@@ -8,86 +8,116 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B783120248
-	for <e@80x24.org>; Fri, 22 Mar 2019 12:47:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62C3120248
+	for <e@80x24.org>; Fri, 22 Mar 2019 13:17:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388116AbfCVMrM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 08:47:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45371 "EHLO mout.gmx.net"
+        id S1728910AbfCVNRv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 09:17:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49211 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730716AbfCVMrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 08:47:11 -0400
+        id S1727928AbfCVNRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 09:17:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553258829;
-        bh=EZXS7uvV4aiXihWe/Cn5u4S7kXquIgIlLgYxRNGhniU=;
+        s=badeba3b8450; t=1553260658;
+        bh=49TGaXPbHDvgaduuLsBOmur62TixLTP+ew2cCM5lvVo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lVogY6ibLanNhFKLxsgTSPQefCxAWQgxujrS2z6CAGKm+ckz0NkWqK/neaR+4jPvP
-         1TGqRhLOceMmNhhW1J5PC2F+MFdH5nujZOstRbUeN8Gzs/OuAqQZBONF/5H4yGnJmq
-         84y1tvT8qCfzb3I2+tYP0fEvSYRImbHPvZjGV30o=
+        b=Wxf0lEF0gpGvHaJyXQmGtkq8a3k2b1lyVGEMugjjhRqffqwJEK+K7x95KM74FiFGg
+         uAMpQS4xQuf/KyneYKdzJreLu/JZq0kgpo/u1hh/eaGg1u5QzT5F/eIuySbsLGyPZu
+         Bh2J/rwZxsb2GpqWB5R3OtzDJ9PBA/F6brsi1X3g=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7kwW-1gl5pd1eTo-00vQWr; Fri, 22
- Mar 2019 13:47:09 +0100
-Date:   Fri, 22 Mar 2019 13:46:53 +0100 (STD)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LngNT-1gVXvJ2kzn-00hxvX; Fri, 22
+ Mar 2019 14:17:38 +0100
+Date:   Fri, 22 Mar 2019 14:17:22 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     balaji marisetti <balajimarisetti@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: git command history
-In-Reply-To: <CAKcrOwe2ARK4J6YuiXUiVXic=q568VC8JtgWMNs6WEd4hhZs3A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903221343090.41@tvgsbejvaqbjf.bet>
-References: <CAKcrOwe2ARK4J6YuiXUiVXic=q568VC8JtgWMNs6WEd4hhZs3A@mail.gmail.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
+In-Reply-To: <87mulocmgz.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903221416230.41@tvgsbejvaqbjf.bet>
+References: <pull.108.v5.git.gitgitgadget@gmail.com> <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com> <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com> <87k1gxa8cm.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1903211528090.41@tvgsbejvaqbjf.bet>
+ <87mulocmgz.fsf@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:FIgycDNB8FNUUvKraOxnJZsk0c1Mz28qvCSRSqml0Nr7QSGmkvd
- 073ahP32HT3OBlg29Y9fJ0e1HgsmMQ4W3t4NVDzAMkkpinkUySKzB93JDanF+12df0uSnM3
- CWLhOeQEQH6zsVFOCjQTCvr2Zwl2qHvvHNk7emcA7Kk/k0iWJRs31Ujxaim8EeNx4T+uf03
- fZXODfws0uV3NDFD9mzkg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iOeAJ/i+/CU=:frC/erlzQfBkyor3L3IYH1
- wiQF3scNW2K772EKvp6hCGk7DL2PwYJbNcOlWGoB2w+bjBcrMqRDzEecelLcGThfuuyVvMXCl
- WEQE2okjg5Vo4RaDyDKETQ1vs/ip9dSzbY7G5lFqYDNfQfMTBZxY6dw562P0jXguCvOIL4jFU
- 0b5tHnMlz6qu8fmlC5k032yo8AqshsKnYXirx223wWqFj4hTebLgXbLAv8Qt191/lJeU4ofkU
- N3ICXeDDTaK+n/WK7aPMdGY3Z4pZ+XwX/zfarZSzClXNTArTVyJ9NH9l16xccjadTBxtJ74y3
- LUL6PUrnYXpdrbWwo8Cict5edSGjiGuapcBp2O0BNG+wSiWDO6oySqO2NtecYxX+0FitxTvzH
- bV118C9nUNjbY9b/6ZJkGxoOl5pYRYDchWZmwkxeCJvr2RhChdwsr2OfJL+LnFJDbjFNqxkFY
- jbZ77iac4T6Ysr0iy/Zt6VzHZuOEy7eAyj29lAe9fSc0adW3Ir9HTZQ7LtSqdMxL1sPAW+Brg
- 5FrF5p0ESqdA0fibEtyHaLdvz5n/PDb/vdW23XWA1uXt9Ql17BW3VEccfUxOa72PALxZh27Vf
- Yl2YsArubK6sL6ogrgo0t60XJ3AbFqIB9MzJ573qmbPtiVH76ShFuSh1frppUF45IP+78Xc+s
- zlHNUVDJu/oW/W3ZrkrqncfNvPcXmU6uwiCUXEXAvl2pH7fKwU/F0sGr93puKOnKBg6jzC66/
- LfU7GkX+E99pHiWj5Aqs7PrTbfU2P7b0SK8uZ9Gr3hj5eKVTk99VMlf57JWr4kaBUUZ/HoOgA
- k2gXwAUUFtVdvqJ3rQSZ9Y7Mt6NAY+mE7nWSklY3gPMtH5/va15IJM0zIHt4SGmLX0np9EMB6
- MGT/8DbJux8tqe68K+5GbHl2GT3VL87xDqNoDAIbRc+lfgAwjVRfHVl7AdQrLmKazbwOcYUA7
- S3Qs4Qsq2TA==
+Content-Type: multipart/mixed; boundary="8323328-962455917-1553260658=:41"
+X-Provags-ID: V03:K1:ZdqmH8+Q/hezwi1tnnD2hibxuLxFFyVQgjyPgUQjAWa5mSxJq83
+ Z5VieTm36Ku5/rF/u/IM2105RxVrGF1iT92l0x8HcrSYmf2pWATGGJVSTRgr5YCav2nxpqP
+ mG6AkqiqAeJUgf9ybVhzOX0JCV0vyYZDRIAjoTIbC4fuhBx4xluCBTWaq63xO79iTva+7Zq
+ a+DXPcJdrMHBrPfdIJ1wQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C5HlhE+QRhE=:/J/Ko+5BFIlxA3zCX+bjvx
+ G+Z7mUA1JdBFqiaV2ISokj2ye/PX5KtYsYxzBe2pyd9VnJTn1mOkTbuWEhhgVqAK8wefb1ne2
+ xjIlMllma6OPyPiPiS8AWk+B7GCIr3N6eH8eMgSaMN++ok9bGEZsizZ/imgzbK/Drn9NQBHht
+ j985l46toNp6hlRBFb+mXGRRrHHGC01VHtxLsoUyfOtooSZNM9yD9+jmv0HGMgwFs++VRJKmh
+ nBV8Gh4OeJ40qqmUX/19TdWRpmMwy8+I14FAl4h+/9xHDfcGBdXHWqLgFmKQ7Vm3Q6pNNl7KC
+ C0IgMp3VgC8kgKJaXX9Fxaq3Dl26Sw57Jud3kWDIVjxfCe0XpZGedTbqmgbLnZf+46pNCdOcl
+ 5bwSq10lAkYrmK2XVUysxCTTnbYoLsWjFPmw0Wg4UhtibRjAIA6rXCnwhkTHBqg3MqpjHfvLR
+ 0GyfPyAssFykLm0p2cXz1ZbAEoBQtrQ8p7BkZOH7+K+HA/g8RX2Kaxold9WCXVG/i2VMfFEhS
+ 8AH3WrdsyGQOfCsWdnl7Yppa0p783Jd1bBRPM0XJTJ9QJ9Uxqk/fED6hVY67v4//mT66WNL69
+ 08jnyCQSH3jjIIqn1xWQxEJ7jbu9czwtPGR4sgIaC9E55uuE2EIlhCfx3ngyJ5tttYTpxC3AP
+ xlnpKYwfRrKJQhALh/E56E3iFJdJwQu/YoEpY7G750PI9ECXze54jfWLLisjzRarkTN9kdSwK
+ HHZjgNsiulEZXXlWVCVsrrcSbS1c01UFDVLoPbe1didwLg2tVoTaIfO5DLPsk1+1gCnPM3crk
+ urhuEdEQx4xORjrVzkh2h2vr4cVRp5Qn0vboSciXvA/KIILV3OqTHvhYzgamAPv1ncXmLbxWH
+ uSEd5BqUV554Vk0a6+0K4ITiVejF8iT4WrT3G0pZj3yiPZuoquwcT86nDbcJ1bGPwl5rDrJzR
+ arYOgvwUSQg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Balaji,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 19 Mar 2019, balaji marisetti wrote:
+--8323328-962455917-1553260658=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Can anyone please tell me if there is way to see the command history
-> of a local git repo?
+Hi =C3=86var,
 
-If you really are only interested in the *Git* commands, you will be able
-to implement something on top of the Trace2 feature (which just made it
-into `master` but not into any official Git version yet, so it will most
-likely be available when Git v2.22.0 comes out).
+On Thu, 21 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-If you are instead interested in all shell commands in a local Git
-worktree (you probably meant the worktree, not the repository, I assume),
-then you might need to play some games with Bash aliases to override `cd`
-and reroute the history by re-setting `HISTFILE` and then calling `history
--cr` or something similar.
+> On Thu, Mar 21 2019, Johannes Schindelin wrote:
+>
+> > On Sun, 17 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >>
+> >> On Fri, Feb 15 2019, Jeff Hostetler wrote:
+> >>
+> >> > I could see having a "~/.git_tr2_config" or something similar in
+> >> > some place like "/etc" that only contained the Trace2 settings. It
+> >> > would be safe to read very early inside main() and we would not
+> >> > consider it to be part of the real config.  For example, "git
+> >> > config" would not know about it.  Then you could enforce a
+> >> > system-wide setting without any of the env var issues.
+> >>
+> >> I haven't written a patch for this, but it seems to me that we could
+> >> just start reading /etc/gitconfig via some custom config callback
+> >> code early as e.g. 58b284a2e91 ("worktree: add per-worktree config
+> >> files", 2018-10-21) does for the worktree config.
+> >
+> > Oy. Oy, oy, oy.
+> >
+> > Maybe use `read_early_config()` instead? That would be *a lot*
+> > cleaner. You could maybe use a9bcf6586d1a (alias: use the early config
+> > machinery to expand aliases, 2017-06-14) as an inspiration.
+>
+> Thanks. I was thinking *only* to do /etc/gitconfig and not the whole
+> .git/config -> ~/.gitconfig etc. sequence just in terms of saving
+> critical time (this is the performance trace path, after all...).
+>
+> But on a second reading I see that read_early_config() can do that if
+> you set config_source->file, opts->respect_includes etc. I.e. it just
+> (depending on options) resolves to git_config_from_file() which
+> 58b284a2e91 used directly.
 
-> If there isn't a way, why hasn't the command-history feature been
-> implemented?
-
-Because Git is an open source project. This means that nobody is
-responsible for fulfilling your wishes, except for you. And you can do it,
-too, this project welcomes all high-quality contributions.
+Sure, it can exclude the repo and user config, but would that not be
+rather confusing?
 
 Ciao,
-Johannes
+Dscho
+
+--8323328-962455917-1553260658=:41--
