@@ -7,122 +7,80 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4D220248
-	for <e@80x24.org>; Fri, 22 Mar 2019 04:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E58A20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 05:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726047AbfCVEy4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 00:54:56 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38187 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbfCVEy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 00:54:56 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a188so821318wmf.3
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 21:54:54 -0700 (PDT)
+        id S1726022AbfCVFCp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 01:02:45 -0400
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:40909 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbfCVFCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 01:02:45 -0400
+Received: by mail-wm1-f44.google.com with SMTP id u10so824448wmj.5
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 22:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=OhAnWKLU7H5uyM3aCLKVR2Yz/OqHwWsH81THLBrZfSA=;
-        b=tI/7qY5xCVhsioFACxB/jiTatv3QPYbeEFnUDN7yTWRxL7PNmywXuXOe6RIDA/WbUv
-         7BftmZ8tKCHkJosn0PKkdLlr6p0I6PTTuvjVSk5tT4PY26/MgcZZS45jLP4aCYlRURbe
-         ukApQy6yvRegTHPKyz4tKyZT88+M3yBT84V+s38YCMXVUDtLnfm06HfrqvyVZSa7kA6A
-         n2rrmkj0P0EmVrqwh0ear4tZPe/bhf19kg6Nmgtcso7/H0xWn28nvm3BxjEemKVCM/nF
-         ZLy5ITSvtiX0ofFltQsXuLI6mYNzqZaoAdLimy4VplDUYu+MfmP4ghI92efVOQbVXkUm
-         peIw==
+         :user-agent:mime-version;
+        bh=sfHK88CI1lMMLhJHMq/4dzQDJsxEwLlo/naNuSyQSAQ=;
+        b=TjOecHZfoKFhbz7kJZC+pmVtWENsC/RAD4jdHiyaKOyU830QbCjxpQVkwkEcI1Q85D
+         EommeA9RQ+vO8hyYdP0ZUKVwpKKgEHxj3Jp0LjSy81ZiklylK2KdKAkPwWQf+FMmFfmd
+         bGn5gDwHgraQPksZiOqEDKU9LnKHOYjijZLkiIZTdiwEr9fsfBvzWDz8prmxJ68h1arK
+         nUfdB9GJIjT8D4taFvWdw2je0/1erw2++XN3eZJ5WPgurzjtQylN4EOcKLGHpqnXSvCk
+         bkSoLsIMC9yTVz5i/xC/d5Pap/aTJfckWcFaegx4Hyuplj9Efh5en6tG/0t5+/5Wk3oL
+         l2Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=OhAnWKLU7H5uyM3aCLKVR2Yz/OqHwWsH81THLBrZfSA=;
-        b=A2rcUNT5hb1RxZN2foJ4e9YHquVSleEXkF0k+8ZVIe2jQ6DK8bVCO1QdCcavBM3WDP
-         y53lMr7x49OnpvY1A38dv+7CV4veC/0w//KZq+9IN5e9pVjWsb0df8A68nK14RrTWMkL
-         SK8x/PoIk9M/tAGu8IoUnrv3W9Vsxc/LRRJR05VP3tP94iM2EUE6xVR/QkeU6zBvHLVM
-         PV54aGuBunP1usJIsWHi5O6Ji4sGsf5Ml0BQP41c+QS9W7zwkNovoy2aCR+ueyEU5b6h
-         1iNwBOsxpLywiRLAncxZ2l1vJBYewzjHh/FkgcMVZBQQJxhZEXj5YgpIM9eWkPXVHsL9
-         s7yw==
-X-Gm-Message-State: APjAAAUeluo3TRqyivRLKoPPxMLFnkJSlwIUSS03PTWQtV5gmqk1LfTC
-        etSJisY5q2+OFf92tsmwEYg=
-X-Google-Smtp-Source: APXvYqwQlB0/l1e7lmpsDPACD+8tgxfADoI1c23OsrXBzn2PbYEH8kI+b5b7wRUu1z6xPUw4jdwSbw==
-X-Received: by 2002:a1c:44:: with SMTP id 65mr1422146wma.127.1553230493814;
-        Thu, 21 Mar 2019 21:54:53 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=sfHK88CI1lMMLhJHMq/4dzQDJsxEwLlo/naNuSyQSAQ=;
+        b=MGfM0JlMLoKXkqNLyTvErSf6mClSsgpVyGet2k96fddN4SJnzAq9meMfrR+eHcbSvf
+         kGKeSHlCV0SPglRfEXqBxhWP5cdrj1p0O5HKUKJduvn2jbeC9Bui3vq5lmwWR2m8HCno
+         d0OHYJxPYDFLDkEhaoHBDMqPqe/t6Yk4/2Qa7zYshJzlzRFLMtwKS0womfDkYRrLQ0m2
+         Q3WTei02PlSoDdpffmrOTf4gfTvFHI3zpTFKzN4Mq2af0T2VKz4B62HuV1j4k8K//Iyb
+         BM9nWzBhTjKuxJiFrbb38q0Eo3PJnm4vkGZhFjVJMW887PRC3vOuqYfx/nJrTvpMP4/d
+         0QgA==
+X-Gm-Message-State: APjAAAUmOAhd9HV5SyAnCiJsG0KRIQ9YaMAgzhyH/tHDlv7D55zU2ocV
+        u8zbQ8dOIk3lu1vtse/zBLQ=
+X-Google-Smtp-Source: APXvYqw/tI2s+XftZUdRUoVlckeBuM1WQP3Cfur/+eQQlPO6VMuEDOA8F0IAVdzIC09MhnrgAO1iIw==
+X-Received: by 2002:a1c:a3c4:: with SMTP id m187mr1651486wme.87.1553230963572;
+        Thu, 21 Mar 2019 22:02:43 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id d9sm5108434wmb.8.2019.03.21.21.54.51
+        by smtp.gmail.com with ESMTPSA id v13sm5457381wmj.43.2019.03.21.22.02.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 21:54:52 -0700 (PDT)
+        Thu, 21 Mar 2019 22:02:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3] glossary: add definition for overlay
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
-        <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
-        <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
-        <20190309172733.GC31533@hank.intra.tgummerer.com>
-        <20190312233040.GE16414@hank.intra.tgummerer.com>
-        <20190317201956.GB1216@hank.intra.tgummerer.com>
-        <3d2ad13b-b5de-7e8f-9647-983e964c6303@iee.org>
-Date:   Fri, 22 Mar 2019 13:54:51 +0900
-In-Reply-To: <3d2ad13b-b5de-7e8f-9647-983e964c6303@iee.org> (Philip Oakley's
-        message of "Thu, 21 Mar 2019 14:48:28 +0000")
-Message-ID: <xmqqbm23qzj8.fsf@gitster-ct.c.googlers.com>
+To:     Leszek Swirski <leszeks@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug: git checkout @{u} breaks git branch if the upstream isn't a local branch
+References: <CAGRskv__Qe-F-grBtq5v-uhHE+BQAcAcOQtX-GKB+MNOrxs0hQ@mail.gmail.com>
+Date:   Fri, 22 Mar 2019 14:02:42 +0900
+In-Reply-To: <CAGRskv__Qe-F-grBtq5v-uhHE+BQAcAcOQtX-GKB+MNOrxs0hQ@mail.gmail.com>
+        (Leszek Swirski's message of "Thu, 21 Mar 2019 16:43:01 +0100")
+Message-ID: <xmqq7ecrqz65.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
+Leszek Swirski <leszeks@google.com> writes:
 
->> of 'cp -R'.  I thought of making the same clarification for 'rsync
->> --delete' as well, however I think with it being explicitly specified
->> for 'cp -R', readers should be able to deduce that we are talking
->> about the destination directory there as well.
-> As a historically Windows user, we should ensure that the meaning is
-> clear to all without the otherwise helpful *nix command examples.
+> I assume that either the reflog entry should be amended to print
+> something more informative (moving from master to origin/master, or at
+> least master@{u}, or the SHA...), or the reflog search in
+> wt_status_get_detached_from should do something cleverer with relative
+> refs.
 
-I do not know about "cp -R", but surely "rsync" is used by Windows
-users as well as users of Unix based systems, isn't it?
+Nicely analyzed. A record "moving to @{u}" in the reflog may not
+leave sufficient information for a later operation to tell what
+branch was refered to with the @{u} reference back when "checkout"
+was run.  I suspect that checking out @{4}, @{1.day.ago}, etc. may
+share the same issue.
 
->> +	Only update and add files to the working directory, but don't
->> +	delete them, similar to how 'cp -R' would update the contents
+"git checkout @{-1}" aka "git checkout -" may not have any problem
+after such a checkout, as it only uses "moving from" side of the
+reflog entry.
 
-> perhaps  s/them/any files/
-
-Probably.  The paths that are not deleted are certainly different
-set of paths from those that are updated and/or added, so it sounds
-like a reasonable thing to do.
-
->> +	in the destination directory.  This is the default mode in a
->> +	<<def_checkout,checkout>> when checking out files from the
->> +	<<def_index,index>> or a <<def_tree-ish,tree-ish>>.  In
->> +	contrast, no-overlay mode also deletes tracked files not
->
-> understanding the past/future distinction is tricky here. Maybe
-> 'deletes previously tracked files that are no longer present in the
-> new source'.
->
-> It's tricky talking about deleting things that are not there.
-
-I am afraid that "previously" may be taken too literally by readers
-and misunderstood as paths that had been tracked even once in the
-past.  
-
-If you think that is worried too much because we can only delete
-what is _currently_ in the index, and any past before what is in the
-current index cannot ever affect the outcome, the same reasoning
-tells me that the original is clear enough without "previously",
-i.e. "tracked ones not present in..." are the ones that are in the
-index currently, but the tree that we are taking new contents from
-does not have them.
-
-I dunno.
-
->> +	present in the source, similar to 'rsync --delete'.
