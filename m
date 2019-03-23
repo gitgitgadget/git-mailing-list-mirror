@@ -6,54 +6,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D30620248
-	for <e@80x24.org>; Sat, 23 Mar 2019 06:38:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1892420248
+	for <e@80x24.org>; Sat, 23 Mar 2019 07:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726096AbfCWGia (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Mar 2019 02:38:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33512 "HELO cloud.peff.net"
+        id S1726247AbfCWHFv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Mar 2019 03:05:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33528 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726046AbfCWGia (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Mar 2019 02:38:30 -0400
-Received: (qmail 25059 invoked by uid 109); 23 Mar 2019 06:38:29 -0000
+        id S1726052AbfCWHFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Mar 2019 03:05:50 -0400
+Received: (qmail 25356 invoked by uid 109); 23 Mar 2019 07:05:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Mar 2019 06:38:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Mar 2019 07:05:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26781 invoked by uid 111); 23 Mar 2019 06:38:52 -0000
+Received: (qmail 26866 invoked by uid 111); 23 Mar 2019 07:06:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 23 Mar 2019 02:38:52 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 23 Mar 2019 03:06:13 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Mar 2019 02:38:27 -0400
-Date:   Sat, 23 Mar 2019 02:38:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Mar 2019 03:05:48 -0400
+Date:   Sat, 23 Mar 2019 03:05:48 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-Subject: Re: How to properly find git config in a libgit.a-using executable?
-Message-ID: <20190323063827.GA9227@sigill.intra.peff.net>
-References: <20190320101941.2xjsjx3zfnnp33a2@glandium.org>
- <20190322073311.GA839@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqbjf.bet>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2] t5551: mark half-auth no-op fetch test as v0-only
+Message-ID: <20190323070548.GA24065@sigill.intra.peff.net>
+References: <20190321174719.151877-1-jonathantanmy@google.com>
+ <20190322190139.151189-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <20190322190139.151189-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 22, 2019 at 02:39:43PM +0100, Johannes Schindelin wrote:
+On Fri, Mar 22, 2019 at 12:01:39PM -0700, Jonathan Tan wrote:
 
-> How about
+> When using protocol v0, upload-pack over HTTP permits a "half-auth"
+> configuration in which, at the web server layer, the info/refs path is
+> not protected by authentication but the git-upload-pack path is, so that
+> a user can perform fetches that do not download any objects without
+> authentication, but still needs authentication to download objects.
 > 
-> 	GIT_EDITOR=echo git config --system -e 2>/dev/null
+> But protocol v2 does not support this, because both ref and pack are
+> obtained from the git-upload-pack path.
 > 
-> It will error out if the directory does not exist, for some reason, e.g.
-> when you installed Git in your home directory via `make install` from a
-> fresh clone. So you'll have to cope with that contingency.
+> Mark the test verifying this behavior as protocol v0-only, with a
+> description of what needs to be done to make v2 support this.
 
-Oh, that's much more clever than mine. I did wonder if it would require
-the containing directory to be writable, but it seems that "--edit" does
-not do the usual lock-and-rename.
+Thanks, this looks like a fine solution to me.
+
+I do not really expect anyone will ever get around to this NEEDSWORK,
+but we can see. :)
 
 -Peff
