@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF4EB20248
-	for <e@80x24.org>; Sat, 23 Mar 2019 15:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C43A20248
+	for <e@80x24.org>; Sat, 23 Mar 2019 15:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727730AbfCWPZg (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Mar 2019 11:25:36 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:47069 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727677AbfCWPZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Mar 2019 11:25:36 -0400
-Received: by mail-pf1-f195.google.com with SMTP id 9so3464280pfj.13
-        for <git@vger.kernel.org>; Sat, 23 Mar 2019 08:25:36 -0700 (PDT)
+        id S1727746AbfCWPZo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Mar 2019 11:25:44 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46427 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727677AbfCWPZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Mar 2019 11:25:44 -0400
+Received: by mail-pg1-f193.google.com with SMTP id a22so3474771pgg.13
+        for <git@vger.kernel.org>; Sat, 23 Mar 2019 08:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Phnsw4zG02guc8oZcPcLY+WOWXthybQOjzshjFP+uuo=;
-        b=FiXgMLidoWSw9uk6YCQTYgB5ruAzMYjYskVxUdoqV454mcPY1A/HnnAfvBs+oRzb4w
-         XUbl5O23lP2W3OB84+2U3JLeNsE6H3JGvB+u/Fg0RIPJH7rhEaxgE1fjGRs7tsZFQ4G1
-         rL62ctfWI7bV+NC3N2wyWLnUupSfiqBVZdaOCbGfkEpITOlwuE5hYpx1O+djJZFqC8lA
-         pAp44H0jrn7qkcUq9hkE4BPpmTznfFkh+auq0MvhWc8jSCmU98ZrMLrMmGATGPDHMSmo
-         lO92vQUfUuan4cx1V4gJOmqSJCcl22sSBKDEptmOInfgDtZ0CFnTQcRTFHiCf6eUnUmc
-         ugnA==
+        bh=zL52v53Y03n+ceEFJ89GWw/GvEQpi29fWEbH6Av6QkI=;
+        b=Z9ydceLzTZ7P+P6+dIsO2x07MzJbAna4cwOhiiUrIfZam/7KJyyKrV47Oa5tcpS7t1
+         F3AnuTCG4c0gRiCI8UVxkC4WEgFqGLb9NQebHn3fYxb6XS2VCMRJnL+nEytW7VXR37j6
+         e1eIEcKlA7VuljSQa/8AbjrC5Di+qjwGChnb4BtIqQJEOHPBeei/EPcIQ9+imf+kXg53
+         pc2TjP5XhdPPpvgfBLrh13NKgoVYhORYEq2FBRd4vOXH8141wnzzErFd0yyubHppyLhr
+         6k7FYdKQ4d4JgSjWCzD28b1hgSlNAPFNk+kGQa3GX8RpkVluOt153V1KXxDyRxRFTT2+
+         0a1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Phnsw4zG02guc8oZcPcLY+WOWXthybQOjzshjFP+uuo=;
-        b=KPKrwj0iFvNEmtGW7nmZwcMvn+kHamadjHOAj8H5EjpkjdOqypKfgC3uPk8YPGek3v
-         vDR9Np92Jr5cUCDDzEh//tVN35p0r9Z6TxhE/R/jNthUQpFQld9GK/5u3fSQeQBczeAE
-         cFctDGavG7TXchK+a6JNxsU4Cupves6g27nGHQ/i8HuNO894s3CCxKrM656TDYh2xmWX
-         smzQZVWrcWS8G6VSyN9YXq4wISTrdZZYXcZewfmi1Fc/+eoShcwwyNBFh5AXwwOcb/Tn
-         5FmkcyKHJ01Fe0p/HTREJL/EtrcqYa3vgNoG3pDgmaqjmIiCuMWEsLuSvgpPafPkRp3b
-         hR9g==
-X-Gm-Message-State: APjAAAU9B+asINK8SWEoMW8cm1lDeZvTmI44hh4CH06gFxmMMS5zD0gH
-        BPS34MWSCflbPYXu2HqIhB1ru03L
-X-Google-Smtp-Source: APXvYqzVZCXIT6AaU4gAIt5M9Z2ZeWnmqPrqM0YGqk48WMZoHC2ATVoRn0oD9ZhhyxjJccubHQyPbA==
-X-Received: by 2002:a63:4e64:: with SMTP id o36mr14081499pgl.213.1553354735686;
-        Sat, 23 Mar 2019 08:25:35 -0700 (PDT)
+        bh=zL52v53Y03n+ceEFJ89GWw/GvEQpi29fWEbH6Av6QkI=;
+        b=Dea2z/aooFEKa/FawiJy2w3tSm6THuFNt3fmsyzOO27vJ7MZFxVyskr6DQT79bYT1u
+         4oWrjUwJe4+66mx2nyQdlG6BpbWD7D5tr+44Gd2bTABIJA9ExG3W5ekoQl7+9XLIVymo
+         zvQR5x48t1X7SiGRUsUdviWlMXmBjISYq+B/Msid80XeOgpnqxJO+V9cIHbkzcHp3WWU
+         tripYr5rK+1xhbiYIflk41ySE/Z0DQ53i/1DhCG9G0/SaL91XaaO9FFWKNVkNZfPDrsD
+         GwvIae8Wfm4dH7uFjgMygxFiYl3GXE3AmiNM3cCwCsipeeSni05JhJdoBMhjVfCNzlCy
+         jZUA==
+X-Gm-Message-State: APjAAAUM8rHTqFbKYy0TjyV8yrWXsmpaeP//JcZPiDQT8vFbX8XrrU0z
+        MIKNvcYMde851lQjindoCHRKgxs/
+X-Google-Smtp-Source: APXvYqzjSCx/QouBg8mn/D67NYzTdhRlBGkEOg0zVG8zX43aL/P+6JVaazMlcShfcOXvR5zP/jTPkA==
+X-Received: by 2002:a17:902:8643:: with SMTP id y3mr15335336plt.195.1553354743288;
+        Sat, 23 Mar 2019 08:25:43 -0700 (PDT)
 Received: from archbookpro.localdomain ([172.56.17.211])
-        by smtp.gmail.com with ESMTPSA id j14sm14209528pfe.12.2019.03.23.08.25.34
+        by smtp.gmail.com with ESMTPSA id k9sm22953148pfc.57.2019.03.23.08.25.40
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Mar 2019 08:25:35 -0700 (PDT)
-Date:   Sat, 23 Mar 2019 08:25:28 -0700
+        Sat, 23 Mar 2019 08:25:42 -0700 (PDT)
+Date:   Sat, 23 Mar 2019 08:25:36 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/3] rebase: teach rebase --keep-base
-Message-ID: <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
+Subject: [PATCH 2/3] t3416: test rebase --keep-base
+Message-ID: <6398944a6f9e696a6f6f7d616447160af93b0639.1553354374.git.liu.denton@gmail.com>
 References: <cover.1553354374.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -66,105 +66,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A common scenario is if a user is working on a topic branch and they
-wish to make some changes to intermediate commits or autosquashing, they
-would run something such as
+Test rebase --keep-base to ensure it works correctly in the normal case
+and fails when there are multiple merge-bases, both in regular and
+interactive mode. Also, test to make sure conflicting options causes
+rebase to fail.
 
-	git rebase -i --onto master... master
-
-in order to preserve the merge base. This prevents unnecessary commit
-churning.
-
-Alternatively, a user wishing to test individual commits in a topic
-branch without changing anything may run
-
-	git rebase -x ./test.sh master... master
-
-Since rebasing onto the merge base of the branch and the upstream is
-such a common case, introduce the --keep-base option as a shortcut.
-
-This allows us to rewrite the above as
-
-	git rebase -i --keep-base master
-
-and
-
-	git rebase -x ./test.sh --keep-base master
-
-respectively.
+While we're at it, add a missing set_fake_editor call to
+'rebase -i --onto master...side'.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/rebase.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ t/t3416-rebase-onto-threedots.sh | 57 ++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 77deebc65c..fffee89064 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -27,8 +27,8 @@
- #include "branch.h"
+diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+index ddf2f64853..9c2548423b 100755
+--- a/t/t3416-rebase-onto-threedots.sh
++++ b/t/t3416-rebase-onto-threedots.sh
+@@ -99,7 +99,64 @@ test_expect_success 'rebase -i --onto master...side' '
+ 	git checkout side &&
+ 	git reset --hard K &&
  
- static char const * const builtin_rebase_usage[] = {
--	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
--		"[<upstream>] [<branch>]"),
-+	N_("git rebase [-i] [options] [--exec <cmd>] "
-+		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
- 		"--root [<branch>]"),
- 	N_("git rebase --continue | --abort | --skip | --edit-todo"),
-@@ -1018,6 +1018,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	};
- 	const char *branch_name;
- 	int ret, flags, total_argc, in_progress = 0;
-+	int keep_base = 0;
- 	int ok_to_skip_pre_rebase = 0;
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf revisions = STRBUF_INIT;
-@@ -1051,6 +1052,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
- 			   N_("rebase onto given branch instead of upstream")),
-+		OPT_BOOL(0, "keep-base", &keep_base,
-+			 N_("use the merge-base of upstream and branch as the current base")),
- 		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
- 			 N_("allow pre-rebase hook to run")),
- 		OPT_NEGBIT('q', "quiet", &options.flags,
-@@ -1217,6 +1220,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
++	set_fake_editor &&
+ 	test_must_fail git rebase -i --onto master...side J
+ '
  
-+	if (keep_base) {
-+		if (options.onto_name)
-+			die(_("cannot combine '--keep-base' with '--onto'"));
-+		if (options.root)
-+			die(_("cannot combine '--keep-base' with '--root'"));
-+	}
++test_expect_success 'rebase --keep-base --onto incompatible' '
++	test_must_fail git rebase --keep-base --onto master...
++'
 +
- 	if (action != NO_ACTION && !in_progress)
- 		die(_("No rebase in progress?"));
- 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
-@@ -1541,10 +1551,19 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* Make sure the branch to rebase onto is valid. */
--	if (!options.onto_name)
-+	if (keep_base) {
-+	    strbuf_reset(&buf);
-+	    strbuf_addstr(&buf, options.upstream_name);
-+	    strbuf_addstr(&buf, "...");
-+	    options.onto_name = xstrdup(buf.buf);
-+	} else if (!options.onto_name)
- 		options.onto_name = options.upstream_name;
- 	if (strstr(options.onto_name, "...")) {
- 		if (get_oid_mb(options.onto_name, &merge_base) < 0)
-+		    if (keep_base)
-+			die(_("'%s': need exactly one merge base with branch"),
-+				options.upstream_name);
-+		    else
- 			die(_("'%s': need exactly one merge base"),
- 			    options.onto_name);
- 		options.onto = lookup_commit_or_die(&merge_base,
++test_expect_success 'rebase --keep-base --root incompatible' '
++	test_must_fail git rebase --keep-base --root
++'
++
++test_expect_success 'rebase --keep-base master from topic' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++
++	git rebase --keep-base master &&
++	git rev-parse C >base.expect &&
++	git merge-base master HEAD >base.actual &&
++	test_cmp base.expect base.actual &&
++
++	git rev-parse HEAD~2 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --keep-base master from side' '
++	git reset --hard &&
++	git checkout side &&
++	git reset --hard K &&
++
++	test_must_fail git rebase --keep-base master
++'
++
++test_expect_success 'rebase -i --keep-base master from topic' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++
++	set_fake_editor &&
++	EXPECT_COUNT=2 git rebase -i --keep-base master &&
++	git rev-parse C >base.expect &&
++	git merge-base master HEAD >base.actual &&
++	test_cmp base.expect base.actual &&
++
++	git rev-parse HEAD~2 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase -i --keep-base master from side' '
++	git reset --hard &&
++	git checkout side &&
++	git reset --hard K &&
++
++	set_fake_editor &&
++	test_must_fail git rebase -i --keep-base master
++'
++
+ test_done
 -- 
 2.21.0.512.g57bf1b23e1
 
