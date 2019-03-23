@@ -2,104 +2,268 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A14A20248
-	for <e@80x24.org>; Sat, 23 Mar 2019 07:54:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3953420248
+	for <e@80x24.org>; Sat, 23 Mar 2019 08:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726692AbfCWHyl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Mar 2019 03:54:41 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34738 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726118AbfCWHyl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Mar 2019 03:54:41 -0400
-Received: by mail-ed1-f66.google.com with SMTP id x14so890504eds.1
-        for <git@vger.kernel.org>; Sat, 23 Mar 2019 00:54:40 -0700 (PDT)
+        id S1726023AbfCWIo6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Mar 2019 04:44:58 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43242 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbfCWIo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Mar 2019 04:44:57 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d17so4696766wre.10
+        for <git@vger.kernel.org>; Sat, 23 Mar 2019 01:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=1m6Ljp3C79N9/L+T88+qmYrth6Di/g8mPt+LdJaaVqo=;
-        b=PXSn6b6E+1OmmbPUql0iVNv8SVhZDWr/l0tQDZcRKNobJvRwuhLbKjW6pmI0ZSn9kL
-         ugfA+syJmdAbA1RDyhJD47mHkUuH/zUcDerEjSL0feBnAWEscuqE53l7ZYKlV9g5r3Y3
-         A5pqxEkbBjZMSDWwkxXAZV/UNTI0F+4kU3iJJ0Gf4t8FBMgCNQfCFe0CeY/1XaePbkkV
-         ZmOPCFayP6m6XK1NEj4gj/eD5NrQkJr6zVDhHnI3asEqQfudt+5xFnrJYUL+RpKPaHhF
-         BuobO+FgdfF/C/7yvaCFzzaanmDLmEVoLuUxLs+Rm+wvFLnmhulRvzhjyetPqfHwFOmN
-         QfMA==
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YKwShtPrwYgA6pzxDlSdn4WZpLpDcAQQoEKrzIDSdpg=;
+        b=VAyslB5fY0ZTVLTIQ1ronxCi5WthjwgnmL3q17pqogAQOtTe5WTt6ns5v5VBA8tVGi
+         Kh4J7fLBnx5aqZZjYr81u48aExuohuWHx8msBc6JDvqc+f1aOlKgEDyBcaowZvrfJnRT
+         s9Omhf6lZYe6brcCb2GEtYBFGJ1404+ipvJZs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=1m6Ljp3C79N9/L+T88+qmYrth6Di/g8mPt+LdJaaVqo=;
-        b=VczCBKzPbMY9N1JyFnITpt0Yv6WI+51clzTKY0YPRmBg88Jc3AmJizaop7tte/PQgP
-         Nll2VGwqfFAa6haGVGeSDz1QCdxY7G19KSCmyeZfLtNJK8whzqJBe7rdiAQsMhf3n9IN
-         AY9OHZmx7TRX67W7Vkw6mbJMn/duPVaBvAwppYV/w2y234NUBAbs5qFS6HTyRSr6vXkf
-         xI3TspAxk3FJivEjgbM748vNpru/9L+cQWW71aVof19W68WERHHctr9fVsJes/bfghX5
-         Q4l5/3YyvxN7JT87k7fN+QHzeKSBHiEUNmhzB4qdQfSsMob3lfIv16mldai5mIZN9TZI
-         DEaw==
-X-Gm-Message-State: APjAAAX1sjmjo8Ytjq+Puc0juWPC2jmdNhX8s4MAJpdZtHlEHnU6PImu
-        XOzBQVfOR63STKaxlfA33uqSkugzTE4=
-X-Google-Smtp-Source: APXvYqwM7VhRWnP6fbcFe9DucqeF5dz5mwsgaBHfwNNl80Fzqe+OoHCAkSuyzGjULK56Uy4xmTwaOw==
-X-Received: by 2002:a50:92b2:: with SMTP id k47mr8709234eda.148.1553327679442;
-        Sat, 23 Mar 2019 00:54:39 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id k13sm3346817edl.59.2019.03.23.00.54.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Mar 2019 00:54:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Keith Smiley <keithbsmiley@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Make stashing nothing exit 1
-References: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com>
-Date:   Sat, 23 Mar 2019 08:54:37 +0100
-Message-ID: <87d0mic9fm.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YKwShtPrwYgA6pzxDlSdn4WZpLpDcAQQoEKrzIDSdpg=;
+        b=KxR51KV3EPBM03I/3s8r/PAfSM2eBdW7EH/C27+ULhXEEE+pBIE7phma9yv9FhRsO2
+         apWs9l0QHZAGhvRlDw38s2cPcDhc5nhZkt2HpI+tEzkoh1Ag4aby5yuLQA2AQ4eppl74
+         wp+FGuI4QlNsdkxXuwV5xqydL6ZNGXbsi54eWO40sfmlCaZ+ob3jqWTr+JdEWuRY2d8Y
+         6ZC/0QuToqN1I1tcHaMIgFienBZpM8F5gGpSC1CfoX0FW8nnzLoHBJ1dwIV7Ztyt4xMd
+         paJ5Od59AfNnXuyyaiDjxNMBzEPYfw4QIe63maaPmR/PqMbZn3dJd4Rjin5OrImYb/ki
+         MuVw==
+X-Gm-Message-State: APjAAAUJErJ+wDU0mmr0siBYt4ySozEvvsNg+GFZdYm+Tbhtc6yD/Qnm
+        zfCG0XDB94PMtso0Nc/hieBsYkaJkyhVV6Rhf2b2fA==
+X-Google-Smtp-Source: APXvYqztG0w6CKNtplpfs2C5bWuEybj9q/JxSEykeS5ggr/uc1aYUmg0iagrgOyqcC0ojE1jnFj6c5n7SlXNM70R5Qc=
+X-Received: by 2002:adf:ebc3:: with SMTP id v3mr9041244wrn.35.1553330695206;
+ Sat, 23 Mar 2019 01:44:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1553283214.git.amazo@checkvideo.com> <bb3e14a3897c98762b0e656d583eaa408a6aba60.1553283214.git.amazo@checkvideo.com>
+In-Reply-To: <bb3e14a3897c98762b0e656d583eaa408a6aba60.1553283214.git.amazo@checkvideo.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Sat, 23 Mar 2019 08:44:44 +0000
+Message-ID: <CAE5ih793TVn0NJ54CJTmOZ0Gr2Y4GSYwP-DAyRpjsgJsGc-NrA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] git-p4: support loading changelist descriptions
+ from files
+To:     "Mazo, Andrey" <amazo@checkvideo.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Vitor Antunes <vitor.hda@gmail.com>,
+        Andrew Oakley <aoakley@roku.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andrey <ahippo@yandex.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 22 Mar 2019 at 19:54, Mazo, Andrey <amazo@checkvideo.com> wrote:
+>
+> Our Perforce server experienced some kind of database corruption a few years ago.
+> While the file data and revision history are mostly intact,
+> some metadata for several changesets got lost.
 
-On Sat, Mar 23 2019, Keith Smiley wrote:
+I think it's not unheard of for P4 databases to end up being corrupt,
+as in your case.
 
-> In the case there are no files to stash, but the user asked to stash, we
-> should exit 1 since the stashing failed.
+It looks like the RCS files get updated, but the database files (i.e.
+the metadata) do not, after which you have a bit of a problem.
+
+So I guess this change could be quite useful, but it really needs some
+documentation and tests to support it - git-p4 is already complicated
+enough!
+
+Your example script should probably use the same magic that the git-p4
+script uses to pick the path to Python.
+
+And perhaps come up with a nicer name than "damaged" - as you say, it
+could also be used for other purposes.
+
+> For example, inspecting certain changelists produces errors.
+> """
+> $ p4 describe -s 12345
+> Date 2019/02/26 16:46:17:
+> Operation: user-describe
+> Operation 'user-describe' failed.
+> Change 12345 description missing!
+> """
+>
+> While some metadata (like changeset descriptions) is obviously lost,
+> most of it can be reconstructed via other commands:
+>  * `p4 changes -l -t //...@12345,12345` --
+>    to obtain date+time, author, beginning of changeset description;
+>  * `p4 files -a //...@12345,12345` --
+>    to obtain file revisions, file types, file actions;
+>  * `p4 diff2 -u //...@12344 //...@12345` --
+>    to get a unified diff of text files in a changeset;
+>  * `p4 print -o binary.blob@12345 //depot/binary.blob@12345` --
+>    to get a revision of a binary file.
+>
+> It might be possible to teach git-p4 to fallback to other methods if `p4 describe` fails,
+> but it's probably too special-cased (really depends on kind and scale of DB corruption),
+> so some manual intervention is perhaps acceptable.
+>
+> So, with some manual work, it's possible to reconstruct `p4 -G describe ...` output manually.
+> In our case, once git-p4 passes `p4 describe` stage,
+> it can proceed further just fine.
+> Thus, it's tempting to feed resurrected metadata to git-p4 when a normal `p4 describe` would fail.
+>
+> This functionality may be useful to cache changelist information,
+> or to make some changes to changelist info before feeding it to git-p4.
+>
+> A new config parameter is introduced to tell git-p4
+> to load certain changelist descriptions from files instead of from a server.
+> For simplicity, it's one pickled file per changelist.
+> ```
+> git config --add git-p4.damagedChangelists 12345.pickled
+> git config --add git-p4.damagedChangelists 12346.pickled
+> ```
+>
+> The following trivial script may be used to produce pickled `p4 -G describe`-compatible output.
+> """
+>  #!/usr/bin/python2
+>
+>  import pickle
+>  import time
+>
+>  # recovered commits of interest
+>  changes = [
+>      {
+>          'change':     '12345',
+>          'status':     'submitted',
+>          'code':       'stat',
+>          'user':       'username1',
+>          'time':       str(int(time.mktime(time.strptime('2019/02/28 16:00:30', '%Y/%m/%d %H:%M:%S')))),
+>          'client':     'username1_hostname1',
+>          'desc':       'A bug is fixed.\nDetails are below:<lost>\n',
+>          'depotFile0': '//depot/branch1/foo.sh',
+>          'action0':    'edit',
+>          'rev0':       '28',
+>          'type0':      'xtext',
+>          'depotFile1': '//depot/branch1/bar.py',
+>          'action1':    'edit',
+>          'rev1':       '43',
+>          'type1':      'text',
+>          'depotFile2': '//depot/branch1/baz.doc',
+>          'action2':    'edit',
+>          'rev2':       '8',
+>          'type2':      'binary',
+>          'depotFile3': '//depot/branch1/qqq.c',
+>          'action3':    'edit',
+>          'rev3':       '6',
+>          'type3':      'ktext',
+>      },
+>  ]
+>
+>  for change in changes:
+>      pickle.dump(change, open('{0}.pickled'.format(change['change']), 'wb'))
+> """
+>
+> Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
 > ---
->  git-stash.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 789ce2f41d4a3..ca362b1a31277 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -318,7 +318,7 @@ push_stash () {
->  	if no_changes "$@"
->  	then
->  		say "$(gettext "No local changes to save")"
-> -		exit 0
-> +		exit 1
->  	fi
+> Notes:
+>     Documentation changes and tests are obviously missing,
+>     but I hoped to get some feedback on the idea overall
+>     before working on those.
 >
->  	git reflog exists $ref_stash ||
-
-Thanks for contributing, some points:
-
- * stash is currently (in the 'next' branch) being rewritten in C. It's
-   a better move at this point to patch that version, this code is about
-   to be deleted.
-
- * This is missing a corresponding test, and skimming the stash manpage
-   we should document how these exit codes are supposed to act.
-
- * Shouldn't we do this consistently across all the other sub-commands?
-   Trying some of them seems 'push' may be the odd one out, but maybe
-   I've missed some (and this would/should be covered by
-   tests). I.e. some single test that does a bunch of ops with no
-   entries / nothing to stash and asserts exit codes.
+>  git-p4.py | 25 ++++++++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 40bc84573b..3133419280 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -24,10 +24,11 @@
+>  import stat
+>  import zipfile
+>  import zlib
+>  import ctypes
+>  import errno
+> +import pickle
+>
+>  # support basestring in python3
+>  try:
+>      unicode = unicode
+>  except NameError:
+> @@ -2615,10 +2616,12 @@ def __init__(self):
+>          self.knownAlienLabelBranches = {}
+>
+>          self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
+>          self.labels = {}
+>
+> +        self.damagedChangelists = {}
+> +
+>      # Force a checkpoint in fast-import and wait for it to finish
+>      def checkpoint(self):
+>          self.gitStream.write("checkpoint\n\n")
+>          self.gitStream.write("progress checkpoint\n\n")
+>          out = self.gitOutput.readline()
+> @@ -3312,10 +3315,25 @@ def getAlienLabelBranchMapping(self):
+>          for mapping in alienLabelBranches:
+>              if mapping:
+>                  (alien, ours) = mapping.split(":")
+>                  self.knownAlienLabelBranches[alien] = ours
+>
+> +    def loadDamagedChangelists(self):
+> +        damagedChangelists = gitConfigList("git-p4.damagedChangelists")
+> +        for clPickled in damagedChangelists:
+> +            if not clPickled:
+> +                continue
+> +
+> +            try:
+> +                clDesc = pickle.load(open(clPickled, 'rb'))
+> +                if not ("status" in clDesc and "user" in clDesc and "time" in clDesc and "change" in clDesc):
+> +                    die("Changelist description read from {0} doesn't have required fields".format(clPickled))
+> +            except (IOError, TypeError) as e:
+> +                die("Can't read changelist description dict from {0}: {1}".format(clPickled, str(e)))
+> +
+> +            self.damagedChangelists[int(clDesc["change"])] = clDesc
+> +
+>      def updateOptionDict(self, d):
+>          option_keys = {}
+>          if self.keepRepoPath:
+>              option_keys['keepRepoPath'] = 1
+>
+> @@ -3413,11 +3431,14 @@ def searchParent(self, parent, branch, target):
+>              return None
+>
+>      def importChanges(self, changes, origin_revision=0):
+>          cnt = 1
+>          for change in changes:
+> -            description = p4_describe(change)
+> +            if change in self.damagedChangelists:
+> +                description = self.damagedChangelists[change]
+> +            else:
+> +                description = p4_describe(change)
+>              self.updateOptionDict(description)
+>
+>              if not self.silent:
+>                  sys.stdout.write("\rImporting revision %s (%s%%)" % (change, cnt * 100 / len(changes)))
+>                  sys.stdout.flush()
+> @@ -3704,10 +3725,12 @@ def run(self, args):
+>                      bad_changesfile = True
+>                      break
+>          if bad_changesfile:
+>              die("Option --changesfile is incompatible with revision specifiers")
+>
+> +        self.loadDamagedChangelists()
+> +
+>          newPaths = []
+>          for p in self.depotPaths:
+>              if p.find("@") != -1:
+>                  atIdx = p.index("@")
+>                  self.changeRange = p[atIdx:]
+> --
+> 2.19.2
+>
