@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC4B120248
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2A3720248
 	for <e@80x24.org>; Sun, 24 Mar 2019 21:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728956AbfCXVzv (ORCPT <rfc822;e@80x24.org>);
+        id S1728963AbfCXVzw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 17:55:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35059 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbfCXVzv (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 24 Mar 2019 17:55:51 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40162 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728839AbfCXVzu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 17:55:50 -0400
-Received: by mail-wm1-f68.google.com with SMTP id z24so3727421wmi.5
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 14:55:49 -0700 (PDT)
+Received: by mail-wr1-f68.google.com with SMTP id w1so7966859wrp.2
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 14:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=J6dWr6A6810kFLcrncLWbeqlzOLeTtogdcqCfQjl0kQ=;
-        b=Ak+ge2ixtnDpp7mKajo44mzMEylAbVHaxeP98knSpP2+TrhjrqIKyVIqt+4syQcEd5
-         3v06O1UZgiCtXMCWlLxRNbTs1AbQFdDsAkz8PKI2tFXvyn6KcPZEFL2/vadP83eK0Svr
-         eLxcTt4Xoxyu4GbABociET8bYPZZ9wzkey/TNaqlSCYqdU9XTyusNU64xG+cvtA2Ldjg
-         5m2e5kvQ1WaOkTRjpqSQzvmB0rGacsCPbTWwrLwpqAf/GvB905rfculkER2LlF0lRFC6
-         it8yzEoOEdzr1rrxMYzQK/VOa1ZJvBt6nB/kFyQMCMqVH6MPIi0ORj4f3r4M+LPCxSBU
-         RNRg==
+        bh=aosOI7X8jOegorDWKC5cBD8GjBzQO0+hNli2kaJQGcg=;
+        b=NgUM2pJEY8J0oAf6ku7pfh73X7al59/+MM5peR/hbvDdCxlLvj+8LFm5rdqQrSCMgr
+         diYTnfrx/jKG8D05w8OhKKrnnKjpUJjY11+AxIA1cf7k2M6l1As+lIdWV7MBmIbteHrd
+         zxQPo8WZvhp5HQlJ1OyURh8KMAD0NopA91i9iMK+1LcjDDxgRMg784gl2rOfJ1VkUN20
+         j32zh9E86wwBoz2JITVFavXez6RQHWgYTxS7bRdTZGlkB8AXR5iQH4GRrGSSC+9W12IQ
+         CdDX8K+gHZX8kGQcIuqm8nHXwz/Rl0NSQJxPM1iv6glk0fv++miRZuODtUd7aci4QW7i
+         fQEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=J6dWr6A6810kFLcrncLWbeqlzOLeTtogdcqCfQjl0kQ=;
-        b=jDEeCQhDOdTtUrTT+dd+A9oWwtHZB4QuJYIYG6VXV9LYHoveh7MyIO7YIDh6x7TPmB
-         pU0TNznj8WeKP2MKFhujjPZ4BKw1a+NHOF02l0SD+CBrVLQ4gZhvIggu2X29QnnQj7f6
-         /1c2afSszbrd44YGXh7pn8Cmse6OACEWDNxUshKMTOoz6tmucAsCDmrUobxBCMD8JKgm
-         DkvbiiWS31y1BmvXL6QNMqYXSo9Ud7z9nfKH9aIu81wK3KWaqh6/+HoOs2KVVp+ovG8B
-         /6x5B6yDcaK7KUvycAczSMcZj0OQX+hiRpA+OJdy+e/qdxbaVHhcjT+l5rUGlRn8Cmvi
-         Vmmg==
-X-Gm-Message-State: APjAAAVFmD3s7dvkv3F+qqTLDfPsSqTTGwaVAnDsxGRwe1d0o6oPHe/z
-        k5IXyWLAjIqr5CzfxnCh4rLryiX7
-X-Google-Smtp-Source: APXvYqwCE+tdNVqRmWmZcf8k7k08b2awLDa0MUBceu9QB6aRsXKsAU2h0A3nExHreT0Dm7iUcfXOqw==
-X-Received: by 2002:a1c:2407:: with SMTP id k7mr9337012wmk.137.1553464548404;
-        Sun, 24 Mar 2019 14:55:48 -0700 (PDT)
+        bh=aosOI7X8jOegorDWKC5cBD8GjBzQO0+hNli2kaJQGcg=;
+        b=DarBkBoRhH35hEMPX8TerUrTQW0UWR0PQYUNXD/XH7lxNuMP8DnxtJRy/fXMhZs4Na
+         4yOmOz26B6x37kSVe6dQSPF/w1Z6aSIvWtnvL2QanQBsMXiy/5HCE+I/G6eRGymDcprs
+         CKk2V0aLQTAwMrOzBDxhtcL2/sJ0kRdEVOmyAMm1pVoYDOsjw4YLZ7j23yyhCakqk/9q
+         Xujv1zK5nrEPsnr8OfGBzx6s6X+J9T/0/9aG8yBGjl3VsrufBwSWnyymtYK7lK575PCO
+         zqfb++riJ8kapz0/BpuQklfTEYhUnzhviBOvCWgic4t6fS+jw2PjpDhm7ynODFwOVqXI
+         5qLA==
+X-Gm-Message-State: APjAAAW28rpxuMXf2tCrTGd3sEoDj+Som5d0tDypSp8xuqHWKbJUgkGV
+        uc97nN0ghIdlgrAIog327ksiCuPa
+X-Google-Smtp-Source: APXvYqxf92w870WlXOa4XHH6muKMxwsRbLj6c3qcHmFWt/tS9SgvMZxkgQ0FP0IxZ2lSob5zjWf/pg==
+X-Received: by 2002:a5d:4987:: with SMTP id r7mr13022556wrq.280.1553464549428;
+        Sun, 24 Mar 2019 14:55:49 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c479e.dyn.telefonica.de. [77.12.71.158])
-        by smtp.gmail.com with ESMTPSA id o17sm15023530wrw.73.2019.03.24.14.55.47
+        by smtp.gmail.com with ESMTPSA id o17sm15023530wrw.73.2019.03.24.14.55.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Mar 2019 14:55:47 -0700 (PDT)
+        Sun, 24 Mar 2019 14:55:48 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 1/6] Documentation/git-diff-tree.txt: fix formatting
-Date:   Sun, 24 Mar 2019 22:55:29 +0100
-Message-Id: <20190324215534.9495-2-szeder.dev@gmail.com>
+Subject: [PATCH v2 2/6] Documentation/technical/api-config.txt: fix formatting
+Date:   Sun, 24 Mar 2019 22:55:30 +0100
+Message-Id: <20190324215534.9495-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
 In-Reply-To: <20190324215534.9495-1-szeder.dev@gmail.com>
 References: <20190324155219.2284-1-szeder.dev@gmail.com>
@@ -75,39 +75,35 @@ X-Mailing-List: git@vger.kernel.org
 Asciidoctor versions v1.5.7 or later print the following warning while
 building the documentation:
 
-      ASCIIDOC git-diff-tree.xml
-  asciidoctor: WARNING: diff-format.txt: line 2: unterminated listing block
+      ASCIIDOC technical/api-config.html
+  asciidoctor: WARNING: api-config.txt: line 232: unterminated listing block
 
-This highlights an issue (even with older Asciidoctor versions) where
-the "Raw output format" header is not rendered as a header, and the
-rest of the document is rendered in monospace.  This is not caused by
-'diff-format.txt' in itself, but rather by 'git-diff-tree.txt'
-including 'pretty-formats.txt' and 'diff-format.txt' on subsequent
-lines, while the former happens to end with monospace-formatted
-example commands.
+This highlight an issue (even with older Asciidoctor versions) where
+the length of the '----' lines surrounding a code example don't match,
+and the rest of the document is rendered in monospace.
 
-Fix this by inserting an empty line between the two include::
-directives.
+Fix this by making sure that the length of those lines match.
 
 The page rendered with AsciiDoc doesn't have this formatting issue.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Documentation/git-diff-tree.txt | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/technical/api-config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index 24f32e8c54..5c8a2a5e97 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -118,6 +118,7 @@ include::pretty-options.txt[]
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index fa39ac9d71..7d20716c32 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -229,7 +229,7 @@ A `config_set` can be used to construct an in-memory cache for
+ config-like files that the caller specifies (i.e., files like `.gitmodules`,
+ `~/.gitconfig` etc.). For example,
  
- 
- include::pretty-formats.txt[]
-+
- include::diff-format.txt[]
- 
- GIT
+----------------------------------------
++----------------------------------------
+ struct config_set gm_config;
+ git_configset_init(&gm_config);
+ int b;
 -- 
 2.21.0.539.g07239c3a71.dirty
 
