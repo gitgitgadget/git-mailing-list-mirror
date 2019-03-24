@@ -2,92 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_05,DEAR_SOMETHING,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4A8C20248
-	for <e@80x24.org>; Sun, 24 Mar 2019 07:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F045420248
+	for <e@80x24.org>; Sun, 24 Mar 2019 07:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728040AbfCXHrP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 03:47:15 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33025 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbfCXHrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 03:47:15 -0400
-Received: by mail-pg1-f193.google.com with SMTP id b12so4344913pgk.0
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 00:47:15 -0700 (PDT)
+        id S1727686AbfCXH6t (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 03:58:49 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:39222 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbfCXH6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 03:58:49 -0400
+Received: by mail-it1-f195.google.com with SMTP id 139so9588115ita.4
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 00:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=emktg-xyz.20150623.gappssmtp.com; s=20150623;
-        h=from:message-id:date:subject:to:mime-version
-         :content-transfer-encoding;
-        bh=aL1b6PZllhCjYCOOR2cND9daF4wguryp7o1UrOAVK2M=;
-        b=Zj9F7m91E9dWBXtgzb9rrCqrHpecZv05O1LNRvk0aO4GMI0w0OsiGLUDq3ip8tYIVQ
-         nVm5RJ+Ht+FozbDvbY4MMwdryQIHIQoWjsevPUwD9Zyb166gFRNt99TpzDF2fvKlAS/W
-         xAaen71WSaoOtzERrguoVGpWhyLYvI+s2oH3Hh/2zpgFA5fpB5SZERZLDrzqE242lLwi
-         Nxx8VJ7kk6z3V3vu7xf1eqbACz6sdKTb3QbmYvIRgVkHUKxny0WA8XhZsRSm/IgQPeek
-         PQDDJMrK9yJmGABzI/zCio0KZSWz2jqP2anoMYBYPsWdrtg78vhJuz7i478bWr9hPXwb
-         jyuQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V17Fw0py4xqS0JSBq8BuSiPVROigL1dS41OEF1cNvjU=;
+        b=glZw1K9Ft60s0oe/ACwXpmpXBUj/yNAvQ/Ktpfg2oBnnVjrjypGiHqarcAvNt8DVLC
+         zPTk70qVfg+7HvTnh+bOTawGtnshEP1SYhC1PlpuC1asIX7WCoTWYLit7svxYWyKxstM
+         ZApEUP7L2ZW35Jk1RuUIFGVvwtx0PvoUpZskvVhKX+S4xHn5RUIR4gi1d4j7iRU5Rsyb
+         AWCg3296AFTgPLRXZcHK/ZYXtcTHiQ+g/ThL/omCvW6GqKYwVFujdYLo4hCDeGAhjlK/
+         7PoRXXSkuSy1t4pd3xIwMPeZ2k3B6b8i+r46tJ4yAFBLQ/mUAoZpzJ8jjz9GDPVvRu9d
+         0l+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:message-id:date:subject:to:mime-version
-         :content-transfer-encoding;
-        bh=aL1b6PZllhCjYCOOR2cND9daF4wguryp7o1UrOAVK2M=;
-        b=KMIMy7kgP7aSYDptcuk/GOUJnFRmU+XVxNt06CDn19w+5qr3ckEHbZxEALsDwz1RxJ
-         /Q4GTA2gMubZvw1EyUiBm1p/jQ+HEcaKXgTxnP9Iy/rYh7fh92SajsFOWTATdM0Yxdjt
-         tFjBBgQw57UiBnib+okDrofQlIo6SQHhrLwD7eTrThY7aqOh/YaSUGMngX1AMtebcvjc
-         UKYnwsNszyhiVbK20YYrdHfxVs+/ElijcQ5EIZTOJtYFAX4iIruTeiSZM7K7uiv8gYxq
-         mzblt726PlIXSLy0GJLSp+SmSLCt09yAoGu5qRK5epgmzF02HREhhBNnx0zq95ChYKHy
-         +/0A==
-X-Gm-Message-State: APjAAAU1K526wqD7lw/2B9hwOguwUsRjtfMoZNEpJAF9zRRGblMMSZst
-        etZe3nlacDBehWad7S+IQFji1kSEmbk=
-X-Google-Smtp-Source: APXvYqwPWj/fNR7TVaqlOYtBi0nHve150T/ul1X0ioJUJymzOsroi4cwqaHbkFNdgh0Uqp/T8gP9tA==
-X-Received: by 2002:a63:1cd:: with SMTP id 196mr17483751pgb.58.1553413634619;
-        Sun, 24 Mar 2019 00:47:14 -0700 (PDT)
-Received: from [127.0.0.1] ([139.59.56.246])
-        by smtp.gmail.com with ESMTPSA id f87sm18642283pff.38.2019.03.24.00.47.13
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Mar 2019 00:47:14 -0700 (PDT)
-From:   Shane <tariq@emktg.xyz>
-X-Google-Original-From: Shane <saeed@aifsco.xyz>
-Message-ID: <0fd3b77461728c42d3643b72df896b5e@swift.generated>
-Date:   Sun, 24 Mar 2019 07:47:11 +0000
-Subject: Software, Website & SEO
-To:     git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V17Fw0py4xqS0JSBq8BuSiPVROigL1dS41OEF1cNvjU=;
+        b=UrEvX5/E37WvCO4H9pQF4sWUC4g3b0bds6p30xzafpRS+hzsK2jQALXCeWQeLa/PWG
+         zmlmQVUD5E9kT8qAlr+PlQfB+nL9fMLEHchp57O7zuKz47V8bG+hxSELD373YL5hA0Cg
+         ZHVS+T9atyQWd8cSCHHSwDEmffc0cSa6jgh5s+mHrQ1YG5Oe2Jxaxoqj0pLWB1/OP5kr
+         j/MAzCtEBQahS3ABJEvHaNsjbCu/BN5lQDWwReipo2JuT9jQ/HtOAt4Pf+sC9eRNf9hg
+         BmdG+i5Kcyf2BOQt6HH49Fvin9uAJRHniFjmDazrnTtKXrjtesuatNDJmuLbTwktYrOC
+         A9ow==
+X-Gm-Message-State: APjAAAU9UalFhba1FysrF44rWu1pQAHXYN60/1drXLoSR0sgTmgWNqCQ
+        jpCGw61K3RGQnJ5q+zPPLu3MvFYO4U6YuikJCXPNMA==
+X-Google-Smtp-Source: APXvYqwVQej6vP9Q8B1m37QMMamS3tp9TXPn6r6utr+d0ULOCL938NM0nG1s4wKrW+d1mL2H4QQ4gCDY3Ze8/HANOsI=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr4225059itf.123.1553414328679;
+ Sun, 24 Mar 2019 00:58:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <5352115.zUM9HkL6VV@beast>
+In-Reply-To: <5352115.zUM9HkL6VV@beast>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 24 Mar 2019 14:58:22 +0700
+Message-ID: <CACsJy8Dhio4C6p-ZtJ1ZOq-6UP9GiBg3sXsy4YDKamm5p-zqbw@mail.gmail.com>
+Subject: Re: Git excludes fails to avoid git submodule warning
+To:     Klaatu <klaatu@member.fsf.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Sir/Ma=E2=80=99am,
+On Sun, Mar 24, 2019 at 6:01 AM Klaatu <klaatu@member.fsf.org> wrote:
+>
+> Working with Git 2.21.0 on Linux:
+>
+> The git-add(1) man page says:
+>
+> "The optional configuration variable core.excludesFile indicates a path to a
+> file containing patterns of file names to exclude from git-add"
+>
+> But if I do this:
+>
+> $ echo "docs/themes/*/.git >> .gitexcludes
+> $ git config core.excludeFiles .gitexcludes
+> $ git add docs
+>  warning: adding embedded git repository: docs/themes/foo
+>
+> It seems to me that this goes against what the git-add(1) man page says.
+>
+> A workaround I found on stackoverflow is to add any file within the target
+> directory:
+>
+> $ git add docs/themes/foo/README
+>
+> And then add everything:
+>
+> $ git add docs
+>
+> In which case the contents of .gitexcludes is honoured. But that seems like a
+> hack.
 
-We are an Web Design & Development company, co=
-mprising young and dynamic professionals. We have executed a number of proj=
-ects in the below mentioned categories:
+That's because you're not supposed to add files inside another
+repository. The "git add docs/theme/foo/README" should have failed.
 
-Website Design & Development=
+This kind of sharing part of worktree between two repositories (the
+top dir and one in docs/themes/foo) has never been officiaily
+supported if I remember it correctly.
 
-PHP & MySQL website application development
-E-Commerce Applications/ W=
-ebsites
-Laravel & VueJS Applications
-Single Page Application(SPA) using=
- VueJS / AngularJS (Javascript)
-SEO & SMM
-Email Marketing
-Content Wri=
-ting
-
-We are extremely competitive and have worked for a lot of compani=
-es, globally, assisting them in developing their company=E2=80=99s & person=
-al websites & customized business applications.
-
-Shawn
-Online Marketi=
-ng Manager
-Mobile/Whatsapp: 0091 7081 7081 71
+> Am I experiencing the intended result of Git's exclude function? If so, I'll
+> happily submit a patch to the man page to clarify this behaviour. If not, I
+> guess I'm submitting a bug report here.
+>
+> Thanks for all the amazing work.
+-- 
+Duy
