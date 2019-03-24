@@ -2,209 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 258F720248
-	for <e@80x24.org>; Sun, 24 Mar 2019 20:56:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9584C20248
+	for <e@80x24.org>; Sun, 24 Mar 2019 21:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727137AbfCXU4b (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 16:56:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34922 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbfCXU4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 16:56:31 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w1so7881276wrp.2
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 13:56:29 -0700 (PDT)
+        id S1728910AbfCXVzu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 17:55:50 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54471 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbfCXVzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 17:55:50 -0400
+Received: by mail-wm1-f68.google.com with SMTP id f3so6960182wmj.4
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 14:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=8FenH2p1v/vfLZh4KVZteIDk4nqkeHkwZCTkNsYFjqk=;
-        b=eBrYZbmBvy1srfEeGazXa7nr6xSLI8+AtQVzsqNx7uvULj0mus5h66fVSv5/BjFfNG
-         bXWkQy3MjX9kciZs3r/1SUEqHlWJlxyWG78eXWyIlWffUqN5Wy+lKtNQ0Z6hNy+XzwaI
-         YOhKw1pQYk8Z/NrNWuY4z2IxOYOmrnp03OagZTV+gAl1ROiGJvRNH1JNWARlsiyCbqS2
-         DFBQLr/jx3uTt+/W6Mfv0gBOQ3pnDsI9YwokATs/mqaYRpH9lF+3pN0B2gNDULLzhKnY
-         LxlMMFnSJjEnRuktoD4aT8e3u3i2GawYgAruCplaVSD/Fx1Py7yRqqwwB1emLLo2wUmb
-         uykQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9Uf/H01W1lWOKpDvnapPCQkstii3bd/yopySZLMY9GY=;
+        b=L+TjoOE6KXtNSggkbhXM2HZr2kObPsiJY9deddFhdXCnbDrvlVaFVOYEbFrZ154ZKP
+         nL6FhxjZpkt0WgeX96tbCGcIRl/c4em8X/+X4HpGmSBqMTu0gOM3RgT3xud0YY6yeoOq
+         ptEOrVP1MfFMLC/WkE84v5i1UtDDiKdQvflJFgYBrGtDomecuj74uXWVP5TF+wa59UmZ
+         +tD70fZ9QvHPrqDWxYFLi661TwI2iR4GDhGfX8qtOCcSA6/Ua2Uq6J94mPjjFsx2ajjw
+         TA6ZS22ozg8gwCekhjJAR5VgoCvG/c6j29z9JQkEXkUOiUoss+t7cL60DcjoyJcYOZZu
+         zblQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=8FenH2p1v/vfLZh4KVZteIDk4nqkeHkwZCTkNsYFjqk=;
-        b=sVokw4+Px8nmAws84BS5vC5keA9zDrjIxksx7964b+HtEQMKEvjfJouSBZwtGB9Int
-         eGPZUTw/5rPJpVjZvxCDHfXeWlmJDNbjDcRvd7Uku4aIRlui2YzeM0TezWuS3S8jMLVQ
-         m4yxeEdRU/QKZKuEeOuQIBnr6EaELeFn0oc/vyixm889yJzVOtQsyACTaRYrT1ZVzMmI
-         OIr4XWxMlouwkIKi6QxC9M+qI44DyVBAhGbHGjjFRUBrAVC69qj93uV9e/x0FPHekEHK
-         5Q20VaqCDAlyUSZzTHkvDvXNWj8LvJWck3+IV6YTiEeNgeWe5+kRDaqsOLga7jUpIY5b
-         fNJA==
-X-Gm-Message-State: APjAAAX2xT+YheqlerpuHqo5HEXBRHS22ISZNV3h5gan43zypfHNxpSt
-        l/W5TO8jAq3HpSbhISNhYd4=
-X-Google-Smtp-Source: APXvYqxo5U66tWTSUM+zGavIlQEFhOvHyfz1emwU5iuUj10VRQvNQlKjFIt+N2qPtiivTcnfqdAOIA==
-X-Received: by 2002:adf:e547:: with SMTP id z7mr12806287wrm.295.1553460988875;
-        Sun, 24 Mar 2019 13:56:28 -0700 (PDT)
-Received: from szeder.dev (x4d0c479e.dyn.telefonica.de. [77.12.71.158])
-        by smtp.gmail.com with ESMTPSA id b9sm20364644wmc.9.2019.03.24.13.56.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Mar 2019 13:56:28 -0700 (PDT)
-Date:   Sun, 24 Mar 2019 21:56:24 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        kernel-usp@googlegroups.com, Alex Riesen <raa.lkml@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC][PATCH v4 1/7] clone: test for our behavior on odd
- objects/* content
-Message-ID: <20190324205624.GJ22459@szeder.dev>
-References: <20190226122829.19178-1-avarab@gmail.com>
- <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190322232237.13293-2-matheus.bernardino@usp.br>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9Uf/H01W1lWOKpDvnapPCQkstii3bd/yopySZLMY9GY=;
+        b=fjio4vZXd2rohu4+B0wCMm4wkN1AzZhtsDFWwgCOX7YfhmkJ0Kxj1RN0E6WeGCSPaI
+         finO2SX0C7UteeqUtzhTfNmmJ0do0pNbdpnN/W7WiXzen7BJWN2L4u6OLyrHzSgnuDEC
+         SLLLZe1e6Ci2wC0DnfO+PK75xmfzHEdH7vHvhNqGyHNgwWUvE5gmX7HlH1WuBi4fsg4M
+         64JyF7z/25LBQz5e9Vtw8SrNZkL5NtCvaZoVFgmX2CXQc7540l34Y5gjN7sTfr0Ph5Bf
+         ntnlpeK96lNpM6rxBviXTeJxVphNPf2v2fQ41IwIRiaHs4dZKEg9CH+HNLYfMc5a++PA
+         Rh/A==
+X-Gm-Message-State: APjAAAWdBrkNlyYwte3s0fI3u0As+jvICqceyLsX0KhCLkWV6geSO4x0
+        NOBYUKajezB3ENpex+dz7BGfRHRy
+X-Google-Smtp-Source: APXvYqzPHSYWQ6F9/TXITBQ+XS8ujRGcR3bcBtIhICOx0WvRXgRUjv4+sOV9NNx7JLLplzVlgzFU1w==
+X-Received: by 2002:a1c:1d97:: with SMTP id d145mr3283951wmd.136.1553464547294;
+        Sun, 24 Mar 2019 14:55:47 -0700 (PDT)
+Received: from localhost.localdomain (x4d0c479e.dyn.telefonica.de. [77.12.71.158])
+        by smtp.gmail.com with ESMTPSA id o17sm15023530wrw.73.2019.03.24.14.55.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 24 Mar 2019 14:55:46 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 0/6] Asciidoctor-related formatting and CI fixes
+Date:   Sun, 24 Mar 2019 22:55:28 +0100
+Message-Id: <20190324215534.9495-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
+In-Reply-To: <20190324155219.2284-1-szeder.dev@gmail.com>
+References: <20190324155219.2284-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190322232237.13293-2-matheus.bernardino@usp.br>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 22, 2019 at 08:22:31PM -0300, Matheus Tavares wrote:
-> From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> 
-> Add tests for what happens when we perform a local clone on a repo
-> containing odd files at .git/object directory, such as symlinks to other
-> dirs, or unknown files.
-> 
-> I'm bending over backwards here to avoid a SHA1 dependency. See [1]
+The first three patches fix formatting issues with Asciidoctor; they
+are the same patches that I sent earlier today, except some commit
+message updates (now they mention the Asciidoctor version which
+started to issue the warning, and I fixed that missing half-sentence
+in one of the commit messages).
 
-s/SHA1/SHA-1/
+The last three patches are a small cleanup and fixes to the
+documentation CI build jobs; notably patch 5 un-breaks the
+documentation build job on Travis CI in the era of Asciidoctor v2.0.0
+[1], and patch 5 fixes some forever-broken checks.
 
-> for an earlier and simpler version that hardcoded a SHA-1s.
+The formatting and CI fixes are not really related, but the check
+fixed in patch 6 would choke without the formatting fixes silencing
+warnings from Asciidoctor, that's why I send them in the same patch
+series.
 
-s/SHA-1s/SHA-1/ or s/a SHA-1s/SHA-1s/, depending on what you consider
-multiple occurrances of the same SHA-1.
-
-> This behavior has been the same for a *long* time, but hasn't been
-> tested for.
-> 
-> There's a good post-hoc argument to be made for copying over unknown
-> things, e.g. I'd like a git version that doesn't know about the
-> commit-graph to copy it under "clone --local" so a newer git version
-> can make use of it.
-> 
-> In follow-up commits we'll look at changing some of this behavior, but
-> for now let's just assert it as-is so we'll notice what we'll change
-> later.
-> 
-> 1. https://public-inbox.org/git/20190226002625.13022-5-avarab@gmail.com/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
+[1] https://public-inbox.org/git/20190324162131.GL4047@pobox.com/
 
 
-> +test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknown files at objects/' '
-> +	git init T &&
-> +	(
-> +		cd T &&
-> +		test_commit A &&
-> +		git gc &&
-> +		(
-> +			cd .git/objects &&
-> +			mv pack packs &&
-> +			ln -s packs pack
-> +		) &&
-> +		test_commit B &&
-> +		(
-> +			cd .git/objects &&
-> +			find ?? -type d >loose-dirs &&
-> +			last_loose=$(tail -n 1 loose-dirs) &&
-> +			rm -f loose-dirs &&
-> +			mv $last_loose a-loose-dir &&
-> +			ln -s a-loose-dir $last_loose &&
-> +			find . -type f | sort >../../../T.objects-files.raw &&
-> +			echo unknown_content> unknown_file
-> +		)
 
-Please drop these inner subshells.  They are unnecessary, because the
-outer subshell alone is sufficient to ensure that the test script
-returns to the original directory if one of the commands were to fail.
+SZEDER Gábor (6):
+  Documentation/git-diff-tree.txt: fix formatting
+  Documentation/technical/api-config.txt: fix formatting
+  Documentation/technical/protocol-v2.txt: fix formatting
+  ci: install Asciidoctor in 'ci/install-dependencies.sh'
+  ci: stick with Asciidoctor v1.5.8 for now
+  ci: fix AsciiDoc/Asciidoctor stderr check in the documentation build
+    job
 
-> +	) &&
-> +	git -C T fsck &&
-> +	git -C T rev-list --all --objects >T.objects
-> +'
-> +
-> +
-> +test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files at objects/' '
-> +	for option in --local --no-hardlinks --shared --dissociate
-> +	do
-> +		git clone $option T T$option || return 1 &&
-> +		git -C T$option fsck || return 1 &&
-> +		git -C T$option rev-list --all --objects >T$option.objects &&
-> +		test_cmp T.objects T$option.objects &&
-> +		(
-> +			cd T$option/.git/objects &&
-> +			find . -type f | sort >../../../T$option.objects-files.raw
-> +		)
+ Documentation/git-diff-tree.txt         |  1 +
+ Documentation/technical/api-config.txt  |  2 +-
+ Documentation/technical/protocol-v2.txt | 52 ++++++++++++-------------
+ ci/install-dependencies.sh              |  3 ++
+ ci/test-documentation.sh                | 15 ++++---
+ 5 files changed, 38 insertions(+), 35 deletions(-)
 
-Nit: this might be a bit easier on the eyes when written as
+-- 
+2.21.0.539.g07239c3a71.dirty
 
-  ( 
-        cd T$option/.git/objects &&
-        find . -type f
-  ) | sort >T$option.objects-files.raw
-
-because it would avoid that '../../../'.
-
-> +	done &&
-> +
-> +	for raw in $(ls T*.raw)
-> +	do
-> +		sed -e "s!/..\$!/X!; s!/../!/Y/!; s![0-9a-f]\{38,\}!Z!" \
-> +		    -e "/multi-pack-index/d" -e "/commit-graph/d" <$raw >$raw.de-sha || return 1
-> +	done &&
-> +
-> +	cat >expected-files <<-EOF &&
-> +	./Y/Z
-> +	./Y/Z
-> +	./a-loose-dir/Z
-> +	./Y/Z
-> +	./info/packs
-> +	./pack/pack-Z.idx
-> +	./pack/pack-Z.pack
-> +	./packs/pack-Z.idx
-> +	./packs/pack-Z.pack
-> +	./unknown_file
-> +	EOF
-> +
-> +	for option in --local --dissociate --no-hardlinks
-> +	do
-> +		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1
-> +	done &&
-> +
-> +	cat >expected-files <<-EOF &&
-> +	./info/alternates
-> +	EOF
-
-Perhaps
-
-  echo ./info/alternates >expected-files
-
-> +	test_cmp expected-files T--shared.objects-files.raw
-> +'
-> +
->  test_done
-> -- 
-> 2.20.1
-> 
