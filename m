@@ -7,209 +7,226 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A640520248
-	for <e@80x24.org>; Sun, 24 Mar 2019 01:07:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30FD620248
+	for <e@80x24.org>; Sun, 24 Mar 2019 01:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727941AbfCXBHa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Mar 2019 21:07:30 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:42197 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727628AbfCXBHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Mar 2019 21:07:30 -0400
-Received: by mail-vs1-f67.google.com with SMTP id f15so3439908vsk.9
-        for <git@vger.kernel.org>; Sat, 23 Mar 2019 18:07:29 -0700 (PDT)
+        id S1728235AbfCXBWX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Mar 2019 21:22:23 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36557 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727635AbfCXBWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Mar 2019 21:22:22 -0400
+Received: by mail-pf1-f193.google.com with SMTP id p10so3981424pff.3
+        for <git@vger.kernel.org>; Sat, 23 Mar 2019 18:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CorDdvYmNzcxQIjNth0oCjM+x82bpQFrhnTpCmee9CI=;
-        b=iOa8onQQ2pegKjmJI1+wNROQYCmEadGLbg5OrKSdhuBKBIKZtC3fyY+D4qV72mAo4/
-         pchOz7w/3eH5AaNQonMeMBN5I2JjkP4LJaWIn79WQsahEh77HN51OTwFVvrgiF9nSpmg
-         nnTq+OxO4F5oq3ITJtop8TYXA4zjQrZvRAvOPjqHVjjoURTgQavNBHKX4engOnrgcVnr
-         ls3RoORArCKlAzsthirrGrG3c4QJAJKdmUfpNHByWCfvj7lrRbb8c5HxEUb1Ccq5tEmf
-         07v4vuIwu4pcpom7KnBtL+5KPJ/FZVcqQHOMiacagB2ItvMsd1AtujXIOs3x7FG1CzG1
-         yuZw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SPe/0gmmkelPt2NPvDLUJeq+HETAR3FjaLYCyE4mpNE=;
+        b=b82uLVSlcOyVBHK73T2fKp7n5TKt7YRXGpUBaekUhNUHnb9ypoGrgZ0ahXqFpPAjHc
+         TwZyej9DH7QjpyEJZ7WPX1kncBW6okSpIhAyrkunwMwF9niTvzREs6wT7/W3kL7OLRyX
+         Fo4AYNF8590LqxXWxNjVbKFQCGjERrLxsHvgDolwy+rW2M+CAMUWYZ1ZffR12KhN4CQ1
+         L53+Tf2y7BFgJGQSQn2YccjYmUXM9SX6y0oSr3fkEr6lmK5GcTsohEEK5nR+5Q6/ZrL0
+         C0LOLj7ZNMWvMYTf6pes13Q9VCJFzxDskyFOM9aHE6aaTb8NdOYAA8WLBT9w7ofDa+Zv
+         A0Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CorDdvYmNzcxQIjNth0oCjM+x82bpQFrhnTpCmee9CI=;
-        b=rLkZV5/vIZg9s721pmrmqUYEXX6hfAzpdrj8QSfXdqo5x74MvrWbujhqFDs1P8aHiS
-         bzE0w8r9HsZLHAsLUTfD7V2BOlkd0K35SBa03lHHcjlTiEbKZ63sPQ876st8BECNEYS4
-         kc9tWMwYgHm3pnXpIlmYe7Lb7meo2o5GSqKNstbzP3jIwnb7sZ/EU5qBNsuMVuw8YWGa
-         DpV5dl2pyMuTmqF7NWHWZqYVTfM+vmiJeY1l2DVMPUxYamXAf0uYD9K/NhZPBM9DJXRs
-         kd5NNpv6l9xhgs4ZiTzz2uwXUAqlVt9omL1XlRmF9n0hcmF1+cIDQflor47Hy4zJ2h03
-         NP+A==
-X-Gm-Message-State: APjAAAWnuEszhM9RmM7vKjSeWG2v5T4hyP8p902S9scI2oaZkjaaRLLv
-        uDuwjyyiHb0zPqofKlDW788uXDFp1KMc7gdwkFI=
-X-Google-Smtp-Source: APXvYqw7Xs4fNCEVnt3bqxpkOTUvW08kd7A9Ta6WVq5r8LJJIJMngLXMx/Grn2mHTGo8sThuRyFhp2EKiPZw3danuCQ=
-X-Received: by 2002:a67:b145:: with SMTP id z5mr10810363vsl.53.1553389648856;
- Sat, 23 Mar 2019 18:07:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
- <20190322151157.9550-1-rohit.ashiwal265@gmail.com>
-In-Reply-To: <20190322151157.9550-1-rohit.ashiwal265@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 23 Mar 2019 18:07:17 -0700
-Message-ID: <CABPp-BEdgSHGTkUcg_UDRu50Ag+cCqigmvU4_JaRZRnDpgWcdA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SPe/0gmmkelPt2NPvDLUJeq+HETAR3FjaLYCyE4mpNE=;
+        b=FDE5rC+98IYeJwE3Sb3f0oZ45Or8Gmxo7/6R8NCnRmyyLCPWtJf0gcbUrp8MI8WyxE
+         IY49nXtkmis/vJ/8GoaM0XQWBO0hYReP5jA2euwJpn/W4ytwTTZYrC596w9AplSRm/eF
+         ssLKkv52dw02QCTD7ebZJjsaAFvk5Ax4vTk8hY56KuPmcRX93Gft8iwwEW0tYvAXJ/cg
+         LuQ9uFVyKMe1xSsNdK4s/r0khzcWGwO4v7lbRLu93ynjiFCE1zC678a+Vmjz5OcZUUT+
+         VrGfJp5qDBfBNurUJRRCnvSNFFTO0O6lH9v5D/J33X6uJuPrgyjq70epEqzisyRu3CPy
+         nE6g==
+X-Gm-Message-State: APjAAAXShjI50Vvw7uer2ZdaMwKxjAHwpvclHSRRFnrU8jQ2ALDF7SV2
+        xArqw4XekjiQUUC1PcCaCVOAPfaNvRo=
+X-Google-Smtp-Source: APXvYqxduxftmjTBlNciZ5S+k/3dIf08HeyFkoE9mXKSZzk84id0xxBKTcJamQtobKm1jclDbg+Bsw==
+X-Received: by 2002:a63:fd07:: with SMTP id d7mr16255812pgh.199.1553390541796;
+        Sat, 23 Mar 2019 18:22:21 -0700 (PDT)
+Received: from ar135.iitr.ernet.in ([103.37.201.80])
+        by smtp.gmail.com with ESMTPSA id g143sm8623885pfb.157.2019.03.23.18.22.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Mar 2019 18:22:21 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     christian.couder@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, artagnon@gmail.com,
+        git@vger.kernel.org, newren@gmail.com, rohit.ashiwal265@gmail.com,
+        s-beyer@gmx.net, t.gummerer@gmail.com, rafa.almas@gmail.com
 Subject: Re: [GSoC][RFC] Proposal: Improve consistency of sequencer commands
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        artagnon@gmail.com, Stephan Beyer <s-beyer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
+Date:   Sun, 24 Mar 2019 06:51:30 +0530
+Message-Id: <20190324012130.6762-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <CAP8UFD22PMjQBsAf1GYphmtmt8x+sO=q=c_4bHDsS8L31Y_3AA@mail.gmail.com>
+References: <CAP8UFD22PMjQBsAf1GYphmtmt8x+sO=q=c_4bHDsS8L31Y_3AA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit!
+Hi Christian
 
-On Fri, Mar 22, 2019 at 8:12 AM Rohit Ashiwal
-<rohit.ashiwal265@gmail.com> wrote:
->
-> Hey People
->
-> I am Rohit Ashiwal and here my first draft of the proposal for the project
-> titled: `Improve consistency of sequencer commands' this summer. I need your
-> feedback and more than that I need help to improve the timeline of this
-> proposal since it looks very weak. Basically, it lacks the "how" component
-> as I don't know much about the codebase in detail.
->
-> Thanks
-> Rohit
->
-> PS: Point one is missing in the timeline from the ideas page[0], can someone
->     explain what exactly it wants?
+On 2019-03-23 22:17 UTC Christian Couder <> wrote:
+> On Fri, Mar 22, 2019 at 4:12 PM Rohit Ashiwal
+> <rohit.ashiwal265@gmail.com> wrote:
+> >
+> > Hey People
+> >
+> > I am Rohit Ashiwal and here my first draft of the proposal for the project
+> > titled: `Improve consistency of sequencer commands' this summer. I need your
+> > feedback and more than that I need help to improve the timeline of this
+> > proposal since it looks very weak. Basically, it lacks the "how" component
+> > as I don't know much about the codebase in detail.
+> >
+> > Thanks
+> > Rohit
+> >
+> > PS: Point one is missing in the timeline from the ideas page[0], can someone
+> >     explain what exactly it wants?
+> 
+> You mean this point from the idea page:
+> 
+> "The suggestion to fix an interrupted rebase-i or cherry-pick due to a
+> commit that became empty via git reset HEAD (in builtin/commit.c)
+> instead of git rebase --skip or git cherry-pick --skip ranges from
+> annoying to confusing. (Especially since other interrupted am’s and
+> rebases both point to am/rebase –skip.). Note that git cherry-pick
+> --skip is not yet implemented, so that would have to be added first."
 
-I don't understand the question; could you restate it?
+Yes.
 
-> Points to work on:
-> ------------------
->     - Add `git cherry-pick --skip`
+> or something else?
+> 
+> By the way it is not very clear if the proposal uses markdown or
+> another related format and if it is also possible (and perhaps even
+> better visually) to see it somewhere else (maybe on GitHub). If that's
+> indeed possible, please provide a link. It is a good thing though to
+> still also send it attached to an email, so that it can be easily
+> reviewed and commented on by people who prefer email discussions.
 
-I'd reword this section as 'Consistently suggest --skip for operations
-that have such a concept'.[1]
+This was intentional. Here is the link of the proposal hosted at gist.github.com[1],
+those who prefer text only version here[2] is mailing list link.
 
-Adding a --skip flag to cherry-pick is useful, but was only meant as a
-step.  Let me explain in more detail and use another comparison point.
-Each of the git commands cherry-pick, merge, rebase take the flags
-"--continue" and "--abort"; but they didn't always do so and so
-continuing or aborting an operation often used special case-specific
-commands for each (e.g. git reset --hard (or later --merge) to abort a
-merge, git commit to continue it, etc.)  Those commands don't
-necessarily make sense to users, whereas '<operation> --continue' and
-'<operation> --abort' do make intuitive sense and is thus memorable.
-We want the same for --skip.
+> > List of Contributions at Git:
+> > -----------------------------
+> > Status: Merge in next revision
+> 
+> Maybe "Merged into the 'next' branch"
+> 
+> > git/git:
+> > [Micro](3): Use helper functions in test script.
+> 
+> Please give more information than that, for example you could point to
+> the commit in the next branch on GitHub and perhaps to the what's
+> cooking email from Junio where it can be seen that the patch has been
+> merged into next and what's its current status.
 
-Both am-based rebases and am itself will give advice to the user to
-use 'git rebase --skip' or 'git am --skip' when a patch isn't needed.
-That's good.  In contrast, interactive-based rebases and cherry-pick
-will suggest that the user run 'git reset' (with no arguments). The
-place that suggests that command should instead suggest either 'git
-rebase --skip' or 'git cherry-pick --skip', depending on which
-operation is in progress.  The first step for doing that, is making
-sure that cherry-pick actually has a '--skip' option.
+Current proposal has added links to those commits.
 
->     - Implement flags that am-based rebases support, but not interactive
->           or merge based, in interactive/merge based rebases
+> > Status: Merged
+> > git-for-windows/git:
+> > [#2077](4): [FIX] git-archive error, gzip -cn : command not found.
 
-The "merge-based" rebase backend was deleted in 2.21.0, with all its
-special flags reimplemented on the top of the interactive backend.  So
-we can omit the deleted backend from the descriptions (instead just
-talk about the am-based and interactive backends).
+This was released in v2.21.0 [3]
 
->     - [Bonus] Deprecate am-based rebases
->     - [Bonus] Make a flag to allow rebase to rewrite commit messages that
->           refer to older commits that were also rebased
+> > Status: Merged
+> > git-for-windows/build-extra:
+> > [#235](5): installer: Fix version of installer and installed file.
+> 
+> For Git for Windows contributions I think a link to the pull request
+> is enough. It could be nice to know though if the commits are part of
+> a released version.
 
-I'd reorder these two.  I suspect the second won't be too hard and
-will provide a new user-visible feature, while the former will
-hopefully not be visible to users; if the former has more than
-cosmetic differences visible to user, it might transform the problem
-into more of a social problem than a technical one or just make into
-something we can't do.
+> > The Project: `Improve consistency of sequencer commands'
+> > ========================================================
+> >
+> > Overview
+> > --------
+> > git-sequencer was introduced by Stephan Beyer <s-beyer@gmx.net> as his
+> > GSoC 2008 project[6]. It executed a sequence of git instructions to  <HEAD>
+> > or <branch> and the sequence was given by a <file> or through stdin. The
+> > git-sequencer wants to become the common backend for git-am, git-rebase
+> > and other git commands. The project was continued by Ramkumar <artagnon@gmail.com>
+> > in 2011[7], converting it to a builtin and extending its domain to git-cherry-pick.
+> 
+> Yeah, you can say that it was another GSoC project and maybe give his
+> full name (Ramkumar Ramachandra).
+> 
+> There have been more related work to extend usage of the sequencer
+> after these GSoC projects, at least from Dscho and maybe from Alban
+> Gruin and Elijah too. I would be nice if you could document that a
+> bit.
+> 
+> > As of now, there are still some inconsistencies among these commands, e.g.,
+> > there is no `--skip` flag in `git-cherry-pick` while one exists for `git-rebase`.
+> > This project aims to remove inconsistencies in how the command line options are
+> > handled.
+> 
+> 
+> > Points to work on:
+> > ------------------
+> >     - Add `git cherry-pick --skip`
+> >     - Implement flags that am-based rebases support, but not interactive
+> >           or merge based, in interactive/merge based rebases
+> 
+> Maybe the flags could be listed.
+> 
+> >     - [Bonus] Deprecate am-based rebases
+> >     - [Bonus] Make a flag to allow rebase to rewrite commit messages that
+> >           refer to older commits that were also rebased
+> 
+> This part of your proposal ("Points to work on") looks weak to me.
+> 
+> Please try to add more details about what you plan to do, how you
+> would describe the new flags in the documentation, which *.c *.h and
+> test files might be changed, etc.
 
-> Proposed Timeline
-> -----------------
->     + Community Bonding (May 6th - May 26th):
->         - Introduction to community
->         - Get familiar with the workflow
->         - Study and understand the workflow and implementation of the project in detail
->
->     + Phase 1  (May 27th - June 23rd):
->         - Start with implementing `git cherry-pick --skip`
->         - Write new tests for the just introduced flag(s)
->         - Analyse the requirements and differences of am-based and other rebases flags
+I'll soon add details to the proposal, currently digging deep into the mailing list.
 
-Writing or finding tests to trigger all the --skip codepaths might be
-the biggest part of this phase.  Implementing `git cherry-pick --skip`
-just involves making it run the code that `git reset` invokes.  The
-you change the error message to reference `<command> --skip` instead
-of `git reset`.  What you're calling phase 1 here isn't quite
-microproject sized, but it should be relatively quick and easy; I'd
-plan to spend much more of your time on phase 2.
+> > Proposed Timeline
+> > -----------------
+> >     + Community Bonding (May 6th - May 26th):
+> >         - Introduction to community
+> >         - Get familiar with the workflow
+> >         - Study and understand the workflow and implementation of the project in detail
+> >
+> >     + Phase 1  (May 27th - June 23rd):
+> >         - Start with implementing `git cherry-pick --skip`
+> >         - Write new tests for the just introduced flag(s)
+> >         - Analyse the requirements and differences of am-based and other rebases flags
+> >
+> >     + Phase 2  (June 24th - July 21st):
+> >         - Introduce flags of am-based rebases to other kinds.
+> >         - Add tests for the same.
+> >
+> >     + Phase 3  (July 22th - August 19th):
+> >         - Act on [Bonus] features
+> >         - Documentation
+> >         - Clean up tasks
+> >
+> >
+> > Relevant Work
+> > =============
+> > Dscho and I had a talk on how a non-am backend should implement `git rebase
+> > --whitespace=fix`, which he warned may become a large project (as it turns
+> > out it is a sub-task in one of the proposed ideas[0]), we were trying to
+> > integrate this on git-for-windows first.
+> > Keeping warning in mind, I discussed this project with Rafael and he suggested
+> > (with a little bit uncertainty in mind) that I should work on implementing
+> > a git-diff flag that generates a patch that when applied, will remove whitespace
+> > errors which I am currently working on.
+> 
+> You mean Rafael Ascensão? Please CC him if he is involved in this.
 
->     + Phase 2  (June 24th - July 21st):
->         - Introduce flags of am-based rebases to other kinds.
->         - Add tests for the same.
+Yes, I'll CC him.
 
-You should probably mention the individual cases from "INCOMPATIBLE
-FLAGS" of the git rebase manpage.  Also, some advice for order of
-tackling these: I think you should probably do --ignore-whitespace
-first; my guess is that one is the easiest.  Close up would be
---committer-date-is-author-date and --ignore-date.  Re-reading, I'm
-not sure -C even makes sense at all; it might be that the solution is
-just accepting the flag and ignoring it, or perhaps it remains the one
-flag the interactive backend won't support, or maybe there is
-something that makes sense to be done.  There'd need to be a little
-investigation for that one, but it might turn out simple too.  The
---whitespace={nowarn|warn|fix|error|error-all} flag will be the
-kicker.  I don't know how long that one will take, but I'm certain
-it's harder than the other flags and it might conceivably take up most
-the summer or even extend beyond.
+Thanks
+Rohit
 
->     + Phase 3  (July 22th - August 19th):
->         - Act on [Bonus] features
->         - Documentation
->         - Clean up tasks
-
-I'd prefer that Documentation updates were made as you went; you'll
-particularly need to look at Documentation/git-cherry-pick.txt and
-Documentation/rebase.txt, especially the "INCOMPATIBLE OPTIONS" and
-"BEHAVIORAL DIFFERENCES" sections of the latter.
-
-Also, as far as timing goes, the rewriting of commit messages seems
-relatively straightforward; you may want to consider doing it before
-the --whitespace flag (despite the fact that I originally suggested it
-as a bonus item).  Deprecating am-based rebases, on the other hand, is
-a bit of a wildcard.  It depends on Phase 2 being completed so it
-definitely makes sense to be last.  If phase 2 is complete, it's
-conceivable that deprecating am-based rebases only takes a little more
-work, but it might expand to use up a lot of time.
-
-> Relevant Work
-> =============
-> Dscho and I had a talk on how a non-am backend should implement `git rebase
-> --whitespace=fix`, which he warned may become a large project (as it turns
-> out it is a sub-task in one of the proposed ideas[0]), we were trying to
-> integrate this on git-for-windows first.
-> Keeping warning in mind, I discussed this project with Rafael and he suggested
-> (with a little bit uncertainty in mind) that I should work on implementing
-> a git-diff flag that generates a patch that when applied, will remove whitespace
-> errors which I am currently working on.
-
-It's awesome that you're looking in to this, but it may make more
-sense to knock out the easy parts of this project first.  That way the
-project gets some value out of your work for sure, you gain confidence
-and familiarity with the codebase, and then you can tackle the more
-difficult items.  Of course, if you're just exploring to learn what's
-possible in order to write the proposal, that's fine, I just think
-once you start on this project, it'd make more sense to do the easier
-ones first.
-
-
-Hope that helps,
-Elijah
+[1]: https://gist.github.com/r1walz/5588d11065d5231ee451c0136400610e
+[2]: https://public-inbox.org/git/20190322151157.9550-1-rohit.ashiwal265@gmail.com/
+[3]: https://github.com/git-for-windows/git/releases/tag/v2.21.0.windows.1
