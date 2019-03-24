@@ -2,110 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD5F20248
-	for <e@80x24.org>; Sun, 24 Mar 2019 13:15:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5925520248
+	for <e@80x24.org>; Sun, 24 Mar 2019 13:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727111AbfCXNPf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 09:15:35 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34603 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbfCXNPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 09:15:35 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p10so7152577wrq.1
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 06:15:33 -0700 (PDT)
+        id S1726963AbfCXNS7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 09:18:59 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38233 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbfCXNS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 09:18:58 -0400
+Received: by mail-pg1-f196.google.com with SMTP id j26so2582092pgl.5
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 06:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SDMbvQEUOrfUW5Y4+EW1XcH2uVnsXqIObnnKHlhGQ8A=;
-        b=ehswytX/46TFHAZsmQeXHYIH282CPLaPqCsQVRvOgMU/8ebnB9kfNnohOa29GN6qT/
-         AH13bo7YTGk2kcMXnjKk+whWh8Udjmg8RfpcR3mdw8m4JxsTQND8bSWs4asmJTmjimig
-         BVgdgr0lzZ8VEt/k4RiQXktGJEqQlGh7LLfdHg0r5siLYE2YO0fwD0O+tpALRhFqGLRP
-         vAtoocoCqxb39fh6ze94uFI/A1jWT9gklsJx46ly/17teqI6g94OwsltJdkBIDh4/HKB
-         0ldQA+b5sKGdGCnushq+ZIKQPRDHjMInfp6m7MNwELeSWgNudsMcXQcGF87y6/9vAGTi
-         nq2w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DwmEEN574nan98fVlGfgoLop/HYgHEouRShzYaBPQsM=;
+        b=szzmCApmuzGnrKPw+8qp1TF2EtbI2+Ih/kZVoDaJYQ4PHrYfKh3Sg/Xq6aGrhAfJkb
+         3KQWASHwlS5Fl7nlOk6E8eFxwx1YL+3Zrhw5QvjHR2SGECltmY1Ifpqf/fRP1ANBYnYy
+         GBzVKxaI+HhmEO9+vPlP+3UV2kgHALjvvvOJJDIQsoUELpCqihz8Wn9UqjbSwoO830aI
+         8xPueoRry4iz0qp+5EYi+FOF0zaA3rIA/b0OflUCXjFtiIJxd3b36ASC1aQMo0bxNowt
+         +2n6PsyZwfHSrI+QYrHBbZpgaeUrC1oR0LlGSa1TzaC9jcLWQIMCCsRpD9RHvyQE3fkv
+         hjiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SDMbvQEUOrfUW5Y4+EW1XcH2uVnsXqIObnnKHlhGQ8A=;
-        b=WyHqZS1GqEEKm7h57FURsa0RTZinB/nbKk3jJE84ECxZdxg+mPp+J4gqrKVHn/j2D3
-         ZOZU+TYjY8j0fYsNCE87UhpCe+XiQ0cj9Xb39IV5XAmIp5ztYnLO+M+9vTHdVaupXHBl
-         4d1QoqSt0XHuvC4NTBFZ0YToVLDpdnOscX/H/qD79cdk1yDkd9ZOiA0E62O8BF5BH1vb
-         WrdrDlpqMJdd/Kpzzqa6QERX68auJHJgVsWpD01Ft8uG/cTDu7C3ZRUyHiTej/vytIEw
-         aFWxZKkUd+i4qteLd+9wgib1JumW7I4ji6yxV4L6sl6zkw1/tVMwftwrBI5VxD8q6Fvo
-         TYKA==
-X-Gm-Message-State: APjAAAXuFjHANpVEEPu+dDk3QoqKnpSZcdqiKudn8mqv+LvIIoR34dPl
-        qt09OW9nWt1nhvxlevWdGYg=
-X-Google-Smtp-Source: APXvYqyhMHwz34+cMfN/+mvuJPZpraBS2ETN2iG2ga7czvHQfa9sQ1it729mTt5nF39nrSWM89IAaw==
-X-Received: by 2002:adf:ebc3:: with SMTP id v3mr12397140wrn.35.1553433332954;
-        Sun, 24 Mar 2019 06:15:32 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id f1sm1148779wrt.87.2019.03.24.06.15.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Mar 2019 06:15:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] rebase: learn --keep-base
-References: <cover.1553354374.git.liu.denton@gmail.com>
-Date:   Sun, 24 Mar 2019 22:15:31 +0900
-In-Reply-To: <cover.1553354374.git.liu.denton@gmail.com> (Denton Liu's message
-        of "Sat, 23 Mar 2019 08:25:22 -0700")
-Message-ID: <xmqqy354o1l8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DwmEEN574nan98fVlGfgoLop/HYgHEouRShzYaBPQsM=;
+        b=lLj+5pCb3gn22RYVeV2sNdysEloEBGN0urhxjTxSGIaAJLfKE+BsuDHv8suZTcvjPY
+         FVpk2GpxX8xU8LwgXIOnBBI+7aLRqP1d9rPGXRFARYggIocwJCd1+Y2k6L+gHIR2TK4C
+         MeDZ+QjrrKDk13U5rZspP1lOF7FRqDxmV75mup3FtG06OldaZlF1uThRW1vTD8XtfEDU
+         7aGRJOMZqY1K/GTy3zkE2YyyUrW2EJV+aYPmNor7ZQx/tNSPeOVXQ0rJxW21ePRiPkak
+         xfHPg3XV7Ufj8+/coBNwmvAyyoKwqQJeWGqPmMk/SDvf/xEzrRugeD1CZAsb1tpIm1OU
+         vFZw==
+X-Gm-Message-State: APjAAAXDoK1weTDtH5MIJqYZDX9Aoflj8D9/2ErEjabNqghnF4404kKD
+        +LD+R1F0wTtb1Qhhk0lnjsY=
+X-Google-Smtp-Source: APXvYqz6giTmUrR+FF4v9jo420cvClwos336M0MVm7BACFH5QZNr3XpTUDti1VyzvCn9G/vlDtelsg==
+X-Received: by 2002:a17:902:9a95:: with SMTP id w21mr12868415plp.74.1553433538245;
+        Sun, 24 Mar 2019 06:18:58 -0700 (PDT)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id l80sm1352717pfb.60.2019.03.24.06.18.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Mar 2019 06:18:57 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 20:18:52 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jason.karns@gmail.com,
+        me@ttaylorr.com
+Subject: [PATCH v2] config: correct '**' matching in includeIf patterns
+Date:   Sun, 24 Mar 2019 20:17:55 +0700
+Message-Id: <20190324131755.26821-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
+In-Reply-To: <20190323034535.23364-1-pclouds@gmail.com>
+References: <20190323034535.23364-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+The current wildmatch() call for includeIf's gitdir pattern does not
+pass the WM_PATHNAME flag. Without this flag, '*' is treated _almost_
+the same as '**' (because '*' also matches slashes) with one exception:
 
-> This series teaches rebase the --keep-base option.
->
-> 'git rebase --keep-base <upstream>' is equivalent to
-> 'git rebase --onto <upstream>... <upstream>' or
-> 'git rebase --onto $(git merge-base <upstream> HEAD) <upstream>' .
->
-> This seems to be a common case that people (including myself!) run
-> into; I was able to find these StackOverflow posts about this use
-> case:
+'/**/' can match a single slash. The pattern 'foo/**/bar' matches
+'foo/bar'.
 
-Since this is 0/3 I won't complain too loudly, but read the above
-again while pretending that you didn't know what your initial
-motivating example was.  The last three lines does not explain
-anything useful to such a reader, and the reader needs to decipher
-the two sample commands to guess what you wanted to achieve.
+But '/*/', which is essentially what wildmatch engine sees without
+WM_PATHNAME, has to match two slashes (and '*' matches nothing). Which
+means 'foo/*/bar' cannot match 'foo/bar'. It can only match 'foo//bar'.
 
-Before "teaches rebase the --keep-base option", you must tell what
-you wanted to do with that new feature to attract readers---convince
-them your new contribution is worth their time to read over.
+The result of this is the current wildmatch() call works most of the
+time until the user depends on '/**/' matching no path component. And
+also '*' matches slashes while it should not, but people probably
+haven't noticed this yet. The fix is straightforward.
 
-If I understand correctly, what "--onto $(git merge-base @{u} HEAD) @{u}"
-lets you express is:
+Reported-by: Jason Karns <jason.karns@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ v2 adds a test. My laziness can't get past Junio.
 
-	no matter how much progress the upstream has made while I
-	was away from the keyboard, I want to rebase the current
-	topic on top of the same commit from the upstream, on which
-	I based the current iteration of the topic.
+ config.c                  |  2 +-
+ t/t1305-config-include.sh | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-I suspect that such a rebase will become no-op without "-i".  Am I
-mistaken?  I am not sure if "--keep-base" is useful without "-i".
-
-But of course, it would be useful with "-i", i.e. when you want to
-further polish the topic.  You need to give <upstream> to the command
-to let it know where their work stops and your work begins,
-i.e. letting the command figure out what commits to replay.  But in
-such a workflow, you do not want <upstream> to affect on top of what
-commit the replayed history is built.  And "keep base" would be a
-very direct way to achieve that.
-
-
+diff --git a/config.c b/config.c
+index 0f0cdd8c0f..c2846df3f1 100644
+--- a/config.c
++++ b/config.c
+@@ -242,7 +242,7 @@ static int include_by_gitdir(const struct config_options *opts,
+ 	}
+ 
+ 	ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
+-			 icase ? WM_CASEFOLD : 0);
++			 WM_PATHNAME | (icase ? WM_CASEFOLD : 0));
+ 
+ 	if (!ret && !already_tried_absolute) {
+ 		/*
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index 635918505d..4d6e70c11d 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -229,6 +229,19 @@ test_expect_success 'conditional include, early config reading' '
+ 	)
+ '
+ 
++test_expect_success 'conditional include with /**/' '
++	mkdir foo/bar &&
++	git init foo/bar/repo &&
++	(
++		cd foo/bar/repo &&
++		echo "[includeIf \"gitdir:**/foo/**/bar/**\"]path=bar7" >>.git/config &&
++		echo "[test]seven=7" >.git/bar7 &&
++		echo 7 >expect &&
++		git config test.seven >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success SYMLINKS 'conditional include, set up symlinked $HOME' '
+ 	mkdir real-home &&
+ 	ln -s real-home home &&
+-- 
+2.21.0.479.g47ac719cd3
 
