@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D60220248
-	for <e@80x24.org>; Sun, 24 Mar 2019 08:22:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 062F420248
+	for <e@80x24.org>; Sun, 24 Mar 2019 08:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728592AbfCXIW0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 04:22:26 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42112 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728582AbfCXIWZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 04:22:25 -0400
-Received: by mail-pg1-f194.google.com with SMTP id p6so4343809pgh.9
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:22:25 -0700 (PDT)
+        id S1728598AbfCXIWb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 04:22:31 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33299 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728582AbfCXIWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 04:22:30 -0400
+Received: by mail-pg1-f195.google.com with SMTP id b12so4373772pgk.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kQKJyX6pIH0h0o6032BfFprRW4OqddV5C8R6Ngys9K8=;
-        b=LskJUeY3xY4H4j1PazxvSH0ex6Q4oRwab/4EpYykF6ycsdlNRNA8on8Iaj2MGjRkoG
-         fSQ85rc5TyYpdiBT7NPX9+pjSeSyTngrTmc+RvyQsuRC3i0Hgxu8NgyPr/7kpDlzNewu
-         ASi8b1gNT3jEPQapNnjnt4+mV/eCPE7yxbTLf/FHqfZk4aLYaHUyAEiATnKocaxmgewY
-         hlsg8LU/mrivLWvlRIQ5l9pR+Ten2sUjjFxzgKL478hljfqaxe49ZhkoOsGefM8JYTeQ
-         hcYyXVfJt24fNqq5oShbEyHGqvAIbRdmBF8U4ExV8tM2JPNonrRbaXC5fIohRR7xbHvS
-         UUNg==
+        bh=E5OGSNhAK2KrRTTWxJ9pmfnCb1piWwcRC0MVDFL4CAI=;
+        b=P98hGqwEW8RupKLhppWOqOmI2tRTss7HzsSOaBbxgMCDFy1drDhDeB8gOLQo4p6K9W
+         /bjtt5LZ2kI1eQ89jBWr0NmPxJPSc1Q/3BovbYtqvmpfgbONj6yKUesz8nTULZ+R02EV
+         6gBUlOrBsBAKBnOeyytEfhr55VjOnlPEzDOjEEcnepQda7UfG56YbcLWyomfMJmESHO6
+         lxIlz9foX/fMOQUt6LMq8KuOCx1XGc978RSSa9SVu6Dd3DbTKrqt5rO0/7UcVfHqg/ez
+         uCegCYq0HQUo5mPDjB1EMstJ98YUkg7nI4VhnLjioBX7/KOW58bYWyXwxrYW/ED548Lb
+         W+/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kQKJyX6pIH0h0o6032BfFprRW4OqddV5C8R6Ngys9K8=;
-        b=ps+WUjTzl8nd3CTl7c1abCP7An3JAh19AeCrGD3pGnlWbREv3UWrOzMpT2swPgrDof
-         8d4o6CqbOZBeBSYxoBt6YhHlxk0TKc+3d/+KwLnWcAy9nWWKraaTKpGim5H9U342tzJd
-         KTELlt8CHcufYp+9nuVenxPvrFrWVoHENSowLM7Ru/x7YuZsLwkE3LyoajVbJaJbjJYV
-         BZly7Qa8gGCCsNeK4pTGR0cqXRERiqAPfekOMTGAvLpmhJTLEAMzNuHgTDQ1LLVw0PFE
-         bPfEMv3NMQBOfRVMBdvwiSjJscRc8YZ3gF6tr1ScgvbIMyj6GPkCDAgfqVoHRD28eJpx
-         +JRQ==
-X-Gm-Message-State: APjAAAXzgRfj8oA9+F7kpt1ExRE0i8NPCWSmdzGCc3rLSTKEEG5hdSSA
-        lkwQsUHM0QxnAPL15tzSZSQ=
-X-Google-Smtp-Source: APXvYqwBYiJc9Q/+8bMCNyBSpuaf3/pcXZEjBghztlSejrAms4rYn+lpITEXamxCf9VOvASDTiaXGA==
-X-Received: by 2002:a62:1197:: with SMTP id 23mr17996321pfr.210.1553415745243;
-        Sun, 24 Mar 2019 01:22:25 -0700 (PDT)
+        bh=E5OGSNhAK2KrRTTWxJ9pmfnCb1piWwcRC0MVDFL4CAI=;
+        b=r9qGhXu5t5javOqypJDx1w0ykiwDFVwDInir4cxmoTS/ilNUq/6q7680H8nIGnLYOT
+         sajj64Kk6pUYFLtbQYR3p3lSQeAj62EivINQpGH6k9nglDKZb/s9i1c/KGopqSwocIdu
+         IQNaRs4anE/8T65xUbD3xvVgUJK962Mogyq39XatPF1ipch4e2GIXte1u/J+1+DDH6pz
+         Lhnot6HQnPMaDZNogKsg8XZbE8fiVycNbNpUEJdLUJOWVNi9N77uWH7gNdu60ANW/iFP
+         UUXC3bHiSGwCBDaLKPDkhaoOgla2UWlKsi8ckNU8arZptOA0Hgia8n0ABMrjgDYn9tcS
+         JKsA==
+X-Gm-Message-State: APjAAAVJGReD3HVbrWHpuWTOMU8rBGd6uc9mz5xw9+FXhJnGfQL9In0u
+        QWYnn16OQSdTDpWOIfLqBNaOBP/+
+X-Google-Smtp-Source: APXvYqyYnD15lRksi0oz2HOTyJBPnaqHn+KVfWBkkMYBN7Lch4+UPeBx6qo867ZT1zyqLobiSJIAGg==
+X-Received: by 2002:a63:544f:: with SMTP id e15mr17838053pgm.344.1553415750267;
+        Sun, 24 Mar 2019 01:22:30 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id i13sm14785369pgq.17.2019.03.24.01.22.22
+        by smtp.gmail.com with ESMTPSA id h65sm15573313pgc.93.2019.03.24.01.22.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Mar 2019 01:22:24 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:22:20 +0700
+        Sun, 24 Mar 2019 01:22:29 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:22:25 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 14/20] diff-parseopt: convert --inter-hunk-context
-Date:   Sun, 24 Mar 2019 15:20:08 +0700
-Message-Id: <20190324082014.2041-15-pclouds@gmail.com>
+Subject: [PATCH v2 15/20] diff-parseopt: convert --[no-]color-moved
+Date:   Sun, 24 Mar 2019 15:20:09 +0700
+Message-Id: <20190324082014.2041-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190324082014.2041-1-pclouds@gmail.com>
 References: <20190320114703.18659-1-pclouds@gmail.com>
@@ -70,108 +70,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Mark one more string for translation while at there
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c          | 50 +++----------------------------------------------
- parse-options.h |  3 ++-
- 2 files changed, 5 insertions(+), 48 deletions(-)
+ diff.c | 38 +++++++++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 6029f8de2d..8b65b03c0d 100644
+index 8b65b03c0d..de6c09e95a 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4573,50 +4573,6 @@ void diff_setup_done(struct diff_options *options)
- 	FREE_AND_NULL(options->parseopts);
+@@ -4841,6 +4841,27 @@ static int diff_opt_char(const struct option *opt,
+ 	return 0;
  }
  
--static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
--{
--	char c, *eq;
--	int len;
--
--	if (*arg != '-')
--		return 0;
--	c = *++arg;
--	if (!c)
--		return 0;
--	if (c == arg_short) {
--		c = *++arg;
--		if (!c)
--			return 1;
--		if (val && isdigit(c)) {
--			char *end;
--			int n = strtoul(arg, &end, 10);
--			if (*end)
--				return 0;
--			*val = n;
--			return 1;
--		}
--		return 0;
--	}
--	if (c != '-')
--		return 0;
--	arg++;
--	eq = strchrnul(arg, '=');
--	len = eq - arg;
--	if (!len || strncmp(arg, arg_long, len))
--		return 0;
--	if (*eq) {
--		int n;
--		char *end;
--		if (!isdigit(*++eq))
--			return 0;
--		n = strtoul(eq, &end, 10);
--		if (*end)
--			return 0;
--		*val = n;
--	}
--	return 1;
--}
--
- int parse_long_opt(const char *opt, const char **argv,
- 		   const char **optarg)
++static int diff_opt_color_moved(const struct option *opt,
++				const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	if (unset) {
++		options->color_moved = COLOR_MOVED_NO;
++	} else if (!arg) {
++		if (diff_color_moved_default)
++			options->color_moved = diff_color_moved_default;
++		if (options->color_moved == COLOR_MOVED_NO)
++			options->color_moved = COLOR_MOVED_DEFAULT;
++	} else {
++		int cm = parse_color_moved(arg);
++		if (cm < 0)
++			return error(_("bad --color-moved argument: %s"), arg);
++		options->color_moved = cm;
++	}
++	return 0;
++}
++
+ static int diff_opt_color_words(const struct option *opt,
+ 				const char *arg, int unset)
  {
-@@ -5291,6 +5247,9 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
- 			       N_("do not show any source or destination prefix"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
-+		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
-+			      N_("show context between diff hunks up to the specified number of lines"),
-+			      PARSE_OPT_NONEG),
- 		OPT_CALLBACK_F(0, "output-indicator-new",
- 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
- 			       N_("<char>"),
-@@ -5483,9 +5442,6 @@ int diff_opt_parse(struct diff_options *options,
- 	}
+@@ -5339,6 +5360,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_CALLBACK_F(0, "color-words", options, N_("<regex>"),
+ 			       N_("equivalent to --word-diff=color --word-diff-regex=<regex>"),
+ 			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG, diff_opt_color_words),
++		OPT_CALLBACK_F(0, "color-moved", options, N_("<mode>"),
++			       N_("move lines of code are colored differently"),
++			       PARSE_OPT_OPTARG, diff_opt_color_moved),
  
- 	/* misc options */
--	else if (opt_arg(arg, '\0', "inter-hunk-context",
--			 &options->interhunkcontext))
--		;
- 	else
- 		return 0;
- 	return 1;
-diff --git a/parse-options.h b/parse-options.h
-index c95cbe26f0..cca64d04cb 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -137,6 +137,7 @@ struct option {
- #define OPT_CALLBACK_F(s, l, v, a, h, f, cb)			\
- 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), (cb) }
- #define OPT_STRING_F(s, l, v, a, h, f)   { OPTION_STRING,  (s), (l), (v), (a), (h), (f) }
-+#define OPT_INTEGER_F(s, l, v, h, f)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h), (f) }
+ 		OPT_GROUP(N_("Diff other options")),
+ 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
+@@ -5422,19 +5446,7 @@ int diff_opt_parse(struct diff_options *options,
+ 		return ac;
  
- #define OPT_END()                   { OPTION_END }
- #define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, \
-@@ -155,7 +156,7 @@ struct option {
- 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
- #define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (i) }
--#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h) }
-+#define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
- #define OPT_MAGNITUDE(s, l, v, h)   { OPTION_MAGNITUDE, (s), (l), (v), \
- 				      N_("n"), (h), PARSE_OPT_NONEG }
- #define OPT_STRING(s, l, v, a, h)   OPT_STRING_F(s, l, v, a, h, 0)
+ 	/* flags options */
+-	if (!strcmp(arg, "--color-moved")) {
+-		if (diff_color_moved_default)
+-			options->color_moved = diff_color_moved_default;
+-		if (options->color_moved == COLOR_MOVED_NO)
+-			options->color_moved = COLOR_MOVED_DEFAULT;
+-	} else if (!strcmp(arg, "--no-color-moved"))
+-		options->color_moved = COLOR_MOVED_NO;
+-	else if (skip_prefix(arg, "--color-moved=", &arg)) {
+-		int cm = parse_color_moved(arg);
+-		if (cm < 0)
+-			return error("bad --color-moved argument: %s", arg);
+-		options->color_moved = cm;
+-	} else if (skip_prefix(arg, "--color-moved-ws=", &arg)) {
++	if (skip_prefix(arg, "--color-moved-ws=", &arg)) {
+ 		unsigned cm = parse_color_moved_ws(arg);
+ 		if (cm & COLOR_MOVED_WS_ERROR)
+ 			return -1;
 -- 
 2.21.0.548.gd3c7d92dc2
 
