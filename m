@@ -2,132 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12A2A20248
-	for <e@80x24.org>; Sun, 24 Mar 2019 10:02:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A97D20248
+	for <e@80x24.org>; Sun, 24 Mar 2019 10:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbfCXKCf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 06:02:35 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60729 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726317AbfCXKCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 06:02:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553421748;
-        bh=I9cqYnc2XNXkfBJP3WbMQZ59ncTh3FXZyBSxjXrMKmc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=W3hVvUeSd7l+VnKbScNDr6PFjY2rCzzI8v1WDgKaMx/dEP8h2QuIdFgiTGyoZbhag
-         PTYy2dKp3fDlD8TiPxBJZTpR6LZTZH/9z04BBJ/RokRn2e8CzX6aFHnm+bEZDyz5cr
-         pvqcWNnc7O1HKYW+j/xvlaPja58EZxGkGtichAeM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.14]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZD0K-1hQdJ22Ifc-00KwlV; Sun, 24
- Mar 2019 11:02:28 +0100
-Date:   Sun, 24 Mar 2019 11:02:27 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Taylor Blau <me@ttaylorr.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] check-docs: fix for setups where executables have
- an extension
-In-Reply-To: <20190322184347.GC12155@Taylors-MacBook-Pro.local>
-Message-ID: <nycvar.QRO.7.76.6.1903241055230.45@tvgsbejvaqbjf.bet>
-References: <pull.162.git.gitgitgadget@gmail.com> <f06126c3a11119bf6e2a830bbac312f65582387f.1552478212.git.gitgitgadget@gmail.com> <20190322184347.GC12155@Taylors-MacBook-Pro.local>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727686AbfCXKE5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 06:04:57 -0400
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:45785 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727211AbfCXKE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 06:04:56 -0400
+Received: by mail-ot1-f41.google.com with SMTP id e5so5527154otk.12
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 03:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p0wcFa5KYZegZCXZ7aAQubb08xBi3I3xkGB6Bcwm3Qg=;
+        b=c2ujBz6Ljl7i6wDxxhHN4AgRgvRtYzwFmbznAqxpRvNyF0/tOSLEKrGOcwBLwXnWrr
+         GbaiYGIC7Uia8PG2itt9/H1MTBxWUyw86AY7FyomSxQuGuO8Qj9+PYh9DcnAbtu/8wkr
+         h+6qjtmLugLbZTUOfy0mZUyhg76DfAxsb53fYoRy9yXM2G5Kqa91sjIufDYz5RbIZU9y
+         K4TmYb8VWVrL01RYmogUHmAk1LYeWI1eYa1r5Tqg0Wyr2lxr8YxyrwUs5wmpG/fzbwF4
+         Y0V17F0+6Ql+AAnVg1d1Y5Tacor/iIWP5e0Pp/gD+kI2p0hbQm7apBVuiFlsg0PBLZnK
+         zeRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p0wcFa5KYZegZCXZ7aAQubb08xBi3I3xkGB6Bcwm3Qg=;
+        b=gXvFSWjfOtjPoEt1XYRMvHALY2/M8bc/L2T8V6rUpOpEaLIcbLeoDoZGKa6U0Yookf
+         P8OQgj3UhNpuw++gEluzulqiECgGeZM6Byi6Ai5AsB2MXhflqIY5+p8FPXb6kbGsNEoC
+         nVirwYis9qDoDCqAzf1FTZ5itTx9ONXxxiQW+g0uW5pbqWMgkkUcdmpJ99gsvaeuDnNg
+         7TAV1r0enb8TKuB5VbAmPmoiJki5RHdFHja6GI4V8bEHKAD566wzRlCPymMJNu95LM+y
+         sK1IdHVNukO4cFPMJGlfOT4eMW4Fo5zkzBc3ZQf/U3tVhJc+PoZ82s0mYnV1z7OBAKGg
+         byPw==
+X-Gm-Message-State: APjAAAVMDtVkuE3IEeeEuLar+JVbV34NYbGm/UKYhgXujJ8PpHyvYcjj
+        PHi2M9p2+4Nifxd1utvkbmLMkkUZ4fW7cy4jVsA=
+X-Google-Smtp-Source: APXvYqwVa7wKj4zDOU2Or3WA9Z/nVgKG8YzsZc1htc/LtSVHgonoxDxkj3KdQUyI/nHik0Tcy6P7pj6TWG5+uOvDnzQ=
+X-Received: by 2002:a9d:7544:: with SMTP id b4mr14092715otl.326.1553421896197;
+ Sun, 24 Mar 2019 03:04:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HgwpBDEg6BbGzUp7CKbWxzFwE2NBbGvs21XTHMQHyfU8StE8mLT
- TEXxQRKDCcsuZjPlIFMcZOciEyTmctdjCnNTO3zlCp1XeCHZTCcnUxk2W1JWOJ2XrIQZVxo
- 2ZH1xkOQj9KtrBWt2TPehNdDYoYaAkymM4dQerWJcL4meXzPmc/gw9rtyjrpLvTgkUjU9ax
- G2cWAiWkEqVkNJpird2kQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UA5rA9vk9jU=:NUJb4DQMD9t0GBSu554FTQ
- xwLMnNOJvILBFk5y07Yha+cHny70Brlc3xmVGf1ARY9RDQeOdTst2+STjBpFsFZjshFep1kYw
- oD9S7+JtZ5RHe+T5O9lawfdzO/pS29Eq33com2piByXbAmnf0gtL4Cb2Yz8mpd8Iz/Wu+oT2f
- 0ZumnkPl3EGbZ0YZfpyoZcT7edOPrmnemDd5x9SM1kLeTaHA+10vvoi0CmZlWYoEl2xwik5iF
- +fdO2wHviBBeJ4nkVU4GPA9q2+Ev6b2WEsLQdYNpIBH7VMNGbtDObVU5G7TfREy9wln/A7rB/
- dCoL95mH99L2DXIUJTeiyMyVDEvsHtsVbE4BUjpBRv7aN6J9JLY6GHpxxQ0CMlUlz3EY+nQfC
- IwUzR1xJFc/Yng2kFvVaXcarjs1ocCSXteCqZ16QpfU21SQQnHC8Cg0JHsGPrV8SVFyK4yVTp
- p/QvVe7STKOx2hmTzn2+99G/2DFm1hdnrhLFK7eVqlSD8R1sV6va2m7pmk3c5ln4Nqxxia/sG
- q+4jus6IIf/yL2SM6dBkGAoLfRvk8+7k7Ox4mHN/AtOl/N7dJ0l4Qbg8G03jA4TSwCig9E39Z
- nbREC1NBa6myYsfA0PwdkJUnj7XO7audb2MeU257xC2ufR+LEaO4KDXDEKE/4X2h1T/Ba09aW
- wlc6NCeQkpf5KHNA1YpEqLN/AeHy8o9ob8n8MnquKmINGQZmDwkEC0p/KVywRwcsSwLKKWvhM
- 48Rs7JtvFtXSZ/iFCaAIJplNRuwW3uAuvH+O4CUzGVJADC8PKyyuIiMo31B77xb0Ulhg0vrOh
- A/c0U7PR31SKjRzA1a+3ffeqpnNerT/AQnM5zEz+gurtGN8BOlYk4oDmNnuzEDO21SCdtGUs2
- 4LDI5A89Zb+/eG7i8XDo12xUOc2bVZ/UXhhWLtXQVfiqtdx/nYlW/ivbeLhG+3tpQg5UBoNiK
- yekAGH7a6vw==
-Content-Transfer-Encoding: quoted-printable
+References: <20190322160615.27124-1-jkapil.cs@gmail.com> <CAP8UFD3K4ft7UVSFeaQzKVVGFPwcLcpTKB+sqFN9X9_j_A093w@mail.gmail.com>
+ <CAMknYEMBYxp1QJ3Ds9dmuS4ccHKtExx33d_Kv63UOwaUMm5oUQ@mail.gmail.com> <CAP8UFD0cWSTZPqqVwTFyYL06S+6aT_EiLPW6jUE0AH9puxevmg@mail.gmail.com>
+In-Reply-To: <CAP8UFD0cWSTZPqqVwTFyYL06S+6aT_EiLPW6jUE0AH9puxevmg@mail.gmail.com>
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Sun, 24 Mar 2019 15:34:44 +0530
+Message-ID: <CAMknYENJ+U4urtSEtwDSLpdwGe=x=uq_HdSs-cT9Z+PT5ZQiLg@mail.gmail.com>
+Subject: Re: [GSoC][RFC/PATCH] userdiff: added support for diffing shell scripts
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
-
-On Fri, 22 Mar 2019, Taylor Blau wrote:
-
-> On Wed, Mar 13, 2019 at 04:56:53AM -0700, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > On Windows, for example, executables (must) have the extension `.exe`.
-> > Our `check-docs` target was not prepared for that.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  Makefile | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 537493822b..df56bf0cd1 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -3074,7 +3074,7 @@ ALL_COMMANDS +=3D git-gui git-citool
-> >  .PHONY: check-docs
-> >  check-docs::
-> >  	$(MAKE) -C Documentation lint-docs
-> > -	@(for v in $(ALL_COMMANDS); \
-> > +	@(for v in $(patsubst %$X,%,$(ALL_COMMANDS)); \
-> >  	do \
-> >  		case "$$v" in \
-> >  		git-merge-octopus | git-merge-ours | git-merge-recursive | \
-> > @@ -3103,7 +3103,7 @@ check-docs::
-> >  		    -e 's/\.txt//'; \
-> >  	) | while read how cmd; \
-> >  	do \
-> > -		case " $(ALL_COMMANDS) " in \
-> > +		case "  $(patsubst %$X,%,$(ALL_COMMANDS)) " in \
+On Sun, Mar 24, 2019 at 2:49 PM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> I'm a little late to reading this thread, but I was curious why there
-> are now two spaces around the patsubst as opposed to the one around
-> ALL_COMMANDS?
+> The test_language_driver() function used to test the regexps is
+> ...
+> GIT_TEST_CMP which is usually either "diff -u" or "diff -c".
 
-Sharp eyes, and a *very* good point. The double space is actually required
-for this patch to work as intended. I added the following explanation to
-the commit message:
+Thanks.
 
-    Note that `$(ALL_COMMANDS)` starts with a space, and that is rather
-    crucial for the `while read how cmd` loop: some of the input lines do
-    not actually have the form `<how> <cmd>`, but only `<cmd>`, therefore
-    `$cmd` evaluates to the empty string, and when we are looking for
-    `* $cmd *` in ` $(ALL_COMMANDS)`, we do find it because the latter
-    starts with a double space.
+please provide some insights on the regex mentioned below:
 
-    In other words, the double space helps us skip the lines that list
-    only a command.
++
++PATTERNS("shell",
++  /* Function Names */
++  "([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*\\([[:space:]]*\\)[[:space:]]*\\{",
++  /* Words */
++  "([$#@A-Za-z_\"\'][$#@A-Za-z0-9_\"\']*)"),
++
 
-    But in this patch, we want to transform `$(ALL_COMMANDS)` via
-    `$(patsubst ...)` which swallows that double space. To help that, we
-    prefix the result with *two* spaces instead of just one.
-
-Do you think that is good enough?
-
-Oh, and can I ask you to review *all* of my patches in the future?
-
-Thanks,
-Dscho
+reference mail:
+https://public-inbox.org/git/20190324084523.8744-1-jkapil.cs@gmail.com/.
+please let me know if the regex is not self explanatory.
