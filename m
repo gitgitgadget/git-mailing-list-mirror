@@ -7,57 +7,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2FBA20248
-	for <e@80x24.org>; Sun, 24 Mar 2019 12:43:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5635820248
+	for <e@80x24.org>; Sun, 24 Mar 2019 12:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728772AbfCXMnA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 08:43:00 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35321 "EHLO
+        id S1726877AbfCXMyz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 08:54:55 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45843 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726963AbfCXMnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 08:43:00 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w1so7110363wrp.2
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 05:42:59 -0700 (PDT)
+        with ESMTP id S1726317AbfCXMyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 08:54:54 -0400
+Received: by mail-wr1-f66.google.com with SMTP id s15so7070491wra.12
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 05:54:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=q0EL8KtJK8xYltzWNoSOkoyoWksE52qSN7KZ8vYn7Ss=;
-        b=d/muyIZ61kR3chYdslXHb3WweHLcaJwS5SH67b0eWBYT5HPxz+ZGmrf5zkCd7bt54z
-         xqz10E8PgYB7uVelxK6aImRajZhhLhcmponBqHrQ0NMfy/Npf6SMRmI6Y47pNLx0R0tO
-         qGaduDgOwrTS79UZ2SQTUjtpDK30JFIAqTkRdqHkZVeRE8/V2p5rDJxkvQotMLky5XDm
-         1Vtyxd+w0Q4Vktw5LCkQ3X2nU/VpY+QNZ22hh3qDntpKSToowg3D6fUtnYhRcbEDPwX/
-         uCa7EUHlDeiTXUHAIcpqaEMctyWGnoUXA3ks4frw3JpVvs65pYOJWTVQ7EK+zAexdFO7
-         pi4A==
+        bh=6yMtHUuRFj4qgMxynsg1bH4wTCBqtvBdMPoEOxR4VNM=;
+        b=SKidZdie7mXHUI3p8dSH9uXLx7SMo8ql6Dk7ZpV8mUTYK4lU6qn2ujEZaHJx2QhUCu
+         sW89ZHTk5YylybY/sagnqwRQO8ElkgplNExty2MaNSHTo3rugjhRR9tfu/6HI1NILCmc
+         Ne2DfN5+Z6n8W43zx9tHPQKsI0bKBihRSOmxKarWWQyE0p/C5gm23Lncq0GilrboViO0
+         0lIj7Teo5TqVa1wrX7tvaNgz+xdaeQ7gBz0Ky13O91j/SPYXEetT7fuJAF3f31TDPlI5
+         ECfs6kW+HKj6HRW+bVrW6p9EDVeCRSUbnDYil1M8VeKLGog/icygq18c5uVQYXpZrG0G
+         gfLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=q0EL8KtJK8xYltzWNoSOkoyoWksE52qSN7KZ8vYn7Ss=;
-        b=PHRENr19nWGDE7WEMA1y6V9cGQ0nqzxNzZA18RAkrsNoCNxoaYhGIfO86BDQM9EObC
-         VXfGceCP+Qjdr2Eu3mwZPWirO1XGRLT4GxSIqhKz5epiX/8pfBzqgqalMJX6Ezgigezm
-         RAJ8qphDgbVJ4S5xzajsVfl56XaUw9dIhBxAQPdUjYEHx/MKJVfbDY/lidGfisxiL7Pb
-         hOHeugVHhGwlNZ+YROH/qx72rOOzLPrk0EGw6q3PGDwR18jnLUyrViHJTK1YiXhh+g5B
-         N/y4/9/mQebhxlO5vlXwAbybjKZyE0nza40YSgYFWvz/viPvTrXqc7Od5q6+PBDhz5y8
-         rtTw==
-X-Gm-Message-State: APjAAAXKgXp2YscB4lg5NiutXiWH3ORDlS2dOf1mXpy+eJEoS6BeHE52
-        TvdxCsoCzgdMoy4B1rtOu2Y=
-X-Google-Smtp-Source: APXvYqyUnH3Qm9wp8ouSkTg7KDKiW3072i3z5MT1PhQ9/bpNh3IA+sHx9mzOgtNqkzAptyRACEjpqg==
-X-Received: by 2002:adf:91c7:: with SMTP id 65mr12831662wri.191.1553431378364;
-        Sun, 24 Mar 2019 05:42:58 -0700 (PDT)
+        bh=6yMtHUuRFj4qgMxynsg1bH4wTCBqtvBdMPoEOxR4VNM=;
+        b=FSxY2GnrH9QyRXmKTpSG0zWijJLWcc6NLOhFtpeIQiYi2c5sw2GbdplKd3pXkVWSMY
+         mvKvI/7c2aNtoMdDp/pvKgBjPoVwFF+XkBG+mkxWUbZ7A0q3EclyyqkIO2xyqyNBrg7P
+         GbTAVEHStvS+LwFdN4+poHliA1/uouSHfq21x++V9XhI1AJ/i5s+8rXHJmNraV7024X5
+         pfZY2Ij5Gfss4aihs7WIpNSxWsCzJbOb3NVYHdUPRuYOh0R9lclc8LGZhdj7D9qBIfHn
+         ev150X/5S+onU1/HUzcimmDm5f1STGF76pRBZHpYF5MmxSpmM3Vycop5bHreC+U8f1mc
+         VcWg==
+X-Gm-Message-State: APjAAAXpHDlieweS1p5i9MARbytpYnlxc5l4NJFFChWpjNaZgSoPg3qJ
+        O2u/coCVdF1JKmo9YEwj89s=
+X-Google-Smtp-Source: APXvYqzBD4aDoAKtqDH+uH3K7Fe2X61x5SvJFyDRDyB4hFWqUA+LDHcFaFF4yuhsKtCRFKJu+P8aFg==
+X-Received: by 2002:adf:9c8f:: with SMTP id d15mr12143196wre.309.1553432092929;
+        Sun, 24 Mar 2019 05:54:52 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id i28sm19662558wrc.32.2019.03.24.05.42.57
+        by smtp.gmail.com with ESMTPSA id 7sm47303794wrc.81.2019.03.24.05.54.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Mar 2019 05:42:57 -0700 (PDT)
+        Sun, 24 Mar 2019 05:54:51 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Keith Smiley <keithbsmiley@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Make stashing nothing exit 1
-References: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com>
-Date:   Sun, 24 Mar 2019 21:42:57 +0900
-In-Reply-To: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com>
-        (Keith Smiley's message of "Fri, 22 Mar 2019 23:12:34 +0000")
-Message-ID: <xmqqh8bsphny.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] check-docs: fix for setups where executables have an extension
+References: <pull.162.git.gitgitgadget@gmail.com>
+        <f06126c3a11119bf6e2a830bbac312f65582387f.1552478212.git.gitgitgadget@gmail.com>
+        <20190322184347.GC12155@Taylors-MacBook-Pro.local>
+        <nycvar.QRO.7.76.6.1903241055230.45@tvgsbejvaqbjf.bet>
+Date:   Sun, 24 Mar 2019 21:54:50 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1903241055230.45@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sun, 24 Mar 2019 11:02:27 +0100 (STD)")
+Message-ID: <xmqqbm20ph45.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,37 +71,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Keith Smiley <keithbsmiley@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> In the case there are no files to stash, but the user asked to stash, we
-> should exit 1 since the stashing failed.
-> ---
-
-Sorry, but I fail to see why this is a good change.  Did you have
-some script that wanted the exit code from "git stash" to indicate
-if it had anything to stash and change the behaviour based on it?
-
-Is it a big enough hassle to figure out if the "stash" command did
-something yourself that justifies forcing existing scripts that rely
-on "no-op is merely a normal exit" behaviour other people have
-written in the past several years?
-
->  git-stash.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Sharp eyes, and a *very* good point. The double space is actually required
+> for this patch to work as intended. I added the following explanation to
+> the commit message:
 >
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 789ce2f41d4a3..ca362b1a31277 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -318,7 +318,7 @@ push_stash () {
->  	if no_changes "$@"
->  	then
->  		say "$(gettext "No local changes to save")"
-> -		exit 0
-> +		exit 1
->  	fi
->  
->  	git reflog exists $ref_stash ||
->
-> --
-> https://github.com/git/git/pull/587
+>     Note that `$(ALL_COMMANDS)` starts with a space, and that is rather
+>     crucial for the `while read how cmd` loop: some of the input lines do
+>     not actually have the form `<how> <cmd>`, but only `<cmd>`, therefore
+>     `$cmd` evaluates to the empty string, and when we are looking for
+>     `* $cmd *` in ` $(ALL_COMMANDS)`, we do find it because the latter
+>     starts with a double space.
+>     In other words, the double space helps us skip the lines that list
+>     only a command.
+
+That sounds more like a bug in the existing set-up even before your
+patch (in fact, these lines are probably from 2007 or so, long
+before you started touching our top-level Makefile heavily).  If we
+want to ignore lines with only one token, I'd rather see it
+explicitly done, e.g.
+
+	... generate data ... |
+	while read how cmd
+	do
+		# skip a line with a single token
+		case "$cmd" in "") continue ;; esac
+
+		# is $cmd part of the known command list?
+		case " $(ALL_COMMANDS) " in
+		*" $cmd "*)	;; # skip
+		*)	echo ... warning ... ;;
+		esac
+	done
+
+instead of relying on "if $cmd is empty, then SP + $cmd + SP makes
+double space, so let's have double space somewhere in the list of
+known commands" cuteness.
+
+Thanks.
+
