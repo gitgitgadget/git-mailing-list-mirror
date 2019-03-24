@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A3720248
-	for <e@80x24.org>; Sun, 24 Mar 2019 21:55:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2FE520248
+	for <e@80x24.org>; Sun, 24 Mar 2019 21:55:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728963AbfCXVzw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 17:55:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35059 "EHLO
+        id S1728976AbfCXVzx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 17:55:53 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46547 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfCXVzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 17:55:51 -0400
-Received: by mail-wr1-f68.google.com with SMTP id w1so7966859wrp.2
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 14:55:50 -0700 (PDT)
+        with ESMTP id S1728839AbfCXVzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 17:55:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o1so7899380wrs.13
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 14:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aosOI7X8jOegorDWKC5cBD8GjBzQO0+hNli2kaJQGcg=;
-        b=NgUM2pJEY8J0oAf6ku7pfh73X7al59/+MM5peR/hbvDdCxlLvj+8LFm5rdqQrSCMgr
-         diYTnfrx/jKG8D05w8OhKKrnnKjpUJjY11+AxIA1cf7k2M6l1As+lIdWV7MBmIbteHrd
-         zxQPo8WZvhp5HQlJ1OyURh8KMAD0NopA91i9iMK+1LcjDDxgRMg784gl2rOfJ1VkUN20
-         j32zh9E86wwBoz2JITVFavXez6RQHWgYTxS7bRdTZGlkB8AXR5iQH4GRrGSSC+9W12IQ
-         CdDX8K+gHZX8kGQcIuqm8nHXwz/Rl0NSQJxPM1iv6glk0fv++miRZuODtUd7aci4QW7i
-         fQEw==
+        bh=5PBiKF8zEpvtgpPoQZBnfSCqx9N/ons4aX+0a2zMnz0=;
+        b=qSw+xa5/LO6cc3lZb+xt7IlvHiVjFo5kXYmGcATfGgN1L2mCl5EiYi9m56ADFabPEk
+         lOI/qTl0MFWsoWgANsWMSiPFvGKRI71kYvr654XtyVkbLBylthZ62mGjM1q4XvHSoN2K
+         AhyUrQW2/ajgBTCHPAhS9IxW0BAr2hEGQ4t3A8VETnUHZnwWjbYMsHhflQW/exM9y9G1
+         VINaX2GmQzInKrbOPgltFh6MemGF6CK5R4tAxn71SLBdIbISR+mPEIlnRrq34Elzn762
+         TYd8BR1Xm0A8VPfGLkToeXg3+JM6tJYZUCgIkMpApgXlAxX9gyZUwKnXKIyK/R+YhjFB
+         032A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aosOI7X8jOegorDWKC5cBD8GjBzQO0+hNli2kaJQGcg=;
-        b=DarBkBoRhH35hEMPX8TerUrTQW0UWR0PQYUNXD/XH7lxNuMP8DnxtJRy/fXMhZs4Na
-         4yOmOz26B6x37kSVe6dQSPF/w1Z6aSIvWtnvL2QanQBsMXiy/5HCE+I/G6eRGymDcprs
-         CKk2V0aLQTAwMrOzBDxhtcL2/sJ0kRdEVOmyAMm1pVoYDOsjw4YLZ7j23yyhCakqk/9q
-         Xujv1zK5nrEPsnr8OfGBzx6s6X+J9T/0/9aG8yBGjl3VsrufBwSWnyymtYK7lK575PCO
-         zqfb++riJ8kapz0/BpuQklfTEYhUnzhviBOvCWgic4t6fS+jw2PjpDhm7ynODFwOVqXI
-         5qLA==
-X-Gm-Message-State: APjAAAW28rpxuMXf2tCrTGd3sEoDj+Som5d0tDypSp8xuqHWKbJUgkGV
-        uc97nN0ghIdlgrAIog327ksiCuPa
-X-Google-Smtp-Source: APXvYqxf92w870WlXOa4XHH6muKMxwsRbLj6c3qcHmFWt/tS9SgvMZxkgQ0FP0IxZ2lSob5zjWf/pg==
-X-Received: by 2002:a5d:4987:: with SMTP id r7mr13022556wrq.280.1553464549428;
-        Sun, 24 Mar 2019 14:55:49 -0700 (PDT)
+        bh=5PBiKF8zEpvtgpPoQZBnfSCqx9N/ons4aX+0a2zMnz0=;
+        b=o7zcMsoFDjhdl+QUvLhMX4MU5t7uB8IwqtpVTI+SGTUQ2cNMCUgd0IHKfmbSE3oxxB
+         pAFS2vaK77oXwnXEiIfimhKyW/zf9JFVQlkC6xsf6KkBYyaB8d3FhXJCjOAt5IYGhkIN
+         P7928BtU6/8pRB5msvXHsFvPgLhmUliLAH17smitae6krfF42MSbIpp1gtxoq8t2REhU
+         WeZrmBoe5yzoIM5rFlnpA9mKp8aqIizBFVDkg1ggkyAkyr2lcgJOSuEoNi4rWNVnCo11
+         c92GFl4z+iWLG1gk62B6zTgcBLmEB/17UvpWyvN0wtVSoZN9jiYvZC9gMRWMuxp8z8tu
+         5FNQ==
+X-Gm-Message-State: APjAAAXor2P8a9upO4saAi+G8ZTIxTnP9ZCAtOhXSBoq6hGG44KSKUS0
+        26t6tf57fGfga+8iqg27COmmldmO
+X-Google-Smtp-Source: APXvYqydZneBcoS9VoFSeIjycK8BtUr+FtewthYGqLacI3dHTpvViUXfhl8Q160IZcUKOfM4lVH7lg==
+X-Received: by 2002:adf:eb46:: with SMTP id u6mr13475916wrn.288.1553464550491;
+        Sun, 24 Mar 2019 14:55:50 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c479e.dyn.telefonica.de. [77.12.71.158])
-        by smtp.gmail.com with ESMTPSA id o17sm15023530wrw.73.2019.03.24.14.55.48
+        by smtp.gmail.com with ESMTPSA id o17sm15023530wrw.73.2019.03.24.14.55.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 24 Mar 2019 14:55:48 -0700 (PDT)
+        Sun, 24 Mar 2019 14:55:49 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 2/6] Documentation/technical/api-config.txt: fix formatting
-Date:   Sun, 24 Mar 2019 22:55:30 +0100
-Message-Id: <20190324215534.9495-3-szeder.dev@gmail.com>
+Subject: [PATCH v2 3/6] Documentation/technical/protocol-v2.txt: fix formatting
+Date:   Sun, 24 Mar 2019 22:55:31 +0100
+Message-Id: <20190324215534.9495-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
 In-Reply-To: <20190324215534.9495-1-szeder.dev@gmail.com>
 References: <20190324155219.2284-1-szeder.dev@gmail.com>
@@ -75,35 +75,174 @@ X-Mailing-List: git@vger.kernel.org
 Asciidoctor versions v1.5.7 or later print the following warning while
 building the documentation:
 
-      ASCIIDOC technical/api-config.html
-  asciidoctor: WARNING: api-config.txt: line 232: unterminated listing block
+      ASCIIDOC technical/protocol-v2.html
+  asciidoctor: WARNING: protocol-v2.txt: line 38: unterminated listing block
 
-This highlight an issue (even with older Asciidoctor versions) where
-the length of the '----' lines surrounding a code example don't match,
-and the rest of the document is rendered in monospace.
+This highlights an issue (even with older Asciidoctor versions) where
+the 'Initial Client Request' header is not rendered as a header but in
+monospace.  I'm not sure what exactly causes this issue and why it's
+an issue only with this particular header, but all headers in
+'protocol-v2.txt' are written like this:
 
-Fix this by making sure that the length of those lines match.
+   Initial Client Request
+  ------------------------
+
+i.e. the header itself is indented by a space, and the "underline" is
+two characters longer than the header.
+
+Dropping that indentation and making the length of the underline match
+the length of the header apparently fixes this issue.
+
+While at it, adjust all other headers 'protocol-v2.txt' as well, to
+match the style we use everywhere else.
 
 The page rendered with AsciiDoc doesn't have this formatting issue.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Documentation/technical/api-config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/technical/protocol-v2.txt | 52 ++++++++++++-------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
-index fa39ac9d71..7d20716c32 100644
---- a/Documentation/technical/api-config.txt
-+++ b/Documentation/technical/api-config.txt
-@@ -229,7 +229,7 @@ A `config_set` can be used to construct an in-memory cache for
- config-like files that the caller specifies (i.e., files like `.gitmodules`,
- `~/.gitconfig` etc.). For example,
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index ead85ce35c..03264c7d9a 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -1,5 +1,5 @@
+- Git Wire Protocol, Version 2
+-==============================
++Git Wire Protocol, Version 2
++============================
  
-----------------------------------------
-+----------------------------------------
- struct config_set gm_config;
- git_configset_init(&gm_config);
- int b;
+ This document presents a specification for a version 2 of Git's wire
+ protocol.  Protocol v2 will improve upon v1 in the following ways:
+@@ -22,8 +22,8 @@ will be commands which a client can request be executed.  Once a command
+ has completed, a client can reuse the connection and request that other
+ commands be executed.
+ 
+- Packet-Line Framing
+----------------------
++Packet-Line Framing
++-------------------
+ 
+ All communication is done using packet-line framing, just as in v1.  See
+ `Documentation/technical/pack-protocol.txt` and
+@@ -34,8 +34,8 @@ In protocol v2 these special packets will have the following semantics:
+   * '0000' Flush Packet (flush-pkt) - indicates the end of a message
+   * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
+ 
+- Initial Client Request
+-------------------------
++Initial Client Request
++----------------------
+ 
+ In general a client can request to speak protocol v2 by sending
+ `version=2` through the respective side-channel for the transport being
+@@ -43,22 +43,22 @@ used which inevitably sets `GIT_PROTOCOL`.  More information can be
+ found in `pack-protocol.txt` and `http-protocol.txt`.  In all cases the
+ response from the server is the capability advertisement.
+ 
+- Git Transport
+-~~~~~~~~~~~~~~~
++Git Transport
++~~~~~~~~~~~~~
+ 
+ When using the git:// transport, you can request to use protocol v2 by
+ sending "version=2" as an extra parameter:
+ 
+    003egit-upload-pack /project.git\0host=myserver.com\0\0version=2\0
+ 
+- SSH and File Transport
+-~~~~~~~~~~~~~~~~~~~~~~~~
++SSH and File Transport
++~~~~~~~~~~~~~~~~~~~~~~
+ 
+ When using either the ssh:// or file:// transport, the GIT_PROTOCOL
+ environment variable must be set explicitly to include "version=2".
+ 
+- HTTP Transport
+-~~~~~~~~~~~~~~~~
++HTTP Transport
++~~~~~~~~~~~~~~
+ 
+ When using the http:// or https:// transport a client makes a "smart"
+ info/refs request as described in `http-protocol.txt` and requests that
+@@ -79,8 +79,8 @@ A v2 server would reply:
+ Subsequent requests are then made directly to the service
+ `$GIT_URL/git-upload-pack`. (This works the same for git-receive-pack).
+ 
+- Capability Advertisement
+---------------------------
++Capability Advertisement
++------------------------
+ 
+ A server which decides to communicate (based on a request from a client)
+ using protocol version 2, notifies the client by sending a version string
+@@ -101,8 +101,8 @@ to be executed by the client.
+     key = 1*(ALPHA | DIGIT | "-_")
+     value = 1*(ALPHA | DIGIT | " -_.,?\/{}[]()<>!@#$%^&*+=:;")
+ 
+- Command Request
+------------------
++Command Request
++---------------
+ 
+ After receiving the capability advertisement, a client can then issue a
+ request to select the command it wants with any particular capabilities
+@@ -137,8 +137,8 @@ command be executed or can terminate the connection.  A client may
+ optionally send an empty request consisting of just a flush-pkt to
+ indicate that no more requests will be made.
+ 
+- Capabilities
+---------------
++Capabilities
++------------
+ 
+ There are two different types of capabilities: normal capabilities,
+ which can be used to to convey information or alter the behavior of a
+@@ -153,8 +153,8 @@ management on the server side in order to function correctly.  This
+ permits simple round-robin load-balancing on the server side, without
+ needing to worry about state management.
+ 
+- agent
+-~~~~~~~
++agent
++~~~~~
+ 
+ The server can advertise the `agent` capability with a value `X` (in the
+ form `agent=X`) to notify the client that the server is running version
+@@ -168,8 +168,8 @@ printable ASCII characters except space (i.e., the byte range 32 < x <
+ and debugging purposes, and MUST NOT be used to programmatically assume
+ the presence or absence of particular features.
+ 
+- ls-refs
+-~~~~~~~~~
++ls-refs
++~~~~~~~
+ 
+ `ls-refs` is the command used to request a reference advertisement in v2.
+ Unlike the current reference advertisement, ls-refs takes in arguments
+@@ -199,8 +199,8 @@ The output of ls-refs is as follows:
+     symref = "symref-target:" symref-target
+     peeled = "peeled:" obj-id
+ 
+- fetch
+-~~~~~~~
++fetch
++~~~~~
+ 
+ `fetch` is the command used to fetch a packfile in v2.  It can be looked
+ at as a modified version of the v1 fetch where the ref-advertisement is
+@@ -444,8 +444,8 @@ header.
+ 		2 - progress messages
+ 		3 - fatal error message just before stream aborts
+ 
+- server-option
+-~~~~~~~~~~~~~~~
++server-option
++~~~~~~~~~~~~~
+ 
+ If advertised, indicates that any number of server specific options can be
+ included in a request.  This is done by sending each option as a
 -- 
 2.21.0.539.g07239c3a71.dirty
 
