@@ -2,60 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1486D202BB
-	for <e@80x24.org>; Sun, 24 Mar 2019 12:16:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C062120248
+	for <e@80x24.org>; Sun, 24 Mar 2019 12:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbfCXMQW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 08:16:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34248 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726090AbfCXMQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 08:16:21 -0400
-Received: (qmail 4778 invoked by uid 109); 24 Mar 2019 12:16:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Mar 2019 12:16:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1627 invoked by uid 111); 24 Mar 2019 12:16:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 24 Mar 2019 08:16:44 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Mar 2019 08:16:20 -0400
-Date:   Sun, 24 Mar 2019 08:16:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190324121619.GD312@sigill.intra.peff.net>
-References: <20190317144747.2418514-1-martin.agren@gmail.com>
- <20190317194431.GY31362@pobox.com>
- <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
- <20190320181715.GJ31362@pobox.com>
- <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
- <20190323192756.GK4047@pobox.com>
+        id S1728716AbfCXM0S (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 08:26:18 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50232 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726160AbfCXM0S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 08:26:18 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z11so6248142wmi.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 05:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Mc/nI1QVc38MnzMwzu8eEZJi4xqeQ2HYniD96NASpmw=;
+        b=hXDTIFmBNf4zM0msUwf2gyN6i91LWNxwAXIeXUWjzL9RD+HM662kJK6KPjCsZok1LM
+         XWuA/kApHYolcQSXIoW4iSk5d3/eR406y+kAZan/46W/osSICHb3tuJwZDkUIvGmnM3u
+         mxu//+MtKdJvoNR72ummXJNTFsRdS+f4zr02t2Zx9ROufCVojYWbcTBu+/35zFpYzv6v
+         0l/lapEhoRSQI9c4m4TEuiQ2ffy9PKBJW0G7dXjU7eX7Bn41wwuJYii4jVEHsMatpe7B
+         7JXpf4rcwZPR8A4sbVaXty6x587Hdz0TeM6E+bepeX1i+MSXT7yOtt9gHMcAHgeuT0D3
+         IYjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Mc/nI1QVc38MnzMwzu8eEZJi4xqeQ2HYniD96NASpmw=;
+        b=bMTsaHAWh5tzD17F+lnre/ufVeYS92IGFuLP5N92SCJCQPa/4P6x+39x7DEaNT4Z/Y
+         1rtcY4GU/1PG/PL4tGTPNb3JktSNV9z1rPgmw0JXsY6pRLh8qN7wrRZl2oaZjyt7CMG9
+         nrCLUOIGyQnEWEmPPOBRixKF5OhGkmOy2S0utbmlt4FF8xkaThclaLCiu0Zpv/M12BuV
+         Rt9B7Bc+jxdmkz9By0e/ulQ3QIIiu5nbg8li6qZrJO6+LLf9zyDmLrrB7NhJRO6Gt9Eu
+         pT8Bk8XVh4Y8vHUlWMg7Hx+zfMU4tq33OFuHUnUCg0bCQKIETi50WmndSbyqdopNK/eK
+         dL3w==
+X-Gm-Message-State: APjAAAUFaxl5lkj0MnYsUcyScIsSgGgZhS+KhogHfluifyOfuZ8J4sZn
+        DXSEfzSzoz43ll+R+y4pIbE=
+X-Google-Smtp-Source: APXvYqyr1v01O3U+0U1mSlAc3OiNA5gkW+wS1Gn3PJ/e9/NRGOjKfzoQhWF/qE93lnrTtN6nQbSJhw==
+X-Received: by 2002:a1c:ef1a:: with SMTP id n26mr2488287wmh.104.1553430376323;
+        Sun, 24 Mar 2019 05:26:16 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id c193sm15945902wma.46.2019.03.24.05.26.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 24 Mar 2019 05:26:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Cc:     git@vger.kernel.org
+Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
+References: <875zsdu41d.fsf@fifthhorseman.net>
+        <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com>
+        <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
+        <87imwbmqpg.fsf@fifthhorseman.net>
+Date:   Sun, 24 Mar 2019 21:26:13 +0900
+In-Reply-To: <87imwbmqpg.fsf@fifthhorseman.net> (Daniel Kahn Gillmor's message
+        of "Fri, 22 Mar 2019 01:19:07 -0400")
+Message-ID: <xmqqpnqgpifu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190323192756.GK4047@pobox.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 23, 2019 at 03:27:56PM -0400, Todd Zullinger wrote:
+Daniel Kahn Gillmor <dkg@fifthhorseman.net> writes:
 
-> I updated my system to asciidoctor-2.0.0 last night and now
-> I can't even generate the man pages properly, because the
-> docbook45 converter was removed.  I'll have to see if I
-> missed some other required update. :/
+> I don't personally have any use case for doing such a tag rename -- you
+> mention two:
+>
+>  a) wanting to call tag "foo" that you found on remote "origin" by the
+>     name of "origin/foo"
+>
+>  b) wanting to call "v2.20.0" by the name "g2.20.0"
 
-I ran into that, too. Using ASCIIDOC_DOCBOOK=docbook5 worked. The output
-looked OK to me, but I only eyeballed it briefly. It's possible there
-are subtle problems.
+For the record, in the latter there is no "wanting to call".  It was
+merely a set-up used to illustrate what support there already exists
+in the current system that helps making users aware of tags that are
+not stored in there "natural" place.
 
--Peff
+The former however is a natural consequence of noises people make
+around here from time to time, wanting to have tags you grab from
+elsewhere and tags you create locally in separate places.
