@@ -2,187 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B23420248
-	for <e@80x24.org>; Sun, 24 Mar 2019 11:26:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCABD202BB
+	for <e@80x24.org>; Sun, 24 Mar 2019 12:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbfCXL0p (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 07:26:45 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:38705 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbfCXL0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 07:26:44 -0400
-Received: by mail-ot1-f67.google.com with SMTP id e80so5636143ote.5
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 04:26:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SAFM34UQZiC+PrnoY0dkO6+e+lRqFnmbl9Re3fWqw8Y=;
-        b=tgn2vX9CgRCs8dtOnbz8sHNkmfrz9L/JvH/I5sE6hhJVFqBYHBDb+zeOjhVZ4XqtlW
-         QbJxkj5XBOerLeZ39IrB7Y7VeFo+FQjZKS1RLJcyheLsgYgZDp6Z2+kwSAqxbKLDZCst
-         HH/zZvcrakJAlOGagvKrqfha2oStWKlUJSVJ+iL9XNW3p5tEuzZz4vmogutHDs+8sclP
-         VihU/t+dCPDqu6coCNqmokUD/w/45dHgM47Jw0KCIXemmDgl8Du/PypTzMPc8nmQsGvv
-         +0YRgZ0coHpdmXB4xxes2U7dIEaxSvJnQ9UogIiTl3GlVKGahJvPXMKPsjPT+cbUsuuJ
-         /9cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SAFM34UQZiC+PrnoY0dkO6+e+lRqFnmbl9Re3fWqw8Y=;
-        b=FkNqrvsJnhTO6v+dGvJAws0lzPlZB3TBtMX5e7kME819FAJqBQz3Q1f5M0qFZfvM3u
-         OVi+vHuVxD8W+YpsAziiTPn+wbdQLVfJE5Vc1+nkBphliPT7jNzQhwbepbUpWITzfi7Z
-         MYB9aSWOGZRhTAo4ALrEy+6jq55eKYhpmVvjIczC1hBel3Ce37c02woGPAv/I+BHEPO2
-         hkyWZfKrSuY5CybOi0d9qaqTe5VenHMkUS7x9jGvCYfctPxXzXYpk11rgMKlZnD/njMC
-         JDsgRckazNvY3aELBYd7Qn3Ux1siOmg0S3fVBSSVDKXSxgjCBq+z1rArL6G3Gw0VSfzg
-         neVg==
-X-Gm-Message-State: APjAAAW1ElYBoBw7oO12DkX4nMdH3k+N9eAmbShujUgSPcfgGveQNytO
-        Q+ZHz79dWra4uO7j02bamy5T4YvEl/X8/2XBwAI=
-X-Google-Smtp-Source: APXvYqy+izVu1rXT7eB/9TNWR7mfu8svsVIA9do8+LeRZwFO3MwXK2qkSgWna3JzWJiPKv83sTisWC3IySrNmXdqLjo=
-X-Received: by 2002:a9d:4d07:: with SMTP id n7mr14528895otf.162.1553426803658;
- Sun, 24 Mar 2019 04:26:43 -0700 (PDT)
+        id S1727217AbfCXMIA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 08:08:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34174 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726160AbfCXMIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 08:08:00 -0400
+Received: (qmail 4454 invoked by uid 109); 24 Mar 2019 12:08:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Mar 2019 12:08:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1485 invoked by uid 111); 24 Mar 2019 12:08:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 24 Mar 2019 08:08:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Mar 2019 08:07:58 -0400
+Date:   Sun, 24 Mar 2019 08:07:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     Wolfgang Denk <wd@denx.de>,
+        Heinrich Schuchardt <xypron.glpk@gmx.de>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Takahiro Akashi <takahiro.akashi@linaro.org>
+Subject: [PATCH 0/3] fix dumb-http fetch with alternates
+Message-ID: <20190324120757.GA18684@sigill.intra.peff.net>
+References: <7e4a2f1d-2b3a-eb83-d3f1-9ac63d68991b@gmx.de>
+ <20190322005107.GL9937@linaro.org>
+ <017964a9-bd75-5e36-0de7-57d4467d6a7e@gmx.de>
+ <20190322071231.GA26114@sigill.intra.peff.net>
+ <20190322082114.BC19924013C@gemini.denx.de>
+ <20190322093132.GA17498@sigill.intra.peff.net>
+ <20190322165034.GA23124@dcvr>
+ <20190323085341.GA9002@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <cover.1552835153.git.ttjtftx@gmail.com> <5a3c6e24eb901c830e8e43608d81aef5d7b60315.1552835153.git.ttjtftx@gmail.com>
- <87imwha1o3.fsf@evledraar.gmail.com>
-In-Reply-To: <87imwha1o3.fsf@evledraar.gmail.com>
-From:   jonathan chang <ttjtftx@gmail.com>
-Date:   Sun, 24 Mar 2019 19:26:32 +0800
-Message-ID: <CAOAu_YJs_ZL0nAARNmdSFjmdh6mSP+e7KvzNB3wj-JGe5sHcdA@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v3 2/3] t0000: avoid using pipes
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190323085341.GA9002@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 12:47 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sun, Mar 17 2019, Jonathan Chang wrote:
->
-> > The exit code of the upstream in a pipe is ignored thus we should avoid
-> > using it. By writing out the output of the git command to a file, we ca=
-n
-> > test the exit codes of both the commands.
-> >
-> > Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
-> > ---
-> >  t/t0000-basic.sh | 28 ++++++++++++++--------------
-> >  1 file changed, 14 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> > index 53821f5817..47666b013e 100755
-> > --- a/t/t0000-basic.sh
-> > +++ b/t/t0000-basic.sh
-> > @@ -1118,27 +1118,25 @@ P=3D$(test_oid root)
-> >
-> >  test_expect_success 'git commit-tree records the correct tree in a com=
-mit' '
-> >       commit0=3D$(echo NO | git commit-tree $P) &&
-> > -     tree=3D$(git show --pretty=3Draw $commit0 |
-> > -              sed -n -e "s/^tree //p" -e "/^author /q") &&
-> > +     git show --pretty=3Draw $commit0 >actual &&
-> > +     tree=3D$(sed -n -e "s/^tree //p" -e "/^author /q" actual) &&
-> >       test "z$tree" =3D "z$P"
->
-> This change is an improvement just changing the "git" invocations. But I
-> wonder as we're reviewing this / churning this if we couldn't also
-> modernize this style to just:
->
->     git .. >tmp &&
->     sed -n -e <tmp >actual &&
->     test_must_be_empty actual
+On Sat, Mar 23, 2019 at 04:53:41AM -0400, Jeff King wrote:
 
-Do you mean something like this:
+> On Fri, Mar 22, 2019 at 04:50:34PM +0000, Eric Wong wrote:
+> 
+> > > Weird. I had set http.maxrequests to "1" to give more readable output
+> > > from GIT_CURL_VERBOSE, etc. It fails with that setting, but not with the
+> > > default of 5. Which certainly seems like a bug, but one that has been
+> > > there for a while (at least since v2.9.x, which I tested).
+> > 
+> > I couldn't reproduce an error after porting your patch to
+> > master (commit 041f5ea1cf987a40 "The third batch"):
+> > https://80x24.org/spew/20190322163449.25362-1-e@80x24.org/raw
+> > 
+> > So you might've hit an ephemeral error (bad connection,
+> > HTTP server restarting, etc).
+> 
+> No, it was quite reproducible. Curious, I decided to bisect. The problem
+> started in ad75ebe5b3 (http: maintain curl sessions, 2009-11-27), but
+> was later fixed by your 2abc848d54 (http: always remove curl easy from
+> curlm session on release, 2016-09-13).
+> 
+> So trying to build the fix directly on 17966c0a63d (which is in between
+> those) will run into this unrelated bug. But forward-porting does work.
 
--       git show --pretty=3Draw $commit0 >actual &&
--       tree=3D$(sed -n -e "s/^tree //p" -e "/^author /q" actual) &&
--       test "z$tree" =3D "z$P"
-+       git show --pretty=3Draw $commit0 >tmp &&
-+       sed -n -e "/$P/d" -e "s/^tree //p" -e "/^author /q" tmp >actual &&
-+       test_must_be_empty actual
+Here's the patch, forward-ported on top of the current master, with
+actual commit messages, a test, and a few subtle tweaks around the
+curl_errorstr handling.
 
-It works. But the semantic is different if we use test_must_be_empty.
-I wonder if you mean test_cmp because I found some commits[1 2 3]
-that changes 'test "z...' to use test_cmp with 'git log -G 'test "z' --onel=
-ine'
-and git-show. However, they are all around 2013, so I'm not so sure
-this is what you mean either.
+  [1/3]: http: factor out curl result code normalization
+  [2/3]: http: normalize curl results for dumb loose and alternates fetches
+  [3/3]: http: use normalize_curl_result() instead of manual conversion
 
-I did found some use of sed's 'd' function in conjunction with
-test_must_be_empty, using:
-  git grep -A 5 'sed .*/d' | grep -B 5 'test_must_be_empty'
-However, they don't use parameter expansion in sed.
-
-There are some places where parameter expansion is used in sed, but
-that would require test_cmp in this case, and would need to write to
-another file to compare.
-
-Maybe this 'test "z$A" =3D "z$B"' syntax is fine, yet most of the existing
-usages are added around 12 years ago according git-blame I saw on
-github.
-
-
-[1]: 03c893cbf9 ("t1006: modernize output comparisons", 2013-07-10)
-[2]: 848575d833 ("push test: simplify check of push result", 2013-03-18)
-[3]: ed838e6615 ("t1300: style updates", 2012-10-23)
-
-
-> > @@ -1162,12 +1161,13 @@ test_expect_success 'very long name in the inde=
-x handled sanely' '
-> >       >path4 &&
-> >       git update-index --add path4 &&
-> >       (
-> > -             git ls-files -s path4 |
-> > -             sed -e "s/      .*/     /" |
-> > +             git ls-files -s path4 >actual &&
-> > +             sed -e "s/      .*/     /" actual |
-> >               tr -d "\012" &&
-> >               echo "$a"
-> >       ) | git update-index --index-info &&
-> > -     len=3D$(git ls-files "a*" | wc -c) &&
-> > +     git ls-files "a*" >actual &&
-> > +     len=3D$(wc -c <actual) &&
-> >       test $len =3D 4098
->
-> Ditto. Maybe the initial author wanted to avoid writing out 4k lines,
-> but now that we're doing so anyway...
-
-This is 'wc -c', so I think I don't have to modify it?
-
-By the way, I found 2 lines that can be changed to use test_must_be_empty
-in t0000-basic.sh. I paste the diff below:
----
-@@ -51,7 +51,7 @@ test_expect_success 'verify that the running shell
-supports "local"' '
-
- test_expect_success '.git/objects should be empty after git init in
-an empty repo' '
-        find .git/objects -type f -print >should-be-empty &&
--       test_line_count =3D 0 should-be-empty
-+       test_must_be_empty should-be-empty
- '
-
- # also it should have 2 subdirectories; no fan-out anymore, pack, and info=
-.
-@@ -1110,7 +1110,7 @@ test_expect_success 'git update-index --refresh
-should succeed' '
-
- test_expect_success 'no diff after checkout and git update-index --refresh=
-' '
-        git diff-files >current &&
--       cmp -s current /dev/null
-+       test_must_be_empty current
- '
+ http-walker.c              | 21 ++++++++++-----------
+ http.c                     | 18 ++++++++++++------
+ http.h                     |  9 +++++++++
+ t/t5550-http-fetch-dumb.sh | 16 ++++++++++++++++
+ 4 files changed, 47 insertions(+), 17 deletions(-)
