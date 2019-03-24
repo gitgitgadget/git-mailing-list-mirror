@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 783D420248
-	for <e@80x24.org>; Sun, 24 Mar 2019 08:22:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FFBD20248
+	for <e@80x24.org>; Sun, 24 Mar 2019 08:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728550AbfCXIWA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 04:22:00 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:43472 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727727AbfCXIWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 04:22:00 -0400
-Received: by mail-pg1-f193.google.com with SMTP id l11so4335385pgq.10
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:21:59 -0700 (PDT)
+        id S1728552AbfCXIWF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 04:22:05 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33273 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727727AbfCXIWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 04:22:04 -0400
+Received: by mail-pg1-f194.google.com with SMTP id b12so4373434pgk.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:22:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=19J41iR97i/mP6yPwyBsWOHUZPfo+bimifdbVSzfPJI=;
-        b=Nn264d+LWt9qT++HtsIoI9XLz1LF8kvdgkApfFWe4JiLkzQAwTVt9I5YyM1PijIFXA
-         pu6JRI1cUc9hz/FndULC8+qaPLGveUTCeOvQdBeire8dMoSNeB4FV1+uiJ3nL1nN9d4G
-         mvSeT7hF675v2j5nE45wvfZx8X9OFTpYWulEyKXuN6s7a8nSpOgOUPNLPWa3pMciXNy3
-         2shWRgtiuIR6Ne0183qSfWS8FHMGrQrkH9RLsOVB2F5xEs2CRHAiVakBflYvhfxA8GAY
-         vmnfoGDMQAh9jd9L8gg2koG3raj0sUFHJ6j1jNunGo2EaIGwMo3sPJ6c9lvCVzGCRZRv
-         D/ug==
+        bh=XqAkRTK77petW2yXkLM57yAG7ibs7weIzZdYYE8xx4M=;
+        b=cPprRfKsURBaUOzRYuqD/lOnavdUiCIG5wfaYbORlXKPIPrNQ/v1O+xq+NUax2LnPZ
+         2V2DUzjxjiYgbq6oaopbWwDK2Bs8X9WPAdqfqwyKTWA6gwzULiVMbZbcK4vv8/dlkTIF
+         b3lcZhSfRULBQlzSp71dA/UwzvRbxmTaNfg4uKryFXClRggLnXfpg9ihb9olhoB190v7
+         XLW0VZQ4XrSoL+/KsuLTIBGFEcDDYPoA45eOzXd8BurxF8MHDi3KaAKAdqRqjuYN3wIg
+         bGZ3DiSoevB6tf9w8+1JarIfT4gn9RM0pFmccSxqcTDGMAZ+Vbs0m6g1n07MCujg9cbz
+         GsKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=19J41iR97i/mP6yPwyBsWOHUZPfo+bimifdbVSzfPJI=;
-        b=KzEGCnCWp8S0JYMYRflqdh2BIuWKtOadEe0Vyb13DeeXqOCvvzZFFDchPZ9IzJ+5ww
-         BUr5ykm+MQe5XMnOM01Xck5SaGwaTrnlcBHcMqu9DX7LuPv7A7MbkPkST+f7EEYNVQBd
-         dfdmkwp3TnL/LF4hluSTN3UxXQzRryM7lBSIx25Hq2fmGhLSRqTiNOZfye0HMTPPh/Fm
-         qz2L4IFv8eyHqfOeCjOQlShJ4AHTePP8m0AvCDoZloA5RGES3Fo2aygLXCyuZ7FmP7v9
-         QNNE07Irrayf9cFPdjydGkM5vjhS/iyOzPo479Gke3jKU0ZVvzguWtZpZpODng3q+keV
-         PdiA==
-X-Gm-Message-State: APjAAAXY7q4548pPUCmfeQksQ/jGUk8sScRKRNtELNbf/uS+G9bQ/bDF
-        YmbnluxJuxUdb7GubG0lrqxenp95
-X-Google-Smtp-Source: APXvYqzRM85Mcf5tZJHjixnBu+xwT3aYQyYnCZufyj+C8FSFEKKhKqx6fTSfjpgqKOqe+X7XcmCa6g==
-X-Received: by 2002:a63:fe0a:: with SMTP id p10mr13101503pgh.86.1553415719296;
-        Sun, 24 Mar 2019 01:21:59 -0700 (PDT)
+        bh=XqAkRTK77petW2yXkLM57yAG7ibs7weIzZdYYE8xx4M=;
+        b=aoMCA2tVZrDK/JL1XtN+nFhHDoQY6+/iZ2feOeAnAmA8mUG1t3yk1uU7FwE+CoSlJA
+         9i5styvgNqqUg8UJeOJWbKC0GUGeW7WXYdO14s0NKQxtpPL3HP+qw9VJ0ktXHepJSqUa
+         vS9juD1Gr6qlf0I0NBVXe2vPsqwRj06fQzMpa/TN4+7T6Hf4RuxXabSAjZsjttTfwjTn
+         Hp+vXSG+NJE2F0hHdJ3Gt8D0LQW1Qo/rEylHmrPYxH46oGtQBoNKFk/W9gZiM/9X7diq
+         Gr2mYl2RaP6iVoWRoCVMLReJa9qXl+GzlHvQ+W2Lj+4xiLrhCmBMty43SuDWVY9UXKiO
+         ogUg==
+X-Gm-Message-State: APjAAAWv5I9b40n+8DIG2r+jwQbUa+UJPc4ssxVIV5dolTnVAOiWSmPB
+        xFIEOjGTIUPZwXC0rsZHBJr9YEf3
+X-Google-Smtp-Source: APXvYqwyb4hWD669IQaaNRrZ2XHUu1/A5VL1wjhILgucKFeXOViIsRMVbJem2mMnRJnsVgQhH+UBqg==
+X-Received: by 2002:a17:902:b418:: with SMTP id x24mr12555459plr.323.1553415724408;
+        Sun, 24 Mar 2019 01:22:04 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id h19sm12967213pfd.130.2019.03.24.01.21.56
+        by smtp.gmail.com with ESMTPSA id z124sm31429636pfb.150.2019.03.24.01.22.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Mar 2019 01:21:58 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:21:54 +0700
+        Sun, 24 Mar 2019 01:22:03 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:21:59 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 09/20] diff-parseopt: convert --diff-filter
-Date:   Sun, 24 Mar 2019 15:20:03 +0700
-Message-Id: <20190324082014.2041-10-pclouds@gmail.com>
+Subject: [PATCH v2 10/20] diff-parseopt: convert --[no-]abbrev
+Date:   Sun, 24 Mar 2019 15:20:04 +0700
+Message-Id: <20190324082014.2041-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190324082014.2041-1-pclouds@gmail.com>
 References: <20190320114703.18659-1-pclouds@gmail.com>
@@ -70,66 +70,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at it, mark one more string for translation
+OPT__ABBREV() has the same behavior as the deleted code with one
+difference: it does check for valid number and error out if not. And the
+'40' change is self explanatory.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ diff.c             | 12 +-----------
+ parse-options-cb.c |  4 ++--
+ 2 files changed, 3 insertions(+), 13 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 99871d2546..47146c33f5 100644
+index 47146c33f5..8d387280a4 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4736,10 +4736,13 @@ static unsigned filter_bit_tst(char status, const struct diff_options *opt)
- 	return opt->filter & filter_bit[(int) status];
- }
- 
--static int parse_diff_filter_opt(const char *optarg, struct diff_options *opt)
-+static int diff_opt_diff_filter(const struct option *option,
-+				const char *optarg, int unset)
- {
-+	struct diff_options *opt = option->value;
- 	int i, optch;
- 
-+	BUG_ON_OPT_NEG(unset);
- 	prepare_filter_bits();
- 
- 	/*
-@@ -4770,7 +4773,8 @@ static int parse_diff_filter_opt(const char *optarg, struct diff_options *opt)
- 
- 		bit = (0 <= optch && optch <= 'Z') ? filter_bit[optch] : 0;
- 		if (!bit)
--			return optarg[i];
-+			return error(_("unknown change class '%c' in --diff-filter=%s"),
-+				     optarg[i], optarg);
- 		if (negate)
- 			opt->filter &= ~bit;
- 		else
-@@ -5389,6 +5393,9 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_CALLBACK_F(0, "find-object", options, N_("<object-id>"),
- 			       N_("look for differences that change the number of occurrences of the specified object"),
- 			       PARSE_OPT_NONEG, diff_opt_find_object),
-+		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
-+			       N_("select files by diff type"),
-+			       PARSE_OPT_NONEG, diff_opt_diff_filter),
- 		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
- 		  N_("Output to a specific file"),
- 		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
-@@ -5441,13 +5448,6 @@ int diff_opt_parse(struct diff_options *options,
+@@ -5254,6 +5254,7 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_SET_INT('z', NULL, &options->line_termination,
+ 			    N_("do not munge pathnames and use NULs as output field terminators in --raw or --numstat"),
+ 			    0),
++		OPT__ABBREV(&options->abbrev),
+ 		OPT_CALLBACK_F(0, "output-indicator-new",
+ 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
+ 			       N_("<char>"),
+@@ -5448,17 +5449,6 @@ int diff_opt_parse(struct diff_options *options,
  	}
  
  	/* misc options */
--	else if ((argcount = parse_long_opt("diff-filter", av, &optarg))) {
--		int offending = parse_diff_filter_opt(optarg, options);
--		if (offending)
--			die("unknown change class '%c' in --diff-filter=%s",
--			    offending, optarg);
--		return argcount;
+-	else if (!strcmp(arg, "--no-abbrev"))
+-		options->abbrev = 0;
+-	else if (!strcmp(arg, "--abbrev"))
+-		options->abbrev = DEFAULT_ABBREV;
+-	else if (skip_prefix(arg, "--abbrev=", &arg)) {
+-		options->abbrev = strtoul(arg, NULL, 10);
+-		if (options->abbrev < MINIMUM_ABBREV)
+-			options->abbrev = MINIMUM_ABBREV;
+-		else if (the_hash_algo->hexsz < options->abbrev)
+-			options->abbrev = the_hash_algo->hexsz;
 -	}
- 	else if (!strcmp(arg, "--no-abbrev"))
- 		options->abbrev = 0;
- 	else if (!strcmp(arg, "--abbrev"))
+ 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
+ 		options->a_prefix = optarg;
+ 		return argcount;
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 2733393546..6e2e8d6273 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -22,8 +22,8 @@ int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
+ 				     opt->long_name);
+ 		if (v && v < MINIMUM_ABBREV)
+ 			v = MINIMUM_ABBREV;
+-		else if (v > 40)
+-			v = 40;
++		else if (v > the_hash_algo->hexsz)
++			v = the_hash_algo->hexsz;
+ 	}
+ 	*(int *)(opt->value) = v;
+ 	return 0;
 -- 
 2.21.0.548.gd3c7d92dc2
 
