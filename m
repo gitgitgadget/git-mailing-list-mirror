@@ -2,135 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8337420248
-	for <e@80x24.org>; Sun, 24 Mar 2019 08:22:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAFC220248
+	for <e@80x24.org>; Sun, 24 Mar 2019 08:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728604AbfCXIW4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 04:22:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42144 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728372AbfCXIW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 04:22:56 -0400
-Received: by mail-pg1-f196.google.com with SMTP id p6so4344204pgh.9
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:22:55 -0700 (PDT)
+        id S1728555AbfCXIpt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 04:45:49 -0400
+Received: from mail-pg1-f180.google.com ([209.85.215.180]:42993 "EHLO
+        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726173AbfCXIpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 04:45:49 -0400
+Received: by mail-pg1-f180.google.com with SMTP id p6so4362856pgh.9
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aiSmXcPWwuUlZwOaeK3ivjrxGNj+j1bDAtipP1bbsHM=;
-        b=MMjAKCohFdfn5xZhz3Rjy5G+SQ3Ij0ejCPFN3o1T6XWk3ftL4vHCU0p1Ar2JptbCVh
-         ec77quzqwMgpUS1JJr2OzN0eKszfzasNPDejWtmnYaE9y31qjnqochFNQgkxzuK6ykZT
-         6rbaycUbNiD98FhkI4HFte1NwEgQms2N514E9RSr1bEauvyHS89uJ6PWg/ieF/BD8eHT
-         /sIBlL2weMTfpLVmyq01nQ0nR+waRQ83i2/0jlmsqv3qcs539si5Ui1Xh2UAuU+l5QJj
-         JrORx4JSI5cnNAu6wOgBigLkWVUo6+9a6Bwohv5Vz1Qg1Tw4dzZ0kxWjwazpmFUE09hl
-         ho5A==
+        bh=LeimIk1dn45YD7OMz+K4OozpDM6PWx6KWcUsm/gDZSE=;
+        b=QFW+XYSpn1YIDOWJyMl1B2vpQKdV70OOVVUl0JLIXuBj+UEtOb95JnqGjDOYP3ymtJ
+         1PJdfJ9IHKtChUQYG8Ct2jXZCmt1e/fwv7Vi6hoZ5T/9Vv5+gAG0qqR+U552UO/BUQ/k
+         oqMnE5DKWzDo3VQ83Rms6WB7s2cIJjnub7tQgr+Tsz47eHLpFy98LmMBRTjOJs8Au7E0
+         IiKyGzAUlybY0tYFtuEkIerFWATXcDV21yHmRNTjdu1oNFhQ3iTWV2jVOWPdbHPYNbX3
+         YkNalRLAz0UZ5pzp37e1YDLEm0MWPb/tWx85Wmm8UZ/6ZnJYu08gfZ7i8GO84yAH0K6x
+         GK1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aiSmXcPWwuUlZwOaeK3ivjrxGNj+j1bDAtipP1bbsHM=;
-        b=itqX0cwxy9tPUMigg4ANbpvXXT+0wcAHSHL/M6jp3K+vKY1x5vai9RzdhROlRT73ko
-         kqNqPTt/aF3UhLhQlhEjzvUyUveJ8KqJ9AnGqRAfakPzj9A9JSmIOrOoEi/XJ0GqM0un
-         zNzavHTKOYysDSIKbqH+R/aGHVWNDKZt+5jUgXVjmcGvOtu/1eKY/NxLxELsolPO5rUB
-         XiuXu9gQqARIGorKzKTjNj9RYNALULJxepb6cPV/iqkMwoka+Av3T3uB3peqMnFXBTUb
-         bSr96pr0UrGLKJZ0BjZeoHQRA3vEgR5+mRU2GxhhR1nX/uW9WwzP/9XcpCVGA+usZsTM
-         kNUA==
-X-Gm-Message-State: APjAAAU6SO8oeKhthYj3Kzwpmfy8D9jnZoys8Tt0hjECRkdcNDsu2XU9
-        Ox93tDt3DBi+NfR+hESsAz0=
-X-Google-Smtp-Source: APXvYqwxOFqu6FUVxXqqy0qD3DiZsiuKSxA/Gx4i4T+pl8ILMrZHUvvUOV6cbe1kAILL1sJXKvOs/A==
-X-Received: by 2002:a17:902:6b48:: with SMTP id g8mr18701431plt.21.1553415775574;
-        Sun, 24 Mar 2019 01:22:55 -0700 (PDT)
-Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id s79sm25236562pfa.61.2019.03.24.01.22.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Mar 2019 01:22:54 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:22:50 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 20/20] am: avoid diff_opt_parse()
-Date:   Sun, 24 Mar 2019 15:20:14 +0700
-Message-Id: <20190324082014.2041-21-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
-In-Reply-To: <20190324082014.2041-1-pclouds@gmail.com>
-References: <20190320114703.18659-1-pclouds@gmail.com>
- <20190324082014.2041-1-pclouds@gmail.com>
+        bh=LeimIk1dn45YD7OMz+K4OozpDM6PWx6KWcUsm/gDZSE=;
+        b=gM9BoFPQvIYGLD4TERD5PQpzw5n8GGQtJ7LcRPxxDj4w7NK7Jfve+MJXU7AQSBVLpL
+         QoBXHhphbSB7huTu5i9Ty+hWalH+bhbZXVzMz5GWvf49bXST9olC9m/WLWgudhGdFjY0
+         RvarEj8fQZRHEf7e6S0i5q8Hel3sM7Dh3y8ZY71jXQL49tnpyWooNqa/CDwL8zOZfzQ8
+         0GXHKmlc/wFRccmQwf/b2EWfVqTTYn3c1FaiJuecWVvDZwWxu7QFNnuBi5PExhSmQoKq
+         o4dXIbZ8r0YWHsog5erVZ2mb+FutTtXig4BI2QMJbNTEFn5f7RCI2kdncJJMqgXq2QkF
+         c7LA==
+X-Gm-Message-State: APjAAAVAVAVgfQK6OlTSqVSslX+S7tu+GNsSrE92HK0Rl1HW/2+DoNkX
+        aaweJqTCwd/2nCqybWEDpQQOVjE+GDA=
+X-Google-Smtp-Source: APXvYqzF/gqHTqbwBNnOdBa2YJGGcPqpQzh8w5Pm3oJsDvlS7wsV3s5ObZdMEJa+x9DAXhG1mcx8zw==
+X-Received: by 2002:a63:ac12:: with SMTP id v18mr16225858pge.111.1553417148669;
+        Sun, 24 Mar 2019 01:45:48 -0700 (PDT)
+Received: from localhost.localdomain ([2405:205:1486:f9d2:785d:51aa:fd3f:3c85])
+        by smtp.gmail.com with ESMTPSA id u15sm19291348pfm.163.2019.03.24.01.45.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 24 Mar 2019 01:45:48 -0700 (PDT)
+From:   Kapil Jain <jkapil.cs@gmail.com>
+To:     christian.couder@gmail.com
+Cc:     git@vger.kernel.org, t.gummerer@gmail.com,
+        Kapil Jain <jkapil.cs@gmail.com>
+Subject: [GSoC][RFC/PATCH 2/2] userdiff: added shell script support, clears test
+Date:   Sun, 24 Mar 2019 14:15:23 +0530
+Message-Id: <20190324084523.8744-1-jkapil.cs@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <CAP8UFD3K4ft7UVSFeaQzKVVGFPwcLcpTKB+sqFN9X9_j_A093w@mail.gmail.com>
+References: <CAP8UFD3K4ft7UVSFeaQzKVVGFPwcLcpTKB+sqFN9X9_j_A093w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff_opt_parse() is a heavy hammer to just set diff filter. But it's
-the only way because of the diff_status_letters[] mapping. Add a new
-API to set diff filter and use it in git-am. diff_opt_parse()'s only
-remaining call site in revision.c will be gone soon and having it here
-just because of git-am does not make sense.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Kapil Jain <jkapil.cs@gmail.com>
 ---
- builtin/am.c | 4 ++--
- diff.c       | 6 ++++++
- diff.h       | 2 ++
- 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 95370313b6..0cbf285459 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1515,11 +1515,11 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		 * review them with extra care to spot mismerges.
- 		 */
- 		struct rev_info rev_info;
--		const char *diff_filter_str = "--diff-filter=AM";
- 
- 		repo_init_revisions(the_repository, &rev_info, NULL);
- 		rev_info.diffopt.output_format = DIFF_FORMAT_NAME_STATUS;
--		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1, rev_info.prefix);
-+		rev_info.diffopt.filter |= diff_filter_bit('A');
-+		rev_info.diffopt.filter |= diff_filter_bit('M');
- 		add_pending_oid(&rev_info, "HEAD", &our_tree, 0);
- 		diff_setup_done(&rev_info.diffopt);
- 		run_diff_index(&rev_info, 1);
-diff --git a/diff.c b/diff.c
-index 8b770cd396..11f26285c3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4692,6 +4692,12 @@ static unsigned filter_bit_tst(char status, const struct diff_options *opt)
- 	return opt->filter & filter_bit[(int) status];
- }
- 
-+unsigned diff_filter_bit(char status)
-+{
-+	prepare_filter_bits();
-+	return filter_bit[(int) status];
-+}
+The test passes now, but imo the regex is not working,
+because the output of git diff with shell regex remains same
+as earlier it was without shell regex.
+
+without shell regex the output was shown as:
+-$TEST_DIRECTORY
++$TEST_DIR
+
+with shell regex the output should be:
+[-$TEST_DIRECTORY-]
+{+$TEST_DIR+}
+
+but even with shell regex the output is:
+-$TEST_DIRECTORY
++$TEST_DIR
+
+some thoughts on regex would be helpful.
+the shell regex is below:
+
 +
- static int diff_opt_diff_filter(const struct option *option,
- 				const char *optarg, int unset)
- {
-diff --git a/diff.h b/diff.h
-index 03c6afda22..f88482705c 100644
---- a/diff.h
-+++ b/diff.h
-@@ -233,6 +233,8 @@ struct diff_options {
- 	struct option *parseopts;
- };
- 
-+unsigned diff_filter_bit(char status);
++PATTERNS("shell",
++  /* Function Names */
++  "([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*\\([[:space:]]*\\)[[:space:]]*\\{",
++  /* Words */
++  "([$#@A-Za-z_\"\'][$#@A-Za-z0-9_\"\']*)"),
 +
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
- void diff_emit_submodule_add(struct diff_options *o, const char *line);
- void diff_emit_submodule_untracked(struct diff_options *o, const char *path);
+
+Thanks.
+
+ t/t4034/shell/expect | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t4034/shell/expect b/t/t4034/shell/expect
+index f2f65e7a9b..1f0d1e1d43 100644
+--- a/t/t4034/shell/expect
++++ b/t/t4034/shell/expect
+@@ -1,6 +1,6 @@
+ <BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 2fc00ad..cd34305 100644<RESET>
++<BOLD>index 32440f9..43a84e0 100644<RESET>
+ <BOLD>--- a/pre<RESET>
+ <BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1 +1 @@<RESET>
+-<RED>[-$TEST_DIRECTORY-]<RESET><GREEN>{+$TEST_DIR+}<RESET>
++<RED>$TEST_DIRECTORY<RESET><GREEN>$TEST_DIR<RESET>
 -- 
-2.21.0.548.gd3c7d92dc2
+2.20.1
 
