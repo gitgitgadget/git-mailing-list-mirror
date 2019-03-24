@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED4BE20248
-	for <e@80x24.org>; Sun, 24 Mar 2019 08:21:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9229720248
+	for <e@80x24.org>; Sun, 24 Mar 2019 08:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728486AbfCXIVS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 04:21:18 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:35026 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727727AbfCXIVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 04:21:18 -0400
-Received: by mail-pf1-f194.google.com with SMTP id t21so4312683pfe.2
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:21:17 -0700 (PDT)
+        id S1728496AbfCXIVX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 04:21:23 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33223 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727727AbfCXIVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 04:21:23 -0400
+Received: by mail-pg1-f193.google.com with SMTP id b12so4372834pgk.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 01:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ik/UldvKgnqQWpze7cA9tPU5bbegyTpwMEKC5nUu6bI=;
-        b=rJnE++oSFnyzSyrm/hIBn5P4yB8oB92DAG/2ipgLgpWb3v/RggMmS1O1xI0Bktm2Ht
-         r+/6L2tyB3vGTs9/zclDxlT9xf+ahEm8FSvXqutRpHAF15Uq8GLfveIzj1JF/dpedfep
-         58QpOx+GNs75JWV1dXdWJgrtQcL2mP8kobjpxdSyugRi1l4aLqV2dECP7SH89KfA1sfc
-         VThmbzqVXWV9P4bXrGJoHs/pEvATOHC7enh5pU0u1iQiNh2A54kODWQ7BElxKsrrOBIK
-         ZMvVopCsW9oKMtGo81cERgrB8WbNa2eJL0Z+Nb4kMGVMbKMQH7ye9gtZmm+6RDtFki1K
-         kwZg==
+        bh=fQ9tNOoo1poOm1ZLmNviPon3/Jsxu8PatTIxAKaGdoU=;
+        b=cX7PuwIYROXYN+79Y0SmP/jNvB/IqofJXKRK3/SCxwb8TyiO40JUvDwqiv4aGUBaqh
+         DlwtRIV2ySah6CRuxVC/0YPQoGX0qmUFIoZvZL0zP0fPuVWJyfVZNAmb9F2xuiQQ912N
+         shIAdM7Bzk7Eg18KhrObFD4VSKBuISJkdSsy9jkUnvwQyGy2+R+8KieJFrT6NrIj94hX
+         4S6aKFb5D4B2rWm+a3K3vuWe4TbfFQBJvQ99BjXFe2xel6E9zKZsvDFLJeP4dfMBxjtM
+         FeksFkhlonC+wMmxFsExQw9tGbaTTKKnUNvqisVk2nNOc5si/V1jU0WHI8bkr64PFFJa
+         7W7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ik/UldvKgnqQWpze7cA9tPU5bbegyTpwMEKC5nUu6bI=;
-        b=B4bzOzxzuNHY1xm3JN0pNd3mTivbFPDL2zw5dubWV5RIryhtxK7AP50N2HCYKHxLPy
-         HLwhWuPhxNwRyo1dXNMZlF7ZMyWR+/kxphCiQu9vo70PI4WD1/I2bqjZUmigjqxrjIoJ
-         ZwFqfarz/KlL2rvvVAdxKf1OrZiU4/2INsVnqeoStGwrD8VYiIH55nM+iRBM00nvUlSM
-         O+K8Fckn1fnqgpuPHQueLKrPdVsCmdLT/dZu69a8vBvBvZILNxsUdYKv06jUokXJKsGw
-         1HyFg+1cc8Yk3WWbXmZtX2G3h9EnS2n3znt3bi+Aq0EEfLjkCydscCoFzsXpPNpvDwXN
-         UANg==
-X-Gm-Message-State: APjAAAUnYfcMA+SgnTLMNgm9021mGKoU5z1i3gDAzIOcuDc96Lx/b7y4
-        t8b+YZ8hsqEWyd7eDS9PoPI=
-X-Google-Smtp-Source: APXvYqxh4kYAc1fCxaKxZOCPxgt009MbSf+LnGocUZqrl55nnYq20LU83uIrHPtwaEX0L8YLMq7Y7w==
-X-Received: by 2002:aa7:82d9:: with SMTP id f25mr17993855pfn.45.1553415677582;
-        Sun, 24 Mar 2019 01:21:17 -0700 (PDT)
+        bh=fQ9tNOoo1poOm1ZLmNviPon3/Jsxu8PatTIxAKaGdoU=;
+        b=jzuUo9A9a0FUYn9IcPJHEdjMFnprYQyUCQPKjGhEbthOedk3aoSC4x2Ysqy+Wn3tXz
+         vw1CXYTFempeRvPuOd7iTVZuCy10rWnvLn19JKTTFf3TA5tUxIz1q3yRb8LytWlJjAE/
+         5K1hXK8zVA3/Cj/bBMqsO6FCd80ONPFeEewTQYbpPwSz0bHq8T38CrXfWcvtfNVdRbNL
+         Q/G+ftGinS0ZBaUslQ9O3g/a+Eo7c5JxZ7tqIkZHhgsJ/eW2MNJcN2ccQleL4M6k03bF
+         sDuCA6rxt541hmPhyyHxIFOzPA/j7L7lOWtqJO3ztVans3uGySwvj//w01cPgoM6lGhf
+         afXw==
+X-Gm-Message-State: APjAAAWln3CbGWIDx1OsFUI34LSjGltbxGBmBMZEsFleUmxkVvXc0Ou4
+        74zCWL35NQenkSdRLhB2gmRs2mqH
+X-Google-Smtp-Source: APXvYqwbz9OB/Q5Dx/HkPlCH8fZ+Av4BW+/ec7TieMw3osTYq/gYyJunvoFOinPbO7MW/2pcRjGL/A==
+X-Received: by 2002:a62:58c7:: with SMTP id m190mr18106081pfb.4.1553415682534;
+        Sun, 24 Mar 2019 01:21:22 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id e15sm15443314pgk.30.2019.03.24.01.21.14
+        by smtp.gmail.com with ESMTPSA id y14sm16654754pgg.6.2019.03.24.01.21.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Mar 2019 01:21:16 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:21:12 +0700
+        Sun, 24 Mar 2019 01:21:21 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 24 Mar 2019 15:21:17 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 01/20] diff-parseopt: convert --ws-error-highlight
-Date:   Sun, 24 Mar 2019 15:19:55 +0700
-Message-Id: <20190324082014.2041-2-pclouds@gmail.com>
+Subject: [PATCH v2 02/20] diff-parseopt: convert --ita-[in]visible-in-index
+Date:   Sun, 24 Mar 2019 15:19:56 +0700
+Message-Id: <20190324082014.2041-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190324082014.2041-1-pclouds@gmail.com>
 References: <20190320114703.18659-1-pclouds@gmail.com>
@@ -70,64 +70,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark one more string for translation while at there.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ diff.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index ce118bb326..7bfdf08137 100644
+index 7bfdf08137..8255db6966 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4801,17 +4801,18 @@ static void enable_patch_output(int *fmt)
- 	*fmt |= DIFF_FORMAT_PATCH;
- }
- 
--static int parse_ws_error_highlight_opt(struct diff_options *opt, const char *arg)
-+static int diff_opt_ws_error_highlight(const struct option *option,
-+				       const char *arg, int unset)
- {
-+	struct diff_options *opt = option->value;
- 	int val = parse_ws_error_highlight(arg);
- 
--	if (val < 0) {
--		error("unknown value after ws-error-highlight=%.*s",
--		      -1 - val, arg);
--		return 0;
--	}
-+	BUG_ON_OPT_NEG(unset);
-+	if (val < 0)
-+		return error(_("unknown value after ws-error-highlight=%.*s"),
-+			     -1 - val, arg);
- 	opt->ws_error_highlight = val;
--	return 1;
-+	return 0;
- }
- 
- static int parse_objfind_opt(struct diff_options *opt, const char *arg)
-@@ -5234,6 +5235,9 @@ static void prep_parse_options(struct diff_options *options)
- 			 N_("show full pre- and post-image object names on the \"index\" lines")),
- 		OPT_COLOR_FLAG(0, "color", &options->use_color,
- 			       N_("show colored diff")),
-+		OPT_CALLBACK_F(0, "ws-error-highlight", options, N_("<kind>"),
-+			       N_("highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff"),
-+			       PARSE_OPT_NONEG, diff_opt_ws_error_highlight),
- 		OPT_CALLBACK_F(0, "output-indicator-new",
- 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
- 			       N_("<char>"),
-@@ -5397,9 +5401,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -5352,6 +5352,12 @@ static void prep_parse_options(struct diff_options *options)
+ 			       N_("specify how differences in submodules are shown"),
+ 			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
+ 			       diff_opt_submodule),
++		OPT_SET_INT_F(0, "ita-invisible-in-index", &options->ita_invisible_in_index,
++			      N_("hide 'git add -N' entries from the index"),
++			      1, PARSE_OPT_NONEG),
++		OPT_SET_INT_F(0, "ita-visible-in-index", &options->ita_invisible_in_index,
++			      N_("treat 'git add -N' entries as real in the index"),
++			      0, PARSE_OPT_NONEG),
+ 		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+ 		  N_("Output to a specific file"),
+ 		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
+@@ -5401,10 +5407,7 @@ int diff_opt_parse(struct diff_options *options,
  		if (cm & COLOR_MOVED_WS_ERROR)
  			return -1;
  		options->color_moved_ws_handling = cm;
--	} else if (skip_prefix(arg, "--ws-error-highlight=", &arg))
--		return parse_ws_error_highlight_opt(options, arg);
--	else if (!strcmp(arg, "--ita-invisible-in-index"))
-+	} else if (!strcmp(arg, "--ita-invisible-in-index"))
- 		options->ita_invisible_in_index = 1;
- 	else if (!strcmp(arg, "--ita-visible-in-index"))
- 		options->ita_invisible_in_index = 0;
+-	} else if (!strcmp(arg, "--ita-invisible-in-index"))
+-		options->ita_invisible_in_index = 1;
+-	else if (!strcmp(arg, "--ita-visible-in-index"))
+-		options->ita_invisible_in_index = 0;
++	}
+ 
+ 	/* misc options */
+ 	else if (!strcmp(arg, "-z"))
 -- 
 2.21.0.548.gd3c7d92dc2
 
