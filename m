@@ -2,135 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9346020248
-	for <e@80x24.org>; Sun, 24 Mar 2019 16:21:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C179320248
+	for <e@80x24.org>; Sun, 24 Mar 2019 18:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbfCXQVm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 12:21:42 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59380 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfCXQVm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 12:21:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 18F5F5B00B;
-        Sun, 24 Mar 2019 12:21:38 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=Eg8goRNRp60Fe
-        wqnjSRDhvqjouI=; b=IWR7ms3F4T+SaK8REmnYraOH/qKvzRiGAuFkbGHoXwCOB
-        yR3Uhj54frZf8pd7rlWw0XSv142W24h/lPoQFPR51VySMIndSZOPyHGtXKy77bZe
-        0hABa1nzjxT4IznCamzZKhBrmwmSshcPj8OlXD25pNBozi7ik0DDtwz9SSonu0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=InFSIqC
-        i+6mEq1vs/WMi/VeiAC4bs91sHhpQomfFTXdmXdspmhxx7uMOzn4RNgO/9EJzp+Q
-        aRUwFIDfRtFrK1fRqB1QhmVrP46pmq0zR2JT7M0HpuwMIrdAwaFj+jE7n+X/4z3O
-        7OYFFuPcjY6VeYab9wNxS88IBSGe+OKjAHJQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 102AE5B00A;
-        Sun, 24 Mar 2019 12:21:38 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A62905B009;
-        Sun, 24 Mar 2019 12:21:34 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Sun, 24 Mar 2019 12:21:31 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190324162131.GL4047@pobox.com>
-References: <20190317144747.2418514-1-martin.agren@gmail.com>
- <20190317194431.GY31362@pobox.com>
- <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
- <20190320181715.GJ31362@pobox.com>
- <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
- <20190323192756.GK4047@pobox.com>
- <20190324121619.GD312@sigill.intra.peff.net>
+        id S1727192AbfCXSJp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 14:09:45 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:43561 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726347AbfCXSJp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 14:09:45 -0400
+Received: by mail-io1-f68.google.com with SMTP id x3so5795493iol.10
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 11:09:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oxm7P/avV+sNwQlGGybXV5bAOZu4llivXlSX+5YqAkU=;
+        b=sI4ZOtKsd38um5eYi6zoLUjAhnxggdCDdP/T7kzHfEhhoMXOHxXYorUJD62vfCX68q
+         SfVD4LjFAgzXYWIBi/9/MEFUNev17HOnC4l8CU5RNY7uV72m2bVscRGkYk1l2nH1Ersh
+         bCSuVxM4hNqOZB0ZLWEw6x1Wtaln21kanyuSRPuyGLhgUiEuXFa1h3jjNfeqBhZKPNjt
+         s33UWViiX1X+dRSmNj0JxySrWR6qOpEr+eZ9Lsp5ZHiqYJ1VsZA3l2dIGsfUPciLfHQP
+         twhTGOx5sOAilgvjNPsaQJQFImewwinOAurJ0Nv1rUvDrYZzPEbxKU4+KWbKr9NUk91Q
+         EKJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oxm7P/avV+sNwQlGGybXV5bAOZu4llivXlSX+5YqAkU=;
+        b=grR0d05v3xhugYAEmPpNncxV4toYSqcbcdFCZbxeadL30n/fckeOpP7pmHmgyFmw31
+         ZcrxIY3lRtRbMNwUkqEl0HCVSF5WkWGrwAbEuGtkeHy8BkEmKG4/OQnlXYhf3lRAB1+N
+         //L3TZQeYGWQJpmLlaQ14PwKPron3NSQ6RUsCif2hNwZqQl9GL5YSVtHxbd/oOzm8thJ
+         tLLyZEdXEzQb0ezAG3qvDpxXgMU/Sa6fbkLgIpjwERZxLUPYLJun+J/sKBI7iD9+o5E4
+         R0PjxyVKZ5JH1zWC48JswE4mOJCdhc1WnuKygDMYYDtUPbH4I5YVBy4jKMc3Ypze9O4I
+         0gOg==
+X-Gm-Message-State: APjAAAV3YsI+aaEbX7rXEo40JaO63XsfpmZbbJw+XrrYOOEATZQfuGdB
+        SJGQkK8HtXORyMuKuK7dtfDdZQQbjlwD6bvVlbcy7A==
+X-Google-Smtp-Source: APXvYqzcUSG+CmWlLd1yM7xjH5Oj/VGXT4omtsZc5eHsFgH79K9qAhuZZ9K6P7gck1ft5Oia96q5oAb1erQEOjQA2Wg=
+X-Received: by 2002:a5e:d717:: with SMTP id v23mr15530113iom.66.1553450983892;
+ Sun, 24 Mar 2019 11:09:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20190324121619.GD312@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: E487B5D6-4E50-11E9-8954-EE24A11ADF13-09356542!pb-smtp21.pobox.com
+References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190322232237.13293-2-matheus.bernardino@usp.br>
+In-Reply-To: <20190322232237.13293-2-matheus.bernardino@usp.br>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sun, 24 Mar 2019 15:09:32 -0300
+Message-ID: <CAHd-oW5Yg=dLfLhVmwkOLC=OW=SYRCXCq+pqn=bKNDY=qydfDg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 1/7] clone: test for our behavior on odd
+ objects/* content
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
+        Alex Riesen <raa.lkml@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Mar 22, 2019 at 8:22 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
+>
+> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>
+> Add tests for what happens when we perform a local clone on a repo
+> containing odd files at .git/object directory, such as symlinks to other
+> dirs, or unknown files.
+>
+> I'm bending over backwards here to avoid a SHA1 dependency. See [1]
+> for an earlier and simpler version that hardcoded a SHA-1s.
+>
+> This behavior has been the same for a *long* time, but hasn't been
+> tested for.
+>
+> There's a good post-hoc argument to be made for copying over unknown
+> things, e.g. I'd like a git version that doesn't know about the
+> commit-graph to copy it under "clone --local" so a newer git version
+> can make use of it.
+>
+> In follow-up commits we'll look at changing some of this behavior, but
+> for now let's just assert it as-is so we'll notice what we'll change
+> later.
+>
+> 1. https://public-inbox.org/git/20190226002625.13022-5-avarab@gmail.com/
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>  t/t5604-clone-reference.sh | 116 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>
+> diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
+> index 4320082b1b..708b1a2c66 100755
+> --- a/t/t5604-clone-reference.sh
+> +++ b/t/t5604-clone-reference.sh
+> @@ -221,4 +221,120 @@ test_expect_success 'clone, dissociate from alterna=
+tes' '
+>         ( cd C && git fsck )
+>  '
+>
+> +test_expect_success 'setup repo with garbage in objects/*' '
+> +       git init S &&
+> +       (
+> +               cd S &&
+> +               test_commit A &&
+> +
+> +               cd .git/objects &&
+> +               >.some-hidden-file &&
+> +               >some-file &&
+> +               mkdir .some-hidden-dir &&
+> +               >.some-hidden-dir/some-file &&
+> +               >.some-hidden-dir/.some-dot-file &&
+> +               mkdir some-dir &&
+> +               >some-dir/some-file &&
+> +               >some-dir/.some-dot-file
+> +       )
+> +'
+> +
+> +test_expect_success 'clone a repo with garbage in objects/*' '
+> +       for option in --local --no-hardlinks --shared --dissociate
+> +       do
+> +               git clone $option S S$option || return 1 &&
+> +               git -C S$option fsck || return 1
+> +       done &&
+> +       find S-* -name "*some*" | sort >actual &&
+> +       cat >expected <<-EOF &&
+> +       S--dissociate/.git/objects/.some-hidden-file
+> +       S--dissociate/.git/objects/some-dir
+> +       S--dissociate/.git/objects/some-dir/.some-dot-file
+> +       S--dissociate/.git/objects/some-dir/some-file
+> +       S--dissociate/.git/objects/some-file
+> +       S--local/.git/objects/.some-hidden-file
+> +       S--local/.git/objects/some-dir
+> +       S--local/.git/objects/some-dir/.some-dot-file
+> +       S--local/.git/objects/some-dir/some-file
+> +       S--local/.git/objects/some-file
+> +       S--no-hardlinks/.git/objects/.some-hidden-file
+> +       S--no-hardlinks/.git/objects/some-dir
+> +       S--no-hardlinks/.git/objects/some-dir/.some-dot-file
+> +       S--no-hardlinks/.git/objects/some-dir/some-file
+> +       S--no-hardlinks/.git/objects/some-file
+> +       EOF
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success SYMLINKS 'setup repo with manually symlinked dirs an=
+d unknown files at objects/' '
+> +       git init T &&
+> +       (
+> +               cd T &&
+> +               test_commit A &&
+> +               git gc &&
+> +               (
+> +                       cd .git/objects &&
+> +                       mv pack packs &&
+> +                       ln -s packs pack
+> +               ) &&
+> +               test_commit B &&
+> +               (
+> +                       cd .git/objects &&
+> +                       find ?? -type d >loose-dirs &&
+> +                       last_loose=3D$(tail -n 1 loose-dirs) &&
+> +                       rm -f loose-dirs &&
+> +                       mv $last_loose a-loose-dir &&
+> +                       ln -s a-loose-dir $last_loose &&
+> +                       find . -type f | sort >../../../T.objects-files.r=
+aw &&
+> +                       echo unknown_content> unknown_file
+> +               )
+> +       ) &&
+> +       git -C T fsck &&
+> +       git -C T rev-list --all --objects >T.objects
+> +'
+> +
+> +
+> +test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown=
+ files at objects/' '
+> +       for option in --local --no-hardlinks --shared --dissociate
+> +       do
+> +               git clone $option T T$option || return 1 &&
+> +               git -C T$option fsck || return 1 &&
+> +               git -C T$option rev-list --all --objects >T$option.object=
+s &&
+> +               test_cmp T.objects T$option.objects &&
+> +               (
+> +                       cd T$option/.git/objects &&
+> +                       find . -type f | sort >../../../T$option.objects-=
+files.raw
+> +               )
+> +       done &&
+> +
+> +       for raw in $(ls T*.raw)
+> +       do
+> +               sed -e "s!/..\$!/X!; s!/../!/Y/!; s![0-9a-f]\{38,\}!Z!" \
+> +                   -e "/multi-pack-index/d" -e "/commit-graph/d" <$raw >=
+$raw.de-sha || return 1
 
-Jeff King wrote:
-> On Sat, Mar 23, 2019 at 03:27:56PM -0400, Todd Zullinger wrote:
->=20
->> I updated my system to asciidoctor-2.0.0 last night and now
->> I can't even generate the man pages properly, because the
->> docbook45 converter was removed.  I'll have to see if I
->> missed some other required update. :/
->=20
-> I ran into that, too. Using ASCIIDOC_DOCBOOK=3Ddocbook5 worked. The out=
-put
-> looked OK to me, but I only eyeballed it briefly. It's possible there
-> are subtle problems.
+=C3=86var, maybe I'm missing something here, but do we really need the
+first sed command ("s!/..\$!/X!") ?
 
-Interesting.  I did that last night as well, but it only led
-to more errors.  I'm curious why manpage builds work for you
-and not for me.
 
-On my fedora 29 test system, ASCIIDOC_DOCBOOK=3Ddocbook5 leads
-to a validation failure from xmlto, since docbook5 doesn't
-use a DTD=B9.  I added XMLTO_EXTRA =3D --skip-validation to the
-USE_ASCIIDOCTOR block, which can build many of the man
-pages, but fails when it gets to git-blame due to use of
-literal < > characters in the xml:
-
-    git-blame.xml:423: parser error : StartTag: invalid element name
-    <literallayout class=3D"monospaced"><40-byte hex sha1> <sourceline> <=
-resultline> <
-                                       ^
-
-While this may be a real issue in the formatting of
-git-blame.txt which we should fix, I'm suspicious of that
-due to the number of other files similarly affected:
-
-    git-blame.txt
-    git-diff-files.txt
-    git-diff-index.txt
-    git-diff-tree.txt
-    git-diff.txt
-    git-format-patch.txt
-    git-http-fetch.txt
-    git-log.txt
-    git-rebase.txt
-    git-rev-list.txt
-    git-show.txt
-    git-svn.txt
-
-=B9 Here's the failure I get without --skip-validation:
-[tmz@f29 Documentation]$ make USE_ASCIIDOCTOR=3D1 git.1
-    SUBDIR ../
-make[1]: 'GIT-VERSION-FILE' is up to date.
-    ASCIIDOC git.xml
-    XMLTO git.1
-xmlto: /home/tmz/src/git/Documentation/git.xml does not validate (status =
-3)
-xmlto: Fix document syntax or use --skip-validation option
-validity error : no DTD found!
-Document /home/tmz/src/git/Documentation/git.xml does not validate
-make: *** [Makefile:359: git.1] Error 13
-
-Thanks,
-
---=20
-Todd
+> +       done &&
+> +
+> +       cat >expected-files <<-EOF &&
+> +       ./Y/Z
+> +       ./Y/Z
+> +       ./a-loose-dir/Z
+> +       ./Y/Z
+> +       ./info/packs
+> +       ./pack/pack-Z.idx
+> +       ./pack/pack-Z.pack
+> +       ./packs/pack-Z.idx
+> +       ./packs/pack-Z.pack
+> +       ./unknown_file
+> +       EOF
+> +
+> +       for option in --local --dissociate --no-hardlinks
+> +       do
+> +               test_cmp expected-files T$option.objects-files.raw.de-sha=
+ || return 1
+> +       done &&
+> +
+> +       cat >expected-files <<-EOF &&
+> +       ./info/alternates
+> +       EOF
+> +       test_cmp expected-files T--shared.objects-files.raw
+> +'
+> +
+>  test_done
+> --
+> 2.20.1
+>
