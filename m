@@ -2,75 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_05,DEAR_SOMETHING,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC9220248
-	for <e@80x24.org>; Sun, 24 Mar 2019 03:46:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4A8C20248
+	for <e@80x24.org>; Sun, 24 Mar 2019 07:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727808AbfCXDqT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Mar 2019 23:46:19 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38308 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727706AbfCXDqT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Mar 2019 23:46:19 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a188so5652298wmf.3
-        for <git@vger.kernel.org>; Sat, 23 Mar 2019 20:46:18 -0700 (PDT)
+        id S1728040AbfCXHrP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 03:47:15 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33025 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbfCXHrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 03:47:15 -0400
+Received: by mail-pg1-f193.google.com with SMTP id b12so4344913pgk.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 00:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=emktg-xyz.20150623.gappssmtp.com; s=20150623;
+        h=from:message-id:date:subject:to:mime-version
+         :content-transfer-encoding;
+        bh=aL1b6PZllhCjYCOOR2cND9daF4wguryp7o1UrOAVK2M=;
+        b=Zj9F7m91E9dWBXtgzb9rrCqrHpecZv05O1LNRvk0aO4GMI0w0OsiGLUDq3ip8tYIVQ
+         nVm5RJ+Ht+FozbDvbY4MMwdryQIHIQoWjsevPUwD9Zyb166gFRNt99TpzDF2fvKlAS/W
+         xAaen71WSaoOtzERrguoVGpWhyLYvI+s2oH3Hh/2zpgFA5fpB5SZERZLDrzqE242lLwi
+         Nxx8VJ7kk6z3V3vu7xf1eqbACz6sdKTb3QbmYvIRgVkHUKxny0WA8XhZsRSm/IgQPeek
+         PQDDJMrK9yJmGABzI/zCio0KZSWz2jqP2anoMYBYPsWdrtg78vhJuz7i478bWr9hPXwb
+         jyuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nXOnFL4oTfdt3opn8B/JahlB1o6Y8alshRD6YrDZymI=;
-        b=mxTt035x1jKO6dj7pbMH/nzGGNZQwMrid6dvUlyzNlwzbP5BB5oCADEh2m0qa/pjAS
-         Lb1xzan9IMdShaL1++zbqyTsU272bFsj58vTgjD/Om5q6WvvcDWezfKL4Lf79hHyMHMD
-         OY5822CmVGF+6xRJ9NgOlBFuXOfp4egn1Z3AgQGCluUC5m62L4tdE9X3Nmw840AzozFN
-         OfqX3U6ZhRyegIUyBqfaxR61oTJYEs3uXmgbunw2HrFNfWAkWwzFzIbIdrexdLE9JBDi
-         X1SWof/pXmPpQIiToaNz/C/oH3TVtXZ3kOTRPxVr9/86r0wHgD1uFOP2fUE614SXphpB
-         mt7A==
-X-Gm-Message-State: APjAAAXyklNQgwxDMDfw0n5YvOqWHzUWhKKB3axguoXy9DKr0PAsv5d9
-        CKlF9P8eRS/13oPcbTYBslu1insIhLnHFVIze2k=
-X-Google-Smtp-Source: APXvYqzx+WQ5RBhQVw7oQ4EgxqbgmWdd/ylfcHqkemSwkxBISJNBar7p28OJ7czFeqh7g0zk+weIRMUbAKCdWs/5PVA=
-X-Received: by 2002:a7b:cd9a:: with SMTP id y26mr1494587wmj.31.1553399178023;
- Sat, 23 Mar 2019 20:46:18 -0700 (PDT)
+        h=x-gm-message-state:from:message-id:date:subject:to:mime-version
+         :content-transfer-encoding;
+        bh=aL1b6PZllhCjYCOOR2cND9daF4wguryp7o1UrOAVK2M=;
+        b=KMIMy7kgP7aSYDptcuk/GOUJnFRmU+XVxNt06CDn19w+5qr3ckEHbZxEALsDwz1RxJ
+         /Q4GTA2gMubZvw1EyUiBm1p/jQ+HEcaKXgTxnP9Iy/rYh7fh92SajsFOWTATdM0Yxdjt
+         tFjBBgQw57UiBnib+okDrofQlIo6SQHhrLwD7eTrThY7aqOh/YaSUGMngX1AMtebcvjc
+         UKYnwsNszyhiVbK20YYrdHfxVs+/ElijcQ5EIZTOJtYFAX4iIruTeiSZM7K7uiv8gYxq
+         mzblt726PlIXSLy0GJLSp+SmSLCt09yAoGu5qRK5epgmzF02HREhhBNnx0zq95ChYKHy
+         +/0A==
+X-Gm-Message-State: APjAAAU1K526wqD7lw/2B9hwOguwUsRjtfMoZNEpJAF9zRRGblMMSZst
+        etZe3nlacDBehWad7S+IQFji1kSEmbk=
+X-Google-Smtp-Source: APXvYqwPWj/fNR7TVaqlOYtBi0nHve150T/ul1X0ioJUJymzOsroi4cwqaHbkFNdgh0Uqp/T8gP9tA==
+X-Received: by 2002:a63:1cd:: with SMTP id 196mr17483751pgb.58.1553413634619;
+        Sun, 24 Mar 2019 00:47:14 -0700 (PDT)
+Received: from [127.0.0.1] ([139.59.56.246])
+        by smtp.gmail.com with ESMTPSA id f87sm18642283pff.38.2019.03.24.00.47.13
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 24 Mar 2019 00:47:14 -0700 (PDT)
+From:   Shane <tariq@emktg.xyz>
+X-Google-Original-From: Shane <saeed@aifsco.xyz>
+Message-ID: <0fd3b77461728c42d3643b72df896b5e@swift.generated>
+Date:   Sun, 24 Mar 2019 07:47:11 +0000
+Subject: Software, Website & SEO
+To:     git@vger.kernel.org
 MIME-Version: 1.0
-References: <cover.1553354374.git.liu.denton@gmail.com> <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
-In-Reply-To: <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 23 Mar 2019 23:46:09 -0400
-Message-ID: <CAPig+cT=jW0w==1ipD4Pem6Y+7orSH5q39j0rBhF87C8AT6Zjg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 23, 2019 at 11:25 AM Denton Liu <liu.denton@gmail.com> wrote:>
-> [...]
-> Since rebasing onto the merge base of the branch and the upstream is
-> such a common case, introduce the --keep-base option as a shortcut.
-> [...]
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> @@ -1541,10 +1551,19 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->         /* Make sure the branch to rebase onto is valid. */
-> -       if (!options.onto_name)
-> +       if (keep_base) {
-> +           strbuf_reset(&buf);
-> +           strbuf_addstr(&buf, options.upstream_name);
-> +           strbuf_addstr(&buf, "...");
-> +           options.onto_name = xstrdup(buf.buf);
-> +       } else if (!options.onto_name)
->                 options.onto_name = options.upstream_name;
->         if (strstr(options.onto_name, "...")) {
->                 if (get_oid_mb(options.onto_name, &merge_base) < 0)
-> +                   if (keep_base)
-> +                       die(_("'%s': need exactly one merge base with branch"),
-> +                               options.upstream_name);
-> +                   else
+Dear Sir/Ma=E2=80=99am,
 
-Style: Indent with tabs, not spaces.
+We are an Web Design & Development company, co=
+mprising young and dynamic professionals. We have executed a number of proj=
+ects in the below mentioned categories:
+
+Website Design & Development=
+
+PHP & MySQL website application development
+E-Commerce Applications/ W=
+ebsites
+Laravel & VueJS Applications
+Single Page Application(SPA) using=
+ VueJS / AngularJS (Javascript)
+SEO & SMM
+Email Marketing
+Content Wri=
+ting
+
+We are extremely competitive and have worked for a lot of compani=
+es, globally, assisting them in developing their company=E2=80=99s & person=
+al websites & customized business applications.
+
+Shawn
+Online Marketi=
+ng Manager
+Mobile/Whatsapp: 0091 7081 7081 71
