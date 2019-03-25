@@ -2,94 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648E020248
-	for <e@80x24.org>; Mon, 25 Mar 2019 18:50:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A663D20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 19:00:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729610AbfCYSu4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 14:50:56 -0400
-Received: from mout.gmx.net ([212.227.15.18]:35171 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728912AbfCYSuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 14:50:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553539854;
-        bh=ol3ZbTRawirZXgrJhsBNw2iX9PqngRKk9P4opAatS1Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Bdua6WzwJ5v4aOKklfqWoy8Rt26KOybbJRFzBQLIFOO1D+f+CtSTZDY9SwibcAWWn
-         SRmtmjtuJmpPSqhsYJc/pMgsDdI86RTp+Nd8ogJJVFKpZLLRw7DQPjVNBhsvpVSakK
-         Ps1DsBtxt8JEqJfDINY4IwERuYEPceg2BOi8FT4I=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxgHz-1gtZ6k3zPH-017AKD; Mon, 25
- Mar 2019 19:50:54 +0100
-Date:   Mon, 25 Mar 2019 19:50:38 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-In-Reply-To: <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903251948200.41@tvgsbejvaqbjf.bet>
-References: <cover.1553354374.git.liu.denton@gmail.com> <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729238AbfCYTAr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 15:00:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59103 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728912AbfCYTAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 15:00:47 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 15AD313C739;
+        Mon, 25 Mar 2019 15:00:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=9uqtDaz9Fzziu
+        pQRjuXZXuGmF/I=; b=na73hDZWouYxkYxHaNQrmYOxyhD3C6JLvfsajhlS/1JFP
+        76vp5sHtEqeI0rl2vEutz66CvifSCc4hgloPuPwpo23WtjjtN7DCx5beeQd0TVgp
+        gt0qv14rD2S3/Ep00OoZWK3Y0S7gpWd4SKiQ6cS0avlG6F7PzbzE+cnJxjWpFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=viplfyq
+        74aDk9P/JIqB8bJskUScneyDp0Nl5IebEmmAFGGzRxEmKvqFs9Tz2dQStXA6tTak
+        lT/vkHFYpuqIkxRt97SkGNQn1hZcWbnT+71bq6lLrJOCbP++rGdO+ODYxZSmYi5U
+        H6kbCuqA+zddq2LjvnP68116tmN1viPCJOqU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B95E13C737;
+        Mon, 25 Mar 2019 15:00:45 -0400 (EDT)
+Received: from pobox.com (unknown [173.67.141.44])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7618813C736;
+        Mon, 25 Mar 2019 15:00:43 -0400 (EDT)
+Date:   Mon, 25 Mar 2019 15:00:41 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+Message-ID: <20190325190041.GM4047@pobox.com>
+References: <20190317144747.2418514-1-martin.agren@gmail.com>
+ <20190317194431.GY31362@pobox.com>
+ <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
+ <20190320181715.GJ31362@pobox.com>
+ <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
+ <20190323192756.GK4047@pobox.com>
+ <20190324121619.GD312@sigill.intra.peff.net>
+ <20190324162131.GL4047@pobox.com>
+ <20190325150633.GC19929@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NOTzdg+AJo4h1B5aEyzAlF5MJi/HVMV3L7p78fdQjgn2eJb/WsC
- sU0i5K6sUoDrgAxITrKqYKgvusZqj6WlTQMuA1x8v6LjyOY1FhxkfZkd4vEisPHLoSlnMxt
- sIa9MD3xMmk5pH3IwSJAC84tBmmyvn735WrVHWPAV7w7DZ2yr4I8+04gRwug/pNCa5laUV4
- 9EPrX1fEWS/N7xsVfQOUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:U+RY+6W0oPM=:AUR1pqOSe0r2Brp3fMBZSk
- dSiFzCTa/GroZ5ZWQhXnh/hZX8pvbOi10EQYUhS1cyQD4667Pzx+pzrjy5MwYRJM/HKuaBJOc
- ATiAbkQimpND/XYyAG3TTU+8sqFht+4+HMTfKrCBUxJejPuIbZBYAKX4VoNmJVRj0M3JDyhcd
- O50UJ/Szdv+gZ5jA1qEaHqb+j89yU2eeLFXnXyGtkB5JKT0BgarjeZ97ECfV+byEzrsK64Qgt
- /7+T9qYolSSwo2gx/VaxdHZMsg52XQT20hAoIzy+Xet5u0+X97PMMwO4gHmsCstd1HvjKP60n
- cePaZXncDDBpqEmf4W5zMaskZ3UwSBNFYZYT90Pam97aBIJ0SDHV0sabHeCABj2fsPT+ItjqQ
- sHFf4j/gJAqSfr1iZqe4RjioZxW/PgmeroKPGe/35ec3mdbpg1evaKbacSs6MEq9xXPPB9VDn
- yCpBjfxSqsmYLy0aKJldtxeX45QhLG9FNymENES++x+u0C9fxfi9QbZkATzPqJGOe2mucQGXV
- F822L935m91FhckDYgxA22fETngasLB+INwnCs600miAUhdt1KuVGXnR8c3o8hQh8nfQgOxmX
- +Vopu0FMFnVrF2Pf03jfAt7MMMCdqyjlOwwk5hS1mBXmNUW72AbZ4VN0WpluE/i42QqFtgMqR
- jhVXLiGOkD0Dm4JaEWxbrS1lvIfuGeEgvjfiqbOXBaaXUm4fvu1OYchvakU1EfTcc7/7f8Pb0
- 84cEE103G9fmEt33PWSCVdD781xnFnAIwL6lZ+HTX8hQ+K0AhUtH/rXbsRT8j9zPeipEafbJn
- CL8rm7dq7MO9uREZjVBk90AiuvuM6PT9CHN1NchSILCrQ6SH6sePoD+XQ3NI9bNF0aKiyoSNU
- QNpyZYRUV0W8Ii7T30VgCq2XDM7SyKwjemCDeQHLFq+pgZ/BTocJMORxgqTYWL9IBP9GiHSc5
- AFzTiK/yW0A==
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20190325150633.GC19929@sigill.intra.peff.net>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 4A5705DA-4F30-11E9-85FA-DF19F34BB12D-09356542!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Hi,
 
-On Sat, 23 Mar 2019, Denton Liu wrote:
+Jeff King wrote:
+> On Sun, Mar 24, 2019 at 12:21:31PM -0400, Todd Zullinger wrote:
+>> I'm curious why manpage builds work for you and not for me.
+>=20
+> I think it's because I'm an idiot. I must have only been using 2.0.0
+> when I was looking at the XML output manually (for the refmiscinfo
+> lines), and never actually rendered it to roff. I get the same problem
+> when I try a full build.
 
-> [...]
->
-> This allows us to rewrite the above as
->
-> 	git rebase -i --keep-base master
->
-> and
->
-> 	git rebase -x ./test.sh --keep-base master
->
-> respectively.
+Ahh.  I was hoping you'd tell me that I was a fool. :)
 
-Just a quick note: this breaks t5407 because that test uses `git rebase
-=2D-keep` and expects that abbreviated option to be expanded to
-`--keep-empty`, which is now no longer the only possible expansion.
+>> On my fedora 29 test system, ASCIIDOC_DOCBOOK=3Ddocbook5 leads
+>> to a validation failure from xmlto, since docbook5 doesn't
+>> use a DTD=B9.  I added XMLTO_EXTRA =3D --skip-validation to the
+>> USE_ASCIIDOCTOR block, which can build many of the man
+>> pages, but fails when it gets to git-blame due to use of
+>> literal < > characters in the xml:
+>>=20
+>>     git-blame.xml:423: parser error : StartTag: invalid element name
+>>     <literallayout class=3D"monospaced"><40-byte hex sha1> <sourceline=
+> <resultline> <
+>>                                        ^
+>=20
+> That seems like a bug in asciidoctor, which ought to be quoting the "<"=
+.
+> We certainly can't quote it ourselves (we don't even know that our
+> backend output is going to a format that needs angle brackets quoted).
 
-I just submitted a patch series to fix that, and other uses of abbreviated
-options in the test suite, in
-https://public-inbox.org/git/pull.167.git.gitgitgadget@gmail.com/T/#t
+Yep, it seems so.  I filed this upstream:
 
-Ciao,
-Johannes
+https://github.com/asciidoctor/asciidoctor/issues/3205
 
-P.S.: Did you run the test suite before submitting your patches?
+I updated to asciidoctor-2.0.1 this morning to test, in case
+it was one of the issues fixed since the 2.0.0 release.
+Alas, we're the first to hit it and report it.
+
+--=20
+Todd
