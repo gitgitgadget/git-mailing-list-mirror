@@ -2,198 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D38E20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 11:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53E3A20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 12:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730780AbfCYLjS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 07:39:18 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50476 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726327AbfCYLjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 07:39:18 -0400
-Received: by mail-wm1-f65.google.com with SMTP id z11so8591518wmi.0
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 04:39:16 -0700 (PDT)
+        id S1731027AbfCYMDB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 08:03:01 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34169 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730605AbfCYMDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 08:03:01 -0400
+Received: by mail-wr1-f66.google.com with SMTP id p10so9835681wrq.1
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 05:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=FWERJbzG7LcNxFfwX8QI+mvQcYOnM7GFoBg5afcoWGA=;
-        b=LhciZY/16zbz7BKys3ZN4uh675EoLfKicnMLyh2pel0vxtt4Pp7sXRaMT4DxkvwPWh
-         thddOj+LwnQ/YGsgQkICgImfUPEU3MvJXUJc/lhxq9Hq2V+Xb5pKE4q/bUd+UTgzNhhd
-         C71pJGJpgSswSXKHRmZu1n18tDFO8IroyWclzlovLZFaAz5X5neT1lw376EQgS8JjmQy
-         AH9ca1SLwrGnGf0x7xWPhOB2ghqKXYQrpzyNGeX9+YG62wJ3NGYaRynPDiIHS56XRTBI
-         KpwpbrzT8MpEVmcxBX+aGUqrDcakHdA3t200T23zHLkN5Bc0DkH5KZ4h5weUZytuCJEt
-         RIBQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3WYviVIr01Z+srjK7ETIk+5zkQjvFvEx94yZg1/IWYI=;
+        b=P2Xfura8vN+KYQDYJil/Rfni0F7FdEv1Yq/uG7483TN4IhuWCaFzbDiJrJpk+gO+fh
+         WXLT7cvVY3nIq1KtvhIKErYII7J6gyskAPMoFWNGKO+7T/Y46QSE3BorBipUhh2yFIk1
+         0I8/S4LtUHJWUEw2Ctwlwi/n9/9REpOgHDvMrmeUJ+snw6PCv0WJigQoBHv4Myzsyxvb
+         /nMG2+HeoF5cCeqWpdDyEv4uMj6JisHTjcBRxQaq9xN6HAjC3+3z6y1GGqdHOvCZv5Pd
+         msY/RD+MeXu956JKhMVZjRQO85qx5zw5OhpaROG9i0UPNkjqc3SeakWKs8Zr390TQx8E
+         cEQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=FWERJbzG7LcNxFfwX8QI+mvQcYOnM7GFoBg5afcoWGA=;
-        b=NFGDl/Ii5qASGsUQ899V8l5YEn4B71hW+UE6C1DtuwsGMJLb2qRsmA3XixvkA4lt6x
-         jzL+BKDcKfWEHkAJB72XyqjPT1pIrPRmwezf/ZoVG3u9LUITeEBnAJVmeyh5DoAty9ly
-         VOhpVPV+vAXG6Wcxyjd7NQiw3r4dsTPca+7nAFEJfjYt2GbbROVuUKx1bzgBc4YwEwaz
-         r1dg8W+VmefJAOlAarFSh4aA2jIq3tFxgF5gPXdA9ZpCjIbHEmT+3iJ3mka+x0rc52Eh
-         R/yfIiTd8snHcLox/v2wE1BKYPvyZygVfg6CniQp+BNoUWlCSnVF1ulKnZcUuUQTuzcB
-         L4Ig==
-X-Gm-Message-State: APjAAAWqdqGjn+f5eH0egSMqxUMAMBu3zcalvI4jnmHZp8BPMCvT2+0E
-        64qnJILdHEM7k6KBnebs3qM=
-X-Google-Smtp-Source: APXvYqyG5gp71s27qycmbUjBtK9x9KUIhk80zAk0i4Wb/vEBYRnNYPYpgqc5KHGR/xDsgCnIQF5Vrg==
-X-Received: by 2002:a7b:cb04:: with SMTP id u4mr12088940wmj.18.1553513956258;
-        Mon, 25 Mar 2019 04:39:16 -0700 (PDT)
-Received: from szeder.dev (x4d0c296b.dyn.telefonica.de. [77.12.41.107])
-        by smtp.gmail.com with ESMTPSA id b3sm18936105wrx.57.2019.03.25.04.39.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Mar 2019 04:39:15 -0700 (PDT)
-Date:   Mon, 25 Mar 2019 12:39:13 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Luke Mewburn <luke@mewburn.net>
-Subject: Re: [PATCH 2/5] progress: return early when in the background
-Message-ID: <20190325113913.GL22459@szeder.dev>
-References: <20190325103844.26749-1-szeder.dev@gmail.com>
- <20190325103844.26749-3-szeder.dev@gmail.com>
- <8736nbcitc.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=3WYviVIr01Z+srjK7ETIk+5zkQjvFvEx94yZg1/IWYI=;
+        b=X0kEJy8hwxRvr6wQJv/fB65YboPDJcapF5osqvLuYJXw1ZSDVUclVkLjQDNGBhOvi0
+         GbMX+HsLB006XSXwfPtTdvq4zu8GOtfLGJYFQsgekM9Igbzl73o6xhtRCAqx/G9Dqiyk
+         7UpXQAJnY3mmHLK5jEUOrWjKshNeibezXmQyvah3H3dA3JS8aQWihRuW+AGA6qb6Txme
+         ma6E1cadHxlmdhQqWi3GGgxBhVntehkIgtGTPDkUD/Lii0WVDPqNcYBaoexNq57WTIzo
+         AB4foWo2/OGI1A0JR9kB57Xf1P0WUiu5kPfskhyA6BnUYaJIXdbkY8iS5+L0pnP7GgT7
+         kmjA==
+X-Gm-Message-State: APjAAAWSW/XRmRqdH45MNthPio6bX3r01c/3cysI/1bdOIiUfhrrG1Hw
+        kVeO7VkhRJfb4A68BvqnEl2E4Tg9
+X-Google-Smtp-Source: APXvYqxKasxUSlefNobGA5QpH+l9g1nxZzABgO6uZI7s4Lbm4CT7hB4SnR7sDm6iN4bO2ofPQP935Q==
+X-Received: by 2002:adf:e683:: with SMTP id r3mr3223943wrm.286.1553515379705;
+        Mon, 25 Mar 2019 05:02:59 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id s12sm15076274wmj.42.2019.03.25.05.02.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Mar 2019 05:02:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] commit-graph: fix sparse 'NULL pointer' warning
+References: <1908832c-8dd0-377e-917b-acb33b00273c@ramsayjones.plus.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <1908832c-8dd0-377e-917b-acb33b00273c@ramsayjones.plus.com>
+Date:   Mon, 25 Mar 2019 13:02:58 +0100
+Message-ID: <871s2vcgb1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8736nbcitc.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 12:08:47PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Mar 25 2019, SZEDER Gábor wrote:
-> 
-> > When a git process runs in the background, it doesn't display
-> > progress, only the final "done" line [1].  The condition to check that
-> > are a bit too deep in the display() function, and thus it calculates
-> > the progress percentage even when no progress will be displayed
-> > anyway.
-> >
-> > Restructure the display() function to return early when we are in the
-> > background, which prevents the unnecessary progress percentae
-> > calculation, and make the function look a bit better by losing one
-> > level of indentation.
-> >
-> > [1] 85cb8906f0 (progress: no progress in background, 2015-04-13)
-> 
-> CC-ing the author of that patch.
-> 
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  progress.c | 26 ++++++++++++++------------
-> >  1 file changed, 14 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/progress.c b/progress.c
-> > index 02a20e7d58..b57c0dae16 100644
-> > --- a/progress.c
-> > +++ b/progress.c
-> > @@ -86,28 +86,30 @@ static void display(struct progress *progress, uint64_t n, const char *done)
-> >  		return;
-> >
-> >  	progress->last_value = n;
-> > +
-> > +	if (!is_foreground_fd(fileno(stderr)) && !done) {
-> > +		progress_update = 0;
-> > +		return;
-> > +	}
-> > +
-> >  	tp = (progress->throughput) ? progress->throughput->display.buf : "";
-> >  	eol = done ? done : "   \r";
-> >  	if (progress->total) {
-> >  		unsigned percent = n * 100 / progress->total;
-> >  		if (percent != progress->last_percent || progress_update) {
-> >  			progress->last_percent = percent;
-> > -			if (is_foreground_fd(fileno(stderr)) || done) {
-> > -				fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
-> > -					progress->title, percent,
-> > -					(uintmax_t)n, (uintmax_t)progress->total,
-> > -					tp, eol);
-> > -				fflush(stderr);
-> > -			}
-> > +			fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
-> > +				progress->title, percent,
-> > +				(uintmax_t)n, (uintmax_t)progress->total,
-> > +				tp, eol);
-> > +			fflush(stderr);
-> >  			progress_update = 0;
-> >  			return;
-> >  		}
-> >  	} else if (progress_update) {
-> > -		if (is_foreground_fd(fileno(stderr)) || done) {
-> > -			fprintf(stderr, "%s: %"PRIuMAX"%s%s",
-> > -				progress->title, (uintmax_t)n, tp, eol);
-> > -			fflush(stderr);
-> > -		}
-> > +		fprintf(stderr, "%s: %"PRIuMAX"%s%s",
-> > +			progress->title, (uintmax_t)n, tp, eol);
-> > +		fflush(stderr);
-> >  		progress_update = 0;
-> >  		return;
-> >  	}
-> 
-> This patch looks good, just notes for potential follow-up:
-> 
->  * Is the "is_foreground_fd(fileno(stderr))" case worth moving into
->    start_progress_delay() & setting a variable? It's a few C lib calls &
->    potential syscall (getpid(...)).
 
-It depends on whether you consider the following case worth caring
-about:
+On Sat, Mar 23 2019, Ramsay Jones wrote:
 
-  $ git long-cmd
-  <shows progress>
-  Ctrl-Z!
-  $ bg
-  <silent>
-  $ fg
-  <shows progress>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi =C3=86var,
+>
+> If you need to re-roll your 'ab/commit-graph-fixes' branch, could you
+> please squash this into the relevant patch (commit aeb244adbc
+> ("commit-graph: don't early exit(1) on e.g. \"git status\"", 2019-02-21).
 
-Or:
+Thanks. Will squash & re-submit. It's still just in "pu". Is there a
+compiler that warns about it? Didn't on clang/gcc, but then again it's
+just-as-valid-C & just a style issue, so compilers don't care...
 
-  $ git long-cmd &
-  <silent>
-  $ fg
-  <shows progress>
+> This same commit (aeb244adbc) also removes the last call, outside of the
+> commit-graph.c file, to the function load_commit_graph_one(). So, this
+> function is now a file-local symbol and could be marked 'static'.
+>
+> Also, the function verify_commit_graph_lite(), introduced in commit
+> d8acf37ff7 ("commit-graph: fix segfault on e.g. \"git status\"",
+> 2019-02-21), currently has no external callers. This function is also
+> a file-local symbol and could be marked 'static', unless you have plans
+> for future external calls?
 
-By moving the is_foreground_fd() check to start_progress_delay() and
-caching its result, in the first case we would print progress even
-after the process is sent to the background, while in the second we
-wouldn't print progress even after the initially backgrounded process
-is brought to the foreground.
+Fixing these too. Just missed them. Thanks.
 
-I think the current behavior makes sense (though I'm not quite sure
-about printing the final "done" line, as I think I would be annoyed if
-it were printed from the background process while I was typing a
-longer command... but I don't run git commands in the background in
-the first place)
-
->  * Is that "|| done" part in the "progress_update" case something that
->    needs to happen? I.e. can we entirely skip the "setup signal handler"
->    part in start_progress_delay() if we detect that we're not in the
->    foreground, and then rely on the stop_progress() call to print the
->    "done"?
-
-This, too, depends on how (or whether at all) we want to handle the
-user sending the process to the background and bringing it back.
-
->    Although we set "progress_update = 1" in stop_progress_msg(), so it's
->    not *just* the signal handler but also us "faking" it, and we'd still
->    need to stash away "progress->last_value = n" in display() in that
->    backgrounding case.
-> 
->    So maybe it's as simple as it's going to get.
-
+>  commit-graph.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 4696ee0036..680c6f5714 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -100,7 +100,7 @@ struct commit_graph *load_commit_graph_one_fd_st(int =
+fd, struct stat *st)
+>  	if (graph_size < GRAPH_MIN_SIZE) {
+>  		close(fd);
+>  		error(_("commit-graph file is too small"));
+> -		return 0;
+> +		return NULL;
+>  	}
+>  	graph_map =3D xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+>  	ret =3D parse_commit_graph(graph_map, fd, graph_size);
