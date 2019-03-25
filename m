@@ -2,188 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66C2520248
-	for <e@80x24.org>; Mon, 25 Mar 2019 11:02:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9889E20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 11:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730681AbfCYLCl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 07:02:41 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:37106 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730519AbfCYLCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 07:02:40 -0400
-Received: by mail-io1-f67.google.com with SMTP id x7so7225991ioh.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 04:02:39 -0700 (PDT)
+        id S1730778AbfCYLIu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 07:08:50 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51049 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729727AbfCYLIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 07:08:50 -0400
+Received: by mail-wm1-f66.google.com with SMTP id z11so8484106wmi.0
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 04:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9ALwNxFkMCz/39OY+RyRQ/u9ZVS3W/uSpy7I5W//gRQ=;
-        b=vNo9na1wztj+jthx2XS3MqscMcs9GO3UTV1S6eWGf32kdMZj97c3odtbPn1PUcVEPL
-         A7FRIVzXZlKodce7K4mp3d/4INgjvxNXl6Jk7YcpgYA0zc+snignoLXcKYrydFAyTlhx
-         7TlJ98G1V/qR/9/aBbWaBVSHMnnhk7/qMK2K7YJs6i/toYnyz/7zC0b8JXJ7OMKMtBDc
-         5vgRopl2WUNIaiKS+R5D9Uu13DMD3fGO9ngVX1RPpDNvIByXGL1xDt/+kuWW2IDLCS2M
-         I24VIX54qlSbjiGIx93dksFI45WYVz1ypDwPQwGt892ov5lXcST2vWbeUDetEDR7Rd34
-         rXxg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pqy5QOP2QFqu1dKrWEDgLuynQWI4Rn0jjIIhZpCGE84=;
+        b=fsN0f81dbKq0CEm71OfSizl2TPZ9lfc7ZFzGdrvqpKBZFF4k9szSA+6axttW5GZZGe
+         EzpUGAmnJGLVz9vI5XkYArbcdy1kPz5kyepUtBsyEljsxk3GcbV9sN0oegTkR27T0Tjh
+         Dxl4ZeP/YqCPwxALuwfLUkySu8I+JUonONoeHoQJkjCL4w2Nw0mJYL6SnRO199rhoS5G
+         eRaYRs8tVqV1tMw0HyekPZO6vxSw7+ZTZxZ8GQOb9yqRoLh3wv6hB4p6qAGWAO5gVshC
+         3fXHYcDOO2Mf00aEQ+6HIEribOS/t0WvivtbMaSk4M1ctZ/dFfNPqW4JQVQBBr+vtTJp
+         VgqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9ALwNxFkMCz/39OY+RyRQ/u9ZVS3W/uSpy7I5W//gRQ=;
-        b=ia+D4ZgTWiOlA+vPycpOVpXFw5OE1ocZWwXBoQMfT9n6OBgb2EiOmTsjYKBS4urWaA
-         hD6f+FpAT+yqqb2Xt+53ERFwoYHh9uclEfsKSgZXl0YAg2Zl/NF445QrZzjS7RMTe2H4
-         qMgJGU42tTvtp7hKYE84HocHNQhlt0o9Yx8WshvX2y44poK6gCB6VPJM1bV7Hd5ZD3P0
-         oRvG5udLigg2FcG5pp6CSeZnnhYnS63k2LWz2jenpMaVBmZfdMXn9q5iic1K0keFq/mn
-         j8TBV3xaLBedAbniiN1HbP6KjqOn3Ce0rSy9IVuqJLHh++WZTGaq4xL8aubG/GklLp8F
-         mEsg==
-X-Gm-Message-State: APjAAAWkLMqygqeo4Qeu6zN1HFK4GvWTA0m7dC4X1aN0s39+5aqwfbrk
-        DN/WlMRTYx8lHZPoX1X5Sqp2mpUCbwE2DDlgB0o=
-X-Google-Smtp-Source: APXvYqydCXA86QcpX+QUaauaMlkaxgwVY7g+lIgEhpnhAoDA+ykYUEnA2flH5CzQYRDzAVYEk0SVdECg7dfCbiutL+w=
-X-Received: by 2002:a5d:9446:: with SMTP id x6mr2819715ior.236.1553511759512;
- Mon, 25 Mar 2019 04:02:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=pqy5QOP2QFqu1dKrWEDgLuynQWI4Rn0jjIIhZpCGE84=;
+        b=CtpylJgaqE61Xl7t9qpFaB/uYEkZqw4af9cB/D8fEqo06sTRWRSvMbyGCkEBO/mr12
+         koKhNiP/aDiUSNvyMzFbXKE3AhJDoOV1enqpLJ/I+r8yqZc5QrfLiP+fxx/sFZrFhVp4
+         6t5xojdUnHuOy2idE67EVjk7i+QHylSCbuB4TuF1R3a2zF+YRZ71UP+YyGzlSx5ejSpY
+         HYo4mJ6DmXpEz9Tut1RkSX8Hoseok5MOJRDizL/6EtvBYgjvhqv/B0f+p1X4sK87AnJu
+         8ExqhRUcDLdh3IQpd5Tmw4pIm9v9QRhcIF86MdOzPAe8QpIogdhI+E//rSLsB+k887gF
+         RLSA==
+X-Gm-Message-State: APjAAAXtZ/vgcRRTrztm+q4B3WpSMDrdH4qYzZubXGvTtoTEHpkZg7i/
+        rF9Q3K2Ucn7c9iEGtEwvOPM=
+X-Google-Smtp-Source: APXvYqyGzcJT30DpjXKqGYmDt4rZLHza5hzCCmVhvn9JCmbmf4EVpQ4u88sXbcPb6QyfxZRDTFTSug==
+X-Received: by 2002:a1c:cc0a:: with SMTP id h10mr4789955wmb.20.1553512128598;
+        Mon, 25 Mar 2019 04:08:48 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id o127sm17770111wmo.20.2019.03.25.04.08.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Mar 2019 04:08:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Luke Mewburn <luke@mewburn.net>
+Subject: Re: [PATCH 2/5] progress: return early when in the background
+References: <20190325103844.26749-1-szeder.dev@gmail.com> <20190325103844.26749-3-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190325103844.26749-3-szeder.dev@gmail.com>
+Date:   Mon, 25 Mar 2019 12:08:47 +0100
+Message-ID: <8736nbcitc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20190325103844.26749-1-szeder.dev@gmail.com> <20190325103844.26749-6-szeder.dev@gmail.com>
-In-Reply-To: <20190325103844.26749-6-szeder.dev@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 25 Mar 2019 18:02:13 +0700
-Message-ID: <CACsJy8AYC24tbDhq6LJ5FgZEcSsOYTuw-G88eXdKzbT6iP3NNw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] progress: break too long progress bar lines
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 5:41 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
+
+On Mon, Mar 25 2019, SZEDER G=C3=A1bor wrote:
+
+> When a git process runs in the background, it doesn't display
+> progress, only the final "done" line [1].  The condition to check that
+> are a bit too deep in the display() function, and thus it calculates
+> the progress percentage even when no progress will be displayed
+> anyway.
 >
-> Some of the recently added progress indicators have quite long titles,
-> which might be even longer when translated to some languages, and when
-> they are shown while operating on bigger repositories, then the
-> progress bar grows longer than the default 80 column terminal width.
+> Restructure the display() function to return early when we are in the
+> background, which prevents the unnecessary progress percentae
+> calculation, and make the function look a bit better by losing one
+> level of indentation.
 >
-> When the progress bar exceeds the width of the terminal it gets
-> line-wrapped, and after that the CR at the end doesn't return to the
-> beginning of the progress bar, but to the first column of its last
-> line.  Consequently, the first line of the previously shown progress
-> bar is not overwritten by the next, and we end up with a bunch of
-> truncated progress bar lines scrolling past:
->
->   $ LANG=3Des_ES.UTF-8 git commit-graph write
->   Encontrando commits para commit graph entre los objetos empaquetados:  =
- 2% (1599
->   Encontrando commits para commit graph entre los objetos empaquetados:  =
- 3% (1975
->   Encontrando commits para commit graph entre los objetos empaquetados:  =
- 4% (2633
->   Encontrando commits para commit graph entre los objetos empaquetados:  =
- 5% (3292
->   [...]
->
-> Prevent this by breaking progress bars after the title once they
-> exceed the width of the terminal, so the counter and optional
-> percentage and throughput, i.e. all changing parts, are on the last
-> line.  Subsequent updates will from then on only refresh the changing
-> parts, but not the title, and it will look like this:
->
->   $ LANG=3Des_ES.UTF-8 ~/src/git/git commit-graph write
->   Encontrando commits para commit graph entre los objetos empaquetados:
->     100% (6584502/6584502), listo.
->   Calculando n=C3=BAmeros de generaci=C3=B3n de commit graph: 100% (82470=
-5/824705), listo.
->   Escribiendo commit graph en 4 pasos: 100% (3298820/3298820), listo.
->
-> Note that the number of columns in the terminal is cached by
-> term_columns(), so this might not kick in when it should when a
-> terminal window is resized while the operation is running.
-> Furthermore, this change won't help if the terminal is so narrow that
-> the counters don't fit on one line, but I would put this in the "If it
-> hurts, don't do it" box.
->
+> [1] 85cb8906f0 (progress: no progress in background, 2015-04-13)
+
+CC-ing the author of that patch.
+
 > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 > ---
->  progress.c | 24 +++++++++++++++++++++---
->  1 file changed, 21 insertions(+), 3 deletions(-)
+>  progress.c | 26 ++++++++++++++------------
+>  1 file changed, 14 insertions(+), 12 deletions(-)
 >
 > diff --git a/progress.c b/progress.c
-> index b37a5398c5..36aaeea340 100644
+> index 02a20e7d58..b57c0dae16 100644
 > --- a/progress.c
 > +++ b/progress.c
-> @@ -8,7 +8,7 @@
->   * published by the Free Software Foundation.
->   */
+> @@ -86,28 +86,30 @@ static void display(struct progress *progress, uint64=
+_t n, const char *done)
+>  		return;
 >
-> -#include "git-compat-util.h"
-> +#include "cache.h"
->  #include "gettext.h"
->  #include "progress.h"
->  #include "strbuf.h"
-> @@ -37,6 +37,8 @@ struct progress {
->         struct throughput *throughput;
->         uint64_t start_ns;
->         struct strbuf counters_sb;
-> +       int title_len;
-> +       int split;
->  };
->
->  static volatile sig_atomic_t progress_update;
-> @@ -119,8 +121,22 @@ static void display(struct progress *progress, uint6=
-4_t n, const char *done)
->                 const char *eol =3D done ? done : "\r";
->                 int clear_len =3D counters_sb->len < last_count_len ?
->                                 last_count_len - counters_sb->len : 0;
-> -               fprintf(stderr, "%s: %s%-*s", progress->title,
-> -                       counters_sb->buf, clear_len, eol);
-> +               int cols =3D term_columns();
+>  	progress->last_value =3D n;
 > +
-> +               if (progress->split) {
-> +                       fprintf(stderr, "  %s%-*s", counters_sb->buf, cle=
-ar_len,
-> +                               eol);
-> +               } else if (!done &&
-> +                          cols < progress->title_len + counters_sb->len =
-+ 2) {
-> +                       clear_len =3D progress->title_len + 1 < cols ?
-> +                                   cols - progress->title_len - 1 : 0;
-> +                       fprintf(stderr, "%s:%*s\n  %s%s", progress->title=
-,
-> +                                       clear_len, "", counters_sb->buf, =
-eol);
-> +                       progress->split =3D 1;
-> +               } else {
-> +                       fprintf(stderr, "%s: %s%-*s", progress->title,
-> +                               counters_sb->buf, clear_len, eol);
-> +               }
->                 fflush(stderr);
->                 progress_update =3D 0;
->         }
-> @@ -225,6 +241,8 @@ static struct progress *start_progress_delay(const ch=
-ar *title, uint64_t total,
->         progress->throughput =3D NULL;
->         progress->start_ns =3D getnanotime();
->         strbuf_init(&progress->counters_sb, 0);
-> +       progress->title_len =3D strlen(title);
+> +	if (!is_foreground_fd(fileno(stderr)) && !done) {
+> +		progress_update =3D 0;
+> +		return;
+> +	}
+> +
+>  	tp =3D (progress->throughput) ? progress->throughput->display.buf : "";
+>  	eol =3D done ? done : "   \r";
+>  	if (progress->total) {
+>  		unsigned percent =3D n * 100 / progress->total;
+>  		if (percent !=3D progress->last_percent || progress_update) {
+>  			progress->last_percent =3D percent;
+> -			if (is_foreground_fd(fileno(stderr)) || done) {
+> -				fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+> -					progress->title, percent,
+> -					(uintmax_t)n, (uintmax_t)progress->total,
+> -					tp, eol);
+> -				fflush(stderr);
+> -			}
+> +			fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+> +				progress->title, percent,
+> +				(uintmax_t)n, (uintmax_t)progress->total,
+> +				tp, eol);
+> +			fflush(stderr);
+>  			progress_update =3D 0;
+>  			return;
+>  		}
+>  	} else if (progress_update) {
+> -		if (is_foreground_fd(fileno(stderr)) || done) {
+> -			fprintf(stderr, "%s: %"PRIuMAX"%s%s",
+> -				progress->title, (uintmax_t)n, tp, eol);
+> -			fflush(stderr);
+> -		}
+> +		fprintf(stderr, "%s: %"PRIuMAX"%s%s",
+> +			progress->title, (uintmax_t)n, tp, eol);
+> +		fflush(stderr);
+>  		progress_update =3D 0;
+>  		return;
+>  	}
 
-I think you need utf8_strwidth() so that the "cols < title_len"
-comparison above works for multibyte encoding too.
+This patch looks good, just notes for potential follow-up:
 
-> +       progress->split =3D 0;
->         set_progress_signal();
->         return progress;
->  }
-> --
-> 2.21.0.539.g07239c3a71.dirty
->
+ * Is the "is_foreground_fd(fileno(stderr))" case worth moving into
+   start_progress_delay() & setting a variable? It's a few C lib calls &
+   potential syscall (getpid(...)).
 
+ * Is that "|| done" part in the "progress_update" case something that
+   needs to happen? I.e. can we entirely skip the "setup signal handler"
+   part in start_progress_delay() if we detect that we're not in the
+   foreground, and then rely on the stop_progress() call to print the
+   "done"?
 
---=20
-Duy
+   Although we set "progress_update =3D 1" in stop_progress_msg(), so it's
+   not *just* the signal handler but also us "faking" it, and we'd still
+   need to stash away "progress->last_value =3D n" in display() in that
+   backgrounding case.
+
+   So maybe it's as simple as it's going to get.
