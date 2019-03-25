@@ -7,124 +7,113 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE21B20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 21:41:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D7A20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729548AbfCYVlh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 17:41:37 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38297 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726217AbfCYVlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 17:41:37 -0400
-Received: by mail-ed1-f65.google.com with SMTP id q14so8928431edr.5
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:41:36 -0700 (PDT)
+        id S1730168AbfCYVlk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 17:41:40 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43324 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729552AbfCYVlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:41:40 -0400
+Received: by mail-ed1-f67.google.com with SMTP id d26so8911421ede.10
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HudhKBgIm+pDyUAeRm26JkfGlSvw+VxgVHd170fsWzI=;
-        b=mjZDuAcwfiMAc4AyfPy48tOedCtcmQLOrOjJ0VsuAQJl8kflgOJAVZZ6iUcQWfIWcw
-         TmkQU+CozRvmzbJqAZ7u64r4TDpKxFzomOLncXFUVx/AwZIpBudQIUvAZm/5WwipWkSu
-         LbO9NE6djsPU8rq4eFTJQbp4dvShOEXyVYPzMy5UH714A+ftd84k9fpHWgsibutRzzs8
-         Acr7+ZMgzwcCcdeYJMCGKS5wctBxHJz2iU11DwBETO//61tvjo+1W2e7uotRzSDjKsjQ
-         DoL2E/FxlfVbds1eoqnNJ6I2dySu3FM373SwxfZsxxlQ2EsK888CcYI2asGm6ttgCh0t
-         SPNg==
+        bh=+eu+jYqaz2y0yXgdpoQz4S0wZNUQdFEE0zmHNHrw/vc=;
+        b=tlcDs7P+0cZK16C7v8L1brPYmBK3i5epR0GwgtKYePMEffSnIIOhAOda8MC1DyVhth
+         mUf58Drejv1NnBtFgb4/a4TiM1THuj87Be4hBAmToRLviqpCjVka+hrHIjf3z67hAf1b
+         aWtMMpoN026w71QrT1ffpBFzyFSSgKYedwyCIT0lG00DzZ6O2f27pvDpHXE84HIwtGJ5
+         NotV622Au9b6DmgWJeu7AtJbe2pziCzqCN4CfHVvRkDfi31z5rUx0kfQrb2TpF/Iah3W
+         RsdF86rv3lL/3Aq0zUFvFhXTfd9enMMkDKgdo2iHkDzSHevIUwd89t/dqf7LGVshDVBr
+         QZmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HudhKBgIm+pDyUAeRm26JkfGlSvw+VxgVHd170fsWzI=;
-        b=ldlg8GrC2Y53iW1frC9tNnBvEWvGaaB8K9ENSWLFniHcs7pjOD3zq12fy5MRlJIsBm
-         yTR7r6G49ddKAHpDRiVqyd6yr3aQXCEVpQnUgJdvPTbMkdrTc2B/evO6yGK2V4Edj5Or
-         TSqt8u3IsTsJ+kj01vKlUmuRQlMX2iCckEmPxqfDiuM1QbYf2+okYvEAZ5lkIDTnsSBP
-         CI/O0uVXdmewACCsStGrZziOdohdEsEzNJFptLsnFgHyxdMW4QJEmJ+P4lKiqkrpenpe
-         Kf/4vkZG740dfn8Lb9iyR71K+y+U26ZAAp/FJl+5kCj+PfqiuAqgJVhKOOWYG0j28Cml
-         q2MA==
-X-Gm-Message-State: APjAAAXVSpez4U954RHQ6cfuL1ItrxFINGPuV+mGjclfC5j0ZEADfWtr
-        z8XRP5H3KV7+MjnDml5xehHRdnB4
-X-Google-Smtp-Source: APXvYqyBrKsjguZivkNbsC1sxoZiK/E9kKXcngX41o+FazgnMva4aTrPNMD2z3MPeI6+lbFhwLCGmA==
-X-Received: by 2002:a17:906:fd5:: with SMTP id c21mr15374899ejk.86.1553550095990;
-        Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
+        bh=+eu+jYqaz2y0yXgdpoQz4S0wZNUQdFEE0zmHNHrw/vc=;
+        b=GzZtuOV8yfEouvzMqY/GsBny3JdD2HfS5jo1dpPJ4IuSCMQ9JQk2ByBNbOMSp6Nhq5
+         S30O5eUEuy3w4UVaSL/OLKskT6j+sa3zcABeNUMFvu70hhdEkCPUL1rINN4cIZM8ugZj
+         kzgux6Kd7qMH6S+qJiwCAfVrcgsYUmjSQjDb1NSXhWNWzjPLfxauZgJdi7/TqzudKGfF
+         95iraWCHIj0OF5fTmqVOwX/0SaaQwT6Ie6chiywLSQw2NWGtfwhDJm9Rsn+87caUEjPX
+         WuvQshxIbbgmzyPAdVV7EZPvMXzC205ligbk68ufktt0zJlTmpeSGg98RgA5HRitMQEd
+         at4w==
+X-Gm-Message-State: APjAAAVJ4by+XX6WPzZ5BoyooSsSStSuURgJcLG0rDhWyFjTIcjZtNUE
+        sgRLtKLwNKAabJsGqJEy+fWqVrpc
+X-Google-Smtp-Source: APXvYqy6Qv+0mOAB0PJVakLj/4wKo1GxiQLPKXPCCWJhUTMjJMU0d/fQVV7mtIkkUeyWq9KRVvOzOA==
+X-Received: by 2002:a50:be05:: with SMTP id a5mr17515198edi.87.1553550098231;
+        Mon, 25 Mar 2019 14:41:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w6sm3711777eja.50.2019.03.25.14.41.35
+        by smtp.gmail.com with ESMTPSA id d37sm6109088ede.79.2019.03.25.14.41.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
-Date:   Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
-X-Google-Original-Date: Mon, 25 Mar 2019 21:41:29 GMT
-Message-Id: <pull.162.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.162.git.gitgitgadget@gmail.com>
+        Mon, 25 Mar 2019 14:41:37 -0700 (PDT)
+Date:   Mon, 25 Mar 2019 14:41:37 -0700 (PDT)
+X-Google-Original-Date: Mon, 25 Mar 2019 21:41:32 GMT
+Message-Id: <0dad6abd2f949b81d4d763b9d8439853a35d3eab.1553550094.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.162.v2.git.gitgitgadget@gmail.com>
 References: <pull.162.git.gitgitgadget@gmail.com>
+        <pull.162.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/5] Fix make check-docs on Windows
+Subject: [PATCH v2 3/5] check-docs: really look at the documented commands
+ again
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I stumbled across this when investigating one of Duy's bugs in the CI
-builds.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Changes since v1:
+As part of the `check-docs` target, we verify that commands that are
+documented are actually in the current list of commands to be built.
 
- * We no longer add an extra space in front of the $(patsubst ...) in the
-   second loop, but fix the underlying bug that prevented check-docs' part
-   from working where it discovered documented commands that are actually
-   not installed.
- * As a fall-out, the gitremote-helpers page, which does not refer to a
-   command, but to a concept, was moved from section 1 to section 7.
- * As a second fall-out, the documentation for git remote-testgit, which is 
-   a command, but not installed, was removed.
- * As a "while at it" patch, the part of the check-docs target that tried to
-   identify commands that are listed in the help, but not implemented, was
-   fixed to no longer mistake guides like gitattributes and gitcli for
-   commands.
+However, this logic broke in 5fafce0b78 (check-docs: get documented
+command list from Makefile, 2012-08-08), when we tried to make the logic
+safer by not looking at the files in the worktree, but at the list of
+files to be generated in `Documentation/Makefile`. While this was the
+right thing to do, it failed to accommodate for the fact that `make -C
+Documentation/ print-man1`, unlike `ls Documentation/*.txt`, would *not*
+print lines starting with the prefix `Documentation/`.
 
-Johannes Schindelin (5):
-  docs: move gitremote-helpers into section 7
-  docs: do not document the `git remote-testgit` command
-  check-docs: really look at the documented commands again
-  check-docs: do not expect guide pages to correspond to commands
-  check-docs: fix for setups where executables have an extension
+At long last, let's fix this.
 
- Documentation/Makefile                |  2 +-
- Documentation/git-remote-ext.txt      |  2 +-
- Documentation/git-remote-fd.txt       |  2 +-
- Documentation/git-remote-helpers.txto |  2 +-
- Documentation/git-remote-testgit.txt  | 30 ---------------------------
- Documentation/gitremote-helpers.txt   |  4 +---
- Documentation/urls.txt                |  2 +-
- Makefile                              |  7 ++++---
- 8 files changed, 10 insertions(+), 41 deletions(-)
- delete mode 100644 Documentation/git-remote-testgit.txt
+Note: This went undetected due to a funny side effect of the
+`ALL_PROGRAMS` variable starting with a space. That space, together with
+the extra space we inserted before `$(ALL_PROGRAMS)` in the
 
+	case " $(ALL_PROGRAMS)" in
+	*" $$cmd ")
+		[...]
 
-base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-162%2Fdscho%2Fcheck-docs-on-windows-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-162/dscho/check-docs-on-windows-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/162
+construct, is responsible that this case arm is used when `cmd` is empty
+(which was clearly not intended to be the case).
 
-Range-diff vs v1:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- -:  ---------- > 1:  0ad38649c0 docs: move gitremote-helpers into section 7
- -:  ---------- > 2:  810d2c5a94 docs: do not document the `git remote-testgit` command
- -:  ---------- > 3:  0dad6abd2f check-docs: really look at the documented commands again
- -:  ---------- > 4:  1097be7678 check-docs: do not expect guide pages to correspond to commands
- 1:  f06126c3a1 ! 5:  b26aa40c61 check-docs: fix for setups where executables have an extension
-     @@ -24,7 +24,7 @@
-       	) | while read how cmd; \
-       	do \
-      -		case " $(ALL_COMMANDS) " in \
-     -+		case "  $(patsubst %$X,%,$(ALL_COMMANDS)) " in \
-     ++		case " $(patsubst %$X,%,$(ALL_COMMANDS)) " in \
-       		*" $$cmd "*)	;; \
-       		*) echo "removed but $$how: $$cmd" ;; \
-       		esac; \
-
+diff --git a/Makefile b/Makefile
+index 537493822b..76904f07fe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3099,7 +3099,7 @@ check-docs::
+ 		    -e 's/^/listed /' command-list.txt; \
+ 		$(MAKE) -C Documentation print-man1 | \
+ 		grep '\.txt$$' | \
+-		sed -e 's|Documentation/|documented |' \
++		sed -e 's|^|documented |' \
+ 		    -e 's/\.txt//'; \
+ 	) | while read how cmd; \
+ 	do \
 -- 
 gitgitgadget
+
