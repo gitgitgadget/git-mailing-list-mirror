@@ -2,90 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA7720248
-	for <e@80x24.org>; Mon, 25 Mar 2019 06:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6777920248
+	for <e@80x24.org>; Mon, 25 Mar 2019 06:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729759AbfCYGku (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 02:40:50 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:54529 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729631AbfCYGku (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 02:40:50 -0400
-Received: by mail-it1-f195.google.com with SMTP id w18so12297353itj.4
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 23:40:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=V9kZeYspdkS31n728MXPdl0ZZi5cm48mND38/KQZsTU=;
-        b=X52hLCqCHmQECFUBhfMjbllHyj+8doM8/QwNZALCUtHpEA6Gh1H7xvxqYfuRnAPJdn
-         yIXKi0ozYES6uZW/Gtx8GaoElJDuk/9ItywX7mSJ4MLfYrkqXPZFOkkUa8Pf3Q4JEt5V
-         kCrat8V26WKx37X79cacoNkIR3wx7qSY177ajvGXrfZe+IobMXxLtV+B0+P8L4GX2iQl
-         Suj6DDsbcuTqvKEfdWQ0SGpFOS1UvZ1qCZU9Xls7JerDUxXHOekqZwvsFr9gm/xGhfrN
-         GlYZvDiUm+p/PBjzjiIN/WoFJL9VjCmbzWNiVyOCkP2qzoFJ1mc6yXD+EzboGN5pUfdf
-         ZYyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=V9kZeYspdkS31n728MXPdl0ZZi5cm48mND38/KQZsTU=;
-        b=DMkb4aJURaoT6sQj7rS+LlwDIxiJ3ruPmQoYPsf3xVKkBJ8zKW1oSrFbKKIZw+zEoF
-         l0/5oF9aSkAF1xaN9lPSbz7kwqWVei2gSEaO+taZfSl7q1iF6e5sItAFIrc8zjcWebKj
-         eOKBF7VZeQKlpbgkuj41oEXAjz7mz7hN6ZsX88uoebCtzi5OvOq2coMmCZCHkbL6vBZy
-         etxGQph40KXYkVlCNsM7H3BpTXtAnSJpyZBHRNS+LdcjDg5GIFc+KY5QszU6JIIPQJue
-         w/8VM4qmt2xGpBJBXWIudCvUgCRYOWzpVIzasy5tnYN2jSg6MBM33XxIS1j5CBRna5Ik
-         whSg==
-X-Gm-Message-State: APjAAAUJ6zwrT9d3xLkij+h8FJ3yqCk0w3RdsVARVuBQlD5ZDM3xRmyf
-        ow0YMIh2raJtRgvluUxoonexc0jY04KI6x9IG+z8Ab+h
-X-Google-Smtp-Source: APXvYqwf3bEvIRVd+IcXGDA52amWWGn7Bj8+Mew89/loZSc2xnuIZmP5BDQIHSnqWqdmXSaIrKkIP2ayhwzou113n/k=
-X-Received: by 2002:a02:6d12:: with SMTP id m18mr17076815jac.54.1553496049899;
- Sun, 24 Mar 2019 23:40:49 -0700 (PDT)
+        id S1729699AbfCYGnN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 02:43:13 -0400
+Received: from mail.javad.com ([54.86.164.124]:54327 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729631AbfCYGnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 02:43:13 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 450003E9F6;
+        Mon, 25 Mar 2019 06:43:11 +0000 (UTC)
+Authentication-Results: mail.javad.com;
+        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=Dfzura+w;
+        dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1553496191;
+        bh=fmOv+pVRz/gsATYOSYDiSJ+xMMbWIuRMoRlbKzfSEDQ=; l=1602;
+        h=Received:From:To:Subject;
+        b=Dfzura+wEPL3ZcjSbnYSBdS7duxnSVanZ09mllwRhhHIouLsfAz4k3T9NQ/U+kFez
+         eqYyWqNRZc9iMe7jEWy7sLNG1UzaS75F9GgCqxVp45wjKG3Q/enmHmW5Qcxfo8zkV4
+         qMsp6eLCpI6SzaLExY2CCi8cjrHGETz2NZjwmXCA=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1h8JK9-0000TA-Fb; Mon, 25 Mar 2019 09:43:09 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
+References: <87efh0pdln.fsf@javad.com>
+        <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
+        <8736nj2jcl.fsf@javad.com>
+        <xmqqbm26xtum.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 25 Mar 2019 09:43:09 +0300
+In-Reply-To: <xmqqbm26xtum.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 20 Mar 2019 09:38:57 +0900")
+Message-ID: <87h8bra1z6.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 25 Mar 2019 02:40:24 -0400
-Message-ID: <CAH8yC8mDWpf0b3zykyvHRLLbYdmLB7hAk9LcsciB=dYhs4C=VA@mail.gmail.com>
-Subject: How to disable docs when building Git from sources
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Everyone,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm working on a low-resource dev-board. It is missing a lot of
-utilities to save space. I'm building Git 2.20 from sources. Make is
-failing due to '/bin/sh: 1: msgfmt: not found'. I don't cross-compile
-because that's a bigger pain in the ass than waiting for the native
-build to finish.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> I think that "first-parent is special" is the way to go indeed for
+>> porcelain, as it does make many thing easier and more convenient[*].
+>
+> Perhaps.  However ...
+>
+>> [*] One example that immediately comes to mind is "git log -p" for a
+>> merge commit. I doesn't currently (as of v2.10) show the first-parent
+>> diff, for whatever reason. "git log -p -m --first-parent" is needed to
+>> get the answer to most "obvious" question: what (merge) commit did to my
+>> mainline? "git show" has its own issues.
+>
+> ... this is very much deliberate and will remain so.
 
-I ran './configure --help' but I don't see a way to disable the docs.
-In the past I tired --disable-docs but it had no effect.
+> A single ball of wax "diff M^ M" for a merge commit is not always
+> what you would want, especially while viewing "git log -p" (without
+> "--first-parent").
 
-How do I disable the docs?
+OK, point taken. Then it's an issue of suppressing (presumably huge)
+parts of output for merge commits by default, and is only vaguely
+relevant to the "first parent is special" trend that I intended to
+discuss. So, let's leave in peace the "git log -p" for now, and let me
+try it from different angle.
 
-=========================
+How about changing "git show -p M" to output "diff -p M^ M" rather than
+"diff-tree --cc M" for merge commits? It's really surprising specifying
+-p has no visible effect.
 
-gcc -o builtin/write-tree.o -c -MF builtin/.depend/write-tree.o.d -MQ builtin/wr
-ite-tree.o -MMD -MP -I/usr/local/include -DNDEBUG -g2 -O2 -march=native -fPIC -I
-. -DHAVE_SYSINFO -DGIT_HOST_CPU="\"armv7l\"" -DUSE_LIBPCRE2 -I/usr/local/include
- -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND -I/usr/local/incl
-ude -I/usr/local/include -I/usr/local/include -DSHA1_DC -DSHA1DC_NO_STANDARD_INC
-LUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.
-h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK  -
-DHAVE_PATHS_H -DHAVE_LIBCHARSET_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_G
-ETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM '-DPROCFS_EXECUTABLE_PATH="/proc/s
-elf/exe"'  -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAG
-ER_ENV='"LESS=FRX LV=-c"'  builtin/write-tree.c
-mkdir -p po/build/locale/pt_PT/LC_MESSAGES/ && msgfmt --check --statistics -o po
-/build/locale/pt_PT/LC_MESSAGES/git.mo po/pt_PT.po
-/bin/sh: 1: msgfmt: not found
-Makefile:2533: recipe for target 'po/build/locale/pt_PT/LC_MESSAGES/git.mo' fail
-ed
-make: *** [po/build/locale/pt_PT/LC_MESSAGES/git.mo] Error 127
+Also, is current output of "git log -m", being extremely confusing,
+suitable for anything? Maybe consider to change it to output diff with
+respect to the first parent only? Though it's then a pity "-m" lacks
+argument here, similar to what it has in cherry-pick.
+
+-- Sergey
