@@ -2,114 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4221620248
-	for <e@80x24.org>; Mon, 25 Mar 2019 14:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94A7720248
+	for <e@80x24.org>; Mon, 25 Mar 2019 14:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729072AbfCYOhw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 10:37:52 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:50307 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729046AbfCYOhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 10:37:51 -0400
-Received: by mail-it1-f196.google.com with SMTP id m137so14280609ita.0
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 07:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=UaPGteKgB8YEsZ6riyERYGHH8hSX0G9pDZQv/m5hKDY=;
-        b=ICJ9uZTD3wvwcgePyQ6ii5jqXYQQFc/5dlOKOiEZ0eERABLuAbtsEUm9wnCzSBd0XE
-         HuTw1vinKlIhLCzxkH8IL5qFW+gMkwsfGrW5wWoNhkLJSWrbCt/b0DsjCwBXGpOuY1Z+
-         BfLTrR0TKdI8WNHD5EmaTQNa32ELLZZIaSn+EKMoR5xwbJvXkOufcs7x8ZTxSS/tM/qM
-         CBRqkXqE3mYTPGINjjyuTlLIXc61zQ+sdkqRLlIihjXFoKscHFAxzAWL2HEcos0sGeCb
-         FmNUbMR2efAugnDOOk+JL1pl/y3DkcU58TC/LBXwqHwU+Q0INMp1EoxBJUbAkLEdlEiz
-         lixg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=UaPGteKgB8YEsZ6riyERYGHH8hSX0G9pDZQv/m5hKDY=;
-        b=HIjPaMcLdVZ2lUHmZDw3A5UUvFvvkruhDpLY787SKalwNDRBF3iDTe3kXVhE3vDkOW
-         DNqVBthYmPBd7/NOUbgFy53cf/qzcQ2GrXkPLvMzxZU3MSYp2/YUk/lEuynwS8xwxJUX
-         Q19nEeHW2gf6+mXL9sqV7TmepuYq3mF9yYs/by3Iy4+OI6NAzaWaNJ8ao9yKWlMHVq6M
-         Sx7PJSQs/yC9veLyVrG8zuIRg0ZNSpjUYg27OtaItQeu18qL2GwUhq34s+OlbqtTnxRz
-         KP7AnjML4G96RaFVbU7W+cS3Krj0RmzK7BigzIhIdl0+ygqsN1P7Sd6DzlOXJJRhuxcI
-         5omw==
-X-Gm-Message-State: APjAAAUKEJZoj5Pw6UyTDIRo8ix9YOwO2ZanhSojKZHiiKYZvoTQwMs/
-        t+lzVAeEbdy9LCoXv2XjYzh6BQUvmDz/hWWOKR4gqCTd
-X-Google-Smtp-Source: APXvYqwqlFW6nrP5tqiZ0QZ/pC0Jpf/cBeo/PH1JAEhEUtM046Tg06mvB5MTv+fqbce7ZsWtEeAFbGImbKhZwylemMk=
-X-Received: by 2002:a02:6d12:: with SMTP id m18mr18617440jac.54.1553524670826;
- Mon, 25 Mar 2019 07:37:50 -0700 (PDT)
+        id S1729182AbfCYOiP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 10:38:15 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55911 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729077AbfCYOiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 10:38:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553524673;
+        bh=ri3dq2n3eZRRDJ3X5U0rCDR5Ry71EuJOR157sq9svBc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ou0hITCKjTdbJtkPEh3ZLA5mOjzi8lnL0W/SjNP7Etkd4QAXM25UQjZ9eISIjEWJl
+         qfOYQtKKn2NPzayZefzqcHTBrwUKD6iTCXMov83Q/7rmnquN8zIbW+1wINuvTQzHsv
+         4WoD9o4eaRHOj/T6NIH1CN13OOYM7SMJr2GKFFDU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mb8MV-1hOafz3qln-00KhLA; Mon, 25
+ Mar 2019 15:37:53 +0100
+Date:   Mon, 25 Mar 2019 15:37:36 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Mike Hommey <mh@glandium.org>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: How to properly find git config in a libgit.a-using
+ executable?
+In-Reply-To: <20190322141925.olzzfjm5ytp2gwv7@glandium.org>
+Message-ID: <nycvar.QRO.7.76.6.1903251529110.41@tvgsbejvaqbjf.bet>
+References: <20190320101941.2xjsjx3zfnnp33a2@glandium.org> <20190322073311.GA839@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqbjf.bet> <20190322141925.olzzfjm5ytp2gwv7@glandium.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAH8yC8mDWpf0b3zykyvHRLLbYdmLB7hAk9LcsciB=dYhs4C=VA@mail.gmail.com>
- <27b99f79-7a6a-1205-b528-84fd81433e0e@kdbg.org>
-In-Reply-To: <27b99f79-7a6a-1205-b528-84fd81433e0e@kdbg.org>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 25 Mar 2019 10:37:24 -0400
-Message-ID: <CAH8yC8nheOmz0G_Pv3oCv03Se16-+Ynwse9xFRDqKf-x2b9Qkw@mail.gmail.com>
-Subject: Re: How to disable docs when building Git from sources
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Sdze0u32NSPPibkJWQXK3/vBkj0OGYQWhPDWQAQrdP/TWXcmXvS
+ GukWJZ3j9fhcXHII8SFTzh+AHJL2nSTnRYO8YsBDGZLDmSFLyDBTDiTTuFonthkq7xNJx/+
+ 7oeXkvRqNG54ZR7/xnkgcD72J8hRq8ZqVJs493zFwEYoVTVgP6MZPHZjs+bzzqySETmfZwj
+ p5swIPbMP/rz6SbZFYG6w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gO/tTmK/CYA=:jTPQi4LpIONY3NA0voPKi9
+ VUejURyZ+lZNcjm59Kmh5CxyL2PI1NXKRwmzE6wXVcN/ACzZ9brl0shHNa3gOt5I1j6EXPBrV
+ H6nLXNQDMP85INxUaRx3K6yJvaps1M7xBQxxwaW8mJ3VZWKui7lJe8MeRhu/l5fCTPRVvId/T
+ p8hzlzkbjWZKjQMIpecq9gUBDmKd+GZC7Q8FlC4gSA0N/srUKyiI+cy1RL1Gf4NnYHL8n2EjD
+ Gfy0IzhqlxaE3c72Z/kmieVGH3px882fwqDLi1sZgDsLVTlMP46bbABgW0BIDGNV7wtpDnkU7
+ 4iRuf5KHMIH8DstZgjy86eMvPb8ty+qRJufu9XFRTdL6UBWwPAEKc9q9BMAm1WlQF0Wb2Iy8B
+ XoBeKNUx/kyoIDs6ku7kXm8A3aFrS05fS3XBzFIMF/JWwinZyTmz7P0Z6dyBjy/dRNgqSfmmx
+ Wh8hudaN5NnurZOxL05oPoadWiuH5q3NbYOab0fuMOzHlIkOQomziFSzbqRueROHifPpVS/aC
+ B8Cgep11Cgv17a93BRtLdJZxgAj6vUV6opE/nzitUv0Clvw5vie0cOf2+ujJ4u8wwDw2hToOC
+ BP60VOTGXe+TAs4Kj/kOwXcRblomYYE0ZyMvaAZ2r5oeXbyJyVUqsoLGmRtHtKvVmfWVSsy1O
+ hGwBwmasQL1y2YJ036iBb354RiGRgknXvjsDgx7utzgk5+m+QWN3MwuckrsdOQA4UEdwLfA7+
+ NIkgs2SSqPVqBsRNCyVSwzkPcom2ar3gOXnrf7axWz0fT+AWE5jLSoy6ev778KfnxPIG/SMrh
+ b84D+inKRJAHVlB2hMgFGxpgljuHztQZU8eKruXxSqNU7XKUnklGG/UywuOC4W1ZwffqMMXX2
+ CM+Pvybh8xr5kDhARnPq8MaeYllNXOzO2LlEEPjRk3mU7+2/kiyju6A+491h30wM9MSat0RZ9
+ qOXbwCwVTQw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 3:14 AM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 25.03.19 um 07:40 schrieb Jeffrey Walton:
-> > I'm working on a low-resource dev-board. It is missing a lot of
-> > utilities to save space. I'm building Git 2.20 from sources. Make is
-> > failing due to '/bin/sh: 1: msgfmt: not found'. I don't cross-compile
-> > because that's a bigger pain in the ass than waiting for the native
-> > build to finish.
+Hi Mike,
+
+On Fri, 22 Mar 2019, Mike Hommey wrote:
+
+> On Fri, Mar 22, 2019 at 02:39:43PM +0100, Johannes Schindelin wrote:
+> > Hi Peff & Mike,
 > >
-> > I ran './configure --help' but I don't see a way to disable the docs.
-> > In the past I tired --disable-docs but it had no effect.
+> > On Fri, 22 Mar 2019, Jeff King wrote:
 > >
-> > How do I disable the docs?
+> > > On Wed, Mar 20, 2019 at 07:19:41PM +0900, Mike Hommey wrote:
+> > >
+> > > > I thought of a few options (it's worth noting the helper is invoke=
+d in a
+> > > > way that makes $GIT_EXEC_PATH set, which can help a little):
+> > > > - spawn `$GIT_EXEC_PATH/git-config -l -z`, parse its output, and s=
+et the
+> > > >   internal config from that. That's the barbarian option.
+> > > > - build the helper with RUNTIME_PREFIX, and modify the RUNTIME_PRE=
+FIX
+> > > >   code to use $GIT_EXEC_PATH if it's set, rather than the path the
+> > > >   executable is in. That actually sounds reasonable enough that I'=
+d send
+> > > >   a patch for git itself. But that doesn't quite address the nitpi=
+ck case
+> > > >   where ETC_GITCONFIG could be either `/etc/gitconfig` or
+> > > >   `etc/gitconfig` depending how git was compiled, and there's no w=
+ay to
+> > > >   know which is the right one.
+> > >
+> > > I'm not entirely sure I understand the problem, but it sounds like y=
+ou
+> > > want to know the baked-in ETC_GITCONFIG for a built version of git (=
+that
+> > > isn't necessarily the one that shares your build of libgit.a).
+> > >
+> > > There's no direct way to have Git print that out. It would be reason=
+able
+> > > to add one to rev-parse, I think.
+> > >
+> > > Barring that, here's a hack:
+> > >
+> > >   git config --system --show-origin --list -z |
+> > >   perl -lne '/^file:(.*?)\0/ and print $1 and exit 0'
+> > >
+> > > If the file is empty, it won't print anything, of course. But then,
+> > > you'd know that it also has no config in it. :)
+> >
+> > How about
+> >
+> > 	GIT_EDITOR=3Decho git config --system -e 2>/dev/null
+> >
+> > It will error out if the directory does not exist, for some reason, e.=
+g.
+> > when you installed Git in your home directory via `make install` from =
+a
+> > fresh clone. So you'll have to cope with that contingency.
 >
-> These are message translations, not documentation. To disable them, set
->
-> NO_GETTEXT=Yes
->
-> in your config.mak.
+> Thank you both, I can probably work with this, although I might have to
+> alter the git init sequence.
 
-Thanks Hannes.
+If you spawn this, you should not need to alter any Git init sequence.
 
-I used 'make -j 4 NO_GETTEXT=Yes' and I think that fixed the command
-line components. Or at least I did not see the error where I was
-previously seeing it.
+Also, I failed to mention that the error message when the directory does
+not exist is quite helpful, too: it mentions the path to that directory.
 
-I am seeing a similar issue now for the GUI components (assuming
-po2msg.sh is doing similar):
+Oh, and I forgot one really crucial thing: you want to set `LANG=3DC`, too=
+,
+to make the output parseable.
 
-make -C git-gui  gitexecdir='/usr/local/libexec/git-core' all
-make[1]: Entering directory '/home/jwalton/Build-Scripts/git-2.21.0/git-gui'
-GITGUI_VERSION = 0.21.GITGUI
-    * new locations or Tcl/Tk interpreter
-tclsh po/po2msg.sh --statistics --tcl -l hu -d po/ po/hu.po
-tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po
-make[1]: tclsh: Command not found
-make[1]: tclsh: Command not found
-tclsh po/po2msg.sh --statistics --tcl -l ja -d po/ po/ja.po
-Makefile:252: recipe for target 'po/hu.msg' failed
-make[1]: tclsh: Command not found
-make[1]: *** [po/hu.msg] Error 127
-make[1]: *** Waiting for unfinished jobs....
-Makefile:252: recipe for target 'po/pt_pt.msg' failed
-make[1]: *** [po/pt_pt.msg] Error 127
-Makefile:252: recipe for target 'po/ja.msg' failed
-make[1]: *** [po/ja.msg] Error 127
-make[1]: Leaving directory '/home/jwalton/Build-Scripts/git-2.21.0/git-gui'
-Makefile:2037: recipe for target 'all' failed
-make: *** [all] Error 2
+> I'm not sure my usecase needs git to cater for it more generally,
+> though.
 
-Jeff
+I guess the idea of Git is that the command-line interface is "the API".
+With that idea, you should indeed not have to know the exact location of
+the system config, as you can simply consume the output of `git config -l
+-z`.
+
+However, given all those really impressive performance wins we get out of
+all those conversions from shell/Perl to C, I am inclined to agree with
+you: any remotely serious application that uses Git either has to access
+libgit.a directly (even if that is discouraged), or has to have
+non-trivial code inside Git to support their use cases (all those
+`for-each-ref` pattern enhancements we had to introduce, for example, to
+make it remotely feasible for a 3rd-party application to work with the
+amounts of branches we sometimes have to deal with, for example).
+
+> Who else uses libgit.a?
+
+I only know of cgit, the fast alternative to gitweb.
+
+Ciao,
+Dscho
