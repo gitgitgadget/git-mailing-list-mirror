@@ -6,94 +6,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAD9420248
-	for <e@80x24.org>; Mon, 25 Mar 2019 14:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFA5520248
+	for <e@80x24.org>; Mon, 25 Mar 2019 14:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729046AbfCYOtd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 10:49:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35042 "HELO cloud.peff.net"
+        id S1728963AbfCYOwG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 10:52:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35048 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726128AbfCYOtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 10:49:33 -0400
-Received: (qmail 320 invoked by uid 109); 25 Mar 2019 14:49:33 -0000
+        id S1726217AbfCYOwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 10:52:06 -0400
+Received: (qmail 350 invoked by uid 109); 25 Mar 2019 14:52:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Mar 2019 14:49:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Mar 2019 14:52:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8250 invoked by uid 111); 25 Mar 2019 14:49:56 -0000
+Received: (qmail 8275 invoked by uid 111); 25 Mar 2019 14:52:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Mar 2019 10:49:56 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Mar 2019 10:52:29 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2019 10:49:31 -0400
-Date:   Mon, 25 Mar 2019 10:49:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2019 10:52:04 -0400
+Date:   Mon, 25 Mar 2019 10:52:04 -0400
 From:   Jeff King <peff@peff.net>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: Strange annotated tag issue
-Message-ID: <20190325144930.GA19929@sigill.intra.peff.net>
-References: <CAHd499BM91tf7f8=phR4Az8vMsHAHUGYsSb1x9as=WukUVZHJw@mail.gmail.com>
- <20190321192928.GA19427@sigill.intra.peff.net>
- <CAHd499BTACjf91Ohi34ozFQE_NOn-LVf-35t7h4CTtDFoMCpWw@mail.gmail.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+Subject: Re: How to disable docs when building Git from sources
+Message-ID: <20190325145204.GB19929@sigill.intra.peff.net>
+References: <CAH8yC8mDWpf0b3zykyvHRLLbYdmLB7hAk9LcsciB=dYhs4C=VA@mail.gmail.com>
+ <27b99f79-7a6a-1205-b528-84fd81433e0e@kdbg.org>
+ <CAH8yC8nheOmz0G_Pv3oCv03Se16-+Ynwse9xFRDqKf-x2b9Qkw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHd499BTACjf91Ohi34ozFQE_NOn-LVf-35t7h4CTtDFoMCpWw@mail.gmail.com>
+In-Reply-To: <CAH8yC8nheOmz0G_Pv3oCv03Se16-+Ynwse9xFRDqKf-x2b9Qkw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 08:50:14AM -0500, Robert Dailey wrote:
+On Mon, Mar 25, 2019 at 10:37:24AM -0400, Jeffrey Walton wrote:
 
-> On Thu, Mar 21, 2019 at 2:29 PM Jeff King <peff@peff.net> wrote:
-> > Tags can point to any object, including another tag. It looks like
-> > somebody made an annotated tag of an annotated tag (probably by
-> > mistake, given that they have the same tag-name).
-> [..]
-> Thanks for explaining. This is very helpful. Am I naive to think that
-> this should be an error? I haven't seen a valid _pragmatic_ use for
-> tags pointing to tags. In 100% of cases (including this one), it is
-> done out of error. As per your example, users try to "correct" an
-> annotated tag pointing at a wrong tag or commit. What they expect is
-> the tag to point to the other tag's commit, but that's not what they
-> get.
+> I used 'make -j 4 NO_GETTEXT=Yes' and I think that fixed the command
+> line components. Or at least I did not see the error where I was
+> previously seeing it.
+> 
+> I am seeing a similar issue now for the GUI components (assuming
+> po2msg.sh is doing similar):
+> 
+> make -C git-gui  gitexecdir='/usr/local/libexec/git-core' all
+> make[1]: Entering directory '/home/jwalton/Build-Scripts/git-2.21.0/git-gui'
+> GITGUI_VERSION = 0.21.GITGUI
+>     * new locations or Tcl/Tk interpreter
+> tclsh po/po2msg.sh --statistics --tcl -l hu -d po/ po/hu.po
+> tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po
+> make[1]: tclsh: Command not found
+> make[1]: tclsh: Command not found
 
-I don't think I've ever seen a tag-to-a-tag in the wild, but I wouldn't
-be surprised if somebody has found a use for it. For example, because
-tags can be signed, I can make a signature of your signature, showing a
-cryptographic chain of custody.
-
-And at any rate, it has been allowed in the data model for almost 15
-years, so I think disallowing it now would be a bad idea. It might be
-acceptable to introduce a safety valve into the porcelain, though.
-
-> From a high-level, pragmatic perspective, doesn't it make more sense
-> to change the git behavior so that annotated tags may only point to
-> commit objects? And in the `git tag -f -m outer mytag mytag` case in
-> your example, this would automatically perform `mytag^{}` to ensure
-> that the behavior the user expects is the behavior they get?
-
-I think "just commits" is too restrictive. linux.git contains a tag of a
-tree, for example (we also have tags pointing to blobs in git.git, but
-they are not annotated).
-
-However, I could see an argument for the git-tag porcelain to notice a
-tag-of-tag and complain. Probably peeling the tag automatically is a bad
-idea, just because it behaved differently for so long. But something
-like might be OK:
-
-  $ git tag -a mytag
-  error: refusing to make a recursive tag
-  hint: The object 'mytag' referred to by your new tag is already a tag.
-  hint:
-  hint: If you meant to create a tag of a tag, use:
-  hint:
-  hint:  git tag -a -f mytag
-  hint:
-  hint: If you meant to tag the object that it points to, use:
-  hint:
-  hint:  git tag -a mytag^{}
-
-It would be a minor annoyance to somebody who frequently makes
-tags-of-tags, but it leaves them with an escape hatch.
+It looks like you don't have tcl at all. Try NO_TCLTK=Nope ?
 
 -Peff
