@@ -2,128 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D96CE20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 21:08:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1DE20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730063AbfCYVI6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 17:08:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:46447 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729283AbfCYVI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 17:08:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553548131;
-        bh=f4tZMPHIJ0XROY6CgRplA/TnAiYOeahqHVYlqsA+7to=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Y4ROepUKzEtapmw8zKJnra7oyPt90yCeD0k9UP6Og7IXYegVBh8d2SrUMOMRTjGii
-         5QCM9X6mIvkTwv1mmt7xw+WJNPiHKrkgrnjTEt09t2C4O/iPYpAuDOmP5ig7kDEvWN
-         80GfN+nJmjOyddQO8VeBJd/BCM4Q/dD9C2ZX57kg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqQzp-1gUoJ00Vfd-00e7bT; Mon, 25
- Mar 2019 22:08:51 +0100
-Date:   Mon, 25 Mar 2019 22:08:35 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] check-docs: fix for setups where executables have
- an extension
-In-Reply-To: <xmqqbm20ph45.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903252206201.41@tvgsbejvaqbjf.bet>
-References: <pull.162.git.gitgitgadget@gmail.com> <f06126c3a11119bf6e2a830bbac312f65582387f.1552478212.git.gitgitgadget@gmail.com> <20190322184347.GC12155@Taylors-MacBook-Pro.local> <nycvar.QRO.7.76.6.1903241055230.45@tvgsbejvaqbjf.bet>
- <xmqqbm20ph45.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730063AbfCYVSK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 17:18:10 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37169 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729569AbfCYVSJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:18:09 -0400
+Received: by mail-wr1-f67.google.com with SMTP id w10so11912625wrm.4
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:18:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1eGF9zzqWYVdg35udDCZUvFvuCQ0o/AjUUiuw5OVAeY=;
+        b=D/p6V5fksVCpeRyXC/G4APEhJ8gDXR3WuV7j3WeDum4Eb44snxP4OgejrhG6Agudhr
+         DGfEeQ+pp+yjyf+rV/1RzBacoP1kOJF5LPcDc5OWcEI4jHQkw4lrn/gcphveJt3KudSP
+         m9Y5fekCic8xpKlD99P9RhNq9s1KNQVa5M43cOkvy8lQlheaBbSNaqrIhePqZ3SPCBca
+         DVp/o7/dXAR6xwbBr1+uEH0po+Feey92YaDC1I9S8YUISHA01sM4ho5c1IyHC9in/TBc
+         9E6cfgoPiHpoC/fchVAd5GD+17jAy9TrMGX7VhgTgJfJNZd1W9tGBVtvoOc/hD8HWvQD
+         q4Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1eGF9zzqWYVdg35udDCZUvFvuCQ0o/AjUUiuw5OVAeY=;
+        b=Kfx7qKM+/tNN4TxmBYm9xoJhsIFB4N53UHUiBUOR6icHfDt9aXTIuIDP202QsVdKKM
+         6SQMV3dv2dKyWJWgyMousrCfhDcLBo0whllxVh7svEJJuox2sBcNVdwE0xLPAPgA1Tyi
+         SVdQaQW3CaOCD1B2f2Xntou3jS0Kp0b1yK849XBXiZGkLpg4NTjXzjdWDAFQfzrE2MRE
+         pI7r0axkIVla75LCshq5uvgcMXrPlI1XF9dSogzveazVmqRZFV8SnyVofEsSraXV4ASB
+         2AxXJuds0d6AZmKM9O2H0q8epyn0aP4Jm2r3glnqFLTGwwG3/E3kgLMvHMgMq7U99d93
+         ZvWg==
+X-Gm-Message-State: APjAAAVlwaxo2SwsWhUzoLVEG2tqBhwuO4j6R1OmiiDzSWPj+0jptukK
+        tH+Hevvx9CM6hV/6DlFXgu+J5g5a0mehGB+I0EmHSEyv
+X-Google-Smtp-Source: APXvYqz0byzbKi98dLS+uNZAe98yDWSppUX/uZlN8z+UwInhoKTkzRIGSuCDre88CmmlyXZYUKw7aR5vPwigTTOhAvs=
+X-Received: by 2002:a5d:6a08:: with SMTP id m8mr16737354wru.30.1553548687978;
+ Mon, 25 Mar 2019 14:18:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9sGdxClohcFUMrMSLMVHH79juq1c9p0SMwbTwDWELFxYOxF0Ig8
- 5N0aN5Md6f66axThRRQQwBJqnitiLdxrR3+/9BvJrXeJ0ns4Q7lLZeIuo4KUBRQ3fwafojs
- AeHU8nrl2thp1Zz6l352mS9jUfE1Gkx95Xn7L+ZXbpGtfVIz0xMkSONZc2R2R8bgYawEAod
- QGdyeqkgH6htsoc5zFZpg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SnA92qFa3x4=:Jfce2FQz7Y9Ru4MEcpiq8g
- iuB9m75ZR96Cxba7CtWqR9FBfgQ4FLlgMVTJmVdjriWi7b9Pt8qqatI0OOVi8QxZM3GPmcCKa
- BzuAj/b1s+XwiCbo1BHCtToWLQZcK8AuLdwW/0iZLq/ge0xqce6OtbLZaMxRl0/jmPfG0Z35B
- 61imf0UA6hidqwqA1QGRU1UnxbIFERFiexv7xcMido0kcjy9wFChbMO8Fd7KUEJGY8UKiABUf
- fKKmSnYmrJzTgaOEYFcmNMupcq3Or+dJKxH2D+AtuRfB0POObkshBtGbAzEC4kKT/xYF9I+Yy
- UHinrHF7wkhDsMPj1QTt6y+fBqxehy4zjRIrPLaq55xnooCQWfyEuMK4SYSpIXJ8KDB1PJP+t
- /JnQSBS1HXbZuZI/pm7vdD/uqPmY5m4lMs0vhrYa3EiY+Z675e5b8wfq5tnJwL66Fto8uESpz
- ku4E6sWZMawTui/nlDV3akJCa1Ei5IMBHv2Od/RAkOz97znIcj785Z3e3qW+oS0dnJX9xxKC5
- qQ5aIixb+KKXgx85Wz9jmv+I1MCQM0rUJqscC2jA9xSFQqBV50k8cgce4bRbt9y9eyOBv63eI
- Yk9+lhOpCWcVdcmxqE4+N5n1DZlyMVYp3koOodARLQYitgGBVIdT68rjk/gzO6oS0zKDHpUCr
- rcW7xcyEsKBBwDF0u1hBAdpn+aNXuRbpl6zmJ2oh/N1LMJ77pXXUg/y/OBSkqOujzix3R37uu
- pVrat+sy5cCZFgCEGwEk6yf+HIuVQm36MC5OVJ0RnMlRUaOTPzDKp0jgfA9y7AzorFXCdo1pV
- pYmR6w60SI9F3/GtP8Tte1qzSSOfh2ssWqC0DBoKMq6hFLjUh7f2CeY8jKipTsW+YcYqHNxpG
- bT7uPdIAt2PAGSmOWJHRIv1QkSq8F4y8oeqRrNTD7G88HKjvbn2FqV3hFb7BurzaEWcjoKn4X
- D5ACKk0wj4g==
+References: <CAMknYEPrrpxESK0onwTHRbVwcZE2YQpT=RVzjb9JfEBEXt4NRA@mail.gmail.com>
+In-Reply-To: <CAMknYEPrrpxESK0onwTHRbVwcZE2YQpT=RVzjb9JfEBEXt4NRA@mail.gmail.com>
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Date:   Tue, 26 Mar 2019 00:17:56 +0300
+Message-ID: <CAL21Bmn0BQirS=vyTRHBx_kfuEp1JY4uw2wkjm5w_pgwgjA5iA@mail.gmail.com>
+Subject: Re: [GSoC] Unify ref-filter formats with other --pretty formats
+To:     Kapil Jain <jkapil.cs@gmail.com>
+Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Sun, 24 Mar 2019, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+=D0=BF=D0=BD, 25 =D0=BC=D0=B0=D1=80. 2019 =D0=B3. =D0=B2 22:27, Kapil Jain =
+<jkapil.cs@gmail.com>:
 >
-> > Sharp eyes, and a *very* good point. The double space is actually requ=
-ired
-> > for this patch to work as intended. I added the following explanation =
-to
-> > the commit message:
-> >
-> >     Note that `$(ALL_COMMANDS)` starts with a space, and that is rathe=
-r
-> >     crucial for the `while read how cmd` loop: some of the input lines=
- do
-> >     not actually have the form `<how> <cmd>`, but only `<cmd>`, theref=
-ore
-> >     `$cmd` evaluates to the empty string, and when we are looking for
-> >     `* $cmd *` in ` $(ALL_COMMANDS)`, we do find it because the latter
-> >     starts with a double space.
-> >     In other words, the double space helps us skip the lines that list
-> >     only a command.
+> Hi,
 >
-> That sounds more like a bug in the existing set-up even before your
-> patch (in fact, these lines are probably from 2007 or so, long
-> before you started touching our top-level Makefile heavily).  If we
-> want to ignore lines with only one token, I'd rather see it
-> explicitly done, e.g.
+> Below are some two queries concerning
+> https://git.github.io/SoC-2019-Ideas/#unify-ref-filter-formats-with-other=
+---pretty-formats
 >
-> 	... generate data ... |
-> 	while read how cmd
-> 	do
-> 		# skip a line with a single token
-> 		case "$cmd" in "") continue ;; esac
+> Q1)
 >
-> 		# is $cmd part of the known command list?
-> 		case " $(ALL_COMMANDS) " in
-> 		*" $cmd "*)	;; # skip
-> 		*)	echo ... warning ... ;;
-> 		esac
-> 	done
+> In pretty.h & pretty.c:
+> void get_commit_format(const char *arg, struct rev_info *);
+> This function Parses given arguments from "arg", checks it for
+> correctness and * fill struct rev_info.
 >
-> instead of relying on "if $cmd is empty, then SP + $cmd + SP makes
-> double space, so let's have double space somewhere in the list of
-> known commands" cuteness.
+> In ref-filter.h & ref-filter.c:
+> int verify_ref_format(struct ref_format *format);
+> This function is Used to verify if the given format is correct and to
+> parse out the used atoms.
+>
+> Now, the verify_ref_format function can be used inside
+> get_commit_format function, hence reusing logic.
+> Is this a correct example to work on, for this project ?
 
-You are right, I should have root-caused it, it had a funny smell to it.
+Hi! Yes, in my opinion your example looks like good starting point.
 
-Turns out that we should not just skip those lines with a single token,
-but instead fix the bug that prevents the `how` variable to be set to
-`documented` in those cases, as had been intended all along.
+> If not, please point out an example so as to understand the problem
+> statement better.
+>
+> Other than this I can't find any other example, for this project in
+> pretty.* and ref-filter.*
+> Perhaps some examples could be found in command specific files, right ?
 
-I fixed the commit, and accompanied it with a bug fix for this, plus for
-the fall-out bugs that had been hidden by this bug.
+Other parts of the project are about reusing other ref-filter logic.
+For example, we could try to reuse format_ref_array_item() from
+ref-filter.h. I haven't dig into pretty.c logic much, but I guess it
+is possible to translate "pretty" formatting commands to ref-filter
+ones. That will allow us to remove similar logic from pretty.c. Our
+final goal is to minimise code duplication and to have one unified
+interface to extract all needed data from object and to print it
+properly.
 
-Ciao,
-Dscho
+>
+> Q2)
+> About a recurring term 'atom' in ref-filter and pretty:
+> what is atom ? is it a piece of a whole document ? and what is meant
+> by used atoms ?
+
+I had the same question in my beginning. Please have a look at [1].
+Another good question - what is object. You could ensure that you
+understand this by reading [2].
+
+>
+> Thanks.
+
+[1] https://git-scm.com/docs/git-for-each-ref#_field_names
+[2] https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
