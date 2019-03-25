@@ -2,140 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C492620248
-	for <e@80x24.org>; Mon, 25 Mar 2019 15:30:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02BFC20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 15:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbfCYPaD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 11:30:03 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43723 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725747AbfCYPaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 11:30:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553527801;
-        bh=Y/FiylvTe4U6T/sGxGEcATFtPOCJX4YDD/wXLsXevco=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bDvbVgkOjbo2C6ufi8u7063aMlR+1Hsu8S17d8xL0OvYk09sAY2gDBCuJF5p1guzN
-         SSM42ZDhHaSLMBeLjvFEaqIYZxFgnjN3R8N9C68VC03UuEvgi62ZksgPGZyhsR6A1m
-         s30uiQNi8cUF+F9T8Lzh5rX4lI/gJQrEqm+/UK5A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLvLE-1h2wIX0voS-007psZ; Mon, 25
- Mar 2019 16:30:01 +0100
-Date:   Mon, 25 Mar 2019 16:29:42 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Keith Smiley <keithbsmiley@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] Make stashing nothing exit 1
-In-Reply-To: <CAPig+cT99t1y8kMdGLF_GU0cvaVm=GKMRJ+xRcgS80rRgdQZDQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903251625250.41@tvgsbejvaqbjf.bet>
-References: <01020169a7ad6af3-ad50e2d1-19fb-46eb-b397-759f8d579e8b-000000@eu-west-1.amazonses.com> <87d0mic9fm.fsf@evledraar.gmail.com> <CAPig+cT99t1y8kMdGLF_GU0cvaVm=GKMRJ+xRcgS80rRgdQZDQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728563AbfCYPcE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 11:32:04 -0400
+Received: from mail-lf1-f48.google.com ([209.85.167.48]:36188 "EHLO
+        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfCYPcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 11:32:03 -0400
+Received: by mail-lf1-f48.google.com with SMTP id d18so6332356lfn.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 08:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc;
+        bh=cehfvDwKHYg0LkKfU5NYVp6Wl31TWKaHnni/1ij8/mM=;
+        b=ES/eTy3A0e4Zf/NbfZkDHK6agoyxPn7AAx14M1stj88AOdMgcSyIm5njvBl94QITPo
+         hENohIxSCx/5qiyeQyrjg7TWIGF2IqnaIFFxWK1o2yUM7AzZeTatGEP62uj/FtRAVTqy
+         KcQkXyl3ZAKJMb1XbG4g7wbR+xf3qrukfU17jg2ygUgPiNBANGceIfndQZRxHo5zDUtd
+         vXpzu8uwZLn1GpMYGVURkcy+4YdQXBpN5HgkCPEk0hSzywmNhU2FV7ow5DViZ4q82ZJr
+         ruSM2GQTcqGxOCcldKWiMe2Iber9Cn4HnDoMXf5JjAUb6/Jbt+7A1WlRh9T/gayArifM
+         WNWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc;
+        bh=cehfvDwKHYg0LkKfU5NYVp6Wl31TWKaHnni/1ij8/mM=;
+        b=uQ051loaKwYz1khdEqzIet7Fk5sdJK5SfgSf/4g1o7FhcUXUo2qXQ4YFwkRNFs0pes
+         gZaWEYnX+IsC50ITYQnE3bxDcF2N2Mw6h3mp4a6sGOUJ5ixrkBRDirHb4PP8Nz4qz3un
+         npADecEc2/f95CF1bS9k8cw/n3qruWE3s+g2Oi9U938VojBik1BJqjTzkdBWWs+PdvpW
+         QDGKORX+iQJr9iJDqigF3sgd9Bw0+nvGsQNA15U8OMuIDZDIccEgiD16UYONv2vKujZp
+         tDPhhHxkE/FfvwqKPXHRlVMXgxXnoH9one5LS9xKUotl6uIWYcpuydDdZm/CGCwlKdH3
+         lwjg==
+X-Gm-Message-State: APjAAAVR6aBkwd3E8NnGfzmsCoY8haJiTbYkw8lq1TFvvX+WLvxYTCDM
+        9MGRjKt000niL/QHOj3aq2zAbSzENJtzvZThhhw=
+X-Google-Smtp-Source: APXvYqyZTl2ZfaPp2nLYLWR7+xj5uWOU2lJxUavz6+GYbKoibpZ9O5oR7LRbXLgfokIhAG0FDGIM7/zJF5hHCJ8i6kE=
+X-Received: by 2002:ac2:4154:: with SMTP id c20mr12363929lfi.74.1553527921618;
+ Mon, 25 Mar 2019 08:32:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1843981721-1553527801=:41"
-X-Provags-ID: V03:K1:GxCdUtLn2HzVmjohM2PdJmM+HEDz1VB5ASsi+jEan7L8NbKFbDM
- iG+eeBi79TDiTAyYu1JJ4ddMFbRJgaqvOn09uNHPxNVw5exKwo0/MvIHJfGmnu4ckfY+H4h
- RlF4A78PXzfAGN3Y3Jg89NdIifa0wSCNqacYdFuDVr+d5HtVtgNDffURyjMaB+WTVnkIDUt
- cuPh1LmXkVUKwv/SgnmCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Q0NbW3Dvoh8=:UaPGBAkrQSW5IwvnFDupuf
- LY5rqs3dmmFfONWCAbmQXcLOhGs8QNGJBtfH67nZKpGphUzocrRrdnXon4RsadUXRU4iwMVla
- X0sUTb6+ciZ32qrMh9Zc3B8jBnoHsK45UfOZRAoUnhgcDQ4pxMp4zPGt0b0ngYL+AmdAE9D2J
- To9Ha/QYeR0UZlStaF7vJ/CRQ+IAPkBgNK4wj2z7Np4ZuJzK0ESmy3LDAX9b84CFyiMbnTmUY
- Mm+8ZaHXsANKriWbkv/L/ar+HEt3aPP9ZkjwatTHmEn6EyjaUsyamQHb87n+pLzB1LQWqziVd
- WCuam1Z7BR77jCRRdDa8uWVPeUjjP8wyUsG2CTsYl/470n29uny1rRBm08O8Z1L95MpkhVhhd
- ZZYjJOMUy47KuSB2hg7zo6nYiMRUbv1nFsCZk85wiirHf7kzt7hRvr1y65/S/WmCB7AIEF8Yo
- Qzz/05MWCnja0LNt9CjJXsbezSEjGA19k/2GeUxt+WinIjIMxWWiLlCNn3yM8U0ykVox+Pmvv
- ///BuLNzQZk4vxRpy92ZsZpZ1fBxRhERpGRyRRLqtLYwpWrUuEPSlsGIZGxW1OKxbS3SVzR19
- bn1zu6qaZ5IMdOLjTBU/m32+TZNXuI8+6OqSaudk4fjEI6YDAXRZ6ohu/EtUu1CLL1xV867+o
- T1DX2wvbljok5OL7wb/x8Qwu7to0zGCIfY0h6on8WrEbfsY5kab/WcXPQ+1xLf+IxJa0RCytv
- VdufWxKJsLottqBdRhO6waUyh2H0NgmlZj8p6ADZ7nMk3Ujj32+QKHDKl6cvorWQYQudSVj02
- Uqx/3BTR+llETQWNX2R0MLo/tY+Z/2Cc70tjPMrtCcIRGDtnAkUTcRNYCDHfEPKhkjKO25znA
- LftLzdjqTvpWTFn4uQ/9igqVKEZcHx0RaUsGTmBPf8eSXC91xgXQWgKl6PY6MiKTzNQl7BElk
- aE77/yQCnUA==
+References: <CAHd499BM91tf7f8=phR4Az8vMsHAHUGYsSb1x9as=WukUVZHJw@mail.gmail.com>
+ <20190321192928.GA19427@sigill.intra.peff.net> <CAHd499BTACjf91Ohi34ozFQE_NOn-LVf-35t7h4CTtDFoMCpWw@mail.gmail.com>
+ <20190325144930.GA19929@sigill.intra.peff.net>
+In-Reply-To: <20190325144930.GA19929@sigill.intra.peff.net>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 25 Mar 2019 10:31:50 -0500
+X-Google-Sender-Auth: hx9EeBdYdY32xoFjugB_JMAE1zE
+Message-ID: <CAHd499CimFqfa-k6pB3NuMmM6fBUeMCOjs0ZUuGEHCc8Q5eEBg@mail.gmail.com>
+Subject: Re: Strange annotated tag issue
+To:     Jeff King <peff@peff.net>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1843981721-1553527801=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Eric,
-
-On Sat, 23 Mar 2019, Eric Sunshine wrote:
-
-> On Sat, Mar 23, 2019 at 3:54 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> > On Sat, Mar 23 2019, Keith Smiley wrote:
-> > > In the case there are no files to stash, but the user asked to stash=
-, we
-> > > should exit 1 since the stashing failed.
-> > > ---
-> > > diff --git a/git-stash.sh b/git-stash.sh
-> > > @@ -318,7 +318,7 @@ push_stash () {
-> > >       if no_changes "$@"
-> > >       then
-> > >               say "$(gettext "No local changes to save")"
-> > > -             exit 0
-> > > +             exit 1
-> > >       fi
-> >
-> >  * Shouldn't we do this consistently across all the other sub-commands=
-?
-> >    Trying some of them seems 'push' may be the odd one out, but maybe
-> >    I've missed some (and this would/should be covered by
-> >    tests). I.e. some single test that does a bunch of ops with no
-> >    entries / nothing to stash and asserts exit codes.
+On Mon, Mar 25, 2019 at 9:49 AM Jeff King <peff@peff.net> wrote:
+> I think "just commits" is too restrictive. linux.git contains a tag of a
+> tree, for example (we also have tags pointing to blobs in git.git, but
+> they are not annotated).
 >
-> A bigger question is why is this change desirable?
-
-Indeed. When I run `git stash`, my intention is to make sure that I can
-get back whatever edits I had made, but right now, I want a clean
-worktree.
-
-So for me, `git stash` does *the exact right thing*.
-
-I could see, however, that other users might think that it is more like a
-"uh oh, I have modifications that I do not want to commit right now!
-Please, Git, put all my local changes into a stash", and when there are
-not even any changes to stash, they want the command to fail.
-
-However, I think that this is not only a change in behavior, but probably
-a minor use case compared to what I feel *my* use case is ;-)
-
-As such, the new behavior should be hidden behind an option (say,
-`--fail-if-clean`).
-
-> What is the justification for turning this into an error and possibly
-> breaking existing automation scripts? Arguing that this case should be
-> an "error" is difficult considering that there are many other commands
-> (inside and outside of Git) which exit with 0 when they have nothing to
-> do. I can't find the message in the archive right now, but I recall a
-> few months ago Junio shooting down an analogous change to some other
-> command, so the justification needs to be a strong one.
-
-Indeed, the commit message should make a case for the change. Otherwise,
-it will be less convincing...
-
-Ciao,
-Johannes
-
+> However, I could see an argument for the git-tag porcelain to notice a
+> tag-of-tag and complain. Probably peeling the tag automatically is a bad
+> idea, just because it behaved differently for so long. But something
+> like might be OK:
 >
-> Also, your Signed-off-by: is missing. See
-> Documentation/SubmittingPatches.  Thanks.
+>   $ git tag -a mytag
+>   error: refusing to make a recursive tag
+>   hint: The object 'mytag' referred to by your new tag is already a tag.
+>   hint:
+>   hint: If you meant to create a tag of a tag, use:
+>   hint:
+>   hint:  git tag -a -f mytag
+>   hint:
+>   hint: If you meant to tag the object that it points to, use:
+>   hint:
+>   hint:  git tag -a mytag^{}
 >
+> It would be a minor annoyance to somebody who frequently makes
+> tags-of-tags, but it leaves them with an escape hatch.
 
---8323328-1843981721-1553527801=:41--
+I think a warning/error would be perfect. Again, if I had realized the
+consequences of my actions years ago when I made this tag, it would
+have changed a lot down the line for me. If I had seen that message
+before, I think it would have helped a lot. You might even add an
+educational bit in there and say "Warning: You are creating an
+annotated tag that points to another annotated tag. Annotated tags may
+point to more than just commits by design. Refspec tag^{} may be used
+to peel the source tag back to the commit it points to". Then follow
+with the instructional commands.
+
+I agree with your approach though. Thanks again.
