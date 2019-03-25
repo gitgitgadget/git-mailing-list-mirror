@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 508FE20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 17:21:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F135A20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 17:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729774AbfCYRU7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 13:20:59 -0400
-Received: from mail-eopbgr780105.outbound.protection.outlook.com ([40.107.78.105]:4384
-        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        id S1729980AbfCYRqa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 13:46:30 -0400
+Received: from mail-eopbgr690115.outbound.protection.outlook.com ([40.107.69.115]:60883
+        "EHLO NAM04-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729106AbfCYRU7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 13:20:59 -0400
+        id S1729548AbfCYRqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 13:46:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kVCQGp2owIXdDs8h884MSNqFqLMmySpKz9gkA/zQJGM=;
- b=afk0t3ox80AaZ5ImV5dm3SVUC9bdnw5NEgxguP+9pNkRALSXN+A8UYaCzqXUkwIQwl5/JUStN8JVT2C2QWQb5OVYRTPAfTPP+CQi/R+xmCzJote9wnRoGhkfs5DDttAap1I1mIC5Z3MNUpntjZcfEBeaPDuHQ4j5mDn7AC5eRn8=
+ bh=DdPa99q9oOtLhJ0wUfWvefBLQNWSCiA0fWW1yoi0Uy8=;
+ b=u5siuI/wLMRZMn2MeInpQR5kHODtymC/oqIjxbLmGAFEeaiu5JrxvFAV9z/1QTR7Gow60Muwe6aFq38DUiHOMP+gyzsPD4muQozKZ4Sf0F66e6v8nA+V7YOHEfYn8lahnpXrmTg+56uTjewV8oeYgn4SMcsAcsAAPWTZPQ/ZmQs=
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB4331.namprd08.prod.outlook.com (20.176.82.32) with Microsoft SMTP
+ DM6PR08MB4234.namprd08.prod.outlook.com (20.176.81.159) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1730.16; Mon, 25 Mar 2019 17:20:55 +0000
+ 15.20.1730.16; Mon, 25 Mar 2019 17:46:25 +0000
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1730.019; Mon, 25 Mar 2019
- 17:20:55 +0000
+ 17:46:25 +0000
 From:   "Mazo, Andrey" <amazo@checkvideo.com>
 To:     "luke@diamand.org" <luke@diamand.org>
 CC:     "ahippo@yandex.com" <ahippo@yandex.com>,
@@ -44,21 +44,19 @@ CC:     "ahippo@yandex.com" <ahippo@yandex.com>,
         "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
         "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
         "vitor.hda@gmail.com" <vitor.hda@gmail.com>
-Subject: Re: [PATCH v2 2/7] git-p4: match branches case insensitively if
- configured
-Thread-Topic: [PATCH v2 2/7] git-p4: match branches case insensitively if
- configured
-Thread-Index: AQHU4DYGwpQ0yt3xbE+SDG6OAdz4sqYY8ZUAgAOsHoA=
-Date:   Mon, 25 Mar 2019 17:20:55 +0000
-Message-ID: <20190325172037.32373-1-amazo@checkvideo.com>
-References: <CAE5ih7-W9vw4siwc=YQD36863LaCm1RzatAZ4Ajjk8MjYimOdA@mail.gmail.com>
-In-Reply-To: <CAE5ih7-W9vw4siwc=YQD36863LaCm1RzatAZ4Ajjk8MjYimOdA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] git-p4: support loading changelist descriptions
+Thread-Topic: [RFC PATCH 2/2] git-p4: support loading changelist descriptions
+Thread-Index: AQHU4zKqQiD0TGqNTE6MUD7Hj7LYwA==
+Date:   Mon, 25 Mar 2019 17:46:25 +0000
+Message-ID: <20190325174615.1231-1-amazo@checkvideo.com>
+References: <CAE5ih793TVn0NJ54CJTmOZ0Gr2Y4GSYwP-DAyRpjsgJsGc-NrA@mail.gmail.com>
+In-Reply-To: <CAE5ih793TVn0NJ54CJTmOZ0Gr2Y4GSYwP-DAyRpjsgJsGc-NrA@mail.gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-clientproxiedby: BN6PR19CA0089.namprd19.prod.outlook.com
- (2603:10b6:404:133::27) To DM6PR08MB4956.namprd08.prod.outlook.com
+x-clientproxiedby: BL0PR05CA0011.namprd05.prod.outlook.com
+ (2603:10b6:208:91::21) To DM6PR08MB4956.namprd08.prod.outlook.com
  (2603:10b6:5:4b::25)
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=amazo@checkvideo.com; 
@@ -66,68 +64,82 @@ x-ms-exchange-messagesentrepresentingtype: 1
 x-mailer: git-send-email 2.19.2
 x-originating-ip: [70.163.25.109]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b3d8df0c-ddca-4f08-f93a-08d6b1463d1b
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4331;
-x-ms-traffictypediagnostic: DM6PR08MB4331:
-x-microsoft-antispam-prvs: <DM6PR08MB433156C2BC4347331D9C6775DA5E0@DM6PR08MB4331.namprd08.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: a613ce62-df25-43c3-ec51-08d6b149ccfb
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600127)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4234;
+x-ms-traffictypediagnostic: DM6PR08MB4234:
+x-microsoft-antispam-prvs: <DM6PR08MB4234B281F094027CC2AE691ADA5E0@DM6PR08MB4234.namprd08.prod.outlook.com>
 x-forefront-prvs: 0987ACA2E2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(39860400002)(136003)(346002)(396003)(199004)(189003)(8936002)(8676002)(186003)(81156014)(7736002)(1730700003)(81166006)(71190400001)(6916009)(6486002)(26005)(14454004)(1076003)(6436002)(2501003)(446003)(25786009)(229853002)(50226002)(68736007)(99286004)(478600001)(476003)(2616005)(66066001)(6246003)(4326008)(2351001)(305945005)(106356001)(5640700003)(105586002)(486006)(53936002)(6506007)(386003)(102836004)(11346002)(316002)(54906003)(256004)(19627235002)(76176011)(6512007)(36756003)(86362001)(7416002)(2906002)(97736004)(3846002)(5660300002)(6116002)(71200400001)(52116002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4331;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(136003)(396003)(39850400004)(346002)(376002)(189003)(199004)(86362001)(14454004)(2351001)(229853002)(316002)(7416002)(1076003)(4326008)(25786009)(54906003)(106356001)(6246003)(36756003)(5640700003)(256004)(53936002)(6512007)(105586002)(6486002)(2906002)(6116002)(2501003)(3846002)(5660300002)(68736007)(486006)(1730700003)(386003)(6506007)(99286004)(19627235002)(8936002)(81166006)(66066001)(81156014)(102836004)(50226002)(97736004)(6436002)(186003)(76176011)(52116002)(11346002)(446003)(476003)(26005)(6916009)(2616005)(8676002)(71200400001)(7736002)(71190400001)(305945005)(478600001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4234;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: checkvideo.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: S+uf7AmR5bESTNcUQ5D7kIuKI4Xbz46DZ47MtGHfZn12m3ZJB9mWdUmanJ6HyfPt23lrqyVOOaG7wubs+/QDFHWksen1OgpXVKgsWYrDEs8s4uzwacTLjZgGjNr+0l+HUzUqAwBMg2lxmGzCJlzQXqZ+kEs0yy77CseiS7FKa4PNjWt44mNbZGBtBOOU52bSwhAsBoYyeQlRLWFZ8JXCQIeEOGKjXGfjRnNWOgEJooF2os07N6DdDJiOHJlajTR64O2qGYr9by+yQyGfIQHItZop4t6Ww2j1Lg4dax09IzKQEFsG3SBzFHtlqI/ZNSbaQD+wW6vGn0BgEVYC7knqqu+dnv6wW0W+oUdtj8CBsbFRgCpkG0kjO2KZbXj526Yiy8a9reYpdChMVvedHeL/r3obIRnnJvn4y1Xqx+fxfpk=
+x-microsoft-antispam-message-info: 7S9UgpEi8SjYKOEId6v3WMIR3IIbSiGE+bs+IeJ9LJvG5nxYPvyP8MZKwBNkiirbBswX2cSiLsnOs+AFBvXITs3dZERoQQEZAckCS2rhhVN06OJfWtmhQWKrscITQLbxTtwcJkT2fSkj/MXOQ10cXXbJUPxgZu0S0UXzsks0qXCtnBdQE7AJm3NWwX71uuAyHwsP1Zqq1jEzsNXe1jrDKs4Hxg8qWwRYn46P3Vh0beYfLqTQZwgcy2SrUBGwcEwl68RR2epLTno7rVatgdTYFYivwr5ypuXofClnKYlUzeok3JWi7RfQ8Eu//k8MX3uU6ekyhEOJI82bmsDYvx0nk6GfJV7FWk83RPDJ6lU79Y4SvktiY+1TU5iJ6hJYDE0WDzf+nBVDTQs1wOQxME0QzxkMvI6oNkq5EYfWMHiPRXU=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3d8df0c-ddca-4f08-f93a-08d6b1463d1b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2019 17:20:55.4197
+X-MS-Exchange-CrossTenant-Network-Message-Id: a613ce62-df25-43c3-ec51-08d6b149ccfb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2019 17:46:25.3367
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4331
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4234
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Mazo, Andrey" <amazo@checkvideo.com>
-
-
-23.03.2019, 05:16, "Luke Diamand" <luke@diamand.org>:
-> On Thu, 21 Mar 2019 at 22:32, Mazo, Andrey <amazo@checkvideo.com> wrote:
->>  git-p4 knows how to handle case insensitivity in file paths
->>  if core.ignorecase is set.
->>  However, when determining a branch for a file,
->>  it still does a case-sensitive prefix match.
->>  This may result in some file changes to be lost on import.
->>
->>  For example, given the following commits
->>   1. add //depot/main/file1
->>   2. add //depot/DirA/file2
->>   3. add //depot/dira/file3
->>   4. add //depot/DirA/file4
->>  and "branchList =3D main:DirA" branch mapping,
->>  commit 3 will be lost.
->>
->>  So, do branch search case insensitively if running with core.ignorecase=
- set.
->>  Teach splitFilesIntoBranches() to use the p4PathStartsWith() function
->>  for path prefix matches instead of always case-sensitive match.
+23.03.2019, 04:44, "Luke Diamand" <luke@diamand.org>:
+> On Fri, 22 Mar 2019 at 19:54, Mazo, Andrey <amazo@checkvideo.com> wrote:
+>>  Our Perforce server experienced some kind of database corruption a few =
+years ago.
+>>  While the file data and revision history are mostly intact,
+>>  some metadata for several changesets got lost.
 >
-> I wonder what other code paths break due to this problem!
+> I think it's not unheard of for P4 databases to end up being corrupt,
+> as in your case.
 >
-> Looks reasonable but I fear there may be some other holes in there -
-> quickly looking through the code suggests there are several other
-> places this problem occurs.
+> It looks like the RCS files get updated, but the database files (i.e.
+> the metadata) do not, after which you have a bit of a problem.
 
-From a quick search for .startswith(), I only see that stripRepoPath() migh=
-t have a similar problem in useclientspec case.
-If you see other apparent problematic places, could you, please, point them=
- out?
+Yeah, that's exactly what happened! :/
 
-Or let me try to come up with a test case, and see what other places break.
+> So I guess this change could be quite useful, but it really needs some
+> documentation and tests to support it - git-p4 is already complicated
+> enough!
+
+Great, thanks for positive feedback.
+Let me start working on these.
+Luckily, the actual git-p4 changes are fairly straightforward.
+
+> Your example script should probably use the same magic that the git-p4
+> script uses to pick the path to Python.
+Oh, you mean "#!/usr/bin/env python"?
+Sure!
+
+Actually, I also have a smarter "example script", which reconstructs `p4 de=
+scribe` output from `p4 files` and `p4 change` without manual intervention.
+It's still short enough to be posted inside commit message, but would it ma=
+ke sense to put it under contrib/ and reference from the docs?
+
+> And perhaps come up with a nicer name than "damaged" - as you say, it
+> could also be used for other purposes.
+Does anything from the list below sound reasonable?
+ 1. git-p4.loadChangelistInfo
+ 2. git-p4.changelistInfoOverride
+ 3. git-p4.cachedChangelistInfo
+
+>> For simplicity, it's one pickled file per changelist.
+(talking to myself)
+I realized `p4 -G describe` produces a marshalled output, not pickled one.
+Don't know why I decided to use pickle instead of marshal back when I wrote=
+ it.
+I'll switch to marshal for serialization/deserialization in the next reroll=
+.
+It'll be easier for testing as well, since `p4 -G describe` output could be=
+ fed directly to damagedChangelists machinery without the need to convert i=
+t from marshal to pickle.
 
 Thank you,
-Andrey.
+Andrey
