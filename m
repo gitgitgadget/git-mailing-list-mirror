@@ -7,135 +7,173 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4A4320248
-	for <e@80x24.org>; Mon, 25 Mar 2019 05:41:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44A7F20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 05:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729366AbfCYFlt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 01:41:49 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45116 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729233AbfCYFlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 01:41:49 -0400
-Received: by mail-pf1-f195.google.com with SMTP id e24so4702697pfi.12
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 22:41:48 -0700 (PDT)
+        id S1729633AbfCYFrf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 01:47:35 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38895 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729594AbfCYFre (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 01:47:34 -0400
+Received: by mail-pg1-f193.google.com with SMTP id j26so3676874pgl.5
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 22:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=chryq5PwtidMNKCo+ug7vuqB/BHloF2XBhAbWlGsJJg=;
-        b=XZ7q84muR8ri1nMVa2/AsQGGwSpTAl20Yd7M3i2Bwq6G+hE2wi47K040/RMMFbjMUE
-         uWdYyvwTiJUEbsWljLYjfE5o7MXbtvGT7kDPkGBifuv3zlQWcxz8vfIOQuPPMsQikN/i
-         9Ce5Zq0Qu8GptvgHQcrvFFc75wZm4uov74Zz2AIbdKFmA5lTSEJPTGawlyHnZR/9OrbK
-         oOgFWfgUBrCPeEMni1bRAnTEBXlWjT3ywUuh799o4SbmBFKxiawi5/T7qx4VHeDyMGi9
-         +zO9EhOqQJdNFjlZvV6uobJky6cmffh4VStSwGQiVvszCuwzfF3vTkQ5utDq18sQMkyC
-         +thA==
+        bh=nro3S9qob0HtQM5Ga0G3H2Owdb/rYLPj3dmnnyCVDkM=;
+        b=F+ytyRC5FfPxiXPIG0hTxWkrxlrlhhoszCpDgfIfhQA06ti+Mnc0MUCCLAaiC3lDLK
+         hSbNnW+PnnjcMso03SKlxLi7I3Fnb3DFYl9kQQi6jm2WoacQ47X47dGWJjMLr0eZHqaC
+         eUsm4Krhkng8VpsrQohpRzpQtLJHwtuytbvYw/fVa1yrIWxXjKjtEbPfAs2c+f2C5UuE
+         JXRKLvWe5+C7H5FxdrBTjval1q27U3+dymO+6HKKk25b9MiXHecVJrykmnarOSbaZKRs
+         ZunTlWZwD1CjRK/cju1X6mQwm+J+NkP3iLmg6Ot31Ep4cWkSxj/JqSMbAXKe2VMbKxqs
+         ncxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=chryq5PwtidMNKCo+ug7vuqB/BHloF2XBhAbWlGsJJg=;
-        b=f2PbX+QvYyhbIw+LoIAZ7yCJonEH5s4MgoALxuV5/rRPqRl21Pk7GQaOgeMORsS/aP
-         lmTwVvLS5nyFiMrCdwlbbdPJiyHvzgVpipH4EdeHezgm4UGf5gzdiPyRm8tTOh7IMi4f
-         nXm88qG11uEZMcPw9AmabEd7VgKa5Ji+TeHvTCHB1x6sx+WHT26C/+mvPmLW70fkg8XQ
-         ZHZhvxrO1+pTmOgk4fp13/gZzKbK4tf8BfnypN1TRwWOgT3HnvsdnfKIoyKygRolIo0w
-         dbziuf1jksPmHSmafyRm6a767ytwSU1ET4ks98lFdoR/O9HodBx6SRzhjS3gflpiVsb7
-         H4ew==
-X-Gm-Message-State: APjAAAUZ7IKYw3y2INlqsVpGBYtbEnoYAm7ccFUZMzET+X4sawX/quvw
-        hVufJ0QoBzfNnlJzbN0P7qck71uB
-X-Google-Smtp-Source: APXvYqyd4dcSF8p3RWDSH284Udob+cVy0Ohvh05bsgF/wiDSe02JHDwUTY25mn90OG9q2uIjuz3B0A==
-X-Received: by 2002:a63:3f8b:: with SMTP id m133mr21301832pga.91.1553492508495;
-        Sun, 24 Mar 2019 22:41:48 -0700 (PDT)
+        bh=nro3S9qob0HtQM5Ga0G3H2Owdb/rYLPj3dmnnyCVDkM=;
+        b=pIEAeyex8/l6XSwjJDycCposQ7dgG5YI+nC2Amw8nOvtAQgDd/hDxvatkuQr5UEcG3
+         +jBS0ccK/nrCQuFNExGFYpCxqeYGspvS70xj9RlIgamg4Js0ekmE15ZsnPvc9750SZyG
+         vZLDpuzgnvrig4xw0Sqyo9O0bPlzfWU0Nix/N20UWvirH36tU8b1m4jQDP/s4FkA4VlW
+         fTcrDfg6eOL3j736cFGbZ/RUm3vJ/pzuc7n+oDTpqTp6HTrYBC6mQyPizjBH37zqNNCr
+         uA9LLIB1tCOv2Ven5s+ZBJffFCoSyXbZaYjc6cTuRHsWGwB+HyrBQYGWl6caekXb5XA3
+         gNMA==
+X-Gm-Message-State: APjAAAUfiw5L5I1oLgIizjhmCuDCWLePvfxpfVR31hyBbeLIVnKX89Ln
+        WIYp1uxCRKVhwWtXwlulkcJhdVZ+
+X-Google-Smtp-Source: APXvYqx1r0aFaZ2fnxgIwbondKNPfXlzdvr6qdhGo2MGeqg8xvBEHQcKsGT0/QTHT7FCpFwrnF09Pw==
+X-Received: by 2002:a17:902:b707:: with SMTP id d7mr23246061pls.91.1553492853116;
+        Sun, 24 Mar 2019 22:47:33 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id d12sm22994561pfh.168.2019.03.24.22.41.46
+        by smtp.gmail.com with ESMTPSA id t129sm22520685pfb.127.2019.03.24.22.47.31
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Mar 2019 22:41:47 -0700 (PDT)
-Date:   Sun, 24 Mar 2019 22:41:45 -0700
+        Sun, 24 Mar 2019 22:47:32 -0700 (PDT)
+Date:   Sun, 24 Mar 2019 22:47:30 -0700
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-Message-ID: <20190325054145.GA1652@archbookpro.localdomain>
+Message-ID: <20190325054730.GB1652@archbookpro.localdomain>
 References: <cover.1553354374.git.liu.denton@gmail.com>
  <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
- <xmqqtvfso1cz.fsf@gitster-ct.c.googlers.com>
- <20190325000618.GB9384@archbookpro.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190325000618.GB9384@archbookpro.localdomain>
+In-Reply-To: <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 24, 2019 at 05:06:18PM -0700, Denton Liu wrote:
-> Hi Junio,
-> 
-> On Sun, Mar 24, 2019 at 10:20:28PM +0900, Junio C Hamano wrote:
-> > Denton Liu <liu.denton@gmail.com> writes:
-> > 
-> > > A common scenario is if a user is working on a topic branch and they
-> > > wish to make some changes to intermediate commits or autosquashing, they
-> > > would run something such as
-> > >
-> > > 	git rebase -i --onto master... master
-> > >
-> > > in order to preserve the merge base. This prevents unnecessary commit
-> > > churning.
-> > >
-> > > Alternatively, a user wishing to test individual commits in a topic
-> > > branch without changing anything may run
-> > >
-> > > 	git rebase -x ./test.sh master... master
-> > >
-> > > Since rebasing onto the merge base of the branch and the upstream is
-> > > such a common case, introduce the --keep-base option as a shortcut.
-> > >
-> > > This allows us to rewrite the above as
-> > >
-> > > 	git rebase -i --keep-base master
-> > >
-> > > and
-> > >
-> > > 	git rebase -x ./test.sh --keep-base master
-> > >
-> > > respectively.
-> > 
-> > I never use the "feature" myself, but I recall that when "git
-> > rebase" is run on a branch appropriately prepared, you do not even
-> > have to say <upstream> (iow, you type "git rebase<RET>" and rebase
-> > on top of @{upstream}).  
-> > 
-> > Can this new "--keep-base" feature mesh well with it?  When the
-> > current branch has forked from origin/master, for example, it would
-> > be good if
-> > 
-> > 	$ git rebase -i --same-base
-> > 
-> > becomes a usable short-hand for
-> > 
-> > 	$ git rebase -i --same-base origin/master
-> 
-> By "--same-base", I am assuming you mistyped and meant to write
-> "--keep-base"? If that's the case, I can make it a shorthand.
+On Sat, Mar 23, 2019 at 08:25:28AM -0700, Denton Liu wrote:
+> A common scenario is if a user is working on a topic branch and they
+> wish to make some changes to intermediate commits or autosquashing, they
 
-Sorry, I misunderstood your question. "--keep-base" already has the
-shorthand case handled by default.
+Sorry, small typo here:
 
-One caveat is that "--fork-point" is automatically implied if no
-upstream is supplied but this behaviour is the same for "--onto" or when
-no other options are supplied as well.
+s/autosquashing/autosquash/
 
-I don't use the feature either so I'm not really sure if this behaviour
-would be the most sane thing to do.
+-Denton
 
-> Thanks,
+> would run something such as
 > 
-> Denton
+> 	git rebase -i --onto master... master
 > 
-> > 
-> > aka
-> > 
-> > 	$ git rebase -i --onto $(git merge-base HEAD origin/master) origin/master
-> > 
+> in order to preserve the merge base. This prevents unnecessary commit
+> churning.
+> 
+> Alternatively, a user wishing to test individual commits in a topic
+> branch without changing anything may run
+> 
+> 	git rebase -x ./test.sh master... master
+> 
+> Since rebasing onto the merge base of the branch and the upstream is
+> such a common case, introduce the --keep-base option as a shortcut.
+> 
+> This allows us to rewrite the above as
+> 
+> 	git rebase -i --keep-base master
+> 
+> and
+> 
+> 	git rebase -x ./test.sh --keep-base master
+> 
+> respectively.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  builtin/rebase.c | 25 ++++++++++++++++++++++---
+>  1 file changed, 22 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 77deebc65c..fffee89064 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -27,8 +27,8 @@
+>  #include "branch.h"
+>  
+>  static char const * const builtin_rebase_usage[] = {
+> -	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+> -		"[<upstream>] [<branch>]"),
+> +	N_("git rebase [-i] [options] [--exec <cmd>] "
+> +		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
+>  	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+>  		"--root [<branch>]"),
+>  	N_("git rebase --continue | --abort | --skip | --edit-todo"),
+> @@ -1018,6 +1018,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	};
+>  	const char *branch_name;
+>  	int ret, flags, total_argc, in_progress = 0;
+> +	int keep_base = 0;
+>  	int ok_to_skip_pre_rebase = 0;
+>  	struct strbuf msg = STRBUF_INIT;
+>  	struct strbuf revisions = STRBUF_INIT;
+> @@ -1051,6 +1052,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		OPT_STRING(0, "onto", &options.onto_name,
+>  			   N_("revision"),
+>  			   N_("rebase onto given branch instead of upstream")),
+> +		OPT_BOOL(0, "keep-base", &keep_base,
+> +			 N_("use the merge-base of upstream and branch as the current base")),
+>  		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+>  			 N_("allow pre-rebase hook to run")),
+>  		OPT_NEGBIT('q', "quiet", &options.flags,
+> @@ -1217,6 +1220,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		usage_with_options(builtin_rebase_usage,
+>  				   builtin_rebase_options);
+>  
+> +	if (keep_base) {
+> +		if (options.onto_name)
+> +			die(_("cannot combine '--keep-base' with '--onto'"));
+> +		if (options.root)
+> +			die(_("cannot combine '--keep-base' with '--root'"));
+> +	}
+> +
+>  	if (action != NO_ACTION && !in_progress)
+>  		die(_("No rebase in progress?"));
+>  	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+> @@ -1541,10 +1551,19 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	/* Make sure the branch to rebase onto is valid. */
+> -	if (!options.onto_name)
+> +	if (keep_base) {
+> +	    strbuf_reset(&buf);
+> +	    strbuf_addstr(&buf, options.upstream_name);
+> +	    strbuf_addstr(&buf, "...");
+> +	    options.onto_name = xstrdup(buf.buf);
+> +	} else if (!options.onto_name)
+>  		options.onto_name = options.upstream_name;
+>  	if (strstr(options.onto_name, "...")) {
+>  		if (get_oid_mb(options.onto_name, &merge_base) < 0)
+> +		    if (keep_base)
+> +			die(_("'%s': need exactly one merge base with branch"),
+> +				options.upstream_name);
+> +		    else
+>  			die(_("'%s': need exactly one merge base"),
+>  			    options.onto_name);
+>  		options.onto = lookup_commit_or_die(&merge_base,
+> -- 
+> 2.21.0.512.g57bf1b23e1
+> 
