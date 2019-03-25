@@ -2,113 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8269820248
-	for <e@80x24.org>; Mon, 25 Mar 2019 13:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4221620248
+	for <e@80x24.org>; Mon, 25 Mar 2019 14:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728959AbfCYNub (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 09:50:31 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:45489 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726243AbfCYNub (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 09:50:31 -0400
-Received: by mail-lf1-f68.google.com with SMTP id 5so6034345lft.12
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 06:50:29 -0700 (PDT)
+        id S1729072AbfCYOhw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 10:37:52 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:50307 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729046AbfCYOhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 10:37:51 -0400
+Received: by mail-it1-f196.google.com with SMTP id m137so14280609ita.0
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 07:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:sender:from:date:message-id
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
          :subject:to:cc;
-        bh=DoRMm+FGMJgqkvzKRS7bjvoEDAkInJHi7kzK1+PDt54=;
-        b=OHXWEymK4NWug3hQlfvThI0jxZHbsSkBmweg72k1t2rMKv/Pld8kbX1X1WIvbZwYRp
-         6j7pUgFHfA9Sh1V1h7+craPu7imE9g7k9rggKAtL0W0GXHhR53/QmovmdHMja0RU2fu6
-         ecj3XzusubabLdwnNLxvWzpnM64KGERt7jJn7lauU8CSitg/5BX3dRB8D2Nqe1KnorHI
-         Zgpo1EYsy2Il2x+Teiu9qcTXjJY7pen2Tpf0wpnXomGt0pMTYCgXBq3FWut3GpHdyeUn
-         qlYsBiqMXDWXutdvB3dl0QcHi49ecKBUvKCRdH2lEhjD7dZGf8EKURJqcIdZwQXvYbSr
-         RkNg==
+        bh=UaPGteKgB8YEsZ6riyERYGHH8hSX0G9pDZQv/m5hKDY=;
+        b=ICJ9uZTD3wvwcgePyQ6ii5jqXYQQFc/5dlOKOiEZ0eERABLuAbtsEUm9wnCzSBd0XE
+         HuTw1vinKlIhLCzxkH8IL5qFW+gMkwsfGrW5wWoNhkLJSWrbCt/b0DsjCwBXGpOuY1Z+
+         BfLTrR0TKdI8WNHD5EmaTQNa32ELLZZIaSn+EKMoR5xwbJvXkOufcs7x8ZTxSS/tM/qM
+         CBRqkXqE3mYTPGINjjyuTlLIXc61zQ+sdkqRLlIihjXFoKscHFAxzAWL2HEcos0sGeCb
+         FmNUbMR2efAugnDOOk+JL1pl/y3DkcU58TC/LBXwqHwU+Q0INMp1EoxBJUbAkLEdlEiz
+         lixg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to:cc;
-        bh=DoRMm+FGMJgqkvzKRS7bjvoEDAkInJHi7kzK1+PDt54=;
-        b=ZTYjQAeoU9kJmD6P89zodYV3KNKjMIA1BUU9MyWnnkW8rxlz4jsi2tZt/sCOMhWDEs
-         xV/OIiSlEpdiHEaAlMXZKg94QpbIkioSyvp1z8Wd7v0UAqFnGgQLEqJ3hBrtJHmllIb7
-         T1BzJJU2V2r37A0V9nFfL2TWHt/ohO8ofNT7q4dGRWo3lHRbgBxkTCrRjOZ6O1RQ2GLj
-         WOTTpDtkp7TGX4w1GcWGEvFYrIMGYCE9SiEGAquc0g5CdE6bLwI7kGt5M50U0+as+MVr
-         /gtdnjLH4wpQXDxmvz+p9m66W31EMz36tSFQfirP6cRKxxk6vt4qlCDlc8DUjpA25CtQ
-         22NQ==
-X-Gm-Message-State: APjAAAXkGyEtP/kgQJgtbWRZhTlUF0BrerySUy6pz8eOyRFrv2zcetDF
-        ur2Vdcjx5OJPDsEs3QHPDsrzPB1AgCh2d7UJ8t8=
-X-Google-Smtp-Source: APXvYqwOtQ6pwTn3/l9hvBltuphim/F6/PHV0b8T0dLWbp1GocDkYWHLysV18uN++ijXp9yR1b0hWVa2j0xAMWEIWv0=
-X-Received: by 2002:ac2:4298:: with SMTP id m24mr8569676lfh.2.1553521827568;
- Mon, 25 Mar 2019 06:50:27 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=UaPGteKgB8YEsZ6riyERYGHH8hSX0G9pDZQv/m5hKDY=;
+        b=HIjPaMcLdVZ2lUHmZDw3A5UUvFvvkruhDpLY787SKalwNDRBF3iDTe3kXVhE3vDkOW
+         DNqVBthYmPBd7/NOUbgFy53cf/qzcQ2GrXkPLvMzxZU3MSYp2/YUk/lEuynwS8xwxJUX
+         Q19nEeHW2gf6+mXL9sqV7TmepuYq3mF9yYs/by3Iy4+OI6NAzaWaNJ8ao9yKWlMHVq6M
+         Sx7PJSQs/yC9veLyVrG8zuIRg0ZNSpjUYg27OtaItQeu18qL2GwUhq34s+OlbqtTnxRz
+         KP7AnjML4G96RaFVbU7W+cS3Krj0RmzK7BigzIhIdl0+ygqsN1P7Sd6DzlOXJJRhuxcI
+         5omw==
+X-Gm-Message-State: APjAAAUKEJZoj5Pw6UyTDIRo8ix9YOwO2ZanhSojKZHiiKYZvoTQwMs/
+        t+lzVAeEbdy9LCoXv2XjYzh6BQUvmDz/hWWOKR4gqCTd
+X-Google-Smtp-Source: APXvYqwqlFW6nrP5tqiZ0QZ/pC0Jpf/cBeo/PH1JAEhEUtM046Tg06mvB5MTv+fqbce7ZsWtEeAFbGImbKhZwylemMk=
+X-Received: by 2002:a02:6d12:: with SMTP id m18mr18617440jac.54.1553524670826;
+ Mon, 25 Mar 2019 07:37:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHd499BM91tf7f8=phR4Az8vMsHAHUGYsSb1x9as=WukUVZHJw@mail.gmail.com>
- <20190321192928.GA19427@sigill.intra.peff.net>
-In-Reply-To: <20190321192928.GA19427@sigill.intra.peff.net>
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Mon, 25 Mar 2019 08:50:14 -0500
-X-Google-Sender-Auth: wMkEc9Ormb4RfC66z3WGH_UPyqw
-Message-ID: <CAHd499BTACjf91Ohi34ozFQE_NOn-LVf-35t7h4CTtDFoMCpWw@mail.gmail.com>
-Subject: Re: Strange annotated tag issue
-To:     Jeff King <peff@peff.net>
-Cc:     Git <git@vger.kernel.org>
+References: <CAH8yC8mDWpf0b3zykyvHRLLbYdmLB7hAk9LcsciB=dYhs4C=VA@mail.gmail.com>
+ <27b99f79-7a6a-1205-b528-84fd81433e0e@kdbg.org>
+In-Reply-To: <27b99f79-7a6a-1205-b528-84fd81433e0e@kdbg.org>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Mon, 25 Mar 2019 10:37:24 -0400
+Message-ID: <CAH8yC8nheOmz0G_Pv3oCv03Se16-+Ynwse9xFRDqKf-x2b9Qkw@mail.gmail.com>
+Subject: Re: How to disable docs when building Git from sources
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 21, 2019 at 2:29 PM Jeff King <peff@peff.net> wrote:
-> Tags can point to any object, including another tag. It looks like
-> somebody made an annotated tag of an annotated tag (probably by
-> mistake, given that they have the same tag-name).
+On Mon, Mar 25, 2019 at 3:14 AM Johannes Sixt <j6t@kdbg.org> wrote:
 >
-> Try this:
+> Am 25.03.19 um 07:40 schrieb Jeffrey Walton:
+> > I'm working on a low-resource dev-board. It is missing a lot of
+> > utilities to save space. I'm building Git 2.20 from sources. Make is
+> > failing due to '/bin/sh: 1: msgfmt: not found'. I don't cross-compile
+> > because that's a bigger pain in the ass than waiting for the native
+> > build to finish.
+> >
+> > I ran './configure --help' but I don't see a way to disable the docs.
+> > In the past I tired --disable-docs but it had no effect.
+> >
+> > How do I disable the docs?
 >
->   git init
->   git commit -m commit --allow-empty
->   git tag -m inner mytag HEAD
->   git tag -f -m outer mytag mytag
+> These are message translations, not documentation. To disable them, set
 >
->   git show mytag
+> NO_GETTEXT=Yes
 >
-> which produces similar output. You can walk the chain yourself with "git
-> at-file tag 4.2.0.1900". That will have a "type" and "object" field
-> which presumably point to the second commit.
->
-> My guess is that somebody was trying to amend the tag commit message,
-> but used the tag name to create the second one, rather than the original
-> commit. I.e,. any of these would have worked for the second command to
-> replace the old tag:
->
->   git tag -f -m 'new message' mytag HEAD
->
->   git tag -f -m 'new message' 2fcfd00ef84572fb88852be55315914f37e91e11
->
->   git tag -f -m 'new message' mytag mytag^{commit}
->
-> If the original tag isn't signed, you could rewrite it at this point
-> using one of the above commands, coupled with GIT_COMMITTER_* to munge
-> the author and date.  But note that fetch doesn't update modified tags
-> by default, so it may just cause confusion if you have a lot of people
-> using the repository.
+> in your config.mak.
 
-Thanks for explaining. This is very helpful. Am I naive to think that
-this should be an error? I haven't seen a valid _pragmatic_ use for
-tags pointing to tags. In 100% of cases (including this one), it is
-done out of error. As per your example, users try to "correct" an
-annotated tag pointing at a wrong tag or commit. What they expect is
-the tag to point to the other tag's commit, but that's not what they
-get.
+Thanks Hannes.
 
-From a high-level, pragmatic perspective, doesn't it make more sense
-to change the git behavior so that annotated tags may only point to
-commit objects? And in the `git tag -f -m outer mytag mytag` case in
-your example, this would automatically perform `mytag^{}` to ensure
-that the behavior the user expects is the behavior they get?
+I used 'make -j 4 NO_GETTEXT=Yes' and I think that fixed the command
+line components. Or at least I did not see the error where I was
+previously seeing it.
+
+I am seeing a similar issue now for the GUI components (assuming
+po2msg.sh is doing similar):
+
+make -C git-gui  gitexecdir='/usr/local/libexec/git-core' all
+make[1]: Entering directory '/home/jwalton/Build-Scripts/git-2.21.0/git-gui'
+GITGUI_VERSION = 0.21.GITGUI
+    * new locations or Tcl/Tk interpreter
+tclsh po/po2msg.sh --statistics --tcl -l hu -d po/ po/hu.po
+tclsh po/po2msg.sh --statistics --tcl -l pt_pt -d po/ po/pt_pt.po
+make[1]: tclsh: Command not found
+make[1]: tclsh: Command not found
+tclsh po/po2msg.sh --statistics --tcl -l ja -d po/ po/ja.po
+Makefile:252: recipe for target 'po/hu.msg' failed
+make[1]: tclsh: Command not found
+make[1]: *** [po/hu.msg] Error 127
+make[1]: *** Waiting for unfinished jobs....
+Makefile:252: recipe for target 'po/pt_pt.msg' failed
+make[1]: *** [po/pt_pt.msg] Error 127
+Makefile:252: recipe for target 'po/ja.msg' failed
+make[1]: *** [po/ja.msg] Error 127
+make[1]: Leaving directory '/home/jwalton/Build-Scripts/git-2.21.0/git-gui'
+Makefile:2037: recipe for target 'all' failed
+make: *** [all] Error 2
+
+Jeff
