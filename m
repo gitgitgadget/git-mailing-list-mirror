@@ -2,138 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8309420248
-	for <e@80x24.org>; Mon, 25 Mar 2019 21:40:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE21B20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729478AbfCYVkz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 17:40:55 -0400
-Received: from mout.gmx.net ([212.227.17.21]:35711 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726217AbfCYVkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 17:40:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553550049;
-        bh=Jg/QsywXlNX6rl5fAj/fa2i2xuHMK3PxiOh/IymmHDQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TsjMpl8PY7ORUepZO8IhuqbzpNU2YK16zFSUDmEPc9FnWwl/ftMZ+hSXU1yttp/hf
-         +YRbu1oE1EtmPSAzRRnZChhXwRlGb0uTWMr9GnWAfkvR8z2EtVohvLntn1e/1R3fa3
-         Hfi8NkPx5KRgfe1GtEvfx2f2Y5IqqLPqjjoLm4OY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmOLO-1ga1X10JoQ-00ZtCt; Mon, 25
- Mar 2019 22:40:49 +0100
-Date:   Mon, 25 Mar 2019 22:40:33 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, jason.karns@gmail.com,
-        me@ttaylorr.com
-Subject: Re: [PATCH v2] config: correct '**' matching in includeIf patterns
-In-Reply-To: <20190324131755.26821-1-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903252233580.41@tvgsbejvaqbjf.bet>
-References: <20190323034535.23364-1-pclouds@gmail.com> <20190324131755.26821-1-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729548AbfCYVlh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 17:41:37 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38297 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726217AbfCYVlh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:41:37 -0400
+Received: by mail-ed1-f65.google.com with SMTP id q14so8928431edr.5
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=HudhKBgIm+pDyUAeRm26JkfGlSvw+VxgVHd170fsWzI=;
+        b=mjZDuAcwfiMAc4AyfPy48tOedCtcmQLOrOjJ0VsuAQJl8kflgOJAVZZ6iUcQWfIWcw
+         TmkQU+CozRvmzbJqAZ7u64r4TDpKxFzomOLncXFUVx/AwZIpBudQIUvAZm/5WwipWkSu
+         LbO9NE6djsPU8rq4eFTJQbp4dvShOEXyVYPzMy5UH714A+ftd84k9fpHWgsibutRzzs8
+         Acr7+ZMgzwcCcdeYJMCGKS5wctBxHJz2iU11DwBETO//61tvjo+1W2e7uotRzSDjKsjQ
+         DoL2E/FxlfVbds1eoqnNJ6I2dySu3FM373SwxfZsxxlQ2EsK888CcYI2asGm6ttgCh0t
+         SPNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=HudhKBgIm+pDyUAeRm26JkfGlSvw+VxgVHd170fsWzI=;
+        b=ldlg8GrC2Y53iW1frC9tNnBvEWvGaaB8K9ENSWLFniHcs7pjOD3zq12fy5MRlJIsBm
+         yTR7r6G49ddKAHpDRiVqyd6yr3aQXCEVpQnUgJdvPTbMkdrTc2B/evO6yGK2V4Edj5Or
+         TSqt8u3IsTsJ+kj01vKlUmuRQlMX2iCckEmPxqfDiuM1QbYf2+okYvEAZ5lkIDTnsSBP
+         CI/O0uVXdmewACCsStGrZziOdohdEsEzNJFptLsnFgHyxdMW4QJEmJ+P4lKiqkrpenpe
+         Kf/4vkZG740dfn8Lb9iyR71K+y+U26ZAAp/FJl+5kCj+PfqiuAqgJVhKOOWYG0j28Cml
+         q2MA==
+X-Gm-Message-State: APjAAAXVSpez4U954RHQ6cfuL1ItrxFINGPuV+mGjclfC5j0ZEADfWtr
+        z8XRP5H3KV7+MjnDml5xehHRdnB4
+X-Google-Smtp-Source: APXvYqyBrKsjguZivkNbsC1sxoZiK/E9kKXcngX41o+FazgnMva4aTrPNMD2z3MPeI6+lbFhwLCGmA==
+X-Received: by 2002:a17:906:fd5:: with SMTP id c21mr15374899ejk.86.1553550095990;
+        Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w6sm3711777eja.50.2019.03.25.14.41.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
+Date:   Mon, 25 Mar 2019 14:41:35 -0700 (PDT)
+X-Google-Original-Date: Mon, 25 Mar 2019 21:41:29 GMT
+Message-Id: <pull.162.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.162.git.gitgitgadget@gmail.com>
+References: <pull.162.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/5] Fix make check-docs on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1565330329-1553550049=:41"
-X-Provags-ID: V03:K1:e0kCNljf7/5zH+Lg18qfMM/p+txjmLnTaHwMpht7DDz7wr0kgeY
- TUDLuAFawCUS02ovoOrZz6yX/W8nfAE+25q/q7W9CWEFwE77Co4F9bKkIQ3H24b7n4UD6Hx
- 0xdukyx/mPQ8jHWxBU12c2bxrqFZRwnGpSyot8LbKN12j8foD3DBscbn/ulBux3dniy6mgi
- 5lBHVzHk+bUZtugV6zc9Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7Usx1hBwHP8=:IZfE4UpElqyr7D/hcOBosJ
- CQYUZP9CAF9Pl4ldv7tI4aj2Y4LA/Oegsa/XFYX4sWIt/ECQAlLgDxx9TH2hKmxikrpBNeRwh
- uSSmdTiupOYtEks7UylcY6/ZFUDkO5Y0O7tSdf+ZVCxVP3mYIPY24WYz63ZvVUnf0bcugnYS3
- LwT8wPUFiKPFpuSiPmV1FreGlcM/T/uRtZoDiZWdRloCaaBVKcK03YZMmZNwZE1T+wp6a7qs/
- oB+0SxKiyb0xAsZnv0opRzaNBd1hKtMInsOwuejBaU6B/15KP0vKi32uA2SHCOOCinM2jyURn
- GHuV6BftaDDMA2HsT6GkdEp6YKWZwGBSr87DIiJGBV0Gck6NZ0V8oiRzWxQZCKZ7HnOhwjE61
- S5XkZcLfgnD3nwFMJx5nS6GRRhjB3xIs2Ql2V+1wmVxOeuC/C9bP6BLgx+7HrCP/cAwNzzNpV
- 2JWXLxQTD+tv5DsB2dibjmuzeETvGCsmOc+lRCz//zUTG61WB6zn/JxR+fyB1PNz3Myx3sl3b
- dSy+f0W/7nc+39B/rDewur5pcu6RLZqymutCnLoqNIPyXIFnSVvUjD/wFrkKFgZkgLmAIJGUS
- 1dPKm+kAgF0b7W4srSKEq73gIL4zyCnfnv/LMZz51dGzKdpoVjyP5AJ5ab6v7D7jGvIL3A5xe
- zvHPZE1XL/W6SfzstmmP4JDgjSnIurgstCeSAn4Thm9axAp2tNr1VFvTlKJChOhsFgy+r6vlx
- EyDOkmpwHNAMXIDPpz/ilci7mqQl+4MfUQnSWeOns77j+UfoIHM6l2Zky7j7cQ2sVxW4r+HlD
- 9uwGGCwbWGmxz/0Ox0G/LFn5WOvLqpqa855bkhUxuDWZVXfnYTP+zjJ0HYGLDB8W1oR3S/lcM
- OgqYCyVnGXozOXpizi+P5iWwgnV2QSabvybk/8BuymRoCksNV3Ox1Vl9B7b9InV9TLJ4puw4B
- iADmif17ZfQ==
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+I stumbled across this when investigating one of Duy's bugs in the CI
+builds.
 
---8323328-1565330329-1553550049=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Changes since v1:
 
-Hi Duy,
+ * We no longer add an extra space in front of the $(patsubst ...) in the
+   second loop, but fix the underlying bug that prevented check-docs' part
+   from working where it discovered documented commands that are actually
+   not installed.
+ * As a fall-out, the gitremote-helpers page, which does not refer to a
+   command, but to a concept, was moved from section 1 to section 7.
+ * As a second fall-out, the documentation for git remote-testgit, which is 
+   a command, but not installed, was removed.
+ * As a "while at it" patch, the part of the check-docs target that tried to
+   identify commands that are listed in the help, but not implemented, was
+   fixed to no longer mistake guides like gitattributes and gitcli for
+   commands.
 
-On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Johannes Schindelin (5):
+  docs: move gitremote-helpers into section 7
+  docs: do not document the `git remote-testgit` command
+  check-docs: really look at the documented commands again
+  check-docs: do not expect guide pages to correspond to commands
+  check-docs: fix for setups where executables have an extension
 
-> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> index 635918505d..4d6e70c11d 100755
-> --- a/t/t1305-config-include.sh
-> +++ b/t/t1305-config-include.sh
-> @@ -229,6 +229,19 @@ test_expect_success 'conditional include, early con=
-fig reading' '
->  	)
->  '
->
-> +test_expect_success 'conditional include with /**/' '
-> +	mkdir foo/bar &&
+ Documentation/Makefile                |  2 +-
+ Documentation/git-remote-ext.txt      |  2 +-
+ Documentation/git-remote-fd.txt       |  2 +-
+ Documentation/git-remote-helpers.txto |  2 +-
+ Documentation/git-remote-testgit.txt  | 30 ---------------------------
+ Documentation/gitremote-helpers.txt   |  4 +---
+ Documentation/urls.txt                |  2 +-
+ Makefile                              |  7 ++++---
+ 8 files changed, 10 insertions(+), 41 deletions(-)
+ delete mode 100644 Documentation/git-remote-testgit.txt
 
-This does assume that no previous test case created `bar`, but that `foo`
-was created (which makes it harder to use `--run=3D<N>` for quicker
-testing/debugging). It would be better to use
 
-	mkdir -p foo/bar &&
+base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-162%2Fdscho%2Fcheck-docs-on-windows-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-162/dscho/check-docs-on-windows-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/162
 
-here. Or *even* better...
+Range-diff vs v1:
 
-> +	git init foo/bar/repo &&
+ -:  ---------- > 1:  0ad38649c0 docs: move gitremote-helpers into section 7
+ -:  ---------- > 2:  810d2c5a94 docs: do not document the `git remote-testgit` command
+ -:  ---------- > 3:  0dad6abd2f check-docs: really look at the documented commands again
+ -:  ---------- > 4:  1097be7678 check-docs: do not expect guide pages to correspond to commands
+ 1:  f06126c3a1 ! 5:  b26aa40c61 check-docs: fix for setups where executables have an extension
+     @@ -24,7 +24,7 @@
+       	) | while read how cmd; \
+       	do \
+      -		case " $(ALL_COMMANDS) " in \
+     -+		case "  $(patsubst %$X,%,$(ALL_COMMANDS)) " in \
+     ++		case " $(patsubst %$X,%,$(ALL_COMMANDS)) " in \
+       		*" $$cmd "*)	;; \
+       		*) echo "removed but $$how: $$cmd" ;; \
+       		esac; \
 
-... just drop the `mkdir foo/bar`, as `git init foo/bar/repo` has not the
-slightest problem creating the intermediate directories.
-
-> +	(
-> +		cd foo/bar/repo &&
-> +		echo "[includeIf \"gitdir:**/foo/**/bar/**\"]path=3Dbar7" >>.git/conf=
-ig &&
-
-This line is longer than the 80 columns asked for in SubmittingPatches,
-and while you have to wrap the line anyway, why not avoid the `cd`, too?
-
-	echo "[includeIf \"gitdir:**/foo/**/bar/**\"]path=3Dbar7" \
-		>>foo/bar/repo/.git/config &&
-	echo "[test]seven=3D7" >foo/bar/repo/.git/bar7 &&
-	echo 7 >expect &&
-	git -C foo/bar/repo config test.seven >actual &&
-	test_cmp expect actual
-
-Ciao,
-Johannes
-
-> +		echo "[test]seven=3D7" >.git/bar7 &&
-> +		echo 7 >expect &&
-> +		git config test.seven >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  test_expect_success SYMLINKS 'conditional include, set up symlinked $HO=
-ME' '
->  	mkdir real-home &&
->  	ln -s real-home home &&
-> --
-> 2.21.0.479.g47ac719cd3
->
->
-
---8323328-1565330329-1553550049=:41--
+-- 
+gitgitgadget
