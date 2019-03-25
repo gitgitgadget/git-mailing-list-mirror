@@ -8,63 +8,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6708720248
-	for <e@80x24.org>; Mon, 25 Mar 2019 21:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8309420248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730387AbfCYV2x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 17:28:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51833 "EHLO mout.gmx.net"
+        id S1729478AbfCYVkz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 17:40:55 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35711 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730239AbfCYV2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 17:28:53 -0400
+        id S1726217AbfCYVkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:40:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553549318;
-        bh=qp979Ax6sbnkWQ9TCsBKIx0AFMsIyTxUnqyGksVQJxc=;
+        s=badeba3b8450; t=1553550049;
+        bh=Jg/QsywXlNX6rl5fAj/fa2i2xuHMK3PxiOh/IymmHDQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QMkIDN3ZbANlDHiBWDlGiChrHudb8DEzgyBhDpFtGOtpOsvdF8BncxaiClARGtjHt
-         k1dS7fW/DCbyL+SSNVJBrwhAiNtUmIZW9u+rABCHWA32y0Aa0ian8UihQddOUfwHgo
-         iP6oeYPuzFoTLssy6wXUVkQwNHefw6AF1DlmF9tM=
+        b=TsjMpl8PY7ORUepZO8IhuqbzpNU2YK16zFSUDmEPc9FnWwl/ftMZ+hSXU1yttp/hf
+         +YRbu1oE1EtmPSAzRRnZChhXwRlGb0uTWMr9GnWAfkvR8z2EtVohvLntn1e/1R3fa3
+         Hfi8NkPx5KRgfe1GtEvfx2f2Y5IqqLPqjjoLm4OY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mgt3g-1hLgJi1DPM-00M2k7; Mon, 25
- Mar 2019 22:28:38 +0100
-Date:   Mon, 25 Mar 2019 22:28:21 +0100 (STD)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LmOLO-1ga1X10JoQ-00ZtCt; Mon, 25
+ Mar 2019 22:40:49 +0100
+Date:   Mon, 25 Mar 2019 22:40:33 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] ci: install Asciidoctor in
- 'ci/install-dependencies.sh'
-In-Reply-To: <20190324215534.9495-5-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903252221300.41@tvgsbejvaqbjf.bet>
-References: <20190324155219.2284-1-szeder.dev@gmail.com> <20190324215534.9495-1-szeder.dev@gmail.com> <20190324215534.9495-5-szeder.dev@gmail.com>
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, jason.karns@gmail.com,
+        me@ttaylorr.com
+Subject: Re: [PATCH v2] config: correct '**' matching in includeIf patterns
+In-Reply-To: <20190324131755.26821-1-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903252233580.41@tvgsbejvaqbjf.bet>
+References: <20190323034535.23364-1-pclouds@gmail.com> <20190324131755.26821-1-pclouds@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1283931657-1553548921=:41"
-Content-ID: <nycvar.QRO.7.76.6.1903252225480.41@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:ib3NfWVYK9rdNIUrhyiqqEM0iOjabxIjG749EeHnXBcJlbp0NZ/
- 2svKaq6l+7xrcy4zVkAineueCEA2Y88KFCZlbN5dakNskAaX0EfsLm2kS1uYdz6E5ta+oCq
- V3IIC8VFWxTe5PUgPNUv5ygwU30R2OLTloQ2bdM+G3OL3j2dTqq/0YUG3k+YKWMXZ0WCjyh
- jtlbZbihCikwkNvSK8K+Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:g83NL9k+s/0=:tcnBewnBFc0UVrxlU3QK+S
- KATJ7loVYB2BmJA1bz2kxSEVXzvwASZ9dxthAgEmuIrSFmBXnpdWf/3ZMZmxVmbncKb0TWJTG
- A2SNh7bPkPzwui+wyCf//qbl1MWsCII+g1vcm7QtOq6zC19qNcH/aeUL5DXHZJLaagRYfe6ot
- tgUdm0hMmYvUC2R0daIcNqdLOr4oRDZX3rtL9fMVTq8qB0YoumS8IeQyoVCQtnZZ4TYP4gQmc
- iTpMDCmOuE4Qk9BeBT8f8sAK2c4atguXNsRMYuE4yDos03XAsvnDpzykcwXVR6PM1JiKv0AYg
- ijvcitnBRIzlveyM6t8jIy1ffwSi2h3V/UwFkHHAaFCj+0Ojqr0dV1z4nj9G6Rv2dS7wmReQS
- ZKI/kiCbkNs8JhbWQx5P1cJfuYViVmtao3pZizYSWNdMnvvjd1Rr1JrNZiXqT3otLGJ7bepXt
- SM8Smdqa4Wgj+CVVYpPeSZvaeDs7eKz34gLE4Wd+10ea3LXzYTo1uyV5+Use2pSodKVPDUjiz
- w8+ybacYg/S8wD6q4Yv0jWIZnfwEHh5yguZiWDm+4YRRYJKxe3XU5EHGOyioZJP4ZFMnfANio
- YCjx2OxBbYNxOz9waQZ7z11pD9JyOPifs4x1+7E7GDqNUyOAoYrsQwOsEONUdZXBGFRgeenTx
- WmL5xxQHzNOPrFfl2/R5znlucTG0NACiQdhfoHLET2hSsFNJdMw7ONKwt5HdoqPbwd39exFv3
- EBPcu4wOHkJGD28XX16hOgduXk41nIA0SeELB1VahSxqltVwZTdHXCyaVBcHCXGZU+9Mw9h26
- hVRh2tgv5ZGmjicJwCIaIvtHsRLjb50y1aj8v5F0kMN3Dli+JGTH6NtpWJpw3lfmSEXHOhegT
- qPZMZg9ruVjfcnX7wGAafKGzy2Te0GL85fV9Qfny1sRddocqatstL5ED0F1/wA2dAkalg/7Xe
- kHbcm978kMA==
+Content-Type: multipart/mixed; boundary="8323328-1565330329-1553550049=:41"
+X-Provags-ID: V03:K1:e0kCNljf7/5zH+Lg18qfMM/p+txjmLnTaHwMpht7DDz7wr0kgeY
+ TUDLuAFawCUS02ovoOrZz6yX/W8nfAE+25q/q7W9CWEFwE77Co4F9bKkIQ3H24b7n4UD6Hx
+ 0xdukyx/mPQ8jHWxBU12c2bxrqFZRwnGpSyot8LbKN12j8foD3DBscbn/ulBux3dniy6mgi
+ 5lBHVzHk+bUZtugV6zc9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7Usx1hBwHP8=:IZfE4UpElqyr7D/hcOBosJ
+ CQYUZP9CAF9Pl4ldv7tI4aj2Y4LA/Oegsa/XFYX4sWIt/ECQAlLgDxx9TH2hKmxikrpBNeRwh
+ uSSmdTiupOYtEks7UylcY6/ZFUDkO5Y0O7tSdf+ZVCxVP3mYIPY24WYz63ZvVUnf0bcugnYS3
+ LwT8wPUFiKPFpuSiPmV1FreGlcM/T/uRtZoDiZWdRloCaaBVKcK03YZMmZNwZE1T+wp6a7qs/
+ oB+0SxKiyb0xAsZnv0opRzaNBd1hKtMInsOwuejBaU6B/15KP0vKi32uA2SHCOOCinM2jyURn
+ GHuV6BftaDDMA2HsT6GkdEp6YKWZwGBSr87DIiJGBV0Gck6NZ0V8oiRzWxQZCKZ7HnOhwjE61
+ S5XkZcLfgnD3nwFMJx5nS6GRRhjB3xIs2Ql2V+1wmVxOeuC/C9bP6BLgx+7HrCP/cAwNzzNpV
+ 2JWXLxQTD+tv5DsB2dibjmuzeETvGCsmOc+lRCz//zUTG61WB6zn/JxR+fyB1PNz3Myx3sl3b
+ dSy+f0W/7nc+39B/rDewur5pcu6RLZqymutCnLoqNIPyXIFnSVvUjD/wFrkKFgZkgLmAIJGUS
+ 1dPKm+kAgF0b7W4srSKEq73gIL4zyCnfnv/LMZz51dGzKdpoVjyP5AJ5ab6v7D7jGvIL3A5xe
+ zvHPZE1XL/W6SfzstmmP4JDgjSnIurgstCeSAn4Thm9axAp2tNr1VFvTlKJChOhsFgy+r6vlx
+ EyDOkmpwHNAMXIDPpz/ilci7mqQl+4MfUQnSWeOns77j+UfoIHM6l2Zky7j7cQ2sVxW4r+HlD
+ 9uwGGCwbWGmxz/0Ox0G/LFn5WOvLqpqa855bkhUxuDWZVXfnYTP+zjJ0HYGLDB8W1oR3S/lcM
+ OgqYCyVnGXozOXpizi+P5iWwgnV2QSabvybk/8BuymRoCksNV3Ox1Vl9B7b9InV9TLJ4puw4B
+ iADmif17ZfQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,79 +69,71 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1283931657-1553548921=:41
-Content-Type: text/plain; CHARSET=UTF-8
+--8323328-1565330329-1553550049=:41
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.1903252225481.41@tvgsbejvaqbjf.bet>
 
-Hi,
+Hi Duy,
 
-I like the rest of the patch series, but this patch, I am not so sure
-about...
+On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-On Sun, 24 Mar 2019, SZEDER G=C3=A1bor wrote:
-
-> When our '.travis.yml' was split into several 'ci/*' scripts [1], the
-> installation of the 'asciidoctor' gem somehow ended up in
-> 'ci/test-documentation.sh'.
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index 635918505d..4d6e70c11d 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -229,6 +229,19 @@ test_expect_success 'conditional include, early con=
+fig reading' '
+>  	)
+>  '
 >
-> Install it in 'ci/install-dependencies.sh', where we install
-> everything else.
+> +test_expect_success 'conditional include with /**/' '
+> +	mkdir foo/bar &&
 
-The big difference you introduce is that asciidoctor is now installed
-with every job, not only with the Documentation job that actually uses it.
+This does assume that no previous test case created `bar`, but that `foo`
+was created (which makes it harder to use `--run=3D<N>` for quicker
+testing/debugging). It would be better to use
 
-Even if it affects me very little (because I don't pay much attention to
-Travis, it's been too flakey for me, and it does not test our Windows
-side, and it is too slow), I'd rather install asciidoctor really only when
-needed.
+	mkdir -p foo/bar &&
 
-So I'd like to recommend to drop this patch from the series.
+here. Or *even* better...
 
-Thanks,
-Dscho
+> +	git init foo/bar/repo &&
 
->
-> [1] 657343a602 (travis-ci: move Travis CI code into dedicated scripts,
->     2017-09-10)
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  ci/install-dependencies.sh | 3 +++
->  ci/test-documentation.sh   | 3 ---
->  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index d64667fcbf..76ec308965 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -54,6 +54,9 @@ StaticAnalysis)
->  Documentation)
->  	sudo apt-get -q update
->  	sudo apt-get -q -y install asciidoc xmlto
+... just drop the `mkdir foo/bar`, as `git init foo/bar/repo` has not the
+slightest problem creating the intermediate directories.
+
+> +	(
+> +		cd foo/bar/repo &&
+> +		echo "[includeIf \"gitdir:**/foo/**/bar/**\"]path=3Dbar7" >>.git/conf=
+ig &&
+
+This line is longer than the 80 columns asked for in SubmittingPatches,
+and while you have to wrap the line anyway, why not avoid the `cd`, too?
+
+	echo "[includeIf \"gitdir:**/foo/**/bar/**\"]path=3Dbar7" \
+		>>foo/bar/repo/.git/config &&
+	echo "[test]seven=3D7" >foo/bar/repo/.git/bar7 &&
+	echo 7 >expect &&
+	git -C foo/bar/repo config test.seven >actual &&
+	test_cmp expect actual
+
+Ciao,
+Johannes
+
+> +		echo "[test]seven=3D7" >.git/bar7 &&
+> +		echo 7 >expect &&
+> +		git config test.seven >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
 > +
-> +	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
-> +	gem install asciidoctor
->  	;;
->  esac
->
-> diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-> index be3b7d376a..8f91f48c81 100755
-> --- a/ci/test-documentation.sh
-> +++ b/ci/test-documentation.sh
-> @@ -5,9 +5,6 @@
->
->  . ${0%/*}/lib.sh
->
-> -test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
-> -gem install asciidoctor
-> -
->  make check-builtins
->  make check-docs
->
+>  test_expect_success SYMLINKS 'conditional include, set up symlinked $HO=
+ME' '
+>  	mkdir real-home &&
+>  	ln -s real-home home &&
 > --
-> 2.21.0.539.g07239c3a71.dirty
+> 2.21.0.479.g47ac719cd3
 >
 >
 
---8323328-1283931657-1553548921=:41--
+--8323328-1565330329-1553550049=:41--
