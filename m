@@ -2,128 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF80F202BB
-	for <e@80x24.org>; Mon, 25 Mar 2019 00:06:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD40420248
+	for <e@80x24.org>; Mon, 25 Mar 2019 01:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729167AbfCYAGV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Mar 2019 20:06:21 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40730 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727275AbfCYAGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Mar 2019 20:06:21 -0400
-Received: by mail-pf1-f193.google.com with SMTP id c207so5073798pfc.7
-        for <git@vger.kernel.org>; Sun, 24 Mar 2019 17:06:21 -0700 (PDT)
+        id S1729231AbfCYBSE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Mar 2019 21:18:04 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33298 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729105AbfCYBSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Mar 2019 21:18:04 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z6so8449663wmi.0
+        for <git@vger.kernel.org>; Sun, 24 Mar 2019 18:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2XdtfV9X1AXXwcohtWfLQHN+ap2SoLYRo02m2/5Ck3A=;
-        b=nTbXtFMPIxckbxbORdTkPWWg4BAyhRZoKtvdGpl/PpuGIJZTeO89wLHyaCf0dMHMhF
-         c4yttvq6RMb3yc0taSZLAulffe+5txJxbRerG4254InnsW2V9fBkx76sEghhXJEBsWki
-         9NTU3d++NLlitL6p4Sq5TbCa5rlNcU9LCc5Sm1smKfSh7gOK3AikLURb/vrr6Xdt2GBB
-         +FWhuOIW1+tFu6J15753NI+q9C15ziOAHLSd//5ICqhp3qnJx6Sz/u1OOQE7iHDIJNa0
-         EGxXpE+5NRoiSZWD9NmF7D92VPTOOj6cI5hMGoQY+Pa0EFFJ/2KqIwieVfIXPzFysguO
-         WpAw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=RtA4grjmNBFzdp81uzijYxeVF9dGiGedgZsWCzAoMnA=;
+        b=KU3pgOAu2su02z5RJs+8kfxpaLU+p4rkWnAQwKcDPCvN9VfrG6AmlJnNgbKk8RKjNl
+         dVvpbj4PkzJcFwkPC7TwEo7bfyp7ypjvCJLQnWE+FA8HQRKW/PktaS2qfI3SmWOwDlGj
+         WA8kjYS6xxgKgL0ugwxcQsaL4Si2dryEyNXFCfxeNrX9rIJtfpIBvojalVq7ZQK0ZZet
+         b0mm2wiu5ftthcLmjw1FSAPsyamsRrv+UU6jiA82SQ/tF1fPnFdcZPJ2AoCjeQsBKJKK
+         XjbWmBn82KRTRjYqh5ECRKwQGPGiG5khv8snalbO0ZMAwi7vG4j+eT1X6dbZn93l3Qzf
+         +2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2XdtfV9X1AXXwcohtWfLQHN+ap2SoLYRo02m2/5Ck3A=;
-        b=nQfI3QnRx+WONUInbqvsjVpapE2aUyY99PyMlwSI9TxTSiIvPuN8BD7P49EaRBo99A
-         QLe6KdnTcSovx2aH9FKz3v0fz3YZN7Rzioah7c9Fjd5SdyF17ijQi6FbZZvdJ3caJt7x
-         ExUYMM0p6yeaiP3Ak6y3hSzsrYC6GCifjE1SKLyarcxSKP+V4vYKyt3Cfxc6uywZTNXr
-         ELM4wiQQhKVwjP+HukiqWbe92v2AYKXfDu9Je7JOE6oXXFEKnWknFawVzC3lrI7xKabT
-         NcpMG7yXLH5m0rVH88390Yq/xMuTDdlvgskocEUEgl281i+10LxcmxThmTo6mjqfLz1H
-         o7EA==
-X-Gm-Message-State: APjAAAXH8ezpUjuKBY/Yd9QjWYoseZYjWYw5PAT92E2xg1XrBYioV+Zp
-        IiK0+WHB3DzPoCC2Cs4xhXY=
-X-Google-Smtp-Source: APXvYqzVJr4l0febjuGNl3014HUQi9cnNPXLmJyRdX0boc2liHfky4Ud0z4IWrgpr8JO5hlURo/WJQ==
-X-Received: by 2002:a17:902:9a0b:: with SMTP id v11mr22145238plp.194.1553472380729;
-        Sun, 24 Mar 2019 17:06:20 -0700 (PDT)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id 16sm22701745pfz.106.2019.03.24.17.06.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Mar 2019 17:06:20 -0700 (PDT)
-Date:   Sun, 24 Mar 2019 17:06:18 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-Message-ID: <20190325000618.GB9384@archbookpro.localdomain>
-References: <cover.1553354374.git.liu.denton@gmail.com>
- <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
- <xmqqtvfso1cz.fsf@gitster-ct.c.googlers.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=RtA4grjmNBFzdp81uzijYxeVF9dGiGedgZsWCzAoMnA=;
+        b=KrPd4JtFjFpG9hcmwxUAV0S/CF6BksoZM4xGZtDuoa6doszrXoUIK98R5vI+0JkKRx
+         zjFBg31yYH5wKcgT9Rzqka/zryIfs30B2CnCIhzPyYL5vx6zkjkitHcfrQUWfY0VL67i
+         o1h1lcQ8n14wKtJriQvkrXZzAJx1n7eBL+Q+LO4UUksu2n7yjeWVjYmZwrdW13Xn0HAI
+         g3UmjRmm03Z00hyqqct9XzbvpKZ0Zv9tE8oISNFaGepePZQl2h55bBiZgmY/HG50zlmP
+         nVB8Rxh1FKP6xfs5NiB51ykJpqiJqO37MGDxeLsweszwb+VeifPx81UKZ2BF0wnPuQOU
+         L5Zg==
+X-Gm-Message-State: APjAAAU9epdvWm1+0Cb5KKu1HkLRw89R7zJ8CRLEAhztDXvivYL/OvDH
+        PKYV5x/KOSJoHpaICtvGGZ8=
+X-Google-Smtp-Source: APXvYqwPvYMfzDuc9Su/vRMWFbKsp56fjU9/82b0gCrqexCrYAESjB2wCq0KA1l1HjBS/G/oXKFKUQ==
+X-Received: by 2002:a1c:d04a:: with SMTP id h71mr3608814wmg.120.1553476682669;
+        Sun, 24 Mar 2019 18:18:02 -0700 (PDT)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id o12sm728205wrx.92.2019.03.24.18.18.01
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 24 Mar 2019 18:18:02 -0700 (PDT)
+Date:   Mon, 25 Mar 2019 01:17:17 +0000
+From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] In `git log --graph`, default to --pretty=oneline
+ --abbrev-commit
+Message-ID: <20190325011717.GA5357@rigel>
+References: <20190323041332.9743-1-alexhenrie24@gmail.com>
+ <xmqq36ncpgpe.fsf@gitster-ct.c.googlers.com>
+ <CAMMLpeQbz5qHyK8e4gZ0zKQ5na+zQCd49GZifKZ_iO-gXrs1Gg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqtvfso1cz.fsf@gitster-ct.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMMLpeQbz5qHyK8e4gZ0zKQ5na+zQCd49GZifKZ_iO-gXrs1Gg@mail.gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Alex,
 
-On Sun, Mar 24, 2019 at 10:20:28PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
+On Sun, Mar 24, 2019 at 04:37:25PM -0600, Alex Henrie wrote:
 > 
-> > A common scenario is if a user is working on a topic branch and they
-> > wish to make some changes to intermediate commits or autosquashing, they
-> > would run something such as
-> >
-> > 	git rebase -i --onto master... master
-> >
-> > in order to preserve the merge base. This prevents unnecessary commit
-> > churning.
-> >
-> > Alternatively, a user wishing to test individual commits in a topic
-> > branch without changing anything may run
-> >
-> > 	git rebase -x ./test.sh master... master
-> >
-> > Since rebasing onto the merge base of the branch and the upstream is
-> > such a common case, introduce the --keep-base option as a shortcut.
-> >
-> > This allows us to rewrite the above as
-> >
-> > 	git rebase -i --keep-base master
-> >
-> > and
-> >
-> > 	git rebase -x ./test.sh --keep-base master
-> >
-> > respectively.
+> Can we compromise and make --pretty=short the default for --graph?
 > 
-> I never use the "feature" myself, but I recall that when "git
-> rebase" is run on a branch appropriately prepared, you do not even
-> have to say <upstream> (iow, you type "git rebase<RET>" and rebase
-> on top of @{upstream}).  
-> 
-> Can this new "--keep-base" feature mesh well with it?  When the
-> current branch has forked from origin/master, for example, it would
-> be good if
-> 
-> 	$ git rebase -i --same-base
-> 
-> becomes a usable short-hand for
-> 
-> 	$ git rebase -i --same-base origin/master
 
-By "--same-base", I am assuming you mistyped and meant to write
-"--keep-base"? If that's the case, I can make it a shorthand.
+I agree that `pretty=medium` is sometimes hard to read and, as of now,
+`pretty=oneline` can be very misleading:
 
-Thanks,
+    $ git log --graph --oneline todo~2..todo master~2..master
 
-Denton
+This will look like you have a sequence of commits when in fact they are
+completely unrelated.
 
-> 
-> aka
-> 
-> 	$ git rebase -i --onto $(git merge-base HEAD origin/master) origin/master
-> 
+But If we make the default to 'short' (or anything else), what should be
+done if the user has `format.pretty=` defined to something? Is `--graph`
+special to be allowed to not follow said configuration?
+
+It's inconsistent itself, and introduces inconsistencies on other things
+like the configuration above.
+
+In my opinion, a better alternative could be having a configuration like
+log.graphFormat, similarly how we have log.graphColors for colors, to
+determine which format should be used with --graph.
+
+This would still require user configuration which may be what you were
+trying to avoid by proposing the change in default behaviour.
+
+Settling for a compromise feels like giving up on the strengths from both.
+
+Cheers,
+Rafael Ascensão
