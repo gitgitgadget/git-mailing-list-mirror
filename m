@@ -2,235 +2,343 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2346720248
-	for <e@80x24.org>; Mon, 25 Mar 2019 15:42:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 331AD202BB
+	for <e@80x24.org>; Mon, 25 Mar 2019 15:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729450AbfCYPmM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 11:42:12 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:35968 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfCYPmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 11:42:11 -0400
-Received: by mail-lf1-f67.google.com with SMTP id d18so6358816lfn.3
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 08:42:09 -0700 (PDT)
+        id S1729010AbfCYPvT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 11:51:19 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:37367 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725795AbfCYPvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 11:51:18 -0400
+Received: by mail-ua1-f66.google.com with SMTP id x1so3151604uaj.4
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 08:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hkhSWwdsR4jZUMiXLHmA6oAmHPhe30BMoYsfQpY/ADY=;
-        b=G775IXjMr7pIYRxSdQF0tXe15xKfi28OCjmfbysvhD4LYLfsmogxFgped50uW3WOi8
-         bnFRRizeAjZG5IO5GiqKLh4cY3imdMl1qP/7/XG/e7JyrlCg8JLsEtl5hP/mhP4Mnan1
-         +BW8sQMjwX37U0RyXjB21DTWw7CM1PyK4pHVwsFeGi+LPMbhHFw1GApDC1I/KjFTkRMt
-         htouIWmY4D7KvFao7oKkvGziMm2BsnPsBYzEPDo03TLnq5sGpsPg2q7vbm43idkR5Jay
-         qfUrTd++cFGzFBad4e9KI74FdNBgzeYiTLxF8ytV4+4w9iISDW4C13NtvTSxuChfxBo2
-         +maQ==
+        bh=LY+w/rtayG5SFEnIhKAE5TlUWJkajX0FyM15R/veeKI=;
+        b=fNke5vAqzRSmXE13bnC7EcYNSW+FmPVFgQ+mwzHCsNin3hS8nMaMR5zymtYbagxpNr
+         xL+MJyE/mgA4SLZtABDFX9BueAfYukwlPHefyDwJozjG/yCV5D+Cm42uDEVkZPqeAgmb
+         71G2fxgSY/ZFM6BhXxV+OP0giMsAemv7OF0Hsqk3u5k46Cb7Umv5CYMg9+HuH+LsFWT0
+         hyf7miF1M8Wf4zb1wCfd86q1joF8L4U4oosBynXf+fhaUKBHXhHopYG1VpBr7iGEX9J4
+         k5AgKflJ66EpFwbU/LB9rVkxzXMhUyYmxtQARHjovavZvWSo/PMwQU2Wid6usEJ9IyWw
+         efuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hkhSWwdsR4jZUMiXLHmA6oAmHPhe30BMoYsfQpY/ADY=;
-        b=T6g9Q49rC6jZl9o5s0Gxxryk9hYIsBSR167L5Ho8yTX1kcEf0YaCRiFlV4+FFA9OU1
-         E4nILY8rcdfNq0XPgx2pwZpbOT5co3vjIuNusLYP07cClRRZ5/VgNp94nci3rI7uLTcs
-         PDGkRnXhn4lKMBwroP0Y5Bm5OCdhO/r/hgnmfjGmc1NrBz9J5fhNOX3wuOr/Bz5/nHXA
-         kY6ZH0XtVRpRfZrS90dF+wAumxwjP35vVPzsV9s5+znruFBylKF6YeiF7kE3yWSY8LvG
-         T4COypQZOOPNUd5bjKfmbTetEXrJ7vsmkjr4Y3N35l/avrsX0rc2fPGtqIJ5B6xKmzjk
-         gB4g==
-X-Gm-Message-State: APjAAAU3TGy4oBwvwuGgald6/U4t+60TqFZNqvYmWYDpTjK/u1FmkrOz
-        M5NeVrtwtHxP1b9Xnv7HaRfDZgL1i14b1AlUFMW2aH8WBGE=
-X-Google-Smtp-Source: APXvYqzjyXKnsfWVbHTintr+TdPaMcpbPdenHhJvJVIDFeRGVbkDhOoRB+/dzTfA0vuHduyJJHDYjD5aEHZrKk0q+HM=
-X-Received: by 2002:ac2:5479:: with SMTP id e25mr11563786lfn.121.1553528527589;
- Mon, 25 Mar 2019 08:42:07 -0700 (PDT)
+        bh=LY+w/rtayG5SFEnIhKAE5TlUWJkajX0FyM15R/veeKI=;
+        b=PcfeiTZDRpglmpzybF9ixK/nAUVIhju2sjvyBONmjxWkRyzDOPQWh0kS84usaaYBim
+         Rkj/vkaIm5RpApsd9k7uHzpwhpEWqcXVRgO4eizkZV6mZQ23x+76Zr+2WKy/D8brWR5K
+         t5uHkimRB6+kT7DRatJJk7red6AkPbXSpmBTcLWzONGAp+djSEESog4F17rnyneIcoj0
+         zK1OUrYL9RigyCqKDKi2q2UC/dfQfBNr1HHtGdeluO84f1Qs6K0nmXkmehfIBxi/JcRG
+         mphXCRof9lgsXgZ4jdfcuLZwpukFKsWdItqENpM/sAeT2yRmUP9LmmxlSXafaAdpWA78
+         N0hQ==
+X-Gm-Message-State: APjAAAX6f46bxm5YxC1s1kfY9Kv9wToJMP3ZeN/jc+XBCDEFa93Ww+ji
+        KD4AXlBIjOb479FqQGmukb6ug8GzcZdpsEsA5oM=
+X-Google-Smtp-Source: APXvYqzH9HvKc3qPubKXBs5OLPewKFus/Yt1MM9wj8wh97PjX5kWDL7sxj8KNlMP9Uz3RakXSwj5uZqlcW/UorOqmWA=
+X-Received: by 2002:ab0:69da:: with SMTP id u26mr14072963uaq.1.1553529076655;
+ Mon, 25 Mar 2019 08:51:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
- <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com> <871s31vjo7.fsf@javad.com>
- <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
- <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com> <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
- <87pnqklr8a.fsf@javad.com> <xmqqlg18srrp.fsf@gitster-ct.c.googlers.com>
- <878sx8lpqw.fsf@javad.com> <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com>
- <87k1gsh1zs.fsf@javad.com> <xmqqy357r6im.fsf@gitster-ct.c.googlers.com>
- <8736nfc4t9.fsf@javad.com> <CALm+SV+mD0oKfQqZBDUixyB6ckHLchj83=0mh7wxuhC5G6kfgQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1903251544260.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1903251544260.41@tvgsbejvaqbjf.bet>
-From:   "C.J. Jameson" <cjcjameson@gmail.com>
-Date:   Mon, 25 Mar 2019 08:41:56 -0700
-Message-ID: <CALm+SVL6ZyVVPqLEiwEzXru8TOjP7JVfpH=THdT9nLvH84O_Mg@mail.gmail.com>
-Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Sergey Organov <sorganov@gmail.com>,
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-2-pclouds@gmail.com>
+ <CABPp-BFXZMorrHph3hGFnqfceHs68byWNgffNKGp1ov6X5-o5A@mail.gmail.com> <20190325095322.GA1617@ash>
+In-Reply-To: <20190325095322.GA1617@ash>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 25 Mar 2019 08:51:04 -0700
+Message-ID: <CABPp-BFtsQzDj3mCr1aRTpy2PQCzATjGGccECCmH8Qa_Y4aASQ@mail.gmail.com>
+Subject: Re: [PATCH v1 01/11] checkout: split part of it to new command 'restore'
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+        Stefan Beller <stefanbeller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 7:56 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Mon, Mar 25, 2019 at 2:53 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Hi C.J.
+> (Including Stefan, in case he's still interested in git and planned
+> something for the "submodule" restore part I mention below)
 >
-> On Fri, 22 Mar 2019, C.J. Jameson wrote:
+> On Fri, Mar 08, 2019 at 10:01:25AM -0800, Elijah Newren wrote:
+> > Thanks for working on this; overall looks really good.  I've got a few
+> > comments here and there on the wording and combinations of options...
 >
-> > Confirming Sergey's summary: at this point, I think my only residual
-> > opinion is that requiring `-m 1` or `--mainline 1` is a little cryptic
-> > for someone who's just cherry-picking a single commit, which happens
-> > to be a merge commit.
+> OK now that the 'git switch' part is mostly settled, I could go back
+> to 'git restore'. I have a lot more homework to do before sending v2,
+> but how about this?
 >
-> Two points:
+> Most of this is minor rephrasing and clarification (thanks!). The big
+> change is `--force` is split into `--keep-unmerged` and
+> `--force-submodules`, the same direction I took in 'git switch'.
 >
-> - You do not happen to cherry-pick a merge commit. If you do that, and do
->   not realize that it is a merge commit, then you have no idea what you
->   actually wanted to pick (the changes relative to the first parent? or the
->   to the second parent?). The fact that Git does not let you do that gives
->   you the opportunity to pause, think, and then be sure what you actually
->   want.
+> Submodules actually pose another problem because there are different
+> things in a submodule to restore:
 >
->   So Git does the right thing there.
+>  - restore HEAD only, leave submodule's worktree alone. This is
+>    `--no-recurse-submodules` (default)
 >
-> - If it is a little cryptic that `-m 1` (or `-m 2` or `-m 3` or...) is
->   needed, then this needs to be made less cryptic. A fantastic idea would
->   be to teach Git to mention this hint in the exact circumstance when it
->   matters most: when the user just tried to cherry-pick a merge commit.
+>  - restoring `HEAD`, which is basically "git switch --detach
+>    <something>" inside the submodule. This is `--recurse-submodules`.
 >
->   I actually do not know whether Git does the right thing there. If it
->   does not, that would be a good direction to focus your efforts on.
+>  - restoring the paths inside the submodules, i.e. the actual "git
+>    restore <some paths>" inside the submodule.
 >
-> > `--no-forbid-merges` would be the thorough way of accommodating it, but
-> > it's even more verbose and you'd still need to discover it...
+>  - a combinarion of two. Basically you want "git reset --hard" in
+>    every selected submodule.
 >
-> But it would definitely make sure that we do not pretend that merge
-> commits are anything like non-merge commits.
->
-> As I pointed out elsewhere in this thread: non-merge commits' purpose in
-> life is to introduce something new, in a relatively small, neat package.
-> If it does not fit into one small, neat package, you need to split it
-> among multiple non-merge commits.
->
-> A *merge commit*'s purpose in life is not to introduce something new, but
-> to reconcile diverging changes. I.e. it is more of a moderator, a mediator
-> between battling non-merge commits. Often, the only real changes a merge
-> commit introduces are changes that are necessary to make the two diverging
-> branches work well together.
->
-> It can be hard in practice to appreciate the difference, but it is very
-> real.
->
-Totally. My context is that we have way too many low-value / no-value merge
-commits in our repo, and we put our version tags on the merge commits rather
-than the non-merge commits (the ones with the meaningful code changes).
-I wish it were different...
+> I wonder if we ever need to cover the third and forth case (and if so,
+> what will the UI be like).  I suppose we could eventually make
+> --recurse-submodules take an argument to specify what to restore,
+> maybe...
 
-It's cool you phrase it this way, because it highlights how our repo's settings
-stray from the meaningful purpose-in-life of these git fundamentals. In Gitlab
-(same is possible in Github), we have our repo configured to:
+This looks pretty good to me, though I've got some small comments
+below.  Note that I'm basically glossing over or ignoring any part
+touching on submodules, so I could easily miss even glaring wording
+problems in that part.
 
-- always create a merge commit when merging to master, even if it's
-  fast-forwardable
-- auto-squash all Merge Requests / Pull Requests into one commit
-  when merging
+> PS. I just found https://asciidoclive.com/. Could be useful to paste
+> this text and render without going through git's build system.
 
-Thank you all for helping me get a very deep understanding of the matter,
-because it enables me to keep pushing my team to select different settings.
+Interesting.  :-)
 
-> For example, when you `git cherry-pick -m 1 <merge>`, you will typically
-> end up with a *ton* more merge conflicts than when you cherry-pick a
-> non-merge commit.
+> -- 8< --
+> git-restore(1)
+> ==============
 >
-> And when you cherry-pick a merge commit, it is much more like performing a
-> squash merge than performing a cherry-pick, and resolving the merge
-> conflicts looks a lot more like bringing peace to a shouting match, much
-> like when you resolve merge conflicts during a *merge* (as opposed to
-> resolving merge conflicts during a cherry-pick, which feels a lot more
-> like helping a patch move into a new city it does not yet quite know).
+> NAME
+> ----
+> git-restore - Restore working tree files
 >
-Yea... we don't feel the pain of squash-like merging at cherry-pick time,
-because pull-requestors' merge requests have already been squashed down
-whether they like it or not...! :( uff da
+> SYNOPSIS
+> --------
+> [verse]
+> 'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>...
+> 'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>...]
+>
+> DESCRIPTION
+> -----------
+> Restore specified paths in the working tree with some contents from a
+> restore source. If a path is tracked but does not exist in the restore
+> source, it will be removed to match the source.
+>
+> The command can also be used to restore the content in the index with
+> `--staged`, or restore both the working tree and the index with
+> `--staged --worktree`.
+>
+> By default, the restore sources for working tree and the index are the
+> index and `HEAD` respectively. `--source` could be used to specify a
+> commit as the restore source.
+>
+> A note about the differences between this command and linkgit:git-reset[1].
+> `git restore` modifies the working tree (and maybe the index) to
+> change file content to match some other, usually older, version, but
+> does not update your branch. `git reset` is mainly about moving the
+> tip of your branch in order to either add or remove commits from the
+> branch.
 
-> (This is at least what my experience is, from working with 70+ branches
-> in Windows that I maintain on top of core Git.)
+Maybe include revert as well?  Perhaps something like...
+
+A note about the differences between this command, linkgit:git-reset[1],
+and and linkgit:git-revert[1].  `git restore` modifies the working tree
+(and maybe the index) to change file content to match some other,
+usually older, version, but does not update your branch. `git reset` is
+mainly about moving the tip of your branch to some other commit,
+implicitly adding and/or removing many commits to the branch.  `git
+revert` is about creating and adding new commits to your branch that
+reverse the changes made in specified commits.
+
+(There is also a similar description in git-revert, which also
+compares all three of revert, reset, and checkout.  It's shorter, but
+focuses more from the "revert" angle.)
+
+> OPTIONS
+> -------
+> -s <tree>::
+> --source=<tree>::
+>         Restore the working tree files with the content from the given
+>         tree. It is common to specify the source tree by naming a
+>         commit, branch or tag associated with it.
+> +
+> If not specified, the default restore source for the working tree is
+> the index, and index `HEAD`. When both `--staged` and `--worktree`
+> are specified, `--source` must also be specified.
+
+s/index `HEAD`/the default restore source for the index is `HEAD`/
+
+> -p::
+> --patch::
+>         Interactively select hunks in the difference between the
+>         restore source and the restore location. See the ``Interactive
+>         Mode'' section of linkgit:git-add[1] to learn how to operate
+>         the `--patch` mode.
+> +
+> Note that `--patch` can accept no pathspec and will restore all
+> modified paths.
+
+s/will restore all/will prompt to restore with all/
+
+> -W::
+> --worktree::
+> -S::
+> --staged::
+>         Specify the restore location. If neither option is specified,
+>         by default the working tree is restored. Specifying `--staged`
+>         will only restore the index. Specifying both restores both.
 >
-> Ciao,
-> Dscho
+> -q::
+> --quiet::
+>         Quiet, suppress feedback messages.
 >
-> > I'd be fine abandon this -- thanks again!
-> >
-> > C.J.
-> >
-> > On Fri, Mar 22, 2019 at 8:22 AM Sergey Organov <sorganov@gmail.com> wrote:
-> > >
-> > > Junio C Hamano <gitster@pobox.com> writes:
-> > >
-> > > > Sergey Organov <sorganov@gmail.com> writes:
-> > > >
-> > > >>> With it reverted, "[alias] cp = cherry-pick -m1" can be used to train
-> > > >>> the user to blindly pick a range that has a merge without thinking,
-> > > >>> which is what I meant by "ship has already sailed".
-> > > >>
-> > > >> Did you mean "With it *not* reverted" here?
-> > > >
-> > > > Thanks for a correction.  Yes, if we do not revert it, then that
-> > > > would allow people to follow a bad workflow we do not want to
-> > > > recommend (and I think that is what Elijah does not want to do), and
-> > > > that is why I said the ship has already sailed.
-> > >
-> > > I still don't think it makes sense to revert the patch (that fixed a
-> > > real-life issue) on the sole ground that, as a side-effect, it has
-> > > provided an opportunity that could potentially be abused, specifically
-> > > by defining a random alias, and then shooting oneself in the foot with
-> > > it. And even then no irreversible damage actually happens.
-> > >
-> > > Moreover, if somebody actually wants to "follow a bad workflow", he
-> > > still needs to ask for it explicitly, either by providing '-m 1', or by
-> > > defining and using an alias, so let him do it please, maybe he even does
-> > > know what he is doing, after all.
-> > >
-> > > >
-> > > >> Those who don't like such alias are still free not to define or use it.
-> > > >
-> > > > That's not the point.  Those who do want to be careful can learn to
-> > > > use a new option --forbid-stupid-things, but why should they?
-> > >
-> > > Sure thing, who said they should? Fortunately, that's exactly the
-> > > current state, no need to invent and specify any --forbid-stupid-things
-> > > option, and even if we pretend the option is already there and is
-> > > active by default, still no need to revert anything.
-> > >
-> > > > They should be forbidden from doing stupid things by default, which is
-> > > > the point of this exchange.
-> > >
-> > > I already agreed before to assume this, and it seems that we now all
-> > > agree this safety should be preserved, as there are those who actually
-> > > care. However, as merges are already forbidden right now with all the
-> > > current defaults, I fail to see how it could justify reverting of
-> > > already applied patch.
-> > >
-> > > To me, the actual question here is: what's the option that overrides
-> > > that default? The current answer is: "-m 1", that admittedly is not very
-> > > nice, but has not been introduced by any of the recent patches, so is
-> > > not solvable by reverting any of them.
-> > >
-> > > To summarize, as it looks to me, it's mostly the current way of allowing
-> > > merges, that cryptically reads as "-m 1", that makes the OP unhappy.
-> > > This was already the case before the "allow '-m 1' for non-merge
-> > > commits" patch, so reverting it won't solve the problem in any suitable
-> > > way.
-> > >
-> > > Due to all the above, may we please finally let alone the already
-> > > applied patch and focus on finding (or denying) actual solution to the
-> > > original issue of this thread?
-> > >
-> > > If so, I'm still on the ground of providing new, say,
-> > > "--no-forbid-merges" option, if anything. I'm with Duy Nguyen that the
-> > > way suggested by RFC, making value optional for yet another short
-> > > option, is to be avoided at all costs.
-> > >
-> > > -- Sergey
-> >
+> --progress::
+> --no-progress::
+>         Progress status is reported on the standard error stream
+>         by default when it is attached to a terminal, unless `--quiet`
+>         is specified. This flag enables progress reporting even if not
+>         attached to a terminal, regardless of `--quiet`.
+>
+> -f::
+> --force::
+>         An alias of `--keep-unmerged` and `--force-submodules`.
+>
+> --keep-unmerged::
+>         If `--source` is not specified, unmerged entries are left
+>         alone and will not fail the operation.
+
+This isn't very clear to me.  Maybe:
+
+Incompatible with --source and --staged.  When specified, unmerged
+entries in the index will not fail the operation and the corresponding
+working tree files will be left unmodified.
+
+> --force-submodules::
+>         Continue even if restoring `HEAD` of a submodule leads to loss
+>         of local changes in that submodule with `--recurse-submodules`.
+>
+> --ours::
+> --theirs::
+>         Restore from stage #2 ('ours') or #3 ('theirs') for unmerged
+>         paths.
+> +
+> Note that during `git rebase` and `git pull --rebase`, 'ours' and
+> 'theirs' may appear swapped. See the explanation of the same options
+> in linkgit:git-checkout[1] for details.
+>
+> -m::
+> --merge::
+>         Recreate the conflicted merge in the specified paths.
+>
+> --conflict=<style>::
+>         The same as `--merge` option above, but changes the way the
+>         conflicting hunks are presented, overriding the merge.conflictStyle
+>         configuration variable.  Possible values are "merge" (default)
+>         and "diff3" (in addition to what is shown by "merge" style,
+>         shows the original contents).
+>
+> --ignore-skip-worktree-bits::
+>         In sparse checkout mode, by default is to only update entries
+>         matched by `<pathspec>` and sparse patterns in
+>         $GIT_DIR/info/sparse-checkout. This option ignores the sparse
+>         patterns and unconditionally restores any files in
+>         `<pathspec>`.
+>
+> --recurse-submodules::
+> --no-recurse-submodules::
+>         Using `--recurse-submodules` will update the content of all
+>         initialized submodules according to the commit recorded in the
+>         superproject. If nothing (or `--no-recurse-submodules`) is
+>         used, the work trees of submodules will not be updated.  Just
+>         like linkgit:git-submodule[1], this will detach `HEAD` of the
+>         submodules.
+>
+> --overlay::
+> --no-overlay::
+>         In overlay mode, the command never removes files when
+>         restoring. In no-overlay mode, tracked files that appear in
+>         the index and working tree, but not in `--source` tree are
+>         removed, to make them match `<tree>` exactly. The default is
+>         no-overlay mode.
+
+I think the "index and working tree" wording might cause some
+problems.  What if the path doesn't exist in the source tree nor the
+working tree, but does appear in the index and the user passes
+--staged?  Maybe just remove that phrase, e.g.:
+
+"...In no-overlay mode, tracked files that do not appear in the
+`--source` tree are removed..."
+
+?
+
+> EXAMPLES
+> --------
+>
+> The following sequence switches to the `master` branch, reverts the
+> `Makefile` to two revisions back, deletes hello.c by mistake, and gets
+> it back from the index.
+>
+> ------------
+> $ git switch master
+> $ git restore --source master~2 Makefile  <1>
+> $ rm -f hello.c
+> $ git restore hello.c                     <2>
+> ------------
+>
+> <1> take a file out of another commit
+> <2> restore hello.c from the index
+>
+> If you want to restore _all_ C source files to match the version in
+> the index, you can say
+>
+> ------------
+> $ git restore '*.c'
+> ------------
+>
+> Note the quotes around `*.c`.  The file `hello.c` will also be
+> restored, even though it is no longer in the working tree, because the
+> file globbing is used to match entries in the index (not in the
+> working tree by the shell).
+>
+> To restore all files in the current directory
+>
+> ------------
+> $ git restore .
+> ------------
+>
+> or to restore all working tree files with 'top' pathspec magic (see
+> linkgit:gitglossary[7])
+>
+> ------------
+> $ git restore :/
+> ------------
+>
+> To restore a file in the index to match the version in `HEAD` (this is
+> the same as using linkgit:git-reset[1])
+>
+> ------------
+> $ git restore --staged hello.c
+> ------------
+>
+> or you can restore both the index and the working tree (this the same
+> as using linkgit:git-checkout[1])
+>
+> ------------
+> $ git restore --source=HEAD --staged --worktree hello.c
+> ------------
+>
+> or the short form which is more practical but less readable:
+>
+> ------------
+> $ git restore -s@ -SW hello.c
+> ------------
+
+@ means HEAD?  I somehow missed this for five and half years.  (Glad
+you put the "less readable" disclaimer/warning on this example,
+though.)
