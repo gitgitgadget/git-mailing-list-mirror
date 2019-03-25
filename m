@@ -2,103 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2663020248
-	for <e@80x24.org>; Mon, 25 Mar 2019 18:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648E020248
+	for <e@80x24.org>; Mon, 25 Mar 2019 18:50:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729855AbfCYSoE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 14:44:04 -0400
-Received: from mail-io1-f48.google.com ([209.85.166.48]:37083 "EHLO
-        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729322AbfCYSoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 14:44:04 -0400
-Received: by mail-io1-f48.google.com with SMTP id x7so8541035ioh.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 11:44:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LyDDvwoTUqIBi0gmoc7byAevITr1SdGu8jJYQAdx7Ss=;
-        b=hWDAk/BoNAnNDP7v7VmiMlQolpSf9qTJSzPPeQet2sD/vCjlBUkD0rWDuA9ton39XN
-         qaW4rxsQCybMf08op0UGstApm0dkCsCVL+Q6mgCOSPgSwcqNr+XrpREA2JhCsBI6RtN8
-         BGR3xKjUrcrEuTDfXfiDdYnBBYy5QOgGui7W6iCC9nixLI3ukYeCRJHSxDHVUIjFxSad
-         dT7cqSHoNTnwLhJrpiTXnSKSazzywfbN+UOMtbzNP9MUS7K1PcH7iCjqXFpMnL9KfWKg
-         GdxYINL54p5zS7+FRxkhEMiMeJxOL8SOwutJqRtHa96al36/rqhcrapxhzgmDUmCGd4v
-         4ROQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LyDDvwoTUqIBi0gmoc7byAevITr1SdGu8jJYQAdx7Ss=;
-        b=OI8DEqMStW9tRHYb3X8pxcczoxo/ol9KUpCipmRFYvdDrxL2hLCrO4FJMiYGMoY7Z3
-         kFlvs5VS+w+KQcMHLC1wAy5HKwA0ERCqDA3vz1f7DsAyFwa5i7SCPuKgPUeBqhB2SfE+
-         SDs6KIZLA4gD4V4mtOOW2jH5A9kHq6sWHr+gNgAmTywOe/KpHHeT4qPGwRvtdNYugJcK
-         A9ate1T5z0UDCoZK0wEJsgL/UdTbqljX8OiT2MlsYn18JHN9j8r//6TNq2QkUmCOp1T9
-         F9HN9fcJb1BfnLZxCToHLr1UYtfiN2R25LIHvTqpsy0GgYuf76+D3j5fVR6y4KIv4CdA
-         Eo8Q==
-X-Gm-Message-State: APjAAAU9BJuW0ao/HFQJobwKIFh2CnMxF4HDPSSWs7UtnIIgmjsMxUjM
-        9fXVDalZDvlAb5PPG4fWHy3zkwrFuIMkmVDs6TAxo7gB
-X-Google-Smtp-Source: APXvYqyv5JDf4muKh5lmS7LrC5GUwUouv4fmDLawnOe2bkY4iW6+0FA+M76PX9FKgafyPjLi90cUdfK0NMEqkXRBSF4=
-X-Received: by 2002:a5d:8757:: with SMTP id k23mr19352122iol.68.1553539443114;
- Mon, 25 Mar 2019 11:44:03 -0700 (PDT)
+        id S1729610AbfCYSu4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 14:50:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35171 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728912AbfCYSuz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 14:50:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553539854;
+        bh=ol3ZbTRawirZXgrJhsBNw2iX9PqngRKk9P4opAatS1Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Bdua6WzwJ5v4aOKklfqWoy8Rt26KOybbJRFzBQLIFOO1D+f+CtSTZDY9SwibcAWWn
+         SRmtmjtuJmpPSqhsYJc/pMgsDdI86RTp+Nd8ogJJVFKpZLLRw7DQPjVNBhsvpVSakK
+         Ps1DsBtxt8JEqJfDINY4IwERuYEPceg2BOi8FT4I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxgHz-1gtZ6k3zPH-017AKD; Mon, 25
+ Mar 2019 19:50:54 +0100
+Date:   Mon, 25 Mar 2019 19:50:38 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
+In-Reply-To: <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903251948200.41@tvgsbejvaqbjf.bet>
+References: <cover.1553354374.git.liu.denton@gmail.com> <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAHd499BM91tf7f8=phR4Az8vMsHAHUGYsSb1x9as=WukUVZHJw@mail.gmail.com>
- <20190321192928.GA19427@sigill.intra.peff.net> <CAHd499BTACjf91Ohi34ozFQE_NOn-LVf-35t7h4CTtDFoMCpWw@mail.gmail.com>
- <20190325144930.GA19929@sigill.intra.peff.net>
-In-Reply-To: <20190325144930.GA19929@sigill.intra.peff.net>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 25 Mar 2019 11:43:52 -0700
-Message-ID: <CAGyf7-EOrCgPY19jgwRd5H-0ADMX9WtLUuACmTAANnNVW-K-_Q@mail.gmail.com>
-Subject: Re: Strange annotated tag issue
-To:     Jeff King <peff@peff.net>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NOTzdg+AJo4h1B5aEyzAlF5MJi/HVMV3L7p78fdQjgn2eJb/WsC
+ sU0i5K6sUoDrgAxITrKqYKgvusZqj6WlTQMuA1x8v6LjyOY1FhxkfZkd4vEisPHLoSlnMxt
+ sIa9MD3xMmk5pH3IwSJAC84tBmmyvn735WrVHWPAV7w7DZ2yr4I8+04gRwug/pNCa5laUV4
+ 9EPrX1fEWS/N7xsVfQOUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:U+RY+6W0oPM=:AUR1pqOSe0r2Brp3fMBZSk
+ dSiFzCTa/GroZ5ZWQhXnh/hZX8pvbOi10EQYUhS1cyQD4667Pzx+pzrjy5MwYRJM/HKuaBJOc
+ ATiAbkQimpND/XYyAG3TTU+8sqFht+4+HMTfKrCBUxJejPuIbZBYAKX4VoNmJVRj0M3JDyhcd
+ O50UJ/Szdv+gZ5jA1qEaHqb+j89yU2eeLFXnXyGtkB5JKT0BgarjeZ97ECfV+byEzrsK64Qgt
+ /7+T9qYolSSwo2gx/VaxdHZMsg52XQT20hAoIzy+Xet5u0+X97PMMwO4gHmsCstd1HvjKP60n
+ cePaZXncDDBpqEmf4W5zMaskZ3UwSBNFYZYT90Pam97aBIJ0SDHV0sabHeCABj2fsPT+ItjqQ
+ sHFf4j/gJAqSfr1iZqe4RjioZxW/PgmeroKPGe/35ec3mdbpg1evaKbacSs6MEq9xXPPB9VDn
+ yCpBjfxSqsmYLy0aKJldtxeX45QhLG9FNymENES++x+u0C9fxfi9QbZkATzPqJGOe2mucQGXV
+ F822L935m91FhckDYgxA22fETngasLB+INwnCs600miAUhdt1KuVGXnR8c3o8hQh8nfQgOxmX
+ +Vopu0FMFnVrF2Pf03jfAt7MMMCdqyjlOwwk5hS1mBXmNUW72AbZ4VN0WpluE/i42QqFtgMqR
+ jhVXLiGOkD0Dm4JaEWxbrS1lvIfuGeEgvjfiqbOXBaaXUm4fvu1OYchvakU1EfTcc7/7f8Pb0
+ 84cEE103G9fmEt33PWSCVdD781xnFnAIwL6lZ+HTX8hQ+K0AhUtH/rXbsRT8j9zPeipEafbJn
+ CL8rm7dq7MO9uREZjVBk90AiuvuM6PT9CHN1NchSILCrQ6SH6sePoD+XQ3NI9bNF0aKiyoSNU
+ QNpyZYRUV0W8Ii7T30VgCq2XDM7SyKwjemCDeQHLFq+pgZ/BTocJMORxgqTYWL9IBP9GiHSc5
+ AFzTiK/yW0A==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 7:49 AM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Mar 25, 2019 at 08:50:14AM -0500, Robert Dailey wrote:
->
-> > On Thu, Mar 21, 2019 at 2:29 PM Jeff King <peff@peff.net> wrote:
-> > > Tags can point to any object, including another tag. It looks like
-> > > somebody made an annotated tag of an annotated tag (probably by
-> > > mistake, given that they have the same tag-name).
-> > [..]
-> > Thanks for explaining. This is very helpful. Am I naive to think that
-> > this should be an error? I haven't seen a valid _pragmatic_ use for
-> > tags pointing to tags. In 100% of cases (including this one), it is
-> > done out of error. As per your example, users try to "correct" an
-> > annotated tag pointing at a wrong tag or commit. What they expect is
-> > the tag to point to the other tag's commit, but that's not what they
-> > get.
->
-> I don't think I've ever seen a tag-to-a-tag in the wild, but I wouldn't
-> be surprised if somebody has found a use for it. For example, because
-> tags can be signed, I can make a signature of your signature, showing a
-> cryptographic chain of custody.
+Hi Denton,
 
-For a while the Atlassian Bamboo team followed a workflow where they
-would do a build in CI, tag that build and then deploy it to a sandbox
-environment for smoke testing. If it passed the smoke tests, it would
-get "promoted" from the sandbox environment to internal instances used
-by the various teams to do their builds. When a sandbox build was
-"promoted", they'd create a tag of the sandbox build's tag to have
-traceability between the two environments.
+On Sat, 23 Mar 2019, Denton Liu wrote:
 
-I'm not advocating for or judging that workflow one way or another,
-and the Bamboo team has since moved on to a different workflow. I just
-thought I'd share it as a tag-of-tag workflow that I've seen a real
-team using. (There was one place in Bitbucket Server's code where we
-didn't handle recursive tags correctly, so their workflow caused some
-errors that I needed to make some adjustments for. As a result,
-Bitbucket Server's test suite now includes tests that cover tag-of-tag
-behaviors.)
+> [...]
+>
+> This allows us to rewrite the above as
+>
+> 	git rebase -i --keep-base master
+>
+> and
+>
+> 	git rebase -x ./test.sh --keep-base master
+>
+> respectively.
 
-Bryan
+Just a quick note: this breaks t5407 because that test uses `git rebase
+=2D-keep` and expects that abbreviated option to be expanded to
+`--keep-empty`, which is now no longer the only possible expansion.
+
+I just submitted a patch series to fix that, and other uses of abbreviated
+options in the test suite, in
+https://public-inbox.org/git/pull.167.git.gitgitgadget@gmail.com/T/#t
+
+Ciao,
+Johannes
+
+P.S.: Did you run the test suite before submitting your patches?
