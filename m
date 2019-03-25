@@ -2,163 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4283120248
-	for <e@80x24.org>; Mon, 25 Mar 2019 20:23:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8EFB20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 20:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729283AbfCYUXp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 16:23:45 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33557 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730389AbfCYUXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 16:23:44 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q1so11768757wrp.0
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 13:23:43 -0700 (PDT)
+        id S1729610AbfCYU0x (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 16:26:53 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44708 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729473AbfCYU0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 16:26:53 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y7so7641810wrn.11
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 13:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=D6mjq6dzb+kEIaIxIGULImm0HiZsaS/TGmgFCinqALo=;
-        b=WVZsqeODcNSnt8hoHrXrJ/ACHDDV3p7ELwcXmgaKYk8a1MwYFJtjyk7YZo1950ZMVA
-         nOUW0Zli501DrHHKylpfLA/lUXxae7lIq8PjfKydna72ChgoeCHcGPP9dO+7GYfKrjWT
-         xDv7VF0BvePgIIe1q5m2EtiSMV5vWJ2xoN8wImDNSUNBgq+V/UNNL/8ofYGWB3omoXz8
-         9p+CYnfgKcS8HsQ915HyYXjFfLNK8uiMEWP0gbHQs3OKUXenHFloS/7X9K5bdzwPpAvQ
-         WUKMT7PcoIMWNa5Wl4qx0J7k/ZDLTPTAFrnYzY7twseM9wuCJdMg17kbH4SReQZaMM4k
-         UTug==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=qp0ZCRoJCPCLkgvMPhKJUyJbNEI6tOmOvxb6wvm/tWA=;
+        b=LW0ghiWQKbsUIQG1xdBA9HVErckXkrimn+QQI7uvZOSPWVVarnn0FWyKwQ0a+V6BSj
+         99UiIHRD3ww9WZ8/2igYeODLdPFamKsm8uCE1EeUGrhZWAdNFgOfO3vHv0aEZSX4FByj
+         I/9KUFYRBv3N+RmGteCu0AFu7qdaMODexPxhrc4XWK8tJ/VA+reC5PHGygFcTJ6fcSaK
+         oWRj5ZPftU2+cHIutknCpZyERgPZOA3m0YyUVM2gMNdSo1UCB8o0tTrzidNDFMmKzYLC
+         FTFN2hA+m+eDMgPOwW0hpuknezZo0o/2kBbAa9y4Hr4hwLZIJRg66rO+uGWWmw7LBwui
+         FqAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=D6mjq6dzb+kEIaIxIGULImm0HiZsaS/TGmgFCinqALo=;
-        b=qKojiczt9ArU3VELI6xFccIkKR0bZ0RB0FJOoUp1rPl6KgaXxawDbx46S6sSYzeYfg
-         Z8vFGSzkDS6JOxqigVQHaPtEgLS5lW8Zaq8R/skazyQY+NSMIUrwoku0QYElJqRLK+0s
-         hspjnzy00dwznbMD6FbF2eLfY6dQdCj5VybXiFSLzIARBhlfnwmLxDhBI3dACw4Yy8P2
-         zxhbhF4UuT/pfvNbrr5oqA7BQi3BHDiF72bQew6gd9YhbI/M0hkrcxrbhLjj8ax/10An
-         /0ZIV3RrTGg2n+PDazDoFBTWXEPpEzP7+akTrTS1PhA2wK8AEMYQaV3qtIFzz48EHlIb
-         ZxyQ==
-X-Gm-Message-State: APjAAAVcaJoZNzwaNsORjk5kgytBHl1U2OBdaKc1B+Bpqyr4z/aqp4a2
-        XyXGIPTOv6C4fFZl/OUPu0SUvEFOwkQ=
-X-Google-Smtp-Source: APXvYqxnzsneWA+V4axLWf2pboCHrvajmL8x9ewW9FBQk5j5LqRIlQeaQr14DBs4NslsaeFFvoTJ1A==
-X-Received: by 2002:a5d:6b4a:: with SMTP id x10mr16633850wrw.63.1553545422204;
-        Mon, 25 Mar 2019 13:23:42 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q26sm16506904wmc.6.2019.03.25.13.23.41
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 25 Mar 2019 13:23:41 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] parse-options: don't emit "ambiguous option" for aliases
-Date:   Mon, 25 Mar 2019 21:23:29 +0100
-Message-Id: <20190325202329.26033-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.360.g471c308f928
-In-Reply-To: <pull.167.git.gitgitgadget@gmail.com>
-References: <pull.167.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=qp0ZCRoJCPCLkgvMPhKJUyJbNEI6tOmOvxb6wvm/tWA=;
+        b=jft/f7BISFbAMYeYNbD/eWeiWaP/VibgKRn8PTGgPqcSZkGkZ+JwpUp/B/ndMzfqv1
+         dM6Bwtsypy/F1wc/JQStB1UlKBW6D4P8lVJHdnlSgjygQ4BCV6+Y4peo82VUQ3XvXrpp
+         gc8xDjmxOiiE4sX0wEnZSV87bpbTugSbKtFSIkGml3O/Ufco0pmbLqeg5OviuR64UY0D
+         x/qCndB7Nv++tLE5hoV64fCNce5RkrAGIm1XaelqBhtDHc4e9Yw6fL39UnglToaBNcEL
+         bKuutqrHn7NasMm5oRv9E8t30QNLqWhI+zNwEm73FSszurT75G+cT+Bq0opo2JvfBX76
+         patQ==
+X-Gm-Message-State: APjAAAVWaM5HYKO1/t+kiePH52EvmzqVMLmTwGWGhpjWtf0hrMh/QfqA
+        Z750T7bmMZipKBM/BMJWz3w=
+X-Google-Smtp-Source: APXvYqwnflxVZ+4T6AzPCLxxoEFn9frb9Eer8IjZBQzi0aRThmUnvIOH4Z17FUC0b8zMALYuokeTYQ==
+X-Received: by 2002:adf:f286:: with SMTP id k6mr8444041wro.137.1553545611582;
+        Mon, 25 Mar 2019 13:26:51 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id 3sm22588986wrk.68.2019.03.25.13.26.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Mar 2019 13:26:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 8/8] tests: disallow the use of abbreviated options (by default)
+References: <pull.167.git.gitgitgadget@gmail.com> <04c36b1de9f22d7e0c64bb118eb424c1f64bd223.1553537656.git.gitgitgadget@gmail.com> <20190325183505.GA28920@dev-l>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190325183505.GA28920@dev-l>
+Date:   Mon, 25 Mar 2019 21:26:49 +0100
+Message-ID: <87r2aubsza.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the option parsing machinery so that e.g. "clone --recurs ..."
-doesn't error out because "clone" understands both "--recursive" and
-"--recurse-submodules" to mean the same thing.
 
-Initially "clone" just understood --recursive until the
---recurses-submodules alias was added in ccdd3da652 ("clone: Add the
---recurse-submodules option as alias for --recursive",
-2010-11-04). Since bb62e0a99f ("clone: teach --recurse-submodules to
-optionally take a pathspec", 2017-03-17) the longer form has been
-promoted to the default.
+On Mon, Mar 25 2019, Denton Liu wrote:
 
-But due to the way the options parsing machinery works this resulted
-in the rather absurd situation of:
+> Hi Johannes,
+>
+> Thanks for catching this. Perhaps I should've been more diligent and ran
+> the entire test suite before submitting but I was running low on
+> batteries only ran the rebase-related tests.
+>
+> On Mon, Mar 25, 2019 at 11:14:23AM -0700, Johannes Schindelin via GitGitGadget wrote:
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> [...]
+>> @@ -325,6 +329,7 @@ file: (not set)
+>>  EOF
+>>
+>>  test_expect_success 'negation of OPT_NONEG flags is not ambiguous' '
+>> +	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
+>>  	test-tool parse-options --no-ambig >output 2>output.err &&
+>>  	test_must_be_empty output.err &&
+>>  	test_cmp expect output
+>
+> Would it make sense to include a test case to ensure that
+> GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS is working properly?
 
-    $ git clone --recurs [...]
-    error: ambiguous option: recurs (could be --recursive or --recurse-submodules)
-
-Let's re-use the PARSE_OPT_NOCOMPLETE flag to mean "this option
-doesn't contribute to abbreviation ambiguity". I was going to add a
-new PARSE_OPT_NOABBREV flag, but it makes sense just to re-use
-PARSE_OPT_NOCOMPLETE.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/clone.c          | 4 ++--
- parse-options.c          | 3 ++-
- parse-options.h          | 2 ++
- t/t0040-parse-options.sh | 5 +++++
- 4 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..4dc26969a7 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -100,8 +100,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("setup as shared repository")),
- 	{ OPTION_CALLBACK, 0, "recursive", &option_recurse_submodules,
- 	  N_("pathspec"), N_("initialize submodules in the clone"),
--	  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, recurse_submodules_cb,
--	  (intptr_t)"." },
-+	  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE,
-+	  recurse_submodules_cb, (intptr_t)"." },
- 	{ OPTION_CALLBACK, 0, "recurse-submodules", &option_recurse_submodules,
- 	  N_("pathspec"), N_("initialize submodules in the clone"),
- 	  PARSE_OPT_OPTARG, recurse_submodules_cb, (intptr_t)"." },
-diff --git a/parse-options.c b/parse-options.c
-index d6a291f705..84f3a2996f 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -294,7 +294,8 @@ static enum parse_opt_result parse_long_opt(
- 		if (!rest) {
- 			/* abbreviated? */
- 			if (!(p->flags & PARSE_OPT_KEEP_UNKNOWN) &&
--			    !strncmp(long_name, arg, arg_end - arg)) {
-+			    !strncmp(long_name, arg, arg_end - arg) &&
-+			    !(options->flags & PARSE_OPT_NOCOMPLETE)) {
- is_abbreviated:
- 				if (abbrev_option) {
- 					/*
-diff --git a/parse-options.h b/parse-options.h
-index 74cce4e7fc..9362a397ae 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -96,6 +96,8 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *				Useful for options with multiple parameters.
-  *   PARSE_OPT_NOCOMPLETE: by default all visible options are completable
-  *			   by git-completion.bash. This option suppresses that.
-+ *			   Will also skip this option when abbreviation is
-+ *			   considered. See core.abbreviatedOptions.
-  *   PARSE_OPT_COMP_ARG: this option forces to git-completion.bash to
-  *			 complete an option as --name= not --name even if
-  *			 the option takes optional argument.
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 19685d1582..c1ea50aa85 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -236,6 +236,11 @@ test_expect_success 'abbreviated options configured with core.abbreviatedOptions
- 	git -c core.abbreviatedOptions=true init --ba C
- '
- 
-+test_expect_success 'NOCOMPLETE options do not contribute to abbreviation' '
-+	test_when_finished "rm -rf A" &&
-+	GIT_TEST_ABBREVIATED_OPTIONS=true git clone --recurs . A
-+'
-+
- cat >typo.err <<\EOF
- error: did you mean `--boolean` (with two dashes ?)
- EOF
--- 
-2.21.0.360.g471c308f928
-
+To elaborate on this since one might wonder "but aren't these those
+tests?". I think you mean if we shouldn't have a "test_must_fail" test
+there that asserts that parsing the options will die with the default of
+GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true. Yeah, that makes sense, it's
+currently a blind spot that we just assume will keep working.
