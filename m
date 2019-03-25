@@ -6,64 +6,72 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA89520248
-	for <e@80x24.org>; Mon, 25 Mar 2019 23:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2C8820248
+	for <e@80x24.org>; Mon, 25 Mar 2019 23:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727412AbfCYXaJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 19:30:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35882 "HELO cloud.peff.net"
+        id S1727394AbfCYXfS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 19:35:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35900 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727328AbfCYXaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 19:30:09 -0400
-Received: (qmail 5483 invoked by uid 109); 25 Mar 2019 23:30:09 -0000
+        id S1726061AbfCYXfS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 19:35:18 -0400
+Received: (qmail 5547 invoked by uid 109); 25 Mar 2019 23:35:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Mar 2019 23:30:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Mar 2019 23:35:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13345 invoked by uid 111); 25 Mar 2019 23:30:33 -0000
+Received: (qmail 13425 invoked by uid 111); 25 Mar 2019 23:35:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Mar 2019 19:30:33 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Mar 2019 19:35:42 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2019 19:30:07 -0400
-Date:   Mon, 25 Mar 2019 19:30:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Mar 2019 19:35:16 -0400
+Date:   Mon, 25 Mar 2019 19:35:16 -0400
 From:   Jeff King <peff@peff.net>
-To:     Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Auto-gc in the background can take a long time to be put in the
- background
-Message-ID: <20190325233007.GA23728@sigill.intra.peff.net>
-References: <20190325232223.r72qtffyzn5qzoxc@glandium.org>
+To:     Michael Platings <michael@platin.gs>
+Cc:     Barret Rhoden <brho@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [RFC PATCH 0/1] Fuzzy blame
+Message-ID: <20190325233516.GB23728@sigill.intra.peff.net>
+References: <20190324235020.49706-1-michael@platin.gs>
+ <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
+ <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
+ <b077afed-d143-506e-977e-6edf2492f75f@google.com>
+ <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190325232223.r72qtffyzn5qzoxc@glandium.org>
+In-Reply-To: <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 26, 2019 at 08:22:23AM +0900, Mike Hommey wrote:
+On Mon, Mar 25, 2019 at 11:21:19PM +0000, Michael Platings wrote:
 
-> Recently, I've noticed that whenever the auto-gc message shows up about
-> being spawned in the background, it still takes a while for git to
-> return to the shell.
+> > I work on a project that needs a major reformatting, and one thing
+> > delaying me was the lack of an ability to ignore commits during blame.
 > 
-> I've finally looked at what it was stuck on, and it's 
-> `git reflog expire --all` taking more than 30s. I guess the question is
-> whether there's a reason this shouldn't run in the background? Another
-> is whether there's something that makes this slower than it should be.
+> I think we understand each other well then - I'm working on a plan to
+> change the variable naming rule in LLVM, and naturally other
+> developers aren't keen on making git blame less useful.
 
-The reason is that it takes locks which can interfere with other
-operations; see 62aad1849f (gc --auto: do not lock refs in the
-background, 2014-05-25).
+This is sort of a tangent to the thread, but have you looked into tools
+that provide an interactive "re-blame from the parent" operation? I use
+tig for this.  Quite often my blame turns up on some boring line
+(whitespace fixing, minor tweaking of a function interface, etc), and
+then I want to keep digging on the "same" line, as counted by line count
+(but it's OK if it's off by one or two lines, since I'm looking at a
+blame of the whole file).
 
-Unfortunately making it faster is hard. To handle expiring unreachable
-items, it has to know what's reachable. Which implies walking the commit
-graph. I don't recall offhand whether setting unreachable-expiration to
-"never" would skip that part. But if not, that should be low-hanging
-fruit.
+Obviously this isn't as automated as saying "ignore commit X, it's just
+variable renaming". But it also eliminates the need to a priori figure
+out all such X that affect the lines you care about. You get an answer,
+your human mind says "nope, that's not interesting", and you press a
+button to dig further.
 
-(I also wonder whether there is really much valuable in keeping
-unreachable things for a shorter period of time, and the default should
-simply be to just prune everything after 90 days, unreachable or not).
+I think there's room for both solutions to co-exist, but just suggesting
+you to try out the one that's already been implemented if you haven't. ;)
 
 -Peff
