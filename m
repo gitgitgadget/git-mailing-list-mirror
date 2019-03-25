@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ACFD202BB
-	for <e@80x24.org>; Mon, 25 Mar 2019 10:39:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD0A20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 10:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730751AbfCYKjA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 06:39:00 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37347 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730361AbfCYKjA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 06:39:00 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w10so9492780wrm.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 03:38:59 -0700 (PDT)
+        id S1730762AbfCYKjD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 06:39:03 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38367 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730535AbfCYKjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 06:39:03 -0400
+Received: by mail-wm1-f68.google.com with SMTP id a188so8429479wmf.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 03:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aaky29/FccbXURdWIlAx4/1oV9df5zw19GK3KRzD4Xk=;
-        b=Z2kopLPSeFuRnlgEhNtSvjNqR+Grhs0ZZQKFYUerfpJhD6qHjfrX+79Hd+RZ0Tfu+0
-         07Gf4oLuDoXSMv9eDSbRyzL3jMKE+YfSdDZOxEF7qQraVw1SLKj2mbfjC32Nx8xA/RI1
-         /rUQJJPRi3ISpb/MKCsu4b9VP6q+fqwHOqJWTmVQDA+6E0oBHXJyIV38J7ARXe7iFG1/
-         xe8x/SGr1G+esMQzTdWAitCx7WArYtqQujw8UdxvdLlxTC3tMMDrSM9GvA+EKfAZ6n9E
-         ieamfe3ewb46uVyX41frbFegSIPTinxvWNcd53USoBNFPl1NnJWUbn573kXueZ3bc8iT
-         XtSg==
+        bh=juvZecVdmRjI3K+Iym2xOTyM7Zcaid80j7UuL47zD0g=;
+        b=CgzFIQTCFv9nz1Kzcj/m8K0nMDbv6vfb3omA0xCFcLT0nBXzGNG/ow9SyLHwOzEiHl
+         q69Bdi58toKSL59B1k7iBck79gIkZ0upoFv8XIreKvDWu3kZzl3QNP2Cfg4MXTtbOU9l
+         1QGwiqh5NcOIAe81D0waJx7nlukgdrNzWVp4rtTr/fmx52VgLHZCqwBYOMhcXvNraeR/
+         FJihtf2TdjXkS1ArR/lPv6Dndcbmqzmte58SuBp5Kws7kysbSmS6n1JX1xbQfo8umnem
+         PVW4eR+83tEztSJBFKEf1v1zhFig1MI66knIzCt+38RG9Fj+qJKUIfZdfS1s0y9+5jO6
+         EP7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aaky29/FccbXURdWIlAx4/1oV9df5zw19GK3KRzD4Xk=;
-        b=GK6l12cfrxOLYzes5caWbX+R7r4158jPdfOGwjQOVC7mW7vIp17kGSOYxUWuM+8b2U
-         htptTLlw3ILfL8z0/n5Vd3Bef2ipPYUkdpUB+oDMXwbKFIigVFdXIS5YyeARFKseedVb
-         XIrYLf7CxZAV+LkjXVsDbmx6j2V9c3TgdQnRhvfo5UiTX4Wy/o8NEXnRMruyE7KZHqIw
-         qGCyTjpaPV8DLM526HNDQA9l2y6q1+PWLJIwAmrMVVZuPo/2DSN7C1GAKzKRREplQ26u
-         ywIvn6dcXWI6fVP4aaprTrG1kN26fK43klyNz/qI9bzhB3bKy27GGAqKvFOigXp98Cbf
-         R2+g==
-X-Gm-Message-State: APjAAAXVbDANNA4Yqogb0HElg1gia8LH5GzxYX13boOMYZnpMgV/BNcR
-        fj2YM4UIFw45OKxi7Ta8eAU/2IEVk+4=
-X-Google-Smtp-Source: APXvYqyNBPKg8iLVS/Ov6m2lrmXoZVZDxPq3BwkE2LdGFyBrRv1XJU5Qtx3RpjbT/wrDk3Il2b0A8g==
-X-Received: by 2002:adf:afd0:: with SMTP id y16mr14587715wrd.328.1553510338130;
-        Mon, 25 Mar 2019 03:38:58 -0700 (PDT)
+        bh=juvZecVdmRjI3K+Iym2xOTyM7Zcaid80j7UuL47zD0g=;
+        b=mH7d+HL4ipgNMbyfQw7fUGj4ald3JEemwGWHsoVWRgmRngKWeBnGIO4FBlKU+rMMbn
+         I0HU+CARjXJbJZAnJYKfAWxw2vt8SjVQ0O16pKoo9QXeisKghbq4huQGCFbAs+1btDbV
+         Ivyp9mgmtZCnPjlorSZ5zO1AdfvYuFPviS4PyMTf+wbnjY1CZEGYEAHn/N32OJKs9y8i
+         WCsUE+21KR/TnoX2ng8o7kejMMrxUkCOdZua3eK4RBMPb803qAu8IiwnoFNURaAl18M3
+         ddFRG8KoIbJArCDtJgswvN9befbbOwcdIt/93MfKwSzZOfkitRbItbmXHWalSzwdSIse
+         kfXA==
+X-Gm-Message-State: APjAAAW3DHUkiZgBsR9nJBq22y1ufUqlGpG9kCeLcHXeuhZh9O93iUSB
+        QFTQ3n8CGi+RIjXtT048yUmcDys4QBY=
+X-Google-Smtp-Source: APXvYqy6caLiMFaFjL/R6doeZHXejslR0Lua7klxMCkb5+k7cP9PgRj+AnNtqu6KngbiA/c95mfDuQ==
+X-Received: by 2002:a1c:7f10:: with SMTP id a16mr3461773wmd.30.1553510340817;
+        Mon, 25 Mar 2019 03:39:00 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c296b.dyn.telefonica.de. [77.12.41.107])
-        by smtp.gmail.com with ESMTPSA id q2sm23247292wrd.46.2019.03.25.03.38.56
+        by smtp.gmail.com with ESMTPSA id q2sm23247292wrd.46.2019.03.25.03.38.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 25 Mar 2019 03:38:57 -0700 (PDT)
+        Mon, 25 Mar 2019 03:39:00 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 1/5] progress: make display_progress() return void
-Date:   Mon, 25 Mar 2019 11:38:40 +0100
-Message-Id: <20190325103844.26749-2-szeder.dev@gmail.com>
+Subject: [PATCH 3/5] progress: assemble percentage and counters in a strbuf before printing
+Date:   Mon, 25 Mar 2019 11:38:42 +0100
+Message-Id: <20190325103844.26749-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
 In-Reply-To: <20190325103844.26749-1-szeder.dev@gmail.com>
 References: <20190325103844.26749-1-szeder.dev@gmail.com>
@@ -69,97 +69,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since the progress infrastructure was introduced in 96a02f8f6d
-(common progress display support, 2007-04-18), display_progress() has
-returned an int, telling callers whether it updated the progress bar
-or not.  However, this is:
+The following patches in this series want to handle the progress bar's
+title and changing parts (i.e. the counter and the optional percentage
+and throughput combined) differently.
 
-  - useless, because over the last dozen years there has never been a
-    single caller that cared about that return value.
-
-  - not quite true, because it doesn't print a progress bar when
-    running in the background, yet it returns 1; see 85cb8906f0
-    (progress: no progress in background, 2015-04-13).
-
-The related display_throughput() function returned void already upon
-its introduction in cf84d51c43 (add throughput to progress display,
-2007-10-30).
-
-Let's make display_progress() return void, too.
+To prepare for those changes assemble the changing parts in a separate
+strbuf before printing.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- progress.c | 15 ++++++++-------
- progress.h |  2 +-
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ progress.c | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
 
 diff --git a/progress.c b/progress.c
-index 5a99c9fbf0..02a20e7d58 100644
+index b57c0dae16..390d2487ca 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -78,12 +78,12 @@ static int is_foreground_fd(int fd)
- 	return tpgrp < 0 || tpgrp == getpgid(0);
- }
+@@ -36,6 +36,7 @@ struct progress {
+ 	unsigned delay;
+ 	struct throughput *throughput;
+ 	uint64_t start_ns;
++	struct strbuf counters_sb;
+ };
  
--static int display(struct progress *progress, uint64_t n, const char *done)
-+static void display(struct progress *progress, uint64_t n, const char *done)
+ static volatile sig_atomic_t progress_update;
+@@ -80,7 +81,9 @@ static int is_foreground_fd(int fd)
+ 
+ static void display(struct progress *progress, uint64_t n, const char *done)
  {
- 	const char *eol, *tp;
+-	const char *eol, *tp;
++	const char *tp;
++	struct strbuf *counters_sb = &progress->counters_sb;
++	int update = 0;
  
  	if (progress->delay && (!progress_update || --progress->delay))
--		return 0;
-+		return;
- 
- 	progress->last_value = n;
- 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
-@@ -100,7 +100,7 @@ static int display(struct progress *progress, uint64_t n, const char *done)
- 				fflush(stderr);
- 			}
- 			progress_update = 0;
--			return 1;
-+			return;
- 		}
- 	} else if (progress_update) {
- 		if (is_foreground_fd(fileno(stderr)) || done) {
-@@ -109,10 +109,10 @@ static int display(struct progress *progress, uint64_t n, const char *done)
- 			fflush(stderr);
- 		}
- 		progress_update = 0;
--		return 1;
-+		return;
+ 		return;
+@@ -93,25 +96,31 @@ static void display(struct progress *progress, uint64_t n, const char *done)
  	}
  
--	return 0;
-+	return;
+ 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
+-	eol = done ? done : "   \r";
+ 	if (progress->total) {
+ 		unsigned percent = n * 100 / progress->total;
+ 		if (percent != progress->last_percent || progress_update) {
+ 			progress->last_percent = percent;
+-			fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+-				progress->title, percent,
+-				(uintmax_t)n, (uintmax_t)progress->total,
+-				tp, eol);
+-			fflush(stderr);
+-			progress_update = 0;
+-			return;
++
++			strbuf_reset(counters_sb);
++			strbuf_addf(counters_sb,
++				    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
++				    (uintmax_t)n, (uintmax_t)progress->total,
++				    tp);
++			update = 1;
+ 		}
+ 	} else if (progress_update) {
+-		fprintf(stderr, "%s: %"PRIuMAX"%s%s",
+-			progress->title, (uintmax_t)n, tp, eol);
++		strbuf_reset(counters_sb);
++		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
++		update = 1;
++	}
++
++	if (update) {
++		const char *eol = done ? done : "   \r";
++
++		fprintf(stderr, "%s: %s%s", progress->title, counters_sb->buf,
++			eol);
+ 		fflush(stderr);
+ 		progress_update = 0;
+-		return;
+ 	}
+ 
+ 	return;
+@@ -213,6 +222,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+ 	progress->delay = delay;
+ 	progress->throughput = NULL;
+ 	progress->start_ns = getnanotime();
++	strbuf_init(&progress->counters_sb, 0);
+ 	set_progress_signal();
+ 	return progress;
  }
- 
- static void throughput_string(struct strbuf *buf, uint64_t total,
-@@ -188,9 +188,10 @@ void display_throughput(struct progress *progress, uint64_t total)
- 		display(progress, progress->last_value, NULL);
- }
- 
--int display_progress(struct progress *progress, uint64_t n)
-+void display_progress(struct progress *progress, uint64_t n)
- {
--	return progress ? display(progress, n, NULL) : 0;
-+	if (progress)
-+		display(progress, n, NULL);
- }
- 
- static struct progress *start_progress_delay(const char *title, uint64_t total,
-diff --git a/progress.h b/progress.h
-index 70a4d4a0d6..59e40cc4fd 100644
---- a/progress.h
-+++ b/progress.h
-@@ -4,7 +4,7 @@
- struct progress;
- 
- void display_throughput(struct progress *progress, uint64_t total);
--int display_progress(struct progress *progress, uint64_t n);
-+void display_progress(struct progress *progress, uint64_t n);
- struct progress *start_progress(const char *title, uint64_t total);
- struct progress *start_delayed_progress(const char *title, uint64_t total);
- void stop_progress(struct progress **progress);
+@@ -256,6 +266,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
+ 		free(buf);
+ 	}
+ 	clear_progress_signal();
++	strbuf_release(&progress->counters_sb);
+ 	if (progress->throughput)
+ 		strbuf_release(&progress->throughput->display);
+ 	free(progress->throughput);
 -- 
 2.21.0.539.g07239c3a71.dirty
 
