@@ -2,131 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE2F20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 22:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9263E20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 23:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729681AbfCYWrs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 18:47:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38285 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729204AbfCYWrs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 18:47:48 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k11so4691198wro.5
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 15:47:47 -0700 (PDT)
+        id S1729121AbfCYXVc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 19:21:32 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:43739 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfCYXVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 19:21:32 -0400
+Received: by mail-qt1-f196.google.com with SMTP id v32so12453996qtc.10
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 16:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0oKEJfiEJcdRsP0l2p3HV6yFMDS5p6sXwOnaUqv3cac=;
-        b=R9IMXKKqOSymcWtI9h6WFNnoFtREgeML/UR5/TiDRNT6fsOzHoGJAeGP0Sg5Fzn9u8
-         XOxsxgFRwdNWhJj1B2z0LG2bhBOcYiBJtMd1f6Hjsx0WnnguHInhaCbjbQzlC82oDW4A
-         5CjtJnOLHSQIIOHwfq7H2en+bVOs6bDiw8vzXT+XtLq/mVAZn98OFg1X8nLXGrvNgdah
-         YBvyKZpVzIpvzuBTXH6CQ4sjalejJUeShfWmCLyd6cfqXDTdDBrR7Q3E99b8iPsb7cZQ
-         KyupPPFQhJBzO7EqQy2QPEet3tsku/MM8Z/A9C3bfjeJWPj2ay6Ky6SauiLixUc/ewhe
-         lUPA==
+        d=platin-gs.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Tnb/nOTfqQQBxeMhPw973EDZ+o7K/dbjkfnmmHzUbwo=;
+        b=EzDh1qMdJgWukiNzOF+GPd4ltS84NB8dvRp1Lk5pHLWqnoKRU4QN52Q+48/w8bzN/X
+         gdpveLX2Sx54xCHFfvs5irh/VXA1cU6/wUCsQvfQWaINpebtN6WrU5W7oPbq0DLgEGM6
+         DWlk/CVlDqxPipi+0jYsz19Bm4h5uVmwN8v+im8r+5yULk0T3o8JuDCYNQRFW4B2TTLd
+         Qe7qS2nS4gGA/2ayWN9PeH4I8fvfUUcL/cZexpxIc9UyIujL1ZSP8ihjLupHe/Ywbsbb
+         CWoyK+9Ov3s1cKa/YpPrhdsc6r12D0FIQa3GH6lEOgUPUw4wkMRGl57PafQQTjUZNqaa
+         m1XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0oKEJfiEJcdRsP0l2p3HV6yFMDS5p6sXwOnaUqv3cac=;
-        b=gERB6r/NKA0o2CmwZVodH6HeH+V//emdN6hQrBisxPNmMbcqPMi3FvyUj8ck0uluTo
-         V2OKonJHnuRXtRqntadVL6nsRNjte8FjXXw3iFpQM4wbBh/BEqK73NzrbYADDV2w6xx6
-         SU6LKOLC6L0RYGkdXaIntroQxr4niJJfpOzvy+koOM/7LGNjAYqAcAdgnPE2k+Tnwdfn
-         Xmp89C42Sp5WDUf+Itr2rxckITG2uA3UkPGiC3GG0pKfFFoyMrSEFw2r7mMsD/Mk9Vet
-         a6Lj/fF1pxR/X4PzmG571opmouuU0bFtl+/Sl9qJ1vkiUpHJPmJWaNuLi6/Qvpjw6YH3
-         +ZVQ==
-X-Gm-Message-State: APjAAAUyMxblIq8mSzb7vpcBDzbtOUjLduDZr+onHUy00oy1ItZTcqc1
-        VkUq4VRQcD9RKaZLb55yhnE5+cz2CK8=
-X-Google-Smtp-Source: APXvYqxhz+x/Rlxe8XQtqUqGJdRrShkD2OEGzwOzh4YSU8lKqbzcA8s2a0o/RRG0Dv7ut0GwXbbeQw==
-X-Received: by 2002:adf:f80c:: with SMTP id s12mr18115516wrp.72.1553554066409;
-        Mon, 25 Mar 2019 15:47:46 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id j184sm26017692wma.47.2019.03.25.15.47.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Mar 2019 15:47:45 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: allow for configuring option abbreviation
-References: <pull.167.git.gitgitgadget@gmail.com> <20190325202329.26033-2-avarab@gmail.com> <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com>
-Date:   Mon, 25 Mar 2019 23:47:44 +0100
-Message-ID: <87o95ybmgf.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Tnb/nOTfqQQBxeMhPw973EDZ+o7K/dbjkfnmmHzUbwo=;
+        b=m63gy1dLfah+kgJDDaT8emHShuYGW0hvrIHFXA6Hb3bImMFb1Jo5OZonlRmfaj5cxL
+         6LA1JDKe0qkz/XRtk0MYQKWwvBoz8+1aK04auwduMJN6WQz7X3wv9NAyi08vXz+8MZ+K
+         IkOFJvoe1UTLOK26Kh8c+clQPJL7UgXDVI4y7+9MOoue4JFBA3Saz98f+FD624B2eWs1
+         gomxdbbrWfnAGp0/1ZmzgmP+dSwx49oheO/nhz+aaKQxJ8zW3KkcIrLkxo6qQ5xm4LfO
+         s+d92QRkrTcqaCNJ2z/cH9mXFypjKjORzfiVdSzHz0O2RpY6zYXrdCCtMi6H4aYwFVT4
+         un9A==
+X-Gm-Message-State: APjAAAXbYqPO5qQ9tSGTBFb776VKhL8yk3KKozVQg8bAE5oEdQBS67xb
+        aThRWoPfEXPKwo2Egyaln6uYGoE40VBQx3OdTGtGA+jN+JE=
+X-Google-Smtp-Source: APXvYqw33phOWtKc9hKfQr1EcEX06df1KG6g7blbd1oc1kYGpCgbJxOIwd75rG1cZ54ZooJ0MeGBDg+sISIf4MNMDtk=
+X-Received: by 2002:ac8:2297:: with SMTP id f23mr22372206qta.348.1553556091010;
+ Mon, 25 Mar 2019 16:21:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20190324235020.49706-1-michael@platin.gs> <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
+ <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com> <b077afed-d143-506e-977e-6edf2492f75f@google.com>
+In-Reply-To: <b077afed-d143-506e-977e-6edf2492f75f@google.com>
+From:   Michael Platings <michael@platin.gs>
+Date:   Mon, 25 Mar 2019 23:21:19 +0000
+Message-ID: <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Fuzzy blame
+To:     Barret Rhoden <brho@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Barret,
 
-On Mon, Mar 25 2019, Eric Sunshine wrote:
+> I work on a project that needs a major reformatting, and one thing
+> delaying me was the lack of an ability to ignore commits during blame.
 
-> On Mon, Mar 25, 2019 at 4:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> diff --git a/Documentation/config/core.txt b/Documentation/config/core.t=
-xt
->> @@ -1,3 +1,15 @@
->> +core.abbreviatedOptions::
->> +       Defaults to `true` which allows options to be abbreviated as
->> +       long as they aren't ambiguous, e.g. for linkgit:git-init[1]
->> +       the `--bare` option can be abbreviated as `--bar`, `--ba` or
->> +       even `--b` since no other option starts with those
->> +       prefixes. However, if such an option were added in the future
->> +       any use of these abbreviations would break.
->> ++
->> +By setting this to false (e.g. in scripts) you can defend against such
->> +future breakages by enforcing that options must always be fully
->> +provided.
->
-> I don't get why having a configuration option is better for defending
-> scripts against this problem than a simple environment variable. It
-> seems easier for the script prologue to contain:
->
->     GIT_TEST_ABBREVIATED_OPTIONS=3Dfalse
->     export GIT_TEST_ABBREVIATED_OPTIONS
->
-> than for it to muck about with git-config or use "git -c
-> core.abbreviatedOptions=3Dfalse ..." everywhere. The commit message
-> doesn't do a good enough job of justifying the configuration option
-> over the environment variable.
->
-> Also, if this is now intended to be more general (aiding script
-> writers) than just being for our test suite, then dropping "TEST" from
-> the name seems warranted:
->
->     GIT_ABBREVIATED_OPTIONS
+I think we understand each other well then - I'm working on a plan to
+change the variable naming rule in LLVM, and naturally other
+developers aren't keen on making git blame less useful.
 
-If we want to make something user-configurable we tend to add config
-variables. The GIT_TEST_* variables are only intended for our own test
-suite, see t/README.
+> One question I have is under which circumstances do you find that you
+> cannot match a suspect/child line to a parent?  One obvious case is a
+> commit that only adds lines - the parent's line set is the empty set.  I
+> think you catch that earlier in your code (parent_chunk_length == 0),
+> though I guess there are other cases where the parent has lines, but
+> they are below a certain match threshold?
 
-I don't mind documenting this, but it's a well-established pattern, so
-if we're going to describe how this works/why use one or the other it
-should probably be some other series to t/README and/or git-config.txt
+Yes, exactly. The threshold is currently 0 i.e. a single matching
+bigram is all that's required for two lines to be considered matching,
+but in future the threshold could be configurable in the same manner
+as -M & -C options.
+In the t8020-blame-fuzzy.sh test script in my patch, where it's
+expected that a line will be attributed to the "ignored" commit you'll
+see "Final". So far this is just "}" lines.
 
-We traditionally *only* expose this sort of thing to users via config,
-and not via env variables.
+> Another question was whether or not you wanted this to apply per commit
+> or for an entire blame session.  It looks like your current code applies
+> it overall, and not for a specific commit.
 
-The config system is more flexible in every way. You can set it
-system-wide, user-wide, repo-wide etc., and if you want exactly the
-scope of an env variable you can do that too, just start your script
-with:
+This is a really interesting question for this feature. Initially I
+just wanted to be able to say "Hey, Git, ignore this revision please."
+But then Git says "OK, but how exactly? I can ignore whitespace and I
+can detect moves & copies so do you want me to do those?" And then I'm
+thinking, actually yes -M10 would be great because I know that this
+revision also reordered a bunch of #includes and I still want people
+to be able to see where they came from. However other sets of options
+might work better for other changes.
 
-    # These "''" quotes are not a mistake, it needs to be like this
-    export GIT_CONFIG_PARAMETERS=3D"'core.abbreviatedOptions=3Dfalse'"
-    git <some-cmd> [...]
+On looking at the problem this way it seems that fuzzy matching
+belongs in the same class as -w, -M & -C. As these options apply for
+an entire blame session, it would be consistent to allow applying the
+fuzzy matching likewise. As a bonus, having the ability to apply the
+-F option for the entire blame session seems quite nice for other use
+cases.
 
-So the reason we have GIT_TEST_* is pretty much because we can't just
-whitelist GIT_CONFIG_PARAMETERS for the test suite, and to make it
-obvious what test modes we have available.
+> I'd much prefer it to be per-commit
+
+Yes, we definitely need a way to say "fuzzy match this commit only"
+otherwise you lose the ability to detect small but significant changes
+in other commits.
+I haven't explored this fully, but I'm thinking that the revision
+options file might look something like this:
+
+# Just use the defaults, whatever they may be
+6e8063eee1d30bc80c7802e94ed0caa8949c6323
+# This commit changed loads of tabs to spaces
+35ee755a8c43bcb3c2786522d423f006c23d32df -w
+# This commit reordered lots of short lines
+c5b679e14b761a7bfd6ae93cfffbf66e3c4e25a5 -M5
+# This commit copied some stuff and changed CamelCase to snake_case
+58b9cd43da695ee339b7679cf0c9f31e1f8ef67f -w -C15 -F
+
+For the command-line, potentially we could make -w/-M/-C/-F specified
+after --ignore-rev apply to only that revision e.g.:
+git blame myfile --ignore-rev 35ee755a8c43bcb3c2786522d423f006c23d32df -M -F
+
+But as I say, I haven't explored this fully.
+
+> For those cases where you can't find a match, I could imagine marking
+> them as unblamable.  The purpose of 'unblamable' in my patchset was to
+> signal to not bother looking up further commit info for a final blame
+> entry.  It was largely so that the user (me!) wouldn't see a commit
+> blamed when I explicitly told git to not tell me about that commit.
+
+I can see how the unblameable concept makes sense for the heuristic
+you have right now. However, once you have a heuristic that can tell
+you with a high degree of certainty that a line really did come from a
+commit that you're merely not interested in, then I suggest that it's
+better to just point at that commit.
+
+> Both approaches sound fine though.
+
+:)
+
+> The first thing that comes to mind for me is to plug your fuzzy logic
+> into my patch set.
+
+Please do! It should be easy to pluck fuzzy_find_matching_lines() and
+its dependencies out. Just to set your expectations, I have not yet
+optimised it and it is highly wasteful right now both in terms of time
+and memory.
+
+> But maybe we need more info for your function.
+
+The extra info needed is the parent & child file content, plus the
+indices in the strings of where new lines start. This information is
+already calculated in the course of doing the diff but it looks like a
+fair amount of plumbing work will be needed to make the information
+available to the chunk callback. That was my reason for initially
+plonking the fuzzy matching in a separate pass.
+
+Thanks,
+-Michael
