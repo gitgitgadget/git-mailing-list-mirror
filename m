@@ -2,113 +2,327 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D278420248
-	for <e@80x24.org>; Mon, 25 Mar 2019 19:29:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 503E720248
+	for <e@80x24.org>; Mon, 25 Mar 2019 19:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729664AbfCYT3b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 15:29:31 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43067 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729548AbfCYT3b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 15:29:31 -0400
-Received: by mail-pl1-f193.google.com with SMTP id m10so418325plt.10
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 12:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NteGGH/VCZueRxjFQ/5RremK0JaWznak9Jw+Na5Qh3M=;
-        b=N+wKd8rWc4orxdvv/VMt7qZGgkHU+XENTr4jhPUgirNowSqQ+bQVdfVFGaFKjTuMmi
-         vqDwe2uhVQbKLdoyDFZ30KLVZ8PRN5OH3w4EXSf0V6pZImuwwDIi6I4GCH5s9lC0GK2K
-         jchtphU6QoHjnPPD7PmvwFE8sN9W+vHpuzGl5/xAAHEkEXtliUMDjbb6CbRj1y/oxi+K
-         vMLphU0U3+uKeJ+PewU9vu4N9AGNeRcEgBp2qvpfIkWW73hbvzQCNOT/TXU1MAo6A1Cg
-         niszTLsymwrDn1vDce5/6/qxR8Aiier6CjTd7/61n/uzYhd2RMVgQQhxGdeIIFDG/W6a
-         hNWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NteGGH/VCZueRxjFQ/5RremK0JaWznak9Jw+Na5Qh3M=;
-        b=JwT6HJuTK5fj42ZMJu9bNtKJLmEy3PYewpQeYNYs0UOl22uyFcFnyY6P3E+lTd873J
-         FU2a/60v6MOqDPyJw02kInLcfxCul5+TZSy1XAabog3njKYYVPSYdcntnfRWv4lQzXWH
-         7P3P6a+7LORphwrB2tsVLw4tWEuEH9DVUwVVFhy/lvXQWI+kLrOulKV9MA/f3WU5H17/
-         XBONX9cz+S3PcmNKUTwjgGvkrc0H4ITEi3TWpefJ+uvEh99Jj9zZ1PgST/1Y1rixQQcA
-         mtneC23IHLjsQEzGm1HB8avtId09GealsRdlnXZRtIIFk+X9Xnm91hnDC/2T5iVIW0Pm
-         1q1w==
-X-Gm-Message-State: APjAAAU61YuRqTgdXq6tA4DrfsAW9RzkEOggx8YPIUPw5ceuhYWfH6xE
-        0yDNgHjB0F/7oJq+bJoR76E=
-X-Google-Smtp-Source: APXvYqwq5nCwrJ4oVqI8BFIpCFLb5XrQz1BXBgNajcHbCyHOOVebKBxWFPXAzKkhf2cFsjaas8+G9w==
-X-Received: by 2002:a17:902:4101:: with SMTP id e1mr27616742pld.25.1553542170977;
-        Mon, 25 Mar 2019 12:29:30 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id s6sm39647995pgi.56.2019.03.25.12.29.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Mar 2019 12:29:29 -0700 (PDT)
-Date:   Mon, 25 Mar 2019 12:29:28 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-Message-ID: <20190325192928.GA31067@dev-l>
-References: <cover.1553354374.git.liu.denton@gmail.com>
- <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com>
- <nycvar.QRO.7.76.6.1903251948200.41@tvgsbejvaqbjf.bet>
+        id S1730168AbfCYTfb convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Mar 2019 15:35:31 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:38621 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729238AbfCYTfa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 15:35:30 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x2PJZLvZ015716
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 25 Mar 2019 15:35:22 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Fabio Aiuto'" <polinice83@libero.it>, <git@vger.kernel.org>
+References: <1553195171.1436.1.camel@libero.it>         <002901d4e01a$88bdd220$9a397660$@nexbridge.com>         <1553196739.1436.3.camel@libero.it>         <000501d4e029$93624940$ba26dbc0$@nexbridge.com>         <1553289910.1481.4.camel@libero.it>         <001301d4e0f7$c061b600$41252200$@nexbridge.com>         <1553290862.1481.9.camel@libero.it>         <001c01d4e100$a5feb610$f1fc2230$@nexbridge.com>         <1553346004.1639.3.camel@libero.it>         <000001d4e1af$77a93010$66fb9030$@nexbridge.com> <1553541691.1485.1.camel@libero.it>
+In-Reply-To: <1553541691.1485.1.camel@libero.it>
+Subject: RE: Semantic errors
+Date:   Mon, 25 Mar 2019 15:35:16 -0400
+Message-ID: <002f01d4e341$e32502e0$a96f08a0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903251948200.41@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIEdXnYK9I+sdb3lPFNGef240rKTAJETcuKAWAyt0QCcXZXHAOMFFg2AaPO4A4BOaiRLAF+b+a3AtmktswB4AHA2gHzwgN2pRg9oxA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
-
-On Mon, Mar 25, 2019 at 07:50:38PM +0100, Johannes Schindelin wrote:
-> Hi Denton,
-> 
-> On Sat, 23 Mar 2019, Denton Liu wrote:
-> 
-> > [...]
+> Of On March 25, 2019 15:22, Fabio Aiuto wrote:
+> Il giorno sab, 23/03/2019 alle 15.34 -0400, Randall S. Becker ha
+> scritto:
+> > On March 23, 2019 9:00, Fabio Aiuto wrote:
+> > > To: Randall S. Becker <rsbecker@nexbridge.com>; git@vger.kernel.org
+> > > Subject: Re: Semantic errors
+> > >
+> > > Il giorno ven, 22/03/2019 alle 18.43 -0400, Randall S. Becker ha
+> > > scritto:
+> > > > > -----Original Message-----
+> > > > > From: Fabio Aiuto <polinice83@libero.it>
+> > > > > Sent: March 22, 2019 17:41
+> > > > > To: Randall S. Becker <rsbecker@nexbridge.com>; git@vger.kernel
+> > > > > .org
+> > > > > Subject: Re: Semantic errors
+> > > > >
+> > > > > Il giorno ven, 22/03/2019 alle 17.39 -0400, Randall S. Becker ha
+> > > > > scritto:
+> > > > > > On March 22, 2019 17:25, Fabio Aiuto
+> > > > > > > Il giorno gio, 21/03/2019 alle 17.03 -0400, Randall S.
+> > > > > > > Becker ha
+> > > > > > > scritto:
+> > > > > > > > > Of On March 21, 2019 15:32, Fabio Aiuto wrote:
+> > > > > > > > > Il giorno gio, 21/03/2019 alle 15.16 -0400, Randall S.
+> > > > > > > > > Becker ha
+> > > > > > > > > scritto:
+> > > > > > > > > > On March 21, 2019 15:06, Fabio Aiuto wrote:
+> > > > > > > > > > > I'm browsins git code with Eclipse. I'm on a local
+> > > > > > > > > > > branch called "studio" based on master (last public
+> > > > > > > > > > > commit e902e9b by Junio C Hamano on Monday March 11
+> > > > > > > > > > > 2019). I've built everything by
+> > > > > > > > > > > changing:
+> > > > > > > > > > > CFLAGS = -g -Wall (removing -O2 to have smooth trace
+> > > > > > > > > > > in debugging).
+> > > > > > > > > > > But the environment detects the following semantic
+> > > > > > > > > > > errors (I made no
+> > > > > > > > > > > edits!!!):
+> > > > > > > > > > > Description	Resource	Path	Loca
+> > > > > > > > > > > tion
+> > > > > > > > > > > Type
+> > > > > > > > > > > Symbol 'GIT_HTML_PATH' could not be resolved
+> > > > > > > > > > > git
+> > > > > > > > > > > .c
+> > > > > > > > > > > /g
+> > > > > > > > > > > it
+> > > > > > > > > > > line 154	Semantic Error
+> > > > > > > > > > > Symbol 'GIT_MAN_PATH' could not be resolved
+> > > > > > > > > > > git.
+> > > > > > > > > > > c
+> > > > > > > > > > > /gi
+> > > > > > > > > > > t
+> > > > > > > > > > > line 158	Semantic Error
+> > > > > > > > > > > Symbol 'GIT_INFO_PATH' could not be resolved
+> > > > > > > > > > > git
+> > > > > > > > > > > .c
+> > > > > > > > > > > /g
+> > > > > > > > > > > it
+> > > > > > > > > > > line 162	Semantic Error
+> > > > > > > > > > > Symbol 'active_cache' could not be resolved
+> > > > > > > > > > > comm
+> > > > > > > > > > > it.c
+> > > > > > > > > > > /git
+> > > > > > > > > > > /builtin	line 899	Semantic Error
+> > > > > > > > > > > Field 'ce_intent_to_add(active_cache[i])' could not
+> > > > > > > > > > > be resolved
+> > > > > > > > > > > commit.c	/git/builtin	line 899
+> > > > > > > > > > > Sem
+> > > > > > > > > > > anti
+> > > > > > > > > > > c
+> > > > > > > > > > > Error
+> > > > > > > > > > > Symbol 'active_nr' could not be resolved	com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /gi
+> > > > > > > > > > > t/bu
+> > > > > > > > > > > iltin	line 889	Semantic Error
+> > > > > > > > > > > Symbol 'active_nr' could not be resolved	com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /gi
+> > > > > > > > > > > t/bu
+> > > > > > > > > > > iltin	line 898	Semantic Error
+> > > > > > > > > > > Field 'oid' could not be resolved	commit.c
+> > > > > > > > > > > /g
+> > > > > > > > > > > it/b
+> > > > > > > > > > > uilt
+> > > > > > > > > > > in
+> > > > > > > > > > > line 1654	Semantic Error
+> > > > > > > > > > > Symbol 'active_nr' could not be resolved	com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /gi
+> > > > > > > > > > > t/bu
+> > > > > > > > > > > iltin	line 901	Semantic Error
+> > > > > > > > > > > Symbol 'active_cache_tree' could not be resolved com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /git/builtin	line 1654	Semantic Error
+> > > > > > > > > > > Symbol 'active_cache_changed' could not be resolved
+> > > > > > > > > > > comm it.c
+> > > > > > > > > > > /git/builtin	line 418	Semantic Error
+> > > > > > > > > > > Symbol 'active_cache_tree' could not be resolved com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /git/builtin	line 419	Semantic Error
+> > > > > > > > > > > Symbol 'active_nr' could not be resolved	com
+> > > > > > > > > > > mit.
+> > > > > > > > > > > c
+> > > > > > > > > > > /gi
+> > > > > > > > > > > t/bu
+> > > > > > > > > > > iltin	line 254	Semantic Error
+> > > > > > > > > > > Symbol 'active_cache' could not be resolved
+> > > > > > > > > > > comm
+> > > > > > > > > > > it.c
+> > > > > > > > > > > /git
+> > > > > > > > > > > /builtin	line 255	Semantic Error
+> > > > > > > > > > >
+> > > > > > > > > > > I can debug without problems, but what if I should
+> > > > > > > > > > > trece through one of those errors?
+> > > > > > > > > > > How can I fix them?
+> > > > > > > > > >
+> > > > > > > > > > This situation occurs in many projects in ECLIPSE, not
+> > > > > > > > > > only git.
+> > > > > > > > > > The
+> > > > > > > > > > errors are likely coming from one of the error parsers
+> > > > > > > > > > that you have enabled in your workspace. Look in the
+> > > > > > > > > > Project Properties or Workspace Preferences under
+> > > > > > > > > > C/C++ Build/Settings in the Error Parsers tab for your
+> > > > > > > > > > build configuration.
+> > > > > > > > > > You may
+> > > > > > > > > > have to turn off some of those.
+> > > > > > > > > > There is also the C/C++ General/Code Analysis
+> > > > > > > > > > Preferences setting where you might have to turn off
+> > > > > > > > > > the problematic errors. I have found that this is a
+> > > > > > > > > > common situation for code that is imported into
+> > > > > > > > > > ECLIPSE from other platforms, where the GNU error and
+> > > > > > > > > > analysis tools are overly aggressive by default.
+> > > > > > > > > >
+> > > > > > > > > > Good luck.
+> > > > > > > > > > Randall
+> > > > > > > > > >
+> > > > > > > > > > -- Brief whoami:
+> > > > > > > > > >  NonStop developer since approximately
+> > > > > > > > > > 211288444200000000
+> > > > > > > > > >  UNIX developer since approximately 421664400
+> > > > > > > > > > -- In my real life, I talk too much.
+> > > > > > > > > >
+> > > > > > > > > >
+> > > > > > > > > >
+> > > > > > > > >
+> > > > > > > > > Thank you I tried to disable all of them, but they all
+> > > > > > > > > remain.
+> > > > > > > > > For
+> > > > > > > > > example the variable 'active_nr' is actually never
+> > > > > > > > > declared.
+> > > > > > > > > That's
+> > > > > > > > > so strange.
+> > > > > > > > > Hope to
+> > > > > > > > > solve this all soon. I'm freezed...
+> > > > > > > >
+> > > > > > > > It is very likely in ECLIPSE either in workstation or
+> > > > > > > > project settings relating to error parsers (turn
+> > > > > > > > everything off).
+> > > > > > > > It
+> > > > > > > > still may be an error parser issue. One key thing... do
+> > > > > > > > not use -Wall.
+> > > > > > > > There are also settings about what to do in some error
+> > > > > > > > conditions configured in ECLIPSE. -Wall could be probably
+> > > > > > > > triggering a response from one of the error parsers. But
+> > > > > > > > the Semantic Error type is not normally from the compiler;
+> > > > > > > > rather, it is from ECLIPSE CDT pre- scanning the code.
+> > > > > > > > Anyway, check out other -W settings to disable all
+> > > > > > > > warnings as a start.
+> > > > > > > > If
+> > > > > > > > you are building in Cygwin or Mingw, you probably can
+> > > > > > > > ignore the ECLIPSE errors, especially if git actually
+> > > > > > > > built. If you are trying to mix a managed build and a
+> > > > > > > > non-managed build in the same project, you are going to be
+> > > > > > > > out of luck.
+> > > > > > > >
+> > > > > > >
+> > > > > > > If I run a make inside the git working directory, this will
+> > > > > > > just create binaries in the working directory. But in my
+> > > > > > > home/{myname}/bin/ I have found the following files:
+> > > > > > >
+> > > > > > > git git-cvsserver gitk git-receive-pack git-shell git-
+> > > > > > > upload-
+> > > > > > > archive git-upload- pack
+> > > > > > >
+> > > > > > > Maybe they are deployed by a make install I run accidentally
+> > > > > > > (I think that's possible). How could I clean the effect of
+> > > > > > > this accidental install?
+> > > > > > > If I don't
+> > > > > > > clean this install could I have problems in the future?
+> > > > > >
+> > > > > > I haven't done a Windows build so I really can't help here.
+> > > > > > Anyone
+> > > > > > else able to chime in?
+> > > > > >
+> > > > >
+> > > > > I'm on debian stretch.
+> > > >
+> > > > Unless /home/{yourname}/bin is on your PATH, the make install
+> > > > should not cause a problem and cleaning up from it probably is
+> > > > fine. I'm surprised there is no /home/{yourname}/share also
+> > > > because make install will move man pages into it - although you
+> > > > might not have all of the man pages installed (that is another
+> > > > topic and make target - my platform does not have a port of the
+> > > > Asciidoctor tool, so I can't build git man pages, so I use
+> > > > quick-install-man, which depends on having a clone of the man page
+> > > > repository that the really awesome git team creates). It might be
+> > > > helpful to specify some of the option defines described in the
+> > > > Makefile so that the install goes to the proper place (like
+> > > > /usr/local). Run 'uname -s' to figure out which system type
+> > > > config.mak.uname is going to use, and go from there.
+> > > >
+> > > > Good luck.
+> > > >
+> > > > Randall
+> > > >
+> > > > -- Brief whoami:
+> > > >  NonStop developer since approximately 211288444200000000
+> > > >  UNIX developer since approximately 421664400
+> > > > -- In my real life, I talk too much.
+> > > >
+> > > >
+> > > >
+> > >
+> > > I found in the Makefile:
+> > >
+> > > ...
+> > >
+> > > prefix = $(HOME)
+> > > bindir = $(prefix)/bin <--- delete the whole home/fabio/bin mandir =
+> > > $(prefix)/share/man  <--- delete infodir = $(prefix)/share/info <
+> > > --- delete
+> > > gitexecdir = libexec/git-core <---- delete mergetoolsdir =
+> > > $(gitexecdir)/mergetools <---not present sharedir = $(prefix)/share
+> > > <---
+> > > delete gitwebdir = $(sharedir)/gitweb <--- delete perllibdir =
+> > > $(sharedir)/perl5
+> > > <--- delete localedir = $(sharedir)/locale <--- delete template_dir
+> > > = share/git- core/templates <--- delete htmldir =
+> > > $(prefix)/share/doc/git-doc <-
+> > > -- not
+> > > present
+> > > ETC_GITCONFIG = $(sysconfdir)/gitconfig   <--- in my /etc there's no
+> > > gitconfig ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes <--- in my
+> > > /etc there's no gitattributes lib = lib # DESTDIR = pathsep = :
+> > >
+> > > bindir_relative = $(patsubst $(prefix)/%,%,$(bindir))
+> > > mandir_relative = $(patsubst $(prefix)/%,%,$(mandir))
+> > > infodir_relative = $(patsubst
+> > > $(prefix)/%,%,$(infodir)) gitexecdir_relative = $(patsubst
+> > > $(prefix)/%,%,$(gitexecdir)) localedir_relative = $(patsubst
+> > > $(prefix)/%,%,$(localedir)) htmldir_relative = $(patsubst
+> > > $(prefix)/%,%,$(htmldir)) perllibdir_relative = $(patsubst
+> > > $(prefix)/%,%,$(perllibdir))
+> > >
+> > > ...
+> > >
+> > > so by deleting all this stuff should be everything good, shouldn't
+> > > it?
+> > > Please let me know if there should be anything else to know.
 > >
-> > This allows us to rewrite the above as
+> > Your path, being
+> > PATH=~/bin:/home/{myname}/bin:/usr/local/bin:/usr/bin:/bin:/usr/local
+> > /g
+> > ames:/usr/games:/usr/sbin:/sbin
+> > puts your own bin in front of where the system-defined git would be
+> > located. So yes, the new install will interfere. As long as you remove
+> > the git install from ~/bin and /home/{myname}/bin (are these not the
+> > same?), you should go back to using the system's git.
 > >
-> > 	git rebase -i --keep-base master
-> >
-> > and
-> >
-> > 	git rebase -x ./test.sh --keep-base master
-> >
-> > respectively.
-> 
-> Just a quick note: this breaks t5407 because that test uses `git rebase
-> --keep` and expects that abbreviated option to be expanded to
-> `--keep-empty`, which is now no longer the only possible expansion.
-> 
-> I just submitted a patch series to fix that, and other uses of abbreviated
-> options in the test suite, in
-> https://public-inbox.org/git/pull.167.git.gitgitgadget@gmail.com/T/#t
+> Thank you Randall, I wonder if it's due to that install that I have these first
+> wo entries in my PATH environment variable. If I create a new user I don't
+> have any entries pointing at home/{username}. Maybe it's impossible to
+> know (I've found nothing related in the Makefile).
+> Does install command set the environment variables with the specified install
+> paths?
 
-Thanks for catching this. I replied with a (tiny) review.
+AFAIK, the git make install does not modify the user's .profile, .bashrc, or any other thing in UNIX that would change your environment settings.
+Good luck,
+Randall
 
-> 
-> Ciao,
-> Johannes
-> 
-> P.S.: Did you run the test suite before submitting your patches?
-
-Usually I'm more diligent about running tests but I wrote this patchset
-in the back of a car when I was running low on batteries. I only ran the
-rebase-related tests but I guess that wasn't enough.
-
-My mistake, though. I'll be sure to _always_ run tests in the future.
-
-Thanks,
-
-Denton
