@@ -2,121 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1DE20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 21:18:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9268720248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730063AbfCYVSK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 17:18:10 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37169 "EHLO
+        id S1730332AbfCYVXi convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Mar 2019 17:23:38 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36749 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729569AbfCYVSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 17:18:09 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w10so11912625wrm.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1eGF9zzqWYVdg35udDCZUvFvuCQ0o/AjUUiuw5OVAeY=;
-        b=D/p6V5fksVCpeRyXC/G4APEhJ8gDXR3WuV7j3WeDum4Eb44snxP4OgejrhG6Agudhr
-         DGfEeQ+pp+yjyf+rV/1RzBacoP1kOJF5LPcDc5OWcEI4jHQkw4lrn/gcphveJt3KudSP
-         m9Y5fekCic8xpKlD99P9RhNq9s1KNQVa5M43cOkvy8lQlheaBbSNaqrIhePqZ3SPCBca
-         DVp/o7/dXAR6xwbBr1+uEH0po+Feey92YaDC1I9S8YUISHA01sM4ho5c1IyHC9in/TBc
-         9E6cfgoPiHpoC/fchVAd5GD+17jAy9TrMGX7VhgTgJfJNZd1W9tGBVtvoOc/hD8HWvQD
-         q4Sw==
+        with ESMTP id S1729761AbfCYVXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:23:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id y13so11945293wrd.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 14:23:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1eGF9zzqWYVdg35udDCZUvFvuCQ0o/AjUUiuw5OVAeY=;
-        b=Kfx7qKM+/tNN4TxmBYm9xoJhsIFB4N53UHUiBUOR6icHfDt9aXTIuIDP202QsVdKKM
-         6SQMV3dv2dKyWJWgyMousrCfhDcLBo0whllxVh7svEJJuox2sBcNVdwE0xLPAPgA1Tyi
-         SVdQaQW3CaOCD1B2f2Xntou3jS0Kp0b1yK849XBXiZGkLpg4NTjXzjdWDAFQfzrE2MRE
-         pI7r0axkIVla75LCshq5uvgcMXrPlI1XF9dSogzveazVmqRZFV8SnyVofEsSraXV4ASB
-         2AxXJuds0d6AZmKM9O2H0q8epyn0aP4Jm2r3glnqFLTGwwG3/E3kgLMvHMgMq7U99d93
-         ZvWg==
-X-Gm-Message-State: APjAAAVlwaxo2SwsWhUzoLVEG2tqBhwuO4j6R1OmiiDzSWPj+0jptukK
-        tH+Hevvx9CM6hV/6DlFXgu+J5g5a0mehGB+I0EmHSEyv
-X-Google-Smtp-Source: APXvYqz0byzbKi98dLS+uNZAe98yDWSppUX/uZlN8z+UwInhoKTkzRIGSuCDre88CmmlyXZYUKw7aR5vPwigTTOhAvs=
-X-Received: by 2002:a5d:6a08:: with SMTP id m8mr16737354wru.30.1553548687978;
- Mon, 25 Mar 2019 14:18:07 -0700 (PDT)
+        bh=yyrCPyobO7JvdDR1nsfOc8PvZWJFvJekaLwZI7wrkrM=;
+        b=II+GT5x9eoEjtin0FqqPc1jiKJS8HSc5pLjfwZcZ+373KlHlCSduQQdpRSeKetC+X0
+         IFLdcaM5G369bu6hXbx7E9rXKEeX6bcHtPfQrtf4wPqC2hrRItRskrYTwO7mm8ytpRNu
+         3nK0jxG4HvGDvbxJF+Wa3wtUWDTHpBVvuWz/vKorbwIEk350C87dJA+AR5kN6TlNQAIQ
+         XTvzPwT5iUGlUcOZGZcp1avS6OvRB2yf7DPhPbIKBITT7hmeGgkBdvWrRoWAP8wrckPf
+         lBtxjzLoZLEiiHjiRzMjl6Mz2Y4vpx7pgnBkRbBV6q4WrwYmat5S5oPtPVXy78u7C1HV
+         waRA==
+X-Gm-Message-State: APjAAAWtCI78uwhsN0e40JJ2VCKKaxHOwamGqXM1dSQMZPyuYdEHQEcl
+        blLfJ3oRE5/Y3i7LME2PzVYziVvpAAUNGEWB7kI=
+X-Google-Smtp-Source: APXvYqxjXBWngawZwDhF7kH/Jlf+xIglSN2BSt+WVR7uP1ZwGuLRQFm32RkEMw2KDvTVs8C5H3JcdUHj6FRuBl7PjEg=
+X-Received: by 2002:adf:ed8a:: with SMTP id c10mr132745wro.40.1553549016211;
+ Mon, 25 Mar 2019 14:23:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAMknYEPrrpxESK0onwTHRbVwcZE2YQpT=RVzjb9JfEBEXt4NRA@mail.gmail.com>
-In-Reply-To: <CAMknYEPrrpxESK0onwTHRbVwcZE2YQpT=RVzjb9JfEBEXt4NRA@mail.gmail.com>
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Date:   Tue, 26 Mar 2019 00:17:56 +0300
-Message-ID: <CAL21Bmn0BQirS=vyTRHBx_kfuEp1JY4uw2wkjm5w_pgwgjA5iA@mail.gmail.com>
-Subject: Re: [GSoC] Unify ref-filter formats with other --pretty formats
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
+References: <pull.167.git.gitgitgadget@gmail.com> <20190325202329.26033-2-avarab@gmail.com>
+In-Reply-To: <20190325202329.26033-2-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 25 Mar 2019 17:23:25 -0400
+Message-ID: <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: allow for configuring option abbreviation
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=D0=BF=D0=BD, 25 =D0=BC=D0=B0=D1=80. 2019 =D0=B3. =D0=B2 22:27, Kapil Jain =
-<jkapil.cs@gmail.com>:
->
-> Hi,
->
-> Below are some two queries concerning
-> https://git.github.io/SoC-2019-Ideas/#unify-ref-filter-formats-with-other=
----pretty-formats
->
-> Q1)
->
-> In pretty.h & pretty.c:
-> void get_commit_format(const char *arg, struct rev_info *);
-> This function Parses given arguments from "arg", checks it for
-> correctness and * fill struct rev_info.
->
-> In ref-filter.h & ref-filter.c:
-> int verify_ref_format(struct ref_format *format);
-> This function is Used to verify if the given format is correct and to
-> parse out the used atoms.
->
-> Now, the verify_ref_format function can be used inside
-> get_commit_format function, hence reusing logic.
-> Is this a correct example to work on, for this project ?
+On Mon, Mar 25, 2019 at 4:23 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+> @@ -1,3 +1,15 @@
+> +core.abbreviatedOptions::
+> +       Defaults to `true` which allows options to be abbreviated as
+> +       long as they aren't ambiguous, e.g. for linkgit:git-init[1]
+> +       the `--bare` option can be abbreviated as `--bar`, `--ba` or
+> +       even `--b` since no other option starts with those
+> +       prefixes. However, if such an option were added in the future
+> +       any use of these abbreviations would break.
+> ++
+> +By setting this to false (e.g. in scripts) you can defend against such
+> +future breakages by enforcing that options must always be fully
+> +provided.
 
-Hi! Yes, in my opinion your example looks like good starting point.
+I don't get why having a configuration option is better for defending
+scripts against this problem than a simple environment variable. It
+seems easier for the script prologue to contain:
 
-> If not, please point out an example so as to understand the problem
-> statement better.
->
-> Other than this I can't find any other example, for this project in
-> pretty.* and ref-filter.*
-> Perhaps some examples could be found in command specific files, right ?
+    GIT_TEST_ABBREVIATED_OPTIONS=false
+    export GIT_TEST_ABBREVIATED_OPTIONS
 
-Other parts of the project are about reusing other ref-filter logic.
-For example, we could try to reuse format_ref_array_item() from
-ref-filter.h. I haven't dig into pretty.c logic much, but I guess it
-is possible to translate "pretty" formatting commands to ref-filter
-ones. That will allow us to remove similar logic from pretty.c. Our
-final goal is to minimise code duplication and to have one unified
-interface to extract all needed data from object and to print it
-properly.
+than for it to muck about with git-config or use "git -c
+core.abbreviatedOptions=false ..." everywhere. The commit message
+doesn't do a good enough job of justifying the configuration option
+over the environment variable.
 
->
-> Q2)
-> About a recurring term 'atom' in ref-filter and pretty:
-> what is atom ? is it a piece of a whole document ? and what is meant
-> by used atoms ?
+Also, if this is now intended to be more general (aiding script
+writers) than just being for our test suite, then dropping "TEST" from
+the name seems warranted:
 
-I had the same question in my beginning. Please have a look at [1].
-Another good question - what is object. You could ensure that you
-understand this by reading [2].
-
->
-> Thanks.
-
-[1] https://git-scm.com/docs/git-for-each-ref#_field_names
-[2] https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
+    GIT_ABBREVIATED_OPTIONS
