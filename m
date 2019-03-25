@@ -2,194 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81FD320248
-	for <e@80x24.org>; Mon, 25 Mar 2019 20:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D96CE20248
+	for <e@80x24.org>; Mon, 25 Mar 2019 21:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729749AbfCYUng (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 16:43:36 -0400
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:43382 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbfCYUng (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 16:43:36 -0400
-Received: by mail-yw1-f73.google.com with SMTP id r8so15693934ywh.10
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 13:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=X2CKljOSxegj7v86sgBh2zIn4ktZLszsvZFiC+Yl6Os=;
-        b=l7TNOpyOFh63/wfUp+QUldSQV10RM/i5c0fI7vljcfR2Op0PiHgxMa6Ul3eaEoAJlw
-         +5zbQvViytcZyOd6y1iJT/QSrwtLN3huap66S2O/nmWbbW5L6b7WPLSzNi+0gJWzdvq/
-         /42XJPeE3t94dWY4VuLc/WvXqMu1GlH2LXnpd8Q0cG/AvNZqebN3XtEYFK6K4+aknYZJ
-         62Gn9oCilgljXBt5pa678b+4Jca8kfum2805wPGopgABlffKSEUB5SrRSwm/wX8eFILJ
-         Esmoe5+RJEOQ1uMzc2dOpT5rXGpgi1IwW/FyO9dJUh6o+cCP+ZYFEAJDfDoPFBDEbKlI
-         9gCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=X2CKljOSxegj7v86sgBh2zIn4ktZLszsvZFiC+Yl6Os=;
-        b=hyyQERa06jnNmcensaqlvVbC6R33YphTjtsOlo5nV48LO0YRGhe6p41XSb8PLyDDC5
-         53+v2FLfUiKK8ZZTEtxh6SbRhcVrWqSjEFxg+nU1zO7GHx+un+hl1FsOHuNvYGMCr2Et
-         pNpqOsKF8mAkFqvteXkVbkIRyQue5ag99BWTUyi1fnxrFCDzU6U/9rUYhhMOB8aNnyQt
-         a5N5wiP3Gev/Gqb3LQNR34yPTKC/iyRgJKMxo+QBJVvr30FFKQsBrbuT9UZ5dWJ7tC16
-         DfsKvbNcd98r1R9j1Y/KCyJXQVEVz2f0tyOCdofMqycC2xI5Pij0hCh8DXPR5TqGXFor
-         /Qgg==
-X-Gm-Message-State: APjAAAVz0BsySVJx0NnLiJBJXRMr112zD4VuAiI2aF97fUhattcgLy50
-        KM6Q5H1oLUZhNF9fEirztAsLtzcgWNub3+Oy4zT+esWwa7RpBNqbbTe0rl6ykpsHkvtrEE7L+iR
-        aAZAyabrchTRJ4mcXGAtuJtG9o28ggDm9+JoFHjl1x/PymMY+y0wkTzG/JstuoatlHq2apCIWUj
-        qH
-X-Google-Smtp-Source: APXvYqwlt4rdPzexQ3e8ap5jkwaGXeamWNo+r+YpWptsWbqv/U16ofD4RB0U5/4itgYMDkHYm8/SqMJiA89/Hy6eHleE
-X-Received: by 2002:a81:56d7:: with SMTP id k206mr3852092ywb.305.1553546615245;
- Mon, 25 Mar 2019 13:43:35 -0700 (PDT)
-Date:   Mon, 25 Mar 2019 13:43:23 -0700
-In-Reply-To: <cover.1553546216.git.jonathantanmy@google.com>
-Message-Id: <c4d2f409e246cce02ebfdb8c7110e3700d066ec8.1553546216.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1553546216.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
-Subject: [PATCH 2/2] fetch-pack: respect --no-update-shallow in v2
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730063AbfCYVI6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 17:08:58 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46447 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729283AbfCYVI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 17:08:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553548131;
+        bh=f4tZMPHIJ0XROY6CgRplA/TnAiYOeahqHVYlqsA+7to=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Y4ROepUKzEtapmw8zKJnra7oyPt90yCeD0k9UP6Og7IXYegVBh8d2SrUMOMRTjGii
+         5QCM9X6mIvkTwv1mmt7xw+WJNPiHKrkgrnjTEt09t2C4O/iPYpAuDOmP5ig7kDEvWN
+         80GfN+nJmjOyddQO8VeBJd/BCM4Q/dD9C2ZX57kg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqQzp-1gUoJ00Vfd-00e7bT; Mon, 25
+ Mar 2019 22:08:51 +0100
+Date:   Mon, 25 Mar 2019 22:08:35 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] check-docs: fix for setups where executables have
+ an extension
+In-Reply-To: <xmqqbm20ph45.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903252206201.41@tvgsbejvaqbjf.bet>
+References: <pull.162.git.gitgitgadget@gmail.com> <f06126c3a11119bf6e2a830bbac312f65582387f.1552478212.git.gitgitgadget@gmail.com> <20190322184347.GC12155@Taylors-MacBook-Pro.local> <nycvar.QRO.7.76.6.1903241055230.45@tvgsbejvaqbjf.bet>
+ <xmqqbm20ph45.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9sGdxClohcFUMrMSLMVHH79juq1c9p0SMwbTwDWELFxYOxF0Ig8
+ 5N0aN5Md6f66axThRRQQwBJqnitiLdxrR3+/9BvJrXeJ0ns4Q7lLZeIuo4KUBRQ3fwafojs
+ AeHU8nrl2thp1Zz6l352mS9jUfE1Gkx95Xn7L+ZXbpGtfVIz0xMkSONZc2R2R8bgYawEAod
+ QGdyeqkgH6htsoc5zFZpg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SnA92qFa3x4=:Jfce2FQz7Y9Ru4MEcpiq8g
+ iuB9m75ZR96Cxba7CtWqR9FBfgQ4FLlgMVTJmVdjriWi7b9Pt8qqatI0OOVi8QxZM3GPmcCKa
+ BzuAj/b1s+XwiCbo1BHCtToWLQZcK8AuLdwW/0iZLq/ge0xqce6OtbLZaMxRl0/jmPfG0Z35B
+ 61imf0UA6hidqwqA1QGRU1UnxbIFERFiexv7xcMido0kcjy9wFChbMO8Fd7KUEJGY8UKiABUf
+ fKKmSnYmrJzTgaOEYFcmNMupcq3Or+dJKxH2D+AtuRfB0POObkshBtGbAzEC4kKT/xYF9I+Yy
+ UHinrHF7wkhDsMPj1QTt6y+fBqxehy4zjRIrPLaq55xnooCQWfyEuMK4SYSpIXJ8KDB1PJP+t
+ /JnQSBS1HXbZuZI/pm7vdD/uqPmY5m4lMs0vhrYa3EiY+Z675e5b8wfq5tnJwL66Fto8uESpz
+ ku4E6sWZMawTui/nlDV3akJCa1Ei5IMBHv2Od/RAkOz97znIcj785Z3e3qW+oS0dnJX9xxKC5
+ qQ5aIixb+KKXgx85Wz9jmv+I1MCQM0rUJqscC2jA9xSFQqBV50k8cgce4bRbt9y9eyOBv63eI
+ Yk9+lhOpCWcVdcmxqE4+N5n1DZlyMVYp3koOodARLQYitgGBVIdT68rjk/gzO6oS0zKDHpUCr
+ rcW7xcyEsKBBwDF0u1hBAdpn+aNXuRbpl6zmJ2oh/N1LMJ77pXXUg/y/OBSkqOujzix3R37uu
+ pVrat+sy5cCZFgCEGwEk6yf+HIuVQm36MC5OVJ0RnMlRUaOTPzDKp0jgfA9y7AzorFXCdo1pV
+ pYmR6w60SI9F3/GtP8Tte1qzSSOfh2ssWqC0DBoKMq6hFLjUh7f2CeY8jKipTsW+YcYqHNxpG
+ bT7uPdIAt2PAGSmOWJHRIv1QkSq8F4y8oeqRrNTD7G88HKjvbn2FqV3hFb7BurzaEWcjoKn4X
+ D5ACKk0wj4g==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In protocol v0, when sending "shallow" lines, the server distinguishes
-between lines caused by the remote repo being shallow and lines caused
-by client-specified depth settings. Unless "--update-shallow" is
-specified, there is a difference in behavior: refs that reach the former
-"shallow" lines, but not the latter, are rejected. But in v2, the server
-does not, and the client treats all "shallow" lines like lines caused by
-client-specified depth settings.
+Hi Junio,
 
-Full restoration of v0 functionality is not possible without protocol
-change, but we can implement a heuristic: if we specify any depth
-setting, treat all "shallow" lines like lines caused by client-specified
-depth settings (that is, unaffected by "--no-update-shallow"), but
-otherwise, treat them like lines caused by the remote repo being shallow
-(that is, affected by "--no-update-shallow"). This restores most of v0
-behavior, except in the case where a client fetches from a shallow
-repository with depth settings.
+On Sun, 24 Mar 2019, Junio C Hamano wrote:
 
-This patch causes a test that previously failed with
-GIT_TEST_PROTOCOL_VERSION=2 to pass.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > Sharp eyes, and a *very* good point. The double space is actually requ=
+ired
+> > for this patch to work as intended. I added the following explanation =
+to
+> > the commit message:
+> >
+> >     Note that `$(ALL_COMMANDS)` starts with a space, and that is rathe=
+r
+> >     crucial for the `while read how cmd` loop: some of the input lines=
+ do
+> >     not actually have the form `<how> <cmd>`, but only `<cmd>`, theref=
+ore
+> >     `$cmd` evaluates to the empty string, and when we are looking for
+> >     `* $cmd *` in ` $(ALL_COMMANDS)`, we do find it because the latter
+> >     starts with a double space.
+> >     In other words, the double space helps us skip the lines that list
+> >     only a command.
+>
+> That sounds more like a bug in the existing set-up even before your
+> patch (in fact, these lines are probably from 2007 or so, long
+> before you started touching our top-level Makefile heavily).  If we
+> want to ignore lines with only one token, I'd rather see it
+> explicitly done, e.g.
+>
+> 	... generate data ... |
+> 	while read how cmd
+> 	do
+> 		# skip a line with a single token
+> 		case "$cmd" in "") continue ;; esac
+>
+> 		# is $cmd part of the known command list?
+> 		case " $(ALL_COMMANDS) " in
+> 		*" $cmd "*)	;; # skip
+> 		*)	echo ... warning ... ;;
+> 		esac
+> 	done
+>
+> instead of relying on "if $cmd is empty, then SP + $cmd + SP makes
+> double space, so let's have double space somewhere in the list of
+> known commands" cuteness.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- fetch-pack.c | 44 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 8 deletions(-)
+You are right, I should have root-caused it, it had a funny smell to it.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a0eb268dfc..672c79c91a 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1253,9 +1253,13 @@ static int process_acks(struct fetch_negotiator *negotiator,
- }
- 
- static void receive_shallow_info(struct fetch_pack_args *args,
--				 struct packet_reader *reader)
-+				 struct packet_reader *reader,
-+				 struct shallow_info *si)
- {
--	int line_received = 0;
-+	struct oid_array *shallows;
-+	int unshallow_received = 0;
-+
-+	shallows = xcalloc(1, sizeof(*shallows));
- 
- 	process_section_header(reader, "shallow-info", 0);
- 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-@@ -1265,8 +1269,7 @@ static void receive_shallow_info(struct fetch_pack_args *args,
- 		if (skip_prefix(reader->line, "shallow ", &arg)) {
- 			if (get_oid_hex(arg, &oid))
- 				die(_("invalid shallow line: %s"), reader->line);
--			register_shallow(the_repository, &oid);
--			line_received = 1;
-+			oid_array_append(shallows, &oid);
- 			continue;
- 		}
- 		if (skip_prefix(reader->line, "unshallow ", &arg)) {
-@@ -1279,7 +1282,7 @@ static void receive_shallow_info(struct fetch_pack_args *args,
- 				die(_("error in object: %s"), reader->line);
- 			if (unregister_shallow(&oid))
- 				die(_("no shallow found: %s"), reader->line);
--			line_received = 1;
-+			unshallow_received = 1;
- 			continue;
- 		}
- 		die(_("expected shallow/unshallow, got %s"), reader->line);
-@@ -1289,11 +1292,35 @@ static void receive_shallow_info(struct fetch_pack_args *args,
- 	    reader->status != PACKET_READ_DELIM)
- 		die(_("error processing shallow info: %d"), reader->status);
- 
--	if (line_received) {
-+	if (args->deepen || unshallow_received) {
-+		/*
-+		 * Treat these as shallow lines caused by our depth settings.
-+		 * In v0, these lines cannot cause refs to be rejected; do the
-+		 * same.
-+		 */
-+		int i;
-+
-+		for (i = 0; i < shallows->nr; i++)
-+			register_shallow(the_repository, &shallows->oid[i]);
-+		oid_array_clear(shallows);
-+		free(shallows);
- 		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
- 					NULL);
- 		args->deepen = 1;
-+	} else if (shallows->nr) {
-+		/*
-+		 * Treat these as shallow lines caused by the remote being
-+		 * shallow. In v0, remote refs that reach these objects are
-+		 * rejected (unless --update-shallow is set); do the same.
-+		 */
-+		prepare_shallow_info(si, shallows);
-+		if (si->nr_ours || si->nr_theirs)
-+			alternate_shallow_file =
-+				setup_temporary_shallow(si->shallow);
-+		else
-+			alternate_shallow_file = NULL;
- 	} else {
-+		free(shallows);
- 		alternate_shallow_file = NULL;
- 	}
- }
-@@ -1337,6 +1364,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 				    int fd[2],
- 				    const struct ref *orig_ref,
- 				    struct ref **sought, int nr_sought,
-+				    struct shallow_info *si,
- 				    char **pack_lockfile)
- {
- 	struct ref *ref = copy_ref_list(orig_ref);
-@@ -1411,7 +1439,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		case FETCH_GET_PACK:
- 			/* Check for shallow-info section */
- 			if (process_section_header(&reader, "shallow-info", 1))
--				receive_shallow_info(args, &reader);
-+				receive_shallow_info(args, &reader, si);
- 
- 			if (process_section_header(&reader, "wanted-refs", 1))
- 				receive_wanted_refs(&reader, sought, nr_sought);
-@@ -1653,7 +1681,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 			BUG("Protocol V2 does not provide shallows at this point in the fetch");
- 		memset(&si, 0, sizeof(si));
- 		ref_cpy = do_fetch_pack_v2(args, fd, ref, sought, nr_sought,
--					   pack_lockfile);
-+					   &si, pack_lockfile);
- 	} else {
- 		prepare_shallow_info(&si, shallow);
- 		ref_cpy = do_fetch_pack(args, fd, ref, sought, nr_sought,
--- 
-2.21.0.155.ge902e9bcae.dirty
+Turns out that we should not just skip those lines with a single token,
+but instead fix the bug that prevents the `how` variable to be set to
+`documented` in those cases, as had been intended all along.
 
+I fixed the commit, and accompanied it with a bug fix for this, plus for
+the fall-out bugs that had been hidden by this bug.
+
+Ciao,
+Dscho
