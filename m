@@ -2,196 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB89E20248
-	for <e@80x24.org>; Mon, 25 Mar 2019 16:07:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9E6120248
+	for <e@80x24.org>; Mon, 25 Mar 2019 16:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729297AbfCYQHm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 12:07:42 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:45864 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbfCYQHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 12:07:42 -0400
-Received: by mail-ua1-f65.google.com with SMTP id c13so1762473uao.12
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 09:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=V2xCGdwGN1CCoqUFUvJCXL17B83tKttqG4sAtntFonU=;
-        b=bzP2pVdjTehKtTCoNqTJKlJO++3pTtBrCXXPiA3llRuDku4DMllAhatAkOkJIVTuWT
-         CmdMwVTgXUhSEubKHPPSH8Rdn2KOfrmCfHSxiVwCvGWXnBfXNYT/mQEpLgH0Lp3Np1Qw
-         +QkZcGx23K11O+HkyBua/zOcbnY3IB0l2Agp1Ixly+vfsz7tcet2E4ACF3Rzp+PLmm9N
-         WRcPxYo4sHTRoDCkWOD4LTW4+XGKhBfbWNAZQwIfsiYafoX458MqgID/AYoi8LTmjcqm
-         qD6js12Ws60y6EHjIvtb2P/EoyEg6VOcSoEc/KhzMk4mCZdjtTlPlIP36lFB1Yq75Dmh
-         DMRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=V2xCGdwGN1CCoqUFUvJCXL17B83tKttqG4sAtntFonU=;
-        b=lT+T7I48O9IJDId1icWQwE2pnxQu+XaLh5lWs+ju0phpMGGq/9IELARyzjIdROYJB3
-         5jVenlmWqNP+xY+SYvjd78INkA8+dGRtJM+Q4T6LXO5jSiR/a4Qycnj94y2P7gO5Fao4
-         06pBlwoa47aL/5sJuA3HzoL5telm3y0jbLrPvD0lzBCliJgMDNXWphA2iRcmUm+ta3jn
-         iTXXoHXs/TBudoVYMHtwXPL83wh9mA6bAQIZwBmV7R79r6Dsm57loamT87lQIh7vOdqu
-         /fA6qnEcnUQ2eGYknWrh43BMc2Yi//D/4/YP85tpjCyvEJm61VXys/ELs4FZiYmEnY3N
-         D/sA==
-X-Gm-Message-State: APjAAAXJhteiwxJEYMvk6XQiqIvevlxfIvfhfxoUW2QpX4uYVi0wGG9d
-        OddWk6s9GirRd7LXcF3hn0oDNE8LDt1Y9zeGuCEzvg==
-X-Google-Smtp-Source: APXvYqxoNcnVPw/Qrxunvcx7rnfmYI0ecIhWSSpiBFlLhek+F/e2R1w0F0ijXlxn4x4toV4/AV/mfk2bqwM5yl4RVgE=
-X-Received: by 2002:a9f:24ee:: with SMTP id 101mr7778603uar.87.1553530060566;
- Mon, 25 Mar 2019 09:07:40 -0700 (PDT)
+        id S1729382AbfCYQ3f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Mar 2019 12:29:35 -0400
+Received: from siwi.pair.com ([209.68.5.199]:17567 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725788AbfCYQ3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Mar 2019 12:29:35 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 9EC463F4020;
+        Mon, 25 Mar 2019 12:29:33 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:9c07:30b3:cc1f:41dc] (unknown [IPv6:2001:4898:8010:2:853b:30b3:cc1f:41dc])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 54C823F4021;
+        Mon, 25 Mar 2019 12:29:33 -0400 (EDT)
+Subject: Re: [PATCH v3 1/1] trace2: write to directory targets
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+References: <cover.1552519463.git.steadmon@google.com>
+ <cover.1553202340.git.steadmon@google.com>
+ <ce5258610ffbc2e498ff33336c5c89b69468d4fd.1553202340.git.steadmon@google.com>
+ <87bm21coco.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <11e8e140-c2b6-8234-e6a3-affe69286cbf@jeffhostetler.com>
+Date:   Mon, 25 Mar 2019 12:29:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.0
 MIME-Version: 1.0
-References: <20190322093138.13765-1-pclouds@gmail.com> <20190322093138.13765-5-pclouds@gmail.com>
-In-Reply-To: <20190322093138.13765-5-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 25 Mar 2019 09:07:28 -0700
-Message-ID: <CABPp-BGcfEuMCcRvALWHO26frj3GRO_Wo620YgXwgriLSMggJA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] checkout: prevent losing staged changes with --merge
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87bm21coco.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 22, 2019 at 2:32 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> When --merge is specified, we may need to do a real merge (instead of
-> three-way tree unpacking), the steps are best seen in git-checkout.sh
-> version before it's removed:
->
->     # Match the index to the working tree, and do a three-way.
->     git diff-files --name-only | git update-index --remove --stdin &&
->     work=3D`git write-tree` &&
->     git read-tree $v --reset -u $new || exit
->
->     git merge-recursive $old -- $new $work
->
->     # Do not register the cleanly merged paths in the index yet.
->     # this is not a real merge before committing, but just carrying
->     # the working tree changes along.
->     unmerged=3D`git ls-files -u`
->     git read-tree $v --reset $new
->     case "$unmerged" in
->     '')     ;;
->     *)
->             (
->                     z40=3D0000000000000000000000000000000000000000
->                     echo "$unmerged" |
->                     sed -e 's/^[0-7]* [0-9a-f]* /'"0 $z40 /"
->                     echo "$unmerged"
->             ) | git update-index --index-info
->             ;;
->     esac
->
-> Notice the last 'read-tree --reset' step. We restore worktree back to
-> 'new' tree after worktree's messed up by merge-recursive. If there are
-> staged changes before this whole command sequence is executed, they
-> are lost because they are unlikely part of the 'new' tree to be
-> restored.
->
-> There is no easy way to fix this. Elijah may have something up his
-> sleeves [1], but until then, check if there are staged changes and
-> refuse to run and lose them. The user would need to do "git reset" to
-> continue in this case.
->
-> A note about the test update. 'checkout -m' in that test will fail
-> because a deletion is staged. This 'checkout -m' was previously needed
-> to verify quietness behavior of unpack-trees. But a different check
-> has been put in place in the last patch. We can safely drop
-> 'checkout -m' now.
->
-> [1] CABPp-BFoL_U=3DbzON4SEMaQSKU2TKwnOgNqjt5MUaOejTKGUJxw@mail.gmail.com
->
-> Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  builtin/checkout.c | 11 ++++++++++-
->  t/t7201-co.sh      | 10 +---------
->  2 files changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 22fb6c0cae..7cd01f62be 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -725,7 +725,10 @@ static int merge_working_tree(const struct checkout_=
-opts *opts,
->                          */
->                         struct tree *result;
->                         struct tree *work;
-> +                       struct tree *old_tree;
->                         struct merge_options o;
-> +                       struct strbuf sb =3D STRBUF_INIT;
-> +
->                         if (!opts->merge)
->                                 return 1;
->
-> @@ -735,6 +738,12 @@ static int merge_working_tree(const struct checkout_=
-opts *opts,
->                          */
->                         if (!old_branch_info->commit)
->                                 return 1;
-> +                       old_tree =3D get_commit_tree(old_branch_info->com=
-mit);
-> +
-> +                       if (repo_index_has_changes(the_repository, old_tr=
-ee, &sb))
-> +                               die(_("cannot continue with staged change=
-s in "
-> +                                     "the following files:\n%s"), sb.buf=
-);
-> +                       strbuf_release(&sb);
->
->                         /* Do more real merge */
->
-> @@ -772,7 +781,7 @@ static int merge_working_tree(const struct checkout_o=
-pts *opts,
->                         ret =3D merge_trees(&o,
->                                           get_commit_tree(new_branch_info=
-->commit),
->                                           work,
-> -                                         get_commit_tree(old_branch_info=
-->commit),
-> +                                         old_tree,
->                                           &result);
->                         if (ret < 0)
->                                 exit(128);
-> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-> index f165582019..5990299fc9 100755
-> --- a/t/t7201-co.sh
-> +++ b/t/t7201-co.sh
-> @@ -224,15 +224,7 @@ test_expect_success 'switch to another branch while =
-carrying a deletion' '
->         test_i18ngrep overwritten errs &&
->
->         test_must_fail git read-tree --quiet -m -u HEAD simple 2>errs &&
-> -       test_must_be_empty errs &&
-> -
-> -       git checkout --merge simple 2>errs &&
-> -       test_i18ngrep ! overwritten errs &&
-> -       git ls-files -u &&
-> -       test_must_fail git cat-file -t :0:two &&
-> -       test "$(git cat-file -t :1:two)" =3D blob &&
-> -       test "$(git cat-file -t :2:two)" =3D blob &&
-> -       test_must_fail git cat-file -t :3:two
-> +       test_must_be_empty errs
->  '
 
-Ah, I see you avoid the other bug in checkout by just removing its
-usage.  Seems fair enough; I can add a separate test to demonstrate
-that bug when I get some time to work on it.  Hopefully I'll find a
-quick fix too.
+
+On 3/23/2019 4:44 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Mar 21 2019, Josh Steadmon wrote:
+> 
+>> When the value of a trace2 environment variable is an absolute path
+>> referring to an existing directory, write output to files (one per
+>> process) underneath the given directory. Files will be named according
+>> to the final component of the trace2 SID, followed by a counter to avoid
+>> potential collisions.
+> 
+[...]
+> 
+> The reason I'm raising this is that it seems like sweeping an existing
+> issue under the rug. We document that the "sid" is "unique", and it's just:
+> 
+>      <nanotime / 1000 (i.e. *nix time in microseconds)>-<pid>
+> 
+> So that might be a lie, and in particular I can imagine that say if
+> every machine at Google is logging traces into some magic mounted FS
+> that there'll be collisions there.
+> 
+> But then let's *fix that*, because we're also e.g. going to have other
+> consumers of these traces using the sid's as primary keys in a logging
+> system.
+> 
+> I wonder if we should just make it a bit longer, human-readable, and
+> include a hash of the hostname:
+> 
+>      perl -MTime::HiRes=gettimeofday -MSys::Hostname -MDigest::SHA=sha1_hex -MPOSIX=strftime -wE '
+>          my ($t, $m) = gettimeofday;
+>          my $host_hex = substr sha1_hex(hostname()), 0, 8;
+>          my $htime = strftime("%Y%m%d%H%M%S", localtime);
+>          my $sid = sprintf("%s-%6d-%s-%s",
+>              $htime,
+>              $m,
+>              $host_hex,
+>              $$ & 0xFFFF,
+>          );
+>          say $sid;
+>      '
+> 
+> Which gets you a SID like:
+> 
+>      20190323213918-404788-c2f5b994-19027
+> 
+> I.e.:
+> 
+>      <YYYYMMDDHHMMSS>-<microsecond-offset>-<8 chars of sha1(hostname -f)>-<pid>
+> 
+> There's obviously ways to make that more compact, but in this case I
+> couldn't see a reason to, also using UTC would be a good idea.
+> 
+> All the trace2 tests pass if I fake that up. Jeff H: Do you have
+> anything that relies on the current format?
+I'm using the SID hierarchy to track parent and child processes,
+but the actual format of an individual SID-component is mostly a
+black box.
+
+I used the microseconds+pid as unique enough.  And events for new
+commands will mostly just append to an existing index, rather than
+being a random insert like you'd get for a GUID.
+
+I didn't use a GUID here because that seemed overkill and a little
+bit more expensive, but perhaps that was just premature optimization
+on my part.
+
+
+So, a new fixed width format like you suggested above would be fine.
+I wonder though, if we're moving towards a stronger SID, there's no
+reason to keep the PID in it.  Which makes me wonder about the value
+of sha(hostname) too.  Perhaps, just make it a GUID or some combination
+of the UTC date and a GUID ( <YYMMDDHHMMSS>-<microseconds>-<GUID> ) or
+something like that.
+
+If it helps, we can change how I'm reporting the SID between parent
+and child processes, so that the SID field in the JSON events is
+just the SID of the current process and have a peer field with the
+SID-hierarchy.  This latter field would only need to be added to the
+"version" or "start" event.  This might make post-processing a little
+easier.  Not sure it matters one way or the other.
+
+I'm open to suggestions here.
+
+Jeff
+
