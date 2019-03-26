@@ -2,141 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBDBA20248
-	for <e@80x24.org>; Tue, 26 Mar 2019 17:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEFF820248
+	for <e@80x24.org>; Tue, 26 Mar 2019 17:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732084AbfCZRhN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 13:37:13 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:48271 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfCZRhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 13:37:10 -0400
-Received: by mail-qt1-f202.google.com with SMTP id 54so14270945qtn.15
-        for <git@vger.kernel.org>; Tue, 26 Mar 2019 10:37:10 -0700 (PDT)
+        id S1732400AbfCZRu5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 13:50:57 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36669 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731571AbfCZRu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 13:50:56 -0400
+Received: by mail-pf1-f194.google.com with SMTP id p10so8422985pff.3
+        for <git@vger.kernel.org>; Tue, 26 Mar 2019 10:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=48gj/lQeQlJHfGUJjN7/R2nz7csIo0YBAt6cRzi2QxA=;
-        b=dktapl5xtOKRvQCFDFcPqix1PqO3FKI8LXDd1ytMqS0vM1DDfJs09vIWhbPBYnCsYx
-         vtdOUULSys6MRvntUvvYKK8hBntT5ARl6SkfG14l7Qgb8WDBrClN4Yww+zRsq+o55rlU
-         us0O0eqtI6RShXhx+auBsKep9yMBWItLzxjkxcpCaPFzb5XVAwR7KD/HmUf+g4pV2ZvE
-         eITzane9WIZHDfDtTonxfAwbmq6amCG+JOYPUVsy8zGC5wm4//jG5eo93HcHrnj4rpYK
-         e3VhrBK1/4kXtrv7mmQf6BUhiKL2XHi8Ns4lq0jyYT6ewQlB4SHW4WsBAPKdrNDudqll
-         KCbw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=vyuDMoJBVQh4ITINOQ5KfehhlvR1GFNl8FKe9AzEPac=;
+        b=oJE6zxgAu2o+LvgRXlgj6FLEPCCggZxp1zrcO5LQdAPE5sqYuhPKFksT2t4YfdQaAo
+         ZCykJyQvhT+DMcRH7W8J6+Sovvyq7AJmn5c2r6dQgST10GLwtSww6Li+4MSgSSPrI5uk
+         /9hShQpKRGbRYBNUXLGfNaG1Ytho7J9TUhhsNOsJenFvXO76Wyolwet8TCLNvDJMcuiq
+         mkO8JHnUMj7qrEYCk7sM0Atf71RlIwsSGZFzcZEuJ8q3rKMEDKmujE2Ns/87o7Iwp8Ym
+         tMqpcOfZa8m5SSiropLMYn+bHWU6SG0gcu7EHP4I3ca+xtzQUbmOK+q3/cvzB+n/Ep/r
+         Tq+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=48gj/lQeQlJHfGUJjN7/R2nz7csIo0YBAt6cRzi2QxA=;
-        b=C9ncgFPwsCoBYyOyzUGLxHVZAR+3NEXJhAMFMnckZoA12rnth0N2j7RzFMGw1P/k7E
-         WoWTSVgQTXXHiaDq6NCpmCLhusaczPHcWpDyvmbt8aRE56kHTFzsBRuzvavAwS+JzNCK
-         HHOPp+hJMoiRWxgK/Gq692KmNQxt3m8fpCDlPvWACblUjhgo1IXKnobIxsY0I5o8QK6L
-         iJBxfwrc/5+KUMdIeSos4kkNwOukpCDZ/PQvVC+JZOpurADx1b8pB/Bq6uqMOpxwQrTg
-         Z+aKlbn53SJDBHBLOvDIxbPPzhAODiVz4txUMrXd4VOzqR+rnK0leQ86PoHay/go8F7d
-         nFGg==
-X-Gm-Message-State: APjAAAUYSxnWC6ZZMOw9IZxzFUv7ItXbQOlEILRyWOw7yjbU7DbCgUOK
-        gWepgx2kpxo5vlyWFKPjToTR80SkmxjqbrQKg2Uz
-X-Google-Smtp-Source: APXvYqxlSgRPwn8Nd5MQouFoKR/r9ql3YH3dugHS8T8Hv1tVOqsHhoJAD8/vBhllxoUYcHTKaCqxQKxZkbhKktTVDq3I
-X-Received: by 2002:ac8:f86:: with SMTP id b6mr27186801qtk.330.1553621830066;
- Tue, 26 Mar 2019 10:37:10 -0700 (PDT)
-Date:   Tue, 26 Mar 2019 10:37:06 -0700
-In-Reply-To: <20190326052011.GB1933@sigill.intra.peff.net>
-Message-Id: <20190326173706.175638-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190326052011.GB1933@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
-Subject: Re: [PATCH 2/2] fetch-pack: respect --no-update-shallow in v2
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=vyuDMoJBVQh4ITINOQ5KfehhlvR1GFNl8FKe9AzEPac=;
+        b=U7ccojVW7Q6wJQa0etrJpD86IoPzgMYYZ1EAjaOObBuG4n9QbN/i8prDwlbdjlk24r
+         Gkx3CyPI/KhXa15/ia0XRvIsaDydbXqk8H20BJFvRGVvmXejvbfj1Stjogv/cirVJhyj
+         9rmtnwSru2tp6h9Lbin3CWBj4Bb2eXwFLneWN54Trsj1lTCi+E/WEx0Mn4Y8Cr5LkzSU
+         8oRx+Ie36eZPq/cxI8XHtLgp0lqYKnlV+bskw/dx9wkRjdZQmRXi0FTLal9y1c33A6tL
+         MwjWVsO3S1cuQz9U8b9O+3pAK1bCbfpX7HbzcX0GttgARyOm6pS3StmA3jo+uKP5NLvH
+         vBhw==
+X-Gm-Message-State: APjAAAXWPGf5T7d997hvPl3PKeTAlTWcWAFU2cyvScQF/9s4mBQ2H+S4
+        7gU+ewIwhhur2So+8VHPp07J1u5o
+X-Google-Smtp-Source: APXvYqzkZlYwOd1J+4dTPUudgaKS3C2sfPSyMm8pgw+wXOpHKM6SCVQcvlsu413ZE3RDVzGZDGSHLw==
+X-Received: by 2002:a65:6559:: with SMTP id a25mr27444024pgw.99.1553622655350;
+        Tue, 26 Mar 2019 10:50:55 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id f1sm30560869pgl.35.2019.03.26.10.50.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Mar 2019 10:50:54 -0700 (PDT)
+Date:   Tue, 26 Mar 2019 10:50:52 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] rebase: learn --keep-base
+Message-ID: <20190326175052.GA14922@dev-l>
+References: <cover.1553354374.git.liu.denton@gmail.com>
+ <87bm1xbt55.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bm1xbt55.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Mon, Mar 25, 2019 at 01:43:23PM -0700, Jonathan Tan wrote:
+Hi Ævar,
+
+On Tue, Mar 26, 2019 at 03:35:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
 > 
-> > In protocol v0, when sending "shallow" lines, the server distinguishes
-> > between lines caused by the remote repo being shallow and lines caused
-> > by client-specified depth settings. Unless "--update-shallow" is
-> > specified, there is a difference in behavior: refs that reach the former
-> > "shallow" lines, but not the latter, are rejected. But in v2, the server
-> > does not, and the client treats all "shallow" lines like lines caused by
-> > client-specified depth settings.
-> > 
-> > Full restoration of v0 functionality is not possible without protocol
-> > change,
+> On Sat, Mar 23 2019, Denton Liu wrote:
 > 
-> That's rather unfortunate. Is this because the v2 ls-refs phase is
-> separate, and that's when a v0 server would tell us about its shallows?
-> It looks like in v2 it comes in a separate "shallow-info" section.
-
-That's right. In v2, it comes in "shallow-info", which happens right
-before the server sends the packfile.
-
-> What would the protocol change look like?  Would we just need a
-> capability to instruct the server to mark the two different types of
-> shallow distinctly? Or do we actually need to convey the information
-> separately (e.g., in the ls-refs phase)?
+> > This series teaches rebase the --keep-base option.
+> >
+> > 'git rebase --keep-base <upstream>' is equivalent to
+> > 'git rebase --onto <upstream>... <upstream>' or
+> > 'git rebase --onto $(git merge-base <upstream> HEAD) <upstream>' .
+> >
+> > This seems to be a common case that people (including myself!) run into; I was
+> > able to find these StackOverflow posts about this use case:
+> >
+> > * https://stackoverflow.com/questions/53234798/can-i-rebase-on-a-branchs-fork-point-without-explicitly-specifying-the-parent
+> > * https://stackoverflow.com/questions/41529128/how-do-you-rebase-only-changes-between-two-branches-into-another-branch
+> > * https://stackoverflow.com/a/4207357
 > 
-> None of that matters for your patch here, but I'm just wondering what
-> the path forward is.
+> Like with another series of yours I think this would be best squashed
+> into one patch.
 
-Conveying it in the ls-refs would work.
+Will do.
 
-> > but we can implement a heuristic: if we specify any depth
-> > setting, treat all "shallow" lines like lines caused by client-specified
-> > depth settings (that is, unaffected by "--no-update-shallow"), but
-> > otherwise, treat them like lines caused by the remote repo being shallow
-> > (that is, affected by "--no-update-shallow"). This restores most of v0
-> > behavior, except in the case where a client fetches from a shallow
-> > repository with depth settings.
 > 
-> That seems like the best we can do without the protocol change. And even
-> if we adjust the protocol, we need some fallback behavior for existing
-> v2 servers, so this is worth doing.
-
-Thanks.
-
-> The patch looks reasonable to me, though I am far from an expert on the
-> shallow bits of the protocol. One thing I did notice:
+> Maybe I've misunderstood this but isn't this like --fork-point except
+> with just plain "git merge-base" instead of "git merge-base
+> --fork-point", but then again 2/3 shows multiple base aren't supported,
+> but merge-base supports that.
 > 
-> >  static void receive_shallow_info(struct fetch_pack_args *args,
-> > -				 struct packet_reader *reader)
-> > +				 struct packet_reader *reader,
-> > +				 struct shallow_info *si)
-> >  {
-> > -	int line_received = 0;
-> > +	struct oid_array *shallows;
-> > +	int unshallow_received = 0;
-> > +
-> > +	shallows = xcalloc(1, sizeof(*shallows));
-> 
-> This has to be heap-allocated, since we pass off ownership to "si"
-> (sometimes). But in the v0 case, it comes from the transport's
-> &data->shallows of a local variable in cmd_fetch_pack(), and we never
-> free it. So I think this oid_array ends up getting leaked.
 
-Thanks for the catch.
+--fork-point gets used to determine the _set of_ commits which are to be
+rebased, whereas --keep-base (and --onto) determine the base where that
+set of commits will be spliced. As a result, these two options cover
+orthogonal use-cases.
 
-> Perhaps it's worth passing down the shallows array we get from the
-> caller of fetch_pack(). Something like the patch below (I think it is
-> never NULL, which means in your patch 1 you can simplify the conditional
-> for the BUG).
+The reason why --keep-base doesn't support multiple bases for the same
+reason that --onto already disallows multiple bases. If we have multiple
+bases, how do we determine which one is the "true base" to use? It makes
+more sense to error out and let the user manually specify it.
 
-[snip patch]
+> I'd find something like the "DISCUSSION ON FORK-POINT MODE" in
+> git-merge-base helpful with examples of what we'd pick in the various
+> scenarios, and also if whatever commit this picks was something you
+> could have "git merge-base" spew out, so you could get what rebase would
+> do here from other tooling (which maybe is possible, but I'm confused by
+> the "no multiple bases"...).
 
-You're right that it is never NULL - I have removed that check. As for
-passing down the shallows array that we get from the caller of
-fetch_pack(), that would get confusing because we end up modifying the
-shallows array in some code paths, and the transport is sometimes reused
-(for example, when backfilling tags). I have instead made a
-shallows_scratch variable in fetch_pack(), and made it pass it down
-(like in the diff you provided).
+If I'm understanding you correctly then yes, this could be done with
+other tooling. See the 0/3 for equivalent commands.
+
+Perhaps I should update the rebase documentation to mention that
+--fork-point and --keep-base are orthogonal because it's unclear for
+you, it's probably unclear for other users as well.
+
+Thanks,
+
+Denton
