@@ -2,86 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 686B020248
-	for <e@80x24.org>; Tue, 26 Mar 2019 14:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E6B020248
+	for <e@80x24.org>; Tue, 26 Mar 2019 14:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731841AbfCZOic (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 10:38:32 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34795 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731839AbfCZOib (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 10:38:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553611105;
-        bh=76G/3dYo6ZdS4QlpDPERXVZRk9FCsaXt2xjsiP2b0x4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GbkKLJ2QJX6M8fkeERt8rStGqoN2B2/6UbN1Tcmw2E7LVf82cjHawWKzDRY7JLHm1
-         ykZbsfzjERbiGzw/v/bP8Wmj8gak2jdaPcH/u0dLrRZ5hrWUeKnIm9vFr/jqPzO2cY
-         cjID0+7glteFFmfvQX14XSJipy93ze6V9qkRXklo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.49.144.175] ([95.208.59.108]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhSfM-1ge56929RI-00maYn; Tue, 26
- Mar 2019 15:38:25 +0100
-Date:   Tue, 26 Mar 2019 15:38:09 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1731687AbfCZOjI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 10:39:08 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37868 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731451AbfCZOjH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 10:39:07 -0400
+Received: by mail-ed1-f65.google.com with SMTP id v21so10983609edq.4
+        for <git@vger.kernel.org>; Tue, 26 Mar 2019 07:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=+1cWYuQ3TQPTwZI5bmvKPuKjZ8a1gzHTLE8JKw2iuDc=;
+        b=H9cWD+k/n+Bw+T3lekphLvz5dIML6qmcURwx42ThTEh99MVvIHeKabxzVxQdQ6dMUA
+         SxGrirXBqgn5H2fmTFnQ8E7Q+ixtDxrv5S9t4Ob1htQ9vhhORsVGvlzhPT/sbjLmaPj/
+         wsRMRuUeXcY+7fJMCj7iC8iGuhU1/gRFtVha4QYQvc9TsLeWO1XricG11PzNyCJpFW9V
+         5xCST2bNM4BwMcMm8ZN+CiOg6f68RMMBlA+qEluB/9fRfsOWSNovqhyWkcC9xdMhtXYO
+         j3m8mb88Q2nV+2dsVpTmgyQ7ilwH7Ejp5PUZ6bkcAls54lJIihCVLL8TgNaSvQaMOzIA
+         C/tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=+1cWYuQ3TQPTwZI5bmvKPuKjZ8a1gzHTLE8JKw2iuDc=;
+        b=Zb6xxDux3ixBFj0z5sxrkdnmiQo31AiMMhdjE/sPr0/bdXg0ZbMtE0+IouG+2rgNwE
+         C1Cczs+2YB8ZZKXThEIAAuRHTDeaBZzgeCLnbgsr2V7qJd5QPlz0fjFfKx6UGvWQ9+VD
+         UMYKsLALmPXEy48yy9pkTy1PfYwzMqLSRRxzKbwZUA1j/YOxLpW24gt6Zf1hPcryx62z
+         eTFw4BezpIrjtZO42C0+r4mZrxA3NzF5qovw9VtlbFFLfpMW429aUrwUQGI6mVbnjtvv
+         v6qkeniqvuASMbNKba574RgmzN+VZLNNhG/FdipyG0u/5uh8ugu1mZcBw2NwLhtw126X
+         7YSQ==
+X-Gm-Message-State: APjAAAX3fmqv3RxU/Cs0zFCQc+/hxcATfCCtZGOAfzv5fqKL1k2SbqTO
+        yxK1gdDHHZcc6AAUc3tZRz0=
+X-Google-Smtp-Source: APXvYqziyCZoPbV+obTc+kSkGy8P82GT9r16IyWobAUFYNvCTAEPhrvs89Rhofs/8ODPGniKDFeobQ==
+X-Received: by 2002:a50:9271:: with SMTP id j46mr20603480eda.184.1553611146186;
+        Tue, 26 Mar 2019 07:39:06 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id m30sm6285743eda.84.2019.03.26.07.39.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Mar 2019 07:39:05 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] Fix make check-docs on Windows
-In-Reply-To: <pull.162.v2.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903261509080.41@tvgsbejvaqbjf.bet>
-References: <pull.162.git.gitgitgadget@gmail.com> <pull.162.v2.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/5] docs: do not document the `git remote-testgit` command
+References: <pull.162.git.gitgitgadget@gmail.com> <pull.162.v2.git.gitgitgadget@gmail.com> <810d2c5a94b40544652c97ffa644b29e0db8af82.1553550094.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <810d2c5a94b40544652c97ffa644b29e0db8af82.1553550094.git.gitgitgadget@gmail.com>
+Date:   Tue, 26 Mar 2019 15:39:03 +0100
+Message-ID: <87a7hhbszc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PIdrH5bIAWyEVDA4WhoiaLpPr+ESwU979+AmvAgg0VDEurD4pDa
- 0qMPhhqx+er6RCHFlB/L2PslruQcgbAb6cTM9wUNLaeXxX2IKOF11U36J9yuNHOHtpdCMDf
- CSIakTKb3mLr6bK3bXmyZfWGAsYtpDSsaHEjqigBvfgKlA6vWVqbFJ5AbqOLb7ZOspswuyv
- fo7B3PH98lscRkTPkCxag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E66iWdKoXG8=:arEZH6/0Y2XthBO2kRudjU
- CQdNL/uPLH8Fv7/tmaq6Bkp47PGHqOrg/DZCswrAnKi7EZ5TtJ8P52Fc6mW0gv2rbd5CVguzc
- Q+8UdbhbDUUlsHGe/3fSF6KdHbS+oTkRR2b/gN2DkmYMpXYBAqf0kjeMRxR4PYvvMkt+GVuU7
- BDwKuTMaom9Fa7BlBzZF6whMzLRABbY0VZ35TNUX99Va+3GD9nd98RJ06hb+kWJu1C7FvD47k
- TAgfvaCaC+1FVvB8RCeo27AeZ4cSyM9wjXm6Ug+cAY/Akd8Ny8vY/jS/THvLqve340h138JOx
- 5Sye9tsWWQVPWH3rUJCiNiNt9n5+7Kz+CBVvu5r1GFY8FE8V3Gtnl7ea+q5/VlyLoIHJNIQCf
- 0F8Bh27DVu3EvO3+SQHLk7ljKgLMg+1wxsqnwF2sbg9fGEIdIFdP6HBChkptXCd631k/ho+DH
- 7if9Hcrf6Vl26pstHAH/imDlPVMfWb0PeHVPrFoEUQXyy6P232pC5mjzRFiLy2h+wFQ+0Wt6d
- va5oJKbiZyoZ7s9rQLL0ASKXD+7cCIe80q3OEdr91ZqgYbMw47AQpslRQ4QegQD/zsk1fs8hL
- bK5ICTGvQaHfIkd4WRXfXY7KWACtjrFOO9kWLywNl91eUtPmU2EIT/+5pColTLysAXOXvXxzL
- yjIs6A6+wzHJxeQ8vUPB3OqpJeQXWnkWgVt+1rtBMJNF1FKsjxfgiy6kNqyyH2XqWTUpE9mk5
- s26fVma0E+lfk7I/Z02S4Es5gUzpmlTbhNyvCD9LmWjb9HM4RUDQSrgZ+VYQiXJgnWq+z5xUY
- S4aW1fmX/b4mIgBsODQp7eFZ3ffgDaw88VOEzTUGWHVTdh79J2xtp2czd2S+pGO/+//cIUNrZ
- mQg6WmSmMEwfFDaIfhB8huGKeIIlBqBYEm9WNuZppsSzerajmoX5iyeJE+eNiZ6UqkuIShmpV
- bm9QkY1iRjw==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Mon, 25 Mar 2019, Johannes Schindelin via GitGitGadget wrote:
+On Mon, Mar 25 2019, Johannes Schindelin via GitGitGadget wrote:
 
-> Johannes Schindelin (5):
->   docs: move gitremote-helpers into section 7
->   docs: do not document the `git remote-testgit` command
->   check-docs: really look at the documented commands again
->   check-docs: do not expect guide pages to correspond to commands
->   check-docs: fix for setups where executables have an extension
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Since 7ded055401 (build: do not install git-remote-testgit, 2013-06-07),
+> we do not install it. Therefore it makes no sense to document it,
+> either.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  Documentation/git-remote-testgit.txt | 30 ----------------------------
+>  Documentation/gitremote-helpers.txt  |  2 --
+>  2 files changed, 32 deletions(-)
+>  delete mode 100644 Documentation/git-remote-testgit.txt
+>
+> diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-remote-testgit.txt
+> deleted file mode 100644
+> index b45bfebba5..0000000000
+> --- a/Documentation/git-remote-testgit.txt
+> +++ /dev/null
+> @@ -1,30 +0,0 @@
+> -git-remote-testgit(1)
+> -=====================
+> -
+> -NAME
+> -----
+> -git-remote-testgit - Example remote-helper
+> -
+> -
+> -SYNOPSIS
+> ---------
+> -[verse]
+> -git clone testgit::<source-repo> [<destination>]
+> -
+> -DESCRIPTION
+> ------------
+> -
+> -This command is a simple remote-helper, that is used both as a
+> -testcase for the remote-helper functionality, and as an example to
+> -show remote-helper authors one possible implementation.
+> -
+> -The best way to learn more is to read the comments and source code in
+> -'git-remote-testgit'.
+> -
+> -SEE ALSO
+> ---------
+> -linkgit:gitremote-helpers[7]
+> -
+> -GIT
+> ----
+> -Part of the linkgit:git[1] suite
+> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+> index 34a3e60d08..2fc4007525 100644
+> --- a/Documentation/gitremote-helpers.txt
+> +++ b/Documentation/gitremote-helpers.txt
+> @@ -513,8 +513,6 @@ linkgit:git-remote-ext[1]
+>
+>  linkgit:git-remote-fd[1]
+>
+> -linkgit:git-remote-testgit[1]
+> -
+>  linkgit:git-fast-import[1]
 
-FWIW I am also working on a follow-up patch series [*1*] that resolves all
-issues reported by `make check-docs` on Windows, but I do not want to make
-this here patch series even bigger (from an initial single, relatively
-small patch).
-
-Ciao,
-Johannes
-
-Foontote *1*: Tracked here: https://github.com/gitgitgadget/git/pull/168
+I wonder if it should be moved into e.g. t/helper or somesuch at this
+point...
