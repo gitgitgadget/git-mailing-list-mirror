@@ -2,101 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66AB320248
-	for <e@80x24.org>; Tue, 26 Mar 2019 15:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2192020248
+	for <e@80x24.org>; Tue, 26 Mar 2019 16:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732075AbfCZP5y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 11:57:54 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:35189 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732041AbfCZP5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 11:57:53 -0400
-Received: by mail-it1-f196.google.com with SMTP id w15so20871985itc.0
-        for <git@vger.kernel.org>; Tue, 26 Mar 2019 08:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OO990CzO+iS4C97bid4b/IcaXIK+HjZG5PpfxN+Q+1Q=;
-        b=G1KU80fU5xGf4Hd81ZubYmJOnu4D1+7/70HRMDS0EAabZywvSr4kjCDe+7QlOQcom3
-         uPwaBAFdL9iho7IIS1aZ/h7jw4+B55qX6L5mXT15h7x53xtWfJlgFC3Q0sA849CDRjvq
-         ILc9Xd9WP5mZgqMywL2z0CuSz1MGu44vUG/MBfcDnFlyc6ONPkkhQPe08Y7O8FhUwGPi
-         vPmPXEEJeSTTtADvB0MeIwaz9wOc9NY7FjHQbJxuLFPNwJQ22iPz4UWi5x0EGuIpLoOC
-         j2GRJWjc+bb26P1DXRc9LVWRTuNRQCRh37zDZOjxx84GCs59Vjm4Ghp6Ik80wlpOTK5C
-         x8ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OO990CzO+iS4C97bid4b/IcaXIK+HjZG5PpfxN+Q+1Q=;
-        b=eDqBc3W6uRzo5lTgskql+c2iaQ63qn7aMAbFHDL/XidhOsVNqSbol9aZoE9Y8dp1jr
-         CWx1PKEbqcv395g612hfvEVGSUkQPoD0Z3y4VYYMI8rkedvSj5VkFjq2A85yzPPiQo04
-         +NaR6k8W3frNuyJk4/l98/+7Re6haDKSX2ZhsCnMaMWUtceNvhqmKB87AcRMHYifp2+5
-         7gAUBFGVGDoJzjGbH1nMngJGZVhvLCN44p5Nd1Og+2TD3l2pNEuW8QvYayfaLQ7cEJjz
-         E0f+3UTLS1J4LChEHxjZ/6Vmsa24bVGntFpAMr6W8YfEjQSscs/kP8+TYZ8sRKbYWDQN
-         Wb4A==
-X-Gm-Message-State: APjAAAVVO0Uu6pgdgx4ytTn/KLHvDHOfrG4rPc8Ilrz85UItj4qo7Xpi
-        94pDvNJmIKgfyJ822/h8ONKwY+mAPxon5a21sBEUgifY
-X-Google-Smtp-Source: APXvYqzWPacJnVt6wMG7ZcLpk3VjkEaiBRMM7GVq3TMetCs/BUqzhIkA7vhfQIJhuDaGpJXjQbcEQ8imTYnVbgjVmx0=
-X-Received: by 2002:a02:1c49:: with SMTP id c70mr16148580jac.92.1553615872853;
- Tue, 26 Mar 2019 08:57:52 -0700 (PDT)
+        id S1731748AbfCZQSZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 12:18:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36708 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729693AbfCZQSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 12:18:25 -0400
+Received: (qmail 15359 invoked by uid 109); 26 Mar 2019 16:18:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Mar 2019 16:18:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20444 invoked by uid 111); 26 Mar 2019 16:18:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Mar 2019 12:18:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Mar 2019 12:18:18 -0400
+Date:   Tue, 26 Mar 2019 12:18:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: [PATCH 0/3] tag: prevent recursive tags
+Message-ID: <20190326161818.GA29627@sigill.intra.peff.net>
+References: <20190325233723.GD23728@sigill.intra.peff.net>
+ <cover.1553586707.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
- <CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com>
- <CABPp-BEksf4SuD57YsUO3YKhU12CAwFTy6pA1tETFrHB1DAz9w@mail.gmail.com>
- <CACsJy8DPDEvNDeE5MpqcGZk9jRmT9g=ix+MOhkv+50J3Egef7A@mail.gmail.com> <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
-In-Reply-To: <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 26 Mar 2019 22:57:26 +0700
-Message-ID: <CACsJy8B0ZWHWGbaE8eDAO_+xzATZRkwJTBGLZnQkR7jSrTv9-g@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1553586707.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 26, 2019 at 10:48 PM Elijah Newren <newren@gmail.com> wrote:
-> > > > PS. git-reset shares the same behavior, but it's in a different boa=
-t,
-> > > > I think. Or maybe I should scrap/replace that one as well.
-> > >
-> > > reset has traditionally been the home of
-> > > how-to-clear-in-progress-state.  e.g. aborting a merge or cherry-pick
-> > > or revert was 'reset --hard' (or later 'reset --merge'), skipping a
-> > > become-empty cherry-pick or rebase is still 'reset', etc.  So it's no=
-t
-> > > that surprising to me that it clears out state.
-> > > ...
-> >
-> > Yeah but it was surprising to me that this is not even mentioned
-> > anywhere in git-reset.txt. You learn by examples basically, or by
-> > experience. But I digress.
->
-> Yeah that is slightly odd -- but that at least provides a small silver
-> lining: it makes it easier to decide to change it and move all the
-> mid-operation-state-clearing to other commands.  :-)
+On Tue, Mar 26, 2019 at 12:53:14AM -0700, Denton Liu wrote:
 
-Don't tempt me. Elsewhere in some discussion with =C3=86var I wrote it's
-better to add "git-ng" instead of going through the deprecation
-process to change behavior of current commands, which also means that
-you better design git-ng well because you can't just go "oops, i did
-it again" and add "git-nng". And I'm slowly realizing that 'switch'
-and 'restore' are just "git-ng checkout" in disguise. That already
-increases my stress level a bit.
---=20
-Duy
+> Peff said:
+> > Yeah, that's probably a good idea. Now we just need somebody to write
+> > the patch...
+> 
+> Hey would you look at that, somebody wrote the patch!
+
+The system works. :)
+
+> Earlier in the mailing list[1], Robert Dailey reported confusion over
+> some recursive tags.
+> 
+> Peff noted that he hasn't seen a tag-to-a-tag in the wild so in most
+> cases, it'd probably be a mistake on the part of a user. He also
+> suggested we error out on a recursive tag unless "--allow-recursive-tag"
+> is provided.
+> 
+> This patchset implements those suggestions.
+
+Thanks. I agree with all of the comments Ævar left, but other than that
+this looks pretty good to me.
+
+The only hesitation I'd have is that turning this case into a hard error
+(rather than just an informative warning) may be too sudden for some
+people's tastes. I'm on the fence myself; I'll be curious what Junio
+thinks when he gets back.
+
+-Peff
