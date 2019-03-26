@@ -2,157 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8D3C202BB
-	for <e@80x24.org>; Tue, 26 Mar 2019 06:29:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3E920248
+	for <e@80x24.org>; Tue, 26 Mar 2019 06:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726553AbfCZG3D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 02:29:03 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43913 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbfCZG3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 02:29:03 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k17so4898374wrx.10
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 23:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XFpvZpRcZooXA5/u/XQbLmpGPAopihRpkmjlGfPNpuQ=;
-        b=sOaDoA0gKX42qXw3cZb4gsLfmtgnVbllzMVlPd4WAul7QtqlzjTaLL2WJqLHhRQl23
-         yYWdDpSVulR1q3vZXXB7SrSFzcUbE/mNPF4b66AfTf+wHyzxX/hunTdi7pJ6Uhj9pDvA
-         87R+cIain6EpoviHNT2nr/7B+yv/fQ1vvebjFMCMAjiPxDbDO3Lu/dy7LmnvJ8yZkXVj
-         XwvIoIYY48CryykoARC3CgrIElJx0un62OqTfl88rFYOqUFQ1lBOTq++Z0UzxzydLWmT
-         Ut1t3WbFnRd5RBEDq5NLX0StmriLPHMjjoU4qH3jcrx1T/dJJhA20kqvsk9nLn/AwFyw
-         RMKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XFpvZpRcZooXA5/u/XQbLmpGPAopihRpkmjlGfPNpuQ=;
-        b=Uksf/2AypEeFFQBAMvVIiF5BbqeXrHWZxLXGdVVMazJPkvTb5Z3HthXfkMcFNoeH0S
-         i6C8EfrPPD5R1XQRExHSoDBozb7CeqKU58qG2oT1RVw5xiu2dHT8NylDOmIp5CKSUn0o
-         vUKuLI9ZA60WMHpTSDCYf/pEczT2UBFCHvb6juI0xAzVBzg0AftTKlbRu3vZSl4mV4fv
-         odGuimvpV65Y83C2cNBp9lqRTFioDWH0p6y2zwB02rZ/7vH+0a/oZ9n9RqpzldFcoPCl
-         +UNecHaOw+e3+PtWUMGfHbikfoshBVD4OPXpytvVL90aubK1150RhpIgKSSBxfgK9rNK
-         UHoA==
-X-Gm-Message-State: APjAAAW6viGxT6+3ggS54sVFq7qYJCQHZyHvj7Uzyc2LCenKfuQRMYmx
-        V44WxugOcZPTyebKAEODzl3IpEG6eBY=
-X-Google-Smtp-Source: APXvYqxdEPiN+PhKDBH7iQOFXiKh5/f2K6Aan8txtB5V8oYiPBG1bY/v0sP2NPi82s1ldF2e4SpHtg==
-X-Received: by 2002:adf:fd46:: with SMTP id h6mr18832921wrs.139.1553581740639;
-        Mon, 25 Mar 2019 23:29:00 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id u12sm16423176wrt.2.2019.03.25.23.28.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Mar 2019 23:28:59 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: allow for configuring option abbreviation
-References: <pull.167.git.gitgitgadget@gmail.com> <20190325202329.26033-2-avarab@gmail.com> <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com> <87o95ybmgf.fsf@evledraar.gmail.com> <CACsJy8Bk=Z8BaVeAhKzF4PWYLLG76cADooHKNw+Xy3EztZL1DQ@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CACsJy8Bk=Z8BaVeAhKzF4PWYLLG76cADooHKNw+Xy3EztZL1DQ@mail.gmail.com>
-Date:   Tue, 26 Mar 2019 07:28:58 +0100
-Message-ID: <87lg12b13p.fsf@evledraar.gmail.com>
+        id S1731050AbfCZGnQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 02:43:16 -0400
+Received: from home.mewburn.net ([121.127.199.9]:37724 "EHLO home.mewburn.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732438AbfCZGhw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 02:37:52 -0400
+X-Greylist: delayed 530 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Mar 2019 02:37:50 EDT
+Received: by home.mewburn.net (Postfix, from userid 1001)
+        id 4765461223; Tue, 26 Mar 2019 17:28:58 +1100 (AEDT)
+Date:   Tue, 26 Mar 2019 17:28:58 +1100
+From:   Luke Mewburn <luke@mewburn.net>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Luke Mewburn <luke@mewburn.net>
+Subject: Re: [PATCH 2/5] progress: return early when in the background
+Message-ID: <20190326062858.GE4753@mewburn.net>
+References: <20190325103844.26749-1-szeder.dev@gmail.com>
+ <20190325103844.26749-3-szeder.dev@gmail.com>
+ <8736nbcitc.fsf@evledraar.gmail.com>
+ <20190325113913.GL22459@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="SLDf9lqlvOQaIe6s"
+Content-Disposition: inline
+In-Reply-To: <20190325113913.GL22459@szeder.dev>
+User-Agent: Mutt/1.5.20 (2009-12-10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Mar 26 2019, Duy Nguyen wrote:
+--SLDf9lqlvOQaIe6s
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Tue, Mar 26, 2019 at 5:48 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->>
->> On Mon, Mar 25 2019, Eric Sunshine wrote:
->>
->> > On Mon, Mar 25, 2019 at 4:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> > <avarab@gmail.com> wrote:
->> >> diff --git a/Documentation/config/core.txt b/Documentation/config/cor=
-e.txt
->> >> @@ -1,3 +1,15 @@
->> >> +core.abbreviatedOptions::
->> >> +       Defaults to `true` which allows options to be abbreviated as
->> >> +       long as they aren't ambiguous, e.g. for linkgit:git-init[1]
->> >> +       the `--bare` option can be abbreviated as `--bar`, `--ba` or
->> >> +       even `--b` since no other option starts with those
->> >> +       prefixes. However, if such an option were added in the future
->> >> +       any use of these abbreviations would break.
->> >> ++
->> >> +By setting this to false (e.g. in scripts) you can defend against su=
-ch
->> >> +future breakages by enforcing that options must always be fully
->> >> +provided.
->> >
->> > I don't get why having a configuration option is better for defending
->> > scripts against this problem than a simple environment variable. It
->> > seems easier for the script prologue to contain:
->> >
->> >     GIT_TEST_ABBREVIATED_OPTIONS=3Dfalse
->> >     export GIT_TEST_ABBREVIATED_OPTIONS
->> >
->> > than for it to muck about with git-config or use "git -c
->> > core.abbreviatedOptions=3Dfalse ..." everywhere. The commit message
->> > doesn't do a good enough job of justifying the configuration option
->> > over the environment variable.
->> >
->> > Also, if this is now intended to be more general (aiding script
->> > writers) than just being for our test suite, then dropping "TEST" from
->> > the name seems warranted:
->> >
->> >     GIT_ABBREVIATED_OPTIONS
->>
->> If we want to make something user-configurable we tend to add config
->> variables. The GIT_TEST_* variables are only intended for our own test
->> suite, see t/README.
->>
->> I don't mind documenting this, but it's a well-established pattern, so
->> if we're going to describe how this works/why use one or the other it
->> should probably be some other series to t/README and/or git-config.txt
->>
->> We traditionally *only* expose this sort of thing to users via config,
->> and not via env variables.
+On 19-03-25 12:39, SZEDER G=E1bor wrote:
+  | On Mon, Mar 25, 2019 at 12:08:47PM +0100, =C6var Arnfj=F6r=F0 Bjarmason=
+ wrote:
+  | >=20
+  | > On Mon, Mar 25 2019, SZEDER G=E1bor wrote:
+  | >=20
+  | > > When a git process runs in the background, it doesn't display
+  | > > progress, only the final "done" line [1].  The condition to check t=
+hat
+  | > > are a bit too deep in the display() function, and thus it calculates
+  | > > the progress percentage even when no progress will be displayed
+  | > > anyway.
+  | > >
+  | > > Restructure the display() function to return early when we are in t=
+he
+  | > > background, which prevents the unnecessary progress percentae
+  | > > calculation, and make the function look a bit better by losing one
+  | > > level of indentation.
+  | > >
+  | > > [1] 85cb8906f0 (progress: no progress in background, 2015-04-13)
+  | >=20
+  | > CC-ing the author of that patch.
+  | >=20
+  | > > Signed-off-by: SZEDER G=E1bor <szeder.dev@gmail.com>
+  | > > ---
+  | > >  progress.c | 26 ++++++++++++++------------
+  | > >  1 file changed, 14 insertions(+), 12 deletions(-)
+  | > >
+  | > > diff --git a/progress.c b/progress.c
+  | > > index 02a20e7d58..b57c0dae16 100644
+  | > > --- a/progress.c
+  | > > +++ b/progress.c
+  | > > @@ -86,28 +86,30 @@ static void display(struct progress *progress, =
+uint64_t n, const char *done)
+  | > >  		return;
+  | > >
+  | > >  	progress->last_value =3D n;
+  | > > +
+  | > > +	if (!is_foreground_fd(fileno(stderr)) && !done) {
+  | > > +		progress_update =3D 0;
+  | > > +		return;
+  | > > +	}
+  | > > +
+  | > >  	tp =3D (progress->throughput) ? progress->throughput->display.buf=
+ : "";
+  | > >  	eol =3D done ? done : "   \r";
+  | > >  	if (progress->total) {
+  | > >  		unsigned percent =3D n * 100 / progress->total;
+  | > >  		if (percent !=3D progress->last_percent || progress_update) {
+  | > >  			progress->last_percent =3D percent;
+  | > > -			if (is_foreground_fd(fileno(stderr)) || done) {
+  | > > -				fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+  | > > -					progress->title, percent,
+  | > > -					(uintmax_t)n, (uintmax_t)progress->total,
+  | > > -					tp, eol);
+  | > > -				fflush(stderr);
+  | > > -			}
+  | > > +			fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
+  | > > +				progress->title, percent,
+  | > > +				(uintmax_t)n, (uintmax_t)progress->total,
+  | > > +				tp, eol);
+  | > > +			fflush(stderr);
+  | > >  			progress_update =3D 0;
+  | > >  			return;
+  | > >  		}
+  | > >  	} else if (progress_update) {
+  | > > -		if (is_foreground_fd(fileno(stderr)) || done) {
+  | > > -			fprintf(stderr, "%s: %"PRIuMAX"%s%s",
+  | > > -				progress->title, (uintmax_t)n, tp, eol);
+  | > > -			fflush(stderr);
+  | > > -		}
+  | > > +		fprintf(stderr, "%s: %"PRIuMAX"%s%s",
+  | > > +			progress->title, (uintmax_t)n, tp, eol);
+  | > > +		fflush(stderr);
+  | > >  		progress_update =3D 0;
+  | > >  		return;
+  | > >  	}
+  | >=20
+  | > This patch looks good, just notes for potential follow-up:
+  | >=20
+  | >  * Is the "is_foreground_fd(fileno(stderr))" case worth moving into
+  | >    start_progress_delay() & setting a variable? It's a few C lib call=
+s &
+  | >    potential syscall (getpid(...)).
+  |=20
+  | It depends on whether you consider the following case worth caring
+  | about:
+  |=20
+  |   $ git long-cmd
+  |   <shows progress>
+  |   Ctrl-Z!
+  |   $ bg
+  |   <silent>
+  |   $ fg
+  |   <shows progress>
+  |=20
+  | Or:
+  |=20
+  |   $ git long-cmd &
+  |   <silent>
+  |   $ fg
+  |   <shows progress>
+  |=20
+  | By moving the is_foreground_fd() check to start_progress_delay() and
+  | caching its result, in the first case we would print progress even
+  | after the process is sent to the background, while in the second we
+  | wouldn't print progress even after the initially backgrounded process
+  | is brought to the foreground.
+  |=20
+  | I think the current behavior makes sense (though I'm not quite sure
+  | about printing the final "done" line, as I think I would be annoyed if
+  | it were printed from the background process while I was typing a
+  | longer command... but I don't run git commands in the background in
+  | the first place)
 
-FWIW I replied so quickly to this with patches since I had something WIP
-to do this, it's annoyed me as a user in the past that I couldn't turn
-this off, IIRC some upgrade of git broke my "bad" muscle memory /
-scripts.
+You've described the current behaviour as I intended it
+in the original patch. I.e,:
+- Display progress if foreground.
+- Suppress output if background.
+- Check the foreground/background state each update in case it changed.
 
-> If this is mostly useful for scripts then I agree with Eric an
-> environment variable is the way to go. A configuration variable does
-> not make it more convenient.
+I based that on other tools that also dynamically change their
+output/progress behaviour whether in the foreground or background.
 
-I think both of you might be assuming that when you want to configure
-something it's as easy to tweak every run time environment (set an env
-var) as it is to set a global config. See the trace2.* config discussion
-for similar use-cases.
+Regarding the final "done" line; I think that's a matter of
+personal preference. I'm not too fussed if that was changed
+so that "done" isn't printed if in the background.
 
-> And no we don't only export via config. There are a bunch of public
-> env variables in git.txt. "core" namespace is already very crowded. If
-> this one is only rarely used, I'd rather not add a new config
-> variable.
 
-I don't see how a new "abbreviatedOptions" is plausibly going to crowd
-out anything else, sounds pretty unambiguous to me.
+  |=20
+  | >  * Is that "|| done" part in the "progress_update" case something that
+  | >    needs to happen? I.e. can we entirely skip the "setup signal handl=
+er"
+  | >    part in start_progress_delay() if we detect that we're not in the
+  | >    foreground, and then rely on the stop_progress() call to print the
+  | >    "done"?
+  |=20
+  | This, too, depends on how (or whether at all) we want to handle the
+  | user sending the process to the background and bringing it back.
+  |=20
+  | >    Although we set "progress_update =3D 1" in stop_progress_msg(), so=
+ it's
+  | >    not *just* the signal handler but also us "faking" it, and we'd st=
+ill
+  | >    need to stash away "progress->last_value =3D n" in display() in th=
+at
+  | >    backgrounding case.
+  | >=20
+  | >    So maybe it's as simple as it's going to get.
+  |=20
 
-By my count out of the the existing GIT_* variables in git.txt around
-1/3 are already configurable via config, another 1/3 (all the GIT_TRACE
-stuff) is something we've wanted to have configurable in the past (but
-nobody's gotten around to writing patches for).
 
-I think it's fair to say that when we normally add user-configurable
-stuff we do it as config, not as new env vars.
+
+regards,
+Luke.
+
+--SLDf9lqlvOQaIe6s
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iEYEARECAAYFAlyZxqoACgkQpBhtmn8zJHJd5gCgudEKF9dRiqKc9WUQxOzE/UgO
+uxcAn0JibH7uRvaSJBP3Y/xe5GowMm9k
+=gB0b
+-----END PGP SIGNATURE-----
+
+--SLDf9lqlvOQaIe6s--
