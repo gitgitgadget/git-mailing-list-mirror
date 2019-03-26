@@ -2,167 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B1CA20248
-	for <e@80x24.org>; Tue, 26 Mar 2019 18:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 523D620248
+	for <e@80x24.org>; Tue, 26 Mar 2019 19:31:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732601AbfCZSnr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 14:43:47 -0400
-Received: from mail-eopbgr820118.outbound.protection.outlook.com ([40.107.82.118]:41292
-        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1732441AbfCZSnr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 14:43:47 -0400
+        id S1730449AbfCZTb2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 15:31:28 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:48365 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727492AbfCZTb2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 15:31:28 -0400
+Received: by mail-qt1-f202.google.com with SMTP id 54so14608642qtn.15
+        for <git@vger.kernel.org>; Tue, 26 Mar 2019 12:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JJbXUDEIm3p7tP0oT8cg/s1YEIJsGwfL1L7NLlEVu6A=;
- b=MFT2qB2Zg8JIvNCDZeMULpkYHdZw5t2Ob863SjDuy9NkMeaZWnnN7kDr/FwWy0wFK9M+od4TGPVrdXtTdeCeJBJfPosCJ7ehU4L2Y/zDe23VWgbShAhC3L0u1+sGLRg0FazyCC2p6wwHI9MPdMzXGWU9x4C2pV0kNpEfKBoIl/I=
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB5947.namprd08.prod.outlook.com (20.179.69.91) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1750.15; Tue, 26 Mar 2019 18:43:43 +0000
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1730.019; Tue, 26 Mar 2019
- 18:43:43 +0000
-From:   "Mazo, Andrey" <amazo@checkvideo.com>
-To:     "luke@diamand.org" <luke@diamand.org>
-CC:     "ahippo@yandex.com" <ahippo@yandex.com>,
-        "Mazo, Andrey" <amazo@checkvideo.com>,
-        "aoakley@roku.com" <aoakley@roku.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "gvanburgh@bloomberg.net" <gvanburgh@bloomberg.net>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
-        "merlorom@yahoo.fr" <merlorom@yahoo.fr>,
-        "miguel.torroja@gmail.com" <miguel.torroja@gmail.com>,
-        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
-        "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
-        "vitor.hda@gmail.com" <vitor.hda@gmail.com>
-Subject: Re: [RFC PATCH 1/2] git-p4: introduce alien branch mappings
-Thread-Topic: [RFC PATCH 1/2] git-p4: introduce alien branch mappings
-Thread-Index: AQHU4OkP5k6YadBSpkG8wakiVMZ6MKYY7keAgAVXgIA=
-Date:   Tue, 26 Mar 2019 18:43:43 +0000
-Message-ID: <20190326184327.28335-1-amazo@checkvideo.com>
-References: <CAE5ih797T4vtuFsDhXuNGX+A89ZQ26GOae9Dt4PVaCwJ8C_GVg@mail.gmail.com>
-In-Reply-To: <CAE5ih797T4vtuFsDhXuNGX+A89ZQ26GOae9Dt4PVaCwJ8C_GVg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MN2PR13CA0027.namprd13.prod.outlook.com
- (2603:10b6:208:160::40) To DM6PR08MB4956.namprd08.prod.outlook.com
- (2603:10b6:5:4b::25)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=amazo@checkvideo.com; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-mailer: git-send-email 2.19.2
-x-originating-ip: [70.163.25.109]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ee878838-94e3-4e93-9a17-08d6b21af895
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600127)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB5947;
-x-ms-traffictypediagnostic: DM6PR08MB5947:
-x-microsoft-antispam-prvs: <DM6PR08MB5947EF0C40DDDC2AA3C3D91EDA5F0@DM6PR08MB5947.namprd08.prod.outlook.com>
-x-forefront-prvs: 09888BC01D
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(396003)(136003)(376002)(366004)(39860400002)(199004)(189003)(54094003)(7416002)(6486002)(102836004)(25786009)(71190400001)(71200400001)(2351001)(186003)(99286004)(54906003)(5640700003)(105586002)(106356001)(6916009)(2906002)(36756003)(386003)(4326008)(6506007)(229853002)(256004)(486006)(81156014)(26005)(52116002)(81166006)(1730700003)(2616005)(305945005)(7736002)(6246003)(76176011)(97736004)(68736007)(14454004)(8676002)(66066001)(86362001)(6512007)(1076003)(50226002)(6116002)(3846002)(53936002)(316002)(19627235002)(446003)(11346002)(476003)(478600001)(6436002)(5660300002)(2501003)(8936002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB5947;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: checkvideo.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: bHTFrpL8btxauC/7f9WBk69ZaPnACtFjYlrMWPvt6UHwHoAmE7QqH0/GDUAiGucKFCi0eVhJ868SYasaNZryZueDy+fvJRo2gOHLlTxLS5xLoleQFZEup8IuVfLoa1MLruZIAmBishgu39b568UjXsW12oukmR5xyl8cGiJSOMy9vJscxqNEI4oeHKMlSM9bGpjE6ZinlFMGZzMxXV9mkzHrL2E7s125pJsFb7JdApIFxud3T631rT8ZiTCGo2d3gjc884pUqBnTVm8CYiRnO/g9t5/JjaupQYswElvxJG1IhEAyAg7QigFrtuOQFU39YcCQ6gVSleorAb90hro2jEjTHGWSxgX4hoctZ3BKp/kR8KzPgiJTLN8AsGub26PVvmxEQ/404MOedRKELxwC9pA78h4feGaJ84HGMcH8vgg=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee878838-94e3-4e93-9a17-08d6b21af895
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Mar 2019 18:43:43.4885
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB5947
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=OjQsOQLBuHS38JcJu9RCZdDDnnjQyQ9aheRyQ8hBYOc=;
+        b=q+skm+m8Z60ggteOPk4wMYk2W3lC6EbCL41uiiWzHLQ1azeIudzumMeMcCK6SMVFgp
+         oYuDZ4hS88hfLTOk+A/UXqSEMiXQgOSx0f4RVJNb4iQjuZFl0q5owPApVftCfLnz0bgN
+         X3VovXEqZzZiL0Wt7jRHUNcXAzBsnva35bDIaqjiCVX2qhXkI4mzMNmGupaDn2VYWxct
+         Esf1tH0aKIL3MNJANRYObXQX0JoqW4HTm94GeeSOLJyA12aSnSghW9bMIf2Yj+wV7v2I
+         hRTLWqMZ+4GXaPlHsBee3ITfGBOYVctDlBip6TiQ9WOl0BF/pv0ucFj8hD+9vLeMO085
+         VdHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=OjQsOQLBuHS38JcJu9RCZdDDnnjQyQ9aheRyQ8hBYOc=;
+        b=R6DL50uYcKkHf1OXBsdzjC8czfklLGSwm6b1Gf8Iq3X6pjXNamMATUKlcG6sYTpx6M
+         LbGD7jllXWWdx886KJD6QEMz9yg/Iv1m37qOwZb0Yk8zA7uFNl8SYh1SIHx9NQ8VW43t
+         3YLNsihXHScYfY/s1i5z8o88lvfyK7QNUwGtpOGdVekLkoxfH7GlB6rjjn92CkL72oho
+         rJWejRTIm3JCi2jbVYg0xf43jmdalVkwJUMAkUH2UELyIZLWn7Ig2J13FkakBZr4+iwO
+         gn1tEIE6k75gJTh+ttMgC/6IVHRy4CmTdieDcCSlLiSAbZaQMbp1B7V6Ds8Qyg/A8Yft
+         pRDg==
+X-Gm-Message-State: APjAAAVVNcv95ljnQfk6+yunsyDcDHt/g7OrnelKw8fa0Je1fqXM4sm3
+        N1w9oywEyP08UhdnNWp5MumgBU6LLsMVcoHNDWycbaMkQudGI10IKKnYokSSnpcs2NeASoFPjxh
+        DK9hWaV6swzibSPuB2Y7E0yihlAiipuJwzWyQwOOPmeLKVTloKJ8OS5EksTMv5wLbb2Xf+rbJVY
+        It
+X-Google-Smtp-Source: APXvYqwMvNECnpwssG4tE5SpylPVp2AwG3sZwTNC7ZMZXV+5koZIxc9vT77Mu2OxUkJNkcZoA9L64yHcCXY1Kt2jgldW
+X-Received: by 2002:a37:790:: with SMTP id 138mr25706818qkh.271.1553628687575;
+ Tue, 26 Mar 2019 12:31:27 -0700 (PDT)
+Date:   Tue, 26 Mar 2019 12:31:19 -0700
+In-Reply-To: <cover.1553546216.git.jonathantanmy@google.com>
+Message-Id: <cover.1553628494.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1553546216.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
+Subject: [PATCH v3 0/2] Last big GIT_TEST_PROTOCOL_VERSION=2 fix, hopefully
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> Labels in Perforce are not global, but can be placed on a particular vie=
-w/subdirectory.
->> This might pose difficulties when importing only parts of Perforce depot=
- into a git repository.
->> For example:
->>  1. Depot layout is as follows:
->>     //depot/metaproject/branch1/subprojectA/...
->>     //depot/metaproject/branch1/subprojectB/...
->>     //depot/metaproject/branch2/subprojectA/...
->>     //depot/metaproject/branch2/subprojectB/...
->>  2. Labels are placed as follows:
->>     * label 1A on //depot/metaproject/branch1/subprojectA/...
->>     * label 1B on //depot/metaproject/branch1/subprojectB/...
->>     * label 2A on //depot/metaproject/branch2/subprojectA/...
->>     * label 2B on //depot/metaproject/branch2/subprojectB/...
->>  3. The goal is to import
->>     subprojectA into subprojectA.git and
->>     subprojectB into subprojectB.git
->>     preserving all the branches and labels.
->>  4. Importing subprojectA.
->>     Label 1A is imported fine because it's placed on certain commit on b=
-ranch1.
->>     However, label 1B is not imported because it's placed on a commit in=
- another subproject:
->>     git-p4 says: "importing label 1B: could not find git commit for chan=
-gelist ..."
->>     The same is with label 2A, which is imported; and 2B, which is not.
->>
->> Currently, there is no easy way (that I'm aware of) to tell git-p4 to
->> import an empty commit into a desired branch,
->> so that a label placed on that changelist could be imported as well,
->=20
-> So there is a file in subprojectA/foo.c@41.
-> And label 1B is against //depot/metaproject/branch1/subprojectB/bar.c@42.
->=20
-> And I suppose in Perforce you could still checkout subprojectA at
-> change 42 and you would get change 41.
->=20
-> But with the way git-p4 works, the label just gets discarded.
+Peff says in [1]:
 
-Yes, exactly.
+> But isn't this line:
+> 
+> >     + 	if (version == protocol_v2) {
+> >     +-		if (shallow && shallow->nr)
+> >     ++		if (shallow->nr)
+> >       			BUG("Protocol V2 does not provide shallows at this point in the fetch");
+> 
+> added by patch 1? It's added with "shallow &&" in patch 1, and then
+> modified in patch 2.
+> 
+> I think the "it's never NULL" property is true even before this series,
+> right?
 
-> You want to be able to checkout the subjectA with a tag called 1B and
-> get the file contents as of 42.
->=20
-> I wonder if it would be easier to teach the code in importP4Labels to
-> go searching harder for the next lower changelist number?
->=20
-> Where it currently says "could not find git commit"... could it do
-> something like "p4 changes -m1 //depot/path/...@LABEL" and use that
-> instead?
->=20
-> I'm not sure if that would work but it would mean you wouldn't need
-> any extra configuration to maintain.
+Ah...yes you're right. I've updated it here.
 
-Yeah, that's a great idea!
-I think, it should work pretty well in simpler cases for sure.
-Initially, I was thinking, that I needed an explicit configuration option
-to choose the proper branch/subproject in a more complicated case,
-but let me give it a try to your idea -- hopefully it just works.
+Thanks for your review.
 
-Some new option like git-p4.allowInexactLabels to enable this behavior?
-Don't think it should be enabled by default unless git-p4.labelImportRegexp=
- is set, right?
+[1] https://public-inbox.org/git/20190326182047.GB24105@sigill.intra.peff.net/
 
-> But perhaps I have misunderstood what you're trying to do here!
-> Perhaps a failing test case might help explain it better?
+Jonathan Tan (2):
+  fetch-pack: call prepare_shallow_info only if v0
+  fetch-pack: respect --no-update-shallow in v2
 
-No, I think, you got it right!
-Thank you for the great suggestion!
+ commit.h     |  4 ++++
+ fetch-pack.c | 51 +++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
-Yeah, let me see if I can get a simple but representative test case.
+Range-diff against v2:
+1:  d2eb101709 ! 1:  64f44a18ad fetch-pack: call prepare_shallow_info only if v0
+    @@ -38,7 +38,7 @@
+     -	prepare_shallow_info(&si, shallow);
+     -	if (version == protocol_v2)
+     +	if (version == protocol_v2) {
+    -+		if (shallow && shallow->nr)
+    ++		if (shallow->nr)
+     +			BUG("Protocol V2 does not provide shallows at this point in the fetch");
+     +		memset(&si, 0, sizeof(si));
+      		ref_cpy = do_fetch_pack_v2(args, fd, ref, sought, nr_sought,
+2:  943b1cbc61 ! 2:  3f65698610 fetch-pack: respect --no-update-shallow in v2
+    @@ -120,11 +120,6 @@
+      	fetch_pack_setup();
+      	if (nr_sought)
+     @@
+    - 		die(_("no matching remote head"));
+    - 	}
+    - 	if (version == protocol_v2) {
+    --		if (shallow && shallow->nr)
+    -+		if (shallow->nr)
+      			BUG("Protocol V2 does not provide shallows at this point in the fetch");
+      		memset(&si, 0, sizeof(si));
+      		ref_cpy = do_fetch_pack_v2(args, fd, ref, sought, nr_sought,
+-- 
+2.21.0.155.ge902e9bcae.dirty
 
->=20
-> Thanks
-> Luke
