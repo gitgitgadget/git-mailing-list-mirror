@@ -2,85 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C649A20248
-	for <e@80x24.org>; Tue, 26 Mar 2019 13:44:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98F2620248
+	for <e@80x24.org>; Tue, 26 Mar 2019 14:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfCZNoI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 09:44:08 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37323 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726140AbfCZNoI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 09:44:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553607841;
-        bh=Jw8Uout5siM1xW5Vr+RS9lFxZLxXINEbOXHmXWeQCz8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Udp2AlcUYDOlDmKDRj8LjLonn4QTlhBxO+w2M+K4h+bQkUT5/bjMEng9lOZGz3f50
-         rFf/xGPjDC/6cCHjqcjiqDcWxbBgqcYW3ci9ft6ETiA5y+0TSujFwweMavYoOVZcOq
-         hd9f2H5WhCPLP1TsgFUQzJtCkNHabmbJHz980/8I=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.49.144.175] ([95.208.59.4]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lt1S6-1gxOY70bow-012VRe; Tue, 26
- Mar 2019 14:44:01 +0100
-Date:   Tue, 26 Mar 2019 14:43:44 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Mike Hommey <mh@glandium.org>
-cc:     git@vger.kernel.org
-Subject: Re: Auto-gc in the background can take a long time to be put in the
- background
-In-Reply-To: <20190325232223.r72qtffyzn5qzoxc@glandium.org>
-Message-ID: <nycvar.QRO.7.76.6.1903261443140.41@tvgsbejvaqbjf.bet>
-References: <20190325232223.r72qtffyzn5qzoxc@glandium.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730587AbfCZOfj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 10:35:39 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36038 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726261AbfCZOfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 10:35:38 -0400
+Received: by mail-ed1-f68.google.com with SMTP id s16so1717015edr.3
+        for <git@vger.kernel.org>; Tue, 26 Mar 2019 07:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=Ee1wtuE4QgIePqqRPBuee7aV6XnYf0gqBjuSCPRG0E4=;
+        b=GiWSYYHUMNXNVL61EYgW/vM1P4ReUwGeVnvssNVTzZOmV5a/ciMDl0eyVN7qUY8gWI
+         jQFyH9pYDmTyoXkXc2B6Uk6D3PZ0SqCb4Jq6NyDlWAhoga6jnGqMxbKtMOl8GI0MkhEh
+         DoITF7hWH7nM8xQo/wpNa09t8drbEjbGlEWtxdChYhCwbg2onkwGDfBgciE5rLgjgsBf
+         1RH8W+0C39Ot+XAXNpWQy/vdrq63tBy/DMZk8VAIPjhZCF1FM6UIFvkspxxy/zmDCQrt
+         xIlq+0moSHUooz0RAuVxXefK4l03tegMb5ZCBq+y0fiPwWCHUAwGM0em4Ty8LwtzHNqA
+         Tf9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=Ee1wtuE4QgIePqqRPBuee7aV6XnYf0gqBjuSCPRG0E4=;
+        b=BIasKgIouLbZXHfiriFNYJk4hIATPaJTdigDODGHJnMgtWpw+b/6ppGA2b7NpQX5f9
+         3NOEm3kjl58VfLI4iOT/rQX3NNonNCBR+UWwJLE76lG8vogxNyiy+MT1ph4ghTzwWonD
+         N9jpmV0hbKmXqOTrBzbHoKEJa/UT49h12J5RZCTekjCsiBRrO0kLNLDS4rmoDpSd5I72
+         iOBt+k2CUuslTscEnu/HDpnUnpqPH1RGtzAj0p7XLrtzfm/oSy2B9SU/cB67o94zEamk
+         roal81mugSZ0EwfB7WxpapoArQuqSv2+AX0nXLnB/ItJQorUmOWGC+mwPB1RbWTO5dZ0
+         RDeg==
+X-Gm-Message-State: APjAAAUNFOh+r1srTblkbvUs1RsbjGIztVx7qf4hOM4JCDI5Po2DusRG
+        nfuIc8dWO0vIe9Fx4PSO7Ug=
+X-Google-Smtp-Source: APXvYqxlkpx7oBeshCDQ82KuzEHwIoKzPdev4nxoHVtlO72P7ZEwR1c60cpDQr09JufoAx1p74W7/A==
+X-Received: by 2002:aa7:d1d0:: with SMTP id g16mr20809912edp.109.1553610937138;
+        Tue, 26 Mar 2019 07:35:37 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id w6sm4145105eja.50.2019.03.26.07.35.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Mar 2019 07:35:35 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/3] rebase: learn --keep-base
+References: <cover.1553354374.git.liu.denton@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <cover.1553354374.git.liu.denton@gmail.com>
+Date:   Tue, 26 Mar 2019 15:35:34 +0100
+Message-ID: <87bm1xbt55.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zr/UexT1oCY0RLuNs2oQSNghSlwAOwCjhWdDeTnDuiZHIaWgJ+O
- YutBRP/ZOpiIxe/7KF3X1H26nwwGcnRmYtKZwqWaGoWzN5wzFhC41+8D0ouU/7kQLqvBu99
- TcXl4ESm2lbtLMLMvEGhLkYBV3X88bGXEMdGv7YWHFxTZJAbfvFFjF+ZHsjySaniS1kOIOt
- HNQdRcDdqFKJdpuqbVTQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hpSlSLnW7+I=:xbb8mwPmYonWP/TAb2EHVV
- +TpdrAFkHEtEAZBc0euLmDrHHcMlQplcNiT8+1QIwXoAp6bPLHhQKwxc4R45sZrCkTzSe+OPr
- 8Nvh9r2CYrYdM30zVhZKL6L9eNE0L4rMXCxzNB6t+TjHATrQma9IPu4VxBhkcVCwOTB+7l8O2
- /+dcqg8C1jkTEMrlb43DRuiEJJ3aLc7DpvcocclCBQBT2TFaxPowdY93NER7A9nZvL+KJ1ksU
- dJQZENSdICzhvgMVbK6wVksp5vBAypvWcWjDjbvybw/ZZZeZYcrWViniY/Ky2HwYQ8nONmzy/
- doyhJ5oIvio0NKJIdM8JlLfeyt+OW6nKUgnpyqD9eylC6ZP9goAhnYj41kj6DIPV+a0QKzzyu
- JeK7E+MyAkmAtSUm14cBKlrZsaEbqauZYF/T9FbF0pZOZAVsrh8xLHFfDXB5ZrIr6YPdkBast
- nXKSaSii+vuyXCEYFhHojRV26KdCbRIXqVsOE6MlOC9/1gDcTOBPdPuJdj8bbN0K88VWFimHq
- nFDVCyw6kB+LbIG2lcEJh7bnfoQ2LNeoOIMaujDpUDe3BpJfyKyUVJgPzMpmw088igefbTtu/
- 2rdm/iu9B+xEY8EGEJ52F3Txim5JIgdKvir56TqJCyz/ZbvJhQbWK9f2rVb8egp9h0YAR0X3u
- 1ji1o2eGmar/kiQMD5WkfpFlV0/jdIQKU0u6UEI9drXc4CqN/TEINK41sM17C0Qf7qUabMXvv
- lDLNoR7hrlh3G2fJ0Jan9oOZ1ZFSNwEWmLMKWvDzslMlesqMvAa1AiGcuXBNF77QQ28s3oV1D
- ZBsDFqeKTS2hTT2837mBiv50gqkXrrtCQrkW4wwvWW42IcGaXPHIxJT7D10cZR3iLFVH5FVwe
- avhHmBHF4CuHY67j5vmZGQzxpNLcC3d71D8dZrbNVEMkYhj4fpBxxY3WcAQr/fmo1MgsOiOxh
- sQITDJJWV7TaMhcwbcHE+20WmL8CNrps=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mike,
 
-On Tue, 26 Mar 2019, Mike Hommey wrote:
+On Sat, Mar 23 2019, Denton Liu wrote:
 
-> Recently, I've noticed that whenever the auto-gc message shows up about
-> being spawned in the background, it still takes a while for git to
-> return to the shell.
+> This series teaches rebase the --keep-base option.
 >
-> I've finally looked at what it was stuck on, and it's
-> `git reflog expire --all` taking more than 30s. I guess the question is
-> whether there's a reason this shouldn't run in the background? Another
-> is whether there's something that makes this slower than it should be.
+> 'git rebase --keep-base <upstream>' is equivalent to
+> 'git rebase --onto <upstream>... <upstream>' or
+> 'git rebase --onto $(git merge-base <upstream> HEAD) <upstream>' .
+>
+> This seems to be a common case that people (including myself!) run into; I was
+> able to find these StackOverflow posts about this use case:
+>
+> * https://stackoverflow.com/questions/53234798/can-i-rebase-on-a-branchs-fork-point-without-explicitly-specifying-the-parent
+> * https://stackoverflow.com/questions/41529128/how-do-you-rebase-only-changes-between-two-branches-into-another-branch
+> * https://stackoverflow.com/a/4207357
 
-Thanks for tracking this down. I hit this problem yesterday and was too
-busy with other things to dig into it.
+Like with another series of yours I think this would be best squashed
+into one patch.
 
-Thank you!
-Dscho
+Maybe I've misunderstood this but isn't this like --fork-point except
+with just plain "git merge-base" instead of "git merge-base
+--fork-point", but then again 2/3 shows multiple base aren't supported,
+but merge-base supports that.
+
+I'd find something like the "DISCUSSION ON FORK-POINT MODE" in
+git-merge-base helpful with examples of what we'd pick in the various
+scenarios, and also if whatever commit this picks was something you
+could have "git merge-base" spew out, so you could get what rebase would
+do here from other tooling (which maybe is possible, but I'm confused by
+the "no multiple bases"...).
