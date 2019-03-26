@@ -7,105 +7,125 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6476B20248
-	for <e@80x24.org>; Tue, 26 Mar 2019 03:08:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A4AC20248
+	for <e@80x24.org>; Tue, 26 Mar 2019 04:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730602AbfCZDII (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Mar 2019 23:08:08 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36967 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727394AbfCZDII (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Mar 2019 23:08:08 -0400
-Received: by mail-ed1-f68.google.com with SMTP id v21so9434899edq.4
-        for <git@vger.kernel.org>; Mon, 25 Mar 2019 20:08:06 -0700 (PDT)
+        id S1726248AbfCZEOd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 00:14:33 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:38696 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725298AbfCZEOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 00:14:32 -0400
+Received: by mail-it1-f196.google.com with SMTP id m18so17711937ita.3
+        for <git@vger.kernel.org>; Mon, 25 Mar 2019 21:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nz4TpFaKsY8qiz/iis55cFQTgfkn5no+dfOQ+ojhcEY=;
-        b=jkocAiaCdR5Y3f7GYM4fNA+AuqnYdlkJ4cpS9hehI7QYhFd/tdJjVnVbNUwKwBvlGV
-         EMu5fJ8hPWt4KCEYHcJUvjVT4F1Tn0OuLQvkMR5y+ZAwXgQ0dx13L8dIPSSFYcM8em06
-         InwiNKgxnspQLtv5wTcBTfDnywZb/23LKd8bIM+djzDV61DOibHoUsfklmIaWwMSxkyh
-         YX7pJPdIvRQbwaQ2/t0Ei/pyGODKtZ2EqBhD/Yqpw34zvrWkqKXger+csvHpK3wljKUM
-         aKmKmxIU8YTjsznfXrg9H9eMhgvicm/1FLwWnz1EBRi0n5J/nh4PgD4IdxP65l3ctL7p
-         ZleA==
+         :cc:content-transfer-encoding;
+        bh=jH/tA5f0QVVG9blIwbwl8TWZDNleGZoJ6ODiWUUkkgA=;
+        b=HWW2AldV7IJ1l04GNHw2t7BQgjW6xU8G/H0FhcKbWli3eH9ZJdcYAus/+7rhdcf6i+
+         D+TU8ta7Qe55ECxBg+q1sCfmYhQV/F1ZMP+NcaCsxu2O7t/UeweiInNhGAeO50UR1iot
+         eiiwiLRtl06jBma20mZeIjT75YDF+uajE2rDSx1EWhsbB+xi9X52WTYb/d+2pJfkjdsZ
+         YInM+SdJm5OrtMhQKwlKv2vSsDV15QeI4ZSzyYuYh3QWgED0UuFu4jvzk3pI2wJzlG5g
+         bba4DygQFIW6A1+guQTetM5UTP50YeoITzXsS8Sm3JhJ9a/uBNFqWGZAwchMklzZyDI2
+         AtrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nz4TpFaKsY8qiz/iis55cFQTgfkn5no+dfOQ+ojhcEY=;
-        b=Ab65sP4SkZG3Lzmlqh9ruwV6lX39WPrV2DNVMTyJYa76QXxtk2+MmnYr/9YqtgOsf1
-         ZXy/pKIo4iShkSjWiJzYD/nKqf2ZlOUgucId7jaUhP5U558NtdVLuVRskTJ4AOA9i7Nm
-         L45QN+n39iLS8XLREmCc5OEHyPcFuRKRu3wCJPtgAIsTVAfc8cLdofGV3r+AgMBjhSXm
-         QqyFeIHLLm0YFtpxcqP+M/h99IK1E0j3OD2Zqn/FwXpouPxEW84x4/vPYxzyBLjJyiP7
-         VwNYCU14SMjrbhQFiDJt/wkR9kNGbqgJukfo268y9mI0chtb378rZFIxPvX6LPZ7TWF8
-         bNZQ==
-X-Gm-Message-State: APjAAAXAH4hi1P9uR+sIQQ7n+QW4HkYQon+eEithl99HLKtAAoDofZJf
-        RnxPwU5JRncs8NE45LTmll0Lk6V6+/VoRYI6LGLlGule
-X-Google-Smtp-Source: APXvYqzfQ0IiY557SKYs0LpvrizNyTIcm+aoLUjyNEZlRLJfbTtC7z8tuziic/oMiBtWLV/ZT68WZJ+5++OFbBZ4zfA=
-X-Received: by 2002:a17:906:3941:: with SMTP id g1mr672483eje.168.1553569686119;
- Mon, 25 Mar 2019 20:08:06 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jH/tA5f0QVVG9blIwbwl8TWZDNleGZoJ6ODiWUUkkgA=;
+        b=G7kx0BBHSF/G8xNNS4l+bMburh006bpnvo5TMRw+galdBJLho9y9mB9U+BFtNGl0yf
+         bDsT0DxcZ5BLPreMWj2hCq8urh4Nb3PDhE3QarAh+gOYrRcQUXb4XSoC8jmunV4L8px3
+         eSwFT22sqGkT+ImRguneznsJgMgadb5Ud68bl9/6uJDDZ2p5RafQn1DG5LEoy1owcdvJ
+         wHYmieN0/g/VF3OELk3QbpfhNEpYDiuO8mLj0+nCN5qVywp2QNnQdIGlVo4lM6ckHJz6
+         4WQ61b1Z152z/llxLalzTf4eHfjwE7kvhUb3gvEGo2xUZZVEiUkWkXnp5EYyPXf3g5tf
+         rWNQ==
+X-Gm-Message-State: APjAAAUoyx9UfVwSMR6tZnEtAIwdSqQ1P/pJPhY27h33gf5OD9/MT9BT
+        LIgqhrG/yIg8zn39wCadPUEqLYuAKRQ+RIXJQCI=
+X-Google-Smtp-Source: APXvYqwvYHTF8GyInZwGNVT86VH/RHDFeZqEqT7J3ZKofj+CyVmbnyTbRS1PLTOEV/wl2rPizn03Em+PkpoR7dohglo=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr1957458itc.70.1553573671552;
+ Mon, 25 Mar 2019 21:14:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190324235020.49706-1-michael@platin.gs> <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
- <b077afed-d143-506e-977e-6edf2492f75f@google.com> <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
- <20190325233516.GB23728@sigill.intra.peff.net>
-In-Reply-To: <20190325233516.GB23728@sigill.intra.peff.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 25 Mar 2019 20:07:53 -0700
-Message-ID: <CA+P7+xo-AHmB+Wv0Z+dpgshhmqSLEb41T-JP+NKJD8DAFARA5w@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Fuzzy blame
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Platings <michael@platin.gs>,
-        Barret Rhoden <brho@google.com>,
+References: <pull.167.git.gitgitgadget@gmail.com> <20190325202329.26033-2-avarab@gmail.com>
+ <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com> <87o95ybmgf.fsf@evledraar.gmail.com>
+In-Reply-To: <87o95ybmgf.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 26 Mar 2019 11:14:05 +0700
+Message-ID: <CACsJy8Bk=Z8BaVeAhKzF4PWYLLG76cADooHKNw+Xy3EztZL1DQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: allow for configuring option abbreviation
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 25, 2019 at 4:37 PM Jeff King <peff@peff.net> wrote:
+On Tue, Mar 26, 2019 at 5:48 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On Mon, Mar 25, 2019 at 11:21:19PM +0000, Michael Platings wrote:
 >
-> > > I work on a project that needs a major reformatting, and one thing
-> > > delaying me was the lack of an ability to ignore commits during blame.
+> On Mon, Mar 25 2019, Eric Sunshine wrote:
+>
+> > On Mon, Mar 25, 2019 at 4:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >> diff --git a/Documentation/config/core.txt b/Documentation/config/core=
+.txt
+> >> @@ -1,3 +1,15 @@
+> >> +core.abbreviatedOptions::
+> >> +       Defaults to `true` which allows options to be abbreviated as
+> >> +       long as they aren't ambiguous, e.g. for linkgit:git-init[1]
+> >> +       the `--bare` option can be abbreviated as `--bar`, `--ba` or
+> >> +       even `--b` since no other option starts with those
+> >> +       prefixes. However, if such an option were added in the future
+> >> +       any use of these abbreviations would break.
+> >> ++
+> >> +By setting this to false (e.g. in scripts) you can defend against suc=
+h
+> >> +future breakages by enforcing that options must always be fully
+> >> +provided.
 > >
-> > I think we understand each other well then - I'm working on a plan to
-> > change the variable naming rule in LLVM, and naturally other
-> > developers aren't keen on making git blame less useful.
+> > I don't get why having a configuration option is better for defending
+> > scripts against this problem than a simple environment variable. It
+> > seems easier for the script prologue to contain:
+> >
+> >     GIT_TEST_ABBREVIATED_OPTIONS=3Dfalse
+> >     export GIT_TEST_ABBREVIATED_OPTIONS
+> >
+> > than for it to muck about with git-config or use "git -c
+> > core.abbreviatedOptions=3Dfalse ..." everywhere. The commit message
+> > doesn't do a good enough job of justifying the configuration option
+> > over the environment variable.
+> >
+> > Also, if this is now intended to be more general (aiding script
+> > writers) than just being for our test suite, then dropping "TEST" from
+> > the name seems warranted:
+> >
+> >     GIT_ABBREVIATED_OPTIONS
 >
-> This is sort of a tangent to the thread, but have you looked into tools
-> that provide an interactive "re-blame from the parent" operation? I use
-> tig for this.  Quite often my blame turns up on some boring line
-> (whitespace fixing, minor tweaking of a function interface, etc), and
-> then I want to keep digging on the "same" line, as counted by line count
-> (but it's OK if it's off by one or two lines, since I'm looking at a
-> blame of the whole file).
+> If we want to make something user-configurable we tend to add config
+> variables. The GIT_TEST_* variables are only intended for our own test
+> suite, see t/README.
 >
-
-+1 for the usefulness of this approach. It really helps figure things
-out in a way that doesn't require me to track all "uninteresting"
-commits, and also works when I *am* trying to find that uninteresting
-commit too.
-
-> Obviously this isn't as automated as saying "ignore commit X, it's just
-> variable renaming". But it also eliminates the need to a priori figure
-> out all such X that affect the lines you care about. You get an answer,
-> your human mind says "nope, that's not interesting", and you press a
-> button to dig further.
+> I don't mind documenting this, but it's a well-established pattern, so
+> if we're going to describe how this works/why use one or the other it
+> should probably be some other series to t/README and/or git-config.txt
 >
-> I think there's room for both solutions to co-exist, but just suggesting
-> you to try out the one that's already been implemented if you haven't. ;)
->
-> -Peff
+> We traditionally *only* expose this sort of thing to users via config,
+> and not via env variables.
 
-That's also my sentiment.
+If this is mostly useful for scripts then I agree with Eric an
+environment variable is the way to go. A configuration variable does
+not make it more convenient.
 
-Thanks,
-Jake
+And no we don't only export via config. There are a bunch of public
+env variables in git.txt. "core" namespace is already very crowded. If
+this one is only rarely used, I'd rather not add a new config
+variable.
+--=20
+Duy
