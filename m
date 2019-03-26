@@ -7,90 +7,89 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A325920248
-	for <e@80x24.org>; Tue, 26 Mar 2019 22:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E790F20248
+	for <e@80x24.org>; Tue, 26 Mar 2019 22:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732079AbfCZWGt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 18:06:49 -0400
-Received: from mail-vk1-f175.google.com ([209.85.221.175]:43879 "EHLO
-        mail-vk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731491AbfCZWGt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 18:06:49 -0400
-Received: by mail-vk1-f175.google.com with SMTP id e131so3189854vkf.10
-        for <git@vger.kernel.org>; Tue, 26 Mar 2019 15:06:48 -0700 (PDT)
+        id S1732086AbfCZWHy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 18:07:54 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:39015 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731654AbfCZWHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 18:07:54 -0400
+Received: by mail-vs1-f68.google.com with SMTP id g127so8686231vsd.6
+        for <git@vger.kernel.org>; Tue, 26 Mar 2019 15:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=74TASdII467UzMAB+9AS6K54fHriju+ivTWyUvWtnk4=;
-        b=QgS3stvGuXo4QNaVa+npCVbrOrNZbuPd7WUn/VUytnxiTDS7thEW+sK0U/OXFufirO
-         BLDvM/b2mo1kiBWa+uukp5+nVVsxfTfUjn5o/MfUCqPe59Pku6xGjLq/9JzFgIcwolK9
-         7Ptxmgvx8/+eYDNQgF9uCXRzUNxPBiGQhKo6bXpRWKiMVRVBn90aOS4jS1pJregRauxT
-         Uyg5Y0ZPYvlavrvJeXNz19iIi8xzjsHZzuLvPmAeL2YSv4V4sN64ftie5CMI5WBSDy7l
-         aiDaBqmWqA2S+bzNiie8gYA1wEOdvk+wYx1Ksp0YB0gOE8WGCPPwBiALhufHqjLAQiQO
-         uDxw==
+         :cc;
+        bh=TJE53U3UocFQD8It5iQORUd36x1i4TdPoGx8855u/NU=;
+        b=HJVn/8EYgobNuZ0PLLoWEDtLcvatb36a9Wn/vRpflHBABuq6x8mPpAnSPsigFEQ92r
+         M9DmusQmed2lgNxMtJ8stjCAaHQNJKy5dcIn6oUmzxDToDFixIUt9usGT40Epdy2wTnH
+         s0CTDKeDBBqB4CLiBDA+rSfdUOTDKQkgsg4MHO2mXylN5zrfn13JEjkEZ+TPbGYF1N+r
+         Xc5O9PCISWQiTXg4ISLEGIx+fmyK2J09jdKEWegENBRBOdtOmJ2h5VpykKF9RXKlssAG
+         oK0xUWFDWMO+49Nk6j8nUvgG7Dyxlq3qCyNtg2AuKrZ+0p8X7EsV3ns5/bYDR2v7ltFr
+         UyeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=74TASdII467UzMAB+9AS6K54fHriju+ivTWyUvWtnk4=;
-        b=OkLS3r46e2I5s1m0CC0ypChtPC/reEyUCgTLQOA2FY8PRe9/IEs/wbBn0igNuEtb/x
-         QbwP+H2a4JAbOVepnnF4dxHRXycORI4hMnWBTk6nMbc3Oh3SgG2bP4IN4SQ1UycQ66K6
-         dAE19BVfMHrxjRhMLQpbc/HED4RE+b6IAsnTzaLxtmMqx/XE3zJZ4zC9iqRst6kHSafX
-         +MnaoIc1E56K299h7A6T/iccRIRel2lQWym871o2A6nBDTL3bufAHjsQEPlG2otWq9At
-         oMO7Ip9LwbbFXjFS0VWDmSWoRL1olrbThyjf5hRVi0k8bKlomrvZO6sIy3/CKMCAYYoZ
-         Rt1A==
-X-Gm-Message-State: APjAAAX8awwQiN8aFB+uCRzZwM5rI3aCoUwMedtEL0mP2zBaFW8BP3+S
-        dBlpP2hZu1A+/MIzFJOeMpgU2141++buGOHbXCxiXA==
-X-Google-Smtp-Source: APXvYqxY8Q61U0JVF3bNxE6m798DWSKAxgZdI5fzeyZbvv1m9plJSLcdjcOKUbOhNveDS3ob6KI5TwCBEGiWLUSyt70=
-X-Received: by 2002:a1f:32c7:: with SMTP id y190mr15038161vky.15.1553638007790;
- Tue, 26 Mar 2019 15:06:47 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=TJE53U3UocFQD8It5iQORUd36x1i4TdPoGx8855u/NU=;
+        b=BiO0RN8ONSVZmswuf302iycWQvF6wKsMZ7cp2yA8c7jFg6uSoI7JZm3t5iG7b5v13r
+         yicu2OLu13RyGF1GOUtdw5DNewFiTJD4YrACC2hmkbUAH/RqCT1RZZBgy/DlN24lJ4Oh
+         hHhdSTgLlx/iSmqNI6Aj33785omZNyDPjtmhQ7AYxbfcE2NcHsFBKu1Q58YcdA4hac1d
+         pKgntydEdunupWhm/4r26KvZcoqtrWUz86fV09XuAdkF5OEKeXenCBY4vOFZ3EeUXDm/
+         pCfi9DU0X40N63zLW7IweoHr6swA4KHZ+hDKY+gYnxorNGLIGmvCQUVj0GV7rCex5C9H
+         qxSA==
+X-Gm-Message-State: APjAAAX1wwglZ5Zq3u0TBXbO9uI7gQ3OjdSRiApgrUi0mJ2/9fbqNJa/
+        rMdOuoff7ZoIP37Bgr1FkTSn3nBsd61ytY1fq9w=
+X-Google-Smtp-Source: APXvYqziobV+P8Jjjc28Lbd3z2oY/YwncYAnAAR2fPY67beHI+UsKZyDnOfX2+nPixV5ONJoG0IFe92ALIobQwnx+3Y=
+X-Received: by 2002:a67:df93:: with SMTP id x19mr20526707vsk.116.1553638073731;
+ Tue, 26 Mar 2019 15:07:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <38B8E527-2338-485E-8840-29121F259687@m-mooga.com>
-In-Reply-To: <38B8E527-2338-485E-8840-29121F259687@m-mooga.com>
+References: <87efh0pdln.fsf@javad.com> <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
+ <8736nj2jcl.fsf@javad.com> <xmqqbm26xtum.fsf@gitster-ct.c.googlers.com>
+ <87h8bra1z6.fsf@javad.com> <20190326163204.GC29627@sigill.intra.peff.net>
+In-Reply-To: <20190326163204.GC29627@sigill.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Mar 2019 15:06:36 -0700
-Message-ID: <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
-Subject: Re: [GSoC] microporject test_path_is_*
-To:     Mooga <contact@m-mooga.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 26 Mar 2019 15:07:42 -0700
+Message-ID: <CABPp-BF7cd2+4jr=zGVP8x_QLdFbyOoGRWUgMtgiGDCdqZdjFA@mail.gmail.com>
+Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m
+ 1' is specified
+To:     Jeff King <peff@peff.net>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, Mar 26, 2019 at 2:10 PM Mooga <contact@m-mooga.com> wrote:
+On Tue, Mar 26, 2019 at 9:35 AM Jeff King <peff@peff.net> wrote:
 >
-> Hi,
-> I am still a bit confused about the task itself
+> On Mon, Mar 25, 2019 at 09:43:09AM +0300, Sergey Organov wrote:
 >
-> it=E2=80=99s just text replacing for example:
-> t1400-update-ref.sh , line 194 -> `test_path_is_missing`  has to be =E2=
-=80=98test_path_is_file=E2=80=99
+> > How about changing "git show -p M" to output "diff -p M^ M" rather than
+> > "diff-tree --cc M" for merge commits? It's really surprising specifying
+> > -p has no visible effect.
 >
-> Thanks
+> That's because "-p" is already the default, and the format selection is
+> orthogonal to the handling of merge commits. Providing "-m" would
+> actually override the "--cc" default (though "--first-parent -m" is
+> likely to be less noisy, per this discussion).
+>
+> As far as defaults go, I dunno. The idea is that "--cc" would give you a
+> nice summary of what the merge _itself_ had to touch. I think that's
+> valuable, too. If we were starting from scratch, I think there could be
+> a discussion about whether one default is better than the other. But at
+> this point I have a hard time finding one so much obviously better than
+> the other to merit changing the behavior.
 
-There are several places in the code that use test with -e or -f or -d
-(or -h or...) in order to check for the presence of a
-file/directory/symlink/etc.  For example,
-   test -f path1/file1
-This could be made more clear and produce nicer error messages if it
-were instead
-   test_path_is_file path1/file1
+Indeed, some of us would view a first parent diff default for merges
+as problematic.  However, I'd like to point out (or remind) that these
+two options aren't the only ways you could view a merge.  Thomas
+Rast's --remerge-diff[1] is another (even if not yet part of git.git).
+Gerrit uses something similar-ish for its default way of showing a
+merge.
 
-There are likewise several that use one of
-   ! test -e path/to/filename
-or
-   ! test -f path/to/filename
-or
-  test ! -f path/to/filename
-which could be replaced by
-  test_path_is_missing path/to/filename
-
-This GSoC microproject is just about picking one testfile that has
-some of these constructs, and fixing the cases found within that
-testfile.
+[1] See e.g. https://bugs.chromium.org/p/git/issues/detail?id=12
