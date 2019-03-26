@@ -8,95 +8,161 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25C9620248
-	for <e@80x24.org>; Tue, 26 Mar 2019 13:28:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBA5E20248
+	for <e@80x24.org>; Tue, 26 Mar 2019 13:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbfCZN2F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 09:28:05 -0400
-Received: from mout.gmx.net ([212.227.17.21]:39097 "EHLO mout.gmx.net"
+        id S1726266AbfCZNl4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 09:41:56 -0400
+Received: from mout.gmx.net ([212.227.15.19]:36041 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726111AbfCZN2F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 09:28:05 -0400
+        id S1726140AbfCZNl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 09:41:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553606883;
-        bh=7pJiA2PN6uyDYZUrisnsXAsQ8IgrTkrbKJQWr3a9Nx0=;
+        s=badeba3b8450; t=1553607697;
+        bh=cFLJHTb+TWDNtwKr2mwe7GH62obV91nWoXEP8cx07xI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZYZ6XtbgQuPrgGzflHAacqcMv3FL3kggoe21J7ED/z9vPtgzlIcJlrPhNDo0dPLfh
-         SfTE7nhT3mw9s9oL2xakKHAkybKTOz9fqjfehUvpG/eEj6xW2lC1ga124rCjJiarfZ
-         Mj4WEz2zCQTSrl75fF4bN/cFAG8VHk7nEAHzCnDc=
+        b=S4vNnxvV/ZUPJzx7FAqFI47IhJkhpaEU1ytRuuXcRWVBj9jka02yBBigP3kAZwF3x
+         gskX5FJNqlphOSB7WYLDjaQ00FBxWqKKB/sC+cxLECPlajdMl6WptH1PNw/vA3kRbA
+         fBYZDFR/qtSc3zuTWPifIvolHBIWGkPkeuc1zswQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.49.144.175] ([95.208.59.4]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LfkJC-1gbLB23UDq-00pNh7; Tue, 26
- Mar 2019 14:28:02 +0100
-Date:   Tue, 26 Mar 2019 14:27:47 +0100 (STD)
+Received: from [10.49.144.175] ([95.208.59.4]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MA91t-1hFby547k9-00BJJF; Tue, 26
+ Mar 2019 14:41:37 +0100
+Date:   Tue, 26 Mar 2019 14:41:20 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] rebase: teach rebase --keep-base
-In-Reply-To: <20190325192928.GA31067@dev-l>
-Message-ID: <nycvar.QRO.7.76.6.1903261424270.41@tvgsbejvaqbjf.bet>
-References: <cover.1553354374.git.liu.denton@gmail.com> <f802e5442013613221a4efd8ef1fecce0f3a9914.1553354374.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.1903251948200.41@tvgsbejvaqbjf.bet> <20190325192928.GA31067@dev-l>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/6] ci: install Asciidoctor in
+ 'ci/install-dependencies.sh'
+In-Reply-To: <20190325214603.GA1343@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1903261439090.41@tvgsbejvaqbjf.bet>
+References: <20190324155219.2284-1-szeder.dev@gmail.com> <20190324215534.9495-1-szeder.dev@gmail.com> <20190324215534.9495-5-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1903252221300.41@tvgsbejvaqbjf.bet> <20190325214603.GA1343@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4WcXmZhxY5rRb8KmwGKxMuZAB6QKJlPlSvJAywBXqQEPIwafAR9
- xw+OAHSB/ZmDjyZUq/XUHMHvF2XwCZ7G8gk+FhxVETdwhBpU+ofSWy6BBhj3qp6yHwmw9PE
- 4dE0KDJTC5PuueP9vnv3R2NSZwnDfEOawytpI5YoOdUO0aBWXZC/PwYygd/pVCYc47S2Cuu
- /rGkq+yhQ4ZzIO5tweNdQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6ayio8ckfaM=:Jw75bRJ5sSO2HZGsjXURMU
- v2Ho7qOxrG7Yqf7Yh3/3sWXRxhzkqCw5tkj13G+7ucrHzHvBKJa1dBipAMNhkX6O0EmJdDETA
- sg8Y/nPHzEvycbf8VdaiZyNxWIcdUTOnDS+RlEYpnFKkJphOwVLrAOZYRCYjJjZo1ec6AwMz6
- cLwj2vPm8dxvJBSO33hEY3QWavbspRTBXGZhoCYtWpzhtISrODRx1kHXQpfXviSE0rzhVmhoE
- XtB4Iatu2JGjICAnE7eR7dgo9VlLWDnK+doN3Ersr6XWgsRBST1+xLX4pa8cvmxlwAO/pWSYg
- +BwkOnys0W73TpVDrR+iYa32pO2FIr1edqXocgLvjo4PcsNmPg7heGAXw17NcSb03+IVdWJ7r
- eR7Oo8VeEl/sknFhDIyrqEmyHmVJldqFqu0xtgpCcGqrxYfxSRx6uDPX9Z3bS41ygKLaCYa02
- dD3wbe/+TAltqZM4Cm3Gf9QgOHRJ7OF3J1VRAJm3rpd/nwzczMmEZlr2vGrsuKksdXHhIu1Hg
- eIaddlUf9CMf17737rAiShVkLwmzewE+Ak+GQ0kuIWC4cYI1U9EETODx+uRxKCtSpJqm22kKU
- yATYuINNhy1BJuwmiiqn4AK3nqqjcHdBqmF9M5EGiNE5IJHQYIh9jaF69MZ42rw+qHe//X/es
- Xb/z4Bhywrj93i2xZY0ov6XITm4pJtcNnMV0b5eYe3d4KmmGV/xufyyHZFAUHAbt9Zfx5dTuc
- Vup66XrvaTKvYFK+36508XYqNxOIvxaLpQPO7DMAkix8NAEiuGdgZQ+2Eqe0X3+VP6B4IkCc0
- ZrAnklOtlrG5lExOMs7WiYHVF83NOEc6FodCK2+IeCIyVpfQ3NorvZaRq8hrBrAsj3TGNbaYV
- HBv18+poG9O6ua4ORcSFfQR6yMTLxUwZv6dQwyIPQejorHqj0WqTRHB2BjLHjgccBsERNarGn
- E/vmApAY8nyxi4RUoXn0xsb0Zm6DJa10=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1282476916-1553607697=:41"
+X-Provags-ID: V03:K1:W6nHc/i1vmD9jKSbmwiGY6lgOCc7kC6jKbprI8/AcDXmprU8IB1
+ StK+3ByVeEhiT4g1BMHHbekKY4akrYirmIh5cYmnejOQuaxVOtemVWabUT1Z2x1Jzzvn/7N
+ DBvB174P5S2+I87NjpsFQKhv0Huw8WgojSlzovrZ/K6fh21nQ8APKR4cb5hsO8+dlTIw/Fd
+ AKpl61Z8b4kqkG6jDl2mQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/iDhvRwat3s=:yvEcwPh5Ka5GGhEsHmKqn9
+ S9CO3sTVG/7X0G+SOwfEhrxAYaaSyQXtwGuOgeUfz5/MwwcHrhLqFBRmDHcEgvUNxVbhKfB9P
+ 2JbUVcxUDQMulIu95P1vfdPGyCGI69yBuWdN07X0ipURAxI4GLk9sGVkMpisZ/rK2KQloy7oO
+ bPJ0kiPXw6m9ZXW+XSMWZ5tu6vIZezTAtK5XzsCD+ui0o3UhUIoohHMw1CM1sAY9uzYK5KVXb
+ aI+UbOLFPJXVUA9KVtrPKkE2J6DJ/yg8kgn+WJirD/L1T9TdejLGVTcUMuhK/LeDub7JDub/J
+ cye54CxcC5XIZqP35qGSbxiYVqDyCja+/UkcHeZxlSHYjk69cDIhVcxsFXMjFBmtrNf4gJJij
+ hWymISqYR7YZxsNbaphkkCkvT91IQg5q2x+R5Kg5N/HdWLSfdoRvYLnf54dZkFvMujIDzL7iZ
+ 3qrFUmCJS9L1hjaWUuUcQdf7lu7PU409hlbOtF+BHTOhXoJaAjeALYzt9GpMaT8WfK/wSuDLd
+ r6pEs01NWB+ZeUTFhrGA1N6i6oww6mSj1nNLkWXKoxOYbtV9HVxEnu9fxoIDaH776y3vqihut
+ rdHOehKH1zzigspnw0GZnfyC2tIJbyDzwI8omCM4nan5UZKkUvtByOYKNOOKbKWR3ceXFPien
+ oXCxOiO3ctNjXuDATxXQoJ9epm0UG5TT7Eg79w4pv6hIsRURT7LEKorKznmvvIo3BGMLLba1j
+ niBkQNhx+t35s7Og77ygdLIVdaBvWkjxbP9s67vYkZW3JT9bjTMantkdjuxtCaf5OHsM1h5Q0
+ jM56z/oinbL0H+juMHmHIWEyBHDlmfk5A/aZcDj/Hw6OjHUCihmCCEZ0eYeRX7Q7fYior5WNQ
+ gRHZPVzhlDQH48aRL6NM+cIt+3Mjv91lZiuEWNAbexTWaElY7N2mgSp1tmKQ6qmTcGMiVEttA
+ TpWffuv/IraGTLOTs3Ld0ScJ/10oCHY0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 25 Mar 2019, Denton Liu wrote:
+--8323328-1282476916-1553607697=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, Mar 25, 2019 at 07:50:38PM +0100, Johannes Schindelin wrote:
+Hi G=C3=A1bor,
+
+On Mon, 25 Mar 2019, SZEDER G=C3=A1bor wrote:
+
+> On Mon, Mar 25, 2019 at 10:28:21PM +0100, Johannes Schindelin wrote:
 >
-> > P.S.: Did you run the test suite before submitting your patches?
+> > I like the rest of the patch series, but this patch, I am not so sure
+> > about...
+> >
+> > On Sun, 24 Mar 2019, SZEDER G=C3=A1bor wrote:
+> >
+> > > When our '.travis.yml' was split into several 'ci/*' scripts [1], th=
+e
+> > > installation of the 'asciidoctor' gem somehow ended up in
+> > > 'ci/test-documentation.sh'.
+> > >
+> > > Install it in 'ci/install-dependencies.sh', where we install
+> > > everything else.
+> >
+> > The big difference you introduce is that asciidoctor is now installed
+> > with every job, not only with the Documentation job that actually uses=
+ it.
 >
-> Usually I'm more diligent about running tests but I wrote this patchset
-> in the back of a car when I was running low on batteries. I only ran the
-> rebase-related tests but I guess that wasn't enough.
+> It is only installed in the 'Documentation' build job.
 
-I totally understand that kind of scenario.
+Oy, you're right!
 
-> My mistake, though. I'll be sure to _always_ run tests in the future.
+> > Even if it affects me very little (because I don't pay much attention =
+to
+> > Travis, it's been too flakey for me, and it does not test our Windows
+> > side, and it is too slow), I'd rather install asciidoctor really only =
+when
+> > needed.
+> >
+> > So I'd like to recommend to drop this patch from the series.
+> >
+> > [...]
+> >
+> > > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > > index d64667fcbf..76ec308965 100755
+> > > --- a/ci/install-dependencies.sh
+> > > +++ b/ci/install-dependencies.sh
+> > > @@ -54,6 +54,9 @@ StaticAnalysis)
+> > >  Documentation)
+>
+>      ^^^^^^^^^^^^^^
 
-Please do not feel bad. I did work pretty hard on making the Azure
-Pipelines support as fast as it is for the very purpose of helping exactly
-situations like yours: to hand off the testing to the cloud when batteries
-run low (or when you want to use your laptop for something else than
-running Git's test suite).
+To be honest, I think it was kind of easy to miss that. Maybe the commit
+message could talk about this, so that future Dscho will have a helpful
+hint when looking at the commit history and stumbling over this move?
 
-And of course to verify that you don't break things on platforms other
-than the one you happen to develop on. And to check the documentation. And
-to run some static analyses.
+If you could add that hint, I would be most grateful.
 
-:-)
+In any case, based on what you taught me I retract my objection to this
+patch.
 
-Maybe you want to open PRs at https://github.com/git/git or at
-https://github.com/gitgitgadget/git to benefit from that kind of automatic
-testing, benefitting from my work (which would make me feel real good
-about spending that amount of time on it).
+Thanks,
+Dscho
 
-Ciao,
-Johannes
+>
+> > >  	sudo apt-get -q update
+> > >  	sudo apt-get -q -y install asciidoc xmlto
+> > > +
+> > > +	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
+> > > +	gem install asciidoctor
+> > >  	;;
+> > >  esac
+> > >
+> > > diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+> > > index be3b7d376a..8f91f48c81 100755
+> > > --- a/ci/test-documentation.sh
+> > > +++ b/ci/test-documentation.sh
+> > > @@ -5,9 +5,6 @@
+> > >
+> > >  . ${0%/*}/lib.sh
+> > >
+> > > -test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
+> > > -gem install asciidoctor
+> > > -
+> > >  make check-builtins
+> > >  make check-docs
+> > >
+> > > --
+> > > 2.21.0.539.g07239c3a71.dirty
+> > >
+> > >
+>
+>
+
+--8323328-1282476916-1553607697=:41--
