@@ -2,83 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28F8820248
-	for <e@80x24.org>; Wed, 27 Mar 2019 18:55:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 211EA20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 20:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389521AbfC0Szq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 14:55:46 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:45198 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389650AbfC0Szp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 14:55:45 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 44Txz31PKSz1qvvr;
-        Wed, 27 Mar 2019 19:55:43 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 44Txz30xdsz1qsx0;
-        Wed, 27 Mar 2019 19:55:43 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id 0FEfZ-pmM6nF; Wed, 27 Mar 2019 19:55:41 +0100 (CET)
-X-Auth-Info: zXpmlfB240t8eHPHOXCtVMGwHrOyhAB1K2kPAwy9w0kGIZXdBQUUHW8dsG+IWLfY
-Received: from igel.home (ppp-46-244-175-98.dynamic.mnet-online.de [46.244.175.98])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Wed, 27 Mar 2019 19:55:41 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-        id 26A052C12D4; Wed, 27 Mar 2019 19:55:41 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Petr Bena <petr@bena.rocks>
-Cc:     git@vger.kernel.org
-Subject: Re: Unable to change remote url of origin
-References: <7b30ebfd-4f85-0fa7-8e66-7e63d7cb52d9@bena.rocks>
-X-Yow:  I want to kill everyone here with a cute colorful Hydrogen Bomb!!
-Date:   Wed, 27 Mar 2019 19:55:41 +0100
-In-Reply-To: <7b30ebfd-4f85-0fa7-8e66-7e63d7cb52d9@bena.rocks> (Petr Bena's
-        message of "Wed, 27 Mar 2019 13:25:27 +0100")
-Message-ID: <87ef6sb102.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728396AbfC0UH7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 16:07:59 -0400
+Received: from bureau84.ns.utoronto.ca ([128.100.132.184]:41165 "EHLO
+        bureau84.ns.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727117AbfC0UH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 16:07:59 -0400
+X-Greylist: delayed 2505 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Mar 2019 16:07:59 EDT
+Received: from exsmtp.utoronto.ca ([128.100.46.57])
+        (authenticated bits=0)
+        by bureau84.ns.utoronto.ca (8.13.8/8.13.8) with ESMTP id x2RJQC0S006668
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 15:26:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=utoronto.ca; s=beta;
+        t=1553714773; bh=zl6IumyopWMBoi5dtAUkqnYRR1phqtU0/VHp2Zuozt8=;
+        h=From:To:Subject:Date:Message-ID:Content-Type:
+         Content-Transfer-Encoding:MIME-Version;
+        b=6TjV6RRmJ+Snsoi45S9st+5QBtYjkAsLjmQ4H87ig7NEmxCe6ZXyUPLtyRCerB0tY
+         WP/NO87lGWd14Ci5yvQUYPHm3w/LwV7Yv8g1/b/e23RuYRc1/pg8ipea26nKyRSVzP
+         QiWNGicDXcduPQ6pCIctrZnRY4G85iaq/xSwel00=
+Received: from ARBOREXCASX3.UTORARBOR.UTORAD.Utoronto.ca
+ ([fe80::d479:357a:c4f:796c]) by arborexhubx1.UTORARBOR.UTORAD.Utoronto.ca
+ ([2002:8064:2e39::8064:2e39]) with mapi id 14.03.0224.002; Wed, 27 Mar 2019
+ 15:26:12 -0400
+From:   Julian Cheng <julian.cheng@utoronto.ca>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [GSoC] [t9803]
+Thread-Topic: [GSoC] [t9803]
+Thread-Index: AQHU5NLUUBNMeD/zM0yu7jlWN2IVvw==
+Date:   Wed, 27 Mar 2019 19:26:12 +0000
+Message-ID: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+Accept-Language: en-CA, en-US
+Content-Language: en-CA
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [128.100.46.46]
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mär 27 2019, Petr Bena <petr@bena.rocks> wrote:
-
-> # Display remote URL
->
-> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
-> origin    git@github.com:grumpy-irc/grumpy (fetch)
-> origin    git@github.com:grumpy-irc/grumpy (push)
->
-> #Now change it to HTTPS instead of SSH
->
-> petr.bena@MacBook:~/Documents/grumpy$ git remote set-url origin
-> https://github.com/grumpy-irc/grumpy
->
-> # Verify if it has changed
->
-> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
-> origin    git@github.com:grumpy-irc/grumpy (fetch)
-> origin    git@github.com:grumpy-irc/grumpy (push)
->
->
-> It's still SSH. What am I doing wrong?
-
-Do you have a URL rewrite rule (url.*.insteadof)?
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Hello Git Community,=0A=
+=0A=
+I=92m new here and hoping to get to be a part of GSOC 2019. I have question=
+s about the main project and the microproject=0A=
+=0A=
+Main Project Quesctions=0A=
+I was hoping to work on =93git revert --drop=94 and =93git commit --reword=
+=94. Are there any mentors available for this project? The ideas page lists=
+ mentors for other projects but not this one.=0A=
+=0A=
+Also, =93git revert --drop=94 and =93git commit --reword=94 appear not to h=
+ave been discussed yet in the public inbox. Is this correct or am I just no=
+t finding the threads?=0A=
+=0A=
+=0A=
+Microproject Questions (test_path_is_*)=0A=
+I would like to improve t9803-git-p4-shell-metachars.sh =0A=
+=0A=
+On the microprojects page, it suggests I should run the tests to make sure =
+they all pass. But if I=92m making changes to the tests, is it really adequ=
+ate testing just to make sure they all pass?=0A=
+=0A=
+To run all tests, I assume I would just navigate to the tests folder in ter=
+minal and call =93sh *.sh=94, but that doesn=92t seem to work. Also, when I=
+ call =93sh  t9803-git-p4-shell-metachars.sh=94, I get =93error: GIT-BUILD-=
+OPTIONS missing (has Git been built?).=94 Git is definitely installed on my=
+ computer though. I=92ve been using it for months. I cloned this repo with =
+Git. What am I missing here?=0A=
+=0A=
+Best,=0A=
+Julian=0A=
