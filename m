@@ -2,125 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D28A20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 00:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF26820248
+	for <e@80x24.org>; Wed, 27 Mar 2019 01:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732169AbfC0AeB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Mar 2019 20:34:01 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:42550 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731873AbfC0AeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Mar 2019 20:34:01 -0400
-Received: by mail-vk1-f193.google.com with SMTP id j195so3266793vkj.9
-        for <git@vger.kernel.org>; Tue, 26 Mar 2019 17:34:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WXkQDO2vTVikciuDjeAZWHZCIXK9R1eRl/iREH/u/mQ=;
-        b=VhC28rJmpd+/Y0iCE95jReQnqIcidnSnkwR+ksv/srNWz1pH7OsbHuLtcMu38FMT3x
-         pQbTmXWMXhw5upwZz239OF4gUEu8158+EzsTcEm36MzQnA71BAWVlUgB4Md7eYLo2hJp
-         wXlcRMWa+lKiQxI8lPcgZ7aV3NhcPCjpsHK5MlghRs98O/LZ5RFz0OaMLJd4nFg61aIp
-         BFLQZZ2bgyaqsnUWFCuXtmNKsCTnj0INn1/B2f2kaYiaj/xywwpQT7GhU3OqdLfwQuve
-         LS/8H2uxNNERR+j/8tkzA/KugshZeeT3hFWkSiFEzVDDPLYasBJhXEt6JgXcac5MYHuo
-         1b/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WXkQDO2vTVikciuDjeAZWHZCIXK9R1eRl/iREH/u/mQ=;
-        b=dakhMzXcG7xDkv2IIJBBzUR8qx4qye2Wjl4ao9FAhUPjRyxWL/oBQx/9NoFyTRLZhx
-         gz5mRdYTGP5dG8UqXGgX2BSk1FQiVY/O0DYJLY12dRfIx3Xnr4JTllv8adspIrvjh12/
-         cstbbM7YuEaT3ITCQp61On4llG54+pMLi7gRBR5ymccpZUrHdArfGxsts/CyzHWnX4t7
-         A8YOIFflf2yFidersG4UkOGGHKD1M+DUiej5FLtZmLH8Owt6LDcJJwW+rKYTJ1lwDLx/
-         FtcARQtbNC4rpegv4kfY6UlU4U6rgtO8TkqgQ/xh+t+Ij2hlGW/+ZF0Aeicuyt7cjH4l
-         2prQ==
-X-Gm-Message-State: APjAAAWzTct8NnEwTbVTFnIanIHHJ6pwfp185K76KUNBTfcSGYX+BRfV
-        LkgyDPpv3fiqP6BS0UkN4kD73gh68Q2VRkwz36g=
-X-Google-Smtp-Source: APXvYqy8SRhvNmrWleQpOJ5GRG9r8pZg8I86GCvxeNEGPUI+ZN8xuZFfaOaNp8Y00GvT+ZehIkLkp/wQvrXRpymujUk=
-X-Received: by 2002:a1f:d8c1:: with SMTP id p184mr20006470vkg.1.1553646839725;
- Tue, 26 Mar 2019 17:33:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <87efh0pdln.fsf@javad.com> <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
- <8736nj2jcl.fsf@javad.com> <xmqqbm26xtum.fsf@gitster-ct.c.googlers.com>
- <87h8bra1z6.fsf@javad.com> <20190326163204.GC29627@sigill.intra.peff.net>
- <CABPp-BF7cd2+4jr=zGVP8x_QLdFbyOoGRWUgMtgiGDCdqZdjFA@mail.gmail.com> <20190326222052.GD1445@sigill.intra.peff.net>
-In-Reply-To: <20190326222052.GD1445@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Mar 2019 17:33:47 -0700
-Message-ID: <CABPp-BGoH3qE0VqMyov-3YTSFSgDBy6xTKKgrckabnAt2pz05A@mail.gmail.com>
-Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m
- 1' is specified
+        id S1732359AbfC0BGL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Mar 2019 21:06:11 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60225 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732345AbfC0BGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Mar 2019 21:06:11 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 164DE4A415;
+        Tue, 26 Mar 2019 21:06:11 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=c4S2pMKnygrPnRWagG1NdWq6NUY=; b=Lw7Muni
+        d/g+cK6Y1QWhWtZ8JNNHePHBXwtkC4aJpnme6o02f9rjk+vMHGh48cc+XrLH+wHp
+        KnKbUow2N32mRvQ8coZLPTVKBu5X/ogTMXWSniPYdSbavgz2xel+rS425uvYRp0h
+        0hgND7G2z3/39nCD4c2R26J6OP7iSvN5yVnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=vFHnZMlJffoS9z57Lx4RrcD2/Etpkc6MG
+        Lo+zPCRnG3F3JeU2OmQXQbmCVU5XGDWnN9hf9woN/JK/pwHCs7sTOLMBtSuM3sYv
+        ty/h442nYy0fKSRfQXdP7qmbXMuihP5VWmFXuLbXE90qHEtwlk84J1i5SzEGlQif
+        6F8FLpuZOU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0E77F4A411;
+        Tue, 26 Mar 2019 21:06:11 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [173.67.141.44])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4638C4A410;
+        Tue, 26 Mar 2019 21:06:06 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Tue, 26 Mar 2019 21:06:03 -0400
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+Message-ID: <20190327010603.GR4047@pobox.com>
+References: <20190317144747.2418514-1-martin.agren@gmail.com>
+ <20190317194431.GY31362@pobox.com>
+ <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
+ <20190320181715.GJ31362@pobox.com>
+ <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
+ <20190323192756.GK4047@pobox.com>
+ <20190324121619.GD312@sigill.intra.peff.net>
+ <20190324162131.GL4047@pobox.com>
+ <20190325150633.GC19929@sigill.intra.peff.net>
+ <20190325190041.GM4047@pobox.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190325190041.GM4047@pobox.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 7FF2C8A8-502C-11E9-936A-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 26, 2019 at 3:20 PM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Mar 26, 2019 at 03:07:42PM -0700, Elijah Newren wrote:
->
-> > On Tue, Mar 26, 2019 at 9:35 AM Jeff King <peff@peff.net> wrote:
-> > >
-> > > On Mon, Mar 25, 2019 at 09:43:09AM +0300, Sergey Organov wrote:
-> > >
-> > > > How about changing "git show -p M" to output "diff -p M^ M" rather than
-> > > > "diff-tree --cc M" for merge commits? It's really surprising specifying
-> > > > -p has no visible effect.
-> > >
-> > > That's because "-p" is already the default, and the format selection is
-> > > orthogonal to the handling of merge commits. Providing "-m" would
-> > > actually override the "--cc" default (though "--first-parent -m" is
-> > > likely to be less noisy, per this discussion).
-> > >
-> > > As far as defaults go, I dunno. The idea is that "--cc" would give you a
-> > > nice summary of what the merge _itself_ had to touch. I think that's
-> > > valuable, too. If we were starting from scratch, I think there could be
-> > > a discussion about whether one default is better than the other. But at
-> > > this point I have a hard time finding one so much obviously better than
-> > > the other to merit changing the behavior.
-> >
-> > Indeed, some of us would view a first parent diff default for merges
-> > as problematic.  However, I'd like to point out (or remind) that these
-> > two options aren't the only ways you could view a merge.  Thomas
-> > Rast's --remerge-diff[1] is another (even if not yet part of git.git).
-> > Gerrit uses something similar-ish for its default way of showing a
-> > merge.
->
-> Heh, I almost mentioned remerge-diff, but since it's not actually part
-> of Git, I didn't want to get into a tangent. But since you mention it,
-> yes, I actually find it quite a useful way of looking at the diff,
-> especially when I want to see what the person resolving the conflicts
-> actually _did_. The --cc combined diff is too eager to throw away hunks
-> that resolved purely to one side (which _most_ of the time is what you
-> want, but when you're hunting a possible error in the merge, it's quite
-> confusing).
->
-> How close is merge-recursive.c to actually doing a pure in-memory merge?
->
-> I seem to recall that was a (the?) sticking point for the original
-> remerge-diff.
+Hi,
 
-Doing a pure in-memory merge is tied up with my overall
-merge-recursive rewrite, but I haven't touched merge stuff in quite a
-while now other than the recent
-make-directory-rename-detection-be-a-conflict-by-default stuff.  I'm
-hoping I can finish that soon (though I've struggled a bit to find the
-time to do so), and finish out the filter-repo stuff, then I plan to
-get back to merge stuff again.  A pure in-memory merge is near the top
-of my priorities for the rewrite, so we'll get it...eventually.
-(Maybe a Christmas present?)
+I wrote:
+> Jeff King wrote:
+>> That seems like a bug in asciidoctor, which ought to be quoting the "<".
+>> We certainly can't quote it ourselves (we don't even know that our
+>> backend output is going to a format that needs angle brackets quoted).
+> 
+> Yep, it seems so.  I filed this upstream:
+> 
+> https://github.com/asciidoctor/asciidoctor/issues/3205
+> 
+> I updated to asciidoctor-2.0.1 this morning to test, in case
+> it was one of the issues fixed since the 2.0.0 release.
+> Alas, we're the first to hit it and report it.
 
-I do think there's more than just that sticking point for the
-remerge-diff, but the other things are on my radar too (a few slots
-later on my todo list).
+Dan Allen fixed this upstream and released 2.0.2 today.
+It's very good to know that asciidoctor upstream is
+incredibly responsive.  If anyone runs into Dan at a
+conference, please buy him a beer. ;)
+
+There's still the matter of 2.0 dropping docbook45.  I'll
+try to get around to testing 1.5.x releases with docbook5 to
+see if they work reasonably well.  If not, we can add a
+version check and set ASCIIDOC_DOCBOOK appropriately.
+
+One other issue that crops up with docbook5 is that the
+xmlto toolchain now outputs:
+
+    Note: namesp. cut : stripped namespace before processing
+
+as documented at
+
+    https://docbook.org/docs/howto/howto.html#dbxsl
+
+It's mostly an annoyance which we either want to strip out,
+or pass an alternate docbook5 xsl, I think.  But I'm not
+very familiar with the guts of the xml/docbook toolchains.
+
+-- 
+Todd
