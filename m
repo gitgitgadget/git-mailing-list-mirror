@@ -2,114 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MIME_QP_LONG_LINE,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75C3820248
-	for <e@80x24.org>; Wed, 27 Mar 2019 20:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02F7820248
+	for <e@80x24.org>; Wed, 27 Mar 2019 21:10:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbfC0UbQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 16:31:16 -0400
-Received: from n1nlsmtp01.shr.prod.ams1.secureserver.net ([188.121.43.201]:51670
-        "EHLO n1nlsmtp01.shr.prod.ams1.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726127AbfC0UbQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Mar 2019 16:31:16 -0400
-Received: from n3plvcpnl110358.prod.ams3.secureserver.net ([160.153.140.31])
-        by : HOSTING RELAY : with ESMTP
-        id 9FBehwArOqBN89FBehvFnd; Wed, 27 Mar 2019 13:30:14 -0700
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=m-mooga.com
-        ; s=default; h=Content-transfer-encoding:Content-type:Mime-version:
-        In-Reply-To:References:Message-ID:CC:To:From:Subject:Date:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=FJqfnE/rk7RsbfacT5hcYCLEXIxb45kYphSFlSeAg54=; b=YnKrocaMz6ytVvlnVbbYfszoFD
-        1UvWF8KCyMoeRa8nluSZSU/WlRpGPXFA0eRidKMVC4MaMOXkGPYQNnQoYWQMqhqv2h0okrokevi+I
-        vCOob+lybWFxRQbena8Fb/5f16zkyRbqYBrxn3TjZcMclEOBytLyVlFZplWCou0HNR+ag6LjifoQb
-        blAVAu/L8aEdTLzJLGELIb3Kk0md88Dv6NEOFkEHAI81xMwok/u8iMBfC0spQCdxdK2g+D9p7r3aW
-        4j7rFjubqBedhzmlfWbdRcbWQhqvP/JzNSMJZ6XspZvg8f7e8IqQzi5xLCYDYJFijJ2sNNsmHrUxi
-        TQQCmLMQ==;
-Received: from ip5f5be6e2.dynamic.kabel-deutschland.de ([95.91.230.226]:37244 helo=[192.168.178.31])
-        by n3plvcpnl110358.prod.ams3.secureserver.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <contact@m-mooga.com>)
-        id 1h9FBe-005WxV-9g; Wed, 27 Mar 2019 13:30:14 -0700
-User-Agent: Microsoft-MacOutlook/10.17.0.190309
-Date:   Wed, 27 Mar 2019 21:29:54 +0100
-Subject: Re: [GSoC][PATCH] microporject test_path_is_*
-From:   Mooga <contact@m-mooga.com>
-To:     Elijah Newren <newren@gmail.com>
-CC:     <git@vger.kernel.org>
-Message-ID: <BF34A383-7714-40CC-B5EF-4FD20E7AC839@m-mooga.com>
-Thread-Topic: [GSoC][PATCH] microporject test_path_is_*
-References: <1A5DE2FC-7D94-4785-A915-EA2A71C6C377@m-mooga.com>
- <CABPp-BE9vNhnN6XdcxnePnXkek0bNogAiA_cKJqZ1-ct=QA2pw@mail.gmail.com>
-In-Reply-To: <CABPp-BE9vNhnN6XdcxnePnXkek0bNogAiA_cKJqZ1-ct=QA2pw@mail.gmail.com>
-Mime-version: 1.0
-Content-type: text/plain;
-        charset="UTF-8"
-Content-transfer-encoding: quoted-printable
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - n3plvcpnl110358.prod.ams3.secureserver.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - m-mooga.com
-X-Get-Message-Sender-Via: n3plvcpnl110358.prod.ams3.secureserver.net: authenticated_id: contact@m-mooga.com
-X-Authenticated-Sender: n3plvcpnl110358.prod.ams3.secureserver.net: contact@m-mooga.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-CMAE-Envelope: MS4wfJlU7X6EXl4BBFcuLELGmMqR6RiTKTGAbzhCzPy5Xgpcq29dmcdRjstSct/T/7dB8fzmtpuN+td68YmbQzQBo9eEL89oxOD98s6pWjRxP1HqW96ZMUA3
- l6q3UIBcedD7rTYu3l+Tufn1zX81I+NZv0oxy380LFdE+2sdisr5e6wSrBGeozwAOQFcNqxf6bx4rhXxLKtxuzuAaIXzLJweu3U=
+        id S1726275AbfC0VKy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 17:10:54 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37890 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726059AbfC0VKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 17:10:53 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 10so10291249pfo.5
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 14:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=d7odEyiOAguby8XHPhcgfnEPgBxlFThIhfnsFimakVs=;
+        b=EGSAfffdfaiG3YOlXA5GgUvraYKcWyGR/B+LOs/OnUZYZ2snFx1xxNs5xwWFkfuoNq
+         fvxR40tiU13NVQLoPEaCPkqItlrmEaqZB12NmxT0ZXhi2qZ7m03ycJPaIFRXz6uWM+IQ
+         HP1ufOV5Vj40jCFPMSuk6iV1uZbm4qA1AYoyGdIxcUMfnuBIu8tdc5UP5rPUpFm4mtcq
+         Jbiw1nM8HOgMRBuxjcYqw1A7nRkXDf9rhw0K5sTWJktef6hIixuok+ovvr3oFlyzNCNC
+         oqC/nfI73eb4T2MFhPUy5Pe1bfF/EzpQ2ijYMsY9+T6VfmN6OUgzVyLQzEAkzvxGf20m
+         RHJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=d7odEyiOAguby8XHPhcgfnEPgBxlFThIhfnsFimakVs=;
+        b=Xvs151CSl6NuY1EpzCxYcBJwmeS6oKWebnEZ6zV8w9sjf4c0RI3Q0UVjVOQDZVxjhP
+         0tHll0zIN6ihOcgmgDeEIFKwwjz/M3G6ONbE4aD9VzuZxiVBIZikmLU5dDybaWlZK7IX
+         AX4wKSyRwckbB4FU1YTIjcBWViaGe4ny2Uskit/X4EFefmO8rCNDDCqHKfXpddd5MCZM
+         fWbGQBce5cyAQs+t3O+SryDxFtN8VF2Jq3Vy31lYmOiFiZ3ey9IH3b0i7/7JlNclEeS8
+         KzVXAOchpHT9enz/1VgFSBjTa2+XL843zxNoaBQ8lMFMHq7i4ltS4YKBi/6XGK2KyUEm
+         FolQ==
+X-Gm-Message-State: APjAAAXo4DOdLp7sOwoT6GQzYh29GUBd2Cjo6UuZpq8SmW9slbQ4znA9
+        JVBDFr1ZOTNys/RrpaypFaw=
+X-Google-Smtp-Source: APXvYqzC+80Sg55onkj0Yl9qxZX4QZoyU0FBmrMamU/bRSSSvosTf3JiNLQW9D9VC/7bJ+pNBRYvFw==
+X-Received: by 2002:aa7:8208:: with SMTP id k8mr20178956pfi.69.1553721053110;
+        Wed, 27 Mar 2019 14:10:53 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id w21sm4162985pfn.48.2019.03.27.14.10.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 14:10:52 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 14:10:50 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Julian Cheng <julian.cheng@utoronto.ca>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [GSoC] [t9803]
+Message-ID: <20190327211050.GA4062@dev-l>
+References: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eliah,=20
-thanks for the advice, but still after I read the  SubmittingPatches , and =
-see around the Submitting patches process still confussing for me , there's =
-a better way  for explanation as an example =20
+Hi Julian,
 
+On Wed, Mar 27, 2019 at 07:26:12PM +0000, Julian Cheng wrote:
+> Hello Git Community,
+> 
+> I’m new here and hoping to get to be a part of GSOC 2019. I have questions about the main project and the microproject
+> 
+> Main Project Quesctions
+> I was hoping to work on “git revert --drop” and “git commit --reword”. Are there any mentors available for this project? The ideas page lists mentors for other projects but not this one.
+> 
+> Also, “git revert --drop” and “git commit --reword” appear not to have been discussed yet in the public inbox. Is this correct or am I just not finding the threads?
+> 
+> 
+> Microproject Questions (test_path_is_*)
+> I would like to improve t9803-git-p4-shell-metachars.sh 
+> 
+> On the microprojects page, it suggests I should run the tests to make sure they all pass. But if I’m making changes to the tests, is it really adequate testing just to make sure they all pass?
+> 
+> To run all tests, I assume I would just navigate to the tests folder in terminal and call “sh *.sh”, but that doesn’t seem to work. Also, when I call “sh  t9803-git-p4-shell-metachars.sh”, I get “error: GIT-BUILD-OPTIONS missing (has Git been built?).” Git is definitely installed on my computer though. I’ve been using it for months. I cloned this repo with Git. What am I missing here?
 
-Regards
+When the tests run, they don't test your installation (the git you're
+currently using in /usr/bin/git). They test the git you've built in the
+project directory.
 
-=EF=BB=BFOn 27.03.19, 18:06, "Elijah Newren" <git-owner@vger.kernel.org on behalf=
- of newren@gmail.com> wrote:
+First of all, you should build the project. You should run "make" from
+the top-level directory of git. This will fill the directory with git-*
+executables. These are the actual binaries that will be tested.
 
-    Hi Mooga,
-   =20
-    On Wed, Mar 27, 2019 at 5:27 AM Mooga <contact@m-mooga.com> wrote:
-    >
-    >
-    > So for example  that is git diff
-    >
-    > diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-    > index 286bba35d8..fc82965a0f 100755
-    > --- a/t/t2400-worktree-add.sh
-    > +++ b/t/t2400-worktree-add.sh
-    > @@ -66,7 +66,7 @@ test_expect_success '"add" worktree' '
-    > test_expect_success '"add" worktree with lock' '
-    >         git rev-parse HEAD >expect &&
-    >         git worktree add --detach --lock here-with-lock master &&
-    > -       test -f .git/worktrees/here-with-lock/locked
-    > +       test_path_is_file .git/worktrees/here-with-lock/locked
-    >
-    > I would like to hear feedback if I should commit
-   =20
-    As you noticed from the other thread, there are folks who are now
-    unsure whether this microproject suggestion is a good idea anymore.
-    Personally, I like the test_path_is_* slightly better, but the real
-    issue is that we didn't have that discussion before starting the GSoC
-    process and putting it up as a suggestion on the microprojects page.
-    I think the main purpose is getting people familiar with creating and
-    submitting patches, so I'd go ahead and make this change as well as
-    others needed in that file and submit it.  Maybe the patch doesn't get
-    applied but if you've created a correct commit and submitted it as a
-    patch to the mailing list, I'd still count it as a successful
-    microproject.
-   =20
+Next, go into t/ and run "make" again to run all of the tests. You can
+also run individual tests by doing something like
+./t9803-git-p4-shell-metachars.sh, for example.
 
+For even more details on testing, see t/README.
 
+Also, some other helpful documentation to read include:
+
+* Documentation/SubmittingPatches
+* Documentation/CodingGuidelines
+
+Hope this helps,
+
+Denton
+
+> 
+> Best,
+> Julian
