@@ -2,115 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B59F20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 10:05:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E89AA20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 10:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732908AbfC0KFc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 06:05:32 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44799 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731664AbfC0KFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 06:05:31 -0400
-Received: by mail-wr1-f66.google.com with SMTP id y7so13647286wrn.11
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 03:05:30 -0700 (PDT)
+        id S1733128AbfC0KJW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 06:09:22 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:45021 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726305AbfC0KJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 06:09:22 -0400
+Received: by mail-wr1-f43.google.com with SMTP id y7so13662974wrn.11
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 03:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WvKmnNY5yuJy5wdZCCx5mAJLQU+xUxHMZ/IvfbZL38A=;
-        b=mg7CL1SdjcXpRI2QnETTFZne+Ob8/Zx2UThfYJ+cXytbzO44QtToIczsTGm2Duj3cQ
-         SPeUL21dcetSxUYE+Oq1KJ8PlGkSpV+Ug+bMOnvX2Woh1sm0l/3z5ZVoLX0y+vf/m7VX
-         VNp8F6+eaN8WQpYLa2OR8nI6BRKLgPvN4jTdScRxGUvtK30ehIWTXGyQkFwsuUw3O8gn
-         1wbNZfDsjrLfGGkuY9CUiFVrCAdf2NSn6/X3goNtTieyISIau/Waz1ONVQ8GD780Jk2T
-         zOsV3anoRYTugEQxRDvRQdkiJUJBJOAFY2gnwItnIN+0LDpzHkP2YCE3vvWjp3GF2DEk
-         2E8Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8GjzeUI1L6HMjREOi8hQemFUcTWbONOMj1BxNQjFgFg=;
+        b=ghFA2mpNpKOSntj4MUXgw36d79cVyfOAN9UNjA1xDIEwG7tma04z9STtw9EHNHzAPP
+         XUc9SC3r1PcMNCeHVDvSYzVEn5fV5BnATxxHY8y8vbet0v7piy+2c+/x/AOGyytP54lf
+         7T9bcKuHnZWk+a3QFdLbrjRJ8e1JpElZWJxlbA4Nyhg94shOLOKGw7UzKWnQV7kUyrYG
+         kkCMfgUHN5B96SMHHVzQxgP/SwK7gBsCy2cpRZXonT7SkILGKUpVSoSR+J5XA98fxeDB
+         WukBzOZGVVAjpPo1ZS7dly8B7Psk4PeZqwfgFQY9FvNMIDIeTbx8edfhqoeFXeLWJIHq
+         02NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WvKmnNY5yuJy5wdZCCx5mAJLQU+xUxHMZ/IvfbZL38A=;
-        b=QWAQkudvG74hKps+QKjWoZEgoQiCcqf9SqxDgtkuol6wLyCVTlpWQI3GhS9sfUkMRD
-         GF34CKvEdip2opXIlqNjLVKJSyhQ7c2plsFBRU7rjMtHHzTMpXKJpGfNW6fX6kvzf46p
-         tcRyi+cYPvK3HbPn7p55NucjEHBpMYEvhXOgCWGtEAF67ULxQK+nDsqBLsjwt99HtU7/
-         kWAu7NELBGC8oa2SspFmxv0kVrFx2A32+eb/qFcJI56nVpp8VOPHW+FlK+bzyY7cJJpF
-         VqaxFFNldu00MJO1q5GvfLIkb2aKwOndbccbH3lxs49kpXXOcaC/DOn2uTE+NEb8b3W8
-         T03g==
-X-Gm-Message-State: APjAAAUDNuKaoWVzk4TGHrxdBkweiUGQRb5vfFg/43EtYdFEz4wlddoB
-        uEySRqKcCwRw7cI5xLPi+XVP6xeWAZY=
-X-Google-Smtp-Source: APXvYqxFPQcJySn8qLtKfmzNnFuvjPy2PFntE3J/L+ps4+frFTYwG0h6Awo3QXP5YycZVsweiz4AQw==
-X-Received: by 2002:adf:b612:: with SMTP id f18mr5430129wre.236.1553681129831;
-        Wed, 27 Mar 2019 03:05:29 -0700 (PDT)
-Received: from szeder.dev (x4d0c7b09.dyn.telefonica.de. [77.12.123.9])
-        by smtp.gmail.com with ESMTPSA id v190sm2348751wme.18.2019.03.27.03.05.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Mar 2019 03:05:28 -0700 (PDT)
-Date:   Wed, 27 Mar 2019 11:05:22 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190327100522.GA32732@szeder.dev>
-References: <20190317194431.GY31362@pobox.com>
- <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
- <20190320181715.GJ31362@pobox.com>
- <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
- <20190323192756.GK4047@pobox.com>
- <20190324121619.GD312@sigill.intra.peff.net>
- <20190324162131.GL4047@pobox.com>
- <20190325150633.GC19929@sigill.intra.peff.net>
- <20190325190041.GM4047@pobox.com>
- <20190327010603.GR4047@pobox.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=8GjzeUI1L6HMjREOi8hQemFUcTWbONOMj1BxNQjFgFg=;
+        b=mW7rnYKPwMiVHfedOkenmgRVjV7hixa+infpuJbVzZwusH/VnguQ6h2M3Dj1hgkc0Y
+         FRllGRvsOKk2EgYT0H3roJ3PNr4BqiKXZ/rxGCnG8AyhZ3nX2AVMEV13ymEpG0dQipTE
+         O7hzYBzZvir0W+0HmVj5VAd2k2r40J6rFE5VG3zvZ8Iid/EB8Iycsm88YECkb011X7Xs
+         eKILsH2tXJln0Hjg7iWalsfV3vet6p+1xINVZZ/LM6oHinoC3QGpTdPI2pWua2Hhbdm0
+         psZwPxtJE43NPuFWYJIoyyEfYY6PPUrf8ApUhUIdVjzG8ApHBn/h/ZgsyG/21v+T0c2d
+         merg==
+X-Gm-Message-State: APjAAAWrgLaYx5dBck826QfPQThPxqadtAZhNw+NNLZ7WCb4PwWbuz13
+        RUr186pSoMFhG/xtmCBNfmA=
+X-Google-Smtp-Source: APXvYqyXKgdlwzHrdSkHiKPMNZPh4mXWhjcJGGiVc0KR21WsDSatboc+jFlkUg6x3FtrTuoVqaQuaQ==
+X-Received: by 2002:adf:ee07:: with SMTP id y7mr21873961wrn.219.1553681360479;
+        Wed, 27 Mar 2019 03:09:20 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id v13sm19309275wmj.43.2019.03.27.03.09.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Mar 2019 03:09:19 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Mooga <contact@m-mooga.com>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [GSoC] microporject test_path_is_*
+References: <38B8E527-2338-485E-8840-29121F259687@m-mooga.com> <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
+Date:   Wed, 27 Mar 2019 11:09:18 +0100
+Message-ID: <877eckbpdd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190327010603.GR4047@pobox.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 26, 2019 at 09:06:03PM -0400, Todd Zullinger wrote:
-> Dan Allen fixed this upstream and released 2.0.2 today.
-> It's very good to know that asciidoctor upstream is
-> incredibly responsive.  If anyone runs into Dan at a
-> conference, please buy him a beer. ;)
 
-I noticed the "Release beer" lines in the Asciidoctor relnotes... :)
+On Tue, Mar 26 2019, Elijah Newren wrote:
 
-> One other issue that crops up with docbook5 is that the
-> xmlto toolchain now outputs:
-> 
->     Note: namesp. cut : stripped namespace before processing
-> 
-> as documented at
-> 
->     https://docbook.org/docs/howto/howto.html#dbxsl
-> 
-> It's mostly an annoyance which we either want to strip out,
-> or pass an alternate docbook5 xsl, I think.  But I'm not
-> very familiar with the guts of the xml/docbook toolchains.
+> Hi,
+>
+> On Tue, Mar 26, 2019 at 2:10 PM Mooga <contact@m-mooga.com> wrote:
+>>
+>> Hi,
+>> I am still a bit confused about the task itself
+>>
+>> it=E2=80=99s just text replacing for example:
+>> t1400-update-ref.sh , line 194 -> `test_path_is_missing`  has to be =E2=
+=80=98test_path_is_file=E2=80=99
+>>
+>> Thanks
+>
+> There are several places in the code that use test with -e or -f or -d
+> (or -h or...) in order to check for the presence of a
+> file/directory/symlink/etc.  For example,
+>    test -f path1/file1
+> This could be made more clear and produce nicer error messages if it
+> were instead
+>    test_path_is_file path1/file1
 
-In our documentation CI build jobs we check that nothing is written to
-Asciidoc/Asciidoctor's standard error [1].  These "Note:" lines go to
-stderr, and will trigger that check and cause the build to fail.  So
-wither we should find a way to silence these notes, or filter them out
-in the CI builds.
+See also the recent thread I started
+https://public-inbox.org/git/87sgwav8cp.fsf@evledraar.gmail.com/ asking
+if these wrappers were useless now. The consensus was to keep them (a
+bunch of use-cases I didn't know about). Useful if you're poking at them
+and wondering why we're using this / what it gives us.
 
+> There are likewise several that use one of
+>    ! test -e path/to/filename
+> or
+>    ! test -f path/to/filename
+> or
+>   test ! -f path/to/filename
+> which could be replaced by
+>   test_path_is_missing path/to/filename
 
-[1] 505ad91304 (travis-ci: check AsciiDoc/AsciiDoctor stderr output,
-    2017-04-26), though it never actually worked as intended, but that
-    is about to get fixed:
+Interesting that for some we use the 'test_is_there/test_is_not_there'
+pattern and for others 'test_is_there [!]'. E.g
+test_path_exist/test_path_is_missing v.s. test_i18ngrep.
 
-    https://public-inbox.org/git/20190324215534.9495-7-szeder.dev@gmail.com/
-
-
+> This GSoC microproject is just about picking one testfile that has
+> some of these constructs, and fixing the cases found within that
+> testfile.
