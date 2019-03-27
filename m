@@ -4,83 +4,112 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MIME_QP_LONG_LINE,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 211EA20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 20:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75C3820248
+	for <e@80x24.org>; Wed, 27 Mar 2019 20:31:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728396AbfC0UH7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 16:07:59 -0400
-Received: from bureau84.ns.utoronto.ca ([128.100.132.184]:41165 "EHLO
-        bureau84.ns.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727117AbfC0UH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 16:07:59 -0400
-X-Greylist: delayed 2505 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Mar 2019 16:07:59 EDT
-Received: from exsmtp.utoronto.ca ([128.100.46.57])
-        (authenticated bits=0)
-        by bureau84.ns.utoronto.ca (8.13.8/8.13.8) with ESMTP id x2RJQC0S006668
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 15:26:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=utoronto.ca; s=beta;
-        t=1553714773; bh=zl6IumyopWMBoi5dtAUkqnYRR1phqtU0/VHp2Zuozt8=;
-        h=From:To:Subject:Date:Message-ID:Content-Type:
-         Content-Transfer-Encoding:MIME-Version;
-        b=6TjV6RRmJ+Snsoi45S9st+5QBtYjkAsLjmQ4H87ig7NEmxCe6ZXyUPLtyRCerB0tY
-         WP/NO87lGWd14Ci5yvQUYPHm3w/LwV7Yv8g1/b/e23RuYRc1/pg8ipea26nKyRSVzP
-         QiWNGicDXcduPQ6pCIctrZnRY4G85iaq/xSwel00=
-Received: from ARBOREXCASX3.UTORARBOR.UTORAD.Utoronto.ca
- ([fe80::d479:357a:c4f:796c]) by arborexhubx1.UTORARBOR.UTORAD.Utoronto.ca
- ([2002:8064:2e39::8064:2e39]) with mapi id 14.03.0224.002; Wed, 27 Mar 2019
- 15:26:12 -0400
-From:   Julian Cheng <julian.cheng@utoronto.ca>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [GSoC] [t9803]
-Thread-Topic: [GSoC] [t9803]
-Thread-Index: AQHU5NLUUBNMeD/zM0yu7jlWN2IVvw==
-Date:   Wed, 27 Mar 2019 19:26:12 +0000
-Message-ID: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
-Accept-Language: en-CA, en-US
-Content-Language: en-CA
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [128.100.46.46]
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
+        id S1727000AbfC0UbQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 16:31:16 -0400
+Received: from n1nlsmtp01.shr.prod.ams1.secureserver.net ([188.121.43.201]:51670
+        "EHLO n1nlsmtp01.shr.prod.ams1.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726127AbfC0UbQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 Mar 2019 16:31:16 -0400
+Received: from n3plvcpnl110358.prod.ams3.secureserver.net ([160.153.140.31])
+        by : HOSTING RELAY : with ESMTP
+        id 9FBehwArOqBN89FBehvFnd; Wed, 27 Mar 2019 13:30:14 -0700
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=m-mooga.com
+        ; s=default; h=Content-transfer-encoding:Content-type:Mime-version:
+        In-Reply-To:References:Message-ID:CC:To:From:Subject:Date:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=FJqfnE/rk7RsbfacT5hcYCLEXIxb45kYphSFlSeAg54=; b=YnKrocaMz6ytVvlnVbbYfszoFD
+        1UvWF8KCyMoeRa8nluSZSU/WlRpGPXFA0eRidKMVC4MaMOXkGPYQNnQoYWQMqhqv2h0okrokevi+I
+        vCOob+lybWFxRQbena8Fb/5f16zkyRbqYBrxn3TjZcMclEOBytLyVlFZplWCou0HNR+ag6LjifoQb
+        blAVAu/L8aEdTLzJLGELIb3Kk0md88Dv6NEOFkEHAI81xMwok/u8iMBfC0spQCdxdK2g+D9p7r3aW
+        4j7rFjubqBedhzmlfWbdRcbWQhqvP/JzNSMJZ6XspZvg8f7e8IqQzi5xLCYDYJFijJ2sNNsmHrUxi
+        TQQCmLMQ==;
+Received: from ip5f5be6e2.dynamic.kabel-deutschland.de ([95.91.230.226]:37244 helo=[192.168.178.31])
+        by n3plvcpnl110358.prod.ams3.secureserver.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <contact@m-mooga.com>)
+        id 1h9FBe-005WxV-9g; Wed, 27 Mar 2019 13:30:14 -0700
+User-Agent: Microsoft-MacOutlook/10.17.0.190309
+Date:   Wed, 27 Mar 2019 21:29:54 +0100
+Subject: Re: [GSoC][PATCH] microporject test_path_is_*
+From:   Mooga <contact@m-mooga.com>
+To:     Elijah Newren <newren@gmail.com>
+CC:     <git@vger.kernel.org>
+Message-ID: <BF34A383-7714-40CC-B5EF-4FD20E7AC839@m-mooga.com>
+Thread-Topic: [GSoC][PATCH] microporject test_path_is_*
+References: <1A5DE2FC-7D94-4785-A915-EA2A71C6C377@m-mooga.com>
+ <CABPp-BE9vNhnN6XdcxnePnXkek0bNogAiA_cKJqZ1-ct=QA2pw@mail.gmail.com>
+In-Reply-To: <CABPp-BE9vNhnN6XdcxnePnXkek0bNogAiA_cKJqZ1-ct=QA2pw@mail.gmail.com>
+Mime-version: 1.0
+Content-type: text/plain;
+        charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - n3plvcpnl110358.prod.ams3.secureserver.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - m-mooga.com
+X-Get-Message-Sender-Via: n3plvcpnl110358.prod.ams3.secureserver.net: authenticated_id: contact@m-mooga.com
+X-Authenticated-Sender: n3plvcpnl110358.prod.ams3.secureserver.net: contact@m-mooga.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-CMAE-Envelope: MS4wfJlU7X6EXl4BBFcuLELGmMqR6RiTKTGAbzhCzPy5Xgpcq29dmcdRjstSct/T/7dB8fzmtpuN+td68YmbQzQBo9eEL89oxOD98s6pWjRxP1HqW96ZMUA3
+ l6q3UIBcedD7rTYu3l+Tufn1zX81I+NZv0oxy380LFdE+2sdisr5e6wSrBGeozwAOQFcNqxf6bx4rhXxLKtxuzuAaIXzLJweu3U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git Community,=0A=
-=0A=
-I=92m new here and hoping to get to be a part of GSOC 2019. I have question=
-s about the main project and the microproject=0A=
-=0A=
-Main Project Quesctions=0A=
-I was hoping to work on =93git revert --drop=94 and =93git commit --reword=
-=94. Are there any mentors available for this project? The ideas page lists=
- mentors for other projects but not this one.=0A=
-=0A=
-Also, =93git revert --drop=94 and =93git commit --reword=94 appear not to h=
-ave been discussed yet in the public inbox. Is this correct or am I just no=
-t finding the threads?=0A=
-=0A=
-=0A=
-Microproject Questions (test_path_is_*)=0A=
-I would like to improve t9803-git-p4-shell-metachars.sh =0A=
-=0A=
-On the microprojects page, it suggests I should run the tests to make sure =
-they all pass. But if I=92m making changes to the tests, is it really adequ=
-ate testing just to make sure they all pass?=0A=
-=0A=
-To run all tests, I assume I would just navigate to the tests folder in ter=
-minal and call =93sh *.sh=94, but that doesn=92t seem to work. Also, when I=
- call =93sh  t9803-git-p4-shell-metachars.sh=94, I get =93error: GIT-BUILD-=
-OPTIONS missing (has Git been built?).=94 Git is definitely installed on my=
- computer though. I=92ve been using it for months. I cloned this repo with =
-Git. What am I missing here?=0A=
-=0A=
-Best,=0A=
-Julian=0A=
+Hi Eliah,=20
+thanks for the advice, but still after I read the  SubmittingPatches , and =
+see around the Submitting patches process still confussing for me , there's =
+a better way  for explanation as an example =20
+
+
+Regards
+
+=EF=BB=BFOn 27.03.19, 18:06, "Elijah Newren" <git-owner@vger.kernel.org on behalf=
+ of newren@gmail.com> wrote:
+
+    Hi Mooga,
+   =20
+    On Wed, Mar 27, 2019 at 5:27 AM Mooga <contact@m-mooga.com> wrote:
+    >
+    >
+    > So for example  that is git diff
+    >
+    > diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+    > index 286bba35d8..fc82965a0f 100755
+    > --- a/t/t2400-worktree-add.sh
+    > +++ b/t/t2400-worktree-add.sh
+    > @@ -66,7 +66,7 @@ test_expect_success '"add" worktree' '
+    > test_expect_success '"add" worktree with lock' '
+    >         git rev-parse HEAD >expect &&
+    >         git worktree add --detach --lock here-with-lock master &&
+    > -       test -f .git/worktrees/here-with-lock/locked
+    > +       test_path_is_file .git/worktrees/here-with-lock/locked
+    >
+    > I would like to hear feedback if I should commit
+   =20
+    As you noticed from the other thread, there are folks who are now
+    unsure whether this microproject suggestion is a good idea anymore.
+    Personally, I like the test_path_is_* slightly better, but the real
+    issue is that we didn't have that discussion before starting the GSoC
+    process and putting it up as a suggestion on the microprojects page.
+    I think the main purpose is getting people familiar with creating and
+    submitting patches, so I'd go ahead and make this change as well as
+    others needed in that file and submit it.  Maybe the patch doesn't get
+    applied but if you've created a correct commit and submitted it as a
+    patch to the mailing list, I'd still count it as a successful
+    microproject.
+   =20
+
+
