@@ -2,139 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B7FC20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 13:01:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD2E20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 13:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728101AbfC0NBX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 09:01:23 -0400
-Received: from insw.cz ([83.167.247.81]:58825 "EHLO insw.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725829AbfC0NBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 09:01:22 -0400
-Received: from localhost (insw.cz [127.0.0.1])
-        by insw.cz (Postfix) with ESMTP id BB9C4DA262D7
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 14:01:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bena.rocks; s=mail;
-        t=1553691680; bh=UxBSINgbb3vcGplzAeMbAqoZsnLgQyJCvnMZGYfpq0g=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=RLeHVLoRCNtC7AH7xC8ieVGeCtRTbbjhCq0akzyvIQsbsVhrkDF66zQj7vih+FxaI
-         SbbEfaT/2m9oE4IYH9CkWa6T8c7f6dQb7S5e/RwSOZO73JMa9raaaH8bf3uZqVxIdn
-         VFlQZIbl7tInZi+Ag9B/33sIZhdpcRqFp+eTgtPg=
-X-Virus-Scanned: Debian amavisd-new at server
-Authentication-Results: insw.cz (amavisd-new); dkim=pass (1024-bit key)
-        header.d=bena.rocks
-Received: from insw.cz ([127.0.0.1])
-        by localhost (insw.cz [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id Ktz82iNkfG_4 for <git@vger.kernel.org>;
-        Wed, 27 Mar 2019 14:01:20 +0100 (CET)
-Received: from MacBook.local (83-167-247-37.static.masterinter.net [83.167.247.37])
-        by insw.cz (Postfix) with ESMTPSA id 11A0ADA262D1;
-        Wed, 27 Mar 2019 14:01:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bena.rocks; s=mail;
-        t=1553691680; bh=UxBSINgbb3vcGplzAeMbAqoZsnLgQyJCvnMZGYfpq0g=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=RLeHVLoRCNtC7AH7xC8ieVGeCtRTbbjhCq0akzyvIQsbsVhrkDF66zQj7vih+FxaI
-         SbbEfaT/2m9oE4IYH9CkWa6T8c7f6dQb7S5e/RwSOZO73JMa9raaaH8bf3uZqVxIdn
-         VFlQZIbl7tInZi+Ag9B/33sIZhdpcRqFp+eTgtPg=
-Subject: Re: Unable to change remote url of origin
-To:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org
-References: <7b30ebfd-4f85-0fa7-8e66-7e63d7cb52d9@bena.rocks>
- <20190327125737.GA20395@alpha>
-From:   Petr Bena <petr@bena.rocks>
-Message-ID: <1af53933-86ad-6272-c564-087a462d7336@bena.rocks>
-Date:   Wed, 27 Mar 2019 14:01:19 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.5.2
+        id S1728357AbfC0NLy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 09:11:54 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:45910 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728101AbfC0NLy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 09:11:54 -0400
+Received: by mail-ed1-f45.google.com with SMTP id m16so13932411edd.12
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 06:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WYlsE/qm0zZlFhbcmpf5JruYHmvGe9TkEOBhpnPOhBk=;
+        b=KzD6kL/xlgjjPXBZ3pPc49p3liywysTdXG/6SlzOIPBmTtfzSZfHxFyLBjk0S9a3Rn
+         Jidk5gYPG0qRdsBwX87w26fcDwGYjcTfwVM+81biEkgF5OuFFN1auDD8lk1pVPYDI84s
+         nL6wBCaL/JeV3i1bZ8bMzLWlo2GQ2t9SsxNotIjaWGiQlVHHDCKxFLnNLDa5IcqqgTXS
+         9GYp3O24l5AnkXTLWoXgNpBsLqubKvKoqT3f9N9nfAoxN6/Xe5rGq6+YCwGYZ3Gwyi85
+         wXJnJieforgxjpTHHbXda8ju5IIy2Lq09RrOwGrqCL3mTPEwCuOSTsDFNetChm2tsM5q
+         fvFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WYlsE/qm0zZlFhbcmpf5JruYHmvGe9TkEOBhpnPOhBk=;
+        b=BhYoAJp9slmHHdq67fM0ls0n+irtmoo1IGuacWjssHBYMTcBFgbwLQxp0PoudMJF2w
+         l6T5WYnw3q4Zrem+Yb5aRxGUj4MEdfOXlPNOIjqNl7IPqIrg6FwqE2UnlyCTrMIUdR2P
+         oHI3emTY2PPDUtsc6GMI82ucQFA4vSyhtmc+NVjuZH6RDWk3t8+C6fly6syGI8YyYXvX
+         oX4fd2ZRqIvNWcG3cemqiCofiRvKPn/op5Vz3DAVzmxXbVz7xD7qdyQ3hJ2LKhD9vUno
+         2zLev5e73Ap5IQDfzNzK4Q5KQxu/klIK0+TbQvxLxcLkgW6QHJOavNZyBlvCqdpIdpKN
+         zzmw==
+X-Gm-Message-State: APjAAAXI197GIs+2Sqna7EoZHQVS0jOWQ4D0ArvobRv4odo6LPhoLVeP
+        I8NR9TXdPkBfqLhSnp/kf22j0YDMt61ZBtYnl0g6gj/q
+X-Google-Smtp-Source: APXvYqx9CjKSb2NF7huGFb8/TK08+akpjCWLXBTszbDwC60y2PHsT0X0WfXsrL9paYnyMaE3cbYX55JLyBayxNYyIpk=
+X-Received: by 2002:a17:906:e201:: with SMTP id gf1mr21077932ejb.108.1553692312767;
+ Wed, 27 Mar 2019 06:11:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190327125737.GA20395@alpha>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+References: <mvmd0mcsjkf.fsf@suse.de>
+In-Reply-To: <mvmd0mcsjkf.fsf@suse.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 27 Mar 2019 14:11:41 +0100
+Message-ID: <CAP8UFD1qU_kJ97MdLFwzx+g3F6Q+fQ9LWOBxd=1m4vSi-fxF=Q@mail.gmail.com>
+Subject: Re: git replace --graft does error checking too late
+To:     Andreas Schwab <schwab@suse.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/03/2019 13:57, Kevin Daudt wrote:
-> On Wed, Mar 27, 2019 at 01:25:27PM +0100, Petr Bena wrote:
->> Hello,
->>
->> I used to change remote URL simply by editing .git/config (which may not be
->> most correct way), but out of sudden I am no longer able to do that. So I
->> decided to do it the "proper way" but still - to no avail. Here is what I do
->> and also it's visible what is wrong:
->>
->> # Display remote URL
->>
->> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
->> origin    git@github.com:grumpy-irc/grumpy (fetch)
->> origin    git@github.com:grumpy-irc/grumpy (push)
->>
->> #Now change it to HTTPS instead of SSH
->>
->> petr.bena@MacBook:~/Documents/grumpy$ git remote set-url origin
->> https://github.com/grumpy-irc/grumpy
->>
->> # Verify if it has changed
->>
->> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
->> origin    git@github.com:grumpy-irc/grumpy (fetch)
->> origin    git@github.com:grumpy-irc/grumpy (push)
->>
->>
->> It's still SSH. What am I doing wrong?
->>
->> petr.bena@MacBook:~/Documents/grumpy$ git --version
->> git version 2.21.0
->>
->>
->> petr.bena@MacBook:~/Documents/grumpy$ cat .git/config
->> [core]
->>      repositoryformatversion = 0
->>      filemode = true
->>      bare = false
->>      logallrefupdates = true
->>      ignorecase = true
->>      precomposeunicode = true
->> [submodule]
->>      active = .
->> [remote "origin"]
->>      url = https://github.com/grumpy-irc/grumpy
->>      fetch = +refs/heads/*:refs/remotes/origin/*
->> [branch "master"]
->>      remote = origin
->>      merge = refs/heads/master
->> [submodule "src/libgp"]
->>      url = http://github.com/grumpy-irc/libgp
->> [submodule "src/libirc"]
->>      url = http://github.com/grumpy-irc/libirc
->> [branch "remote_scripts"]
->>      remote = origin
->>      merge = refs/heads/remote_scripts
->>
-> Hello Petr,
+On Wed, Mar 27, 2019 at 11:24 AM Andreas Schwab <schwab@suse.de> wrote:
 >
-> What does git config --show-origin remoe.origin.url return?
->
-> Kind regards, Kevin
+> When running `git replace --graft A B' where B is a non-commit (eg. a
+> tag) it displays an error,
 
+Yeah, it seems that when A is a commit and B a tag I get:
 
-Hello Kevin,
+"error: object A is a tag, not a commit"
 
-petr.bena@MacBook:~/Documents/grumpy$ git config --show-origin 
-remote.origin.url
-file:.git/config    https://github.com/grumpy-irc/grumpy
+which is wrong as A is a commit.
 
-However git push is still accessing SSH version (which is blocked by FW 
-in this place):
+> but creates the replace ref anyway.  I think
+> it should verify that B names a commit object before creating the ref.
 
-petr.bena@MacBook:~/Documents/grumpy$ git push -v
-Pushing to git@github.com:grumpy-irc/grumpy
+Accepting a tag and using the commit the tag points to could be useful.
 
-I need to change it to HTTPS
+For example someone could look at the commit graph, then decide to tag
+the commit(s) that should be used when replacing, and then use `git
+replace --graft A <tag>...`
+using the created tag(s).
 
+(I checked the code in builtin/replace.c and it seems that we use
+lookup_commit_reference() on each of the new parents, so we should be
+safe in case one of the given new parents cannot be peeled into a
+commit.)
+
+So it seems to me that the issue is that it shows a wrong error when
+it shouldn't show anything, or perhaps only a warning.
