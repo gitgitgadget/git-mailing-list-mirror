@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 701A120248
-	for <e@80x24.org>; Wed, 27 Mar 2019 06:37:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB3D20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 08:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733139AbfC0GhE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 02:37:04 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:40613 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfC0GhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 02:37:03 -0400
-Received: by mail-it1-f195.google.com with SMTP id y63so12673014itb.5
-        for <git@vger.kernel.org>; Tue, 26 Mar 2019 23:37:03 -0700 (PDT)
+        id S1726344AbfC0I0N (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 04:26:13 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:39794 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725786AbfC0I0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 04:26:12 -0400
+Received: by mail-qt1-f194.google.com with SMTP id t28so17817517qte.6
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 01:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=platin-gs.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=l/H084qsfQ5vGM3t220f2HCOfOotIAytRSfltsNCwaw=;
-        b=Fj/XPaWCjIxaobD6JbX3/WTFcZdRzso4MwQtyQcpCI4sv+stAwmrLeMdzVJtJQ7j7e
-         zka1vMihHzLwvaGBSYsWNRJluQLh7QzPMmALhu0RuDADnVhUnaDqV02tPGflcu6d4ewW
-         z+YKnIwh2elqqpGqfyh5dUdWgF+nPIb60YdswRXTLfORg1Ko9QI7qkPjpvd9eFto+RLt
-         CD2t2RbL/dF+5A4FL35UlA3s84Oslknz+DZ3akZGTtPjsw4QzNXd+xYXRGank6t4rbZv
-         6uyXBuBOnqQiJS2OiSZ6GDyWUFLDxPliXcWF8klW6SIJhZr+9oXnPWO5YtEalsqZYxw2
-         LlRA==
+        bh=99wOYG05UX+3cIqZUsrV/nGlB5WGXeI11gwTN09d9wQ=;
+        b=uo47xwefTTCzK1GX83XRWv6fuwsJ8x0Y2rXorXqTfquaoVFqTUHSffZbZtDbSYB0oz
+         aI7IYMCEJi8it95oy7+qfCq+f6TjPcr3N/A0TNFmu9mwis9VE8FzYYAEWxirBTKaIcyF
+         5tMHs6VASA1AYizChOc5d6t7kypVg6xeRpKEHnh4FcapZC6dDNAGlIm9sVzenhcF9e1U
+         zQXSk+eSG3xcwC4kzWZjG0zcw632m8LFNTRzqb9PXj0ySwrlQLNFK1vWjaq/3n75eBw3
+         I8sZsjnttKs4wV1VxQH6Tzw+xTLvVFShWD8l7d5T+sa69F3xTa2aCrz/yzGFpSUMcRJW
+         MG4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=l/H084qsfQ5vGM3t220f2HCOfOotIAytRSfltsNCwaw=;
-        b=jrXXgjcQTDNrKAQTURxFwiPbHBhrxgfGaFx3967gih8Ap19hZOCYLNTjuwOINEeojP
-         4hjOQJ241MqumTnGdyaBcQ9vcCkIKfxM4rI4LYvxnEjVfFltEIeoOs6xuIWjw+00phZ5
-         Kkjg250MFXo4uekiNjx9Xz5jAY/emrvAWLKuWcJ3Pnmft94t45PvdPslFDQSz7ju6b+0
-         ekVw5Q6cUcgrYr+82O10XSEStgMXwzq7T0b8pdYhh6jQYRMugN/OFyvf+54GAyYyXjeh
-         AJMw91VtLfb9ih+3eSbS0EDc0BjQVQk+CCsjzCDLf1x0GXuJeb11AhEIE/YbTasDx3jP
-         fY3A==
-X-Gm-Message-State: APjAAAU5q5LLNkhoZxMfQcI5l9PDeW0oxvoZMl0DehWEof/Py5kFmhdF
-        6TyuVn/xYTQvX0N8dYSvhWEa+p1IUCN2SOSlqmc=
-X-Google-Smtp-Source: APXvYqxHR9n9uyQE2LBCPZpxZuCCgtMEtDW/9VI5IuNxaORd2VDY/m3vOK8gqW0YQqqt8ei73gfuche2rVWOrhAvT/s=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr2263887itc.70.1553668623063;
- Tue, 26 Mar 2019 23:37:03 -0700 (PDT)
+        bh=99wOYG05UX+3cIqZUsrV/nGlB5WGXeI11gwTN09d9wQ=;
+        b=M87ZHJRjZht8n/CR3kx74A0OZbJjgYj8mjQJLDOmx2orv34dvFC0vUastHR+bLVPXB
+         2mrOlOuBoLvLyhgXJeWpltlXDb/cnkLWwS774p8ZDbykB0c5A82RwoiPEuhuvEbqGtHv
+         objohIcQaJrdoY52gq1rulOR1TXkuc2kxSBCnRG6VxtgMZcOVp8Y+wSjmd4gdSVPtc0z
+         tN+zz/wqGuYecJbLNMqM3n4nmcVTC7NnoX4Lg9rMRV2nV6CQQXxAqlR8X9Hr08GQA3Uv
+         iKRrXQzKayhZJ7hNBIDOyh5GAP6L/A82HUpDCCjxj2bG0/YLaJlpZ+9MmG+sfqSfvVV6
+         YOAg==
+X-Gm-Message-State: APjAAAVeK9tgbTDnyl7WcT8wUZ57az/GoEQqF96G7oFOb8O6KrQc1zzy
+        FFvFryA0zRk45eJhPNYrpeQwnABr5Opqwr+g6Xcqn268juM=
+X-Google-Smtp-Source: APXvYqxNIU8XDDlxjVuSvTIBSkhom+O30ztu+CqwLZXkEvNDi2KlMnXtJwi5v5YSuBIScYDEUvaWJeYBLnLN/rQh/b8=
+X-Received: by 2002:ac8:74d9:: with SMTP id j25mr26710187qtr.98.1553675171795;
+ Wed, 27 Mar 2019 01:26:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190324235020.49706-1-michael@platin.gs> <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
  <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
  <b077afed-d143-506e-977e-6edf2492f75f@google.com> <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
  <20190325233516.GB23728@sigill.intra.peff.net> <CA+P7+xo-AHmB+Wv0Z+dpgshhmqSLEb41T-JP+NKJD8DAFARA5w@mail.gmail.com>
- <CAJDYR9RVz6ZKQ-vdC8O3LYZnGeBcGHCRtL0m6UoRrKDBsUoFOw@mail.gmail.com>
-In-Reply-To: <CAJDYR9RVz6ZKQ-vdC8O3LYZnGeBcGHCRtL0m6UoRrKDBsUoFOw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 27 Mar 2019 13:36:36 +0700
-Message-ID: <CACsJy8D8yBK9p9Rgy+wk8cMfPLG7qanvGA-LcmmHmjbaMnvBLQ@mail.gmail.com>
+ <CAJDYR9RVz6ZKQ-vdC8O3LYZnGeBcGHCRtL0m6UoRrKDBsUoFOw@mail.gmail.com> <CACsJy8D8yBK9p9Rgy+wk8cMfPLG7qanvGA-LcmmHmjbaMnvBLQ@mail.gmail.com>
+In-Reply-To: <CACsJy8D8yBK9p9Rgy+wk8cMfPLG7qanvGA-LcmmHmjbaMnvBLQ@mail.gmail.com>
+From:   Michael Platings <michael@platin.gs>
+Date:   Wed, 27 Mar 2019 08:26:00 +0000
+Message-ID: <CAJDYR9T40xaSpmL_e00WWXzxEm_j0pcTqBhvr=5mu-fTpKodmQ@mail.gmail.com>
 Subject: Re: [RFC PATCH 0/1] Fuzzy blame
-To:     Michael Platings <michael@platin.gs>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>,
         Barret Rhoden <brho@google.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -70,23 +70,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 27, 2019 at 3:27 AM Michael Platings <michael@platin.gs> wrote:
-> I think it's really important that we make this dead easy for everyone
-> to use. The ultimate in ease of use would be for git blame to
-> automatically pick up ignore settings without the user having to even
-> know that it's happening. But that breaks the principle of least
-> astonishment. The next simplest thing I can think of is to add a
-> configuration option blame.ignoreRevs which would have the same
-> effect, except the user has to opt in.
-> Barret has implemented blame.ignoreRevsFile, but I think the world
-> will be a more consistent and happier place if we dictate the location
-> that the revisions are loaded from, in the same way as .gitignore.
-> Deciding what that location should be is one of those bikeshed
-> arguments which is perhaps why Barret dodged it :)
+> Another good place to keep these revs is git-notes,
+> which probably could result in faster lookups too and can be made
+> visible in git-log.
 
-And bikeshedding. Another good place to keep these revs is git-notes,
-which probably could result in faster lookups too and can be made
-visible in git-log. But that's in addition to --ignoreRevsFile, not
-replacing it.
--- 
-Duy
+Oh wow, I really like this. A major concern I had about the revisions
+file was that you don't know what a revision ID will be until it's
+upstream. If you can specify *in the commit message itself* what
+options should apply to git blame for that revision then that problem
+is solved. And if you change your mind later, or want to ignore a
+pre-existing revision then git-notes solves that problem.
+
+So I'm thinking you just have a commit message like this:
+"
+Make all function names snake_case
+git-blame-ignore: fuzzy
+"
+And users who have blame.ignoreRevs set will have the -F/--fuzzy
+option applied to that commit.
+
+> But that's in addition to --ignoreRevsFile, not replacing it.
+
+I disagree. ignoreRevsFile has the major problem that the file will
+need updating every time you rebase a commit to be ignored, and you'll
+need to remember to edit it for cherry picks. Let's not have that
+option as I think it will add unhelpful complexity.
+
+-Michael
