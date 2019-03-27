@@ -2,94 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3480220248
-	for <e@80x24.org>; Wed, 27 Mar 2019 09:16:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B59F20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 10:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732333AbfC0JQi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 05:16:38 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33309 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbfC0JQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 05:16:37 -0400
-Received: by mail-pf1-f195.google.com with SMTP id i19so786038pfd.0
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 02:16:37 -0700 (PDT)
+        id S1732908AbfC0KFc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 06:05:32 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44799 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731664AbfC0KFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 06:05:31 -0400
+Received: by mail-wr1-f66.google.com with SMTP id y7so13647286wrn.11
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 03:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G9q4MrIGBUbms/u/4/1EAZUPfOysVodT9y7IOBD+YYw=;
-        b=d+pofsNi+RAxKHZEjnDDUx8sJcimt7TE2g8NXi8eRFWtCcOSPrNThEaAU4Qr7gDNLI
-         cTgzqDQpQZK759YQDdgYeZo2TGkBvfq9mxszbReBm0erPZik09NK2qp35RiI9xnoOH5v
-         ebqfquRgeHL6G5K8UUG8aKtCO9TrRcgY0+eFThQMxSxJirUu3Kj2FMVaxDN71jNRj/ZH
-         PnRO9yWIFRSo34tuMWnw1x3Db6a6Q7aWCGORk11W6VokdeFslSwJITGmX4sVdMFQFMJB
-         4IX9pISqYaaV84it/x1LFS2n1jRikvx98RgZs1d8WSAOCAgdvH8Xqfx7sJXeKVc51xL5
-         qg8g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WvKmnNY5yuJy5wdZCCx5mAJLQU+xUxHMZ/IvfbZL38A=;
+        b=mg7CL1SdjcXpRI2QnETTFZne+Ob8/Zx2UThfYJ+cXytbzO44QtToIczsTGm2Duj3cQ
+         SPeUL21dcetSxUYE+Oq1KJ8PlGkSpV+Ug+bMOnvX2Woh1sm0l/3z5ZVoLX0y+vf/m7VX
+         VNp8F6+eaN8WQpYLa2OR8nI6BRKLgPvN4jTdScRxGUvtK30ehIWTXGyQkFwsuUw3O8gn
+         1wbNZfDsjrLfGGkuY9CUiFVrCAdf2NSn6/X3goNtTieyISIau/Waz1ONVQ8GD780Jk2T
+         zOsV3anoRYTugEQxRDvRQdkiJUJBJOAFY2gnwItnIN+0LDpzHkP2YCE3vvWjp3GF2DEk
+         2E8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G9q4MrIGBUbms/u/4/1EAZUPfOysVodT9y7IOBD+YYw=;
-        b=hEgbD7m1KWjPnLtOBlwm/FLDPoiZN3sYZmwMuwMmS5RxxJqKMXyUGI9GGWwN889E54
-         oHKsuWdSn8ixl0Fk+U50b9eVm5UOLrNou85GlNNqucwy1nwMtnxqTWbvnXb7FW54jz0m
-         tKB6bDc8BSYjYKwxKz9FGTxY8utFcQ7ktzlxVQDQyD1wXNZSHHkzD1ieolvgRH/KfkOR
-         P15kRpksM21Y5kQrgcLMsDye6HOYioJexFGyIw9Lao0jhcRZqnSJNTNLSOsMuhhe5fMT
-         d50TkTMJhHkXJgAqdiSqM5rWjrmGsDw3dsSgkoMP3UYBMQWHSXe6/ZzDDR9eylSY6Bpm
-         5PCQ==
-X-Gm-Message-State: APjAAAWLvE+81a3eEx+dcCn8Ari+g7fQl3WRScJmchARZsE2+cRD0zR5
-        BoGkzGcPprUYLoqrxscd1GPbXi9F
-X-Google-Smtp-Source: APXvYqzkTSWZNhn45qbpFZkl6aMnjzrnu80dRsPAgEE7tsQDWOvXo9k1+/XqmEGae+yaQlxQFhKoHw==
-X-Received: by 2002:a63:ee04:: with SMTP id e4mr33377750pgi.310.1553678197058;
-        Wed, 27 Mar 2019 02:16:37 -0700 (PDT)
-Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id d15sm5502243pfo.34.2019.03.27.02.16.34
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WvKmnNY5yuJy5wdZCCx5mAJLQU+xUxHMZ/IvfbZL38A=;
+        b=QWAQkudvG74hKps+QKjWoZEgoQiCcqf9SqxDgtkuol6wLyCVTlpWQI3GhS9sfUkMRD
+         GF34CKvEdip2opXIlqNjLVKJSyhQ7c2plsFBRU7rjMtHHzTMpXKJpGfNW6fX6kvzf46p
+         tcRyi+cYPvK3HbPn7p55NucjEHBpMYEvhXOgCWGtEAF67ULxQK+nDsqBLsjwt99HtU7/
+         kWAu7NELBGC8oa2SspFmxv0kVrFx2A32+eb/qFcJI56nVpp8VOPHW+FlK+bzyY7cJJpF
+         VqaxFFNldu00MJO1q5GvfLIkb2aKwOndbccbH3lxs49kpXXOcaC/DOn2uTE+NEb8b3W8
+         T03g==
+X-Gm-Message-State: APjAAAUDNuKaoWVzk4TGHrxdBkweiUGQRb5vfFg/43EtYdFEz4wlddoB
+        uEySRqKcCwRw7cI5xLPi+XVP6xeWAZY=
+X-Google-Smtp-Source: APXvYqxFPQcJySn8qLtKfmzNnFuvjPy2PFntE3J/L+ps4+frFTYwG0h6Awo3QXP5YycZVsweiz4AQw==
+X-Received: by 2002:adf:b612:: with SMTP id f18mr5430129wre.236.1553681129831;
+        Wed, 27 Mar 2019 03:05:29 -0700 (PDT)
+Received: from szeder.dev (x4d0c7b09.dyn.telefonica.de. [77.12.123.9])
+        by smtp.gmail.com with ESMTPSA id v190sm2348751wme.18.2019.03.27.03.05.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Mar 2019 02:16:36 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 27 Mar 2019 16:16:31 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] interpret-trailers.txt: start the desc line with a capital letter
-Date:   Wed, 27 Mar 2019 16:16:28 +0700
-Message-Id: <20190327091628.22102-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
+        Wed, 27 Mar 2019 03:05:28 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 11:05:22 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+Message-ID: <20190327100522.GA32732@szeder.dev>
+References: <20190317194431.GY31362@pobox.com>
+ <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
+ <20190320181715.GJ31362@pobox.com>
+ <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
+ <20190323192756.GK4047@pobox.com>
+ <20190324121619.GD312@sigill.intra.peff.net>
+ <20190324162131.GL4047@pobox.com>
+ <20190325150633.GC19929@sigill.intra.peff.net>
+ <20190325190041.GM4047@pobox.com>
+ <20190327010603.GR4047@pobox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190327010603.GR4047@pobox.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This description line is shown in 'git help -a' and all other commands
-description starts with an uppercase character. This just makes that
-printout a bit nicer.
+On Tue, Mar 26, 2019 at 09:06:03PM -0400, Todd Zullinger wrote:
+> Dan Allen fixed this upstream and released 2.0.2 today.
+> It's very good to know that asciidoctor upstream is
+> incredibly responsive.  If anyone runs into Dan at a
+> conference, please buy him a beer. ;)
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/git-interpret-trailers.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I noticed the "Release beer" lines in the Asciidoctor relnotes... :)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index a5e8b36f62..96ec6499f0 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -3,7 +3,7 @@ git-interpret-trailers(1)
- 
- NAME
- ----
--git-interpret-trailers - add or parse structured information in commit messages
-+git-interpret-trailers - Add or parse structured information in commit messages
- 
- SYNOPSIS
- --------
--- 
-2.21.0.479.g47ac719cd3
+> One other issue that crops up with docbook5 is that the
+> xmlto toolchain now outputs:
+> 
+>     Note: namesp. cut : stripped namespace before processing
+> 
+> as documented at
+> 
+>     https://docbook.org/docs/howto/howto.html#dbxsl
+> 
+> It's mostly an annoyance which we either want to strip out,
+> or pass an alternate docbook5 xsl, I think.  But I'm not
+> very familiar with the guts of the xml/docbook toolchains.
+
+In our documentation CI build jobs we check that nothing is written to
+Asciidoc/Asciidoctor's standard error [1].  These "Note:" lines go to
+stderr, and will trigger that check and cause the build to fail.  So
+wither we should find a way to silence these notes, or filter them out
+in the CI builds.
+
+
+[1] 505ad91304 (travis-ci: check AsciiDoc/AsciiDoctor stderr output,
+    2017-04-26), though it never actually worked as intended, but that
+    is about to get fixed:
+
+    https://public-inbox.org/git/20190324215534.9495-7-szeder.dev@gmail.com/
+
 
