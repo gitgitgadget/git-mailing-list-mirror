@@ -2,109 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C61F20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 09:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3480220248
+	for <e@80x24.org>; Wed, 27 Mar 2019 09:16:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726379AbfC0JCa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 05:02:30 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:54609 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfC0JC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 05:02:29 -0400
-Received: by mail-it1-f196.google.com with SMTP id w18so24176989itj.4
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 02:02:29 -0700 (PDT)
+        id S1732333AbfC0JQi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 05:16:38 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33309 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbfC0JQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 05:16:37 -0400
+Received: by mail-pf1-f195.google.com with SMTP id i19so786038pfd.0
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 02:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=08jM69aB+aibWwb9AwVbRE0TCvzNK60OPpM4C8m6hpk=;
-        b=ZUlj1tXGopztlfuqMeB150FEByxCryXYGTUfmPK/XesYXBzzCXjv2X4VqazQnWzQqZ
-         rRR0U6f9UXFLO4khAwOrVlkCkVtdkI36T9qU3UMFQ17asdGKaZzl3CS8+3t8iHX+E0uC
-         k91Aalr43Yscnsq565ngihEeGSKNQDUPXE7nRCtj4JN31fG17n0SpcEdd7du8LyugqAD
-         XxQigOTUMFBr6C5rM0HyAbrepF9UAYHfB2P/NaKafLEMtXP6uAYLDawUc2q2cohrxLM0
-         wUIDuY9+0RMNSsO1lgIlb3/XgCtuFGbW8quhnPAQItSzxHknht82P1P7o8p8T2+eDM0V
-         sS5g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G9q4MrIGBUbms/u/4/1EAZUPfOysVodT9y7IOBD+YYw=;
+        b=d+pofsNi+RAxKHZEjnDDUx8sJcimt7TE2g8NXi8eRFWtCcOSPrNThEaAU4Qr7gDNLI
+         cTgzqDQpQZK759YQDdgYeZo2TGkBvfq9mxszbReBm0erPZik09NK2qp35RiI9xnoOH5v
+         ebqfquRgeHL6G5K8UUG8aKtCO9TrRcgY0+eFThQMxSxJirUu3Kj2FMVaxDN71jNRj/ZH
+         PnRO9yWIFRSo34tuMWnw1x3Db6a6Q7aWCGORk11W6VokdeFslSwJITGmX4sVdMFQFMJB
+         4IX9pISqYaaV84it/x1LFS2n1jRikvx98RgZs1d8WSAOCAgdvH8Xqfx7sJXeKVc51xL5
+         qg8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=08jM69aB+aibWwb9AwVbRE0TCvzNK60OPpM4C8m6hpk=;
-        b=caAyUtUoOD2il27a83wa5xA5w9dwikhY+SGi95oELzJA30bJeR5K0l8ZbUqEa1eJEU
-         c6lTIRnjZXQRWyesanU5KDN/liujwDh+Fef+3pfUWewTmAPOoQtTRnjnrjVrQTAeB6YY
-         1NATxHDBH3K29u/wsr6VteRrgDyRxUkJIdNYeygyKZsX3BrCfsPWTRD1xLcSIkxbSNab
-         w9spDfkSRzZcMo4jIhhydowY5/JL6BTBUEpAC2yzVGZE2ekbJVrrtcuhwb3e1SS9eQDF
-         DBPOyIe/63F5s+4IFQ29Yj3u9lkcV4X1kqw9JAz/09EsrqxEAdKpw5PDI+wlme/j1e1t
-         cBpA==
-X-Gm-Message-State: APjAAAWW+I/rBqJ3CAOBvNaTo5lcfPgaBH+jtWMYqXKxH3+yJmNL/uaK
-        9Y6YtoWueFsNztODhgJF0YAv8uX+uQ1Sp7LhaL/boA==
-X-Google-Smtp-Source: APXvYqxsNb79VC7W77C2W3cqPuXdgjz/Bq0jXyCRsrJhxF9vkO2IuFQCgnX2KapmqdZIp2rORPOmkHBF6DAbcNoNXH4=
-X-Received: by 2002:a02:1c49:: with SMTP id c70mr19041643jac.92.1553677348737;
- Wed, 27 Mar 2019 02:02:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=G9q4MrIGBUbms/u/4/1EAZUPfOysVodT9y7IOBD+YYw=;
+        b=hEgbD7m1KWjPnLtOBlwm/FLDPoiZN3sYZmwMuwMmS5RxxJqKMXyUGI9GGWwN889E54
+         oHKsuWdSn8ixl0Fk+U50b9eVm5UOLrNou85GlNNqucwy1nwMtnxqTWbvnXb7FW54jz0m
+         tKB6bDc8BSYjYKwxKz9FGTxY8utFcQ7ktzlxVQDQyD1wXNZSHHkzD1ieolvgRH/KfkOR
+         P15kRpksM21Y5kQrgcLMsDye6HOYioJexFGyIw9Lao0jhcRZqnSJNTNLSOsMuhhe5fMT
+         d50TkTMJhHkXJgAqdiSqM5rWjrmGsDw3dsSgkoMP3UYBMQWHSXe6/ZzDDR9eylSY6Bpm
+         5PCQ==
+X-Gm-Message-State: APjAAAWLvE+81a3eEx+dcCn8Ari+g7fQl3WRScJmchARZsE2+cRD0zR5
+        BoGkzGcPprUYLoqrxscd1GPbXi9F
+X-Google-Smtp-Source: APXvYqzkTSWZNhn45qbpFZkl6aMnjzrnu80dRsPAgEE7tsQDWOvXo9k1+/XqmEGae+yaQlxQFhKoHw==
+X-Received: by 2002:a63:ee04:: with SMTP id e4mr33377750pgi.310.1553678197058;
+        Wed, 27 Mar 2019 02:16:37 -0700 (PDT)
+Received: from ash ([171.236.209.43])
+        by smtp.gmail.com with ESMTPSA id d15sm5502243pfo.34.2019.03.27.02.16.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 02:16:36 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 27 Mar 2019 16:16:31 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] interpret-trailers.txt: start the desc line with a capital letter
+Date:   Wed, 27 Mar 2019 16:16:28 +0700
+Message-Id: <20190327091628.22102-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 MIME-Version: 1.0
-References: <20190324235020.49706-1-michael@platin.gs> <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
- <b077afed-d143-506e-977e-6edf2492f75f@google.com> <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
- <20190325233516.GB23728@sigill.intra.peff.net> <CA+P7+xo-AHmB+Wv0Z+dpgshhmqSLEb41T-JP+NKJD8DAFARA5w@mail.gmail.com>
- <CAJDYR9RVz6ZKQ-vdC8O3LYZnGeBcGHCRtL0m6UoRrKDBsUoFOw@mail.gmail.com>
- <CACsJy8D8yBK9p9Rgy+wk8cMfPLG7qanvGA-LcmmHmjbaMnvBLQ@mail.gmail.com> <CAJDYR9T40xaSpmL_e00WWXzxEm_j0pcTqBhvr=5mu-fTpKodmQ@mail.gmail.com>
-In-Reply-To: <CAJDYR9T40xaSpmL_e00WWXzxEm_j0pcTqBhvr=5mu-fTpKodmQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 27 Mar 2019 16:02:02 +0700
-Message-ID: <CACsJy8D-Nwyh0tXsOiqBUnkKVm5TQcVaszdLX1FMr7vDfQ8krg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Fuzzy blame
-To:     Michael Platings <michael@platin.gs>
-Cc:     Jacob Keller <jacob.keller@gmail.com>, Jeff King <peff@peff.net>,
-        Barret Rhoden <brho@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 27, 2019 at 3:26 PM Michael Platings <michael@platin.gs> wrote:
->
-> > Another good place to keep these revs is git-notes,
-> > which probably could result in faster lookups too and can be made
-> > visible in git-log.
->
-> Oh wow, I really like this. A major concern I had about the revisions
-> file was that you don't know what a revision ID will be until it's
-> upstream. If you can specify *in the commit message itself* what
-> options should apply to git blame for that revision then that problem
-> is solved. And if you change your mind later, or want to ignore a
-> pre-existing revision then git-notes solves that problem.
->
-> So I'm thinking you just have a commit message like this:
-> "
-> Make all function names snake_case
-> git-blame-ignore: fuzzy
-> "
-> And users who have blame.ignoreRevs set will have the -F/--fuzzy
-> option applied to that commit.
+This description line is shown in 'git help -a' and all other commands
+description starts with an uppercase character. This just makes that
+printout a bit nicer.
 
-Yeah some trailer in the commit itself is also good if you know in
-advance it should be treated differently. I think we have
-git-interpret-trailers to help extract these info.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-interpret-trailers.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > But that's in addition to --ignoreRevsFile, not replacing it.
->
-> I disagree. ignoreRevsFile has the major problem that the file will
-> need updating every time you rebase a commit to be ignored, and you'll
-> need to remember to edit it for cherry picks. Let's not have that
-> option as I think it will add unhelpful complexity.
-
-OK I was just trying to say I did not object any current suggestions
-(because I didn't know much in the first place). I'll just leave this
-for other people to discuss :)
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index a5e8b36f62..96ec6499f0 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -3,7 +3,7 @@ git-interpret-trailers(1)
+ 
+ NAME
+ ----
+-git-interpret-trailers - add or parse structured information in commit messages
++git-interpret-trailers - Add or parse structured information in commit messages
+ 
+ SYNOPSIS
+ --------
 -- 
-Duy
+2.21.0.479.g47ac719cd3
+
