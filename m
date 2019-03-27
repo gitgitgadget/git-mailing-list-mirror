@@ -2,114 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E89AA20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 10:09:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0BF0202BB
+	for <e@80x24.org>; Wed, 27 Mar 2019 10:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733128AbfC0KJW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 06:09:22 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:45021 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726305AbfC0KJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 06:09:22 -0400
-Received: by mail-wr1-f43.google.com with SMTP id y7so13662974wrn.11
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 03:09:21 -0700 (PDT)
+        id S1733100AbfC0KLA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 06:11:00 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45797 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726305AbfC0KLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 06:11:00 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s15so17780980wra.12
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 03:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8GjzeUI1L6HMjREOi8hQemFUcTWbONOMj1BxNQjFgFg=;
-        b=ghFA2mpNpKOSntj4MUXgw36d79cVyfOAN9UNjA1xDIEwG7tma04z9STtw9EHNHzAPP
-         XUc9SC3r1PcMNCeHVDvSYzVEn5fV5BnATxxHY8y8vbet0v7piy+2c+/x/AOGyytP54lf
-         7T9bcKuHnZWk+a3QFdLbrjRJ8e1JpElZWJxlbA4Nyhg94shOLOKGw7UzKWnQV7kUyrYG
-         kkCMfgUHN5B96SMHHVzQxgP/SwK7gBsCy2cpRZXonT7SkILGKUpVSoSR+J5XA98fxeDB
-         WukBzOZGVVAjpPo1ZS7dly8B7Psk4PeZqwfgFQY9FvNMIDIeTbx8edfhqoeFXeLWJIHq
-         02NQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dFTCtR2/1Sl5vNYxuu454fia8JbIwiusq4Hk6bRGZFs=;
+        b=f/1wMkYQgAXPGvqnDwjb1HUKTOmo0bUlEkakaXJCL/HDOEPNogFEymalgEx+Sc+Ris
+         2+BUc52H0bYnz1pG5V0T29u27tI7ksjN6tlg8IjX7t21ZMGUn+4bVpPG/GbYy4JUmlQY
+         fRoS1xVu4scvpKoEFIVNYVDw13LosC5diD4S1NfVvZCFHsFaWPUyVyJ23i6AporlGHTc
+         5HItU2KavVLcMwq380wDptH7gVgIkjTQoP7cZvlM5sAyb6d2MtKvFJEzZhraVNsmLDTs
+         9GP2XnQcUEeOeiNi4o2AYYbKCjYdeRgwusawyPXU45gslT7GzlnKNyilaoi6wlE8Tziw
+         wOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=8GjzeUI1L6HMjREOi8hQemFUcTWbONOMj1BxNQjFgFg=;
-        b=mW7rnYKPwMiVHfedOkenmgRVjV7hixa+infpuJbVzZwusH/VnguQ6h2M3Dj1hgkc0Y
-         FRllGRvsOKk2EgYT0H3roJ3PNr4BqiKXZ/rxGCnG8AyhZ3nX2AVMEV13ymEpG0dQipTE
-         O7hzYBzZvir0W+0HmVj5VAd2k2r40J6rFE5VG3zvZ8Iid/EB8Iycsm88YECkb011X7Xs
-         eKILsH2tXJln0Hjg7iWalsfV3vet6p+1xINVZZ/LM6oHinoC3QGpTdPI2pWua2Hhbdm0
-         psZwPxtJE43NPuFWYJIoyyEfYY6PPUrf8ApUhUIdVjzG8ApHBn/h/ZgsyG/21v+T0c2d
-         merg==
-X-Gm-Message-State: APjAAAWrgLaYx5dBck826QfPQThPxqadtAZhNw+NNLZ7WCb4PwWbuz13
-        RUr186pSoMFhG/xtmCBNfmA=
-X-Google-Smtp-Source: APXvYqyXKgdlwzHrdSkHiKPMNZPh4mXWhjcJGGiVc0KR21WsDSatboc+jFlkUg6x3FtrTuoVqaQuaQ==
-X-Received: by 2002:adf:ee07:: with SMTP id y7mr21873961wrn.219.1553681360479;
-        Wed, 27 Mar 2019 03:09:20 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id v13sm19309275wmj.43.2019.03.27.03.09.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Mar 2019 03:09:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Mooga <contact@m-mooga.com>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [GSoC] microporject test_path_is_*
-References: <38B8E527-2338-485E-8840-29121F259687@m-mooga.com> <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
-Date:   Wed, 27 Mar 2019 11:09:18 +0100
-Message-ID: <877eckbpdd.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dFTCtR2/1Sl5vNYxuu454fia8JbIwiusq4Hk6bRGZFs=;
+        b=Lp+AJooGxX/pjPNlBQCD+o+U0Z4KC9OFYQnXC1zOC5pbt5XGVcbxra79TVdZoRmaj3
+         PhI+u09NwYIoK8YqrlvNVwsQrPFG2Y0ypXXqtmri2eRkeF9VoGe0XwmIn0GsQvbtAN8g
+         Bw9vdznjy1axsCPdhOhyrsUBQ6oWiobL1KXN9/faT/1sFHPAoNI8lEBtieLUv4Dj1NIu
+         g075YenCy0iCjmZX6xHsfu4OXPafZeJ8bP0pnK9J41/O46ovFzDL3JA3otrb3DqaAe7h
+         Jh2c3M1MdjoBULSArmWI2mFM8+CVfZd/vqcU/iNQEeIAcqNCcoEbzvgNHF4+PPBb0RwK
+         q7YA==
+X-Gm-Message-State: APjAAAVnr4lAWaJiNGmulnvNclh7S1WAlzFEdN3kzrHnyPJBhGl6vOmS
+        2jp94stM+g6R+BJczFh149fiHKzoL38=
+X-Google-Smtp-Source: APXvYqysxxzV9WSmEcnEGOKGC19JMczoyEwettDn5y16TuYVsM9nlogFi3HyWbixcn2DHfsyWNr1bQ==
+X-Received: by 2002:adf:f80c:: with SMTP id s12mr23792450wrp.72.1553681458506;
+        Wed, 27 Mar 2019 03:10:58 -0700 (PDT)
+Received: from szeder.dev (x4d0c7b09.dyn.telefonica.de. [77.12.123.9])
+        by smtp.gmail.com with ESMTPSA id k9sm25583501wru.55.2019.03.27.03.10.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 03:10:57 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 11:10:55 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff: batch fetching of missing blobs
+Message-ID: <20190327101055.GB32732@szeder.dev>
+References: <20190326220906.111879-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20190326220906.111879-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Mar 26, 2019 at 03:09:06PM -0700, Jonathan Tan wrote:
+> diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
+> new file mode 100755
+> index 0000000000..38f03be114
+> --- /dev/null
+> +++ b/t/t4067-diff-partial-clone.sh
+> @@ -0,0 +1,76 @@
+> +#!/bin/sh
+> +
+> +test_description='behavior of diff when reading objects in a partial clone'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'git show batches blobs' '
+> +	test_create_repo server &&
+> +	echo a >server/a &&
+> +	echo b >server/b &&
+> +	git -C server add a b &&
+> +	git -C server commit -m x &&
+> +
+> +	test_config -C server uploadpack.allowfilter 1 &&
+> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
+> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
+> +
+> +	# Ensure that there is exactly 1 negotiation by checking that there is
+> +	# only 1 "done" line sent. ("done" marks the end of negotiation.)
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client show HEAD &&
+> +	grep "git> done" trace >done_lines &&
+> +	test_line_count = 1 done_lines
+> +'
+> +
+> +test_expect_success 'diff batches blobs' '
+> +	rm -rf server client trace &&
 
-On Tue, Mar 26 2019, Elijah Newren wrote:
+Please use 'test_when_finished' in the previous test to clean up after
+itself.
 
-> Hi,
->
-> On Tue, Mar 26, 2019 at 2:10 PM Mooga <contact@m-mooga.com> wrote:
->>
->> Hi,
->> I am still a bit confused about the task itself
->>
->> it=E2=80=99s just text replacing for example:
->> t1400-update-ref.sh , line 194 -> `test_path_is_missing`  has to be =E2=
-=80=98test_path_is_file=E2=80=99
->>
->> Thanks
->
-> There are several places in the code that use test with -e or -f or -d
-> (or -h or...) in order to check for the presence of a
-> file/directory/symlink/etc.  For example,
->    test -f path1/file1
-> This could be made more clear and produce nicer error messages if it
-> were instead
->    test_path_is_file path1/file1
+> +
+> +	test_create_repo server &&
+> +	echo a >server/a &&
+> +	echo b >server/b &&
+> +	git -C server add a b &&
+> +	git -C server commit -m x &&
+> +	echo c >server/c &&
+> +	echo d >server/d &&
+> +	git -C server add c d &&
+> +	git -C server commit -m x &&
+> +
+> +	test_config -C server uploadpack.allowfilter 1 &&
+> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
+> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
+> +
+> +	# Ensure that there is exactly 1 negotiation by checking that there is
+> +	# only 1 "done" line sent. ("done" marks the end of negotiation.)
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
+> +	grep "git> done" trace >done_lines &&
+> +	test_line_count = 1 done_lines
+> +'
+> +
+> +test_expect_success 'diff skips same-OID blobs' '
+> +	rm -rf server client trace &&
 
-See also the recent thread I started
-https://public-inbox.org/git/87sgwav8cp.fsf@evledraar.gmail.com/ asking
-if these wrappers were useless now. The consensus was to keep them (a
-bunch of use-cases I didn't know about). Useful if you're poking at them
-and wondering why we're using this / what it gives us.
+Likewise.
 
-> There are likewise several that use one of
->    ! test -e path/to/filename
-> or
->    ! test -f path/to/filename
-> or
->   test ! -f path/to/filename
-> which could be replaced by
->   test_path_is_missing path/to/filename
-
-Interesting that for some we use the 'test_is_there/test_is_not_there'
-pattern and for others 'test_is_there [!]'. E.g
-test_path_exist/test_path_is_missing v.s. test_i18ngrep.
-
-> This GSoC microproject is just about picking one testfile that has
-> some of these constructs, and fixing the cases found within that
-> testfile.
+> +	test_create_repo server &&
+> +	echo a >server/a &&
+> +	echo b >server/b &&
+> +	git -C server add a b &&
+> +	git -C server commit -m x &&
+> +	echo another-a >server/a &&
+> +	git -C server add a &&
+> +	git -C server commit -m x &&
+> +
+> +	test_config -C server uploadpack.allowfilter 1 &&
+> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
+> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
+> +
+> +	echo a | git hash-object --stdin >hash-old-a &&
+> +	echo another-a | git hash-object --stdin >hash-new-a &&
+> +	echo b | git hash-object --stdin >hash-b &&
+> +
+> +	# Ensure that only a and another-a are fetched.
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
+> +	grep "want $(cat hash-old-a)" trace &&
+> +	grep "want $(cat hash-new-a)" trace &&
+> +	! grep "want $(cat hash-b)" trace
+> +'
+> +
+> +test_done
+> -- 
+> 2.21.0.155.ge902e9bcae.dirty
+> 
