@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69B7B20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 17:50:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28F8820248
+	for <e@80x24.org>; Wed, 27 Mar 2019 18:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727872AbfC0RuN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 13:50:13 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:41208 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727657AbfC0RuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 13:50:12 -0400
-Received: by mail-lj1-f193.google.com with SMTP id k8so15201276lja.8
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 10:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ANzKOcyfHMQEury0g6YDOU8Sm0A2R96cz35xvWJw0O0=;
-        b=J1upB7jDQkRDPfCGBrHvjkAo3OfPtn2v9uDjq2jpFWAC8+49Onop+XdwMxrmvOLxLo
-         AZjxt2tnr1IF4tpnYrRkRrp5XLFFZtbwfD+gAPpGIwjMTU3KwJArtYGV+aBSDENAMgGF
-         51OmExxbu2K12kdrqWwIlnTchcGgfb2jCb+UzZwpIsesLlHoUbcfoXKcjdYcITq6Pf3T
-         8sVDGAUuvBgDb8rqaZPIEdTVjzqDvuUA4B8B+0ARt9KpCBCaXOHmBq3N7vA1yXv7mGmI
-         e/8aDbSeCtLN6MBnFSpm56MntnPM+XkMrFMhSCdPaMJYXfvabOarf22D2SClTifjSrPm
-         SFeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ANzKOcyfHMQEury0g6YDOU8Sm0A2R96cz35xvWJw0O0=;
-        b=kAxMpRJwOP0rlkQkc7dQIji2pZ0i6A/2Oguv/xD8ZnqD9t6zfo2XJL3vWbLoklBz4R
-         70r6ugDEckpZhth4F4QYCGLXDaycQlVlr2id2urzn5GcTWgwxyQmMNOKCnxIDMFvmlyJ
-         rtVhyZ5R3tbJm5De7OlHa9968i6ErN9So1YAaY/GzlauhfvkhsyE0lrn7lhbVLjbrTGd
-         DBKGQNuswgPhDIaS97YNsSpEmklIqlpqxwApvW/ChH39y4DkG7rGpABfvwikQlw9CCm2
-         kf6v6sEVMyYKLaUc/yuh6I9Fa2VNYMC9E18b/+5E+yfUTVHb7+YrAXxrcDEnpWQMBT6x
-         ulvw==
-X-Gm-Message-State: APjAAAU/7G6NpLdhzqEd9WHPNmJPNUMm7mHhmjf4WY9RXxlJkIwpXxIR
-        KJekQ9FbWi7wZolLp/6NkUO3nC3Sp02yyd2J0HM=
-X-Google-Smtp-Source: APXvYqwaniFlg79Po5AZn57K/d6R8VGmqBBUYDL9KrLrf4HFqjIargPY3wFPgA1wU4oe5+Wi80q1yXUqU+nZ5AKJzkM=
-X-Received: by 2002:a2e:99d2:: with SMTP id l18mr12515531ljj.27.1553709010609;
- Wed, 27 Mar 2019 10:50:10 -0700 (PDT)
+        id S2389521AbfC0Szq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 14:55:46 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:45198 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389650AbfC0Szp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 14:55:45 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 44Txz31PKSz1qvvr;
+        Wed, 27 Mar 2019 19:55:43 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 44Txz30xdsz1qsx0;
+        Wed, 27 Mar 2019 19:55:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id 0FEfZ-pmM6nF; Wed, 27 Mar 2019 19:55:41 +0100 (CET)
+X-Auth-Info: zXpmlfB240t8eHPHOXCtVMGwHrOyhAB1K2kPAwy9w0kGIZXdBQUUHW8dsG+IWLfY
+Received: from igel.home (ppp-46-244-175-98.dynamic.mnet-online.de [46.244.175.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Wed, 27 Mar 2019 19:55:41 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id 26A052C12D4; Wed, 27 Mar 2019 19:55:41 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Petr Bena <petr@bena.rocks>
+Cc:     git@vger.kernel.org
+Subject: Re: Unable to change remote url of origin
+References: <7b30ebfd-4f85-0fa7-8e66-7e63d7cb52d9@bena.rocks>
+X-Yow:  I want to kill everyone here with a cute colorful Hydrogen Bomb!!
+Date:   Wed, 27 Mar 2019 19:55:41 +0100
+In-Reply-To: <7b30ebfd-4f85-0fa7-8e66-7e63d7cb52d9@bena.rocks> (Petr Bena's
+        message of "Wed, 27 Mar 2019 13:25:27 +0100")
+Message-ID: <87ef6sb102.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190323041332.9743-1-alexhenrie24@gmail.com> <xmqq36ncpgpe.fsf@gitster-ct.c.googlers.com>
- <CAMMLpeQbz5qHyK8e4gZ0zKQ5na+zQCd49GZifKZ_iO-gXrs1Gg@mail.gmail.com>
- <20190325011717.GA5357@rigel> <CAMMLpeQGz85ogLgKX6DBMyz0wpRvW9fXCpK87m+JoT9i7hw1Kw@mail.gmail.com>
- <CAMMLpeStw=qg50nbAkuKRTUTvkAhjw8kvZxxrAmTcfuK4L8cmA@mail.gmail.com> <CACUQV59x-W+fCz_O5EnbZhjZ1CB2NhEQbkR8dAYMizAQGQ2SFA@mail.gmail.com>
-In-Reply-To: <CACUQV59x-W+fCz_O5EnbZhjZ1CB2NhEQbkR8dAYMizAQGQ2SFA@mail.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Wed, 27 Mar 2019 11:49:58 -0600
-Message-ID: <CAMMLpeS1RyjCu6mKe2-oDzCfXheAdpTiXM28dUfd3TyCuZwUFA@mail.gmail.com>
-Subject: Re: [PATCH] In `git log --graph`, default to --pretty=oneline --abbrev-commit
-To:     =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 24, 2019 at 11:27 PM Rafael Ascens=C3=A3o <rafa.almas@gmail.com=
-> wrote:
+On Mär 27 2019, Petr Bena <petr@bena.rocks> wrote:
+
+> # Display remote URL
 >
-> Or just $git log --graph --oneline, since --oneline is a shortcut for the=
- longer --pretty=3Doneline --abbrev-commit.
+> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
+> origin    git@github.com:grumpy-irc/grumpy (fetch)
+> origin    git@github.com:grumpy-irc/grumpy (push)
+>
+> #Now change it to HTTPS instead of SSH
+>
+> petr.bena@MacBook:~/Documents/grumpy$ git remote set-url origin
+> https://github.com/grumpy-irc/grumpy
+>
+> # Verify if it has changed
+>
+> petr.bena@MacBook:~/Documents/grumpy$ git remote -v
+> origin    git@github.com:grumpy-irc/grumpy (fetch)
+> origin    git@github.com:grumpy-irc/grumpy (push)
+>
+>
+> It's still SSH. What am I doing wrong?
 
-Thanks for the tip! I didn't know about the --oneline option, but now
-that I do, I suppose I don't really need an alias.
+Do you have a URL rewrite rule (url.*.insteadof)?
 
--Alex
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
