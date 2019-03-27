@@ -2,131 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B4E20248
-	for <e@80x24.org>; Wed, 27 Mar 2019 22:04:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD0720248
+	for <e@80x24.org>; Wed, 27 Mar 2019 22:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726102AbfC0WEt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 18:04:49 -0400
-Received: from bureau92.ns.utoronto.ca ([128.100.132.250]:40870 "EHLO
-        bureau92.ns.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725601AbfC0WEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 18:04:49 -0400
-Received: from exsmtp.utoronto.ca ([128.100.46.58])
-        (authenticated bits=0)
-        by bureau92.ns.utoronto.ca (8.13.8/8.13.8) with ESMTP id x2RM4lvb018903
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=OK)
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 18:04:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=utoronto.ca; s=beta;
-        t=1553724288; bh=gvN9oj9fm5LnSEMBYmZjmQ42ry/jgtftfcNkIoh/Bg0=;
-        h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-         Content-Type:Content-Transfer-Encoding:MIME-Version;
-        b=IVeBlXVhOX9Uv9pDmcpYGnCmf/ji6xWx9Gs6G1bWIpibVdISbXDVxmDPhhm5y52ZQ
-         yi7uNUqzFVD+LSe3VlYkuUlwxvEAGDjBuDKpfc+32HWDrHJhZtdDoeo+NuguuPWyLx
-         4jhP+aGP9mNw/4/DBP4KDqO/i/s9wYgmnidOKyx8=
-Received: from ARBOREXCASX3.UTORARBOR.UTORAD.Utoronto.ca
- ([fe80::d479:357a:c4f:796c]) by arborexhubx2.UTORARBOR.UTORAD.Utoronto.ca
- ([::1]) with mapi id 14.03.0181.006; Wed, 27 Mar 2019 18:04:47 -0400
-From:   Julian Cheng <julian.cheng@utoronto.ca>
-To:     "liu.denton@gmail.com" <liu.denton@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [GSoC] [t9803]
-Thread-Topic: [GSoC] [t9803]
-Thread-Index: AQHU5NLUUBNMeD/zM0yu7jlWN2IVv6YgPIQA///H1Io=
-Date:   Wed, 27 Mar 2019 22:04:46 +0000
-Message-ID: <7BFDFF1D85B3B544BB69BB9AB23D479D01F45370@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
-References: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>,<20190327211050.GA4062@dev-l>
-In-Reply-To: <20190327211050.GA4062@dev-l>
-Accept-Language: en-CA, en-US
-Content-Language: en-CA
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [128.100.46.46]
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+        id S1728218AbfC0WXR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 18:23:17 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59659 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727949AbfC0WXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 18:23:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553725387;
+        bh=2hzcO3igmJu1TSnz3VDWwbOGAOUyTR275xwHtvqEA+o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ljRJUJzCZZPpJ661DNFZRwRlnmxtFJoIpXfFfW+nuiQ6Scbfes8ibf1TMVwNTtXig
+         yVUH3Y/44VHH/CaTbaCkhtjv9xerV35BKz+jaSXWT2MQkAb1NgJDue5Rj7VeLPImRd
+         AfwJdp5jsKkCZa4WvA4lSIZMYlURsVLEi9r7yYuc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1gdBnb2ebs-00ppxd; Wed, 27
+ Mar 2019 23:23:07 +0100
+Date:   Wed, 27 Mar 2019 23:23:08 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/5] docs: do not document the `git remote-testgit`
+ command
+In-Reply-To: <87a7hhbszc.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903272317550.41@tvgsbejvaqbjf.bet>
+References: <pull.162.git.gitgitgadget@gmail.com> <pull.162.v2.git.gitgitgadget@gmail.com> <810d2c5a94b40544652c97ffa644b29e0db8af82.1553550094.git.gitgitgadget@gmail.com> <87a7hhbszc.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1122868800-1553725389=:41"
+X-Provags-ID: V03:K1:nlKiExfwUKnuncl8A1zzhpPE1jsMWJ+uOtYhSQQExXspXO5vB0L
+ EGTDNmRiE2f64FMABSApvFAdqLjjdP3RPFvDo2UsmF2ARmxA88bEWG8hdR4+tNkUlNWagyS
+ rrz+jteCiymvr78/Crg8Gc3PdfqDoY+W2I4vs5YXh9+2kmjma1Nrg0lIdDgL4Fk1p/YHWkx
+ S6OZHt7lgZSK5ganTxs6g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gIOR9hrDpSU=:2WfhCmkGELds9EGmdOeBzG
+ VNuYQOVgZHSc2lTmAH9rIOvtv1+QCsY3ve3vrNrCqBLdiA3AgnV43wbc+FNoL3z/A7863qUhj
+ LvOZt0nohwG7bfL/WYxqF6+aksXMHvogvhpDOeWM9u9hBfNahpm14MJ7947K7cAGCzsck9+33
+ 0epOjrQPFXF+BRdYMFGpkUaNHb2TDlv56ZkAMiAABOWFbYEFFMZJnKtCDHbNTbR4ambaQnxPY
+ NOjmr3KWF3rrf4RDsSyy9XoLZxK832QSvYQzys1rqluPVL8GBpYx+ToFe8lfce/wfY0FES4Z7
+ hTn1FKUEWzY5BL7ZjPzF0131rbWCbJRsEsBEKtHbJ0vaNhsgRP4uAK3AMGs4zAh42iWsMFm4a
+ r7sk7lqvfIkUuK4EEHl43+GsOSPkGjXzfoOM7E5U7388v9HQMU7W41Id++wP4/vMjEvV6LCqQ
+ O5xQzc97ofjpiGKTO8fgil1/Qy1046Sxe3Ug4vAHNkwZGnkbLTXWuArFlJgaSBW3EmD9nR3sW
+ nr3n5ypSRFz0SW76PzDxjq5E6EmQ8exfMwR+Q5IbRYyajJsWQfIeJtE20FfiRLFJyNp+HNvbo
+ Uw5Mm9iwFhkEMou4kxOj2h31fAnikMl3JMICWS+ULakrzNiLZPP0qNdR1fhGGBXvHD52SEgnr
+ iCw0uGlz7FdN3p/5R4i1a/9zdBvct2eAg2RRe70TQZNJdwVQbwXh+En2HjVj+Q0KIw31wFLbO
+ BGCWIn8ZwZfksohUKgFWnDzGRh/QXVia/TcdhAvScyXBPylWNbWCRDYkfwnC2pErvCzLASBNd
+ k+zwPu66iON/pwy+6VpnXJTfNArCNwB9boitA5RcZYNpH3C36p8AQzvFJ9lsz8HlzCa+VbFkD
+ GMCy6utqGPKG/6UJ6dw5LkrONR7ows4qtqRxQukZA3/CgySWUMRinbsx4+cQsUIxJYpktYRg4
+ KahisstEGdQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton, thanks for the pointers!=0A=
-=0A=
-I get the following when I run "make" in the top level directory of git and=
- I'm not sure how to deal with it. Any ideas?=0A=
-$ make=0A=
-    LINK git-http-fetch=0A=
-.../lib/libcurl.so: undefined reference to `SSLv2_client_method'=0A=
-collect2: error: ld returned 1 exit status=0A=
-Makefile:2434: recipe for target 'git-http-fetch' failed=0A=
-make: *** [git-http-fetch] Error 1=0A=
-=0A=
-________________________________________=0A=
-From: Denton Liu [liu.denton@gmail.com]=0A=
-Sent: March-27-19 5:10 PM=0A=
-To: Julian Cheng=0A=
-Cc: git@vger.kernel.org=0A=
-Subject: Re: [GSoC] [t9803]=0A=
-=0A=
-Hi Julian,=0A=
-=0A=
-On Wed, Mar 27, 2019 at 07:26:12PM +0000, Julian Cheng wrote:=0A=
-> Hello Git Community,=0A=
->=0A=
-> I=92m new here and hoping to get to be a part of GSOC 2019. I have questi=
-ons about the main project and the microproject=0A=
->=0A=
-> Main Project Quesctions=0A=
-> I was hoping to work on =93git revert --drop=94 and =93git commit --rewor=
-d=94. Are there any mentors available for this project? The ideas page list=
-s mentors for other projects but not this one.=0A=
->=0A=
-> Also, =93git revert --drop=94 and =93git commit --reword=94 appear not to=
- have been discussed yet in the public inbox. Is this correct or am I just =
-not finding the threads?=0A=
->=0A=
->=0A=
-> Microproject Questions (test_path_is_*)=0A=
-> I would like to improve t9803-git-p4-shell-metachars.sh=0A=
->=0A=
-> On the microprojects page, it suggests I should run the tests to make sur=
-e they all pass. But if I=92m making changes to the tests, is it really ade=
-quate testing just to make sure they all pass?=0A=
->=0A=
-> To run all tests, I assume I would just navigate to the tests folder in t=
-erminal and call =93sh *.sh=94, but that doesn=92t seem to work. Also, when=
- I call =93sh  t9803-git-p4-shell-metachars.sh=94, I get =93error: GIT-BUIL=
-D-OPTIONS missing (has Git been built?).=94 Git is definitely installed on =
-my computer though. I=92ve been using it for months. I cloned this repo wit=
-h Git. What am I missing here?=0A=
-=0A=
-When the tests run, they don't test your installation (the git you're=0A=
-currently using in /usr/bin/git). They test the git you've built in the=0A=
-project directory.=0A=
-=0A=
-First of all, you should build the project. You should run "make" from=0A=
-the top-level directory of git. This will fill the directory with git-*=0A=
-executables. These are the actual binaries that will be tested.=0A=
-=0A=
-Next, go into t/ and run "make" again to run all of the tests. You can=0A=
-also run individual tests by doing something like=0A=
-./t9803-git-p4-shell-metachars.sh, for example.=0A=
-=0A=
-For even more details on testing, see t/README.=0A=
-=0A=
-Also, some other helpful documentation to read include:=0A=
-=0A=
-* Documentation/SubmittingPatches=0A=
-* Documentation/CodingGuidelines=0A=
-=0A=
-Hope this helps,=0A=
-=0A=
-Denton=0A=
-=0A=
->=0A=
-> Best,=0A=
-> Julian=0A=
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1122868800-1553725389=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi =C3=86var,
+
+On Tue, 26 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+>
+> On Mon, Mar 25 2019, Johannes Schindelin via GitGitGadget wrote:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Since 7ded055401 (build: do not install git-remote-testgit, 2013-06-07=
+),
+> > we do not install it. Therefore it makes no sense to document it,
+> > either.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  Documentation/git-remote-testgit.txt | 30 ---------------------------=
+-
+> >  Documentation/gitremote-helpers.txt  |  2 --
+> >  2 files changed, 32 deletions(-)
+> >  delete mode 100644 Documentation/git-remote-testgit.txt
+> >
+> > diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-=
+remote-testgit.txt
+> > deleted file mode 100644
+> > index b45bfebba5..0000000000
+> > --- a/Documentation/git-remote-testgit.txt
+> > +++ /dev/null
+> > @@ -1,30 +0,0 @@
+> > -git-remote-testgit(1)
+> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > -
+> > -NAME
+> > -----
+> > -git-remote-testgit - Example remote-helper
+> > -
+> > -
+> > -SYNOPSIS
+> > ---------
+> > -[verse]
+> > -git clone testgit::<source-repo> [<destination>]
+> > -
+> > -DESCRIPTION
+> > ------------
+> > -
+> > -This command is a simple remote-helper, that is used both as a
+> > -testcase for the remote-helper functionality, and as an example to
+> > -show remote-helper authors one possible implementation.
+> > -
+> > -The best way to learn more is to read the comments and source code in
+> > -'git-remote-testgit'.
+> > -
+> > -SEE ALSO
+> > ---------
+> > -linkgit:gitremote-helpers[7]
+> > -
+> > -GIT
+> > ----
+> > -Part of the linkgit:git[1] suite
+> > diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitre=
+mote-helpers.txt
+> > index 34a3e60d08..2fc4007525 100644
+> > --- a/Documentation/gitremote-helpers.txt
+> > +++ b/Documentation/gitremote-helpers.txt
+> > @@ -513,8 +513,6 @@ linkgit:git-remote-ext[1]
+> >
+> >  linkgit:git-remote-fd[1]
+> >
+> > -linkgit:git-remote-testgit[1]
+> > -
+> >  linkgit:git-fast-import[1]
+>
+> I wonder if it should be moved into e.g. t/helper or somesuch at this
+> point...
+
+Sure.
+
+One thing to keep in mind is that we cannot change the actual name of the
+executable, as it needs to have the format `git-remote-*`, and cannot
+require a first argument `testgit`, to be able to perform its purpose.
+
+We do have a precedent for that kind of scenario: `test-fake-ssh`. It is
+also not folded into `test-tool`, and it is copied while changing the name
+to `ssh`, as required to fulfill its mission.
+
+I am not totally enthusiastic about this because this is what prevents
+Git's test suite from running in a RAM disk on Windows, IIRC: I have not
+been able to convince my RAM disk provider to allow executables stored on
+it to be executed.
+
+Ciao,
+Dscho
+
+--8323328-1122868800-1553725389=:41--
