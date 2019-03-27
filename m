@@ -3,277 +3,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF15220248
-	for <e@80x24.org>; Wed, 27 Mar 2019 23:09:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1143F20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 23:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727766AbfC0XJz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 19:09:55 -0400
-Received: from mail-eopbgr720098.outbound.protection.outlook.com ([40.107.72.98]:64736
-        "EHLO NAM05-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725601AbfC0XJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 19:09:55 -0400
+        id S1727846AbfC0Xct (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 19:32:49 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:34891 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725601AbfC0Xcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 19:32:48 -0400
+Received: by mail-pf1-f194.google.com with SMTP id t21so10450416pfe.2
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 16:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D0io8mx3hqe/NQwLql+tnuLkm7gv6XyLBRCwlzMyAlU=;
- b=pgfV9TUR9XLLooYDkAzoW7EssBWTmSaFrnrn3JsWln9OVRKZRV/oMqFzuaOmgwEgnWzDh502ZNToPlCB5Luhnh6kvMbsiiSWogGXyxBQ3a9l/wEP/8DypNwRSAuZzhT/6xS/uWvxIkqJA8F53RRDGRDmuHB1whhqsBYq2PHSoyQ=
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB5307.namprd08.prod.outlook.com (20.176.112.208) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1730.19; Wed, 27 Mar 2019 23:08:11 +0000
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1730.019; Wed, 27 Mar 2019
- 23:08:11 +0000
-From:   "Mazo, Andrey" <amazo@checkvideo.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
-        Luke Diamand <luke@diamand.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        George Vanburgh <gvanburgh@bloomberg.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Miguel Torroja <miguel.torroja@gmail.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        Vitor Antunes <vitor.hda@gmail.com>,
-        Andrew Oakley <aoakley@roku.com>,
-        =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
-        Andrey <ahippo@yandex.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 1/1] git-p4: inexact label detection
-Thread-Topic: [RFC PATCH 1/1] git-p4: inexact label detection
-Thread-Index: AQHU5PHyPTHfkx/A7Uy6V45Zb7ZQLQ==
-Date:   Wed, 27 Mar 2019 23:08:11 +0000
-Message-ID: <f695acc99834e01f0313c0cc9cb024f960da3ab1.1553727979.git.amazo@checkvideo.com>
-References: <20190326184327.28335-1-amazo@checkvideo.com>
-In-Reply-To: <20190326184327.28335-1-amazo@checkvideo.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BL0PR03CA0024.namprd03.prod.outlook.com
- (2603:10b6:208:2d::37) To DM6PR08MB4956.namprd08.prod.outlook.com
- (2603:10b6:5:4b::25)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=amazo@checkvideo.com; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-mailer: git-send-email 2.19.2
-x-originating-ip: [70.163.25.109]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 8194fff7-6080-49ee-bb5f-08d6b3091513
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB5307;
-x-ms-traffictypediagnostic: DM6PR08MB5307:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <DM6PR08MB5307A5A7B35F8D7E5143E221DA580@DM6PR08MB5307.namprd08.prod.outlook.com>
-x-forefront-prvs: 0989A7979C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(39860400002)(376002)(136003)(346002)(189003)(199004)(105586002)(478600001)(52116002)(6306002)(7736002)(6916009)(25786009)(4326008)(106356001)(26005)(14454004)(66066001)(118296001)(3846002)(2906002)(305945005)(53936002)(386003)(6116002)(97736004)(966005)(6512007)(68736007)(6436002)(186003)(5640700003)(76176011)(256004)(6506007)(36756003)(102836004)(50226002)(486006)(86362001)(476003)(2501003)(81166006)(19627235002)(1730700003)(8936002)(81156014)(11346002)(2616005)(7416002)(5660300002)(14444005)(316002)(71200400001)(8676002)(446003)(54906003)(99286004)(2351001)(71190400001)(6486002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB5307;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: checkvideo.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: G9g0Ud7epAlJxeUTsdMEO1dZPU+cP2NWUtRPq/39RKVUV556BBOv0qz3I5GcwB+KAqAe+lB63f69WWhnOVH/3yKEBDndrq1lV9DLGfE5Wn/99eZCVWExnuOJ9OgZMM8Sca/qHXczalpeNV4P8w+n/E4TJER5zyROAOVqbGRUDhSoiuID9WzTpit5n8aCkANXZZR852P1iwEyLQQXdVa0kY8+GFq0kR0qtpH6l7OPXXYkCKuW0d7gr2/NaDQtcZAdGesshStKqYKWW+tcgoqw6WWG1c5uQrdDUlUfLdSpKF/8HxhCmav1t3ZUY0YOApMlOeevch+7AACAsZQRyL+LDJEQhOiiU0l4N1x+IP/iYeRqW+lj3CoMj3Die141CF6VWsLzr2aq9GYDt2psCFhP+tcQLcH3Djpll5fk7OPqwGA=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=0WqBvR8RFDXaI08pUQ5cUFxf7Mnw5mzr8tFbJWh8DLk=;
+        b=Y5sfQ42ywv+fEUbIHT3grMJYvmgFquY16y8CBpsjFUka44cFQx8v2na3g6/emPYZsC
+         HP4BUoDKmm5p6yWrEqe+C+2zv30WV+1ig7dQZD2tOM8vi6DMH3fP1SUEg4xv9XaqmcNP
+         UxF28D0Lf1ZmoDoPq07h+zTu2iOn0KuxenqQsO/WSTOXwl35YUYZJ4UiTyoefMj7hzze
+         ku1h+bqrtHgYa/Kdj1lbLB5rKvilBuOhLA+2Q/sCq3eAS7Gr3ehW+BLz8RtSWTPoF+L2
+         sZKFS2XPH6giaG8UzIpDfWVOI/E5jFDJRwP5Ndc8Ig7OMUGo1o/kj1ww99eMbgq/TVRZ
+         F9tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0WqBvR8RFDXaI08pUQ5cUFxf7Mnw5mzr8tFbJWh8DLk=;
+        b=TABzJ6qb6PULWo1jMUdAv6+r6uUuMmGhEqxvw89AeapW49vSOHBGDttm9NwYk5/c/G
+         3R+wkr0J49msyt0vQUz9Hsve8HlAm3PX5kZMS5vaEKq7S0w+B9P7xQIXjYRmrmlaj1Rf
+         NgeyKyYCu8h3OyYfKMgSGVwBBKgKnGKCk9CFBtO5VlyATuJ/XE+I5CpT4nnXCHTSrZda
+         v+ld/QqHI/+iEZc9b0U0f0z8VvX/WQ2Jytpgl3KT6D8n1aEd1WVKfM6N/oueCbgvN+w6
+         d8Jp+/9Q5a7GFGrCNijRN3F4CV2QX7O0oh61RaKW/IhF+W4U2WOSRa2Y/MMl4cm05BsJ
+         q8IQ==
+X-Gm-Message-State: APjAAAW0x7NLKJ6mIQyiD4ClWx8fSLFW6LSYKzbREcZSnc8n4cfM3n3T
+        rXoVutGjKSVuxwtQsNWwW6c=
+X-Google-Smtp-Source: APXvYqzP8TF7kqyIxkqCQCC1uWWd+Im5ZYdEcPsXzY5No9UEQrfLBB6L34YOtKEAt7OV4eExmcSDSQ==
+X-Received: by 2002:a62:1318:: with SMTP id b24mr35446515pfj.201.1553729567685;
+        Wed, 27 Mar 2019 16:32:47 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id i64sm33414462pfb.112.2019.03.27.16.32.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 16:32:46 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 16:32:45 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Julian Cheng <julian.cheng@utoronto.ca>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [GSoC] [t9803]
+Message-ID: <20190327233245.GA30401@dev-l>
+References: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+ <20190327211050.GA4062@dev-l>
+ <7BFDFF1D85B3B544BB69BB9AB23D479D01F45370@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+ <20190327225120.GA9277@dev-l>
+ <7BFDFF1D85B3B544BB69BB9AB23D479D01F45380@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
 MIME-Version: 1.0
-X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8194fff7-6080-49ee-bb5f-08d6b3091513
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2019 23:08:11.2748
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB5307
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7BFDFF1D85B3B544BB69BB9AB23D479D01F45380@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Labels in Perforce are not global, but can be placed on a particular view/s=
-ubdirectory.
-This might pose difficulties when importing only parts of Perforce depot in=
-to a git repository.
-For example:
- 1. Depot layout is as follows:
-    //depot/metaproject/branch1/subprojectA/...
-    //depot/metaproject/branch1/subprojectB/...
-    //depot/metaproject/branch2/subprojectA/...
-    //depot/metaproject/branch2/subprojectB/...
- 2. Labels are placed as follows:
-    * label 1A on //depot/metaproject/branch1/subprojectA/...
-    * label 1B on //depot/metaproject/branch1/subprojectB/...
-    * label 2A on //depot/metaproject/branch2/subprojectA/...
-    * label 2B on //depot/metaproject/branch2/subprojectB/...
- 3. The goal is to import
-    subprojectA into subprojectA.git and
-    subprojectB into subprojectB.git
-    preserving all the branches and labels.
- 4. Importing subprojectA.
-    Label 1A is imported fine because it's placed on certain commit on bran=
-ch1.
-    However, label 1B is not imported because it's placed on a commit in an=
-other subproject:
-    git-p4 says: "importing label 1B: could not find git commit for changel=
-ist ..."
-    The same is with label 2A, which is imported; and 2B, which is not.
+On Wed, Mar 27, 2019 at 11:01:38PM +0000, Julian Cheng wrote:
+> I'm running Ubuntu 16.04. "sudo apt-get upgrade" tell me I'm up to date. I hope it's not just that I'm not running a more recent Ubuntu.
 
-Currently, there is no easy way (that I'm aware of) to tell git-p4 to
-import an empty commit into a desired branch,
-so that a label placed on that changelist could be imported as well,
-It might be possible to get a similar effect by importing both subprojectA =
-and B in a single git repo,
-and then running `git filter-branch --subdirectory-filter subprojectA`,
-but this might produce way more irrelevant empty commits, than needed for l=
-abels.
-(although imported changelists can be limited with git-p4 --changesfile opt=
-ion)
-Also, `git filter-branch` is harder to use for incremental imports
-or when changes are submitted from git back to Perforce.
+I am running Ubuntu 16.04 currently as well, so that shouldn't be a
+problem.
 
-As suggested by Luke,
-instead of creating an empty commit for the sole purpose of being tagged la=
-ter,
-teach git-p4 to search harder for the next lower changelist,
-corresponding to the label in question.
+Admittedly, I'm not too familiar with curl or openssl (and Ubuntu for
+that matter, I typically use a different distro) but I believe that a
+workaround would be to replace your libcurl4-openssl-dev with
+libcurl4-gnutls-dev. I believe this should work unless you have a strong
+reason against it.
 
-Do this by finding the highest changelist up to the label under all known b=
-ranches,
-(branches are finalized by the time importP4Labels() runs)
-and using it instead of a depot-wide changelist corresponding to the label.
-
-This new behavior may not be desired for people,
-who want exact label <-> changelist relationship.
-So, add a new boolean config parameter git-p4.allowInexactLabels (defaults =
-to false)
-to explicitly enable it if needed.
-Also, this behavior only appears to be useful in case of multiple branches,
-(otherwise, every Perforce changelist should appear in git)
-so it's not engaged when running without branch detection.
-
-Detect and report (--verbose) "inexact" tags,
-i.e. tags placed on a lower changelist than was in Perforce.
-Implement this by comparing a changelist for which a commit was found
-with a changelist corresponding to the label on the whole depot.
-
-Note, that the new "inexact" logic works slower
-than the original code in case of numerous branches,
-because p4 needs to calculate the most recent change for each branch path i=
-nstead of just one.
-
-This is an alternative solution to "alien" branches concept proposed earlie=
-r:
-https://public-inbox.org/git/b02df749b9266ac8c73707617a171122156621ab.15532=
-83214.git.amazo@checkvideo.com/
-
-Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
-Suggested-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py | 45 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index b04f54b3d1..838c1b43d7 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -3186,17 +3186,40 @@ def importP4Labels(self, stream, p4Labels):
-             if name in ignoredP4Labels:
-                 continue
-=20
-             labelDetails =3D p4CmdList(['label', "-o", name])[0]
-=20
--            # get the most recent changelist for each file in this label
--            change =3D p4Cmd(["changes", "-m", "1"] + ["%s...@%s" % (p, na=
-me)
-+            if self.detectBranches and gitConfigBool("git-p4.allowInexactL=
-abels"):
-+                doInexactLabels =3D True
-+            else:
-+                doInexactLabels =3D False
-+
-+            # get the most recent changelist in this label for the whole d=
-epot
-+            depot_wide_changelist =3D p4Cmd(["changes", "-m", "1"] + ["%s.=
-..@%s" % (p, name)
-                                 for p in self.depotPaths])
-+            if 'change' in depot_wide_changelist:
-+                depot_wide_changelist =3D int(depot_wide_changelist['chang=
-e'])
-+            else:
-+                depot_wide_changelist =3D None
-+
-+            # get the most recent changelist for each file under branches =
-of interest in this label
-+            if doInexactLabels:
-+                paths =3D ["%s...@%s" % (self.depotPaths[0] + p + '/', nam=
-e) for p in self.knownBranches]
-+                changes =3D p4CmdList(["changes", "-m", "1"] + paths)
-+                changes =3D [int(c['change']) for c in changes if 'change'=
- in c]
-+
-+                # there may be different "most recent" changelists for dif=
-ferent paths.
-+                # take the newest since some paths were just modified late=
-r than others.
-+                if changes:
-+                    changelist =3D max(changes)
-+                else:
-+                    changelist =3D None
-+            else:
-+                changelist =3D depot_wide_changelist
-=20
--            if 'change' in change:
-+            if changelist:
-                 # find the corresponding git commit; take the oldest commi=
-t
--                changelist =3D int(change['change'])
-                 if changelist in self.committedChanges:
-                     gitCommit =3D ":%d" % changelist       # use a fast-im=
-port mark
-                     commitFound =3D True
-                 else:
-                     gitCommit =3D read_pipe(["git", "rev-list", "--max-cou=
-nt=3D1",
-@@ -3216,14 +3239,24 @@ def importP4Labels(self, stream, p4Labels):
-                         tmwhen =3D 1
-=20
-                     when =3D int(time.mktime(tmwhen))
-                     self.streamTag(stream, name, labelDetails, gitCommit, =
-when)
-                     if verbose:
--                        print("p4 label %s mapped to git commit %s" % (nam=
-e, gitCommit))
-+                        if depot_wide_changelist =3D=3D changelist:
-+                            isExact =3D ""
-+                        else:
-+                            isExact =3D " inexactly"
-+                        print("p4 label %s mapped%s to git commit %s" % (n=
-ame, isExact, gitCommit))
-             else:
-                 if verbose:
--                    print("Label %s has no changelists - possibly deleted?=
-" % name)
-+                    if depot_wide_changelist:
-+                        # there is a changelist corresponding to this labe=
-l,
-+                        # but it's not under any branches of interest.
-+                        print("Label %s has no changelists under detected =
-branches -- ignoring" % name)
-+                    else:
-+                        # there is no changelist corresponding to this lab=
-el in the whole depot
-+                        print("Label %s has no changelists - possibly dele=
-ted?" % name)
-=20
-             if not commitFound:
-                 # We can't import this label; don't try again as it will g=
-et very
-                 # expensive repeatedly fetching all the files for labels t=
-hat will
-                 # never be imported. If the label is moved in the future, =
-the
-
-base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
---=20
-2.19.2
-
+> ________________________________________
+> From: Denton Liu [liu.denton@gmail.com]
+> Sent: March-27-19 6:51 PM
+> To: Julian Cheng
+> Cc: git@vger.kernel.org
+> Subject: Re: [GSoC] [t9803]
+> 
+> On Wed, Mar 27, 2019 at 10:04:46PM +0000, Julian Cheng wrote:
+> > Denton, thanks for the pointers!
+> >
+> > I get the following when I run "make" in the top level directory of git and I'm not sure how to deal with it. Any ideas?
+> > $ make
+> >     LINK git-http-fetch
+> > .../lib/libcurl.so: undefined reference to `SSLv2_client_method'
+> > collect2: error: ld returned 1 exit status
+> > Makefile:2434: recipe for target 'git-http-fetch' failed
+> > make: *** [git-http-fetch] Error 1
+> 
+> What OS and/or distro are you currently running? It looks like you
+> either have some out-of-date libraries or you're entirely missing some
+> libraries.
+> 
+> >
+> > ________________________________________
+> > From: Denton Liu [liu.denton@gmail.com]
+> > Sent: March-27-19 5:10 PM
+> > To: Julian Cheng
+> > Cc: git@vger.kernel.org
+> > Subject: Re: [GSoC] [t9803]
+> >
+> > Hi Julian,
+> >
+> > On Wed, Mar 27, 2019 at 07:26:12PM +0000, Julian Cheng wrote:
+> > > Hello Git Community,
+> > >
+> > > I’m new here and hoping to get to be a part of GSOC 2019. I have questions about the main project and the microproject
+> > >
+> > > Main Project Quesctions
+> > > I was hoping to work on “git revert --drop” and “git commit --reword”. Are there any mentors available for this project? The ideas page lists mentors for other projects but not this one.
+> > >
+> > > Also, “git revert --drop” and “git commit --reword” appear not to have been discussed yet in the public inbox. Is this correct or am I just not finding the threads?
+> > >
+> > >
+> > > Microproject Questions (test_path_is_*)
+> > > I would like to improve t9803-git-p4-shell-metachars.sh
+> > >
+> > > On the microprojects page, it suggests I should run the tests to make sure they all pass. But if I’m making changes to the tests, is it really adequate testing just to make sure they all pass?
+> > >
+> > > To run all tests, I assume I would just navigate to the tests folder in terminal and call “sh *.sh”, but that doesn’t seem to work. Also, when I call “sh  t9803-git-p4-shell-metachars.sh”, I get “error: GIT-BUILD-OPTIONS missing (has Git been built?).” Git is definitely installed on my computer though. I’ve been using it for months. I cloned this repo with Git. What am I missing here?
+> >
+> > When the tests run, they don't test your installation (the git you're
+> > currently using in /usr/bin/git). They test the git you've built in the
+> > project directory.
+> >
+> > First of all, you should build the project. You should run "make" from
+> > the top-level directory of git. This will fill the directory with git-*
+> > executables. These are the actual binaries that will be tested.
+> >
+> > Next, go into t/ and run "make" again to run all of the tests. You can
+> > also run individual tests by doing something like
+> > ./t9803-git-p4-shell-metachars.sh, for example.
+> >
+> > For even more details on testing, see t/README.
+> >
+> > Also, some other helpful documentation to read include:
+> >
+> > * Documentation/SubmittingPatches
+> > * Documentation/CodingGuidelines
+> >
+> > Hope this helps,
+> >
+> > Denton
+> >
+> > >
+> > > Best,
+> > > Julian
