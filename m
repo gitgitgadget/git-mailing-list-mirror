@@ -2,170 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD0720248
-	for <e@80x24.org>; Wed, 27 Mar 2019 22:23:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 762AF20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 22:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728218AbfC0WXR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 18:23:17 -0400
-Received: from mout.gmx.net ([212.227.15.19]:59659 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727949AbfC0WXR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 18:23:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553725387;
-        bh=2hzcO3igmJu1TSnz3VDWwbOGAOUyTR275xwHtvqEA+o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ljRJUJzCZZPpJ661DNFZRwRlnmxtFJoIpXfFfW+nuiQ6Scbfes8ibf1TMVwNTtXig
-         yVUH3Y/44VHH/CaTbaCkhtjv9xerV35BKz+jaSXWT2MQkAb1NgJDue5Rj7VeLPImRd
-         AfwJdp5jsKkCZa4WvA4lSIZMYlURsVLEi9r7yYuc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1gdBnb2ebs-00ppxd; Wed, 27
- Mar 2019 23:23:07 +0100
-Date:   Wed, 27 Mar 2019 23:23:08 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] docs: do not document the `git remote-testgit`
- command
-In-Reply-To: <87a7hhbszc.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903272317550.41@tvgsbejvaqbjf.bet>
-References: <pull.162.git.gitgitgadget@gmail.com> <pull.162.v2.git.gitgitgadget@gmail.com> <810d2c5a94b40544652c97ffa644b29e0db8af82.1553550094.git.gitgitgadget@gmail.com> <87a7hhbszc.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727909AbfC0WvY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 18:51:24 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:46628 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726275AbfC0WvY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 18:51:24 -0400
+Received: by mail-pg1-f196.google.com with SMTP id q1so2457421pgv.13
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 15:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=8TXhT+YjRZbXREavXajQDswpLIfh8HGcVSX0sVUHGAE=;
+        b=dCmQmdrAXCLJMwpPygZtyr1YBOiRP5JHaP0L+Dmo1s9nB6x2RSnJc5unxTQhCYxJBR
+         aZcae0repTeuABH41QBtIoRzO6H3vOLou98/Qe4YGSVybjpo2qDzaRCibzvmOW1d2TTd
+         Hrg2pqRK86MwNoAik0eH6bmwCV7XExv0R9etjGb3z0nYtIhqa/gqX2jNx2tzIoDeFFqf
+         rvcKmF+T6ZzhniAgSg28yWPDDS+yrlNuNAjAhUpnOnj08pl//plh7fse0yDnyzSrP8Rj
+         DVRFCIWZ3O81a36+XoCQXD3Y8BMAXZMvdotTaX5QWku4KDQjNjvdP9kS670Qfz3kcHFK
+         AECA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8TXhT+YjRZbXREavXajQDswpLIfh8HGcVSX0sVUHGAE=;
+        b=cLt154gw4BnCeOarFfKRGzrH/qTZzMK0wu22hM4lRacHAVuW6WhzKqxJCdAg5ZZWOL
+         /UYvmNN1tpg76xKQbcmlUwWNH+aIPLrKStjaR2Wp2szvjeQoyYRajuiwV54LICyfBAo5
+         pAn/qERqorrPxlxSuWyvrqQ6IhkPYKQ9URCZp/kaajyC5pRzq0DX9Rs+kRdRoYrTQxma
+         3mg4iJesoInk4P4aSvWGtgPE3l740FBrJwALv7zkoKQHajfih7W3pWCpO6Z1ay+HYkQo
+         mG2RzbKnUaT8OYH2w6pKDksOB8UQxLg2VvxgvyUecGWrccffglzAYdR4f1/kqpVwdgXw
+         VHNw==
+X-Gm-Message-State: APjAAAUUY0TCSKQ218cud26L9WQWOhkxh64s6dMZpyB/EogNU+S2qbjq
+        M6DV7GBMAwYSNeMj8LmylVc=
+X-Google-Smtp-Source: APXvYqy1r2xEQd7Ji45HA9XLMmeJ7IMQepMvyC0Dt4cUUWbdRKyEUcswGaovDZJ/YjPJGfE9tG2SMw==
+X-Received: by 2002:a63:450f:: with SMTP id s15mr36148781pga.157.1553727083169;
+        Wed, 27 Mar 2019 15:51:23 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id g188sm41147308pfc.24.2019.03.27.15.51.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 15:51:22 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 15:51:20 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Julian Cheng <julian.cheng@utoronto.ca>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [GSoC] [t9803]
+Message-ID: <20190327225120.GA9277@dev-l>
+References: <7BFDFF1D85B3B544BB69BB9AB23D479D01F4534A@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+ <20190327211050.GA4062@dev-l>
+ <7BFDFF1D85B3B544BB69BB9AB23D479D01F45370@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1122868800-1553725389=:41"
-X-Provags-ID: V03:K1:nlKiExfwUKnuncl8A1zzhpPE1jsMWJ+uOtYhSQQExXspXO5vB0L
- EGTDNmRiE2f64FMABSApvFAdqLjjdP3RPFvDo2UsmF2ARmxA88bEWG8hdR4+tNkUlNWagyS
- rrz+jteCiymvr78/Crg8Gc3PdfqDoY+W2I4vs5YXh9+2kmjma1Nrg0lIdDgL4Fk1p/YHWkx
- S6OZHt7lgZSK5ganTxs6g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gIOR9hrDpSU=:2WfhCmkGELds9EGmdOeBzG
- VNuYQOVgZHSc2lTmAH9rIOvtv1+QCsY3ve3vrNrCqBLdiA3AgnV43wbc+FNoL3z/A7863qUhj
- LvOZt0nohwG7bfL/WYxqF6+aksXMHvogvhpDOeWM9u9hBfNahpm14MJ7947K7cAGCzsck9+33
- 0epOjrQPFXF+BRdYMFGpkUaNHb2TDlv56ZkAMiAABOWFbYEFFMZJnKtCDHbNTbR4ambaQnxPY
- NOjmr3KWF3rrf4RDsSyy9XoLZxK832QSvYQzys1rqluPVL8GBpYx+ToFe8lfce/wfY0FES4Z7
- hTn1FKUEWzY5BL7ZjPzF0131rbWCbJRsEsBEKtHbJ0vaNhsgRP4uAK3AMGs4zAh42iWsMFm4a
- r7sk7lqvfIkUuK4EEHl43+GsOSPkGjXzfoOM7E5U7388v9HQMU7W41Id++wP4/vMjEvV6LCqQ
- O5xQzc97ofjpiGKTO8fgil1/Qy1046Sxe3Ug4vAHNkwZGnkbLTXWuArFlJgaSBW3EmD9nR3sW
- nr3n5ypSRFz0SW76PzDxjq5E6EmQ8exfMwR+Q5IbRYyajJsWQfIeJtE20FfiRLFJyNp+HNvbo
- Uw5Mm9iwFhkEMou4kxOj2h31fAnikMl3JMICWS+ULakrzNiLZPP0qNdR1fhGGBXvHD52SEgnr
- iCw0uGlz7FdN3p/5R4i1a/9zdBvct2eAg2RRe70TQZNJdwVQbwXh+En2HjVj+Q0KIw31wFLbO
- BGCWIn8ZwZfksohUKgFWnDzGRh/QXVia/TcdhAvScyXBPylWNbWCRDYkfwnC2pErvCzLASBNd
- k+zwPu66iON/pwy+6VpnXJTfNArCNwB9boitA5RcZYNpH3C36p8AQzvFJ9lsz8HlzCa+VbFkD
- GMCy6utqGPKG/6UJ6dw5LkrONR7ows4qtqRxQukZA3/CgySWUMRinbsx4+cQsUIxJYpktYRg4
- KahisstEGdQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7BFDFF1D85B3B544BB69BB9AB23D479D01F45370@arborexcasx3.UTORARBOR.UTORAD.Utoronto.ca>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Mar 27, 2019 at 10:04:46PM +0000, Julian Cheng wrote:
+> Denton, thanks for the pointers!
+> 
+> I get the following when I run "make" in the top level directory of git and I'm not sure how to deal with it. Any ideas?
+> $ make
+>     LINK git-http-fetch
+> .../lib/libcurl.so: undefined reference to `SSLv2_client_method'
+> collect2: error: ld returned 1 exit status
+> Makefile:2434: recipe for target 'git-http-fetch' failed
+> make: *** [git-http-fetch] Error 1
 
---8323328-1122868800-1553725389=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+What OS and/or distro are you currently running? It looks like you
+either have some out-of-date libraries or you're entirely missing some
+libraries.
 
-Hi =C3=86var,
-
-On Tue, 26 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
->
-> On Mon, Mar 25 2019, Johannes Schindelin via GitGitGadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> ________________________________________
+> From: Denton Liu [liu.denton@gmail.com]
+> Sent: March-27-19 5:10 PM
+> To: Julian Cheng
+> Cc: git@vger.kernel.org
+> Subject: Re: [GSoC] [t9803]
+> 
+> Hi Julian,
+> 
+> On Wed, Mar 27, 2019 at 07:26:12PM +0000, Julian Cheng wrote:
+> > Hello Git Community,
 > >
-> > Since 7ded055401 (build: do not install git-remote-testgit, 2013-06-07=
-),
-> > we do not install it. Therefore it makes no sense to document it,
-> > either.
+> > I’m new here and hoping to get to be a part of GSOC 2019. I have questions about the main project and the microproject
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  Documentation/git-remote-testgit.txt | 30 ---------------------------=
--
-> >  Documentation/gitremote-helpers.txt  |  2 --
-> >  2 files changed, 32 deletions(-)
-> >  delete mode 100644 Documentation/git-remote-testgit.txt
+> > Main Project Quesctions
+> > I was hoping to work on “git revert --drop” and “git commit --reword”. Are there any mentors available for this project? The ideas page lists mentors for other projects but not this one.
 > >
-> > diff --git a/Documentation/git-remote-testgit.txt b/Documentation/git-=
-remote-testgit.txt
-> > deleted file mode 100644
-> > index b45bfebba5..0000000000
-> > --- a/Documentation/git-remote-testgit.txt
-> > +++ /dev/null
-> > @@ -1,30 +0,0 @@
-> > -git-remote-testgit(1)
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > -
-> > -NAME
-> > -----
-> > -git-remote-testgit - Example remote-helper
-> > -
-> > -
-> > -SYNOPSIS
-> > ---------
-> > -[verse]
-> > -git clone testgit::<source-repo> [<destination>]
-> > -
-> > -DESCRIPTION
-> > ------------
-> > -
-> > -This command is a simple remote-helper, that is used both as a
-> > -testcase for the remote-helper functionality, and as an example to
-> > -show remote-helper authors one possible implementation.
-> > -
-> > -The best way to learn more is to read the comments and source code in
-> > -'git-remote-testgit'.
-> > -
-> > -SEE ALSO
-> > ---------
-> > -linkgit:gitremote-helpers[7]
-> > -
-> > -GIT
-> > ----
-> > -Part of the linkgit:git[1] suite
-> > diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitre=
-mote-helpers.txt
-> > index 34a3e60d08..2fc4007525 100644
-> > --- a/Documentation/gitremote-helpers.txt
-> > +++ b/Documentation/gitremote-helpers.txt
-> > @@ -513,8 +513,6 @@ linkgit:git-remote-ext[1]
+> > Also, “git revert --drop” and “git commit --reword” appear not to have been discussed yet in the public inbox. Is this correct or am I just not finding the threads?
 > >
-> >  linkgit:git-remote-fd[1]
 > >
-> > -linkgit:git-remote-testgit[1]
-> > -
-> >  linkgit:git-fast-import[1]
->
-> I wonder if it should be moved into e.g. t/helper or somesuch at this
-> point...
-
-Sure.
-
-One thing to keep in mind is that we cannot change the actual name of the
-executable, as it needs to have the format `git-remote-*`, and cannot
-require a first argument `testgit`, to be able to perform its purpose.
-
-We do have a precedent for that kind of scenario: `test-fake-ssh`. It is
-also not folded into `test-tool`, and it is copied while changing the name
-to `ssh`, as required to fulfill its mission.
-
-I am not totally enthusiastic about this because this is what prevents
-Git's test suite from running in a RAM disk on Windows, IIRC: I have not
-been able to convince my RAM disk provider to allow executables stored on
-it to be executed.
-
-Ciao,
-Dscho
-
---8323328-1122868800-1553725389=:41--
+> > Microproject Questions (test_path_is_*)
+> > I would like to improve t9803-git-p4-shell-metachars.sh
+> >
+> > On the microprojects page, it suggests I should run the tests to make sure they all pass. But if I’m making changes to the tests, is it really adequate testing just to make sure they all pass?
+> >
+> > To run all tests, I assume I would just navigate to the tests folder in terminal and call “sh *.sh”, but that doesn’t seem to work. Also, when I call “sh  t9803-git-p4-shell-metachars.sh”, I get “error: GIT-BUILD-OPTIONS missing (has Git been built?).” Git is definitely installed on my computer though. I’ve been using it for months. I cloned this repo with Git. What am I missing here?
+> 
+> When the tests run, they don't test your installation (the git you're
+> currently using in /usr/bin/git). They test the git you've built in the
+> project directory.
+> 
+> First of all, you should build the project. You should run "make" from
+> the top-level directory of git. This will fill the directory with git-*
+> executables. These are the actual binaries that will be tested.
+> 
+> Next, go into t/ and run "make" again to run all of the tests. You can
+> also run individual tests by doing something like
+> ./t9803-git-p4-shell-metachars.sh, for example.
+> 
+> For even more details on testing, see t/README.
+> 
+> Also, some other helpful documentation to read include:
+> 
+> * Documentation/SubmittingPatches
+> * Documentation/CodingGuidelines
+> 
+> Hope this helps,
+> 
+> Denton
+> 
+> >
+> > Best,
+> > Julian
