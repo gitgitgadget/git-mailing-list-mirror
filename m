@@ -2,124 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MIME_QP_LONG_LINE,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50C2020248
-	for <e@80x24.org>; Wed, 27 Mar 2019 11:30:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCE9C20248
+	for <e@80x24.org>; Wed, 27 Mar 2019 12:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726392AbfC0LaP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 07:30:15 -0400
-Received: from n1nlsmtp02.prod.ams1.secureserver.net ([188.121.43.194]:45372
-        "EHLO n1nlsmtp02.shr.prod.ams1.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726319AbfC0LaO (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Mar 2019 07:30:14 -0400
-Received: from n3plvcpnl110358.prod.ams3.secureserver.net ([160.153.140.31])
-        by : HOSTING RELAY : with ESMTP
-        id 96k3hSIpb1z7s96k3hq7gH; Wed, 27 Mar 2019 04:29:12 -0700
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=m-mooga.com
-        ; s=default; h=Content-transfer-encoding:Content-type:Mime-version:
-        In-Reply-To:References:Message-ID:CC:To:From:Subject:Date:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=nD3Fpr8aB91HjqOoOeDDxyJ5UCGVXTz+oARmEtCacQA=; b=ENX+wFknGyuhVXlitGVFkEcVyz
-        Cmk9chKthnHtabMaDnYHk8nWciXUA5THUgWXmoonRJM9RG3LrgwcZ8HVEdDkv5Bd5s5vUYhuiAZic
-        2n6zHc5NE0GwVwGc0IwEvpz68na9JRqIgDrWt68c2gBSgNPg5p6q79aMef5QKTfFMl7aIlbHUgfGZ
-        HFlzTm5dawL8+vgYpuamBSBfpnv/uYYNQNtoH8gJghE+ksmO0aujJUFs6/46VfvGMXmlUBaemwAZH
-        msGO72HcBN5fy4vk3Dsw0lEgu2p49ap8VaV2N3fSN8VjNW/Gvewq1lms0TRVxOsrxwNMyTu5Z2t7N
-        oBkG42OQ==;
-Received: from [141.22.241.209] (port=56254)
-        by n3plvcpnl110358.prod.ams3.secureserver.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <contact@m-mooga.com>)
-        id 1h96k3-005MM5-50; Wed, 27 Mar 2019 04:29:11 -0700
-User-Agent: Microsoft-MacOutlook/10.17.0.190309
-Date:   Wed, 27 Mar 2019 12:28:49 +0100
+        id S1728165AbfC0MOR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 08:14:17 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54483 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726296AbfC0MOR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 08:14:17 -0400
+Received: by mail-wm1-f66.google.com with SMTP id f3so15982536wmj.4
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 05:14:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Cy02O4/3XrbIqx3nDOR9+4sjNVZ4mw/s6sHQdFKpPEg=;
+        b=XqJ692fmey2j+ORN6uHaXEN/AuPl2aOVaNao2WrLVQO6ZJeaWhhTFqYH4kngz97yjB
+         NKWa0hjrKr/DTPUCeFSWPa2vJonipFG4YYR+plSq28s4qTr19uHre6OXK9fDp5sro/as
+         CQrKZUj2w9/zWh0z4kAfMVCRvNea6eUKeyFFGCjVEqtAQS5xSj+3MWid+nqsCLB8RX/H
+         yu2BmjbpOYDwG5b/n2nxQ6o2EAVZPLkME2BCVj3vBPMFRL4UgPOfd1xrJ3sfm80llSWe
+         cf6+DURr7jCeOy5++j1k2VgAKaYMhzvfYbnkqQtcWk9vfgAwPfwDL/4s1A0WqDRoMk9G
+         djoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Cy02O4/3XrbIqx3nDOR9+4sjNVZ4mw/s6sHQdFKpPEg=;
+        b=Xo9B8MRsauZ5jcbgEo1ELLzg6dmHPIKO1F1DRQ/5Dzz0zQuaCEgZXLTRtIzzUncz17
+         2/9F5tVO9tnKdIzED+Ebw80lUSqNWeuUkV6OBn//DaZROKKf7C9cVYJFPNN+7ZGiqEWe
+         RItJ2QSvKHEVYDzPuiLMUXReC6IIz1QE8vZ0P6jR8OcFAZFpRMneVxW34dU5Pd5C2Oux
+         4UUy/64G7JKRWJrywnfJT1CQOPXvhdauahyIWuR1kgzVVdtmc5ncYkny695cr/HSOSuA
+         mMHvvSdJFVoimdk2q3Vnv1jhGDzzZz4GCBGvY1ovUyNA5hOJfHjVWJ0GdJTu4ERL4Nf7
+         X/8Q==
+X-Gm-Message-State: APjAAAXQ5VnaEZKALzTeizvQy7FEz9/kK7DOqkACpTiOnn7fZCnRJqiA
+        tFauGbRPaPWfHnQIX9PO2E6v2sLg
+X-Google-Smtp-Source: APXvYqydikTyKq7OacTATa9u/MfHShaUa5Ho73RYNtewdc2FJQyxjWarfbPQRFLZb+YmTkOAI4goBA==
+X-Received: by 2002:a1c:e185:: with SMTP id y127mr13027987wmg.76.1553688854573;
+        Wed, 27 Mar 2019 05:14:14 -0700 (PDT)
+Received: from szeder.dev (x4d0c7b09.dyn.telefonica.de. [77.12.123.9])
+        by smtp.gmail.com with ESMTPSA id z14sm26545899wrv.78.2019.03.27.05.14.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Mar 2019 05:14:13 -0700 (PDT)
+Date:   Wed, 27 Mar 2019 13:14:11 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Mooga <contact@m-mooga.com>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: [GSoC] microporject test_path_is_*
-From:   Mooga <contact@m-mooga.com>
-To:     Elijah Newren <newren@gmail.com>
-CC:     <git@vger.kernel.org>
-Message-ID: <BBF4F6A7-E5CA-4493-B386-AB7A69EA6EFD@m-mooga.com>
-Thread-Topic: [GSoC] microporject test_path_is_*
+Message-ID: <20190327121411.GE32732@szeder.dev>
 References: <38B8E527-2338-485E-8840-29121F259687@m-mooga.com>
  <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
-In-Reply-To: <CABPp-BHwUoqk79Kf=ynna5x+mCJyOLz66v6pDieyEeM7YCRS+g@mail.gmail.com>
-Mime-version: 1.0
-Content-type: text/plain;
-        charset="UTF-8"
-Content-transfer-encoding: quoted-printable
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - n3plvcpnl110358.prod.ams3.secureserver.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - m-mooga.com
-X-Get-Message-Sender-Via: n3plvcpnl110358.prod.ams3.secureserver.net: authenticated_id: contact@m-mooga.com
-X-Authenticated-Sender: n3plvcpnl110358.prod.ams3.secureserver.net: contact@m-mooga.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-CMAE-Envelope: MS4wfMaZHEK5A6qGWI2HzpbieH295WuYBHPMpgJmz3xP8L23zAkgrntlFpN+b7Yz/95Vkpzdk8pvVBOw9hOW4NHqC4raP0ET6TXX+7GfAX2eQUFgd81ktpDF
- 4FBsO5V5C5UJv3N7SiKH4ECiLfKcK3VabJGZpNiNKS6kBukF7S5CSPbmbaCqXfZHLLSft5HG5IAMFamRIHotqbQT+F4Bca6wUvc=
+ <877eckbpdd.fsf@evledraar.gmail.com>
+ <20190327104935.GD32732@szeder.dev>
+ <874l7obm0c.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874l7obm0c.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 27, 2019 at 12:21:55PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Mar 27 2019, SZEDER Gábor wrote:
+> 
+> > On Wed, Mar 27, 2019 at 11:09:18AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> > There are likewise several that use one of
+> >> >    ! test -e path/to/filename
+> >> > or
+> >> >    ! test -f path/to/filename
+> >> > or
+> >> >   test ! -f path/to/filename
+> >> > which could be replaced by
+> >> >   test_path_is_missing path/to/filename
+> >>
+> >> Interesting that for some we use the 'test_is_there/test_is_not_there'
+> >> pattern and for others 'test_is_there [!]'. E.g
+> >> test_path_exist/test_path_is_missing v.s. test_i18ngrep.
+> >
+> > It's unclear what the '!' should negate in case of 'test_path_is_file
+> > ! file'.  What if 'file' does exists, but it's not a file but a
+> > directory, socket, fifo, or symlink?  'test ! -f file' returns success
+> > in these cases as well.
+> >
+> > OTOH, it's quite clear what the negation should mean in case of
+> > 'test_i18ngrep'.
+> 
+> *Should* we make it better? Yeah sure, maybe. I'm just pointing out for
+> context to someone poking at this for the first time that now we
+> sometimes do "! foo <arg>" v.s. "foo <arg>" as "foo_is <arg>" and
+> "foo_not <arg>" and other times "foo [!] <arg>".
+> 
+> So yeah, maybe we should improve things to disambiguate the cases you
+> mentioned, but right now e.g. "test_path_exists" and
+> "test_path_is_missing" are just "test -e" and "! test -e", respectively.
 
-So for example  that is git diff
+I'm not sure why 'test_path_exists' exists, as I don't readily see a
+valid reason why a test should only be interested in whether the path
+exists, but but not whether it's a file or a directory.  Luckily it
+haven't caught on, and it's only used twice in the whole test suite.
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 286bba35d8..fc82965a0f 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -66,7 +66,7 @@ test_expect_success '"add" worktree' '
-test_expect_success '"add" worktree with lock' '
-        git rev-parse HEAD >expect &&
-        git worktree add --detach --lock here-with-lock master &&
--       test -f .git/worktrees/here-with-lock/locked
-+       test_path_is_file .git/worktrees/here-with-lock/locked
+However, as shown above, the existend of 'test_path_is_missing' is
+very much justified.
 
+> The same caveats you've mentioned also apply to "test_i18ngrep" b.t.w.,
+> there we squash the 3x standard exit codes of grep[1] into a boolean,
+> and thus e.g. ignore the difference between <file> not matching an
+> <file> being a directory or whatever.
 
+I'm not sure I understand, 'test_i18ngrep' handles the missing file or
+not a file cases reasonably well:
 
-=EF=BB=BFOn 26.03.19, 23:07, "Elijah Newren" <git-owner@vger.kernel.org on behalf=
- of newren@gmail.com> wrote:
+  expecting success: 
+          test_i18ngrep ! foo nonexistent-file
+  
+  error: bug in the test script: test_i18ngrep requires a file to read as the last parameter
 
-    Hi,
-   =20
-    On Tue, Mar 26, 2019 at 2:10 PM Mooga <contact@m-mooga.com> wrote:
-    >
-    > Hi,
-    > I am still a bit confused about the task itself
-    >
-    > it=E2=80=99s just text replacing for example:
-    > t1400-update-ref.sh , line 194 -> `test_path_is_missing`  has to be =E2=
-=80=98test_path_is_file=E2=80=99
-    >
-    > Thanks
-   =20
-    There are several places in the code that use test with -e or -f or -d
-    (or -h or...) in order to check for the presence of a
-    file/directory/symlink/etc.  For example,
-       test -f path1/file1
-    This could be made more clear and produce nicer error messages if it
-    were instead
-       test_path_is_file path1/file1
-   =20
-    There are likewise several that use one of
-       ! test -e path/to/filename
-    or
-       ! test -f path/to/filename
-    or
-      test ! -f path/to/filename
-    which could be replaced by
-      test_path_is_missing path/to/filename
-   =20
-    This GSoC microproject is just about picking one testfile that has
-    some of these constructs, and fixing the cases found within that
-    testfile.
-   =20
+or
+
+  expecting success: 
+          mkdir dir &&
+          test_i18ngrep ! foo dir
+  
+  error: bug in the test script: test_i18ngrep requires a file to read as the last parameter
 
 
+> 
+> 1. http://pubs.opengroup.org/onlinepubs/009695399/utilities/grep.html
