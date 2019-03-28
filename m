@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69A8620248
-	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31EEB20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727624AbfC1QOz (ORCPT <rfc822;e@80x24.org>);
+        id S1727532AbfC1QOz (ORCPT <rfc822;e@80x24.org>);
         Thu, 28 Mar 2019 12:14:55 -0400
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:53169 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfC1QOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 12:14:54 -0400
-Received: by mail-wm1-f53.google.com with SMTP id a184so4198967wma.2
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:53 -0700 (PDT)
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:44636 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727493AbfC1QOx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 12:14:53 -0400
+Received: by mail-wr1-f42.google.com with SMTP id y7so19492876wrn.11
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=luL8kTgjIVASvqVkUPhlJxRfwjVsqTYlqLdiKMpuQ2Y=;
-        b=KY7GJ6DMIEtUc1HU3R8crhX6c4QaS/NJ1u5pGtlVFalLX7PtCGq4bApR6uRix0Hp3c
-         5ymz85IMH38ITb9d6jfsxl2HLBEA5z3fRcwy653kiORZAw3BW/YXJrR0VnheYObeHe09
-         dE7PnKJBBNaBtHNY8oyzLIQggYo7LI8PuFlZT/7qRVWvkoIr3rYSl77yGeCdNq6eekvs
-         NtTRqr3+j9eksLDh082g4oNB/pzrIbYvo5h9/X+h76lCOUfr7x3MIR/+Ps7YodnqBDcR
-         EnELB2LoUBk/rbmoXuPjDo+3y8JvsY3YTb5qf2nYL43Zn6kpdUEuznBya9E9D4xiKO5c
-         +LNA==
+        bh=0OrYW0SN8tkBewlpvNwKRkXnGPnUDO/Qv15OMaVKJBM=;
+        b=l6a0RZ3rH96gh+NtM9Kop0zHDEg7oMBL7JUDoLCZeyWqzD3XsEPFQZVctSEidKV7U/
+         W01EPyewBf62Vb/OIqbk+cQL0eAtzHgGBwrTirD7NIzODAJMq9vdlw2B1qK2Y0CTP9Mv
+         bAPDvk6UMnfzxnPajQAJdPDhrfenGldhgwvVmtXFFr7T32OFvWUfwdcKq8g/o56zHnKJ
+         LWGutAhnv0bTqVHc/ONnAPbAMBiSUJGyFHOAX7v0e0x38UsQfKdlNuy4ZbzWeJS8PH7/
+         fAgNvkVGeATG8UPgWOf2uR8NgKBwIPAqyP8azh2M6thtzSdNwlmbxbrOuT7oNDV8lCqB
+         au/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=luL8kTgjIVASvqVkUPhlJxRfwjVsqTYlqLdiKMpuQ2Y=;
-        b=PbaBuTXbKPEyCINJ4Tau4kigVjrZ/2pW7rA9AvNlUmsUSz8zM1Dbg0SWcXaTSs74BB
-         1MQdNcW+j80uKqOg6d/NAd2vnWxxqwojltGE2sTfVz3iPePtEtQwCtLdrQvYLL+5MyiS
-         Uitu4L0RVyHs2eoRbbv9u4vFPWQVDqjskokDrmNv17nWNTEL5ig3lsnHICz6eDdpNnq0
-         wAcHX/2F9HN8oQEP08GvmtDuMpeXe9pzNh5TcMFgh6ahLoM0iw5CA8VDG8gjFfn5OUeK
-         mHMREjOqNTDc7Zd+fZWw9HCRGyv0E4dZiqqwfsFS6Ho7G/PDhQO5CaL6De6nssDmlV8W
-         3xAw==
-X-Gm-Message-State: APjAAAUgaNvnRayCB4UJqiJUKGD9EDNQHIxF1l2juoPuj9A85cfOHN8a
-        t8R53fpdbwDxrudbD9mtDHbfX2/oTzY=
-X-Google-Smtp-Source: APXvYqyCVEiP1x/E0AK4bxI/hgF3D/qVZLaUJQM3X8t5HvjPcQdZsHsdy7tSq9z+MFHcFh4rT1LGbw==
-X-Received: by 2002:a7b:c767:: with SMTP id x7mr591731wmk.6.1553789692429;
-        Thu, 28 Mar 2019 09:14:52 -0700 (PDT)
+        bh=0OrYW0SN8tkBewlpvNwKRkXnGPnUDO/Qv15OMaVKJBM=;
+        b=L4olQl8ep7eMEAOEmCOJRx9f20HRvWxsfRV6eqiV6GN3aYCvmEKjoCRl1LBbp0yy4D
+         8L/H/l8oqpGDk0ZklM9tvnnt41ovHdTT1LJ2H1SpYXvc6/LSB8r/H54G6vyRrfMjA2dS
+         WcsN/siANgPhGPzpkd/7MVl3AiFNFs8F7CHy25aCywL9htXNVzlb+xFjDWpuFIHOaZXQ
+         /GifDp/EKV0pCM5QHAxxQp6QtTF2TpZFkR3ygKXG0yugEMuQ1KghL8XowWmWPLJqZYBA
+         35CLlNo8m4zrP/AYHALB0g9KMVRJsnGoy01pfJOIfKxlSWxSsANhEbflIRDjxtRq8k3G
+         Cw6w==
+X-Gm-Message-State: APjAAAWU2SqJrESawFM7GtPZdD4ggg+F/H1l0+F51I6EIaU8OT875ROD
+        rpXoUI25xYbkWOJY7xbMcbtzRYHn
+X-Google-Smtp-Source: APXvYqzcg79+8RO+VTBh+8HyYuw5IoAh9DRGaag2Gl34rMvvQf6r0Yi9aIQ9zniVhUlbrl2PJQMHAw==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr7923616wro.232.1553789690961;
+        Thu, 28 Mar 2019 09:14:50 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.50
+        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.49
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 28 Mar 2019 09:14:51 -0700 (PDT)
+        Thu, 28 Mar 2019 09:14:49 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 5/7] reflog tests: test for the "points nowhere" warning
-Date:   Thu, 28 Mar 2019 17:14:32 +0100
-Message-Id: <20190328161434.19200-6-avarab@gmail.com>
+Subject: [PATCH v4 4/7] reflog tests: make use of "test_config" idiom
+Date:   Thu, 28 Mar 2019 17:14:31 +0100
+Message-Id: <20190328161434.19200-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
 In-Reply-To: <20190315155959.12390-1-avarab@gmail.com>
 References: <20190315155959.12390-1-avarab@gmail.com>
@@ -74,40 +74,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git reflog expire" command when given an unknown reference has
-since 4264dc15e1 ("git reflog expire", 2006-12-19) when this command
-was implemented emit an error, but this has never been tested for.
-
-Let's test for it, also under gc.reflogExpire{Unreachable,}=never in
-case a future change is tempted to take shortcuts in the presence of
-such config.
+Change a couple of tests that weren't using the helper to use it. This
+makes the trailing "--unset" unnecessary.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1410-reflog.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ t/t1410-reflog.sh | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 42f5ac9ed9..e8f8ac9785 100755
+index ae8a448e34..42f5ac9ed9 100755
 --- a/t/t1410-reflog.sh
 +++ b/t/t1410-reflog.sh
-@@ -250,6 +250,16 @@ test_expect_success 'gc.reflogexpire=false' '
+@@ -232,24 +232,21 @@ test_expect_success '--expire=never' '
+ '
+ 
+ test_expect_success 'gc.reflogexpire=never' '
++	test_config gc.reflogexpire never &&
++	test_config gc.reflogexpireunreachable never &&
+ 
+-	git config gc.reflogexpire never &&
+-	git config gc.reflogexpireunreachable never &&
+ 	git reflog expire --verbose --all &&
+ 	git reflog refs/heads/master >output &&
+ 	test_line_count = 4 output
+ '
+ 
+ test_expect_success 'gc.reflogexpire=false' '
++	test_config gc.reflogexpire false &&
++	test_config gc.reflogexpireunreachable false &&
+ 
+-	git config gc.reflogexpire false &&
+-	git config gc.reflogexpireunreachable false &&
+ 	git reflog expire --verbose --all &&
+ 	git reflog refs/heads/master >output &&
+-	test_line_count = 4 output &&
+-
+-	git config --unset gc.reflogexpire &&
+-	git config --unset gc.reflogexpireunreachable
++	test_line_count = 4 output
  
  '
  
-+test_expect_success 'git reflog expire unknown reference' '
-+	test_config gc.reflogexpire never &&
-+	test_config gc.reflogexpireunreachable never &&
-+
-+	test_must_fail git reflog expire master@{123} 2>stderr &&
-+	test_i18ngrep "points nowhere" stderr &&
-+	test_must_fail git reflog expire does-not-exist 2>stderr &&
-+	test_i18ngrep "points nowhere" stderr
-+'
-+
- test_expect_success 'checkout should not delete log for packed ref' '
- 	test $(git reflog master | wc -l) = 4 &&
- 	git branch foo &&
 -- 
 2.21.0.392.gf8f6787159e
 
