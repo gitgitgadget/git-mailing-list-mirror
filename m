@@ -7,151 +7,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A631420248
-	for <e@80x24.org>; Thu, 28 Mar 2019 15:05:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B00C20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 16:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726087AbfC1PFl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 11:05:41 -0400
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:40128 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725816AbfC1PFl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 11:05:41 -0400
-Received: by mail-vk1-f194.google.com with SMTP id l17so4589259vke.7
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 08:05:40 -0700 (PDT)
+        id S1726286AbfC1QCU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 12:02:20 -0400
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:40909 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfC1QCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 12:02:20 -0400
+Received: by mail-vs1-f66.google.com with SMTP id f22so8738449vso.7
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uEYAZmyOe7YoT4pw7bw5sqjs3hwBngfyUBScYzTEP6k=;
-        b=HUTToib4Kug1L68pi9IrT+Ihm8+EqH3mIt/JvSrmpSEMwoIsndLrFZcQ0dDJLCgCQA
-         TkeIDLtgcgqWHdAa5H4AjNKBLZdhh7U6LENcMjNewvHiUjl69wLJQ+btLT2kdPbDHZ62
-         XxZAF5Un8C7eXkX0auICre0bhZ2dVidvUGX6phh3x+pocvd+pa6bSVXfg2+h0434SFmO
-         QL4rcj5aIN6fdgpSek4ZWo4mOnRfuhgB+tVjTNdTgBtBw/NmF/xPRAJd5y8f8DJuJ37x
-         9175kT71N97InsU5TvQbb36JpzmhBvBAbWdNeYBfsTLINgrkX5ZsLf/3WsHH2TuwP2HP
-         /+9A==
+        bh=yfMqqA37r5EKfG/GSuHzGSYod4miHMpvibc9kpHNqkU=;
+        b=i22/kj+8z0QjmApabsz2Qo9p/hq3GnbxVb1xd8utfT5xyjHpUqtQUPJ+nZTsj0tVmJ
+         ov5kvhTgZefionZFiPenb81qMu+9mMMEKUocVSGIRPa2PvedY2tRptLW/7OZ2zuRb7ND
+         HAbaRCfpomE3LDHdBG0ak0lTjfMxfhi2dZQu22gwNUsJbZi0xzCsFLrZk499CoGYb22M
+         sijdfX3LxefT1YzpZnQYebzjmZXKVgycmoFvp2sRbyrMijMqFMpEouru645pCXWeLJqc
+         VuXEyHRfvF4+8i5y97aiIwRfH/+VmJg1a68J+MtXvnusWIwppq/Kr/qfICYaw0ldmO6I
+         wezA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uEYAZmyOe7YoT4pw7bw5sqjs3hwBngfyUBScYzTEP6k=;
-        b=VCIdssxj/XgkL45Lgev7DsJUoSchn1MqAGj/uni/8cU9BIxt8MFH5AS9VHy7UPloEW
-         JzyJG6RnLDQr2ok+/4SnsikMkjV2+TNsHAlW+/i2wMncjZMhKJrz5rcy9KitsC/8spMK
-         7CCJYQPD23Ft7TE+a+FHFXP7/o2yD3hwFQbq0liZkcDDXfbOV++/oDdqdjwotO1uw62k
-         wNYu00A8dURrE5tC3S7EdHeWzFbhm83TZdW731NYRdGtfYb3mde1lw9WppP1ygFLH6aS
-         1kwbkfUpJ4awDn/mVo1LJBR/KHzFZxIwmFZH4wgiyPzB1xyBw5JKUcv2YyegTQ1+qBST
-         1Uqg==
-X-Gm-Message-State: APjAAAUaPlwbabuMCTDgme4sTo6QaQXlE2n4ZPC//iEU6fxQ6PbixTvc
-        48JzNoMSEHRLama4JjkgqIq4EWZK4X3vwDEPWSk=
-X-Google-Smtp-Source: APXvYqyEY8p1eikymgfz1rJ8Q8qPk0utx9Bbu2l0LXtfu4XFKhV/xKhUC6ZbJrKJBlmnaHhNqNCE1t0OR70VxjpJNxI=
-X-Received: by 2002:a1f:2acb:: with SMTP id q194mr24886529vkq.92.1553785539717;
- Thu, 28 Mar 2019 08:05:39 -0700 (PDT)
+        bh=yfMqqA37r5EKfG/GSuHzGSYod4miHMpvibc9kpHNqkU=;
+        b=pxDnFqJTWu68JHOTMBaGiuRJdUZ34oxMJXBd1BMv9xvnYtaG2o8cw11RMEmC97v6G8
+         e0U8jD/N9sFr3dn9hhgOWfYBjqLsd9YXxC2o3zQ4ex/atiI8bi5EyNelwBZl3HRLJBB3
+         TdUyiaMOwKBvzH+ASa76ztMo28NQj622S38nUn8JiU9N3ww2OPaGR+mr7Xx5vHYWbsfY
+         blJcLZTT36d071UOI0P11iNjLK2bWcDDEA2FT2ruzR0J48x+bdul8rCbGoRhKncr7MtM
+         ybgHjdnOz5QGA8Z+nlhhHSuBEILT189GBJvdz9iIpDS9MF/hcanLG1bRpCliAGwH+Xuz
+         vBbQ==
+X-Gm-Message-State: APjAAAUZjuazAD0oMDRy9WZHh6QCwQruAf5coO2Sm2PINT2BnvWx/zuM
+        UPdp3Sfe8ssrPLS4D8DoLGjiX0okQfMAaH5SR0pv0n4m
+X-Google-Smtp-Source: APXvYqyGmSwiXdiQOHL838FMkD//Dp6MDzGVgAQWnttn49L4m5Tn3mpdMwG/+RlrbXBWwrOjEISoWUpvgyGFt9vdpWM=
+X-Received: by 2002:a67:f416:: with SMTP id p22mr27693966vsn.175.1553788939232;
+ Thu, 28 Mar 2019 09:02:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
- <CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com>
- <CABPp-BEksf4SuD57YsUO3YKhU12CAwFTy6pA1tETFrHB1DAz9w@mail.gmail.com>
- <CACsJy8DPDEvNDeE5MpqcGZk9jRmT9g=ix+MOhkv+50J3Egef7A@mail.gmail.com>
- <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
- <0dc8820c-c6b0-c4ca-2107-84061fdc5333@gmail.com> <CACsJy8AmgDh1Z4CKTzSAVrywo0q-CFKbpuyqdtRm9m7pkUweSw@mail.gmail.com>
-In-Reply-To: <CACsJy8AmgDh1Z4CKTzSAVrywo0q-CFKbpuyqdtRm9m7pkUweSw@mail.gmail.com>
+References: <1A5DE2FC-7D94-4785-A915-EA2A71C6C377@m-mooga.com>
+ <CABPp-BE9vNhnN6XdcxnePnXkek0bNogAiA_cKJqZ1-ct=QA2pw@mail.gmail.com> <BF34A383-7714-40CC-B5EF-4FD20E7AC839@m-mooga.com>
+In-Reply-To: <BF34A383-7714-40CC-B5EF-4FD20E7AC839@m-mooga.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 28 Mar 2019 08:05:27 -0700
-Message-ID: <CABPp-BHQCy4zUEhFvLpjs8vMFq7vTaHzbe6BoJxCShxYtk7K9w@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 28 Mar 2019 09:02:07 -0700
+Message-ID: <CABPp-BGiP8BZwWQMbYhVQjqq8jZx+bbUTfgLaC6ZyukpLErZBw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] microporject test_path_is_*
+To:     Mooga <contact@m-mooga.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 28, 2019 at 4:04 AM Duy Nguyen <pclouds@gmail.com> wrote:
+On Wed, Mar 27, 2019 at 1:31 PM Mooga <contact@m-mooga.com> wrote:
 >
-> On Wed, Mar 27, 2019 at 5:24 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >
-> > On 26/03/2019 15:48, Elijah Newren wrote:
-> > > On Tue, Mar 26, 2019 at 8:24 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > >> On Tue, Mar 26, 2019 at 10:01 PM Elijah Newren <newren@gmail.com> wrote:
-> > >
-> > >> Yeah.. --ignore-in-process does not necessarily mean aborting
-> > >> something when you just want to get out to examine some other commit.
-> > >> And I agree doing nothing seems like the best (or least
-> > >> confusing/surprising) option.
-> > >>
-> > >> There will be some funny thing. Like if you commit after switching
-> > >> away and MERGE_HEAD is there, I think you will be creating a merge
-> > >> commit.
-> > >
-> > > Yes, and in the middle of a cherry-pick with a range you've added some
-> > > commits to one branch and some to another.  In the middle of a revert
-> > > you're doing similar.  It sounds like crazytown to me (and maybe we
-> > > shouldn't provide the --ignore-in-process flag unless users clamor for
-> > > it
+> Hi Eliah,
+> thanks for the advice, but still after I read the  SubmittingPatches , and see around the Submitting patches process still confussing for me , there's a better way  for explanation as an example
 >
-> I missed this part in my last reading. I think if we could safely
-> switch away and get back to resume, then --ignore-in-process could
-> still be useful. I sometimes switch to another commit to check out
-> stuff then back. For interactive rebase with "edit" command for
-> example, it's quite safe to do so. (yes the other option is "git
-> worktree add", but that could be a heavy hammer sometimes)
-
-Ah, switching not for the purpose of continuing the operation
-elsewhere, but just to check things out with the intent of coming back
-before continuing.  That does make sense.  Please do add a warning
-when users do it, though.
-
-> > I think that could be the way to go for merges and cherry-picks, or
 >
-> Just so we're clear, what is your "the way" to go? to remove
-> CHERRY_HEAD_PICK and MERGE_HEAD (and other MERGE_* as well) if
-> --ignore-in-process is specified? Or to leave MERGE_* and
-> CHERRY_PICK_HEAD alone and delete other stuff?
+> Regards
 
-Personally, I don't think `switch` should modify in-process state of
-other operations ever.  Not merge state, not cherry-pick state, not
-rebase state, not bisect state, etc.  And default should be for it to
-error out if any such state exists.  In-process state should be
-updated almost exclusively by `<operation>
---(continue|abort|skip|quit)` (or in bisect's case, the
-bad/good/skip/reset commands).  They only reason I put the 'almost'
-qualifier in there is that I'm not opposed to the _reset_ command
-continuing to do some things with state because of backward
-compatibility (and I might begrudgingly admit the same for other
-commands if they touch it though I'm tempted to say any command other
-than reset and the operation itself that touches in-process state
-represents a bug that should be fixed).  However, I very much want to
-steer users away from using reset (or other commands) to change state
-and guide them to instead use `<operation>
---(continue|abort|skip|quit)`.  I think we make things confusing and
-do users a disservice by not having in-process state be a totally
-orthogonal thing that is only updated by that process's subcommand.
+On this list, please respond to emails interleaved or below the
+original email; we discourage top-posting.
 
-If people use --ignore-in-process, I think the state should remain and
-we should give a big warning to the user about how the operation is
-still in progress and likely to give very confusing results and
-suggest either switching back to the current commit or running
-`<operation> --quit` for them to clear it.
-
-Also, if --ignore-in-process still fails because they need
---discard-changes too, then we could give a really obnoxious warning
-about how they should probably consider --quit first if they really
-want to switch.
-
-> > possibly require --discard-changes as well. The only time I use checkout
-> > like this is during a rebase if I want to rewind it - I edit the todo
-> > list with the output of 'git log --pretty="pick %h %s" --reverse' and do
-> > 'git checkout' followed by 'git rebase --continue' Though these days I
-> > could add a 'reset' line to the todo list and skip the checkout.
-
-I think Phillip's usecase is entirely consistent with the
-don't-have-switch-touch-process-state view.
-
+What part of the process is confusing?  Without knowing that, we're
+likely to just repeat the document as it stands.  Also, have you taken
+a look at https://gitgitgadget.github.io/ (which is a new thing
+designed to make submitting patches to git.git easier)?
 
 Hope that helps,
 Elijah
