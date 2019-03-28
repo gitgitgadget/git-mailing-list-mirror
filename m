@@ -2,144 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87CD020248
-	for <e@80x24.org>; Thu, 28 Mar 2019 00:06:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D23720248
+	for <e@80x24.org>; Thu, 28 Mar 2019 00:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729956AbfC1AGX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 20:06:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35318 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726173AbfC1AGW (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Mar 2019 20:06:22 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:d97:2d03:d5df:c7a7])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 49D976048F;
-        Thu, 28 Mar 2019 00:06:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1553731578;
-        bh=ZRLiybfRX54bI9vvvz392qGiMFmAybR9bo8YQnBY+ek=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=MA6K4hi7M9HhjsZ6TP/hM9kzAXtetiwcivpbt2qRFsnYBOoGMMSSZz+wfCES6zs8G
-         eUsBE0Jat8WGv6h6olyPrs3ZSk/GIJttDxITWqUExTRuHcQTr/qKzjj26EF0ecmOe+
-         MjJNcvrvz6DMgFkgDJWFHb0nkah0Aoqw5oLaCMnnGCm++352xIg5nUiF58mT30fw0H
-         +55kLkYTC+2xFBdneUQDZuYSgENsqRmiF1picKz44Zp4X7SDxXnB1GMGAtcD13w5Tw
-         eJAd6hVPK8kG5N2HZslXtfHpcRamg5XDWXNpSV3FfN+FFB+A60yjTn1XoknO/AW16E
-         8oem/HZUMS6i6KSD1kcNVKomt7wmqOybTfB/ttsKp3MBDACEWU98j/TBmSZk6aBYr8
-         hCrn+251fchlwCxTNCPdsIH4EHJTK6bZeezpxQxPNC+caMblihnNsqXnuSGcCeJ0QE
-         I0r6axe1IQ0EH/s+FGZaKjP0bz99vCQfa4xQg4KL7YKK1H2booh
-Date:   Thu, 28 Mar 2019 00:06:12 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-Message-ID: <20190328000612.GA12419@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-References: <20190317194431.GY31362@pobox.com>
- <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
- <20190320181715.GJ31362@pobox.com>
- <CAN0heSpJvsPm_qq63VumokmyOG6N=6fwMZRqf_9CzoCeHsdiyQ@mail.gmail.com>
- <20190323192756.GK4047@pobox.com>
- <20190324121619.GD312@sigill.intra.peff.net>
- <20190324162131.GL4047@pobox.com>
- <20190325150633.GC19929@sigill.intra.peff.net>
- <20190325190041.GM4047@pobox.com>
- <20190327010603.GR4047@pobox.com>
+        id S1726234AbfC1Atk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 20:49:40 -0400
+Received: from mail-it1-f180.google.com ([209.85.166.180]:35111 "EHLO
+        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbfC1Atk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 20:49:40 -0400
+Received: by mail-it1-f180.google.com with SMTP id w15so3371451itc.0
+        for <git@vger.kernel.org>; Wed, 27 Mar 2019 17:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=6+m/AfSrQMn6pAC0WxMUVShbSagBo8w6vu6A2OyqZ7Q=;
+        b=RzW3OxT93k5TX4Bl69TBGSaIAqUc0VBqIM8ty7Uq7kgvFWmktgpN9qM6Zl71aw4WUB
+         R/0ELsdXJ9KMzCb5IaVWBkiXPGvrVs5ZB3D/SYJcpstZR1dWhsqWX+2RceGj/hsul1oP
+         nt7n1aNHsvdUFaZqenPN7dgHD4iFLnz1tRCheMCh+HZBc9tET3uQT39EzT719+Jk4hBl
+         cNygR3SCWi/+tYHj9PiBfZ2i+qXBGTRBWHaX1oVUiRlIGXuf/axgIVAwv6LUMRyK6JLF
+         gSKQKq7V4QWgwiAG14DUri1As7hGtMfaRIWT5g1aK0U1O/g7fHlVRwL/1CHerGe8+Snu
+         IrgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6+m/AfSrQMn6pAC0WxMUVShbSagBo8w6vu6A2OyqZ7Q=;
+        b=pyP7o55wPqPviwmPMsE+WTkVG1k6WSxnyKW3gwOpp7m/fgWSHV/SmSDVaPGqe1zIgf
+         lmrz7sfxpV15jv8pxdVzZQOXcKMV6nNK8lXDPX1g1kCxJIGWTmLKubb2ckK5CObJdtBJ
+         TgVbpzT3n8vcbWHlLEg6QrESXJ04OlsIcDL/xECbL3cglZ7wXGYMGaUmlsge0DuKCNeS
+         vnghb9Mlu0DhzyB5Q0KI7gKyJqzuKYYWiV2qmkKru+MYWcaug3C7sWh3NO/3gAUJCCKW
+         1HN+Sv6Zdwwfcez1PBhzOUPigz02N4M73a/Nd08eb9vRZJRbNdE+DTGzRYT093U1Ey1A
+         W0ew==
+X-Gm-Message-State: APjAAAV5NIrJCBUXoZMpmhaZJ7ogLB5/rh2hQIkjvbdBtRyk1u14UCAW
+        LdswY+sVXkLfCU1y40p5i8YEP1IL/GbYAm5jbeKwSOSHLKg=
+X-Google-Smtp-Source: APXvYqy2FccMbUxO4AxNBp0oJaDhzp9r6B83xnbYw6yXIRpnP1v/RUCovFf3JblchUdslUfB30e+9AQbfEWExyXOntM=
+X-Received: by 2002:a24:50d5:: with SMTP id m204mr6290597itb.103.1553734178536;
+ Wed, 27 Mar 2019 17:49:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="envbJBWh7q8WU6mo"
-Content-Disposition: inline
-In-Reply-To: <20190327010603.GR4047@pobox.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Wed, 27 Mar 2019 17:49:27 -0700
+Message-ID: <CAGyf7-F8cmzOuhi6zeJJ13iwGh_ie-uTiJYUzBwssvH+kCY+yA@mail.gmail.com>
+Subject: Puzzling Git backtrace
+To:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I'm trying to assist a Bitbucket Server customer who is seeing some
+"git-upload-pack" processes "hang" on their server.
 
---envbJBWh7q8WU6mo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+While investigating, we had them connect gdb to their processes (which
+are 2.10.0 built from source using a simple unzip-and-run-make
+approach) and get the backtraces for them. The output that they're
+seeing makes no sense to me, though, so I'm throwing this out to the
+list just to see if anyone has any idea how the processes could end up
+like this.
 
-On Tue, Mar 26, 2019 at 09:06:03PM -0400, Todd Zullinger wrote:
-> There's still the matter of 2.0 dropping docbook45.  I'll
-> try to get around to testing 1.5.x releases with docbook5 to
-> see if they work reasonably well.  If not, we can add a
-> version check and set ASCIIDOC_DOCBOOK appropriately.
->=20
-> One other issue that crops up with docbook5 is that the
-> xmlto toolchain now outputs:
->=20
->     Note: namesp. cut : stripped namespace before processing
->=20
-> as documented at
->=20
->     https://docbook.org/docs/howto/howto.html#dbxsl
->=20
-> It's mostly an annoyance which we either want to strip out,
-> or pass an alternate docbook5 xsl, I think.  But I'm not
-> very familiar with the guts of the xml/docbook toolchains.
+One "family" of "hung" processes looks like this in ps:
 
-I'm quite familiar with this area, because I used DocBook and its
-stylesheets for my college papers. There are two sets of stylesheets,
-the namespaced ones (for DocBook 5) and the non-namespaced ones (for
-DocBook 4). They can be distinguished because the URLs (and typically
-the paths) use "xsl" (for non-namespaced) or "xsl-ns" (for namespaced).
+32432  7811 atlbitb+ Mar22 /bin/git upload-pack /path/to/repository
+32433 32432 atlbitb+ Mar22 git-upload-pack /path/to/repository
 
-xmlto by default uses the older ones, and assuming you have a reasonably
-capable XSLT processor, either set of stylesheets can be used, since
-they simply transform the document into the right type (although with a
-warning, as you've noticed).
+Looks normal enough. The backtrace for process 32432 also looks like I'd expect:
 
-Unfortunately, xmlto is hard-coded to use the non-namespaced stylesheets
-with no option to specify which to use, and it doesn't appear to be
-actively developed. There's an option to specify the stylesheet (-x),
-but it can't take a URL, since xmlto "helpfully" fully qualifies the
-path. That means we'd need to know the location on disk of those
-stylesheets in order to use them, since we can't rely on catalog
-resolution.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+#0  0x00007fa39842fc9c in __libc_waitpid (pid=pid@entry=32433,
+stat_loc=stat_loc@entry=0x7fffb42a4e4c, options=options@entry=0) at
+../sysdeps/unix/sysv/linux/waitpid.c:31
+#1  0x00000000005098f2 in wait_or_whine (pid=32433, argv0=0xd6e0c0
+"git-upload-pack", in_signal=in_signal@entry=0) at run-command.c:229
+#2  0x000000000050a949 in finish_command
+(cmd=cmd@entry=0x7fffb42a4ea0) at run-command.c:537
+#3  0x000000000050a9c1 in run_command (cmd=cmd@entry=0x7fffb42a4ea0)
+at run-command.c:558
+#4  0x000000000050aa5e in run_command_v_opt_cd_env
+(argv=argv@entry=0x7fffb42a5140, opt=opt@entry=40, dir=dir@entry=0x0,
+env=env@entry=0x0) at run-command.c:578
+#5  0x000000000050aa79 in run_command_v_opt
+(argv=argv@entry=0x7fffb42a5140, opt=opt@entry=40) at
+run-command.c:563
+#6  0x0000000000405ad0 in execv_dashed_external (argv=0x7fffb42a5140)
+at git.c:569
+#7  run_argv (argv=0x7fffb42a4f10, argcp=0x7fffb42a4f1c) at git.c:596
+#8  cmd_main (argc=2, argc@entry=3, argv=0x7fffb42a5140,
+argv@entry=0x7fffb42a5138) at git.c:665
+#9  0x0000000000404d9d in main (argc=3, argv=0x7fffb42a5138) at common-main.c:40
 
---envbJBWh7q8WU6mo
-Content-Type: application/pgp-signature; name="signature.asc"
+It's in "wait_or_whine" for "git-upload-pack".
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.14 (GNU/Linux)
+When they attached to 32433 and printed its backtrace, though, things
+go a little sideways:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlycD/QACgkQv1NdgR9S
-9ot7lBAAx6vadVoi7Y6EVJyb1AnDsMLgHbXqMcl+RYdpAeqFCwP+ljmYNNhChoF5
-5uj4KF4afe7SalD8DE8srHttX/nUuMsMHk4ID3/8YfnE3SrFYnFmnViMoo6iz26r
-zOqd5vcdWmBPOVsmSxod1C7uqbEMmLUJqMSlGpO7hjAagLK1cY2JW4rOgguQJjpc
-M5IcVj+Us4iZVGiJmB6LFcm02wNZXdlpHO2AcHaAyHssHDRWZa2jlPRXcZfk+DO+
-xJeaEueFvPDmZTBCFOzU5qpdMZ5W/vTJNv54BCpCH9rECvCiFSvRxkbRNh2Ip9bH
-ea+kDJ4QprFM/orug16WqaiJmmDpRY7Wfac/Q1/mhNyhFR/f5NM4yglUdUQb4W6G
-eQx03/stjG3QjUzoZb0BtqYjpsbOXsCn6xRKKKwmxBCuEJ8+eAkOnPQ7yfY4KFdS
-Rg9IvAVzOy6/yb0WT5oRtt7vog/g86dYjTU7sLsk/+fBDll7Y8iSab0LTk0LsYG2
-T2/vbuV3se9/x0kVQBkz82XqVHTpJfE/I6aQgmFgMLCun3hSSAbrrJRLnxyFzjGq
-Y4FVYC/+j+fRsKT9U+5vUfB/yz+4CzGTZWyD0KA8gZ687ICEqfbV4cKxDzZQ2rBJ
-Ne7BE/ITRC1WQycrP8VRbjb/NGCXvU46fVIbkpd3LlTA2E7Xnmw=
-=UNBa
------END PGP SIGNATURE-----
+(gdb) attach 32433
+Attaching to program: /usr/bin/git, process 32433
+Reading symbols from /lib64/ld-linux-x86-64.so.2...Reading symbols
+from /usr/lib/debug/usr/lib64/ld-2.17.so.debug...done.
+done.
+Loaded symbols for /lib64/ld-linux-x86-64.so.2
+0x00007f79d1aca240 in ?? ()
+(gdb) bt
+#0  0x00007f79d1aca240 in ?? ()
+#1  0x000000000045179e in mktree_line (allow_missing=4,
+nul_term_line=0, len=<optimized out>, buf=<optimized out>) at
+builtin/mktree.c:103
+#2  cmd_mktree (ac=<optimized out>, av=<optimized out>,
+prefix=<optimized out>) at builtin/mktree.c:173
+#3  0x0000000000000000 in ?? ()
 
---envbJBWh7q8WU6mo--
+So ps shows "git-upload-pack", and the parent process shows it's
+waiting for "git-upload-pack", but gdb shows it's attaching to "git",
+not "git-upload-pack", and the stack trace on the child shows it's
+running "git mktree". I've searched through the source code and I
+don't see any path through upload-pack.c that could result in it
+essentially exec'ing "git mktree" over the top of itself, or even
+spawning a "git mktree" of its own.
+
+Has anyone seen anything like this before? Any thoughts on how what
+should be a "git-upload-pack" could possibly end up being a "git
+mktree" instead?
+
+Best regards,
+Bryan
