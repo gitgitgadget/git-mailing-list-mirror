@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04B6D20248
-	for <e@80x24.org>; Thu, 28 Mar 2019 03:00:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 537DC20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 03:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727483AbfC1DAE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Mar 2019 23:00:04 -0400
-Received: from mail-it1-f170.google.com ([209.85.166.170]:39922 "EHLO
-        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbfC1DAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Mar 2019 23:00:04 -0400
-Received: by mail-it1-f170.google.com with SMTP id 139so3695246ita.4
-        for <git@vger.kernel.org>; Wed, 27 Mar 2019 20:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=q+cL3pdHr6SAT2ETxqjQ5CMpDjhOrbwCY6Pv5sQv54Y=;
-        b=YBmZKPvuc57NbfxRpo2XXvdQwd2tRYNg3HDuvGpLbj2ankoHgPWgwxR0QvAdrYtbbN
-         KQYPlpnLga9CxUJuuu5s+5yCa58xdepM207vRwBNrpF5SslnhiROZi99rdDQ8QXSjj6R
-         iSRQ5LLfuHwLTt1X9N3qMag9LRMKl/QQ4FgJgyYdpDGO/1oKsExb8PvOJ6g59Uqc1iWg
-         ZXqZcCACVDLDWOlEc62kfQtJatAbXNblr+kkBll/YebTVCI9JGRX+prXNAr/W1idueYv
-         iqms8+CwMhSZzLTvDbD5bVk6twJxVAz9ztoUF137KI+T3Kn082xhTuf29zkjlANaw/g7
-         iZjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q+cL3pdHr6SAT2ETxqjQ5CMpDjhOrbwCY6Pv5sQv54Y=;
-        b=Du64nlrD9sidT9ZTAR7eFAKaQCnD1xHzrxRB25qrXnkqgcv85RJfiRHhcW7e56XUNG
-         C8vD6g6KaCpOLF4E6puvhJ/6RvwCDOX/Days7pGmyRWaJKK0HSksTuRfYzOWHUVK4ggS
-         gE4wQdamUrvCV1l8kyysQTnURFpWmhxylgIssaAtsl7oUI/k3rbKToC8Zqrqs/CjQMJs
-         ulEg1SRVPoZKS5Toj/hZ7bGSwv21mrmsfpNzIkJAiablCVqbRv8gBVViRA8dFlaa+cty
-         HKlLFb1saORFHoLcj0KfEAp8XU9tv1/P1PpXDiReukz/ncX3EQJJI7zL73Wq/jyPDF6B
-         yHow==
-X-Gm-Message-State: APjAAAVoMtLYThRJI76TX5pEME6rl/8yScFoEE6slfbTClK3gz0wz2Op
-        Broih1DFw7lJvker0tB1lB7PiagBZlfYdCRqVGD7A7Jx
-X-Google-Smtp-Source: APXvYqztShiwqosDdlOlR0Tqt/TFc5/0muT8I4Tj1tdD60ncYfOU/1g0uz9GSlHgQksCx3sxP/LOGt/bO0cmJhHMrXI=
-X-Received: by 2002:a24:9dca:: with SMTP id f193mr5769653itd.72.1553742003580;
- Wed, 27 Mar 2019 20:00:03 -0700 (PDT)
+        id S1727385AbfC1DNQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Mar 2019 23:13:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38544 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725601AbfC1DNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Mar 2019 23:13:16 -0400
+Received: (qmail 13923 invoked by uid 109); 28 Mar 2019 03:13:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Mar 2019 03:13:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2487 invoked by uid 111); 28 Mar 2019 03:13:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 27 Mar 2019 23:13:40 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Mar 2019 23:13:14 -0400
+Date:   Wed, 27 Mar 2019 23:13:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: binary search when storing wanted-refs
+Message-ID: <20190328031314.GB10032@sigill.intra.peff.net>
+References: <20190327211110.46327-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <CAGyf7-F8cmzOuhi6zeJJ13iwGh_ie-uTiJYUzBwssvH+kCY+yA@mail.gmail.com>
- <20190328014957.GA7887@sigill.intra.peff.net>
-In-Reply-To: <20190328014957.GA7887@sigill.intra.peff.net>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Wed, 27 Mar 2019 19:59:52 -0700
-Message-ID: <CAGyf7-EeeuaHKwn776i4YfFEX_rckKoszvn+K5mtD-aAafT=7w@mail.gmail.com>
-Subject: Re: Puzzling Git backtrace
-To:     Jeff King <peff@peff.net>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190327211110.46327-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 27, 2019 at 6:50 PM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Mar 27, 2019 at 05:49:27PM -0700, Bryan Turner wrote:
->
-> > I'm trying to assist a Bitbucket Server customer who is seeing some
-> > "git-upload-pack" processes "hang" on their server.
-> >
-> > While investigating, we had them connect gdb to their processes (which
-> > are 2.10.0 built from source using a simple unzip-and-run-make
-> > approach) and get the backtraces for them. The output that they're
-> > seeing makes no sense to me, though, so I'm throwing this out to the
-> > list just to see if anyone has any idea how the processes could end up
-> > like this.
->
-> upload-pack didn't become a builtin until v2.18, so...
->
-> > When they attached to 32433 and printed its backtrace, though, things
-> > go a little sideways:
-> >
-> > (gdb) attach 32433
-> > Attaching to program: /usr/bin/git, process 32433
->
-> The debugger needs to be using git-upload-pack as its executable, not
-> "git".
+On Wed, Mar 27, 2019 at 02:11:10PM -0700, Jonathan Tan wrote:
 
-Derp. Of course. Sorry, clearly it's been too long since I used C in anger!
+> In do_fetch_pack_v2(), the "sought" array is sorted by name, and it is
+> not subsequently reordered (within the function). Therefore,
+> receive_wanted_refs() can assume that "sought" is sorted, and can thus
+> use a binary search when storing wanted-refs retrieved from the server.
+> 
+> Replace the existing linear search with a binary search. This improves
+> performance significantly when mirror cloning a repository with more
+> than 1 million refs.
 
-Thanks for taking the time to point out what should have been obvious,
-and for doing it so kindly!
+This looks good.
 
-Bryan
+The flow in do_fetch_pack_v2() is a little funny. I wanted to
+double-check that we always sorted the sought list, because it only
+happens in the CHECK_LOCAL state of the state machine.
+
+But as far as I can tell we always begin the function in CHECK_LOCAL, it
+always transitions out to another state, and we never go back to it. So
+all of that part of the state-machine switch could really just be done
+once before entering the state-machine's while loop.
+
+Not really relevant to your patch, but maybe worth tweaking separately
+(or maybe not, if people find the all-in-a-state-machine style more
+readable; I found it more confusing to reason about).
+
+> +static int cmp_name_ref(const void *name, const void *ref)
+> +{
+> +	return strcmp(name, (*(struct ref **)ref)->name);
+> +}
+
+After some errors with qsort comparison functions a while back[1], I
+double-checked that this has the right number of asterisks. I believe it
+does. :)
+
+-Peff
+
+[1] https://public-inbox.org/git/d1b58614-989f-5998-6c53-c19eee409a2f@web.de/
+    and the child thread it spawned are interesting reading, though I
+    don't think we ever followed up on it.
