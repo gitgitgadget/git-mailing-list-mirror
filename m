@@ -2,130 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC7A6202BB
-	for <e@80x24.org>; Thu, 28 Mar 2019 19:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1EC620248
+	for <e@80x24.org>; Thu, 28 Mar 2019 20:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726045AbfC1TDO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 15:03:14 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:33039 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbfC1TDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 15:03:14 -0400
-Received: by mail-lj1-f193.google.com with SMTP id f23so18677355ljc.0
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 12:03:13 -0700 (PDT)
+        id S1726250AbfC1UFH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 16:05:07 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52278 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726195AbfC1UFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 16:05:07 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a184so141896wma.2
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 13:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:sender:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=jNFy7aCeUN0fTCI/MhRUaAXA2UTM73Y/nv+2ciP/nPA=;
-        b=l6kzhx0469X7wFEhoBOiVjGMnsYEl2WiifkjFJ8d3otiNCUDrOuCzR46XrEDbM4AMM
-         8PidtIX4VpeZrVQwWc/3TuNtMTOOPzgZjgJpmOVPVzx92Rc/zAOqfCtjO+2ynN3L/kjj
-         SszDWIsQf1jdwZs3/e8KtCSX2XbuwPkem5neshmoVqrvOwnV674KJMrsIOGqREkpsnWS
-         apJuajQ4z0dRGsSTzK7Rkknb6ui3fj1AQW+TBh2ttG8OL1ZypjP19VMCmG+XygEPJeMi
-         UaGdeTX1l9GxlUWUjhE/LQu2U1UBQHrJC9Imb3jhISXHjBFwYkXWWn8+rmGiXsYg+YaM
-         UFyA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZoZ8YJXqbi0UX894W+FSeXf3vHD5w2VbOWvPwij7ZK8=;
+        b=kh5av2gaZGhjC/spI09Thq0cQL/0fYtaJbNX0XSmr0h6eaBAjdNPWtC7t/tePocXba
+         EMzeBl+DNrazFuUAoEeZ+ksMED00Y2F063xx/C5Ak9vS077uZW93CIaECLh0n9bZbym4
+         M4KRRReI3KdMI8+EVg0O26ES/OhOFZUyhj35sBOIcnuOBNV9LLQX2jajiD7mSk0VyaLW
+         gtbtrTzB9b+iTilpeUOxPNhac5tfGdIpSuN1e32XUuUg0ZSvmfeYp31aSiCB0OOOe67M
+         0o1jJnhkMAglN9Pa3aDmIdfdmmkHYKdW5DP8wO0Bq8ATfmPHv3mla+lypqxgvtca5vrN
+         QnJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=jNFy7aCeUN0fTCI/MhRUaAXA2UTM73Y/nv+2ciP/nPA=;
-        b=Jsd3oUQcapA+Opu0fIq34pLUPn82cpgkJZ4r3xFrhZd9zgTWZ1SREUbH3hJBbN+WfH
-         uptLL8BVv3aeamM2IodNqpTU901JuLMIEZd0X5KOOJTk47UvfihT83jSFaGaRpXZBYj+
-         bjUmGZO22RODpz18+JO2kMgG1yM+eFrr3H2/xqdySbPPEtzwYgbgeqYItK2MLUEluVae
-         sv50FFJoycYTykbvyWwdux9Ou5G2yZsXGdAP0EhTlkBLk76WxoAGyXgUtEX0S+qEzj2s
-         53WlW3d0slXzh16Xo8Lbcr9/39f7P9JcJgI+jS3aV66o4hsxvmZXtY/vHObLKz+Mw46p
-         kMkw==
-X-Gm-Message-State: APjAAAUInsodwAN/I9hMH7uYgu1AIu8VO1yjlswniFXlB0+pxb470LCe
-        mCv3nZYbh9hs0zMMif8q/nfWAbxWS+bb2oqhOho=
-X-Google-Smtp-Source: APXvYqxRh/BAu2GurZ6TFIQogdFhvBiOfTtvFXiboom5+0Yy6gaNn223cyLd1mDteh46iJKHughlpJ9gnWtYS0balB0=
-X-Received: by 2002:a2e:9e47:: with SMTP id g7mr106571ljk.48.1553799791078;
- Thu, 28 Mar 2019 12:03:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZoZ8YJXqbi0UX894W+FSeXf3vHD5w2VbOWvPwij7ZK8=;
+        b=h6Uyqwfgkp8gSsA2+M6H5hMVPg0OH70LJzJs2JLPeDX3pFheZzv4JB1DqG3m0X39nG
+         Axt6p6bgFclJN7PlxyvZGdssrkRcbSsEs1eIlqeMEVpqrkZ2qKibShG7Jqok/rVT1IeE
+         OkDoROm3D/aMJtLQUpdmsjilioSdwCElc7PyKj87kLb2vJgcIQS80S/0Xc8tnJ2APOZI
+         1KPM476sXjEogowPjrC0THtoWxesoFnU+u458cBqiMNgCmOcAUhh5l4nh/YPbrbWot1x
+         WYidm+jRh6pk0l1gZGVDUj0ZWHf6bgegiNp5MesWdOO1xbmRqm6SguaKlkDm+nYvoJUF
+         G2Jg==
+X-Gm-Message-State: APjAAAV27X4eYn/T7nQ4ASMZQhpxE/+KLIvHqtTGssDTYZxAaL8cQ334
+        PBnAdBMb9+PVVic/45hh7WaPZvX/bEw=
+X-Google-Smtp-Source: APXvYqyXDIAo0VSKOURM2zV/hMmNQ3jOOVdsii6vYjQ7rQsXTMYeNlg2dd0UnF3HCFOzqhbJBJIDMQ==
+X-Received: by 2002:a1c:9ad6:: with SMTP id c205mr1147337wme.46.1553803505166;
+        Thu, 28 Mar 2019 13:05:05 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id g84sm68842wmf.25.2019.03.28.13.05.03
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 28 Mar 2019 13:05:03 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] sha1-file: test the error behavior of alt_odb_usable()
+Date:   Thu, 28 Mar 2019 21:04:56 +0100
+Message-Id: <20190328200456.29240-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
+In-Reply-To: <20181204132716.19208-2-avarab@gmail.com>
+References: <20181204132716.19208-2-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20190325233723.GD23728@sigill.intra.peff.net> <cover.1553586707.git.liu.denton@gmail.com>
- <c371a653b4049256f3427e467b144385ee47ef43.1553586707.git.liu.denton@gmail.com>
- <CABPp-BGKWxJVGfQC3imj8Z6RHxQ6zLOGRpkOjyn93a3RxmE0Lw@mail.gmail.com> <875zs4boib.fsf@evledraar.gmail.com>
-In-Reply-To: <875zs4boib.fsf@evledraar.gmail.com>
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Thu, 28 Mar 2019 14:02:59 -0500
-X-Google-Sender-Auth: oSt5eogXRX_M--9ejFSN8ZEgPnY
-Message-ID: <CAHd499AJzEL27fNUHa9WXquaOFzXYuPLCpDOx4xvPF_CfRQwLA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] tag: prevent recursive tags
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 27, 2019 at 5:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Wed, Mar 27 2019, Elijah Newren wrote:
->
-> > On Tue, Mar 26, 2019 at 12:56 AM Denton Liu <liu.denton@gmail.com> wrot=
-e:
-> >>
-> >> Robert Dailey reported confusion on the mailing list about a recursive
-> >> tag which was most likely created by mistake. Jeff King noted that thi=
-s
-> >> isn't a very common case so, most likely, creating a tag-to-a-tag is a
-> >> user-error.
-> >>
-> >> Prevent mistakes by erroring and providing advice on recursive tags,
-> >> unless "--allow-recursive-tag" is specified. Fix tests that fail as a
-> >> result of this change.
-> >
-> > Any chance we could use the term "nested tag" instead of "recursive tag=
-"?
->
-> +1. "Recursive" sounded wrong to me, but I couldn't think of the
-> now-obvious alternative.
->
-> Some grepping around shows we use "nested submodules" fairly
-> consistently, and in gitrevisions(7) we say the peel syntax will
-> recursively peel tags (but don't call them nested).
->
-> So makes sense to refer to the object type as nested, and when we're
-> referring to the operation that'll iterate over that nested structure
-> say it'll be done "recursively".
+Add a test for the error() case in alt_odb_usable() where an alternate
+directory doesn't exist. This behavior has been the same since
+26125f6b9b ("detect broken alternates.", 2006-02-22), but if that
+error() was turned into die() the entire test suite would still pass.
 
-Wow thanks for fixing this, you guys are awesome. I wasn't expecting
-anyone to fix this since it seemed kinda niche. You're right that I
-created this nested tag unintentionally. And due to `git-lfs migrate`
-not handling nested annotated tags, it took days of debugging to
-eventually figure out that nothing was working because of 1 farkled
-tag.
+Perhaps we should die() in that case, but let's start by adding a test
+here to assert the long-standing existing behavior.
 
-Just to make sure I understand the change, is a tag pointing to
-another tag object now going to be forbidden by default? And to allow
-it, you must do `git tag --allow-nested-tag`?
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-So for example, going forward, if we have this:
+Unchanged from a 3-part series I submitted in December:
+https://public-inbox.org/git/20181204132716.19208-1-avarab@gmail.com/
 
-$ git tag -m 'Tag 1' 1.0
-$ git tag -m 'Tag 2' 2.0
+Part of trying to re-submit the uncontentious parts of whatever I've
+submitted in the past that I have stalled for whatever reason...
 
-This will fail:
+ t/t5613-info-alternate.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-$ git tag -f 2.0 1.0
+diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
+index 895f46bb91..d2964c57b7 100755
+--- a/t/t5613-info-alternate.sh
++++ b/t/t5613-info-alternate.sh
+@@ -136,4 +136,11 @@ test_expect_success CASE_INSENSITIVE_FS 'dup finding can be case-insensitive' '
+ 	test_cmp expect actual.alternates
+ '
+ 
++test_expect_success 'print "error" on non-existing alternate' '
++	git init --bare I &&
++	echo DOES_NOT_EXIST >I/objects/info/alternates &&
++	git -C I fsck 2>stderr &&
++	test_i18ngrep "does not exist; check" stderr
++'
++
+ test_done
+-- 
+2.21.0.392.gf8f6787159e
 
-Unless I do either:
-
-$ git tag --allow-nested-tag -f 2.0 1.0
-
-Or (this is the intended behavior in my case):
-
-$ git tag -f 2.0 1.0^{}
