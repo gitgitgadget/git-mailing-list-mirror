@@ -2,194 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C596F20248
-	for <e@80x24.org>; Thu, 28 Mar 2019 18:50:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC7A6202BB
+	for <e@80x24.org>; Thu, 28 Mar 2019 19:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726088AbfC1SuL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 14:50:11 -0400
-Received: from siwi.pair.com ([209.68.5.199]:41087 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726045AbfC1SuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 14:50:11 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 177323F400C;
-        Thu, 28 Mar 2019 14:50:10 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:7c88:9548:6197:9e61] (unknown [IPv6:2001:4898:8010:0:65be:9548:6197:9e61])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 8B56B3F4000;
-        Thu, 28 Mar 2019 14:50:09 -0400 (EDT)
-Subject: Re: [PATCH 4/4] trace2: use system config for default trace2 settings
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        steadmon@google.com, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.169.git.gitgitgadget@gmail.com>
- <7e0d4e20fbb3abbc787bc216d2c4bd8c18860aed.1553779851.git.gitgitgadget@gmail.com>
- <87wokj9ic1.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <f09d1d23-865f-fc35-250b-141a4d049029@jeffhostetler.com>
-Date:   Thu, 28 Mar 2019 14:50:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726045AbfC1TDO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 15:03:14 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:33039 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbfC1TDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 15:03:14 -0400
+Received: by mail-lj1-f193.google.com with SMTP id f23so18677355ljc.0
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 12:03:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=jNFy7aCeUN0fTCI/MhRUaAXA2UTM73Y/nv+2ciP/nPA=;
+        b=l6kzhx0469X7wFEhoBOiVjGMnsYEl2WiifkjFJ8d3otiNCUDrOuCzR46XrEDbM4AMM
+         8PidtIX4VpeZrVQwWc/3TuNtMTOOPzgZjgJpmOVPVzx92Rc/zAOqfCtjO+2ynN3L/kjj
+         SszDWIsQf1jdwZs3/e8KtCSX2XbuwPkem5neshmoVqrvOwnV674KJMrsIOGqREkpsnWS
+         apJuajQ4z0dRGsSTzK7Rkknb6ui3fj1AQW+TBh2ttG8OL1ZypjP19VMCmG+XygEPJeMi
+         UaGdeTX1l9GxlUWUjhE/LQu2U1UBQHrJC9Imb3jhISXHjBFwYkXWWn8+rmGiXsYg+YaM
+         UFyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=jNFy7aCeUN0fTCI/MhRUaAXA2UTM73Y/nv+2ciP/nPA=;
+        b=Jsd3oUQcapA+Opu0fIq34pLUPn82cpgkJZ4r3xFrhZd9zgTWZ1SREUbH3hJBbN+WfH
+         uptLL8BVv3aeamM2IodNqpTU901JuLMIEZd0X5KOOJTk47UvfihT83jSFaGaRpXZBYj+
+         bjUmGZO22RODpz18+JO2kMgG1yM+eFrr3H2/xqdySbPPEtzwYgbgeqYItK2MLUEluVae
+         sv50FFJoycYTykbvyWwdux9Ou5G2yZsXGdAP0EhTlkBLk76WxoAGyXgUtEX0S+qEzj2s
+         53WlW3d0slXzh16Xo8Lbcr9/39f7P9JcJgI+jS3aV66o4hsxvmZXtY/vHObLKz+Mw46p
+         kMkw==
+X-Gm-Message-State: APjAAAUInsodwAN/I9hMH7uYgu1AIu8VO1yjlswniFXlB0+pxb470LCe
+        mCv3nZYbh9hs0zMMif8q/nfWAbxWS+bb2oqhOho=
+X-Google-Smtp-Source: APXvYqxRh/BAu2GurZ6TFIQogdFhvBiOfTtvFXiboom5+0Yy6gaNn223cyLd1mDteh46iJKHughlpJ9gnWtYS0balB0=
+X-Received: by 2002:a2e:9e47:: with SMTP id g7mr106571ljk.48.1553799791078;
+ Thu, 28 Mar 2019 12:03:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87wokj9ic1.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190325233723.GD23728@sigill.intra.peff.net> <cover.1553586707.git.liu.denton@gmail.com>
+ <c371a653b4049256f3427e467b144385ee47ef43.1553586707.git.liu.denton@gmail.com>
+ <CABPp-BGKWxJVGfQC3imj8Z6RHxQ6zLOGRpkOjyn93a3RxmE0Lw@mail.gmail.com> <875zs4boib.fsf@evledraar.gmail.com>
+In-Reply-To: <875zs4boib.fsf@evledraar.gmail.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Thu, 28 Mar 2019 14:02:59 -0500
+X-Google-Sender-Auth: oSt5eogXRX_M--9ejFSN8ZEgPnY
+Message-ID: <CAHd499AJzEL27fNUHa9WXquaOFzXYuPLCpDOx4xvPF_CfRQwLA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] tag: prevent recursive tags
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 27, 2019 at 5:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Wed, Mar 27 2019, Elijah Newren wrote:
+>
+> > On Tue, Mar 26, 2019 at 12:56 AM Denton Liu <liu.denton@gmail.com> wrot=
+e:
+> >>
+> >> Robert Dailey reported confusion on the mailing list about a recursive
+> >> tag which was most likely created by mistake. Jeff King noted that thi=
+s
+> >> isn't a very common case so, most likely, creating a tag-to-a-tag is a
+> >> user-error.
+> >>
+> >> Prevent mistakes by erroring and providing advice on recursive tags,
+> >> unless "--allow-recursive-tag" is specified. Fix tests that fail as a
+> >> result of this change.
+> >
+> > Any chance we could use the term "nested tag" instead of "recursive tag=
+"?
+>
+> +1. "Recursive" sounded wrong to me, but I couldn't think of the
+> now-obvious alternative.
+>
+> Some grepping around shows we use "nested submodules" fairly
+> consistently, and in gitrevisions(7) we say the peel syntax will
+> recursively peel tags (but don't call them nested).
+>
+> So makes sense to refer to the object type as nested, and when we're
+> referring to the operation that'll iterate over that nested structure
+> say it'll be done "recursively".
 
+Wow thanks for fixing this, you guys are awesome. I wasn't expecting
+anyone to fix this since it seemed kinda niche. You're right that I
+created this nested tag unintentionally. And due to `git-lfs migrate`
+not handling nested annotated tags, it took days of debugging to
+eventually figure out that nothing was working because of 1 farkled
+tag.
 
-On 3/28/2019 10:36 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Mar 28 2019, Jeff Hostetler via GitGitGadget wrote:
-> 
-> Thanks for working on this!
-> 
-> Haven't given this any deep testing. Just some observations:
-> 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teach git to read the system config (usually "/etc/gitconfig") for
->> default Trace2 settings.  This allows system-wide Trace2 settings to
->> be installed and inherited to make it easier to manage a collection of
->> systems.
-[...]
+Just to make sure I understand the change, is a tag pointing to
+another tag object now going to be forbidden by default? And to allow
+it, you must do `git tag --allow-nested-tag`?
 
->> diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
->> new file mode 100644
->> index 0000000000..656613e371
->> --- /dev/null
-[...]
+So for example, going forward, if we have this:
 
->> +/* clang-format off */
->> +static struct tr2_sysenv_entry tr2_sysenv_settings[] = {
->> +	{ "GIT_TR2_CONFIG_PARAMS",   "trace2.configparams"     },
->> +
->> +	{ "GIT_TR2_DST_DEBUG",       "trace2.destinationdebug" },
->> +
->> +	{ "GIT_TR2",                 "trace2.normaltarget"     },
->> +	{ "GIT_TR2_BRIEF",           "trace2.normalbrief"      },
->> +
->> +	{ "GIT_TR2_EVENT",           "trace2.eventtarget"      },
->> +	{ "GIT_TR2_EVENT_BRIEF",     "trace2.eventbrief"       },
->> +	{ "GIT_TR2_EVENT_NESTING",   "trace2.eventnesting"     },
->> +
->> +	{ "GIT_TR2_PERF",            "trace2.perftarget"       },
->> +	{ "GIT_TR2_PERF_BRIEF",      "trace2.perfbrief"        },
->> +};
->> +/* clang-format on */
->> +
->> +static int tr2_sysenv_cb(const char *key, const char *value, void *d)
->> +{
->> +	int k;
->> +
-> 
-> I added:
-> 
-> 	if (!starts_with(key, "trace2."))
-> 		return 0;
-> 
-> Here, and everything works as expected. I think that's a good
-> idea. Makes this O(n) over N config keys instead of O(n*x) where x = num
-> entries in tr2_sysenv_settings.
+$ git tag -m 'Tag 1' 1.0
+$ git tag -m 'Tag 2' 2.0
 
-Good idea.  Thanks!
+This will fail:
 
-> 
->> +	for (k = 0; k < ARRAY_SIZE(tr2_sysenv_settings); k++) {
->> +		if (!strcmp(key, tr2_sysenv_settings[k].git_config_name)) {
->> +			free(tr2_sysenv_settings[k].value);
->> +			tr2_sysenv_settings[k].value = xstrdup(value);
->> +			return 0;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +/*
->> + * Load Trace2 settings from the system config (usually "/etc/gitconfig"
->> + * unless we were built with a runtime-prefix).  These are intended to
->> + * define the default values for Trace2 as requested by the administrator.
->> + */
->> +void tr2_sysenv_load(void)
->> +{
->> +	const char *system_config_pathname;
->> +	const char *test_pathname;
->> +
->> +	system_config_pathname = git_etc_gitconfig();
->> +
->> +	test_pathname = getenv("GIT_TEST_TR2_SYSTEM_CONFIG");
->> +	if (test_pathname) {
->> +		if (!*test_pathname || !strcmp(test_pathname, "0"))
->> +			return; /* disable use of system config */
->> +
->> +		/* mock it with given test file */
->> +		system_config_pathname = test_pathname;
->> +	}
->> +
->> +	if (file_exists(system_config_pathname))
->> +		git_config_from_file(tr2_sysenv_cb, system_config_pathname,
->> +				     NULL);
-> 
-> Maybe this isn't worth it, but this "file_exists" thing is something we
-> could abstract in the config machinery (or maybe passing via
-> "config_options" makes more sense):
-[...]
+$ git tag -f 2.0 1.0
 
-This is a good idea, but I think I'll save this for a future effort
-rather than add it to the current patch series.  It just seems outside
-of my scope right now and adds to the footprint of this series.
+Unless I do either:
 
-[...]
->>
->> -	nesting = getenv(TR2_ENVVAR_EVENT_NESTING);
->> +	nesting = tr2_sysenv_get(TR2_SYSENV_EVENT_NESTING);
->>   	if (nesting && ((want_nesting = atoi(nesting)) > 0))
->>   		tr2env_event_nesting_wanted = want_nesting;
->>
->> -	brief = getenv(TR2_ENVVAR_EVENT_BRIEF);
->> +	brief = tr2_sysenv_get(TR2_SYSENV_EVENT_BRIEF);
->>   	if (brief && ((want_brief = atoi(brief)) > 0))
->>   		tr2env_event_brief = want_brief;
-> 
-> A lot of this pre-dates this patch, but I wonder if the whole of trace2
-> couldn't make more use of config.c's bool parsing for things like
-> these. Maybe by having a "cfg_type" enum & parsed_value void* in
-> tr2_sysenv_entry?
+$ git tag --allow-nested-tag -f 2.0 1.0
 
-I converted the "brief" instances in the normal and perf targets to
-use git_parse_maybe_bool() already, but I missed this one.
+Or (this is the intended behavior in my case):
 
-The nesting one above is actually an integer value rather than a bool.
-I'll rename the variables in the re-roll to clarify that.
-
-
-[...]
->> -	brief = getenv(TR2_ENVVAR_NORMAL_BRIEF);
->> +	brief = tr2_sysenv_get(TR2_SYSENV_NORMAL_BRIEF);
->>   	if (brief && *brief &&
->>   	    ((want_brief = git_parse_maybe_bool(brief)) != -1))
->>   		tr2env_normal_brief = want_brief;
-[...]
->> -	brief = getenv(TR2_ENVVAR_PERF_BRIEF);
->> +	brief = tr2_sysenv_get(TR2_SYSENV_PERF_BRIEF);
->>   	if (brief && *brief &&
->>   	    ((want_brief = git_parse_maybe_bool(brief)) != -1))
->>   		tr2env_perf_brief = want_brief;
-
-
-Thanks for the review.
-I'll push up another version shortly.
-
-Jeff
+$ git tag -f 2.0 1.0^{}
