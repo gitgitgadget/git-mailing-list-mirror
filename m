@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3FD920248
-	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DEAC20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727247AbfC1QOr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 12:14:47 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37341 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfC1QOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 12:14:46 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w10so23643179wrm.4
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:46 -0700 (PDT)
+        id S1727480AbfC1QOt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 12:14:49 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36434 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725994AbfC1QOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 12:14:48 -0400
+Received: by mail-wr1-f67.google.com with SMTP id y13so5938294wrd.3
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B+9J3SVAVWhJiKXDaZ+gd7akPEjKvPC3FYgc0MNVYgo=;
-        b=BUSkGMyujQ9kGLZ0IpCQRx9E/Uazu7Hde0IwgEuA6cZDjn8WzUIgJRgHhKdSTI9wQs
-         SANgZZSaBiXEaASNHnwwPliBexZCCX7Ld3FrXlWb21yQIQKhxTRloOJGqivNKAMw0yTi
-         9bRmSx9WOWwsYi47sR6VuJCd3aYPo/d82QXx60m09O5WSj18v5CS+ZYjZAFTb6eGNlah
-         vMuXViaVqqdQ+sW8m39r2PgEPg9mDfLmselKY5SiX9PbDOEc6l/WiqYJT+5t7WLXh/kI
-         WznEdp1W+0wcETqulAgahX0ilT9SsL884t6UQgsOLeJ3s+rPmTOL3eblNYYrZOqi30QT
-         oUvQ==
+        bh=Azel+emmJoppX1wRkVgtkK2y/tr9G+gEDkKxNECillo=;
+        b=WfnM7I/5PerRUniulbxpQAVqX6dotMPRWGptUSVR4xRcM3PwkGH0quUxYJCMFUXMxf
+         ZTfnNltcMXLGHKs1a7xvFYJ4B8kLwtK2LGGSPp/pOLHYtKggCSmjQg9lzxJC3juIz4tw
+         SjluL90HUkyh8G85++e0joluhPBdbwgvpWBAji0jqSuidMER80nDv044cSYbP6gop3TK
+         6DXOF5MKahvHhL1KK5tUX55lwfgvJmaOLlfL4n5X72gje/5sGRutjARWmydZcS5Ja42L
+         n5PYogZOJu/htlMYShvQVedpOvvq7eZGjG5iw5ny+6+IUcxMfPR9pBGo7ndPdoOc0/pr
+         Vpjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=B+9J3SVAVWhJiKXDaZ+gd7akPEjKvPC3FYgc0MNVYgo=;
-        b=mxVSVuJ9Eap7c/rGX+WiRs7TftKeb8PDjmhGXqDQcYrYYLjW5InraLAybOS8hRLm2n
-         7EPsP2e7pnCAr/0L8+BazsJcJMSdW7apuj8iWtMZMctkwiiiZhsA8YAq8CR1vYuTJmX7
-         Q70iAKXgCyZWgqOWA2qXpI3GFjOH51se4rmwWyr9rbfsDXVtNhozgjXjYKsU7rRjGLIk
-         Gc+pVXK7sY357vu2vNg6Zp625hVe27bd/qYMdSrzhQKLViXmigriiaanYOcMNYC9XSXD
-         FNrMyHpbkPo2IkFilW6/+BfldvkvH8qBo3aHZ+j2wBwLxn+RsKWK9rxCfuJRMPeY6IgT
-         lGYw==
-X-Gm-Message-State: APjAAAVymrORc+QjjkxvQMfr7Se59Yy/hYZONhe2czsV3jeMkskz58Du
-        4X75dO5X5YMxULbw5KmNMFN/fl/g
-X-Google-Smtp-Source: APXvYqyoqCzOJxRZccnJbJFYSMR5diXCJfNdSXKJBNNWJtT/sEpr2QV0qVPZEbtLlD6vAzLIMwqe2Q==
-X-Received: by 2002:adf:eb85:: with SMTP id t5mr28043257wrn.168.1553789684738;
-        Thu, 28 Mar 2019 09:14:44 -0700 (PDT)
+        bh=Azel+emmJoppX1wRkVgtkK2y/tr9G+gEDkKxNECillo=;
+        b=AgUIrtgTuV22xV2G2BY6/RdpLM52x291TMVg0j6qthq6k7DoEq2/2LFMIUQruPDCwF
+         x63WFx/VlNNWpdLfpE4q1XbFU31/4z3/ajTVjlgfjNKcZLUCWCF7bA3DRVYa7fUd8R1B
+         HkB42C//lWKkvnAAKz3yU5UcFYmgilbTsDQMoGTgH1LlcrVyub0/F7lxiTNliIr9jwne
+         KEievsABzdde9r5TcYBJwInD96f8awYgmDhEd6Tn7QDfIPoCilc94kCYSPQRABD8LI2s
+         AURLG8abSa419gbwlvaKduRzd1HRKH/s4jLHUSyrofA2ZH7ONeKbed/B73z97e6PVPwi
+         MlQg==
+X-Gm-Message-State: APjAAAVyYo1Q19o4aBO779fz6GzklI03loutTGSxXFAFEuczQ1li4hMO
+        X3NHvLtS+kLsOVyJG1n60hPYLeoX
+X-Google-Smtp-Source: APXvYqy0fyiTkFTN94SrVSuocX39OybvBg6HhZeCYXG8poAUqeP068e8vjqWJrGo6+/KdYiwmaGQyA==
+X-Received: by 2002:a5d:4f89:: with SMTP id d9mr27382615wru.195.1553789686545;
+        Thu, 28 Mar 2019 09:14:46 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.43
+        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.45
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 28 Mar 2019 09:14:43 -0700 (PDT)
+        Thu, 28 Mar 2019 09:14:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/7] gc: tests and handle reflog expire config
-Date:   Thu, 28 Mar 2019 17:14:27 +0100
-Message-Id: <20190328161434.19200-1-avarab@gmail.com>
+Subject: [PATCH v4 1/7] gc: remove redundant check for gc_auto_threshold
+Date:   Thu, 28 Mar 2019 17:14:28 +0100
+Message-Id: <20190328161434.19200-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
 In-Reply-To: <20190315155959.12390-1-avarab@gmail.com>
 References: <20190315155959.12390-1-avarab@gmail.com>
@@ -74,55 +74,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It seems the list software dislikes Michael Haggerty for some reason,
-but as seen in my reply to his message my v4 has some unaddressed
-issues in the previous 8/8 that I need to get to:
-https://public-inbox.org/git/87pnqkco8v.fsf@evledraar.gmail.com/
+Checking gc_auto_threshold in too_many_loose_objects() was added in
+17815501a8 ("git-gc --auto: run "repack -A -d -l" as necessary.",
+2007-09-17) when need_to_gc() itself was also reliant on
+gc_auto_pack_limit before its early return:
 
-I'll have limited time next week to get to that, so in the meantime
-here's a re-send without that patch, but just the unrelated
-cleanup/tests & gc "expire" fix up to v3's 7/8. The only other change
-is fixing commit message nonsense (from an earlier version), which
-Peff pointed out.
+    gc_auto_threshold <= 0 && gc_auto_pack_limit <= 0
 
-I'll then get to the issue mhaggerty noted & submit that independently
-later, but this should be ready for queuing & moving down to next,
-since (unlike the previous 8/8) none of it's tricky code we need to be
-really careful with.
+When that check was simplified to just checking "gc_auto_threshold <=
+0" in b14d255ba8 ("builtin-gc.c: allow disabling all auto-gc'ing by
+assigning 0 to gc.auto", 2008-03-19) this unreachable code should have
+been removed. We only call too_many_loose_objects() from within
+need_to_gc() itself, which will return if this condition holds, and in
+cmd_gc() which will return before ever getting to "auto_gc &&
+too_many_loose_objects()" if "auto_gc && !need_to_gc()" is true
+earlier in the function.
 
-Ævar Arnfjörð Bjarmason (7):
-  gc: remove redundant check for gc_auto_threshold
-  gc: convert to using the_hash_algo
-  gc: refactor a "call me once" pattern
-  reflog tests: make use of "test_config" idiom
-  reflog tests: test for the "points nowhere" warning
-  reflog tests: assert lack of early exit with expiry="never"
-  gc: handle & check gc.reflogExpire config
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/gc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
- builtin/gc.c      | 37 +++++++++++++++++++++++++++++--------
- t/t1410-reflog.sh | 25 +++++++++++++++++--------
- t/t6500-gc.sh     | 19 +++++++++++++++++++
- 3 files changed, 65 insertions(+), 16 deletions(-)
-
-Range-diff:
-1:  81694c8213 = 1:  be889156db gc: remove redundant check for gc_auto_threshold
-2:  4bdcf1d0be = 2:  764c9a7380 gc: convert to using the_hash_algo
-3:  9444a1233a = 3:  d521c22103 gc: refactor a "call me once" pattern
-4:  60a06ae618 = 4:  768aba9889 reflog tests: make use of "test_config" idiom
-5:  52838fdc44 = 5:  2ddbee93a1 reflog tests: test for the "points nowhere" warning
-6:  6063429f10 ! 6:  97e3d74371 reflog tests: assert lack of early exit with expiry="never"
-    @@ -3,8 +3,7 @@
-         reflog tests: assert lack of early exit with expiry="never"
-     
-         When gc.reflogExpire and gc.reflogExpireUnreachable are set to "never"
-    -    and --stale-fix isn't in effect (covered by the first part of the "if"
-    -    statement being modified here) we *could* exit early without
-    +    and --stale-fix isn't in effect we *could* exit early without
-         pointlessly looping over all the reflogs.
-     
-         However, as an earlier change to add a test for the "points nowhere"
-7:  6693d1d84d = 7:  48e5c234ae gc: handle & check gc.reflogExpire config
-8:  e0814569ab < -:  ---------- reflog expire: don't assert the OID when locking refs
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 020f725acc..8c2312681c 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -157,9 +157,6 @@ static int too_many_loose_objects(void)
+ 	int num_loose = 0;
+ 	int needed = 0;
+ 
+-	if (gc_auto_threshold <= 0)
+-		return 0;
+-
+ 	dir = opendir(git_path("objects/17"));
+ 	if (!dir)
+ 		return 0;
 -- 
 2.21.0.392.gf8f6787159e
 
