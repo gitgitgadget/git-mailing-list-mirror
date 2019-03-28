@@ -2,114 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D72FD20248
-	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8B0D20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 16:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727630AbfC1QO5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 12:14:57 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37361 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbfC1QO4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 12:14:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w10so23643774wrm.4
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:55 -0700 (PDT)
+        id S1726340AbfC1QXS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 12:23:18 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42679 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbfC1QXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 12:23:18 -0400
+Received: by mail-wr1-f66.google.com with SMTP id g3so20186185wrx.9
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cXlEvWIWuf0LfwswZtIl3cIBvHeegqhbRdOcFQ8IUNo=;
-        b=UtvZcgeLKNdzMqztBG52aTPTTyG2I+x4oJ7KrKu/hlWBPQQEKEwJSPDeL8/tI9eHZG
-         qM01G+nkK4RvImGflWPNU9vg02sj4Z7PhgpYdVwg/AZxdIearEdA5+xIFiF1WylmtK6f
-         nLtQwMASYxb+9O4jQQWioD8tsezec+JfxZxC8DVLpgmU8YWiWrAsipN5OXAn4WoGxDz5
-         aUiOlQ0cJlBgnwoz4+juOZe/7w4fOq4a2rdk5QXlfLJ76HPs5Yz1J3dbw8Sb57oiTc3Y
-         omOaBICYj/xRXwOa44xATrYB15rRhD2XZU3xhRG3ILNUV5moA9MUiNoRGDB/D7aBTLV0
-         xM/A==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=u0rYJt+8hJuXz8B0S3jwq86ZmizaRBxjCVZc/5sm3rI=;
+        b=ZoLQ3hwbs2cHpAGnOJa8+mUapzx1Zbkc2r87/5ebL4Io05VP6HeeXGPntPWTQVCXCG
+         wBDJmAhodOm0NXbt0/GCy6R8M0OR1F3WmqNvrWWkaQE8ZRArkiKBfjBFVhG1mhxtellL
+         Kxg61JEx4QiTZRlgX04IXvVKsQMFa7ZrQK9hYLDb+hJsbt3oLBws0bvviFk249ksgcCU
+         7Csq9v1eGcdSuGP32FO4ZrxSNS0DlFjK/XXy5ZwIez09l/XNu+pATQ6WXR0CO3rl09b9
+         2H9s8a9PceEIDA8fEbYSi/Ksj1wo/oQ4QThFbcRQoh7Ye2iflPN0+vcjyJoV83xFZHIR
+         Dqow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cXlEvWIWuf0LfwswZtIl3cIBvHeegqhbRdOcFQ8IUNo=;
-        b=ZrOESkxtu77EwOFqxClUR6jTgV7oXKdwf9mDo585QfwcbVgzO8AdAA3lKc9gDkNrF/
-         lNWifKPmystZor+Sc4NDlQ+u2xDA98lD69uBO89Ak5Mmo/KwtpHX8414UxXcDeoSjkJN
-         wZ9EptuWT530blpdXGoQCSgjagHOsw4U0ERT2Qij593UKzoFwlMlz8HpPxXfT2RJJZRt
-         4zqgiHsbjcvboaA4ct8uF1SdzwPIiE2sQydPoTAcZ7Dtb1Jf3Qc6MELRxlyKg/pV/AZB
-         fwdpL2JuDfZzKXHb+Kz7eLUkE4Qf9ACM9xO5W9gb+8NQto11k3uqbGXg9WSKFtDX4oT8
-         BqDw==
-X-Gm-Message-State: APjAAAXY1h0gMsPora+jHQRYcGIxD5/O+Zc125TPEiX3n915n2+Ku6/8
-        aF0NYNoOdbFiSm8gRxOwjh0yUdQzNpQ=
-X-Google-Smtp-Source: APXvYqxxHCsYVK9VH+vn7TH4RjlycB+0V3If1I7ZPm5mnY+WnVa+KKWJuR/zWDM6gOfYokR+4aloSA==
-X-Received: by 2002:adf:fd43:: with SMTP id h3mr26923392wrs.310.1553789693738;
-        Thu, 28 Mar 2019 09:14:53 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.52
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 28 Mar 2019 09:14:52 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 6/7] reflog tests: assert lack of early exit with expiry="never"
-Date:   Thu, 28 Mar 2019 17:14:33 +0100
-Message-Id: <20190328161434.19200-7-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
-In-Reply-To: <20190315155959.12390-1-avarab@gmail.com>
-References: <20190315155959.12390-1-avarab@gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=u0rYJt+8hJuXz8B0S3jwq86ZmizaRBxjCVZc/5sm3rI=;
+        b=ammesIk1Zw7zTXi4szW7RN4/a8xVkC8KjSBRGuJywvAPd50JdH9yLikPARB2G5VFNW
+         UA1ZjTike9haKjWn4ydQpoxu2w+8v6gYTAJ/5kfiIc3M7hoe0ZjWXn9QrzJYre/WFAsI
+         TItkpDvzCGiErbyIXgVoskCKdvqowB/QV3yt++XWz+KOE7g2xjRyjLUF155XdmsAMsbM
+         nj0bTD3rEluTh85Fn+StYfr90r82HtWgaOVvRNZqAVW2FP2im+67OL8zdIk2I0bk4FfA
+         HpX+iLuw8ufRqfFtS8a+XNIhXJQ1UO4q4AErPxNL9vseBlSfTSU89qSo/SSPcyLXPNg5
+         4ogw==
+X-Gm-Message-State: APjAAAUm8MyCs0Ndi8kOazHkPa1ljxtMO5tFVme3yYejpa5P1Ku/jsAL
+        jydTQBmgwq876o+h/L/Qx+o=
+X-Google-Smtp-Source: APXvYqxejBdGr7/it1Mny/nFihOppqly3YhBmWr2rJDh6ywVUTFOnC6GFldjLdg2yqnmaBUEKjt0Bw==
+X-Received: by 2002:adf:f80c:: with SMTP id s12mr29217894wrp.72.1553790196333;
+        Thu, 28 Mar 2019 09:23:16 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-10-192.as13285.net. [92.22.10.192])
+        by smtp.gmail.com with ESMTPSA id p3sm20010751wrx.71.2019.03.28.09.23.14
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Mar 2019 09:23:15 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command
+ 'switch'
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+References: <20190208090401.14793-1-pclouds@gmail.com>
+ <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com>
+ <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+ <CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com>
+ <CABPp-BEksf4SuD57YsUO3YKhU12CAwFTy6pA1tETFrHB1DAz9w@mail.gmail.com>
+ <CACsJy8DPDEvNDeE5MpqcGZk9jRmT9g=ix+MOhkv+50J3Egef7A@mail.gmail.com>
+ <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
+ <0dc8820c-c6b0-c4ca-2107-84061fdc5333@gmail.com>
+ <CACsJy8AmgDh1Z4CKTzSAVrywo0q-CFKbpuyqdtRm9m7pkUweSw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <a68ce0b4-81c5-e889-fc90-ed8b17a10d4a@gmail.com>
+Date:   Thu, 28 Mar 2019 16:23:13 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8AmgDh1Z4CKTzSAVrywo0q-CFKbpuyqdtRm9m7pkUweSw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When gc.reflogExpire and gc.reflogExpireUnreachable are set to "never"
-and --stale-fix isn't in effect we *could* exit early without
-pointlessly looping over all the reflogs.
+On 28/03/2019 11:04, Duy Nguyen wrote:
+> On Wed, Mar 27, 2019 at 5:24 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> On 26/03/2019 15:48, Elijah Newren wrote:
+>>> On Tue, Mar 26, 2019 at 8:24 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>>>> On Tue, Mar 26, 2019 at 10:01 PM Elijah Newren <newren@gmail.com> wrote:
+>>>
+>>>> Yeah.. --ignore-in-process does not necessarily mean aborting
+>>>> something when you just want to get out to examine some other commit.
+>>>> And I agree doing nothing seems like the best (or least
+>>>> confusing/surprising) option.
+>>>>
+>>>> There will be some funny thing. Like if you commit after switching
+>>>> away and MERGE_HEAD is there, I think you will be creating a merge
+>>>> commit.
+>>>
+>>> Yes, and in the middle of a cherry-pick with a range you've added some
+>>> commits to one branch and some to another.  In the middle of a revert
+>>> you're doing similar.  It sounds like crazytown to me (and maybe we
+>>> shouldn't provide the --ignore-in-process flag unless users clamor for
+>>> it
+> 
+> I missed this part in my last reading. I think if we could safely
+> switch away and get back to resume, then --ignore-in-process could
+> still be useful.
 
-However, as an earlier change to add a test for the "points nowhere"
-warning shows even in such a mode we might want to print out a
-warning.
+If we can get back safely then that makes sense, I'm not sure about 
+switching while there are conflicts or staged changes though, it feels 
+like there's more potential for things to go wrong there.
 
-So while it's conceivable to implement this, I don't think it's worth
-it. It's going to be too easy to inadvertently add some flag that'll
-make the expiry happen anyway, and even with "never" we'd like to see
-all the lines we're going to keep.
+> I sometimes switch to another commit to check out
+> stuff then back. For interactive rebase with "edit" command for
+> example, it's quite safe to do so. (yes the other option is "git
+> worktree add", but that could be a heavy hammer sometimes) >
+>> I think that could be the way to go for merges and cherry-picks, or
+> 
+> Just so we're clear, what is your "the way" to go? to remove
+> CHERRY_HEAD_PICK and MERGE_HEAD (and other MERGE_* as well) if
+> --ignore-in-process is specified? Or to leave MERGE_* and
+> CHERRY_PICK_HEAD alone and delete other stuff?
 
-So let's assert that we're going to loop over all the references even
-when this configuration is in effect.
+I was agreeing with Elijah about dropping --ignore-in-progress unless 
+there's a demand for it or at least restricting it so that it requires 
+--discard-changes and aborts in-progress merges and single in-progress 
+cherry-picks/reverts. (I'm worried about people switching branches when 
+cherry-picking more than one commit, though as you say it can make sense 
+during a rebase.)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t1410-reflog.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Best Wishes
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index e8f8ac9785..79f731db37 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -235,7 +235,9 @@ test_expect_success 'gc.reflogexpire=never' '
- 	test_config gc.reflogexpire never &&
- 	test_config gc.reflogexpireunreachable never &&
- 
--	git reflog expire --verbose --all &&
-+	git reflog expire --verbose --all >output &&
-+	test_line_count = 9 output &&
-+
- 	git reflog refs/heads/master >output &&
- 	test_line_count = 4 output
- '
--- 
-2.21.0.392.gf8f6787159e
+Phillip
 
+>> possibly require --discard-changes as well. The only time I use checkout
+>> like this is during a rebase if I want to rewind it - I edit the todo
+>> list with the output of 'git log --pretty="pick %h %s" --reverse' and do
+>> 'git checkout' followed by 'git rebase --continue' Though these days I
+>> could add a 'reset' line to the todo list and skip the checkout.
