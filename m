@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 350FC20248
+	by dcvr.yhbt.net (Postfix) with ESMTP id D72FD20248
 	for <e@80x24.org>; Thu, 28 Mar 2019 16:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727639AbfC1QO6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 12:14:58 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45252 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfC1QO5 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727630AbfC1QO5 (ORCPT <rfc822;e@80x24.org>);
         Thu, 28 Mar 2019 12:14:57 -0400
-Received: by mail-wr1-f66.google.com with SMTP id s15so23622671wra.12
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:56 -0700 (PDT)
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37361 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727493AbfC1QO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 12:14:56 -0400
+Received: by mail-wr1-f65.google.com with SMTP id w10so23643774wrm.4
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 09:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZJvTU3k0qMmPHSAq9eKvNiRlibzp+mODk3qXX35Wsb4=;
-        b=ruGbbdAYCMtNU9g0UeyFkZe5H2MEdpzFhNeVk+LlTz4S9MrenO1eQJRgYJmlggh8h4
-         2QAGhY5jYhrwh/vHb5tt5UHvpeGnNJhjBjniZ5ix5q4EORXDySsvH5Lafi7BgXkVG2kt
-         qs7kgbbp/ptjqhjqM+U2BvhC5nEMLNFgLVXeWSgwh3L6MFtasBYYcScytY7tnwJTi0+D
-         tGF+1BQbQDS07F4WcW8QALYBprgjdjN/RBOzLFJBGQnqf792H7VxJutYnHXve5c0f6uX
-         d+paIzDeJXKwkG3DUQMMidfANgRUFS9+1JkBGuPzFyTNAO511CMRkOYev73gzpvAsj9e
-         t7iw==
+        bh=cXlEvWIWuf0LfwswZtIl3cIBvHeegqhbRdOcFQ8IUNo=;
+        b=UtvZcgeLKNdzMqztBG52aTPTTyG2I+x4oJ7KrKu/hlWBPQQEKEwJSPDeL8/tI9eHZG
+         qM01G+nkK4RvImGflWPNU9vg02sj4Z7PhgpYdVwg/AZxdIearEdA5+xIFiF1WylmtK6f
+         nLtQwMASYxb+9O4jQQWioD8tsezec+JfxZxC8DVLpgmU8YWiWrAsipN5OXAn4WoGxDz5
+         aUiOlQ0cJlBgnwoz4+juOZe/7w4fOq4a2rdk5QXlfLJ76HPs5Yz1J3dbw8Sb57oiTc3Y
+         omOaBICYj/xRXwOa44xATrYB15rRhD2XZU3xhRG3ILNUV5moA9MUiNoRGDB/D7aBTLV0
+         xM/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZJvTU3k0qMmPHSAq9eKvNiRlibzp+mODk3qXX35Wsb4=;
-        b=RE1LJLQOcbA6fbH3PCAHfEga8p2OFqKF1VF6Mw8eLRUwI2z1qRbMVWlCtq2SvqRRc0
-         I4dJ3h3Qvwrbp7jIhXrdU1q4T7yA9qjBhUmbI1tBKbG508fRihKzj2Ii8hWnLMftRFPD
-         2UpkwdYV8TEFq6vNuzmfVpQAFomSN5Jny2SOIF9I0vmYSG8o7kqeNdyCErZWWdeuIh6e
-         MNMAyC7oDhFaTbZpk9WZBR5B/Bvdg9TfqM4k15b5Siqo4VdsOO7aAVlBMPQ3wLlb+ESh
-         8CQjNJmO6BfsdzDg0671E3zni9mpuho+oKIOOJuTEAT4DSutuoI50zRCAD+6q5S6wVBS
-         HCyw==
-X-Gm-Message-State: APjAAAWfChtQNGQ0FMIpArCR/Xggg8y5v7SeKOlNMGsyvpoNlk+3jyP9
-        /eIJiMlWRg6hz/t76X7u7uHjPKSFsGY=
-X-Google-Smtp-Source: APXvYqxVsP1WvG5Ttb/ral8yQeHqucp/iOAw6OfWXitWnZkG+gwnT5BvSsZqpn6XJEuvs6zZ9ajhfA==
-X-Received: by 2002:a5d:6181:: with SMTP id j1mr27215546wru.11.1553789694869;
-        Thu, 28 Mar 2019 09:14:54 -0700 (PDT)
+        bh=cXlEvWIWuf0LfwswZtIl3cIBvHeegqhbRdOcFQ8IUNo=;
+        b=ZrOESkxtu77EwOFqxClUR6jTgV7oXKdwf9mDo585QfwcbVgzO8AdAA3lKc9gDkNrF/
+         lNWifKPmystZor+Sc4NDlQ+u2xDA98lD69uBO89Ak5Mmo/KwtpHX8414UxXcDeoSjkJN
+         wZ9EptuWT530blpdXGoQCSgjagHOsw4U0ERT2Qij593UKzoFwlMlz8HpPxXfT2RJJZRt
+         4zqgiHsbjcvboaA4ct8uF1SdzwPIiE2sQydPoTAcZ7Dtb1Jf3Qc6MELRxlyKg/pV/AZB
+         fwdpL2JuDfZzKXHb+Kz7eLUkE4Qf9ACM9xO5W9gb+8NQto11k3uqbGXg9WSKFtDX4oT8
+         BqDw==
+X-Gm-Message-State: APjAAAXY1h0gMsPora+jHQRYcGIxD5/O+Zc125TPEiX3n915n2+Ku6/8
+        aF0NYNoOdbFiSm8gRxOwjh0yUdQzNpQ=
+X-Google-Smtp-Source: APXvYqxxHCsYVK9VH+vn7TH4RjlycB+0V3If1I7ZPm5mnY+WnVa+KKWJuR/zWDM6gOfYokR+4aloSA==
+X-Received: by 2002:adf:fd43:: with SMTP id h3mr26923392wrs.310.1553789693738;
+        Thu, 28 Mar 2019 09:14:53 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.53
+        by smtp.gmail.com with ESMTPSA id d14sm25519089wro.79.2019.03.28.09.14.52
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 28 Mar 2019 09:14:54 -0700 (PDT)
+        Thu, 28 Mar 2019 09:14:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 7/7] gc: handle & check gc.reflogExpire config
-Date:   Thu, 28 Mar 2019 17:14:34 +0100
-Message-Id: <20190328161434.19200-8-avarab@gmail.com>
+Subject: [PATCH v4 6/7] reflog tests: assert lack of early exit with expiry="never"
+Date:   Thu, 28 Mar 2019 17:14:33 +0100
+Message-Id: <20190328161434.19200-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
 In-Reply-To: <20190315155959.12390-1-avarab@gmail.com>
 References: <20190315155959.12390-1-avarab@gmail.com>
@@ -74,109 +74,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't redundantly run "git reflog expire --all" when gc.reflogExpire
-and gc.reflogExpireUnreachable are set to "never", and die immediately
-if those configuration valuer are bad.
+When gc.reflogExpire and gc.reflogExpireUnreachable are set to "never"
+and --stale-fix isn't in effect we *could* exit early without
+pointlessly looping over all the reflogs.
 
-As an earlier "assert lack of early exit" change to the tests for "git
-reflog expire" shows, an early check of gc.reflogExpire{Unreachable,}
-isn't wanted in general for "git reflog expire", but it makes sense
-for "gc" because:
+However, as an earlier change to add a test for the "points nowhere"
+warning shows even in such a mode we might want to print out a
+warning.
 
- 1) Similarly to 8ab5aa4bd8 ("parseopt: handle malformed --expire
-    arguments more nicely", 2018-04-21) we'll now die early if the
-    config variables are set to invalid values.
+So while it's conceivable to implement this, I don't think it's worth
+it. It's going to be too easy to inadvertently add some flag that'll
+make the expiry happen anyway, and even with "never" we'd like to see
+all the lines we're going to keep.
 
-    We run "pack-refs" before "reflog expire", which can take a while,
-    only to then die on an invalid gc.reflogExpire{Unreachable,}
-    configuration.
-
- 2) Not invoking the command at all means it won't show up in trace
-    output, which makes what's going on more obvious when the two are
-    set to "never".
-
- 3) As a later change documents we lock the refs when looping over the
-    refs to expire, even in cases where we end up doing nothing due to
-    this config.
-
-    For the reasons noted in the earlier "assert lack of early exit"
-    change I don't think it's worth it to bend over backwards in "git
-    reflog expire" itself to carefully detect if we'll really do
-    nothing given the combination of all its possible options and skip
-    that locking, but that's easy to detect here in "gc" where we'll
-    only run "reflog expire" in a relatively simple mode.
+So let's assert that we're going to loop over all the references even
+when this configuration is in effect.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/gc.c  | 17 +++++++++++++++++
- t/t6500-gc.sh | 19 +++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ t/t1410-reflog.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ae716a00d4..8943bcc300 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -116,6 +116,19 @@ static void process_log_file_on_signal(int signo)
- 	raise(signo);
- }
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index e8f8ac9785..79f731db37 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -235,7 +235,9 @@ test_expect_success 'gc.reflogexpire=never' '
+ 	test_config gc.reflogexpire never &&
+ 	test_config gc.reflogexpireunreachable never &&
  
-+static int gc_config_is_timestamp_never(const char *var)
-+{
-+	const char *value;
-+	timestamp_t expire;
+-	git reflog expire --verbose --all &&
++	git reflog expire --verbose --all >output &&
++	test_line_count = 9 output &&
 +
-+	if (!git_config_get_value(var, &value) && value) {
-+		if (parse_expiry_date(value, &expire))
-+			die(_("failed to parse '%s' value '%s'"), var, value);
-+		return expire == 0;
-+	}
-+	return 0;
-+}
-+
- static void gc_config(void)
- {
- 	const char *value;
-@@ -127,6 +140,10 @@ static void gc_config(void)
- 			pack_refs = git_config_bool("gc.packrefs", value);
- 	}
- 
-+	if (gc_config_is_timestamp_never("gc.reflogexpire") &&
-+	    gc_config_is_timestamp_never("gc.reflogexpireunreachable"))
-+		prune_reflogs = 0;
-+
- 	git_config_get_int("gc.aggressivewindow", &aggressive_window);
- 	git_config_get_int("gc.aggressivedepth", &aggressive_depth);
- 	git_config_get_int("gc.auto", &gc_auto_threshold);
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 4684d06552..7411bf7fec 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -120,6 +120,25 @@ test_expect_success 'gc --quiet' '
- 	test_must_be_empty stderr
+ 	git reflog refs/heads/master >output &&
+ 	test_line_count = 4 output
  '
- 
-+test_expect_success 'gc.reflogExpire{Unreachable,}=never skips "expire" via "gc"' '
-+	test_config gc.reflogExpire never &&
-+	test_config gc.reflogExpireUnreachable never &&
-+
-+	GIT_TRACE=$(pwd)/trace.out git gc &&
-+
-+	# Check that git-pack-refs is run as a sanity check (done via
-+	# gc_before_repack()) but that git-expire is not.
-+	grep -E "^trace: (built-in|exec|run_command): git pack-refs --" trace.out &&
-+	! grep -E "^trace: (built-in|exec|run_command): git reflog expire --" trace.out
-+'
-+
-+test_expect_success 'one of gc.reflogExpire{Unreachable,}=never does not skip "expire" via "gc"' '
-+	>trace.out &&
-+	test_config gc.reflogExpire never &&
-+	GIT_TRACE=$(pwd)/trace.out git gc &&
-+	grep -E "^trace: (built-in|exec|run_command): git reflog expire --" trace.out
-+'
-+
- run_and_wait_for_auto_gc () {
- 	# We read stdout from gc for the side effect of waiting until the
- 	# background gc process exits, closing its fd 9.  Furthermore, the
 -- 
 2.21.0.392.gf8f6787159e
 
