@@ -2,135 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0C84202BB
-	for <e@80x24.org>; Thu, 28 Mar 2019 06:52:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C467520248
+	for <e@80x24.org>; Thu, 28 Mar 2019 07:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbfC1Gwz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 02:52:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38592 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726379AbfC1Gwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 02:52:54 -0400
-Received: (qmail 15889 invoked by uid 109); 28 Mar 2019 06:52:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Mar 2019 06:52:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3043 invoked by uid 111); 28 Mar 2019 06:53:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 28 Mar 2019 02:53:18 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Mar 2019 02:52:52 -0400
-Date:   Thu, 28 Mar 2019 02:52:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff: batch fetching of missing blobs
-Message-ID: <20190328065252.GA1930@sigill.intra.peff.net>
-References: <20190326220906.111879-1-jonathantanmy@google.com>
+        id S1726293AbfC1Hf1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 03:35:27 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:34456 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbfC1Hf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 03:35:27 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x14so13644216eds.1
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 00:35:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=68XQhmz+6KUf4xCmbqKCFJI/hIBywgibH7OAV3ytWL4=;
+        b=lV1fZNZMzhX1M1A76MKRcghliH8XGGXxDijtBBPmC7zDZiW3HIKYCgP/HL17bm1pQI
+         jDaceVks1bQTfUQbp6DnJS87m8Dxo/imxsux5mLHuv+z67uUDdA/3zFrTtL+a3LnTPNJ
+         YIOiP8c6DxXlHF7+kkMG/EPctVBI8PKaoAqQdFpM8Zvv2UP28g3gDhaiSnmCqi03XNys
+         JkQ7lf3SZyjBk/w4Z9w253k3Kqa0/R5/yS1r2OHCdz88kHzMrGtwyOq7yE51hd40g+Ns
+         fpwO+OvIY4MzdhvhlGod5cLoypI7l82NKnvqxdoUOFmFPrbWO1ZEzItC3+tisUaXiZ64
+         6u+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=68XQhmz+6KUf4xCmbqKCFJI/hIBywgibH7OAV3ytWL4=;
+        b=Jc5dlAVbl4Bxg78bdJ/c5xAjxIqu1guTa8RIuch5tN7k6Aw4jBTpXAxrMSP3JGDjTo
+         NGOMa/U7s27YqFEbcJsT53yLdJytEwKhvANN72pyWkQGNF+0iVP/5FyEL/BHid8OnZGI
+         MEuRjxaPB0kqfWhjoTUmcey0xVwyCOyONF7+0uzN3xkO0egkMmW1TzLHf78oxhYMgUp4
+         0OHK35mZp8OWziNidQYNwFG3FZyYoQ14W5v2D3ijjBem0DxDsc2v2EvBTbDms6ns1OO0
+         qRx99vrGPtrpkoyJIB2IkkT1NtbeqBxD8eBh3/t48CEePmRaR8PI9ydwcYpYRjiMyZaX
+         58mQ==
+X-Gm-Message-State: APjAAAU9YwpDHWDPlQ1S+X9Y0A2ISzAu09LyjtLJ+x6G5X19c3EMhugf
+        eDHNTSQN0BsZiPkO866ViSpV2PLR1OqLgXW7Tnk=
+X-Google-Smtp-Source: APXvYqwiQ4Eahoi2elKZxkm7Pyr1kER+cceOw6itgDpYNiUPVwkoUEkGk2mkhCFPUBUC6abtx/CCVJVgQz9XprPH9rY=
+X-Received: by 2002:a17:906:641:: with SMTP id t1mr4598738ejb.158.1553758525696;
+ Thu, 28 Mar 2019 00:35:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190326220906.111879-1-jonathantanmy@google.com>
+References: <mvmd0mcsjkf.fsf@suse.de> <CAP8UFD1qU_kJ97MdLFwzx+g3F6Q+fQ9LWOBxd=1m4vSi-fxF=Q@mail.gmail.com>
+ <CAP8UFD111-zqa7Fhr1KnmWYAKpBN4ofqn0AvD_nP3s_WBFzLqw@mail.gmail.com>
+In-Reply-To: <CAP8UFD111-zqa7Fhr1KnmWYAKpBN4ofqn0AvD_nP3s_WBFzLqw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 28 Mar 2019 08:35:13 +0100
+Message-ID: <CAP8UFD2yMOLKOdcXnPsCvAzymjLJX2A4U2DHfq1JjvZnQj9pLQ@mail.gmail.com>
+Subject: Re: git replace --graft does error checking too late
+To:     Andreas Schwab <schwab@suse.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 26, 2019 at 03:09:06PM -0700, Jonathan Tan wrote:
+On Wed, Mar 27, 2019 at 2:21 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Wed, Mar 27, 2019 at 2:11 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > On Wed, Mar 27, 2019 at 11:24 AM Andreas Schwab <schwab@suse.de> wrote:
+> > >
+> > > When running `git replace --graft A B' where B is a non-commit (eg. a
+> > > tag) it displays an error,
+> >
+> > Yeah, it seems that when A is a commit and B a tag I get:
+> >
+> > "error: object A is a tag, not a commit"
+> >
+> > which is wrong as A is a commit.
+>
+> Actually I get the above only if A is a commit but there is a tag
+> pointing to it. If there is no tag pointing to it I get:
+>
+> error: object C is a tag, not a commit
+>
+> where C is the hash of the tag object B (C=$(git rev-parse B))
+>
+> So yeah, this is weird.
 
-> When running a command like "git show" or "git diff" in a partial clone,
-> batch all missing blobs to be fetched as one request.
-> 
-> This is similar to c0c578b33c ("unpack-trees: batch fetching of missing
-> blobs", 2017-12-08), but for another command.
+I think I understand what happens. It seems that we put the SHA-1 of
+the tag in the new object we create instead of the SHA-1 of the
+underlying commit and that's what generates the error message and
+other issues later.
 
-Sounds like a good idea, and this should make some cases much better
-without making any cases worse. Two observations about how we might do
-even better, though:
+The following patch (that unfortunately Gmail is likely to muck)
+should fix at least part of the issue. I will send a real patch with
+tests later.
 
-> @@ -6067,6 +6068,32 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
-> [...]
+diff --git a/builtin/replace.c b/builtin/replace.c
+index f5701629a8..b0a9227f9a 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -370,16 +370,19 @@ static int replace_parents(struct strbuf *buf,
+int argc, const char **argv)
+        /* prepare new parents */
+        for (i = 0; i < argc; i++) {
+                struct object_id oid;
++               struct commit *commit;
++
+                if (get_oid(argv[i], &oid) < 0) {
+                        strbuf_release(&new_parents);
+                        return error(_("not a valid object name: '%s'"),
+                                     argv[i]);
+                }
+-               if (!lookup_commit_reference(the_repository, &oid)) {
++               commit = lookup_commit_reference(the_repository, &oid);
++               if (!commit) {
+                        strbuf_release(&new_parents);
+-                       return error(_("could not parse %s"), argv[i]);
++                       return error(_("could not parse %s as a
+commit"), argv[i]);
+                }
+-               strbuf_addf(&new_parents, "parent %s\n", oid_to_hex(&oid));
++               strbuf_addf(&new_parents, "parent %s\n",
+oid_to_hex(&commit->object.oid));
+        }
 
-At this stage we're looking at actually diffing the contents themselves.
-But we'd also potentially need the blobs during rename and break
-detection. It's not always the same set of blobs (e.g., unless you've
-cranked up the copy-detection flags, renames only look at added/deleted
-entries). We could have each phase do its own bulk fetch, which
-worst-case gives us probably three fetches. But I wonder if we could
-figure out a complete plausible set immediately after the tree diff.
-
-> +	if (repository_format_partial_clone) {
-> +		/*
-> +		 * Prefetch the diff pairs that are about to be flushed.
-> +		 */
-> +		struct oid_array to_fetch = OID_ARRAY_INIT;
-> +		int fetch_if_missing_store = fetch_if_missing;
-> +
-> +		fetch_if_missing = 0;
-> +		for (i = 0; i < q->nr; i++) {
-> +			struct diff_filepair *p = q->queue[i];
-> +			if (!check_pair_status(p))
-> +				continue;
-> +			if (p->one && p->one->oid_valid &&
-> +			    !has_object_file(&p->one->oid))
-> +				oid_array_append(&to_fetch, &p->one->oid);
-> +			if (p->two && p->two->oid_valid &&
-> +			    !has_object_file(&p->two->oid))
-> +				oid_array_append(&to_fetch, &p->two->oid);
-> +		}
-
-These has_object_file() calls may repeatedly re-scan the pack directory,
-once per call.  Since it's likely that some may be missing, that may be
-a noticeable amount of wasted work for a big diff (still way less than
-individually fetching each missing object, so it's a net win, but read
-on).
-
-If you use the QUICK flag, that avoids the re-scans, but we may miss
-erroneously say "we don't have it" if we race with a repack. For that,
-we can either:
-
-  1. Just ignore it. It's relatively rare, and the worst case is that we
-     re-fetch an object.
-
-  2. Do a series of QUICK checks, followed by a single
-     reprepare_packed_git() if we had any missing, and then another
-     series of QUICK checks. Then worst-case we have a single re-scan.
-
-Something like:
-
-  int object_is_missing_cb(const struct object_id *oid, void *data)
-  {
-	return !has_object_file_with_flags(oid, OBJECT_INFO_QUICK);
-  }
-  ...
-
-  /* collect all of the possible blobs we need */
-  for (i = 0; i < q->nr; i++) {
-	...
-	oid_array_append(&to_fetch, &p->one->oid);
-	oid_array_append(&to_fetch, &p->two->oid);
-  }
-
-  /* drop any we already have */
-  oid_array_filter(&to_fetch, object_is_missing_cb, NULL);
-
-  /* any missing ones might actually be a race; try again */
-  if (to_fetch.nr) {
-	  reprepare_packed_git(the_repository);
-	  oid_array_filter(&to_fetch, object_is_missing_cb, NULL);
-  }
-
-  /* and now anything we have left is definitely not here */
-  if (to_fetch.nr)
-	fetch_objects(..., to_fetch.oid, to_fetch.nr).
-
-One thing I noticed while writing this: we don't seem to do any
-de-duplication of the list (in yours or mine), and it doesn't look like
-fetch_objects() does either. I wonder if an oidset would be a better
-data structure.
-
--Peff
+        /* replace existing parents with new ones */
