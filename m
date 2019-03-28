@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD1720248
-	for <e@80x24.org>; Thu, 28 Mar 2019 17:17:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A921620248
+	for <e@80x24.org>; Thu, 28 Mar 2019 17:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726543AbfC1RRt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 13:17:49 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34195 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbfC1RRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 13:17:49 -0400
-Received: by mail-wm1-f67.google.com with SMTP id o10so7752062wmc.1
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 10:17:47 -0700 (PDT)
+        id S1726751AbfC1RRw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 13:17:52 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38397 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfC1RRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 13:17:52 -0400
+Received: by mail-wr1-f66.google.com with SMTP id k11so16500284wro.5
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 10:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lwCkn/HVhD2YhKUCSfTcjbYyFQgaiwYbuGVuEFudRWM=;
-        b=ZtHORA7btuxqZbUVqo5Bwj+CDfHiDfZ32VmuylZd8P0VQOojTxAHnz13DNXW2KPj5r
-         qISNsvUx8PlHQqKHQ/wrRFPE+whb+EbjCpaQeOQhGZwFnnXN0otAxc9hqea5uoftypmH
-         Vknm/sgdgRcRy8Z1hbKCuIdHTYG6/+FqqREJEOibcj2leGbZKs5iFB/KD/hrGUPWqAYJ
-         LD4Z7skbgBiL9XdnnsKyfqUBSkK23+Gp2ZFFrf87KpVMKuIkzTZ12leAJgTQKbEiqWpl
-         /CbDUWkiq3B1C/G+dx/FQzedEeUyZXov0hh+0fGYw2w4t2wrmuY+L6Adq4X+P2A5QL6l
-         IuPA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aPoaRr4MQJOjKlAQc67uV9qdtpB1pZyevaMgzEXSn90=;
+        b=shg51U8FBrPa8s4HA/2BiEhUVBNeh2N3VmicADnpQYhEmrw8f/y8u2z3a3ncVK+g1a
+         MsClGFStKMAndPWTpNZalFJ+f0fj34lsHomHEViIt2AU3Lmm9Eu9u1rFcFeeoCCF6XVS
+         mYUo5lwg2oK5f5sb3dxcV9lWENWrRg9wf1MRWrgk1hGNuxq3+Mx72f282XJJzfBbrE72
+         Y/FzPN4KZ3huz/QTUKLXDQOzWIW3yOKTGOjZLIxy/G0Kd7rTxSFE3U9g8wcNzwW/7qgz
+         aZT+VsTxFSOu2153OuXxybLQt6cjkwROHyDXQam0jJ0zLgJQfpYy6Hqz+Q8nOs/FjhJ5
+         cRpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lwCkn/HVhD2YhKUCSfTcjbYyFQgaiwYbuGVuEFudRWM=;
-        b=nIH6tQAo3qUSD+8R72SYwJjFjZxK9PSBwNuE8F8pfBiCVZJtRU9cWc/Mk8mVTFVW3H
-         LCupwt0mTkDciEBN7kb+037dEN1bIV3A1BDP5C/ymjXVe8XZdMl7PouO+bpIoXZypATE
-         ieZ2YeN7zgxttgFIe4PipaUlspMXfEWtOSzrEFQHawNNDM8fP8Qs0EBgcvhNUO00cGsQ
-         w4iDnYuU4n14DbjoRaC19dY/+rD/4LfrBcdG4VJmCE5uW1my0bkS1SqsI+A4HoPAFmZV
-         GWzG9LKeUh6qx6wfbi9eDGIWMh7EMAs/17VAIRYjMB6NOv0PVCKYF7oRxYApmrE3sD02
-         HRQw==
-X-Gm-Message-State: APjAAAXJjIrnzCr2X3Z6Gxu5LBUkoMnDVwLwl093pRk2fgFnVnb383kH
-        c9tRDDloca2RewgaB+NQhTU4n2FK
-X-Google-Smtp-Source: APXvYqz3CKWXfLvtN2InGWHQJAhXOijOh5WZMn+8KnAHtiVeAoO79z+WPwLWF4rjXR4ihhPB4fXs2A==
-X-Received: by 2002:a1c:ca06:: with SMTP id a6mr738912wmg.14.1553793466379;
-        Thu, 28 Mar 2019 10:17:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aPoaRr4MQJOjKlAQc67uV9qdtpB1pZyevaMgzEXSn90=;
+        b=Mip7ZTIu6rNoL2ejD2XJwydAeFWN2osmNbY71HVsvfyJtkR8CAA7zagPmVYFs994+8
+         HArEP2Fvh3gKnAXYiE9C9sVBxIawOfb4gVGDyzpZ8PQvz9VuoJGLVm0TmDJC7DtBnpVR
+         +CEVqbOqMqPTJG7UPML/nhe8rh/Hq3aRVF3iM5aEKdqUg1L0ehxxpDwNmb2Y1JWZOsg6
+         zAZh7E6YdxkPs52+a23gmzxHm1srbX3+ilTzLREhISJW8nO/JwB0A/7PfeV07J/gIk20
+         20PYB71qoctzdLYshUHDsIXY/dEToBlYPGj66UowMFhds0Rj3XLEhqQA3cnejx+ZWb1c
+         4fRw==
+X-Gm-Message-State: APjAAAV6HCrIH1glEAtoyEMV6bKSyl4vAptOgAMZwV5vZuSRD1LFvywN
+        gFtgEB17qE/NRusVZP1OAjgZ/b/q
+X-Google-Smtp-Source: APXvYqxF2SfdRQStcY54u0kE5nUjomi0NLKx8ELQqaGqeP9iOhszTEenfZ3c0CRP5Ch6NDkR0OjlZQ==
+X-Received: by 2002:adf:ce87:: with SMTP id r7mr27027645wrn.324.1553793470755;
+        Thu, 28 Mar 2019 10:17:50 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:1085:dfe0:49c5:28f4:744c:fa99])
-        by smtp.gmail.com with ESMTPSA id d17sm25837369wrw.88.2019.03.28.10.17.45
+        by smtp.gmail.com with ESMTPSA id d17sm25837369wrw.88.2019.03.28.10.17.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Mar 2019 10:17:45 -0700 (PDT)
+        Thu, 28 Mar 2019 10:17:50 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Andreas Schwab <schwab@suse.de>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/3] t6050: use test_line_count instead of wc -l
-Date:   Thu, 28 Mar 2019 18:17:20 +0100
-Message-Id: <20190328171722.9753-1-chriscool@tuxfamily.org>
+Subject: [PATCH 2/3] t6050: redirect expected error output to /dev/null
+Date:   Thu, 28 Mar 2019 18:17:21 +0100
+Message-Id: <20190328171722.9753-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.21.0.68.gd997bba285.dirty
+In-Reply-To: <20190328171722.9753-1-chriscool@tuxfamily.org>
+References: <20190328171722.9753-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -66,31 +68,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This modernizes a test and makes it more portable.
+Otherwise the error from `git rev-parse` is uselessly
+polluting the debug output.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t6050-replace.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t6050-replace.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index d638119750..41b177936e 100755
+index 41b177936e..5cb8281bab 100755
 --- a/t/t6050-replace.sh
 +++ b/t/t6050-replace.sh
-@@ -393,9 +393,11 @@ test_expect_success 'replace ref cleanup' '
- '
+@@ -40,7 +40,7 @@ commit_peeling_shows_parents ()
+ 	test "$_found" = "$_parent" || return 1
+ 	_parent_number=$(( $_parent_number + 1 ))
+     done &&
+-    test_must_fail git rev-parse --verify $_commit^$_parent_number
++    test_must_fail git rev-parse --verify $_commit^$_parent_number 2>/dev/null
+ }
  
- test_expect_success '--graft with and without already replaced object' '
--	test $(git log --oneline | wc -l) = 7 &&
-+	git log --oneline >log &&
-+	test_line_count = 7 log &&
- 	git replace --graft $HASH5 &&
--	test $(git log --oneline | wc -l) = 3 &&
-+	git log --oneline >log &&
-+	test_line_count = 3 log &&
- 	commit_has_parents $HASH5 &&
- 	test_must_fail git replace --graft $HASH5 $HASH4 $HASH3 &&
- 	git replace --force -g $HASH5 $HASH4 $HASH3 &&
+ commit_has_parents ()
 -- 
 2.21.0.68.gd997bba285.dirty
 
