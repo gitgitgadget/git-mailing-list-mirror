@@ -2,153 +2,346 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDC6420248
-	for <e@80x24.org>; Thu, 28 Mar 2019 22:10:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD9C20248
+	for <e@80x24.org>; Thu, 28 Mar 2019 22:17:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727146AbfC1WKx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Mar 2019 18:10:53 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33487 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726294AbfC1WKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Mar 2019 18:10:53 -0400
-Received: by mail-wm1-f67.google.com with SMTP id z6so8287032wmi.0
-        for <git@vger.kernel.org>; Thu, 28 Mar 2019 15:10:52 -0700 (PDT)
+        id S1728190AbfC1WRu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Mar 2019 18:17:50 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36930 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726472AbfC1WRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Mar 2019 18:17:50 -0400
+Received: by mail-pl1-f194.google.com with SMTP id q6so20414pll.4
+        for <git@vger.kernel.org>; Thu, 28 Mar 2019 15:17:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=zDKr8jOV+cXzfQwwO2be8xxzh6Z9SSRpvtZAT56AiLE=;
-        b=ZsM4YttdCUH8Xe9KWPv08+M59dWIgS6ydjVcYGbuRItNHEk+e9c9ByQUQ3ctG4iuty
-         rSgc5oqYYBpw0hGKMakhZFAXaz4SfYIrevMh+zXez/E5dVyr8894iLdYU3Uo/DPLDLUW
-         gHjENMqIpxQDOWSod+dIg2NfDIETq1JoKLIeD0+e644tFawNsrUZfc3ast3VYsw+4Eql
-         hnv8e7y9t5aym9IluUQ5tFPhENUOTB37D2OWTD/TnqpUhTMMg0E66vXOKwCdn4v/LwfP
-         e9+TzgUfA6LGrPfJSvZOG3gX5fB0qUHEQR2Ys8lDaIGXIjxeKP9Uq8l8L2pCSDyQmQ+p
-         HNLw==
+        bh=erEStCQelhZeo3p36wM1K2sS6toP+umuv0lUL6QIz98=;
+        b=BXvNwrhcLsPeQVXK54JR7+bAyIO/zguD40M9oQUOLNTtGwfhOEvhM61ooYPHnyCVjB
+         d1fKO+RU75i7vlXIoteaAw3TwKGZKZWCghiZD9baA8WqCYT6A2NfWeUCiDBoEaO2zrI9
+         uRrSrP/ls3bHdWJWdyzGLodHglMhHaTbzFuRlvZW1wpvzlyw1ih16o3g7YCT56Iv5XyA
+         mSIlE9LMm/jxqIKfeRD6FzI7B4tw/8uoMo1+i/gc86cs69peXKYb0lHNEA1an+eMbDQG
+         f+Vv0itn1ZtaWd/zrck9NcKT0ILIKR+8Axp1dybAgiHmvULvdnYfNFVAYvEhM41jCWGh
+         1slA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=zDKr8jOV+cXzfQwwO2be8xxzh6Z9SSRpvtZAT56AiLE=;
-        b=od/q1IZv/0mtzuEhQi4rfAh16+ylnAQqeyKfwYGZx1ogChhTfRf96n7QShbgVxlwtt
-         MypdPFwVNI4OQUfA+u1kQD/SaQKLDrf/0/H+vWRylpoV5mG2M9mYxIRvXDV6ww0B45Ad
-         QGvp+WXCT7dz+UwvdxYirh3pbhZ0Ia2nIkPOacudohR+gErDdgx4NajEfnzDIVkSqP6T
-         PjuWAXFS1vjBdsFm5tRdVaB1FCVhhGl+QnjSk3AX0vIVn+Q8XnZzY/pzMlBTVItHD1yL
-         pHJeYxK8k6KUAEHJtHnmydspoR8Ae1cCrB5WPHokghfFW5X311m/56TiFDGJNodI499Z
-         7ftg==
-X-Gm-Message-State: APjAAAUv9ITxfnF0Nqla20H0I2evHadxZHzRAEif3z4Pja9FPMXq5cBF
-        gCy3fWPjE0clZn+mqiC6iztcjvH2
-X-Google-Smtp-Source: APXvYqwrrjpU8i4wN177GgkUzVVGcSlAixFtoNl9dynE18gd5HLUY3FANRMEsGg8YYRCl1ctLiXmqg==
-X-Received: by 2002:a1c:80cd:: with SMTP id b196mr1424847wmd.84.1553811051789;
-        Thu, 28 Mar 2019 15:10:51 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id 4sm406721wmi.14.2019.03.28.15.10.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Mar 2019 15:10:50 -0700 (PDT)
-Date:   Thu, 28 Mar 2019 22:10:49 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        kernel-usp@googlegroups.com,
-        Benoit Pierre <benoit.pierre@gmail.com>,
+        bh=erEStCQelhZeo3p36wM1K2sS6toP+umuv0lUL6QIz98=;
+        b=na1YwGMBiNXMZPLcEUis5kBG34K7WT2rHx1AznQ80s5cgAcqGWfCGN/JZRNdqdO2Bn
+         Y84JJ5YKq5YE8CQSN67NU2K+u3f8dR13lFtVdk//VZq9x6/ETu4gun6g04m3b6VqpNeK
+         Xh3/xQd1Z1GX3MbI1Lw8KEw3/P4LubONgtSaDjRNd+O8SMCGNu43XuHtrBWeGfV+2NA1
+         eiykffcgehihmquuDinagMRKt8k0tgw5qbGuMZYn2gzICZnYRqhY7EWAGozwlvvsI/yR
+         aK+9W9JftIwlwLreX85zdw/z8uhgiPQ5k2IfkzxnbLPtatAqkkhKE73RF4kyBL/kFPRI
+         8e0A==
+X-Gm-Message-State: APjAAAUCDJ09TtjCBBvqxbzCH/taiVvsQnjNghGkB9FiyzMfUO2byJl5
+        QfNUF0ayZxekfe4TpfmNOFx11Zkr
+X-Google-Smtp-Source: APXvYqzzpzqddYIb4/GsG0N+SOupy7DZTRvt00T9FYTFSjbpe9qTb83WkEf4S+wahBH9sNKTuz0vMQ==
+X-Received: by 2002:a17:902:586:: with SMTP id f6mr44427353plf.68.1553811468742;
+        Thu, 28 Mar 2019 15:17:48 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id a8sm238323pfo.144.2019.03.28.15.17.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Mar 2019 15:17:46 -0700 (PDT)
+Date:   Thu, 28 Mar 2019 15:17:45 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
- .git/objects/
-Message-ID: <20190328221049.GK32487@hank.intra.tgummerer.com>
-References: <20190226122829.19178-1-avarab@gmail.com>
- <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190322232237.13293-3-matheus.bernardino@usp.br>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2] rebase: teach rebase --keep-base
+Message-ID: <20190328221745.GA3941@dev-l>
+References: <cover.1553354374.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190322232237.13293-3-matheus.bernardino@usp.br>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <cover.1553354374.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/22, Matheus Tavares wrote:
-> There is currently an odd behaviour when locally clonning a repository
-> with symlinks at .git/objects: using --no-hardlinks all symlinks are
-> dereferenced but without it Git will try to hardlink the files with the
-> link() function, which has an OS-specific behaviour on symlinks. On OSX
-> and NetBSD, it creates a hardlink to the file pointed by the symlink
-> whilst on GNU/Linux, it creates a hardlink to the symlink itself.
-> 
-> On Manjaro GNU/Linux:
->     $ touch a
->     $ ln -s a b
->     $ link b c
->     $ ls -li a b c
->     155 [...] a
->     156 [...] b -> a
->     156 [...] c -> a
-> 
-> But on NetBSD:
->     $ ls -li a b c
->     2609160 [...] a
->     2609164 [...] b -> a
->     2609160 [...] c
-> 
-> It's not good to have the result of a local clone to be OS-dependent and
-> since the behaviour on GNU/Linux may result in broken symlinks, let's
-> re-implement it with linkat() instead of link() using a flag to always
-> follow symlinks and make the hardlink be to the pointed file. With this,
-> besides standardizing the behaviour, no broken symlinks will be
-> produced. Also, add tests for symlinked files at .git/objects/.
-> 
-> Note: Git won't create symlinks at .git/objects itself, but it's better
-> to handle this case and be friendly with users who manually create them.
-> 
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Co-authored-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/clone.c            |  2 +-
->  t/t5604-clone-reference.sh | 26 +++++++++++++++++++-------
->  2 files changed, 20 insertions(+), 8 deletions(-)
-> 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 50bde99618..b76f33c635 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -443,7 +443,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
->  		if (unlink(dest->buf) && errno != ENOENT)
->  			die_errno(_("failed to unlink '%s'"), dest->buf);
->  		if (!option_no_hardlinks) {
-> -			if (!link(src->buf, dest->buf))
-> +			if (!linkat(AT_FDCWD, src->buf, AT_FDCWD, dest->buf, AT_SYMLINK_FOLLOW))
+A common scenario is if a user is working on a topic branch and they
+wish to make some changes to intermediate commits or autosquash, they
+would run something such as
 
-This line is starting to get a bit long, might be worth breaking it up
-to keep to 80 characters per line.
+	git rebase -i --onto master... master
 
-I notice that we are currently not using 'linkat()' anywhere else in
-our codebase.  It looks like it has been introduced in POSIX.1-2008,
-which sounds fairly recent by git's standards.  So I wonder if this is
-really supported on all platforms that git is being built on.
+in order to preserve the merge base. This prevents unnecessary commit
+churning.
 
-I also wonder what would need to be done on Windows if we were to
-introduce this.  I see we define the 'link()' function in
-'compat/mingw.c' for that currently, so I guess something similar
-would be needed for 'linkat()'.  I added Dscho to Cc for Windows
-expertise.
+Alternatively, a user wishing to test individual commits in a topic
+branch without changing anything may run
 
-While I agree with the goal of consistency accross all platforms here,
-I don't know if it's actually worth going through the pain of doing
-that, especially for somewhat of an edge case in local clones.
+	git rebase -x ./test.sh master... master
 
-If the test in the previous patch passes on all platforms, I'd be okay
-with just calling the behaviour here undefined, especially as git
-would never actually create symlinks in the .git/objects directory.
+Since rebasing onto the merge base of the branch and the upstream is
+such a common case, introduce the --keep-base option as a shortcut.
+
+This allows us to rewrite the above as
+
+	git rebase -i --keep-base master
+
+and
+
+	git rebase -x ./test.sh --keep-base master
+
+respectively.
+
+Add tests to ensure --keep-base works correctly in the normal case and
+fails when there are multiple merge bases, both in regular and
+interactive mode. Also, test to make sure conflicting options cause
+rebase to fail. While we're adding test cases, add a missing
+set_fake_editor call to 'rebase -i --onto master...side'.
+
+While we're documenting the --keep-base option, change an instance of
+"merge-base" to "merge base", which is the consistent spelling.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+
+Ævar, I have a feeling that we're still miscommunicating and we don't
+fully understand each other. I'm putting up v2 to hopefully clear things
+up a little but I welcome more feedback.
+
+This patch now depends "[PATCH 1/8] tests (rebase): spell out the
+`--keep-empty` option" which is the first patch of Johannes's "Do not
+use abbreviated options in tests" patchset[1]. (Thanks for catching
+that, Johannes!)
+
+Changes since v1:
+
+* Squashed old set into one patch
+* Fixed indentation style and dangling else
+* Added more documentation after discussion with Ævar
+
+[1]: https://public-inbox.org/git/a1b4b74b9167e279dae4cd8c58fb28d8a714a66a.1553537656.git.gitgitgadget@gmail.com/
+
+ Documentation/git-rebase.txt     | 25 ++++++++++++--
+ builtin/rebase.c                 | 32 ++++++++++++++----
+ t/t3416-rebase-onto-threedots.sh | 57 ++++++++++++++++++++++++++++++++
+ 3 files changed, 105 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 6363d674b7..27be1f48ff 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -8,8 +8,8 @@ git-rebase - Reapply commits on top of another base tip
+ SYNOPSIS
+ --------
+ [verse]
+-'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+-	[<upstream> [<branch>]]
++'git rebase' [-i | --interactive] [<options>] [--exec <cmd>]
++	[--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+ 'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+ 	--root [<branch>]
+ 'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-current-patch
+@@ -217,6 +217,19 @@ As a special case, you may use "A\...B" as a shortcut for the
+ merge base of A and B if there is exactly one merge base. You can
+ leave out at most one of A and B, in which case it defaults to HEAD.
+ 
++--keep-base::
++	Set the starting point at which to create the new commits to the
++	merge base of <upstream> <branch>. Running
++	'git rebase --keep-base <upstream> <branch>' is equivalent to
++	running 'git rebase --onto <upstream>... <upstream>'.
+++
++Although both this option and --fork-point find the merge base between
++<upstream> and <branch>, this option uses the merge base as the _starting
++point_ on which new commits will be created, whereas --fork-point uses
++the merge base to determine the _set of commits_ which will be rebased.
+++
++See also INCOMPATIBLE OPTIONS below.
++
+ <upstream>::
+ 	Upstream branch to compare against.  May be any valid commit,
+ 	not just an existing branch name. Defaults to the configured
+@@ -364,6 +377,10 @@ ends up being empty, the <upstream> will be used as a fallback.
+ +
+ If either <upstream> or --root is given on the command line, then the
+ default is `--no-fork-point`, otherwise the default is `--fork-point`.
+++
++If your branch was based on <upstream> but <upstream> was rewound and
++your branch contains commits which were dropped, this option can be used
++with `--keep-base` in order to drop those commits from your branch.
+ 
+ --ignore-whitespace::
+ --whitespace=<option>::
+@@ -539,6 +556,8 @@ In addition, the following pairs of options are incompatible:
+  * --preserve-merges and --rebase-merges
+  * --rebase-merges and --strategy
+  * --rebase-merges and --strategy-option
++ * --keep-base and --onto
++ * --keep-base and --root
+ 
+ BEHAVIORAL DIFFERENCES
+ -----------------------
+@@ -863,7 +882,7 @@ NOTE: While an "easy case recovery" sometimes appears to be successful
+       --interactive` will be **resurrected**!
+ 
+ The idea is to manually tell 'git rebase' "where the old 'subsystem'
+-ended and your 'topic' began", that is, what the old merge-base
++ended and your 'topic' began", that is, what the old merge base
+ between them was.  You will have to find a way to name the last commit
+ of the old 'subsystem', for example:
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 77deebc65c..7c14a00460 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -27,8 +27,8 @@
+ #include "branch.h"
+ 
+ static char const * const builtin_rebase_usage[] = {
+-	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+-		"[<upstream>] [<branch>]"),
++	N_("git rebase [-i] [options] [--exec <cmd>] "
++		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
+ 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+ 		"--root [<branch>]"),
+ 	N_("git rebase --continue | --abort | --skip | --edit-todo"),
+@@ -1018,6 +1018,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	};
+ 	const char *branch_name;
+ 	int ret, flags, total_argc, in_progress = 0;
++	int keep_base = 0;
+ 	int ok_to_skip_pre_rebase = 0;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	struct strbuf revisions = STRBUF_INIT;
+@@ -1051,6 +1052,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+ 			   N_("rebase onto given branch instead of upstream")),
++		OPT_BOOL(0, "keep-base", &keep_base,
++			 N_("use the merge-base of upstream and branch as the current base")),
+ 		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+ 			 N_("allow pre-rebase hook to run")),
+ 		OPT_NEGBIT('q', "quiet", &options.flags,
+@@ -1217,6 +1220,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_rebase_usage,
+ 				   builtin_rebase_options);
+ 
++	if (keep_base) {
++		if (options.onto_name)
++			die(_("cannot combine '--keep-base' with '--onto'"));
++		if (options.root)
++			die(_("cannot combine '--keep-base' with '--root'"));
++	}
++
+ 	if (action != NO_ACTION && !in_progress)
+ 		die(_("No rebase in progress?"));
+ 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+@@ -1541,12 +1551,22 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	/* Make sure the branch to rebase onto is valid. */
+-	if (!options.onto_name)
++	if (keep_base) {
++		strbuf_reset(&buf);
++		strbuf_addstr(&buf, options.upstream_name);
++		strbuf_addstr(&buf, "...");
++		options.onto_name = xstrdup(buf.buf);
++	} else if (!options.onto_name)
+ 		options.onto_name = options.upstream_name;
+ 	if (strstr(options.onto_name, "...")) {
+-		if (get_oid_mb(options.onto_name, &merge_base) < 0)
+-			die(_("'%s': need exactly one merge base"),
+-			    options.onto_name);
++		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
++			if (keep_base)
++				die(_("'%s': need exactly one merge base with branch"),
++				    options.upstream_name);
++			else
++				die(_("'%s': need exactly one merge base"),
++				    options.onto_name);
++		}
+ 		options.onto = lookup_commit_or_die(&merge_base,
+ 						    options.onto_name);
+ 	} else {
+diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+index ddf2f64853..9c2548423b 100755
+--- a/t/t3416-rebase-onto-threedots.sh
++++ b/t/t3416-rebase-onto-threedots.sh
+@@ -99,7 +99,64 @@ test_expect_success 'rebase -i --onto master...side' '
+ 	git checkout side &&
+ 	git reset --hard K &&
+ 
++	set_fake_editor &&
+ 	test_must_fail git rebase -i --onto master...side J
+ '
+ 
++test_expect_success 'rebase --keep-base --onto incompatible' '
++	test_must_fail git rebase --keep-base --onto master...
++'
++
++test_expect_success 'rebase --keep-base --root incompatible' '
++	test_must_fail git rebase --keep-base --root
++'
++
++test_expect_success 'rebase --keep-base master from topic' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++
++	git rebase --keep-base master &&
++	git rev-parse C >base.expect &&
++	git merge-base master HEAD >base.actual &&
++	test_cmp base.expect base.actual &&
++
++	git rev-parse HEAD~2 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase --keep-base master from side' '
++	git reset --hard &&
++	git checkout side &&
++	git reset --hard K &&
++
++	test_must_fail git rebase --keep-base master
++'
++
++test_expect_success 'rebase -i --keep-base master from topic' '
++	git reset --hard &&
++	git checkout topic &&
++	git reset --hard G &&
++
++	set_fake_editor &&
++	EXPECT_COUNT=2 git rebase -i --keep-base master &&
++	git rev-parse C >base.expect &&
++	git merge-base master HEAD >base.actual &&
++	test_cmp base.expect base.actual &&
++
++	git rev-parse HEAD~2 >actual &&
++	git rev-parse C^0 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rebase -i --keep-base master from side' '
++	git reset --hard &&
++	git checkout side &&
++	git reset --hard K &&
++
++	set_fake_editor &&
++	test_must_fail git rebase -i --keep-base master
++'
++
+ test_done
+-- 
+2.21.0.695.gaf8658f249
+
