@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33AA220248
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD23520248
 	for <e@80x24.org>; Fri, 29 Mar 2019 17:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729890AbfC2REg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 13:04:36 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33090 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729814AbfC2REe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 13:04:34 -0400
-Received: by mail-ed1-f66.google.com with SMTP id q3so2675240edg.0
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 10:04:32 -0700 (PDT)
+        id S1729859AbfC2RE3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 13:04:29 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42136 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729842AbfC2RE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 13:04:29 -0400
+Received: by mail-ed1-f65.google.com with SMTP id x61so2620716edc.9
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 10:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NQjHoIFjs3C/cZ7OrubkbcSGMwDWVDHj/4Rt1jlRsFs=;
-        b=gK3jX1oQrCBBWPK9WYctD4deGaBV7r6H0Ot9iBsMr+/Jp3hzs9XZ6n+nAmKlxxBp1C
-         2v0U7o8YeuqVwECghzCXchxpj+2zzAjUE/pPbpLaKBjI+Z6XEyFxPEmXxVJcZy0yCw12
-         Pl6mCEGbQVVlB3EL0qlP/+rtGk541O38V+Sa2BASrzcq3AP54rll64TSMD2ql9N42xRJ
-         cet5uFjlLVumd1gRyy2aSbT+cR+IPyPaXIsJPhnVEyE7AgNe9UPgeEmRwq4tdkjn5APC
-         1jRwsySLhMoUrlKxcNKi8XJaWuXxa4ZGbxOY4HF45PfFFqRroTF1XdcoWss40NklYNRd
-         GoKA==
+        bh=VsFPVQlrbd+oBjrpClEK4LCZ+NiKxOzUOqbfxGpd3qw=;
+        b=JKuboLGql4wa+kNp0KtwW7uA9iG7erQH6k5uponEmKUstlXEJo6vYtd8xzfXfETdPb
+         7gh6XmGnVzAGLbE1wmUjbV61pOAJ5oCH1aSF08CUXIrznIT3mqNuIBwbZFRU+OH4lFaJ
+         BLrvojy6N4zbmd2tLPUexSC6mgXedKWeqbyzE4XnYNb5IkOHEiXAPbZtWsDdmtEKYRki
+         9v+Wz8nWvG9jqU/IOzwccJTzEGH4YY75E7GrhNBci8ROY4g02nec2ZdE4+Kr5XOCylaV
+         lRMhFFHeMW57atjl8HBXqNcpFcXMSiAdDs98Q68bVgWkUUPWEHnU+NpDJmtyOAnjLBOi
+         TD8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NQjHoIFjs3C/cZ7OrubkbcSGMwDWVDHj/4Rt1jlRsFs=;
-        b=BN1ISdOaG7YKNfr+rWkSbOx6WoEKmPRdi1GKEPnbyBWkiwBt8EKxHBLR12Cl47U4NM
-         gleH02r5MQuTn/zBwfNNVlJLlliD7UgPTcon2Bjo1YfRPbJlde0bt0eApaBKbgou9KWP
-         Ubuh5x5xCtp3xQMyC2+d1qQDcREn4ylmBHWteDAoCw91InaL4WNappHB8b6MiAfRKqkR
-         rLLjl8xIfiJG3m5xzCw35S3nmbHw4gCz+n70yfV+kKffzHIHbJK9X7bt2K8UT/cT2e12
-         0a9AMMpVNcD4DTtgbEAQnwAj4IttuP2QndH6DMwmr6KxjmIDWb1zuB5dwS5wpJftdcJ/
-         Cirg==
-X-Gm-Message-State: APjAAAX5Rgdn2CLSzpUJ3spAofDb4k3kovPgzFKAoPnoHvOGnTrz/4vb
-        8qe7ht2h5//rj7pJwKcACX4qA0jZ
-X-Google-Smtp-Source: APXvYqwO3/za0w/KL8F/SbVZusIfyM8g4yyrk+XLrw+9hKNH2goAG1IXMfm4iSh2dLSJ2DuC9xzbIQ==
-X-Received: by 2002:a17:906:2306:: with SMTP id l6mr27525969eja.27.1553879071650;
-        Fri, 29 Mar 2019 10:04:31 -0700 (PDT)
+        bh=VsFPVQlrbd+oBjrpClEK4LCZ+NiKxOzUOqbfxGpd3qw=;
+        b=TMoXikjwgukWd1Rt5a3y6JZSLgayKwdvXXLkxtHeNR0bEATVbym492+E1r9POroNUO
+         Z7D6pn9sS1YvgHZFZFNjet9dCzsKuZxTSiwp0MQApC4nbApmRTlOIxkD2iiBOk5RDt+3
+         DV65sGu6CGyCbcidSWuk9e3Yl84IY73UUgAPSCP8FZxpGyDVoIq49J+06Q3CtEKb/2k8
+         RADodlsXkW+iVN2JEJN5yviP4hNYMoF06frqOnO9ewwCWqrqTOYpEThHlK9EzNhQttCp
+         s82UXWhST9LWvSBiOMnuKnx38Bul1xBUHpidPYCYAIJTIM1NPrp799szWkizd7PMiLxC
+         1vBw==
+X-Gm-Message-State: APjAAAWGT6zKtttdwp0WnX+3fLClQ0jj8eOiy50UtGrMCODRPWVVCXnO
+        /AGs/IyrA82eYWDHa+ouSDLZPQ05
+X-Google-Smtp-Source: APXvYqxj2q72wjzRPmkpDS1pmxWV/n+1ODApxwBYOU6qU8ScgxrkxHszWL0mYN16QREMgNFAzUEpyQ==
+X-Received: by 2002:a17:906:d69:: with SMTP id s9mr27886669ejh.205.1553879066073;
+        Fri, 29 Mar 2019 10:04:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b34sm518569edd.24.2019.03.29.10.04.30
+        by smtp.gmail.com with ESMTPSA id k32sm779251ede.97.2019.03.29.10.04.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Mar 2019 10:04:30 -0700 (PDT)
-Date:   Fri, 29 Mar 2019 10:04:30 -0700 (PDT)
-X-Google-Original-Date: Fri, 29 Mar 2019 17:04:23 GMT
-Message-Id: <4352952677a11776a18ec9b6862cf358307cfafd.1553879063.git.gitgitgadget@gmail.com>
+        Fri, 29 Mar 2019 10:04:25 -0700 (PDT)
+Date:   Fri, 29 Mar 2019 10:04:25 -0700 (PDT)
+X-Google-Original-Date: Fri, 29 Mar 2019 17:04:17 GMT
+Message-Id: <7f1a34732271f9fbdbec0f4cd0a5990466ebd071.1553879063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v2.git.gitgitgadget@gmail.com>
 References: <pull.169.git.gitgitgadget@gmail.com>
         <pull.169.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 7/7] trace2: make SIDs more unique
+Subject: [PATCH v2 1/7] trace2: refactor setting process starting time
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,153 +73,239 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update SID component construction to use the current UTC datetime
-and a portion of the SHA1 of the hostname.
-
-Use an simplified date/time format to make it easier to use the
-SID component as a logfile filename.
+Create trace2_initialize_clock() and call from main() to capture
+process start time in isolation and before other sub-systems are
+ready.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-trace2.txt | 12 ++++----
- trace2/tr2_sid.c                       | 39 +++++++++++++++++++++++---
- trace2/tr2_tbuf.c                      | 16 +++++++++++
- trace2/tr2_tbuf.h                      |  1 +
- 4 files changed, 58 insertions(+), 10 deletions(-)
+ Documentation/technical/api-trace2.txt | 12 ++++++--
+ common-main.c                          |  2 ++
+ compat/mingw.c                         |  2 ++
+ trace2.c                               |  7 ++++-
+ trace2.h                               | 17 ++++++++++++
+ trace2/tr2_tls.c                       | 38 ++++++++++++++++----------
+ trace2/tr2_tls.h                       |  8 +++++-
+ 7 files changed, 67 insertions(+), 19 deletions(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index db968e31f7..e740db3907 100644
+index 2de565fa3d..f37fccf1da 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
-@@ -78,11 +78,11 @@ git version 2.20.1.155.g426c96fcdb
+@@ -160,17 +160,23 @@ purposes.
+ 
+ These are concerned with the lifetime of the overall git process.
+ 
++`void trace2_initialize_clock()`::
++
++	Initialize the Trace2 start clock and nothing else.  This should
++	be called at the very top of main() to capture the process start
++	time and reduce startup order dependencies.
++
+ `void trace2_initialize()`::
+ 
+ 	Determines if any Trace2 Targets should be enabled and
+-	initializes the Trace2 facility.  This includes starting the
+-	elapsed time clocks and thread local storage (TLS).
++	initializes the Trace2 facility.  This includes setting up the
++	Trace2 thread local storage (TLS).
  +
- ------------
- $ cat ~/log.event
--{"event":"version","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
--{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
--{"event":"cmd_name","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
--{"event":"exit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
--{"event":"atexit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
-+{"event":"version","sid":"20190329-144314-319944-9b68c35f-012232","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
-+{"event":"start","sid":"20190329-144314-319944-9b68c35f-012232","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
-+{"event":"cmd_name","sid":"20190329-144314-319944-9b68c35f-012232","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
-+{"event":"exit","sid":"20190329-144314-319944-9b68c35f-012232","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
-+{"event":"atexit","sid":"20190329-144314-319944-9b68c35f-012232","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
- ------------
+ This function emits a "version" message containing the version of git
+ and the Trace2 protocol.
+ +
+ This function should be called from `main()` as early as possible in
+-the life of the process.
++the life of the process after essential process initialization.
  
- == Enabling a Target
-@@ -571,7 +571,7 @@ The following key/value pairs are common to all events:
- ------------
+ `int trace2_is_enabled()`::
+ 
+diff --git a/common-main.c b/common-main.c
+index d484aec209..6137af0e63 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -27,6 +27,8 @@ int main(int argc, const char **argv)
  {
- 	"event":"version",
--	"sid":"1547659722619736-11614",
-+	"sid":"20190329-144314-319944-9b68c35f-012232",
- 	"thread":"main",
- 	"time":"2019-01-16T17:28:42.620713Z",
- 	"file":"common-main.c",
-diff --git a/trace2/tr2_sid.c b/trace2/tr2_sid.c
-index 984524a43c..6801113e53 100644
---- a/trace2/tr2_sid.c
-+++ b/trace2/tr2_sid.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "trace2/tr2_tbuf.h"
- #include "trace2/tr2_sid.h"
+ 	int result;
  
- #define TR2_ENVVAR_PARENT_SID "GIT_TR2_PARENT_SID"
-@@ -6,6 +7,39 @@
- static struct strbuf tr2sid_buf = STRBUF_INIT;
- static int tr2sid_nr_git_parents;
++	trace2_initialize_clock();
++
+ 	/*
+ 	 * Always open file descriptors 0/1/2 to avoid clobbering files
+ 	 * in die().  It also avoids messing up when the pipes are dup'ed
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 6b04514cdc..a2f74aca6a 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2569,6 +2569,8 @@ void mingw_startup(void)
+ 	wchar_t **wenv, **wargv;
+ 	_startupinfo si;
+ 
++	trace2_initialize_clock();
++
+ 	maybe_redirect_std_handles();
+ 
+ 	/* get wide char arguments and environment */
+diff --git a/trace2.c b/trace2.c
+index ccccd4ef09..6dd51e6aa5 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -142,6 +142,11 @@ static void tr2main_signal_handler(int signo)
+ 	raise(signo);
+ }
+ 
++void trace2_initialize_clock(void)
++{
++	tr2tls_start_process_clock();
++}
++
+ void trace2_initialize_fl(const char *file, int line)
+ {
+ 	struct tr2_tgt *tgt_j;
+@@ -428,7 +433,7 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
+ 	us_now = getnanotime() / 1000;
+ 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+ 
+-	tr2tls_create_self(thread_name);
++	tr2tls_create_self(thread_name, us_now);
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_thread_start_fl)
+diff --git a/trace2.h b/trace2.h
+index ae5020d0e6..8f89e70c44 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -19,6 +19,23 @@ struct json_writer;
+  * [] trace2_printf*    -- legacy trace[1] messages.
+  */
  
 +/*
-+ * Compute the final component of the SID representing the current process.
-+ * This should uniquely identify the process and be a valid filename (to
-+ * allow writing trace2 data to per-process files).
++ * Initialize the TRACE2 clock and do nothing else, in particular
++ * no mallocs, no system inspection, and no environment inspection.
 + *
-+ * <yyyymmdd> '-' <hhmmss> '-' <fraction> '-' <sha1-prefix> '-' <pid>
++ * This should be called at the very top of main() to capture the
++ * process start time.  This is intended to reduce chicken-n-egg
++ * bootstrap pressure.
++ *
++ * It is safe to call this more than once.  This allows capturing
++ * absolute startup costs on Windows which uses a little trickery
++ * to do setup work before common-main.c:main() is called.
++ *
++ * The main trace2_initialize_fl() may be called a little later
++ * after more infrastructure is established.
 + */
-+static void tr2_sid_append_my_sid_component(void)
-+{
-+	const struct git_hash_algo *algo = &hash_algos[GIT_HASH_SHA1];
-+	struct tr2_tbuf tb_now;
-+	git_hash_ctx ctx;
-+	unsigned char hash[GIT_MAX_RAWSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
-+	char hostname[HOST_NAME_MAX + 1];
-+
-+	tr2_tbuf_utc_datetime_for_filename(&tb_now);
-+	strbuf_addstr(&tr2sid_buf, tb_now.buf);
-+	strbuf_addch(&tr2sid_buf, '-');
-+
-+	if (xgethostname(hostname, sizeof(hostname)))
-+		xsnprintf(hostname, sizeof(hostname), "localhost");
-+
-+	algo->init_fn(&ctx);
-+	algo->update_fn(&ctx, hostname, strlen(hostname));
-+	algo->final_fn(hash, &ctx);
-+	hash_to_hex_algop_r(hex, hash, algo);
-+	strbuf_add(&tr2sid_buf, hex, 8);
-+
-+	strbuf_addch(&tr2sid_buf, '-');
-+	strbuf_addf(&tr2sid_buf, "%06"PRIuMAX, (uintmax_t)getpid());
-+}
++void trace2_initialize_clock(void);
 +
  /*
-  * Compute a "unique" session id (SID) for the current process.  This allows
-  * all events from this process to have a single label (much like a PID).
-@@ -20,7 +54,6 @@ static int tr2sid_nr_git_parents;
-  */
- static void tr2_sid_compute(void)
- {
--	uint64_t us_now;
- 	const char *parent_sid;
+  * Initialize TRACE2 tracing facility if any of the builtin TRACE2
+  * targets are enabled in the environment.  Emits a 'version' event.
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 8e65b0361d..31fb529f93 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -10,16 +10,30 @@
+ #define TR2_REGION_NESTING_INITIAL_SIZE (100)
  
- 	if (tr2sid_buf.len)
-@@ -38,9 +71,7 @@ static void tr2_sid_compute(void)
- 		tr2sid_nr_git_parents++;
- 	}
+ static struct tr2tls_thread_ctx *tr2tls_thread_main;
+-static uint64_t tr2tls_us_start_main;
++static uint64_t tr2tls_us_start_process;
  
--	us_now = getnanotime() / 1000;
--	strbuf_addf(&tr2sid_buf, "%" PRIuMAX "-%" PRIdMAX, (uintmax_t)us_now,
--		    (intmax_t)getpid());
-+	tr2_sid_append_my_sid_component();
+ static pthread_mutex_t tr2tls_mutex;
+ static pthread_key_t tr2tls_key;
  
- 	setenv(TR2_ENVVAR_PARENT_SID, tr2sid_buf.buf, 1);
- }
-diff --git a/trace2/tr2_tbuf.c b/trace2/tr2_tbuf.c
-index eb1b240d8a..c1a50fe084 100644
---- a/trace2/tr2_tbuf.c
-+++ b/trace2/tr2_tbuf.c
-@@ -30,3 +30,19 @@ void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb)
- 		  tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
- 		  (long)tv.tv_usec);
- }
-+
-+void tr2_tbuf_utc_datetime_for_filename(struct tr2_tbuf *tb)
+ static int tr2_next_thread_id; /* modify under lock */
+ 
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
++void tr2tls_start_process_clock(void)
 +{
-+	struct timeval tv;
-+	struct tm tm;
-+	time_t secs;
++	if (tr2tls_us_start_process)
++		return;
 +
-+	gettimeofday(&tv, NULL);
-+	secs = tv.tv_sec;
-+	gmtime_r(&secs, &tm);
-+
-+	xsnprintf(tb->buf, sizeof(tb->buf),
-+		  "%4d%02d%02d-%02d%02d%02d-%06ld", tm.tm_year + 1900,
-+		  tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
-+		  (long)tv.tv_usec);
++	/*
++	 * Keep the absolute start time of the process (i.e. the main
++	 * process) in a fixed variable since other threads need to
++	 * access it.  This allows them to do that without a lock on
++	 * main thread's array data (because of reallocs).
++	 */
++	tr2tls_us_start_process = getnanotime() / 1000;
 +}
-diff --git a/trace2/tr2_tbuf.h b/trace2/tr2_tbuf.h
-index 2a1d173ff2..29efff1ef7 100644
---- a/trace2/tr2_tbuf.h
-+++ b/trace2/tr2_tbuf.h
-@@ -19,5 +19,6 @@ void tr2_tbuf_local_time(struct tr2_tbuf *tb);
-  * Fill buffer with formatted UTC datatime string.
-  */
- void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb);
-+void tr2_tbuf_utc_datetime_for_filename(struct tr2_tbuf *tb);
++
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++					     uint64_t us_thread_start)
+ {
+-	uint64_t us_now = getnanotime() / 1000;
+ 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
  
- #endif /* TR2_TBUF_H */
+ 	/*
+@@ -29,7 +43,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
+ 	 */
+ 	ctx->alloc = TR2_REGION_NESTING_INITIAL_SIZE;
+ 	ctx->array_us_start = (uint64_t *)xcalloc(ctx->alloc, sizeof(uint64_t));
+-	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
++	ctx->array_us_start[ctx->nr_open_regions++] = us_thread_start;
+ 
+ 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+ 
+@@ -55,7 +69,7 @@ struct tr2tls_thread_ctx *tr2tls_get_self(void)
+ 	 * here and silently continue.
+ 	 */
+ 	if (!ctx)
+-		ctx = tr2tls_create_self("unknown");
++		ctx = tr2tls_create_self("unknown", getnanotime() / 1000);
+ 
+ 	return ctx;
+ }
+@@ -124,22 +138,18 @@ uint64_t tr2tls_absolute_elapsed(uint64_t us)
+ 	if (!tr2tls_thread_main)
+ 		return 0;
+ 
+-	return us - tr2tls_us_start_main;
++	return us - tr2tls_us_start_process;
+ }
+ 
+ void tr2tls_init(void)
+ {
++	tr2tls_start_process_clock();
++
+ 	pthread_key_create(&tr2tls_key, NULL);
+ 	init_recursive_mutex(&tr2tls_mutex);
+ 
+-	tr2tls_thread_main = tr2tls_create_self("main");
+-	/*
+-	 * Keep a copy of the absolute start time of the main thread
+-	 * in a fixed variable since other threads need to access it.
+-	 * This also eliminates the need to lock accesses to the main
+-	 * thread's array (because of reallocs).
+-	 */
+-	tr2tls_us_start_main = tr2tls_thread_main->array_us_start[0];
++	tr2tls_thread_main = tr2tls_create_self("main",
++						tr2tls_us_start_process);
+ }
+ 
+ void tr2tls_release(void)
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index bb80e3f8e7..b1e327a928 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -31,7 +31,8 @@ struct tr2tls_thread_ctx {
+  * In this and all following functions the term "self" refers to the
+  * current thread.
+  */
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name);
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++					     uint64_t us_thread_start);
+ 
+ /*
+  * Get our TLS data.
+@@ -94,4 +95,9 @@ void tr2tls_release(void);
+  */
+ int tr2tls_locked_increment(int *p);
+ 
++/*
++ * Capture the process start time and do nothing else.
++ */
++void tr2tls_start_process_clock(void);
++
+ #endif /* TR2_TLS_H */
 -- 
 gitgitgadget
+
