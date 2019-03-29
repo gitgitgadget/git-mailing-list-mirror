@@ -2,122 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07D1720248
-	for <e@80x24.org>; Fri, 29 Mar 2019 15:40:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C587220248
+	for <e@80x24.org>; Fri, 29 Mar 2019 15:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729561AbfC2Pkt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 11:40:49 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51397 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728902AbfC2Pkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 11:40:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553874043;
-        bh=zIJXs3GIhlzDzUcWA2Oad9N+tAmduN8mJuSeGFNxmAI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CfwVWYYLvcmwFeg/EJ2tGPYIBX8xyI8P3kM4Mb3pbYuneSCOLc/KBmitb3MgyMLBV
-         9WwzRYg5/3hRut8s3aiOV2VernMOXRVpQNYYzup9TsoToimWwVLRPOrt8zX/ZQVMkJ
-         MgZ0yVzzVI1G/OLyOHUoL6jptMiVHgvQQGL4GJfE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwZtX-1gtGdA0T2F-018K5d; Fri, 29
- Mar 2019 16:40:43 +0100
-Date:   Fri, 29 Mar 2019 16:40:43 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, kernel-usp@googlegroups.com,
-        Benoit Pierre <benoit.pierre@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
- .git/objects/
-In-Reply-To: <20190328221049.GK32487@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1903291635050.41@tvgsbejvaqbjf.bet>
-References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br> <20190322232237.13293-3-matheus.bernardino@usp.br> <20190328221049.GK32487@hank.intra.tgummerer.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729184AbfC2PrT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 11:47:19 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:40152 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728720AbfC2PrT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 11:47:19 -0400
+Received: by mail-vk1-f193.google.com with SMTP id l17so599356vke.7
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 08:47:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Nh+xO72/NPpBUrII8PTSoIshfnJYPQYwHHWCLhsflPE=;
+        b=Bll59Va2o5OfvN8gxw6mYxE0NLa6ydY1m4+rMV+1DNn+tgVY/wm3p4ax0T79g3+iIz
+         3qG/VO05ns3ikhR7GK1rp61ix4srT+YpLK5/AODqPVmgYaUWqZ+yqFheun6d75ncEeep
+         WR0oe8dfn7XaOTq+ratEINozSzOZNYcMxdA/X+pY1R1uEkl4ug2b3UUbmSOMW6T7subK
+         lKd2PX4ut04hi3XSk0w+qTrcXPFiu5l+VfQAs9zPbPfhoZ+qHk+hefrnZJUnAxog7mw+
+         rVX1fCiD4UcV/KdIUFgfJeW6vr/LQnN1ps63IR1nTRa8Xa+Tv+D2+F97o/1FYNexORSH
+         wC6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Nh+xO72/NPpBUrII8PTSoIshfnJYPQYwHHWCLhsflPE=;
+        b=nBL3s/mXsnAPP2MEvnriIT+wu5Gapd19uYlmzLcJePoNu0wfY8OplWEPYrdkgS9p3n
+         RGDsl/JXYXDDLYBgu2mWxcaWFxU3/SJZy1lYdB9YSBEZW7kYjE8XWZVQJ3TN/+/2xLnl
+         jev3uBF+Ki7dR0+zMbpXHYm4IppGri8L/6IgY7n9H417SUk8etGOxqXlxWsSjQ/IeRY1
+         FEvKbRc1PNSQkw9thRnGfWQIydNDbkIsAyPXbcaOMq0sH2c0nVCaSaGAm++JRfaZnLld
+         41ZZ929Igof8U1r/ZEKvnoSeAF87yjT7cVhmG2RVX5GWzP9FdYArgAAm64ytjTrBslpK
+         7twg==
+X-Gm-Message-State: APjAAAXcU5XSgnnafkKzUVF7ozM2mwfZaruKsfurhD5hlUGmjwMzx/2r
+        NrfGL36z8TjtJDaRHpEDQHfVwFMTCDFdSw8xCLc=
+X-Google-Smtp-Source: APXvYqyFvZATjI3UZm59R9MjWsJTeLYtlrcd/n+RTJLykS9Xv6atxD5b4rdPgQX8EmWJnt1Ul3NtJSsFk0UL6w7D6ek=
+X-Received: by 2002:a1f:2fc2:: with SMTP id v185mr2431301vkv.92.1553874437901;
+ Fri, 29 Mar 2019 08:47:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bA/4SPWW/pKziSeMT8NGF/jbuk0wAA28VF3qRvwJDsUUNQApRyk
- hbjmCumXFTs2InibbnQnYDSMgMYH+ZzvGqUY4eTWYtkNdIioVy++L8pM8Wo/JGUh0ilrDU1
- BOLTr96xXwuJHdWLJz0mXMCt5KUdyXlCtjh15Lw2QbFfV1WuTD8ZL4ghJkNmvw4sk6sFzaL
- qltbf12+jzIG2woHneByw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:McO1vjGycz4=:VuPhKZn94U5NJ2pjFCT81a
- K8P0Up1sKbtQ5+f3fsnRx3RORggjhlTHD4ppaSolvGwbBEfcyYAgDmQbwyVlL2GERUxDqMgqn
- 257ZUPRFed0IqvnPluzkk7QxrcrNCCouK8ROvG0/7r+CucnxjteWak5ri41zGp0M5jD4YlXAY
- sQgNTPAdgYomkrc17aI7MEK/wkbP3eEl2+WFuTWbB+1RRItBqEXo2OCIQ3vUSlnsZIk2tl2T6
- tIRzAx49FhwJbXU3QkVIPjC5bOtQN5s4sXzxzpr9j8FoWG+KUg9iB0MnU9tlaWamVvnP2Xe9H
- tQ0XdiKwt/Od4KTTKtG7gb/BDivU/kUuoGqrlIaNnljtJn+KuVYjmhYOFhHhIiSxXhgpTEpmI
- ie/00gvDbqe+Y5Wa/ApdKZK2ogiRPmZrtcJsSGXah9+MteNuocTKuUWQqeM04MygannLjSj7z
- ZvHtTNU+wp5zdY/fhtLX04YxLPmgxu8gNiA78x91mycjbuQgtbzkXCvhvNacWKbkYm5/GPAuN
- P2OtQihdgeiWCDnY2Exoco3qZGllA/hNAyzTMYD2pKkm/fsjItKt970kbPTejrmpWXouPAya0
- WjcrTIMmV6SE4r890JZiMxfyWerbr4wH81qRN833d1Y0ZAHOU9ktehIhhSfGAnRu4i0lul4j3
- NTsaTA0oPbZOez7ilr3Jl35rYD3vje4J6fmSNtreDtSUQeRb9JQH2EjQ+/allZVfyAWndgaZf
- 2nWb9/it/fSPjAyjlIxx89ogEwsxTu++xezSbG42SQ4HRTytm5OgRlajjj/t+WLeaiZpFxD3d
- 0ssbaBEFFEBxWivJI0UvKORzc5CTQ07PS99/EWWArUUpCe0jC7EyYqyYgHNDuErey0kcilBSB
- 3Wja+EP9iPBWYpmvG8m4Fe2e/c0k029JN/anVt1IZlhSlQ9LIiUZ46goRQRH7DH4zIjFWJcRU
- GjZEA426FGw==
+References: <20190321131655.15249-1-pclouds@gmail.com> <20190329103919.15642-1-pclouds@gmail.com>
+ <20190329103919.15642-24-pclouds@gmail.com>
+In-Reply-To: <20190329103919.15642-24-pclouds@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 29 Mar 2019 08:47:06 -0700
+Message-ID: <CABPp-BHX1gRhTdurAwrPg60Hk-OuhbrEN=4zatx4OOUo-DkQvw@mail.gmail.com>
+Subject: Re: [PATCH v6 23/27] switch: reject if some operation is in progress
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
-
-On Thu, 28 Mar 2019, Thomas Gummerer wrote:
-
-> On 03/22, Matheus Tavares wrote:
-> >
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 50bde99618..b76f33c635 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -443,7 +443,7 @@ static void copy_or_link_directory(struct strbuf *=
-src, struct strbuf *dest,
-> >  		if (unlink(dest->buf) && errno !=3D ENOENT)
-> >  			die_errno(_("failed to unlink '%s'"), dest->buf);
-> >  		if (!option_no_hardlinks) {
-> > -			if (!link(src->buf, dest->buf))
-> > +			if (!linkat(AT_FDCWD, src->buf, AT_FDCWD, dest->buf, AT_SYMLINK_FO=
-LLOW))
+On Fri, Mar 29, 2019 at 3:42 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
 >
-> [...]
+> Unless you know what you're doing, switching to another branch to do
+> something then switching back could be confusing. Worse, you may even
+> forget that you're in the middle of something. By the time you realize,
+> you may have done a ton of work and it gets harder to go back.
 >
-> I notice that we are currently not using 'linkat()' anywhere else in
-> our codebase.  It looks like it has been introduced in POSIX.1-2008,
-> which sounds fairly recent by git's standards.  So I wonder if this is
-> really supported on all platforms that git is being built on.
+> A new option --ignore-in-progress was considered but dropped because it
+> was not exactly clear what should happen. Sometimes you can switch away
+> and get back safely and resume the operation. Sometimes not. And the
+> git-checkout behavior is automatically clear merge/revert/cherry-pick,
+> which makes it a bit even more confusing [1].
+>
+> We may revisit and add this option in the future. But for now play it
+> safe and not allow it (you can't even skip this check with --force). The
+> user is suggested to cancel the operation by themselves (and hopefully
+> they do consider the consequences, not blindly type the command), or to
+> create a separate worktree instead of switching. The third option is
+> the good old "git checkout", but it's not mentioned.
 
-I bet you it isn't.
+I think these safety checks are pretty important for checkout too...
 
-> I also wonder what would need to be done on Windows if we were to
-> introduce this.  I see we define the 'link()' function in
-> 'compat/mingw.c' for that currently, so I guess something similar
-> would be needed for 'linkat()'.  I added Dscho to Cc for Windows
-> expertise.
+>
+> [1] CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=3DYtUvQkWriAk5w@mail.gmail.com
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  builtin/checkout.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index f7967cdb7c..5f100c1552 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -24,6 +24,7 @@
+>  #include "tree.h"
+>  #include "tree-walk.h"
+>  #include "unpack-trees.h"
+> +#include "wt-status.h"
+>  #include "xdiff-interface.h"
+>
+>  static const char * const checkout_usage[] =3D {
+> @@ -56,6 +57,7 @@ struct checkout_opts {
+>         int accept_pathspec;
+>         int switch_branch_doing_nothing_is_ok;
+>         int only_merge_on_switching_branches;
+> +       int can_switch_when_in_progress;
+>
+>         const char *new_branch;
+>         const char *new_branch_force;
+> @@ -1202,6 +1204,39 @@ static void die_expecting_a_branch(const struct br=
+anch_info *branch_info)
+>         die(_("a branch is expected, got '%s'"), branch_info->name);
+>  }
+>
+> +static void die_if_some_operation_in_progress(void)
+> +{
+> +       struct wt_status_state state;
+> +
+> +       memset(&state, 0, sizeof(state));
+> +       wt_status_get_state(the_repository, &state, 0);
+> +
+> +       if (state.merge_in_progress)
+> +               die(_("cannot switch branch while merging\n"
+> +                     "Consider \"git merge --quit\" "
+> +                     "or \"git worktree add\"."));
+> +       if (state.am_in_progress)
+> +               die(_("cannot switch branch in the middle of an am sessio=
+n\n"
+> +                     "Consider \"git am --quit\" "
+> +                     "or \"git worktree add\"."));
+> +       if (state.rebase_interactive_in_progress || state.rebase_in_progr=
+ess)
+> +               die(_("cannot switch branch while rebasing\n"
+> +                     "Consider \"git rebase --quit\" "
+> +                     "or \"git worktree add\"."));
+> +       if (state.cherry_pick_in_progress)
+> +               die(_("cannot switch branch while cherry-picking\n"
+> +                     "Consider \"git cherry-pick --quit\" "
+> +                     "or \"git worktree add\"."));
+> +       if (state.revert_in_progress)
+> +               die(_("cannot switch branch while reverting\n"
+> +                     "Consider \"git revert --quit\" "
+> +                     "or \"git worktree add\"."));
+> +       if (state.bisect_in_progress)
+> +               die(_("cannot switch branch while bisecting\n"
+> +                     "Consider \"git bisect reset HEAD\" "
+> +                     "or \"git worktree add\"."));
+> +}
+> +
+>  static int checkout_branch(struct checkout_opts *opts,
+>                            struct branch_info *new_branch_info)
+>  {
+> @@ -1257,6 +1292,9 @@ static int checkout_branch(struct checkout_opts *op=
+ts,
+>             !new_branch_info->path)
+>                 die_expecting_a_branch(new_branch_info);
+>
+> +       if (!opts->can_switch_when_in_progress)
+> +               die_if_some_operation_in_progress();
+> +
+>         if (new_branch_info->path && !opts->force_detach && !opts->new_br=
+anch &&
+>             !opts->ignore_other_worktrees) {
+>                 int flag;
+> @@ -1514,6 +1552,7 @@ int cmd_checkout(int argc, const char **argv, const=
+ char *prefix)
+>         opts.only_merge_on_switching_branches =3D 0;
+>         opts.accept_pathspec =3D 1;
+>         opts.implicit_detach =3D 1;
+> +       opts.can_switch_when_in_progress =3D 1;
 
-Indeed, `linkat()` would have to be implemented in `compat/mingw.c`. It
-would be a bit involved because the last parameter of that function
-changes behavior noticeably, but the main difficulty (to determine the
-path from a file descriptor) should be overcome using
-`HANDLE olddirhandle =3D _get_osfhandle(olddirfd);` and the calling
-`GetFinalPathNameByHandleW(olddirhandle, wbuf, sizeof(wbuf));`.
+I think this should be 0 too; this check is good for both checkout and
+switch.  And if people really do want to use it during in-progress
+operations because it is sometimes safe enough, then both operations
+deserve some kind of override flag that checks for the appropriate
+safety conditions (as we're discussing in the other thread) and then
+allows or rejects it.
 
-So yes, this is *not* something I'd do lightly.
+However, I'm totally fine with proposing another patch after your
+series lands to do all of this; this patch is fine as-is for now.
 
-The bigger problem will be to continue to support older Unices such as
-SunOS and AIX. I highly doubt that they have that function. You should
-find out, Matheus.
-
-Ciao,
-Johannes
+>         options =3D parse_options_dup(checkout_options);
+>         options =3D add_common_options(&opts, options);
+> @@ -1549,6 +1588,7 @@ int cmd_switch(int argc, const char **argv, const c=
+har *prefix)
+>         opts.switch_branch_doing_nothing_is_ok =3D 0;
+>         opts.only_merge_on_switching_branches =3D 1;
+>         opts.implicit_detach =3D 0;
+> +       opts.can_switch_when_in_progress =3D 0;
+>
+>         options =3D parse_options_dup(switch_options);
+>         options =3D add_common_options(&opts, options);
+> --
+> 2.21.0.479.g47ac719cd3
