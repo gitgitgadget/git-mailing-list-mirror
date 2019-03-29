@@ -2,160 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FEA920248
-	for <e@80x24.org>; Fri, 29 Mar 2019 14:28:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAFB520248
+	for <e@80x24.org>; Fri, 29 Mar 2019 14:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728994AbfC2O2I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 10:28:08 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:37098 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728711AbfC2O2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 10:28:08 -0400
-Received: by mail-it1-f194.google.com with SMTP id u65so4156872itc.2
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 07:28:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0pkVNwhMrpMoYRGbEdTbiLveyuyYLyR/EDXOD0z60PY=;
-        b=EdIt9Q4DdJZCv6PaeJQxQhxJ0iR+3ifFZ254HJaX3GtGKDIMtQZxz7UJpvtb6R4T8c
-         q2nca9pit+G300OtVLJ6y55IUMIC3D8tOpwxlMSxR3Yvk9dqZACD/LFbJplbxY/Paq3o
-         9lFj5N3kLnaMg3wKDR8UZVFqD/0+YIszq0xSguyY2HKYdTUg+rI0K63atr0fNDKO3OK6
-         L7plCxGmMLgdr5zyqGqBUggaJ6LbfH/hXTEfCDzS1uPgf5eCvvNRnvrYMLRlXYkScH1v
-         YcZwZTNCU2m/lJJq0jjI3SSQhAUQvWgbg20/UNS3cZ8KxpZsmHLDzxIyRTsj2/P4Yaf+
-         eM6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0pkVNwhMrpMoYRGbEdTbiLveyuyYLyR/EDXOD0z60PY=;
-        b=UbKAJoGUAwDNyrfs3mr1YOyegd4jSfAhYOi16UoYyxEP00uti6VRxO77k+zxjwSlS6
-         UdudT8s8DzxNzPlHYEXxMuwj0lCEh/mgS+Ol9n0rCXfgCRIkBlwX/fxEF3xayzyVir4W
-         L5azASq8LvTa7MCkPywPcl8QLU7qoEaFN7rH4Hj/WcGSS8y1By1A5XkJ9sqwnmfOpw7B
-         J4zmpw56GtBwpj0X27Xv8SSOWyfXIRTiY88Id8y7lxg5ZIF8CoH50F3amFOj7hBIh3hA
-         jnhMHPVTa15rqI0LWzUxx0PIlUPks/rUaR1LX3KhfZsxiVt4GQtlov+Xl3fjKmjTmnro
-         PDlw==
-X-Gm-Message-State: APjAAAXr3i8ga9JdgA+USvhYtL0IY7pkWy7A8q6Jgy30pkTeY4ZVD1W/
-        3ctzB1CuiRV7Ij2OH5JUyN0CBh8tPakMdzoPO0afYw==
-X-Google-Smtp-Source: APXvYqwZ6Qq2UNgiS+Z6YaEdNYoEStcpc32yDwJeHjiO5XZm6CTlEkvJsBrC2wqIxCKyyXUwaWFqFf+pHPDkbCh2Eq4=
-X-Received: by 2002:a24:4682:: with SMTP id j124mr1234668itb.90.1553869685776;
- Fri, 29 Mar 2019 07:28:05 -0700 (PDT)
+        id S1728966AbfC2Osg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 10:48:36 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53855 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728848AbfC2Osf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 10:48:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553870908;
+        bh=gfDnWVHTHbUHt8Oa4c/wR6y0jqUWglzTsd/i23Pr7Iw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=L89Ztu31lsdqhPjGfo+IhzQ75zq1RPGJafhMfl1LobhBkkt6swq4c42/D99CBY5zl
+         3s0Ca0989G5mo9LABY0D4Iro4AQF9/L7hGrggQIE4IzKfnac4kNPLs3FuHqdNvg9Y1
+         DCvNCSe5lBrxvk47UhUy8d/nbJI01XsAH6LraJQY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lmqxo-1gT7Sa0JLw-00h8XC; Fri, 29
+ Mar 2019 15:48:28 +0100
+Date:   Fri, 29 Mar 2019 15:48:28 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/5] docs: do not document the `git remote-testgit`
+ command
+In-Reply-To: <nycvar.QRO.7.76.6.1903272317550.41@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1903291546010.41@tvgsbejvaqbjf.bet>
+References: <pull.162.git.gitgitgadget@gmail.com> <pull.162.v2.git.gitgitgadget@gmail.com> <810d2c5a94b40544652c97ffa644b29e0db8af82.1553550094.git.gitgitgadget@gmail.com> <87a7hhbszc.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.1903272317550.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190322232237.13293-3-matheus.bernardino@usp.br> <20190328221049.GK32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190328221049.GK32487@hank.intra.tgummerer.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 29 Mar 2019 11:27:54 -0300
-Message-ID: <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at .git/objects/
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
-        Benoit Pierre <benoit.pierre@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-108526342-1553870909=:41"
+X-Provags-ID: V03:K1:8BfmlyZJDRiKL0tfqDflBvoeqnD7W6fBlvM0H3INsOzHL1g7Tul
+ 5jc4mQoRkIjxMADH51aIJpp3yZhQS6YAkyTAIrV9nb3WKa2ZuJDhXsWo4ZqIgJKifKQWYCN
+ 2BDVHuz2jMphDuzXbOr3UxZ9uuJR75OMPey/YHffpuflb8qasTzmyU8Hx86BKcA+gwC3NhC
+ BzccXajrffjuaZxETkv9w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+DhMEe2Lst4=:MLSXPnUlutCQbmlJr5/BP9
+ 6KSdKH1R9hIU+7SVenIp5geRLpuVgijxcaIQVOBmuYQ93yXhUQGId16XsRRjE2McRI/H5nYLo
+ bihAfcwjW5RSLNJUGdjfjiQoFNN9l07E69U/SEETTg/lInIg6KKiqecUHE2m8M8jxDxrqimTu
+ csRYyQKTxNOf+qJzeo0OBk1oQ7YKjneKTruUs2YHYoI6iVFqTXYbBR6Xd8gL8ycKOVagF3vph
+ 4yB5AHQbCfUHMAk4r98rEt8FoUBfvvH6YSgrjU1ceci3UXxSvmasuoXTUnMsW4Wi/LrtemwJq
+ XVq9wL/LlzM3DVPlDNoC/qAV0GEdkInUeD4tPbZFLC5p4bNttkukH+jpHkU2gZ0uiPFtsZemG
+ LRMQN6XewHdSBIMyBvRdFEEphF/en1yqmhsVzaurSP0HGWMP5tur/qzXMOqMvmK8QVel1joyd
+ 8CEV8CVECvt+MFNCBJcTadoinlhPQna0g2g1nrstLPmtJIr455gzkzRypmCV9B8rETZoEXNfY
+ 1z5nxwm6pGQnVhXnFp0Yr0Cd6d3hNvKD44krUUJY01Nd755RLkFhxhqCvGzkJKiw5scFO535M
+ uMVWYWk+XOOLio/3tTIDw5e1zNmBjAEgAxZti0j4RUxWLCTcSXrI5My1GVkOlk8KYlnQ4rO9h
+ 97sIj3SE1fy9Oj23fFOA+mQf5IAPfXEQTksjatXZJx+N8qbViuRoU/iz2UJcgrbY5iJIdzCa8
+ 97PR7Zdd3U8Aeuk+awgIE4iJ9mT/xLODM4275+jkAa88sZJNkM47JbSW+tZQAAVcmKMdUoqb4
+ /F9CI4wisYcKrG+bn8BdqKEOcflP3vokO9ynia/qu1/KMp7lSl3fAWkju4juCUurOlGLPGYlk
+ cwmTEZW/FLEaOETJAQWAGbjfNngcILx/iyOHoOC4vlnerT2ibb1jqeR/ZDDZ+bAr4wl/+bG1P
+ LJtMWfFpi+A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 28, 2019 at 7:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrot=
-e:
->
-> On 03/22, Matheus Tavares wrote:
-> > There is currently an odd behaviour when locally clonning a repository
-> > with symlinks at .git/objects: using --no-hardlinks all symlinks are
-> > dereferenced but without it Git will try to hardlink the files with the
-> > link() function, which has an OS-specific behaviour on symlinks. On OSX
-> > and NetBSD, it creates a hardlink to the file pointed by the symlink
-> > whilst on GNU/Linux, it creates a hardlink to the symlink itself.
-> >
-> > On Manjaro GNU/Linux:
-> >     $ touch a
-> >     $ ln -s a b
-> >     $ link b c
-> >     $ ls -li a b c
-> >     155 [...] a
-> >     156 [...] b -> a
-> >     156 [...] c -> a
-> >
-> > But on NetBSD:
-> >     $ ls -li a b c
-> >     2609160 [...] a
-> >     2609164 [...] b -> a
-> >     2609160 [...] c
-> >
-> > It's not good to have the result of a local clone to be OS-dependent an=
-d
-> > since the behaviour on GNU/Linux may result in broken symlinks, let's
-> > re-implement it with linkat() instead of link() using a flag to always
-> > follow symlinks and make the hardlink be to the pointed file. With this=
-,
-> > besides standardizing the behaviour, no broken symlinks will be
-> > produced. Also, add tests for symlinked files at .git/objects/.
-> >
-> > Note: Git won't create symlinks at .git/objects itself, but it's better
-> > to handle this case and be friendly with users who manually create them=
-.
-> >
-> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> > Co-authored-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> > ---
-> >  builtin/clone.c            |  2 +-
-> >  t/t5604-clone-reference.sh | 26 +++++++++++++++++++-------
-> >  2 files changed, 20 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 50bde99618..b76f33c635 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -443,7 +443,7 @@ static void copy_or_link_directory(struct strbuf *s=
-rc, struct strbuf *dest,
-> >               if (unlink(dest->buf) && errno !=3D ENOENT)
-> >                       die_errno(_("failed to unlink '%s'"), dest->buf);
-> >               if (!option_no_hardlinks) {
-> > -                     if (!link(src->buf, dest->buf))
-> > +                     if (!linkat(AT_FDCWD, src->buf, AT_FDCWD, dest->b=
-uf, AT_SYMLINK_FOLLOW))
->
-> This line is starting to get a bit long, might be worth breaking it up
-> to keep to 80 characters per line.
->
-> I notice that we are currently not using 'linkat()' anywhere else in
-> our codebase.  It looks like it has been introduced in POSIX.1-2008,
-> which sounds fairly recent by git's standards.  So I wonder if this is
-> really supported on all platforms that git is being built on.
->
-> I also wonder what would need to be done on Windows if we were to
-> introduce this.  I see we define the 'link()' function in
-> 'compat/mingw.c' for that currently, so I guess something similar
-> would be needed for 'linkat()'.  I added Dscho to Cc for Windows
-> expertise.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ok, what if instead of using linkat() we use 'realpath(const char
-*path, char *resolved_path)', which will resolve any symlinks at
-'path' and store the canonical path at 'resolved_path'? Then, we can
-still keep using link() but now, with the certainty that all platforms
-will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
-Would that be a better idea?
+--8323328-108526342-1553870909=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> While I agree with the goal of consistency accross all platforms here,
-> I don't know if it's actually worth going through the pain of doing
-> that, especially for somewhat of an edge case in local clones.
+Hi =C3=86var,
+
+On Wed, 27 Mar 2019, Johannes Schindelin wrote:
+
+> On Tue, 26 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> If the test in the previous patch passes on all platforms, I'd be okay
-> with just calling the behaviour here undefined, especially as git
-> would never actually create symlinks in the .git/objects directory.
+> > On Mon, Mar 25 2019, Johannes Schindelin via GitGitGadget wrote:
+> >
+> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > >
+> > > Since 7ded055401 (build: do not install git-remote-testgit, 2013-06-=
+07),
+> > > we do not install it. Therefore it makes no sense to document it,
+> > > either.
+> > >
+> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > ---
+> > >  Documentation/git-remote-testgit.txt | 30 -------------------------=
+---
+> > >  Documentation/gitremote-helpers.txt  |  2 --
+> > >  2 files changed, 32 deletions(-)
+> > >  delete mode 100644 Documentation/git-remote-testgit.txt
+> > >
+> > > diff --git a/Documentation/git-remote-testgit.txt b/Documentation/gi=
+t-remote-testgit.txt
+> > > deleted file mode 100644
+> > > index b45bfebba5..0000000000
+> > > --- a/Documentation/git-remote-testgit.txt
+> > > +++ /dev/null
+> > > @@ -1,30 +0,0 @@
+> > > -git-remote-testgit(1)
+> > > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > > -
+> > > -NAME
+> > > -----
+> > > -git-remote-testgit - Example remote-helper
+> > > -
+> > > -
+> > > -SYNOPSIS
+> > > ---------
+> > > -[verse]
+> > > -git clone testgit::<source-repo> [<destination>]
+> > > -
+> > > -DESCRIPTION
+> > > ------------
+> > > -
+> > > -This command is a simple remote-helper, that is used both as a
+> > > -testcase for the remote-helper functionality, and as an example to
+> > > -show remote-helper authors one possible implementation.
+> > > -
+> > > -The best way to learn more is to read the comments and source code =
+in
+> > > -'git-remote-testgit'.
+> > > -
+> > > -SEE ALSO
+> > > ---------
+> > > -linkgit:gitremote-helpers[7]
+> > > -
+> > > -GIT
+> > > ----
+> > > -Part of the linkgit:git[1] suite
+> > > diff --git a/Documentation/gitremote-helpers.txt b/Documentation/git=
+remote-helpers.txt
+> > > index 34a3e60d08..2fc4007525 100644
+> > > --- a/Documentation/gitremote-helpers.txt
+> > > +++ b/Documentation/gitremote-helpers.txt
+> > > @@ -513,8 +513,6 @@ linkgit:git-remote-ext[1]
+> > >
+> > >  linkgit:git-remote-fd[1]
+> > >
+> > > -linkgit:git-remote-testgit[1]
+> > > -
+> > >  linkgit:git-fast-import[1]
+> >
+> > I wonder if it should be moved into e.g. t/helper or somesuch at this
+> > point...
+>
+> Sure.
+>
+> One thing to keep in mind is that we cannot change the actual name of th=
+e
+> executable, as it needs to have the format `git-remote-*`, and cannot
+> require a first argument `testgit`, to be able to perform its purpose.
+>
+> We do have a precedent for that kind of scenario: `test-fake-ssh`. It is
+> also not folded into `test-tool`, and it is copied while changing the na=
+me
+> to `ssh`, as required to fulfill its mission.
+>
+> I am not totally enthusiastic about this because this is what prevents
+> Git's test suite from running in a RAM disk on Windows, IIRC: I have not
+> been able to convince my RAM disk provider to allow executables stored o=
+n
+> it to be executed.
+
+Oh you know what? `git-remote-testgit` is a *shell script*.
+
+So that one was easy...
+
+Now, the question is really, should I just add this patch *here*, or to
+the non-Windows-related docs fixes I have lined up?
+
+Decisions, decisions.
+
+Ciao,
+Dscho
+
+--8323328-108526342-1553870909=:41--
