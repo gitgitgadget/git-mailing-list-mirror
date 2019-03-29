@@ -8,188 +8,168 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEEAB20248
-	for <e@80x24.org>; Fri, 29 Mar 2019 15:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A09620248
+	for <e@80x24.org>; Fri, 29 Mar 2019 15:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729042AbfC2Pv5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 11:51:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:35701 "EHLO mout.gmx.net"
+        id S1729577AbfC2P4r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 11:56:47 -0400
+Received: from mout.gmx.net ([212.227.17.22]:47883 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728902AbfC2Pv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 11:51:57 -0400
+        id S1728839AbfC2P4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 11:56:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553874710;
-        bh=iiwiwp8eFIa8IqebnM2PyPwLkaGhW0UI+2seQ3cCOZI=;
+        s=badeba3b8450; t=1553874988;
+        bh=do9s7kcz+bU+BDqtEBzzOo1Nq0AHeplUU+F11CA5QIQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QrNYYUFuUlXtKnkVbW69TO8xkEkExsSj5mS5edSu8SZXLxegyJnCwUdj2p5/mLx8e
-         vwrQe0HMe4y3Wxmy4FfI8H+pelqB5KyiIAFoCgw3uQ2S/TDcY236eLHM9T6hdhS0yj
-         LjVRSyPLnQcwssLB3OX1c+kDdVMBdaB62dbamjNo=
+        b=DhKwRSffsjKY0kGZSQbgfw/WSrjutao4vxkQ+jFZJ7jvm5S2S5qxqY4v9cBwUUBrV
+         MNcRy/UpZiD6vvnxsjy+txVne/9CdJTUmnh1GDIr8utmMpKVIC2/08YqPBWk380qNl
+         rjHCOZHvzkUxqfORfSVodYF/r0DwS5Crc3GrYqYs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ln7wj-1gTNpw3K9t-00hPUi; Fri, 29
- Mar 2019 16:51:49 +0100
-Date:   Fri, 29 Mar 2019 16:51:50 +0100 (STD)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDE6y-1hB43E1olQ-00GYis; Fri, 29
+ Mar 2019 16:56:28 +0100
+Date:   Fri, 29 Mar 2019 16:56:28 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH] sequencer: fix cleanup with --signoff and -x
-In-Reply-To: <20190329110842.30604-1-phillip.wood123@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903291651340.41@tvgsbejvaqbjf.bet>
-References: <20190329110842.30604-1-phillip.wood123@gmail.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 0/6] Asciidoctor-related formatting and CI fixes
+In-Reply-To: <20190329123520.27549-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903291653590.41@tvgsbejvaqbjf.bet>
+References: <20190324215534.9495-1-szeder.dev@gmail.com> <20190329123520.27549-1-szeder.dev@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DJdaXWPTxm1GTFhys07Z4z3o/dMkK3rzHFWiOR7kWCtPOtH+4So
- 5R5XQx4jt9q0O0X8rqDUP+liFxcKDV2XNW9w4+t2oZe0nMfIuNtdeY8KXqvLT3GPehnzqS1
- ByNEqCDYMLaMhxon81SOKbBEkzBOQWiaNEfNeb4boJb8kvqLe7GXH7GoEYmChEof+IPYdv4
- GUQNgmbkPgAc+YfmjxDYA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pgTXJAHHLR8=:A+LDSMmMj9g8EyBv7j7L76
- 2+v+I0EJjlTGgQyhc1+Odbe2PCbFexkr1ZXPFTJzyd8PdVlOMgl3tfKCHOSt+D8Qre2NZGI/l
- LTswmS5sEgnpeW1uZqpvtnGT07+qdsn3rns8pOXLf8gggudKyCuj5mkSarwG7EHIVhzRw+I0q
- 1DK74J1NxM1q+1hpVxoB0d1ao1y0/WpNT+rid3NwU03uW5wTGE6QYHtwEqgpGGwHAozxYoehh
- iFHzKcfOiF9hoeVUikqIERCFxsIMTcawQb8FZpt6mz8qO+vlCDZj0ElNKcYsf3wJ6WqRerBM2
- Gip4QZxjAG9A4i+FHr7n4XhwD8YCrOSGhCWedD8OC5R9j6FXW43M5eOkh8Isnp1JDJieX6+XI
- QQ3B4qz/VchBxKKSOEqPmZKZXa504XH+WHkO44JF63AOcMQixulkvEDlK/KR5gWWmvI08mrbE
- MUgw8sE7Isv6QwGPFPWh2vP05/aYYfa+1kMgjdGR8e/+9BhXe9dMu0q4O4eZ00wIMwf420asQ
- yDkqnoJt58pXOq0kPDLluHPlXPTJJ1H3FwKDnzIRU3YDAm3seW9pS2fPSQhNBs/Goc7ELq2xf
- YWShoCTSvuDd1/c33ArIM4XwULQ9fZLRPanLaiXsabuQh3ySpA7lyETVg5dvNDseYGUEkwoP6
- 5yt4MDZvx2oR44hDdVJZC0AMLBOL8N3Bjy/ayg62eXaxADPmGK3W1x2JxT66SiKVYxUcqTi2W
- EhYUNPRyT8dSkAl4SS9aJsaYcV0g3dA+vsdXigWcxcGtq9yTkqbDEq4LrJZ95OGlejKdt/w3E
- VljNBjGqaY5oMs5uB5lSQyyO1jiFvM0cLYzEcZl8pARvdaNagDhwEN9GPwKmkovYAA5KGnWLx
- 9tjb4O/VWL4hfP7CJfeByoQWd2AfNbbwH/eu5gl72Veo9TIsy6HnK9ng/dkG7/y9xbDFRRKPQ
- j0hfPS7amfA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1151427003-1553874990=:41"
+X-Provags-ID: V03:K1:TPqiaYQy+qDhtyWZlvul5QvSxicwwFsfLx/0i2bHhqjmSKEDMRP
+ uRT9thmEuZBK4XJk/u8CDy2Arb060vmGUA9O51FJ8aUkuKorwYEQRaDJEt0NnFXqyfZ4lsq
+ FBIvb+BSQzC94yoHht/08v40AOc/DM7e3c5NgrJy9yn9CGPqqSq/ijC7pIXaT6POw11hekH
+ 3shcEBsCJcwwEacTdMtMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+uQ6kxDf1k8=:9XsIV4K1T0i4yNDXeAWtXp
+ 6uLQqy0muS25bE3z2SNM2M285TV7PRkwHxaIAoJsl/vSN2NaGKk4jxixDgYe6FTEepNPkbNIK
+ 5iIE9Iu+WFFXvhI4sOU6psCF/rf6+sNVqHbbfs76U98vWALwFb6KFEUZ4vE8VbRrfnVNbfuer
+ WDaQwl6EIP9L3KQ9bLLngh2EgAkxsUwopOHwxRzzYdMaLx0jExNxpAbUaHKvL5Xs/VqW+kKcS
+ sRE76jcH1nnGhMREABvygjYpDeK4JHtj0Pgc+hkomotmr9uQv083OKNsMDd0boFt3NOzQPZzB
+ RGbI97KmxspAY6BgEvlxxmCwpdMQmWA9VP+moykiy80kTDlc+mOJaOm8psBG47yi5x+yWFs5x
+ 0+ki241ZHPCMqqht5J0Cs4Dv/VRnT5nNWIqVfHp2WKbd+mtFVwzXu08blgtxl/GWZv+mtQAoh
+ 5/5F2GgsP4RCvHrxH1ItIAzr6IzUVNddZipPnKb6fplOEtKvkiJ4Q7+h6bMPT1g9pNJAt3UhN
+ ODJ+CDPAJFpU4QvxChU/405JldGXGp7lNMilOe4iRVT03hxuGVQuqIvSzYua9by/MKEJotKWg
+ CrLijOVxrEP8ApAaYGddWP0YQERhfb0UP38PSExRNNonoJ+muzg4wpCX+IfcBzyBJkYE+hWdQ
+ zmP9K05vS6gxaQ/waEASSPtbud+h0E7n9GYCVfZ9Df3D9s+ZoSfn1gI8Qz3M3e5DPhlCJ7T7h
+ 6nIY1GjshoVyztLKluDVp6P43BaLtGqen8nXKjfAp2o9YCek/wkqDJgeYH9TGoCwa2lb0AW1c
+ cC1LmvbeX+iRwwyO7QGGyNX5KCW3GWvwZ4cAnaCyUKXiEWUp5QqHiZFbN2nXAgK11oJnQYQL8
+ IGMXNiXB8/l6C5oaCj380ikh+Z9FpXW2x7C8rO3nTnM76SKNjvlgKnNCAYmeL9eoHC34zaalp
+ KM66jltebLg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 29 Mar 2019, Phillip Wood wrote:
+--8323328-1151427003-1553874990=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi,
+
+On Fri, 29 Mar 2019, SZEDER G=C3=A1bor wrote:
+
+> [...]
+>   - Mention in patch 4's commit message that Asciidoctor is still only
+>     installed in the Documentation build job.
+> [...]
 >
-> Before commit 356ee4659b ("sequencer: try to commit without forking 'git
-> commit'", 2017-11-24) when --signoff or -x were given on the command
-> line the commit message was cleaned up with --cleanup=3Dspace or
-> commit.cleanup if it was set. Unfortunately this behavior was lost when
-> I implemented committing without forking. Fix this and add some tests to
-> catch future regressions.
+> Range-diff:
+> 1:  8026f62876 =3D 1:  8026f62876 Documentation/git-diff-tree.txt: fix f=
+ormatting
+> 2:  fd19cf4b24 =3D 2:  fd19cf4b24 Documentation/technical/api-config.txt=
+: fix formatting
+> 3:  638dcd64e9 =3D 3:  638dcd64e9 Documentation/technical/protocol-v2.tx=
+t: fix formatting
+> 4:  6f8c6ff398 ! 4:  2e94e2b7b6 ci: install Asciidoctor in 'ci/install-d=
+ependencies.sh'
+>     @@ -6,8 +6,9 @@
+>          installation of the 'asciidoctor' gem somehow ended up in
+>          'ci/test-documentation.sh'.
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+>     -    Install it in 'ci/install-dependencies.sh', where we install
+>     -    everything else.
+>     +    Install it in 'ci/install-dependencies.sh', where we install ot=
+her
+>     +    dependencies of the Documentation build job as well (asciidoc,
+>     +    xmlto).
 
-Looks good to me!
+I would have wished for something that more explicitly said that it still
+*only* installs it for the Documentation job.
 
-Thank you,
+But I can live with the current wording.
+
+>          [1] 657343a602 (travis-ci: move Travis CI code into dedicated s=
+cripts,
+>              2017-09-10)
+> [...]
+>
+>     @@ -66,15 +77,32 @@
+>       +++ b/ci/test-documentation.sh
+>      @@
+>
+>     + . ${0%/*}/lib.sh
+>     +
+>     ++filter_log () {
+>     ++	sed -e '/^GIT_VERSION =3D /d' \
+>     ++	    -e '/^    \* new asciidoc flags$/d' \
+>     ++	    "$1"
+>     ++}
+>     ++
+>     + make check-builtins
+>     + make check-docs
+>     +
+>       # Build docs with AsciiDoc
+>     - make doc > >(tee stdout.log) 2> >(tee stderr.log >&2)
+>     +-make doc > >(tee stdout.log) 2> >(tee stderr.log >&2)
+>      -! test -s stderr.log
+>     -+cat stderr.log
+>     ++make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
+>     ++cat stderr.raw
+>     ++filter_log stderr.raw >stderr.log
+>      +test ! -s stderr.log
+>       test -s Documentation/git.html
+>       test -s Documentation/git.xml
+>       test -s Documentation/git.1
+>     -@@
+>     + grep '<meta name=3D"generator" content=3D"AsciiDoc ' Documentation=
+/git.html
+>     +
+>     +-rm -f stdout.log stderr.log
+>     ++rm -f stdout.log stderr.log stderr.raw
+>     + check_unignored_build_artifacts
+>
+>       # Build docs with AsciiDoctor
+>       make clean
+>     @@ -82,8 +110,8 @@
+>      -sed '/^GIT_VERSION =3D / d' stderr.log
+>      -! test -s stderr.log
+>      +make USE_ASCIIDOCTOR=3D1 doc > >(tee stdout.log) 2> >(tee stderr.r=
+aw >&2)
+>     -+sed '/^GIT_VERSION =3D / d' stderr.raw >stderr.log
+>     -+cat stderr.log
+>     ++cat stderr.raw
+>     ++filter_log stderr.raw >stderr.log
+>      +test ! -s stderr.log
+>       test -s Documentation/git.html
+>       grep '<meta name=3D"generator" content=3D"Asciidoctor ' Documentat=
+ion/git.html
+
+Wow. Subtle. And a bit hard to read without color ;-) But from what I
+understand, this does the right thing.
+
+So from my side, this patch series is good to go!
+
+Thanks,
 Dscho
 
->
-> This clashes with dl/merge-cleanup-scissors-fix, I've sent some
-> rebased patches to Denton and he's going to send a re-roll based on
-> those.
->
->  sequencer.c              | 24 +++++++++++++++++-------
->  sequencer.h              |  1 +
->  t/t3511-cherry-pick-x.sh | 20 ++++++++++++++++++++
->  3 files changed, 38 insertions(+), 7 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 0db410d590..15457bbe71 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -172,17 +172,22 @@ static int git_sequencer_config(const char *k, con=
-st char *v, void *cb)
->  		if (status)
->  			return status;
->
-> -		if (!strcmp(s, "verbatim"))
-> +		if (!strcmp(s, "verbatim")) {
->  			opts->default_msg_cleanup =3D COMMIT_MSG_CLEANUP_NONE;
-> -		else if (!strcmp(s, "whitespace"))
-> +			opts->explicit_cleanup =3D 1;
-> +		} else if (!strcmp(s, "whitespace")) {
->  			opts->default_msg_cleanup =3D COMMIT_MSG_CLEANUP_SPACE;
-> -		else if (!strcmp(s, "strip"))
-> +			opts->explicit_cleanup =3D 1;
-> +		} else if (!strcmp(s, "strip")) {
->  			opts->default_msg_cleanup =3D COMMIT_MSG_CLEANUP_ALL;
-> -		else if (!strcmp(s, "scissors"))
-> +			opts->explicit_cleanup =3D 1;
-> +		} else if (!strcmp(s, "scissors")) {
->  			opts->default_msg_cleanup =3D COMMIT_MSG_CLEANUP_SPACE;
-> -		else
-> +			opts->explicit_cleanup =3D 1;
-> +		} else {
->  			warning(_("invalid commit message cleanup mode '%s'"),
->  				  s);
-> +		}
->
->  		free((char *)s);
->  		return status;
-> @@ -1382,8 +1387,13 @@ static int try_to_commit(struct repository *r,
->  		msg =3D &commit_msg;
->  	}
->
-> -	cleanup =3D (flags & CLEANUP_MSG) ? COMMIT_MSG_CLEANUP_ALL :
-> -					  opts->default_msg_cleanup;
-> +	if (flags & CLEANUP_MSG)
-> +		cleanup =3D COMMIT_MSG_CLEANUP_ALL;
-> +	else if ((opts->signoff || opts->record_origin) &&
-> +		 !opts->explicit_cleanup)
-> +		cleanup =3D COMMIT_MSG_CLEANUP_SPACE;
-> +	else
-> +		cleanup =3D opts->default_msg_cleanup;
->
->  	if (cleanup !=3D COMMIT_MSG_CLEANUP_NONE)
->  		strbuf_stripspace(msg, cleanup =3D=3D COMMIT_MSG_CLEANUP_ALL);
-> diff --git a/sequencer.h b/sequencer.h
-> index 4d505b3590..82bc7a48d5 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -47,6 +47,7 @@ struct replay_opts {
->
->  	char *gpg_sign;
->  	enum commit_msg_cleanup_mode default_msg_cleanup;
-> +	int explicit_cleanup;
->
->  	/* Merge strategy */
->  	char *strategy;
-> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
-> index 9888bf34b9..84a587daf3 100755
-> --- a/t/t3511-cherry-pick-x.sh
-> +++ b/t/t3511-cherry-pick-x.sh
-> @@ -298,4 +298,24 @@ test_expect_success 'cherry-pick preserves commit m=
-essage' '
->  	test_cmp expect actual
->  '
->
-> +test_expect_success 'cherry-pick -x cleans commit message' '
-> +	pristine_detach initial &&
-> +	git cherry-pick -x mesg-unclean &&
-> +	git log -1 --pretty=3Dformat:%B >actual &&
-> +	printf "%s\n(cherry picked from commit %s)\n" \
-> +		"$mesg_unclean" $(git rev-parse mesg-unclean) |
-> +			git stripspace >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'cherry-pick -x respects commit.cleanup' '
-> +	pristine_detach initial &&
-> +	git -c commit.cleanup=3Dstrip cherry-pick -x mesg-unclean &&
-> +	git log -1 --pretty=3Dformat:%B >actual &&
-> +	printf "%s\n(cherry picked from commit %s)\n" \
-> +		"$mesg_unclean" $(git rev-parse mesg-unclean) |
-> +			git stripspace -s >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-> --
-> 2.21.0
->
->
+--8323328-1151427003-1553874990=:41--
