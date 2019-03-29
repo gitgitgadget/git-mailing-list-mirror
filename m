@@ -2,209 +2,403 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C587220248
-	for <e@80x24.org>; Fri, 29 Mar 2019 15:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9D5020248
+	for <e@80x24.org>; Fri, 29 Mar 2019 15:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729184AbfC2PrT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 11:47:19 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:40152 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728720AbfC2PrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 11:47:19 -0400
-Received: by mail-vk1-f193.google.com with SMTP id l17so599356vke.7
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 08:47:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Nh+xO72/NPpBUrII8PTSoIshfnJYPQYwHHWCLhsflPE=;
-        b=Bll59Va2o5OfvN8gxw6mYxE0NLa6ydY1m4+rMV+1DNn+tgVY/wm3p4ax0T79g3+iIz
-         3qG/VO05ns3ikhR7GK1rp61ix4srT+YpLK5/AODqPVmgYaUWqZ+yqFheun6d75ncEeep
-         WR0oe8dfn7XaOTq+ratEINozSzOZNYcMxdA/X+pY1R1uEkl4ug2b3UUbmSOMW6T7subK
-         lKd2PX4ut04hi3XSk0w+qTrcXPFiu5l+VfQAs9zPbPfhoZ+qHk+hefrnZJUnAxog7mw+
-         rVX1fCiD4UcV/KdIUFgfJeW6vr/LQnN1ps63IR1nTRa8Xa+Tv+D2+F97o/1FYNexORSH
-         wC6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Nh+xO72/NPpBUrII8PTSoIshfnJYPQYwHHWCLhsflPE=;
-        b=nBL3s/mXsnAPP2MEvnriIT+wu5Gapd19uYlmzLcJePoNu0wfY8OplWEPYrdkgS9p3n
-         RGDsl/JXYXDDLYBgu2mWxcaWFxU3/SJZy1lYdB9YSBEZW7kYjE8XWZVQJ3TN/+/2xLnl
-         jev3uBF+Ki7dR0+zMbpXHYm4IppGri8L/6IgY7n9H417SUk8etGOxqXlxWsSjQ/IeRY1
-         FEvKbRc1PNSQkw9thRnGfWQIydNDbkIsAyPXbcaOMq0sH2c0nVCaSaGAm++JRfaZnLld
-         41ZZ929Igof8U1r/ZEKvnoSeAF87yjT7cVhmG2RVX5GWzP9FdYArgAAm64ytjTrBslpK
-         7twg==
-X-Gm-Message-State: APjAAAXcU5XSgnnafkKzUVF7ozM2mwfZaruKsfurhD5hlUGmjwMzx/2r
-        NrfGL36z8TjtJDaRHpEDQHfVwFMTCDFdSw8xCLc=
-X-Google-Smtp-Source: APXvYqyFvZATjI3UZm59R9MjWsJTeLYtlrcd/n+RTJLykS9Xv6atxD5b4rdPgQX8EmWJnt1Ul3NtJSsFk0UL6w7D6ek=
-X-Received: by 2002:a1f:2fc2:: with SMTP id v185mr2431301vkv.92.1553874437901;
- Fri, 29 Mar 2019 08:47:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190321131655.15249-1-pclouds@gmail.com> <20190329103919.15642-1-pclouds@gmail.com>
- <20190329103919.15642-24-pclouds@gmail.com>
-In-Reply-To: <20190329103919.15642-24-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 29 Mar 2019 08:47:06 -0700
-Message-ID: <CABPp-BHX1gRhTdurAwrPg60Hk-OuhbrEN=4zatx4OOUo-DkQvw@mail.gmail.com>
-Subject: Re: [PATCH v6 23/27] switch: reject if some operation is in progress
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
+        id S1729269AbfC2Prt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 11:47:49 -0400
+Received: from mout.gmx.net ([212.227.17.20]:34623 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728720AbfC2Prt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 11:47:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553874462;
+        bh=RMzeekQVvkuLn+pcsZuq3nfpI8oJJN6pt77qxd6S5yk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LsaGtkQFgEMjGbhTiJA8Tybo+LqNu2RVzNi790x6I9Dv2Wu+GE/QNjSETMB5UGVFZ
+         m+NNYU4kSdobr8+D9rE/smSJFhGy/bcgx4eNp3jXpRyBKGYV8kNJUJj+1Rmf13TSO2
+         FSWBjPFxq3ipOGwkQq5bw5vTzBvnkrtGnU9Y1Sy8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLB89-1hAAqV1XlZ-000HZV; Fri, 29
+ Mar 2019 16:47:42 +0100
+Date:   Fri, 29 Mar 2019 16:47:42 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v2] rebase: teach rebase --keep-base
+In-Reply-To: <20190328221745.GA3941@dev-l>
+Message-ID: <nycvar.QRO.7.76.6.1903291643060.41@tvgsbejvaqbjf.bet>
+References: <cover.1553354374.git.liu.denton@gmail.com> <20190328221745.GA3941@dev-l>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-802038762-1553874464=:41"
+X-Provags-ID: V03:K1:Zzb5X1aR0fZPCLRQEhpUOWItugCSg7Fl2j02DZppmJNM0CskhFa
+ 41m6rCRl2OkgdD0R2t8maLQBIAr2FNJ2kL/aTk2x3dVZUlq1yi2Ni6k2CiqawDpZq1KafJ9
+ THaQFPb+6CXQkXcC6klt+FbArY2O3p7lPmf8ZsQojZ1gXDwn3258bMxHmjpt4YKJOLgAz0o
+ KJEmAsAvavDYbA4nAh9+g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8hEkekAlvUY=:oQ+x3boyfq+8JhN+Ee+Q/Z
+ Nz8/iCcE6Q9hsZl7nSpjTeWHEjJ0EVcdm6K6z1IajKsCaFKFzc/74RHtGCR1aO5+/m5394vP2
+ 055aTjWSv67IM8LogE+ujZ79DQOTBeOEnj+/hMQmCgMES1/lMnYcCtu4j2xPal4DIwLeVMq/M
+ UUAPCOEH7PPoMF+J4sGS51cb98/kPJITifV4o5pxIF+bD/MbOWlX8fOjTxcy0Ntrco+2IL+v9
+ 83Q6+3NP/akCA0CLUNPatOy9sAg0TTiwAcIEMjBiVAsd+Uzod4568tArnwZ3+CTuLIW9KqErj
+ C2hvYOPJN7XgM2gAYiZ1VMHFeTIDZ0IL5PC9eaGD64dWnbi5kreuPL8Rgoa17yctC8tVr4ybo
+ XKkptkscYHSbmB7dC+OTvSEfTqZBRl2FiPkjaPm3bT82BwyJN2U5O47Me+DwXZ1bb37Ggka7f
+ UG8HuFBg/17D6Qca9k4vaGPV9oO4ndZQMZWTwGiUgDo6PwNY2NLJmkW+eDKCNYPo2Z8eKokLN
+ O40gWWCrlrIdUY6pEX2KAqJU+ED4cZmyWd7no+7tANir4BzMEKjVA2uErVU4urN2dfGqyd1sQ
+ L940d+5OYgWXor7OStohtouv2WvjTqWVzh7/vhxt+Py3BzB7yGOx7b4dm5ntibMnMLEIelFQ6
+ +hAg1MEyO8uhmiAMhzIkIs82uVo5a7FAgwYbjLiIbSKvzdkx5ZRJkAlmH3NZ+xjm8zgg0Pqxc
+ wfd2F9jxU505fAprT37nM1q2DOmE9CK266Ns8Gcmi+rAqhzvbKmBMJcdHOcVS3OLZDnmgu/OM
+ ro08pysCD7nxa63pIVv8lHyzOp4WnKeeUvNWwtgRfvBIlNoktHwDHyK/RCofbCF1yYgcxyJtF
+ /pLE67z3Bo28gpd6ZdoBYnc73yKZzzsc2cjrLuZHDi3zVql7kXmcYeuaYMtmfhCB/6m2rFYLs
+ FbtU621FspA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 29, 2019 at 3:42 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> Unless you know what you're doing, switching to another branch to do
-> something then switching back could be confusing. Worse, you may even
-> forget that you're in the middle of something. By the time you realize,
-> you may have done a ton of work and it gets harder to go back.
->
-> A new option --ignore-in-progress was considered but dropped because it
-> was not exactly clear what should happen. Sometimes you can switch away
-> and get back safely and resume the operation. Sometimes not. And the
-> git-checkout behavior is automatically clear merge/revert/cherry-pick,
-> which makes it a bit even more confusing [1].
->
-> We may revisit and add this option in the future. But for now play it
-> safe and not allow it (you can't even skip this check with --force). The
-> user is suggested to cancel the operation by themselves (and hopefully
-> they do consider the consequences, not blindly type the command), or to
-> create a separate worktree instead of switching. The third option is
-> the good old "git checkout", but it's not mentioned.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I think these safety checks are pretty important for checkout too...
+--8323328-802038762-1553874464=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+Hi Denton,
+
+On Thu, 28 Mar 2019, Denton Liu wrote:
+
+> A common scenario is if a user is working on a topic branch and they
+> wish to make some changes to intermediate commits or autosquash, they
+> would run something such as
 >
-> [1] CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=3DYtUvQkWriAk5w@mail.gmail.com
+> 	git rebase -i --onto master... master
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+> in order to preserve the merge base. This prevents unnecessary commit
+> churning.
+
+Maybe an example would clarify what you try to do here? Something like:
+
+	Example: When contributing a patch series to the Git mailing list,
+	one often starts on top of the current `master`. However, while
+	developing the patch series, `master` is also developed further,
+	and it is sometimes not the best idea to keep rebasing on top
+	of `master`, but to keep the base commit as-is. In such a case,
+	the user can call
+
+		git rebase -i --onto master... master
+
+	as a shortcut to using the merge base between `master` and the
+	current branch as base commit.
+
+I wonder, however, whether it makes sense to introduce a shorter, sweeter
+way to do this:
+
+		git rebase -i master...
+
+I.e. if we detect that the `<upstream>` argument is not a valid ref, that
+it ends with three dots, and that stripping those dots off makes it a
+valid ref, then we internally convert that to the same as `--onto
+master... master`.
+
+What do you think?
+
+Ciao,
+Dscho
+
+> Alternatively, a user wishing to test individual commits in a topic
+> branch without changing anything may run
+>
+> 	git rebase -x ./test.sh master... master
+>
+> Since rebasing onto the merge base of the branch and the upstream is
+> such a common case, introduce the --keep-base option as a shortcut.
+>
+> This allows us to rewrite the above as
+>
+> 	git rebase -i --keep-base master
+>
+> and
+>
+> 	git rebase -x ./test.sh --keep-base master
+>
+> respectively.
+>
+> Add tests to ensure --keep-base works correctly in the normal case and
+> fails when there are multiple merge bases, both in regular and
+> interactive mode. Also, test to make sure conflicting options cause
+> rebase to fail. While we're adding test cases, add a missing
+> set_fake_editor call to 'rebase -i --onto master...side'.
+>
+> While we're documenting the --keep-base option, change an instance of
+> "merge-base" to "merge base", which is the consistent spelling.
+>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
->  builtin/checkout.c | 40 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
 >
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index f7967cdb7c..5f100c1552 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -24,6 +24,7 @@
->  #include "tree.h"
->  #include "tree-walk.h"
->  #include "unpack-trees.h"
-> +#include "wt-status.h"
->  #include "xdiff-interface.h"
+> =C3=86var, I have a feeling that we're still miscommunicating and we don=
+'t
+> fully understand each other. I'm putting up v2 to hopefully clear things
+> up a little but I welcome more feedback.
 >
->  static const char * const checkout_usage[] =3D {
-> @@ -56,6 +57,7 @@ struct checkout_opts {
->         int accept_pathspec;
->         int switch_branch_doing_nothing_is_ok;
->         int only_merge_on_switching_branches;
-> +       int can_switch_when_in_progress;
+> This patch now depends "[PATCH 1/8] tests (rebase): spell out the
+> `--keep-empty` option" which is the first patch of Johannes's "Do not
+> use abbreviated options in tests" patchset[1]. (Thanks for catching
+> that, Johannes!)
 >
->         const char *new_branch;
->         const char *new_branch_force;
-> @@ -1202,6 +1204,39 @@ static void die_expecting_a_branch(const struct br=
-anch_info *branch_info)
->         die(_("a branch is expected, got '%s'"), branch_info->name);
->  }
+> Changes since v1:
 >
-> +static void die_if_some_operation_in_progress(void)
-> +{
-> +       struct wt_status_state state;
+> * Squashed old set into one patch
+> * Fixed indentation style and dangling else
+> * Added more documentation after discussion with =C3=86var
+>
+> [1]: https://public-inbox.org/git/a1b4b74b9167e279dae4cd8c58fb28d8a714a6=
+6a.1553537656.git.gitgitgadget@gmail.com/
+>
+>  Documentation/git-rebase.txt     | 25 ++++++++++++--
+>  builtin/rebase.c                 | 32 ++++++++++++++----
+>  t/t3416-rebase-onto-threedots.sh | 57 ++++++++++++++++++++++++++++++++
+>  3 files changed, 105 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 6363d674b7..27be1f48ff 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -8,8 +8,8 @@ git-rebase - Reapply commits on top of another base tip
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <n=
+ewbase>]
+> -	[<upstream> [<branch>]]
+> +'git rebase' [-i | --interactive] [<options>] [--exec <cmd>]
+> +	[--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+>  'git rebase' [-i | --interactive] [<options>] [--exec <cmd>] [--onto <n=
+ewbase>]
+>  	--root [<branch>]
+>  'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --s=
+how-current-patch
+> @@ -217,6 +217,19 @@ As a special case, you may use "A\...B" as a shortc=
+ut for the
+>  merge base of A and B if there is exactly one merge base. You can
+>  leave out at most one of A and B, in which case it defaults to HEAD.
+>
+> +--keep-base::
+> +	Set the starting point at which to create the new commits to the
+> +	merge base of <upstream> <branch>. Running
+> +	'git rebase --keep-base <upstream> <branch>' is equivalent to
+> +	running 'git rebase --onto <upstream>... <upstream>'.
+> ++
+> +Although both this option and --fork-point find the merge base between
+> +<upstream> and <branch>, this option uses the merge base as the _starti=
+ng
+> +point_ on which new commits will be created, whereas --fork-point uses
+> +the merge base to determine the _set of commits_ which will be rebased.
+> ++
+> +See also INCOMPATIBLE OPTIONS below.
 > +
-> +       memset(&state, 0, sizeof(state));
-> +       wt_status_get_state(the_repository, &state, 0);
-> +
-> +       if (state.merge_in_progress)
-> +               die(_("cannot switch branch while merging\n"
-> +                     "Consider \"git merge --quit\" "
-> +                     "or \"git worktree add\"."));
-> +       if (state.am_in_progress)
-> +               die(_("cannot switch branch in the middle of an am sessio=
-n\n"
-> +                     "Consider \"git am --quit\" "
-> +                     "or \"git worktree add\"."));
-> +       if (state.rebase_interactive_in_progress || state.rebase_in_progr=
-ess)
-> +               die(_("cannot switch branch while rebasing\n"
-> +                     "Consider \"git rebase --quit\" "
-> +                     "or \"git worktree add\"."));
-> +       if (state.cherry_pick_in_progress)
-> +               die(_("cannot switch branch while cherry-picking\n"
-> +                     "Consider \"git cherry-pick --quit\" "
-> +                     "or \"git worktree add\"."));
-> +       if (state.revert_in_progress)
-> +               die(_("cannot switch branch while reverting\n"
-> +                     "Consider \"git revert --quit\" "
-> +                     "or \"git worktree add\"."));
-> +       if (state.bisect_in_progress)
-> +               die(_("cannot switch branch while bisecting\n"
-> +                     "Consider \"git bisect reset HEAD\" "
-> +                     "or \"git worktree add\"."));
-> +}
-> +
->  static int checkout_branch(struct checkout_opts *opts,
->                            struct branch_info *new_branch_info)
->  {
-> @@ -1257,6 +1292,9 @@ static int checkout_branch(struct checkout_opts *op=
-ts,
->             !new_branch_info->path)
->                 die_expecting_a_branch(new_branch_info);
+>  <upstream>::
+>  	Upstream branch to compare against.  May be any valid commit,
+>  	not just an existing branch name. Defaults to the configured
+> @@ -364,6 +377,10 @@ ends up being empty, the <upstream> will be used as=
+ a fallback.
+>  +
+>  If either <upstream> or --root is given on the command line, then the
+>  default is `--no-fork-point`, otherwise the default is `--fork-point`.
+> ++
+> +If your branch was based on <upstream> but <upstream> was rewound and
+> +your branch contains commits which were dropped, this option can be use=
+d
+> +with `--keep-base` in order to drop those commits from your branch.
 >
-> +       if (!opts->can_switch_when_in_progress)
-> +               die_if_some_operation_in_progress();
-> +
->         if (new_branch_info->path && !opts->force_detach && !opts->new_br=
-anch &&
->             !opts->ignore_other_worktrees) {
->                 int flag;
-> @@ -1514,6 +1552,7 @@ int cmd_checkout(int argc, const char **argv, const=
+>  --ignore-whitespace::
+>  --whitespace=3D<option>::
+> @@ -539,6 +556,8 @@ In addition, the following pairs of options are inco=
+mpatible:
+>   * --preserve-merges and --rebase-merges
+>   * --rebase-merges and --strategy
+>   * --rebase-merges and --strategy-option
+> + * --keep-base and --onto
+> + * --keep-base and --root
+>
+>  BEHAVIORAL DIFFERENCES
+>  -----------------------
+> @@ -863,7 +882,7 @@ NOTE: While an "easy case recovery" sometimes appear=
+s to be successful
+>        --interactive` will be **resurrected**!
+>
+>  The idea is to manually tell 'git rebase' "where the old 'subsystem'
+> -ended and your 'topic' began", that is, what the old merge-base
+> +ended and your 'topic' began", that is, what the old merge base
+>  between them was.  You will have to find a way to name the last commit
+>  of the old 'subsystem', for example:
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 77deebc65c..7c14a00460 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -27,8 +27,8 @@
+>  #include "branch.h"
+>
+>  static char const * const builtin_rebase_usage[] =3D {
+> -	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+> -		"[<upstream>] [<branch>]"),
+> +	N_("git rebase [-i] [options] [--exec <cmd>] "
+> +		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
+>  	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+>  		"--root [<branch>]"),
+>  	N_("git rebase --continue | --abort | --skip | --edit-todo"),
+> @@ -1018,6 +1018,7 @@ int cmd_rebase(int argc, const char **argv, const =
+char *prefix)
+>  	};
+>  	const char *branch_name;
+>  	int ret, flags, total_argc, in_progress =3D 0;
+> +	int keep_base =3D 0;
+>  	int ok_to_skip_pre_rebase =3D 0;
+>  	struct strbuf msg =3D STRBUF_INIT;
+>  	struct strbuf revisions =3D STRBUF_INIT;
+> @@ -1051,6 +1052,8 @@ int cmd_rebase(int argc, const char **argv, const =
+char *prefix)
+>  		OPT_STRING(0, "onto", &options.onto_name,
+>  			   N_("revision"),
+>  			   N_("rebase onto given branch instead of upstream")),
+> +		OPT_BOOL(0, "keep-base", &keep_base,
+> +			 N_("use the merge-base of upstream and branch as the current base")=
+),
+>  		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+>  			 N_("allow pre-rebase hook to run")),
+>  		OPT_NEGBIT('q', "quiet", &options.flags,
+> @@ -1217,6 +1220,13 @@ int cmd_rebase(int argc, const char **argv, const=
  char *prefix)
->         opts.only_merge_on_switching_branches =3D 0;
->         opts.accept_pathspec =3D 1;
->         opts.implicit_detach =3D 1;
-> +       opts.can_switch_when_in_progress =3D 1;
-
-I think this should be 0 too; this check is good for both checkout and
-switch.  And if people really do want to use it during in-progress
-operations because it is sometimes safe enough, then both operations
-deserve some kind of override flag that checks for the appropriate
-safety conditions (as we're discussing in the other thread) and then
-allows or rejects it.
-
-However, I'm totally fine with proposing another patch after your
-series lands to do all of this; this patch is fine as-is for now.
-
->         options =3D parse_options_dup(checkout_options);
->         options =3D add_common_options(&opts, options);
-> @@ -1549,6 +1588,7 @@ int cmd_switch(int argc, const char **argv, const c=
-har *prefix)
->         opts.switch_branch_doing_nothing_is_ok =3D 0;
->         opts.only_merge_on_switching_branches =3D 1;
->         opts.implicit_detach =3D 0;
-> +       opts.can_switch_when_in_progress =3D 0;
+>  		usage_with_options(builtin_rebase_usage,
+>  				   builtin_rebase_options);
 >
->         options =3D parse_options_dup(switch_options);
->         options =3D add_common_options(&opts, options);
+> +	if (keep_base) {
+> +		if (options.onto_name)
+> +			die(_("cannot combine '--keep-base' with '--onto'"));
+> +		if (options.root)
+> +			die(_("cannot combine '--keep-base' with '--root'"));
+> +	}
+> +
+>  	if (action !=3D NO_ACTION && !in_progress)
+>  		die(_("No rebase in progress?"));
+>  	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+> @@ -1541,12 +1551,22 @@ int cmd_rebase(int argc, const char **argv, cons=
+t char *prefix)
+>  	}
+>
+>  	/* Make sure the branch to rebase onto is valid. */
+> -	if (!options.onto_name)
+> +	if (keep_base) {
+> +		strbuf_reset(&buf);
+> +		strbuf_addstr(&buf, options.upstream_name);
+> +		strbuf_addstr(&buf, "...");
+> +		options.onto_name =3D xstrdup(buf.buf);
+> +	} else if (!options.onto_name)
+>  		options.onto_name =3D options.upstream_name;
+>  	if (strstr(options.onto_name, "...")) {
+> -		if (get_oid_mb(options.onto_name, &merge_base) < 0)
+> -			die(_("'%s': need exactly one merge base"),
+> -			    options.onto_name);
+> +		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
+> +			if (keep_base)
+> +				die(_("'%s': need exactly one merge base with branch"),
+> +				    options.upstream_name);
+> +			else
+> +				die(_("'%s': need exactly one merge base"),
+> +				    options.onto_name);
+> +		}
+>  		options.onto =3D lookup_commit_or_die(&merge_base,
+>  						    options.onto_name);
+>  	} else {
+> diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-thre=
+edots.sh
+> index ddf2f64853..9c2548423b 100755
+> --- a/t/t3416-rebase-onto-threedots.sh
+> +++ b/t/t3416-rebase-onto-threedots.sh
+> @@ -99,7 +99,64 @@ test_expect_success 'rebase -i --onto master...side' =
+'
+>  	git checkout side &&
+>  	git reset --hard K &&
+>
+> +	set_fake_editor &&
+>  	test_must_fail git rebase -i --onto master...side J
+>  '
+>
+> +test_expect_success 'rebase --keep-base --onto incompatible' '
+> +	test_must_fail git rebase --keep-base --onto master...
+> +'
+> +
+> +test_expect_success 'rebase --keep-base --root incompatible' '
+> +	test_must_fail git rebase --keep-base --root
+> +'
+> +
+> +test_expect_success 'rebase --keep-base master from topic' '
+> +	git reset --hard &&
+> +	git checkout topic &&
+> +	git reset --hard G &&
+> +
+> +	git rebase --keep-base master &&
+> +	git rev-parse C >base.expect &&
+> +	git merge-base master HEAD >base.actual &&
+> +	test_cmp base.expect base.actual &&
+> +
+> +	git rev-parse HEAD~2 >actual &&
+> +	git rev-parse C^0 >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'rebase --keep-base master from side' '
+> +	git reset --hard &&
+> +	git checkout side &&
+> +	git reset --hard K &&
+> +
+> +	test_must_fail git rebase --keep-base master
+> +'
+> +
+> +test_expect_success 'rebase -i --keep-base master from topic' '
+> +	git reset --hard &&
+> +	git checkout topic &&
+> +	git reset --hard G &&
+> +
+> +	set_fake_editor &&
+> +	EXPECT_COUNT=3D2 git rebase -i --keep-base master &&
+> +	git rev-parse C >base.expect &&
+> +	git merge-base master HEAD >base.actual &&
+> +	test_cmp base.expect base.actual &&
+> +
+> +	git rev-parse HEAD~2 >actual &&
+> +	git rev-parse C^0 >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'rebase -i --keep-base master from side' '
+> +	git reset --hard &&
+> +	git checkout side &&
+> +	git reset --hard K &&
+> +
+> +	set_fake_editor &&
+> +	test_must_fail git rebase -i --keep-base master
+> +'
+> +
+>  test_done
 > --
-> 2.21.0.479.g47ac719cd3
+> 2.21.0.695.gaf8658f249
+>
+>
+
+--8323328-802038762-1553874464=:41--
