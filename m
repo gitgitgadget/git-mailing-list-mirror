@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45401202BB
-	for <e@80x24.org>; Fri, 29 Mar 2019 16:32:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF813202BB
+	for <e@80x24.org>; Fri, 29 Mar 2019 16:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729550AbfC2Qc2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 12:32:28 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44058 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728853AbfC2Qc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 12:32:27 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y7so3305140wrn.11
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 09:32:25 -0700 (PDT)
+        id S1729629AbfC2Qc3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 12:32:29 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46764 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729046AbfC2Qc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 12:32:29 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t17so3295638wrw.13
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 09:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=Py/bPB5sbovzenr2sctxEbkMb5g2NI5LKmdsc9jJR1s=;
-        b=aHKvuuZ6vn5AZFHJL7rRNvJtAAevWCUTBIskiZUGX5JUvKvQ7Pz2kslymTWSaGYVY2
-         +m1e6n1b+vdkXNm450xYI2cbR2PMXKGohfI69p9efiBOrJRuqH8QwtDikO/9nhTC3U8c
-         RlttnVqn4H/KkPMllFj6tSnNWRtdb6GWUk57zoCrHZFxaQ85z+I0gM4Acw4X5aFnc06O
-         EbTwSBNgpv+X7rrZHRDII3GolR5QTgjGDJeqjJ4kkZ7RZXUm+Wp2ANp78+HdEUZS5v2b
-         Va6OO9RqMVcvNsFgVf435dRKZ+b8/bYR3TBDQzqIEpcKc/ReZV5IwIDiCRMvdqQTyNxs
-         uuOg==
+        bh=zQl2ADxgUG2hvY/F8U5dIFlD4nht+A2e+KfeCuAiXgo=;
+        b=cpy71XMbTSCA5xCarBMlWNNg79pO4oTEvZZ3/lZKTvJDVVaO7kPq5Qrsl+gXsehAgx
+         fmYVFX92riAl1YdqJJwFlPw2zqLBIHyurl+hORNDTOqw+7u6M3O4VpJoMOcliyCXazOA
+         cWdSYosIL2PchSNAAVCA8R/Dz9X0br3Zd1mmcbPgvCueE/299hv6XXZwmanXNI3UKWv/
+         P8GIDSFJa3wf5IOUw/fB8UIka+DNX8HLr9Z0bjAQAEA5NVBFK7fIJayDHYo5B0qMRiIw
+         NHZTLwKybQd+X5GwSouP/eYj9XpANRNVjoug1hGTXRb4l4Y1ENPy3MxyAlr+dgjzv1WI
+         7yAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=Py/bPB5sbovzenr2sctxEbkMb5g2NI5LKmdsc9jJR1s=;
-        b=ddP+I/tEk+aXEq4LO2hUijjHwxzaxDflYuJUhmcjjJSKDvYfZwcWIv6a7dLKW/hHP+
-         qjsEbb8WMIXgii58LsXUxXRTOjzod9B3NOKLfDibw30k5Hd3HcB6CLxMi2sgzXArln9R
-         3EKIJA9cKB445dWvjox6g6i6VnQMzYLLAiqdbBpIVGRSWexccDoZbTkVrTot9DES+7wc
-         tJFgPn9TA1ciSWJyPJa80Gr9PV8cmeviXkti76jMfC/QM1u2TegdcO2rRotvMZQDptO9
-         C3fi5GFnjADi1Zlyeck2KNs7pSUw3NNUHW0jx3WYxM8d+EGokLR11ri8bWe495y0cOc3
-         7h9g==
-X-Gm-Message-State: APjAAAUq/Hv53QIKOVBy8EIHHh0oiS2tk3haMQeccMH3rV27gZVqyGhl
-        vN7GbQvsHBC/m2vcrEPS3AYofCZhqM4=
-X-Google-Smtp-Source: APXvYqyEDOaMI9BYzJBubj5+0Cah+cU+RGV9xP7bUTOTBZVhf1nGYKMtwYKpBL+ng7pAoiSn1fHu0Q==
-X-Received: by 2002:a5d:6181:: with SMTP id j1mr31106456wru.11.1553877144992;
-        Fri, 29 Mar 2019 09:32:24 -0700 (PDT)
+        bh=zQl2ADxgUG2hvY/F8U5dIFlD4nht+A2e+KfeCuAiXgo=;
+        b=R+zPAqtq+IhOVW4OuMuW09ROOrEJWKOEAHgwORu+DSBdfX3ZBYEw+X7C/4oryBiSY9
+         18Pg/JeLClOjCrrMB3bJufqV06A8Tlp7/8FpOtA246RXelN5IoJl96eZp61+lavrrLDW
+         mUR22ml2XarxfyYfM//rqDPH+enYfmGWLTU42fx5WvzK+eqT7gUyk2O8PNFb3MbGIrUZ
+         zkePcUrSNm2ZcLp7wnpfmDIM+Y/DxPm1yCDLn9804u4jeH5Pkvpollbj8rRCnFjfOEK9
+         3DLR2go2OAe3ro+XS6HDTSb70595uyrxMnOsQNFFA/tl5qQQpmM9WEeppcP+CtBKBCNj
+         jYyw==
+X-Gm-Message-State: APjAAAUKbEWhoAvkWLc8OFmnttlrlyiblI77A4F9kadQXkqxsaV4fl4x
+        mx8EraA4XDb3uSrRKc3zyD0D+a9kOpo=
+X-Google-Smtp-Source: APXvYqyi6816jnOCyw8p6jfuVn9lR8mxegvn3qwKpl4QoVi6FRyDmI8CsKFYkSTFUX0bx53VEvYT3A==
+X-Received: by 2002:a5d:46c9:: with SMTP id g9mr30685239wrs.211.1553877146127;
+        Fri, 29 Mar 2019 09:32:26 -0700 (PDT)
 Received: from localhost.localdomain (host-89-242-191-183.as13285.net. [89.242.191.183])
-        by smtp.gmail.com with ESMTPSA id j64sm3463175wmb.36.2019.03.29.09.32.23
+        by smtp.gmail.com with ESMTPSA id j64sm3463175wmb.36.2019.03.29.09.32.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Mar 2019 09:32:24 -0700 (PDT)
+        Fri, 29 Mar 2019 09:32:25 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -56,9 +56,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>,
         Duy Nguyen <pclouds@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 1/2] commit/reset: try to clean up sequencer state
-Date:   Fri, 29 Mar 2019 16:30:08 +0000
-Message-Id: <20190329163009.493-2-phillip.wood123@gmail.com>
+Subject: [PATCH 2/2] fix cherry-pick/revert status after commit
+Date:   Fri, 29 Mar 2019 16:30:09 +0000
+Message-Id: <20190329163009.493-3-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190329163009.493-1-phillip.wood123@gmail.com>
 References: <20190329163009.493-1-phillip.wood123@gmail.com>
@@ -72,149 +72,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When cherry-picking or reverting a sequence of commits and if the final
-pick/revert has conflicts and the user uses `git commit` to commit the
-conflict resolution and does not run `git cherry-pick --continue` then
-the sequencer state is left behind. This can cause problems later. In my
-case I cherry-picked a sequence of commits the last one of which I
-committed with `git commit` after resolving some conflicts, then a while
-later, on a different branch I aborted a revert which rewound my HEAD to
-the end of the cherry-pick sequence on the previous branch. Avoid this
-potential problem by removing the sequencer state if we're committing or
-resetting the final pick in a sequence.
+If the user commits a conflict resolution using 'git commit' during a
+sequence of picks then 'git status' missed the fact that a
+cherry-pick/revert is still in progress.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- branch.c                        |  7 +++++--
- builtin/commit.c                |  7 +++++--
- sequencer.c                     | 23 +++++++++++++++++++++++
- sequencer.h                     |  1 +
- t/t3507-cherry-pick-conflict.sh | 19 +++++++++++++++++++
- 5 files changed, 53 insertions(+), 4 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 28b81a7e02..9ed60081c1 100644
---- a/branch.c
-+++ b/branch.c
-@@ -5,6 +5,7 @@
- #include "refs.h"
- #include "refspec.h"
- #include "remote.h"
-+#include "sequencer.h"
- #include "commit.h"
- #include "worktree.h"
- 
-@@ -339,8 +340,10 @@ void create_branch(struct repository *r,
- 
- void remove_branch_state(struct repository *r)
- {
--	unlink(git_path_cherry_pick_head(r));
--	unlink(git_path_revert_head(r));
-+	if (!unlink(git_path_cherry_pick_head(r)))
-+		sequencer_post_commit_cleanup();
-+	if (!unlink(git_path_revert_head(r)))
-+		sequencer_post_commit_cleanup();
- 	unlink(git_path_merge_head(r));
- 	unlink(git_path_merge_rr(r));
- 	unlink(git_path_merge_msg(r));
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2986553d5f..422b7d62a5 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1657,8 +1657,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		die("%s", err.buf);
- 	}
- 
--	unlink(git_path_cherry_pick_head(the_repository));
--	unlink(git_path_revert_head(the_repository));
-+	if (!unlink(git_path_cherry_pick_head(the_repository)))
-+		sequencer_post_commit_cleanup();
-+	if (!unlink(git_path_revert_head(the_repository)))
-+		sequencer_post_commit_cleanup();
- 	unlink(git_path_merge_head(the_repository));
- 	unlink(git_path_merge_msg(the_repository));
- 	unlink(git_path_merge_mode(the_repository));
-@@ -1678,6 +1680,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	if (amend && !no_post_rewrite) {
- 		commit_post_rewrite(the_repository, current_head, &oid);
- 	}
-+
- 	if (!quiet) {
- 		unsigned int flags = 0;
- 
+Notes:
+    I'm not user about printing the oid of the commit that was just picked,
+    maybe we should just say that a cherry-pick/revert is in progress. That
+    will mean auditing all the consumers of wt_status_get_state() to ensure
+    they can cope with a null oid.
+
+sequencer.c            | 37 +++++++++++++++++++++++++++++++++++++
+ sequencer.h            |  2 ++
+ t/t7512-status-help.sh | 19 +++++++++++++++++++
+ wt-status.c            | 12 +++++++++++-
+ 4 files changed, 69 insertions(+), 1 deletion(-)
+
 diff --git a/sequencer.c b/sequencer.c
-index 0db410d590..028699209f 100644
+index 028699209f..5595cc786f 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2220,6 +2220,29 @@ static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
- 	return len;
+@@ -2142,6 +2142,43 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 	return !item->commit;
  }
  
-+void sequencer_post_commit_cleanup(void)
++int sequencer_get_last_command(struct repository *r, enum replay_action *action,
++			       struct object_id *oid)
 +{
-+	struct replay_opts opts = REPLAY_OPTS_INIT;
++	struct todo_item item;
++	char *eol;
++	const char *todo_file;
 +	struct strbuf buf = STRBUF_INIT;
-+	const char *eol;
-+	const char *todo_path = git_path_todo_file();
++	int ret = -1;
 +
-+	if (strbuf_read_file(&buf, todo_path, 0) < 0) {
-+		if (errno == ENOENT) {
-+			return;
-+		} else {
-+			error_errno("unable to open '%s'", todo_path);
-+			return;
-+		}
++	todo_file = git_path_todo_file();
++	if (strbuf_read_file(&buf, todo_file, 0) < 0) {
++		if (errno == ENOENT)
++			return -1;
++		else
++			return error_errno("unable to open '%s'", todo_file);
 +	}
-+	/* If there is only one line then we are done */
-+	eol = strchr(buf.buf, '\n');
-+	if (!eol || !eol[1])
-+		sequencer_remove_state(&opts);
++	eol = strchrnul(buf.buf, '\n');
++	if (buf.buf != eol && eol[-1] == '\r')
++		eol--; /* strip Carriage Return */
++	if (parse_insn_line(r, &item, buf.buf, eol))
++		goto fail;
++	if (item.command == TODO_PICK)
++		*action = REPLAY_PICK;
++	else if (item.command == TODO_REVERT)
++		*action = REPLAY_REVERT;
++	else
++		goto fail;
 +
++	oidcpy(oid, &item.commit->object.oid);
++	ret = 0;
++
++ fail:
 +	strbuf_release(&buf);
++
++	return ret;
 +}
 +
- static int read_populate_todo(struct repository *r,
- 			      struct todo_list *todo_list,
- 			      struct replay_opts *opts)
+ static int parse_insn_buffer(struct repository *r, char *buf,
+ 			     struct todo_list *todo_list)
+ {
 diff --git a/sequencer.h b/sequencer.h
-index 4d505b3590..43548295a1 100644
+index 43548295a1..815c68c4a3 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -144,3 +144,4 @@ int read_author_script(const char *path, char **name, char **email, char **date,
- void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
+@@ -145,3 +145,5 @@ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
  int write_basic_state(struct replay_opts *opts, const char *head_name,
  		      const char *onto, const char *orig_head);
-+void sequencer_post_commit_cleanup(void);
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 0db166152a..69e6389e69 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -156,6 +156,25 @@ test_expect_success 'successful commit clears CHERRY_PICK_HEAD' '
- 
- 	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
+ void sequencer_post_commit_cleanup(void);
++int sequencer_get_last_command(struct repository* r, enum replay_action *action,
++			       struct object_id *oid);
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 458608cc1e..71d28a50f7 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -780,6 +780,25 @@ EOF
+ 	test_i18ncmp expected actual
  '
-+test_expect_success 'successful final commit clears sequencer state' '
-+	pristine_detach initial &&
-+
-+	test_must_fail git cherry-pick base picked-signed &&
-+	echo resolved >foo &&
-+	test_path_is_file .git/sequencer/todo &&
-+	git commit -a &&
-+	test_must_fail test_path_exists .git/sequencer
-+'
-+
-+test_expect_success 'reset after final pick clears sequencer state' '
-+	pristine_detach initial &&
-+
-+	test_must_fail git cherry-pick base picked-signed &&
-+	echo resolved >foo &&
-+	test_path_is_file .git/sequencer/todo &&
-+	git reset &&
-+	test_must_fail test_path_exists .git/sequencer
-+'
  
- test_expect_success 'failed cherry-pick produces dirty index' '
- 	pristine_detach initial &&
++test_expect_success 'status when cherry-picking after committing conflict resolution' '
++	git reset --hard cherry_branch &&
++	test_when_finished "git cherry-pick --abort" &&
++	test_must_fail git cherry-pick cherry_branch_second one_cherry &&
++	TO_CHERRY_PICK=$(git rev-parse --short CHERRY_PICK_HEAD) &&
++	echo end >main.txt &&
++	git commit -a &&
++	cat >expected <<EOF &&
++On branch cherry_branch
++You are currently cherry-picking commit $TO_CHERRY_PICK.
++  (all conflicts fixed: run "git cherry-pick --continue")
++  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
++
++nothing to commit (use -u to show untracked files)
++EOF
++	git status --untracked-files=no >actual &&
++	test_i18ncmp expected actual
++'
++
+ test_expect_success 'status showing detached at and from a tag' '
+ 	test_commit atag tagging &&
+ 	git checkout atag &&
+diff --git a/wt-status.c b/wt-status.c
+index 1f564b12d2..355e4cd03d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -17,6 +17,7 @@
+ #include "utf8.h"
+ #include "worktree.h"
+ #include "lockfile.h"
++#include "sequencer.h"
+ 
+ static const char cut_line[] =
+ "------------------------ >8 ------------------------\n";
+@@ -1563,6 +1564,7 @@ void wt_status_get_state(struct repository *r,
+ {
+ 	struct stat st;
+ 	struct object_id oid;
++	enum replay_action action;
+ 
+ 	if (!stat(git_path_merge_head(r), &st)) {
+ 		wt_status_check_rebase(NULL, state);
+@@ -1580,7 +1582,15 @@ void wt_status_get_state(struct repository *r,
+ 		state->revert_in_progress = 1;
+ 		oidcpy(&state->revert_head_oid, &oid);
+ 	}
+-
++	if (!sequencer_get_last_command(r, &action, &oid)) {
++		if (action == REPLAY_PICK) {
++			state->cherry_pick_in_progress = 1;
++			oidcpy(&state->cherry_pick_head_oid, &oid);
++		} else {
++			state->revert_in_progress = 1;
++			oidcpy(&state->revert_head_oid, &oid);
++		}
++	}
+ 	if (get_detached_from)
+ 		wt_status_get_detached_from(r, state);
+ }
 -- 
 2.21.0
 
