@@ -2,84 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 041A620248
-	for <e@80x24.org>; Fri, 29 Mar 2019 13:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2AF20248
+	for <e@80x24.org>; Fri, 29 Mar 2019 13:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729543AbfC2NEZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 09:04:25 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:54348 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729524AbfC2NEY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 09:04:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=NzEMw+TINbUYfZE4sAdAYO3JphJ5vBB223kwJtlkURc=; b=DgnWtaR01STfcpIycg4jCUB0U
-        zEncGpvRSVUlqT5vWHXdF3M3UqQiGoTy8VSZtivDxV8xcPiXVUqNcl9OEHK3cRl4oPcwNigdPJ3nz
-        p0hQCONSyh9T48C9Q3b5pVtENQEAqLGCCoN0ydQepTT4awijT5+C1DQhdQcTgZBMKAfg3n2EO+Tdn
-        6mzMGbnTZDGiE1a4LBXDNmSrau5sCNdf9jA2foVuXBYU9SymYX5xtzvYN+mfAAywCwqMUh2NZZ7h7
-        /7NxY/AZSpupldZETaVCitmLla1eeuKopkuMG9kfzXXT3s2Ky1PaxrGl0aUzdxSbBgn7G2Ea6g7Pe
-        chiiFlV9w==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.114.104.32]:54852 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h9rBF-0007WY-Sn; Fri, 29 Mar 2019 09:04:22 -0400
-Date:   Fri, 29 Mar 2019 09:04:20 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Peter Toye <git@ptoye.com>
-cc:     git@vger.kernel.org
-Subject: Re: A puzzling omission from the Git book
-In-Reply-To: <373066205.20190329125548@ptoye.com>
-Message-ID: <alpine.LFD.2.21.1903290903430.14340@localhost.localdomain>
-References: <373066205.20190329125548@ptoye.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1729616AbfC2NQO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 09:16:14 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:46939 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729477AbfC2NQN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 09:16:13 -0400
+Received: by mail-io1-f68.google.com with SMTP id b9so1651797iot.13
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 06:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oLce4ijUhtTzWN2qvZJ0H3t6UlRTdHHjtI6DmYeXt9A=;
+        b=0C/IQW34ppq2aGeYOsn6ZpK0DjXU6XLM/CsDbom58y/NJ1WxsK3uLf9sTfP6EprKf/
+         VD0guP4WYiNcpTs9oecLhQsBKbwntC8Dh7vPgGupASR8ZcFRqoy5M5WrQdtxlMRNLgRB
+         uYUqVMIaNYzGftJBYWuaTmcuRdXYz1gzNQAyDsKen4AnpWcXNaZIwNx9qTWuxx9uSY6R
+         wlw/WTD88qHzl9D3MS3CUkFloGllDVoaNmC9u88/pvNs5x9wOKXqh2HlQNvg1fDgF0Jz
+         KBfsdTS3P1hA7we0m2Dml3rz21uOox29JUO13e2DKyXj049zdf2EUkX2JLVnT9Aln4WE
+         9Zgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oLce4ijUhtTzWN2qvZJ0H3t6UlRTdHHjtI6DmYeXt9A=;
+        b=cXnolq4NRiZVH5gVQxHrNPggIo3IiBE1bWdPLhpW1dz/MF2JpBt6fb2k9bBwIWVp4X
+         Fj3bpHuP9difawR8+S6wHdkgua7tcH+MDyRemS23qy/AN3/behyILESxyNz3RFeHCV6e
+         tiUj3PrIGOq23saAjy/PNd0VIdRimuteFwLhNvRz7sNSa2q91zodl27EoVI03XfaE3eh
+         8G25g3gOYXabF15QDp7pbZkMF4NxGgN8rmxWk+vqV/u5rf0imIqCVrttlcWlc6xqqTVv
+         67N1cFnzrN8gaUOIzrCwZZtMR2/qg2dZ0O00GPUEuosOI7Nd6DTCxv+8wwQdP1MK5qo6
+         C+Bg==
+X-Gm-Message-State: APjAAAU+o+XhT+IPNpvI1uf85HIeHrrJPV+JVYHbMHM1ec4umfICaMAN
+        sjB2wHAyGkip/2de9I6BC7sI9AqBdb9xfkC8GI0Vcw==
+X-Google-Smtp-Source: APXvYqxTTMLytrtbLGvaSgkVIpW76nTxaalK1nCZCtMVvUNkyzce6PusAsMcqDpIiJ6X85nCc0Ymw7IOyjqDok5OrfQ=
+X-Received: by 2002:a6b:e305:: with SMTP id u5mr33789191ioc.262.1553865372835;
+ Fri, 29 Mar 2019 06:16:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190322232237.13293-4-matheus.bernardino@usp.br> <20190328221910.GL32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190328221910.GL32487@hank.intra.tgummerer.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 29 Mar 2019 10:16:01 -0300
+Message-ID: <CAHd-oW4dpr9bp2fgYzwzz1NcpXGnD3o6phcY8Dek5T6rahMX3Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 3/7] dir-iterator: add flags parameter to dir_iterator_begin
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 29 Mar 2019, Peter Toye wrote:
+On Thu, Mar 28, 2019 at 7:19 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>
+> On 03/22, Matheus Tavares wrote:
+> > Add the possibility of giving flags to dir_iterator_begin to initialize
+> > a dir-iterator with special options.
+> >
+> > Currently possible flags are DIR_ITERATOR_PEDANTIC, which makes
+> > dir_iterator_advance abort imediatelly in the case of an error while
+>
+> s/imediatelly/immediately/
+>
 
-> I'm looking for a way of comparing the files in two branches.
-> According to Stack Overflow there's a git diff command but I can't
-> see any reference to it in the book. Am I being more than usually
-> thick?
-
-  it should be just
-
-  $ git diff <branch1> <branch2> -- <filename>
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Thanks!
