@@ -7,79 +7,82 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9383620248
-	for <e@80x24.org>; Fri, 29 Mar 2019 20:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6794520248
+	for <e@80x24.org>; Fri, 29 Mar 2019 20:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729987AbfC2UFV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 16:05:21 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45647 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729972AbfC2UFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 16:05:21 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s15so4004435wra.12
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 13:05:19 -0700 (PDT)
+        id S1730090AbfC2UPq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 16:15:46 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36758 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729906AbfC2UPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 16:15:45 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y13so4081070wrd.3
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 13:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c9Om5PO5rhUn9df7p1AjtehE2Y8pzZQxrWMK4t0LJkM=;
-        b=jgp6HLwRUFEYOzJN5Oyfv5jjPDNo8noOqJFIl+BljQm3RQF7bu8Hqvge+hmnLAaLsW
-         HTEXChJzr6njvax3UDziJlsamsva7dmtkAjj6TyfMenxkd1gKo9nwcQty/uEKDET0eth
-         0VAoE6eFCQ6u+baYCvMbUZdfDgQT5agdjmQsRjfWburbwobmrztEQFY56HE8hWtGGax3
-         xTh6A3qZOiQOzTsTHh8/+hl9bwz6RPFVHDKeUcMeMAEIkENakISCo9bhVrDSv0NvRQy2
-         cTsmU6aQZlGZJGxGlFVDQOz7hrY834AzwA/JdPt+DU1RGFssLpf9AI0UgrVUyIDLc5CE
-         eOVQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=kczIPAqDQjkSS/pFpmQ6yG0YMF3pWRt0NyO1DrxyEzU=;
+        b=BZ7YCOINko9X0oS4VGmNnAwhI74Uz2g2Lo3a6NDMXm73xX3tQDg+iDXVL5CecZeJDq
+         2b9DHPaGaDzxNC/rwdv14JF3obQXEtiTG+lpN5ZrgWT8ywx4xBIFpZileIrDJmqS/7pj
+         VYS2YzpBDD9gI5d6i0rkskv7n6cpbTD7yit3tlE/5D9ecPIZqWXlmQrmba1D9nApYglA
+         mC1EoCjn4sDrWflbZ85R8rmdkNR1S1jVuM3E4ULoLpn/r4crMLIGVoFFskDQ9OdIAHUz
+         4OsitsXkiy6iSqXv9KWZizSinX60Y99alb2fdDFRfS2nadXh/tfQejF+B0vIUp9rBj8H
+         2JzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c9Om5PO5rhUn9df7p1AjtehE2Y8pzZQxrWMK4t0LJkM=;
-        b=W/gOW2I/VdxKkhwFqPTgVZ464UV106S5BJfwh6Cif1aBlSjAV6sga+cpcKC9VY386d
-         Fju+8HM+MLw83+EKLrpWeJ8beZ9REcqhBP9QhUPOlsx+QsWv80rg8yFGkNU1rfHPgVnk
-         DsRS6qH6aDg8DeLsuFFKGCQVsq0bxklGcTBBXA8UpccS3PlGvtTj58FPQQ+QcE/Ny2qv
-         xSlfsgBvwOr1X7YcozWSLFjHesB9w6KhlolRaJpJg3S505TkBUSKCrr3C3ys4SZ1A6GR
-         TABrr6OuLfRgr2lM8QBx1kMmVClNnqk1RkGHFFX5oojNbM2nDyCB6ftZE/tbQe9cMNPE
-         HfRw==
-X-Gm-Message-State: APjAAAUM/djF4ihOSS+CsGwY8uRc2iO1rkcjDUYpW+sHB7ArcUq8iDtK
-        X25MgsnoPZLDEw9Pc62wsqU=
-X-Google-Smtp-Source: APXvYqzQuWo+cA3DzP7JCnz/jsg90L5kbZ/WYMnFAWj3mlz0ebXtibhXNx9YCSbH+cx7KcftLxIQQw==
-X-Received: by 2002:adf:d84d:: with SMTP id k13mr35833405wrl.154.1553889919198;
-        Fri, 29 Mar 2019 13:05:19 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=kczIPAqDQjkSS/pFpmQ6yG0YMF3pWRt0NyO1DrxyEzU=;
+        b=Fz2DPn99FY2nOOiptRAttmKJsOpizvD6Syn5ilH+H/RVOsuhQAByio8yPELURttjvN
+         fOs48aKRhn23WVHrP16EiK2jNzqji0T02i6WmP/eaRupD9xW8b0hUo82BrW0Bo5F6517
+         DIR8XPiqIxEQdfssDC+dJqCGIEBX0+3yfyRz/e/G0iql00v29TPCv6E6CWgjzhRCG5Ax
+         NhxuOJAoP+D4cR6dD8MEeROMSMxaFnEwI5eNYEOpBPnvxHwv1ZMWzj43He60okYyW8Ts
+         773Twvkz/Mief6RtlQJOsKA0RfAWQApkqEymGRm/onL0l+UXi+jV7SeUKBJer3lAsu3C
+         H1bg==
+X-Gm-Message-State: APjAAAXEwYIqQNPd2qIDIdv+K/0b/P5aUwGHcCmVzC/2r0VPkiRGllqi
+        kNNhs63bdjk7nb5H0lZgz2I=
+X-Google-Smtp-Source: APXvYqzoOmXGZh0l920P+Wu4elAVEbTo1dqYspLnqKve3c/ZeIM5dFfCcF9dpusgH0oUVO5ppntVdg==
+X-Received: by 2002:adf:b601:: with SMTP id f1mr16498185wre.158.1553890544005;
+        Fri, 29 Mar 2019 13:15:44 -0700 (PDT)
 Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id o130sm5627173wmo.43.2019.03.29.13.05.17
+        by smtp.gmail.com with ESMTPSA id j64sm4392643wmb.36.2019.03.29.13.15.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Mar 2019 13:05:17 -0700 (PDT)
-Date:   Fri, 29 Mar 2019 20:05:17 +0000
+        Fri, 29 Mar 2019 13:15:42 -0700 (PDT)
+Date:   Fri, 29 Mar 2019 20:15:41 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
         Christian Couder <christian.couder@gmail.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>,
+        kernel-usp@googlegroups.com,
         Benoit Pierre <benoit.pierre@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
  .git/objects/
-Message-ID: <20190329200517.GO32487@hank.intra.tgummerer.com>
+Message-ID: <20190329201541.GP32487@hank.intra.tgummerer.com>
 References: <20190226122829.19178-1-avarab@gmail.com>
  <20190322232237.13293-1-matheus.bernardino@usp.br>
  <20190322232237.13293-3-matheus.bernardino@usp.br>
  <20190328221049.GK32487@hank.intra.tgummerer.com>
- <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
+ <87sgv69itl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87sgv69itl.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/29, Matheus Tavares Bernardino wrote:
-> On Thu, Mar 28, 2019 at 7:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On 03/29, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Mar 28 2019, Thomas Gummerer wrote:
 > > I notice that we are currently not using 'linkat()' anywhere else in
 > > our codebase.  It looks like it has been introduced in POSIX.1-2008,
 > > which sounds fairly recent by git's standards.  So I wonder if this is
@@ -91,15 +94,38 @@ On 03/29, Matheus Tavares Bernardino wrote:
 > > would be needed for 'linkat()'.  I added Dscho to Cc for Windows
 > > expertise.
 > 
-> Ok, what if instead of using linkat() we use 'realpath(const char
-> *path, char *resolved_path)', which will resolve any symlinks at
-> 'path' and store the canonical path at 'resolved_path'? Then, we can
-> still keep using link() but now, with the certainty that all platforms
-> will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
-> Would that be a better idea?
+> For better of worse this particular quest started because I pointed out
+> (with some WIP patches) that for understanding this change we should
+> test whatever we did now, to ensure that the refactoring didn't have
+> unintended side-effects.
+> 
+> But that's a separate question from whether or not we want to keep the
+> current behavior.
+> 
+> I think the current behavior is clearly insane, so I think we should
+> change it with some follow-up patches. In particular options like
+> --dissociate should clearly (in my mind at least) have behavior similar
+> to "cp -L", and --local should hardlink to the *target* of the symlink,
+> if anything, at least for objects/{??,pack,info}
 
-Yeah, I think that is a good idea.  Note that 'realpath()' itself is
-not used anywhere in our codebase either, but there is
-'strbuf_realpath()', that from reading the function documentation does
-exactly what 'realpath()' would do.  So using 'strbuf_realpath()'
-would probably be the right thing to do here.
+Right, I definitely agree with all of that.  Adding tests for the
+current behaviour is definitely a good thing if we can do it in a sane
+way.  And I also agree that the current behaviour is insane, and
+should be fixed, but that may not want to be part of this patch
+series.
+
+> I think that changes the portability story with linkat(), since it's not
+> something we should be planning to keep, just an intermediate step so we
+> don't have a gigantic patch that both adds tests, refactors and changes
+> the behavior.
+
+Fair enough, but that also means that this patch series necessarily
+has to introduce the changes in behaviour as well as switching clone
+to use dir-iterator.  Of course we could say that the switch-over to
+using dir-iterator could be done as a separate patch series, but that
+seems a bit too much of a change in scope of this series.
+
+Now I think Matheus has actually found a nice solution to this issue
+using 'strbuf_readlink()', which gives us the same behaviour as using
+'linkat()' in this patch would give us, so this might not be that big
+an issue in the end.
