@@ -2,131 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9AB920248
-	for <e@80x24.org>; Fri, 29 Mar 2019 19:52:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9383620248
+	for <e@80x24.org>; Fri, 29 Mar 2019 20:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729961AbfC2Twv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 15:52:51 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54775 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729380AbfC2Twu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 15:52:50 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c1so2542094wml.4
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 12:52:49 -0700 (PDT)
+        id S1729987AbfC2UFV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 16:05:21 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45647 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729972AbfC2UFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 16:05:21 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s15so4004435wra.12
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 13:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=zIfSAJR/CShnmsnYgNPcIvb0ijJiECM0N0wi1+W4TPw=;
-        b=lh8/K/jONaIj/m6ddeOTzFa4cQNo1oh8dlje1+CgdPSuRpVt85NQkbMtdqAJFVTqeX
-         O+qHO9+5qTqmdui64C37KFWbpd8iNM5BuMhiIvBT2DunA6LYwk3RbGp8AMUOuHdMAyZb
-         6GN0G/Lw9EODiSMuVFP5Kys/x9NLyIod7JTkeJvFaZNOdxJeuibVD+xJFwmlCLvTHnXJ
-         sRbplNRccKnbA6yamtVYVXspwsxD0RVt09gNpmAj2hUHXyLDrrT6Gl3TP1B7WCtPh7Qd
-         oXK6hb8jHaas4Mk1PROJcZWFzz8BaWiAlgwaKmSXg6ePMMD17e/eOGM8vH8+vKm77H9U
-         8Pmw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=c9Om5PO5rhUn9df7p1AjtehE2Y8pzZQxrWMK4t0LJkM=;
+        b=jgp6HLwRUFEYOzJN5Oyfv5jjPDNo8noOqJFIl+BljQm3RQF7bu8Hqvge+hmnLAaLsW
+         HTEXChJzr6njvax3UDziJlsamsva7dmtkAjj6TyfMenxkd1gKo9nwcQty/uEKDET0eth
+         0VAoE6eFCQ6u+baYCvMbUZdfDgQT5agdjmQsRjfWburbwobmrztEQFY56HE8hWtGGax3
+         xTh6A3qZOiQOzTsTHh8/+hl9bwz6RPFVHDKeUcMeMAEIkENakISCo9bhVrDSv0NvRQy2
+         cTsmU6aQZlGZJGxGlFVDQOz7hrY834AzwA/JdPt+DU1RGFssLpf9AI0UgrVUyIDLc5CE
+         eOVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=zIfSAJR/CShnmsnYgNPcIvb0ijJiECM0N0wi1+W4TPw=;
-        b=nTZaC4iKAeeuh1XEVZJkVd1Aa+vlh1C1DJUANgL0Uctgp/p60/0259s4XphRpXXg/X
-         tE6Q3ilGYOpOoV5Pp5IKotoZHB0tIODAfP8DkTRQOlpEVScuLxdGq5Fp6zzLfyzZW5oe
-         CASBf8yLwSIHF34+++J5vDzVMiCJofVdBULchQSM+uuNKrIs53iVCuVwyG5pSxLlcK5m
-         USKcr0uqd7J+eIROKo3LBu9thVhfa7IhczOIKFx2R7Kg9Yt1TZl181gCNAiZ81UNJXyU
-         XMRb1wp7fcBUI63iMlWC4rZfoOjwOEAnHUw0Nt7GGjMmITSYRZS9jxd799RpfxQWrXoQ
-         pOSw==
-X-Gm-Message-State: APjAAAW8+ucgqgaq6GDjH65RoI71KE4GjECYyXJnLAexE6rz6LAgnj03
-        9qQHswWy3d/O6ri6LkogfwQ=
-X-Google-Smtp-Source: APXvYqxpQHrc8RqNKX7Mb+GluvZi9nHwWM7iJSdwMqgLuML4o2NDveTGhKItygDg5jIS52SqJ6756w==
-X-Received: by 2002:a1c:4105:: with SMTP id o5mr4922277wma.35.1553889169290;
-        Fri, 29 Mar 2019 12:52:49 -0700 (PDT)
-Received: from szeder.dev (x4dbd3bb2.dyn.telefonica.de. [77.189.59.178])
-        by smtp.gmail.com with ESMTPSA id h7sm1550583wmg.34.2019.03.29.12.52.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Mar 2019 12:52:48 -0700 (PDT)
-Date:   Fri, 29 Mar 2019 20:52:46 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Todd Zullinger <tmz@pobox.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3.1 5/6] ci: stick with Asciidoctor v1.5.8 for now
-Message-ID: <20190329195246.GH32732@szeder.dev>
-References: <20190324215534.9495-1-szeder.dev@gmail.com>
- <20190329123520.27549-1-szeder.dev@gmail.com>
- <20190329123520.27549-6-szeder.dev@gmail.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=c9Om5PO5rhUn9df7p1AjtehE2Y8pzZQxrWMK4t0LJkM=;
+        b=W/gOW2I/VdxKkhwFqPTgVZ464UV106S5BJfwh6Cif1aBlSjAV6sga+cpcKC9VY386d
+         Fju+8HM+MLw83+EKLrpWeJ8beZ9REcqhBP9QhUPOlsx+QsWv80rg8yFGkNU1rfHPgVnk
+         DsRS6qH6aDg8DeLsuFFKGCQVsq0bxklGcTBBXA8UpccS3PlGvtTj58FPQQ+QcE/Ny2qv
+         xSlfsgBvwOr1X7YcozWSLFjHesB9w6KhlolRaJpJg3S505TkBUSKCrr3C3ys4SZ1A6GR
+         TABrr6OuLfRgr2lM8QBx1kMmVClNnqk1RkGHFFX5oojNbM2nDyCB6ftZE/tbQe9cMNPE
+         HfRw==
+X-Gm-Message-State: APjAAAUM/djF4ihOSS+CsGwY8uRc2iO1rkcjDUYpW+sHB7ArcUq8iDtK
+        X25MgsnoPZLDEw9Pc62wsqU=
+X-Google-Smtp-Source: APXvYqzQuWo+cA3DzP7JCnz/jsg90L5kbZ/WYMnFAWj3mlz0ebXtibhXNx9YCSbH+cx7KcftLxIQQw==
+X-Received: by 2002:adf:d84d:: with SMTP id k13mr35833405wrl.154.1553889919198;
+        Fri, 29 Mar 2019 13:05:19 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id o130sm5627173wmo.43.2019.03.29.13.05.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 29 Mar 2019 13:05:17 -0700 (PDT)
+Date:   Fri, 29 Mar 2019 20:05:17 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Benoit Pierre <benoit.pierre@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
+ .git/objects/
+Message-ID: <20190329200517.GO32487@hank.intra.tgummerer.com>
+References: <20190226122829.19178-1-avarab@gmail.com>
+ <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190322232237.13293-3-matheus.bernardino@usp.br>
+ <20190328221049.GK32487@hank.intra.tgummerer.com>
+ <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190329123520.27549-6-szeder.dev@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 29, 2019 at 01:35:19PM +0100, SZEDER Gábor wrote:
-> The release of Asciidoctor v2.0.0 two days ago broke our documentation
+On 03/29, Matheus Tavares Bernardino wrote:
+> On Thu, Mar 28, 2019 at 7:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > I notice that we are currently not using 'linkat()' anywhere else in
+> > our codebase.  It looks like it has been introduced in POSIX.1-2008,
+> > which sounds fairly recent by git's standards.  So I wonder if this is
+> > really supported on all platforms that git is being built on.
+> >
+> > I also wonder what would need to be done on Windows if we were to
+> > introduce this.  I see we define the 'link()' function in
+> > 'compat/mingw.c' for that currently, so I guess something similar
+> > would be needed for 'linkat()'.  I added Dscho to Cc for Windows
+> > expertise.
+> 
+> Ok, what if instead of using linkat() we use 'realpath(const char
+> *path, char *resolved_path)', which will resolve any symlinks at
+> 'path' and store the canonical path at 'resolved_path'? Then, we can
+> still keep using link() but now, with the certainty that all platforms
+> will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
+> Would that be a better idea?
 
-Well, what happened "two days ago" when I sent v2 is now seven days
-ago...  Let's just say "recent" instead.
-
-
-  --- >8 ---
-
-Subject: ci: stick with Asciidoctor v1.5.8 for now
-
-The recent release of Asciidoctor v2.0.0 broke our documentation
-build job on Travis CI, where we 'gem install asciidoctor', which
-always brings us the latest and (supposedly) greatest.  Alas, we are
-not ready for that just yet, because it removed support for DocBook
-4.5, and we have been requiring that particular DocBook version to
-build 'user-manual.xml' with Asciidoctor, resulting in:
-
-      ASCIIDOC user-manual.xml
-  asciidoctor: FAILED: missing converter for backend 'docbook45'. Processing aborted.
-    Use --trace for backtrace
-  make[1]: *** [user-manual.xml] Error 1
-
-Unfortunately, we can't simply switch to DocBook 5 right away, as
-doing so leads to validation errors from 'xmlto', and working around
-those leads to yet another errors... [1]
-
-So let's stick with Asciidoctor v1.5.8 (latest stable release before
-v2.0.0) in our documentation build job on Travis CI for now, until we
-figure out how to deal with the fallout from Asciidoctor v2.0.0.
-
-[1] https://public-inbox.org/git/20190324162131.GL4047@pobox.com/
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/install-dependencies.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 76ec308965..52a44c690a 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -56,7 +56,7 @@ Documentation)
- 	sudo apt-get -q -y install asciidoc xmlto
- 
- 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
--	gem install asciidoctor
-+	gem install --version 1.5.8 asciidoctor
- 	;;
- esac
- 
--- 
-2.21.0.539.g07239c3a71.dirty
-
+Yeah, I think that is a good idea.  Note that 'realpath()' itself is
+not used anywhere in our codebase either, but there is
+'strbuf_realpath()', that from reading the function documentation does
+exactly what 'realpath()' would do.  So using 'strbuf_realpath()'
+would probably be the right thing to do here.
