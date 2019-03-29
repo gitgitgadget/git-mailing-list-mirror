@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0751120248
-	for <e@80x24.org>; Fri, 29 Mar 2019 10:40:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7568C20248
+	for <e@80x24.org>; Fri, 29 Mar 2019 10:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729117AbfC2KkX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 06:40:23 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33139 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728870AbfC2KkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 06:40:22 -0400
-Received: by mail-pl1-f196.google.com with SMTP id bg8so864757plb.0
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 03:40:22 -0700 (PDT)
+        id S1729121AbfC2Kk3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 06:40:29 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45586 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728858AbfC2Kk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 06:40:29 -0400
+Received: by mail-pf1-f194.google.com with SMTP id e24so858791pfi.12
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 03:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=U4DWjjEYUTmxfrXi8kKJqDZtbl4jFGYkHjK7Ettpmig=;
-        b=TTmbhQ9oic+lM+Z5EMvgZUZJ4GBG/+4WzfyAyWUt51yRMbFpK9ElemKsYjmjCfE4m2
-         3tnyYaELCt8DXVQaAuD++7PDAJCjfzMFOUmb+fl3mT5v/QIkdlAB1yHCv7FLY6P4uYlO
-         MWkZDBrUgwEE22DQmmuGWHuijKqujzcTIFF873VH2HZH6BRwTMl4w478dyemmM7S6hay
-         /40ioxRMz5DxbAn4Wr+ZaNkSTqaQ0y9RFrVkiseY3Ove2iia+kydo4qkQHnNzXi/mqGP
-         XVvBIvjLEU9ngjnVVf1Qbdzqy9N+gxeez41paHioHkG/vikYCpXHUrgv9lK1+F7yHtmP
-         re2g==
+        bh=KLjMC0gWwQ14+sVWjBuPYxax41jDf2KnKxeCS3H54Vc=;
+        b=YQqNB6bE6edqaIG3vfWnJX3xmGiM+8UgmWU/oQ62sq3ITmpyQy2NCh08I6gblsg0I2
+         jVhJzqJj3t9bBHrftFrMQPuwqv1i7P2Lz7v8z02ofUrTKgS6KCMnYxxARAtiIDJGg88U
+         h4DkZhv48umIejRLmQto0oqpPuMyd77D1stp9YKsLGDeMMqnLGzPKx4Vl4HeotPs5nLV
+         JylkdKaAdPVLUiMPCtV7fQtbPDs21pRkhgYAsP7KNH6taiDzZuISnOsKC6/Pvx3b4ehN
+         OUUOneMpo762j/pASWpiPteG4z4uvmls917P8sn/hv5Jkm38ILnU53JJg5fHcLghvEvf
+         uYAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=U4DWjjEYUTmxfrXi8kKJqDZtbl4jFGYkHjK7Ettpmig=;
-        b=qfEOTWjL6JFojvX+Bxfq5CMK/SCADMtm/084Fmp0BmiWDRE5wpoDmPqYFYelIfsiJH
-         YXj2ht0S/+XWfuExDWiYHC50Vp4L8euinVZ2racFCiy1J2JApL5OHUfmehdRJBGvUk8t
-         ypopf7ud9EkCw/A0vEck/K2mSaadthhE2fphkV2fUSVGMK5wK6aO6unQQ+hySll9oy2b
-         MqIpTTpXvQ/pVBtFKAWHuyBXF5RV5bjOI5CNzczlqUC447rrbzeoWcaFQ/qN8ly96tgO
-         I5Iz8zO0eA4kNKp5z+r0rdMddATJBGcmJpSx4n2epfrC8gdYUFS7kFr+LbPOzhFsJzOF
-         JkIw==
-X-Gm-Message-State: APjAAAVw2rn92gYcU+dJoZONLcRChHeXfl3jPTH+bn0pAGb8OfBVoIk7
-        w6tdxl5zvHbm6UU77PzOx7tiriZk
-X-Google-Smtp-Source: APXvYqzyyYdzEFrmNrQCvqfpoA0eF0loEPomAJKfZn6zxiWV2pMXA39FVWdQ1aByNRysJdNJvcqkBg==
-X-Received: by 2002:a17:902:a714:: with SMTP id w20mr49104498plq.331.1553856022101;
-        Fri, 29 Mar 2019 03:40:22 -0700 (PDT)
+        bh=KLjMC0gWwQ14+sVWjBuPYxax41jDf2KnKxeCS3H54Vc=;
+        b=UkWTC4TwQsi3xYKz+QT25L9dFm/F4FsmU/38/nqkq4XsbwhEJ/iE92m0hwmOs5oHYm
+         93Dl7YPwIKmqRlwUJK4I2v13LWrcO6oUG/wlefRbP7bfgLPLeovZFFlNYTNkBda0syXe
+         K4EoKElpDf1lPJI7qpVPcVVf9OrRXrk7kgZt2L2ZNCw2bKbpzOsWZ660ULAo4/ltzWzT
+         x5mojSxu2RFbAWrXjmtGgIeZzJ+HBkQ+vdznwNKMXcDgYpD+tuSy+aB7OMu3Cbyl8zNB
+         NsbkJvCt9NGJ5/bBrL+rX/rJZFERyZkUQW7NCm4zpgxkD0DRzRzmPj3+BtTeQBXriv4W
+         jL2A==
+X-Gm-Message-State: APjAAAXk1M3OhR+WeG2Rzqj7mTSBWZ8KpDKVEbR2peb4aobbGxe9VxgM
+        nRQng6Vxov/PePLEXHxEggc=
+X-Google-Smtp-Source: APXvYqxbzt1CGPmkRlI1a597Dx2GvVPyU/bYyj6VLU3dP3gUWaBU2fGabj80QaX4qWRId78OKxX35A==
+X-Received: by 2002:a62:293:: with SMTP id 141mr45584092pfc.245.1553856028423;
+        Fri, 29 Mar 2019 03:40:28 -0700 (PDT)
 Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id a7sm2846900pfc.45.2019.03.29.03.40.17
+        by smtp.gmail.com with ESMTPSA id z6sm2899799pgo.31.2019.03.29.03.40.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Mar 2019 03:40:21 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 29 Mar 2019 17:40:15 +0700
+        Fri, 29 Mar 2019 03:40:27 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 29 Mar 2019 17:40:22 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -57,9 +57,9 @@ Cc:     eckhard.s.maass@googlemail.com, git@vger.kernel.org,
         gitster@pobox.com, jacob.keller@gmail.com, martin.agren@gmail.com,
         newren@gmail.com, phillip.wood123@gmail.com, rybak.a.v@gmail.com,
         sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v6 06/27] checkout: advice how to get out of detached HEAD mode
-Date:   Fri, 29 Mar 2019 17:38:58 +0700
-Message-Id: <20190329103919.15642-7-pclouds@gmail.com>
+Subject: [PATCH v6 07/27] checkout: inform the user when removing branch state
+Date:   Fri, 29 Mar 2019 17:38:59 +0700
+Message-Id: <20190329103919.15642-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190329103919.15642-1-pclouds@gmail.com>
 References: <20190321131655.15249-1-pclouds@gmail.com>
@@ -72,83 +72,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Detached HEAD mode is considered dangerous and confusing for newcomers
-and we print a big block of warning how to move forward. But we should
-also suggest the user the way to get out of it if they get into detached
-HEAD by mistake.
+After a successful switch, if a merge, cherry-pick or revert is ongoing,
+it is canceled. This behavior has been with us from the very early
+beginning, soon after git-merge was created but never actually
+documented [1]. It may be a good idea to be transparent and tell the
+user if some operation is canceled.
 
-While at there, I also suggest how to turn the advice off. This is
-another thing I find annoying with advices and should be dealt with in a
-more generic way. But that may require some refactoring in advice.c
-first.
+I consider this a better way of telling the user than just adding a
+sentence or two in git-checkout.txt, which will be mostly ignored
+anyway.
+
+PS. Originally I wanted to print more details like
+
+    warning: cancelling an in-progress merge from <SHA-1>
+
+which may allow some level of undo if the user wants to. But that seems
+a lot more work. Perhaps it can be improved later if people still want
+that.
+
+[1] ... and I will try not to argue whether it is a sensible behavior.
+There is some more discussion here if people are interested:
+CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- advice.c                   | 17 +++++++++++++----
- t/t2020-checkout-detach.sh | 12 ++++++++++++
- 2 files changed, 25 insertions(+), 4 deletions(-)
+ branch.c           | 11 +++++++----
+ branch.h           |  2 +-
+ builtin/am.c       |  2 +-
+ builtin/checkout.c |  2 +-
+ builtin/rebase.c   |  4 ++--
+ builtin/reset.c    |  2 +-
+ builtin/revert.c   |  2 +-
+ 7 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index 567209aa79..b224825637 100644
---- a/advice.c
-+++ b/advice.c
-@@ -191,13 +191,22 @@ void NORETURN die_conclude_merge(void)
- void detach_advice(const char *new_name)
- {
- 	const char *fmt =
--	_("Note: checking out '%s'.\n\n"
-+	_("Note: checking out '%s'.\n"
-+	"\n"
- 	"You are in 'detached HEAD' state. You can look around, make experimental\n"
- 	"changes and commit them, and you can discard any commits you make in this\n"
--	"state without impacting any branches by performing another checkout.\n\n"
-+	"state without impacting any branches by performing another checkout.\n"
-+	"\n"
- 	"If you want to create a new branch to retain commits you create, you may\n"
--	"do so (now or later) by using -b with the checkout command again. Example:\n\n"
--	"  git checkout -b <new-branch-name>\n\n");
-+	"do so (now or later) by using -b with the checkout command again. Example:\n"
-+	"\n"
-+	"  git checkout -b <new-branch-name>\n"
-+	"\n"
-+	"Or undo this checkout with:\n"
-+	"\n"
-+	"  git checkout -\n"
-+	"\n"
-+	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
- 
- 	fprintf(stderr, fmt, new_name);
+diff --git a/branch.c b/branch.c
+index 28b81a7e02..8dd5bb9f1c 100644
+--- a/branch.c
++++ b/branch.c
+@@ -337,11 +337,14 @@ void create_branch(struct repository *r,
+ 	free(real_ref);
  }
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 1fa670625c..743c7248a2 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -206,6 +206,12 @@ test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not as
  
- 	  git checkout -b <new-branch-name>
+-void remove_branch_state(struct repository *r)
++void remove_branch_state(struct repository *r, int verbose)
+ {
+-	unlink(git_path_cherry_pick_head(r));
+-	unlink(git_path_revert_head(r));
+-	unlink(git_path_merge_head(r));
++	if (!unlink(git_path_cherry_pick_head(r)) && verbose)
++		warning(_("cancelling a cherry picking in progress"));
++	if (!unlink(git_path_revert_head(r)) && verbose)
++		warning(_("cancelling a revert in progress"));
++	if (!unlink(git_path_merge_head(r)) && verbose)
++		warning(_("cancelling a merge in progress"));
+ 	unlink(git_path_merge_rr(r));
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
+diff --git a/branch.h b/branch.h
+index 29c1afa4d0..aed045901e 100644
+--- a/branch.h
++++ b/branch.h
+@@ -64,7 +64,7 @@ extern int validate_new_branchname(const char *name, struct strbuf *ref, int for
+  * Remove information about the state of working on the current
+  * branch. (E.g., MERGE_HEAD)
+  */
+-void remove_branch_state(struct repository *r);
++void remove_branch_state(struct repository *r, int verbose);
  
-+	Or undo this checkout with:
-+
-+	  git checkout -
-+
-+	Turn off this advice by setting config variable advice.detachedHead to false
-+
- 	HEAD is now at \$commit three
- 	EOF
+ /*
+  * Configure local branch "local" as downstream to branch "remote"
+diff --git a/builtin/am.c b/builtin/am.c
+index 4fb107a9d1..99b66508fd 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1957,7 +1957,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (merge_tree(remote_tree))
+ 		return -1;
  
-@@ -282,6 +288,12 @@ test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked
+-	remove_branch_state(the_repository);
++	remove_branch_state(the_repository, 0);
  
- 	  git checkout -b <new-branch-name>
+ 	return 0;
+ }
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0e6037b296..f66bd2f56d 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -899,7 +899,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 				delete_reflog(old_branch_info->path);
+ 		}
+ 	}
+-	remove_branch_state(the_repository);
++	remove_branch_state(the_repository, !opts->quiet);
+ 	strbuf_release(&msg);
+ 	if (!opts->quiet &&
+ 	    (new_branch_info->path || (!opts->force_detach && !strcmp(new_branch_info->name, "HEAD"))))
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 52114cbf0d..646d0f9fb1 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1272,7 +1272,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (reset_head(NULL, "reset", NULL, RESET_HEAD_HARD,
+ 			       NULL, NULL) < 0)
+ 			die(_("could not discard worktree changes"));
+-		remove_branch_state(the_repository);
++		remove_branch_state(the_repository, 0);
+ 		if (read_basic_state(&options))
+ 			exit(1);
+ 		goto run_rebase;
+@@ -1292,7 +1292,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			       NULL, NULL) < 0)
+ 			die(_("could not move back to %s"),
+ 			    oid_to_hex(&options.orig_head));
+-		remove_branch_state(the_repository);
++		remove_branch_state(the_repository, 0);
+ 		ret = finish_rebase(&options);
+ 		goto cleanup;
+ 	}
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 7882829a95..6d9397c844 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -420,7 +420,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			print_new_head_line(lookup_commit_reference(the_repository, &oid));
+ 	}
+ 	if (!pathspec.nr)
+-		remove_branch_state(the_repository);
++		remove_branch_state(the_repository, 0);
  
-+	Or undo this checkout with:
-+
-+	  git checkout -
-+
-+	Turn off this advice by setting config variable advice.detachedHead to false
-+
- 	HEAD is now at \$commit... three
- 	EOF
- 
+ 	return update_ref_status;
+ }
+diff --git a/builtin/revert.c b/builtin/revert.c
+index a47b53ceaf..ebf2789225 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -196,7 +196,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+ 	if (cmd == 'q') {
+ 		int ret = sequencer_remove_state(opts);
+ 		if (!ret)
+-			remove_branch_state(the_repository);
++			remove_branch_state(the_repository, 0);
+ 		return ret;
+ 	}
+ 	if (cmd == 'c')
 -- 
 2.21.0.479.g47ac719cd3
 
