@@ -2,215 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1253320248
-	for <e@80x24.org>; Fri, 29 Mar 2019 15:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07D1720248
+	for <e@80x24.org>; Fri, 29 Mar 2019 15:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728938AbfC2Pfs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 11:35:48 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:39223 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728839AbfC2Pfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 11:35:48 -0400
-Received: by mail-ua1-f67.google.com with SMTP id d5so811912uan.6
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 08:35:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TuSl+UK1gGbxYyx5+D97972UGyPUWfFU4pxZ8rZlgR8=;
-        b=AS6FTt6lfeWf2j7jOCO3Z013gpLmX5WySW3V8vCCkomYyHKeYYkdgj9YobsN3Dd4oQ
-         eM7e4FpckEMn1KKPAChn0MlC9T8cSJhoUpeg2Y/okWyd4msrjf5AFY89mDGpcGrN12WK
-         JstOOA2bC90RUm8xRo1dosb6xHPxKrnioRbhFSvQPH2Hw26lgLQEtck8rQi580IA2bNJ
-         R1FuMDVuPThXmDGa++GnkK8e7oq3vFayxuvSlVyjR/jPsoEfHMdFAhmw6lnRzY/GRUMC
-         prgy0iH0U3E5+RRcgK+zdDhraKcLgy2YoFnEhhQXyo+NxFzfQyzVL1ay+FWAtdIaC0ta
-         X6gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TuSl+UK1gGbxYyx5+D97972UGyPUWfFU4pxZ8rZlgR8=;
-        b=kH5lNhuzTx3kG5n+mJvVhMgGFyfTLx1DfgsEAEh7BFsViV0RMc9NxppAT8+iyYQsp8
-         oo3K5WI2We09yXqIy6VSYSKulhQluIYW4MfaDMR953YxlAmqwcw/ocfDXJiSjlP81CyJ
-         VRlai9N1DowRzvyAJLGNDPPKg+fb5sqBLFcRtnmTh4WR9htHYiClVpq2kxwVKpsY6dlL
-         uy074TbAd6mRTjHa+pVYtqP/42AMAFg+kqFvKr9k75d0ROzzt2EeqExIwchSCnpabX+l
-         4LUBbGf+IQrLffjHjZu4NaLCdoV23Bg/JOem3VGbKZC6/IWwpfAt1Tk1kXFb28gpXExa
-         E8Tw==
-X-Gm-Message-State: APjAAAX63TVq94glrDPtWloffuOOOXVkgtwoQxN4daBhYQbGtsQShnlk
-        inyXwAmUOEOCMNXQasconQLHUJyIU7/+/qLDT3M=
-X-Google-Smtp-Source: APXvYqw40Doax5ksnnPTrqiK5ozyaIyISZP5PgokqCrIQXzDQsHUJFWbidWIb0IeBtxVQjjGSm+8Oth0wXsNJ9Z60Ok=
-X-Received: by 2002:ab0:21c5:: with SMTP id u5mr18034955uan.81.1553873747153;
- Fri, 29 Mar 2019 08:35:47 -0700 (PDT)
+        id S1729561AbfC2Pkt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 11:40:49 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51397 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728902AbfC2Pkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 11:40:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553874043;
+        bh=zIJXs3GIhlzDzUcWA2Oad9N+tAmduN8mJuSeGFNxmAI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CfwVWYYLvcmwFeg/EJ2tGPYIBX8xyI8P3kM4Mb3pbYuneSCOLc/KBmitb3MgyMLBV
+         9WwzRYg5/3hRut8s3aiOV2VernMOXRVpQNYYzup9TsoToimWwVLRPOrt8zX/ZQVMkJ
+         MgZ0yVzzVI1G/OLyOHUoL6jptMiVHgvQQGL4GJfE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwZtX-1gtGdA0T2F-018K5d; Fri, 29
+ Mar 2019 16:40:43 +0100
+Date:   Fri, 29 Mar 2019 16:40:43 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, kernel-usp@googlegroups.com,
+        Benoit Pierre <benoit.pierre@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
+ .git/objects/
+In-Reply-To: <20190328221049.GK32487@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1903291635050.41@tvgsbejvaqbjf.bet>
+References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br> <20190322232237.13293-3-matheus.bernardino@usp.br> <20190328221049.GK32487@hank.intra.tgummerer.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
- <CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com>
- <CABPp-BEksf4SuD57YsUO3YKhU12CAwFTy6pA1tETFrHB1DAz9w@mail.gmail.com>
- <CACsJy8DPDEvNDeE5MpqcGZk9jRmT9g=ix+MOhkv+50J3Egef7A@mail.gmail.com>
- <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
- <0dc8820c-c6b0-c4ca-2107-84061fdc5333@gmail.com> <CACsJy8AmgDh1Z4CKTzSAVrywo0q-CFKbpuyqdtRm9m7pkUweSw@mail.gmail.com>
- <a68ce0b4-81c5-e889-fc90-ed8b17a10d4a@gmail.com> <CABPp-BHsD=o=3jPKH6gH+XbEdNVqzhr18BSfupbaSNpxAgaqdw@mail.gmail.com>
- <42ba7f39-4a8e-9866-eebd-2a4dd5ff8414@gmail.com>
-In-Reply-To: <42ba7f39-4a8e-9866-eebd-2a4dd5ff8414@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 29 Mar 2019 08:35:34 -0700
-Message-ID: <CABPp-BGE49LyxQSMd8v_af=X_N9b0GyOk6TMK6jb8w1GMy6x+g@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:bA/4SPWW/pKziSeMT8NGF/jbuk0wAA28VF3qRvwJDsUUNQApRyk
+ hbjmCumXFTs2InibbnQnYDSMgMYH+ZzvGqUY4eTWYtkNdIioVy++L8pM8Wo/JGUh0ilrDU1
+ BOLTr96xXwuJHdWLJz0mXMCt5KUdyXlCtjh15Lw2QbFfV1WuTD8ZL4ghJkNmvw4sk6sFzaL
+ qltbf12+jzIG2woHneByw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:McO1vjGycz4=:VuPhKZn94U5NJ2pjFCT81a
+ K8P0Up1sKbtQ5+f3fsnRx3RORggjhlTHD4ppaSolvGwbBEfcyYAgDmQbwyVlL2GERUxDqMgqn
+ 257ZUPRFed0IqvnPluzkk7QxrcrNCCouK8ROvG0/7r+CucnxjteWak5ri41zGp0M5jD4YlXAY
+ sQgNTPAdgYomkrc17aI7MEK/wkbP3eEl2+WFuTWbB+1RRItBqEXo2OCIQ3vUSlnsZIk2tl2T6
+ tIRzAx49FhwJbXU3QkVIPjC5bOtQN5s4sXzxzpr9j8FoWG+KUg9iB0MnU9tlaWamVvnP2Xe9H
+ tQ0XdiKwt/Od4KTTKtG7gb/BDivU/kUuoGqrlIaNnljtJn+KuVYjmhYOFhHhIiSxXhgpTEpmI
+ ie/00gvDbqe+Y5Wa/ApdKZK2ogiRPmZrtcJsSGXah9+MteNuocTKuUWQqeM04MygannLjSj7z
+ ZvHtTNU+wp5zdY/fhtLX04YxLPmgxu8gNiA78x91mycjbuQgtbzkXCvhvNacWKbkYm5/GPAuN
+ P2OtQihdgeiWCDnY2Exoco3qZGllA/hNAyzTMYD2pKkm/fsjItKt970kbPTejrmpWXouPAya0
+ WjcrTIMmV6SE4r890JZiMxfyWerbr4wH81qRN833d1Y0ZAHOU9ktehIhhSfGAnRu4i0lul4j3
+ NTsaTA0oPbZOez7ilr3Jl35rYD3vje4J6fmSNtreDtSUQeRb9JQH2EjQ+/allZVfyAWndgaZf
+ 2nWb9/it/fSPjAyjlIxx89ogEwsxTu++xezSbG42SQ4HRTytm5OgRlajjj/t+WLeaiZpFxD3d
+ 0ssbaBEFFEBxWivJI0UvKORzc5CTQ07PS99/EWWArUUpCe0jC7EyYqyYgHNDuErey0kcilBSB
+ 3Wja+EP9iPBWYpmvG8m4Fe2e/c0k029JN/anVt1IZlhSlQ9LIiUZ46goRQRH7DH4zIjFWJcRU
+ GjZEA426FGw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Thomas,
 
-On Fri, Mar 29, 2019 at 4:04 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> On 28/03/2019 17:39, Elijah Newren wrote:
-> > On Thu, Mar 28, 2019 at 9:23 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >> On 28/03/2019 11:04, Duy Nguyen wrote:
+On Thu, 28 Mar 2019, Thomas Gummerer wrote:
 
-> >>> Just so we're clear, what is your "the way" to go? to remove
-> >>> CHERRY_HEAD_PICK and MERGE_HEAD (and other MERGE_* as well) if
-> >>> --ignore-in-process is specified? Or to leave MERGE_* and
-> >>> CHERRY_PICK_HEAD alone and delete other stuff?
-> >>
-> >> I was agreeing with Elijah about dropping --ignore-in-progress unless
-> >> there's a demand for it or at least restricting it so that it requires
-> >> --discard-changes and aborts in-progress merges and single in-progress
-> >> cherry-picks/reverts. (I'm worried about people switching branches when
-> >> cherry-picking more than one commit, though as you say it can make sense
-> >> during a rebase.)
+> On 03/22, Matheus Tavares wrote:
 > >
-> > I understand the desire to prevent mis-uses, and I agree that if there
-> > are staged changes or conflicts it's really likely things will go
-> > sideways.  But I think we should instead check for those situations
-> > rather than use e.g. rebase vs. merge as a proxy for whether those
-> > problems could be present.
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index 50bde99618..b76f33c635 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -443,7 +443,7 @@ static void copy_or_link_directory(struct strbuf *=
+src, struct strbuf *dest,
+> >  		if (unlink(dest->buf) && errno !=3D ENOENT)
+> >  			die_errno(_("failed to unlink '%s'"), dest->buf);
+> >  		if (!option_no_hardlinks) {
+> > -			if (!link(src->buf, dest->buf))
+> > +			if (!linkat(AT_FDCWD, src->buf, AT_FDCWD, dest->buf, AT_SYMLINK_FO=
+LLOW))
 >
-> When cherry-picking multiple commits if the user commits the conflict
-> resolution with 'git commit' then the presence of .git/sequencer is the
-> only sign that a cherry-pick is in progress (wt-status.c fails to detect
-> this, I've got a fix but no tests yet). rebase can also stop without
-> having conflicts or staged changes so I think we need to check for in
-> progress commands as well as conflicts (what do we want to do if someone
-
-This whole discussion is about "--ignore-in-progress" which implicitly
-implies we are checking for in progress commands and choosing whether
-to override it.  So I don't understand what you mean by saying we need
-to check for it; isn't that a given?
-
-> tries to switch in the middle of a bisect? - I don't have a strong
-> opinion). I agree switch should fail if there are conflicts, but I think
-> it is fine to switch with staged or unstaged changes if there isn't a
-> merge etc in progress (I quite often start working on something and
-> then realize I haven't started a new branch just before I commit). I
-> could possibly be convinced that silently switching with staged changes
-> is always a bad idea though.
-
-I think we might be missing the big picture by trying to discuss
-things in terms of in-progress operations or conflicts or staged
-changes or unstaged changes.  Allow me to attempt to reframe the
-discussion:  We have identified at least one case where allowing the
---ignore-in-progress flag would be unsafe, and we've identified one
-where we think it would be safe and useful, thus we need a rule of
-thumb for when it is safe to use and when it isn't.  Here's my
-attempt:
-
-  --ignore-in-progress is safe enough for usage if we can switch to
-another branch and back with no net overall changes to either the
-index or the working tree after the two switches.
-
-This rule could allow for the presence of both staged and unstaged
-changes (or maybe even conflicts in some alternate world where
-checkout/switch didn't necessarily error out on those), depending on
-if switch/checkout can operate without touching those particular files
-as part of switching.
-
-> > I am especially concerned with the idea of
-> > having something like "git switch --ignore-in-progress
-> > --discard-changes" being used to quit merges or cherry-picks or
-> > reverts or even rebases. In my opinion, doing so is creating flags to > combine uncommon pairs of git commands (git <operation> --quit + git
-> > switch) in a way that is far less clear.  I think that's a bad route
-> > to go down, and we should keep the commands orthogonal
+> [...]
 >
-> keeping commands orthogonal is certainly clearer, if less convenient -
-> lets do it (assuming Duy agrees).
+> I notice that we are currently not using 'linkat()' anywhere else in
+> our codebase.  It looks like it has been introduced in POSIX.1-2008,
+> which sounds fairly recent by git's standards.  So I wonder if this is
+> really supported on all platforms that git is being built on.
 
-Yaay!
+I bet you it isn't.
 
-> > (if I could
-> > start all over, I'd also make reset and checkout and everything else
-> > stop modifying any in-progress state).
-> >
-> > Instead, I would either:
-> >
-> >    * Drop `--ignore-in-progress` for now.  (Although Duy had a
-> > meaningful usecase)
->
-> I think it could be useful during a rebase, I'm not sure about any of
-> the other operations though.
+> I also wonder what would need to be done on Windows if we were to
+> introduce this.  I see we define the 'link()' function in
+> 'compat/mingw.c' for that currently, so I guess something similar
+> would be needed for 'linkat()'.  I added Dscho to Cc for Windows
+> expertise.
 
-I think it could be useful during some rebases, but it should not be
-allowed if the user can't switch back to the current commit with no
-net overall changes to the index or working tree.
+Indeed, `linkat()` would have to be implemented in `compat/mingw.c`. It
+would be a bit involved because the last parameter of that function
+changes behavior noticeably, but the main difficulty (to determine the
+path from a file descriptor) should be overcome using
+`HANDLE olddirhandle =3D _get_osfhandle(olddirfd);` and the calling
+`GetFinalPathNameByHandleW(olddirhandle, wbuf, sizeof(wbuf));`.
 
-Also, I don't see how rebase is unique here.  Rebase, cherry-pick,
-merge, and revert can all stop with conflicts, staged changes, and
-unstaged changes.  All of them can also stop without any one of those
-(e.g. cherry-pick'ing a commit which has been piecemeal applied
-already, merging a branch whose individual changes have already been
-cherry-picked and when the user has specified --no-commit, or
-reverting a commit whose changes have already been unapplied).  Thus,
-I continue to believe that which operation is in progress is
-irrelevant.  Either we shouldn't allow switching during any
-in-progress operation, or we should determine some other criteria for
-when it is safe to allow --ignore-in-progress.  Basing it on the
-operation would sometimes allow --ignore-in-progress to be used when
-it shouldn't be, and disallow it sometimes when it shouldn't.  I'm a
-fan of the rule I mentioned up above ("if we can switch and switch
-back with no net changes then it's safe enough to allow")
+So yes, this is *not* something I'd do lightly.
 
-> >
-> > OR
-> >
-> >    * Make `git switch --ignore-in-progress <branch>` leave all process
-> > state in place and switch branches, if we would otherwise be able to
-> > switch branches (i.e. there isn't dirty or conflicted changes in the
-> > way).
->
-> I thought we allowed branch switches when there are staged or unstaged
-> changes, I don't think that is a problem unless we're in the middle of a
-> merge etc. I'm still not sure it's a good idea to switch branches in the
-> middle of a multiple cherry-pick, maybe we should print a warning.
+The bigger problem will be to continue to support older Unices such as
+SunOS and AIX. I highly doubt that they have that function. You should
+find out, Matheus.
 
-I didn't say to disallow it if there were dirty or conflicted changes,
-I said to disallow it if there were dirty or conflicted changes *in
-the way*.  We don't allow branch switches when dirty changes would be
-overwritten or need to be merged, as that can't easily be reversed.  I
-think --ignore-in-progress should only be allowed when it can be
-easily reversed to get the user back to the right branch/commit.
-
-This "no net changes" rule also reinforces (or is reinforced by) the
-other suggestion I made of having --ignore-in-progress be made
-incompatible with both -m and --discard-changes.
-
-But I totally agree that switching branches during the middle of some
-operation should print a warning -- not just for cherry-pick, but for
-merge or rebase or revert too.  In all cases it'll be important to
-tell the user both that they could really mess things up if they try
-to resume the operation without switching back, and telling the user
-how to get back to where they used to be (in rebase's case, that'd be
-"git switch --ignore-in-progress <previous-commit>" while for the
-other three it'd be "git switch --ignore-in-progress
-<previous-branch>").
+Ciao,
+Johannes
