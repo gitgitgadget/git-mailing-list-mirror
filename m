@@ -2,136 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27EAE20248
-	for <e@80x24.org>; Fri, 29 Mar 2019 13:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E085B20248
+	for <e@80x24.org>; Fri, 29 Mar 2019 14:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728939AbfC2NzX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 09:55:23 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42560 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728919AbfC2NzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 09:55:22 -0400
-Received: by mail-ed1-f65.google.com with SMTP id x61so2075652edc.9
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 06:55:21 -0700 (PDT)
+        id S1728877AbfC2OGd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Mar 2019 10:06:33 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:37534 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728713AbfC2OGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Mar 2019 10:06:33 -0400
+Received: by mail-it1-f193.google.com with SMTP id u65so4034322itc.2
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 07:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Cb6qWVPpD3pVYY9I7AtbPKM0PvvOI0HD8C1Sard8Kf8=;
-        b=JNrg4Ge3Pp+oRkZomZZVR5Jbn117DnksmYfVJAEtFYg635ZxqQKIgkD0FC1R+G11ib
-         39AZTxbqiIq7eh3d1y8nGMExxBsKN1qOzgGSdhIm+csyoZSr7099YfofHnB6VtDlo6xw
-         nLq/amXvvItLEnWNoRXR8CSMDY7jyM4UzbKlO3PERQpx00q8Pqnw/7bWuLWvOkWwvBO8
-         0sljNFgOixcbY1HuCJLQxTE81DHd0dt9gj4syneroj2lID/3CyaWLrVFY6jIHO/uRsH0
-         ASAzhAIqF2S16a7lVCQkMmaciD5iFUHxKypkzsg/DNWmJrwYSV/8S0GLm6Ft/euV/oCO
-         o68Q==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cD0+dp0m1MQ2Fz4scPjc5P0cEKZX5aCrmGsxFnXoZBs=;
+        b=XD0DWvJRnMZy4hHuCz+z2B772EfxQmvgmH3eALH3xLBgSEvz6JN0W/bU0lHJdsnMgX
+         LX92nVR6JYcZ1YxxflRBkbxFgR2agiZGOVyagp2B/81gxF2BXAkZtpS49Qk4ofDieLh7
+         4N9O3b/Afe64/g8GmWCD0I+Pbtu2RG9d0eOASmWx/1ityINKtJMOoIDVh6PpkS7/2Fis
+         l3JImElMDLkgyjuIuc4rx59mmvUpu8xJoB+jg7rtR3E5dQFnyNOiGTHEP1vq76st+TZ6
+         V3nMOPLWe28P6/v8Xgp/yLWABeQQdgfNUXHfDRr5L4NlU0oyV5O8m8u19y/nfE8WnX1P
+         uknQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Cb6qWVPpD3pVYY9I7AtbPKM0PvvOI0HD8C1Sard8Kf8=;
-        b=laVsBcxTZh46uAnvJOyoLcWaKS3Hu4HjumlqCxZ8DyBRmDykD/SATLtFNzNi3uGXOr
-         mM6/MlhDUOE4NeT1qw7shTqJWfxf6T2N2QXdq3da3/uyUt16CirBscCKUVVRMnqn2rQx
-         oBEOydRxgWPp4ijkOUjePBtJ+Jv8c2zTis9u9LO5U5JMKazlGGDtWYgS7UHBlvZyuG1d
-         5XNi63nB0B+F4ue8+jG/JeJFiJASXjj/+0t6VuX7ZBorn7MpFv0LmJHBhhgTSohvKwY7
-         0zHMKYq/3ZpjEJ6dahX7HrlcFpyvphS8y0CefuWVgKvzAkeZBK9bBaDEP2TdEqBFv+J0
-         ueVQ==
-X-Gm-Message-State: APjAAAVwQCV/D8YRN20ePA65LWQoXxvbX7vYPe4oP7nL4ZRkUppLFeFU
-        nyjB1hHXiF5itR2Sqe+VXkk=
-X-Google-Smtp-Source: APXvYqyeD/0J+McJWwYdAjx2VngAaLqC2X/pf1D18zaDRKy13OaYlhljfJSCkSEgcfNix85YuD5xRw==
-X-Received: by 2002:a50:8561:: with SMTP id 88mr17191303edr.101.1553867720575;
-        Fri, 29 Mar 2019 06:55:20 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id r14sm674190edd.87.2019.03.29.06.55.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Mar 2019 06:55:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2] sha1-file: test the error behavior of alt_odb_usable()
-References: <20181204132716.19208-2-avarab@gmail.com> <20190328200456.29240-1-avarab@gmail.com> <20190329134603.GB21802@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190329134603.GB21802@sigill.intra.peff.net>
-Date:   Fri, 29 Mar 2019 14:55:18 +0100
-Message-ID: <87pnq9aipl.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cD0+dp0m1MQ2Fz4scPjc5P0cEKZX5aCrmGsxFnXoZBs=;
+        b=Ov+xXZ71nOUQC8c5co12PPzQP6fadApYvOOPvcINYe6eggwN2oSOu/xsvLDDSDrGte
+         MXxfGT/rSMPatDQKp8LPHGt4QSvqCs2TaDgoMWGD163ueQxu7kVV93nljf9Xa3SDm59k
+         WlmnoEQ++qRPsF0gBqt0UWpkCvOSZeLcIjFeI77XETUjobbseCeufmTNbFfzInDGMSkG
+         cj/cWMBZDEdKmFcMI7Z+V04onb7IddJRAL5yJh+ALdjRlvxJHA8UC7w0tGQeHI8H8Z3N
+         PgxQXxIsCNCToS3ASp+WoaGl0sVntQUftKmsIMhwQh899h1uemt5v2HGbdVjVySKVAU/
+         Ts7A==
+X-Gm-Message-State: APjAAAWFCTyEsmRdsIepRxYwvo2c8poGvA6RVMCcqqsXIRa1Tr2Yoxoc
+        C6tK0dHK1oiGQg13ibPZ6hHjxASYD9rtSyz/DLYLkQ==
+X-Google-Smtp-Source: APXvYqxEq5n8OV371FExUdHzFD1nhWTknRbY1uPldWP8EMf+GeOF0Cge/hf2BZO4IcXk6f4YpsyNAWviapp3wmXXQgY=
+X-Received: by 2002:a24:4755:: with SMTP id t82mr4370504itb.72.1553868392224;
+ Fri, 29 Mar 2019 07:06:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190322232237.13293-2-matheus.bernardino@usp.br> <20190328214950.GJ32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190328214950.GJ32487@hank.intra.tgummerer.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 29 Mar 2019 11:06:20 -0300
+Message-ID: <CAHd-oW70VNgYmX9=5x0CwoSD2a0ik2AoJyd7T3xiO4O030c5yQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 1/7] clone: test for our behavior on odd
+ objects/* content
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
+        Alex Riesen <raa.lkml@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Mar 28, 2019 at 6:49 PM Thomas Gummerer <t.gummerer@gmail.com> wrot=
+e:
+>
+> On 03/22, Matheus Tavares wrote:
+> > From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> >
+> > Add tests for what happens when we perform a local clone on a repo
+> > containing odd files at .git/object directory, such as symlinks to othe=
+r
+> > dirs, or unknown files.
+> >
+> > I'm bending over backwards here to avoid a SHA1 dependency. See [1]
+> > for an earlier and simpler version that hardcoded a SHA-1s.
+> >
+> > This behavior has been the same for a *long* time, but hasn't been
+> > tested for.
+> >
+> > There's a good post-hoc argument to be made for copying over unknown
+> > things, e.g. I'd like a git version that doesn't know about the
+> > commit-graph to copy it under "clone --local" so a newer git version
+> > can make use of it.
+> >
+> > In follow-up commits we'll look at changing some of this behavior, but
+> > for now let's just assert it as-is so we'll notice what we'll change
+> > later.
+> >
+> > 1. https://public-inbox.org/git/20190226002625.13022-5-avarab@gmail.com=
+/
+> >
+> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > Helped-by: Matheus Tavares <matheus.bernardino@usp.br>
+>
+> The trailers should be in the order things have happened usually.  So
+> having =C3=86var's S-o-b first makes sense, but the Helped-by should come
+> before your S-o-b, as you made the changes first before sending out
+> the patch series.
 
-On Fri, Mar 29 2019, Jeff King wrote:
+Ok, thanks for letting me know. I'll fix it.
 
-> On Thu, Mar 28, 2019 at 09:04:56PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> Add a test for the error() case in alt_odb_usable() where an alternate
->> directory doesn't exist. This behavior has been the same since
->> 26125f6b9b ("detect broken alternates.", 2006-02-22), but if that
->> error() was turned into die() the entire test suite would still pass.
->>
->> Perhaps we should die() in that case, but let's start by adding a test
->> here to assert the long-standing existing behavior.
->
-> I think if anything we might go the other direction, and downgrade the
-> error() to a warning() or even omit it entirely. It's not an error to
-> have a missing or transient alternate. Unless of course it has objects
-> you need, but then those generate their own errors.
+> When sending someone elses patch in a slightly modified version, it
+> may also be useful to add which parts you changed, as it was done in
+> e8dfcace31 ("poll: use GetTickCount64() to avoid wrap-around issues",
+> 2018-10-31) for example.
 
-Yeah that sounds fine. FWIW it's just an "error" in the sense of being
-printed out by error(), but we proceed, so it's really a warning,
-sort-of.
+Thanks, I didn't know about that! I searched the log and didn't see
+many of this on patches with 'Helped-by' tags, is there a particular
+case to use it or not?
 
-> I actually think in an ideal world we wouldn't say anything at all about
-> alternates which aren't present, don't appear to contain objects, etc,
-> on their own. And then when we hit an error because an object is
-> missing, only _then_ diagnose and say "hey, you have this alternate but
-> it doesn't have anything in it. Maybe that's an error?". Doing that
-> diagnosis in the error path helps in two ways:
->
->   - we don't have to worry about it being slow
->
->   - we can be a bit more loose about things that _might_ be an issue.
->     E.g., it's not an error to point to an alternate directory that has
->     no files in it. It might be a misconfiguration, or it might just not
->     have any objects right now. It's hard to justify complaining about
->     it in _every_ git command that loads alternates. But after hitting a
->     fatal error due to a missing object, it seems like a convenient
->     thing to mention to the user.
->
-> I suspect that implementing it that way might be a pain, though. Even if
-> we had a convenient diagnose_missing_object() one-liner, there are
-> probably dozens of separate places it would need to be called from.
->
->> diff --git a/t/t5613-info-alternate.sh b/t/t5613-info-alternate.sh
->> index 895f46bb91..d2964c57b7 100755
->> --- a/t/t5613-info-alternate.sh
->> +++ b/t/t5613-info-alternate.sh
->> @@ -136,4 +136,11 @@ test_expect_success CASE_INSENSITIVE_FS 'dup findin=
-g can be case-insensitive' '
->>  	test_cmp expect actual.alternates
->>  '
->>
->> +test_expect_success 'print "error" on non-existing alternate' '
->> +	git init --bare I &&
->> +	echo DOES_NOT_EXIST >I/objects/info/alternates &&
->> +	git -C I fsck 2>stderr &&
->> +	test_i18ngrep "does not exist; check" stderr
->> +'
->
-> All that said, I don't really have an objection against this patch,
-> since it's just testing the current behavior. Anybody who wants to
-> change it would find it pretty easy to tweak this test, too.
+> Iirc, the test that is added in this patch does not work on some
+> platforms, notably MacOS.  That would mean that we would break
+> bisectability at this patch on some platforms if we were to introduce
+> it here.  Therefore I think it would be better to squash this patch
+> into the next one which fixes these inconsistencies.
+> Note that I can't test this at the moment, so this concern is only
+> based on previous discussions that I remember.  If that's already
+> addressed somehow, all the better!
 
-Yup. Just wanted to get the patch to test what we do *currently* out,
-might loop back to finishing up the rest of this.
+Yes, it is already addressed :) The section of these tests that used
+to break on some platforms is now moved to the next patch which also
+fixes the platform inconsistencies. Now both patches (this and the
+next) work on macOS, NetBSD and GNU/Linux. Also every test and job is
+passing at travis-ci, except by the job named "Documentation"[1]. But,
+it's weird since these patches don't even touch Documentation/... And
+master is failing the same job at my fork as well [2]... Any thoughts
+on that?
+
+[1] https://travis-ci.org/MatheusBernardino/git/builds/512713775
+[2] https://travis-ci.org/MatheusBernardino/git/builds/513028692
