@@ -2,136 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD1920248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5451A20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 14:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730464AbfC3LjB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:39:01 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46338 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730430AbfC3LjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:39:01 -0400
-Received: by mail-io1-f68.google.com with SMTP id b9so3887690iot.13
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NSdlb0f1+4vSthkobNYPL8lmI4CKdSrZ/sa3/0u4WT0=;
-        b=Zpfvyi/1OdUGFesXo51+OgVCEGGrQTXY10mv66qyFoowZGN6heMFQCuSx5aenqMv85
-         XdSsJxqA73+5c43gkNx35oRaVi212uyfUqUCwpDzftc/ouFkoKq5BjY3Se/VbC5JDhPK
-         ZJKb69JJ2sizTCy2rLABpxokXx12osHQCipA2YKv8eZM30SBNfIvQSxXnFeG7Rbzo1Hm
-         oSyA2wUZxKKQ+xKVKpQq6zv5ehc7NFVJPGbgoLiDRQV69eDm5a5lP19WQNs+76tqhGqg
-         G48kb8ER3tduWqCvTpBQcoNcF5onytqVTmzsqh0CB4h629INvvHFMJF1hCmqDUKNcaak
-         wMSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NSdlb0f1+4vSthkobNYPL8lmI4CKdSrZ/sa3/0u4WT0=;
-        b=dVU8w+J3HfSErluxYmxfbenqIXpDBeYiURqzexBXPz2YSyXnduDwsbcaKDmKVgWF4T
-         n9xSJTU6KjMRtkSZyse4n6MPhl7cQfOsiYBUwka49PzOzJApjk/Evscxl8uwyeVXoSi2
-         ApHuTqy7BC+lPEcLb5+CxNnxlutG4ff3Bvnl1cjSYFG/T9qrOZWJyWMWvNGliMiRNTyT
-         gYdsh/IgbINd+Xhbdj5+lEt2TAcs9/FHe1fUaUeVf1Iq9PJ9A8j4uccWLZgYMobFbPCu
-         QwAriqP9CX8+D9DVleQlAeO8Z9+H2tnsZthvev8vBJu3atXF0AQ1YNHNN0FUHs/V7o6s
-         PR0A==
-X-Gm-Message-State: APjAAAUuqmqjF4qkBVmcj0Xazsy+W198UYCVrAp7PSajWxAhjrDrLM7M
-        DBsPuEpKQAM58ihQtsCwnOdUitA7AvqeG5MyMJ4xJQ==
-X-Google-Smtp-Source: APXvYqx0XXPRqPjLFRedTsYPxo0231WZmzBSkkLVhCBdMNHkD+M9GKs9ybfEzSy5e+TNnpP8XIeDpWbceAgMHJy4N+0=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr12010267ioa.282.1553945940483;
- Sat, 30 Mar 2019 04:39:00 -0700 (PDT)
+        id S1730850AbfC3ONS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 10:13:18 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:39080 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730832AbfC3ONS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 10:13:18 -0400
+Received: from [192.168.1.12] ([2.101.245.142])
+        by smtp.talktalk.net with SMTP
+        id AEjSh6HwxgI7iAEjShNiw9; Sat, 30 Mar 2019 14:13:15 +0000
+X-Originating-IP: [2.101.245.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=mQgiQ6BlbOv19lEfDgieCg==:117
+ a=mQgiQ6BlbOv19lEfDgieCg==:17 a=IkcTkHD0fZMA:10 a=w0RzvLSWAAAA:20
+ a=aulWLQ49AAAA:20 a=52-Yb1kGAAAA:20 a=IoXxO10MqF6Dbp1GsckA:9
+ a=QEXdDO2ut3YA:10 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=QOGEsqRv6VhmHaoFNykA:22
+From:   Philip Oakley <philipoakley@iee.org>
+Subject: test suite: why does git add large_file create a pack, rather than an
+ object?
+To:     Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Message-ID: <f0c838f0-2f75-2b05-1aeb-3db4743ce89a@iee.org>
+Date:   Sat, 30 Mar 2019 14:13:15 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
- <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
- <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
- <CACsJy8D9h2yT18V6pH+TKOaFPNQUf=Gd6YtgVkqUW_hvS1ZFaA@mail.gmail.com> <CAApa7v9-2BhTQgt_Vd1mLACsrR2ZhYRBRrNTx2HDrEKXuHVSXw@mail.gmail.com>
-In-Reply-To: <CAApa7v9-2BhTQgt_Vd1mLACsrR2ZhYRBRrNTx2HDrEKXuHVSXw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 30 Mar 2019 18:38:34 +0700
-Message-ID: <CACsJy8BQStYZrTi6Pfrq+TDy-1d74cpS=+8QTr3DDJwgb3ZB9A@mail.gmail.com>
-Subject: Re: Feature Request git clone shallow-include
-To:     Joe Enzminger <joe.enzminger@exactasystems.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfDfm6YHOMXQ1kyVXHxNccXO8prO0/4f6MBCuKApwF3CyyFezohbDi+nGkZqIKTGOuCI9wKhkLqEx+87YtvLFIjiju5Vr+DcmhDWl/10ogf0XqcrmA76O
+ 2ckXydY8NCItfOU9R5ZcLMb+YR/jFqPfYcgxfV9XUJ9IXz8z8rcarlKCY+fr+ogQ9Wvh2cLQMI22XP/XFzET9R4FtpRfVKpMUDlppgzRCM6TK1wsy4KlW0Lo
+ B7BZpoYHm+hrlqu7OHEMoXRiUxN6V6kN3eXDW7WffJ1gQBSL3TEKZStEg8DHlS4RfKD7I0nuInbGNpc5Bcu4CA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 30, 2019 at 5:02 AM Joe Enzminger
-<joe.enzminger@exactasystems.com> wrote:
->
-> Duy -
->
-> Any updates on this feature request?
+I'm looking at the Git-for-Windows(GfW) >4Gb  large file problem 
+following Torsten and Thomas's work (and others). [1,2,3, etc.]
 
-Nope. I've been busy with other stuff. I did have a look at the
-possibility of reusing code in sha1-name.c and concluded that it's not
-quite safe.
+I've added a few more changes to my branch [2] to get the zlib to 
+properly count past its 32bit limit when wrapped in the git_inflate 
+(etc) wrapper code. [4]
 
-> Joe
->
-> On Thu, Feb 21, 2019 at 7:06 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Thu, Feb 21, 2019 at 1:07 AM Joe Enzminger
-> > <joe.enzminger@exactasystems.com> wrote:
-> > >
-> > > That is correct.  What you suggest is actually what I tried (using
-> > > sha-1 syntax).  For my purposes, excluding the tag's parent's but
-> > > including the tag is sufficient, but if is fairly straightforward to
-> > > extend support to the other use cases I'm sure someone would find is
-> > > useful.
-> >
-> > It's not hard to do. I hope I will find some time to do it soon. My
-> > only concern is whether reuse the current code or write new. The
-> > former makes it easy to accidentally accept some extended sha-1 syntax
-> > that should not run on the server side. On the other hand, the latter
-> > will not be as thoroughly tested because it only runs by shallow code.
-> > That's my problem though. I think I might be able to find a third
-> > option somewhere in between.
-> >
-> > >
-> > > Joe
-> > >
-> > >
-> > > On Tue, Feb 19, 2019 at 7:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> > > >
-> > > > On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
-> > > > <joe.enzminger@exactasystems.com> wrote:
-> > > > >
-> > > > > Currently, git clone supports shallow-exclude=<tag-name>.  The client
-> > > > > will clone up to, but not including, the commit with the tag.
-> > > > >
-> > > > > It would be useful to have the ability to include the commit with the
-> > > > > tag.  The suggestion would be to add a "shallow-include" options to
-> > > > > clone to support this behavior.
-> > > >
-> > > > So exclude the tag's parents and everything before, but keep the tag, correct?
-> > > >
-> > > > I think if we support --shallow-exclude=<tag>^ then it should work the
-> > > > way you want (if the tag is a normal merge you may need to add
-> > > > --shallow-exclude=<tag>^2 as well). And you can do even fancier thing
-> > > > like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
-> > > > of the tag, but keep the tag and grand parents). We will need to
-> > > > restrict extended SHA-1 syntax to a safe subset of course.
-> > > >
-> > > > > I have tried to use shallow-exclude with a follow on git fetch
-> > > > > --deepen=1, but it always returns "fatal: error in object; unshallow
-> > > > > <sha1>"
-> > > > --
-> > > > Duy
-> >
-> >
-> >
-> > --
-> > Duy
+At the moment I'm using an extended _test_ case that starts by adding a 
+~5.1Gb file and then using verify-pack, which aborts with an error.
 
+         dd if=/dev/zero of=file bs=1M count=5100 &&
+         git config core.compression 0 &&
+         git config core.looseCompression 0 &&
+         git add file &&
+         git verify-pack -s .git/objects/pack/*.pack &&
+         git fsck --verbose --strict --full &&
+         ...
 
+If however I simple execute the commands from the GfW bash, the added 
+file is stored as a blob object, rather than a pack.
+
+I'm at a loss to understand the reason for the change in behaviour 
+[store file as pack, vs store as object] between running the code as a 
+test script and at the terminal. What am I missing?
+
+I have 'good' output from the test script on the WSL (and have 
+identified the packs' specific byte differences), but my gdb experience 
+is limited so executing that test while within the test script meant I 
+couldn't start debugging there. Hence the direct execution from the 
+terminal that raised the issue.
 
 -- 
-Duy
+
+Philip
+[1] <20190131203842.633ztr4yckn7kl2d@tb-raspi4>
+[2] https://github.com/gitgitgadget/git/pull/115#issuecomment-4753008375
+[3] https://github.com/git-for-windows/git/issues/1848
+[4] https://github.com/PhilipOakley/git/tree/size_t2
+
