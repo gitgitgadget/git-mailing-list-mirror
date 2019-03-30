@@ -2,164 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE76220248
-	for <e@80x24.org>; Sat, 30 Mar 2019 18:30:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2E4720248
+	for <e@80x24.org>; Sat, 30 Mar 2019 19:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731057AbfC3SaR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 14:30:17 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56008 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731029AbfC3SaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 14:30:16 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93EDD45D5A;
-        Sat, 30 Mar 2019 14:30:12 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=9o7ikzeitQvEde/i1UkUEBkgn
-        AA=; b=FdupqxJB23BAweDRxa6VUzbCiB6yfe6ltb7+mEjKrf5BDkEHG8ZMCU4DP
-        6WfQpeem9EQsQ0RGhrQxBQaSgOVlEBWoEg6HdEcxfFP+QVs8sLyCMXH7l8q3NVzz
-        5F3m9ZaA5+NlQ5Ld3Rry4GUO+vsrWQ5DO4wNe0rebbv8Nbqomw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=sFtyV8LT7PNyfp8hLED
-        VUaJpieEj7EHdfHcPSynLAjoMBplFqDsA2WOFzSmMfMo2HOHfMfhfNQpK45AtpGr
-        PGjB/FSNKZ76T/SPqarIg9X/dAuaLAq6vMzkT2cUonSVjTJb5vw1OfWgX6X+4c/T
-        MpWeCfohfKSgGsy+Bl7V/Shk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8DD3745D58;
-        Sat, 30 Mar 2019 14:30:12 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.202.93.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0EADF45D53;
-        Sat, 30 Mar 2019 14:30:06 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v1 1/2] Documentation/rev-list-options: wrap --date=<format> block with "--"
-Date:   Sat, 30 Mar 2019 14:30:00 -0400
-Message-Id: <20190330183001.16624-2-tmz@pobox.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190330183001.16624-1-tmz@pobox.com>
-References: <20190330183001.16624-1-tmz@pobox.com>
+        id S1730808AbfC3T1n (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 15:27:43 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37420 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730713AbfC3T1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 15:27:43 -0400
+Received: by mail-wr1-f67.google.com with SMTP id w10so6696225wrm.4
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 12:27:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5XEQFV90aPjdLv+MecW21b8I1Kvyk+/X8WCU6O8wp4U=;
+        b=q4D57YebMWDO2sYt/Z3DGEQLtr9rJ3vIApeEpKGczCmcVSqYCicF9AFJwkUn8habUB
+         fLWT4XDYOIJZwpsKtdHx82i9DU+ogAfJTAH3SWKxsUwlno92KgJz86zBMRj2GRnC+EC7
+         pl3uUAronU1sNF2CCtKgt+M88ymBFlgnDgVRiQG9DtHIbxNunAZI/RHnvQRfG8SwrgVq
+         5Ry48rXYMq+3WBo9O2ZYnptidHF68MVTtZTgJyVSAnQHVwuJ4u6jAKPgO2+aYhQZb8I/
+         ORltAJz4146vQLqQNL9Ml//wVuk+l99axzRU8TFg9L4kMZidS5Y1bO9pXX7B93WLqudX
+         H+FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5XEQFV90aPjdLv+MecW21b8I1Kvyk+/X8WCU6O8wp4U=;
+        b=rwDAUK+IFreoMFipPSo+t26ooNWBN8bnb+mwgE/RFCFqNzg5SGjQPi3eJXJJJPkOrN
+         VmqFNKSCwFj+zKgI+EyAF9cAKcg1Z39XfXrgiKEDlIntx4f8Hbq7oPjhXXdYrbfD34Q1
+         fYLowIsHIk8pEllPjOcUwyu1W3lGgt5hbW6dXpTDCx7T4tNq12S65/IBmnqCB43H1JIO
+         isvAX2Ja1UD95xRz1IUOhoxdTENNjlIoMm78h3FtP6JuzQ0ALxU1qmiHdnWEpnypX8gr
+         m28UN2Cz3B7X0V6IL3kLuSLt0EBmvkOhVtAao22G94B4iU4UzUr+K+3Bb+9rQ1kk7mrk
+         Chzw==
+X-Gm-Message-State: APjAAAXtNkNjFuw4wzBzWULm1stDdsbvgZB8VKSR1JtYoQDgSOSpegwt
+        4vOFdBX6/QtKyQUorQv/zZ4=
+X-Google-Smtp-Source: APXvYqyyw6w6Bx63o7x2irRhFZeHZk+9rrLJgeodLuBCK19ghHJvQhFMNfm57ul2B6Qf/+Z5kCdv+g==
+X-Received: by 2002:adf:ec11:: with SMTP id x17mr34230758wrn.120.1553974061013;
+        Sat, 30 Mar 2019 12:27:41 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id q3sm6769438wrr.75.2019.03.30.12.27.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 30 Mar 2019 12:27:39 -0700 (PDT)
+Date:   Sat, 30 Mar 2019 19:27:38 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Benoit Pierre <benoit.pierre@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at
+ .git/objects/
+Message-ID: <20190330192738.GQ32487@hank.intra.tgummerer.com>
+References: <20190226122829.19178-1-avarab@gmail.com>
+ <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190322232237.13293-3-matheus.bernardino@usp.br>
+ <20190328221049.GK32487@hank.intra.tgummerer.com>
+ <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
+ <20190329200517.GO32487@hank.intra.tgummerer.com>
+ <CAHd-oW5aTyr7OmYwETLHYbHbRYgcUPuHpt2eN=Z2FWrqUQTzJQ@mail.gmail.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: D8A2A94C-5319-11E9-BC1E-EE24A11ADF13-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd-oW5aTyr7OmYwETLHYbHbRYgcUPuHpt2eN=Z2FWrqUQTzJQ@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using "+" to continue multiple list items is more tedious and
-error-prone than wrapping the entire block with "--" block markers.
+On 03/30, Matheus Tavares Bernardino wrote:
+> On Fri, Mar 29, 2019 at 5:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > On 03/29, Matheus Tavares Bernardino wrote:
+> > > Ok, what if instead of using linkat() we use 'realpath(const char
+> > > *path, char *resolved_path)', which will resolve any symlinks at
+> > > 'path' and store the canonical path at 'resolved_path'? Then, we can
+> > > still keep using link() but now, with the certainty that all platforms
+> > > will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
+> > > Would that be a better idea?
+> >
+> > Yeah, I think that is a good idea.  Note that 'realpath()' itself is
+> > not used anywhere in our codebase either, but there is
+> > 'strbuf_realpath()', that from reading the function documentation does
+> > exactly what 'realpath()' would do.  So using 'strbuf_realpath()'
+> > would probably be the right thing to do here.
+> 
+> Thanks. While I was looking for realpath() at git codebase (before I
+> saw your email), I got a little confused: Besides strbuf_realpath() I
+> also found real_path(), real_path_if_valid() and real_pathdup(). All
+> these last three use strbuf_realpath() but they also initialize the
+> struct strbuf internally and just return a 'char *', which is much
+> convenient in some cases.
 
-When using asciidoctor, the list items after the --date=3Diso list items
-are incorrectly formatted when using "+" continuation.  Use "--" block
-markers to correctly format the block.
+Right, feel free to use whichever is most convenient for you, and
+whichever works in the context.
 
-When using asciidoc there is no change in how the content is rendered.
+>                            What seems weird to me is that, whilst
+> real_pathdup() releases the internally initialized struct strubuf
+> (leaving just the returned string to be free'd by the user), the other
+> two don't. So, if struct strbuf change in the future to have more
+> dynamic allocated resources, these functions will also have to be
+> modified. Also, since real_pathdup() can already do what the other two
+> do, do you know if there is a reason to keep all of them?
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+Right, '*dup()' functions usually leave the return value to be free'd
+by the caller.  And while 'real_pathdup()' could do what the others do
+already it also takes more effort to use it.  Users don't need to free
+the return value from 'real_path()' to avoid a memory leak.  This
+alone justifies its existence I think.
 
-The issue this fixes can be seen in the git-log and git-rev-list docs on
-git-scm.com:
+> One last question: I found some places which don't free the string
+> returned by, for example, real_path() (e.g., find_worktree() at
+> worktree.c). Would it be a valid/good patch (or patches) to add free()
+> calls in this places? (I'm currently trying to get more people here at
+> USP to contribute to git, and maybe this could be a nice first
+> contribution for them...)
 
-https://git-scm.com/docs/git-log#Documentation/git-log.txt---dateltformat=
-gt
-https://git-scm.com/docs/git-rev-list#Documentation/git-rev-list.txt---da=
-teltformatgt
+Trying to plug memory leaks in the codebase is definitely something
+that I think is worthy of doing.  Sometimes it's not worth actually
+free'ing the memory, for example just before the program exits, in
+which case we can use the UNLEAK annotation.  It was introduced in
+0e5bba53af ("add UNLEAK annotation for reducing leak false positives",
+2017-09-08) if you want more background.
 
- Documentation/rev-list-options.txt | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-=
-options.txt
-index ca959a7286..7b415dff82 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -805,12 +805,13 @@ include::pretty-options.txt[]
- 	author's). If `-local` is appended to the format (e.g.,
- 	`iso-local`), the user's local time zone is used instead.
- +
-+--
- `--date=3Drelative` shows dates relative to the current time,
- e.g. ``2 hours ago''. The `-local` option has no effect for
- `--date=3Drelative`.
--+
-+
- `--date=3Dlocal` is an alias for `--date=3Ddefault-local`.
--+
-+
- `--date=3Diso` (or `--date=3Diso8601`) shows timestamps in a ISO 8601-li=
-ke format.
- The differences to the strict ISO 8601 format are:
-=20
-@@ -818,15 +819,14 @@ The differences to the strict ISO 8601 format are:
- 	- a space between time and time zone
- 	- no colon between hours and minutes of the time zone
-=20
--+
- `--date=3Diso-strict` (or `--date=3Diso8601-strict`) shows timestamps in=
- strict
- ISO 8601 format.
--+
-+
- `--date=3Drfc` (or `--date=3Drfc2822`) shows timestamps in RFC 2822
- format, often found in email messages.
--+
-+
- `--date=3Dshort` shows only the date, but not the time, in `YYYY-MM-DD` =
-format.
--+
-+
- `--date=3Draw` shows the date as seconds since the epoch (1970-01-01
- 00:00:00 UTC), followed by a space, and then the timezone as an offset
- from UTC (a `+` or `-` with four digits; the first two are hours, and
-@@ -835,28 +835,28 @@ with `strftime("%s %z")`).
- Note that the `-local` option does not affect the seconds-since-epoch
- value (which is always measured in UTC), but does switch the accompanyin=
-g
- timezone value.
--+
-+
- `--date=3Dhuman` shows the timezone if the timezone does not match the
- current time-zone, and doesn't print the whole date if that matches
- (ie skip printing year for dates that are "this year", but also skip
- the whole date itself if it's in the last few days and we can just say
- what weekday it was).  For older dates the hour and minute is also
- omitted.
--+
-+
- `--date=3Dunix` shows the date as a Unix epoch timestamp (seconds since
- 1970).  As with `--raw`, this is always in UTC and therefore `-local`
- has no effect.
--+
-+
- `--date=3Dformat:...` feeds the format `...` to your system `strftime`,
- except for %z and %Z, which are handled internally.
- Use `--date=3Dformat:%c` to show the date in your system locale's
- preferred format.  See the `strftime` manual for a complete list of
- format placeholders. When using `-local`, the correct syntax is
- `--date=3Dformat-local:...`.
--+
-+
- `--date=3Ddefault` is the default format, and is similar to
- `--date=3Drfc2822`, with a few exceptions:
--
-+--
- 	- there is no comma after the day-of-week
-=20
- 	- the time zone is omitted when the local time zone is used
+That said, the memory from 'real_path()' should actually not be
+free'd.  The strbuf there has a static lifetime, so it is valid until
+git exits.  If we were to free the return value of the function we'd
+actually free an internal buffer of the strbuf, that is still valid.
+So if someone were to use 'real_path()' after that, the memory that
+strbuf still thinks it owns would actually have been free'd, which
+would result in undefined behaviour, and probably would make git
+segfault.
