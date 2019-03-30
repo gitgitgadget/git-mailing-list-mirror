@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04C1A20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:21:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECF820248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730800AbfC3LVi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:21:38 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36689 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730729AbfC3LVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:21:38 -0400
-Received: by mail-pg1-f195.google.com with SMTP id 85so2437646pgc.3
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:21:38 -0700 (PDT)
+        id S1730729AbfC3LVo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:21:44 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:34258 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730591AbfC3LVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:21:43 -0400
+Received: by mail-pg1-f193.google.com with SMTP id v12so2444412pgq.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YLC/zHqD4nZfCBSwlO+lsrWxWfpYZdPdK2PMT6BBWgM=;
-        b=RSxayYB3JUv7kVzoQxUHxQ9NIUCoMNFeRH4zKPXRy8aaeeoGgZgBTCdSBC2Rh5znb3
-         oi7Z9yTiNAw9pmk5cUwoA/LNx7swZdSANlwDy28wfzrAez5GvbFC9RZ70kKvwGqxOIec
-         5uVgb/1F/D7rGdL3dp/3SVe9+j53ox9EqL6wN0i1WfublSx76W93ZVWuxd51/Nv2canM
-         OR+CJ9OCCdfdPbHVvy5VHFSdqeaZ5OQg9EB3silyweSmEDFGhxz0gG7QlmyQaeC85aBj
-         vQLjFctfzaT0yLLJTmCiLCnHCr+ukeN6XPQxN4DNq0tqocgyprM+Lh0jzzilYuRjFRB6
-         prhg==
+        bh=mk/AggNO03fk2G0u4xF9XXptVhBAQp2iIFzsp49nKTY=;
+        b=NT7cxy1Lnzz5L+EZenc9f2Ha5dxCIHP7sDjzczTEx4PLyzR/80j0lQtLSevkVevZ0Y
+         7QtbRixarQYTvoyjzTdbmovuVaQjowFF5vNgH1BfCycOocqQo4U2Bdi86ObU9wc8IopD
+         P34o1Sxfax9+9gMzD/NNos4SoKiRfQlDmpIqLkRfTi9YN2puF/7Ej/CjUmx+M7SiFRzt
+         Q992lqarDeg05L/3Fq8dPQ+CaWdC00dRtkFBQFWzlFqnrugtDtSsC5H+lziJieODM9dL
+         3rvrFQrWaW3FOhLYWw20ibsMtRZxmIxAQKEkyOjGYJueUTZchjXs5J9sCa7QfZpPxvY8
+         Lx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YLC/zHqD4nZfCBSwlO+lsrWxWfpYZdPdK2PMT6BBWgM=;
-        b=WF2uHdlmKULbCBomyfK3pexfNRS1Rlgp07mEVcrN9MRGJlHg2zBhIdRyEB9voTth7/
-         C2NHgRXWi1vviIpn9FWhGF6Hv1KryehP/dE/Bbq5WPOdLy/itTSk4+Oh2xdzz9Wll78a
-         cwIihPwUUybzvmD2PkSducdJMv0bdIbEu0LyRODTEr3gL2RImJyZdXz4lnKPSwraqp4C
-         wdf1y5TFB2OFDweSm9Z2I6l2JdadIpltPKoNrkvwe6ek4DYAZZCbMgFXAgmViWHfSlY4
-         36z3PzVeYZxIwSW3Z1qE5T4uCb/kaQQC0SsBeoFJvyJdZkdVnvAugNxpbrcISXjTPloh
-         zVAA==
-X-Gm-Message-State: APjAAAXta2OYUKUyN9jv5BbmhUl7t4UGFw08r8Drg89jWRQ6zX0oR/iI
-        so0DyS/vdZMwDnr4M8Mj2sMVfYjP
-X-Google-Smtp-Source: APXvYqxkM2dw9cwkCXp0OROzIHVaOqN4pLnFqLucFEITu6rQNZFfGoM9KQzCjLz+OzoOHGEDanDW4w==
-X-Received: by 2002:a62:55c7:: with SMTP id j190mr50850311pfb.226.1553944897840;
-        Sat, 30 Mar 2019 04:21:37 -0700 (PDT)
+        bh=mk/AggNO03fk2G0u4xF9XXptVhBAQp2iIFzsp49nKTY=;
+        b=fDl3uz9++2laDv7goxukHCQ+F2wqNyOwN2RRiiqi6GEg+CpvCDqSUWOoxgiUDOLd1i
+         pOnMow7Kd97WGboQoyHom0AAeMqGsJ6yDNx7PLjGn5JWeFgf03Xelmo0dpJUXxXDn+S8
+         S/rEEXFphejeX5c6/wCzLC+dtoZbeEyQ++PMd0pXLMWiad7xDkkYKfSSoPH4H1BPzQyS
+         J3e1vV/AgosITzj7MEiPMrVcc9NZkWY4/XmmCXYrxRA3S8UjIIJvThIx8RcvFcAtJDCJ
+         F3//xXY0R9GC3iTU7voBAQEEFowVcW/w1RA4Q931PGWHr99zomIFUOaX5ttrJCg4N0Lq
+         bA+g==
+X-Gm-Message-State: APjAAAXBzOAEwi9UexlWNLc5iK6PV2HjPGIfrKVlikX1cGB9csK+NF+y
+        kcng3JdNExqsxoNVbwxdOkBRdikd
+X-Google-Smtp-Source: APXvYqyXkfem3lyxyEx5894julogs/7kwUsdRHeJJ7Ercw9pPFEU9tCMsqhqNIEDufXRAbzo+UJCXQ==
+X-Received: by 2002:aa7:9219:: with SMTP id 25mr53592119pfo.205.1553944902995;
+        Sat, 30 Mar 2019 04:21:42 -0700 (PDT)
 Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id i24sm6904862pfo.85.2019.03.30.04.21.34
+        by smtp.gmail.com with ESMTPSA id y12sm10653409pgq.64.2019.03.30.04.21.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 04:21:37 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:21:33 +0700
+        Sat, 30 Mar 2019 04:21:42 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:21:38 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 14/31] sha1-name.c: add repo_for_each_abbrev()
-Date:   Sat, 30 Mar 2019 18:19:10 +0700
-Message-Id: <20190330111927.18645-15-pclouds@gmail.com>
+Subject: [PATCH 15/31] sha1-name.c: remove the_repo from get_short_oid()
+Date:   Sat, 30 Mar 2019 18:19:11 +0700
+Message-Id: <20190330111927.18645-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -73,45 +73,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h     | 3 ++-
- sha1-name.c | 5 +++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ sha1-name.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 4f8ebb0a67..0cb95c0d4f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1392,7 +1392,8 @@ extern enum get_oid_result get_oid_with_context(struct repository *repo, const c
- 				struct object_context *oc);
- 
- typedef int each_abbrev_fn(const struct object_id *oid, void *);
--extern int for_each_abbrev(const char *prefix, each_abbrev_fn, void *);
-+int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_fn, void *);
-+#define for_each_abbrev(prefix, fn, data) repo_for_each_abbrev(the_repository, prefix, fn, data)
- 
- extern int set_disambiguate_hint_config(const char *var, const char *value);
- 
 diff --git a/sha1-name.c b/sha1-name.c
-index a75992eb54..cdcf84b826 100644
+index cdcf84b826..2643b75b54 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -493,13 +493,14 @@ static enum get_oid_result get_short_oid(const char *name, int len,
- 	return status;
+@@ -436,7 +436,8 @@ static void sort_ambiguous_oid_array(struct repository *r, struct oid_array *a)
+ 	sort_ambiguous_repo = NULL;
  }
  
--int for_each_abbrev(const char *prefix, each_abbrev_fn fn, void *cb_data)
-+int repo_for_each_abbrev(struct repository *r, const char *prefix,
-+			 each_abbrev_fn fn, void *cb_data)
+-static enum get_oid_result get_short_oid(const char *name, int len,
++static enum get_oid_result get_short_oid(struct repository *r,
++					 const char *name, int len,
+ 					 struct object_id *oid,
+ 					 unsigned flags)
  {
- 	struct oid_array collect = OID_ARRAY_INIT;
+@@ -444,7 +445,7 @@ static enum get_oid_result get_short_oid(const char *name, int len,
  	struct disambiguate_state ds;
- 	int ret;
+ 	int quietly = !!(flags & GET_OID_QUIETLY);
  
--	if (init_object_disambiguation(the_repository, prefix, strlen(prefix), &ds) < 0)
-+	if (init_object_disambiguation(r, prefix, strlen(prefix), &ds) < 0)
+-	if (init_object_disambiguation(the_repository, name, len, &ds) < 0)
++	if (init_object_disambiguation(r, name, len, &ds) < 0)
  		return -1;
  
- 	ds.always_call_fn = 1;
+ 	if (HAS_MULTI_BITS(flags & GET_OID_DISAMBIGUATORS))
+@@ -482,8 +483,8 @@ static enum get_oid_result get_short_oid(const char *name, int len,
+ 			ds.fn = NULL;
+ 
+ 		advise(_("The candidates are:"));
+-		for_each_abbrev(ds.hex_pfx, collect_ambiguous, &collect);
+-		sort_ambiguous_oid_array(the_repository, &collect);
++		repo_for_each_abbrev(r, ds.hex_pfx, collect_ambiguous, &collect);
++		sort_ambiguous_oid_array(r, &collect);
+ 
+ 		if (oid_array_for_each(&collect, show_ambiguous_object, &ds))
+ 			BUG("show_ambiguous_object shouldn't return non-zero");
+@@ -855,7 +856,8 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
+ 
+ 	if (warn_ambiguous_refs && !(flags & GET_OID_QUIETLY) &&
+ 	    (refs_found > 1 ||
+-	     !get_short_oid(str, len, &tmp_oid, GET_OID_QUIETLY)))
++	     !get_short_oid(the_repository,
++			    str, len, &tmp_oid, GET_OID_QUIETLY)))
+ 		warning(warn_msg, len, str);
+ 
+ 	if (reflog_len) {
+@@ -1109,7 +1111,8 @@ static int get_describe_name(const char *name, int len, struct object_id *oid)
+ 			if (ch == 'g' && cp[-1] == '-') {
+ 				cp++;
+ 				len -= cp - name;
+-				return get_short_oid(cp, len, oid, flags);
++				return get_short_oid(the_repository,
++						     cp, len, oid, flags);
+ 			}
+ 		}
+ 	}
+@@ -1163,7 +1166,7 @@ static enum get_oid_result get_oid_1(const char *name, int len,
+ 	if (!ret)
+ 		return FOUND;
+ 
+-	return get_short_oid(name, len, oid, lookup_flags);
++	return get_short_oid(the_repository, name, len, oid, lookup_flags);
+ }
+ 
+ /*
 -- 
 2.21.0.479.g47ac719cd3
 
