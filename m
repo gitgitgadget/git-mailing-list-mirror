@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6985920248
-	for <e@80x24.org>; Sat, 30 Mar 2019 22:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA12720248
+	for <e@80x24.org>; Sat, 30 Mar 2019 22:49:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731019AbfC3WtZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 18:49:25 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:38179 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730666AbfC3WtY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 18:49:24 -0400
-Received: by mail-qt1-f193.google.com with SMTP id d13so6759125qth.5
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 15:49:24 -0700 (PDT)
+        id S1731024AbfC3Wt2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 18:49:28 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:42365 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730666AbfC3Wt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 18:49:28 -0400
+Received: by mail-qt1-f194.google.com with SMTP id p20so6492525qtc.9
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 15:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=axc3ebt8FvJkWFbNG0UQUWu+PmJJC1EyvfpEjBRwsAA=;
-        b=RVSaa0MV3nrpP0zKdrcghusTb/AbEqhR8K/QeVDliQGYLXisrR8qrlDr393I+p5fLl
-         2jrhi4RlQC4ct1SzpnEK6idMpfn0OgmP6oXT3H8FRBKih88IvkSAesnDGzNutVG/8CmT
-         cii21LcxqwSMgfwyc9PkOHyLAO2e1yOCe05MnWg9juvjd4dSKAeTtDYZG6QqJTI0mX5C
-         R7Hi8gYgjbn53LKemgvRFWDtqIc72of+1yZ7cDUMshZu+ZVtjoTD63K7DEEccpEI0MrI
-         +vxVBXBbw5XHTn8jBB1eJpRQ8jIdcarGWPW1+MQb/YQnDfCAvCVUx5cNox9RjNPli20c
-         XpwA==
+        bh=lFwzYyS24Sj7uW4/YpI3WSwS0fZiSiLROyQBRdvQzL8=;
+        b=b7i3uuk6jL/lpxPIuAgWTvj55kOMXdWHeTUXc8rET7ynfeKeExDGLtBcEzOlsgmlTH
+         g6d+utubmFmXG1qH7OjrSMxGVID/Rcd2sG5gd9VLip831sYC/4pgQbvAgbYMF6cZ4R+k
+         kRS94DTVF2RxIS3HxdL5Ruhp+zViiOYE5t+A4qMF68VSlVm5sfSGzkeOeWbCfymLv6LN
+         UopsP1x1C5QyYW03+8XXbHKZLg5EA1xkt2D17xczwofUhkiVIJXrumPuM+9EG58zsO0v
+         YvPrUo1JqPnY6syfK7okxM5hc9D16iwDIGTKUuX8RNByMLbEIQWbi0/U1XjRvkQPF4Wi
+         N6yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=axc3ebt8FvJkWFbNG0UQUWu+PmJJC1EyvfpEjBRwsAA=;
-        b=q+GWB3K01Pem38XokGfHtoAi8X7ehsGsRmuSlrVd2TKT7hM8xbpSI47XWDDYm+NaLg
-         LJYoghZzJRqZ1Nr7aQf6SjmEQqODRjsL94DhKqbG+UBm8y3SZCtM6MW0uUafo0UVXwYP
-         Bakccih3mjiiAqINYhTuQwrTaRPWcGETqse/DcvHwxHFeCQrAZmmx+NeqZcYqBRI5Deh
-         P5kwIT+ntxQMTaTZ0W7suiOujLTaW5QXDd+U03Zr937k5FVcDFNXD9a4ugudei/8wFxN
-         bDNi+P/x/dVc4C/z9N6mRAhNZj8+IA2jafphkZBBy0VmlxNcUMFxW9QFRE4xjF9iYhBj
-         Z9tg==
-X-Gm-Message-State: APjAAAX9c9OHpcjYA4NXcvi5JlUKGqdBhZY8xl4+T+/9WlDuQ2xJa18z
-        Gn0ZhhasWlsH6YUjC6p20V+TAA==
-X-Google-Smtp-Source: APXvYqzA8UTKuuf7cv7+X3Zb2m8WVmUtDOeK2opoxxj9x1Mbx4zhWg4bbz5ZXhKJnpR/PqmOejx3Wg==
-X-Received: by 2002:a0c:c165:: with SMTP id i34mr27486701qvh.6.1553986163849;
-        Sat, 30 Mar 2019 15:49:23 -0700 (PDT)
+        bh=lFwzYyS24Sj7uW4/YpI3WSwS0fZiSiLROyQBRdvQzL8=;
+        b=kyL066bWc1EohqYP6LsmBLpTImLmq2pOmhEVC3/gTklSjilVPg6SqOFbVUQHPbFM4i
+         L4pbjisVs+DHI5TsOdmIIAtaBYyiHYVL1xiHqTsH4kXqWdhA5DBpVphRQoNXDixDVOxn
+         iAxBOotO3zfTfuM85Zfyb4cA7etmr2ops7hPu6lRmmgBZn8iiAGwvGVHU4nwEbILsnT8
+         A2ZEUznlFDkxjozHkKHNIEK207IuJ490gCM8zUAgn5qVny0Pszq09xbw3J61GF0wTvmb
+         lKbGrHmPaRy+Ua6ziKoDyvmXp2v1tdRIVeku/AqVU9ZLREz1IufBhMH4aVcsAAscq+bu
+         vuFw==
+X-Gm-Message-State: APjAAAUYXCjFhZPhJjDW+DQBkgaMC0desZF1gNCVUwq0qcHIiUZQFhdI
+        zU5juGC0zutZJFIscAcsoL1N5w==
+X-Google-Smtp-Source: APXvYqwiOA0cHNI8yjcSH/ZilWO22SPVE73F9u22O8utmB2VPpivZOdIaPNnUy3xqUPHQPhciAmj2A==
+X-Received: by 2002:ac8:2427:: with SMTP id c36mr47544598qtc.124.1553986167410;
+        Sat, 30 Mar 2019 15:49:27 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::4])
-        by smtp.gmail.com with ESMTPSA id x191sm3139943qka.78.2019.03.30.15.49.21
+        by smtp.gmail.com with ESMTPSA id x191sm3139943qka.78.2019.03.30.15.49.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 15:49:23 -0700 (PDT)
+        Sat, 30 Mar 2019 15:49:26 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
@@ -57,157 +57,226 @@ Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        kernel-usp@googlegroups.com
-Subject: [GSoC][PATCH v5 2/7] clone: better handle symlinked files at .git/objects/
-Date:   Sat, 30 Mar 2019 19:49:02 -0300
-Message-Id: <20190330224907.3277-3-matheus.bernardino@usp.br>
+        kernel-usp@googlegroups.com,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [GSoC][PATCH v5 3/7] dir-iterator: add flags parameter to dir_iterator_begin
+Date:   Sat, 30 Mar 2019 19:49:03 -0300
+Message-Id: <20190330224907.3277-4-matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190330224907.3277-1-matheus.bernardino@usp.br>
 References: <20190322232237.13293-1-matheus.bernardino@usp.br>
  <20190330224907.3277-1-matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is currently an odd behaviour when locally cloning a repository
-with symlinks at .git/objects: using --no-hardlinks all symlinks are
-dereferenced but without it, Git will try to hardlink the files with the
-link() function, which has an OS-specific behaviour on symlinks. On OSX
-and NetBSD, it creates a hardlink to the file pointed by the symlink
-whilst on GNU/Linux, it creates a hardlink to the symlink itself.
+Add the possibility of giving flags to dir_iterator_begin to initialize
+a dir-iterator with special options.
 
-On Manjaro GNU/Linux:
-    $ touch a
-    $ ln -s a b
-    $ link b c
-    $ ls -li a b c
-    155 [...] a
-    156 [...] b -> a
-    156 [...] c -> a
+Currently possible flags are DIR_ITERATOR_PEDANTIC, which makes
+dir_iterator_advance abort immediately in the case of an error while
+trying to fetch next entry; and DIR_ITERATOR_FOLLOW_SYMLINKS, which
+makes the iteration follow symlinks to directories and include its
+contents in the iteration. These new flags will be used in a subsequent
+patch.
 
-But on NetBSD:
-    $ ls -li a b c
-    2609160 [...] a
-    2609164 [...] b -> a
-    2609160 [...] c
-
-It's not good to have the result of a local clone to be OS-dependent and
-besides that, the current behaviour on GNU/Linux may result in broken
-symlinks. So let's standardize this by making the hardlinks always point
-to dereferenced paths, instead of the symlinks themselves. Also, add
-tests for symlinked files at .git/objects/.
-
-Note: Git won't create symlinks at .git/objects itself, but it's better
-to handle this case and be friendly with users who manually create them.
+Also adjust refs/files-backend.c to the new dir_iterator_begin
+signature.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Co-authored-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/clone.c            |  5 ++++-
- t/t5604-clone-reference.sh | 27 ++++++++++++++++++++-------
- 2 files changed, 24 insertions(+), 8 deletions(-)
+ dir-iterator.c       | 28 +++++++++++++++++++++++++---
+ dir-iterator.h       | 39 +++++++++++++++++++++++++++++++++------
+ refs/files-backend.c |  2 +-
+ 3 files changed, 59 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..f975b509f1 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -443,7 +443,10 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 		if (unlink(dest->buf) && errno != ENOENT)
- 			die_errno(_("failed to unlink '%s'"), dest->buf);
- 		if (!option_no_hardlinks) {
--			if (!link(src->buf, dest->buf))
-+			char *resolved_path = real_pathdup(src->buf, 1);
-+			int status = link(resolved_path, dest->buf);
-+			free(resolved_path);
-+			if (!status)
+diff --git a/dir-iterator.c b/dir-iterator.c
+index f2dcd82fde..17aca8ea41 100644
+--- a/dir-iterator.c
++++ b/dir-iterator.c
+@@ -48,12 +48,16 @@ struct dir_iterator_int {
+ 	 * that will be included in this iteration.
+ 	 */
+ 	struct dir_iterator_level *levels;
++
++	/* Combination of flags for this dir-iterator */
++	unsigned flags;
+ };
+ 
+ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ {
+ 	struct dir_iterator_int *iter =
+ 		(struct dir_iterator_int *)dir_iterator;
++	int ret;
+ 
+ 	while (1) {
+ 		struct dir_iterator_level *level =
+@@ -71,6 +75,8 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 
+ 			level->dir = opendir(iter->base.path.buf);
+ 			if (!level->dir && errno != ENOENT) {
++				if (iter->flags & DIR_ITERATOR_PEDANTIC)
++					goto error_out;
+ 				warning("error opening directory %s: %s",
+ 					iter->base.path.buf, strerror(errno));
+ 				/* Popping the level is handled below */
+@@ -122,6 +128,8 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			if (!de) {
+ 				/* This level is exhausted; pop up a level. */
+ 				if (errno) {
++					if (iter->flags & DIR_ITERATOR_PEDANTIC)
++						goto error_out;
+ 					warning("error reading directory %s: %s",
+ 						iter->base.path.buf, strerror(errno));
+ 				} else if (closedir(level->dir))
+@@ -138,11 +146,20 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
  				continue;
- 			if (option_local > 0)
- 				die_errno(_("failed to create link '%s'"), dest->buf);
-diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
-index 207650cb95..0800c3853f 100755
---- a/t/t5604-clone-reference.sh
-+++ b/t/t5604-clone-reference.sh
-@@ -266,7 +266,7 @@ test_expect_success 'clone a repo with garbage in objects/*' '
- 	test_cmp expected actual
- '
  
--test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknown files at objects/' '
-+test_expect_success SYMLINKS 'setup repo with manually symlinked or unknown files at objects/' '
- 	git init T &&
- 	(
- 		cd T &&
-@@ -280,10 +280,19 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
- 		ln -s packs pack &&
- 		find ?? -type d >loose-dirs &&
- 		last_loose=$(tail -n 1 loose-dirs) &&
--		rm -f loose-dirs &&
- 		mv $last_loose a-loose-dir &&
- 		ln -s a-loose-dir $last_loose &&
-+		first_loose=$(head -n 1 loose-dirs) &&
-+		rm -f loose-dirs &&
+ 			strbuf_addstr(&iter->base.path, de->d_name);
+-			if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
+-				if (errno != ENOENT)
 +
-+		cd $first_loose &&
-+		obj=$(ls *) &&
-+		mv $obj ../an-object &&
-+		ln -s ../an-object $obj &&
++			if (iter->flags & DIR_ITERATOR_FOLLOW_SYMLINKS)
++				ret = stat(iter->base.path.buf, &iter->base.st);
++			else
++				ret = lstat(iter->base.path.buf, &iter->base.st);
 +
-+		cd ../ &&
- 		find . -type f | sort >../../../T.objects-files.raw &&
-+		find . -type l | sort >../../../T.objects-symlinks.raw &&
- 		echo unknown_content> unknown_file
- 	) &&
- 	git -C T fsck &&
-@@ -291,7 +300,7 @@ test_expect_success SYMLINKS 'setup repo with manually symlinked dirs and unknow
- '
++			if (ret < 0) {
++				if (errno != ENOENT) {
++					if (iter->flags & DIR_ITERATOR_PEDANTIC)
++						goto error_out;
+ 					warning("error reading path '%s': %s",
+ 						iter->base.path.buf,
+ 						strerror(errno));
++				}
+ 				continue;
+ 			}
  
+@@ -159,6 +176,10 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			return ITER_OK;
+ 		}
+ 	}
++
++error_out:
++	dir_iterator_abort(dir_iterator);
++	return ITER_ERROR;
+ }
  
--test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files at objects/' '
-+test_expect_success SYMLINKS 'clone repo with symlinked or unknown files at objects/' '
- 	for option in --local --no-hardlinks --shared --dissociate
- 	do
- 		git clone $option T T$option || return 1 &&
-@@ -300,7 +309,8 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 		test_cmp T.objects T$option.objects &&
- 		(
- 			cd T$option/.git/objects &&
--			find . -type f | sort >../../../T$option.objects-files.raw
-+			find . -type f | sort >../../../T$option.objects-files.raw &&
-+			find . -type l | sort >../../../T$option.objects-symlinks.raw
- 		)
- 	done &&
+ int dir_iterator_abort(struct dir_iterator *dir_iterator)
+@@ -182,7 +203,7 @@ int dir_iterator_abort(struct dir_iterator *dir_iterator)
+ 	return ITER_DONE;
+ }
  
-@@ -314,6 +324,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 	./Y/Z
- 	./Y/Z
- 	./a-loose-dir/Z
-+	./an-object
- 	./Y/Z
- 	./info/packs
- 	./pack/pack-Z.idx
-@@ -323,13 +334,15 @@ test_expect_success SYMLINKS 'clone repo with symlinked dirs and unknown files a
- 	./unknown_file
- 	EOF
+-struct dir_iterator *dir_iterator_begin(const char *path)
++struct dir_iterator *dir_iterator_begin(const char *path, unsigned flags)
+ {
+ 	struct dir_iterator_int *iter = xcalloc(1, sizeof(*iter));
+ 	struct dir_iterator *dir_iterator = &iter->base;
+@@ -195,6 +216,7 @@ struct dir_iterator *dir_iterator_begin(const char *path)
  
--	for option in --local --dissociate --no-hardlinks
-+	for option in --local --no-hardlinks --dissociate
- 	do
--		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1
-+		test_cmp expected-files T$option.objects-files.raw.de-sha || return 1 &&
-+		test_must_be_empty T$option.objects-symlinks.raw.de-sha || return 1
- 	done &&
+ 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
  
- 	echo ./info/alternates >expected-files &&
--	test_cmp expected-files T--shared.objects-files.raw
-+	test_cmp expected-files T--shared.objects-files.raw &&
-+	test_must_be_empty T--shared.objects-symlinks.raw
- '
++	iter->flags = flags;
+ 	iter->levels_nr = 1;
+ 	iter->levels[0].initialized = 0;
  
- test_done
+diff --git a/dir-iterator.h b/dir-iterator.h
+index 970793d07a..93646c3bea 100644
+--- a/dir-iterator.h
++++ b/dir-iterator.h
+@@ -19,7 +19,7 @@
+  * A typical iteration looks like this:
+  *
+  *     int ok;
+- *     struct iterator *iter = dir_iterator_begin(path);
++ *     struct iterator *iter = dir_iterator_begin(path, 0);
+  *
+  *     while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
+  *             if (want_to_stop_iteration()) {
+@@ -40,6 +40,20 @@
+  * dir_iterator_advance() again.
+  */
+ 
++/*
++ * Flags for dir_iterator_begin:
++ *
++ * - DIR_ITERATOR_PEDANTIC: override dir-iterator's default behavior
++ *   in case of an error while trying to fetch the next entry, which is
++ *   to emit a warning and keep going. With this flag, resouces are
++ *   freed and ITER_ERROR is return immediately.
++ *
++ * - DIR_ITERATOR_FOLLOW_SYMLINKS: make dir-iterator follow symlinks to
++ *   directories, i.e., iterate over linked directories' contents.
++ */
++#define DIR_ITERATOR_PEDANTIC (1 << 0)
++#define DIR_ITERATOR_FOLLOW_SYMLINKS (1 << 1)
++
+ struct dir_iterator {
+ 	/* The current path: */
+ 	struct strbuf path;
+@@ -54,20 +68,28 @@ struct dir_iterator {
+ 	/* The current basename: */
+ 	const char *basename;
+ 
+-	/* The result of calling lstat() on path: */
++	/*
++	 * The result of calling lstat() on path or stat(), if the
++	 * DIR_ITERATOR_FOLLOW_SYMLINKS flag was set at
++	 * dir_iterator's initialization.
++	 */
+ 	struct stat st;
+ };
+ 
+ /*
+- * Start a directory iteration over path. Return a dir_iterator that
+- * holds the internal state of the iteration.
++ * Start a directory iteration over path with the combination of
++ * options specified by flags. Return a dir_iterator that holds the
++ * internal state of the iteration.
+  *
+  * The iteration includes all paths under path, not including path
+  * itself and not including "." or ".." entries.
+  *
+- * path is the starting directory. An internal copy will be made.
++ * Parameters are:
++ *  - path is the starting directory. An internal copy will be made.
++ *  - flags is a combination of the possible flags to initialize a
++ *    dir-iterator or 0 for default behaviour.
+  */
+-struct dir_iterator *dir_iterator_begin(const char *path);
++struct dir_iterator *dir_iterator_begin(const char *path, unsigned flags);
+ 
+ /*
+  * Advance the iterator to the first or next item and return ITER_OK.
+@@ -76,6 +98,11 @@ struct dir_iterator *dir_iterator_begin(const char *path);
+  * dir_iterator and associated resources and return ITER_ERROR. It is
+  * a bug to use iterator or call this function again after it has
+  * returned ITER_DONE or ITER_ERROR.
++ *
++ * Note that whether dir-iterator will return ITER_ERROR when failing
++ * to fetch the next entry or just emit a warning and try to fetch the
++ * next is defined by the 'pedantic' option at dir-iterator's
++ * initialization.
+  */
+ int dir_iterator_advance(struct dir_iterator *iterator);
+ 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index ef053f716c..2ce9783097 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2143,7 +2143,7 @@ static struct ref_iterator *reflog_iterator_begin(struct ref_store *ref_store,
+ 
+ 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0);
+ 	strbuf_addf(&sb, "%s/logs", gitdir);
+-	iter->dir_iterator = dir_iterator_begin(sb.buf);
++	iter->dir_iterator = dir_iterator_begin(sb.buf, 0);
+ 	iter->ref_store = ref_store;
+ 	strbuf_release(&sb);
+ 
 -- 
 2.20.1
 
