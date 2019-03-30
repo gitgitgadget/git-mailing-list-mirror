@@ -2,78 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8751520248
-	for <e@80x24.org>; Sat, 30 Mar 2019 17:17:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C45320248
+	for <e@80x24.org>; Sat, 30 Mar 2019 17:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730618AbfC3RRw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 13:17:52 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:23934 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730444AbfC3RRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 13:17:52 -0400
-Received: from [192.168.1.12] ([2.101.245.142])
-        by smtp.talktalk.net with SMTP
-        id AHc6hKcc0WIpcAHc6hHlSV; Sat, 30 Mar 2019 17:17:50 +0000
-X-Originating-IP: [2.101.245.142]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=mQgiQ6BlbOv19lEfDgieCg==:117
- a=mQgiQ6BlbOv19lEfDgieCg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=We0TE4j0AAAA:8 a=Lczhz_mWAAAA:8 a=I7LBQiMBkbgBjNC8B_QA:9
- a=QEXdDO2ut3YA:10 a=_eRXXHC6AMsA:10 a=T8AJnZ-oFs04XlNxSoO0:22
-Subject: Google "Season of Docs"
-References: <8bb78ce0-9b32-7c49-e4aa-ce9f31662627@thingbag.net>
-To:     Git List <git@vger.kernel.org>
-From:   Philip Oakley <philipoakley@iee.org>
-X-Forwarded-Message-Id: <8bb78ce0-9b32-7c49-e4aa-ce9f31662627@thingbag.net>
-Message-ID: <572677cc-eef3-345b-e970-cd6cc80e8e96@iee.org>
-Date:   Sat, 30 Mar 2019 17:17:51 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1730654AbfC3RSB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 13:18:01 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:33836 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730497AbfC3RSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 13:18:01 -0400
+Received: by mail-ua1-f68.google.com with SMTP id c6so1743363uan.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 10:18:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HeaAF5xwdCNw53d1pf7bbMsvaUnzAC84JuupZwNIniw=;
+        b=NDkIvueEDQKNxayi1JFw0yFAb+MEpe5mTmovOEBQ+tmLc/Owoj4LO1QNHQha/uwTZe
+         GTyr+6A/RUq4Kj+7EaOewRE6LWBj3jBsum0+pYYn+v/UXm+IjnLOre1RLjW5RML9mdnt
+         YGKXmuqfiL35Td9zmVxNLodpzCDNvO5g2ob8R/odlXMhkrhTsmsYAFXIQAd2nmRoMwF+
+         yDY9/tSQQQl4kegjntkaKz7JXHDIaqOxDHbmLAh3rMgDhdb7IBsFqegegkX4URvXiedc
+         575RPVMzir5BgC2VhRnm509rQ1mxsK76kcL4xZu13TVBK/fxmFtOxqpjChk7/j/mKKyL
+         QYxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HeaAF5xwdCNw53d1pf7bbMsvaUnzAC84JuupZwNIniw=;
+        b=OxktNWaBh9zn/tq9poGbwlXvMEOi1oSH2sUkfIzLfZMBwx5k7Vf2F1tWGpaObS0L7b
+         lkm5T3/trIbIo6GDhG4/yTm2UGesSEPIzclgiu/KhVV7JoWtO4XPHK1zikKh/yVwFCaM
+         7sImjg1jycy4tq7FqKrG5dUjKoIb/6M20qO/qZx7435l3kSx40gpVVDleN1g0VIHkA4k
+         /5MGs5rVtF8Cm4PMj9mKZcvbqN3fYfyTWM/YvyX4vMMO4fHPGPDLAjQsFnHUTVD9xUK+
+         /rkn+yRhVg50TQi3AOsGfEpBc6TvH1Fek52OM8nczE+AwYYAvoqw/dCzETta+f7z6GNJ
+         0oFA==
+X-Gm-Message-State: APjAAAWLGMO4HeiHlrRSjJyEPoALG03wLIAk7OR4LKN3lvYXQn1zy25u
+        VeeFvzXhA3mijUONIr8bs9/jq52IMqvRXoTuL9Q=
+X-Google-Smtp-Source: APXvYqxSD4dl4ZfykGtamgJz3yqR+GvFhG+rq0+N9Sbr8npEdpu62k4TnQFHX51Z93JZWDvcCAjUYSAEIqva37Ptd0Q=
+X-Received: by 2002:a9f:24ee:: with SMTP id 101mr25102787uar.87.1553966280319;
+ Sat, 30 Mar 2019 10:18:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <8bb78ce0-9b32-7c49-e4aa-ce9f31662627@thingbag.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfHetyaN3lIlOJjIWlVwGeiY3wWP0BcGSqpbKJQyTqFRFDPX+Xj0HkqBPP8zOcwTQAhhrEJ84OdnBT64E3Ds5ihL99qhvqRJ1a8E90saEsc4fAy/KZn+g
- UgnT/R7wgdQ1FZ0FJut8Jstz5gUPdI4Kq5xwQSHHuPr5sYuCqlbRrhdQ
+References: <CABPp-BEsqW61f4SWehTpFzMF97AzTUB_StOS83GAmZOC7QohSg@mail.gmail.com>
+ <20190330084822.11285-1-rohit.ashiwal265@gmail.com>
+In-Reply-To: <20190330084822.11285-1-rohit.ashiwal265@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 30 Mar 2019 10:13:56 -0700
+Message-ID: <CABPp-BFdg8M17YuhKOrtTS3Xeyf2TQB1+vBzDVTo5EzMebyLEA@mail.gmail.com>
+Subject: Re: [GSoC][RFC v2] Improve consistency of sequencer commands
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>, artagnon@gmail.com,
+        Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        Stephan Beyer <s-beyer@gmx.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We mentor Summer of Code projects.
-Perhaps we should be doing something similar for docs.  Now Google are:
+On Sat, Mar 30, 2019 at 1:49 AM Rohit Ashiwal
+<rohit.ashiwal265@gmail.com> wrote:
+>
+> Hi Elijah
+>
+> On 2019-03-30  0:38 UTC Elijah Newren <newren@gmail.com> wrote:
+>
+> > I'm curious if you're looking at an old version of the documentation
+> > (...or maybe the documentation just isn't that clear?).  Interactive
+> > rebases have supported --signoff since commit a852ec7f273c ("rebase:
+> > extend --signoff support", 2018-03-20)
+>
+> Oh~ after having a quick look at my currently installed version of git,
+> it was 2.17.1, which has outdated man pages :sweat_smile:. Yes, you are
+> correct, I'm sorry.
+>
+> Feeling dumb
+> Rohit
 
-https://opensource.googleblog.com/2019/03/introducing-season-of-docs.html
-
-April 2-23: Open source organizations apply to take part in Season of Docs
-
-My thoughts include:
-* There is an expansion in the user base (e.g. 1.5m downloads on 
-Windows), with a corresponding shift in focus (application to practice).
--- Are more examples needed, are the basics understood,
-* Manuals are no longer printed, so readability assessments should match 
-screen formats (maybe).
--- bite-sized chunks
-* Developers rarely want to write documentation (it's too obvious to them)
--- if stack-overflow is the go-to source for 'real' users, why not mine 
-that source.
--- Our code base has become larger than the average brain-full, maybe 
-that (developer education) also could also benefit from some further 
-structural documentation.
-* Git for Windows: to few developers, large gaps in knowledge, chasing 
-both upstream and MS directions of travel, a high hurdle for WinDevs to 
-get started,..
--- the wiki could be built upon, anything to get more support..
-* git-scm - the book - at least make it easier to find the 'how to help' 
-page! (falls between the Github corporate and Open Source stools, or so 
-it seems)
-
-does anyone else have pet thoughts..?
-
-Philip
-https://www.infoq.com/news/2019/03/google-launches-season-of-docs
+Don't feel dumb.  I like the initiative.  Also, since you highlighted
+it, there might be an issue with picking merge commits; either they
+aren't affected by --signoff and should be, or the documentation
+should be updated to mention they are handled too.  So there is
+actually something here, I think.
