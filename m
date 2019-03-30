@@ -2,115 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01AA20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 09:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 218F420248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730367AbfC3JMn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 05:12:43 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46577 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729755AbfC3JMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 05:12:42 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d1so3993010edd.13
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 02:12:41 -0700 (PDT)
+        id S1730735AbfC3LUc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:20:32 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:34175 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730683AbfC3LUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:20:31 -0400
+Received: by mail-pg1-f193.google.com with SMTP id v12so2443530pgq.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=u8HWfSsNAtfKrsRQZ4pE7JePlEiDt3Cuv9U4lCywMSg=;
-        b=gr4nh7kj/r7Pb0tj3buj8MvGcFYqjJulF8TUiCVsWbLBXs22zk/SR3c+dMakxxxm0N
-         gO4FNnQOj3fg/+T0rxpk309I5JXUI05LBG2ti43NC76SfobvLyVK77dL8uPCsYtarkAb
-         Qwuq+/Qr+Luz7FzxFHPiYbh+HwmgckH9L2ebAAGkLIStPkThayCbgc+3D3EzaktFtn6b
-         X8OwNbgE1J33THJaMj+WB3+/PPBO3OeNek0hC1vPxSAg2d2EiY1DUx0wSLaVMVWdonte
-         FzNDZXpLgeI4saFj6XsAZGDbxwqE7K+f/wsnkOIh8zoOqTIPIYgZjmAZma7g6sZhA6hz
-         gCQQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9Hh1qjhIYgsEJ1RAvKb6URhIj4fZF8d7gLklPr6lwvk=;
+        b=UGijZ6CVxz6Pv/Sf5AsB9sx6vY05vsBWB2NqyxQ9EbnM/BojiLWozYJe1P+uACon9c
+         /qPVzp4LZNycO25CJZVLEJg8QPeaKYlJMynfLIDlY21/TZrnF87x/SQQ5UCJ4oyCMaKV
+         M8kI61w3+BSk9awPr56CbBK3IBoeFD05JkfmQ/+bN7zJSQMKrsyHeF7GQ4oEdCHJbgJQ
+         ufocfZMXNZ2tABqB7EsONnr8sEeFTu7QK5FF6AUEuGWlzYNEcVeD71Mlq/kg4oBlWVyg
+         eVJT+Y+r9Auu2RqAck58Hvbx3PdxcSzfj+Z67q0BNZpzdQQfnTMqPqkZ5fMMmt9olI/y
+         hXRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=u8HWfSsNAtfKrsRQZ4pE7JePlEiDt3Cuv9U4lCywMSg=;
-        b=p8Nk6RiBJQ8+IfYp6WkMNy+68v4W0s0VoPx2/+ZePwzLSJ3ikaEdolzVnMUCQ6BEo5
-         dM2PcTRPkUTFMcPYeJG09qIGWijXHR5/8LCMVMeO9NUBWs0oqfJ9vk5ZZOd9g8pF8J5J
-         k7/j6+ZI5uBe/X/rAAuRA7RdlhtPrdyX6V9iZdwj2lIcuXHWGeann9vNslN/wvRA6/IW
-         M1wxijSj+ZB4OxvEG3VZhuvdkIOCMZLS0GCw9POXZTwAKpmxwzTe/3SSobrrd401wYx5
-         SteFb8QeozNoxTnOQRUaiy5fbog40efL5rPvnIXK2HEQtdDPQD3mzuIldrsAkDHxzp5c
-         ttAg==
-X-Gm-Message-State: APjAAAUf+NBXjZMfbJpDIXfhYz3jSBl77exuiej2YHttXPbZUfoA/6eJ
-        EGByXwxVQV2bwlCTPJJHDv8=
-X-Google-Smtp-Source: APXvYqx+rRZ1WDA4YXHBYB3xozlTNOOXj0krOMN0zuieO/EPolLM2y5s2JahiwDQJx1stZZgzPCvGg==
-X-Received: by 2002:a50:aa0f:: with SMTP id o15mr34926330edc.129.1553937160847;
-        Sat, 30 Mar 2019 02:12:40 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id x45sm1342572edm.64.2019.03.30.02.12.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 30 Mar 2019 02:12:40 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Linus Nilsson <Linus.Nilsson@trimma.se>
-Subject: Re: [PATCH v2 15/15] merge-recursive: switch directory rename detection default
-References: <20190306002744.14418-1-newren@gmail.com> <20190330003336.21940-1-newren@gmail.com> <20190330003336.21940-16-newren@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190330003336.21940-16-newren@gmail.com>
-Date:   Sat, 30 Mar 2019 10:12:39 +0100
-Message-ID: <87imw0afp4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9Hh1qjhIYgsEJ1RAvKb6URhIj4fZF8d7gLklPr6lwvk=;
+        b=bJ8MqUONjpYXg8KNZvfyYLDL/MJUGjgV9vcOGXiiVq2WT2mJOcVC2T7drAoNbB0cDr
+         9WUHaeVwOIcXV2RqnGk/YyNshGG6D3sFhhBej0GCHRXHubf2Vkc6dK//Tb0kA3P02jpD
+         OtkFPYeR0vpaPT0E///LRTiOHOD/Yug3X/o+sacQ1WZQGj0zUFFWIk9PUaHO7js9bTFB
+         srtCYTKH8ccMtbC9x9U6jDeH2vnlq+tii9u8JfF2gQV79tKQOdcpIthmerQp34YFBCff
+         0PNkykLzkOJz+8SeCX+q5IEl93IFacHLS/qYGRO3uBYVkoWRhDv0mTnxYhVQqJLnX5U0
+         Bqjg==
+X-Gm-Message-State: APjAAAWs4iZBTpYnGzC+9U8tk3nTt5naC1E/+7OVbOPTCmD3g12py7fu
+        XLIkxr418l2cLDJjapO00WMFoKQj
+X-Google-Smtp-Source: APXvYqxvGj7G//lRSm0/a3lO3df3+K8826rky0SjtC1C2sx+tQUtqsp4mUWe//DaxKy6s1sgx2kLWA==
+X-Received: by 2002:a62:2fc4:: with SMTP id v187mr54080582pfv.147.1553944830651;
+        Sat, 30 Mar 2019 04:20:30 -0700 (PDT)
+Received: from ash ([171.236.209.43])
+        by smtp.gmail.com with ESMTPSA id 10sm6973775pft.83.2019.03.30.04.20.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Mar 2019 04:20:29 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:20:25 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 01/31] packfile.c: add repo_approximate_object_count()
+Date:   Sat, 30 Mar 2019 18:18:57 +0700
+Message-Id: <20190330111927.18645-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
+In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
+References: <20190330111927.18645-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ packfile.c | 14 +++++++-------
+ packfile.h |  3 ++-
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-On Sat, Mar 30 2019, Elijah Newren wrote:
+diff --git a/packfile.c b/packfile.c
+index 16bcb75262..2ad4fab2f8 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -893,25 +893,25 @@ static void prepare_packed_git(struct repository *r);
+  * all unreachable objects about to be pruned, in which case they're not really
+  * interesting as a measure of repo size in the first place.
+  */
+-unsigned long approximate_object_count(void)
++unsigned long repo_approximate_object_count(struct repository *r)
+ {
+-	if (!the_repository->objects->approximate_object_count_valid) {
++	if (!r->objects->approximate_object_count_valid) {
+ 		unsigned long count;
+ 		struct multi_pack_index *m;
+ 		struct packed_git *p;
+ 
+-		prepare_packed_git(the_repository);
++		prepare_packed_git(r);
+ 		count = 0;
+-		for (m = get_multi_pack_index(the_repository); m; m = m->next)
++		for (m = get_multi_pack_index(r); m; m = m->next)
+ 			count += m->num_objects;
+-		for (p = the_repository->objects->packed_git; p; p = p->next) {
++		for (p = r->objects->packed_git; p; p = p->next) {
+ 			if (open_pack_index(p))
+ 				continue;
+ 			count += p->num_objects;
+ 		}
+-		the_repository->objects->approximate_object_count = count;
++		r->objects->approximate_object_count = count;
+ 	}
+-	return the_repository->objects->approximate_object_count;
++	return r->objects->approximate_object_count;
+ }
+ 
+ static void *get_next_packed_git(const void *p)
+diff --git a/packfile.h b/packfile.h
+index d70c6d9afb..f04440f984 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -57,7 +57,8 @@ struct packed_git *get_all_packs(struct repository *r);
+  * Give a rough count of objects in the repository. This sacrifices accuracy
+  * for speed.
+  */
+-unsigned long approximate_object_count(void);
++unsigned long repo_approximate_object_count(struct repository *r);
++#define approximate_object_count() repo_approximate_object_count(the_repository)
+ 
+ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ 					 struct packed_git *packs);
+-- 
+2.21.0.479.g47ac719cd3
 
-I may have more, just quickly skimming this for the first time...
-
->  merge.renames::
-> -	Whether and how Git detects renames.  If set to "false",
-> -	rename detection is disabled. If set to "true", basic rename
-> -	detection is enabled.  Defaults to the value of diff.renames.
-> +	Whether Git detects renames.  If set to "false", rename detection
-> +	is disabled. If set to "true", basic rename detection is enabled.
-> +	Defaults to the value of diff.renames.
-> [...]
-> +	if (!git_config_get_string("merge.directoryrenames", &value)) {
-> +		if (!strcasecmp(value, "true"))
-> +			opt->detect_directory_renames = 2;
-> +		else if (!strcasecmp(value, "false"))
-> +			opt->detect_directory_renames = 0;
-> +		else if (!strcasecmp(value, "conflict"))
-> +			opt->detect_directory_renames = 1;
-> +		else {
-> +			error(_("Invalid value for merge.directoryRenames: %s"),
-> +			      value);
-> +			opt->detect_directory_renames = 1;
-> +		}
-> +		free(value);
-> +	}
-
-Instead of making your own true/false parser you can use
-git_parse_maybe_bool(). See what we do for merge.ff:
-
-    builtin/merge.c-617-    else if (!strcmp(k, "merge.ff")) {
-    builtin/merge.c:618:            int boolval = git_parse_maybe_bool(v);
-    builtin/merge.c-619-            if (0 <= boolval) {
-    builtin/merge.c-620-                    fast_forward = boolval ? FF_ALLOW : FF_NO;
-    builtin/merge.c-621-            } else if (v && !strcmp(v, "only")) {
-    builtin/merge.c-622-                    fast_forward = FF_ONLY;
-    builtin/merge.c-623-            } /* do not barf on values from future versions of git */
-    builtin/merge.c-624-            return 0;
-
-Small nit, but allows us to document "this config takse bool or ..."
-without having different verions of "bool" in various places.
-
-Also, I don't care personally, but this also violates the "if one thing
-requires braces put it on all the if/else arms" in CodingGuidelines.
