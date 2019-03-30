@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6E6F20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 14:28:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F96B20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 14:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730856AbfC3O2J (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 10:28:09 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:35184 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730840AbfC3O2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 10:28:09 -0400
-Received: by mail-pf1-f196.google.com with SMTP id t21so2400305pfe.2
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 07:28:08 -0700 (PDT)
+        id S1730881AbfC3O2N (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 10:28:13 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38965 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730840AbfC3O2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 10:28:13 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b65so2355384plb.6
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 07:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3Csi5sqWrLVj4u3nXKne1LVlxHnXYvaydXevcEbn+3A=;
-        b=vFwacNrWxDDhp8JR3zNTua3MIqKklfM80E5tkw28en2D3qOiEm6vBkhLEtmcg+CVJl
-         b8wjtjZNO1l9evBf9jWgGC7SF+dogPM9D4xYVQ9+xezTRIdmczK6+3baTceCv2LwHDY1
-         crEamzu7khbxYjQkyX29CYh9elM+tB7PD7Ci91s/R6fB9C794hCdz3mQZ+4WblW+QymW
-         ioNevhkna1mgTmCOU4v7kevLOkbL9j5qSLOJd3bmRM4BknHzeGkti1D55nS4z0dJ/oa4
-         BxzzjTvybiSwToXj/dbRycRMkQ326Znks226NSgJUpkU3TMHRfDs6x2KFLMXet12BE/K
-         ybYQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=NivD/tZZ5tt6KvOTJM1WjCiXRgiIyw9yS3YXw6UaOeo=;
+        b=ouTgQeyNu0nHpysnkM9j8J8ipRCC8P9/+MDdisvNQqTzd6HZmi/TKCzFfBUUB8hfYn
+         vW2XEG34IV9HzWX2YNF/zpXx5muOIE+kcSZzLL2B5kLCmV303VglJvBz/S3SNeF0J5vD
+         UPNDPGFyo5lJcpc26J7l8AGeQsW9HHjg2q3naP4xDDCxMAkNsQZjArNFojEI4l1ZSllW
+         6/bPYH7IVpkLRyREjwWLdZdBie6U501xIpsIDx8+Iee+DPEbBr8KUOx/TAWEv/QAEXid
+         BJYsZzg79jWyWR3nHS8QOvKV4BciF67bMCcExHq7LRrZRhksM4dfKn7XlzZctxPC68rz
+         3LMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3Csi5sqWrLVj4u3nXKne1LVlxHnXYvaydXevcEbn+3A=;
-        b=umv5GMfhkuuVnpbnIjk6c9zJ2i8Hov8eBFzdSjfT/h0fyW2L88qD8ygDX6nvqWq9az
-         Bdp2QA2QJGqYmM58njk6wyRWAl0FS6AMxM1Z4xWshBuhdU2/HVmETo2lT5tSIlNQscwL
-         QvYNV7TTKvJE+gxe5n0/DlMPiaqKKKvjQEi7JCwKC5dbiOO1KAOcr6x7LLT8/k1jiAeo
-         1D+0SfouTsOH0GbsJKdHfLt2hkdCHB+nc3Lee+cEY2USqpzAMb2oJ9QxDRgTG67WyXJ5
-         uCwKl8TeU5mheUJKvQPeEkZm7jwzvc7CdgxDXTjuStvGy8Pxaj20j6Bsy3tWLY5r1Q/P
-         G88Q==
-X-Gm-Message-State: APjAAAXQjrq1QFNnYouVf817v2/XXjnG5Xsl5XP930IElJfi1d2feVr+
-        JKD5ZOunih2Yj8IlP2yal5aGTTJpbtA=
-X-Google-Smtp-Source: APXvYqztNVob0vhEX4aBYyVYcc6Q/sexHpbDDX3jDu90Ew25BvHznU1puJcRCw1QXLV195meXjqaUw==
-X-Received: by 2002:a63:4815:: with SMTP id v21mr51995017pga.412.1553956088449;
-        Sat, 30 Mar 2019 07:28:08 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=NivD/tZZ5tt6KvOTJM1WjCiXRgiIyw9yS3YXw6UaOeo=;
+        b=bqgVg24jndG70+eDoFPHNulrWilXD0K+2/VG8O9A/MRphSAbtTsbIxg7z6b8+IkpBL
+         5raAhD96vVPCBLYGAPsfD0HXaTnlmRy1MR5C0VEi3BtPNKW9s+8fkcdk5FdqHTpmC6LT
+         hIcjCXCF1zx44buwYC+SRqWOxHdW4iP2/WoLVGqdZ742+MuNv1s7qUVsO+ey62lD2/M9
+         YHXO55zNqTMGRWFVsRmYSalAS7Q1LXwgqQzFDSKhHTh8+4/F/PcERhnR2PT2dR3hR9ar
+         2rjeD59dMNdhm4za9Rr3n4TdxsyEFQdHoNaojGswrUYp92Eedp9KY4x3nJbkY8H5RPX8
+         gIsw==
+X-Gm-Message-State: APjAAAVh04on+LFy28Ra80YKXU7PVRkMyg80OHx/vU9Q8LtYXWhqKpV7
+        Ey7uNwo6respyHmCmWoLMqvTYuMG5U8=
+X-Google-Smtp-Source: APXvYqxiXJgpgljokk3ShU2VAQkPUrX5//ZGzXtcj3I16wPvkGCXvoo3Iiw3WZD8z71HBm4BLYCgRw==
+X-Received: by 2002:a17:902:a513:: with SMTP id s19mr2909167plq.97.1553956092563;
+        Sat, 30 Mar 2019 07:28:12 -0700 (PDT)
 Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
-        by smtp.gmail.com with ESMTPSA id v12sm6621737pfe.148.2019.03.30.07.28.06
+        by smtp.gmail.com with ESMTPSA id v12sm6621737pfe.148.2019.03.30.07.28.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Mar 2019 07:28:07 -0700 (PDT)
+        Sat, 30 Mar 2019 07:28:12 -0700 (PDT)
 From:   Jonathan Chang <ttjtftx@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jonathan Chang <ttjtftx@gmail.com>,
@@ -58,10 +58,12 @@ Cc:     Jonathan Chang <ttjtftx@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [GSoC][PATCH v4 0/5] Avoid using pipes
-Date:   Sat, 30 Mar 2019 22:27:53 +0800
-Message-Id: <cover.1553954776.git.ttjtftx@gmail.com>
+Subject: [GSoC][PATCH v4 1/5] t0000: fix indentation
+Date:   Sat, 30 Mar 2019 22:27:54 +0800
+Message-Id: <86146182b7b1d4194168f509d0ee421713723700.1553954776.git.ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <cover.1553954776.git.ttjtftx@gmail.com>
+References: <cover.1553954776.git.ttjtftx@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -69,46 +71,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I added 2 additional patches that modernize style, based on discussion
-in [1].
-Also added description in commit message as suggested in [2].
+Fix indentation of a line containing a pipeline to reduce the
+noise when refactoring the pipeline in a subsequent commit.
+This has been wrong since the refactoring done in 1b5b2b641a
+("t0000: modernise style", 2012-03-02), but carries no meaning.
 
+Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+---
+ t/t0000-basic.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[v1]: https://public-inbox.org/git/20190309154555.33407-1-ttjtftx@gmail.com/
-[v2]: https://public-inbox.org/git/20190310080739.63984-1-ttjtftx@gmail.com/
-[v3]: https://public-inbox.org/git/cover.1552835153.git.ttjtftx@gmail.com/
-
-[1]: https://public-inbox.org/git/87imwha1o3.fsf@evledraar.gmail.com/
-[2]: https://public-inbox.org/git/20190317200609.GA1216@hank.intra.tgummerer.com/
-
-
-Jonathan Chang (5):
-  t0000: fix indentation
-  t0000: avoid using pipes
-  t0000: use test_line_count instead of wc -l
-  t0000: use test_cmp instead of "test" builtin
-  t0000: make use of the test_must_be_empty function
-
- t/t0000-basic.sh | 41 +++++++++++++++++++++--------------------
- 1 file changed, 21 insertions(+), 20 deletions(-)
-
-Range-diff against v3:
-1:  768bf373d0 = 1:  86146182b7 t0000: fix indentation
-2:  8ee5e073a2 ! 2:  1ca1168f91 t0000: avoid using pipes
-    @@ -6,6 +6,10 @@
-         using it. By writing out the output of the git command to a file, we can
-         test the exit codes of both the commands.
-     
-    +    This commit doesn't make any additional simplifications, such as using
-    +    the test_line_count function for counting the lines in the output. These
-    +    simplifications will be made in subsequent commits.
-    +
-         Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
-     
-      diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-3:  68590a40d7 = 3:  28986ed000 t0000: use test_line_count instead of wc -l
--:  ---------- > 4:  731463ed98 t0000: use test_cmp instead of "test" builtin
--:  ---------- > 5:  53f58a4f89 t0000: make use of the test_must_be_empty function
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index b6566003dd..53821f5817 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -1132,7 +1132,7 @@ test_expect_success 'git commit-tree records the correct parent in a commit' '
+ 
+ test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+ 	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
+-	     parent=$(git show --pretty=raw $commit2 |
++	parent=$(git show --pretty=raw $commit2 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q" |
+ 		sort -u) &&
+ 	test "z$commit0" = "z$parent" &&
 -- 
 2.21.0
 
