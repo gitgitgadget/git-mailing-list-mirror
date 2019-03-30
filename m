@@ -7,128 +7,112 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336CF20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 02:57:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED52320248
+	for <e@80x24.org>; Sat, 30 Mar 2019 05:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730236AbfC3Cty (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Mar 2019 22:49:54 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:44916 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729885AbfC3Cty (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Mar 2019 22:49:54 -0400
-Received: by mail-io1-f68.google.com with SMTP id u12so3328296iop.11
-        for <git@vger.kernel.org>; Fri, 29 Mar 2019 19:49:54 -0700 (PDT)
+        id S1726463AbfC3FcP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 01:32:15 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:40001 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726273AbfC3FcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 01:32:15 -0400
+Received: by mail-it1-f194.google.com with SMTP id y63so7297820itb.5
+        for <git@vger.kernel.org>; Fri, 29 Mar 2019 22:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mIGJZNEwO/gmurXRw0p/fPenHlGmx8z12bmYweMBSP0=;
-        b=MERT2qqAykpxylomDdrQ5xsO8jJmFjwyx8CK8Liky0GA0oSxvBTuOd/YGArPOl+3MR
-         wqk+6Jf6CzYgs8h8ar+ZE84Gb+2pPS0Kzl0xfKHOMnV30kn1Ba9gWAqMFru2dX3l4Cc5
-         9detkJhk3XW/IaFlkynSMr9GTFKkzOGuRH1s089r2vwsUpLSgZvlGL0VPe3BBQbn2OT+
-         TC59Ab18+ImAmRLv/aodNsQi6+TXaLYYGqh6t+RszeFU/2d/7IW3U8lHaJLgd9ELkHQc
-         CCErBCwxnCX+7//Rf+TqeiOi89QUhl34gvbztahI4NM/i/Jo3skInWYil1B9Q3XkSSdV
-         vqBw==
+        bh=1P+9FK0Vn5XkBSAoqrYU6n4THNdZK/CuQMNctNAv9gs=;
+        b=sPzsD3BigxxmD7hRHfl3n22U+gXUn5ewQLc+sHXXKJxrYbfKHXnmvY6QoE5kj0YkdS
+         u630VLTUzHDGxODXBshZFqdEgMzZNfb56LJQaUSzf7YeP3WGEH0MgJGYRjMCASdUPkZq
+         vDwZ7aP9B5Y7B+7QlCRSaMHsS19hKdw+vCSSviHO+hObKdfsjm/Sk7QZi6ozGrRLmksG
+         wSuP8qxAjXNsxzXqkia7wdgXFG/eipwNTa7grLWqhMdVY9aBXScKYC9GSMdhpm2LtkPZ
+         baRAYY7hi5fzb3w8HYUQdZBC/C8ABV8Q2J40Oci7hYcwZAbrlkxrU/TXqWLd2ewXeF3h
+         5/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mIGJZNEwO/gmurXRw0p/fPenHlGmx8z12bmYweMBSP0=;
-        b=QHRwsulPJyTiyU+IRktQGqQkcZQxmVqjKTlEvBN59nASeqQi8IDRdZzwz6ZhqORPCi
-         ZYtxSL2LCVXtCQXpFOHxE8ewEp3f5HPofdhFDuaiWH/tdzmaRcR0gwCplefybEW92ahH
-         2EoiC7p9QzF+fJP7neaY8WT9UcyfrfD2GTSq3jrCbxJs6pm+PmmDWGKT68jNuyqvFAKz
-         84s2SGslp5Xmqwu7uI7nLsALyoE1sc8GDXypMuv3M4yX63W4pGlmyxoBcz6Dgq6PLqTS
-         z3jwafsLf3NqNv36lKVE5W7ynRxGkSCpc++9d9H583wO6TSe/5q9Kjqk7oID+Gvt0Ch/
-         9Xew==
-X-Gm-Message-State: APjAAAWwWuouVeRv0ybn+CP8T0L/jkv1C0a5DJHlqrvrFo5g/zCBkb5W
-        CLE4o3KhtZVkGaxRqutnV7hwQL+S5ozTnKNFB2xU5g==
-X-Google-Smtp-Source: APXvYqy1j3FJGlg25+jvTvXaPr2r2EzahZkwzKiT6gUkz+r9yQhrbaCQw0bXhqEVFCDMblUohxwrRwTZDRK98I8wcq8=
-X-Received: by 2002:a6b:e305:: with SMTP id u5mr36327713ioc.262.1553914193552;
- Fri, 29 Mar 2019 19:49:53 -0700 (PDT)
+        bh=1P+9FK0Vn5XkBSAoqrYU6n4THNdZK/CuQMNctNAv9gs=;
+        b=mAETQ0YGfv9HY7f0LAL6U4j1n7K2kA2qOJsL2PM4+fEOmUdSq+AvLPu/ASPT8m7U7j
+         k8H2Pc+skHJmdOupxxfMjAFgz0+3MUCddrJlndjKvxZwMPGnMnkp+zhwy8pPhqx/DQax
+         N9yaCGLuk9ezwj9ocx57YtW7AVEJxntWV2DzT7c7OTRUqcbgV5LnIK1ZAXQ/xVTJv/Tu
+         Ew/dIMN3TINDbbSC7j7I8gA1UVF0xEaCQ8u53+vMAsh1doM+aWdTdtmbDVJgfuQNx2ZE
+         nXOEY9NqYjIiCpEcLnzQHZWQ8q2ZjfOhzmoqNi9cyty6C921/Rs/Sh5EjfHtHwCFKo1r
+         199g==
+X-Gm-Message-State: APjAAAUMNKY1+QPPo8gpzbzQXUH8+KQA7WJMw2NV5EnFQx0AT4uoL8iL
+        rDGSyTWtJgiFi54YoNyTLD9RUb8pgheZFpxUfKtf1w==
+X-Google-Smtp-Source: APXvYqz/Eo6csu1/24I9TOtYYDTHPNAl8X5y2yERXvBMjmtlcswHu2qF3xxrRKBdLtwBno/jaDopClJBOEUQz4StBBU=
+X-Received: by 2002:a24:e4c6:: with SMTP id o189mr2274319ith.4.1553923934456;
+ Fri, 29 Mar 2019 22:32:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190322232237.13293-2-matheus.bernardino@usp.br> <20190328214950.GJ32487@hank.intra.tgummerer.com>
- <CAHd-oW70VNgYmX9=5x0CwoSD2a0ik2AoJyd7T3xiO4O030c5yQ@mail.gmail.com> <20190329193158.GN32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190329193158.GN32487@hank.intra.tgummerer.com>
+ <20190322232237.13293-3-matheus.bernardino@usp.br> <20190328221049.GK32487@hank.intra.tgummerer.com>
+ <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com> <20190329200517.GO32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190329200517.GO32487@hank.intra.tgummerer.com>
 From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 29 Mar 2019 23:49:42 -0300
-Message-ID: <CAHd-oW6HmovFFKEPRCvyD8hfiToV8TNc=YFUKdDhPtzxUeoMdw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4 1/7] clone: test for our behavior on odd
- objects/* content
+Date:   Sat, 30 Mar 2019 02:32:03 -0300
+Message-ID: <CAHd-oW5aTyr7OmYwETLHYbHbRYgcUPuHpt2eN=Z2FWrqUQTzJQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at .git/objects/
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 Cc:     git <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
-        Alex Riesen <raa.lkml@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Benoit Pierre <benoit.pierre@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 29, 2019 at 4:32 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On Fri, Mar 29, 2019 at 5:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
 >
 > On 03/29, Matheus Tavares Bernardino wrote:
-> > On Thu, Mar 28, 2019 at 6:49 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > > When sending someone elses patch in a slightly modified version, it
-> > > may also be useful to add which parts you changed, as it was done in
-> > > e8dfcace31 ("poll: use GetTickCount64() to avoid wrap-around issues",
-> > > 2018-10-31) for example.
+> > On Thu, Mar 28, 2019 at 7:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > > I notice that we are currently not using 'linkat()' anywhere else in
+> > > our codebase.  It looks like it has been introduced in POSIX.1-2008,
+> > > which sounds fairly recent by git's standards.  So I wonder if this is
+> > > really supported on all platforms that git is being built on.
+> > >
+> > > I also wonder what would need to be done on Windows if we were to
+> > > introduce this.  I see we define the 'link()' function in
+> > > 'compat/mingw.c' for that currently, so I guess something similar
+> > > would be needed for 'linkat()'.  I added Dscho to Cc for Windows
+> > > expertise.
 > >
-> > Thanks, I didn't know about that! I searched the log and didn't see
-> > many of this on patches with 'Helped-by' tags, is there a particular
-> > case to use it or not?
+> > Ok, what if instead of using linkat() we use 'realpath(const char
+> > *path, char *resolved_path)', which will resolve any symlinks at
+> > 'path' and store the canonical path at 'resolved_path'? Then, we can
+> > still keep using link() but now, with the certainty that all platforms
+> > will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
+> > Would that be a better idea?
 >
-> Helped-by tags are usually used when you want to give someone credit
-> for help you got on a patch that you originally authored.  It's up to
-> you at which point of involvement you actually want to add the tag, I
-> tend to add them whenever someones input significantly
-> changes/improves the patch.  I think adding it here might be okay,
-> it's just less common when sending a patch that someone else authored
-> originally.
->
+> Yeah, I think that is a good idea.  Note that 'realpath()' itself is
+> not used anywhere in our codebase either, but there is
+> 'strbuf_realpath()', that from reading the function documentation does
+> exactly what 'realpath()' would do.  So using 'strbuf_realpath()'
+> would probably be the right thing to do here.
 
-Ok, got it, thanks!
+Thanks. While I was looking for realpath() at git codebase (before I
+saw your email), I got a little confused: Besides strbuf_realpath() I
+also found real_path(), real_path_if_valid() and real_pathdup(). All
+these last three use strbuf_realpath() but they also initialize the
+struct strbuf internally and just return a 'char *', which is much
+convenient in some cases. What seems weird to me is that, whilst
+real_pathdup() releases the internally initialized struct strubuf
+(leaving just the returned string to be free'd by the user), the other
+two don't. So, if struct strbuf change in the future to have more
+dynamic allocated resources, these functions will also have to be
+modified. Also, since real_pathdup() can already do what the other two
+do, do you know if there is a reason to keep all of them?
 
-> > > Iirc, the test that is added in this patch does not work on some
-> > > platforms, notably MacOS.  That would mean that we would break
-> > > bisectability at this patch on some platforms if we were to introduce
-> > > it here.  Therefore I think it would be better to squash this patch
-> > > into the next one which fixes these inconsistencies.
-> > > Note that I can't test this at the moment, so this concern is only
-> > > based on previous discussions that I remember.  If that's already
-> > > addressed somehow, all the better!
-> >
-> > Yes, it is already addressed :) The section of these tests that used
-> > to break on some platforms is now moved to the next patch which also
-> > fixes the platform inconsistencies. Now both patches (this and the
-> > next) work on macOS, NetBSD and GNU/Linux.
->
-> Great!
->
-> >                                             Also every test and job is
-> > passing at travis-ci, except by the job named "Documentation"[1]. But,
-> > it's weird since these patches don't even touch Documentation/... And
-> > master is failing the same job at my fork as well [2]... Any thoughts
-> > on that?
->
-> Yeah, this error seems to have nothing to do with your patch series.
-> Since the last run of travis on master [*1*] at least the asciidoc
-> package doesn't seem to have changed, so from a first look I don't
-> quite understand what's going on there.  In any case, I don't think
-> you need to worry about that for now, as it hasn't been triggered by
-> your changes (I won't discourage you from looking at why it is failing
-> and to try and fix that, but I think your time is probably better
-> spent looking at this patch series and the proposal for GSoC for
-> now).
->
-
-Ok, thanks again.
-
-> *1*: https://travis-ci.org/git/git/builds/508784487
->
-> > [1] https://travis-ci.org/MatheusBernardino/git/builds/512713775
-> > [2] https://travis-ci.org/MatheusBernardino/git/builds/513028692
+One last question: I found some places which don't free the string
+returned by, for example, real_path() (e.g., find_worktree() at
+worktree.c). Would it be a valid/good patch (or patches) to add free()
+calls in this places? (I'm currently trying to get more people here at
+USP to contribute to git, and maybe this could be a nice first
+contribution for them...)
