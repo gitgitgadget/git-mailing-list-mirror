@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9147020248
-	for <e@80x24.org>; Sat, 30 Mar 2019 14:28:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFEE20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 14:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730906AbfC3O2V (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 10:28:21 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36540 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730840AbfC3O2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 10:28:20 -0400
-Received: by mail-pf1-f196.google.com with SMTP id z5so1369563pfn.3
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 07:28:20 -0700 (PDT)
+        id S1730914AbfC3O2X (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 10:28:23 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:37683 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730840AbfC3O2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 10:28:23 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 8so2397612pfr.4
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 07:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DC7ogn1dZXaQ13yVn0z4VykUOjFkAe+PZoyncoSnCgY=;
-        b=UpwXbPKUg6szpmo8CaVGNVY6v0x3I22pnLDXNZykLTSHDNZI1aPljpiY05TU2xHhAr
-         QJsjL/RS8CP/O3BeYRHbzFY94c8Sm2HsiAoI7ztvD34u0hBBxYMVV0LyfgVDyTX1TyFY
-         cMJHka4vQKkhPIkxtbVMhrlV8icuM7RhjNRfEKe+Ua/D+L/+iqQkNlNEGnhhQ7jZ3UCj
-         qzZ7mA0RfEtq+RJOYBFCuozrPm/dSbTZh6qntr4AeaqTYgVYD/4pnDwv/sD3BMGocLtd
-         kXwIA/QMkd3GkkymS2pOSAlZ48h1cNLtRYOFfAEBGo2zdsZHSWMbLqYq3nKnvL3nZWNc
-         5vew==
+        bh=FhAAN28qHfr9fTL5Y+JfBtxC+H9lMrCKQyb4ktkGN0Y=;
+        b=uX8siTw4X9lPTkX8Y9fbQWrXmbRepyFWkAKwuvkxmnEgBGw2zInHJIWiBg/nb+svL7
+         lPfTi15wizBpwwF5bZc8/DAuCI1im4eEllj/kaKntUAefiH+SjFSs0u2IfR+sJKZld9k
+         QFLpnr0bmg7TndiJV1rLxVNhHVDDtjwukplFhbgKij8Z5s6LpblRc7I6ItdV1ZEHfsbx
+         JiBaHz0rO+9E3NGK5ptyn6Dqo7bgY9nwcX6E5Vrp5xJerwadIO3vHiRcNQufVEn7dhll
+         NXVbkafr8tWNkwOyllkVnuXZ/ts7UiE4moiPzRhpZKd0eaTHIBHCxDasSUEXoR4M7lLi
+         gz3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DC7ogn1dZXaQ13yVn0z4VykUOjFkAe+PZoyncoSnCgY=;
-        b=LmjqoS+vw2nowf9gLmzdNssmcHuZMcucCromkjIanWRR/Q3q8lGUIo2HxVdwAPhAK5
-         p12YBFBG+ua96UXVxzakZ0pNvkM9rB58mVEjXe51+dVoyt774KB/2rkzvE7DzV+IO5IQ
-         faI2lCcjxs6yk5y+TW0XVqoWWggf1+JKB9oawU+Lm7Sn+P7CfobBv8f/FrYzO4VHyFOm
-         nSC/QAhd16ouk+3tbvCDoKJi5lp8gZL8woBSKrdQwYp2fLzstnx3wkZVfFC58JbEkEZC
-         V/FszlMeundNh0zVF0cYuCB3kXqFNWj4v7RqBgwlI7GGFo10XG1QCMGAr2I4VRaP17yc
-         kyXg==
-X-Gm-Message-State: APjAAAVvZ+OXG/dtPmWcgHKzl+gN8jCI2MuMogSQALnD+carGCphfFVu
-        sA3JNIWG0uv5NQz2OReKxiXtlNB7Hks=
-X-Google-Smtp-Source: APXvYqyzo5hB36uVXuuNxmw4kHJCo8yDfMMr6E/DSL6vPPn8ob9TwPBdS+xg8PonvB503ucJXpDQTg==
-X-Received: by 2002:a62:6c6:: with SMTP id 189mr52168183pfg.36.1553956099916;
-        Sat, 30 Mar 2019 07:28:19 -0700 (PDT)
+        bh=FhAAN28qHfr9fTL5Y+JfBtxC+H9lMrCKQyb4ktkGN0Y=;
+        b=nYmn3SsqE5ASsgvnDQUpQc6y0XWXHUEVKza4PG0jZgFzDiBtzPlIVEAL0WvCOGJ/Ac
+         JAwMLfQPP+wn7fECapqMWqYNqCf1vPhgMMpTxQ6QZCrx5CudNYOEVc0yoCcjcC2h2hUe
+         3uqrj21hFc91u3l8zy59+/rYcOBMEvYm51JcUDzzFL5GJQ1M5tOYmS6pqujFca3SjKLT
+         XBUTTZOAr2y1CvqtD5/IqueKXI1K70RjmyAFQYnQct95z5VgV59qeCZXHxOwmlsMKurE
+         xy5gpI8aT4TvvxWvum+iQliisdYdnKZtbroztBWVhN1nYwSaQeH5492aBJUr+eSpuqYB
+         vaTA==
+X-Gm-Message-State: APjAAAVe5GLpfE8wkMcv/N8clkaA1cY1daJ5EkNwpYah8XQC3hirEykj
+        smgK8+g0+AcSHGLzTshXJy7boGZkmrk=
+X-Google-Smtp-Source: APXvYqywX/eYizBTSKeKbW6OGxc5xkHkJacX13UxUL12CEWQV/ZyW4DPvlOYCX6f//Dt7VNS+Hz7yw==
+X-Received: by 2002:a62:874d:: with SMTP id i74mr25725273pfe.211.1553956102265;
+        Sat, 30 Mar 2019 07:28:22 -0700 (PDT)
 Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
-        by smtp.gmail.com with ESMTPSA id v12sm6621737pfe.148.2019.03.30.07.28.18
+        by smtp.gmail.com with ESMTPSA id v12sm6621737pfe.148.2019.03.30.07.28.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 30 Mar 2019 07:28:19 -0700 (PDT)
+        Sat, 30 Mar 2019 07:28:21 -0700 (PDT)
 From:   Jonathan Chang <ttjtftx@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jonathan Chang <ttjtftx@gmail.com>,
@@ -58,9 +58,9 @@ Cc:     Jonathan Chang <ttjtftx@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [GSoC][PATCH v4 4/5] t0000: use test_cmp instead of "test" builtin
-Date:   Sat, 30 Mar 2019 22:27:57 +0800
-Message-Id: <731463ed9892c283b6acb0ce69e097769e43de62.1553954776.git.ttjtftx@gmail.com>
+Subject: [GSoC][PATCH v4 5/5] t0000: make use of the test_must_be_empty function
+Date:   Sat, 30 Mar 2019 22:27:58 +0800
+Message-Id: <53f58a4f89ff911d0f761f4e9403e0ddb4454674.1553954776.git.ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <cover.1553954776.git.ttjtftx@gmail.com>
 References: <cover.1553954776.git.ttjtftx@gmail.com>
@@ -73,38 +73,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
 ---
- t/t0000-basic.sh | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ t/t0000-basic.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 3de13daabe..49923c5ff1 100755
+index 49923c5ff1..0cb69a89de 100755
 --- a/t/t0000-basic.sh
 +++ b/t/t0000-basic.sh
-@@ -1118,16 +1118,18 @@ P=$(test_oid root)
+@@ -51,7 +51,7 @@ test_expect_success 'verify that the running shell supports "local"' '
  
- test_expect_success 'git commit-tree records the correct tree in a commit' '
- 	commit0=$(echo NO | git commit-tree $P) &&
--	git show --pretty=raw $commit0 >actual &&
--	tree=$(sed -n -e "s/^tree //p" -e "/^author /q" actual) &&
--	test "z$tree" = "z$P"
-+	git show --pretty=raw $commit0 >output &&
-+	echo "$P" >expect &&
-+	sed -n -e "s/^tree //p" -e "/^author /q" output >actual &&
-+	test_cmp expect actual
+ test_expect_success '.git/objects should be empty after git init in an empty repo' '
+ 	find .git/objects -type f -print >should-be-empty &&
+-	test_line_count = 0 should-be-empty
++	test_must_be_empty should-be-empty
  '
  
- test_expect_success 'git commit-tree records the correct parent in a commit' '
- 	commit1=$(echo NO | git commit-tree $P -p $commit0) &&
--	git show --pretty=raw $commit1 >actual &&
--	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual) &&
--	test "z$commit0" = "z$parent"
-+	git show --pretty=raw $commit1 >output &&
-+	echo "$commit0" >expect &&
-+	sed -n -e "s/^parent //p" -e "/^author /q" output >actual &&
-+	test_cmp expect actual
+ # also it should have 2 subdirectories; no fan-out anymore, pack, and info.
+@@ -1110,7 +1110,7 @@ test_expect_success 'git update-index --refresh should succeed' '
+ 
+ test_expect_success 'no diff after checkout and git update-index --refresh' '
+ 	git diff-files >current &&
+-	cmp -s current /dev/null
++	test_must_be_empty current
  '
  
- test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+ ################################################################
 -- 
 2.21.0
 
