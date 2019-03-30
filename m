@@ -2,160 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A226B20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD1920248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730767AbfC3LXE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:23:04 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45188 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730471AbfC3LXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:23:04 -0400
-Received: by mail-pf1-f194.google.com with SMTP id e24so2244841pfi.12
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:23:03 -0700 (PDT)
+        id S1730464AbfC3LjB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:39:01 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:46338 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730430AbfC3LjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:39:01 -0400
+Received: by mail-io1-f68.google.com with SMTP id b9so3887690iot.13
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xHihulZqB9t7pgfq8tjomSTv/8DEfubw/edGbtbh7Pk=;
-        b=YoRZ+KKVXMbi9tpM0H57m4NaWb4YQdyu/IeuHASamjHbxFDHjke2qlw5zx5KyC+bjR
-         onuS1E4VZrlJ57cpH7qqgORSufAsCQ8KUhksL3izrWmoc8uN4Zb1RMp4JhGDd55chifL
-         oiwe5HKh7ww1ZwbRKT5ht9DjGOUZXPPMg2bL3yMKesNCoyMr6Ky1+vCaqRm8tj0wfX6d
-         qde0fyG8YeIg7ayXT49shEISeYhA4ekiiAoL4NvZyIGlu7PJRkb3QYEXqoFucsoGdM0L
-         JQH1eTH4rNFXpioNth/qvKUvxNa6p5r7SBlfM550Of8BgG1yONyqgAiYmS799INULpsQ
-         +E9Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NSdlb0f1+4vSthkobNYPL8lmI4CKdSrZ/sa3/0u4WT0=;
+        b=Zpfvyi/1OdUGFesXo51+OgVCEGGrQTXY10mv66qyFoowZGN6heMFQCuSx5aenqMv85
+         XdSsJxqA73+5c43gkNx35oRaVi212uyfUqUCwpDzftc/ouFkoKq5BjY3Se/VbC5JDhPK
+         ZJKb69JJ2sizTCy2rLABpxokXx12osHQCipA2YKv8eZM30SBNfIvQSxXnFeG7Rbzo1Hm
+         oSyA2wUZxKKQ+xKVKpQq6zv5ehc7NFVJPGbgoLiDRQV69eDm5a5lP19WQNs+76tqhGqg
+         G48kb8ER3tduWqCvTpBQcoNcF5onytqVTmzsqh0CB4h629INvvHFMJF1hCmqDUKNcaak
+         wMSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xHihulZqB9t7pgfq8tjomSTv/8DEfubw/edGbtbh7Pk=;
-        b=QXwVsMwXIhT6WVe0QYDzeSbJoxHCaGSoXj8I1zYHjFTlWkQRMxjqFqLXo70p5fscpi
-         W+6soQYXGg0zukbpJok1du3zjCq7Xt20qAhC8Bt+3M+HXrT5nNjULb6+DTSYe1zcbXYa
-         h37/iYY4/i30/QDQKnaRl+RztOVeDhfxd4OBuTT8mtyo+FUQIBmNpF3gO5mq/FtxxdSS
-         opJGef6pRQcKjDDwJckl/lAKPMgYFDxCwrlU+nJ1H736hnMb0IYeUnpQzpsr6eGOOplZ
-         5IzAVqEkxe+Aahf47wsWlPTc9jv+4pPyRMBai7rmn8kTyWL3GyFFNyaqhFcxXwqTc+Tr
-         eG5A==
-X-Gm-Message-State: APjAAAX4MVFxrET1oF8JzM6t3FoJ1IKd3Kr0f6tMQWiRT9uXX9h32LWc
-        9CsTPEH41G5aqbip90v9eNYmlPgn
-X-Google-Smtp-Source: APXvYqxsY1AU2gebN98s4m0LLJ9DFgoF8xfKC4LWpSWK78bK51Du/tSzua8/QGhWrxYJBjR+AAe+dw==
-X-Received: by 2002:a65:664a:: with SMTP id z10mr7479447pgv.443.1553944983484;
-        Sat, 30 Mar 2019 04:23:03 -0700 (PDT)
-Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id a17sm7051085pgd.30.2019.03.30.04.23.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 04:23:02 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:58 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <stefanbeller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 31/31] sha1-name.c: remove the_repo from get_oid_mb()
-Date:   Sat, 30 Mar 2019 18:19:27 +0700
-Message-Id: <20190330111927.18645-32-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
-In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
-References: <20190330111927.18645-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NSdlb0f1+4vSthkobNYPL8lmI4CKdSrZ/sa3/0u4WT0=;
+        b=dVU8w+J3HfSErluxYmxfbenqIXpDBeYiURqzexBXPz2YSyXnduDwsbcaKDmKVgWF4T
+         n9xSJTU6KjMRtkSZyse4n6MPhl7cQfOsiYBUwka49PzOzJApjk/Evscxl8uwyeVXoSi2
+         ApHuTqy7BC+lPEcLb5+CxNnxlutG4ff3Bvnl1cjSYFG/T9qrOZWJyWMWvNGliMiRNTyT
+         gYdsh/IgbINd+Xhbdj5+lEt2TAcs9/FHe1fUaUeVf1Iq9PJ9A8j4uccWLZgYMobFbPCu
+         QwAriqP9CX8+D9DVleQlAeO8Z9+H2tnsZthvev8vBJu3atXF0AQ1YNHNN0FUHs/V7o6s
+         PR0A==
+X-Gm-Message-State: APjAAAUuqmqjF4qkBVmcj0Xazsy+W198UYCVrAp7PSajWxAhjrDrLM7M
+        DBsPuEpKQAM58ihQtsCwnOdUitA7AvqeG5MyMJ4xJQ==
+X-Google-Smtp-Source: APXvYqx0XXPRqPjLFRedTsYPxo0231WZmzBSkkLVhCBdMNHkD+M9GKs9ybfEzSy5e+TNnpP8XIeDpWbceAgMHJy4N+0=
+X-Received: by 2002:a6b:3709:: with SMTP id e9mr12010267ioa.282.1553945940483;
+ Sat, 30 Mar 2019 04:39:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
+ <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
+ <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
+ <CACsJy8D9h2yT18V6pH+TKOaFPNQUf=Gd6YtgVkqUW_hvS1ZFaA@mail.gmail.com> <CAApa7v9-2BhTQgt_Vd1mLACsrR2ZhYRBRrNTx2HDrEKXuHVSXw@mail.gmail.com>
+In-Reply-To: <CAApa7v9-2BhTQgt_Vd1mLACsrR2ZhYRBRrNTx2HDrEKXuHVSXw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 30 Mar 2019 18:38:34 +0700
+Message-ID: <CACsJy8BQStYZrTi6Pfrq+TDy-1d74cpS=+8QTr3DDJwgb3ZB9A@mail.gmail.com>
+Subject: Re: Feature Request git clone shallow-include
+To:     Joe Enzminger <joe.enzminger@exactasystems.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- cache.h     |  3 ++-
- sha1-name.c | 18 +++++++++++-------
- 2 files changed, 13 insertions(+), 8 deletions(-)
+On Sat, Mar 30, 2019 at 5:02 AM Joe Enzminger
+<joe.enzminger@exactasystems.com> wrote:
+>
+> Duy -
+>
+> Any updates on this feature request?
 
-diff --git a/cache.h b/cache.h
-index 871a167bf8..9a600a8b50 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1386,6 +1386,7 @@ int repo_get_oid_committish(struct repository *r, const char *str, struct object
- int repo_get_oid_tree(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_treeish(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_blob(struct repository *r, const char *str, struct object_id *oid);
-+int repo_get_oid_mb(struct repository *r, const char *str, struct object_id *oid);
- void maybe_die_on_misspelt_object_name(struct repository *repo,
- 				       const char *name,
- 				       const char *prefix);
-@@ -1399,6 +1400,7 @@ extern enum get_oid_result get_oid_with_context(struct repository *repo, const c
- #define get_oid_tree(str, oid)		repo_get_oid_tree(the_repository, str, oid)
- #define get_oid_treeish(str, oid)	repo_get_oid_treeish(the_repository, str, oid)
- #define get_oid_blob(str, oid)		repo_get_oid_blob(the_repository, str, oid)
-+#define get_oid_mb(str, oid) 		repo_get_oid_mb(the_repository, str, oid)
- 
- typedef int each_abbrev_fn(const struct object_id *oid, void *);
- int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_fn, void *);
-@@ -1486,7 +1488,6 @@ int repo_interpret_branch_name(struct repository *r,
- 			       unsigned allowed);
- #define interpret_branch_name(str, len, buf, allowed) \
- 	repo_interpret_branch_name(the_repository, str, len, buf, allowed)
--extern int get_oid_mb(const char *str, struct object_id *oid);
- 
- extern int validate_headref(const char *ref);
- 
-diff --git a/sha1-name.c b/sha1-name.c
-index d49496397d..cf314ebb29 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1338,7 +1338,9 @@ static int interpret_nth_prior_checkout(struct repository *r,
- 	return retval;
- }
- 
--int get_oid_mb(const char *name, struct object_id *oid)
-+int repo_get_oid_mb(struct repository *r,
-+		    const char *name,
-+		    struct object_id *oid)
- {
- 	struct commit *one, *two;
- 	struct commit_list *mbs;
-@@ -1348,27 +1350,29 @@ int get_oid_mb(const char *name, struct object_id *oid)
- 
- 	dots = strstr(name, "...");
- 	if (!dots)
--		return get_oid(name, oid);
-+		return repo_get_oid(r, name, oid);
- 	if (dots == name)
--		st = get_oid("HEAD", &oid_tmp);
-+		st = repo_get_oid(r, "HEAD", &oid_tmp);
- 	else {
- 		struct strbuf sb;
- 		strbuf_init(&sb, dots - name);
- 		strbuf_add(&sb, name, dots - name);
--		st = get_oid_committish(sb.buf, &oid_tmp);
-+		st = repo_get_oid_committish(r, sb.buf, &oid_tmp);
- 		strbuf_release(&sb);
- 	}
- 	if (st)
- 		return st;
--	one = lookup_commit_reference_gently(the_repository, &oid_tmp, 0);
-+	one = lookup_commit_reference_gently(r, &oid_tmp, 0);
- 	if (!one)
- 		return -1;
- 
--	if (get_oid_committish(dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
-+	if (repo_get_oid_committish(r, dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
- 		return -1;
--	two = lookup_commit_reference_gently(the_repository, &oid_tmp, 0);
-+	two = lookup_commit_reference_gently(r, &oid_tmp, 0);
- 	if (!two)
- 		return -1;
-+	if (r != the_repository)
-+		BUG("sorry get_merge_bases() can't take struct repository yet");
- 	mbs = get_merge_bases(one, two);
- 	if (!mbs || mbs->next)
- 		st = -1;
+Nope. I've been busy with other stuff. I did have a look at the
+possibility of reusing code in sha1-name.c and concluded that it's not
+quite safe.
+
+> Joe
+>
+> On Thu, Feb 21, 2019 at 7:06 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Thu, Feb 21, 2019 at 1:07 AM Joe Enzminger
+> > <joe.enzminger@exactasystems.com> wrote:
+> > >
+> > > That is correct.  What you suggest is actually what I tried (using
+> > > sha-1 syntax).  For my purposes, excluding the tag's parent's but
+> > > including the tag is sufficient, but if is fairly straightforward to
+> > > extend support to the other use cases I'm sure someone would find is
+> > > useful.
+> >
+> > It's not hard to do. I hope I will find some time to do it soon. My
+> > only concern is whether reuse the current code or write new. The
+> > former makes it easy to accidentally accept some extended sha-1 syntax
+> > that should not run on the server side. On the other hand, the latter
+> > will not be as thoroughly tested because it only runs by shallow code.
+> > That's my problem though. I think I might be able to find a third
+> > option somewhere in between.
+> >
+> > >
+> > > Joe
+> > >
+> > >
+> > > On Tue, Feb 19, 2019 at 7:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> > > >
+> > > > On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
+> > > > <joe.enzminger@exactasystems.com> wrote:
+> > > > >
+> > > > > Currently, git clone supports shallow-exclude=<tag-name>.  The client
+> > > > > will clone up to, but not including, the commit with the tag.
+> > > > >
+> > > > > It would be useful to have the ability to include the commit with the
+> > > > > tag.  The suggestion would be to add a "shallow-include" options to
+> > > > > clone to support this behavior.
+> > > >
+> > > > So exclude the tag's parents and everything before, but keep the tag, correct?
+> > > >
+> > > > I think if we support --shallow-exclude=<tag>^ then it should work the
+> > > > way you want (if the tag is a normal merge you may need to add
+> > > > --shallow-exclude=<tag>^2 as well). And you can do even fancier thing
+> > > > like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
+> > > > of the tag, but keep the tag and grand parents). We will need to
+> > > > restrict extended SHA-1 syntax to a safe subset of course.
+> > > >
+> > > > > I have tried to use shallow-exclude with a follow on git fetch
+> > > > > --deepen=1, but it always returns "fatal: error in object; unshallow
+> > > > > <sha1>"
+> > > > --
+> > > > Duy
+> >
+> >
+> >
+> > --
+> > Duy
+
+
+
 -- 
-2.21.0.479.g47ac719cd3
-
+Duy
