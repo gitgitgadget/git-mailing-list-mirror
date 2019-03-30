@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93B8020248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:22:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B80B20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730809AbfC3LWo (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:22:44 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:33289 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730808AbfC3LWo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:22:44 -0400
-Received: by mail-pl1-f193.google.com with SMTP id t16so342927plo.0
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:43 -0700 (PDT)
+        id S1730810AbfC3LWt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:22:49 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:38763 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730471AbfC3LWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:22:49 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 10so2262490pfo.5
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hKjJIvSfH8MGf6h4/kuMUZwGHNx2sxD8tRhAQUc8aZA=;
-        b=IUDLNowA/JkQg9RtYkmqJ5zqCtXPiFWry1mKhLRN/sfoGd25FBY1xPmcTjMdn9mQkd
-         85SuMPs1soWmCO/5Sl63FL2+Ab41/LDHTa7tATv3JQjilj0cgHTSVmbBlswTsE9kIs27
-         tbENckJmZBasWLS0kqWRvdej5Wa7mwT0Y/puVMBOng5NBVM+8OysSCLunxrMbvY3TkKj
-         xVC/W74y/0wVdxBezbl/BZIpQ7eptXy9va4/lgcCQdqAnawFkZFDVrCumddCDZ6BxjIp
-         BjaWEvBB9shLjgPcbd5WMX3s8srm5ZCYlIZoXqwol+xWW+/eNOUd3n1KdtwmAYxuoh5i
-         dHpQ==
+        bh=kMiXl1MxKUOko0eG2ftuaNwMJYbmJV8Dmae7pks8mVA=;
+        b=l7iVkOTAzeZmrsPhIbk3BID0EKFgV/JPwQ762zx6CbyPvTLPGSfyoQ31NJdOpD60BV
+         b4moDK9PZ0qO32zeVS9XTd9SD2arSl75uK2Nlg0ZnKkfiY7zsNcDuxhQHBfPdLTcFzmm
+         fvfazPbR1tSUHwqyuQu0k6vycd0vFL9Fe4T7alFA7xbltLQLp83CVBGuhfsJ+BJrRJv+
+         qzyf0tZQn6OE0EMW1HEs7OczIo83NcJRB60SGxC+Xe10aTolhoWf07EAOtaQXZ2oRpko
+         WqMwGt9rN2YvPUT36wa/RV+sNMlySKDth8FqJyySRkLTfsCmSThj6yQNvTzNML6BmrMf
+         LWlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hKjJIvSfH8MGf6h4/kuMUZwGHNx2sxD8tRhAQUc8aZA=;
-        b=KU1PhUy3lWOM/Ur/Ag8QxEq8sWS6V24Pnt5cTWRDrORHTtJaASmVjf73SsoCa7t1DT
-         qv+vNhp0ZUq//XfzjQOmWl/vpWoSOzp9SE/b5bmc44fpYU5sPHJ0HrCeSPOOFwtv+szp
-         lTL5XANnnIJ0n1bcr3cqidmgwJTqJI9aJsnJ9NQEri0Fwg7NAzLKwkb/ON7E9lAjuutB
-         OugZ+zCdVCBtEo+8cBHw/CU2G9IWjsa0sz8OywGkXLl3Pjop4kTR936e+pvuaUWQzJUe
-         Evmjsjh4slPwf8UogCoYsK8kMU24xVJT6jvagiL1m2LNFQZ/IGiNnd5CX/iSS8/4Wa2E
-         Yl6Q==
-X-Gm-Message-State: APjAAAVDjsfFBJvRYvkEP8GWgD+JyFKS5Vag8R6fEnBLCRoN1y0YnVKu
-        6ucmp3lnQ5Qa3CrYy7MP6p2utlNf
-X-Google-Smtp-Source: APXvYqwHE9c932SAYO4WfeS3LFARaDrYT9GdvR4Ch4sl28Wtx1eWekFm/rMsoYUoVi9i+gV5v2DnMg==
-X-Received: by 2002:a17:902:9a5:: with SMTP id 34mr54428060pln.287.1553944963390;
-        Sat, 30 Mar 2019 04:22:43 -0700 (PDT)
+        bh=kMiXl1MxKUOko0eG2ftuaNwMJYbmJV8Dmae7pks8mVA=;
+        b=kTUNn3QbLZenhtAjuQPAkf7F9ZMNvha1w/l2C+X/DsX/uIg3p8FuPg8qUjtPLEKJLy
+         0HmD0mAOn2+GqkkrBjyXoQ55SU47JwoXgo/ZIfFOurkwgsnfibydZD2oDMcNuei9mvor
+         aC3G7YGm4ouahN28EkF/AEdjdl1D45xTNIcca96S2oFlddSUFfQ1C/vU89bHDqaklrXO
+         P9Zp5bkBxAgY+Kj2QdqNiNGtiWdLQYznmHZmy96PVxmzj2vfOoBppA5YZEGq/69JApmE
+         SrS+baQoZnPWA8HVKrXtwFGmQecofBR27jppxIOM+ziP9qE/9m3/aEqIuTwV7JVrkA16
+         gRfA==
+X-Gm-Message-State: APjAAAVF9csBtPb6E6c4GfVovQ8rv+mie59CUPYjlnj7AjSP8ZsrYwXi
+        TKWQM6KxLfajOcHjMLE1R7B0heCb
+X-Google-Smtp-Source: APXvYqwQ9JXmRD0kp4WmAoAdecgmpMsS7PRMwz0Ipcaxd5co2jePGTNx79lMq2zn+0bvM2IZsURjGg==
+X-Received: by 2002:a65:63c2:: with SMTP id n2mr14683848pgv.439.1553944968405;
+        Sat, 30 Mar 2019 04:22:48 -0700 (PDT)
 Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id 13sm5808564pfi.172.2019.03.30.04.22.40
+        by smtp.gmail.com with ESMTPSA id p3sm10637975pfp.136.2019.03.30.04.22.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 04:22:42 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:38 +0700
+        Sat, 30 Mar 2019 04:22:47 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:43 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 27/31] sha1-name.c: add repo_get_oid()
-Date:   Sat, 30 Mar 2019 18:19:23 +0700
-Message-Id: <20190330111927.18645-28-pclouds@gmail.com>
+Subject: [PATCH 28/31] submodule-config.c: use repo_get_oid for reading .gitmodules
+Date:   Sat, 30 Mar 2019 18:19:24 +0700
+Message-Id: <20190330111927.18645-29-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -71,43 +71,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since 76e9bdc437 (submodule: support reading .gitmodules when it's not
+in the working tree - 2018-10-25), every time you do
+
+    git grep --recurse-submodules
+
+you are likely to see one warning line per submodule (unless all those
+submodules also have submodules). On a superproject with plenty of
+submodules (I've seen one with 67) this is really annoying.
+
+The warning was there because we could not resolve extended SHA-1
+syntax on a submodule. We can now. Make use of the new API and get rid
+of the warning.
+
+It would be even better if config_with_options() supports multiple
+repositories too. But one step at a time.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h     | 3 ++-
- sha1-name.c | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ submodule-config.c                 | 20 +++++++-------------
+ t/t7814-grep-recurse-submodules.sh |  6 +-----
+ 2 files changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 2149dc4f56..f6e87194d0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1380,7 +1380,8 @@ enum get_oid_result {
- 		       */
- };
+diff --git a/submodule-config.c b/submodule-config.c
+index 66653e86b9..4264ee216f 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -625,23 +625,16 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
+ 		const struct config_options opts = { 0 };
+ 		struct object_id oid;
+ 		char *file;
++		char *oidstr = NULL;
  
--extern int get_oid(const char *str, struct object_id *oid);
-+int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
-+#define get_oid(str, oid) repo_get_oid(the_repository, str, oid)
- extern int get_oid_commit(const char *str, struct object_id *oid);
- extern int get_oid_committish(const char *str, struct object_id *oid);
- extern int get_oid_tree(const char *str, struct object_id *oid);
-diff --git a/sha1-name.c b/sha1-name.c
-index 64a50d1291..953df0d692 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1573,10 +1573,10 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
-  * This is like "get_oid_basic()", except it allows "object ID expressions",
-  * notably "xyz^" for "parent of xyz"
-  */
--int get_oid(const char *name, struct object_id *oid)
-+int repo_get_oid(struct repository *r, const char *name, struct object_id *oid)
- {
- 	struct object_context unused;
--	return get_oid_with_context(the_repository, name, 0, oid, &unused);
-+	return get_oid_with_context(r, name, 0, oid, &unused);
+ 		file = repo_worktree_path(repo, GITMODULES_FILE);
+ 		if (file_exists(file)) {
+ 			config_source.file = file;
+-		} else if (repo->submodule_prefix) {
+-			/*
+-			 * When get_oid and config_with_options, used below,
+-			 * become able to work on a specific repository, this
+-			 * warning branch can be removed.
+-			 */
+-			warning("nested submodules without %s in the working tree are not supported yet",
+-				GITMODULES_FILE);
+-			goto out;
+-		} else if (get_oid(GITMODULES_INDEX, &oid) >= 0) {
+-			config_source.blob = GITMODULES_INDEX;
+-		} else if (get_oid(GITMODULES_HEAD, &oid) >= 0) {
+-			config_source.blob = GITMODULES_HEAD;
++		} else if (repo_get_oid(repo, GITMODULES_INDEX, &oid) >= 0 ||
++			   repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
++			config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
++			if (repo != the_repository)
++				add_to_alternates_memory(repo->objects->odb->path);
+ 		} else {
+ 			goto out;
+ 		}
+@@ -649,6 +642,7 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
+ 		config_with_options(fn, data, &config_source, &opts);
+ 
+ out:
++		free(oidstr);
+ 		free(file);
+ 	}
  }
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index fa475d52fa..134a694516 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -380,11 +380,7 @@ test_expect_success 'grep --recurse-submodules should pass the pattern type alon
+ 	fi
+ '
  
- 
+-# Recursing down into nested submodules which do not have .gitmodules in their
+-# working tree does not work yet. This is because config_from_gitmodules()
+-# uses get_oid() and the latter is still not able to get objects from an
+-# arbitrary repository (the nested submodule, in this case).
+-test_expect_failure 'grep --recurse-submodules with submodules without .gitmodules in the working tree' '
++test_expect_success 'grep --recurse-submodules with submodules without .gitmodules in the working tree' '
+ 	test_when_finished "git -C submodule checkout .gitmodules" &&
+ 	rm submodule/.gitmodules &&
+ 	git grep --recurse-submodules -e "(.|.)[\d]" >actual &&
 -- 
 2.21.0.479.g47ac719cd3
 
