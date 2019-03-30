@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E078C20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:22:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFBEE20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:23:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730634AbfC3LWy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:22:54 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36781 "EHLO
+        id S1730766AbfC3LW7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:22:59 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34352 "EHLO
         mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730471AbfC3LWy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:22:54 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 85so2438585pgc.3
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:53 -0700 (PDT)
+        with ESMTP id S1730471AbfC3LW7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:22:59 -0400
+Received: by mail-pg1-f196.google.com with SMTP id v12so2445356pgq.1
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WiTcqjXHjS0GDmkL0Ayotb8v1V1CzkGfFwAIuM5mr9Q=;
-        b=RAX7GIj8DB4AP+vtj6a47L2WJYwpJlYoSbzand/wrZyGN10VRaAVH5lEGhsMev+lKz
-         m+TOZQ7VuZgbAux7arrV7Bmi+48J0excc+LDaOQjnRa1Z7oWaqLVhBGTVtoydw0t0ac7
-         dS76tstdgSuWmuZZg4Anfo6k8ZAAJN8hJrH+FI0PyW6dxmsVrnryI/ZoeL2mpAhixT/B
-         9dY515F5Sz8MWNeNM2GrFgFMYXqs/40hYl5PXQFbl0Ya0RDUOQgV29LiEhPcqx4mTgCx
-         I7oEOO6b8xwTaOSDIsO4SZbeweTojoK0tn29aT4bZk/bkBKhw0Q1nptbGL/4kgupdDFW
-         IAPQ==
+        bh=h4UsmkkHNE/w67i9pZNTRUVeoBYpvfa1184swHxAb98=;
+        b=o/ttobVKJjpQ6XugtGbnlu7iT8FPXqv1bxD6+D3XAlCRKkO0YkoFsfALRnUdImWdSs
+         yf7akBlS4hzh5V8w5eKg1dnxON9COPqfSXRzvZx5HwjjYKW6ql8XjGOA+icKyoC2LC0M
+         GKqMhOAD9OTwTeqRNIntiokrz2pscjc8SU8uB7AKqETYpUNqxUl3yLDxtsWWVt2iRZ3B
+         WLHosj2z3e09La9n97CPaD4i2nmj6jZMR/Ci9NO8ZwYP5rVBjKrWPSM80q/p6XWJaT9g
+         Zmwjff+fgPS2dPN3Xw7C6S1XmwbwNit8Y5rgViCgEmKgxNJ1UVX0AYW0rVrUGbQ2FOup
+         rWGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WiTcqjXHjS0GDmkL0Ayotb8v1V1CzkGfFwAIuM5mr9Q=;
-        b=YVgfJ0SucRDCe+0FONxysyU3n2hSU7WD6nGjQH1ZOFyeW2Nlk07t7vBuGRdFGWewSA
-         GK1Bq4LNzEX5lnUw6vdcjBcP0QhUdP1WoqJG5JpBBcRzBrUUGfwKDI4TBL5kc1xvDYvs
-         PZPrGHOTwsExdq5rKKRK98KwOP5TcTKpogzXKhk5x97Fd4ySV3C23RcCrR8kYIgTR9UO
-         3MHFx0h/gqLcmIzn/G9PZXLCac/bc0zxTomMQcGs7cYaJAtwUNKofxaNnSikd8m5ez/X
-         n48BQDbC8zo0K8jqaf2Z/tHxnaaMUAbqnR39yiZsWjHNVRe8hRDcTRvULKWHWVmRQXGU
-         OqWg==
-X-Gm-Message-State: APjAAAXQ2qx7IyqSVHC9WBsQGAdBq4JCP3TWLP4pMn/UNLvJ5vHT6wxT
-        kh4+wdyhp5vi8DnVDrwwLcUHY73b
-X-Google-Smtp-Source: APXvYqzAY3QGpDy8G0KOFqQr4pPhnNIiGf9lVRDACyZmnUNqvu9AaXvWKCAqyqjJX/65+89OF7LCjg==
-X-Received: by 2002:a63:ed11:: with SMTP id d17mr50563845pgi.211.1553944973247;
-        Sat, 30 Mar 2019 04:22:53 -0700 (PDT)
+        bh=h4UsmkkHNE/w67i9pZNTRUVeoBYpvfa1184swHxAb98=;
+        b=dFGzG2wRoOUoA4/gk2QTOZh4kBpH9S8CH7+Q2AWL8tUAVD2Gs8/ebzJ+VP1RWBJvb0
+         vIPoHasyyZ+O4nG4GMmdR7fP8iWDFPGjU5jnL3qnWfll9Kets5CglkHCWHLmJdANV/nl
+         AdAiSJdQ0qY9WfqN4qIKbhO0YVYznpCyvSyKs9yMEWXvbiQv6FxgLT5HiLJdDLXaL23h
+         keWsM6Yd/Gl2FDwaXW2c43872v3ESp163sRiIUXZJmFcT4m1Nuh+00a86eYM7ZYh1rwo
+         zOWU9B+eCzZLfeOew+wKiV7BatioK0J3iZbjepVYv7ZIMeRiKlKm9h6fjmiuB4oKbCrH
+         RwYw==
+X-Gm-Message-State: APjAAAVVfNS/7e8b4REmW7T201nZPWhdBtPlCpowSP33ZAJ045XB8YV4
+        5Dj/g6CpUEqnb/rcbvucxz8PXkxy
+X-Google-Smtp-Source: APXvYqwz5t/nUarYQ+S/uyoPp6QF3gTX+PKmxqwa774DoUqp2+RkjIV3x0gHW3u4wRJu7rwE0F8L1Q==
+X-Received: by 2002:a65:5a81:: with SMTP id c1mr49650651pgt.391.1553944978475;
+        Sat, 30 Mar 2019 04:22:58 -0700 (PDT)
 Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id o5sm19479549pfa.135.2019.03.30.04.22.50
+        by smtp.gmail.com with ESMTPSA id z189sm6480400pfb.146.2019.03.30.04.22.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 04:22:52 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:48 +0700
+        Sat, 30 Mar 2019 04:22:57 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:53 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 29/31] sha1-name.c: remove the_repo from maybe_die_on_misspelt_object_name
-Date:   Sat, 30 Mar 2019 18:19:25 +0700
-Message-Id: <20190330111927.18645-30-pclouds@gmail.com>
+Subject: [PATCH 30/31] sha1-name.c: remove the_repo from other get_oid_*
+Date:   Sat, 30 Mar 2019 18:19:26 +0700
+Message-Id: <20190330111927.18645-31-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -73,76 +73,112 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h     | 4 +++-
- setup.c     | 7 ++++---
- sha1-name.c | 6 ++++--
- 3 files changed, 11 insertions(+), 6 deletions(-)
+ cache.h     | 18 ++++++++++++------
+ sha1-name.c | 35 ++++++++++++++++++++---------------
+ 2 files changed, 32 insertions(+), 21 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index f6e87194d0..3718b3db8a 100644
+index 3718b3db8a..871a167bf8 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1387,7 +1387,9 @@ extern int get_oid_committish(const char *str, struct object_id *oid);
- extern int get_oid_tree(const char *str, struct object_id *oid);
- extern int get_oid_treeish(const char *str, struct object_id *oid);
- extern int get_oid_blob(const char *str, struct object_id *oid);
--extern void maybe_die_on_misspelt_object_name(const char *name, const char *prefix);
-+void maybe_die_on_misspelt_object_name(struct repository *repo,
-+				       const char *name,
-+				       const char *prefix);
- extern enum get_oid_result get_oid_with_context(struct repository *repo, const char *str,
+@@ -1381,12 +1381,11 @@ enum get_oid_result {
+ };
+ 
+ int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
+-#define get_oid(str, oid) repo_get_oid(the_repository, str, oid)
+-extern int get_oid_commit(const char *str, struct object_id *oid);
+-extern int get_oid_committish(const char *str, struct object_id *oid);
+-extern int get_oid_tree(const char *str, struct object_id *oid);
+-extern int get_oid_treeish(const char *str, struct object_id *oid);
+-extern int get_oid_blob(const char *str, struct object_id *oid);
++int repo_get_oid_commit(struct repository *r, const char *str, struct object_id *oid);
++int repo_get_oid_committish(struct repository *r, const char *str, struct object_id *oid);
++int repo_get_oid_tree(struct repository *r, const char *str, struct object_id *oid);
++int repo_get_oid_treeish(struct repository *r, const char *str, struct object_id *oid);
++int repo_get_oid_blob(struct repository *r, const char *str, struct object_id *oid);
+ void maybe_die_on_misspelt_object_name(struct repository *repo,
+ 				       const char *name,
+ 				       const char *prefix);
+@@ -1394,6 +1393,13 @@ extern enum get_oid_result get_oid_with_context(struct repository *repo, const c
  				unsigned flags, struct object_id *oid,
  				struct object_context *oc);
-diff --git a/setup.c b/setup.c
-index d0c958c3b2..8dcb4631f7 100644
---- a/setup.c
-+++ b/setup.c
-@@ -164,7 +164,8 @@ int check_filename(const char *prefix, const char *arg)
- 	die_errno(_("failed to stat '%s'"), arg);
- }
  
--static void NORETURN die_verify_filename(const char *prefix,
-+static void NORETURN die_verify_filename(struct repository *r,
-+					 const char *prefix,
- 					 const char *arg,
- 					 int diagnose_misspelt_rev)
- {
-@@ -179,7 +180,7 @@ static void NORETURN die_verify_filename(const char *prefix,
- 	 * let maybe_die_on_misspelt_object_name() even trigger.
- 	 */
- 	if (!(arg[0] == ':' && !isalnum(arg[1])))
--		maybe_die_on_misspelt_object_name(arg, prefix);
-+		maybe_die_on_misspelt_object_name(r, arg, prefix);
- 
- 	/* ... or fall back the most general message. */
- 	die(_("ambiguous argument '%s': unknown revision or path not in the working tree.\n"
-@@ -234,7 +235,7 @@ void verify_filename(const char *prefix,
- 		die(_("option '%s' must come before non-option arguments"), arg);
- 	if (looks_like_pathspec(arg) || check_filename(prefix, arg))
- 		return;
--	die_verify_filename(prefix, arg, diagnose_misspelt_rev);
-+	die_verify_filename(the_repository, prefix, arg, diagnose_misspelt_rev);
- }
- 
- /*
++#define get_oid(str, oid)		repo_get_oid(the_repository, str, oid)
++#define get_oid_commit(str, oid)	repo_get_oid_commit(the_repository, str, oid)
++#define get_oid_committish(str, oid)	repo_get_oid_committish(the_repository, str, oid)
++#define get_oid_tree(str, oid)		repo_get_oid_tree(the_repository, str, oid)
++#define get_oid_treeish(str, oid)	repo_get_oid_treeish(the_repository, str, oid)
++#define get_oid_blob(str, oid)		repo_get_oid_blob(the_repository, str, oid)
++
+ typedef int each_abbrev_fn(const struct object_id *oid, void *);
+ int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_fn, void *);
+ #define for_each_abbrev(prefix, fn, data) repo_for_each_abbrev(the_repository, prefix, fn, data)
 diff --git a/sha1-name.c b/sha1-name.c
-index 953df0d692..b94d381bef 100644
+index b94d381bef..d49496397d 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -1885,11 +1885,13 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
-  * exist in 'HEAD'" when given "HEAD:doc", or it may return in which case
-  * you have a chance to diagnose the error further.
+@@ -1590,43 +1590,48 @@ int repo_get_oid(struct repository *r, const char *name, struct object_id *oid)
+  * commit-ish. It is merely to give a hint to the disambiguation
+  * machinery.
   */
--void maybe_die_on_misspelt_object_name(const char *name, const char *prefix)
-+void maybe_die_on_misspelt_object_name(struct repository *r,
-+				       const char *name,
-+				       const char *prefix)
+-int get_oid_committish(const char *name, struct object_id *oid)
++int repo_get_oid_committish(struct repository *r,
++			    const char *name,
++			    struct object_id *oid)
  {
- 	struct object_context oc;
- 	struct object_id oid;
--	get_oid_with_context_1(the_repository, name, GET_OID_ONLY_TO_DIE,
-+	get_oid_with_context_1(r, name, GET_OID_ONLY_TO_DIE,
- 			       prefix, &oid, &oc);
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository,
+-				    name, GET_OID_COMMITTISH,
++	return get_oid_with_context(r, name, GET_OID_COMMITTISH,
+ 				    oid, &unused);
+ }
+ 
+-int get_oid_treeish(const char *name, struct object_id *oid)
++int repo_get_oid_treeish(struct repository *r,
++			 const char *name,
++			 struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository,
+-				    name, GET_OID_TREEISH,
++	return get_oid_with_context(r, name, GET_OID_TREEISH,
+ 				    oid, &unused);
+ }
+ 
+-int get_oid_commit(const char *name, struct object_id *oid)
++int repo_get_oid_commit(struct repository *r,
++			const char *name,
++			struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository,
+-				    name, GET_OID_COMMIT,
++	return get_oid_with_context(r, name, GET_OID_COMMIT,
+ 				    oid, &unused);
+ }
+ 
+-int get_oid_tree(const char *name, struct object_id *oid)
++int repo_get_oid_tree(struct repository *r,
++		      const char *name,
++		      struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository,
+-				    name, GET_OID_TREE,
++	return get_oid_with_context(r, name, GET_OID_TREE,
+ 				    oid, &unused);
+ }
+ 
+-int get_oid_blob(const char *name, struct object_id *oid)
++int repo_get_oid_blob(struct repository *r,
++		      const char *name,
++		      struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository,
+-				    name, GET_OID_BLOB,
++	return get_oid_with_context(r, name, GET_OID_BLOB,
+ 				    oid, &unused);
  }
  
 -- 
