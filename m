@@ -2,87 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5451A20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 14:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E6F20248
+	for <e@80x24.org>; Sat, 30 Mar 2019 14:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730850AbfC3ONS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 10:13:18 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:39080 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730832AbfC3ONS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 10:13:18 -0400
-Received: from [192.168.1.12] ([2.101.245.142])
-        by smtp.talktalk.net with SMTP
-        id AEjSh6HwxgI7iAEjShNiw9; Sat, 30 Mar 2019 14:13:15 +0000
-X-Originating-IP: [2.101.245.142]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=mQgiQ6BlbOv19lEfDgieCg==:117
- a=mQgiQ6BlbOv19lEfDgieCg==:17 a=IkcTkHD0fZMA:10 a=w0RzvLSWAAAA:20
- a=aulWLQ49AAAA:20 a=52-Yb1kGAAAA:20 a=IoXxO10MqF6Dbp1GsckA:9
- a=QEXdDO2ut3YA:10 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=QOGEsqRv6VhmHaoFNykA:22
-From:   Philip Oakley <philipoakley@iee.org>
-Subject: test suite: why does git add large_file create a pack, rather than an
- object?
-To:     Git List <git@vger.kernel.org>
-Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Message-ID: <f0c838f0-2f75-2b05-1aeb-3db4743ce89a@iee.org>
-Date:   Sat, 30 Mar 2019 14:13:15 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1730856AbfC3O2J (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 10:28:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35184 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730840AbfC3O2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 10:28:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id t21so2400305pfe.2
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 07:28:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Csi5sqWrLVj4u3nXKne1LVlxHnXYvaydXevcEbn+3A=;
+        b=vFwacNrWxDDhp8JR3zNTua3MIqKklfM80E5tkw28en2D3qOiEm6vBkhLEtmcg+CVJl
+         b8wjtjZNO1l9evBf9jWgGC7SF+dogPM9D4xYVQ9+xezTRIdmczK6+3baTceCv2LwHDY1
+         crEamzu7khbxYjQkyX29CYh9elM+tB7PD7Ci91s/R6fB9C794hCdz3mQZ+4WblW+QymW
+         ioNevhkna1mgTmCOU4v7kevLOkbL9j5qSLOJd3bmRM4BknHzeGkti1D55nS4z0dJ/oa4
+         BxzzjTvybiSwToXj/dbRycRMkQ326Znks226NSgJUpkU3TMHRfDs6x2KFLMXet12BE/K
+         ybYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Csi5sqWrLVj4u3nXKne1LVlxHnXYvaydXevcEbn+3A=;
+        b=umv5GMfhkuuVnpbnIjk6c9zJ2i8Hov8eBFzdSjfT/h0fyW2L88qD8ygDX6nvqWq9az
+         Bdp2QA2QJGqYmM58njk6wyRWAl0FS6AMxM1Z4xWshBuhdU2/HVmETo2lT5tSIlNQscwL
+         QvYNV7TTKvJE+gxe5n0/DlMPiaqKKKvjQEi7JCwKC5dbiOO1KAOcr6x7LLT8/k1jiAeo
+         1D+0SfouTsOH0GbsJKdHfLt2hkdCHB+nc3Lee+cEY2USqpzAMb2oJ9QxDRgTG67WyXJ5
+         uCwKl8TeU5mheUJKvQPeEkZm7jwzvc7CdgxDXTjuStvGy8Pxaj20j6Bsy3tWLY5r1Q/P
+         G88Q==
+X-Gm-Message-State: APjAAAXQjrq1QFNnYouVf817v2/XXjnG5Xsl5XP930IElJfi1d2feVr+
+        JKD5ZOunih2Yj8IlP2yal5aGTTJpbtA=
+X-Google-Smtp-Source: APXvYqztNVob0vhEX4aBYyVYcc6Q/sexHpbDDX3jDu90Ew25BvHznU1puJcRCw1QXLV195meXjqaUw==
+X-Received: by 2002:a63:4815:: with SMTP id v21mr51995017pga.412.1553956088449;
+        Sat, 30 Mar 2019 07:28:08 -0700 (PDT)
+Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
+        by smtp.gmail.com with ESMTPSA id v12sm6621737pfe.148.2019.03.30.07.28.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 30 Mar 2019 07:28:07 -0700 (PDT)
+From:   Jonathan Chang <ttjtftx@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jonathan Chang <ttjtftx@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [GSoC][PATCH v4 0/5] Avoid using pipes
+Date:   Sat, 30 Mar 2019 22:27:53 +0800
+Message-Id: <cover.1553954776.git.ttjtftx@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfDfm6YHOMXQ1kyVXHxNccXO8prO0/4f6MBCuKApwF3CyyFezohbDi+nGkZqIKTGOuCI9wKhkLqEx+87YtvLFIjiju5Vr+DcmhDWl/10ogf0XqcrmA76O
- 2ckXydY8NCItfOU9R5ZcLMb+YR/jFqPfYcgxfV9XUJ9IXz8z8rcarlKCY+fr+ogQ9Wvh2cLQMI22XP/XFzET9R4FtpRfVKpMUDlppgzRCM6TK1wsy4KlW0Lo
- B7BZpoYHm+hrlqu7OHEMoXRiUxN6V6kN3eXDW7WffJ1gQBSL3TEKZStEg8DHlS4RfKD7I0nuInbGNpc5Bcu4CA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm looking at the Git-for-Windows(GfW) >4Gb  large file problem 
-following Torsten and Thomas's work (and others). [1,2,3, etc.]
+I added 2 additional patches that modernize style, based on discussion
+in [1].
+Also added description in commit message as suggested in [2].
 
-I've added a few more changes to my branch [2] to get the zlib to 
-properly count past its 32bit limit when wrapped in the git_inflate 
-(etc) wrapper code. [4]
 
-At the moment I'm using an extended _test_ case that starts by adding a 
-~5.1Gb file and then using verify-pack, which aborts with an error.
+[v1]: https://public-inbox.org/git/20190309154555.33407-1-ttjtftx@gmail.com/
+[v2]: https://public-inbox.org/git/20190310080739.63984-1-ttjtftx@gmail.com/
+[v3]: https://public-inbox.org/git/cover.1552835153.git.ttjtftx@gmail.com/
 
-         dd if=/dev/zero of=file bs=1M count=5100 &&
-         git config core.compression 0 &&
-         git config core.looseCompression 0 &&
-         git add file &&
-         git verify-pack -s .git/objects/pack/*.pack &&
-         git fsck --verbose --strict --full &&
-         ...
+[1]: https://public-inbox.org/git/87imwha1o3.fsf@evledraar.gmail.com/
+[2]: https://public-inbox.org/git/20190317200609.GA1216@hank.intra.tgummerer.com/
 
-If however I simple execute the commands from the GfW bash, the added 
-file is stored as a blob object, rather than a pack.
 
-I'm at a loss to understand the reason for the change in behaviour 
-[store file as pack, vs store as object] between running the code as a 
-test script and at the terminal. What am I missing?
+Jonathan Chang (5):
+  t0000: fix indentation
+  t0000: avoid using pipes
+  t0000: use test_line_count instead of wc -l
+  t0000: use test_cmp instead of "test" builtin
+  t0000: make use of the test_must_be_empty function
 
-I have 'good' output from the test script on the WSL (and have 
-identified the packs' specific byte differences), but my gdb experience 
-is limited so executing that test while within the test script meant I 
-couldn't start debugging there. Hence the direct execution from the 
-terminal that raised the issue.
+ t/t0000-basic.sh | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
+Range-diff against v3:
+1:  768bf373d0 = 1:  86146182b7 t0000: fix indentation
+2:  8ee5e073a2 ! 2:  1ca1168f91 t0000: avoid using pipes
+    @@ -6,6 +6,10 @@
+         using it. By writing out the output of the git command to a file, we can
+         test the exit codes of both the commands.
+     
+    +    This commit doesn't make any additional simplifications, such as using
+    +    the test_line_count function for counting the lines in the output. These
+    +    simplifications will be made in subsequent commits.
+    +
+         Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+     
+      diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+3:  68590a40d7 = 3:  28986ed000 t0000: use test_line_count instead of wc -l
+-:  ---------- > 4:  731463ed98 t0000: use test_cmp instead of "test" builtin
+-:  ---------- > 5:  53f58a4f89 t0000: make use of the test_must_be_empty function
 -- 
-
-Philip
-[1] <20190131203842.633ztr4yckn7kl2d@tb-raspi4>
-[2] https://github.com/gitgitgadget/git/pull/115#issuecomment-4753008375
-[3] https://github.com/git-for-windows/git/issues/1848
-[4] https://github.com/PhilipOakley/git/tree/size_t2
+2.21.0
 
