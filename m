@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7356C20248
-	for <e@80x24.org>; Sat, 30 Mar 2019 11:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93B8020248
+	for <e@80x24.org>; Sat, 30 Mar 2019 11:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730806AbfC3LWj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Mar 2019 07:22:39 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:38312 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730430AbfC3LWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Mar 2019 07:22:39 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g37so2221912plb.5
-        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:38 -0700 (PDT)
+        id S1730809AbfC3LWo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Mar 2019 07:22:44 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33289 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730808AbfC3LWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Mar 2019 07:22:44 -0400
+Received: by mail-pl1-f193.google.com with SMTP id t16so342927plo.0
+        for <git@vger.kernel.org>; Sat, 30 Mar 2019 04:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Vod4aOH+wA+JD7yNprXuqsVCLUsUss9P8ReeepwUd1o=;
-        b=XMEI2/idG7Axvn+oSI5oe1zCCVn1O6EWazHbA5Y7f8TJjfw13pg0SbQuSFsjXdpLF1
-         RuKWslsFU1f7/TbFgq8Ah3hv4s/oEqza5IHyeDjunwHWIZj8Tz79B3ineH9PmnO2FxuJ
-         iThkhlrzvpeeIywwwCNh3HiygvkOrT+DjPpz06Ag/Fs236CWvTNfhcmEzuIaR2LMuv/y
-         8FayJouoxb9creT02QUeVX/QhbNbii5xGvIWfYhWLN5XfOEWvMsak5pi8hQPRDoV4Ovp
-         P1/IH10aEwvqRso6BdVO2NpqzC2NVlr1NcC2bE9s1FkvoDnqIwpRAT1Ir5ZDn6Hdzcoe
-         MT9w==
+        bh=hKjJIvSfH8MGf6h4/kuMUZwGHNx2sxD8tRhAQUc8aZA=;
+        b=IUDLNowA/JkQg9RtYkmqJ5zqCtXPiFWry1mKhLRN/sfoGd25FBY1xPmcTjMdn9mQkd
+         85SuMPs1soWmCO/5Sl63FL2+Ab41/LDHTa7tATv3JQjilj0cgHTSVmbBlswTsE9kIs27
+         tbENckJmZBasWLS0kqWRvdej5Wa7mwT0Y/puVMBOng5NBVM+8OysSCLunxrMbvY3TkKj
+         xVC/W74y/0wVdxBezbl/BZIpQ7eptXy9va4/lgcCQdqAnawFkZFDVrCumddCDZ6BxjIp
+         BjaWEvBB9shLjgPcbd5WMX3s8srm5ZCYlIZoXqwol+xWW+/eNOUd3n1KdtwmAYxuoh5i
+         dHpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Vod4aOH+wA+JD7yNprXuqsVCLUsUss9P8ReeepwUd1o=;
-        b=tBvrAVpRU/CmMth0sfGeJcif5I6m+6OpD1nMK0+1iehNG5KO8xoXaCl/xPvzvRLO64
-         s9aJwLI8qOWafRnwqtZn+oINTDWAlUsI4boa/MNwsII3D+2W1Xg9itTSN5cbsD87ennp
-         l3FV+qxcn3htyNIjw91cblsoUCKMP+syOhKBK8Fqd6zWbLwAv3pt7tK3gKXaOc+TW4LX
-         mOMZl6T60QdTIbF+dkpwlpwDTkqSdvxdJlcxlIm8htcLnwRemQHkIKdvC+gJZ3KaEx3U
-         dOETTqg5KZZ87urg00mj87o6wfQnA62ULNnCSFiylOA9g2Xy6WyPev2RxYBq/eT0y0YN
-         IA+Q==
-X-Gm-Message-State: APjAAAUveYW/KPT2Hn6STdC/x7DZnYryyH/s3MJ2qH7Y3k46GGoTuVnw
-        ZzL6Rt07VNcfPJKzx0xljFIpy9b0
-X-Google-Smtp-Source: APXvYqyrzMas0r1LJXOQdr+KPym5kCk5pTm7Hv4gStia9ZObq+WVCiuNV1uN11w7LvMraaPC3A81NQ==
-X-Received: by 2002:a17:902:e709:: with SMTP id co9mr30801490plb.86.1553944958368;
-        Sat, 30 Mar 2019 04:22:38 -0700 (PDT)
+        bh=hKjJIvSfH8MGf6h4/kuMUZwGHNx2sxD8tRhAQUc8aZA=;
+        b=KU1PhUy3lWOM/Ur/Ag8QxEq8sWS6V24Pnt5cTWRDrORHTtJaASmVjf73SsoCa7t1DT
+         qv+vNhp0ZUq//XfzjQOmWl/vpWoSOzp9SE/b5bmc44fpYU5sPHJ0HrCeSPOOFwtv+szp
+         lTL5XANnnIJ0n1bcr3cqidmgwJTqJI9aJsnJ9NQEri0Fwg7NAzLKwkb/ON7E9lAjuutB
+         OugZ+zCdVCBtEo+8cBHw/CU2G9IWjsa0sz8OywGkXLl3Pjop4kTR936e+pvuaUWQzJUe
+         Evmjsjh4slPwf8UogCoYsK8kMU24xVJT6jvagiL1m2LNFQZ/IGiNnd5CX/iSS8/4Wa2E
+         Yl6Q==
+X-Gm-Message-State: APjAAAVDjsfFBJvRYvkEP8GWgD+JyFKS5Vag8R6fEnBLCRoN1y0YnVKu
+        6ucmp3lnQ5Qa3CrYy7MP6p2utlNf
+X-Google-Smtp-Source: APXvYqwHE9c932SAYO4WfeS3LFARaDrYT9GdvR4Ch4sl28Wtx1eWekFm/rMsoYUoVi9i+gV5v2DnMg==
+X-Received: by 2002:a17:902:9a5:: with SMTP id 34mr54428060pln.287.1553944963390;
+        Sat, 30 Mar 2019 04:22:43 -0700 (PDT)
 Received: from ash ([171.236.209.43])
-        by smtp.gmail.com with ESMTPSA id j28sm10627788pgb.46.2019.03.30.04.22.35
+        by smtp.gmail.com with ESMTPSA id 13sm5808564pfi.172.2019.03.30.04.22.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 30 Mar 2019 04:22:37 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:33 +0700
+        Sat, 30 Mar 2019 04:22:42 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 30 Mar 2019 18:22:38 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <stefanbeller@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 26/31] sha1-name.c: remove the_repo from get_oid_with_context_1()
-Date:   Sat, 30 Mar 2019 18:19:22 +0700
-Message-Id: <20190330111927.18645-27-pclouds@gmail.com>
+Subject: [PATCH 27/31] sha1-name.c: add repo_get_oid()
+Date:   Sat, 30 Mar 2019 18:19:23 +0700
+Message-Id: <20190330111927.18645-28-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190330111927.18645-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -73,45 +73,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-name.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ cache.h     | 3 ++-
+ sha1-name.c | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 2149dc4f56..f6e87194d0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1380,7 +1380,8 @@ enum get_oid_result {
+ 		       */
+ };
+ 
+-extern int get_oid(const char *str, struct object_id *oid);
++int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
++#define get_oid(str, oid) repo_get_oid(the_repository, str, oid)
+ extern int get_oid_commit(const char *str, struct object_id *oid);
+ extern int get_oid_committish(const char *str, struct object_id *oid);
+ extern int get_oid_tree(const char *str, struct object_id *oid);
 diff --git a/sha1-name.c b/sha1-name.c
-index 6b53ea2eeb..64a50d1291 100644
+index 64a50d1291..953df0d692 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -12,6 +12,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "repository.h"
-+#include "submodule.h"
- #include "midx.h"
- #include "commit-reach.h"
+@@ -1573,10 +1573,10 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+  * This is like "get_oid_basic()", except it allows "object ID expressions",
+  * notably "xyz^" for "parent of xyz"
+  */
+-int get_oid(const char *name, struct object_id *oid)
++int repo_get_oid(struct repository *r, const char *name, struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(the_repository, name, 0, oid, &unused);
++	return get_oid_with_context(r, name, 0, oid, &unused);
+ }
  
-@@ -1797,7 +1798,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			oc->path = xstrdup(cp);
  
- 		if (!repo->index->cache)
--			repo_read_index(the_repository);
-+			repo_read_index(repo);
- 		pos = index_name_pos(repo->index, cp, namelen);
- 		if (pos < 0)
- 			pos = -pos - 1;
-@@ -1842,6 +1843,14 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			new_filename = resolve_relative_path(repo, filename);
- 			if (new_filename)
- 				filename = new_filename;
-+			/*
-+			 * NEEDSWORK: Eventually get_tree_entry*() should
-+			 * learn to take struct repository directly and we
-+			 * would not need to inject submodule odb to the
-+			 * in-core odb.
-+			 */
-+			if (repo != the_repository)
-+				add_to_alternates_memory(repo->objects->odb->path);
- 			if (flags & GET_OID_FOLLOW_SYMLINKS) {
- 				ret = get_tree_entry_follow_symlinks(&tree_oid,
- 					filename, oid, &oc->symlink_path,
 -- 
 2.21.0.479.g47ac719cd3
 
