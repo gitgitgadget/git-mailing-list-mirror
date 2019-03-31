@@ -2,80 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0203820248
-	for <e@80x24.org>; Sun, 31 Mar 2019 21:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6698220248
+	for <e@80x24.org>; Sun, 31 Mar 2019 22:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731509AbfCaVtF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 17:49:05 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:46885 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731172AbfCaVtF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 17:49:05 -0400
-Received: by mail-wr1-f44.google.com with SMTP id t17so9303859wrw.13
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 14:49:04 -0700 (PDT)
+        id S1731526AbfCaWBJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Mar 2019 18:01:09 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36809 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731172AbfCaWBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Mar 2019 18:01:09 -0400
+Received: by mail-wm1-f66.google.com with SMTP id h18so9055582wml.1
+        for <git@vger.kernel.org>; Sun, 31 Mar 2019 15:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/4g536bWR3EE4BMdvgxEv+f0rkF2jIRKEn8plNEUNig=;
-        b=qs6aWlvMKE/McJfzKRSjiNrRSNZmLssaQRpDgN+SmHyB3h46mjajfMEro0UrIG9iQB
-         8QSbTvF9ZQj0iNRmDvtacdE5dxZi7mQy/SjoQ0XXOym4kzs74dO1tA/UECAKvjyTIhXF
-         98j+fwZlB58zVmM3vrwmgsBndnawVp8e5Q8r4iogLvKwXDVmXUDbUefLX3YS76qr/pLm
-         lUzuG4vSQkIP3k3/VmMOQUvF8Hj9yP2q6Iq5gLUtOtMtBLDk7qK46JkewIik73xa2hYa
-         VdS38KJ2QEP3w38bgRcZ4M5dr4Z1DyWHgO68VZFsY9x2smAvH0fNlM3ENbnMxoiHLxyj
-         38GQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2Hv0C7ttE+bvKcei0hD61xLwrqLEytzNFatcCrywb6g=;
+        b=cHm9eE2yIHVYKde2AEZVoB2N6d0ttg8GiEHRtO+WbbxnZgGyzzVbNtfdqGA0Yf5pra
+         6x1JEVrELEBPhSWwt1wBBnnyTn6dYLfr5rMmk5+Qt1TLK003O9FQIrWRYxGNC71Ek4qs
+         PlqqTyC+2WNRql8LJ50RgXLrFqD9ZxdJi2x67e/y6dJJJL1e228IaW2JWMh+00Hor6aH
+         fcvGE7E8ih9VGAuOlWGxAC7AiBFD/vInR93dEocHrDJq0IYZi1o4pJpAFC+kDgl0MQyi
+         CRK4hMsrsE9xwB3hh2EHCCy1yFT1ngR0FvRvYmdUfxwnMxk7aPUYh/agFWiQsEt75121
+         w5AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/4g536bWR3EE4BMdvgxEv+f0rkF2jIRKEn8plNEUNig=;
-        b=MR9K1818PMG2NNl9H/E6I/Lf4yMzQ3dlJ9rpK35TfHF3ftiom8zCDEqqd8KKB38mzY
-         NVPvQQYNvvnr4OJCuQe1RCSDVsP2Mel48381MryYqgyXHaxI5MSVdhx8V88CPA0CGC5R
-         Vf6mXkFZNwQjKrg1Vx31bvVAc6OAV1iKRhf9VVzlgf2633djWKBX+1S/OM+OUh9z0Vr4
-         MuTFKoq10bEhJAWTlX59mf65vv/+E/hgrr+aZtZdKkfHXqBDEz5w3ToPY/Bw/ZZ078Mx
-         S+3pd5oZX53ki056OhNuEpSPjDROynynDiJ83jx6QtmVgVYxEkmX3Pm2czuuK3BAn9M1
-         oUNQ==
-X-Gm-Message-State: APjAAAVhneZ6IblqSn/y/1csvdx2DjB6q/Fa8Pj9tw5wNJbILK6Y3oyV
-        krtPeowI+J8yTYdEsNjcVn0=
-X-Google-Smtp-Source: APXvYqwtdghcHrqdLk7b/ds7uv0DpiUn4Xj59ZoInZb9R7fgpCXv0qipqxmygwyEZCQvOVLIeahS0w==
-X-Received: by 2002:adf:f60e:: with SMTP id t14mr37219781wrp.39.1554068943188;
-        Sun, 31 Mar 2019 14:49:03 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id a23sm6567555wmm.46.2019.03.31.14.49.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 31 Mar 2019 14:49:01 -0700 (PDT)
-Date:   Sun, 31 Mar 2019 22:49:00 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Google "Season of Docs"
-Message-ID: <20190331214900.GX32487@hank.intra.tgummerer.com>
-References: <8bb78ce0-9b32-7c49-e4aa-ce9f31662627@thingbag.net>
- <572677cc-eef3-345b-e970-cd6cc80e8e96@iee.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2Hv0C7ttE+bvKcei0hD61xLwrqLEytzNFatcCrywb6g=;
+        b=dEY90GkKfqc7pkFxv+ZFK4RhGz2ZWOABlVaJxjLVdCOFn0Ywn7pTz/4hhdtWQpG8QY
+         leh0U3UJxmPxpI2vq2dUil+NlAp73PEc7uDoF6bAsOxXWIbakJa9kH2qHUslEnWL44ur
+         RUeqnpDZDsZY9cbTT+8dDlz5uzik5fYiIr3CHMWfatl1AN5aXzKz0hnNUY+hn+/iHIYC
+         pfF2hbcYr8fZy435ffZMVqAa5JNmgW2EbH/lOUYQOuyscdjqiJv6eZXaDdP1PJ2PHlj3
+         savVdcJYF7+8ffKhxMM7aDLsiLicwzX+LmTzQP7l3doaGW+4IOlOfyWtd5Oc8ag3UsRr
+         xIsA==
+X-Gm-Message-State: APjAAAXPYrK4uchLi8+zguIrehwh2dbqxXQWIDmEVwkV2nIQWlBZ6Cbz
+        Gm6wnhgcx28x+Fa2q96Vg383PQxe
+X-Google-Smtp-Source: APXvYqz/kudn0Ysx7WwpyURjaY1vk3MZ2efHzk/MN69ygdKFRXWD+dQ94bavDME91pCzuyaGCsXD0w==
+X-Received: by 2002:a1c:21c1:: with SMTP id h184mr10702489wmh.128.1554069666799;
+        Sun, 31 Mar 2019 15:01:06 -0700 (PDT)
+Received: from localhost.localdomain ([185.220.70.170])
+        by smtp.gmail.com with ESMTPSA id f128sm8321532wme.28.2019.03.31.15.01.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 31 Mar 2019 15:01:05 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>
+Subject: [PATCH] mailinfo: support Unicode scissors
+Date:   Mon,  1 Apr 2019 00:01:04 +0200
+Message-Id: <20190331220104.31628-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <572677cc-eef3-345b-e970-cd6cc80e8e96@iee.org>
-User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/30, Philip Oakley wrote:
-> We mentor Summer of Code projects.
-> Perhaps we should be doing something similar for docs.� Now Google are:
+'git am --scissors' allows cutting a patch from an email at a scissors
+line.  Such a line should contain perforation, i.e. hyphens, and a
+scissors symbol.  Only ASCII graphics scissors '8<' '>8' '%<' '>%' are
+recognized by 'git am --scissors' command at the moment.
 
-One thing that I think is worth highlighting, that I don't think is
-clear from the blog post or this email, is that in contrast to Google
-Summer of Code, Season of Docs targets experienced technical writers,
-rather than students.  Just leaving this here for anyone that's just
-reading this email and/or the blog post.
+Unicode character 'BLACK SCISSORS' (U+2702) has been a part of Unicode
+since version 1.0.0 [1].  Since then 'BLACK SCISSORS' also became part
+of character set Emoji 1.0, published in 2015 [2].  With its adoption as
+an emoji, availability of this character on keyboards has increased.
+
+Support UTF-8 encoding of '✂' in function is_scissors_line, for 'git am
+--scissors' to be able to cut at Unicode perforation lines in emails.
+Note, that Unicode character '✂' is three bytes in UTF-8 encoding.
+
+1. https://www.unicode.org/versions/Unicode1.0.0/CodeCharts1.pdf
+   https://www.unicode.org/Public/reconstructed/1.0.0/UnicodeData.txt
+2. https://unicode.org/Public/emoji/1.0/emoji-data.txt
+
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+
+This applies on top of ar/t4150-remove-cruft merged into next in 
+commit a0106a8d5c, which also edited the test setup in t4150.
+
+ mailinfo.c    |  7 +++++++
+ t/t4150-am.sh | 26 +++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index b395adbdf2..4ef6cdee85 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -701,6 +701,13 @@ static int is_scissors_line(const char *line)
+ 			c++;
+ 			continue;
+ 		}
++		if (!memcmp(c, "✂", 3)) {
++			in_perforation = 1;
++			perforation += 3;
++			scissors += 3;
++			c++;
++			continue;
++		}
+ 		in_perforation = 0;
+ 	}
+ 
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 3f7f750cc8..3ea8e8a2cf 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -77,12 +77,20 @@ test_expect_success 'setup: messages' '
+ 
+ 	printf "Subject: " >subject-prefix &&
+ 
+-	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF
++	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF &&
+ 	This line should not be included in the commit message with --scissors enabled.
+ 
+ 	 - - >8 - - remove everything above this line - - >8 - -
+ 
+ 	EOF
++
++	cat - subject-prefix msg-without-scissors-line >msg-with-unicode-scissors <<-\EOF
++	Lines above unicode scissors line should not be included in the commit
++	message with --scissors enabled.
++
++	- - - ✂ - - - ✂ - - -
++
++	EOF
+ '
+ 
+ test_expect_success setup '
+@@ -161,6 +169,12 @@ test_expect_success setup '
+ 	git format-patch --stdout expected-for-no-scissors^ >patch-with-scissors-line.eml &&
+ 	git reset --hard HEAD^ &&
+ 
++	echo file >file &&
++	git add file &&
++	git commit -F msg-with-unicode-scissors &&
++	git format-patch --stdout HEAD^ >patch-with-unicode-scissors.eml &&
++	git reset --hard HEAD^ &&
++
+ 	sed -n -e "3,\$p" msg >file &&
+ 	git add file &&
+ 	test_tick &&
+@@ -421,6 +435,16 @@ test_expect_success 'am --scissors cuts the message at the scissors line' '
+ 	test_cmp_rev expected-for-scissors HEAD
+ '
+ 
++test_expect_success 'am --scissors cuts the message at the unicode scissors line' '
++	rm -fr .git/rebase-apply &&
++	git reset --hard &&
++	git checkout second &&
++	git am --scissors patch-with-unicode-scissors.eml &&
++	test_path_is_missing .git/rebase-apply &&
++	git diff --exit-code expected-for-scissors &&
++	test_cmp_rev expected-for-scissors HEAD
++'
++
+ test_expect_success 'am --no-scissors overrides mailinfo.scissors' '
+ 	rm -fr .git/rebase-apply &&
+ 	git reset --hard &&
+-- 
+2.21.0
+
