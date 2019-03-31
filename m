@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9D3A20248
-	for <e@80x24.org>; Sun, 31 Mar 2019 13:47:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1055020248
+	for <e@80x24.org>; Sun, 31 Mar 2019 13:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731174AbfCaNrU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 09:47:20 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54764 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726863AbfCaNrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 09:47:20 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c1so6231289wml.4
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 06:47:19 -0700 (PDT)
+        id S1731183AbfCaNrZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Mar 2019 09:47:25 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55679 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726863AbfCaNrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Mar 2019 09:47:25 -0400
+Received: by mail-wm1-f65.google.com with SMTP id o25so7376110wmf.5
+        for <git@vger.kernel.org>; Sun, 31 Mar 2019 06:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/Whf53RYajtH1ixHWDQGsRDiopMalC1KjGDtZF302jE=;
-        b=JJlHA1X4ktOuiBb5AherJDmrFwv0cAihyymaFn0o55oq9+/RqQxu1Xt//tJQaCaF47
-         kUEj6XD8TzdnRfsziJ0ym77iQqopIYrlsCXQ+cqVMBvq8Qbf1PZNCTe+RhD3YbuQ+SWn
-         v5iZKiqLH9b4MPfnXjpSirkW9uR5XjX0QSkGlXehySA+QEgMLOtvXTCdnsEaUx47448l
-         KRtS+fCueUcRAp4tk9QAUz7x0FtPVPuuiCFNdKAzohJha5FBwZuusH3YI7+r2NwG8bSl
-         8U7zjC5Ze+zWT5BwSHEU0UgxDcZZOD0fqQMvy3/IUe/4HfqSNCZhRLuHLHO8aPRYSlxU
-         dE5A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mqpkrNR1P5CYNde3Z3grem5V4WT7WS4kIpFjg/5cxGc=;
+        b=OFLyKYNdCZDRy/jTSOd5LR2UfZ1CXhf4cBwYQpS7Jw/ZjLZXnBpYZJjmPJmGD1v3On
+         4nRJZYh6PXgRsDlZFcpkjzZq1kfbGkEO5s8lZWbsQgv71qLU6O9+0y8JpRbmsd6PXaKK
+         HZNWSlnrCx4bqFxGz2JHXCkBBPNsZitzXpsgFIEjYdx/SCWlUDt3CWiie/J60jBS/cRz
+         I662fnAZyS7RSR4L2tY/r5uenpsYdDjMHdl70rJU+5AunkQuScsQWvdV27sXhLiFkpDu
+         8AR9IQKoXIiftv8bb/wuygR/9Y0e41ZVigVJIfsuxlBFS/6rq8b6bxEgQC+HswnZcVho
+         VUTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/Whf53RYajtH1ixHWDQGsRDiopMalC1KjGDtZF302jE=;
-        b=pYFbVqjXjbMMH8DlAPOfdnXd59a18ciosMkn+CJsvlH0quZvK6k+HL2huWlz5HDjIj
-         EvLApdvcrIuIwm1XeJqxSYi1E9t4+/NLRn42qPdiNLU2VIIbuRGPAmpxhJVH9C0Rzn5s
-         +k7X3X9X4frkixalrqf1nIGVEmnvlufCBmaJhhj2FDVyNeOnwELzySpFxAh/jGY7gXkS
-         luUgcDlK2FaG/jK0lZylps9D/KGDcA0bIdMqEouj0wbd0aUVnqMmYmulGiEJEYKpPPwL
-         8Wo/bZJAja4ksPfGOUajNOQc4WEsa9epG/O2dFAY4QU5FTijioZZEBOCwEqkSAhPjVzm
-         z7OQ==
-X-Gm-Message-State: APjAAAXpR+qveRw/IPj8FUU3eeLt+q90BSZ2B+ERmE8iNdo1vCm3+3kC
-        pKe4BvujQJ/QkRHtyPppCT4sJR4U
-X-Google-Smtp-Source: APXvYqza/drigZHiAcEXG+sGGtG2QGwrhwYRQPokscUvKdwe3YR35KGgH6aw/6U9ch+klwnpHVsl9w==
-X-Received: by 2002:a1c:e70b:: with SMTP id e11mr9002331wmh.17.1554040037798;
-        Sun, 31 Mar 2019 06:47:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mqpkrNR1P5CYNde3Z3grem5V4WT7WS4kIpFjg/5cxGc=;
+        b=I17Q2TQBKeWjra6zP1yB0mVjKx1t1fHZyMMDBcFK0hfhKJ8+onUvN2/TV+8GshA+r+
+         9B0Pdi8f9m7J/n3crWSnir5ChZXFNgiJWD9hRNljbM4nKfosJX9raeaou6BIHB4u5ruV
+         h2SjGkSYWw1gxSvMqqtMj0q2kXx75Xn3JrKZaZbWauQimxyt/KGY7VTSH5+DnSD5qsM0
+         /XbNmWEHojGDSOJI1Rs7xAjQEFh/iY00eNloiGD7oT3wyVnClq53slpd2y5B22m9GPGG
+         DOqUW+IR2zWyb7iBGNbHH9It6NXaCvjBS4HtYagoyopGroiywHI2+wrlTStOESFSn8yp
+         hA6Q==
+X-Gm-Message-State: APjAAAXNwqZEX15wFGSnVm9paMbrf2Edb2768za0lbySJPcWv2SmGdga
+        llQFn3heC31URk0vy9Srwv4TitQ6
+X-Google-Smtp-Source: APXvYqz+ou0gUizo5GytJteGf/mpxg32KeQcZq+0nWkLxH5f6p2WfYoxdHEhrOltqv6mCziw6NvoUw==
+X-Received: by 2002:a1c:ac07:: with SMTP id v7mr2136952wme.49.1554040043507;
+        Sun, 31 Mar 2019 06:47:23 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:10ce:4d96:49c5:28f4:744c:fa99])
-        by smtp.gmail.com with ESMTPSA id o10sm10290490wru.54.2019.03.31.06.47.16
+        by smtp.gmail.com with ESMTPSA id o10sm10290490wru.54.2019.03.31.06.47.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 31 Mar 2019 06:47:17 -0700 (PDT)
+        Sun, 31 Mar 2019 06:47:23 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,54 +57,45 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 0/4] fix `git replace --graft` tag related issues
-Date:   Sun, 31 Mar 2019 15:46:55 +0200
-Message-Id: <20190331134659.28808-1-chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/4] t6050: use test_line_count instead of wc -l
+Date:   Sun, 31 Mar 2019 15:46:56 +0200
+Message-Id: <20190331134659.28808-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.21.0.69.g2d86a08d09
+In-Reply-To: <20190331134659.28808-1-chriscool@tuxfamily.org>
+References: <20190331134659.28808-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is version 2 of a small patch series to fix tag related issues in
-`git replace --graft` that Andreas Schwab reported in:
+This modernizes a test and makes it more portable.
 
-https://public-inbox.org/git/mvmd0mcsjkf.fsf@suse.de/
+Reviewed-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6050-replace.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-The first version of this patch series was:
-
-https://public-inbox.org/git/20190328171722.9753-1-chriscool@tuxfamily.org/
-
-Changes compared to the previous version are the following:
-
-  - patch 4/4 has been added to fix issues when a tag is passed first
-
-  - in patch 2/4 the error message is redirected to a file instead of
-    /dev/null as suggested by Ævar after a comment by Eric
-
-  - title of patch 3/4 has been extended with "as parent" to make it
-    different from title of patch 4/4
-
-I saw that t6050 has existing 4-space-instead-of-tabs issues, but it
-can perhaps be dealt with if some bigger changes are made to this test
-script.
-
-Thanks Taylor for the review, and Eric and Ævar for the
-comments/suggestions!
-
-Christian Couder (4):
-  t6050: use test_line_count instead of wc -l
-  t6050: redirect expected error output to a file
-  replace: fix --graft when passing a tag as parent
-  replace: fix --graft when passing a tag first
-
- builtin/replace.c  | 20 +++++++++++++-------
- t/t6050-replace.sh | 31 ++++++++++++++++++++++++++++---
- 2 files changed, 41 insertions(+), 10 deletions(-)
-
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index d638119750..41b177936e 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -393,9 +393,11 @@ test_expect_success 'replace ref cleanup' '
+ '
+ 
+ test_expect_success '--graft with and without already replaced object' '
+-	test $(git log --oneline | wc -l) = 7 &&
++	git log --oneline >log &&
++	test_line_count = 7 log &&
+ 	git replace --graft $HASH5 &&
+-	test $(git log --oneline | wc -l) = 3 &&
++	git log --oneline >log &&
++	test_line_count = 3 log &&
+ 	commit_has_parents $HASH5 &&
+ 	test_must_fail git replace --graft $HASH5 $HASH4 $HASH3 &&
+ 	git replace --force -g $HASH5 $HASH4 $HASH3 &&
 -- 
 2.21.0.69.g2d86a08d09
 
