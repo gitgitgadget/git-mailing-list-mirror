@@ -2,222 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAD9720248
-	for <e@80x24.org>; Sun, 31 Mar 2019 22:07:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 492FF20248
+	for <e@80x24.org>; Sun, 31 Mar 2019 22:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731403AbfCaWHI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 18:07:08 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46078 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731172AbfCaWHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 18:07:07 -0400
-Received: by mail-wr1-f66.google.com with SMTP id s15so9353086wra.12
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 15:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=L3Fd/uMUhX8132eERasXEHvcVZem9hNilL9TnVBrd+I=;
-        b=P/roD8fnKKn58JdGortav/yP4AbyFTwv9Nj5M2QY9eTknXW99v0OAJT48hl9LHC1HM
-         mJJ8Di69J2Bv9RezeFt+ZyUmKpygB9195x/zAo3kgC/w/bWbFzUsO+UWmI2y980ioVHB
-         9TQTXh+QGyjd2JVunrmlri+jHUmQRV+RytHbeisHzHxvRfTby0lh9AVMDOsqPgu/XTSu
-         CiDxO7uTNAkcISwq6s3Rus6oq7+17GbJgzJ5L99AH7GngYVoDz0vrPm1QAJD7AhYapKI
-         I36Cjy8zkA75/LOrC8x3Fb91L+Cx06vPmBwX+KxS3Q033MV6DuOfFpvji/gZp+1qgECT
-         gXrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=L3Fd/uMUhX8132eERasXEHvcVZem9hNilL9TnVBrd+I=;
-        b=pG5PjXvgTWe7j7l52hTaj7imnndFLddpw77tWriwo9IUrp8SWeNXSoqJPC7IjNLH9d
-         ntSr5FJ3yOTx00+X2w00vcp2psBQt043q1hdokvP/jNHU233kFHdPN+M4N+yRUk9E2hU
-         v8ZJRgitBY7mc8Do5uqIbiqZUn3Kov5PNMlE24dOwyPwDdlzmyilyBFMOV8bXZnUt7pc
-         mL4S9oulWo51rq9QxfwaHP5aNDZjNhv8ajG5nRzdy0lLfbRgfRkIwkaV5+nA74K4XcN2
-         FPioUaFJKD97rprj1x8WG/zQrSXMwt/kPTWkC2HUFaD37VsY3zClhZClfHMZd/bywRqG
-         kVCA==
-X-Gm-Message-State: APjAAAVYCiJEYjlGxAdw7xod0ttU7ie/iTE/DR3RkpX3uWzgv2gALDQO
-        cHVWSNLeS8mnBMPga2c/8pBwf+Us
-X-Google-Smtp-Source: APXvYqyQTC6184pm5PY6lr8S1G0hQSwKK3eEsgrUOHVgnbAwN2bWsfA0mW+O2PLanxG0L2CVCMcFAw==
-X-Received: by 2002:adf:fcc5:: with SMTP id f5mr38848665wrs.166.1554070025756;
-        Sun, 31 Mar 2019 15:07:05 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id a11sm7513963wmm.35.2019.03.31.15.07.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 31 Mar 2019 15:07:04 -0700 (PDT)
-Date:   Sun, 31 Mar 2019 23:07:03 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] git stash --snapshot
-Message-ID: <20190331220703.GY32487@hank.intra.tgummerer.com>
-References: <002101d4e039$a7cd8a10$f7689e30$@nexbridge.com>
+        id S1731382AbfCaWTV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Mar 2019 18:19:21 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:23613 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731324AbfCaWTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Mar 2019 18:19:21 -0400
+Received: from [192.168.1.12] ([2.101.245.142])
+        by smtp.talktalk.net with SMTP
+        id AinOh9a8HgI7iAinOhOSbB; Sun, 31 Mar 2019 23:19:19 +0100
+X-Originating-IP: [2.101.245.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=mQgiQ6BlbOv19lEfDgieCg==:117
+ a=mQgiQ6BlbOv19lEfDgieCg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8 a=pGLkceISAAAA:8
+ a=uPZiAMpXAAAA:8 a=wBFLdvVfQhUmNWd9B_QA:9 a=QEXdDO2ut3YA:10
+ a=xts0dhWdiJbonKbuqhAr:22 a=PwKx63F5tFurRwaNxrlG:22
+Subject: Re: Google "Season of Docs"
+To:     Kapil Jain <jkapil.cs@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <8bb78ce0-9b32-7c49-e4aa-ce9f31662627@thingbag.net>
+ <572677cc-eef3-345b-e970-cd6cc80e8e96@iee.org>
+ <CAMknYEP2m7fJ9o5dybEibmMwJJ9-wMStThwU0YN6f_QZzK=z=w@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <70eeea8b-230c-1f33-f52d-db0e69870a76@iee.org>
+Date:   Sun, 31 Mar 2019 23:19:20 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <002101d4e039$a7cd8a10$f7689e30$@nexbridge.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <CAMknYEP2m7fJ9o5dybEibmMwJJ9-wMStThwU0YN6f_QZzK=z=w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfCiC5Wcsehaih4tWSdauCk5C01fEd23lbT1tBUkUR0moslqlGy/aBJR4uNlQQw8m+hg2GilWupmL65fHqFtxT1wMO0t13SQdEkHNz4CNxkh9EDP2UfIF
+ fd9qRws/AdNwmO+CijLZtmA/HlcmjGiF3M1h02MyxPHpD6i2Fub/kyKO9Iq9CqTfs1nyIvdLr6/VvoLSrfiFZBpFNzJ+C676A/g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/21, Randall S. Becker wrote:
-> About two weeks ago there was a discussion about building an undo stack. 
-> https://public-inbox.org/git/000401d4d6c8$f68bb020$e3a31060$@nexbridge.com/
-> 
-> it had me thinking about whether a stash --snapshot might be useful. Below
-> is a conceptual change - by no means even close to complete. This would
-> allow scripting to wrap critical commands with a "git stash push --snapshot"
-> without changing the working directory.
+hi Kapil,
+On 31/03/2019 07:41, Kapil Jain wrote:
+> On Sat, Mar 30, 2019 at 10:48 PM Philip Oakley <philipoakley@iee.org> wrote:
+>> * Developers rarely want to write documentation (it's too obvious to them)
+>> -- Our code base has become larger than the average brain-full, maybe
+>> that (developer education) also could also benefit from some further
+>> structural documentation.
+> by developer documentation you mean, a doc explaining what each function does ?
+> agreed, such developer education will help a lot.
+> i am currently trying to do that for `pretty.c`
+I was especially thinking for that point of architectural descriptions 
+for the code to help new folk (devs) learn about the codebase, rather 
+than it potentially feeling like a bit of an initiation / indoctrination 
+activity. Often the tidbits about the architecture, organisation and 
+coding approaches are buried in the email archive, but are hard to find 
+for the new comer. For example there are various times that one gets say 
+a "Junio explains" email that contains a wealth of information, but 
+unless recognised and book marked at the time, rapidly disappears under 
+the email pile, so finding the right way of improving that part of the 
+documentation would be useful and is something that Technical Authors 
+can guide on.
+>
+>> -- if stack-overflow is the go-to source for 'real' users, why not mine
+>> that source.
+> this point is unclear, please elaborate.
+> I mean stack overflow is searchable already, what kind of mining are
+> we talking about ?
+Back at an email on the new switch-branch (etc) command [1] it was 
+pointed out that we can discern a many things from the sorts of 
+questions asked [2]. In that case it was about the User Interface (UI) 
+for 'undo'. There are many other issues that crop up that should have 
+been easily answered by our extensive documentation, but even when folk 
+do try to read the manuals they often don't know where to start or when 
+they have found the right nugget. The idea of 'mining' the stack 
+overflow (SO) data is to help with that.
 
-I'm not sure I understand this proposal correctly.  Since you mention
-this being used in scripting, would it be any different than using
-'git stash push && git stash apply'?  The former is a bit more
-expensive of course, but conceptually it would do the same thing, I
-think.
+It should also be noted that the manual style is in many ways dated - it 
+was developed back in the 1960s or before, and was in the days of paper 
+reference manuals for those already experienced in the art. We (the 
+folks interested in documentation) possibly need to reflect on whether 
+the approach is enough, or even sufficient, for the modern world. The SO 
+data provides an insight into the questions folk actually ask, and the 
+answers they need - perhaps if we had that support structure in place it 
+would complement the manuals (there isn't even an index for the manuals, 
+nor 'did you mean/want' prompts should folks land on the wrong man page.
 
-I could see this as somewhat useful, but I don't think stash supports
-all the necessary operations yet.  E.g. what if you are in the middle
-of resolving a merge conflict.  But maybe a bit more of a description of your problem would
-help convince me.
+We may want to ask if someone has a 'Simplified English' converter 
+(AECMA did a guidance of aerospace/pilot/tech manuals). In the same vein 
+we should also appreciate that as devs, we are by definition poor at 
+user grade documentation, so getting help may improve things.
 
-For the undo stack discussion, I think I prefer something like Duy's
-backup-log [*1*] proposal, that is built into git, rather than
-scripting my own solution, even if it's supported by 'git stash'.
+I was mainly pointing out the opportunity, as I hadn't seen it mentioned 
+elsewhere on the list.
 
-I meant to review those patches, but unfortunately never got around to
-that.  But if it's something that interests you as well, reviewing the
-patches is probably the best way to get support for this into git.
+Philip
 
-*1*: https://public-inbox.org/git/20181209104419.12639-1-pclouds@gmail.com/
+[1] 
+https://public-inbox.org/git/CACsJy8Dg06DbbSLuuVHKgQUwHXqqVZLjbmkdkN=m=Vx-QeP6zQ@mail.gmail.com/
+[2] https://stackoverflow.com/questions/tagged/git?sort=frequent
 
->                                          For symmetry, a "git stash pop
-> --force" is needed if --include-untracked were used to stash everything in
-> the first place.
-
-What exactly is the force option meant to do?  Apply the stash anyway,
-and discard current changes?  Wouldn't that lead to loosing data
-again, just in a different way?
-
->                   It might be more useful also to wait until stash is
-> converted to C, I suppose.
-
-Yes please, any changes should ideally also apply to the stash-in-C
-topic, unless they are actual bug fixes.
-
->                            I'm wondering whether to pursue this or drop it.
-> Thoughts? (and I beg forgiveness for what my mailer might do to the wrapping
-> of this patch, and I already know the indent is wrong between 329 and 370,
-> and that the granularity of the --force option is wrong).
-> 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 789ce2f41d..7741192980 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -5,12 +5,13 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
->  USAGE="list [<options>]
->     or: $dashless show [<stash>]
->     or: $dashless drop [-q|--quiet] [<stash>]
-> -   or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-> +   or: $dashless ( pop | apply ) [--index] [-q|--quiet] [-f|--force]
-> [<stash>]
->     or: $dashless branch <branchname> [<stash>]
->     or: $dashless save [--patch] [-k|--[no-]keep-index] [-q|--quiet]
->                       [-u|--include-untracked] [-a|--all] [<message>]
->     or: $dashless [push [--patch] [-k|--[no-]keep-index] [-q|--quiet]
->                        [-u|--include-untracked] [-a|--all] [-m <message>]
-> +                      [--snapshot]
->                        [-- <pathspec>...]]
->     or: $dashless clear"
-> 
-> @@ -252,6 +253,7 @@ push_stash () {
->         patch_mode=
->         untracked=
->         stash_msg=
-> +       snapshot=
->         while test $# != 0
->         do
->                 case "$1" in
-> @@ -286,6 +288,9 @@ push_stash () {
->                 --message=*)
->                         stash_msg=${1#--message=}
->                         ;;
-> +               --snapshot)
-> +                       snapshot=t
-> +                       ;;
->                 --help)
->                         show_help
->                         ;;
-> @@ -329,6 +334,8 @@ push_stash () {
->         die "$(gettext "Cannot save the current status")"
->         say "$(eval_gettext "Saved working directory and index state
-> \$stash_msg")"
-> 
-> +       if test -z "$snapshot"
-> +       then
->         if test -z "$patch_mode"
->         then
->                 test "$untracked" = "all" && CLEAN_X_OPTION=-x ||
-> CLEAN_X_OPTION=
-> @@ -363,6 +370,7 @@ push_stash () {
->                         git reset -q -- "$@"
->                 fi
->         fi
-> +       fi
->  }
-> 
->  save_stash () {
-> @@ -490,6 +498,7 @@ parse_flags_and_rev()
-> 
->         FLAGS=
->         REV=
-> +       FORCE_OPTION=
->         for opt
->         do
->                 case "$opt" in
-> @@ -499,6 +508,9 @@ parse_flags_and_rev()
->                         --index)
->                                 INDEX_OPTION=--index
->                         ;;
-> +                       -f|--force)
-> +                               FORCE_OPTION=--force
-> +                       ;;
->                         --help)
->                                 show_help
->                         ;;
-> @@ -607,7 +619,7 @@ apply_stash () {
->         if test -n "$u_tree"
->         then
->                 GIT_INDEX_FILE="$TMPindex" git read-tree "$u_tree" &&
-> -               GIT_INDEX_FILE="$TMPindex" git checkout-index --all &&
-> +               GIT_INDEX_FILE="$TMPindex" git checkout-index --all
-> $FORCE_OPTION &&
->                 rm -f "$TMPindex" ||
->                 die "$(gettext "Could not restore untracked files from stash
-> entry")"
->         fi
-> @@ -688,7 +700,7 @@ apply_to_branch () {
->         set -- --index "$@"
->         assert_stash_like "$@"
-> 
-> -       git checkout -b $branch $REV^ &&
-> +       git checkout -b $branch $FORCE_OPTION $REV^ &&
->         apply_stash "$@" && {
->                 test -z "$IS_STASH_REF" || drop_stash "$@"
->         }
-> 
-> Regards,
-> Randall
-> 
-> -- Brief whoami:
->  NonStop developer since approximately 211288444200000000
->  UNIX developer since approximately 421664400
-> -- In my real life, I talk too much.
-> 
-> 
-> 
