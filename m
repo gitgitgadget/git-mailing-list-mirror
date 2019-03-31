@@ -2,115 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07DF520248
-	for <e@80x24.org>; Sun, 31 Mar 2019 18:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A492D20248
+	for <e@80x24.org>; Sun, 31 Mar 2019 19:15:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731321AbfCaS52 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 14:57:28 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50229 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbfCaS52 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 14:57:28 -0400
-Received: by mail-wm1-f67.google.com with SMTP id z11so7974355wmi.0
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 11:57:27 -0700 (PDT)
+        id S1731445AbfCaTPC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Mar 2019 15:15:02 -0400
+Received: from mail-vk1-f169.google.com ([209.85.221.169]:42405 "EHLO
+        mail-vk1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbfCaTPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Mar 2019 15:15:02 -0400
+Received: by mail-vk1-f169.google.com with SMTP id 195so1604807vkx.9
+        for <git@vger.kernel.org>; Sun, 31 Mar 2019 12:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ha83I//HhSx8Ckrgd7oDyYu2HsDGloRLQUsBmLEO16s=;
-        b=R9kjvQ1hhLzrZa+oi0qUmzh0EIN4MXEM6LpCr6brCmfaqG38DPfunghcI1P1wLGl+b
-         92gAn8/DPJIpf3PPYj8OTvQFRS1OzIdRmlaUncO5nunKltdU7JosIsSJhSGVkbb46xDY
-         XwwQCaHIGfQllvViFFg7rNNl+w2Wozt6wTkGm6gOidFL8ZA/NCiGVWJGQ7JTjN87ynWf
-         oHTm/KDj67Pfg6SpqUH0dAJdXKc7BcuiA5rbfa6NgJdqsckv7KPhjvkEI1/Vbw60uiyJ
-         JJofevAAUaHEEYkQhJahfSlgDAyQLNdcOR/KA6SDqZh4Yv661XILmMz/cdJyzlxsqUHd
-         YSng==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HuiJcVNyfMXIM8XResg7bdpt9cNKCK+IffB+x6aJ3f4=;
+        b=FmS9/fkBC1c+bHlK5b9ywG6h9QubqOZrK36nOAjhZZJKlhpf5/1IYdnUwnFl6IDwOV
+         4/143Fp05P4KjhNdbyfBARdQchaOF3SILA6Uz52uJ7LsGnXMdaPioX05QgB1KKJetIzG
+         cigW5T07Zg0ftWQD1g0C2t8tiMBnRLqlotKqiKKxhipy7Z0IKyPTWR0TwbWhwZty1SND
+         EkifAlNXmlyU9vgpbSMyBKgGZYIna5WsDLGciyYuBgS83YPwku3cGAb3NvejwYw8wfEK
+         yereAmZIayi2/HekYOQqBOCZpxHBIgUPSnSnYzeSZltJEXukZPX0qiRYfeue2nqfY9x7
+         2JGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ha83I//HhSx8Ckrgd7oDyYu2HsDGloRLQUsBmLEO16s=;
-        b=TxltfjUuj1hXzaSCwGYeVpMY6kAGP5AFc4ZpvmKMAzYWFsHoaneEcvnuI6ZHSgOUJ3
-         OpbzDb7sNCLAHIx//IPTDl2WjqscKjR1iNob6149NS5we7LQ+eGj0kU+Xoxnnx7sqhIG
-         Brg88YZMmDjf9lj43BwpPeagdBv1FCwQkuryqfYA7At9exQdWOakWXfMM8f4+YtwrF4t
-         L+x7iN18ENTsi7Ck5TvYKlIzikVFU6ttVutfzDuUt8l6ljvRQpRnnQq6DeCTWRUuwZML
-         2t8IytrMCkxZtSaW4tQm2rCUjXPhbTeKjD4iCwDdb85GiSDM4KAlU4qkF14iGhoAD6Eu
-         GFiw==
-X-Gm-Message-State: APjAAAUoq2zZVzcedRl8CdcDn6acYcBnF7FXlg7yR4cika+7xiGBwCRX
-        P+aOGgNN5gzFf8TvtEjJgBMNF56J
-X-Google-Smtp-Source: APXvYqwFJVSbp+gDCxCL2AcVs99p2SsAeDT2g2kOQ0YemMmpfovbTSSbXx+pk9aIZYHBdNJPjlxjhg==
-X-Received: by 2002:a1c:41d6:: with SMTP id o205mr9833741wma.2.1554058646737;
-        Sun, 31 Mar 2019 11:57:26 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id z14sm9171981wrv.78.2019.03.31.11.57.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 31 Mar 2019 11:57:25 -0700 (PDT)
-Date:   Sun, 31 Mar 2019 19:57:24 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     jonathan chang <ttjtftx@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [GSoC][PATCH v4 4/5] t0000: use test_cmp instead of "test"
- builtin
-Message-ID: <20190331185724.GW32487@hank.intra.tgummerer.com>
-References: <cover.1553954776.git.ttjtftx@gmail.com>
- <731463ed9892c283b6acb0ce69e097769e43de62.1553954776.git.ttjtftx@gmail.com>
- <20190330193842.GR32487@hank.intra.tgummerer.com>
- <CAOAu_YKMuy2vWQqZz+=-7JGhce9BEdMqsr8HOKZOJVq=chpqVw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HuiJcVNyfMXIM8XResg7bdpt9cNKCK+IffB+x6aJ3f4=;
+        b=MQ8xpMoPZhnC5FHnilKCQDfLlTc+NRI99rrFh9GWsBdxytUXsmSwGWuCYtrpSkfcEp
+         3onaHKr0r6Ke04uPWpx4itL0jdnOr9/znvBHjyQMq+mBWG5rR/6FJOhT0zDTgCyyU4SC
+         43x7oPfdv4HQhc8ChoAVMlAlREoGjMjyAU3JgPJBJlTb/6tXvHTEYfmau0lXAeY9riZH
+         c4aMifrlAd+CkLCE3f4gVKlDDD+Gm/ya/lZ1XmvM4S3tHcxzY8IrMkgWbxH6EfZkBnkZ
+         lh4NnEP/IAxrBBX3unr3NpudNDNipuOi/0LpXaaR4wcGgN9kbvBuTLsf6mgAtZ+o9I/5
+         RyQw==
+X-Gm-Message-State: APjAAAVH8d7KvfgsNgzr2iwaACB3+PZ9rMMcjdAfS1Fg8EbOfefUGeVS
+        5mnI1tM4gg6cbixDpxiR1JRDsq1CJWEnercMmYg=
+X-Google-Smtp-Source: APXvYqxw+/CPB8F/X3eJXheqMSJOMHDtmaESZUqyQembY0hsVWp3mP75vmI/jZmpH6PYYOk2+CtFOXAjKBNYtPvHcEg=
+X-Received: by 2002:a1f:4f44:: with SMTP id d65mr35080948vkb.58.1554059701260;
+ Sun, 31 Mar 2019 12:15:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOAu_YKMuy2vWQqZz+=-7JGhce9BEdMqsr8HOKZOJVq=chpqVw@mail.gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+References: <CAODFU0qcwZm=2YnGm+rccDT2e5yZU3pyYGUGTwr9izod+e0s0A@mail.gmail.com>
+In-Reply-To: <CAODFU0qcwZm=2YnGm+rccDT2e5yZU3pyYGUGTwr9izod+e0s0A@mail.gmail.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Sun, 31 Mar 2019 21:14:50 +0200
+Message-ID: <CAKPyHN2Unp7Cou86fefYo9nD_ApokMxRMih=d27=rp634bYKwQ@mail.gmail.com>
+Subject: Re: git-gui: unstaged changes windowpane resets after unstaging a line
+To:     Jan Ziak <0xe2.0x9a.0x9b@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/31, jonathan chang wrote:
-> On Sun, Mar 31, 2019 at 3:38 AM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> >
-> > On 03/30, Jonathan Chang wrote:
-> > > Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
-> > > ---
-> > >  t/t0000-basic.sh | 14 ++++++++------
-> > >  1 file changed, 8 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> > > index 3de13daabe..49923c5ff1 100755
-> > > --- a/t/t0000-basic.sh
-> > > +++ b/t/t0000-basic.sh
-> > > @@ -1118,16 +1118,18 @@ P=$(test_oid root)
-> > >
-> > >  test_expect_success 'git commit-tree records the correct tree in a commit' '
-> > >       commit0=$(echo NO | git commit-tree $P) &&
-> > > -     git show --pretty=raw $commit0 >actual &&
-> >
-> > This line has been introduced in a previous commit.  If the file was
-> > called 'output' there already, I think that patch would be just as
-> > understandable, but this diff would be a little less noisy.
-> 
-> Make sense. I tried to make patches from last iteration untouched,
-> so I don't break anything.
+Hi Jan,
 
-This is what running tests, and reviewing your own code are good for :)
+On Sun, Mar 31, 2019 at 8:45 PM Jan Ziak <0xe2.0x9a.0x9b@gmail.com> wrote:
+>
+> Hello
+>
+> After performing "Unstage Line From Commit" action, the "Unstaged
+> Changes" windowpane is reset. The reset does not happen with "Unstage
+> Hunk From Commit" action.
 
->                             And I was wondering since I'm only
-> appending patches, if I should also append the PATCH number as
-> [PATCH v3 4/3], to reduce the number of emails. Now I realize that
-> by making it a new iteration, we can also make some improvement
-> to reduce the patch noise.
+because its not necessary when staging a hunk. Though when staging a
+line it is better to run the diff algorithm again.
 
-Right, appending patches using 4/3 for example can be done in some
-rare cases, but since you already modified patch 2/2, a new new
-iteration is required anyway.
+Anyway, which problem do you observe in particular?
 
-So yeah improving the overall series is always a good thing.
-Especially since I see you already included the range-diff, it's not
-very hard for reviewers to see what changed in the last iteration.
+Best,
+Bert
+
+>
+> git version 2.21.0
+>
+> Sincerely
+> Jan
