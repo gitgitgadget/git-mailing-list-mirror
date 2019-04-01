@@ -2,150 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAF8420248
-	for <e@80x24.org>; Mon,  1 Apr 2019 21:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C44C120248
+	for <e@80x24.org>; Mon,  1 Apr 2019 21:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbfDAVQv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 17:16:51 -0400
-Received: from siwi.pair.com ([209.68.5.199]:32889 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726501AbfDAVQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 17:16:51 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 59C573F40D0;
-        Mon,  1 Apr 2019 17:16:50 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:74a2:1cda:f42b:77ce] (unknown [IPv6:2001:4898:8010:0:5dd8:1cda:f42b:77ce])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D3CFA3F40C7;
-        Mon,  1 Apr 2019 17:16:49 -0400 (EDT)
-Subject: Re: [PATCH v2 7/7] trace2: make SIDs more unique
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        steadmon@google.com, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.169.git.gitgitgadget@gmail.com>
- <pull.169.v2.git.gitgitgadget@gmail.com>
- <4352952677a11776a18ec9b6862cf358307cfafd.1553879063.git.gitgitgadget@gmail.com>
- <87lg0x9voz.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5a507e32-cf84-21c9-4ffe-246ecef49370@jeffhostetler.com>
-Date:   Mon, 1 Apr 2019 17:16:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726656AbfDAVxi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 17:53:38 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34766 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725858AbfDAVxi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 17:53:38 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p10so13990913wrq.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 14:53:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v8HsMoTpJ40120qWfjo2GURyQAfkWu9Tok//Qtr+H1g=;
+        b=gYSho64ivRAVoahCrXFG5QH//8XGtNnpox2ilZ6vXe4viyUfTshaeebQIvYKHntyQp
+         XXieI7F0uQ6q3/52P0gXeT7Pzdfk8ootR1PJjD6rI9j2BGiz7CDiVo6FLxiKEc7BntmN
+         wWC9HkVc8Lc37pK9QJPU+aI/JqIERIZ2xukqLz/lanyeNW7AH9Y0RYF5A3FRJrmCwSJW
+         2JTqywQJm4u/82NI5wr8bxW9Mvvjid1w5etR6bx5xYkWnv5DMvKy51D+nf9prxVNNiJA
+         V/t/ILwHW1VLIWZP4A0qvwNOmg6LcVKEcxoceRT3GyrcROLPK7kPPJeSje3uyK81m5FM
+         dw2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v8HsMoTpJ40120qWfjo2GURyQAfkWu9Tok//Qtr+H1g=;
+        b=E7CxY/OmK2/IU+wQWiPRttVydU23/v0uFR+143ixVHfQeJrUPSMz9r8ltz7Xn+LLnZ
+         pDtAtRbQTEkH4bJy0PsWgYRSmJBCHTnxasw0t/oaER3YE05oYEzKLFBiRUHeMgU1A0vT
+         nR2NCCCKWQ9JI3U5/ybxNJ1utYV9ROg0geOrByAJOfiwjH8S+1pqhqwRV1gLpbwJyGGW
+         vxEs4at6eoVVW/9yqwPHXoidv+rwUzUlm09lAwA48BpDq18ERSH5tDtd/itLNsZSIv3t
+         hCFjFMkHwD21EW+D6QCiiDE21DSNcV8P8Ml5vZxJqKh8WPVqW85Zv+N3KnbnN8j2PVfd
+         nkSw==
+X-Gm-Message-State: APjAAAWjP/S5HOWOHkJBycpgDkdRpe6on5TaP/qE207HVaKGIWUFCMYK
+        CuRk/bB6OGoMoU+hhGcVW95jDO37vCg=
+X-Google-Smtp-Source: APXvYqxtdHJnBfbJSufi1Mrb2hAkhIWtRZOrxcKb1mKkAb0/ZYMNrq1KQWbfkRy+rCO63plj9DLLYw==
+X-Received: by 2002:adf:fd04:: with SMTP id e4mr44358570wrr.190.1554155616705;
+        Mon, 01 Apr 2019 14:53:36 -0700 (PDT)
+Received: from localhost.localdomain ([185.220.70.166])
+        by smtp.gmail.com with ESMTPSA id v192sm17082227wme.24.2019.04.01.14.53.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Apr 2019 14:53:35 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+Subject: [PATCH v2 1/2] mailinfo: use starts_with() for clarity
+Date:   Mon,  1 Apr 2019 23:53:33 +0200
+Message-Id: <20190401215334.18678-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190331220104.31628-1-rybak.a.v@gmail.com>
+References: <20190331220104.31628-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87lg0x9voz.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Existing checks using memcmp(3) never read past the end of the line,
+because all substrings we are interested in are two characters long, and
+the outer loop guarantees we have at least one character. So at most we
+will look at the NUL.
 
+However, this is too subtle and may lead to bugs in code which copies
+this behavior without realizing substring length requirement.  So use
+starts_with() instead, which will stop at NUL regardless of the length
+of the prefix. Remove extra pair of parentheses while we are here.
 
-On 3/29/2019 6:12 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Fri, Mar 29 2019, Jeff Hostetler via GitGitGadget wrote:
-> 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Update SID component construction to use the current UTC datetime
->> and a portion of the SHA1 of the hostname.
->>
->> Use an simplified date/time format to make it easier to use the
->> SID component as a logfile filename.
->> [...]
->> +static void tr2_sid_append_my_sid_component(void)
->> +{
->> +	const struct git_hash_algo *algo = &hash_algos[GIT_HASH_SHA1];
->> +	struct tr2_tbuf tb_now;
->> +	git_hash_ctx ctx;
->> +	unsigned char hash[GIT_MAX_RAWSZ + 1];
->> +	char hex[GIT_MAX_HEXSZ + 1];
->> +	char hostname[HOST_NAME_MAX + 1];
->> +
->> +	tr2_tbuf_utc_datetime_for_filename(&tb_now);
->> +	strbuf_addstr(&tr2sid_buf, tb_now.buf);
->> +	strbuf_addch(&tr2sid_buf, '-');
->> +
->> +	if (xgethostname(hostname, sizeof(hostname)))
->> +		xsnprintf(hostname, sizeof(hostname), "localhost");
->> +
->> +	algo->init_fn(&ctx);
->> +	algo->update_fn(&ctx, hostname, strlen(hostname));
->> +	algo->final_fn(hash, &ctx);
->> +	hash_to_hex_algop_r(hex, hash, algo);
->> +	strbuf_add(&tr2sid_buf, hex, 8);
->> +
->> +	strbuf_addch(&tr2sid_buf, '-');
->> +	strbuf_addf(&tr2sid_buf, "%06"PRIuMAX, (uintmax_t)getpid());
->> +}
->> +
-> 
-> Thanks for turning my shitty half-formed idea into a patch :)
-> 
-> I wrote this on top to bikeshed this a bit further, wonder what you
-> think:
-> https://github.com/gitgitgadget/git/compare/pr-169/jeffhostetler/core-tr2-startup-and-sysenv-v2...avar:pr-169/jeffhostetler/core-tr2-startup-and-sysenv-v2
-> 
-> So e.g.:
-> 
->      Before: 20190329-220413-446441-c2f5b994-018702
->      After:  20190329T220431.244562Z-Hc2f5b994-P19812F
-> 
-> I.e:
-> 
->   * Using <date>T<time> as is ISO 8601 convention/easier to read
-> 
->   * <dateime>.<microseconds>Z, so seperating with "." to indicate it's
->     the same value + add "Z" for "it's UTC". I'm least sure about the
->     ".". Is that going to cause issues on Windows these days (the rest
->     being the "extension"...).
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
 
-I had a version that did just that.  I checked the various ISO and RFCs
-and it seems like the fractional seconds is usually allowed between the
-whole seconds and the "Z".
+On Mon, Apr 01, 2019 at 06:11:57 -0400, Jeff King wrote:
+> I wonder if it's worth re-writing it like:
 
-I've not seen any problems with that format.
+Turned Peff's suggestion into a patch.
 
-I think I got spooked by your original suggestion to put the fraction in
-a term after the whole "<date>T<time>Z" term.
+ mailinfo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I'll convert it back to match your suggestion.
-
-> 
->   * I changed the hostname discovery so if gethostbyname() fails we'll
->     print "-H00000000-" for that part, instead of "-H<first 8 chars of
->     the sha1 for 'localhost'>-". Also prefix with "H" for "Host".
-
-I like that.
-
-> 
->   * Wrap pids to 0xffff, prefix with "P" (Pid)" and trail with either "F"
->     = Full or "W" = Wrapped (not the real PID).
-
-I could see the "P".  I'm not sure about the hex -- I sometimes want to
-do a "ps" or watch the processes go by in TaskManager and friends and
-they all print the pid in decimal.  But it's not that big a deal.
-
-> 
->   * I didn't add "T<datetime>" like "H" and "P" for the rest, since it's
->     obvious what sort of value it is.
-> 
-> Maybe this is going a bit overboard, but I think it's easier to read at
-> a glance for humans, and since it's meant to be opaque to machines
-> anyway and the length is simliar enough not to matter I figure it's
-> worth it.
-> 
-
-I'll re-roll.
-Thanks
-Jeff
+diff --git a/mailinfo.c b/mailinfo.c
+index b395adbdf2..f4aaa89788 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -693,8 +693,8 @@ static int is_scissors_line(const char *line)
+ 			perforation++;
+ 			continue;
+ 		}
+-		if ((!memcmp(c, ">8", 2) || !memcmp(c, "8<", 2) ||
+-		     !memcmp(c, ">%", 2) || !memcmp(c, "%<", 2))) {
++		if (starts_with(c, ">8") || starts_with(c, "8<") ||
++		    starts_with(c, ">%") || starts_with(c, "%<")) {
+ 			in_perforation = 1;
+ 			perforation += 2;
+ 			scissors += 2;
+-- 
+2.21.0
 
