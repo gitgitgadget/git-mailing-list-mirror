@@ -7,146 +7,148 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3A6820248
-	for <e@80x24.org>; Mon,  1 Apr 2019 03:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A11C720248
+	for <e@80x24.org>; Mon,  1 Apr 2019 03:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731655AbfDAD5F (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 23:57:05 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:40649 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731476AbfDAD5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 23:57:05 -0400
-Received: by mail-io1-f66.google.com with SMTP id d201so6558357iof.7
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 20:57:04 -0700 (PDT)
+        id S1731671AbfDAD7t (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Mar 2019 23:59:49 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:55176 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731476AbfDAD7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Mar 2019 23:59:49 -0400
+Received: by mail-it1-f195.google.com with SMTP id n78so2129906itb.4
+        for <git@vger.kernel.org>; Sun, 31 Mar 2019 20:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xIDxEGnD09pISsCfRIJLh5drhyRMbl/mGn94qn+DrDY=;
-        b=jMg944qTwcqYT+N4bjnE2iSCkvu8EeFXwx82ZdX4NnxONkBtbcyi/NLi3pL1WFvSia
-         ofLws8sKX7VYxdgQTFpcgLu5Yr+T4SZ1VAH6tuX8ZKtHH/n/OvEptVvOYgbC3VaYIwMU
-         tcyEwi6smfv7b5P8Pju9ASmyOVSobot4qra2q6MVZSdbrU8gGkR2gbC1wGbIPuMnsKKP
-         YuY6LTancVUExwtSOwPgOvh9d26gXhoC10lz5RseX3NonrI9flEKGXSeUxR2rNoTIJTE
-         ArtRardUY6Hv2Txngncz2wtwc2JdlpJQNQQpejCpesbTYNABtW0a4hLpk/1WTR4iYyJf
-         UWrw==
+         :cc:content-transfer-encoding;
+        bh=q6ljYzk3S+xfogzKXKolR65SzMozEemWnkJemI+lY7c=;
+        b=Qc+3Hq76oYzCnFM1avad6lMwHomjckiPj/q98nSTA1avhGNoCL+iGI+2PlcSZgRSxC
+         UCY/ZHrk2YXefRepj9zOGNpDMdQIRzfblYdNh9owAwVIMQPCr/3X+InGVEXGnisOecnC
+         p+fAKFpQYLs/7b7QPiv9fUAGi8GGTs7qpa3g0lUiWRxyIfIO+4hWav4daBKqMqyVVIFg
+         XZ5wLcNC9Moxko0Q7OmaQbT+YeDVD6Kt5IqEkVhl2nskfjQ1Y8KeNowTGVbqNea8Z0ms
+         K0RnE+QHU5ztJf/7IHT4Jxc87DpTzBgkb1+ROqA9BSBORHtVFE8GS+s8GBcDECMFKNjD
+         pNvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xIDxEGnD09pISsCfRIJLh5drhyRMbl/mGn94qn+DrDY=;
-        b=bVQ88aMn+1lqNd2PSuojVU9Ppr3cEkfGzjzW6bnwsi/FtpDsLte7uXTEVrUxXRbp07
-         aWnNgJjdEU7dYv5yOoVB5eHT8dtew6qdSJZ3/ffhte1fC1GAgmQV295BChgsnh+dit/j
-         rJBgFrRmZUghWj9+3PclGvn6oppsKf7HJ/vWqOhOMNvvbLqnEP0hDBi8eG85JuiCJ7A9
-         HBTRET6KQM+bLhUM+EumK5DSvNcwK4r8UHFFafedD65u0JUBjmsgHoMslnrThA26/0Ce
-         oH7JlrWaZ/N05y977zP6Wvx+BHFsHKwb/XaZQE9PFr0ONW5MhDkGK0p7XBPA8xz34edC
-         M/Vg==
-X-Gm-Message-State: APjAAAWKyj5X2YsNFiavd/n44c2SAvg+WFfcrHfG+NA+nqa2oc+cxQdK
-        BvFNNM4r0iNSQMlKPd2j4CrwAUaiJ0eJfGSCSQa2IQ==
-X-Google-Smtp-Source: APXvYqyAZ3kBtgNmvde8hDKnXb7cjCQ2uZtan21aOGhGA0s/enHcGqezlf3TDU2i5V1mwN/6OOoM0PH6Ijnk6HVYagA=
-X-Received: by 2002:a5e:d608:: with SMTP id w8mr41916810iom.293.1554091023798;
- Sun, 31 Mar 2019 20:57:03 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=q6ljYzk3S+xfogzKXKolR65SzMozEemWnkJemI+lY7c=;
+        b=FmMMD8HYEKkl9uC5L68mfPuLuwByrwHPjXJZ/cf23m0dvA91zpN9R0vW4Xrq48Xpkd
+         L6TdH4YQiMdaBMJVy98dN66LEyHe7CEeDbUtmXcb0Ft0BN7pya3ei1tdsKBovnjg9c6O
+         Ky9u6x+kaAoH5kj9zHr7aOiDG//R9XwE8FXSo7w+Yuhwu/XR6nDObRaOO0K6zo1dbY9X
+         FAEoCo9jSCD/w3vzcG5EBz1pFicYgmKRSSIJuTjeewlHy2w9RfKz6GsURxQViw8Dglel
+         2Nvaf+nHK20ggCNMHZmaz9qpFR3GsRVjwTe8iv25fwGMUGcTHB/9S1v+qwFlYkuIEbYr
+         M9Xg==
+X-Gm-Message-State: APjAAAVfR9wRMJCQN63Wd9iaIzfdUixHZid8anxv55337MX3qSuZl+3N
+        CQrXcfrRTz2cbAh+MmOgjmvlxe4sGyNdFlhu984IOA==
+X-Google-Smtp-Source: APXvYqzR5q+xnM70PJ0PN/yPFv6KGN+amK2ALnwnXk7MZBlktb4e2TEbmdPP3/eXzmQKj5FT3xyWkhDkuYwyelbNa/M=
+X-Received: by 2002:a24:4682:: with SMTP id j124mr10312514itb.90.1554091188342;
+ Sun, 31 Mar 2019 20:59:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190226122829.19178-1-avarab@gmail.com> <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190322232237.13293-3-matheus.bernardino@usp.br> <20190328221049.GK32487@hank.intra.tgummerer.com>
- <CAHd-oW78Cwhq8sFFjOX4c6kS8JsEUUd_RGgheJhdN6MLAr+G2Q@mail.gmail.com>
- <20190329200517.GO32487@hank.intra.tgummerer.com> <CAHd-oW5aTyr7OmYwETLHYbHbRYgcUPuHpt2eN=Z2FWrqUQTzJQ@mail.gmail.com>
- <20190330192738.GQ32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190330192738.GQ32487@hank.intra.tgummerer.com>
+References: <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190330224907.3277-1-matheus.bernardino@usp.br> <20190330224907.3277-3-matheus.bernardino@usp.br>
+ <20190331174038.GS32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190331174038.GS32487@hank.intra.tgummerer.com>
 From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 1 Apr 2019 00:56:52 -0300
-Message-ID: <CAHd-oW7jJWyww1i6rLG60M91NJa4AV2nbyOaXA6KE=StmmN6_A@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4 2/7] clone: better handle symlinked files at .git/objects/
+Date:   Mon, 1 Apr 2019 00:59:36 -0300
+Message-ID: <CAHd-oW5+GuSerJMD9XAdCNEFa1qXZFtD=Tov0EyRAn4Hckw9Fw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v5 2/7] clone: better handle symlinked files at .git/objects/
 To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>,
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Kernel USP <kernel-usp@googlegroups.com>,
-        Benoit Pierre <benoit.pierre@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 30, 2019 at 4:27 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On Sun, Mar 31, 2019 at 2:40 PM Thomas Gummerer <t.gummerer@gmail.com> wrot=
+e:
 >
-> On 03/30, Matheus Tavares Bernardino wrote:
-> > On Fri, Mar 29, 2019 at 5:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > >
-> > > On 03/29, Matheus Tavares Bernardino wrote:
-> > > > Ok, what if instead of using linkat() we use 'realpath(const char
-> > > > *path, char *resolved_path)', which will resolve any symlinks at
-> > > > 'path' and store the canonical path at 'resolved_path'? Then, we can
-> > > > still keep using link() but now, with the certainty that all platforms
-> > > > will have a consistent behaviour? (also, realpath() is POSIX.1-2001)
-> > > > Would that be a better idea?
-> > >
-> > > Yeah, I think that is a good idea.  Note that 'realpath()' itself is
-> > > not used anywhere in our codebase either, but there is
-> > > 'strbuf_realpath()', that from reading the function documentation does
-> > > exactly what 'realpath()' would do.  So using 'strbuf_realpath()'
-> > > would probably be the right thing to do here.
+> On 03/30, Matheus Tavares wrote:
+> > There is currently an odd behaviour when locally cloning a repository
+> > with symlinks at .git/objects: using --no-hardlinks all symlinks are
+> > dereferenced but without it, Git will try to hardlink the files with th=
+e
+> > link() function, which has an OS-specific behaviour on symlinks. On OSX
+> > and NetBSD, it creates a hardlink to the file pointed by the symlink
+> > whilst on GNU/Linux, it creates a hardlink to the symlink itself.
 > >
-> > Thanks. While I was looking for realpath() at git codebase (before I
-> > saw your email), I got a little confused: Besides strbuf_realpath() I
-> > also found real_path(), real_path_if_valid() and real_pathdup(). All
-> > these last three use strbuf_realpath() but they also initialize the
-> > struct strbuf internally and just return a 'char *', which is much
-> > convenient in some cases.
+> > On Manjaro GNU/Linux:
+> >     $ touch a
+> >     $ ln -s a b
+> >     $ link b c
+> >     $ ls -li a b c
+> >     155 [...] a
+> >     156 [...] b -> a
+> >     156 [...] c -> a
+> >
+> > But on NetBSD:
+> >     $ ls -li a b c
+> >     2609160 [...] a
+> >     2609164 [...] b -> a
+> >     2609160 [...] c
+> >
+> > It's not good to have the result of a local clone to be OS-dependent an=
+d
+> > besides that, the current behaviour on GNU/Linux may result in broken
+> > symlinks. So let's standardize this by making the hardlinks always poin=
+t
+> > to dereferenced paths, instead of the symlinks themselves. Also, add
+> > tests for symlinked files at .git/objects/.
+> >
+> > Note: Git won't create symlinks at .git/objects itself, but it's better
+> > to handle this case and be friendly with users who manually create them=
+.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Right, feel free to use whichever is most convenient for you, and
-> whichever works in the context.
+> > Co-authored-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+> > ---
+> >  builtin/clone.c            |  5 ++++-
+> >  t/t5604-clone-reference.sh | 27 ++++++++++++++++++++-------
+> >  2 files changed, 24 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index 50bde99618..f975b509f1 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -443,7 +443,10 @@ static void copy_or_link_directory(struct strbuf *=
+src, struct strbuf *dest,
+> >               if (unlink(dest->buf) && errno !=3D ENOENT)
+> >                       die_errno(_("failed to unlink '%s'"), dest->buf);
+> >               if (!option_no_hardlinks) {
+> > -                     if (!link(src->buf, dest->buf))
+> > +                     char *resolved_path =3D real_pathdup(src->buf, 1)=
+;
+> > +                     int status =3D link(resolved_path, dest->buf);
+> > +                     free(resolved_path);
+> > +                     if (!status)
 >
-> >                            What seems weird to me is that, whilst
-> > real_pathdup() releases the internally initialized struct strubuf
-> > (leaving just the returned string to be free'd by the user), the other
-> > two don't. So, if struct strbuf change in the future to have more
-> > dynamic allocated resources, these functions will also have to be
-> > modified. Also, since real_pathdup() can already do what the other two
-> > do, do you know if there is a reason to keep all of them?
+> Is there any reason why we can't use 'real_path()' here?  As I
+> mentioned in [*1*], 'real_path()' doesn't require the callers to free
+> any memory, so the above could become much simpler, and could just be
 >
-> Right, '*dup()' functions usually leave the return value to be free'd
-> by the caller.  And while 'real_pathdup()' could do what the others do
-> already it also takes more effort to use it.  Users don't need to free
-> the return value from 'real_path()' to avoid a memory leak.  This
-> alone justifies its existence I think.
->
-> > One last question: I found some places which don't free the string
-> > returned by, for example, real_path() (e.g., find_worktree() at
-> > worktree.c). Would it be a valid/good patch (or patches) to add free()
-> > calls in this places? (I'm currently trying to get more people here at
-> > USP to contribute to git, and maybe this could be a nice first
-> > contribution for them...)
->
-> Trying to plug memory leaks in the codebase is definitely something
-> that I think is worthy of doing.  Sometimes it's not worth actually
-> free'ing the memory, for example just before the program exits, in
-> which case we can use the UNLEAK annotation.  It was introduced in
-> 0e5bba53af ("add UNLEAK annotation for reducing leak false positives",
-> 2017-09-08) if you want more background.
->
-> That said, the memory from 'real_path()' should actually not be
-> free'd.  The strbuf there has a static lifetime, so it is valid until
-> git exits.  If we were to free the return value of the function we'd
-> actually free an internal buffer of the strbuf, that is still valid.
-> So if someone were to use 'real_path()' after that, the memory that
-> strbuf still thinks it owns would actually have been free'd, which
-> would result in undefined behaviour, and probably would make git
-> segfault.
+> +                       if (!link(real_path(src->buf), dest->buf))
 >
 
-Thanks for the great explanation, Thomas. I hadn't noticed that the
-strbuf variable inside real_path() is declared as static. I also took
-some time, now, to better understand how strbuf functions deal with
-the buf attribute (especially how it's realloc'ed) and now I think I
-understand it better. Thanks again for the help!
+Yes, you are right. I will change this! I sent this v5 before
+carefully reading your previous email and studding strbuf functions
+and real_path(), now that I did that, I see that real_path() is the
+best option here. Thanks!
 
-> --
-> You received this message because you are subscribed to the Google Groups "Kernel USP" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to kernel-usp+unsubscribe@googlegroups.com.
-> To post to this group, send email to kernel-usp@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/kernel-usp/20190330192738.GQ32487%40hank.intra.tgummerer.com.
-> For more options, visit https://groups.google.com/d/optout.
+> *1*: <20190330192738.GQ32487@hank.intra.tgummerer.com>
+>
+> >                               continue;
+> >                       if (option_local > 0)
+> >                               die_errno(_("failed to create link '%s'")=
+, dest->buf);
