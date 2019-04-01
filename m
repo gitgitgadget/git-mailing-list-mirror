@@ -2,241 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342B920248
-	for <e@80x24.org>; Mon,  1 Apr 2019 15:38:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE40820248
+	for <e@80x24.org>; Mon,  1 Apr 2019 15:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbfDAPiC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 11:38:02 -0400
-Received: from mout.gmx.net ([212.227.15.19]:35275 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726617AbfDAPiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 11:38:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554133061;
-        bh=XEL7dN276RhwzGNdsqve8seIwL7QHLhcRqsFuAqCXiU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NdRQ8E6UEejMTe8iosVlIAMguYA9dcJnSdiU8QBRYpNgxbsB5myqN7/0W1jYmwxWB
-         pTov8+WLCGZlvqa4jC4T50Le0kC9jh2ne2VtYyvrqhlW3ZXfJJlwFaRJ8TA/tgLTmO
-         uXGqkmevpli3QB0i+5I3dtSM+aCps0Y8sE0KnQCY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhGw-1h9ISZ2PGA-00HBF1; Mon, 01
- Apr 2019 17:37:41 +0200
-Date:   Mon, 1 Apr 2019 17:37:46 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] praise: make 'blameless' cultural enforcement
- configurable
-In-Reply-To: <20190401101246.21418-2-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904011737050.41@tvgsbejvaqbjf.bet>
-References: <20190401101246.21418-1-avarab@gmail.com> <20190401101246.21418-2-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726988AbfDAPlX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 11:41:23 -0400
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:35368 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726617AbfDAPlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 11:41:23 -0400
+Received: by mail-vk1-f193.google.com with SMTP id g24so2205268vki.2
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 08:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=arqRLMyZNSrWDmd4d1cbjYjSQVZS79TgXFxTn6qj91Y=;
+        b=kLBRTxYyxGkVgi7Ec7NPY++ZjrkQjmkw1hidE9sIpjt5+9zAk7SYctAPLqH7pNaTk1
+         LfcLWKM4q0Vj3KTI3keUOyld2EYeAinXg9DB1ToAgdY3xPFBbY99gC9jRTLkspT496Fj
+         v99N5URA0IuueJfMO+BSGV0HJqf2YDrYU2RSZaZau+pptVkLsTLXLeN2pJKIPVGmnjSw
+         nc5Z2jviQjl3owTGNdMF6D0ttz+W1KfjhETpUP5dxIlwuzJHxLLgm+veyoYye/xagwLz
+         i5aoDcsI2x8NhWLGsCFrPJHQvPF8ojCnZwBU1Xi7UrxRW96M3i+JkOUW8pioefYjtwpX
+         Lttw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=arqRLMyZNSrWDmd4d1cbjYjSQVZS79TgXFxTn6qj91Y=;
+        b=sRG3SHX+Oyin7p2XzfjUpYhAuHnO+rCKaO26eVy2qzPjkIEngEy9FGkedC6S/6kopN
+         lsA6TkGxOz5wfuVMW81mJPwi4H7EZ6vTB9UIuY10bQtwDSxpUt3a2XyRaP2xooAisfLu
+         //jL8YiBgmutv4RruWto5T/H1Mx47p9RARGPGiWTReMveQHWgI+iBH3A7m1NQuqCDHpt
+         IQCRLsT2Q2ZsMRvFXbd0SxdH2c9MN5TG13/WxWCTrdz06rFFPzuIovU92Ibnm6eKY6SL
+         LREiDtP+Phf1THJfIxFMhseBqKR61yhU4TOBrlotD+2NW1FJmFFlkmws+dhMCiVPjfiN
+         MOvA==
+X-Gm-Message-State: APjAAAUsB5dTV3pgFIE5OSV/tRykBrIah49gRcHAYkWi/AwGV5enBPkx
+        vIKefPOWYfz7xd/706jghXEDnyuSy8joxTMmdxg=
+X-Google-Smtp-Source: APXvYqzAv0TEsOzv5qfOA2AdxShhuxihOyRKEHRKiQEQ6G+jyDY7mkjKQKYpY54bEGYEQX66kCJX5QtWDoQ9AxjVr/Q=
+X-Received: by 2002:a1f:8d45:: with SMTP id p66mr1617669vkd.21.1554133282446;
+ Mon, 01 Apr 2019 08:41:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1307536628-1554133067=:41"
-X-Provags-ID: V03:K1:WUPFYi84/TfAXOJOWmxI6b8lBJZAc+Q+jr01nP3HdEmJoSSH+/D
- 8NCR0J4gXMQCG22zZL+t9bb1pvtDtNf2SzVTZdcNoxp6XffIJzR03QWtZKVD0GmtaGeviHc
- 4FCnqZbBCJ6JuDYHh5KubuZ7+k+As907xr9WvIk1yvoe4WXdU1/ju3L++dJxIQtbTl2VC5M
- M87iyxey1QKkOPE7QY1Eg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SyoDth8PGdA=:SgOyhyntCqbD4S41s9h+yM
- x4OODye+l9/r5cfGXUFkeI+DtJHfAphQ7NRU4peYWW7LrlInoRnLiUk38GlP0iyE0BEtJsyYi
- 6kmn2UKaEhnFhaoMi5HWxJHm0jy0adosWHB+tmzmZs7/bF6KhYXMb18I3YMtNQognITvDlB87
- AeMg4bZ8p0HVoFHCx7clanzEQk202UINVU1GopdVnJk+hV1vSDKDpu0eYRRCPLhAuWG2L9/pP
- f24XSVyfIfYQ0rCkpCG62Ytgu3ZMD0b5CaYwYVajl3kfxFzjrc8lai0Y1VXmeM9H/7cnSD8JI
- NWP23kgH0D8kF6PP5mp6qOJQRQRPULlG9ERGIJu9NfuiaKcSfGTcx7bQt0V47H4AdOVKd4JQM
- JMNyeSSsbkXkPgRdZbshIQo0/bAcipQmsvBZuTw+cddI3kNpAuzet6u/ftFjfgzQZoUsr/Kmh
- pRuF6UcXc/kQ1Rpsdh6cojlaaLu/TuIzzBg3BlC8AZA0sYd0mfXqT18fdIje54ioWiPNfje8b
- RMBgLWkI/09iX+CyYOcBus2kv8tAK+VsPJwm6fSz9zqv76RZXl6xLBwfYk4tQKbve8dr1EeO4
- 1pK2lJ/3cnAJ48CWmucHO02zRmTOEPtNm+iG9oYA3dIsrtuHjPfzgVLuKsb7SsaCIUHAzyET9
- 2Um4ibyrY7lLML6Qtvv1QfhZu7p+dmLX009Omgh9cGnaH+PxWxaJI6Z49T3YRnJbIfh9NfpJP
- HGQQQ6/CXq9T8ICU4sXsBOPHA2uUQgh61myLKzzrUM9euorIvwx0XeZv7LpNWv4bfJxQwW368
- s3x/yf3JNpnkN2mp2O5BEarCH9VhanxYOg3LnK5oK3Ql9QHZS9Gpgt05qxEmzZB91wqIJIKcl
- bljgtJKf+b96ScKrl8k6rpAxwIQvfhXH2C1I6RVY7fHWvJgZqwmJVX//E4qHcxOcnyCkW2Aaf
- oX+IpBNlXJw==
+References: <20190306002744.14418-1-newren@gmail.com> <20190330003336.21940-1-newren@gmail.com>
+ <20190330003336.21940-16-newren@gmail.com> <87imw0afp4.fsf@evledraar.gmail.com>
+In-Reply-To: <87imw0afp4.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 1 Apr 2019 08:41:11 -0700
+Message-ID: <CABPp-BEAMo-+mZcPTSyhts_-6eMcnRYc6bBojJSAtMTS2meHUg@mail.gmail.com>
+Subject: Re: [PATCH v2 15/15] merge-recursive: switch directory rename
+ detection default
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Linus Nilsson <Linus.Nilsson@trimma.se>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sat, Mar 30, 2019 at 2:12 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Sat, Mar 30 2019, Elijah Newren wrote:
+>
+> I may have more, just quickly skimming this for the first time...
+>
+> >  merge.renames::
+> > -     Whether and how Git detects renames.  If set to "false",
+> > -     rename detection is disabled. If set to "true", basic rename
+> > -     detection is enabled.  Defaults to the value of diff.renames.
+> > +     Whether Git detects renames.  If set to "false", rename detection
+> > +     is disabled. If set to "true", basic rename detection is enabled.
+> > +     Defaults to the value of diff.renames.
+> > [...]
+> > +     if (!git_config_get_string("merge.directoryrenames", &value)) {
+> > +             if (!strcasecmp(value, "true"))
+> > +                     opt->detect_directory_renames =3D 2;
+> > +             else if (!strcasecmp(value, "false"))
+> > +                     opt->detect_directory_renames =3D 0;
+> > +             else if (!strcasecmp(value, "conflict"))
+> > +                     opt->detect_directory_renames =3D 1;
+> > +             else {
+> > +                     error(_("Invalid value for merge.directoryRenames=
+: %s"),
+> > +                           value);
+> > +                     opt->detect_directory_renames =3D 1;
+> > +             }
+> > +             free(value);
+> > +     }
+>
+> Instead of making your own true/false parser you can use
+> git_parse_maybe_bool(). See what we do for merge.ff:
+>
+>     builtin/merge.c-617-    else if (!strcmp(k, "merge.ff")) {
+>     builtin/merge.c:618:            int boolval =3D git_parse_maybe_bool(=
+v);
+>     builtin/merge.c-619-            if (0 <=3D boolval) {
+>     builtin/merge.c-620-                    fast_forward =3D boolval ? FF=
+_ALLOW : FF_NO;
+>     builtin/merge.c-621-            } else if (v && !strcmp(v, "only")) {
+>     builtin/merge.c-622-                    fast_forward =3D FF_ONLY;
+>     builtin/merge.c-623-            } /* do not barf on values from futur=
+e versions of git */
+>     builtin/merge.c-624-            return 0;
+>
+> Small nit, but allows us to document "this config takse bool or ..."
+> without having different verions of "bool" in various places.
+>
+> Also, I don't care personally, but this also violates the "if one thing
+> requires braces put it on all the if/else arms" in CodingGuidelines.
 
---8323328-1307536628-1554133067=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Mon, 1 Apr 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> The culture shock of having a 'blameless' culture from day one might
-> be too much for some, so let's allow for setting
-> "blame.culture.enforcement=3Dwarning" to allow for easing into the
-> default of "error".
->
-> Also allow for excluding non-interactive users of "blame". There are
-> some automated users who use "blame" but don't use the "--porcelain"
-> format (which was already excluded). Those can set
-> e.g. "error:interactive" to only emit errors when "blame" is
-> interacting with a TTY.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-
-I reviewed both patches, and they look fine to me. So they are
-
-Blessed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-:-D
-
-> ---
->  Documentation/config/blame.txt | 12 ++++++++++++
->  builtin/blame.c                | 27 ++++++++++++++++++++++++++-
->  t/t8002-blame.sh               | 28 ++++++++++++++++++++++++++++
->  3 files changed, 66 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/config/blame.txt b/Documentation/config/blame=
-.txt
-> index c85b35de17..13570192cf 100644
-> --- a/Documentation/config/blame.txt
-> +++ b/Documentation/config/blame.txt
-> @@ -7,6 +7,18 @@ blame.culture::
->  +
->  Note that the `--porcelain` format for machine consumption is exempt
->  from this enforcement to avoid breaking existing scripts.
-> ++
-> +See `blame.culture.enforcement` below for tweaking the error behavior.
-> +
-> +blame.culture.enforcement::
-> +	When `blame.culture=3Dblameless` is set invoking
-> +	linkgit:git-blame[1] becomes an `error` This variable can also
-> +	be set to `warning` to only warn, and to either
-> +	`error:interactive` or `warning:interactive` to only error out
-> +	or warn if stderr is connected to a TTY.
-> ++
-> +This allows for enforcing a blameless culture on interactive users,
-> +while leaving any automated use alone.
->
->  blame.blankBoundary::
->  	Show blank commit object name for boundary commits in
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 238b19db48..9f62950559 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -59,6 +59,12 @@ static size_t blame_date_width;
->
->  static struct string_list mailmap =3D STRING_LIST_INIT_NODUP;
->
-> +static enum {
-> +	BLAME_ENFORCE_ERROR		=3D 1<<0,
-> +	BLAME_ENFORCE_WARNING		=3D 1<<1,
-> +	BLAME_ENFORCE_INTERACTIVE	=3D 1<<2
-> +} blame_culture_enforcement =3D BLAME_ENFORCE_ERROR;
-> +
->  #ifndef DEBUG
->  #define DEBUG 0
->  #endif
-> @@ -686,6 +692,19 @@ static int git_blame_config(const char *var, const =
-char *value, void *cb)
->  		blameless_culture =3D !strcmp(value, "blameless");
->  		return 0;
->  	}
-> +	if (!strcmp(var, "blame.culture.enforcement")) {
-> +		if (!strcmp(value, "error"))
-> +			blame_culture_enforcement =3D BLAME_ENFORCE_ERROR;
-> +		else if (!strcmp(value, "error:interactive"))
-> +			blame_culture_enforcement =3D (BLAME_ENFORCE_ERROR |
-> +						     BLAME_ENFORCE_INTERACTIVE);
-> +		else if (!strcmp(value, "warning"))
-> +			blame_culture_enforcement =3D BLAME_ENFORCE_WARNING;
-> +		else if (!strcmp(value, "warning:interactive"))
-> +			blame_culture_enforcement =3D (BLAME_ENFORCE_WARNING |
-> +						     BLAME_ENFORCE_INTERACTIVE);
-> +		return 0;
-> +	}
->  	if (!strcmp(var, "blame.showemail")) {
->  		int *output_option =3D cb;
->  		if (git_config_bool(var, value))
-> @@ -897,7 +916,13 @@ int cmd_blame(int argc, const char **argv, const ch=
-ar *prefix)
->  		blame_date_mode.type =3D DATE_ISO8601;
->  	} else if (!cmd_is_praise && blameless_culture &&
->  		   !(output_option & OUTPUT_PORCELAIN)) {
-> -		die(_("must be invoked as 'git praise' with 'blame.culture=3Dblameles=
-s' set!"));
-> +		if (!(blame_culture_enforcement & BLAME_ENFORCE_INTERACTIVE) ||
-> +		    isatty(2)) {
-> +			if (blame_culture_enforcement & BLAME_ENFORCE_ERROR)
-> +				die(_("must be invoked as 'git praise' with 'blame.culture=3Dblamel=
-ess' set!"));
-> +			else if (blame_culture_enforcement & BLAME_ENFORCE_WARNING)
-> +				warning(_("should be invoked as 'git praise' with 'blame.culture=3D=
-blameless' set!"));
-> +		}
->  	} else {
->  		blame_date_mode =3D revs.date_mode;
->  	}
-> diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-> index 2d59b856d1..09ef0bc440 100755
-> --- a/t/t8002-blame.sh
-> +++ b/t/t8002-blame.sh
-> @@ -2,6 +2,7 @@
->
->  test_description=3D'git blame'
->  . ./test-lib.sh
-> +. "$TEST_DIRECTORY/lib-terminal.sh"
->
->  PROG=3D'git blame -c'
->  . "$TEST_DIRECTORY"/annotate-tests.sh
-> @@ -60,9 +61,36 @@ test_expect_success 'praise' '
->
->  test_expect_success 'enforced praise' '
->  	test_must_fail git -c blame.culture=3Dblameless blame one 2>err &&
-> +	test_i18ngrep "must be.*git praise" err &&
-> +	test_must_fail git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Derror blame one 2>err &&
->  	test_i18ngrep "must be.*git praise" err
->  '
->
-> +test_expect_success 'recommended praise' '
-> +	git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Dwarning blame one 2>err &&
-> +	test_i18ngrep "should be.*git praise" err
-> +'
-> +
-> +test_expect_success TTY 'interactive: praise blame.culture.enforcement=
-=3D*:interactive' '
-> +	test_must_fail test_terminal git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Derror:interactive blame one 2>err &&
-> +	test_i18ngrep "must be.*git praise" err &&
-> +	test_terminal git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Dwarning:interactive blame one 2>err &&
-> +	test_i18ngrep "should be.*git praise" err
-> +'
-> +
-> +test_expect_success TTY 'non-interactive: praise blame.culture.enforcem=
-ent=3D*:interactive' '
-> +	git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Derror:interactive blame one 2>err &&
-> +	test_i18ngrep ! "must be.*git praise" err &&
-> +	git -c blame.culture=3Dblameless \
-> +		-c blame.culture.enforcement=3Dwarning:interactive blame one 2>err &&
-> +	test_i18ngrep ! "should be.*git praise" err
-> +'
-> +
->  test_expect_success 'blame with showemail options' '
->  	git blame --show-email one >blame1 &&
->  	find_blame <blame1 >result &&
-> --
-> 2.21.0.392.gf8f6787159e
->
->
-
---8323328-1307536628-1554133067=:41--
+Thanks for taking a look.  I'll make the fix, and wait for other
+feedback before resending.
