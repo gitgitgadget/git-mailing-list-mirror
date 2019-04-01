@@ -2,84 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4910F20248
-	for <e@80x24.org>; Mon,  1 Apr 2019 21:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAB0520248
+	for <e@80x24.org>; Mon,  1 Apr 2019 22:31:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726775AbfDAVys (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 17:54:48 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51312 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725869AbfDAVys (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 17:54:48 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 4so1017551wmf.1
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 14:54:47 -0700 (PDT)
+        id S1726732AbfDAWbt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 18:31:49 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:32848 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725869AbfDAWbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 18:31:49 -0400
+Received: by mail-ed1-f65.google.com with SMTP id q3so9881476edg.0
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 15:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Sb0X65UEYKZ7rVsJGlcjzuj4jd7AuWivUAjvpAhdJuo=;
-        b=ZJtWxOC/xGPB6d3ppMbSX3Tg9EJcPBSTqMw56bhElZUzvzIwRlmQ+kvh6rh/wb1jOp
-         njOsoDBIMm/p2nJchWmb+dm1S9AaW/N9HHpFQETKJbP5eC1cSumOwZawSraFM2vKnxfw
-         JfmG6a5JZmF95P8+4IYmNYC1t5j1aJVcMv8/wDz926Eww9XV5S+Kpsm8U1cIt8iROsC3
-         o9FzEmmOmd+FWTAaikodWA6Ep/0bL3pNCQkpQM7C38DHWsH8RvDr+QRQqwqgBnHc4k2j
-         l222Y9imUuB7JxVvEIN1dAHCkTYAw76gtoasW5nU/AMon885h/1BgrnpOthaXO+Kg6U4
-         pFMw==
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=q48DaaW0t3Wp3YxAByKerh3lvJzyXnWNlwMUCGdkfsQ=;
+        b=t39sMz5xNUSZ3nr+9vEpAcc+jcQu06c8Bn1MZFlnDfv+ayEf9NkwEi2ogjo2dyda0D
+         rhDQSG1yhuwF+YsbBZFCRmZJrbiefdu/OAeB0delIdgghcJA8tfNVhAOg0WLXVAa/dx6
+         zoIq6Mc2JeLS6vy6nhk6KPuUnSDiD3wu7n5yW8AdzK3t9MRSNClSWdHQ/q2uiXFUcWSk
+         Inx64D+V09F/tDQBdtgYrjoarKnZq/zX9P+YqEdd+IxXJgqpnXTNY4EvVqb5TA7pCPPM
+         puM8sSuU//J7Rdim9xwXtNHffJjHyVh2zUacqJnkvCktzTxC7pQf2SOTrGizA9MlyMwJ
+         Bp8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Sb0X65UEYKZ7rVsJGlcjzuj4jd7AuWivUAjvpAhdJuo=;
-        b=RToJjo6W/R56LJDg2LEYm62EyMv3K79EGCIduco/B9DTOCqkP8NbcvClB+pUwjOSn5
-         7nv9IZE4PAtLNbYcpcLl2z6epOD7C+84eiGBFyAKFdUNPrGZqHgmWGHUhAhlzIEStoaf
-         2IL9XXhNnPIVmbr7iRHUzfZ9hItkG9tJY2ocNhW2keEsne62M+DK1FnZnzdI4GD8qlfr
-         Hlcoiulp6rnHFEh+t/P1fKqkMWNdr20aBmFxOkK0Z5xk9V6cKmySJzbf4BkYWXvUDGc1
-         mHO6W5bKHC7rRMVjuIp9JfxVe5bt0c/qCn1bFAqseF0d47FEZ+AeycsqbPoTdrjvGHDC
-         TylQ==
-X-Gm-Message-State: APjAAAXns83ey9w3n45xpe1rGH+DHjD6d1uK1ElTVKcBuF6F6vjtEMCR
-        L/+cJ4VIiCA3XyBbXobMUzRK/ghLtyY=
-X-Google-Smtp-Source: APXvYqx7R+BFC1WJ4j9P9qiP5yPnjaV2umw2Kk03HfvyTW/3jE6hjN1dPBao4TW+vZeOpRrEhrkyMg==
-X-Received: by 2002:a1c:80cd:: with SMTP id b196mr1109160wmd.84.1554155686501;
-        Mon, 01 Apr 2019 14:54:46 -0700 (PDT)
-Received: from [10.42.1.10] ([185.220.70.166])
-        by smtp.gmail.com with ESMTPSA id x18sm11311264wmi.6.2019.04.01.14.54.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Apr 2019 14:54:45 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH] mailinfo: support Unicode scissors
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20190331220104.31628-1-rybak.a.v@gmail.com>
- <CACsJy8As7_qS-JRdMSNJco_=F4r21sjPR32thVrAB_CTrRdz8Q@mail.gmail.com>
-Message-ID: <9481b5c1-5fe0-2d83-a721-72cb2a9e6d18@gmail.com>
-Date:   Mon, 1 Apr 2019 23:54:44 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=q48DaaW0t3Wp3YxAByKerh3lvJzyXnWNlwMUCGdkfsQ=;
+        b=l1npk0sJ95e4ppONZyMlODTYtf1qRld7h/uSG7EKsuymc158mMAj03CY9QYvVJ046N
+         zXmfYMmL6gaNgSGURaUBgEQm5cgVHkHs+9tWCppUAa9uiuYhq5+mbhhxaZjy3ERnU1Sh
+         thP5kWzhsTrU+cU1lwhv79Jl/8lSfkSZg60ISJDjYliE7/psogtPK2o4TJx82L84JxyK
+         bE/B5Ud84oP9r4txtklkIF5CX5NexffKjWGHU1w48Lcz32XNy1XEPRYW/PZiZoD68D01
+         I2Fhj9BeQUQpNe0VwywMEFRA9bur1aED/aeTeFfF/ee4p8op1+Jw8+gwZimLud5exPaQ
+         vkSg==
+X-Gm-Message-State: APjAAAW7kSrInpZYyzjQh6dwGQR8kDv8PSRn02Xsiw1Ph/wl4wxARfyB
+        sBra2m5IdQ7WPhIpdSxNX85pd5qQwlWhZSCVUYVmiqoh+pE=
+X-Google-Smtp-Source: APXvYqxV5R15g2ZSTE2qT4UdvSlKBHNhrV3f3GWrtPNLiq26Or8FYDxsNfpgldVQ1Z7hkHWg67Wi3tz5lKEpbVKW63c=
+X-Received: by 2002:a17:906:6c0d:: with SMTP id j13mr37463157ejr.249.1554157906624;
+ Mon, 01 Apr 2019 15:31:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8As7_qS-JRdMSNJco_=F4r21sjPR32thVrAB_CTrRdz8Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   Chanseok Oh <chanseok@google.com>
+Date:   Mon, 1 Apr 2019 18:31:10 -0400
+Message-ID: <CAP5K-1YJN9jt_6yEbLs=ET6M2tRLMMoio65GJMsJy69Y+LCn1g@mail.gmail.com>
+Subject: [Bug] git log - reports wrong date and time
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 1 Apr 2019 16:27:02 +0700, Duy Nguyen wrote:
-> On Mon, Apr 1, 2019 at 5:03 AM Andrei Rybak <rybak.a.v@gmail.com> wrote:
->> Support UTF-8 encoding of '✂' in function is_scissors_line, for 'git am
->> --scissors' to be able to cut at Unicode perforation lines in emails.
->> Note, that Unicode character '✂' is three bytes in UTF-8 encoding.
-> 
-> On top of what was already said in this thread. For some reason (bad
-> font?) these scissors are drawn cutting _down_ for me instead of left
-> or right. It looks a bit strange.
+Hello,
 
-This might be an indication that the font used is rendering the
-symbol as an emoji. Most scissors in emoji fonts are vertical:
-https://emojipedia.org/black-scissors/
+I'm using the latest version.
+
+    $ git version
+    git version 2.21.0.392.gf8f6787159e-goog
+
+WORKS: the following prints out the date and time in my local timezone.
+
+    $ git log '--date=format-local:%Y%m%d %H%M%S %z (%Z)' --format=%cd -n1
+    20190401 170250 -0400 (EDT)
+
+WORKS: "TZ=UTC" is respected. It prints time in UTC.
+
+    $ TZ=UTC git log '--date=format-local:%Y%m%d %H%M%S %z (%Z)'
+--format=%cd -n1
+    20190401 210250 +0000 (UTC)
+
+BROKEN: anything other than UTC reports wrong date.
+
+    $ TZ=KST git log '--date=format-local:%Y%m%d %H%M%S %z (%Z)'
+--format=%cd -n1
+    20190401 210250 +0000 (KST)
+
+The time is in UTC. Worse, %Z respects TZ=KST, which is in conflict with %z.
+
+The symptom is same with "--date=local". It respects TZ=UTC but
+nothing other than TZ=UTC.
+
+Regards,
+Chanseok
