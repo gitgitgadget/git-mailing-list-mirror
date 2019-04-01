@@ -2,126 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D14F20248
-	for <e@80x24.org>; Mon,  1 Apr 2019 09:29:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CB0020248
+	for <e@80x24.org>; Mon,  1 Apr 2019 10:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725882AbfDAJ3W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 05:29:22 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33169 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725817AbfDAJ3W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 05:29:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q1so11038417wrp.0
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 02:29:20 -0700 (PDT)
+        id S1726409AbfDAKJt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 06:09:49 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:37622 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725867AbfDAKJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 06:09:48 -0400
+Received: by mail-io1-f68.google.com with SMTP id x7so7240832ioh.4
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=/v1Z4uCNnSkaApqfLIM/lqmhpT/g7dTOL6TXjIC0BRA=;
-        b=c2d+pj819ewqFwWUB+9T096QGzP/MnvaTjFhQAE76hw5saiv815XI2gI5aTJviwZKt
-         PUsNrFkfggwDmW7M5FxYsKspfeY1Pse3SK1fDwWx+UKK+Wz57Be8b4alfi8lIxWwnrOx
-         RgpEsBUSTI/2dXL1E+prlQvpz8ziNwTF+oOjwe/yDXvDuNJKKyX8epSbScw/aWE6OqbM
-         oPvN28nKW65yZQqpdPnBzN2NcYiISuTDQFatUZHJXVVga2exthwKAIbdOJoggQPJsRp5
-         GB6D5fDt7fxFaxlyuRguMNMREb6BnAsk35XdWT/shetTPNnkw0jCQ/9tu9zgcHxVoI2D
-         0hhw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=V11Oyxc/OZ7ivz21AogzSQEUVQ21kt1ALIQZ7+xksXU=;
+        b=gozGfvHMo9QR254wFV/Sp2kNoueavDJ4yl1lrEwI3ELk9gAS1OXLZfRZBbIkLOMZkl
+         9BVVB8uxvP5mKru7ygrHXTFQWrbtJ5mlOOqmyOdH43K4N7r33BZNM7tTrehuYUWEYlCd
+         WIOo2sKpSH+ViES5IFVrO4hA6osUdVA09vO/aUHyuUm0wYIPt8UoYa9Mp9vOVExlbweO
+         EULGI8bHraDmrtm+RMnGcUq5Ue4Aw5kaftiJbml+zxRlgrjFF3geIKSVHXhPZqnWk1Ea
+         ZnZijZ6Mvpp85+6kH5TQIUEAk/md438TcDrHreGomWrM0HXkUGnm3jQOHQgltlAHCVI2
+         Grnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=/v1Z4uCNnSkaApqfLIM/lqmhpT/g7dTOL6TXjIC0BRA=;
-        b=sa1bBZPQHjlRUb0dBHqs96cM0309hzhYDBeXOI/x3dGA2lMfs82I5zfvEhR1vFW/Cy
-         tW2a+yrFIWExhdsCL+mSiCBG5Iaj04iMrofWwnXxR6D+Y3GZGhvQHKgLm9SL52bS8aY2
-         pYyI4KyGk3BdJRlJ1xQQsXpg9CaCDpcfGsggBsNZL2qjaF9HNuQizRKRV70xPCNg0xLb
-         OVUF9C0i+wGFVyOCXO23PluV/BqIpvz6d4sp1wZWftYNmF+QBd7YNW31y5vn93ES7prU
-         zRm/Cb3Q0RuD+nCErn9Nlj5Iqol8+tFY1wTG6XghoyRJbWSTigpjZMCy5Kh6hT1vBqrk
-         Dc7g==
-X-Gm-Message-State: APjAAAUU3AHV04dCKCMY0W/Go2UME6w+PxmCUZrPVIbQdCyMikceRUi3
-        EwDcGJPvLzOIgjwrsrBC9Vs=
-X-Google-Smtp-Source: APXvYqxyVFPEU/X9Brqmo558XrSxXpH/6H3JMLDuFuGkHLtE3A/RmxVc883W2ni8DaoinKv8HuXqpQ==
-X-Received: by 2002:a5d:660c:: with SMTP id n12mr4513635wru.160.1554110960041;
-        Mon, 01 Apr 2019 02:29:20 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id d7sm9839931wmf.31.2019.04.01.02.29.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Apr 2019 02:29:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [Fix v1] builtin/ls-files.c: add error check on lstat for modified files
-References: <20190217163456.17560-1-randall.s.becker@rogers.com>
-Date:   Mon, 01 Apr 2019 18:29:19 +0900
-Message-ID: <xmqq4l7ixeds.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V11Oyxc/OZ7ivz21AogzSQEUVQ21kt1ALIQZ7+xksXU=;
+        b=TLH7Nl7FD4XL4E1dDt2qbxAjlcdVHtDGZ8YKzskpp7ZeXiMJ4B886pGiiAoy5+1q9k
+         57tV4vJCixLzNiIwZYi6/96AdLh3s0AwiOrgsTnX3UFYQjWYau/A155XgtCg7/k1+kP+
+         sHcR9eBs3TQpId8q8tMspqvfxpc96l0SGn/i0eds0sTV/MOqppqSTKSCzHXuQ7rI8FhI
+         PSuKHHlV5ELGZwq6Kxk0GXXzlq5YJJNfYSyiA+vOdG5lKEyFNziKc1g8mSV3Q0M9ME1x
+         blO0IrV2o90hOxf/DrNyfTchrY6v/wToLC4mKERcMZN8K94txxVnAx2RAdHFPSiIhxxr
+         ws7g==
+X-Gm-Message-State: APjAAAVbECQXbnYh6U5bmN1RrigG3B+5LvDZPdueN9SKmk6C7WeVbHiT
+        Rp54yeejaFyggD5u9tow4qPjXEH/qMBwfnt7FE0=
+X-Google-Smtp-Source: APXvYqxffFrEGZtnUBdzfSmCnAjfe1igA63dA4yCnBPCjYlqPEypy1kAZpJu+6QLCV5OlJct7pwpVAMYEPAyca/dBV0=
+X-Received: by 2002:a6b:3709:: with SMTP id e9mr17129253ioa.282.1554113387705;
+ Mon, 01 Apr 2019 03:09:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190329163009.493-1-phillip.wood123@gmail.com> <20190329163009.493-2-phillip.wood123@gmail.com>
+In-Reply-To: <20190329163009.493-2-phillip.wood123@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 1 Apr 2019 17:09:21 +0700
+Message-ID: <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] commit/reset: try to clean up sequencer state
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-randall.s.becker@rogers.com writes:
-
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+On Fri, Mar 29, 2019 at 11:32 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> The result from lstat, checking whether a file has been deleted, is now
-> included priot to calling id_modified when showing modified files. Prior
-
-s/priot/prior/
-
-> to this fix, it is possible that files that were deleted could show up
-> as being modified because the lstat error was unchecked.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Reported-by: Joe Ranieri <jranieri@grammatech.com>
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> When cherry-picking or reverting a sequence of commits and if the final
+> pick/revert has conflicts and the user uses `git commit` to commit the
+> conflict resolution and does not run `git cherry-pick --continue` then
+> the sequencer state is left behind. This can cause problems later. In my
+> case I cherry-picked a sequence of commits the last one of which I
+> committed with `git commit` after resolving some conflicts, then a while
+> later, on a different branch I aborted a revert which rewound my HEAD to
+> the end of the cherry-pick sequence on the previous branch. Avoid this
+> potential problem by removing the sequencer state if we're committing or
+> resetting the final pick in a sequence.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  builtin/ls-files.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  branch.c                        |  7 +++++--
+>  builtin/commit.c                |  7 +++++--
+>  sequencer.c                     | 23 +++++++++++++++++++++++
+>  sequencer.h                     |  1 +
+>  t/t3507-cherry-pick-conflict.sh | 19 +++++++++++++++++++
+>  5 files changed, 53 insertions(+), 4 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 28b81a7e02..9ed60081c1 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -5,6 +5,7 @@
+>  #include "refs.h"
+>  #include "refspec.h"
+>  #include "remote.h"
+> +#include "sequencer.h"
+>  #include "commit.h"
+>  #include "worktree.h"
+>
+> @@ -339,8 +340,10 @@ void create_branch(struct repository *r,
+>
+>  void remove_branch_state(struct repository *r)
 
-The justification for the change reads quite convincing.  Is it
-merely "it is _possible_ ... _could_ show up", though?  The code is
-iterating over the in-core index, so if you add a blob at path F in
-the index then remove that regular file F from the working tree,
-when it is the cache entry for "F"'s turn to get inspected, lstat()
-would say ENOENT, (show_deleted && err) would show tag_removed, and
-ie_modified() gets a garbage &st and ie_match_stat() would say
-"modified", no?  
+This function is also called in git-am, git-rebase and git-checkout.
+While the first two should not be affected, git-checkout can be
+executed while we're in the middle of a cherry-pick or revert. I guess
+that's ok because git-checkout is basically the same as git-reset in
+this case?
 
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 29a8762d4..fc21f4795 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -348,7 +348,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
->  			err = lstat(fullname.buf, &st);
->  			if (show_deleted && err)
->  				show_ce(repo, dir, ce, fullname.buf, tag_removed);
-> -			if (show_modified && ie_modified(repo->index, ce, &st, 0))
-> +			if (show_modified && !err && ie_modified(repo->index, ce, &st, 0))
->  				show_ce(repo, dir, ce, fullname.buf, tag_modified);
->  		}
->  	}
+>  {
+> -       unlink(git_path_cherry_pick_head(r));
+> -       unlink(git_path_revert_head(r));
+> +       if (!unlink(git_path_cherry_pick_head(r)))
+> +               sequencer_post_commit_cleanup();
+> +       if (!unlink(git_path_revert_head(r)))
+> +               sequencer_post_commit_cleanup();
+>         unlink(git_path_merge_head(r));
+>         unlink(git_path_merge_rr(r));
+>         unlink(git_path_merge_msg(r));
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 2986553d5f..422b7d62a5 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1657,8 +1657,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>                 die("%s", err.buf);
+>         }
+>
+> -       unlink(git_path_cherry_pick_head(the_repository));
+> -       unlink(git_path_revert_head(the_repository));
+> +       if (!unlink(git_path_cherry_pick_head(the_repository)))
+> +               sequencer_post_commit_cleanup();
+> +       if (!unlink(git_path_revert_head(the_repository)))
+> +               sequencer_post_commit_cleanup();
+>         unlink(git_path_merge_head(the_repository));
+>         unlink(git_path_merge_msg(the_repository));
+>         unlink(git_path_merge_mode(the_repository));
+> @@ -1678,6 +1680,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>         if (amend && !no_post_rewrite) {
+>                 commit_post_rewrite(the_repository, current_head, &oid);
+>         }
+> +
+>         if (!quiet) {
+>                 unsigned int flags = 0;
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 0db410d590..028699209f 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2220,6 +2220,29 @@ static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
+>         return len;
+>  }
+>
+> +void sequencer_post_commit_cleanup(void)
+> +{
+> +       struct replay_opts opts = REPLAY_OPTS_INIT;
+> +       struct strbuf buf = STRBUF_INIT;
+> +       const char *eol;
+> +       const char *todo_path = git_path_todo_file();
+> +
+> +       if (strbuf_read_file(&buf, todo_path, 0) < 0) {
+> +               if (errno == ENOENT) {
+> +                       return;
+> +               } else {
+> +                       error_errno("unable to open '%s'", todo_path);
 
-And the implementation of the change looks OK.
+_() the string to make it translatable.
 
-I wonder if there is an easy way to cover this with a test or two.
-Wouldn't it be just the matter of doing something like this
+> +                       return;
+> +               }
+> +       }
+> +       /* If there is only one line then we are done */
+> +       eol = strchr(buf.buf, '\n');
+> +       if (!eol || !eol[1])
+> +               sequencer_remove_state(&opts);
 
-	test_expect_success 'allow telling modified and deleted ones apart' '
-		>testfile &&
-		git add testfile &&
-		rm testfile &&
-		echo C testfile >expect &&
-		git ls-files -m -d -t testfile >actual &&
-		test_cmp expect actual
-	'
+Should we say something to let the user know cherry-pick/revert is
+finished? (unless --quiet is specified)
 
-in some existing test file for ls-files, perhaps in t3004 (ls-files-basic)?
-
-I went back to the original discussion of the "BUG" around mid Feb
-2019, and didn't find anybody worried about backward compatibility.
-As "ls-files -[dm...t]" is marked semi-deprecated, perhaps breaking
-the current users does not matter that much ;-)
+> +
+> +       strbuf_release(&buf);
+> +}
+> +
+>  static int read_populate_todo(struct repository *r,
+>                               struct todo_list *todo_list,
+>                               struct replay_opts *opts)
+-- 
+Duy
