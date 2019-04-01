@@ -2,188 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CB0020248
-	for <e@80x24.org>; Mon,  1 Apr 2019 10:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96BE320248
+	for <e@80x24.org>; Mon,  1 Apr 2019 10:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726409AbfDAKJt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 06:09:49 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:37622 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725867AbfDAKJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 06:09:48 -0400
-Received: by mail-io1-f68.google.com with SMTP id x7so7240832ioh.4
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V11Oyxc/OZ7ivz21AogzSQEUVQ21kt1ALIQZ7+xksXU=;
-        b=gozGfvHMo9QR254wFV/Sp2kNoueavDJ4yl1lrEwI3ELk9gAS1OXLZfRZBbIkLOMZkl
-         9BVVB8uxvP5mKru7ygrHXTFQWrbtJ5mlOOqmyOdH43K4N7r33BZNM7tTrehuYUWEYlCd
-         WIOo2sKpSH+ViES5IFVrO4hA6osUdVA09vO/aUHyuUm0wYIPt8UoYa9Mp9vOVExlbweO
-         EULGI8bHraDmrtm+RMnGcUq5Ue4Aw5kaftiJbml+zxRlgrjFF3geIKSVHXhPZqnWk1Ea
-         ZnZijZ6Mvpp85+6kH5TQIUEAk/md438TcDrHreGomWrM0HXkUGnm3jQOHQgltlAHCVI2
-         Grnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V11Oyxc/OZ7ivz21AogzSQEUVQ21kt1ALIQZ7+xksXU=;
-        b=TLH7Nl7FD4XL4E1dDt2qbxAjlcdVHtDGZ8YKzskpp7ZeXiMJ4B886pGiiAoy5+1q9k
-         57tV4vJCixLzNiIwZYi6/96AdLh3s0AwiOrgsTnX3UFYQjWYau/A155XgtCg7/k1+kP+
-         sHcR9eBs3TQpId8q8tMspqvfxpc96l0SGn/i0eds0sTV/MOqppqSTKSCzHXuQ7rI8FhI
-         PSuKHHlV5ELGZwq6Kxk0GXXzlq5YJJNfYSyiA+vOdG5lKEyFNziKc1g8mSV3Q0M9ME1x
-         blO0IrV2o90hOxf/DrNyfTchrY6v/wToLC4mKERcMZN8K94txxVnAx2RAdHFPSiIhxxr
-         ws7g==
-X-Gm-Message-State: APjAAAVbECQXbnYh6U5bmN1RrigG3B+5LvDZPdueN9SKmk6C7WeVbHiT
-        Rp54yeejaFyggD5u9tow4qPjXEH/qMBwfnt7FE0=
-X-Google-Smtp-Source: APXvYqxffFrEGZtnUBdzfSmCnAjfe1igA63dA4yCnBPCjYlqPEypy1kAZpJu+6QLCV5OlJct7pwpVAMYEPAyca/dBV0=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr17129253ioa.282.1554113387705;
- Mon, 01 Apr 2019 03:09:47 -0700 (PDT)
+        id S1725991AbfDAKL7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 06:11:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42684 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725867AbfDAKL7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 06:11:59 -0400
+Received: (qmail 23568 invoked by uid 109); 1 Apr 2019 10:11:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 01 Apr 2019 10:11:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11082 invoked by uid 111); 1 Apr 2019 10:12:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 01 Apr 2019 06:12:24 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 01 Apr 2019 06:11:57 -0400
+Date:   Mon, 1 Apr 2019 06:11:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] mailinfo: support Unicode scissors
+Message-ID: <20190401101156.GA1131@sigill.intra.peff.net>
+References: <20190331220104.31628-1-rybak.a.v@gmail.com>
+ <20190331230947.GI32732@szeder.dev>
 MIME-Version: 1.0
-References: <20190329163009.493-1-phillip.wood123@gmail.com> <20190329163009.493-2-phillip.wood123@gmail.com>
-In-Reply-To: <20190329163009.493-2-phillip.wood123@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 1 Apr 2019 17:09:21 +0700
-Message-ID: <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] commit/reset: try to clean up sequencer state
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190331230947.GI32732@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 29, 2019 at 11:32 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> When cherry-picking or reverting a sequence of commits and if the final
-> pick/revert has conflicts and the user uses `git commit` to commit the
-> conflict resolution and does not run `git cherry-pick --continue` then
-> the sequencer state is left behind. This can cause problems later. In my
-> case I cherry-picked a sequence of commits the last one of which I
-> committed with `git commit` after resolving some conflicts, then a while
-> later, on a different branch I aborted a revert which rewound my HEAD to
-> the end of the cherry-pick sequence on the previous branch. Avoid this
-> potential problem by removing the sequencer state if we're committing or
-> resetting the final pick in a sequence.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  branch.c                        |  7 +++++--
->  builtin/commit.c                |  7 +++++--
->  sequencer.c                     | 23 +++++++++++++++++++++++
->  sequencer.h                     |  1 +
->  t/t3507-cherry-pick-conflict.sh | 19 +++++++++++++++++++
->  5 files changed, 53 insertions(+), 4 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 28b81a7e02..9ed60081c1 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -5,6 +5,7 @@
->  #include "refs.h"
->  #include "refspec.h"
->  #include "remote.h"
-> +#include "sequencer.h"
->  #include "commit.h"
->  #include "worktree.h"
->
-> @@ -339,8 +340,10 @@ void create_branch(struct repository *r,
->
->  void remove_branch_state(struct repository *r)
+On Mon, Apr 01, 2019 at 01:09:47AM +0200, SZEDER Gábor wrote:
 
-This function is also called in git-am, git-rebase and git-checkout.
-While the first two should not be affected, git-checkout can be
-executed while we're in the middle of a cherry-pick or revert. I guess
-that's ok because git-checkout is basically the same as git-reset in
-this case?
+> On Mon, Apr 01, 2019 at 12:01:04AM +0200, Andrei Rybak wrote:
+> > diff --git a/mailinfo.c b/mailinfo.c
+> > index b395adbdf2..4ef6cdee85 100644
+> > --- a/mailinfo.c
+> > +++ b/mailinfo.c
+> > @@ -701,6 +701,13 @@ static int is_scissors_line(const char *line)
+> >  			c++;
+> >  			continue;
+> >  		}
+> > +		if (!memcmp(c, "✂", 3)) {
+> 
+> This character is tiny.  Please add a comment that it's supposed to be
+> a Unicode scissors character.
 
->  {
-> -       unlink(git_path_cherry_pick_head(r));
-> -       unlink(git_path_revert_head(r));
-> +       if (!unlink(git_path_cherry_pick_head(r)))
-> +               sequencer_post_commit_cleanup();
-> +       if (!unlink(git_path_revert_head(r)))
-> +               sequencer_post_commit_cleanup();
->         unlink(git_path_merge_head(r));
->         unlink(git_path_merge_rr(r));
->         unlink(git_path_merge_msg(r));
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 2986553d5f..422b7d62a5 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1657,8 +1657,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->                 die("%s", err.buf);
->         }
->
-> -       unlink(git_path_cherry_pick_head(the_repository));
-> -       unlink(git_path_revert_head(the_repository));
-> +       if (!unlink(git_path_cherry_pick_head(the_repository)))
-> +               sequencer_post_commit_cleanup();
-> +       if (!unlink(git_path_revert_head(the_repository)))
-> +               sequencer_post_commit_cleanup();
->         unlink(git_path_merge_head(the_repository));
->         unlink(git_path_merge_msg(the_repository));
->         unlink(git_path_merge_mode(the_repository));
-> @@ -1678,6 +1680,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->         if (amend && !no_post_rewrite) {
->                 commit_post_rewrite(the_repository, current_head, &oid);
->         }
-> +
->         if (!quiet) {
->                 unsigned int flags = 0;
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 0db410d590..028699209f 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2220,6 +2220,29 @@ static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
->         return len;
->  }
->
-> +void sequencer_post_commit_cleanup(void)
-> +{
-> +       struct replay_opts opts = REPLAY_OPTS_INIT;
-> +       struct strbuf buf = STRBUF_INIT;
-> +       const char *eol;
-> +       const char *todo_path = git_path_todo_file();
-> +
-> +       if (strbuf_read_file(&buf, todo_path, 0) < 0) {
-> +               if (errno == ENOENT) {
-> +                       return;
-> +               } else {
-> +                       error_errno("unable to open '%s'", todo_path);
+I think it might also be the first raw UTF-8 character in our source,
+which is otherwise ASCII. Usually we'd spell out the binary (with a
+comment).
 
-_() the string to make it translatable.
+I think I agree with Junio's response, tough, that this is probably not
+a road we want to go down, unless this micro-format is being actively
+used in the wild (I have no idea, but I have never seen it).
 
-> +                       return;
-> +               }
-> +       }
-> +       /* If there is only one line then we are done */
-> +       eol = strchr(buf.buf, '\n');
-> +       if (!eol || !eol[1])
-> +               sequencer_remove_state(&opts);
+> Should we worry about this memcmp() potentially reading past the end
+> of the string when 'c' points to the last character?
 
-Should we say something to let the user know cherry-pick/revert is
-finished? (unless --quiet is specified)
+I also wondered if the existing memcmps for ">8", etc, would have this
+problem. They don't, but it's somewhat subtle. They are only 2
+characters long, and the outer loop guarantees we have at least 1
+character. So at most we will look at the NUL. But obviously a 3-byte
+sequence like this may invoke undefined behavior, and the existing
+memcmps encourage anybody adding code to do it wrong.
 
-> +
-> +       strbuf_release(&buf);
-> +}
-> +
->  static int read_populate_todo(struct repository *r,
->                               struct todo_list *todo_list,
->                               struct replay_opts *opts)
--- 
-Duy
+I wonder if it's worth re-writing it like:
+
+diff --git a/mailinfo.c b/mailinfo.c
+index b395adbdf2..46b1b2a4a8 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -693,8 +693,8 @@ static int is_scissors_line(const char *line)
+ 			perforation++;
+ 			continue;
+ 		}
+-		if ((!memcmp(c, ">8", 2) || !memcmp(c, "8<", 2) ||
+-		     !memcmp(c, ">%", 2) || !memcmp(c, "%<", 2))) {
++		if ((starts_with(c, ">8") || starts_with(c, "8<") ||
++		     starts_with(c, ">%") || starts_with(c, "%<"))) {
+ 			in_perforation = 1;
+ 			perforation += 2;
+ 			scissors += 2;
+
+-Peff
