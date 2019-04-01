@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF5D620248
-	for <e@80x24.org>; Mon,  1 Apr 2019 10:46:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AEB620248
+	for <e@80x24.org>; Mon,  1 Apr 2019 10:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbfDAKqF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 06:46:05 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35752 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbfDAKqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 06:46:04 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y197so10798337wmd.0
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:46:03 -0700 (PDT)
+        id S1726183AbfDAKrS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 06:47:18 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38795 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfDAKrS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 06:47:18 -0400
+Received: by mail-wm1-f65.google.com with SMTP id w15so10793708wmc.3
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=29ONbGJgwUloBdy76rVlDHNiaSt5KQVBoXOYZAnovRQ=;
-        b=SBs8f7iQCzf1DGttEb3LIpuB57oE2gsvYYoVZeyIT3uKLUOYQbSuzppF4O1Y6SNNcD
-         SwLVrRzDANg9hUWMKah9WdvyhAZX4njx5xvpCawZjMHm6YhdovWlPyTlmNBEugMqvAgM
-         ghTaZAcriYoCXg6j64nVJxZS/n9qAIC+jza/W/2bTHBjASRn1/pJlVJ4ij8cfi2+uNos
-         Zu+jMHkqNmaP6YI78oUea/3ERzXFkyyo5aSqLucPCFCy4e6XzimSUvXyGsYp7QwEcdQA
-         2CYn+FSpwDE16/QnrIl2k3bD8vVbb407tWj2PJGORfvn8MjOa2hn8DWr8r54p/IM1DFo
-         J0CA==
+        bh=eHCIxRB0PCB2p/0Fr4re1zh7CqSxoe+RroVrhUJxjnU=;
+        b=lXMxczJXlTZNdqTgyguVJQLFKTnmGwcgxNRRTjD6ASl4C0iTeDbKDXlYW2qIxpi9PI
+         NT8FfrTP1t5Cgz7x8XqC36uMHy1gphEMGaI09bHYtiHt7TLxCCo0pBGk/nmFyDy2qIs4
+         d+sd5dBFDDiwsGdhETaX0oPOYDk+kxYIK6RcYYjPBMhPRoZFa7cqcGu0Bl+pLgxIxH07
+         pgfWnYDS0GqI2NMUGlcQWH9ewkrAuFUWq2/rw5m4iKiH81K87yiQtlu2bb1cZ9wJ82pj
+         FYr2pUmnbqFgHo6eOXVD6CO4fC9aB73C3HCj9eFpeX1thZ+Ps2n7Wm007YKArIUCBRN3
+         8/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=29ONbGJgwUloBdy76rVlDHNiaSt5KQVBoXOYZAnovRQ=;
-        b=cc98b63L4OuL0AyX8V0Ga2W8jt/Pq8C8BQKHxGGktTGKofNnnzwxpEVVKM2XadgJpg
-         eux6hCTDOdB0iAbSVVvrT0ilJJnBKq30hBlfGBM1PoM8JkITjC1NbfqG2QrRErJZqfm0
-         YczEY8CrTi03I+y3EsOJsbGUvE6LM/dcKbU3OZpl+5Nqe5cl6zfFYVpHKCBvE8rp6ft0
-         8Q03V9OFiCvxgJPaWOOx782syOdDRFAWgiPbvI9JoVycmQw7KMT2PBXRnIhH63ZmraTr
-         w5bhGN6MumgWEv48j7JiPt26INdJr54NpXNtrB87PYq7xk0sTFv5nJjzJJbmXYAh+rYx
-         B5qQ==
-X-Gm-Message-State: APjAAAWpjDXvy2iYhLpnhsQtlla0Ac88a+SPia5B1fgSvaMJOkTt8qbH
-        eadDrIEZXgMUxa4e/fupS/qGQrplNuw=
-X-Google-Smtp-Source: APXvYqyd8TtUlVgX1wPyKEEjLQk1dOHIi1ZE07IG418CL24WdaHgEJYUqkX2FuIs+gagSY4YxpWyvQ==
-X-Received: by 2002:a1c:40d6:: with SMTP id n205mr12074298wma.140.1554115562702;
-        Mon, 01 Apr 2019 03:46:02 -0700 (PDT)
+        bh=eHCIxRB0PCB2p/0Fr4re1zh7CqSxoe+RroVrhUJxjnU=;
+        b=ct/1yTB818PI6mkrfBgvbKaL6H60Njf19L3TEK72hLunL8RXeFotFe4q+YUyDjyuHU
+         4f36lJ35Vl+NV/1LikukYJOTK8h2mCFDRVxj/X9fZG2PsjocI5nXGf5gOC3COQmtRFKf
+         a5lHPxsH8XDmnMCQaIqCKCfIWMJiI2lwHa/RO/csRG6VH6hltxzfXzyIcyb7oqUYYSGy
+         DV7xgs7xaeaMsUE4FwJtUNL0N7drdzsk3+KqEU21bnPr0gzfzDsazyhingy1uEkuHSaF
+         py5lcZhJlvFBs7efLTVWjF1PpVUDjaBNRDtxGGd9HRK1oXcK7fPcZRVPvhbq6OiLu1hu
+         ANIw==
+X-Gm-Message-State: APjAAAV8Ls8E0llbadGPfk9jZUOtmbtIvMcDqN/I3hCp3A9558mMUqkn
+        X3MCzdH+ITWlhwS0S6cdhQc=
+X-Google-Smtp-Source: APXvYqyp2yBoNaiKGN2BKsB+VojIwAYsdLXoMFhkSu4gposhckLEEjWV1YlNASS6tG6cEobStTYT7A==
+X-Received: by 2002:a1c:7ec2:: with SMTP id z185mr13009131wmc.69.1554115636236;
+        Mon, 01 Apr 2019 03:47:16 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 13sm10543229wmf.23.2019.04.01.03.46.01
+        by smtp.gmail.com with ESMTPSA id y127sm8812706wmg.29.2019.04.01.03.47.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Apr 2019 03:46:02 -0700 (PDT)
+        Mon, 01 Apr 2019 03:47:15 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] rebase: teach rebase --keep-base
-References: <cover.1553354374.git.liu.denton@gmail.com>
-        <20190328221745.GA3941@dev-l>
-        <nycvar.QRO.7.76.6.1903291643060.41@tvgsbejvaqbjf.bet>
-Date:   Mon, 01 Apr 2019 19:46:01 +0900
-Message-ID: <xmqq1s2mvw9i.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH 1/2] parse-options: allow for configuring option abbreviation
+References: <pull.167.git.gitgitgadget@gmail.com>
+        <20190325202329.26033-2-avarab@gmail.com>
+        <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com>
+Date:   Mon, 01 Apr 2019 19:47:14 +0900
+Message-ID: <xmqqtvfiuhn1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,22 +69,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Hi Denton,
+> I don't get why having a configuration option is better for defending
+> scripts against this problem than a simple environment variable. It
+> seems easier for the script prologue to contain:
 >
-> On Thu, 28 Mar 2019, Denton Liu wrote:
+>     GIT_TEST_ABBREVIATED_OPTIONS=false
+>     export GIT_TEST_ABBREVIATED_OPTIONS
 >
->> A common scenario is if a user is working on a topic branch and they
->> wish to make some changes to intermediate commits or autosquash, they
->> would run something such as
->>
->> 	git rebase -i --onto master... master
-> ...
-> I wonder, however, whether it makes sense to introduce a shorter, sweeter
-> way to do this:
->
-> 		git rebase -i master...
+> than for it to muck about with git-config or use "git -c
+> core.abbreviatedOptions=false ..." everywhere. The commit message
+> doesn't do a good enough job of justifying the configuration option
+> over the environment variable.
 
-I agree that this is very tempting, as it mimicks "git checkout
-master...".  But as Denton responds, it is not quite the same, so...
+Absolutely.
+
+One thing that big brotherly types would find config attractive is
+to install centrally managed /etc/gitconfig so that they can tell
+the tracing machinery to log all git command invocations centrally;
+with environment only system, it is not easy to arrange.
+
+But this one under discussion is probably a use case that is at the
+other end of the extreme from that.
+
+Users (1) may use scripts written by third-parties, (2) may also
+develop their own scripts, and (3) even may run Git commands
+interactively.
+
+It is a laudable goal to introduce a mechanism to "notice use of
+abbreviated options that happen to be unique right now but may not
+stay unique forever and warn against it".  But (2) among the above
+three uses is the only use case that wants the protection, which
+makes the configuration a poor fit for the purpose.
+
+
+
+
