@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4317D20248
-	for <e@80x24.org>; Mon,  1 Apr 2019 11:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 509F920248
+	for <e@80x24.org>; Mon,  1 Apr 2019 11:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbfDALw3 (ORCPT <rfc822;e@80x24.org>);
+        id S1726843AbfDALw3 (ORCPT <rfc822;e@80x24.org>);
         Mon, 1 Apr 2019 07:52:29 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55986 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726567AbfDALw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 07:52:26 -0400
-Received: by mail-wm1-f68.google.com with SMTP id o25so10070815wmf.5
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 04:52:25 -0700 (PDT)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43115 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfDALw2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 07:52:28 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k17so11594802wrx.10
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 04:52:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m3Tio5fjCwPDnH5z24dGZajGLAF5zsfpLL1cnXKmJWY=;
-        b=EUNAKkqtGq4bPpccCv/qeysnFfcaYDEY/jt/JsQ0iVZL9wLWI/jzMXajJXJdAFyeBa
-         bcDPSBU+aZjgQ4fLVZsAg0+Qssy8XiXB1lb/XhN0MqdCsXSQWWXHCeFY4z3u3Sgvj/4c
-         RJeT0pKTi3yrnqSmadgaJSpmGghEdMGrnsvn02u1t706qr1rPxdeiKWUUYtvwH8INJv7
-         BowNM7rE0JdfsBimK32DQ2n+s4wSh4TRM1ZG1/XzZbU6M4DH/tDmFOpIvDXPrFj4FrjE
-         T7nojz3V1FoOj0Svj349tvokBUEkARggXcrxpZ5xwXBIBzkpIQwRNuo6U5p9AWvYEnhZ
-         QhuQ==
+        bh=Pgw0q6Wuvjq06+I2emdoNnWxe7ebvcI62LtKRQ0d+R0=;
+        b=guPyy8MpNsrpVFws++3Gu/Yda1j/qMcDe+jpm7Nexo+7gMlIffmDNu3mprO3vSmh12
+         BSrH3ZxebKbG6kz62avzUI0KmDPk8Nfg2MqbBBREjg5+SZtcHejHEZYEdxLIL1MHu7Ij
+         z95mS3VfVwafXe46pRorA8EC7rQ+5YuBPSD/62R9dnePdqj569ki4ji1expOnXdyinIZ
+         98DrUrXWmtiXz8C4VtwqmXeJ7Gylbah7Pq/UHiDSQCpbyErzxryNOzoROiONl5sCRmYk
+         3p34MIIgQmzFBPCqEPRBWhPNoaCCghcNkSaO2BDGOdv0cYY97m8SaBEageCoiM62BhX6
+         PR5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m3Tio5fjCwPDnH5z24dGZajGLAF5zsfpLL1cnXKmJWY=;
-        b=sCDr6JFIpAgjkFXChu/8DwsEfNBqk8nzTrmiaAuZWRWH6E7sT2DGey/4HmWQ6zgWZk
-         cyYsYmYPI9DRtozult/QbOY8YpYWOKXSu5k/BoORtPPsEWrWORiZoJWMmqzkow0zs2Ek
-         bwtaYFFvxK6oUVcPg0u514uu5VNY5RDYGSCibMgkOoP6CoZVGAumRzT3Q2nJ0v9nYYnv
-         uXlRcPZyjNV5Sdg3SlM62xAh9LnT/yXIugzXBCbGLW0kjdvcxYlsV77H6xdaMQ4etIrm
-         6v2i84GAaZAzjb7uM4mpJ7uADb1cRlllxDaiXImSCjCR64EKil9tgnZAFpWjS/AWJ8IK
-         ueuQ==
-X-Gm-Message-State: APjAAAVhwIUf4Bh4Rq50V1fdQEZIdRKjkoyRwX/ucfQ6vNq/hE9Jn261
-        R/EWN+a8rdU2COvZ9LtYa1s7kwV8
-X-Google-Smtp-Source: APXvYqzDInJPUcoDbPh88b0haXW+svG6IZwAFrT4fawN7Yg4hMo0c2wVAaTH7Cij8MA5c1RjOtw6Gw==
-X-Received: by 2002:a1c:c101:: with SMTP id r1mr11630809wmf.123.1554119544400;
-        Mon, 01 Apr 2019 04:52:24 -0700 (PDT)
+        bh=Pgw0q6Wuvjq06+I2emdoNnWxe7ebvcI62LtKRQ0d+R0=;
+        b=KghydP6Rbgziw+FrZ8sw3q1Fwv9XICrp5Lm2ZBvHXj/avVGcN86GHCaBU6SijMOM+N
+         PR+TSR3iA0g2Z33RDVDFXHDFfeFsfSfMfrb3OFfCwUJ2Xa363PlAW3HYiuUnGlh69lxs
+         pRTr6o6aj02Red8PhkE0e+DcKYEp/wOUbHrfS0C0WbOfUQ3xlHNMSrEWFoAbgfyrjQkt
+         MvixmKU+b+TsL0RPqRie6krEl4bMn6tCEaHHPvEnCPuJkZUgTIWiULCahx34zXXaWeL3
+         rZbif327x4+h3Fu4YpbbcDZCbiH7DmX+t28ymrUm8p8gopEc3v8oneNJvsxBkuVLQ7sI
+         AE3w==
+X-Gm-Message-State: APjAAAUZlXeYTk6ShjuW8hDQ8RnlNUcQQTjcm33skyhOhgVKWSDGu13A
+        GJylV1zqzg2NsFh2feAabdQ=
+X-Google-Smtp-Source: APXvYqxytAn3zAN5A0+NXK2en0ea9QPGh5Halx8WLQsTvEkZfJYE291+MmovcC7X5Kbuun6W2Rs01w==
+X-Received: by 2002:a5d:6b04:: with SMTP id v4mr2337637wrw.69.1554119546556;
+        Mon, 01 Apr 2019 04:52:26 -0700 (PDT)
 Received: from localhost.localdomain (x4db6660d.dyn.telefonica.de. [77.182.102.13])
-        by smtp.gmail.com with ESMTPSA id f11sm11250970wrm.30.2019.04.01.04.52.23
+        by smtp.gmail.com with ESMTPSA id f11sm11250970wrm.30.2019.04.01.04.52.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 01 Apr 2019 04:52:23 -0700 (PDT)
+        Mon, 01 Apr 2019 04:52:25 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
         Duy Nguyen <pclouds@gmail.com>,
         Luke Mewburn <luke@mewburn.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 2/4] progress: assemble percentage and counters in a strbuf before printing
-Date:   Mon,  1 Apr 2019 13:52:15 +0200
-Message-Id: <20190401115217.3423-3-szeder.dev@gmail.com>
+Subject: [PATCH v2 4/4] progress: break too long progress bar lines
+Date:   Mon,  1 Apr 2019 13:52:17 +0200
+Message-Id: <20190401115217.3423-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
 In-Reply-To: <20190401115217.3423-1-szeder.dev@gmail.com>
 References: <20190325103844.26749-1-szeder.dev@gmail.com>
@@ -71,104 +71,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The following patches in this series want to handle the progress bar's
-title and changing parts (i.e. the counter and the optional percentage
-and throughput combined) differently, and need to know the length
-of the changing parts of the previously displayed progress bar.
+Some of the recently added progress indicators have quite long titles,
+which might be even longer when translated to some languages, and when
+they are shown while operating on bigger repositories, then the
+progress bar grows longer than the default 80 column terminal width.
 
-To prepare for those changes assemble the changing parts in a separate
-strbuf kept in 'struct progress' before printing.
+When the progress bar exceeds the width of the terminal it gets
+line-wrapped, and after that the CR at the end doesn't return to the
+beginning of the progress bar, but to the first column of its last
+line.  Consequently, the first line of the previously shown progress
+bar is not overwritten by the next, and we end up with a bunch of
+truncated progress bar lines scrolling past:
+
+  $ LANG=es_ES.UTF-8 git commit-graph write
+  Encontrando commits para commit graph entre los objetos empaquetados:   2% (1599
+  Encontrando commits para commit graph entre los objetos empaquetados:   3% (1975
+  Encontrando commits para commit graph entre los objetos empaquetados:   4% (2633
+  Encontrando commits para commit graph entre los objetos empaquetados:   5% (3292
+  [...]
+
+Prevent this by breaking progress bars after the title once they
+exceed the width of the terminal, so the counter and optional
+percentage and throughput, i.e. all changing parts, are on the last
+line.  Subsequent updates will from then on only refresh the changing
+parts, but not the title, and it will look like this:
+
+  $ LANG=es_ES.UTF-8 ~/src/git/git commit-graph write
+  Encontrando commits para commit graph entre los objetos empaquetados:
+    100% (6584502/6584502), listo.
+  Calculando números de generación de commit graph: 100% (824705/824705), listo.
+  Escribiendo commit graph en 4 pasos: 100% (3298820/3298820), listo.
+
+Note that the number of columns in the terminal is cached by
+term_columns(), so this might not kick in when it should when a
+terminal window is resized while the operation is running.
+Furthermore, this change won't help if the terminal is so narrow that
+the counters don't fit on one line, but I would put this in the "If it
+hurts, don't do it" box.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- progress.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ progress.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/progress.c b/progress.c
-index 02a20e7d58..842db14b72 100644
+index 3149ecd460..e28ccdafd2 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -36,6 +36,7 @@ struct progress {
- 	unsigned delay;
+@@ -8,11 +8,12 @@
+  * published by the Free Software Foundation.
+  */
+ 
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "gettext.h"
+ #include "progress.h"
+ #include "strbuf.h"
+ #include "trace.h"
++#include "utf8.h"
+ 
+ #define TP_IDX_MAX      8
+ 
+@@ -37,6 +38,8 @@ struct progress {
  	struct throughput *throughput;
  	uint64_t start_ns;
-+	struct strbuf counters_sb;
+ 	struct strbuf counters_sb;
++	int title_len;
++	int split;
  };
  
  static volatile sig_atomic_t progress_update;
-@@ -80,36 +81,42 @@ static int is_foreground_fd(int fd)
- 
- static void display(struct progress *progress, uint64_t n, const char *done)
- {
--	const char *eol, *tp;
-+	const char *tp;
-+	struct strbuf *counters_sb = &progress->counters_sb;
-+	int show_update = 0;
- 
- 	if (progress->delay && (!progress_update || --progress->delay))
- 		return;
- 
- 	progress->last_value = n;
- 	tp = (progress->throughput) ? progress->throughput->display.buf : "";
--	eol = done ? done : "   \r";
- 	if (progress->total) {
- 		unsigned percent = n * 100 / progress->total;
- 		if (percent != progress->last_percent || progress_update) {
- 			progress->last_percent = percent;
--			if (is_foreground_fd(fileno(stderr)) || done) {
--				fprintf(stderr, "%s: %3u%% (%"PRIuMAX"/%"PRIuMAX")%s%s",
--					progress->title, percent,
--					(uintmax_t)n, (uintmax_t)progress->total,
--					tp, eol);
--				fflush(stderr);
--			}
--			progress_update = 0;
--			return;
+@@ -114,8 +117,24 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 			const char *eol = done ? done : "\r";
+ 			int clear_len = counters_sb->len < last_count_len ?
+ 					last_count_len - counters_sb->len : 0;
+-			fprintf(stderr, "%s: %s%-*s", progress->title,
+-				counters_sb->buf, clear_len, eol);
++			int progress_line_len = progress->title_len +
++						counters_sb->len + 2;
++			int cols = term_columns();
 +
-+			strbuf_reset(counters_sb);
-+			strbuf_addf(counters_sb,
-+				    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
-+				    (uintmax_t)n, (uintmax_t)progress->total,
-+				    tp);
-+			show_update = 1;
- 		}
- 	} else if (progress_update) {
-+		strbuf_reset(counters_sb);
-+		strbuf_addf(counters_sb, "%"PRIuMAX"%s", (uintmax_t)n, tp);
-+		show_update = 1;
-+	}
-+
-+	if (show_update) {
- 		if (is_foreground_fd(fileno(stderr)) || done) {
--			fprintf(stderr, "%s: %"PRIuMAX"%s%s",
--				progress->title, (uintmax_t)n, tp, eol);
-+			const char *eol = done ? done : "   \r";
-+
-+			fprintf(stderr, "%s: %s%s", progress->title,
-+				counters_sb->buf, eol);
++			if (progress->split) {
++				fprintf(stderr, "  %s%-*s", counters_sb->buf,
++					clear_len, eol);
++			} else if (!done && cols < progress_line_len) {
++				clear_len = progress->title_len + 1 < cols ?
++					    cols - progress->title_len - 1 : 0;
++				fprintf(stderr, "%s:%*s\n  %s%s",
++					progress->title, clear_len, "",
++					counters_sb->buf, eol);
++				progress->split = 1;
++			} else {
++				fprintf(stderr, "%s: %s%-*s", progress->title,
++					counters_sb->buf, clear_len, eol);
++			}
  			fflush(stderr);
  		}
  		progress_update = 0;
--		return;
- 	}
- 
- 	return;
-@@ -211,6 +218,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
- 	progress->delay = delay;
+@@ -221,6 +240,8 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
  	progress->throughput = NULL;
  	progress->start_ns = getnanotime();
-+	strbuf_init(&progress->counters_sb, 0);
+ 	strbuf_init(&progress->counters_sb, 0);
++	progress->title_len = utf8_strwidth(title);
++	progress->split = 0;
  	set_progress_signal();
  	return progress;
  }
-@@ -254,6 +262,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 		free(buf);
- 	}
- 	clear_progress_signal();
-+	strbuf_release(&progress->counters_sb);
- 	if (progress->throughput)
- 		strbuf_release(&progress->throughput->display);
- 	free(progress->throughput);
 -- 
 2.21.0.539.g07239c3a71.dirty
 
