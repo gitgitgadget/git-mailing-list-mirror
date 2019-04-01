@@ -2,153 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A11C720248
-	for <e@80x24.org>; Mon,  1 Apr 2019 03:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0FE20248
+	for <e@80x24.org>; Mon,  1 Apr 2019 06:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731671AbfDAD7t (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Mar 2019 23:59:49 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:55176 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731476AbfDAD7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Mar 2019 23:59:49 -0400
-Received: by mail-it1-f195.google.com with SMTP id n78so2129906itb.4
-        for <git@vger.kernel.org>; Sun, 31 Mar 2019 20:59:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=q6ljYzk3S+xfogzKXKolR65SzMozEemWnkJemI+lY7c=;
-        b=Qc+3Hq76oYzCnFM1avad6lMwHomjckiPj/q98nSTA1avhGNoCL+iGI+2PlcSZgRSxC
-         UCY/ZHrk2YXefRepj9zOGNpDMdQIRzfblYdNh9owAwVIMQPCr/3X+InGVEXGnisOecnC
-         p+fAKFpQYLs/7b7QPiv9fUAGi8GGTs7qpa3g0lUiWRxyIfIO+4hWav4daBKqMqyVVIFg
-         XZ5wLcNC9Moxko0Q7OmaQbT+YeDVD6Kt5IqEkVhl2nskfjQ1Y8KeNowTGVbqNea8Z0ms
-         K0RnE+QHU5ztJf/7IHT4Jxc87DpTzBgkb1+ROqA9BSBORHtVFE8GS+s8GBcDECMFKNjD
-         pNvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=q6ljYzk3S+xfogzKXKolR65SzMozEemWnkJemI+lY7c=;
-        b=FmMMD8HYEKkl9uC5L68mfPuLuwByrwHPjXJZ/cf23m0dvA91zpN9R0vW4Xrq48Xpkd
-         L6TdH4YQiMdaBMJVy98dN66LEyHe7CEeDbUtmXcb0Ft0BN7pya3ei1tdsKBovnjg9c6O
-         Ky9u6x+kaAoH5kj9zHr7aOiDG//R9XwE8FXSo7w+Yuhwu/XR6nDObRaOO0K6zo1dbY9X
-         FAEoCo9jSCD/w3vzcG5EBz1pFicYgmKRSSIJuTjeewlHy2w9RfKz6GsURxQViw8Dglel
-         2Nvaf+nHK20ggCNMHZmaz9qpFR3GsRVjwTe8iv25fwGMUGcTHB/9S1v+qwFlYkuIEbYr
-         M9Xg==
-X-Gm-Message-State: APjAAAVfR9wRMJCQN63Wd9iaIzfdUixHZid8anxv55337MX3qSuZl+3N
-        CQrXcfrRTz2cbAh+MmOgjmvlxe4sGyNdFlhu984IOA==
-X-Google-Smtp-Source: APXvYqzR5q+xnM70PJ0PN/yPFv6KGN+amK2ALnwnXk7MZBlktb4e2TEbmdPP3/eXzmQKj5FT3xyWkhDkuYwyelbNa/M=
-X-Received: by 2002:a24:4682:: with SMTP id j124mr10312514itb.90.1554091188342;
- Sun, 31 Mar 2019 20:59:48 -0700 (PDT)
+        id S1726530AbfDAGUd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 02:20:33 -0400
+Received: from mail.bs-ag.com ([188.21.13.130]:60409 "EHLO mail.bs-ag.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726206AbfDAGUd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 02:20:33 -0400
+Received: from mail.bs-ag.com (mail.bs-ag.com [127.0.0.1])
+        by mail.bs-ag.com (Postfix) with ESMTP id B9609148;
+        Mon,  1 Apr 2019 08:20:30 +0200 (CEST)
+Received: from BSEDGE02.bsbanksysteme.com (bsedge02.bsbanksysteme.com [192.168.12.70])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.bs-ag.com (Postfix) with ESMTPS id 68E09148;
+        Mon,  1 Apr 2019 08:20:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bs-ag.com; s=mail;
+        t=1554099630; bh=LgWSa1aWZpc+7TpLBluD2C2CRlbGJLJKRef1vddSXaw=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=SxrjNeuQ0aTOK6CqxcfxKPrfpFMiI/Y96usCBwm6b7rzHPymv15bwPSa8q1ygX5Vn
+         ISF2GCODFc5QH/zm0KH+X5jd75//p+hMTXAGAGiP2aFYvkcJ3dFlD+cF307XEsYkVJ
+         buRYugung6KqCMEoF+d6lxLVKrQf52lV448sfi0E=
+Received: from BSMAIL04.bsbanksysteme.com (192.168.61.4) by
+ BSEDGE02.bsbanksysteme.com (192.168.12.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Mon, 1 Apr 2019 08:19:59 +0200
+Received: from BSMAIL03.bsbanksysteme.com (192.168.61.3) by
+ BSMAIL04.bsbanksysteme.com (192.168.61.4) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Mon, 1 Apr 2019 08:20:30 +0200
+Received: from BSMAIL03.bsbanksysteme.com ([fe80::7caf:3000:a4ad:8b1e]) by
+ BSMAIL03.bsbanksysteme.com ([fe80::7caf:3000:a4ad:8b1e%3]) with mapi id
+ 15.01.1531.010; Mon, 1 Apr 2019 08:20:30 +0200
+From:   Kurt Ablinger <kurt.ablinger@bs-ag.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: AW: Problem with filename containing '?'
+Thread-Topic: Problem with filename containing '?'
+Thread-Index: AdTmMDmLpwQZ0+zUTtiuFmuefskE2///9t6A//u1TIA=
+Date:   Mon, 1 Apr 2019 06:20:29 +0000
+Message-ID: <5b0bf4aab0e443408675e53ba2d39f62@bs-ag.com>
+References: <1c1c5d858d8b431fb96b1d48044c00b7@bs-ag.com>
+ <20190329133349.GA21802@sigill.intra.peff.net>
+In-Reply-To: <20190329133349.GA21802@sigill.intra.peff.net>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.61.246]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190330224907.3277-1-matheus.bernardino@usp.br> <20190330224907.3277-3-matheus.bernardino@usp.br>
- <20190331174038.GS32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190331174038.GS32487@hank.intra.tgummerer.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 1 Apr 2019 00:59:36 -0300
-Message-ID: <CAHd-oW5+GuSerJMD9XAdCNEFa1qXZFtD=Tov0EyRAn4Hckw9Fw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 2/7] clone: better handle symlinked files at .git/objects/
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-EndpointSecurity-0xde81-EV: v:6.6.9.134, d:out, a:y, w:t, t:32, sv:1554089354, ts:1554099599
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 31, 2019 at 2:40 PM Thomas Gummerer <t.gummerer@gmail.com> wrot=
-e:
->
-> On 03/30, Matheus Tavares wrote:
-> > There is currently an odd behaviour when locally cloning a repository
-> > with symlinks at .git/objects: using --no-hardlinks all symlinks are
-> > dereferenced but without it, Git will try to hardlink the files with th=
-e
-> > link() function, which has an OS-specific behaviour on symlinks. On OSX
-> > and NetBSD, it creates a hardlink to the file pointed by the symlink
-> > whilst on GNU/Linux, it creates a hardlink to the symlink itself.
-> >
-> > On Manjaro GNU/Linux:
-> >     $ touch a
-> >     $ ln -s a b
-> >     $ link b c
-> >     $ ls -li a b c
-> >     155 [...] a
-> >     156 [...] b -> a
-> >     156 [...] c -> a
-> >
-> > But on NetBSD:
-> >     $ ls -li a b c
-> >     2609160 [...] a
-> >     2609164 [...] b -> a
-> >     2609160 [...] c
-> >
-> > It's not good to have the result of a local clone to be OS-dependent an=
-d
-> > besides that, the current behaviour on GNU/Linux may result in broken
-> > symlinks. So let's standardize this by making the hardlinks always poin=
-t
-> > to dereferenced paths, instead of the symlinks themselves. Also, add
-> > tests for symlinked files at .git/objects/.
-> >
-> > Note: Git won't create symlinks at .git/objects itself, but it's better
-> > to handle this case and be friendly with users who manually create them=
-.
-> >
-> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> > Co-authored-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> > ---
-> >  builtin/clone.c            |  5 ++++-
-> >  t/t5604-clone-reference.sh | 27 ++++++++++++++++++++-------
-> >  2 files changed, 24 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 50bde99618..f975b509f1 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -443,7 +443,10 @@ static void copy_or_link_directory(struct strbuf *=
-src, struct strbuf *dest,
-> >               if (unlink(dest->buf) && errno !=3D ENOENT)
-> >                       die_errno(_("failed to unlink '%s'"), dest->buf);
-> >               if (!option_no_hardlinks) {
-> > -                     if (!link(src->buf, dest->buf))
-> > +                     char *resolved_path =3D real_pathdup(src->buf, 1)=
-;
-> > +                     int status =3D link(resolved_path, dest->buf);
-> > +                     free(resolved_path);
-> > +                     if (!status)
->
-> Is there any reason why we can't use 'real_path()' here?  As I
-> mentioned in [*1*], 'real_path()' doesn't require the callers to free
-> any memory, so the above could become much simpler, and could just be
->
-> +                       if (!link(real_path(src->buf), dest->buf))
->
-
-Yes, you are right. I will change this! I sent this v5 before
-carefully reading your previous email and studding strbuf functions
-and real_path(), now that I did that, I see that real_path() is the
-best option here. Thanks!
-
-> *1*: <20190330192738.GQ32487@hank.intra.tgummerer.com>
->
-> >                               continue;
-> >                       if (option_local > 0)
-> >                               die_errno(_("failed to create link '%s'")=
-, dest->buf);
+R29vZCBtb3JuaW5nLA0KDQpzb3JyeSB0byB3YXN0ZSB5b3VyIHRpbWUgLSBteSBjaGVjayB3YXMg
+aW5jb21wbGV0ZSAtIHRoZSBmaWxlIGluIHF1ZXN0aW9uIGlzIHRoZXJlLg0KDQpCdXQgdGhlIHBy
+b2JsZW0gd2l0aCBlR2l0L2pHaXQgb24gV2luZG93cyAoRWNsaXBzZSkgcGVyc2lzdHMuIEkgZGlk
+IG5vdCBjaGVjayBqR2l0IGluIGxpbnV4Lg0KDQpUaGUgcHJvYmxlbSBzZWVtcyB0byBiZSwgdGhh
+dCBsaW51eCBhY2NlcHRzID8gaW4gZmlsZW5hbWVzIC0gYnV0IHdpbmRvd3MgZG9lcyBub3QgLSBz
+byBubyBwcm9ibGVtIHdpdCBnaXQgKG5hdGl2ZSBvciBqYXZhKS4NCg0KQW55d2F5IC0gbWF5YmUg
+dGhpcyBjb3VsZCBiZSBhbiBvcHRpb24gZm9yIGEgZnV0dXJlIHZlcnNpb24gb2YgZ2l0Og0KDQoJ
+YWNjZXB0IG9ubHkgJ2NvbXBhdGlibGUnIGZpbGUvcGF0aC1uYW1lcw0Kb3INCgl2YWxpZCBmaWxl
+L3BhdGgtbmFtZS1wYXR0ZXJuDQoNCnRoaXMgY291bGQgYmUgdXNlZnVsIGZvciB1c2FnZSBvbiBk
+aWZmZXJlbnQgcGxhdGZvcm1zLg0KDQpTb3JyeSBhZ2FpbiwgdGhhbmtzIGFuZCBncmVldGluZ3MN
+Ckt1cnQNCg0KDQotLS0tLVVyc3Byw7xuZ2xpY2hlIE5hY2hyaWNodC0tLS0tDQpWb246IEplZmYg
+S2luZyA8cGVmZkBwZWZmLm5ldD4gDQpHZXNlbmRldDogRnJlaXRhZywgMjkuIE3DpHJ6IDIwMTkg
+MTQ6MzQNCkFuOiBLdXJ0IEFibGluZ2VyIDxrdXJ0LmFibGluZ2VyQGJzLWFnLmNvbT4NCkNjOiBn
+aXRAdmdlci5rZXJuZWwub3JnDQpCZXRyZWZmOiBSZTogUHJvYmxlbSB3aXRoIGZpbGVuYW1lIGNv
+bnRhaW5pbmcgJz8nDQoNCk9uIEZyaSwgTWFyIDI5LCAyMDE5IGF0IDAxOjEwOjE5UE0gKzAwMDAs
+IEt1cnQgQWJsaW5nZXIgd3JvdGU6DQoNCj4gaW4gTGludXggdGhlIGdpdC1jbGllbnQgYWNjZXB0
+cyAoYWRkLCBjb21taXQsIHB1c2gpIGZpbGVzIHdpdGggJz8nIChxdWVzdGlvbm1hcmspICBpbiBp
+dHMgbmFtZS4NCj4gDQo+IFdoZW4gY2xvbmluZyBzdWNoIGEgcmVwb3NpdG9yeSBpbnRvIEVjbGlw
+c2UgKGVHaXQvakdpdCkgdGhlIA0KPiByZXBvc2l0b3J5LWNsb25lIGlzIHJlamVjdGVkIHdpdGgg
+YW4gJ0ludmFsaWQgUGF0aCctbWVzc2FnZSB3aXRoIHRoZSANCj4gPy1maWxlbmFtZS4NCj4gDQo+
+IFVuZGVyIExpbnV4IGl0IGlzIHBvc3NpYmxlIHRvIGNyZWF0ZSBhIGNsb25lICh0aGUgc2FtZSBn
+aXQtYmluYXJ5IHVzZWQgDQo+IHRvIGNoZWNraW4gdGhlID8tZmlsZSkgd2l0aG91dCBhbnkgbWVz
+c2FnZS4NCj4gQnV0IHRoZSBkaXJlY3RvcnkgY29udGFpbmluZyB0aGUgPy1maWxlIGlzIHNpbGVu
+dGx5IGRpc2NhcmRlZCB3aGF0ZXZlciANCj4geW91IGNoZWNrb3V0IChtYXN0ZXIvSEVBRCwgZmly
+c3Qgb3IgYW55IG90aGVyIGNvbW1pdCBjb250YWluaW5nIHRoaXMgDQo+IGZpbGUpLg0KDQpJdCBz
+ZWVtcyB0byB3b3JrIGZpbmUgZm9yIG1lIHdpdGggYSBmZXcgc2ltcGxlIGV4ZXJjaXNlczoNCg0K
+ICBnaXQgaW5pdCByZXBvDQogIGNkIHJlcG8NCiAgbWtkaXIgc3ViZGlyDQogIGVjaG8gZm9vID4n
+c3ViZGlyL2Jhcj8nDQogIGdpdCBhZGQgLg0KICBnaXQgY29tbWl0IC1tICdmaWxlIHdpdGggcXVl
+c3Rpb24gbWFyayBpbiBuYW1lJw0KDQogIGdpdCBjbG9uZSAtLW5vLWxvY2FsIC4gY2hpbGQNCiAg
+Y2QgY2hpbGQNCiAgbHMgLWwNCiAgZWNobyBjaGFuZ2VzID4nc3ViZGlyL2Jhcj8nDQogIGdpdCBj
+b21taXQgLWFtICdjaGFuZ2VzJw0KICBnaXQgc2hvdw0KDQpJdCBhbHNvIHNlZW1zIHRvIGNsb25l
+IGZpbmUgd2l0aCBqZ2l0Og0KDQogIGpnaXQgY2xvbmUgJFBXRC9yZXBvIGpnaXQtY2xvbmUNCg0K
+Q2FuIHlvdSBzaG93IHVzIG1vcmUgZXhhY3RseSB3aGF0IHlvdSdyZSBydW5uaW5nLCBhbmQgd2hh
+dCBkb2Vzbid0IHdvcms/DQoNCkFsc28sIG9uZSBvdGhlciBxdWVzdGlvbjogYXJlIHlvdSBzdXJl
+IGl0J3MgYWN0dWFsbHkgYSBxdWVzdGlvbiBtYXJrIGluIHRoZSBuYW1lPyBJZiB0aGVyZSBhcmUg
+bm9uLWFzY2lpIGdhcmJhZ2UgY2hhcmFjdGVycywgImxzIiB3aWxsIHR5cGljYWxseSBzaG93IGEg
+cXVlc3Rpb24gbWFyayB3aGVuIG91dHB1dCBpcyBnb2luZyB0byB0aGUgdGVybWluYWwuIEUuZy46
+DQoNCiAgJCBlY2hvIGZvbyA+IiQocHJpbnRmICdmdW5ueVwxY2hhcicpIg0KICAkIGxzDQogIGZ1
+bm55P2NoYXINCiAgJCBscyB8IGNhdCAtQQ0KICBmdW5ueV5BY2hhciQNCiAgJCBscyB8IHh4ZA0K
+ICAwMDAwMDAwMDogNjY3NSA2ZTZlIDc5MDEgNjM2OCA2MTcyIDBhICAgICAgICAgICAgICBmdW5u
+eS5jaGFyLg0KDQpJZiBpdCdzIHNvbWUgbW9yZSBleG90aWMgY2hhcmFjdGVyLCB0aGVuIHRoYXQg
+bWF5IGJlIHdoeSBqZ2l0IHJlamVjdHMgaXQuDQoNCi1QZWZmDQo=
