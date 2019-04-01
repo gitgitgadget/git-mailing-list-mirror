@@ -7,116 +7,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE40820248
-	for <e@80x24.org>; Mon,  1 Apr 2019 15:41:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35C3220248
+	for <e@80x24.org>; Mon,  1 Apr 2019 15:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbfDAPlX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 11:41:23 -0400
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:35368 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbfDAPlX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 11:41:23 -0400
-Received: by mail-vk1-f193.google.com with SMTP id g24so2205268vki.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 08:41:23 -0700 (PDT)
+        id S1726988AbfDAPxC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 11:53:02 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:42612 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726754AbfDAPxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 11:53:01 -0400
+Received: by mail-vs1-f65.google.com with SMTP id f15so5789363vsk.9
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 08:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=arqRLMyZNSrWDmd4d1cbjYjSQVZS79TgXFxTn6qj91Y=;
-        b=kLBRTxYyxGkVgi7Ec7NPY++ZjrkQjmkw1hidE9sIpjt5+9zAk7SYctAPLqH7pNaTk1
-         LfcLWKM4q0Vj3KTI3keUOyld2EYeAinXg9DB1ToAgdY3xPFBbY99gC9jRTLkspT496Fj
-         v99N5URA0IuueJfMO+BSGV0HJqf2YDrYU2RSZaZau+pptVkLsTLXLeN2pJKIPVGmnjSw
-         nc5Z2jviQjl3owTGNdMF6D0ttz+W1KfjhETpUP5dxIlwuzJHxLLgm+veyoYye/xagwLz
-         i5aoDcsI2x8NhWLGsCFrPJHQvPF8ojCnZwBU1Xi7UrxRW96M3i+JkOUW8pioefYjtwpX
-         Lttw==
+         :cc;
+        bh=UMMOCG5QbT3R+u31ktNYp37TA8MWocqB8uWuYgXA2Mw=;
+        b=tZb71Re+8t8z9/JO7m24pDZTk8+msbv302RVb/HGlQHgdTQnaHWZEuUX3oILbSvnzB
+         rLcYXrBtQICCBLRG0ke3++iAApLKE/IP1vqP65D0YyD9v2fDUN34f7YUJDgbi/xvR6ow
+         6Fv/OVJgHRodpyIssuwmzN0K8Gek6h0R2PZRMa/MB8VZsSwFmLFP+ge8wrsgssw6NxNe
+         PYfLTo18HaKutEOyUR6Mjl76cD9Trmb9DHRmDzQ5QHuQJcdPlTx2TnRrhKz9r5raZGj1
+         5eNVG81rM6arDl+SIWPxa9/ioN/WE2eU8pJeSXK5QAn9elrUT1wqqcRKdGI7npH31Z4E
+         qtrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=arqRLMyZNSrWDmd4d1cbjYjSQVZS79TgXFxTn6qj91Y=;
-        b=sRG3SHX+Oyin7p2XzfjUpYhAuHnO+rCKaO26eVy2qzPjkIEngEy9FGkedC6S/6kopN
-         lsA6TkGxOz5wfuVMW81mJPwi4H7EZ6vTB9UIuY10bQtwDSxpUt3a2XyRaP2xooAisfLu
-         //jL8YiBgmutv4RruWto5T/H1Mx47p9RARGPGiWTReMveQHWgI+iBH3A7m1NQuqCDHpt
-         IQCRLsT2Q2ZsMRvFXbd0SxdH2c9MN5TG13/WxWCTrdz06rFFPzuIovU92Ibnm6eKY6SL
-         LREiDtP+Phf1THJfIxFMhseBqKR61yhU4TOBrlotD+2NW1FJmFFlkmws+dhMCiVPjfiN
-         MOvA==
-X-Gm-Message-State: APjAAAUsB5dTV3pgFIE5OSV/tRykBrIah49gRcHAYkWi/AwGV5enBPkx
-        vIKefPOWYfz7xd/706jghXEDnyuSy8joxTMmdxg=
-X-Google-Smtp-Source: APXvYqzAv0TEsOzv5qfOA2AdxShhuxihOyRKEHRKiQEQ6G+jyDY7mkjKQKYpY54bEGYEQX66kCJX5QtWDoQ9AxjVr/Q=
-X-Received: by 2002:a1f:8d45:: with SMTP id p66mr1617669vkd.21.1554133282446;
- Mon, 01 Apr 2019 08:41:22 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=UMMOCG5QbT3R+u31ktNYp37TA8MWocqB8uWuYgXA2Mw=;
+        b=T1jEJMBsTsc0YCoyEICAVy1m6W6yOU3eTJzBvWg6tA2o2bfeYij3E3wM35IwvF5HUA
+         YUkRJtrMryw1t6vfUpKYQJXGtuVrki+2ViXK8tv0LkPYuJpgz9EIqtQV3T5g4OBrdkZK
+         6gigbWzWDAJus/2D7uN39mgtgMXyqDIbm22vqU21xnLWWCMFGXuKaLsIIxeAOVxdomrV
+         9yvAVe93x/bDE34bQvGPpdzoK6bbv/Q9j7pLP8Yp4gmFx5C2JxANpK8U4cLE4zh7R6qV
+         GkMc9eFpw0QnPdXxAa+joJ0zoab7frvuvzEyfdRbi4pvJippEot2JbGQCNoqtKQIjthR
+         ZpIA==
+X-Gm-Message-State: APjAAAWD5SaEjqq+D0fmhMLKMQKwAvUxTVJq0Srp7JT5JBa1YoPN/ovu
+        b1XBqcmYUdQDkZv0MHEYgHrbRtcdB8Hxd0UjtGQ=
+X-Google-Smtp-Source: APXvYqxBBk2gNEFx/s2X/wDqEYKzKGGP2t7it7SqJlIT11Vt0sDZR9TLDH25r3xCOPtIQoUj47s0Xr4Z6GVfbl1v2uo=
+X-Received: by 2002:a67:74cd:: with SMTP id p196mr38368467vsc.215.1554133980841;
+ Mon, 01 Apr 2019 08:53:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190306002744.14418-1-newren@gmail.com> <20190330003336.21940-1-newren@gmail.com>
- <20190330003336.21940-16-newren@gmail.com> <87imw0afp4.fsf@evledraar.gmail.com>
-In-Reply-To: <87imw0afp4.fsf@evledraar.gmail.com>
+References: <20190220225846.10658-1-newren@gmail.com> <CABPp-BHp83H1qhrd-j1yvdWz56AwDJogFjf_3iaEDVjFvGansg@mail.gmail.com>
+ <xmqqwokevwbb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwokevwbb.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Apr 2019 08:41:11 -0700
-Message-ID: <CABPp-BEAMo-+mZcPTSyhts_-6eMcnRYc6bBojJSAtMTS2meHUg@mail.gmail.com>
-Subject: Re: [PATCH v2 15/15] merge-recursive: switch directory rename
- detection default
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 1 Apr 2019 08:52:48 -0700
+Message-ID: <CABPp-BEHiYddGzVfuQoiN403na2dOSXBbnJDffp3pPsEqQ2Pgw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] Fix some fast-import parsing issues
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Linus Nilsson <Linus.Nilsson@trimma.se>
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>, David Barr <david.barr@cordelta.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 30, 2019 at 2:12 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Sat, Mar 30 2019, Elijah Newren wrote:
+On Mon, Apr 1, 2019 at 3:44 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I may have more, just quickly skimming this for the first time...
+> Elijah Newren <newren@gmail.com> writes:
 >
-> >  merge.renames::
-> > -     Whether and how Git detects renames.  If set to "false",
-> > -     rename detection is disabled. If set to "true", basic rename
-> > -     detection is enabled.  Defaults to the value of diff.renames.
-> > +     Whether Git detects renames.  If set to "false", rename detection
-> > +     is disabled. If set to "true", basic rename detection is enabled.
-> > +     Defaults to the value of diff.renames.
-> > [...]
-> > +     if (!git_config_get_string("merge.directoryrenames", &value)) {
-> > +             if (!strcasecmp(value, "true"))
-> > +                     opt->detect_directory_renames =3D 2;
-> > +             else if (!strcasecmp(value, "false"))
-> > +                     opt->detect_directory_renames =3D 0;
-> > +             else if (!strcasecmp(value, "conflict"))
-> > +                     opt->detect_directory_renames =3D 1;
-> > +             else {
-> > +                     error(_("Invalid value for merge.directoryRenames=
-: %s"),
-> > +                           value);
-> > +                     opt->detect_directory_renames =3D 1;
-> > +             }
-> > +             free(value);
-> > +     }
+> > On Wed, Feb 20, 2019 at 2:58 PM Elijah Newren <newren@gmail.com> wrote:
+> >>
+> >> I found a few issues with parsing in fast-import (dating back to
+> > ....
+> >> I've cc'ed the relevant folks, and have a few patches that fix the
+> >> issue and I think make the parser more robust against future issues in
+> >> a way that I think is safe enough for backward compatibility, but
+> >> "backward compatible enough" might concern some folks; if so, please
+> >> take a look at patches 4 and 5.
+> >
+> > Just thought I'd ping to see if folks have any concerns with this
+> > slight tweak to backward compatibility; if not, I'll just repost the
+> > patches removing the RFC label.
 >
-> Instead of making your own true/false parser you can use
-> git_parse_maybe_bool(). See what we do for merge.ff:
->
->     builtin/merge.c-617-    else if (!strcmp(k, "merge.ff")) {
->     builtin/merge.c:618:            int boolval =3D git_parse_maybe_bool(=
-v);
->     builtin/merge.c-619-            if (0 <=3D boolval) {
->     builtin/merge.c-620-                    fast_forward =3D boolval ? FF=
-_ALLOW : FF_NO;
->     builtin/merge.c-621-            } else if (v && !strcmp(v, "only")) {
->     builtin/merge.c-622-                    fast_forward =3D FF_ONLY;
->     builtin/merge.c-623-            } /* do not barf on values from futur=
-e versions of git */
->     builtin/merge.c-624-            return 0;
->
-> Small nit, but allows us to document "this config takse bool or ..."
-> without having different verions of "bool" in various places.
->
-> Also, I don't care personally, but this also violates the "if one thing
-> requires braces put it on all the if/else arms" in CodingGuidelines.
+> It's been more than a month and we haven't hard from anybody,
+> perhaps?
 
-Thanks for taking a look.  I'll make the fix, and wait for other
-feedback before resending.
+Indeed; I was going to resend sooner but got wrapped up in
+directory-rename-conflict-by-default, switch and restore series
+discussions, etc.  I'll rip off the RFC label and resend.
