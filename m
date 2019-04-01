@@ -2,57 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 826F720374
-	for <e@80x24.org>; Mon,  1 Apr 2019 16:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9C8C20305
+	for <e@80x24.org>; Mon,  1 Apr 2019 16:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728710AbfDAQla (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 12:41:30 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55498 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728589AbfDAQla (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 12:41:30 -0400
-Received: by mail-wm1-f66.google.com with SMTP id o25so76610wmf.5
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 09:41:28 -0700 (PDT)
+        id S1728726AbfDAQlt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 12:41:49 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:32861 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728589AbfDAQlt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 12:41:49 -0400
+Received: by mail-ed1-f68.google.com with SMTP id q3so8885342edg.0
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 09:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SwY4YQ9CmNMFl8SEZH8ZEdg5yuh6M1j0CxuCRDDi3SQ=;
-        b=XHYdlNOrKMI1jqbV8CKiv7kY+dUdBi0uPSGC3C+VIp4k4toA8h7k/pJu2wkXu9w8O0
-         rpSyMDan2O22JAvXcRhFLDn4mdkYcoxdX+eRX/mA66UaNSQVwm7cyvIHCB4Ox5NhsYIF
-         mjW2uAzBQwco5AD0xXYMMLQMT+aa4ub0huFrRg0fnMDnEplEfEoHdjijf5lfWvP/qa4m
-         upDixf4gLUaj3iHz/a5nshuHE1Qp4wW3TSXePEMQyvvVxYXrntHEh3yK0Xqj4RUh5IuH
-         UL7kWGaPXskP4ghHCFS1YsVx1z3+bkF3mwEUDPvmGIutjc3Ck778KfvLvrnEPMoDfJwC
-         F4nA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oRYBwkKbTA/xoEuNWOOYTnSGmrM2PdQkDKbB9X/KvIo=;
+        b=dmtkmZ3nL0zSWBLcrn50w7N7hMTX4UrcoXIMT91Y4kjs5d19/RFx1ixhvMskgb7Dxq
+         Mh+FIomAlvmass8a3b3jH5UAX+K85DN4HPlc1/qvNiEbjYZb5PKn5e8DCa8H+c2+xS3U
+         7ffFIn+8YO9i6PQYv+t7kd74P9Sm84QaG7B9U2rgCkZjcoNFBTZpYolGaAH1xCqeNe50
+         5xKoTNTiCIXDtJd9ulOW3WV+T/kMozqUkQ1J6CeAHLd6cUmY7/s/IaUKvHZkYIdKcNOB
+         Y351Z0C2es2IdU2B8xfSgfYC8GkYXcMEJ6NvJnC7j80M4k/a565vSNFx5vItN4YRd0rP
+         ZVvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SwY4YQ9CmNMFl8SEZH8ZEdg5yuh6M1j0CxuCRDDi3SQ=;
-        b=JDDoDZmZuZmbzhUt9z6Qpk8O9tjXJJIq1B36q+/iD80qgTUNR54Li5EfpbOKmzHC0C
-         pJzs/qZmQTf1FEEJiPiYUWb52Y3b6MmwwW8Tg0c/IkKXwGQNHmBAJSvlkjou51fXi08L
-         VAuTFF9pPsgTJaMVfbvw8HAzxtvUtx9Xbr3t2kByEdk/rNs8QsZdPmagPGoUjbtD3oDc
-         omX/n2fYnbGfTCwVbjDwBZEodJ0jyqdJuu5ClLzAa9GTYJsLL5DM6eB3/6ZJgx9qovZ2
-         GPolyB530dmAGqxYW/gHZtvufhZv46vRNzWhQgO0deRrmvKlkF3IP2UFXoyP4EjjoERq
-         USbQ==
-X-Gm-Message-State: APjAAAWf7YsseokEcbsidai2EE0hHNT4PffUi6XPMzqIRwdXOy2yuOTf
-        YnS93GnbocEtAlZihkfbAdyE41kp
-X-Google-Smtp-Source: APXvYqyINGwJEjAbn7rR/jmfJrqV5j2NlYqVfYMF60A4lArU4r3o8RydLwd1FU6yqYGHIj/RRuKzLw==
-X-Received: by 2002:a7b:c923:: with SMTP id h3mr354130wml.34.1554136887640;
-        Mon, 01 Apr 2019 09:41:27 -0700 (PDT)
-Received: from localhost.localdomain ([2a04:cec0:101d:3e80:8542:d1d4:667f:a0da])
-        by smtp.gmail.com with ESMTPSA id s10sm11749070wmh.0.2019.04.01.09.41.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Apr 2019 09:41:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oRYBwkKbTA/xoEuNWOOYTnSGmrM2PdQkDKbB9X/KvIo=;
+        b=Zu4VV4Wuy/LCtwaIhTJDLJl8LIKbbkxgGvdyGOjzVC0OOj7QZi4H2DXoGVB3a2S0H5
+         +zDMJ07Zo2wlYAlr097qHjAgr/+ZAsCG8qnt4P08/Dx6N8uiAr0viV/fD+Xk2zC/bf4+
+         4dYLEHrnBGVYdy4V6RuKWnBdhVUSe/Az2EBuRO1fxbSBlGyvzwASKgcix0hyeL/QoS3c
+         +Vbobp74zqQ0pb8eK9tuAlm/pAJiZL5GV0SGOVeyP9ufXrdnuuGYyyiHl9CMu9kkJLF+
+         ygj3wsDFazIjQ8dYqk/vLo4xaj0UrcB+m3M6WoO5czr18GkYNPjZvES/HjCzXsZNqrDM
+         wqIA==
+X-Gm-Message-State: APjAAAWr0FJESOm+sTqLCOxlaU5BDhUQp5QCj7jBoxuyfvCygoexsnVs
+        oVXt/DwvPlpMeM8VzJlequOvzIMrhWVk9LinQ0U=
+X-Google-Smtp-Source: APXvYqySaJQZvtTHzztIeJyTobtG/EmwlQkmZDEEVIuY7Neh9AcnyHajC5ratmKy+HKEI1Lzzwtys0chwyQI1UPXaxg=
+X-Received: by 2002:a50:9b50:: with SMTP id a16mr8838515edj.160.1554136907150;
+ Mon, 01 Apr 2019 09:41:47 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190312132959.11764-1-chriscool@tuxfamily.org>
+ <20190312132959.11764-3-chriscool@tuxfamily.org> <xmqqtvg7e7pn.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvg7e7pn.fsf@gitster-ct.c.googlers.com>
 From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Date:   Mon, 1 Apr 2019 18:41:33 +0200
+Message-ID: <CAP8UFD208vY=0tduwSipBHYTPJCrBtsME6GouZMiKrnXJ=0zAw@mail.gmail.com>
+Subject: Re: [PATCH v3 02/11] Add initial support for many promisor remotes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Ben Peart <Ben.Peart@microsoft.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
@@ -63,91 +65,167 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 09/11] t0410: test fetching from many promisor remotes
-Date:   Mon,  1 Apr 2019 18:40:43 +0200
-Message-Id: <20190401164045.17328-10-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.21.0.203.gd44fa53258
-In-Reply-To: <20190401164045.17328-1-chriscool@tuxfamily.org>
-References: <20190401164045.17328-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Beat Bolli <dev+git@drbeat.li>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+On Wed, Mar 13, 2019 at 5:09 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > +struct promisor_remote *promisor_remote_new(const char *remote_name)
+> > +{
+>
+> Shouldn't this be static?  The config callback that calls this
+> function is inside this file.
 
-This shows that it is now possible to fetch objects from more
-than one promisor remote, and that fetching from a new
-promisor remote can configure it as one.
+Yeah, I made it static.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t0410-partial-clone.sh | 47 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+> > +     struct promisor_remote *o;
+> > +
+> > +     o = xcalloc(1, sizeof(*o));
+> > +     o->remote_name = xstrdup(remote_name);
+>
+> A comment on this later...
+>
+> > +static struct promisor_remote *promisor_remote_look_up(const char *remote_name,
+> > +                                                    struct promisor_remote **previous)
+>
+> In our codebase, this operation is far more often called "lookup",
+> one word, according to "git grep -e look_up \*.h".
 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 9266037714..146b0a1e03 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -182,8 +182,53 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
- 	grep "git< fetch=.*ref-in-want" trace
- '
- 
-+test_expect_success 'fetching of missing objects from another promisor remote' '
-+	git clone "file://$(pwd)/server" server2 &&
-+	test_commit -C server2 bar &&
-+	git -C server2 repack -a -d --write-bitmap-index &&
-+	HASH2=$(git -C server2 rev-parse bar) &&
-+
-+	git -C repo remote add server2 "file://$(pwd)/server2" &&
-+	git -C repo config remote.server2.promisor true &&
-+	git -C repo cat-file -p "$HASH2" &&
-+
-+	git -C repo fetch server2 &&
-+	rm -rf repo/.git/objects/* &&
-+	git -C repo cat-file -p "$HASH2" &&
-+
-+	# Ensure that the .promisor file is written, and check that its
-+	# associated packfile contains the object
-+	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
-+	test_line_count = 1 promisorlist &&
-+	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
-+	git verify-pack --verbose "$IDX" | grep "$HASH2"
-+'
-+
-+test_expect_success 'fetching of missing objects configures a promisor remote' '
-+	git clone "file://$(pwd)/server" server3 &&
-+	test_commit -C server3 baz &&
-+	git -C server3 repack -a -d --write-bitmap-index &&
-+	HASH3=$(git -C server3 rev-parse baz) &&
-+	git -C server3 config uploadpack.allowfilter 1 &&
-+
-+	rm repo/.git/objects/pack/pack-*.promisor &&
-+
-+	git -C repo remote add server3 "file://$(pwd)/server3" &&
-+	git -C repo fetch --filter="blob:none" server3 $HASH3 &&
-+
-+	test "$(git -C repo config remote.server3.promisor)" = "true" &&
-+
-+	# Ensure that the .promisor file is written, and check that its
-+	# associated packfile contains the object
-+	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
-+	test_line_count = 1 promisorlist &&
-+	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
-+	git verify-pack --verbose "$IDX" | grep "$HASH3"
-+'
-+
- test_expect_success 'fetching of missing blobs works' '
--	rm -rf server repo &&
-+	rm -rf server server2 repo &&
-+	rm -rf server server3 repo &&
- 	test_create_repo server &&
- 	test_commit -C server foo &&
- 	git -C server repack -a -d --write-bitmap-index &&
--- 
-2.21.0.203.gd44fa53258
+Ok, I changed it to "lookup".
 
+> > +{
+> > +     struct promisor_remote *o, *p;
+> > +
+> > +     for (p = NULL, o = promisors; o; p = o, o = o->next)
+> > +             if (o->remote_name && !strcmp(o->remote_name, remote_name)) {
+> > +                     if (previous)
+> > +                             *previous = p;
+>
+> I think the "previous" thing is for the callers to learn what
+> pointer points at the found entry, allowing e.g. an element to be
+> inserted just before the found element.
+
+Actually it's to make it easy to move the found element.
+
+> If so, would it make more
+> sense to use the more familiar pattern to use
+>
+>         *previous = &promisors;
+>
+> here?
+
+If I do that I get an "error: assignment from incompatible pointer
+type" as "*previous" is of type "struct promisor_remote *" while
+"&promisors" is of type "struct promisor_remote **".
+
+Maybe you mean:
+
+         *previous = promisors;
+
+but I fail to see how that would correctly pass the previous element
+when the found one is not the first one.
+
+> That would remove the need to switch on NULL-ness of previous
+> in the caller.
+
+In the only caller that passes a non NULL previous, we call
+promisor_remote_move_to_tail() which does:
+
+    if (previous)
+        previous->next = o->next;
+    else
+        promisors = o->next ? o->next : o;
+
+So yeah we check the NULL-ness of previous, but if previous has been
+set to promisors, then previous->next = o->next will not set promisors
+correctly.
+
+I guess we are not here in the case were the familiar pattern you are
+thinking about can be applied. Or is there an example, maybe in the
+Git source code, that I could learn from?
+
+Another possibility is to just use hashmap as you suggest below or
+list.h. It might be a bit wasteful, but the code simplification might
+be worth it.
+
+> > diff --git a/promisor-remote.h b/promisor-remote.h
+> > new file mode 100644
+> > index 0000000000..bfbf7c0f21
+> > --- /dev/null
+> > +++ b/promisor-remote.h
+> > @@ -0,0 +1,17 @@
+> > +#ifndef PROMISOR_REMOTE_H
+> > +#define PROMISOR_REMOTE_H
+> > +
+> > +/*
+> > + * Promisor remote linked list
+> > + * Its information come from remote.XXX config entries.
+> > + */
+> > +struct promisor_remote {
+> > +     const char *remote_name;
+> > +     struct promisor_remote *next;
+> > +};
+>
+> Would it make the management of storage easier to make it
+>
+>         struct promisor_remote {
+>                 struct promisor_remote *next;
+>                 const char name[FLEX_ARRAY];
+>         };
+>
+> that will allow allocation with
+>
+>         struct promisor_remote *r;
+>         FLEX_ALLOC_STR(r, name, remote_name);
+
+Ok to use a flex array. If we ever use arrays or hashmaps of promisor
+remotes, we might have to go back to not using one.
+
+> Or if the remote_name field must be a pointer, perhaps use
+> FLEXPTR_ALLOC_STR().
+
+[...]
+
+> Can the name of promisor be any string?  If they end up getting used
+> as part of a path on the filesystem, we'd need to worry about case
+> sensitivity and UTF-8 normalization issues as well.
+
+It looks like for regular remotes we only check if they start with /.
+So I don't think we need to do more than that for promisor remotes. I
+added the check.
+
+> In a large enough project where multi-promisor makes sense, what is
+> the expected number of promisors a repository would define?  10s?
+> 1000s?  Would a linked list still make sense when deployed in the
+> real world, or would we be forced to move to something like hashmap
+> later?
+
+I am ok to use hashmap to make it similar with regular remotes.
+
+For now I don't expect large projects to use more than 10s promisors
+though. They are defined in the config file and I don't think people
+will be happy if they have to manage more than 10s promisors in their
+config file. If people really start to use more than that, they are
+likely to ask us for a new mechanism to manage them (and to
+automatically have them configured from servers). So maybe we can
+change that if/when we have to work on such mechanism.
+
+
+
+
+> You do not have to have the answers to all these questions, and even
+> the ones with concrete answers, you do not necessarily have to act
+> on them right now (e.g. you may anticipate the eventual need to move
+> to hashmap, but prototyping with linked list is perfectly fine;
+> being aware of the possibility alone would force us to be careful to
+> make sure that the implementation detail does not leak through too
+> much and confined within _lookup(), _find(), etc. functions, and
+> that awareness is good enough at this point).
+>
+> Thanks.
