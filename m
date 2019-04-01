@@ -7,82 +7,91 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E47220248
-	for <e@80x24.org>; Mon,  1 Apr 2019 10:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84F7F20248
+	for <e@80x24.org>; Mon,  1 Apr 2019 10:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726588AbfDAKpA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 06:45:00 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38537 "EHLO
+        id S1726608AbfDAKpF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 06:45:05 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39728 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfDAKo7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 06:44:59 -0400
-Received: by mail-wm1-f65.google.com with SMTP id w15so10785504wmc.3
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:44:58 -0700 (PDT)
+        with ESMTP id S1725889AbfDAKpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 06:45:05 -0400
+Received: by mail-wm1-f65.google.com with SMTP id n25so10781217wmk.4
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:45:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=jaRnJVyZVR7eJ2a0kuVm06s2m7Rf14Ci577TJlk1spQ=;
-        b=aruWliXdvWusOw1OussDKIdOnKAQB/iHlN4zEVYqBDOAH+Pd5f0eOk1qd8fjuQMjy3
-         0K5MrnZ1flto1pwQHJYlPpn8/a5elsayWlzFXStp9u/MmYs19BDWZBcWvxYv0d39ng/E
-         9JxPceshpQm3nPv05JFAcvbGYeDaGr3YmPSfcfQAHL0pM7uiy7JkkiwaghXKJTGf+OCL
-         ciDEW0IRmM88m4ImNPQWH0hWYUaX/Sf+/1rEzpvwK/056FsKHbIpTmI5L3gb8AagULaw
-         enIQaBQJI6NfmLYgMEDvh3IYVLGVZfFK46H9d/ChpKt9pyEuTPOvQijRfadxS2LSOY9j
-         q/Nw==
+         :mime-version:content-transfer-encoding;
+        bh=YRviBuwZx5K4yd4vgZ56iXiW0e4+EH+Kmx/KI/6Fy5o=;
+        b=mhizNHr5Pzf7PVyPOgkTjhD68CrDkomPBjg5vkw/7EbZkrgFU0ujq6AtFVPEIQdKu6
+         AmpgSrJwEiID3S0Un0dgYallH+9qwbSsXxz5u+Gza1kzgzoGwBad8Q3wpbWW0EvcTbSl
+         HGERQlrK2O+nNZSmCvapDMCFqtPnniaxtA+sKjpIMXBrdUCRe4IE0ez/EQUV2JZt2yrW
+         raOMvRaTkkJoRgnsymmIWaLOiLYpHkDbNIxLhYbPVMcOpkrEF44BzMcSQJk4OLfXS/6t
+         OFw4W3T6iVdyrZigcaDguDgJKtH+cKtxnRePTzr4PDJcKONNWuPRqVbh5tzvz4RuJt/c
+         ts+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=jaRnJVyZVR7eJ2a0kuVm06s2m7Rf14Ci577TJlk1spQ=;
-        b=ZDYFcrtBO/6d6QvzUPpQ3kEIf9CCRzktAbUnvvnELx0NQSAWQr9JzA0swoD0VoiGp0
-         YqyvIohMwX5+KNGoMzAWiX9prcDMFxZWHoz0tCBpjLq4v8eKrzcZzkE033zg4poveBzN
-         QsRgr4uCiicy95MG2rXE9sRS4hBy2O7JkaBWEROxe20NQ7kuLzoALl3UMUclnnBpPODc
-         CRlZsk0jmSVbVoQB5g0fwm+mBn3I9B+glro9EUQuIJPYsfJp0QLLr8JrCxDXqFTfjG4R
-         ALU+r8rLeJw2PBsif/qOph1/TZCUHJEs4D+Ocx6F1r5mpUiu/K/WVP0JQ6xoNOyQ2PSX
-         6vwQ==
-X-Gm-Message-State: APjAAAUhrQYE2fnKUzU5AUw/3OecPwqlL2fnDrVZXUxs2yP8JCSjM8i6
-        aXSoPtguxc5yfPHQfNSUfZc=
-X-Google-Smtp-Source: APXvYqwYr/tT87XAf5qh/Es7LmGoUEkn3mmZei5o+zwsv6IFLhtMvSGYlF3BfpxBSF4PDYHGp0kVKA==
-X-Received: by 2002:a1c:14:: with SMTP id 20mr11389749wma.66.1554115497740;
-        Mon, 01 Apr 2019 03:44:57 -0700 (PDT)
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=YRviBuwZx5K4yd4vgZ56iXiW0e4+EH+Kmx/KI/6Fy5o=;
+        b=Jj4uvveZ+4Jozdo9FtAr8XbiMz0B+NUoGDsJiREO0w+KxVJBWkzxz6cmyo1d+kjb0i
+         Twk1yq8NspLfHbgkCA2WjyAnBXXxFmLffb5LsV87iutufcvWeXJ6JB6ZxqaeA99GCYAW
+         aAqNR5FpTlM7+NnPjiM2agNEYbMGN+B7Q2spa9aydfM7tBkFd6mSTnnFsKb/Lp9XZeo0
+         6bG+sW1EwiiiuwM2gpyaNzX79P/DeEQFxz20ofTvnoHeu6KTrTIIIFbayfi/4B2zGVnp
+         DNEasQjKWpUZyM4caXXvSwE94XwPwgOiu3rYb9W2Gp/Uq9FIut2fPzAFTdiTyGnF1sKx
+         +Qow==
+X-Gm-Message-State: APjAAAVvBS7xOj76bFSL44wVxuLOnwjtj4qEipSBKezV/9kLUPtoeM2/
+        OUf4n1kniSVmCYNwx+foSCg=
+X-Google-Smtp-Source: APXvYqyNwRuoCyOgi9wcYbHRjPzQkk4G+l313JH4KXle5q6V8zci1e+o17ccCix/cGCOfokRFl5kNQ==
+X-Received: by 2002:a1c:16:: with SMTP id 22mr11261894wma.91.1554115503148;
+        Mon, 01 Apr 2019 03:45:03 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id w11sm31340822wre.15.2019.04.01.03.44.56
+        by smtp.gmail.com with ESMTPSA id d7sm10143483wmf.31.2019.04.01.03.45.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Apr 2019 03:44:56 -0700 (PDT)
+        Mon, 01 Apr 2019 03:45:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, David Barr <david.barr@cordelta.com>
-Subject: Re: [RFC PATCH 0/5] Fix some fast-import parsing issues
-References: <20190220225846.10658-1-newren@gmail.com>
-        <CABPp-BHp83H1qhrd-j1yvdWz56AwDJogFjf_3iaEDVjFvGansg@mail.gmail.com>
-Date:   Mon, 01 Apr 2019 19:44:56 +0900
-Message-ID: <xmqqwokevwbb.fsf@gitster-ct.c.googlers.com>
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] In `git log --graph`, default to --pretty=oneline --abbrev-commit
+References: <20190323041332.9743-1-alexhenrie24@gmail.com>
+        <xmqq36ncpgpe.fsf@gitster-ct.c.googlers.com>
+        <CAMMLpeQbz5qHyK8e4gZ0zKQ5na+zQCd49GZifKZ_iO-gXrs1Gg@mail.gmail.com>
+        <20190325011717.GA5357@rigel>
+Date:   Mon, 01 Apr 2019 19:45:01 +0900
+Message-ID: <xmqqpnq6vwb6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Rafael Ascensão <rafa.almas@gmail.com> writes:
 
-> On Wed, Feb 20, 2019 at 2:58 PM Elijah Newren <newren@gmail.com> wrote:
->>
->> I found a few issues with parsing in fast-import (dating back to
-> ....
->> I've cc'ed the relevant folks, and have a few patches that fix the
->> issue and I think make the parser more robust against future issues in
->> a way that I think is safe enough for backward compatibility, but
->> "backward compatible enough" might concern some folks; if so, please
->> take a look at patches 4 and 5.
+> I agree that `pretty=medium` is sometimes hard to read and, as of now,
+> `pretty=oneline` can be very misleading:
 >
-> Just thought I'd ping to see if folks have any concerns with this
-> slight tweak to backward compatibility; if not, I'll just repost the
-> patches removing the RFC label.
+>     $ git log --graph --oneline todo~2..todo master~2..master
+>
+> This will look like you have a sequence of commits when in fact they are
+> completely unrelated.
 
-It's been more than a month and we haven't hard from anybody,
-perhaps?
+This is pretty much unrelated to which level of details should be
+the default, isn't it?
+
+I do agree that --graph should be more intelligent around the root
+commits when showing two or more unrelated lines of histories.
+
+Something like [*1*] from discussion in 2013 (not the patch that
+started the thread, for reasons stated in the thread, but ideas
+offered as alternative design in the discussion) would be the right
+way to solve it and it would work with all the log formatting
+options, whether --oneline, --pretty=medium, etc.
+
+[Reference]
+
+
+*1* http://public-inbox.org/git/1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com/
