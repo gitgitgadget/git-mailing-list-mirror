@@ -2,60 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C272920248
-	for <e@80x24.org>; Mon,  1 Apr 2019 10:47:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E8CC20248
+	for <e@80x24.org>; Mon,  1 Apr 2019 10:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbfDAKrX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 06:47:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39814 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbfDAKrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 06:47:23 -0400
-Received: by mail-wr1-f67.google.com with SMTP id j9so11360679wrn.6
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:47:22 -0700 (PDT)
+        id S1726761AbfDAKrj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 06:47:39 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:33877 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfDAKri (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 06:47:38 -0400
+Received: by mail-wm1-f50.google.com with SMTP id r186so1273466wmf.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 03:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version:content-transfer-encoding;
-        bh=YxRYA3LVuV/LL79azomBsYlO33icj8+6F31yZUaqNbs=;
-        b=Qk3HhEZjHTB9DCOs37Npl0W2uWOBn1i9mB+IhV5iM/4QnrFgv+iB4J0D/mP3vMGWEq
-         7BI2KUnnMxPZEkWiGba/JX2J99gaR/Jd3P4oofZAOcQgsxal15gKLvNAphe1VRMAz8GY
-         zHo8NufUKodrt9Kv1a+NwcxqDuwf/ywn1fFcuFRtm3Eh4gLgjc0L+AQ0oIDJ2FN6/ayE
-         OQfmWFloPnuX7dInAd2vMDoqmQShKYXrZDMVI76BZotXwwpX9ccxfb9KJ6W7NeM/VchV
-         jFt2kK7GvatrHUox/GtGwPQm7wVObjYE3LH9oN7x23Ugzy5Phf7tfUjteniiSP5bly6Z
-         JMGw==
+        bh=1qwRBz1Kf4MCDMJD/9p9FPYgRGbDIxv6LAfVnuMxEfY=;
+        b=K7iPfoWiZN+MSgUyhBecRsjLHB9AjFphVQJtkaUClqlO2QPK+wgv2sIZayMq8gKvcf
+         OfLeJTeQmR7GKtFbCTptYWGkgGxkmFOA045dHRXrqFhOe+B+o5Ska5cHLrjeeZODkwSO
+         m+Rg2evFXUm6yWL+Suwu+fpkfHVqd5UobSSuzcfG/DqOG75g87ENF9E7xf/bfHJ80Pp1
+         ta2Vlaq7EhbWhHtfKoJspsWbAlQruS+qDtnGqDmDZViS28nPcBGcJcIlXxXCVOy+N7Rd
+         70XJ3G/z+Y0xjBmG/zg3Z/ecreFwd5WPUFMOK7AxhFbTIy0bIK9rtvB461D1JzimXreo
+         iEKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=YxRYA3LVuV/LL79azomBsYlO33icj8+6F31yZUaqNbs=;
-        b=lQtTL9Ip3bS6gFexX+HFEa41rNn9GAGg36gExiwtFZWDqtWh0VIarX5sa/VOnjhTB1
-         3ncDSiha2HQpz/FIjPgCU9khWCt70ENS2oNZkTGcK2ySHw+1TDzVL4alTOX2BmSZ6ubG
-         a/ecxjiHo70l81Ir4iiETgM05C244AeLzCcHlZ9RyvIjd7F3FmO4HqaEc6z1c9TcyRmb
-         rJSHLNCq4hApeWfDVnzS0n0zBDzJkYDIwJFl3eP+ji4QawR/K47B0fUpjq6u+wjCLz+1
-         tycxgES4gjB/ypFS2Rzug5k8NVV1GLaHlt6UKlkWAWDGI2RDleP/6BGADhP1XBzvYXx1
-         EGCg==
-X-Gm-Message-State: APjAAAW1Kk8owwzYmdi8x1hYVaYUYalB0Ht2CJ9DGzWgYqhsra9f6yxg
-        V/cB5P/RsAmfe0FqCu26Pb8=
-X-Google-Smtp-Source: APXvYqy9/kwpTffeimC0WkgtZ6+SH9B1roxvjGB2yjLTqTeKHq5itWjsQNZrX+zCRV468MYsYH1Ayw==
-X-Received: by 2002:adf:ebd2:: with SMTP id v18mr6807770wrn.108.1554115641750;
-        Mon, 01 Apr 2019 03:47:21 -0700 (PDT)
+        bh=1qwRBz1Kf4MCDMJD/9p9FPYgRGbDIxv6LAfVnuMxEfY=;
+        b=nZyKeRc7rpQVL+24J4U9YjH3BGdaUJVkhVpYfTqdbN224+Syw6Clb843IEdS5oh8p4
+         nS0kumNrkhbfXlM4dizc3PigKtBnw9eva/y/NrfYTnQYDMQKZyS7mr7QeQF06zF90trJ
+         4Hjggl33FTMw48nXGqO+8FxwYOOvl0u+KG3WE1PaoIdRJ260WTseXGWYRoKrl30ss04I
+         m0vRo5DvjLbUA9Vkp3tYRm1ukLD5dxx/2YNBpXq0lnkn7JzYaRDjTAZyGSR1KnhlUPAM
+         1rd9KNtgBeEnldff0D1sRxLmOFEsKTLrLWX2hbjIignbkfic1QKyjBkfU6IcsBQEcdMM
+         Taog==
+X-Gm-Message-State: APjAAAVd5ONgWut6D3FvG1cMyJsjfGBRkZmv1PIB/bg1OfTnLOeS6sdi
+        Cxyg7fjQwFjVe1MJqID2Lr0=
+X-Google-Smtp-Source: APXvYqxzr+Lpx5ac+K55SHxwZmnrv6p/zNQZRYo7Cw93RWszZ2sef6yvjkLAuZLslAev20WRpgETQg==
+X-Received: by 2002:a05:600c:218:: with SMTP id 24mr12233395wmi.144.1554115656669;
+        Mon, 01 Apr 2019 03:47:36 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id s18sm8974560wmc.41.2019.04.01.03.47.21
+        by smtp.gmail.com with ESMTPSA id t81sm18966453wmb.5.2019.04.01.03.47.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Apr 2019 03:47:21 -0700 (PDT)
+        Mon, 01 Apr 2019 03:47:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] read-tree.txt: clarify --reset and worktree changes
-References: <20190326120939.31657-1-pclouds@gmail.com>
-Date:   Mon, 01 Apr 2019 19:47:20 +0900
-Message-ID: <xmqqmulauhmv.fsf@gitster-ct.c.googlers.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Git List <git@vger.kernel.org>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: test suite: why does git add large_file create a pack, rather than an object?
+References: <f0c838f0-2f75-2b05-1aeb-3db4743ce89a@iee.org>
+Date:   Mon, 01 Apr 2019 19:47:35 +0900
+Message-ID: <xmqqftr2uhmg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -65,34 +68,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Philip Oakley <philipoakley@iee.org> writes:
 
-> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-> index 5c70bc2878..12a25bc954 100644
-> --- a/Documentation/git-read-tree.txt
-> +++ b/Documentation/git-read-tree.txt
-> @@ -38,8 +38,9 @@ OPTIONS
->  	started.
->  
->  --reset::
-> -        Same as -m, except that unmerged entries are discarded
-> -        instead of failing.
-> +	Same as -m, except that unmerged entries are discarded
-> +	instead of failing. If `-u` is used, updates leading to loss
-> +	of local changes will not abort the operation.
+> At the moment I'm using an extended _test_ case that starts by adding
+> a ~5.1Gb file and then using verify-pack, which aborts with an error.
+>
+>         dd if=/dev/zero of=file bs=1M count=5100 &&
+>         git config core.compression 0 &&
+>         git config core.looseCompression 0 &&
+>         git add file &&
+>         git verify-pack -s .git/objects/pack/*.pack &&
+>         git fsck --verbose --strict --full &&
+>         ...
+>
+> If however I simple execute the commands from the GfW bash, the added
+> file is stored as a blob object, rather than a pack.
+>
+> I'm at a loss to understand the reason for the change in behaviour
+> [store file as pack, vs store as object] between running the code as a
+> test script and at the terminal. What am I missing?
 
-"git add $file" makes a local change to the index at path $file",
-and reverting that local change is what "read-tree --reset"
-primarily does.
-
-The difference cased by presence or lack of "-u" is only about the
-working tree files, so s/local/working tree/ perhaps?
-
-I'd also phrase s/If `-u` is used/When used with `-u`/ if I were
-writing this.
-
-Thanks.
-
->  
->  -u::
->  	After a successful merge, update the files in the work
+To which test are you adding the above piece?  Perhaps one of those
+that configures core.bigfilethreashold?
