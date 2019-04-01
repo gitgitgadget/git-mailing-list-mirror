@@ -2,85 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29B8020248
-	for <e@80x24.org>; Mon,  1 Apr 2019 09:27:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4FB820248
+	for <e@80x24.org>; Mon,  1 Apr 2019 09:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725868AbfDAJ13 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 05:27:29 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:40196 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbfDAJ13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 05:27:29 -0400
-Received: by mail-io1-f65.google.com with SMTP id d201so7127917iof.7
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 02:27:29 -0700 (PDT)
+        id S1725880AbfDAJ3J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 05:29:09 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:47026 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbfDAJ3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 05:29:09 -0400
+Received: by mail-wr1-f65.google.com with SMTP id t17so10976438wrw.13
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 02:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x418IPhTGTg8wsVB83ZnNkdAJTNFIL8+nl65oONdOAM=;
-        b=F+FdqMrPr+CrCluC10T7T7IQCo0sPsxnQKfMzvcQkl4wU+y5DKht11bt02f6YnenKw
-         UVcqDKHCRYJ7g8e1wstB+T86QypxVkYhkrxvmUb7h/uc+Ls3fWt+vbgujCa9p6NcBygx
-         ur8psPpV6Bd3QInFnGJIjs+QBFBXpzJ/SJGTryIiruZsf9YqeL5aLUJZ36fNiz61MZFe
-         bIY5HxaLiI79tZ7hPddUSNInQvxLtjQb9q7mzPD0VamTuSuPj+OzW8Hm5o58fObpKWhg
-         LYycGK5VKWfEv+12gzzcMiPh7nSMx1Z2KnbFBxmYYee01qgga4OaE6z5LYmiZolmH7Fe
-         2ooA==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=qKSQ1ap13h6ulqRDg/d/CLOGehdff/GuFycu0SQTyK0=;
+        b=gTSFj1xopIBsu7Yizo2ga0z6nlvMTtFn092WLGgS/fPDmpleur8znEoJ2uEyhSGMkq
+         gjPRDmGPIAVr1lgCMFC786muJTXRW/012CyRX7n9thIjWnaVS2jmPQOmEEZZu4iyDlP3
+         tBj1lEzpVmHuVcqFXx1THDwmM27oujYiXuUrzXjpJSbzi7CCRHsmRNvOC0e9YCaNiCPq
+         DTK3rRHju72MsydHvx7oTXz1Q1JC4Avgx+yY0HzdimQ44rH43RVSKZHHWS0PTc/wRBvn
+         2o0ydcEtR3/yu6u2VRu1xUituv8u/YQX46kYsO88psamBYKqrJ9i+dOKQCYEnrdQnMoP
+         v3aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x418IPhTGTg8wsVB83ZnNkdAJTNFIL8+nl65oONdOAM=;
-        b=Xo5fgUqY1Oo/r1uN+ezF7rYzapj9YRPJQPUvzwroMMr4e/6fKlwePiuOSSWjZW9BVk
-         PUv4YlYSdCr9f3JbGY6CEwAqaAd4Ucs7/nlSa6WRUbI2FH+1OyD5zZIUgTG9Ada4SnGG
-         O49bM8hqRQQ6entJViALpGrQTEZgOBOp87E9mWR5eJf0iux7Pl50kHKPoe1f++7qwEAG
-         k5T7DRkKszTdWnVEyZplh3NXvjSK/VfO5uMTB0DprefTNw57y6Dr8U7VTf6YcuhOBz5+
-         bnt5Na/0CQS/k50h2KLQCBETdAHAQfXx490ACkHelzLx4t2i3IGFhbVXCRvxViqB/dNx
-         Oeaw==
-X-Gm-Message-State: APjAAAXkPxwyMGOJz9QT2/HK4tLFH+UGwnO2RTbnnTkxV9E5uNp9pza/
-        P7vFxDSR8ZgbBjqlRH5oIxbqsQ5OmH9HQjXlzHU=
-X-Google-Smtp-Source: APXvYqw8RL6LqsVKK6DCP3g88/HeJ6F/kEh/Fh5q/hPtz2AeWrIWMI2aTI4jcKmM7WG5X34zH5FsU6lW8auq/+VMlNo=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr17035477ioa.282.1554110848693;
- Mon, 01 Apr 2019 02:27:28 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=qKSQ1ap13h6ulqRDg/d/CLOGehdff/GuFycu0SQTyK0=;
+        b=P5jAoFZFSHPrhXBT6Rcdl/dhSiBJWe7mZtCi1zCn5rYSb1FZ+B/BAW7ycAGQm7dDq4
+         aD6yo1Pl1iqYQVAXeWKBy5ul6VtnPVYMoFSSoMBwWIMLWq24wnXB1pad6b58ZLEGf8FS
+         P3XpX7vjXBOMfG1fz3x7Ls/dt+PcaUDHjAhjsPTsKNK8iG8lRWRyixFoe3BiyKyB0W6I
+         +6QwK1/V8l3XQZKOBiqaVBXOD1gQCTJAH5XCR5fayyMY57fOBxvcPBM9e8ETIqDXEOFo
+         xzG6nr2NrW9MDPfFdoeS9jpVA94DUJ9CVbQzaIcC/nvUGI6fBxaPGgpnjMeZdvYz20nj
+         nJ9g==
+X-Gm-Message-State: APjAAAWd9CP9AXm6HMWL/FFi0Ymrg0i8HKpKAfRJE5vVJ56UhkFMoYWX
+        O8Hx3PDiasKoEyLq1E/h5xODSS3+xQw=
+X-Google-Smtp-Source: APXvYqyv6RCz8hyKENXS3noeIqHGFdQHSF1GJUEM/EmLZGQ/qGc6olDS7JjokdAymYkrV6f/y4RdeA==
+X-Received: by 2002:a05:6000:1292:: with SMTP id f18mr41343225wrx.115.1554110947730;
+        Mon, 01 Apr 2019 02:29:07 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id v14sm9336531wrr.20.2019.04.01.02.29.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 01 Apr 2019 02:29:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+References: <20190208090401.14793-1-pclouds@gmail.com>
+        <20190308095752.8574-1-pclouds@gmail.com>
+        <20190308095752.8574-11-pclouds@gmail.com>
+        <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+        <CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com>
+        <CABPp-BEksf4SuD57YsUO3YKhU12CAwFTy6pA1tETFrHB1DAz9w@mail.gmail.com>
+        <CACsJy8DPDEvNDeE5MpqcGZk9jRmT9g=ix+MOhkv+50J3Egef7A@mail.gmail.com>
+        <CABPp-BFTyALWmnJ=dT1xNivjcQhtKak15ydfkYjEsEC-j4BD9w@mail.gmail.com>
+Date:   Mon, 01 Apr 2019 18:29:06 +0900
+Message-ID: <xmqqbm1qxee5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190331220104.31628-1-rybak.a.v@gmail.com>
-In-Reply-To: <20190331220104.31628-1-rybak.a.v@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 1 Apr 2019 16:27:02 +0700
-Message-ID: <CACsJy8As7_qS-JRdMSNJco_=F4r21sjPR32thVrAB_CTrRdz8Q@mail.gmail.com>
-Subject: Re: [PATCH] mailinfo: support Unicode scissors
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 1, 2019 at 5:03 AM Andrei Rybak <rybak.a.v@gmail.com> wrote:
->
-> 'git am --scissors' allows cutting a patch from an email at a scissors
-> line.  Such a line should contain perforation, i.e. hyphens, and a
-> scissors symbol.  Only ASCII graphics scissors '8<' '>8' '%<' '>%' are
-> recognized by 'git am --scissors' command at the moment.
->
-> Unicode character 'BLACK SCISSORS' (U+2702) has been a part of Unicode
-> since version 1.0.0 [1].  Since then 'BLACK SCISSORS' also became part
-> of character set Emoji 1.0, published in 2015 [2].  With its adoption as
-> an emoji, availability of this character on keyboards has increased.
->
-> Support UTF-8 encoding of '=E2=9C=82' in function is_scissors_line, for '=
-git am
-> --scissors' to be able to cut at Unicode perforation lines in emails.
-> Note, that Unicode character '=E2=9C=82' is three bytes in UTF-8 encoding=
-.
+Elijah Newren <newren@gmail.com> writes:
 
-On top of what was already said in this thread. For some reason (bad
-font?) these scissors are drawn cutting _down_ for me instead of left
-or right. It looks a bit strange.
---=20
-Duy
+> On Tue, Mar 26, 2019 at 8:24 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Tue, Mar 26, 2019 at 10:01 PM Elijah Newren <newren@gmail.com> wrote:
+>
+>> Yeah.. --ignore-in-process does not necessarily mean aborting
+>> something when you just want to get out to examine some other commit.
+>> And I agree doing nothing seems like the best (or least
+>> confusing/surprising) option.
+> ...
+> Yes, and in the middle of a cherry-pick with a range you've added some
+> commits to one branch and some to another.  In the middle of a revert
+> you're doing similar.  It sounds like crazytown to me (and maybe we
+> shouldn't provide the --ignore-in-process flag unless users clamor for
+> it ...
+
+It really sounds like --ignore-in-process that _leaves_ the state
+files around which are known to be unrelated to the new commit
+pointed out by HEAD is asking for trouble.
+
+We just should tell the users "if you want to go examine something
+else during an in-progress operation, do it elsewhere, or cancel the
+in-progress operation with 'cmd --abort' (or perhaps 'reset --hard')
+which will allow 'switch' to move away".
+
+The thing is, "switch temporarily to another commit, do some
+sightseeing and then switch back to the original commit--we did not
+touch the in-progress state files while doing so, so we ought to
+come back to exactly the same state to be able to continue" is
+brittle.  Temporarily switching to another commit or branch would
+need to touch the index (in some irrevocable way) and with future
+versions of Git, underlying machineries (like UNDO data) other than
+the index as well.  What the user would do after (temporarily)
+switching out of the in-process state (e.g. controlled by the
+sequencer) may be destructive (e.g. "switch away temporarily, forget
+that you've switched away and try to run cherry-pick or rebase").
+
