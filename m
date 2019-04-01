@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04F9920248
-	for <e@80x24.org>; Mon,  1 Apr 2019 18:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62E020248
+	for <e@80x24.org>; Mon,  1 Apr 2019 18:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731027AbfDASCa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 14:02:30 -0400
-Received: from mail-eopbgr700094.outbound.protection.outlook.com ([40.107.70.94]:27833
-        "EHLO NAM04-SN1-obe.outbound.protection.outlook.com"
+        id S1731006AbfDASCd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 14:02:33 -0400
+Received: from mail-eopbgr800114.outbound.protection.outlook.com ([40.107.80.114]:16704
+        "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1730884AbfDASC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 14:02:28 -0400
+        id S1729644AbfDASCb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 14:02:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hGU2xz9yoNd355zlBtTlFUkLXuZ3yqbgB4XOtyApIFY=;
- b=PKjq+yQLVM2KBhUuLPdcwmFbUf8PxRb0VwPcPc/sw/Xxx8UHoIFxMGbdc18CJFvv7QiDYq3Zgbhq8WpnOoiVsrpYVRHZTBq76vz/teTBqdlpnO4dy5Cqs22vXuj7y7tRJoB0LjjEtiXV8xCXwjxJZEGglCMDo92Hju4ehJJFRVc=
+ bh=WLBJc3/6T45L7LU/ZLPvJFaGpn7iSfrlOaluT++5XzA=;
+ b=zDC7ASafT5T1BoNtcQyw1oh2XPDW94BrG7hTpsAaYJj94onf9WuiUoiLCdBUuX+vEwhqVqhBoqUpnsWIF8VnVHy+Js7usG6Cd2UYTrZZ3W3F+AWQutWHPlnJAGYO+f8P/mOq023aj0OpSustSw2Y5t84UM0sRIHrOJfSnpdXsnM=
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB5465.namprd08.prod.outlook.com (20.178.24.138) with Microsoft SMTP
+ DM6PR08MB4412.namprd08.prod.outlook.com (20.176.82.158) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1750.17; Mon, 1 Apr 2019 18:02:26 +0000
+ 15.20.1750.22; Mon, 1 Apr 2019 18:02:24 +0000
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::1ca7:6cc5:a0b3:e164]) by DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::1ca7:6cc5:a0b3:e164%3]) with mapi id 15.20.1750.021; Mon, 1 Apr 2019
- 18:02:26 +0000
+ 18:02:24 +0000
 From:   "Mazo, Andrey" <amazo@checkvideo.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
@@ -44,12 +44,13 @@ CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
         =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
         Andrey Mazo <ahippo@yandex.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/8] git-p4: don't groom exclude path list on every commit
-Thread-Topic: [PATCH v3 4/8] git-p4: don't groom exclude path list on every
- commit
-Thread-Index: AQHU6LUQZzjar1DN4kml4TvFGRj2CA==
-Date:   Mon, 1 Apr 2019 18:02:26 +0000
-Message-ID: <1bd5e170e00956ba131cf57b680102610a1b4aa2.1554141338.git.amazo@checkvideo.com>
+Subject: [PATCH v3 3/8] git-p4: match branches case insensitively if
+ configured
+Thread-Topic: [PATCH v3 3/8] git-p4: match branches case insensitively if
+ configured
+Thread-Index: AQHU6LUPgABiTghHjkK8/wWQW9SQGQ==
+Date:   Mon, 1 Apr 2019 18:02:24 +0000
+Message-ID: <6eaad2582c14961ec682d299267b279ce16906ef.1554141338.git.amazo@checkvideo.com>
 References: <cover.1553207234.git.amazo@checkvideo.com>
  <cover.1554141338.git.amazo@checkvideo.com>
 In-Reply-To: <cover.1554141338.git.amazo@checkvideo.com>
@@ -66,125 +67,125 @@ x-ms-exchange-messagesentrepresentingtype: 1
 x-mailer: git-send-email 2.19.2
 x-originating-ip: [70.163.25.109]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 63bfcfaf-7e88-4d65-6cf3-08d6b6cc32b1
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600139)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:DM6PR08MB5465;
-x-ms-traffictypediagnostic: DM6PR08MB5465:
-x-microsoft-antispam-prvs: <DM6PR08MB5465D00BCF52AE81A88B339DDA550@DM6PR08MB5465.namprd08.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 1dc4edde-b0b0-4b89-ec25-08d6b6cc316e
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328)(7193020);SRVR:DM6PR08MB4412;
+x-ms-traffictypediagnostic: DM6PR08MB4412:
+x-microsoft-antispam-prvs: <DM6PR08MB4412680C4E3A6D5CF71A3A2FDA550@DM6PR08MB4412.namprd08.prod.outlook.com>
 x-forefront-prvs: 0994F5E0C5
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(396003)(346002)(136003)(39860400002)(189003)(199004)(105586002)(81156014)(2351001)(446003)(36756003)(76176011)(6916009)(11346002)(71190400001)(305945005)(4326008)(102836004)(478600001)(50226002)(7736002)(25786009)(6116002)(5660300002)(14454004)(2906002)(256004)(14444005)(3846002)(6436002)(1730700003)(53936002)(6512007)(26005)(5640700003)(71200400001)(66066001)(7416002)(186003)(6486002)(97736004)(86362001)(2501003)(81166006)(99286004)(316002)(6506007)(386003)(8676002)(54906003)(8936002)(486006)(68736007)(52116002)(2616005)(118296001)(476003)(106356001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB5465;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(136003)(366004)(346002)(376002)(189003)(199004)(6116002)(118296001)(2351001)(66066001)(305945005)(105586002)(6916009)(3846002)(50226002)(97736004)(2501003)(106356001)(8936002)(81166006)(81156014)(7736002)(8676002)(2906002)(1730700003)(54906003)(71200400001)(71190400001)(316002)(14454004)(478600001)(14444005)(256004)(19627235002)(99286004)(446003)(6506007)(386003)(102836004)(52116002)(76176011)(486006)(476003)(2616005)(25786009)(11346002)(7416002)(6436002)(5660300002)(26005)(5640700003)(4326008)(53936002)(6512007)(86362001)(68736007)(36756003)(6486002)(186003);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4412;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: checkvideo.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: AB+2b+rNxZwQxUrm9mswUlktd9+gkIpL6srUmThvS8oa9fzgop6nAJw+qKIEYF37T340TJKElmjX1iNTqksCAYaby4nj79S5fsRV/K1xQU7RJ/XEVsrjvSYIsC90No8ipandTp/pnz3lPcZYPx+wIUv/6ZNSuyzD0mheDRTvpXuHnjeLVaSOwl7YCpBUgiW6rYoxNGb6p+JBPuyxOjckjBFE165qwSCHFmGoHKzd2L37n3D5ftg543loyXMApZKAqULmAlrpkmHY7vKRlYVcVCSbkkuebsIhrMS32P/HuyNbP+WnxSavjNdBObuZpKe80NlINBsF16HmN8ZrxGkavqUK1YhkjahI4llI7LEH63DDguruuumiQ6BPBMjnqgAoOvViJczGmvfWOF2xOaZ77mjnlhPAcEZ/wVDF9hArxjI=
+x-microsoft-antispam-message-info: fiDBXrU0ImMYkwQPExTfhZS16OZF6c7kgLnk4s0kAknoFeiAw/0t5JtCvt79P8BEgoQIGhzywPUcIUaR2SbtvSrFVBJtiprTKrxLWqToUAamK3wcCIcyBZnEVR11RVgH0w7MLKjtyCet7yFy+oqcGbyiY2pqh8Aq47qLxGxfzwnvHz1VpS2M2VZoXVZPgB7ukfg0q2ElS4yKk2LNaQF3NGQu3GEItp1Gv3Bn63J866mD/wZi6TEGmDQ/cFigJwM6RLPi1MlVKC5gJnOAFT9rSTCo4PnxevT1RiYHH/6eF/WCxL3k+dAjXS4PcBCxcsUEMBKJzR1a5Ax9YWEvE3ucM/tLOfrveQiMTCT5QRDZCeE2sFgCOJ6+aP4CoIs7mYhwrL+xMIZay8gezJwFUqbLZxciA68/JlSWuiQAZCifLro=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 63bfcfaf-7e88-4d65-6cf3-08d6b6cc32b1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2019 18:02:26.1837
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1dc4edde-b0b0-4b89-ec25-08d6b6cc316e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2019 18:02:24.1302
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB5465
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4412
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, `cloneExclude` array is being groomed (by removing trailing "...=
-")
-on every changeset.
-(since `extractFilesFromCommit()` is called on every imported changeset)
+git-p4 knows how to handle case insensitivity in file paths
+if core.ignorecase is set.
+However, when determining a branch for a file,
+it still does a case-sensitive prefix match.
+This may result in some file changes to be lost on import.
 
-As a micro-optimization, do it once while parsing arguments.
-Also, prepend "/" and remove trailing "..." at the same time.
+For example, given the following commits
+ 1. add //depot/main/file1
+ 2. add //depot/DirA/file2
+ 3. add //depot/dira/file3
+ 4. add //depot/DirA/file4
+and "branchList =3D main:DirA" branch mapping,
+commit 3 will be lost.
+
+So, do branch search case insensitively if running with core.ignorecase set=
+.
+Teach splitFilesIntoBranches() to use the p4PathStartsWith() function
+for path prefix matches instead of always case-sensitive match.
 
 Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
 ---
- git-p4.py | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ git-p4.py                | 4 ++--
+ t/t9801-git-p4-branch.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index f3e5ccb7af..7edcbad055 100755
+index c0a3068b6f..f3e5ccb7af 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1314,11 +1314,11 @@ class Command:
-     def __init__(self):
-         self.usage =3D "usage: %prog [options]"
-         self.needsGit =3D True
-         self.verbose =3D False
+@@ -2666,11 +2666,11 @@ def stripRepoPath(self, path, prefixes):
+             # branch detection moves files up a level (the branch name)
+             # from what client spec interpretation gives
+             path =3D self.clientSpecDirs.map_in_client(path)
+             if self.detectBranches:
+                 for b in self.knownBranches:
+-                    if path.startswith(b + "/"):
++                    if p4PathStartsWith(path, b + "/"):
+                         path =3D path[len(b)+1:]
 =20
--    # This is required for the "append" cloneExclude action
-+    # This is required for the "append" update_shelve action
-     def ensure_value(self, attr, value):
-         if not hasattr(self, attr) or getattr(self, attr) is None:
-             setattr(self, attr, value)
-         return getattr(self, attr)
+         elif self.keepRepoPath:
+             # Preserve everything in relative path name except leading
+             # //depot/; just look at first prefix as they all should
+@@ -2721,11 +2721,11 @@ def splitFilesIntoBranches(self, commit):
+                 relPath =3D self.stripRepoPath(path, self.depotPaths)
 =20
-@@ -2528,10 +2528,15 @@ def map_in_client(self, depot_path):
-             return self.client_spec_path_cache[depot_path]
+             for branch in self.knownBranches.keys():
+                 # add a trailing slash so that a commit into qt/4.2foo
+                 # doesn't end up in qt/4.2, e.g.
+-                if relPath.startswith(branch + "/"):
++                if p4PathStartsWith(relPath, branch + "/"):
+                     if branch not in branches:
+                         branches[branch] =3D []
+                     branches[branch].append(file)
+                     break
 =20
-         die( "Error: %s is not found in client spec path" % depot_path )
-         return ""
+diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
+index c48532e12b..4779448b4c 100755
+--- a/t/t9801-git-p4-branch.sh
++++ b/t/t9801-git-p4-branch.sh
+@@ -648,11 +648,11 @@ test_expect_success !CASE_INSENSITIVE_FS 'basic p4 br=
+anches for case folding' '
+ 		p4 submit -d "branch1/b1f4"
+ 	)
+ '
 =20
-+def cloneExcludeCallback(option, opt_str, value, parser):
-+    # prepend "/" because the first "/" was consumed as part of the option=
- itself.
-+    # ("-//depot/A/..." becomes "/depot/A/..." after option parsing)
-+    parser.values.cloneExclude +=3D ["/" + re.sub(r"\.\.\.$", "", value)]
-+
- class P4Sync(Command, P4UserMap):
+ # Check that files are properly split across branches when ignorecase is s=
+et
+-test_expect_failure !CASE_INSENSITIVE_FS 'git p4 clone, branchList branch =
+definition, ignorecase' '
++test_expect_success !CASE_INSENSITIVE_FS 'git p4 clone, branchList branch =
+definition, ignorecase' '
+ 	test_when_finished cleanup_git &&
+ 	test_create_repo "$git" &&
+ 	(
+ 		cd "$git" &&
+ 		git config git-p4.branchList main:branch1 &&
+@@ -674,11 +674,11 @@ test_expect_failure !CASE_INSENSITIVE_FS 'git p4 clon=
+e, branchList branch defini
+ 		test_path_is_file b1f4
+ 	)
+ '
 =20
-     def __init__(self):
-         Command.__init__(self)
-         P4UserMap.__init__(self)
-@@ -2551,11 +2556,11 @@ def __init__(self):
-                 optparse.make_option("--keep-path", dest=3D"keepRepoPath",=
- action=3D'store_true',
-                                      help=3D"Keep entire BRANCH/DIR/SUBDIR=
- prefix during import"),
-                 optparse.make_option("--use-client-spec", dest=3D"useClien=
-tSpec", action=3D'store_true',
-                                      help=3D"Only sync files that are incl=
-uded in the Perforce Client Spec"),
-                 optparse.make_option("-/", dest=3D"cloneExclude",
--                                     action=3D"append", type=3D"string",
-+                                     action=3D"callback", callback=3Dclone=
-ExcludeCallback, type=3D"string",
-                                      help=3D"exclude depot path"),
-         ]
-         self.description =3D """Imports from Perforce into a git repositor=
-y.\n
-     example:
-     //depot/my/project/ -- to import the current head
-@@ -2617,12 +2622,10 @@ def checkpoint(self):
-         out =3D self.gitOutput.readline()
-         if self.verbose:
-             print("checkpoint finished: " + out)
-=20
-     def extractFilesFromCommit(self, commit, shelved=3DFalse, shelved_cl =
-=3D 0):
--        self.cloneExclude =3D [re.sub(r"\.\.\.$", "", path)
--                             for path in self.cloneExclude]
-         files =3D []
-         fnum =3D 0
-         while "depotFile%s" % fnum in commit:
-             path =3D  commit["depotFile%s" % fnum]
-=20
-@@ -3888,11 +3891,10 @@ def run(self, args):
-=20
-         if not self.cloneDestination and len(depotPaths) > 1:
-             self.cloneDestination =3D depotPaths[-1]
-             depotPaths =3D depotPaths[:-1]
-=20
--        self.cloneExclude =3D ["/"+p for p in self.cloneExclude]
-         for p in depotPaths:
-             if not p.startswith("//"):
-                 sys.stderr.write('Depot paths must start with "//": %s\n' =
-% p)
-                 return False
-=20
+ # Check that files are properly split across branches when ignorecase is s=
+et, use-client-spec case
+-test_expect_failure !CASE_INSENSITIVE_FS 'git p4 clone with client-spec, b=
+ranchList branch definition, ignorecase' '
++test_expect_success !CASE_INSENSITIVE_FS 'git p4 clone with client-spec, b=
+ranchList branch definition, ignorecase' '
+ 	client_view "//depot/... //client/..." &&
+ 	test_when_finished cleanup_git &&
+ 	test_create_repo "$git" &&
+ 	(
+ 		cd "$git" &&
 --=20
 2.19.2
 
