@@ -2,134 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EA2920248
-	for <e@80x24.org>; Mon,  1 Apr 2019 13:56:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DABE20248
+	for <e@80x24.org>; Mon,  1 Apr 2019 13:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728134AbfDAN41 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 09:56:27 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:36924 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727415AbfDAN40 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 09:56:26 -0400
-Received: by mail-it1-f195.google.com with SMTP id u65so15352731itc.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 06:56:26 -0700 (PDT)
+        id S1727415AbfDAN5a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 09:57:30 -0400
+Received: from mail-ua1-f43.google.com ([209.85.222.43]:34198 "EHLO
+        mail-ua1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726841AbfDAN5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 09:57:30 -0400
+Received: by mail-ua1-f43.google.com with SMTP id c6so3098935uan.1
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 06:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9B6FEI3PpBJ1AvnPPNMXzA/glIWarkda40ZYRxEuYvM=;
-        b=I0L/Sx+A9pvqgzqwnnKiIkRaOvqLEb5DZEFSDCysOMfpcq5QnYVeKutF+olrnJRj+p
-         LksHduzO5E3cQsvhVoOJIjxw5ug4Y6REXfy675kctBOfe5+7gMBfyubX5ii5TacgyMUL
-         gdRqZGH+pCA1N+NmxSpKIfxD7IESCJJq3UOjlq/6okNh3ax/vJhgRQup+CPXmaYBMQje
-         BsZWCfoD0vNNV+sJcYmoeIvwYU0YwlcmPd62TU7AM4ljrvgEJ4kJwr0MqGz4fheuDE/S
-         2bkrpXLapiT7BNHyCqJl8XLcGbgL0FnL7gS2b/rD6cDlHfi1AuICHcYCjhml36796Cc2
-         KWgw==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DJSlER9cFsUlC6iKxG+jxRSBfDmfBWDqiHagB2IhsCM=;
+        b=JmA28Y6X2LPRh2UFGpaqfg0AWWRNmqcemPvrEk0B+ERRWksEZSQJcWXd/KEDJBeBej
+         NbGLab3VH7ln4LEuHnY8KZt+x6Mkq5fVF8iIC44B36kvqvedtWCtf7wUwUqx7wX1Ic4T
+         oIOkr6LnHDuiQXaEiQDRoB6nCgcBIPXXBXa6yLStAuzaEW/Cro1DrUGp49FyhzRWDrOV
+         JLgiXxjSc+FSXvwSbehmKWd1Ihw/rT3EDlRtS5yZErwfjyWVko4NYb77Rkn9Ve/WKtIR
+         njIlOmYsbi6UCUhtBlz0sDh75aF2LZ58rrLBPFR4Hrcex3yxIpjWGT1rNlo3Zo2EylBo
+         RkGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9B6FEI3PpBJ1AvnPPNMXzA/glIWarkda40ZYRxEuYvM=;
-        b=Uhov9qfE5s7iFTDhHTb2ZxCQ7m2Erm2pTPJqv/8jud5bt0NXLGeR1xD+huvEBN6TTF
-         0QN1PbORijswCuadJIjID4WDhS12Kx/sbb9wbWYnyixmBK+R3uiy9nvSf+XV+hZkp2co
-         zeUgwdoQxD+kyHV3Qb+y5nDZBlEbuSnHDhTWQFkaKA9zT6Zq9o/j2n2L2vFyP6k3RkGy
-         TZR80YJC3tadfxvObHU9idYYGhojAXe6Gq81DazuLz8O9OvTJC98oppSIwidX1po83R6
-         M+qjSKq8087Y9LXvLFPXsVSXU7WzK+upTEPASMvoiD2+QUbNhZmeHNSkZt+wfYOnOdQw
-         au9Q==
-X-Gm-Message-State: APjAAAXBkpWxFZxEH0JljJM6QyIZYwzuI1L1lcMYDjN0gjqEeh6q1eOu
-        SUpLjmMkQXjjPtF2/xist7WyBBwk2jEmG5Tr2HAl/g==
-X-Google-Smtp-Source: APXvYqz5xLG2V4prS6sXeOtP3EnQzl/AjTEBHOQGoaxHwCQySKdQXrdMUtFFeHm1PoP7KMBiQI8LB0OhdjobzBE/zgo=
-X-Received: by 2002:a24:4755:: with SMTP id t82mr14350648itb.72.1554126985913;
- Mon, 01 Apr 2019 06:56:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DJSlER9cFsUlC6iKxG+jxRSBfDmfBWDqiHagB2IhsCM=;
+        b=E7IbiNo1fwy+8yHSsd0PyaPj5a83aYmWQjVsH0Oo/6r2IKG8RjL6a3VKpn4pQCUEb/
+         2P/K2BH5UMpWiHGhcjA4kKLIywlLy5AJAgY+d+wBx13py341ZgSC6LgBrNaBP6zvMRgQ
+         10uWqcSQikGZPH6a7P+siLIqqDNu4+voLeTR7VcGVsTwTEDr/36xlfMt67KZ1odxeeaP
+         bixMAzikRs1M5QKumSbWMNv6BZPeZ+/rkjnDrfXQCn+kFsVCt+MIDHv2Hy/rfbKpkrWc
+         ox4Zl9eWHKTu2ucd9kJ6so7JEQQmCPdh3ORmW4JO+Uit/Y3f/JU+nDkbBwawLvTEi482
+         gi6g==
+X-Gm-Message-State: APjAAAUdKALDkRpvf55ftmGooQNuCbC95jOV496BFsQQ8az6x7roO96u
+        9ld2jhdLNKNy1hGWyJNi89bDLoOEKHLzmqZOFtrkHTlg
+X-Google-Smtp-Source: APXvYqwPYY+leDbIQu6z4D8SZj7EN0kFUZ0sooPuBN32sp3NWZ89R7Y0p93RJxBTW5RncsWMJJFhRoOy5qjyjy6WZUU=
+X-Received: by 2002:a9f:2c8b:: with SMTP id w11mr35361328uaj.17.1554127048901;
+ Mon, 01 Apr 2019 06:57:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190322232237.13293-1-matheus.bernardino@usp.br>
- <20190330224907.3277-1-matheus.bernardino@usp.br> <20190331181635.GU32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190331181635.GU32487@hank.intra.tgummerer.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 1 Apr 2019 10:56:14 -0300
-Message-ID: <CAHd-oW63ysav-xgL4txuwMTtu+EPi5W82SOoKFpgfPz9eKz0Nw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 0/7] clone: dir-iterator refactoring with tests
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kernel USP <kernel-usp@googlegroups.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From:   Jan Ziak <0xe2.0x9a.0x9b@gmail.com>
+Date:   Mon, 1 Apr 2019 15:57:17 +0200
+Message-ID: <CAODFU0rSSeLReFKci_p3kjJwxD65R21syDTHoKcqWJ0wbF8jZQ@mail.gmail.com>
+Subject: git-gui: executed hooks are different from command-line git if
+ hooksPath is set
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="000000000000afb0f30585786622"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 31, 2019 at 3:16 PM Thomas Gummerer <t.gummerer@gmail.com> wrot=
-e:
->
-> On 03/30, Matheus Tavares wrote:
-> > This patchset contains:
-> > - a replacement of explicit recursive dir iteration at
-> >   copy_or_link_directory for the dir-iterator API;
-> > - some refactoring and behaviour changes at local clone, mainly to
-> >   take care of symlinks and hidden files at .git/objects; and
-> > - tests for this type of files
->
-> Thanks.  I read through the series, and only found a few minor nits.
->
-> One note on the cover letter, as I'm not sure I mentioned this before.
-> But as the series progresses and there are less changes in individual
-> patches, it is useful to include a 'range-diff', so reviewers can
-> quickly see what changed in the series.  This is especially useful if
-> they can still remember the last iteration, so they don't necessarily
-> have to re-read the whole series.
->
-> This can be added using the '--range-diff' option in 'git
-> format-patch'.
+--000000000000afb0f30585786622
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks! I think you've said it earlier, but I forgot to use. I will
-include it in v6! Thanks for remembering me about it.
+Hello
 
-> > Changes since v4:
-> > - Improved and fixed errors at messages from patches 1, 3, 5, 6 and 7.
-> > - At first patch:
-> >   - Simplified construction, changing a multi-line cat for an echo.
-> >   - Removed unnecessary subshells.
-> >   - Disabled gc.auto, just to make sure we don't get any undesired
-> >     behaviour for this test
-> >   - Removed the first section of a sed command ("s!/..\$!/X!;")
-> >     that converts SHA-1s to fixed strings. No SHA-1 seemed to
-> >     be changed by this section and neither it seemed to be used
-> >     after the command.
-> > - At second patch, removed linkat() usage, which is  POSIX.1-2008
-> >   and may not be supported in all platforms git is being built.
-> >   Now the same effect is achieved using real_pathdup() + link().
-> >
-> > v4: https://public-inbox.org/git/20190322232237.13293-1-matheus.bernard=
-ino@usp.br/
-> >
-> > Matheus Tavares (6):
-> >   clone: better handle symlinked files at .git/objects/
-> >   dir-iterator: add flags parameter to dir_iterator_begin
-> >   clone: copy hidden paths at local clone
-> >   clone: extract function from copy_or_link_directory
-> >   clone: use dir-iterator to avoid explicit dir traversal
-> >   clone: replace strcmp by fspathcmp
-> >
-> > =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason (1):
-> >   clone: test for our behavior on odd objects/* content
-> >
-> >  builtin/clone.c            |  75 ++++++++++++---------
-> >  dir-iterator.c             |  28 +++++++-
-> >  dir-iterator.h             |  39 +++++++++--
-> >  refs/files-backend.c       |   2 +-
-> >  t/t5604-clone-reference.sh | 133 +++++++++++++++++++++++++++++++++++++
-> >  5 files changed, 235 insertions(+), 42 deletions(-)
-> >
-> > --
-> > 2.20.1
-> >
+Command-line "git commit" and graphical "git gui" commit are invoking
+different hooks if hooksPath is set in $HOME/.gitconfig.
+
+Namely, in my case command-line "git commit" runs
+"/home/atom/dev/git-hooks/post-commit" - while "git gui" commit runs
+".git/hooks/post-commit".
+
+Please run the attached shell script in an empty directory to
+reproduce this issue. The script is using strace to determine which
+hook is being executed. The script will run "git gui": the user is
+expected to simply commit changes from the gui and then close the gui
+for the script to finish.
+
+Script output:
+  command-line: access("/home/atom/dev/git-hooks/post-commit", X_OK)
+  gui: access(".git/hooks/post-commit", X_OK)
+
+$ cat ~/.gitconfig
+[core]
+    hooksPath = /home/atom/dev/git-hooks
+
+git version 2.21.0
+
+Sincerely
+Jan
+
+--000000000000afb0f30585786622
+Content-Type: application/x-shellscript; name="a.sh"
+Content-Disposition: attachment; filename="a.sh"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jtyeudv00>
+X-Attachment-Id: f_jtyeudv00
+
+IyEvYmluL2Jhc2gKc2V0IC1lCgpncmVwIC1xIGhvb2tzUGF0aCB+Ly5naXRjb25maWcgfHwgeyBl
+Y2hvICJtaXNzaW5nIGhvb2tzUGF0aCBpbiAuZ2l0Y29uZmlnIjsgZXhpdCAxOyB9CgpnaXQgaW5p
+dAplY2hvICIjIS9iaW4vYmFzaCIgPiAuZ2l0L2hvb2tzL3Bvc3QtY29tbWl0CmNobW9kICt4IC5n
+aXQvaG9va3MvcG9zdC1jb21taXQKCmZvcigoaT0wOyBpPDEwOyBpKyspKTsgZG8KCWVjaG8gbGlu
+ZTEgPiBmaWxlJGkKZG9uZQpnaXQgYWRkIGZpbGUqCmdpdCBjb21taXQgLW0gImluaXRpYWwgY29t
+bWl0IgoKZm9yKChpPTA7IGk8MTA7IGkrKykpOyBkbwoJZWNobyBsaW5lMiA+PiBmaWxlJGkKZG9u
+ZQpnaXQgYWRkIGZpbGUqCnN0cmFjZSAtZiAtbyBnaXQtY29tbWl0LnN0cmFjZSAtdiAtLSBnaXQg
+Y29tbWl0IC1tICJjb21taXQiCgpmb3IoKGk9MDsgaTwxMDsgaSsrKSk7IGRvCgllY2hvIGxpbmUz
+ID4+IGZpbGUkaQpkb25lCmdpdCBhZGQgZmlsZSoKc3RyYWNlIC1mIC1vIGdpdC1ndWkuc3RyYWNl
+IC12IC0tIGdpdCBndWkKCmVjaG8KZ3JlcCAtLWNvbG9yIHBvc3QtIGdpdC1jb21taXQuc3RyYWNl
+CmVjaG8KZ3JlcCAtLWNvbG9yIHBvc3QtIGdpdC1ndWkuc3RyYWNlCgplY2hvCmdyZXAgcG9zdC0g
+Z2l0LWNvbW1pdC5zdHJhY2UgfCBncmVwIC0tY29sb3IgR0lUX0RJUiB8fCBlY2hvICIhISEgbWlz
+c2luZyBHSVRfRElSIGluIGdpdC1jb21taXQuc3RyYWNlIgplY2hvCmdyZXAgcG9zdC0gZ2l0LWd1
+aS5zdHJhY2UgfCBncmVwIC0tY29sb3IgR0lUX0RJUiB8fCBlY2hvICIhISEgbWlzc2luZyBHSVRf
+RElSIGluIGdpdC1ndWkuc3RyYWNlIgo=
+--000000000000afb0f30585786622--
