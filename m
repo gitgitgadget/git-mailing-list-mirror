@@ -2,187 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 913F920248
-	for <e@80x24.org>; Tue,  2 Apr 2019 18:36:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29B9C20248
+	for <e@80x24.org>; Tue,  2 Apr 2019 19:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729308AbfDBSgH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Apr 2019 14:36:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56179 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728359AbfDBSgH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Apr 2019 14:36:07 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F214A64ED0;
-        Tue,  2 Apr 2019 14:35:59 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=74xv6UM0j2BZnrv2w9q/wnYO5
-        bw=; b=V7cXXUH4TaQX/QaO6JZrgKCr9ljAk+5GI48Ln+ZxA7Kcdo9XBxsHi/11e
-        4aROMMfmAziCB3MtpBL1j1syQEI95ccFqBHCjm+4wpHhN0PUHMvy66L1ZwelLRo2
-        X3Nx7vHbRVtltGX5QR1UzsYEe2CChgxCZQLIAdnrnyz3vb6v7U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D3F7464ECF;
-        Tue,  2 Apr 2019 14:35:59 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=9N75kEzyWaWhMWYHfD6WhxOj/85mJoxLTWMSyfxupD0=; b=FMC9mFi5gKLHFDkaDNYb+fYHLFK5RFPKE3TZ6Ac2dukNG1uWxMoZO+FVV5D3MjYHhanjFyFs5AlovhwoxhHyt3uy28MFHCfKuhm/y01rztsFUIPY1etJ2ncgGOdNcbwLNbUl9Te22CIPL5rOKZS3vSGgbqOP6Vgv4cecbEFnFTI=
-Received: from hylob.dartmouth.edu (unknown [129.170.31.50])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C84D64ECA;
-        Tue,  2 Apr 2019 14:35:55 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Cc:     debian@onerussian.com
-Subject: [PATCH v2 4/4] dir: do not traverse repositories with no commits
-Date:   Tue,  2 Apr 2019 14:35:05 -0400
-Message-Id: <20190402183505.31512-5-kyle@kyleam.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190402183505.31512-1-kyle@kyleam.com>
-References: <87lg1eq146.fsf@kyleam.com>
- <20190402183505.31512-1-kyle@kyleam.com>
+        id S1730094AbfDBTHJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Apr 2019 15:07:09 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:52396 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726083AbfDBTHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Apr 2019 15:07:09 -0400
+Received: by mail-it1-f195.google.com with SMTP id x132so5009687itf.2
+        for <git@vger.kernel.org>; Tue, 02 Apr 2019 12:07:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m7Fnl+NRmaVX5Q28tvHO2Erurvf0mYOwE6C6uF/vs18=;
+        b=zYQ5PtylmPhV5BvUl3GvuqWmT5an2yrMRChlnt6r8DQRZ8/zlWoJe1Y8QUDGc8Db8D
+         rUYmmvbJuC/7r+l2zC9ZnStHkVsCZuXM7W7RUkPZmgBB2pRF1xfC57OttQEoBPdDhT4m
+         X/tnodIsn1lUCMxcdC44jKlk0qndbZZYkvwf8InAtmylP8GhFZkdLOmzne0vGYUtRAzs
+         lsvKrm2wK9FYllcnhKG9uGlUtdsy9//Q1GCcGe3IxdOI+/JAuNSB2aeGhH4ZXWEORYpJ
+         19RMsviQIWcnkBPAx7yVItDpqbKX6sQT2oLANGV+dVXw4mzpBkGE2LP0GWy94ctxYm9x
+         h2cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m7Fnl+NRmaVX5Q28tvHO2Erurvf0mYOwE6C6uF/vs18=;
+        b=kqZzTXEZC71sEHuBxHgmfXqWGruikv/5gPtKJqON9jjzvgFK3YDnSwvxiq+DHq2n7v
+         BuuefWZAGY1YnywkqbDrzM2dXNwl20zAGaJfl5lcOKAaGVD7bEiW3iTKbANHxmpgYnT9
+         WFR6YKrvNKjj47ZsPmhu0L5KfgJdO2zGSJ8YAL2IogkFIf5afmmb3erY1eATUWbVfrBr
+         rM1tiYrfZSEAR5a//2cqYiRnEgaG7mwC67HWxJpIUrlHRqjexwnYsBXSgitFuWoCjO4/
+         HGMCU9+Kn1Qk1iwxIHLS46y/oqVhCL0FshPzcARJUVf8Vh8svG3skdRcq45f8S74zNYu
+         B3FA==
+X-Gm-Message-State: APjAAAUO/DWOxhpZqMa0k7XFEsfssNgKtayI2CMxQfSwNFpQRoh5MH6r
+        7LjEMnPDoUeTabOCtGpS9NTOJugirnP1aH/sE/U8wg==
+X-Google-Smtp-Source: APXvYqwa+BC1nqF5lQNszNNvYq3DX4uhtbF53EfkvRNoviYF5MKtkuDujQeZ/ePGiGmR1cj2srviGbgKHuvDJ+Hsfyc=
+X-Received: by 2002:a24:4511:: with SMTP id y17mr5337250ita.20.1554232028518;
+ Tue, 02 Apr 2019 12:07:08 -0700 (PDT)
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 27C0246A-5576-11E9-9AE0-EE24A11ADF13-24757444!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+ <20190402005245.4983-1-matheus.bernardino@usp.br> <CACsJy8BSDz1JO+w1N9w2W1zxY+EWTxiU6yB_V0eeOD--g-TzeA@mail.gmail.com>
+In-Reply-To: <CACsJy8BSDz1JO+w1N9w2W1zxY+EWTxiU6yB_V0eeOD--g-TzeA@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 2 Apr 2019 16:06:57 -0300
+Message-ID: <CAHd-oW5K5VrbhfYw+-bWmYXbysH1z8b2kSuDvxhPKBXgXj=KXw@mail.gmail.com>
+Subject: Re: Make the git codebase thread-safe
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Zager <szager@chromium.org>,
+        Stefan Zager <szager@google.com>,
+        Zachary Turner <zturner@chromium.org>,
+        "Robin H . Johnson" <robbat2@gentoo.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        David Kastrup <dak@gnu.org>, Alfredo Goldman <gold@ime.usp.br>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When treat_directory() encounters a directory that is not in the index
-and DIR_NO_GITLINKS is unset, it calls resolve_gitlink_ref() to decide
-if a directory looks like a repository, in which case the directory
-won't be traversed.  As a result, 'status -uall' and 'ls-files -o'
-will show only the directory, even when there are untracked files
-within the directory.
+On Mon, Apr 1, 2019 at 10:07 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Tue, Apr 2, 2019 at 7:52 AM Matheus Tavares
+> <matheus.bernardino@usp.br> wrote:
+> > I downloaded chromium to give it a try and got (on a machine with i7 and
+> > SSD, running Manjaro Linux):
+> >
+> > - 17s on blame for a file with long history[2]
+> > - 2m on blame for a huge file[3]
+> > - 15s on log for both [2] and [3]
+> > - 1s for git status
+> >
+> > It seems quite a lot, especially with SSD, IMO.
+>
+> There have been a couple of optimizations that are probably still not
+> enabled by default because they only benefit large repos. So you may
+> want to check and turn them on before measuring anything:
+> commit-graph, pack bitmap, untracked cache or fsmonitor. All these
+> should be mentioned in 'git help config' (as starting point). Also
+> search "threads" in that man page because some commands may have multi
+> threads support but disabled by default for the same reason.
 
-For the unusual case where a repository doesn't have any commits,
-resolve_gitlink_ref() returns -1 because HEAD cannot be resolved, and
-the directory is treated as a normal directory (i.e. traversal does
-not stop at the repository boundary).  The status and ls-files
-commands above list untracked files within the repository rather than
-showing only the top-level directory.
+Nice, thanks for the suggestions!
 
-The above case is a corner case in an already unusual situation of the
-working tree containing a repository that is not a tracked submodule,
-but we might as well treat anything that looks like a repository
-consistently.  Loosen the "looks like a repository" criteria in
-treat_directory() by replacing resolve_gitlink_ref() with
-is_nonbare_repository_dir(), one of the checks that is performed
-downstream when resolve_gitlink_ref() is called with an empty
-repository.
+> From your command list though, I think you might get the same results
+> (maybe with a bit faster 'git status') even with all optimizations on.
 
-As the required update to t3700-add shows, being looser with the check
-means that we're stricter when adding empty repositories to the index:
+Yes, you were right. With the optimizations on, I got the following
+times on those same files:
 
-  % git add repo
-  warning: adding embedded git repository: repo
-  hint: You've added another git repository inside your current repositor=
-y.
-  hint: [...]
-  error: unable to index file 'repo/'
-  fatal: adding files failed
+- 17~18s on blame for about_flags.cc
+- 1m50s~2m on blame for sqlite3.c
+- 15s on log for both
+- 0.3~0.5s on git status
 
-That error message isn't particularly helpful in this situation, but
-it seems preferable to the old behavior of adding the repository's
-untracked files.  And if the caller really wants the previous
-behavior, they can get it by adding a trailing slash.
-
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- dir.c                                   |  6 ++++--
- t/t3009-ls-files-others-nonsubmodule.sh | 22 +++++++++++++++++++++-
- t/t3700-add.sh                          |  1 +
- 3 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index b2cabadf25..a4e59eb351 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1467,9 +1467,11 @@ static enum path_treatment treat_directory(struct =
-dir_struct *dir,
- 			return path_none;
- 		}
- 		if (!(dir->flags & DIR_NO_GITLINKS)) {
--			struct object_id oid;
--			if (resolve_gitlink_ref(dirname, "HEAD", &oid) =3D=3D 0)
-+			struct strbuf sb =3D STRBUF_INIT;
-+			strbuf_addstr(&sb, dirname);
-+			if (is_nonbare_repository_dir(&sb))
- 				return exclude ? path_excluded : path_untracked;
-+			strbuf_release(&sb);
- 		}
- 		return path_recurse;
- 	}
-diff --git a/t/t3009-ls-files-others-nonsubmodule.sh b/t/t3009-ls-files-o=
-thers-nonsubmodule.sh
-index 9ed75928aa..be4e7e26bc 100755
---- a/t/t3009-ls-files-others-nonsubmodule.sh
-+++ b/t/t3009-ls-files-others-nonsubmodule.sh
-@@ -8,6 +8,14 @@ This test runs git ls-files --others with the following =
-working tree:
-       directory with no files aside from a bogus .git file
-     repo-bogus-untracked-file/
-       directory with a bogus .git file and another untracked file
-+    repo-no-commit-no-files/
-+      git repository without a commit or a file
-+    repo-no-commit-untracked-file/
-+      git repository without a commit but with an untracked file
-+    repo-with-commit-no-files/
-+      git repository with a commit and no untracked files
-+    repo-with-commit-untracked-file/
-+      git repository with a commit and an untracked file
- '
-=20
- . ./test-lib.sh
-@@ -17,6 +25,10 @@ test_expect_success 'setup: expected output' '
- 	expected
- 	output
- 	repo-bogus-untracked-file/untracked
-+	repo-no-commit-no-files/
-+	repo-no-commit-untracked-file/
-+	repo-with-commit-no-files/
-+	repo-with-commit-untracked-file/
- 	EOF
- '
-=20
-@@ -25,7 +37,15 @@ test_expect_success 'setup: directories' '
- 	echo foo >repo-bogus-no-files/.git &&
- 	mkdir repo-bogus-untracked-file &&
- 	echo foo >repo-bogus-untracked-file/.git &&
--	: >repo-bogus-untracked-file/untracked
-+	: >repo-bogus-untracked-file/untracked &&
-+	git init repo-no-commit-no-files &&
-+	git init repo-no-commit-untracked-file &&
-+	: >repo-no-commit-untracked-file/untracked &&
-+	git init repo-with-commit-no-files &&
-+	git -C repo-with-commit-no-files commit --allow-empty -mmsg &&
-+	git init repo-with-commit-untracked-file &&
-+	test_commit -C repo-with-commit-untracked-file msg &&
-+	: >repo-with-commit-untracked-file/untracked
- '
-=20
- test_expect_success 'ls-files --others handles non-submodule .git' '
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index be582a513b..5a8425962b 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -396,6 +396,7 @@ test_expect_success 'no file status change if no path=
-spec is given in subdir' '
- '
-=20
- test_expect_success 'all statuses changed in folder if . is given' '
-+	rm -fr empty &&
- 	git add --chmod=3D+x . &&
- 	test $(git ls-files --stage | grep ^100644 | wc -l) -eq 0 &&
- 	git add --chmod=3D-x . &&
---=20
-2.21.0
-
+> --
+> Duy
