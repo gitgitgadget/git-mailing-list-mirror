@@ -2,82 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FE8520248
-	for <e@80x24.org>; Tue,  2 Apr 2019 00:58:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7C420248
+	for <e@80x24.org>; Tue,  2 Apr 2019 01:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbfDBA6E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Apr 2019 20:58:04 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52363 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbfDBA6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Apr 2019 20:58:04 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a184so1341035wma.2
-        for <git@vger.kernel.org>; Mon, 01 Apr 2019 17:58:03 -0700 (PDT)
+        id S1727948AbfDBBHq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Apr 2019 21:07:46 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:38862 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbfDBBHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Apr 2019 21:07:46 -0400
+Received: by mail-it1-f194.google.com with SMTP id f22so2430663ita.3
+        for <git@vger.kernel.org>; Mon, 01 Apr 2019 18:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5r90QCAHv5nmf8hYTnOLPAKU8Drz9XL2yStTETObLF0=;
-        b=FQsnmLqm/JeNJ91/Gk01DPFDW5yOrGjvzce+teWnngrUKM+0fci2Igxjhse0ejirKM
-         xd3zxuCyZNNW82zpB34g3PBHMPBqAal2kpwvX2R3zxbkTudhJIDxH25xSNluid76ba4a
-         c12+npfPWGS7YewdJbYLRQHHlYXe4AbbyS0JXI0PIKQNPukHrzeuvW7K/Magl++78niZ
-         Ov8gs40lIHKqs5MgWx4mWsW0wnuvSG91ZRagLD0FD2BJdM3ahCYOusQxX60t9qgy8fZx
-         5v7xEWlnr+hvHlpLoqX7AvHtqdIN6S40DdIPWcmRwTd1om8ina1xE6jRFq4L9bsP028c
-         K4Hg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OBYR6ViogUV8b5pNT6ff5rVwFhOD0kpDEk+U1ozZjS4=;
+        b=n6Mw+pxveeuwu3ni5XTEpREw23UiPg6uzEB4A1Cs0M7EAOiT5wXkTm8FX7+1LCKbdJ
+         lEA9nV6jzoGuuc2RmMcBNpcx+v6hCi4prWrswfPI6JKFInT5vNmIraXoA2KbZ/YSnHG6
+         b5C4Snon+BePAxOHwsjlMdLOAd48pDT5cb5irtUr6whC+yHWMrFP4feLZvRATs7nJANd
+         1/yojnGjrEfLD1SLbMfFdW7536HDx1T5+vw9HgSNOgYDOB9qCE/Jtbu5zC7XhDsgu8Vx
+         26Wqr4tSuT1M2Wqv9iDezOwMJ5fKfHsODA34xrSE9EZC5YqDNemKxkQdiLnQZyyc+/jt
+         N+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5r90QCAHv5nmf8hYTnOLPAKU8Drz9XL2yStTETObLF0=;
-        b=ApDducvKgGDPwvqvmnVRj3c0SIbXXXcPXLb6WBChqnCwbjj5Zo4g/71CtUgXJRh6LN
-         MVSewIZ3AXNoAoNBWk3xfGoVMjX8rPSGsDhH894lBTZKVnTD3TFSBsCqMA11eF2RX95s
-         VYeMTGTkPO5BlNZcocZ5SGmns3a0b57zWhzY1PDXsO/lZ+kzFOq7yOtovUAWKKD0QXAI
-         NWpgAp0MG5dVLrPDw6R6iqhksYWy1v/cIzmWEwYU0an3mhwoN1mnpvIwmMUA3wVKDRc4
-         o8a4WdJTXrPms+VpK3ro19jALH6KhbWEKPSP3Uok6xBl+b79qiHVM57RuCMXCJ3LoFcS
-         Jsew==
-X-Gm-Message-State: APjAAAVpQP/S09WnMM+hA449q/OER977Y8ipzN3GggbXX9CiGVWaYR/5
-        yxTCr6z5++hKpcLMvLEMbCU=
-X-Google-Smtp-Source: APXvYqzCSSNDmdPz7AAIeN6T0bevKyAJwKPkXWOIfnkPzUOqB/CiUa7vm3NDQ/+jM2Dk0cRUpl2zXg==
-X-Received: by 2002:a1c:be0e:: with SMTP id o14mr1376566wmf.11.1554166682283;
-        Mon, 01 Apr 2019 17:58:02 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id y125sm19590839wmc.39.2019.04.01.17.58.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 01 Apr 2019 17:58:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 0/8] Do not use abbreviated options in tests
-References: <pull.167.git.gitgitgadget@gmail.com>
-Date:   Tue, 02 Apr 2019 09:58:01 +0900
-In-Reply-To: <pull.167.git.gitgitgadget@gmail.com> (Johannes Schindelin via
-        GitGitGadget's message of "Mon, 25 Mar 2019 11:14:17 -0700 (PDT)")
-Message-ID: <xmqqy34tte92.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OBYR6ViogUV8b5pNT6ff5rVwFhOD0kpDEk+U1ozZjS4=;
+        b=r8mXdOqiLmK7VtY60wGr8DzKLChq9FagCcr8NxlTwP/LDFoMNABcNxX2tP5rVuM7aX
+         35MhdBZbesbnhdLuPhXBkLOSU2fUzwjQLLPHn1jhsl1Z1aATfdTpkT/DEjP9blEU47dU
+         SpMgSJF1BGYeFZymqUoHoN/Ntd1/eY5lsUJj3G7mrZ7iCzUB2PGFUYWAkc1GpHx6c9VK
+         +ASPHWrBn+1hH0G0X69fVLm8hJcE1L/MdTahiOFP5H7VMBHk4aKy5mmICQyZTVSOrF4R
+         VqG80dpqZt79poFA03c23Z6qK7jbtmsaBkTydQlQyR+esyFz3Td0SIqtzk4Dgor4Cuj9
+         La4g==
+X-Gm-Message-State: APjAAAVOU6k+GC0yyskTm3F9NKiQwQs4pZmAZpazcJGVo7EJKmbLw6l3
+        4RGHAtmiD37X9oNkzvDViwlrAWso+ZRcCLhJDeI=
+X-Google-Smtp-Source: APXvYqzZA9jPcbqG4Fidn1ZI8fOgvdaRLSxe9qtxWGIofRvgAwPDq17uwkj8yDipqeDsuHMbY9SaQMyUQpyGth18Kus=
+X-Received: by 2002:a24:5e06:: with SMTP id h6mr1883426itb.107.1554167265186;
+ Mon, 01 Apr 2019 18:07:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+ <20190402005245.4983-1-matheus.bernardino@usp.br>
+In-Reply-To: <20190402005245.4983-1-matheus.bernardino@usp.br>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 2 Apr 2019 08:07:18 +0700
+Message-ID: <CACsJy8BSDz1JO+w1N9w2W1zxY+EWTxiU6yB_V0eeOD--g-TzeA@mail.gmail.com>
+Subject: Re: Make the git codebase thread-safe
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Zager <szager@chromium.org>,
+        Stefan Zager <szager@google.com>,
+        Zachary Turner <zturner@chromium.org>,
+        "Robin H . Johnson" <robbat2@gentoo.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        David Kastrup <dak@gnu.org>, Alfredo Goldman <gold@ime.usp.br>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Tue, Apr 2, 2019 at 7:52 AM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
+> I downloaded chromium to give it a try and got (on a machine with i7 and
+> SSD, running Manjaro Linux):
+>
+> - 17s on blame for a file with long history[2]
+> - 2m on blame for a huge file[3]
+> - 15s on log for both [2] and [3]
+> - 1s for git status
+>
+> It seems quite a lot, especially with SSD, IMO.
 
-> We do not want to have tests that need to be changed by completely unrelated
-> patch series, just because abbreviations that used to be unique are being
-> made non-unique by said patch series.
+There have been a couple of optimizations that are probably still not
+enabled by default because they only benefit large repos. So you may
+want to check and turn them on before measuring anything:
+commit-graph, pack bitmap, untracked cache or fsmonitor. All these
+should be mentioned in 'git help config' (as starting point). Also
+search "threads" in that man page because some commands may have multi
+threads support but disabled by default for the same reason.
 
-Makes sense.
-
-If we wanted to make sure that options in abbreviated form work
-correctly, we should do so in dedicated parseopt-specific tests (and
-we do in t0040, I think), not in tests for random other commands
-that happens to feed options to them.
-
-Will queue.
+From your command list though, I think you might get the same results
+(maybe with a bit faster 'git status') even with all optimizations on.
+-- 
+Duy
