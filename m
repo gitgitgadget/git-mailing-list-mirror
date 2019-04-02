@@ -7,118 +7,182 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A672A20248
-	for <e@80x24.org>; Tue,  2 Apr 2019 18:36:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 913F920248
+	for <e@80x24.org>; Tue,  2 Apr 2019 18:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729289AbfDBSgB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Apr 2019 14:36:01 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58671 "EHLO
+        id S1729308AbfDBSgH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Apr 2019 14:36:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56179 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728724AbfDBSgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Apr 2019 14:36:01 -0400
+        with ESMTP id S1728359AbfDBSgH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Apr 2019 14:36:07 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B70E164ECC;
-        Tue,  2 Apr 2019 14:35:56 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F214A64ED0;
+        Tue,  2 Apr 2019 14:35:59 -0400 (EDT)
         (envelope-from kyle@kyleam.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=Ln+3RKIc4+1gtv687vJ+Y+jNx
-        zw=; b=DwMf2B1/EqGyXnaEPfAjrA3T8Jo8EfEJHnWnxKAu5hOjAGuKbAi5N19wf
-        FBq/5cASGYSK4y8Zf9RHbGbI18hjEzBCJfdyDReNQuK/0sk+uF8FhMlHipZ4Nkku
-        F+96bdUY/8aHOkI2nvQUjAXoyF7INrH9HBGhg5M0WBJpVh1E4c=
+        :content-transfer-encoding; s=sasl; bh=74xv6UM0j2BZnrv2w9q/wnYO5
+        bw=; b=V7cXXUH4TaQX/QaO6JZrgKCr9ljAk+5GI48Ln+ZxA7Kcdo9XBxsHi/11e
+        4aROMMfmAziCB3MtpBL1j1syQEI95ccFqBHCjm+4wpHhN0PUHMvy66L1ZwelLRo2
+        X3Nx7vHbRVtltGX5QR1UzsYEe2CChgxCZQLIAdnrnyz3vb6v7U=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE5DA64ECB;
-        Tue,  2 Apr 2019 14:35:56 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D3F7464ECF;
+        Tue,  2 Apr 2019 14:35:59 -0400 (EDT)
         (envelope-from kyle@kyleam.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=8pBgDRBYkQqv/MU3KvmVVM3Y0EvyNV9T1zL4ECxoaaU=; b=ZYGcKAI6klbkqVH8y7P1n+nb/nn//1psDN2hYfKNXWkRi3Q4dwDrSLEtbOFwe/7BeLMBbymD7TWmydo9S2LAIQdb0M5VOjsy3BPFF3vIqKld84cXRevfZGFfqIzJVHoPfqIHcB8eag7LIqMKzd/yI12zKNcFw4yBwnwx9HBfXQQ=
+ h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=9N75kEzyWaWhMWYHfD6WhxOj/85mJoxLTWMSyfxupD0=; b=FMC9mFi5gKLHFDkaDNYb+fYHLFK5RFPKE3TZ6Ac2dukNG1uWxMoZO+FVV5D3MjYHhanjFyFs5AlovhwoxhHyt3uy28MFHCfKuhm/y01rztsFUIPY1etJ2ncgGOdNcbwLNbUl9Te22CIPL5rOKZS3vSGgbqOP6Vgv4cecbEFnFTI=
 Received: from hylob.dartmouth.edu (unknown [129.170.31.50])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DD1B364EC7;
-        Tue,  2 Apr 2019 14:35:52 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C84D64ECA;
+        Tue,  2 Apr 2019 14:35:55 -0400 (EDT)
         (envelope-from kyle@kyleam.com)
 From:   Kyle Meyer <kyle@kyleam.com>
 To:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
 Cc:     debian@onerussian.com
-Subject: [PATCH v2 3/4] t3009: test that ls-files -o traverses bogus repo
-Date:   Tue,  2 Apr 2019 14:35:04 -0400
-Message-Id: <20190402183505.31512-4-kyle@kyleam.com>
+Subject: [PATCH v2 4/4] dir: do not traverse repositories with no commits
+Date:   Tue,  2 Apr 2019 14:35:05 -0400
+Message-Id: <20190402183505.31512-5-kyle@kyleam.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190402183505.31512-1-kyle@kyleam.com>
 References: <87lg1eq146.fsf@kyleam.com>
  <20190402183505.31512-1-kyle@kyleam.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 25E063EE-5576-11E9-A4D1-EE24A11ADF13-24757444!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 27C0246A-5576-11E9-9AE0-EE24A11ADF13-24757444!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a2d5156c2b (resolve_gitlink_ref: ignore non-repository paths,
-2016-01-22) added this test, the purpose was to check the 'ls-files
--o' didn't die() when processing the bogus repository.  The expected
-output didn't even need to be adjusted for the addition because the
-bogus repository is treated as an empty directory.
+When treat_directory() encounters a directory that is not in the index
+and DIR_NO_GITLINKS is unset, it calls resolve_gitlink_ref() to decide
+if a directory looks like a repository, in which case the directory
+won't be traversed.  As a result, 'status -uall' and 'ls-files -o'
+will show only the directory, even when there are untracked files
+within the directory.
 
-Let's add another scenario to test that 'ls-files -o' lists an
-untracked file within this directory.  Doing so isn't useful for the
-original purpose of the test, but it will be helpful for highlighting
-that this traversal does _not_ happen in the non-bogus scenarios that
-will be added next.  Rename the original subdirectory to highlight the
-difference with the new one.
+For the unusual case where a repository doesn't have any commits,
+resolve_gitlink_ref() returns -1 because HEAD cannot be resolved, and
+the directory is treated as a normal directory (i.e. traversal does
+not stop at the repository boundary).  The status and ls-files
+commands above list untracked files within the repository rather than
+showing only the top-level directory.
+
+The above case is a corner case in an already unusual situation of the
+working tree containing a repository that is not a tracked submodule,
+but we might as well treat anything that looks like a repository
+consistently.  Loosen the "looks like a repository" criteria in
+treat_directory() by replacing resolve_gitlink_ref() with
+is_nonbare_repository_dir(), one of the checks that is performed
+downstream when resolve_gitlink_ref() is called with an empty
+repository.
+
+As the required update to t3700-add shows, being looser with the check
+means that we're stricter when adding empty repositories to the index:
+
+  % git add repo
+  warning: adding embedded git repository: repo
+  hint: You've added another git repository inside your current repositor=
+y.
+  hint: [...]
+  error: unable to index file 'repo/'
+  fatal: adding files failed
+
+That error message isn't particularly helpful in this situation, but
+it seems preferable to the old behavior of adding the repository's
+untracked files.  And if the caller really wants the previous
+behavior, they can get it by adding a trailing slash.
 
 Signed-off-by: Kyle Meyer <kyle@kyleam.com>
 ---
- t/t3009-ls-files-others-nonsubmodule.sh | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ dir.c                                   |  6 ++++--
+ t/t3009-ls-files-others-nonsubmodule.sh | 22 +++++++++++++++++++++-
+ t/t3700-add.sh                          |  1 +
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
+diff --git a/dir.c b/dir.c
+index b2cabadf25..a4e59eb351 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1467,9 +1467,11 @@ static enum path_treatment treat_directory(struct =
+dir_struct *dir,
+ 			return path_none;
+ 		}
+ 		if (!(dir->flags & DIR_NO_GITLINKS)) {
+-			struct object_id oid;
+-			if (resolve_gitlink_ref(dirname, "HEAD", &oid) =3D=3D 0)
++			struct strbuf sb =3D STRBUF_INIT;
++			strbuf_addstr(&sb, dirname);
++			if (is_nonbare_repository_dir(&sb))
+ 				return exclude ? path_excluded : path_untracked;
++			strbuf_release(&sb);
+ 		}
+ 		return path_recurse;
+ 	}
 diff --git a/t/t3009-ls-files-others-nonsubmodule.sh b/t/t3009-ls-files-o=
 thers-nonsubmodule.sh
-index cc66a4a14d..9ed75928aa 100755
+index 9ed75928aa..be4e7e26bc 100755
 --- a/t/t3009-ls-files-others-nonsubmodule.sh
 +++ b/t/t3009-ls-files-others-nonsubmodule.sh
-@@ -1,6 +1,14 @@
- #!/bin/sh
-=20
--test_description=3D'test git ls-files --others with non-submodule reposi=
-tories'
-+test_description=3D'test git ls-files --others with non-submodule reposi=
-tories
-+
-+This test runs git ls-files --others with the following working tree:
-+
-+    repo-bogus-no-files/
-+      directory with no files aside from a bogus .git file
-+    repo-bogus-untracked-file/
-+      directory with a bogus .git file and another untracked file
-+'
+@@ -8,6 +8,14 @@ This test runs git ls-files --others with the following =
+working tree:
+       directory with no files aside from a bogus .git file
+     repo-bogus-untracked-file/
+       directory with a bogus .git file and another untracked file
++    repo-no-commit-no-files/
++      git repository without a commit or a file
++    repo-no-commit-untracked-file/
++      git repository without a commit but with an untracked file
++    repo-with-commit-no-files/
++      git repository with a commit and no untracked files
++    repo-with-commit-untracked-file/
++      git repository with a commit and an untracked file
+ '
 =20
  . ./test-lib.sh
-=20
-@@ -8,12 +16,19 @@ test_expect_success 'setup: expected output' '
- 	cat >expected <<-EOF
+@@ -17,6 +25,10 @@ test_expect_success 'setup: expected output' '
  	expected
  	output
-+	repo-bogus-untracked-file/untracked
+ 	repo-bogus-untracked-file/untracked
++	repo-no-commit-no-files/
++	repo-no-commit-untracked-file/
++	repo-with-commit-no-files/
++	repo-with-commit-untracked-file/
  	EOF
  '
 =20
-+test_expect_success 'setup: directories' '
-+	mkdir repo-bogus-no-files &&
-+	echo foo >repo-bogus-no-files/.git &&
-+	mkdir repo-bogus-untracked-file &&
-+	echo foo >repo-bogus-untracked-file/.git &&
-+	: >repo-bogus-untracked-file/untracked
-+'
-+
- test_expect_success 'ls-files --others handles non-submodule .git' '
--	mkdir not-a-submodule &&
--	echo foo >not-a-submodule/.git &&
- 	git ls-files -o >output &&
- 	test_cmp expected output
+@@ -25,7 +37,15 @@ test_expect_success 'setup: directories' '
+ 	echo foo >repo-bogus-no-files/.git &&
+ 	mkdir repo-bogus-untracked-file &&
+ 	echo foo >repo-bogus-untracked-file/.git &&
+-	: >repo-bogus-untracked-file/untracked
++	: >repo-bogus-untracked-file/untracked &&
++	git init repo-no-commit-no-files &&
++	git init repo-no-commit-untracked-file &&
++	: >repo-no-commit-untracked-file/untracked &&
++	git init repo-with-commit-no-files &&
++	git -C repo-with-commit-no-files commit --allow-empty -mmsg &&
++	git init repo-with-commit-untracked-file &&
++	test_commit -C repo-with-commit-untracked-file msg &&
++	: >repo-with-commit-untracked-file/untracked
  '
+=20
+ test_expect_success 'ls-files --others handles non-submodule .git' '
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index be582a513b..5a8425962b 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -396,6 +396,7 @@ test_expect_success 'no file status change if no path=
+spec is given in subdir' '
+ '
+=20
+ test_expect_success 'all statuses changed in folder if . is given' '
++	rm -fr empty &&
+ 	git add --chmod=3D+x . &&
+ 	test $(git ls-files --stage | grep ^100644 | wc -l) -eq 0 &&
+ 	git add --chmod=3D-x . &&
 --=20
 2.21.0
 
