@@ -2,103 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85E3A20248
-	for <e@80x24.org>; Tue,  2 Apr 2019 18:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA4DD202BB
+	for <e@80x24.org>; Tue,  2 Apr 2019 18:35:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729158AbfDBSUL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Apr 2019 14:20:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55165 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725991AbfDBSUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Apr 2019 14:20:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554229200;
-        bh=2QXOD9ZbZNfg+PbGGNqMCxoiAdjpKOq3Yhr5oLmhTGU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Zvjef8sKr4xDZKWF5mVHeCCt+S6dX6qVtPK/idimBmlgyTOK8tdTSZ8xJGPQO+9Gf
-         NzfwNTfGIdcSxVDlzjeMD2/YAjnNWEylOSI4iDa/XeKEjooxCbCYN25M0VAjnTVkUX
-         dOZHbMkPuCTgjDsWZVR0mE4fjP4BZHNPpQSU3/mI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lcjdr-1gTU5n112l-00k93H; Tue, 02
- Apr 2019 20:20:00 +0200
-Date:   Tue, 2 Apr 2019 20:20:05 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Bj=C3=B6rn_Pettersson_A?= 
-        <bjorn.a.pettersson@ericsson.com>
-cc:     Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Bad performance when using git log --parents (used by gitk)
-In-Reply-To: <HE1PR0702MB378867A3A8F81CB475882A28B0560@HE1PR0702MB3788.eurprd07.prod.outlook.com>
-Message-ID: <nycvar.QRO.7.76.6.1904022017510.41@tvgsbejvaqbjf.bet>
-References: <HE1PR0702MB3788FCDAB764252D9CBB42E5B0560@HE1PR0702MB3788.eurprd07.prod.outlook.com> <20190402132756.GB13141@sigill.intra.peff.net> <HE1PR0702MB378867A3A8F81CB475882A28B0560@HE1PR0702MB3788.eurprd07.prod.outlook.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729251AbfDBSfi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Apr 2019 14:35:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55179 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728359AbfDBSfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Apr 2019 14:35:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 485EA64EBF;
+        Tue,  2 Apr 2019 14:35:29 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references:mime-version
+        :content-transfer-encoding; s=sasl; bh=JT+a8Z6QsHmDDS/r6eax4jgwI
+        9k=; b=Mv7ZitLn3tnsvN10AOUG9enFD0PgxcVux3qLTZYCkrBN1OjWUqItLigk8
+        WBy7igAaubDboL5mz0tgB+6sYDbdsCWXMFhDWMQ2fUMSATR+T0toHDLAxV6FC35+
+        ME4hPe/rfVUXIe62nsUuFV9RD77QB7kVj6DSI2AT4Yh9faefbU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4185A64EBE;
+        Tue,  2 Apr 2019 14:35:29 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=lFF+A4VpdynPDEVHoCydIinCSfT1Mlp01eg+peh4eQ4=; b=XCzUEcMEkf/mJbMFV6cJ3wrge2gAqDkPWbnWiQpfqpShARCLG0pbFI+B/CvqIaKCz3Igs5IuOsNCtGWM/iR26sSvVoi80Wewe4ppVMTpYo+5PTxmYAUo3jgRRjfilA6zfMUuY8pciR/9p76bytXIcisqCsZembx04oP2R7vC9Ck=
+Received: from hylob.dartmouth.edu (unknown [129.170.31.50])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 759C564EBB;
+        Tue,  2 Apr 2019 14:35:26 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Cc:     debian@onerussian.com
+Subject: [PATCH v2 0/4] dir: Treat a repository without commits as a repository
+Date:   Tue,  2 Apr 2019 14:35:01 -0400
+Message-Id: <20190402183505.31512-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <87lg1eq146.fsf@kyleam.com>
+References: <87lg1eq146.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-748568384-1554229206=:41"
-X-Provags-ID: V03:K1:Nb9q1Sq/MQUveU/UObymGiWywWVPNoUFsfbj08GCZpOCa5ALx0E
- /TOHbzvZ0rv/dW71OxghFHp+EYyB4+OEJXbUp6OHGzLRhFbcd/q7tPuF6GIO++itgakg3cn
- e1qWCIGCe8hqBQHQedIRFmB4z1Wms0CnPCtGm5+UqHbbdZCnGTGZypXqDXy2Nk6ix6AP6qW
- xuTuoKFqCmTpcTo+DHPbQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OlDkiDJjmJo=:VG7My/3+qU7Nh8MWDGwiMS
- HP5m7kYzMmA1X4+H7wqoqAUQcJWFp0qeZjwOy5jvCY8yBSfNQ2Znumfvm/tItAOBbEvBGe1VV
- 4fHGGdXHjpFFPunK1rR7NI2dFNl0nE13x3uFvn1ziQY4uRVEhoWitHrr/XkUJ6I0WtRtbYrAV
- Y9wivRhrcEmUyqDNVA97qHsp5xwE0qCe5SW5BJdV60F1rky1FF1BFSgE8qM6nf5/SvPt3U4HO
- uNSAn+oNPCN1vK56eeM52qEqCWfndn4IvtHMaiGxusGO0bsGCr8XzS9tw4F8HFMabnXo2zZuh
- l84z59fC+dUy3s6/fjz+XK7UKmfHcjL6ZP9+JR24oUJqtz6qnoCTC9jor0D66jlEEe4opyQu/
- PITsnz35X4SJwTtw0l9wuhRx79Ml1lBDGMrR8m2dLNB73x9i9/m2lhF5cKKalNdpo0877KDP/
- jDHQlNWnV+r/oPmsJVCI2ZJGBmGiNRqEBmIwuTRwZLZlAqf4zLH2RhdjnApCd6C3dIK6ohhIw
- C4jHinKS4oDuYJwxFrDeOwpM8f6aaCXjeh3pGPQxQa/jDlBAaupvJMnKypleubOyOi/dqB1uO
- IN5AhzL1jw94B+iZRZxpxXXYXeNY5XSk/HCzdy7KvW9EktyoNVaEZ8039Ct+HmBZ+9z5JcQ2/
- 1i6k9DmkP/Kwfsvo8NuSpX67+IOtQnh3sH3XbWx+VnmCAeb5KbWoN8tW4hOKx91UxLgfiH7MS
- 9aswj9T8X5cesIdU0+D5Tg2LbXrY0GekAvYbt1sMvjZcY3zjoJt1aBa5tX5PsJDnSSDtcpNJ5
- 8SeLY1rJALCqi4NJ92s/r3ELZeKNYsv/X/pnXjMJLBOAUlpGT4MvPuDt4jDpjFdKbKquUNCLd
- PT7Eu5lryn+6kmHJwA4foWWf/mGY6g4E07ejfp6PgjSohsZSsi3SiTP0I86QoBT1TJIAqEeYB
- iOCAXqzCTIw==
+X-Pobox-Relay-ID: 1587B484-5576-11E9-886F-EE24A11ADF13-24757444!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-748568384-1554229206=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Bj=C3=B6rn,
-
-On Tue, 2 Apr 2019, Bj=C3=B6rn Pettersson A wrote:
-
-> Thanks for a quick reply (with lots of details).
+> Kyle Meyer <kyle@kyleam.com> writes:
 >
-> Hitting some quadratic complexity algorithm explains why the "degradatio=
-n"
-> is so huge. And if I understand it correctly we are more or less "unluck=
-y"
-> to hit such access patterns more often in the new repo.
+> [...]
 >
-> Anyway, nice to see that you already have some ideas regarding how to
-> improve this.
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 514ede2596..6c74656027 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -234,10 +234,18 @@ cmd_add()
+>>  	if test -z "$force" &&
+>>  		! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_p=
+ath" > /dev/null 2>&1
+>>  	then
+>> -		eval_gettextln "The following path is ignored by one of your .gitig=
+nore files:
+>> +		if test -d "$sm_path" &&
+>> +			test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null) &&
+>> +			! git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null
+>> +		then
+>> +			die "$(eval_gettext "'\$sm_path' does not have any commits")"
+>> +		else
+>> +			eval_gettextln "\
+>> +The following path is ignored by one of your .gitignore files:
+>>  \$sm_path
+>>  Use -f if you really want to add it." >&2
+>> -		exit 1
+>> +			exit 1
+>> +		fi
+>
+> I didn't think through this check, which would have been obvious had I
+> ran the added test without the rest of the patches in this series.  It
+> assumes that the 'git add --dry-run' call fails, but that failure
+> depends on the last patch of this series.  So I'd need to move this
+> patch to the end or find a new place for this "no commits" check.
 
-In the meantime, maybe the commit graph feature can help you?
+v2 moves the "no commits" check outside of the 'git add --dry-run'
+failure condition so that the first patch doesn't depend on the final
+patch in this series.
 
-	git config --global core.commitGraph true
-	git config --global gc.writeCommitGraph true
-	git commit-graph write --reachable
 
-The idea being that the commit graph extracts a lot of information
-pre-emptively and makes the lookup of those bits faster than unpacking the
-commits all the time.
+Kyle Meyer (4):
+  submodule: refuse to add repository with no commits
+  t3000: move non-submodule repo test to separate file
+  t3009: test that ls-files -o traverses bogus repo
+  dir: do not traverse repositories with no commits
 
-Ciao,
-Johannes
+ dir.c                                   |  6 ++-
+ git-submodule.sh                        |  7 ++++
+ t/t3000-ls-files-others.sh              |  7 ----
+ t/t3009-ls-files-others-nonsubmodule.sh | 56 +++++++++++++++++++++++++
+ t/t3700-add.sh                          |  1 +
+ t/t7400-submodule-basic.sh              | 11 ++++-
+ 6 files changed, 78 insertions(+), 10 deletions(-)
+ create mode 100755 t/t3009-ls-files-others-nonsubmodule.sh
 
---8323328-748568384-1554229206=:41--
+Range-diff against v1:
+1:  e0db7e3c3c ! 1:  b080e2c557 submodule: refuse to add repository with =
+no commits
+    @@ -9,10 +9,9 @@
+         in the sub-repository are added to the current repository.
+    =20
+         Detect if the path is a repository with no commits and abort to =
+avoid
+    -    getting into this state unless --force is used.  Reacting to --f=
+orce
+    -    isn't very useful, especially because an upcoming commit will ma=
+ke
+    -    'git add' fail in this situation, but it allows us to use the sa=
+me
+    -    'git add --dry-run' condition as the ignored path case.
+    +    getting into this state.  Note that this check must come before =
+the
+    +    'git add --dry-run' check because an upcoming commit will make '=
+git
+    +    add' fail in this situation.
+    =20
+         Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+    =20
+    @@ -20,26 +19,19 @@
+      --- a/git-submodule.sh
+      +++ b/git-submodule.sh
+     @@
+    + 		die "$(eval_gettext "'\$sm_path' already exists in the index and =
+is not a submodule")"
+    + 	fi
+    +=20
+    ++	if test -d "$sm_path" &&
+    ++		test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null)
+    ++	then
+    ++	    git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null ||
+    ++	    die "$(eval_gettext "'\$sm_path' does not have any commits")"
+    ++	fi
+    ++
+      	if test -z "$force" &&
+      		! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm=
+_path" > /dev/null 2>&1
+      	then
+    --		eval_gettextln "The following path is ignored by one of your .git=
+ignore files:
+    -+		if test -d "$sm_path" &&
+    -+			test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null) &=
+&
+    -+			! git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null
+    -+		then
+    -+			die "$(eval_gettext "'\$sm_path' does not have any commits")"
+    -+		else
+    -+			eval_gettextln "\
+    -+The following path is ignored by one of your .gitignore files:
+    - \$sm_path
+    - Use -f if you really want to add it." >&2
+    --		exit 1
+    -+			exit 1
+    -+		fi
+    - 	fi
+    -=20
+    - 	if test -n "$custom_name"
+    =20
+      diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.s=
+h
+      --- a/t/t7400-submodule-basic.sh
+2:  6eed1f5daf =3D 2:  c027701842 t3000: move non-submodule repo test to =
+separate file
+3:  7ba3209762 =3D 3:  97f53e30c0 t3009: test that ls-files -o traverses =
+bogus repo
+4:  2901375dc1 =3D 4:  a926b87102 dir: do not traverse repositories with =
+no commits
+--=20
+2.21.0
+
