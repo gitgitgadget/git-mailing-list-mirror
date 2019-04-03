@@ -2,114 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C93E20248
-	for <e@80x24.org>; Wed,  3 Apr 2019 06:47:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99E0020248
+	for <e@80x24.org>; Wed,  3 Apr 2019 06:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfDCGri (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 02:47:38 -0400
-Received: from mail-eopbgr20116.outbound.protection.outlook.com ([40.107.2.116]:53415
-        "EHLO EUR02-VE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725977AbfDCGrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 02:47:37 -0400
+        id S1726425AbfDCGrv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 02:47:51 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44172 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725977AbfDCGrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 02:47:51 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y7so19687739wrn.11
+        for <git@vger.kernel.org>; Tue, 02 Apr 2019 23:47:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=matrixil.onmicrosoft.com; s=selector1-matrix-co-il;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6llKcSBN+Cds8L5gm4smGJDsarHfbaf00Tm5u9hmgUY=;
- b=lkm3IWzf74Vpm4AhXEWeuLUfxV4ClE4XYZqoUFl1Y2QwzQz/cqxJjaS5yR05tzDOSsJzsLn8XA9xZrsxYn9ZzFzlI7T5P7f4amjCyqnLLVrXWp0AMJjLIVpISefndd8Cyx+n9HrfjXYfN1MiAbh4IjUGwHp06fSt679akWaze04=
-Received: from AM6PR08MB4199.eurprd08.prod.outlook.com (20.179.3.202) by
- AM6PR08MB4119.eurprd08.prod.outlook.com (20.179.3.25) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1771.13; Wed, 3 Apr 2019 06:47:34 +0000
-Received: from AM6PR08MB4199.eurprd08.prod.outlook.com
- ([fe80::ecff:bf65:983:9a4c]) by AM6PR08MB4199.eurprd08.prod.outlook.com
- ([fe80::ecff:bf65:983:9a4c%4]) with mapi id 15.20.1771.011; Wed, 3 Apr 2019
- 06:47:34 +0000
-From:   Amiel Elboim <amielel@matrix.co.il>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Fw: git describe issue
-Thread-Topic: git describe issue
-Thread-Index: AQHU6eQfRF4BjkBwkkaGQKDd1PgbEaYp/jU6
-Date:   Wed, 3 Apr 2019 06:47:34 +0000
-Message-ID: <AM6PR08MB4199B076CB886AE814AFF4528D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
-References: <AM6PR08MB41993844F57794DDF4B33B8F8D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
-In-Reply-To: <AM6PR08MB41993844F57794DDF4B33B8F8D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=amielel@matrix.co.il; 
-x-originating-ip: [2.53.138.204]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0353ea9d-670c-4939-be40-08d6b8004080
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR08MB4119;
-x-ms-traffictypediagnostic: AM6PR08MB4119:
-x-microsoft-antispam-prvs: <AM6PR08MB41195F211BAD6AB619A30E4E8D570@AM6PR08MB4119.eurprd08.prod.outlook.com>
-x-forefront-prvs: 0996D1900D
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(136003)(39860400002)(366004)(346002)(199004)(189003)(5660300002)(256004)(99286004)(74316002)(7736002)(7696005)(305945005)(26005)(102836004)(186003)(7116003)(14454004)(486006)(11346002)(446003)(93156006)(476003)(2351001)(76176011)(478600001)(6506007)(2501003)(6116002)(3846002)(74482002)(316002)(97736004)(66066001)(106356001)(33656002)(71190400001)(71200400001)(229853002)(9686003)(55016002)(2473003)(1730700003)(105586002)(81166006)(81156014)(8676002)(2906002)(6436002)(5640700003)(6916009)(68736007)(8936002)(52536014)(4744005)(25786009)(53936002)(2940100002)(86362001);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR08MB4119;H:AM6PR08MB4199.eurprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: matrix.co.il does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: kslBEbFDiwZMYh0VWgUzr4uT/dk4bSlzt0UmV1sFgGjhr2OZmkgu8+h8maqNwOeMUH6uVJfQhHyaPDjEw4tRJL0wY9XLx6zDhVz4/9sYHo2tKSzxHZSX4Sx21/FJdEI7GFp2lkpbG4zQ3Fc7B3UPNG8mJIH3fMVYdRoeJkv031cf73iMuDIx0sie2WI0vFhaP6UJcWzkOI8B+63fEJon8ZjK8d8lCNupUPgT11pzmNxjsxHHUM7a5atuT7hbjdoFYgae+ioNODSfEPspx5RQc7mpgeZYaEDCmt5ON18+lw4yTInY6Ivrif4VTlhn8UHPpJQUtu3KehdeauMyxxS6OS50ea84Bn5ikLE843anI2i5OtLdbJ04agx56IJVBdUN71ITOBZzftcRPL4SLfmudNbZo27+asveAIsWhZG31qM=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gOoNOWiB/r+D3XHxeImpaoBeV04B58CESUeByF63kR4=;
+        b=ZlWZfzxQvlW8ueSAwTg+rO8GCTxI/lARSbEWSvqCZEHomK5cRlQiL/2EXw3T5qVKWK
+         McaEuBIQGL3A4wdHz8MxJMPysBovKerh57Lgq9u4Z4a2DWDiFM68PO69M9kfrkiLjPFT
+         2lNqLYmAoYmrXTFfje/PnmYZMWbc96Oa66VtSAiXqmkKLTjx3mPVha81t55oeyJDtKz8
+         HlDIsvpBNVmYmoFk7yp17lFSLr7gx8nx5MUdEP67qMIh4x1OIt4gSyivwIpZfX40XEN3
+         e33Ek5Ay0t7ud6FkHwQDsagN6ehlRbTSFUDr14dzYzMmGU3q5BTZsfRJdVnR2QMhUcBd
+         whMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gOoNOWiB/r+D3XHxeImpaoBeV04B58CESUeByF63kR4=;
+        b=ZQi2ON5mz70WHprydjpKikIU0Y3wTD4GeCItzRzPEjkEP6qlqHAnJgW+YBhftTJHaR
+         OA/DPpbO3BlmwZ7fFLbBtr69NkmBGT2Tk8kmTA1A1w8lFdgwiM94I1cz91xdzWI5t8BW
+         2/IPpyyBsfJmLlDMqo6dDhUJKlPkBUJOV8Pi0mgXXXlo+Pj3EMyzwnMBy7q1I5wXKX4s
+         D/FtvSxILyqkfmWlIwYssc6DXWcoGlXaoO14ibRcsI1mQIKvKjlN6Oywvjm04U7yqABb
+         y6hb6S0Hm3VIvVQoZUXUMlUhjkiFrifOB/yy+2B6jKDZY+i3Wb9d0W0kyWF0yw3nJ+dY
+         G3xQ==
+X-Gm-Message-State: APjAAAVON3orzdPnEQJfCD68NiDX4fupQdTjBifT9lixznSPfYIpCq7e
+        bipO65KrJwApuaBGf4oBv7w=
+X-Google-Smtp-Source: APXvYqzah9R4JlamuwX+/H+PWe8nnKn52WdA/W8k53pM6MBxpLn1V9KClO9/2pgjTrzLBv8nczI5ww==
+X-Received: by 2002:adf:f1ce:: with SMTP id z14mr31531916wro.152.1554274069306;
+        Tue, 02 Apr 2019 23:47:49 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id z8sm13562893wrh.80.2019.04.02.23.47.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 02 Apr 2019 23:47:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/2] mailinfo: support Unicode scissors
+References: <20190331220104.31628-1-rybak.a.v@gmail.com>
+        <20190401215334.18678-1-rybak.a.v@gmail.com>
+        <20190401215334.18678-2-rybak.a.v@gmail.com>
+        <20190402143615.GC10564@sigill.intra.peff.net>
+Date:   Wed, 03 Apr 2019 15:47:47 +0900
+In-Reply-To: <20190402143615.GC10564@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 2 Apr 2019 10:36:15 -0400")
+Message-ID: <xmqq8swrtwj0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: matrix.co.il
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0353ea9d-670c-4939-be40-08d6b8004080
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2019 06:47:34.0293
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8b3747c3-cccd-4b17-8f18-bd610edc86e6
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR08MB4119
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
+> In fact, I think you could then combine this with the previous
+> conditional and get:
+>
+>   if (skip_prefix(c, ">8", &end) ||
+>       skip_prefix(c, "8<", &end) ||
+>       skip_prefix(c, ">%", &end) ||
+>       skip_prefix(c, "%<", &end) ||
+>       /* U-2702 in UTF-8 */
+>       skip_prefix(c, "\xE2\x9C\x82", &end)) {
+>           in_perforation = 1;
+> 	  perforation += end - c;
+> 	  scissors += end - c;
+> 	  c = end - 1; /* minus one to account for loop increment */
+>   }
+>
+> (Though I'm still on the fence regarding the whole idea, so do not take
+> this as an endorsement ;) ).
 
-Hi!
+I do not think we want to add more, but use of skip_prefix does
+sound sensible.  I was very tempted to suggest
 
-I've found strange behavior with 'git describe' command, look like for me a=
-s bug.=A0
+	static const char *scissors[] = {
+		">8", "8<", ">%", "%<",
+                NULL,
+	};
+        const char **s;
 
-In the case I create 2 tags on same commit and I run 'git describe --tags' =
-I expect to get the latest tag, but always I get the first tag I created on=
- the commit.
+	for (s = scissors; *s; s++)
+		if (skip_prefix, c, *s, &end) {
+			in_perforation = 1;
+			...
+			break;
+		}
+	}
+        if (!s)
+		... we are not looking at any of the scissors[] ...
 
-Unlike=A0git-describe documentations - "The command finds the most recent t=
-ag that is reachable from a commit. "
+but that would encourage adding more random entries to the array,
+which we would want to avoid in order to help reduce the cognirive
+load of end-users.
 
-Simple example -=A0=A0=A0
-
-
-
-amiel@CLINIKALDEV10:~/Xpress$ git tag v1
-amiel@CLINIKALDEV10:~/Xpress$ git tag v2
-amiel@CLINIKALDEV10:~/Xpress$ git describe --tags
-v1
-amiel@CLINIKALDEV10:~/Xpress$ gl
-* 4f54749 (HEAD -> master, tag: v2, tag: v1, origin/master, origin/HEAD) st=
-art point with git
-
-
-
-I'll happy to know if is bug or I don't understand something.
-
-
-Thanks
-
-
-Amiel=A0=A0
-
-=A0=A0
-
-
-     =
+In hindsight, addition of an undocumented '%' was already a mistake.
+I wonder how widely it is in use (yes, I am tempted to deprecate and
+remove these two to match the code to the docs).
