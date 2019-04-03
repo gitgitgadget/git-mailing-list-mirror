@@ -2,159 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59AAA20248
-	for <e@80x24.org>; Wed,  3 Apr 2019 11:38:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6041420248
+	for <e@80x24.org>; Wed,  3 Apr 2019 12:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbfDCLiB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 07:38:01 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34106 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfDCLiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 07:38:01 -0400
-Received: by mail-pg1-f194.google.com with SMTP id v12so8209852pgq.1
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:38:00 -0700 (PDT)
+        id S1726074AbfDCMGa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 08:06:30 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:36989 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725941AbfDCMGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 08:06:30 -0400
+Received: by mail-it1-f193.google.com with SMTP id u65so10783756itc.2
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 05:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xHihulZqB9t7pgfq8tjomSTv/8DEfubw/edGbtbh7Pk=;
-        b=lMeUAY81DfcCU6fIUyriJQyQrvs3U6GvtDaefrnyXBimYlodSt6FpX6+VdhXBjimVc
-         UK+fdoazW/jfw9h/0KBqWzB+dtqNxgxZz7yCRNfpsEjayZ96w28OJGtA7A5kPawMEy+Z
-         WDWbRN/tlyfPW3CJ+OrmKW85NjtF+fxOCnE+8fQdVwruD7phnCvQyg6O3hE+c9djH67W
-         nl1ARvIzVhQjedEAcoRHGpM58HGf5SfAVz6YFEcAPbSLYnjx3WM2B/mm0GuzJ1wUYu99
-         Ubfb4F6+Kl/EdlI61tSNFhzN4v404kI+wHeyOYb3vmT/LQZ7HZRwivpSN9LizlihtTDn
-         8FDg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=t62H0gDXzrbsyNWsdv6Vq+lAPqnQ/kOGBK56qSvPdSY=;
+        b=R5/3Pi4TIZ7ZxFhr1D16Ky4I14a+QwWDlhK4M+XSOG/kkSvXjf1qB0BMjknqkuWCTD
+         j8BIbsTt5BIGEsr5jDrjYPatxWBa46mDrKNAdrIEdDpIGz42pOeKw+GOCm9sJRknbHT3
+         nxo8Q51XjelUPUrk18VNdvmknn6AO7RSqibhsG8FmHiXqBWNVvrwMN1NKQPM5UF+XSOE
+         c5OXGGZ5Sb/vJTPfPeAnpVGJV7/4IVv9eq9aOZC6aV9hTCMK3eH239vJ2L2yAJpEJtQq
+         GN9pUdAJjb/KMhJBsMj0/GycARv5XKQX0g27yiHUThb6Li82MZqRoYryG+Q2pfOFD0Rd
+         KStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xHihulZqB9t7pgfq8tjomSTv/8DEfubw/edGbtbh7Pk=;
-        b=qZHBWaeG1Hv70fR7SH8ysamEgPNx93Ba9NhTL7+K1wqjUf1ypxloMVAf0cgoKIKVXu
-         UZS9CgSOvFnGFB+17oCYJ3tYDDf1frBaZFmUFROLHaA9fKzc0CtJf5Pr8jmS233OvXdn
-         mVSslFJn7Sl7XVJzySoTrpCcVw9PQ6le4O0PSvH6pZmjuuEJSmJojn0vEtebPX26XIRr
-         86WwiGPGVoO/k+WhTpbYVFTiydwHqy2af2tpKZbD5/LQ6a07ZlMU83N+Iw956cYte658
-         +kDofml6470vf1qPF98eEv9QkrQI9XSIKxppd7A5AUz6eoYuRMY25uLdu7QaeTGZFQwx
-         ltqA==
-X-Gm-Message-State: APjAAAW+/Hl91wboQ7q9dpyyKt5zLd+NM14NauA9U5TmRz1vxrxbde5D
-        jspebqxYUonSV9A796NxQwDYF019
-X-Google-Smtp-Source: APXvYqxtD3QzF99nj59kfzCW7phd9XMjtlHcZ1tBjdlbxFgRSgeZ37BWCK1H02UWOikkcB/xf9Lgsg==
-X-Received: by 2002:a65:62c3:: with SMTP id m3mr12640544pgv.159.1554291480551;
-        Wed, 03 Apr 2019 04:38:00 -0700 (PDT)
-Received: from ash ([27.75.136.26])
-        by smtp.gmail.com with ESMTPSA id s85sm17768687pfa.23.2019.04.03.04.37.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 04:37:59 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:37:55 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 32/32] sha1-name.c: remove the_repo from get_oid_mb()
-Date:   Wed,  3 Apr 2019 18:34:57 +0700
-Message-Id: <20190403113457.20399-33-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
-In-Reply-To: <20190403113457.20399-1-pclouds@gmail.com>
-References: <20190330111927.18645-1-pclouds@gmail.com>
- <20190403113457.20399-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=t62H0gDXzrbsyNWsdv6Vq+lAPqnQ/kOGBK56qSvPdSY=;
+        b=FTAn8Y+tAtT1sc5arwBRQIxSlf+8kDGNCKlY4viDsuAN9RAKSmZDANT0B8fTkQHeU5
+         pURwW5ISq5PTiA+7Sv476krBGJlai82il9z5GSsbhfFxIkPRxRh7R5bXbOE2uovghFGg
+         m2BvpfUkR6ZMm4esrr5/V7+6YHCR6BUAK7v9pJsB0hD08tTI3WLgKpoSTvacrA81mL4E
+         kqPKxUKBmoocW8c0XbuBwnKLBb4BDM3Q3bIziQ6o1E5X0D2eIaegfUDMno32wjllnRyE
+         J6e2WbgPt7viZZluGuFXCpjrsQWKO41ZVcCjGjEOmchSva+4Cqhm1nwq5kFGIshzkdvr
+         g7EA==
+X-Gm-Message-State: APjAAAXuXHvoaZt92k8VVgPden8wptfopv4vzc6oYeBLrwvR5uPf0cY6
+        vZ6sRLOVwz2g7TCuTFi7U5QyaFB20llOcpuX2LY=
+X-Google-Smtp-Source: APXvYqyR3OZrUbYNJ7COqi1AdmOT0LlHZZvF/BBb/K6gCDa4t0PbjDmH7HSfufl8fckHfg4b8BcfZe5Gy4e3Q4LFiT4=
+X-Received: by 2002:a24:4755:: with SMTP id t82mr1460353itb.72.1554293189041;
+ Wed, 03 Apr 2019 05:06:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20190402115625.21427-1-dak@gnu.org> <xmqqv9zvsfay.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AbkmJ69ucCfGMdXHGvfko89SxH=DKjra6Ltwf7wpy-Og@mail.gmail.com> <20190403113604.GA2941@sigill.intra.peff.net>
+In-Reply-To: <20190403113604.GA2941@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 3 Apr 2019 19:06:02 +0700
+Message-ID: <CACsJy8BCGHqjO5fKG7TO5X239z_7Gzdo80jF0rx939X501yVnA@mail.gmail.com>
+Subject: Re: [PATCH] blame.c: don't drop origin blobs as eagerly
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- cache.h     |  3 ++-
- sha1-name.c | 18 +++++++++++-------
- 2 files changed, 13 insertions(+), 8 deletions(-)
+On Wed, Apr 3, 2019 at 6:36 PM Jeff King <peff@peff.net> wrote:
+> I suspect we could do even better by storing and reusing not just the
+> original blob between diffs, but the intermediate diff state (i.e., the
+> hashes produced by xdl_prepare(), which should be usable between
+> multiple diffs). That's quite a bit more complex, though, and I imagine
+> would require some surgery to xdiff.
 
-diff --git a/cache.h b/cache.h
-index 871a167bf8..9a600a8b50 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1386,6 +1386,7 @@ int repo_get_oid_committish(struct repository *r, const char *str, struct object
- int repo_get_oid_tree(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_treeish(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_blob(struct repository *r, const char *str, struct object_id *oid);
-+int repo_get_oid_mb(struct repository *r, const char *str, struct object_id *oid);
- void maybe_die_on_misspelt_object_name(struct repository *repo,
- 				       const char *name,
- 				       const char *prefix);
-@@ -1399,6 +1400,7 @@ extern enum get_oid_result get_oid_with_context(struct repository *repo, const c
- #define get_oid_tree(str, oid)		repo_get_oid_tree(the_repository, str, oid)
- #define get_oid_treeish(str, oid)	repo_get_oid_treeish(the_repository, str, oid)
- #define get_oid_blob(str, oid)		repo_get_oid_blob(the_repository, str, oid)
-+#define get_oid_mb(str, oid) 		repo_get_oid_mb(the_repository, str, oid)
- 
- typedef int each_abbrev_fn(const struct object_id *oid, void *);
- int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_fn, void *);
-@@ -1486,7 +1488,6 @@ int repo_interpret_branch_name(struct repository *r,
- 			       unsigned allowed);
- #define interpret_branch_name(str, len, buf, allowed) \
- 	repo_interpret_branch_name(the_repository, str, len, buf, allowed)
--extern int get_oid_mb(const char *str, struct object_id *oid);
- 
- extern int validate_headref(const char *ref);
- 
-diff --git a/sha1-name.c b/sha1-name.c
-index d49496397d..cf314ebb29 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1338,7 +1338,9 @@ static int interpret_nth_prior_checkout(struct repository *r,
- 	return retval;
- }
- 
--int get_oid_mb(const char *name, struct object_id *oid)
-+int repo_get_oid_mb(struct repository *r,
-+		    const char *name,
-+		    struct object_id *oid)
- {
- 	struct commit *one, *two;
- 	struct commit_list *mbs;
-@@ -1348,27 +1350,29 @@ int get_oid_mb(const char *name, struct object_id *oid)
- 
- 	dots = strstr(name, "...");
- 	if (!dots)
--		return get_oid(name, oid);
-+		return repo_get_oid(r, name, oid);
- 	if (dots == name)
--		st = get_oid("HEAD", &oid_tmp);
-+		st = repo_get_oid(r, "HEAD", &oid_tmp);
- 	else {
- 		struct strbuf sb;
- 		strbuf_init(&sb, dots - name);
- 		strbuf_add(&sb, name, dots - name);
--		st = get_oid_committish(sb.buf, &oid_tmp);
-+		st = repo_get_oid_committish(r, sb.buf, &oid_tmp);
- 		strbuf_release(&sb);
- 	}
- 	if (st)
- 		return st;
--	one = lookup_commit_reference_gently(the_repository, &oid_tmp, 0);
-+	one = lookup_commit_reference_gently(r, &oid_tmp, 0);
- 	if (!one)
- 		return -1;
- 
--	if (get_oid_committish(dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
-+	if (repo_get_oid_committish(r, dots[3] ? (dots + 3) : "HEAD", &oid_tmp))
- 		return -1;
--	two = lookup_commit_reference_gently(the_repository, &oid_tmp, 0);
-+	two = lookup_commit_reference_gently(r, &oid_tmp, 0);
- 	if (!two)
- 		return -1;
-+	if (r != the_repository)
-+		BUG("sorry get_merge_bases() can't take struct repository yet");
- 	mbs = get_merge_bases(one, two);
- 	if (!mbs || mbs->next)
- 		st = -1;
+Amazing. xdl_prepare_ctx and xdl_hash_record (called inside
+xdl_prepare_ctx) account for 36% according to 'perf report'. Please
+tell me you just did not get this on your first guess.
+
+I tracked and dumped all the hashes that are sent to xdl_prepare() and
+it looks like the amount of duplicates is quite high. There are only
+about 1000 one-time hashes out of 7000 (didn't really draw a histogram
+to examine closer). So yeah this looks really promising, assuming
+somebody is going to do something about it.
 -- 
-2.21.0.479.g47ac719cd3
-
+Duy
