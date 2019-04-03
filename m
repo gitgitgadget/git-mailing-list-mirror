@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A56720248
-	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5404F20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbfDCQCX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 12:02:23 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:50476 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbfDCQCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 12:02:20 -0400
-Received: by mail-qt1-f201.google.com with SMTP id g17so17085965qte.17
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:19 -0700 (PDT)
+        id S1726097AbfDCQCZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 12:02:25 -0400
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:46674 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726905AbfDCQCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 12:02:24 -0400
+Received: by mail-yb1-f201.google.com with SMTP id w7so12931624ybp.13
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=vqpSvSVgsjiBDoqCJmRFvEvI1PO2DZZSVEUwTTuYrHc=;
-        b=vmKDvrW6L9p6SxgeQnbn1UAcFCXksvbrgM52HL4ERM7B2GkRPB6W7ETAKVG7b9KxTJ
-         lLHYZzxWV3reERpy3bOmc1s3/++TnCxjxaf+5eut+wLNLfJkl7xdnayGSfkTLpwWh6D6
-         2+g0CX9oRPLbsJZ5EqkxYQ36RWKeD2zg+joEZlz3eAPq26XN1IuJ9IJNcgaoODZtCz1a
-         8cgSBkvJv7ggAQXi2+u5G3oX++afcfa4y93kFQWcJDbAiNsuClXJluHQWsP+y7+ja+X8
-         oNjUkTQN+7pXOOVP6XsXprLbj9NXw5T3/Ye2swkwotiwtpoHyctmVe6KgDwIz3Vsp/x4
-         o+JQ==
+        bh=vTMv3QPI6Pla6XvF00bREwFsePuzc1VMiiGs3G9vnyA=;
+        b=tyE2NTLOEQplqXycBWJh6xw4AmV8EgpfTKP9fhp8vqWGtyaGAg2d+3jXrL66cxLUFc
+         567NsZOfZZOcIw0QKClI546h4vSzu6OQ79CF+ka5pL7Kqtz3x7EobXBVoLBQfvl7L1eM
+         fbrbJgpNjtD4QnN+CiFigm21+VD59RGnJ98F0aBX28lNODL3JvxwKbPJ2vQ/Cti6I4EZ
+         4Yc4vPU6PdjNeGeE1TVkkkEDciJG85BhlXyx8sX+Nwy/CUT2Fvrv7LNBddDlZASSsaXK
+         81qAFwwVuTHDTFcHcJiesWQWluGH1GO/aMtGa1Pd1pG3H/GdUVVEqb/nt6PEfGdAPseh
+         WJmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=vqpSvSVgsjiBDoqCJmRFvEvI1PO2DZZSVEUwTTuYrHc=;
-        b=cvlO1fg0Sr5avZuZQYgYB4b0RwNepbn3TsOotDQPTRsF2EBhPCWpavUhDgQnAB4FE3
-         Ouo1yZ6PE+V7FQZZexrTernvBThsltg9hOimPpv0/QgDk+251z7s42jYdbfkD/Cul6j0
-         alR7AEdsajNPukQjmIMyTMQcpIdDNu1Ty+B0tL6NBy/UnVR56HjsLT3uJzoA3ZCHja2k
-         x8BuQsfbEhvvm0GQjj6NA1LTMuDj1CmFbSMmnSQKDUJiDqJ352NedSNZpguN1lABOMSg
-         jxvjxbquvuF2cXd5VSA2nZ8gd8NH9L6rE56qeO0gjmaHUlCOGJA5m23VASwuqC3rL39Z
-         tKvA==
-X-Gm-Message-State: APjAAAXjMuGSuQUQm2aQCJUm9ZPMfabW7ZNPox9xTg3XYBYPWCRE647/
-        YDIROyMBFGWsWptlM/u8GkHc34EeZ78VOWoaFJI/64kUW9fNlChID5Rl++snisfhRRuNq96QbfP
-        n2e5NYdpVFDKrzdkqKTEl2uR2hX31JLAyN8QrwPOjcc0OLd8pSCWU
-X-Google-Smtp-Source: APXvYqwPhgXMhwwGgiBUH+FoolZ4y10KRB7Eqgi9F0FUIz8zaBwhKIup+GNn0RXhdWwRn4ExBJpzocZp
-X-Received: by 2002:a0c:ad17:: with SMTP id u23mr30667qvc.41.1554307339375;
- Wed, 03 Apr 2019 09:02:19 -0700 (PDT)
-Date:   Wed,  3 Apr 2019 12:02:04 -0400
+        bh=vTMv3QPI6Pla6XvF00bREwFsePuzc1VMiiGs3G9vnyA=;
+        b=VBtS0s/DwjdJO2TVGph77eosffuV85Epbx5eBbrIOuLN8lBSy2VQpPuQQr6P1jYOEh
+         rqtwVe2r2e614eGXZKRtmJESiIQ9Wh7TrSzqaj+W8x/r40428EcZ4hAaNeF+/J3ZDXpv
+         pyarcDSQZxonSfK5eazUVeBeiEzNAPIdmSSiKJcT9BXY9YzHRGkISymRwU9Is1G/dPhV
+         WDLN7y1XNU7ZT0C0Z503SVH7tiZoxT2yE+pj3PwI+I6pgugDIEE09UDnh9b6ErNyU8qI
+         Q7ImqZ+KH4d/dIoTa6vfOOe7KGMHhrFuZ+jHlbOTTvixlfTP0XRA4OO3qKJHm5g+RaG7
+         TAkQ==
+X-Gm-Message-State: APjAAAU572+pNRUoBGWD7zBgiO0H/qtsOZ9wWdNJVcxv//MXLjxEBoky
+        jCSUWrbmmw7u0GIOJ4L6qvlV/E+IQWzmU6bKBZl28v+NWYRDx6l9FPT+DosjPSDAV7NoDgHsou2
+        t0VMjPME/KpASogE48VUPtvE8QRIjUf8g9ariogdzy3gUVt3rJ7ZK
+X-Google-Smtp-Source: APXvYqwa1JI1/ISpyrfOi9tdtrcLAdZ3paSYiJ5oU2SZ1CsfsDGdHXVC6dkl7K+rYP6aPUTyqumZ8Xmh
+X-Received: by 2002:a25:370a:: with SMTP id e10mr174863yba.81.1554307342683;
+ Wed, 03 Apr 2019 09:02:22 -0700 (PDT)
+Date:   Wed,  3 Apr 2019 12:02:07 -0400
 In-Reply-To: <20190403160207.149174-1-brho@google.com>
-Message-Id: <20190403160207.149174-4-brho@google.com>
+Message-Id: <20190403160207.149174-7-brho@google.com>
 Mime-Version: 1.0
 References: <20190403160207.149174-1-brho@google.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v5 3/6] blame: optionally track the line starts during fill_blame_origin()
+Subject: [PATCH v5 6/6] RFC blame: use a fingerprint heuristic to match
+ ignored lines
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     Michael Platings <michael@platin.gs>,
@@ -69,179 +70,215 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The line_starts array is an index of line number to file offset, so that
-we can quickly find where a particular line begins in a file.  Prior to
-this commit, we only tracked this information for the final file image,
-i.e. the current version of the file.
+This replaces the heuristic used to identify lines from ignored commits
+with one that finds likely candidate lines in the parent's version of
+the file.
 
-This commit adds the ability to track this information for any version
-of the file throughout the file's history.  In particular, we track this
-info when we load the file's image into memory: fill_blame_origin().
+The old heuristic simply assigned lines in the target to the same line
+number (plus offset) in the parent.  The new function uses
+fingerprinting based on the sum of the bitwise-ORed bits in a string.
 
-This feature will be used when we attempt to pass blame entries to
-parents when we "ignore" a commit.  Most uses of fill_blame_origin()
-will not require this feature, hence the flag parameter.  Multiple calls
-to fill_blame_origin() are idempotent, and any of them can request the
-creation of the line_starts array.
+The fingerprint code and the idea to use them for blame
+came from Michael Platings <michael@platin.gs>.
+
+For each line in the target, guess_line_blames() finds the best line in
+the parent, above a magic threshold (1 byte pair, currently).  Ties are
+broken by proximity of the parent line number to the target's line.
+
+Here's an example of the difference between algorithms.  Consider a file
+with four commits:
+
+	commit-a 11) void new_func_1(void *x, void *y);
+	commit-b 12) void new_func_2(void *x, void *y);
+	commit-c 13) some_line_c
+	commit-d 14) some_line_d
+
+After a commit 'X', we have:
+
+	commit-X 11) void new_func_1(void *x,
+	commit-X 12)                 void *y);
+	commit-X 13) void new_func_2(void *x,
+	commit-X 14)                 void *y);
+	commit-c 15) some_line_c
+	commit-d 16) some_line_d
+
+When we blame-ignored with the old algorithm, we get:
+
+	commit-a 11) void new_func_1(void *x,
+	commit-b 12)                 void *y);
+	00000000 13) void new_func_2(void *x,
+	00000000 14)                 void *y);
+	commit-c 15) some_line_c
+	commit-d 16) some_line_d
+
+Where commit-b is blamed for 12 instead of 13.  With the fingerprint
+algorithm, we get:
+
+	commit-a 11) void new_func_1(void *x,
+	commit-b 12)                 void *y);
+	commit-b 13) void new_func_2(void *x,
+	commit-b 14)                 void *y);
+	commit-c 15) some_line_c
+	commit-d 16) some_line_d
+
+Note both lines 12 and 14 are given to commit b.  Their match is above
+the FINGERPRINT_THRESHOLD, and they tied.  Specifically, parent lines 11
+and 12 both match these lines.  The algorithm chose parent line 12,
+since that was closest to the target line numbers of 12 and 14.
+
+If we increase the threshold, say to 10, those two lines won't match,
+and will be treated as 'unblamable.'
+
+TODO:
+- Is '1' a decent threshold?  Add another user option?
+
+- Can we decrease that FINGERPRINT_LENGTH?  Or do something about the
+TODO about using a set data structure?
+
+- How about matching *outside* the parent's diff hunk?  Right now, this
+just looks in the parent's hunk for a match.  But a better match may be
+elsewhere in the file.  This might happen when the diff has too small of
+a -M.  If we do this, then consider caching the fingerprints for a
+parent's entire file, since multiple target blame_entries may check the
+entire parent's space.  Also, if we do this, we probably need to sort the
+parent's blame list (again), since the spliced entries point outside of
+the diff hunk's range in the parent's address space.
+
+- If we never intend to match outside the parent's diff hunk, then we
+might be able to short-circuit guess_line_blames() when the parent's
+chunk length is 0.  Doing this somewhat limits the algorithms, and would
+be a performance optimization, which I didn't want to do without numbers
+saying we needed it.
+
+- Fix up this commit + message.  I'd be up for splitting it more,
+particularly if Michael wants his contributions/fingerprinting in his
+own commit.
 
 Suggested-by: Michael Platings <michael@platin.gs>
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- blame.c | 76 ++++++++++++++++++++++++++++++++++-----------------------
- blame.h |  2 ++
- 2 files changed, 48 insertions(+), 30 deletions(-)
+ blame.c | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 87 insertions(+), 5 deletions(-)
 
 diff --git a/blame.c b/blame.c
-index 31e05c1458d8..cb5806f955a6 100644
+index c06cbd906658..50511a300059 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -310,12 +310,42 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
- 	return xdi_diff(file_a, file_b, &xpp, &xecfg, &ecb);
+@@ -915,27 +915,109 @@ static int are_lines_adjacent(struct blame_line_tracker *first,
+ 	       first->s_lno + 1 == second->s_lno;
  }
  
-+static const char *get_next_line(const char *start, const char *end)
+-/*
+- * This cheap heuristic assigns lines in the chunk to their relative location in
+- * the parent's chunk.  Any additional lines are left with the target.
++/* https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel */
++static int bitcount(uint32_t v)
 +{
-+	const char *nl = memchr(start, '\n', end - start);
-+
-+	return nl ? nl + 1 : end;
++	v = v - ((v >> 1) & 0x55555555u);
++	v = (v & 0x33333333u) + ((v >> 2) & 0x33333333u);
++	return (((v + (v >> 4)) & 0xf0f0f0fu) * 0x1010101u) >> 24;
 +}
 +
-+static int find_line_starts(int **line_starts, const char *buf,
-+			    unsigned long len)
++#define FINGERPRINT_LENGTH (8 * 256)
++#define FINGERPRINT_THRESHOLD 1
++/* This is just a bitset indicating which byte pairs are present.
++ * e.g. the string "good goo" has pairs "go", "oo", "od", "d ", " g"
++ * String similarity is calculated as a bitwise or and counting the set bits.
++ *
++ * TODO for the string lengths we typically deal with, this would probably be
++ * implemented more efficiently with a set data structure.
+  */
++struct fingerprint {
++	uint32_t bits[FINGERPRINT_LENGTH];
++};
++
++static void get_fingerprint(struct fingerprint *result, const char *line_begin,
++			    const char *line_end)
 +{
-+	const char *end = buf + len;
-+	const char *p;
-+	int *lineno;
-+	int num = 0;
++	for (const char *p = line_begin; p + 1 < line_end; ++p) {
++		unsigned int c = tolower(*p) | (tolower(*(p + 1)) << 8);
 +
-+	for (p = buf; p < end; p = get_next_line(p, end))
-+		num++;
-+
-+	ALLOC_ARRAY(*line_starts, num + 1);
-+	lineno = *line_starts;
-+
-+	for (p = buf; p < end; p = get_next_line(p, end))
-+		*lineno++ = p - buf;
-+
-+	*lineno = len;
-+
-+	return num;
++		result->bits[c >> 5] |= 1u << (c & 0x1f);
++	}
 +}
 +
- /*
-  * Given an origin, prepare mmfile_t structure to be used by the
-  * diff machinery
-  */
- static void fill_origin_blob(struct diff_options *opt,
--			     struct blame_origin *o, mmfile_t *file, int *num_read_blob)
-+			     struct blame_origin *o, mmfile_t *file,
-+			     int *num_read_blob, int fill_line_starts)
++static int fingerprint_similarity(const struct fingerprint *a,
++				  const struct fingerprint *b)
++{
++	int intersection = 0;
++
++	for (int i = 0; i < FINGERPRINT_LENGTH; ++i)
++		intersection += bitcount(a->bits[i] & b->bits[i]);
++	return intersection;
++}
++
++static void get_chunk_fingerprints(struct fingerprint *fingerprints,
++				   const char *content,
++				   const int *line_starts,
++				   long chunk_start,
++				   long chunk_length)
++{
++	line_starts += chunk_start;
++	for (int i = 0; i != chunk_length; ++i) {
++		const char *linestart = content + line_starts[i];
++		const char *lineend = content + line_starts[i + 1];
++
++		get_fingerprint(fingerprints + i, linestart, lineend);
++	}
++}
++
+ static void guess_line_blames(struct blame_entry *e,
+ 			      struct blame_origin *parent,
+ 			      struct blame_origin *target,
+ 			      int offset, int delta,
+ 			      struct blame_line_tracker *line_blames)
  {
- 	if (!o->file.ptr) {
- 		enum object_type type;
-@@ -339,11 +369,16 @@ static void fill_origin_blob(struct diff_options *opt,
++	struct fingerprint *fp_parent, *fp_target;
+ 	int nr_parent_lines = e->num_lines - delta;
+ 
++	fp_parent = xcalloc(sizeof(struct fingerprint), nr_parent_lines);
++	fp_target = xcalloc(sizeof(struct fingerprint), e->num_lines);
++
++	get_chunk_fingerprints(fp_parent, parent->file.ptr,
++			       parent->line_starts,
++			       e->s_lno + offset, nr_parent_lines);
++	get_chunk_fingerprints(fp_target, target->file.ptr,
++			       target->line_starts,
++			       e->s_lno, e->num_lines);
++
+ 	for (int i = 0; i < e->num_lines; i++) {
+-		if (i < nr_parent_lines) {
++		int best_sim_val = FINGERPRINT_THRESHOLD;
++		int best_sim_idx = -1;
++		int sim;
++
++		for (int j = 0; j < nr_parent_lines; j++) {
++			sim = fingerprint_similarity(&fp_target[i],
++						     &fp_parent[j]);
++			if (sim < best_sim_val)
++				continue;
++			/* Break ties with the closest-to-target line number */
++			if (sim == best_sim_val && best_sim_idx != -1 &&
++			    abs(best_sim_idx - i) < abs(j - i))
++				continue;
++			best_sim_val = sim;
++			best_sim_idx = j;
++		}
++		if (best_sim_idx >= 0) {
+ 			line_blames[i].is_parent = 1;
+-			line_blames[i].s_lno = e->s_lno + i + offset;
++			line_blames[i].s_lno = e->s_lno + offset + best_sim_idx;
+ 		} else {
+ 			line_blames[i].is_parent = 0;
+ 			line_blames[i].s_lno = e->s_lno + i;
+ 		}
  	}
- 	else
- 		*file = o->file;
-+	if (fill_line_starts && !o->line_starts)
-+		o->num_lines = find_line_starts(&o->line_starts, o->file.ptr,
-+						o->file.size);
- }
- 
- static void drop_origin_blob(struct blame_origin *o)
- {
- 	FREE_AND_NULL(o->file.ptr);
-+	FREE_AND_NULL(o->line_starts);
-+	o->num_lines = 0;
++
++	free(fp_parent);
++	free(fp_target);
  }
  
  /*
-@@ -992,8 +1027,10 @@ static void pass_blame_to_parent(struct blame_scoreboard *sb,
- 	d.offset = 0;
- 	d.dstq = &newdest; d.srcq = &target->suspects;
- 
--	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
--	fill_origin_blob(&sb->revs->diffopt, target, &file_o, &sb->num_read_blob);
-+	fill_origin_blob(&sb->revs->diffopt, parent, &file_p,
-+			 &sb->num_read_blob, 0);
-+	fill_origin_blob(&sb->revs->diffopt, target, &file_o,
-+			 &sb->num_read_blob, 0);
- 	sb->num_get_patch++;
- 
- 	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d, sb->xdl_opts))
-@@ -1199,7 +1236,8 @@ static void find_move_in_parent(struct blame_scoreboard *sb,
- 	if (!unblamed)
- 		return; /* nothing remains for this target */
- 
--	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
-+	fill_origin_blob(&sb->revs->diffopt, parent, &file_p,
-+			 &sb->num_read_blob, 0);
- 	if (!file_p.ptr)
- 		return;
- 
-@@ -1328,7 +1366,8 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
- 			norigin = get_origin(parent, p->one->path);
- 			oidcpy(&norigin->blob_oid, &p->one->oid);
- 			norigin->mode = p->one->mode;
--			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p, &sb->num_read_blob);
-+			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p,
-+					 &sb->num_read_blob, 0);
- 			if (!file_p.ptr)
- 				continue;
- 
-@@ -1650,37 +1689,14 @@ void assign_blame(struct blame_scoreboard *sb, int opt)
- 	}
- }
- 
--static const char *get_next_line(const char *start, const char *end)
--{
--	const char *nl = memchr(start, '\n', end - start);
--	return nl ? nl + 1 : end;
--}
--
- /*
-  * To allow quick access to the contents of nth line in the
-  * final image, prepare an index in the scoreboard.
-  */
- static int prepare_lines(struct blame_scoreboard *sb)
- {
--	const char *buf = sb->final_buf;
--	unsigned long len = sb->final_buf_size;
--	const char *end = buf + len;
--	const char *p;
--	int *lineno;
--	int num = 0;
--
--	for (p = buf; p < end; p = get_next_line(p, end))
--		num++;
--
--	ALLOC_ARRAY(sb->lineno, num + 1);
--	lineno = sb->lineno;
--
--	for (p = buf; p < end; p = get_next_line(p, end))
--		*lineno++ = p - buf;
--
--	*lineno = len;
--
--	sb->num_lines = num;
-+	sb->num_lines = find_line_starts(&sb->lineno, sb->final_buf,
-+					 sb->final_buf_size);
- 	return sb->num_lines;
- }
- 
-diff --git a/blame.h b/blame.h
-index be3a895043e0..b418bd2e480d 100644
---- a/blame.h
-+++ b/blame.h
-@@ -51,6 +51,8 @@ struct blame_origin {
- 	 */
- 	struct blame_entry *suspects;
- 	mmfile_t file;
-+	int num_lines;
-+	int *line_starts;
- 	struct object_id blob_oid;
- 	unsigned mode;
- 	/* guilty gets set when shipping any suspects to the final
 -- 
 2.21.0.392.gf8f6787159e-goog
 
