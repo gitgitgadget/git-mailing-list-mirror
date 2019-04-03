@@ -2,87 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8982C202BB
-	for <e@80x24.org>; Wed,  3 Apr 2019 00:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C93E20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 06:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726524AbfDCAB4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Apr 2019 20:01:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42789 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726527AbfDCAB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Apr 2019 20:01:56 -0400
-Received: by mail-pg1-f196.google.com with SMTP id p6so7329187pgh.9
-        for <git@vger.kernel.org>; Tue, 02 Apr 2019 17:01:55 -0700 (PDT)
+        id S1726245AbfDCGri (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 02:47:38 -0400
+Received: from mail-eopbgr20116.outbound.protection.outlook.com ([40.107.2.116]:53415
+        "EHLO EUR02-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725977AbfDCGrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 02:47:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=48qjLs2HhiHL7Cic2NLgWRPMm1cmn3peG3UHcvWU9ek=;
-        b=JxmPzlQN/im20fzZN8/65ydqEsScSNY6Pk828pqbhGZMEb/vQsZT42oT6I75zHD2Ay
-         UZVN6l68CKcs3r0zc+5CUfPgXIvVK+LKTVfIccG4bPNodgFzvEmso8AQXEBRFg/HdmFt
-         BgiK8qrPQy0f83LzhFrD2kXloq5zqlZaz7wql1kc0BI2ELSBY4fExrjsY9sLaIaUngsX
-         s2jXDbePGfG6R30oDEGn8HkfzEiu4vDU0LWgROY7ivfF2GyFlXgeKzwQwaVPxtMaoTlR
-         8ugsHCLxwtrNSimLEVmwh+oaD5nvxzozxeEX7hwRywnHsHpS/ZZv4zsyG707+NapYGtS
-         PtdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=48qjLs2HhiHL7Cic2NLgWRPMm1cmn3peG3UHcvWU9ek=;
-        b=GLwN4ryr0qbrTv8aNwI5nQp4eArZ8U1CtgrUXiljDdQNS10+v0LZEOqkfjdHhUztE2
-         L0fgfLrXMZcZikTljQjTxj5++dN61DxiyGcKuFt63FzrCAt8TVg8yMXYBn5HXdhhrodw
-         L1kVRqmiwlah5f2VEA/jVQJPOz6BjTGTkgVyxUl7qfV2bIXk9J3ebPeCvoUI9y+giGIL
-         8Qx46wXLRGp2eZcfMWl+PEh0/Su/8SBV1evenhWTmWWHUrKaIS6/UEIBzaDzN4l5XqQw
-         pFugeSrajK+n9seYpwhFrfxyDiMC4e4+Tea3J1BTZxUz2iUP8TAWNhvK/kBAgaoCeU1P
-         zb5A==
-X-Gm-Message-State: APjAAAXn0RMjJYCeGwEAEjrYxu8hWIY3YChsCz6Qquq8G9fTPh2hj9Y1
-        YA60rvN4zydNm7MbZ98wA10=
-X-Google-Smtp-Source: APXvYqzR/cpYhyOsKFNbzbdxMLDMsIHjbhVU6m1u+9+w0pILfDwZbY3RcnpPc5Pd8cM2iQt7EeixMQ==
-X-Received: by 2002:a63:4e4e:: with SMTP id o14mr70359556pgl.254.1554249715258;
-        Tue, 02 Apr 2019 17:01:55 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id 75sm25641917pfr.55.2019.04.02.17.01.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 02 Apr 2019 17:01:54 -0700 (PDT)
-Date:   Tue, 2 Apr 2019 17:01:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        avarab@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 4/7] trace2: use system config for default trace2
- settings
-Message-ID: <20190403000152.GB190454@google.com>
-References: <pull.169.git.gitgitgadget@gmail.com>
- <pull.169.v2.git.gitgitgadget@gmail.com>
- <d048f3ffb801adc7f1b4e48248ca31ebade1b37d.1553879063.git.gitgitgadget@gmail.com>
- <20190401210034.GD60888@google.com>
+ d=matrixil.onmicrosoft.com; s=selector1-matrix-co-il;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6llKcSBN+Cds8L5gm4smGJDsarHfbaf00Tm5u9hmgUY=;
+ b=lkm3IWzf74Vpm4AhXEWeuLUfxV4ClE4XYZqoUFl1Y2QwzQz/cqxJjaS5yR05tzDOSsJzsLn8XA9xZrsxYn9ZzFzlI7T5P7f4amjCyqnLLVrXWp0AMJjLIVpISefndd8Cyx+n9HrfjXYfN1MiAbh4IjUGwHp06fSt679akWaze04=
+Received: from AM6PR08MB4199.eurprd08.prod.outlook.com (20.179.3.202) by
+ AM6PR08MB4119.eurprd08.prod.outlook.com (20.179.3.25) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1771.13; Wed, 3 Apr 2019 06:47:34 +0000
+Received: from AM6PR08MB4199.eurprd08.prod.outlook.com
+ ([fe80::ecff:bf65:983:9a4c]) by AM6PR08MB4199.eurprd08.prod.outlook.com
+ ([fe80::ecff:bf65:983:9a4c%4]) with mapi id 15.20.1771.011; Wed, 3 Apr 2019
+ 06:47:34 +0000
+From:   Amiel Elboim <amielel@matrix.co.il>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Fw: git describe issue
+Thread-Topic: git describe issue
+Thread-Index: AQHU6eQfRF4BjkBwkkaGQKDd1PgbEaYp/jU6
+Date:   Wed, 3 Apr 2019 06:47:34 +0000
+Message-ID: <AM6PR08MB4199B076CB886AE814AFF4528D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
+References: <AM6PR08MB41993844F57794DDF4B33B8F8D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
+In-Reply-To: <AM6PR08MB41993844F57794DDF4B33B8F8D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amielel@matrix.co.il; 
+x-originating-ip: [2.53.138.204]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0353ea9d-670c-4939-be40-08d6b8004080
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR08MB4119;
+x-ms-traffictypediagnostic: AM6PR08MB4119:
+x-microsoft-antispam-prvs: <AM6PR08MB41195F211BAD6AB619A30E4E8D570@AM6PR08MB4119.eurprd08.prod.outlook.com>
+x-forefront-prvs: 0996D1900D
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(376002)(136003)(39860400002)(366004)(346002)(199004)(189003)(5660300002)(256004)(99286004)(74316002)(7736002)(7696005)(305945005)(26005)(102836004)(186003)(7116003)(14454004)(486006)(11346002)(446003)(93156006)(476003)(2351001)(76176011)(478600001)(6506007)(2501003)(6116002)(3846002)(74482002)(316002)(97736004)(66066001)(106356001)(33656002)(71190400001)(71200400001)(229853002)(9686003)(55016002)(2473003)(1730700003)(105586002)(81166006)(81156014)(8676002)(2906002)(6436002)(5640700003)(6916009)(68736007)(8936002)(52536014)(4744005)(25786009)(53936002)(2940100002)(86362001);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR08MB4119;H:AM6PR08MB4199.eurprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: matrix.co.il does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: kslBEbFDiwZMYh0VWgUzr4uT/dk4bSlzt0UmV1sFgGjhr2OZmkgu8+h8maqNwOeMUH6uVJfQhHyaPDjEw4tRJL0wY9XLx6zDhVz4/9sYHo2tKSzxHZSX4Sx21/FJdEI7GFp2lkpbG4zQ3Fc7B3UPNG8mJIH3fMVYdRoeJkv031cf73iMuDIx0sie2WI0vFhaP6UJcWzkOI8B+63fEJon8ZjK8d8lCNupUPgT11pzmNxjsxHHUM7a5atuT7hbjdoFYgae+ioNODSfEPspx5RQc7mpgeZYaEDCmt5ON18+lw4yTInY6Ivrif4VTlhn8UHPpJQUtu3KehdeauMyxxS6OS50ea84Bn5ikLE843anI2i5OtLdbJ04agx56IJVBdUN71ITOBZzftcRPL4SLfmudNbZo27+asveAIsWhZG31qM=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190401210034.GD60888@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-OriginatorOrg: matrix.co.il
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0353ea9d-670c-4939-be40-08d6b8004080
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2019 06:47:34.0293
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8b3747c3-cccd-4b17-8f18-bd610edc86e6
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR08MB4119
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon wrote:
 
-> A question for the list: should these new config vars also be documented
-> in the git-config manpage, or is it better to keep these separate since
-> they are only read from the system config?
 
-Yes, they should be in the git-config manpage.
+Hi!
 
-*If* they are read only from the system config, the documentation
-there should say so.
+I've found strange behavior with 'git describe' command, look like for me a=
+s bug.=A0
 
-Thanks,
-Jonathan
+In the case I create 2 tags on same commit and I run 'git describe --tags' =
+I expect to get the latest tag, but always I get the first tag I created on=
+ the commit.
+
+Unlike=A0git-describe documentations - "The command finds the most recent t=
+ag that is reachable from a commit. "
+
+Simple example -=A0=A0=A0
+
+
+
+amiel@CLINIKALDEV10:~/Xpress$ git tag v1
+amiel@CLINIKALDEV10:~/Xpress$ git tag v2
+amiel@CLINIKALDEV10:~/Xpress$ git describe --tags
+v1
+amiel@CLINIKALDEV10:~/Xpress$ gl
+* 4f54749 (HEAD -> master, tag: v2, tag: v1, origin/master, origin/HEAD) st=
+art point with git
+
+
+
+I'll happy to know if is bug or I don't understand something.
+
+
+Thanks
+
+
+Amiel=A0=A0
+
+=A0=A0
+
+
+     =
