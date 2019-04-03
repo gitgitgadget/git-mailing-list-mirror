@@ -2,84 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3179C20248
-	for <e@80x24.org>; Wed,  3 Apr 2019 21:49:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B97920248
+	for <e@80x24.org>; Wed,  3 Apr 2019 22:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbfDCVtx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 17:49:53 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42652 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726167AbfDCVtw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 17:49:52 -0400
-Received: by mail-qt1-f194.google.com with SMTP id p20so859658qtc.9
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 14:49:52 -0700 (PDT)
+        id S1726314AbfDCWAH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 18:00:07 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:38492 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbfDCWAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 18:00:07 -0400
+Received: by mail-pf1-f169.google.com with SMTP id 10so255014pfo.5
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 15:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=platin-gs.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vvrWAe28+nzFjUWxIx9G2aMb74DFa4nBemD+Rxmo1vM=;
-        b=ztw0LQgnze8/ihEbEeH6LYS47DIsP3sfsa/mz5T2RVb3ePpxRXu5EA98shwlasQIGh
-         2NfixYTLk/Y+B+SFRcRm5M0qAyEKlRggyrGDm5gI7RO6JLrDvylMBTr3+lxsRomKMr0l
-         FNtW43o+7MMGHDJ0cVbxXDELcFkpU5P4ld6uYQSlep/dwxa4b25Wk93hFVXhLqNPnQLt
-         SVFmPfz31Eelek+U+30TERiAQUhzPQmxHiYI3D03sWAjwuMNaF++Q0dmMopJK3R7qK8i
-         tUbcUMAdt/6Pl+qgwzKzk0xm/F7A7Xw+oOxvDhaD3dpbynHlZ4jqqxwrrpjzuu2GAbCd
-         FsJA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=IE3MBwe4s5g0Lx1vCmIN/22wLrgdWfyH5d30wwP6/BE=;
+        b=g18Wpz1fFg3uLWYBhUngjZwwH47tX3yuSyekRZSj6nitPEhLE+EPWkzj74L/qBS4sO
+         mLZ5gI0Tw4QQyHJPV7lIDfEWb5HTkrMdKf5bxPmOJdyJg6QV9I2WG2B1fLikyv/yeoe1
+         HwV9LdfH+TDNEcwOvTuxiWLGTUE3NCPv1iHBTaAyadrKuF36srdp0ovhL3r/B/lbKPc/
+         l5Mlx9iT/ePbTBT5wFW8jmMxefR57mDDSgS24beR1OnN1VuRWJkG/tu/fLc5I6o8nFit
+         OSzyOrb5H1lJMjPSFfKCXZdu+8SbEoocTdLX2sC74fN5nFmyWh7vzjSv5zjb9gD5QqBX
+         GjaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vvrWAe28+nzFjUWxIx9G2aMb74DFa4nBemD+Rxmo1vM=;
-        b=sUIz0a1w8TLInrED5MyJMuhErg2mxf5zBwOdQIBlfVdNe2PWqK7nUUnz+83Q54J9Vf
-         LHiMBFL16j3gTS5jAsadoDyN1bWAMT9QADpl7JuuRKZNQCTn61/ul3s2SY4JMZ3aI+3C
-         gfjY8xVO6Uu6llp4a4+vbIjpu7uDgAfFW0FD2aw4c/KbkOIn6KnViNK6/mdYnnDM4fTV
-         4X5dJ8Iy3y5cYCF+b2jhG/nT2i/GLKaRJ8n2euflF7s/AQ+lG0idXLMttxPbE65FSdCt
-         i6hRPLQOikH/VRCjZgTN76EpVjkba/3BHaP8SMyuT5ZWSC/BzRaQeJlMDP9iidZo15BI
-         GnGQ==
-X-Gm-Message-State: APjAAAXje76AzX9PXLg/2HQqQdyE1oJP1pzSNfq2ZhA0NUImeN6PucsK
-        XDKI3rtToUZsfxGmyvpnz24zkE/ia/eZ3Rjf/lI=
-X-Google-Smtp-Source: APXvYqwoZCbeTn85NhOer0pXvLKg3aVE0yNm3ciyimJzz/5eRvVZSDvlhpgEKtLF64YevmPbGfD8Z2N87Wrof59bZ7w=
-X-Received: by 2002:ac8:33b8:: with SMTP id c53mr2133248qtb.11.1554328191940;
- Wed, 03 Apr 2019 14:49:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=IE3MBwe4s5g0Lx1vCmIN/22wLrgdWfyH5d30wwP6/BE=;
+        b=BdPZyOP/gSCMAS8GJQdkYIc1t0kW2uNUsacB927Ua8NANDdLDZfBt8JPae5EmsQ3u0
+         Yibgx1XQuDUdOb1eIzepxnx6ZAJd7oq6y3Xz1nSuafe3QObSWAUbqyypPB0QnOJsOzTY
+         Q8hGBqji32Vbd7EpcszYkUkolbHfFJaHXYoPxwWIop8H/NSF7Pn56u4212WRS/kS4RMI
+         jaok1wSCB4ANEzQGDgcO1lAXAW6FvGw3BCOGfZkxr1Ks0GWfUMCkPg6h3ojI9b1BWHEM
+         wi7Fhf9tCfhJohaidKaTIpTaqaFd4DP6l/PprlfgIJOx3H+Bn9F9/4ES/ygTAcDayGMZ
+         OL6w==
+X-Gm-Message-State: APjAAAXuKVghgcw8bwkwSYgNNVj4za3G+s/sSRZEN80ZqVnz6lM5zmXq
+        LCKEmUXo35r6ZPIKa+1rhu4pTmX8
+X-Google-Smtp-Source: APXvYqzyeWn4sGz/yigd5MaVS+7OKfIy30mVmiu0iTsMyTwNGYrW2z9wMQXfm+Ux4Atax2/5qj8UJg==
+X-Received: by 2002:a62:1815:: with SMTP id 21mr1917258pfy.107.1554328805717;
+        Wed, 03 Apr 2019 15:00:05 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id w3sm42214137pfn.179.2019.04.03.15.00.03
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Apr 2019 15:00:04 -0700 (PDT)
+Date:   Wed, 3 Apr 2019 15:00:03 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/2] create FLEX_ALLOC_MEM to FLEX_ALLOC_STR cocci rule
+Message-ID: <cover.1554328261.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-References: <20190324235020.49706-1-michael@platin.gs> <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
- <b077afed-d143-506e-977e-6edf2492f75f@google.com> <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
- <7540d14b-f225-39ec-b37e-54cb157d4a72@google.com>
-In-Reply-To: <7540d14b-f225-39ec-b37e-54cb157d4a72@google.com>
-From:   Michael Platings <michael@platin.gs>
-Date:   Wed, 3 Apr 2019 22:49:39 +0100
-Message-ID: <CAJDYR9TmRThj5J_4ecj619_-19VqzHX17dBpUScJvvv6c=5zjA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Fuzzy blame
-To:     Barret Rhoden <brho@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Barret.
-I've cooled off on the git-notes idea since learning that notes
-branches have to be pulled explicitly. And different people may have
-different ideas about which types of commits they want to ignore, so
-not predefining the name of the ignore file(s) does seem like the best
-option, even if it's not perfect. And maybe having --fuzzy as a
-separate option would be nice, maybe not - either way it can wait. In
-short, I've come full circle and wish to do what I can to assist your
-proposal (+ fuzzy matching).
-I've rewritten the fuzzy matching function so it's now much faster and
-more modest in its memory use. I hope to share the patch tomorrow.
-Following that, I'll do what I can to assist with reviewing your
-patches.
-Cheers,
--Michael
+I was playing around with coccinelle and I noticed that we have a use of
+FLEX_ALLOC_MEM that could be converted into FLEX_ALLOC_STR. Convert it
+and write a cocci rule to prevent this from happening.
+
+Note that this was more of an exercise to teach myself how to use
+coccinelle. I'm just submitting a useful patch that came as a result of
+this. Please let me know if this is unwelcome.
+
+Denton Liu (2):
+  midx.c: convert FLEX_ALLOC_MEM to FLEX_ALLOC_STR
+  cocci: FLEX_ALLOC_MEM to FLEX_ALLOC_STR
+
+ contrib/coccinelle/flex_alloc.cocci | 13 +++++++++++++
+ midx.c                              |  2 +-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+ create mode 100644 contrib/coccinelle/flex_alloc.cocci
+
+-- 
+2.21.0.834.geaa57a21fa
+
