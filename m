@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B930520248
-	for <e@80x24.org>; Wed,  3 Apr 2019 11:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4133020248
+	for <e@80x24.org>; Wed,  3 Apr 2019 11:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbfDCLhX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 07:37:23 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33281 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfDCLhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 07:37:23 -0400
-Received: by mail-pg1-f193.google.com with SMTP id k19so1521344pgh.0
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:37:23 -0700 (PDT)
+        id S1726167AbfDCLh3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 07:37:29 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:37672 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfDCLh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 07:37:28 -0400
+Received: by mail-pl1-f193.google.com with SMTP id w23so4960776ply.4
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1HRwL2T7MODfcXrlBYA8wLAi07ntXHgzSLd7OPKp/jk=;
-        b=TAE0l0JSl52773Syvht+Aekoo+10iC/+wqWBK/86seg0T5Ows2N+ab6AJKlGb51+DY
-         M3aNzjg0DJLstSvWfIc72J3QkLcwIl8mwvlXYiGRO6MormH0Bl6A6ls/qfOeIfy4MuKe
-         lgvfVpFvOlsfRrdDUfbDFYJcIaZXuu1eiZWGg/cMDhRaERChbpnoZljaXwWSRv61yOir
-         HRiZf8H42A47z0ofItJPVy78sAXbqYQYlevOMeErY+L6JwLIfJOcNtCWXf9vIgwwlZV3
-         bBzKvQwDUpjyU+67mFihnWquJWIpL3bZ8G5zhjFUxSCrihyS3y+/AjryPq94//ebIoE/
-         LzkA==
+        bh=1353qhiBFkvg4CjMPjTgaQAM7MfVk9j47bxGFKrEJdQ=;
+        b=k8yr8qbwV5EeljhROVOlPglqvIsjIfQp57qFMTFzot69uo+eD/4ok72euUyKQUnVet
+         K3+fqTBzU2AaMhDIFcIArMU1oESYbGgkMqQoC+4+ClulUBm5SYc7r1SFNRlA86hMLkys
+         8mQp2hsCBYqRBJUca74UIqyeNNAZTK4d+pz1MYSlCFeg1h/+8rfRjn13rex/qzeXHgH1
+         4AQ9z+ab6kGGJVoaMBfRYXwQl4k0TB/C7GxFvcoHVBHKvHdfhjXXBf7DRv5eU0Afa/7L
+         Z2DL7tmkEaOp9s7lXL9q95GE/zrjk3Y4EONAmLxl75AkhN5R5CexpB4Sss1tcI+fQhgK
+         Y59Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1HRwL2T7MODfcXrlBYA8wLAi07ntXHgzSLd7OPKp/jk=;
-        b=GTPUuUhDwbgqGisdCR3P6WkDadP65CISJneyje+fwj2BZPklXNkUqtn8y1q1VadMXk
-         HqcyJ5nZqnxJKIkC161XD0wtXHSA92EQqxtjvBa4qJtr9Vh/075X8TLBz8vNt9xmKjxT
-         pLG2YqqwkB0Vm560KrgT3H1zcjNHyYOTo06TfTBdS+DFbjz8+7j4bgZ2gJNAP32l+jLS
-         2vBBnZvzn32l4k+CdznbnGnr+qjQFoYvlem+npOhZfPwOMDogywLMudZZyiMEuta6z3Q
-         aLqNULRSyfxTv6SW5ImzBKgHFBAfUhYhgphH4kovW2X1g57HHRu2RwSDodoxOwbUwmFE
-         c/YA==
-X-Gm-Message-State: APjAAAXmBnk5zAlVS7IKUI6MspQsn4OEmM3Y0GPXZHXVv2vre4EqnqDa
-        sFnJOnqLXPjtwVC6t1EUEG4=
-X-Google-Smtp-Source: APXvYqzhRXk5hYxBSCcRkdkY1+qW5nAx4uWDrLMqT/gkXWwMu2BZoZ2kB0XNHhFXPBMxJU7tHFyjHg==
-X-Received: by 2002:aa7:818a:: with SMTP id g10mr73363686pfi.178.1554291442922;
-        Wed, 03 Apr 2019 04:37:22 -0700 (PDT)
+        bh=1353qhiBFkvg4CjMPjTgaQAM7MfVk9j47bxGFKrEJdQ=;
+        b=GteyuMeOUYSS8v+D2ffjuC4dVplz56CnoX/QDzeMB+l7xIHN2QOefh+wBpclibw68K
+         qT7g0TVEBdkb0P7vsYBbQDpiwIJNA8SRPToJS1puFFFqwdgY7oyvGtcK3iTq+Ab+kKD0
+         K7UlkLVyzfcjH7ynH+a+Qr1dbGH0wk5LovaGkJhWBmhrFbzqUNU0ElP1OGqbnk68/Z/B
+         SWJMnrpBHIhsml/8I/hsLwaYxEJTAqg8+/GOc28KbR8DBCXuajILQiaqt3uXn5OSXozT
+         OZtLkqYFv2IWk9MoiCm9pQzDFqEofHh5JcLIrxLV8E7rIllhiWGOw6duOXJy1A50lLVA
+         Ne2g==
+X-Gm-Message-State: APjAAAWoGnh++T5ruPpJ2A7f+77TUVSa5TPofTSaBRrttTnyyMepIl9t
+        DXRyjQV8lxu0sUkagfTCcjs=
+X-Google-Smtp-Source: APXvYqxMNFjdKJUuZ6G/F4LXuEJp1jguo6JJrpzwFjbKLpWXKVeJ8Ec+Vc3nIf0wF/igP6e+DWeFIg==
+X-Received: by 2002:a17:902:526:: with SMTP id 35mr72629541plf.276.1554291448205;
+        Wed, 03 Apr 2019 04:37:28 -0700 (PDT)
 Received: from ash ([27.75.136.26])
-        by smtp.gmail.com with ESMTPSA id w3sm39941393pfn.179.2019.04.03.04.37.19
+        by smtp.gmail.com with ESMTPSA id h65sm43295625pfd.108.2019.04.03.04.37.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 04:37:22 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:37:17 +0700
+        Wed, 03 Apr 2019 04:37:27 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:37:23 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 25/32] sha1-name.c: remove the_repo from diagnose_invalid_index_path()
-Date:   Wed,  3 Apr 2019 18:34:50 +0700
-Message-Id: <20190403113457.20399-26-pclouds@gmail.com>
+Subject: [PATCH v2 26/32] sha1-name.c: remove the_repo from resolve_relative_path()
+Date:   Wed,  3 Apr 2019 18:34:51 +0700
+Message-Id: <20190403113457.20399-27-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190403113457.20399-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -70,83 +70,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"remove" is not entirely correct. But at least the function is aware
+that if the given repo is not the_repository, then $CWD and
+is_inside_work_tree() means nothing.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- dir.c       | 8 ++++++++
- dir.h       | 4 +++-
- sha1-name.c | 7 ++++---
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ sha1-name.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index b2cabadf25..e6d97343f4 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2315,6 +2315,14 @@ int file_exists(const char *f)
- 	return lstat(f, &sb) == 0;
- }
- 
-+int repo_file_exists(struct repository *repo, const char *path)
-+{
-+	if (repo != the_repository)
-+		BUG("do not know how to check file existence in arbitrary repo");
-+
-+	return file_exists(path);
-+}
-+
- static int cmp_icase(char a, char b)
- {
- 	if (a == b)
-diff --git a/dir.h b/dir.h
-index e3ec26143d..47c5409ced 100644
---- a/dir.h
-+++ b/dir.h
-@@ -269,7 +269,9 @@ extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
- extern void clear_exclude_list(struct exclude_list *el);
- extern void clear_directory(struct dir_struct *dir);
--extern int file_exists(const char *);
-+
-+int repo_file_exists(struct repository *repo, const char *path);
-+int file_exists(const char *);
- 
- extern int is_inside_dir(const char *dir);
- extern int dir_inside_of(const char *subdir, const char *dir);
 diff --git a/sha1-name.c b/sha1-name.c
-index d9050776dd..6caf3f4e3a 100644
+index 6caf3f4e3a..6b53ea2eeb 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -1664,11 +1664,12 @@ static void diagnose_invalid_oid_path(const char *prefix,
+@@ -1719,12 +1719,12 @@ static void diagnose_invalid_index_path(struct repository *r,
  }
  
- /* Must be called only when :stage:filename doesn't exist. */
--static void diagnose_invalid_index_path(struct index_state *istate,
-+static void diagnose_invalid_index_path(struct repository *r,
- 					int stage,
- 					const char *prefix,
- 					const char *filename)
- {
-+	struct index_state *istate = r->index;
- 	const struct cache_entry *ce;
- 	int pos;
- 	unsigned namelen = strlen(filename);
-@@ -1708,7 +1709,7 @@ static void diagnose_invalid_index_path(struct index_state *istate,
- 			    ce_stage(ce), filename);
- 	}
  
--	if (file_exists(filename))
-+	if (repo_file_exists(r, filename))
- 		die("Path '%s' exists on disk, but not in the index.", filename);
- 	if (is_missing_file_error(errno))
- 		die("Path '%s' does not exist (neither on disk nor in the index).",
-@@ -1814,7 +1815,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			pos++;
+-static char *resolve_relative_path(const char *rel)
++static char *resolve_relative_path(struct repository *r, const char *rel)
+ {
+ 	if (!starts_with(rel, "./") && !starts_with(rel, "../"))
+ 		return NULL;
+ 
+-	if (!is_inside_work_tree())
++	if (r != the_repository || !is_inside_work_tree())
+ 		die("relative path syntax can't be used outside working tree.");
+ 
+ 	/* die() inside prefix_path() if resolved path is outside worktree */
+@@ -1785,7 +1785,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			stage = name[1] - '0';
+ 			cp = name + 3;
  		}
- 		if (only_to_die && name[1] && name[1] != '/')
--			diagnose_invalid_index_path(repo->index, stage, prefix, cp);
-+			diagnose_invalid_index_path(repo, stage, prefix, cp);
- 		free(new_path);
- 		return -1;
- 	}
+-		new_path = resolve_relative_path(cp);
++		new_path = resolve_relative_path(repo, cp);
+ 		if (!new_path) {
+ 			namelen = namelen - (cp - name);
+ 		} else {
+@@ -1839,7 +1839,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			const char *filename = cp+1;
+ 			char *new_filename = NULL;
+ 
+-			new_filename = resolve_relative_path(filename);
++			new_filename = resolve_relative_path(repo, filename);
+ 			if (new_filename)
+ 				filename = new_filename;
+ 			if (flags & GET_OID_FOLLOW_SYMLINKS) {
 -- 
 2.21.0.479.g47ac719cd3
 
