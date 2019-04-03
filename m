@@ -7,103 +7,146 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A61E220248
-	for <e@80x24.org>; Wed,  3 Apr 2019 15:25:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31A8A20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbfDCPZs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 11:25:48 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40853 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726084AbfDCPZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 11:25:48 -0400
-Received: by mail-pf1-f195.google.com with SMTP id c207so8330678pfc.7
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 08:25:48 -0700 (PDT)
+        id S1726384AbfDCQCR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 12:02:17 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:43591 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726144AbfDCQCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 12:02:16 -0400
+Received: by mail-qt1-f201.google.com with SMTP id q21so17104659qtf.10
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JJyvpPPorGKhay8UafZEDh9fgQ29AlJqUfzFxkbLirM=;
-        b=pQ0tUpzyFhxyqsxQdTQczgjevq3WMGkQx2zE07o8o8RlFlNV5DtdJClHliaXz52uMZ
-         S11T1u4NJe6aOSkhPMWJLKp9yM9DuSLiboWmsyZY/vx1bVC+K4iLdSyHjZ/SPTU/9qUr
-         nvYOnmi66x1/zKxdHKtMzxJudbRtQ/JcBkn1dFTrEWlSFs0/MezUgSUzzb7VCPChvHjQ
-         eY8SattAKE6LKUkKBhF4WWqF4IUrx5KCHuoEcxUp2K71lUAgiiOSlmCIixa2+stpIGZK
-         cM6eg8FLBxbEjY21UH/hRrfp25lfYMcL6e35hduxF55lJSdwSaS21YXX7t83PWuDOmPu
-         FS2A==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=MmsxYSTvGX0745drk7i5zY4omjc26GTBQvXkq9Xps6U=;
+        b=PxTsou+uFK2AJ8k+zWMpWE0Ug/5rYyUSz5cFZgu7BYD029sahfNCdbj678MK9snBiW
+         yLUEK9c/lnUCUe9QRfuit+m5K9DGztAoVVk2bYqc/XloS79Y/P8YWE9sF9gestUogd96
+         knVwQUGQOg2yD4C+yUJd26/17HaaCdPyHTwOuL/+KXCPuHLuyfY3jBfniiSY3u94/l6j
+         Th4/RgtWaW0jy10ErZxAYaQRKC1HFcLlEmbJeqOF3kfEOx6bQ+1pm1mOLNDPy4NFYLOy
+         Wpjl3+0FyDZ1EjFJUhzWjeIQYw9GbnhWH5dW+KIL00R/0nvHSPrqn65bpTNT195jsNiR
+         BBKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JJyvpPPorGKhay8UafZEDh9fgQ29AlJqUfzFxkbLirM=;
-        b=Dgzm0mv4it9uNxyvMQ7nljou1gOFyZSeooQbvGJ2MFoYckquu9pclrJU90pyiTJzDd
-         QH43OdgFWOLChpShMm5v++ssrZIYMdqmh5E6BFp2A/GmbIPRE++Fw3xoFe0LQ8cTN5cB
-         0o1KOZKqy2jBV7G0sGKT4RkQy4jp3p5bu3kwumto9aFpegCrIEOpmAfF9jxw4kUrC9R6
-         bp4S3HtX/IwphU8FIud0h3I9UprNVfhh6q2VNFzEaka+ptRRDPVyV2F30xshyebtCn15
-         /idASj62Ud+GJDSQ75oii44zajUvd68q8KuYJK6N0r6Zi4C2R2r1IKfIVVJq9BeEgWj2
-         LrVw==
-X-Gm-Message-State: APjAAAWeN4JyB4TC+HY3kTjU5j9IsVETlZLbCar+ldOL54/nPOsKQ26N
-        39TiW3XQyNzONH033B46+HvYwu58HX8=
-X-Google-Smtp-Source: APXvYqy2Rw7GBuVtZxWYxocTgI/gfdBbvX3eX+XF/MYeXr8T7cDyYWhiXQr/wDk+WM5qOvSEiZQI0A==
-X-Received: by 2002:a62:6842:: with SMTP id d63mr14795650pfc.9.1554305146903;
-        Wed, 03 Apr 2019 08:25:46 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id g6sm20133856pgq.54.2019.04.03.08.25.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 08:25:45 -0700 (PDT)
-Subject: Re: [RFC PATCH 0/1] Fuzzy blame
-To:     Michael Platings <michael@platin.gs>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <20190324235020.49706-1-michael@platin.gs>
- <xmqq5zs7oexn.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9RWUmXzh9Pn3qGBXAxNf70-SMKUCB3wwXVYKRTKOy8F_g@mail.gmail.com>
- <b077afed-d143-506e-977e-6edf2492f75f@google.com>
- <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=MmsxYSTvGX0745drk7i5zY4omjc26GTBQvXkq9Xps6U=;
+        b=O3+ed1NiY9mm2SHxHPgbpeGU3ph6nP1NqC3BsGGKwlXt4LzJwg79lBC3wXgdzZ9UAR
+         Ih3Riq0TFS070Ti9ZTVvTLAJwBibDT5RZs+NLqmOrhqC5zORFEbMgqb8r3/j3WP/32nL
+         0tFmeGP6wCqnP5wBVauAQUZgnqA8yzkGEemB0TCjT7ybjyxf/efomqXIF9uQ8M2maLhV
+         9e6UFAUUsodqdJoUNRNwTDyGspWwF24GNWQLVTbgFjzj9bRzvdRjMcevGhyGxA+4fmmf
+         HLxR8M/SMfdohYXgBW6CKJltRJmd5pxn/uVqAd45VB0+BmGBOJYzGBihG3sYOWnr3Rmr
+         q75A==
+X-Gm-Message-State: APjAAAVpiGs6aAGsInghNpaqF8JVd5FkHKq9G1pF7J95nSjTmbC8LoVi
+        awleZKKco8NFetBdia6HDcfloiwQ5exvcZQMkm1jKMbc1X6W9SkCgxuDtVr5xN5XyUNbde23Fzf
+        wvaCekq6Fai7WLJAYwxvYl6KoGGoS2qCMQbrxWJKUzD7Ok/bIcTK1
+X-Google-Smtp-Source: APXvYqwhIWRuCALlMCR9j4OTKsw3tctvk489WvDtemD2ys86vW3hYTTVogYUOMQBjeo1Z4IkyoZgmpx5
+X-Received: by 2002:a37:4a54:: with SMTP id x81mr81642qka.36.1554307335715;
+ Wed, 03 Apr 2019 09:02:15 -0700 (PDT)
+Date:   Wed,  3 Apr 2019 12:02:01 -0400
+Message-Id: <20190403160207.149174-1-brho@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
+Subject: [PATCH v5 0/6] blame: add the ability to ignore commits
 From:   Barret Rhoden <brho@google.com>
-Message-ID: <7540d14b-f225-39ec-b37e-54cb157d4a72@google.com>
-Date:   Wed, 3 Apr 2019 11:25:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-In-Reply-To: <CAJDYR9R77_+gfOgLXX_Az8iODNRyDTHAT8BAubZeptEWJViYqA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi -
+This patch set adds the ability to ignore a set of commits and their
+changes when blaming.  This can be used to ignore a commit deemed 'not
+interesting,' such as reformatting.
 
-On 3/25/19 7:21 PM, Michael Platings wrote:
->> The first thing that comes to mind for me is to plug your fuzzy logic
->> into my patch set.
-> Please do! It should be easy to pluck fuzzy_find_matching_lines() and
-> its dependencies out. Just to set your expectations, I have not yet
-> optimised it and it is highly wasteful right now both in terms of time
-> and memory.
+The last patch in the series is an RFC, and the others could be merged
+without it.  That last patch changes the heuristic by which ignored
+lines are attributed to specific lines in the parent commit.  This
+increases the likelihood of blaming the 'right' commit, where 'right' is
+subjective.
 
-I edited my patch set to allow changing the heuristic.  I also made a 
-commit that uses your fingerprinting code to match target lines to 
-parent lines.  I'll send it all out in another email and CC you.  The 
-last commit is still a work in progress.
+The last patch needs a little work still - there's a TODO section in
+its commit message.  It includes some of Michael's code, so if we are
+going to keep it, I'd like to sort out authorship correctly.
 
-Regarding stuff like the name of the ignore file, in my first version, I 
-went with whatever git hyper-blame does.  That was shot down, rightly 
-so, I think.  With a git-config setting, you can name the file whatever 
-you want, or add multiple files.  With my current patchset, you can 
-disable the file too with --ignore-revs-file="".
+v4 -> v5
+v4: https://public-inbox.org/git/20190226170648.211847-1-brho@google.com/
+- Changed the handling of blame_entries from ignored commits so that you
+  can use any algorithm you want to map lines from the diff chunk to
+  different parts of the parent commit.
+- fill_origin_blob() optionally can track the offsets of the start of
+  every line, similar to what we do in the scoreboard for the final
+  file.  This can be used by the matching algorithm.  It has no effect
+  if you are not ignoring commits.
+- RFC of a fuzzy/fingerprinting heuristic, based on Michael Platings RFC
+  at https://public-inbox.org/git/20190324235020.49706-2-michael@platin.gs/
+- Made the tests that detect unblamable entries more resilient to
+  different heuristics.
+- Fixed a few bugs:
+	- tests were not grepping the line number from --line-porcelain
+	  correctly.
+	- In the old version, when I passed the "upper" part of the
+	  blame entry to the target and marked unblamable, the suspect
+	  was incorrectly marked as the parent.  The s_lno was also in
+	  the parent's address space.
 
-As far as using notes or per-commit info, that might be nice, though 
-it's not a huge burden to have a separate commit - you can wait til 
-after things get merged (so we have the final object name (hash)) and 
-it's not hugely burdensome.  But I get that's just my opinion.  =)
+v3 -> v4
+v3: https://public-inbox.org/git/20190212222722.240676-1-brho@google.com/
+- Cleaned up the tests, especially removing usage of sed -i.
+- Squashed the 'tests' commit into the other blame commits.  Let me know
+  if you'd like further squashing.
 
-Barret
+v2 -> v3
+v2: https://public-inbox.org/git/20190117202919.157326-1-brho@google.com/
+- SHA-1 -> "object name", and fixed other comments
+- Changed error string for oidset_parse_file()
+- Adjusted existing fsck tests to handle those string changes
+- Return hash of all zeros for lines we know we cannot identify
+- Allow repeated options for blame.ignoreRevsFile and
+  --ignore-revs-file.  An empty file name resets the list.  Config
+  options are parsed before the command line options.
+- Rebased to master
+- Added regression tests
 
+v1 -> v2
+v1: https://public-inbox.org/git/20190107213013.231514-1-brho@google.com/
+- extracted the skiplist from fsck to avoid duplicating code
+- overhauled the interface and options
+- split out markIgnoredFiles
+- handled merges
 
+Barret Rhoden (6):
+  Move init_skiplist() outside of fsck
+  blame: use a helper function in blame_chunk()
+  blame: optionally track the line starts during fill_blame_origin()
+  blame: add the ability to ignore commits and their changes
+  blame: add a config option to mark ignored lines
+  RFC blame: use a fingerprint heuristic to match ignored lines
+
+ Documentation/blame-options.txt |  16 ++
+ Documentation/config/blame.txt  |  11 +
+ Documentation/git-blame.txt     |   1 +
+ blame.c                         | 384 +++++++++++++++++++++++++++-----
+ blame.h                         |   6 +
+ builtin/blame.c                 |  51 +++++
+ fsck.c                          |  37 +--
+ oidset.c                        |  35 +++
+ oidset.h                        |   8 +
+ t/t5504-fetch-receive-strict.sh |  14 +-
+ t/t8013-blame-ignore-revs.sh    | 201 +++++++++++++++++
+ 11 files changed, 665 insertions(+), 99 deletions(-)
+ create mode 100755 t/t8013-blame-ignore-revs.sh
+
+-- 
+2.21.0.392.gf8f6787159e-goog
 
