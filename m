@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBB3720248
-	for <e@80x24.org>; Wed,  3 Apr 2019 07:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5C4F20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 07:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbfDCHpN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 03:45:13 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33752 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbfDCHpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 03:45:13 -0400
-Received: by mail-wm1-f65.google.com with SMTP id z6so4160008wmi.0
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 00:45:11 -0700 (PDT)
+        id S1728674AbfDCH7G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 03:59:06 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33185 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726615AbfDCH7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 03:59:06 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q1so20001562wrp.0
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 00:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2PaXQl9nXACihEJQ2g5c59uPG5Qb+s8SR5N3MQS3Cao=;
-        b=bOL14fQevHnWlYDEUblfFtKhdzhPSovzzXl8RpY13BLazV2kwfaNoMDFE1PyOzf1xS
-         LRhsY0Tn24fWGnCNzAtLmHOpgRi48FJgifGPhHccxRY+9zNbqe2krZu0Dnjo7tkdieEg
-         oAHWULisqCUOrtuZJiaheMq+v6+5Gqow5zkW118wHW3Z1eP3N3tH3S/61Z5iSw7DGoDp
-         PFXPACLrYtcLjTdTv0whi5bfc7U/XsfmDltVYtMlYinGOfNmjRvqtt/Qo0gJ/0jfPodv
-         xlDRf0685slbAXm57c8ZYtbFhVDlW98zNWjbKIkbk4pYfCLH6YXIxEXbJG3Ww2kp0QXV
-         cXig==
+        bh=4h0pVr5+3I9WJ7s0HukXqdFTNwezVMfXDbHevGUNhBs=;
+        b=FvPR3ZAUBsi+mWAQgPzBQkLrhQDRtVS4CilUe9GY1LTp8BVB1NpXTUjZCDcvC8iLU5
+         W0n6EG3DX+TWHVeepVWOhqVJDMjh4PHPcPfxBn0p5IlGF3C/iWN5vDDpcfKPicQp4L2K
+         K2gE6eGaB7zo2OL18XgQOo3WbmPJrK35UujCVdxO5+YKiRejNc8qxwEyNtnwMaXkYXOm
+         oxoAOP7CgMkXVFLRovqjGfUFzzmsNZI0SlF3E1rah7WdD3slcg1DvK65j1FmswQbPHtI
+         U0NbkC1Vz7Tr5/9AKV+1KHZsbMKEQalwS+q5Bs7j6QkxvwVcRxMf8EAYgw9kBJvkyoUR
+         EFaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2PaXQl9nXACihEJQ2g5c59uPG5Qb+s8SR5N3MQS3Cao=;
-        b=nzA87oPw2Wj0TdwW2suKhTAojXR9RSLvbM0aToLyG/E28Dwn4kxLT4rydg7kz8Z8os
-         FrLGnWA9Waqh1qCLCDT/M3k4eviGa3v79TqtbpbHXAO6eUWgjMiFxc22N6Fx1m5PAwM7
-         QUwqvfmcTpi3tXFhEaYWLg2VHSdqRIVNANJDKMqVNLbhxscaPb86g0SuduxXO4SRNbel
-         /eD77cx1H0OsBEkzzbu1XH6JOYT782K1y2fjoSrZ5tSSzXdgg7JzJXQ04p+C63hxc0+h
-         Jk7uizF6cZhOczG1sRhOJJ14+ZAbONptWQJaaczHn1tqC2aSWzZ0LWATc++7f4eJ+NGO
-         xrcQ==
-X-Gm-Message-State: APjAAAXPdBP6XsygFZZnpet6sOLP+128PuRqcJKw/HrtqW/YM+mReQsY
-        jnNuCU6QeZFT02tdVLyP9MY=
-X-Google-Smtp-Source: APXvYqxorkkPpsOqK8/980wu2CgFUFEM+opli7PGJh/kpCbf/yl37r5rwdScuR7KYteF7QmegZbxNg==
-X-Received: by 2002:a1c:a103:: with SMTP id k3mr996783wme.8.1554277510852;
-        Wed, 03 Apr 2019 00:45:10 -0700 (PDT)
+        bh=4h0pVr5+3I9WJ7s0HukXqdFTNwezVMfXDbHevGUNhBs=;
+        b=hTt8diKiP8KJgnZp4B18RghEBuNY/HrHQfsIBgACRIKRl8IZO2rrPAoEu/icNlBVsh
+         noODeoc02gHTAKX8fVebpvNmRbXmcMizpjrz6WrNfPC02BuudPtrw+hh1VI5DRw48S/1
+         9pQWqEQgIjipmEhoJnkellUUxSQDpTghEuRAHo9QEyl4xBgGI29wREkH3U0ZFrMe4Ph5
+         Ig8xzF9HIsNZEBfDXuboV0GBXoBL5mj1w82TFG3E0yA7MAK/rIOJEaSrL65QbhQaTC1T
+         ryC77jz8hwtModilUMn0oqADkHXeYIQ2H7TImOs2vpmj5irMA6CE/dE4/FMkeMqPNOk8
+         ofzQ==
+X-Gm-Message-State: APjAAAW5suQ8j+g6+KsH7+wB2xGh4WZXdjFihdOKxW0sUbkXZA5oafO7
+        UgXOq7KCdQismAYy2gzUWRI=
+X-Google-Smtp-Source: APXvYqw32+rlpd+nMTuDAdBabiG17p3fthHT6ttEc/7UzHq6GiaHJn5kXFIMRBq1wB6AIhxOJ4wZ3g==
+X-Received: by 2002:a5d:4d42:: with SMTP id a2mr5916951wru.130.1554278344123;
+        Wed, 03 Apr 2019 00:59:04 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id l21sm6830006wme.4.2019.04.03.00.45.09
+        by smtp.gmail.com with ESMTPSA id x18sm20825525wrw.14.2019.04.03.00.59.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Apr 2019 00:45:10 -0700 (PDT)
+        Wed, 03 Apr 2019 00:59:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     David Kastrup <dak@gnu.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] blame.c: don't drop origin blobs as eagerly
-References: <20190402115625.21427-1-dak@gnu.org>
-Date:   Wed, 03 Apr 2019 16:45:09 +0900
-In-Reply-To: <20190402115625.21427-1-dak@gnu.org> (David Kastrup's message of
-        "Tue, 2 Apr 2019 13:56:25 +0200")
-Message-ID: <xmqqv9zvsfay.fsf@gitster-ct.c.googlers.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     git@vger.kernel.org, debian@onerussian.com
+Subject: Re: [PATCH v2 2/4] t3000: move non-submodule repo test to separate file
+References: <87lg1eq146.fsf@kyleam.com>
+        <20190402183505.31512-1-kyle@kyleam.com>
+        <20190402183505.31512-3-kyle@kyleam.com>
+Date:   Wed, 03 Apr 2019 16:59:02 +0900
+In-Reply-To: <20190402183505.31512-3-kyle@kyleam.com> (Kyle Meyer's message of
+        "Tue, 2 Apr 2019 14:35:03 -0400")
+Message-ID: <xmqqlg0rsent.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,53 +68,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Kastrup <dak@gnu.org> writes:
+Kyle Meyer <kyle@kyleam.com> writes:
 
-> When a parent blob already has chunks queued up for blaming, dropping
-> the blob at the end of one blame step will cause it to get reloaded
-> right away, doubling the amount of I/O and unpacking when processing a
-> linear history.
+> a2d5156c2b (resolve_gitlink_ref: ignore non-repository paths,
+> 2016-01-22) added a test to t3000-ls-files-others.sh to check that
+> 'ls-files -o' does not die() when given a subdirectory that looks like
+> a repository but is actually a subdirectory containing a bogus .git
+> file.
 >
-> Keeping such parent blobs in memory seems like a reasonable optimization
-> that should incur additional memory pressure mostly when processing the
-> merges from old branches.
+> Move this test to a separate file in preparation for testing scenarios
+> with non-submodule repositories that are not bogus.
 
-Thanks for finding an age-old one that dates back to 7c3c7962
-("blame: drop blob data after passing blame to the parent",
-2007-12-11).
+It is unclear to me why this is needed.
 
-Interestingly, the said commit claims:
+> +++ b/t/t3009-ls-files-others-nonsubmodule.sh
+> @@ -0,0 +1,21 @@
+> +#!/bin/sh
+> +
+> +test_description='test git ls-files --others with non-submodule repositories'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup: expected output' '
+> +	cat >expected <<-EOF
+> +	expected
+> +	output
+> +	EOF
+> +'
 
-    When passing blame from a parent to its parent (i.e. the
-    grandparent), the blob data for the parent may need to be read
-    again, but it should be relatively cheap, thanks to delta-base
-    cache.
-            
-but perhaps you found a case where the delta-base cache is not all
-that effective in the benchmark?
+I think this is overkill.  Usually we have one expectation for a
+single test, so having the above inside the actual test below makes
+more sense.
 
-Will queue.  Thanks.
+Or are you planning to add more tests before the test_done we see
+below, all of which expect the above output?  It would make perfect
+sense if it were the case, but I do not think that is what is
+happenning here...
 
-
-
-
->
-> Signed-off-by: David Kastrup <dak@gnu.org>
-> ---
->  blame.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/blame.c b/blame.c
-> index 5c07dec190..c11c516921 100644
-> --- a/blame.c
-> +++ b/blame.c
-> @@ -1562,7 +1562,8 @@ static void pass_blame(struct blame_scoreboard *sb, struct blame_origin *origin,
->  	}
->  	for (i = 0; i < num_sg; i++) {
->  		if (sg_origin[i]) {
-> -			drop_origin_blob(sg_origin[i]);
-> +			if (!sg_origin[i]->suspects)
-> +				drop_origin_blob(sg_origin[i]);
->  			blame_origin_decref(sg_origin[i]);
->  		}
->  	}
+> +test_expect_success 'ls-files --others handles non-submodule .git' '
+> +	mkdir not-a-submodule &&
+> +	echo foo >not-a-submodule/.git &&
+> +	git ls-files -o >output &&
+> +	test_cmp expected output
+> +'
+> +
+> +test_done
