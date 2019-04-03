@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0633420248
-	for <e@80x24.org>; Wed,  3 Apr 2019 11:36:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BB28202BB
+	for <e@80x24.org>; Wed,  3 Apr 2019 11:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726624AbfDCLgO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 07:36:14 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43334 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725941AbfDCLgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 07:36:13 -0400
-Received: by mail-pl1-f196.google.com with SMTP id m10so7897684plt.10
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:36:13 -0700 (PDT)
+        id S1726630AbfDCLgU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 07:36:20 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44109 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725941AbfDCLgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 07:36:19 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i2so8179901pgj.11
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0Sww8ndWyCxak9+iI+JOYHneVIA0yT5/XJ9VtPjuYpA=;
-        b=KFr4lhcGDuVhrk/38+h/AtbYQP0nD8CEYcr1NamEFWFrP4SCoIswGQlXYs0QvlBKyf
-         vEQ9D0cn4c11WRHJTDByb01r30NC6nfiSXpfmjALgifrkOQxw1dxKvuVRf9EEMABXZRf
-         ia00+CwLk3kVLCp66OC7Nb5I4qm+uIdEFiPxL9HjUlA6oTjZZ54fP4MGnjLOkwcIjHK1
-         TNIfpHthAgNGscbqjSrxLgHF++G328cgJWYGSisuF+aQb1CLxOmMfDUQ/wLfJLmnWgXE
-         IZ0+4pV4Omgiwdpa4YnWPktnzeti+89TQ6PbUXJjlOJcVlzBdl2/dAzPqU5XEC82tVck
-         BCKA==
+        bh=Z3tl6C17iYwwBOSBKh5AtgHHBV5w/wvyG2a5No1/lCw=;
+        b=L1eEl/42XtHRVUa4ZQukAtR2EAQVs3vgb/tK/OKJ/jBBhSum7Tr+hyZs+KLx8zoEoI
+         6nR5aJQxLoFUWXbYoWmmDL0uJzXlbAIc3/RHuTWBa8BXskrRgKmyPk1AP4fPdZI7kCa4
+         fMMGwLPIRaKMJGSDpE5/Dm8gYFL3YUPghvxRmGG+sMKKHJj0bWvVrMIxP3aVEJbHTpVj
+         yV3nQPPQNX+0L+1mjNAG455WYGuDesQNvdmE4+a9tLukPWPkgmt5KWxYurT7XNuZrNTk
+         ujj537NSZnMOUop09KCPi16F4ZoiwJJ5Ik7bIOu//3CydBf1tdftbesecT400W7bDkWu
+         pJww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0Sww8ndWyCxak9+iI+JOYHneVIA0yT5/XJ9VtPjuYpA=;
-        b=lysLMJtWd2RvL/f4qGOI1IzfGqDaftkUVxwyyOassHdmSz6KIIDoD3ViVZyNY8962p
-         xb/teYIRLciqo+WMvji3XwFEwFaDD1lbtRNs00aeyNIoZ/qGrjeBi5FDJ+gCixq3tA9L
-         E+yBhHFACbvLBgLE+h9MtMbDwzxCsyIsNIFOKj8RUGlljNWkqzQciql77WM+Nao5zAjO
-         4LpQMEeZ9nYmQN69XsQw7SUA47mRoNuTSlmQOv/OBdRq3asqwiiobOIsRK8rhgrTaOU6
-         eoB38038t7wsuUBY6GhyRUkDO6wGkGw3XNIDmBfaDaMnX5U9LXZZHq/gyXWdCwyLeUvO
-         irlw==
-X-Gm-Message-State: APjAAAXCJwgit3CH6oIYw5+y7zXenVd9ohz0rr4H/R0q/CWbMmV4FAP5
-        anFznskRpUahoqTL3E21rm8=
-X-Google-Smtp-Source: APXvYqz1LSCqGBiWN/5aMeaSH3ePCblXUbD+1JDewZ7verqc1Ke7mWiUdDxIDZdolQ84g7GjNEfjbg==
-X-Received: by 2002:a17:902:2b88:: with SMTP id l8mr24150393plb.262.1554291372757;
-        Wed, 03 Apr 2019 04:36:12 -0700 (PDT)
+        bh=Z3tl6C17iYwwBOSBKh5AtgHHBV5w/wvyG2a5No1/lCw=;
+        b=fKskH4nz98ujnAL9Tl62mU/vZ5XNUkbc90vPn0icRv2PaBRvwc9nR7JsTaF4p6Co0T
+         ekL3erOaH+gti3CovsF1gum4rgde1dISoNdKg0HOdaXJfVJVyYNPQ/mbgRYB2Ncn7dib
+         tGtWWFITcQsQ2Bf+4KxOkzLSwkP00JBH1UcDCAl+4v3STyNYskKjuh7an939aqcUszbQ
+         REJ8iY8CdWxaDHy/KUwCRORoezRyZ1ADRUeupIeghaUWIZNZge4+x6oVuSv50jD7aai7
+         Uku+nm+Du7pBluS4kTYKz/oazdAkCHkQ02tk14IoNCOQYdZhG0SB31MqaONnh9/PZJdq
+         UfMA==
+X-Gm-Message-State: APjAAAV5pAMtigJkrzSn7BjltoDMe1xUfESMIeLq8MOvPcacVD8IUD3W
+        dJRStgFepnmg8yPoXK8W+dE=
+X-Google-Smtp-Source: APXvYqz+r5ZBeQh7gdpWpBYGUf6Xd5x9zBkTLI31SI+W+dX9b+t7DwqEnqVkTWmaSaSrDTyGZtF07Q==
+X-Received: by 2002:a63:360e:: with SMTP id d14mr58972259pga.188.1554291379167;
+        Wed, 03 Apr 2019 04:36:19 -0700 (PDT)
 Received: from ash ([27.75.136.26])
-        by smtp.gmail.com with ESMTPSA id 75sm28611618pfr.55.2019.04.03.04.36.09
+        by smtp.gmail.com with ESMTPSA id a12sm17881795pgq.21.2019.04.03.04.36.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 04:36:12 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:36:07 +0700
+        Wed, 03 Apr 2019 04:36:17 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:36:13 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 12/32] sha1-name.c: remove the_repo from find_abbrev_len_packed()
-Date:   Wed,  3 Apr 2019 18:34:37 +0700
-Message-Id: <20190403113457.20399-13-pclouds@gmail.com>
+Subject: [PATCH v2 13/32] sha1-name.c: add repo_find_unique_abbrev_r()
+Date:   Wed,  3 Apr 2019 18:34:38 +0700
+Message-Id: <20190403113457.20399-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190403113457.20399-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -72,41 +72,78 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-name.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ cache.h     |  6 ++++--
+ sha1-name.c | 15 +++++++++------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index fcb24b5781..4f8ebb0a67 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1045,8 +1045,10 @@ extern void check_repository_format(void);
+  * Note that while this version avoids the static buffer, it is not fully
+  * reentrant, as it calls into other non-reentrant git code.
+  */
+-extern const char *find_unique_abbrev(const struct object_id *oid, int len);
+-extern int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len);
++const char *repo_find_unique_abbrev(struct repository *r, const struct object_id *oid, int len);
++#define find_unique_abbrev(oid, len) repo_find_unique_abbrev(the_repository, oid, len)
++int repo_find_unique_abbrev_r(struct repository *r, char *hex, const struct object_id *oid, int len);
++#define find_unique_abbrev_r(hex, oid, len) repo_find_unique_abbrev_r(the_repository, hex, oid, len)
+ 
+ extern const unsigned char null_sha1[GIT_MAX_RAWSZ];
+ extern const struct object_id null_oid;
 diff --git a/sha1-name.c b/sha1-name.c
-index 7558ce51a3..b9381aaba6 100644
+index b9381aaba6..9b57787b76 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -514,6 +514,7 @@ struct min_abbrev_data {
- 	unsigned int init_len;
- 	unsigned int cur_len;
- 	char *hex;
-+	struct repository *repo;
- 	const struct object_id *oid;
- };
- 
-@@ -619,9 +620,9 @@ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
- 	struct multi_pack_index *m;
- 	struct packed_git *p;
- 
--	for (m = get_multi_pack_index(the_repository); m; m = m->next)
-+	for (m = get_multi_pack_index(mad->repo); m; m = m->next)
- 		find_abbrev_len_for_midx(m, mad);
--	for (p = get_packed_git(the_repository); p; p = p->next)
-+	for (p = get_packed_git(mad->repo); p; p = p->next)
+@@ -626,15 +626,16 @@ static void find_abbrev_len_packed(struct min_abbrev_data *mad)
  		find_abbrev_len_for_pack(p, mad);
  }
  
-@@ -658,6 +659,7 @@ int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
+-int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
++int repo_find_unique_abbrev_r(struct repository *r, char *hex,
++			      const struct object_id *oid, int len)
+ {
+ 	struct disambiguate_state ds;
+ 	struct min_abbrev_data mad;
+ 	struct object_id oid_ret;
+-	const unsigned hexsz = the_hash_algo->hexsz;
++	const unsigned hexsz = r->hash_algo->hexsz;
+ 
+ 	if (len < 0) {
+-		unsigned long count = approximate_object_count();
++		unsigned long count = repo_approximate_object_count(r);
+ 		/*
+ 		 * Add one because the MSB only tells us the highest bit set,
+ 		 * not including the value of all the _other_ bits (so "15"
+@@ -659,7 +660,7 @@ int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
  	if (len == hexsz || !len)
  		return hexsz;
  
-+	mad.repo = the_repository;
+-	mad.repo = the_repository;
++	mad.repo = r;
  	mad.init_len = len;
  	mad.cur_len = len;
  	mad.hex = hex;
+@@ -681,13 +682,15 @@ int find_unique_abbrev_r(char *hex, const struct object_id *oid, int len)
+ 	return mad.cur_len;
+ }
+ 
+-const char *find_unique_abbrev(const struct object_id *oid, int len)
++const char *repo_find_unique_abbrev(struct repository *r,
++				    const struct object_id *oid,
++				    int len)
+ {
+ 	static int bufno;
+ 	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
+ 	char *hex = hexbuffer[bufno];
+ 	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
+-	find_unique_abbrev_r(hex, oid, len);
++	repo_find_unique_abbrev_r(r, hex, oid, len);
+ 	return hex;
+ }
+ 
 -- 
 2.21.0.479.g47ac719cd3
 
