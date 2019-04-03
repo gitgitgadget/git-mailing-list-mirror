@@ -2,99 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC8F320248
-	for <e@80x24.org>; Wed,  3 Apr 2019 06:59:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406A1202BB
+	for <e@80x24.org>; Wed,  3 Apr 2019 07:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726796AbfDCG72 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 02:59:28 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:54630 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbfDCG72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 02:59:28 -0400
-Received: by mail-it1-f194.google.com with SMTP id a190so7886712ite.4
-        for <git@vger.kernel.org>; Tue, 02 Apr 2019 23:59:27 -0700 (PDT)
+        id S1728591AbfDCHKy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 03:10:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46652 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbfDCHKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 03:10:53 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t17so6760798wrw.13
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 00:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=40DekmwSQ3lRk04SzR6vghWrms2UmItbLhcT5TXM2Kk=;
-        b=lPhCVerAGKj1U99aDj5AILIwAgVGcLxv6t++Jq5o3SpeDR8aQUx669a9b0MkhyDTjI
-         j4/glk2wUUYxQrvrjpblAKVb5RZczNDPgDkn91yUOKE8+hRjh5gKOOkhEkor9YAFEZHg
-         kq6mZZ0ApWHYNT2hqUgkilHa4iBdCHQepOJjjwq6nLc/WhWnZfEY6tZV5bxxWDUuv/V0
-         op/bK2vtss2B3kiN3T6/rbeQ9H/iAKw9GeapiNBNkytuuhH1BYDqvaHMZgikTAbHFiSK
-         7mwJgstwtDOoss9gV13qzcY3LFwQiZAYAXU6tUM7h13mj6u4K0iwoZHvkOvA9sMyOYzv
-         qzGA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=IiYVRj+vyk8QJPx5iX5DF326hdqtPoqi6C875yES48o=;
+        b=qd56gdQFrmFA+ZcbIf28CxwN4ZpyrdAvGNW7LkCg2vfAT0rlPEvBQjA0GGjw1LF5HP
+         1qp+UGFr4wUn5bnvG0q08GpFqJREu5T9OzHkx+pcKtPAGscXDX10oRIv3+dxvzTbECHd
+         eZag+447MoGD4RjwBsAwbDOoO4g8hQB3+MHHLDU1mkGuPFfoCaJ/3XahJXHuk5/caHXc
+         7mwKA1peTXT6P5tMhN8dQIIMzqMWRgP+JGfS/dwNbVVnVYHRS8Jk0eWpg9KZJvpjy+Fv
+         OQU1hImUNEp61p1EqhXKzNONhhO43Ytv3hzXaEFaSY9Ps7Foqehjc4XaUyH8VNJcb6kD
+         b+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=40DekmwSQ3lRk04SzR6vghWrms2UmItbLhcT5TXM2Kk=;
-        b=rf5Momyn7lcNxtCzgVDErscz89hwh7UtMRcXetGBf+DrIS0YZfQmm+kbZX7a3J/JYL
-         7WAW8ZvCoz3LjQbGal3+oafkvNmzwlHhnFPek3roD8ocs3/8AULMlXYeSu6h7Py/nBXy
-         I281nahISOjB1eDsv8CTjv1HNJXgMUB+HGbXyER+gs1Lx995e246EYGiYbSzhdCkn0ih
-         IGQ8QzEZ6S5q9AdFgttEpT6e+MPZsx/JwoP2ElOkQ9hm4RJcEb37pto2inqgNrG08/La
-         Fpe/Vi0rlgNRd6WHw8AhcJX26/Hcf63Axh+4aYKBJogjLFYGVFCYw+hlzrY+Wt1h7E8K
-         tzew==
-X-Gm-Message-State: APjAAAXl84TTXnNmS3suvfz+Rx4WUGTfnrW1yjEGAOFh0aNRDrnPTVX9
-        8C1slxgoH2+a4W/lXNczTKB+X0OIrDoy/t8yrjkFNw==
-X-Google-Smtp-Source: APXvYqwLfR7ubhKfjAKMLxC/e4GGKSS4OkcbRySwu5/xDoxnFHuPoGTKG5CKShZr37IYBR1mSCybrRAXYXxUUEPhA/s=
-X-Received: by 2002:a24:4702:: with SMTP id t2mr631243itb.105.1554274767301;
- Tue, 02 Apr 2019 23:59:27 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=IiYVRj+vyk8QJPx5iX5DF326hdqtPoqi6C875yES48o=;
+        b=HIPFGL6p74odUKIzCXk3Wuormn2PERMztlYWI9m07kzCIqv8UO+MbHfeRYPhB9qPqP
+         Nf54oq9zc98n7bsCcRb+d26pC/jgPLAdjERHXqVvv0TR7x3dq44jBNaBGkhp9IWYIdWo
+         MJOPqfXMfVIUyvANmanfXGUkOqCaJtoTYLy5+D1CwzbienqxYbldLT52EWcjnVd/Me7d
+         HwkU6kJI77UcWF5PqjkeumeozSh3dKRQWCgf+eFX/p++wVjJj5RGQfd4Wp5REg/X2JO+
+         //lUFIvEzA0q4v2DMEwYNrIQXpCfSIkdtftxA2fiMRF2bsiGEkdcKPXgUCbV2M9aWiEA
+         eN9A==
+X-Gm-Message-State: APjAAAUw5GjVHIZzw6W5pc3ivhc9zE2yLQKm/cSOWwsCcsJsTS3TfPR6
+        Lyhbp825buyYbAZuhvF0bvg=
+X-Google-Smtp-Source: APXvYqyqpres1yn2ov6T33uIq5tIEVVs0pbAmJOfrZwyMK/lW9ApGDN3IOzDxSCT84hM18577TQMYg==
+X-Received: by 2002:adf:de8d:: with SMTP id w13mr47085950wrl.26.1554275451921;
+        Wed, 03 Apr 2019 00:10:51 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id x192sm19156113wmf.48.2019.04.03.00.10.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 03 Apr 2019 00:10:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     "Mazo\, Andrey" <amazo@checkvideo.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Vitor Antunes <vitor.hda@gmail.com>,
+        Andrew Oakley <aoakley@roku.com>,
+        Andrey Mazo <ahippo@yandex.com>
+Subject: Re: [PATCH v3 2/8] git-p4: add failing test for "git-p4: match branches case insensitively if configured"
+References: <cover.1553207234.git.amazo@checkvideo.com>
+        <cover.1554141338.git.amazo@checkvideo.com>
+        <68b68ce1e4782bba552a016867bfc629f0d5e24f.1554141338.git.amazo@checkvideo.com>
+        <20190402120537.GK32732@szeder.dev>
+Date:   Wed, 03 Apr 2019 16:10:50 +0900
+In-Reply-To: <20190402120537.GK32732@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Tue, 2 Apr 2019 14:05:37 +0200")
+Message-ID: <xmqq4l7ftvgl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <AM6PR08MB41993844F57794DDF4B33B8F8D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
- <AM6PR08MB4199B076CB886AE814AFF4528D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
-In-Reply-To: <AM6PR08MB4199B076CB886AE814AFF4528D570@AM6PR08MB4199.eurprd08.prod.outlook.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 2 Apr 2019 23:59:15 -0700
-Message-ID: <CAGyf7-HUAoYURDnnp+nq+4EQkysoTE+f_WK8cEVPCHP065rv6A@mail.gmail.com>
-Subject: Re: Fw: git describe issue
-To:     Amiel Elboim <amielel@matrix.co.il>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 2, 2019 at 11:47 PM Amiel Elboim <amielel@matrix.co.il> wrote:
-> Hi!
->
-> I've found strange behavior with 'git describe' command, look like for me as bug.
->
-> In the case I create 2 tags on same commit and I run 'git describe --tags' I expect to get the latest tag, but always I get the first tag I created on the commit.
->
-> Unlike git-describe documentations - "The command finds the most recent tag that is reachable from a commit. "
->
-> Simple example -
->
-> amiel@CLINIKALDEV10:~/Xpress$ git tag v1
-> amiel@CLINIKALDEV10:~/Xpress$ git tag v2
-> amiel@CLINIKALDEV10:~/Xpress$ git describe --tags
-> v1
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-With this example, Git has no way to know which tag is "newer".
-They're lightweight tags, which means they have no metadata of their
-own; they just tag a commit. That means, as far as "age" goes, they're
-both the same because their age is drawn from the tagged commit, which
-is the same for both. (Since tag names are entirely free-form, I'm not
-sure Git makes any effort to try and parse them to "guess" which is
-newer; that seems like a Sisyphean task to me.)
+> I wonder whether it would be worth amending 07353d9042 to keep
+> 'kill_p4d' around as a wrapper around 'stop_and_cleanup_p4d' for the
+> time being.
 
-If you run this with annotated tags, you get different output (at
-least on Git 2.20.1, what I happened to have installed; you never
-mentioned your Git version)
-incom@Jael MINGW64 /c/Temp/first.git (BARE:master)
-$ git tag -a v1
-incom@Jael MINGW64 /c/Temp/first.git (BARE:master)
-$ git tag -a v2
-incom@Jael MINGW64 /c/Temp/first.git (BARE:master)
-$ git describe --tags
-v2
+I think renaming was the right thing to do; "show --cc" shows that
+the post-image lives in the new world order where calling kill_p4d
+is not usually needed clearly with a hunk that replaces kill_p4d
+(which only existed in the old world) with stop_and_cleanup (which
+exists only in the new world).
 
-Hope this helps!
-Bryan
+Will redo the merge and teach my rerere database.
+
+Thanks.
