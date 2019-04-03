@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4133020248
-	for <e@80x24.org>; Wed,  3 Apr 2019 11:37:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DF7520248
+	for <e@80x24.org>; Wed,  3 Apr 2019 11:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726167AbfDCLh3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 07:37:29 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37672 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfDCLh2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 07:37:28 -0400
-Received: by mail-pl1-f193.google.com with SMTP id w23so4960776ply.4
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:37:28 -0700 (PDT)
+        id S1726264AbfDCLhe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 07:37:34 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40086 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfDCLhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 07:37:33 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c207so8026812pfc.7
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 04:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1353qhiBFkvg4CjMPjTgaQAM7MfVk9j47bxGFKrEJdQ=;
-        b=k8yr8qbwV5EeljhROVOlPglqvIsjIfQp57qFMTFzot69uo+eD/4ok72euUyKQUnVet
-         K3+fqTBzU2AaMhDIFcIArMU1oESYbGgkMqQoC+4+ClulUBm5SYc7r1SFNRlA86hMLkys
-         8mQp2hsCBYqRBJUca74UIqyeNNAZTK4d+pz1MYSlCFeg1h/+8rfRjn13rex/qzeXHgH1
-         4AQ9z+ab6kGGJVoaMBfRYXwQl4k0TB/C7GxFvcoHVBHKvHdfhjXXBf7DRv5eU0Afa/7L
-         Z2DL7tmkEaOp9s7lXL9q95GE/zrjk3Y4EONAmLxl75AkhN5R5CexpB4Sss1tcI+fQhgK
-         Y59Q==
+        bh=Vod4aOH+wA+JD7yNprXuqsVCLUsUss9P8ReeepwUd1o=;
+        b=gM//HBHwSpGDsu10L6vYBKxP3cBSbMiLAKl6kvHixVgiTlFDOjKOEslCCApNjEmQ9P
+         muOW/L1Ya5ulBQHxmQqR4W4iiJ3PGo+9g38KC5WE8VdwSUIc8xkGuqmEGHPCVh9EQCcx
+         diZvFirFnCCMxJpdk1pr1rTIhWjqojTwCCoYJAGKZi2eZ2Xz1w+s3w2wIkMt8shUGkK9
+         MJ7DrhXfN+3+U2ZyNTom/jivPl+oP11ILWQvT5kJ108E/in8I8bYXBT88ScAD2ELGTEl
+         aVDPmkh6gXocOH8qdK/TYUaIlJ6URAnGEt9EoRP8gxTzNXAVzwGP5G8Fn1IB4CMKhYyO
+         85Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1353qhiBFkvg4CjMPjTgaQAM7MfVk9j47bxGFKrEJdQ=;
-        b=GteyuMeOUYSS8v+D2ffjuC4dVplz56CnoX/QDzeMB+l7xIHN2QOefh+wBpclibw68K
-         qT7g0TVEBdkb0P7vsYBbQDpiwIJNA8SRPToJS1puFFFqwdgY7oyvGtcK3iTq+Ab+kKD0
-         K7UlkLVyzfcjH7ynH+a+Qr1dbGH0wk5LovaGkJhWBmhrFbzqUNU0ElP1OGqbnk68/Z/B
-         SWJMnrpBHIhsml/8I/hsLwaYxEJTAqg8+/GOc28KbR8DBCXuajILQiaqt3uXn5OSXozT
-         OZtLkqYFv2IWk9MoiCm9pQzDFqEofHh5JcLIrxLV8E7rIllhiWGOw6duOXJy1A50lLVA
-         Ne2g==
-X-Gm-Message-State: APjAAAWoGnh++T5ruPpJ2A7f+77TUVSa5TPofTSaBRrttTnyyMepIl9t
-        DXRyjQV8lxu0sUkagfTCcjs=
-X-Google-Smtp-Source: APXvYqxMNFjdKJUuZ6G/F4LXuEJp1jguo6JJrpzwFjbKLpWXKVeJ8Ec+Vc3nIf0wF/igP6e+DWeFIg==
-X-Received: by 2002:a17:902:526:: with SMTP id 35mr72629541plf.276.1554291448205;
-        Wed, 03 Apr 2019 04:37:28 -0700 (PDT)
+        bh=Vod4aOH+wA+JD7yNprXuqsVCLUsUss9P8ReeepwUd1o=;
+        b=Gdk3KwkiR25AFziifjsIcHRD6OqNuu/WU7FFN6Xg7owBW9PQgpZgJrndJxBycdki31
+         hQx6c9KaZeYM2z7P1vP6y+DiOOsKTUdtuFCDsUeKF7gWLP9Oqy1WVvgqjIuxULWZk/QV
+         iwEtAEaqaZeARNhZDK+iDGXKFnOSoW0mtoLWahtAsuWqCJcBfkKza0YQrSGXWdCN/Ma0
+         AOmkOVQbcQmoIzXOGmKddJ73BF1w9Hgi2AkFr/7geMRVm2Z0gV0NlDi7cfAFNTUam+4/
+         b57u8aVtCqTo+A5lvmY1Co+Y11CshT9i0t8d8Ol4Ecr0yT9vWow+JtZsoO2t+LuGIDO+
+         zjaQ==
+X-Gm-Message-State: APjAAAW8+Fi0J+DtdUfrAzS5fsrXcTCqwMEjmMoeU6uNVEgvmElzBW69
+        +LfgNiHDyf+Ird4/di7PojY=
+X-Google-Smtp-Source: APXvYqwSY4rpweMT+pCMYFKi/FkWkBHpOGTXBDX0dClAM4XU47XGV+X3eMOtFldgAORWXZlKwh9/tg==
+X-Received: by 2002:a65:6210:: with SMTP id d16mr22802248pgv.110.1554291453283;
+        Wed, 03 Apr 2019 04:37:33 -0700 (PDT)
 Received: from ash ([27.75.136.26])
-        by smtp.gmail.com with ESMTPSA id h65sm43295625pfd.108.2019.04.03.04.37.25
+        by smtp.gmail.com with ESMTPSA id k10sm509555pgo.82.2019.04.03.04.37.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 04:37:27 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:37:23 +0700
+        Wed, 03 Apr 2019 04:37:32 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 03 Apr 2019 18:37:28 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 26/32] sha1-name.c: remove the_repo from resolve_relative_path()
-Date:   Wed,  3 Apr 2019 18:34:51 +0700
-Message-Id: <20190403113457.20399-27-pclouds@gmail.com>
+Subject: [PATCH v2 27/32] sha1-name.c: remove the_repo from get_oid_with_context_1()
+Date:   Wed,  3 Apr 2019 18:34:52 +0700
+Message-Id: <20190403113457.20399-28-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190403113457.20399-1-pclouds@gmail.com>
 References: <20190330111927.18645-1-pclouds@gmail.com>
@@ -70,52 +70,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"remove" is not entirely correct. But at least the function is aware
-that if the given repo is not the_repository, then $CWD and
-is_inside_work_tree() means nothing.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-name.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sha1-name.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/sha1-name.c b/sha1-name.c
-index 6caf3f4e3a..6b53ea2eeb 100644
+index 6b53ea2eeb..64a50d1291 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -1719,12 +1719,12 @@ static void diagnose_invalid_index_path(struct repository *r,
- }
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "repository.h"
++#include "submodule.h"
+ #include "midx.h"
+ #include "commit-reach.h"
  
+@@ -1797,7 +1798,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			oc->path = xstrdup(cp);
  
--static char *resolve_relative_path(const char *rel)
-+static char *resolve_relative_path(struct repository *r, const char *rel)
- {
- 	if (!starts_with(rel, "./") && !starts_with(rel, "../"))
- 		return NULL;
- 
--	if (!is_inside_work_tree())
-+	if (r != the_repository || !is_inside_work_tree())
- 		die("relative path syntax can't be used outside working tree.");
- 
- 	/* die() inside prefix_path() if resolved path is outside worktree */
-@@ -1785,7 +1785,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			stage = name[1] - '0';
- 			cp = name + 3;
- 		}
--		new_path = resolve_relative_path(cp);
-+		new_path = resolve_relative_path(repo, cp);
- 		if (!new_path) {
- 			namelen = namelen - (cp - name);
- 		} else {
-@@ -1839,7 +1839,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 			const char *filename = cp+1;
- 			char *new_filename = NULL;
- 
--			new_filename = resolve_relative_path(filename);
-+			new_filename = resolve_relative_path(repo, filename);
+ 		if (!repo->index->cache)
+-			repo_read_index(the_repository);
++			repo_read_index(repo);
+ 		pos = index_name_pos(repo->index, cp, namelen);
+ 		if (pos < 0)
+ 			pos = -pos - 1;
+@@ -1842,6 +1843,14 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			new_filename = resolve_relative_path(repo, filename);
  			if (new_filename)
  				filename = new_filename;
++			/*
++			 * NEEDSWORK: Eventually get_tree_entry*() should
++			 * learn to take struct repository directly and we
++			 * would not need to inject submodule odb to the
++			 * in-core odb.
++			 */
++			if (repo != the_repository)
++				add_to_alternates_memory(repo->objects->odb->path);
  			if (flags & GET_OID_FOLLOW_SYMLINKS) {
+ 				ret = get_tree_entry_follow_symlinks(&tree_oid,
+ 					filename, oid, &oc->symlink_path,
 -- 
 2.21.0.479.g47ac719cd3
 
