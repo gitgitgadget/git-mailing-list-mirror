@@ -2,88 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD2F720248
-	for <e@80x24.org>; Wed,  3 Apr 2019 19:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E6C920248
+	for <e@80x24.org>; Wed,  3 Apr 2019 19:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbfDCTl4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 15:41:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45910 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726064AbfDCTl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 15:41:56 -0400
-Received: (qmail 8060 invoked by uid 109); 3 Apr 2019 19:41:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 03 Apr 2019 19:41:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11392 invoked by uid 111); 3 Apr 2019 19:42:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 03 Apr 2019 15:42:18 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Apr 2019 15:41:50 -0400
-Date:   Wed, 3 Apr 2019 15:41:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clone: do faster object check for partial clones
-Message-ID: <20190403194150.GA27199@sigill.intra.peff.net>
-References: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
+        id S1726384AbfDCTyO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 15:54:14 -0400
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:33220 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726064AbfDCTyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 15:54:14 -0400
+Received: by mail-oi1-f170.google.com with SMTP id e5so14685353oii.0
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 12:54:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mYZraSQ3quTNsuckPPk4abvZv/FHf0jI2d+bKrZTeW8=;
+        b=R7zNRr7gAJgl8DZh7stjyqbvIo85b8QT7b0054NH0ZZ5NcMMCqlKEo5Fth4emFNN47
+         ucKXIQjjbjEyRNS+Ecp8u+GtCpqOPIit9NGVK2EY60umgpmWE2fCzimZMcPIhm6DDtKw
+         6F7SHqUx4US/cUGIvMxXc4g7RBczynEKbXI/h46dsUhN3X/HVtolIUNL8Cc0lwuvrZlU
+         HvdOyXmI5m0K9tu8qIfRTDI073RV+zVaSO8E0czA+w1y3V7WEALEjIEHCIADk+LELs9E
+         woC90zULJHSeRNTlr4lH4zvmrgGWYKFPOZ5vV1uPJ8U6gMRrABKVAR7h1uscicHpKs7h
+         7r0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mYZraSQ3quTNsuckPPk4abvZv/FHf0jI2d+bKrZTeW8=;
+        b=ZFHvRsRsSq19p3id0My3+otLPtnG5dvXeVd2+uzdxSpwlW94dfbp1VL8HDe/AJYQqQ
+         zo14DM2Wtt6ocD8DZ6kwpma7xFcwFEF2TbTqu5dAPPIpVGNkp+JE12Ypbys4f5w2sIwU
+         8tnGMUMNzcguzxWiYZw/AKWwJErPkmcJeaeR0QtUq4tTpsRf/0eh4jRIlzVhzafkonil
+         zD3DcQsDeA4rsHkzYw7oZ1M+w1R3UqSWgLcTMU/XYO1kvSVcmpA4MVFIr+SqtyMv2wAx
+         HhrcSc/VfgwQe7lZmNgjlU0m+RHaaKoHl/saQpZo84O4FKQWHCnovsgQgi3dakvn6/yl
+         IXFw==
+X-Gm-Message-State: APjAAAW9XcCl4EzLH3edW1b+q9MdqYrI/mPqVnsg+lB7OENZdr97Orzy
+        R7kWpXmQx17g8wrzH4EP/erLOPnpQKkHZaCB6LNzqvZh
+X-Google-Smtp-Source: APXvYqzkDSSC28bbZXu7bhTE4UPfo9qqulnN5IRw+LDwUTeMc/vFwE0nKokIaeqZ25u+3LAnklOYnUrSNH62McaaD3I=
+X-Received: by 2002:aca:ba82:: with SMTP id k124mr932421oif.110.1554321253631;
+ Wed, 03 Apr 2019 12:54:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Thu, 4 Apr 2019 01:24:02 +0530
+Message-ID: <CAMknYEPzUpa3c9PSfJNo6rzUOt-bDUDYrcn9JcHgSGW43KuRYg@mail.gmail.com>
+Subject: [GSoC] [RFC] Unify ref-filter formats with other --pretty formats
+To:     git <git@vger.kernel.org>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>, peff@peff.net,
+        Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 03, 2019 at 10:27:21AM -0700, Josh Steadmon wrote:
+Reference: https://git.github.io/SoC-2019-Ideas/#unify-ref-filter-formats-with-other---pretty-formats
 
-> For partial clones, doing a full connectivity check is wasteful; we skip
-> promisor objects (which, for a partial clone, is all known objects), and
-> excluding them all from the connectivity check can take a significant
-> amount of time on large repos.
-> 
-> At most, we want to make sure that we get the objects referred to by any
-> wanted refs. For partial clones, just check that these objects were
-> transferred.
+I have spent some time with both pretty.* and ref-filter.*
 
-This isn't strictly true, since we could get objects from elsewhere via
---shared or --reference. Those might not be promisor objects.
+First off, we are aiming to reuse ref-filter, so avoiding any sort of
+re-implementation is recommended.
 
-Shouldn't we be able to stop a traversal as soon as we see that an
-object is in a promisor pack?
+Now, coming to pretty.* and ref-filter.*
 
-I.e., here:
+suppose, a function named xyz() in ref-filter.c seems like it could be
+reused in pretty.c.
+since ref-filter doesn't use any struct of pretty.c. The xyz()
+function in its original form is not useful for pretty.c.
+So now, in order for the xyz() function to be useful in pretty.c.
+Function xyz() should be using structs of pretty.*
 
-> +	if (opt->check_refs_only) {
-> +		/*
-> +		 * For partial clones, we don't want to walk the full commit
-> +		 * graph because we're skipping promisor objects anyway. We
-> +		 * should just check that objects referenced by wanted refs were
-> +		 * transferred.
-> +		 */
-> +		do {
-> +			if (!repo_has_object_file(the_repository, &oid))
-> +				return 1;
-> +		} while (!fn(cb_data, &oid));
-> +		return 0;
-> +	}
+now, if we make xyz() use the pretty.* structs, then its
+re-implementation and not reusing. its like keeping two different
+functions one for ref-filter and another for pretty.*.
+which is what is already happening.
 
-for each object where you ask "do we have this?" we could, for the same
-cost, ask "do we have this in a promisor pack?". And the answer would be
-yes for each in a partial clone.
-
-But that would also cleanly handle --shared, etc, that I mentioned. And
-more importantly, it would _also_ work on fetches. If I fetch from you
-and get a promisor pack, then there is no point in me enumerating every
-tree you sent. As long as you gave me a tip tree, then you have promised
-that you'd give me all the others if I ask.
-
-So it seems like this should be a feature of the child rev-list, to stop
-walking the graph at any object that is in a promisor pack.
-
--Peff
+please provide any starting point for reusing ref-filter. i don't see
+any in pretty.*.
+reusing ref-filter specifically in pretty.* is not the motive. please
+point out any file in entire code base, that you may feel can reuse
+some ref-filter logic.
