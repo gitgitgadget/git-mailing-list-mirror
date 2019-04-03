@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE45020248
-	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6001B20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726870AbfDCQCU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 12:02:20 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:52822 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726396AbfDCQCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 12:02:19 -0400
-Received: by mail-qt1-f202.google.com with SMTP id g48so17181154qtk.19
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:18 -0700 (PDT)
+        id S1726924AbfDCQCX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 12:02:23 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:43004 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726879AbfDCQCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 12:02:23 -0400
+Received: by mail-qt1-f201.google.com with SMTP id n10so17224088qtk.9
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=IbDBlJ6pktA8Le6KDQI3FiwOvhxnTO4oU0ur7q/h/wE=;
-        b=RMKx+T107RK3yGe481rJw6rB39PS6g7Guo07cmYdhQfncwvED8CQJeacilY5TWXESV
-         0j7NgGXPfcKE2mPZk/GV8alOI8HURG7upoO1qjh7t5+rKtTvaz3uAj3H3l/TxOEBryP4
-         8WSZpuLPwS6RmNEMOBxOhKlrvsquVWlWGGRbH+eH3OMrTwEyGSIQysbrZpNlBQWi0YtZ
-         y5o08/Z09/3qIFW8ET/C6+Cp+DTKfhN7ZdSoq92rL4k3FtFSch4xr1J78C5uWvVVjJLn
-         xmzG6FQGy3JAHJRue/2Xqo5U2Mhh8ZQZWb1qGwdHIQWIZy56d8ZjHZ6Je1Q+2h3xqxO0
-         pAMg==
+        bh=3dyMHnqAjwUFinA6RxKtg0TlKX7tnV1KwyqZGhcxxyE=;
+        b=Je7Im8b8KgRZE6X+0WJgQY+MilwqD95QFRhqOKbk04kQRwaKFmqmWzLtHJF7hYNyBS
+         3v4VtxQIaNZYSLS9aDwabgoOBvrr5aSpulobwpusrHVVEr1rU9FZ7CwTp90CwzMYiZ+j
+         GwmxddbCANTcalhkBV/S7LT1Xg61HEqopAOAbXRIyRGSfqvKtNXlfUyBL6H/kgFeij4Q
+         WwRp1+DAHieK/PhNJg6fu3rtWQJ+dAkhXu26lVDr5CB8aFD9OyO8JyWz1fzRQwVRLH4c
+         1kpLDtVPhG6yU/B3bUKlVPzl6w0ZVGxFNj44jSmFWe3LpP5uNehI/ZZ8dX4dJ8eRcFbS
+         ni6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=IbDBlJ6pktA8Le6KDQI3FiwOvhxnTO4oU0ur7q/h/wE=;
-        b=OucwBtGRuSgiUncd5qsIrXAZnA8tj6hw+rpgYLZIN7y8MsX0l+WOIgNEgohAMmMgdH
-         DipQFZmxkegEh4F1FOD8spm10eHwqWE76/G1wkh7R2IQ7fsYJTGcOY6SrEPrO+Pe8NgH
-         d01R/V9BYElCyI4ueOFYKPZ0jkXHMQ9BsiXDvwgqhgMXW2x68rFfhyYB/R+Z6Q9cC0T/
-         eojgvWP9RUcSXh4Y6q3ixv/TZStzevRu5a60pnvxP8F5gPbtDGg0Wf7IcSn+Jg5jgMjH
-         dHg82Cm64GY3XarzEOUyZ1phbZuMb2vljUFHlPTAfjjF0v7CNFXH2yRew/APUWmEPZPi
-         9iQA==
-X-Gm-Message-State: APjAAAWiE4R3UuUncdIgWjACp5dkOE3mwg+F/MdQaXe6EeGLobp4Ilyx
-        sJgofJ2Z+y1HlNKFuzHW0PWGqPdowXSkx7vRxqjCln01NvHK20hbU8RqKxlGn7ZrHZYs0R3NgZY
-        KgxlLWaDpNMl4nbrwsgsGaGdcJBoixUoKsWifOX1E9VuwbWSiUVP/
-X-Google-Smtp-Source: APXvYqx7a5kBlvehCgnygBEr68MPY3RmQ5OXM6pc/3HTN/bFL1dDHQ5g921GcGXYDApRWkvLq/2pPmEW
-X-Received: by 2002:a37:a07:: with SMTP id 7mr83561qkk.50.1554307338326; Wed,
- 03 Apr 2019 09:02:18 -0700 (PDT)
-Date:   Wed,  3 Apr 2019 12:02:03 -0400
+        bh=3dyMHnqAjwUFinA6RxKtg0TlKX7tnV1KwyqZGhcxxyE=;
+        b=ScDq1PMwOBOcQxm7atfRRQ3/5wUFEsq0U2gV+SLfTy5vaDMEDhb+8hM/20eLvI/or/
+         cCKElFbkXBSmvkv65Slbg7YCgrS4IDeTSPfAeUGfZW79e/ahnlNyKncGxVmQl2Suq/Ff
+         B/slBrj/7Gfng3g5YBvJKKvx0u3QEkdl7IFZCdfQYpgUswNgWSJl9rlrfYHzJPQ5fUjz
+         y6eUPC/TBdbV56NKEU+607yqs8IdEuAZrj9YErgNTp5B1SMgRWgZ0MKyZgIgfL/xrsle
+         jnlnq5C6v7xz34RMgiLI956hxQEtBveR7CMpRyPwqbm4/UQfn53KuKp/TiQZEUaycidS
+         FHcQ==
+X-Gm-Message-State: APjAAAXC3Bg/Elp6vTuUxgQZOK5t5jOEIajQae+6GyFsHXnvuK1rEgfe
+        JmJXhMys6CiCfLZHEWHAJcU7IOcba9cSYjLfo6a5QCbmam7XoE/kld4HHRL+zzpQU7HscT8hmbo
+        gBJlEGtMVwE9mzKBQzb1bFPETTBt2Xtql/b5JfzjLuVrUo2zhusmE
+X-Google-Smtp-Source: APXvYqzTF/oXu/hld4iiqWNXFJvBcXdPL4GeWYiNdbDn7Zbg8rC8d3As3Qjiolbb2rzSxkEXrbefXCN4
+X-Received: by 2002:a0c:9596:: with SMTP id s22mr42683qvs.16.1554307341518;
+ Wed, 03 Apr 2019 09:02:21 -0700 (PDT)
+Date:   Wed,  3 Apr 2019 12:02:06 -0400
 In-Reply-To: <20190403160207.149174-1-brho@google.com>
-Message-Id: <20190403160207.149174-3-brho@google.com>
+Message-Id: <20190403160207.149174-6-brho@google.com>
 Mime-Version: 1.0
 References: <20190403160207.149174-1-brho@google.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v5 2/6] blame: use a helper function in blame_chunk()
+Subject: [PATCH v5 5/6] blame: add a config option to mark ignored lines
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -69,84 +69,170 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The same code for splitting a blame_entry at a particular line was used
-twice in blame_chunk(), and I'll use the helper again in an upcoming
-patch.
+When ignoring commits, the commit that is blamed might not be
+responsible for the change.  Users might want to know when a particular
+line has a potentially inaccurate blame.
+
+This patch adds a config option to identify these lines by specifying
+blame.markIgnoredFiles.  When this option is set, each blame line is
+marked with an '*'.  For example:
+
+278b6158d6fdb (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
+
+appears as:
+
+*278b6158d6fd (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
+
+where the '*' is placed before the commit, and the hash has one fewer
+characters.
 
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- blame.c | 44 ++++++++++++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ Documentation/config/blame.txt |  4 ++++
+ blame.c                        |  4 ++++
+ blame.h                        |  1 +
+ builtin/blame.c                |  9 +++++++++
+ t/t8013-blame-ignore-revs.sh   | 33 +++++++++++++++++++++++++++++++++
+ 5 files changed, 51 insertions(+)
 
+diff --git a/Documentation/config/blame.txt b/Documentation/config/blame.txt
+index 4da2788f306d..9f7f0fcf42c9 100644
+--- a/Documentation/config/blame.txt
++++ b/Documentation/config/blame.txt
+@@ -26,3 +26,7 @@ blame.ignoreRevsFile::
+ 	`#` are ignored.  This option may be repeated multiple times.  Empty
+ 	file names will reset the list of ignored revisions.  This option will
+ 	be handled before the command line option `--ignore-revs-file`.
++
++blame.markIgnoredLines::
++	Mark lines that were changed by an ignored revision with a '*' in the
++	output of linkgit:git-blame[1].
 diff --git a/blame.c b/blame.c
-index da57233cbbd9..31e05c1458d8 100644
+index e0612ac34ba7..c06cbd906658 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -838,6 +838,27 @@ static struct blame_entry *reverse_blame(struct blame_entry *head,
- 	return tail;
- }
+@@ -515,6 +515,7 @@ void blame_coalesce(struct blame_scoreboard *sb)
+ 	for (ent = sb->ent; ent && (next = ent->next); ent = next) {
+ 		if (ent->suspect == next->suspect &&
+ 		    ent->s_lno + ent->num_lines == next->s_lno &&
++		    ent->ignored == next->ignored &&
+ 		    ent->unblamable == next->unblamable) {
+ 			ent->num_lines += next->num_lines;
+ 			ent->next = next->next;
+@@ -767,6 +768,7 @@ static void split_overlap(struct blame_entry *split,
+ 	int chunk_end_lno;
+ 	memset(split, 0, sizeof(struct blame_entry [3]));
  
-+/*
-+ * Splits a blame entry into two entries at 'len' lines.  The original 'e'
-+ * consists of len lines, i.e. [e->lno, e->lno + len), and the second part,
-+ * which is returned, consists of the remainder: [e->lno + len, e->lno +
-+ * e->num_lines).  The caller needs to sort out the reference counting for the
-+ * new entry's suspect.
-+ */
-+static struct blame_entry *split_blame_at(struct blame_entry *e, int len,
-+					  struct blame_origin *new_suspect)
-+{
-+	struct blame_entry *n = xcalloc(1, sizeof(struct blame_entry));
++	split[0].ignored = split[1].ignored = split[2].ignored = e->ignored;
+ 	split[0].unblamable = e->unblamable;
+ 	split[1].unblamable = e->unblamable;
+ 	split[2].unblamable = e->unblamable;
+@@ -891,6 +893,7 @@ static struct blame_entry *split_blame_at(struct blame_entry *e, int len,
+ 	struct blame_entry *n = xcalloc(1, sizeof(struct blame_entry));
+ 
+ 	n->suspect = new_suspect;
++	n->ignored = e->ignored;
+ 	n->unblamable = e->unblamable;
+ 	n->lno = e->lno + len;
+ 	n->s_lno = e->s_lno + len;
+@@ -954,6 +957,7 @@ static void ignore_blame_entry(struct blame_entry *e,
+ 	struct blame_line_tracker *line_blames;
+ 	int entry_len, nr_lines;
+ 
++	e->ignored = 1;
+ 	line_blames = xcalloc(sizeof(struct blame_line_tracker),
+ 			      e->num_lines);
+ 	guess_line_blames(e, parent, target, offset, delta, line_blames);
+diff --git a/blame.h b/blame.h
+index 93780b01504c..f7755920c90d 100644
+--- a/blame.h
++++ b/blame.h
+@@ -94,6 +94,7 @@ struct blame_entry {
+ 	 * scanning the lines over and over.
+ 	 */
+ 	unsigned score;
++	int ignored;
+ 	int unblamable;
+ };
+ 
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 5f38e9dccddd..46d96905de75 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -53,6 +53,7 @@ static int show_progress;
+ static char repeated_meta_color[COLOR_MAXLEN];
+ static int coloring_mode;
+ static struct string_list ignore_revs_file_list = STRING_LIST_INIT_NODUP;
++static int mark_ignored_lines;
+ 
+ static struct date_mode blame_date_mode = { DATE_ISO8601 };
+ static size_t blame_date_width;
+@@ -482,6 +483,10 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
+ 			}
+ 		}
+ 
++		if (mark_ignored_lines && ent->ignored) {
++			length--;
++			putchar('*');
++		}
+ 		if (ent->unblamable)
+ 			memset(hex, '0', length);
+ 		printf("%.*s", length, hex);
+@@ -710,6 +715,10 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+ 		string_list_insert(&ignore_revs_file_list, str);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "blame.markignoredlines")) {
++		mark_ignored_lines = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "color.blame.repeatedlines")) {
+ 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
+ 			warning(_("invalid color '%s' in color.blame.repeatedLines"),
+diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+index df4993f98682..c4cd9a6c54be 100755
+--- a/t/t8013-blame-ignore-revs.sh
++++ b/t/t8013-blame-ignore-revs.sh
+@@ -123,6 +123,39 @@ test_expect_success bad_files_and_revs '
+ 	test_i18ngrep "Invalid object name: NOREV" err
+ 	'
+ 
++# Commit Z will touch the first two lines.  Y touched all four.
++# 	A--B--X--Y--Z
++# The blame output when ignoring Z should be:
++# ^Y ... 1)
++# ^Y ... 2)
++# Y  ... 3)
++# Y  ... 4)
++# We're checking only the first character
++test_expect_success mark_ignored_lines '
++	git config --add blame.markIgnoredLines true &&
 +
-+	n->suspect = new_suspect;
-+	n->lno = e->lno + len;
-+	n->s_lno = e->s_lno + len;
-+	n->num_lines = e->num_lines - len;
-+	e->num_lines = len;
-+	e->score = 0;
-+	return n;
-+}
++	test_write_lines line-one-Z line-two-Z y3 y4 >file &&
++	git add file &&
++	test_tick &&
++	git commit -m Z &&
++	git tag Z &&
 +
- /*
-  * Process one hunk from the patch between the current suspect for
-  * blame_entry e and its parent.  This first blames any unfinished
-@@ -864,14 +885,9 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
- 		 */
- 		if (e->s_lno + e->num_lines > tlno) {
- 			/* Move second half to a new record */
--			int len = tlno - e->s_lno;
--			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
--			n->suspect = e->suspect;
--			n->lno = e->lno + len;
--			n->s_lno = e->s_lno + len;
--			n->num_lines = e->num_lines - len;
--			e->num_lines = len;
--			e->score = 0;
-+			struct blame_entry *n;
++	git blame --ignore-rev Z file >blame_raw &&
++	echo "*" >expect &&
 +
-+			n = split_blame_at(e, tlno - e->s_lno, e->suspect);
- 			/* Push new record to diffp */
- 			n->next = diffp;
- 			diffp = n;
-@@ -918,14 +934,10 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
- 			 * Move second half to a new record to be
- 			 * processed by later chunks
- 			 */
--			int len = same - e->s_lno;
--			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
--			n->suspect = blame_origin_incref(e->suspect);
--			n->lno = e->lno + len;
--			n->s_lno = e->s_lno + len;
--			n->num_lines = e->num_lines - len;
--			e->num_lines = len;
--			e->score = 0;
-+			struct blame_entry *n;
++	sed -n "1p" blame_raw | cut -c1 >actual &&
++	test_cmp expect actual &&
 +
-+			n = split_blame_at(e, same - e->s_lno,
-+					   blame_origin_incref(e->suspect));
- 			/* Push new record to samep */
- 			n->next = samep;
- 			samep = n;
++	sed -n "2p" blame_raw | cut -c1 >actual &&
++	test_cmp expect actual &&
++
++	sed -n "3p" blame_raw | cut -c1 >actual &&
++	! test_cmp expect actual &&
++
++	sed -n "4p" blame_raw | cut -c1 >actual &&
++	! test_cmp expect actual
++	'
++
+ # Resetting the repo and creating:
+ #
+ # A--B--M
 -- 
 2.21.0.392.gf8f6787159e-goog
 
