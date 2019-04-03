@@ -7,232 +7,241 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6001B20248
-	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A56720248
+	for <e@80x24.org>; Wed,  3 Apr 2019 16:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbfDCQCX (ORCPT <rfc822;e@80x24.org>);
+        id S1726918AbfDCQCX (ORCPT <rfc822;e@80x24.org>);
         Wed, 3 Apr 2019 12:02:23 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:43004 "EHLO
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:50476 "EHLO
         mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726879AbfDCQCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 12:02:23 -0400
-Received: by mail-qt1-f201.google.com with SMTP id n10so17224088qtk.9
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:22 -0700 (PDT)
+        with ESMTP id S1726144AbfDCQCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 12:02:20 -0400
+Received: by mail-qt1-f201.google.com with SMTP id g17so17085965qte.17
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 09:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=3dyMHnqAjwUFinA6RxKtg0TlKX7tnV1KwyqZGhcxxyE=;
-        b=Je7Im8b8KgRZE6X+0WJgQY+MilwqD95QFRhqOKbk04kQRwaKFmqmWzLtHJF7hYNyBS
-         3v4VtxQIaNZYSLS9aDwabgoOBvrr5aSpulobwpusrHVVEr1rU9FZ7CwTp90CwzMYiZ+j
-         GwmxddbCANTcalhkBV/S7LT1Xg61HEqopAOAbXRIyRGSfqvKtNXlfUyBL6H/kgFeij4Q
-         WwRp1+DAHieK/PhNJg6fu3rtWQJ+dAkhXu26lVDr5CB8aFD9OyO8JyWz1fzRQwVRLH4c
-         1kpLDtVPhG6yU/B3bUKlVPzl6w0ZVGxFNj44jSmFWe3LpP5uNehI/ZZ8dX4dJ8eRcFbS
-         ni6w==
+        bh=vqpSvSVgsjiBDoqCJmRFvEvI1PO2DZZSVEUwTTuYrHc=;
+        b=vmKDvrW6L9p6SxgeQnbn1UAcFCXksvbrgM52HL4ERM7B2GkRPB6W7ETAKVG7b9KxTJ
+         lLHYZzxWV3reERpy3bOmc1s3/++TnCxjxaf+5eut+wLNLfJkl7xdnayGSfkTLpwWh6D6
+         2+g0CX9oRPLbsJZ5EqkxYQ36RWKeD2zg+joEZlz3eAPq26XN1IuJ9IJNcgaoODZtCz1a
+         8cgSBkvJv7ggAQXi2+u5G3oX++afcfa4y93kFQWcJDbAiNsuClXJluHQWsP+y7+ja+X8
+         oNjUkTQN+7pXOOVP6XsXprLbj9NXw5T3/Ye2swkwotiwtpoHyctmVe6KgDwIz3Vsp/x4
+         o+JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=3dyMHnqAjwUFinA6RxKtg0TlKX7tnV1KwyqZGhcxxyE=;
-        b=ScDq1PMwOBOcQxm7atfRRQ3/5wUFEsq0U2gV+SLfTy5vaDMEDhb+8hM/20eLvI/or/
-         cCKElFbkXBSmvkv65Slbg7YCgrS4IDeTSPfAeUGfZW79e/ahnlNyKncGxVmQl2Suq/Ff
-         B/slBrj/7Gfng3g5YBvJKKvx0u3QEkdl7IFZCdfQYpgUswNgWSJl9rlrfYHzJPQ5fUjz
-         y6eUPC/TBdbV56NKEU+607yqs8IdEuAZrj9YErgNTp5B1SMgRWgZ0MKyZgIgfL/xrsle
-         jnlnq5C6v7xz34RMgiLI956hxQEtBveR7CMpRyPwqbm4/UQfn53KuKp/TiQZEUaycidS
-         FHcQ==
-X-Gm-Message-State: APjAAAXC3Bg/Elp6vTuUxgQZOK5t5jOEIajQae+6GyFsHXnvuK1rEgfe
-        JmJXhMys6CiCfLZHEWHAJcU7IOcba9cSYjLfo6a5QCbmam7XoE/kld4HHRL+zzpQU7HscT8hmbo
-        gBJlEGtMVwE9mzKBQzb1bFPETTBt2Xtql/b5JfzjLuVrUo2zhusmE
-X-Google-Smtp-Source: APXvYqzTF/oXu/hld4iiqWNXFJvBcXdPL4GeWYiNdbDn7Zbg8rC8d3As3Qjiolbb2rzSxkEXrbefXCN4
-X-Received: by 2002:a0c:9596:: with SMTP id s22mr42683qvs.16.1554307341518;
- Wed, 03 Apr 2019 09:02:21 -0700 (PDT)
-Date:   Wed,  3 Apr 2019 12:02:06 -0400
+        bh=vqpSvSVgsjiBDoqCJmRFvEvI1PO2DZZSVEUwTTuYrHc=;
+        b=cvlO1fg0Sr5avZuZQYgYB4b0RwNepbn3TsOotDQPTRsF2EBhPCWpavUhDgQnAB4FE3
+         Ouo1yZ6PE+V7FQZZexrTernvBThsltg9hOimPpv0/QgDk+251z7s42jYdbfkD/Cul6j0
+         alR7AEdsajNPukQjmIMyTMQcpIdDNu1Ty+B0tL6NBy/UnVR56HjsLT3uJzoA3ZCHja2k
+         x8BuQsfbEhvvm0GQjj6NA1LTMuDj1CmFbSMmnSQKDUJiDqJ352NedSNZpguN1lABOMSg
+         jxvjxbquvuF2cXd5VSA2nZ8gd8NH9L6rE56qeO0gjmaHUlCOGJA5m23VASwuqC3rL39Z
+         tKvA==
+X-Gm-Message-State: APjAAAXjMuGSuQUQm2aQCJUm9ZPMfabW7ZNPox9xTg3XYBYPWCRE647/
+        YDIROyMBFGWsWptlM/u8GkHc34EeZ78VOWoaFJI/64kUW9fNlChID5Rl++snisfhRRuNq96QbfP
+        n2e5NYdpVFDKrzdkqKTEl2uR2hX31JLAyN8QrwPOjcc0OLd8pSCWU
+X-Google-Smtp-Source: APXvYqwPhgXMhwwGgiBUH+FoolZ4y10KRB7Eqgi9F0FUIz8zaBwhKIup+GNn0RXhdWwRn4ExBJpzocZp
+X-Received: by 2002:a0c:ad17:: with SMTP id u23mr30667qvc.41.1554307339375;
+ Wed, 03 Apr 2019 09:02:19 -0700 (PDT)
+Date:   Wed,  3 Apr 2019 12:02:04 -0400
 In-Reply-To: <20190403160207.149174-1-brho@google.com>
-Message-Id: <20190403160207.149174-6-brho@google.com>
+Message-Id: <20190403160207.149174-4-brho@google.com>
 Mime-Version: 1.0
 References: <20190403160207.149174-1-brho@google.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v5 5/6] blame: add a config option to mark ignored lines
+Subject: [PATCH v5 3/6] blame: optionally track the line starts during fill_blame_origin()
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
-Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+Cc:     Michael Platings <michael@platin.gs>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
         <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
         Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Michael Platings <michael@platin.gs>
+        Stefan Beller <stefanbeller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When ignoring commits, the commit that is blamed might not be
-responsible for the change.  Users might want to know when a particular
-line has a potentially inaccurate blame.
+The line_starts array is an index of line number to file offset, so that
+we can quickly find where a particular line begins in a file.  Prior to
+this commit, we only tracked this information for the final file image,
+i.e. the current version of the file.
 
-This patch adds a config option to identify these lines by specifying
-blame.markIgnoredFiles.  When this option is set, each blame line is
-marked with an '*'.  For example:
+This commit adds the ability to track this information for any version
+of the file throughout the file's history.  In particular, we track this
+info when we load the file's image into memory: fill_blame_origin().
 
-278b6158d6fdb (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
+This feature will be used when we attempt to pass blame entries to
+parents when we "ignore" a commit.  Most uses of fill_blame_origin()
+will not require this feature, hence the flag parameter.  Multiple calls
+to fill_blame_origin() are idempotent, and any of them can request the
+creation of the line_starts array.
 
-appears as:
-
-*278b6158d6fd (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
-
-where the '*' is placed before the commit, and the hash has one fewer
-characters.
-
+Suggested-by: Michael Platings <michael@platin.gs>
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- Documentation/config/blame.txt |  4 ++++
- blame.c                        |  4 ++++
- blame.h                        |  1 +
- builtin/blame.c                |  9 +++++++++
- t/t8013-blame-ignore-revs.sh   | 33 +++++++++++++++++++++++++++++++++
- 5 files changed, 51 insertions(+)
+ blame.c | 76 ++++++++++++++++++++++++++++++++++-----------------------
+ blame.h |  2 ++
+ 2 files changed, 48 insertions(+), 30 deletions(-)
 
-diff --git a/Documentation/config/blame.txt b/Documentation/config/blame.txt
-index 4da2788f306d..9f7f0fcf42c9 100644
---- a/Documentation/config/blame.txt
-+++ b/Documentation/config/blame.txt
-@@ -26,3 +26,7 @@ blame.ignoreRevsFile::
- 	`#` are ignored.  This option may be repeated multiple times.  Empty
- 	file names will reset the list of ignored revisions.  This option will
- 	be handled before the command line option `--ignore-revs-file`.
-+
-+blame.markIgnoredLines::
-+	Mark lines that were changed by an ignored revision with a '*' in the
-+	output of linkgit:git-blame[1].
 diff --git a/blame.c b/blame.c
-index e0612ac34ba7..c06cbd906658 100644
+index 31e05c1458d8..cb5806f955a6 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -515,6 +515,7 @@ void blame_coalesce(struct blame_scoreboard *sb)
- 	for (ent = sb->ent; ent && (next = ent->next); ent = next) {
- 		if (ent->suspect == next->suspect &&
- 		    ent->s_lno + ent->num_lines == next->s_lno &&
-+		    ent->ignored == next->ignored &&
- 		    ent->unblamable == next->unblamable) {
- 			ent->num_lines += next->num_lines;
- 			ent->next = next->next;
-@@ -767,6 +768,7 @@ static void split_overlap(struct blame_entry *split,
- 	int chunk_end_lno;
- 	memset(split, 0, sizeof(struct blame_entry [3]));
+@@ -310,12 +310,42 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+ 	return xdi_diff(file_a, file_b, &xpp, &xecfg, &ecb);
+ }
  
-+	split[0].ignored = split[1].ignored = split[2].ignored = e->ignored;
- 	split[0].unblamable = e->unblamable;
- 	split[1].unblamable = e->unblamable;
- 	split[2].unblamable = e->unblamable;
-@@ -891,6 +893,7 @@ static struct blame_entry *split_blame_at(struct blame_entry *e, int len,
- 	struct blame_entry *n = xcalloc(1, sizeof(struct blame_entry));
++static const char *get_next_line(const char *start, const char *end)
++{
++	const char *nl = memchr(start, '\n', end - start);
++
++	return nl ? nl + 1 : end;
++}
++
++static int find_line_starts(int **line_starts, const char *buf,
++			    unsigned long len)
++{
++	const char *end = buf + len;
++	const char *p;
++	int *lineno;
++	int num = 0;
++
++	for (p = buf; p < end; p = get_next_line(p, end))
++		num++;
++
++	ALLOC_ARRAY(*line_starts, num + 1);
++	lineno = *line_starts;
++
++	for (p = buf; p < end; p = get_next_line(p, end))
++		*lineno++ = p - buf;
++
++	*lineno = len;
++
++	return num;
++}
++
+ /*
+  * Given an origin, prepare mmfile_t structure to be used by the
+  * diff machinery
+  */
+ static void fill_origin_blob(struct diff_options *opt,
+-			     struct blame_origin *o, mmfile_t *file, int *num_read_blob)
++			     struct blame_origin *o, mmfile_t *file,
++			     int *num_read_blob, int fill_line_starts)
+ {
+ 	if (!o->file.ptr) {
+ 		enum object_type type;
+@@ -339,11 +369,16 @@ static void fill_origin_blob(struct diff_options *opt,
+ 	}
+ 	else
+ 		*file = o->file;
++	if (fill_line_starts && !o->line_starts)
++		o->num_lines = find_line_starts(&o->line_starts, o->file.ptr,
++						o->file.size);
+ }
  
- 	n->suspect = new_suspect;
-+	n->ignored = e->ignored;
- 	n->unblamable = e->unblamable;
- 	n->lno = e->lno + len;
- 	n->s_lno = e->s_lno + len;
-@@ -954,6 +957,7 @@ static void ignore_blame_entry(struct blame_entry *e,
- 	struct blame_line_tracker *line_blames;
- 	int entry_len, nr_lines;
+ static void drop_origin_blob(struct blame_origin *o)
+ {
+ 	FREE_AND_NULL(o->file.ptr);
++	FREE_AND_NULL(o->line_starts);
++	o->num_lines = 0;
+ }
  
-+	e->ignored = 1;
- 	line_blames = xcalloc(sizeof(struct blame_line_tracker),
- 			      e->num_lines);
- 	guess_line_blames(e, parent, target, offset, delta, line_blames);
+ /*
+@@ -992,8 +1027,10 @@ static void pass_blame_to_parent(struct blame_scoreboard *sb,
+ 	d.offset = 0;
+ 	d.dstq = &newdest; d.srcq = &target->suspects;
+ 
+-	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
+-	fill_origin_blob(&sb->revs->diffopt, target, &file_o, &sb->num_read_blob);
++	fill_origin_blob(&sb->revs->diffopt, parent, &file_p,
++			 &sb->num_read_blob, 0);
++	fill_origin_blob(&sb->revs->diffopt, target, &file_o,
++			 &sb->num_read_blob, 0);
+ 	sb->num_get_patch++;
+ 
+ 	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d, sb->xdl_opts))
+@@ -1199,7 +1236,8 @@ static void find_move_in_parent(struct blame_scoreboard *sb,
+ 	if (!unblamed)
+ 		return; /* nothing remains for this target */
+ 
+-	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
++	fill_origin_blob(&sb->revs->diffopt, parent, &file_p,
++			 &sb->num_read_blob, 0);
+ 	if (!file_p.ptr)
+ 		return;
+ 
+@@ -1328,7 +1366,8 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
+ 			norigin = get_origin(parent, p->one->path);
+ 			oidcpy(&norigin->blob_oid, &p->one->oid);
+ 			norigin->mode = p->one->mode;
+-			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p, &sb->num_read_blob);
++			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p,
++					 &sb->num_read_blob, 0);
+ 			if (!file_p.ptr)
+ 				continue;
+ 
+@@ -1650,37 +1689,14 @@ void assign_blame(struct blame_scoreboard *sb, int opt)
+ 	}
+ }
+ 
+-static const char *get_next_line(const char *start, const char *end)
+-{
+-	const char *nl = memchr(start, '\n', end - start);
+-	return nl ? nl + 1 : end;
+-}
+-
+ /*
+  * To allow quick access to the contents of nth line in the
+  * final image, prepare an index in the scoreboard.
+  */
+ static int prepare_lines(struct blame_scoreboard *sb)
+ {
+-	const char *buf = sb->final_buf;
+-	unsigned long len = sb->final_buf_size;
+-	const char *end = buf + len;
+-	const char *p;
+-	int *lineno;
+-	int num = 0;
+-
+-	for (p = buf; p < end; p = get_next_line(p, end))
+-		num++;
+-
+-	ALLOC_ARRAY(sb->lineno, num + 1);
+-	lineno = sb->lineno;
+-
+-	for (p = buf; p < end; p = get_next_line(p, end))
+-		*lineno++ = p - buf;
+-
+-	*lineno = len;
+-
+-	sb->num_lines = num;
++	sb->num_lines = find_line_starts(&sb->lineno, sb->final_buf,
++					 sb->final_buf_size);
+ 	return sb->num_lines;
+ }
+ 
 diff --git a/blame.h b/blame.h
-index 93780b01504c..f7755920c90d 100644
+index be3a895043e0..b418bd2e480d 100644
 --- a/blame.h
 +++ b/blame.h
-@@ -94,6 +94,7 @@ struct blame_entry {
- 	 * scanning the lines over and over.
+@@ -51,6 +51,8 @@ struct blame_origin {
  	 */
- 	unsigned score;
-+	int ignored;
- 	int unblamable;
- };
- 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5f38e9dccddd..46d96905de75 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -53,6 +53,7 @@ static int show_progress;
- static char repeated_meta_color[COLOR_MAXLEN];
- static int coloring_mode;
- static struct string_list ignore_revs_file_list = STRING_LIST_INIT_NODUP;
-+static int mark_ignored_lines;
- 
- static struct date_mode blame_date_mode = { DATE_ISO8601 };
- static size_t blame_date_width;
-@@ -482,6 +483,10 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 			}
- 		}
- 
-+		if (mark_ignored_lines && ent->ignored) {
-+			length--;
-+			putchar('*');
-+		}
- 		if (ent->unblamable)
- 			memset(hex, '0', length);
- 		printf("%.*s", length, hex);
-@@ -710,6 +715,10 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 		string_list_insert(&ignore_revs_file_list, str);
- 		return 0;
- 	}
-+	if (!strcmp(var, "blame.markignoredlines")) {
-+		mark_ignored_lines = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "color.blame.repeatedlines")) {
- 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
- 			warning(_("invalid color '%s' in color.blame.repeatedLines"),
-diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
-index df4993f98682..c4cd9a6c54be 100755
---- a/t/t8013-blame-ignore-revs.sh
-+++ b/t/t8013-blame-ignore-revs.sh
-@@ -123,6 +123,39 @@ test_expect_success bad_files_and_revs '
- 	test_i18ngrep "Invalid object name: NOREV" err
- 	'
- 
-+# Commit Z will touch the first two lines.  Y touched all four.
-+# 	A--B--X--Y--Z
-+# The blame output when ignoring Z should be:
-+# ^Y ... 1)
-+# ^Y ... 2)
-+# Y  ... 3)
-+# Y  ... 4)
-+# We're checking only the first character
-+test_expect_success mark_ignored_lines '
-+	git config --add blame.markIgnoredLines true &&
-+
-+	test_write_lines line-one-Z line-two-Z y3 y4 >file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m Z &&
-+	git tag Z &&
-+
-+	git blame --ignore-rev Z file >blame_raw &&
-+	echo "*" >expect &&
-+
-+	sed -n "1p" blame_raw | cut -c1 >actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "2p" blame_raw | cut -c1 >actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "3p" blame_raw | cut -c1 >actual &&
-+	! test_cmp expect actual &&
-+
-+	sed -n "4p" blame_raw | cut -c1 >actual &&
-+	! test_cmp expect actual
-+	'
-+
- # Resetting the repo and creating:
- #
- # A--B--M
+ 	struct blame_entry *suspects;
+ 	mmfile_t file;
++	int num_lines;
++	int *line_starts;
+ 	struct object_id blob_oid;
+ 	unsigned mode;
+ 	/* guilty gets set when shipping any suspects to the final
 -- 
 2.21.0.392.gf8f6787159e-goog
 
