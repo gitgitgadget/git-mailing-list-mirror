@@ -2,163 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6C420248
-	for <e@80x24.org>; Wed,  3 Apr 2019 21:07:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92CDF20248
+	for <e@80x24.org>; Wed,  3 Apr 2019 21:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726387AbfDCVHv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 17:07:51 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:42137 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbfDCVHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 17:07:49 -0400
-Received: by mail-qt1-f195.google.com with SMTP id p20so731933qtc.9
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 14:07:48 -0700 (PDT)
+        id S1728448AbfDCVdY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 17:33:24 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:40433 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726151AbfDCVdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 17:33:23 -0400
+Received: by mail-pf1-f196.google.com with SMTP id c207so219574pfc.7
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 14:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UDDWOucOhVKfDLm7kdQeslDgPlVVPK0xF9wbxFFOg3g=;
-        b=HmxpdWlRmL5W3qhIg0EVB91PyQr3Fl0TIN2MWR1+BUP+O+k+DvB0kpFu433O/K97V3
-         sNb0UHRRCjorwKCzKSYs6a1UcgqTJiMm8Cr1gW0eLR6C+SyfmQb0dVU8OOAvpSSG4ozQ
-         YkjFLugOjDzB+N2XhYOr8hLoykcXZdDfd6ntQuL3Ii8mGY5L7HpsryjgW++HsC9ASJ64
-         GrDjrm47WEpRMmJnfKB00b3TkahVuotj0WtFWg1ovr3ZjlOSvKyad88yFiMtw5DgiNLw
-         w5y+PCE1RiC/IAi47lXUPSOmaNLplVnlp81aELC5nYaEa229hag+J+IA7cCaq9obuUDK
-         /6pQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=p/BXNIIepoJz4SHe1CZcmu4LIdcIpZW9fqnh8AAmb8g=;
+        b=IcB0ForOrJHZbpYqMJwt2nd6xXspXXoefPjngyyDB3FVZB57XCVtKRC45FO/CYPvCk
+         7psx7ZKqmPp+nyCRGCRDt81gZat5q6Y9iazzXKPps95VNrO0nIbmvcC8PUvwX9CN5Kv5
+         C/lUlkWsND7+k1i9lCStQCAMeYbHuC5QLln0RP+M3r0GLl1K54a2QmqQluOvzGgWxJJE
+         aAVEIrr7nhvmmDLVVQCiYeJxntXYPP4IKZpyHUuLyd4cbwuoq4Jk3E61xeietrU0i4XF
+         lYh1wBq7x9aF1RYpkBmao7Ty1ru2EVZv+qMBKo5EJtluvC4/+hQVqc2OomBrMnDOujHT
+         30pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UDDWOucOhVKfDLm7kdQeslDgPlVVPK0xF9wbxFFOg3g=;
-        b=gBcrWWpfEYikvWfUjIqiJVlMbbkJ7zEgk7hXL5B1M58KbJC8vMlMI352urLZW3ccyf
-         ynL2tG/2QnBDolFd/OeSub5xlkLOQcd4EQIr64Sqk6db8cX0rbvHh5wErjXqyk5RoEj5
-         LkQaQVmoEeHu0EBj5qNWCKjQ9m93+aPd2OBwM+N1eQty9TtfRKv+6RKq+clzqIaI9Tbv
-         mS6VDY+pkxv0lM+8r3ATo/75furZFZOMeG/EIA7jQZylukUfdbyHdIN2Xi5HT2zEb4rM
-         NGz4RqvaeqbpPCTCbfs0wva/LJTQbhtbZEptltiBpdcrQ9bnntkGW3srUaiOnap3NDbb
-         i5Dg==
-X-Gm-Message-State: APjAAAXnnfkhaXFoG0ZQAxQbnWG00lCufCT+8UeeK+t2waJG6TWORluT
-        Fyi2x2G1fANKKWp+YQ2r5ezUjPN/QaQNAlaVv9syyCiJ
-X-Google-Smtp-Source: APXvYqw0XM6L0ch4R78C7dLEfJm4DBduPLR/85U0iL0wON4ylg/0Gq0KFDorGfCt92W59uQHUFgd2mq+G94JGdr/oJA=
-X-Received: by 2002:ac8:2a2e:: with SMTP id k43mr2032004qtk.353.1554325668097;
- Wed, 03 Apr 2019 14:07:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=p/BXNIIepoJz4SHe1CZcmu4LIdcIpZW9fqnh8AAmb8g=;
+        b=TW+b5m69vzumer+jcLrHyTgrDECamMH3Mk1GybhSzsZTFiggtEd1Iu/KJUQOvgcc1V
+         3i56WOuVx26Z5+zmm/rnATP8UYaghcOmE6lzIYW6aVJNZLgVITfOBpxPqMVnQ1FCX0LR
+         +mlXMcqfAF7ukMAZzYJmTb3o1JO2K8GMYa2BVrIiHhNIY9RZPqrvnfb23SB/vaYfil5k
+         cgPBI2FqfoWcMeuVoR9MIZ9HZ755bArMb0gMgzu9go/0paV3dabWMpGtxwufLF+oJhP8
+         085uFjUJWI9qBv5J6JoJpIEJfp4ar32M5AmcKGiSN8BB3VeFUnG2tLZetgU9XNvFwrMO
+         CJfA==
+X-Gm-Message-State: APjAAAW65jASS6xQtKP6urNT4Lo73G1ktWDaQuzCHAQTeaGFjsN3T3LW
+        8oQi/6waGHUmPxYK3rbg730=
+X-Google-Smtp-Source: APXvYqyOCmhXkfKkoNHqijU0baxA+WLY5xOd88IRJFYrz/VntwZuXf6XkU8bqvtKP2AYiIK+P+s92A==
+X-Received: by 2002:a62:e315:: with SMTP id g21mr1857565pfh.2.1554327201795;
+        Wed, 03 Apr 2019 14:33:21 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id h1sm4360045pgs.67.2019.04.03.14.33.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Apr 2019 14:33:20 -0700 (PDT)
+Date:   Wed, 3 Apr 2019 14:33:18 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2.5 2/2] tag: prevent nested tags
+Message-ID: <20190403213318.GA14137@dev-l>
+References: <1bd9ee28bc8726490ec0a93286056beeb147fc49.1554183429.git.liu.denton@gmail.com>
+ <20190402230345.GA5004@dev-l>
+ <xmqqzhp7sfw4.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <CAD8q83SifH-7mKOet-Uuf_KHCqvO2mkxiZgEyQhoNRhshFG_Lg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1904031957480.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1904031957480.41@tvgsbejvaqbjf.bet>
-From:   Khalid Ali <khalludi123@gmail.com>
-Date:   Wed, 3 Apr 2019 17:07:34 -0400
-Message-ID: <CAD8q83Rz6myozY1aJqaZjEfjgmSkQ0059=m=mmkJ9O90u+9spw@mail.gmail.com>
-Subject: Re: [GSoC][RFC] proposal: convert git-submodule to builtin script
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhp7sfw4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First of all, thank you so much for the detailed feedback. I wasn't sure
-how much to include in the proposal, but I see it still needs a lot of work.
+On Wed, Apr 03, 2019 at 04:32:27PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > This is the first use of the '%n$<fmt>' style of printf format in the
+> > *.[ch] files in our codebase, but it's supported by POSIX[1] and there
+> > are existing uses for it in po/*.po files, so hopefully it won't cause
+> 
+> The latter is a stronger indication that this should be OK than the
+> former ;-)  Thanks for digging and noting.
 
-> When you talk about "Convert each main task in git-submodule into a C
-> function." and "If certain functionality is missing, add it to the correct
-> script.", it is a good idea to back that up by concrete examples.
->
-> Like, study `git-submodule.sh` and extract the list of "main tasks", and
-> then mention that in your proposal. I see that you listed 9 main tasks,
-> but it is not immediately clear whether you extracted that list from the
-> usage text, from the manual page, or from the script itself. If the latter
-> (which I think would be the best, given the goal of converting the code in
-> that script), it would make a ton of sense to mention the function names
-> and maybe add a permalink to the corresponding code (you could use e.g.
-> GitHub's permalinks).
+Thank Ævar, I shamelessly stole this message from one of his patches
+that didn't get included in[1].
 
-Yes, I actually did extract the tasks straight from git-submodule.sh. I will
-definitely add the appropriate function names and permalinks to the
-proposal.
+> 
+> > diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+> > index 88620429ea..ec4f6ae658 100644
+> > --- a/Documentation/config/advice.txt
+> > +++ b/Documentation/config/advice.txt
+> > @@ -90,4 +90,6 @@ advice.*::
+> >  	waitingForEditor::
+> >  		Print a message to the terminal whenever Git is waiting for
+> >  		editor input from the user.
+> > +	nestedTag::
+> > +		Advice shown if a user attempts to recursively tag a tag object.
+> >  --
+> 
+> In addition to 'advice', we may have to add a configuration to help
+> projects that wants to tag tag objects regularly so that they do not
+> have to keep typing "--allow-nested-tag".  But that can wait until a
+> participant of such a project comes forward and makes a case for
+> their workflow.
+> 
+> > +chain of custody by signing someone else's signed tag. However, in
+> > +practice, this is typically a mistake so we prevent it from happening by
+> > +default unless specifically requested.
+> 
+> I am not sure if this is so bad, actually.  Why do we need to treat
+> it as a mistake?  When a command that wants a commit is fed a tag
+> (either a tag that directly refers to a commit, or a tag that tags
+> another tag that refers to a commit), the command knows how to peel
+> so it's not like the user is forced to say "git log T^{commit}".
 
-> And then look at one of those main tasks, think of something that you
-> believe should be covered in the test suite, describe it, then figure out
-> whether it is already covered. If it is, mention that, together with the
-> location, otherwise state which script would be the best location, and
-> why.
+This patch came about because Robert Dailey expressed confusion after
+accidentally creating a tag-to-a-tag a while back by mistake when he
+actually meant to amend a tag.
 
-Ah, alright. I'll have a look at the test suite to see what is covered and
-include a section in my proposal.
+In the discussion upthread, Peff noted that he has never seen a
+tag-to-a-tag in the wild before. I think the conclusion was that for
+the majority of users, doing this is an error. That is what this patch
+is guarding against.
 
-> Besides, if you care to have a bit of a deeper look into the
-> `git-submodule.sh` script, you will see a peculiar pattern in some of the
-> subcommands, e.g. in `cmd_foreach`:
-> https://github.com/git/git/blob/v2.21.0/git-submodule.sh#L320-L349
->
-> Essentially, it spends two handfuls of lines on option parsing, and then
-> the real business logic is performed by the `submodule--helper`, which is
-> *already* a built-in.
->
-> Even better: most of that business logic is implemented in a file that has
-> the very file name you proposed already: `submodule.c`.
->
-> So if I were you, I would add a section to your proposal (which in the end
-> would no doubt dwarf the existing sections) that has as subsections each
-> of those commands in `git-submodule.sh` that do *not* yet follow this
-> pattern "parse options then hand off to submodule--helper".
->
-> I would then study the commit history of the ones that *do* use the
-> `submodule--helper` to see how they were converted, what conventions were
-> used, whether there were recurring patterns, etc.
->
-> In each of those subsections, I would then discuss what the
-> still-to-be-converted commands do, try to find the closest command that
-> already uses the `submodule--helper`, and then assess what it would take
-> to convert them, how much code it would probably need, whether it could
-> reuse parts that are already in `submodule.c`, etc.
+> 
+> And if something that *MUST* take a commit refuses to (or more
+> likely, forges to) peel a tag down to a commit and yields an error,
+> I think that is what needs fixing, not the command that creates a
+> tag.
+> 
+> So, I am fairly negative on this change---unless it is made much
+> more clear in the doc and/or in the proposed log message what
+> practical downside there are to the end users if we do not stop this
+> "mistake", that is.
 
-I definitely noticed the option parsing in multiple parts of the function, but
-the pattern didn't click until you mentioned it. I'll do as you recommended
-and take a look at submodule.c to see how the code and functionality in
-git-submodule.sh can be merged.
+I can update the log message to include more detail.
 
-> Judging from past projects to convert scripts to C, I would say that the
-> most successful strategy was to chomp off manageable parts and move them
-> from the script to C. I am sure that you will find tons of good examples
-> for this strategy by looking at the commit history of `git-submodule.sh`
-> and then searching for the corresponding patches in the Git mailing list
-> archive (e.g. https://public-inbox.org/git/).
->
-> Do not expect those "chomped off" parts to hit `master` very quickly,
-> though. Most likely, you would work on one patch series (very closely with
-> your mentor at first, to avoid unnecessary blocks and to get a better feel
-> for the way the Git community works right from the start), then, when that
-> patch series is robust and solid and ready to be contributed, you would
-> send it to the Git mailing list and immediately start working on the next
-> patch series, all the while the reviews will trickle in. Those reviews
-> will help you to improve the patch series, and it is a good idea to
-> incorporate the good suggestions, and to discuss the ones you think are
-> not necessary, for a few days before sending the next patch series
-> iteration.
->
-> Essentially, you will work in parallel on a few patch series at all times.
-> Those patch series stack on top of each other, and they should, one after
-> the other, make it into `pu` first, then, when they are considered ready
-> for testing into `next`, and eventually to `master`. Whenever you
-> contribute a new patch series iteration, you then rebase the remaining
-> patch series on top. Ideally it will look a bit like a fern, with the
-> first patch series being along the farthest, and each subsequent patch
-> series at an earlier stage than its predecessor.
+> 
+> > +Automatically erroring on nested tags was introduced in Git version
+> > +2.22.0.
+> 
+> And please do not write something like this.  A feature gets in a
+> release when it is ready, and we may not ship this in 2.22.
 
-Ok, so I'd be doing each of the portions and submitting them to the mailing
-list as I finish to let other coders take a look and give feedback.
+Ævar suggested that we include this because git tag gets used by a lot
+of scripts so in case one ever starts failing, a maintainer can more
+easily track down the reason why.
 
-> Phew. Long mail. Hopefully this amount of information does not scare you.
-> And maybe some of it will help you with the proposal and/or the project.
+> 
+> "git tag --help" the user is running may or may not have the
+> paragraph about "nested tag", depending on the existence of the
+> feature in the version of Git the user is running, so there is no
+> need to say something like that.
+> 
+> And no, I do not buy arguments like "random web servers serve
+> different versions of documentation without identifying which
+> version of Git they describe".
+> 
 
-Once again, thank you for the detailed feedback. This really gave me a good
-idea of the project as a whole and what I need to include in my proposal.
+Thanks for the comments,
 
-Sincerely,
+Denton
 
--Khalid
+[1]: https://public-inbox.org/git/20181026192734.9609-8-avarab@gmail.com/
