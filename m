@@ -2,190 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCC3320248
-	for <e@80x24.org>; Thu,  4 Apr 2019 02:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32EB620248
+	for <e@80x24.org>; Thu,  4 Apr 2019 03:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbfDDCrQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 22:47:16 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35670 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbfDDCrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 22:47:16 -0400
-Received: by mail-wm1-f67.google.com with SMTP id y197so1287579wmd.0
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 19:47:14 -0700 (PDT)
+        id S1726412AbfDDD0K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 23:26:10 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:45765 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726218AbfDDD0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 23:26:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id e24so594571pfi.12
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 20:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=QQJh/Yjbo0sGaRnti5167gBf8IUWinE2lID6obZH2uo=;
-        b=o4s5zmgBGNfVuhVC8CGqGHXqhTk4KsEFc05iLaNo5Bc0Q8lLM4V6l6MtFPDPV7JqQA
-         w8KMIt+tAg1oYH4FTBJykCO+kGlWNPorOfNj71qh6/sZ5cGpfozK8CbphGFUFx1oFEQx
-         RySl8z0tqFWAmp27nGEDUvD4iFGVbazqO6XyEkSlCsH2yrm967SAjiQLXsNPRPMeH2dz
-         Y+nZS0HNp90x11bUtmXu0xzGK7NGjRCKUpwDw9IK9dWKOcN283YEKDzM8Jm61xOsiBPV
-         EDsK4d0G9JsAEixXCVCgbpdrTd1gQ3dMAOUXdnpRa/q/vSU+t3BIGYkBGrrcRiLapF9l
-         DCIw==
+        bh=GxHwfTGOSW2Q7HP5Xbhkq6IKxJLVragVLO3TTSsXNwU=;
+        b=dHM5FyYmNT9+6dwS7bZeqdB3L2u+B2rqFBRMrCmn/eIHfadhw1RI9rO4pM3Ai3ssl4
+         uQyDffPBIQHfde+VYrWzDuLFWfJAcuUfrUb9TmAgFvrL9dKeDOgVWIcUtWzcW0+JEr5F
+         lEAP28b04KH6SQBzgOyn0s4n8j2ZenzSnfRANtf9569axeRa+FzkNp510bI0cgxQsdn4
+         1RbwzUfgUUUZCZEaXT1YlxL+nNqPsWfeKMcB8/hrFnoEpP7/nEtX5vfPgqBM0L57mFfj
+         Eiylvn4tB99nvFs/QOw+CNEB95dyU/Eigx0iDB7ByVejcGaZpUL3BFmuwT6Q2lIOrLYG
+         6Pkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QQJh/Yjbo0sGaRnti5167gBf8IUWinE2lID6obZH2uo=;
-        b=m/TWUxMVtD5kinBGsZbnF5I0iZQTxvbOUU5nWvFexwTOTcRf3uVpITBDSQGLVHmP6R
-         ZQgbUx6kG+X4SEAcTqLCHHryMwR6IzVDgYJH9Wtv0ibK3k0KWbXccGK6GxInwP79eTtu
-         D70do9iZdb9z7627j7QFsNNDJ+owyLYncnUu6XWhxR9r0O9+J27xDlbQFFgc3zB2R3sN
-         i6J5aF9xKfY4uXsBQ2QINtsuGOAlTlNpdZXY2Zr6fUGLH23mp16vikyGd1csivIdPFtO
-         Myqi6E3FfrBKmVGLg/vUDKuuZOLSI6irfnN/XT8WyWxlFyS8pFXxEKO8iIQKRZcnuczY
-         RoTA==
-X-Gm-Message-State: APjAAAWZLyiIWzBXYY4/VwuipnsgdhJEbEl2ms/effvYmvD0uIgUH+y5
-        QGPfGsVv/WeXRzmbuWe7psE=
-X-Google-Smtp-Source: APXvYqwp55k0Zb3rP+Za03QDVeeZ4utkRQ31x/zoRV8h90ge2Ei2/a1YgaJIY596/x7GfEf1gN6mXA==
-X-Received: by 2002:a1c:dc43:: with SMTP id t64mr2252346wmg.19.1554346033588;
-        Wed, 03 Apr 2019 19:47:13 -0700 (PDT)
-Received: from szeder.dev (x4db96230.dyn.telefonica.de. [77.185.98.48])
-        by smtp.gmail.com with ESMTPSA id n4sm18389141wrx.39.2019.04.03.19.47.12
+        bh=GxHwfTGOSW2Q7HP5Xbhkq6IKxJLVragVLO3TTSsXNwU=;
+        b=fuiNI0UyLikjq2YbTbZq5fhKCuQINSORN3cKPnYN1Htxf6UliNl3H3novlg/GySe9e
+         ftMFd/k3w8JMzUO8yXRIGKHooWRcypEh/8ai8vWxFRtZ8Df5f9GuJqV8I/FmucyAFDt/
+         QSOFL5qPkF8vPldM6Y27K8e0x9TwuQvmbCs8bCKaW8AvGAq+hK1l/oKuPBeGgNXP+3gf
+         EB/pojVcdnfD+FHyUzsnf5pMl1BcifUciS6W1d+4Q2vq2WgIoPZ6qVIiTBE5Jm/jsV1n
+         pWLT8PI0f1b/92BIVFUdVIq8wPZqLe7FNe6dIaQsWUSstUlFo12jlPERwEquvomurjNq
+         aw4A==
+X-Gm-Message-State: APjAAAU5L04ZyCfek543Eas4390t3xSMIudbDs3zQujx2qwvwIzbXaNT
+        +pMK/AVOtd1+b8FtBDy1T7jkhQ==
+X-Google-Smtp-Source: APXvYqy5wjDWnsRzJ+jqVsAEXntPsXQWILCpZdoNXaVBKj6lXLu9xLTME65K6fspTcKler7VW9eXUg==
+X-Received: by 2002:aa7:8384:: with SMTP id u4mr3285556pfm.214.1554348368909;
+        Wed, 03 Apr 2019 20:26:08 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:9872:5c59:bf42:220b])
+        by smtp.gmail.com with ESMTPSA id g4sm31383593pfm.115.2019.04.03.20.26.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 19:47:12 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 04:47:10 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
-Message-ID: <20190404024710.GO32732@szeder.dev>
-References: <20190326220906.111879-1-jonathantanmy@google.com>
- <cover.1553895166.git.jonathantanmy@google.com>
- <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
+        Wed, 03 Apr 2019 20:26:08 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Wed, 3 Apr 2019 20:26:06 -0700
+To:     Jeff King <peff@peff.net>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: Feature request: Add --no-edit to git tag command
+Message-ID: <20190404032606.GA39148@Taylors-MBP.hsd1.wa.comcast.net>
+References: <CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com>
+ <20190404015744.GF4409@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190404015744.GF4409@sigill.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 29, 2019 at 02:39:28PM -0700, Jonathan Tan wrote:
-> diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-> new file mode 100755
-> index 0000000000..349851be7d
-> --- /dev/null
-> +++ b/t/t4067-diff-partial-clone.sh
-> @@ -0,0 +1,103 @@
-> +#!/bin/sh
-> +
-> +test_description='behavior of diff when reading objects in a partial clone'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'git show batches blobs' '
-> +	test_when_finished "rm -rf server client trace" &&
-> +	
-> +	test_create_repo server &&
-> +	echo a >server/a &&
-> +	echo b >server/b &&
-> +	git -C server add a b &&
-> +	git -C server commit -m x &&
-> +
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +	# Ensure that there is exactly 1 negotiation by checking that there is
-> +	# only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client show HEAD &&
-> +	grep "git> done" trace >done_lines &&
-> +	test_line_count = 1 done_lines
+Hi Peff,
 
-These patches and 'cc/multi-promisor' don't seem to work well
-together, and all tests checking 'test_line_count = 1 done_lines' in
-this test script fail in current 'pu', because there are two
-"git> done" lines.
+On Wed, Apr 03, 2019 at 09:57:44PM -0400, Jeff King wrote:
+> On Wed, Apr 03, 2019 at 09:38:02AM -0500, Robert Dailey wrote:
+>
+> > Similar to git commit, it would be nice to have a --no-edit option for
+> > git tag. Use case is when I force-recreate a tag:
+> >
+> > $ git tag -af 1.0 123abc
+> >
+> > An editor will be prompted with the previous annotated tag message. I
+> > would like to add --no-edit to instruct it to use any previously
+> > provided message and without prompting the editor:
+> >
+> > $ git tag --no-edit -af 1.0 123abc
+>
+> Yeah, that sounds like a good idea.
 
-> +'
-> +
-> +test_expect_success 'diff batches blobs' '
-> +	test_when_finished "rm -rf server client trace" &&
-> +
-> +	test_create_repo server &&
-> +	echo a >server/a &&
-> +	echo b >server/b &&
-> +	git -C server add a b &&
-> +	git -C server commit -m x &&
-> +	echo c >server/c &&
-> +	echo d >server/d &&
-> +	git -C server add c d &&
-> +	git -C server commit -m x &&
-> +
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +	# Ensure that there is exactly 1 negotiation by checking that there is
-> +	# only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +	grep "git> done" trace >done_lines &&
-> +	test_line_count = 1 done_lines
-> +'
-> +
-> +test_expect_success 'diff skips same-OID blobs' '
-> +	test_when_finished "rm -rf server client trace" &&
-> +
-> +	test_create_repo server &&
-> +	echo a >server/a &&
-> +	echo b >server/b &&
-> +	git -C server add a b &&
-> +	git -C server commit -m x &&
-> +	echo another-a >server/a &&
-> +	git -C server add a &&
-> +	git -C server commit -m x &&
-> +
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +	echo a | git hash-object --stdin >hash-old-a &&
-> +	echo another-a | git hash-object --stdin >hash-new-a &&
-> +	echo b | git hash-object --stdin >hash-b &&
-> +
-> +	# Ensure that only a and another-a are fetched.
-> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +	grep "want $(cat hash-old-a)" trace &&
-> +	grep "want $(cat hash-new-a)" trace &&
-> +	! grep "want $(cat hash-b)" trace
-> +'
-> +
-> +test_expect_success 'diff with rename detection batches blobs' '
-> +	test_when_finished "rm -rf server client trace" &&
-> +
-> +	test_create_repo server &&
-> +	echo a >server/a &&
-> +	printf "b\nb\nb\nb\nb\n" >server/b &&
-> +	git -C server add a b &&
-> +	git -C server commit -m x &&
-> +	rm server/b &&
-> +	printf "b\nb\nb\nb\nbX\n" >server/c &&
-> +	git -C server add c &&
-> +	git -C server commit -a -m x &&
-> +
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +	# Ensure that there is exactly 1 negotiation by checking that there is
-> +	# only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff -M HEAD^ HEAD >out &&
-> +	grep "similarity index" out &&
-> +	grep "git> done" trace >done_lines &&
-> +	test_line_count = 1 done_lines
-> +'
-> +
-> +test_done
-> -- 
-> 2.21.0.197.gd478713db0
-> 
+Agreed.
+
+I think that the implement is a little different than "add a --no-edit"
+flag, though. 'git tag' already has a OPT_BOOL for '--edit', which means
+that '--no-edit' exists, too.
+
+But, when we look and see how the edit option is passed around, we find
+that the check whether or not to launch the editor (again, in
+builtin/tag.c within 'create_tag()') is:
+
+  if (!opt->message_given || opt->use_editor)
+
+So, it's not that we didn't take '--no-edit', it's that we didn't get a
+_message_, so we'll open the editor to get one (even if '--no-edit' was
+given).
+
+This makes me think that we should do two things:
+
+  1. Make !opt->message_give && !opt->use_editor an invalid invocation.
+     If I (1) didn't give a message but I did (2) give '--no-edit', I'd
+     expect a complaint, not an editor window.
+
+  2. Then, do what Robert suggests, which is to "make opt->message_given
+     true", by re-using the previous tag's message.
+
+> I think it wouldn't be very hard to implement, either. Maybe a good
+> starter project or #leftoverbits for somebody.
+
+Maybe. I think that it's made a little more complicated by the above,
+but it's certainly doable. Maybe good for GSoC?
+
+> -Peff
+
+Thanks,
+Taylor
