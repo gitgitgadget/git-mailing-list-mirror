@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEACA20248
-	for <e@80x24.org>; Thu,  4 Apr 2019 23:27:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A38DE20248
+	for <e@80x24.org>; Thu,  4 Apr 2019 23:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729594AbfDDX1G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 19:27:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47416 "HELO cloud.peff.net"
+        id S1729961AbfDDX1p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 19:27:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47422 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729251AbfDDX1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 19:27:06 -0400
-Received: (qmail 1467 invoked by uid 109); 4 Apr 2019 23:27:06 -0000
+        id S1727039AbfDDX1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 19:27:45 -0400
+Received: (qmail 1482 invoked by uid 109); 4 Apr 2019 23:27:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 04 Apr 2019 23:27:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 04 Apr 2019 23:27:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20429 invoked by uid 111); 4 Apr 2019 23:27:32 -0000
+Received: (qmail 20445 invoked by uid 111); 4 Apr 2019 23:28:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 04 Apr 2019 19:27:32 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 04 Apr 2019 19:28:12 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2019 19:27:04 -0400
-Date:   Thu, 4 Apr 2019 19:27:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Apr 2019 19:27:43 -0400
+Date:   Thu, 4 Apr 2019 19:27:43 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 05/12] http: simplify parsing of remote objects/info/packs
-Message-ID: <20190404232704.GE21839@sigill.intra.peff.net>
+Subject: [PATCH 06/12] server-info: fix blind pointer arithmetic
+Message-ID: <20190404232743.GF21839@sigill.intra.peff.net>
 References: <20190404232104.GA27770@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,86 +39,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can use skip_prefix() and parse_oid_hex() to continuously increment
-our pointer, rather than dealing with magic numbers. This also fixes a
-few small shortcomings:
+When we're writing out a new objects/info/packs file, we read back the
+old one to try to keep the ordering the same. When we see a line
+starting with "P", we expect "P pack-1234..." and blindly jump to "line
++ 2" to parse the pack name. If we saw a line with _just_ "P" and
+nothing else, we'd jump past the end of the buffer and start reading
+arbitrary memory.
 
-  - if we see a 'P' line that does not match our expectations, we'll
-    leave our "i" counter in the middle of the line. So we'll parse:
-    "P P P pack-1234.pack" as if there was just one "P" which was not
-    intentional (though probably not that harmful).
+This shouldn't be a big attack vector, as the files are local to the
+repository and written by us, but it's clearly worth fixing (we do read
+remote copies of the file for dumb-http fetches, but using a totally
+different parser!).
 
-  - if we see a line with the right prefix, suffix, and length, i.e.
-    matching /P pack-.{40}.pack\n/, we'll interpret the middle part as
-    hex without checking if it could be parsed. This could lead to us
-    looking at uninitialized garbage in the hash array. In practice this
-    means we'll just make a garbage request to the server which will
-    fail, though it's interesting that a malicious server could convince
-    us to leak 40 bytes of uninitialized stack to them.
-
-  - the current code is picky about seeing a newline at the end of file,
-    but we can easily be more liberal
+Let's instead use skip_prefix() here, which avoids pointer arithmetic
+altogether. Note that this converts our switch statement to an if/else
+chain, making it slightly more verbose. But it will also make it easier
+to do a few follow-on cleanups.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http.c | 35 ++++++++++++++---------------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
+ server-info.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/http.c b/http.c
-index a32ad36ddf..2ef47bc779 100644
---- a/http.c
-+++ b/http.c
-@@ -2147,11 +2147,11 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+diff --git a/server-info.c b/server-info.c
+index e2b2d6a27a..b61a6be4c2 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -112,9 +112,9 @@ static struct pack_info *find_pack_by_name(const char *name)
+ /* Returns non-zero when we detect that the info in the
+  * old file is useless.
+  */
+-static int parse_pack_def(const char *line, int old_cnt)
++static int parse_pack_def(const char *packname, int old_cnt)
  {
- 	struct http_get_options options = {0};
--	int ret = 0, i = 0;
--	char *url, *data;
-+	int ret = 0;
-+	char *url;
-+	const char *data;
- 	struct strbuf buf = STRBUF_INIT;
--	unsigned char hash[GIT_MAX_RAWSZ];
--	const unsigned hexsz = the_hash_algo->hexsz;
-+	struct object_id oid;
+-	struct pack_info *i = find_pack_by_name(line + 2);
++	struct pack_info *i = find_pack_by_name(packname);
+ 	if (i) {
+ 		i->old_num = old_cnt;
+ 		return 0;
+@@ -139,24 +139,26 @@ static int read_pack_info_file(const char *infofile)
+ 		return 1; /* nonexistent is not an error. */
  
- 	end_url_with_slash(&buf, base_url);
- 	strbuf_addstr(&buf, "objects/info/packs");
-@@ -2163,24 +2163,17 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
- 		goto cleanup;
+ 	while (fgets(line, sizeof(line), fp)) {
++		const char *arg;
+ 		int len = strlen(line);
+ 		if (len && line[len-1] == '\n')
+ 			line[--len] = 0;
  
- 	data = buf.buf;
--	while (i < buf.len) {
--		switch (data[i]) {
--		case 'P':
--			i++;
--			if (i + hexsz + 12 <= buf.len &&
--			    starts_with(data + i, " pack-") &&
--			    starts_with(data + i + hexsz + 6, ".pack\n")) {
--				get_sha1_hex(data + i + 6, hash);
--				fetch_and_setup_pack_index(packs_head, hash,
--						      base_url);
--				i += hexsz + 11;
--				break;
--			}
+ 		if (!len)
+ 			continue;
+ 
+-		switch (line[0]) {
+-		case 'P': /* P name */
+-			if (parse_pack_def(line, old_cnt++))
++		if (skip_prefix(line, "P ", &arg)) {
++			/* P name */
++			if (parse_pack_def(arg, old_cnt++))
+ 				goto out_stale;
+-			break;
+-		case 'D': /* we used to emit D but that was misguided. */
+-		case 'T': /* we used to emit T but nobody uses it. */
++		} else if (line[0] == 'D') {
++			/* we used to emit D but that was misguided. */
+ 			goto out_stale;
 -		default:
--			while (i < buf.len && data[i] != '\n')
--				i++;
-+	while (*data) {
-+		if (skip_prefix(data, "P pack-", &data) &&
-+		    !parse_oid_hex(data, &oid, &data) &&
-+		    skip_prefix(data, ".pack", &data) &&
-+		    (*data == '\n' || *data == '\0')) {
-+			fetch_and_setup_pack_index(packs_head, oid.hash, base_url);
++		} else if (line[0] == 'T') {
++			/* we used to emit T but nobody uses it. */
++			goto out_stale;
 +		} else {
-+			data = strchrnul(data, '\n');
+ 			error("unrecognized: %s", line);
+-			break;
  		}
--		i++;
-+		if (*data)
-+			data++; /* skip past newline */
  	}
- 
- cleanup:
+ 	fclose(fp);
 -- 
 2.21.0.714.gd1be1d035b
 
