@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B542020248
-	for <e@80x24.org>; Thu,  4 Apr 2019 07:34:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B428720248
+	for <e@80x24.org>; Thu,  4 Apr 2019 07:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbfDDHeo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 03:34:44 -0400
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:40355 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726031AbfDDHeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 03:34:44 -0400
-Received: by mail-pg1-f181.google.com with SMTP id u9so787707pgo.7
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 00:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mg0hes+MQWC5nxAEVrQEAVbmxzqdYrTgmPYkG3d/JPw=;
-        b=E8zqeIzg5TV/I79GhOcG7s2DAwjBLeUCpwu2eur3SJ5yLnMYK/DVoB5Ih6Mo6+SNKD
-         Atc+QYlpID+JonFBBdZsc2xqNLACKF+3S+SmKiXXVk8zOEySRV3CqZdXOoPV0QCjw2xO
-         Mo6gZ7+I5S/epDHtKpVwzGENntiUmpAScFkZ/RgdELkjKU6cqUTg2nFfenHkWEfzIDmv
-         Sel06qRRw8PFDA9DK5bPopXXaN7fuKDzSwzRk0JV9LSD6La3fd/oWR6/0VHCTONGfl5v
-         YMz221cVIRkppiJ/aWGC5UU981cWzKdMdqqhY1CIayTTaGtg722c7oYpoElat08Uu8G+
-         84FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mg0hes+MQWC5nxAEVrQEAVbmxzqdYrTgmPYkG3d/JPw=;
-        b=TnFrMsT4cLAJeF6arbhjTHdu+Ym69Q7MrEMZHU/5OtJJGIQfSnzM8xKBMNx7dTfBU2
-         eUGfJvYzYbLWLoQgMbUejJDyErkZZMquJQ33geDIJpIZq8olMtqia8MMCm7414bIZYcI
-         sReoqN9rzwcEAgFkk7HrVJLKK+mq04eRngiTWdl4NBhr+myQb07p4WbETXLZJ43YPpRq
-         ync2DLtpOqw2zhY5pA245KXnL+8hRURmos3cuMX/0uhgK0j1kpLIXVi0NC5dtOBSQIjg
-         LAdOCl9ReP/4Xwq+nCMqGesPiHYRRsAxDfboS7HspaAkHWIS9qmp4YcdvEu7vPkwRPEp
-         XtkQ==
-X-Gm-Message-State: APjAAAUZQzZWLySniacmGE/LikEf071aisfizhtUhXx1d9JrLQ8lmTCj
-        bzWeJfasVZwObBSYvz7QfPw=
-X-Google-Smtp-Source: APXvYqylsMn1XYnccK/imqcFkKfqtxxxTc6nz9FtmcDNkbO4WXj6JfWXMUyV/aZ0wwBTCf2oexbndQ==
-X-Received: by 2002:a65:6108:: with SMTP id z8mr4385552pgu.106.1554363282075;
-        Thu, 04 Apr 2019 00:34:42 -0700 (PDT)
-Received: from localhost.localdomain (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id b26sm41802310pgn.4.2019.04.04.00.34.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Apr 2019 00:34:41 -0700 (PDT)
-From:   David Aguilar <davvid@gmail.com>
+        id S1726223AbfDDHiu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 03:38:50 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:57094 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726031AbfDDHiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 03:38:50 -0400
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id C9904440054;
+        Thu,  4 Apr 2019 10:38:46 +0300 (IDT)
+References: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il> <bc20070b-437a-9875-efd0-b4cad1413233@rasmusvillemoes.dk> <604795fe60991f22273cbb652eeeedc17985bc65.camel@perches.com> <xmqqh8c03dcz.fsf@gitster-ct.c.googlers.com>
+User-agent: mu4e 1.0; emacs 26.1
+From:   Baruch Siach <baruch@tkos.co.il>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git ML <git@vger.kernel.org>
-Subject: [PATCH 2/2] contrib/completion: add smerge to the mergetool completion candidates
-Date:   Thu,  4 Apr 2019 00:34:39 -0700
-Message-Id: <20190404073439.9558-2-davvid@gmail.com>
-X-Mailer: git-send-email 2.21.0.198.gfad8868f4e
-In-Reply-To: <20190404073439.9558-1-davvid@gmail.com>
-References: <20190404073439.9558-1-davvid@gmail.com>
+Cc:     Joe Perches <joe@perches.com>,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
+Subject: Re: [PATCH] send-email: don't cc *-by lines with '-' prefix
+In-reply-to: <xmqqh8c03dcz.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 04 Apr 2019 10:38:46 +0300
+Message-ID: <874l7ekynt.fsf@tarshish>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- contrib/completion/git-completion.bash | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hi Junio,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 976e4a6548..b6d69bcaeb 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1501,7 +1501,8 @@ _git_diff ()
- }
- 
- __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
--			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc codecompare
-+			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc
-+			codecompare smerge
- "
- 
- _git_difftool ()
--- 
-2.21.0.198.gfad8868f4e
+On Mon, Mar 18 2019, Junio C. Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+>
+>> My preference would be for correctness.
+>> I presume something like this isn't too onerous.
+>
+> I am guessing that /^---/ is to stop at the three-dash line *OR*
+> after the initial handful of lines of the first diff header (as the
+> last resort) and that is why it is not looking for /^---$/.
+>
+> If that is the case, I think it makes a lot of sense.  It is a
+> general improvement not tied to the case that triggered this thread.
+>
+> Independently, I think it makes sense to do something like
+>
+> 	/^([a-z][a-z-]*-by|Cc): (.*)/i
+>
+> to tighten the match to exclude a non-trailer; that would have been
+> sufficient for the original case that triggered this thread.
 
+Is there anything I need to do more to get this fix applied for the next
+git release?
+
+Thanks,
+baruch
+
+>> ---
+>>  git-send-email.perl | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/git-send-email.perl b/git-send-email.perl
+>> index 8200d58cdc..83b0429576 100755
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -1697,9 +1697,10 @@ sub process_file {
+>>  		}
+>>  	}
+>>  	# Now parse the message body
+>> +	my $in_patch = 0;
+>>  	while(<$fh>) {
+>>  		$message .=  $_;
+>> -		if (/^([a-z-]*-by|Cc): (.*)/i) {
+>> +		if (!$in_patch && /^([a-z-]*-by|Cc): (.*)/i) {
+>>  			chomp;
+>>  			my ($what, $c) = ($1, $2);
+>>  			# strip garbage for the address we'll use:
+>> @@ -1725,6 +1726,8 @@ sub process_file {
+>>  			push @cc, $c;
+>>  			printf(__("(body) Adding cc: %s from line '%s'\n"),
+>>  				$c, $_) unless $quiet;
+>> +		} elsif (/^---/) {
+>> +			$in_patch = 1;
+>>  		}
+>>  	}
+>>  	close $fh;
+
+
+--
+     http://baruch.siach.name/blog/                  ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
