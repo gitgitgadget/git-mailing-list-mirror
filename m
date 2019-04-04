@@ -2,80 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC65320248
-	for <e@80x24.org>; Thu,  4 Apr 2019 08:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE58320248
+	for <e@80x24.org>; Thu,  4 Apr 2019 09:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727431AbfDDIaw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 04:30:52 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:33232 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727165AbfDDIav (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 04:30:51 -0400
-Received: by mail-ed1-f46.google.com with SMTP id q3so1413051edg.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 01:30:50 -0700 (PDT)
+        id S2387545AbfDDJNV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 05:13:21 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54898 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733232AbfDDJNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 05:13:19 -0400
+Received: by mail-wm1-f65.google.com with SMTP id c1so2131341wml.4
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6cZKAYPM4S+BQHr3wD6SOpwYCMmH6zpgtX+NTekErgk=;
-        b=qqMrE0RfuXj9T5jZqThypLCmgZENRMEKjkM9Ws05FzZ2IsXhzPhw+VE3fg9AQeD2U+
-         sJToB+L30Jv7hTyowpl9SHQCcU7yG/rdapBWvy0i64KoBilfOJ3vrqvRqXEeuaQhxFce
-         IHngliChOxToz4QDh7NzCzPKqiYPzZb48DGjCE16LY8G0T6pzmnsPnNyKjEpuFrVVI6m
-         JHny1IP91VgCP7beRlk2t0PUyQlah2gT0h/fC1UhJiNfQjCORB9aZw81NrAbxnVO2MQW
-         J4JW7AEsXFXNS+DRrwGuiwmwQRRAWLIChUlnXguTAfHxw4FFT/r4aTWCF5nMp0qRGijy
-         LjzQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4rnVFTIgiqBKyRez23307x1pnAxQGO4DYmBv5I1+/XE=;
+        b=mfhMMr6ddAUBMWMy7+udWiB7zkfqJMqExewNPTFuQrEiS2XGzij9rAbcACu45cxLlk
+         9CV76E9z/u2RA8IrIX15airygXmXgiwNEvfj2pV8tfklWcleQesQpTd9Z5ZnVzuZEbw3
+         Cb/BsBZ0JB4gM2XYlxU0EBCcSaCHNub+dVAuSEpWg7mWxtlWI2IvhKo3Ztz1K9fxzIei
+         6pKxVrMJdHBrHQYw7aFbWQ5FSKUQyuJ1jYWc/GGo1tteLLT/VF1tXE/Dg51aHUDYKnIO
+         T6fUalke1Qr6meTmu/Af+3mQ8l+IBw2UeJgIgvg2g6koaL3WlMOnv1ZIrR9P2xSdDGgD
+         1jag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6cZKAYPM4S+BQHr3wD6SOpwYCMmH6zpgtX+NTekErgk=;
-        b=WCP7USM5ig8MQQIKtgNcH48iMSQRrnnh4ko5Wl78D7Ptcg1sLqqC3WBcvGVBK4tDN2
-         wJqxynntiYo6D/yvj427MGTIbNTykbAVGzPU9Tr8q4Cqt21XZO6F20NL72gsRRLwmc+k
-         jW8cba8LedJnFnoarmw19dcqmuP0AFHsa843l0nZtbBW5TFk1UOnoiAwNIWz91YiOVGh
-         h8XzrLo0ZcztqEp2+8YxWt0L1GIbEMyu4jHLk8Cf7WgI0XOJYj90CzAdOVpE4z7hsVdM
-         B+eU4/iit1ZKZGVFlPiQshWwkYmC1HL9AozHUvwc/aatIGza1wf8CoKa/HPZ5MwQBS7N
-         3fBg==
-X-Gm-Message-State: APjAAAX6/0kLUGMwpgg9iMrUdzrD4jJJRWpVyNSYY1AapPCNlfhcWURY
-        d/fIYqHy5UYEMFHlkEF/eTbrRE3wxx+Pn+FVILg=
-X-Google-Smtp-Source: APXvYqwjs9hYrSC+BHluDorPRT10J6rcuM+ADYwKkQgXPX0EjqEF6rrGOOxVvzNjf0Bw4HltKWn/Kh179vU8prE4qhM=
-X-Received: by 2002:a50:a90d:: with SMTP id l13mr2912857edc.45.1554366649911;
- Thu, 04 Apr 2019 01:30:49 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4rnVFTIgiqBKyRez23307x1pnAxQGO4DYmBv5I1+/XE=;
+        b=RtgXCuIH8iMKqsmUOZJ7POmvTlCnvxCvz6MrYeir48N/tLuDDx6nPKB4hiwXjPoxfW
+         xFjOBZ/Hk/ObI3VjkU838rtNArv9RBxIbKkGsgGj2eXfbpCo0/cQJMXi0mTSzVdIZnAT
+         t/vQFffW/LOHsm9+WcTHNjufbGMtVF1I9qPUu7Nx+Q2J/fN3PuU8VxjXpDUwX+lDeIqj
+         AGT+X8gUubEog5/mfl+3HT/moA3YY7+mjslTIpB/12q322ovZqyWN4ZbEnx/omn2RQzq
+         TTX+fUWj0poUMtgXJHjjC3aumNsZdr4Cuw5bMVJ9Mgvw2b8qvXO/L5gABP2fXfymCja6
+         j4sQ==
+X-Gm-Message-State: APjAAAXsPYrVqKmTZeLUnf/EMVWjA9p2sHdYRdXuEcctowveqNlpAwrl
+        nafW+mKjU00J6RImQFjJmZAMRZiKjXw=
+X-Google-Smtp-Source: APXvYqzYt5qKUkZ+wEdw797dvi8Q16DBlL0QLIpFORulMtREWze8M3SOCoztiz52E99q+KKxvj+qew==
+X-Received: by 2002:a1c:be13:: with SMTP id o19mr2989127wmf.19.1554369197193;
+        Thu, 04 Apr 2019 02:13:17 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id a6sm13533650wrp.49.2019.04.04.02.13.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Apr 2019 02:13:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: Feature request: Add --no-edit to git tag command
+References: <CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com>
+        <20190404015744.GF4409@sigill.intra.peff.net>
+Date:   Thu, 04 Apr 2019 18:13:16 +0900
+In-Reply-To: <20190404015744.GF4409@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 3 Apr 2019 21:57:44 -0400")
+Message-ID: <xmqqo95mf80j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAD8q83SifH-7mKOet-Uuf_KHCqvO2mkxiZgEyQhoNRhshFG_Lg@mail.gmail.com>
-In-Reply-To: <CAD8q83SifH-7mKOet-Uuf_KHCqvO2mkxiZgEyQhoNRhshFG_Lg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 4 Apr 2019 10:30:38 +0200
-Message-ID: <CAP8UFD2z2au=Ftx828++kziwcEV+FaRrVJd4rqMw-N3=w5DN=w@mail.gmail.com>
-Subject: Re: [GSoC][RFC] proposal: convert git-submodule to builtin script
-To:     Khalid Ali <khalludi123@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Tue, Apr 2, 2019 at 10:34 PM Khalid Ali <khalludi123@gmail.com> wrote:
+> On Wed, Apr 03, 2019 at 09:38:02AM -0500, Robert Dailey wrote:
 >
-> My name is Khalid Ali and I am looking to convert the git-submodule to
-> a builtin C script. The link below contains my first proposal draft
-> [1] and my microproject is at [2]. My main concern is that my second
-> task is not verbose enough. I am not sure if I should add a specific
-> breakdown of large items within the submodule command.
+>> Similar to git commit, it would be nice to have a --no-edit option for
+>> git tag. Use case is when I force-recreate a tag:
+>> 
+>> $ git tag -af 1.0 123abc
+>> 
+>> An editor will be prompted with the previous annotated tag message. I
+>> would like to add --no-edit to instruct it to use any previously
+>> provided message and without prompting the editor:
+>> 
+>> $ git tag --no-edit -af 1.0 123abc
+>
+> Yeah, that sounds like a good idea.
 
-There was a GSoC project about the same subject a few years ago:
+I am not so sure this is a good idea, especially if the plan is to
+do this alone without necessary associated change to make things
+consistent.
 
-https://public-inbox.org/git/CAME+mvXtA6iZNfErTX5tYB-o-5xa1yesAG5h=iP_Z2_zL_kOnQ@mail.gmail.com/
+The part that bothers me most is use of "-f".  The mentalitly behind
+"-f" is "I am creating a new and tag that is totally unrelated to
+any existing tag, but since the command refuses to reuse the ref to
+point at my new tag, I am giving an '-f' to force (1) unpointing the
+existing unrelated tag and (2) pointing the enwly created tag with
+that tagname".
 
-I think you should take a look at the work that was done (merged and
-not merged) and report about it in your proposal.
+The proposed change still uses "-f" but wants to somehow take the
+tag message from the unrelated tag that happens to sit at the same
+place as the new tag wants to go.  That breaks the mental model a
+big way.
 
-Thanks,
-Christian.
+If this were a new option that is spelled "--amend", I won't
+be complaining, though.
