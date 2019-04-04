@@ -2,241 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 967A420248
-	for <e@80x24.org>; Thu,  4 Apr 2019 00:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A97D420248
+	for <e@80x24.org>; Thu,  4 Apr 2019 01:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbfDDAVL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 20:21:11 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:45017 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbfDDAVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 20:21:11 -0400
-Received: by mail-pl1-f193.google.com with SMTP id g12so215407pll.11
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 17:21:10 -0700 (PDT)
+        id S1726316AbfDDBPe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Apr 2019 21:15:34 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:36108 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726199AbfDDBPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Apr 2019 21:15:34 -0400
+Received: by mail-it1-f193.google.com with SMTP id y10so1065929itc.1
+        for <git@vger.kernel.org>; Wed, 03 Apr 2019 18:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pOhA4b0GZphxB/Y75HbAwJZLn4a6ILnsJT7p6ejjMAE=;
-        b=eVUOdW1k1ZGZv7p/u2DJqXEHWbPiahSCWldf4awaDbiZjiP0A9scfRu+KdtxfzNraK
-         yXE8NhjxKHoQggxSHsrEdNcoW2D8n9xB0o9UmIkY08EvHztmyoPdPuMHrgejGE+BcJw8
-         P88MZEKtxShGSROvPNBH4olWCix66qsL8DlDuhhoZiXP9fTBByqWiJJPzW0MQCxuz1q5
-         5xbKz0FYiCgeeMOyesfSS32Uv9U7XfheLZw6jfgzfPKAogQT4OUP1J1NcjirEdre3UB2
-         frIhM5oyykgDLZkMM4mlZhfplNFDYttow+yo4rAjQ/YtCIKOU5BIA/Vh2EH9Kyv1ewcZ
-         R+0Q==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8KmVkAgmrHjU9B9kJQdmE78JxR+1qd7xSed+TGN+REo=;
+        b=l9/q81WgXeFPX4xbKJBXUmJ7+IEwv2SG+ZpoXaCHMgeJuOmCWOLTEtGdkXo81Ib0Nu
+         qmNaMg2Akb1/uxqnaSdrqf3Hk3B1ugmz4RQago01UfHaVecJuw+I8QsneeZ8o1yh2JjE
+         gjHtoVuzav0UCfKM6Ts7nAY/PDxgni2zVgVAM6dAN4Ki9JeAXMsn39fvea4OTiQWc7g0
+         sqIIOWHvmMiV3C0xfS/JGKYA5ABi0/6VUSZzjL8sA8duI1nTvswboi4WN4TICihZ8/TO
+         P/o5UoMsx6y4/RBwE/Dla2/8GExIC+fYoh3z0xAP9ZATXGC69VF3TCSK/jPqZEN0UsAP
+         Zwyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=pOhA4b0GZphxB/Y75HbAwJZLn4a6ILnsJT7p6ejjMAE=;
-        b=JiEvr+VRaEFjuEulTy3tYCRP0Q9+hj75+AbpJsHNgS2h1NB7Jz0tGgKsB6SexJiPU8
-         D4K4Cr9Rw3QeZ0oLkvkZ51pPpYN2comA5ra4fLgO4H8NTIpchDq+qhrCmtCIYRTyCe9w
-         RUX6MJwxTNbA+AOd0LQvTMFrxOGCoGZeVtSDCbgPMXge4v88Jl8CJ4TGB35abXEzpVvX
-         wHg+csLn+LVodieviTnIlTOxglH1Cz0OLi9u4CMlkW7nxbWPayQWRztFPioTBBXJPY+u
-         sRR+YqAyHBE+wwzLjv+aji5MAl7XYy7w5h/on8JEUPa2ngkDtGo/xUBsCBwxu4jTw57X
-         Z6Lw==
-X-Gm-Message-State: APjAAAUkqzAgoI/C54OR29Ubq0HMVukPXr3aqEa82L7JEKD3jTT3944N
-        UD7IfQpV6x/T2biu3Q+mfCJMCA==
-X-Google-Smtp-Source: APXvYqzMuICKRO/7yjrQ3J03y9S5vH3TI6vHAw0dX40SVK5m5+lyyt0Ngn7zP7EC2qCyFVgLI6FSAA==
-X-Received: by 2002:a17:902:8c89:: with SMTP id t9mr3069321plo.265.1554337269614;
-        Wed, 03 Apr 2019 17:21:09 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id t8sm20740044pgp.5.2019.04.03.17.21.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Apr 2019 17:21:08 -0700 (PDT)
-Date:   Wed, 3 Apr 2019 17:21:01 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     peff@peff.net, git@vger.kernel.org
-Subject: Re: [PATCH] clone: do faster object check for partial clones
-Message-ID: <20190404002101.GF60888@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
-        git@vger.kernel.org
-References: <20190403194150.GA27199@sigill.intra.peff.net>
- <20190403205748.107979-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8KmVkAgmrHjU9B9kJQdmE78JxR+1qd7xSed+TGN+REo=;
+        b=QwoYmIAk+rsDHAtKTIRruDtU8utzgiYC4HzxB5QCBa1ppPtvwX4WiGD4P5JyXX/HWZ
+         dlcQBaDTHCvOV16MtZDf3SsDqPgHOiVETH6JA1+hKPEtHv/JySinUs0jkdB2SerDP4MG
+         25Qy8+klJb+bMNKeZvnPW/gL8pck6P1SHlrsht3VoLo1Eit1eVVD43kzUEReyDe66vjq
+         z3BOXOk1czabtzqEiu4HxExvUaW/A0bQAy5tm8Ekry3E3xHT1NIh8Tn8xtYY6dFOj0l2
+         WdJWx8hRNhCIHJ3UHETbjl3NaN3zs1EeUwqLTOxZkqRHE3PyRV7kfypZ+oFBnrVP1eOr
+         UwGg==
+X-Gm-Message-State: APjAAAVTYTthGZbgDD97gxGWbNWpKxPmlEYDmV7vO6xvswO5khjAayAe
+        MkD22cwUbHfJrxe9wwZOCgewcMGJyb2L2VTw5UAEwWR0H9I=
+X-Google-Smtp-Source: APXvYqwVHT4EJn0cyeo5s0b2rbzpLPpwh4FLdJDfc3KPIec3ks8OBwv/miQZdkFuebOUHK3Vr4qnCHKca/RuxAO0MXs=
+X-Received: by 2002:a24:7294:: with SMTP id x142mr2799336itc.7.1554340532699;
+ Wed, 03 Apr 2019 18:15:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190403205748.107979-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com> <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+ <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com>
+ <20190305045140.GH19800@sigill.intra.peff.net> <CACsJy8D-eQUGFsu4_cB9FE6gAo2d68EF_x2ze3YLXKAxYJfhSQ@mail.gmail.com>
+ <CAHd-oW4LsyZOgHYgKaACX8AtzbA8pBpFUPWSF3GF6XxA_HKfjA@mail.gmail.com>
+ <CACsJy8Bit46VatYZNB-ZsMBL043_GYDLqZ3fAZ8HzXZ9Kv1Z0g@mail.gmail.com>
+ <CAHd-oW4e6CtcaKXbowqZM-pDAEGJxupHwBvFk2veaaYswt0hmQ@mail.gmail.com>
+ <20190312100237.GA20471@ash> <CACsJy8C=1dj-1T=5dt92LK5_Ario_YL2hkQWpi2dkhXyYY=_Hw@mail.gmail.com>
+In-Reply-To: <CACsJy8C=1dj-1T=5dt92LK5_Ario_YL2hkQWpi2dkhXyYY=_Hw@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 3 Apr 2019 22:15:21 -0300
+Message-ID: <CAHd-oW7fXbJyxesgCoiTOWGLH9Tpk5FUN7VsaBrqU842BJpT3Q@mail.gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+To:     git <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        David Kastrup <dak@gnu.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.04.03 13:57, Jonathan Tan wrote:
-> > On Wed, Apr 03, 2019 at 10:27:21AM -0700, Josh Steadmon wrote:
-> > 
-> > > For partial clones, doing a full connectivity check is wasteful; we skip
-> > > promisor objects (which, for a partial clone, is all known objects), and
-> > > excluding them all from the connectivity check can take a significant
-> > > amount of time on large repos.
-> > > 
-> > > At most, we want to make sure that we get the objects referred to by any
-> > > wanted refs. For partial clones, just check that these objects were
-> > > transferred.
-> > 
-> > This isn't strictly true, since we could get objects from elsewhere via
-> > --shared or --reference. Those might not be promisor objects.
-> 
-> I don't think local clones (which --shared or --reference implies) can
-> be partial, but the bigger point is below.
-> 
-> > Shouldn't we be able to stop a traversal as soon as we see that an
-> > object is in a promisor pack?
-> > 
-> > I.e., here:
-> > 
-> > > +	if (opt->check_refs_only) {
-> > > +		/*
-> > > +		 * For partial clones, we don't want to walk the full commit
-> > > +		 * graph because we're skipping promisor objects anyway. We
-> > > +		 * should just check that objects referenced by wanted refs were
-> > > +		 * transferred.
-> > > +		 */
-> > > +		do {
-> > > +			if (!repo_has_object_file(the_repository, &oid))
-> > > +				return 1;
-> > > +		} while (!fn(cb_data, &oid));
-> > > +		return 0;
-> > > +	}
-> > 
-> > for each object where you ask "do we have this?" we could, for the same
-> > cost, ask "do we have this in a promisor pack?". And the answer would be
-> > yes for each in a partial clone.
-> > 
-> > But that would also cleanly handle --shared, etc, that I mentioned. And
-> > more importantly, it would _also_ work on fetches. If I fetch from you
-> > and get a promisor pack, then there is no point in me enumerating every
-> > tree you sent. As long as you gave me a tip tree, then you have promised
-> > that you'd give me all the others if I ask.
-> > 
-> > So it seems like this should be a feature of the child rev-list, to stop
-> > walking the graph at any object that is in a promisor pack.
-> 
-> We currently already do a less optimal version of this - we pass
-> --exclude-promisor-objects to rev-list, which indeed stops traversal at
-> any promisor objects (whether in a promisor pack or referenced by one).
-> As far as I know, the problem is that to do so, we currently enumerate
-> all the objects in all promisor packs, and all objects that those
-> objects reference (which means we inflate them too) - so that we have an
-> oidset that we can check objects against.
-> 
-> A partial solution is for is_promisor_object() to first check if the
-> given object is in a promisor pack, avoiding generating the set of
-> promisor objects until necessary. This would work in a blob:none clone
-> with the refs pointing all to commits or all to blobs, but would not
-> work in a tree:none clone (or maybe, in this case, the clone would be
-> small enough that performance is not a concern, hmm).
-> 
-> Maybe the ideal solution is for rev-list to check if an object is in a
-> promisor pack and if --exclude-promisor-objects is active, we do not
-> follow any outgoing links.
+Hi,
 
-I am not sure that this actually saves us any work vs. the original
-method of marking promisor objects as uninteresting. Marking the objects
-uninteresting involves calling for_each_packed_object(some_callback_fn, ...,
-FOR_EACH_OBJECT_PROMISOR_ONLY). But this is also exactly the setup that
-is_promisor_object() runs the first time it's called. In fact, it looks
-to me like the callback function used by the latter is more expensive
-than the former. Is there some alternative to is_promisor_object() that
-doesn't involve this object enumeration?
+I've been studying the codebase and looking for older emails in the ML
+that discussed what I want to propose as my GSoC project. In
+particular, I found a thread about slow git commands on chromium, so I
+reached them out at chromium's ML to ask if it's still an issue. I got
+the following answer:
 
-I've tried implementing this approach anyway (diff against master is
-below), but I can't get a version that passes t0410-partial-clone.sh
-(cases 17 and 19). In case 17, the rev-list emits one extra line
-corresponding to the blob for baz.t. I'm not sure why the original
-implementation thinks that baz.t is a promisor object but my WIP version
-doesn't.
+On Wed, Apr 3, 2019 at 1:41 PM Erik Chen <erikchen@chromium.org> wrote:
+> Yes, this is absolutely still a problem for Chrome. I filed some bugs for common operations that are slow for Chrome: git blame [1], git stash [2], git status [3]
+> On Linux, blame is the only operation that is really problematic. On macOS and Windows ... it's hard to find a git operation that isn't slow. :(
 
-I'll keep poking at this tomorrow, I just thought I should comment on
-what I've found so far in case anyone can spot where I'm going wrong.
+I don't really know if treading would help stash and status, but I
+think it could help blame. By the little I've read of blame's code so
+far, my guess is that the priority queue used for the commits could be
+an interface for a producer-consumer mechanism and that way,
+assign_blame's main loop could be done in parallel. And as we can se
+at [4], that is 90% of the command's time. Does this makes sense?
 
+But as Duy pointed out, if I recall correctly, for git blame to be
+parallel, pack access and diff code would have to be thread-safe
+first. And also, it seems, by what we've talked earlier, that this
+much wouldn't fit all together in a single GSoC. So, would it be a
+nice GSoC proposal to try "making code used by blame thread-safe",
+targeting a future parallelism on blame to be done after GSoC? And if
+so, could you please point me out which files should I be studying to
+write the planning for this proposal? (Unfortunately I wasn't able to
+study pack access and diff code yet. I got carried on looking for
+performance hostposts and now I'm a bit behind schedule :(
 
+Also, an implementation for fuzzy blame is being developer right
+now[5] and Jeff (CC-ed) suggested recently another performance
+improvement that could be done in blame[6]. So I would like to know
+wether you think it is worthy putting efforts trying to parallelize
+it.
 
-diff --git a/list-objects.c b/list-objects.c
-index dc77361e11..1cb85f1662 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -326,6 +326,12 @@ static void traverse_trees_and_blobs(struct traversal_context *ctx,
- 		struct object *obj = pending->item;
- 		const char *name = pending->name;
- 		const char *path = pending->path;
-+		trace_printf("DEBUG: Examining object: %s\n", oid_to_hex(&obj->oid));
-+		if (ctx->revs->exclude_promisor_objects &&
-+		    is_promisor_object(&obj->oid)) {
-+			trace_printf("DEBUG: Skipping object: %s\n", oid_to_hex(&obj->oid));
-+			continue;
-+		}
- 		if (obj->flags & (UNINTERESTING | SEEN))
- 			continue;
- 		if (obj->type == OBJ_TAG) {
-@@ -356,6 +362,13 @@ static void do_traverse(struct traversal_context *ctx)
- 	strbuf_init(&csp, PATH_MAX);
- 
- 	while ((commit = get_revision(ctx->revs)) != NULL) {
-+		trace_printf("DEBUG: Examining commit: %s\n", oid_to_hex(&commit->object.oid));
-+		if (ctx->revs->exclude_promisor_objects &&
-+		    is_promisor_object(&commit->object.oid)) {
-+			trace_printf("DEBUG: Skipping commit: %s\n", oid_to_hex(&commit->object.oid));
-+			continue;
-+		}
-+
- 		/*
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
-diff --git a/revision.c b/revision.c
-index eb8e51bc63..85974e941d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3067,17 +3067,6 @@ void reset_revision_walk(void)
- 	clear_object_flags(SEEN | ADDED | SHOWN);
- }
- 
--static int mark_uninteresting(const struct object_id *oid,
--			      struct packed_git *pack,
--			      uint32_t pos,
--			      void *cb)
--{
--	struct rev_info *revs = cb;
--	struct object *o = parse_object(revs->repo, oid);
--	o->flags |= UNINTERESTING | SEEN;
--	return 0;
--}
--
- define_commit_slab(indegree_slab, int);
- define_commit_slab(author_date_slab, timestamp_t);
- 
-@@ -3316,11 +3305,6 @@ int prepare_revision_walk(struct rev_info *revs)
- 	    (revs->limited && limiting_can_increase_treesame(revs)))
- 		revs->treesame.name = "treesame";
- 
--	if (revs->exclude_promisor_objects) {
--		for_each_packed_object(mark_uninteresting, revs,
--				       FOR_EACH_OBJECT_PROMISOR_ONLY);
--	}
--
- 	if (revs->no_walk != REVISION_WALK_NO_WALK_UNSORTED)
- 		commit_list_sort_by_date(&revs->commits);
- 	if (revs->no_walk)
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index bce02788e6..55ac29f650 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -342,7 +342,7 @@ test_expect_success 'rev-list stops traversal at promisor commit, tree, and blob
- 
- 	git -C repo config core.repositoryformatversion 1 &&
- 	git -C repo config extensions.partialclone "arbitrary string" &&
--	git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
-+	GIT_TRACE="$(pwd)/rev_trace" git -C repo rev-list --exclude-promisor-objects --objects HEAD >out &&
- 	! grep $COMMIT out &&
- 	! grep $TREE out &&
- 	! grep $BLOB out &&
+Thanks again for all the support.
+Matheus Tavares
+
+[1] https://bugs.chromium.org/p/git/issues/detail?id=18&q=
+[2] https://bugs.chromium.org/p/git/issues/detail?id=17&q=
+[3] https://bugs.chromium.org/p/git/issues/detail?id=16&q=
+[4] https://i.imgur.com/XmyJMuE.png
+[5] https://public-inbox.org/git/20190403160207.149174-1-brho@google.com/T/#mb772910506e99e00337e4606f8377f95ef41c8c6
+[6] https://public-inbox.org/git/87ftqz5osx.fsf@fencepost.gnu.org/T/#m9caa63d35d39de8d2b7c5c6852f331dc2328e1ea
