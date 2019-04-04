@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A0A120248
-	for <e@80x24.org>; Thu,  4 Apr 2019 09:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB5F20248
+	for <e@80x24.org>; Thu,  4 Apr 2019 09:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733015AbfDDJba (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 05:31:30 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33331 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732611AbfDDJba (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 05:31:30 -0400
-Received: by mail-wm1-f66.google.com with SMTP id z6so6854969wmi.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:31:28 -0700 (PDT)
+        id S1729723AbfDDJcj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 05:32:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38353 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732795AbfDDJci (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 05:32:38 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k11so2857149wro.5
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=lErX7uQTVTo+Kst7VMDN9fOP+TZzOSekLWfHsogpmPA=;
-        b=nNJF7dD0PHrWaPuFEmlpL5Gwy7+hx9wuPSPrMSC6xX0zeT5vzE0i8/ATZu3Awj/OZI
-         5sHfZj4eyJZlMf1kUfZOdp2tAx3fB58ViKYQgIpbrJ8LuEwaWyKQZN+kOkfr4+mrf23J
-         1s2eXE/aItNGpNUY1qpz/FtYQR3x6Yh214bxSyiBlYp8E4XEaipi2wf/JbI0RupuuGFU
-         6Y1I85nQpLT8/SBEs0LpVntkwFH+aIlnWjeaiK83oa/RrQTrU7Ek2EfFdSYhxgP5d071
-         RjN8oVV0LmvCoH/miiZbOY88Xy1r25ncnh3SULh1vba8q9rpaKt51ToRFJfQ4R4yg23H
-         t3lg==
+        bh=kHucCFByV8wgravKwQg1iq43bPq2NAR91PY+b1HEPio=;
+        b=Q35PPwhEkE8xx2qwbdQyayUH5Ed27Sq1Sc2uTtMZdpAG3csFxKiBDkaEx+qLMFNQJA
+         hZhzMAMN3RY3h99nx4rDJzgrVijagvMcnoza/o8UAnfiVNvCRdfPq/wx5GSRVbFontUh
+         3m6y6m4+iBSk9m710glIC+IpHQFEEQ5i/D+Tmq1aN5EowPbIw+g1Cb2InTbDV57I6EnW
+         z7vtRAvAcDcmZHBwt5d+/QlH6LvR6xe9qiHplpM7cLSGQHQMc8XLcYICptlJ8jLaFNuN
+         r3b6qS6qYTP6eHZW7QG6kC7ogGJvGnlcCGZYr82L8wByYEKVwnqyBUvTxrRHUoGGfYZG
+         +nRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=lErX7uQTVTo+Kst7VMDN9fOP+TZzOSekLWfHsogpmPA=;
-        b=hIBNHmyuZlCxG4kDwKIGSmJ0g9vAJFcT/D6jFIxxmAV/45vkKrfS8bzUoC2d/7XLZy
-         5fZOG9fWN8PHu2NhP+zw/SfA7gpmIHH14EfqbHGebDA+6Xq0pCETkTZAjzlicEMwllpD
-         l0XbMnsTJ+c3U0xbrtvR8ShFqbRT4bsxba/zgKKyDqrGO1q+zYjKeagVJ7BAbQrAdcyF
-         1bm5dLRhVaF51LV3ldJ0BbenR8lc5qi7tf8tYoqnVPPSCV7jGE2GRW/TT7+tOXZu5Mcw
-         9+L+uUVCuCy3HnD2ju91C/dXdG/BDD3vsHgr5HdG5EsH/6IzAwKPG5wWrUrCp//Chqnj
-         jbCw==
-X-Gm-Message-State: APjAAAVfKUVOS6kN218ROVJKCiFLhIhs99MODssKy6vURg209kqD6syB
-        WVKHIRREAOzOB1QyuMWVQZg=
-X-Google-Smtp-Source: APXvYqz4aDMibzRvlHlik+M3j0T9xFMk55pir2JvqYKJ7jKmPccvaQeG9UHYnxCFVrhJ+TREj9Rs7w==
-X-Received: by 2002:a7b:cbd6:: with SMTP id n22mr3531858wmi.57.1554370287814;
-        Thu, 04 Apr 2019 02:31:27 -0700 (PDT)
+        bh=kHucCFByV8wgravKwQg1iq43bPq2NAR91PY+b1HEPio=;
+        b=n/Uyu6hsX4kTAbBSSS+l6rgAeFIL9qdSLmFmyrHibLEskxAfjqA/SwSKkCNccz4IZM
+         opRSh4TxyWJT0hErK4+xI1H29bTw/dl9i0C06c3gss4yKOwYi9SsmmGBPUEF9BuseNiJ
+         tXEb77i12DncqJq5E7XXpEt8R4QOk/+Lpg2jLMIxbOiiClTX+YHz7iPIZBWxnkvpbcZo
+         K0TzquGtD87QxVc+xjvE+PPRz5NkPgBLFUTyK454lKBmrIDLsA6tHQlfnGGpIUapGH6l
+         gfJdqIDgBD6simt89uE0NL/pUo2zNikRxcSaZHrM4w90/r7C31wNDJ3qfoOhbpg322dU
+         if4g==
+X-Gm-Message-State: APjAAAU9rN1dtWJPA7inPB5xwMuCihbgD3k+T6zRW5Sa1uGlS5a8/mmt
+        VsC7A8zmQV3nADUzfNZJjrJAnnNxrpY=
+X-Google-Smtp-Source: APXvYqwtr6fQ0m+QymxYSerj07GZlp7SylJ5blKeFgKzYMyjs/EQKNd/42ty4v8c5SnD+ZQ9OtmJAQ==
+X-Received: by 2002:a5d:6706:: with SMTP id o6mr3489737wru.36.1554370356450;
+        Thu, 04 Apr 2019 02:32:36 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o17sm19218249wrw.73.2019.04.04.02.31.26
+        by smtp.gmail.com with ESMTPSA id 84sm33645602wme.43.2019.04.04.02.32.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 02:31:27 -0700 (PDT)
+        Thu, 04 Apr 2019 02:32:35 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Robert Dailey <rcdailey.lists@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH v2.5 2/2] tag: prevent nested tags
 References: <1bd9ee28bc8726490ec0a93286056beeb147fc49.1554183429.git.liu.denton@gmail.com>
         <20190402230345.GA5004@dev-l>
         <xmqqzhp7sfw4.fsf@gitster-ct.c.googlers.com>
-        <20190403213318.GA14137@dev-l>
-        <20190404020226.GG4409@sigill.intra.peff.net>
-Date:   Thu, 04 Apr 2019 18:31:25 +0900
-In-Reply-To: <20190404020226.GG4409@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 3 Apr 2019 22:02:26 -0400")
-Message-ID: <xmqqftqyf76a.fsf@gitster-ct.c.googlers.com>
+        <xmqq7ecbscay.fsf@gitster-ct.c.googlers.com>
+        <CAHd499C9g3yPvs=wuaSuLrW=R09yjT5DcKHfpH9=PYYkAcpuhg@mail.gmail.com>
+Date:   Thu, 04 Apr 2019 18:32:35 +0900
+In-Reply-To: <CAHd499C9g3yPvs=wuaSuLrW=R09yjT5DcKHfpH9=PYYkAcpuhg@mail.gmail.com>
+        (Robert Dailey's message of "Wed, 3 Apr 2019 13:26:51 -0500")
+Message-ID: <xmqqbm1mf74c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,20 +74,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-> I do still think it is likely to be a mistake. I think Junio's point,
-> though is: who cares if the mistake was made? For the most part you can
-> continue to use the tag as if the mistake had never been made, because
-> Git peels through multiple layers as necessary.
+>> > more clear in the doc and/or in the proposed log message what
+>> > practical downside there are to the end users if we do not stop this
+>> > "mistake", that is.
+>>
+>> Having said all that, I can sort-of see that it may make sense to
+>> forbid tagging anything but a commit-ish, either by default, or a
+>> "git tag --forbid-no-committish" that can be turned on with a
+>> configuration.
+>
+> I don't really understand what part of the change is a negative for
+> you. Are you saying that `git tag` should peel the tags for you? Or
+> are you saying you don't like nested tagging to be opt-in and an error
+> otherwise?
 
-Nicely said.
-
-If we forget to peel, that is a bigger problem, but I do not think
-it makes any sense to single out tag-of-tag as "curious" and forbid
-it, when we silently allow tag-of-blob or tag-of-tree happily.
-
-An opt-in (i.e. default to false) tag.allowTaggingOnlyCommits I do
-not have any problem with, and I could be persuaded into taking an
-opt-out (i.e. default to true) tag.forbidTaggingAnythingButCommits
-configuration, perhaps, though.
+No, no and no.  I am saying "git tag -a -m 'message' tag anothertag"
+that creates a tag that points at another tag is perfectly fine.
