@@ -7,63 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A634D20248
-	for <e@80x24.org>; Thu,  4 Apr 2019 09:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93EF520248
+	for <e@80x24.org>; Thu,  4 Apr 2019 09:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730528AbfDDJrf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 05:47:35 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35055 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728814AbfDDJre (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 05:47:34 -0400
-Received: by mail-wm1-f67.google.com with SMTP id y197so2606082wmd.0
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:47:33 -0700 (PDT)
+        id S1730623AbfDDJuA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 05:50:00 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55789 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727108AbfDDJt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 05:49:56 -0400
+Received: by mail-wm1-f65.google.com with SMTP id o25so2252747wmf.5
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=afUdYax6JkbUwjUNH5ucLzRIn/lzS8vr4SYmJ8J3IW4=;
-        b=vNb9gKj3gidGDe6j4RDnNaNVgw91GQkPmnEXE8EBBeTkIPTtSz3wudjj7+WeLFg2Fu
-         gL7YWpAqAuzvCdfsYYNHHT+SAJe8ajDIbRMocbrnwGArG6cTQXi9pXeWiR2FGTjQktfl
-         hyVvk0vkiDCwQr8Hm9o76pvkDrQjLQXk5jH1+lWW15hNtjZKk+DFojVTD90OPWLUCZY3
-         WbMaVCZqbLfHt47Q19r07IzPs9nM5VtQUU7HNRmDr1uHaexCaUiIEP+lmblJUoJpr+2c
-         tw+O1gtk8zUILS5YPwI0/uFQOuJjJlFQRygP3U02lChH6BYm/PcNki7A/DOLjI0PPzC7
-         1ilg==
+        bh=9Wj+pBa/Zkx/q5vmaCX6aqLEGPc9MK5fNhGep1vmgTA=;
+        b=uEwdb2nMAzhnc9u2Vd+xEBwLDULgAoZPUmFltWwK1NylTQhVuIuBJRcdGraOWXjP7T
+         pPMrhVwh8BXrF82FR/YvsV076eBtNXgsL+BuKPNwB+WU5Y1lOh7T47hgZ1BQbcsnONsD
+         DASXwSDTIkoRmoWjtsF90N//WDx1OSHbkp2ie2pQlsTPAKwBoia6zcdPlVLDfoyIF+co
+         2lnpn8qdwUl/wJZecXTmH+Yvk6SSPbp9KKi5RvW4qtOW9dYTl3tZ1dORiQSA+RmaxauF
+         dfsUK38/nP7DtChJAC+ttS8Ux99HMu2AD+MgMjanYu1MWIIiJpZjFJUJnIE17gfhSS5w
+         UaeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=afUdYax6JkbUwjUNH5ucLzRIn/lzS8vr4SYmJ8J3IW4=;
-        b=Uem/dyCFF20e7Z2Qo17RaRQnbRK9t3RMFGX2V53VxPtSWFRACtSbfW6H+tFSSOqch3
-         selxlBELPQ/xWZqD11erFawvL8mOL3FmCGWJc+gtuPJv2iHr59hug7VEdH5OqtV7yeT5
-         Pcu7EG9VfZWlbkhxt96bheDWQNijWcS70dHZMSdoaklgRJLWZ5BrU8lVFOwmRzKh7Nt/
-         HD5ZDbQGIZkaUE7ARgkWwEDtdU1iHd7IRVfXnpCr7qT3Smh2M68Fe0Jb3lWuCu40Y1Yj
-         1pMGnDOBa9kym7V4MfNhTJ3Zwnq8cI72dQtafyE49DJklYriG1C07S/1P2EllLBiq2r3
-         tk5Q==
-X-Gm-Message-State: APjAAAU7xaMYt2j1eKiIMk64eVxo8S4aj4JShCx+Ng72AyOyDY7EHqd9
-        RSQjLsOixtiiOefCxOIXOqqpVRwXLGU=
-X-Google-Smtp-Source: APXvYqykwd1eHHtfHPiq2Lfp/vCwvqdXuyazZDGDO3vhAenVWNvKWPDeSWz2PpmS2G48KcIPHy39Pg==
-X-Received: by 2002:a1c:f50a:: with SMTP id t10mr3302790wmh.86.1554371252757;
-        Thu, 04 Apr 2019 02:47:32 -0700 (PDT)
+        bh=9Wj+pBa/Zkx/q5vmaCX6aqLEGPc9MK5fNhGep1vmgTA=;
+        b=iDWWEa4dasZ6IQyG70Zxr8o+vVvVUhAOAkpwJZduGIdJ2TWzpp7875N/yxDq8Yg+3H
+         VgwYkGvZtGYAlwHT546w7NO/MxxUFMk8rt0Dq9iLNsvv/TJdw3B0KSTp8aThb7AwmRkB
+         Q3EuE5QVvF2zj1u2YYY7F7wwhdW/v4Hre+2reUPOHSyaQrfKiOLEUv01TkV8GhsgLIeF
+         v7L4ns9yRIAyd+EuJ8BIBZxeXwPIwZwTKSIjao3jGEI8lrgRXvPJwEHmvax/tna+wtMD
+         7No60XgGk34ATbVUdjiDLOAHB6N6R1Af6gOlsiuHhXXRZPXh98HXSW4XY1Ceq9oXS57w
+         i96A==
+X-Gm-Message-State: APjAAAXsQOIqVYG1tRSzko1KU9EOJvE36S4Z/gKUseBtj1kAaJnXEibh
+        ndAVWE3gB/cCBxIzURNzJKPzVthV3eo=
+X-Google-Smtp-Source: APXvYqyoQcVI3wMFqeMXsD0v/DLFQezk5x0JympGlA5a4KRt18unfa4t/okK1fNKDFEM2zhX5y86fA==
+X-Received: by 2002:a1c:804c:: with SMTP id b73mr3269291wmd.116.1554371394212;
+        Thu, 04 Apr 2019 02:49:54 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id m13sm20693532wmg.42.2019.04.04.02.47.31
+        by smtp.gmail.com with ESMTPSA id o4sm38639556wmo.20.2019.04.04.02.49.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 02:47:32 -0700 (PDT)
+        Thu, 04 Apr 2019 02:49:53 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     Baruch Siach <baruch@tkos.co.il>, Joe Perches <joe@perches.com>,
-        git@vger.kernel.org
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     git@vger.kernel.org, Joe Perches <joe@perches.com>,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>
 Subject: Re: [PATCH] send-email: don't cc *-by lines with '-' prefix
 References: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
-        <bc20070b-437a-9875-efd0-b4cad1413233@rasmusvillemoes.dk>
-        <604795fe60991f22273cbb652eeeedc17985bc65.camel@perches.com>
-        <xmqqh8c03dcz.fsf@gitster-ct.c.googlers.com> <874l7ekynt.fsf@tarshish>
-        <xmqqk1gaf7oe.fsf@gitster-ct.c.googlers.com> <87zhp6jf2o.fsf@tarshish>
-        <dd8160f8-0e5e-1024-53c1-1a9f23423af5@rasmusvillemoes.dk>
-Date:   Thu, 04 Apr 2019 18:47:31 +0900
-In-Reply-To: <dd8160f8-0e5e-1024-53c1-1a9f23423af5@rasmusvillemoes.dk> (Rasmus
-        Villemoes's message of "Thu, 4 Apr 2019 11:42:23 +0200")
-Message-ID: <xmqq36myf6fg.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 04 Apr 2019 18:49:53 +0900
+In-Reply-To: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
+        (Baruch Siach's message of "Sat, 16 Mar 2019 21:26:50 +0200")
+Message-ID: <xmqqy34qdrr2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,18 +67,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rasmus Villemoes <rv@rasmusvillemoes.dk> writes:
+Baruch Siach <baruch@tkos.co.il> writes:
 
-> My ack for Baruch's original patch, which AFAICT is identical with
-> Junio's suggestion, still stands. FWIW, I'm against Joe's suggestion of
-> stopping at a line matching /^---/, since it's not unlikely somebody
-> does something like
+> Since commit ef0cc1df90f6b ("send-email: also pick up cc addresses from
+> -by trailers") in git version 2.20, git send-email adds to cc list
+> addresses from all *-by lines. As a side effect a line with
+> '-Signed-off-by' is now also added to cc. This makes send-email pick
+> lines from patches that remove patch files from the git repo. This is
+> common in the Buildroot project that often removes (and adds) patch
+> files that have 'Signed-off-by' in their patch description part.
 >
-> ---- dmesg output ----
-> bla bla
-> ----
+> Consider only *-by lines that start with [a-z] (case insensitive) to
+> avoid unrelated addresses in cc.
 >
-> in the commit message.
+> Cc: Joe Perches <joe@perches.com>
+> Cc: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+>  git-send-email.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 8eb63b5a2f8d..5656ba83d9b1 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1693,7 +1693,7 @@ sub process_file {
+>  	# Now parse the message body
+>  	while(<$fh>) {
+>  		$message .=  $_;
+> -		if (/^([a-z-]*-by|Cc): (.*)/i) {
+> +		if (/^([a-z][a-z-]*-by|Cc): (.*)/i) {
+>  			chomp;
+>  			my ($what, $c) = ($1, $2);
+>  			# strip garbage for the address we'll use:
 
-Hmph.  That does make sort-of sense ;-)
+OK, this fell through the cracks (and it did not help that a recent
+ping message did not come as a response to it, but as a response to
+another thread with an alternative implementation).  Will apply and
+cook in 'next' to see what happens.
 
+FYI, being in 'next' does not mean it will be in the next release.
+Being in 'master' usually does, though.
