@@ -2,152 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED35720248
-	for <e@80x24.org>; Thu,  4 Apr 2019 20:28:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ECEB20248
+	for <e@80x24.org>; Thu,  4 Apr 2019 21:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730421AbfDDU2S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 16:28:18 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37000 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729701AbfDDU2S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 16:28:18 -0400
-Received: by mail-pl1-f196.google.com with SMTP id w23so1721611ply.4
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 13:28:17 -0700 (PDT)
+        id S1729143AbfDDV3Q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 17:29:16 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:42855 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726790AbfDDV3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 17:29:15 -0400
+Received: by mail-wr1-f50.google.com with SMTP id g3so5534078wrx.9
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 14:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dHZTn76pEIV+2racdgYoMSmjqznLK13Z9TW4f0ou4Lc=;
-        b=T2dpEcLMlWr456iruOOuGRVhwgqkvHxnhzy8Zyx/03GCcWOvwrQPGnV1fnM2tq7/qs
-         B/lXSeFsEq9peGM1e461HcK3XxJxG+6nBTlAGw5w7U3leg73ceWLvrtqPUkPn30O0KGK
-         0gE5W4wDVEoba6I1+j6Q9mbFJwMFpFwjAd7aSqsVLk6G/nPCySqyFZnteiklG3n+NfVO
-         R/cE7JLgdohoI9hapoMG0BZug2Kyyj6imB+P4meANZ+TJKKPWD5YrkZgjsjBdh73Sp42
-         cEQbR9p55GyaOqxFAqzpOvKXLZjAyuR52h9XKX6520+vKSxfPJdUxaXb+2pNyL6fdZxH
-         3Mig==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9pNRxiI389Q3KqXdt35MAXN5OXD617bjqrIVFxGmbMg=;
+        b=qDaw4zVhNjcezBst06gj+DlC/FM3aN9N6Rb4u40xbwZ74PdUVyMhSvkyHk+sFyFP9E
+         tQvcrFFoa54oCl9IzvmpxWotU1MvCsmsn0kRBQg11FXocy1lRdL0K/1CTNsfGYRYh0rQ
+         4bYnvI7Jw71ZQ99E7i5Fh5yteiqy7DxwSE5K9iQoxLz+c9Xu4zGg1cAgCr0Gt48PacGy
+         5WTWExRYo+9bj9t3ChpA52uV1CiRJaAhJV5Yc5zxmaF4Oys2+UZBu1crhg1GmpHzXtOQ
+         /7u+Y8/h2rp8M+BH+uMBImWHAQGUuFJcVX/4kBS9IeRIam4qsUNWJUTYTkvsGTxSwakX
+         Lp6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dHZTn76pEIV+2racdgYoMSmjqznLK13Z9TW4f0ou4Lc=;
-        b=Gv2w3XXzvQqZyOKYitHITtPm/kFAsXNkcKDgA480/F2KhIjKEq+RWuxszDmarKOuXF
-         0MDWExTdiKIoQRPdnnOlyiJvacuOTHtpOR+vAW/TR4CZN+dP1CgaUw5WNdefzpd9p6xZ
-         A86I+wzbUdgN/RyO31P2IZovrAzZgsmqEvH8C3N8g3rGVnvvKZX8n1eZkIvHaH10HfXH
-         VzUW/zgegdVBLxqEr+VeVk9Ry1aUREEMkFaGcDdAQiMmY9fZVRNJXuymqaDKsYKN/Xs5
-         fIMrNnbeuueMTnUaR74pclDUOKHJ9/ogEAxJ1SscK7XO2ThdskRhL6z+Sii0edC0G72T
-         z7Fw==
-X-Gm-Message-State: APjAAAW5Y4Y8SYjzB+t5kVzczlsBZgD9DpT7iv3rOsJtyBXCM3G4Et9F
-        snNZ0gUJK2gHGRXVHmiEfuTw2VY0
-X-Google-Smtp-Source: APXvYqypD+ZbKdB0g7iItLZiMKBIrHiKowz1a83exRu2rGUTzA4bm52BhX+eNsJQmx+0eBE83TBx8g==
-X-Received: by 2002:a17:902:290b:: with SMTP id g11mr8592726plb.269.1554409697122;
-        Thu, 04 Apr 2019 13:28:17 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id x24sm26744268pfn.128.2019.04.04.13.28.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Apr 2019 13:28:16 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 13:28:14 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/4] t3431: add rebase --fork-point tests
-Message-ID: <20190404202814.GA1290@dev-l>
-References: <20190328221745.GA3941@dev-l>
- <cover.1554151449.git.liu.denton@gmail.com>
- <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9pNRxiI389Q3KqXdt35MAXN5OXD617bjqrIVFxGmbMg=;
+        b=f/Enjb1NsKzR0uiLYtv5lp36BJ+qPEh9LcA4Y51YDJnBfOuscTDKoW2Pm+yM93IpjI
+         y1uu57P+etouVTvAtSvm3KhahxaRaXhvk6T/345FKqm+k14tFEtEW3qxcSzIxb0fvhiA
+         /a7Go+o/UOQz3PSqAOQKxHL3k/R117/KgDX6LS+58B0EpamX7lHI/6WOEEQ1YZBhzhbU
+         ChSRy3XTK6K0nTWJcaMzMj2bW7BcpSEJkthS/iAnk5EaVcC3WO+V+6WAKzZTzv9KT5Ak
+         1lC/pdlcIUx4hyAvaC5d6SHeJN0whbcQOv9irKWo2XYjZw1USAUmi9HeIXxAvsCHHmCk
+         cZWA==
+X-Gm-Message-State: APjAAAWTeYRLml00mXZsWTQMgL8OjBusRqx+2ub2Y5wr3C5cToVaNHiX
+        BYRKE+Zk9L5OnnsD9Y+SGSM=
+X-Google-Smtp-Source: APXvYqwMcIdlo+QOl1EMXVxrnwq1x8nskkbRXisXlWQ+wfFjMPdmjHTKG0YqcKL7qyLCNUCd3T9ieQ==
+X-Received: by 2002:adf:e94d:: with SMTP id m13mr6168848wrn.141.1554413354116;
+        Thu, 04 Apr 2019 14:29:14 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id g13sm423967wmh.11.2019.04.04.14.29.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Apr 2019 14:29:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Apr 2019, #01; Thu, 4)
+References: <xmqqr2aidpxw.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CmkFNv7Fy+rSY0Q=1DhYSrpSfU=XEpSS6QRLASJtsVew@mail.gmail.com>
+Date:   Fri, 05 Apr 2019 06:29:11 +0900
+In-Reply-To: <CACsJy8CmkFNv7Fy+rSY0Q=1DhYSrpSfU=XEpSS6QRLASJtsVew@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 4 Apr 2019 18:08:25 +0700")
+Message-ID: <xmqqmul5e9y0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 01, 2019 at 01:51:57PM -0700, Denton Liu wrote:
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  t/t3431-rebase-fork-point.sh | 53 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100755 t/t3431-rebase-fork-point.sh
-> 
-> diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-> new file mode 100755
-> index 0000000000..8e2483b73e
-> --- /dev/null
-> +++ b/t/t3431-rebase-fork-point.sh
-> @@ -0,0 +1,53 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2019 Denton Liu
-> +#
-> +
-> +test_description='git rebase --fork-point test'
-> +
-> +. ./test-lib.sh
-> +
-> +# A---B---D---E       (master)
-> +#     \
-> +#      C*---F---G (side)
-> +#
-> +# C was formerly part of master but is side out
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Sorry, small typo. We should probably fix this before it gets merged
-into next.
+> On Thu, Apr 4, 2019 at 5:29 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> * nd/precious (2019-04-01) 1 commit
+>>  - Introduce "precious" file concept
+>>
+>>  "git clean" learned to pay attention to the 'precious' attributes
+>>  and keep untracked paths with the attribute instead of removing.
+>>
+>>  Will merge to 'next'.
+>
+> There was no conclusion from the last thread if I remember correctly
+> and I kind of gave up on it. If you want to include anyway, should we
+> go for a more specific attribute (e.g. "clean") and leave "precious"
+> for later whenever it's better defined?
 
-This should read "C was formerly part of master but master was rewound
-to remove C"
-
-Thanks,
-
-Denton
-
-> +#
-> +test_expect_success setup '
-> +	test_commit A &&
-> +	test_commit B &&
-> +	test_commit C &&
-> +	git branch -t side &&
-> +	git reset --hard HEAD^ &&
-> +	test_commit D &&
-> +	test_commit E &&
-> +	git checkout side &&
-> +	test_commit F &&
-> +	test_commit G
-> +'
-> +
-> +test_rebase() {
-> +	expected="$1" &&
-> +	shift &&
-> +	test_expect_success "git rebase $@" "
-> +		git checkout master &&
-> +		git reset --hard E &&
-> +		git checkout side &&
-> +		git reset --hard G &&
-> +		git rebase $@ &&
-> +		test_write_lines $expected >expect &&
-> +		git log --pretty=%s >actual &&
-> +		test_cmp expect actual
-> +	"
-> +}
-> +
-> +test_rebase 'G F E D B A' ''
-> +test_rebase 'G F D B A' '--onto D'
-> +test_rebase 'G F C E D B A' '--no-fork-point'
-> +test_rebase 'G F C D B A' '--no-fork-point --onto D'
-> +test_rebase 'G F E D B A' '--fork-point refs/heads/master'
-> +test_rebase 'G F D B A' '--fork-point --onto D refs/heads/master'
-> +test_rebase 'G F C E D B A' 'refs/heads/master'
-> +test_rebase 'G F C D B A' '--onto D refs/heads/master'
-> +
-> +test_done
-> -- 
-> 2.21.0.695.gaf8658f249
-> 
+I'd rather pick between (1) using the final name for the concept we
+want to eventually achieve, i.e. "precious", and starting small,
+i.e. "initially, only git-clean knows about it", or (2) doing
+nothing.  Per-command 'precious-this', 'precious-that' that would be
+left as interface wart for years is not a pretty sight I want to
+see.
