@@ -2,122 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32EB620248
-	for <e@80x24.org>; Thu,  4 Apr 2019 03:26:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AA99202BB
+	for <e@80x24.org>; Thu,  4 Apr 2019 07:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726412AbfDDD0K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Apr 2019 23:26:10 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45765 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbfDDD0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Apr 2019 23:26:09 -0400
-Received: by mail-pf1-f196.google.com with SMTP id e24so594571pfi.12
-        for <git@vger.kernel.org>; Wed, 03 Apr 2019 20:26:09 -0700 (PDT)
+        id S1727290AbfDDHYA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 03:24:00 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32805 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726058AbfDDHYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 03:24:00 -0400
+Received: by mail-wr1-f66.google.com with SMTP id q1so2316082wrp.0
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 00:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GxHwfTGOSW2Q7HP5Xbhkq6IKxJLVragVLO3TTSsXNwU=;
-        b=dHM5FyYmNT9+6dwS7bZeqdB3L2u+B2rqFBRMrCmn/eIHfadhw1RI9rO4pM3Ai3ssl4
-         uQyDffPBIQHfde+VYrWzDuLFWfJAcuUfrUb9TmAgFvrL9dKeDOgVWIcUtWzcW0+JEr5F
-         lEAP28b04KH6SQBzgOyn0s4n8j2ZenzSnfRANtf9569axeRa+FzkNp510bI0cgxQsdn4
-         1RbwzUfgUUUZCZEaXT1YlxL+nNqPsWfeKMcB8/hrFnoEpP7/nEtX5vfPgqBM0L57mFfj
-         Eiylvn4tB99nvFs/QOw+CNEB95dyU/Eigx0iDB7ByVejcGaZpUL3BFmuwT6Q2lIOrLYG
-         6Pkg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=/T4ToK6Kpy+e2996t91+37sWi3sVTsD485NGAOR/DpA=;
+        b=TJZHUHCQJj4OaSmbYuNdVaGyAhZfX0Qg2QXFde14ZVGyesY9msHPkWhhYEl0Fp1PQK
+         v0H8QFdTupK4A302nfal6GIPouph8ucDptB17NDxTMbT08OfQ2HMDEyw9hrWYvDHmLof
+         R+Kd+wRK2hOMaDL61OGRJ7+3KqfuvccZBDHWihwhcre9GW/QOz1eR28z5MrRqafhGMaD
+         tpRqK2FufKwqyGEnx4x0JJiZIq80q/iFKAOdow1AG7KNYuGpdiwG5fL/8baUZvr7Joo4
+         F7I8vt3zEd5jueBOmxg4G18TwEGpdLk/5v5fQknQzayKQkpdv3PXGiTh1Mvw/35h2WQn
+         EgBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GxHwfTGOSW2Q7HP5Xbhkq6IKxJLVragVLO3TTSsXNwU=;
-        b=fuiNI0UyLikjq2YbTbZq5fhKCuQINSORN3cKPnYN1Htxf6UliNl3H3novlg/GySe9e
-         ftMFd/k3w8JMzUO8yXRIGKHooWRcypEh/8ai8vWxFRtZ8Df5f9GuJqV8I/FmucyAFDt/
-         QSOFL5qPkF8vPldM6Y27K8e0x9TwuQvmbCs8bCKaW8AvGAq+hK1l/oKuPBeGgNXP+3gf
-         EB/pojVcdnfD+FHyUzsnf5pMl1BcifUciS6W1d+4Q2vq2WgIoPZ6qVIiTBE5Jm/jsV1n
-         pWLT8PI0f1b/92BIVFUdVIq8wPZqLe7FNe6dIaQsWUSstUlFo12jlPERwEquvomurjNq
-         aw4A==
-X-Gm-Message-State: APjAAAU5L04ZyCfek543Eas4390t3xSMIudbDs3zQujx2qwvwIzbXaNT
-        +pMK/AVOtd1+b8FtBDy1T7jkhQ==
-X-Google-Smtp-Source: APXvYqy5wjDWnsRzJ+jqVsAEXntPsXQWILCpZdoNXaVBKj6lXLu9xLTME65K6fspTcKler7VW9eXUg==
-X-Received: by 2002:aa7:8384:: with SMTP id u4mr3285556pfm.214.1554348368909;
-        Wed, 03 Apr 2019 20:26:08 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:9872:5c59:bf42:220b])
-        by smtp.gmail.com with ESMTPSA id g4sm31383593pfm.115.2019.04.03.20.26.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Apr 2019 20:26:08 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Wed, 3 Apr 2019 20:26:06 -0700
-To:     Jeff King <peff@peff.net>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Feature request: Add --no-edit to git tag command
-Message-ID: <20190404032606.GA39148@Taylors-MBP.hsd1.wa.comcast.net>
-References: <CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com>
- <20190404015744.GF4409@sigill.intra.peff.net>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=/T4ToK6Kpy+e2996t91+37sWi3sVTsD485NGAOR/DpA=;
+        b=lYW02fy+YGdVmQQ3U68yhTcET1ornPA+oe6WeP+JCYzfIEGfIBmqmoY1h1eC9Y+sM8
+         bhK+JSjXnUMu0lRq9bSt4Y1lEtiEjQaIBpk3TSPIQjXgyvraF9kwYwVgjgp+tNFkn2ia
+         XN6ax9WmCptqRMDfEh/i9YBH9KKOT8DiKid4RSLnvzSy73hPosUl/E44az+hkzSqTi30
+         mzC7zknALh9IExjOxHIjHpCW+t9ap1r4J8XqWcGeSnxU2RYXRLCpgHWIiSLu6dbtSg0A
+         dG1Bd+MpBogJEX6N7/D7ZlVGMSyO2w0JRP4lUaPahy9WoXIn1/oKs+MC3PFNqyr4SPW4
+         dH0w==
+X-Gm-Message-State: APjAAAVpJe59TaKdp6BGXEWvQspNARjnT8u0syMxUlIYVy11dW2WKYAd
+        aoIrtCqyc6cm03kdOUtY7/Q=
+X-Google-Smtp-Source: APXvYqyDIzBW2kTdOUSOQmnxvgDnzKFMGGKP97Q9GP39lNQSwryPljeToiJe6MP69vVafRCg2cgXhg==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr2699695wro.232.1554362637938;
+        Thu, 04 Apr 2019 00:23:57 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id o1sm21525381wmh.47.2019.04.04.00.23.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Apr 2019 00:23:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v4 00/11] Many promisor remotes
+References: <20190401164045.17328-1-chriscool@tuxfamily.org>
+Date:   Thu, 04 Apr 2019 16:23:56 +0900
+Message-ID: <xmqq36mygrn7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190404015744.GF4409@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Christian Couder <christian.couder@gmail.com> writes:
 
-On Wed, Apr 03, 2019 at 09:57:44PM -0400, Jeff King wrote:
-> On Wed, Apr 03, 2019 at 09:38:02AM -0500, Robert Dailey wrote:
->
-> > Similar to git commit, it would be nice to have a --no-edit option for
-> > git tag. Use case is when I force-recreate a tag:
-> >
-> > $ git tag -af 1.0 123abc
-> >
-> > An editor will be prompted with the previous annotated tag message. I
-> > would like to add --no-edit to instruct it to use any previously
-> > provided message and without prompting the editor:
-> >
-> > $ git tag --no-edit -af 1.0 123abc
->
-> Yeah, that sounds like a good idea.
+> This path series is a follow up from the "remote odb" patch series
+> that I sent last year, which were a follow up from previous
+> series. See the links section for more information.
 
-Agreed.
+When this topic gets merged with the "diff: batch fetching of missing
+blobs" topic, the result seems to break t4067.
 
-I think that the implement is a little different than "add a --no-edit"
-flag, though. 'git tag' already has a OPT_BOOL for '--edit', which means
-that '--no-edit' exists, too.
 
-But, when we look and see how the edit option is passed around, we find
-that the check whether or not to launch the editor (again, in
-builtin/tag.c within 'create_tag()') is:
 
-  if (!opt->message_given || opt->use_editor)
 
-So, it's not that we didn't take '--no-edit', it's that we didn't get a
-_message_, so we'll open the editor to get one (even if '--no-edit' was
-given).
 
-This makes me think that we should do two things:
-
-  1. Make !opt->message_give && !opt->use_editor an invalid invocation.
-     If I (1) didn't give a message but I did (2) give '--no-edit', I'd
-     expect a complaint, not an editor window.
-
-  2. Then, do what Robert suggests, which is to "make opt->message_given
-     true", by re-using the previous tag's message.
-
-> I think it wouldn't be very hard to implement, either. Maybe a good
-> starter project or #leftoverbits for somebody.
-
-Maybe. I think that it's made a little more complicated by the above,
-but it's certainly doable. Maybe good for GSoC?
-
-> -Peff
-
-Thanks,
-Taylor
