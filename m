@@ -2,125 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B111E20248
-	for <e@80x24.org>; Thu,  4 Apr 2019 18:06:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B8DF20248
+	for <e@80x24.org>; Thu,  4 Apr 2019 18:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729356AbfDDSG6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 14:06:58 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:47015 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbfDDSG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 14:06:58 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t17so4874785wrw.13
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 11:06:57 -0700 (PDT)
+        id S1729286AbfDDSZO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 14:25:14 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37002 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726698AbfDDSZO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 14:25:14 -0400
+Received: by mail-pg1-f193.google.com with SMTP id e6so1641901pgc.4
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 11:25:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
-         :references:mime-version:content-disposition:in-reply-to
-         :accept-language:user-agent;
-        bh=RdfNiC7gPjQKchqIFYoNIVJH+b5D0Nxc0sEuiDFBnKQ=;
-        b=I+DSclWENhEzBoedGvEj4k5no3rblZ2kRduVSCgTHtF/Tqo+mJ3zX5YWENhv2S4g2F
-         gXookbAZgbC5I7SMlqdF88CP/73WgUmcW9F1Z9byLzwqk7Ozq3n/YDc20Pb3fVoimTxQ
-         ty9fyJjJvJdDizXwkCVj8WeFMhR8JVX6vQZ8FAJLXn0NTnrkiYBFLDQQXhkf9XoQn+Tq
-         9PTp5MwQCwkYn0CE48r0gbSxD1k/t/N7c5igGx3xS8EuarzjdjduYzYbaaIV4GXPU8qP
-         yYbHL/wTorFcF3ewbaug4GPMTKCZeeuFhC8cyx1WT335XItJqZnLHkSO/uvOu4aJM5vN
-         i6iA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xtxajJT/IITLi72630l41RU8NM75A9B+SVbRzitn00E=;
+        b=gvMT7kRirPcpQYI46U4BX9fQlRNhmW7AmJqxkwqmEuFOh+KN7Oauw6qZiQXsblbwIN
+         0V5qCzmrIBV1qnEUYazZZdiSsc3SRmTCNKHOEAWopFucle4hKB5HzBWzZicziAfcBaYw
+         A4/8C0pUwSSd4vT3cK1viN4oBvJX9u4095/qK7qHHvmxLCXT8rQD2ZcH5snU88hNUAKR
+         y/MqqqI8CnKFKdP6DG07033MSdhId25hzDIxEUO65czGsOoTuErR0NiEV629RHrexdg3
+         y1eRC603oOJ0g1ScMJHHtRFM+Do8bGcbqLopHiMHtlv0Yl0LHk+hAvew4bakEJlnDrgN
+         3Bdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:accept-language:user-agent;
-        bh=RdfNiC7gPjQKchqIFYoNIVJH+b5D0Nxc0sEuiDFBnKQ=;
-        b=DEhMQ/I8UxCMykhyXooIcWcOTJhKAA3+stJnsQXsGfKPXpG2XQdfWo+yOWAHyqsmXf
-         KU5RuwoDPakB5jSEbd2OzlEkWLXGXBIU8+u6PrUgW0L39Eg/1b0TYtl/qKwoxCPOM4+S
-         4Gon1HX0DBZxqteh8Ylkx8In7i4AIN9lA7gN40zL04Cp9M8UVpwTRLf6ZB4vNdbllo2o
-         8avUEg7rcL0B3zeaxwljmJSl66i+OzN9PhYACxb7hn+c61i9YugXHGkHWO69v2rZd8V2
-         1Tu9KiSx0BIrC2KCXcNZBAa4asl2GW6fv5JvYcMNit9rnVBRI8WC8pOXdw60C5taANVT
-         VESA==
-X-Gm-Message-State: APjAAAVdu6js2nEvA+4H71XeOyfislBAwkn0tfEYPNwvXyY1RvAI+p7Q
-        7k3ofpRFwRigvWw9Oxz/0jk=
-X-Google-Smtp-Source: APXvYqxRzy4DD5PSC9/e8oUbLc2iZKIcWxV0XcuMfVacgECI4t6GJGaT0HboQeFwocz9pnMSta242g==
-X-Received: by 2002:adf:ee50:: with SMTP id w16mr5004187wro.293.1554401216473;
-        Thu, 04 Apr 2019 11:06:56 -0700 (PDT)
-Received: from jak-t480s ([2a02:908:2813:42c0:fdb4:7ddd:ea6b:efd2])
-        by smtp.gmail.com with ESMTPSA id d3sm31539432wmf.46.2019.04.04.11.06.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 11:06:55 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 20:06:53 +0200
-From:   Julian Andres Klode <jak@jak-linux.org>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git List Mailing <git@vger.kernel.org>
-Subject: Re: "Problems" with git format-patch --thread email header ordering
-Message-ID: <20190404180653.curtoo7yot6tpqfk@jak-t480s>
-Mail-Followup-To: Julian Andres Klode <jak@jak-linux.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List Mailing <git@vger.kernel.org>
-References: <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
- <xmqqk1h09224.fsf@gitster-ct.c.googlers.com>
- <CAHk-=whe+R7fkTi0eBnhrBY=_k_du3e5dkNsVe=HgKXLoXekdg@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xtxajJT/IITLi72630l41RU8NM75A9B+SVbRzitn00E=;
+        b=Jzj0ikH8t/AccEmXgjnOihn6GUO+pPIC4ufI8i4Bdnyphs1zriBd2Yd3PaDnEDYypT
+         RttcLWAStEegpVau80p6eUCKq/63IPbzOrosxrUYfpRWy+svLWXouHFY/hpL8G9dXift
+         R72onssyL+zez1ozE7SRY5v97zC3KQCirboJff28WkjA/ZNlwI7Zs+AxzhiTuyTjrkkF
+         1GkEdUgJruhNXG/Bhi0gy1gej4DuT7JeCw4d8GyhxlUNtsT1fH1n6sCkR0a5X+AiqZfJ
+         24K/i488Da+fAU7Iy0LbeZqRyurrh3XDHlW4UDGB0sT95LOi8aAk5CZ17GP4b+seMoIS
+         Ps0Q==
+X-Gm-Message-State: APjAAAXEMxB/wJ6n55zv7rANOiSgvs0N5ZkSP/jc44hdU2PXQ1p3qXQg
+        fennOvSKfkxP2YLHfpmv6SoplEhA
+X-Google-Smtp-Source: APXvYqwd5ahU2T/TC7j4qRYXHyZmJQV6AR4bSPTA7TurmZfs+/shXcBLeHa2dKlCWlDXZmfo0VHKIw==
+X-Received: by 2002:a63:114d:: with SMTP id 13mr7456358pgr.216.1554402313659;
+        Thu, 04 Apr 2019 11:25:13 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id i135sm28566798pgd.41.2019.04.04.11.25.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Apr 2019 11:25:12 -0700 (PDT)
+Date:   Thu, 4 Apr 2019 11:25:12 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/2] tag: advise on recursive tagging
+Message-ID: <20190404182512.GA29737@dev-l>
+References: <cover.1554183429.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHk-=whe+R7fkTi0eBnhrBY=_k_du3e5dkNsVe=HgKXLoXekdg@mail.gmail.com>
-Accept-Language: de-DE, de, en-GB, en-US, en
-User-Agent: NeoMutt/20180716
+In-Reply-To: <cover.1554183429.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 15, 2019 at 09:59:25AM -0700, Linus Torvalds wrote:
-> On Thu, Mar 14, 2019 at 9:47 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Linus Torvalds <torvalds@linux-foundation.org> writes:
-> >
-> > > While it's true that header ordering isn't specified, there's a common
-> > > "canonical" order that the headers are listed in. To quote rfc822:
-> > > ...
-> > >             body must occur AFTER  the  headers.   It  is  recommended
-> > >             that,  if  present,  headers be sent in the order "Return-
-> > >             Path", "Received", "Date",  "From",  "Subject",  "Sender",
-> > >             "To", "cc", etc.
-> >
-> > I obviously won't do the last one myself, but if the issue is only
-> > to swap from and date, then this may be sufficient, perhaps?
-> 
-> I'm not actually sure _what_ the order requirements for gmail are,
-> since gmail itself doesn't seem to honor them. Does the order of the
-> Message-ID header line matter, for example?
-> 
-> I don't think it's the order of the From/Date lines, actually, because
-> google itself doesn't do that.
-> 
-> What Thomas Found out was that the exact same email with
-> 
->     Message-Id/From/Date/Subject/To
-> 
-> (in that order) does not work, but
-> 
->     Date/From/Subject/To/Message-Id
-> 
-> does work. Weird and "wonderful". But there might be a lot of other
-> orderings that work or don't.
-> 
-> Having looked through some other emails, I know that
-> 
->     From/To/Subject/Date/Message-Id
->     Subject/To/References/From/Message-ID/Date
-> 
-> also works.  Which makes me suspect that it's the Message-ID line that matters.
+[ Sorry for the spam, I typoed the mailing list address the first time ]
 
-I also know that gmail rewrites the Message-ID / creates one if it is
-missing or "odd" (such as ends in a .). It those probably makes sense
-in that twisted world view to require that to be fairly late...
+Hi all,
+
+I've been following the discussion and the tl;dr of it seems to be this:
+Junio wants to keep the long-standing behaviour of being able to git tag
+anything while Robert seems to believe that for most users, it is a
+mistake and even though Git is able unpeel tags, other tool authors may
+not be aware that this is even possible and not handle the case.
+
+I've tried to compromise between both sides. Now, we keep the old
+behaviour but instead of silently ignoring nested tags, we print out a
+hint that the user can act on. Hopefully, this should address everyone's
+concerns.
+
+The added benefit is that this won't break any existing scripts' unless
+they are parsing stderr for whatever reason, but no one would do that,
+right? ;)
+
+Denton Liu (2):
+  tag: fix formatting
+  tag: advise on nested tags
+
+ Documentation/config/advice.txt |  2 ++
+ advice.c                        |  2 ++
+ advice.h                        |  1 +
+ builtin/tag.c                   | 23 +++++++++++++++++------
+ t/t7004-tag.sh                  | 11 +++++++++++
+ 5 files changed, 33 insertions(+), 6 deletions(-)
 
 -- 
-debian developer - deb.li/jak | jak-linux.org - free software dev
-ubuntu core developer                              i speak de, en
+2.21.0.843.gd0ae0373aa
+
