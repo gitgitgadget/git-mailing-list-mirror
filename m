@@ -7,58 +7,61 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE58320248
-	for <e@80x24.org>; Thu,  4 Apr 2019 09:13:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56C7120248
+	for <e@80x24.org>; Thu,  4 Apr 2019 09:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387545AbfDDJNV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 05:13:21 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54898 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733232AbfDDJNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 05:13:19 -0400
-Received: by mail-wm1-f65.google.com with SMTP id c1so2131341wml.4
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:13:18 -0700 (PDT)
+        id S1727025AbfDDJUh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 05:20:37 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33888 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726952AbfDDJUg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 05:20:36 -0400
+Received: by mail-wr1-f65.google.com with SMTP id p10so2827349wrq.1
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 02:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=4rnVFTIgiqBKyRez23307x1pnAxQGO4DYmBv5I1+/XE=;
-        b=mfhMMr6ddAUBMWMy7+udWiB7zkfqJMqExewNPTFuQrEiS2XGzij9rAbcACu45cxLlk
-         9CV76E9z/u2RA8IrIX15airygXmXgiwNEvfj2pV8tfklWcleQesQpTd9Z5ZnVzuZEbw3
-         Cb/BsBZ0JB4gM2XYlxU0EBCcSaCHNub+dVAuSEpWg7mWxtlWI2IvhKo3Ztz1K9fxzIei
-         6pKxVrMJdHBrHQYw7aFbWQ5FSKUQyuJ1jYWc/GGo1tteLLT/VF1tXE/Dg51aHUDYKnIO
-         T6fUalke1Qr6meTmu/Af+3mQ8l+IBw2UeJgIgvg2g6koaL3WlMOnv1ZIrR9P2xSdDGgD
-         1jag==
+        bh=UAyhydIHP/a85o1zr9TIiv4wkQo3zaKqVcv+StklDzM=;
+        b=IXDugqDfL/N2QTUPn0IcoMmA1Dasxazs56k7sJH09qYuXrY6Cevanr2//TfdAT5FZw
+         ylkZQ8GIeQ39aOEDQUsQS8c27olHNBoIPhwWc6lb5L768a6XCMeghQVUjNdqgIStFU1V
+         eyanThKEyGwvnyJATKlmSSkVxSjv3DO4cmNtccsyRpXa9bR1ZOkWHoFwscmVR5PoKyH2
+         5ELYqSaQxGUtBo6w96Nv8HTlExA8a24kxxvUcooO/hZ1zVcYeE566HNH5tZDDuC1ylD/
+         xY/6sES5pk5FV0EKFua+xELJfSnGk7BwGIw7/EJkPPPMahwo8SYg1IJlWpGU6ojlJ3yA
+         02sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=4rnVFTIgiqBKyRez23307x1pnAxQGO4DYmBv5I1+/XE=;
-        b=RtgXCuIH8iMKqsmUOZJ7POmvTlCnvxCvz6MrYeir48N/tLuDDx6nPKB4hiwXjPoxfW
-         xFjOBZ/Hk/ObI3VjkU838rtNArv9RBxIbKkGsgGj2eXfbpCo0/cQJMXi0mTSzVdIZnAT
-         t/vQFffW/LOHsm9+WcTHNjufbGMtVF1I9qPUu7Nx+Q2J/fN3PuU8VxjXpDUwX+lDeIqj
-         AGT+X8gUubEog5/mfl+3HT/moA3YY7+mjslTIpB/12q322ovZqyWN4ZbEnx/omn2RQzq
-         TTX+fUWj0poUMtgXJHjjC3aumNsZdr4Cuw5bMVJ9Mgvw2b8qvXO/L5gABP2fXfymCja6
-         j4sQ==
-X-Gm-Message-State: APjAAAXsPYrVqKmTZeLUnf/EMVWjA9p2sHdYRdXuEcctowveqNlpAwrl
-        nafW+mKjU00J6RImQFjJmZAMRZiKjXw=
-X-Google-Smtp-Source: APXvYqzYt5qKUkZ+wEdw797dvi8Q16DBlL0QLIpFORulMtREWze8M3SOCoztiz52E99q+KKxvj+qew==
-X-Received: by 2002:a1c:be13:: with SMTP id o19mr2989127wmf.19.1554369197193;
-        Thu, 04 Apr 2019 02:13:17 -0700 (PDT)
+        bh=UAyhydIHP/a85o1zr9TIiv4wkQo3zaKqVcv+StklDzM=;
+        b=aJElhngqg7KOSruvBPGlZh8TXaJBjMt+EKlprHHHYRHjMU1BjOM9eofu/LvtyREm0P
+         utRhmBbU5Fjofj1QhOUHALde7WQCAjmHXtWKcrmrq4lqVXy4i9fsG2QK8bZpFMm1StCm
+         J3L+VQR2zjk3A+ftPHT0xrjjOPQTgDiGtRaReHQXNssnpmT2fb9Jm+Tvrxhpuas36OX6
+         x+EZ0XoX8iv2qM53borZrwlPMfuWvrJiV530QNC2VdCXclYaNU6eqt8FlIE766vW4vYJ
+         91a9OuvwZBv+ry4PmxyyhyR9jUHV5ctstTwUbXa6/cgDlFW9AKFET8Qdrw28vUEtKQ6L
+         gGvA==
+X-Gm-Message-State: APjAAAXIUMiL0n29mAQXMq1UE6kRfPwDKnXs1NnD7lQ+LxhVx9ugq1Yk
+        c4g30QO7FvD3QID5roKDnMI=
+X-Google-Smtp-Source: APXvYqxMD1qUzzOWaLm5JVtWa+BGPeEuBUVWfPB0uFlvnVQUX5ggxhz0RiBEp6xwZbqghAHCoLJbqw==
+X-Received: by 2002:adf:b612:: with SMTP id f18mr3329776wre.236.1554369635077;
+        Thu, 04 Apr 2019 02:20:35 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id a6sm13533650wrp.49.2019.04.04.02.13.16
+        by smtp.gmail.com with ESMTPSA id z1sm15818326wrs.52.2019.04.04.02.20.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 02:13:16 -0700 (PDT)
+        Thu, 04 Apr 2019 02:20:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-Subject: Re: Feature request: Add --no-edit to git tag command
-References: <CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com>
-        <20190404015744.GF4409@sigill.intra.peff.net>
-Date:   Thu, 04 Apr 2019 18:13:16 +0900
-In-Reply-To: <20190404015744.GF4409@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 3 Apr 2019 21:57:44 -0400")
-Message-ID: <xmqqo95mf80j.fsf@gitster-ct.c.googlers.com>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Joe Perches <joe@perches.com>,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>, git@vger.kernel.org
+Subject: Re: [PATCH] send-email: don't cc *-by lines with '-' prefix
+References: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
+        <bc20070b-437a-9875-efd0-b4cad1413233@rasmusvillemoes.dk>
+        <604795fe60991f22273cbb652eeeedc17985bc65.camel@perches.com>
+        <xmqqh8c03dcz.fsf@gitster-ct.c.googlers.com> <874l7ekynt.fsf@tarshish>
+Date:   Thu, 04 Apr 2019 18:20:33 +0900
+In-Reply-To: <874l7ekynt.fsf@tarshish> (Baruch Siach's message of "Thu, 04 Apr
+        2019 10:38:46 +0300")
+Message-ID: <xmqqk1gaf7oe.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,38 +70,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Baruch Siach <baruch@tkos.co.il> writes:
 
-> On Wed, Apr 03, 2019 at 09:38:02AM -0500, Robert Dailey wrote:
+>> Independently, I think it makes sense to do something like
+>>
+>> 	/^([a-z][a-z-]*-by|Cc): (.*)/i
+>>
+>> to tighten the match to exclude a non-trailer; that would have been
+>> sufficient for the original case that triggered this thread.
 >
->> Similar to git commit, it would be nice to have a --no-edit option for
->> git tag. Use case is when I force-recreate a tag:
->> 
->> $ git tag -af 1.0 123abc
->> 
->> An editor will be prompted with the previous annotated tag message. I
->> would like to add --no-edit to instruct it to use any previously
->> provided message and without prompting the editor:
->> 
->> $ git tag --no-edit -af 1.0 123abc
->
-> Yeah, that sounds like a good idea.
+> Is there anything I need to do more to get this fix applied for the next
+> git release?
 
-I am not so sure this is a good idea, especially if the plan is to
-do this alone without necessary associated change to make things
-consistent.
-
-The part that bothers me most is use of "-f".  The mentalitly behind
-"-f" is "I am creating a new and tag that is totally unrelated to
-any existing tag, but since the command refuses to reuse the ref to
-point at my new tag, I am giving an '-f' to force (1) unpointing the
-existing unrelated tag and (2) pointing the enwly created tag with
-that tagname".
-
-The proposed change still uses "-f" but wants to somehow take the
-tag message from the unrelated tag that happens to sit at the same
-place as the new tag wants to go.  That breaks the mental model a
-big way.
-
-If this were a new option that is spelled "--amend", I won't
-be complaining, though.
+Get "this" fix applied?  I think we should tighten the regexp to
+exclude a non-trailer, which would have been sufficient for the
+original case without anything else in "this" fix.  So in short, I
+do not think "this" fix won't be applied without further tweaking
+;-)
