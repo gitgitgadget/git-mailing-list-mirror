@@ -6,142 +6,158 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFE2820248
-	for <e@80x24.org>; Fri,  5 Apr 2019 18:06:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 097AB20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 18:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731477AbfDESGG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 14:06:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48690 "HELO cloud.peff.net"
+        id S1731620AbfDESGY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 14:06:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48700 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728683AbfDESGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 14:06:06 -0400
-Received: (qmail 11061 invoked by uid 109); 5 Apr 2019 18:06:06 -0000
+        id S1728683AbfDESGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 14:06:24 -0400
+Received: (qmail 11084 invoked by uid 109); 5 Apr 2019 18:06:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:06:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:06:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28216 invoked by uid 111); 5 Apr 2019 18:06:33 -0000
+Received: (qmail 28234 invoked by uid 111); 5 Apr 2019 18:06:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:06:33 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:06:51 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:06:04 -0400
-Date:   Fri, 5 Apr 2019 14:06:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:06:22 -0400
+Date:   Fri, 5 Apr 2019 14:06:22 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 05/13] midx: check both pack and index names for
- containment
-Message-ID: <20190405180604.GE32243@sigill.intra.peff.net>
+Subject: [PATCH v2 06/13] packfile: fix pack basename computation
+Message-ID: <20190405180622.GF32243@sigill.intra.peff.net>
 References: <20190405180306.GA21113@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20190405180306.GA21113@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A midx file (and the struct we parse from it) contains a list of all of
-the covered packfiles, mentioned by their ".idx" names (e.g.,
-"pack-1234.idx", etc). And thus calls to midx_contains_pack() expect
-callers to provide the idx name.
+When we have a multi-pack-index that covers many packfiles, we try to
+avoid opening the .idx for those packfiles. To do that we feed the pack
+name to midx_contains_pack(). But that function wants to see only the
+basename, which we compute using strrchr() to find the final slash. But
+that leaves an extra "/" at the start of our string.
 
-This works for most of the calls, but the one in open_packed_git_1()
-tries to feed a packed_git->pack_name, which is the ".pack" name,
-meaning we'll never find a match (even if the pack is covered by the
-midx).
+We can fix this by incrementing the pointer. That also raises the
+question of what to do when the name does not have a '/' at all. This
+should generally not happen (we always find files in "pack/"), but it
+doesn't hurt to be defensive here.
 
-We can fix this by converting the ".pack" to ".idx" in the caller.
-However, that requires allocating a new string. Instead, let's make
-midx_contains_pack() a bit friendlier, and allow it take _either_ the
-.pack or .idx variant.
+Let's wrap all of that up in a helper function and make it publicly
+available, since a later patch will need to use it, too.
 
-All cleverness in the matching code is credited to René. Bugs are mine.
+The tests don't notice because there's nothing about opening those .idx
+files that would cause us to give incorrect output. It's just a little
+slower. The new test checks this case by corrupting the covered .idx,
+and then making sure we don't complain about it.
 
-There's no test here, because while this does fix _a_ bug, it's masked
-by another bug in that same caller. That will be covered (with a test)
-in the next patch.
+We also have to tweak t5570, which intentionally corrupts a .idx file
+and expects us to notice it. When run with GIT_TEST_MULTI_PACK_INDEX,
+this will fail since we now will (correctly) not bother opening the .idx
+at all. We can fix that by unconditionally dropping any midx that's
+there, which ensures we'll have to read the .idx.
 
-Helped-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I was tempted to suggest that the midx struct just store the base name
-without ".idx" at all, but having callers pass that is no less tricky
-than passing ".idx" (they still have to allocate a new string).
+ packfile.c                  | 12 +++++++++++-
+ packfile.h                  |  6 ++++++
+ t/t5319-multi-pack-index.sh | 14 ++++++++++++++
+ t/t5570-git-daemon.sh       |  1 +
+ 4 files changed, 32 insertions(+), 1 deletion(-)
 
- midx.c | 36 ++++++++++++++++++++++++++++++++++--
- midx.h |  2 +-
- 2 files changed, 35 insertions(+), 3 deletions(-)
-
-diff --git a/midx.c b/midx.c
-index 8a505fd423..0ceca1938f 100644
---- a/midx.c
-+++ b/midx.c
-@@ -307,7 +307,39 @@ int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct mu
- 	return nth_midxed_pack_entry(m, e, pos);
+diff --git a/packfile.c b/packfile.c
+index 6e40bd89c7..7a2dd2fdbe 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -466,6 +466,16 @@ static unsigned int get_max_fd_limit(void)
+ #endif
  }
  
--int midx_contains_pack(struct multi_pack_index *m, const char *idx_name)
-+/* Match "foo.idx" against either "foo.pack" _or_ "foo.idx". */
-+static int cmp_idx_or_pack_name(const char *idx_or_pack_name,
-+				const char *idx_name)
++const char *pack_basename(struct packed_git *p)
 +{
-+	/* Skip past any initial matching prefix. */
-+	while (*idx_name && *idx_name == *idx_or_pack_name) {
-+		idx_name++;
-+		idx_or_pack_name++;
-+	}
-+
-+	/*
-+	 * If we didn't match completely, we may have matched "pack-1234." and
-+	 * be left with "idx" and "pack" respectively, which is also OK. We do
-+	 * not have to check for "idx" and "idx", because that would have been
-+	 * a complete match (and in that case these strcmps will be false, but
-+	 * we'll correctly return 0 from the final strcmp() below.
-+	 *
-+	 * Technically this matches "fooidx" and "foopack", but we'd never have
-+	 * such names in the first place.
-+	 */
-+	if (!strcmp(idx_name, "idx") && !strcmp(idx_or_pack_name, "pack"))
-+		return 0;
-+
-+	/*
-+	 * This not only checks for a complete match, but also orders based on
-+	 * the first non-identical character, which means our ordering will
-+	 * match a raw strcmp(). That makes it OK to use this to binary search
-+	 * a naively-sorted list.
-+	 */
-+	return strcmp(idx_or_pack_name, idx_name);
++	const char *ret = strrchr(p->pack_name, '/');
++	if (ret)
++		ret = ret + 1; /* skip past slash */
++	else
++		ret = p->pack_name; /* we only have a base */
++	return ret;
 +}
 +
-+int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
- {
- 	uint32_t first = 0, last = m->num_packs;
+ /*
+  * Do not call this directly as this leaks p->pack_fd on error return;
+  * call open_packed_git() instead.
+@@ -482,7 +492,7 @@ static int open_packed_git_1(struct packed_git *p)
  
-@@ -317,7 +349,7 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_name)
- 		int cmp;
+ 	if (!p->index_data) {
+ 		struct multi_pack_index *m;
+-		const char *pack_name = strrchr(p->pack_name, '/');
++		const char *pack_name = pack_basename(p);
  
- 		current = m->pack_names[mid];
--		cmp = strcmp(idx_name, current);
-+		cmp = cmp_idx_or_pack_name(idx_or_pack_name, current);
- 		if (!cmp)
- 			return 1;
- 		if (cmp > 0) {
-diff --git a/midx.h b/midx.h
-index 774f652530..26dd042d63 100644
---- a/midx.h
-+++ b/midx.h
-@@ -43,7 +43,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 					struct multi_pack_index *m,
- 					uint32_t n);
- int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m);
--int midx_contains_pack(struct multi_pack_index *m, const char *idx_name);
-+int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name);
- int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
+ 		for (m = the_repository->objects->multi_pack_index;
+ 		     m; m = m->next) {
+diff --git a/packfile.h b/packfile.h
+index b40fc34fb2..45bf792d79 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -31,6 +31,12 @@ char *sha1_pack_name(const unsigned char *sha1);
+  */
+ char *sha1_pack_index_name(const unsigned char *sha1);
  
- int write_midx_file(const char *object_dir);
++/*
++ * Return the basename of the packfile, omitting any containing directory
++ * (e.g., "pack-1234abcd[...].pack").
++ */
++const char *pack_basename(struct packed_git *p);
++
+ struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
+ 
+ typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 8c4d2bd849..1ebf19ec3c 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -117,6 +117,20 @@ test_expect_success 'write midx with one v2 pack' '
+ 
+ compare_results_with_midx "one v2 pack"
+ 
++test_expect_success 'corrupt idx not opened' '
++	idx=$(test-tool read-midx $objdir | grep "\.idx\$") &&
++	mv $objdir/pack/$idx backup-$idx &&
++	test_when_finished "mv backup-\$idx \$objdir/pack/\$idx" &&
++
++	# This is the minimum size for a sha-1 based .idx; this lets
++	# us pass perfunctory tests, but anything that actually opens and reads
++	# the idx file will complain.
++	test_copy_bytes 1064 <backup-$idx >$objdir/pack/$idx &&
++
++	git -c core.multiPackIndex=true rev-list --objects --all 2>err &&
++	test_must_be_empty err
++'
++
+ test_expect_success 'add more objects' '
+ 	for i in $(test_seq 6 10)
+ 	do
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index 58ee787685..19e271bda6 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -90,6 +90,7 @@ test_expect_success 'fetch notices corrupt pack' '
+ test_expect_success 'fetch notices corrupt idx' '
+ 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+ 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
++	 rm -f objects/pack/multi-pack-index &&
+ 	 p=$(ls objects/pack/pack-*.idx) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
 -- 
 2.21.0.729.g7d31bf3764
 
