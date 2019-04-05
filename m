@@ -2,118 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9489520248
-	for <e@80x24.org>; Fri,  5 Apr 2019 16:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB76020248
+	for <e@80x24.org>; Fri,  5 Apr 2019 17:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731102AbfDEQ6p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 12:58:45 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:49820
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726643AbfDEQ6p (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Apr 2019 12:58:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1554483523;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=b13COOocibGqqYasUHKatxnFJWtw3oqRgToPW2ehbYo=;
-        b=ZYQZho3Sl4PbU+PbQ7fvjKAvwXsAGEjFtHo2x2cnJqh9SaCOrWMvvukgKuDV34or
-        NE9jGfq6bmrP79oNUS6nqeCqAyHPU9mSTPOqnue6x38wCGLV1Nocv7jlZ/noke+0eHN
-        6eMxOn2HjoBfUw1/87D6zm90AYSVspom9XyX/iWA=
-From:   UTKARSH RAI <utkarsh.rai60@gmail.com>
+        id S1731153AbfDERJk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 13:09:40 -0400
+Received: from mail-vk1-f201.google.com ([209.85.221.201]:50475 "EHLO
+        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730587AbfDERJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 13:09:40 -0400
+Received: by mail-vk1-f201.google.com with SMTP id k78so2818138vkk.17
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 10:09:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bB5CJoTccP5ipZaDNn8+ntfmBTQy9oGTgOE2n2WWmT4=;
+        b=jkV5CHskFPgMdhk6+S0hWV20p5MGoocQNa4j1FVlP1XUoGhOrCfWXc8Nz5dS3HvyOM
+         HVg90cMw3qc9uSUlo8BqqiABqu5hV180GBjmwAUf1GpfzJENiQCPQAM/mEc/3uOrKvkP
+         R9vitb+/QXMT8iQeO1dlLLuL83XjWZ4Fvs1JQ7NuImOkLvwPxXHk3X1inUGghCGZjxza
+         6mEszrgQygGeQAw6a8JEcagUSg5chO8CUX587Aj13OazraNpmAckflqVmiz88p6AkoGL
+         Hmp+MxTiqjdlj+XDv3wvmW6aGo0Qpj9j8vRBwNAKC0g2hXD+6Va+ld5wrmWgryn3vpsu
+         4SjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bB5CJoTccP5ipZaDNn8+ntfmBTQy9oGTgOE2n2WWmT4=;
+        b=Pa47TWtS6ZOCRhKOSaVYY0qw3RCVpgtcczqDD4pP84HrxNjtJ2zhoKKfv0R3/7oEj4
+         hH7hTolD0RWz/R3Q3jFXlZEPuQ1se7mEMdIFk3qZq0SZXX/mLAmBZbWSqcpLozgbly83
+         WcKS+2DYySgD76Y9JPwD6mogva+g8jaYDRpNVyEcg7gwbwow2MHL0plSpkhPloi7MLHg
+         lvPHPWXtjF2JLtEbctbea7LLT7HtLvHWvHhAavRUaI8hUOgL0XplHT7cRFzjpFUtd9PI
+         tcMaIJS7lKSSvwr/N0UgaHvfdMYM9sBa2KxK1hgSf0sF7bBZjKed59RZhTpR00OY1sMF
+         0bcw==
+X-Gm-Message-State: APjAAAVe5CIbWi+G//BFnPVAcCmHebGHmQgw3qhEDlWAOJ9J4+JXoLVV
+        xNUnfRohzx2t9MD/7a46zIdzNORR82kwXFa+zQBrXK7D6fDWKYwj0I0inpdajwp/ONivobnGNfl
+        3OUxMUgx8x3olFBR5I18oXmj+TN9g2/xxJi3vDTcr9enWen83XzX+Cytsn+DiORV9dI0Qcq+aFG
+        Af
+X-Google-Smtp-Source: APXvYqzNnrAC/PQlbvSykAgufU9IIePjTL5lB0aUZMC6LMIcAcGQzRKZ4VFyyM86VFkoRldHacRBcU52ngA/ZbMEmezu
+X-Received: by 2002:a1f:9010:: with SMTP id s16mr1615819vkd.12.1554484179262;
+ Fri, 05 Apr 2019 10:09:39 -0700 (PDT)
+Date:   Fri,  5 Apr 2019 10:09:34 -0700
+In-Reply-To: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
+Message-Id: <20190405170934.20441-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
+X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
+Subject: [PATCH] fixup! diff: batch fetching of missing blobs
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Message-ID: <01020169ee702e51-e9c8d564-10f5-49e9-a411-fd7ceaef7afc-000000@eu-west-1.amazonses.com>
-Subject: =?UTF-8?Q?[[GSoC][PATCH_=E2=80=A6]]_In_notes-merg?=
- =?UTF-8?Q?e.c_updated_notes=5Fmerge=5Fcommit()?=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 5 Apr 2019 16:58:43 +0000
-X-SES-Outgoing: 2019.04.05-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Cc:     Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Updated notes_merge_commit() by replacing readdir() ,opendir() apis by replacing them with dir_iterator_advance() and dir_iterator_begin() respectively.
-Signed-off-by: ur10 <utkarsh.rai60@gmail.com>
----
- notes-merge.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+This is a fixup on the tip of jt/batch-fetch-blobs-in-diff (571debe1d9).
 
-diff --git a/notes-merge.c b/notes-merge.c
-index 280aa8e6c1b04..dc4e2cce7151a 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -13,6 +13,8 @@
- #include "strbuf.h"
- #include "notes-utils.h"
- #include "commit-reach.h"
-+#include "dir-iterator.h"
-+#include "iterator.h"
- 
- struct notes_merge_pair {
- 	struct object_id obj, base, local, remote;
-@@ -673,8 +675,8 @@ int notes_merge_commit(struct notes_merge_options *o,
- 	 * commit message and parents from 'partial_commit'.
- 	 * Finally store the new commit object OID into 'result_oid'.
- 	 */
--	DIR *dir;
--	struct dirent *e;
-+	struct dir_iterator *iter;
-+	int ok;
- 	struct strbuf path = STRBUF_INIT;
- 	const char *buffer = get_commit_buffer(partial_commit, NULL);
- 	const char *msg = strstr(buffer, "\n\n");
-@@ -689,27 +691,27 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		die("partial notes commit has empty message");
- 	msg += 2;
- 
--	dir = opendir(path.buf);
--	if (!dir)
-+	iter = dir_iterator_begin(path.buf);
-+	if (!iter)
- 		die_errno("could not open %s", path.buf);
- 
- 	strbuf_addch(&path, '/');
- 	baselen = path.len;
--	while ((e = readdir(dir)) != NULL) {
-+	while ((ok = dir_iterator_advance(iter) )== ITER_OK) {
- 		struct stat st;
- 		struct object_id obj_oid, blob_oid;
- 
--		if (is_dot_or_dotdot(e->d_name))
-+		if (is_dot_or_dotdot(iter->basename))
- 			continue;
- 
--		if (get_oid_hex(e->d_name, &obj_oid)) {
-+		if (get_oid_hex(iter->basename, &obj_oid)) {
- 			if (o->verbosity >= 3)
- 				printf("Skipping non-SHA1 entry '%s%s'\n",
--					path.buf, e->d_name);
-+					path.buf, iter->basename);
- 			continue;
- 		}
- 
--		strbuf_addstr(&path, e->d_name);
-+		strbuf_addstr(&path,iter->basename);
- 		/* write file as blob, and add to partial_tree */
- 		if (stat(path.buf, &st))
- 			die_errno("Failed to stat '%s'", path.buf);
-@@ -731,7 +733,7 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		printf("Finalized notes merge commit: %s\n",
- 			oid_to_hex(result_oid));
- 	strbuf_release(&path);
--	closedir(dir);
-+	
- 	return 0;
+I don't know if Junio has already merged this branch to next (he marked
+this as "Will merge to 'next'" in the "What's Cooking" email, but when I
+fetched, it hasn't been merged yet). If he has, we can use this commit
+message:
+
+diff: propagate options->repo to add_if_missing
+
+Avoid a usage of the_repository by propagating the configured repository
+to add_if_missing(). Also, prefetch only if the repository being diffed
+is the_repository (because we do not support lazy fetching for any other
+repository anyway).
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks, Duy, for noticing this.
+---
+ diff.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 1eccefb4ef..811afbdfb1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6367,18 +6367,19 @@ void diffcore_fix_diff_index(void)
+ 	QSORT(q->queue, q->nr, diffnamecmp);
  }
  
+-static void add_if_missing(struct oid_array *to_fetch,
++static void add_if_missing(struct oid_array *to_fetch, struct repository *r,
+ 			   const struct diff_filespec *filespec)
+ {
+ 	if (filespec && filespec->oid_valid &&
+-	    oid_object_info_extended(the_repository, &filespec->oid, NULL,
++	    oid_object_info_extended(r, &filespec->oid, NULL,
+ 				     OBJECT_INFO_FOR_PREFETCH))
+ 		oid_array_append(to_fetch, &filespec->oid);
+ }
+ 
+ void diffcore_std(struct diff_options *options)
+ {
+-	if (repository_format_partial_clone) {
++	if (options->repo == the_repository &&
++	    repository_format_partial_clone) {
+ 		/*
+ 		 * Prefetch the diff pairs that are about to be flushed.
+ 		 */
+@@ -6388,8 +6389,8 @@ void diffcore_std(struct diff_options *options)
+ 
+ 		for (i = 0; i < q->nr; i++) {
+ 			struct diff_filepair *p = q->queue[i];
+-			add_if_missing(&to_fetch, p->one);
+-			add_if_missing(&to_fetch, p->two);
++			add_if_missing(&to_fetch, options->repo, p->one);
++			add_if_missing(&to_fetch, options->repo, p->two);
+ 		}
+ 		if (to_fetch.nr)
+ 			/*
+-- 
+2.21.0.392.gf8f6787159e-goog
 
---
-https://github.com/git/git/pull/594
