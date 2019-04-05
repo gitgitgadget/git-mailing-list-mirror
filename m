@@ -7,106 +7,113 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB08720248
-	for <e@80x24.org>; Fri,  5 Apr 2019 01:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8731C20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 01:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730104AbfDEBGC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 21:06:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50672 "EHLO
+        id S1730345AbfDEBUK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 21:20:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51730 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730036AbfDEBGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 21:06:02 -0400
+        with ESMTP id S1727053AbfDEBUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 21:20:10 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DF3D12AAA8;
-        Thu,  4 Apr 2019 21:05:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 25B3212ABF8;
+        Thu,  4 Apr 2019 21:20:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
         :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=dmoUBQtsPr6sm
-        zBqt9A+UFXJxhk=; b=K/KJU6Y/qNOJAWXtx74yGEXss+f92VyHJMZN09Z5Frnax
-        6ABQ9vK+evH6IzXMpdgouDYW5j2xP2FQ4DfMjQa82UJCO2LXf0uA0NqyIUIwqLXe
-        6W1DZnbBKt31Efsdy1UrIzEHBmtxAYgNznLe3pY9gQlucS2GhhRfL2/I/KJzpw=
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=BUFYYq4Lps69F
+        /7rDjp5PR7vldA=; b=sWkJcPTlXN1aN/hq3ZCYmUDX2t+jqaFGLZO/aI6DiLZnw
+        MAuTO6uUCGlfdRkjOlxN9dnHWWEIk6WHyYRi8YFeeuZkQMstzxO7za2joM4wdGig
+        QZVYu+lEZ+kDqSLw5EhTsA601Vi48Z6ao3PWzUFlcCg/F7kWKUtzXWQ5HxeE6I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
         :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=sCVWlFc
-        xTq4vZx3zFzK/QQKRwp7p/cm5TcFMm9WHVpUzEnXoGEbGE37V6JmtYVdKBFsHffO
-        MyNeJbQNdz29PrAEcwvrQqKdkFaTrQmOWfi1tArQ9BpydmjVKFzditw1oggUBr3m
-        Nt735wLtZt1JNHWt7aLKOabf8pW0JqOa1Hx4=
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=T6S7jHj
+        LzcB2olNspOyO992kQrRlQU9O8Xo4uFxvbrxYoYFmWulptu60bw731mbp0z4Ygii
+        n3mAh3VSeePm+0ABeQefuASKcjwoxlvRCKTXx4sjJON+jRRa3sNsH2wam8+ZKds3
+        CvMg1AB2167L9ZZ8fjYnVJqhzgwl1e0vsiRU=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46F0612AAA6;
-        Thu,  4 Apr 2019 21:05:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BD3D12ABF6;
+        Thu,  4 Apr 2019 21:20:05 -0400 (EDT)
 Received: from pobox.com (unknown [173.67.141.44])
         (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C76A212AAA5;
-        Thu,  4 Apr 2019 21:05:57 -0400 (EDT)
-Date:   Thu, 4 Apr 2019 21:05:56 -0400
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70BE112ABF5;
+        Thu,  4 Apr 2019 21:20:04 -0400 (EDT)
+Date:   Thu, 4 Apr 2019 21:20:02 -0400
 From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2019, #01; Thu, 4)
-Message-ID: <20190405010556.GN4047@pobox.com>
-References: <xmqqr2aidpxw.fsf@gitster-ct.c.googlers.com>
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v1 1/2] Documentation/rev-list-options: wrap
+ --date=<format> block with "--"
+Message-ID: <20190405012002.GO4047@pobox.com>
+References: <20190330183001.16624-1-tmz@pobox.com>
+ <20190330183001.16624-2-tmz@pobox.com>
+ <20190401130804.GA11664@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr2aidpxw.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20190401130804.GA11664@sigill.intra.peff.net>
 User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: F8686324-573E-11E9-BDF4-DF19F34BB12D-09356542!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F10ECE5E-5740-11E9-B12C-DF19F34BB12D-09356542!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-Junio C Hamano wrote:
-> * sg/asciidoctor-in-ci (2019-04-01) 6 commits
->  - ci: fix AsciiDoc/Asciidoctor stderr check in the documentation build=
- job
->  - ci: stick with Asciidoctor v1.5.8 for now
->  - ci: install Asciidoctor in 'ci/install-dependencies.sh'
->  - Documentation/technical/protocol-v2.txt: fix formatting
->  - Documentation/technical/api-config.txt: fix formatting
->  - Documentation/git-diff-tree.txt: fix formatting
+Jeff King wrote:
+> On Sat, Mar 30, 2019 at 02:30:00PM -0400, Todd Zullinger wrote:
 >=20
->  Update our support to format documentation in the CI environment,
->  either with AsciiDoc ro Asciidoctor.
+>> Using "+" to continue multiple list items is more tedious and
+>> error-prone than wrapping the entire block with "--" block markers.
+>>=20
+>> When using asciidoctor, the list items after the --date=3Diso list ite=
+ms
+>> are incorrectly formatted when using "+" continuation.  Use "--" block
+>> markers to correctly format the block.
+>>=20
+>> When using asciidoc there is no change in how the content is rendered.
 >=20
->  Will merge to 'next'.
+> This seems like an asciidoctor bug, though I think this kind of
+> list-within-a-list stuff is inherently a bit heuristic-driven just due
+> to the syntax.
 
-Martin mentioned this in reply to the patch thread=B9 but it
-looks like it slipped by unnoticed.  There's some extraneous
-comments in 28216d13f4 ("ci: stick with Asciidoctor v1.5.8
-for now", 2019-03-29) which would be good to trim before
-this hits next.
+Indeed.  There's certainly a limit to the changes we want to
+make solely to work-around issues in either asciidoc or
+asciidoctor.  When the work-around is (at least arguably) an
+improvement, then it's probably worthwhile.  That's how I
+thought about it, anyway. :)
 
-    commit 28216d13f43b07e41bdd83b786ae31c00c657e06
-    Author: SZEDER G=E1bor <szeder.dev@gmail.com>
-    Date:   Fri Mar 29 20:52:46 2019 +0100
+> I do agree that the result after your patch is more readable, so I thin=
+k
+> I prefer it even if the asciidoctor bug were fixed. I suspect we could
+> be using "--" blocks for readability in more places (I don't think it's
+> worth going on a hunt to convert old spots, but something to keep in
+> mind as we write new documentation).
 
-        ci: stick with Asciidoctor v1.5.8 for now
-       =20
-        On Fri, Mar 29, 2019 at 01:35:19PM +0100, SZEDER G=E1bor wrote:
-        > The release of Asciidoctor v2.0.0 two days ago broke our docume=
-ntation
-       =20
-        Well, what happened "two days ago" when I sent v2 is now seven da=
-ys
-        ago...  Let's just say "recent" instead.
-       =20
-          --- >8 ---
-       =20
-        Subject: ci: stick with Asciidoctor v1.5.8 for now
-       =20
-        The recent release of Asciidoctor v2.0.0 broke our documentation
-        ...
+Agreed, that sounds perfectly reasonable to me.  The
+Asciidoctor user manual says:
 
-=B9 <CAN0heSrQrVQ+t3ZH1igU8zZLjjyhzZshFgarLcZOumWMBRN2Tg@mail.gmail.com>
+    If you=E2=80=99re attaching more than one block to a list item,
+    you=E2=80=99re strongly encouraged to wrap the content inside an
+    open block. That way, you only need a single list
+    continuation line to attach the open block to the list
+    item. Within the open block, you write like you normally
+    would, no longer having to worry about adding list
+    continuations between the blocks to keep them attached
+    to the list item.
 
-Thanks,
+https://asciidoctor.org/docs/user-manual/#list-continuation
+
+I imagine it's "strongly encouraged" both to help consumers
+avoid these sort of oddly-parsed continuation issues, as
+well as the Asciidoctor devs from having to field as many
+bug reports.
 
 --=20
 Todd
