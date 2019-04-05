@@ -2,158 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA28420248
-	for <e@80x24.org>; Fri,  5 Apr 2019 10:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D29320248
+	for <e@80x24.org>; Fri,  5 Apr 2019 10:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730610AbfDEKlk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 06:41:40 -0400
-Received: from mout.web.de ([212.227.15.3]:41195 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730283AbfDEKlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 06:41:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1554460891;
-        bh=vtar5/stMkrPLkoRjMrsa0gtjNclkqjOBvQIYX3lqVs=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Cc:Date:In-Reply-To;
-        b=iNFEMO0uiHEae59ffqKIc0QS6hlnkMb7JQHaexj9tWeziml4mS9nrCRHgNwNSYObA
-         h92WON/bDnWIBhdXkGCe6HoRJSUf/18IpivRi6PowLwBsdSHlynwkqauclEP6WhyRR
-         pAb4jxJ6SdFiAe+vSWI5BZKXmGmjA1YKs8emXBXY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.22] ([79.203.21.163]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mg7Zl-1hX2Ss1xQb-00NPNx; Fri, 05
- Apr 2019 12:41:31 +0200
-Subject: Re: [PATCH 05/12] http: simplify parsing of remote objects/info/packs
-To:     Jeff King <peff@peff.net>
-References: <20190404232104.GA27770@sigill.intra.peff.net>
- <20190404232704.GE21839@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Message-ID: <83129937-dcd0-f16e-c8aa-97eceec9769a@web.de>
-Date:   Fri, 5 Apr 2019 12:41:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1730646AbfDEKui (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 06:50:38 -0400
+Received: from mail-wm1-f48.google.com ([209.85.128.48]:40607 "EHLO
+        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730497AbfDEKui (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 06:50:38 -0400
+Received: by mail-wm1-f48.google.com with SMTP id z24so6691395wmi.5
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 03:50:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LdSElWFx2bOVUM86wFGjjEyVjx8NRUL6l4iGwey9hck=;
+        b=VHBvh4Khh1DvVuDPzsFDzmzDLzjfv+VLtd+x40WhoaxCbmIR/CF/WGCwlPbC20DU/N
+         WM3IFCTR3A6EyIYEbulSluFtxRWmW740kd0NV4DN8NgoCRN78BeK4IO9ZZPF8tax123G
+         L/VfDkP6mjF6Wdhaxz/zftfTtS9NIuCkomOO97H2yTW6enS/tRBTOgefNPVsduzJR4JY
+         w9NowhKyD8puyMF4Ul9FSUYZPdrbQanThfwVvl0jcRejGqP5JK3uqjMh6fM9nqN5rL43
+         qTEk3WLKi0b+mHeJ2HdvmQPbFvtIMOdKlwfQbfGECw9ZbbsxAsrRspUFioYZgw9pK7Na
+         orHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LdSElWFx2bOVUM86wFGjjEyVjx8NRUL6l4iGwey9hck=;
+        b=YEzZ1H7EZanxd9+Bh+YUJ9zCZvBCG8HmzHpZjZjcDOorIB2fsJaMpbGjM2pip6gNSM
+         F97NKJ2mARMjz0o1uLYIpSEfNOX6ipDpdebR1kgtTLm7K+PbvUt6Z04zey1ZIS9iXGKW
+         JCOnNiAhg8MLu5y5rjlzZ9fJ03FTHJll7slXYFI2MGIkR8UW6wqguv6vx15plDAxBClN
+         bxduyxZd9a23wK/M7UEAATPLyZOQgVL2N4hwVDCpf1zOsr4+8o+zlucTu+DqwCKCV4Pd
+         /cNjqHPCssZChN/3fbPvaSJFtgvERxrw02pEpq8rklQFh5Sb+5DX7PYsU4jmO7vJKIW4
+         Q8ng==
+X-Gm-Message-State: APjAAAUrcFiigV/xdIibS6txDNDdblrZZC1HEBXeyD/JCk9TS1eAEHHk
+        QHuQdko3/Hl4PIdO6HrH1L90NhJglIE=
+X-Google-Smtp-Source: APXvYqyLN0Twt3xcdQvTpnvDIVAi+sNQaNKbM7r1mx1A3KVL1AHr0PQo8X3wyzr27jZqhbsTQSe8nw==
+X-Received: by 2002:a05:600c:2189:: with SMTP id e9mr7474208wme.4.1554461436402;
+        Fri, 05 Apr 2019 03:50:36 -0700 (PDT)
+Received: from szeder.dev (x4d0c3c70.dyn.telefonica.de. [77.12.60.112])
+        by smtp.gmail.com with ESMTPSA id i28sm61745156wrc.32.2019.04.05.03.50.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Apr 2019 03:50:35 -0700 (PDT)
+Date:   Fri, 5 Apr 2019 12:50:33 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
+Subject: Re: [PATCH 2/7] t: introduce tests for unexpected object types
+Message-ID: <20190405105033.GT32732@szeder.dev>
+References: <cover.1554435033.git.me@ttaylorr.com>
+ <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
 MIME-Version: 1.0
-In-Reply-To: <20190404232704.GE21839@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0Jy/Vx+CVO6izkdtsLABEsg9g4vA9HOt0NvgA1N7NGFnTTD4z2t
- G1Y0l6pMsw/+fHCo71EpjZJBn7uzY7iXu6UcP2bfrUHriMeHqmmPebQByp4OTx49CS4YtoJ
- +ljol6maNlYBJfTuW4ma5his+Lt5aJc6fHoe5r74lIVBNErcFMW3qHf+xnXx0TB5UF0zx3g
- D/LTiTe5oQwP0FRVzqv/Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IiVWAUBJKq8=:4YcML3/G2zsxLwmlr4+1mY
- 0m0S4LS/74pI++OpK2ZZDJdXMQE2viwqC3ONSSdvTB8ISkDiGvPk5MwOZxSOU8c/QQBSXUI4F
- LTIw3evusCNSvmgAnmKNTwn4fARpkRWZbOVWp7zPCHaCbNdcguit1mHsFsTmZ5UP9DE3vjr18
- IkmLZb+O50IibScRJbTxlkQ+deml4K5UunutHLF+w+lv4gKVOXEiOWwOqNvj9ZwlMTbAu4rlm
- pTmhKyeJtpCOQJuItcZKFGFMFgPixbSY8cL0X8MdSzeiBWQ0cURTuoU4dLmiqWS5SbyQbQXU8
- oQCRgLmeeKKV8c8LdhV6HHQfqJJ4Mf2sgvLPjBnJcFJKnnn0u7ZRLXYhcMj0liDXpLefNVXce
- RQuVLIBCpJEUwLGkZTCEsATtJxA4jWccL4v8OrPIplXm4kwqkg58rs6nHj06VjZPL+ZZjIi3o
- p2GkQyIvlKeYx+dlWasE4sUVCPlf5+p+GIR/v+CXPKf+lpFAqDqw9ByP9/g/ahvIMf3SMrkJP
- NaYl2SEPsAJCJZwn6RlaoSuguS56uDl/P1wOXKeStW+SLA7MB5KKdnNbvOvNGtYk4HJ8VSHgJ
- kh7ce3Q8Dy8XknJgzT8a06kmTBpSJMspVIg+rTu+1yZ7NklqUnxNoR3EstTGRh7zwQzWHZFwp
- 7henb4FmknKNACueMrk+Km5IZBqkzJQHMG28q2HwJVH/ggkVtENxfVyYRoHCpbDn20PXQPE0r
- 1WUOV8JPPxzx3wSMQ8US2PGwC0SC4UdLf2S0Dcaz2hlh0G0gPdc0tLnBDua0xcWdlLhIDcRQz
- 6qqV4708rT7SU4fOIuWJ5vymp9S8YcZ8AV2nRRIM+PLkql5EdCWLj109o9uILAi9ZGHU0UEai
- 8xXmlUHtrOXty/GymydMcNoTYAgRG1IDJMoCpue8XewW21JH/CvX7YM7X+HAMf
+Content-Disposition: inline
+In-Reply-To: <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.04.2019 um 01:27 schrieb Jeff King:
-> We can use skip_prefix() and parse_oid_hex() to continuously increment
-> our pointer, rather than dealing with magic numbers. This also fixes a
-> few small shortcomings:
->
->   - if we see a 'P' line that does not match our expectations, we'll
->     leave our "i" counter in the middle of the line. So we'll parse:
->     "P P P pack-1234.pack" as if there was just one "P" which was not
->     intentional (though probably not that harmful).
+On Thu, Apr 04, 2019 at 08:37:44PM -0700, Taylor Blau wrote:
+> diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
+> new file mode 100755
+> index 0000000000..472b08528a
+> --- /dev/null
+> +++ b/t/t6102-rev-list-unexpected-objects.sh
+> @@ -0,0 +1,123 @@
+> +#!/bin/sh
+> +
+> +test_description='git rev-list should handle unexpected object types'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup well-formed objects' '
+> +	blob="$(printf "foo" | git hash-object -w --stdin)" &&
+> +	tree="$(printf "100644 blob $blob\tfoo" | git mktree)" &&
+> +	commit="$(git commit-tree $tree -m "first commit")"
+> +'
+> +
+> +test_expect_success 'setup unexpected non-blob entry' '
+> +	printf "100644 foo\0$(echo $tree | hex2oct)" >broken-tree &&
+> +	broken_tree="$(git hash-object -w --literally -t tree broken-tree)"
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-blob entry (lone)' '
+> +	test_must_fail git rev-list --objects $broken_tree
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-blob entry (seen)' '
+> +	test_must_fail git rev-list --objects $tree $broken_tree
+> +'
+> +
+> +test_expect_success 'setup unexpected non-tree entry' '
+> +	printf "40000 foo\0$(echo $blob | hex2oct)" >broken-tree &&
+> +	broken_tree="$(git hash-object -w --literally -t tree broken-tree)"
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-tree entry (lone)' '
+> +	test_must_fail git rev-list --objects $broken_tree
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-tree entry (seen)' '
+> +	test_must_fail git rev-list --objects $blob $broken_tree >output 2>&1
 
-How so?  The default case, which we'd fall through to, skips the rest
-of such a line, doesn't it?
+This test saves standard output and error, but doesn't look at them.
 
->
->   - if we see a line with the right prefix, suffix, and length, i.e.
->     matching /P pack-.{40}.pack\n/, we'll interpret the middle part as
->     hex without checking if it could be parsed. This could lead to us
->     looking at uninitialized garbage in the hash array. In practice this
->     means we'll just make a garbage request to the server which will
->     fail, though it's interesting that a malicious server could convince
->     us to leak 40 bytes of uninitialized stack to them.
->
->   - the current code is picky about seeing a newline at the end of file,
->     but we can easily be more liberal
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  http.c | 35 ++++++++++++++---------------------
->  1 file changed, 14 insertions(+), 21 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index a32ad36ddf..2ef47bc779 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -2147,11 +2147,11 @@ static int fetch_and_setup_pack_index(struct pac=
-ked_git **packs_head,
->  int http_get_info_packs(const char *base_url, struct packed_git **packs=
-_head)
->  {
->  	struct http_get_options options =3D {0};
-> -	int ret =3D 0, i =3D 0;
-> -	char *url, *data;
-> +	int ret =3D 0;
-> +	char *url;
-> +	const char *data;
->  	struct strbuf buf =3D STRBUF_INIT;
-> -	unsigned char hash[GIT_MAX_RAWSZ];
-> -	const unsigned hexsz =3D the_hash_algo->hexsz;
-> +	struct object_id oid;
->
->  	end_url_with_slash(&buf, base_url);
->  	strbuf_addstr(&buf, "objects/info/packs");
-> @@ -2163,24 +2163,17 @@ int http_get_info_packs(const char *base_url, st=
-ruct packed_git **packs_head)
->  		goto cleanup;
->
->  	data =3D buf.buf;
-> -	while (i < buf.len) {
-> -		switch (data[i]) {
-> -		case 'P':
-> -			i++;
-> -			if (i + hexsz + 12 <=3D buf.len &&
-> -			    starts_with(data + i, " pack-") &&
-> -			    starts_with(data + i + hexsz + 6, ".pack\n")) {
-> -				get_sha1_hex(data + i + 6, hash);
-> -				fetch_and_setup_pack_index(packs_head, hash,
-> -						      base_url);
-> -				i +=3D hexsz + 11;
-> -				break;
-> -			}
-> -		default:
-> -			while (i < buf.len && data[i] !=3D '\n')
-> -				i++;
-> +	while (*data) {
-> +		if (skip_prefix(data, "P pack-", &data) &&
-> +		    !parse_oid_hex(data, &oid, &data) &&
-> +		    skip_prefix(data, ".pack", &data) &&
-> +		    (*data =3D=3D '\n' || *data =3D=3D '\0')) {
-> +			fetch_and_setup_pack_index(packs_head, oid.hash, base_url);
-> +		} else {
-> +			data =3D strchrnul(data, '\n');
->  		}
-> -		i++;
-> +		if (*data)
-> +			data++; /* skip past newline */
+> +'
+> +
+> +test_expect_success 'setup unexpected non-commit parent' '
+> +	git cat-file commit $commit |
+> +		perl -lpe "/^author/ && print q(parent $blob)" \
+> +		>broken-commit &&
 
-So much simpler, *and* converted to object_id -- I like it!
+Don't run git commands upstream of a pipe, because the pipe hides
+their exit code.  This applies to several other tests below as well.
 
-Parsing "P" and "pack-" together crosses logical token boundaries,
-but that I don't mind it here.
+Wouldn't a 'sed' one-liner suffice, so we won't have yet another perl
+dependency?
 
-Ren=C3=A9
+> +	broken_commit="$(git hash-object -w --literally -t commit \
+> +		broken-commit)"
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-commit parent (lone)' '
+> +	test_must_fail git rev-list --objects $broken_commit >output 2>&1 &&
+> +	test_i18ngrep "not a commit" output
 
+Please make sure that this "not a commit" message goes to the file
+descriptor it is supposed to, i.e., assuming it's part of an error
+message:
+
+  test_must_fail git rev-list .... 2>err &&
+  test_i18ngrep "..." err
+
+This applies to several other tests below and in other patches as
+well.
+
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-commit parent (seen)' '
+> +	test_must_fail git rev-list --objects $commit $broken_commit \
+> +		>output 2>&1 &&
+> +	test_i18ngrep "not a commit" output
+> +'
+> +
+> +test_expect_success 'setup unexpected non-tree root' '
+> +	git cat-file commit $commit |
+> +	sed -e "s/$tree/$blob/" >broken-commit &&
+> +	broken_commit="$(git hash-object -w --literally -t commit \
+> +		broken-commit)"
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-tree root (lone)' '
+> +	test_must_fail git rev-list --objects $broken_commit
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-tree root (seen)' '
+> +	test_must_fail git rev-list --objects $blob $broken_commit
+> +'
+> +
+> +test_expect_success 'setup unexpected non-commit tag' '
+> +	git tag -a -m "tagged commit" tag $commit &&
+> +	test_when_finished "git tag -d tag" &&
+> +	git cat-file -p tag | sed -e "s/$commit/$blob/" >broken-tag &&
+> +	tag=$(git hash-object -w --literally -t tag broken-tag)
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-commit tag (lone)' '
+> +	test_must_fail git rev-list --objects $tag
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-commit tag (seen)' '
+> +	test_must_fail git rev-list --objects $blob $tag >output 2>&1 &&
+> +	test_i18ngrep "not a commit" output
+> +'
+> +
+> +test_expect_success 'setup unexpected non-tree tag' '
+> +	git tag -a -m "tagged tree" tag $tree &&
+> +	test_when_finished "git tag -d tag" &&
+> +	git cat-file -p tag |
+> +	sed -e "s/$tree/$blob/" >broken-tag &&
+> +	tag=$(git hash-object -w --literally -t tag broken-tag)
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-tree tag (lone)' '
+> +	test_must_fail git rev-list --objects $tag
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-tree tag (seen)' '
+> +	test_must_fail git rev-list --objects $blob $tag >output 2>&1 &&
+> +	test_i18ngrep "not a tree" output
+> +'
+> +
+> +test_expect_success 'setup unexpected non-blob tag' '
+> +	git tag -a -m "tagged blob" tag $blob &&
+> +	test_when_finished "git tag -d tag" &&
+> +	git cat-file -p tag |
+> +	sed -e "s/$blob/$commit/" >broken-tag &&
+> +	tag=$(git hash-object -w --literally -t tag broken-tag)
+> +'
+> +
+> +test_expect_failure 'traverse unexpected non-blob tag (lone)' '
+> +	test_must_fail git rev-list --objects $tag
+> +'
+> +
+> +test_expect_success 'traverse unexpected non-blob tag (seen)' '
+> +	test_must_fail git rev-list --objects $commit $tag >output 2>&1 &&
+> +	test_i18ngrep "not a blob" output
+> +'
+> +
+> +test_done
+> -- 
+> 2.21.0.203.g358da99528
+> 
