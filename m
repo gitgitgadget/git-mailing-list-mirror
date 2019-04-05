@@ -7,83 +7,209 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 389DF20248
-	for <e@80x24.org>; Fri,  5 Apr 2019 20:17:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDBEB20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 20:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbfDEUR2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 16:17:28 -0400
-Received: from mout.web.de ([217.72.192.78]:37481 "EHLO mout.web.de"
+        id S1726337AbfDEUS1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 16:18:27 -0400
+Received: from mout.web.de ([217.72.192.78]:39453 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725946AbfDEUR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 16:17:27 -0400
+        id S1725946AbfDEUS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 16:18:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1554495443;
-        bh=SNFKqlsq2TYUWZ3NylgbhvfJJHXrnXjg+RABbMsowPQ=;
+        s=dbaedf251592; t=1554495502;
+        bh=AAF+cfuA6m0CSCVj7GLRmZ3ngBG7bb2h+2KnbEGTPbk=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ZxUAxRnY2+vCSbD/Pkp0KsO25r7vIbHvA6Ghz/NcYiSLCV4qFSpyDmOEjDJ/IQbDR
-         7E9wCSN+rLCoYMOMUPnWB0HW8SbQk8+JV7dcoxBXezN2I9P2oGX7uvXlMISvE5Gcp0
-         Eyv8SmtRn6zZs2VW8MY0hKGMpM1SRLDxBsSdis9E=
+        b=SF84vgKS3LuPcEhjFiyDUot2rRHUjo5hYAZ8eXTqz5tcH1LEE66VKS3Qvax/PDQ3x
+         dGSjvKF9vfGEa4OztsvVX2niY4KMUgPQCYjf7lCRT0+TLXoqXCoD6S0DswvyJl1hts
+         KcAzbqDbPFBgG5a/NuiD8vnYp5gkB4zt+iJMN8HA=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.22] ([79.203.21.163]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSrYf-1hJxO23BHp-00RoOd; Fri, 05
- Apr 2019 22:17:23 +0200
-Subject: Re: [PATCH 05/12] http: simplify parsing of remote objects/info/packs
+Received: from [192.168.178.22] ([79.203.21.163]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LecNe-1gZGXA1kfW-00qTjJ; Fri, 05
+ Apr 2019 22:18:22 +0200
+Subject: Re: [PATCH v2 05/13] midx: check both pack and index names for
+ containment
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <20190404232104.GA27770@sigill.intra.peff.net>
- <20190404232704.GE21839@sigill.intra.peff.net>
- <83129937-dcd0-f16e-c8aa-97eceec9769a@web.de>
- <20190405181132.GA32401@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20190405180306.GA21113@sigill.intra.peff.net>
+ <20190405180604.GE32243@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <85b12bbd-15a8-09a1-395b-dc1606ab34e7@web.de>
-Date:   Fri, 5 Apr 2019 22:17:07 +0200
+Message-ID: <8f188559-c1a9-7717-4b2c-a7397cfaa6bc@web.de>
+Date:   Fri, 5 Apr 2019 22:18:17 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190405181132.GA32401@sigill.intra.peff.net>
+In-Reply-To: <20190405180604.GE32243@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8S1u9ThWG1Z0yzo6IQLQpU29ndosyQNfAaPzVZOTF0ESncoONlN
- NojAbCIB154p1BOgxtwrMdPnpoZ+H7hWRR+KZDiGTnf3Mfe7fX3LJKs//rZkhHGFJ0muIx6
- JhmVokkVsr7iFfVK8YMjaNu2o5iAERWhJseasvcnGPLgmfZrlXnVyY9YAH3gxDqI79bgKeH
- 8TctkF3uiZzsNS0C3g64A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:H1qX6ehDVDw=:sNfDaiYeSl1QZAb72rTBLr
- WvVB8x//P1AJPjUUmQGKepknCWj3HiMFBNZrt6nw7qHtEmioB55BNUjkReKMmy6mwJhnR/wFK
- yxwSmTWVHq/YQFGQ/UYkCHiNPMdZWDZqB6EOCKGy+xMSSdYh/kPydHWQCr3hBReaH4fh3e8kl
- 8FFUali9BzKyAWldhiI+ajNGlFU/4ne9uRLKbePQb3qve2TlhnpzdyyPfMyrktpQ29aPkUoMv
- aNdexpMkg0J27Y0xtR59dIC6adsOXvfgPGXhsfd0C4o83Ype0L0abUI085USMBH8/gxUYxJl7
- aj6VnkoTUBKmTl/soToP2GSHRiGikqzhBTN+ApPlXogPYnChbCW32dHk72L2t+V2Z3PFDyZTn
- D21O18hC3jjQ1eRS0A9gS4P/G4rYsv6YEcEnzOBAxAQAya+lFwECUmfxBEcqnUljSWaf3Ni2N
- U7R0S04P1FTf/DlEWd3cpX2oHKu0zX5lQeFN1dRNYitWtQmDpe2YNtddYpMFRY3wOdLy58XAg
- hEq6hOEgIiq/YJEKt7RovEUIKl0qDeDY0HG348tfpXL4j3xfiXBatB8UqJKNuLJT5TVa+exZf
- 9RZPsEXveMbJrUFInu01wvTPEsFbZLLb2G/OPxPDk0QLs4GyJZIefef8/0OQ/2s8a/zYBfebP
- EdHn71aFehtkY9k7ElIgiu/9I761Ij9wDYQSpXfANAPn7s419vCI7+z6HUvxi/bxZNz6dQI25
- AVifcyMSjAHHM9ZDDD4Z0YMYwUkPIiv/d7kxCDLPHMTq93emSoJchOPC53JnGRnEseHRdYiXY
- 35cg2X7dDSRwn5AFDc6jha97w9c81ss3De2JTJoDYedkpXCnKtsnjxn+1lHR0ouAlZ1OzhqW0
- M7hJ/u6wQ5A6RT2PXn0t2MS9dQG9mg9eVtZXUshh6aFNWxW0svQM2/FOK6Fn4M
+X-Provags-ID: V03:K1:Hup+dGHsiuDnsngR4hPp2VvmSApDhauMmCDqrNyYKBQK7nwiOoG
+ tGWSVuIYgpuwa4n6117PKmL8l+49kHuYge78mWcQ2o8lZlz+9LUXUJeZaJcW0qBs6eZdML4
+ cgwssq52A6fWHCb/hWZ97K7iIPZnebYwnyQOAz7SnhB8dqTCvZtWaPdozrLRRmPZpIn3QwG
+ iVzAODVAt3jMKfS3wIWzQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+wh4tYwX/uc=:VQMLkvMyJxdQPEdyWEIp0o
+ j3ZiQG8DLUkdR9Az78JSTczAqTbDhNALJr0JUBmJ9z6hqUGAPtGh+390XgnMPNGtBXnBBKLN/
+ I0vn7+Pek9kXLleaeRCVQvlC9AVV7YrqYUBV5k4X4NQCLgvgtFsfWegusr6XYb12WE6sAMAd2
+ RUex0E+OHj0qC7zeJYS6QWKNNGAxWObkRtkozf/5+7LabUkm874vJ3sspdiHeeZ4GTEwi8OXI
+ mi60W81tAY0C5QWq+4qTHY4tcobtrJJUlY1oH9SqY/EedOc5MZjPEckK3zsaN/BwCde4yBifv
+ 6i99+OZ2TtXqRg2+ztt2mZBg2N0tPHAJnX9lKOIlnldyE6DAetojB0ckQz1RbJVVmjxcQhF5E
+ xgB3ABUlTBBlYdHM1eI3i67RJf21sxDosGmAYtnhk/vq9+1O7DM7DxGfT5aHagYgJUhTLyETc
+ kul9uhNH0x9xbuUSmitLyH1ZFNYvcjwAg8Xc1aBlQATWk610RdvsRf+C5lcwK6F8c9He7OQ+D
+ 5vpFfuY9KvVc1zP9Fy/4AIhq+SJYM/+vR7+XnN1oCi/uWowo5kjh9pfgjfP7wfY6wU9QXgZBi
+ 3d4X1MwBX9VcSTBGreyNsqOPR1haQ7Mo18GYwoOpdu+66GWQPStGnki7gEF1ErELwFbuEOcvV
+ yr+voPh1jxpdYkDqiDSAEPGkoeK91ycppuGzcUzLXhdSfrRqYhAxoN/aginJ+Z58q3j+SvlzE
+ Om0LI5ZlLoOtXmXcd/Tnb+/7+5jYtDX8YJoue5rArVLTOGbzHWac3yJwo3IPNFeCfNYyqzdRq
+ jrF8XoW91tlgxLYYlVWVzjMxsMH0mUyTTORYX8hHLoKPl3sGahaIQfJFWjM+cHyZRfJb20Huu
+ P+L/J3U++s5VHCQrTT9c9Zr+rmPufCJ29/pRMla+h+/o9GxW1er+fz5MzN4OdT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.04.2019 um 20:11 schrieb Jeff King:
-> On Fri, Apr 05, 2019 at 12:41:27PM +0200, Ren=C3=A9 Scharfe wrote:
->> Parsing "P" and "pack-" together crosses logical token boundaries,
->> but that I don't mind it here.
+Am 05.04.2019 um 20:06 schrieb Jeff King:
+> A midx file (and the struct we parse from it) contains a list of all of
+> the covered packfiles, mentioned by their ".idx" names (e.g.,
+> "pack-1234.idx", etc). And thus calls to midx_contains_pack() expect
+> callers to provide the idx name.
 >
-> Yeah, I was tempted to write:
+> This works for most of the calls, but the one in open_packed_git_1()
+> tries to feed a packed_git->pack_name, which is the ".pack" name,
+> meaning we'll never find a match (even if the pack is covered by the
+> midx).
 >
->   if (skip_prefix(data, "P ", &data) &&
->       skip_prefix(data, "pack-", &data) &&
->       ...
+> We can fix this by converting the ".pack" to ".idx" in the caller.
+> However, that requires allocating a new string. Instead, let's make
+> midx_contains_pack() a bit friendlier, and allow it take _either_ the
+> .pack or .idx variant.
 >
-> but that felt a little silly. I dunno. I guess it is probably not any
-> less efficient, because we'd expect skip_prefix() and its loop to get
-> inlined here anyway.
+> All cleverness in the matching code is credited to Ren=C3=A9. Bugs are m=
+ine.
 
-Didn't think of inlining.  Clang unrolls the whole comparison (except on
-powerpc64), but the other compilers available at the Compiler Explorer
-website keep the consecutive calls separate: https://godbolt.org/z/7eTarV
+I didn't consider it to be particularly tricky -- but then kept the dots
+in both filename extension strings, which is not going to fly, as they
+are skipped by the common-prefix loop..  Thanks for fixing that.
 
-Ren=C3=A9
+> There's no test here, because while this does fix _a_ bug, it's masked
+> by another bug in that same caller. That will be covered (with a test)
+> in the next patch.
+>
+> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I was tempted to suggest that the midx struct just store the base name
+> without ".idx" at all, but having callers pass that is no less tricky
+> than passing ".idx" (they still have to allocate a new string).
+
+The middle part of the comparison function would become:
+
+	if (!*idx_name && (!strcmp(idx_or_pack_name, ".idx") ||
+			   !strcmp(idx_or_pack_name, ".pack"))
+		return 0;
+
+No allocations needed -- except when building the list.
+
+(And this time we'd actually need the dots.)
+
+>
+>  midx.c | 36 ++++++++++++++++++++++++++++++++++--
+>  midx.h |  2 +-
+>  2 files changed, 35 insertions(+), 3 deletions(-)
+>
+> diff --git a/midx.c b/midx.c
+> index 8a505fd423..0ceca1938f 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -307,7 +307,39 @@ int fill_midx_entry(const struct object_id *oid, st=
+ruct pack_entry *e, struct mu
+>  	return nth_midxed_pack_entry(m, e, pos);
+>  }
+>
+> -int midx_contains_pack(struct multi_pack_index *m, const char *idx_name=
+)
+> +/* Match "foo.idx" against either "foo.pack" _or_ "foo.idx". */
+> +static int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+> +				const char *idx_name)
+> +{
+> +	/* Skip past any initial matching prefix. */
+> +	while (*idx_name && *idx_name =3D=3D *idx_or_pack_name) {
+> +		idx_name++;
+> +		idx_or_pack_name++;
+> +	}
+> +
+> +	/*
+> +	 * If we didn't match completely, we may have matched "pack-1234." and
+> +	 * be left with "idx" and "pack" respectively, which is also OK. We do
+> +	 * not have to check for "idx" and "idx", because that would have been
+> +	 * a complete match (and in that case these strcmps will be false, but
+> +	 * we'll correctly return 0 from the final strcmp() below.
+> +	 *
+> +	 * Technically this matches "fooidx" and "foopack", but we'd never hav=
+e
+> +	 * such names in the first place.
+> +	 */
+> +	if (!strcmp(idx_name, "idx") && !strcmp(idx_or_pack_name, "pack"))
+> +		return 0;
+
+This is asymmetric, and thus the function should not be used for sorting,
+where it would be called for random pairs of values. For the binary search
+it's fine, assuming the list contains only index filenames (ending with
+".idx"), as the search string is always passed in as idx_or_pack_name.
+
+And an extension-insensitive lookup works fine in a strcmp()-sorted list
+because the order wouldn't change when sorting it again with a looser
+stable extension-sensitive sort.
+
+> +
+> +	/*
+> +	 * This not only checks for a complete match, but also orders based on
+> +	 * the first non-identical character, which means our ordering will
+> +	 * match a raw strcmp(). That makes it OK to use this to binary search
+> +	 * a naively-sorted list.
+> +	 */
+> +	return strcmp(idx_or_pack_name, idx_name);
+
+At this point we could also compare the chars like this:
+
+	return (unsigned char)(*idx_or_pack_name) - (unsigned char)(*idx_name);
+
+This avoids a function call, but doesn't look very pretty.  And I'm not
+fully sure the casts are correct.
+
+> +}
+> +
+> +int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_p=
+ack_name)
+>  {
+>  	uint32_t first =3D 0, last =3D m->num_packs;
+>
+> @@ -317,7 +349,7 @@ int midx_contains_pack(struct multi_pack_index *m, c=
+onst char *idx_name)
+>  		int cmp;
+>
+>  		current =3D m->pack_names[mid];
+> -		cmp =3D strcmp(idx_name, current);
+> +		cmp =3D cmp_idx_or_pack_name(idx_or_pack_name, current);
+>  		if (!cmp)
+>  			return 1;
+>  		if (cmp > 0) {
+> diff --git a/midx.h b/midx.h
+> index 774f652530..26dd042d63 100644
+> --- a/midx.h
+> +++ b/midx.h
+> @@ -43,7 +43,7 @@ struct object_id *nth_midxed_object_oid(struct object_=
+id *oid,
+>  					struct multi_pack_index *m,
+>  					uint32_t n);
+>  int fill_midx_entry(const struct object_id *oid, struct pack_entry *e, =
+struct multi_pack_index *m);
+> -int midx_contains_pack(struct multi_pack_index *m, const char *idx_name=
+);
+> +int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_p=
+ack_name);
+>  int prepare_multi_pack_index_one(struct repository *r, const char *obje=
+ct_dir, int local);
+>
+>  int write_midx_file(const char *object_dir);
+>
+
