@@ -7,121 +7,147 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAA8720248
-	for <e@80x24.org>; Fri,  5 Apr 2019 03:37:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECD8220248
+	for <e@80x24.org>; Fri,  5 Apr 2019 03:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729823AbfDEDhm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 23:37:42 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:45714 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729631AbfDEDhm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 23:37:42 -0400
-Received: by mail-pf1-f193.google.com with SMTP id e24so2463230pfi.12
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 20:37:42 -0700 (PDT)
+        id S1729887AbfDEDho (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 23:37:44 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44520 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729631AbfDEDho (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 23:37:44 -0400
+Received: by mail-pl1-f194.google.com with SMTP id g12so2241411pll.11
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 20:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=OeLIol7el6f6wbhSdS5o9Ipk84ciqkKLdEcoUK+hDNI=;
-        b=iownSwHSWE0ac+rSK5GFEoSmKEcwicUCYsWEoPDAgQTEt6ihp6PXbtxmEO5SyonziT
-         lR50TPaAI26V497vtAHs0VdNGUIzJ6C50YfkJPscu/ZhKL3LwQqDUZTYOHIF86I8tK6T
-         uL8bqaUQ5pK+/5DzTexB2NWHVsCl45LmLLAkbr1vjctD40PAt/u+Nsg+CHLjLE2unQJj
-         kpT/kkDRg43NfH8xD287cS53BsPc1fLS5SuYLiUlYLw2qBrRKTcZsmJCuIw6LDQL9UiO
-         GH4Gac3uY3TUpoHqPVEJA04FZOrFShevI2KlHOHHcQ3+JSJ0Qx6VfqRXYU5PE1wbyrdh
-         UPlg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QHITU3saHrz6FKalxeyHDbDq0zATq6MwsUSWFfoZ3Fs=;
+        b=yPly15uiTvRfAIcYFf4yHFtKFJFLMr7b6raIvSyNw8lMBNwkpYVist3uG7AZObyOEG
+         jhq1pWcHvoHtCwrj0Dwb6Hvsl5mOivB270e5JvxhzOuMkWk9MmjDcZ+m6uRrVv/7jXl3
+         HF8r/9+e2hUINuiqyEH6WSWP5rtVWt9rQGg+7RvkmkUEVuCe+9j7rra8Rgb5yu+iWsW+
+         xc62ozWuYgzV/+bOOQTPObD9WOF/pTlc8V3lCqu7vcjadFB6KcUfwJ10RTjQM+aICgbt
+         QQGb5F0lVxsHXJvCXW6riUkn1MNekrDvCGnY7eFICPvnlb0jBCQ21scUuN6O5VMdbQve
+         COVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=OeLIol7el6f6wbhSdS5o9Ipk84ciqkKLdEcoUK+hDNI=;
-        b=Qncy4d/e9cw9KHsMb1T/MDrBfw19ihFBnO3t8hQYV9K1/ygc7gCLRNVL9mUEce1l+J
-         xyLLeQdsTDz1yYopKNVc7X+qHE8udEzZ7eJtU3QlNFmYFtY1KmfJCO4AvMBsScP/QLGs
-         9qlqrF+sJQRcpcPEaTJowo3lBwxwpMJAsSJobID/tvwAtvKLQzoexLCrQXxEAZ5VgG4p
-         uSLbcuD693OwnLIjEgAg4Pxi/RbOO15/7eXkjbSZyNy+pCH/L6uK0MqyubJfBYg3YwQc
-         jUBaB36vL4fTr2Cg+Vw+FOnZZzQ9Hn9/VRTMJDEA4oqIlYTuW3TyaWAYpDqn7cgt9OBb
-         oJUA==
-X-Gm-Message-State: APjAAAVt7aVS5qLjiiJ+FoKHQ5ann4w8yT7W/dkuE1nBNV8y/BOhCCEP
-        MZvJVeDoPbmDlm91uv7eLPerOzN8BmEETQ==
-X-Google-Smtp-Source: APXvYqwl7glbcgm5XLWONp8EsH3XnrZc4H4Bj6pkbC2lYOje+boDVetS3wSuxV1fSQ6UpUrNZdwJ/Q==
-X-Received: by 2002:a62:424f:: with SMTP id p76mr9929222pfa.141.1554435461193;
-        Thu, 04 Apr 2019 20:37:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QHITU3saHrz6FKalxeyHDbDq0zATq6MwsUSWFfoZ3Fs=;
+        b=PQOlo4PafPu1o0Vj4tYbUkMCfLE6hYTq3jHiHsxG+MSdICXP+wbxlXZoqaX3Qf/7h4
+         hjfoyXkqDAkMNKGyzLURZQ7ObF4zdJJSIOa/5pdqiuIiEdB59e0OjtVhgdqvHvGUk+a+
+         z/npJKkUiYhM3WBTix5hatJwFsYVkStzEFp1UJzLo4vmvN4xZNMu9BYGrFvX3guRu8DN
+         ArfoVdsqGkY+j2b0FN4l0z6KuiOm8TMfvm9FkpghzlX7m8FWxg+UR2vN3p+Tf7HL5tmp
+         q5u/ORrbZZ0Yz4EOcRKobaCNoQV4aE4otFg6hRnSOEc2RHSh96G54rmmahPqFXNekFpf
+         KPtg==
+X-Gm-Message-State: APjAAAU/ot/14LkKOJUjJ94cQS8i4cbedUi1KXMhCQX0YdnBwuM1IBKt
+        Tv1N+y9rnb6lBam1zFabRaU8EDYX83VNfA==
+X-Google-Smtp-Source: APXvYqw7Phj92JS/ifXP69+BdLsl6GR9012VX0n/joOR+yr/QtIOlyyEynrhtwosQ+CrP9CPS2av0g==
+X-Received: by 2002:a17:902:2bc9:: with SMTP id l67mr10655437plb.102.1554435463416;
+        Thu, 04 Apr 2019 20:37:43 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:9900:4016:ceb4:1574])
-        by smtp.gmail.com with ESMTPSA id v189sm60563218pgd.77.2019.04.04.20.37.40
+        by smtp.gmail.com with ESMTPSA id l69sm27661879pga.73.2019.04.04.20.37.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Apr 2019 20:37:40 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 20:37:39 -0700
+        Thu, 04 Apr 2019 20:37:42 -0700 (PDT)
+Date:   Thu, 4 Apr 2019 20:37:42 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com
-Subject: [PATCH 0/7] harden unexpected object types checks
-Message-ID: <cover.1554435033.git.me@ttaylorr.com>
+Subject: [PATCH 1/7] t: move 'hex2oct' into test-lib-functions.sh
+Message-ID: <f09c374557070b286391f1f69c4288d7d0769851.1554435033.git.me@ttaylorr.com>
+References: <cover.1554435033.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1554435033.git.me@ttaylorr.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+The helper 'hex2oct' is used to convert base-16 encoded data into a
+base-8 binary form, and is useful for preparing data for commands that
+accept input in a binary format, such as 'git hash-object', via
+'printf'.
 
-Peff pointed out to me a couple of weeks ago that we could reproducibly
-crash Git when doing the following:
+This helper is defined identically in three separate places throughout
+'t'. Move the definition to test-lib-function.sh, so that it can be used
+in new test suites, and its definition is not redundant.
 
-  $ git rev-list --objects <blob> <broken-tree>
+This will likewise make our job easier in the subsequent commit, which
+also uses 'hex2oct'.
 
-Where <blob> is a normal blob, and <broken-tree> is a tree which
-contains an entry that refers to <blob> but gives it a type other than
-'blob'. (This is described in detail in 2/7 and fixed in 3/7.)
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t1007-hash-object.sh  | 4 ----
+ t/t1450-fsck.sh         | 4 ----
+ t/t5601-clone.sh        | 4 ----
+ t/test-lib-functions.sh | 6 ++++++
+ 4 files changed, 6 insertions(+), 12 deletions(-)
 
-We decided to continue, trying to come up with more tests that exercise
-similar object corruption, and the tests
-'t6102-rev-list-unexpected-objects.sh' are what we came up with.
-
-The series goes as follows:
-
-  1. Prepare ourselves by moving a helper in 't' into
-     test-lib-functions.sh so that we can use it in a new location.
-
-  2. Write out a handful of tests that exercises cases similar to the
-     above, and mark the ones with bugs as 'test_expect_failure'.
-
-  3. Fix (most) of them in each subsequent commit.
-
-The exception we make for step (3) is that don't provide a complete fix,
-only restore behavior to before the commit at which it regressed.
-
-I'll be brief here, since most of the detail is described at length in
-the patches themselves. This said, please do ask questions where I
-wasn't clear, or could have been clearer. (This series grew larger than
-I originally expected it to, so perhaps there is detail that I
-accumulated and didn't devote enough time to).
-
-Thanks as always in advance for your review.
-
-
-Jeff King (3):
-  get_commit_tree(): return NULL for broken tree
-  rev-list: let traversal die when --missing is not in use
-  rev-list: detect broken root trees
-
-Taylor Blau (4):
-  t: move 'hex2oct' into test-lib-functions.sh
-  t: introduce tests for unexpected object types
-  list-objects.c: handle unexpected non-blob entries
-  list-objects.c: handle unexpected non-tree entries
-
- builtin/rev-list.c                     |   4 +-
- commit.c                               |   6 +-
- list-objects.c                         |  13 +++
- t/t1007-hash-object.sh                 |   4 -
- t/t1450-fsck.sh                        |   4 -
- t/t5601-clone.sh                       |   4 -
- t/t6102-rev-list-unexpected-objects.sh | 127 +++++++++++++++++++++++++
- t/test-lib-functions.sh                |   6 ++
- 8 files changed, 152 insertions(+), 16 deletions(-)
- create mode 100755 t/t6102-rev-list-unexpected-objects.sh
-
---
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index a37753047e..7099d33508 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -199,10 +199,6 @@ test_expect_success 'too-short tree' '
+ 	test_i18ngrep "too-short tree object" err
+ '
+ 
+-hex2oct() {
+-    perl -ne 'printf "\\%03o", hex for /../g'
+-}
+-
+ test_expect_success 'malformed mode in tree' '
+ 	hex_sha1=$(echo foo | git hash-object --stdin -w) &&
+ 	bin_sha1=$(echo $hex_sha1 | hex2oct) &&
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 49f08d5b9c..0f268a3664 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -256,10 +256,6 @@ test_expect_success 'unparseable tree object' '
+ 	test_i18ngrep ! "fatal: empty filename in tree entry" out
+ '
+ 
+-hex2oct() {
+-	perl -ne 'printf "\\%03o", hex for /../g'
+-}
+-
+ test_expect_success 'tree entry with type mismatch' '
+ 	test_when_finished "remove_object \$blob" &&
+ 	test_when_finished "remove_object \$tree" &&
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index d6948cbdab..3f49943010 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -611,10 +611,6 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
+ '
+ 
+-hex2oct () {
+-	perl -ne 'printf "\\%03o", hex for /../g'
+-}
+-
+ test_expect_success 'clone on case-insensitive fs' '
+ 	git init icasefs &&
+ 	(
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 80402a428f..349eabe851 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1202,6 +1202,12 @@ depacketize () {
+ 	'
+ }
+ 
++# Converts base-16 data into base-8. The output is given as a sequence of
++# escaped octals, suitable for consumption by 'printf'.
++hex2oct () {
++	perl -ne 'printf "\\%03o", hex for /../g'
++}
++
+ # Set the hash algorithm in use to $1.  Only useful when testing the testsuite.
+ test_set_hash () {
+ 	test_hash_algo="$1"
+-- 
 2.21.0.203.g358da99528
+
