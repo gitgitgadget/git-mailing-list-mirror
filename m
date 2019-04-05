@@ -2,106 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 048BC20248
-	for <e@80x24.org>; Fri,  5 Apr 2019 05:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C324720248
+	for <e@80x24.org>; Fri,  5 Apr 2019 07:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726728AbfDEFqL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 01:46:11 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34736 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726677AbfDEFqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 01:46:10 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p10so6469504wrq.1
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 22:46:09 -0700 (PDT)
+        id S1730045AbfDEHev (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 03:34:51 -0400
+Received: from mail-qt1-f170.google.com ([209.85.160.170]:41196 "EHLO
+        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726594AbfDEHev (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 03:34:51 -0400
+Received: by mail-qt1-f170.google.com with SMTP id w30so6298000qta.8
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 00:34:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=b0oAk2bBBl9fyGzxgJOrKwYbXNrnrTOpNB3pDdOdDFU=;
-        b=ZpjDVjnSDAJG78vQf2ceUh1pTUQN8DImZV8JGC0TNKblDRCIwQJE17QRoZ1a6aiAO6
-         BQxWw7/pShqRilyTT8PZ+bnssNHABH3ODh+y0do1UiPyEttvgSlJtaFQQIyFzXGBs+lt
-         /ccemJ1N70d6ptEduJjJz0I/IpWxnZh2cqPLlSwZ3YYnD6RdFvJILmqJCMQqiRIhKmj0
-         DzNIo2YvUlHPGiS7CdtNxLS/o8mJvmPZy71H/4BG+16AQjOX8lr0Z+ow6jCqb0CGwAQU
-         QASbA5rUJRXxJYVdfuXDYTGKksl0PIG59KCzEt2odCvbEOQj1FgE4bNB93bBNjoOAojt
-         cy2Q==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=av0tOeYqjyws2FGTNZ+KQcs9Ad8bOnoTO+PXNxvbc18=;
+        b=VsA5bAD4PfScNuyrA2TFSpdank0KmGzYVFQmgtiJfECgUVv1bWsDvmvXqmCb4uWjMO
+         ZpWX9IyVrcMDvUQtSn/pIPXQ1ItNgBzfB+yhH8vCK+Jy7xiqnQq++wN7JXKHCxRpZ1RR
+         HekBcSo0J+9fHFO6TVhM0Er3G1Q+wiasRfzJsFttn8a88m1PPmpLqgL31sE0kzgOrkfK
+         6feY7JJhiRtlo7Hto8R+83wLd55Uvsi/iGD7TUkmCvPRuC9OyrdW0Xx0gWa9UfcIS+XD
+         O7Jxmvfd4STwsxi8tT2RHPGtuDY1tpxyvlKzuQ9speD+J0U9fETppqgg1FHa8Aj222BI
+         gC9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=b0oAk2bBBl9fyGzxgJOrKwYbXNrnrTOpNB3pDdOdDFU=;
-        b=L8WIj2eeJ2u6gMziWMjd2THkBwXFsT9FNHAZjDeD5sk0FqUHcqvXyl9eYKU5LJMoqP
-         U8Dip9fRMi4Q+zS1MeAXTbxjdtuC5u7g/0cZGj5fBIxO+R8+O5BURTyFMiSgaBf/rXnb
-         fqphyhaEfyncugSa0j8mj7jPtwxrPACf+vsxUNb59vScU3mBvemQ8z+Z+jc6XexZ5sZo
-         bjPQNxHFs9Ie45D+x2CCtC3j6TGgCaeKsNw1E+T6C50Fcx9znnlKa6mJylwkQ3PZUnLf
-         jemcSw8TdHbE8yyJJFCmWeYlJ4XEiKx7XoYRvxB1/IXy+6AzuTDn0P9uKOwOlCX7Pafc
-         eKCg==
-X-Gm-Message-State: APjAAAVv3ep+uD5ci1ZVe+JyxErvyOJHtG0ebcF65f5bhzkki0tXffZ2
-        //gwm9v3yu3PglFBDu9pRGo=
-X-Google-Smtp-Source: APXvYqwLwkj2pQ7lcFRQ0LWgvvFBVxOPEcUVKWwrQniILfekyySld/DCAWLdNLAN8HpL1f1/EhmQHA==
-X-Received: by 2002:a5d:4a4f:: with SMTP id v15mr6623321wrs.5.1554443168669;
-        Thu, 04 Apr 2019 22:46:08 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id j22sm63322745wrd.91.2019.04.04.22.46.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 22:46:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/12] a rabbit hole of update-server-info fixes
-References: <20190404232104.GA27770@sigill.intra.peff.net>
-Date:   Fri, 05 Apr 2019 14:46:07 +0900
-In-Reply-To: <20190404232104.GA27770@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 4 Apr 2019 19:21:04 -0400")
-Message-ID: <xmqqpnq1c8dc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=av0tOeYqjyws2FGTNZ+KQcs9Ad8bOnoTO+PXNxvbc18=;
+        b=F6O0KL8xVwkjqlow6Qf8NsRixRVSJGAZ0O1Lx6X4kgrRq1cRleVammDtxDaTKIDGon
+         4gJq4V7+gVIyuu9PX1mM+RhQw6aNG1froTAJ0gBeYkjRd3Rry2/1mMRKO4K2j7IgWk82
+         G4vdFmyPv0FUFvtY3MYnt5xlB2Vg1toEVfuqsYntlcBTAdzx7Xlny0vIEGTAt3Bjp1WO
+         l9dAqhRF6GCWj9spyZ/3LZq7SXJj9tUSHCGiZOqDilG+5ftHzg9+ruVMvAUlp3L2pTmL
+         Y/riTP2GIPYeRma+wnp+CBg6WgloRAHSlp/VrCaAOILTmiBtDiPsCqrUA3hGy6fCktCd
+         Hmdw==
+X-Gm-Message-State: APjAAAVejXrDvjvIQrzpdhyRXc/w51Gl/FRj15IhC4+JPrpISoQlf5rk
+        7J8bNgYdsxT5tAzJMqhPZcCSiX63OBOmNwRNFeY4VgWJ
+X-Google-Smtp-Source: APXvYqxhgoRqbGAPtLPqYNZjqXw2OyOsxvtxblwmTnmZlxCScTN61nh2wiBQcjRUWjSHOn/lo17n0huda5qnyE1YCcg=
+X-Received: by 2002:ac8:38fd:: with SMTP id g58mr9816081qtc.14.1554449690306;
+ Fri, 05 Apr 2019 00:34:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Date:   Fri, 5 Apr 2019 09:34:39 +0200
+Message-ID: <CAA01Csp7y9=2n9=TNYMMw9LUO_cENz7FBeZjFrUd2FvHFT9NCQ@mail.gmail.com>
+Subject: "commit --author=..." does not work if global email and name is not set
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> This patch series started with patch 12: I just wanted to drop the
-> unused "force" parameter from update_info_refs().
->
-> But that made me look at its sibling update_info_packs(), and whether it
-> ...
-> And here we are. I present them here in reverse rabbit-hole order (which
-> is also roughly important fixes first, and minor cleanups last). The
-> individual chunks are mostly independent, but the server-info cleanups
-> rely on the shared pack_basename() helper added as part of the midx fix.
+I have a repo downloaded on machines which do automatic tests.
+Sometimes I want to make a quick fix there and push back to origin.
+Reading git-commit docs I had impression that I can use "--author=me"
+and it will work. But it requires setting global user name and email:
 
-A kind of cover letter to make readers chuckle.  Well written.
+========================================================
+$ git commit --author=pkruk
 
-And of course, thanks.  It's a delight to read a nicely constructed
-series like this one.
+*** Please tell me who you are.
 
->
->   [01/12]: t5319: fix bogus cat-file argument
->   [02/12]: t5319: drop useless --buffer from cat-file
->   [03/12]: packfile: factor out .pack to .idx name conversion
->   [04/12]: packfile: check midx coverage with .idx rather than .pack
->   [05/12]: http: simplify parsing of remote objects/info/packs
->   [06/12]: server-info: fix blind pointer arithmetic
->   [07/12]: server-info: simplify cleanup in parse_pack_def()
->   [08/12]: server-info: use strbuf to read old info/packs file
->   [09/12]: server-info: drop nr_alloc struct member
->   [10/12]: packfile.h: drop extern from function declarations
->   [11/12]: server-info: drop objdirlen pointer arithmetic
->   [12/12]: update_info_refs(): drop unused force parameter
->
->  http.c                      | 35 ++++++---------
->  packfile.c                  | 31 ++++++++++---
->  packfile.h                  | 86 ++++++++++++++++++++-----------------
->  server-info.c               | 57 +++++++++++-------------
->  t/t5319-multi-pack-index.sh | 29 ++++++++++---
->  5 files changed, 132 insertions(+), 106 deletions(-)
->
-> -Peff
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'some@default.(none)')
+========================================================
+
+I do not want to set the default name/email, because I want commits to
+have real names, and not some "automatic test account" info. For
+pushing back to origin I already have to use a read-write SSH key, but
+lack of default name/email would prevent accidental commits (people
+WILL forget to use --author ...).
+
+Do you think changing git to not require default name/email if
+"--author" is specified is possible (and hopefully easy and quick to
+implement ;))?
+
+Thanks,
+
+-- 
+Piotr Krukowiecki
