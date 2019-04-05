@@ -6,81 +6,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD66A20248
-	for <e@80x24.org>; Fri,  5 Apr 2019 18:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E017F20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 18:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731711AbfDESbo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 14:31:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48848 "HELO cloud.peff.net"
+        id S1731571AbfDESlN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 14:41:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48862 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731589AbfDESbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 14:31:44 -0400
-Received: (qmail 12008 invoked by uid 109); 5 Apr 2019 18:31:44 -0000
+        id S1731183AbfDESlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 14:41:13 -0400
+Received: (qmail 12329 invoked by uid 109); 5 Apr 2019 18:41:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:31:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:41:13 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28598 invoked by uid 111); 5 Apr 2019 18:32:11 -0000
+Received: (qmail 28642 invoked by uid 111); 5 Apr 2019 18:41:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:32:11 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:41:40 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:31:42 -0400
-Date:   Fri, 5 Apr 2019 14:31:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:41:11 -0400
+Date:   Fri, 5 Apr 2019 14:41:11 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 2/7] t: introduce tests for unexpected object types
-Message-ID: <20190405183142.GD2284@sigill.intra.peff.net>
+Subject: Re: [PATCH 6/7] rev-list: let traversal die when --missing is not in
+ use
+Message-ID: <20190405184111.GE2284@sigill.intra.peff.net>
 References: <cover.1554435033.git.me@ttaylorr.com>
- <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
+ <a3a80b4b2a988eb65d85a5acd54c584d047073c7.1554435033.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
+In-Reply-To: <a3a80b4b2a988eb65d85a5acd54c584d047073c7.1554435033.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 04, 2019 at 08:37:44PM -0700, Taylor Blau wrote:
+On Thu, Apr 04, 2019 at 08:37:54PM -0700, Taylor Blau wrote:
 
-> Let A be the object referenced with an unexpected type, and B be the
-> object doing the referencing. Do the following:
+>  3. have the traversal machinery communicate the failure to the caller,
+>     so that it can decide how to proceed without re-evaluting the object
+>     itself.
 > 
->   - test 'git rev-list --objects A B'. This causes A to be "cached", and
->     presents the above scenario.
-> 
-> Likewise, if we have a tree entry that claims to be a tree (for example)
-> but points to another object type (say, a blob), there are two ways we
-> might find out:
-> 
->   - when we call lookup_tree(), we might find that we've already seen
->     the object referenced as another type, in which case we'd get NULL
-> 
->   - we call lookup_tree() successfully, but when we try to read the
->     object, we find out it's something else.
-> 
-> We should check that we behave sensibly in both cases (especially
-> because it is easy for a malicious actor to provoke one case or the
-> other).
+> Of those, I think (3) is probably the best path forward. However, this
+> patch does none of them. In the name of expediently fixing the
+> regression to a normal "rev-list --objects" that we use for connectivity
+> checks, this simply restores the pre-7c0fe330d5 behavior of having the
+> traversal die as soon as it fails to load a tree (when --missing is set
+> to MA_ERROR, which is the default).
 
-I think our pasting together of multiple commits adding the lone/seen
-cases ended up in some redundancy in the description. In particular, I'm
-not sure what the first paragraph/bullet quoted above is trying to say,
-as it corresponds to the second bullet in the later list. Maybe collapse
-them together like:
+I think this is worth doing, as it restores the earlier behavior. But a
+few general thoughts (which I've shared already with you, but for the
+benefit of the list):
 
-  We might hit an unexpected type in two different ways (imagine we have
-  a tree entry that claims to be a tree but actually points to a blob):
+ - actually doing the "communicate failure to the caller" would probably
+   not be too bad as a single-bit PARSE_FAILED flag in obj->flags. But
+   it does require the caller understanding which objects the traversal
+   would try to parse (i.e., rev-list would have to understand that it
+   is on its own to check blobs, even if they don't have a PARSE_FAILED
+   flag).
 
-    - when we call lookup_tree(), we might find that we've already seen
-      the object referenced as a blob, in which case we'd get NULL. We
-      can exercise this with "git rev-list --objects $blob $tree", which
-      guarantees that the blob will have been parsed before we look in
-      the tree. These tests are marked as "seen" in the test script.
+ - speaking of blobs, this series does not help rev-list find a
+   mis-typed or bit-rotted blob at all, because it never opens the
+   blobs. Does that mean my expectations for rev-list are simply too
+   high, and that we should be expecting fsck-like checks to catch
+   these? I dunno.
 
-    - we call lookup_tree() successfully, but when we try to read the
-      object, we find out it's something else. We construct our tests
-      such that $blob is not otherwise mentioned in $tree. These tests
-      are marked as "lone" in the script.
+   It would not be too expensive to convert the existing "do we have the
+   blob" check in rev-list to "do we have it, and is its type correct?".
+   But obviously finding bitrot would be super-expensive. Which leads me
+   to...
+
+ - there actually _is_ a --verify-objects option, which would check even
+   blobs for bitrot. It was added long ago in 5a48d24012 (rev-list
+   --verify-object, 2011-09-01) for use with check_connected(). But it
+   was deemed too slow for normal use, and ripped out in d21c463d55
+   (fetch/receive: remove over-pessimistic connectivity check,
+   2012-03-15).
+
+That last one implies that we're OK relying on the incoming index-pack
+to catch these cases (which is going to do a sha1 over each object).
+
+It does seem like we should bother to notice failures when it's _free_
+to do so, which is the case with these tree-loading failures. Which is
+basically what this patch is doing.
 
 -Peff
