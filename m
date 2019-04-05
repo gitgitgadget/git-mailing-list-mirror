@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 538F520248
-	for <e@80x24.org>; Fri,  5 Apr 2019 03:37:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5367D20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 03:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729931AbfDEDht (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 23:37:49 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36534 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729631AbfDEDhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 23:37:48 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 85so2306478pgc.3
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 20:37:48 -0700 (PDT)
+        id S1729934AbfDEDhv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 23:37:51 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:45422 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729631AbfDEDhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 23:37:50 -0400
+Received: by mail-pl1-f195.google.com with SMTP id bf11so2239572plb.12
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 20:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=AxVTQ4DnUgP3W/0YNxbBl/tAE1nkMLyDaJJJllUySFY=;
-        b=XkuNJCvg7NmQuJ9PvBX/QTjQQWpKwro/mGAuqwf1HT9ozsw4psQgL2C4qwM94KWQPL
-         NNfWwHEirqTv+e3K8QiUFoXWJOAFDhkWGCUSVf7TpzLvZCjQi7lHdFJvMNidW4EH5iL/
-         EGq77OxPf6/EeOENEVnBcs5lzPRMwv32TyILeqS2Bc/8155JMoHx+8riRxTUqQiSt2LB
-         3Rnq71i9JI2uYz2LWZQq2wozrvPUv/n8XY5v+96aTfCHXddIEH0VHJ1QGjINZjem+qFP
-         RDYw8sptmWWZTYHgCpSFQdYCbdm0sONMejL5leWw+ErG3zGAIPNcXT9zHU/yqaTjkRsU
-         hzWw==
+        bh=eGWxjGhlNFg5TpJtevAfYnV2v0oecDO4SqpwhnHhpFE=;
+        b=MtP0fknwN7OiSrvqs74ahIKPzyytAyFgqAP6n4pzEPCBqFiL8YN+v0ZPxdxjwGdG0S
+         vkBTQ2Vbr+AvztFObOcjj6nwqB5Q9yi19H3vFeVkURldAeYiR82Y2cH26ZEhx1/QSirj
+         8hnjRx43+ApOqNJSNt6lRG1PtrPgi+nJBEbGPjlK6CguflPm8ZmGSUS9ZJQtiAdwhHdO
+         c3wGRf7t4NFwmQvpnfBJFjawMK+k6wuUPPXw3x212QKqSToBQ243rgPBy/69q2CZJTOn
+         bQmqOPrkCebSxSA62ynPD2O9jm4FkupM/e6NDdI/J9nmRRQj4fpSD8g/mA/vFxKqXeUY
+         00YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AxVTQ4DnUgP3W/0YNxbBl/tAE1nkMLyDaJJJllUySFY=;
-        b=imCQOqBusUyEjLVEfsm/ILOHjRTfBXCpe2j3+8mOnAqOYnYXIExjfkSCPO4ueGzJTA
-         0ML4dTLfSxS0BS+OJ1G+bjIJAbVxuS5+tJ3as0rYihWN2CuZmegvFQEywRCUVobfk6WK
-         Agb2v15zjRngUHdW7kIhaLgsxMyG3qdlEqDO8/wvENybMoPDfLgt7L2yMJPMNVHVip9K
-         mGvATuwkAawMBfP7JlI/7PZBN2xk6hilRN+Eq5GPNnRBDAEhnFfRL8AM2CpOZwG08Vlr
-         474X4h35F6RH/oOaaDNOSCCrSd81QhtHpFpY50LpbLCgxpJeZ3pLi7GvjiA4MEIcASsW
-         JGYg==
-X-Gm-Message-State: APjAAAV6D0yze5IZQfOctxMuGe8Ex3r9ai1pyiiTjBud6l/cBQ6nqx4+
-        AmjGvAFflBFmyxoM0VzgCVBB7wZV/WairQ==
-X-Google-Smtp-Source: APXvYqzG8rVlfX9oP0DuN7UPL6c602gKWG8HBGIczwliOq01bxeIhsmSQz7lD6TJ9qq5aCOiQA7Cbg==
-X-Received: by 2002:a63:1912:: with SMTP id z18mr9686967pgl.115.1554435467628;
-        Thu, 04 Apr 2019 20:37:47 -0700 (PDT)
+        bh=eGWxjGhlNFg5TpJtevAfYnV2v0oecDO4SqpwhnHhpFE=;
+        b=s6SjuQT6F8dy4XdGOxC4U+0H/GBr1gqxm8POtLP+E0xPoRkeHs8oam7/fbPZwNaqTw
+         yQESkjymWdCqqf4IOKBv0dO6iesYqrXI+l+EsNJhMBa0EBIuKQqKPpyH1k0yiRD4oMoP
+         xD5BJsrfWYbX/mdr7bKdGoHjmtC6fjwvYST8v7Of7IZANfjoO0GLceTsaOFp33OdcLuy
+         sF/l2mbxhuqx1v6PznotoXYhtUcRQUOGvwnjA4x8bnucnkbqIYylaWBTG5UYa0uXrV01
+         srhNtLru0+MKFin+bU+9oTknvuQZXJ6Pd7whdDYJS1HhLNNIGP7k0E3GVqsZ4DqwoAi3
+         rPnA==
+X-Gm-Message-State: APjAAAVihwLvHfG3uwT5EHQXMG4dbU3YjekMbOC5MdPQvzQXaYSDKXtK
+        QDy/TZh3L/z0vkx61qn0n0DcGr009+7crA==
+X-Google-Smtp-Source: APXvYqwZuAmF6srajO1/Aws9aSPZ23goSgNiYllXJVxYFJTu0sWTtM5sl06ytKelQo3RwhPRjqVWZA==
+X-Received: by 2002:a17:902:b484:: with SMTP id y4mr10358248plr.88.1554435469925;
+        Thu, 04 Apr 2019 20:37:49 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:9900:4016:ceb4:1574])
-        by smtp.gmail.com with ESMTPSA id l63sm30487829pfc.89.2019.04.04.20.37.46
+        by smtp.gmail.com with ESMTPSA id o5sm68988463pfa.135.2019.04.04.20.37.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Apr 2019 20:37:47 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 20:37:46 -0700
+        Thu, 04 Apr 2019 20:37:49 -0700 (PDT)
+Date:   Thu, 4 Apr 2019 20:37:48 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com
-Subject: [PATCH 3/7] list-objects.c: handle unexpected non-blob entries
-Message-ID: <75f20ee26def257aa45dd31cd016ee76f81dcb83.1554435033.git.me@ttaylorr.com>
+Subject: [PATCH 4/7] list-objects.c: handle unexpected non-tree entries
+Message-ID: <6d59461830b89fab5eabae1c1b883888bd9d9fca.1554435033.git.me@ttaylorr.com>
 References: <cover.1554435033.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -66,12 +66,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix one of the cases described in the previous commit where a tree-entry
-that is promised to a blob is in fact a non-blob.
-
-When 'lookup_blob()' returns NULL, it is because Git has cached the
-requested object as a non-blob. In this case, prevent a SIGSEGV by
-'die()'-ing immediately before attempting to dereference the result.
+Apply similar treatment as the previous commit for non-tree entries,
+too.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
@@ -80,37 +76,37 @@ Signed-off-by: Taylor Blau <me@ttaylorr.com>
  2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/list-objects.c b/list-objects.c
-index dc77361e11..ea04bbdee6 100644
+index ea04bbdee6..bb7e61ef4b 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -133,6 +133,11 @@ static void process_tree_contents(struct traversal_context *ctx,
- 					base, entry.path);
- 		else {
- 			struct blob *b = lookup_blob(ctx->revs->repo, &entry.oid);
-+			if (!b) {
-+				die(_("entry '%s' in tree %s has blob mode, "
-+				      "but is not a blob"),
+@@ -125,6 +125,11 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 
+ 		if (S_ISDIR(entry.mode)) {
+ 			struct tree *t = lookup_tree(ctx->revs->repo, &entry.oid);
++			if (!t) {
++				die(_("entry '%s' in tree %s has tree mode, "
++				      "but is not a tree"),
 +				    entry.path, oid_to_hex(&tree->object.oid));
 +			}
- 			b->object.flags |= NOT_USER_GIVEN;
- 			process_blob(ctx, b, base, entry.path);
+ 			t->object.flags |= NOT_USER_GIVEN;
+ 			process_tree(ctx, t, base, entry.path);
  		}
 diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
-index 472b08528a..76fe9be30f 100755
+index 76fe9be30f..30976385a8 100755
 --- a/t/t6102-rev-list-unexpected-objects.sh
 +++ b/t/t6102-rev-list-unexpected-objects.sh
-@@ -19,8 +19,9 @@ test_expect_failure 'traverse unexpected non-blob entry (lone)' '
+@@ -33,8 +33,9 @@ test_expect_failure 'traverse unexpected non-tree entry (lone)' '
  	test_must_fail git rev-list --objects $broken_tree
  '
  
--test_expect_failure 'traverse unexpected non-blob entry (seen)' '
--	test_must_fail git rev-list --objects $tree $broken_tree
-+test_expect_success 'traverse unexpected non-blob entry (seen)' '
-+	test_must_fail git rev-list --objects $tree $broken_tree >output 2>&1 &&
-+	test_i18ngrep "is not a blob" output
+-test_expect_failure 'traverse unexpected non-tree entry (seen)' '
+-	test_must_fail git rev-list --objects $blob $broken_tree >output 2>&1
++test_expect_success 'traverse unexpected non-tree entry (seen)' '
++	test_must_fail git rev-list --objects $blob $broken_tree >output 2>&1 &&
++	test_i18ngrep "is not a tree" output
  '
  
- test_expect_success 'setup unexpected non-tree entry' '
+ test_expect_success 'setup unexpected non-commit parent' '
 -- 
 2.21.0.203.g358da99528
 
