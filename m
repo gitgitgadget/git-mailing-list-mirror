@@ -2,137 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E484820248
-	for <e@80x24.org>; Fri,  5 Apr 2019 20:16:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 389DF20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 20:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726310AbfDEUQM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 16:16:12 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39151 "EHLO mout.gmx.net"
+        id S1726264AbfDEUR2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 16:17:28 -0400
+Received: from mout.web.de ([217.72.192.78]:37481 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726264AbfDEUQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 16:16:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554495369;
-        bh=G+JSLWIbyBmZSRxWgsx9fM/VAKUcN0ohnTAmV+rjY/0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QhBk4yp7TR+uzI0mqMypEeFcsR5761kQ3I0a9FH5QKeFEv2LsSX/hUMAvh/uOn0/f
-         a+7rKNbMXENwA4ZPRDkR92EQKyqOiZSai33YuZwfpwU6w0Znq7pHnhxNASGV2yONjD
-         q5xctxppDd76ua9UGKA2E8Kjbc0WcaDnaXIvyJAs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSY2q-1hKEW43KsO-00Rcfy; Fri, 05
- Apr 2019 22:16:08 +0200
-Date:   Fri, 5 Apr 2019 22:16:10 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH] fixup! diff: batch fetching of missing blobs
-In-Reply-To: <20190405170934.20441-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1904052214280.41@tvgsbejvaqbjf.bet>
-References: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com> <20190405170934.20441-1-jonathantanmy@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725946AbfDEUR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 16:17:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1554495443;
+        bh=SNFKqlsq2TYUWZ3NylgbhvfJJHXrnXjg+RABbMsowPQ=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ZxUAxRnY2+vCSbD/Pkp0KsO25r7vIbHvA6Ghz/NcYiSLCV4qFSpyDmOEjDJ/IQbDR
+         7E9wCSN+rLCoYMOMUPnWB0HW8SbQk8+JV7dcoxBXezN2I9P2oGX7uvXlMISvE5Gcp0
+         Eyv8SmtRn6zZs2VW8MY0hKGMpM1SRLDxBsSdis9E=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.22] ([79.203.21.163]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSrYf-1hJxO23BHp-00RoOd; Fri, 05
+ Apr 2019 22:17:23 +0200
+Subject: Re: [PATCH 05/12] http: simplify parsing of remote objects/info/packs
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <20190404232104.GA27770@sigill.intra.peff.net>
+ <20190404232704.GE21839@sigill.intra.peff.net>
+ <83129937-dcd0-f16e-c8aa-97eceec9769a@web.de>
+ <20190405181132.GA32401@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <85b12bbd-15a8-09a1-395b-dc1606ab34e7@web.de>
+Date:   Fri, 5 Apr 2019 22:17:07 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qdY/KduAaapa0ptZB9Ah380vi7NDbjb09mZf4MPa4N9UccbaFqT
- 6bpkc0CAwGVF4B334knd0AvshMdZSRPR8vpkpuNKcgcHaw3cvcA3T+Q4agBZGTe7hfYimzs
- 9IVdH98PPTjcL8eL2wxVcGoMfmp+1XCh4JWaH1/N7KrlVldfzaCAOqYHMsbFfGdmqKmt411
- rLhTv8SmCQ0lbDzI7rQNA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4prFadERBig=:T08/yLYt8BmdGJUtIq7cAi
- ShS+hGppxaZMSX+XLs1vuU7cyqFEx6OpAkw/4ECaeYFsYBkAG4WQ/E1SKJcGl9q8X2XD+99Hn
- inh8NIPg9HhmwMNODu3ekM8ZRSdzHrmmYAjt6MQm1N412RgpfowkkZyGRoFLxnGC65gkIptk3
- fYnHWUsujdP+b/eQjgm3QSrquhY0zTJXWdPJuzoQAenCOS9IQ2qYuWXRGZafKTQq270FoZ/jM
- KDrwrjr8wV8Y14c35DIhrA3mwxcEkGPUntykXaGpztb1ppWawdexyOQUy+uKKIFvccWgaxf8X
- UHo6JFR50tHOwoHz4aHTQ35IH4+aGEgMgC6RdKi7pC3XAoLgB3/9O6M2T3o7lrcwL/JXdxe+Z
- 6MOj0yNsxVQwwqmmbZNWAmgLSsXfVNtYvdEeAd75Ggm9cSfAgF0INuwmOmHjcrZodX6tbq70s
- tqpr8RjS/mWy2IKqopCTbNICkPwuK2W8ECiBl+hodq3ZV6+JHYvra8HNWabs7qhMng/9f1Kfw
- I+OVjhzvLhpQUE1wIG3+JB8SxKJkKKt/d4bv9cadEODtHx3qIHamBP7UaaW2qpH4ztWFR49WG
- M+Ahv1NuQCIxbJbB/diN52QBA6w1bgez2QghuYcwpiVfcJJNg4V+TfUne6bw48YiWAYSIkn3i
- WsF6oUc2uJ0ofLh7Kq0Ms5Q8aJ6tvmBJu1uR4TQin+e45g2bu9BrIrwzmoONwGSa+brxMinM1
- X6AfY5LNmEJev352s6yNQLAKRzESuRMCqTo7NvOSW17Mw73zuCVSkFRNMwIl9hsn6MSfWAMxx
- GUaop2W9K6Hewg1WfQSZc5GEoxE58o3b5wPvETTuyyxHU8tCAiUEIhyX/8KtbTRuLs91a75Xh
- q+6aZfLM4ikxBObQAO5rTlHxuS4SytM74yq8KoAWGVFHsRCJLs/QwWIqFDZxO2AwzSYEna51J
- KIQ8+DTUyAA==
+In-Reply-To: <20190405181132.GA32401@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:8S1u9ThWG1Z0yzo6IQLQpU29ndosyQNfAaPzVZOTF0ESncoONlN
+ NojAbCIB154p1BOgxtwrMdPnpoZ+H7hWRR+KZDiGTnf3Mfe7fX3LJKs//rZkhHGFJ0muIx6
+ JhmVokkVsr7iFfVK8YMjaNu2o5iAERWhJseasvcnGPLgmfZrlXnVyY9YAH3gxDqI79bgKeH
+ 8TctkF3uiZzsNS0C3g64A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:H1qX6ehDVDw=:sNfDaiYeSl1QZAb72rTBLr
+ WvVB8x//P1AJPjUUmQGKepknCWj3HiMFBNZrt6nw7qHtEmioB55BNUjkReKMmy6mwJhnR/wFK
+ yxwSmTWVHq/YQFGQ/UYkCHiNPMdZWDZqB6EOCKGy+xMSSdYh/kPydHWQCr3hBReaH4fh3e8kl
+ 8FFUali9BzKyAWldhiI+ajNGlFU/4ne9uRLKbePQb3qve2TlhnpzdyyPfMyrktpQ29aPkUoMv
+ aNdexpMkg0J27Y0xtR59dIC6adsOXvfgPGXhsfd0C4o83Ype0L0abUI085USMBH8/gxUYxJl7
+ aj6VnkoTUBKmTl/soToP2GSHRiGikqzhBTN+ApPlXogPYnChbCW32dHk72L2t+V2Z3PFDyZTn
+ D21O18hC3jjQ1eRS0A9gS4P/G4rYsv6YEcEnzOBAxAQAya+lFwECUmfxBEcqnUljSWaf3Ni2N
+ U7R0S04P1FTf/DlEWd3cpX2oHKu0zX5lQeFN1dRNYitWtQmDpe2YNtddYpMFRY3wOdLy58XAg
+ hEq6hOEgIiq/YJEKt7RovEUIKl0qDeDY0HG348tfpXL4j3xfiXBatB8UqJKNuLJT5TVa+exZf
+ 9RZPsEXveMbJrUFInu01wvTPEsFbZLLb2G/OPxPDk0QLs4GyJZIefef8/0OQ/2s8a/zYBfebP
+ EdHn71aFehtkY9k7ElIgiu/9I761Ij9wDYQSpXfANAPn7s419vCI7+z6HUvxi/bxZNz6dQI25
+ AVifcyMSjAHHM9ZDDD4Z0YMYwUkPIiv/d7kxCDLPHMTq93emSoJchOPC53JnGRnEseHRdYiXY
+ 35cg2X7dDSRwn5AFDc6jha97w9c81ss3De2JTJoDYedkpXCnKtsnjxn+1lHR0ouAlZ1OzhqW0
+ M7hJ/u6wQ5A6RT2PXn0t2MS9dQG9mg9eVtZXUshh6aFNWxW0svQM2/FOK6Fn4M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Am 05.04.2019 um 20:11 schrieb Jeff King:
+> On Fri, Apr 05, 2019 at 12:41:27PM +0200, Ren=C3=A9 Scharfe wrote:
+>> Parsing "P" and "pack-" together crosses logical token boundaries,
+>> but that I don't mind it here.
+>
+> Yeah, I was tempted to write:
+>
+>   if (skip_prefix(data, "P ", &data) &&
+>       skip_prefix(data, "pack-", &data) &&
+>       ...
+>
+> but that felt a little silly. I dunno. I guess it is probably not any
+> less efficient, because we'd expect skip_prefix() and its loop to get
+> inlined here anyway.
 
-On Fri, 5 Apr 2019, Jonathan Tan wrote:
+Didn't think of inlining.  Clang unrolls the whole comparison (except on
+powerpc64), but the other compilers available at the Compiler Explorer
+website keep the consecutive calls separate: https://godbolt.org/z/7eTarV
 
-> This is a fixup on the tip of jt/batch-fetch-blobs-in-diff (571debe1d9).
->
-> I don't know if Junio has already merged this branch to next (he marked
-> this as "Will merge to 'next'" in the "What's Cooking" email, but when I
-> fetched, it hasn't been merged yet). If he has, we can use this commit
-> message:
->
-> diff: propagate options->repo to add_if_missing
->
-> Avoid a usage of the_repository by propagating the configured repository
-> to add_if_missing(). Also, prefetch only if the repository being diffed
-> is the_repository (because we do not support lazy fetching for any other
-> repository anyway).
-
-True, and the introduction of `has_promisor_remotes()` should probably
-help that, by introducing a parameter of type `struct repository *r`.
-
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-
-The patch and the commit message look good!
-
-Thanks,
-Dscho
-
-> diff --git a/diff.c b/diff.c
-> index 1eccefb4ef..811afbdfb1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6367,18 +6367,19 @@ void diffcore_fix_diff_index(void)
->  	QSORT(q->queue, q->nr, diffnamecmp);
->  }
->
-> -static void add_if_missing(struct oid_array *to_fetch,
-> +static void add_if_missing(struct oid_array *to_fetch, struct repositor=
-y *r,
->  			   const struct diff_filespec *filespec)
->  {
->  	if (filespec && filespec->oid_valid &&
-> -	    oid_object_info_extended(the_repository, &filespec->oid, NULL,
-> +	    oid_object_info_extended(r, &filespec->oid, NULL,
->  				     OBJECT_INFO_FOR_PREFETCH))
->  		oid_array_append(to_fetch, &filespec->oid);
->  }
->
->  void diffcore_std(struct diff_options *options)
->  {
-> -	if (repository_format_partial_clone) {
-> +	if (options->repo =3D=3D the_repository &&
-> +	    repository_format_partial_clone) {
->  		/*
->  		 * Prefetch the diff pairs that are about to be flushed.
->  		 */
-> @@ -6388,8 +6389,8 @@ void diffcore_std(struct diff_options *options)
->
->  		for (i =3D 0; i < q->nr; i++) {
->  			struct diff_filepair *p =3D q->queue[i];
-> -			add_if_missing(&to_fetch, p->one);
-> -			add_if_missing(&to_fetch, p->two);
-> +			add_if_missing(&to_fetch, options->repo, p->one);
-> +			add_if_missing(&to_fetch, options->repo, p->two);
->  		}
->  		if (to_fetch.nr)
->  			/*
-> --
-> 2.21.0.392.gf8f6787159e-goog
->
->
+Ren=C3=A9
