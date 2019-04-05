@@ -2,126 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB76020248
-	for <e@80x24.org>; Fri,  5 Apr 2019 17:09:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6760520248
+	for <e@80x24.org>; Fri,  5 Apr 2019 17:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731153AbfDERJk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 13:09:40 -0400
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:50475 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730587AbfDERJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 13:09:40 -0400
-Received: by mail-vk1-f201.google.com with SMTP id k78so2818138vkk.17
-        for <git@vger.kernel.org>; Fri, 05 Apr 2019 10:09:39 -0700 (PDT)
+        id S1731576AbfDERZl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 13:25:41 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35455 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731133AbfDERZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 13:25:40 -0400
+Received: by mail-pf1-f196.google.com with SMTP id t21so1319187pfh.2
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 10:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bB5CJoTccP5ipZaDNn8+ntfmBTQy9oGTgOE2n2WWmT4=;
-        b=jkV5CHskFPgMdhk6+S0hWV20p5MGoocQNa4j1FVlP1XUoGhOrCfWXc8Nz5dS3HvyOM
-         HVg90cMw3qc9uSUlo8BqqiABqu5hV180GBjmwAUf1GpfzJENiQCPQAM/mEc/3uOrKvkP
-         R9vitb+/QXMT8iQeO1dlLLuL83XjWZ4Fvs1JQ7NuImOkLvwPxXHk3X1inUGghCGZjxza
-         6mEszrgQygGeQAw6a8JEcagUSg5chO8CUX587Aj13OazraNpmAckflqVmiz88p6AkoGL
-         Hmp+MxTiqjdlj+XDv3wvmW6aGo0Qpj9j8vRBwNAKC0g2hXD+6Va+ld5wrmWgryn3vpsu
-         4SjQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=daoNHX8t5ay3fJ823/SjM+xVbjkGh8coK3mnb7mkrPU=;
+        b=HMi55A9iXv6RKPrDpespE8vmb+RJeMg6gvHOc80FZV3GgnclNMpsqJWvGLHrQi4hBs
+         4+Hf27uZeSldU2JNnO3tii+bsxGKz+ZVgOxqmxw5dyN5IX5rTLYr0aGeFs97YC+bL7Ir
+         CCY6Ci6kq2Mqb02Wl1YCVD477Ai1IkkR/rOajQYvWZ9nRThCjc4e2UvR+OGrkF88+H5b
+         ZP2FKDeoTd1ghKnwEFzt0QFk1yWT+UfzMU2CRA0k5a8jrxj/msFFWx7iXOP916vsABgf
+         AZMqC/tNUexjhfvixKkdq99tsW1QDxtPvGXdEE7MMotrA3EvjNyZkE8ZlaZ3YgzXz886
+         IwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bB5CJoTccP5ipZaDNn8+ntfmBTQy9oGTgOE2n2WWmT4=;
-        b=Pa47TWtS6ZOCRhKOSaVYY0qw3RCVpgtcczqDD4pP84HrxNjtJ2zhoKKfv0R3/7oEj4
-         hH7hTolD0RWz/R3Q3jFXlZEPuQ1se7mEMdIFk3qZq0SZXX/mLAmBZbWSqcpLozgbly83
-         WcKS+2DYySgD76Y9JPwD6mogva+g8jaYDRpNVyEcg7gwbwow2MHL0plSpkhPloi7MLHg
-         lvPHPWXtjF2JLtEbctbea7LLT7HtLvHWvHhAavRUaI8hUOgL0XplHT7cRFzjpFUtd9PI
-         tcMaIJS7lKSSvwr/N0UgaHvfdMYM9sBa2KxK1hgSf0sF7bBZjKed59RZhTpR00OY1sMF
-         0bcw==
-X-Gm-Message-State: APjAAAVe5CIbWi+G//BFnPVAcCmHebGHmQgw3qhEDlWAOJ9J4+JXoLVV
-        xNUnfRohzx2t9MD/7a46zIdzNORR82kwXFa+zQBrXK7D6fDWKYwj0I0inpdajwp/ONivobnGNfl
-        3OUxMUgx8x3olFBR5I18oXmj+TN9g2/xxJi3vDTcr9enWen83XzX+Cytsn+DiORV9dI0Qcq+aFG
-        Af
-X-Google-Smtp-Source: APXvYqzNnrAC/PQlbvSykAgufU9IIePjTL5lB0aUZMC6LMIcAcGQzRKZ4VFyyM86VFkoRldHacRBcU52ngA/ZbMEmezu
-X-Received: by 2002:a1f:9010:: with SMTP id s16mr1615819vkd.12.1554484179262;
- Fri, 05 Apr 2019 10:09:39 -0700 (PDT)
-Date:   Fri,  5 Apr 2019 10:09:34 -0700
-In-Reply-To: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
-Message-Id: <20190405170934.20441-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
-X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH] fixup! diff: batch fetching of missing blobs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=daoNHX8t5ay3fJ823/SjM+xVbjkGh8coK3mnb7mkrPU=;
+        b=BQW31KDginvaUxSFP2ov043gFU/Lshbbf4LaaimNThnTRpHtaS0Njv4p+Bky1xAkEi
+         bAYkkc+Bm32MUZjy+xwKpPzcd6R6130Iw3Kgz45WAvXLQkoMpsDb+6MqZj3hB33l5XTY
+         a0u7b+6BjIdIxb+x6QT+l/3Qdu5xu2G2D8zxsV4elJQio0gUQnoEYT1/tIS1i+ZZaUpd
+         ASjl7+nP8bpZwYRu3nigU0uM2pPJtzp1D5/NXgb1V3bNlTIghNZELJiFEdGJmMSmKz2R
+         wvlhyCklGe+rXoUFkQNu34d1tSRthHfrC/QOPFuNvxt2OPlSjFFZUV7mMRFLZ9Hm4taW
+         VFnA==
+X-Gm-Message-State: APjAAAVCNf+J63jqKI8cfrGXZ+TaDH7tcfnANAAVLbzn50G7EQL0UGhf
+        ibo8VHb8UT6GhpXx2dYxssc=
+X-Google-Smtp-Source: APXvYqy9TNLuhZPr0GDHVi1Z3aH51ieBoz2yOrg/ZRWjYu3amg2kLn2amDzL/lzhhkco6X6d0XtLgA==
+X-Received: by 2002:a63:7154:: with SMTP id b20mr13374010pgn.359.1554485139821;
+        Fri, 05 Apr 2019 10:25:39 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id p3sm34864858pfn.167.2019.04.05.10.25.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Apr 2019 10:25:38 -0700 (PDT)
+Date:   Fri, 5 Apr 2019 10:25:36 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 1/4] t3431: add rebase --fork-point tests
+Message-ID: <20190405172536.GA11212@dev-l>
+References: <20190328221745.GA3941@dev-l>
+ <cover.1554151449.git.liu.denton@gmail.com>
+ <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
+ <nycvar.QRO.7.76.6.1904051653360.41@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1904051653360.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a fixup on the tip of jt/batch-fetch-blobs-in-diff (571debe1d9).
+On Fri, Apr 05, 2019 at 04:55:37PM +0200, Johannes Schindelin wrote:
+> Hi Denton,
+> 
+> On Mon, 1 Apr 2019, Denton Liu wrote:
+> 
+> > diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+> > new file mode 100755
+> > index 0000000000..8e2483b73e
+> > --- /dev/null
+> > +++ b/t/t3431-rebase-fork-point.sh
+> > @@ -0,0 +1,53 @@
+> > +#!/bin/sh
+> > +#
+> > +# Copyright (c) 2019 Denton Liu
+> > +#
+> > +
+> > +test_description='git rebase --fork-point test'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +# A---B---D---E       (master)
+> > +#     \
+> > +#      C*---F---G (side)
+> > +#
+> > +# C was formerly part of master but is side out
+> > +#
+> > +test_expect_success setup '
+> > +	test_commit A &&
+> > +	test_commit B &&
+> > +	test_commit C &&
+> > +	git branch -t side &&
+> > +	git reset --hard HEAD^ &&
+> > +	test_commit D &&
+> > +	test_commit E &&
+> > +	git checkout side &&
+> > +	test_commit F &&
+> > +	test_commit G
+> > +'
+> > +
+> > +test_rebase() {
+> > +	expected="$1" &&
+> > +	shift &&
+> > +	test_expect_success "git rebase $@" "
+> > +		git checkout master &&
+> > +		git reset --hard E &&
+> > +		git checkout side &&
+> > +		git reset --hard G &&
+> > +		git rebase $@ &&
+> 
+> I think we need this patch, to make the macOS build happy:
 
-I don't know if Junio has already merged this branch to next (he marked
-this as "Will merge to 'next'" in the "What's Cooking" email, but when I
-fetched, it hasn't been merged yet). If he has, we can use this commit
-message:
+Thanks for digging into this, both.
 
-diff: propagate options->repo to add_if_missing
+Out of curiosity, t3432 is written similarly:
 
-Avoid a usage of the_repository by propagating the configured repository
-to add_if_missing(). Also, prefetch only if the repository being diffed
-is the_repository (because we do not support lazy fetching for any other
-repository anyway).
+	test_rebase_same_head() {
+		status="$1" &&
+		shift &&
+		test_expect_$status "git rebase $@ with $changes is no-op" "
+			oldhead=\$(git rev-parse HEAD) &&
+			test_when_finished 'git reset --hard \$oldhead' &&
+			git rebase $@ &&
+			newhead=\$(git rev-parse HEAD) &&
+			test_cmp_rev \$oldhead \$newhead
+		"
+	}
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Thanks, Duy, for noticing this.
----
- diff.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+and is also invoked similarly
 
-diff --git a/diff.c b/diff.c
-index 1eccefb4ef..811afbdfb1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6367,18 +6367,19 @@ void diffcore_fix_diff_index(void)
- 	QSORT(q->queue, q->nr, diffnamecmp);
- }
- 
--static void add_if_missing(struct oid_array *to_fetch,
-+static void add_if_missing(struct oid_array *to_fetch, struct repository *r,
- 			   const struct diff_filespec *filespec)
- {
- 	if (filespec && filespec->oid_valid &&
--	    oid_object_info_extended(the_repository, &filespec->oid, NULL,
-+	    oid_object_info_extended(r, &filespec->oid, NULL,
- 				     OBJECT_INFO_FOR_PREFETCH))
- 		oid_array_append(to_fetch, &filespec->oid);
- }
- 
- void diffcore_std(struct diff_options *options)
- {
--	if (repository_format_partial_clone) {
-+	if (options->repo == the_repository &&
-+	    repository_format_partial_clone) {
- 		/*
- 		 * Prefetch the diff pairs that are about to be flushed.
- 		 */
-@@ -6388,8 +6389,8 @@ void diffcore_std(struct diff_options *options)
- 
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
--			add_if_missing(&to_fetch, p->one);
--			add_if_missing(&to_fetch, p->two);
-+			add_if_missing(&to_fetch, options->repo, p->one);
-+			add_if_missing(&to_fetch, options->repo, p->two);
- 		}
- 		if (to_fetch.nr)
- 			/*
--- 
-2.21.0.392.gf8f6787159e-goog
+	test_rebase_same_head success ''
 
+but it doesn't seem to fail. Any ideas on why?
+
+Thanks,
+
+Denton
+
+> 
+> -- snip --
+> Subject: fixup??? t3431: add rebase --fork-point tests
+> 
+> Try to fix the Mac build, which currently fails thusly:
+> 
+>     ++ git reset --hard G
+>     HEAD is now at d8775ba G
+>     ++ git rebase $'\177'
+>     fatal: invalid upstream '?'
+>     error: last command exited with $?=128
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+> index 4607e65de6..b41a0c0b68 100755
+> --- a/t/t3431-rebase-fork-point.sh
+> +++ b/t/t3431-rebase-fork-point.sh
+> @@ -34,7 +34,7 @@ test_rebase() {
+>  		git reset --hard E &&
+>  		git checkout side &&
+>  		git reset --hard G &&
+> -		git rebase $@ &&
+> +		eval git rebase \"$@\" &&
+>  		test_write_lines $expected >expect &&
+>  		git log --pretty=%s >actual &&
+>  		test_cmp expect actual
+> -- snap --
+> 
+> Ciao,
+> Dscho
+> 
+> > +		test_write_lines $expected >expect &&
+> > +		git log --pretty=%s >actual &&
+> > +		test_cmp expect actual
+> > +	"
+> > +}
+> > +
+> > +test_rebase 'G F E D B A' ''
+> > +test_rebase 'G F D B A' '--onto D'
+> > +test_rebase 'G F C E D B A' '--no-fork-point'
+> > +test_rebase 'G F C D B A' '--no-fork-point --onto D'
+> > +test_rebase 'G F E D B A' '--fork-point refs/heads/master'
+> > +test_rebase 'G F D B A' '--fork-point --onto D refs/heads/master'
+> > +test_rebase 'G F C E D B A' 'refs/heads/master'
+> > +test_rebase 'G F C D B A' '--onto D refs/heads/master'
+> > +
+> > +test_done
+> > --
+> > 2.21.0.695.gaf8658f249
+> >
+> >
