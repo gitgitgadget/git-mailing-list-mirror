@@ -2,146 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ADC920248
-	for <e@80x24.org>; Fri,  5 Apr 2019 00:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE6F20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 00:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730217AbfDEAJm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 20:09:42 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44121 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729831AbfDEAJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 20:09:41 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i2so2039937pgj.11
-        for <git@vger.kernel.org>; Thu, 04 Apr 2019 17:09:41 -0700 (PDT)
+        id S1730491AbfDEAhC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 20:37:02 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:43147 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfDEAhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 20:37:01 -0400
+Received: by mail-ua1-f67.google.com with SMTP id n16so1512305uae.10
+        for <git@vger.kernel.org>; Thu, 04 Apr 2019 17:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZbgCM9EGF4lpdcMXfNuPsdC2BOVUDXImMGA9wQUCtKU=;
-        b=UOcB4vFFf8BwAwBSB+js+bN3GLRskRCd0I6zF3Gy/RKQwEi6s5aNJ55NLB7BVDn8Si
-         qRnCgDOJPP0O3lfHQk5nJTNmAxe7ajU1uBN3OSoGR3zPEKRBGq/jRybg6y6dxVUz9atD
-         xbk6heVPxgfcUuWEOM6+3YJ9F6YSxVafSq1cN4IQZFWpeoupZTnQ4jfTa52haAmQim8j
-         771KaWY2XjmqxEs2RhrKgdk80RcFwM4gHQnyYjytwWUgZfdr4C1I0oUNfDNLplda3dyC
-         tRcWfZLRq1NZfSMXgMzTwqAiKzLbjl5whdF17zsQ4P8lxs7ulHUBAYtz61Yg4QYPuYCr
-         iYow==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=w6ZIDIQZzW9wmRNE6q8d2zD7HcVUvaIhRxupog8iNZM=;
+        b=s3HNJClgPjfMHKA5B6xSIwavF07YiaY04JJA2mMg3HHLRY9c6S31mnzT9FW/KsH229
+         iJfEeLT1Hf5lOMYvNQN/wo1KlV+tn2BWN2MvZNnM69JusuBVbUbJA5m3pnb2E0ACJW0b
+         NoUCLx0Fxrg2itGRPZ2EcLBdPBi0av7Wrhb+xR6B7ORG5nWJm1RbLsnaBQ+DEiEbNNWg
+         CQarMOhwdSdCUepkW9spH2qGTfxe84hXrkMXrn8FmH0a0n383/UoJd0YcZwmF2v5ZNy7
+         bNGyeXW/uSCR4fqSAMuWeQwj9Tysmma/r2O8YEIwQkZbp9vIwaTuRC0AdkGkkdDD/J8z
+         IVqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=ZbgCM9EGF4lpdcMXfNuPsdC2BOVUDXImMGA9wQUCtKU=;
-        b=HMK5P9owOZ1gaCANONmNcVYZsiwpCFFbIIBmDFKoY+Clyj9fMdZPlDQNGkOJWXRAy/
-         LRk9LnPqCZc1icl4sXL2r8qq8Zf4UKALlcn0KjadJFV6jtkaKoFszC7i3j3eST/X8UFO
-         ckxFgnsicLdAovom/dFwum9nvy08Qldd8No+05GihUtt+3ksbpc55dz/JW5DlTinrnDP
-         bOzXHH6ytDVJw+jtb0pTC8zrV8OOJmTonUQomn8yOu5cmLvuDZfQFYfCKl/cmuCzQdNJ
-         7NrPulFythp6bQD2a98na6o84gxch82+krgHPCl7brQAVpAVQa/7mATtHsRRCwKdBB0d
-         e0Tw==
-X-Gm-Message-State: APjAAAUi1Wb7ENGupBBPMlLXUh7Be091CRT5R0n/L8Iov1IpkLMshVC/
-        sCRaYRRLyk4mHVIn16PEfYoXpg==
-X-Google-Smtp-Source: APXvYqwonSD/6Pe6/GCGrkXlVcLVFM1D5yJQdjhyv3iyy16kGKvRhftm4zs9zVRdLIy/5g/0z7mOAg==
-X-Received: by 2002:a63:5f05:: with SMTP id t5mr8525676pgb.176.1554422980466;
-        Thu, 04 Apr 2019 17:09:40 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id i10sm30197377pfj.7.2019.04.04.17.09.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Apr 2019 17:09:39 -0700 (PDT)
-Date:   Thu, 4 Apr 2019 17:09:34 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v2] rev-list: exclude promisor objects at walk time
-Message-ID: <20190405000934.GH60888@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        jonathantanmy@google.com, jrnieder@gmail.com
-References: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
- <9f327d6d8dc5e71eb0039aef3ac76ea16c2adab3.1554417917.git.steadmon@google.com>
- <20190404230759.GA26623@sigill.intra.peff.net>
- <20190404234726.GG60888@google.com>
- <20190405000001.GA20793@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w6ZIDIQZzW9wmRNE6q8d2zD7HcVUvaIhRxupog8iNZM=;
+        b=doWczxy5dMU6hm5K4viGiuRg9E0W3e1LJHjwAjcAg7NZd3R3ub+NtUSERhRy4ie4qY
+         dW3FHl/qEOAKkPQeQZUOPtqs/pCEpMYlpl9A+vQXGFV5dwrYbRR7NKcYpowdCS45NUfA
+         lflkIKwxeeQmilY0jY6dAaOcV0T1J0lbUhcdwTz2Q4xPvHKMwh7suqqV/PWmztwiy252
+         vnUg1ILQPdm9OWa/wr6bs3MF1DVmM1sfbZqTayvzIASN+4KYS2AFD4Up84abzUEq7gmN
+         TofS/Z1FkHGLi4CE7KPBYsgfTiaMMmXbbHIMm4VTLUHHubn9k0AlEDIS/Hp/UDBIDvIA
+         8LZQ==
+X-Gm-Message-State: APjAAAX18ygQKwer4sVvYk8jBNxv8fyDEJy5vmS1hVL0eYR+YrEs3bKY
+        SXc5C86UBX0VkUuTsiSqrJ3T+G2DZXZEiQMhujE=
+X-Google-Smtp-Source: APXvYqxtkKpSfiOdglmnuUzslSltl3xnrBfzC3ZjouFuyTjGrieXPp31ahUrjeo9Sa5mz+eckPbtXfRiaNyE8MZD5s4=
+X-Received: by 2002:ab0:2653:: with SMTP id q19mr5651768uao.76.1554424620030;
+ Thu, 04 Apr 2019 17:37:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190405000001.GA20793@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1bd9ee28bc8726490ec0a93286056beeb147fc49.1554183429.git.liu.denton@gmail.com>
+ <20190402230345.GA5004@dev-l> <xmqqzhp7sfw4.fsf@gitster-ct.c.googlers.com>
+ <20190403213318.GA14137@dev-l> <20190404020226.GG4409@sigill.intra.peff.net> <xmqqftqyf76a.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftqyf76a.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 4 Apr 2019 17:36:48 -0700
+Message-ID: <CABPp-BHBq64-4jO4=rxUsA2WV5keh86wrai87i=oLTzXdcTb=w@mail.gmail.com>
+Subject: Re: [PATCH v2.5 2/2] tag: prevent nested tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.04.04 20:00, Jeff King wrote:
-> On Thu, Apr 04, 2019 at 04:47:26PM -0700, Josh Steadmon wrote:
-> 
-> > > Did you (or anybody else) have any thoughts on the case where a given
-> > > object is referred to both by a promisor and a non-promisor (and we
-> > > don't have it)? That's the "shortcut" I think we're taking here: we
-> > > would no longer realize that it's available via the promisor when we
-> > > traverse to it from the non-promisor. I'm just not clear on whether that
-> > > can ever happen.
-> > 
-> > I am not sure either. In process_blob() and process_tree() there are
-> > additional checks for whether missing blobs/trees are promisor objects
-> > using is_promisor_object()...  but if we call that we undo the
-> > performance gains from this change.
-> 
-> Hmm. That might be a good outcome, though. If it never happens, we're
-> fast. If it does happen, then our worst case is that we fall back to the
-> current slower-but-more-thorough check. (And I think that happens with
-> your patch, without us having to do anything further).
-> 
-> > > One other possible small optimization: we don't look up the object
-> > > unless the caller asked to exclude promisors, which is good. But we
-> > > could also keep a single flag for "is there a promisor pack at all?".
-> > > When there isn't, we know there's no point in looking for the object.
-> > [...]
-> > I'm not necessarily opposed, but I'm leaning towards the "won't matter
-> > much" side.
-> > 
-> > Where would such a flag live, in this case, and who would be responsible
-> > for initializing it? I guess it would only matter for rev-list, so we
-> > could initialize it in cmd_rev_list() if --exclude-promisor-objects is
-> > passed?
-> 
-> The check is really something like:
-> 
->   int have_promisor_pack() {
-> 	for (p = packed_git; p; p = p->next) {
-> 		if (p->pack_promisor)
-> 			return 1;
-> 	}
-> 	return 0;
->   }
-> 
-> That could be lazily cached as a single bit, but it would need to be
-> reset whenever we call reprepare_packed_git().
-> 
-> Let's just punt on it for now. I'm not convinced it would actually yield
-> any benefit, unless we have a partial-clone repo that doesn't have any
-> promisor packs (but then, I suspect whatever un-partial'd it should
-> probably be resetting the partial flag in the config).
-> 
-> > > I didn't see any tweaks to the callers, which makes sense; we're already
-> > > passing --exclude-promisor-objects as necessary. Which means by itself,
-> > > this patch should be making things faster, right? Do you have timings to
-> > > show that off?
-> > 
-> > Yeah, for a partial clone of a large-ish Android repo [1], we see the
-> > connectivity check go from >180s to ~7s.
-> 
-> Those are nice numbers. :) Worth mentioning in the commit message, I
-> think. How does it compare to your earlier patch? I'd hope they're about
-> the same.
+On Thu, Apr 4, 2019 at 2:31 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > I do still think it is likely to be a mistake. I think Junio's point,
+> > though is: who cares if the mistake was made? For the most part you can
+> > continue to use the tag as if the mistake had never been made, because
+> > Git peels through multiple layers as necessary.
+>
+> Nicely said.
+>
+> If we forget to peel, that is a bigger problem, but I do not think
+> it makes any sense to single out tag-of-tag as "curious" and forbid
+> it, when we silently allow tag-of-blob or tag-of-tree happily.
+>
+> An opt-in (i.e. default to false) tag.allowTaggingOnlyCommits I do
+> not have any problem with, and I could be persuaded into taking an
+> opt-out (i.e. default to true) tag.forbidTaggingAnythingButCommits
+> configuration, perhaps, though.
 
-Thanks, will include them in the v3 commit message. Unfortunately it's
-hard to compare against v1, because v1 doesn't call rev-list at all, and
-thus we don't have a good measurement in the trace / trace2 output. The
-rev-list timing has been pretty consistent at just a bit over 3 minutes,
-but the overall clone takes anywhere from 12-20 minutes, so any
-difference between v1 and v2 performance just gets lost in the noise. If
-I get a chance on Monday I may go back to v1 and add some timing.
+I'm slightly in favor of the tag.forbidTaggingAnythingButCommits
+route.  Two reasons:
+
+  * Even core git commands can't handle these properly after more than
+a decade, making me suspect that tools in the greater git ecosystem
+are going to fail to handle them too.  In more detail...  Some
+examples: fast-export with --tag-of-filtered-object=rewrite fails on
+tags of tags and tags of blobs.  Without that flag, I think
+fast-export munges tags of tags, but maybe that was only under some
+other special case; I don't remember right now.  Also, filter-branch
+munges tags of tags (though maybe that's documented; it may have
+decided that tags of tags are an error in need of fixing with no flag
+for users to opt out).  Considering core tools that have been part of
+git for over a decade mishandle tags of anything other than commits
+(or maybe even treat them as erroneous), I don't see why we'd expect
+tools outside of git to handle them correctly.  Thus, I think it'd be
+nice if people had to specify some kind of way to state they are sure
+they want to tag something other than a commit.
+
+  * The only two repositories I know of and have access to which has
+such tags are linux.git (a tag of a tree) and git.git (a tag of a blob
+and four or so tags of tags).  Further, these tags are all pretty old
+too.  So, I think disallowing the creation of tags of non-commit
+objects would be unlikely to negatively impact existing users.
+
+
+Though, on the flipside, given how rare these seem to be in practice,
+it might not be worth the effort.  Certainly not at the top of my
+priority list.
+
+Elijah
