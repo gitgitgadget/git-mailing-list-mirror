@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B686F20248
-	for <e@80x24.org>; Fri,  5 Apr 2019 09:40:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E108E20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 10:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730490AbfDEJkC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 05:40:02 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:46997 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729833AbfDEJkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 05:40:02 -0400
-Received: by mail-io1-f66.google.com with SMTP id p23so3854897iol.13
-        for <git@vger.kernel.org>; Fri, 05 Apr 2019 02:40:00 -0700 (PDT)
+        id S1730501AbfDEKXv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 06:23:51 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34996 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730292AbfDEKXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 06:23:51 -0400
+Received: by mail-pl1-f195.google.com with SMTP id w24so2815676plp.2
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 03:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=X+FnOGwEobQ+exCtw4sxRSw0RKzILCnY8q/bEE5Gj9U=;
-        b=lSaDOG9/35QqeDsf21QBegpjLYNCk3Fj3ANcm5K7MJthNwr8jJsqKX2JVUZHBvKSPB
-         yG/6q7T2uWv19Jza0wMes/xr93PhK0dRybp6R31MwsM3tQBq4W6bvI+u7uDhKdhqZk5b
-         8lzp2WwSaMJw+HWPjuiLBApvfUcF0365Djt1zWfZ9NCs3y8Yq14gXynn+Rr3MsSPA264
-         ftsdzZWle9kSoRDsx9DYDVXw48ovGj/mNxjbRofIvtDgQ8z+3jpZ3h8zIWtcWhDaQiEn
-         uPtutfIFsGdAXqG9FQgjS9HwVlSbQvf3Zzh+fr+4ipyruLzJyOPZmiiS2XHbhk4F+e8K
-         REQA==
+        bh=fxlB+8y3RWuMVqMshZsswE/m0nInTPKgXJKW3fOIWgA=;
+        b=pjhfdOz6ljvz3RgOfvd2i7n5ou9Gh/hqoKSLzzFIVjgr0TrtwqfOEM8AEUQkhBkuf6
+         REVLqxDxTZaK2OL08TqlQTN1WqPK/tcvJvx9Ge29rGCrknebDZdhLqS13MXKikxNcm7I
+         gxgdhunsLZEyK8BFkP9HEVO+rhRousKjBJoQM8GLJNm1mKSL45tq1ih9KLc5hglOl/Aw
+         50J6I+ElGI1Jq6mx9K7Gk5sA6SM7n+8vMFoAaU9MlTFgItvQN4bIF6WLjpsZbmOkBlW4
+         RFMaZyNc2itMHK4v2imhXMSYq0HyHF+JSYyYqW8egobnYnRaTyGAZi5OVQe9pVI0zOx3
+         uUpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=X+FnOGwEobQ+exCtw4sxRSw0RKzILCnY8q/bEE5Gj9U=;
-        b=nXa2OpQ6oFDQlxVurcCkvSqX3YRAW21UGm8/oJfSZ+ZS+kVQbwIr3LIGDZOxYgIBqu
-         bxz4dFzwLthWwfdO/FNkWwD7UqyFQTQEN6L3YEock5tA0iB8bDJgPTTHs8A0fFbGthwR
-         ffuevdNwuTQxS/Iyts9NfXrtXhyKWCTVZY9q8A+KAeDjLjEOFzuSmYVlezpglI84Dhxf
-         guphrwMl2hY+7DH9sbzFKqBKManK55F9dP8PBKU4K/aNjB7AcmKLHh6KCpCkjlBy3Wzh
-         m1JeqLLKpRd9390maNbXDBDZT7kKzRT/1co3nHD1KZCQlP0Hy61zlewX6kYfBYn6Z7J+
-         Sv4g==
-X-Gm-Message-State: APjAAAXgR//FfibQFoBNfiM/MwDGMICG5X/wbGMV34u9K2g51lRbuzkG
-        h7MW8pEYDEiTiYcJnXinKXiv5xFoM6qokLx49G3E0Q==
-X-Google-Smtp-Source: APXvYqwe3DrmVSaQe6Gf85BkDDXHjpuTFBBv2Vs19AifMM6gF+iIt/4OM/dPiniO2FQwgbiaXPX3n1VcJVB/erSmiFw=
-X-Received: by 2002:a5e:8418:: with SMTP id h24mr7619888ioj.170.1554457200518;
- Fri, 05 Apr 2019 02:40:00 -0700 (PDT)
+        bh=fxlB+8y3RWuMVqMshZsswE/m0nInTPKgXJKW3fOIWgA=;
+        b=OTRqKg6CADbiGvnw0cImTPxkCABwWwv7xsQmcwvSV2BJ9RHlOWaYIS9tR7JyczVP70
+         HawfidUnj5DIfNqOGHynKoHZz4D4/esx0rehbDw3PQM+z/kTSi7dFSF1kBcyPnCe9R8h
+         S4P4dI+AjvNgr0FgY+fJzJi5hWtvoRpcKvNNui5hWmcEvOrejsN9DbU5rd7nlAiv6INa
+         tyK//m3cNkycRDIV0aQOpPddDSWc1DKXsjZIL0ZJzZvco34xDCXGQ2XMV6dg5n++JI6E
+         ONpat1zbf/k/FGkisXYB41J3P+5e/ERitgcIagnGGaC9T30C94qPX0/rGvtIC8jOHm2x
+         FF3g==
+X-Gm-Message-State: APjAAAW8gUohWL13GwLq/P3vEnilEXI1LsioSqZAROOm0rCjz9HfV+N5
+        OWMn67G1dTUiUTPTY9F3nryf1iNxqO2zCtBCwJw=
+X-Google-Smtp-Source: APXvYqzHWPr+Yh5JTbMKTBCO7HnF9gNpraCMJq9lZ/Pb5VXBchjh0M8Mh9hXaZI/rlUozeZvmk6sWUwXfkqo2anMHoU=
+X-Received: by 2002:a17:902:e407:: with SMTP id ci7mr11930109plb.219.1554459830641;
+ Fri, 05 Apr 2019 03:23:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190326220906.111879-1-jonathantanmy@google.com>
- <cover.1553895166.git.jonathantanmy@google.com> <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
-In-Reply-To: <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 5 Apr 2019 16:39:34 +0700
-Message-ID: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+References: <20190330183001.16624-1-tmz@pobox.com> <CAN0heSpB_0Hi2zCA+gmiaARpSYM7fKayB2rs6wFi_VeXevqd+Q@mail.gmail.com>
+ <20190405014040.GR4047@pobox.com>
+In-Reply-To: <20190405014040.GR4047@pobox.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 5 Apr 2019 12:23:36 +0200
+Message-ID: <CAN0heSrbjRExHwch0K_W+xwpERnFUJmaiHhCkAaK9nnxFnXEhw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] minor asciidoc/tor formatting fixes
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -63,191 +64,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 30, 2019 at 4:40 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> When running a command like "git show" or "git diff" in a partial clone,
-> batch all missing blobs to be fetched as one request.
->
-> This is similar to c0c578b33c ("unpack-trees: batch fetching of missing
-> blobs", 2017-12-08), but for another command.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  diff.c                        |  32 +++++++++++
->  t/t4067-diff-partial-clone.sh | 103 ++++++++++++++++++++++++++++++++++
->  2 files changed, 135 insertions(+)
->  create mode 100755 t/t4067-diff-partial-clone.sh
->
-> diff --git a/diff.c b/diff.c
-> index ec5c095199..1eccefb4ef 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -25,6 +25,7 @@
->  #include "packfile.h"
->  #include "parse-options.h"
->  #include "help.h"
-> +#include "fetch-object.h"
->
->  #ifdef NO_FAST_WORKING_DIRECTORY
->  #define FAST_WORKING_DIRECTORY 0
-> @@ -6366,8 +6367,39 @@ void diffcore_fix_diff_index(void)
->         QSORT(q->queue, q->nr, diffnamecmp);
->  }
->
-> +static void add_if_missing(struct oid_array *to_fetch,
-> +                          const struct diff_filespec *filespec)
-> +{
-> +       if (filespec && filespec->oid_valid &&
-> +           oid_object_info_extended(the_repository, &filespec->oid, NULL,
+Hi Todd,
 
-I'm quite sure we can pass 'struct repository *' around in diff code
-now. I think it's the "repo" field in "struct diff_options". Please
-use it and avoid more references to the_repository.
+On Fri, 5 Apr 2019 at 03:40, Todd Zullinger <tmz@pobox.com> wrote:
 
-> +                                    OBJECT_INFO_FOR_PREFETCH))
-> +               oid_array_append(to_fetch, &filespec->oid);
-> +}
-> +
->  void diffcore_std(struct diff_options *options)
->  {
-> +       if (repository_format_partial_clone) {
-> +               /*
-> +                * Prefetch the diff pairs that are about to be flushed.
-> +                */
-> +               int i;
-> +               struct diff_queue_struct *q = &diff_queued_diff;
-> +               struct oid_array to_fetch = OID_ARRAY_INIT;
-> +
-> +               for (i = 0; i < q->nr; i++) {
-> +                       struct diff_filepair *p = q->queue[i];
-> +                       add_if_missing(&to_fetch, p->one);
-> +                       add_if_missing(&to_fetch, p->two);
-> +               }
-> +               if (to_fetch.nr)
-> +                       /*
-> +                        * NEEDSWORK: Consider deduplicating the OIDs sent.
-> +                        */
-> +                       fetch_objects(repository_format_partial_clone,
-> +                                     to_fetch.oid, to_fetch.nr);
-> +               oid_array_clear(&to_fetch);
-> +       }
-> +
->         /* NOTE please keep the following in sync with diff_tree_combined() */
->         if (options->skip_stat_unmatch)
->                 diffcore_skip_stat_unmatch(options);
-> diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-> new file mode 100755
-> index 0000000000..349851be7d
-> --- /dev/null
-> +++ b/t/t4067-diff-partial-clone.sh
-> @@ -0,0 +1,103 @@
-> +#!/bin/sh
-> +
-> +test_description='behavior of diff when reading objects in a partial clone'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'git show batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client show HEAD &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_expect_success 'diff batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       echo c >server/c &&
-> +       echo d >server/d &&
-> +       git -C server add c d &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_expect_success 'diff skips same-OID blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       echo another-a >server/a &&
-> +       git -C server add a &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       echo a | git hash-object --stdin >hash-old-a &&
-> +       echo another-a | git hash-object --stdin >hash-new-a &&
-> +       echo b | git hash-object --stdin >hash-b &&
-> +
-> +       # Ensure that only a and another-a are fetched.
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +       grep "want $(cat hash-old-a)" trace &&
-> +       grep "want $(cat hash-new-a)" trace &&
-> +       ! grep "want $(cat hash-b)" trace
-> +'
-> +
-> +test_expect_success 'diff with rename detection batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       printf "b\nb\nb\nb\nb\n" >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       rm server/b &&
-> +       printf "b\nb\nb\nb\nbX\n" >server/c &&
-> +       git -C server add c &&
-> +       git -C server commit -a -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff -M HEAD^ HEAD >out &&
-> +       grep "similarity index" out &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_done
-> --
-> 2.21.0.197.gd478713db0
->
+> > On Sat, 30 Mar 2019 at 19:30, Todd Zullinger <tmz@pobox.com> wrote:
+> >>
+> >> Just chipping away at the remaining differences between asciidoc and
+> >> asciidoctor.
+> >>
+> >> Todd Zullinger (2):
+> >>   Documentation/rev-list-options: wrap --date=<format> block with "--"
+> >>   Documentation/git-status: fix titles in porcelain v2 section
 
+> There are two other changes I've got queued locally.  One in
+> git-show-branch.txt removes the last use of {apostrophe}.
+> Another in git-svn.txt is a bit of a work-around for a
+> difference in the way asciidoc and asciidoctor parse the
+> second paragraph in the CONFIGURATION section.  That may
+> well be an asiidoctor bug, but it seems like one we can
+> adjust for without much effort.
 
--- 
-Duy
+The second one looks like it can be fixed by using `*` instead of '\*',
+which I think is more correct anyway. I don't know what your local
+workaround looks like, but I think a patch like "use backticks
+consistently" (both change to them, in a number of places, and add them,
+where we currently have nothing) would be a good change by itself, and
+we could note that "BTW, this fixes ...". How does that compare to what
+you have?
+
+Martin
