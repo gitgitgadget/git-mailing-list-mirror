@@ -2,171 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9278420248
-	for <e@80x24.org>; Fri,  5 Apr 2019 14:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2BA720248
+	for <e@80x24.org>; Fri,  5 Apr 2019 15:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731306AbfDEOzp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 10:55:45 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60605 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726594AbfDEOzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 10:55:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554476137;
-        bh=kwSu6LAAhgrZXv6iSVfc2i+OHgluDG/Lw1SYC1DivPA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=d+9+rA3uvu4QbbXm/UPeOq6Voa0ZWMZwWOukthlAUnBC+GOcWfdn4N7oig2eO7g2d
-         YfTr76rQ3JFtOPjxdO69SZOZPeoIxAEEpaBpJOGJmKgldIwI3edAMiaZ+y9d1vsjuK
-         LPEiMXj0auaupZ9I1EFXQQJJb0MgM++werhu818M=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1ga25t0nCG-00ppv5; Fri, 05
- Apr 2019 16:55:37 +0200
-Date:   Fri, 5 Apr 2019 16:55:37 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v3 1/4] t3431: add rebase --fork-point tests
-In-Reply-To: <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904051653360.41@tvgsbejvaqbjf.bet>
-References: <20190328221745.GA3941@dev-l> <cover.1554151449.git.liu.denton@gmail.com> <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731270AbfDEPA5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 11:00:57 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:45624 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728743AbfDEPA5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Apr 2019 11:00:57 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x35EwPFJ001918;
+        Fri, 5 Apr 2019 08:00:41 -0700
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2rmg26mf48-2
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Fri, 05 Apr 2019 08:00:41 -0700
+Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
+ sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 5 Apr 2019 08:00:42 -0700
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Fri, 5 Apr 2019 08:00:39 -0700
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 2BF67220CB1D;
+        Fri,  5 Apr 2019 08:00:39 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     <git@vger.kernel.org>
+CC:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Linus Nilsson <Linus.Nilsson@trimma.se>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v3 03/15] merge-recursive: rename diff_filespec 'one' to 'o'
+Date:   Fri, 5 Apr 2019 08:00:14 -0700
+Message-ID: <20190405150026.5260-4-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.211.g719c25afaf.dirty
+In-Reply-To: <20190405150026.5260-1-newren@gmail.com>
+References: <20190330003336.21940-1-newren@gmail.com>
+ <20190405150026.5260-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HiXNtTVxLMKP2N74OjwmXizG3K4Xnbz05CUkbF3IYJQodeGKfOs
- L05YvZa7cUUlARq4WgWlEQ/DO3PypipqTQ2JIbLtU/c/4IQD/5D15rcm8epXFt3L6Q+GXfR
- BJ02Y8osFULwegxU7ZE5Z72VOU/WUgDqPMcuWA30zZl62FJeBtp5ksVZupzSMNQqx74U78Z
- p+OBBvpeLM+tm/y/vqN1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7jegafPBHp0=:3tXzWaavjYBtn/GcKvlPd9
- ikxSMBYFlFQnkXmAFuISvgpovjihDkUjq3gMzw47M5tL56nikXBRtbJeppkXCX7/k3V59Idx3
- GecQH35Ti6F82ftriFml7xifGjEo/NrkorB1gl8GO/Hv0UW0Cwfb7OzvrBMb7MAWPsTfYYkmL
- S6ErGR9pCfDVPYA5fcxjOPzuHpznVXnMr5jyTsw6kEo1kz5FrgNHbLitDm+ktLukIo06JM7c5
- XGqAoZSsBzk7B31yvVh9xmqEoTBhfxuguKkN/WekLTiePNqie4sYuvo3GxjaiZsMAh6SFs6/y
- vRALgLJNt76Ll4OAnVpHMZDp6Qw8NltiSYTyiHZRJOSwMZKU78UAZuo/kFEm5ahBHk8Pl1h63
- mr+m4hV2kc6kMLiNfIObtL6M5iadyrxr+LQ+Yl+b2/H+eGVUEOaIK4fYV9tmw9FcYRMlLQLPV
- 9HxR6FEzf6qOWFgomyvC6J0+w1HpDo7tEjQ+rP+HcTceAhl+SNsTrTY38K8wlAmqK6u/ab7H1
- LjhYz5Uhev8ADjJP0bn3eaAKxe1qvWUmPX6I3B+O8/S+NXEe3GhCjleZMwhYCdw0fNZ7wc6Vp
- Xr7XdYQkXut+rYqF0NXD2p6QJfYpeSGMohR5rCs72XO8OH92NG19EFnRZ5fvSscTD40Pm2Ush
- nynA8dcVcBR+v0N6nlmL0KMuLtdpols7ZB7qBPO5S1U/V7f+acbbzp6VYPgCn7y9ao6cicCKs
- RnjITyNE4D2Gd5lq5YO1MzLw5becwgK+ltaVnTPH8XueG14u4VOc0wp0wgHGek95PeJRgi/qP
- wnnSPikdldTCPPP14Up1ZvGsMlfkY09dCcyY7IWW1F83u03Z8rGFFqKwGcnzq4lc3qIRHLz2i
- DYCkGmkpkLvEyr2K352Mhzr/mGIIntBSnKgMXUdjSJ4ywfQ0qoV/UOllJT55OY+WWKtusDR9B
- 4cYnIHmcX0Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-04-05_11:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1904050102
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+In the previous commit, we noted that several places throughout merge
+recursive both had a reason to use 'o'; some for a merge_options struct,
+and others for a diff_filespec struct.  Some places had both, forcing
+one of the two to be renamed, though the choice was inconsistent.  Now
+that the merge_options struct has been renamed to 'opt' everywhere, we
+can replace the few places that used 'one' for the diff_filespec to 'o'.
 
-On Mon, 1 Apr 2019, Denton Liu wrote:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-> diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-> new file mode 100755
-> index 0000000000..8e2483b73e
-> --- /dev/null
-> +++ b/t/t3431-rebase-fork-point.sh
-> @@ -0,0 +1,53 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2019 Denton Liu
-> +#
-> +
-> +test_description=3D'git rebase --fork-point test'
-> +
-> +. ./test-lib.sh
-> +
-> +# A---B---D---E       (master)
-> +#     \
-> +#      C*---F---G (side)
-> +#
-> +# C was formerly part of master but is side out
-> +#
-> +test_expect_success setup '
-> +	test_commit A &&
-> +	test_commit B &&
-> +	test_commit C &&
-> +	git branch -t side &&
-> +	git reset --hard HEAD^ &&
-> +	test_commit D &&
-> +	test_commit E &&
-> +	git checkout side &&
-> +	test_commit F &&
-> +	test_commit G
-> +'
-> +
-> +test_rebase() {
-> +	expected=3D"$1" &&
-> +	shift &&
-> +	test_expect_success "git rebase $@" "
-> +		git checkout master &&
-> +		git reset --hard E &&
-> +		git checkout side &&
-> +		git reset --hard G &&
-> +		git rebase $@ &&
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 09b76d596e..36af5d9cc6 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1050,7 +1050,7 @@ struct merge_file_info {
+ 
+ static int merge_3way(struct merge_options *opt,
+ 		      mmbuffer_t *result_buf,
+-		      const struct diff_filespec *one,
++		      const struct diff_filespec *o,
+ 		      const struct diff_filespec *a,
+ 		      const struct diff_filespec *b,
+ 		      const char *branch1,
+@@ -1084,9 +1084,9 @@ static int merge_3way(struct merge_options *opt,
+ 	}
+ 
+ 	if (strcmp(a->path, b->path) ||
+-	    (opt->ancestor != NULL && strcmp(a->path, one->path) != 0)) {
++	    (opt->ancestor != NULL && strcmp(a->path, o->path) != 0)) {
+ 		base_name = opt->ancestor == NULL ? NULL :
+-			mkpathdup("%s:%s", opt->ancestor, one->path);
++			mkpathdup("%s:%s", opt->ancestor, o->path);
+ 		name1 = mkpathdup("%s:%s", branch1, a->path);
+ 		name2 = mkpathdup("%s:%s", branch2, b->path);
+ 	} else {
+@@ -1096,7 +1096,7 @@ static int merge_3way(struct merge_options *opt,
+ 		name2 = mkpathdup("%s", branch2);
+ 	}
+ 
+-	read_mmblob(&orig, &one->oid);
++	read_mmblob(&orig, &o->oid);
+ 	read_mmblob(&src1, &a->oid);
+ 	read_mmblob(&src2, &b->oid);
+ 
+@@ -1295,7 +1295,7 @@ static int merge_submodule(struct merge_options *opt,
+ }
+ 
+ static int merge_mode_and_contents(struct merge_options *opt,
+-				   const struct diff_filespec *one,
++				   const struct diff_filespec *o,
+ 				   const struct diff_filespec *a,
+ 				   const struct diff_filespec *b,
+ 				   const char *filename,
+@@ -1310,7 +1310,7 @@ static int merge_mode_and_contents(struct merge_options *opt,
+ 		 * side of the conflict markers and the other branch on the
+ 		 * top.  Fix that.
+ 		 */
+-		return merge_mode_and_contents(opt, one, b, a,
++		return merge_mode_and_contents(opt, o, b, a,
+ 					       filename,
+ 					       branch2, branch1,
+ 					       extra_marker_size, result);
+@@ -1329,31 +1329,31 @@ static int merge_mode_and_contents(struct merge_options *opt,
+ 			oidcpy(&result->oid, &b->oid);
+ 		}
+ 	} else {
+-		if (!oid_eq(&a->oid, &one->oid) && !oid_eq(&b->oid, &one->oid))
++		if (!oid_eq(&a->oid, &o->oid) && !oid_eq(&b->oid, &o->oid))
+ 			result->merge = 1;
+ 
+ 		/*
+ 		 * Merge modes
+ 		 */
+-		if (a->mode == b->mode || a->mode == one->mode)
++		if (a->mode == b->mode || a->mode == o->mode)
+ 			result->mode = b->mode;
+ 		else {
+ 			result->mode = a->mode;
+-			if (b->mode != one->mode) {
++			if (b->mode != o->mode) {
+ 				result->clean = 0;
+ 				result->merge = 1;
+ 			}
+ 		}
+ 
+-		if (oid_eq(&a->oid, &b->oid) || oid_eq(&a->oid, &one->oid))
++		if (oid_eq(&a->oid, &b->oid) || oid_eq(&a->oid, &o->oid))
+ 			oidcpy(&result->oid, &b->oid);
+-		else if (oid_eq(&b->oid, &one->oid))
++		else if (oid_eq(&b->oid, &o->oid))
+ 			oidcpy(&result->oid, &a->oid);
+ 		else if (S_ISREG(a->mode)) {
+ 			mmbuffer_t result_buf;
+ 			int ret = 0, merge_status;
+ 
+-			merge_status = merge_3way(opt, &result_buf, one, a, b,
++			merge_status = merge_3way(opt, &result_buf, o, a, b,
+ 						  branch1, branch2,
+ 						  extra_marker_size);
+ 
+@@ -1372,8 +1372,8 @@ static int merge_mode_and_contents(struct merge_options *opt,
+ 			result->clean = (merge_status == 0);
+ 		} else if (S_ISGITLINK(a->mode)) {
+ 			result->clean = merge_submodule(opt, &result->oid,
+-							one->path,
+-							&one->oid,
++							o->path,
++							&o->oid,
+ 							&a->oid,
+ 							&b->oid);
+ 		} else if (S_ISLNK(a->mode)) {
+@@ -1750,7 +1750,7 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
+ 	struct merge_file_info mfi;
+ 	struct diff_filespec other;
+ 	struct diff_filespec *add;
+-	struct diff_filespec *one = ci->pair1->one;
++	struct diff_filespec *o = ci->pair1->one;
+ 	struct diff_filespec *a = ci->pair1->two;
+ 	struct diff_filespec *b = ci->pair2->two;
+ 	char *path_desc;
+@@ -1758,13 +1758,13 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
+ 	output(opt, 1, _("CONFLICT (rename/rename): "
+ 	       "Rename \"%s\"->\"%s\" in branch \"%s\" "
+ 	       "rename \"%s\"->\"%s\" in \"%s\"%s"),
+-	       one->path, a->path, ci->branch1,
+-	       one->path, b->path, ci->branch2,
++	       o->path, a->path, ci->branch1,
++	       o->path, b->path, ci->branch2,
+ 	       opt->call_depth ? _(" (left unresolved)") : "");
+ 
+ 	path_desc = xstrfmt("%s and %s, both renamed from %s",
+-			    a->path, b->path, one->path);
+-	if (merge_mode_and_contents(opt, one, a, b, path_desc,
++			    a->path, b->path, o->path);
++	if (merge_mode_and_contents(opt, o, a, b, path_desc,
+ 				    ci->branch1, ci->branch2,
+ 				    opt->call_depth * 2, &mfi))
+ 		return -1;
+@@ -1777,7 +1777,7 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
+ 		 * pathname and then either rename the add-source file to that
+ 		 * unique path, or use that unique path instead of src here.
+ 		 */
+-		if (update_file(opt, 0, &mfi.oid, mfi.mode, one->path))
++		if (update_file(opt, 0, &mfi.oid, mfi.mode, o->path))
+ 			return -1;
+ 
+ 		/*
+@@ -2863,10 +2863,10 @@ static int process_renames(struct merge_options *opt,
+ 			if (clean_merge < 0)
+ 				goto cleanup_and_return;
+ 			if (try_merge) {
+-				struct diff_filespec *one, *a, *b;
++				struct diff_filespec *o, *a, *b;
+ 				src_other.path = (char *)ren1_src;
+ 
+-				one = ren1->pair->one;
++				o = ren1->pair->one;
+ 				if (a_renames == renames1) {
+ 					a = ren1->pair->two;
+ 					b = &src_other;
+@@ -2874,7 +2874,7 @@ static int process_renames(struct merge_options *opt,
+ 					b = ren1->pair->two;
+ 					a = &src_other;
+ 				}
+-				update_entry(ren1->dst_entry, one, a, b);
++				update_entry(ren1->dst_entry, o, a, b);
+ 				setup_rename_conflict_info(RENAME_NORMAL,
+ 							   ren1->pair,
+ 							   NULL,
+-- 
+2.21.0.211.g719c25afaf.dirty
 
-I think we need this patch, to make the macOS build happy:
-
-=2D- snip --
-Subject: fixup??? t3431: add rebase --fork-point tests
-
-Try to fix the Mac build, which currently fails thusly:
-
-    ++ git reset --hard G
-    HEAD is now at d8775ba G
-    ++ git rebase $'\177'
-    fatal: invalid upstream '?'
-    error: last command exited with $?=3D128
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index 4607e65de6..b41a0c0b68 100755
-=2D-- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -34,7 +34,7 @@ test_rebase() {
- 		git reset --hard E &&
- 		git checkout side &&
- 		git reset --hard G &&
--		git rebase $@ &&
-+		eval git rebase \"$@\" &&
- 		test_write_lines $expected >expect &&
- 		git log --pretty=3D%s >actual &&
- 		test_cmp expect actual
-=2D- snap --
-
-Ciao,
-Dscho
-
-> +		test_write_lines $expected >expect &&
-> +		git log --pretty=3D%s >actual &&
-> +		test_cmp expect actual
-> +	"
-> +}
-> +
-> +test_rebase 'G F E D B A' ''
-> +test_rebase 'G F D B A' '--onto D'
-> +test_rebase 'G F C E D B A' '--no-fork-point'
-> +test_rebase 'G F C D B A' '--no-fork-point --onto D'
-> +test_rebase 'G F E D B A' '--fork-point refs/heads/master'
-> +test_rebase 'G F D B A' '--fork-point --onto D refs/heads/master'
-> +test_rebase 'G F C E D B A' 'refs/heads/master'
-> +test_rebase 'G F C D B A' '--onto D refs/heads/master'
-> +
-> +test_done
-> --
-> 2.21.0.695.gaf8658f249
->
->
