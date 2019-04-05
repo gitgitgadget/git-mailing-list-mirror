@@ -6,73 +6,81 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05AFC20248
-	for <e@80x24.org>; Fri,  5 Apr 2019 18:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD66A20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 18:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731133AbfDESYO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 14:24:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48830 "HELO cloud.peff.net"
+        id S1731711AbfDESbo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 14:31:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48848 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730329AbfDESYO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 14:24:14 -0400
-Received: (qmail 11773 invoked by uid 109); 5 Apr 2019 18:24:14 -0000
+        id S1731589AbfDESbo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 14:31:44 -0400
+Received: (qmail 12008 invoked by uid 109); 5 Apr 2019 18:31:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:24:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:31:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28545 invoked by uid 111); 5 Apr 2019 18:24:41 -0000
+Received: (qmail 28598 invoked by uid 111); 5 Apr 2019 18:32:11 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:24:41 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:32:11 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:24:12 -0400
-Date:   Fri, 5 Apr 2019 14:24:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:31:42 -0400
+Date:   Fri, 5 Apr 2019 14:31:42 -0400
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        gitster@pobox.com
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
 Subject: Re: [PATCH 2/7] t: introduce tests for unexpected object types
-Message-ID: <20190405182412.GC2284@sigill.intra.peff.net>
+Message-ID: <20190405183142.GD2284@sigill.intra.peff.net>
 References: <cover.1554435033.git.me@ttaylorr.com>
  <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
- <20190405105033.GT32732@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190405105033.GT32732@szeder.dev>
+In-Reply-To: <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 05, 2019 at 12:50:33PM +0200, SZEDER Gábor wrote:
+On Thu, Apr 04, 2019 at 08:37:44PM -0700, Taylor Blau wrote:
 
-> > +test_expect_failure 'traverse unexpected non-tree entry (seen)' '
-> > +	test_must_fail git rev-list --objects $blob $broken_tree >output 2>&1
+> Let A be the object referenced with an unexpected type, and B be the
+> object doing the referencing. Do the following:
 > 
-> This test saves standard output and error, but doesn't look at them.
-
-I think we want to be checking for "not a tree" here, which is later
-added with the fix. But either we should have the test_i18ngrep here
-initially, or we should add both the redirect and the grep with the fix.
-
-> > +test_expect_success 'setup unexpected non-commit parent' '
-> > +	git cat-file commit $commit |
-> > +		perl -lpe "/^author/ && print q(parent $blob)" \
-> > +		>broken-commit &&
+>   - test 'git rev-list --objects A B'. This causes A to be "cached", and
+>     presents the above scenario.
 > 
-> Don't run git commands upstream of a pipe, because the pipe hides
-> their exit code.  This applies to several other tests below as well.
+> Likewise, if we have a tree entry that claims to be a tree (for example)
+> but points to another object type (say, a blob), there are two ways we
+> might find out:
+> 
+>   - when we call lookup_tree(), we might find that we've already seen
+>     the object referenced as another type, in which case we'd get NULL
+> 
+>   - we call lookup_tree() successfully, but when we try to read the
+>     object, we find out it's something else.
+> 
+> We should check that we behave sensibly in both cases (especially
+> because it is easy for a malicious actor to provoke one case or the
+> other).
 
-I disagree with that rule here. We're not testing "cat-file" in any
-meaningful way, but just getting some stock output from a known-good
-commit.
+I think our pasting together of multiple commits adding the lone/seen
+cases ended up in some redundancy in the description. In particular, I'm
+not sure what the first paragraph/bullet quoted above is trying to say,
+as it corresponds to the second bullet in the later list. Maybe collapse
+them together like:
 
-> Wouldn't a 'sed' one-liner suffice, so we won't have yet another perl
-> dependency?
+  We might hit an unexpected type in two different ways (imagine we have
+  a tree entry that claims to be a tree but actually points to a blob):
 
-Heh, this was actually the subject of much discussion before the patches
-hit the list. If you can write such a one-liner that is both readable
-and portable, please share it. I got disgusted with sed and suggested
-this perl.
+    - when we call lookup_tree(), we might find that we've already seen
+      the object referenced as a blob, in which case we'd get NULL. We
+      can exercise this with "git rev-list --objects $blob $tree", which
+      guarantees that the blob will have been parsed before we look in
+      the tree. These tests are marked as "seen" in the test script.
+
+    - we call lookup_tree() successfully, but when we try to read the
+      object, we find out it's something else. We construct our tests
+      such that $blob is not otherwise mentioned in $tree. These tests
+      are marked as "lone" in the script.
 
 -Peff
