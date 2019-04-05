@@ -6,91 +6,120 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE06120248
-	for <e@80x24.org>; Fri,  5 Apr 2019 18:11:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D83120248
+	for <e@80x24.org>; Fri,  5 Apr 2019 18:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731312AbfDESLe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Apr 2019 14:11:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48712 "HELO cloud.peff.net"
+        id S1731457AbfDESM5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Apr 2019 14:12:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48718 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728683AbfDESLe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Apr 2019 14:11:34 -0400
-Received: (qmail 11259 invoked by uid 109); 5 Apr 2019 18:11:34 -0000
+        id S1728683AbfDESM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Apr 2019 14:12:57 -0400
+Received: (qmail 11308 invoked by uid 109); 5 Apr 2019 18:12:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:11:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Apr 2019 18:12:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28292 invoked by uid 111); 5 Apr 2019 18:12:01 -0000
+Received: (qmail 28317 invoked by uid 111); 5 Apr 2019 18:13:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:12:01 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Apr 2019 14:13:24 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:11:32 -0400
-Date:   Fri, 5 Apr 2019 14:11:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Apr 2019 14:12:55 -0400
+Date:   Fri, 5 Apr 2019 14:12:55 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 05/12] http: simplify parsing of remote objects/info/packs
-Message-ID: <20190405181132.GA32401@sigill.intra.peff.net>
-References: <20190404232104.GA27770@sigill.intra.peff.net>
- <20190404232704.GE21839@sigill.intra.peff.net>
- <83129937-dcd0-f16e-c8aa-97eceec9769a@web.de>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 07/13] http: simplify parsing of remote objects/info/packs
+Message-ID: <20190405181255.GG32243@sigill.intra.peff.net>
+References: <20190405180306.GA21113@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <83129937-dcd0-f16e-c8aa-97eceec9769a@web.de>
+In-Reply-To: <20190405180306.GA21113@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 05, 2019 at 12:41:27PM +0200, René Scharfe wrote:
+We can use skip_prefix() and parse_oid_hex() to continuously increment
+our pointer, rather than dealing with magic numbers. This also fixes a
+few small shortcomings:
 
-> Am 05.04.2019 um 01:27 schrieb Jeff King:
-> > We can use skip_prefix() and parse_oid_hex() to continuously increment
-> > our pointer, rather than dealing with magic numbers. This also fixes a
-> > few small shortcomings:
-> >
-> >   - if we see a 'P' line that does not match our expectations, we'll
-> >     leave our "i" counter in the middle of the line. So we'll parse:
-> >     "P P P pack-1234.pack" as if there was just one "P" which was not
-> >     intentional (though probably not that harmful).
-> 
-> How so?  The default case, which we'd fall through to, skips the rest
-> of such a line, doesn't it?
+  - if we see a line with the right prefix, suffix, and length, i.e.
+    matching /P pack-.{40}.pack\n/, we'll interpret the middle part as
+    hex without checking if it could be parsed. This could lead to us
+    looking at uninitialized garbage in the hash array. In practice this
+    means we'll just make a garbage request to the server which will
+    fail, though it's interesting that a malicious server could convince
+    us to leak 40 bytes of uninitialized stack to them.
 
-Oh, you're right. I didn't notice the fall-through, which is quite
-subtle (I'm actually surprised -Wimplicit-fallthrough doesn't complain
-about this).
+  - the current code is picky about seeing a newline at the end of file,
+    but we can easily be more liberal
 
-I'll fix up the commit message (the cleanup is still very much worth it
-for the garbage-oid issue, IMHO).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This drops an incorrect claim from the v1 commit message. Sorry, I only
+remembered to deal with it as I was sending the patch out, so it is not
+reflected in the range-diff in the cover letter.
 
-> > +	while (*data) {
-> > +		if (skip_prefix(data, "P pack-", &data) &&
-> > +		    !parse_oid_hex(data, &oid, &data) &&
-> > +		    skip_prefix(data, ".pack", &data) &&
-> > +		    (*data == '\n' || *data == '\0')) {
-> > +			fetch_and_setup_pack_index(packs_head, oid.hash, base_url);
-> > +		} else {
-> > +			data = strchrnul(data, '\n');
-> >  		}
-> > -		i++;
-> > +		if (*data)
-> > +			data++; /* skip past newline */
-> 
-> So much simpler, *and* converted to object_id -- I like it!
-> 
-> Parsing "P" and "pack-" together crosses logical token boundaries,
-> but that I don't mind it here.
+ http.c | 35 ++++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 21 deletions(-)
 
-Yeah, I was tempted to write:
+diff --git a/http.c b/http.c
+index a32ad36ddf..2ef47bc779 100644
+--- a/http.c
++++ b/http.c
+@@ -2147,11 +2147,11 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
+ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+ {
+ 	struct http_get_options options = {0};
+-	int ret = 0, i = 0;
+-	char *url, *data;
++	int ret = 0;
++	char *url;
++	const char *data;
+ 	struct strbuf buf = STRBUF_INIT;
+-	unsigned char hash[GIT_MAX_RAWSZ];
+-	const unsigned hexsz = the_hash_algo->hexsz;
++	struct object_id oid;
+ 
+ 	end_url_with_slash(&buf, base_url);
+ 	strbuf_addstr(&buf, "objects/info/packs");
+@@ -2163,24 +2163,17 @@ int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
+ 		goto cleanup;
+ 
+ 	data = buf.buf;
+-	while (i < buf.len) {
+-		switch (data[i]) {
+-		case 'P':
+-			i++;
+-			if (i + hexsz + 12 <= buf.len &&
+-			    starts_with(data + i, " pack-") &&
+-			    starts_with(data + i + hexsz + 6, ".pack\n")) {
+-				get_sha1_hex(data + i + 6, hash);
+-				fetch_and_setup_pack_index(packs_head, hash,
+-						      base_url);
+-				i += hexsz + 11;
+-				break;
+-			}
+-		default:
+-			while (i < buf.len && data[i] != '\n')
+-				i++;
++	while (*data) {
++		if (skip_prefix(data, "P pack-", &data) &&
++		    !parse_oid_hex(data, &oid, &data) &&
++		    skip_prefix(data, ".pack", &data) &&
++		    (*data == '\n' || *data == '\0')) {
++			fetch_and_setup_pack_index(packs_head, oid.hash, base_url);
++		} else {
++			data = strchrnul(data, '\n');
+ 		}
+-		i++;
++		if (*data)
++			data++; /* skip past newline */
+ 	}
+ 
+ cleanup:
+-- 
+2.21.0.729.g7d31bf3764
 
-  if (skip_prefix(data, "P ", &data) &&
-      skip_prefix(data, "pack-", &data) &&
-      ...
-
-but that felt a little silly. I dunno. I guess it is probably not any
-less efficient, because we'd expect skip_prefix() and its loop to get
-inlined here anyway.
-
--Peff
