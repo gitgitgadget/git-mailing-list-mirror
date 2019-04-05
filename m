@@ -7,62 +7,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0475820248
-	for <e@80x24.org>; Fri,  5 Apr 2019 01:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 455FD20248
+	for <e@80x24.org>; Fri,  5 Apr 2019 01:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730552AbfDEBch (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Apr 2019 21:32:37 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57273 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730369AbfDEBch (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Apr 2019 21:32:37 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 173534FD4C;
-        Thu,  4 Apr 2019 21:32:35 -0400 (EDT)
+        id S1730508AbfDEBkt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Apr 2019 21:40:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50460 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729635AbfDEBkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Apr 2019 21:40:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2C8416784C;
+        Thu,  4 Apr 2019 21:40:47 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
         :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=VFDqPb8HyRhWGuOQ/OAzFLnOnIE=; b=hSCvpWi
-        DkkSCeXKf00Pm/mH5iz7gTZodfTR2g1jkZ77rsQROyzNP4LFVGXIpqNrB1U9B4EZ
-        hrHFypxGD5qEPhJeGwxT/K77pyd3PfRhbRJo3Vk98h224ixVZgSW+PhMCQIx/XcU
-        2GqDV1J6r4v53kqQ4zalz5i9zCUaNDaAgMBI=
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=sA+9ySbs+DqqC
+        qZYSbcL5Z2lRXM=; b=ufwhdli1dLol4rbWyATs/MPgNHY3P9zDY4ACI/ghRC9aR
+        jsRmo/mwiKIpSe3WECFD0mBpiUalxhojtGOj4dEqYR2vP525Yyt8/jGk/xRFYuY8
+        KBYr5z/POQmg7KNrAo8URfgolN6F3dtI1JiEilsje2AhTX7sM9qGBu6Nug5HMs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
         :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=PnsscxsiLqwt3UHWw0gZhlkcHsHdnCzB9
-        B9cC+iDcDTTKkeE+IhtXNTsk3fX1pwWfqQhBf5GFvTGH7g6Au3vGir8Kbs3DQkuQ
-        kfVgMSzXU8iyVz0HN3JF/xOOl019Sb4ZWWxGB7milRIzGB4TX8hRfbZ+lbMTyhi2
-        DL7iiKVipk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D0B24FD4B;
-        Thu,  4 Apr 2019 21:32:35 -0400 (EDT)
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=OICAGKM
+        uEFonXpJe/jvWsvikO9XnC7YUOVgSiPMuAP7agyqH4obTAwbmfFmTrXac36q0zl+
+        /xf/fNzq1rB7SdsK6ipQwVi8OC65GREgfpW+iI0W7g6B7Pt3NaE7NGaoIDXca6d1
+        AvsSzDgSlrx+hbc+WdSKRWr2rmBtWXHsXX3Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23ADD6784B;
+        Thu,  4 Apr 2019 21:40:47 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 Received: from pobox.com (unknown [173.67.141.44])
         (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9ACCF4FD47;
-        Thu,  4 Apr 2019 21:32:31 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D17A26784A;
+        Thu,  4 Apr 2019 21:40:43 -0400 (EDT)
         (envelope-from tmz@pobox.com)
-Date:   Thu, 4 Apr 2019 21:32:28 -0400
+Date:   Thu, 4 Apr 2019 21:40:41 -0400
 From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org,
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1 2/2] Documentation/git-status: fix titles in porcelain
- v2 section
-Message-ID: <20190405013228.GQ4047@pobox.com>
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v1 0/2] minor asciidoc/tor formatting fixes
+Message-ID: <20190405014040.GR4047@pobox.com>
 References: <20190330183001.16624-1-tmz@pobox.com>
- <20190330183001.16624-3-tmz@pobox.com>
- <a8be0a1e-bb34-5709-0307-68b1fdd2d95c@jeffhostetler.com>
+ <CAN0heSpB_0Hi2zCA+gmiaARpSYM7fKayB2rs6wFi_VeXevqd+Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <a8be0a1e-bb34-5709-0307-68b1fdd2d95c@jeffhostetler.com>
+In-Reply-To: <CAN0heSpB_0Hi2zCA+gmiaARpSYM7fKayB2rs6wFi_VeXevqd+Q@mail.gmail.com>
 User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: AEA94718-5742-11E9-99A0-EE24A11ADF13-09356542!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: D3F6F514-5743-11E9-BEF6-D01F9763A999-09356542!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,17 +67,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Jeff Hostetler wrote:
-> On 3/30/2019 2:30 PM, Todd Zullinger wrote:
->> The '^### ' lines were added in 1cd828ddc8 ("git-status.txt: describe
->> --porcelain=v2 format", 2016-08-11).  I'm _presuming_ they were made
->> with markdown syntax in mind, but if not I can drop that bit from the
->> commit message.  Jeff H, do you happen to recall?
-> 
-> Yes, I was probably had markdown on the brain that day.
+Martin =C5gren wrote:
+> On Sat, 30 Mar 2019 at 19:30, Todd Zullinger <tmz@pobox.com> wrote:
+>>
+>> Just chipping away at the remaining differences between asciidoc and
+>> asciidoctor.
+>>
+>> Todd Zullinger (2):
+>>   Documentation/rev-list-options: wrap --date=3D<format> block with "-=
+-"
+>>   Documentation/git-status: fix titles in porcelain v2 section
+>=20
+> Nice. I've tested and diffed across various dimensions. Looks good to m=
+e.
 
-Cool, thanks.  Lucky guess on my part then.  It's not like
-I've ever done something similar in other repos. ;)
+Thanks for testing!  On pu we're down to a fairly small
+amount of differences now.  Most of what remains are
+whitespace changes; some of which I would like to bring up
+to the Asciidoctor team to see if they're intentional.
 
--- 
+There are two other changes I've got queued locally.  One in
+git-show-branch.txt removes the last use of {apostrophe}.
+Another in git-svn.txt is a bit of a work-around for a
+difference in the way asciidoc and asciidoctor parse the
+second paragraph in the CONFIGURATION section.  That may
+well be an asiidoctor bug, but it seems like one we can
+adjust for without much effort.
+
+--=20
 Todd
