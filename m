@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95E8A20248
-	for <e@80x24.org>; Sat,  6 Apr 2019 11:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1B3A20248
+	for <e@80x24.org>; Sat,  6 Apr 2019 11:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726578AbfDFLgJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Apr 2019 07:36:09 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:45509 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfDFLgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Apr 2019 07:36:09 -0400
-Received: by mail-pf1-f193.google.com with SMTP id e24so4743333pfi.12
-        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:36:08 -0700 (PDT)
+        id S1726584AbfDFLgO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Apr 2019 07:36:14 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36118 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfDFLgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Apr 2019 07:36:14 -0400
+Received: by mail-pf1-f196.google.com with SMTP id z5so4764305pfn.3
+        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:36:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LaAroo8H6l5o6UF7G2ggzqIjs+ycGdPBE3mfbGzd8Qc=;
-        b=ChqjZWl1C1DR22FhqCRQTUTlRI06atScMYEcppGObCQX3EtaVSsXu8Njbb5pEmPFHV
-         /YTa5KUg46OjKDXKDi1ZB3lxIM88RjXtNG2PDZ8/zR7wcZUSC5qlCyhkPgqOtr343Cxh
-         Osu1bZoLKJllsMjAN+eFkRP4wdOygNaC05+S0kvmDjLJ5pSgxNocXpWclziV3nMU6KF8
-         4Mx9ueFnqvh288/Ju6pXU97H2he157OisyTZQML2P17Y6hqrA2tJId+Kr2OJeqUSEsE0
-         +3uRgQjSI/xNJXiqRQuOZcpiPw15cRf6zmS2EayBeEzTgPfsr7EkEBswpjG2Ix/FyWXv
-         o80w==
+        bh=0KdpKCBthk7pbFNe/d0GUMNketEGbY/sNj+6gFKzJkY=;
+        b=MRiMONm8nk7ctdLin3lpx8flmHg7UUZ5NXFnFpGvj/qJwGkl+l5BY1BU7LTFC7lGDL
+         jA4XsGZsG2trydYtTEBUyfjVx7+55vuiUa9HrIgJLESO72aT+p4kJzZ75pZmVslfA8sf
+         ofN3BzHcyKSJeaqHVCWEjjqEiTp1Do4q80WfjEatrR3AGPCPQ0ths+frLXNdkQHoME+1
+         DbhhR9mqHA2aUxDxUa6rfHJqWN4rCl/Pv3VTjUwWO9vMuPXRs1osfi7m51+y0v28Ch3O
+         rKca/i4e8W56fCQIsYvWTNFWhu9cHcxmqZM7B9k9YOhl1N8H72lAZtS7BMlWT4hsmP6T
+         j3CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LaAroo8H6l5o6UF7G2ggzqIjs+ycGdPBE3mfbGzd8Qc=;
-        b=i1dnfL0j5Omq3jUUHiGVbVtE8p6DDm+00r4c+Aa+SYI4iaqPF4f1fkeulmBv9xQoJi
-         7RwmuiRW7Ir3x7FdbNbsSB3NPrOFt0NOh7EEE3ArDXSETASJzOp9fIkw0eVJjqxKTBgy
-         pebdTgGYHN8KehsRYFpJLUEnoTvlsOtnZEs41BkZx77WEsgM4cVnqnoO4N/SaCgL8eM6
-         iew/K4jtWJ87WPQ9e7VqSWYRitn/jktUWB8k5YR/FmHlQLzyysIWphCdAG+9r/5ab8TM
-         gbj+g52VMvelP63kfQK79NsYAzfdny+k5sOpMA1lvgAJ+WnbGlyNaYqwQj5I/B5/W4JC
-         e/vg==
-X-Gm-Message-State: APjAAAUUq7OVLpDiJhXZswfdsLIkxvqPTYIFNNHcVMeuhE7L+YCyzs2M
-        j5S28O8nSokd8Adxzm7oJCjGzsAX
-X-Google-Smtp-Source: APXvYqzShfzyPqVnmmY+OCi/Kb18foUhYqOQSMq5c42TKtlWOKeWmXgwsVa6x0YOR3UHV0z5MSw6Bg==
-X-Received: by 2002:a63:2b41:: with SMTP id r62mr16553524pgr.403.1554550568526;
-        Sat, 06 Apr 2019 04:36:08 -0700 (PDT)
+        bh=0KdpKCBthk7pbFNe/d0GUMNketEGbY/sNj+6gFKzJkY=;
+        b=oBRClpBrXZkrXEXxi4rONq7NTypfqtjlbuoQJog315kHM7BKcfS7zbmd1FdttHj7AR
+         4hsefRZO9f8XaPBuCub+flNMVi+fk2IiADmdbIYeUaPOSQsETlGZU1ifoeW3CX4fNVwk
+         tkuGxkyabzV89TdoP7My1i+5lb/zFSiHMCPbEOwI6xu3KFWF4xYXIXhY95zqUV4rDgXA
+         dmKFmQzIr0d171YDNwlwjFPh9AoG4P+gbc82spJ4DT9w26aZrJ6nQF7lPzot0zAP6YV1
+         ga7wcYc1tX5ZgRLM1fmBGHmU9MZlKWupV8FcQe3oAnJxDUELRgRx9icMGu2zguNlbqq6
+         LMdA==
+X-Gm-Message-State: APjAAAUvVATJsilDdv/rd67DQoBJU9uQ+oi4HtgEIuzOdD5XMVQotpTo
+        vHlM3eww/SEJ9WJnOa+sCjo=
+X-Google-Smtp-Source: APXvYqztSzYiDPQsnyYjVZUkBancC7avLA7F1EdA2tkadFwZGK/WVUxAi8UMW7bfQnCtcUFfC3kb0A==
+X-Received: by 2002:a63:450f:: with SMTP id s15mr17156940pga.157.1554550573872;
+        Sat, 06 Apr 2019 04:36:13 -0700 (PDT)
 Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id p189sm18997567pfg.184.2019.04.06.04.36.05
+        by smtp.gmail.com with ESMTPSA id y23sm35663911pfn.25.2019.04.06.04.36.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Apr 2019 04:36:07 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:36:03 +0700
+        Sat, 06 Apr 2019 04:36:13 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:36:08 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         szeder.dev@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 10/33] refs.c: remove the_repo from read_ref_at()
-Date:   Sat,  6 Apr 2019 18:34:30 +0700
-Message-Id: <20190406113453.5149-11-pclouds@gmail.com>
+Subject: [PATCH v3 11/33] commit.c: add repo_get_commit_tree()
+Date:   Sat,  6 Apr 2019 18:34:31 +0700
+Message-Id: <20190406113453.5149-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190406113453.5149-1-pclouds@gmail.com>
 References: <20190403113457.20399-1-pclouds@gmail.com>
@@ -71,98 +71,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Remove the implicit dependency on the_repository in this function.
+It will be used in sha1-name.c functions when they are updated to take
+any 'struct repository'. get_commit_tree() remains as a compat wrapper,
+to be slowly replaced later.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/show-branch.c | 6 ++++--
- refs.c                | 7 ++++---
- refs.h                | 3 ++-
- sha1-name.c           | 3 ++-
- 4 files changed, 12 insertions(+), 7 deletions(-)
+ commit.c                        | 5 +++--
+ commit.h                        | 5 +++--
+ contrib/coccinelle/commit.cocci | 7 ++++---
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 934e514944..082daeac32 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -753,7 +753,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 				/* Ah, that is a date spec... */
- 				timestamp_t at;
- 				at = approxidate(reflog_base);
--				read_ref_at(ref, flags, at, -1, &oid, NULL,
-+				read_ref_at(get_main_ref_store(the_repository),
-+					    ref, flags, at, -1, &oid, NULL,
- 					    NULL, NULL, &base);
- 			}
- 		}
-@@ -765,7 +766,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			timestamp_t timestamp;
- 			int tz;
- 
--			if (read_ref_at(ref, flags, 0, base + i, &oid, &logmsg,
-+			if (read_ref_at(get_main_ref_store(the_repository),
-+					ref, flags, 0, base + i, &oid, &logmsg,
- 					&timestamp, &tz, NULL)) {
- 				reflog = i;
- 				break;
-diff --git a/refs.c b/refs.c
-index edea001446..92d1f6dbdd 100644
---- a/refs.c
-+++ b/refs.c
-@@ -967,7 +967,8 @@ static int read_ref_at_ent_oldest(struct object_id *ooid, struct object_id *noid
- 	return 1;
+diff --git a/commit.c b/commit.c
+index a5333c7ac6..f0a5506f04 100644
+--- a/commit.c
++++ b/commit.c
+@@ -340,7 +340,8 @@ void free_commit_buffer(struct parsed_object_pool *pool, struct commit *commit)
+ 	}
  }
  
--int read_ref_at(const char *refname, unsigned int flags, timestamp_t at_time, int cnt,
-+int read_ref_at(struct ref_store *refs, const char *refname,
-+		unsigned int flags, timestamp_t at_time, int cnt,
- 		struct object_id *oid, char **msg,
- 		timestamp_t *cutoff_time, int *cutoff_tz, int *cutoff_cnt)
+-struct tree *get_commit_tree(const struct commit *commit)
++struct tree *repo_get_commit_tree(struct repository *r,
++				  const struct commit *commit)
  {
-@@ -983,7 +984,7 @@ int read_ref_at(const char *refname, unsigned int flags, timestamp_t at_time, in
- 	cb.cutoff_cnt = cutoff_cnt;
- 	cb.oid = oid;
+ 	if (commit->maybe_tree || !commit->object.parsed)
+ 		return commit->maybe_tree;
+@@ -348,7 +349,7 @@ struct tree *get_commit_tree(const struct commit *commit)
+ 	if (commit->graph_pos == COMMIT_NOT_FROM_GRAPH)
+ 		BUG("commit has NULL tree, but was not loaded from commit-graph");
  
--	for_each_reflog_ent_reverse(refname, read_ref_at_ent, &cb);
-+	refs_for_each_reflog_ent_reverse(refs, refname, read_ref_at_ent, &cb);
- 
- 	if (!cb.reccnt) {
- 		if (flags & GET_OID_QUIETLY)
-@@ -994,7 +995,7 @@ int read_ref_at(const char *refname, unsigned int flags, timestamp_t at_time, in
- 	if (cb.found_it)
- 		return 0;
- 
--	for_each_reflog_ent(refname, read_ref_at_ent_oldest, &cb);
-+	refs_for_each_reflog_ent(refs, refname, read_ref_at_ent_oldest, &cb);
- 
- 	return 1;
+-	return get_commit_tree_in_graph(the_repository, commit);
++	return get_commit_tree_in_graph(r, commit);
  }
-diff --git a/refs.h b/refs.h
-index 859dffe691..8f9cbf8a93 100644
---- a/refs.h
-+++ b/refs.h
-@@ -388,7 +388,8 @@ int refs_create_reflog(struct ref_store *refs, const char *refname,
- int safe_create_reflog(const char *refname, int force_create, struct strbuf *err);
  
- /** Reads log for the value of ref during at_time. **/
--int read_ref_at(const char *refname, unsigned int flags,
-+int read_ref_at(struct ref_store *refs,
-+		const char *refname, unsigned int flags,
- 		timestamp_t at_time, int cnt,
- 		struct object_id *oid, char **msg,
- 		timestamp_t *cutoff_time, int *cutoff_tz, int *cutoff_cnt);
-diff --git a/sha1-name.c b/sha1-name.c
-index d535bb82f7..15a1107998 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -849,7 +849,8 @@ static int get_oid_basic(const char *str, int len, struct object_id *oid,
- 				return -1;
- 			}
- 		}
--		if (read_ref_at(real_ref, flags, at_time, nth, oid, NULL,
-+		if (read_ref_at(get_main_ref_store(the_repository),
-+				real_ref, flags, at_time, nth, oid, NULL,
- 				&co_time, &co_tz, &co_cnt)) {
- 			if (!len) {
- 				if (starts_with(real_ref, "refs/heads/")) {
+ struct object_id *get_commit_tree_oid(const struct commit *commit)
+diff --git a/commit.h b/commit.h
+index 42728c2906..f1aa4c0472 100644
+--- a/commit.h
++++ b/commit.h
+@@ -32,7 +32,7 @@ struct commit {
+ 
+ 	/*
+ 	 * If the commit is loaded from the commit-graph file, then this
+-	 * member may be NULL. Only access it through get_commit_tree()
++	 * member may be NULL. Only access it through repo_get_commit_tree()
+ 	 * or get_commit_tree_oid().
+ 	 */
+ 	struct tree *maybe_tree;
+@@ -143,7 +143,8 @@ void repo_unuse_commit_buffer(struct repository *r,
+  */
+ void free_commit_buffer(struct parsed_object_pool *pool, struct commit *);
+ 
+-struct tree *get_commit_tree(const struct commit *);
++struct tree *repo_get_commit_tree(struct repository *, const struct commit *);
++#define get_commit_tree(c) repo_get_commit_tree(the_repository, c)
+ struct object_id *get_commit_tree_oid(const struct commit *);
+ 
+ /*
+diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
+index c49aa558f0..57c8f71479 100644
+--- a/contrib/coccinelle/commit.cocci
++++ b/contrib/coccinelle/commit.cocci
+@@ -12,17 +12,18 @@ expression c;
+ 
+ // These excluded functions must access c->maybe_tree direcly.
+ @@
+-identifier f !~ "^(get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit)$";
++identifier f !~ "^(repo_get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit)$";
+ expression c;
+ @@
+   f(...) {<...
+ - c->maybe_tree
+-+ get_commit_tree(c)
+++ repo_get_commit_tree(the_repository, c)
+   ...>}
+ 
+ @@
+ expression c;
++expression r;
+ expression s;
+ @@
+-- get_commit_tree(c) = s
++- repo_get_commit_tree(r, c) = s
+ + c->maybe_tree = s
 -- 
 2.21.0.479.g47ac719cd3
 
