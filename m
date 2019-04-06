@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4680220248
-	for <e@80x24.org>; Sat,  6 Apr 2019 12:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 786D620248
+	for <e@80x24.org>; Sat,  6 Apr 2019 13:12:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726404AbfDFMTV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Apr 2019 08:19:21 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:55574 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726310AbfDFMTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Apr 2019 08:19:20 -0400
-Received: by mail-it1-f196.google.com with SMTP id y134so7225270itc.5
-        for <git@vger.kernel.org>; Sat, 06 Apr 2019 05:19:20 -0700 (PDT)
+        id S1726466AbfDFNME (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Apr 2019 09:12:04 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:38911 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726316AbfDFNME (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Apr 2019 09:12:04 -0400
+Received: by mail-wr1-f52.google.com with SMTP id k11so11066453wro.5
+        for <git@vger.kernel.org>; Sat, 06 Apr 2019 06:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oIVO4wyWLBnE1Ag8WQm8Vjc+Nras5HNltvZ2s38Qtd4=;
-        b=iPxH6S2zsh9ouueSb188WRO6qHlER6ripIcEBnIHdZd5WxNhXcM8ltRlvjR3jSg7B5
-         yMdkDD/4AIko7xf7NZesHBW1DF8x05wWwJcnsJdVnZ2EP+fkVo1yrYT3IHwSg2Kg+ZO8
-         dCr4Zmpsak1okN4YZsjaoMQDsd+YmikDe/CWDJTJPi7emNIV2gvWS3lj8sqKaPoJd3Mz
-         sHfP1sNqx4hNcW3v9T7KurcXKy/L7Nd6otvgmYcpNvqTUqMlE/WtTg+PY7feLPjbzKDw
-         Sx/nbSsr4M/sTRVHZMRzeEnio1bmlvv+fTjXesPW8tTY9a6B1Ro+VxxYfRIvgm4e6peW
-         8o9Q==
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=azoGAtxtigKVo2tKUjWVfIysC3+UryjVG2HfvDmMjLw=;
+        b=OecvvrPlTVBdmznWwQCmqUjzjhavUJ1IMevUH/DG3xOv+33BkutKzLKWAr3+dTm5ZP
+         z0xQmKVWNTuCd5eUpjiCPXNYdg2CEyTtK00/t6ivQ9EkQBjhnGo87iKRtxt3WcXAkgeE
+         eK20BRgOm8drwg0btZsjKFjrY082pohkQuAXVrajEiP2qj8bqLubOmh3rOAOuK0hXoJL
+         Kne0YPNEhXq0t13ztw8o48mlTLiYde1Gp4cNEK1iDv3Pn7s+9QStGASYA+CFCVighQFc
+         DWmrxVgbgujaiWV1LkuzNhpnTTAkQg6sLYLgZ36zo5qqvSFVGfASKkzNDikt/XcJIuwe
+         HDUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oIVO4wyWLBnE1Ag8WQm8Vjc+Nras5HNltvZ2s38Qtd4=;
-        b=tKxApjDJ/DhBvXoVHL6SdRZ87talg8ykvhyW+y4Y6XHt015NrAo5/yJWVh0LKtxFOQ
-         N7Ght4TKTG+VWyHMWlyFKfBugtkb7KxdfqDHHcb6XoA2h74eAXFwDiN7qA0Pj+ojwW7R
-         Rmitls2AOW3rdOmm8NZTilbgfHNidM/Osu0pBcHdKBFsyKR0lSs9d0Cg056JkIQMrrS2
-         xuupfvVCe3m2NVeGVF9N/Oydlkif1AKKmkMvUMJP24e2PoTnM5vZ1KyeiBjRIbSdBW0X
-         3L7V2ZuG0lPPPnebw3vA3Joh92CCFeWVUxbAuVTJhi9VXNLauoSvSN50jt4L5AHggBoM
-         wOYg==
-X-Gm-Message-State: APjAAAXzA/7rrmus3z6ybRC0yGYABaoVSvEWmAWo2vZbjmWYyjMo7JIc
-        F/w8lV4zyCfQQcwtig5IrWRQvp8IVsVDWaWKqW0=
-X-Google-Smtp-Source: APXvYqwzz5ik51G16Vc4dhShR4wULzqsQkL4IeX0BZwuhu+B2d01a7RN6zCqeIOOfVtHbJtXMq5CY1wrEexG4AcZyKw=
-X-Received: by 2002:a02:c50b:: with SMTP id s11mr14177970jam.84.1554553160041;
- Sat, 06 Apr 2019 05:19:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=azoGAtxtigKVo2tKUjWVfIysC3+UryjVG2HfvDmMjLw=;
+        b=EaA+DEKKvC7nUma3m9WtRQHdNgqpt7vkGG+SBntCULMUkZ7UhIXhZsLc7vxZHghlf5
+         4g1c4twD3FIIhUVvmPD0lKHmU194O8L2LgSFpPQaBuv/aT336PUivrJwie1iynonUSsL
+         v7cZu1JphZve+ku77GprwowB6NKeZ8lk7E1BIBfuE/vFIp5Yce4o80WQhh64X90o7xop
+         9s+5CeWzgSrEodr0CgiBTEcD6mCfDetumXvT41SEp9PWN/wQV4cmlLHhZQYC6lh/mJAE
+         eYowNhDTrgbNFWgdAt4IxJU4zBnuCwlyAy//eS6l/qQRWRXM2iJwbNJ2X6u0CK/N2H1/
+         Qh6Q==
+X-Gm-Message-State: APjAAAVJI/yf0AIOSc/XivAYj+XCteAHTDWS8FwkdZ3j/MAqDws0tU+I
+        6ga+qnfj0LqDKWYeRvC4jWhAmDJO
+X-Google-Smtp-Source: APXvYqwO9aBdb7hBb8rdb9zt8YqLaqcmxbWc3WX4DDEpZrnTXinGw0RXSf7TNp/3S7eZQDZ3O0/K9Q==
+X-Received: by 2002:a5d:4a4f:: with SMTP id v15mr2574212wrs.5.1554556322032;
+        Sat, 06 Apr 2019 06:12:02 -0700 (PDT)
+Received: from doriath (87-231-246-247.rev.numericable.fr. [87.231.246.247])
+        by smtp.gmail.com with ESMTPSA id p6sm18290011wrs.6.2019.04.06.06.12.01
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sat, 06 Apr 2019 06:12:01 -0700 (PDT)
+Date:   Sat, 6 Apr 2019 15:12:00 +0200
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+To:     git@vger.kernel.org
+Subject: Pull without fetch
+Message-ID: <20190406131200.xcd7gtf7dlc567uh@doriath>
 MIME-Version: 1.0
-References: <CAMknYEPS68VEkUbNxeKQvVDGjzVpBXKNAi3uA04pLwN9k4ZTfA@mail.gmail.com>
- <CACsJy8AnXawOgC0eWKpSF7iGXAvPdP9=SZX1HePRABVdkiKs8g@mail.gmail.com> <CAMknYENJogZ6vxs3zxivD3TPtDnfE9DFQDTwri+eLJmTwr4zxw@mail.gmail.com>
-In-Reply-To: <CAMknYENJogZ6vxs3zxivD3TPtDnfE9DFQDTwri+eLJmTwr4zxw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 6 Apr 2019 19:18:53 +0700
-Message-ID: <CACsJy8DNb+Xu_bLAGw3WHECygxMLQHkaqGhJ89SY_yGF+c20bw@mail.gmail.com>
-Subject: Re: [RFC] TODO in read-cache.c
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Sat, 06 Apr 2019 15:09:49 +0200
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 6, 2019 at 7:14 PM Kapil Jain <jkapil.cs@gmail.com> wrote:
-> > In some cases, it will be simple. For example, if you have a look at
-> > repo_read_index(), it already knows what repo it handles, so you can
-> > just extend read_index_from() to take 'struct repository *' and pass
-> > 'repo' to it.
-> >
-> > Be careful though, repository and istate does not have one-to-one
-> > relationship (I'll leave it to you to find out why). So you cannot
-> > replace
->
-> should i run all the tests after making the changes, or are there some
-> specific ones.
+Dear git developpers,
 
-'make test' (with -j<something> to speed up) should always be done for
-any kind of changes. But I'm pretty sure you'll hit plenty compiler
-errors that will make you pause and think.
+is there a way to do a git pull without it running git fetch?
+Looking at the source in builtin/pull.c does not seem to indicate so.
+
+Here is my use case: I do a `git fetch --all` to look at the incoming
+changes, and only afterwards I would like to do a `git pull --no-fetch`. I
+could of course call `git merge`/`git rebase` directly, but the advantage
+of `git pull` is that it parses the value of branch.<name>.rebase for me
+(in `parse_config_rebase`). I could easily write a script for it, but this
+would just duplicate this part of git-pull, so we might as well use git
+pull directly. Moreover, `git-pull --rebase` used to have extra functionality
+where it looked at the reflog to find the merge base. This is now
+incorporated directly into git rebase, but this is one more reason I would
+like to use git pull directly.
+
+I am missing another way? Would a patch to provide this feature be accepted?
+
 -- 
-Duy
+Damien Robert
