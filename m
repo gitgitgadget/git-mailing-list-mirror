@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BA7720248
-	for <e@80x24.org>; Sat,  6 Apr 2019 11:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19E4F20248
+	for <e@80x24.org>; Sat,  6 Apr 2019 11:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726493AbfDFLfh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Apr 2019 07:35:37 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:46752 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfDFLfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Apr 2019 07:35:37 -0400
-Received: by mail-pl1-f196.google.com with SMTP id y6so4466208pll.13
-        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:35:36 -0700 (PDT)
+        id S1726511AbfDFLfn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Apr 2019 07:35:43 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:34074 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfDFLfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Apr 2019 07:35:42 -0400
+Received: by mail-pl1-f194.google.com with SMTP id y6so4491445plt.1
+        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SILCV0xL0rMhdc8DRhCUAEY33mnaNDt1h5vVG3Tug14=;
-        b=A6oHA7YpfdCRe8OKG7NpcSkQeWcrsYBUCVxdz5eULDgFDiqUREeecLwFnq+gymF5QL
-         sDkS8+frIR8DHZThiUlHRr+R5n0fXjBs5vPJOE6Qir6JVtczdvAJZLRIpvpDhDlY9lzs
-         1V5bKRaSwrGnTTWYIfcsmg96+Sgbnump1Ietdfb7WHyCS53AydUzsHS85paAXok5IaMA
-         9hg7DQaOA+utGVPygLQ2/q0odOzESnl9rDVmA0V+w9mOEaNfw+gc29xHplkyyBu2hpHy
-         EEAGzpMdGOg4n29n6m/SOxdbDoYd/l3glR49YNxuAdLjcG4ysK8GocMauzXKvLw8MVyk
-         6pyw==
+        bh=QNHEfU5Es+iTRROnoumQYR2DGfc6CnyeuJUutLTjvtc=;
+        b=TBAemQTMAntX+vhQ5XCYYrG/Ss6E7kap9s3iY8vYyvobUOpVd8kgmotppYLN818SsW
+         h5/FhDWsn7D/NeZ5Hq6oA1f/tUquAanhjUNNU5KvXKQ6GnUdNRE+g3baCJM3ITg5BDNG
+         b8rjFxk8NatoArMI78eCaGlGUpa1UwXz6T+AyVOruUMPaFaXCx4bV3vPBZ8r3EgncRCH
+         Z2oKjWNzm/KYzIy47Z2SKy8OT7P1FmZQmlVfiM2pcpL/+AKCsk6cp+zfdyKlDdRuBDWp
+         pdvjfxuwMjd8ciDLFSBBaLfyt3T6S3o1MCdzhj/it1UxnaoXecib1gtRXCs+OJFb4kIf
+         ZhbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SILCV0xL0rMhdc8DRhCUAEY33mnaNDt1h5vVG3Tug14=;
-        b=cw2h856nX7y1F8lff1csc4tdLkFglFiAxI1p6k0Y9NSoB5Xogib9E6hgsfccZWnM1c
-         HI74HLEanVTwnYDCTTdo5fHyzAEuucxV5RIMTxM+hjzZmHdz6v/Cgq92GRpA+wxza4e/
-         Qd2ySVpdT5lBdd2kaARHeO8cekL6CsSY+fSiGUP0fHJZqmoW488eVgVZrUqLRYf4FaJU
-         4u6+tTushYYOZgITvla6jLSCpt7jmOe50g0CxLXA9k3GoL7Wr5Zdnwj5mL9HZAgcGXpb
-         PKnpScDiN0adgRzf2qqeLJBMqIlRWA95uXxooOEUKoOcd5ZoHaZj1eJuXv/kAM1+mse2
-         GAow==
-X-Gm-Message-State: APjAAAXlvMSm9jq5RIRcU4RvrPm478SIJCFZJefNsP+M31GKKtBEquJc
-        e8YmLmLwPXXWbRHMYgg1ej8=
-X-Google-Smtp-Source: APXvYqyMncNPmVN7rczOLNHE2qYZWigNHSUZ5+GHEI2fB1GHBLHwghYr3aW/IULT2D5+3dUT/75hKA==
-X-Received: by 2002:a17:902:4681:: with SMTP id p1mr18518762pld.42.1554550536567;
-        Sat, 06 Apr 2019 04:35:36 -0700 (PDT)
+        bh=QNHEfU5Es+iTRROnoumQYR2DGfc6CnyeuJUutLTjvtc=;
+        b=ofVrMRBc7KvPQFNZNMX41ECHXdAph4UoZfunNZ+ajx4Eyuo6gIg80ySwsuUNYNu89S
+         wN4mWVSxNmDGWOs8hGdVAQr9DFKkYKMx4vDVAJ/AkwuwyL5MGkZMVuBjJ5FCEF7yT9oo
+         KUovPnUxeLcY6p1Rqnvi9dAhsnl9JRWC9Sec+NOou3tpI7e5GTcb/pwFZ4A3Bsy8JwqN
+         iEruoPpYUjJwK5oxFqkdZB2ekNWx/7nYq8U3ObEdD95Spp/1hRGQf7Uckf+ibs58diZj
+         ZfYDrYnWFinHoV0WewZOlDDnHPa+8CoN+82g3Z8tb+sjrH6HGh0SohHE0hAOT4M9CLxp
+         7CdA==
+X-Gm-Message-State: APjAAAVlLQQKBEs8f63hwtjZQid6gw7L3k4FgQxbWamXYb/mdKPwZDmR
+        OvrqQBxgxRmxuw41+d/MWPNj/KF0
+X-Google-Smtp-Source: APXvYqwmlf3GBMDLKsYzz7ox0kH+PghSGo9a3Vza5nOAswOTKoBhm2APFtYIJp3XPykw57J0yGCnCA==
+X-Received: by 2002:a17:902:20eb:: with SMTP id v40mr18143680plg.20.1554550541959;
+        Sat, 06 Apr 2019 04:35:41 -0700 (PDT)
 Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id o67sm46921088pga.55.2019.04.06.04.35.33
+        by smtp.gmail.com with ESMTPSA id f63sm34770584pfc.180.2019.04.06.04.35.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Apr 2019 04:35:35 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:35:31 +0700
+        Sat, 06 Apr 2019 04:35:41 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:35:36 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         szeder.dev@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 04/33] refs.c: add refs_ref_exists()
-Date:   Sat,  6 Apr 2019 18:34:24 +0700
-Message-Id: <20190406113453.5149-5-pclouds@gmail.com>
+Subject: [PATCH v3 05/33] refs.c: add refs_shorten_unambiguous_ref()
+Date:   Sat,  6 Apr 2019 18:34:25 +0700
+Message-Id: <20190406113453.5149-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190406113453.5149-1-pclouds@gmail.com>
 References: <20190403113457.20399-1-pclouds@gmail.com>
@@ -73,29 +73,59 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ refs.c | 11 +++++++++--
+ refs.h |  2 ++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 142888a40a..b869f32d8b 100644
+index b869f32d8b..3dde824aab 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -241,9 +241,14 @@ int read_ref(const char *refname, struct object_id *oid)
- 	return read_ref_full(refname, RESOLVE_REF_READING, oid, NULL);
+@@ -1169,7 +1169,8 @@ int update_ref(const char *msg, const char *refname,
+ 			       old_oid, flags, onerr);
  }
  
-+static int refs_ref_exists(struct ref_store *refs, const char *refname)
+-char *shorten_unambiguous_ref(const char *refname, int strict)
++char *refs_shorten_unambiguous_ref(struct ref_store *refs,
++				   const char *refname, int strict)
+ {
+ 	int i;
+ 	static char **scanf_fmts;
+@@ -1247,7 +1248,7 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 			strbuf_reset(&resolved_buf);
+ 			strbuf_addf(&resolved_buf, rule,
+ 				    short_name_len, short_name);
+-			if (ref_exists(resolved_buf.buf))
++			if (refs_ref_exists(refs, resolved_buf.buf))
+ 				break;
+ 		}
+ 
+@@ -1266,6 +1267,12 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 	return xstrdup(refname);
+ }
+ 
++char *shorten_unambiguous_ref(const char *refname, int strict)
 +{
-+	return !!refs_resolve_ref_unsafe(refs, refname, RESOLVE_REF_READING, NULL, NULL);
++	return refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
++					    refname, strict);
 +}
 +
- int ref_exists(const char *refname)
- {
--	return !!resolve_ref_unsafe(refname, RESOLVE_REF_READING, NULL, NULL);
-+	return refs_ref_exists(get_main_ref_store(the_repository), refname);
- }
+ static struct string_list *hide_refs;
  
- static int match_ref_pattern(const char *refname,
+ int parse_hide_refs_config(const char *var, const char *value, const char *section)
+diff --git a/refs.h b/refs.h
+index 308fa1f03b..5627570241 100644
+--- a/refs.h
++++ b/refs.h
+@@ -462,6 +462,8 @@ int check_refname_format(const char *refname, int flags);
+ 
+ const char *prettify_refname(const char *refname);
+ 
++char *refs_shorten_unambiguous_ref(struct ref_store *refs,
++				   const char *refname, int strict);
+ char *shorten_unambiguous_ref(const char *refname, int strict);
+ 
+ /** rename ref, return 0 on success **/
 -- 
 2.21.0.479.g47ac719cd3
 
