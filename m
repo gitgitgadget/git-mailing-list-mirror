@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD4F20248
-	for <e@80x24.org>; Sat,  6 Apr 2019 11:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 297FF20248
+	for <e@80x24.org>; Sat,  6 Apr 2019 11:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbfDFLf7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Apr 2019 07:35:59 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38002 "EHLO
+        id S1726571AbfDFLgE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Apr 2019 07:36:04 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:45742 "EHLO
         mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfDFLf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Apr 2019 07:35:58 -0400
-Received: by mail-pg1-f194.google.com with SMTP id j26so4500956pgl.5
-        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:35:58 -0700 (PDT)
+        with ESMTP id S1726036AbfDFLgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Apr 2019 07:36:03 -0400
+Received: by mail-pg1-f194.google.com with SMTP id y3so4478622pgk.12
+        for <git@vger.kernel.org>; Sat, 06 Apr 2019 04:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=10ZYZz/KCtQq+hTWl+4RRZs4YFEAPYAluyqXGvx5xco=;
-        b=d7IdrH1/ZFKNBlUhJL5SMLfdYW5w0jyP2wUjwjs4Hv7rZTUHBLLYGZh1H8P1lTp+Jb
-         NB2c1uWmbbeBqM280qmV7UzdNFXWY/DzfYkcWfCe730p6SWkRdk8eCJVOeuffiQTkSh6
-         hOGS1h7vEcE04dHHrsWXDIjCQwqSa/8OgFm2czhjcFx3s2PXYvB0oBI/tEIZR4T9b4XK
-         qBuFgwlgDsPlCbY6bs1iQXhupNggUmQqkpTDpY7Gn/Cx9HLLzhgwYVEQ0Eu0nlzAHDHc
-         hV7UvHta0xY9UgqaHfyHEnpKwnK+0ZTArxl0DE+h3QW9T9OXRVvEw1DZh9wbF2lwOw7q
-         TJJQ==
+        bh=szpMHP8EhvpaCOO0W8tVbc6AFYjGROhwwjWwnfbVc9o=;
+        b=no1651ehIlY4odQ8r+Ow/PM8vL19tiLT+/HL79TP5KzKlq7AUL2qKGEbwhQqQgFhRw
+         rp9/6VbCkXhLtA0sJeUXVwdJ5FwLCBuabZ/lTfwH3BX6iUW6AxrRetnhTScKvZmQOduu
+         3C4myriNSz/jvnv3taFboWbXuyu9hlgfOS9WmI/6Nm/oLohvpGZ7iQ70q0CDKOr34Uv6
+         vTDbMVzR1MaFcGYaGDIbTU3wy9R+7gAxXb4Wk906g34v8bV+Zdgz3uSl2fEbQlrP7a/Y
+         zLnYDeF2FObXIGrxEoMJzKUzudRBQMkv5LbMni9j5hrj2zSRRFDrSDO0fKmUFmBe389S
+         vG+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=10ZYZz/KCtQq+hTWl+4RRZs4YFEAPYAluyqXGvx5xco=;
-        b=mIJhDJC0o+J9+9IP92h3bsz2lKJVx542RTvE5cysa58h0vRDeyOpaWbC6+f2bm36Sl
-         bstN+Hg0TbjUD8tmekt5p+oRHDu6KRTU/ElrtL3qWDg90j6bqtOu1YJ3WYXC6RX4jPwJ
-         jL+YbSvmi1Dp6d1kYR3m8zSeO671hl3p2CauBG8YhE00h89ZrA/LT8ULIqhS2PUO47r1
-         FLXrItawpl1kcJz/4FyX0egI6/S3pVWdizTiLT9sPd4s5XX+PMbJTVd2nQUOD9grfhE3
-         hfkW+NmceYDJKthEm5CSrOFrFj1MmtwKFxpGzuO/pxMYPaPcT9gQlafYA9aQDBa7nWLY
-         ftTg==
-X-Gm-Message-State: APjAAAULwlXY7mnwfx9JmHZUkBDr9+fcra6bunt6OLItfThNc6WbHZ8f
-        7zzevinINs9YWWtCfLQEYt0=
-X-Google-Smtp-Source: APXvYqyBeqVT9uGGNJG0UjsIxVgifOVwclu4ItOwp3/fYJ/nSYIZwrpkDqGTFOKSFaEKnXCQ4plfNA==
-X-Received: by 2002:aa7:8b12:: with SMTP id f18mr18307355pfd.89.1554550557957;
-        Sat, 06 Apr 2019 04:35:57 -0700 (PDT)
+        bh=szpMHP8EhvpaCOO0W8tVbc6AFYjGROhwwjWwnfbVc9o=;
+        b=GOjroJ8WwOSXD2+COrZN25FOgMFrx1kFT9hHZQm0QH/u+jL2pHRMfcMYdP3GtkDKWi
+         FotL7UKZZsLQLcbFwS5Ddwn5gTlWKdmFTPW88yK/xTAGyR8TA87HxCt9V/0iaG651Qo6
+         nglKzNWST0yJ/SZmbJDQzBkh7oGay76TxfSCLJ9eYx3cLjSaHbpukJiDzRpALjgtgWtF
+         ZvskpDDcMiCILDbx4VKZNIsbKORZGeXLHbWm49q30UXWYEk+bB2TvfUJxzSAqHgR6knN
+         RdeUpi1DNjd8JuZxpBnpQGb2YYM3gHU9SnsRZOUMVhDzIZKNUDVpRP+8+8d7s0cfN9y9
+         5qAg==
+X-Gm-Message-State: APjAAAXBEadu+z12HLXSwazp5P0fZt7kbdDlyBhKtUTmbdefFCgYEPK1
+        mroZ+IRbPoYE4NAALUkovhY=
+X-Google-Smtp-Source: APXvYqw+4vKuwjPTr14NEw1W/4yOu4VMqbG+Ltx426AiAO1IXhkUKYVWWQYz7dvv1GYtY+OS2ceVvA==
+X-Received: by 2002:a65:6149:: with SMTP id o9mr8343652pgv.254.1554550563331;
+        Sat, 06 Apr 2019 04:36:03 -0700 (PDT)
 Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id b7sm73796349pfj.67.2019.04.06.04.35.54
+        by smtp.gmail.com with ESMTPSA id 75sm42503723pfr.55.2019.04.06.04.36.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Apr 2019 04:35:57 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:35:52 +0700
+        Sat, 06 Apr 2019 04:36:02 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 06 Apr 2019 18:35:58 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
         szeder.dev@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 08/33] refs.c: add repo_dwim_ref()
-Date:   Sat,  6 Apr 2019 18:34:28 +0700
-Message-Id: <20190406113453.5149-9-pclouds@gmail.com>
+Subject: [PATCH v3 09/33] refs.c: add repo_dwim_log()
+Date:   Sat,  6 Apr 2019 18:34:29 +0700
+Message-Id: <20190406113453.5149-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.479.g47ac719cd3
 In-Reply-To: <20190406113453.5149-1-pclouds@gmail.com>
 References: <20190403113457.20399-1-pclouds@gmail.com>
@@ -73,47 +73,69 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 12 +++++++++---
+ refs.c | 21 +++++++++++++++------
  refs.h |  1 +
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 1f5864aa36..bd0fec5776 100644
+index bd0fec5776..edea001446 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -555,14 +555,20 @@ static char *substitute_branch_name(struct repository *r,
- 	return NULL;
- }
- 
--int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
-+int repo_dwim_ref(struct repository *r, const char *str, int len,
-+		  struct object_id *oid, char **ref)
- {
--	char *last_branch = substitute_branch_name(the_repository, &str, &len);
--	int   refs_found  = expand_ref(the_repository, str, len, oid, ref);
-+	char *last_branch = substitute_branch_name(r, &str, &len);
-+	int   refs_found  = expand_ref(r, str, len, oid, ref);
- 	free(last_branch);
+@@ -603,9 +603,11 @@ int expand_ref(struct repository *repo, const char *str, int len,
  	return refs_found;
  }
  
-+int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
+-int dwim_log(const char *str, int len, struct object_id *oid, char **log)
++int repo_dwim_log(struct repository *r, const char *str, int len,
++		  struct object_id *oid, char **log)
+ {
+-	char *last_branch = substitute_branch_name(the_repository, &str, &len);
++	struct ref_store *refs = get_main_ref_store(r);
++	char *last_branch = substitute_branch_name(r, &str, &len);
+ 	const char **p;
+ 	int logs_found = 0;
+ 	struct strbuf path = STRBUF_INIT;
+@@ -617,13 +619,15 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **log)
+ 
+ 		strbuf_reset(&path);
+ 		strbuf_addf(&path, *p, len, str);
+-		ref = resolve_ref_unsafe(path.buf, RESOLVE_REF_READING,
+-					 &hash, NULL);
++		ref = refs_resolve_ref_unsafe(refs, path.buf,
++					      RESOLVE_REF_READING,
++					      &hash, NULL);
+ 		if (!ref)
+ 			continue;
+-		if (reflog_exists(path.buf))
++		if (refs_reflog_exists(refs, path.buf))
+ 			it = path.buf;
+-		else if (strcmp(ref, path.buf) && reflog_exists(ref))
++		else if (strcmp(ref, path.buf) &&
++			 refs_reflog_exists(refs, ref))
+ 			it = ref;
+ 		else
+ 			continue;
+@@ -639,6 +643,11 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **log)
+ 	return logs_found;
+ }
+ 
++int dwim_log(const char *str, int len, struct object_id *oid, char **log)
 +{
-+	return repo_dwim_ref(the_repository, str, len, oid, ref);
++	return repo_dwim_log(the_repository, str, len, oid, log);
 +}
 +
- int expand_ref(struct repository *repo, const char *str, int len,
- 	       struct object_id *oid, char **ref)
+ static int is_per_worktree_ref(const char *refname)
  {
+ 	return !strcmp(refname, "HEAD") ||
 diff --git a/refs.h b/refs.h
-index b630d5bde7..fd3dc1d0f4 100644
+index fd3dc1d0f4..859dffe691 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -149,6 +149,7 @@ struct argv_array;
- void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
+@@ -150,6 +150,7 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
  
  int expand_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
-+int repo_dwim_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
+ int repo_dwim_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
++int repo_dwim_log(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
  int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
  int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
  
