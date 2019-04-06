@@ -2,134 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06C0620248
-	for <e@80x24.org>; Sat,  6 Apr 2019 04:21:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 574B520248
+	for <e@80x24.org>; Sat,  6 Apr 2019 05:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725951AbfDFESO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Apr 2019 00:18:14 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:39864 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfDFESN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Apr 2019 00:18:13 -0400
-Received: by mail-it1-f193.google.com with SMTP id 139so12942885ita.4
-        for <git@vger.kernel.org>; Fri, 05 Apr 2019 21:18:13 -0700 (PDT)
+        id S1726053AbfDFFXZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Apr 2019 01:23:25 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:34035 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725290AbfDFFXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Apr 2019 01:23:25 -0400
+Received: by mail-pg1-f193.google.com with SMTP id v12so4165003pgq.1
+        for <git@vger.kernel.org>; Fri, 05 Apr 2019 22:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ulsSWqm6lQxbu4fDli9APKkTm9YGY0FS57TdW6QWjl0=;
-        b=R7zihBCjSLaIqvZwXCpqe5KdNQI3T3WZxRUQTkdyT+85t5Id+Ls8HmsiZs/AP1LMD0
-         ffp2prX9OXEzawOQ9teXCQ8JF0iXIEyykILuLbdRatpfsHF2NtLzi+Zm9CQBuiRwVL/t
-         bjzfxBTeLVFAyMHNnhJxL6vRD23arh8AiLDmxaSO0E2SY31pFpvGEqbJR9rpWLIhlOAA
-         stTCtsanDoCbEOVHCUc7yZTJ/tc6EhSQ++ELdHMExlvHBrhQ37mKjtGUveBKg6uMd9Yp
-         7dWl+SPEpieRIMonKmejYgH08GEAPKdqYlx30MOfht74Zb7SHSOKuvwwLHrUXh/QOMkx
-         /EIw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=e81pohi3eYOa+k27YV3wVDhqlxvWlQ1GvIk8J1yQ4Uc=;
+        b=SlDiSQo0y7ndWlu7ITltHV3DTLuksT6Z/mFCrQTcymrpSBoudoX1i81N4coAU5sUnf
+         b5HH9qACVCOaUwvQ/ALRpi6FrUgc+k7kT88mDcbQJomvS1AZfDQhQl4F/N3hDNEnHVi+
+         gf1ZDk2AbXxPSzV/3kkto3BBp9yP4QWBrDgcavrojgSFLqm2/Z2x3orMLemEfD9TiJ0V
+         4PDa0vpzi9c5vWE041j5/YFAgWNqI7//uwSXKiQDhXJa4yMndYWqGzwgLTpIxPU1W5Bf
+         BNih3VxjMAa5tL4PAmQr5sQ12VhX1TtdtxT1ZtpaAFnhxVhXsymGvO10zunaBS5TJBBm
+         m9Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ulsSWqm6lQxbu4fDli9APKkTm9YGY0FS57TdW6QWjl0=;
-        b=RguYk9ylf+wUF+xw2c/Aoe8OpQyblmLFAiPqxSMe2SV9jov3fXrxIP0SFAaoS8oQ0Z
-         CEDO4yLeLVpuH/fWNtiE3+hYPft+9jL4Jlhd1Xvq7zbqgxIxgduQ5+xcfd8TeDKIS742
-         8GCvc6Tl+BMWAV/9IzB+KZC2OdEQv5wFyPqHIyay5ThkL8UjLNngfuBgg8KzzR0NcndJ
-         cG8Tz+yanW0RgA5+gCMnY0kyUzt2Vr82zHprN11mKdBBtzjChqpME0DyDqWCW3IDM7DW
-         iwh/RT70JwRop3UWKsVueGDRpInvQX+gegtsogywOQ7znWp3eBJxzz6WZ2mgOv8u5WR6
-         VIvw==
-X-Gm-Message-State: APjAAAXt0SpSA4hcy2zKz3xwmp0PSMhu5Y4YlipCSfu5umjeQaQCp9zr
-        4sEA7pzlJkZLQuy/9Y1DEqPuIqC7RD5yPgXvukI=
-X-Google-Smtp-Source: APXvYqy2GRKR9xrlWUfpmWpQPAluj5BWkd9UPxHmFJMQzMGgeocsUrrgc9sDqWZLb3p2cHhcm7AvFIFktCzxYwWksUs=
-X-Received: by 2002:a24:f8c7:: with SMTP id a190mr4658231ith.72.1554524293022;
- Fri, 05 Apr 2019 21:18:13 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=e81pohi3eYOa+k27YV3wVDhqlxvWlQ1GvIk8J1yQ4Uc=;
+        b=qyIlaDHNTET2+F5JEK6PiwlI3EkM7MrYPCH3sz3vAPb4xInCxgMYlKHfhxViwdMkgg
+         HRJ+9lQjyGUpPoxahBvP9fZErVInRfBhtC7VCtHuV+itSa+B10PkP/7z1NK/r4sfRTwC
+         Qauqom7Fm30oAACaOZkxnFjZ0f9PI51DX/NuxS9Mk4HbdH+fWVZde42OgyfVo9gYPt3Z
+         48nNrACOZuiwdA1HcLFvufdp+PWQJ56QWyGIC3nfbvulgE0CmJGE1EwApHFJdgByKO2Y
+         ZrU8frCm90Giew7cGqg37eeKgDIz5KK87Nj1af2auz2LJMKDP09wwPukXXOjy3YnGUCl
+         zbPw==
+X-Gm-Message-State: APjAAAVsuKQXeW6xbJXl3+ibNQwC49QvtxlF8ZzT0cWvMXQf/RlP5oUc
+        gj5W43WaDBAwtmegA3mfrxLCBrP4wR2ubQ==
+X-Google-Smtp-Source: APXvYqwGzRCD5DGZMenaiG6dp72VjAX+Eo3OFBL7uK1oX7LcIe5k0w+e8HjAdCmGnKusduxVajsY7A==
+X-Received: by 2002:aa7:914d:: with SMTP id 13mr16912619pfi.149.1554528204409;
+        Fri, 05 Apr 2019 22:23:24 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:e077:74b2:7faa:e131])
+        by smtp.gmail.com with ESMTPSA id c17sm33807184pfd.76.2019.04.05.22.23.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Apr 2019 22:23:23 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Fri, 5 Apr 2019 22:23:22 -0700
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 2/7] t: introduce tests for unexpected object types
+Message-ID: <20190406052322.GA37216@Taylors-MBP.hsd1.wa.comcast.net>
+References: <cover.1554435033.git.me@ttaylorr.com>
+ <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
+ <20190405183142.GD2284@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
- <20190405170934.20441-1-jonathantanmy@google.com>
-In-Reply-To: <20190405170934.20441-1-jonathantanmy@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 6 Apr 2019 11:17:46 +0700
-Message-ID: <CACsJy8AjyY1Azbf4VfnJMA3O8NNBV1P16dZRrHOUJdsYQHUu4g@mail.gmail.com>
-Subject: Re: [PATCH] fixup! diff: batch fetching of missing blobs
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190405183142.GD2284@sigill.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 6, 2019 at 12:09 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> This is a fixup on the tip of jt/batch-fetch-blobs-in-diff (571debe1d9).
->
-> I don't know if Junio has already merged this branch to next (he marked
-> this as "Will merge to 'next'" in the "What's Cooking" email, but when I
-> fetched, it hasn't been merged yet). If he has, we can use this commit
-> message:
->
-> diff: propagate options->repo to add_if_missing
->
-> Avoid a usage of the_repository by propagating the configured repository
-> to add_if_missing(). Also, prefetch only if the repository being diffed
-> is the_repository (because we do not support lazy fetching for any other
-> repository anyway).
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> Thanks, Duy, for noticing this.
-> ---
->  diff.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index 1eccefb4ef..811afbdfb1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6367,18 +6367,19 @@ void diffcore_fix_diff_index(void)
->         QSORT(q->queue, q->nr, diffnamecmp);
->  }
->
-> -static void add_if_missing(struct oid_array *to_fetch,
-> +static void add_if_missing(struct oid_array *to_fetch, struct repository *r,
+Hi Peff,
 
-One last nit. "struct repository *r" is often the first argument. See
-https://public-inbox.org/git/xmqqsh2p6l43.fsf@gitster-ct.c.googlers.com/
-
->                            const struct diff_filespec *filespec)
->  {
->         if (filespec && filespec->oid_valid &&
-> -           oid_object_info_extended(the_repository, &filespec->oid, NULL,
-> +           oid_object_info_extended(r, &filespec->oid, NULL,
->                                      OBJECT_INFO_FOR_PREFETCH))
->                 oid_array_append(to_fetch, &filespec->oid);
->  }
+On Fri, Apr 05, 2019 at 02:31:42PM -0400, Jeff King wrote:
+> On Thu, Apr 04, 2019 at 08:37:44PM -0700, Taylor Blau wrote:
 >
->  void diffcore_std(struct diff_options *options)
->  {
-> -       if (repository_format_partial_clone) {
-> +       if (options->repo == the_repository &&
-> +           repository_format_partial_clone) {
->                 /*
->                  * Prefetch the diff pairs that are about to be flushed.
->                  */
-> @@ -6388,8 +6389,8 @@ void diffcore_std(struct diff_options *options)
+> > Let A be the object referenced with an unexpected type, and B be the
+> > object doing the referencing. Do the following:
+> >
+> >   - test 'git rev-list --objects A B'. This causes A to be "cached", and
+> >     presents the above scenario.
+> >
+> > Likewise, if we have a tree entry that claims to be a tree (for example)
+> > but points to another object type (say, a blob), there are two ways we
+> > might find out:
+> >
+> >   - when we call lookup_tree(), we might find that we've already seen
+> >     the object referenced as another type, in which case we'd get NULL
+> >
+> >   - we call lookup_tree() successfully, but when we try to read the
+> >     object, we find out it's something else.
+> >
+> > We should check that we behave sensibly in both cases (especially
+> > because it is easy for a malicious actor to provoke one case or the
+> > other).
 >
->                 for (i = 0; i < q->nr; i++) {
->                         struct diff_filepair *p = q->queue[i];
-> -                       add_if_missing(&to_fetch, p->one);
-> -                       add_if_missing(&to_fetch, p->two);
-> +                       add_if_missing(&to_fetch, options->repo, p->one);
-> +                       add_if_missing(&to_fetch, options->repo, p->two);
->                 }
->                 if (to_fetch.nr)
->                         /*
-> --
-> 2.21.0.392.gf8f6787159e-goog
+> I think our pasting together of multiple commits adding the lone/seen
+> cases ended up in some redundancy in the description. In particular, I'm
+> not sure what the first paragraph/bullet quoted above is trying to say,
+> as it corresponds to the second bullet in the later list.
+
+I agree that this is at the very least redundant, and at the most,
+confusing. I think that you're right that this is the result of
+squashing the commits often enough that some of this cruft stuck around
+and got combined in ways that it shouldn't have.
+
+> Maybe collapse them together like:
 >
+>   We might hit an unexpected type in two different ways (imagine we have
+>   a tree entry that claims to be a tree but actually points to a blob):
+>
+>     - when we call lookup_tree(), we might find that we've already seen
+>       the object referenced as a blob, in which case we'd get NULL. We
+>       can exercise this with "git rev-list --objects $blob $tree", which
+>       guarantees that the blob will have been parsed before we look in
+>       the tree. These tests are marked as "seen" in the test script.
+>
+>     - we call lookup_tree() successfully, but when we try to read the
+>       object, we find out it's something else. We construct our tests
+>       such that $blob is not otherwise mentioned in $tree. These tests
+>       are marked as "lone" in the script.
 
+Indeed, this is much cleaner (and thanks for writing it here, and saving
+me the work). I think that I will take this as-is for 2/7 in v2.
 
--- 
-Duy
+> -Peff
+
+Thanks,
+Taylor
