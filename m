@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 732E520248
-	for <e@80x24.org>; Sun,  7 Apr 2019 06:00:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C786720248
+	for <e@80x24.org>; Sun,  7 Apr 2019 07:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725980AbfDGGAW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 02:00:22 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44337 "EHLO
+        id S1726019AbfDGHPo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 03:15:44 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45072 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfDGGAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 02:00:22 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d11so8802007edp.11
-        for <git@vger.kernel.org>; Sat, 06 Apr 2019 23:00:21 -0700 (PDT)
+        with ESMTP id S1725929AbfDGHPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 03:15:44 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f19so1860467edw.12
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 00:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=c2B5gyHM1p5mhk8tHdbLH4nn0Da7+Zzam0p+LVs/D1o=;
-        b=fxPo8BzO6kzUP/AupH7005FpC7GUecJGqjbMJG7JK+4N+pqy+bwzbmVIvAvAYpZEkF
-         TfRUlxH9YDgSez1CxNq+DAXWn34dvurU/AydtvjH00pCjEEaROoN/22QzzLPDteELR/J
-         E2fX7j3WDGqN5JassVtWbNpJIJIwwWDgPq3685LdrNixpbsFji03ql255rR29MuAlSto
-         l2u+jrNyZ1Md9pfwRcJQEBb5WknXdBXeLhsNa/d4Y/N71xGVoZTKVSe58b5LLPhjNf0m
-         b7pcMv3UrTM6ieJIQwzMz76mNS+S5r5T9SXC+ScfzOdQz7yWnRroYDOTAR1zBISMZjkV
-         8IlQ==
+        bh=OcwcsVosMDgDidWMmPARkfZ4PTukzAHwrqYT+V5Dm20=;
+        b=AhS9wY5WJsrwYqVb9mAj0xR12T16LD9xT7h5zEL87LzYjnAyL5hfR3Q3gkMRkaNrUh
+         OGj6vaYKdiNAIoG7Rlau9AtliGqspxaGbByeXr7kL2xKS2FBP4ZW9sDqFls2WQx+ujyD
+         vmBmesdBo6MFlVchKHZJXLgRuGySDIpobDM2o9FFacgwmi/VyB5FkQgAnN03Ah3qxw1p
+         3jREHCKYrV4aBNEwOq72/rDF9NU0Jk9OIkFwWXtv5mgwPr8xj/w58KwUKSY1qQBr5Y3y
+         OSKqi/dA4a9NKJHzb4AkFmpuswr+XXoCaTrgR35XfM2h8xt6yP6Y2kIVB6qYtUK3Tc7s
+         jcgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=c2B5gyHM1p5mhk8tHdbLH4nn0Da7+Zzam0p+LVs/D1o=;
-        b=HhKHkC/YdnzwB15B0TGyogGEdgER1JQWA1NfuuT6XE3tSlWWsEdF2SeytdUpuCpvrk
-         8y5Cc59tGwGbyi4eIDD3xhVeMEIMf04qKtYaoPjhEH/3+zzGh6GjrqUNodzLQNqxERhJ
-         ljTM5aHiH4GKeXYQHl8A7belNf94yD0taFhss6CLF4+muF6IS3TONs5mKrk8TGXPtKqf
-         iY7fh4iSBQBeiWS9jkmb/qbKOAJ119uCeAjcC2SxuHWuHb4qj4uMJM++hiobuR10pi83
-         TGm3aDnhaKErDJw+GkU0l+Y8bG6l9WNY6pIuE8sJ8Dq4j2MyGH/OTBM7rQuKb5HMe8Sy
-         ORew==
-X-Gm-Message-State: APjAAAV4dcST1Fy5WnPTAhixGyaFP4piS2+5YRgPdaWwlzKGjxCphVth
-        pccs30aeGa2nlDjPvkcHGCxIofydYYVqdLbw4ag=
-X-Google-Smtp-Source: APXvYqyGCvDLcfeO5w0mkIJj4vSr2bocn0YgMigyapK72xcIqELnD5PiHJZAulnf1z/QOUUSAVUyH9Tamal8mEeXVrY=
-X-Received: by 2002:a50:b6d5:: with SMTP id f21mr14251774ede.105.1554616820355;
- Sat, 06 Apr 2019 23:00:20 -0700 (PDT)
+        bh=OcwcsVosMDgDidWMmPARkfZ4PTukzAHwrqYT+V5Dm20=;
+        b=qtVCyfWcMS+2MmbHdHHgzQceeMs9tsXG9UhmuLgvuYmGmH9mRCjeGOpGM1qbaM15yf
+         6kfSWhCCIjR9kke/Agq6qLQVWlG87OUCEtm6hiaScKk//NWScy2vkLwxYgBpcAhtn9Wu
+         qLWATbPuxuypp/j/X3sm0HK716Gx8lL4EsEDgSSJ9NMlI28Xi3VcHgws7SYeuMZDXb17
+         5IoD8UZaEcRZ5kRUGFiigDmRW5xaBgQEgNO3TpccKxuqI8LovX1Fw4yPiXgZxqb7BkNv
+         KxZdsQ5/E7D2XCFUrKKWJKOWkcExoyM8dtNcfnEyCC0ybSypeyvwUL5YZ5lQhk0z+KXq
+         KhrA==
+X-Gm-Message-State: APjAAAXAuKiBC/NQbCl0MmQCLZP+rRbAg1/ZpaLELpNMifbNgIIeaHTw
+        TEBIYquRmjqSY1bljF9apGOfF2MiCnaidCtxM2xg1tM8
+X-Google-Smtp-Source: APXvYqwVT56Xwbnk3i9+bSe/+c9iH0FIrlMJbgYbiaCpQzndNY2GOshmWmlSM8kqfrHhrE3/hyNR+v/5fue+2mRK8mg=
+X-Received: by 2002:aa7:c959:: with SMTP id h25mr14418556edt.107.1554621341992;
+ Sun, 07 Apr 2019 00:15:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190326220906.111879-1-jonathantanmy@google.com>
- <cover.1553895166.git.jonathantanmy@google.com> <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
- <20190404024710.GO32732@szeder.dev> <nycvar.QRO.7.76.6.1904051528130.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1904051528130.41@tvgsbejvaqbjf.bet>
+References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
+ <20190405213100.9577-1-rohit.ashiwal265@gmail.com>
+In-Reply-To: <20190405213100.9577-1-rohit.ashiwal265@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 7 Apr 2019 08:00:08 +0200
-Message-ID: <CAP8UFD1qK61MtJ-XeMuwY4W2V0CdHeZQC9rQap1M+nEeaLmBJQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Date:   Sun, 7 Apr 2019 09:15:30 +0200
+Message-ID: <CAP8UFD12GXV80SVi5UR=mpBox9DFWw0Fp2wrf+1FEXbUdX1ReA@mail.gmail.com>
+Subject: Re: [GSoC][RFC v3] Proposal: Improve consistency of sequencer commands
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        git <git@vger.kernel.org>, rafa.almas@gmail.com,
+        Stephan Beyer <s-beyer@gmx.net>,
+        Thomas Gummerer <t.gummerer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,96 +68,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Rohit,
 
-On Fri, Apr 5, 2019 at 3:38 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-
-> On Thu, 4 Apr 2019, SZEDER G=C3=A1bor wrote:
+On Fri, Apr 5, 2019 at 11:32 PM Rohit Ashiwal
+<rohit.ashiwal265@gmail.com> wrote:
 >
-> > On Fri, Mar 29, 2019 at 02:39:28PM -0700, Jonathan Tan wrote:
-> > > diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clo=
-ne.sh
-> > > new file mode 100755
-> > > index 0000000000..349851be7d
-> > > --- /dev/null
-> > > +++ b/t/t4067-diff-partial-clone.sh
-> > > @@ -0,0 +1,103 @@
-> > > +#!/bin/sh
-> > > +
-> > > +test_description=3D'behavior of diff when reading objects in a parti=
-al clone'
-> > > +
-> > > +. ./test-lib.sh
-> > > +
-> > > +test_expect_success 'git show batches blobs' '
-> > > +   test_when_finished "rm -rf server client trace" &&
-> > > +
-> > > +   test_create_repo server &&
-> > > +   echo a >server/a &&
-> > > +   echo b >server/b &&
-> > > +   git -C server add a b &&
-> > > +   git -C server commit -m x &&
-> > > +
-> > > +   test_config -C server uploadpack.allowfilter 1 &&
-> > > +   test_config -C server uploadpack.allowanysha1inwant 1 &&
-> > > +   git clone --bare --filter=3Dblob:limit=3D0 "file://$(pwd)/server"=
- client &&
-> > > +
-> > > +   # Ensure that there is exactly 1 negotiation by checking that the=
-re is
-> > > +   # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> > > +   GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C client show HEAD &&
-> > > +   grep "git> done" trace >done_lines &&
-> > > +   test_line_count =3D 1 done_lines
-> >
-> > These patches and 'cc/multi-promisor' don't seem to work well
-> > together, and all tests checking 'test_line_count =3D 1 done_lines' in
-> > this test script fail in current 'pu', because there are two
-> > "git> done" lines.
+> Here is one more iteration of my draft proposal[1]. RFC.
+
+Nice, thanks for iterating on this!
+
+As we are close to the deadline (April 9th) for proposal submissions,
+I think it's a good idea to already upload your draft proposal on the
+GSoC site. I think you will be able to upload newer versions until the
+deadline, but uploading soon avoid possible last minute issues and
+mistakes.
+
+In the version you upload, please add one or more links to the
+discussion of your proposal on the mailing list.
+
+> ### List of Contributions at Git:
 >
-> I investigated a little further, and it would seem that it is neither thi=
-s
-> patch nor the cc/multi-promisor patches that introduce the problem, but
-> the merge between the two... The latter tries to get away from using the
-> global variable `repository_format_partial_clone` while this patch
-> introduces another user.
+> Repo                              |Status                      |Title
+> ----------------------------------|----------------------------|---------=
+--------------------------------------------------------------
+> [git/git][8]                      | [Will merge in master][13] | [Micro][=
+3]**:** Use helper functions in test script
+> [git-for-windows/git][9]          | Merged and released        | [#2077][=
+4]**:** [FIX] git-archive error, gzip -cn : command not found.
+> [git-for-windows/build-extra][10] | Merged and released        | [#235][5=
+]**:** installer: Fix version of installer and installed file.
 
-Thanks for investigating! Yeah, that's part of the problem.
+Nice!
 
-The fix I would suggest is:
+> #### Overview
+>
+> Since when it was created in 2005, the `git rebase` command has been
+> implemented using shell scripts that are calling other git commands. Comm=
+ands
+> like `git format-patch` to create a patch series for some commits, and th=
+en
+> `git am` to apply the patch series on top of a different commit in case o=
+f
+> regular rebase and the interactive rebase calls `git cherry-pick` repeate=
+dly
+> for the same.
+>
+> Neither of these approaches has been very efficient though, and the main =
+reason
+> behind that is that repeatedly calling a git command has a significant
+> overhead. Even the regular git rebase would do that as `git am` had been
+> implemented by launching `git apply` on each of the patches.
+>
+> The overhead is especially big on Windows where creating a new process is=
+ quite
+> slow, but even on other Operating Systems it requires setting up everythi=
+ng
+> from scratch, then reading the index from disk, and then, after performin=
+g some
+> changes, writing the index back to the disk.
+>
+> Stephan Beyer \<s-beyer@gmx.net> tried to introduce git-sequencer as his =
+GSoC
+> 2008 [project][6] which executed a sequence of git instructions to  \<HEA=
+D> or
+> \<branch> and the sequence was given by a \<file> or through `stdin`. The
+> git-sequencer wants to become the common backend for git-am, git-rebase a=
+nd
+> other git commands, so as to improve performance, since then it eliminate=
+d the
+> need to spawn a new process.
+>
+> Unfortunately, most of the code did not get merged during the SoC period =
+but he
+> continued his contributions to the project along with Christian Couder
+> \<chriscool@tuxfamily.org> and then mentor Daniel Barkalow
+> \<barkalow@iabervon.org>.
+>
+> The project was continued by Ramkumar Ramachandra \<artagnon@gmail.com> i=
+n
+> [2011][7], extending its domain to git-cherry-pick. The sequencer code go=
+t
+> merged and it was now possible to "continue" and "abort" when cherry-pick=
+ing or
+> reverting many commits.
+>
+> A patch series by Christian Couder \<chriscool@tuxfamily.org> was merged =
+in
+> [2016][16] to the `master` branch that makes `git am` call `git apply`=E2=
+=80=99s
+> internal functions without spawning the latter as a separate process. So =
+the
+> regular rebase will be significantly faster especially on Windows and for=
+ big
+> repositories in the next Git feature release.
 
-diff --git a/diff.c b/diff.c
-index f685ab10b5..a2b1241f83 100644
---- a/diff.c
-+++ b/diff.c
-@@ -26,6 +26,7 @@
- #include "parse-options.h"
- #include "help.h"
- #include "fetch-object.h"
-+#include "promisor-remote.h"
+It looks like you copy pasted the Git Rev News article without
+updating the content. The improvement has been released a long time
+ago.
 
- #ifdef NO_FAST_WORKING_DIRECTORY
- #define FAST_WORKING_DIRECTORY 0
-@@ -6489,7 +6490,7 @@ static void add_if_missing(struct oid_array *to_fetch=
-,
+> Despite the success (of GSoC '11), Dscho had to improve a lot of things t=
+o make
+> it possible to reuse the sequencer in the interactive rebases making it f=
+aster.
 
- void diffcore_std(struct diff_options *options)
- {
--    if (repository_format_partial_clone) {
-+    if (has_promisor_remote()) {
-         /*
-          * Prefetch the diff pairs that are about to be flushed.
-          */
-@@ -6506,8 +6507,7 @@ void diffcore_std(struct diff_options *options)
-             /*
-              * NEEDSWORK: Consider deduplicating the OIDs sent.
-              */
--            fetch_objects(repository_format_partial_clone,
--                      to_fetch.oid, to_fetch.nr);
-+            promisor_remote_get_direct(to_fetch.oid, to_fetch.nr);
-         oid_array_clear(&to_fetch);
-     }
+Maybe s/rebases/rebase/
 
-I will send a new version with the above soon based on top of
-jt/batch-fetch-blobs-in-diff in pu.
+> His work can be found [here][15].
+
+It seems to me that there has been more recent work than this and also
+perhaps interesting suggestions and discussions about possible
+sequencer related  improvements on the mailing list.
+
+> The learnings from all those works will serve as a huge headstart this ye=
+ar for
+> me.
+>
+> As of now, there are still some inconsistencies among these commands, e.g=
+.,
+> there is no `--skip` flag in `git-cherry-pick` while one exists for
+> `git-rebase`. This project aims to remove inconsistencies in how the comm=
+and
+> line options are handled.
