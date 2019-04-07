@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18C2220248
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DA0E20248
 	for <e@80x24.org>; Sun,  7 Apr 2019 19:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726397AbfDGTwh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 15:52:37 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38448 "EHLO
+        id S1726415AbfDGTwk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 15:52:40 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51721 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726362AbfDGTwh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 15:52:37 -0400
-Received: by mail-wm1-f65.google.com with SMTP id w15so12402443wmc.3
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 12:52:36 -0700 (PDT)
+        with ESMTP id S1726362AbfDGTwj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 15:52:39 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 4so11910918wmf.1
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 12:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s1PJ7xjZwYNE7NdyQEvhNH6kqiv62uYpxOYV8PtA9U8=;
-        b=NGqfhJqjnnI8HbUvwdIH/AkZUvzsfYq2RapMvjfXs2aZQBdLjhgcs1PbQEaNYYcLz0
-         NhwTdmIWFzeyFyhArpwXOh3rRm7z9m8XfXhS0n1kS7iegrRxNBojA8Rmsg+R7wKQG1nP
-         F+XXVh6A8uMO2mi5bPmRwtT7+qbu9i//hCqLCb93Xk6QZ7k9Ptigv/Of2o5cgbrpg/VP
-         JNnXmsXzR22DS77SA73aIlq1uRIVaHXK5O+ZT4KjpdTsU7XC6rCKSBJYxUr2Z/rhJyvh
-         nf4z9Hb47uUIdhr9ccBNJEqkpCncZYBJPBFa+r6UtZXuD4jSMvQhbJzhoZHhYVGfrIFH
-         F4VA==
+        bh=o/A8XOkySTNrBhJOhhzMmwfo0SaDP8OPiDWiZmHqW5s=;
+        b=YYkNXXFrLTPbG9AWgm/Flwu9aujIAz9L3zE9CCjM6F7K/1WDWAAsxNe1CGdWMh+6z+
+         W/xZU1+/lVUwXG8tOtrazfHtPSxrHMnGtcGZHjHN6w04bkbeoMTZmBJgMknxV+RJJari
+         KnYhwK5AIPlHyFlImZt9Xign+rqhByikSDxLz42LGQ77XM5lvDk00ZtBA++UsqtdISVP
+         fD+7PGEW+WYEKzPC3Gr5C7EPXEt56b+YyA3RT0C8xfSGsXVxo3F2ySNBZH39eyqqEemB
+         afBj0qFKFz8QU8Ains41y8/X7VfJjvgXZTfAv4hJAIaeJCNVKoo+OjXbMwR3dugHyBD2
+         d98w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s1PJ7xjZwYNE7NdyQEvhNH6kqiv62uYpxOYV8PtA9U8=;
-        b=V3anwvxKZZ0mEpk8C/VzvX6ZNlUARyqAvPWMTlufr3CtasIE5zppgZzhkafO55rnJA
-         fNF+sIEH+l4W0eBWZG9/KThr/WiGOdWCVL28g6UheguK95LwSueqlTTS0QyFfqHC0wuE
-         0x/tm89jlIes1OlY4Xa0anDROoJ4GHTziqLMfZ73KIkz0lhSJentRKaSo1EKg1nTTGRY
-         l3V1FD9fuOooMiRf8kqcltLINj8zskoFJ0s14F5/U6Eo/DA9dzHiRlvLwnamBjHH0EWt
-         XCWa1yCBXWqKVZq3KGhz1sRa7xFWIJtwKVeiNH1GNnpQ0h82KXkf2Utp9pJagIjhy8T5
-         +pYw==
-X-Gm-Message-State: APjAAAUDMpqC1X1ZclVxz+lsMCj57G4a9Jw0NHPqYoA2GtU8tvRxcBYF
-        e+lSxsuB2mIL4GPgTAcXYkExWiSo
-X-Google-Smtp-Source: APXvYqwZTV+jJEB2onB2OMagSFmYsNKMvq48AlnDXlvyE6B32b3DE50boF8+Jb7Cfngkuqrld7eD9g==
-X-Received: by 2002:a7b:cbd6:: with SMTP id n22mr16232491wmi.57.1554666755603;
-        Sun, 07 Apr 2019 12:52:35 -0700 (PDT)
+        bh=o/A8XOkySTNrBhJOhhzMmwfo0SaDP8OPiDWiZmHqW5s=;
+        b=a1VXvWWBar390fUs7CMaGK10LddUbFVzmsbJgjIIlu32ZjcbqG290+8RPfZs2PFUB2
+         4QCn17Qa/w76toTfuuvmeg46v15Re+WpIPW5cpeFhDu9tw2IdCR8MTeEdoxOtEYFRt89
+         17PNB47DQIR3FqjnVCo3ZILZM2vjuAXXmkO5mbxbLS9Bu8C1uazDnnw7sm+rVE8xBB4h
+         6gXdqiBcbZgDRDE9c4LqWGXH+Ny/HROjFnuVPXaT218GP8yrxVXyzI1zpmtxK8djHrB1
+         YQMbjminOhly3S+dG4LZtHyWeP1RZ/Fz1tulisSftRiMnEl3uZrVit+gzmJ9Zk23eRJe
+         MWJw==
+X-Gm-Message-State: APjAAAWJfYTyhKh/S8oRnEFfEZ2ZIr+WpFkp572RMTn5M+4V03L54Y88
+        CALvpmWHN4rAzrlkS+g2dgSILFNi
+X-Google-Smtp-Source: APXvYqydmkdPshPFsqR+UPwmSvEooSlClJ8ETWZWPBqgLrLIK1unX+LKwxOMSJ7zIJVTdc5PfvON4w==
+X-Received: by 2002:a1c:988d:: with SMTP id a135mr16128070wme.24.1554666757519;
+        Sun, 07 Apr 2019 12:52:37 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16sm41815402wrs.0.2019.04.07.12.52.33
+        by smtp.gmail.com with ESMTPSA id e16sm41815402wrs.0.2019.04.07.12.52.36
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 07 Apr 2019 12:52:34 -0700 (PDT)
+        Sun, 07 Apr 2019 12:52:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>, Todd Zullinger <tmz@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 00/11] gc docs: modernize and fix the documentation
-Date:   Sun,  7 Apr 2019 21:52:06 +0200
-Message-Id: <20190407195217.3607-1-avarab@gmail.com>
+Subject: [PATCH v4 01/11] gc docs: modernize the advice for manually running "gc"
+Date:   Sun,  7 Apr 2019 21:52:07 +0200
+Message-Id: <20190407195217.3607-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
 In-Reply-To: <20190322093242.5508-5-avarab@gmail.com>
 References: <20190322093242.5508-5-avarab@gmail.com>
@@ -76,49 +76,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v4 fixes a misbalanced quote noted by Todd Zullinger in
-<20190330180415.GC4047@pobox.com>, and makes this equivalent to the
-post-squash version sitting in gitster/ab/gc-docs now.
+The docs have been recommending that users need to run this manually,
+but that hasn't been needed in practice for a long time except in
+exceptional circumstances.
 
-Ævar Arnfjörð Bjarmason (11):
-  gc docs: modernize the advice for manually running "gc"
-  gc docs: stop noting "repack" flags
-  gc docs: clean grammar for "gc.bigPackThreshold"
-  gc docs: include the "gc.*" section from "config" in "gc"
-  gc docs: re-flow the "gc.*" section in "config"
-  gc docs: fix formatting for "gc.writeCommitGraph"
-  gc docs: note how --aggressive impacts --window & --depth
-  gc docs: downplay the usefulness of --aggressive
-  gc docs: note "gc --aggressive" in "fast-import"
-  gc docs: clarify that "gc" doesn't throw away referenced objects
-  gc docs: remove incorrect reference to gc.auto=0
+Let's instead have this reflect reality and say that most users don't
+need to run this manually at all, while briefly describing the sorts
+sort of cases where "gc" does need to be run manually.
 
- Documentation/config/gc.txt       |  38 ++++++--
- Documentation/git-fast-import.txt |   7 ++
- Documentation/git-gc.txt          | 142 ++++++++++--------------------
- 3 files changed, 86 insertions(+), 101 deletions(-)
+Since we're recommending that users run this most of the and usually
+don't need to tweak it, let's tone down the very prominent example of
+the gc.auto=0 command. It's sufficient to point to the gc.auto
+documentation below.
 
-Range-diff:
- 1:  a48ef8d5d8 =  1:  a48ef8d5d8 gc docs: modernize the advice for manually running "gc"
- 2:  21e66a7903 =  2:  21e66a7903 gc docs: stop noting "repack" flags
- 3:  c8a1342e34 =  3:  c8a1342e34 gc docs: clean grammar for "gc.bigPackThreshold"
- 4:  9163e2f885 !  4:  f54ef80e69 gc docs: include the "gc.*" section from "config" in "gc"
-    @@ -100,7 +100,7 @@
-     -configuration variable, then all loose objects are combined into a
-     -single pack.  Setting the value of `gc.auto`
-     -to 0 disables automatic packing of loose objects.
-    -+See the `gc.auto' option in the "CONFIGURATION" section below for how
-    ++See the `gc.auto` option in the "CONFIGURATION" section below for how
-     +this heuristic works.
-      +
-     -If the number of packs exceeds the value of `gc.autoPackLimit`,
- 5:  8fa0e26671 =  5:  4ea4cf885a gc docs: re-flow the "gc.*" section in "config"
- 6:  b70396f029 =  6:  ae5755278f gc docs: fix formatting for "gc.writeCommitGraph"
- 7:  04ee81a3c9 =  7:  fc3bd0d5f4 gc docs: note how --aggressive impacts --window & --depth
- 8:  04af0afbcf =  8:  7cff026e58 gc docs: downplay the usefulness of --aggressive
- 9:  c35bc94416 =  9:  64617c43f6 gc docs: note "gc --aggressive" in "fast-import"
-10:  702f2cd2d9 = 10:  84e5c669eb gc docs: clarify that "gc" doesn't throw away referenced objects
-11:  08af3cc3ee = 11:  6a027d25a7 gc docs: remove incorrect reference to gc.auto=0
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-gc.txt | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index a7c1b0f60e..dd22eecc79 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -20,17 +20,16 @@ created from prior invocations of 'git add', packing refs, pruning
+ reflog, rerere metadata or stale working trees. May also update ancillary
+ indexes such as the commit-graph.
+ 
+-Users are encouraged to run this task on a regular basis within
+-each repository to maintain good disk space utilization and good
+-operating performance.
+-
+-Some git commands may automatically run 'git gc'; see the `--auto` flag
+-below for details. If you know what you're doing and all you want is to
+-disable this behavior permanently without further considerations, just do:
+-
+-----------------------
+-$ git config --global gc.auto 0
+-----------------------
++When common porcelain operations that create objects are run, they
++will check whether the repository has grown substantially since the
++last maintenance, and if so run `git gc` automatically. See `gc.auto`
++below for how to disable this behavior.
++
++Running `git gc` manually should only be needed when adding objects to
++a repository without regularly running such porcelain commands, to do
++a one-off repository optimization, or e.g. to clean up a suboptimal
++mass-import. See the "PACKFILE OPTIMIZATION" section in
++linkgit:git-fast-import[1] for more details on the import case.
+ 
+ OPTIONS
+ -------
 -- 
 2.21.0.392.gf8f6787159e
 
