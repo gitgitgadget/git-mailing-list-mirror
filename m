@@ -2,98 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 811C020248
-	for <e@80x24.org>; Sun,  7 Apr 2019 13:08:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9D9420248
+	for <e@80x24.org>; Sun,  7 Apr 2019 13:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726246AbfDGNI0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 09:08:26 -0400
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:40152 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbfDGNI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 09:08:26 -0400
-Received: by mail-ot1-f68.google.com with SMTP id t8so9620522otp.7
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 06:08:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GInWLBST1qGU6znwJxlCmt/uE0ekdahoUjtz/trojeU=;
-        b=MAKJBwCsR7RtBC8F4gMDc9AwwJMOWF36/mPGeprJUt9pJUwPP7BeVHb76rGOoNMhu0
-         09ETJAHoJqfqfRjc4grg0xam9xVZM+UZlt83YTADUu2+VZ+a/9ADDIQAvQYZ/9J4kd9W
-         +eBUJ9PAiJ+CC88rn66S9yzAdO6gohq3QSRhmOGTPOANYIaCDD7159SmtLgtCopYl7FB
-         OUl4fOhCidZ9Ydv3P5C6GSlO2PVBoy42y5eF7iBZ9pR0v5J0a9Bs4rxbyqlHaHnGaoDr
-         sB4NBr5wiRUc2S8LYRQEMPJhA8568yJhMV1BG9vnQIsedRA2N7y1F8iO8qpwK52BXkYi
-         e0BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GInWLBST1qGU6znwJxlCmt/uE0ekdahoUjtz/trojeU=;
-        b=Fp8csCcYcWK0ZaDWp+P+LbfVTxQ8foTmx2LqMa4UrKYczwGFVo3ky0RkIOcp6Emhal
-         v32d3YRGFRePnNPBh4DHK6An8g8TCAPctZIHwngqE2ceCubwIG8CsCxE+1coRyGnpIil
-         5HXsUfJP1tXbJ99EvkI9sxLti+yHfZNuK2OskZNjnm71/ZpKaOjgWzj5CUbUlDS+DAgQ
-         smwzipbM5/V8P3di80aCC5I4M6rlM+mFixROan4Vzx+DBkDb6jrIAiRIpSgxkyFRtupR
-         cZgA9CXLsQHTL33BvUHz21H4gS4L+1yn8w37OeXrc3MFnNhS8N8zbo9ZrqXSkv1zqSew
-         lMnA==
-X-Gm-Message-State: APjAAAVaUSA/gbagpjxBoRcX6ssJYnNXs3oGQY6DWgsLe4fLy/ETvs1s
-        /0SD13N82O4Jav3cWJeEuEyDOnOoKnNQjB55kfNFCGRZX8k=
-X-Google-Smtp-Source: APXvYqxzLkys3Drar9vIQVP4bGzURmVyo40dhW5cFqXRUkJTgtkNLES+uXr0Ngaen8Wol+wbRgYsu0rUf4xMcArRBXs=
-X-Received: by 2002:a9d:784a:: with SMTP id c10mr15011916otm.337.1554642504628;
- Sun, 07 Apr 2019 06:08:24 -0700 (PDT)
+        id S1726411AbfDGNlQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 09:41:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50124 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726362AbfDGNlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 09:41:16 -0400
+Received: (qmail 17656 invoked by uid 109); 7 Apr 2019 13:41:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 07 Apr 2019 13:41:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9960 invoked by uid 111); 7 Apr 2019 13:41:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 07 Apr 2019 09:41:43 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Apr 2019 09:41:13 -0400
+Date:   Sun, 7 Apr 2019 09:41:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 6/7] rev-list: let traversal die when --missing is not in
+ use
+Message-ID: <20190407134113.GA13417@sigill.intra.peff.net>
+References: <cover.1554435033.git.me@ttaylorr.com>
+ <a3a80b4b2a988eb65d85a5acd54c584d047073c7.1554435033.git.me@ttaylorr.com>
+ <20190405184111.GE2284@sigill.intra.peff.net>
+ <20190406053648.GD37216@Taylors-MBP.hsd1.wa.comcast.net>
 MIME-Version: 1.0
-From:   Kapil Jain <jkapil.cs@gmail.com>
-Date:   Sun, 7 Apr 2019 18:38:13 +0530
-Message-ID: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
-Subject: [GSoC][RFC] discussion about stashing with conflicts
-To:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190406053648.GD37216@Taylors-MBP.hsd1.wa.comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-below is my understanding from reading the parts of code as suggested on IRC.
+On Fri, Apr 05, 2019 at 10:36:48PM -0700, Taylor Blau wrote:
 
-what is the use of ce_stage macro ?
-tells about stage of an index entry.
-if ce_stage says, stage #0 i.e staging area, then that index entry is
-in staging area
-and nothing needs to be done.
-else a temporary index entry is created and repo_read_index_unmerged()
-calls other function and tries to add it to index.
-if it fails, it issues an error.
+> > > Of those, I think (3) is probably the best path forward. However, this
+> > > patch does none of them. In the name of expediently fixing the
+> > > regression to a normal "rev-list --objects" that we use for connectivity
+> > > checks, this simply restores the pre-7c0fe330d5 behavior of having the
+> > > traversal die as soon as it fails to load a tree (when --missing is set
+> > > to MA_ERROR, which is the default).
+> >
+> > I think this is worth doing, as it restores the earlier behavior. But a
+> > few general thoughts (which I've shared already with you, but for the
+> > benefit of the list):
+> 
+> I agree that it's worth doing. One question that I have is _when_ you
+> feel it's good to do. I'm happy to write it and include the change in
+> v2, but if others would be happy not to grow the series too much between
+> re-rolls, I'd be just as pleased to send it in a new series after this
+> one.
 
-is this correct interpretation ?
+I'm not sure what "it" is here. My earlier message was admittedly
+rambling, but I think I'm arguing that it's OK to continue to include
+this patch that you already have, and punt further changes to make
+"rev-list --objects" detect blob problems down the road. I.e., leave the
+two expect_failures in place that your v1 series ends with.
 
-1) in repo_read_index_unmerged(), why don't we make the value of
-`unmerged` 0, if adding index entry is successful; as the entry is no
-longer unmerged ?
-
-2) what is ADD_CACHE_SKIP_DFCHECK ?
-i am unsure if i get its meaning, cache.h says that it means "Ok to
-skip DF conflict checks"
-what are DF conflict checks ? something about diffing to check for
-conflicts ? if so why are we skipping it this entry had conflicts in
-the past maybe it will create again.
-
-3) what is cache_nr variable in index_state struct ? what is its use ?
-
-
-Now, about add_index_entry_with_check(), i don't fully understand this
-function but concentrating on the part pointed by dscho.
-https://github.com/git/git/blob/v2.21.0/read-cache.c#L1284-L1294
-
-    /*
-     * Inserting a merged entry ("stage 0") into the index
-     * will always replace all non-merged entries..
-     */
-
-so this is the part we need to play with for the project
-https://git.github.io/SoC-2019-Ideas/#teach-git-stash-to-handle-unmerged-index-entries
-try and change this in some-way to not replace those unmerged entries
-or store them some place else ?
+-Peff
