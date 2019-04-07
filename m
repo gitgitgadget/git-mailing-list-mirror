@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 021D220248
-	for <e@80x24.org>; Sun,  7 Apr 2019 19:52:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A702220248
+	for <e@80x24.org>; Sun,  7 Apr 2019 19:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfDGTws (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 15:52:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44730 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726462AbfDGTwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 15:52:47 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y7so13796144wrn.11
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 12:52:45 -0700 (PDT)
+        id S1726512AbfDGTwv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 15:52:51 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36956 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726497AbfDGTwt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 15:52:49 -0400
+Received: by mail-wm1-f66.google.com with SMTP id v14so12389467wmf.2
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 12:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+QZZxuA1szXKbodDI1ZS7sUwGQUn86iFE2+GzZpUnNM=;
-        b=ffCOLZaF+fOFCSRGZhFHbuk7O2ns2gvW7h0yMKrVz0vDAwXQ3vcwb83uHAeUNt7TfL
-         MPkGavIySWgZc/rODQ+l1I5jOkBEVLB6gpOi5/OYphO1MQbG4yS+by49D+tC1GSHD/Bf
-         hUdbcw+Ux0e117a7jb9O2wtP0s4mV1F3W8jeVU7xJl6AZ17GiI/IbuPmYS622p9zjmUH
-         cc0U2UZHljAzl5viI9xW+G7hg7gkYv7xaLtwAwZtAfo4eSNebHiA1T5+tFc91bkP3/Yy
-         3//Msy4E2/r7LVen2ev0m8TiTc3jkRSERdlkhoKy8GNJAbUYJQ3LCsgw6sW7EMLGGyXJ
-         /XrQ==
+        bh=L+8KT0rRI3Y/uas5bEm2ecBWz03t+5nnF7RAFwHcIdA=;
+        b=IjuOLe6AIGQXO1Y4LDL75YF/n/z837PoLfN+QNHwkLTNagA46H+SVVM5U5wveIGga2
+         5HbcEFCZry4Rl0PZSSUGqqSADlU0xShNIVZ28tyWSNh2F4vGDXfVuR14i6xu+9NkTJEy
+         zj459w0idqza209N2NHGsVkHiR3BFVcX33wuhVTjoxspsj+3Xo/s9/gxTunr8HniQ5bG
+         lka6HUxqB52BBGHGoTnjgJd+izxlHAv+RkY9U1tJXroRasVPQs7L0KL6EjmdU/pTdFE+
+         iIdUazxoEV7CAiax4Z9dLa7MaHyMRfpbHEQohOywOhVi2yOaro3/A15Ek98PAFKi3Roj
+         QRRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+QZZxuA1szXKbodDI1ZS7sUwGQUn86iFE2+GzZpUnNM=;
-        b=H3et2ZZC8K8JqR0SDmt62Nw6z6nBGphlss1Yv70oC6WBFOSBPLocg/Ju57rFR+J0rJ
-         DuLpIgT+TjX/371+h50JMZ+Z1f+++cgp9zfUl7KiqOS7pjVM/M7LKZdsc22Y9e/S6Bg6
-         PIbjKUYwpD5kXPWOJ0fdcrVNROvZfYVXvP4vD8Og1dISx4jLm8uofk0KCrtLuhnAGTt7
-         Tdz7wi8PUtP4diX3H6oOTUeALuGQ4pOD1q2aQrxz8DTo08hW5zquMpi+7fEztn+y1Q9x
-         UZbNTKlhp+38uVmFkW05g/bQciVS7X65KEyWmNX8SCSK4HyRA2jbSjc1ZCa5DeKENURz
-         3qYg==
-X-Gm-Message-State: APjAAAVw5QRA37NcznXWt9deP8nutfzTNQTy4c9sY2/VAu5BeXfiuw+9
-        DBhFoxuYgrZsmcinwL9HBv8RmdY4uZ4=
-X-Google-Smtp-Source: APXvYqwQ2t4ujku+IibT0IOb/BC2B1bt454iPLjKEquXKirMhmhAoVkPppZennsR07RW2Y0kJ56TCQ==
-X-Received: by 2002:adf:f7c2:: with SMTP id a2mr15028170wrq.242.1554666765043;
-        Sun, 07 Apr 2019 12:52:45 -0700 (PDT)
+        bh=L+8KT0rRI3Y/uas5bEm2ecBWz03t+5nnF7RAFwHcIdA=;
+        b=ggdK1ElY5DgMqoA3hD3uSlSvoptvGVSnmqm5KDqKDPsxodjlp5UxUHJi1tLFuar2r3
+         4GWRRORNFfEG8d42afvKAdNrBe/LP/ryOHRtJXWdgNOD+85bMFVJ34KKFiXsqA8NziQN
+         dGi1CnFcnjJANudVmVr7HsWlWokxamuhEpsOz4vx1LDgqsV9wTHY+NjTLKjxVrTyp656
+         hN9Uackdxu6BOtW/7SbiwsvD/WjFjjHnJayQuqP5+XxauxPLKm+gN7BHCrBf1Q2UGEeN
+         iQScUaJQ18O2xCA2HG3Tio1Q22Xbjq50l4bKsvUBs++VuRUyY1N5b+cfEA1N2kZ3Svpv
+         acrQ==
+X-Gm-Message-State: APjAAAXp+1QwPiRTeU8jf6qyaIx4gtPjnYmuT5e0AXeG1DvrDocxdli8
+        ADwev1NVCMhtDN30OcGK0ko9YaG3RSg=
+X-Google-Smtp-Source: APXvYqw0ecLobl/QNck5BpCOetHMB00USQ32EC+TUIEOguQdxclyvShzms9OJfbYoSUVeRv1YkXbzw==
+X-Received: by 2002:a1c:dc43:: with SMTP id t64mr16023984wmg.19.1554666767617;
+        Sun, 07 Apr 2019 12:52:47 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e16sm41815402wrs.0.2019.04.07.12.52.43
+        by smtp.gmail.com with ESMTPSA id e16sm41815402wrs.0.2019.04.07.12.52.46
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 07 Apr 2019 12:52:44 -0700 (PDT)
+        Sun, 07 Apr 2019 12:52:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>, Todd Zullinger <tmz@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 07/11] gc docs: note how --aggressive impacts --window & --depth
-Date:   Sun,  7 Apr 2019 21:52:13 +0200
-Message-Id: <20190407195217.3607-8-avarab@gmail.com>
+Subject: [PATCH v4 09/11] gc docs: note "gc --aggressive" in "fast-import"
+Date:   Sun,  7 Apr 2019 21:52:15 +0200
+Message-Id: <20190407195217.3607-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e
 In-Reply-To: <20190322093242.5508-5-avarab@gmail.com>
 References: <20190322093242.5508-5-avarab@gmail.com>
@@ -76,48 +76,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 07e7dbf0db (gc: default aggressive depth to 50, 2016-08-11) we
-somewhat confusingly use the same depth under --aggressive as we do by
-default.
-
-As noted in that commit that makes sense, it was wrong to make more
-depth the default for "aggressive", and thus save disk space at the
-expense of runtime performance, which is usually the opposite of
-someone who'd like "aggressive gc" wants.
-
-But that's left us with a mostly-redundant configuration variable, so
-let's clearly note in its documentation that it doesn't change the
-default.
+Amend the "PACKFILE OPTIMIZATION" section in "fast-import" to explain
+that simply running "git gc --aggressive" after a "fast-import" should
+properly optimize the repository. This is simpler and more effective
+than the existing "repack" advice (which I'm keeping as it helps
+explain things) because it e.g. also packs the newly imported refs.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/gc.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Documentation/git-fast-import.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 56918a5008..f732fe5bfd 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -1,7 +1,8 @@
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
--	to 50.
-+	to 50, which is the default for the `--depth` option when
-+	`--aggressive` isn't in use.
- +
- See the documentation for the `--depth` option in
- linkgit:git-repack[1] for more details.
-@@ -9,7 +10,8 @@ linkgit:git-repack[1] for more details.
- gc.aggressiveWindow::
- 	The window size parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
--	to 250.
-+	to 250, which is a much more aggressive window size than
-+	the default `--window` of 10.
- +
- See the documentation for the `--window` option in
- linkgit:git-repack[1] for more details.
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 43ab3b1637..2248755cb7 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -1396,6 +1396,13 @@ deltas are suboptimal (see above) then also adding the `-f` option
+ to force recomputation of all deltas can significantly reduce the
+ final packfile size (30-50% smaller can be quite typical).
+ 
++Instead of running `git repack` you can also run `git gc
++--aggressive`, which will also optimize other things after an import
++(e.g. pack loose refs). As noted in the "AGGRESSIVE" section in
++linkgit:git-gc[1] the `--aggressive` option will find new deltas with
++the `-f` option to linkgit:git-repack[1]. For the reasons elaborated
++on above using `--aggressive` after a fast-import is one of the few
++cases where it's known to be worthwhile.
+ 
+ MEMORY UTILIZATION
+ ------------------
 -- 
 2.21.0.392.gf8f6787159e
 
