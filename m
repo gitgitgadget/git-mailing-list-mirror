@@ -2,116 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18D4120248
-	for <e@80x24.org>; Sun,  7 Apr 2019 10:19:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65CBA20248
+	for <e@80x24.org>; Sun,  7 Apr 2019 11:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfDGKTp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 06:19:45 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34982 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbfDGKTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 06:19:44 -0400
-Received: by mail-pg1-f194.google.com with SMTP id g8so5603511pgf.2
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 03:19:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tsfkry5OoTB5RsFg2h6NsRNSLaA/XW+zTOCJMf8mtJM=;
-        b=YsFsMFOIvX7msRbg2CiAyhi2VpCbnzGo4iEgBuv2/FovuP6oPGje0NlAIRidjys5tv
-         oGj05Or5nUJeAcVddz2cjoEd++UizwozVQzXey1UUGz2JCcdST63q2kolQLKQlVk6WO4
-         Rl+plwNnJodRq6ML1qkHpCwJBaS/4aH1mXnT0jzHXmLv8f2UyImeSQYwDC7bBzlf4C5O
-         QT/TSZfzfwLS3pn29w49PHjj2B8cgBMv3tp+ovvRyZV26rOMVn2s6euKDlBJCpB8Rx+R
-         hX6n2VyhQV3PM0fIGRcgpBTdmVZwcHOLj59GY5HKtHnCTu8m3AGbJ5snVbUgEUseLVAJ
-         Rn8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tsfkry5OoTB5RsFg2h6NsRNSLaA/XW+zTOCJMf8mtJM=;
-        b=rMnImYNya+biTcTR/AWvv5zdXR57JMoiFt31phBX7YidDIl67DNHuImaxNUOO9TfzI
-         KqdNkYMJ2AvslLOFZ7NkLGhzxBuLU1OxlQurqllvBKpfEstlyp6DkTDsEY2nua+x0YvR
-         bzIwXlj9RyvCSwelIYJA7VOczzqLtdX858ue3nLbnmnqPU3HTCZF7UhczcoXZe83nMhY
-         uSG1Mhe/DVrnLXYHXtcj0XCju/ulRHosAd8iTli233wDLo3pidQ1rA+mfbdwlPxOKNO+
-         YT1OnDzrZsi9N88ovLGlKNdmTy983mFDTo1RYVpAZfOCp0zfXy6zi8HCArPe9uslpBS0
-         ygRQ==
-X-Gm-Message-State: APjAAAV08GBjH0GYSsif2cCPP2LvYbUCIkIqIOPXDaqaDM5G+2PcF3Ok
-        E/Ft7gnP6lWtH87zzY5jR9c=
-X-Google-Smtp-Source: APXvYqysWBNuSFoiL3gaPGKTzd+shvzw1qsUIxH4n0NAFED8AdOnjoaykDa5nuNwYumFDMPLPuPvPw==
-X-Received: by 2002:a65:625a:: with SMTP id q26mr22600282pgv.68.1554632384099;
-        Sun, 07 Apr 2019 03:19:44 -0700 (PDT)
-Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id x8sm17984991pgp.48.2019.04.07.03.19.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Apr 2019 03:19:43 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 07 Apr 2019 17:19:38 +0700
-Date:   Sun, 7 Apr 2019 17:19:38 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        t.gummerer@gmail.com
-Subject: Re: [PATCH][RFC] read-cache: read_index_from() accepts repo as arg
-Message-ID: <20190407101938.GA24126@ash>
-References: <20190407073712.1642-1-jkapil.cs@gmail.com>
- <20190407100010.GA23427@ash>
+        id S1726366AbfDGLwM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 07:52:12 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:45678 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbfDGLwM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 07:52:12 -0400
+Received: from [192.168.1.12] ([2.101.245.142])
+        by smtp.talktalk.net with SMTP
+        id D6LIhRkRtgI7iD6LIhSdeA; Sun, 07 Apr 2019 12:52:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1554637929;
+        bh=1ewEEyHVq18dBac2Mhl0GjuRacdkwKCRUQ96O6b6B9w=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=c+coMkCJ1EbxLfdnoKYNmG6FbHdneMoxwM939GSvMS1GtZTUCR/ufnuc1YF9zPlIL
+         aLfiQ3Axyl0skKlxLcFBKx9/hLUt7drARjZ0i2xurFPK5o/+fmyzpP5UQ08c6aUt6W
+         EbYTC/ZvWd/gy2L6uVOG/lo+6rf0J47qHPv6hPTA=
+X-Originating-IP: [2.101.245.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=mQgiQ6BlbOv19lEfDgieCg==:117
+ a=mQgiQ6BlbOv19lEfDgieCg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8 a=pGLkceISAAAA:8
+ a=bDADMGTweaP0FWVwrZcA:9 a=QEXdDO2ut3YA:10 a=xts0dhWdiJbonKbuqhAr:22
+ a=PwKx63F5tFurRwaNxrlG:22
+Subject: Re: git glossary --help ?
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>
+Cc:     Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <05e6a0ad-36ea-e594-f253-ded3e5392375@iee.org>
+ <CACsJy8DE4WfbU2y8+__4qD7V5FLodKjxX-bu+seE8mh65q8FYQ@mail.gmail.com>
+From:   Philip Oakley <philipoakley@talktalk.net>
+Message-ID: <8e40eb85-0368-d12f-f238-acababdcd858@talktalk.net>
+Date:   Sun, 7 Apr 2019 12:52:09 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190407100010.GA23427@ash>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CACsJy8DE4WfbU2y8+__4qD7V5FLodKjxX-bu+seE8mh65q8FYQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfCiYU5O575gkTPDNYl3ISog3G3eku5hs3e/0lfB1y4T1Ph5iEsX6/PCIPQSW7Ck1TuaOIdhT7AO3bXXa4c9mbX65wsSThePw56z6fgZflb594fWegdoI
+ gOlF06RvIpy4zao4Hx8zRwnFkXgQyiu9jrnQV7JY2kMzSXgYNjhvi/zy1nAKgQpTB6u50HxuPqNVWXxLl4O9Z3LfeVyuArmIjV5iMi9opBV7VR1XvnIWqEn1
+ 8zpaHuHA25YCWDF0wVJCT/79mPU7ujxHCJMkt6AdXWsHKswWqRnR0XC4dt/JVwJg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 07, 2019 at 05:00:11PM +0700, Duy Nguyen wrote:
-> So, with something like a patch below (not tested), you should be able
-> to write
-> 
-> 	worktrees = repo_get_worktrees(revs->repo, 0);
-> 	...
-> 		struct repository *r = repo_worktree_init(wt);
-> 		if (read_index_from(&istate, r->index_file, r) > 0)
-> 			do_add_index_objects_to_pending(revs, &istate, flags);
-> 		repo_clear(r);
+Hi Duy,
 
-Actually it gets better. You can just use repo_read_index()
+On 07/04/2019 04:20, Duy Nguyen wrote:
+> On Sun, Apr 7, 2019 at 12:31 AM Philip Oakley <philipoakley@iee.org> wrote:
+>> Following the discussions about the tag peeling issue, I thought to have
+>> a look at what the git glossary says.
+>>
+>> I had it in my head that when the git guides were linked to the help
+>> system, that the --help option provided a short circuit direct to help
+>> item. However this did not happen.
+>>
+>> I found that the capability had been lost, which given that a lot of the
+>> underpinning knowledge is in the guides this would appear to be a loss.
+>>
+>> I don't have an older version to test, but I thought I remember the
+>> capability from about the time of my 65f98358c0 ("builtin/help.c: add
+>> --guide option", 2013-04-02).
+>>
+>> Have I misremembered the --help capability?
+>>
+>> cc'ing Duy in case he remembers something from the recent update
+> Phew... I didn't break anything!
+>
+> That behavior has been gone since 2c6b6d9f7d (help: make option --help
+> open man pages only for Git commands, 2016-08-26). Ralf did not
+> mention why he thought "git <concept> --help" was a bad idea. But it
+> was considered a bug by Junio [1]
+>
+> [1] https://public-inbox.org/git/CAPc5daXicjUDi6B-MA8Sn=_UZ_jHvc8SE4ZXt2dHbbDQkD7=WA@mail.gmail.com/
+Thanks for the link. I see I responded later in the thread but didn't 
+follow it up sufficiently (not sure what I was doing back then.. summer 
+break maybe).
 
-diff --git a/revision.c b/revision.c
-index eb8e51bc63..93fe8bbbfe 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1546,19 +1546,18 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
- 	if (revs->single_worktree)
- 		return;
- 
--	worktrees = get_worktrees(0);
-+	worktrees = repo_get_worktrees(revs->repo);
- 	for (p = worktrees; *p; p++) {
-+		struct repository repo;
- 		struct worktree *wt = *p;
--		struct index_state istate = { NULL };
- 
- 		if (wt->is_current)
- 			continue; /* current index already taken care of */
- 
--		if (read_index_from(&istate,
--				    worktree_git_path(wt, "index"),
--				    get_worktree_git_dir(wt)) > 0)
--			do_add_index_objects_to_pending(revs, &istate, flags);
--		discard_index(&istate);
-+		repo_worktree_init(repo, revs->repo, wt);
-+		if (repo_read_index(repo) > 0)
-+			do_add_index_objects_to_pending(revs, repo->index, flags);
-+		repo_clear(&repo);
- 	}
- 	free_worktrees(worktrees);
- }
---
-Duy
+I do think we are sometimes a bit dismissive of features (accidental 
+bias) that help the general user in getting help. If we think that 'git 
+help' is the (one) right way of providing access to manuals (such as the 
+concept guides) then maybe we shouldn't have the ubiquitous --help 
+option for all the commands. Or,
+
+Or, we should be liberal in what we accept from others (Postel's Law). 
+It is normal to type 'git foo --help'. So maybe allow these multiple 
+ways of accessing the documentation. Given the update to the command 
+list capability, I'll add it to my todo list to see if we can accept 
+guide names with --help and, one way or another, get folk to the right 
+place (the guide or command they should have used/requested).
+-- 
+Philip
