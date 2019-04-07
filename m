@@ -2,101 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8120E20248
-	for <e@80x24.org>; Sun,  7 Apr 2019 12:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 811C020248
+	for <e@80x24.org>; Sun,  7 Apr 2019 13:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbfDGMRr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 08:17:47 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:38159 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726049AbfDGMRr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 08:17:47 -0400
-Received: by mail-pf1-f193.google.com with SMTP id 10so5961580pfo.5
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 05:17:47 -0700 (PDT)
+        id S1726246AbfDGNI0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 09:08:26 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:40152 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbfDGNI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 09:08:26 -0400
+Received: by mail-ot1-f68.google.com with SMTP id t8so9620522otp.7
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 06:08:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VglZV+v7KFkJFKuScGURKUdIm8BTTbfm1aEDplyVZLY=;
-        b=qhLQqDaQ9AX3SzgosRmJHMhSyBAOm0Ds+fLl8qWl93mZYUZDZ7Njlb0GceUbK5t6Cg
-         +L/D6DopjooE+Tvd8Vrz8eiGYkdD27ysUpzd4SOqMRrZ4EyIKzdK8hjujj7X3MDDzumb
-         gthggy9m9B60oys1gnQMffu9aRiaeLMZuyhas/IXmWYUD3L40Sj8KWnr5wtZCHUNHHGH
-         qNAoIvhxB9ojy/WlGhdEbRcViXkHYAVFdVdiKEfGe6u/hNWmlZj8LuXT+OWTfYy/3QAV
-         9VS4ENesFnr/n4RxvFwUUMwCZUVjtI5/EUiuR4sBRQlCMcVgQaoiuUAGJM786A1IxVkY
-         XDgA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GInWLBST1qGU6znwJxlCmt/uE0ekdahoUjtz/trojeU=;
+        b=MAKJBwCsR7RtBC8F4gMDc9AwwJMOWF36/mPGeprJUt9pJUwPP7BeVHb76rGOoNMhu0
+         09ETJAHoJqfqfRjc4grg0xam9xVZM+UZlt83YTADUu2+VZ+a/9ADDIQAvQYZ/9J4kd9W
+         +eBUJ9PAiJ+CC88rn66S9yzAdO6gohq3QSRhmOGTPOANYIaCDD7159SmtLgtCopYl7FB
+         OUl4fOhCidZ9Ydv3P5C6GSlO2PVBoy42y5eF7iBZ9pR0v5J0a9Bs4rxbyqlHaHnGaoDr
+         sB4NBr5wiRUc2S8LYRQEMPJhA8568yJhMV1BG9vnQIsedRA2N7y1F8iO8qpwK52BXkYi
+         e0BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=VglZV+v7KFkJFKuScGURKUdIm8BTTbfm1aEDplyVZLY=;
-        b=oGS52o2O7HcZbfdNQAf5qprPT8vQzd+f0w5Uuk6yBHNZ+Cu+TskPgnx0NvTv1ENAvr
-         wCk0FlmPeSBOEDB3c/TcTiO14RNTByA9GsmbBwqJvAoHELE645sk7ZERGnmBhCL/GKwb
-         UJj+OB1ehszy39j6cla+9YrmspxsepkIsERfZ0s/BpLkE/zZgVjObsZEwTx+k3zYkTSe
-         TbQqsZm9JYls1Z7PHMzmJEtdl1hiHJZ20wrHQvZzlfaed0U280b4vAL/oyroaVJyYsp5
-         +MLAHGE8V4BJHhDmRBGNyq65Eb+r9bBTPsuhsJXnBm7vAxuzwS4lj2BZg1h0D3Nbh88d
-         a+0g==
-X-Gm-Message-State: APjAAAURVXoO9ku62Flf2TtXt51ylx/HiNVlL5Uk2xF+FJOs32hNC6mx
-        s4S935IYDf/R/KCZn3ntkaA=
-X-Google-Smtp-Source: APXvYqwX3xh5xzsslMTLt0UrO4nvG45fy9SZxMyeNatI5uX4mcKO6covPpko1QXO9PZ1PpZn5YCfCg==
-X-Received: by 2002:a63:243:: with SMTP id 64mr22553717pgc.214.1554639466338;
-        Sun, 07 Apr 2019 05:17:46 -0700 (PDT)
-Received: from ar135.iitr.local ([103.37.201.45])
-        by smtp.gmail.com with ESMTPSA id q74sm22450378pfc.111.2019.04.07.05.17.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Apr 2019 05:17:45 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     christian.couder@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, alban.gruin@gmail.com,
-        artagnon@gmail.com, git@vger.kernel.org, newren@gmail.com,
-        rafa.almas@gmail.com, rohit.ashiwal265@gmail.com, s-beyer@gmx.net,
-        t.gummerer@gmail.com
-Subject: Re: [GSoC][RFC v3] Proposal: Improve consistency of sequencer commands
-Date:   Sun,  7 Apr 2019 17:46:40 +0530
-Message-Id: <20190407121640.3737-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <CAP8UFD12GXV80SVi5UR=mpBox9DFWw0Fp2wrf+1FEXbUdX1ReA@mail.gmail.com>
-References: <CAP8UFD12GXV80SVi5UR=mpBox9DFWw0Fp2wrf+1FEXbUdX1ReA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GInWLBST1qGU6znwJxlCmt/uE0ekdahoUjtz/trojeU=;
+        b=Fp8csCcYcWK0ZaDWp+P+LbfVTxQ8foTmx2LqMa4UrKYczwGFVo3ky0RkIOcp6Emhal
+         v32d3YRGFRePnNPBh4DHK6An8g8TCAPctZIHwngqE2ceCubwIG8CsCxE+1coRyGnpIil
+         5HXsUfJP1tXbJ99EvkI9sxLti+yHfZNuK2OskZNjnm71/ZpKaOjgWzj5CUbUlDS+DAgQ
+         smwzipbM5/V8P3di80aCC5I4M6rlM+mFixROan4Vzx+DBkDb6jrIAiRIpSgxkyFRtupR
+         cZgA9CXLsQHTL33BvUHz21H4gS4L+1yn8w37OeXrc3MFnNhS8N8zbo9ZrqXSkv1zqSew
+         lMnA==
+X-Gm-Message-State: APjAAAVaUSA/gbagpjxBoRcX6ssJYnNXs3oGQY6DWgsLe4fLy/ETvs1s
+        /0SD13N82O4Jav3cWJeEuEyDOnOoKnNQjB55kfNFCGRZX8k=
+X-Google-Smtp-Source: APXvYqxzLkys3Drar9vIQVP4bGzURmVyo40dhW5cFqXRUkJTgtkNLES+uXr0Ngaen8Wol+wbRgYsu0rUf4xMcArRBXs=
+X-Received: by 2002:a9d:784a:: with SMTP id c10mr15011916otm.337.1554642504628;
+ Sun, 07 Apr 2019 06:08:24 -0700 (PDT)
+MIME-Version: 1.0
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Sun, 7 Apr 2019 18:38:13 +0530
+Message-ID: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
+Subject: [GSoC][RFC] discussion about stashing with conflicts
+To:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Chris!
+below is my understanding from reading the parts of code as suggested on IRC.
 
-On Sun, 7 Apr 2019 09:15:30 +0200 Christian Couder <christian.couder@gmail.com> wrote:
+what is the use of ce_stage macro ?
+tells about stage of an index entry.
+if ce_stage says, stage #0 i.e staging area, then that index entry is
+in staging area
+and nothing needs to be done.
+else a temporary index entry is created and repo_read_index_unmerged()
+calls other function and tries to add it to index.
+if it fails, it issues an error.
 
-> As we are close to the deadline (April 9th) for proposal submissions,
-> I think it's a good idea to already upload your draft proposal on the
-> GSoC site. I think you will be able to upload newer versions until the
-> deadline, but uploading soon avoid possible last minute issues and
-> mistakes.
+is this correct interpretation ?
 
-Sure, I'll upload my proposal as soon as possible.
+1) in repo_read_index_unmerged(), why don't we make the value of
+`unmerged` 0, if adding index entry is successful; as the entry is no
+longer unmerged ?
 
-> It looks like you copy pasted the Git Rev News article without
-> updating the content. The improvement has been released a long time
-> ago.
+2) what is ADD_CACHE_SKIP_DFCHECK ?
+i am unsure if i get its meaning, cache.h says that it means "Ok to
+skip DF conflict checks"
+what are DF conflict checks ? something about diffing to check for
+conflicts ? if so why are we skipping it this entry had conflicts in
+the past maybe it will create again.
 
-The intention was to document how the project started and *major* milestones or
-turning points of the project. Here they are.
+3) what is cache_nr variable in index_state struct ? what is its use ?
 
-> Maybe s/rebases/rebase/
 
-Yes, :P
+Now, about add_index_entry_with_check(), i don't fully understand this
+function but concentrating on the part pointed by dscho.
+https://github.com/git/git/blob/v2.21.0/read-cache.c#L1284-L1294
 
-> It seems to me that there has been more recent work than this and also
-> perhaps interesting suggestions and discussions about possible
-> sequencer related  improvements on the mailing list.
+    /*
+     * Inserting a merged entry ("stage 0") into the index
+     * will always replace all non-merged entries..
+     */
 
-Again the idea was to document earlier stages of project, "recent" discussions
-have been on the optimizations which are not exactly relevant.
-
-Should I write more about recent developments?
-
-Regards
-Rohit
-
+so this is the part we need to play with for the project
+https://git.github.io/SoC-2019-Ideas/#teach-git-stash-to-handle-unmerged-index-entries
+try and change this in some-way to not replace those unmerged entries
+or store them some place else ?
