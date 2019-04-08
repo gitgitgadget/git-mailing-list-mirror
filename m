@@ -7,63 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 866EB20248
-	for <e@80x24.org>; Mon,  8 Apr 2019 04:14:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D792D20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 04:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbfDHEOe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 00:14:34 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37427 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbfDHEOd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 00:14:33 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v14so13058383wmf.2
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 21:14:32 -0700 (PDT)
+        id S1725984AbfDHES5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 00:18:57 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:52985 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725950AbfDHES5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 00:18:57 -0400
+Received: by mail-wm1-f52.google.com with SMTP id a184so12588935wma.2
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 21:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=uwM5RCfeWY+QnpscGJW7Ms16OB0GgEjTEnkhc2gSM98=;
-        b=CKVO9qS9qA8nMWRSRWVOamyqXg7QH1XxVj+xUMpVeM/GyUfAFE0GnHICyBog0v5U/R
-         XXzFxoyVUuCGpfi3g9p3Kuw9XYMOULDQTnjRLp7VDndZMi/yUdnYK9aRo1ACYYnRAg+j
-         O1Da5LuY8rIxgt1qG4Zf/bKUK+7FacbkGpze+GDDOjpVP1ly7W2oMQMzYKsJoJEzluQJ
-         QhlZ8wC3MPElYI4Zv+yhCq3PNLHQDa6kua5ibujJ7XeExbDaQEhdbBt3X1l1QRPRmy7w
-         UVLceU1QKSdlm3FCT48DUsXN5wGL6Rr/lsbiMVdMLbVh4spNuQLSWsSybYpOcI4FPNmA
-         urYw==
+        bh=AaK8bamBjTrcL2rM/lpJr0X70VbId91JVA2ilkSIN6M=;
+        b=IJRviTscEUosdMY25fjR5YhJjLk+8YOpoe8phEN+PLpoPOqJDWOziGopunSkAvQm0/
+         ZBsmmtcXYXB/U2pY4ee4ryr8LoOtY2jDeePwwndGumhtdQBDJyYStxwnPPnXORrwA2UR
+         yT5d+Lgh84jA7XNUiV7hj14aPy3ovHJ+zmjLc/FdgV/25uyxhP09udsL022Zc4csdJd9
+         aXThqndGLjsSwh2OBTwQV9nyCqzsVy66AbPzop+kG7TjXw1OhWO2gxd3QqPWsaexzZmh
+         XHOc50L2sQ8XjI9PPADO+EX189SFJqMCFzOfCgf6vEhK0+27YyPEHjiFT1qRvyPC32wv
+         lE3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=uwM5RCfeWY+QnpscGJW7Ms16OB0GgEjTEnkhc2gSM98=;
-        b=aFODJ94lHxV8ZCWlLpWm/dl1ENI0yp8rYCfYC+htUr8zYyemKIwS5oaKI0oXpx3Hr9
-         5svLqGz6uyUSwQky5zm5zit8e1b7HTxk78LkNkSFDkv7BXXpmfvXG6uHc9Nd/k86A7eP
-         JgZ7QyXZfOtSyQ6p9ufj4ExRvjoqXpndt7n7CAQLuwahF0xHxlQviniPZSdDJ8auKQo1
-         sbQ1ffOpGMWmotj+RZdYrdiTReKp4irgQMjRQBlJvllQw94gYr0W8cU6KwKkZaL/MmV+
-         4iWQMmgHcmX4ASOENKCMCa+0aocYvzHO9RDAvGP1/FJmFtJ7+JulNPyPywuSOWD/LkLm
-         Uxyg==
-X-Gm-Message-State: APjAAAWZ79kTmu2JSHnLQODLeqRcdCFn2a1/NnEOta4/XpdPaSP94QLg
-        TNnMyRrvk+qiSSYIVcKYsI4=
-X-Google-Smtp-Source: APXvYqzLnomLdJ9/lEV6PWZc0i02laIP9MrZkPeA3mUqNx/qxXiNVmLGZIBoyFYuUJGwmmR/cYXCJg==
-X-Received: by 2002:a1c:658a:: with SMTP id z132mr15965137wmb.92.1554696871877;
-        Sun, 07 Apr 2019 21:14:31 -0700 (PDT)
+        bh=AaK8bamBjTrcL2rM/lpJr0X70VbId91JVA2ilkSIN6M=;
+        b=l7msFUejENvGT1AvyzKJEOpb949OL1hPH4QKs9F4JVSoesDkIhvuON5Uc8jqD/G51P
+         d9g+B56CLGNncfF0NdOgeLDFnZ06Ou9v5tutkVccJtsuvf8DkiMifnzUtIPtGZ2IJSil
+         71/SNzEJRjemnbx7abln/2qkS9M71T5YZfJPsXG8CWpOtO2GN4cr79lIW2LnbLeCgdQq
+         197uOXixT8HX6pRlhshOSzBgRQcPts6ePUEfZYLxCrX3SpGwMoRYhW/+67KoUy89yju1
+         MSKNwl87vp7pqUkW+vzlkNs5ELC+jKCVZ6gktozS67CUXrV7rW+9rEsIKMCDi80dZpqL
+         T6aA==
+X-Gm-Message-State: APjAAAWrrlWgRKA0vW2BBqEYM3aFvU/D6lMJpAmLHcvr0ccjSGnhQKMB
+        vW/FmvN5iahfnsOJW8w6H8M6Ktyfi98=
+X-Google-Smtp-Source: APXvYqyG1h0eqz/lC3zmO6eYnNNRzNZy8V9OjJgZROxyHM8RsYFX1GGZPjL3cxWMNAaE2zWLMuRcdw==
+X-Received: by 2002:a7b:c301:: with SMTP id k1mr16556779wmj.37.1554697135298;
+        Sun, 07 Apr 2019 21:18:55 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id r30sm91874851wrr.46.2019.04.07.21.14.30
+        by smtp.gmail.com with ESMTPSA id x5sm9288447wmi.37.2019.04.07.21.18.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 07 Apr 2019 21:14:31 -0700 (PDT)
+        Sun, 07 Apr 2019 21:18:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Apr 2019, #01; Thu, 4)
 References: <xmqqr2aidpxw.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CmkFNv7Fy+rSY0Q=1DhYSrpSfU=XEpSS6QRLASJtsVew@mail.gmail.com>
-        <xmqqmul5e9y0.fsf@gitster-ct.c.googlers.com>
-        <87d0lyanen.fsf@evledraar.gmail.com>
-Date:   Mon, 08 Apr 2019 13:14:30 +0900
-In-Reply-To: <87d0lyanen.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+        <87h8bb9bmx.fsf@evledraar.gmail.com>
+Date:   Mon, 08 Apr 2019 13:18:54 +0900
+In-Reply-To: <87h8bb9bmx.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
  =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 06 Apr 2019 22:28:48 +0200")
-Message-ID: <xmqqimvpb0bd.fsf@gitster-ct.c.googlers.com>
+        message of "Sat, 06 Apr 2019 21:28:22 +0200")
+Message-ID: <xmqqef6db041.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,38 +72,57 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->> I'd rather pick between (1) using the final name for the concept we
->> want to eventually achieve, i.e. "precious", and starting small,
->> i.e. "initially, only git-clean knows about it", or (2) doing
->> nothing.  Per-command 'precious-this', 'precious-that' that would be
->> left as interface wart for years is not a pretty sight I want to
->> see.
+> On Thu, Apr 04 2019, Junio C Hamano wrote:
 >
-> I think we shouldn't squat "precious" in general without seeing where we
-> want to go with it, which I tried to sum up in
-> https://public-inbox.org/git/87ftsi68ke.fsf@evledraar.gmail.com/
+> Just comments on ab/* stuff:
 >
-> But aside from that larger discussion, I see no problem with having some
-> "+clean" or "-clean" attribute with basically Duy's current patch in
-> nd/precious with the equivalent of "s/precious/clean/". Duy suggested
-> this in
-> https://public-inbox.org/git/CACsJy8C377NmLv9edNYjinKAQf-P1y5+Nwhdj3vRkz_E__x43Q@mail.gmail.com/
+>> * ab/gc-reflog (2019-04-01) 7 commits
+>>  - gc: handle & check gc.reflogExpire config
+>>  - reflog tests: assert lack of early exit with expiry="never"
+>>  - reflog tests: test for the "points nowhere" warning
+>>  - reflog tests: make use of "test_config" idiom
+>>  - gc: refactor a "call me once" pattern
+>>  - gc: convert to using the_hash_algo
+>>  - gc: remove redundant check for gc_auto_threshold
+>>
+>>  Fix various glitches in "git gc" around reflog handling.
+>>
+>>  cf. <20190328161434.19200-1-avarab@gmail.com> (v4)
+>
+> Missing a "will..." note for this one, the "cf" is just the cover letter
+> for v4. AFAICT it should be ready to merge down from "pu".
 
-I know.  I've already said that we do not want proliferation of
-precious-clean precious-merge precious-yet-another-thing.
+The former is because I haven't decided and more importantly I
+haven't seen enough input on the list to make a decision.
 
-> ... shouldn't be breaking the reasonable assumption a user of "-x"
-> could make so far, which is "ignore repo config, just wipe it
-> all".
+The latter is quite normal.  cf. is literally "here is one of the
+things I can look at as a starting point to remind me what this
+topic was about and what its current state is", a note left for me.
+It often is "don't forget that somebody raised an issue and I should
+not merge to to 'next' yet" but it is not limited to objections.
 
-Yup.  I think that is reasonable.  To paraphrase (so that you can
-tell me that I misunderstood you, if that is the case), if we are
-told to honor only what the index knows, deliberately ignoring the
-.gitignore file, then we should also ignore .gitattributes that says
-which ones are ignored-but-precious, as the "precious" attribute is
-a mere implementation detail of what _could_ have been part of the
-exclude mechanism (aka ".gitignore") from day one, if we designed
-the exclude mechanism to support "ignored and expendable" and
-"ignored and precious" from day one.  "clean -x" would certainly
-have ignored both kinds.
+As I haven't seen enough input on the topic, and I have quite a
+backlog after being offline for a wee, pointing at a cover to make
+sure I can quickly find out which iteration I happen to have was/is
+a logical thing to do.
 
+>> * ab/gc-docs (2019-04-01) 12 commits
+>>  - SQAUSH??? fixup! gc docs: include the "gc.*" section from "config" in "gc"
+>>  - gc docs: remove incorrect reference to gc.auto=0
+>>  - gc docs: clarify that "gc" doesn't throw away referenced objects
+>>  - gc docs: note "gc --aggressive" in "fast-import"
+>>  - gc docs: downplay the usefulness of --aggressive
+>>  - gc docs: note how --aggressive impacts --window & --depth
+>>  - gc docs: fix formatting for "gc.writeCommitGraph"
+>>  - gc docs: re-flow the "gc.*" section in "config"
+>>  - gc docs: include the "gc.*" section from "config" in "gc"
+>>  - gc docs: clean grammar for "gc.bigPackThreshold"
+>>  - gc docs: stop noting "repack" flags
+>>  - gc docs: modernize the advice for manually running "gc"
+>
+> That squash makes sense. Will submit another version with it integrated.
+
+OK, then I won't squash it myself, but instead queue the updated
+patches.
+
+Thanks.
