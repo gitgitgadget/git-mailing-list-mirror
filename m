@@ -2,94 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4410120248
-	for <e@80x24.org>; Mon,  8 Apr 2019 01:34:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5780C20305
+	for <e@80x24.org>; Mon,  8 Apr 2019 02:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbfDHBeK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 21:34:10 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:44732 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726349AbfDHBeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 21:34:10 -0400
-Received: by mail-wr1-f50.google.com with SMTP id y7so14291469wrn.11
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 18:34:09 -0700 (PDT)
+        id S1726493AbfDHCRa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 22:17:30 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:39053 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbfDHCRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 22:17:30 -0400
+Received: by mail-io1-f68.google.com with SMTP id e13so9685020ioq.6
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 19:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Bn8KjpVuH7o7O/ogb9OTeguVgKJAoPSF+nuGEiBTKkc=;
-        b=bX2O/8qsIElx1vE1QB+IhTL/M759cMXglWd/Jjjired0Cxi/3PlLOJDIGBXs9xXexb
-         8b3Y2HeCXFLcSN3UeF2B+6Q9aGLR1h4vJj0iWg4InEIVn1GAbOK2ABgbAlA3s+OzCks8
-         T+QfKjEJbv5/Ou3RKmoMc5nAwItQVFrDYRhJXymsssflWvZMs30f3MLNbT2lXLgKhLnt
-         kolC5R5y1D5jg3T9PyXCrveOb0pmUdD6c4Kt9ldEUJ4UnPIVzzNqGnM0r89Z1K++5Q9a
-         rsk4QRlQT7jZ56CNSwgRrIxPpwvErC3e62dQ7R8K13GKgk+HBVmX5ieldGckAwSD0M/l
-         bq1g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KwBsT0QsGLQnm9YrPXm0hYGB/Kp9WzlDIAPuNHRBRMc=;
+        b=Uo3rG52tVZ8sYh1BYgCBcO2WwG3PrNYdx3+qIgPU8puK6U7/gEYranNIeoS5a3+HEN
+         sYR5OyQmyglamawnrqmy5wX4ox40u9LZ5e6NXtk7uGBCwXRakQVMIDSHCMxIbXvv4mhs
+         WKTpufR72/WzrDOVST9aJWgAb9FuyVm1JkObr8D/ImP3uRmuoMrWxEWuMKoPdAjU73zR
+         G3MH4/GC5NClXBawP+ohONIWIM1C/SIAHtPEisYOlZhg+ix/kqUfFnZFCfYM0Ht/NMDr
+         G72DoW6CzZHqo4dv+YZi+XOdENChCvqyyVDAgiVj1e2mbf0H18gzzz3G8g7eHL6MR1C0
+         tSLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Bn8KjpVuH7o7O/ogb9OTeguVgKJAoPSF+nuGEiBTKkc=;
-        b=L5vDB5JXytvx7WPIQyMv1LVB0/KspbFRq0uhI63Mt+zSgUgfETON+KH76flgMtIm8B
-         ZakrFaOrXBAKkOtCD2lqCn9pqj1jxNlStlhWAzmo9tbuZ/597Bjh9AQN5Bb+pG63NQFT
-         HvO5nB5BC+wxl5awWiXG4VgqgglhrcW59ctgfly2clBuv9rI838qfUxadzy1GOMl2IZs
-         k03OCsptLpZgSAk/tBLBumEpGLyEKO9oIsPIOE0RFb9KoMEH23DoVpb2y7Gee+bMbf1R
-         gSSOBDbOg11v0mf8T+U5H3TOHZUor2d/Wp+zOCZExyUCkp4Qvvz0IkAywvMshMeMv2ye
-         Zi1w==
-X-Gm-Message-State: APjAAAVaxBm4cMxLLqFiDxBvACOyXJJoJABn5OZKT9BjQce8Bbcqvufj
-        8rX26tJ/sERjLhNLcfxgLAa5toANjk4=
-X-Google-Smtp-Source: APXvYqwx4h5KrDquqt1A50LwcL65GkXpJXiiLjh+mywyG1SPj56t8DLyEqtCvA92cQ2yw6zMqt5R4Q==
-X-Received: by 2002:adf:f1c6:: with SMTP id z6mr16218681wro.232.1554687248783;
-        Sun, 07 Apr 2019 18:34:08 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id y1sm84276999wrd.34.2019.04.07.18.34.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 07 Apr 2019 18:34:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Damien Robert <damien.olivier.robert@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Pull without fetch
-References: <20190406131200.xcd7gtf7dlc567uh@doriath>
-Date:   Mon, 08 Apr 2019 10:34:07 +0900
-In-Reply-To: <20190406131200.xcd7gtf7dlc567uh@doriath> (Damien Robert's
-        message of "Sat, 6 Apr 2019 15:12:00 +0200")
-Message-ID: <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KwBsT0QsGLQnm9YrPXm0hYGB/Kp9WzlDIAPuNHRBRMc=;
+        b=kic7HKIgXBh/7kKDjpwhGYx0HVmKmUvWM+9ayzI3+5IaEq20rWSzqsXzrB0Ta4vMU/
+         6eQZeeLs5sBaNo5vptPBWB405mJz+96xncCERK9K3sRb96F39Ybb0wdO+mBjII3H9tqm
+         NgdZGtVdM2bJdUjaQC7scLjDhpM8XIQSHWpEyssvEE32ojAR62775ln2iNwziUFBeA1l
+         alNQcSXPq8fyqmprFOT3wC+jXgi7iNjv9ktCXHf2RRk/2mBdsU4v4QfzlGuX9Xlx9wiM
+         pW2fDBYXNdLTaBhBnbixIEwrwjK9akyPlMmLT8mMK8lNZ8UTKsVZPFo8AWkGsM87pNS1
+         laNQ==
+X-Gm-Message-State: APjAAAXpdT6l2/PTFK842fS9jwhsDt7W10SX3u5eI8VQesPoMSwPcJ23
+        MJa9aoGVNh4jlJfwNpjnRrkbWFeB4YZYt2WdXjI=
+X-Google-Smtp-Source: APXvYqxyqM+PBt1aMRMNrzYXg4V1tZ31PEHH0IWMAm/39Hv73QsTKCZNmIpYRXGNSoQRSZuXkhE86cPYLrW3w0obOnA=
+X-Received: by 2002:a5d:840d:: with SMTP id i13mr9995214ion.186.1554689849267;
+ Sun, 07 Apr 2019 19:17:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190406131200.xcd7gtf7dlc567uh@doriath> <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 8 Apr 2019 09:17:02 +0700
+Message-ID: <CACsJy8B_-r-=LxzvdnY44H7Bnydijqu4+GvWOy3r+hP723uezA@mail.gmail.com>
+Subject: Re: Pull without fetch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Damien Robert <damien.olivier.robert@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Damien Robert <damien.olivier.robert@gmail.com> writes:
+On Mon, Apr 8, 2019 at 8:34 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Damien Robert <damien.olivier.robert@gmail.com> writes:
+>
+> > is there a way to do a git pull without it running git fetch?
+> > Looking at the source in builtin/pull.c does not seem to indicate so.
+>
+> The reason behind that is because it does not make any sense for
+> "pull", which is meant as a quick short-cut to say "fetch && merge",
+> not to run fetch, especially back then when 'git pull' was designed,
+> the world was much simpler.  There was no "fetch && rebase", our
+> branches did not know what their @{upstream}s were.  In that simpler
+> world, what you are trying to do would have been:
+>
+>         git fetch
+>         # did I get anything worth integrating?
+>         git merge FETCH_HEAD
+>
+> That obviously would not work for those with "pull.rebase", and I do
+> not think it makes much sense to teach "git rebase" the same trick
+> to read FETCH_HEAD as "git merge" does in the above sequence.
+>
+> Others may have a better idea, but I do not immediately see any
+> solution better than inventing a new option to "git pull".
+>
+> Another and better option that may be harder to arrange is to make
+> sure that a no-op "git fetch" incurs very low cost.  If you did so,
 
-> is there a way to do a git pull without it running git fetch?
-> Looking at the source in builtin/pull.c does not seem to indicate so.
+Not exactly related. But I often wish to see the list of branch
+updates since the last fetch. There's no easy way (that I know) to do
+this unless you copy the last fetch's output somewhere. If this "fetch
+at low cost" could simply read FETCH_HEAD and summarizes it like a
+normal fetch, that would be great. And it should also be very low cost
+because we only replay the last part (making summary) of normal fetch.
 
-The reason behind that is because it does not make any sense for
-"pull", which is meant as a quick short-cut to say "fetch && merge",
-not to run fetch, especially back then when 'git pull' was designed,
-the world was much simpler.  There was no "fetch && rebase", our
-branches did not know what their @{upstream}s were.  In that simpler
-world, what you are trying to do would have been:
-
-	git fetch
-	# did I get anything worth integrating?
-	git merge FETCH_HEAD
-
-That obviously would not work for those with "pull.rebase", and I do
-not think it makes much sense to teach "git rebase" the same trick
-to read FETCH_HEAD as "git merge" does in the above sequence.
-
-Others may have a better idea, but I do not immediately see any
-solution better than inventing a new option to "git pull".
-
-Another and better option that may be harder to arrange is to make
-sure that a no-op "git fetch" incurs very low cost.  If you did so,
-"git fetch && git pull" would perform just like your "git fetch &&
-git pull --no-fetch", and we won't need a new option at all.
+> "git fetch && git pull" would perform just like your "git fetch &&
+> git pull --no-fetch", and we won't need a new option at all.
+-- 
+Duy
