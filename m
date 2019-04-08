@@ -2,88 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89C4A20248
-	for <e@80x24.org>; Mon,  8 Apr 2019 17:01:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A46620248
+	for <e@80x24.org>; Mon,  8 Apr 2019 17:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729020AbfDHRB3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 13:01:29 -0400
-Received: from mail-ot1-f73.google.com ([209.85.210.73]:34795 "EHLO
-        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726726AbfDHRB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 13:01:29 -0400
-Received: by mail-ot1-f73.google.com with SMTP id 7so8466435otj.1
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 10:01:28 -0700 (PDT)
+        id S1729030AbfDHREv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 13:04:51 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:52842 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728905AbfDHREv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 13:04:51 -0400
+Received: by mail-it1-f195.google.com with SMTP id x132so274276itf.2
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 10:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LGtKWDqmUNOkkyMIcZyJXAo9mf4EZ/DnoL7OhwY8PKk=;
-        b=V2Vcj9rZBBnalDWT/8FMa0QAgU6BtiODRQVe4wa2dC1XdYKHl0u1md8nU8W7IKeYCp
-         vphqem0DQJu4iRDkXMB4fTRsID++TWgVv6T+Nwyat4vd76KM4fjwOhJZMEc377Dme8hi
-         lW7KMJPpB6/D1MzTpN8l54HJz2nrdM6r2xJbOf3RDKhuocBVXt9yX4L6ZMRjAMnD8Vx3
-         tPP9ZBvqfmUyI3Q58yX4p5sxpxdc/PXgBlo7qamllyIVmKh8cAckwqQ844u1goHUN3Bj
-         L92FGLXGPtqiDBMNNe4MPlFf4vfqsWD6V61Kc7Svgg/oLcBE/upXffSdQRRvlSZOGzZL
-         9SSw==
+        bh=rQ//Lu8zjkVswpDUiuks8tRio7ApHWFS47pqtURqs2g=;
+        b=iagZzS+s7PGGdbql38zvZGIVqMH0au2pmg7oZ/RWkM9mMJlFl+PPiQnmSdcT1hGYsg
+         znkNTJQbHYPB10PsjgDGIRPIdfgLk6rwVBUc6aGPCZaIEdXLOawA7uZnuZ8wzFQoo9Nn
+         qF19n/qVRG6Ko5A/XKKL3DJAW83CFAS7v0KcAjMAV2ypLV+ZLFVpnI6p2BoGGM3ca7mV
+         YQHYmYXCptqA5205eYe2PGmJp3cP6sjyFUwYigITdjbaj8v7S8uEkT3QwZUmgy7xqF3i
+         hQ9bAD2Yl8jA5PgeaoIGlS6M0+JV37bPn6lM7IL1AbkgbkisPm+6rHjSuojLlRpIPMwq
+         sSlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=LGtKWDqmUNOkkyMIcZyJXAo9mf4EZ/DnoL7OhwY8PKk=;
-        b=jXzU976hkGPpUqIEwe9aL/ZfGbkdYl/iJIlYPP7mDIBENunmya74e9u6Y9K+kigkze
-         DvR7OD98Fbp2y6PwskQmQWBmAymQF2odqBY/o2B4b2UcJ9nCCaOBT9qi0+n8s0ui9XTs
-         w5+8j8NtdxIU/1AEH88Kf/xDDO6cMimvnRuXlYL190FQMN4x014UmDwMOmX4uH5Yk5CM
-         U7+TGDoydjU+5oHGiepOcCv4qEWnXIWbJkwLrD3pZIeotYEusr1fYq5ii5A1sSr/iZs/
-         zmKFQbgJLMVFq10j1hUZWfDyr8/zb/rj/V/3lRlEPiIp/TDxbuLf16V3MrKAw5qGgQSl
-         PxAA==
-X-Gm-Message-State: APjAAAWL43zgsKW5UNwP6XNOd5wYnK1S8W41KPyfOdV3UiaHeZZDgC/H
-        i8VcocDm76WbRBu0xNH1TfRhU/yAZ3CnpojVh8DP
-X-Google-Smtp-Source: APXvYqxooxwImzefztdUtoC+IzNEeeayB+OQZnKEFfGTB8CikAX5VJiuWiAAUzTqFrZzrnYhoL5ugDs62dWzuwjczAbn
-X-Received: by 2002:a05:6830:112:: with SMTP id i18mr2081054otp.50.1554742888175;
- Mon, 08 Apr 2019 10:01:28 -0700 (PDT)
-Date:   Mon,  8 Apr 2019 10:01:25 -0700
-In-Reply-To: <20190406113113.GA219876@google.com>
-Message-Id: <20190408170125.124345-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190406113113.GA219876@google.com>
-X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: Re: [PATCH v2] t5551: mark half-auth no-op fetch test as v0-only
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     jrnieder@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rQ//Lu8zjkVswpDUiuks8tRio7ApHWFS47pqtURqs2g=;
+        b=IIu6TRGqT87xGCstENiUKU+oPjurprbFndF3YZQGMZsekUMqRQdouYc2eL0q618vev
+         8dKs1wqViJgwdvG7IUOgATPWS1Tf7lFT2AtgL3RevmvfExUt4DfZGufBvj/RK6p9i/IW
+         1nZbYIIgLIPpXCpXgkkOj5a85o67sFzYG04Mz5Uge50Rj/u/VZWwjkjjpxifxjk0cdBZ
+         580dio65W2WXRVz+zV2AJkCsThwEUZr1g/zJWTjzk+J6BCOe4QC1diVGW+90FeGYVNd/
+         8D1L+ZHvXx7o4WhbhvrOi/uhiscNJTw3lJUbAUM192GgiMe09EH3xqNu77HLBKL/sxQB
+         gAGg==
+X-Gm-Message-State: APjAAAXrxDdFT4ulbwlwLS42dBZZXPjF0gQueb/xcWDIejOatmjeYfTf
+        4EbV63MxboJ0Fx8uX6hbg3gLAwT0VTSCoU/K8ctWQg==
+X-Google-Smtp-Source: APXvYqygaGw4PVgKjoHp2/U9OpFUwtNJ6CNOeJbrECpPzv3Q5932Z62si5xwuW6YuBArypc80XC6xB5IyT1KEEZDeJ0=
+X-Received: by 2002:a02:c955:: with SMTP id u21mr21655877jao.105.1554743090381;
+ Mon, 08 Apr 2019 10:04:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAHd-oW7KMrDJ-cyzk63oqW9-QVpag6fKnDp+Mo5bWxg1KfzY3g@mail.gmail.com>
+ <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
+ <CACsJy8DxW7ZcSNQBZq4+A6c+9xZopg79sXfi6Na61Xgcoqd6ng@mail.gmail.com> <79ecdc5b-2ccf-ae4d-3775-b850641f8c3e@iee.org>
+In-Reply-To: <79ecdc5b-2ccf-ae4d-3775-b850641f8c3e@iee.org>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 8 Apr 2019 14:04:39 -0300
+Message-ID: <CAHd-oW5PFmj4u2YB-1TcHWNxkokfCEsUq_zB=Rx2Vmdk5Z9eMw@mail.gmail.com>
+Subject: Re: [GSoC][RFC] Proposal: Make pack access code thread-safe
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +	# NEEDSWORK: When using HTTP(S), protocol v0 supports a "half-auth"
-> > +	# configuration with authentication required only when downloading
-> > +	# objects and not refs, by having the HTTP server only require
-> > +	# authentication for the "git-upload-pack" path and not "info/refs".
-> > +	# This is not possible with protocol v2, since both objects and refs
-> > +	# are obtained from the "git-upload-pack" path. A solution to this is
-> > +	# to teach the server and client to be able to inline ls-refs requests
-> > +	# as an Extra Parameter (see pack-protocol.txt), so that "info/refs"
-> > +	# can serve refs, just like it does in protocol v0.
-> > +	GIT_TEST_PROTOCOL_VERSION=0 git --git-dir=half-auth fetch &&
-> >  	expect_askpass none
-> 
-> I suspect it's fine if protocol v2 never supports this.  Can we change
-> the NEEDSWORK comment to say that the protocol v2 spec should document
-> the lack of support for half-auth?
-> 
-> With or without such a change,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+On Mon, Apr 8, 2019 at 6:26 AM Philip Oakley <philipoakley@iee.org> wrote:
+>
+> On 08/04/2019 02:23, Duy Nguyen wrote:
+> > On Mon, Apr 8, 2019 at 5:52 AM Christian Couder
+> > <christian.couder@gmail.com> wrote:
+> >>> Git has a very optimized mechanism to compactly store
+> >>> objects (blobs, trees, commits, etc.) in packfiles[2]. These files are
+> >>> created by[3]:
+> >>>
+> >>> 1. listing objects;
+> >>> 2. sorting the list with some good heuristics;
+> >>> 3. traversing the list with a sliding window to find similar objects in
+> >>> the window, in order to do delta decomposing;
+> >>> 4. compress the objects with zlib and write them to the packfile.
+> >>>
+> >>> What we are calling pack access code in this document, is the set of
+> >>> functions responsible for retrieving the objects stored at the
+> >>> packfiles. This process consists, roughly speaking, in three parts:
+> >>>
+> >>> 1. Locate and read the blob from packfile, using the index file;
+> >>> 2. If the blob is a delta, locate and read the base object to apply the
+> >>> delta on top of it;
+> >>> 3. Once the full content is read, decompress it (using zlib inflate).
+> >>>
+> >>> Note: There is a delta cache for the second step so that if another
+> >>> delta depends on the same base object, it is already in memory. This
+> >>> cache is global; also, the sliding windows, are global per packfile.
+> >> Yeah, but the sliding windows are used only when creating pack files,
+> >> not when reading them, right?
+> > These windows are actually for reading. We used to just mmap the whole
+> > pack file in the early days but that was impossible for 4+ GB packs on
+> > 32-bit platforms, which was one of the reasons, I think, that sliding
+> > windows were added, to map just the parts we want to read.
+>
+> Another "32-bit problem" should also be expressly considered during the
+> GSoC work because of the MS Windows definition of uInt / long to be only
+> 32 bits, leading to much of the Git code failing on the Git for Windows
+> port and on the Git LFS (for Windows) for packs and files greater than
+> 4Gb. https://github.com/git-for-windows/git/issues/1063
 
-Thanks for your review. Junio brought up a possible workflow that uses
-this feature [1] and while I don't know if we will ever get around to
-supporting half-auth in v2, it seems better to me to leave the
-possibility open.
+Thanks for pointing it out. I didn't get it, thought, if your
+suggestion was to also propose tackling this issue in this GSoC
+project. Was it that? I read the link but it seems to be a kind of
+unrelated problem from what I'm planing to do with the pack access
+code (which is tread-safety). I may have understood this wrongly,
+though. Please, let me know if that's the case :)
 
-[1] https://public-inbox.org/git/xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com/
+> Mainly it is just substitution of size_t for long, but there can be
+> unexpected coercions when mixed data types get coerced down to a local
+> 32-bit long. This is made worse by it being implementation defined, so
+> one needs to be explicit about some casts up to pointer/memsized types.
+> >>> # Points to work on
+> >>>
+> >>> * Investigate pack access call chains and look for non-thread-safe
+> >>> operations on then.
+> >>> * Protect packfile.c read-and-write global variables, such as
+> >>> pack_open_windows, pack_open_fds and etc., using mutexes.
+> >> Do you want to work on making both packfile reading and packfile
+> >> writing thread safe? Or just packfile reading?
+> > Packfile writing is probably already or pretty close to thread-safe
+> > (at least the main writing code path in git-pack-objects; the
+> > streaming blobs to a pack, i'm not so sure).
+> --
+> Philip
