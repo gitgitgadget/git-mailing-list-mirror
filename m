@@ -2,298 +2,514 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C0620248
-	for <e@80x24.org>; Mon,  8 Apr 2019 09:59:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A171920248
+	for <e@80x24.org>; Mon,  8 Apr 2019 10:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725984AbfDHJ7E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 05:59:04 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:33041 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725857AbfDHJ7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 05:59:03 -0400
-Received: by mail-it1-f196.google.com with SMTP id v8so16755442itf.0
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 02:59:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=upJobZnjTvNEY0FAzfT/VFpv3GBXcN9SqbeP6p6zORI=;
-        b=Sr84pvGyH6kfbHNXQWp1ziUCjhESFT7ufH1hfRkNnCTO+uxY1GrakAChb9goJPB0Aq
-         hXgAqibC1hkr6B4B7Gz7dB6gVQV+QclHkH09YoLUV6O5CHytaHFk/QS6CnKfApsCWNOk
-         fVz8dW87VHoGVRW2dxUn3M9UiGMK0dF2DvfoS/r2HoIVjHMynqSSWfoWtYq5BuatBKHf
-         ZKUyMcRK7kmFIVv4I+m3g1lfc2zoy2a5aSmVFM6VCj/4p8nN6wRfX6SLm3/TdyE5hGsn
-         1cCC+CagDKWNPPwaao7yceuvl4DguiAkbZ0G5kuUkhVWZySSlUWMbUf9kxcxvjxKsIz3
-         mb4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=upJobZnjTvNEY0FAzfT/VFpv3GBXcN9SqbeP6p6zORI=;
-        b=gBnAFhpVrxGAJWvbAErvQ+zbqBQ/tgGVdS2VUU+GP6//E+qKb+zK4mmTz5GrX63uvi
-         v2pJH/52Y6kHJoyRnKsqNe7lbQHpc5xxmXpMlj7sBUZH69DJT9VplJhHFK95jr3bBgFL
-         SMnM0FhyORcmXrIJ8QmTn0cHc9bPgz22PRFrAmp/+zah32qZDAobExHMGM2iIQ1Ibgb0
-         lCa1ysof2riw6pt1cCVX8mNF3JeXCoNSYNquDcRjZ4IH3RM72wE6w9LTfvEOmyYxKdG0
-         LgFD3CMXRNPEH9UpdlwcMhi++GpvIW/b3BA22QTcAx4s2uQMHmbP+nZfzSxOhlaKVXJE
-         PmIw==
-X-Gm-Message-State: APjAAAUFE73ZQ6KWYUppg9dX0eBvEx1urotVUxcXD+D7prPXFJAb+VCs
-        NEPG8xr1eUOiA8WuNtNjlT735rhriIj8Q3MHxDY=
-X-Google-Smtp-Source: APXvYqy1sbYBAqJKr+RlcsKxJFVlPrPmvx7kQemYcspAnmJP+orxcs3WXxHrJ6dUoSmUg0llZmhxUszbNgkWryBQXlc=
-X-Received: by 2002:a24:f8c7:: with SMTP id a190mr11813937ith.72.1554717542700;
- Mon, 08 Apr 2019 02:59:02 -0700 (PDT)
+        id S1726025AbfDHK2I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 06:28:08 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:58412 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725947AbfDHK2H (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 8 Apr 2019 06:28:07 -0400
+Received: from mail-lj1-f176.google.com ([209.85.208.176]); authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hDRVT-0007Op-Ca; Mon, 08 Apr 2019 12:28:03 +0200
+Received: by mail-lj1-f176.google.com with SMTP id y6so10696366ljd.12
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 03:28:03 -0700 (PDT)
+X-Gm-Message-State: APjAAAWhFja3+ESCybjco0v9H7x9VszKcpSOLf+nSSx0czte2hosUInA
+        NeP+p7xyZjSCndNG64+AGAIx1rd2euFeLzySou0=
+X-Google-Smtp-Source: APXvYqwVtJQ7U8HaWtKncjv8WroZWJ7uUJNCroLbWfN52OrZwewHFQyPgZXhrdTUqQXX51a+sG6UECjCqP05EWPvaPg=
+X-Received: by 2002:a2e:9e4d:: with SMTP id g13mr12872549ljk.12.1554719282834;
+ Mon, 08 Apr 2019 03:28:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <CACsJy8CgXLZxqab4vcP1jh3OMCGh1i=easb5BpCs1J8Uf_jsxw@mail.gmail.com>
- <20190405170934.20441-1-jonathantanmy@google.com> <CACsJy8AjyY1Azbf4VfnJMA3O8NNBV1P16dZRrHOUJdsYQHUu4g@mail.gmail.com>
- <xmqqmul1b0pg.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmul1b0pg.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 8 Apr 2019 16:58:35 +0700
-Message-ID: <CACsJy8BHqaqOHVbwtONU5=RiG7Q8WNNAN5EGV_nm7NyNWeyuiQ@mail.gmail.com>
-Subject: Re: [PATCH] fixup! diff: batch fetching of missing blobs
+References: <20190405200045.10063-1-admin@in-ici.net> <xmqqftqt7x49.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftqt7x49.fsf@gitster-ct.c.googlers.com>
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+Date:   Mon, 8 Apr 2019 12:27:51 +0200
+X-Gmail-Original-Message-ID: <CAKrvxcVgMLNEEY6U+ybm6n4WtUCdOaYRjBrDKFvRwzYbZyB2UQ@mail.gmail.com>
+Message-ID: <CAKrvxcVgMLNEEY6U+ybm6n4WtUCdOaYRjBrDKFvRwzYbZyB2UQ@mail.gmail.com>
+Subject: Re: [PATCH/docs] make slash-rules more readable
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1554719285;d4b91b14;
+X-HE-SMSGID: 1hDRVT-0007Op-Ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 11:06 AM Junio C Hamano <gitster@pobox.com> wrote:
+Am Mo., 8. Apr. 2019 um 09:51 Uhr schrieb Junio C Hamano <gitster@pobox.com>:
 >
-> Duy Nguyen <pclouds@gmail.com> writes:
+> "Adam Nielsen" <admin@in-ici.net> writes:
 >
-> >> Avoid a usage of the_repository by propagating the configured repository
-> >> to add_if_missing(). Also, prefetch only if the repository being diffed
-> >> is the_repository (because we do not support lazy fetching for any other
-> >> repository anyway).
+> A few notes on the form.
 >
-> If we are willing to stay limited to the default repository anyway,
-> allowing add_if_missing() to take an arbitrary repository does not
-> really matter, but before the caller of add_if_missing() befcomes
-> ready to work on an arbitrary repository, this change has to happen.
+> > From: Adam Nielsen <admin@in-ici.net>
 >
-> To update the caller, it seems to me that fetch_objects() must learn
-> to take an arbitrary repository, but is that the only thing needed?
-> After that, the function that the caller resides in and callchain
-> upwards can learn to take a repository instance if we want to be
-> able to diff inside an arbitrary repository.
+> This "author" identity and the name-email on the Signed-off-by: line
+> should match, at least for this project.  I cannot tell which one is
+> your preference, and I do not have any preference over your name
+> either ;-), but please pick one and use it consistently.
 >
-> But.  Such a change still would not allow us to compare a tree in
-> one repository against a tree in another repository.
 
-I feel lost (and the answer "go read partial clone code!" is perfectly
-acceptable) but why would we need to diff trees of two different
-repositories?
+Haha yes sorry. I had my struggles with this patch procedure and I
+will do better next time.
 
-> It is likely
-> that a caller with such a need would simply make sure that objects
-> in both repositories are available by using the in-core alternate
-> object store mechanism, making it a more-or-less moot point to be
-> able to pass a repository instance through the callchain X-<.  We
-> probably should make it, and spell it out somewhere in a long term
-> vision shared among the developers, an explicit goal to get rid of
-> the internal (ab)use of the alternate object store mechanism.
 
-I think submodule code so far is doing this way. Though I don't see
-any reason we need it for submodule code. Objects are not supposed to
-be shared between the super- and the sub-repo.
+> >
+> > gitignore.txt: make slash-rules more readable
+> >
+> > Remove the addition `it is removed for the purpose of the following description` and
+> > make clear in which situations a trailing slash is used or not. Increase readability
+> > and make all paragraphs valid, even if they are not read in strict order.
+> > Replace `otherwise` with the the concrete pattern that is considered in the paragraph to avoid
+> > confusion.
+> > Add simple examples to point out the significant difference between using or not using a trailing slash.
+>
+> These are overly long lines; we tend to fold long lines at around
+> 70 char or so.
+
+Okay.
 
 >
-> With squashing the fix-up commit in, the 2/2 patch has become like
-> so.
+> > Signed-off-by: Adam J. N. Nielsen <info@drnielsen.de>
+> >
+> > ---
+> >  Documentation/gitignore.txt | 23 +++++++++++++----------
+> >  1 file changed, 13 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> > index 1c94f08ff4..c6720b0ac4 100644
+> > --- a/Documentation/gitignore.txt
+> > +++ b/Documentation/gitignore.txt
+> > @@ -89,22 +89,25 @@ PATTERN FORMAT
+> >     Put a backslash ("`\`") in front of the first "`!`" for patterns
+> >     that begin with a literal "`!`", for example, "`\!important!.txt`".
+> >
+> > - - If the pattern ends with a slash, it is removed for the
+> > -   purpose of the following description, but it would only find
+> > + - If the pattern ends with a slash "`/`", it would only find
+> >     a match with a directory.  In other words, `foo/` will match a
+> >     directory `foo` and paths underneath it, but will not match a
+> >     regular file or a symbolic link `foo` (this is consistent
+> >     with the way how pathspec works in general in Git).
 >
-> Thanks, both.
+> I do like this change, even though I cannot bring myself backing it
+> 100% immediately.
+
+> The reason why I wrote it the way in the original
+> was because I did not want to repeat "... but a slash at end, if
+> exists, is exempt from this rule"
+
+Yes, I can see why this makes sense. However, I find that this exception
+makes this paragraph hard to read. Also I think its ambiguous if "it" refers
+to the pattern or the slash. The first few times I read it,
+I just didn't get it and was very intimidated by the paragraph.
+
+> over and over in the later bullet
+> points, as it would be a maintenance burden when we have more bullet
+> points and when we find a better phrasing to say "... but a slash at
+> end if exists, is exempt from this rule".
+
+Yes, I agree. One should not repeat such a bloated exception rule over and over
+again.
+
 >
-> -- >8 --
-> From: Jonathan Tan <jonathantanmy@google.com>
-> Date: Fri, 5 Apr 2019 10:09:34 -0700
-> Subject: [PATCH] diff: batch fetching of missing blobs
+> The patch I am responding to bites the bullet and repeats the "the
+> one at the end does not count", which may be slightly harder to
+> maintain, but certainly makes it easier to read.
 >
-> When running a command like "git show" or "git diff" in a partial clone,
-> batch all missing blobs to be fetched as one request.
+> > - - If the pattern does not contain a slash '/', Git treats it as
+> > -   a shell glob pattern and checks for a match against the
+> > -   pathname relative to the location of the `.gitignore` file
+> > -   (relative to the toplevel of the work tree if not from a
+> > -   `.gitignore` file).
+> > + - If the pattern contains no slash "`/`" other then a trailing slash,
 >
-> This is similar to c0c578b33c ("unpack-trees: batch fetching of missing
-> blobs", 2017-12-08), but for another command.
+> While pretending to be a fresh reader and reading only this line
+> made me wonder if the rule described in this bullet point applies
+> only to a pattern that has a single slash at the end.  I wonder if
+> it is just me, or we can improve the phrasing so that it is clear
+> that a pattern without any slash also is covered by this rule, not
+> just a pattern that has all non-slash chars followed by a single
+> slash.
+
+I agree with you. How about we make up the word "intermediate slash" and
+explain it in an extra paragraph? This would make it less repetitive.
+Also it makes clear that the case without any slash is also covered.
+Perhaps
+
+         In the following we use the term **intermediate slash** to
+         denote a slash "`/`" in a pattern that is not a trailing slash
+         nor a leading slash.
+         For example the pattern `/foo/bar`, `foo/bar` and `/foo/bar/`
+all contain
+         only one intermediate slash. The pattern `foo/` does not contain an
+         intermediate slash.
+
+Then, instead of:
+
+         If the pattern contains no slash "`/`" other then a trailing slash,"
+
+one could say:
+
+         If the pattern contains no intermediate slash "`/`",
+
+
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  diff.c                        |  33 +++++++++++
->  t/t4067-diff-partial-clone.sh | 103 ++++++++++++++++++++++++++++++++++
->  2 files changed, 136 insertions(+)
->  create mode 100755 t/t4067-diff-partial-clone.sh
+> > +   then the pattern will match in all directories. In other words,
+> > +   `foo/` will match `/bar/foo/` and `foo` will match `/bar/bar/foo`.
 >
-> diff --git a/diff.c b/diff.c
-> index ec5c095199..811afbdfb1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -25,6 +25,7 @@
->  #include "packfile.h"
->  #include "parse-options.h"
->  #include "help.h"
-> +#include "fetch-object.h"
+> The half-technical "treats it as a shell glob pattern" from the
+> original is gone, which I think is a good change.  The examples may
+> need to be improved, as it may not be clear to naive readers that
+> with /bar/foo/, you meant that it is limited to a directory but not
+> a file, and with /bar/bar/foo you meant both a directory and a file
+> is fine.  Perhaps
 >
->  #ifdef NO_FAST_WORKING_DIRECTORY
->  #define FAST_WORKING_DIRECTORY 0
-> @@ -6366,8 +6367,40 @@ void diffcore_fix_diff_index(void)
->         QSORT(q->queue, q->nr, diffnamecmp);
->  }
+>         For example, 'frotz/' matches 'frotz', 'a/frotz', etc. that
+>         is a directory, but does not match if these are files.
+>         A pattern 'frotz' on the other hand matches these paths
+>         whether they are files or directories.
 >
-> +static void add_if_missing(struct oid_array *to_fetch, struct repository *r,
-> +                          const struct diff_filespec *filespec)
-> +{
-> +       if (filespec && filespec->oid_valid &&
-> +           oid_object_info_extended(r, &filespec->oid, NULL,
-> +                                    OBJECT_INFO_FOR_PREFETCH))
-> +               oid_array_append(to_fetch, &filespec->oid);
-> +}
-> +
->  void diffcore_std(struct diff_options *options)
->  {
-> +       if (options->repo == the_repository &&
-> +           repository_format_partial_clone) {
-> +               /*
-> +                * Prefetch the diff pairs that are about to be flushed.
-> +                */
-> +               int i;
-> +               struct diff_queue_struct *q = &diff_queued_diff;
-> +               struct oid_array to_fetch = OID_ARRAY_INIT;
-> +
-> +               for (i = 0; i < q->nr; i++) {
-> +                       struct diff_filepair *p = q->queue[i];
-> +                       add_if_missing(&to_fetch, options->repo, p->one);
-> +                       add_if_missing(&to_fetch, options->repo, p->two);
-> +               }
-> +               if (to_fetch.nr)
-> +                       /*
-> +                        * NEEDSWORK: Consider deduplicating the OIDs sent.
-> +                        */
-> +                       fetch_objects(repository_format_partial_clone,
-> +                                     to_fetch.oid, to_fetch.nr);
-> +               oid_array_clear(&to_fetch);
-> +       }
-> +
->         /* NOTE please keep the following in sync with diff_tree_combined() */
->         if (options->skip_stat_unmatch)
->                 diffcore_skip_stat_unmatch(options);
-> diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
-> new file mode 100755
-> index 0000000000..90c8fb2901
-> --- /dev/null
-> +++ b/t/t4067-diff-partial-clone.sh
-> @@ -0,0 +1,103 @@
-> +#!/bin/sh
-> +
-> +test_description='behavior of diff when reading objects in a partial clone'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'git show batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client show HEAD &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_expect_success 'diff batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       echo c >server/c &&
-> +       echo d >server/d &&
-> +       git -C server add c d &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_expect_success 'diff skips same-OID blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       echo b >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       echo another-a >server/a &&
-> +       git -C server add a &&
-> +       git -C server commit -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       echo a | git hash-object --stdin >hash-old-a &&
-> +       echo another-a | git hash-object --stdin >hash-new-a &&
-> +       echo b | git hash-object --stdin >hash-b &&
-> +
-> +       # Ensure that only a and another-a are fetched.
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff HEAD^ HEAD &&
-> +       grep "want $(cat hash-old-a)" trace &&
-> +       grep "want $(cat hash-new-a)" trace &&
-> +       ! grep "want $(cat hash-b)" trace
-> +'
-> +
-> +test_expect_success 'diff with rename detection batches blobs' '
-> +       test_when_finished "rm -rf server client trace" &&
-> +
-> +       test_create_repo server &&
-> +       echo a >server/a &&
-> +       printf "b\nb\nb\nb\nb\n" >server/b &&
-> +       git -C server add a b &&
-> +       git -C server commit -m x &&
-> +       rm server/b &&
-> +       printf "b\nb\nb\nb\nbX\n" >server/c &&
-> +       git -C server add c &&
-> +       git -C server commit -a -m x &&
-> +
-> +       test_config -C server uploadpack.allowfilter 1 &&
-> +       test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +       git clone --bare --filter=blob:limit=0 "file://$(pwd)/server" client &&
-> +
-> +       # Ensure that there is exactly 1 negotiation by checking that there is
-> +       # only 1 "done" line sent. ("done" marks the end of negotiation.)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client diff -M HEAD^ HEAD >out &&
-> +       grep "similarity index" out &&
-> +       grep "git> done" trace >done_lines &&
-> +       test_line_count = 1 done_lines
-> +'
-> +
-> +test_done
-> --
-> 2.21.0-196-g041f5ea1cf
+
+Yes. This is so much better.
+
+> I also wonder if "in all directories" is clear enough that your
+> "all" is limited to below the level the ignore pattern is defined
+> for (i.e. "*.1" that appears in "Documentation/.gitignore" does not
+> ignore "foo.1" at the top-level of the tree).
+
+Its mentioned at the start of the page that the pattern is always
+relative to the location of the `.gitignore` file. However, I see that
+since its said "in all directories" its necessary to restrict it again.
+How about
+
+         If the pattern contains no intermediate slash "`/`",
+         the pattern will match in all directories at or below
+         the `.gitignore` file, with infinite depth.
+
 >
+> So I can tell that this patch is trying to address a problem in the
+> original that is worth fixing, but I cannot say the result is good.
+> At least not yet.
+>
+> > - - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
+> > -   anything except "`/`", "`?`" matches any one character except "`/`"
+> > -   and "`[]`" matches one character in a selected range. See
+> > + - If the pattern contains a slash "`/`" other then a trailing slash, then
+>
+> The same comment applies to this first line about the ambiguity of a
+> pattern without any slash anywhere.
+
+This would now change with the above remarks to:
+
+         If the pattern contains an intermediate slash "`/`",
+
+>
+> > +   the pattern is always considered from the `.gitignore` file location.
+> > +   In other words, `foo/bar` will match `/foo/bar` but not `/bar/foo/bar`.
+>
+> Again, loss of the mention of "shell glob" is a good thing, as we
+> still have a clue for those "in the know" at the end by mentioning
+> fnmatch(3).
+>
+> The example lacks one crucial description to be useful.  The reader
+> must be told where foo/bar came from.  Was it in the .gitignore file
+> at the top-level?  A per-directory exclude file bar/.gitignore?
+> Without making that clear, none of the "In other words" example
+> makes much sense.
+>
+> Also another issue common to previous example is that you are using
+> absolute path notation "/bar/foo/", "/bar/foo/bar", etc. without
+> explaining what you want it mean.  I can guess that it does not
+> refer to the root of the filesystem but you meant to refer to the
+> top level of the working tree, but you are not writing documentation
+> to help _me_ understand Git, so we should not rely on that "I can
+> guess".  I do not think an average first-time reader can.
+
+Maybe its shorter and clearer to write it like this:
+
+         If the pattern contains an intermediate slash "`/`",
+         its equivalent to the same pattern starting with a leading slash.
+         For example the pattern `doc/read.txt` is equivalent to
+         `/doc/read.txt`.
+
+If we do this, one would need to lift the "leading slash" paragraph up
+(The one starting with "A leading slash matches the beginning of the
+pathname. For example,...").
+
+Note that since an intermediate slash is explicitly not a leading
+slash, it is not said that
+`/bar/` and `//bar/` are equivalent.
+
+
+
+>
+> > + - The character "`*`" matches anything except a non trailing slash "`/`".
+> > +   For example, "foo/*" matches "foo/test.json" and "foo/bar/"
+> > +   but not "foo/bar/test.json".
+>
+> I think your writing out the trailing slash on the filesystem-entity
+> side (i.e. things that are matched by patterns) is making the
+> resulting description more distracting than necessary.  Being able
+> to mark a pattern with a trailing slash to "match only to directory"
+> is one thing, but when the example talks about paths foo/test.json
+> (presumably a regular file and not a directory) and foo/bar
+> (presumably a directory), it shouldn't force users to mistakenly
+> think that the matching engine first appends a slash after a
+> directory we read from the filesystem before applying the pattern
+> matching logic, which has a compensating hack to ignore trailing
+> slash from the path when matching.
+>
+> Once you write consistently that a path for a directory foo/bar is
+> foo/bar, not foo/bar/, then this example would become much easier to
+> write and read, I suspect.
+>
+>         An asterisk "`*`" matches anything except a slash.  A
+>         pattern "foo/*", for example, matches "foo/test.json" (a
+>         regular file), "foo/bar" (a diretory), but it does not match
+>         "foo/bar/hello.c" (a regular file), as the asterisk in the
+>         patter does not match "bar/hello.c" which has a slash in it.
+>
+> perhaps.
+
+I agree, this is much better. Although I would leave out
+
+>  "as the asterisk in the patter does not match "bar/hello.c"
+>   which has a slash in it."
+
+>
+> > +   The character "`?`" matches any one character except "`/`".
+> > +   The character "`[]`" matches one character in a selected range. See
+>
+> Calling `[]` construct "the character" is blatantly wrong.
+
+Yes, my bad.
+
+>
+>         The range notation, e.g. `[a-zA-Z]`, can be used to match
+>         one of the characters in a range.
+>
+> perhaps.
+
+That is much better too.
+
+> It still omits negation [!0-9] but it probably is OK to
+> leave that for fnmatch(3), and you've done so by leaving these two
+> lines from the original intact, which is good.
+>
+> >     fnmatch(3) and the FNM_PATHNAME flag for a more detailed
+> >     description.
+>
+>
+> Thanks.
+
+Thank you for all your input. If you agree with my proposed changes, I would
+create a new patch merging all this together.
+
+
+Am Mo., 8. Apr. 2019 um 09:51 Uhr schrieb Junio C Hamano <gitster@pobox.com>:
+>
+> "Dr. Adam Nielsen" <admin@in-ici.net> writes:
+>
+> A few notes on the form.
+>
+> > From: Adam Nielsen <admin@in-ici.net>
+>
+> This "author" identity and the name-email on the Signed-off-by: line
+> should match, at least for this project.  I cannot tell which one is
+> your preference, and I do not have any preference over your name
+> either ;-), but please pick one and use it consistently.
+>
+> >
+> > gitignore.txt: make slash-rules more readable
+> >
+> > Remove the addition `it is removed for the purpose of the following description` and
+> > make clear in which situations a trailing slash is used or not. Increase readability
+> > and make all paragraphs valid, even if they are not read in strict order.
+> > Replace `otherwise` with the the concrete pattern that is considered in the paragraph to avoid
+> > confusion.
+> > Add simple examples to point out the significant difference between using or not using a trailing slash.
+>
+> These are overly long lines; we tend to fold long lines at around
+> 70 char or so.
+>
+> > Signed-off-by: Adam J. N. Nielsen <info@drnielsen.de>
+> >
+> > ---
+> >  Documentation/gitignore.txt | 23 +++++++++++++----------
+> >  1 file changed, 13 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> > index 1c94f08ff4..c6720b0ac4 100644
+> > --- a/Documentation/gitignore.txt
+> > +++ b/Documentation/gitignore.txt
+> > @@ -89,22 +89,25 @@ PATTERN FORMAT
+> >     Put a backslash ("`\`") in front of the first "`!`" for patterns
+> >     that begin with a literal "`!`", for example, "`\!important!.txt`".
+> >
+> > - - If the pattern ends with a slash, it is removed for the
+> > -   purpose of the following description, but it would only find
+> > + - If the pattern ends with a slash "`/`", it would only find
+> >     a match with a directory.  In other words, `foo/` will match a
+> >     directory `foo` and paths underneath it, but will not match a
+> >     regular file or a symbolic link `foo` (this is consistent
+> >     with the way how pathspec works in general in Git).
+>
+> I do like this change, even though I cannot bring myself backing it
+> 100% immediately.  The reason why I wrote it the way in the original
+> was because I did not want to repeat "... but a slash at end, if
+> exists, is exempt from this rule" over and over in the later bullet
+> points, as it would be a maintenance burden when we have more bullet
+> points and when we find a better phrasing to say "... but a slash at
+> end if exists, is exempt from this rule".
+>
+> The patch I am responding to bites the bullet and repeats the "the
+> one at the end does not count", which may be slightly harder to
+> maintain, but certainly makes it easier to read.
+>
+> > - - If the pattern does not contain a slash '/', Git treats it as
+> > -   a shell glob pattern and checks for a match against the
+> > -   pathname relative to the location of the `.gitignore` file
+> > -   (relative to the toplevel of the work tree if not from a
+> > -   `.gitignore` file).
+> > + - If the pattern contains no slash "`/`" other then a trailing slash,
+>
+> While pretending to be a fresh reader and reading only this line
+> made me wonder if the rule described in this bullet point applies
+> only to a pattern that has a single slash at the end.  I wonder if
+> it is just me, or we can improve the phrasing so that it is clear
+> that a pattern without any slash also is covered by this rule, not
+> just a pattern that has all non-slash chars followed by a single
+> slash.
+>
+> > +   then the pattern will match in all directories. In other words,
+> > +   `foo/` will match `/bar/foo/` and `foo` will match `/bar/bar/foo`.
+>
+> The half-technical "treats it as a shell glob pattern" from the
+> original is gone, which I think is a good change.  The examples may
+> need to be improved, as it may not be clear to naive readers that
+> with /bar/foo/, you meant that it is limited to a directory but not
+> a file, and with /bar/bar/foo you meant both a directory and a file
+> is fine.  Perhaps
+>
+>         For example, 'frotz/' matches 'frotz', 'a/frotz', etc. that
+>         is a directory, but does not match if these are files.
+>         A pattern 'frotz' on the other hand matches these paths
+>         whether they are files or directories.
+>
+> I also wonder if "in all directories" is clear enough that your
+> "all" is limited to below the level the ignore pattern is defined
+> for (i.e. "*.1" that appears in "Documentation/.gitignore" does not
+> ignore "foo.1" at the top-level of the tree).
+>
+> So I can tell that this patch is trying to address a problem in the
+> original that is worth fixing, but I cannot say the result is good.
+> At least not yet.
+>
+> > - - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
+> > -   anything except "`/`", "`?`" matches any one character except "`/`"
+> > -   and "`[]`" matches one character in a selected range. See
+> > + - If the pattern contains a slash "`/`" other then a trailing slash, then
+>
+> The same comment applies to this first line about the ambiguity of a
+> pattern without any slash anywhere.
+>
+> > +   the pattern is always considered from the `.gitignore` file location.
+> > +   In other words, `foo/bar` will match `/foo/bar` but not `/bar/foo/bar`.
+>
+> Again, loss of the mention of "shell glob" is a good thing, as we
+> still have a clue for those "in the know" at the end by mentioning
+> fnmatch(3).
+>
+> The example lacks one crucial description to be useful.  The reader
+> must be told where foo/bar came from.  Was it in the .gitignore file
+> at the top-level?  A per-directory exclude file bar/.gitignore?
+> Without making that clear, none of the "In other words" example
+> makes much sense.
+>
+> Also another issue common to previous example is that you are using
+> absolute path notation "/bar/foo/", "/bar/foo/bar", etc. without
+> explaining what you want it mean.  I can guess that it does not
+> refer to the root of the filesystem but you meant to refer to the
+> top level of the working tree, but you are not writing documentation
+> to help _me_ understand Git, so we should not rely on that "I can
+> guess".  I do not think an average first-time reader can.
+>
+> > + - The character "`*`" matches anything except a non trailing slash "`/`".
+> > +   For example, "foo/*" matches "foo/test.json" and "foo/bar/"
+> > +   but not "foo/bar/test.json".
+>
+> I think your writing out the trailing slash on the filesystem-entity
+> side (i.e. things that are matched by patterns) is making the
+> resulting description more distracting than necessary.  Being able
+> to mark a pattern with a trailing slash to "match only to directory"
+> is one thing, but when the example talks about paths foo/test.json
+> (presumably a regular file and not a directory) and foo/bar
+> (presumably a directory), it shouldn't force users to mistakenly
+> think that the matching engine first appends a slash after a
+> directory we read from the filesystem before applying the pattern
+> matching logic, which has a compensating hack to ignore trailing
+> slash from the path when matching.
+>
+> Once you write consistently that a path for a directory foo/bar is
+> foo/bar, not foo/bar/, then this example would become much easier to
+> write and read, I suspect.
+>
+>         An asterisk "`*`" matches anything except a slash.  A
+>         pattern "foo/*", for example, matches "foo/test.json" (a
+>         regular file), "foo/bar" (a diretory), but it does not match
+>         "foo/bar/hello.c" (a regular file), as the asterisk in the
+>         patter does not match "bar/hello.c" which has a slash in it.
+>
+> perhaps.
+>
+> > +   The character "`?`" matches any one character except "`/`".
+> > +   The character "`[]`" matches one character in a selected range. See
+>
+> Calling `[]` construct "the character" is blatantly wrong.
+>
+>         The range notation, e.g. `[a-zA-Z]`, can be used to match
+>         one of the characters in a range.
+>
+> perhaps.  It still omits negation [!0-9] but it probably is OK to
+> leave that for fnmatch(3), and you've done so by leaving these two
+> lines from the original intact, which is good.
+>
+> >     fnmatch(3) and the FNM_PATHNAME flag for a more detailed
+> >     description.
+>
+>
+> Thanks.
+
 
 
 -- 
-Duy
+
+
+Dr. Adam Nielsen
+
+
+Administrator for IN/ICI/WHO
+
+
+IN:
+
+www.nlp-institutes.net
+
+
+ICI:
+
+www.coaching-institutes.net
+
+
+WHO:
+
+www.world-hypnosis.org
