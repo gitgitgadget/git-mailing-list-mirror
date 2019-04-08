@@ -7,111 +7,208 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2EC420248
-	for <e@80x24.org>; Mon,  8 Apr 2019 14:53:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B94CA20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 15:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726717AbfDHOxo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 10:53:44 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:46260 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbfDHOxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 10:53:43 -0400
-Received: by mail-wr1-f49.google.com with SMTP id t17so16730191wrw.13
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 07:53:42 -0700 (PDT)
+        id S1726908AbfDHPrw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 11:47:52 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39067 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726573AbfDHPrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 11:47:52 -0400
+Received: by mail-wr1-f67.google.com with SMTP id j9so17020230wrn.6
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 08:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=4eiYHiHaHx3KYUEenFNwwwZ1eAH8RqjyQxt4G0w2APY=;
-        b=Mq6xZUZ0PQLXpheyVOb094jDY3M6RnY1GMRQxzLl+td1mn8eixjKDzVkOwyOr3Udo5
-         D0bOkuClPRtl677TWMehoSsJOOhOjrqhYRnOXumpBCjvyAzStKJzHMvqGZ8laDUenJEn
-         7LRQJy1Yi46xqLkoqYCDa3PSbC4uQi1c8krMlKtN6yH0+WEyGkeOgu9Z2QR1yi41wWna
-         6MNyJl6QmxBnpb9oKGwXaggQYIYOU+pWHw7Py7XdcAqAr3XiPEXq2WCvKR+OE2Ht58RP
-         wmsROnSAdbwGqXIdBV0w2W6s8nNRtnNdwZl6mpfIow9PoVdv2V0j+LIwxnz0cFIczQ80
-         Vn1w==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=w9sbCqn6HTh+hKqMPdZfHcvu+gljTQtppKJHCvtqzXQ=;
+        b=HS6Fo3NwiDvHl2/fCQxDWO5MddMh1kyVcA7k/m/x806uYnwtgG69T89PhMIC3L3nHF
+         hs+WDAG8dci4eTilCYSu8389mG7XEUjAnmEprx12KcBli5mRkEwMDhmCpJZVkxxVXF1W
+         duQfylCEOYVzBt0zYlZmu4p8qcu8wCFMWp24Tg/55ty0Hf22Uz9gKbdlynXtvsqDWE/d
+         GyMZGkxa87W2L46BAA6AZ/cG+Q5K0XFMQRlhtI2QzbE9JotC/l8QqrjPDYamIWwdsfer
+         j2iAHOczZWbsYzsCToXX52/7LhoNT+JHTJS0fvTdE4xHgNzxgkOjaVJ60ryapTehgnx3
+         SVqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=4eiYHiHaHx3KYUEenFNwwwZ1eAH8RqjyQxt4G0w2APY=;
-        b=WuGcoHiMfHW8aJeV/fC0BkzFy5CMH/y1BL2PqfLO0Rj4uWGKlBHJMGq3pT8kosIOnh
-         p8w/j1EuEH/inIyfvfALiAEs2UfnsFGAh9Kb3bjILCZnQ44Nv+hhPkk6zAjGNCWziQ/j
-         8hBU1Xrqfa4n+b5e7jCRz17jT9iDk1ORObcXPb4U+MTsmu+96oe7jYCkDB93YoMucEa0
-         s24AiTYDpjAxLtS3XzS+UEV2EmK4lZfQ08ITulKs/dWYqdtzX/D20Df1qmaPXCTNBcAQ
-         RrA2US3v2SFwee8hdVZRqKN0mFX1zgacE3S3KAfBNlMIL7G6vov5EOlH9WxSkDhWlFek
-         U1xg==
-X-Gm-Message-State: APjAAAWMLHpGCBxCxuWUl/LJKxwUMKX3gf51CDhJgP/QzDMPWH9xuM7X
-        zsFMyD5u7rjRe3NooTNODpKugcqs
-X-Google-Smtp-Source: APXvYqzZiSdRyhoa8Y0cJ2ZxkU9kZ+k+VslUzsC1X02UYO6DDk/cK9ZXSDyAkHDXddG6r4FiAMzzuw==
-X-Received: by 2002:a5d:6406:: with SMTP id z6mr20200597wru.266.1554735221906;
-        Mon, 08 Apr 2019 07:53:41 -0700 (PDT)
-Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id i17sm26512098wrs.44.2019.04.08.07.53.40
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Apr 2019 07:53:41 -0700 (PDT)
-Date:   Mon, 8 Apr 2019 16:53:40 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Pull without fetch
-Message-ID: <20190408145340.3rdprg3yu5shpelu@feanor>
-References: <20190406131200.xcd7gtf7dlc567uh@doriath>
- <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=w9sbCqn6HTh+hKqMPdZfHcvu+gljTQtppKJHCvtqzXQ=;
+        b=JkzDoECzj/G2DSqKqn41JHMbAkHMzucIBvDa9J6Xi3MJ7/+dwB5J9NW/nvD301JbLB
+         WjeZgu4wjm0XWjX8eAewOzYRNXvK84jXBP10dGZOkvb4FLZ6Pnjk0eCAlEoh6Q/kvSWU
+         tvKDEs6j50FIZZhhfNrvDnICkPvuGS88rHiOQs4JLb6BES7lh8FubEvKXJuJwShDZa+X
+         XgqOvh6r9T6bGyc1FaFHX5HmQJZ2U39arxexfe0SPBcNghRaVzLyZc2b2Fnl/G7f7XvY
+         c4nHJwree4kOKlGHR/gUSt3Lmk8UxuWTIqUfzr7D9Zk6B8NHGE/khSkOabJ26BmOkand
+         pV+A==
+X-Gm-Message-State: APjAAAUznNYXygIzKYA0tCa+zK4mnGFHI8msQSX0ArHcd1CD3ENtCmu4
+        3/YAGQJ+/HLvWNMd0xD6rZK7W6Sjll4=
+X-Google-Smtp-Source: APXvYqws2IcHIihNoE//C37s9DGm9uskj5S/ANTeurBeMd1EKR4a7HEqxH3DWtqHtWCg227gScOhcQ==
+X-Received: by 2002:a5d:63c5:: with SMTP id c5mr20221407wrw.82.1554738470541;
+        Mon, 08 Apr 2019 08:47:50 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-29-11.as13285.net. [92.22.29.11])
+        by smtp.gmail.com with ESMTPSA id v1sm43037169wrd.47.2019.04.08.08.47.49
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Apr 2019 08:47:49 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] commit/reset: try to clean up sequencer state
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+References: <20190329163009.493-1-phillip.wood123@gmail.com>
+ <20190329163009.493-2-phillip.wood123@gmail.com>
+ <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <9f3ec8b3-f2c4-63b8-3350-a37d42bebd47@gmail.com>
+Date:   Mon, 8 Apr 2019 16:47:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Mon, 08 Apr 2019 16:43:13 +0200
-User-Agent: NeoMutt/20180716
+In-Reply-To: <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Junio C Hamano, Mon 08 Apr 2019 at 10:34:07 (+0900) :
-> In that simpler world, what you are trying to do would have been:
+On 01/04/2019 11:09, Duy Nguyen wrote:
+> On Fri, Mar 29, 2019 at 11:32 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> When cherry-picking or reverting a sequence of commits and if the final
+>> pick/revert has conflicts and the user uses `git commit` to commit the
+>> conflict resolution and does not run `git cherry-pick --continue` then
+>> the sequencer state is left behind. This can cause problems later. In my
+>> case I cherry-picked a sequence of commits the last one of which I
+>> committed with `git commit` after resolving some conflicts, then a while
+>> later, on a different branch I aborted a revert which rewound my HEAD to
+>> the end of the cherry-pick sequence on the previous branch. Avoid this
+>> potential problem by removing the sequencer state if we're committing or
+>> resetting the final pick in a sequence.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>   branch.c                        |  7 +++++--
+>>   builtin/commit.c                |  7 +++++--
+>>   sequencer.c                     | 23 +++++++++++++++++++++++
+>>   sequencer.h                     |  1 +
+>>   t/t3507-cherry-pick-conflict.sh | 19 +++++++++++++++++++
+>>   5 files changed, 53 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/branch.c b/branch.c
+>> index 28b81a7e02..9ed60081c1 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -5,6 +5,7 @@
+>>   #include "refs.h"
+>>   #include "refspec.h"
+>>   #include "remote.h"
+>> +#include "sequencer.h"
+>>   #include "commit.h"
+>>   #include "worktree.h"
+>>
+>> @@ -339,8 +340,10 @@ void create_branch(struct repository *r,
+>>
+>>   void remove_branch_state(struct repository *r)
+> 
+> This function is also called in git-am, git-rebase and git-checkout.
+> While the first two should not be affected, git-checkout can be
+> executed while we're in the middle of a cherry-pick or revert. I guess
+> that's ok because git-checkout is basically the same as git-reset in
+> this case?
 
-> 	git fetch
-> 	# did I get anything worth integrating?
-> 	git merge FETCH_HEAD
+Yes that's right
 
-Indeed.
+>>   {
+>> -       unlink(git_path_cherry_pick_head(r));
+>> -       unlink(git_path_revert_head(r));
+>> +       if (!unlink(git_path_cherry_pick_head(r)))
+>> +               sequencer_post_commit_cleanup();
+>> +       if (!unlink(git_path_revert_head(r)))
+>> +               sequencer_post_commit_cleanup();
+>>          unlink(git_path_merge_head(r));
+>>          unlink(git_path_merge_rr(r));
+>>          unlink(git_path_merge_msg(r));
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 2986553d5f..422b7d62a5 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -1657,8 +1657,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>                  die("%s", err.buf);
+>>          }
+>>
+>> -       unlink(git_path_cherry_pick_head(the_repository));
+>> -       unlink(git_path_revert_head(the_repository));
+>> +       if (!unlink(git_path_cherry_pick_head(the_repository)))
+>> +               sequencer_post_commit_cleanup();
+>> +       if (!unlink(git_path_revert_head(the_repository)))
+>> +               sequencer_post_commit_cleanup();
+>>          unlink(git_path_merge_head(the_repository));
+>>          unlink(git_path_merge_msg(the_repository));
+>>          unlink(git_path_merge_mode(the_repository));
+>> @@ -1678,6 +1680,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>          if (amend && !no_post_rewrite) {
+>>                  commit_post_rewrite(the_repository, current_head, &oid);
+>>          }
+>> +
+>>          if (!quiet) {
+>>                  unsigned int flags = 0;
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 0db410d590..028699209f 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2220,6 +2220,29 @@ static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
+>>          return len;
+>>   }
+>>
+>> +void sequencer_post_commit_cleanup(void)
+>> +{
+>> +       struct replay_opts opts = REPLAY_OPTS_INIT;
+>> +       struct strbuf buf = STRBUF_INIT;
+>> +       const char *eol;
+>> +       const char *todo_path = git_path_todo_file();
+>> +
+>> +       if (strbuf_read_file(&buf, todo_path, 0) < 0) {
+>> +               if (errno == ENOENT) {
+>> +                       return;
+>> +               } else {
+>> +                       error_errno("unable to open '%s'", todo_path);
+> 
+> _() the string to make it translatable.
 
-> That obviously would not work for those with "pull.rebase", and I do
-> not think it makes much sense to teach "git rebase" the same trick
-> to read FETCH_HEAD as "git merge" does in the above sequence.
+Well spotted, thanks
 
-Yes, it could learn to read the first branch not marked as not-for-merge,
-but I agree this would be more confusing since it would introduce another
-special handling of FETCH_HEAD, different from `merge` (which handle *all*
-branches not marked as not-for-merge) and the other reference parsing
-mechanisms (which simply look at the first branch in FETCh_HEAD).
+>> +                       return;
+>> +               }
+>> +       }
+>> +       /* If there is only one line then we are done */
+>> +       eol = strchr(buf.buf, '\n');
+>> +       if (!eol || !eol[1])
+>> +               sequencer_remove_state(&opts);
+> 
+> Should we say something to let the user know cherry-pick/revert is
+> finished? (unless --quiet is specified)
 
-> Others may have a better idea, but I do not immediately see any
-> solution better than inventing a new option to "git pull".
+I'd not thought of that, at the moment we don't say anything about 
+removing CHERRY_PICK_HEAD etc when they are removed by reset or 
+checkout, I'm not sure this is much different to those cases - but maybe 
+they should be printing some feedback as well.
 
-Indeed, I was wondering if I was missing something since this is something
-I do often (granted in practice it's not too hard to type `git merge` or
-`git rebase` after the fetch for a branch; but when handling a lot of
-branches at once I prefer to automatize this somewhat, and when I find
-myself writing a script that needs to read branch.<name>.rebase values I am
-left wondering if this would not be better to be directly supported in `git
-pull` directly).
+Best Wishes
 
+Phillip
 
-> Another and better option that may be harder to arrange is to make
-> sure that a no-op "git fetch" incurs very low cost.  If you did so,
-> "git fetch && git pull" would perform just like your "git fetch &&
-> git pull --no-fetch", and we won't need a new option at all.
-
-I am not sure I understand what a no-op `git fetch` means exactly.
-In the "git fetch; <review changes>; git pull" scenario,
-after I do the real `git fetch` and want to merge/rebase the changes, how
-would I prevent `git pull` to pull new commits that were pushed in between?
-
--- 
-Damien Robert
+>> +
+>> +       strbuf_release(&buf);
+>> +}
+>> +
+>>   static int read_populate_todo(struct repository *r,
+>>                                struct todo_list *todo_list,
+>>                                struct replay_opts *opts)
