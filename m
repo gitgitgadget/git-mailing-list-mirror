@@ -2,112 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6D120248
-	for <e@80x24.org>; Mon,  8 Apr 2019 21:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3344C20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 21:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726898AbfDHVS7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 17:18:59 -0400
-Received: from mail-pf1-f173.google.com ([209.85.210.173]:36985 "EHLO
-        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726372AbfDHVS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 17:18:59 -0400
-Received: by mail-pf1-f173.google.com with SMTP id 8so8353774pfr.4
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 14:18:59 -0700 (PDT)
+        id S1726730AbfDHVzk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 17:55:40 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35113 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbfDHVzj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 17:55:39 -0400
+Received: by mail-wm1-f68.google.com with SMTP id y197so945456wmd.0
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 14:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Q6HGcF1Ok43dKm9hY/nIS2AF+6GGQI5y/1ymZItEMQo=;
-        b=YuQEmb+R639oHEdj8GFFc62xbi1v9et+oFOHCpQ0s+sxkoM7+U+K2z3UZHHl+H67bZ
-         pf4oLXK7BjfWFRGgv6qZOSjj8icMfXE1BHLTEgqMOpE+V0cYqfveTzNwPSdyQelruvGJ
-         PcqNF+nA0bfLFGsGUwvUiF8iq6quppWbxwXQ1BSqZhFMjqnYcYPJR6UNnQoIY6D/JccC
-         t9cJYkHqoMC2URXqAi1w/V12RSrxIUaSljaZl9eqUhTjgtD412ZBVLowB2BZ7YVNHyhZ
-         d30mPGJtKz2Mr0YJjedpnHdmGqM8A8BFgtIK68OWFsff/oDTxaxoxen8W0GWOd5TjYDk
-         MNdA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UgiHJ2r86Bke4G4RfDNN2y42tuUVqCFLeR6Q8Yl0ubI=;
+        b=Pvan3WDGJ7wD47KkPGpzx1e36f2aVW/tAViQ1BCEi1oX/syhDTRuY8uRUszU4JazRW
+         yptSmtMl0q77C5m47j2vlcl8NQDGlqNR/RXSSGl7EiK6MhcVVKqSIx8wDe2elOjbGnZF
+         orwArbvbgzSp+h5XPEZt3/nhxRv7cUZ4FLILsdkADufrBqw1FcZae8gsYomCuDiNxlBD
+         ZH/XQQgFTazWoRMqUeDUxcRySx3yynzVtA8HRua6OUj7aprnCFTKaWtmusTbFxkzo2Q5
+         /h6gpquX7yN+nqorcoDEePujxaL1VJl8gwD9ZU43UDGZAV3jEmbNhRYibQdpHF3emW1+
+         gfsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Q6HGcF1Ok43dKm9hY/nIS2AF+6GGQI5y/1ymZItEMQo=;
-        b=dyfq+ILhOE8FmYNw4iZR1ugtm9P2n6bS0StUIVE2fVI8wGyrOaQxNTZYlWEKaTmfW2
-         khlel8Dk0nCYlbE9YyZoPJ/7fIK2Hzb4SKCXu2ikoALOle91rv9na2sHXAqcLMS6cSrc
-         NCRa3dIorruKxMIdwIx/KfuApU5cehFhwlEaRWq6OfZpQas48sBSxMMEycXShz69TXDs
-         VxIWsnqoj+8XWmfgdPpE9nOtfcpd8WOwEY49j+S8D/iGX3erg82hJMOs7kaCX2/Y8cLi
-         bIyI5JvsL2es40WecABv+IYNfnZikm0xXPsu+7+wwX4djbUqdEcXdrUH4bvIi5eiCz0t
-         rHRQ==
-X-Gm-Message-State: APjAAAV9tD2oNzdaT8EG6SLfjJQeSLi4uXj6bqnrnG2yTHNhTJDgNJMx
-        JJDfe07pHfL//mpSfuv3/9VY5w==
-X-Google-Smtp-Source: APXvYqz2GvTgonmW3z2e94EdgXc2jv59NjCMKsU73Zu5fEW6nzXc6E91oTPElJGy2jKnSRih8Co2xA==
-X-Received: by 2002:a62:ed10:: with SMTP id u16mr32686498pfh.187.1554758338116;
-        Mon, 08 Apr 2019 14:18:58 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id 10sm18686712pft.100.2019.04.08.14.18.56
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UgiHJ2r86Bke4G4RfDNN2y42tuUVqCFLeR6Q8Yl0ubI=;
+        b=Q+rEPRIQMm5mN8xbaXpt5pyDPIXHLaBgMfhpy+i9zk6Ogw/zrDDPGMhs33fwzexyV3
+         xJSRtYc6CggoQ7KGYoy7ozXOBH2RZroQLGRIs5ED8xmEuzLd7ahZA7xQs0SRY25Lln2C
+         zioNw1GvTrR7iHz1rypgdAVoGvRczrxPgvrEA8DBEkSCZXAZkHgcHOWEElhllOWY3e6W
+         7xEsxBJzOxcZ5PN9tZT2nI7f16F0rivbEv7X4fA9mBIeT8AcXEu4shhhapbbFBG6yNzU
+         U7zpWLjDpq8oheASV/XRixZw2slWRGswSROlNxaOTS4USmpiJRh7M12SeLM+LUhL3ke9
+         PKdg==
+X-Gm-Message-State: APjAAAU5fSeAsXE9uVMHRqh4b7mQHDlgJeci/D+cgOF6Xj+VC5auQ6oM
+        RZjTsJ+2JokDPVM+Xd0KhqE=
+X-Google-Smtp-Source: APXvYqyDd0gfDZrIhrWecbb94Q0bnE1ORgcMMmWTbBayCK91dED7gOA47yWyzN64obDc0N1GsYQqew==
+X-Received: by 2002:a1c:cf46:: with SMTP id f67mr18646889wmg.98.1554760537569;
+        Mon, 08 Apr 2019 14:55:37 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id y125sm23114747wmc.39.2019.04.08.14.55.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Apr 2019 14:18:57 -0700 (PDT)
-Date:   Mon, 8 Apr 2019 14:18:50 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: What's cooking in git.git (Apr 2019, #01; Thu, 4)
-Message-ID: <20190408211850.GJ60888@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-References: <xmqqr2aidpxw.fsf@gitster-ct.c.googlers.com>
- <87ef6eaoub.fsf@evledraar.gmail.com>
- <xmqqa7h1aznl.fsf@gitster-ct.c.googlers.com>
+        Mon, 08 Apr 2019 14:55:36 -0700 (PDT)
+Date:   Mon, 8 Apr 2019 22:55:35 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Kapil Jain <jkapil.cs@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [GSoC][RFC] discussion about stashing with conflicts
+Message-ID: <20190408215535.GB32487@hank.intra.tgummerer.com>
+References: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
+ <20190407183857.GA32487@hank.intra.tgummerer.com>
+ <CAMknYEOAg1S8cNYdLPgJemxgikisNpmeuw74T0w+7PUo93stVg@mail.gmail.com>
+ <CACsJy8Dc3fuXWOOO-hNJqGNomufP7bffoHVf5hHLTubHQvq9vA@mail.gmail.com>
+ <CAMknYENqH==YcAfU-B16Jytc4Pts4viNQn9deTFag++zZVb1+Q@mail.gmail.com>
+ <CACsJy8D7mQZgJhZ4H8Z929EnjYe1Wp7idrbXqkUsmL1Ypn83dg@mail.gmail.com>
+ <CAMknYENGZBQ6-8sJ5UrKS_ZLLoz79K8FYUHFQqSpV2JrkSuf6w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa7h1aznl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAMknYENGZBQ6-8sJ5UrKS_ZLLoz79K8FYUHFQqSpV2JrkSuf6w@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019.04.08 13:28, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On 04/08, Kapil Jain wrote:
+> while understanding add_index_entry_with_check()
+> i got to do_invalidate_path().
 > 
-> > unique (AFAICT "actually unique" in practice) in the parallel in-flight
-> > jh/trace2-sid-fix
-> > (https://public-inbox.org/git/4352952677a11776a18ec9b6862cf358307cfafd.1553879063.git.gitgitgadget@gmail.com/)
-> >
-> > I think it's fine to merge js/trace2-to-directory down as it is, but do
-> > you/Josh think that retry logic needs to stay with that sort of SID?
+> the commit hash for do_invalidate_path() function is
+> `749864627c2d3c33bbc56d7ba0b5542af698cc40`
 > 
-> I do not speak for Josh, but I think the only two logical choices
-> are to open with (O_CREAT|O_EXCL) and
+> in the commit message it is explained that, cache-tree is used to
+> store object names of index file objects and it is kept separate from
+> index file because adding it would change index file format.
 > 
->  (1) fallback with .%d suffix, making it clear that we are not
->      willing to lose log files even when SID generation is botched; or
+> the part i couldn't understand is:
+> "During various index manupulations, we selectively invalidate
+> the parts so that the next write-tree can bypass regenerating
+> tree objects for unchanged parts of the directory hierarchy."
 > 
->  (2) die/BUG when it fails, making it clear that we do rely on the
->      guanateed uniqueness of SID.
-> 
-> A distant third may be to warn when open with O_CREAT|O_EXCL fails,
-> but I am not sure what its value would be to do so---especially if
-> we trust in the "actually unique in practice".  Between (1) and (2),
-> I have a slight preference to (1) over (2), as that is much easier
-> to explain.
-> 
-> Those who want to have a "fixed width" thing could just ignore the
-> ones with suffix---as long as the "actually unique in practice"
-> claim holds, doing so will not lose any non-negligible amount of
-> information anyway.
+> what exactly does invalidating means here ?
 
-I prefer (1) as well, although I would be happy to re-write this if the
-list consensus goes the other way.
+FWIW, I don't think you need to understand cache-tree for the stash
+GSoC project.  Your time is probably better spent taking what you
+learned, and trying to make that into a proposal, as the application
+period is coming to an end.
+
+That said, since we are talking about a cache here, invalidating means
+simply making part of the cache invalid, which means the caches
+contents need to be re-calculated next time they are needed.
+
+For the cache-tree in particular that means that we need to
+re-calculate tree objects that have been invalidated, while we can
+just re-use the ones that have not.
+
+If you want to have a look at the cache-tree, you can use
+'t/helper/test-tool dump-cache-tree .git/index' from your locally
+built git, which will dump the cache-tree that can be found
+'.git/index'.  Compare the output of that command just after you did
+'git reset --hard' on your repository (of course it needs some
+contents), and after you modified some file, and added it to the index
+using 'git add'.  In the latter case you will notice some directories
+that are marked as 'invalid'.
