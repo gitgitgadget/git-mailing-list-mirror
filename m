@@ -2,131 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB3F020248
-	for <e@80x24.org>; Mon,  8 Apr 2019 06:03:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D0C720248
+	for <e@80x24.org>; Mon,  8 Apr 2019 06:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726517AbfDHGDH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 02:03:07 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53387 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726369AbfDHGDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 02:03:07 -0400
-Received: by mail-wm1-f66.google.com with SMTP id q16so12797356wmj.3
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 23:03:06 -0700 (PDT)
+        id S1726201AbfDHGki (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 02:40:38 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35002 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725983AbfDHGki (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 02:40:38 -0400
+Received: by mail-ed1-f65.google.com with SMTP id s39so10601138edb.2
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 23:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=srnffmyiFaDxGTnyQtiPFWDlOh5rF8f0eWb7Rrpjw6g=;
-        b=IjbANN/r/6+CfOxrZVA3UPBQBpkdFbeQb6NLpTjGBf7NnrbPzfPxoqFPr134D1GIKP
-         V9oYEBXxLf4v/YMNTgmpXt2agTnH9tDdoBDJ+aPGAyrzgSnGCZstZirHPLWFLKZabNEX
-         MtlzpHSCFi52DpbGyiN980Avdi67ZCo5FUwPH623t2qm+AXX9PENgRDaL5pvCseEv/aD
-         KcJm+jMos6aYIu12Ww3klAGk3NOcKCS0mzQXFztuPtSvdx8kCS5vDYe0oOHiixj9xIpn
-         nnlZKrG39bWhXVUwrelXsEgKHZKu7gJBEIQfr12Qe/c8JUMITG3H/E4L/s9pXThoBmp4
-         GSrA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dSxq3p7URqD48kGOTMxpzjWi92cf4ANV4G1UY1JwOI0=;
+        b=Pm0B9O66vSPhcTWDb3Dys6QGQGC9kK+elUNWCgJ8kghmWc+g1fDfX6dx5pQS3VrMUd
+         Y2PusvvN+Ly/Vn6SFMBFhE86vD4vsD/IScXSJzESx7OFBmyUY9e6CpficfzhbaDP218f
+         bs5OGTWjCYCQhPGbxAuvPDHcMqwm13Egc/o1Kfgr0nNs1BuYd9otVqkkuJFIc5jMrqAO
+         9EgBsdWO13KJEDRXtZEsxiAzB5KwTQbpk9igsbROGHrdF4Xfsc56saJrloPIrV7SRpP9
+         pjIZmcqLPLlxd9rwdrid5Ry4KVPd1Z2DJszvdG3o9UgjBqty1YweShk0Sy7uLjSiub08
+         jV3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=srnffmyiFaDxGTnyQtiPFWDlOh5rF8f0eWb7Rrpjw6g=;
-        b=KCmDa7Bm9M+mH7Oa9bE2ugA5O4hpNp/VOGTJ5pRui3fbI36KmR3Rx9v5BhX/ZlBE6T
-         VaikwBKcGbzo+GYtYzx7kRg22swI+X6cCzoNKEz4dwvzRZL0mRfzLPr6dWGjsdDn8gdj
-         mWatqH7iy1+86YfOTd0SGaCSoqXjU9MXJyWjHMIu5nVKQR6VqnLKgJ6wsflQAJW7OHBA
-         RrY9jd6ABovCfuLo2aempi52vkeUrrRzGPtDFUruTnGPH5SeZylMBo3FAj0lIxa1gDpi
-         uWmlp39ASh6fgyjP+T3e2Pxh5NRNpCako18Ayx5ewWWinWCfChxJxCeFuausBr5xy6/Y
-         xBrQ==
-X-Gm-Message-State: APjAAAUziEwYa8m9Uw25/pRJ0I5K5Hx22UXADQeOKeJtjdvi4gI1xUGa
-        QFdr+nsjhEwsDgq1g+QBcIQ=
-X-Google-Smtp-Source: APXvYqwd0RYBp/dyk/7qBux7tDCaYl5KeClB+LJywZSyy1pJqP2if5PLC+7qKdyQuH+QXeiRLPCD5g==
-X-Received: by 2002:a1c:9991:: with SMTP id b139mr15342278wme.53.1554703385150;
-        Sun, 07 Apr 2019 23:03:05 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id v16sm53190261wro.48.2019.04.07.23.03.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 07 Apr 2019 23:03:04 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
-References: <20190326220906.111879-1-jonathantanmy@google.com>
-        <cover.1553895166.git.jonathantanmy@google.com>
-        <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
-        <20190404024710.GO32732@szeder.dev>
-        <nycvar.QRO.7.76.6.1904051528130.41@tvgsbejvaqbjf.bet>
-        <CAP8UFD1qK61MtJ-XeMuwY4W2V0CdHeZQC9rQap1M+nEeaLmBJQ@mail.gmail.com>
-        <xmqqy34lb4vb.fsf@gitster-ct.c.googlers.com>
-        <xmqqmul19h9j.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 08 Apr 2019 15:03:04 +0900
-In-Reply-To: <xmqqmul19h9j.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 08 Apr 2019 14:51:20 +0900")
-Message-ID: <xmqqftqt9gpz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dSxq3p7URqD48kGOTMxpzjWi92cf4ANV4G1UY1JwOI0=;
+        b=VxrNz3G99QdiUVDgcAUN9udyUJi7fs3pGxB3jTREpKYrxhz8A/lE1hUTmTg3aG+xSO
+         DUzlrI3x7GBJhKv0WQYoG+dk6ktnXw9diy32t/LZs15S81preaSY9nza9Z3YmlGcegwX
+         BbUlG8bRIY5bl18tMkpkcFJ+pWhnePW+R75fQlz5ojr5R3cawYmV2jHRWYxlJuGmRr+I
+         JLzal/difuhynE/bQcGQzuke5hfk4XaaoLAfNfbhUSXxMNh522KEOIRzSFOzz1uHZwRw
+         OSq1mJN9b9fYbHZhQQykxNjb5wPkXbLr8OFkOWPeEfJWY/fYx95u6nelMLyZRWGrh2RA
+         VCjA==
+X-Gm-Message-State: APjAAAUsya7tUTB44HG2Jige2McPLM88ZNaJ4syNsvU04VlCNTip+6/P
+        xnnIHvQqe0MSzBe76ZVoldiIkVebuFgbojwdgLU=
+X-Google-Smtp-Source: APXvYqwlcPLZvpT7b8SNTPLhqoI1sVc3ibdNG0KpL/72jBWOT+GRXFBtQAMS/4RL/FkUi6+JaFeHnxlprIdJiSOrydo=
+X-Received: by 2002:a17:906:d503:: with SMTP id ge3mr15552044ejb.2.1554705636825;
+ Sun, 07 Apr 2019 23:40:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190326220906.111879-1-jonathantanmy@google.com>
+ <cover.1553895166.git.jonathantanmy@google.com> <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
+ <20190404024710.GO32732@szeder.dev> <nycvar.QRO.7.76.6.1904051528130.41@tvgsbejvaqbjf.bet>
+ <CAP8UFD1qK61MtJ-XeMuwY4W2V0CdHeZQC9rQap1M+nEeaLmBJQ@mail.gmail.com> <xmqqy34lb4vb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy34lb4vb.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 8 Apr 2019 08:40:23 +0200
+Message-ID: <CAP8UFD0gmaZzfK7taS=1hj=sCEpLFt_Az60TxYeUqp2A7r25JQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->>>  #include "fetch-object.h"
->>> +#include "promisor-remote.h"
->>
->> Thanks.
+On Mon, Apr 8, 2019 at 4:36 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Together with "if we are forbidding the direct access to the
-> repository_format_partial_clone variable and the fetch_objects()
-> funciton, make it clear that is what is being done in the
-> multi-promisor topic", I think a patch that adds this header should
-> also remove inclusion of "fetch-object.h".
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> >  #ifdef NO_FAST_WORKING_DIRECTORY
+> >  #define FAST_WORKING_DIRECTORY 0
+> > @@ -6489,7 +6490,7 @@ static void add_if_missing(struct oid_array *to_fetch,
+> >
+> >  void diffcore_std(struct diff_options *options)
+> >  {
+> > -    if (repository_format_partial_clone) {
+> > +    if (has_promisor_remote()) {
+>
+> Hmph, I see quite a few references to the variable disappears
+> between next and pu.  Is it that in the new world order, nobody
+> outside the low-level object-access layer should look at the
+> variable directly, but instead ask the has_promisor_remote()
+> function?
 
-In fact, your topic itself has the same issue.  I'll queue the
-following at the tip of the topic tentatively before merging it to
-'pu' with the fix we have been discussing around this thread.
+Yeah, repository_format_partial_clone contains the remote configured
+in extensions.partialclone, while in the new world order there can be
+other promisor remotes than this one, and most of the code is only
+interested in asking if we use any promisor remote.
 
-Thanks.
+> If so, can we at least document that?  Making it static
+> (or at least renaming it) would have helped the compiler to notice
+> this semantic merge conflict better.
 
--- >8 --
-In multi-promisor world, fetch_objects() should not be used
-directly; promisor_remote_get_direct() call replaces the helper.
+Ok, I will see if I can make it static (or maybe rename it).
 
- sha1-file.c    | 1 -
- unpack-trees.c | 1 -
- 2 files changed, 2 deletions(-)
+Patch 3f82acbca2 (Use promisor_remote_get_direct() and
+has_promisor_remote(), 2019-04-01) in cc/multi-promisor starts with:
 
-diff --git a/sha1-file.c b/sha1-file.c
-index 715a2b882a..87ea8606f4 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -30,7 +30,6 @@
- #include "mergesort.h"
- #include "quote.h"
- #include "packfile.h"
--#include "fetch-object.h"
- #include "object-store.h"
- #include "promisor-remote.h"
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 47353d85c3..ca0ab68c32 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -16,7 +16,6 @@
- #include "submodule-config.h"
- #include "fsmonitor.h"
- #include "object-store.h"
--#include "fetch-object.h"
- #include "promisor-remote.h"
- 
- /*
--- 
-2.21.0-196-g041f5ea1cf
+    Use promisor_remote_get_direct() and has_promisor_remote()
 
+    Instead of using the repository_format_partial_clone global
+    and fetch_objects() directly, let's use has_promisor_remote()
+    and promisor_remote_get_direct().
+
+    This way all the configured promisor remotes will be taken
+    into account, not only the one specified by
+    extensions.partialClone.
+
+I will at least add something telling that in most cases
+"repository_format_partial_clone" and fetch_objects() shouldn't be
+used directly anymore.
+
+> > @@ -6506,8 +6507,7 @@ void diffcore_std(struct diff_options *options)
+> >              /*
+> >               * NEEDSWORK: Consider deduplicating the OIDs sent.
+> >               */
+> > -            fetch_objects(repository_format_partial_clone,
+> > -                      to_fetch.oid, to_fetch.nr);
+> > +            promisor_remote_get_direct(to_fetch.oid, to_fetch.nr);
+>
+> Likewise between fetch_objects() and promisor_remote_get_direct().
+> Shouldn't the underlying fetch_objects be hidden from general
+> callers?
+
+I will see if I can do that, though it has to be used in promisor-remote.c.
