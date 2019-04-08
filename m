@@ -7,121 +7,92 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB2E20248
-	for <e@80x24.org>; Mon,  8 Apr 2019 04:38:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BFEB20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 05:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726012AbfDHEi2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 00:38:28 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34707 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725923AbfDHEi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 00:38:28 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p10so14635903wrq.1
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 21:38:26 -0700 (PDT)
+        id S1726383AbfDHFNV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 01:13:21 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43973 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726012AbfDHFNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 01:13:20 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k17so14618927wrx.10
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 22:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=FHr/a/PaedIhBK+6llTfeWcxq3UYZPnMFn/YfKtxHA0=;
-        b=DDK2/q25+X0trVLsYbL7A1c6tWNvIR7LqVb3BVelu9gVRjjAvnhQab5tOakSIfPO4l
-         HEEwny1nlq901yIq/qK6nOFjD7Qi2h7ShpDVIbAZUiYPp1PpRbVnpCVPRMaYBJMc2X9G
-         w9Ynyu0XeEcnxEiTEHEvhk/jP2NyeP2ZNbJfDLIK5hh8FsG1Flq7TxjtHfoPK2zh3B5w
-         6vqm5e5kRMpGl7AmTy2Gs1R+nbrTRzgTVfjHDIyvWp4r88m+DCkhbh3g6MlVtL3U3qIJ
-         eOA/QTfUmUvoGcEfYZC0CkuXs7g0qWn7Slt2Yl9wckda3rCOl3TEmW19OCYdLjVuh9L1
-         EKgg==
+         :user-agent:mime-version;
+        bh=uw5DdwGxw3jbJG0KlQAeWM6Sxpm0MGr8FFQ7UEfoiWM=;
+        b=WWjFzIjBj8cSdIOS20xZwdoZ7R/nzr1kSQZ9BybJRGizukO8xOkYrlqA0FYQDTs8wN
+         B0tqdTou51flhZYh2fTcf3btbSb4/Z3seHFZFPS05221pp1/PTbphRUgpWLghvNWA9iX
+         3LYfLOaRih1dy6aqQS/K3jxeSe6opQyYtihCXwbwZo9Wc3u+2liQ5roeVbCTSvjXptxi
+         ZUnyhHBvKiW8pYrzU4F2HGX0lA8mK3mwdN6DplWyOior/EdxCDPDSy44DikAb9TYhOPs
+         V0H8LyPHyEhug0YdZhEPtG3tzaCSLD9L/C/xeAqSKBE3e61xj8PkJk6nsoqQL4eEKecK
+         n3zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=FHr/a/PaedIhBK+6llTfeWcxq3UYZPnMFn/YfKtxHA0=;
-        b=b+jz55yM02JKNInfIyFG6LgGhvh2VgeRkprbZJWaCKGdWF5yreaNIRnmcQawEtf+Fm
-         GpEDicsMAxGTB9u4lQAKgFz5v68uxNid1+p867tnrdCXp8tf/WhbUH0lBtV3xZKaAaex
-         xohg5Y0UIsYVtRFxUUsXyDAhg4brdm6O72Po7q5cpbrMxQu7ArkF4Q9UsH6JT+zre3u0
-         2ObhZEsKb+UbFow4ZzZ+od/jUfznIc9txqcAjgsWT0JLNmw4w+XjjOsgU7+NJIRC8jYT
-         9ovsHnH6m8233C1VwmIfTN+XExpXVnm9B4a/3q/gDxBt5WaackGT4BzMojA3xz/uk48+
-         0csw==
-X-Gm-Message-State: APjAAAWVpugqaMbsOeVHExINdEagRHl2q51l5+fjTswQyyktf6Q0+QN1
-        lwPbMoI78i06jNv0mdZnisQ=
-X-Google-Smtp-Source: APXvYqyPu/3+HWQCghBl0xMQ9Kg14kPh+23yV1a+/LhZMZmxbIiGG37RF7yy+ryjcjmXjHd68HK9iQ==
-X-Received: by 2002:a5d:4a8d:: with SMTP id o13mr5442553wrq.209.1554698306067;
-        Sun, 07 Apr 2019 21:38:26 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uw5DdwGxw3jbJG0KlQAeWM6Sxpm0MGr8FFQ7UEfoiWM=;
+        b=t+TQMfmTdIhOEL3q2QW4nAjYur6LTY57a1JSvzA+IOHAaiZe/Lg332Y0q+36taqUv4
+         bPrUzg5FyOlS3zLRekYHPXDpwQTBJcdp6vEHZTeKSVM/ejghf1FcTRFLK/afjB+Xjt8F
+         sczYWHyTT67xDLwrMes/xtiDGThSW1aOobIKbJNWiemTmRwfgjXMHrZ+Jtvasc1SFw9v
+         8OSlZyEFf/tDWZd/Zv6WpxtK5WJ7m4JsYv91QyaiBtHvzz0Fg15IOMYT6DmFzILe9E6z
+         y9voHyDww7YHhUx4Km25TzDZ8UT6CL8luEg+lQ8wuuWvm2DA/8DZXfOMxGwssBpaD4pi
+         S8ag==
+X-Gm-Message-State: APjAAAWKZavNciHkg+BxRetrg+L43K5fjgH245YeVmMQm5JnK0XNtJti
+        LgOidJwhtLmqvj1g25TXcv8=
+X-Google-Smtp-Source: APXvYqzwuWI1+yE01UrdNSZiKH7M6bDwkSJZLr2V9bk++rV9CRrZKLvt35VfWz4aUn8WKVgwmwZUUg==
+X-Received: by 2002:a5d:6349:: with SMTP id b9mr13744934wrw.62.1554700398964;
+        Sun, 07 Apr 2019 22:13:18 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id v184sm20750201wma.6.2019.04.07.21.38.25
+        by smtp.gmail.com with ESMTPSA id j3sm68969479wre.51.2019.04.07.22.13.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 07 Apr 2019 21:38:25 -0700 (PDT)
+        Sun, 07 Apr 2019 22:13:17 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/4] t3431: add rebase --fork-point tests
-References: <20190328221745.GA3941@dev-l>
-        <cover.1554151449.git.liu.denton@gmail.com>
-        <234ac9f024bf4e6b4944fd8f3912cf6367cf828b.1554151449.git.liu.denton@gmail.com>
-        <20190405111513.GU32732@szeder.dev>
-Date:   Mon, 08 Apr 2019 13:38:24 +0900
-In-Reply-To: <20190405111513.GU32732@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message of
-        "Fri, 5 Apr 2019 13:15:13 +0200")
-Message-ID: <xmqq4l79az7j.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?= 
+        <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 01/13] packfile.h: drop extern from function declarations
+References: <20190405180306.GA21113@sigill.intra.peff.net>
+        <20190405180340.GA32243@sigill.intra.peff.net>
+        <c21b923f-54aa-defa-ecfd-11ecd6f8a664@ramsayjones.plus.com>
+        <20190405192534.GA4496@sigill.intra.peff.net>
+Date:   Mon, 08 Apr 2019 14:13:17 +0900
+In-Reply-To: <20190405192534.GA4496@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 5 Apr 2019 15:25:35 -0400")
+Message-ID: <xmqqzhp19j0y.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> +	test_expect_success "git rebase $@" "
->> +...
->> +		git rebase $@ &&
->> +...
->> +	"
->> +}
->> +
->> +test_rebase 'G F E D B A' ''
+> On Fri, Apr 05, 2019 at 08:19:30PM +0100, Ramsay Jones wrote:
 >
-> It appears that this last empty argument triggers some bug in Bash
-> v4.2 and older (and on macOS such an old Bash is the default /bin/sh),
-> as it turns that empty argument into something else, which in turn
-> fails the test with:
->
->   <...>
->   ++ git rebase $'\177'
->   fatal: invalid upstream '?'
->   error: last command exited with $?=128
->   not ok 2 - git rebase
->
-> https://travis-ci.org/git/git/jobs/516070862#L2276
-
-Yeah, every time I see $@ that appears in any form other than "$@"
-(i.e. within a pair of double-quotes without anything else in it),
-it makes me feel very uneasy.  Shouldn't the argument to the above
-"rebase" be spelled $* instead?  I somehow do not think use of $@
-there is buying us anything.
-
-Of course, if we were really passing an arg with $IFS character in
-it, we could probably eval 'git rebase "$@"' it (with appropriate
-quoting to adjust for the surrounding quote pair).
-
-> Omitting that empty argument avoids this issue, and the test still
-> checks what it was supposed to.
->
->> +test_rebase 'G F D B A' '--onto D'
->> +test_rebase 'G F C E D B A' '--no-fork-point'
->> +test_rebase 'G F C D B A' '--no-fork-point --onto D'
->> +test_rebase 'G F E D B A' '--fork-point refs/heads/master'
->> +test_rebase 'G F D B A' '--fork-point --onto D refs/heads/master'
->> +test_rebase 'G F C E D B A' 'refs/heads/master'
->> +test_rebase 'G F C D B A' '--onto D refs/heads/master'
->> +
->> +test_done
->> -- 
->> 2.21.0.695.gaf8658f249
+>> >  /* global flag to enable extra checks when accessing packed objects */
+>> > -extern int do_check_packed_object_crc;
+>> > +int do_check_packed_object_crc;
 >> 
+>> ... removing this 'extern' on an int variable sends 'sparse'
+>> into a frenzy of warnings! :-D
+>> 
+>> [You didn't use a global s/extern// by any chance?]
+>
+> Oh my. I did look at each one, but probably via replace-and-confirm in
+> vim. I don't know how I managed to botch that one so badly.
+
+Perhaps we should keep 'extern' even when declaring (not defining) a
+public function in the header file to avoid a gotcha like this?
+
+What was the reasoning behind the insn in CodingGuidelines?  "As it
+is already the default" does qualify as a reasonable justification
+for telling "extern is not needed for functions" to our readers, but
+not quite enough for "extern should not be used for functions".
+
