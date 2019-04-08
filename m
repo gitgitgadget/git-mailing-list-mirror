@@ -3,73 +3,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 063B720248
-	for <e@80x24.org>; Mon,  8 Apr 2019 11:09:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B986F20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 11:26:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726539AbfDHLJh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 07:09:37 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:45789 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725881AbfDHLJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 07:09:37 -0400
-Received: by mail-io1-f65.google.com with SMTP id s7so10606301iom.12
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 04:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=loMHk2W0CeT298OGsRa4UXzRvanG9fpFkbGZdgtjrVw=;
-        b=LYU3c9w2FnPUdzlRsQiRxe3sc/sr2bbGr0ezJ308JIfc74SpXeK+IjsC8eQX0Qa1L7
-         tIZ/wd4kYVqcMosXCXhFXb2r9ZR74BHkOT/EP9rgSOaCagXqyLohIVTyKuXtreJjWUJo
-         5CMd89eIBQxO2dIuTb/rK9ESa6Hl0wq0hW5eL0n5sv8OTjBmNUQUbhQue7r9OIT1ZL3W
-         KlYwBW273u/j5tCPTkSDJx5y07rAKHrBvJ1UcZ1NrAiiNr40LLkG1KureIXPpKPRWfdv
-         pYKNwKm/KbNZFNFsy2TL5pwLZl+R9VlYpj6yz5wqGoirXBxlWwpN3SG4CK+6zE4d2+Ga
-         4aQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=loMHk2W0CeT298OGsRa4UXzRvanG9fpFkbGZdgtjrVw=;
-        b=Yg0P16EFLQGr87DsUmxyOFiGYTFFpxC/Usvzv7tw3KAMlnHOBzW7v475xf8z57uM+7
-         9un+cxFTcQoQrR2dE6EeHwwfFPptyvZBXLZLdwaegPOVKAdwP54dJd36x7xozZnlm0De
-         SELBkDb2fyfqTVLPp+WLeClm1d5NMiSiH0aFbuF3gxU+iOU992i1ct+3c3G7kv12vKk+
-         IhewCNyjtOHDnzlcuzhmcIrW1kf0Evg6Dlax4D2GKS85MiTaca/9qwSvtCFaUNrEgkAp
-         MnuMTyyfeillkXtV+HhV71lUL5g2UmBYKPZTjAEMHfNzSwmJuz7Jju/34ArqZCr0pJtz
-         L6Eg==
-X-Gm-Message-State: APjAAAW3R9feVtPP5wDNKGJPkIshFMYbAKh10DK/Qw24J/krYS4nmkYZ
-        eE9wu9ILjOIJCCNL3YDPUK9WvpmK2jXmuiYS3gY=
-X-Google-Smtp-Source: APXvYqxZzr5NVDd7xkRsmKgGZxCPNZoC3LId74BzSzZrmiXcRbh36Gc/l17kShlLW4VVFkbXzgYATlXOWULtOorYeKc=
-X-Received: by 2002:a5e:8418:: with SMTP id h24mr17955817ioj.170.1554721776713;
- Mon, 08 Apr 2019 04:09:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
- <20190407183857.GA32487@hank.intra.tgummerer.com> <CAMknYEOAg1S8cNYdLPgJemxgikisNpmeuw74T0w+7PUo93stVg@mail.gmail.com>
- <CACsJy8Dc3fuXWOOO-hNJqGNomufP7bffoHVf5hHLTubHQvq9vA@mail.gmail.com> <CAMknYENqH==YcAfU-B16Jytc4Pts4viNQn9deTFag++zZVb1+Q@mail.gmail.com>
-In-Reply-To: <CAMknYENqH==YcAfU-B16Jytc4Pts4viNQn9deTFag++zZVb1+Q@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 8 Apr 2019 18:09:10 +0700
-Message-ID: <CACsJy8D7mQZgJhZ4H8Z929EnjYe1Wp7idrbXqkUsmL1Ypn83dg@mail.gmail.com>
-Subject: Re: [GSoC][RFC] discussion about stashing with conflicts
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726119AbfDHL0j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 07:26:39 -0400
+Received: from srv1.79p.de ([213.239.234.118]:51106 "EHLO srv1.79p.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725984AbfDHL0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 07:26:38 -0400
+X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Apr 2019 07:26:38 EDT
+Received: from srv1.79p.de (localhost [127.0.0.1])
+        by srv1.79p.de (Postfix) with ESMTP id C48C6220063;
+        Mon,  8 Apr 2019 13:20:18 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: by srv1.79p.de (Postfix, from userid 1000)
+        id 2C7E822006E; Mon,  8 Apr 2019 13:20:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+        s=mail2019; t=1554722418;
+        bh=a8ma+TgZDqga74MJu39R7RrLG32NcaHcdOlHvZFnoRU=;
+        h=From:To:Subject:Cc:Date:From;
+        b=AgMJ47gGWRt0YSeNqS+xHxBVpSmpOXc/7PyxiwQ/wuzihoX2jJ7KEX2GPc7WYUiSM
+         HIzNXiprq45VAMEWw2d+q6OM/2LrTwP9r6oEVJp3E18L9NClqDo6PzL1B1uUq4LL82
+         ZVvpkVKNIPJcYX91G+8Z1jLdV/rrdh0LBVSw6mTKBBrSIUUCumyssedZq4FUKWFVJe
+         amQb+BU7it1d6cO5pxdj2sl/IvyqPSnxZf22AIfHgiN+hdtU3SPOrRvzaxGn9IVN/W
+         Um+U+UZAGQsGmFVtkjtD4SFi2UMBDFrJKlzUwBKxgIE+2/8nsjEIUYcBGipGU9R21q
+         +zZHsDb4yjh5w==
+From:   Sven Strickroth <email@cs-ware.de>
+To:     git@vger.kernel.org
+Subject: [PATCH] Unbreak real_path on Windows for already absolute paths (with
+ Visual Studio)
+Cc:     gitster@pobox.com, peff@peff.net, johannes.schindelin@gmx.de
+Message-Id: <6c7d4155-e554-dc9a-053e-f3a8c7cd4075@cs-ware.de>
+Date:   Mon, 8 Apr 2019 13:16:33 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 6:00 PM Kapil Jain <jkapil.cs@gmail.com> wrote:
-> for finding that commit message did you do something like this:
-> git log -L :repo_read_index_unmerged:read-cache.c
+A path such as 'c:/somepath/submodule/../.git/modules/submodule' wasn't
+resolved correctly any more, because the *nix variant of
+offset_1st_component is used instead of the Win32 specific version.
 
-No. I'm old fashioned. I just do "git log --patch --follow <path>"
-then search read_index_unmerged, which should at least appear in the
-@@ line. But yeah log -L or "tig blame" may be better to dig in
-history.
+Regression was introduced in commit
+25d90d1cb72ce51407324259516843406142fe89.
+
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+ git-compat-util.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e0275da7e0..9be177e588 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -210,6 +210,7 @@
+ #include "compat/mingw.h"
+ #include "compat/win32/fscache.h"
+ #elif defined(_MSC_VER)
++#include "compat/win32/path-utils.h"
+ #include "compat/msvc.h"
+ #include "compat/win32/fscache.h"
+ #else
 -- 
-Duy
+2.21.0.windows.1
+
