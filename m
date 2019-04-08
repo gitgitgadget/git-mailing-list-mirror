@@ -2,213 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B94CA20248
-	for <e@80x24.org>; Mon,  8 Apr 2019 15:47:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 057E320248
+	for <e@80x24.org>; Mon,  8 Apr 2019 15:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726908AbfDHPrw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 11:47:52 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39067 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbfDHPrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 11:47:52 -0400
-Received: by mail-wr1-f67.google.com with SMTP id j9so17020230wrn.6
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 08:47:51 -0700 (PDT)
+        id S1728840AbfDHPsZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 11:48:25 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38987 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725983AbfDHPsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 11:48:24 -0400
+Received: by mail-ed1-f65.google.com with SMTP id n9so3265463edt.6
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 08:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=w9sbCqn6HTh+hKqMPdZfHcvu+gljTQtppKJHCvtqzXQ=;
-        b=HS6Fo3NwiDvHl2/fCQxDWO5MddMh1kyVcA7k/m/x806uYnwtgG69T89PhMIC3L3nHF
-         hs+WDAG8dci4eTilCYSu8389mG7XEUjAnmEprx12KcBli5mRkEwMDhmCpJZVkxxVXF1W
-         duQfylCEOYVzBt0zYlZmu4p8qcu8wCFMWp24Tg/55ty0Hf22Uz9gKbdlynXtvsqDWE/d
-         GyMZGkxa87W2L46BAA6AZ/cG+Q5K0XFMQRlhtI2QzbE9JotC/l8QqrjPDYamIWwdsfer
-         j2iAHOczZWbsYzsCToXX52/7LhoNT+JHTJS0fvTdE4xHgNzxgkOjaVJ60ryapTehgnx3
-         SVqQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Iav9N+XEZmhGeO6bToKcdpahwecbiSERla4b//s18PA=;
+        b=cex/LWq/Y5uRB3ke9lXB88OhO3sJBXNx/jDN9TKvC2r6rSQV4gtEmDf1fcPNprO7Cj
+         mz6Lc2/HDkmOJSbU235Z+AqXaowWZFWZNupl9R6k2Wk+0rU9hwN4lvjDciaNCP/9r3FK
+         vuQUYmFvgtdt9Exln6da927CUaMeKNsNQJFHnJ7gAlJZwKvcEqry9T4cb5p/+4Iu60vY
+         PtnWi94we+pv5nS3YR0/gOxhkJKu1Y3k93wDbHmqvx7h/lBQM4/71bRF1CixCuNdU/PI
+         A0xDjAzvbHGaTOF8kd/LstKyq0rcpI/TlWLEOylhpv6mV+8h/Kx6YpeiWPXOQuXI/1J8
+         w7cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=w9sbCqn6HTh+hKqMPdZfHcvu+gljTQtppKJHCvtqzXQ=;
-        b=JkzDoECzj/G2DSqKqn41JHMbAkHMzucIBvDa9J6Xi3MJ7/+dwB5J9NW/nvD301JbLB
-         WjeZgu4wjm0XWjX8eAewOzYRNXvK84jXBP10dGZOkvb4FLZ6Pnjk0eCAlEoh6Q/kvSWU
-         tvKDEs6j50FIZZhhfNrvDnICkPvuGS88rHiOQs4JLb6BES7lh8FubEvKXJuJwShDZa+X
-         XgqOvh6r9T6bGyc1FaFHX5HmQJZ2U39arxexfe0SPBcNghRaVzLyZc2b2Fnl/G7f7XvY
-         c4nHJwree4kOKlGHR/gUSt3Lmk8UxuWTIqUfzr7D9Zk6B8NHGE/khSkOabJ26BmOkand
-         pV+A==
-X-Gm-Message-State: APjAAAUznNYXygIzKYA0tCa+zK4mnGFHI8msQSX0ArHcd1CD3ENtCmu4
-        3/YAGQJ+/HLvWNMd0xD6rZK7W6Sjll4=
-X-Google-Smtp-Source: APXvYqws2IcHIihNoE//C37s9DGm9uskj5S/ANTeurBeMd1EKR4a7HEqxH3DWtqHtWCg227gScOhcQ==
-X-Received: by 2002:a5d:63c5:: with SMTP id c5mr20221407wrw.82.1554738470541;
-        Mon, 08 Apr 2019 08:47:50 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-29-11.as13285.net. [92.22.29.11])
-        by smtp.gmail.com with ESMTPSA id v1sm43037169wrd.47.2019.04.08.08.47.49
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Apr 2019 08:47:49 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] commit/reset: try to clean up sequencer state
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-References: <20190329163009.493-1-phillip.wood123@gmail.com>
- <20190329163009.493-2-phillip.wood123@gmail.com>
- <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <9f3ec8b3-f2c4-63b8-3350-a37d42bebd47@gmail.com>
-Date:   Mon, 8 Apr 2019 16:47:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Iav9N+XEZmhGeO6bToKcdpahwecbiSERla4b//s18PA=;
+        b=C44boasFgwcoUO+dOmYZxFdIAXXabR0BEOjaoDZdfKRqa6/u9QsAk4+I+amUkBSlfT
+         HqwQjLtEkBgQHUdt29TAp5WYyUD6ZSPkheu2k/WXNxwfxnxr7I3uNJDduUbZivzph1/v
+         WVFnIuYARdiN2ZBzRy3krjgOQq4P+7/vdQFKbDY5uiZk8Yqoj2+d3cd5ZDTBXJA+I8rg
+         AqeotPcHNIwF2M/bHL0nYjggO07T4zVVsGM8ULrSyzF0thfdlFneDb9+76xuvRQQCzgg
+         ifSUcwlo08B3rlSK8x6P9B5V0eOlnJAoTtteCElo82QZj5AsEmd9CgbC5cw7jtdmirUa
+         hjSw==
+X-Gm-Message-State: APjAAAWg28krUc6a1+eq+usXb7nQDgA2gvyfjlxwlO/r9BxokR23IOLh
+        mJXMeaNiXl++x7R8FHcN0bE=
+X-Google-Smtp-Source: APXvYqzKSO71hXLjYM/0l16kFcdKxOXFb9Hy4vGBuHbBQldP/7g+C01YWSVEQpJ7W9zbN4jJMX2wow==
+X-Received: by 2002:a17:906:1dc9:: with SMTP id v9mr16404224ejh.262.1554738502380;
+        Mon, 08 Apr 2019 08:48:22 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id ga13sm5512900ejb.9.2019.04.08.08.48.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Apr 2019 08:48:21 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] blame: default to HEAD in a bare repo when no start commit is given
+References: <20190407234327.25617-1-szeder.dev@gmail.com> <878swkacok.fsf@evledraar.gmail.com> <20190408143046.GF8796@szeder.dev>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190408143046.GF8796@szeder.dev>
+Date:   Mon, 08 Apr 2019 17:48:21 +0200
+Message-ID: <875zroa46y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8D3tH0K8wNLighuNtjUtv3K3TGNMGgx3T5j5sCxok8hbQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/04/2019 11:09, Duy Nguyen wrote:
-> On Fri, Mar 29, 2019 at 11:32 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> When cherry-picking or reverting a sequence of commits and if the final
->> pick/revert has conflicts and the user uses `git commit` to commit the
->> conflict resolution and does not run `git cherry-pick --continue` then
->> the sequencer state is left behind. This can cause problems later. In my
->> case I cherry-picked a sequence of commits the last one of which I
->> committed with `git commit` after resolving some conflicts, then a while
->> later, on a different branch I aborted a revert which rewound my HEAD to
->> the end of the cherry-pick sequence on the previous branch. Avoid this
->> potential problem by removing the sequencer state if we're committing or
->> resetting the final pick in a sequence.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   branch.c                        |  7 +++++--
->>   builtin/commit.c                |  7 +++++--
->>   sequencer.c                     | 23 +++++++++++++++++++++++
->>   sequencer.h                     |  1 +
->>   t/t3507-cherry-pick-conflict.sh | 19 +++++++++++++++++++
->>   5 files changed, 53 insertions(+), 4 deletions(-)
->>
->> diff --git a/branch.c b/branch.c
->> index 28b81a7e02..9ed60081c1 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -5,6 +5,7 @@
->>   #include "refs.h"
->>   #include "refspec.h"
->>   #include "remote.h"
->> +#include "sequencer.h"
->>   #include "commit.h"
->>   #include "worktree.h"
->>
->> @@ -339,8 +340,10 @@ void create_branch(struct repository *r,
->>
->>   void remove_branch_state(struct repository *r)
-> 
-> This function is also called in git-am, git-rebase and git-checkout.
-> While the first two should not be affected, git-checkout can be
-> executed while we're in the middle of a cherry-pick or revert. I guess
-> that's ok because git-checkout is basically the same as git-reset in
-> this case?
 
-Yes that's right
+On Mon, Apr 08 2019, SZEDER G=C3=A1bor wrote:
 
->>   {
->> -       unlink(git_path_cherry_pick_head(r));
->> -       unlink(git_path_revert_head(r));
->> +       if (!unlink(git_path_cherry_pick_head(r)))
->> +               sequencer_post_commit_cleanup();
->> +       if (!unlink(git_path_revert_head(r)))
->> +               sequencer_post_commit_cleanup();
->>          unlink(git_path_merge_head(r));
->>          unlink(git_path_merge_rr(r));
->>          unlink(git_path_merge_msg(r));
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 2986553d5f..422b7d62a5 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1657,8 +1657,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>                  die("%s", err.buf);
->>          }
+> On Mon, Apr 08, 2019 at 02:44:59PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >>
->> -       unlink(git_path_cherry_pick_head(the_repository));
->> -       unlink(git_path_revert_head(the_repository));
->> +       if (!unlink(git_path_cherry_pick_head(the_repository)))
->> +               sequencer_post_commit_cleanup();
->> +       if (!unlink(git_path_revert_head(the_repository)))
->> +               sequencer_post_commit_cleanup();
->>          unlink(git_path_merge_head(the_repository));
->>          unlink(git_path_merge_msg(the_repository));
->>          unlink(git_path_merge_mode(the_repository));
->> @@ -1678,6 +1680,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>          if (amend && !no_post_rewrite) {
->>                  commit_post_rewrite(the_repository, current_head, &oid);
->>          }
->> +
->>          if (!quiet) {
->>                  unsigned int flags = 0;
+>> On Mon, Apr 08 2019, SZEDER G=C3=A1bor wrote:
 >>
->> diff --git a/sequencer.c b/sequencer.c
->> index 0db410d590..028699209f 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -2220,6 +2220,29 @@ static ssize_t strbuf_read_file_or_whine(struct strbuf *sb, const char *path)
->>          return len;
->>   }
+>> > When 'git blame' is invoked without specifying the commit to start
+>> > blaming from, it starts from the given file's state in the work tree.
+>> > However, when invoked in a bare repository without a start commit,
+>> > then there is no work tree state to start from, and it dies with the
+>> > following error message:
+>> >
+>> >   $ git rev-parse --is-bare-repository
+>> >   true
+>> >   $ git blame file.c
+>> >   fatal: this operation must be run in a work tree
+>> >
+>> > This is misleading, because it implies that 'git blame' doesn't work
+>> > in bare repositories at all, but it does, in fact, work just fine when
+>> > it is given a commit to start from.
+>> >
+>> > We could improve the error message, of course, but let's just default
+>> > to HEAD in a bare repository instead, as most likely that is what the
+>> > user wanted anyway (if they wanted to start from an other commit, then
+>> > they would have specified that in the first place).
+>> >
+>> > 'git annotate' is just a thin wrapper around 'git blame', so in the
+>> > same situation it printed the same misleading error message, and this
+>> > patch fixes it, too.
+>> >
+>> > Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 >>
->> +void sequencer_post_commit_cleanup(void)
->> +{
->> +       struct replay_opts opts = REPLAY_OPTS_INIT;
->> +       struct strbuf buf = STRBUF_INIT;
->> +       const char *eol;
->> +       const char *todo_path = git_path_todo_file();
->> +
->> +       if (strbuf_read_file(&buf, todo_path, 0) < 0) {
->> +               if (errno == ENOENT) {
->> +                       return;
->> +               } else {
->> +                       error_errno("unable to open '%s'", todo_path);
-> 
-> _() the string to make it translatable.
+>> There was the explicit decision not to fall back to HEAD in 1cfe77333f
+>> ("git-blame: no rev means start from the working tree file.",
+>> 2007-01-30). This change makes sense to me, but perhaps some discussion
+>> or reference to the previous commit is warranted?
+>
+> I don't think so, because that doesn't apply here, since it doesn't
+> really make much sense to talk about a working tree file in a bare
+> repo.
 
-Well spotted, thanks
+I mean for context in the sense that the current error we display we
+haven't always shown, and explicitly started doing in that commit (but
+for another purpose...).
 
->> +                       return;
->> +               }
->> +       }
->> +       /* If there is only one line then we are done */
->> +       eol = strchr(buf.buf, '\n');
->> +       if (!eol || !eol[1])
->> +               sequencer_remove_state(&opts);
-> 
-> Should we say something to let the user know cherry-pick/revert is
-> finished? (unless --quiet is specified)
+>> Although from skimming the thread from back then it seems to be "not
+>> HEAD but working tree file", not "let's not use HEAD in bare repos".
+>>
+>> >  builtin/blame.c     | 13 +++++++++++++
+>> >  t/annotate-tests.sh |  8 ++++++++
+>> >  2 files changed, 21 insertions(+)
+>> >
+>> > diff --git a/builtin/blame.c b/builtin/blame.c
+>> > index 177c1022a0..21cde57e71 100644
+>> > --- a/builtin/blame.c
+>> > +++ b/builtin/blame.c
+>> > @@ -27,6 +27,7 @@
+>> >  #include "object-store.h"
+>> >  #include "blame.h"
+>> >  #include "string-list.h"
+>> > +#include "refs.h"
+>> >
+>> >  static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] =
+[<rev>] [--] <file>");
+>> >
+>> > @@ -993,6 +994,18 @@ int cmd_blame(int argc, const char **argv, const =
+char *prefix)
+>> >
+>> >  	revs.disable_stdin =3D 1;
+>> >  	setup_revisions(argc, argv, &revs, NULL);
+>> > +	if (!revs.pending.nr && is_bare_repository()) {
+>> > +		struct commit *head_commit;
+>> > +		struct object_id head_oid;
+>> > +
+>> > +		if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+>> > +					&head_oid, NULL) ||
+>> > +		    !(head_commit =3D lookup_commit_reference_gently(revs.repo,
+>> > +							     &head_oid, 1)))
+>> > +			die("no such ref: HEAD");
+>> > +
+>> > +		add_pending_object(&revs, &head_commit->object, "HEAD");
+>> > +	}
+>>
+>> With this patch, if I have a bare repo without a HEAD I now get:
+>>
+>>     fatal: no such ref: HEAD
+>
+> This is the same error message as in a regular repo without HEAD.
+> That's good: it's consistent, and it tells what the actual problem is.
+>
+> Though perhaps too terse and the error message from 'git log' would
+> apply just as well and be more friendly:
+>
+>   fatal: your current branch 'master' does not have any commits yet
+>
+>> Instead of:
+>>
+>>     fatal: this operation must be run in a work tree
+>>
+>> Both are bad & misleading, perhaps we can instead say something like:
+>>
+>>     die(_("in a bare repository you must specify a ref to blame from, we=
+ tried and failed to implicitly use HEAD"));
 
-I'd not thought of that, at the moment we don't say anything about 
-removing CHERRY_PICK_HEAD etc when they are removed by reset or 
-checkout, I'm not sure this is much different to those cases - but maybe 
-they should be printing some feedback as well.
+Yeah, I missed that it's the same message as with no HEAD in a non-bare
+repo. Makes sense.
 
-Best Wishes
+> The point of this patch is that you don't necessarily have to specify
+> the starting ref in a bare repo anymore.
+>
+>> Along with a test for what we do in bare repos without a HEAD....?
+>
+> How can a repo have no HEAD?  Maybe I'm missing something, but I only
+> see the following cases:
+>
+>   - An empty repo: there is nothing to blame there at all in the first
+>     place.
+>
+>   - An orphan branch in a non-bare repo: there is nothing to blame
+>     there.
+>
+>   - The user is looking for trouble, and ran 'git update-ref -d HEAD',
+>     as you mentioned below, or something else with similar results.
+>     "If it hurts, don't it" applies.
+>
+>   - Some sort of repo corruption that left the refs in a sorry state.
+>     The user has more serious problems than the error message from
+>     'git blame'.
+>
+> So I doubt that any of these cases are worth dealing with and testing
+> specifically in a bare repo.
 
-Phillip
+If you setup a repo to manually fetch refspecs you can end up without a
+HEAD but still be able to 'blame' stuff. I don't think that happens with
+non-bare, but does with bare. E.g. I set up some server-side "blame"
+that supports the "master" branch of several repos like that in the
+past, and just plain 'git blame' throws the old message.
 
->> +
->> +       strbuf_release(&buf);
->> +}
->> +
->>   static int read_populate_todo(struct repository *r,
->>                                struct todo_list *todo_list,
->>                                struct replay_opts *opts)
+So maybe since we're checking is_bare_repository() it's worth improving
+the error while we're at it, or at least testing that bare & non-bare do
+the same thing.
+
+>>
+>> >
+>> >  	init_scoreboard(&sb);
+>> >  	sb.revs =3D &revs;
+>> > diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+>> > index 6da48a2e0a..d933af5714 100644
+>> > --- a/t/annotate-tests.sh
+>> > +++ b/t/annotate-tests.sh
+>> > @@ -68,6 +68,14 @@ test_expect_success 'blame 1 author' '
+>> >  	check_count A 2
+>> >  '
+>> >
+>> > +test_expect_success 'blame in a bare repo without starting commit' '
+>> > +	git clone --bare . bare.git &&
+>> > +	(
+>> > +		cd bare.git &&
+>> > +		check_count A 2
+>> > +	)
+>>
+>> ....just 'git update-ref -d HEAD` after this and a test for 'git blame
+>> <file>' here would test bare without HEAD.
+>>
+>> >  test_expect_success 'blame by tag objects' '
+>> >  	git tag -m "test tag" testTag &&
+>> >  	git tag -m "test tag #2" testTag2 testTag &&
