@@ -2,101 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A69920248
-	for <e@80x24.org>; Mon,  8 Apr 2019 19:36:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3783B20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 20:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727414AbfDHTgX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 15:36:23 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:36736 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbfDHTgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 15:36:23 -0400
-Received: by mail-io1-f66.google.com with SMTP id f6so12139955iop.3
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 12:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=So2QftLbZboSy7vPUToyTV6c3ZuvgR4rxtkJvDXwgBM=;
-        b=bdMUcI193MGo9UiBUoetJooTzchh9TduDfLh9DCRS/1dj9zgnndsm2HqZ/Dpulolju
-         ehEX8Jeim1zZjdZGb8BAAQGcUpW6Arure76sV1XwEuka/Jrz0uPC/JRr+XdvHkYsy+1q
-         NUWulvYuJDP6/msbMUiR0Fpfu95391uIspHtBOKb2D1YbJtgrlNra8VtF5Kswl7foGVU
-         RguFMZdy19G0T2QoO/Tqdp8CRuboi0Cw6V2VxRjqjkrnOBNjnIXohh2CJcHBxY28y85B
-         DtX33f01XGlN5Ood+UJvzyoWAguZvnHTMNJg1qqBYV2CGd2e1jMJrWd9SG0iOLNiusxw
-         WbKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=So2QftLbZboSy7vPUToyTV6c3ZuvgR4rxtkJvDXwgBM=;
-        b=X28cTqRnHCKRfEmJ9OUSmuAutZ3E2Xvx9HGD6lokGijG5PlGmjl7OcHqhIDrVC2l81
-         g0CUkcJwb5IdxIJ6AGE+iE0Ck5Ooqcj/3ubNyjOZ5lNQFnQZhwoOAB5/mZB4AVtIyrnA
-         5p/eQ7UKT2j6zaNZ4bP1dxiGyJ5QMbxio3gpUgZ9khen4zA7iWdAOFCz/34z1ZDWvyUd
-         QzV8zvKmRZhN5sOUyRRRz57VCAx3Wi1kLsgnIIo7mpAzRrqdQhEJmizWupF1mvNh/w1n
-         L792/jPZ/r8yO8D8tpjErMGB3Nk/TTAHxxAiwby/GW0JcCIoFFGT0Nve/oJplhm9suOK
-         UyZQ==
-X-Gm-Message-State: APjAAAWKkq/Zeimj2brlpAA+P9kZk0tqj8lSh6dkDbUvqFiNDHKkteRW
-        uvPFnNcJTRjba/QVWCTuSkSmwFrOLbkd9vi2xAIUxA==
-X-Google-Smtp-Source: APXvYqwN1t5mx8X37EoYlBYc0IoTO9uh598EMjl7YM5f/8YFQkhxgLEyRoeHBJ3Fl0H4jj3mrhq23LE3OBpj3HNKfLw=
-X-Received: by 2002:a5d:81c2:: with SMTP id t2mr17736718iol.183.1554752182448;
- Mon, 08 Apr 2019 12:36:22 -0700 (PDT)
+        id S1728546AbfDHUcy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 16:32:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51348 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726930AbfDHUcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 16:32:54 -0400
+Received: (qmail 11144 invoked by uid 109); 8 Apr 2019 20:32:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 08 Apr 2019 20:32:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22685 invoked by uid 111); 8 Apr 2019 20:33:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 08 Apr 2019 16:33:22 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Apr 2019 16:32:52 -0400
+Date:   Mon, 8 Apr 2019 16:32:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 01/13] packfile.h: drop extern from function
+ declarations
+Message-ID: <20190408203252.GA5696@sigill.intra.peff.net>
+References: <20190405180306.GA21113@sigill.intra.peff.net>
+ <20190405180340.GA32243@sigill.intra.peff.net>
+ <c21b923f-54aa-defa-ecfd-11ecd6f8a664@ramsayjones.plus.com>
+ <20190405192534.GA4496@sigill.intra.peff.net>
+ <xmqqzhp19j0y.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <CAHd-oW7KMrDJ-cyzk63oqW9-QVpag6fKnDp+Mo5bWxg1KfzY3g@mail.gmail.com>
- <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
- <CACsJy8DxW7ZcSNQBZq4+A6c+9xZopg79sXfi6Na61Xgcoqd6ng@mail.gmail.com>
- <79ecdc5b-2ccf-ae4d-3775-b850641f8c3e@iee.org> <CAHd-oW5PFmj4u2YB-1TcHWNxkokfCEsUq_zB=Rx2Vmdk5Z9eMw@mail.gmail.com>
- <1348d823-9729-a5eb-2104-df7c4a41911d@iee.org>
-In-Reply-To: <1348d823-9729-a5eb-2104-df7c4a41911d@iee.org>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 8 Apr 2019 16:36:11 -0300
-Message-ID: <CAHd-oW79P+Fq6OkdDa4Ly2mecuCM0tyS7jopON2_2rL-mf9RXQ@mail.gmail.com>
-Subject: Re: [GSoC][RFC] Proposal: Make pack access code thread-safe
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzhp19j0y.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 4:19 PM Philip Oakley <philipoakley@iee.org> wrote:
->
-> Hi Matheus
->
-> On 08/04/2019 18:04, Matheus Tavares Bernardino wrote:
-> >> Another "32-bit problem" should also be expressly considered during the
-> >> GSoC work because of the MS Windows definition of uInt / long to be only
-> >> 32 bits, leading to much of the Git code failing on the Git for Windows
-> >> port and on the Git LFS (for Windows) for packs and files greater than
-> >> 4Gb.https://github.com/git-for-windows/git/issues/1063
->
-> > Thanks for pointing it out. I didn't get it, thought, if your
-> > suggestion was to also propose tackling this issue in this GSoC
-> > project. Was it that? I read the link but it seems to be a kind of
-> > unrelated problem from what I'm planing to do with the pack access
-> > code (which is tread-safety). I may have understood this wrongly,
-> > though. Please, let me know if that's the case :)
+On Mon, Apr 08, 2019 at 02:13:17PM +0900, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Apr 05, 2019 at 08:19:30PM +0100, Ramsay Jones wrote:
 > >
-> The main point was to avoid accidental regressions by re-introducing
-> simple 'longs' where memsized types were more appropriate.
->
-> Torsten has already done a lot of work at
-> https://github.com/tboegi/git/tree/tb.190402_1552_convert_size_t_only_git_master_181124_mk_size_t
+> >> >  /* global flag to enable extra checks when accessing packed objects */
+> >> > -extern int do_check_packed_object_crc;
+> >> > +int do_check_packed_object_crc;
+> >> 
+> >> ... removing this 'extern' on an int variable sends 'sparse'
+> >> into a frenzy of warnings! :-D
+> >> 
+> >> [You didn't use a global s/extern// by any chance?]
+> >
+> > Oh my. I did look at each one, but probably via replace-and-confirm in
+> > vim. I don't know how I managed to botch that one so badly.
+> 
+> Perhaps we should keep 'extern' even when declaring (not defining) a
+> public function in the header file to avoid a gotcha like this?
+> 
+> What was the reasoning behind the insn in CodingGuidelines?  "As it
+> is already the default" does qualify as a reasonable justification
+> for telling "extern is not needed for functions" to our readers, but
+> not quite enough for "extern should not be used for functions".
 
-Got it. Thanks, Philip!
+I think the reasoning is just that it's useless noise, so it makes the
+resulting lines longer (which are often already too-long) and harder to
+read.
 
-> HTH
-> Philip
-> (I'm off line for a few days)
+For this particular patch, I don't care that much about the existing
+functions, which I'm not touching, but rather was adding a new one. And
+my options were:
+
+  - use "extern" there to match; even if we don't want to go through the
+    code churn of cleaning up existing cases, I think we shouldn't be
+    encouraging it in new ones. Even more crazy to me would actually
+    be review telling somebody to add an extern.
+
+  - intermingle it with the existing extern ones. Low risk, but leaves
+    people wondering why some have extern and some do not.
+
+  - clean up the existing cases first
+
+I dunno. Like all code churn, these kinds of clean-ups have the
+possibility of accidentally screwing something up. But they are at least
+a one-time pain, as long as we do not keep changing our mind back and
+forth.
+
+-Peff
