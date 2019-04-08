@@ -2,77 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B986F20248
-	for <e@80x24.org>; Mon,  8 Apr 2019 11:26:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E189220248
+	for <e@80x24.org>; Mon,  8 Apr 2019 11:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726119AbfDHL0j (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 07:26:39 -0400
-Received: from srv1.79p.de ([213.239.234.118]:51106 "EHLO srv1.79p.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725984AbfDHL0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 07:26:38 -0400
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Apr 2019 07:26:38 EDT
-Received: from srv1.79p.de (localhost [127.0.0.1])
-        by srv1.79p.de (Postfix) with ESMTP id C48C6220063;
-        Mon,  8 Apr 2019 13:20:18 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: by srv1.79p.de (Postfix, from userid 1000)
-        id 2C7E822006E; Mon,  8 Apr 2019 13:20:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2019; t=1554722418;
-        bh=a8ma+TgZDqga74MJu39R7RrLG32NcaHcdOlHvZFnoRU=;
-        h=From:To:Subject:Cc:Date:From;
-        b=AgMJ47gGWRt0YSeNqS+xHxBVpSmpOXc/7PyxiwQ/wuzihoX2jJ7KEX2GPc7WYUiSM
-         HIzNXiprq45VAMEWw2d+q6OM/2LrTwP9r6oEVJp3E18L9NClqDo6PzL1B1uUq4LL82
-         ZVvpkVKNIPJcYX91G+8Z1jLdV/rrdh0LBVSw6mTKBBrSIUUCumyssedZq4FUKWFVJe
-         amQb+BU7it1d6cO5pxdj2sl/IvyqPSnxZf22AIfHgiN+hdtU3SPOrRvzaxGn9IVN/W
-         Um+U+UZAGQsGmFVtkjtD4SFi2UMBDFrJKlzUwBKxgIE+2/8nsjEIUYcBGipGU9R21q
-         +zZHsDb4yjh5w==
-From:   Sven Strickroth <email@cs-ware.de>
-To:     git@vger.kernel.org
-Subject: [PATCH] Unbreak real_path on Windows for already absolute paths (with
- Visual Studio)
-Cc:     gitster@pobox.com, peff@peff.net, johannes.schindelin@gmx.de
-Message-Id: <6c7d4155-e554-dc9a-053e-f3a8c7cd4075@cs-ware.de>
-Date:   Mon, 8 Apr 2019 13:16:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S1726784AbfDHLz6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 07:55:58 -0400
+Received: from mail-qk1-f174.google.com ([209.85.222.174]:45584 "EHLO
+        mail-qk1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbfDHLzj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 07:55:39 -0400
+Received: by mail-qk1-f174.google.com with SMTP id z76so7687650qkb.12
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 04:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/Sp7JaUGGWijVEXx4IMK5ye9BFrKGEl4+cVH88BwlF8=;
+        b=LgpBlmegc+BNy2v1cf1VynE7rBxoZ9wk29gbE09tLXS6P6TK98Tcw10peavViFFYB7
+         DxCTEJAdch65d98Qit4xqwhYP3AbovrfKcpIxnMheuy9teIeAMjCUf9RSCtPX2/uocuq
+         GUy0n2zT7HGsVJ7Ow4XW11Sys6mKcE5GuuIBxSJ0fLXOOV11GddhoftTNMRdIVwIpeIi
+         CxTQ8KuMffZxRlhhFl0ot/0DR9opMgmHXN8hnlRU0s9H8yowhnKUmP+MJxQ1qK0SUB93
+         68nLgniiADi14cYSbxCz2T6/qaRli0eU09uSlLiUWU5GcHaUL4bBt0AlirZZ3fCLoKzE
+         flfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/Sp7JaUGGWijVEXx4IMK5ye9BFrKGEl4+cVH88BwlF8=;
+        b=SkHJifsXwLlgTJiRGlX42nYheqJ6wRZxSju9b1AOULc84qM7XHSVfMtDH06jsfMM++
+         QJaXmGhfiljorVLNSzgDtgI/uwZq9YCgzyn+iuLE1Rv2Epju3+ocHCHfzR4LqLkqSqkG
+         46w9b6cig+ZT1kNjJzCoTkqzs99DSgQdkuF+ZY7VUzQUMefz2c8CdeKHH7tEJQlAM4NU
+         xVzVN9Xoq3mLIrJg+5zq/KsDpiUCoH6ggXCJuJM5I/GnUjDcm5Vj5L/F9ShtrEDES+t7
+         fRmBqMkWZMgR0fcmIiHZhdu6MtIIZ4Y4JU1lcHEuKlUDBV/zJPOKYTZCOKxNgNiME4lD
+         meFw==
+X-Gm-Message-State: APjAAAUaxCSnIuNXskvxxKvJB85BBJNJI5puYAH+0ZwBcWj8HCcQ5JcA
+        o5jUT50C/fo8gA+oQdFn8+VOx9kQH4t1k36OETk=
+X-Google-Smtp-Source: APXvYqwV2MVYI+McpoiqOdVaqmeTYjN+v+tcMx3pavsQPMc9rd4M11r/pF+hFPnmLRoGtrmbjJdKr0MuMoDBytMkrDE=
+X-Received: by 2002:ae9:f50c:: with SMTP id o12mr22196835qkg.298.1554724537794;
+ Mon, 08 Apr 2019 04:55:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAA01Csp7y9=2n9=TNYMMw9LUO_cENz7FBeZjFrUd2FvHFT9NCQ@mail.gmail.com>
+ <8636mvng8n.fsf@gmail.com> <xmqq36mt9e7l.fsf@gitster-ct.c.googlers.com>
+ <CAA01CsqAt8osKArhdgATNj29+a9VO6wUwhX6=cRebnDBFx_EVg@mail.gmail.com> <86y34kn4c8.fsf@gmail.com>
+In-Reply-To: <86y34kn4c8.fsf@gmail.com>
+From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Date:   Mon, 8 Apr 2019 13:55:25 +0200
+Message-ID: <CAA01CspJAPnBFsQsXP4Dpweeg6oBVj==TB0aEnK5o1Et5zS30Q@mail.gmail.com>
+Subject: Re: "commit --author=..." does not work if global email and name is
+ not set
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A path such as 'c:/somepath/submodule/../.git/modules/submodule' wasn't
-resolved correctly any more, because the *nix variant of
-offset_1st_component is used instead of the Win32 specific version.
+On Mon, Apr 8, 2019 at 1:06 PM Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>
+> >> On Sat, Apr 6, 2019 at 8:25 PM Jakub Narebski <jnareb@gmail.com> wrote:
+> >>>
+> >>> Better though is to focus on what you want, namely to prevent accidental
+> >>> commits without specified author, instead of how you want to achieve it,
+> >>> i.e. using --author to provide both author and committer identity (the
+> >>> XY problem).  On that machine with "automatic test account" set up
+> >>> pre-commit or commit-msg hook that fails if the GIT_AUTHOR_IDENT
+> >>> environment variable is not the "automatic test account".
+> >
+> > I'm not sure if I follow you. I want to be able to make both "real
+> > user" and "automatic test account user" commits from that machine. I
+> > want to make sure that:
+> > - automatic commits (scripts) use their own account
+> > - real person making commit uses their own account
+> >
+> > IMO the only way this can be achieved is by not having any default
+> > account setup, so that both the scripts and the real users need to
+> > specify it "by hand".
+>
+> If a real person making commits uses their own account (just on that
+> machine), he or she can set up `user.name` and `user.email` settings in
+> the per-user Git configuration file
 
-Regression was introduced in commit
-25d90d1cb72ce51407324259516843406142fe89.
+There is one common "test" (Windows) account which is used both by
+automatic test scripts and by real people who log into that machine,
+so this is not possible.
 
-Signed-off-by: Sven Strickroth <email@cs-ware.de>
----
- git-compat-util.h | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e0275da7e0..9be177e588 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -210,6 +210,7 @@
- #include "compat/mingw.h"
- #include "compat/win32/fscache.h"
- #elif defined(_MSC_VER)
-+#include "compat/win32/path-utils.h"
- #include "compat/msvc.h"
- #include "compat/win32/fscache.h"
- #else
+> If however one is doing commits from the "automatic test user" account,
+> then the `pre-commit` or `commit-msg` hook configured for that specific
+> repository for that automatic account would be run, which can detect
+> that the commit was not done with
+>
+>   $ git commit --author="My Name <me@my.email.com>"
+>
+> The additional advantage is that you can examine committer data to
+> detect such cases of committing out of automatic account.
+
+Do you mean following?
+
+1. set default user (user.name, user.email) to "automatic test user"
+on that machine
+2. set commit hook to prevent commits with "automatic test user" AUTHOR
+3. scripts will set AUTHOR (--author) to for example "script X" or
+"automatic script user" - different than the default user
+4. real users will set AUTHOR to their own identity (--author=me)
+
+I suppose that would work. Looks much more complicated than simply
+setting "--author" (or "--user") though...
+
+
 -- 
-2.21.0.windows.1
-
+Piotr Krukowiecki
