@@ -2,122 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E189220248
-	for <e@80x24.org>; Mon,  8 Apr 2019 11:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9072E20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 12:45:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbfDHLz6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 07:55:58 -0400
-Received: from mail-qk1-f174.google.com ([209.85.222.174]:45584 "EHLO
-        mail-qk1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbfDHLzj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 07:55:39 -0400
-Received: by mail-qk1-f174.google.com with SMTP id z76so7687650qkb.12
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 04:55:38 -0700 (PDT)
+        id S1726577AbfDHMpD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 08:45:03 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36964 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfDHMpD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 08:45:03 -0400
+Received: by mail-ed1-f65.google.com with SMTP id l20so4049931edv.4
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 05:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/Sp7JaUGGWijVEXx4IMK5ye9BFrKGEl4+cVH88BwlF8=;
-        b=LgpBlmegc+BNy2v1cf1VynE7rBxoZ9wk29gbE09tLXS6P6TK98Tcw10peavViFFYB7
-         DxCTEJAdch65d98Qit4xqwhYP3AbovrfKcpIxnMheuy9teIeAMjCUf9RSCtPX2/uocuq
-         GUy0n2zT7HGsVJ7Ow4XW11Sys6mKcE5GuuIBxSJ0fLXOOV11GddhoftTNMRdIVwIpeIi
-         CxTQ8KuMffZxRlhhFl0ot/0DR9opMgmHXN8hnlRU0s9H8yowhnKUmP+MJxQ1qK0SUB93
-         68nLgniiADi14cYSbxCz2T6/qaRli0eU09uSlLiUWU5GcHaUL4bBt0AlirZZ3fCLoKzE
-         flfw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=O4OiVtjKH4Hl3QjjqH9+D6pxUuuP5C/uxvMMuM3sW4M=;
+        b=MBHUHVPlCMrHkZGwWKFROr4zzmzgKNQ7FA8KkB/l9+C2urjaiVMjxxA+sUeqJo5/EH
+         X7qOx3+pkK+qNgX+DJMBROXdDWCWNqP6vcyqO3GXLqYI9L3wujkQ0gP91W9Mqc69ao9q
+         uu6OEVAHMg65xLtL7I4vGeecig7AICICoaOXM6jL361yWoof1R7vr6602Vn2LklPYRb7
+         GiL/apak4CaSCPcpjVavFrZD4xvK9NcfNkCJF2P9t8RYdgKH3fH5qaJkVvh6LsjjcQKp
+         WjLzohofIowuAi7+aFPbVP+qhG7H8FSVyEZ/uZOJJBNxEwJ2UPhiIUNiuq4MfULjM+wx
+         sviQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/Sp7JaUGGWijVEXx4IMK5ye9BFrKGEl4+cVH88BwlF8=;
-        b=SkHJifsXwLlgTJiRGlX42nYheqJ6wRZxSju9b1AOULc84qM7XHSVfMtDH06jsfMM++
-         QJaXmGhfiljorVLNSzgDtgI/uwZq9YCgzyn+iuLE1Rv2Epju3+ocHCHfzR4LqLkqSqkG
-         46w9b6cig+ZT1kNjJzCoTkqzs99DSgQdkuF+ZY7VUzQUMefz2c8CdeKHH7tEJQlAM4NU
-         xVzVN9Xoq3mLIrJg+5zq/KsDpiUCoH6ggXCJuJM5I/GnUjDcm5Vj5L/F9ShtrEDES+t7
-         fRmBqMkWZMgR0fcmIiHZhdu6MtIIZ4Y4JU1lcHEuKlUDBV/zJPOKYTZCOKxNgNiME4lD
-         meFw==
-X-Gm-Message-State: APjAAAUaxCSnIuNXskvxxKvJB85BBJNJI5puYAH+0ZwBcWj8HCcQ5JcA
-        o5jUT50C/fo8gA+oQdFn8+VOx9kQH4t1k36OETk=
-X-Google-Smtp-Source: APXvYqwV2MVYI+McpoiqOdVaqmeTYjN+v+tcMx3pavsQPMc9rd4M11r/pF+hFPnmLRoGtrmbjJdKr0MuMoDBytMkrDE=
-X-Received: by 2002:ae9:f50c:: with SMTP id o12mr22196835qkg.298.1554724537794;
- Mon, 08 Apr 2019 04:55:37 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=O4OiVtjKH4Hl3QjjqH9+D6pxUuuP5C/uxvMMuM3sW4M=;
+        b=Q4dkqoSvFW52mv9MBwSNvdztOE7+orqo4Udg0KoHGO2YMEDqDZ6cf3lhn9JBP8THpL
+         SXNFUqDsk++m017gBoyG9orexqIiHqldkUdc0ljl0dZGkTWHN0vTtOLiBKFEzlx1hq2B
+         cIfUt2xz84wVu3jXuVG5vMiR43bZENORWNHtlFfTII17+wzsuOOGlKDJg3CP8PaakqFx
+         Lp/5i094Npuct91o6mvl98+2LdqMJNQNK2i0f3If0pO7jP3gOJsnKbcGcrosbNNY+c/2
+         uu0zVrWHxvmFIcAclVfGLvOb9aXm9cL0fqROJHtylVihRdDY9qeyfnlvysFPPFXZwMJA
+         zURA==
+X-Gm-Message-State: APjAAAWmci6HAJc13N+XEcZd9gSUs9yYYHGwSHVlzyNiczp1uc2c38Aq
+        fNlLFMnnBzbxOItxzbsYjok=
+X-Google-Smtp-Source: APXvYqzjthmKuWzOuTcufKkq/JfAoBgxm+qwoeW0fewNnrcCvFDQiBPMegmY4RWfIMlJdwcxhHG6mA==
+X-Received: by 2002:a50:b323:: with SMTP id q32mr19074724edd.24.1554727500826;
+        Mon, 08 Apr 2019 05:45:00 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id c9sm4288732ejb.1.2019.04.08.05.44.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Apr 2019 05:44:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] blame: default to HEAD in a bare repo when no start commit is given
+References: <20190407234327.25617-1-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190407234327.25617-1-szeder.dev@gmail.com>
+Date:   Mon, 08 Apr 2019 14:44:59 +0200
+Message-ID: <878swkacok.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAA01Csp7y9=2n9=TNYMMw9LUO_cENz7FBeZjFrUd2FvHFT9NCQ@mail.gmail.com>
- <8636mvng8n.fsf@gmail.com> <xmqq36mt9e7l.fsf@gitster-ct.c.googlers.com>
- <CAA01CsqAt8osKArhdgATNj29+a9VO6wUwhX6=cRebnDBFx_EVg@mail.gmail.com> <86y34kn4c8.fsf@gmail.com>
-In-Reply-To: <86y34kn4c8.fsf@gmail.com>
-From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Date:   Mon, 8 Apr 2019 13:55:25 +0200
-Message-ID: <CAA01CspJAPnBFsQsXP4Dpweeg6oBVj==TB0aEnK5o1Et5zS30Q@mail.gmail.com>
-Subject: Re: "commit --author=..." does not work if global email and name is
- not set
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 1:06 PM Jakub Narebski <jnareb@gmail.com> wrote:
+
+On Mon, Apr 08 2019, SZEDER G=C3=A1bor wrote:
+
+> When 'git blame' is invoked without specifying the commit to start
+> blaming from, it starts from the given file's state in the work tree.
+> However, when invoked in a bare repository without a start commit,
+> then there is no work tree state to start from, and it dies with the
+> following error message:
 >
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>   $ git rev-parse --is-bare-repository
+>   true
+>   $ git blame file.c
+>   fatal: this operation must be run in a work tree
 >
-> >> On Sat, Apr 6, 2019 at 8:25 PM Jakub Narebski <jnareb@gmail.com> wrote:
-> >>>
-> >>> Better though is to focus on what you want, namely to prevent accidental
-> >>> commits without specified author, instead of how you want to achieve it,
-> >>> i.e. using --author to provide both author and committer identity (the
-> >>> XY problem).  On that machine with "automatic test account" set up
-> >>> pre-commit or commit-msg hook that fails if the GIT_AUTHOR_IDENT
-> >>> environment variable is not the "automatic test account".
-> >
-> > I'm not sure if I follow you. I want to be able to make both "real
-> > user" and "automatic test account user" commits from that machine. I
-> > want to make sure that:
-> > - automatic commits (scripts) use their own account
-> > - real person making commit uses their own account
-> >
-> > IMO the only way this can be achieved is by not having any default
-> > account setup, so that both the scripts and the real users need to
-> > specify it "by hand".
+> This is misleading, because it implies that 'git blame' doesn't work
+> in bare repositories at all, but it does, in fact, work just fine when
+> it is given a commit to start from.
 >
-> If a real person making commits uses their own account (just on that
-> machine), he or she can set up `user.name` and `user.email` settings in
-> the per-user Git configuration file
-
-There is one common "test" (Windows) account which is used both by
-automatic test scripts and by real people who log into that machine,
-so this is not possible.
-
-
-> If however one is doing commits from the "automatic test user" account,
-> then the `pre-commit` or `commit-msg` hook configured for that specific
-> repository for that automatic account would be run, which can detect
-> that the commit was not done with
+> We could improve the error message, of course, but let's just default
+> to HEAD in a bare repository instead, as most likely that is what the
+> user wanted anyway (if they wanted to start from an other commit, then
+> they would have specified that in the first place).
 >
->   $ git commit --author="My Name <me@my.email.com>"
+> 'git annotate' is just a thin wrapper around 'git blame', so in the
+> same situation it printed the same misleading error message, and this
+> patch fixes it, too.
 >
-> The additional advantage is that you can examine committer data to
-> detect such cases of committing out of automatic account.
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
 
-Do you mean following?
+There was the explicit decision not to fall back to HEAD in 1cfe77333f
+("git-blame: no rev means start from the working tree file.",
+2007-01-30). This change makes sense to me, but perhaps some discussion
+or reference to the previous commit is warranted?
 
-1. set default user (user.name, user.email) to "automatic test user"
-on that machine
-2. set commit hook to prevent commits with "automatic test user" AUTHOR
-3. scripts will set AUTHOR (--author) to for example "script X" or
-"automatic script user" - different than the default user
-4. real users will set AUTHOR to their own identity (--author=me)
+Although from skimming the thread from back then it seems to be "not
+HEAD but working tree file", not "let's not use HEAD in bare repos".
 
-I suppose that would work. Looks much more complicated than simply
-setting "--author" (or "--user") though...
+>  builtin/blame.c     | 13 +++++++++++++
+>  t/annotate-tests.sh |  8 ++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 177c1022a0..21cde57e71 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -27,6 +27,7 @@
+>  #include "object-store.h"
+>  #include "blame.h"
+>  #include "string-list.h"
+> +#include "refs.h"
+>
+>  static char blame_usage[] =3D N_("git blame [<options>] [<rev-opts>] [<r=
+ev>] [--] <file>");
+>
+> @@ -993,6 +994,18 @@ int cmd_blame(int argc, const char **argv, const cha=
+r *prefix)
+>
+>  	revs.disable_stdin =3D 1;
+>  	setup_revisions(argc, argv, &revs, NULL);
+> +	if (!revs.pending.nr && is_bare_repository()) {
+> +		struct commit *head_commit;
+> +		struct object_id head_oid;
+> +
+> +		if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+> +					&head_oid, NULL) ||
+> +		    !(head_commit =3D lookup_commit_reference_gently(revs.repo,
+> +							     &head_oid, 1)))
+> +			die("no such ref: HEAD");
+> +
+> +		add_pending_object(&revs, &head_commit->object, "HEAD");
+> +	}
 
+With this patch, if I have a bare repo without a HEAD I now get:
 
--- 
-Piotr Krukowiecki
+    fatal: no such ref: HEAD
+
+Instead of:
+
+    fatal: this operation must be run in a work tree
+
+Both are bad & misleading, perhaps we can instead say something like:
+
+    die(_("in a bare repository you must specify a ref to blame from, we tr=
+ied and failed to implicitly use HEAD"));
+
+Along with a test for what we do in bare repos without a HEAD....?
+
+>
+>  	init_scoreboard(&sb);
+>  	sb.revs =3D &revs;
+> diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+> index 6da48a2e0a..d933af5714 100644
+> --- a/t/annotate-tests.sh
+> +++ b/t/annotate-tests.sh
+> @@ -68,6 +68,14 @@ test_expect_success 'blame 1 author' '
+>  	check_count A 2
+>  '
+>
+> +test_expect_success 'blame in a bare repo without starting commit' '
+> +	git clone --bare . bare.git &&
+> +	(
+> +		cd bare.git &&
+> +		check_count A 2
+> +	)
+
+....just 'git update-ref -d HEAD` after this and a test for 'git blame
+<file>' here would test bare without HEAD.
+
+>  test_expect_success 'blame by tag objects' '
+>  	git tag -m "test tag" testTag &&
+>  	git tag -m "test tag #2" testTag2 testTag &&
