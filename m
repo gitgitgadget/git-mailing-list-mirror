@@ -2,191 +2,249 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84E6920248
-	for <e@80x24.org>; Mon,  8 Apr 2019 16:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 920FD20248
+	for <e@80x24.org>; Mon,  8 Apr 2019 16:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbfDHQLj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 12:11:39 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46243 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726926AbfDHQLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 12:11:38 -0400
-Received: by mail-wr1-f68.google.com with SMTP id t17so17056692wrw.13
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 09:11:37 -0700 (PDT)
+        id S1726818AbfDHQma (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 12:42:30 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:37233 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726678AbfDHQma (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 12:42:30 -0400
+Received: by mail-io1-f65.google.com with SMTP id x7so11624876ioh.4
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 09:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=AjxMJ4SRmkSbMKZXCNqfz19yIEZ8YsYqn6ACyYkK0H0=;
-        b=A4gNvPDb4hnUhGFMLM99J7/sx8BU8IcjOS4A+mJFtmQr5uIQK3wkTsAz9pm4IIydNM
-         rYpXNhoMlk8+dGS7YpD8zwFTMpqH/9P9zmxPPrabjypWwFhmC4Z5uXaIJznenkQ2fUsr
-         cKD4V/rfAiiIGZoBrOWkOpwJbqBhyVYwq/Q3IOE/06t74IKufeVuRM/97Dz1+/3H7Rn4
-         C+zWGmkvJgODtqUaZiiIKuEkhxGxrJzwtQJ4AsCwst1dsB6Nb9V+x2SCsn82oQZsbc6x
-         vrBff0VImCZ7dIFv5iVZksnF1BHY/1+4fR00koVFBinCo1yhL9dT4Hckj1dHTGu5vXG8
-         67Gw==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=61bSLufu9uDXnf0s7JImrotOMKcyhsWGxDNE4vqh0Yw=;
+        b=TmXGzLMppi6xAPh1t3WaPOR3QiAZEroh4xEfhcp8tpTysxHMFOeeZmIyMnpNmjehXN
+         PopdaF0p6MQk9OxYV3h5l7a8WUCN99ouaU84YDiknbEMvHSn4g63yAMl/zXlS6B82EJN
+         5a47xfWBQ0N0t4odIMWHgK0iCe3YHk9RNq8+C363ayZ2hQz8FdYqtooNkPbHPPBnZNef
+         5mRfXz7cviny9+7kgvJLgk2TyahsE0C61gbMFIEF6LSJi0/pX2GqW72XGjvLMiP2ceuA
+         1XRQ8qiLYqHWPZDM5FEpDSmX9hG5jC/WAPZU5CU6wn2ZIwREC9I0pr8PIJABJD4I/0qp
+         pHZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AjxMJ4SRmkSbMKZXCNqfz19yIEZ8YsYqn6ACyYkK0H0=;
-        b=GUIO1mzsdWCqXYZ2aSU0DtQgTi8DKgZxUSrHxlTTYHhKM6t8ekNzV+JH5gNZVzficK
-         XUWbIsO7cDz2G53/2ThQGUaGeUVtubQahtJxewG1Z27vfDfXrrRZK15P3EBOZkhznSGa
-         MMg7+Y4gfdKXm5j/h+falDIoX8dgcYcsGcV3EfoUv8AcFk7g+3hfPQLTeOBVb2gdoCcG
-         FJ1CH1G886py9I+ZUyeLtIIYa/kl7dq8TS7nde78VMMFFo1yNnrEBHbxcEP3NaE2XAdq
-         ru9xihCfDNbJbvk++kVxZR/6OmEJrgdS3BeMuOvRrx5rI52tGQkiF6A0x2NlAACTcXCN
-         wT6A==
-X-Gm-Message-State: APjAAAUAndMaJ6X0sK81gHcLeHqc0K4MbI/+gLxQz6tunvKA8ch+/MVS
-        IAiBE/o69Ye97WPFz440RTk=
-X-Google-Smtp-Source: APXvYqzTH2Q8tvR2p9XV3Gz1znfDoVU9Ul9tgo8qJc1D1MLtYVq3PXy5CscnzeKix/i8r5oTxh5w7Q==
-X-Received: by 2002:adf:f344:: with SMTP id e4mr20881481wrp.77.1554739896387;
-        Mon, 08 Apr 2019 09:11:36 -0700 (PDT)
-Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id v1sm43132721wrd.47.2019.04.08.09.11.35
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 08 Apr 2019 09:11:35 -0700 (PDT)
-Date:   Mon, 8 Apr 2019 18:11:34 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Pull without fetch
-Message-ID: <20190408161134.gdxmxvqitxioeibp@feanor>
-References: <20190406131200.xcd7gtf7dlc567uh@doriath>
- <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
- <20190408145340.3rdprg3yu5shpelu@feanor>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=61bSLufu9uDXnf0s7JImrotOMKcyhsWGxDNE4vqh0Yw=;
+        b=MO8ZpbNJ892dL3wnKF6bUlnry4/R6x9VDS8gaw4Elz2dpPiIVvSrxUHmsZu8L6CLP0
+         RkoFmngLN2WoWp//ywemYS7xwvDNpU0DK5lUzP08uS0WZ7bPaFY/37LvsATbClBH7BU/
+         iuuIVg61a4SOnOajJkMhRtynmUr9YgzSkx702psrkqWJ3SSiNUfxEPwgavtAM/cOLRgJ
+         env5k5YKAtetefXyehinViTJ3fMFBfHA5nMjZw1ZQZk539N4IrpheVZpkw67hPw/K9CW
+         d4PI01vtYCuf5tnqsEK4sk27vSqST1yITX5TnrJAx8o5NuIE8V4DXtTTpRZmvHf6E3Zl
+         VzMw==
+X-Gm-Message-State: APjAAAWgb+CcLvOWYcI/irTSPJR1BYr2xhkKUgxBBzd9rsmOV9xH9J8J
+        a25t0lSz/jrecdUwTnJg44F6M0hkCQK6clq4b5k+gQ==
+X-Google-Smtp-Source: APXvYqyUSswiHbMqWa8eui4ot45E/GrTetmQXn/wBtZlIZfCB2gtOaCRA9F4e8LRNMnqkO6UdWzJEFhFLB/UHBCiHag=
+X-Received: by 2002:a6b:c981:: with SMTP id z123mr17942916iof.123.1554741748529;
+ Mon, 08 Apr 2019 09:42:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190408145340.3rdprg3yu5shpelu@feanor>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Mon, 08 Apr 2019 18:09:07 +0200
-User-Agent: NeoMutt/20180716
+References: <CAHd-oW7KMrDJ-cyzk63oqW9-QVpag6fKnDp+Mo5bWxg1KfzY3g@mail.gmail.com>
+ <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
+In-Reply-To: <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 8 Apr 2019 13:42:17 -0300
+Message-ID: <CAHd-oW7UQdmyeODUOPdjMnmumFaQZ7_bzB2-x=crN92arSOejQ@mail.gmail.com>
+Subject: Re: [GSoC][RFC] Proposal: Make pack access code thread-safe
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Damien Robert, Mon 08 Apr 2019 at 16:53:40 (+0200) :
-> > Others may have a better idea, but I do not immediately see any
-> > solution better than inventing a new option to "git pull".
+On Sun, Apr 7, 2019 at 7:52 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> Hi Matheus
+>
+> On Sun, Apr 7, 2019 at 10:48 PM Matheus Tavares Bernardino
+> <matheus.bernardino@usp.br> wrote:
+> >
+> > This is my proposal for GSoC with the subject "Make pack access code
+> > thread-safe".
+>
+> Thanks!
+>
+> > I'm late in schedule but I would like to ask for your
+> > comments on it. Any feedback will be highly appreciated.
+> >
+> > The "rendered" version can be seen here:
+> > https://docs.google.com/document/d/1QXT3iiI5zjwusplcZNf6IbYc04-9diziVKd=
+OGkTHeIU/edit?usp=3Dsharing
+>
+> Thanks for the link!
+>
+> > Besides administrative questions and contributions to FLOSS projects, a=
+t
+> > FLUSP, I=E2=80=99ve been mentoring people who want to start contributin=
+g to the
+> > Linux Kernel and now, to Git, as well.
+>
+> Nice! Do you have links about that?
 
-So here is a RFC patch that implements --no-fetch. (I am not sure about
-the wording of the documentation, and what's the best way to test that
-fetch was not called).
+Unfortunately not :( Maybe just the mentoring slides (e.g.
+https://flusp.ime.usp.br/materials/Kernel_Primeiros_Passos.pdf). But
+they are all in Portuguese, so I don't know wether it would be
+valuable to add them here...
 
--- >8 --
+> > # The Project
+> >
+> > As direct as possible, the goal with this project is to make more of
+> > Git=E2=80=99s codebase thread-safe, so that we can improve parallelism =
+in
+> > various commands. The motivation behind this are the complaints from
+> > developers experiencing slow Git commands when working with large
+> > repositories[1], such as chromium and Android. And since nowadays, most
+> > personal computers have multi-core CPUs, it is a natural step trying to
+> > improve parallel support so that we can better use the available resour=
+ces.
+> >
+> > With this in mind, pack access code is a good target for improvement,
+> > since it=E2=80=99s used by many Git commands (e.g., checkout, grep, bla=
+me, diff,
+> > log, etc.). This section of the codebase is still sequential and has
+> > many global states, which should be protected before we can work to
+> > improve parallelism.
+>
+> I think it's better if global state can be made local or perhaps
+> removed, rather than protected (though of course that's not always
+> possible).
 
-From: Damien Robert <damien.olivier.robert+git@gmail.com>
-Date: Mon, 8 Apr 2019 17:51:51 +0200
-Subject: [PATCH 1/1] pull: add --no-fetch
+Indeed! I just added this to the docs version. Thanks
 
-A common workflow is to do a fetch, review the changes, and then
-integrate the changes via an explicit merge or rebase.
+> > ## The Pack Access Code
+> >
+> > To better describe what the pack access code is, we must talk about
+> > Git=E2=80=99s object storing (in a simplified way):
+>
+> Maybe s/storing/storage/
 
-In the good old days `git pull` was essentially `git fetch` followed by
-`git merge FETCH_HEAD` so it was easy to separate the fetching part from
-the integrating part.
+Thanks. Already changed.
 
-But nowadays there are no easy way to do the integrating part of `git
-pull`. Indeed, `git pull` learnt to read the config values of
-`branch.<current>.rebase` and `pull.rebase`, whose possible values are
-growing. At the time of this commit, they can be 'true', 'merges',
-'preserve' and 'interactive'.
+> > Besides what are called loose objects,
+>
+> s/loose object/loose object files/
 
-To remedy this, add a new --no-fetch option to `git pull`.
+Done, thanks!
 
-Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
----
- Documentation/git-pull.txt |  9 +++++++++
- builtin/pull.c             |  8 ++++++--
- t/t5520-pull.sh            | 14 ++++++++++++++
- 3 files changed, 29 insertions(+), 2 deletions(-)
+> > Git has a very optimized mechanism to compactly store
+> > objects (blobs, trees, commits, etc.) in packfiles[2]. These files are
+> > created by[3]:
+> >
+> > 1. listing objects;
+> > 2. sorting the list with some good heuristics;
+> > 3. traversing the list with a sliding window to find similar objects in
+> > the window, in order to do delta decomposing;
+> > 4. compress the objects with zlib and write them to the packfile.
+> >
+> > What we are calling pack access code in this document, is the set of
+> > functions responsible for retrieving the objects stored at the
+> > packfiles. This process consists, roughly speaking, in three parts:
+> >
+> > 1. Locate and read the blob from packfile, using the index file;
+> > 2. If the blob is a delta, locate and read the base object to apply the
+> > delta on top of it;
+> > 3. Once the full content is read, decompress it (using zlib inflate).
+> >
+> > Note: There is a delta cache for the second step so that if another
+> > delta depends on the same base object, it is already in memory. This
+> > cache is global; also, the sliding windows, are global per packfile.
+>
+> Yeah, but the sliding windows are used only when creating pack files,
+> not when reading them, right?
+>
+> > If these steps were thread-safe, the ability to perform the delta
+> > reconstruction (together with the delta cache lookup) and zlib inflatio=
+n
+> > in parallel could bring a good speedup. At git-blame, for example,
+> > 24%[4] of the time is spent in the call stack originated at
+> > read_object_file_extended. Not only this but once we have this big
+> > section of the codebase thread-safe, we can work to parallelize even
+> > more work at higher levels of the call stack. Therefore, with this
+> > project, we aim to make room for many future optimizations in many Git
+> > commands.
+>
+> Nice.
+>
+> > # Plan
+> >
+> > I will probably be working mainly with packfile.c, sha1-file.c,
+> > object-store.h, object.c and pack.h, however, I may also need to tackle
+> > other files. I will be focusing on the following three pack access call
+> > chains, found in git-grep and/or git-blame:
+> >
+> > read_object_file =E2=86=92 repo_read_object_file =E2=86=92 read_object_=
+file_extended =E2=86=92
+> > read_object =E2=86=92 oid_object_info_extended =E2=86=92 find_pack_entr=
+y =E2=86=92
+> > fill_pack_entry =E2=86=92 find_pack_entry_one =E2=86=92 bsearch_pack an=
+d
+> > nth_packed_object_offset
+> >
+> > oid_object_info =E2=86=92 oid_object_info_extended =E2=86=92 <same as p=
+revious>
+> >
+> > read_object_with_reference =E2=86=92 read_object_file =E2=86=92 <same a=
+s previous>
+> >
+> > Ideally, at the end of the project, it will be possible to call
+> > read_object_file, oid_object_info and read_object_with_reference with
+> > thread-safety, so that these operations can be, latter, performed in
+> > parallel.
+> >
+> > Here are some threads on Git=E2=80=99s mailing list where I started dis=
+cussing
+> > my project:
+> >
+> > * https://public-inbox.org/git/CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00d=
+U8iaoc+b8=3DQ@mail.gmail.com/
+> > * https://public-inbox.org/git/20190402005245.4983-1-matheus.bernardino=
+@usp.br/#t
+> >
+> > And also, a previous attempt to make part of the pack access code
+> > thread-safe which I may use as a base:
+> >
+> > * https://public-inbox.org/git/20140212015727.1D63A403D3@wince.sfo.corp=
+.google.com/#Z30builtin:gc.c
+>
+> Nice.
+>
+> > # Points to work on
+> >
+> > * Investigate pack access call chains and look for non-thread-safe
+> > operations on then.
+> > * Protect packfile.c read-and-write global variables, such as
+> > pack_open_windows, pack_open_fds and etc., using mutexes.
+>
+> Do you want to work on making both packfile reading and packfile
+> writing thread safe? Or just packfile reading?
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 118d9d86f7..cec06bf6e3 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -144,6 +144,15 @@ This option is only valid when "--rebase" is used.
- Options related to fetching
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-+--fetch::
-+--no-fetch::
-+	Perform a fetch first. This option can be used to override
-+	--no-fetch.
-++
-+With --no-fetch don't fetch before updating the branch via a merge or a
-+rebase. This can be used to review changes by doing a fetch first before
-+pulling.
-+
- include::fetch-options.txt[]
- 
- include::pull-fetch-param.txt[]
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 33db889955..0c14701abe 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -111,6 +111,7 @@ static char *opt_gpg_sign;
- static int opt_allow_unrelated_histories;
- 
- /* Options passed to git-fetch */
-+static int opt_fetch = 1;
- static char *opt_all;
- static char *opt_append;
- static char *opt_upload_pack;
-@@ -195,6 +196,8 @@ static struct option pull_options[] = {
- 
- 	/* Options passed to git-fetch */
- 	OPT_GROUP(N_("Options related to fetching")),
-+	OPT_BOOL(0, "fetch", &opt_fetch,
-+		N_("fetch before merging / rebasing (default)")),
- 	OPT_PASSTHRU(0, "all", &opt_all, NULL,
- 		N_("fetch from all remotes"),
- 		PARSE_OPT_NOARG),
-@@ -912,8 +915,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			oidclr(&rebase_fork_point);
- 	}
- 
--	if (run_fetch(repo, refspecs))
--		return 1;
-+	if (opt_fetch)
-+		if (run_fetch(repo, refspecs))
-+			return 1;
- 
- 	if (opt_dry_run)
- 		return 0;
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index cf4cc32fd0..058c85e6a4 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -134,6 +134,20 @@ test_expect_success 'the default remote . should not break explicit pull' '
- 	test_cmp reflog.expected reflog.fuzzy
- '
- 
-+test_expect_success 'With --no-fetch will not fetch but still merge pending changes' '
-+	git checkout -b nofetch master^ &&
-+	echo modified >file &&
-+	git commit -a -m modified &&
-+	git checkout copy &&
-+	git reset --hard HEAD^ &&
-+	test "$(cat file)" = file &&
-+	stat --format %Y .git/FETCH_HEAD > fetch_head_before &&
-+	git pull --no-fetch . nofetch &&
-+	stat --format %Y .git/FETCH_HEAD > fetch_head_after &&
-+	test "$(cat file)" = modified &&
-+	test_cmp fetch_head_before fetch_head_after
-+'
-+
- test_expect_success 'fail if wildcard spec does not match any refs' '
- 	git checkout -b test copy^ &&
- 	test_when_finished "git checkout -f copy && git branch -D test" &&
--- 
-Patched on top of v2.21.0-196-g041f5ea1cf (git version 2.21.0)
+I plan to work on packfile reading, only.
 
+> If some variables are used for both reading and writing packfiles, do
+> you plan to protect them only when they are used for reading?
+
+Hm, I haven't thought of that before. But indeed, if they are used for
+both, I think I should protect them in both cases.
+
+> The rest of your proposal looks very good to me. Please make sure you
+> upload this or an updated version soon to the GSoC web site.
+
+Thanks, Christian. I will work on the final points today and submit it.
+
+> Thanks,
+> Christian.
