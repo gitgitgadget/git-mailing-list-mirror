@@ -2,140 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5545220248
-	for <e@80x24.org>; Mon,  8 Apr 2019 05:48:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2100320248
+	for <e@80x24.org>; Mon,  8 Apr 2019 05:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbfDHFsg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 01:48:36 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:34869 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726068AbfDHFsf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 01:48:35 -0400
-Received: by mail-oi1-f193.google.com with SMTP id j132so9524061oib.2
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 22:48:35 -0700 (PDT)
+        id S1726212AbfDHFvX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 01:51:23 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35819 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725995AbfDHFvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 01:51:23 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y197so13249265wmd.0
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 22:51:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+JYPj0BnmSWv8RHeDxPS7KnwKtXYDkI9LOfAoIs3dDE=;
-        b=AmgtgBLc+2K0TFZMGqC6NT+hGQZKXDQ65N8TCgmq4UDq7OCfq4wgKvwUjKvfpyKC1z
-         M3ZRVCuK/lA0n7LzT8Z6JdoF6vHWr2DcvVQlzaGjKqXIirXzgWI8ao7u4tlUmY3jfIc1
-         9kNVwT5ltD0f7kJ5OIXzvzZphRuNdWteTLsqj/GiLerc+mAk2IoxUZJdy9D9paOeqgFH
-         kZB0KQTQ2bQhEEgkZFDL58kAbJFHDqCl3QHQiitpixm4Gfa2KLSRLny9V0g2BvrR2vZk
-         ACrb40uyeEjhpJbfWpCNdmY8quneDs53ppvqDRqVG+WhihVmCDPnr8xGnSoRAfuBQhj9
-         z8aQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8Nd15DhYUNGwfOdYKD0sdyh57lnkmVlo+wp2xcC50WY=;
+        b=PW6HoHL8uD3rPZ1zaJHhT94NEcHecqVeqFhVCZ5VWjwLdDDglLNluTxtjELv14Ib8d
+         YgJZ1YLNghLHgsz6y1pVg+BhAcuLUB0XrIHTFLo4/Gr4Hou4YiNUbVvucCwffOnZ04yQ
+         yBRiz6HRHIy14Apm9W2zoJzQ1X6obCshL/1LbsZgM/fP+NM+cgN3WD5md1HCfe++ClmZ
+         ipfu7QXFUFCp73ea8Bm9+dfK3Z4bmnNLIHaYDbZxx0qzQbtDMHNlCj1DNrxuA6ZTqEQQ
+         7EC6SVeb9TftS0CR2CbKeSm0R59zgZL2C1+trj3OFn814IXUj2XXogcxdlghZH9g+oUn
+         4QoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+JYPj0BnmSWv8RHeDxPS7KnwKtXYDkI9LOfAoIs3dDE=;
-        b=DtYypU/c79EZe5SKzXP+NiK0HNcmCLpSWzai8vK55BqbIcj/58Yxo7Z2zzA1gr/8rW
-         LHAWp10N60nxmKSG4RSil+in0wBV2iB/O7HhiKDN+cyo+MQ0HJAgwUu5w1yL8xw3Wn6J
-         Cevm0z7A2anjKWgZyzhfQq/ZMOsHGxi+5AflvUIm8OVXolcM2U4VcAVXFHgzd8m9HGhx
-         1G7Qqn2QAq/WlxIi0MmaJmrIlXM062pqZdKMT7BJY6CV/qdYoFDGbQcwTp91f9m6MwoC
-         HjV9vCgFqCXOOrQqCipjamQYH/1VlYnYLF9Hm8mJpV0UARCZj8QThLRsYKQNW9yG59oK
-         FUdQ==
-X-Gm-Message-State: APjAAAXzNRfyyqVPggUH5jkNSPFu3hyComg37/loNpkkmBHxBmqC35ti
-        O2/LbjBPc/ZAE6wGMNUxeoRa92KPuvfar7bquwM=
-X-Google-Smtp-Source: APXvYqyVIxuRL4L5pgdyiu/EtfavK1nyP7ZqverAnFEruu8MLOCYcx2C7hDD3vYtwQ0R4opO9itBacaIi172llqdip0=
-X-Received: by 2002:aca:e58b:: with SMTP id c133mr14706537oih.119.1554702514816;
- Sun, 07 Apr 2019 22:48:34 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8Nd15DhYUNGwfOdYKD0sdyh57lnkmVlo+wp2xcC50WY=;
+        b=SXQ0lOpvDzwM1+xXHm6hvsdPw44XLF0rHGNLrQcegzn+6w0FPEFVlcooXZ41HMfrr7
+         8mVwAIRW1Zkr649tkSLV7Zd6CatZR0a3KSsrsWsx9fWl9DYnBiC/XHgnVo28SQ/W97hf
+         c9jEB8kSkG6ZNF380P9b2GFo24LLzgizQONZef1hZS/9aYGUYmq7BuljZEaNpkrlBZdN
+         2ihASDRyVQhuuKfJUxSRAcCVeIdMSiYYQHyrg1rRyCPJvLXErcexxNxbYzyRUX69R34x
+         bwck/GZuUJPRW1HRRbHNyA+vfEVoVtABNW4YK4RR85Hq4+csM1Fq9TqETxbe/B30Nz2m
+         YvPQ==
+X-Gm-Message-State: APjAAAV7CudtspGB/Ru3XJdgS3apOlMVZDiGKoqAQg7GLQ560ceUFRCX
+        0Tb5AYPnLKHh411XbAdY/zs=
+X-Google-Smtp-Source: APXvYqwp2ODQFKtnlLzBSl5mVW5s9cwHVtsTKuBGdDG080AvUNm7gogUj4mM05zoVxO2bCmBCXbjHA==
+X-Received: by 2002:a7b:c3c9:: with SMTP id t9mr15531666wmj.131.1554702681794;
+        Sun, 07 Apr 2019 22:51:21 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id w130sm13627647wma.36.2019.04.07.22.51.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 07 Apr 2019 22:51:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] diff: batch fetching of missing blobs
+References: <20190326220906.111879-1-jonathantanmy@google.com>
+        <cover.1553895166.git.jonathantanmy@google.com>
+        <44de02e584f449481e6fb00cf35d74adf0192e9d.1553895166.git.jonathantanmy@google.com>
+        <20190404024710.GO32732@szeder.dev>
+        <nycvar.QRO.7.76.6.1904051528130.41@tvgsbejvaqbjf.bet>
+        <CAP8UFD1qK61MtJ-XeMuwY4W2V0CdHeZQC9rQap1M+nEeaLmBJQ@mail.gmail.com>
+        <xmqqy34lb4vb.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 08 Apr 2019 14:51:20 +0900
+In-Reply-To: <xmqqy34lb4vb.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 08 Apr 2019 11:36:08 +0900")
+Message-ID: <xmqqmul19h9j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
- <20190407183857.GA32487@hank.intra.tgummerer.com>
-In-Reply-To: <20190407183857.GA32487@hank.intra.tgummerer.com>
-From:   Kapil Jain <jkapil.cs@gmail.com>
-Date:   Mon, 8 Apr 2019 11:18:23 +0530
-Message-ID: <CAMknYEOAg1S8cNYdLPgJemxgikisNpmeuw74T0w+7PUo93stVg@mail.gmail.com>
-Subject: Re: [GSoC][RFC] discussion about stashing with conflicts
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 12:09 AM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> On 04/07, Kapil Jain wrote:
-> >
-> > what is the use of ce_stage macro ?
-> > tells about stage of an index entry.
-> > if ce_stage says, stage #0 i.e staging area, then that index entry is
-> > in staging area
-> > and nothing needs to be done.
+>> Thanks for investigating! Yeah, that's part of the problem.
+>>
+>> The fix I would suggest is:
+>>
+>> diff --git a/diff.c b/diff.c
+>> index f685ab10b5..a2b1241f83 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -26,6 +26,7 @@
+>>  #include "parse-options.h"
+>>  #include "help.h"
+>>  #include "fetch-object.h"
+>> +#include "promisor-remote.h"
 >
-> I don't quite understand what you mean with "nothing needst to be
-> done" here.  In the context of teaching 'git stash' to handle unmerged
-> index entries, nothing that is not already being done needs to be done
-> with an index entry that is at stage #0.  The current implementation
-> already handles that correctly.
->
-> > else a temporary index entry is created and repo_read_index_unmerged()
-> > calls other function and tries to add it to index.
-> > if it fails, it issues an error.
->
-> Not sure what you mean here.  Index entries with higher stages are not
-> temporary, they are written out to the index file, and can then be
-> read back with 'repo_read_index()' for example.
+> Thanks.
 
-sorry, i failed to provide detailed explanation. below is what i meant.
+Together with "if we are forbidding the direct access to the
+repository_format_partial_clone variable and the fetch_objects()
+funciton, make it clear that is what is being done in the
+multi-promisor topic", I think a patch that adds this header should
+also remove inclusion of "fetch-object.h".
 
-in repo_read_index_merged(),
-if ce_stage() macro says that this cache_entry is in stage #0 i.e.
-already merged,
-then the function doesn't try to add that entry into index.
-
-if (!ce_stage(ce))
-    continue;
-
-but when it is not in stage #0; the function, creates a temporary cache_entry,
-
-struct cache_entry *new_ce;
-new_ce = make_empty_cache_entry(istate, len);
-
-and tries to add it to index file.
-
-if (add_index_entry(istate, new_ce, ADD_CACHE_SKIP_DFCHECK))
-    return error(_("%s: cannot drop to stage #0"),
-             new_ce->name);
-
-now if this try of adding index entry is successful, then that entry
-is no longer unmerged, right ?
-so can we make `unmerged` variable 0.
-
-> >
-> > 1) in repo_read_index_unmerged(), why don't we make the value of
-> > `unmerged` 0, if adding index entry is successful; as the entry is no
-> > longer unmerged ?
->
-> Because the caller often wants to know if the index is unmerged in the
-> first place, and would refuse to operate on such an index.  Read the
-> comment documenting the function again, that explains this very
-> nicely.  Then see how some callers actually use the function, and
-> you'll see that they actually don't care about dropping the entry to
-> stage 0,
-
->but they care about knowing whether the index is unmerged or
-> not.
-
-if they care about whether the index *is* unmerged, and that call to
-add_index_entry()
-is successful, then index is no longer unmerged (at least because of
-that index_entry).
-is it possible that they care about if index *was* unmerged ?
-
-
-> So the question is, did you read this function in depth and understand
-> what it does?  If you want to validate your understanding of the
-> function, try to repeat what it does in your own words, and ask for us
-> to correct you.
-
-upcoming mail will do so.
