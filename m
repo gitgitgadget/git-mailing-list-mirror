@@ -2,85 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1382F20305
-	for <e@80x24.org>; Mon,  8 Apr 2019 11:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D53B620248
+	for <e@80x24.org>; Mon,  8 Apr 2019 11:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725984AbfDHLA7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 07:00:59 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:43930 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725881AbfDHLA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 07:00:59 -0400
-Received: by mail-oi1-f194.google.com with SMTP id t81so10121134oig.10
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 04:00:58 -0700 (PDT)
+        id S1726119AbfDHLGy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 07:06:54 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:35063 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726005AbfDHLGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 07:06:54 -0400
+Received: by mail-wr1-f47.google.com with SMTP id w1so15885646wrp.2
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 04:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MUHommq83D2Q69UidU3idekkaRbIRbQ9ogGzXuyhb68=;
-        b=PdOGIq+7wOV7+FJdZPz4IK8OHQW86TgjBUN4pJIEjRdVxvjC7C6sx4Iwral57KdpMS
-         pHJnVT0W9vbpTwpcf5eiQ/DU6l+s2JsGgqUTDWuyhdVVGtUzkl264561XGjqCjAXLFM2
-         3tHMFyqdjZLyD3f7jRAanJ7Hnm7ffFSWJp2O/Rss+bTanJHnPCKdNAidBIZWdeaGZvUV
-         o68eoRxmG4wzzz0sCsh42KXV/kw3RCfCGDg0ECoa8jzLiF9+2U3GubdfRM8lJ8L3q0j5
-         nvgA5vMf5ILfprzHPpXNVYHQP4mVo1PEfC4fGTFkliLlJj8ThAeCsVE/QsysKqgJuAXZ
-         nItg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=OZrPaapTglowGGnjM0ZScR5GdY01yaKHs+ZE/LJYBIA=;
+        b=bx+KqpVMysnXKpprIXzAwSLvhdKlbwBvCejmdrjbFmYEyRMvYbEbfSndnOdYHGh1vu
+         zq53rT0OKR3hv1L9XnS86b5oyeu5n7u8ROHH2vGS5Tn904iqU5XrQT23mWjOp8pEVZjB
+         vsYN5PxK95qNPtnv9rJUZfcBRe2D/1ke1ME8r//iN7lUOMAyyBmIaJqTCul0W3rjj+tr
+         35wiqAQOwdpy3fi3o8y/H3r7TsGUS44UsocoRBlh52N0N73VwaH6d3YyijtIQ9k8GXx9
+         vCVo2hmeQOq+jdtjv6NVaJA4DTHObIr7MePcHmCkzyl5wrYJgmV3mlghdCrYJNWCd9Zm
+         T57Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MUHommq83D2Q69UidU3idekkaRbIRbQ9ogGzXuyhb68=;
-        b=H+x3CbS6l8N4hNG+6DfCsS2m4ba9hQDyyc9mumm9BNhX0XBpNO22+GzyYW/67VRPMV
-         zfWK7rkDro3JV7Zw8EYftTr/ZEjYhdjbr6DDP01GqifVy0JuE/UFucJ+zFj4kLIFnBIA
-         c4JnFY1ma+P0ONgSADmF5HX2uOSE8U+uuasb9xmvsrFuOAxgPWXIkm0IUvKEgnsAvRNB
-         raLw5w1wmfbCa/4W7/k1g9jSrq/naT19u47Li/xZC/txzjqPDS2TObrRizkWLBN98Vhy
-         1ypL7p32orc7PhzqpfqKUJOUcHgkKRoMKU4QzRyTQ/c0BK0ty/4k/WGZFwNg10pYZT1u
-         pMYA==
-X-Gm-Message-State: APjAAAU44B92HPFISybr527XW/VyXD9uNpDX8OnK0YqPl5W9tCV86Is4
-        ZL/W/QyNzz0Ol3wxZcv859rkalaOiXpUp4lYtAs=
-X-Google-Smtp-Source: APXvYqzik1uM2w3swOQhL75ociNbv907kXxWEcThhUoXrUHXGwv3Z9AOfumytLt/kZNAyHM+mhtzunkHncF0kUy9oK0=
-X-Received: by 2002:aca:e58b:: with SMTP id c133mr15348046oih.119.1554721258363;
- Mon, 08 Apr 2019 04:00:58 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=OZrPaapTglowGGnjM0ZScR5GdY01yaKHs+ZE/LJYBIA=;
+        b=QqZCyuU+i47/x6Ph+Th8SMoWv3JvAhlrp8YGN8BEtNd8rC+R3mxk/tiABsJDsWzLd/
+         D0ljgmVrWGJEbe80llJFysKR+OhwTJBPI4UXePIpmhiTYNE1WTKnQBB8Y50xxDmdvXC6
+         vfTSdxR4/tLXfjXW3/n/jfTNF6h0dirqzjGRArcfhzF9+nJawHBaDwPqph20bkZsAFxE
+         uyFQCgU9U7sdgwr8Pqx6bnwaJjCCDBqTE9RsqokGjBeY6ODW9VGEGffLepPTTM6IT2vh
+         noLKwZaY7OnBKIe2o89lEvg3nJQjoBHTnz/IKNL6f0E9bDfqnVspFjJ487FC4szzvpw5
+         gXUA==
+X-Gm-Message-State: APjAAAUiQl5GXoJFEl/V1ssIEvRewVOzsUiILjXnGLGr082bTbhuxB3g
+        5YNRxz1dbrcdQBap1zmvxhhDd7Q5DEw=
+X-Google-Smtp-Source: APXvYqxETVFb9RmGbtWJZDffxhcuIOzn79DKZFjZza/clcrXC/yd3JwBiv/krtU4quivEfph6Ta83g==
+X-Received: by 2002:a5d:400c:: with SMTP id n12mr17507144wrp.31.1554721612043;
+        Mon, 08 Apr 2019 04:06:52 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egg215.neoplus.adsl.tpnet.pl. [83.21.70.215])
+        by smtp.gmail.com with ESMTPSA id b3sm31946341wrx.57.2019.04.08.04.06.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Apr 2019 04:06:50 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: "commit --author=..." does not work if global email and name is not set
+References: <CAA01Csp7y9=2n9=TNYMMw9LUO_cENz7FBeZjFrUd2FvHFT9NCQ@mail.gmail.com>
+        <8636mvng8n.fsf@gmail.com>
+        <xmqq36mt9e7l.fsf@gitster-ct.c.googlers.com>
+        <CAA01CsqAt8osKArhdgATNj29+a9VO6wUwhX6=cRebnDBFx_EVg@mail.gmail.com>
+Date:   Mon, 08 Apr 2019 13:06:47 +0200
+In-Reply-To: <CAA01CsqAt8osKArhdgATNj29+a9VO6wUwhX6=cRebnDBFx_EVg@mail.gmail.com>
+        (Piotr Krukowiecki's message of "Mon, 8 Apr 2019 11:54:29 +0200")
+Message-ID: <86y34kn4c8.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-References: <CAMknYEN1x5zDPn4vaZmw3ch-Oy2=NQ=cfF9YmXumcbZGWvTToQ@mail.gmail.com>
- <20190407183857.GA32487@hank.intra.tgummerer.com> <CAMknYEOAg1S8cNYdLPgJemxgikisNpmeuw74T0w+7PUo93stVg@mail.gmail.com>
- <CACsJy8Dc3fuXWOOO-hNJqGNomufP7bffoHVf5hHLTubHQvq9vA@mail.gmail.com>
-In-Reply-To: <CACsJy8Dc3fuXWOOO-hNJqGNomufP7bffoHVf5hHLTubHQvq9vA@mail.gmail.com>
-From:   Kapil Jain <jkapil.cs@gmail.com>
-Date:   Mon, 8 Apr 2019 16:30:46 +0530
-Message-ID: <CAMknYENqH==YcAfU-B16Jytc4Pts4viNQn9deTFag++zZVb1+Q@mail.gmail.com>
-Subject: Re: [GSoC][RFC] discussion about stashing with conflicts
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 4:02 PM Duy Nguyen <pclouds@gmail.com> wrote:
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+
+>> On Sat, Apr 6, 2019 at 8:25 PM Jakub Narebski <jnareb@gmail.com> wrote:
+>>>
+>>> Better though is to focus on what you want, namely to prevent accidental
+>>> commits without specified author, instead of how you want to achieve it,
+>>> i.e. using --author to provide both author and committer identity (the
+>>> XY problem).  On that machine with "automatic test account" set up
+>>> pre-commit or commit-msg hook that fails if the GIT_AUTHOR_IDENT
+>>> environment variable is not the "automatic test account".
 >
-> Sometimes when I don't understand what some code does, I look at "git
-> log --patch". In this case, there a big explanation in ad3762042a
-> (read-cache: fix directory/file conflict handling in
-> read_index_unmerged(), 2018-07-31) that might help you.
+> I'm not sure if I follow you. I want to be able to make both "real
+> user" and "automatic test account user" commits from that machine. I
+> want to make sure that:
+> - automatic commits (scripts) use their own account
+> - real person making commit uses their own account
 >
+> IMO the only way this can be achieved is by not having any default
+> account setup, so that both the scripts and the real users need to
+> specify it "by hand".
 
-i got my reason from the commit message,
+If a real person making commits uses their own account (just on that
+machine), he or she can set up `user.name` and `user.email` settings in
+the per-user Git configuration file with
 
-"The _only_ reason we want to keep a previously unmerged entry in the
-index at stage #0 is so that we don't forget the fact that we have
-corresponding file in the work tree in order to be able to remove it
-when the tree we are resetting to does not have the path."
+  $ git config --global user.name  "My Name"
+  $ git config --global user.email me@my.email.com
 
-and now that i got back to reading that comment, it makes sense.
+If however one is doing commits from the "automatic test user" account,
+then the `pre-commit` or `commit-msg` hook configured for that specific
+repository for that automatic account would be run, which can detect
+that the commit was not done with
 
-for finding that commit message did you do something like this:
-git log -L :repo_read_index_unmerged:read-cache.c
+  $ git commit --author=3D"My Name <me@my.email.com>"
 
-Thanks.
+The additional advantage is that you can examine committer data to
+detect such cases of committing out of automatic account.
+
+I hope that helps,
+--
+Jakub Nar=C4=99bski
