@@ -2,115 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46BF320248
-	for <e@80x24.org>; Mon,  8 Apr 2019 01:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4410120248
+	for <e@80x24.org>; Mon,  8 Apr 2019 01:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726489AbfDHBXx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Apr 2019 21:23:53 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:39948 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726466AbfDHBXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Apr 2019 21:23:53 -0400
-Received: by mail-io1-f65.google.com with SMTP id d201so9621834iof.7
-        for <git@vger.kernel.org>; Sun, 07 Apr 2019 18:23:53 -0700 (PDT)
+        id S1726436AbfDHBeK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Apr 2019 21:34:10 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:44732 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726349AbfDHBeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Apr 2019 21:34:10 -0400
+Received: by mail-wr1-f50.google.com with SMTP id y7so14291469wrn.11
+        for <git@vger.kernel.org>; Sun, 07 Apr 2019 18:34:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pHJGplNOV+cARceIaBmMZMmeNiNGjo4kXIDlFhjKRBg=;
-        b=K+nwhEk6zc5WPsjbpXGVmfex4f/Q9WE4NIsOJ7eDVGlzzMFSdKJIE05mDJIO8p/1g6
-         19Q75RAljE7GlvyJ0Bo68OJQgWepOQxPpe9qLVI+UyeDNCvkb4p9LQhBILbvHL0aeckI
-         hNVef8KlL21wJ6hGFLHTS3ukwgvxuxoxtU2ggDMplLnJDCg0VqWuOrMEB75mLO6tSdZy
-         Pu2uECthXt2dTIJYg7rWoe0+9lptFv30JzrjCE9BDCHJXmAVXtE5sEROchAMOnfMpxgW
-         ReoU+CVtkMFjiHAn95FDAxRCXm70V6QUDdaRLhp3TOSnoXUWNd6bG8fSNmCdV9dllkfW
-         MItg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Bn8KjpVuH7o7O/ogb9OTeguVgKJAoPSF+nuGEiBTKkc=;
+        b=bX2O/8qsIElx1vE1QB+IhTL/M759cMXglWd/Jjjired0Cxi/3PlLOJDIGBXs9xXexb
+         8b3Y2HeCXFLcSN3UeF2B+6Q9aGLR1h4vJj0iWg4InEIVn1GAbOK2ABgbAlA3s+OzCks8
+         T+QfKjEJbv5/Ou3RKmoMc5nAwItQVFrDYRhJXymsssflWvZMs30f3MLNbT2lXLgKhLnt
+         kolC5R5y1D5jg3T9PyXCrveOb0pmUdD6c4Kt9ldEUJ4UnPIVzzNqGnM0r89Z1K++5Q9a
+         rsk4QRlQT7jZ56CNSwgRrIxPpwvErC3e62dQ7R8K13GKgk+HBVmX5ieldGckAwSD0M/l
+         bq1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pHJGplNOV+cARceIaBmMZMmeNiNGjo4kXIDlFhjKRBg=;
-        b=ceNnV21Ek3mocfOXfsUxVbMEg/Igqc1vTA9D3exVYTtYmdzfLL+IuQAryDSyLqS6mS
-         T80H0QrocRijSl7NPmGfQ5wDjr1ciC4Gf5U85ttqV2XKJjOVUJghqpB096OGKeHEeXmu
-         Nk2fy71ekYDAVZsV87fmnbOuVKwkwGWPo4G0L8zoCX0/QuW7eBAQ6+5Beajc1qj90WX3
-         TA3VQ4M9PpSELcCHa98StKMWui/Ehgrws00i7PdJkYW8YGI4bQlLOADUtREf2CLwmSX0
-         3Qve8+s3EKUBz8iAUPONYl7XWrUOs0i46mUYOpOKBgsVtYetlyqHp0G62SWwy0NhfNHV
-         7p8g==
-X-Gm-Message-State: APjAAAVLVS5ZypVQZ1M0kUI7P9NnBgiUBZQFBs9izlsiBTIhDsx/XA/9
-        ZmRHJLNQ/ib8vuxf2K38RGrdp1g8Dpp7n4Y9GvqWlA==
-X-Google-Smtp-Source: APXvYqzcPrIjKp/KPt8BISqvtIIOEpfq34NVhg+Xv/lp8fDO16S+4/7quEQ733K+afD0PUjMrKlGy+57VdiIgYRpYaM=
-X-Received: by 2002:a5e:9805:: with SMTP id s5mr18124707ioj.149.1554686632846;
- Sun, 07 Apr 2019 18:23:52 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Bn8KjpVuH7o7O/ogb9OTeguVgKJAoPSF+nuGEiBTKkc=;
+        b=L5vDB5JXytvx7WPIQyMv1LVB0/KspbFRq0uhI63Mt+zSgUgfETON+KH76flgMtIm8B
+         ZakrFaOrXBAKkOtCD2lqCn9pqj1jxNlStlhWAzmo9tbuZ/597Bjh9AQN5Bb+pG63NQFT
+         HvO5nB5BC+wxl5awWiXG4VgqgglhrcW59ctgfly2clBuv9rI838qfUxadzy1GOMl2IZs
+         k03OCsptLpZgSAk/tBLBumEpGLyEKO9oIsPIOE0RFb9KoMEH23DoVpb2y7Gee+bMbf1R
+         gSSOBDbOg11v0mf8T+U5H3TOHZUor2d/Wp+zOCZExyUCkp4Qvvz0IkAywvMshMeMv2ye
+         Zi1w==
+X-Gm-Message-State: APjAAAVaxBm4cMxLLqFiDxBvACOyXJJoJABn5OZKT9BjQce8Bbcqvufj
+        8rX26tJ/sERjLhNLcfxgLAa5toANjk4=
+X-Google-Smtp-Source: APXvYqwx4h5KrDquqt1A50LwcL65GkXpJXiiLjh+mywyG1SPj56t8DLyEqtCvA92cQ2yw6zMqt5R4Q==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr16218681wro.232.1554687248783;
+        Sun, 07 Apr 2019 18:34:08 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id y1sm84276999wrd.34.2019.04.07.18.34.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 07 Apr 2019 18:34:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Pull without fetch
+References: <20190406131200.xcd7gtf7dlc567uh@doriath>
+Date:   Mon, 08 Apr 2019 10:34:07 +0900
+In-Reply-To: <20190406131200.xcd7gtf7dlc567uh@doriath> (Damien Robert's
+        message of "Sat, 6 Apr 2019 15:12:00 +0200")
+Message-ID: <xmqq4l79cmb4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHd-oW7KMrDJ-cyzk63oqW9-QVpag6fKnDp+Mo5bWxg1KfzY3g@mail.gmail.com>
- <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
-In-Reply-To: <CAP8UFD0qeOaS8NBOaMjzDf_tWJrgkYSAOgn8D=4JER2atg3H8g@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 8 Apr 2019 08:23:26 +0700
-Message-ID: <CACsJy8DxW7ZcSNQBZq4+A6c+9xZopg79sXfi6Na61Xgcoqd6ng@mail.gmail.com>
-Subject: Re: [GSoC][RFC] Proposal: Make pack access code thread-safe
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 8, 2019 at 5:52 AM Christian Couder
-<christian.couder@gmail.com> wrote:
-> > Git has a very optimized mechanism to compactly store
-> > objects (blobs, trees, commits, etc.) in packfiles[2]. These files are
-> > created by[3]:
-> >
-> > 1. listing objects;
-> > 2. sorting the list with some good heuristics;
-> > 3. traversing the list with a sliding window to find similar objects in
-> > the window, in order to do delta decomposing;
-> > 4. compress the objects with zlib and write them to the packfile.
-> >
-> > What we are calling pack access code in this document, is the set of
-> > functions responsible for retrieving the objects stored at the
-> > packfiles. This process consists, roughly speaking, in three parts:
-> >
-> > 1. Locate and read the blob from packfile, using the index file;
-> > 2. If the blob is a delta, locate and read the base object to apply the
-> > delta on top of it;
-> > 3. Once the full content is read, decompress it (using zlib inflate).
-> >
-> > Note: There is a delta cache for the second step so that if another
-> > delta depends on the same base object, it is already in memory. This
-> > cache is global; also, the sliding windows, are global per packfile.
->
-> Yeah, but the sliding windows are used only when creating pack files,
-> not when reading them, right?
+Damien Robert <damien.olivier.robert@gmail.com> writes:
 
-These windows are actually for reading. We used to just mmap the whole
-pack file in the early days but that was impossible for 4+ GB packs on
-32-bit platforms, which was one of the reasons, I think, that sliding
-windows were added, to map just the parts we want to read.
+> is there a way to do a git pull without it running git fetch?
+> Looking at the source in builtin/pull.c does not seem to indicate so.
 
-> > # Points to work on
-> >
-> > * Investigate pack access call chains and look for non-thread-safe
-> > operations on then.
-> > * Protect packfile.c read-and-write global variables, such as
-> > pack_open_windows, pack_open_fds and etc., using mutexes.
->
-> Do you want to work on making both packfile reading and packfile
-> writing thread safe? Or just packfile reading?
+The reason behind that is because it does not make any sense for
+"pull", which is meant as a quick short-cut to say "fetch && merge",
+not to run fetch, especially back then when 'git pull' was designed,
+the world was much simpler.  There was no "fetch && rebase", our
+branches did not know what their @{upstream}s were.  In that simpler
+world, what you are trying to do would have been:
 
-Packfile writing is probably already or pretty close to thread-safe
-(at least the main writing code path in git-pack-objects; the
-streaming blobs to a pack, i'm not so sure).
--- 
-Duy
+	git fetch
+	# did I get anything worth integrating?
+	git merge FETCH_HEAD
+
+That obviously would not work for those with "pull.rebase", and I do
+not think it makes much sense to teach "git rebase" the same trick
+to read FETCH_HEAD as "git merge" does in the above sequence.
+
+Others may have a better idea, but I do not immediately see any
+solution better than inventing a new option to "git pull".
+
+Another and better option that may be harder to arrange is to make
+sure that a no-op "git fetch" incurs very low cost.  If you did so,
+"git fetch && git pull" would perform just like your "git fetch &&
+git pull --no-fetch", and we won't need a new option at all.
