@@ -7,205 +7,110 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C27F720248
-	for <e@80x24.org>; Tue,  9 Apr 2019 02:07:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6331420248
+	for <e@80x24.org>; Tue,  9 Apr 2019 02:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726837AbfDICHx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 22:07:53 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:37735 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725953AbfDICHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 22:07:53 -0400
-Received: by mail-pg1-f195.google.com with SMTP id e6so8358435pgc.4
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 19:07:52 -0700 (PDT)
+        id S1727266AbfDICLo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 22:11:44 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:46921 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbfDICLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 22:11:41 -0400
+Received: by mail-pf1-f195.google.com with SMTP id 9so8717836pfj.13
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 19:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=aFUcGv4j/mwOvw53iC4bpyA0FOmn5MpJK8pwAdkRolo=;
-        b=YNATiFKBoi56tVFuuf1LZvDCSwz9BVXwrKaw8wp08roh4l/JdS+u9TptD2PdF5un1h
-         4tMnNrpxE5yC+7on0UXDaR9XutOBI3EI4uodP1SLCYhi2TgRFtI896FYyj5rn5oWqo73
-         9SFKS8rCc1cVzesjkc/CQr9wZ+bQzoACBUiv82qpjTsJ/8fzwaHzKF0YV5m70M1u7Jzg
-         O5GUPhXwSjE+9E5k1UDeRoKFEa95Gs13I8sgzaR7dhjjK+aXH0Ux6p7+g/xrcR+Sgg1p
-         AtxMkKen/efqJzLh7br8Cy6TGR18qq52V5oF6rtU1h4xDqZm4u7o1DkheceGHnEimJj4
-         mkSg==
+        bh=gVHhVDe9uQCF3KZJwQGfRNw4pZuqC6vf7lPIHK47hXM=;
+        b=DPLQfh1Yqe3JSCfGC2fn685LTnXtyXwT7yv6KVBOoblhtOA1TAOaKr7m+wbmn/k7cL
+         UXtBmHcOQbSBKHKk07EYmL53zwd3/CwbfYysvcEZ0bFnImJRKRIckACyT1IVJNuebASO
+         6we2Brmiq73KyC0T+kpj0O238PdY0s9nZklr4uymuVWLfG8/cHd1MS8LxEb9lLZ51kBX
+         1DyCBLQYO9id/Iy7XC8NF9t1OFsBGwi/rgbLeyeDedK5nm2GB82S+kIr/qwgSnZBovVc
+         jVkeW+tN6mFV66Kmbb2DyB6KmftL/9x62ZuK5+t4Ii5KGATx8+YcVKMQtlgsOY1fpZ6G
+         HgtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aFUcGv4j/mwOvw53iC4bpyA0FOmn5MpJK8pwAdkRolo=;
-        b=eAMSvL0gCHL5ZmIkrVEv0CH/pBXH7EdxcfsnthoiSSG/03/CDRHcyj4pHNQmPjSDwW
-         sGroTaSbXer49qmwK1uczluLkXd9S2Kv+Myf87kC/oFNbs0AJWg+XlANpmB5I0CI/Xdq
-         MOyvqhP3TNW1iW9TQL55e2bJ/Wv9DNOC7U+ziRBnw7c/JsZYOQGBug2pUkjJp6pXb/g2
-         +ZVWwyxyjREt0LbffmVnB+0sIn3h089CTAd8EYcFGEVXp6AIvgWVT9pRMt53QSPSI4Vu
-         WIWLSX3V2H9wXVslzttTdZzPumURqRH5RYE73l5TjATsynYs3ACvWj383ed2Hin2EbWY
-         2TsA==
-X-Gm-Message-State: APjAAAUX7SswFmrzNLdB/Baht3ytcH4hb4HsLkRSEvkM279JRFQQLvFM
-        deYw6InxOgn7xCbptiiZunvcIg==
-X-Google-Smtp-Source: APXvYqwREQfzNldVmduhpeMje3nFvNFXlD8qKNVjvDqGAtSup+jydLZXOupcyT3cFhJJmKM6ULR4+g==
-X-Received: by 2002:a63:6844:: with SMTP id d65mr32288358pgc.393.1554775672072;
-        Mon, 08 Apr 2019 19:07:52 -0700 (PDT)
+        bh=gVHhVDe9uQCF3KZJwQGfRNw4pZuqC6vf7lPIHK47hXM=;
+        b=DJ50EXMgpnrY+3tg1fVWX5IlEKzMf28V2LuqAyoKSTFtzDDFsugWgOZ+xJwRJxcVYb
+         1ZAe1BqO2nxpU8P5+5uAU8D0omK0iQi4eMFFgkx7heV1+OTU2efj8wsxnAXcD9szr1uV
+         8UHbHIWKTjIla4bz16MkBCL7E5f/apDxHVksgQ6781G9ytjxbNCQV4CNnMwh/z3kMbIU
+         Ba18m24mhkG4gLWSXvX7AotMCheIvskyUOUc3p63s+X++G8lQ5LpOwb5OGuRjEtBIUBR
+         318zCxbLWTD+WkMU/yS2+yjCCCl57nkfCJX6ytvh+684pc8NvXpNuae7myhMj8S3VwFh
+         nrCg==
+X-Gm-Message-State: APjAAAWJq3GHdhgNbFWoCLqk0FqDOj/uN5EpUqkjD6/rjLE3J+iAcO8A
+        EMuzOhcVIhMmCY9r7SC5+a/dpw==
+X-Google-Smtp-Source: APXvYqzOKSg/Fg1AYslWssvMXEM2TclHTKSeuoETr4b866gpxp7O2F4JUn2c9FQSRpv3CM6/cVyPDg==
+X-Received: by 2002:a63:ed4f:: with SMTP id m15mr30930602pgk.387.1554775900738;
+        Mon, 08 Apr 2019 19:11:40 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:d869:cd1a:616d:3c11])
-        by smtp.gmail.com with ESMTPSA id g64sm71669201pfg.13.2019.04.08.19.07.50
+        by smtp.gmail.com with ESMTPSA id x16sm66074014pge.27.2019.04.08.19.11.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Apr 2019 19:07:51 -0700 (PDT)
-Date:   Mon, 8 Apr 2019 19:07:49 -0700
+        Mon, 08 Apr 2019 19:11:39 -0700 (PDT)
+Date:   Mon, 8 Apr 2019 19:11:38 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, pclouds@gmail.com,
-        t.gummerer@gmail.com
-Subject: Re: [PATCH][RFC] read-cache: read_index_from() accepts repo as arg
-Message-ID: <20190409020749.GC81620@Taylors-MBP.hsd1.wa.comcast.net>
-References: <20190407073712.1642-1-jkapil.cs@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 6/7] rev-list: let traversal die when --missing is not in
+ use
+Message-ID: <20190409021138.GD81620@Taylors-MBP.hsd1.wa.comcast.net>
+References: <cover.1554435033.git.me@ttaylorr.com>
+ <a3a80b4b2a988eb65d85a5acd54c584d047073c7.1554435033.git.me@ttaylorr.com>
+ <20190405184111.GE2284@sigill.intra.peff.net>
+ <20190406053648.GD37216@Taylors-MBP.hsd1.wa.comcast.net>
+ <20190407134113.GA13417@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190407073712.1642-1-jkapil.cs@gmail.com>
+In-Reply-To: <20190407134113.GA13417@sigill.intra.peff.net>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kapil,
+Hi Peff,
 
-On Sun, Apr 07, 2019 at 01:07:12PM +0530, Kapil Jain wrote:
-> Signed-off-by: Kapil Jain <jkapil.cs@gmail.com>
-> ---
+On Sun, Apr 07, 2019 at 09:41:13AM -0400, Jeff King wrote:
+> On Fri, Apr 05, 2019 at 10:36:48PM -0700, Taylor Blau wrote:
 >
-> In read-cache, the read_index_from() function had a TODO task,
-> this patch completes that. There are some other functions in the same file
-> where this exact TODO needs to be done, will proceed to do them once this patch is accepted.
+> > > > Of those, I think (3) is probably the best path forward. However, this
+> > > > patch does none of them. In the name of expediently fixing the
+> > > > regression to a normal "rev-list --objects" that we use for connectivity
+> > > > checks, this simply restores the pre-7c0fe330d5 behavior of having the
+> > > > traversal die as soon as it fails to load a tree (when --missing is set
+> > > > to MA_ERROR, which is the default).
+> > >
+> > > I think this is worth doing, as it restores the earlier behavior. But a
+> > > few general thoughts (which I've shared already with you, but for the
+> > > benefit of the list):
+> >
+> > I agree that it's worth doing. One question that I have is _when_ you
+> > feel it's good to do. I'm happy to write it and include the change in
+> > v2, but if others would be happy not to grow the series too much between
+> > re-rolls, I'd be just as pleased to send it in a new series after this
+> > one.
 >
-> running test gave 256 not okays, each had a label as `# TODO known breakage`, which i think
-> are not concerned to this patch.
+> I'm not sure what "it" is here.
 
-Please make sure to wrap your commit messages at 72 characters per-line.
-Incidentally, I just wrote another email about this same topic [1],
-which has some good advice for how to do this in an automated way.
+Yes... as I read this email again after the weekend had passed, I found
+myself a little confused, too.
 
->  apply.c            | 2 +-
->  builtin/worktree.c | 2 +-
->  cache-tree.c       | 2 +-
->  cache.h            | 4 ++--
->  read-cache.c       | 4 ++--
->  repository.c       | 2 +-
->  revision.c         | 2 +-
->  7 files changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/apply.c b/apply.c
-> index f15afa9f6a..3b4d128149 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -4021,7 +4021,7 @@ static int read_apply_cache(struct apply_state *state)
->  {
->  	if (state->index_file)
->  		return read_index_from(state->repo->index, state->index_file,
-> -				       get_git_dir());
-> +				       get_git_dir(), state->repo);
->  	else
->  		return repo_read_index(state->repo);
->  }
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 6cc094a453..874adebd2c 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -737,7 +737,7 @@ static void validate_no_submodules(const struct worktree *wt)
->  		 */
->  		found_submodules = 1;
->  	} else if (read_index_from(&istate, worktree_git_path(wt, "index"),
-> -				   get_worktree_git_dir(wt)) > 0) {
-> +				   get_worktree_git_dir(wt), the_repository) > 0) {
->  		for (i = 0; i < istate.cache_nr; i++) {
->  			struct cache_entry *ce = istate.cache[i];
->  			int err;
-> diff --git a/cache-tree.c b/cache-tree.c
-> index b13bfaf71e..84f19b224e 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -616,7 +616,7 @@ int write_index_as_tree(struct object_id *oid, struct index_state *index_state,
->
->  	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
->
-> -	entries = read_index_from(index_state, index_path, get_git_dir());
-> +	entries = read_index_from(index_state, index_path, get_git_dir(), the_repository);
->  	if (entries < 0) {
->  		ret = WRITE_TREE_UNREADABLE_INDEX;
->  		goto out;
-> diff --git a/cache.h b/cache.h
-> index ac92421f3a..3850c82fc9 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -420,7 +420,7 @@ extern struct index_state the_index;
->  #define active_cache_tree (the_index.cache_tree)
->
->  #define read_cache() repo_read_index(the_repository)
-> -#define read_cache_from(path) read_index_from(&the_index, (path), (get_git_dir()))
-> +#define read_cache_from(path) read_index_from(&the_index, (path), (get_git_dir()), the_repository)
->  #define read_cache_preload(pathspec) repo_read_index_preload(the_repository, (pathspec), 0)
->  #define is_cache_unborn() is_index_unborn(&the_index)
->  #define read_cache_unmerged() repo_read_index_unmerged(the_repository)
-> @@ -678,7 +678,7 @@ extern void preload_index(struct index_state *index,
->  extern int do_read_index(struct index_state *istate, const char *path,
->  			 int must_exist); /* for testting only! */
->  extern int read_index_from(struct index_state *, const char *path,
-> -			   const char *gitdir);
-> +			   const char *gitdir, const struct repository *repo);
->  extern int is_index_unborn(struct index_state *);
->
->  /* For use with `write_locked_index()`. */
-> diff --git a/read-cache.c b/read-cache.c
-> index 4dc6de1b55..0444703284 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2256,7 +2256,7 @@ static void freshen_shared_index(const char *shared_index, int warn)
->  }
->
->  int read_index_from(struct index_state *istate, const char *path,
-> -		    const char *gitdir)
-> +		    const char *gitdir, const struct repository *repo)
->  {
->  	struct split_index *split_index;
->  	int ret;
-> @@ -2292,7 +2292,7 @@ int read_index_from(struct index_state *istate, const char *path,
->  		split_index->base = xcalloc(1, sizeof(*split_index->base));
->
->  	base_oid_hex = oid_to_hex(&split_index->base_oid);
-> -	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
-> +	base_path = xstrfmt("%s/sharedindex.%s", repo->gitdir, base_oid_hex);
->  	trace2_region_enter_printf("index", "shared/do_read_index",
->  				   the_repository, "%s", base_path);
->  	ret = do_read_index(split_index->base, base_path, 1);
-> diff --git a/repository.c b/repository.c
-> index 682c239fe3..8ac2b65f61 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -264,7 +264,7 @@ int repo_read_index(struct repository *repo)
->  	if (!repo->index)
->  		repo->index = xcalloc(1, sizeof(*repo->index));
->
-> -	return read_index_from(repo->index, repo->index_file, repo->gitdir);
-> +	return read_index_from(repo->index, repo->index_file, repo->gitdir, repo);
->  }
->
->  int repo_hold_locked_index(struct repository *repo,
-> diff --git a/revision.c b/revision.c
-> index eb8e51bc63..247a4d5704 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1556,7 +1556,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
->
->  		if (read_index_from(&istate,
->  				    worktree_git_path(wt, "index"),
-> -				    get_worktree_git_dir(wt)) > 0)
-> +				    get_worktree_git_dir(wt), the_repository) > 0)
->  			do_add_index_objects_to_pending(revs, &istate, flags);
->  		discard_index(&istate);
->  	}
-> --
-> 2.20.1
->
+> My earlier message was admittedly rambling, but I think I'm arguing
+> that it's OK to continue to include this patch that you already have,
+> and punt further changes to make "rev-list --objects" detect blob
+> problems down the road. I.e., leave the two expect_failures in place
+> that your v1 series ends with.
+
+I believe that that was the "it" that I was talking about it. To be
+explicit, I think I was suggesting that we should not change this patch
+much or add more to the series, and rather address the blob checking in
+a new series after this one.
+
+> -Peff
+
 Thanks,
 Taylor
-
-[1]: https://public-inbox.org/git/20190409020004.GA81620@Taylors-MBP.hsd1.wa.comcast.net/
