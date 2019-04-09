@@ -2,89 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1359D20248
-	for <e@80x24.org>; Tue,  9 Apr 2019 07:42:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A38220248
+	for <e@80x24.org>; Tue,  9 Apr 2019 07:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbfDIHmW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 03:42:22 -0400
-Received: from srv1.79p.de ([213.239.234.118]:57260 "EHLO srv1.79p.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726079AbfDIHmW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 03:42:22 -0400
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Apr 2019 03:42:21 EDT
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [141.89.53.191] (dhcp191.soft.cs.uni-potsdam.de [141.89.53.191])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sven@cs-ware.de)
-        by srv1.79p.de (Postfix) with ESMTPSA id 832B1220060;
-        Tue,  9 Apr 2019 09:34:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2019; t=1554795248;
-        bh=DveXrXzwc5yCP49Ez9VxjA8eH03FFwJVkfeQOnjWmpU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=6CZNPtOUioFHjE1ho1FkLXFcAROjdZ8XE+ApyJQsAppL2X+Sp7k1qVLmIAxnrQCj4
-         lejuKV3cHsc+inwjCJ2IC2PilvLVKFALvunriaQ6t4AyP5WDLRWefeR9CViZigLtXm
-         DOoRAw/4Ox0hBmfj5gmqC1tSBgk+AjJ3O3fU6jvzOFn29u+AP0IdNfkcvpNHIfHSUI
-         0u7umLbp67mI8VNjvWiF9oFZw91/Ane/kEECw5VTdx56lY/ei3m2yAtFZXCuJP79Yr
-         sPAwoNJi3JmTHm6uxJIlwFO1nhnM0ZXdTAC7aUu85AiCP+9n8Bno0kC77M2zNPwO1y
-         CMV2TamQLuOVQ==
-Subject: Re: [PATCH] Unbreak real_path on Windows for already absolute paths
- (with Visual Studio)
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, johannes.schindelin@gmx.de
-References: <6c7d4155-e554-dc9a-053e-f3a8c7cd4075@cs-ware.de>
- <0f629384-638f-bfb9-89da-ade335e364fd@web.de>
-From:   Sven Strickroth <sven@cs-ware.de>
-Openpgp: preference=signencrypt
-Message-ID: <950ee9b8-786f-28cd-3e89-ad174fd857a4@cs-ware.de>
-Date:   Tue, 9 Apr 2019 09:34:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726632AbfDIHnh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 03:43:37 -0400
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:55609 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726062AbfDIHnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 03:43:37 -0400
+Received: by mail-wm1-f52.google.com with SMTP id o25so2184560wmf.5
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 00:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=nWJiNwJI7lopQqaDdHhLilojCPqQz5SBmPtjIyju0BI=;
+        b=Ky6sk6Cx6S+KeIQlXi7ZotRSo141FvSr4tkzl1b4Qm/0P/4FmSNJk/Ej3Ruo+p8V8i
+         Lcb380upcEK4yVjQ7ZUmFykZ7deO/s5RS5Q9SHYeqqTFtPRLpu8QlsOwG3bmj9mlg6Kv
+         cbjY6FM4zblMlFUrHZA0F9XNQywOmVv0Vr4JLneNue0UqWJFR/G3ypr4vZyPy2a+BdNS
+         ig9x7tltfyxMxD18SIuugbC3DI/zRcTtEptPPLbmZ9Sh6/mX0aqlIZh36n8PTjKji0Xc
+         oPhhcgTyfx0wL6l8BtiEE6P6JMMwfokPj3yxWAnAA+xSU9XSzQpQ1GRVSiu3EYqOE7Ho
+         4MUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=nWJiNwJI7lopQqaDdHhLilojCPqQz5SBmPtjIyju0BI=;
+        b=YFdsFWiA+8UArst56ppPBHPwDMlPScvDV2V/DpIP0AE6YZfdX379QOsoh1/IzLcM9b
+         +oqDm9DWe2oNIap5EokdahXzJ9bbmp1cgAu9738nKP0MYPeBnhhiZceo69T422Jv90Gl
+         2hSRxw/yV0dRvqTuCJV9iVrhaJomDZ2cUng2kxqXjycBVfhqkGj2F4quuQm+Qwg58YHW
+         osTaNOQIPMkRNc2fnguEchdlX3Qjl9nZA6L7GdizVe0euElUnEQ4TIM4xpOclCZ1/cTJ
+         fhavPtT6xyPIdJUCrWjRrkbg5nOPSv9oDuCq2JYr/Cli5QAntQvPrxKi9tMdKEsrxs26
+         SNKA==
+X-Gm-Message-State: APjAAAUZl79dnYBmSoWJjAdIj8VQEUseSAUK48ZrNag0G30LSabVBbXP
+        1liqnZJDi8QezsS0CL2GKS3Yi+LoCD8=
+X-Google-Smtp-Source: APXvYqzCMzCk3dakdtTCcnUkIGqkx4akzs+X+d1ReK3XryyBD/nFOCPmFU3PxkI64SI9ZR/XKzze4w==
+X-Received: by 2002:a1c:480b:: with SMTP id v11mr20206198wma.25.1554795815180;
+        Tue, 09 Apr 2019 00:43:35 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egs74.neoplus.adsl.tpnet.pl. [83.21.82.74])
+        by smtp.gmail.com with ESMTPSA id y17sm37479648wrh.60.2019.04.09.00.43.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Apr 2019 00:43:34 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: "commit --author=..." does not work if global email and name is not set
+References: <CAA01Csp7y9=2n9=TNYMMw9LUO_cENz7FBeZjFrUd2FvHFT9NCQ@mail.gmail.com>
+        <8636mvng8n.fsf@gmail.com>
+        <xmqq36mt9e7l.fsf@gitster-ct.c.googlers.com>
+        <CAA01CsqAt8osKArhdgATNj29+a9VO6wUwhX6=cRebnDBFx_EVg@mail.gmail.com>
+        <86y34kn4c8.fsf@gmail.com>
+        <CAA01CspJAPnBFsQsXP4Dpweeg6oBVj==TB0aEnK5o1Et5zS30Q@mail.gmail.com>
+Date:   Tue, 09 Apr 2019 09:43:29 +0200
+In-Reply-To: <CAA01CspJAPnBFsQsXP4Dpweeg6oBVj==TB0aEnK5o1Et5zS30Q@mail.gmail.com>
+        (Piotr Krukowiecki's message of "Mon, 8 Apr 2019 13:55:25 +0200")
+Message-ID: <86tvf7mxni.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <0f629384-638f-bfb9-89da-ade335e364fd@web.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.04.2019 um 07:53 schrieb Torsten Bögershausen:
->> Regression was introduced in commit
->> 25d90d1cb72ce51407324259516843406142fe89.
-> 
-> Was it ?
-> 25d90d1cb merged this commit:
-> 1cadad6f6 (junio/tb/use-common-win32-pathfuncs-on-cygwin)
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+> On Mon, Apr 8, 2019 at 1:06 PM Jakub Narebski <jnareb@gmail.com> wrote:
+>> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+>>>> On Sat, Apr 6, 2019 at 8:25 PM Jakub Narebski <jnareb@gmail.com> wrote:
+>>>>>
+>>>>> Better though is to focus on what you want, namely to prevent acciden=
+tal
+>>>>> commits without specified author, instead of how you want to achieve =
+it,
+>>>>> i.e. using --author to provide both author and committer identity (the
+>>>>> XY problem).  On that machine with "automatic test account" set up
+>>>>> pre-commit or commit-msg hook that fails if the GIT_AUTHOR_IDENT
+>>>>> environment variable is not the "automatic test account".
+>>>
+>>> I'm not sure if I follow you. I want to be able to make both "real
+>>> user" and "automatic test account user" commits from that machine. I
+>>> want to make sure that:
+>>> - automatic commits (scripts) use their own account
+>>> - real person making commit uses their own account
+>>>
+>>> IMO the only way this can be achieved is by not having any default
+>>> account setup, so that both the scripts and the real users need to
+>>> specify it "by hand".
+>>
+>> If a real person making commits uses their own account (just on that
+>> machine), he or she can set up `user.name` and `user.email` settings in
+>> the per-user Git configuration file
+>
+> There is one common "test" (Windows) account which is used both by
+> automatic test scripts and by real people who log into that machine,
+> so this is not possible.
 
-Yes, I copied the revision of the merge commit.
+Well, if it is not possible to make it multi-account machine, where
+everybody logins with their own account...
 
-> And, if I read that correctly,  1cadad6f6 does not change anything for MSVC.
-> And the problem with the missing/wrong path resolution was there before
-> 1cadad6f6 and after 1cadad6f6.
+>> If however one is doing commits from the "automatic test user" account,
+>> then the `pre-commit` or `commit-msg` hook configured for that specific
+>> repository for that automatic account would be run, which can detect
+>> that the commit was not done with
+>>
+>>   $ git commit --author=3D"My Name <me@my.email.com>"
+>>
+>> The additional advantage is that you can examine committer data to
+>> detect such cases of committing out of automatic account.
+>
+> Do you mean following?
+>
+> 1. set default user (user.name, user.email) to "automatic test user"
+> on that machine
+> 2. set commit hook to prevent commits with "automatic test user" AUTHOR
+> 3. scripts will set AUTHOR (--author) to for example "script X" or
+> "automatic script user" - different than the default user
 
-That's not correct, it was correct before:
-1cadad6f6 removes mingw_offset_1st_component from mingw.c which is
-included by msvc.c. Then the in git-compat.h the new file
-"compat/win32/path-utils.h" is only included for __CYGWIN__ and
-__MINGW32__, here _MSC_VER is missing -> that's the regression.
+Or, if possible, you could simply check if `git commit` was called from
+a login shell / interactive shell, rather than from a script.  This
+would make all scripts work automatically without any changes.
 
-> In config.mak.uname  we need to add a line
-> compat/win32/path-utils.o
-> for the Windows build.
-> In the git-for windows codebase I see
->   COMPAT_OBJS +=compat/win32/path-utils
+Alternatively scripts could set some special environment variable that
+would be checked by the commit hook.
 
-I don't use config.mak.uname and never did, so I can't tell you about that.
+> 4. real users will set AUTHOR to their own identity (--author=3Dme)
+>
+> I suppose that would work. Looks much more complicated than simply
+> setting "--author" (or "--user") though...
 
--- 
-Best regards,
- Sven Strickroth
- PGP key id F5A9D4C4 @ any key-server
+however, it is one-time configuration.
+
+Yet another solution would be for each user to create his or her own
+clone of repository (sharing repository data using `git clone
+--reference`), and set up their identities in per-repository
+configuration.  Though that requires them to use the correct
+directory...
+
+Best,
+--
+Jakub Nar=C4=99bski
