@@ -2,107 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 827EB20248
-	for <e@80x24.org>; Tue,  9 Apr 2019 11:45:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90A5920248
+	for <e@80x24.org>; Tue,  9 Apr 2019 11:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726463AbfDILpb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 07:45:31 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34866 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfDILpb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 07:45:31 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w1so20514714wrp.2
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 04:45:30 -0700 (PDT)
+        id S1727264AbfDILut (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 07:50:49 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:36391 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726464AbfDILut (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 07:50:49 -0400
+Received: by mail-ot1-f48.google.com with SMTP id o74so15244647ota.3
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 04:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XpjoNDzBHLr97kqmU6Q8aPtNeM40b0gc0EmTLUy17cA=;
-        b=SqvhKFXlwTSQj/NZ/iIXIJ3TEQACmUm9QVTaLV4qprd/mip1JTP/B/RR3Lr9a+vl31
-         dUFwCrwqoN9qCgXd3BPwlsPS1ZJ+S86TPbKPHyv/aAxrkiWM++R1FrjjCFu3tZcwTsEo
-         9hsx6FGkq759ZKoGj+u/S8vUgzjwLpewYVIfuRQUPVx+rYfnNNSwi7cZglrNgcLrBQQ6
-         uY4lFtsZBK3pRHUWqeEXwFzITdtOBwkwdE97SUoUCDjy3hgqLf9crzvH+kGv624N9lj8
-         xbEhrb9RH+TtCe18XvAH3xJMawYEnpwE+fOueTCXCY8FHNx6AFU/ixedVjtIeTqTzRkg
-         HVBA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=KUthLYgJEzrfiSNz4evabOv40jRi17ITFORDOueN2f4=;
+        b=O2tWGYkdMyHqFmGj0QP9p9fMl+W/ekI94V6V5/5FGhpRIBKuhA6PsNwF5ipT56zwKy
+         3TpwHbBS+0czGvK/xpWaMp2IH6evuqxvrjSw5jTGZAPMTQ5WMklmFGYMwY2Tv/wNT+Gv
+         ESoeqUW8sJaEvv7enohRY3j5dTuXzpbmeGvzgdwERelCyMAnkOf6NQ2NCfVJIxaqIOaH
+         IzsKIM0ayFwrUkW8ybReOspZ6LDEDKzFtr/q0C7yBa03av2T3pcmThHlxroVTDs1vXhi
+         fLPpe9bXfsFKGc9fgpfYckoZweWE65zjVhQN1TiB6o3lgkZQWL82UTPe6QTesKBF9HDD
+         vP8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XpjoNDzBHLr97kqmU6Q8aPtNeM40b0gc0EmTLUy17cA=;
-        b=tMVtpty83GphWTlYPfPNhSlXRhPMnWhAxZrTjQfF9n9Qcru5zGwiHM5tGnkxGJd5nv
-         UoXsNQsA8HrDvUAcM02biKntpV9rsw27KNXXZ+bs7Ru4Oob74mh+BZgfszmykaXCr7EF
-         XoL26vg2O91uEuy6tv+FQDo/GU2rmQeS1FVARiLLN3aV6OYf2KdVVl8SGKJ5CrrAYbfn
-         FJWvxh3oAnSYyNZalKlxT5ieeR/IMJk9mtY2QilA9UnNoeMSUYIyYezTnp+c3g/9YBc7
-         TEHG4pPi55pGoAYzT4MoLQQT/ppC9EFselG3JrQqTbVirAVIoZLGuPWJVXOJ+pMl+/my
-         368g==
-X-Gm-Message-State: APjAAAWgxdMNnlvLRaF5rNDm5uml9nFOBH9eQzI1wdPfrLNOpnGDYAlQ
-        d27nLx1k9HXmqZGVxW/P0CU=
-X-Google-Smtp-Source: APXvYqw/Y7CsSklEk0sdCJ/bk8RpHv+3IhSuOwPtdRvSVWASnAQMra3tut30dSPnocXR+BMBrKRFJg==
-X-Received: by 2002:a5d:400c:: with SMTP id n12mr21799789wrp.31.1554810329218;
-        Tue, 09 Apr 2019 04:45:29 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id e9sm48881134wrp.35.2019.04.09.04.45.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Apr 2019 04:45:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sven Strickroth <email@cs-ware.de>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org, peff@peff.net, johannes.schindelin@gmx.de
-Subject: Re: [PATCH v2] MSVC: Unbreak real_path for Windows paths
-References: <6c7d4155-e554-dc9a-053e-f3a8c7cd4075@cs-ware.de>
-        <0f629384-638f-bfb9-89da-ade335e364fd@web.de>
-        <950ee9b8-786f-28cd-3e89-ad174fd857a4@cs-ware.de>
-        <31485f76-13a9-ec3b-16b9-78864490164d@cs-ware.de>
-Date:   Tue, 09 Apr 2019 20:45:28 +0900
-In-Reply-To: <31485f76-13a9-ec3b-16b9-78864490164d@cs-ware.de> (Sven
-        Strickroth's message of "Mon, 8 Apr 2019 13:26:16 +0200")
-Message-ID: <xmqqzhoz4d2f.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=KUthLYgJEzrfiSNz4evabOv40jRi17ITFORDOueN2f4=;
+        b=a1E5tfksH03Jm9sqHbhFVVKmBD4+TnhI/JaIzwRPeUEVjOYjuEVF7Hm8om59r78vbA
+         v6Grai8FL4sa03mLujIcd9HOz6Z1bgxAPApYYzJQ70emJA80XMf+7KdyqrBfkEFzUomU
+         fj+LGte0XDFxMWB8pnTNFS8Rmzm8EevNMNKigpP4M/9Iwt1oKBLHAEZpc7dqsCpteZ8L
+         PgY2kn/+e+tfduyTkEkRUQGGSluZzvuuIULfpq6U8bbtr7D5fwexQYMFLQ3I0lpqzOnc
+         XJQXrruo9diiSBnw4j9NvlcrsG93StCzmuqPvGQ8cSArYEtTZkAK7o19bZuDeVEkF5yL
+         iyMQ==
+X-Gm-Message-State: APjAAAXGwzt2t0iA6HAtfVFs0FkINI+tqVtLkX0/RWDMpbSLAjyWHzZ1
+        fpZvgUi2SbxBp5xMf7Il7eBhXGj1mKffZzy41ZwDAz6Rx/o=
+X-Google-Smtp-Source: APXvYqxztQH65k6ZYlR8u3nl6JkNEEJV/XEjNbKpa2BBdSg0pdphxPDeZLf/3k8ycH2hn59/UtKMWHfcoBOi+Z+Pq68=
+X-Received: by 2002:a9d:5908:: with SMTP id t8mr24085393oth.45.1554810648060;
+ Tue, 09 Apr 2019 04:50:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Tue, 9 Apr 2019 17:20:36 +0530
+Message-ID: <CAMknYENOfZKM0H5aznK9VyXzGA_SG+E1v62Jcez4bxnznNyPmw@mail.gmail.com>
+Subject: [GSoC] [RFC] git stashing discussing solution approaches
+To:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sven Strickroth <email@cs-ware.de> writes:
+Just had a small discussion on irc about solving
+https://git.github.io/SoC-2019-Ideas/#teach-git-stash-to-handle-unmerged-index-entries
+the discussion:
+https://colabti.org/irclogger/irclogger_log/git-devel?date=2019-04-09
 
-> A path such as 'c:/somepath/submodule/../.git/modules/submodule' wasn't
-> resolved correctly any more, because the *nix variant of offset_1st_component
-> is used instead of the Win32 specific version.
->
-> Regression was introduced in commit 1cadad6f6 when mingw_offset_1st_component
-> was moved from mingw.c which is included by msvc.c to a separate file. Then,
-> the new file "compat/win32/path-utils.h" was only included for the __CYGWIN__
-> and __MINGW32__ cases in git-compat-util.h, the case for _MSC_VER was missing.
->
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> ---
->  config.mak.uname  | 1 +
->  git-compat-util.h | 1 +
->  2 files changed, 2 insertions(+)
+Below are two approaches for solving this problem:
 
-Some context lines in config.mak.uname did not match tips of any of
-the well-known branches I tried, and the blob object name recorded
-on the "index" line was not useful, either, so I ended up applying
-the patch by hand.  I do not think I screwed up a simple two-liner
-patch like this too badly ;-), but please keep an eye on what will
-appear on 'pu' and holler if I did, so we can correct it before it
-hits 'master'.
+Approach 1) The suggested approach.
 
-Thanks.
+Perform an octopus merge of all `stage n` (n>0) unmerged index entries.
 
->
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 32381f5fd1..eb1428858c 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -426,6 +426,7 @@ ifeq ($(uname_S),Windows)
->  	CFLAGS =
->  	BASIC_CFLAGS = -nologo -I. -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+a problem with this approach:
 
+1) Octopus merge can fail, and if it does what do we do in that case ?
+Solution: store the conflicted state, and restore it when stash is applied.
+
+I am not clear on how would we store the conflicted state (away from
+index file).
+please provide reference to code or docs that may be helpful to
+understand this or is this the part that needs to be implemented for
+this project ?
+
+
+Approach 2) This approach is a shot in dark; not well thought, may
+have a lot of problems.
+
+consider a scenario, index file has 20 entries, 5 of which are
+unmerged. now you detach those 5 entries from index file and store
+them in some other file say `index_unmerged_branch_name`. now index is
+no longer unmerged, and user can now do `git stash push`.
+later when user does `git stash apply` we put those 5 unmerged entries
+back in the index file.
+
+identified problems with this approach:
+
+1) where do you store `index_unmerged_branch_name`? What if the user
+has a file that's already named like that?
+Solution: we store `index_unmerged_branch_name` in `.git` directory
+
+2) how do you reference that to a specific stash commit? remember that
+there can be multiple stashes.
+Solution: we put that info in the `.git/log/refs/stash` file telling
+it, that this particular stash has a separate
+`index_unmerged_branch_name` file.
+Although this would require changing format of log file and hence the
+code logic to read it. but it could be done.
+
+3) blobs that are referenced in this index may not be referenced by
+any tree/commit anymore.
+Solution: perhaps we can store the references too.
