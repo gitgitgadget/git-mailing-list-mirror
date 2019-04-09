@@ -2,88 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AF5920248
-	for <e@80x24.org>; Tue,  9 Apr 2019 15:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19E1020248
+	for <e@80x24.org>; Tue,  9 Apr 2019 15:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfDIPic (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 11:38:32 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38391 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726372AbfDIPib (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 11:38:31 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k11so21542285wro.5
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 08:38:30 -0700 (PDT)
+        id S1726517AbfDIPjj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 11:39:39 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:42733 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726486AbfDIPji (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 11:39:38 -0400
+Received: by mail-ot1-f68.google.com with SMTP id 103so15951208otd.9
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 08:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uhGaouN2BBhU6DUPBHiIcJdwXTFrmtrYjfeNPBTdKSA=;
-        b=vG/jMCvjr9CpRkSVfQgiEwHb1oFJNl1w4bqLlQxsEdyZCAHpFpenPCJrbnLXLnteQt
-         DaMU1giCLKmDPJV4DNqRDxr6ZqI5cUo6hZy86Tbbj6aNOM0ggY2f1fJNKwgo4B5BdFcg
-         Y7fAVarsb+tzrQPVq/v9pgubydlBkFfeg2DW2/OWAWMmFBLmBRDZLt26cjZkkpofXWNm
-         MsQuU4oQbXMw5IUMZg1X4jC96Kpch20mUZxy/y4LVp+QA2mQRsTKsqpuwOJYVBbfyOG3
-         AmptGpdOnmcF6iJSozsBJs6+odV3vKhjgAHK4fxImO71UetQvtlhh7VP5f3V9L+cjPgR
-         WDWw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=u3LeWUWoGy32sZp53aB1vJLMoZMbdIX19PT7H2KwTg4=;
+        b=W2cjjoWMaJtcL8u4R6maUV6uTXn1lla0vK75/SUBCPvG5Zm/K5OucvVXHWwKm7c1NM
+         7KZIhWQ9w6C4i64fTYFmDvlb27MjzRiqhGLw2Z7wZmiE8KujQ1Rginwj28qATvorX9Ya
+         NrZRm8a0XZjfsPcR5L5r8iufZqDyoPJtHONwvhp1jcvznxOEYdrjTd4WftRkI0Vk+6v5
+         sG64itrLSeijFgiqedpNPLBvIRwIMNJ+ywnioJYaj/LdB2+1f5GyMNLgBkn7PugZ3QBE
+         DEWBoeAOVI4V48mrLtEgyZMZ6Sb945JJC0JEYzA79US4sRjUpjvlqgo0ajC9NFsVyecM
+         9fMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uhGaouN2BBhU6DUPBHiIcJdwXTFrmtrYjfeNPBTdKSA=;
-        b=tB65AlOCMITpOPQtTGz4rLZ9fe+mT7RZ817d+XyVRCGYj6NnX6SXJoJUELYzq0k7yJ
-         o2/7bvFxO20NzBcYFnPHqAEh7G7t9oBzb5Hj1IaSx9vOXEmWls9+MzFlL1zugjuGIrI2
-         0Alx0Ds8WDS1lq+4F/4HyUcdYpoTNA7N097g6K/DqXcz2TtJ3iZe5XJqxf1fbmDp8v27
-         c1/4EKnL68/BOV5E6q909gKdyZioNJ8T5416gOgf/vOEdTGRzkqzK+pFzUAHM1JIEqaf
-         HoojGKUCnkdwBIbFDBSHf4cS/0SjC0UJ1fCL7R14Q0LBgfRiiUkvUrV7Vhpx9MZ486G2
-         oCDA==
-X-Gm-Message-State: APjAAAXbO/7itZNDxdYcHjTezW/uIvp3LJ00JX+oZL+MuiHrUKggakw4
-        Q6E6w1HwsHPzC+Ir1ghwMPNA/rTaX2w=
-X-Google-Smtp-Source: APXvYqxFM/9qKes88e0vmofK31dMBHn9toiGgAML3hDN5Qb+wefJFgaw7pLewLC7qKoxMFdoRss53Q==
-X-Received: by 2002:a5d:4710:: with SMTP id y16mr14299334wrq.176.1554824309835;
-        Tue, 09 Apr 2019 08:38:29 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id j22sm101522078wrd.91.2019.04.09.08.38.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Apr 2019 08:38:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     Michael Platings <michael@platin.gs>, David Kastrup <dak@gnu.org>,
-        Git mailing list <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 6/6] RFC blame: use a fingerprint heuristic to match ignored lines
-References: <20190407214635.12984-1-michael@platin.gs>
-        <8736mtqy9n.fsf@fencepost.gnu.org>
-        <CAJDYR9TXL_9JpWvNv9ahK1aYV4isduHhvzvobCJ16q7LWhPRcA@mail.gmail.com>
-        <6752a735-2e7b-7d13-799f-a42e6995498c@google.com>
-Date:   Wed, 10 Apr 2019 00:38:28 +0900
-In-Reply-To: <6752a735-2e7b-7d13-799f-a42e6995498c@google.com> (Barret
-        Rhoden's message of "Mon, 8 Apr 2019 12:03:29 -0400")
-Message-ID: <xmqqftqr42a3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=u3LeWUWoGy32sZp53aB1vJLMoZMbdIX19PT7H2KwTg4=;
+        b=kxJu7BN3wdH82FCeQG9kT6qtF+uuBH/sZa9IcZ2j/E2zeLGJQnD/cNW5sAbJHfHmK3
+         Ea6zyfYeYyTkVz35ClwX116Y/3Id47or41gl8r0kUaHq0pjjlna/mHoKALC4RvTbezQl
+         IWIyHn6NPza9BxAZqpc4PB1NZByD3UhVeLfbc+Dp19fTTI/Q6cXRCTsHjCr8XSJsB/B2
+         sNfy7UGbn4QVIbfC2AGFlmPthRD6lUg5o3UwSI0KoFw0RMdDMkEEOvZWtpavhPXJANjG
+         HWYqDBHOgpxUdGIWwTSLBL5aLz3zVY9ty6VWp/J54wX2Fgv6QhaCt4xfh7c2Beg2bma5
+         NEhQ==
+X-Gm-Message-State: APjAAAWRWtWrfszp2P6ej1BzBNd5zOi0z49RibAgWdcMZwkVULVHG13M
+        Zk7ok7VDU9flWQzgdz8qAX74KpNSAPNGDo16jMVmudYx
+X-Google-Smtp-Source: APXvYqy0FEnKqdjl2K7tCjnUo2d8Hxpy8hQzZZmALPdxY2SDLqe2+Cb1WpmyLXEFsgGIb0SabRN+O0PTQ3mVTqdqu6U=
+X-Received: by 2002:a05:6830:9a:: with SMTP id a26mr22788584oto.317.1554824377548;
+ Tue, 09 Apr 2019 08:39:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Tue, 9 Apr 2019 21:09:25 +0530
+Message-ID: <CAMknYEMh=CN6GGRPD_fkafHy84e49JY5dK2dAgX6Z7542dJ-Uw@mail.gmail.com>
+Subject: [GSoC] [RFC] Proposal: Teach git stash to handle unmerged index entries.
+To:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Barret Rhoden <brho@google.com> writes:
+Plan to implement the project.
 
-> On 4/8/19 5:48 AM, Michael Platings wrote:
->> Hi David,
->> You also get an out-of-memory error with the patch Barret posted at
->> the start of this thread.
->
-> I think I see the issue, and will fix it when I repost the patch set.
+Objective:
+Teach git stash to handle unmerged index entries.
 
-Thanks.
+Description:
+When the index is unmerged, git stash refuses to do anything. That is
+unnecessary, though, as it could easily craft e.g. an octopus merge of
+the various stages. A subsequent git stash apply can detect that
+octopus and re-generate the unmerged index.
+
+
+Implementation Idea:
+Performing an octopus merge of all `stage n` (n>0) unmerged index
+entries, could solve the problem, but
+
+What if there are conflicts in merging ?
+In this case, we would store(commit) the conflicted state, so they can
+be regenerated when git stash is applied.
+
+How to store the conflicted files ?
+create a tree from the merge using `git-write-tree`
+and then commit that tree using `git-commit-tree`.
+
+
+Relevant Discussions:
+https://colabti.org/irclogger/irclogger_log/git-devel?date=2019-04-05#l92
+https://colabti.org/irclogger/irclogger_log/git-devel?date=2019-04-09#l47
+
+
+Idea Execution Plan: Divided into 2 parts.
+
+Part 1: Store the unmerged index entries this part will work with `git
+stash push`
+
+stash.sh: file would be changed to accommodate the below implementation.
+
+Step 1:
+Extract all the unmerged entries from index file and store them in a
+temporary index file.
+
+read-cache.c: this file is responsible for reading index file,
+probably this implementation will end up in this file.
+
+Step 2:
+cache-tree.c: study and implement a slightly modified version of the
+function `write_index_as_tree()`
+
+int write_index_as_tree(struct object_id *oid, struct index_state
+*index_state, const char *index_path, int flags, const char *prefix);
+
+this function is responsible for writing tree from index file.
+Currently in this function, the index must be in a fully merged state,
+and we are dealing with its exact opposite. So a version to write tree
+for unmerged index entries will be implemented.
+
+Step 3:
+write-tree.c: some possible changes will go here, so as to use the
+modified version of write_index_as_tree() function.
+
+Step 4:
+use git-commit-tree to commit the written tree and store the hash in
+some file say `stash_conflicting_merge`
+
+Step 5:
+Write tests for all implementation till this point.
+
+Part 2: Retrieve the tree hash and regenerate the state of repository
+as it was earlier.
+
+Step 6:
+Modify implementation of `git stash apply` for regenerating the committed tree.
+
+Step 7:
+Write tests.
