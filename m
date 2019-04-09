@@ -2,163 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95C2A20248
-	for <e@80x24.org>; Tue,  9 Apr 2019 12:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4855020248
+	for <e@80x24.org>; Tue,  9 Apr 2019 12:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbfDIMSs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 08:18:48 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:34218 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbfDIMSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 08:18:48 -0400
-Received: by mail-it1-f193.google.com with SMTP id z17so2635601itc.1
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 05:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I1P7a4tI9YHXcKgV+bggH3khgQw92UK9CF2oOEAr16o=;
-        b=ZxsF15JG/TX0WU2mPGYAqrouJNhes5OB+zi7BtP2W/dAPze/kj6Z5Z8FCwHIXbAIAM
-         AogRi417uiIS07pyxB2iF0ZsV501pHWHO3pMxgEHPxgJ30vuCOp7/j7oO5HbwbYAvwG1
-         9iKASbKZLEQsMRDQ0Jkjav4cslWPPAZzEc6XnJNEMTyFNYCZCiVg6cFqY1s2NTZWfq2i
-         hKkq/XRjMEsYAkYvqMNLuhy8plsP/wG+8EXpEM/CgNXflQOBl3H1SCEq1I5bUg9/GRN6
-         PCUq+C4t9NjD716cvymoNjGyT5+vyN+peyZMhP/a2qRIBrYhJlOKccAU+P3Wz0lRgGva
-         LYjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I1P7a4tI9YHXcKgV+bggH3khgQw92UK9CF2oOEAr16o=;
-        b=FzLsh4uHjk3bRZdIG1Whyd+rvnkNC8+W0+wSeHIZ6E6CWsxcAuaUdb7LyVi2rH/7BP
-         Hore0ymHg7dw3/9Y3+gVYB8ENRvj2nicmUAOfzuQlzDGALKGjSJdx9l0O9/WASXyP8nZ
-         OxEi8dgznYKNC35ieCAGSy1xzBZwnaxvXRj6/bNFkS4r4gw1pCGgjkx059ihls/xSHeS
-         y34pB1mnE4OUTg4ps/R6TXvyJLqQk5u3H3U9PJ63FfLUKzrswbShrzD4OEVu+5RzjPuH
-         qxCt0O/ZcM6e7gXQ2hARLHuT1pK8rMD1mgkiPGkQyaZCQBv4nZdDUeLu3Alr1pznEMoU
-         thOQ==
-X-Gm-Message-State: APjAAAV7HfDSlraMTmqJ6q47sKhFG4UpodtfuB7BzbXMhIeEYaqBLUJ0
-        e2Vrff5Oms8sPlSQyEmhD3NftijWXoaWgx8o7Jg=
-X-Google-Smtp-Source: APXvYqyu1UiL3K9STajURzoV8xV137xr4xoZCpQvX+dIrI2qR1Ae4VaxZptfBRtf/M8bzXCP3/Dh0SH7YUt8nfxBwGU=
-X-Received: by 2002:a02:c50b:: with SMTP id s11mr26239789jam.84.1554812327164;
- Tue, 09 Apr 2019 05:18:47 -0700 (PDT)
+        id S1726463AbfDIMTa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 08:19:30 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:45924 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726001AbfDIMTa (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 9 Apr 2019 08:19:30 -0400
+Received: from mail-lj1-f178.google.com ([209.85.208.178]); authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hDpio-0005Fo-GT; Tue, 09 Apr 2019 14:19:26 +0200
+Received: by mail-lj1-f178.google.com with SMTP id l7so14240520ljg.6
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 05:19:26 -0700 (PDT)
+X-Gm-Message-State: APjAAAX2tr1BU+02zeXpocb2NsML99S7xnoEJHa/mQrjoVTlR4W/vYiF
+        15ZxkSKYB+Ac7gSJI/O6GLO7FdEyELwdrnX4B9c=
+X-Google-Smtp-Source: APXvYqw/dUG+wA35LzkqdbaNBAwGvMwyhkzM5ZznfAgL3C4cdw8xYcQ8bxkYPyQkkxFSz7HlwB1IYc4prHHTZm4ea0I=
+X-Received: by 2002:a2e:9a46:: with SMTP id k6mr19138466ljj.119.1554812366013;
+ Tue, 09 Apr 2019 05:19:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-2-pclouds@gmail.com>
- <CABPp-BFXZMorrHph3hGFnqfceHs68byWNgffNKGp1ov6X5-o5A@mail.gmail.com>
- <CACsJy8D4tvm_zLo0DcnjmcBeKDRDR+HGAxd1PsUMSBcgR59DPg@mail.gmail.com> <CABPp-BENtDUOpKYHZu=4rKFrQMaCE=fEtAWRqHvePjZYm1jTtg@mail.gmail.com>
-In-Reply-To: <CABPp-BENtDUOpKYHZu=4rKFrQMaCE=fEtAWRqHvePjZYm1jTtg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 9 Apr 2019 19:18:20 +0700
-Message-ID: <CACsJy8DSyLttWr=QSg+enkTm4EKADmL99zZ0fiZRjCpXo9=5YA@mail.gmail.com>
-Subject: Re: [PATCH v1 01/11] checkout: split part of it to new command 'restore'
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+References: <20190405200045.10063-1-admin@in-ici.net> <xmqqftqt7x49.fsf@gitster-ct.c.googlers.com>
+ <CAKrvxcVgMLNEEY6U+ybm6n4WtUCdOaYRjBrDKFvRwzYbZyB2UQ@mail.gmail.com> <xmqqy34j7jci.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy34j7jci.fsf@gitster-ct.c.googlers.com>
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+Date:   Tue, 9 Apr 2019 14:19:14 +0200
+X-Gmail-Original-Message-ID: <CAKrvxcW1hKUjMsCGUz7GothxbEKiQek2J5CkjhuiSKoGrArjbQ@mail.gmail.com>
+Message-ID: <CAKrvxcW1hKUjMsCGUz7GothxbEKiQek2J5CkjhuiSKoGrArjbQ@mail.gmail.com>
+Subject: Re: [PATCH/docs] make slash-rules more readable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1554812368;93970b47;
+X-HE-SMSGID: 1hDpio-0005Fo-GT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(since 'git switch' is basically done, let's get back to 'git restore')
+>> I agree with you. How about we make up the word "intermediate slash" and
+>> explain it in an extra paragraph?
 
-On Sun, Mar 10, 2019 at 1:27 AM Elijah Newren <newren@gmail.com> wrote:
->
-> On Sat, Mar 9, 2019 at 4:16 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Sat, Mar 9, 2019 at 1:01 AM Elijah Newren <newren@gmail.com> wrote:
->
-> > > > +-q::
-> > > > +--quiet::
-> > > > +       Quiet, suppress feedback messages.
-> > > > +
-> > > > +--progress::
-> > > > +--no-progress::
-> > > > +       Progress status is reported on the standard error stream
-> > > > +       by default when it is attached to a terminal, unless `--quiet`
-> > > > +       is specified. This flag enables progress reporting even if not
-> > > > +       attached to a terminal, regardless of `--quiet`.
-> > >
-> > > I'm assuming this means there are feedback messages other than
-> > > progress feedback?
+> I am not sure if that is any better than "in the following, pretend
+> that a slash at the end of a pattern does not exist", which is how
+> the current description avoids repetition and aims for clarity.
+> It probably is worse than than the current one if we need to introduce
+> a new term that is otherwise not useful elsewhere---a new term adds
+> to the cognitive load of readers.
+
+The description "in the following, pretend that a slash at the end of
+a pattern does not exist"
+is much better understandable then "it is removed for the purpose of
+the following description"
+to me. However, I still think its better not to use it:
+
+  1. The following paragraphs may not be valid if you do not keep this
+rule in mind.
+      This could happen, because one may not read the paragraphs in order,
+      or its unclear if "in the following" is meant for all following
+paragraphs or just this
+      paragraph, or one simply forgets it if one happens to check up a
+specific paragraph
+      after some months or when returning from a break.
+  2. Forcing the user to be aware that "in the following pretend that
+a slash at the end does not exist"
+      is at least for me a harder cognitive load then introducing a new term.
+      Because for every new paragraph that I read, I have to check if
+this rule applies.
+  3. If you jump between paragraphs, you always need to locate the rule
+      and then check if the current paragraph is below or after that rule.
+  4. There are 7 paragraphs following this "specific rule" but only
+the next paragraph
+      is using it. I think its also not needed for the paragraph where
+it appears.
+      For the other 6 paragraphs one needs to unnecessary check
+      if the rule is implicitly used anywhere.
+  5. For every paragraph that one may add in the future below that
+rule, one needs to double check
+      if its compatible with this rule. So in terms of maintenance I
+think its rather a downside.
+
+If something is cumbersome to explain and appears often, I think its
+best to explain it once in detail
+and refer to that instead of a bloated description. However, since
+this scenario only appears in two paragraphs,
+a new term is maybe not justifiable. Thus, a cumbersome but complete
+description might be preferable.
+
+> > Its mentioned at the start of the page that the pattern is always
+> > relative to the location of the `.gitignore` file. However, I see that
+> > since its said "in all directories" its necessary to restrict it again.
+> > How about
 > >
-> > There could be. This is carried over from git-checkout. I suspect this
-> > is about warnings that we print from time to time.
+> >          If the pattern contains no intermediate slash "`/`",
+> >          the pattern will match in all directories at or below
+> >          the `.gitignore` file, with infinite depth.
 >
-> Why would --quiet squelch warnings?  I figured it'd only squelch
-> feedback, informational, or progress messages.
+> It is unclear what "with infinite depth" means in this sentence.
+> There is no depth-limit in the exclude mechanism, and I'd prefer
+> not to confuse readers by making a casual mention of "depth" to
+> imply as if there is some depth-based logic.
 
-I'm wrong. Warnings are not suppressed by --quiet. It looks like
---quiet is not really used by 'git restore'. Based on code inspection,
---quiet implies --no-progress if --[no-]progress is not specified.
-Otherwise progress bar is enabled only when we have tty.
+The description "infinite depth" is used in the current documentation
+in the paragraph
+for `/**`. I thought its good to reuse something that has already been
+approved by the community.
+I think it points out very well that we are not only looking at
+folders at the level of the `.gitignore`
+file but all the folders below.
 
-> I understand you just carried it over from git-checkout, but as worded
-> it makes me wonder if checkout has suboptimal behavior or perhaps just
-> a suboptimal explanation of its flags ... and if it does, we probably
-> don't want to carry that over.
+> Also, as you defined "intermediate" as a slash that is neither
+> leading nor trailing, the above paragraph says "/foo" matches any
+> filesystem entity whose final path component is 'foo', e.g. a file
+> 'foo' at the current level, a directory 'foo' in subdirectory 'dir'
+> (i.e. 'dir/foo'), etc.  I do not think you meant to say that (and
 
-But there is something we don't show now, but I don't know if we should show.
+We could fix it by defining an intermediate slash as any slash that is
+not a trailing one.
+But then one may just call it a "non-trailing" slash which is maybe
+self-explanatory enough.
 
-The commit that started all this is 0f086e6dca (checkout: print
-something when checking out paths, 2018-11-13) where I tried to make
-'git checkout' mistakes easier to see by printing
+> this is why I do not like to introduce a new term---even its
+> inventor cannot get it right).
 
-    Updated <n> paths from <some-checkout-source>
+Especially if someone invents a new thing, I would not expect that its
+perfect right from scratch.
 
-Because the reason is to help spot mistakes, this is only printed when
-you do "git checkout <paths>" _without_ the double dashes to
-disambiguate.
+However, I have to admit, the introduced term "intermediate" has its
+flaws. Maybe using "non-trailing" or a description is better.
 
-Since git-restore has no ambiguation (between restoring paths and
-switching branches) these messages are never printed. I'm just
-wondering if we should print them anyway. It gives some feedback
-instead of the silent output in the successful case. Some might like
-it, some don't.
-
-> > > > +-f::
-> > > > +--force::
-> > > > +       If `--source` is not specified, unmerged entries are left alone
-> > > > +       and will not fail the operation. Unmerged entries are always
-> > > > +       replaced if `--source` is specified, regardless of `--force`.
-> > >
-> > > This may be slightly confusing, in particular it suggests that --index
-> > > (or --worktree and --index) are the default.  Is --force only useful
-> > > when --index is specified?  If it has utility with --worktree only,
-> > > what does it do?
+> > I agree, this is much better. Although I would leave out
 > >
-> > Well, this is 'git checkout -f' behavior which only concerns the
-> > index. So yeah it only matters with --index.
+> >>  "as the asterisk in the patter does not match "bar/hello.c"
+> >>   which has a slash in it."
 >
-> Okay, good to know that this only matters with --index. However, new
-> problem: This makes the explanation feel contradictory, though,
-> because elsewhere you stated that --source=HEAD is implied when
-> --index is given without a source.  So, the combination of this
-> description and that fact suggests that -f is either useless (--index
-> is not specified) or ignored (because --source will either default to
-> HEAD or be specified by the user).  Maybe that's true and -f should be
-> removed from this new document.  If it has actual utility in some
-> cases, then this description needs to be reworked to explain what
-> those circiumstances are somehow.
+> I happen to think that the part is the more important half of that
+> whole "example".
 
-Actually my description of this option is not clear. This is about
---worktree, not --index.
+Alright.
 
-When we do "git restore <path>" (which by default implies --worktree),
-we take the entry from the index and overwrite the worktree with it.
-But if the entry is unmerged (and --ours or --theirs are not
-specified), there is no good way we can handle it automatically.
 
-So the default behavior in this case is abort the operation. -f goes
-with a gentler option: ignore unmerged entries and go restore normal
-ones. And to keep people informed that there _are_ unmerged entries,
-warning is displayed for each one.
 
-So, maybe I'll rename --force to --ignore-unmerged? This option will
-only matter in the "git restore [--worktree]" form. In other words,
-restoring worktree from the index. If --ignored-unmerged is specified
-in other modes, die().
--- 
-Duy
+To summarize: I would suggest to drop "it is removed for the purpose
+of the following description" because of the points
+I made at the top and instead mention the necessary exceptions in the
+two relevant paragraphs. Here my new updated proposals:
+
+          If the pattern contains no slash "`/`"
+          (except an optional trailing slash),
+          the pattern will match in all directories relative to
+          the `.gitignore` file, with infinite depth.
+          For example, `frotz/` matches `frotz` and `a/frotz` that
+          is a directory, but does not match if these are files.
+          A pattern `frotz` on the other hand matches these paths
+          whether they are files or directories.
+
+I think this is better then my first proposal:
+
+>> + - If the pattern contains no slash "`/`" other then a trailing slash,
+
+>While pretending to be a fresh reader and reading only this line
+>made me wonder if the rule described in this bullet point applies
+>only to a pattern that has a single slash at the end.  I wonder if
+>it is just me, or we can improve the phrasing so that it is clear
+>that a pattern without any slash also is covered by this rule, not
+>just a pattern that has all non-slash chars followed by a single
+>slash.
+
+The phrase "except an optional" and the example both point out that
+this rule works with and without trailing slash.
+I kept "infinite depth" for the reasons explained above.
+
+For the next paragraph I would suggest this:
+
+        If the pattern contains a non-trailing slash "`/`",
+        it matches the beginning of the pathname.
+        For example, the pattern `doc/frotz/` matches
+        `doc/frotz` that is a directory
+        but does not match `a/doc/frotz`.
+
+Where I have taken `it matches the beginning of the pathname` from the
+paragraph of a leading slash.
+The example uses a trailing slash, to emphasize that this rule works
+also with trailing slash, for the case
+that the reader confuses the line with "If the pattern contains no
+trailing slash". Alternatively I would suggest:
+
+        If the pattern contains a slash "`/`"
+        that is not a trailing slash,
+        it matches the beginning of the pathname.
+        For example, the pattern `doc/frotz/` matches
+        `doc/frotz` that is a directory
+        but does not match `a/doc/frotz`.
+
+This might be addressing the problem of my first proposal:
+
+>> + - If the pattern contains a slash "`/`" other then a trailing slash, then
+
+>The same comment applies to this first line about the ambiguity of a
+>pattern without any slash anywhere.
+
+
+
+All the best,
+Adam
