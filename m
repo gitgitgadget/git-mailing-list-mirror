@@ -2,123 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30D420248
-	for <e@80x24.org>; Tue,  9 Apr 2019 19:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9B7F20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 20:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfDIT20 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 15:28:26 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58663 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726415AbfDIT20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 15:28:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554838095;
-        bh=Z3ZgOyCb8SlSsEFyEHXBRHnajkehqOLHPLntjcOd53A=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=QBMUntBMoSRpk/DJLcZXv8tkWLxR+ojgXa2dF/rBLWik1pWhwJNld0oybnoEw6Hit
-         IUhlOb9HKXINtvnYeg3x1fpwgDjM1+cm4GSeYvf7Uuf4u0Nwti8Ne7WusrUfrX8iUC
-         rd+3kWAWSiuYv/5KTfIp3fiIlL/cuv4+M4oVk+8E=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from LT02.fritz.box ([84.118.159.3]) by mail.gmx.com (mrgmx001
- [212.227.17.184]) with ESMTPSA (Nemesis) id 0MEGIi-1h7IaV33Hc-00FWwy; Tue, 09
- Apr 2019 21:28:15 +0200
-From:   Heinrich Schuchardt <xypron.glpk@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brian M Carlson <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Heinrich Schuchardt <xypron.glpk@gmx.de>
-Subject: [PATCH 1/1] send-email: fix transferencoding config option
-Date:   Tue,  9 Apr 2019 21:27:33 +0200
-Message-Id: <20190409192733.10173-1-xypron.glpk@gmx.de>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:B+Llt/dkY6caPLBkJ7NVsE2cwJD8PmXAv6mq3l72/HUOAXIAlNn
- 0/VyGg7D5RCGEvC5h4yxwfqXrcBiKHJXhpHfgyKbK3c3RRol2tGLpkKCj2Taplu6jZ61H7T
- vUu/i9OyD7WN4GmQcXTxKJpZWS/TEiKpToWy8MeipKyHbHAYCXwSLLXlatJdgnl9IUlNHZt
- rVFs3tgVrrQUkQzps7syQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RaOidZc+lP8=:kRAUgEueSYxgr/mb6eCo6l
- GmKXmr1Wi9kx0cpKRgVoUM/Drf5Qkx15L9peVPeI1zK86OmRO/nDeC0BXT+qZPnsa6gt7NF8o
- DE8L1tp/ruNspm74cccBHHg01iRIaz6F4bDCP9kAz7CU4L/MFnCtgc9rQmt0hqLAwrZjkwQe5
- dOTu5etx0U1eu6ijveDV/dpjeRmNp3IfWtC3nJANFZ10MCQM8ZYEw/OCjdWAvT2ZiuHOIL7PR
- oXdp2HRHZnKSjtooTV63AFlmMtPr6AUSPpwOOq1dBFILVIMUEvuiXrA3+jeH58M33IeNq0M2o
- Ms/eiKo9x7ycaaVhjfXRuQEi5se7xRSCh51clf9zjqQdIu0BVPhClX1N2DakqxmCnKwm8Yc4D
- TEjdJCFntRb4ChU7rLIMzqbKzZgMeKf2eKNyk/2PZJzUczRPBMVDpJkqNrCzOExaqVopsSCRp
- 5b8LAmkdXPFXnjaAnDN5Fh7Ky/NrOSTTPjpiQz1ASRjF/qhugJ5fj7Ah0DyWVjKhe1+BSH1un
- lkn80XuL/IaN2yjfRNKWgRR4bSJC+LIjm9KNlFI+3t57fEUI1DpaCIftfPeyWorqIx6DxTYCg
- NP3jCr8JKuNRrD1X+P2M88GOfe2fa4inrTjiVlq3WOIKNI5O7w4ThuPfx9V7jXiKc0MZi+yTX
- w8ozSN4aq+BF6qiLy9KOoZYDbD9XzNnRapl5eCgVvQ8P7r1ElacG14q5+ElyV7VSNrFcUznRn
- 48vKnmDu7c810nBUVvx5UEsBbaFlUyk1QbdNsI0mOr0eMVsz7YMI1bh772dCTdswyw8i4WuDh
- S2C1oVhdCYZ+aHVh8AOsu/w07DKXzuf9e/ZSFIqRqwtC+WTytyWp6NxFmDdeUBjDgw1yd41pT
- ZutJk6NOBbAJ0dBocgaZXKKc5n3FOH0BcZRpzdDhVWQQ6/qC4bWZ1GHZpEMcBl
+        id S1726489AbfDIUbj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 16:31:39 -0400
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:44415 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726333AbfDIUbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 16:31:39 -0400
+Received: by mail-vk1-f202.google.com with SMTP id f3so8908232vkb.11
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 13:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=umBF97FPxq5eFNMnh7m87tyGpxrYccxwVo5zigdamHw=;
+        b=k+qbMeW7qIVgmn4fYS1lUlw5JiXnrq0vyMV5rwb/ITfZEhZ4p5d1WdWu6wruSy8+HY
+         ALbhE5QMzKWMB/di7paYJRb2iskz0MVeh1wSeOQ2RVu8E5JRgAyxAHzJAXXjCSuhZncQ
+         6IHWapBQupxvIwu7QbvXXe4d8vRIORberFKTJn3Uu72GTxD1kewCZY66wV5fDm/ttuhm
+         M/hhN4ywvDX/zigmc9ym0ewLGeqbRcX2xSCrcgSg+XVKRpkzXrivBmRra/eVYWTEBwJ2
+         FmcElIX4BX2e9iBficrSjgFO9FQsyhMGaS0wudH/mlVikpUX6W0Y2Y5vJxYuRYgceLmM
+         xi6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=umBF97FPxq5eFNMnh7m87tyGpxrYccxwVo5zigdamHw=;
+        b=DUZ07ZuxR9mm6eqQKfGnLQNX0QDZ0fbmXszA84HgdEdtUnvU18PfK6RJ15favzH6U+
+         eTW74R53enxFM9Mjf72TFgYUA5CuZ6687pke7lon4ElehxvRRXXDhES1Lkj/oGKobaTh
+         8vwwunIQK3kNZEkiUUKAiXpm3yuzusz+tTmSDja43hU6z3x6SbPNkRaUj2uVMCW3Rl3L
+         MtjnqFdeZLI10+uhE2sXH/IgipVAM304z+YHdGr9T4xSdX6APCrD24QgPCi11oKLlTs0
+         fbJj60OmfmmWagQfcX4KYlGXlzp5EAC92gZOA51WxxaQ/UnncGrY+ykPeZ68B/2i8gwf
+         Bbvw==
+X-Gm-Message-State: APjAAAUl/98PuLrQtHIJAx1lNgW+G3XgXt0LTRWejeqbHQ0yQEkuYrU5
+        kW93ieDMPLTW7Kzma3/x1yFH/2BpDr/V0uwCn672QZIFAuUBxPHe66yluKyj5xeJFbIePffyUkq
+        7JtJHQKkmpWlRv9jbUeRoTOlmYkXNaMGJLqPCNE7On8JSvROjngQ4iudAgQyXvd3oTx5qG2/yf3
+        yR
+X-Google-Smtp-Source: APXvYqyAnipJqg9MdtVaiWXSTwk3MGFfPpNXJVg5CLp4PCmhD6jhxyftyDhOFmoP79qfM6m+Gig5RYwDCm5PlTQMNnkn
+X-Received: by 2002:a67:c911:: with SMTP id w17mr1490561vsk.3.1554841897652;
+ Tue, 09 Apr 2019 13:31:37 -0700 (PDT)
+Date:   Tue,  9 Apr 2019 13:31:32 -0700
+In-Reply-To: <20190405204413.93900-1-jonathantanmy@google.com>
+Message-Id: <cover.1554841624.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190405204413.93900-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
+Subject: [PATCH v2 0/2] Server options when cloning
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since e67a228cd8a ("send-email: automatically determine transfer-encoding"=
-)
-the value of sendmail.transferencoding is ignored because when parsing
-the configuration $target_xfer_encoding is not initial anymore.
+I created v2 by rewriting jt/clone-server-option, so you'll see some
+Reviewed-by lines and Signed-off-by lines with another name than mine.
 
-Instead of initializing variable $target_xfer_encoding on definition we
-have to set it to the default value of 'auto' if is initial after parsing
-the configuration files.
+Changes from v1:
+ - Broke long line. (DUP->NODUP was already done by Junio in
+   jt/clone-server-option, so you don't see it in the range-diff below.)
+ - Warn if server-option is specified but not sent to the server (in
+   fetch and clone).
+ - Document that server's handling of server-option is server-specific.
 
-The documentation erroneously mentions the option as
-sendmail.transferEncoding. Fix that typo.
+These patches are on maint, matching jt/clone-server-option, but should
+apply cleanly on master too.
 
-Fixes: e67a228cd8a ("send-email: automatically determine transfer-encoding=
-")
-Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
-=2D--
- Documentation/git-send-email.txt | 2 +-
- git-send-email.perl              | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+Jonathan Tan (2):
+  transport: warn if server options are unsupported
+  clone: send server options when using protocol v2
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-ema=
-il.txt
-index 1afe9fc858..884e776add 100644
-=2D-- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -146,7 +146,7 @@ Note that no attempts whatsoever are made to validate =
-the encoding.
- 	even more opaque.  auto will use 8bit when possible, and quoted-printabl=
-e
- 	otherwise.
- +
--Default is the value of the `sendemail.transferEncoding` configuration
-+Default is the value of the `sendemail.transferencoding` configuration
- value; if that is unspecified, default to `auto`.
+ Documentation/fetch-options.txt |  3 ++-
+ Documentation/git-clone.txt     |  8 +++++++
+ builtin/clone.c                 |  6 ++++++
+ t/t5702-protocol-v2.sh          | 38 +++++++++++++++++++++++++++++++++
+ transport.c                     |  8 +++++++
+ 5 files changed, 62 insertions(+), 1 deletion(-)
 
- --xmailer::
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 8200d58cdc..0e23193939 100755
-=2D-- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -239,7 +239,7 @@ sub do_edit {
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- my ($compose_encoding);
--my $target_xfer_encoding =3D 'auto';
-+my ($target_xfer_encoding);
-
- my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
-
-@@ -446,6 +446,8 @@ sub read_config {
- 			$smtp_encryption =3D 'ssl';
- 		}
- 	}
-+
-+	$target_xfer_encoding =3D 'auto' unless (defined $target_xfer_encoding);
- }
-
- # read configuration from [sendemail "$identity"], fall back on [sendemai=
-l]
-=2D-
-2.20.1
+Range-diff against v1:
+-:  ---------- > 1:  af3cc05324 transport: warn if server options are unsupported
+1:  90ce94e039 ! 2:  142c25abd2 clone: send server options when using protocol v2
+    @@ -11,10 +11,27 @@
+         has "-o" for another parameter, teach "clone" only to receive
+         "--server-option".
+     
+    +    Explain in the documentation, both for clone and for fetch, that server
+    +    handling of server options are server-specific.
+    +
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+         Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+    + diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+    + --- a/Documentation/fetch-options.txt
+    + +++ b/Documentation/fetch-options.txt
+    +@@
+    + --server-option=<option>::
+    + 	Transmit the given string to the server when communicating using
+    + 	protocol version 2.  The given string must not contain a NUL or LF
+    +-	character.
+    ++	character.  The server's handling of server options, including
+    ++	unknown ones, is server-specific.
+    + 	When multiple `--server-option=<option>` are given, they are all
+    + 	sent to the other side in the order listed on the command line.
+    + 
+    +
+      diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+      --- a/Documentation/git-clone.txt
+      +++ b/Documentation/git-clone.txt
+    @@ -25,7 +42,8 @@
+     +--server-option=<option>::
+     +	Transmit the given string to the server when communicating using
+     +	protocol version 2.  The given string must not contain a NUL or LF
+    -+	character.
+    ++	character.  The server's handling of server options, including
+    ++	unknown ones, is server-specific.
+     +	When multiple `--server-option=<option>` are given, they are all
+     +	sent to the other side in the order listed on the command line.
+     +
+    @@ -48,8 +66,8 @@
+      		   N_("separate git dir from working tree")),
+      	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+      			N_("set config inside the new repository")),
+    -+	OPT_STRING_LIST(0, "server-option", &server_options, N_("server-specific"),
+    -+			N_("option to transmit")),
+    ++	OPT_STRING_LIST(0, "server-option", &server_options,
+    ++			N_("server-specific"), N_("option to transmit")),
+      	OPT_SET_INT('4', "ipv4", &family, N_("use IPv4 addresses only"),
+      			TRANSPORT_FAMILY_IPV4),
+      	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+    @@ -68,7 +86,7 @@
+      --- a/t/t5702-protocol-v2.sh
+      +++ b/t/t5702-protocol-v2.sh
+     @@
+    - 	grep "server-option=world" log
+    + 	grep "Ignoring server options" err
+      '
+      
+     +test_expect_success 'server-options are sent when cloning' '
+    @@ -81,6 +99,16 @@
+     +	grep "server-option=hello" log &&
+     +	grep "server-option=world" log
+     +'
+    ++
+    ++test_expect_success 'warn if using server-option with clone with legacy protocol' '
+    ++	test_when_finished "rm -rf myclone" &&
+    ++
+    ++	GIT_TEST_PROTOCOL_VERSION=0 git -c protocol.version=0 \
+    ++		clone --server-option=hello --server-option=world \
+    ++		"file://$(pwd)/file_parent" myclone 2>err &&
+    ++
+    ++	grep "Ignoring server options" err
+    ++'
+     +
+      test_expect_success 'upload-pack respects config using protocol v2' '
+      	git init server &&
+-- 
+2.21.0.392.gf8f6787159e-goog
 
