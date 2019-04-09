@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86B5420305
-	for <e@80x24.org>; Tue,  9 Apr 2019 16:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2575120380
+	for <e@80x24.org>; Tue,  9 Apr 2019 16:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726706AbfDIQL5 (ORCPT <rfc822;e@80x24.org>);
+        id S1726697AbfDIQL5 (ORCPT <rfc822;e@80x24.org>);
         Tue, 9 Apr 2019 12:11:57 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36356 "EHLO
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40681 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbfDIQLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 12:11:55 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y13so21664513wrd.3
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 09:11:53 -0700 (PDT)
+        with ESMTP id S1726595AbfDIQL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 12:11:56 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h4so21651934wre.7
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 09:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6dY8p3PC3FPmzIiYwR+SfHDaGkLhxN1lcLnqyC+viH0=;
-        b=ZlKdiFCNeKulp2U3zjGzhcstQW58bKT5U0QLzphNa5zHKLUj4Bmw3L/qbyt7HoEJrV
-         RYbkAR9Wy5+/Y595OJwyN4t2oCScuDn2Fg78Bhb0M8853w+/quca96qFGKWCG8usA7dN
-         lx+MLPgEFPAsoalypVsJgMYBUHYn8eyvdRO6dmMi1/OBkpqDPSs6JiwrUssrKRfMDd1v
-         FMm9xmza+8psP+6hDN60Vvth/aUZ5mv4tcVTn0NfAZI7GNyXAUXe/1qmtXo+mCb3J/j8
-         pWz5Ch6XeJTOcoYTXaFS679Bgmw72rlBswiZH0ewApeGJCicJM4aRT9Lcn2Ofow2C2eb
-         HCJQ==
+        bh=JaLcNLgH1FGvrESE5cWo/Yv1cI7dR1PzTsVxV3BN05A=;
+        b=O0W287gaWtjeEWgGdg37MVgq19h/huaOh0UIGeW8mkvP2dg/iYqYH9nTyyDPXRWKB4
+         G/xad30WBfhtrTAQOKBROBcaa44G6PVJICoxmD/+RBRvMJRcNd9CaBnU2gcxt+e8otiT
+         aYoglHxS60HBsbdK7sEa8+wo1KviOuxg00k0uGCFSSO0YAiIH1ZZxMtwOeihvtacS+Ak
+         lulkq3lv5mi1WWxwabIx7F/4pae3Ba67CuAc1fytYWNvOY4sqpHt/Y1ZXqTrIN1/+V8p
+         Egv1RzpWJPF3r7jSsQQKi52I5wKDhzeuM8Mza+Qn2ebCiyzYa/JjUARP5+UH/OCgq/3R
+         M9Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6dY8p3PC3FPmzIiYwR+SfHDaGkLhxN1lcLnqyC+viH0=;
-        b=uM4S0oogtwkZbRi1Jn7E1ZCAxBOdoRWv68/iRINsm5gTpdV7ugklfhFIfY2/zUMG5N
-         mywOFtTEOlKBachocUkY/mlFevpoOt8doUGRatqMfPL0i7iV7AmaXQo4HfwZBG59bF8P
-         Ke8cC0r1vzRAe7vHWn4dBt2NGVIrp5qixYkwwmnR380VZ/SJrC9dBFhEWVAJKez4ldHk
-         N8dhtpVsXsO4etIOns1SE672PgfFQJmq5HkD3Exl0PcmJNQr8Pp+YdyLaiIdqSl1oDxL
-         nk4XNQaGWniYEk47+stTMqjih18BDze9QetfGTllgnLRNdg/RAcd3aBKXpEh1+0VIdsP
-         71mw==
-X-Gm-Message-State: APjAAAXTb+r5Ue0Zs88qRDNtBLQ+XD4nPYpSANWZ6kl5yoRSm28rWXf5
-        AEelhGYmlcWM7AjfoHPAO7WUpFOQ
-X-Google-Smtp-Source: APXvYqwW7NY+qsuGAKxQg8Y1+s5N8fIWxjVd470lfkwqVGIWYLByz+105Tb5H/p7KprMQaX/El+TpQ==
-X-Received: by 2002:a5d:68cd:: with SMTP id p13mr22731891wrw.22.1554826312657;
-        Tue, 09 Apr 2019 09:11:52 -0700 (PDT)
+        bh=JaLcNLgH1FGvrESE5cWo/Yv1cI7dR1PzTsVxV3BN05A=;
+        b=LQ8IQLkSHqTI3dQkXzFJoortmNzX0K/7T6zO2dqPBhgc+qM1bFf5lFbWfBoeKeqRl2
+         FJvxVz4EBZ6VE7xEWB53TGYYvmSpHKRBtfpIC0faSXHEfCIYlsPIPKGdPEZJxfKUrIPe
+         1IWdBozP46SDpn0JMrgA1qHlbI0CdtO+PjCl74mKBgHPSwQYZawLlNsUJ02ctNumS2VA
+         D3t5LiMAuwjx1sMDxdgRgNtUwvNr3Vwfd/KohvNBdQjNOlCfkaTNOWyd/S7KaO9K+N4x
+         swLB6G6UQ/VaQxEpH2LEqpvC66wnRf5enhBq5yM/dDHaVbRPvwhgNmnEab6sty8A8iq/
+         5IHA==
+X-Gm-Message-State: APjAAAUQSdEUaNhQyn5b05I+jDho6Buq0DzOpk38q5nxjdvcmoHdlNCn
+        2Xuq0w9pMZOnQWYHHOQi4kb8XqkA
+X-Google-Smtp-Source: APXvYqzDhU7z2xVtxuy9swj0BOrSXJ5t7kJC6KwdBVYh4ho2fBmcHgTv814KnTBg/OI7AhODU1LuBQ==
+X-Received: by 2002:adf:ea0b:: with SMTP id q11mr5369803wrm.233.1554826314195;
+        Tue, 09 Apr 2019 09:11:54 -0700 (PDT)
 Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id i2sm4356012wmg.47.2019.04.09.09.11.50
+        by smtp.gmail.com with ESMTPSA id i2sm4356012wmg.47.2019.04.09.09.11.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 09:11:51 -0700 (PDT)
+        Tue, 09 Apr 2019 09:11:53 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Beat Bolli <dev+git@drbeat.li>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 07/16] Use promisor_remote_get_direct() and has_promisor_remote()
-Date:   Tue,  9 Apr 2019 18:11:07 +0200
-Message-Id: <20190409161116.30256-8-chriscool@tuxfamily.org>
+Subject: [PATCH v5 08/16] diff: use promisor-remote.h instead of fetch-object.h
+Date:   Tue,  9 Apr 2019 18:11:08 +0200
+Message-Id: <20190409161116.30256-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.21.0.750.g68c8ebb2ac
 In-Reply-To: <20190409161116.30256-1-chriscool@tuxfamily.org>
 References: <20190409161116.30256-1-chriscool@tuxfamily.org>
@@ -79,374 +79,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using the repository_format_partial_clone global
-and fetch_objects() directly, let's use has_promisor_remote()
-and promisor_remote_get_direct().
+The repository_format_partial_clone global and fetch_objects()
+should not be used anymore when there can be more than one
+promisor remote. Instead let's use has_promisor_remote()
+and promisor_remote_get_direct() from "promisor-remote.h".
 
 This way all the configured promisor remotes will be taken
 into account, not only the one specified by
 extensions.partialClone.
 
-Also when cloning or fetching using a partial clone filter,
-remote.origin.promisor will be set to "true" instead of
-setting extensions.partialClone to "origin". This makes it
-possible to use many promisor remote just by fetching from
-them.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/cat-file.c            |  5 +++--
- builtin/fetch.c               | 11 ++++++-----
- builtin/gc.c                  |  3 ++-
- builtin/repack.c              |  3 ++-
- cache-tree.c                  |  3 ++-
- connected.c                   |  3 ++-
- list-objects-filter-options.c | 28 +++++++++++++++-------------
- packfile.c                    |  3 ++-
- sha1-file.c                   | 15 ++++++++-------
- t/t5601-clone.sh              |  2 +-
- t/t5616-partial-clone.sh      |  2 +-
- unpack-trees.c                |  7 +++----
- 12 files changed, 47 insertions(+), 38 deletions(-)
+ diff.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 0f092382e1..85ae10bf0b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -15,6 +15,7 @@
- #include "sha1-array.h"
+diff --git a/diff.c b/diff.c
+index 4d3cf83a27..02864171fd 100644
+--- a/diff.c
++++ b/diff.c
+@@ -25,7 +25,7 @@
  #include "packfile.h"
- #include "object-store.h"
+ #include "parse-options.h"
+ #include "help.h"
+-#include "fetch-object.h"
 +#include "promisor-remote.h"
  
- struct batch_options {
- 	int enabled;
-@@ -523,8 +524,8 @@ static int batch_objects(struct batch_options *opt)
- 	if (opt->all_objects) {
- 		struct object_cb_data cb;
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+@@ -6490,8 +6490,7 @@ static void add_if_missing(struct repository *r,
  
--		if (repository_format_partial_clone)
--			warning("This repository has extensions.partialClone set. Some objects may not be loaded.");
-+		if (has_promisor_remote())
-+			warning("This repository uses promisor remotes. Some objects may not be loaded.");
- 
- 		cb.opt = opt;
- 		cb.expand = &data;
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 4ba63d5ac6..f74bd78144 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -23,6 +23,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "commit-reach.h"
-+#include "promisor-remote.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -1460,7 +1461,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * If no prior partial clone/fetch and the current fetch DID NOT
- 	 * request a partial-fetch, do a normal fetch.
- 	 */
--	if (!repository_format_partial_clone && !filter_options.choice)
-+	if (!has_promisor_remote() && !filter_options.choice)
- 		return;
- 
- 	/*
-@@ -1468,7 +1469,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * on this repo and remember the given filter-spec as the default
- 	 * for subsequent fetches to this remote.
- 	 */
--	if (!repository_format_partial_clone && filter_options.choice) {
-+	if (!has_promisor_remote() && filter_options.choice) {
- 		partial_clone_register(remote->name, &filter_options);
- 		return;
- 	}
-@@ -1477,7 +1478,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
- 	 * We are currently limited to only ONE promisor remote and only
- 	 * allow partial-fetches from the promisor remote.
- 	 */
--	if (strcmp(remote->name, repository_format_partial_clone)) {
-+	if (!promisor_remote_find(remote->name)) {
- 		if (filter_options.choice)
- 			die(_("--filter can only be used with the remote "
- 			      "configured in extensions.partialClone"));
-@@ -1611,7 +1612,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (depth || deepen_since || deepen_not.nr)
- 		deepen = 1;
- 
--	if (filter_options.choice && !repository_format_partial_clone)
-+	if (filter_options.choice && !has_promisor_remote())
- 		die("--filter can only be used when extensions.partialClone is set");
- 
- 	if (all) {
-@@ -1645,7 +1646,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (remote) {
--		if (filter_options.choice || repository_format_partial_clone)
-+		if (filter_options.choice || has_promisor_remote())
- 			fetch_one_setup_partial(remote);
- 		result = fetch_one(remote, argc, argv, prune_tags_ok);
- 	} else {
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 8943bcc300..824a8832b5 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -27,6 +27,7 @@
- #include "pack-objects.h"
- #include "blob.h"
- #include "tree.h"
-+#include "promisor-remote.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -661,7 +662,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 			argv_array_push(&prune, prune_expire);
- 			if (quiet)
- 				argv_array_push(&prune, "--no-progress");
--			if (repository_format_partial_clone)
-+			if (has_promisor_remote())
- 				argv_array_push(&prune,
- 						"--exclude-promisor-objects");
- 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 3ea0583d02..57568ce9a8 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -11,6 +11,7 @@
- #include "midx.h"
- #include "packfile.h"
- #include "object-store.h"
-+#include "promisor-remote.h"
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-@@ -359,7 +360,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	argv_array_push(&cmd.args, "--all");
- 	argv_array_push(&cmd.args, "--reflog");
- 	argv_array_push(&cmd.args, "--indexed-objects");
--	if (repository_format_partial_clone)
-+	if (has_promisor_remote())
- 		argv_array_push(&cmd.args, "--exclude-promisor-objects");
- 	if (write_bitmaps)
- 		argv_array_push(&cmd.args, "--write-bitmap-index");
-diff --git a/cache-tree.c b/cache-tree.c
-index b13bfaf71e..64c285a746 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -5,6 +5,7 @@
- #include "cache-tree.h"
- #include "object-store.h"
- #include "replace-object.h"
-+#include "promisor-remote.h"
- 
- #ifndef DEBUG
- #define DEBUG 0
-@@ -357,7 +358,7 @@ static int update_one(struct cache_tree *it,
- 		}
- 
- 		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
--			(repository_format_partial_clone &&
-+			(has_promisor_remote() &&
- 			 ce_skip_worktree(ce));
- 		if (is_null_oid(oid) ||
- 		    (!ce_missing_ok && !has_object_file(oid))) {
-diff --git a/connected.c b/connected.c
-index 1bba888eff..0eaaedee6a 100644
---- a/connected.c
-+++ b/connected.c
-@@ -4,6 +4,7 @@
- #include "connected.h"
- #include "transport.h"
- #include "packfile.h"
-+#include "promisor-remote.h"
- 
- /*
-  * If we feed all the commits we want to verify to this command
-@@ -56,7 +57,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	argv_array_push(&rev_list.args,"rev-list");
- 	argv_array_push(&rev_list.args, "--objects");
- 	argv_array_push(&rev_list.args, "--stdin");
--	if (repository_format_partial_clone)
-+	if (has_promisor_remote())
- 		argv_array_push(&rev_list.args, "--exclude-promisor-objects");
- 	if (!opt->is_deepening_fetch) {
- 		argv_array_push(&rev_list.args, "--not");
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index c0036f7378..f41a831fce 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -6,6 +6,7 @@
- #include "list-objects.h"
- #include "list-objects-filter.h"
- #include "list-objects-filter-options.h"
-+#include "promisor-remote.h"
- 
- /*
-  * Parse value of the argument to the "filter" keyword.
-@@ -144,30 +145,31 @@ void partial_clone_register(
- 	const char *remote,
- 	const struct list_objects_filter_options *filter_options)
+ void diffcore_std(struct diff_options *options)
  {
--	/*
--	 * Record the name of the partial clone remote in the
--	 * config and in the global variable -- the latter is
--	 * used throughout to indicate that partial clone is
--	 * enabled and to expect missing objects.
--	 */
--	if (repository_format_partial_clone &&
--	    *repository_format_partial_clone &&
--	    strcmp(remote, repository_format_partial_clone))
--		die(_("cannot change partial clone promisor remote"));
-+	char *cfg_name;
- 
--	git_config_set("core.repositoryformatversion", "1");
--	git_config_set("extensions.partialclone", remote);
-+	/* Check if it is already registered */
-+	if (!promisor_remote_find(remote)) {
-+		git_config_set("core.repositoryformatversion", "1");
- 
--	repository_format_partial_clone = xstrdup(remote);
-+		/* Add promisor config for the remote */
-+		cfg_name = xstrfmt("remote.%s.promisor", remote);
-+		git_config_set(cfg_name, "true");
-+		free(cfg_name);
-+	}
- 
- 	/*
- 	 * Record the initial filter-spec in the config as
- 	 * the default for subsequent fetches from this remote.
-+	 *
-+	 * TODO: record it into remote.<name>.partialclonefilter
- 	 */
- 	core_partial_clone_filter_default =
- 		xstrdup(filter_options->filter_spec);
- 	git_config_set("core.partialclonefilter",
- 		       core_partial_clone_filter_default);
-+
-+	/* Make sure the config info are reset */
-+	promisor_remote_reinit();
- }
- 
- void partial_clone_get_default_filter_spec(
-diff --git a/packfile.c b/packfile.c
-index 498498b1e3..fa5a9bb136 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -16,6 +16,7 @@
- #include "tree.h"
- #include "object-store.h"
- #include "midx.h"
-+#include "promisor-remote.h"
- 
- char *odb_pack_name(struct strbuf *buf,
- 		    const unsigned char *sha1,
-@@ -2147,7 +2148,7 @@ int is_promisor_object(const struct object_id *oid)
- 	static int promisor_objects_prepared;
- 
- 	if (!promisor_objects_prepared) {
--		if (repository_format_partial_clone) {
-+		if (has_promisor_remote()) {
- 			for_each_packed_object(add_promisor_object,
- 					       &promisor_objects,
- 					       FOR_EACH_OBJECT_PROMISOR_ONLY);
-diff --git a/sha1-file.c b/sha1-file.c
-index 83358737f3..e7e037b6ce 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -30,8 +30,8 @@
- #include "mergesort.h"
- #include "quote.h"
- #include "packfile.h"
--#include "fetch-object.h"
- #include "object-store.h"
-+#include "promisor-remote.h"
- 
- /* The maximum size for an object header. */
- #define MAX_HEADER_LEN 32
-@@ -1369,16 +1369,17 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
- 		}
- 
- 		/* Check if it is a missing object */
--		if (fetch_if_missing && repository_format_partial_clone &&
-+		if (fetch_if_missing && has_promisor_remote() &&
- 		    !already_retried && r == the_repository &&
- 		    !(flags & OBJECT_INFO_FOR_PREFETCH)) {
- 			/*
--			 * TODO Investigate checking fetch_object() return
--			 * TODO value and stopping on error here.
--			 * TODO Pass a repository struct through fetch_object,
--			 * such that arbitrary repositories work.
-+			 * TODO Investigate checking promisor_remote_get_direct()
-+			 * TODO return value and stopping on error here.
-+			 * TODO Pass a repository struct through
-+			 * promisor_remote_get_direct(), such that arbitrary
-+			 * repositories work.
- 			 */
--			fetch_objects(repository_format_partial_clone, real, 1);
-+			promisor_remote_get_direct(real, 1);
- 			already_retried = 1;
- 			continue;
- 		}
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 23854cab26..15720847b0 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -653,7 +653,7 @@ partial_clone () {
- 	git -C client fsck &&
- 
- 	# Ensure that unneeded blobs are not inadvertently fetched.
--	test_config -C client extensions.partialclone "not a remote" &&
-+	test_config -C client remote.origin.promisor "false" &&
- 	test_must_fail git -C client cat-file -e "$HASH1" &&
- 
- 	# But this blob was fetched, because clone performs an initial checkout
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 9a8f9886b3..c9e5f14165 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -42,7 +42,7 @@ test_expect_success 'do partial clone 1' '
- 
- 	test_cmp expect_1.oids observed.oids &&
- 	test "$(git -C pc1 config --local core.repositoryformatversion)" = "1" &&
--	test "$(git -C pc1 config --local extensions.partialclone)" = "origin" &&
-+	test "$(git -C pc1 config --local remote.origin.promisor)" = "true" &&
- 	test "$(git -C pc1 config --local core.partialclonefilter)" = "blob:none"
- '
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 22985aa4a3..d86cd922e0 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -16,7 +16,7 @@
- #include "submodule-config.h"
- #include "fsmonitor.h"
- #include "object-store.h"
--#include "fetch-object.h"
-+#include "promisor-remote.h"
- 
- /*
-  * Error messages expected by scripts out of plumbing commands such as
-@@ -398,7 +398,7 @@ static int check_updates(struct unpack_trees_options *o)
- 		load_gitmodules_file(index, &state);
- 
- 	enable_delayed_checkout(&state);
--	if (repository_format_partial_clone && o->update && !o->dry_run) {
-+	if (has_promisor_remote() && o->update && !o->dry_run) {
+-	if (options->repo == the_repository &&
+-	    repository_format_partial_clone) {
++	if (options->repo == the_repository && has_promisor_remote()) {
  		/*
- 		 * Prefetch the objects that are to be checked out in the loop
- 		 * below.
-@@ -417,8 +417,7 @@ static int check_updates(struct unpack_trees_options *o)
- 			oid_array_append(&to_fetch, &ce->oid);
- 		}
- 		if (to_fetch.nr)
+ 		 * Prefetch the diff pairs that are about to be flushed.
+ 		 */
+@@ -6508,8 +6507,7 @@ void diffcore_std(struct diff_options *options)
+ 			/*
+ 			 * NEEDSWORK: Consider deduplicating the OIDs sent.
+ 			 */
 -			fetch_objects(repository_format_partial_clone,
 -				      to_fetch.oid, to_fetch.nr);
 +			promisor_remote_get_direct(to_fetch.oid, to_fetch.nr);
  		oid_array_clear(&to_fetch);
  	}
- 	for (i = 0; i < index->cache_nr; i++) {
+ 
 -- 
 2.21.0.750.g68c8ebb2ac
 
