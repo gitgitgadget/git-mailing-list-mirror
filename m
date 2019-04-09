@@ -2,108 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90A5920248
-	for <e@80x24.org>; Tue,  9 Apr 2019 11:50:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95C2A20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 12:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbfDILut (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 07:50:49 -0400
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:36391 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726464AbfDILut (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 07:50:49 -0400
-Received: by mail-ot1-f48.google.com with SMTP id o74so15244647ota.3
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 04:50:48 -0700 (PDT)
+        id S1726352AbfDIMSs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 08:18:48 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:34218 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726001AbfDIMSs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 08:18:48 -0400
+Received: by mail-it1-f193.google.com with SMTP id z17so2635601itc.1
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 05:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KUthLYgJEzrfiSNz4evabOv40jRi17ITFORDOueN2f4=;
-        b=O2tWGYkdMyHqFmGj0QP9p9fMl+W/ekI94V6V5/5FGhpRIBKuhA6PsNwF5ipT56zwKy
-         3TpwHbBS+0czGvK/xpWaMp2IH6evuqxvrjSw5jTGZAPMTQ5WMklmFGYMwY2Tv/wNT+Gv
-         ESoeqUW8sJaEvv7enohRY3j5dTuXzpbmeGvzgdwERelCyMAnkOf6NQ2NCfVJIxaqIOaH
-         IzsKIM0ayFwrUkW8ybReOspZ6LDEDKzFtr/q0C7yBa03av2T3pcmThHlxroVTDs1vXhi
-         fLPpe9bXfsFKGc9fgpfYckoZweWE65zjVhQN1TiB6o3lgkZQWL82UTPe6QTesKBF9HDD
-         vP8A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=I1P7a4tI9YHXcKgV+bggH3khgQw92UK9CF2oOEAr16o=;
+        b=ZxsF15JG/TX0WU2mPGYAqrouJNhes5OB+zi7BtP2W/dAPze/kj6Z5Z8FCwHIXbAIAM
+         AogRi417uiIS07pyxB2iF0ZsV501pHWHO3pMxgEHPxgJ30vuCOp7/j7oO5HbwbYAvwG1
+         9iKASbKZLEQsMRDQ0Jkjav4cslWPPAZzEc6XnJNEMTyFNYCZCiVg6cFqY1s2NTZWfq2i
+         hKkq/XRjMEsYAkYvqMNLuhy8plsP/wG+8EXpEM/CgNXflQOBl3H1SCEq1I5bUg9/GRN6
+         PCUq+C4t9NjD716cvymoNjGyT5+vyN+peyZMhP/a2qRIBrYhJlOKccAU+P3Wz0lRgGva
+         LYjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KUthLYgJEzrfiSNz4evabOv40jRi17ITFORDOueN2f4=;
-        b=a1E5tfksH03Jm9sqHbhFVVKmBD4+TnhI/JaIzwRPeUEVjOYjuEVF7Hm8om59r78vbA
-         v6Grai8FL4sa03mLujIcd9HOz6Z1bgxAPApYYzJQ70emJA80XMf+7KdyqrBfkEFzUomU
-         fj+LGte0XDFxMWB8pnTNFS8Rmzm8EevNMNKigpP4M/9Iwt1oKBLHAEZpc7dqsCpteZ8L
-         PgY2kn/+e+tfduyTkEkRUQGGSluZzvuuIULfpq6U8bbtr7D5fwexQYMFLQ3I0lpqzOnc
-         XJQXrruo9diiSBnw4j9NvlcrsG93StCzmuqPvGQ8cSArYEtTZkAK7o19bZuDeVEkF5yL
-         iyMQ==
-X-Gm-Message-State: APjAAAXGwzt2t0iA6HAtfVFs0FkINI+tqVtLkX0/RWDMpbSLAjyWHzZ1
-        fpZvgUi2SbxBp5xMf7Il7eBhXGj1mKffZzy41ZwDAz6Rx/o=
-X-Google-Smtp-Source: APXvYqxztQH65k6ZYlR8u3nl6JkNEEJV/XEjNbKpa2BBdSg0pdphxPDeZLf/3k8ycH2hn59/UtKMWHfcoBOi+Z+Pq68=
-X-Received: by 2002:a9d:5908:: with SMTP id t8mr24085393oth.45.1554810648060;
- Tue, 09 Apr 2019 04:50:48 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=I1P7a4tI9YHXcKgV+bggH3khgQw92UK9CF2oOEAr16o=;
+        b=FzLsh4uHjk3bRZdIG1Whyd+rvnkNC8+W0+wSeHIZ6E6CWsxcAuaUdb7LyVi2rH/7BP
+         Hore0ymHg7dw3/9Y3+gVYB8ENRvj2nicmUAOfzuQlzDGALKGjSJdx9l0O9/WASXyP8nZ
+         OxEi8dgznYKNC35ieCAGSy1xzBZwnaxvXRj6/bNFkS4r4gw1pCGgjkx059ihls/xSHeS
+         y34pB1mnE4OUTg4ps/R6TXvyJLqQk5u3H3U9PJ63FfLUKzrswbShrzD4OEVu+5RzjPuH
+         qxCt0O/ZcM6e7gXQ2hARLHuT1pK8rMD1mgkiPGkQyaZCQBv4nZdDUeLu3Alr1pznEMoU
+         thOQ==
+X-Gm-Message-State: APjAAAV7HfDSlraMTmqJ6q47sKhFG4UpodtfuB7BzbXMhIeEYaqBLUJ0
+        e2Vrff5Oms8sPlSQyEmhD3NftijWXoaWgx8o7Jg=
+X-Google-Smtp-Source: APXvYqyu1UiL3K9STajURzoV8xV137xr4xoZCpQvX+dIrI2qR1Ae4VaxZptfBRtf/M8bzXCP3/Dh0SH7YUt8nfxBwGU=
+X-Received: by 2002:a02:c50b:: with SMTP id s11mr26239789jam.84.1554812327164;
+ Tue, 09 Apr 2019 05:18:47 -0700 (PDT)
 MIME-Version: 1.0
-From:   Kapil Jain <jkapil.cs@gmail.com>
-Date:   Tue, 9 Apr 2019 17:20:36 +0530
-Message-ID: <CAMknYENOfZKM0H5aznK9VyXzGA_SG+E1v62Jcez4bxnznNyPmw@mail.gmail.com>
-Subject: [GSoC] [RFC] git stashing discussing solution approaches
-To:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-2-pclouds@gmail.com>
+ <CABPp-BFXZMorrHph3hGFnqfceHs68byWNgffNKGp1ov6X5-o5A@mail.gmail.com>
+ <CACsJy8D4tvm_zLo0DcnjmcBeKDRDR+HGAxd1PsUMSBcgR59DPg@mail.gmail.com> <CABPp-BENtDUOpKYHZu=4rKFrQMaCE=fEtAWRqHvePjZYm1jTtg@mail.gmail.com>
+In-Reply-To: <CABPp-BENtDUOpKYHZu=4rKFrQMaCE=fEtAWRqHvePjZYm1jTtg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 9 Apr 2019 19:18:20 +0700
+Message-ID: <CACsJy8DSyLttWr=QSg+enkTm4EKADmL99zZ0fiZRjCpXo9=5YA@mail.gmail.com>
+Subject: Re: [PATCH v1 01/11] checkout: split part of it to new command 'restore'
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just had a small discussion on irc about solving
-https://git.github.io/SoC-2019-Ideas/#teach-git-stash-to-handle-unmerged-index-entries
-the discussion:
-https://colabti.org/irclogger/irclogger_log/git-devel?date=2019-04-09
+(since 'git switch' is basically done, let's get back to 'git restore')
 
-Below are two approaches for solving this problem:
+On Sun, Mar 10, 2019 at 1:27 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Sat, Mar 9, 2019 at 4:16 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> > On Sat, Mar 9, 2019 at 1:01 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> > > > +-q::
+> > > > +--quiet::
+> > > > +       Quiet, suppress feedback messages.
+> > > > +
+> > > > +--progress::
+> > > > +--no-progress::
+> > > > +       Progress status is reported on the standard error stream
+> > > > +       by default when it is attached to a terminal, unless `--quiet`
+> > > > +       is specified. This flag enables progress reporting even if not
+> > > > +       attached to a terminal, regardless of `--quiet`.
+> > >
+> > > I'm assuming this means there are feedback messages other than
+> > > progress feedback?
+> >
+> > There could be. This is carried over from git-checkout. I suspect this
+> > is about warnings that we print from time to time.
+>
+> Why would --quiet squelch warnings?  I figured it'd only squelch
+> feedback, informational, or progress messages.
 
-Approach 1) The suggested approach.
+I'm wrong. Warnings are not suppressed by --quiet. It looks like
+--quiet is not really used by 'git restore'. Based on code inspection,
+--quiet implies --no-progress if --[no-]progress is not specified.
+Otherwise progress bar is enabled only when we have tty.
 
-Perform an octopus merge of all `stage n` (n>0) unmerged index entries.
+> I understand you just carried it over from git-checkout, but as worded
+> it makes me wonder if checkout has suboptimal behavior or perhaps just
+> a suboptimal explanation of its flags ... and if it does, we probably
+> don't want to carry that over.
 
-a problem with this approach:
+But there is something we don't show now, but I don't know if we should show.
 
-1) Octopus merge can fail, and if it does what do we do in that case ?
-Solution: store the conflicted state, and restore it when stash is applied.
+The commit that started all this is 0f086e6dca (checkout: print
+something when checking out paths, 2018-11-13) where I tried to make
+'git checkout' mistakes easier to see by printing
 
-I am not clear on how would we store the conflicted state (away from
-index file).
-please provide reference to code or docs that may be helpful to
-understand this or is this the part that needs to be implemented for
-this project ?
+    Updated <n> paths from <some-checkout-source>
 
+Because the reason is to help spot mistakes, this is only printed when
+you do "git checkout <paths>" _without_ the double dashes to
+disambiguate.
 
-Approach 2) This approach is a shot in dark; not well thought, may
-have a lot of problems.
+Since git-restore has no ambiguation (between restoring paths and
+switching branches) these messages are never printed. I'm just
+wondering if we should print them anyway. It gives some feedback
+instead of the silent output in the successful case. Some might like
+it, some don't.
 
-consider a scenario, index file has 20 entries, 5 of which are
-unmerged. now you detach those 5 entries from index file and store
-them in some other file say `index_unmerged_branch_name`. now index is
-no longer unmerged, and user can now do `git stash push`.
-later when user does `git stash apply` we put those 5 unmerged entries
-back in the index file.
+> > > > +-f::
+> > > > +--force::
+> > > > +       If `--source` is not specified, unmerged entries are left alone
+> > > > +       and will not fail the operation. Unmerged entries are always
+> > > > +       replaced if `--source` is specified, regardless of `--force`.
+> > >
+> > > This may be slightly confusing, in particular it suggests that --index
+> > > (or --worktree and --index) are the default.  Is --force only useful
+> > > when --index is specified?  If it has utility with --worktree only,
+> > > what does it do?
+> >
+> > Well, this is 'git checkout -f' behavior which only concerns the
+> > index. So yeah it only matters with --index.
+>
+> Okay, good to know that this only matters with --index. However, new
+> problem: This makes the explanation feel contradictory, though,
+> because elsewhere you stated that --source=HEAD is implied when
+> --index is given without a source.  So, the combination of this
+> description and that fact suggests that -f is either useless (--index
+> is not specified) or ignored (because --source will either default to
+> HEAD or be specified by the user).  Maybe that's true and -f should be
+> removed from this new document.  If it has actual utility in some
+> cases, then this description needs to be reworked to explain what
+> those circiumstances are somehow.
 
-identified problems with this approach:
+Actually my description of this option is not clear. This is about
+--worktree, not --index.
 
-1) where do you store `index_unmerged_branch_name`? What if the user
-has a file that's already named like that?
-Solution: we store `index_unmerged_branch_name` in `.git` directory
+When we do "git restore <path>" (which by default implies --worktree),
+we take the entry from the index and overwrite the worktree with it.
+But if the entry is unmerged (and --ours or --theirs are not
+specified), there is no good way we can handle it automatically.
 
-2) how do you reference that to a specific stash commit? remember that
-there can be multiple stashes.
-Solution: we put that info in the `.git/log/refs/stash` file telling
-it, that this particular stash has a separate
-`index_unmerged_branch_name` file.
-Although this would require changing format of log file and hence the
-code logic to read it. but it could be done.
+So the default behavior in this case is abort the operation. -f goes
+with a gentler option: ignore unmerged entries and go restore normal
+ones. And to keep people informed that there _are_ unmerged entries,
+warning is displayed for each one.
 
-3) blobs that are referenced in this index may not be referenced by
-any tree/commit anymore.
-Solution: perhaps we can store the references too.
+So, maybe I'll rename --force to --ignore-unmerged? This option will
+only matter in the "git restore [--worktree]" form. In other words,
+restoring worktree from the index. If --ignored-unmerged is specified
+in other modes, die().
+-- 
+Duy
