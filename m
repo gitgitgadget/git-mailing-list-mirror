@@ -2,113 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_50,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72FC720248
-	for <e@80x24.org>; Tue,  9 Apr 2019 10:13:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 088FE20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 10:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726387AbfDIKNo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 06:13:44 -0400
-Received: from bmmpg2703.jpx1.mp.cheetahdigital.com ([106.185.83.117]:52711
-        "EHLO bmmpg2703.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726001AbfDIKNo (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 9 Apr 2019 06:13:44 -0400
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Apr 2019 06:13:43 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1554804824;
-        s=spex.201608; d=spex.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=tKCMntKRuBkDId2z5rxVBRHiHZ/fv/MRCGOLmbq3K98=;
-        b=UFLth4SZ9ZbjZuvXAfu6fjuBL4OEOpUnfg3NshviIQrmwGnoi7Tvul/sJGS/2RtQ
-        57pb4bOq0X3iWk5tlrLRZxjJYnXXMqRqf+cc29DUPB4IMoR2qpv4EQ5j3XI8Ex72f1W
-        Nm33rsfqTXLborC8STwRBrXKm61O4M4ZdK51AqvM=
-Date:   Tue, 9 Apr 2019 18:51:34 +0900 (JST)
-From:   Qu Jun MARKETING & SALES PROMOTION EXPO Show
-         Management <spex-en@spex.jp>
-Reply-To: spworld@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1554803494276.2019100197.rxjp006.0.11663.00000000@ad145se.mpse.jp>
-Subject: =?utf-8?B?5bCG6LS15Y+455qE5paH5YW35omT5YWl5pel5pys55qE5L+D6ZSA56S85ZOB?=
- =?utf-8?B?5biC5Zy6LS0tLU1BUktFVElORw==?=
- =?utf-8?B?ICYgU0FMRVMgUFJPTU9USU9OIEVYUE8gW0p1bmVd?=
+        id S1726236AbfDIKW0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 06:22:26 -0400
+Received: from mail-eopbgr680136.outbound.protection.outlook.com ([40.107.68.136]:45574
+        "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726035AbfDIKW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 06:22:26 -0400
+Received: from BYAPR08CA0024.namprd08.prod.outlook.com (2603:10b6:a03:100::37)
+ by MWHPR08MB2622.namprd08.prod.outlook.com (2603:10b6:300:b6::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1771.16; Tue, 9 Apr
+ 2019 10:22:23 +0000
+Received: from DM3NAM03FT009.eop-NAM03.prod.protection.outlook.com
+ (2a01:111:f400:7e49::207) by BYAPR08CA0024.outlook.office365.com
+ (2603:10b6:a03:100::37) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1771.16 via Frontend
+ Transport; Tue, 9 Apr 2019 10:22:23 +0000
+Authentication-Results: spf=fail (sender IP is 45.75.195.239)
+ smtp.mailfrom=reedexpo.co.jp; vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=reedexpo.co.jp;
+Received-SPF: Fail (protection.outlook.com: domain of reedexpo.co.jp does not
+ designate 45.75.195.239 as permitted sender) receiver=protection.outlook.com;
+ client-ip=45.75.195.239; helo=mail.rxnova.com;
+Received: from mail.rxnova.com (45.75.195.239) by
+ DM3NAM03FT009.mail.protection.outlook.com (10.152.82.114) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.1771.16 via Frontend Transport; Tue, 9 Apr 2019 10:22:23 +0000
+Received: from smtplive.rxnova.com ([10.221.0.6]) by mail.rxnova.com with Microsoft SMTPSVC(8.5.9600.16384);
+         Tue, 9 Apr 2019 11:21:23 +0100
+Received: from WIN-OEPN42C26RR ([10.221.35.156]) by smtplive.rxnova.com with Microsoft SMTPSVC(8.5.9600.16384);
+         Tue, 9 Apr 2019 11:22:22 +0100
 MIME-Version: 1.0
+From:   Reed Exhibitions Japan <noreply@reedexpo.co.jp>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 9 Apr 2019 11:22:21 +0100
+Subject: Request Accepted (MARKETING & SALES PROMOTION EXPO)
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: base64
+Message-ID: <WIN-NLJRTK45D7HoRaD00024e9d@smtplive.rxnova.com>
+X-OriginalArrivalTime: 09 Apr 2019 10:22:22.0107 (UTC) FILETIME=[1E5B16B0:01D4EEBE]
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-HT: Tenant
+X-Forefront-Antispam-Report: CIP:45.75.195.239;IPV:NLI;CTRY:;EFV:NLI;SFV:NSPM;SFS:(10019020)(376002)(396003)(39860400002)(346002)(136003)(2980300002)(1110001)(1109001)(339900001)(189003)(199004)(4744005)(85426001)(6916009)(356004)(14444005)(36906005)(69596002)(2906002)(5009600100001)(2501003)(50466002)(5660300002)(47776003)(316002)(86362001)(23676004)(2486003)(77096007)(186003)(97736004)(64544003)(2351001)(53936002)(305945005)(26005)(476003)(68736007)(9686003)(5640700003)(508600001)(436003)(74482002)(486006)(8676002)(105606002)(1730700003)(106466001)(81166006)(81156014)(126002)(8936002)(336012);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR08MB2622;H:mail.rxnova.com;FPR:;SPF:Fail;LANG:en;PTR:InfoDomainNonexistent;MX:1;A:1;
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f142b98b-656c-4f30-96d8-08d6bcd54190
+X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328);SRVR:MWHPR08MB2622;
+X-MS-TrafficTypeDiagnostic: MWHPR08MB2622:
+X-Microsoft-Antispam-PRVS: <MWHPR08MB2622D6609EC56351171B3EAD8B2D0@MWHPR08MB2622.namprd08.prod.outlook.com>
+X-Forefront-PRVS: 000227DA0C
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Message-Info: dnTwXuOw52hglzjJJav7xuU41/eOdNtUjTYyhhdsat01VMmJqgM8vAQjYmp+xYYxDI84DQkaJMmbtt6DDj3fciu80eLVHiXKH8Hmdfaoc0gRaZF6zKZHhaPTiU2eJpDUV4wibpSeSTLXiFkEvp3M06mYh4gQQPg1WMCjtDgMdb/M/iZ8j1iE9leaJZkrD2gUj1+mDsADu4sfJJig1AclbojW8AdVEn6hY9Zpp1ie+GJnHzOvT6ndDEiJIA3kNVwoQkm5PUO/hnSpax/7PfKxWAjAqxjWVd14ZTF4p1u1tNRQw0SCFYbF9BZyZkGt9nHlNSP61urwDEQga52yLTglaxhT+OomcnukffD5IOHqJmRSZLAWzTJSl7CS+3ge+382B2m4mo6NCpJsNZEKDcpKaktpBAcVkCz610WnWmsLTUc=
+X-OriginatorOrg: reedexpo.co.jp
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2019 10:22:23.0842
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f142b98b-656c-4f30-96d8-08d6bcd54190
+X-MS-Exchange-CrossTenant-Id: 9274ee3f-9425-4109-a27f-9fb15c10675d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=9274ee3f-9425-4109-a27f-9fb15c10675d;Ip=[45.75.195.239];Helo=[mail.rxnova.com]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR08MB2622
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-尊敬的 市场经理
-,
+KioqIFRoaXMgaXMgYW4gYXV0b21hdGljYWxseSBnZW5lcmF0ZWQgRW1haWwsIHBsZWFz
+ZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBtZXNzYWdlLg0KSWYgeW91IG5lZWQgdG8gY29u
+dGFjdCB1cywgcGxlYXNlIHNlbmQgYW4gRW1haWwgdG8gY2FyQHJlZWRleHBvLmNvLmpw
+ICoqKg0KDQpSZXF1ZXN0IEFjY2VwdGVkIA0KDQpXZSB3aWxsIHByb2Nlc3MgeW91ciBy
+ZXF1ZXN0IGluIGEgdGltZWx5IG1hbm5lci4gSG93ZXZlciwgcGxlYXNlIGJlIG5vdGVk
+IHRoYXQgaXQgbWF5IHRha2UgdXMgYSBmZXcgZGF5cyB0byBjb21wbGV0ZSB0aGUgcHJv
+Y2Vzcy4NCg0KDQpFbWFpbCBhZGRyZXNzIHRvIGJlIHJlbW92ZWQ6IGdpdEB2Z2VyLmtl
+cm5lbC5vcmcNCipDb25maXJtYXRpb24gb2YgRW1haWwgYWRkcmVzczogZ2l0QHZnZXIu
+a2VybmVsLm9yZw0KSUQgKG5vbiBlc3NlbnRpYWwpKklEIGFwcGVhcnMgYXQgdGhlIGJv
+dHRvbSBvZiB0aGUgRW1haWwgeW91IHJlY2VpdmVkLjogRTM2LUcxNDAyLTAwNzUNCg0K
+T3JnYW5pc2VyOiBSZWVkIEV4aGliaXRpb25zIEphcGFuIEx0ZC4NCk1BUktFVElORyAm
+IFNBTEVTIFBST01PVElPTiBFWFBPIFNob3cgTWFuYWdlbWVudA0KMThGIFNoaW5qdWt1
+LU5vbXVyYSBCbGRnLiwgMS0yNi0yDQpOaXNoaXNoaW5qdWt1LCBTaGluanVrdS1rdSwg
+VG9reW8gMTYzLTA1NzAsIEphcGFuDQpURUw6ICs4MS0zLTMzNDktODUwNQ0KRW1haWw6
+IHNwd29ybGRAcmVlZGV4cG8uY28uanA=
 
-您好！
-这里是日本国际促销礼品&营销展MARKETING & SALES PROMOTION EXPO展会主办方。
-
-日本国际促销礼品&营销展是日本最大的针对促销及营销的专业BtoB展会。
-
-贵司是否正在考虑以哪种方式将贵司产品打入日本市场？
-在此我们强烈推荐您将贵司的文具作为促销礼品在日本销售。
-
-为何作为促销礼品推广？
-
-·日本促销礼品文化长久深厚，如产品包装、答谢礼品、杂志附录、宣传赠品、演唱会/动漫周边等在日本都属于促销礼品范畴。
-·由于产品目的是用来赠送，客户在订购促销礼品时无需考虑在库风险，因此通常订购量会比正常礼品商品高许多。
-·购买促销礼品的客户更多追求的是新颖、低价的产品，所以在品质管理上的要求相对贩卖商品门槛低。
-
-
-来场观众除了知名的商社/广告代理店，更有各大公司的市场部负责人。
-在本展贵司可以直接接触到最终客户，跳过多层中间商进一步提高贵司的产品竞争力。
-
-如果贵司有兴趣了解更多关于展会的信息如:
-·展位价格
-·可选展位
-·参展商名单
-           
-          等
-
-请您简单填写以下表格或回复本邮件。
-
--------------------------------------
-mailto:spworld@reedexpo.co.jp
-公司名:
-联系人:
-Email:
-电话:
--------------------------------------
-
-期待您的回复
-
-敬祝商祺,
-
-Qu Jun (Mr.)
-MARKETING & SALES PROMOTION EXPO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-mailto:spworld@reedexpo.co.jp
-
-----------------------
-MARKETING & SALES PROMOTION EXPO [6月展]
-日期: 2019年6月19日（周三）- 6月21日（周五）
-地点: 日本东京有明国际展览中心
-WEB: https://www.sp-world.jp/en-gb.html
-----------------------
-
-ID: E36-G1402-0075
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd. 
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your Email and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from List>
-Please click the URL below and enter your Email address to be removed from the list.
-https://www.reedexpo.co.jp/en/Form01/SPW/Cancel/
-You will not receive any further information on this exhibition/conference.
