@@ -2,129 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC27320248
-	for <e@80x24.org>; Tue,  9 Apr 2019 23:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C939620248
+	for <e@80x24.org>; Tue,  9 Apr 2019 23:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726680AbfDIXGd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 19:06:33 -0400
-Received: from mout.gmx.net ([212.227.15.15]:39569 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726592AbfDIXGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 19:06:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554851184;
-        bh=MqEUzUmdo93R05toIcKrubPu4VrYrNzF2nL7iT+trzM=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=WEgWEC4epryETi2WlkaAjZXVzSaiWff5o6/Wx8F0dEHwbdtDzTOfjzTAWCxYCe7t6
-         TSMo5zK01Cm7PgWEWyHOcW6msyZKlSGrDqi+JVB2xuXDuAn0opv7z+sgMNIXsNzSok
-         eOlDnSIAj6sWGLtpqpoMDC4B/4nHf8xhnd1GSRUY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.123.60] ([84.118.159.3]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MU0pN-1hMYNK2xAP-00QiJ3; Wed, 10
- Apr 2019 01:06:23 +0200
-Subject: Re: [PATCH 1/1] send-email: fix transferencoding config option
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20190409192733.10173-1-xypron.glpk@gmx.de>
- <20190409225531.GI12419@genre.crustytoothpaste.net>
-From:   Heinrich Schuchardt <xypron.glpk@gmx.de>
-Message-ID: <bd431817-3c47-c05c-5a92-b26eb2b25d4d@gmx.de>
-Date:   Wed, 10 Apr 2019 01:06:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726723AbfDIXIB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 19:08:01 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64001 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726671AbfDIXIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 19:08:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3F9F52A08;
+        Tue,  9 Apr 2019 19:07:59 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references:mime-version
+        :content-transfer-encoding; s=sasl; bh=aI4ZLy0bcLjTR8+ia+GSZi7JI
+        R4=; b=v+EsZvMP3LUl+Q9zEPg/KT9MKEdFHqPw5JNsxIPCuH7iVAJwiHRnQnEaG
+        Ur7h+vC61QrJ7kbIPLhhja+UDGr4YsmbBh6tpUO+K8W4K5F3A+8x4SL7fCCA+uxt
+        1PC42XJx4WgE9ZV9zCuxKpyFxh709otuIKObtXDqvt09DyOJdY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9DB0A52A04;
+        Tue,  9 Apr 2019 19:07:59 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=1steWBb7d9OVqYfLekljoKJG923KpOPJWIKAzGbEan8=; b=ytxytWtLH28UeBQMLsWnmj6UKcaK4ebmqtNdH74uoYLPIuIDYgw8utonih6JIv010k3ruHe5lMt6xjXI1TNW/KZqIOloYOmZs7Wz7cklURRZLkC4vKPTmVx0gbdDCaxlLusRfeDgt35NCf44hCFEwfW7tZXTOKnUp+L9Xrsj2p0=
+Received: from hylob.dartmouth.edu (unknown [129.170.31.11])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 53EA3529FF;
+        Tue,  9 Apr 2019 19:07:54 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, debian@onerussian.com,
+        Kyle Meyer <kyle@kyleam.com>
+Subject: [PATCH v3 1/3] submodule: refuse to add repository with no commits
+Date:   Tue,  9 Apr 2019 19:07:35 -0400
+Message-Id: <20190409230737.26809-2-kyle@kyleam.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190409230737.26809-1-kyle@kyleam.com>
+References: <20190409230737.26809-1-kyle@kyleam.com>
 MIME-Version: 1.0
-In-Reply-To: <20190409225531.GI12419@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+X-Pobox-Relay-ID: 4F25EBC4-5B1C-11E9-85C9-EE24A11ADF13-24757444!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LQ3IShzZqbwkndyIqfgvDKf2shsrzYe21T3RpNlrsMZt8n01YDe
- D3Q+gJvJeM86VBkI21wpxKHh42Jifd5jpCOhKHAZs2VrLprgQmfSA3211BP9DQcYJEhxluR
- Le5LhRwNwSYt0D9bqXiYfsZYxqf789pS7QA/sVaDfhEac0d1bHMUx+MxkJWLfLjYfao4uad
- rbGGW5gdvMf01F/oQ68Ag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pCeBe4Gls8E=:Rskd8LZzXGyBmdt8tNhVY2
- QNUowEAimjfZYEREpW/uqzq6CEPMDvOaG8teAZzyOxxtpLE0zzT3sqYrkB4Ws006V5J0lVJ3G
- nAI6ChgBN1rh9rqqSUeT/Mbl48mXHcdR3g8uKSTO4BRZIS+0wX9WuhlXyjsljn65Tr5E+Qn++
- OxYaaSqppF6/pPpqP35xettbjLrjQtTc5K8Z1DhosiSkO8a7xWuo5/GQNdw8pf29XBqWvPCx9
- n+Nb8tnsS1rkN9tR+kDH4ITjEUmlXygczYOOM372ziynnhngvqBd//oUTqwHj636uLlosdL56
- +AO9n0ZdPPJn/33xpGXyxmppX5jU6MJL+phb58ZxyZ0rtFjHN+dseShSC2SNQaQwNIig6/Yq2
- ORgeOiSadxmZyuvgXPDvYGULI+0/XE6ccdc/MSj89Q7nHxG70kBhAR6FrjIQD6VK5ORm06FQo
- 7tiUWp/6Q8OJanjLTQO1e2Ule0up/NKez/NK3TnqnwEMq1HNspuoOEVj+9TmqJqM2viM0ZdC7
- CvbKmFQfGyyDDNRXW0sS9Auo4TerLPzUJOrUdAoznB4TZhB7v9G0aY6KKMOMfe2IkpBgBQutt
- VXgEujdKIuAhrXAPorHdo4J1LH4u15QRJxkKMPiXcmXrPHSfGS3ytsSCueK99H80uzBYWi+a4
- P4PbComz8K4tT5dpLVL3qQXZ1EE49eugE05N9DsOe1WLn0GWgCmSoJI6JiDSL3ERfVyNLHhzZ
- 5ytYUSN6rB0x79sy92MHxUTZhHRMo62qStFEZ1nWZWB6FEEU5YOlYvcvG7fGpfs9ehtR8Y+53
- r38Jd7KdvF6eHcXMzI6M1QkiFQQ3JYtt6zYQ6GWOGaRVkSh5rk4OHbrIAkc1pl8Z0vDLyI0KR
- 50JU+dAnPSo6JNAfwGFPTMVQjVNZoeL8VpW4ZzKoA8tkw3zf7QVfp2IV73fiMC8KG70Ho6Vpx
- gRyG2WonClg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/10/19 12:55 AM, brian m. carlson wrote:
-> On Tue, Apr 09, 2019 at 09:27:33PM +0200, Heinrich Schuchardt wrote:
->> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
-email.txt
->> index 1afe9fc858..884e776add 100644
->> --- a/Documentation/git-send-email.txt
->> +++ b/Documentation/git-send-email.txt
->> @@ -146,7 +146,7 @@ Note that no attempts whatsoever are made to valida=
-te the encoding.
->>  	even more opaque.  auto will use 8bit when possible, and quoted-print=
-able
->>  	otherwise.
->>  +
->> -Default is the value of the `sendemail.transferEncoding` configuration
->> +Default is the value of the `sendemail.transferencoding` configuration
->>  value; if that is unspecified, default to `auto`.
->
-> In Git, two-part config settings are case-insensitive. We traditionally
-> write them in lower camel case because it's easier for people to read.
-> Git will canonicalize the values when "git config" runs.
->
-> So I don't think we should change this.
+When the path given to 'git submodule add' is an existing repository
+that is not in the index, the repository is passed to 'git add'.  If
+this repository doesn't have a commit checked out, we don't get a
+useful result: there is no subproject OID to track, and any untracked
+files in the sub-repository are added as blobs in the top-level
+repository.
 
-Thanks for the hint.
+To avoid getting into this state, abort if the path is a repository
+that doesn't have a commit checked out.  Note that this check must
+come before the 'git add --dry-run' check because the next commit will
+make 'git add' fail when given a repository that doesn't have a commit
+checked out.
 
->
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index 8200d58cdc..0e23193939 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -239,7 +239,7 @@ sub do_edit {
->>  my (@suppress_cc);
->>  my ($auto_8bit_encoding);
->>  my ($compose_encoding);
->> -my $target_xfer_encoding =3D 'auto';
->> +my ($target_xfer_encoding);
->>
->>  my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
->>
->> @@ -446,6 +446,8 @@ sub read_config {
->>  			$smtp_encryption =3D 'ssl';
->>  		}
->>  	}
->> +
->> +	$target_xfer_encoding =3D 'auto' unless (defined $target_xfer_encodin=
-g);
->>  }
->>
->>  # read configuration from [sendemail "$identity"], fall back on [sende=
-mail]
->
-> Thanks for fixing this. I didn't realize that we only set values if the
-> variable holding them is undef. Would you mind adding a test for this
-> case so we won't regress it in the future?
->
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ git-submodule.sh           |  7 +++++++
+ t/t7400-submodule-basic.sh | 11 ++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-Nice challenge for my first patch for git :)
-I will give it a try.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2c0fb6d723..c88a05086e 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -231,6 +231,13 @@ cmd_add()
+ 		die "$(eval_gettext "'\$sm_path' already exists in the index and is no=
+t a submodule")"
+ 	fi
+=20
++	if test -d "$sm_path" &&
++		test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null)
++	then
++	    git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null ||
++	    die "$(eval_gettext "'\$sm_path' does not have a commit checked out=
+")"
++	fi
++
+ 	if test -z "$force" &&
+ 		! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path=
+" > /dev/null 2>&1
+ 	then
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index aba2d4d6ee..a208cb26e1 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -46,6 +46,15 @@ test_expect_success 'submodule update aborts on missin=
+g gitmodules url' '
+ 	test_must_fail git submodule init
+ '
+=20
++test_expect_success 'add aborts on repository with no commits' '
++	cat >expect <<-\EOF &&
++	'"'repo-no-commits'"' does not have a commit checked out
++	EOF
++	git init repo-no-commits &&
++	test_must_fail git submodule add ../a ./repo-no-commits 2>actual &&
++	test_i18ncmp expect actual
++'
++
+ test_expect_success 'setup - repository in init subdirectory' '
+ 	mkdir init &&
+ 	(
+@@ -809,7 +818,7 @@ test_expect_success '../bar/a/b/c works with relative=
+ local path - ../foo/bar.gi
+ 		cp pristine-.git-config .git/config &&
+ 		cp pristine-.gitmodules .gitmodules &&
+ 		mkdir -p a/b/c &&
+-		(cd a/b/c && git init) &&
++		(cd a/b/c && git init && test_commit msg) &&
+ 		git config remote.origin.url ../foo/bar.git &&
+ 		git submodule add ../bar/a/b/c ./a/b/c &&
+ 		git submodule init &&
+--=20
+2.21.0
 
-Best regards
-
-Heinrich
