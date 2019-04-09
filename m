@@ -2,81 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6084C20248
-	for <e@80x24.org>; Tue,  9 Apr 2019 19:18:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E30D420248
+	for <e@80x24.org>; Tue,  9 Apr 2019 19:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbfDITSf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 15:18:35 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:36206 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726463AbfDITSe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 15:18:34 -0400
-Received: by mail-wm1-f42.google.com with SMTP id h18so4642729wml.1
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 12:18:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OqqvvD1IWaDXbfo7rRfT9aSg10mvgP4NZj7fWwNCEhU=;
-        b=qzQEtWapqcrjOv+8XkkaGRG5AR4EiYoOy/SqkPILf+N6j/h0LM9d018qWJ1VahB7dF
-         6aEZwqA6pTQQFftdunrvu4L0/RvjNu9TH1CMfw9vY3pDvODb2g9iwNrXXO55wtwxxGOc
-         ix5SWSuZ5C6t28+Jx+Scxa8rcdFSEMn4f8AXgYD25jz3/sn2oa8WJOkCOaugKkWRxT1j
-         zf8EOE5Ba8NaYAR2q8FwiznEky/Osr6gXOT90Lz4INqo+hC1VLhnG+/40VDFDbuLPB4/
-         9fmBZjJuaPN/IxhTmgBqBg65PYp692geBkCkbKhmYfeAqiDlsZZbIFFy6fF1rjx9qF1O
-         /j5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OqqvvD1IWaDXbfo7rRfT9aSg10mvgP4NZj7fWwNCEhU=;
-        b=KktzKup3TMTSBzZPlVb/5Kc5/QPRs/VGN1brAYOugRnu6/Of71U0eYv40+wC/sduWu
-         yxz22bCOklELV0MV/TX5LBUQsDF4DsJjDPxLXitrOUtVQ6uLhQWybUIqgp86V/dSSsJ+
-         q5+pBLFbDwrwIgSrmMPZx1ND9XBf8xRQ9v/nsH5WArtQl2MrX/Ebe46F7Q0MnZCtT1vi
-         XaMgg/LjKQf+sVOd8nOlrJqu8P2Bv08Vr9ue4RunABLvZLlkiT2SYWgVkk27blld8Hsq
-         6vc/3BbY0EM99Ts8WJvimY5MK8SejH4barEy9kj3FO5zwQfPjNQsxKK4YFZBjCzn6I6N
-         zPGg==
-X-Gm-Message-State: APjAAAWbOLhJIcprUKfnO5zh2/YrxNJIAHK3RwFhKooaLYNFzW7liTn8
-        RFK1l3kT4AKtv1pBIvD3RjQ=
-X-Google-Smtp-Source: APXvYqyi8gW3qoveD6yW4h6OBsyO3qHeTkftaXmcMPFNRjJk+1TIPEo09T37NIqV454qo/7vk6qpRQ==
-X-Received: by 2002:a1c:1d49:: with SMTP id d70mr23085173wmd.36.1554837513016;
-        Tue, 09 Apr 2019 12:18:33 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id n6sm24478407wmn.48.2019.04.09.12.18.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Apr 2019 12:18:32 -0700 (PDT)
-Date:   Tue, 9 Apr 2019 20:18:31 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
+        id S1726496AbfDIT20 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 15:28:26 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58663 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726415AbfDIT20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 15:28:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1554838095;
+        bh=Z3ZgOyCb8SlSsEFyEHXBRHnajkehqOLHPLntjcOd53A=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=QBMUntBMoSRpk/DJLcZXv8tkWLxR+ojgXa2dF/rBLWik1pWhwJNld0oybnoEw6Hit
+         IUhlOb9HKXINtvnYeg3x1fpwgDjM1+cm4GSeYvf7Uuf4u0Nwti8Ne7WusrUfrX8iUC
+         rd+3kWAWSiuYv/5KTfIp3fiIlL/cuv4+M4oVk+8E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from LT02.fritz.box ([84.118.159.3]) by mail.gmx.com (mrgmx001
+ [212.227.17.184]) with ESMTPSA (Nemesis) id 0MEGIi-1h7IaV33Hc-00FWwy; Tue, 09
+ Apr 2019 21:28:15 +0200
+From:   Heinrich Schuchardt <xypron.glpk@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
-Message-ID: <20190409191831.GC32487@hank.intra.tgummerer.com>
-References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+Cc:     Brian M Carlson <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Heinrich Schuchardt <xypron.glpk@gmx.de>
+Subject: [PATCH 1/1] send-email: fix transferencoding config option
+Date:   Tue,  9 Apr 2019 21:27:33 +0200
+Message-Id: <20190409192733.10173-1-xypron.glpk@gmx.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:B+Llt/dkY6caPLBkJ7NVsE2cwJD8PmXAv6mq3l72/HUOAXIAlNn
+ 0/VyGg7D5RCGEvC5h4yxwfqXrcBiKHJXhpHfgyKbK3c3RRol2tGLpkKCj2Taplu6jZ61H7T
+ vUu/i9OyD7WN4GmQcXTxKJpZWS/TEiKpToWy8MeipKyHbHAYCXwSLLXlatJdgnl9IUlNHZt
+ rVFs3tgVrrQUkQzps7syQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RaOidZc+lP8=:kRAUgEueSYxgr/mb6eCo6l
+ GmKXmr1Wi9kx0cpKRgVoUM/Drf5Qkx15L9peVPeI1zK86OmRO/nDeC0BXT+qZPnsa6gt7NF8o
+ DE8L1tp/ruNspm74cccBHHg01iRIaz6F4bDCP9kAz7CU4L/MFnCtgc9rQmt0hqLAwrZjkwQe5
+ dOTu5etx0U1eu6ijveDV/dpjeRmNp3IfWtC3nJANFZ10MCQM8ZYEw/OCjdWAvT2ZiuHOIL7PR
+ oXdp2HRHZnKSjtooTV63AFlmMtPr6AUSPpwOOq1dBFILVIMUEvuiXrA3+jeH58M33IeNq0M2o
+ Ms/eiKo9x7ycaaVhjfXRuQEi5se7xRSCh51clf9zjqQdIu0BVPhClX1N2DakqxmCnKwm8Yc4D
+ TEjdJCFntRb4ChU7rLIMzqbKzZgMeKf2eKNyk/2PZJzUczRPBMVDpJkqNrCzOExaqVopsSCRp
+ 5b8LAmkdXPFXnjaAnDN5Fh7Ky/NrOSTTPjpiQz1ASRjF/qhugJ5fj7Ah0DyWVjKhe1+BSH1un
+ lkn80XuL/IaN2yjfRNKWgRR4bSJC+LIjm9KNlFI+3t57fEUI1DpaCIftfPeyWorqIx6DxTYCg
+ NP3jCr8JKuNRrD1X+P2M88GOfe2fa4inrTjiVlq3WOIKNI5O7w4ThuPfx9V7jXiKc0MZi+yTX
+ w8ozSN4aq+BF6qiLy9KOoZYDbD9XzNnRapl5eCgVvQ8P7r1ElacG14q5+ElyV7VSNrFcUznRn
+ 48vKnmDu7c810nBUVvx5UEsBbaFlUyk1QbdNsI0mOr0eMVsz7YMI1bh772dCTdswyw8i4WuDh
+ S2C1oVhdCYZ+aHVh8AOsu/w07DKXzuf9e/ZSFIqRqwtC+WTytyWp6NxFmDdeUBjDgw1yd41pT
+ ZutJk6NOBbAJ0dBocgaZXKKc5n3FOH0BcZRpzdDhVWQQ6/qC4bWZ1GHZpEMcBl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/10, Junio C Hamano wrote:
+Since e67a228cd8a ("send-email: automatically determine transfer-encoding"=
+)
+the value of sendmail.transferencoding is ignored because when parsing
+the configuration $target_xfer_encoding is not initial anymore.
 
-> * tg/stash-in-c-show-default-to-p-fix (2019-03-21) 1 commit
->   (merged to 'next' on 2019-04-10 at 9489a31a36)
->  + stash: setup default diff output format if necessary
->  (this branch uses ps/stash-in-c; is tangled with js/stash-in-c-pathspec-fix and tb/stash-in-c-unused-param-fix.)
-> 
->  A regression fix.
-> 
->  Will merge to 'master'.
+Instead of initializing variable $target_xfer_encoding on definition we
+have to set it to the default value of 'auto' if is initial after parsing
+the configuration files.
 
-ps/stash-in-c is still marked as "Will cook in 'next'", so I assume
-since this is fixing a regression in that topic, "Will merge to
-'master'" is a mistake here?
+The documentation erroneously mentions the option as
+sendmail.transferEncoding. Fix that typo.
+
+Fixes: e67a228cd8a ("send-email: automatically determine transfer-encoding=
+")
+Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
+=2D--
+ Documentation/git-send-email.txt | 2 +-
+ git-send-email.perl              | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-ema=
+il.txt
+index 1afe9fc858..884e776add 100644
+=2D-- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -146,7 +146,7 @@ Note that no attempts whatsoever are made to validate =
+the encoding.
+ 	even more opaque.  auto will use 8bit when possible, and quoted-printabl=
+e
+ 	otherwise.
+ +
+-Default is the value of the `sendemail.transferEncoding` configuration
++Default is the value of the `sendemail.transferencoding` configuration
+ value; if that is unspecified, default to `auto`.
+
+ --xmailer::
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 8200d58cdc..0e23193939 100755
+=2D-- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -239,7 +239,7 @@ sub do_edit {
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
+ my ($compose_encoding);
+-my $target_xfer_encoding =3D 'auto';
++my ($target_xfer_encoding);
+
+ my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
+
+@@ -446,6 +446,8 @@ sub read_config {
+ 			$smtp_encryption =3D 'ssl';
+ 		}
+ 	}
++
++	$target_xfer_encoding =3D 'auto' unless (defined $target_xfer_encoding);
+ }
+
+ # read configuration from [sendemail "$identity"], fall back on [sendemai=
+l]
+=2D-
+2.20.1
+
