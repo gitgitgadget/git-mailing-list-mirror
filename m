@@ -2,122 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74EB820305
-	for <e@80x24.org>; Tue,  9 Apr 2019 10:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35B9F20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 10:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbfDIKlZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 06:41:25 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:38710 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfDIKlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 06:41:25 -0400
-Received: by mail-ed1-f51.google.com with SMTP id d13so4458982edr.5
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 03:41:24 -0700 (PDT)
+        id S1726220AbfDIK6j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 06:58:39 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33704 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726112AbfDIK6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 06:58:39 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q1so20322195wrp.0
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 03:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7gN9nsFoWqXbe1R3feDEMax2/wjhV5m+ypVTmLEALRc=;
-        b=aIKsyNRxif4Usa43aSacW1fzLbVvmubC7usUKqIudqyfX4b4hP8xq8sE2NKyzM9z35
-         dlGJofualeZs2WkLvQ5FpcJ37CZqhGRkqsg85uwp7wlyXDZoDYE8mc9B082Y1lWRXvBK
-         9GzF3v3kJ2CderbIYvxJSMN/kMxRRmzoMiWLnZe/UADA+E4rSD5O5ljeKH6etH1K6qsn
-         /JJbTDNAiDwA2PG+X+/+2T5Gdojwr4FcBnqJ3ZALx8OorTsJ58PyaLBJyZVCX309Px2S
-         3qSx8XGiiFoe5gxtkBr1O3FlYUoTg2qJtF4OHidgrNJbuYT2Sp3UW3D6t98+XfVnmAvT
-         ddPw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=HlpqeHhw//4MoeEZXiDvV2GtDdNLlHa2hCs46qy5dCE=;
+        b=ecQyF2yi56q2G+mY97wKfawOcoh8/9bMY8D7szHYDZdZ6n+jUPLMVg6w72QgXXT+Nx
+         8PBbSF6wKmKx6MVB36cUdtXnyT8RCQFHJMRIEYgVh9RymykEgXQ0S7uYmUBMNpi4be0E
+         HLbHwuHjyfOt+KOONDcs9Z1vX4gReVUoOFoDjv5xm5Hftg9bwEmrhAmNA2A9dBB+2u99
+         DCWInbYJ7uDeQLGGpdNrLvG2lm3Gn8b6N34uaxAZ1ne0niHXKsSln6OnrH/jkK+N4cmy
+         1EYS3RY5v3hPYW7RChWCH7Nd/t9f52ZMgejzINRdBk0m6g8mA6DiIHgnq1R50jLDjtor
+         SRog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7gN9nsFoWqXbe1R3feDEMax2/wjhV5m+ypVTmLEALRc=;
-        b=Khtkn18HnE9azCz70IRt8MM7sxW/p/Jlla98VWsjCKEHDkMNGtSTSPzXpPIN8bxlre
-         RWiMrcCAa47mwZgbUvcmKBUHkNKbkq2c8A9fzSsjjin1punl0//OhHV7II99UiHnRg/E
-         C2yWBnJNo1Kjklt9pqX2sO2aiN62Bev0+mn8ZZ86OFx89AwercgeD++K+YEfyDdnQJUu
-         eLxgxL//TXM9ypNr8HyWvDjIXldsW8WR5u96PRvTs48wj64XWc9TxTs4DbNutyogcbYG
-         3nh+c6uhebcspkA0aKrw5Huzt/1x4Oup95IN+Lp0maLvmoI33Lm6nS+w7BeOlbk3uyLK
-         Zu+w==
-X-Gm-Message-State: APjAAAX6Ib249O2prTm2pf2mMUH7VEu77WuxDUhm86W405lYD0szTJXo
-        dM7iQiM5QrFZyvaarsj5v7sUEJzx
-X-Google-Smtp-Source: APXvYqymmHMg0WzgUde+nF3EKfZCxsx0WD2x0/FjXPNsfQS3ol+KEqC0OZ/L0xsVu9vKAbzqBEU9Kg==
-X-Received: by 2002:a17:906:37d2:: with SMTP id o18mr20197522ejc.112.1554806483560;
-        Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t9sm3462830ejz.92.2019.04.09.03.41.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=HlpqeHhw//4MoeEZXiDvV2GtDdNLlHa2hCs46qy5dCE=;
+        b=YY/rAZZ29KFURiYzUyLn0CEzjb56buMqX7MsaqW7ybZEYJwAGVJRbt72oCxDSR69oi
+         KXOG6XVQMMEdY+Rk3naG2TDDZUF2mtERbwvzNCBZVyuvQzp+qygor4c7Va5wQuKcLmJI
+         QUBIgwDKR51t5oWrFJxBpKB/IuvRbdfRqyBQj/WTAz9FBsa/Da9IGfN9iwupa3lDM5/g
+         sds3KMzesXOUjO6+3RbZPcMdH8NxKavuYiW8r6Ei2O6OGz2rlVxh/Dm+GjYcAY4vtSjf
+         j9tCiZYEihmyWh4K56HXiJ2+ZyR6m9Xn51VgEbvYrYmTPseVO/Imc0h0Ffr7NSnnoPp2
+         7GWg==
+X-Gm-Message-State: APjAAAXq9OfWLogsNfg70hrKKkIJAp1I92K5N9QN53K5zmwkKD2jewFH
+        8TxnF2zPEEk9umCNZ3uWJ0E=
+X-Google-Smtp-Source: APXvYqySlhPeLZfk8teMT87E0LFIGUdPU80ALRYRcX3H8p5UYH7qVBvdXl7oTrYEfmTUFi7ins8UHA==
+X-Received: by 2002:adf:afee:: with SMTP id y46mr22021640wrd.217.1554807517687;
+        Tue, 09 Apr 2019 03:58:37 -0700 (PDT)
+Received: from szeder.dev (x4dbe2124.dyn.telefonica.de. [77.190.33.36])
+        by smtp.gmail.com with ESMTPSA id o15sm28040880wrj.59.2019.04.09.03.58.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
-Date:   Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
-X-Google-Original-Date: Tue, 09 Apr 2019 10:41:20 GMT
-Message-Id: <a01a8c704ba03213aa59c59384dba46502089522.1554806481.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.176.git.gitgitgadget@gmail.com>
-References: <pull.176.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t3301: fix false negative
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 09 Apr 2019 03:58:36 -0700 (PDT)
+Date:   Tue, 9 Apr 2019 12:58:34 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 01/32] rebase: 'make coccicheck' cleanup
+Message-ID: <20190409105834.GG8796@szeder.dev>
+References: <20190330111927.18645-1-pclouds@gmail.com>
+ <20190403113457.20399-1-pclouds@gmail.com>
+ <20190403113457.20399-2-pclouds@gmail.com>
+ <20190404172515.GR32732@szeder.dev>
+ <CACsJy8C5K15QOeAJmPBb-VkcJnAiha9BNuUwVAL_mH_y6YBjow@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8C5K15QOeAJmPBb-VkcJnAiha9BNuUwVAL_mH_y6YBjow@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Fri, Apr 05, 2019 at 04:26:10PM +0700, Duy Nguyen wrote:
+> On Fri, Apr 5, 2019 at 12:25 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> >
+> > On Wed, Apr 03, 2019 at 06:34:26PM +0700, Nguyễn Thái Ngọc Duy wrote:
+> > > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> > > ---
+> > >  builtin/rebase.c | 5 ++---
+> > >  1 file changed, 2 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > > index 77deebc65c..c064909329 100644
+> > > --- a/builtin/rebase.c
+> > > +++ b/builtin/rebase.c
+> > > @@ -1592,8 +1592,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> > >                               branch_name = options.head_name;
+> > >
+> > >               } else {
+> > > -                     free(options.head_name);
+> > > -                     options.head_name = NULL;
+> > > +                     FREE_AND_NULL(options.head_name);
+> > >                       branch_name = "HEAD";
+> > >               }
+> > >               if (get_oid("HEAD", &options.orig_head))
+> > > @@ -1793,7 +1792,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> > >        * we just fast-forwarded.
+> > >        */
+> > >       strbuf_reset(&msg);
+> > > -     if (!oidcmp(&merge_base, &options.orig_head)) {
+> > > +     if (oideq(&merge_base, &options.orig_head)) {
+> > >               printf(_("Fast-forwarded %s to %s.\n"),
+> > >                       branch_name, options.onto_name);
+> > >               strbuf_addf(&msg, "rebase finished: %s onto %s",
+> >
+> > You are already using Coccinelle v1.0.7, aren't you?
+> 
+> No it's 1.0.5.
 
-In 6956f858f6 (notes: implement helpers needed for note copying during
-rewrite, 2010-03-12), we introduced a test case that verifies that the
-config setting `notes.rewriteRef` can be overridden via the environment
-variable `GIT_NOTES_REWRITE_REF`.
+Oh, you are right, Coccinelle 1.0.5 does indeed find these.
 
-Back when it was introduced, it relied on a side effect of an earlier
-test case that configured `core.noteRef` to point to `refs/notes/other`.
+When I saw that the self-built 1.0.7 found something that the
+distro-shipped 1.0.4 didn't, I checked it with a self-built 1.0.6, and
+as it didn't find these, either, I didn't bother with 1.0.5.  It seems
+that it got fixed 1.0.5, then regressed in 1.0.6, to be fixed again in
+1.0.7.
 
-In 908a320363 (t3301: modernize style, 2014-11-12), this side effect was
-removed.
+> I guess I should upgrade then.
 
-The test case *still* passed, but for the wrong reason: we no longer
-overrode the rewrite ref, but there simply was nothing to rewrite
-anymore, as the overridden notes ref was "modernized" away.
+I found 'make coccicheck' with 1.0.7 to be about 10-15% faster than
+previous versions.
 
-Let's let that test case pass for the correct reason again.
-
-To make sure of that, let's change the idea of the original test case:
-it configured `notes.rewriteRef` to point to the actual notes ref,
-forced that to be ignored and then verified that the notes were *not*
-rewritten.
-
-By turning that idea upside down (configure the `notes.rewriteRef` to
-another notes ref, override it via the environment variable to force the
-notes to be copied, and then verify that the notes *were* rewritten), we
-make it much harder for that test case to pass for the wrong reason.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t3301-notes.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 84bbf88cf9..704bbc6541 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1120,9 +1120,10 @@ test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
- 	test_config notes.rewriteMode overwrite &&
- 	test_config notes.rewriteRef refs/notes/other &&
- 	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
--	GIT_NOTES_REWRITE_REF= git notes copy --for-rewrite=foo &&
-+	GIT_NOTES_REWRITE_REF=refs/notes/commits \
-+		git notes copy --for-rewrite=foo &&
- 	git log -1 >actual &&
--	test_cmp expect actual
-+	grep "replacement note 3" actual
- '
- 
- test_expect_success 'git notes copy diagnoses too many or too few parameters' '
--- 
-gitgitgadget
