@@ -7,110 +7,181 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6331420248
-	for <e@80x24.org>; Tue,  9 Apr 2019 02:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CCC520248
+	for <e@80x24.org>; Tue,  9 Apr 2019 02:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727266AbfDICLo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Apr 2019 22:11:44 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46921 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726081AbfDICLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Apr 2019 22:11:41 -0400
-Received: by mail-pf1-f195.google.com with SMTP id 9so8717836pfj.13
-        for <git@vger.kernel.org>; Mon, 08 Apr 2019 19:11:41 -0700 (PDT)
+        id S1726535AbfDIC3k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Apr 2019 22:29:40 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39268 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbfDIC3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Apr 2019 22:29:39 -0400
+Received: by mail-pg1-f195.google.com with SMTP id k3so8384528pga.6
+        for <git@vger.kernel.org>; Mon, 08 Apr 2019 19:29:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gVHhVDe9uQCF3KZJwQGfRNw4pZuqC6vf7lPIHK47hXM=;
-        b=DPLQfh1Yqe3JSCfGC2fn685LTnXtyXwT7yv6KVBOoblhtOA1TAOaKr7m+wbmn/k7cL
-         UXtBmHcOQbSBKHKk07EYmL53zwd3/CwbfYysvcEZ0bFnImJRKRIckACyT1IVJNuebASO
-         6we2Brmiq73KyC0T+kpj0O238PdY0s9nZklr4uymuVWLfG8/cHd1MS8LxEb9lLZ51kBX
-         1DyCBLQYO9id/Iy7XC8NF9t1OFsBGwi/rgbLeyeDedK5nm2GB82S+kIr/qwgSnZBovVc
-         jVkeW+tN6mFV66Kmbb2DyB6KmftL/9x62ZuK5+t4Ii5KGATx8+YcVKMQtlgsOY1fpZ6G
-         HgtA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=QjbuJeAOaN27fBJid31TZfOEI8uCV2pzOGdnXf+QRY8=;
+        b=QI4HE7sMGZy+uPyoRl7mL39mzfAWpu40az0KFs5Iv/cX7/yjb5zur45Qa9+IxMevSZ
+         EPkzx3FDd5QYAN4FdR8490ijwESi9K1uTGQK2/HhKgRatHOIZn5qvMZ5Gx4rbDjOJC5O
+         V1HrNHxO6Do50cM6CTsbE3t3VQZmRrBw+PppVUHsBwwf7rbPDwD6j6eLvB4OOs0RG9uM
+         thmW9+xDevBWL6gWtkllGNhKVKsP/WvbTIGlUBntODpAT1VArmT5vMuFFs2uoZuQSbnU
+         4CLnVexHxTw4SysbAZEK4KFZs68i4eK+YrjMMMTFdKXRby/cRQ3xg50ra2CpFXe6rg47
+         x4JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gVHhVDe9uQCF3KZJwQGfRNw4pZuqC6vf7lPIHK47hXM=;
-        b=DJ50EXMgpnrY+3tg1fVWX5IlEKzMf28V2LuqAyoKSTFtzDDFsugWgOZ+xJwRJxcVYb
-         1ZAe1BqO2nxpU8P5+5uAU8D0omK0iQi4eMFFgkx7heV1+OTU2efj8wsxnAXcD9szr1uV
-         8UHbHIWKTjIla4bz16MkBCL7E5f/apDxHVksgQ6781G9ytjxbNCQV4CNnMwh/z3kMbIU
-         Ba18m24mhkG4gLWSXvX7AotMCheIvskyUOUc3p63s+X++G8lQ5LpOwb5OGuRjEtBIUBR
-         318zCxbLWTD+WkMU/yS2+yjCCCl57nkfCJX6ytvh+684pc8NvXpNuae7myhMj8S3VwFh
-         nrCg==
-X-Gm-Message-State: APjAAAWJq3GHdhgNbFWoCLqk0FqDOj/uN5EpUqkjD6/rjLE3J+iAcO8A
-        EMuzOhcVIhMmCY9r7SC5+a/dpw==
-X-Google-Smtp-Source: APXvYqzOKSg/Fg1AYslWssvMXEM2TclHTKSeuoETr4b866gpxp7O2F4JUn2c9FQSRpv3CM6/cVyPDg==
-X-Received: by 2002:a63:ed4f:: with SMTP id m15mr30930602pgk.387.1554775900738;
-        Mon, 08 Apr 2019 19:11:40 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QjbuJeAOaN27fBJid31TZfOEI8uCV2pzOGdnXf+QRY8=;
+        b=ZsJfIjH7R6VSy8I0F51SuRgqXIgd6g7kPjgyV/sRzCo5GIdeF78gDuOxw3rMcp/W8Y
+         uVQYKy729i+Qvqs069uQw2CHlGBBRmleaDHxGLkocprsH1btMpYC61aFUU5UeCFTM7h8
+         zx/7lgL2k1mLvydYLGynpM/jCRrJPZ9mCT/iAxA3ViM4Ndmy5JCPrmLEqYgwhqxFg938
+         1je7rjZNPuUxnsRRf+NqX92IyL4UhGVDkQly4yfuVh+++krkGWUW1/79shzlQakq+pHJ
+         UZqCW0vOWt5/6kUuFDpARfjIanlPwyCzSczDG9OR7Rk7ZajzCplTJRwU0DsALkFHKqYN
+         7V2w==
+X-Gm-Message-State: APjAAAVw/JJjpwrQTNtE0r62rDqyQyIKvibhQnbMxb/wtAIzcx73H0pS
+        ZdfwSsOGlS45udM3OqfpFWPUEg==
+X-Google-Smtp-Source: APXvYqykevNK5rMJjA3Vk6+jsC9xw3xz5LSXYtanyLbPpJbKmWgPBtIBTPDFFengx2slvIQ5NyEx3A==
+X-Received: by 2002:a65:4341:: with SMTP id k1mr32353899pgq.88.1554776978456;
+        Mon, 08 Apr 2019 19:29:38 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:d869:cd1a:616d:3c11])
-        by smtp.gmail.com with ESMTPSA id x16sm66074014pge.27.2019.04.08.19.11.39
+        by smtp.gmail.com with ESMTPSA id g2sm45660894pfd.134.2019.04.08.19.29.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Apr 2019 19:11:39 -0700 (PDT)
-Date:   Mon, 8 Apr 2019 19:11:38 -0700
+        Mon, 08 Apr 2019 19:29:37 -0700 (PDT)
+Date:   Mon, 8 Apr 2019 19:29:36 -0700
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         gitster@pobox.com
-Subject: Re: [PATCH 6/7] rev-list: let traversal die when --missing is not in
- use
-Message-ID: <20190409021138.GD81620@Taylors-MBP.hsd1.wa.comcast.net>
+Subject: Re: [PATCH 2/7] t: introduce tests for unexpected object types
+Message-ID: <20190409022936.GE81620@Taylors-MBP.hsd1.wa.comcast.net>
 References: <cover.1554435033.git.me@ttaylorr.com>
- <a3a80b4b2a988eb65d85a5acd54c584d047073c7.1554435033.git.me@ttaylorr.com>
- <20190405184111.GE2284@sigill.intra.peff.net>
- <20190406053648.GD37216@Taylors-MBP.hsd1.wa.comcast.net>
- <20190407134113.GA13417@sigill.intra.peff.net>
+ <ef6b4f380435d9743a56f47f68c18123bf0a0933.1554435033.git.me@ttaylorr.com>
+ <20190405105033.GT32732@szeder.dev>
+ <20190405182412.GC2284@sigill.intra.peff.net>
+ <20190405184229.GB8796@szeder.dev>
+ <20190405185241.GG2284@sigill.intra.peff.net>
+ <87a7h1a5uk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190407134113.GA13417@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a7h1a5uk.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Ævar,
 
-On Sun, Apr 07, 2019 at 09:41:13AM -0400, Jeff King wrote:
-> On Fri, Apr 05, 2019 at 10:36:48PM -0700, Taylor Blau wrote:
+On Sun, Apr 07, 2019 at 11:00:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
 >
-> > > > Of those, I think (3) is probably the best path forward. However, this
-> > > > patch does none of them. In the name of expediently fixing the
-> > > > regression to a normal "rev-list --objects" that we use for connectivity
-> > > > checks, this simply restores the pre-7c0fe330d5 behavior of having the
-> > > > traversal die as soon as it fails to load a tree (when --missing is set
-> > > > to MA_ERROR, which is the default).
-> > >
-> > > I think this is worth doing, as it restores the earlier behavior. But a
-> > > few general thoughts (which I've shared already with you, but for the
-> > > benefit of the list):
+> On Fri, Apr 05 2019, Jeff King wrote:
+>
+> > On Fri, Apr 05, 2019 at 08:42:29PM +0200, SZEDER Gábor wrote:
 > >
-> > I agree that it's worth doing. One question that I have is _when_ you
-> > feel it's good to do. I'm happy to write it and include the change in
-> > v2, but if others would be happy not to grow the series too much between
-> > re-rolls, I'd be just as pleased to send it in a new series after this
-> > one.
+> >> > > Don't run git commands upstream of a pipe, because the pipe hides
+> >> > > their exit code.  This applies to several other tests below as well.
+> >> >
+> >> > I disagree with that rule here. We're not testing "cat-file" in any
+> >> > meaningful way, but just getting some stock output from a known-good
+> >> > commit.
+> >>
+> >> It makes auditing harder and sets bad example.
+> >
+> > I disagree that it's a bad example. Just because a reader might not
+> > realize that it is sometimes OK and sometimes not, does not make it bad
+> > to do so in the OK case. It means the reader needs to understand the
+> > rule in order to correctly apply it.
 >
-> I'm not sure what "it" is here.
+> FWIW I thought the rule was something to the effect of "we're hacking on
+> git, any change might segfault in some unexpected test, let's make sure
+> that fails right away", hence the blanket rule in t/README against "!
+> git <cmd>" in favor of "test_must_fail git <cmd>", and "don't feed the
+> output of a git command to a pipe" documented right after that.
 
-Yes... as I read this email again after the weekend had passed, I found
-myself a little confused, too.
+I have some loosely-held opinions on this. Certainly knowing if a change
+to git caused a segfault in some test is something that we would want to
+know about, though I'm not sure we're loosing anything by putting 'git'
+on the left-hand side of a pipe here.
 
-> My earlier message was admittedly rambling, but I think I'm arguing
-> that it's OK to continue to include this patch that you already have,
-> and punt further changes to make "rev-list --objects" detect blob
-> problems down the road. I.e., leave the two expect_failures in place
-> that your v1 series ends with.
+  - If someone wrote a change to git that introduced a segfault in 'git
+    cat-file', I'm sure that this would not be the only place that in
+    the suite that would break because of it. Presumably, at least one
+    of those places uses 'test_must_fail git ...' instead
 
-I believe that that was the "it" that I was talking about it. To be
-explicit, I think I was suggesting that we should not change this patch
-much or add more to the series, and rather address the blob checking in
-a new series after this one.
+  - At the very least, 'broken-commit' doesn't contain what it needs to,
+    the test breaks in another way (albeit further from the actual
+    defect), and the developer finds out about their bug that way.
 
-> -Peff
+In any case, these above two might be moot anyways, because I'm almost
+certain that it will be a rarity for someone to _only_ run t6102, unless
+it is included in a blanket 'make' from within 't'.
+
+> > I am sympathetic to the auditing issue, though.
+
+Just to satisfy my curiosity, I put git on the left-hand side of a pipe
+to see how many such examples exist today:
+
+  ~/g/git (master) $ git grep 'git cat-file .* |' -- t/t*.sh | wc -l
+      179
+
+I'm not going to claim that changing 179 -> 180 is neutral or bad, but
+it's interesting nonetheless.
+
+> > I dunno. In this case it is not too bad to do:
+> >
+> >   git cat-file commit $commit >good-commit &&
+> >   perl ... <good-commit >broken-commit
+> >
+> > but I am not sure I am on board with a blanket rule of "git must never
+> > be on the left-hand side of a pipe".
+
+I think that I mostly agree with Peff here for the reasons above.
+
+That all said, I don't really want to hold up the series for this alone.
+Since there don't seem to be many other comments or issues, I would be
+quite happy to do whatever people are most in favor of.
+
+I basically don't really feel strongly about writing:
+
+  git cat-file commit $commit | sed -e ... >broken-commit
+
+as opposed to:
+
+  git cat-file commit $commit >good-commit &&
+  sed -e '' <commit >bad-commit
+
+> >> > > Wouldn't a 'sed' one-liner suffice, so we won't have yet another perl
+> >> > > dependency?
+> >> >
+> >> > Heh, this was actually the subject of much discussion before the patches
+> >> > hit the list. If you can write such a one-liner that is both readable
+> >> > and portable, please share it. I got disgusted with sed and suggested
+> >> > this perl.
+> >>
+> >> Hm, so the trivial s/// with '\n' in the replacement part is not
+> >> portable, then?  Oh, well.
+> >
+> > I don't think it is, but I could be wrong. POSIX does say that "\n"
+> > matches a newline in the pattern space, but nothing about it on the RHS
+> > of a substitution. I have a vague feeling of running into problems in
+> > the past, but I could just be misremembering.
+> >
+> > We also tried matching /^tree/ and using "a\" to append a line, but it
+> > was both hard to read and hit portability issues with bsd sed.
+
+I think that all of this discussion is addressed elsewhere in thread, but
+the gist is that Eric provided a suitable sed invocation that I am going
+to use instead of Peff's Perl.
+
+> > -Peff
 
 Thanks,
 Taylor
