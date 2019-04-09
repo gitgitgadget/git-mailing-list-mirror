@@ -2,218 +2,283 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE8120248
-	for <e@80x24.org>; Tue,  9 Apr 2019 15:57:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3948020248
+	for <e@80x24.org>; Tue,  9 Apr 2019 15:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbfDIP5A (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 11:57:00 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35974 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726826AbfDIP5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 11:57:00 -0400
-Received: by mail-pg1-f196.google.com with SMTP id 85so9542031pgc.3
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 08:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IyRzfhjIPtRX5i+HK7htBxMcLl7O+HquThdC7G/Gdos=;
-        b=GdoRCgDxCVhK3HxXxbj9pAevayMTEIEZNIP6ooxzOMGnDPSvE7gfkOLoNOm5Rd3ZC7
-         68H3pylIdxcHl7e5lhF3NSWeIfXKbgOEX3oZNA7Op3GN6oAWN+g8gs8oLCnYrcVuhr4s
-         IorGbMLH2Op7UhdnikHnyggwBOE9iMxyZht85tgmnr8uTMrFTAXLS6L0Y3JAj518f3yQ
-         cf8OvSXlXSIQGZDISc6bGfTkfSn/oSkqzWY4zP0qI7z1Uxpjm9Z8tKdf2fJ90FdVU/Nj
-         BQZ0uWq2iG2JpDrF22mqfqP0nkXwr/0slcQogtLVDCO/CDZ3YYIhCMwSXBmJaJ/vmrnN
-         ny8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IyRzfhjIPtRX5i+HK7htBxMcLl7O+HquThdC7G/Gdos=;
-        b=k3K2JdZ5avXxah40V3n1PfzUHSuNsJ9qe8wmww6f8cnOMMpyhlVAR+0bs+qlKl4zaq
-         dhsWKkuOxhkrbEbCDeKJN8ROkAVWHSnbfR+Tfb/V/EWrF3jmUwRZEDX84rirgZ/iMwJx
-         ji3QrPOtOVcD7CeyWNo3LNz04RWifCTipxxYDUBQtTr27n/zCTkju+DcXNx7sR8xQObR
-         6O7WKAsoF97HQgjr7rqI25nNrgnpYJ8199sOSxgJiK6egGP3S+k+8E9Qr4zahFJh1N9n
-         jkZOwlDLzCut3iAx2up/bGeBDpl/DJfxDQ/jD58hnlxvbYZ00GJ45bcyZhFKthXxuMXp
-         JjGw==
-X-Gm-Message-State: APjAAAXZo9jHnu9o8XM/4nOnSNASwzoWWB8+dy8ij1Gi5dQL7lK1QEXL
-        eaIjok2D/bnA1nr3nWv6O29bXg==
-X-Google-Smtp-Source: APXvYqzblbiPI5ZjaDnO9DdyVNeE7Q6Ju0GNsrmIGyjEBi7O6zvTy5d0AGt5T0GXavps7Gk9oS9D3Q==
-X-Received: by 2002:a63:6b08:: with SMTP id g8mr28538560pgc.211.1554825418518;
-        Tue, 09 Apr 2019 08:56:58 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id j6sm44286229pfe.107.2019.04.09.08.56.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 08:56:57 -0700 (PDT)
-Subject: Re: [PATCH v5 6/6] RFC blame: use a fingerprint heuristic to match
- ignored lines
-To:     michael@platin.gs, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <[PATCH v5 6/6] RFC blame: use a fingerprint heuristic to match
- ignored lines> <20190407214635.12984-1-michael@platin.gs>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <2747b3b2-0447-0d03-dc7e-c7fa460a303b@google.com>
-Date:   Tue, 9 Apr 2019 11:56:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726517AbfDIP6F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 11:58:05 -0400
+Received: from siwi.pair.com ([209.68.5.199]:28377 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726479AbfDIP6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 11:58:05 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 2B5593F4114;
+        Tue,  9 Apr 2019 11:58:03 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:995e:33b7:8498:9c41] (unknown [IPv6:2001:4898:8010:0:8294:33b7:8498:9c41])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9DE2F3F4094;
+        Tue,  9 Apr 2019 11:58:02 -0400 (EDT)
+Subject: Re: [PATCH v2 4/7] trace2: use system config for default trace2
+ settings
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        steadmon@google.com, avarab@gmail.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.169.git.gitgitgadget@gmail.com>
+ <pull.169.v2.git.gitgitgadget@gmail.com>
+ <d048f3ffb801adc7f1b4e48248ca31ebade1b37d.1553879063.git.gitgitgadget@gmail.com>
+ <20190403000032.GA190454@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <a0c89d0d-669e-bf56-25d2-cbb09b012e70@jeffhostetler.com>
+Date:   Tue, 9 Apr 2019 11:58:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190407214635.12984-1-michael@platin.gs>
+In-Reply-To: <20190403000032.GA190454@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi -
 
-On 4/7/19 5:46 PM, michael@platin.gs wrote:
-> From: Michael Platings <michael@platin.gs>
+
+On 4/2/2019 8:00 PM, Jonathan Nieder wrote:
+> Hi,
 > 
-> Hi Barret,
-> This is the updated fuzzy matching algorithm, sorry for the delay. It does
-> highlight a bug in the calculation for the number of lines ("int nr_parent_lines
->   = e->num_lines - delta;") - if you apply the patch, build it, then try to
-> ./git blame --ignore-rev <the patch commit ID> blame.c then you'll get a segfault
-> because nr_parent_lines is a negative number. I haven't had time to investigate further
-> but I have confirmed that the bug is not due to my patch.
+> Jeff Hostetler via GitGitGadget wrote:
+> 
+>> Teach git to read the system config (usually "/etc/gitconfig") for
+>> default Trace2 settings.  This allows system-wide Trace2 settings to
+>> be installed and inherited to make it easier to manage a collection of
+>> systems.
+> 
+> Yay!  Thanks for writing this, and sorry for the slow review.
+> 
+> [...]
+>> Only the system config file is used.  Trace2 config values are ignored
+>> in local, global, and other config files.  Likewise, the "-c" command
+>> line arguments are ignored for Trace2 values.  These limits are for
+>> performance reasons.
+> 
+> Can you say a bit more about this?  If I'm willing to pay the
+> performance cost, is there a way for me to turn on respecting other
+> config files?  What is that performance cost?
 
-Although I couldn't recreate this, I saw how it could happen.  I have an 
-updated version that fixes it.  Short version: I just pass through 
-parent_len instead of trying to recreate it with 'delta.'  Recreating 
-can go awry because e->num_lines may be less than a chunk size.
+Several thoughts here.  Some are performance-related and some are
+startup chicken-n-egg problems.  I tried to add trace2 to the code
+base in the least disruptive way possible and hopefully with minimal
+side-effects on existing behaviors.  And also minimum impact on overall
+performance when not in use.
 
-> The matching algorithm might not be obvious so it could do with more commenting.
-> In the mean time I hope the tests will make the intent clear. In particular I
-> want to avoid lines being reordered, because for the interesting use cases
-> usually sequences are unchanged even if they shift across different lines.
+So, with that in mind:
 
-I thought you wanted to detect similarity across potentially reordered 
-lines.  E.g.
+[] Trace2 should be initialized as early as and lightly as possible
+    so that timers are started and it can capture events from other
+    startup activities.  And so that we can tell as early as possible
+    if trace2 should NOT be enabled and short-cut those calls and not
+    waste time collecting unnecessary data.
 
-commit a 10) #include <sys/a.h>
-commit b 11) #include <foo/b.h>
-commit c 12) #include <bar/c.h>
-commit d 13) #include <dir/d.h>
+[] Trace2 is initialized by calls from common-main.c:main().  This
+    happens before cmd_main() is called, so we are very early in the
+    startup process and very few things have been initialized.  For
+    example, I had to let git_resolve_executable_dir() run so that
+    we could find the location of the system config, but that's about
+    it.  We have not even initialized "the_repository" yet.
 
-Where commit X (to be ignored) alphabetized them (or something):
+[] WRT "-c var=val", this is processed by git.c:handle_options() and
+    called from git.c:cmd_main() and git.c:handle_alias().  So the "-c"
+    args won't be respected until after that point.
 
-commit X 10) #include <bar/c.h>
-commit X 11) #include <dir/d.h>
-commit X 12) #include <foo/b.h>
-commit X 13) #include <sys/a.h>
+    Adding trace2 initialization after that point is a bit of a mess.
+    Teaching trace2 to scan the argv for "-c" is just duplicating effort.
+    And moving the "-c" processing earlier in the startup, changes the
+    behavior of the "git-*" commands (which don't currently recognize
+    the "-c" option).
 
-In this case, you want to find the line number in the parent that 
-corresponds to each line in the target (X is the target, in the relevant 
-blame code).  The mapping is: (target -> parent)
+    So that's why I'm suggesting we not respect "-c" for this.
 
-10 -> 12
-11 -> 13
-12 -> 11
-13 -> 10
+[] By initializing trace2 inside main() we guarantee that it will get
+    started.  If we wait to initialize it until after handle_options()
+    returns, we miss events for commands that it handles itself (such
+    as "git --exec-path" where it just prints and exits or syntax errors
+    where it directly calls usage() and exits).
 
-And the parent's line numbers are out of order.  But that's fine - at 
-least with the infrastructure from my patch, since it sorts the ignored 
-queue at the end of blame_chunk().  The rule in blame.c is that blame 
-entries attached to a suspect need to be sorted by s_lno.  (At least 
-based on a comment, and my reading of the code).
+[] WRT to per-repo config values:
 
-Maybe we have a different definition of reordering or are having 
-different issues regarding line numbers?  TBH, I didn't follow the 
-recursion and partitioning strategy too closely.
+    In common-main.c:main() we have not yet discovered the .git dir,
+    so repo-local config files are questionable at a very early point
+    in the process startup.  Again, it comes down to whether we wait
+    for gitdir discovery (and whatever file system scanning, --gitdir,
+    or -C processing is required) before deciding whether to start
+    trace2 or not.
 
-> Regarding the existing implementation I've got to say I find it unhelpful
-> marking "unblameable" lines with a 000000 commit ID. That commit ID already has
-> a meaning - lines that aren't yet committed. Further, the purpose of ignoring
-> commits should be to avoid obscuring other useful information, not to absolutely
-> refuse to show that commit at all. If there's no other commit to show then it's
-> harmless to show the commit that would otherwise be ignored.
+    Also, per-repo trace2 config settings aren't available at the time
+    of the clone, so just relying on them will leave our telemetry
+    incomplete.  It's better to have a system (or maybe a user) setting
+    and not a per-repo setting.
 
-For me, if I tell git blame to not tell me about a commit, then I don't 
-want to hear about it.  My typical blame session involves running blame, 
-then digging up the commit it pointed to.  If it points to the commit I 
-already told it to not show, then it'll just annoy me.   All 0s made 
-sense to me as in "don't bother looking this up."
+    Longer term, with submodules and plans to support them in-proc rather
+    than via sub-processes, I don't think there should be any expectation
+    that trace2 settings would adapt during recursive operations.  So for
+    example, a top-level command might see different trace2 settings than
+    a command run inside a submodule.  If submodule operations become
+    in-proc, then to maintain that expected behavior we'd need to have
+    per-repo trace2 settings.  (Granted, not impossible, but by saying no
+    to that now, we can eliminate a possible pain point in the future.)
 
-If you *did* want to see the ignored commit, then I'd run it with 
---ignore-revs-file="", to disable ignore.
+[] i'll add more on this topic at the bottom of this note in response to
+    your per-user and includes questions.
 
-That being said, I realize this is a preference of mine, and I can make 
-a blame config option to control this.  Probably 
-blame.maskIgnoredCommits or something.
 
-> - How about matching *outside* the parent's diff hunk?
-> I'd like to know what the use case would be for that. For the use case of
-> looking "through" a reformatting or renaming commit I think it would be unhelpful.
+> [...]
+>> --- a/Documentation/technical/api-trace2.txt
+>> +++ b/Documentation/technical/api-trace2.txt
+>> @@ -117,6 +117,37 @@ values are recognized.
+>>   Socket type can be either `stream` or `dgram`.  If the socket type is
+>>   omitted, Git will try both.
+>>   
+>> +== Trace2 Settings in System Config
+>> +
+>> +Trace2 also reads configuration information from the system config.
+>> +This is intended to help adminstrators to gather system-wide Git
+>> +performance data.
+>> +
+>> +Trace2 only reads the system configuration, it does not read global,
+>> +local, worktree, or `-c` config settings.
+> 
+> An additional limitation is that this doesn't appear to support
+> include.* directives.  Intended?
 
-I noticed that I have some commits where a hunk in a diff is broken up 
-into multiple calls to blame_chunk.  So a better way to prhase it would 
-be "looking outside a blame_chunk()'s chunk."
+I didn't specifically intend to support or not-support include files
+here.  Frankly, the complexity of the config code makes my eyes bleed.
+I'll investigate adding it.
 
-For example, I have a hunk like this (modified to show the contiguous 
-lines of context, subtraction, addition):
 
-@@ -256,99 +260,99 @@
-   3 context
--83 subtract
-+23 addition
-   1 context
-- 2 sub
-+16 add
-   1 context
-- 5 sub
-+ 6 add
-   1 context
-+45 add
-   3 context
+> 
+> [...]
+>> --- a/t/t0210-trace2-normal.sh
+>> +++ b/t/t0210-trace2-normal.sh
+> [...]
+>> +MOCK=./mock_system_config
+>> +
+>> +test_expect_success 'setup mocked /etc/gitconfig' '
+>> +	git config --file $MOCK trace2.normalTarget "$(pwd)/trace.normal" &&
+>> +	git config --file $MOCK trace2.normalBrief 1
+>> +'
+>> +
+>> +test_expect_success 'using mock, normal stream, return code 0' '
+>> +	test_when_finished "rm trace.normal actual expect" &&
+>> +	GIT_TEST_TR2_SYSTEM_CONFIG="$MOCK" test-tool trace2 001return 0 &&
+> 
+> Tests run with GIT_CONFIG_NOSYSTEM=1 to protect themselves from any
+> system config the user has.
 
-blame_chunk() sees that as four separate calls, broken up by the lines 
-of context:
+Thanks for the pointer.  I'll update the tr2_sysenv_load() to check
+git_system_config() before trying to use the system config file.
 
-	blame_chunk tlno 262 off -4 same 285 plen 83 enl 23
-	blame_chunk tlno 286 off 56 same 302 plen 2 enl 16
-	blame_chunk tlno 303 off 42 same 309 plen 5 enl 6
-	blame_chunk tlno 310 off 41 same 355 plen 0 enl 45
+> 
+> So this would be easier to test if we can use user-level config for
+> it.
 
-For a lot of those lines, the source of the change was in another diff 
-hunk - especially that 45 line addition with nothing from the parent.
+I suppose.  I think it just moves the testing problem to a trick using
+$HOME, right?  But it does get rid of that GIT_TEST_TR2_SYSTEM_CONFIG
+symbol, so yeah a net win.  I'll investigate.  Thanks.
 
-Part of the reason for that large diff is whitespace changes, so I can 
-run blame with -w.  But there are other scenarios.  Here's another one: 
-the header file alphabetizing case:
 
-@@ -4,9 +4,9 @@
-   3 context
-- 1 #include <header.h>
-   2 context (other headers)
-+ 1 #include <header.h>
-   3 context
+> [...]
+>> --- /dev/null
+>> +++ b/trace2/tr2_sysenv.c
+>> @@ -0,0 +1,128 @@
+>> +#include "cache.h"
+>> +#include "config.h"
+>> +#include "dir.h"
+>> +#include "tr2_sysenv.h"
+>> +
+>> +/*
+>> + * Each entry represents a trace2 setting.
+>> + * See Documentation/technical/api-trace2.txt
+>> + */
+>> +struct tr2_sysenv_entry {
+>> +	const char *env_var_name;
+>> +	const char *git_config_name;
+>> +
+>> +	char *value;
+>> +	unsigned int getenv_called : 1;
+>> +};
+>> +
+>> +/*
+>> + * This table must match "enum tr2_sysenv_variable" in tr2_sysenv.h.
+> 
+> Can we deduplicate to avoid the need to match?
+> 
+> Perhaps using C99 array initializers would help:
+> 
+> 	[TR2_SYSENV_CFG_PARAM] = { ... },
 
-That shows up as two blame chunks:
-	blame_chunk tlno 6 off 0 same 6 plen 1 enl 0
-	blame_chunk tlno 8 off 1 same 9 plen 0 enl 1
+Cool.  I hadn't seen that syntax before.
 
-What's funny about it is that if the commit we're ignoring did more 
-damage to the file (changed every line, for instance), it'd be easier to 
-find the right line in the parent, since we'd have the entire diff hunk.
+> 
+> [...]
+>> +/*
+>> + * Load Trace2 settings from the system config (usually "/etc/gitconfig"
+>> + * unless we were built with a runtime-prefix).  These are intended to
+>> + * define the default values for Trace2 as requested by the administrator.
+>> + */
+>> +void tr2_sysenv_load(void)
+>> +{
+>> +	const char *system_config_pathname;
+>> +	const char *test_pathname;
+>> +
+>> +	system_config_pathname = git_etc_gitconfig();
+>> +
+>> +	test_pathname = getenv("GIT_TEST_TR2_SYSTEM_CONFIG");
+>> +	if (test_pathname) {
+>> +		if (!*test_pathname || !strcmp(test_pathname, "0"))
+>> +			return; /* disable use of system config */
+>> +
+>> +		/* mock it with given test file */
+>> +		system_config_pathname = test_pathname;
+>> +	}
+>> +
+>> +	if (file_exists(system_config_pathname))
+>> +		git_config_from_file(tr2_sysenv_cb, system_config_pathname,
+>> +				     NULL);
+> 
+> This duplicates functionality from config.c and misses some features
+> along the way (e.g. support for include.*).
+> 
+> Would read_early_config work?  If we want a variant that doesn't
+> discover_git_directory, we can change that function to handle it.
+> 
+> For our needs at Google, it would be very helpful to have support for
+> include.* and reading settings from at least $HOME/.gitconfig in
+> addition to /etc/gitconfig (even better if it supports per-repo config
+> as well).  I believe it would simplify the code and tests, too.  If
+> there's anything I can to help, please don't hesitate to ask.
 
-Anyway, being able to look outside the current blame_chunk would help in 
-those scenarios.  Specifically, I'm talking about letting blame_chunk() 
-point anywhere in the parent.  Right now, it can only look in the 
-parent's part of the chunk passed to blame_chunk, which can be 
-relatively small.
+read_early_config() might work, but it is pretty heavy and doesn't
+address my above comments.
 
-Barret
+Perhaps a compromise would be to have it read just the system and
+user config files (w/ includes turned on).  It shouldn't take too
+much time and it shouldn't have the startup-order dependencies, I
+think.
 
+Thoughts??
+
+> 
+> Thanks,
+> Jonathan
+> 
+
+Thanks,
+Jeff
