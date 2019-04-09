@@ -2,189 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62EEF20248
-	for <e@80x24.org>; Tue,  9 Apr 2019 23:08:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68F4B20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 23:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726774AbfDIXIJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 19:08:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59877 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726685AbfDIXIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 19:08:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E44E52A10;
-        Tue,  9 Apr 2019 19:08:01 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=B444AfZYNjWiWWu3SXcFZOvbT
-        Wg=; b=sQOFAfckcL8aPW+1+OGxma3HHJnIsob5fbQBhUKZLhOPGp420jTZ7MlvR
-        R/cHzXNG+3VRelSY0XYHcUZVW9FgkYKdwdNmfEKTv54HhGnkX6N5l5eEOWdKgy7d
-        JsvZ+b975ulMwgJQ+z4mSsH2c5ugNqZLRfp6Q7cLEYOaOCxAnE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7782C52A0F;
-        Tue,  9 Apr 2019 19:08:01 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id:in-reply-to:references:mime-version:content-transfer-encoding; s=mesmtp; bh=L2Cl4ihWgtsRKFb0Np7XaJqmCZUBwT7qT3nrHa1Yr1Y=; b=nZ+IGVOqL72lPQretIN/RjMxwM29ta95gnbpFTItMVDu75udHuney7X/l0q6HrNMalodV4608ES874TirMOxWAqnHyGRpHfXG0dsrYpxdXcqsc27Ennlh1ufs9r4b17xnF7XABk6pG3/uYLXsF3uodhxqiMCQZSYLHI2EbaFcVs=
-Received: from hylob.dartmouth.edu (unknown [129.170.31.11])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 88A6152A03;
-        Tue,  9 Apr 2019 19:07:57 -0400 (EDT)
-        (envelope-from kyle@kyleam.com)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, debian@onerussian.com,
-        Kyle Meyer <kyle@kyleam.com>
-Subject: [PATCH v3 2/3] dir: do not traverse repositories with no commits
-Date:   Tue,  9 Apr 2019 19:07:36 -0400
-Message-Id: <20190409230737.26809-3-kyle@kyleam.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190409230737.26809-1-kyle@kyleam.com>
-References: <20190409230737.26809-1-kyle@kyleam.com>
+        id S1726748AbfDIXjS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 19:39:18 -0400
+Received: from mout.gmx.net ([212.227.15.18]:34725 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726640AbfDIXjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 19:39:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1554853145;
+        bh=xNR/zGbDqDS5rgOoGJOUHd8VewMI2qNW+Z99GzRj030=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Hq0VJ9gub17APJSqHD5HtUXChgV2eT3jOphHrqY32NHZDWkXvbGi/jFZTTBp0yw8j
+         gqeMWRMOPKuXacgrU/U7Hp0EkzTxqBi/cMExSKPaLqJYh100hMq8bEzp4m219uwO/P
+         2ElJvOkZBIhZ6jAAvVcTDHGV9Y1wwTcIWaLfrAfc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.123.60] ([84.118.159.3]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaWlT-1gT4fW1vSB-00mN3G; Wed, 10
+ Apr 2019 01:39:05 +0200
+Subject: Re: [PATCH 1/1] send-email: fix transferencoding config option
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brian M Carlson <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20190409192733.10173-1-xypron.glpk@gmx.de>
+ <20190409215856.GD92879@google.com>
+From:   Heinrich Schuchardt <xypron.glpk@gmx.de>
+Message-ID: <44afdc46-260d-2ad3-0a00-5789615146a8@gmx.de>
+Date:   Wed, 10 Apr 2019 01:39:03 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 51107A26-5B1C-11E9-A248-EE24A11ADF13-24757444!pb-smtp21.pobox.com
+In-Reply-To: <20190409215856.GD92879@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WluHbFJsnjmP/T/z4V0SBLuCGTBbGZRp6mIDKVmcovpWhp9DZ5d
+ Jx+DvNz460JRS7d54GUk09WsniE4ionfpYJ8hrHF8h4mTYHT8Avk9J+3AZN2gD9LfFzXsjY
+ UIXCHUeJgruefwdht5Ze876nzOdWYq90t6Ihz7qr8RDxbzhJZp2L0rytLSq9wSO/bj1vQaA
+ oq9MYAYLs95SMr1BlwMtA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8VlIdfAzDv4=:rkrof94U7a+WIqzHrTn2hq
+ uakuXQnse5l8rSvr9lMmGiJoxYSzNL/PS4sYe/c/s4xLI/1w6Wg4gzYclp7ioyh7z8mH9EQkK
+ 5kS2t8QhwNoXzzSFepbBAgvOnWvwCgW34fNV/G6MbcCiXH+COS5X04sMuP4SxkLitKI/pxmcS
+ J4duTPJ2GVPi2QfDa6AZWy7q1ynm4AKaiD94C0fAqCZ+3bTkY/coXJm+b6b20689o9tNr2Adg
+ g2bnlGbquzyLHu2obW94skAKIcQbTW4fIUD2CEz9La7NTroDf/4xmTiJeED46xhSnRsFrfK+z
+ fmAaIllI3z3k/NGV36ZijicGpdjR7Pkz9o7ogtkAvnducmiJRNAve89Hzz1enZPAlMA7JaOqN
+ Beu/n0CipFjVgmy1B0MRQ3Ym22hJfNab2Ai/XFRJvZKCNu1gzww84SRY0wS/kqg81TaZ7l4aO
+ pKZloox3e+ybr2lMg9q7WVcg4q9BHpl7Ql622Nnhdvcp1Zr1X6FpfqfBq6XBM/Z7XeFpcaH/q
+ C55fJMCXz8NC9ozmC2mxb6T7c7N59wouspVtC/yrYywuE5VffX990MiMMZVgqruzRalkQWsvo
+ 6Gf4u+PWy4niI3qUYvxW+APFVjFKXaQD0Fcy36iyAdgovgQ/LaySucEjlF2gV58CFF5lJOIf3
+ gitWBxc0qPX8No7EE2hGIvet4Tsb1uMaspixgKCjKE4ladb12Ea9wMD/Z+iUw02CYj9QAojHc
+ 2TXd6zflMl01r3MIR6uXhbnyEU9XqPh//EKsfhsA85CKQtVDG3Gcaocqv2P5D1e4yVS3apAn3
+ /TktXQWtgLA2Y3b/g3y4IWXYmk151z49TL+ApCBMh03HKX43IjnKw5BY2qQgqbLrIZvjZS+uW
+ YYrwU9yjpkkM4tQ+xAz5wqqZ61qyw5D1N2+zYtcMLPf6C/1535R9qvrMc8iqqpfLfJeDe6J4k
+ mskvsKPj8nw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When treat_directory() encounters a directory that is not in the index
-and DIR_NO_GITLINKS is unset, it calls resolve_gitlink_ref() to decide
-if a directory looks like a repository, in which case the directory
-won't be traversed.  As a result, 'status -uall' and 'ls-files -o'
-will show only the directory, even when there are untracked files
-within the directory.
+On 4/9/19 11:58 PM, Jonathan Nieder wrote:
+> (thanks for cc-ing bmc!)
+> Hi,
+>
+> Heinrich Schuchardt wrote:
+>
+>> Subject: send-email: fix transferencoding config option
+>
+> nit: "fix" doesn't tell me what was broken and what you improved about
+> it.  Here, I think you mean "respect transferencoding config option".
+>
+>> Since e67a228cd8a ("send-email: automatically determine transfer-encodi=
+ng")
+>> the value of sendmail.transferencoding is ignored because when parsing
+>> the configuration $target_xfer_encoding is not initial anymore.
+>
+> nit: I was confused when first reading this, since I read "the
+> configuration $target_xfer_encoding" as a single phrase.  A comma
+> after "configuration" might help.
+>
+>> Instead of initializing variable $target_xfer_encoding on definition we
+>> have to set it to the default value of 'auto' if is initial after parsi=
+ng
+>> the configuration files.
+>
+> run-on sentence.  I'm having trouble parsing this part.
+>
+> Can you start from the beginning and describe again what this does?
+> In other words, tell me
+>
+> - What is the user-facing effect of the change?  What workflow is it
+>   part of?
 
-For the unusual case where a repository doesn't have a commit checked
-out, resolve_gitlink_ref() returns -1 because HEAD cannot be resolved,
-and the directory is treated as a normal directory (i.e. traversal
-does not stop at the repository boundary).  The status and ls-files
-commands above list untracked files within the repository rather than
-showing only the top-level directory.  And if 'git add' is called on a
-repository with no commit checked out, any untracked files under the
-repository are added as blobs in the top-level project, a behavior
-that is unlikely to be what the caller intended.
+I am working with a repository which uses CRLF line endings. So when
+sending patches I should use an appropriate encoding. There should be
+two ways to do it:
 
-The above case is a corner case in an already unusual situation of the
-working tree containing a repository that is not a tracked submodule,
-but we might as well treat anything that looks like a repository
-consistently.  Loosen the "looks like a repository" criteria in
-treat_directory() by replacing resolve_gitlink_ref() with
-is_nonbare_repository_dir(), one of the checks that is performed
-downstream when resolve_gitlink_ref() is called.
+- call git-send-email with --transfer-encoding base64
+- git config --global sendmail.transferencoding base64
 
-As the required update to t3700-add shows, calling 'git add' on a
-repository with no commit checked out will now raise an error.  While
-this is the desired behavior, note that the output isn't yet
-appropriate.  The next commit will improve this output.
+Unfortunately the latter method did not show the expected result. The
+setting was simply ignored.
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- dir.c                                   |  6 ++-
- t/t3009-ls-files-others-nonsubmodule.sh | 50 +++++++++++++++++++++++++
- t/t3700-add.sh                          |  1 +
- 3 files changed, 55 insertions(+), 2 deletions(-)
- create mode 100755 t/t3009-ls-files-others-nonsubmodule.sh
+>
+> - Any risks or complications?
 
-diff --git a/dir.c b/dir.c
-index b2cabadf25..a4e59eb351 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1467,9 +1467,11 @@ static enum path_treatment treat_directory(struct =
-dir_struct *dir,
- 			return path_none;
- 		}
- 		if (!(dir->flags & DIR_NO_GITLINKS)) {
--			struct object_id oid;
--			if (resolve_gitlink_ref(dirname, "HEAD", &oid) =3D=3D 0)
-+			struct strbuf sb =3D STRBUF_INIT;
-+			strbuf_addstr(&sb, dirname);
-+			if (is_nonbare_repository_dir(&sb))
- 				return exclude ? path_excluded : path_untracked;
-+			strbuf_release(&sb);
- 		}
- 		return path_recurse;
- 	}
-diff --git a/t/t3009-ls-files-others-nonsubmodule.sh b/t/t3009-ls-files-o=
-thers-nonsubmodule.sh
-new file mode 100755
-index 0000000000..963f3462b7
---- /dev/null
-+++ b/t/t3009-ls-files-others-nonsubmodule.sh
-@@ -0,0 +1,50 @@
-+#!/bin/sh
-+
-+test_description=3D'test git ls-files --others with non-submodule reposi=
-tories
-+
-+This test runs git ls-files --others with the following working tree:
-+
-+    nonrepo-no-files/
-+      plain directory with no files
-+    nonrepo-untracked-file/
-+      plain directory with an untracked file
-+    repo-no-commit-no-files/
-+      git repository without a commit or a file
-+    repo-no-commit-untracked-file/
-+      git repository without a commit but with an untracked file
-+    repo-with-commit-no-files/
-+      git repository with a commit and no untracked files
-+    repo-with-commit-untracked-file/
-+      git repository with a commit and an untracked file
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup: directories' '
-+	mkdir nonrepo-no-files/ &&
-+	mkdir nonrepo-untracked-file &&
-+	: >nonrepo-untracked-file/untracked &&
-+	git init repo-no-commit-no-files &&
-+	git init repo-no-commit-untracked-file &&
-+	: >repo-no-commit-untracked-file/untracked &&
-+	git init repo-with-commit-no-files &&
-+	git -C repo-with-commit-no-files commit --allow-empty -mmsg &&
-+	git init repo-with-commit-untracked-file &&
-+	test_commit -C repo-with-commit-untracked-file msg &&
-+	: >repo-with-commit-untracked-file/untracked
-+'
-+
-+test_expect_success 'ls-files --others handles untracked git repositorie=
-s' '
-+	git ls-files -o >output &&
-+	cat >expect <<-EOF &&
-+	nonrepo-untracked-file/untracked
-+	output
-+	repo-no-commit-no-files/
-+	repo-no-commit-untracked-file/
-+	repo-with-commit-no-files/
-+	repo-with-commit-untracked-file/
-+	EOF
-+	test_cmp expect output
-+'
-+
-+test_done
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index be582a513b..5a8425962b 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -396,6 +396,7 @@ test_expect_success 'no file status change if no path=
-spec is given in subdir' '
- '
-=20
- test_expect_success 'all statuses changed in folder if . is given' '
-+	rm -fr empty &&
- 	git add --chmod=3D+x . &&
- 	test $(git ls-files --stage | grep ^100644 | wc -l) -eq 0 &&
- 	git add --chmod=3D-x . &&
---=20
-2.21.0
+None that I am aware of.
 
+>
+> - Any technical details that might be interesting to the later reader?
+
+As I tried to explain above the setting is ignored because a variable is
+initialized too early.
+
+>
+> - What does this allow me to do that I couldn't do before?
+
+You can use a global setting for the transfer encoding.
+
+>
+> The code can speak for itself, so this should primarily focus on the
+> intention behind the change.
+>
+> [...]
+>> --- a/Documentation/git-send-email.txt
+>> +++ b/Documentation/git-send-email.txt
+>> @@ -146,7 +146,7 @@ Note that no attempts whatsoever are made to valida=
+te the encoding.
+>>  	even more opaque.  auto will use 8bit when possible, and quoted-print=
+able
+>>  	otherwise.
+>>  +
+>> -Default is the value of the `sendemail.transferEncoding` configuration
+>> +Default is the value of the `sendemail.transferencoding` configuration
+>
+> Unrelated change?
+>
+> [...]
+>> --- a/git-send-email.perl
+>> +++ b/git-send-email.perl
+>> @@ -239,7 +239,7 @@ sub do_edit {
+>>  my (@suppress_cc);
+>>  my ($auto_8bit_encoding);
+>>  my ($compose_encoding);
+>> -my $target_xfer_encoding =3D 'auto';
+>> +my ($target_xfer_encoding);
+>>
+>>  my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
+>>
+>> @@ -446,6 +446,8 @@ sub read_config {
+>>  			$smtp_encryption =3D 'ssl';
+>>  		}
+>>  	}
+>> +
+>> +	$target_xfer_encoding =3D 'auto' unless (defined $target_xfer_encodin=
+g);
+>
+> Makes sense.
+>
+> Is there a way to cover this in tests (t/t9001-send-email.sh) so we
+> can avoid regressing again?
+
+I will give it a try.
+
+>
+> The rest looks good.
+>
+> Thanks for noticing, and hope that helps,
+> Jonathan
+>
+Thanks for reviewing.
+
+Best regards
+
+Heinrich
