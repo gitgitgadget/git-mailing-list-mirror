@@ -2,92 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F282620248
-	for <e@80x24.org>; Tue,  9 Apr 2019 21:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30A0B20248
+	for <e@80x24.org>; Tue,  9 Apr 2019 21:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727024AbfDIVo0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 17:44:26 -0400
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:47259 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbfDIVoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 17:44:24 -0400
-Received: by mail-pf1-f201.google.com with SMTP id n63so10151pfb.14
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 14:44:24 -0700 (PDT)
+        id S1726742AbfDIV7A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 17:59:00 -0400
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:35526 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726640AbfDIV7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 17:59:00 -0400
+Received: by mail-pf1-f182.google.com with SMTP id t21so84839pfh.2
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 14:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=+VanXq4rtE0QuNErXPOSJouFJeXTJzNuBxJ6RaGbUhA=;
-        b=VBFIrqntdbYQMW0cXSC3z+8Trzlmc+JUHOqxrc1LkoX/7lQKLNc5sW8BSx13dYk4At
-         95yCKhUTGK6DSzaNOVmwtcsG3IpaO3/VWdv8ha4+nxTMoAnLHrnZXcetizbme8NX+czH
-         E1d4RggjL2IO5QxdqqxPSdZZ+wAqXypIqtXnnoYcbokj4DdQ0djdBjZMDWmQ+oAwsBJn
-         SGixxbvvCINGN14aNt59NsSAw/AD8k83bprNqPK7UlSCprHAxCzm+M+ve9XcrtP4hjFA
-         gopy3hUakfRUNj4Jr4/RPvglEWF50y4tB0KAPcTZVCKc+l6jvmaLaOK8uVURVFBf/Ing
-         w/1w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eOg6vRVmAFoV4OLnVR6AMpa0+QU88+S8cJxLDXdIGLs=;
+        b=gdL8EekPLuKdL5ibY0ihvTWiq5ecmbKeOJ0WNrOcJl8x1QlOQv8RBWUi4vdrjgBIgb
+         vTloo61lXDzrb5G7sLjG97fWa+/4+SUOXDdQBQS519lxdme9jHE3mrPz9fJpTEdP0ZRc
+         qSC2uVF7TUoVw39VE+FWZjzvV9bz+1gk1m50I6DwyqAl2y84dNyA+aeY5jY3ykruTW/D
+         rd0p/A120n77q0e8htaCWl5NCeMrDTXXS6F/tH+WH71kgTIw+FoSJ3tdAdl38uNMcBua
+         qTU4Z2Ky1nD1EaY+krbRBgv1kawYobu80/OuHXcXLNZFw2uBS1DTmFtfsQAHBUYIccDr
+         /GhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=+VanXq4rtE0QuNErXPOSJouFJeXTJzNuBxJ6RaGbUhA=;
-        b=BFBPj7h6aQ5jD6S0Zr14ST4RqNAKZuonj3utaUBpTj/0EeRR2EqDXwc0XNVTJk5lcX
-         EWDEyUflnExqNIwUTsbF7Qt0jdfzJ+7HneQKd/8SgjV7Jj7ydGcSrTwupgcrm1b9H3zu
-         76RtCxzRMwDBaxySY78n92NsWcv4r1N6QI1Jra6fa7Ak7fDEH6w7sEZ43cwEAEqJfz2I
-         xCG2pdF/wto6nH0KV2jDC2PiT9ukluwiR5mXcAzAul7clp1p0YJdNIF3DDe+MFRWOKLg
-         RhBURFL//p+RXkn17KsVGv/6+e6V0eeFosyVrHD1dThFryGItK440jFovWiMX5LBvGoA
-         Feww==
-X-Gm-Message-State: APjAAAVZ9S5RW7J4ksXs6bWUrdzgiiO8e3athD9HN8PmClzbAjC2ZSZ6
-        +D/4OnDVXJpWOXcr74n9Ul4NOUv9JoVvu+OacLuWBEMgmtVETg0S9uawYOsrwHTjKmvcy7oZKLX
-        8prel6QbxI+xoyVLWEappilSFwFoABSc9CF81GPaD+6+21zCly6euqO8gQvkJo75OAgaNYCRrkw
-        Lt
-X-Google-Smtp-Source: APXvYqw+NKz73DwIBmAbvRAggF8RbpEZOIX5gSzHBO+LpYAIVFd6tWk2ADDo/sPf4lzHfumLIuQVWtCjBVHqxNOmsdeV
-X-Received: by 2002:a63:6d8a:: with SMTP id i132mr718406pgc.32.1554846263409;
- Tue, 09 Apr 2019 14:44:23 -0700 (PDT)
-Date:   Tue,  9 Apr 2019 14:44:20 -0700
-Message-Id: <20190409214420.90898-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [RFC PATCH] pack-objects: write objects packed to trace2
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eOg6vRVmAFoV4OLnVR6AMpa0+QU88+S8cJxLDXdIGLs=;
+        b=lYVOQBeYMohmhOoBSaaFLsuobnciVei/Jy8+NsOvArxd06af4m0Yvd1JnHwQSIxt5o
+         SBNDqeQTlHViaFOo+Vf1V02klKEa0LURMAbWKAo5R4pkcFui40YBLWuxDdxHcdosU0Mo
+         jdbtDeDP3VVkiBFnGkqFtY50x+rmnhB7gMQC8SbmZ4nVgs2oj98X6ckS3A3wc+2VX6bf
+         Nca+YBFTxpEjAX43mmDVKXbQZ1humHqG3Yf86VqPGEiNhM8P13IIbipe1Zog0YmaML7C
+         9AKRNyB8zUUXWMrwdLIY8n4O4EbkLOXNTmpo/oDhfR/UNmBfxdOIUpo8Ep8T198EyIhn
+         0Vkw==
+X-Gm-Message-State: APjAAAWZo6LJmvNelbTmslCgeUfxEC6O08ekwhXrhRKbr8iPBT0daT9L
+        2upt7EcK+Vh20ucJORdNfFXQTLkg
+X-Google-Smtp-Source: APXvYqxpFsIFbA2vRLN+HzeDOcgpgKfjeKwrXJTwVgIoms0WVR0d7+4COic39kz5wMJkc+qCSFFDeQ==
+X-Received: by 2002:a62:5797:: with SMTP id i23mr38278583pfj.12.1554847138919;
+        Tue, 09 Apr 2019 14:58:58 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id f63sm55700667pfc.180.2019.04.09.14.58.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Apr 2019 14:58:58 -0700 (PDT)
+Date:   Tue, 9 Apr 2019 14:58:56 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Heinrich Schuchardt <xypron.glpk@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brian M Carlson <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] send-email: fix transferencoding config option
+Message-ID: <20190409215856.GD92879@google.com>
+References: <20190409192733.10173-1-xypron.glpk@gmx.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190409192733.10173-1-xypron.glpk@gmx.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is useful when investigating performance of pushes, and other times
-when no progress information is written (because the pack is written to
-stdout).
+(thanks for cc-ing bmc!)
+Hi,
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-We're trying to improve push performance, and it would be nice to be
-able to observe the number of objects sent over each push, both to
-correlate it with time taken (which is already traced) and to notice
-situations when significantly more objects are being sent than needed.
+Heinrich Schuchardt wrote:
 
-Sending this as an RFC because this patch works but is somewhat ad-hoc -
-perhaps someone else has a more comprehensive solution.
----
- builtin/pack-objects.c | 1 +
- 1 file changed, 1 insertion(+)
+> Subject: send-email: fix transferencoding config option
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a154fc29f6..ac464d7d07 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -964,6 +964,7 @@ static void write_pack_file(void)
- 	if (written != nr_result)
- 		die(_("wrote %"PRIu32" objects while expecting %"PRIu32),
- 		    written, nr_result);
-+	trace2_printf("packed %d objects", nr_result);
- }
- 
- static int no_try_delta(const char *path)
--- 
-2.21.0.392.gf8f6787159e-goog
+nit: "fix" doesn't tell me what was broken and what you improved about
+it.  Here, I think you mean "respect transferencoding config option".
 
+> Since e67a228cd8a ("send-email: automatically determine transfer-encoding")
+> the value of sendmail.transferencoding is ignored because when parsing
+> the configuration $target_xfer_encoding is not initial anymore.
+
+nit: I was confused when first reading this, since I read "the
+configuration $target_xfer_encoding" as a single phrase.  A comma
+after "configuration" might help.
+
+> Instead of initializing variable $target_xfer_encoding on definition we
+> have to set it to the default value of 'auto' if is initial after parsing
+> the configuration files.
+
+run-on sentence.  I'm having trouble parsing this part.
+
+Can you start from the beginning and describe again what this does?
+In other words, tell me
+
+- What is the user-facing effect of the change?  What workflow is it
+  part of?
+
+- Any risks or complications?
+
+- Any technical details that might be interesting to the later reader?
+
+- What does this allow me to do that I couldn't do before?
+
+The code can speak for itself, so this should primarily focus on the
+intention behind the change.
+
+[...]
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -146,7 +146,7 @@ Note that no attempts whatsoever are made to validate the encoding.
+>  	even more opaque.  auto will use 8bit when possible, and quoted-printable
+>  	otherwise.
+>  +
+> -Default is the value of the `sendemail.transferEncoding` configuration
+> +Default is the value of the `sendemail.transferencoding` configuration
+
+Unrelated change?
+
+[...]
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -239,7 +239,7 @@ sub do_edit {
+>  my (@suppress_cc);
+>  my ($auto_8bit_encoding);
+>  my ($compose_encoding);
+> -my $target_xfer_encoding = 'auto';
+> +my ($target_xfer_encoding);
+> 
+>  my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
+> 
+> @@ -446,6 +446,8 @@ sub read_config {
+>  			$smtp_encryption = 'ssl';
+>  		}
+>  	}
+> +
+> +	$target_xfer_encoding = 'auto' unless (defined $target_xfer_encoding);
+
+Makes sense.
+
+Is there a way to cover this in tests (t/t9001-send-email.sh) so we
+can avoid regressing again?
+
+The rest looks good.
+
+Thanks for noticing, and hope that helps,
+Jonathan
