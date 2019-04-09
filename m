@@ -7,81 +7,117 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF24420305
-	for <e@80x24.org>; Tue,  9 Apr 2019 10:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74EB820305
+	for <e@80x24.org>; Tue,  9 Apr 2019 10:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbfDIKlY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 06:41:24 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:38705 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfDIKlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 06:41:24 -0400
-Received: by mail-ed1-f47.google.com with SMTP id d13so4458954edr.5
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
+        id S1726352AbfDIKlZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 06:41:25 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:38710 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726062AbfDIKlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 06:41:25 -0400
+Received: by mail-ed1-f51.google.com with SMTP id d13so4458982edr.5
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 03:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=dTibaL6DIChvo+PXer7Ert+a5/VDjBFD19O129SMfOo=;
-        b=kmm2b9kCIRL5668H4hGLXbYnfyUXSPRA7xMQiCR7eb/Ir+OvruMEYsfYyztwAcCKfW
-         VUHGMLTudNQcvIfUZ69coF5ZDAjl5haocxSbz7mOk1qy3Mzt004vQ0vdnKUWA/VaLPDd
-         1zZIaGsljSn/hbYZvJ/T1zjpR7y7j73WdoxTPN/7Hf5pmfwXQdrjVY6uSeCz3qN6D6au
-         ahwpWjodQvDmnUlE+tsJl8OeyBqSdrrOnIlwGGnZMShgTje4M0/L7t+AfRMpWEwozKzW
-         Kad7npcRsSJJEG1PdcD6pcCLwLyx8yowQBbmFXrswJwLV0kDpG7gOOl7LUfpJYxU569U
-         O5+g==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7gN9nsFoWqXbe1R3feDEMax2/wjhV5m+ypVTmLEALRc=;
+        b=aIKsyNRxif4Usa43aSacW1fzLbVvmubC7usUKqIudqyfX4b4hP8xq8sE2NKyzM9z35
+         dlGJofualeZs2WkLvQ5FpcJ37CZqhGRkqsg85uwp7wlyXDZoDYE8mc9B082Y1lWRXvBK
+         9GzF3v3kJ2CderbIYvxJSMN/kMxRRmzoMiWLnZe/UADA+E4rSD5O5ljeKH6etH1K6qsn
+         /JJbTDNAiDwA2PG+X+/+2T5Gdojwr4FcBnqJ3ZALx8OorTsJ58PyaLBJyZVCX309Px2S
+         3qSx8XGiiFoe5gxtkBr1O3FlYUoTg2qJtF4OHidgrNJbuYT2Sp3UW3D6t98+XfVnmAvT
+         ddPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dTibaL6DIChvo+PXer7Ert+a5/VDjBFD19O129SMfOo=;
-        b=gnb+r4ROcMYpwl57BA0wSqEJJc+ddc0kFbo3vSvuylNY9xRYGXgt9Fquw48UPsdX5v
-         uSqIuPUt2thntpW7Rf6o/+oO1LeI+SOuID/A16vOjADSsD45F8Na4jkku5Hu7VZ6JQPD
-         Jaq82WrwwRTytinZfkYJwbj9nZaR2I7qvpE9HABWDilDrqKDC943Zrmw4tCgCA4EJ0VU
-         i1RrY+lOWVATMRXGU4u+r/PfaUVoTmkw/F5DK77vKdg+Dd89h4uL1JRwEpUFvZqezj1f
-         6YMV9zN+cc24g0Fw+E3toGf4rSoAZ5fBHtEV7V5kWgKVPIQAlDDNrw+gzP6TLyOK3DYd
-         G2bA==
-X-Gm-Message-State: APjAAAXLVJ6eGxjkbZEaqmebgbsJVvzLJetSAe0cS0sfcBHoVjRk5PFv
-        afUeiGvoIazAkxhyTgd3I4JXPk0W
-X-Google-Smtp-Source: APXvYqyYha3U3xfS5bd7T1ESMo5Qzqh8u+8Cp7pZlulkQQ/eIK+ykViREo0Bdw0A8Hmhkzc2QQzKuw==
-X-Received: by 2002:a17:906:e202:: with SMTP id gf2mr19438603ejb.55.1554806482744;
-        Tue, 09 Apr 2019 03:41:22 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7gN9nsFoWqXbe1R3feDEMax2/wjhV5m+ypVTmLEALRc=;
+        b=Khtkn18HnE9azCz70IRt8MM7sxW/p/Jlla98VWsjCKEHDkMNGtSTSPzXpPIN8bxlre
+         RWiMrcCAa47mwZgbUvcmKBUHkNKbkq2c8A9fzSsjjin1punl0//OhHV7II99UiHnRg/E
+         C2yWBnJNo1Kjklt9pqX2sO2aiN62Bev0+mn8ZZ86OFx89AwercgeD++K+YEfyDdnQJUu
+         eLxgxL//TXM9ypNr8HyWvDjIXldsW8WR5u96PRvTs48wj64XWc9TxTs4DbNutyogcbYG
+         3nh+c6uhebcspkA0aKrw5Huzt/1x4Oup95IN+Lp0maLvmoI33Lm6nS+w7BeOlbk3uyLK
+         Zu+w==
+X-Gm-Message-State: APjAAAX6Ib249O2prTm2pf2mMUH7VEu77WuxDUhm86W405lYD0szTJXo
+        dM7iQiM5QrFZyvaarsj5v7sUEJzx
+X-Google-Smtp-Source: APXvYqymmHMg0WzgUde+nF3EKfZCxsx0WD2x0/FjXPNsfQS3ol+KEqC0OZ/L0xsVu9vKAbzqBEU9Kg==
+X-Received: by 2002:a17:906:37d2:: with SMTP id o18mr20197522ejc.112.1554806483560;
+        Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h33sm9469097ede.18.2019.04.09.03.41.21
+        by smtp.gmail.com with ESMTPSA id t9sm3462830ejz.92.2019.04.09.03.41.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 03:41:22 -0700 (PDT)
-Date:   Tue, 09 Apr 2019 03:41:22 -0700 (PDT)
-X-Google-Original-Date: Tue, 09 Apr 2019 10:41:19 GMT
-Message-Id: <pull.176.git.gitgitgadget@gmail.com>
+        Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
+Date:   Tue, 09 Apr 2019 03:41:23 -0700 (PDT)
+X-Google-Original-Date: Tue, 09 Apr 2019 10:41:20 GMT
+Message-Id: <a01a8c704ba03213aa59c59384dba46502089522.1554806481.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.176.git.gitgitgadget@gmail.com>
+References: <pull.176.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Fix a false negative in t3301-notes.sh
+Subject: [PATCH 1/1] t3301: fix false negative
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is always bad when test cases fail for the wrong reasons, but it is in
-some ways more scary when they pass for the wrong reasons.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I stumbled over this issue while chasing down a Windows-specific issue that
-caused two other test cases to fail, and should have caused this one to
-fail, too, but didn't.
+In 6956f858f6 (notes: implement helpers needed for note copying during
+rewrite, 2010-03-12), we introduced a test case that verifies that the
+config setting `notes.rewriteRef` can be overridden via the environment
+variable `GIT_NOTES_REWRITE_REF`.
 
-Johannes Schindelin (1):
-  t3301: fix false negative
+Back when it was introduced, it relied on a side effect of an earlier
+test case that configured `core.noteRef` to point to `refs/notes/other`.
 
+In 908a320363 (t3301: modernize style, 2014-11-12), this side effect was
+removed.
+
+The test case *still* passed, but for the wrong reason: we no longer
+overrode the rewrite ref, but there simply was nothing to rewrite
+anymore, as the overridden notes ref was "modernized" away.
+
+Let's let that test case pass for the correct reason again.
+
+To make sure of that, let's change the idea of the original test case:
+it configured `notes.rewriteRef` to point to the actual notes ref,
+forced that to be ignored and then verified that the notes were *not*
+rewritten.
+
+By turning that idea upside down (configure the `notes.rewriteRef` to
+another notes ref, override it via the environment variable to force the
+notes to be copied, and then verify that the notes *were* rewritten), we
+make it much harder for that test case to pass for the wrong reason.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t3301-notes.sh | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-
-base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-176%2Fdscho%2Ffix-false-negative-in-t3301-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-176/dscho/fix-false-negative-in-t3301-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/176
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 84bbf88cf9..704bbc6541 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1120,9 +1120,10 @@ test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
+ 	test_config notes.rewriteMode overwrite &&
+ 	test_config notes.rewriteRef refs/notes/other &&
+ 	echo $(git rev-parse HEAD^) $(git rev-parse HEAD) |
+-	GIT_NOTES_REWRITE_REF= git notes copy --for-rewrite=foo &&
++	GIT_NOTES_REWRITE_REF=refs/notes/commits \
++		git notes copy --for-rewrite=foo &&
+ 	git log -1 >actual &&
+-	test_cmp expect actual
++	grep "replacement note 3" actual
+ '
+ 
+ test_expect_success 'git notes copy diagnoses too many or too few parameters' '
 -- 
 gitgitgadget
