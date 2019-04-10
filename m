@@ -2,139 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 191FF20248
-	for <e@80x24.org>; Wed, 10 Apr 2019 06:41:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7401720248
+	for <e@80x24.org>; Wed, 10 Apr 2019 07:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbfDJGlK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 02:41:10 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:47270 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726230AbfDJGlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 02:41:10 -0400
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id 58E29340871
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 06:41:09 +0000 (UTC)
-Received: (qmail 28452 invoked by uid 10000); 10 Apr 2019 06:41:05 -0000
-Date:   Wed, 10 Apr 2019 06:41:05 +0000
-From:   "Robin H. Johnson" <robbat2@gentoo.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: regression AGAIN in output of git-pull --rebase
- --recurse-submodules=yes --quiet
-Message-ID: <robbat2-20190410T062730-540884809Z@orbis-terrarum.net>
-References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
+        id S1726931AbfDJHj1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 03:39:27 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:42994 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726052AbfDJHj0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Apr 2019 03:39:26 -0400
+Received: from mail-lj1-f169.google.com ([209.85.208.169]); authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hE7pN-0002wt-5V; Wed, 10 Apr 2019 09:39:25 +0200
+Received: by mail-lj1-f169.google.com with SMTP id f23so1191412ljc.0
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 00:39:25 -0700 (PDT)
+X-Gm-Message-State: APjAAAVvl6mjYjp4W8Cr5dPk/+UF5UzlnWg1iE4iTGbCWt2nOrQ75/KZ
+        5o8/tov4+S4WPQNId7wruoyfJTHLO0i7SRqlS4s=
+X-Google-Smtp-Source: APXvYqxbZJU1t1mK1nfCHY6UHKmQj497IdDEDPmIaDFWSf2ypvohLcU/MKjJk9cCnfEo48EYv5bIRljqWDQVddiWrSE=
+X-Received: by 2002:a2e:9a46:: with SMTP id k6mr21836237ljj.119.1554881964718;
+ Wed, 10 Apr 2019 00:39:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HywJcj55HbA57jnN"
-Content-Disposition: inline
-In-Reply-To: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+References: <20190405200045.10063-1-admin@in-ici.net> <xmqqftqt7x49.fsf@gitster-ct.c.googlers.com>
+ <CAKrvxcVgMLNEEY6U+ybm6n4WtUCdOaYRjBrDKFvRwzYbZyB2UQ@mail.gmail.com>
+ <xmqqy34j7jci.fsf@gitster-ct.c.googlers.com> <CAKrvxcW1hKUjMsCGUz7GothxbEKiQek2J5CkjhuiSKoGrArjbQ@mail.gmail.com>
+ <xmqqzhoz2lpr.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhoz2lpr.fsf@gitster-ct.c.googlers.com>
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+Date:   Wed, 10 Apr 2019 09:39:13 +0200
+X-Gmail-Original-Message-ID: <CAKrvxcX+Fi1U4NcH5Mqf0cR8QQc9FWtVQ-uuj0Dhd3qEu5o6XA@mail.gmail.com>
+Message-ID: <CAKrvxcX+Fi1U4NcH5Mqf0cR8QQc9FWtVQ-uuj0Dhd3qEu5o6XA@mail.gmail.com>
+Subject: Re: [PATCH/docs] make slash-rules more readable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1554881966;a79bf0db;
+X-HE-SMSGID: 1hE7pN-0002wt-5V
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> the pattern is matched against paths in the directory where the
+> `.gitignore` file that has the pattern in it is in, and any of
+> its subdirectories (recursively).
 
---HywJcj55HbA57jnN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> the pattern will match in all directories relative to
+> the `.gitignore` file, with infinite depth.
 
-A year ago, I raised <robbat2-20190410T062730-540884809Z@orbis-terrarum.net=
-> as an issue,
-which lead to commit commit a56771a668dd4963675914bc5da0e1e015952dae.
+I could not catch the difference between the meaning of both.
+However, I think "paths in the directory" and "directories relative to"
+are maybe both ambiguous.
 
-The exact same workload somewhere between 2.18.0 and 2.19.0 has caused
-the message to come back. I noticed it first in a 2.18.0->2.21.0
-upgrade, and did a partial bisect based on tags to trace it to 2.19.0.
+Since a pattern without a non-trailing slash must always be a file name or a
+folder name, and does not have a leading slash, we could maybe just
+say it like this:
 
-=3D=3D=3D
-$ git submodule foreach --quiet git pull origin master --quiet >/dev/null
-=46rom git://anongit.gentoo.org/data/gentoo-news
- * branch            master     -> FETCH_HEAD
-=46rom git://anongit.gentoo.org/data/glep
- * branch            master     -> FETCH_HEAD
-=3D=3D=3D
-
-I suspect it was a result of:
-ea27893a65cc41cad2710466aa6a58866ff22f1e Merge branch 'pc/submodule-helper-=
-foreach'
-
-But I haven't done a full bisect to prove it yet.
-
-On Sat, Jan 20, 2018 at 05:57:29AM +0000, Robin H. Johnson wrote:
-> Somewhere between 2.13.6 & 2.14.1 there's an output regression. I
-> haven't done a bisect to trace it down further yet.
->=20
-> Specifically, --rebase --recurse-submodules=3Dyes seems to cause --quiet
-> to not be effective anymore.
->=20
-> Full commandline:
-> $ git pull --rebase --recurse-submodules --quiet
->=20
-> In 2.13.6, there is no output, it's quiet as expect.
->=20
-> In 2.14.1, you get:
-> HEAD is up to date.
-> Submodule path '_data/news': rebased into 'a50b763c338161b4621d23e9fa5cd6=
-e11455d6ca'
-> HEAD is up to date.
-> Submodule path 'glep': rebased into 'e1f100ec3ba44ab1672d61cabf4690b355e4=
-6158'
->=20
-> Steps to reproduction:
-> 1. git clone --recurse-submodules \
->  https://anongit.gentoo.org/git/sites/www.git
-> 2. cd www
-> 3. git submodule foreach --quiet git pull --quiet origin master
-> 4. git pull --rebase --recurse-submodules=3Dyes --quiet
->=20
-> Repeat step 4 for repeated bug output.
-> If you drop the --rebase, then you need to re-run step 3 first.
->=20
-> --=20
-> Robin Hugh Johnson
-> Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
-> E-Mail   : robbat2@gentoo.org
-> GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-> GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+        the pattern is matched against all files and folders (recursively)
+        from the location of the `.gitignore` file.
+---------
 
 
+> Unlike a pattern without a slash, a pattern with a
+> non-trailing slash is matched against paths immediately in
+> the directory the `.gitignore` file the pattern appears in
+> is stored in, and does not get used in its subdirectories..
 
---=20
-Robin Hugh Johnson
-Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
-E-Mail   : robbat2@gentoo.org
-GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+I think one can always assume that we talking about the relevant
+`.gitignore` file (where the pattern appears in).
 
---HywJcj55HbA57jnN
-Content-Type: application/pgp-signature; name="signature.asc"
+Perhaps this covers it all?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+        A pattern with a non-trailing slash is always considered
+        to begin at the `.gitignore` file location.
 
-iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAlytj/5fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
-RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
-JsSuJA//ebbKmSui7pY9sAnuQkdOlo+g1sekb5fIwXT+i+flZLIlLcGXU+upk4Gu
-9KzevduLz4lDzd2NEtdrOZ87SxhR8EJT8NTCc5XcUx9fimBhK6tg8DvENDbUeUuT
-yIzaWPl6TUcDRcyBgUdFfJu8LhDHQs84cu/LnnQkPzdZ3N2kfxf49ywEHiKPSWE3
-tJS1aHdF2V+Ka0qEDfyb10cwnzQerhD7Xx6GVlNEC6sIuQXSBvL0LBhliNsENOQj
-iOaFe+SptArqegVIs9BuqqN0AJsRj9JBu8dsb+aoqeA8SZoD2qV6LtqRuBYDpLkK
-xtMDbLQcijd+p/vaYAhOyJlpTJyV/nbSgelPuRI9BsZ3TnwwoqgkPQlEXjFxw6+j
-8C9X2BJ7HCSvXMvcWTrWlRQTmMe36AR93tOc2IwjEgAG0i/hF+N6U/vDSONQYzld
-xKwIaL3PC1FXPa04eVsuL1iEjpIfUlVEYkRxkAZhqOBJMq/S4f14G03Bt/y9gvvA
-Tbx4dZ10KorOE0wW9/1qyXOe7x0b7vYg/b/+oHaFngJfycR85scJZL8VpIiUYKxF
-aaFvc1Hy/h5rQlmB67mLBNpKWIdjiM+FVhGDhLNO16K+oDyTVJDeiLLxYgJ7jNLx
-a4KzRaJ0P8XXL92DgZ0+FtpBfop/8TNfMPVKhMejIviKBFvhG20=
-=PVH6
------END PGP SIGNATURE-----
+followed by your example
 
---HywJcj55HbA57jnN--
+> For example, the pattern `doc/frotz/` that appears in
+> `.gitignore` at the top-level of the project matches
+> `doc/frotz` directory (again, seen from the top-level), but
+> not `a/doc/frotz`.
+
+and maybe one more example
+
+        Note that the pattern `doc/frotz` and `/doc/frotz` are
+        equivalent.
+        However `/bar` and `bar` are different. They both match the
+        `bar` file or folder at the top level, but only the latter
+will also match `foo/bar`
+        (when `foo` is at the top level).
+
+This avoids the hustle with the ambiguous path, where it starts, and
+trailing or leading slashes. Together with the
+two examples it seems to be a good compromise between accuracy and
+understandable.
+
+The alternative would be to say
+
+        A pattern with a non-trailing slash is only matched against any
+        path that begins in the directory of the `.gitignore` file.
+
+While this is maybe clearer then saying "pattern [...] always
+considered to begin at` it is ambiguous about the slashes.
+So a very accuracy but maybe less understandable version would be
+something like this:
+
+        A pattern with a non-trailing slash is only matched against any
+        path that begins in the directory of the `.gitignore` file.
+        For example, if the `.gitignore` file is in folder `doc`
+        the path to file  `bar/doc/a/foo` that begins in `doc` is `a/foo`.
+        A pattern that matches a path except for a leading slash or
+trailing slash
+        is still considered a match. It is still valid however,
+        that when a pattern ends with a slash, it would only find a
+match with a directory.
+
+---------
+
+> Also, a pattern "/doc" matches doc at the current level (i.e. the
+> directory in which .gitignore file that the pattern was taken from
+> is found) and not in any subdirectories.  Is that clear in the
+> proposed update?
+
+Yes.
+
+However, in the docs is already one paragraph solely dedicated for this case:
+
+> A leading slash matches the beginning of the pathname. For example, "/*.c" matches
+> "cat-file.c" but not "mozilla-sha1/sha1.c".
+
+However, we have already a better and more in detail explained example
+in the new
+proposal `*` paragraph and and the case with the leading slash is
+now a sub-case of `A pattern with a non-trailing slash`
+so we might just get rid of the above paragraph?
+----------
+
+
+Thank you for explaining me how the algorithm works procedurally.
+It gave some inside of the origin of "If the pattern ends with a slash, it is
+removed for the purpose of the following description.."
+---------
+
+All the best,
+Adam
