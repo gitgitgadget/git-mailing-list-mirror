@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4440920248
-	for <e@80x24.org>; Wed, 10 Apr 2019 03:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1608420248
+	for <e@80x24.org>; Wed, 10 Apr 2019 03:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727011AbfDJDwU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 23:52:20 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36854 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726678AbfDJDwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 23:52:19 -0400
-Received: by mail-wr1-f66.google.com with SMTP id y13so1109434wrd.3
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 20:52:18 -0700 (PDT)
+        id S1726837AbfDJD5F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 23:57:05 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:33589 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726808AbfDJD5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 23:57:04 -0400
+Received: by mail-wm1-f67.google.com with SMTP id z6so3747697wmi.0
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 20:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=J4HG60cT5XROtw9X7oKfF7ytgk/zXiWyHCfDtYGMZuk=;
-        b=LaOWp55cwnsRGbpnbtA+8RdjtQmBd2zHNTK183moorWsIjVp2ilzF/dNchmS6vK+Bt
-         TNHonbF2UlNor73mLvGUrMQ58ysQ3e8/Er1uq4rSEwfUJPc15ekdaf7KJQJVZfJrzZvx
-         Oq5EJgVJzE9dxfz1JuWJt4ukZSWXMGiwkS5XBQdyyKwn1aJ6cjFBsNt5tbbzjt6qiheO
-         /0d/qKHOZEzhUUQnhPHJtSsR49j2cQFb/sjuXr0vtq9JQ8+PkO67jQXGKKZTr8YbF0f8
-         T+sshJYACZ7CplZo2OQI6075KVZU9FAQ9G9BHZjQ0JqfqgVSEFCvrPGrshijJxK36cep
-         actg==
+        bh=OFbpVvn36aD2DKPX2EPK/I549f/zqnQej0qVJTlTGoE=;
+        b=p1BuUYoINyTp7wWdBm5H6wJWk52JyWCLbf5iTZH4g57ZYQkXw65Kl5jQfbVEg623gT
+         meKPT0Fo7dxoSFBsn6spkVskS+vynO8TL8drCYLNbziTTutflLovQxw+BBL3nibOMy/n
+         jxkIMG095f4DcwF9cVwC1lDXUB6m4wQ/7OrqPG7QS7QMpFZTl0herhVEsV4XOhSNZS3m
+         1YfMar18GrGThnbc/7zL1ABaiFrMAJJM0SmD8OLs5EPnCx3BvfWU1licKEnKZex4IjQB
+         0OpPzFDKyS7mOXuDLN8bb+nQttID3gRqz4T1yRAXtB+rR0fm+YIapwlVStGZ5mzHK183
+         iY3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=J4HG60cT5XROtw9X7oKfF7ytgk/zXiWyHCfDtYGMZuk=;
-        b=BlYxx6XamsIcZogISnazEC37X3DzrOnSi0YTMW6za0gkLmUic1l8B6hCx3cu5cHTFh
-         qJeczzClb2QWKGRzWH5NBGrXXi1TJRnroVKtKxenpa7BgJbSXYqNOaCevDTn7ObVbTbT
-         vsqD87SzL0Zd2Rzs+k2IHB5FdqhcfiIDdBS1SK0VeeFsHn6n8gzFv0KorZeS+/cIbdiB
-         JF65H1TCH449WiDsquQ6qRuw9CakRrDeOpzgX6mx4imQJHeVKeGcBCrv4h98G30eN0Cg
-         l3E4f2nY18Rnk+w+qgU1A6chvciZWdskwmqY7C6x5VVvr3IbrR8kvcLc06M7BcCQCUVf
-         Fh0A==
-X-Gm-Message-State: APjAAAVN/M/HDtvNRqBeJFAkoHn27snGWJd8/XUs/2OFigEWymmUVdoe
-        aPjBAjaadSZvcZyMnSJgqks=
-X-Google-Smtp-Source: APXvYqz4YudLnALnGrQeeM/Qv8lcLVnGe0r/B4LMqAG3kC8Q9581RyQbFWaBemz6XUjZmd+oK2EQxA==
-X-Received: by 2002:a5d:69c1:: with SMTP id s1mr25276787wrw.245.1554868337646;
-        Tue, 09 Apr 2019 20:52:17 -0700 (PDT)
+        bh=OFbpVvn36aD2DKPX2EPK/I549f/zqnQej0qVJTlTGoE=;
+        b=rjW7jjSFeZMIWQqQmujGUU5v9tVkscPP2Yc86aQyOnXB357k17cSJdujo3JZtvwVbo
+         bTGwo2qaD83faawVkHwEqD0uK0lI5pEuB1RQx5x0llpLo2HRKSDpUlSVZlUaQS/ZwjEc
+         haPY6tUXv9iL/8Qs72+8Z70gmHpm6W+W4PXadzeQlA4qbBziuykzzMUBcYpjeq6EkUmw
+         piDplKPf2+UDr2huXyAmVKnB+GpUvOr6i+pgjMojNKb4pIKju8JNzsT9dxYVl9crKqSa
+         fSdzQ6f0AO5XcGft+PzsycMqhhmjPOL7BInd6pZT1x8Pq2pADPrQcCdulRyMaDe/fJzW
+         SrbA==
+X-Gm-Message-State: APjAAAWkdX5TAcTeQ8LyimQuR5yOAbHcloALTPW/49M/v1Km81IRtCpF
+        +v7EAXgPLzYceJ9GugGKP2OetS8/e+0=
+X-Google-Smtp-Source: APXvYqwLPJywbuZve2w/F3LoNiyg5WlIJbGmxTN8UIP7uQ8BQKCezmK4uvKmEQwEirQTlrcE0I4LMg==
+X-Received: by 2002:a7b:c00e:: with SMTP id c14mr1112104wmb.110.1554868622879;
+        Tue, 09 Apr 2019 20:57:02 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 84sm1390033wme.43.2019.04.09.20.52.16
+        by smtp.gmail.com with ESMTPSA id y197sm962673wmd.34.2019.04.09.20.57.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 09 Apr 2019 20:52:17 -0700 (PDT)
+        Tue, 09 Apr 2019 20:57:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] pack-objects: write objects packed to trace2
-References: <20190409214420.90898-1-jonathantanmy@google.com>
-Date:   Wed, 10 Apr 2019 12:52:16 +0900
-In-Reply-To: <20190409214420.90898-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 9 Apr 2019 14:44:20 -0700")
-Message-ID: <xmqqzhoy1pqn.fsf@gitster-ct.c.googlers.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     git@vger.kernel.org, debian@onerussian.com
+Subject: Re: [PATCH v3 0/3] dir: treat a repository without commits as a repository
+References: <20190409230737.26809-1-kyle@kyleam.com>
+Date:   Wed, 10 Apr 2019 12:57:01 +0900
+In-Reply-To: <20190409230737.26809-1-kyle@kyleam.com> (Kyle Meyer's message of
+        "Tue, 9 Apr 2019 19:07:34 -0400")
+Message-ID: <xmqqv9zm1piq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,17 +66,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Kyle Meyer <kyle@kyleam.com> writes:
 
-> This is useful when investigating performance of pushes, and other times
-> when no progress information is written (because the pack is written to
-> stdout).
+> The series improves the handling of sub-repositories that don't have a
+> commit checked out.  In particular, it addresses the following issues:
+> ...
+>   * Commit message tweaks.  These include replacing wording like "no
+>     commits" with something like "no commit checked out" because,
+>     technically, this series also concerns repositories that have
+>     commit objects but are on an unborn branch.
+
+Changes from "not have any commits" to "not have a commit checked
+out" can also be seen in the code (the next bullet point), which is
+a very welcome change.  It shows that the patchset was done with
+nice attention to the detail.
+
+>   * Change the "git submodule add" error message to match the wording
+>     of the new error message added in add_to_index().
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> We're trying to improve push performance, and it would be nice to be
-> able to observe the number of objects sent over each push, both to
-> correlate it with time taken (which is already traced) and to notice
-> situations when significantly more objects are being sent than needed.
+>   * Consistently use "expect" rather than "expected" as the output
+>     file name for expected test output.
 
-Thanks---I find it a laudable goal, too.
+Thanks; will replace.  Hopefully this round is ready for 'next'.
+
