@@ -7,240 +7,185 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5E4B20248
-	for <e@80x24.org>; Wed, 10 Apr 2019 17:37:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A71D020248
+	for <e@80x24.org>; Wed, 10 Apr 2019 17:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729641AbfDJRhx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 13:37:53 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46604 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729055AbfDJRhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 13:37:53 -0400
-Received: by mail-ed1-f65.google.com with SMTP id d1so2758368edd.13
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
+        id S1729662AbfDJRhz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 13:37:55 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43213 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727659AbfDJRhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 13:37:54 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w3so2770633edu.10
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QBNY+zM+g0Jzt9KVZ0RFyjAcM0/7a17ywCCrd1K+glM=;
-        b=VZVulx1OhQF3owETkn4X3KxnmWE8Fmk6JA2AsZA5ndDDERDP85Vck9a0/LOg0K25QG
-         hS0vWQyk+6yYQkGz6YMujid8hQKzFoyazcDNp2lXjsmzNRFMBEpVChE0wwk8OStGUTlV
-         4DGPrGGTu7xc3qfus1OmdROzfSfjN3dN1om9xHqBPE9SzAPH3Unkz+orsoVFo+K3JgfH
-         9KkVQ9vLLe2eb8oUZlqQ1u6nwLapBbmjoOYS84sQPDP+aLVd1f5OZG+b+gpJAy7KgUJn
-         kPbXnsqTf9Qbuz8UJ7Zg2mmyZ2XNPzwyKWYXfEWw6gMloxgeIPtNCfkKYTAXdrgC5gGc
-         9w6w==
+        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
+        b=iXroslVWMzwofEKZbLv73F4uwCKcp07ER4xfD9B4FLdOs4PJuHlnZ7u6PppvRFbRQI
+         2Hu+HOooUfMTa57QpLCyVWG2CX5Rqf3I3OPwe0Gh7l3NCEbaTh6nhG84/NI+kHPhbSfm
+         P8j4QW22xTY3DQmwSF7cZmqVOY0MBJT+tQh1COCIaXOFpkcs76QS4dJR61VzVZokfvhZ
+         HvAgAfVIR5FTGTsnmth2AS0i4FLPtBCyM+vCzBC6Xk8Sn9gmphD2rcV5bC0t4hjSdvPZ
+         IATKS88tr9WPpaAX/3u9QUqWXoflvTRqK03uK4asjD8VC00rFsi+L++Rb7vCx/6QSrY5
+         Vzcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QBNY+zM+g0Jzt9KVZ0RFyjAcM0/7a17ywCCrd1K+glM=;
-        b=NkvJtRx6UUdIOZri7s+uYYaArD9ReEMuKPgSdZRTrAS9uUr5nSiWIEBScozyi5GuTY
-         8IWgqbke6yiRvMUuK9GX+3DrGJDRjvr6lN+vVulc/Cj5DtcDrZMUrYY2XcdjsqmsumoC
-         FhpkpVP5Sa+r/z3NSwP5mUAueF68jqhjHWZmOnyVw1eqeikTWmEnqqyFAqUArBH7G0wU
-         PhdobWE+Fyprs0/jz55j80EbyTG5PLNYuMEapjRrtffUwFzux3aJEcL7Z6WvPHOpbBLX
-         O/ShDAzOuBLtORgu/Ccg1gqf6VIkb52McnQWrQQpSD5hhx/PFdKGtXF2lzwUG4fjuOPN
-         HfYw==
-X-Gm-Message-State: APjAAAXfY1JL+i8x93jf0lAPXZEQRzHTfur0Jm/w3bAEOpvDEl3ggXcJ
-        cCtiJj9UOGS+PprD8w+YMAPgwOca
-X-Google-Smtp-Source: APXvYqyw2CjLBD1sEmAfMa8GdIthonzy7udEXZNc3H8sQOtDA3qrw6mYE0yPBp3rqPeb/VDdWUe+sQ==
-X-Received: by 2002:aa7:d3d8:: with SMTP id o24mr28635737edr.53.1554917871024;
-        Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
+        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
+        b=i1TS+ESgsC+EvKB3ikwVNKCwpcUEUJrk0Cy+Ty0lVBjg6b8l1d1U8ttmK+brRqPLFN
+         jMv/sdx2bZyMCE9m3ks8K5+5u5wumRl6l5aPP1eR/wmEewKoyoRB0IqHHPlBFYzexyOU
+         1ps9ejOghS/N5Mkr/X2jil0EAi1cJWZbY2Gh9XFM2GEjaCEgdWzKCsuVygtzG22yZU9N
+         cTj3/Xokdbs6iQBwuOyLlBC/5Mj2H+QY48SZdmi3Boyeg/YBDuk+TgOO3xRuerqYd++/
+         XaH6NkQn5rvTNX4wBsw4j07UkUcMwW0EPHKZnbEucODJGczavA+3r/pTMc63vEjXCv4H
+         LsqQ==
+X-Gm-Message-State: APjAAAX0yA3CaeaTsqK3+2kqr45KVqIZNd1tahRD0CJIvDJdwUxdN2gy
+        JScOoSFL7M2s6E6UDlleILgUASHt
+X-Google-Smtp-Source: APXvYqx+8c8wRKleUMkWljstFWSJaGSVDO1431apSE3dt5Rgqqkm0rtsYcnTuLDieCy4ld29mJa99g==
+X-Received: by 2002:a05:6402:501:: with SMTP id m1mr15279161edv.216.1554917872080;
+        Wed, 10 Apr 2019 10:37:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c7sm10464206edt.70.2019.04.10.10.37.50
+        by smtp.gmail.com with ESMTPSA id q20sm6673867ejb.65.2019.04.10.10.37.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Apr 2019 10:37:50 -0700 (PDT)
-Date:   Wed, 10 Apr 2019 10:37:50 -0700 (PDT)
-X-Google-Original-Date: Wed, 10 Apr 2019 17:37:38 GMT
-Message-Id: <12978dc248a2cd07c90559691b8a2add84f45394.1554917868.git.gitgitgadget@gmail.com>
+        Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
+Date:   Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
+X-Google-Original-Date: Wed, 10 Apr 2019 17:37:39 GMT
+Message-Id: <06ba1ae34462c201b19b617ee23e76886928b387.1554917868.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.git.gitgitgadget@gmail.com>
 References: <pull.170.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 01/11] Start to implement a built-in version of `git add
- --interactive`
+From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 02/11] diff: export diffstat interface
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Daniel Ferreira <bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Daniel Ferreira <bnmvco@gmail.com>
 
-This is hardly the first conversion of a Git command that is implemented
-as a script to a built-in. So far, the most successful strategy for such
-conversions has been to add a built-in helper and call that for more and
-more functionality from the script, as more and more parts are
-converted.
+Make the diffstat interface (namely, the diffstat_t struct and
+compute_diffstat) no longer be internal to diff.c and allow it to be used
+by other parts of git.
 
-With the interactive add, we choose a different strategy. The sole
-reason for this is that on Windows (where such a conversion has the most
-benefits in terms of speed and robustness) we face the very specific
-problem that a `system()` call in Perl seems to close `stdin` in the
-parent process when the spawned process consumes even one character from
-`stdin`. And that just does not work for us here, as it would stop the
-main loop as soon as any interactive command was performed by the
-helper. Which is almost all of the commands in `git add -i`.
+This is helpful for code that may want to easily extract information
+from files using the diff machinery, while flushing it differently from
+how the show_* functions used by diff_flush() do it. One example is the
+builtin implementation of git-add--interactive's status.
 
-It is almost as if Perl told us once again that it does not want us to
-use it on Windows.
-
-Instead, we follow the opposite route where we start with a bare-bones
-version of the built-in interactive add, guarded by the new
-`add.interactive.useBuiltin` config variable, and then add more and more
-functionality to it, until it is feature complete.
-
-At this point, the built-in version of `git add -i` only states that it
-cannot do anything yet ;-)
-
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/add.txt |  5 +++++
- Makefile                     |  1 +
- add-interactive.c            | 13 +++++++++++++
- add-interactive.h            | 10 ++++++++++
- builtin/add.c                | 16 +++++++++++++++-
- t/README                     |  4 ++++
- 6 files changed, 48 insertions(+), 1 deletion(-)
- create mode 100644 add-interactive.c
- create mode 100644 add-interactive.h
+ diff.c | 37 +++++++++++++++----------------------
+ diff.h | 19 +++++++++++++++++++
+ 2 files changed, 34 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
-index 4d753f006e..c9f748f81c 100644
---- a/Documentation/config/add.txt
-+++ b/Documentation/config/add.txt
-@@ -5,3 +5,8 @@ add.ignore-errors (deprecated)::
- 	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
- 	as it does not follow the usual naming convention for configuration
- 	variables.
-+
-+add.interactive.useBuiltin::
-+	[EXPERIMENTAL] Set to `true` to use the experimental built-in
-+	implementation of the interactive version of linkgit:git-add[1]
-+	instead of the Perl script version. Is `false` by default.
-diff --git a/Makefile b/Makefile
-index c5240942f2..18e656a32f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -848,6 +848,7 @@ LIB_H = $(shell $(FIND) . \
- 	-name '*.h' -print)
- 
- LIB_OBJS += abspath.o
-+LIB_OBJS += add-interactive.o
- LIB_OBJS += advice.o
- LIB_OBJS += alias.o
- LIB_OBJS += alloc.o
-diff --git a/add-interactive.c b/add-interactive.c
-new file mode 100644
-index 0000000000..540bf185d8
---- /dev/null
-+++ b/add-interactive.c
-@@ -0,0 +1,13 @@
-+#include "cache.h"
-+#include "add-interactive.h"
-+#include "config.h"
-+
-+int add_i_config(const char *var, const char *value, void *cb)
-+{
-+	return git_default_config(var, value, cb);
-+}
-+
-+int run_add_i(struct repository *r, const struct pathspec *ps)
-+{
-+	die(_("No commands are available in the built-in `git add -i` yet!"));
-+}
-diff --git a/add-interactive.h b/add-interactive.h
-new file mode 100644
-index 0000000000..e6e6e051eb
---- /dev/null
-+++ b/add-interactive.h
-@@ -0,0 +1,10 @@
-+#ifndef ADD_INTERACTIVE_H
-+#define ADD_INTERACTIVE_H
-+
-+int add_i_config(const char *var, const char *value, void *cb);
-+
-+struct repository;
-+struct pathspec;
-+int run_add_i(struct repository *r, const struct pathspec *ps);
-+
-+#endif
-diff --git a/builtin/add.c b/builtin/add.c
-index db2dfa4350..5a32a755c8 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -20,6 +20,7 @@
- #include "bulk-checkin.h"
- #include "argv-array.h"
- #include "submodule.h"
-+#include "add-interactive.h"
- 
- static const char * const builtin_add_usage[] = {
- 	N_("git add [<options>] [--] <pathspec>..."),
-@@ -28,6 +29,7 @@ static const char * const builtin_add_usage[] = {
- static int patch_interactive, add_interactive, edit_interactive;
- static int take_worktree_changes;
- static int add_renormalize;
-+static int use_builtin_add_i;
- 
- struct update_callback_data {
- 	int flags;
-@@ -186,6 +188,9 @@ int run_add_interactive(const char *revision, const char *patch_mode,
- 	int status, i;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
-+	if (use_builtin_add_i && !patch_mode)
-+		return !!run_add_i(the_repository, pathspec);
-+
- 	argv_array_push(&argv, "add--interactive");
- 	if (patch_mode)
- 		argv_array_push(&argv, patch_mode);
-@@ -319,7 +324,12 @@ static int add_config(const char *var, const char *value, void *cb)
- 		ignore_add_errors = git_config_bool(var, value);
- 		return 0;
+diff --git a/diff.c b/diff.c
+index 5306c48652..daa5f3a736 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2489,22 +2489,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
  	}
--	return git_default_config(var, value, cb);
-+	if (!strcmp(var, "add.interactive.usebuiltin")) {
-+		use_builtin_add_i = git_config_bool(var, value);
-+		return 0;
-+	}
-+
-+	return add_i_config(var, value, cb);
  }
  
- static const char embedded_advice[] = N_(
-@@ -394,8 +404,12 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	int require_pathspec;
- 	char *seen = NULL;
- 	struct lock_file lock_file = LOCK_INIT;
-+	int use_builtin_add_i_env =
-+		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
+-struct diffstat_t {
+-	int nr;
+-	int alloc;
+-	struct diffstat_file {
+-		char *from_name;
+-		char *name;
+-		char *print_name;
+-		const char *comments;
+-		unsigned is_unmerged:1;
+-		unsigned is_binary:1;
+-		unsigned is_renamed:1;
+-		unsigned is_interesting:1;
+-		uintmax_t added, deleted;
+-	} **files;
+-};
+-
+ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 					  const char *name_a,
+ 					  const char *name_b)
+@@ -6001,12 +5985,7 @@ void diff_flush(struct diff_options *options)
+ 	    dirstat_by_line) {
+ 		struct diffstat_t diffstat;
  
- 	git_config(add_config, NULL);
-+	if (use_builtin_add_i_env >= 0)
-+		use_builtin_add_i = use_builtin_add_i_env;
+-		memset(&diffstat, 0, sizeof(struct diffstat_t));
+-		for (i = 0; i < q->nr; i++) {
+-			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p))
+-				diff_flush_stat(p, options, &diffstat);
+-		}
++		compute_diffstat(options, &diffstat, q);
+ 		if (output_format & DIFF_FORMAT_NUMSTAT)
+ 			show_numstat(&diffstat, options);
+ 		if (output_format & DIFF_FORMAT_DIFFSTAT)
+@@ -6306,6 +6285,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
+ 	return ignored;
+ }
  
- 	argc = parse_options(argc, argv, prefix, builtin_add_options,
- 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
-diff --git a/t/README b/t/README
-index 886bbec5bc..6408a1847e 100644
---- a/t/README
-+++ b/t/README
-@@ -383,6 +383,10 @@ GIT_TEST_REBASE_USE_BUILTIN=<boolean>, when false, disables the
- builtin version of git-rebase. See 'rebase.useBuiltin' in
- git-config(1).
- 
-+GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
-+builtin version of git add -i. See 'add.interactive.useBuiltin' in
-+git-config(1).
++void compute_diffstat(struct diff_options *options,
++		      struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q)
++{
++	int i;
 +
- GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
- of the index for the whole test suite by bypassing the default number of
- cache entries and thread minimums. Setting this to 1 will make the
++	memset(diffstat, 0, sizeof(struct diffstat_t));
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (check_pair_status(p))
++			diff_flush_stat(p, options, diffstat);
++	}
++}
++
+ void diff_addremove(struct diff_options *options,
+ 		    int addremove, unsigned mode,
+ 		    const struct object_id *oid,
+diff --git a/diff.h b/diff.h
+index b512d0477a..ae9bedfab8 100644
+--- a/diff.h
++++ b/diff.h
+@@ -240,6 +240,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
+ void diff_emit_submodule_pipethrough(struct diff_options *o,
+ 				     const char *line, int len);
+ 
++struct diffstat_t {
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *from_name;
++		char *name;
++		char *print_name;
++		const char *comments;
++		unsigned is_unmerged:1;
++		unsigned is_binary:1;
++		unsigned is_renamed:1;
++		unsigned is_interesting:1;
++		uintmax_t added, deleted;
++	} **files;
++};
++
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+@@ -328,6 +344,9 @@ void diff_change(struct diff_options *,
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
++void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q);
++
+ #define DIFF_SETUP_REVERSE      	1
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
 -- 
 gitgitgadget
 
