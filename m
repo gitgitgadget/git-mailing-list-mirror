@@ -2,120 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1CE520248
-	for <e@80x24.org>; Wed, 10 Apr 2019 02:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA1EA20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 03:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727212AbfDJCN3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 22:13:29 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:43337 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726532AbfDJCN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 22:13:27 -0400
-Received: by mail-pf1-f194.google.com with SMTP id c8so412483pfd.10
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 19:13:27 -0700 (PDT)
+        id S1726730AbfDJDBj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 23:01:39 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36634 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726654AbfDJDBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 23:01:39 -0400
+Received: by mail-wm1-f67.google.com with SMTP id h18so849385wml.1
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 20:01:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LLfpLlhpw31KK81zU7lFM9kt119J6dbXq0O/nIm28/8=;
-        b=Rxe2WuuA52DcBt1Zairv9Osr1BlWjGyvCQImBs1tMTSEDYgzpPqSCcVTxjdhs5Cwx/
-         pfLPyu8AGQCzK3b4EJxtYe/ULrh9wGFaHMnEKSrmQgCZ512qyHSkcip8T47MBZgZjvHM
-         mt4r65AsOiEHQJPVglYr3gs82K4m2XBfWv349Lsdg74vpmMd4Itm+vzT7Mam2N0iDl4F
-         SO5HGT0gHhhg7a/ZeTlgE3lziZyQimiYeSEvfH0xhIjg7fz6ApM9FBzvpxk8ZVdKjIXG
-         gpGE0zShJcdGjy1Hi/HjCA/NtdpBBGL5Dg6iulx1zroz7FEqVVsIcGnS7Whttk8/2vtT
-         43Tw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aKenXnke4Jc3aWpKpyqOPbiNPGqgMWV4m+49sQz/pUk=;
+        b=IfZ3KC70wkGb55130lenLhLCmR5OvpbypFmYcGN5Md+utFNIWC+ln5fAjcWt0JXHTw
+         26wMKan7CPAzbfQa4v6T7e29GWhiLW3x8xtw9+LCwKWRYVWMGqddiMzr0kk093zTZDs2
+         0FCEO1zsXGMUnBgjllcj5WJX7NhBg04vom5ibN1cc0jsaCmJNem59STROu3tpodDgQpk
+         sT/lQCtM+xy8cFdPqtlQAotgEjKbFq7tZc72FnEJqTsIoh7v8xpQowyVDIor+JuPhdry
+         d79GO8i4d1EDcMdnlIdbbyHuXnmRGSPpKvYBdP5dVkoKG5hOVOwChC7j6n9/H9WUxfr8
+         ysgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LLfpLlhpw31KK81zU7lFM9kt119J6dbXq0O/nIm28/8=;
-        b=kvoFQki4+stPMc+ctP61azsG/Pvb+2Bz9UbCQA/0jH8aqjL51crHsVFAMyayqaSphg
-         88Ahh0M439PRzjLkVCTkw5qHCrj449M93H2/S27KUKc0KKf/Lojctvv87nlmn3tSAA04
-         8E1SD4UFMcV2kR44rNiGS7QDq31RIw9Wb3/6IFwA/sfLl00PWFruTa81gsfF79bg2vCA
-         D6g2bJzb+MXtM3YrS3v1L26JjGXymIceIWe49CQCoGrC75uMtHY5lduwzZJkBAdfkolh
-         DA0n4fvbbzxAWz7G5EC4q21mPyjy4SUHK3g6JDiyL2y4BmY7mibsgyq9gMuiYdUMqxb7
-         Z3vA==
-X-Gm-Message-State: APjAAAXF/rnWKtgIl2jsSTh6SQ87FsKok4AFH4O15VMj1JjPxSZWs7I8
-        mY8OfXhcrUc/UxihVOkLczWrpv8+kpiuUwLj
-X-Google-Smtp-Source: APXvYqzutRrWrk1Kt7GPNlJgeKL8awziDsAl2CkZ//oa8sSoK10zDGfupLL3KRdqutmsRpnS6M61oA==
-X-Received: by 2002:aa7:83d1:: with SMTP id j17mr41084488pfn.78.1554862406390;
-        Tue, 09 Apr 2019 19:13:26 -0700 (PDT)
-Received: from localhost ([2601:602:9200:32b0:c47d:9491:9418:887])
-        by smtp.gmail.com with ESMTPSA id u26sm46050806pfn.5.2019.04.09.19.13.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 19:13:25 -0700 (PDT)
-Date:   Tue, 9 Apr 2019 19:13:25 -0700
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, gitster@pobox.com, peff@peff.net,
-        sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v2 7/7] rev-list: detect broken root trees
-Message-ID: <e0bd479e822ce81de280ee6fdd07f608a96b7836.1554861974.git.me@ttaylorr.com>
-References: <cover.1554435033.git.me@ttaylorr.com>
- <cover.1554861974.git.me@ttaylorr.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=aKenXnke4Jc3aWpKpyqOPbiNPGqgMWV4m+49sQz/pUk=;
+        b=eZlmcFsjrbWgmCYWG/6Eglsg5ZkVAfaNhoH0TfFA7DtP0Zu7oU+T5p7sZ/QrlVzxkM
+         HemIMmZ13IsquMurwMcxwTaZhl+P+mrOPvta2UWgaeXxZYY7YH/KYQZxA0PocwF4EQ4R
+         rJVgGX4QxMPtl+j3A1BT+4VVE2VTVGqlSqSuI4tcgp10vGuz30ERxgIbDFkAONYfnTsj
+         RDlL8BnW/1xG3tuMpONkMj0e7FwqMiVQteWcub8k/Tol9MCQnsS7ywEQRUGJ8yg39z+S
+         mQE8OQWzG+w4SSVT2Rb9msXOrCIwoZsKON/RvOmTOjNxwdzqLRtYN+/d5GVBPQ4el+6V
+         AJog==
+X-Gm-Message-State: APjAAAXq0QtgyZq8W/8pBYIasOXJ7+DuDilCLcf3qMr33HjvIDQxBN1b
+        CNZp0UMUBywWv1qLJrSIv3M=
+X-Google-Smtp-Source: APXvYqyVbe3uC1++qnUX75Jufy4CjpsUoTtKwpL4P/2P5Nz3WvPHbnGV8gvpUiCwUZw2H217zVRQlA==
+X-Received: by 2002:a1c:6502:: with SMTP id z2mr873360wmb.119.1554865297333;
+        Tue, 09 Apr 2019 20:01:37 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id 13sm1283124wmf.23.2019.04.09.20.01.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Apr 2019 20:01:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+        <20190409191831.GC32487@hank.intra.tgummerer.com>
+Date:   Wed, 10 Apr 2019 12:01:36 +0900
+In-Reply-To: <20190409191831.GC32487@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Tue, 9 Apr 2019 20:18:31 +0100")
+Message-ID: <xmqqmuky36nj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1554861974.git.me@ttaylorr.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-When the traversal machinery sees a commit without a root tree, it
-assumes that the tree was part of a BOUNDARY commit, and quietly ignores
-the tree. But it could also be caused by a commit whose root tree is
-broken or missing.
+> On 04/10, Junio C Hamano wrote:
+>
+>> * tg/stash-in-c-show-default-to-p-fix (2019-03-21) 1 commit
+>>   (merged to 'next' on 2019-04-10 at 9489a31a36)
+>>  + stash: setup default diff output format if necessary
+>>  (this branch uses ps/stash-in-c; is tangled with js/stash-in-c-pathspec-fix and tb/stash-in-c-unused-param-fix.)
+>> 
+>>  A regression fix.
+>> 
+>>  Will merge to 'master'.
+>
+> ps/stash-in-c is still marked as "Will cook in 'next'", so I assume
+> since this is fixing a regression in that topic, "Will merge to
+> 'master'" is a mistake here?
 
-Instead, let's die() when we see a NULL root tree. We can differentiate
-it from the BOUNDARY case by seeing if the commit was actually parsed.
-This covers that case, plus future-proofs us against any others where we
-might try to show an unparsed commit.
+Thanks.  I actually intend to unfreeze ps/stash-in-c and topics that
+fix it, now this topic is also ready to go.  So I'd rather mark them
+all for 'master', and give all of them exposure so that we can smoke
+out remaining issues, if any.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- list-objects.c                         | 3 +++
- t/t6102-rev-list-unexpected-objects.sh | 6 ++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index bb7e61ef4b..b5651ddd5b 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -374,6 +374,9 @@ static void do_traverse(struct traversal_context *ctx)
- 			struct tree *tree = get_commit_tree(commit);
- 			tree->object.flags |= NOT_USER_GIVEN;
- 			add_pending_tree(ctx->revs, tree);
-+		} else if (commit->object.parsed) {
-+			die(_("unable to load root tree for commit %s"),
-+			      oid_to_hex(&commit->object.oid));
- 		}
- 		ctx->show_commit(commit, ctx->show_data);
- 
-diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
-index 28ee1bcb07..28611c978e 100755
---- a/t/t6102-rev-list-unexpected-objects.sh
-+++ b/t/t6102-rev-list-unexpected-objects.sh
-@@ -67,8 +67,10 @@ test_expect_success 'traverse unexpected non-tree root (lone)' '
- 	test_must_fail git rev-list --objects $broken_commit
- '
- 
--test_expect_failure 'traverse unexpected non-tree root (seen)' '
--	test_must_fail git rev-list --objects $blob $broken_commit
-+test_expect_success 'traverse unexpected non-tree root (seen)' '
-+	test_must_fail git rev-list --objects $blob $broken_commit \
-+		>output 2>&1 &&
-+	test_i18ngrep "not a tree" output
- '
- 
- test_expect_success 'setup unexpected non-commit tag' '
--- 
-2.21.0.203.g358da99528
+
