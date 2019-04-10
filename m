@@ -2,89 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D96D320248
-	for <e@80x24.org>; Wed, 10 Apr 2019 10:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59B8D20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 11:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730742AbfDJKqI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 06:46:08 -0400
-Received: from sella4.gpi.it ([89.190.163.252]:56902 "EHLO sella4.gpi.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730717AbfDJKqI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 06:46:08 -0400
-Received: from prdzimgpi04.gpi.it (prdmta.gpi.it [192.168.40.36])
-        by sella4.gpi.it (Postfix) with ESMTPS id 9832F100070
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:45:59 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by prdzimgpi04.gpi.it (Postfix) with ESMTP id 8A783313237
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:45:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at prdzimgpi04.gpi.it
-Received: from prdzimgpi04.gpi.it ([127.0.0.1])
-        by localhost (prdzimgpi04.gpi.it [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id XyNzwynBp5Cz for <git@vger.kernel.org>;
-        Wed, 10 Apr 2019 12:45:59 +0200 (CEST)
-Received: from prdzimgpi02.gpi.it (prdzimgpi02.gpi.it [10.192.1.151])
-        by prdzimgpi04.gpi.it (Postfix) with ESMTP id 6E691313236
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:45:59 +0200 (CEST)
-Date:   Wed, 10 Apr 2019 12:45:59 +0200 (CEST)
-From:   Nicola Farina <nicola.farina@gpi.it>
-To:     git <git@vger.kernel.org>
-Message-ID: <1509193182.25902858.1554893159368.JavaMail.zimbra@gpi.it>
-Subject: Git subtree error on windows 10 with 2.21 version
+        id S1730504AbfDJLSm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 07:18:42 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46070 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729140AbfDJLSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 07:18:42 -0400
+Received: by mail-pl1-f195.google.com with SMTP id bf11so1225538plb.12
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 04:18:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=09A0mXQFs15UxMWdNJ9XZ9MYfucRobnJ9Y/M51tYG4k=;
+        b=mS5swk21fTynojLFHRYtJEX78PBQHGEXNM2qdfqTuFqhuA3xZozE74EafLP+Z4eMti
+         lEV5qXBPuqirnxhhk/hKJSdY2SJkpRDODO7adVeC0j3jBnz1UT4A5+BS8pVjkFfiI/Bc
+         oPzauglOohoRgabTlaBujZaoIc6po2X2glP33LyobjscqCuQl4KU5D+m7Nn/osN31tra
+         qnbFRCninGZKUus1v7rBSDzHq/5Sa/aHxw1nJfF7c93DMlfCbIrqaOFi3J9p2Wz/Pho7
+         w9L2GeYG4FzfsWoXOTnpONmfYCMQf2RD3K+w2reZjzFcb42RVlMQQ0wcBGLXlcp/BX2w
+         NneA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=09A0mXQFs15UxMWdNJ9XZ9MYfucRobnJ9Y/M51tYG4k=;
+        b=ewjkEOq2iOr0hwxEFrPQcQslVPYwQsAi0dbl+1SUZxmzEX2jq+ScO2v9EvHo8FTX0h
+         0DoXknJB95BFdxYNiDqykC9qXTQtLRmk5xEDYdVva5fvZwwF9DwzxWyLrM/PTsT9bcx7
+         EwjzOGVzZ3Zi2XlHaNlzIhUCZ0zGsxnBw+nmj2kkVIhzH15fNX/63dZ25CqWlI1gtVlN
+         keoGH7S5VvpKH9HxSWQpsrSUg+XXmC0vemInuxdfphtp5CZqEWpxo5X/blaopGyuSEEU
+         HyoZLFQiiu3nlVutd2PpnskRbp9ircJYGYDcnusePxlsbrd8/EBIkIrfhHySheNwxi6J
+         ykOQ==
+X-Gm-Message-State: APjAAAVqD7AYaR1syF7N8z4ZEd5kedtZ68ymsL08eVq/wyJk4cDtP7jh
+        lR+MnwzjH7xNTCpzfITfWoA=
+X-Google-Smtp-Source: APXvYqwhau+ir6lmYIbG4hPR0RLr7iDwjtJBw+6ZX1D8BYHcLNBUtk4wN7vqR+Jktz1tUTeQcoipng==
+X-Received: by 2002:a17:902:5ac4:: with SMTP id g4mr41219948plm.261.1554895120825;
+        Wed, 10 Apr 2019 04:18:40 -0700 (PDT)
+Received: from ash ([116.102.217.71])
+        by smtp.gmail.com with ESMTPSA id a6sm49313871pfn.181.2019.04.10.04.18.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 10 Apr 2019 04:18:39 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 10 Apr 2019 18:18:35 +0700
+Date:   Wed, 10 Apr 2019 18:18:35 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: regression AGAIN in output of git-pull --rebase
+ --recurse-submodules=yes --quiet
+Message-ID: <20190410111834.GA25638@ash>
+References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
+ <robbat2-20190410T062730-540884809Z@orbis-terrarum.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.8.8_GA_2096 (ZimbraWebClient - GC73 (Win)/8.8.8_GA_1703)
-X-Authenticated-User: nicola.farina@gpi.it
-Thread-Index: 9g2yRSZ0MgrYuCgJLhvDcCQekpoE2Q==
-Thread-Topic: Git subtree error on windows 10 with 2.21 version
-X-GPI-MailScanner-Information: Please contact sat@gpi.it for more information
-X-GPI-MailScanner-ID: 9832F100070.AF8E6
-X-GPI-MailScanner: Found to be clean
-X-GPI-MailScanner-MCPCheck: 
-X-GPI-MailScanner-SpamCheck: non spam, SpamAssassin (not cached,
-        punteggio=-2.9, necessario 5, autolearn=not spam, ALL_TRUSTED -1.00,
-        BAYES_00 -1.90)
-X-GPI-MailScanner-From: nicola.farina@gpi.it
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <robbat2-20190410T062730-540884809Z@orbis-terrarum.net>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Wed, Apr 10, 2019 at 06:41:05AM +0000, Robin H. Johnson wrote:
+> A year ago, I raised <robbat2-20190410T062730-540884809Z@orbis-terrarum.net> as an issue,
+> which lead to commit commit a56771a668dd4963675914bc5da0e1e015952dae.
+> 
+> The exact same workload somewhere between 2.18.0 and 2.19.0 has caused
+> the message to come back. I noticed it first in a 2.18.0->2.21.0
+> upgrade, and did a partial bisect based on tags to trace it to 2.19.0.
+> 
+> ===
+> $ git submodule foreach --quiet git pull origin master --quiet >/dev/null
+> From git://anongit.gentoo.org/data/gentoo-news
+>  * branch            master     -> FETCH_HEAD
+> From git://anongit.gentoo.org/data/glep
+>  * branch            master     -> FETCH_HEAD
+> ===
 
-After upgrading to 2.21 issuing this subtree command:
+If you run this with GIT_TRACE=1, you can see that --quiet is passed
+to submodule--helper correctly.
 
-git subtree push --prefix ouverture Shared-Ouverture master
+trace: built-in: git submodule--helper foreach --quiet git pull --quiet origin master
 
-I get these errors:
+The problem here is the option parser of this command would try to
+parse all options, so it considers both --quiet the same thing and are
+to tell "submodule--foreach" to be quiet, the second --quiet is not
+part of the "git pull" command anymore.
 
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory
+So the fix would be to pass "--" to stop option parsing.
+submodule--helper should not parse options it does not understand
+anyway. Something like this should work.
 
-I have installed git choosing the option "use git with bash only"
+-- 8< --
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6bcc4f1bd7..6394222628 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -571,7 +571,7 @@ static int module_foreach(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, module_foreach_options,
+-			     git_submodule_helper_usage, PARSE_OPT_KEEP_UNKNOWN);
++			     git_submodule_helper_usage, 0);
+ 
+ 	if (module_list_compute(0, NULL, prefix, &pathspec, &list) < 0)
+ 		return 1;
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 2c0fb6d723..a967b2890d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -346,7 +346,7 @@ cmd_foreach()
+ 		shift
+ 	done
+ 
+-	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
+ }
+ 
+ #
+-- 8< --
 
-thanks for any suggestions/help
-Nicola
+I'm a bit reluctant to follow up with a proper patch because I can't
+digest the t5572-submodule-pull.sh tests. And we definitely need to
+add a test case about --quiet to make sure it won't happen again.
+--
+Duy
+
+> 
+> I suspect it was a result of:
+> ea27893a65cc41cad2710466aa6a58866ff22f1e Merge branch 'pc/submodule-helper-foreach'
+> 
+> But I haven't done a full bisect to prove it yet.
+> 
+> On Sat, Jan 20, 2018 at 05:57:29AM +0000, Robin H. Johnson wrote:
+> > Somewhere between 2.13.6 & 2.14.1 there's an output regression. I
+> > haven't done a bisect to trace it down further yet.
+> > 
+> > Specifically, --rebase --recurse-submodules=yes seems to cause --quiet
+> > to not be effective anymore.
+> > 
+> > Full commandline:
+> > $ git pull --rebase --recurse-submodules --quiet
+> > 
+> > In 2.13.6, there is no output, it's quiet as expect.
+> > 
+> > In 2.14.1, you get:
+> > HEAD is up to date.
+> > Submodule path '_data/news': rebased into 'a50b763c338161b4621d23e9fa5cd6e11455d6ca'
+> > HEAD is up to date.
+> > Submodule path 'glep': rebased into 'e1f100ec3ba44ab1672d61cabf4690b355e46158'
+> > 
+> > Steps to reproduction:
+> > 1. git clone --recurse-submodules \
+> >  https://anongit.gentoo.org/git/sites/www.git
+> > 2. cd www
+> > 3. git submodule foreach --quiet git pull --quiet origin master
+> > 4. git pull --rebase --recurse-submodules=yes --quiet
+> > 
+> > Repeat step 4 for repeated bug output.
+> > If you drop the --rebase, then you need to re-run step 3 first.
+> > 
+> > -- 
+> > Robin Hugh Johnson
+> > Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+> > E-Mail   : robbat2@gentoo.org
+> > GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+> > GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+> 
+> 
+> 
+> -- 
+> Robin Hugh Johnson
+> Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+> E-Mail   : robbat2@gentoo.org
+> GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+> GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+
+
