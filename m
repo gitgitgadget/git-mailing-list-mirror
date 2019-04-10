@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37F8320248
-	for <e@80x24.org>; Wed, 10 Apr 2019 19:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2955320248
+	for <e@80x24.org>; Wed, 10 Apr 2019 19:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbfDJTAw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 15:00:52 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41273 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726644AbfDJTAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 15:00:52 -0400
-Received: by mail-ed1-f65.google.com with SMTP id u2so2994059eds.8
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:00:51 -0700 (PDT)
+        id S1726702AbfDJTEl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 15:04:41 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41697 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726630AbfDJTEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 15:04:41 -0400
+Received: by mail-ed1-f68.google.com with SMTP id u2so3004176eds.8
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=fKPa919f+5LJtIG4iMfO9WxqDh2q5tQ4WR1ZSjBh5qk=;
-        b=eCPttNkqFKXgI/QVx8z8N2eAk6lUAbWSHfCwOzHlGWI/Vj+V6W29xqbxaM59g8/fxS
-         TJJnz+A7zd+2e4ata7cFx5vJEHqZyDwJrj9de0HhAOK9fS9nKONQZYJFRFucjUZZ+3JI
-         KIFH8jkEjgv2fwenPPb/h4WFyAyDdxyq/VSXIYn8QCrUf8H6pBujs11ErhJ5X8nBnXXU
-         3puMqhggNdCNqWYpUuIZOQXq0MPF1gD0GpXxp5rY4nn1qvIBgb0eIp/akeEjQ3krBooO
-         he6C5LQrCvovW8HXRYqm2rCgc2XnY0j2+nua8N8LRHr8qjnVvo2TOsSpDbDPinEgHhCc
-         Tjhg==
+        bh=cwkUdHGBAb/o5dNhYL7y+HTtY2rviO/az6lw59f7MzE=;
+        b=gp/Mx/YWsnHix9X5tpRrFY4uOmQ+ClC6zh6TZgH70b18XQpHIW1rmAE2NYoRLswIrr
+         EaSquzTh6BjRBinhwjoTyqBfnvEvhrANBdEYPMNU3gruhKQSXrS6kdQRWkZD3WZ/Bp7I
+         U7KrBadE//8vU816eAUVQMFikjtrTbXKqWPjSIa5ydWpGqJotKih1Nx4SM2Zz8JDqTUE
+         ls2jaXRSl98PqFI9yNU8A5aDB0vAaNIGDRH1KKhNOgIfKPgLmqo1w44pCNuVD1Z+hiLh
+         8E59qW4Jsoz3z9jqThjpphx3S1iZDEVXlV6tfBDb9UCURx4eH9quQgJbTPR8NjkT8eM0
+         7Pxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=fKPa919f+5LJtIG4iMfO9WxqDh2q5tQ4WR1ZSjBh5qk=;
-        b=WdAv37CMjX1ObxT87K7LbjgFQCO3NRrVohiizIHXJNWmkn2JhQcpiaNywJt63T7pMT
-         t5/dxifn9kKVWk7LK4dpbOyO3sP4DQHUBoq9tfUIiFVq4E78MAbZzts4uxQgY4YyNBgD
-         NEUnlt/SreRSFukosXc1+ol8L6dWi9m6THAVqSB4/smKzOS1Wl/k6F8RXGlLZHBvUUFU
-         E6n+OZ0CeYpSdHvWxzXPXwVaUm8XaXzWPlQprElXMURBYY5R8+PkJI57ra2++W/nmGdx
-         iIkw+r94XtpjH6ios6gDIhAiue5RbUzTICv4kPXFbY3OYjmM7O9gJQ4vrA17D1DGkOHX
-         TlBw==
-X-Gm-Message-State: APjAAAXkfYRem8i6Dw3Ny6I0oOY7Wn5WUXXfVqnCF/vMnEj2NcupI1Sv
-        Yf53/Bqs1IfCh0RZWBINaQ4=
-X-Google-Smtp-Source: APXvYqz5lb0anqHe0cEFCEn5XioBJNkc3jOAcBj8Hu2SuMaljlv0p4HoaRljxSyoPP3HE8OIGibthg==
-X-Received: by 2002:a17:906:3612:: with SMTP id q18mr24960117ejb.147.1554922850588;
-        Wed, 10 Apr 2019 12:00:50 -0700 (PDT)
+        bh=cwkUdHGBAb/o5dNhYL7y+HTtY2rviO/az6lw59f7MzE=;
+        b=JoqIlwqeoESG3eFj6RxBP6/YV+RwC1DFbMM8GdjS7eQKKXrxZ1UnXDsAmIJ8hk4486
+         NakgOJmeyvFSdDfiHNcvCa3ZXZlu7nl6eJIEvodtjvyPQWlPfSYejavx973OIB/036Mc
+         xUAjF79VGo3QD1JJkjSVMt2bRilwchbqaHeBM+9dSO13wYvph8mpHzZi7Mrnt+CLSLm6
+         iENd5sLESH3P8zpStEBtOwlYG0Vi6gj4zAfna0B1fgiP3KXwdQVhmfAI/2Uh6f0sGEQ5
+         VlakmQD08QE+qgZXyYB2zFisd58A3yA2aE1zzTsNUjcYKZSlEUThHd/X2C6+KeRyRkBv
+         Zp6A==
+X-Gm-Message-State: APjAAAUXWfErp0F5VFlv5pFAW9yQIFOgtfCziwESJ7D8IyBKZwLpLr7o
+        CchELzkIh9KcWlBLl0BuzTc=
+X-Google-Smtp-Source: APXvYqwD1myC1DT6hkvpQJ6yf+7ER+SpsC23oFJL2Asx73SP9tta724tSXwUAQcHon+iLZs5+vKDfQ==
+X-Received: by 2002:a17:906:f0f:: with SMTP id z15mr9324717eji.125.1554923079633;
+        Wed, 10 Apr 2019 12:04:39 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id s14sm62055eda.26.2019.04.10.12.00.49
+        by smtp.gmail.com with ESMTPSA id y12sm4239216ejo.85.2019.04.10.12.04.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Apr 2019 12:00:49 -0700 (PDT)
+        Wed, 10 Apr 2019 12:04:38 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Barret Rhoden <brho@google.com>
 Cc:     git@vger.kernel.org, David Kastrup <dak@gnu.org>,
@@ -59,12 +59,12 @@ Cc:     git@vger.kernel.org, David Kastrup <dak@gnu.org>,
         =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Stefan Beller <stefanbeller@gmail.com>,
         Michael Platings <michael@platin.gs>
-Subject: Re: [PATCH v6 3/6] blame: add the ability to ignore commits and their changes
-References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-4-brho@google.com>
+Subject: Re: [PATCH v6 1/6] Move init_skiplist() outside of fsck
+References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-2-brho@google.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190410162409.117264-4-brho@google.com>
-Date:   Wed, 10 Apr 2019 21:00:48 +0200
-Message-ID: <878swhfzxb.fsf@evledraar.gmail.com>
+In-reply-to: <20190410162409.117264-2-brho@google.com>
+Date:   Wed, 10 Apr 2019 21:04:37 +0200
+Message-ID: <877ec1fzqy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -75,47 +75,16 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Apr 10 2019, Barret Rhoden wrote:
 
-(Just skimming)
+> init_skiplist() took a file consisting of SHA-1s and comments and added
+> the objects to an oidset.  This functionality is useful for other
+> commands.
 
-> revisions for commits that perform mass reformatting, and their users
-> have the optional to ignore all of the commits in that file.
+This change would be much easier to review if you led with a commit
+where you s/Invalid SHA-1/invalid object name/ (lower-case while we're
+at it), s/skip list/object name/ etc, and did that rename of the "hash"
+to "name" variable if you're so inclined.
 
-s/have the optional/have the option/
-
-> +--ignore-revs-file <file>::
-> +	Ignore revisions listed in `file`, one unabbreviated object name per line.
-> +	Whitespace and comments beginning with `#` are ignored.
-
-Maybe just say "Ignore revisions listed in `file`, which is expected to
-be in the same format as an `fsck.skipList`.".
-
-> +	the `blame.ignoreRevsFile` config option.  An empty file name, `""`, will
-> +	clear the list of revs from previously processed files.
-
-Maybe I haven't read this carefully enough but the use-case for this
-doesn't seem to be explained, you need this for the option, but the
-config file too? If I want to override fsck.skipList I do
-`fsck.skipList=/dev/zero`. Isn't that enough for this use-case without
-introducing config state-machine magic?
-
-> +	split[0].unblamable = e->unblamable;
-> +	split[1].unblamable = e->unblamable;
-> +	split[2].unblamable = e->unblamable;
-
-I wonder what the comfort level for people in general is before turning
-this sort of thing into a for-loop, 4? :)
-
-> +	nr_lines = e->num_lines;	// e changes in the loop
-
-A C++-like trailing comment.
-
-> +	grep "^[0-9a-f]\+ [0-9]\+ 1" blame_raw | sed -e "s/ .*//" >actual &&
-> +	git rev-parse X >expect &&
-> +	test_cmp expect actual &&
-> +
-> +	grep "^[0-9a-f]\+ [0-9]\+ 2" blame_raw | sed -e "s/ .*//" >actual &&
-> +	git rev-parse X >expect &&
-> +	test_cmp expect actual
-
-The grep here is a bug. See my 4abf20f004 ("tests: fix unportable "\?"
-and "\+" regex syntax", 2019-02-21).
+Then you'd end up with a small refactoring change that changes the tests
+(or even just make the tests grep for e.g. "Could not open.*:
+does-not-exist" instead), and the moving of the function would be
+entirely caught by the rename detection.
