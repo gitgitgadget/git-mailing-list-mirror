@@ -2,198 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C7FA20248
-	for <e@80x24.org>; Wed, 10 Apr 2019 19:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0109D20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 20:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726093AbfDJTQl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 15:16:41 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52229 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725982AbfDJTQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 15:16:40 -0400
-Received: by mail-wm1-f67.google.com with SMTP id a184so3817436wma.2
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:16:39 -0700 (PDT)
+        id S1726632AbfDJUZE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 16:25:04 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:40904 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726014AbfDJUZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 16:25:04 -0400
+Received: by mail-io1-f67.google.com with SMTP id d201so3342896iof.7
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 13:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=AAPEEeDMizPY45gnHtC5mGg5xgsuTCl7wrt/PJyMVYk=;
-        b=by6Zrw9zIPSuzDD5nhY5CBE9NNCVH6XrPp7oX3DiHVgSfBJ2XJWNHlCMzaJlrE+7fS
-         Xgb5wou7CobL8ASkWwopYswq6/ahW925YfupjGUVNceJ7b6Iw7G5ypBnmYB4CpITYIqX
-         BYWua3Ovgt7TAPzeJgYId+DV8lsuBtP5ONERBf9CT8ZpKgXJlJN6P1r/bRLM7+Ip+/vI
-         1G8deRUTFKhBlygtGLP0GwFCLouDRkL+CXBcmk+7aJ4s3QNRsbyRq9zsIzwV8ubrCS9f
-         RvzjwlEl60X20kHpIeHQb1hzwZCHorYUwdhKitiepkcGYaSf9AW897Rn70IcTyZD8rKc
-         TVBg==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Rlv19dkwc0zxaRqbFpZI0/uT4+rH3UNLv3KNMfEU9lU=;
+        b=kimTiGhxA5WzU5/57d/hFwR8nt8FKxnqmDpfRzzNmY942jiIxc6Q4eLkeHwuwW0jMe
+         pIF88j4NfIxMbNwisTQqJyGhKYUL6eG/gby0C4vOL18uqkIV+WIWwVapa7JzNgdd0oYl
+         dWWmgaG/uocaiinqZReFF2phTfo4WOFmMImhlaqPFxZ4EDb2ZbI5vHdUK6jUmz0dhFtk
+         jRez6WNwkZ+MXdeP5lzfnboys+J/oXCHlXw6RCHRaeyGnT9yLWf+ejUKrgndYvivlUbu
+         RjR0LbsDFXWVDJkT5yLb1PU7L/a0rEpRjCaiIIRnlu4zz3iD7w+484B1rSyl07CNF/eo
+         TwBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=AAPEEeDMizPY45gnHtC5mGg5xgsuTCl7wrt/PJyMVYk=;
-        b=dR7G4hHkV6RqEnvDHOsvVdU/CIdmD2IZo83FisRAhGrM/B0VQ2tWfyaFhyfLNU2jd/
-         9CPGfkD7zSYlhUjtdcfFjD3yeIxYP+Qkj7wJTHx8nBgYUsH/EgAzObt7p6nr0XkRww2e
-         ZflxlofI8ZQ+YU3H04fVJG4ZKkNAcGVJ5Aev7L1QYzN4nBz9GhcRHAEBiZy7gRH72aaK
-         ZYR5AMY+ByHBqFbi0IgHlOj1LDVseZeOlz4xmRKH9CI9RfXbmvgeSvjmDQBW9vAQD7yg
-         XpvObJhQAVF4slx25uaPlWMWZE0hyd3IKNKC8AizyPe8m85Dr/Vu2/fNEgzFOeCGcELh
-         nxxg==
-X-Gm-Message-State: APjAAAXjxLLYibDwnLj3OB9wcCTcHr4PZQHhvwJ5Xx/02L3jasps2f3Y
-        yyB87uc1uXzYtTZV43zbqV0=
-X-Google-Smtp-Source: APXvYqzrs7yIRLqcCaWKTAYn8vEmpiFerZtoccG4V+c/UaIlqUFuHvONMCQs9CWo8qdYvipGcyUX2g==
-X-Received: by 2002:a1c:6c17:: with SMTP id h23mr4215886wmc.122.1554923798564;
-        Wed, 10 Apr 2019 12:16:38 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-29-81.as13285.net. [92.22.29.81])
-        by smtp.gmail.com with ESMTPSA id c20sm68018379wre.28.2019.04.10.12.16.37
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Apr 2019 12:16:37 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 08/11] rebase -i: use struct rebase_options to parse
- args
-To:     Alban Gruin <alban.gruin@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190319190317.6632-1-phillip.wood123@gmail.com>
- <20190319190317.6632-9-phillip.wood123@gmail.com>
- <7ba0dc1a-b6dd-4ef6-81ee-495e32fc67cf@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <1413d9ef-7164-c3e6-629d-8388d3177e1b@gmail.com>
-Date:   Wed, 10 Apr 2019 20:16:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Rlv19dkwc0zxaRqbFpZI0/uT4+rH3UNLv3KNMfEU9lU=;
+        b=lx2eUPG1WTbjPm9EHWy3hTq7sIhl81VKgWKLHGSSPfZ0vXJMfvI7+wQz42ebTRCPo3
+         8OveZy5yjIKMX65xVBsCQIfSRhhR68dIxqwvVTW1BHI1y4ld/HDB0m+xyIY002qM5Cki
+         Lk6H5yFF2mz+3qBNi/WXTPBBAfOBOYfgfwlAEcXHMp4+1Wj8K8EF8FBZYAa8+SGiqIV+
+         Y9jyCZJWiJ9aNweWI/RvuKj/OrrEIX2glE4Ga34NUEqqE8CYgNdALGfBeN+4/2k874J4
+         q+/80H5Lk1PsP/7DIQUOxyWn2RbOrBq2Mvm61blL7aJjDaTzz4iCj5TN3+i45coqayGJ
+         GUng==
+X-Gm-Message-State: APjAAAWPbgrtsIgJj+rpfLEJ6J1v/l8okA+fZ+ooXpWIJocBbPUfk6bt
+        Cp3fcxDgDvs8Oc2TGt1+7SvRtikNbCLRh2mdxy9G+M9l/0o=
+X-Google-Smtp-Source: APXvYqwlZQnfv55nnFerO9/bFmkXfJQJeqIr+ZZHwf8VTcYYm3CoLZKWN4CWIJ1QIZB4mymbY61zFAfAaMwlOvjXOX0=
+X-Received: by 2002:a6b:7218:: with SMTP id n24mr28227008ioc.112.1554927903181;
+ Wed, 10 Apr 2019 13:25:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7ba0dc1a-b6dd-4ef6-81ee-495e32fc67cf@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+References: <20190322232237.13293-1-matheus.bernardino@usp.br>
+ <20190330224907.3277-1-matheus.bernardino@usp.br> <20190330224907.3277-4-matheus.bernardino@usp.br>
+ <20190331181209.GT32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190331181209.GT32487@hank.intra.tgummerer.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 10 Apr 2019 17:24:51 -0300
+Message-ID: <CAHd-oW7yPj5Ons3kfdEHtFgowc=F=2BD9EvU+fJbHe9=UXhx1g@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v5 3/7] dir-iterator: add flags parameter to dir_iterator_begin
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kernel USP <kernel-usp@googlegroups.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+Hi, Thomas
 
-sorry for the slow reply, I think you're probably off-list for a while 
-by now
+Sorry for the late reply, but now that I submitted my GSoC proposal I
+can finally come back to this series.
 
-On 21/03/2019 21:13, Alban Gruin wrote:
-> Hi Phillip,
-> 
-> It’s nice to see your work on this on the list.
-> 
-> Le 19/03/2019 à 20:03, Phillip Wood a écrit :
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> In order to run `rebase -i` without forking `rebase--interactive` it
->> will be convenient to use the same structure when parsing the options in
->> cmd_rebase() and cmd_rebase__interactive().
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   builtin/rebase.c | 203 ++++++++++++++++++++++++++---------------------
->>   1 file changed, 112 insertions(+), 91 deletions(-)
->>
->> diff --git a/builtin/rebase.c b/builtin/rebase.c
->> index c93f2aa629..33a2495032 100644
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -50,6 +50,73 @@ enum rebase_type {
->>   	REBASE_PRESERVE_MERGES
->>   };
->>   
->> +struct rebase_options {
->> +	enum rebase_type type;
->> +	const char *state_dir;
->> +	struct commit *upstream;
->> +	const char *upstream_name;
->> +	const char *upstream_arg;
->> +	char *head_name;
->> +	struct object_id orig_head;
->> +	struct commit *onto;
->> +	const char *onto_name;
->> +	const char *revisions;
->> +	const char *switch_to;
->> +	int root;
->> +	struct object_id *squash_onto;
->> +	struct commit *restrict_revision;
->> +	int dont_finish_rebase;
->> +	enum {
->> +		REBASE_NO_QUIET = 1<<0,
->> +		REBASE_VERBOSE = 1<<1,
->> +		REBASE_DIFFSTAT = 1<<2,
->> +		REBASE_FORCE = 1<<3,
->> +		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
->> +	} flags;
->> +	struct argv_array git_am_opts;
->> +	const char *action;
->> +	int signoff;
->> +	int allow_rerere_autoupdate;
->> +	int keep_empty;
->> +	int autosquash;
->> +	char *gpg_sign_opt;
->> +	int autostash;
->> +	char *cmd;
->> +	int allow_empty_message;
->> +	int rebase_merges, rebase_cousins;
->> +	char *strategy, *strategy_opts;
->> +	struct strbuf git_format_patch_opt;
->> +	int reschedule_failed_exec;
->> +};
->> +
->> +#define REBASE_OPTIONS_INIT {			  	\
->> +		.type = REBASE_UNSPECIFIED,	  	\
->> +		.flags = REBASE_NO_QUIET, 		\
->> +		.git_am_opts = ARGV_ARRAY_INIT,		\
->> +		.git_format_patch_opt = STRBUF_INIT	\
->> +	}
->> +
->> +static struct replay_opts get_replay_opts(const struct rebase_options *opts)
->> +{
->> +	struct replay_opts replay = REPLAY_OPTS_INIT;
->> +
->> +	sequencer_init_config(&replay);
->> +
->> +	replay.action = REPLAY_INTERACTIVE_REBASE;
->> +	replay.signoff = opts->signoff;
->> +	replay.allow_ff = !(opts->flags & REBASE_FORCE);
->> +	if (opts->allow_rerere_autoupdate)
->> +		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
->> +	replay.allow_empty = 1;
->> +	replay.allow_empty_message = opts->allow_empty_message;
->> +	replay.verbose = opts->flags & REBASE_VERBOSE;
->> +	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
->> +	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
->> +	replay.strategy = opts->strategy;
->> +
->> +	return replay;
->> +}
->> +
-> 
-> I wonder if `struct rebase_options` and `struct replay_options` could be
-> merged, or at least have `replay_options` used in `rebase_options`,
-> instead of converting one to the other.  I think it would make things
-> simpler and cleaner, but I don’t know how hard it would be, or if my
-> assumption is correct.
+On Sun, Mar 31, 2019 at 3:12 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>
+> On 03/30, Matheus Tavares wrote:
+> > Add the possibility of giving flags to dir_iterator_begin to initialize
+> > a dir-iterator with special options.
+> >
+> > Currently possible flags are DIR_ITERATOR_PEDANTIC, which makes
+> > dir_iterator_advance abort immediately in the case of an error while
+> > trying to fetch next entry; and DIR_ITERATOR_FOLLOW_SYMLINKS, which
+> > makes the iteration follow symlinks to directories and include its
+> > contents in the iteration. These new flags will be used in a subsequent
+> > patch.
+> >
+> > Also adjust refs/files-backend.c to the new dir_iterator_begin
+> > signature.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> >  dir-iterator.c       | 28 +++++++++++++++++++++++++---
+> >  dir-iterator.h       | 39 +++++++++++++++++++++++++++++++++------
+> >  refs/files-backend.c |  2 +-
+> >  3 files changed, 59 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/dir-iterator.c b/dir-iterator.c
+> > index f2dcd82fde..17aca8ea41 100644
+> > --- a/dir-iterator.c
+> > +++ b/dir-iterator.c
+> > @@ -48,12 +48,16 @@ struct dir_iterator_int {
+> >        * that will be included in this iteration.
+> >        */
+> >       struct dir_iterator_level *levels;
+> > +
+> > +     /* Combination of flags for this dir-iterator */
+> > +     unsigned flags;
+> >  };
+> >
+> >  int dir_iterator_advance(struct dir_iterator *dir_iterator)
+> >  {
+> >       struct dir_iterator_int *iter =
+> >               (struct dir_iterator_int *)dir_iterator;
+> > +     int ret;
+>
+> Minor nit: I'd define this variable closer to where it is actually
+> used, inside the second 'while(1)' loop in this function.  That would
+> make it clearer that it's only used there and not in other places in
+> the function as well, which I had first expected when I read this.
 
-I did consider doing that, but there are a few subtle differences in the 
-way the options are stored in each struct (eg the gpg option has a 
-leading -S in struct rebase_options but not struct replay_options) and I 
-think it would be a bit of a faff to align them as it would mean messing 
-with the code uses them and the code that reads/writes the various state 
-files (we cannot change the on-disk format without breaking things - 
-sometimes users start a rebase with one version of git bundled with 
-something like tig and then continue on the command-line with a 
-different version). I'd prefer to leave it as a future cleanup once this 
-series has been merged.
+Right, thanks.
 
-Best Wishes
+> > diff --git a/dir-iterator.h b/dir-iterator.h
+> > index 970793d07a..93646c3bea 100644
+> > --- a/dir-iterator.h
+> > +++ b/dir-iterator.h
+> > @@ -19,7 +19,7 @@
+> >   * A typical iteration looks like this:
+> >   *
+> >   *     int ok;
+> > - *     struct iterator *iter = dir_iterator_begin(path);
+> > + *     struct iterator *iter = dir_iterator_begin(path, 0);
+>
+> Outside of this context, we already mentione errorhandling when
+> 'ok != ITER_DONE' in his example.  This still can't happen with the
+> way the dir iterator is used here, but it serves as a reminder if
+> people are using the DIR_ITERATOR_PEDANTIC flag.  Good.
 
-Phillip
-> 
-> Cheers,
-> Alban
-> 
+This made me think again about the documentation saying that
+dir_iterator_abort() and dir_iterator_advance() may return ITER_ERROR,
+but the implementation does not containing these possibilities.
+(Besides when the pedantic flag is used). Maybe the idea was to make
+API-users implement the check for an ITER_ERROR in case dir-iterator
+needs to start returning it in the future.
+
+But do you think such a change in dir-iterator is likely to happen?
+Maybe we could just make dir_iterator_abort() be void and remove this
+section from documentation. Then, for dir_iterator_advance() users
+would only need to check for ITER_ERROR if the pedantic flag was given
+at dir-iterator creation...
+
+Also CC-ed Michael in case he has some input
