@@ -2,109 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0D520248
-	for <e@80x24.org>; Wed, 10 Apr 2019 18:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37F8320248
+	for <e@80x24.org>; Wed, 10 Apr 2019 19:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731447AbfDJS3z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 14:29:55 -0400
-Received: from mail-eopbgr790097.outbound.protection.outlook.com ([40.107.79.97]:26624
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727305AbfDJS3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 14:29:54 -0400
+        id S1726702AbfDJTAw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 15:00:52 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41273 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726644AbfDJTAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 15:00:52 -0400
+Received: by mail-ed1-f65.google.com with SMTP id u2so2994059eds.8
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 12:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+lbBZ3ooDtHk2PiHaobg7/MQV2VGvul+jcyyoeHQeAw=;
- b=DLd4R5k65kl5XsNWW0yiqLC356j/0FsYr3k0NLRkTgXO/DSVAwaCv3J8VeyuhEdXKriU3wv8VLM8Pl+XBM0Z4+TUN/YgDru+oeNAznK3fyYfssqtTluxHzggvi1jRpCaTz4WlmuoOuIoQuL4cZnjYdyI/sLpbycIssDiyAuabNc=
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB4283.namprd08.prod.outlook.com (20.176.82.20) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1792.14; Wed, 10 Apr 2019 18:29:51 +0000
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::6849:6be1:92ad:4577]) by DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::6849:6be1:92ad:4577%4]) with mapi id 15.20.1771.021; Wed, 10 Apr 2019
- 18:29:51 +0000
-From:   "Mazo, Andrey" <amazo@checkvideo.com>
-To:     "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "ahippo@yandex.com" <ahippo@yandex.com>,
-        "luke@diamand.org" <luke@diamand.org>,
-        "Mazo, Andrey" <amazo@checkvideo.com>
-Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
-Thread-Topic: What's cooking in git.git (Apr 2019, #02; Wed, 10)
-Thread-Index: AQHU7v81wvcMXSCz6kuZAmSXfR4nhKY1uIiA
-Date:   Wed, 10 Apr 2019 18:29:51 +0000
-Message-ID: <20190410182859.20511-1-amazo@checkvideo.com>
-References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BN6PR03CA0066.namprd03.prod.outlook.com
- (2603:10b6:404:4c::28) To DM6PR08MB4956.namprd08.prod.outlook.com
- (2603:10b6:5:4b::25)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=amazo@checkvideo.com; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-mailer: git-send-email 2.19.2
-x-originating-ip: [70.163.25.109]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bf52e61b-c1de-4ddb-4f67-08d6bde284f4
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328)(7193020);SRVR:DM6PR08MB4283;
-x-ms-traffictypediagnostic: DM6PR08MB4283:
-x-microsoft-antispam-prvs: <DM6PR08MB4283771FAF8E2E3015FC8D93DA2E0@DM6PR08MB4283.namprd08.prod.outlook.com>
-x-forefront-prvs: 00032065B2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(346002)(39860400002)(136003)(376002)(366004)(189003)(199004)(6486002)(50226002)(8676002)(71190400001)(81166006)(1730700003)(2351001)(3846002)(106356001)(99286004)(105586002)(6116002)(81156014)(5660300002)(256004)(446003)(14444005)(2616005)(6916009)(14454004)(11346002)(486006)(71200400001)(1076003)(6512007)(68736007)(386003)(86362001)(8936002)(5640700003)(6246003)(52116002)(2906002)(476003)(53936002)(36756003)(54906003)(6436002)(186003)(26005)(107886003)(478600001)(2501003)(66066001)(229853002)(6506007)(97736004)(25786009)(305945005)(316002)(4326008)(7736002)(76176011)(102836004)(325944009)(71610200001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4283;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: checkvideo.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: AFfgJYdSbFKHv0tKtn/CE+Bfp36BXai4R1qOYpBPMeMxADJ+jXzIpeKDc9nUfM7F4AKqS/z4S+27j+PXpPyRqYcMySct/wQn0wvLd225uk2I5ko6XQ3+vCIGxeGOUTmP0L8BzNo6dmnbl3MEtHcGN/E38AcnPr3lqVn8e50iDIQjLCUeAmSN5A3kD9D6kp8r/ww9K//yVzs5J7rENLWi+C1mbY4LWQmWSmBNlf/CL0fpeagOAoG5DC6EceAVuhnqz37qubFnPnA+I8SaOwNxz0nvszf0IinSjtZvgJLLo0Y6TSZwuCKLK9+sA+rb/ftxUDssgQyYPNZHbBfMEq9l6CcxapgmKA5gOEHvkDam5YB5ggkUQ903KMhrCssWfr4SlIpQI0kr8RiOvyqKY/Xm9DkT30JFzJfwD/l9epco2UE=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=fKPa919f+5LJtIG4iMfO9WxqDh2q5tQ4WR1ZSjBh5qk=;
+        b=eCPttNkqFKXgI/QVx8z8N2eAk6lUAbWSHfCwOzHlGWI/Vj+V6W29xqbxaM59g8/fxS
+         TJJnz+A7zd+2e4ata7cFx5vJEHqZyDwJrj9de0HhAOK9fS9nKONQZYJFRFucjUZZ+3JI
+         KIFH8jkEjgv2fwenPPb/h4WFyAyDdxyq/VSXIYn8QCrUf8H6pBujs11ErhJ5X8nBnXXU
+         3puMqhggNdCNqWYpUuIZOQXq0MPF1gD0GpXxp5rY4nn1qvIBgb0eIp/akeEjQ3krBooO
+         he6C5LQrCvovW8HXRYqm2rCgc2XnY0j2+nua8N8LRHr8qjnVvo2TOsSpDbDPinEgHhCc
+         Tjhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=fKPa919f+5LJtIG4iMfO9WxqDh2q5tQ4WR1ZSjBh5qk=;
+        b=WdAv37CMjX1ObxT87K7LbjgFQCO3NRrVohiizIHXJNWmkn2JhQcpiaNywJt63T7pMT
+         t5/dxifn9kKVWk7LK4dpbOyO3sP4DQHUBoq9tfUIiFVq4E78MAbZzts4uxQgY4YyNBgD
+         NEUnlt/SreRSFukosXc1+ol8L6dWi9m6THAVqSB4/smKzOS1Wl/k6F8RXGlLZHBvUUFU
+         E6n+OZ0CeYpSdHvWxzXPXwVaUm8XaXzWPlQprElXMURBYY5R8+PkJI57ra2++W/nmGdx
+         iIkw+r94XtpjH6ios6gDIhAiue5RbUzTICv4kPXFbY3OYjmM7O9gJQ4vrA17D1DGkOHX
+         TlBw==
+X-Gm-Message-State: APjAAAXkfYRem8i6Dw3Ny6I0oOY7Wn5WUXXfVqnCF/vMnEj2NcupI1Sv
+        Yf53/Bqs1IfCh0RZWBINaQ4=
+X-Google-Smtp-Source: APXvYqz5lb0anqHe0cEFCEn5XioBJNkc3jOAcBj8Hu2SuMaljlv0p4HoaRljxSyoPP3HE8OIGibthg==
+X-Received: by 2002:a17:906:3612:: with SMTP id q18mr24960117ejb.147.1554922850588;
+        Wed, 10 Apr 2019 12:00:50 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id s14sm62055eda.26.2019.04.10.12.00.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 10 Apr 2019 12:00:49 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Subject: Re: [PATCH v6 3/6] blame: add the ability to ignore commits and their changes
+References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-4-brho@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190410162409.117264-4-brho@google.com>
+Date:   Wed, 10 Apr 2019 21:00:48 +0200
+Message-ID: <878swhfzxb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf52e61b-c1de-4ddb-4f67-08d6bde284f4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2019 18:29:51.4529
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4283
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiAqIGFtL3A0LWJyYW5jaGVzLWV4Y2x1ZGVzICgyMDE5LTA0LTAyKSA4IGNvbW1pdHMNCj4gIC0g
-Z2l0LXA0OiByZXNwZWN0IGV4Y2x1ZGVkIHBhdGhzIHdoZW4gZGV0ZWN0aW5nIGJyYW5jaGVzDQo+
-ICAtIGdpdC1wNDogYWRkIGZhaWxpbmcgdGVzdCBmb3IgImdpdC1wNDogcmVzcGVjdCBleGNsdWRl
-ZCBwYXRocyB3aGVuIGRldGVjdGluZyBicmFuY2hlcyINCj4gIC0gZ2l0LXA0OiBkb24ndCBleGNs
-dWRlIG90aGVyIGZpbGVzIHdpdGggc2FtZSBwcmVmaXgNCj4gIC0gZ2l0LXA0OiBhZGQgZmFpbGlu
-ZyB0ZXN0IGZvciAiZG9uJ3QgZXhjbHVkZSBvdGhlciBmaWxlcyB3aXRoIHNhbWUgcHJlZml4Ig0K
-PiAgLSBnaXQtcDQ6IGRvbid0IGdyb29tIGV4Y2x1ZGUgcGF0aCBsaXN0IG9uIGV2ZXJ5IGNvbW1p
-dA0KPiAgLSBnaXQtcDQ6IG1hdGNoIGJyYW5jaGVzIGNhc2UgaW5zZW5zaXRpdmVseSBpZiBjb25m
-aWd1cmVkDQo+ICAtIGdpdC1wNDogYWRkIGZhaWxpbmcgdGVzdCBmb3IgImdpdC1wNDogbWF0Y2gg
-YnJhbmNoZXMgY2FzZSBpbnNlbnNpdGl2ZWx5IGlmIGNvbmZpZ3VyZWQiDQo+ICAtIGdpdC1wNDog
-ZGV0ZWN0L3ByZXZlbnQgaW5maW5pdGUgbG9vcCBpbiBnaXRDb21taXRCeVA0Q2hhbmdlKCkNCj4g
-DQo+ICAiZ2l0IHA0IiB1cGRhdGUuDQo+IA0KPiAgSXMgdGhpcyByZWFkeSBmb3IgJ25leHQnPw0K
-Pg0KDQpBIGNvdXBsZSBvZiB3ZWVrcyBhZ28sIEx1a2Ugc2FpZCBoZSB3YXMgcXVpdGUgYnVzeSwN
-CnNvIEkgd291bGQgZ3Vlc3MsIGhlIGRpZG4ndCBoYXZlIGEgY2hhbmNlIHRvIGxvb2sgYXQgdGhl
-c2UgY2hhbmdlcyB5ZXQuDQoNCg0KV2hpbGUgd2UncmUgb24gdGhpcywgSSB3YW50ZWQgdG8gZGlz
-Y3VzcyBhbm90aGVyIHRvcGljLg0KTXkgbGFzdCBkYXkgYXQgdGhlIGN1cnJlbnQgZW1wbG95ZXIs
-IENoZWNrVmlkZW8sIGlzIEFwcmlsIDE5Lg0KQWZ0ZXIgdGhhdCwgSSdsbCBsb3NlIGFjY2VzcyB0
-byBhbWF6b0BjaGVja3ZpZGVvLmNvbSBlbWFpbCBhZGRyZXNzLg0KSSBwbGFuIHRvIHN3aXRjaCB0
-byBteSBwZXJzb25hbCBlbWFpbCAoYWhpcHBvQHlhbmRleC5jb20pIGZvciBnaXQtcDQtcmVsYXRl
-ZCBkaXNjdXNzaW9ucyBzdGFydGluZyB0b21vcnJvdywgQXByaWwgMTEuDQoNClNob3VsZCBJIHJl
-c2VuZCBteSBwYXRjaGVzIGZyb20gbXkgcGVyc29uYWwgYWRkcmVzcyBhbmQvb3IgYWRkIGFub3Ro
-ZXIgcy1vLWI/DQpMaWtlDQoiIiINClNpZ25lZC1vZmYtYnk6IEFuZHJleSBNYXpvIDxhbWF6b0Bj
-aGVja3ZpZGVvLmNvbT4NClNpZ25lZC1vZmYtYnk6IEFuZHJleSBNYXpvIDxhaGlwcG9AeWFuZGV4
-LmNvbT4NCiIiIg0KDQoNCkFsc28sIEkgd29uJ3QgaGF2ZSBhY2Nlc3MgdG8gYSBsYXJnZSBQZXJm
-b3JjZSBzZXJ2ZXIgYWZ0ZXIgQXByaWwgMTksDQp3aGljaCB3YXMgZ29vZCBmb3IgdGVzdGluZy4N
-Cg0KLS0NCkFuZHJleQ0K
+
+On Wed, Apr 10 2019, Barret Rhoden wrote:
+
+(Just skimming)
+
+> revisions for commits that perform mass reformatting, and their users
+> have the optional to ignore all of the commits in that file.
+
+s/have the optional/have the option/
+
+> +--ignore-revs-file <file>::
+> +	Ignore revisions listed in `file`, one unabbreviated object name per line.
+> +	Whitespace and comments beginning with `#` are ignored.
+
+Maybe just say "Ignore revisions listed in `file`, which is expected to
+be in the same format as an `fsck.skipList`.".
+
+> +	the `blame.ignoreRevsFile` config option.  An empty file name, `""`, will
+> +	clear the list of revs from previously processed files.
+
+Maybe I haven't read this carefully enough but the use-case for this
+doesn't seem to be explained, you need this for the option, but the
+config file too? If I want to override fsck.skipList I do
+`fsck.skipList=/dev/zero`. Isn't that enough for this use-case without
+introducing config state-machine magic?
+
+> +	split[0].unblamable = e->unblamable;
+> +	split[1].unblamable = e->unblamable;
+> +	split[2].unblamable = e->unblamable;
+
+I wonder what the comfort level for people in general is before turning
+this sort of thing into a for-loop, 4? :)
+
+> +	nr_lines = e->num_lines;	// e changes in the loop
+
+A C++-like trailing comment.
+
+> +	grep "^[0-9a-f]\+ [0-9]\+ 1" blame_raw | sed -e "s/ .*//" >actual &&
+> +	git rev-parse X >expect &&
+> +	test_cmp expect actual &&
+> +
+> +	grep "^[0-9a-f]\+ [0-9]\+ 2" blame_raw | sed -e "s/ .*//" >actual &&
+> +	git rev-parse X >expect &&
+> +	test_cmp expect actual
+
+The grep here is a bug. See my 4abf20f004 ("tests: fix unportable "\?"
+and "\+" regex syntax", 2019-02-21).
