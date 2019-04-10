@@ -7,185 +7,139 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A71D020248
-	for <e@80x24.org>; Wed, 10 Apr 2019 17:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 228D220248
+	for <e@80x24.org>; Wed, 10 Apr 2019 17:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729662AbfDJRhz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 13:37:55 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43213 "EHLO
+        id S1729678AbfDJRh5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 13:37:57 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34752 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727659AbfDJRhy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 13:37:54 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w3so2770633edu.10
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:52 -0700 (PDT)
+        with ESMTP id S1729655AbfDJRh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 13:37:56 -0400
+Received: by mail-ed1-f67.google.com with SMTP id x14so2814746eds.1
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
-        b=iXroslVWMzwofEKZbLv73F4uwCKcp07ER4xfD9B4FLdOs4PJuHlnZ7u6PppvRFbRQI
-         2Hu+HOooUfMTa57QpLCyVWG2CX5Rqf3I3OPwe0Gh7l3NCEbaTh6nhG84/NI+kHPhbSfm
-         P8j4QW22xTY3DQmwSF7cZmqVOY0MBJT+tQh1COCIaXOFpkcs76QS4dJR61VzVZokfvhZ
-         HvAgAfVIR5FTGTsnmth2AS0i4FLPtBCyM+vCzBC6Xk8Sn9gmphD2rcV5bC0t4hjSdvPZ
-         IATKS88tr9WPpaAX/3u9QUqWXoflvTRqK03uK4asjD8VC00rFsi+L++Rb7vCx/6QSrY5
-         Vzcg==
+        bh=xlQ44cEW8g8+h+YkNNfpEFl7iqnx2b9UReJ1Qvue5RU=;
+        b=S/VCnW8sFUNafj6NR+dBEliVFJdcn+jBhSVQ9258rFthx7fU3TEgShwyPIQYrUDWev
+         QvLfIA/1C+Zdf+UYDkT+Nwv8ixNpHycfyWRx3MgYKSnQbCf5viRgUWt1XZVmUDp5wqQ3
+         g5fRsA890Jjj9zvRE06+Tgo3m93ZC+pGMGgF7vIpylGHXRenwYzosPK4rW0HLno2R7/e
+         bLgClieKTPoFLpzdiZL7QRGERpR0hmDvOPCOgMb/eiJI9AySbDgGnFjojeSrEhz6Zdrl
+         o550AnIRJlkdcruqBcmswwnOKgGKAvNZqVAS6r2kg46M6SDsw9QGTXG+9AfdXSUL4MCC
+         0xIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
-        b=i1TS+ESgsC+EvKB3ikwVNKCwpcUEUJrk0Cy+Ty0lVBjg6b8l1d1U8ttmK+brRqPLFN
-         jMv/sdx2bZyMCE9m3ks8K5+5u5wumRl6l5aPP1eR/wmEewKoyoRB0IqHHPlBFYzexyOU
-         1ps9ejOghS/N5Mkr/X2jil0EAi1cJWZbY2Gh9XFM2GEjaCEgdWzKCsuVygtzG22yZU9N
-         cTj3/Xokdbs6iQBwuOyLlBC/5Mj2H+QY48SZdmi3Boyeg/YBDuk+TgOO3xRuerqYd++/
-         XaH6NkQn5rvTNX4wBsw4j07UkUcMwW0EPHKZnbEucODJGczavA+3r/pTMc63vEjXCv4H
-         LsqQ==
-X-Gm-Message-State: APjAAAX0yA3CaeaTsqK3+2kqr45KVqIZNd1tahRD0CJIvDJdwUxdN2gy
-        JScOoSFL7M2s6E6UDlleILgUASHt
-X-Google-Smtp-Source: APXvYqx+8c8wRKleUMkWljstFWSJaGSVDO1431apSE3dt5Rgqqkm0rtsYcnTuLDieCy4ld29mJa99g==
-X-Received: by 2002:a05:6402:501:: with SMTP id m1mr15279161edv.216.1554917872080;
-        Wed, 10 Apr 2019 10:37:52 -0700 (PDT)
+        bh=xlQ44cEW8g8+h+YkNNfpEFl7iqnx2b9UReJ1Qvue5RU=;
+        b=Hum2Emq55k1PX+TQHDudkoBmQCZuSSf7EXEm+oGgxQ6RGdOI1ZN+aZbJlbHk7A8p3A
+         NsxgGrs2mgBHeQRFtb3tEP8+RZZqeUUSCU9RLJdz+C85q1YLKX9IcNlvS+zlFX/u20VC
+         qOhCd0hkuiCztg3pSnrfbC+YaldxursyenDgnJryWcjmnduiVQmw3lCB8GWM4kooKtew
+         ViDSPpLczSlRLa0ePGRNYHBRnBHiF+WBcW6cqCWjjFQ0b+WRqsJ/SXBeA29EkHElSe7t
+         kywLebzR8HVQpF2q6gF0mSo6NOShrDkXLgVCvHYDAxpsfFcflmM3HJiRP2CYhZ8fZlNp
+         1rrg==
+X-Gm-Message-State: APjAAAUwZJ4DNkkRVP+UA/55CZP3q2iFa+3HfndPhKx1480pNWwZHDYf
+        U3EbyCjIM4fPzeqMNDc5zxNSpd8X
+X-Google-Smtp-Source: APXvYqx5D5CJFxW9YTFuRPrhfUDAXvHzG27aRgq75tFD/o5crbQUkBNcpWRf+amt62JicmgEpicsBQ==
+X-Received: by 2002:a17:906:37cb:: with SMTP id o11mr25049464ejc.199.1554917873793;
+        Wed, 10 Apr 2019 10:37:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q20sm6673867ejb.65.2019.04.10.10.37.51
+        by smtp.gmail.com with ESMTPSA id l63sm1278456ede.22.2019.04.10.10.37.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
-Date:   Wed, 10 Apr 2019 10:37:51 -0700 (PDT)
-X-Google-Original-Date: Wed, 10 Apr 2019 17:37:39 GMT
-Message-Id: <06ba1ae34462c201b19b617ee23e76886928b387.1554917868.git.gitgitgadget@gmail.com>
+        Wed, 10 Apr 2019 10:37:53 -0700 (PDT)
+Date:   Wed, 10 Apr 2019 10:37:53 -0700 (PDT)
+X-Google-Original-Date: Wed, 10 Apr 2019 17:37:41 GMT
+Message-Id: <a512e14609e27e483f79c9e6cda007f88ec7a6dc.1554917868.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.git.gitgitgadget@gmail.com>
 References: <pull.170.git.gitgitgadget@gmail.com>
-From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 02/11] diff: export diffstat interface
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 04/11] built-in add -i: refresh the index before running
+ `status`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Ferreira <bnmvco@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Make the diffstat interface (namely, the diffstat_t struct and
-compute_diffstat) no longer be internal to diff.c and allow it to be used
-by other parts of git.
+This is what the Perl version does, and therefore it is what the
+built-in version should do, too.
 
-This is helpful for code that may want to easily extract information
-from files using the diff machinery, while flushing it differently from
-how the show_* functions used by diff_flush() do it. One example is the
-builtin implementation of git-add--interactive's status.
-
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff.c | 37 +++++++++++++++----------------------
- diff.h | 19 +++++++++++++++++++
- 2 files changed, 34 insertions(+), 22 deletions(-)
+ add-interactive.c |  4 +++-
+ repository.c      | 19 +++++++++++++++++++
+ repository.h      |  7 +++++++
+ 3 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/diff.c b/diff.c
-index 5306c48652..daa5f3a736 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2489,22 +2489,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- 	}
+diff --git a/add-interactive.c b/add-interactive.c
+index f627a56eeb..d971b58552 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -264,7 +264,9 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 		    _("staged"), _("unstaged"), _("path"));
+ 	opts.header = header.buf;
+ 
+-	res = run_status(r, ps, &files, &opts);
++	repo_refresh_and_write_index(r, REFRESH_QUIET, 1);
++	if (run_status(r, ps, &files, &opts) < 0)
++		res = -1;
+ 
+ 	release_file_list(&files);
+ 	strbuf_release(&print_file_item_data.buf);
+diff --git a/repository.c b/repository.c
+index 65e6f8b8fd..c90f310093 100644
+--- a/repository.c
++++ b/repository.c
+@@ -272,3 +272,22 @@ int repo_hold_locked_index(struct repository *repo,
+ 		BUG("the repo hasn't been setup");
+ 	return hold_lock_file_for_update(lf, repo->index_file, flags);
  }
- 
--struct diffstat_t {
--	int nr;
--	int alloc;
--	struct diffstat_file {
--		char *from_name;
--		char *name;
--		char *print_name;
--		const char *comments;
--		unsigned is_unmerged:1;
--		unsigned is_binary:1;
--		unsigned is_renamed:1;
--		unsigned is_interesting:1;
--		uintmax_t added, deleted;
--	} **files;
--};
--
- static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
- 					  const char *name_a,
- 					  const char *name_b)
-@@ -6001,12 +5985,7 @@ void diff_flush(struct diff_options *options)
- 	    dirstat_by_line) {
- 		struct diffstat_t diffstat;
- 
--		memset(&diffstat, 0, sizeof(struct diffstat_t));
--		for (i = 0; i < q->nr; i++) {
--			struct diff_filepair *p = q->queue[i];
--			if (check_pair_status(p))
--				diff_flush_stat(p, options, &diffstat);
--		}
-+		compute_diffstat(options, &diffstat, q);
- 		if (output_format & DIFF_FORMAT_NUMSTAT)
- 			show_numstat(&diffstat, options);
- 		if (output_format & DIFF_FORMAT_DIFFSTAT)
-@@ -6306,6 +6285,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
- 	return ignored;
- }
- 
-+void compute_diffstat(struct diff_options *options,
-+		      struct diffstat_t *diffstat,
-+		      struct diff_queue_struct *q)
++
++int repo_refresh_and_write_index(struct repository *r,
++				 unsigned int flags, int gentle)
 +{
-+	int i;
++	struct lock_file lock_file = LOCK_INIT;
++	int fd;
 +
-+	memset(diffstat, 0, sizeof(struct diffstat_t));
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		if (check_pair_status(p))
-+			diff_flush_stat(p, options, diffstat);
-+	}
++	if (repo_read_index_preload(r, NULL, 0) < 0)
++		return error(_("could not read index"));
++	fd = repo_hold_locked_index(r, &lock_file, 0);
++	if (!gentle && fd < 0)
++		return error(_("could not lock index for writing"));
++	refresh_index(r->index, flags, NULL, NULL, NULL);
++	if (0 <= fd)
++		repo_update_index_if_able(r, &lock_file);
++	rollback_lock_file(&lock_file);
++
++	return 0;
 +}
-+
- void diff_addremove(struct diff_options *options,
- 		    int addremove, unsigned mode,
- 		    const struct object_id *oid,
-diff --git a/diff.h b/diff.h
-index b512d0477a..ae9bedfab8 100644
---- a/diff.h
-+++ b/diff.h
-@@ -240,6 +240,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
- void diff_emit_submodule_pipethrough(struct diff_options *o,
- 				     const char *line, int len);
+diff --git a/repository.h b/repository.h
+index 8981649d43..fb49e0e328 100644
+--- a/repository.h
++++ b/repository.h
+@@ -154,5 +154,12 @@ int repo_read_index_unmerged(struct repository *);
+  */
+ void repo_update_index_if_able(struct repository *, struct lock_file *);
  
-+struct diffstat_t {
-+	int nr;
-+	int alloc;
-+	struct diffstat_file {
-+		char *from_name;
-+		char *name;
-+		char *print_name;
-+		const char *comments;
-+		unsigned is_unmerged:1;
-+		unsigned is_binary:1;
-+		unsigned is_renamed:1;
-+		unsigned is_interesting:1;
-+		uintmax_t added, deleted;
-+	} **files;
-+};
-+
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-@@ -328,6 +344,9 @@ void diff_change(struct diff_options *,
++/*
++ * Refresh the index and write it out. If the index file could not be
++ * locked, error out, except in gentle mode. The flags will be passed
++ * through to refresh_index().
++ */
++int repo_refresh_and_write_index(struct repository *r,
++				 unsigned int flags, int gentle);
  
- struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
- 
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
-+		      struct diff_queue_struct *q);
-+
- #define DIFF_SETUP_REVERSE      	1
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
+ #endif /* REPOSITORY_H */
 -- 
 gitgitgadget
 
