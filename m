@@ -8,131 +8,133 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C86420248
-	for <e@80x24.org>; Wed, 10 Apr 2019 20:57:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A72C20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 21:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726672AbfDJU47 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 16:56:59 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33953 "EHLO mout.gmx.net"
+        id S1726247AbfDJVvs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 17:51:48 -0400
+Received: from mout.gmx.net ([212.227.17.21]:47077 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726093AbfDJU46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 16:56:58 -0400
+        id S1726038AbfDJVvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 17:51:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554929812;
-        bh=Ph70TrBXxJRTeGNqN6zWg3jsIj8Krgier0g4j6ljwF8=;
+        s=badeba3b8450; t=1554933103;
+        bh=YrV99MwMFSB8OXS35/k4qBrFKNqmSG8r7dAWagG4Pow=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Dr6yh4pLfcJN+JhcBDMWjdmZemBDby5NvANNcbV01NC1CNwkR1wsxnosF1MYg7UiN
-         FroHtnzVqjIiklJgwC4RN+fJg0cZnN7FqyIHFBGIEznk/JPGNKivlpoCu6PVOtzqqE
-         F4vrM7PmxXdOAlTy+6PyZFKAIOJKt42DXMzq37Ho=
+        b=Do8iELBlbmg4sDSAShWlbSQKnnBLJo2yAORirPDjET8PNmgofbR04On3uqy3BkEly
+         dqCCX3NkTvBwtcvUBLGzw1ILiaqe+FrqIxubxGMWQMutvb724vXg9tVEkzMesQLaxQ
+         VJtEBfRZdnUzeCZ2fK9Q7bjH1VyAZgGjj0L6xoWQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbuIK-1gVP9M2rSO-00jKg2; Wed, 10
- Apr 2019 22:56:52 +0200
-Date:   Wed, 10 Apr 2019 22:56:52 +0200 (DST)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFAaV-1h7SR206sF-00GGjC; Wed, 10
+ Apr 2019 23:51:43 +0200
+Date:   Wed, 10 Apr 2019 23:51:43 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v3 00/33] nd/sha1-name-c-wo-the-repository updates
-In-Reply-To: <20190406113453.5149-1-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904102254500.41@tvgsbejvaqbjf.bet>
-References: <20190403113457.20399-1-pclouds@gmail.com> <20190406113453.5149-1-pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: nd/switch-and-restore, was Re: What's cooking in git.git (Apr 2019,
+ #02; Wed, 10)
+In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1904102348500.41@tvgsbejvaqbjf.bet>
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-965227943-1554929813=:41"
-X-Provags-ID: V03:K1:AcZoYO79PvciXSGx1NoKQMw1rT88I+yKPq11ti77XYjv0EERdSg
- YFfRe7OhxDdAsM195EcKzXPLOShDUP1xfKjPGgOwxm2kKOT01OSRotp6gAwS0LGu4GJ8A0K
- unVWY/hBxi3EFjfxwOplhDApLVbsSH3e4LxnafL5QM9ZZ83kZWOq8FUQqoZ2AeoRSrNFbca
- xXdbn4wlx9g1NQkfZ4kKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9osyi9aYUbQ=:xzAfhTVIdoI/3fGiPcWaLq
- 7/OV1AIpkh7sRrnimATIik1E4/ofrks2qbK9KCBmQnP18HvCBKuOYoGr0tRzpD1ME7us43tZ/
- AMG+tgG8PjM0u+5hjlW101zrU+owFMCVnbUxS6eOiYHjXg6tDvF7DiqrAibbbmvNYv9xvTuVc
- VvQv8x3gvlcTBF3HfGfzcWacnz/+mJkLyzNzwm19hSVmcRPjXsKPbtsX+0WO0W+ywFIeSOe+9
- IyjQYjH2VwEezgMMtMPYzZc2MYhNSYMlj+X4KmcUHlkxJirohDkChaI5OztpRuLM8jg12wvQJ
- CArYcWkaNPBHTTZdD6o8kBkc/lYqq3AeeAUBSV1LFjYiuVOqb6lnJ1EV8+9Km5AV21DB1RF6U
- rg4db6l1oL79YaMSAf4npVl7YMhpUOfwADAPXWSMyE3Kc6y2zEKY0bo5VgQYEU8RtJQ9WlE1p
- 2qtKlN9ooAJNjBDhhyEBMvS/MtWXB6J6Rp+nGG3Vlj0AvlfkodKzMPqODJFvkkrVHDl81o5yp
- sOGoBUhmYn3yMnrnHURBNopEEKu8RjQsRSzRai8j9kD2ilN4ALyg9HL5RvdCfQn7W16HgRuIv
- HLB7bptnjBro8JW4JkCQPofjZC42aPJm8M81BEc2zQArR+6rg43c97xKxT8fCDHM/fkbonmrv
- s8yh3VvKSoetSy09ISRDGCXIbhBEWzPx6ZtFjzxvs0kvJxEO2Egtiy9oCV92Vueb0dyVU66ye
- kFlrg3OaPAGGC1o9v5wRLjlH0bJNzo67dOOk9JsC3/V9CMxRLHUTRLCZaNT4keYyY0WRhK0lT
- 8fprke7ouOB5dNGR/7m/u3DH0fLpc/gb9rRyLIyb2ZWXCz51q+QrluRbZLNv6lHIl1dnDnxGD
- SP+RmDPC0tLIuI2YszJ58qdao95n/lavsEqnVSaDUicF0u2H+KV2jTTFKFqFhRmnHNkb4zcKX
- aI9qeWxKO8A==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vDRFOrSRfkS7BjlItRRL5q/oGvrsTONkB43iytyz6jFi5VnBzVl
+ wbrnrenbl+D7UZGmudjGNSE7cNfS1BCuDftoit5a98cmoZyT0zy3mY+kpla95sbJ4egK3Ww
+ C73gdN1vQo1YsQ/UINoo1UMJOb5XIQAR7X477i7FZJ4KjDOCvItZQcpqEfn7LO7mesMYCTO
+ qEIdxZXHgtFutsFEC1jQw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rsmnjSAWcRk=:vw0b41L6tr8Q8MzOlINoZS
+ OzFUT7COp1Y4KuaN5LVMw4sIHFslWeRbE06q/tFUGTjyUTmlUQNbB25YupTgdJatMJUnr2f1Y
+ VQxiZ5oxVxpx5NA310keW53rfSTJcqsOQ7rvzLy8HmcuLB3yd2tmz8kEA1o6erQNdtPsotvHV
+ VHMTRMZsIY3g0zG1PcKE+woM+AoNmcquQW6rs085E0hBE+FSd8ip+ZPOf8SfwtldBTrM7iROb
+ nFEXQ4e1q6XQUFTlauoZUWLnmyoRlcoPlniw9iJagoe6FVp4t/xilzH1i8BqkeEZG1WXWfvZw
+ qezcHxVC2ajHA2Swp/gzKHp7AsOYrR/jV5Zrbs6L+BhYbqeY1FHzBaNaOr3+mhOhBG1l7KVpi
+ PoPefZjxIG/mpliRoQICk32IVVNLJ+LIN0VOA/P4Udl0gVe2fKWg6h8+zpJk8XUIV9sUcOKa7
+ lfSyFfptnjqRpExyajmJQOFTFHl+iY8YHtZfVkF9+8/1avUozMMZRjhJ97IIKkMei+Gw9ol3B
+ ZSoTTWUHKuNb2Iv7n5xSijbp34B4qY+FsC22HQ0dfgD2VE5Uy+u4GGkUZL5hH1zJeM1ElkdhS
+ goP8yL4v18le9ncO2uzYsUGH8bxXZ3+qdqNLw17RaboGFAcFHZgy2kSYZWLsVQNy8wBrRAOqw
+ UVqGXKjkWvN977kxVWCcLlhS5BN3UQxrMXh1VG1IVTG4WdlJoD8qNuptLeYNdCXjs3v57p5Td
+ dHtkRXaxDNZwm1pdqCyAbqInmCk44u/pTnydMrflOr2lZBNVNvHC2rrN4Kr2hncFFw2QhmJep
+ vEFUiP6TmhWpxSeIPclt+LsH7dk5b4O6QUD0h91qTj4AqEsnkQ1HRvvj1WAwcIKRuSgcixlkS
+ +QLfpcM2JGtA6nnT8REakMGxeO6I9jLsOgNfObQLOuqCSrjC6mnbCyq3juKyBAT6A5DWEke3B
+ vRJr2H+KEig==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-965227943-1554929813=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 10 Apr 2019, Junio C Hamano wrote:
 
-Hi Duy,
-
-On Sat, 6 Apr 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-> 10:  68876a150f ! 11:  848456f59c commit.c: add repo_get_commit_tree()
->     @@ -2,6 +2,11 @@
+> * nd/switch-and-restore (2019-04-02) 39 commits
+>  - doc: promote "git restore"
+>  - completion: support restore
+>  - SQUASH??? move -p test to 2071 from 2070
+>  - t: add tests for restore
+>  - restore: support --patch
+>  - restore: default to --source=3DHEAD when only --index is specified
+>  - restore: add --worktree and --index
+>  - checkout: factor out worktree checkout code
+>  - restore: disable overlay mode by default
+>  - restore: make pathspec mandatory
+>  - restore: take tree-ish from --source option instead
+>  - checkout: split part of it to new command 'restore'
+>  - doc: promote "git switch"
+>  - completion: support switch
+>  - t: add tests for switch
+>  - switch: make --orphan switch to an empty tree
+>  - switch: reject if some operation is in progress
+>  - switch: no worktree status unless real branch switch happens
+>  - switch: implicit dwim, use --no-guess to disable it
+>  - switch: add short option for --detach
+>  - switch: only allow explicit detached HEAD
+>  - switch: reject "do nothing" case
+>  - switch: stop accepting pathspec
+>  - switch: remove -l
+>  - switch: add --discard-changes
+>  - switch: better names for -b and -B
+>  - checkout: split part of it to new command 'switch'
+>  - checkout: split options[] array in three pieces
+>  - checkout: move 'confict_style' and 'dwim_..' to checkout_opts
+>  - checkout: make "opts" in cmd_checkout() a pointer
+>  - checkout: factor out some code in parse_branchname_arg()
+>  - checkout: keep most #include sorted
+>  - checkout: inform the user when removing branch state
+>  - checkout: advice how to get out of detached HEAD mode
+>  - t: rename t2014-switch.sh to t2014-checkout-switch.sh
+>  - git-checkout.txt: fix monospace typeset
+>  - doc: document --overwrite-ignore
+>  - git-checkout.txt: fix one syntax line
+>  - git-checkout.txt: spell out --no-option
 >
->          commit.c: add repo_get_commit_tree()
+>  Two new commands "git switch" and "git restore" are introduced to
+>  split "checking out a branch to work on advancing its history" and
+>  "checking out paths out of the index and/or a tree-ish to work on
+>  advancing the current history" out of the single "git checkout"
+>  command.
 >
->     +    Remove the implicit dependency on the_repository in this functi=
-on.
->     +    It will be used in sha1-name.c functions when they are updated =
-to take
->     +    any 'struct repository'. get_commit_tree() remains as a compat =
-wrapper,
->     +    to be slowly replaced later.
->     +
->       diff --git a/commit.c b/commit.c
->       --- a/commit.c
->       +++ b/commit.c
->     @@ -29,6 +34,15 @@
->       --- a/commit.h
->       +++ b/commit.h
->      @@
->     +
->     + 	/*
->     + 	 * If the commit is loaded from the commit-graph file, then this
->     +-	 * member may be NULL. Only access it through get_commit_tree()
->     ++	 * member may be NULL. Only access it through repo_get_commit_tre=
-e()
->     + 	 * or get_commit_tree_oid().
->     + 	 */
->     + 	struct tree *maybe_tree;
->     +@@
->        */
->       void free_commit_buffer(struct parsed_object_pool *pool, struct co=
-mmit *);
->
->     @@ -57,3 +71,10 @@
->         ...>}
->
->       @@
->     + expression c;
->     ++expression r;
->     + expression s;
->     + @@
->     +-- get_commit_tree(c) =3D s
->     ++- repo_get_commit_tree(r, c) =3D s
->     + + c->maybe_tree =3D s
+>  cf. <20190329103919.15642-1-pclouds@gmail.com> (switch v6)
+>  cf. <20190308101655.9767-1-pclouds@gmail.com> (restore v1)
 
-I think this is wrong, and admittedly I had the very same version
-originally.
+This one fails the CI for almost a month already, still needing this
+squashed in:
 
-When you have an arbitrary `r` in any `repo_get_commit_tree(r, c)` (as
-opposed to `the_repository`), the conversion to `c->maybe_tree` is most
-likely incorrect.
+=2D- snipsnap --
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index a667a5ced4ec..1faeee50593e 100644
+=2D-- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -144,7 +144,7 @@ $ git restore .
+ ------------
 
-Therefore, I don't think that we can do that.
+ or to restore all working tree files with 'top' pathspec magic (see
+-linkgit::gitglossary[7])
++linkgit:gitglossary[7])
 
-Ciao,
-Johannes
+ ------------
+ $ git restore :/
 
---8323328-965227943-1554929813=:41--
