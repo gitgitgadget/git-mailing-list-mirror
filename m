@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB3920248
-	for <e@80x24.org>; Wed, 10 Apr 2019 02:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1CE520248
+	for <e@80x24.org>; Wed, 10 Apr 2019 02:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727204AbfDJCN0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Apr 2019 22:13:26 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46394 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726532AbfDJCNZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Apr 2019 22:13:25 -0400
-Received: by mail-pl1-f195.google.com with SMTP id y6so358916pll.13
-        for <git@vger.kernel.org>; Tue, 09 Apr 2019 19:13:24 -0700 (PDT)
+        id S1727212AbfDJCN3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Apr 2019 22:13:29 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43337 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726532AbfDJCN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Apr 2019 22:13:27 -0400
+Received: by mail-pf1-f194.google.com with SMTP id c8so412483pfd.10
+        for <git@vger.kernel.org>; Tue, 09 Apr 2019 19:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=J6pvJyAVVkdi2nWzGxuznoVHl8qMv+EJV5RdSVqHEUA=;
-        b=SBuECwnNKr3A+vnUBMMOB5UpfiEIp0gX27WTO8u5ntGRHKcwQIZ3t/XXApRZ3foEbd
-         +u4z30sTx3Fe7qwzYIaFWFdLaxGDsYkkT+d4m0oZUKl5tVQwA9uc4HFC/40R6qw1D8aE
-         NGg3riPzMKY2gd2oFrVnJ/GlKpsVGriT4HZV7xkdFQwbHeGUO+H9etDBH0lef7x/bSoh
-         +Jw1ygWZCLM/+sSU0gn1JOch9lEpxNEoSWJunKTjGMiNucn0wNA8D8iSzNjmbDPGUZAm
-         sEJ+OAfjBBi/nq5bw/u77sL+ZnSdAuc7HrO7vKHTQm6bEj2jDLn72W6+HVw/VTbKC1lR
-         1zlg==
+        bh=LLfpLlhpw31KK81zU7lFM9kt119J6dbXq0O/nIm28/8=;
+        b=Rxe2WuuA52DcBt1Zairv9Osr1BlWjGyvCQImBs1tMTSEDYgzpPqSCcVTxjdhs5Cwx/
+         pfLPyu8AGQCzK3b4EJxtYe/ULrh9wGFaHMnEKSrmQgCZ512qyHSkcip8T47MBZgZjvHM
+         mt4r65AsOiEHQJPVglYr3gs82K4m2XBfWv349Lsdg74vpmMd4Itm+vzT7Mam2N0iDl4F
+         SO5HGT0gHhhg7a/ZeTlgE3lziZyQimiYeSEvfH0xhIjg7fz6ApM9FBzvpxk8ZVdKjIXG
+         gpGE0zShJcdGjy1Hi/HjCA/NtdpBBGL5Dg6iulx1zroz7FEqVVsIcGnS7Whttk8/2vtT
+         43Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=J6pvJyAVVkdi2nWzGxuznoVHl8qMv+EJV5RdSVqHEUA=;
-        b=ms/B378d7sMzNnR6QNMwbjMz9fZuzEou5GLnxrGYIb/GRVTKgFVi4Xxa+XTRV+bnYj
-         ylghfI2IPIEuULzetW/i+V0TEZa8zYuNbu+jie9YpgTRNEkt94Pr4FV1TRgjArLCe4iV
-         1j21t2JC2eY5H+NrgbqvNyROBSuky/g9D543MsIV1cVoAp4pAopYW6e0sFqNCioUB61H
-         1ew72ZtLjK5Xq1zfhZhBylF5teLlRcWyt/1JKMqtxBhmpjHAHolGCFcyF7Ss4t6QKeKR
-         L3ZfeiOoaFgmWi2pXWKhvaKAHRp4dEHCUi7Kq8IMK8IdjKp2wBdkTLKLH8dwltMjjWVO
-         AE5g==
-X-Gm-Message-State: APjAAAXJ7XBVs6rirVYdx0TPZJdplreCDfBHHWyC+vbFykx/y6A1UGhN
-        ZlFSKrpzvam5xmdBQSSTr2wonocmCQBbST/p
-X-Google-Smtp-Source: APXvYqxdcirh0BXBCOOYycOe/YqYwdhdW78AyAf2wzIU10wB//sLjidL5XDEqWjSrUz9VYTf98EWHg==
-X-Received: by 2002:a17:902:b948:: with SMTP id h8mr40673218pls.39.1554862404176;
-        Tue, 09 Apr 2019 19:13:24 -0700 (PDT)
+        bh=LLfpLlhpw31KK81zU7lFM9kt119J6dbXq0O/nIm28/8=;
+        b=kvoFQki4+stPMc+ctP61azsG/Pvb+2Bz9UbCQA/0jH8aqjL51crHsVFAMyayqaSphg
+         88Ahh0M439PRzjLkVCTkw5qHCrj449M93H2/S27KUKc0KKf/Lojctvv87nlmn3tSAA04
+         8E1SD4UFMcV2kR44rNiGS7QDq31RIw9Wb3/6IFwA/sfLl00PWFruTa81gsfF79bg2vCA
+         D6g2bJzb+MXtM3YrS3v1L26JjGXymIceIWe49CQCoGrC75uMtHY5lduwzZJkBAdfkolh
+         DA0n4fvbbzxAWz7G5EC4q21mPyjy4SUHK3g6JDiyL2y4BmY7mibsgyq9gMuiYdUMqxb7
+         Z3vA==
+X-Gm-Message-State: APjAAAXF/rnWKtgIl2jsSTh6SQ87FsKok4AFH4O15VMj1JjPxSZWs7I8
+        mY8OfXhcrUc/UxihVOkLczWrpv8+kpiuUwLj
+X-Google-Smtp-Source: APXvYqzutRrWrk1Kt7GPNlJgeKL8awziDsAl2CkZ//oa8sSoK10zDGfupLL3KRdqutmsRpnS6M61oA==
+X-Received: by 2002:aa7:83d1:: with SMTP id j17mr41084488pfn.78.1554862406390;
+        Tue, 09 Apr 2019 19:13:26 -0700 (PDT)
 Received: from localhost ([2601:602:9200:32b0:c47d:9491:9418:887])
-        by smtp.gmail.com with ESMTPSA id g2sm50284156pfd.134.2019.04.09.19.13.23
+        by smtp.gmail.com with ESMTPSA id u26sm46050806pfn.5.2019.04.09.19.13.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Apr 2019 19:13:23 -0700 (PDT)
-Date:   Tue, 9 Apr 2019 19:13:23 -0700
+        Tue, 09 Apr 2019 19:13:25 -0700 (PDT)
+Date:   Tue, 9 Apr 2019 19:13:25 -0700
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com, gitster@pobox.com, peff@peff.net,
         sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v2 6/7] rev-list: let traversal die when --missing is not in
- use
-Message-ID: <88ca5dfe68c4cdb558aff6e90a525ec06f15dbd6.1554861974.git.me@ttaylorr.com>
+Subject: [PATCH v2 7/7] rev-list: detect broken root trees
+Message-ID: <e0bd479e822ce81de280ee6fdd07f608a96b7836.1554861974.git.me@ttaylorr.com>
 References: <cover.1554435033.git.me@ttaylorr.com>
  <cover.1554861974.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -71,101 +70,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-Commit 7c0fe330d5 (rev-list: handle missing tree objects properly,
-2018-10-05) taught the traversal machinery used by git-rev-list to
-ignore missing trees, so that rev-list could handle them itself.
+When the traversal machinery sees a commit without a root tree, it
+assumes that the tree was part of a BOUNDARY commit, and quietly ignores
+the tree. But it could also be caused by a commit whose root tree is
+broken or missing.
 
-However, it does so only by checking via oid_object_info_extended() that
-the object exists at all. This can miss several classes of errors that
-were previously detected by rev-list:
-
-  - type mismatches (e.g., we expected a tree but got a blob)
-
-  - failure to read the object data (e.g., due to bitrot on disk)
-
-This is especially important because we use "rev-list --objects" as our
-connectivity check to admit new objects to the repository, and it will
-now miss these cases (though the bitrot one is less important here,
-because we'd typically have just hashed and stored the object).
-
-There are a few options to fix this:
-
- 1. we could check these properties in rev-list when we do the existence
-    check. This is probably too expensive in practice (perhaps even for
-    a type check, but definitely for checking the whole content again,
-    which implies loading each object into memory twice).
-
- 2. teach the traversal machinery to differentiate between a missing
-    object, and one that could not be loaded as expected. This probably
-    wouldn't be too hard to detect type mismatches, but detecting bitrot
-    versus a truly missing object would require deep changes to the
-    object-loading code.
-
- 3. have the traversal machinery communicate the failure to the caller,
-    so that it can decide how to proceed without re-evaluting the object
-    itself.
-
-Of those, I think (3) is probably the best path forward. However, this
-patch does none of them. In the name of expediently fixing the
-regression to a normal "rev-list --objects" that we use for connectivity
-checks, this simply restores the pre-7c0fe330d5 behavior of having the
-traversal die as soon as it fails to load a tree (when --missing is set
-to MA_ERROR, which is the default).
-
-Note that we can't get rid of the object-existence check in
-finish_object(), because this also handles blobs (which are not
-otherwise checked at all by the traversal code).
+Instead, let's die() when we see a NULL root tree. We can differentiate
+it from the BOUNDARY case by seeing if the commit was actually parsed.
+This covers that case, plus future-proofs us against any others where we
+might try to show an unparsed commit.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/rev-list.c                     | 4 +++-
- t/t6102-rev-list-unexpected-objects.sh | 4 ++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ list-objects.c                         | 3 +++
+ t/t6102-rev-list-unexpected-objects.sh | 6 ++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 425a5774db..9f31837d30 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -379,7 +379,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	repo_init_revisions(the_repository, &revs, prefix);
- 	revs.abbrev = DEFAULT_ABBREV;
- 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
--	revs.do_not_die_on_missing_tree = 1;
- 
- 	/*
- 	 * Scan the argument list before invoking setup_revisions(), so that we
-@@ -409,6 +408,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+diff --git a/list-objects.c b/list-objects.c
+index bb7e61ef4b..b5651ddd5b 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -374,6 +374,9 @@ static void do_traverse(struct traversal_context *ctx)
+ 			struct tree *tree = get_commit_tree(commit);
+ 			tree->object.flags |= NOT_USER_GIVEN;
+ 			add_pending_tree(ctx->revs, tree);
++		} else if (commit->object.parsed) {
++			die(_("unable to load root tree for commit %s"),
++			      oid_to_hex(&commit->object.oid));
  		}
- 	}
+ 		ctx->show_commit(commit, ctx->show_data);
  
-+	if (arg_missing_action)
-+		revs.do_not_die_on_missing_tree = 1;
-+
- 	argc = setup_revisions(argc, argv, &revs, &s_r_opt);
- 
- 	memset(&info, 0, sizeof(info));
 diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
-index e3ec195532..28ee1bcb07 100755
+index 28ee1bcb07..28611c978e 100755
 --- a/t/t6102-rev-list-unexpected-objects.sh
 +++ b/t/t6102-rev-list-unexpected-objects.sh
-@@ -30,7 +30,7 @@ test_expect_success 'setup unexpected non-tree entry' '
- 	broken_tree="$(git hash-object -w --literally -t tree broken-tree)"
- '
- 
--test_expect_failure 'traverse unexpected non-tree entry (lone)' '
-+test_expect_success 'traverse unexpected non-tree entry (lone)' '
- 	test_must_fail git rev-list --objects $broken_tree
- '
- 
-@@ -63,7 +63,7 @@ test_expect_success 'setup unexpected non-tree root' '
- 		broken-commit)"
- '
- 
--test_expect_failure 'traverse unexpected non-tree root (lone)' '
-+test_expect_success 'traverse unexpected non-tree root (lone)' '
+@@ -67,8 +67,10 @@ test_expect_success 'traverse unexpected non-tree root (lone)' '
  	test_must_fail git rev-list --objects $broken_commit
  '
  
+-test_expect_failure 'traverse unexpected non-tree root (seen)' '
+-	test_must_fail git rev-list --objects $blob $broken_commit
++test_expect_success 'traverse unexpected non-tree root (seen)' '
++	test_must_fail git rev-list --objects $blob $broken_commit \
++		>output 2>&1 &&
++	test_i18ngrep "not a tree" output
+ '
+ 
+ test_expect_success 'setup unexpected non-commit tag' '
 -- 
 2.21.0.203.g358da99528
-
