@@ -8,114 +8,115 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADC920248
-	for <e@80x24.org>; Wed, 10 Apr 2019 22:15:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8FC20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 22:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbfDJWPc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 18:15:32 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54815 "EHLO mout.gmx.net"
+        id S1726536AbfDJWdC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 18:33:02 -0400
+Received: from mout.gmx.net ([212.227.15.19]:48591 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725982AbfDJWPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 18:15:32 -0400
+        id S1725981AbfDJWdC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 18:33:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1554934524;
-        bh=ae3LX8vy+WmRsrNif2G2G3pWpjIYhz8T156JKIzAcZc=;
+        s=badeba3b8450; t=1554935574;
+        bh=GekH2dzRORHpLM/ajmT33oVhSKCWDcllt/oYqf34KzQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eMcnM4ey/RK/DnwCDi2S1AnTfyKhfa1Bgh9XnRhQXbHOalmpJtbaiEuDXUdcsXEbe
-         0clCGVsdKWkdIWX/83kcNI+VGMQeemWRkE3u51ypK3LLCv8P4LSha8QWlNA7BM3UD9
-         BuzQnqnVF5OcWDlEGv/8X4WeTYZI7RpMDyLEs3uM=
+        b=YjK04z9ggzaAoTI3eXy1X3A1c8x9BHkCtG+3iPtDZaY4/PIze1tsIqx1ryZmt1AVr
+         DlP9mTBtD50WsX+CPWILbBeHi5m2B4AL6vYdPyyk2m5VAA67WJJ1nO1Cm8JhRJl1yO
+         OQWFXyl8Osq4muMbAcfCvSlhUaiSRG6mLr1/pBI0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuKHz-1gmbpj0hHT-011lIz; Thu, 11
- Apr 2019 00:15:24 +0200
-Date:   Thu, 11 Apr 2019 00:15:24 +0200 (DST)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2DxE-1gk7eS3F7O-013gBC; Thu, 11
+ Apr 2019 00:32:54 +0200
+Date:   Thu, 11 Apr 2019 00:32:55 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
-In-Reply-To: <2a91a971-24fa-9cc7-5159-14c0771838f6@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904110014460.41@tvgsbejvaqbjf.bet>
-References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com> <2a91a971-24fa-9cc7-5159-14c0771838f6@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: jh/trace2-sid-fix, was Re: What's cooking in git.git (Apr 2019, #02;
+ Wed, 10)
+In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1904110016030.41@tvgsbejvaqbjf.bet>
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TPbMBiY9Hu+k07PuAiXobRNNPHG5STu8FYVBG5szbq9jVzAt+F4
- 0AquXz+Ei/1R0LALYWZakvDt6PhiWf/RhwZk77AWDoa0/1Og7JcW95Xd+aoezkefMD9LDjp
- TEAsCi5MkN10Tv37AQoU2k5qklRakpt79Uv46KzVw3pv2BMUWxV788K/u7W3RfQZTkFV1Ru
- 06+jM1rJQ4OThXoSSkZEg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:q8ijr7srk+4=:P412fQu4z/24HgZDtSBlFO
- APXsdIuVAA8JqQ5bffp2B6+sJIh8k7lJbVEz0c0rjwG/I/6a6gEi7rCNSIYci4bD+L0r39aq6
- JN7acWi2MBC1PrF0fW+DWHZoI7u7NQlD/Gabwywf4RWCYCW+dFGmYICGY3KwyvejHHnVNMr51
- M60+lwyDvECEE9dfjCPq66Ga/YMqZZTk5DVlqzeD5Tl1U7bmsnHP+IdJYNH2js3lGvT39oCLl
- VcXJRIlTPDjk4p0D9o7fXVFiDabi2k85LmHUf28Lh/ws/ZPah7L277dlKnffrQl0xLUtN9CSa
- F8g+eUB4aeSTDz96BC652UmEG3F/l3/l+cIcCHsWZSeJYzVxd1PNY2ST7lRLQBDDKqayHFHEa
- xr56gcLxFLEcae1VJOfNcZ6QJVG6BS+3QjXmzIYoozrJUrN88OcFwFpUgilbKG193tUxpNbRz
- Jdl4QHWPQIg7D3K62krIbEFpOFQ6FxXRaqs0kJgOLBCfj9UxsUooljWIHqd9CieICTPxpSeSY
- MySCYAd5S6P6VW7TEIKlGwkw7dCjy/xMxhjORjp+ieBwmAeTN5aVBLcIWppn7MlomQbTxeN09
- BlaxsYzPKxfZHmgH2mHMfxzl62LZYhVM231zFs9OFHDN2SY/vZGqT/b8n8A/G2xak9t7Rtryq
- 3Cklf+VQ07C77GlgM/6cyd4tta/ar+p9eMHCpQEoyznTmiZkCATsgf/XkrDWlvwCXpq22at7j
- 6GGZUViLzzMoNxrCtzoPsJ1gys7ZFyPcbVFCs6J3IWr/exoDDsjKzLI+F6f7a6Eu3wAEE5dyR
- RaDRuOalui/4wC7MTruUa2QJgaEyV/GvJz5kKx2buJDciRJS6fbluTScOXYMhc08DuxZqVPqn
- dwpE+FjRc6ECd/DPYKmub7/pJZAI0sCfbH0YQeF3UJ/5XJmjAAy7VSrWNxsmsMhobe56xSMrS
- rDUgguMJUng==
+X-Provags-ID: V03:K1:cjM9uXoVZZVuZKWF4MsDNveKj5wBa8HVDhqHqJvzNy7zH4PMxnG
+ gm9HTwAerNvtJwVMpINw9G7rKqi6gJ1YEbVFq7fyhgHcZaLNJyGhCfbWSiPBELEVTAVneLT
+ /t/ocpMaC/oZShkOxsIz/nG1UOMGVOdJUbcPsVilgTsdt174MIsdW3QIiR3CFUmJDPnE+ce
+ yV8mrWlRVc7ltnIbAH8KA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WuFANuADyrI=:Sra/m3dptnU3SrFWOGqlde
+ NJnbuaWeQ8n1CElOGJpuOg82C6mEOFXXhqnwaHJzC/aY9XjiOymUGd6hiSdhNpt/pIcCqAeT9
+ oDsLDnZOwhcv4lMmAoa7KX+u3GdYRwW+bk4ekoDqOJ987Y2kEWOv7E90PlaB7U6+tfEVDx8W+
+ FuHdKQ7G88GDqD+N4pw3wKC5JXw9fcxHkhXD9XtrmW6DM+rdu0miFsOUYV6ivmSIrvE6qlSYM
+ 1lsb+ZpMBUuP+LFAOanvsYXeA3oPgHCclmWNKW7YIJ2jdCJQy7TpSdGjmiCYhD1RfAhjqx9bF
+ /fYwiNXja0IFLrRYBhC50KScQZfD5ETNyk2Mut9P0reWeu9rmXrcvdfndgWIeSFHzMSUz52/t
+ AsbT4hyLhyTgDzFQLf6R1Rqxc4age9aGc66EZxayf1HuRbZCVBw7CLeVLECK2Pg+F+YoDeO5r
+ CiRRbOkthN1QnZptOmD8yf1BYUPsIRA8ANjAUYq32shUnDNwT2ql9ai3AG8deFQIRlDl7T5Zn
+ 8ybhmQtGNwaNtOi7zPd8CLCa6nHWujXa1aw62yuWb+eu13oMNM0rGLJYinVQWVbFeiGmRRZkM
+ sAi9mMlaTqyO+g5hFAIkkAnrA6/DxzfzJZqRBO9yI9Xa6Z6BgaUDDpUO9gtoBfRRQZyUso0+S
+ yy/O5IDCtlxPFpDmtNbbiBsZFmi1FOt/4dqqQaBFgEvj9LnBuTo2HFPIGHeWHpXZXG6rzH3fA
+ z+f8U5rD4of7WAxO25RicJIRefUXUMzMiUJErf0simVAEB2+9dxX4YkFFRySQRDh2dLfQC58O
+ gd4lrvkdB7p0dezId4u2992H+mlOxYI4VqrSHacSZOT1LxtFEhf68q5/wwS4crL8hKTvKuRmm
+ eh6F2rFrU9ioUVr+/R6jy6s1N1e4Y8C5sPWpthxBv7CQRX7Onq7g+kJvkPCAGVjEJObNhoXXK
+ ChiN5zyzuvQ==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Junio,
 
-On Wed, 10 Apr 2019, Phillip Wood wrote:
+On Wed, 10 Apr 2019, Junio C Hamano wrote:
 
-> On 09/04/2019 19:08, Junio C Hamano wrote:
-> > Here are the topics that have been cooking.  Commits prefixed with
-> > '-' are only in 'pu' (proposed updates) while commits prefixed with
-> > '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> > the integration branches, but I am still holding onto them.
-> >
-> > * pw/rebase-i-internal-rfc (2019-03-21) 12 commits
-> >   - rebase -i: run without forking rebase--interactive
-> >   - rebase: use a common action enum
-> >   - rebase -i: use struct rebase_options in do_interactive_rebase()
-> >   - rebase -i: use struct rebase_options to parse args
-> >   - rebase -i: use struct object_id for squash_onto
-> >   - rebase -i: use struct commit when parsing options
-> >   - rebase -i: remove duplication
-> >   - rebase -i: combine rebase--interactive.c with rebase.c
-> >   - rebase: use OPT_RERERE_AUTOUPDATE()
-> >   - rebase: rename write_basic_state()
-> >   - sequencer: always discard index after checkout
-> >   - Merge branch 'ag/sequencer-reduce-rewriting-todo' into
-> >   pw/rebase-i-internal-rfc
-> >   (this branch uses ag/sequencer-reduce-rewriting-todo.)
-> >
-> >   The internal implementation of "git rebase -i" has been updated to
-> >   avoid forking a separate "rebase--interactive" process.
-> >
-> >   Comments?  Is this ready?
+> * jh/trace2-sid-fix (2019-04-01) 7 commits
+>  - trace2: make SIDs more unique
+>  - trace2: clarify UTC datetime formatting
+>  - trace2: report peak memory usage of the process
+>  - trace2: use system config for default trace2 settings
+>  - trace2: find exec-dir before trace2 initialization
+>  - trace2: add absolute elapsed time to start event
+>  - trace2: refactor setting process starting time
 >
-> It is more or less ready, there weren't many comments. I'm planning to s=
-end a
-> re-roll but am waiting to see what happens with dl/merge-cleanup-scissor=
-s-fix
-> and [1] (which you don't seem to have picked up yet) as we discussed reb=
-asing
-> this series on top of a merge of the current base with
-> dl/merge-cleanup-scissors-fix which currently conflicts with [1].
->
-> Also now ab/drop-scripted-rebase is going to be in master I could add a =
-patch
-> to this series that drops a bunch of unneeded options from rebase--inter=
-active
-> as it will only be called by git-rebase--preserve-merges.sh which only u=
-ses a
-> subset of the current options but that could always come separately late=
-r.
+>  Polishing of the new trace2 facility continues.  The system-level
+>  configuration can specify site-wide trace2 settings (which would be
+>  loved by big-brother types ;-).
 
-Or we wait with this until we can drop preserve-merges altogether?
+While this is all fun and joy to perpetuate the stereotypes, I think that
+more people would potentially be interested in using this in their
+development teams, if only they knew what the actual purpose of trace2 is
+(which this comment does not describe well).
+
+As you probably use this description for the release notes, maybe it would
+be a good idea to replace the Orwell reference by something like this:
+
+	This allows trace2 to be enabled in a site-wide configuration. The
+	intended audience for this feature are development teams which
+	want to analyze and identify performance bottlenecks and other
+	problems typical in their common workflows.
+
+If you still need to be convinced that this kind of setting can help
+tremendously with improving Git *itself* to become faster, watch the talk
+by John Briggs at GitMerge 2019:
+https://www.youtube.com/watch?v=3Dvat97a8C0o0
+
+I cannot stress how crucial it is for our in-house use to have this kind
+of detailed logging to steer our development efforts.
+
+And obviously you are totally allowed to continue to make these jokes
+about surveillance, at least as long as you admit that you know that
+nobody wants to enable this outside their own development teams.
+
+It would just be nice to see it ackowledged from time to time that these
+analyses that we perform ("we" meaning the team in which I am embedded,
+and other teams, e.g. within Google) have a direct benefit to the Git
+project, as we no longer have to guess or surmise where our time is best
+spent improving Git's performance, but we can focus our attention wisely
+based on scientifically-sound statistics.
 
 Ciao,
 Dscho
+
+>  Getting closer but still being discussed.
+>  cf. <20190403000032.GA190454@google.com>
