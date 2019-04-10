@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1357A20248
-	for <e@80x24.org>; Wed, 10 Apr 2019 16:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36D520248
+	for <e@80x24.org>; Wed, 10 Apr 2019 16:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729582AbfDJQYa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 12:24:30 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:54927 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727277AbfDJQY3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 12:24:29 -0400
-Received: by mail-vk1-f202.google.com with SMTP id r132so1196274vke.21
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 09:24:28 -0700 (PDT)
+        id S1730084AbfDJQYd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 12:24:33 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:35479 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729881AbfDJQYd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 12:24:33 -0400
+Received: by mail-qt1-f201.google.com with SMTP id c28so1617361qtd.2
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 09:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=gJ2aSAphWMyMYVcygCMJGS0BGTB8tp8cPgxmA2+NKs0=;
-        b=B4EbvJxxEUO45cUBWOolOm6QGTsS4uqd/XNiRjtohiyudsbsI7RtsFr3C3wjI4l3Kk
-         uKp8sUL/QVs9TAWtLjWcwXWj5wzhiH1XM/qYGtBbNi9ucn8HA6mp6J/+23YHxf6TC9IB
-         5XTTpT3NGihLfSDINCC++E3xCmOX+gyJLeNabZtzl5RvikaPO0xZKnjsBBJY5RJnCvnR
-         ROTUuIZ7aNSFljFfgSpxzA7yZ9/+2QQdMaO7UoUUpKika7L8VELuU9DywbD0ywRtYbHn
-         knCAv7xZU6ZwRukj6RO6yZrj9UsWizp6K6GMpxo7icz+oOQzWmboaM6XTGoKPrjK0UBT
-         Btsw==
+        bh=ZEjbmaQhMa1PUBfSaF2qR0gA/5T880d3kpY/s4VibMk=;
+        b=O5LuHjizgsHkeo69fEO6Wq2IxiThc+UkFYIN0fVdZiBJq7EkzAw5hhMNx4kiudapLt
+         XQAGh/cSE654nSR/qqoP1G2DrBh1aDU2cFYqCOIgZobKuQPLekzY1Utt0vfdfP9iOybe
+         iHPZOHsF7B2cksWca1IZXuGJMnujpjYg5rz/7MxHQn8QJ8dJPcD79POjlWHZirwvvdyR
+         IAg9ckdgD7TrGMg3y8Vx4DlDaxvoTwDl0zSz+BBc4endWkuYbP0nuw/BgdnnmVBViTeT
+         6KXMdsQPKme3GkOeGEJsmxjSmp0xzdNrIrlyhfoQswrel9nTJ+UQGuNzFic+73R0sPWw
+         GNmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=gJ2aSAphWMyMYVcygCMJGS0BGTB8tp8cPgxmA2+NKs0=;
-        b=QfrLTirDQUoqn4t0EYmF/SWWBv5u0GC4pIr3gOud39uuofWJtnMiHNmHAEK6M+Bv3e
-         HXUs70Ah+NPO+gPrCQdMXk3Ce0Ae5omd+vW8pHScbzivqg4UGif5NgbBYpDKfaTc/eQ4
-         vSMrFTYTANUMTPXeCh7yz2QSYxjG/Uyt9nS940TkIAsbL8lRQCPvOrGYBUWXkNuITy6z
-         +Dpra5vA/UmItg1Sn82N5aMUPWL+OQauOoNthSeu4Ok4xIFZS1Fwwka3tbnPxqnzcv+a
-         ebynip5EUVQjN6G8CoaeiCEtFQ2dG2vTj74Xf7vM7Chm00w1TOo/pHCD+fPVB0QMeVSn
-         netg==
-X-Gm-Message-State: APjAAAX89vM5AlnXCRlqSIxUL68GIJN+snbm89qR7xbcCnG3flJoCpX7
-        hLwHw+jIAneMSeBG4YErKotqz7CHbKSujFrNnun50WbYvN2JRPuUEcqzmjf+avD95/aMvAWsQ5v
-        LG0pgBsme90eTxZZ7JztySQE0BBCGhFaivKnmJ9XrFMU/tOKiK/uM
-X-Google-Smtp-Source: APXvYqxutmuh4hCtMk+7lKdKvEWK5bxOYmbb9Re0cpGJ3eO1UKcYyw8CeOuBs4K1AyG7/g6zj42/jp24
-X-Received: by 2002:a1f:2751:: with SMTP id n78mr4567644vkn.11.1554913468308;
- Wed, 10 Apr 2019 09:24:28 -0700 (PDT)
-Date:   Wed, 10 Apr 2019 12:24:04 -0400
+        bh=ZEjbmaQhMa1PUBfSaF2qR0gA/5T880d3kpY/s4VibMk=;
+        b=J/eyhhtEk9Ym4io5pxwQP9ThDgs/aE7djMWO8VHL2erVtrm08opnX1yRefTtOeqVPw
+         lCSh0liHPlnfEK38vVgWiRLrvt/jggaFhZ3lyAfH91QvFzbXC4nmwQZpptyx6tPvwVdy
+         dtdDBl6xI5Kum4KFtQkf9Q0lwbvUOYnmRwkoieASgHg4xNjW2Sk5Tv6R2t7NlUg4gDCG
+         wQho/jOzywfOf3yoe2rAOvEIJBrL4epa91KTeytQYkTzWvjvaqGYsNUsByB3mwQY7ODk
+         IbOnaYWzeQRWu2jhwOTVxruytjf2VMZZU9FLhYSaZ2mKvUIAG6Y34I6IbE0QVh1YDABT
+         pK7A==
+X-Gm-Message-State: APjAAAWAzM74+JTPJ870hjhBuAiAADWPmcvCYXxSPWETujB50RQA4Jmz
+        X0ucQyCnU1TGSu3G47HZ3TsIvdU7VOjCazK1t0MSYUn5cK6e3mnfLytuIA5UfzPKg6Zi5z0iOC2
+        rMsQ6ZUwmnIMgNbkS+aGqPyDZEo5mKYal7njek22oCTxLcHZfU0VJ
+X-Google-Smtp-Source: APXvYqz+rgL3QqDmmVEy6/vXFrl/ykDURfpPhioSvIoueFfcLaEmDhIaS5H6rSEpA6h12WCK1ZnhCRET
+X-Received: by 2002:a37:6903:: with SMTP id e3mr5522881qkc.48.1554913472102;
+ Wed, 10 Apr 2019 09:24:32 -0700 (PDT)
+Date:   Wed, 10 Apr 2019 12:24:05 -0400
 In-Reply-To: <20190410162409.117264-1-brho@google.com>
-Message-Id: <20190410162409.117264-2-brho@google.com>
+Message-Id: <20190410162409.117264-3-brho@google.com>
 Mime-Version: 1.0
 References: <20190410162409.117264-1-brho@google.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v6 1/6] Move init_skiplist() outside of fsck
+Subject: [PATCH v6 2/6] blame: use a helper function in blame_chunk()
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -69,186 +69,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-init_skiplist() took a file consisting of SHA-1s and comments and added
-the objects to an oidset.  This functionality is useful for other
-commands.
+The same code for splitting a blame_entry at a particular line was used
+twice in blame_chunk(), and I'll use the helper again in an upcoming
+patch.
 
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- fsck.c                          | 37 +--------------------------------
- oidset.c                        | 35 +++++++++++++++++++++++++++++++
- oidset.h                        |  8 +++++++
- t/t5504-fetch-receive-strict.sh | 14 ++++++-------
- 4 files changed, 51 insertions(+), 43 deletions(-)
+ blame.c | 44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/fsck.c b/fsck.c
-index 2260adb71e7a..d45534ad90f5 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
- 	return msg_type;
+diff --git a/blame.c b/blame.c
+index 5c07dec19035..9555a9420836 100644
+--- a/blame.c
++++ b/blame.c
+@@ -839,6 +839,27 @@ static struct blame_entry *reverse_blame(struct blame_entry *head,
+ 	return tail;
  }
  
--static void init_skiplist(struct fsck_options *options, const char *path)
--{
--	FILE *fp;
--	struct strbuf sb = STRBUF_INIT;
--	struct object_id oid;
--
--	fp = fopen(path, "r");
--	if (!fp)
--		die("Could not open skip list: %s", path);
--	while (!strbuf_getline(&sb, fp)) {
--		const char *p;
--		const char *hash;
--
--		/*
--		 * Allow trailing comments, leading whitespace
--		 * (including before commits), and empty or whitespace
--		 * only lines.
--		 */
--		hash = strchr(sb.buf, '#');
--		if (hash)
--			strbuf_setlen(&sb, hash - sb.buf);
--		strbuf_trim(&sb);
--		if (!sb.len)
--			continue;
--
--		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
--			die("Invalid SHA-1: %s", sb.buf);
--		oidset_insert(&options->skiplist, &oid);
--	}
--	if (ferror(fp))
--		die_errno("Could not read '%s'", path);
--	fclose(fp);
--	strbuf_release(&sb);
--}
--
- static int parse_msg_type(const char *str)
- {
- 	if (!strcmp(str, "error"))
-@@ -284,7 +249,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
- 		if (!strcmp(buf, "skiplist")) {
- 			if (equal == len)
- 				die("skiplist requires a path");
--			init_skiplist(options, buf + equal + 1);
-+			oidset_parse_file(&options->skiplist, buf + equal + 1);
- 			buf += len + 1;
- 			continue;
- 		}
-diff --git a/oidset.c b/oidset.c
-index fe4eb921df81..878a1b56af1c 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
- 	kh_release_oid(&set->set);
- 	oidset_init(set, 0);
- }
-+
-+void oidset_parse_file(struct oidset *set, const char *path)
-+{
-+	FILE *fp;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct object_id oid;
-+
-+	fp = fopen(path, "r");
-+	if (!fp)
-+		die("Could not open object name list: %s", path);
-+	while (!strbuf_getline(&sb, fp)) {
-+		const char *p;
-+		const char *name;
-+
-+		/*
-+		 * Allow trailing comments, leading whitespace
-+		 * (including before commits), and empty or whitespace
-+		 * only lines.
-+		 */
-+		name = strchr(sb.buf, '#');
-+		if (name)
-+			strbuf_setlen(&sb, name - sb.buf);
-+		strbuf_trim(&sb);
-+		if (!sb.len)
-+			continue;
-+
-+		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
-+			die("Invalid object name: %s", sb.buf);
-+		oidset_insert(set, &oid);
-+	}
-+	if (ferror(fp))
-+		die_errno("Could not read '%s'", path);
-+	fclose(fp);
-+	strbuf_release(&sb);
-+}
-diff --git a/oidset.h b/oidset.h
-index c9d0f6d3cc8b..c4807749df8d 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -73,6 +73,14 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
-  */
- void oidset_clear(struct oidset *set);
- 
-+/**
-+ * Add the contents of the file 'path' to an initialized oidset.  Each line is
-+ * an unabbreviated object name.  Comments begin with '#', and trailing comments
-+ * are allowed.  Leading whitespace and empty or white-space only lines are
-+ * ignored.
++/*
++ * Splits a blame entry into two entries at 'len' lines.  The original 'e'
++ * consists of len lines, i.e. [e->lno, e->lno + len), and the second part,
++ * which is returned, consists of the remainder: [e->lno + len, e->lno +
++ * e->num_lines).  The caller needs to sort out the reference counting for the
++ * new entry's suspect.
 + */
-+void oidset_parse_file(struct oidset *set, const char *path);
++static struct blame_entry *split_blame_at(struct blame_entry *e, int len,
++					  struct blame_origin *new_suspect)
++{
++	struct blame_entry *n = xcalloc(1, sizeof(struct blame_entry));
 +
- struct oidset_iter {
- 	kh_oid_t *set;
- 	khiter_t iter;
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 7bc706873c5b..7184f1d07f90 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -164,9 +164,9 @@ test_expect_success 'fsck with unsorted skipList' '
- test_expect_success 'fsck with invalid or bogus skipList input' '
- 	git -c fsck.skipList=/dev/null -c fsck.missingEmail=ignore fsck &&
- 	test_must_fail git -c fsck.skipList=does-not-exist -c fsck.missingEmail=ignore fsck 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "Could not open object name list: does-not-exist" err &&
- 	test_must_fail git -c fsck.skipList=.git/config -c fsck.missingEmail=ignore fsck 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err
-+	test_i18ngrep "Invalid object name: \[core\]" err
- '
- 
- test_expect_success 'fsck with other accepted skipList input (comments & empty lines)' '
-@@ -193,7 +193,7 @@ test_expect_success 'fsck no garbage output from comments & empty lines errors'
- test_expect_success 'fsck with invalid abbreviated skipList input' '
- 	echo $commit | test_copy_bytes 20 >SKIP.abbreviated &&
- 	test_must_fail git -c fsck.skipList=SKIP.abbreviated fsck 2>err-abbreviated &&
--	test_i18ngrep "^fatal: Invalid SHA-1: " err-abbreviated
-+	test_i18ngrep "^fatal: Invalid object name: " err-abbreviated
- '
- 
- test_expect_success 'fsck with exhaustive accepted skipList input (various types of comments etc.)' '
-@@ -226,10 +226,10 @@ test_expect_success 'push with receive.fsck.skipList' '
- 	test_must_fail git push --porcelain dst bogus &&
- 	git --git-dir=dst/.git config receive.fsck.skipList does-not-exist &&
- 	test_must_fail git push --porcelain dst bogus 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "Could not open object name list: does-not-exist" err &&
- 	git --git-dir=dst/.git config receive.fsck.skipList config &&
- 	test_must_fail git push --porcelain dst bogus 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
-+	test_i18ngrep "Invalid object name: \[core\]" err &&
- 
- 	git --git-dir=dst/.git config receive.fsck.skipList SKIP &&
- 	git push --porcelain dst bogus
-@@ -255,10 +255,10 @@ test_expect_success 'fetch with fetch.fsck.skipList' '
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
- 	git --git-dir=dst/.git config fetch.fsck.skipList does-not-exist &&
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "Could not open object name list: does-not-exist" err &&
- 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/config &&
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
-+	test_i18ngrep "Invalid object name: \[core\]" err &&
- 
- 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/SKIP &&
- 	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
++	n->suspect = new_suspect;
++	n->lno = e->lno + len;
++	n->s_lno = e->s_lno + len;
++	n->num_lines = e->num_lines - len;
++	e->num_lines = len;
++	e->score = 0;
++	return n;
++}
++
+ /*
+  * Process one hunk from the patch between the current suspect for
+  * blame_entry e and its parent.  This first blames any unfinished
+@@ -865,14 +886,9 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
+ 		 */
+ 		if (e->s_lno + e->num_lines > tlno) {
+ 			/* Move second half to a new record */
+-			int len = tlno - e->s_lno;
+-			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
+-			n->suspect = e->suspect;
+-			n->lno = e->lno + len;
+-			n->s_lno = e->s_lno + len;
+-			n->num_lines = e->num_lines - len;
+-			e->num_lines = len;
+-			e->score = 0;
++			struct blame_entry *n;
++
++			n = split_blame_at(e, tlno - e->s_lno, e->suspect);
+ 			/* Push new record to diffp */
+ 			n->next = diffp;
+ 			diffp = n;
+@@ -919,14 +935,10 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
+ 			 * Move second half to a new record to be
+ 			 * processed by later chunks
+ 			 */
+-			int len = same - e->s_lno;
+-			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
+-			n->suspect = blame_origin_incref(e->suspect);
+-			n->lno = e->lno + len;
+-			n->s_lno = e->s_lno + len;
+-			n->num_lines = e->num_lines - len;
+-			e->num_lines = len;
+-			e->score = 0;
++			struct blame_entry *n;
++
++			n = split_blame_at(e, same - e->s_lno,
++					   blame_origin_incref(e->suspect));
+ 			/* Push new record to samep */
+ 			n->next = samep;
+ 			samep = n;
 -- 
 2.21.0.392.gf8f6787159e-goog
 
