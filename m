@@ -7,240 +7,160 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6717C20248
-	for <e@80x24.org>; Wed, 10 Apr 2019 17:38:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49B3120248
+	for <e@80x24.org>; Wed, 10 Apr 2019 17:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729729AbfDJRiD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 13:38:03 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44899 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729655AbfDJRh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 13:37:59 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d11so2763329edp.11
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:58 -0700 (PDT)
+        id S1729735AbfDJRiI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 13:38:08 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36664 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729660AbfDJRiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 13:38:02 -0400
+Received: by mail-ed1-f65.google.com with SMTP id u57so2151679edm.3
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pRNh/ztFrKB40bwoePW1Bf5Lnj9AMgB3ybTo5lQDG3k=;
-        b=EZgyrUfr/x3vvRnr8V78N4BGlJ9r/WXABmdcPKcRL9EuSEib5PzO3C/NeFS83ZuI+G
-         QLgeAQU/LwPBWbhA3JCsWlCKRHpvOFQgQGTijk16MV3uwdNVM95O2as6/AmBOrdMeA+W
-         Zs+y8EnSufnbbyme3gqp7Qo5EOfUlvZz/quXTAvkyHgDA7qb6EdvIM7bHmTsAAakwh+f
-         KdIs8jX+rxBB3HR9J0VBRPLBR18u3kmcII4mz0XJ2OCpuAATI4OqKLJyXn5d0j26L5qU
-         VbOfP+bOF8cp0KnZXOURH3QgnOFbZmcRkonBR7wqTjkXnX64KkDvGcz+BgBaDVfV0OLj
-         TbWA==
+        bh=DtjJwGlqWAmz2GQrgZaQ3BoKO9TUM2pqgcQ4qFfHgU4=;
+        b=TBwa9gUOF6LtDyXhhUqekuxVI0vlf2EK39KcXPJX+qhFwdT8kDRkY9BX/DRUodjKqv
+         JmaUgwbAUn8fd8GIdL73qyxl4nLAdY2mApHTZGI0Jz3AiuUQJTFoVrXP0iioWNHyM0/h
+         lNgsZcvOLzfJ17RQuPRzaltRpyHThLueuTrpY+RXelxuEQ2WBHUJ8zQS4VltuQ0O8+2s
+         VtQctEPU4kW0YotmyrUQhTUcei7E5gtzuOD7Q0i3Q9TH18b7uIzJWFJrV5knwhyKTVnE
+         brxHFyll8Ac43jtHe6cMC1/8L7scKWvOXrWCRluKNTNXdCXr3O9t78qdsmo6Pyp7BAZ4
+         uY3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pRNh/ztFrKB40bwoePW1Bf5Lnj9AMgB3ybTo5lQDG3k=;
-        b=R0zVtBxd0VJcf4YBZ4fXlN92SZPSdPNSZhu8WbBmafTfQ4mRo8IUzG/Wl9D17VftPs
-         V3EiKwS2AElDwFqbJTumZSY3freh1qRIy7epkplfHxDldDsIrC1CZdO6ohRQHUaP8YJe
-         loWHaHdlo2heBijzDeLha4VtJeyILugJrGcu1XmdxQlQFvXmcA/z3hLW7W9F9quBW9uE
-         fyfoBE1JBXEEEz4XvDcxFLdUHUxt8Jdh1+Eb2GnpGy5Kfd7pra7QIcz1AHGO60haN41Q
-         KYT2y0eE3S54xT9TyGofEJgM/BdbZQDTuFytKrulJ2qpRK9W8mczm1xhI+f6dhCsRKjn
-         0vSw==
-X-Gm-Message-State: APjAAAVMh5d5FaM/B1I2H63CfxrUyk5XcgCaETv5moIuFfRiCKlF+EXh
-        gYA6/GEo67v3uTy8nC3n1bZW7pUe
-X-Google-Smtp-Source: APXvYqxbpWgXpm1SnxDNqylp9GUn8M5T3Mwo4HdvyV6QPRSHLJjMwwaSlJg2sUkwcIiyzK9ZQI2DhA==
-X-Received: by 2002:a17:906:aece:: with SMTP id me14mr25301781ejb.0.1554917877318;
-        Wed, 10 Apr 2019 10:37:57 -0700 (PDT)
+        bh=DtjJwGlqWAmz2GQrgZaQ3BoKO9TUM2pqgcQ4qFfHgU4=;
+        b=HopR/4VpikEMNNGcyUe2mi0uyxzJEQzjFfrl9R/TlSgD1nNbCygqnBJUJA33DZI1e6
+         jswFIdPlN6pQHkLeYq7inWl3+VvFT+bZsDX9Jd8SW86ErzgVRR/Lh6l7KVvAIG7lzwuc
+         +cKIpA2PUFvL3v7bo/RFDHmNIvIDBjwaeNe3m2AJmccx0t7Yk9e2eOJhi1NVvvRqgfE3
+         4uwW5DGJOEtVv9xVZ8mfdU/wUROoPxjWNTN935MLpQUVUoUI13w9l9D3i2U2YQXA3acu
+         kCQAXWoIVRFuswnAQ9l+TCKWs84QZ8q/hJcEbxkKrRmZLkanLFZwtzru1sH8TVrStI7z
+         BsdA==
+X-Gm-Message-State: APjAAAWotI04X7WYRrKVc/CGWFmJEeWT1IG7vZiDxi9bK/Rsmx6niH/L
+        c7MIot1DIG2fftpduFBjJGsaxKOT
+X-Google-Smtp-Source: APXvYqy4AHajVaCAemCWpsc2xUT22FnPeunQAtq4meIJtO/0MYrho6pLVMMOZ6nX6OlF9fNJs6BHkA==
+X-Received: by 2002:a17:906:4c45:: with SMTP id d5mr4623296ejw.133.1554917879868;
+        Wed, 10 Apr 2019 10:37:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm1338490edx.12.2019.04.10.10.37.56
+        by smtp.gmail.com with ESMTPSA id 10sm1119144ejn.37.2019.04.10.10.37.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Apr 2019 10:37:56 -0700 (PDT)
-Date:   Wed, 10 Apr 2019 10:37:56 -0700 (PDT)
-X-Google-Original-Date: Wed, 10 Apr 2019 17:37:45 GMT
-Message-Id: <56acc31e962e5985c7ad2119b7e6d86f7647e786.1554917868.git.gitgitgadget@gmail.com>
+        Wed, 10 Apr 2019 10:37:59 -0700 (PDT)
+Date:   Wed, 10 Apr 2019 10:37:59 -0700 (PDT)
+X-Google-Original-Date: Wed, 10 Apr 2019 17:37:48 GMT
+Message-Id: <481e3316d5a2486dbfef32fca9e096a8eb9a64ee.1554917868.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.git.gitgitgadget@gmail.com>
 References: <pull.170.git.gitgitgadget@gmail.com>
-From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 08/11] built-in add -i: show unique prefixes of the commands
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 11/11] built-in add -i: implement the `help` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Slavica Djukic <slawica92@hotmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like in the Perl script `git-add--interactive.perl`, for each
-command a unique prefix is determined (if there exists any within the
-given parameters), and shown in the list, and accepted as a shortcut for
-the command.
+This imitates the code to show the help text from the Perl script
+`git-add--interactive.perl` in the built-in version.
 
-We use the prefix map implementation that we just added in the previous
-commit for that purpose.
+To make sure that it renders exactly like the Perl version of `git add
+-i`, we also add a test case for that to `t3701-add-interactive.sh`.
 
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 70 ++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 57 insertions(+), 13 deletions(-)
+ add-interactive.c          | 27 +++++++++++++++++++++++++--
+ t/t3701-add-interactive.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 2 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index c8bd62369e..62ce446dd9 100644
+index a1550d9b9f..a6baf57e20 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -6,6 +6,7 @@
- #include "diffcore.h"
- #include "revision.h"
- #include "refs.h"
-+#include "prefix-map.h"
- 
- static int use_color = -1;
- 
-@@ -53,18 +54,33 @@ int add_i_config(const char *var, const char *value, void *cb)
- 	return git_color_default_config(var, value, cb);
- }
- 
--struct item {
--	const char *name;
--};
-+static ssize_t find_unique(const char *string,
-+			   struct prefix_item **list, size_t nr)
-+{
-+	ssize_t found = -1, i;
-+
-+	for (i = 0; i < nr; i++) {
-+		struct prefix_item *item = list[i];
-+		if (!starts_with(item->name, string))
-+			continue;
-+		if (found >= 0)
-+			return -1;
-+		found = i;
-+	}
-+
-+	return found;
-+}
- 
- struct list_options {
- 	int columns;
- 	const char *header;
--	void (*print_item)(int i, struct item *item, void *print_item_data);
-+	void (*print_item)(int i, struct prefix_item *item,
-+			   void *print_item_data);
- 	void *print_item_data;
- };
- 
--static void list(struct item **list, size_t nr, struct list_options *opts)
-+static void list(struct prefix_item **list, size_t nr,
-+		 struct list_options *opts)
- {
- 	int i, last_lf = 0;
- 
-@@ -101,12 +117,14 @@ struct list_and_choose_options {
- /*
-  * Returns the selected index.
-  */
--static ssize_t list_and_choose(struct item **items, size_t nr,
-+static ssize_t list_and_choose(struct prefix_item **items, size_t nr,
- 			       struct list_and_choose_options *opts)
- {
- 	struct strbuf input = STRBUF_INIT;
- 	ssize_t res = -1;
- 
-+	find_unique_prefixes(items, nr, 1, 4);
-+
- 	for (;;) {
- 		char *p, *endp;
- 
-@@ -146,6 +164,9 @@ static ssize_t list_and_choose(struct item **items, size_t nr,
- 			}
- 
- 			p[sep] = '\0';
-+			if (index < 0)
-+				index = find_unique(p, items, nr);
-+
- 			if (index < 0 || index >= nr)
- 				printf(_("Huh (%s)?\n"), p);
- 			else {
-@@ -171,7 +192,7 @@ struct adddel {
- 
- struct file_list {
- 	struct file_item {
--		struct item item;
-+		struct prefix_item item;
- 		struct adddel index, worktree;
- 	} **file;
- 	size_t nr, alloc;
-@@ -337,12 +358,29 @@ static void populate_wi_changes(struct strbuf *buf,
- 		strbuf_addstr(buf, no_changes);
- }
- 
-+/* filters out prefixes which have special meaning to list_and_choose() */
-+static int is_valid_prefix(const char *prefix, size_t prefix_len)
-+{
-+	return prefix_len && prefix &&
-+		/*
-+		 * We expect `prefix` to be NUL terminated, therefore this
-+		 * `strcspn()` call is okay, even if it might do much more
-+		 * work than strictly necessary.
-+		 */
-+		strcspn(prefix, " \t\r\n,") >= prefix_len &&	/* separators */
-+		*prefix != '-' &&				/* deselection */
-+		!isdigit(*prefix) &&				/* selection */
-+		(prefix_len != 1 ||
-+		 (*prefix != '*' &&				/* "all" wildcard */
-+		  *prefix != '?'));				/* prompt help */
-+}
-+
- struct print_file_item_data {
- 	const char *modified_fmt;
- 	struct strbuf buf, index, worktree;
- };
- 
--static void print_file_item(int i, struct item *item,
-+static void print_file_item(int i, struct prefix_item *item,
- 			    void *print_file_item_data)
- {
- 	struct file_item *c = (struct file_item *)item;
-@@ -369,20 +407,26 @@ static int run_status(struct repository *r, const struct pathspec *ps,
- 		return -1;
- 
- 	if (files->nr)
--		list((struct item **)files->file, files->nr, opts);
-+		list((struct prefix_item **)files->file, files->nr, opts);
- 	putchar('\n');
- 
+@@ -439,6 +439,27 @@ static int run_status(struct repository *r, const struct pathspec *ps,
  	return 0;
  }
  
--static void print_command_item(int i, struct item *item,
-+static void print_command_item(int i, struct prefix_item *item,
- 			       void *print_command_item_data)
- {
--	printf(" %2d: %s", i + 1, item->name);
-+	if (!item->prefix_length ||
-+	    !is_valid_prefix(item->name, item->prefix_length))
-+		printf(" %2d: %s", i + 1, item->name);
-+	else
-+		printf(" %3d: [%.*s]%s", i + 1,
-+		       (int)item->prefix_length, item->name,
-+		       item->name + item->prefix_length);
- }
- 
- struct command_item {
--	struct item item;
-+	struct prefix_item item;
- 	int (*command)(struct repository *r, const struct pathspec *ps,
- 		       struct file_list *files, struct list_options *opts);
++static int run_help(struct repository *r, const struct pathspec *ps,
++		    struct file_list *files, struct list_options *opts)
++{
++	const char *help_color = get_add_i_color(COLOR_HELP);
++
++	color_fprintf_ln(stdout, help_color, "status        - %s",
++			 _("show paths with changes"));
++	color_fprintf_ln(stdout, help_color, "update        - %s",
++			 _("add working tree state to the staged set of changes"));
++	color_fprintf_ln(stdout, help_color, "revert        - %s",
++			 _("revert staged set of changes back to the HEAD version"));
++	color_fprintf_ln(stdout, help_color, "patch         - %s",
++			 _("pick hunks and update selectively"));
++	color_fprintf_ln(stdout, help_color, "diff          - %s",
++			 _("view diff between HEAD and index"));
++	color_fprintf_ln(stdout, help_color, "add untracked - %s",
++			 _("add contents of untracked files to the staged set of changes"));
++
++	return 0;
++}
++
+ struct print_command_item_data {
+ 	const char *color, *reset;
  };
-@@ -420,7 +464,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 		res = -1;
+@@ -490,9 +511,11 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 		N_("What now"), command_prompt_help
+ 	};
+ 	struct command_item
+-		status = { { "status" }, run_status };
++		status = { { "status" }, run_status },
++		help = { { "help" }, run_help };
+ 	struct command_item *commands[] = {
+-		&status
++		&status,
++		&help
+ 	};
  
- 	for (;;) {
--		i = list_and_choose((struct item **)commands,
-+		i = list_and_choose((struct prefix_item **)commands,
- 				    ARRAY_SIZE(commands), &main_loop_opts);
- 		if (i < -1) {
- 			printf(_("Bye.\n"));
+ 	struct print_file_item_data print_file_item_data = {
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 65dfbc033a..91aaef2932 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -639,4 +639,28 @@ test_expect_success 'add -p patch editing works with pathological context lines'
+ 	test_cmp expected-2 actual
+ '
+ 
++test_expect_success 'show help from add--helper' '
++	git reset --hard &&
++	cat >expect <<-EOF &&
++
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
++	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
++	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
++	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
++	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
++	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>>$SP
++	Bye.
++	EOF
++	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
++	test_decode_color <actual.colored >actual &&
++	test_i18ncmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
-
