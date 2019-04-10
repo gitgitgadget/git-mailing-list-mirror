@@ -2,146 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24FF020248
-	for <e@80x24.org>; Wed, 10 Apr 2019 16:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BE6B20248
+	for <e@80x24.org>; Wed, 10 Apr 2019 16:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731806AbfDJQUd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 12:20:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53742 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727892AbfDJQUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 12:20:33 -0400
-Received: (qmail 27691 invoked by uid 109); 10 Apr 2019 16:20:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Apr 2019 16:20:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16789 invoked by uid 111); 10 Apr 2019 16:20:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Apr 2019 12:20:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2019 12:20:29 -0400
-Date:   Wed, 10 Apr 2019 12:20:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] untracked cache: fix off-by-one
-Message-ID: <20190410162029.GA30818@sigill.intra.peff.net>
-References: <pull.178.git.gitgitgadget@gmail.com>
- <a7f75cefb682546862be4dd8b48f91c4034c5d5a.1554901006.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a7f75cefb682546862be4dd8b48f91c4034c5d5a.1554901006.git.gitgitgadget@gmail.com>
+        id S1729192AbfDJQY0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 12:24:26 -0400
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:54823 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727277AbfDJQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 12:24:26 -0400
+Received: by mail-vs1-f74.google.com with SMTP id t85so613575vsc.21
+        for <git@vger.kernel.org>; Wed, 10 Apr 2019 09:24:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=V0P4WLssVQpJsofDa92CJHrPQBMOdHeHemR19nRyp88=;
+        b=IvWp6MbJUCLDzkMuAmgf27+D8gDdtMioAUqHxoLXHS2pNrE3NbGayXEvENvdCOS22Z
+         res4RwOLfM3HCKTik1pOceLc0t2zdmWYM6HVNX4oMK18UwD8EeKJQD9yaEjQ8WovRbpz
+         rKFXDqFv5+/mAowTEEu7PpeiSREINAoOK9cdVOeR2YOuhGjny068+NN0mYEGRNk+gBX1
+         Ya+4sFIr8F7no5UdmXWdLWNqV8ynCaiioyo8PPtPRe+qLdQLAVDXCdWE0J9zox43i0Ap
+         f0ddLzfQ8zMolmhPI1v8Fd1PyHyVMLrfMrTICRWY7fuVlBAE6oXXgwcYZvga8VSTi/7k
+         otrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=V0P4WLssVQpJsofDa92CJHrPQBMOdHeHemR19nRyp88=;
+        b=ke0QAnOkLB3W+efDvk5wR4ILD4/Swo11xdyktuZWKHkJm7PoKhSACsYI1DecSmj6tE
+         osRsY3hDEbVqE01U0sykE5cg5dRoDvcSI7aFBniZ9lJGwew1GyyChq5eD8JNErsO8VZa
+         YxCS00sF29zd8E62J07LYpgHXorlTjpN2peJb1qM4Sy0Rvo23HxlajXDYowR34BQOIrx
+         jNaQeM1ocwNIdikc3LZER5ore2sNuI1PoWBtWoqyFxP3VUbHvDxXzW2Hlk68QxtwurVn
+         jEfqSolBn5EUWMp2EoJ5yD20NIcAOS4UxSy+o6KX4LE/cWetsvs+ZUW+T4uB2WTHVuUl
+         F7/Q==
+X-Gm-Message-State: APjAAAVkx57D6eVErtu2YC1azxw5KffbT08UqmC9+xbpsFwopI0i7sme
+        HXczevP1XuPdOMp9H1ifMvp0uGGCbm1OnMc+aE/uW1uS1xWSPB7q1qObDOjSv5IJVkuQ4Yv6yes
+        zsHpKCz5BN3zdiM9C/PrzUjVKndxmcMAD2UPOpbdLyFQkw15XPFqV
+X-Google-Smtp-Source: APXvYqxklBK3GeU3CnUy373IEHMGcAmiHI42/WNYN/8ANpyCqFeSlCgBgsvAG86Vu/9XwqC5f8zBsdpA
+X-Received: by 2002:a67:8797:: with SMTP id j145mr5049100vsd.12.1554913464335;
+ Wed, 10 Apr 2019 09:24:24 -0700 (PDT)
+Date:   Wed, 10 Apr 2019 12:24:03 -0400
+Message-Id: <20190410162409.117264-1-brho@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
+Subject: [PATCH v6 0/6] blame: add the ability to ignore commits
+From:   Barret Rhoden <brho@google.com>
+To:     git@vger.kernel.org
+Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 10, 2019 at 05:56:48AM -0700, Johannes Schindelin via GitGitGadget wrote:
+This patch set adds the ability to ignore a set of commits and their
+changes when blaming.  This can be used to ignore a commit deemed 'not
+interesting,' such as reformatting.
 
-> Probably in the endeavor to avoid the `calloc()` implied by
-> `FLEX_ALLOC_STR()` (it is hard to know why exactly, the commit message
-> of that commit is a bit parsimonious with information), it calls
-> `malloc()` manually and then `memcpy()`s the bits and pieces into place.
+The last patch in the series changes the heuristic by which ignored
+lines are attributed to specific lines in the parent commit.  This
+increases the likelihood of blaming the 'right' commit, where 'right' is
+subjective.  Perhaps we want another algorithm.  I'm using a relatively
+simple one that uses the basics of Michael's fingerprinting code, but he
+has another algorithm.
 
-You have a talent for understatement. :)
+v5 -> v6
+v5: https://public-inbox.org/git/20190403160207.149174-1-brho@google.com/
+- The "guess" heuristic can now look anywhere in the parent file for a
+  matching line, instead of just looking in the parent chunk.  The
+  chunks passed to blame_chunk() are smaller than you'd expect: they are
+  just adjacent '-' and '+' sections.  Any diff 'context' is a chunk
+  boundary.
+- Fixed the parent_len calculation.  I had been basing it off of
+  e->num_lines, and treating the blame entry as if it was the target
+  chunk, but the individual blame entries are subsets of the chunk.  I
+  just pass the parent chunk info all the way through now.
+- Use Michael's newest fingerprinting code, which is a large speedup.
+- Made a config option to zero the hash for an ignored line when the
+  heuristic could not find a line in the parent to blame.  Previously,
+  this was always 'on'.
+- Moved the for loop variable declarations out of the for ().
+- Rebased on master.
 
-> It allocates the size of `struct untracked_cache_dir` plus the string
-> length of the untracked file name, then copies the information in two
-> steps: first the fixed-size metadata, then the name. And here lies the
-> rub: it includes the trailing NUL byte in the name.
-> 
-> If `FLEX_ARRAY` is defined as 0, this results in a buffer overrun.
-> 
-> To fix this, let's just add 1, for the trailing NUL byte. Technically,
-> this overallocates on platforms where `FLEX_ARRAY` is 1, but it should
-> not matter much in reality, as `malloc()` usually overallocates anyway,
-> unless the size to allocate aligns exactly with some internal chunk size
-> (see below for more on that).
+v4 -> v5
+v4: https://public-inbox.org/git/20190226170648.211847-1-brho@google.com/
+- Changed the handling of blame_entries from ignored commits so that you
+  can use any algorithm you want to map lines from the diff chunk to
+  different parts of the parent commit.
+- fill_origin_blob() optionally can track the offsets of the start of
+  every line, similar to what we do in the scoreboard for the final
+  file.  This can be used by the matching algorithm.  It has no effect
+  if you are not ignoring commits.
+- RFC of a fuzzy/fingerprinting heuristic, based on Michael Platings RFC
+  at https://public-inbox.org/git/20190324235020.49706-2-michael@platin.gs/
+- Made the tests that detect unblamable entries more resilient to
+  different heuristics.
+- Fixed a few bugs:
+	- tests were not grepping the line number from --line-porcelain
+	  correctly.
+	- In the old version, when I passed the "upper" part of the
+	  blame entry to the target and marked unblamable, the suspect
+	  was incorrectly marked as the parent.  The s_lno was also in
+	  the parent's address space.
 
-Yeah, every struct on a platform where FLEX_ARRAY is 1 ends up
-over-allocated by 1 byte. We could account for that in all of our flex
-allocations, but I don't it affects enough platforms to be worth the
-bother.
+v3 -> v4
+v3: https://public-inbox.org/git/20190212222722.240676-1-brho@google.com/
+- Cleaned up the tests, especially removing usage of sed -i.
+- Squashed the 'tests' commit into the other blame commits.  Let me know
+  if you'd like further squashing.
 
-> The real strange thing is that neither valgrind nor DrMemory catches
-> this bug. In this developer's tests, a `memcpy()` (but not a
-> `memset()`!) could write up to 4 bytes after the allocated memory range
-> before valgrind would start reporting an issue.
+v2 -> v3
+v2: https://public-inbox.org/git/20190117202919.157326-1-brho@google.com/
+- SHA-1 -> "object name", and fixed other comments
+- Changed error string for oidset_parse_file()
+- Adjusted existing fsck tests to handle those string changes
+- Return hash of all zeros for lines we know we cannot identify
+- Allow repeated options for blame.ignoreRevsFile and
+  --ignore-revs-file.  An empty file name resets the list.  Config
+  options are parsed before the command line options.
+- Rebased to master
+- Added regression tests
 
-I couldn't get it to trigger with ASan, either.  I assume it's due to
-alignment (i.e., those tools are stuck poisoning at the end of a page,
-but the start of the struct needs to be page-aligned). But that would
-imply that we could trigger it with different path lengths, which I
-wasn't able to do. So I dunno.
+v1 -> v2
+v1: https://public-inbox.org/git/20190107213013.231514-1-brho@google.com/
+- extracted the skiplist from fsck to avoid duplicating code
+- overhauled the interface and options
+- split out markIgnoredFiles
+- handled merges
 
-> However, when running Git built with nedmalloc as allocator, under rare
-> conditions (and inconsistently at that), this bug triggered an `abort()`
-> because nedmalloc rounds up the size to be `malloc()`ed to a multiple of
-> a certain chunk size, then adds a few bytes to be used for storing some
-> internal state. If there is no rounding up to do (because the size is
-> already a multiple of that chunk size), and if the buffer is overrun as
-> in the code patched in this commit, the internal state is corrupted.
->
-> The scenario that triggered this here bug fix entailed a git.git
-> checkout with an extra copy of the source code in an untracked
-> subdirectory, meaning that there was an untracked subdirectory called
-> "thunderbird-patch-inline" whose name's length is exactly 24 bytes,
-> which, added to the size of above-mentioned `struct untracked_cache_dir`
-> that weighs in with 104 bytes on a 64-bit system, amounts to 128,
-> aligning perfectly with nedmalloc's chunk size.
 
-Right, that makes sense that the length would impact it there.
+Barret Rhoden (6):
+  Move init_skiplist() outside of fsck
+  blame: use a helper function in blame_chunk()
+  blame: add the ability to ignore commits and their changes
+  blame: add config options to handle output for ignored lines
+  blame: optionally track line fingerprints during fill_blame_origin()
+  blame: use a fingerprint heuristic to match ignored lines
 
-> As there is no obvious way to trigger this bug reliably, on all
-> platforms supported by Git, and as the bug is obvious enough, this patch
-> comes without a regression test.
+ Documentation/blame-options.txt |  18 ++
+ Documentation/config/blame.txt  |  16 ++
+ Documentation/git-blame.txt     |   1 +
+ blame.c                         | 446 ++++++++++++++++++++++++++++----
+ blame.h                         |   6 +
+ builtin/blame.c                 |  56 ++++
+ fsck.c                          |  37 +--
+ oidset.c                        |  35 +++
+ oidset.h                        |   8 +
+ t/t5504-fetch-receive-strict.sh |  14 +-
+ t/t8013-blame-ignore-revs.sh    | 202 +++++++++++++++
+ 11 files changed, 740 insertions(+), 99 deletions(-)
+ create mode 100755 t/t8013-blame-ignore-revs.sh
 
-Makes sense. This code path should be well-covered by the existing tests
-anyway, so even if we could get those tools to trigger, I don't think
-there would be much point in adding a new test.
+-- 
+2.21.0.392.gf8f6787159e-goog
 
-> diff --git a/dir.c b/dir.c
-> index b2cabadf25..f5293a6536 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2760,7 +2760,7 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
->  	next = data + len + 1;
->  	if (next > rd->end)
->  		return -1;
-> -	*untracked_ = untracked = xmalloc(st_add(sizeof(*untracked), len));
-> +	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), len, 1));
->  	memcpy(untracked, &ud, sizeof(ud));
->  	memcpy(untracked->name, data, len + 1);
-
-This is obviously correct, even just from the context.
-
-IMHO it is worth it in cases like this to just use FLEX_ALLOC for
-simplicity; calloc() is not too expensive. However, there's an
-interesting subtlety there. Our length comes from this line just above
-your hunk:
-
-  len = strlen((const char *)data);
-
-how do we know that data actually contains a NUL? It's ultimately
-pointing to our mmap of the index file. So I think a malformed index
-would potentially cause us to go off the end of the array and read
-arbitrary memory.
-
-The right thing is probably something like:
-
-  eos = memchr(data, '\0', end - data);
-  if (!eos)
-	return error("malformed untracked cache extension");
-  len = eos - data;
-
-I wouldn't be at all surprised if other bits of the index code have the
-same issue, though. And at any rate, thinking about that should
-definitely not hold up your fix.
-
--Peff
