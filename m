@@ -2,119 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB9020305
-	for <e@80x24.org>; Wed, 10 Apr 2019 22:43:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A49F20305
+	for <e@80x24.org>; Wed, 10 Apr 2019 22:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbfDJWm7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 18:42:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35432 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725982AbfDJWm7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Apr 2019 18:42:59 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D70E460458;
-        Wed, 10 Apr 2019 22:42:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1554936177;
-        bh=YmVa/dDjSEa00g2FvdEvMAjNlykd3rADt+6RJF2/I8E=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dzRMHuAWUtJKLd0EiDwzLCbwb3XlMxncvBObguBkxenwvn2AjOclIyz/4yXg2Q89R
-         waUIyAdg53z7YB2IbVyhvBvoxHi2MjGDObybbHXJwi5nK7orifdtXxIPb6AgzajyjA
-         HVE8EYSxzGxscA8A815OdQKnRPk/y4TZWdT/M6qWHE/nLG9znz3Yi7XcTn/YlfL0cq
-         I7EVvcxLfyVUCgDPWuuRbP+uq2w0ndI/wWDQ0Iy05usFu1z/lfL4s+MFu3Pvx9qUh+
-         eo6biPcA88CI/eqwL8tOUn9WhPW5yLit1qLBZScqzdsNSsg449qqtSpCu+j4oiXjet
-         JwobvTXbg0w7VJ+Scm2yJtZIqGpfaEkhrTMG6XJGSS/uR1+LYimWO91V7lzpqsicSR
-         UMZZGv5O/C7wma+w0q1OABKqknDA7Q1OyUgqUhZTMmfaQWLPgN+297jrj/FUPUwvdi
-         76Ii2FFlqSf9Ze4UaG8ephnik4eXy8aoFk9Uxg25ai1kgVUvp1j
-Date:   Wed, 10 Apr 2019 22:42:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Heinrich Schuchardt <xypron.glpk@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] send-email: fix transferencoding config option
-Message-ID: <20190410224250.GJ12419@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-References: <20190409192733.10173-1-xypron.glpk@gmx.de>
- <20190409215856.GD92879@google.com>
- <xmqq8swi34h5.fsf@gitster-ct.c.googlers.com>
- <668fc68f-4d94-39e8-256d-55229472761f@gmx.de>
+        id S1726038AbfDJW50 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 18:57:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54318 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725982AbfDJW50 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 18:57:26 -0400
+Received: (qmail 31686 invoked by uid 109); 10 Apr 2019 22:57:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Apr 2019 22:57:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21436 invoked by uid 111); 10 Apr 2019 22:57:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Apr 2019 18:57:52 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Apr 2019 18:57:21 -0400
+Date:   Wed, 10 Apr 2019 18:57:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+Message-ID: <20190410225721.GA32262@sigill.intra.peff.net>
+References: <20190214043127.GA19019@sigill.intra.peff.net>
+ <20190214043743.GB19183@sigill.intra.peff.net>
+ <20190309024944.zcbwgvn52jsw2a2e@dcvr>
+ <20190310233956.GB3059@sigill.intra.peff.net>
+ <20190312031303.5tutut7zzvxne5dw@dcvr>
+ <20190312104954.GA2023@sigill.intra.peff.net>
+ <20190313015133.n7f7lyujnlwfytre@dcvr>
+ <20190313145417.GA24101@sigill.intra.peff.net>
+ <20190314091254.nescpfp3n6mbjpmh@dcvr>
+ <87zhoz8b9o.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="w6U88vdWm8UqIXvc"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <668fc68f-4d94-39e8-256d-55229472761f@gmx.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87zhoz8b9o.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Apr 09, 2019 at 05:10:43PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
---w6U88vdWm8UqIXvc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I've found a case where turning bitmaps on does horrible things for
+> bitmap "push" performance.
+> [...]
+> I can't share the repo, but I had a report where just a "git push" of a
+> topic branch that was 2/58 ahead/behind took ~2 minutes just in
+> "Enumerating objects", but ~500ms without bitmaps.
 
-On Wed, Apr 10, 2019 at 10:40:51PM +0200, Heinrich Schuchardt wrote:
-> Sounds reasonable. But including the tests requested nothing I could
-> easily shoulder.
->=20
-> Just a quite different thought:
->=20
-> 'auto' should discover a safe transfer encoding. Why does 'auto' not
-> discover that a patch contains carriage returns and should be base64
-> encoded (see subroutine apply_transfer_encoding())?
+That's pretty bad, though I'm not terribly surprised. The worst cases
+are ones where we have to traverse a lot to fill in the bitmap. So
+either there are a lot of commits newer than the bitmapped pack, or
+we've done a bad job of picking old commits to bitmap, requiring us to
+walk back to find all of the reachable objects (until we find something
+that does have a bitmap).
 
-Because nobody thought of it. The original rationale for "auto" was to
-replace "8bit" with something sane that worked due to long lines as an
-alternative to forcing people to choose it themselves.
+And "bad" here is somewhat subjective. The other side told us some
+"have" lines, and those are what we have to walk back from. _Usually_
+those would correspond to ref tips, and the bitmap code tries to put a
+bitmap at each ref tip. But if you have tons of refs, it can't always do
+so.
 
-And as the commit message says:
+> I.e. almost all the time is in get_object_list_from_bitmap() and around
+> 1m30s in just this in pack-bitmap.c:
+> 
+>     haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
+> 
+> And then another ~20s in:
+> 
+>     wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap);
 
-  Choose quoted-printable instead of base64, since base64-encoded plain
-  text is treated as suspicious by some spam filters.
+Yeah, that's where I'd expect the time to go. Inside find_objects()
+we'll call traverse_commit_list() to do the actual walk.
 
-I'll try to see if I can write something up to handle this better. If
-quoted-printable works, I'll pick that; otherwise, I'll choose base64.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The first walk for "haves" is looking mostly at old commits. Stuff that
+is mentioned in the pack, but for which we have to walk to find the
+bitmap.
 
---w6U88vdWm8UqIXvc
-Content-Type: application/pgp-signature; name="signature.asc"
+The second walk for wants is probably mostly looking at new commits.
+Things that don't have a bitmap yet, and for which we have to walk
+(though it's interesting that it's so much more expensive than the
+non-bitmap walk, which has to fully enumerate those trees itself; that
+implies that some of the "haves" are recent, too, with respect to the
+last pack).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+> This is with 10 packs and where only the largest (initial clone pack)
+> had a *.bitmap, but I can also reproduce with a 'git repack -A -d -b',
+> i.e. with only one pack with a *.bitmap, although that makes it a bit
+> better for the first bit, and almost completely cuts down on the time
+> spent in the second phase:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlyucWoACgkQv1NdgR9S
-9osRyxAAuWNU/CEqptGp9Eex+6LE4hHxk3qaVAaprLXJWJOqFvt1r7IyRcrc8VE5
-5carFpPIFbu7u9EaZeBwULePagMJyO/h6B4b0oLEiOWjHGAtSKkjSubS/DeneptV
-Q5wLpJmviPRTIeGgjEWim+s1ZItOfYQlapnLfiO/HknZ6aWrb3+ThuaF6/WedxMm
-6x2HMUHJmDVVBKH+iuzTkAsBFCMmmh7r8NcaQozV+V4qxXN4OmOzI/+dfhgRf5yH
-0t1Y6don4wNjVmovRoauT68D9ne5HrHblaCbkLOAdA9JT7EGIgZzO6SaijjVCAU2
-3OJUWDq9szuMJPnNmXp6cIof5mhSpOwvlBgym18ogSHV+mPnNFuEXepgTxS0JrRv
-0tfgSAI3Jknq8w+mGx8VsiZD6pYV7lQIJGm6LSu9+EXrmPDbvCDMxwpryP4CtGwM
-Mks7ZHJRelpcUVc7d+l/JBTt4DWWbyW2Mtv/j4QPlkOmTDVgtB7ZsTpFsTirnXQ5
-uypM4ah3VS934KsFf57C3bd+jgU+5yQbwSgVOz8BYAP5wgHHfmimb0o5Dr6vWH8r
-k1c9VquetSoZ2t2MH5X+9QqktAWpvBlV0VNAyQzm9L4XjTVLsCL+KsaFH+2jtI2u
-UhCuMTf/LjNAbiIbmDNGOKYQ4bUd47p24mYpifvaPV9PooYAICE=
-=zruD
------END PGP SIGNATURE-----
+Yeah, that makes sense. By repacking you've taken all those new commits
+and included them in on-disk bitmaps. So I'd expect the "wants" to get
+much shorter, but the "haves" phase staying long means we could do a
+better job of picking commits to have on-disk bitmaps.
 
---w6U88vdWm8UqIXvc--
+So two avenues for exploration I think:
+
+  1. I've long suspected that the bitmap selection code isn't ideal.
+     Both in terms of what it picks, but also in its runtime (I think it
+     ends up walking the same slices of history multiple times in some
+     cases).
+
+  2. The answer we get from a bitmap versus a regular traversal are not
+     apples-to-apples equivalent. The regular traversal walks down to
+     the UNINTERESTING commits, marks the boundaries trees and blobs as
+     UNINTERESTING, and then adds in all the interesting trees and blobs
+     minus the UNINTERESTING parts. So it can sometimes give the wrong
+     answer, claiming something is interesting when it is not.
+
+     Whereas with bitmaps we fill in the trees and blobs as we walk, and
+     you get the true answer. But it means we may open up a lot more
+     trees than the equivalent traversal would.
+
+     So one thing I've never really experimented with (and indeed, never
+     really thought about until writing this email) is that the bitmaps
+     could try to do that looser style of traversal, knowing that we
+     might err on the side of calling things interesting in a few cases.
+     But hopefully spending a lot less time opening trees.
+
+     I'm not even 100% sure what that would look like in code, but just
+     thinking about it from a high level, I don't there's a particular
+     mathematical reason it couldn't work.
+
+-Peff
