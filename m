@@ -2,403 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E5A620248
-	for <e@80x24.org>; Wed, 10 Apr 2019 17:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0D520248
+	for <e@80x24.org>; Wed, 10 Apr 2019 18:29:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729365AbfDJRiD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 13:38:03 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42279 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729686AbfDJRh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 13:37:59 -0400
-Received: by mail-ed1-f68.google.com with SMTP id x61so2767685edc.9
-        for <git@vger.kernel.org>; Wed, 10 Apr 2019 10:37:57 -0700 (PDT)
+        id S1731447AbfDJS3z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Apr 2019 14:29:55 -0400
+Received: from mail-eopbgr790097.outbound.protection.outlook.com ([40.107.79.97]:26624
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727305AbfDJS3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Apr 2019 14:29:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cdblAUKb1BRCIE4qquMZH5t9/Ta5EkwHhGee4Xpbjf8=;
-        b=qitn+TmE9uAHmc7QrNOdgphsvkLJ4bqy+z6m6O6ZN0IhkmqDefHiaUm5DjnOotNI0q
-         zYSsrHtQI9ujpt5erSCXyZ9FU4e6auhRqv+XT5pMfx1vhvSG93haHbwy4KCUMyQ53IY0
-         G//6gK3O3zc4cVz0Q/mG9p2caBz/ICWMcOt2BcP81H3n4FgWuXCYeYatm2riO8SB1xfE
-         rmdJUWrqKfCYqFakbTWWKkbmtlqhuAEKjHGbHZbGXFTAWdqgTLDUb+aJzzMeFQfk3dtl
-         ws/wndylLb3Bz9E7SnGbOy9H5aeBQPT9K+V8cyy7KooE/Ssmg0wd7qQFrSF05x3TW1rd
-         imsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cdblAUKb1BRCIE4qquMZH5t9/Ta5EkwHhGee4Xpbjf8=;
-        b=TFCcfXUXVdvHe2+TK6ym26NhAALt2HQIazAoxKLEPBTxn1UDkL7GZIVegDULfUJY2J
-         Flkyak2md2QqXVfrOOnXPHstSdfe6KAU3NL0esy5Ww71UYlHVjv4k3ZzNQgndoTrZZ4u
-         H/c4tYgsuU5iUENxafL4ImzVOI3TLkK7ElUKC/VpIrPMenlwK3I8fO5gbHWYevjuvsTx
-         GcQlmXItjkJnl2kOeuwb4qzJ3sKFkuizkVnLZn9vVP1FK1hzjik+F6yC8c/TEeLQzx/m
-         vHX2teJQg8hUEmwvtFVQdLFHsco8cS14/C/AlXAVKUsqPGv/0JDDf/XX/dn4mWYkJ1Wp
-         jBJg==
-X-Gm-Message-State: APjAAAWW82dWLvCpbEmGyGEyPno2797Ar0MOR2ojYwzaxGLCbssKlV40
-        ff2kxFVeX+zPifxY1W9dZSsJtk5D
-X-Google-Smtp-Source: APXvYqxqPiQ4GEFTP9LyJvwcs2rsT420ske76kKNGXEwQn7m5wfMztRR+ehXdO6zhhtKnQBVnNfF3w==
-X-Received: by 2002:a50:ba8a:: with SMTP id x10mr9465917ede.209.1554917876464;
-        Wed, 10 Apr 2019 10:37:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h11sm4387653eds.44.2019.04.10.10.37.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Apr 2019 10:37:55 -0700 (PDT)
-Date:   Wed, 10 Apr 2019 10:37:55 -0700 (PDT)
-X-Google-Original-Date: Wed, 10 Apr 2019 17:37:44 GMT
-Message-Id: <db1ede363645b0620d4924639efe5ec708441aa7.1554917868.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.170.git.gitgitgadget@gmail.com>
-References: <pull.170.git.gitgitgadget@gmail.com>
-From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 07/11] Add a function to determine unique prefixes for a list
- of strings
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+lbBZ3ooDtHk2PiHaobg7/MQV2VGvul+jcyyoeHQeAw=;
+ b=DLd4R5k65kl5XsNWW0yiqLC356j/0FsYr3k0NLRkTgXO/DSVAwaCv3J8VeyuhEdXKriU3wv8VLM8Pl+XBM0Z4+TUN/YgDru+oeNAznK3fyYfssqtTluxHzggvi1jRpCaTz4WlmuoOuIoQuL4cZnjYdyI/sLpbycIssDiyAuabNc=
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
+ DM6PR08MB4283.namprd08.prod.outlook.com (20.176.82.20) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1792.14; Wed, 10 Apr 2019 18:29:51 +0000
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::6849:6be1:92ad:4577]) by DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::6849:6be1:92ad:4577%4]) with mapi id 15.20.1771.021; Wed, 10 Apr 2019
+ 18:29:51 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     "gitster@pobox.com" <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "ahippo@yandex.com" <ahippo@yandex.com>,
+        "luke@diamand.org" <luke@diamand.org>,
+        "Mazo, Andrey" <amazo@checkvideo.com>
+Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
+Thread-Topic: What's cooking in git.git (Apr 2019, #02; Wed, 10)
+Thread-Index: AQHU7v81wvcMXSCz6kuZAmSXfR4nhKY1uIiA
+Date:   Wed, 10 Apr 2019 18:29:51 +0000
+Message-ID: <20190410182859.20511-1-amazo@checkvideo.com>
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BN6PR03CA0066.namprd03.prod.outlook.com
+ (2603:10b6:404:4c::28) To DM6PR08MB4956.namprd08.prod.outlook.com
+ (2603:10b6:5:4b::25)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-mailer: git-send-email 2.19.2
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: bf52e61b-c1de-4ddb-4f67-08d6bde284f4
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600139)(711020)(4605104)(2017052603328)(7193020);SRVR:DM6PR08MB4283;
+x-ms-traffictypediagnostic: DM6PR08MB4283:
+x-microsoft-antispam-prvs: <DM6PR08MB4283771FAF8E2E3015FC8D93DA2E0@DM6PR08MB4283.namprd08.prod.outlook.com>
+x-forefront-prvs: 00032065B2
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(346002)(39860400002)(136003)(376002)(366004)(189003)(199004)(6486002)(50226002)(8676002)(71190400001)(81166006)(1730700003)(2351001)(3846002)(106356001)(99286004)(105586002)(6116002)(81156014)(5660300002)(256004)(446003)(14444005)(2616005)(6916009)(14454004)(11346002)(486006)(71200400001)(1076003)(6512007)(68736007)(386003)(86362001)(8936002)(5640700003)(6246003)(52116002)(2906002)(476003)(53936002)(36756003)(54906003)(6436002)(186003)(26005)(107886003)(478600001)(2501003)(66066001)(229853002)(6506007)(97736004)(25786009)(305945005)(316002)(4326008)(7736002)(76176011)(102836004)(325944009)(71610200001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4283;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: AFfgJYdSbFKHv0tKtn/CE+Bfp36BXai4R1qOYpBPMeMxADJ+jXzIpeKDc9nUfM7F4AKqS/z4S+27j+PXpPyRqYcMySct/wQn0wvLd225uk2I5ko6XQ3+vCIGxeGOUTmP0L8BzNo6dmnbl3MEtHcGN/E38AcnPr3lqVn8e50iDIQjLCUeAmSN5A3kD9D6kp8r/ww9K//yVzs5J7rENLWi+C1mbY4LWQmWSmBNlf/CL0fpeagOAoG5DC6EceAVuhnqz37qubFnPnA+I8SaOwNxz0nvszf0IinSjtZvgJLLo0Y6TSZwuCKLK9+sA+rb/ftxUDssgQyYPNZHbBfMEq9l6CcxapgmKA5gOEHvkDam5YB5ggkUQ903KMhrCssWfr4SlIpQI0kr8RiOvyqKY/Xm9DkT30JFzJfwD/l9epco2UE=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf52e61b-c1de-4ddb-4f67-08d6bde284f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2019 18:29:51.4529
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4283
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Slavica Djukic <slawica92@hotmail.com>
-
-In the `git add -i` command, we show unique prefixes of the commands and
-files, to give an indication what prefix would select them.
-
-Naturally, the C implementation looks a lot different than the Perl
-implementation: in Perl, a trie is much easier implemented, while we
-already have a pretty neat hashmap implementation in C that we use for
-the purpose of storing (not necessarily unique) prefixes.
-
-The idea: for each item that we add, we generate prefixes starting with
-the first letter, then the first two letters, then three, etc, until we
-find a prefix that is unique (or until the prefix length would be
-longer than we want). If we encounter a previously-unique prefix on the
-way, we adjust that item's prefix to make it unique again (or we mark it
-as having no unique prefix if we failed to find one). These partial
-prefixes are stored in a hash map (for quick lookup times).
-
-To make sure that this function works as expected, we add a test using a
-special-purpose test helper that was added for that purpose.
-
-Note: We expect the list of prefix items to be passed in as a list of
-pointers rather than as regular list to avoid having to copy information
-(the actual items will most likely contain more information than just
-the name and the length of the unique prefix, but passing in `struct
-prefix_item *` would not allow for that).
-
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile                   |   2 +
- prefix-map.c               | 111 +++++++++++++++++++++++++++++++++++++
- prefix-map.h               |  40 +++++++++++++
- t/helper/test-prefix-map.c |  58 +++++++++++++++++++
- t/helper/test-tool.c       |   1 +
- t/helper/test-tool.h       |   1 +
- t/t0016-prefix-map.sh      |  10 ++++
- 7 files changed, 223 insertions(+)
- create mode 100644 prefix-map.c
- create mode 100644 prefix-map.h
- create mode 100644 t/helper/test-prefix-map.c
- create mode 100755 t/t0016-prefix-map.sh
-
-diff --git a/Makefile b/Makefile
-index 18e656a32f..8299b3f17d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -754,6 +754,7 @@ TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-parse-options.o
- TEST_BUILTINS_OBJS += test-path-utils.o
- TEST_BUILTINS_OBJS += test-pkt-line.o
-+TEST_BUILTINS_OBJS += test-prefix-map.o
- TEST_BUILTINS_OBJS += test-prio-queue.o
- TEST_BUILTINS_OBJS += test-reach.o
- TEST_BUILTINS_OBJS += test-read-cache.o
-@@ -967,6 +968,7 @@ LIB_OBJS += patch-ids.o
- LIB_OBJS += path.o
- LIB_OBJS += pathspec.o
- LIB_OBJS += pkt-line.o
-+LIB_OBJS += prefix-map.o
- LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
-diff --git a/prefix-map.c b/prefix-map.c
-new file mode 100644
-index 0000000000..3c5ae4ae0a
---- /dev/null
-+++ b/prefix-map.c
-@@ -0,0 +1,111 @@
-+#include "cache.h"
-+#include "prefix-map.h"
-+
-+static int map_cmp(const void *unused_cmp_data,
-+		   const void *entry,
-+		   const void *entry_or_key,
-+		   const void *unused_keydata)
-+{
-+	const struct prefix_map_entry *a = entry;
-+	const struct prefix_map_entry *b = entry_or_key;
-+
-+	return a->prefix_length != b->prefix_length ||
-+		strncmp(a->name, b->name, a->prefix_length);
-+}
-+
-+static void add_prefix_entry(struct hashmap *map, const char *name,
-+			     size_t prefix_length, struct prefix_item *item)
-+{
-+	struct prefix_map_entry *result = xmalloc(sizeof(*result));
-+	result->name = name;
-+	result->prefix_length = prefix_length;
-+	result->item = item;
-+	hashmap_entry_init(result, memhash(name, prefix_length));
-+	hashmap_add(map, result);
-+}
-+
-+static void init_prefix_map(struct prefix_map *prefix_map,
-+			    int min_prefix_length, int max_prefix_length)
-+{
-+	hashmap_init(&prefix_map->map, map_cmp, NULL, 0);
-+	prefix_map->min_length = min_prefix_length;
-+	prefix_map->max_length = max_prefix_length;
-+}
-+
-+static void add_prefix_item(struct prefix_map *prefix_map,
-+			    struct prefix_item *item)
-+{
-+	struct prefix_map_entry *e = xmalloc(sizeof(*e)), *e2;
-+	int j;
-+
-+	e->item = item;
-+	e->name = e->item->name;
-+
-+	for (j = prefix_map->min_length; j <= prefix_map->max_length; j++) {
-+		if (!isascii(e->name[j])) {
-+			free(e);
-+			break;
-+		}
-+
-+		e->prefix_length = j;
-+		hashmap_entry_init(e, memhash(e->name, j));
-+		e2 = hashmap_get(&prefix_map->map, e, NULL);
-+		if (!e2) {
-+			/* prefix is unique so far */
-+			e->item->prefix_length = j;
-+			hashmap_add(&prefix_map->map, e);
-+			break;
-+		}
-+
-+		if (!e2->item)
-+			continue; /* non-unique prefix */
-+
-+		if (j != e2->item->prefix_length)
-+			BUG("unexpected prefix length: %d != %d",
-+			    (int)j, (int)e2->item->prefix_length);
-+
-+		/* skip common prefix */
-+		for (; j < prefix_map->max_length && e->name[j]; j++) {
-+			if (e->item->name[j] != e2->item->name[j])
-+				break;
-+			add_prefix_entry(&prefix_map->map, e->name, j + 1,
-+					 NULL);
-+		}
-+
-+		/* e2 no longer refers to a unique prefix */
-+		if (j < prefix_map->max_length && e2->name[j]) {
-+			/* found a new unique prefix for e2's item */
-+			e2->item->prefix_length = j + 1;
-+			add_prefix_entry(&prefix_map->map, e2->name, j + 1,
-+					 e2->item);
-+		}
-+		else
-+			e2->item->prefix_length = 0;
-+		e2->item = NULL;
-+
-+		if (j < prefix_map->max_length && e->name[j]) {
-+			/* found a unique prefix for the item */
-+			e->item->prefix_length = j + 1;
-+			add_prefix_entry(&prefix_map->map, e->name, j + 1,
-+					 e->item);
-+		} else {
-+			/* item has no (short enough) unique prefix */
-+			e->item->prefix_length = 0;
-+			free(e);
-+		}
-+
-+		break;
-+	}
-+}
-+
-+void find_unique_prefixes(struct prefix_item **list, size_t nr,
-+			  int min_length, int max_length)
-+{
-+	int i;
-+	struct prefix_map prefix_map;
-+
-+	init_prefix_map(&prefix_map, min_length, max_length);
-+	for (i = 0; i < nr; i++)
-+		add_prefix_item(&prefix_map, list[i]);
-+	hashmap_free(&prefix_map.map, 1);
-+}
-diff --git a/prefix-map.h b/prefix-map.h
-new file mode 100644
-index 0000000000..ce3b8a4a32
---- /dev/null
-+++ b/prefix-map.h
-@@ -0,0 +1,40 @@
-+#ifndef PREFIX_MAP_H
-+#define PREFIX_MAP_H
-+
-+#include "hashmap.h"
-+
-+struct prefix_item {
-+	const char *name;
-+	size_t prefix_length;
-+};
-+
-+struct prefix_map_entry {
-+	struct hashmap_entry e;
-+	const char *name;
-+	size_t prefix_length;
-+	/* if item is NULL, the prefix is not unique */
-+	struct prefix_item *item;
-+};
-+
-+struct prefix_map {
-+	struct hashmap map;
-+	int min_length, max_length;
-+};
-+
-+/*
-+ * Find unique prefixes in a given list of strings.
-+ *
-+ * Typically, the `struct prefix_item` information will be but a field in the
-+ * actual item struct; For this reason, the `list` parameter is specified as a
-+ * list of pointers to the items.
-+ *
-+ * The `min_length`/`max_length` parameters define what length the unique
-+ * prefixes should have.
-+ *
-+ * If no unique prefix could be found for a given item, its `prefix_length`
-+ * will be set to 0.
-+ */
-+void find_unique_prefixes(struct prefix_item **list, size_t nr,
-+			  int min_length, int max_length);
-+
-+#endif
-diff --git a/t/helper/test-prefix-map.c b/t/helper/test-prefix-map.c
-new file mode 100644
-index 0000000000..3f1c90eaf0
---- /dev/null
-+++ b/t/helper/test-prefix-map.c
-@@ -0,0 +1,58 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "prefix-map.h"
-+
-+static size_t test_count, failed_count;
-+
-+static void check(int succeeded, const char *file, size_t line_no,
-+		  const char *fmt, ...)
-+{
-+	va_list ap;
-+
-+	test_count++;
-+	if (succeeded)
-+		return;
-+
-+	va_start(ap, fmt);
-+	fprintf(stderr, "%s:%d: ", file, (int)line_no);
-+	vfprintf(stderr, fmt, ap);
-+	fputc('\n', stderr);
-+	va_end(ap);
-+
-+	failed_count++;
-+}
-+
-+#define EXPECT_SIZE_T_EQUALS(expect, actual, hint) \
-+	check(expect == actual, __FILE__, __LINE__, \
-+	      "size_t's do not match: %" \
-+	      PRIdMAX " != %" PRIdMAX " (%s) (%s)", \
-+	      (intmax_t)expect, (intmax_t)actual, #actual, hint)
-+
-+int cmd__prefix_map(int argc, const char **argv)
-+{
-+#define NR 5
-+	struct prefix_item items[NR] = {
-+		{ "unique" },
-+		{ "hell" },
-+		{ "hello" },
-+		{ "wok" },
-+		{ "world" },
-+	};
-+	struct prefix_item *list[NR] = {
-+		items, items + 1, items + 2, items + 3, items + 4
-+	};
-+
-+	find_unique_prefixes(list, NR, 1, 3);
-+
-+#define EXPECT_PREFIX_LENGTH_EQUALS(expect, index) \
-+	EXPECT_SIZE_T_EQUALS(expect, list[index]->prefix_length, \
-+			     list[index]->name)
-+
-+	EXPECT_PREFIX_LENGTH_EQUALS(1, 0);
-+	EXPECT_PREFIX_LENGTH_EQUALS(0, 1);
-+	EXPECT_PREFIX_LENGTH_EQUALS(0, 2);
-+	EXPECT_PREFIX_LENGTH_EQUALS(3, 3);
-+	EXPECT_PREFIX_LENGTH_EQUALS(3, 4);
-+
-+	return !!failed_count;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 99db7409b8..d6a92a8699 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -32,6 +32,7 @@ static struct test_cmd cmds[] = {
- 	{ "parse-options", cmd__parse_options },
- 	{ "path-utils", cmd__path_utils },
- 	{ "pkt-line", cmd__pkt_line },
-+	{ "prefix-map", cmd__prefix_map },
- 	{ "prio-queue", cmd__prio_queue },
- 	{ "reach", cmd__reach },
- 	{ "read-cache", cmd__read_cache },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 25abed1cf2..33a089ee4e 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -29,6 +29,7 @@ int cmd__online_cpus(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
- int cmd__path_utils(int argc, const char **argv);
- int cmd__pkt_line(int argc, const char **argv);
-+int cmd__prefix_map(int argc, const char **argv);
- int cmd__prio_queue(int argc, const char **argv);
- int cmd__reach(int argc, const char **argv);
- int cmd__read_cache(int argc, const char **argv);
-diff --git a/t/t0016-prefix-map.sh b/t/t0016-prefix-map.sh
-new file mode 100755
-index 0000000000..187fa92aec
---- /dev/null
-+++ b/t/t0016-prefix-map.sh
-@@ -0,0 +1,10 @@
-+#!/bin/sh
-+
-+test_description='basic tests for prefix map'
-+. ./test-lib.sh
-+
-+test_expect_success 'prefix map' '
-+	test-tool prefix-map
-+'
-+
-+test_done
--- 
-gitgitgadget
-
+PiAqIGFtL3A0LWJyYW5jaGVzLWV4Y2x1ZGVzICgyMDE5LTA0LTAyKSA4IGNvbW1pdHMNCj4gIC0g
+Z2l0LXA0OiByZXNwZWN0IGV4Y2x1ZGVkIHBhdGhzIHdoZW4gZGV0ZWN0aW5nIGJyYW5jaGVzDQo+
+ICAtIGdpdC1wNDogYWRkIGZhaWxpbmcgdGVzdCBmb3IgImdpdC1wNDogcmVzcGVjdCBleGNsdWRl
+ZCBwYXRocyB3aGVuIGRldGVjdGluZyBicmFuY2hlcyINCj4gIC0gZ2l0LXA0OiBkb24ndCBleGNs
+dWRlIG90aGVyIGZpbGVzIHdpdGggc2FtZSBwcmVmaXgNCj4gIC0gZ2l0LXA0OiBhZGQgZmFpbGlu
+ZyB0ZXN0IGZvciAiZG9uJ3QgZXhjbHVkZSBvdGhlciBmaWxlcyB3aXRoIHNhbWUgcHJlZml4Ig0K
+PiAgLSBnaXQtcDQ6IGRvbid0IGdyb29tIGV4Y2x1ZGUgcGF0aCBsaXN0IG9uIGV2ZXJ5IGNvbW1p
+dA0KPiAgLSBnaXQtcDQ6IG1hdGNoIGJyYW5jaGVzIGNhc2UgaW5zZW5zaXRpdmVseSBpZiBjb25m
+aWd1cmVkDQo+ICAtIGdpdC1wNDogYWRkIGZhaWxpbmcgdGVzdCBmb3IgImdpdC1wNDogbWF0Y2gg
+YnJhbmNoZXMgY2FzZSBpbnNlbnNpdGl2ZWx5IGlmIGNvbmZpZ3VyZWQiDQo+ICAtIGdpdC1wNDog
+ZGV0ZWN0L3ByZXZlbnQgaW5maW5pdGUgbG9vcCBpbiBnaXRDb21taXRCeVA0Q2hhbmdlKCkNCj4g
+DQo+ICAiZ2l0IHA0IiB1cGRhdGUuDQo+IA0KPiAgSXMgdGhpcyByZWFkeSBmb3IgJ25leHQnPw0K
+Pg0KDQpBIGNvdXBsZSBvZiB3ZWVrcyBhZ28sIEx1a2Ugc2FpZCBoZSB3YXMgcXVpdGUgYnVzeSwN
+CnNvIEkgd291bGQgZ3Vlc3MsIGhlIGRpZG4ndCBoYXZlIGEgY2hhbmNlIHRvIGxvb2sgYXQgdGhl
+c2UgY2hhbmdlcyB5ZXQuDQoNCg0KV2hpbGUgd2UncmUgb24gdGhpcywgSSB3YW50ZWQgdG8gZGlz
+Y3VzcyBhbm90aGVyIHRvcGljLg0KTXkgbGFzdCBkYXkgYXQgdGhlIGN1cnJlbnQgZW1wbG95ZXIs
+IENoZWNrVmlkZW8sIGlzIEFwcmlsIDE5Lg0KQWZ0ZXIgdGhhdCwgSSdsbCBsb3NlIGFjY2VzcyB0
+byBhbWF6b0BjaGVja3ZpZGVvLmNvbSBlbWFpbCBhZGRyZXNzLg0KSSBwbGFuIHRvIHN3aXRjaCB0
+byBteSBwZXJzb25hbCBlbWFpbCAoYWhpcHBvQHlhbmRleC5jb20pIGZvciBnaXQtcDQtcmVsYXRl
+ZCBkaXNjdXNzaW9ucyBzdGFydGluZyB0b21vcnJvdywgQXByaWwgMTEuDQoNClNob3VsZCBJIHJl
+c2VuZCBteSBwYXRjaGVzIGZyb20gbXkgcGVyc29uYWwgYWRkcmVzcyBhbmQvb3IgYWRkIGFub3Ro
+ZXIgcy1vLWI/DQpMaWtlDQoiIiINClNpZ25lZC1vZmYtYnk6IEFuZHJleSBNYXpvIDxhbWF6b0Bj
+aGVja3ZpZGVvLmNvbT4NClNpZ25lZC1vZmYtYnk6IEFuZHJleSBNYXpvIDxhaGlwcG9AeWFuZGV4
+LmNvbT4NCiIiIg0KDQoNCkFsc28sIEkgd29uJ3QgaGF2ZSBhY2Nlc3MgdG8gYSBsYXJnZSBQZXJm
+b3JjZSBzZXJ2ZXIgYWZ0ZXIgQXByaWwgMTksDQp3aGljaCB3YXMgZ29vZCBmb3IgdGVzdGluZy4N
+Cg0KLS0NCkFuZHJleQ0K
