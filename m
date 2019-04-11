@@ -2,105 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E68220248
-	for <e@80x24.org>; Thu, 11 Apr 2019 13:50:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C0BF20248
+	for <e@80x24.org>; Thu, 11 Apr 2019 15:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726603AbfDKNt7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 09:49:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54930 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726106AbfDKNt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 09:49:59 -0400
-Received: (qmail 7172 invoked by uid 109); 11 Apr 2019 13:49:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Apr 2019 13:49:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27942 invoked by uid 111); 11 Apr 2019 13:50:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Apr 2019 09:50:28 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2019 09:49:57 -0400
-Date:   Thu, 11 Apr 2019 09:49:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?546L5YGl5by6?= <jianqiang.wang@securitygossip.com>
-Subject: [PATCH 4/4] progress: use xmalloc/xcalloc
-Message-ID: <20190411134957.GD9182@sigill.intra.peff.net>
-References: <20190411134736.GA28543@sigill.intra.peff.net>
+        id S1726599AbfDKPGU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 11:06:20 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:36281 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726145AbfDKPGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 11:06:19 -0400
+Received: by mail-ed1-f46.google.com with SMTP id u57so4884863edm.3
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 08:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Wm2Q/t9QL6FGsg63YD1Bk3oT66p5HQxm5J9JLQcOd4=;
+        b=a6RWPaHt+NvPDDRvZHmgeXbbWqG7KpHGGIIG7S9p3kPXPrgOTv9rT1jryjJ7dHBMil
+         g/Qx0BaRi6WN+DGqHkw8sovfcAeOo204Yx82qVnwzKKwa5pJm3wZTzP1K8HgekcIUreo
+         kfwdHZuozh6mufGIF2UlWoRNJMiunkD6vbC3VXBvOwlrK8y70D6wBXPfJGP7/sEfYRCw
+         bOL8J2u0L/XsgWGVKTnJSelpCRtePUJnaCSKvqy0FXigAGfqj1gTCa35duJEcGRFqR4t
+         KbaFusLOm02a9/e58FqCSxEOAMUp+MgsvNziYWRluDdhkDTFMdrxf3A95QSwTfzwG/pL
+         UMVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Wm2Q/t9QL6FGsg63YD1Bk3oT66p5HQxm5J9JLQcOd4=;
+        b=YnaDMufjuXMBovkbCQeQxDAmpi/jC3C0rF5sxp7JB0q+J5jgIAHWQ8B4JYOKNKfEdG
+         dnM5CPeZU0ADusEZXBmASrTE7YA8aIBVqnCwBikrTJY12thU/bIbDukxJ/UFHvCJlwrw
+         ooH+Qk3J9J2dYBCesTMeEIJ23WmE5Mvla0bGtHt9tO07B2LgktUxtCyhVRNNVWaM3MWi
+         1zNgtzQs6vHFOkjkSUfitD82WGiQhsSf97bc5hwJeagWU+Rt7oHkBEwyN4qPXN5usLBG
+         hu+X+/wy5j0LWZZDZMgqIFabHEkndpcqx+qBZwYAmVhTK48e36v5qEB8wa2lrJsCrrIo
+         Yhgg==
+X-Gm-Message-State: APjAAAUplg/jKOJ01A5hcBMLEDeS1y0aAhiA8r1fNbPLYs9xYYlkmI0m
+        FHbcb+soSXDQ/XAJP7LOkk5vsLBvTCdUCIo96QTmMXDp
+X-Google-Smtp-Source: APXvYqxCimU0JuHwVmGCKk5k4gp4E61s5CWnVzuBvks1oLy8v3/3jPQYZkQ6W0YvLcU8bmNgMon0LQaX+ll2Oi8TETQ=
+X-Received: by 2002:a17:906:8604:: with SMTP id o4mr25471897ejx.178.1554995177944;
+ Thu, 11 Apr 2019 08:06:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190411134736.GA28543@sigill.intra.peff.net>
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 11 Apr 2019 17:06:06 +0200
+Message-ID: <CAP8UFD2KsjPo7G0BtzXfA3gyoUyR7y_WsNLm3mn39O8h4n+Kfw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the early days of Git, the progress code allocates its struct with
-a bare malloc(), not xmalloc(). If the allocation fails, we just avoid
-showing progress at all.
+On Tue, Apr 9, 2019 at 8:08 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-While perhaps a noble goal not to fail the whole operation because of
-optional progress, in practice:
+> * cc/replace-graft-peel-tags (2019-04-01) 4 commits
+>  - replace: fix --graft when passing a tag first
+>  - replace: fix --graft when passing a tag as parent
+>  - t6050: redirect expected error output to a file
+>  - t6050: use test_line_count instead of wc -l
+>
+>  When given a tag that points at a commit-ish, "git replace --graft"
+>  failed to peel the tag before writing a replace ref, which did not
+>  make sense because the old graft mechanism the feature wants to
+>  mimick only allowed to replace one commit object with another.
+>  This has been fixed.
+>
+>  The title of the top two commits are fairly useless and does not
+>  say how the issue was fixed, but the fix is to peel the given tag
+>  ourselves down to the underlying commit object.
 
-  1. Any failure to allocate a few dozen bytes here means critical path
-     allocations are likely to fail, too.
+I can send a new version where the top two commits have the following titles:
 
-  2. These days we use a strbuf for throughput progress (and there's a
-     patch under discussion to do the same for non-throughput cases,
-     too). And that uses xmalloc() under the hood, which means we'd
-     still die on some allocation failures.
+  - replace: peel tag when passing a tag first to --graft
+  - replace: peel tag when passing a tag as parent to --graft
 
-Let's switch to xmalloc(). That makes us consistent with the rest of Git
-and makes it easier to audit for other (less careful) bare mallocs.
+I am also ok with you changing the titles, as you prefer.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This one is obviously less urgent than the others in that it doesn't
-trigger a segfault. So this is purely cleanup.
-
- progress.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 5a99c9fbf0..699ac33c4f 100644
---- a/progress.c
-+++ b/progress.c
-@@ -139,12 +139,10 @@ void display_throughput(struct progress *progress, uint64_t total)
- 	now_ns = getnanotime();
- 
- 	if (!tp) {
--		progress->throughput = tp = calloc(1, sizeof(*tp));
--		if (tp) {
--			tp->prev_total = tp->curr_total = total;
--			tp->prev_ns = now_ns;
--			strbuf_init(&tp->display, 0);
--		}
-+		progress->throughput = tp = xcalloc(1, sizeof(*tp));
-+		tp->prev_total = tp->curr_total = total;
-+		tp->prev_ns = now_ns;
-+		strbuf_init(&tp->display, 0);
- 		return;
- 	}
- 	tp->curr_total = total;
-@@ -196,13 +194,7 @@ int display_progress(struct progress *progress, uint64_t n)
- static struct progress *start_progress_delay(const char *title, uint64_t total,
- 					     unsigned delay)
- {
--	struct progress *progress = malloc(sizeof(*progress));
--	if (!progress) {
--		/* unlikely, but here's a good fallback */
--		fprintf(stderr, "%s...\n", title);
--		fflush(stderr);
--		return NULL;
--	}
-+	struct progress *progress = xmalloc(sizeof(*progress));
- 	progress->title = title;
- 	progress->total = total;
- 	progress->last_value = -1;
--- 
-2.21.0.922.g1a559e573c
+Thanks!
