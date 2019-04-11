@@ -2,189 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9F020248
-	for <e@80x24.org>; Thu, 11 Apr 2019 20:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBDA20248
+	for <e@80x24.org>; Thu, 11 Apr 2019 20:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726780AbfDKUa0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 16:30:26 -0400
-Received: from mail-oi1-f202.google.com ([209.85.167.202]:43465 "EHLO
-        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726748AbfDKUaZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 16:30:25 -0400
-Received: by mail-oi1-f202.google.com with SMTP id u10so3437560oie.10
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 13:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=zN/yXJBnLA+2itMrWSSUERUXbXTQwHjdgXLrjjZpfSM=;
-        b=uNJylTwTN1gofTWSOzraUwAq/d68YZjD0lEWJ06EBCfC9gdnnSORbb4luORoOINM2L
-         8YFZ7JD2R2y9+YcQnK2Cj/iQ3dud/i3ttSYTTMZqqRYsPBsCTsiZcDfw0K+JDtaDILuc
-         4SA53pndcFzKv+EZt6eYDYa+G6mchwxpKZn06PW5QAQQnG22x5eQvogBoa8NM0cUw/8C
-         7sRZSJYWV14TssvpTo07S+bdqfmbvWEAq43+WVOSnfGIsH6wSw8cG20wnnyrYwTwK/JD
-         nGFCOZTfGrYu3cuqnCOPu2UNiFwE9yzvH0e0/Zsux/ootVabE9+CEB6P3imCYQfvltZd
-         1PFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=zN/yXJBnLA+2itMrWSSUERUXbXTQwHjdgXLrjjZpfSM=;
-        b=FE8jItY1JHsKMTV0vUjwnzcmMo11/HYO3pKhVbsyPxMX75rCgYW4uBXtpRnPiyUpQa
-         8xkLf6QiUBlCRqPa0aKRhJQKGE6euAn6dCIfVFy34ASliLnEO1ljG5EzgqBNYkQuxr4k
-         y5bgU6CtG0EDB2ObRiaqo8LgMCaIYMkhTyKqDJqVGEVT/3hsOet8BNtntsHkKoz5aoqk
-         VF02BurXw+ZgAZAX8Ys3c5nC/JrByTTeL4Gd5f4mYebGKUohOBmAs8/amAsEuBc806RE
-         StY6dBRUUG6FFXZXgR8XYzdF0Sf1lo6H1gqIkjSnZMCHHumKlG+ryU6TDMOq1SYDXL/6
-         zBNg==
-X-Gm-Message-State: APjAAAV+XeniDJOxin2EaSB2bGobsIZcfWYm/Uft6PhdbWZTTmezypU/
-        E/eZDzOX40p6HqoWD3/fjXAy1NWmPW8vzKrmWgjgM8OI45kYz4ZFBwgjYS12q++nzyktRKn1m6m
-        Ah48LlWGn8TzSK6eBAAHf+GhiJghbVCKQrZCLaquBPsTLHl2NPdhEoHwESAfwV7nNaZxnuDpiI8
-        r7
-X-Google-Smtp-Source: APXvYqzrsgStzEcNpEqqfZBq/3ij3cXCrwODUmnmhFoFQ/w5nrV3P3WgkMFTAI4wBon28jJek+Eqcyj9+9ts3V4Zk4Zo
-X-Received: by 2002:aca:b887:: with SMTP id i129mr4433158oif.47.1555014624182;
- Thu, 11 Apr 2019 13:30:24 -0700 (PDT)
-Date:   Thu, 11 Apr 2019 13:30:16 -0700
-In-Reply-To: <cover.1555014408.git.jonathantanmy@google.com>
-Message-Id: <f59b8244eb3cf75ceeb21f52a6679a5fb3b96fd1.1555014408.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190405204413.93900-1-jonathantanmy@google.com> <cover.1555014408.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v3 2/2] clone: send server options when using protocol v2
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727020AbfDKUhI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 16:37:08 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45581 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726978AbfDKUhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 16:37:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555015022;
+        bh=AePKQqSwz69+zUPM2EAJRr6Qt/MbFBmYwQbNtVvPvxc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=HV6WQ5Y992UHImAMSjc6sECyBa7EGbsQkdXPk0aITALeeTmT6VahTNxL0keTnETAY
+         JED5AQ2jLSBfpraygLHkK7HvEf/hmDo/TPc0JK6uSzEvJwObISUc7g8w4P5jXzGZtu
+         lljvWuHTqHMy288oHnf32w7U4fWR9BtC2XSJchF4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MN0jA-1hGuQw02jg-006dn2; Thu, 11
+ Apr 2019 22:37:02 +0200
+Date:   Thu, 11 Apr 2019 22:36:46 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 00/33] nd/sha1-name-c-wo-the-repository updates
+In-Reply-To: <CACsJy8AE1cOYCNDu7suQDJ0NYxeoG3w6e-+mZ-J1D5j_WNLWeg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904112233490.41@tvgsbejvaqbjf.bet>
+References: <20190403113457.20399-1-pclouds@gmail.com> <20190406113453.5149-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1904102254500.41@tvgsbejvaqbjf.bet> <CACsJy8AE1cOYCNDu7suQDJ0NYxeoG3w6e-+mZ-J1D5j_WNLWeg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3MANm3LaP3kflMAvvPLbBwD5nlUzb2Q9YcL2k7mo40qLvb5o8YZ
+ bTWkW86PTq5fHQWRFiA2LQkB1Uo/xIsfZJdtVyTzcQo9VNB+UY5sN7HVxtvUTfbgygm+AZv
+ MbHTbf6Ripg+1By2frfZkfCkFRcVH3farFoUnXbD5F7lS+rT+74bfDOUGdsR8FsDtspKBsw
+ s/IMg1U3p2BBpmHmvB+Qw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pb6+qgfcdhI=:OlvXJLrhYABBPvhcAsd8tK
+ I1Hm0txIFiFet0/55lF4/VokNU0ERVheaGhoIBLVegMKRu8r+tFbwHj97fbqQJH+2QNVKqmLi
+ ykK+WnmSFVXNmVsYSBKaMd0PfpAl7G1id+uyveYXTLDw6nT5/fxmW9rE4Xoy/IcKDYU/uIjF/
+ eYaIxWFV/OpgzZiivVmN7kfPTn8b6bopWZbTBDwgBatmQx/xQOtZwq8jni9w/Hq3xXlDGIs40
+ NYy+qDzgGOSweFRFL/INeFzkX3aNk/y8kmhNOZGaNSL5z40XSQck2X5JnLgV2Mnn9J46AB2JT
+ SWhY2Ltl0ml9NruqlqqfU233i/tm08CdcRwZa3aPFsBI9Qn21SQYbctB2wgLA/vLa2NTQfnFt
+ CoeH8l7yzHFos3XHwoSdPwFYmEF7zFtYj1fQmrJgFVRXMTE9GrvsWMXKRVanHtHmA+Hpi+nqF
+ AZ24MBXN50450q7qxeVjV+llLcG1a+a4CC9ct6ZwwH7hHBmWrfvO9pQ8oL3kzvGZnsWoqvrrG
+ 1yf/PH/0wlhIgLC2hRTPjxYIYcTg/rb6HTXhPiI3EftNbFlWyJu4HOVQ8l4jrUvLnj6ih28r1
+ AvPK8+BG6+kKaPcVVOnmmS2m9dKNog3dOCEYsEBPpqNBJaAMiEs388UrsNfNq4INFX1WtfPye
+ PN0nIVmvnfktKE2Z8rkvFr90UWe1TbE5t2rbyzQym8P4mJ/LKVjSaPDloC9tSXM87GFD1/7wO
+ 20V1KXW0+MaPVXr+ORlI5k3Lii7sdMYyIkeOd+G9VUzsEtxdMdzWfiophxEEguRWm8gRh6gA2
+ fg+sKlGqcgGJZlqWzitoLjXfnDoOUhkLKl4wYJLRNCm02nEE0mzShoPaAwsozoKNnVcw15RyJ
+ eZklCCNe33TU1bYzGpIRzuXED+dYwXTPy0e2e4zx19ebJcG2wP1idJpda8TiM+AhgrX8BFohE
+ aVb0J1FX8IQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 5e3548ef16 ("fetch: send server options when using protocol v2",
-2018-04-24) taught "fetch" the ability to send server options when using
-protocol v2, but not "clone". This ability is triggered by "-o" or
-"--server-option".
+Hi,
 
-Teach "clone" the same ability, except that because "clone" already
-has "-o" for another parameter, teach "clone" only to receive
-"--server-option".
+On Thu, 11 Apr 2019, Duy Nguyen wrote:
 
-Explain in the documentation, both for clone and for fetch, that server
-handling of server options are server-specific. This is similar to
-receive-pack's handling of push options - currently, they are just sent
-to hooks to interpret as they see fit.
+> On Thu, Apr 11, 2019 at 3:56 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > >       @@
+> > >     + expression c;
+> > >     ++expression r;
+> > >     + expression s;
+> > >     + @@
+> > >     +-- get_commit_tree(c) =3D s
+> > >     ++- repo_get_commit_tree(r, c) =3D s
+> > >     + + c->maybe_tree =3D s
+> >
+> > I think this is wrong, and admittedly I had the very same version
+> > originally.
+> >
+> > When you have an arbitrary `r` in any `repo_get_commit_tree(r, c)` (as
+> > opposed to `the_repository`), the conversion to `c->maybe_tree` is mos=
+t
+> > likely incorrect.
+>
+> I did read the get_commit_tree() source code before doing this. struct
+> repository is only used to get commit graph to speed things up and we
+> can't change a thing there when maybe_tree is reassigned. To reassign
+> maybe_tree, commit-graph does not matter. Neither does the_repository
+> (vs arbitrary struct repo)
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/fetch-options.txt |  3 ++-
- Documentation/git-clone.txt     |  8 ++++++++
- builtin/clone.c                 |  6 ++++++
- t/t5702-protocol-v2.sh          | 22 ++++++++++++++++++++++
- 4 files changed, 38 insertions(+), 1 deletion(-)
+You read the current code. Obviously, you had no future code to read.
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index fa0a3151b3..91c47752ec 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -216,7 +216,8 @@ endif::git-pull[]
- --server-option=<option>::
- 	Transmit the given string to the server when communicating using
- 	protocol version 2.  The given string must not contain a NUL or LF
--	character.
-+	character.  The server's handling of server options, including
-+	unknown ones, is server-specific.
- 	When multiple `--server-option=<option>` are given, they are all
- 	sent to the other side in the order listed on the command line.
- 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 2fd12524f9..a0f14b51f2 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -131,6 +131,14 @@ objects from the source repository into a pack in the cloned repository.
- 	is specified. This flag forces progress status even if the
- 	standard error stream is not directed to a terminal.
- 
-+--server-option=<option>::
-+	Transmit the given string to the server when communicating using
-+	protocol version 2.  The given string must not contain a NUL or LF
-+	character.  The server's handling of server options, including
-+	unknown ones, is server-specific.
-+	When multiple `--server-option=<option>` are given, they are all
-+	sent to the other side in the order listed on the command line.
-+
- --no-checkout::
- -n::
- 	No checkout of HEAD is performed after the clone is complete.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..31a47d190a 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -66,6 +66,7 @@ static int option_dissociate;
- static int max_jobs = -1;
- static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
- static struct list_objects_filter_options filter_options;
-+static struct string_list server_options = STRING_LIST_INIT_NODUP;
- 
- static int recurse_submodules_cb(const struct option *opt,
- 				 const char *arg, int unset)
-@@ -137,6 +138,8 @@ static struct option builtin_clone_options[] = {
- 		   N_("separate git dir from working tree")),
- 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
- 			N_("set config inside the new repository")),
-+	OPT_STRING_LIST(0, "server-option", &server_options,
-+			N_("server-specific"), N_("option to transmit")),
- 	OPT_SET_INT('4', "ipv4", &family, N_("use IPv4 addresses only"),
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
-@@ -1136,6 +1139,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
- 				     option_upload_pack);
- 
-+	if (server_options.nr)
-+		transport->server_options = &server_options;
-+
- 	if (filter_options.choice) {
- 		struct strbuf expanded_filter_spec = STRBUF_INIT;
- 		expand_list_objects_filter_spec(&filter_options,
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 7ddcf26e76..b8d5264a45 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -270,6 +270,28 @@ test_expect_success 'warn if using server-option with fetch with legacy protocol
- 	grep "server options require protocol version 2 or later" err
- '
- 
-+test_expect_success 'server-options are sent when cloning' '
-+	test_when_finished "rm -rf log myclone" &&
-+
-+	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
-+		clone --server-option=hello --server-option=world \
-+		"file://$(pwd)/file_parent" myclone &&
-+
-+	grep "server-option=hello" log &&
-+	grep "server-option=world" log
-+'
-+
-+test_expect_success 'warn if using server-option with clone with legacy protocol' '
-+	test_when_finished "rm -rf myclone" &&
-+
-+	GIT_TEST_PROTOCOL_VERSION=0 test_must_fail git -c protocol.version=0 \
-+		clone --server-option=hello --server-option=world \
-+		"file://$(pwd)/file_parent" myclone 2>err &&
-+
-+	grep "see protocol.version in" err &&
-+	grep "server options require protocol version 2 or later" err
-+'
-+
- test_expect_success 'upload-pack respects config using protocol v2' '
- 	git init server &&
- 	write_script server/.git/hook <<-\EOF &&
--- 
-2.21.0.392.gf8f6787159e-goog
+The cocci patch you are changing will affect future code, too.
 
+The safe, and correct, thing to do, then, is to not pretend to know what
+future `get_commit_tree()` functions will do, and instead go with the
+stricter  version of the cocci patch, as I had suggested.
+
+Ciao,
+Johannes
+
+> >
+> > Therefore, I don't think that we can do that.
+> >
+> > Ciao,
+> > Johannes
+>
+>
+>
+> --
+> Duy
+>
