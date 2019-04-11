@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C75CD20248
-	for <e@80x24.org>; Thu, 11 Apr 2019 13:13:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B498920248
+	for <e@80x24.org>; Thu, 11 Apr 2019 13:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbfDKNNs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 09:13:48 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45779 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbfDKNNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 09:13:48 -0400
-Received: by mail-pl1-f194.google.com with SMTP id bf11so3385014plb.12
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 06:13:48 -0700 (PDT)
+        id S1726752AbfDKNNy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 09:13:54 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36324 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726536AbfDKNNy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 09:13:54 -0400
+Received: by mail-pg1-f193.google.com with SMTP id 85so3516431pgc.3
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 06:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Bdb8mvEBPu5UGyZoTJdN5btCt2lqdJmqQQ47/rWjgCA=;
-        b=jpLjMXy/eWGv3SkDVmx2yV/ZW07p0gV6yhmHosS+CRsM4KDKr3Wk+LjCX1xU8uvae4
-         uAzEFeBHQoGttn16vorRotdCfqSoY0CPTH1Ejd2v5Jmm4/TYBXt6cHcbAq1ybOzSjSdS
-         vLZkMPECb/HRK2tD4nK32xPknXMdWKEuVj+qx9KiZvACgowJI97MibaHSB7P1rF4NdJ6
-         TjM6ERsnBf8xVhYD3Dv77SZSj4fXFbSzenZB1qmnHR4VymVGlLLqAcTt/0CBiar/8JE2
-         o6/xR2/3dVxGC1mmghu3Kjkttbjw6pcpbT0FdMwe1xh8msK6s+1toql0OgbbQl4PsLvO
-         LxFw==
+        bh=MwRO2z8kQeF3ksLZsr+v5KJ+1r6RYSnYKWnOkWZjHOQ=;
+        b=F/qacjHoRgzm+BWFUEdVBR8Z54ez438KOwLNAL63KMmkriC2yxxQubzbLGD82GinZ7
+         Gp0f3FLahZBblI7yFajI8hjHFI8xHxCBgK93wK3+4Lj1nu8UBT1fTCVnyNvi17oropXU
+         Mbye2VlKNbSsu61AtyODv4q71KJp39KjkgmJJvcL6UcBY9BU4jo3tcmWJkKnLKEbOPNR
+         KrDYCOYHgW0Fd0Q5Z3jqSwSeeONDfiiO+n3mH95vzChEkG1GEO7nf+jOxuAQLr/EsaTm
+         LUOVH3WSucQKkxGkdDjjvoOVf94v5f7twZOW9X0F20CwP0p8WD3hUD9n7NY/Sq9oOMrG
+         FszQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Bdb8mvEBPu5UGyZoTJdN5btCt2lqdJmqQQ47/rWjgCA=;
-        b=Kdb3HLsUNMXspsL1ZV+Kgu33Vq5vNduojZKUOV/GISrbeU/e4lNAUecmY4UN1XR/3L
-         BpP435d0iO/Zw881kDxUgEm9bFrIk5gfqZ2OY6NOQBt2zLnO6Btt1oM8/BiZibPe9/iN
-         ThhOYPavzQX5DDKBjT/McmqEH5N3s7VbTLOJI99z/MldkismFMqGRs4AK/rxGvwQXQnU
-         5CndB+U85OeHvmUx3z4t7sFvJTxSzvFWY0fGBsGiw9F/2ozak1HL/QjFo+YiWqcXdNXi
-         AjKj0FctmYShyYb8NTVwHegUTdFWN0DLkkGY3DllPwwP/iBTCPvsKSUgRnXNZCxjfHCQ
-         p0sQ==
-X-Gm-Message-State: APjAAAVjwtOqc2slauAK3vq4YEWrZCf/XdRJyJoMn7EVKFD7I+OX8PbQ
-        pmKIbv1SlY8/ShOuUYQnk9A=
-X-Google-Smtp-Source: APXvYqzCJKiJBhUSaltn1c3fGvcUHlTHBk9z80l9xBTkwNpxOXPtfco2X83ariX0xSRkvUZuzB1TAA==
-X-Received: by 2002:a17:902:e709:: with SMTP id co9mr50882773plb.86.1554988427874;
-        Thu, 11 Apr 2019 06:13:47 -0700 (PDT)
+        bh=MwRO2z8kQeF3ksLZsr+v5KJ+1r6RYSnYKWnOkWZjHOQ=;
+        b=eo09pLE9iAWK5CzCw8nsLuuC1ZOSLJBYKRD0ZlCCXUmOmmGbYvDDn4fdJQjRxjn2Cr
+         C9Gp3jOWBr3Tt9TtZ4BbAHjg+9B1u8atxg5XYf7+oMIK/IPxg69Qf4nB7O3bORnlafOJ
+         Xkt94SqgSD8uVO05dHjEj1wnfpmsIeJvXktmjzZuTf7Yhmdhlp19wETqv0DCQvx8HQW+
+         4qFlh57BS3ssTHia1u4oxAjduso3VlvMS1x3JiIFJ/CcVn8jv4QiMNu3Hmbq4uRUnMH0
+         iA/7dbhiL9lnT8KfE4r6WGw3r2Ny8YqU4/TfK6T+JSPUc0Aa+ZhaKhuKqNtQ8sMYZ9dO
+         SitA==
+X-Gm-Message-State: APjAAAWiWaBo8kelzUeSZNbwKeoxgnggx++gUrEQDmdRxRbHVTGHO3ya
+        BOANIceQ1CCpp2ncZ0o8mo4=
+X-Google-Smtp-Source: APXvYqy5Lcdp0VnBrXUxWkPgyOyrSzvjzAOVWcUk6HPrjvAiit9h8fEQerrxoZpcpeps6s+hj2iyBQ==
+X-Received: by 2002:a63:1d5b:: with SMTP id d27mr45876786pgm.386.1554988433848;
+        Thu, 11 Apr 2019 06:13:53 -0700 (PDT)
 Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id y12sm104484356pgq.64.2019.04.11.06.13.44
+        by smtp.gmail.com with ESMTPSA id k9sm55145129pga.22.2019.04.11.06.13.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Apr 2019 06:13:47 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 11 Apr 2019 20:13:42 +0700
+        Thu, 11 Apr 2019 06:13:53 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 11 Apr 2019 20:13:48 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -57,9 +57,9 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         Eric Sunshine <sunshine@sunshineco.com>, rybak.a.v@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         jacob.keller@gmail.com
-Subject: [PATCH v2 12/16] completion: support restore
-Date:   Thu, 11 Apr 2019 20:12:14 +0700
-Message-Id: <20190411131218.19195-13-pclouds@gmail.com>
+Subject: [PATCH v2 13/16] user-manual.txt: prefer 'merge --abort' over 'reset --hard'
+Date:   Thu, 11 Apr 2019 20:12:15 +0700
+Message-Id: <20190411131218.19195-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.682.g30d2204636
 In-Reply-To: <20190411131218.19195-1-pclouds@gmail.com>
 References: <20190308101655.9767-1-pclouds@gmail.com>
@@ -72,41 +72,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Completion for restore is straightforward. We could still do better
-though by giving the list of just tracked files instead of all present
-ones. But let's leave it for later.
+Since the operation in progress is merge, stick to the 'git merge'
+variant of aborting. 'git reset --hard' does not really tell you about
+aborting the merge by just looking, longer to type, and even though I
+know by heart what --hard do, I still dislike it when I need to consider
+whether --hard, --mixed or --soft.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/user-manual.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b24bc48276..58d18d41a2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2491,6 +2491,21 @@ _git_reset ()
- 	__git_complete_refs
- }
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 94799faa2b..4e210970e1 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1408,7 +1408,7 @@ If you get stuck and decide to just give up and throw the whole mess
+ away, you can always return to the pre-merge state with
  
-+_git_restore ()
-+{
-+	case "$cur" in
-+	--conflict=*)
-+		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		;;
-+	--source=*)
-+		__git_complete_refs --cur="${cur##--source=}"
-+		;;
-+	--*)
-+		__gitcomp_builtin restore
-+		;;
-+	esac
-+}
-+
- __git_revert_inprogress_options="--continue --quit --abort"
+ -------------------------------------------------
+-$ git reset --hard HEAD
++$ git merge --abort
+ -------------------------------------------------
  
- _git_revert ()
+ Or, if you've already committed the merge that you want to throw away,
 -- 
 2.21.0.682.g30d2204636
 
