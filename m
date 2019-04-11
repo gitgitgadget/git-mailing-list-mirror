@@ -2,98 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B22D620248
-	for <e@80x24.org>; Thu, 11 Apr 2019 11:17:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBE7820248
+	for <e@80x24.org>; Thu, 11 Apr 2019 12:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbfDKLRg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 07:17:36 -0400
-Received: from mail-yw1-f48.google.com ([209.85.161.48]:46444 "EHLO
-        mail-yw1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbfDKLRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 07:17:36 -0400
-Received: by mail-yw1-f48.google.com with SMTP id v127so1890897ywe.13
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 04:17:36 -0700 (PDT)
+        id S1727160AbfDKMsK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 08:48:10 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:46988 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726832AbfDKMsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 08:48:10 -0400
+Received: by mail-oi1-f174.google.com with SMTP id x188so4734662oia.13
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 05:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=CjWlyknICftdFVJEXlreeD5D9kEIryvfzlcj/CKf7bY=;
-        b=ZF00HXgUy7TQUg8APUpMb10fAhuJvP+vJDF6reyNcozzqPVdlfciPMYKkmQmLx++5U
-         QyDd7za7EfqYHLQGoR94szJbhZ6tMPs+699EeVP3iq2BGFdiycfLh51LFmZWoEhx2BI1
-         /ATUMDRYPeH+Kfz/xqdFAuZWAPYjwvoNw3t7RTQrBqpU+SbWLYYibStCUmD9wjmvdoLc
-         D1ttNuLc2r83F08Vp/P3GDsQ0rnSCqv4IP/uv35yS2pkPb4SYChq4EJoEKWx8NaWqUza
-         8cnIRxaPJS3IZMyBLIeP5hgeQWxMfuyfv0yLVgiMugwp7PKbCzANy8ESWyjNEnEM8wpD
-         2nXQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GJ06CQbechC6aAYzYph9esNKVRRGfM3Z4yyU2bCtijA=;
+        b=LDbzeVOQzGRqHInLXBun2/YgGHEWgE1I3FvydXzrzxjW4T79uTpGrYcs6fkNZjB5yD
+         3pq1LiUJ1Vp/sFWQtKuLhA3Y+3eSMAGUD8b3Ji2kEGtBI0c+G9gSsjc0aP4F4biOv0sM
+         xin3ZxFH7vAI36ipuhx0aaIj+nSFXHDFHSH8G8XtfkR7ROhfG9BnFTA36P/pO+dy3rgV
+         nra9Zo9J0E9Gn6DeGsyGLZ5sNrWQigBDX4vanah1w5p5LdMVNKvA9z1MSmh9dOaPMEqd
+         UB9ePKNBYEYlEMJthw5h6pDCOlB2i3BY6LfohD4FvSqW+u4aDREP+vyM8yPJquQrm/Mq
+         4TTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=CjWlyknICftdFVJEXlreeD5D9kEIryvfzlcj/CKf7bY=;
-        b=T4iyl/g6Q3RRq4CLp97gzznKHa0ZYOyuVH13TBB8QDjub+R/Qfgnzl7b8oIPe5O19U
-         jd7toDVrtCBP2UWWKltar8wQUs/Gt7wQl+e3y+oxi70ufmdaWpOJ10jAqU0hpunTvm/o
-         1dwQQENhFG4v9vtYc18QODOibYcWfGyooiPIo4t7Hu9uZ9+HRjIRPv2l0zhmVAKppwar
-         C1XU7C5eENszQL15SeAbP8No+kc6h85o0QA64Jj259jPhShycihLDQSxBzySY5GovWwG
-         G32TcGptOuoUcKOKkyvjQ19EaBPOQZ44dL1d5oNuAKRlHrKDuQiV6l2zIqEB3Wvbug4Z
-         08GA==
-X-Gm-Message-State: APjAAAVSjOHYY4syZPDsPCSjm44KS2fWZOL3LD9o7PR3eXp5IZCTurzU
-        paInBXrld6upIru5Pw2ZUJHvTc/n
-X-Google-Smtp-Source: APXvYqzSSfh66k1oBw8souX1XVFKVgG48PrnmCJfY5zWZ3Dv3Q0Updb2o7KCIWSQpWFLCYatGJ0YNQ==
-X-Received: by 2002:a81:a113:: with SMTP id y19mr21012183ywg.200.1554981455470;
-        Thu, 11 Apr 2019 04:17:35 -0700 (PDT)
-Received: from ash ([116.102.217.71])
-        by smtp.gmail.com with ESMTPSA id p75sm16668330ywg.36.2019.04.11.04.17.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Apr 2019 04:17:34 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 11 Apr 2019 18:17:29 +0700
-Date:   Thu, 11 Apr 2019 18:17:29 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: incorrect range-diff output?
-Message-ID: <20190411111729.GB5620@ash>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GJ06CQbechC6aAYzYph9esNKVRRGfM3Z4yyU2bCtijA=;
+        b=JSlJ7kFjiylx9GV2ew28MaU8jdTi1WkmNax9402gaswcagrsuLxo2GHALzWKtwXTHO
+         93kS22Yf0m/+Owfcq/kUyI1ohfIBSOpuU8Rxv/vVFuURV2N3gMMG2sX55ctld/3916tz
+         V7KSPjynqTCA1u1OhurwqWZtN4/tbecJp22lAhm/0pUgOeQsgou2jWLyWBJ7qOvt4bJp
+         KY9T2xcsD8gITfYnVUplIXdMZWbibSBtDxl7juNsDPgprDK+oA65y/a9ZSy+f89+5OGt
+         5rxj3Vq67xlQ0nLK/GFcrl5znl4E/mXKUn5N0hn6VF2QZQYd4x2JjEbEaR3Vr9D9LKYL
+         uUzQ==
+X-Gm-Message-State: APjAAAWaJtWajItkyYJ5QSRVraBcR14LqqvSbUkNfWlejSdQbTCjXTXf
+        ie5gnE1DGOIC20Sjn3EABrikJ3vfDaU57d5Pv8v3Jg==
+X-Google-Smtp-Source: APXvYqxcg+3vXOqFgmyYteq+gJh9M9OCvXiDpThHpu7wEP8TgM5M1dbGUMgtpgKg7HEcYT/++eyxEe2UDqjq5la+Krc=
+X-Received: by 2002:aca:f581:: with SMTP id t123mr6489022oih.0.1554986889576;
+ Thu, 11 Apr 2019 05:48:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From:   NoName Req <nonamereq29@gmail.com>
+Date:   Thu, 11 Apr 2019 15:47:58 +0300
+Message-ID: <CABgj7us=Rk3EUvd2EVVqsYKDUGS7VfAX09SpW04fB26cgntw5g@mail.gmail.com>
+Subject: Bug(feature?) on git-diff-files
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Try
+Summary
+   `git -C (folder path) diff-files --name-only` output is not correct
 
-    git range-diff from...to
+Steps to Reproduce
+1. Apply change to a clean git repository. Go to another folder (not
+within this repository) and apply the command
+   `git -C repo-path diff-files --name-only`
+The above command lists dirty files in that repository.
+2. Now undo your changes on the repository
+3. Issue the same command. It still lists the file.
 
-with those two branches from https://gitlab.com/pclouds/git.git. The
-interesting part is this
+More Information
 
-      diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-      --- a/Documentation/gitcli.txt
-    @@ -120,10 +111,11 @@
-        * linkgit:git-commit[1] to advance the current branch.
-      
-     -  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
-    -+  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
-    -     pathname parameters) to undo changes.
-    +-    pathname parameters) to undo changes.
-    ++  * linkgit:git-restore[1] to undo changes.
-      
-        * linkgit:git-merge[1] to merge between local branches.
-    + 
+`git -C repo-path diff`  command doesn't seem to have this problem.
 
-This particular hunk comes from giteveryday.txt, not gitcli.txt. And
-the b/Documentation/gitcli.txt line is also missing.
+System Information
 
-I'm in the middle of some other things (and don't know range-diff that
-well) so I'm just dropping a bug report here.
-
-I've tried all 'master', 'next' and 'pu'. Same result. Tried
---no-pager too in case the pager ate something up.
---
-Duy
+Arch Linux 5.0.7-arch1-1-ARCH
+git version 2.21.0
