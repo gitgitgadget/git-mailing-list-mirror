@@ -2,75 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381AF20248
-	for <e@80x24.org>; Thu, 11 Apr 2019 19:49:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE6C120248
+	for <e@80x24.org>; Thu, 11 Apr 2019 20:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbfDKTt2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 15:49:28 -0400
-Received: from amber.ccs.neu.edu ([129.10.116.51]:47543 "EHLO
-        amber.ccs.neu.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726629AbfDKTt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 15:49:28 -0400
-X-Greylist: delayed 1983 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Apr 2019 15:49:27 EDT
-Received: from zimbra.ccs.neu.edu ([129.10.117.202])
-        by amber.ccs.neu.edu with esmtps (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-        (Exim 4.69)
-        (envelope-from <cgemici@ccs.neu.edu>)
-        id 1hEfBj-0000L5-Qd
-        for git@vger.kernel.org; Thu, 11 Apr 2019 15:16:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.ccs.neu.edu (Postfix) with ESMTP id A418F1B20002
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 15:16:23 -0400 (EDT)
-Received: from zimbra.ccs.neu.edu ([127.0.0.1])
-        by localhost (zimbra.ccs.neu.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id YhinO5hKb2e2 for <git@vger.kernel.org>;
-        Thu, 11 Apr 2019 15:16:23 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.ccs.neu.edu (Postfix) with ESMTP id 5CFC31B20003
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 15:16:23 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at zimbra.ccs.neu.edu
-Received: from zimbra.ccs.neu.edu ([127.0.0.1])
-        by localhost (zimbra.ccs.neu.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 2RuJGA5QiBu7 for <git@vger.kernel.org>;
-        Thu, 11 Apr 2019 15:16:23 -0400 (EDT)
-Received: from zimbra.ccs.neu.edu (localhost [127.0.0.1])
-        by zimbra.ccs.neu.edu (Postfix) with ESMTP id 030481B20002
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 15:16:22 -0400 (EDT)
-Date:   Thu, 11 Apr 2019 15:16:22 -0400 (EDT)
-From:   Can Gemicioglu <cgemici@ccs.neu.edu>
-To:     git@vger.kernel.org
-Message-ID: <408662419.10955610.1555010182939.JavaMail.zimbra@zimbra.ccs.neu.edu>
-Subject: Bug Report for git apply
+        id S1726649AbfDKUEy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 16:04:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55566 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726538AbfDKUEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 16:04:54 -0400
+Received: (qmail 14532 invoked by uid 109); 11 Apr 2019 20:04:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Apr 2019 20:04:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32442 invoked by uid 111); 11 Apr 2019 20:05:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Apr 2019 16:05:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2019 16:04:52 -0400
+Date:   Thu, 11 Apr 2019 16:04:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?546L5YGl5by6?= <jianqiang.wang@securitygossip.com>
+Subject: Re: [PATCH 0/4] use xmalloc in more places
+Message-ID: <20190411200452.GA19315@sigill.intra.peff.net>
+References: <20190411134736.GA28543@sigill.intra.peff.net>
+ <20190411191452.GA21290@D-10-18-172-132.dhcp4.washington.edu>
+ <20190411193735.GB32528@sigill.intra.peff.net>
+ <20190411194308.GA26327@D-10-18-172-132.dhcp4.washington.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.200.205.253]
-X-Mailer: Zimbra 8.6.0_GA_1153 (ZimbraWebClient - FF68 (Linux)/8.6.0_GA_1153)
-Thread-Topic: Bug Report for git apply
-Thread-Index: t/HlgvWcXqWXQB3m0Q8QGjQiRNYV5A==
+Content-Disposition: inline
+In-Reply-To: <20190411194308.GA26327@D-10-18-172-132.dhcp4.washington.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Apr 11, 2019 at 12:43:08PM -0700, Taylor Blau wrote:
 
-I noticed a problem when trying to apply a patch file that contained many separate patches in a single file. Trying to apply this patch gave me a "No such file or directory" error for one of the files in the middle and after looking around I realised this file was also created earlier in the patch. I tested this myself with these steps and saw a similar error:
+> > I don't think we can ban malloc, since we have to use it ourselves. :)
+> >
+> > With some contortions, we probably could unban it specifically in
+> > wrapper.c (though note there are a few other calls I've left which would
+> > need to be handled somehow).
+> 
+> Right. I think that I should have made this point clearer in my initial
+> reply. I was thinking that we could #undef the banned macro in
+> wrapper.c, or some similar hula-hooping.
 
-1. Create a new file and commit.
-2. Move the file to a different folder and commit.
-3. Create a single patch for these 2 commits by using git format-patch and concatenating the two resulting files (01.patch, 02.patch) into one (combined.patch).
-4. Roll back to 2 commits earlier.
+That _probably_ works, but I think technically falls afoul of platforms
+on which there's a malloc macro in the first place. We need to not just
+#undef it then, but restore the original macro, which is impossible. So
+you're better off just not fudging it in the first place. Which would
+probably be something like:
 
-At that point if I try to use 'git apply combined.patch', it will throw the same no such file error. However, if I use 'git am combined.patch' instead it works. If I apply the first 2 patches separately instead, using 'git apply 0*' it also works but if I first try to check if it will work with 'git apply --check 0*' it actually throws the same error again.
+  #define SUPPRESS_BAN_MALLOC
+  #include "git-compat-util.h"
 
-I'm guessing there's something like a check to make sure the file exists that throws an error even if the file was going to be created by previous commits.
+or something, with the appropriate magic in banned.h.
 
-Tested on git version 2.21.0 on Ubuntu 18.04
+This might be academic, but you wouldn't know until somebody's platform
+subtly breaks. ;) We did run into it already with strcpy(), I think,
+hence the defensive #undefs in banned.h.
 
-Best,
-Can Gemicioglu
+> Yeah... maybe that's the bigger question that I hadn't asked. I made the
+> suggestion thinking that it would help newcomers avoid writing
+> 'malloc()' and sending it if they didn't know we use our 'xmalloc()'
+> instead.
+> 
+> But I'm not sure if the argument holds up. I think that in general
+> exactly the sorts of new-comers that I'm thinking of would have more
+> than one review cycle anyway, so it might not be worth the effort,
+> anyway...
+
+I think it's still a reasonable thought, even if I'm not sure the
+balance of cost/reward is quite there so far (but might change if it's
+an error we see people start to make). Compared to coccinelle, the
+banned-function approach is a little nicer for helping new submitters
+because it catches the problem during a normal compile (and we know
+nobody would ever submit a patch without having at least compiled it,
+right? ;) ).
+
+-Peff
