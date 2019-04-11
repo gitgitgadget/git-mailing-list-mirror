@@ -2,65 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D7620305
-	for <e@80x24.org>; Thu, 11 Apr 2019 02:36:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8000620248
+	for <e@80x24.org>; Thu, 11 Apr 2019 04:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726630AbfDKCgI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Apr 2019 22:36:08 -0400
-Received: from mail-40130.protonmail.ch ([185.70.40.130]:36982 "EHLO
-        mail-40130.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbfDKCgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Apr 2019 22:36:08 -0400
-Date:   Thu, 11 Apr 2019 02:36:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1554950166;
-        bh=HN9zCZsAM5eObm0BbVlxVfinGJgPrQ+sryG31pjNhEY=;
-        h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
-        b=ZP4UD5cWOAdY9pnA4X0Ds2AtQ/Ei/UVqx32IO6IMwu+/PHDBjSnsnON/9s2SI5Vjv
-         JCuyl3BYkCHPrforsbdz8e8fLMxVWLa6tM+7sdOizIUv0smDl5ppagfrxzXFujzREp
-         XdVcD7iBQ7ZXg5bJXmK0sstMgvdsCLgNLRc+5QEg=
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   ron <ronazek@protonmail.com>
-Reply-To: ron <ronazek@protonmail.com>
-Subject: Local Config File: Submodule initialization looks broken with the --recurse-submodules option when cloning a repository
-Message-ID: <Otial29UjnjP-PuGN9Mwnd8k4q8Alof6wWOxFqYv_mXpNbumrljWGN44RvNZYIkC-in7KSXzjFjbceYglTW4iACRcven7CyHUUSUcPCWbL4=@protonmail.com>
-Feedback-ID: RMis9b9KHKlvsb8KKkeurfBt3UTu5TN-1L1t5jXjkqXfFdr8BIyQs5Ws7O_ywm8jXx2U-EI3XDzu_Y-JlzMpfw==:Ext:ProtonMail
+        id S1725793AbfDKEGr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 00:06:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54502 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725782AbfDKEGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 00:06:46 -0400
+Received: (qmail 2029 invoked by uid 109); 11 Apr 2019 04:06:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Apr 2019 04:06:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23983 invoked by uid 111); 11 Apr 2019 04:07:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Apr 2019 00:07:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2019 00:06:42 -0400
+Date:   Thu, 11 Apr 2019 00:06:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Josh Steadmon <steadmon@google.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, jonathantanmy@google.com, jrnieder@gmail.com
+Subject: Re: [PATCH v3] rev-list: exclude promisor objects at walk time
+Message-ID: <20190411040642.GA8418@sigill.intra.peff.net>
+References: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
+ <9856e7fc74f51b60ae162cbed3f5c0cf8c603222.1554757275.git.steadmon@google.com>
+ <20190409180418.GH8796@szeder.dev>
+ <20190409234255.GM60888@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190409234255.GM60888@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Initially reported for GFW on version 2.20.1, I have tested with Linux Mint=
- Mate 19.1 Tessa which by default uses git version 2.17.1
+On Tue, Apr 09, 2019 at 04:42:55PM -0700, Josh Steadmon wrote:
 
-It produces a config file with the relevant submodule entries looking like =
-this:
+> >   warning: reflog of 'HEAD' references pruned commits
+> >   warning: reflog of 'refs/heads/master' references pruned commits
+> >   fatal: unable to read 71905dfcd543b7cbb0b4b66fbd20379e67220557
+> >   error: last command exited with $?=128
+> >   not ok 23 - repack -d does not irreversibly delete promisor objects
+> > 
+> 
+> Thank you for catching this. I haven't yet figured out the cause. I will
+> look into this more tomorrow and then send a V4 once I've fixed it.
 
-----------------
-[submodule]
-=09active =3D .
+I'm concerned that this is a sign that the approach I suggested does not
+actually work everywhere. I.e., could this be a case where we have some
+non-promisor object that points to a sub-object that is reachable from
+the promisor pack, but not a direct tip? Before your patch we'd consider
+that sub-object a promisor (because we enumerate all of the graph that
+we do have and mark each such object), but afterwards we would not.
 
-[submodule "Submodule/Path"]
-=09url =3D https://github.com/organization/submodule.git
-----------------
+And I wonder if that confuses pack-objects. Though I think it would
+confuse it in the _opposite_ direction. I.e., using
+--exclude-promisor-objects would count such an object as not-a-promisor
+and would be more inclined to include it in the new pack.
 
-Instead of that, which is produced by manually initializing a submodule any=
-time after cloning:
+It is curious that this only turns up with GIT_TEST_COMMIT_GRAPH=1, too.
+It seems like any such problem ought to be independent of that.
 
-----------------
- [submodule "Submodule/Path"]
-=09active =3D true
-=09url =3D https://github.com/organization/submodule.git
-----------------
+Puzzling...
 
-Sent with ProtonMail Secure Email.
-
-
+-Peff
