@@ -2,91 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE6C120248
-	for <e@80x24.org>; Thu, 11 Apr 2019 20:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1029E20248
+	for <e@80x24.org>; Thu, 11 Apr 2019 20:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbfDKUEy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 16:04:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55566 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726538AbfDKUEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 16:04:54 -0400
-Received: (qmail 14532 invoked by uid 109); 11 Apr 2019 20:04:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Apr 2019 20:04:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32442 invoked by uid 111); 11 Apr 2019 20:05:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Apr 2019 16:05:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2019 16:04:52 -0400
-Date:   Thu, 11 Apr 2019 16:04:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?546L5YGl5by6?= <jianqiang.wang@securitygossip.com>
-Subject: Re: [PATCH 0/4] use xmalloc in more places
-Message-ID: <20190411200452.GA19315@sigill.intra.peff.net>
-References: <20190411134736.GA28543@sigill.intra.peff.net>
- <20190411191452.GA21290@D-10-18-172-132.dhcp4.washington.edu>
- <20190411193735.GB32528@sigill.intra.peff.net>
- <20190411194308.GA26327@D-10-18-172-132.dhcp4.washington.edu>
+        id S1726825AbfDKURX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 16:17:23 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:34646 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726538AbfDKURX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 16:17:23 -0400
+Received: by mail-wr1-f52.google.com with SMTP id p10so9030114wrq.1
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 13:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5E1RMSxU23BSbso01P8uW1hdInp7LkqeGyEZr3G+Ovk=;
+        b=LOR9d/0yJaORulZp7Tf+BnfooP2GkJtOQ3n5K4SlXlK1oyOyFDr7xiIxlJERMGZUAt
+         CyPDvDrcst+yp7hXS4bcR9c0eJzKlKvdB5enjR6iXphZixNm/zKi4r1DI4YfpjmLbray
+         er8lYO4r2RnoVotbx3uvoIQUiIQkmilXrJ9MFx1Czi0yhT/2zWUhy5SVdDxIDkKX6nZP
+         u4TzdJ5clmVoPq0y8EyqJRKcewH4Ja9Z6WK3YJEmBYI6cciCoygy05IQAgjfZYXSITf1
+         xGxTuc7UXn4Eaqs4MZeoYlOQO4rlVeeZu4nszmhCVJpUebFE/iBlAyqcli8deObi1Iqt
+         GtFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5E1RMSxU23BSbso01P8uW1hdInp7LkqeGyEZr3G+Ovk=;
+        b=VA3BED6gOFDG1D4Wh7bUKAdh2RkdNSHaQzDaEA6+DUyMlK+rkiAtemtM2QqNUvNASK
+         jzvdyDteXtfx3qc3laE7QoxYFjlIcWhhLfAnQmEiwICG35DTUOc2BDMOJUazdqPLLAl7
+         66gUqZWs0iAwNwys/M9DwOjxUFKTMdsFcmqltbrZgb7xy3WG9w5K160/sdhL5t3T3Cc9
+         d3cSvHtNL6bmimklTbL+Sk2AXQ+S9ffmQefFo8zb3PDqkqqGnIEXEwM1n3rsgho2VOXG
+         HmRvcHqP0t4kKyhfjXyRyDIvpM2hKzve8Q0wm+4QG1WQKhUkedioNYFPpWTt2DiNM/TS
+         E3og==
+X-Gm-Message-State: APjAAAW+/sLoxnHdIgiDLSsREA6kq4BzfpKmOM5jDxbEJ4irizqWU+C6
+        0+7X7FZ8oVQYKp+VmxDp0nLw0XH/
+X-Google-Smtp-Source: APXvYqz2VMy63K1LCOz60p6JA+RgO0YeE4h1v5aB1f8QQbOmfK1/eOLcQibvVWRf/ho2oUjtB8C32Q==
+X-Received: by 2002:a5d:458f:: with SMTP id p15mr32119797wrq.188.1555013841785;
+        Thu, 11 Apr 2019 13:17:21 -0700 (PDT)
+Received: from szeder.dev (x4d0c7202.dyn.telefonica.de. [77.12.114.2])
+        by smtp.gmail.com with ESMTPSA id x205sm8949906wmg.9.2019.04.11.13.17.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Apr 2019 13:17:20 -0700 (PDT)
+Date:   Thu, 11 Apr 2019 22:17:18 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Can Gemicioglu <cgemici@ccs.neu.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug Report for git apply
+Message-ID: <20190411201718.GJ8796@szeder.dev>
+References: <408662419.10955610.1555010182939.JavaMail.zimbra@zimbra.ccs.neu.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190411194308.GA26327@D-10-18-172-132.dhcp4.washington.edu>
+In-Reply-To: <408662419.10955610.1555010182939.JavaMail.zimbra@zimbra.ccs.neu.edu>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 11, 2019 at 12:43:08PM -0700, Taylor Blau wrote:
+On Thu, Apr 11, 2019 at 03:16:22PM -0400, Can Gemicioglu wrote:
+> I noticed a problem when trying to apply a patch file that contained
+> many separate patches in a single file.
 
-> > I don't think we can ban malloc, since we have to use it ourselves. :)
-> >
-> > With some contortions, we probably could unban it specifically in
-> > wrapper.c (though note there are a few other calls I've left which would
-> > need to be handled somehow).
+To quote the first line of its manpage :) 'git apply' is meant to
+"Apply a patch to files and/or to the index".  Note the singular "a
+patch"; not multiple patches in the same or multiple files.
+
+Use 'git am' instead, that is its job, and as you noted, it works.
+
+> Trying to apply this patch gave me a "No such file or directory" error for one of the files in the middle and after looking around I realised this file was also created earlier in the patch. I tested this myself with these steps and saw a similar error:
 > 
-> Right. I think that I should have made this point clearer in my initial
-> reply. I was thinking that we could #undef the banned macro in
-> wrapper.c, or some similar hula-hooping.
-
-That _probably_ works, but I think technically falls afoul of platforms
-on which there's a malloc macro in the first place. We need to not just
-#undef it then, but restore the original macro, which is impossible. So
-you're better off just not fudging it in the first place. Which would
-probably be something like:
-
-  #define SUPPRESS_BAN_MALLOC
-  #include "git-compat-util.h"
-
-or something, with the appropriate magic in banned.h.
-
-This might be academic, but you wouldn't know until somebody's platform
-subtly breaks. ;) We did run into it already with strcpy(), I think,
-hence the defensive #undefs in banned.h.
-
-> Yeah... maybe that's the bigger question that I hadn't asked. I made the
-> suggestion thinking that it would help newcomers avoid writing
-> 'malloc()' and sending it if they didn't know we use our 'xmalloc()'
-> instead.
+> 1. Create a new file and commit.
+> 2. Move the file to a different folder and commit.
+> 3. Create a single patch for these 2 commits by using git format-patch and concatenating the two resulting files (01.patch, 02.patch) into one (combined.patch).
+> 4. Roll back to 2 commits earlier.
 > 
-> But I'm not sure if the argument holds up. I think that in general
-> exactly the sorts of new-comers that I'm thinking of would have more
-> than one review cycle anyway, so it might not be worth the effort,
-> anyway...
-
-I think it's still a reasonable thought, even if I'm not sure the
-balance of cost/reward is quite there so far (but might change if it's
-an error we see people start to make). Compared to coccinelle, the
-banned-function approach is a little nicer for helping new submitters
-because it catches the problem during a normal compile (and we know
-nobody would ever submit a patch without having at least compiled it,
-right? ;) ).
-
--Peff
+> At that point if I try to use 'git apply combined.patch', it will
+> throw the same no such file error. However, if I use 'git am
+> combined.patch' instead it works. If I apply the first 2 patches
+> separately instead, using 'git apply 0*' it also works but if I
+> first try to check if it will work with 'git apply --check 0*' it
+> actually throws the same error again.
+> 
+> I'm guessing there's something like a check to make sure the file exists that throws an error even if the file was going to be created by previous commits.
+> 
+> Tested on git version 2.21.0 on Ubuntu 18.04
+> 
+> Best,
+> Can Gemicioglu
