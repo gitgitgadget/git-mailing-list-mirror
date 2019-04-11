@@ -2,84 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8BA20248
-	for <e@80x24.org>; Thu, 11 Apr 2019 23:49:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3AB020248
+	for <e@80x24.org>; Thu, 11 Apr 2019 23:56:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727133AbfDKXtW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 19:49:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55782 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726917AbfDKXtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 19:49:22 -0400
-Received: (qmail 21613 invoked by uid 109); 11 Apr 2019 23:49:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Apr 2019 23:49:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1688 invoked by uid 111); 11 Apr 2019 23:49:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Apr 2019 19:49:51 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Apr 2019 19:49:20 -0400
-Date:   Thu, 11 Apr 2019 19:49:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ls-files: use correct format string
-Message-ID: <20190411234920.GA27914@sigill.intra.peff.net>
-References: <20190407184751.28027-1-t.gummerer@gmail.com>
- <20190411041823.GA17699@sigill.intra.peff.net>
- <20190411212830.GF32487@hank.intra.tgummerer.com>
+        id S1727023AbfDKX4V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 19:56:21 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40255 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726778AbfDKX4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 19:56:21 -0400
+Received: by mail-qt1-f195.google.com with SMTP id x12so9276998qts.7
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 16:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=CyidiXVjHEqz0BL9xHeRqBcKdfQaxL1w99KYBS9k7FA=;
+        b=RVEiYdNDntagbUx2g0qm84FT/Y4ZX4b7XFq/07mGzZvFopKpRvyESM/60cWXZS+8t+
+         KNqT+4Pv1yzELEQAdEU9N379nLg4Qyyo4jVQGJrQCbsRvkYLrAE54C8J57Hr2zqY5cEK
+         wFjspOgqAT2Ni16AzPqdXyXqlSlDuf5QgDkicRWdH+zTBmzNIdBPg/ZjdzXePrSrb2ty
+         BD8pbCIR4niYLao2a/Txb2evuGaJ6pqBFc7KTqej0K6FiR8mP435es9weRipXdZ+iYkb
+         VcRofhJJjD9nKVj7OGoxH1YgM0QfEjGMUPAEKPWHSQPBzTVkNhadRG1RudrvIYJdkzVF
+         pHKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=CyidiXVjHEqz0BL9xHeRqBcKdfQaxL1w99KYBS9k7FA=;
+        b=bAKHB5Et7K74M+cMpxFiOqOi9xsQNLorxd0eSXoK9TzasHeDr+oaA9Axr5MWl9fWxj
+         MYbx+62krG6WOTYKE3u8rrb4FGdjuXbhEMAe+5RKUw291MtvBjAhRKdKqn257Q7nf1uA
+         7fGneX+vq9WRo2slBCEm6eOk7UWfrVuavzwFHffOhN3iNMlzumHrStWpWHzvZ6z0Kkbk
+         xLF7OdWpyK596WI6szghKpzo7vX2frJK6lJ1syK7lSHr90Bu6Gql0GjLzipY6S7ls5UX
+         5dJaqbotqqWfKo22AP/hxFU1SVlVNqm17Kzz8QhDT4SlAKJp4F5ZoZ8HW4+30iMG+xJ1
+         IG8Q==
+X-Gm-Message-State: APjAAAVJ9JrX0o0Dk9uhg0SNukRbil4E1OtxmgRydzGlxHAI6Nv2YHz8
+        IH1o32qAcWevb3xgq8AKSf51MR+zXfugMunP7JXeQdPH
+X-Google-Smtp-Source: APXvYqxiOgfPNyFL9KlkYuA+XLIMNgUayLWM/8LfwIWsvN2NupFsQZi0lpZI82mm5vTXJ7dTIiDgZEI5ukGquCuxJHQ=
+X-Received: by 2002:a0c:d4a2:: with SMTP id u31mr44404798qvh.139.1555026980252;
+ Thu, 11 Apr 2019 16:56:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190411212830.GF32487@hank.intra.tgummerer.com>
+From:   wh <microrffr@gmail.com>
+Date:   Thu, 11 Apr 2019 16:56:09 -0700
+Message-ID: <CAL_tzDGRQ4BzJ4c6QypXfBXQNQYocbKbJSBOHhBBB2TwQQPCGA@mail.gmail.com>
+Subject: [BUG] rebase --interactive silently overwrites ignored files
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 11, 2019 at 10:28:30PM +0100, Thomas Gummerer wrote:
+I'm using git 2.20.1 from Debian. Git is usually careful not to
+overwrite untracked files, including ignored files. But interactive
+rebase doesn't detect this (non-interactive rebase works fine).
 
-> > I didn't see any comment on this, but it seems like it must be obviously
-> > correct, since as you note we do define those fields as unsigned. I'm
-> > really surprised that -Wformat doesn't catch this, though. I wonder why.
-> 
-> Good point.  A bit of digging led me to -Wformat-signedness, which
-> should catch this.  This turns up a lot of errors in our codebase.  I
-> didn't go through to see how many of them are actual errors, and how
-> many are false-positives though.
+Reproduction:
+-----
 
-Ah, right, I totally forgot that signedness got its own warning class.
-Thanks for enlightening me.
+#!/bin/sh
+mkdir upstream
+cd upstream
+git init
+echo 1 >feature-1
+git add feature-1
+git commit -m "feature 1"
 
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=65446 describes how the
-> option can lead to false positives, e.g.
-> 
->     printf ("%u\n", unsigned_short);
-> 
-> might turn up an error.  From a quick test this seems to work
-> correctly with gcc 8.2.1 that I have on my machine though, so the
-> issue might be fixed in newer gcc version, even though that bug report
-> is still marked as new.
+cd ..
+git clone upstream local
+cd local
+# write some tools for our own convenience
+echo ours >tools
+echo /tools >>.git/info/exclude
+# start working on a feature
+git checkout -b f2
+echo wip >feature-2
+git add feature-2
+git commit -m "wip"
 
-Interesting. Looking at that thread, I actually don't think it would be
-so bad to warn there anyway. It's true that due to integer promotion an
-unsigned short will work with %u, but I'd be just as happy to switch
-such a format to "%hu", which is more correct.
+cd ../upstream
+# official tools are available
+echo theirs >tools
+git add tools
+git commit -m "tools"
 
-> Maybe it's worth going through the warnings at some point to see if it
-> would be possible to turn -Wformat-signedness on.
+cd ../local
+git fetch ../upstream master
 
-I skimmed over a few of the results. There are definitely some that
-could produce funny output. There are also many that are harmless (e.g.,
-printing a constant 0 with "%o", which technically should be "0U"). I
-don't think it's high priority, but if anybody wants to chip away at it,
-be my guest.
+# this would be okay
+#git rebase FETCH_HEAD
 
-In the meantime, I think your patch here is an obvious improvement.
+# problem: overwrites tools silently
+GIT_EDITOR=true git rebase -i FETCH_HEAD
 
--Peff
+cat tools
+
+-----
+
+Expected: `git rebase -i` fails because it would have to overwrite the
+untracked "tools" file. Contents of tools file remains `ours`.
+
+Actual: Contents of tools file becomes `theirs`.
