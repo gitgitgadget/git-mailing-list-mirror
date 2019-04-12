@@ -7,63 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C1920248
-	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D54D20248
+	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbfDLMAe (ORCPT <rfc822;e@80x24.org>);
+        id S1726875AbfDLMAf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 08:00:35 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46425 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727011AbfDLMAe (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 Apr 2019 08:00:34 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42098 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726711AbfDLMAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 08:00:34 -0400
-Received: by mail-ed1-f66.google.com with SMTP id x61so8074879edc.9
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:33 -0700 (PDT)
+Received: by mail-ed1-f67.google.com with SMTP id d1so8069888edd.13
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
-        b=KmSXFKFpzrn9mlWp350XEamIu9Oq8nJRYjmFyYDkahJzo+XCl/ZtzOB6TTLIdRApoA
-         lhNkKB2lXFJcH0Rthgs3KKjiARkiiFlg3apV0sReydy78UaZ4XVs0/NWuNZz7ZDm2OyS
-         t8viWBIUJkY52Gm4cR664D/YyqNUjAmXuOrJCtQiMaDMNq284kkKkyYDLB0c/k32g20p
-         krwVHOugXt8bEG1Al9y/RwYnrTImPYi8e4woYHTZ2SI/iw5JN8oSVIDjnf0QRMMo0TsP
-         g1SBE0k21gf1tmsrsT86TpHUH5gpdvwirZkccY1lJv02mXuep7LS0CZVLRkYEi1TlDxB
-         hWsw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pDAzqZgidp9Ac8078IjNUa202C1/co4UXZSblVoI2mI=;
+        b=VS3MlpsY2pYhibKUAlucqBqhf8u2SknVP7BdzXDXghg436ryvgeGB+zVelGlgiBRJ1
+         oNIADhHj1gdVBcZaAqMRI0sotHbkrBZu6H/bHOApdtLLNu85gmXw/qYW/VEHdZ4MJKn8
+         u6o2WsTCVoLN4x+a3LpS95RDOCuSN3KE6B5QLvh5MxcQyvRG87TcfVdFAx3bhycEKdmg
+         YSBsFu5TYUwsWbgyziincMRGlOtkZf9z47Ltuvx9KoRoH2DKwRSjOraLsxxYhTZbBTtX
+         dNgw7jB/fRTDs+SfXvn4SGXTZJO9ndvJvGCqZVhAcjFkSo6F6AchgS3hU9/8cq5U0jWa
+         hFuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
-        b=Je1OaEp+PDlrmH6y6OWKgLNlgcr6vD1UTBGqLrA0PE/mGkW/6XXrhswTpj8VWw2xq8
-         PC2M0N6XbpXxTXKwE5TbbxhrEvF6lkmGEnOHXtwCcaFQB9o3mlptDadh+WCkO5kpGN83
-         tNwkQZnusrpw+KzXgh/v1LwzPKqvar+aWIQ4JFPmSvGmvih+vRE5jNjIy614p1qvQ5bs
-         c9sEaXdTsa3RSOHg7nXJNx2dcTNUYftgdifjk+RWlVkfsrbghUsa2lAcVnxfdG5DDtF/
-         5rdKMu9gax1EpxQiLnUCBJKsSq3TmsqGLtwdZgMrXjLrB0Zoo9N6pxBVq2PXIYFASSlG
-         U3mw==
-X-Gm-Message-State: APjAAAUqHrO2JSJ2NfY77JyWbhizjyg30GPUo/BCGUecwNkc1UBfMsZe
-        fj3Vyqjq4PlyhRZvXJKP/Viuk7US
-X-Google-Smtp-Source: APXvYqz/yiBRIY62zGTmnWXMecikFq9bpBi/EkqUU7M95Wc7g8/KDE8ejMQPkXsSOG+xhWgCV5UR8A==
-X-Received: by 2002:a17:906:4c4e:: with SMTP id d14mr22335932ejw.127.1555070432370;
-        Fri, 12 Apr 2019 05:00:32 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pDAzqZgidp9Ac8078IjNUa202C1/co4UXZSblVoI2mI=;
+        b=XVoBjXDb9/d9lip0+hTJAGvlbMaqEWNhGm9C4lnMOBC1XJvVHu1FICu2uZjklNmNL/
+         +kWxag1Y4p6P8rcgwXWMj9lEFG+1AHrN0NmDyvlq25boc59a/FzE6eZBATv6yHX+5FPU
+         NJPsbndX8Wn/HBte7dx6qsybuBVubvu6m+145NKB2Kq16Ym7b7UFbA2qZaAbU7o+7Cq4
+         9WiFMRZ9B8eLMlMZz9DmQMaCP32KSRO99AVynmILJUI9m8N0Mm1dKUNpS5hZiqdhpO8T
+         NQp611dz+kyKZ+tH+jQibibXev4UD8AW0YjZi06Uz20/foc5TqYJqy69AwQpOkQaMa+7
+         WMJA==
+X-Gm-Message-State: APjAAAWowxpy4+iE5qauK105wY8+NCEkwtS+gIuazEGsE5bc/2tnWXx5
+        t/600pN5QsX5WN+F31dDAzdidIMl
+X-Google-Smtp-Source: APXvYqyK4jOOyoOy1ValeOXCdFLasSz5mNKX6beMix7uocN+K0uskRPVITR41yLo7ztYLm2uQUs9kA==
+X-Received: by 2002:aa7:d39a:: with SMTP id x26mr13197810edq.48.1555070433296;
+        Fri, 12 Apr 2019 05:00:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 25sm7437116ejv.27.2019.04.12.05.00.31
+        by smtp.gmail.com with ESMTPSA id b2sm10944eds.15.2019.04.12.05.00.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Apr 2019 05:00:31 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 05:00:31 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Apr 2019 12:00:24 GMT
-Message-Id: <81c08b178be6329d51586fa9d615063d3c6f9625.1555070430.git.gitgitgadget@gmail.com>
+        Fri, 12 Apr 2019 05:00:32 -0700 (PDT)
+Date:   Fri, 12 Apr 2019 05:00:32 -0700 (PDT)
+X-Google-Original-Date: Fri, 12 Apr 2019 12:00:25 GMT
+Message-Id: <7dc5293e9e0f8997674b1273393f22954e72c4cd.1555070430.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/7] remote-testgit: move it into the support directory for
- t5801
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH 2/7] help -a: do not list commands that are excluded from the
+ build
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
@@ -74,76 +71,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `git-remote-testgit` script is really only used in
-`t5801-remote-helpers.sh`. It does not even contain any `@@<MAGIC>@@`
-placeholders that would need to be interpolated via `make
-git-remote-testgit`.
-
-Let's just move it to a new home, decluttering the top-level directory
-and clarifying that this is just a test helper, not an official Git
-command that we would want to ever support.
-
-Suggested by Ævar Arnfjörð Bjarmason.
+When built with NO_CURL or with NO_UNIX_SOCKETS, some commands are
+skipped from the build. It does not make sense to list them in the
+output of `git help -a`, so let's just not.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .gitignore                                          | 1 -
- Makefile                                            | 3 ---
- t/t5801-remote-helpers.sh                           | 2 ++
- git-remote-testgit.sh => t/t5801/git-remote-testgit | 0
- 4 files changed, 2 insertions(+), 4 deletions(-)
- rename git-remote-testgit.sh => t/t5801/git-remote-testgit (100%)
+ Makefile            | 14 ++++++++++++--
+ generate-cmdlist.sh | 10 +++++++++-
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 7374587f9d..de8fc2f5b1 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -135,7 +135,6 @@
- /git-remote-ftps
- /git-remote-fd
- /git-remote-ext
--/git-remote-testgit
- /git-remote-testpy
- /git-remote-testsvn
- /git-repack
 diff --git a/Makefile b/Makefile
-index 8654c130f8..26f8ed2228 100644
+index 26f8ed2228..8f3c477ab3 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -633,7 +633,6 @@ SCRIPT_SH += git-merge-resolve.sh
- SCRIPT_SH += git-mergetool.sh
- SCRIPT_SH += git-quiltimport.sh
- SCRIPT_SH += git-legacy-rebase.sh
--SCRIPT_SH += git-remote-testgit.sh
- SCRIPT_SH += git-request-pull.sh
- SCRIPT_SH += git-stash.sh
- SCRIPT_SH += git-submodule.sh
-@@ -657,8 +656,6 @@ SCRIPT_PERL += git-svn.perl
+@@ -611,6 +611,7 @@ FUZZ_PROGRAMS =
+ LIB_OBJS =
+ PROGRAM_OBJS =
+ PROGRAMS =
++EXCLUDED_PROGRAMS =
+ SCRIPT_PERL =
+ SCRIPT_PYTHON =
+ SCRIPT_SH =
+@@ -1323,6 +1324,7 @@ ifdef NO_CURL
+ 	REMOTE_CURL_PRIMARY =
+ 	REMOTE_CURL_ALIASES =
+ 	REMOTE_CURL_NAMES =
++	EXCLUDED_PROGRAMS += git-http-fetch git-http-push
+ else
+ 	ifdef CURLDIR
+ 		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+@@ -1347,7 +1349,11 @@ endif
+ 	ifeq "$(curl_check)" "070908"
+ 		ifndef NO_EXPAT
+ 			PROGRAM_OBJS += http-push.o
++		else
++			EXCLUDED_PROGRAMS += git-http-push
+ 		endif
++	else
++		EXCLUDED_PROGRAMS += git-http-push
+ 	endif
+ 	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
+ 	ifeq "$(curl_check)" "072200"
+@@ -1593,7 +1599,9 @@ ifdef NO_INET_PTON
+ 	LIB_OBJS += compat/inet_pton.o
+ 	BASIC_CFLAGS += -DNO_INET_PTON
+ endif
+-ifndef NO_UNIX_SOCKETS
++ifdef NO_UNIX_SOCKETS
++	EXCLUDED_PROGRAMS += git-credential-cache git-credential-cache--daemon
++else
+ 	LIB_OBJS += unix-socket.o
+ 	PROGRAM_OBJS += credential-cache.o
+ 	PROGRAM_OBJS += credential-cache--daemon.o
+@@ -2112,7 +2120,9 @@ $(BUILT_INS): git$X
+ command-list.h: generate-cmdlist.sh command-list.txt
  
- SCRIPT_PYTHON += git-p4.py
+ command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ && mv $@+ $@
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
++		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
++		command-list.txt >$@+ && mv $@+ $@
  
--NO_INSTALL += git-remote-testgit
--
- # Generated files for scripts
- SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
- SCRIPT_PERL_GEN = $(patsubst %.perl,%,$(SCRIPT_PERL))
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index aaaa722cca..d04f8007e0 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -8,6 +8,8 @@ test_description='Test remote-helper import and export commands'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-gpg.sh
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+ 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 709d67405b..7867b99d19 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -6,7 +6,7 @@ die () {
+ }
  
-+PATH="$TEST_DIRECTORY/t5801:$PATH"
+ command_list () {
+-	grep -v '^#' "$1"
++	eval grep -ve '^#' $exclude_programs "$1"
+ }
+ 
+ get_categories () {
+@@ -93,6 +93,14 @@ EOF
+ EOF
+ }
+ 
++exclude_programs=
++while test "a$1" = "a--exclude-program"
++do
++	shift
++	exclude_programs="$exclude_programs -e \"^$1 \""
++	shift
++done
 +
- compare_refs() {
- 	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
- 	git --git-dir="$3/.git" rev-parse --verify $4 >actual &&
-diff --git a/git-remote-testgit.sh b/t/t5801/git-remote-testgit
-similarity index 100%
-rename from git-remote-testgit.sh
-rename to t/t5801/git-remote-testgit
+ echo "/* Automatically generated by generate-cmdlist.sh */
+ struct cmdname_help {
+ 	const char *name;
 -- 
 gitgitgadget
 
