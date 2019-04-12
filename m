@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D54D20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EDD220248
+	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726875AbfDLMAf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 08:00:35 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46425 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbfDLMAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 08:00:34 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d1so8069888edd.13
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:34 -0700 (PDT)
+        id S1727381AbfDLMAj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 08:00:39 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42108 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727104AbfDLMAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 08:00:38 -0400
+Received: by mail-ed1-f68.google.com with SMTP id x61so8075019edc.9
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pDAzqZgidp9Ac8078IjNUa202C1/co4UXZSblVoI2mI=;
-        b=VS3MlpsY2pYhibKUAlucqBqhf8u2SknVP7BdzXDXghg436ryvgeGB+zVelGlgiBRJ1
-         oNIADhHj1gdVBcZaAqMRI0sotHbkrBZu6H/bHOApdtLLNu85gmXw/qYW/VEHdZ4MJKn8
-         u6o2WsTCVoLN4x+a3LpS95RDOCuSN3KE6B5QLvh5MxcQyvRG87TcfVdFAx3bhycEKdmg
-         YSBsFu5TYUwsWbgyziincMRGlOtkZf9z47Ltuvx9KoRoH2DKwRSjOraLsxxYhTZbBTtX
-         dNgw7jB/fRTDs+SfXvn4SGXTZJO9ndvJvGCqZVhAcjFkSo6F6AchgS3hU9/8cq5U0jWa
-         hFuA==
+        bh=TK+BqPyov7hMK2nEAVYNtDmgaj2D2pd0bnVLeYSYIpI=;
+        b=BZutH9qNC8QFaZk9lMs/Z1K7TKn0XNye/xTwkJ+ILooFINxp4nes/4QYAPfivuaCfO
+         LvNUaRVqwjA6CtQd66fL2KbwJTBKNTNAHSyvzfIpVMK5quY8JrYcRQbzZwihjfcyrQdF
+         7nI/MwOv92JnWj85y+N+Zo68sasQkIwkT0kXj5MEkD78TIC2PvseclMxWMDuPhR2haMQ
+         t4mg4+FXsnyjyBv5Hvr1hQJzjqACzbBauB0HJ6z6HbMBK5XNqg6C72V9n6mhSa60naW4
+         iCqgJk1DCaJVLlToZqzTF1quSat4GUDERlPeZhTCrU5i53C4W/keNGNWH4TL8dWHIzBQ
+         ldnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pDAzqZgidp9Ac8078IjNUa202C1/co4UXZSblVoI2mI=;
-        b=XVoBjXDb9/d9lip0+hTJAGvlbMaqEWNhGm9C4lnMOBC1XJvVHu1FICu2uZjklNmNL/
-         +kWxag1Y4p6P8rcgwXWMj9lEFG+1AHrN0NmDyvlq25boc59a/FzE6eZBATv6yHX+5FPU
-         NJPsbndX8Wn/HBte7dx6qsybuBVubvu6m+145NKB2Kq16Ym7b7UFbA2qZaAbU7o+7Cq4
-         9WiFMRZ9B8eLMlMZz9DmQMaCP32KSRO99AVynmILJUI9m8N0Mm1dKUNpS5hZiqdhpO8T
-         NQp611dz+kyKZ+tH+jQibibXev4UD8AW0YjZi06Uz20/foc5TqYJqy69AwQpOkQaMa+7
-         WMJA==
-X-Gm-Message-State: APjAAAWowxpy4+iE5qauK105wY8+NCEkwtS+gIuazEGsE5bc/2tnWXx5
-        t/600pN5QsX5WN+F31dDAzdidIMl
-X-Google-Smtp-Source: APXvYqyK4jOOyoOy1ValeOXCdFLasSz5mNKX6beMix7uocN+K0uskRPVITR41yLo7ztYLm2uQUs9kA==
-X-Received: by 2002:aa7:d39a:: with SMTP id x26mr13197810edq.48.1555070433296;
-        Fri, 12 Apr 2019 05:00:33 -0700 (PDT)
+        bh=TK+BqPyov7hMK2nEAVYNtDmgaj2D2pd0bnVLeYSYIpI=;
+        b=Fmg5Ny34/QzeUyMuE5X1uelueFTNTW1y9Crpyum+qAw609K26/MlHbjsTY11CnQjkC
+         i1+dUvwu+UYap6fUKUhKDaRnrYKJgFGBlyajydL7GV2u9pxo8papwptlfICrXn9DcmUr
+         laNaAutOb/JhnTPze45VizuNb5QWNOrCJMX5WXsfRG3O88w53GyXhi5BZxi0mQlUm1M9
+         D6zX6uKmOTicHBpR5t6ByD6Klpuin2DUcrUChrJjUXuuuyoTATrfxS0NO0uriZvPaQl0
+         SGlaI4OiFBzMOAAjU1/QODKCeraBkPZxz4L1Jdvm1Vd1c2ZUCyzrbUFvfNOOsCVXvJX7
+         pvyg==
+X-Gm-Message-State: APjAAAV1zTc+t3WIAPfyPeYsTAR9HTBaZibRtZJvhQA/XiN76nSQdOic
+        lTbvD/tYoafkBfm2BZ+gSAmpM856
+X-Google-Smtp-Source: APXvYqx/zBvI3psoAmkTrCC9R9QqatV7RQAQ9rP57polYhOMPtujfdcnW92DNBQwgUSbIEtC2OUk0g==
+X-Received: by 2002:a17:906:6406:: with SMTP id d6mr7023174ejm.103.1555070435262;
+        Fri, 12 Apr 2019 05:00:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b2sm10944eds.15.2019.04.12.05.00.32
+        by smtp.gmail.com with ESMTPSA id 59sm1806369edy.60.2019.04.12.05.00.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Apr 2019 05:00:32 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 05:00:32 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Apr 2019 12:00:25 GMT
-Message-Id: <7dc5293e9e0f8997674b1273393f22954e72c4cd.1555070430.git.gitgitgadget@gmail.com>
+        Fri, 12 Apr 2019 05:00:34 -0700 (PDT)
+Date:   Fri, 12 Apr 2019 05:00:34 -0700 (PDT)
+X-Google-Original-Date: Fri, 12 Apr 2019 12:00:27 GMT
+Message-Id: <31d8e43cbfaec36f662006a711b64bca47009e59.1555070430.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/7] help -a: do not list commands that are excluded from the
- build
+Subject: [PATCH 4/7] docs: exclude documentation for commands that have been
+ excluded
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,98 +71,159 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When built with NO_CURL or with NO_UNIX_SOCKETS, some commands are
-skipped from the build. It does not make sense to list them in the
-output of `git help -a`, so let's just not.
+When building with certain build options, some commands are excluded
+from the build. For example, `git-credential-cache` is skipped when
+building with `NO_UNIX_SOCKETS`.
+
+Let's not build or package documentation for those excluded commands.
+
+This issue was pointed out rightfully when running `make check-docs` on
+Windows, where we do not yet have Unix sockets, and therefore the
+`credential-cache` command is excluded (yet its documentation was built
+and shipped).
+
+Note: building the documentation via `make -C Documentation` leaves the
+build system with no way to determine which commands have been
+excluded. If called thusly, we gracefully fail to exclude their
+documentation. Only when building the documentation via the top-level
+Makefile will it get excluded properly, or after building
+`Documentation/GIT-EXCLUDED-PROGRAMS` manually.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile            | 14 ++++++++++++--
- generate-cmdlist.sh | 10 +++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ Documentation/.gitignore |  1 +
+ Documentation/Makefile   |  3 +++
+ Makefile                 | 36 ++++++++++++++++++++----------------
+ 3 files changed, 24 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index 3ef54e0adb..ea27148c59 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -13,3 +13,4 @@ mergetools-*.txt
+ manpage-base-url.xsl
+ SubmittingPatches.txt
+ tmp-doc-diff/
++/GIT-EXCLUDED-PROGRAMS
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index af0e2cf11a..e22ea2f57c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -7,7 +7,10 @@ ARTICLES =
+ SP_ARTICLES =
+ OBSOLETE_HTML =
+ 
++-include GIT-EXCLUDED-PROGRAMS
++
+ MAN1_TXT += $(filter-out \
++		$(patsubst %,%.txt,$(EXCLUDED_PROGRAMS)) \
+ 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt))
+ MAN1_TXT += git.txt
 diff --git a/Makefile b/Makefile
-index 26f8ed2228..8f3c477ab3 100644
+index 5880d4d3a9..a5212c64bf 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -611,6 +611,7 @@ FUZZ_PROGRAMS =
- LIB_OBJS =
- PROGRAM_OBJS =
- PROGRAMS =
-+EXCLUDED_PROGRAMS =
- SCRIPT_PERL =
- SCRIPT_PYTHON =
- SCRIPT_SH =
-@@ -1323,6 +1324,7 @@ ifdef NO_CURL
- 	REMOTE_CURL_PRIMARY =
- 	REMOTE_CURL_ALIASES =
- 	REMOTE_CURL_NAMES =
-+	EXCLUDED_PROGRAMS += git-http-fetch git-http-push
- else
- 	ifdef CURLDIR
- 		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
-@@ -1347,7 +1349,11 @@ endif
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
- 			PROGRAM_OBJS += http-push.o
-+		else
-+			EXCLUDED_PROGRAMS += git-http-push
- 		endif
-+	else
-+		EXCLUDED_PROGRAMS += git-http-push
- 	endif
- 	curl_check := $(shell (echo 072200; $(CURL_CONFIG) --vernum | sed -e '/^70[BC]/s/^/0/') 2>/dev/null | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "072200"
-@@ -1593,7 +1599,9 @@ ifdef NO_INET_PTON
- 	LIB_OBJS += compat/inet_pton.o
- 	BASIC_CFLAGS += -DNO_INET_PTON
- endif
--ifndef NO_UNIX_SOCKETS
-+ifdef NO_UNIX_SOCKETS
-+	EXCLUDED_PROGRAMS += git-credential-cache git-credential-cache--daemon
-+else
- 	LIB_OBJS += unix-socket.o
- 	PROGRAM_OBJS += credential-cache.o
- 	PROGRAM_OBJS += credential-cache--daemon.o
-@@ -2112,7 +2120,9 @@ $(BUILT_INS): git$X
- command-list.h: generate-cmdlist.sh command-list.txt
+@@ -2455,22 +2455,25 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
  
- command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh command-list.txt >$@+ && mv $@+ $@
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
-+		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
-+		command-list.txt >$@+ && mv $@+ $@
+ export DEFAULT_EDITOR DEFAULT_PAGER
  
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
- 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 709d67405b..7867b99d19 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -6,7 +6,7 @@ die () {
- }
- 
- command_list () {
--	grep -v '^#' "$1"
-+	eval grep -ve '^#' $exclude_programs "$1"
- }
- 
- get_categories () {
-@@ -93,6 +93,14 @@ EOF
- EOF
- }
- 
-+exclude_programs=
-+while test "a$1" = "a--exclude-program"
-+do
-+	shift
-+	exclude_programs="$exclude_programs -e \"^$1 \""
-+	shift
-+done
++Documentation/GIT-EXCLUDED-PROGRAMS: Makefile config.mak.uname
++	$(QUIET_GEN)echo "EXCLUDED_PROGRAMS := $(EXCLUDED_PROGRAMS)" >$@
 +
- echo "/* Automatically generated by generate-cmdlist.sh */
- struct cmdname_help {
- 	const char *name;
+ .PHONY: doc man man-perl html info pdf
+-doc: man-perl
++doc: man-perl Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation all
+ 
+-man: man-perl
++man: man-perl Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation man
+ 
+ man-perl: perl/build/man/man3/Git.3pm
+ 
+-html:
++html: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation html
+ 
+-info:
++info: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation info
+ 
+-pdf:
++pdf: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation pdf
+ 
+ XGETTEXT_FLAGS = \
+@@ -2907,33 +2910,33 @@ endif
+ install-gitweb:
+ 	$(MAKE) -C gitweb install
+ 
+-install-doc: install-man-perl
++install-doc: install-man-perl Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation install
+ 
+-install-man: install-man-perl
++install-man: install-man-perl Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation install-man
+ 
+-install-man-perl: man-perl
++install-man-perl: man-perl Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mandir_SQ)/man3'
+ 	(cd perl/build/man/man3 && $(TAR) cf - .) | \
+ 	(cd '$(DESTDIR_SQ)$(mandir_SQ)/man3' && umask 022 && $(TAR) xof -)
+ 
+-install-html:
++install-html: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation install-html
+ 
+-install-info:
++install-info: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation install-info
+ 
+-install-pdf:
++install-pdf: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation install-pdf
+ 
+-quick-install-doc:
++quick-install-doc: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation quick-install
+ 
+-quick-install-man:
++quick-install-man: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation quick-install-man
+ 
+-quick-install-html:
++quick-install-html: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation quick-install-html
+ 
+ 
+@@ -2988,7 +2991,7 @@ artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
+ htmldocs = git-htmldocs-$(GIT_VERSION)
+ manpages = git-manpages-$(GIT_VERSION)
+ .PHONY: dist-doc distclean
+-dist-doc:
++dist-doc: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir .doc-tmp-dir
+ 	$(MAKE) -C Documentation WEBDOC_DEST=../.doc-tmp-dir install-webdoc
+@@ -3035,6 +3038,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(MAKE) -C Documentation/ clean
++	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
+ ifndef NO_PERL
+ 	$(MAKE) -C gitweb clean
+ 	$(RM) -r perl/build/
+@@ -3062,7 +3066,7 @@ ALL_COMMANDS += gitweb
+ ALL_COMMANDS += git-gui git-citool
+ 
+ .PHONY: check-docs
+-check-docs::
++check-docs:: Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(MAKE) -C Documentation lint-docs
+ 	@(for v in $(patsubst %$X,%,$(ALL_COMMANDS)); \
+ 	do \
 -- 
 gitgitgadget
 
