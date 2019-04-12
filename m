@@ -2,128 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBB020248
-	for <e@80x24.org>; Fri, 12 Apr 2019 09:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 561FD20248
+	for <e@80x24.org>; Fri, 12 Apr 2019 09:14:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbfDLJGf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 05:06:35 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53621 "EHLO mout.gmx.net"
+        id S1727271AbfDLJOY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 05:14:24 -0400
+Received: from tschil.ethgen.ch ([5.9.7.51]:52206 "EHLO tschil.ethgen.ch"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726851AbfDLJGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 05:06:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555059989;
-        bh=Prefw5j0qj+iHbARSDNmKDeWRI5wnYmvE7VBMpPAr30=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RNh1B03xyV9gqeWIfKXzyh37lhQjy8ucyELP5U/YXjS1tLf+hfEUY+OK3O7Hm3fIc
-         tCko9DgP7v2UdA5yFGbACSd5Lp6zG3iy9DaO6nZbS+ZlTaKmrYR65Mg5WaHSns+eMT
-         BctATxH/tc/q2IZWwThUce+wnLnG6TUE6Umltmq8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTkNU-1hNdbA3tAm-00QR73; Fri, 12
- Apr 2019 11:06:29 +0200
-Date:   Fri, 12 Apr 2019 11:06:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Git List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: allow for configuring option
- abbreviation
-In-Reply-To: <xmqqtvfiuhn1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1904121100030.41@tvgsbejvaqbjf.bet>
-References: <pull.167.git.gitgitgadget@gmail.com> <20190325202329.26033-2-avarab@gmail.com> <CAPig+cR0Ldt3EpQ683ZFNFXggfsTrdeZ3R-V6pDBZNA1N3c+xg@mail.gmail.com> <xmqqtvfiuhn1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725973AbfDLJOY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 05:14:24 -0400
+Received: from [192.168.17.4] (helo=ikki.ket)
+        by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <klaus@ethgen.ch>)
+        id 1hEsGL-0007Gp-Fn; Fri, 12 Apr 2019 11:14:21 +0200
+Received: from klaus by ikki.ket with local (Exim 4.92)
+        (envelope-from <klaus@ethgen.ch>)
+        id 1hEsGL-0000ip-7B; Fri, 12 Apr 2019 11:14:21 +0200
+Date:   Fri, 12 Apr 2019 10:14:21 +0100
+From:   Klaus Ethgen <Klaus@ethgen.ch>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: fatal: unable to read after commit
+Message-ID: <20190412091420.GF12669@ikki.ethgen.ch>
+References: <20190411164440.GC12669@ikki.ethgen.ch>
+ <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1200981579-1555059988=:41"
-X-Provags-ID: V03:K1:OPhc/kZRSf61NrmH/ULlNIfbxyA3PIY3fp1nJL5CkocwAlDB7un
- r+ZFOu08DYCo4eizNjmkt0HwoVXZ1vhpxx1+vnZsm2g+L6NbggxR2E8TXsG/V0pdngvQsRp
- 8gQxCU24Ae3NV09XHb2P/N9XA847ofBiPX2saIwre45JA4LlxIqmmjH2ClK2nHcDQ3smtKL
- QHmJ2QmYB9JNNLR1SiitA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:M5mLBooGjVY=:3vacs9bGqfYDOVAKe0R1Y+
- pihdRnJFjXbVHCyh5VngLBtYGSmibZbOmFneUkYvcEeqaSa3J32iYJShhLfmnK0CNxnH2JzjT
- T48rCB/p73pWdM7gR0k07Qsqrs2S5F5UhUAc5/FzLZFdihEp5/IhUjmLnP+eZrRcp5L84/DMt
- 2SZWUee9zJGXcrn4TuhHDNo0XehpCJ4n5coJgiqNkjCo4w/m9d0+4+nC3ryx4I9peT1wi7e2/
- RPdAF43Q7Ae9zyL0rA0do5eieNMtkhjwMakESt7RBZA+P/gmHWFV4pmsYgAshD4POJqkg8cy0
- sjUVIE/bobeNMLuWLHyYg5D5+gL4pQsZta9+s5PIN253yE3UhEOzivgHkbcYkdoDoVv/BRABh
- k2ngYOw/KtWZIQJJDSnaASilKInskE6NURPDZ3Evj1IhA5mL0jRwI0YDRxHLwDch08AOX4g/I
- zbY2s6VG0+/NfHFdqUcGbSZETaA5UQpaFrQHAXRwCple490iiKqCosMVbwVfPj1aOVljPX8Rv
- /BM8+bsiuIVvY/ctkCUpwvFxKRGaoWO51RVTeHJWILdyyhFrBVgUpF/lXBYnz7wOnE/gk8rcW
- l/bLVNPjeTUCMlcYRafNbywT0BR92HNm2BWOT0BVoLiEjUJNk7eT5TSxOBIGGe7K3+w/uV5VH
- SS7byO9cu+NJA5Ol9Ge+s1W7JaAQFXw7MWy36iQ5Nv4RkuzwHRfskjCfqbIO1URC5qBCWbh6w
- tArDySnRrY0jUTijUPZyQxWR0fMM52Z9RcbXXc+m08cnRZWlle0i+uufOwdT4H9SZYyVv2qS5
- 1TufHLd0xlhcJvt5kvptItFj0op5uaTyG7gA5qXLUk+BTdKDlvHeQ57pJyn3daU90Siasy17i
- 5wue2RK4ES/uXrt+NmUFB2HI/7SkWhVTSx5S91g/yQVBJXbRMwrLnq61G/RNpnRp0TjpcpW6V
- +UqvsyAdESg==
+Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
+OpenPGP: id=79D0B06F4E20AF1C;
+ url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
---8323328-1200981579-1555059988=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi Christian,
 
-Hi Junio,
-
-On Mon, 1 Apr 2019, Junio C Hamano wrote:
-
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
-> > I don't get why having a configuration option is better for defending
-> > scripts against this problem than a simple environment variable. It
-> > seems easier for the script prologue to contain:
+Am Fr den 12. Apr 2019 um  9:39 schrieb Christian Couder:
+> On Thu, Apr 11, 2019 at 7:24 PM Klaus Ethgen <Klaus@ethgen.ch> wrote:
+> 
+> > I am a heavy user of git now at version 2.20.1 on debian.
 > >
-> >     GIT_TEST_ABBREVIATED_OPTIONS=3Dfalse
-> >     export GIT_TEST_ABBREVIATED_OPTIONS
-> >
-> > than for it to muck about with git-config or use "git -c
-> > core.abbreviatedOptions=3Dfalse ..." everywhere. The commit message
-> > doesn't do a good enough job of justifying the configuration option
-> > over the environment variable.
->
-> Absolutely.
->
-> One thing that big brotherly types would find config attractive is
-> to install centrally managed /etc/gitconfig so that they can tell
-> the tracing machinery to log all git command invocations centrally;
-> with environment only system, it is not easy to arrange.
+> > Since some weeks I have the problem that I get often "fatal: unable to
+> > read ..." and a unclear repository after a git commit. The commit itself
+> > is correct and so a git reset --hard helps to fix the issue.
+> 
+> Could you tell us at least which Debian version and file system you use?
 
-I think that in this instance, we should use the fact that we know =C3=86v=
-ar
-well, and refrain from characterizing him as a Big Brotherly type.
+Sorry, it is debian unstable and the filesystem is a brfs.
 
-=46rom my reading, it looks like =C3=86var just wants to avoid being woken=
- up for
-a Live Site Incident that is caused by a violation of Postel's Law: be
-accepting in your input, but stringent in your output. And in this case,
-the scripts by their colleagues is the output that should be more
-stringent, and enforcing the stringency via a system-wide config variable
-is as legit as our instistence that `user.name` and `user.email` must be
-provided if you want to create a commit.
+> Would you be ok to bisect it or at least tell us if it happens with
+> 2.19.2, 2.20.0 and 2.21.0?
 
-And I would not have the faintest problem with adding that patch to
-introduce the `core.*` setting to that end (which would be the right
-section, too, even if there are already so many `core.*` settings).
+I could try, but from the fact, that it happens not all the time, I am
+not sure if it helps.
 
-Having said that, I get the strong impression that there is a rather
-violent pushback against this (which I don't understand). Combined with
-the fact that it would protect only against a tiny fraction of "git
-upgrade problems", I'm getting more into the "well, then let's just not
-bother" camp.
+However, I might have found one repo where it allways happens. In fact,
+I am able to reproduce it also in my local geeqie checkout.
 
-Ciao,
-Dscho
+> > Any Idea what could be the reason for that problem. I encounter it on
+> > different repositories so not limited to one.
+> 
+> Is it easy to reproduce even on very small test repos? Could you send
+> us a small script that reproduces it?
 
---8323328-1200981579-1555059988=:41--
+In any case it happens if I modify a file and add+commit or commit -a
+it. What happens is that the index seems to be corrupted. The HEAD gets
+the correct commit and the checked out version of the file is also
+correct. Only the index seems to be corrupt (Until I do git reset).
+
+When I do a git status, I get the following output:
+   Auf Branch master
+   Ihr Branch ist 1 Commit vor 'origin/master'.
+     (benutzen Sie "git push", um lokale Commits zu publizieren)
+
+   Zum Commit vorgemerkte Änderungen:
+     (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
+
+	   neue Datei:     pending.data
+
+   Änderungen, die nicht zum Commit vorgemerkt sind:
+     (benutzen Sie "git add/rm <Datei>...", um die Änderungen zum Commit vorzumerken)
+     (benutzen Sie "git checkout -- <Datei>...", um die Änderungen im Arbeitsverzeichnis zu verwerfen)
+
+	   gelöscht:       pending.data
+
+And it seems, that the brocken object is always the same:
+   > git diff
+   fatal: unable to read 544f4ec5fe7c7b04c73b2c2fe9e3e7779e929819
+
+independent from the repository.
+
+I do not have a pending.data and did not touch this one.
+
+> Could you also run the Git test suite on your machine?
+
+Sure.
+
+But at the moment, I have some more findings that points to another
+component in the queue. When I do a "commit -a -m test", the error does
+not happens. When I do a "commit -a" and use the editor (vim) to write
+the commit message, it happens.
+
+As I use fugitive, I cannot rule out, that the problem is in that vim
+addon.
+
+Regards
+   Klaus
+- -- 
+Klaus Ethgen                                       http://www.ethgen.ch/
+pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
+Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
+-----BEGIN PGP SIGNATURE-----
+Comment: Charset: ISO-8859-1
+
+iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlywVuYACgkQpnwKsYAZ
+9qybEQv/bn3Bs+e/xgPfWK9yDbBlcmVywAiBty5RgYl5FQNHPb/6rRbZMk9wT6MJ
+NkLGTj5sgrtRik+TU8C0j982XBJW6EY8jEIzOisBtm5aQ63KdymSI+q6MQd1C3/R
+1dd4IMfM2GylQohhsptUdRwErvjoOKHpqAvJnKMnzUC5YxYZ4QL64LLnjoCAz3mK
+1W4VceZVHluD/2nv9HP5aOgqihWJNYhIGP9308X4JXw6qn5wGWGljDsyk4NE+NWr
+3O0QBYGJO7AYA1WH6eCrPx7DSrPpArdLIwhQCntIKJIrsf3mn4VBUAVB+uhTLeIa
+oFyx9vSX/9KlruL/ni287RCRJBYh4DVDsXligFeUTRe0SOuVPgjku9R2oYKpoeKB
+7AhI+rKY6vg3At/6iIcaeSw7+ln8ilSqLmbTAz0ygc16T7+CNK5En+nAM2otiNmU
+Fs5upQsVGb6pCFTp6aC8P6v+eTqlvH+l6jMsR/7Lx95U9+yOSdSO5x9sbCasCs/g
+Z/XxPGkv
+=P22A
+-----END PGP SIGNATURE-----
