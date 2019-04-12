@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 179EB20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 385E720248
+	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbfDLMAj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 08:00:39 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:44216 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726711AbfDLMAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 08:00:36 -0400
-Received: by mail-ed1-f45.google.com with SMTP id d11so8074094edp.11
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:35 -0700 (PDT)
+        id S1727403AbfDLMAl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 08:00:41 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44135 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726898AbfDLMAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 08:00:40 -0400
+Received: by mail-ed1-f66.google.com with SMTP id d11so8074250edp.11
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a6HInrpazxG+ZyyT+ukU+pYjlFBdRKEAQDUrtHtpFz0=;
-        b=A3rlgVCHmGboLA7T42G3h43zv9dUYYHxmZLo32/TXZ9auK8lY6oejO4W0NcZ2EAZYU
-         YqbKfpkmJVZwqiEIkJa8xKv/uyi4rq4w9p3yUkd+dxdbmo/g7xBs6/RG9ROHBHIx50se
-         ZXtCxBC7NXHecC+Mq6y1p6UKeNhBIkDRjFwfi0d5rzQte8sWRzLiJH9eyMNTFvca+XlL
-         C2VW12A34BjvknsnIg1WxpLGkOgOupcqyG9EVxo/gg5e4R2MiOC5BuxacJCFrLSJYzvp
-         yLiulU5aepIXFdNwMYv7HlvKbbbaRa2lyj/mgzHez5KnlvJ0WepCDPfcCK6O6fcuaHrF
-         t59A==
+        bh=Jkt5GDfTi+/UE7sV2MF0GxMgRBAKiWI783ntUc7cnho=;
+        b=eproQXO9FWjWFRsgLFnx2pCwaICIs5I95Gu6phkkPYmrhIu6SLEPfrMlKRwr8l3BrT
+         uALveYGUvzhhiTB3l8lCEcJiG6HQ8y0mcReGv3AaSV7cue1fDVr2DxT/Ibgb86hAwA5M
+         jmhKWskNdzdmuH4DeTbkq0x45uXq5/FeASo6Fs7MCH1RLT/RHxGs3DSgyTRhjKlFlEEb
+         tRc1jwalTEjN4bXMdsdlrh2cmhxqA8t8jYNNyOx+6AyQ4ieHXGnXJkCAfC4mw6UgJkrO
+         NcvR3pw4AYHd9I50WR5wB4MdZBORmEKyYIzcQjx2KXAqqKooacsDRt0SVvXh635ebyFw
+         Z1SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a6HInrpazxG+ZyyT+ukU+pYjlFBdRKEAQDUrtHtpFz0=;
-        b=ssbILj8yxTtXLiRZ5L+mxN8K07mUWYnwZ5zrBfyCcYVbK1UzdwkNNNlgn4QoXTGjR5
-         MeJb8ZcxFR/85H56ShNECHo658WwTdbUwnQdsAqJDGa9IJBB5bisuc0uXrISPyjf2GOb
-         +I8Cbb3Ar16jo81uU7wpwqsGGAgRqYIi4M2bL0yVtyD0MBOBYKpgzddH6fRjZGnkRIxL
-         sxSef1NaMxJ6Mtcm6wACnCpuRMvv3nyF2TM7E8sED1unsmkf0jFbzCl32vTx+L9+jHsI
-         NlGv09t06oVgK5sMTDiXJy2rFH1sqg0AWRdz+KnmbZKjuP1nf9Xlq9jgm65qjhlRr9Tx
-         +OHQ==
-X-Gm-Message-State: APjAAAUIpnaLxPGy5czN4bWgc6MeShSwUC/bpGzJ6XyXALZSDxRM5jlM
-        YS9zqP4j96AE1OS8lfuOa7rG/5CH
-X-Google-Smtp-Source: APXvYqxIuPsoVwljJWP+ognKkYj19Nb3G1aOJJby1HzcGjLBmzQXZJ8wFAtVxRJ0AnhEB5FWf1lgEw==
-X-Received: by 2002:a17:906:1545:: with SMTP id c5mr31431442ejd.135.1555070434259;
-        Fri, 12 Apr 2019 05:00:34 -0700 (PDT)
+        bh=Jkt5GDfTi+/UE7sV2MF0GxMgRBAKiWI783ntUc7cnho=;
+        b=kPxx8INu5xaPK1pQL6eTvL83ni7yWLHj78somN30dgqv7ThFU8FfsZQTguODJDLT+y
+         EP2oqk2n4fNQK0C+fuVB6LSveUR7n0lmhYYMY5GS6L+CeSlARGvwy/5WYLcVVg1/6AKY
+         aMr5dbmQG4SD7RM5aRfwKB+CHGn4G6BUSpowbqC1RWR2tyrWPrLDss6hN000ojD6jHz5
+         NwUBJ2tjUUyQhuYKzGR6Ya4RCsFdNrGAfcrqGLNsFFev6WtOx+LlT9JfA3wdzDeWuB3k
+         UBPWCyv/QcICZS61TPJKRaRkEohtgt4plLMmmYbOAXAxzBVQs1qnTCsJaS+56JBbsEhU
+         DJMQ==
+X-Gm-Message-State: APjAAAV18149ametZvRkFPqUvd0kdz/u+tsY6xyLBD1eED7gFAUHiWCi
+        Ak1matOq3bR/lSvnKLXmF5IWJJAd
+X-Google-Smtp-Source: APXvYqzvR9IQ2yyn3Ppv2aSsj/6bZL21Z/uZocr6V6QlHnnveBAk+1XgzswtmxdC5spKGeGGpX6FVw==
+X-Received: by 2002:a17:906:a311:: with SMTP id j17mr31741824ejz.269.1555070437661;
+        Fri, 12 Apr 2019 05:00:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m10sm397644edl.62.2019.04.12.05.00.33
+        by smtp.gmail.com with ESMTPSA id j3sm7499448ejv.22.2019.04.12.05.00.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Apr 2019 05:00:33 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 05:00:33 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Apr 2019 12:00:26 GMT
-Message-Id: <96ced7e17cb40c4d0f15955c482857196862ab80.1555070430.git.gitgitgadget@gmail.com>
+        Fri, 12 Apr 2019 05:00:37 -0700 (PDT)
+Date:   Fri, 12 Apr 2019 05:00:37 -0700 (PDT)
+X-Google-Original-Date: Fri, 12 Apr 2019 12:00:30 GMT
+Message-Id: <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/7] check-docs: do not pretend that commands are listed which
- are excluded
+Subject: [PATCH 7/7] Turn `git serve` into a test helper
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,29 +70,353 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the previous commit, we taught `git help -a` to stop listing commands
-that are excluded from the build.
+The `git serve` built-in was introduced in ed10cb952d31 (serve:
+introduce git-serve, 2018-03-15) as a backend to serve Git protocol v2,
+probably originally intended to be spawned by `git upload-pack`.
 
-In this commit, we stop `check-docs` from claiming that those commands
-are listed.
+However, in the version that the protocol v2 patches made it into core
+Git, `git upload-pack` calls the `serve()` function directly instead of
+spawning `git serve`; The only reason in life for `git serve` to survive
+as a built-in command is to provide a way to test the protocol v2
+functionality.
+
+Meaning that it does not even have to be a built-in that is installed
+with end-user facing Git installations, but it can be a test helper
+instead.
+
+Let's make it so.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ Makefile                                    |  2 +-
+ builtin.h                                   |  1 -
+ git.c                                       |  1 -
+ builtin/serve.c => t/helper/test-serve-v2.c |  7 +++--
+ t/helper/test-tool.c                        |  1 +
+ t/helper/test-tool.h                        |  1 +
+ t/t5701-git-serve.sh                        | 32 ++++++++++++---------
+ t/t5702-protocol-v2.sh                      |  5 ++--
+ t/t5703-upload-pack-ref-in-want.sh          | 16 +++++------
+ 9 files changed, 36 insertions(+), 30 deletions(-)
+ rename builtin/serve.c => t/helper/test-serve-v2.c (81%)
 
 diff --git a/Makefile b/Makefile
-index 8f3c477ab3..5880d4d3a9 100644
+index caa20923a4..d7656cdc4f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3085,6 +3085,7 @@ check-docs::
- 	( \
- 		sed -e '1,/^### command list/d' \
- 		    -e '/^#/d' \
-+		    $(patsubst %,-e '/^% /d',$(EXCLUDED_PROGRAMS)) \
- 		    -e '/guide$$/d' \
- 		    -e 's/[ 	].*//' \
- 		    -e 's/^/listed /' command-list.txt; \
+@@ -762,6 +762,7 @@ TEST_BUILTINS_OBJS += test-repository.o
+ TEST_BUILTINS_OBJS += test-revision-walking.o
+ TEST_BUILTINS_OBJS += test-run-command.o
+ TEST_BUILTINS_OBJS += test-scrap-cache-tree.o
++TEST_BUILTINS_OBJS += test-serve-v2.o
+ TEST_BUILTINS_OBJS += test-sha1.o
+ TEST_BUILTINS_OBJS += test-sha1-array.o
+ TEST_BUILTINS_OBJS += test-sha256.o
+@@ -1131,7 +1132,6 @@ BUILTIN_OBJS += builtin/rev-parse.o
+ BUILTIN_OBJS += builtin/revert.o
+ BUILTIN_OBJS += builtin/rm.o
+ BUILTIN_OBJS += builtin/send-pack.o
+-BUILTIN_OBJS += builtin/serve.o
+ BUILTIN_OBJS += builtin/shortlog.o
+ BUILTIN_OBJS += builtin/show-branch.o
+ BUILTIN_OBJS += builtin/show-index.o
+diff --git a/builtin.h b/builtin.h
+index 6538932e99..c48636e244 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -219,7 +219,6 @@ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+ extern int cmd_revert(int argc, const char **argv, const char *prefix);
+ extern int cmd_rm(int argc, const char **argv, const char *prefix);
+ extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
+-extern int cmd_serve(int argc, const char **argv, const char *prefix);
+ extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
+ extern int cmd_show(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 2dd588674f..c58b067771 100644
+--- a/git.c
++++ b/git.c
+@@ -548,7 +548,6 @@ static struct cmd_struct commands[] = {
+ 	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "rm", cmd_rm, RUN_SETUP },
+ 	{ "send-pack", cmd_send_pack, RUN_SETUP },
+-	{ "serve", cmd_serve, RUN_SETUP },
+ 	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
+ 	{ "show", cmd_show, RUN_SETUP },
+ 	{ "show-branch", cmd_show_branch, RUN_SETUP },
+diff --git a/builtin/serve.c b/t/helper/test-serve-v2.c
+similarity index 81%
+rename from builtin/serve.c
+rename to t/helper/test-serve-v2.c
+index d3fd240bb3..aee35e5aef 100644
+--- a/builtin/serve.c
++++ b/t/helper/test-serve-v2.c
+@@ -1,14 +1,14 @@
++#include "test-tool.h"
+ #include "cache.h"
+-#include "builtin.h"
+ #include "parse-options.h"
+ #include "serve.h"
+ 
+ static char const * const serve_usage[] = {
+-	N_("git serve [<options>]"),
++	N_("test-tool serve-v2 [<options>]"),
+ 	NULL
+ };
+ 
+-int cmd_serve(int argc, const char **argv, const char *prefix)
++int cmd__serve_v2(int argc, const char **argv)
+ {
+ 	struct serve_options opts = SERVE_OPTIONS_INIT;
+ 
+@@ -19,6 +19,7 @@ int cmd_serve(int argc, const char **argv, const char *prefix)
+ 			 N_("exit immediately after advertising capabilities")),
+ 		OPT_END()
+ 	};
++	const char *prefix = setup_git_directory();
+ 
+ 	/* ignore all unknown cmdline switches for now */
+ 	argc = parse_options(argc, argv, prefix, options, serve_usage,
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 2b21943f93..4bf3666b43 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -48,6 +48,7 @@ static struct test_cmd cmds[] = {
+ 	{ "revision-walking", cmd__revision_walking },
+ 	{ "run-command", cmd__run_command },
+ 	{ "scrap-cache-tree", cmd__scrap_cache_tree },
++	{ "serve-v2", cmd__serve_v2 },
+ 	{ "sha1", cmd__sha1 },
+ 	{ "sha1-array", cmd__sha1_array },
+ 	{ "sha256", cmd__sha256 },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 25abed1cf2..bc72370916 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -39,6 +39,7 @@ int cmd__repository(int argc, const char **argv);
+ int cmd__revision_walking(int argc, const char **argv);
+ int cmd__run_command(int argc, const char **argv);
+ int cmd__scrap_cache_tree(int argc, const char **argv);
++int cmd__serve_v2(int argc, const char **argv);
+ int cmd__sha1(int argc, const char **argv);
+ int cmd__sha1_array(int argc, const char **argv);
+ int cmd__sha256(int argc, const char **argv);
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index fe45bf828d..ffb9613885 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='test git-serve and server commands'
++test_description='test protocol v2 server commands'
+ 
+ . ./test-lib.sh
+ 
+@@ -14,7 +14,8 @@ test_expect_success 'test capability advertisement' '
+ 	0000
+ 	EOF
+ 
+-	GIT_TEST_SIDEBAND_ALL=0 git serve --advertise-capabilities >out &&
++	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
++		--advertise-capabilities >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -24,11 +25,11 @@ test_expect_success 'stateless-rpc flag does not list capabilities' '
+ 	test-tool pkt-line pack >in <<-EOF &&
+ 	0000
+ 	EOF
+-	git serve --stateless-rpc >out <in &&
++	test-tool serve-v2 --stateless-rpc >out <in &&
+ 	test_must_be_empty out &&
+ 
+ 	# EOF
+-	git serve --stateless-rpc >out &&
++	test-tool serve-v2 --stateless-rpc >out &&
+ 	test_must_be_empty out
+ '
+ 
+@@ -37,7 +38,7 @@ test_expect_success 'request invalid capability' '
+ 	foobar
+ 	0000
+ 	EOF
+-	test_must_fail git serve --stateless-rpc 2>err <in &&
++	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
+ 	test_i18ngrep "unknown capability" err
+ '
+ 
+@@ -46,7 +47,7 @@ test_expect_success 'request with no command' '
+ 	agent=git/test
+ 	0000
+ 	EOF
+-	test_must_fail git serve --stateless-rpc 2>err <in &&
++	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
+ 	test_i18ngrep "no command requested" err
+ '
+ 
+@@ -56,7 +57,7 @@ test_expect_success 'request invalid command' '
+ 	agent=git/test
+ 	0000
+ 	EOF
+-	test_must_fail git serve --stateless-rpc 2>err <in &&
++	test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
+ 	test_i18ngrep "invalid command" err
+ '
+ 
+@@ -87,7 +88,7 @@ test_expect_success 'basics of ls-refs' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -107,7 +108,7 @@ test_expect_success 'basic ref-prefixes' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -127,7 +128,7 @@ test_expect_success 'refs/heads prefix' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -148,7 +149,7 @@ test_expect_success 'peel parameter' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -169,7 +170,7 @@ test_expect_success 'symrefs parameter' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -189,7 +190,7 @@ test_expect_success 'sending server-options' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc <in >out &&
++	test-tool serve-v2 --stateless-rpc <in >out &&
+ 	test-tool pkt-line unpack <out >actual &&
+ 	test_cmp expect actual
+ '
+@@ -204,7 +205,10 @@ test_expect_success 'unexpected lines are not allowed in fetch request' '
+ 	0000
+ 	EOF
+ 
+-	test_must_fail git -C server serve --stateless-rpc <in >/dev/null 2>err &&
++	(
++		cd server &&
++		test_must_fail test-tool serve-v2 --stateless-rpc
++	) <in >/dev/null 2>err &&
+ 	grep "unexpected line: .this-is-not-a-command." err
+ '
+ 
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index db4ae09f2f..8691bfc52d 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -359,12 +359,13 @@ test_expect_success 'even with handcrafted request, filter does not work if not
+ 	0000
+ 	EOF
+ 
+-	test_must_fail git -C server serve --stateless-rpc <in >/dev/null 2>err &&
++	test_must_fail test-tool -C server serve-v2 --stateless-rpc \
++		<in >/dev/null 2>err &&
+ 	grep "unexpected line: .filter blob:none." err &&
+ 
+ 	# Exercise to ensure that if advertised, filter works
+ 	git -C server config uploadpack.allowfilter 1 &&
+-	git -C server serve --stateless-rpc <in >/dev/null
++	test-tool -C server serve-v2 --stateless-rpc <in >/dev/null
+ '
+ 
+ test_expect_success 'default refspec is used to filter ref when fetchcing' '
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index f87b2f6df3..dd1cbd0dd6 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -48,15 +48,15 @@ test_expect_success 'setup repository' '
+ '
+ 
+ test_expect_success 'config controls ref-in-want advertisement' '
+-	git serve --advertise-capabilities >out &&
++	test-tool serve-v2 --advertise-capabilities >out &&
+ 	! grep -a ref-in-want out &&
+ 
+ 	git config uploadpack.allowRefInWant false &&
+-	git serve --advertise-capabilities >out &&
++	test-tool serve-v2 --advertise-capabilities >out &&
+ 	! grep -a ref-in-want out &&
+ 
+ 	git config uploadpack.allowRefInWant true &&
+-	git serve --advertise-capabilities >out &&
++	test-tool serve-v2 --advertise-capabilities >out &&
+ 	grep -a ref-in-want out
+ '
+ 
+@@ -70,7 +70,7 @@ test_expect_success 'invalid want-ref line' '
+ 	0000
+ 	EOF
+ 
+-	test_must_fail git serve --stateless-rpc 2>out <in &&
++	test_must_fail test-tool serve-v2 --stateless-rpc 2>out <in &&
+ 	grep "unknown ref" out
+ '
+ 
+@@ -90,7 +90,7 @@ test_expect_success 'basic want-ref' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc >out <in &&
++	test-tool serve-v2 --stateless-rpc >out <in &&
+ 	check_output
+ '
+ 
+@@ -112,7 +112,7 @@ test_expect_success 'multiple want-ref lines' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc >out <in &&
++	test-tool serve-v2 --stateless-rpc >out <in &&
+ 	check_output
+ '
+ 
+@@ -133,7 +133,7 @@ test_expect_success 'mix want and want-ref' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc >out <in &&
++	test-tool serve-v2 --stateless-rpc >out <in &&
+ 	check_output
+ '
+ 
+@@ -153,7 +153,7 @@ test_expect_success 'want-ref with ref we already have commit for' '
+ 	0000
+ 	EOF
+ 
+-	git serve --stateless-rpc >out <in &&
++	test-tool serve-v2 --stateless-rpc >out <in &&
+ 	check_output
+ '
+ 
 -- 
 gitgitgadget
-
