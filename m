@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D772120248
-	for <e@80x24.org>; Fri, 12 Apr 2019 03:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31E8320248
+	for <e@80x24.org>; Fri, 12 Apr 2019 05:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbfDLDwY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 23:52:24 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35355 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726699AbfDLDwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 23:52:23 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w24so4420905plp.2
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 20:52:23 -0700 (PDT)
+        id S1726024AbfDLFOk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 01:14:40 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52568 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfDLFOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 01:14:39 -0400
+Received: by mail-wm1-f65.google.com with SMTP id a184so9509580wma.2
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 22:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Vq738eLV65bTTrGzgQrnKbqh1KBD4fh9UD1vtvmWjo8=;
-        b=edJiie9iVtXGsTpH69jGdIB46u31OW6l/7msTNDPPFMg/Sstja0nnvphRMb2VLXwgw
-         fUrPcQmnAOyZNiYxkIKSEuQ0RzUdmWDuycfMTVxQV9bjPXiSNVfWoCEvMhMpG/41ZFez
-         Q5mCXEvu9e7TQ0QMdO8SBaiXUDsZrWy5ui+RSOoEp69+5VSO5jZRW68a33Z8eAgykcWH
-         Q3iLT9T+9QvkiF6h/iWcZ7WJrFBFgckT81kxYlWOBZGLZHXHGr046O0zkftGNJg8PLhP
-         X0JLtQqK4HKMyi8raGCdADhdq//hRchYM/BywBQUKmBh3Ap8pJNhT2Y9xECwdbKqO9w+
-         UvCw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=X3Y5pVIaBKgUV53T9PdptnYX472PaH0TBda3c7jPeLM=;
+        b=gkxWiB5zxgEm8q+ONbDmLRvEX5rg3SjmovCKRREMD63lE898T+V1KGsjPruyhwlskZ
+         POZseeqbGeZiZq9PhoQ8D9pHj2/iT3yiOi0hwDhQ5KNxTQqSY0PxJEvNxbj8JNI7aZzX
+         7/fcDkLiiOD17aEUZDEgFYLeJU8azzg8CVlhaZaMNuosxqyrpzWnMguSjJ1IHqBBIgtA
+         uZ54VJkz5VTupNhNpzYnZIgaynLkViCLT+Fq8kIMsvihbArH5h9WCWfjJ/3gLu3UCz9W
+         m4lG8xITBTTIUhc3/4weCbsn0AwNvFKPp3ron1rOIBs8EszWJO3AJJ3yZ6q/SNJZkhTM
+         YuWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Vq738eLV65bTTrGzgQrnKbqh1KBD4fh9UD1vtvmWjo8=;
-        b=aj+NX4eNN7z5i48iUNziNrGiEn2t09dwx8WCXN96cccbaHakqXSB160WLELlqjyXHj
-         NvVpLNyor8MAqVad+MVJzzQBZFfISbrxMzeYu00LmH7HUU91VtXyYpalhNJXIsPwfMTy
-         OMYVSRvQIMLU4+lsLogVczV3PPYZzpaz26La1nmrWfBLCB6MPU/GIIp/+Qq3qT1Giuwe
-         N+U1aLEy2ABpVzsiEfNaMvuP2gMdunfn1VjXPpMCZV7huGHPxqW0+cU2kZ9YPD4YQFaU
-         kKVaM3pjPAq8YBHvVn1uWGSXcUxXUjxW46WnxMi51S/VXr+uMa+g2sNdtm+MpciVBOBk
-         qGhA==
-X-Gm-Message-State: APjAAAWzqfuohG+2vD7NHZmkmnEJVe9fOWa6uXqWj6/h1qOiIrqkRGZv
-        yNpilqP1ZlflAHEPyzCq9rU=
-X-Google-Smtp-Source: APXvYqzJEViTTuA2TNVbbaq0nsddxbfjPY6BWwr77nfSOXfMK0FKHJv9lTsqreHl/Ybws9swRuE08Q==
-X-Received: by 2002:a17:902:2bab:: with SMTP id l40mr54498565plb.273.1555041142757;
-        Thu, 11 Apr 2019 20:52:22 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id z13sm56435790pgc.25.2019.04.11.20.52.21
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=X3Y5pVIaBKgUV53T9PdptnYX472PaH0TBda3c7jPeLM=;
+        b=h0WkGFb2J5nmjCpCABB99S4oqQYLeF/Lfkuf/t0Bpyl5CY9stPa9E+PlxPWLRHmUUB
+         sKP0pw4DgkgxwWkxOvp9z+kabwNxo/t4GF54C8Urm0HEjJYpDgGU8H/0X2pb4albAdoH
+         n00+zHvpibErW5FQQ8khP6qII4lfvn3Ta92wnkqL0OFBg+tDQyYzso4owGDn4/YA7yLP
+         O7J1UxXCJDRBQ0vxaifMGf5QadPaAzp1m/1x8Ed0u2DX+PRNLY+pkxQJbSdC4quYqV6A
+         C44D8HabvvKaBFVQGzNzur31Xs3M57MV5RWCG5efLGN6lVbEbGou8pBe+zvH1J6ZNdup
+         Ybgg==
+X-Gm-Message-State: APjAAAXi5foEPSC8Co55ykkN//TlZcRJ1WEDBNlhaXxRI6Oe4aQEqWRt
+        279V2x7p1+v2c4971/RNzvZzMeLqnUY=
+X-Google-Smtp-Source: APXvYqyc4RTGFKLrgLOY7Cg8RQ6owYwd05dgKGq1OarV83LclSgQME2/YTbQmkDjdmLBFwLNFMmYmA==
+X-Received: by 2002:a05:600c:2294:: with SMTP id 20mr8471329wmf.56.1555046077905;
+        Thu, 11 Apr 2019 22:14:37 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id f11sm52341019wrm.30.2019.04.11.22.14.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Apr 2019 20:52:21 -0700 (PDT)
-Date:   Thu, 11 Apr 2019 20:52:20 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        steadmon@google.com, avarab@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 01/10] config: initialize opts structure in
- repo_read_config()
-Message-ID: <20190412035220.GA26967@google.com>
-References: <pull.169.v2.git.gitgitgadget@gmail.com>
- <pull.169.v3.git.gitgitgadget@gmail.com>
- <ea8c199f911a84505b1aba5735a280ffc989e2a1.1554995916.git.gitgitgadget@gmail.com>
+        Thu, 11 Apr 2019 22:14:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>, rybak.a.v@gmail.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        jacob.keller@gmail.com
+Subject: Re: [PATCH v2 00/16] Add new command 'restore'
+References: <20190308101655.9767-1-pclouds@gmail.com>
+        <20190411131218.19195-1-pclouds@gmail.com>
+Date:   Fri, 12 Apr 2019 14:14:36 +0900
+In-Reply-To: <20190411131218.19195-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 11 Apr 2019 20:12:02 +0700")
+Message-ID: <xmqq4l73ztxf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ea8c199f911a84505b1aba5735a280ffc989e2a1.1554995916.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Jeff Hostetler wrote:
+> v2 should address all the comments from v1. I still haven't done that
+> --intent-to-add thing yet even though I'd like to make it default
+> behavior too. Anyway changes are
+>
+> - --index is renamed to --staged to avoid conflict with --index from
+>   git-apply, which has different meaning.
 
-> Initialize opts structure in repo_read_config().
+I think this is a reasonable compromise.  Documentation/gitcli.txt
+needs to be updated for this new addition, where it currently only
+talks about the distinction between "--cached" and "--index".
 
-Good find.  I wonder if there are some flags we can turn on with
-DEVELOPER=1 to prevent this kind of issue going undetected in the
-future (or maybe this means we need to get the valgrind or ASan
-testing modes to be fast enough for people to consistently run them).
+> - git-rm learns about --staged as an alias of --cached (in fact it's
+>   more the other way around). This is to keep suggestions consistent
+>   because we tell people to do "git foo --staged" everywhere.
 
-[...]
->  config.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I am not sure 100% about this one.  If "--staged" is only about
+updating the index without touching the working tree, then existing
+"--cached" is already serving its purpose and there is no need to
+add yet another.  Why did we need it for "restore-paths" in the
+first place?  Is it because the target of restoring can be one of
+the three (index+working-tree, index-only, or working-tree only),
+not just the traditional two (index+working-tree that is signalled
+by "--index", and index-only that is signalled by "--cached")?
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
+I think it would make sense to introduce --staged to "git rm", if we
+teach the third target (i.e. "working-tree only") to the command,
+but otherwise, I am not sure if it would help reducing conflusion.
