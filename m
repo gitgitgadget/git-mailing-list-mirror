@@ -2,139 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 561FD20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 09:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 361D920248
+	for <e@80x24.org>; Fri, 12 Apr 2019 09:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727271AbfDLJOY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 05:14:24 -0400
-Received: from tschil.ethgen.ch ([5.9.7.51]:52206 "EHLO tschil.ethgen.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725973AbfDLJOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 05:14:24 -0400
-Received: from [192.168.17.4] (helo=ikki.ket)
-        by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <klaus@ethgen.ch>)
-        id 1hEsGL-0007Gp-Fn; Fri, 12 Apr 2019 11:14:21 +0200
-Received: from klaus by ikki.ket with local (Exim 4.92)
-        (envelope-from <klaus@ethgen.ch>)
-        id 1hEsGL-0000ip-7B; Fri, 12 Apr 2019 11:14:21 +0200
-Date:   Fri, 12 Apr 2019 10:14:21 +0100
-From:   Klaus Ethgen <Klaus@ethgen.ch>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: fatal: unable to read after commit
-Message-ID: <20190412091420.GF12669@ikki.ethgen.ch>
-References: <20190411164440.GC12669@ikki.ethgen.ch>
- <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
+        id S1726884AbfDLJWR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 05:22:17 -0400
+Received: from mail-io1-f49.google.com ([209.85.166.49]:46780 "EHLO
+        mail-io1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbfDLJWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 05:22:16 -0400
+Received: by mail-io1-f49.google.com with SMTP id p23so7848964iol.13
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 02:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3LoFkQaW2odJStYydav1kHjgiUns+oKfQsnymL5IWA4=;
+        b=O1cq3mT+UKO1CxFAgMlAhPDxfx80YXtX8BPdER7yPbJmRydflQbTDzWGSL1UZaH1Ct
+         CgIVOswaB0IHxle1dYI8KMn2xv/i25J+BJVneDXZWYo8xCB2nGiAAK6MEM3GLUoyiC3I
+         b9cJWCBd3DwCgBI/XrL4K9DafHXnfZ+J36hRUruw3W3/IV4krUxMQ8T2ks2reNhNydZL
+         W9s7hvY5byF5N0pBVn4HqvjKeOgoaUPnkDuBVecmxNlU7a6wpwfdUK9wOjLLrETraD1O
+         X7UyxRweu0TiFOfbNxQ5z9rCcQTmFQN6I9WahwfTITFfAOZa16cMDlJwt5ehI+HF2/5P
+         ugTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3LoFkQaW2odJStYydav1kHjgiUns+oKfQsnymL5IWA4=;
+        b=HMKBu6OKiCwoE3fZKvjUjHKBVQD8SZ7Rs8PCAiA+i6V6g03PMDqve42qfwHl4Y2d42
+         +79TP+Ns6BelPaM9s1rXPQOicrFLE9INPaPLo9f5N6VZL0N0+s6Tn1Bs3gQJNTqAc8+n
+         vKJRCfqbLyel+FQJ4DXSSZAJweMBZUDLZIjCtoz6PU2GV51+SwZG37cLMTos+4A+5FLK
+         C/zRKwbVXqvJ0AWmK9Esw4N97TK6tU5cnQNRP8FyOhfkYxrmLD9ZNXWt9ZO+Dz9JZcnH
+         jLz+kp0wgjnMh6sdAkGSGaH/q+Q44YUy0EblJuoQrkupmFYkJu5zCPAP4WZ/ZeTpIR0L
+         /hCg==
+X-Gm-Message-State: APjAAAVxNMgl9rw6mUPszkppqThu6L4DZzUKFb6b0jNwEGwBiUFUeYVB
+        bUB/v9FqHGAYIjyov8oBxpcqeRpFxzFH0xa7Lf4=
+X-Google-Smtp-Source: APXvYqxXzIFHI9UxXxOR0aOrd5m2cgoco0POl7mnlMwqvpCMiULalJvSikX1p/edpIJp1WpVnKJTXHR7+JY50A3Xlng=
+X-Received: by 2002:a5e:9805:: with SMTP id s5mr38264638ioj.149.1555060936019;
+ Fri, 12 Apr 2019 02:22:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
-OpenPGP: id=79D0B06F4E20AF1C;
- url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190411111729.GB5620@ash> <20190411220532.GG32487@hank.intra.tgummerer.com>
+In-Reply-To: <20190411220532.GG32487@hank.intra.tgummerer.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 12 Apr 2019 16:21:49 +0700
+Message-ID: <CACsJy8DTQV=U3gP_b5eOX7fXy4_rs+iyJFVGWLkC3VwagdVnPA@mail.gmail.com>
+Subject: Re: incorrect range-diff output?
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Fri, Apr 12, 2019 at 5:05 AM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> I'm not sure what the right solution for this is.  I think one thing
+> I'd like range-diff to do is to add the filename, or some context
+> (e.g. is this part of the commit message etc.) to the @@ line (not
+> sure what that is called?).
 
-Hi Christian,
-
-Am Fr den 12. Apr 2019 um  9:39 schrieb Christian Couder:
-> On Thu, Apr 11, 2019 at 7:24 PM Klaus Ethgen <Klaus@ethgen.ch> wrote:
-> 
-> > I am a heavy user of git now at version 2.20.1 on debian.
-> >
-> > Since some weeks I have the problem that I get often "fatal: unable to
-> > read ..." and a unclear repository after a git commit. The commit itself
-> > is correct and so a git reset --hard helps to fix the issue.
-> 
-> Could you tell us at least which Debian version and file system you use?
-
-Sorry, it is debian unstable and the filesystem is a brfs.
-
-> Would you be ok to bisect it or at least tell us if it happens with
-> 2.19.2, 2.20.0 and 2.21.0?
-
-I could try, but from the fact, that it happens not all the time, I am
-not sure if it helps.
-
-However, I might have found one repo where it allways happens. In fact,
-I am able to reproduce it also in my local geeqie checkout.
-
-> > Any Idea what could be the reason for that problem. I encounter it on
-> > different repositories so not limited to one.
-> 
-> Is it easy to reproduce even on very small test repos? Could you send
-> us a small script that reproduces it?
-
-In any case it happens if I modify a file and add+commit or commit -a
-it. What happens is that the index seems to be corrupted. The HEAD gets
-the correct commit and the checked out version of the file is also
-correct. Only the index seems to be corrupt (Until I do git reset).
-
-When I do a git status, I get the following output:
-   Auf Branch master
-   Ihr Branch ist 1 Commit vor 'origin/master'.
-     (benutzen Sie "git push", um lokale Commits zu publizieren)
-
-   Zum Commit vorgemerkte Änderungen:
-     (benutzen Sie "git reset HEAD <Datei>..." zum Entfernen aus der Staging-Area)
-
-	   neue Datei:     pending.data
-
-   Änderungen, die nicht zum Commit vorgemerkt sind:
-     (benutzen Sie "git add/rm <Datei>...", um die Änderungen zum Commit vorzumerken)
-     (benutzen Sie "git checkout -- <Datei>...", um die Änderungen im Arbeitsverzeichnis zu verwerfen)
-
-	   gelöscht:       pending.data
-
-And it seems, that the brocken object is always the same:
-   > git diff
-   fatal: unable to read 544f4ec5fe7c7b04c73b2c2fe9e3e7779e929819
-
-independent from the repository.
-
-I do not have a pending.data and did not touch this one.
-
-> Could you also run the Git test suite on your machine?
-
-Sure.
-
-But at the moment, I have some more findings that points to another
-component in the queue. When I do a "commit -a -m test", the error does
-not happens. When I do a "commit -a" and use the editor (vim) to write
-the commit message, it happens.
-
-As I use fugitive, I cannot rule out, that the problem is in that vim
-addon.
-
-Regards
-   Klaus
-- -- 
-Klaus Ethgen                                       http://www.ethgen.ch/
-pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
-Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
------BEGIN PGP SIGNATURE-----
-Comment: Charset: ISO-8859-1
-
-iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlywVuYACgkQpnwKsYAZ
-9qybEQv/bn3Bs+e/xgPfWK9yDbBlcmVywAiBty5RgYl5FQNHPb/6rRbZMk9wT6MJ
-NkLGTj5sgrtRik+TU8C0j982XBJW6EY8jEIzOisBtm5aQ63KdymSI+q6MQd1C3/R
-1dd4IMfM2GylQohhsptUdRwErvjoOKHpqAvJnKMnzUC5YxYZ4QL64LLnjoCAz3mK
-1W4VceZVHluD/2nv9HP5aOgqihWJNYhIGP9308X4JXw6qn5wGWGljDsyk4NE+NWr
-3O0QBYGJO7AYA1WH6eCrPx7DSrPpArdLIwhQCntIKJIrsf3mn4VBUAVB+uhTLeIa
-oFyx9vSX/9KlruL/ni287RCRJBYh4DVDsXligFeUTRe0SOuVPgjku9R2oYKpoeKB
-7AhI+rKY6vg3At/6iIcaeSw7+ln8ilSqLmbTAz0ygc16T7+CNK5En+nAM2otiNmU
-Fs5upQsVGb6pCFTp6aC8P6v+eTqlvH+l6jMsR/7Lx95U9+yOSdSO5x9sbCasCs/g
-Z/XxPGkv
-=P22A
------END PGP SIGNATURE-----
+I don't know what that "@@" line is called either but if possible
+please keep those lines too. I quite often depend on them to know what
+function I'm reading.
+-- 
+Duy
