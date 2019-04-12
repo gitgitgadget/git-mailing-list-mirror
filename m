@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3022D20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 01:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6681020248
+	for <e@80x24.org>; Fri, 12 Apr 2019 01:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbfDLB2D (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 21:28:03 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34752 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726646AbfDLB2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 21:28:03 -0400
-Received: by mail-wm1-f68.google.com with SMTP id r186so3148490wmf.1
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 18:28:02 -0700 (PDT)
+        id S1726667AbfDLBse (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 21:48:34 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37386 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726656AbfDLBse (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 21:48:34 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w10so9792786wrm.4
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 18:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=NgfksYTldN/qaSTxqkzNaRHKpRVz6jJ/Q7mCKwOTsWo=;
-        b=fAoAj0jcm0gtpgXBQkKswXtfAZhYENj5tvSls15SlnyfBOAzT+mGVobuM0sZ25SZkz
-         FRSPhfDuLsei8GyxzR6lhcfZYU+en14r3N8wjhDEnkws/I+LzHO1kTFqIKRjtqaWmOK1
-         zXWPhGovQ0GvZ2A/NtIMt/1h0lz3u3Wt9+2tel6oso6rhkTPkxrloCDOClmdTRHNg9PE
-         0Wuc+EVdJ6OajNrkzCpx3/co7gN83M/4kd3MPF70TzDrsvU0TgaLm4jG7X5kQNF5Scgv
-         x0TIQcilMbV1m0WplnrHY2QsogEi0o6HTTOwxJqb1/MqgZqaqoKtmeVeUqC1q4wGcYLs
-         6k6A==
+        bh=Do6crs3syZlfKyY0J5m6RQMvh9Qa70Tt0A1OtzLNFds=;
+        b=aT+NJ32MSPWYBxjEyaTfXemBWPe2qddmsjQWUNV/0Ov212DB5IWTp12XEO69MPKqzI
+         r02xLdz6RoK2+dZ/LZjD7BDIkizo8lFbAOw8doaH3TsLXkLZLIqB/4iIUg/nWJThh+tX
+         XXRCEgCn5yGEMUcVqZcm1QdZz4Le/iYZSvMmQU41nlBB7TkgDB/WlJPTrTlY9no86wYt
+         8WTF9H3xx50n2+T5fNXO2mJWzV7s+Cz7FiVd692UTohphhCKwVc0zLdzcBWKELxIkkAd
+         fRNaPzKHiC4TItiJieX+IZkRXBMiq5L/YirLOW9Gc8dvwYEUmsGDPYuMK45jwPn1C8wx
+         DJ+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=NgfksYTldN/qaSTxqkzNaRHKpRVz6jJ/Q7mCKwOTsWo=;
-        b=VGN986vISt9tTvD/m4uyifIE47ME7vWunAzue8kh2xl6W39L06RKTNfIbO2PPxTJOa
-         bNT9Hic5O/qmurkVPu6e4hD1L1KaX5IaR6CCPy5P9O3UgPh41OzD3f6DPZ+jrKjm12BF
-         oK6sadn9F6nXqseNJsrLlYP8PQ+iiiEXXxnawlUOeOOA1MsOGMgjmRZnLpUkyGnhhdKR
-         YYjgjmtqpaMNcN1pv45s4T2CBESge2/tp8KrXSgoCTCB+0+EGeEnn8Pk3/dy6RAUpTj2
-         FSqj+KEjob3RAmGINFC4DUdeP9oQB1Dsrn9PMau5CMG9GZcX70htajFf9C1bIIVJC6nr
-         WPIQ==
-X-Gm-Message-State: APjAAAXUKpK5BbYL/rlwQZaeL4x0JfX/A2/b6+dweUynS6Wql05+ayJS
-        pKE6k9wuO0XkqWKhNYb1Pik=
-X-Google-Smtp-Source: APXvYqw1ueqK2xLuc6gCtse9HAb5OvLTuDXRhXtlpm6a8ODHQBv7+2t3H4bh7tDpUr8BAFm5wEjcZw==
-X-Received: by 2002:a1c:208c:: with SMTP id g134mr8840188wmg.70.1555032481690;
-        Thu, 11 Apr 2019 18:28:01 -0700 (PDT)
+        bh=Do6crs3syZlfKyY0J5m6RQMvh9Qa70Tt0A1OtzLNFds=;
+        b=cWAcNTvLyWTIwgzdSmW1nhVdMbaFAVxCwbRnCzLZS28X6LBJ7F/Ie0WBRhyKvEsfVZ
+         r9BaUJ+NadZl20jN3NbyLdjq6eQ3x9vYrCfW4OfykK2cX4ognYJGatfw9WmoU7dJS+iH
+         Fo5REnoYtVZaAyKzg3/NAsx8+jSmwpDXKhH/4TUMBO2mjUn+Wf+0C0apw5RNLDoZNNV4
+         OiQdzgXMnS0pVKlAGR6iMW/RHKhXjTodKYmB5UgZwBO9ndgusjli15+pPtrYLXPGvsMK
+         mK5enYIMiFLEeU5/GNuiIRX/5qgJL+Kgx7NktFmMy64fKfgLoDzXN2zUECAt4+M2z/Cg
+         E1bA==
+X-Gm-Message-State: APjAAAUBOwALOVF6KIz9FBm/Tzo4Ed5j93qAAlzH/FBk6TI0KIMK6/Yg
+        qMFkeFwgLXJaE82rkgDiO8i+UIF4MXM=
+X-Google-Smtp-Source: APXvYqw3m+/Cffr+jCFgTJ7B3MEiFlpiYouj6xtpP+D8xQCdetcovJWfvQjI0lyqFe8rtrwdKw0xtg==
+X-Received: by 2002:adf:f488:: with SMTP id l8mr32201712wro.213.1555033712015;
+        Thu, 11 Apr 2019 18:48:32 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id z84sm7613909wmg.24.2019.04.11.18.28.00
+        by smtp.gmail.com with ESMTPSA id a11sm5241531wmm.35.2019.04.11.18.48.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Apr 2019 18:28:01 -0700 (PDT)
+        Thu, 11 Apr 2019 18:48:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Introduce "precious" file concept
-References: <xmqqimvpb0bd.fsf@gitster-ct.c.googlers.com>
-        <20190409102649.22115-1-pclouds@gmail.com>
-        <xmqqh8b75s9l.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8Ct6A7a7FzzH7ZUv9R2+k=G6qhzZ8Yjq8GUDBdTr_QBQA@mail.gmail.com>
-Date:   Fri, 12 Apr 2019 10:28:00 +0900
-In-Reply-To: <CACsJy8Ct6A7a7FzzH7ZUv9R2+k=G6qhzZ8Yjq8GUDBdTr_QBQA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 10 Apr 2019 16:36:05 +0700")
-Message-ID: <xmqqbm1c107z.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] untracked cache: fix off-by-one
+References: <pull.178.git.gitgitgadget@gmail.com>
+        <a7f75cefb682546862be4dd8b48f91c4034c5d5a.1554901006.git.gitgitgadget@gmail.com>
+        <20190410162029.GA30818@sigill.intra.peff.net>
+Date:   Fri, 12 Apr 2019 10:48:30 +0900
+In-Reply-To: <20190410162029.GA30818@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 10 Apr 2019 12:20:29 -0400")
+Message-ID: <xmqq7ec00z9t.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,32 +70,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> But gitattributes.txt explicitly says that it's wrong. One would need
-> to do "path/** precious" to achieve the same thing.
+> Yeah, every struct on a platform where FLEX_ARRAY is 1 ends up
+> over-allocated by 1 byte. We could account for that in all of our flex
+> allocations, but I don't it affects enough platforms to be worth the
+> bother.
+
+It was an explicit design decision to declare that the
+overallocation was a non-problem back when we invented FLEX_ARRAY
+macro.  We could probably have instead decided to pass number of
+bytes to be stored in the flex-array (including NUL if that is a
+character array) then subtract the value of FLEX_ARRAY if FLEX_ARRAY
+were limited to only 0 or 1, but that was not workable as it is the
+most natural to define FLEX_ARRAY to an empty string, i.e. making an
+array field decl to "type field[];", for the more recent compilers.
+
+
+>> As there is no obvious way to trigger this bug reliably, on all
+>> platforms supported by Git, and as the bug is obvious enough, this patch
+>> comes without a regression test.
 >
-> So yeah maybe doing this before S_ISDIR() is wrong. The definition of
-> `precious` also only says "... is set on _files_". Maybe best to
-> ignore attributes on directories? At least it looks like that's how
-> all other attributes do.
+> Makes sense. This code path should be well-covered by the existing tests
+> anyway, so even if we could get those tools to trigger, I don't think
+> there would be much point in adding a new test.
 
-I could be persuaded in the other direction if there are widespread
-uses (or misuses---but once it gets widespread in the wild and turns
-out to be useful, it ceases to be misuses and becomes a feature) of
-giving an attribute to a directory that affects the treatment of
-that directory *itself*, but if there is none, I'd prefer to keep
-the attribute "what's tracked only".
+Yeah, it is already super that this obscure bug was spotted in the
+first place.  It is true that this may regress without a test, but I
+do not think it is reasonable to expect that it is possible to write
+a reliable crash-detecting test for this one.
 
-Whether it is a good idea to give an attribute to a directory to
-affect the treatement of the directory *itself* (eh, rather,
-especially if it were a good idea), I'd consider it a misuse as a
-short-hand for giving all paths within it the same attribute, given
-"path/**" is available, as that would make it impossible to say "I'd
-want to affect this directory, but not any of the directories or
-files in it".
+> The right thing is probably something like:
+>
+>   eos = memchr(data, '\0', end - data);
+>   if (!eos)
+> 	return error("malformed untracked cache extension");
+>   len = eos - data;
+>
+> I wouldn't be at all surprised if other bits of the index code have the
+> same issue, though. And at any rate, thinking about that should
+> definitely not hold up your fix.
 
-And if that is not clear in the current documentation set that faces
-our developers, perhaps we should make it so.
+True, true.  I wonder if folks intereseted in libFuzzer can chime in
+with something useful here, but that is totally independent.
 
-Thanks.
