@@ -2,109 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 398FF20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 12:00:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0A5520248
+	for <e@80x24.org>; Fri, 12 Apr 2019 12:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbfDLMAj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 08:00:39 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:32962 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbfDLMAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 08:00:38 -0400
-Received: by mail-ed1-f66.google.com with SMTP id d55so7302885ede.0
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:00:36 -0700 (PDT)
+        id S1726843AbfDLMlf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 08:41:35 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:37146 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726244AbfDLMlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 08:41:35 -0400
+Received: by mail-oi1-f196.google.com with SMTP id v84so7812700oif.4
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 05:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HPcFO45vxtPULRTBA3PXeRbOkzEFzKMHoMsROfDBHok=;
-        b=rvi0BZ2aJBAmOWUg9FR4D5rLbLIb0paLCnMcm+eXKOjAUUp1kRhzayKeFxgyml4FPX
-         VU5i6mT3XbUasy3dAXFtBqqrqA4irsBA0yhn8HptX81nWouerscJlkaMLEozKmaEQRGT
-         03/O7Zk0dnLrfwRiV80QjzKD/fZ7VTO7chJu8oonjZ7nuAs1PApKqwAoucQpEs/EWTFo
-         gq0KNxxYUuc53WKdZdXruLwlIrkuFeuyqfdTTZQXLsyvnJONq6V7n8+HMMcoPXNLxaFl
-         a/NiMK/HtHTJWYSNypA3b2lEg9+E7mvWJgNhI/sgiK05CyueKMFmY5YJN7FEyjowEGfS
-         WQmQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zc9YtY8ssjp25keLIw6tSqbaYKRAoCem7euEkaPh7XU=;
+        b=hq19yzoDD4JG4tTPIlO0Z2jPkkOeDLNMjItm+vX9njdEsufCJ6MAucgwt/I4b9ejDy
+         Q9N9nmofrEIWx8o85zp6JAwHfXvf2KCVqg0fpai1HwTIWk/bG7VyryGhvuSFqXuChP3u
+         C0vaWVD8Q1/5dAVG51dTr9gDEq03ZOwk9wiIXmHbfRxEUQZHSNV39wcwYKfBKrlCUWrt
+         DsqdBbpLxP5Um/YuZHv1y+p9OrAYbqC8a8zXkvy65zFnB40PCoKpOgRrGJC1e8xLDLSY
+         2vS8flypYmCKtzskaNQHMoiTxQM/Kiy3OPBhdGiKp9gdg+SGYVbvCnsEDnsC1kqR90DT
+         jpgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HPcFO45vxtPULRTBA3PXeRbOkzEFzKMHoMsROfDBHok=;
-        b=F6FBvcvemOjsRIEYn8urCvLqHnlQHWlnTR8kWN13SDi/ROJrSk70stokysKVxc5dws
-         Ukuk//KLRQaYdX6PnXFFU6Ndn5g8atYmvi2iLm+8OmXLIGr8pQgXu9QPephD+VmPly3G
-         AyI6VibnhsQglhb4LKeoHnHCVFXTb7FdRk6W+bbVMBwf3Y/D2Pbw6WDZBdV/C36gFzzg
-         D68RY4PKb/QUOI+Q3obLHMWFd5NC4pV6xmjDnPsnmz9JQbApnQHB04RSkGibXLVjO42q
-         dLSftPFa5levfV2m5mjWVWPeepBx990DsHifkur+bmwr4UxFgisrOfEzm8d9EJ73guxZ
-         CdcA==
-X-Gm-Message-State: APjAAAVN3CO2Cv3yEvtmsM4DIgxc9IZyYoox1A53YYRdErOvzJxXT/Di
-        N+FhLCi6HFGK/FUqbI6H8TxbUIC4
-X-Google-Smtp-Source: APXvYqwSUfPXpX5N6Wgo7NUYhCCrQ9b45ntNzqYwHMoE/LZitLjToiEfSB35Jk6J3T8IUo2g2dPlng==
-X-Received: by 2002:a17:906:708d:: with SMTP id b13mr31438627ejk.120.1555070436062;
-        Fri, 12 Apr 2019 05:00:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l26sm5049789ejr.82.2019.04.12.05.00.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Apr 2019 05:00:35 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 05:00:35 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Apr 2019 12:00:28 GMT
-Message-Id: <fb3daa6427595b1df24d3664212a704da171c95e.1555070430.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.168.git.gitgitgadget@gmail.com>
-References: <pull.168.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 5/7] check-docs: do not bother checking for legacy scripts'
- documentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zc9YtY8ssjp25keLIw6tSqbaYKRAoCem7euEkaPh7XU=;
+        b=lPkUGN0G9P9cgBDlcow0M3Uj4t/knK8NReaVASVpkESIpaRC/o/qdwaGNOdQy3V8MV
+         NMIgvDVlO/N4u1BMc2WJSl4BslkLRc8IvyVPzw3IbMff6Wg8tBAq8UWtLwCAlkV5Q9C4
+         Gh4By7knBriXwbpQMSZSyBtTxZ8Y8yeL4yUqSPlwcuCyZvGk3kU5zxl88vSm4yRW5d3W
+         PQOfYuxe9GckGhbXhW5W6bo+acUSUHqb2skUXyNs7MWm+XKuX9PYyE+GQxteObigVdOX
+         +FAj5AB2xQ+Xyarvzqw4tzDBnPZbMG1VY9Ca+g51G6uKiyeVbcV5IGr2y3ToS98/TvGZ
+         bOzg==
+X-Gm-Message-State: APjAAAVw631DCPYar4xwTv1ZjfQ87BZg2zs+3T0rYHNKPkFvdTZOLzAW
+        SSzpOlAbWmpx0JAI/bBiJJjvisH1ofW1LI6buGs=
+X-Google-Smtp-Source: APXvYqyhpnrTKpA7giFhvufGl8+sRBQCMshW2e0NkXslDUZlRb+0CNOMGdzLhU1ABj5t9jkkDVpeo9orx9/Po8v5gsE=
+X-Received: by 2002:aca:d4d8:: with SMTP id l207mr9812086oig.29.1555072894337;
+ Fri, 12 Apr 2019 05:41:34 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CABgj7us=Rk3EUvd2EVVqsYKDUGS7VfAX09SpW04fB26cgntw5g@mail.gmail.com>
+ <CACsJy8B0dmonaCuAmT6wNJae8iX0JxUOvU-P=zvjVUrQnoHoUw@mail.gmail.com>
+In-Reply-To: <CACsJy8B0dmonaCuAmT6wNJae8iX0JxUOvU-P=zvjVUrQnoHoUw@mail.gmail.com>
+From:   NoName Req <nonamereq29@gmail.com>
+Date:   Fri, 12 Apr 2019 15:41:22 +0300
+Message-ID: <CABgj7uu95Pg7jJY1CN7kUS-SWE6+FCgQshuzWWRrhMqBd_zMMA@mail.gmail.com>
+Subject: Re: Bug(feature?) on git-diff-files
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Okay thanks for the reply. I didn't know about git update-index will
+try that now.
 
-In the recent years, there has been a big push to convert more and more
-of Git's commands that are implemented as scripts to built-ins written
-in pure, portable C, for robustness, speed and portability.
-
-One strategy that served us well is to convert those scripts
-incrementally, starting by renaming the scripts to
-`git-legacy-<command>`, then introducing a built-in that does nothing
-else at first than checking the config setting `<command>.useBuiltin`
-(which defaults to `false` at the outset) and handing off to the legacy
-script if so asked.
-
-Obviously, those `git-legacy-<command>` commands share the documentation
-with the built-in `git-<command>`, and are not intended to be called
-directly anyway. So let's not try to ensure that they are documented
-separately from their built-in versions.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index a5212c64bf..caa20923a4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3074,7 +3074,7 @@ check-docs:: Documentation/GIT-EXCLUDED-PROGRAMS
- 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
- 		git-merge-resolve | git-merge-subtree | \
- 		git-fsck-objects | git-init-db | \
--		git-remote-* | git-stage | \
-+		git-remote-* | git-stage | git-legacy-* | \
- 		git-?*--?* ) continue ;; \
- 		esac ; \
- 		test -f "Documentation/$$v.txt" || \
--- 
-gitgitgadget
-
+On Thu, Apr 11, 2019 at 3:57 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Thu, Apr 11, 2019 at 7:49 PM NoName Req <nonamereq29@gmail.com> wrote:
+> >
+> > Summary
+> >    `git -C (folder path) diff-files --name-only` output is not correct
+> >
+> > Steps to Reproduce
+> > 1. Apply change to a clean git repository. Go to another folder (not
+> > within this repository) and apply the command
+> >    `git -C repo-path diff-files --name-only`
+> > The above command lists dirty files in that repository.
+> > 2. Now undo your changes on the repository
+> > 3. Issue the same command. It still lists the file.
+> >
+> > More Information
+> >
+> > `git -C repo-path diff`  command doesn't seem to have this problem.
+>
+> I haven't tried to reproduce. But my first impression is diff-files,
+> as a low-level plumbing sometimes requires you to refresh the index
+> first. Sometimes without that, you'll get wrong output.
+>
+> "git diff" is a more high-level command that always refreshes the
+> index internally.
+>
+> >
+> > System Information
+> >
+> > Arch Linux 5.0.7-arch1-1-ARCH
+> > git version 2.21.0
+>
+>
+>
+> --
+> Duy
