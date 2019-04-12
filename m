@@ -7,107 +7,177 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8779820248
-	for <e@80x24.org>; Fri, 12 Apr 2019 19:51:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB86C20248
+	for <e@80x24.org>; Fri, 12 Apr 2019 19:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726983AbfDLTva (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 15:51:30 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:38300 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726936AbfDLTv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 15:51:29 -0400
-Received: by mail-pl1-f201.google.com with SMTP id cs14so6899375plb.5
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 12:51:29 -0700 (PDT)
+        id S1726998AbfDLTvd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 15:51:33 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:38510 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726936AbfDLTvb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 15:51:31 -0400
+Received: by mail-yw1-f74.google.com with SMTP id i203so7754445ywa.5
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 12:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=sXfUsjoQZu8h9yCIzx+VMxMakZa6UoNRMElPLcl8XW8=;
-        b=W/DffTEKK/HSkMlB+ZWaUcyleAjiJh5B4+qgoKT8LhjJ5xGC66Z57GqF9iTE4Q7X9X
-         UQzRLnHebmxhZcoEF7USo10A6kqJN6vasqL0dgZIIx9u9a2TJNGA2skYgkZIIJbQFhM4
-         4wlENGiadohVR13ISfMlJ237IwrJ33bxntX68KxCYs5tXQnHdX7wqBJFwxmcNYgEa0t7
-         HyRL8+toyev6mt0ahj6X1uTJ3YH5gxFHHz5/8m7R24+uDpqqmNQUL3Iuuw6A164ameAF
-         bE5cUnIltwdjRuO+PwBsqKcXZIBdOCMwINKkppcHCXkS4QdLNQV9uktdgxUrn5dtJEg9
-         CwwQ==
+        bh=YzjnCYhoqUX4sZpUu0U/9KO2xhZTR6i6LWSZV+BVRfc=;
+        b=VSjmb/LGIlIb4IwozypbC5fQ98lL42Bk9moV9R36Jfx+H3Fq+yM4Ny/cG48Ks6KyIm
+         eQEpYZJ8xD1s/5tD0N+fnh4dK9LDPMmqaoX/pXfvpGwIqp13MxeMlEpb9B5bAVSS0E6B
+         LxQ98lJ8pCWNnxINkdV0CLl7uSqMqxCwH4OKupH179soGX+2C6eKoMtXnYx4rnwhf8ZW
+         5C5lgdDS5KIp6MxbEBsjj7bWe0LxPH0rup6HaT73InDyidybvDSSQe27KklHjcAoAIUZ
+         zoRrNHf5lfNpVrXKN6W1vGnAbUpcAWvxW7rGRJpsLpK55/MihqwOEFedrjsXwV1DwaNh
+         Z3HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=sXfUsjoQZu8h9yCIzx+VMxMakZa6UoNRMElPLcl8XW8=;
-        b=dRBUs/Ks/AsGmcxR9g8swnSGSTFhaBzjs/yqxcqij8ivf8oiSw95y39WiRJWn+dDyl
-         hGcPSsO+HhwD2VCuzU/1bIQGpJx8mG0KIhKyYQRaz2nn4fsUQjw8G4fbtAyTOZFSedWl
-         HH1j4tjQcTffV2L5BG0OZXl+kneEYh794Xgo91W+N8id2R5igDAhggx2P/ioPCvW8ZWT
-         Hj2rRztVCSDrQsOdU/nFVc5QUUYCaopKzbHNGAWYKWb5uTLljWOhXvO5Fej4cGB0xb/M
-         i4W4VqCNMX30UMUzay7XJsqjAx8ost1ih3/VjZSRbi3rJmlujSRuPm4V/s76Yyzfk1xc
-         T4KQ==
-X-Gm-Message-State: APjAAAWFYuc0d0RI3QGwAD0iF5Z8VbsWggUV5KI90xWWu6ppZhSuXuxj
-        8uWXa0WE4ivfkyS/gbi5CbkBQod67JMJCsA+aizs9N0wDHLjIRpikEfCu6vfb2qk3D9Qdjlw/4x
-        j96rJ+V/tPBSW2qleSTw9bb1Do3V54Mkfgz3tJBjIbw+dobNWbbPBgw7WaDO8iPDhcVWDjvzNcq
-        9J
-X-Google-Smtp-Source: APXvYqwu5CUbdQc9DEqwj21v2moQWuMc6ojZQXf5XgjNGyJ1nnzPPDXubtZQQzxKjZV0zxhteyWsqwgJGfR69fKpRh0v
-X-Received: by 2002:a63:fa46:: with SMTP id g6mr1143072pgk.73.1555098688268;
- Fri, 12 Apr 2019 12:51:28 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 12:51:21 -0700
+        bh=YzjnCYhoqUX4sZpUu0U/9KO2xhZTR6i6LWSZV+BVRfc=;
+        b=U7CAd5u95bZHqgtIxWj4j0UYaBJil2IQ8srUgtxVWEXqoKFmlFk5qCO3PzDK+FjpV5
+         gegMzO6FtIKY5POcw54iocQCaF5o3++69XrW2o+QzZu8WWukUckRBUl8Wa7jxOFm/WQE
+         igWXNsdz/p6wr6jfzcQnXae223VKQTjYXTrkZCsG6X60VmpVPlJXK0C2kvASO8Pk7pPb
+         QHUgYqemo4yZHv6EL+y7LqMbK9s+SV68Zy0r6hDD+LpTFhDNSLbZbYnfIQJtr+36cn5G
+         4sNUYuSmljVMK7ReUBHA/Xd2PlLOyHyMXuFjTdHh4BiyVsQl3/+VyQNVfFHrfkO6cDYS
+         c0Og==
+X-Gm-Message-State: APjAAAW8dEl7WGHzI8mm/n89TSVsSANK+f2xA5qpW5Jw7hrH6cwUaVg8
+        EaPGFmxTeCWSjxApuLxm7mdcBvlLvvtkowAmgxYm9llDGulvRIwsjqSlSKI7Ffs+5Hah2Xrmu8V
+        ALmModay+WXX23wm7+35n2pUb7ufI2pnuSOvaF3G1tKevYqyeThW1daqylU6sp4WwekrZTY6oIF
+        3W
+X-Google-Smtp-Source: APXvYqxkfWDW8U5HXEg5Q8/Awj4QuTRe6NKNIOi9ntKybONBkGVLEtn6yi4Tj8Nw+8XoiHenDdwhkx88CtQnN6HJLCMj
+X-Received: by 2002:a25:6cc6:: with SMTP id h189mr10935629ybc.13.1555098690779;
+ Fri, 12 Apr 2019 12:51:30 -0700 (PDT)
+Date:   Fri, 12 Apr 2019 12:51:22 -0700
 In-Reply-To: <cover.1555098572.git.jonathantanmy@google.com>
-Message-Id: <598b2de0162e240521f04d40d41eb11843be7198.1555098572.git.jonathantanmy@google.com>
+Message-Id: <48bdd462c4e6f609827f4970ee76316e3b54b400.1555098572.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20190405204413.93900-1-jonathantanmy@google.com> <cover.1555098572.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.21.0.392.gf8f6787159e-goog
-Subject: [PATCH v4 1/2] transport: die if server options are unsupported
+Subject: [PATCH v4 2/2] clone: send server options when using protocol v2
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Server options were added in commit 5e3548ef16 ("fetch: send server
-options when using protocol v2", 2018-04-24), supported only for
-protocol version 2. But if the user specifies server options, and the
-protocol version being used doesn't support them, the server options are
-silently ignored.
+Commit 5e3548ef16 ("fetch: send server options when using protocol v2",
+2018-04-24) taught "fetch" the ability to send server options when using
+protocol v2, but not "clone". This ability is triggered by "-o" or
+"--server-option".
 
-Teach any transport users to die instead in this situation, just like
-how "push" dies if push options are provided when the server doesn't
-support them.
+Teach "clone" the same ability, except that because "clone" already
+has "-o" for another parameter, teach "clone" only to receive
+"--server-option".
+
+Explain in the documentation, both for clone and for fetch, that server
+handling of server options are server-specific. This is similar to
+receive-pack's handling of push options - currently, they are just sent
+to hooks to interpret as they see fit.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t5702-protocol-v2.sh | 19 +++++++++++++++++++
- transport.c            | 10 ++++++++++
- 2 files changed, 29 insertions(+)
+ Documentation/fetch-options.txt |  3 ++-
+ Documentation/git-clone.txt     |  8 ++++++++
+ builtin/clone.c                 |  6 ++++++
+ t/t5702-protocol-v2.sh          | 22 ++++++++++++++++++++++
+ 4 files changed, 38 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index fa0a3151b3..91c47752ec 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -216,7 +216,8 @@ endif::git-pull[]
+ --server-option=<option>::
+ 	Transmit the given string to the server when communicating using
+ 	protocol version 2.  The given string must not contain a NUL or LF
+-	character.
++	character.  The server's handling of server options, including
++	unknown ones, is server-specific.
+ 	When multiple `--server-option=<option>` are given, they are all
+ 	sent to the other side in the order listed on the command line.
+ 
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 2fd12524f9..a0f14b51f2 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -131,6 +131,14 @@ objects from the source repository into a pack in the cloned repository.
+ 	is specified. This flag forces progress status even if the
+ 	standard error stream is not directed to a terminal.
+ 
++--server-option=<option>::
++	Transmit the given string to the server when communicating using
++	protocol version 2.  The given string must not contain a NUL or LF
++	character.  The server's handling of server options, including
++	unknown ones, is server-specific.
++	When multiple `--server-option=<option>` are given, they are all
++	sent to the other side in the order listed on the command line.
++
+ --no-checkout::
+ -n::
+ 	No checkout of HEAD is performed after the clone is complete.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 50bde99618..31a47d190a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -66,6 +66,7 @@ static int option_dissociate;
+ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
+ static struct list_objects_filter_options filter_options;
++static struct string_list server_options = STRING_LIST_INIT_NODUP;
+ 
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -137,6 +138,8 @@ static struct option builtin_clone_options[] = {
+ 		   N_("separate git dir from working tree")),
+ 	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+ 			N_("set config inside the new repository")),
++	OPT_STRING_LIST(0, "server-option", &server_options,
++			N_("server-specific"), N_("option to transmit")),
+ 	OPT_SET_INT('4', "ipv4", &family, N_("use IPv4 addresses only"),
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+@@ -1136,6 +1139,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+ 
++	if (server_options.nr)
++		transport->server_options = &server_options;
++
+ 	if (filter_options.choice) {
+ 		struct strbuf expanded_filter_spec = STRBUF_INIT;
+ 		expand_list_objects_filter_spec(&filter_options,
 diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index db4ae09f2f..1e8357a4c7 100755
+index 1e8357a4c7..2a3575d38c 100755
 --- a/t/t5702-protocol-v2.sh
 +++ b/t/t5702-protocol-v2.sh
-@@ -182,6 +182,13 @@ test_expect_success 'server-options are sent when using ls-remote' '
- 	grep "server-option=world" log
+@@ -270,6 +270,28 @@ test_expect_success 'warn if using server-option with fetch with legacy protocol
+ 	grep "server options require protocol version 2 or later" err
  '
  
-+test_expect_success 'warn if using server-option with ls-remote with legacy protocol' '
-+	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -c protocol.version=0 \
-+		ls-remote -o hello -o world "file://$(pwd)/file_parent" master 2>err &&
++test_expect_success 'server-options are sent when cloning' '
++	test_when_finished "rm -rf log myclone" &&
 +
-+	grep "see protocol.version in" err &&
-+	grep "server options require protocol version 2 or later" err
++	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
++		clone --server-option=hello --server-option=world \
++		"file://$(pwd)/file_parent" myclone &&
++
++	grep "server-option=hello" log &&
++	grep "server-option=world" log
 +'
- 
- test_expect_success 'clone with file:// using protocol v2' '
- 	test_when_finished "rm -f log" &&
-@@ -251,6 +258,18 @@ test_expect_success 'server-options are sent when fetching' '
- 	grep "server-option=world" log
- '
- 
-+test_expect_success 'warn if using server-option with fetch with legacy protocol' '
-+	test_when_finished "rm -rf temp_child" &&
 +
-+	git init temp_child &&
++test_expect_success 'warn if using server-option with clone with legacy protocol' '
++	test_when_finished "rm -rf myclone" &&
 +
-+	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -C temp_child -c protocol.version=0 \
-+		fetch -o hello -o world "file://$(pwd)/file_parent" master 2>err &&
++	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -c protocol.version=0 \
++		clone --server-option=hello --server-option=world \
++		"file://$(pwd)/file_parent" myclone 2>err &&
 +
 +	grep "see protocol.version in" err &&
 +	grep "server options require protocol version 2 or later" err
@@ -116,41 +186,6 @@ index db4ae09f2f..1e8357a4c7 100755
  test_expect_success 'upload-pack respects config using protocol v2' '
  	git init server &&
  	write_script server/.git/hook <<-\EOF &&
-diff --git a/transport.c b/transport.c
-index e078812897..77446119da 100644
---- a/transport.c
-+++ b/transport.c
-@@ -252,6 +252,14 @@ static int connect_setup(struct transport *transport, int for_push)
- 	return 0;
- }
- 
-+static void die_if_server_options(struct transport *transport)
-+{
-+	if (!transport->server_options || !transport->server_options->nr)
-+		return;
-+	advise(_("see protocol.version in 'git help config' for more details"));
-+	die(_("server options require protocol version 2 or later"));
-+}
-+
- /*
-  * Obtains the protocol version from the transport and writes it to
-  * transport->data->version, first connecting if not already connected.
-@@ -286,6 +294,7 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-+		die_if_server_options(transport);
- 		get_remote_heads(&reader, &refs,
- 				 for_push ? REF_NORMAL : 0,
- 				 &data->extra_have,
-@@ -363,6 +372,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-+		die_if_server_options(transport);
- 		refs = fetch_pack(&args, data->fd, data->conn,
- 				  refs_tmp ? refs_tmp : transport->remote_refs,
- 				  dest, to_fetch, nr_heads, &data->shallow,
 -- 
 2.21.0.392.gf8f6787159e-goog
 
