@@ -2,86 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC88B20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 08:39:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FB1520248
+	for <e@80x24.org>; Fri, 12 Apr 2019 08:42:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727440AbfDLIjP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 04:39:15 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:41186 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726851AbfDLIjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 04:39:15 -0400
-Received: by mail-ed1-f68.google.com with SMTP id g6so3645570edc.8
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 01:39:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vscCuUplgmc2SuSg37PhAgVhSDRmK0pI5QxZGSH/wrY=;
-        b=BHu12zOjFuyASp7S0/zGQbaiuok8b/fgqqpWNFYH0YQ0SrZt1fq05b2rOQOsDzOreD
-         2y7+DQhVKnVWvdZ9K4t7njlMfPuxjxZViNmVjcKnoh1pWIAuryIFMYaSOTO4AIF6bHm5
-         M8I0eXBloCldvvu8OXvF7qJ+8aHIevPmaYs76A/36tS7u0DIyd9UiQF7P6b4LqK++Xfm
-         GQTJwqI2ZBIou9KK6n5njdhgLBQ7H1NmndDBdrMi4XRlsdr4adUvzANeKg5yqIhM+l1f
-         ROUzOOWAtoQg6CoL5pdT/Bw2JoCFvHOtWOVchWICUgct2ZGY2Z9N22IROnq9yCWQjS7N
-         dIcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vscCuUplgmc2SuSg37PhAgVhSDRmK0pI5QxZGSH/wrY=;
-        b=lS9oben1Uw/B/aTC00XJN4dQzFpJfXpceUKK+gznSflqoH50TwqwbdV4W46sRUa7NI
-         RTWW0f+505/rbqM0RCzaSVJl2bxRqp978r1/S01Fipl4DQr6r5Qqqi3Ysbd6mvP56alW
-         J1Fg9IFdPuzFg0jYkcNvnq7wLyHRdeyW67juHxke3MGn/TntmCyEdQxB2BlkOR3eiwLX
-         gwG+i42r8mwEsW2/YZF6feBMpSI1EJ9MS2cWPWgCrmkQGn4VzZbTL4u1I7wCK7YPdw8h
-         bXLml2YSCpMg7N1ii1LYFa9tXVp7d327eVBI+C6zktGAsf064FG2JCBqIVNv/xp3YPbJ
-         Uudw==
-X-Gm-Message-State: APjAAAVUlvuhc82c3mgbsTeRc7Jo9JyRHNfn4bAp1mO/OUzBAwQLmG+U
-        d9GcAvG6YgQ0wuDoJyxXoJS068KqiQt/0k+jxb11Fg==
-X-Google-Smtp-Source: APXvYqynyKtSxZtHiJ5HuL6PTmRopg66PbDKk26P/ol/pQvtLpc+lG/4pWMrdXErA5rwjt3BCWrplaIy6Y4NsNWF9Ps=
-X-Received: by 2002:a17:906:8604:: with SMTP id o4mr27955459ejx.178.1555058353290;
- Fri, 12 Apr 2019 01:39:13 -0700 (PDT)
+        id S1727281AbfDLImH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 04:42:07 -0400
+Received: from mout.gmx.net ([212.227.15.15]:42849 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725973AbfDLImH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 04:42:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555058525;
+        bh=sqKQd9bLEi1ecY/yUzisxQ6n8YKdF58RYWa6GRSOiuE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FTBFF+PL8JrL3kYz/8sNJ72WpoO/u1CcXj1HaZHK94BhdQ/xUTDoWLS7AwsjE4ch5
+         pF4P3al8nkkpaZ+4RyOIUQdJXnPgScmf/FfOC9prDUaN2SkNX84MU6b8p6KXa3F8Gp
+         92brq+fsQRtWLZuQhIhKjf53SGYdVSzjwzooylms=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y47-1h1Rdi1Kpj-00vBCE; Fri, 12
+ Apr 2019 10:42:05 +0200
+Date:   Fri, 12 Apr 2019 10:41:49 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
+Subject: Re: incorrect range-diff output?
+In-Reply-To: <20190411220532.GG32487@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1904121038540.41@tvgsbejvaqbjf.bet>
+References: <20190411111729.GB5620@ash> <20190411220532.GG32487@hank.intra.tgummerer.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190411164440.GC12669@ikki.ethgen.ch>
-In-Reply-To: <20190411164440.GC12669@ikki.ethgen.ch>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 12 Apr 2019 10:39:02 +0200
-Message-ID: <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
-Subject: Re: fatal: unable to read after commit
-To:     Klaus Ethgen <Klaus@ethgen.ch>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ynVa743J0af+OZvDuaF6maWVA6nVPpyvUvARaE3qCwBwPBEj8gv
+ A3WXmKK7/UV6j88CA7CdoqbgGEaUemVg5mT/8G8zc1JObZMrLPAM1np0JQ3NSKC6R37jSs6
+ xWXawEJb689neFjaWRv6BFQFQfnHedpcZNo5RiL4UHiMNuTli/itOTK3WQqV8HmHsVRsllW
+ KsPR19ro9EcwbEwruIdcQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tmRzE3jOyOs=:MPI+UyCl28n7vNoWXlncdU
+ uLpYc/o6qxHbSFhBWak8Dm7jmxiz46NwrAw/SINamqPbaP4pgLhFT0AXcDFjg5kErk8SWyYUa
+ hcoWX8cCAEzLo/OrINYYWYa8164f79KzEh3awfqtfgkXuYdZ5dAq3Biy5TJvKy+yrOnmZusuB
+ kA5K3cEqFxfYP8whBorMCI7jOGN5CavDUgQUrDRXcABAbRC3vCMrs6K9olP9+QV4Ma2WcwOLR
+ lNqx9FpaAFwXYoazXZNMrSgmILzC55BeGattls9hBDmSmDxDojNeEHQ0JlUmpt4cYjU0x/oFM
+ hTt4wseg+g0OHrnPQtZgxE+q2vfgoexBufXVeOfaxFfuHxYEQc/qoD3LoJe/aBtgoz7VYOh4e
+ 26iRdBDUXGdtX7v1NaUnwOje0Iq+DA21BOMR6mzkkpi3XsjfXQ7tsoJJ5AP/DczAWjoDItSna
+ mNaUDqCxYMkPsEitPhkWY4WunOdI9EIw1btc8hMHkygnBeK3L0oyLkcE9zbEqU5IYJAHcQ6b2
+ gkf4o6cQgv/mKvsWhMfMhM1i7E6AQIqKYwOl5bwSf2OVgqTclG5F0XZb+PU8M7OMkQ8nrDqSE
+ 4R9GSqAdcFR6mAmEMXaEohue57q3ll7DIYHyu7wEuoF3vMMlL7+aqKWi8hsbAghDskiZDk7L8
+ ffNKWhRmlCcL+VNSTC6GdxWQ6MWbPLdhuywV0xOAKnZdAASw/af7foGSZLeuc2y2++nlo0Cud
+ mhKPCKav2mGL2/Tv+olGXzZEi73F4+GbEAMU5Ro7DzS1VZ+q3OUwnvaqSHLFX9RB46FvS+UeH
+ pWoWoBCpOLTvrh6pSZptqYzuKT6ILoI9j1dvgo0zklCP6ceYt8q5kPbYqwMajLV7VbsZioFYp
+ laTT+Ka3+oEwK6ayX41PENayzZS6NWnumwvqpfRX8ut2ym0+T5OZ7/KC/yozKzpxET88J3MzS
+ +mfptX+SL2g==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Thomas,
 
-On Thu, Apr 11, 2019 at 7:24 PM Klaus Ethgen <Klaus@ethgen.ch> wrote:
+On Thu, 11 Apr 2019, Thomas Gummerer wrote:
 
-> I am a heavy user of git now at version 2.20.1 on debian.
+> On 04/11, Duy Nguyen wrote:
+> > Try
+> >
+> >     git range-diff from...to
+> >
+> > with those two branches from https://gitlab.com/pclouds/git.git. The
+> > interesting part is this
+> >
+> >       diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+> >       --- a/Documentation/gitcli.txt
+> >     @@ -120,10 +111,11 @@
+> >         * linkgit:git-commit[1] to advance the current branch.
+> >
+> >      -  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
+> >     -+  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
+> >     -     pathname parameters) to undo changes.
+> >     +-    pathname parameters) to undo changes.
+> >     ++  * linkgit:git-restore[1] to undo changes.
+> >
+> >         * linkgit:git-merge[1] to merge between local branches.
+> >     +
+> >
+> > This particular hunk comes from giteveryday.txt, not gitcli.txt. And
+> > the b/Documentation/gitcli.txt line is also missing.
 >
-> Since some weeks I have the problem that I get often "fatal: unable to
-> read ..." and a unclear repository after a git commit. The commit itself
-> is correct and so a git reset --hard helps to fix the issue.
+> I think the output here is technically correct, even though it is very
+> misleading.  range-diff doesn't currently show the filenames of the
+> diff that changed, which makes this a bit hard to read.
 
-Could you tell us at least which Debian version and file system you use?
+True. In the spirit of the "funcname" feature of our `git diff` command,
+we could add some (abbreviated) form of the corresponding `diff` lines
+(maybe just the `a/` filename? Or maybe the `a/` file name, prefixed by
+`-` or `+`, and if the `b/` filename is different, `old->new`? With
+`/dev/null` substituted by `(new)` or `(deleted)`?).
 
-Would you be ok to bisect it or at least tell us if it happens with
-2.19.2, 2.20.0 and 2.21.0?
+> [...]
+>
+> Maybe I can find some time over the weekend to tackle this, if nobody
+> else gets to it first.
 
-> Any Idea what could be the reason for that problem. I encounter it on
-> different repositories so not limited to one.
+Good luck ;-)
 
-Is it easy to reproduce even on very small test repos? Could you send
-us a small script that reproduces it?
-
-Could you also run the Git test suite on your machine?
-
-Thanks,
-Christian.
+Ciao,
+Dscho
