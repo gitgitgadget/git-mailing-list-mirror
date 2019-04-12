@@ -2,75 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65C7720248
-	for <e@80x24.org>; Fri, 12 Apr 2019 07:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4F9120248
+	for <e@80x24.org>; Fri, 12 Apr 2019 07:09:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbfDLHFU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 03:05:20 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37876 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbfDLHFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 03:05:19 -0400
-Received: by mail-wm1-f67.google.com with SMTP id v14so9622398wmf.2
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 00:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BsgzNDtfEUG59//hw1vMaWw/5APSTrwtiHBXlPh1xyQ=;
-        b=dBWhbmikvknsD9MLmdqZq1bFjava2LdJ2Pr1G9uvdcP/g278iutPqfJF0R5kHCiFJR
-         XsD3NVVPPJQlcbJPEB7p3L2iIqchs6o0D+IT04LbWI2OGkXKoDLDx+fgIWePpiqEznLR
-         dZn7sK4A8h4YoEi5ZxkqhLOhoTAqEY2iknb/S7bdRii+USJbR4mew9bfo5aOxwidmVPt
-         eGNsefBW6wzeK6oLcrnPb9mhz44tcl1iT5ZOZjBWR9Tc0BCqKwoA23ZyexRK2PBE9nxm
-         UKwg0fklHi1+4BQLywdy0VRFVKtVDHz80I2RAQ7eXwjS0YWezfUvm+b73TMV8TncwyFE
-         xQTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=BsgzNDtfEUG59//hw1vMaWw/5APSTrwtiHBXlPh1xyQ=;
-        b=tkSViPuvg+npw4guLS+cPT0JVLUVSuaFlArPYmJmKwJVMTRUxm5HHy9gHexWIpFJCQ
-         3iO18KSrqr/Fq8cR8eHcJmcwm3EOepwXVeoGwH3U9kGaczZc2je/nJiRHIOzH7Cq/s7y
-         cIjYz42m0vpnMYJG2TqqSOzuSp1we05+gGtB6dfcIN9spg3eCbtucYRMrnsdUhyGSbCm
-         rwG29e2BEiigw4n/Evf7yWJ5xfbpOnLmInH+Aoh7jJDrkSh/XQqFXUw5M9FfxdZz5l/4
-         mxTiYGwpdautiw4kZ+zuSoBp3AKDZQHpMIMW5hCTsgFLDlufd0hwWVimnZx5e8owi8zv
-         Djqg==
-X-Gm-Message-State: APjAAAXGsZhVHk2cavr9U7EBbUmCyZr1mQ2lRh72s1Wutf8SJPAEYRR6
-        cmSoEdNiTAZw6jf03G6KuLyGHWgqEmw=
-X-Google-Smtp-Source: APXvYqx0QNX785M+4k2P/i4Uus5PT4oxaY7Xx1/qWriDikZ+fY+9Xnlv85jGcNQplWKifvsHqz0DDg==
-X-Received: by 2002:a7b:ca49:: with SMTP id m9mr9371975wml.61.1555052717844;
-        Fri, 12 Apr 2019 00:05:17 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id y197sm10533668wmd.34.2019.04.12.00.05.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Apr 2019 00:05:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ron <ronazek@protonmail.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git merge should report an actual syntax error when a semicolon is used instead of space for specifying multiple branches
-References: <fQ_n3UAoz-yQ8MMCgPLhVDqkMCqpXQ2Dk34IZgksKIQ1B3Sig_T70nPI5mI0z9z2A5ZLdk5ooUYnAJelV-7eMNrnCr4V73Rz87pP1arR8WA=@protonmail.com>
-Date:   Fri, 12 Apr 2019 16:05:16 +0900
-In-Reply-To: <fQ_n3UAoz-yQ8MMCgPLhVDqkMCqpXQ2Dk34IZgksKIQ1B3Sig_T70nPI5mI0z9z2A5ZLdk5ooUYnAJelV-7eMNrnCr4V73Rz87pP1arR8WA=@protonmail.com>
-        (ron's message of "Thu, 11 Apr 2019 01:12:51 +0000")
-Message-ID: <xmqqsgunya8j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726838AbfDLHJB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 03:09:01 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:37840 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726024AbfDLHJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 03:09:01 -0400
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by smtp.gentoo.org (Postfix) with ESMTPS id 35A3D340DFC
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 07:09:00 +0000 (UTC)
+Received: (qmail 18767 invoked by uid 10000); 12 Apr 2019 07:08:55 -0000
+Date:   Fri, 12 Apr 2019 07:08:55 +0000
+From:   "Robin H. Johnson" <robbat2@gentoo.org>
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     "Robin H. Johnson" <robbat2@gentoo.org>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: regression AGAIN in output of git-pull --rebase
+ --recurse-submodules=yes --quiet
+Message-ID: <robbat2-20190412T063235-859985527Z@orbis-terrarum.net>
+References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
+ <robbat2-20190410T062730-540884809Z@orbis-terrarum.net>
+ <20190410111834.GA25638@ash>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6FinHCQBQ0zFDOqT"
+Content-Disposition: inline
+In-Reply-To: <20190410111834.GA25638@ash>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ron <ronazek@protonmail.com> writes:
 
-> ... And it may not be uncommon since it comes from the fact that
-> git merge normally follows git fetch where semicolon is supported
-> as per normal.
+--6FinHCQBQ0zFDOqT
+Content-Type: multipart/mixed; boundary="1ozVqH6bFr/3sC51"
+Content-Disposition: inline
 
-I do not know what "git fetch" uses semicolon for here.  Care to
-elaborate?
+
+--1ozVqH6bFr/3sC51
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Apr 10, 2019 at 06:18:35PM +0700, Duy Nguyen wrote:
+> ...
+
+Thanks, I tested, and had good results in almost all of my tests.
+
+Almost all: config setting of 'pull.rebase=3Dpreserve'=20
+=3D=3D=3D
+$ git submodule foreach --quiet git pull --quiet origin master >/dev/null
+Successfully rebased and updated detached HEAD.
+Successfully rebased and updated detached HEAD.
+$ git pull --rebase --recurse-submodules=3Dyes --quiet >/dev/null
+$
+=3D=3D=3D
+Looking at git-rebase--preserve-merges.sh for this message, I think that
+should be a separate patch to make it respect --quiet.
+
+> -- 8< --
+(snip patch, please add my DCO signed-off-by)
+Tested-by: Robin H. Johnson <robbat2@gentoo.org>
+Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
+> -- 8< --
+>=20
+> I'm a bit reluctant to follow up with a proper patch because I can't
+> digest the t5572-submodule-pull.sh tests. And we definitely need to
+> add a test case about --quiet to make sure it won't happen again.
+Find testcase attached. Please submit in a series with your patch
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+
+--1ozVqH6bFr/3sC51
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="0001-submodule-foreach-test-foreach-option-swallowing.patch"
+Content-Transfer-Encoding: quoted-printable
+
+=46rom a57994f2d78134936521375ba9798a1b7418e230 Mon Sep 17 00:00:00 2001
+=46rom: "Robin H. Johnson" <robbat2@gentoo.org>
+Date: Fri, 12 Apr 2019 00:00:07 -0700
+Subject: [PATCH] submodule foreach: test foreach option swallowing
+
+Add a testcase for submodule foreach option parsing not knowing where to
+stop taking options, and accidently removing options intended for
+foreach target commands.
+
+CC: Duy Nguyen <pclouds@gmail.com>
+CC: Prathamesh Chavan <pc44800@gmail.com>
+Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
+---
+ t/t7407-submodule-foreach.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 77729ac4aa..706ae762e0 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -411,4 +411,14 @@ test_expect_success 'multi-argument command passed to =
+foreach is not shell-evalu
+ 	test_cmp expected actual
+ '
+=20
++test_expect_success 'option-like arguments passed to foreach commands are =
+not lost' '
++	(
++		cd super &&
++		git submodule foreach "echo be --quiet" > ../expected &&
++		git submodule foreach echo be --quiet > ../actual
++	) &&
++	grep -sq -e "--quiet" expected &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
+2.21.0
+
+
+--1ozVqH6bFr/3sC51--
+
+--6FinHCQBQ0zFDOqT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAlywOYVfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
+RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
+JsTkSQ//Snww7OkF6WeVBIb9Y2PQMdssdCQZn9OP8InVMbrmMFPl6jlG3zL0Bf7g
+QuKFiP3bM5wJ35u/PDJQntJtXQmY8WZfRbgz/2liwT/dobmD9fGXYW8IpA5TGcx/
+WmDqFs79m+MPZcDnp0z8pzJQLMiZg1FJoc3cwlbbnS72D6n037qKuVM0r2SweF1m
+0MWPhAESlKFT67Cijst5wyg2PvP2cd9eK55rV2vKh26y37bWZ9KtmoK/xIV9HmqJ
+QssCDtzAEfxkv4c4C6mraQtVsKvtAselmYK0TfcyNvujBNqEGFZB+vF4sz9gR/uj
+Wa/vvJ9Dq04y01rDlT0WJL6pBzNQ09My/EaCfiaBUcu4L7xiaWI+7QyeRQKVfULh
+wa4RsMgNvV3gF/XCgiVlcPztAbFqRgfVveac/pWKV//wGlg8c9i0y7t4hUs2xR/n
+ZtitEhb44YLtYMIrf9OccG96f5Nx+xS7JinFH4TuaPJcIDzMJoSsvvAAP9/7gfuP
+BgVc9MaR77T/oGVx2BCJCBjw/9D3ia01b2Kqga/vGc7qg16lOl+M88VhKFLdCRHF
+RiIxnd7WKbMZX2OWHZdn1ECLtkTd8KKGG/OnM3eXSbqhYxkkNjbD6C0jp9ielwI7
+Ar6jdp6kF8EJ4Nm9v/4qkrrkn6DN9IanPLqB6e54pJAWayVp3x4=
+=+Ewk
+-----END PGP SIGNATURE-----
+
+--6FinHCQBQ0zFDOqT--
