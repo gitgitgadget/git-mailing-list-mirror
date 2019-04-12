@@ -2,119 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEC6720248
-	for <e@80x24.org>; Fri, 12 Apr 2019 13:47:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D41820248
+	for <e@80x24.org>; Fri, 12 Apr 2019 14:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbfDLNry (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 09:47:54 -0400
-Received: from siwi.pair.com ([209.68.5.199]:45526 "EHLO siwi.pair.com"
+        id S1726768AbfDLOZh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 10:25:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35369 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727006AbfDLNry (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 09:47:54 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id D9A383F408D;
-        Fri, 12 Apr 2019 09:47:52 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:5d6b:2c19:6eaf:1844] (unknown [IPv6:2001:4898:8010:0:46a1:2c19:6eaf:1844])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 5F7673F404C;
-        Fri, 12 Apr 2019 09:47:52 -0400 (EDT)
-Subject: Re: [PATCH v3 00/10] trace2: load trace2 settings from system config
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        steadmon@google.com, avarab@gmail.com
-References: <pull.169.v2.git.gitgitgadget@gmail.com>
- <pull.169.v3.git.gitgitgadget@gmail.com>
- <xmqqv9zkymzd.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <b4236c9b-8fc2-3704-dfcd-ae71962ac6eb@jeffhostetler.com>
-Date:   Fri, 12 Apr 2019 09:47:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726327AbfDLOZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 10:25:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555079124;
+        bh=uvPYYE2Iu/oXFiZ0o6yhLF3t/ClD8DvfSwfT82LxYko=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hikU/LMKl7Q4Xt/Mj5nYJTYlEuQwmLFedwt+rveiENlB/JPkLDP+Ja74vWGFvymKq
+         FZJYEEwIDgcO836PfWqYGZN8zCVDTMJzO91yiPXCTcobr78vOA1AGYfejo0tj0LHth
+         3pYcqED/JOW6v9gvsGgKwUEZ5E2jqBUJe9xTTLog=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MD9J6-1h53d20pA4-00Gcxx; Fri, 12
+ Apr 2019 16:25:24 +0200
+Date:   Fri, 12 Apr 2019 16:25:08 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, git@vger.kernel.org, gitster@pobox.com,
+        stefanbeller@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 00/33] nd/sha1-name-c-wo-the-repository updates
+In-Reply-To: <20190412001730.GM8796@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1904121624160.41@tvgsbejvaqbjf.bet>
+References: <20190403113457.20399-1-pclouds@gmail.com> <20190406113453.5149-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1904102254500.41@tvgsbejvaqbjf.bet> <20190411205146.GK8796@szeder.dev> <20190411205857.GL8796@szeder.dev> <20190412001730.GM8796@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqv9zkymzd.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1095331993-1555079124=:41"
+X-Provags-ID: V03:K1:AdJWG/S9VLQlu63SvlZDAtUOFlAAEbyO1Q6s82kepCNI/oBPV+w
+ jjOXl3IsViOtwQfx6LIM5K7f/qj8FzPhmGZU0RSG+wZ3jXMg2x5b6aYC912VasvStv0f0wf
+ dq9ry6cpYcBH4e5uZYHQDONJ020ZjgqvavT8gwmBl/R4WGRvY4njUlmbRF9lYma3iiBUMnC
+ qzvFANukSB0pc7pH+oaMw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k0fKC44rWhs=:kK6vawxa85XFyHnzzSuYDs
+ 64ADSHZj65oC+96X1inSAtmLOj2P/TGa+Gd+UyKb58uzqqk/bm4Qw8JVSqWUrbF9my/W31ea2
+ KXlxKmABkMv8Yrf6aQv4xyO7xkW6c2K0gChf1yzrrzE1xj2cwmiPGCozsP7WZcQ4ctMcgbz3P
+ pqB4d4o+Fji2balo88ExaH2Rqgy/1RAENZ7Zs3FaA6xHfZDpga+tIevmze8Lo6nY1+dxKMYf9
+ LRB2SoOgfACCr2k2+3gWeZW0e07uW52xBLIfNUA0Cp/OHNXviq1qsxct99ovdKnDfY/9jWOj5
+ aoZCUGbsHwz9DXrlkvd9BEq3TDOULw5CBMgr8teP7fboHdh1kMH0Re6m0ExI+PxeEKekjPl7g
+ IKvV45wospuFOz4FIO21I97gKlJM7ilNNVjAefe8q/8tPmdxx97oHvks5+mSuQ8f38YzF+JXx
+ nD7lCt+eh3U3uxBpqeRQFbJ8u1uvjyNaDJ+iDVRBkbYs6ALs+ruXzZm+9UFsZWDCWypYAHMIA
+ y9Xa6n8pyqIRvUtvhWNQMfbp91BCUAz28+DiVYNDMS3mijHS91Rw0+BRZoxB1zUPuPb0FsfOn
+ wGt7GX4Dr304bNar9z/uD73gVDPPy0PXX1UYSzWquYJObOj8ouGjN4Q3DDnhzgnrU/2F5jSCo
+ OGZcJt+zzeKz8gpHJ4pVwlfE3WP/Nr7wbXYQcV+ajB+jlsN9FioyQCtr+quog8eEXn3+i46Rp
+ 4Sl47LprpzliE1kd1TIVvaOEscK48kuGRReyTU7mCutQidUWZarhKdYB+D09KvRtIED/b5lcY
+ b7mMaBTmeHWT8op2TY9PpBc1UoqnbqkV5GMr0phHlQhVhzPJ3IGsBFS5/at9dKc3c8TV3ULsb
+ swEwOf2U01Id7UwhHDz+xvCcrNVDXG7nhoHC0Uky8c+f/AKX+BbtyAEN//NElXSr48uucRhc7
+ SG+R0KbNJPg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-1095331993-1555079124=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 4/11/2019 10:29 PM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-[...]
->>       @@ -512,19 +454,28 @@
->>        + */
->>        +/* clang-format off */
->>
->>       ++	[TR2_SYSENV_CFG_PARAM]     = { "GIT_TR2_CONFIG_PARAMS",
->>       ++				       "trace2.configparams" },
->>       ++
->>       ++	[TR2_SYSENV_DST_DEBUG]     = { "GIT_TR2_DST_DEBUG",
->>       ++				       "trace2.destinationdebug" },
->>       ++
->>       ++	[TR2_SYSENV_NORMAL]        = { "GIT_TR2",
->>       ++				       "trace2.normaltarget" },
->>       ++	[TR2_SYSENV_NORMAL_BRIEF]  = { "GIT_TR2_BRIEF",
->>       ++				       "trace2.normalbrief" },
->>       ++
->>       ++	[TR2_SYSENV_EVENT]         = { "GIT_TR2_EVENT",
->>       ++				       "trace2.eventtarget" },
->>       ++	[TR2_SYSENV_EVENT_BRIEF]   = { "GIT_TR2_EVENT_BRIEF",
->>       ++				       "trace2.eventbrief" },
->>       ++	[TR2_SYSENV_EVENT_NESTING] = { "GIT_TR2_EVENT_NESTING",
->>       ++				       "trace2.eventnesting" },
->>       ++
->>       ++	[TR2_SYSENV_PERF]          = { "GIT_TR2_PERF",
->>       ++				       "trace2.perftarget" },
->>       ++	[TR2_SYSENV_PERF_BRIEF]    = { "GIT_TR2_PERF_BRIEF",
->>       ++				       "trace2.perfbrief" },
-> 
-> 
-> With use of designated initializers, the table got a lot cleaner to
-> read.  Is the above "format off" still needed (I am a bit curious
-> how clang-format wants these entries to look like)?
+Hi,
 
-clang-format suggests getting rid of the extra whitespace on the
-lines, so we lose all of the column alignment.  Then it wants to
-line-wrap some but not all of the lines.  So it is a bit of a mess
-to look at.
+On Fri, 12 Apr 2019, SZEDER G=C3=A1bor wrote:
 
+> On Thu, Apr 11, 2019 at 10:58:57PM +0200, SZEDER G=C3=A1bor wrote:
+> > On Thu, Apr 11, 2019 at 10:51:46PM +0200, SZEDER G=C3=A1bor wrote:
+> > > On Wed, Apr 10, 2019 at 10:56:52PM +0200, Johannes Schindelin wrote:
+> > > > >         ...>}
+> > > > >
+> > > > >       @@
+> > > > >     + expression c;
+> > > > >     ++expression r;
+> > > > >     + expression s;
+> > > > >     + @@
+> > > > >     +-- get_commit_tree(c) =3D s
+> > > > >     ++- repo_get_commit_tree(r, c) =3D s
+> > > > >     + + c->maybe_tree =3D s
+> > > >
+> > > > I think this is wrong, and admittedly I had the very same version
+> > > > originally.
+> > > >
+> > > > When you have an arbitrary `r` in any `repo_get_commit_tree(r, c)`=
+ (as
+> > > > opposed to `the_repository`), the conversion to `c->maybe_tree` is=
+ most
+> > > > likely incorrect.
+> > > >
+> > > > Therefore, I don't think that we can do that.
+> > >
+> > > So, as far as I understand, the goal of these 'c->maybe_tree'-relate=
+d
+> > > semantic patches is to prevent "generic" parts of Git from accessing
+> > > this field directly, as it might not be initialized in a
+> > > commit-graph-enabled repository.
+> > >
+> > > Only three functions are explicitly exempt, while this last semantic
+> > > patch in question implicitly allows a few more that assign a value t=
+o
+> > > 'c->maybe_tree'.  These functions are release_commit_memory() and
+> > > parse_commit_buffer() in 'commit.c' and fill_commit_in_graph() in
+> > > 'commit-graph.c',
+>
+> ... and make_virtual_commit() in 'merge-recursive.c'.
+>
+> > and after a quick look these functions seem to be
+> > > rather fundamenal in the life-cycle of a commit object.
+> >
+> > Erm, not "commit object"; I meant the life-cycle of a 'struct commit'
+> > instance.
+> >
+> > > I think they deserve to be explicitly exempted, too, and then we cou=
+ld
+> > > remove this last semantic patch altogether.
+>
+> And it would look like this.  Yeah, that's a very long line there, but
+> I don't think we can break it up.
+>
+>   -- >8 --
+>
+> diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit=
+.cocci
+> index 57c8f71479..fe814f313e 100644
+> --- a/contrib/coccinelle/commit.cocci
+> +++ b/contrib/coccinelle/commit.cocci
+> @@ -10,20 +10,15 @@ expression c;
+>  - c->maybe_tree->object.oid.hash
+>  + get_commit_tree_oid(c)->hash
+>
+> -// These excluded functions must access c->maybe_tree direcly.
+> +// These excluded functions must access/modify c->maybe_tree direcly.
+> +// Note that if c->maybe_tree is written somewhere outside of these
+> +// functions, then the recommended transformation will be bogus with
+> +// repo_get_commit_tree() on the LHS.
+>  @@
+> -identifier f !~ "^(repo_get_commit_tree|get_commit_tree_in_graph_one|lo=
+ad_tree_for_commit)$";
+> -expression c;
+> +identifier f !~ "^(repo_get_commit_tree|get_commit_tree_in_graph_one|lo=
+ad_tree_for_commit|fill_commit_in_graph|parse_commit_buffer|release_commit=
+_memory|make_virtual_commit)$";
 
-> 
->>       ++	if (pid > 999999)
->>       ++		strbuf_addf(&tr2sid_buf, "W%06d", (int)(pid % 1000000));
->>       ++	else
->>       ++		strbuf_addf(&tr2sid_buf, "P%06d", (int)pid);
-> 
-> I do not think it matters too much, but this is kind-of curious.
-> 
-> How would the users of the log utilize the distinction between W and
-> P?  Do they discard the ones with W when they care about the exact
-> process that left the trace entries, or something?  If it's not a
-> plausibly useful use pattern (and I do not think it is), I wonder if
-> we want to go with only W (i.e. truncated to the lower N digits)
-> entries, if you are shooting for a fixed-width output from this
-> function.  If you want less chance of collisions, you obviously
-> could use hexadecimal to gain back a few more bits.
-> 
-> After all, if the application does care the PID, that could be in
-> the log data itself (i.e. an "start" event can say "my pid is blah").
+Hahahaha! That's *really* long.
 
-Right. Ævar suggested adding the full or wrapped PID so that the SID
-would be a fixed length.  I stuck with decimal rather than hex because
-it's easier to match up a running command with '/usr/bin/ps' output,
-but that's no big deal either way.  It might be simpler to just %08lx
-it and be done with it.
+And a good indicator that this should be hidden in a single helper
+function (`set_commit_tree()`, file-local of course) that is exempted in
+the cocci patch.
 
-Jeff
+Ciao,
+Dscho
 
+> +struct commit *c;
+>  @@
+>    f(...) {<...
+>  - c->maybe_tree
+>  + repo_get_commit_tree(the_repository, c)
+>    ...>}
+> -
+> -@@
+> -expression c;
+> -expression r;
+> -expression s;
+> -@@
+> -- repo_get_commit_tree(r, c) =3D s
+> -+ c->maybe_tree =3D s
+>
+
+--8323328-1095331993-1555079124=:41--
