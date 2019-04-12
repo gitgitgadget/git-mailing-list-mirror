@@ -7,60 +7,68 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6CC320248
-	for <e@80x24.org>; Fri, 12 Apr 2019 02:30:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DAD120248
+	for <e@80x24.org>; Fri, 12 Apr 2019 02:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbfDLCaC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Apr 2019 22:30:02 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37747 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726667AbfDLCaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Apr 2019 22:30:02 -0400
-Received: by mail-wm1-f66.google.com with SMTP id v14so9023889wmf.2
-        for <git@vger.kernel.org>; Thu, 11 Apr 2019 19:30:00 -0700 (PDT)
+        id S1726732AbfDLCc3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Apr 2019 22:32:29 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33177 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726682AbfDLCc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Apr 2019 22:32:28 -0400
+Received: by mail-wr1-f68.google.com with SMTP id q1so9915528wrp.0
+        for <git@vger.kernel.org>; Thu, 11 Apr 2019 19:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=bZI0Sc8bvoK4DvZG67R9QmxDBFkql8cXeuEg8fUNZOM=;
-        b=oVnomxgsW2Ar4FBPXynliZLokHxYetB3NuaeFbmXSVFPlhZQ94Pp4VYnc3gdLxRVg0
-         DJYGMjVZkxUMyr/W5DklHTtb/Gd2YlHCuYsFZhQF8lEgOE3GWZBrBDogVhTljHz3p1De
-         VT8x4SnUpCWkrSmaVOEv8FbM2swTeoa0jIOiw3u0a6ccVipqjiYuv9PJS82HGfHbmEn/
-         /cxi6VxZgP0d3WUV9OR1liIGq80gsEoAplBpGSyQ3XyIhapxNU7YR47npeyW58hHYk90
-         Q9bitcDCB7ild9xAxSAcFqx39LgIhIADQIeQ8N38AcNnSiQwM/N3wqnK2NNmtqOyJ+4+
-         gP8Q==
+        bh=bFzsJapnKGQWuOeFqXjcCjwPetdozVS2NgAxZT9Ag0o=;
+        b=HnZtg5v39JoxuuS8QarMnaMIsclD3+oPdaDk53++H7afj6vjxv0SWoMxeN+T/ZnEGV
+         H71bZ2BMx0C0UZKq59olkbVy57yJ6zlcNaX2bM2numtDjJMHihJmj1aAWTXgsFudPigd
+         /IsLzILW6NXkkgQkBK9jbZI/an4+/CIWBXs/lLpG2Kh+T0m7m5u34XLpCnTixk7I0wcz
+         Cru6Pc1QgqjkrE9eBaGjkX1AKJ0MR8jnoUU7dEy4seoppv8NBJjArtjQCIGa/BpuHJgV
+         IJy6DeFC/pRCeqMkmwf4y6+OgOWV3CaMs9bRj8SyQl2OClVFgRzhzghpYPhZEmZv+dkY
+         yZMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=bZI0Sc8bvoK4DvZG67R9QmxDBFkql8cXeuEg8fUNZOM=;
-        b=O9U8DQKDZ2sKGc9sO4e+ORgQGnnFcoIw0QgaTjDrg5qH6nJ3R1TNToGRRkh+rSTVeF
-         gYeClrwKOU+BKArPWG4WLFil3Pw88JliQpN1TgmLAGwnfn2KiblwWCowAjY4L9cJSdMy
-         Mq8x7IeD5FElmO3NIvGbsOS0/VjFy28pFZc2sX0b6GBx2+ApCFRsfphv9Hd0P+iGl0+8
-         TLqOsEvnn2tgfF7iHPoAUYgVW8W4KvB6L0hQ171G9AzempqhQV1ec+k3YMGgbVC973Oa
-         VQ3FL1ZE4iyhpOMIGZTfST6qTSZWTxOqZcQac5yC+JL8vTBQYvntMCirpYLpgA4Upwk4
-         c+qA==
-X-Gm-Message-State: APjAAAU2uOxDPisg/xKcaPUYyPEghpVpcmgMOXIQzOKVJ5dkAVYb8mbK
-        dVNZOQXeImWwFVJUJ/hNV/gEDowuz2U=
-X-Google-Smtp-Source: APXvYqyK5XbqQuxs9scok+tIYZvT+8zVYqeB5wP/XLiJ11gMECfsubTzg545+mRuZh3AE57RARB5Jw==
-X-Received: by 2002:a05:600c:20d:: with SMTP id 13mr9229979wmi.60.1555036199995;
-        Thu, 11 Apr 2019 19:29:59 -0700 (PDT)
+        bh=bFzsJapnKGQWuOeFqXjcCjwPetdozVS2NgAxZT9Ag0o=;
+        b=UDtaBrlD2YyeR3Tizmx8B7DZelwG7gOYtxeXcMPfxVhPX/BDcn1U1dcBjNg5AeWMNp
+         o8Zv71v6KGTVJqzaQti4M8R2VuIHdNOil2lMSVUJt2Mx15fpUvwSErjkp6zDLPyjxvc6
+         bU4SqPgoE+6rScXowSHHKluD24lOEYRh5HHwVr8/NTrl0+xGe+ljcuOJ2FS2qHlkaeGQ
+         lL5J0BbMrJWHLh7ZzMddVD5p76LD7acBEYgUCe23oi6orzGXwpjEHkrZgvw2GG7yb2h/
+         xtkW/fI+cQMI9YZ0A1ySpKyMsXvDajRK/8U6V3rBJNeDSEmdX4S2v42hVobC2Sm3SCSJ
+         sopQ==
+X-Gm-Message-State: APjAAAUj0KkwPkx8jxrc9NqndSXBFlpkhcqkOYC5jUD7ZLUCPBfJUDiu
+        UVF11VPr7XgyUNbd61/8PN0=
+X-Google-Smtp-Source: APXvYqxLEsqtn1lhqx8J1B5AyEPj39Mfq+7jrRoj61GBcIDCY/WbgzqgUOHtstcdEw9Xi4G2hXdy5g==
+X-Received: by 2002:adf:dc4a:: with SMTP id m10mr32825737wrj.0.1555036346834;
+        Thu, 11 Apr 2019 19:32:26 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id g13sm5312049wmh.11.2019.04.11.19.29.58
+        by smtp.gmail.com with ESMTPSA id h2sm61087721wro.11.2019.04.11.19.32.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Apr 2019 19:29:58 -0700 (PDT)
+        Thu, 11 Apr 2019 19:32:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        steadmon@google.com, avarab@gmail.com
-Subject: Re: [PATCH v3 00/10] trace2: load trace2 settings from system config
-References: <pull.169.v2.git.gitgitgadget@gmail.com>
-        <pull.169.v3.git.gitgitgadget@gmail.com>
-Date:   Fri, 12 Apr 2019 11:29:58 +0900
-In-Reply-To: <pull.169.v3.git.gitgitgadget@gmail.com> (Jeff Hostetler via
-        GitGitGadget's message of "Thu, 11 Apr 2019 08:18:37 -0700 (PDT)")
-Message-ID: <xmqqv9zkymzd.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?B=C3=A1rbara?= de Castro Fernandes 
+        <barbara.fernandes@usp.br>,
+        Robert Dailey <rcdailey.lists@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Git <git@vger.kernel.org>
+Subject: Re: Feature request: Add --no-edit to git tag command
+References: <CAHd499BM6M+=zRE1WFVXr7b+VhJHFeDind5xLqXcwZLv7QeDvw@mail.gmail.com>
+        <20190404015744.GF4409@sigill.intra.peff.net>
+        <20190404032606.GA39148@Taylors-MBP.hsd1.wa.comcast.net>
+        <20190404120613.GB22324@sigill.intra.peff.net>
+        <CAHd499CUCoShsQHYZotFqprfDUf_owg_Urbt29fkNRV6LhFc3Q@mail.gmail.com>
+        <20190405222100.GA10787@sigill.intra.peff.net>
+        <CAJ+V80pY0L7onX600dmSaMuFFnH5n52-3CmnRyDKr-7ZkZ92mA@mail.gmail.com>
+        <20190411182903.GA32528@sigill.intra.peff.net>
+Date:   Fri, 12 Apr 2019 11:32:25 +0900
+In-Reply-To: <20190411182903.GA32528@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 11 Apr 2019 14:29:03 -0400")
+Message-ID: <xmqqr2a8ymva.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,101 +78,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Here is version 3.
-> [] It incorporates Ævar's suggestions WRT the format and uniqueness of the
-> SID. [] It now reads both system and global config for trace2 settings and
-> handles includes as Jonathan suggested.
-
-Following the ISO more closely with Ts and Zs in the format looks
-like a good idea (i.e. it gives a more familiar-looking result).  I
-have no string opinions on the per-user config or inclusion, but I
-think it probably is an essential ingredient to give an opt-out
-escape hatch to make this appear less big-brotherly [*1*].
-
-	Side note *1*: and hence less scary.  An otherwise useful
-	mechanism can have an appearance that it can also be misused
-	for bad purposes, and at that point, to those with fear, it
-	does not matter how useful an application the mechanism has.
-
-	I think "by default you are opting in due to your belonging
-	to this organization in the first place (hence we give you
-	/etc/gitconfig that lets us collect your usage patterns) but
-	you could easily opt-out by overriding in $HOME/.gitconfig"
-	strikes a good balance.
-
-> I added a read_very_early_config() function that is similar to 
-> read_early_config()but omits repo local, worktree, and -c command line
-> settings. This felt like a little bit of a hack, but it made the intent
-> clear.
-
-I am not yet judging if the "very early config" itself is a good
-thing to have (and if it is good, then it is not a "hack" ;-)), but
-I very much agree that it is a very good change to have a helper
-that makes the intent clear.
-
->      -+# Now test using system config by using a mocked up config file
->      -+# rather than inheriting "/etc/gitconfig".  Here we do not use
->      -+# GIT_TR2* environment variables.
->      -+
->       +unset GIT_TR2_BRIEF
-
-
-This does not have to be sane_unset, as we are not aiming for making
-our tests "set -e" clean.  But in tXXXX-*.sh scripts, it may not be
-a bad idea to stick to sane_unset regardless, as people tend to cut
-and paste without thinking enough.
-
->      @@ -512,19 +454,28 @@
->       + */
->       +/* clang-format off */
+> On Thu, Apr 11, 2019 at 03:20:52PM -0300, Bárbara de Castro Fernandes wrote:
 >
->      ++	[TR2_SYSENV_CFG_PARAM]     = { "GIT_TR2_CONFIG_PARAMS",
->      ++				       "trace2.configparams" },
->      ++
->      ++	[TR2_SYSENV_DST_DEBUG]     = { "GIT_TR2_DST_DEBUG",
->      ++				       "trace2.destinationdebug" },
->      ++
->      ++	[TR2_SYSENV_NORMAL]        = { "GIT_TR2",
->      ++				       "trace2.normaltarget" },
->      ++	[TR2_SYSENV_NORMAL_BRIEF]  = { "GIT_TR2_BRIEF",
->      ++				       "trace2.normalbrief" },
->      ++
->      ++	[TR2_SYSENV_EVENT]         = { "GIT_TR2_EVENT",
->      ++				       "trace2.eventtarget" },
->      ++	[TR2_SYSENV_EVENT_BRIEF]   = { "GIT_TR2_EVENT_BRIEF",
->      ++				       "trace2.eventbrief" },
->      ++	[TR2_SYSENV_EVENT_NESTING] = { "GIT_TR2_EVENT_NESTING",
->      ++				       "trace2.eventnesting" },
->      ++
->      ++	[TR2_SYSENV_PERF]          = { "GIT_TR2_PERF",
->      ++				       "trace2.perftarget" },
->      ++	[TR2_SYSENV_PERF_BRIEF]    = { "GIT_TR2_PERF_BRIEF",
->      ++				       "trace2.perfbrief" },
+>> This new proposed --amend option, although semantically different,
+>> would have a very similar functionality to the already existing -f
+>> option. So should we, perhaps, change -f's behavior to treat the tag
+>> as a new one, treating the old one as if it never existed (as I think
+>> Junio was saying)? By this I mean the command should fail if the user
+>> doesn't give a SHA-1 and the previous message wouldn't be preloaded.
+>> --amend, on the other hand, would give the user an opportunity to
+>> revise the tag by opening, by default, the editor with the
+>> pre-existing message unless given the '--no-edit' option, and if not
+>> given a SHA-1 it would keep on using the previous one.
+>
+> Yes, that's what I'd expect it to do (so yes, it's also different from
+> "-f" in that it defaults to the existing tag destination instead of
+> HEAD).
 
+Do you mean you'd expect "--amend" to do that, which is different
+from what "-f" does, so they should not be conflated into one?
 
-With use of designated initializers, the table got a lot cleaner to
-read.  Is the above "format off" still needed (I am a bit curious
-how clang-format wants these entries to look like)?
+If so, I think that makes sense and changing the behaviour of "-f"
+is too confusing.
 
->      ++	if (pid > 999999)
->      ++		strbuf_addf(&tr2sid_buf, "W%06d", (int)(pid % 1000000));
->      ++	else
->      ++		strbuf_addf(&tr2sid_buf, "P%06d", (int)pid);
-
-I do not think it matters too much, but this is kind-of curious.
-
-How would the users of the log utilize the distinction between W and
-P?  Do they discard the ones with W when they care about the exact
-process that left the trace entries, or something?  If it's not a
-plausibly useful use pattern (and I do not think it is), I wonder if
-we want to go with only W (i.e. truncated to the lower N digits)
-entries, if you are shooting for a fixed-width output from this
-function.  If you want less chance of collisions, you obviously
-could use hexadecimal to gain back a few more bits.
-
-After all, if the application does care the PID, that could be in
-the log data itself (i.e. an "start" event can say "my pid is blah").
-
-Thanks.  I'll wait until learning what others think.
