@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B49AB20248
-	for <e@80x24.org>; Fri, 12 Apr 2019 09:37:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B80720248
+	for <e@80x24.org>; Fri, 12 Apr 2019 09:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726735AbfDLJh0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Apr 2019 05:37:26 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44300 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726881AbfDLJhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Apr 2019 05:37:24 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d11so7732578edp.11
-        for <git@vger.kernel.org>; Fri, 12 Apr 2019 02:37:23 -0700 (PDT)
+        id S1726867AbfDLJhX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Apr 2019 05:37:23 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41285 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726678AbfDLJhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Apr 2019 05:37:21 -0400
+Received: by mail-ed1-f66.google.com with SMTP id g6so3788688edc.8
+        for <git@vger.kernel.org>; Fri, 12 Apr 2019 02:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a1s78ePGcYIGjMfbIq9Y0wgOYdjX++nDCmviqjK1Pa8=;
-        b=gU/HsqUPBa2q3qO9XXiXCPFOdNHKXf+cXNeoDBjG67aZgo+80DeiPvxI4yVo7NOj4f
-         cjqvpPH98gxDCfxSbyanFmf+QY9EjSISCF5x7R4RhRZoD43B74U3XyirfITombX9P+RJ
-         w8H7dinaK4/ByTI6EanbiD81NPvxFcofLsQ95dnUhW3UX0AjXveYbd7cJhu32HrgDQTX
-         FTeRVPwpp/KRW3uD5wVTqv7cKdlMslGcXfTE77BlNUZ5Dkea4Dt9XHvQaS/xRauagzYi
-         a2KxPslKcpE5mfv4OnaDBan3O108VQ1eI7/Hvm/n+ALyYlCvuhA4KV/eu12q9dVZQ6vV
-         kHmw==
+        bh=fSib6Aueo4f2tH0P/GdTW+1ikI+DVkU702AgxIHCrso=;
+        b=jRpBrpSGyjbtF5qi/W97m8Jr/U1S026Wxvm0pSe6GeHQdLBCQbLCOZaEVb603ZYsKw
+         qAkSB1EzVBPad10LdQeYyZ4hiT9COaGaX13+qgEx7IWs3oG8FwhW2wvdgD5McJEDyl9k
+         TFJs6Q/exPntvqFIdhv4LANJ3yXGpccppFkvpCuOnP4UV4lT2IhBlw4Q6UlScDrebrK5
+         Q9UkNPRu7O2r5UjK6w02ISRRf9zDWgdfETEqPJ+NDTWbDqVp3Flq30KDJ19NlJ4Z8Ms0
+         1x15g2Qp2HhLK5Dhryehd+HMwK4n1D0ATy9RR+jJdG8jK6Ox+ZTEiRrEqnH7m9MPpjEi
+         BlqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a1s78ePGcYIGjMfbIq9Y0wgOYdjX++nDCmviqjK1Pa8=;
-        b=ckzasEC6vcU4Oe0vQrrncStjrtFv1RS5Ou+C17yp1wofc4agg8YxthUvCJ1yDBfzXh
-         Rq/R9864dIqKeuisG0bpgQu1N7wux21Dn9RLqzF/RAwhVhQaPhDkiRA31P43hVu5CGMN
-         zJCu0SoQhdM3NaNUJEyAFqFLmlaQel1evAliePifGboccnMyHYgVsr7PFCJ/Yu5adlY5
-         TaS5cgYDCpwqdmfxNzRHiv/qyM523ogYEJFxTWIKBFecN/XVYBp5fuYu/UlNhXLvkKq5
-         8SRce+6uflDIJu3LR2aZG930neEumHJgQzSIUWmbf6mGQ9NbeUHeNtR1RJzCOXroJbcp
-         B/EQ==
-X-Gm-Message-State: APjAAAVHB9Z5n13sJ8pX5riFujdfF+wnzxOB/w6V6duJWmDznD03e9RG
-        uDoDQrWyv/DGULWjw7Sxwk4nm9jQ
-X-Google-Smtp-Source: APXvYqxMdT0lgGzgXaK5uQXdDF4hc/Up3/kvj51c7+JjwCLv36wN++vOmqggjr5B2052vM3EKjtDjQ==
-X-Received: by 2002:a17:906:a841:: with SMTP id dx1mr28777189ejb.99.1555061842867;
-        Fri, 12 Apr 2019 02:37:22 -0700 (PDT)
+        bh=fSib6Aueo4f2tH0P/GdTW+1ikI+DVkU702AgxIHCrso=;
+        b=jodfLZ86Q3jlrSl3uUQE51J9VlebAb+mZzT5007wx1a/eBUOCw6uR1ZiSTCq0Qscen
+         qI8kjR9+vN2whCE/bMHCmGOGrQpRmTJUXeAwh+KBQyizlQy4QJwACK2FKoHiupONcBiW
+         UxOyodImw6VV2eVmml27ZogqBzbX7uFKvOYuaF+I/jyx72+rkQ8MSQZ3LsBfkXCSj3v2
+         5dzzFAy6wvtD2epExuKUHP6JcsnaO+wXFoL3SommhV6QHjSesCxf0/gQZRZnO1oS9ta0
+         6IZZBad2yZuthNhySi54PcoIbvjeQZ6oqsSesxE+o4hvJJoOr3zslYqpw4Xk6KxwfnWC
+         qoSw==
+X-Gm-Message-State: APjAAAWq/Btcy4j2RADErzxgwyxl8q2r4j3NZr2YHjeD8GUw48UV0DBs
+        dqbn4+yMNuY/7MfL4Sa3AAgxoc/m
+X-Google-Smtp-Source: APXvYqyeSWbg5a7JiFuTN/HGkgvLUm4AckY/d0M5OVPiLheZgmz9DNabRvbRmTDG0engN4HjjdtvYw==
+X-Received: by 2002:a17:906:e241:: with SMTP id gq1mr9338164ejb.5.1555061839766;
+        Fri, 12 Apr 2019 02:37:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w3sm5072234edq.33.2019.04.12.02.37.22
+        by smtp.gmail.com with ESMTPSA id p13sm4106099edx.96.2019.04.12.02.37.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Apr 2019 02:37:22 -0700 (PDT)
-Date:   Fri, 12 Apr 2019 02:37:22 -0700 (PDT)
-X-Google-Original-Date: Fri, 12 Apr 2019 09:37:14 GMT
-Message-Id: <7372059922710f392201cb32c5a7ac9cbdbe0616.1555061837.git.gitgitgadget@gmail.com>
+        Fri, 12 Apr 2019 02:37:19 -0700 (PDT)
+Date:   Fri, 12 Apr 2019 02:37:19 -0700 (PDT)
+X-Google-Original-Date: Fri, 12 Apr 2019 09:37:10 GMT
+Message-Id: <a1b4b74b9167e279dae4cd8c58fb28d8a714a66a.1555061837.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.167.v2.git.gitgitgadget@gmail.com>
 References: <pull.167.git.gitgitgadget@gmail.com>
         <pull.167.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 5/8] tests (push): do not abbreviate the `--follow-tags`
- option
+Subject: [PATCH v2 1/8] tests (rebase): spell out the `--keep-empty` option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,36 +73,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We really want to spell out the option in the full form, to avoid any
-ambiguity that might be introduced by future patches.
+This test wants to run `git rebase` with the `--keep-empty` option, but
+it really only spelled out `--keep` and trusted Git's option parsing to
+determine that this was a unique abbreviation of the real option.
+
+However, Denton Liu contributed a patch series in
+https://public-inbox.org/git/cover.1553354374.git.liu.denton@gmail.com/
+that introduces a new `git rebase` option called `--keep-base`, which
+makes this previously unique abbreviation non-unique.
+
+Whether this patch series is accepted or not, it is actually a bad
+practice to use abbreviated options in our test suite, because of the
+issue that those unique option names are not guaranteed to stay unique
+in the future.
+
+So let's just not use abbreviated options in the test suite.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5516-fetch-push.sh | 4 ++--
+ t/t5407-post-rewrite-hook.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 37e8e80893..db0b1db458 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1370,7 +1370,7 @@ test_expect_success 'push does not follow tags by default' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'push --follow-tag only pushes relevant tags' '
-+test_expect_success 'push --follow-tags only pushes relevant tags' '
- 	mk_test testrepo heads/master &&
- 	rm -fr src dst &&
- 	git init src &&
-@@ -1384,7 +1384,7 @@ test_expect_success 'push --follow-tag only pushes relevant tags' '
- 		git tag -m "future" future &&
- 		git checkout master &&
- 		git for-each-ref refs/heads/master refs/tags/tag >../expect &&
--		git push --follow-tag ../dst master
-+		git push --follow-tags ../dst master
- 	) &&
- 	(
- 		cd dst &&
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index a4a5903cba..7344253bfb 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -131,7 +131,7 @@ test_expect_success 'git rebase -m --skip' '
+ test_expect_success 'git rebase with implicit use of interactive backend' '
+ 	git reset --hard D &&
+ 	clear_hook_input &&
+-	test_must_fail git rebase --keep --onto A B &&
++	test_must_fail git rebase --keep-empty --onto A B &&
+ 	echo C > foo &&
+ 	git add foo &&
+ 	git rebase --continue &&
+@@ -146,7 +146,7 @@ test_expect_success 'git rebase with implicit use of interactive backend' '
+ test_expect_success 'git rebase --skip with implicit use of interactive backend' '
+ 	git reset --hard D &&
+ 	clear_hook_input &&
+-	test_must_fail git rebase --keep --onto A B &&
++	test_must_fail git rebase --keep-empty --onto A B &&
+ 	test_must_fail git rebase --skip &&
+ 	echo D > foo &&
+ 	git add foo &&
 -- 
 gitgitgadget
 
