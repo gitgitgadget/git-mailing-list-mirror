@@ -2,83 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B118D20248
-	for <e@80x24.org>; Sat, 13 Apr 2019 15:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47B3220248
+	for <e@80x24.org>; Sat, 13 Apr 2019 20:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfDMPYN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 11:24:13 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:36463 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727066AbfDMPYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 11:24:13 -0400
-Received: by mail-ed1-f47.google.com with SMTP id u57so10259769edm.3
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 08:24:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=nYFDnyPyjwocUbnWcuBf0PnW0l0w69CLXKkYpvkXpEU=;
-        b=M9k6XhX/2HBJt4NPHicKiOTOvxIUhOrnwRySA3+dPGaVJ80bfXWI0teN0m0FDW81RG
-         fIY7r2sj65JnyUMWEuTAAI3tV/DnTx3i5irvUz7F2m2pxZ1S83LPlBKTqJkYvnzkgmj3
-         MRUmJzbo/xN3z2PEq6t6lD36Kq22Pt+9mqMTwvz6HjUIBo/ClKvB71kujWXNS0y/RV0h
-         76+RXTLwnQMD2J/HGzyixTpSxipKE5OefLig8uoLmQmIH9eCirRJ90RonmrRTz5pAbtl
-         JecDJZ6Zfnl0EkyFTZaf7B1qQtyg7rNa3qF2J1NFfMiWK/QYKmJSnNU/Xkj89t8yvlAJ
-         HeYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=nYFDnyPyjwocUbnWcuBf0PnW0l0w69CLXKkYpvkXpEU=;
-        b=bqKCbgjPJz/C7E5Dcw3w6Rabscs0SBMS89qtqNOPQUPpCM/eDALVEG8baGsk5absa0
-         ii/3jYILNQEAFd2yufUJzfLJQl41O7PdzRxlo+QmVY4186nOVSC6mSlqAcQEt4eSHzj3
-         jR3jpibT6KTvzP4njLCv1jatOhdfTRLSUyO3ZWFiBTvPNHQqZVcCEBY++zoUjrk06pfu
-         gdIKlgPSX0Nrycmpm7HkFkULog3WCo5P3WzO8hKy8WYKUEgydySMD/eY8fN3kUJeWvNH
-         wVGeSNqgB+hdpc7FRWItQcrb/z/vrQe2aiuMfiR3H0YrozmjJnLa0kpJGmZh21G7u1LK
-         KNkQ==
-X-Gm-Message-State: APjAAAV006aOVokTryFo2W2JYbidEyi5JzCEllKEsTXWMsk8gVGUpfxR
-        g+POFkMtN5tYnW/SYIE6YpJA/P00nW9FpPrxAZ/LZuKFDGj+Tw==
-X-Google-Smtp-Source: APXvYqwLkmfyowguf8rBkScFzJIoskadEhOwiwfRxtp5KOv2Kvr/zf2L5DIzyKQzm4YdGN/M0szNNT/cxHaEHUoZsOM=
-X-Received: by 2002:a50:acc6:: with SMTP id x64mr11877360edc.141.1555169051294;
- Sat, 13 Apr 2019 08:24:11 -0700 (PDT)
+        id S1727019AbfDMU1w convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 13 Apr 2019 16:27:52 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:21264 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbfDMU1w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 16:27:52 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x3DKRn2i042982
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 16:27:50 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: [BUG] GIT_SSH_COMMAND is not being decomposed
+Date:   Sat, 13 Apr 2019 16:27:44 -0400
+Message-ID: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com>
 MIME-Version: 1.0
-References: <5cl.5Cyq.1JuGDapDk}8.1SiN42@seznam.cz>
-In-Reply-To: <5cl.5Cyq.1JuGDapDk}8.1SiN42@seznam.cz>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Sat, 13 Apr 2019 17:23:45 +0200
-Message-ID: <CABUeae9g-J3zXpkc1Y_6vQM5VQ0do3c9PT-300Vcvoxi5kQY1g@mail.gmail.com>
-Subject: Re: Repositories stucture
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        boundary="----=_NextPart_000_0003_01D4F215.30AFA740";
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQC3GS3pUTVWeV9PAQCC41Aun5SSNg==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 13 Apr 2019 at 07:32, Mgr Georg Black <georg.black@seznam.cz> wrote=
-:
-> People from big company(BC) wanna to have only one big repository with al=
-l code in it. BC wanna have to folders structure for language and projects.=
- But for us is that idea bit uncomfortable because we rather have more repo=
-sitories by language, maybe by project (in BC folders). It's useless for us=
- that every developer on specific project and language have all other sourc=
-es in their local repository. Is it the solvable?
+I am encountering a problem on one of our NonStop platform variants where
+the GIT_SSH_COMMAND string is not being broken into constituent parts. This
+is causing SSH to not run properly. As background, SSH is not in a standard
+location and has non-standard required arguments. This also occurs with
+core.sshCommand. The situation is:
 
-Show the BC how Boost libraries structure the repositories with submodules
-There is single superproject https://github.com/boostorg/boost/
-and large number of libraries (each with dedicated team of developers).
-Periodically, everything is synchronised into the superproject repo
-and prepared for release in single bundle.
+git config --global core.sshCommand '/G/system/zssh/sshossz5 -Q'
 
-Then, you may want to learn about submodule and subtree features of Git,
-and choose the one that suits best your workflow(s) to implement your
-repositories structure.
+which correctly sets .gitconfig as:
 
-Best regards,
---=20
-Mateusz Loskot, http://mateusz.loskot.net
+[core]
+        sshCommand = /G/system/zssh/sshossz5 -Q
+
+When git is run with GIT_TRACE=true GIT_PACKET_TRACE=true git fetch
+
+We get the partial trace:
+14:19:56.027088 trace: built-in: git fetch
+14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5 -Q' -G
+user@host
+
+The same trace on our systems that actually do work results in:
+14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5' '-Q' -G
+user@host
+
+I need help resolving why this is happening (as in where to look and debug
+the situation).
+
+Urgently,
+Randall
+
+-- Brief whoami:
+NonStop developer since approximately 211288444200000000
+UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
+
