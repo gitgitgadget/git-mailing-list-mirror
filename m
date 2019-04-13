@@ -7,159 +7,102 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB42120248
-	for <e@80x24.org>; Sat, 13 Apr 2019 10:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FDA320374
+	for <e@80x24.org>; Sat, 13 Apr 2019 10:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726647AbfDMKUO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 06:20:14 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:38989 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfDMKUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 06:20:14 -0400
-Received: by mail-it1-f194.google.com with SMTP id 139so19820082ita.4
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 03:20:13 -0700 (PDT)
+        id S1726571AbfDMKj4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Apr 2019 06:39:56 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:35519 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726175AbfDMKj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 06:39:56 -0400
+Received: by mail-it1-f196.google.com with SMTP id w15so19893664itc.0
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 03:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=69kc6lzmXV38hq0x6S0dlX+/IvyVEeOkpOYVkrqlQog=;
-        b=QZz3VTAfcAjCa2z4Qz3yGfjTWIvtoB4YhypbYieWAcfmV8X/SQ4fapmdLFgQL2dwZM
-         +2CvVBMFAgfJ/7tPV33jX71ywrFbIgArW8ggbWnI9xbJtQtQ2UwV9QgSMkQyFJN+DZJa
-         PlKQn+Heu/k/qTqXFpwXNOeJwCF1kwm7AfuV9GX1d3TVQGuyEde1rcSDwR+mqwpQ8FLo
-         kqhwsBWffkkiikwZR7Igml8qKI6fobPq1doT4G8EyX4qbJwLs6JTAvQEWzhIpp/HYXIL
-         Epr9p9KjGrXFMrnvwsUG6CVO9WI7hNc/64JuoHarReGoqBPcjTOHC8cLqUvsZ8er/I1s
-         2yew==
+         :cc;
+        bh=WITDXqORYHB4yx+qSJ3KtOED2iNpGIVDK7aH2wE7VmY=;
+        b=f/jBeKFjq1bEH1sS+hBA8LxzXPvzMAieQaVGvvdvMr1iVIUPf7LPPf8+xUgT/Ii8+4
+         g9c453eYmVu71TqYmsaEbMgwh9d9tD40SJcbVBz1oZIC0/lzXrzfmlDwKjlRgBV9yB1g
+         b4LzI0CDhlF6LnqQ3LsgU1QqYq60VSaWOP8rdmIhFdJhYeEN9z4t/kUPlewMLYFghp7m
+         rocwZL8TCCGVF3EAej4R5QPBrECmq8y3Z+RyVOt9nHaDhcMpWCvHql0mJC/HbdBvpN9q
+         DTjPvmpfKS/nGeYJvk96GiipeAeEDKY05KTgwvf7I+T9TpDzwbodyJDts3RUZYgz1R4u
+         4+ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=69kc6lzmXV38hq0x6S0dlX+/IvyVEeOkpOYVkrqlQog=;
-        b=iq/fNrLnXnBWwxn4pvXgFusYM8PXkBAr0IwMHxSSoP9L8ygVUR5lQJtPLJb6zokncU
-         uoXl+Mof9vPGcgRqqnRValdavcPYr+EabihdWz+y7SKtTOJfIp+PcQRtf5S6HG0xnadE
-         xneyJCGYMsqnfzw3s8iFrd6p8/pjC7kF1k7Y30p9i6ShsR5ayTp1qRpfA7BFs7MdP0AR
-         ilxiUCf7BUUr2y0uY8KjxsP2YUkCkDqWMkp6fTwUsi1xU8t1ROC6iCPmSxaRIoDSPae6
-         oTVQNfxETRc5sndfCqWCpJ5rsvYlrX5g0FBeb/q9HLFgeNSZvXVPWAe+wDPEFzHnuzpZ
-         IT2A==
-X-Gm-Message-State: APjAAAWAM09/mtJOyQ5J4CCv4FFQ6xlJJGc9Pi/OqgliWr8zRfluC/L1
-        JRJmumgrLY58knblJAXgRO5t9P3Xmn7imUJDyqg=
-X-Google-Smtp-Source: APXvYqz6RLXnY2OPnZguFT929p+3hHoLhyNq8N0pMVyyeXLqzhQIK8YUM+RvOdPBzz1gZAJcyM0vZtgFG8j9IlMhixU=
-X-Received: by 2002:a24:5e06:: with SMTP id h6mr15578340itb.107.1555150813113;
- Sat, 13 Apr 2019 03:20:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=WITDXqORYHB4yx+qSJ3KtOED2iNpGIVDK7aH2wE7VmY=;
+        b=S4jNGkQgIPuxCfi1M0VjQTOhfpwP4G4MSEcwqVYvvtUJsWV6lPHZDApBEFFgzQNsF5
+         Rc30FlRiunkm97RsLLotDoUIDXdc8/pdMa7pcnl0AL8wbJh+jqo3uwrCEkp7OJp+LARf
+         p/ix2O13COubRX4r2Ev5JPSm9sQY7B727unUxKV5QFjDGylr+O4bhy0fwuGSIyHkmIAq
+         PKBmOtzX3Sj49+Z/LDJgdPqxPtqOan9Z/Aw6+REqHuRU14CqyK+NwNdWxMkxR4XnffvC
+         pzsjrAPeJA7U8oLKnNzYOC0bYYp7q6t+9pT1jqFuph7D4md0Ls3IFwtwYprrwb4xXNZF
+         8SfA==
+X-Gm-Message-State: APjAAAV5iFchexdrB3LMpU15N5ZSleMXlbgYFO1EwCo+rJiNnVcVtehu
+        RBnFNsr5SRXeQ0RAlB59jv54aytbv3agRyBcaGQ=
+X-Google-Smtp-Source: APXvYqwcCMEWSIltvxAR8EtR7lnCdjDIq03ZbHowArRVgW3TUMIcu8y8Z54BdkANAsHkhcBWrh5NfBF8e0sMNks+Lc8=
+X-Received: by 2002:a02:c50b:: with SMTP id s11mr9280376jam.84.1555151995023;
+ Sat, 13 Apr 2019 03:39:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqimvpb0bd.fsf@gitster-ct.c.googlers.com> <20190409102649.22115-1-pclouds@gmail.com>
- <875zriga8f.fsf@evledraar.gmail.com>
-In-Reply-To: <875zriga8f.fsf@evledraar.gmail.com>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190411131218.19195-1-pclouds@gmail.com>
+ <xmqq4l73ztxf.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4l73ztxf.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 13 Apr 2019 17:19:47 +0700
-Message-ID: <CACsJy8AEZ-Lz6zgEsuNukvphB9TTa9FAC1gK05fhnie2xtfc9w@mail.gmail.com>
-Subject: Re: [PATCH] Introduce "precious" file concept
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 13 Apr 2019 17:39:28 +0700
+Message-ID: <CACsJy8A42eObPkDvuPd7GodKxfaRMk0cd1YLUz+G-K4Qed2X7Q@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] Add new command 'restore'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've had enough. Please drop this nd/precious. I'm not updating it anymore.
+On Fri, Apr 12, 2019 at 12:14 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > - git-rm learns about --staged as an alias of --cached (in fact it's
+> >   more the other way around). This is to keep suggestions consistent
+> >   because we tell people to do "git foo --staged" everywhere.
+>
+> I am not sure 100% about this one.  If "--staged" is only about
+> updating the index without touching the working tree, then existing
+> "--cached" is already serving its purpose and there is no need to
+> add yet another.
 
-On Sat, Apr 13, 2019 at 4:54 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Apr 09 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> >  Here's the replacement patch that keeps "git clean" behavior the same
-> >  as before and only checks 'precious' attribute when --keep-precous is
-> >  specified.
->
-> Cool to have the expected interaction with -x. Thanks.
->
-> > -'git clean' [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <pa=
-th>...
-> > +'git clean' [<options>] [-d] [-f] [-i] [-n] [-x | -X] [--] <path>...
->
-> For e.g. git-status(1) we just say:
->
->     git status [<options>...] [--] [<pathspec>...]
->
-> And for git-add(1) we do:
->
->      git add [--verbose | -v] <very long exhaustive list of options
->                               spanning 4 lines omitted>
->
->
-> Seems we should do one or the other here, i.e. either just add
-> --keep-precious to the list, or leave it at just:
->
->     git clean [<options>...] [--] [<pathspec>...]
->
-> > +This attribute is set on files to indicate that their content is
-> > +valuable. Some commands will behave slightly different on precious
-> > +files. linkgit:git-clean[1] may leave precious files alone.
->
-> As noted upthread I think it's better to start with "clean" and
-> "--keep-noclean", we can always alias it to "precious" later without
-> squatting on that more general term when we (IMO) don't have the full
-> picture yet & know if we even want that...
->
-> But anyway, with that out of the way and assuming this is kept-as is
-> seems we could document this better if we're going to keep "precious",
-> e.g. maybe:
->
->     This attribute is set on files to indicate that they're important
->     while not being tracked. This attribute is experimental and subject
->     to future change as more commands are changed to support it.
->
->     Now it's only supported by linkgit:git-clean[1] which'll skip
->     cleaning files marked ith `precious` when given the
->     `--keep-precious` option. This can be useful in combination with
->     linkgit:gitignore[5] to e.g. mark `*.o` build assets as both ignored
->     and precious.
->
-> I.e. say it's still early days, that it's "experimental" (not insisting
-> on that phrasing, but somehow signaling to users that if they set this
-> now it may do new/unexpected things in the future), and briefly describe
-> how it works with "clean" and what the main intended use-case is.
->
-> > +test_expect_success 'git clean -xd --keep-precious leaves precious fil=
-es alone' '
-> > +     git init precious &&
-> > +     (
-> > +             cd precious &&
-> > +             test_commit one &&
-> > +             cat >.gitignore <<-\EOF &&
-> > +             *.o
-> > +             *.mak
-> > +             EOF
-> > +             cat >.gitattributes <<-\EOF &&
-> > +             *.mak precious
-> > +             .gitattributes precious
-> > +             *.precious precious
-> > +             EOF
-> > +             mkdir sub &&
-> > +             touch one.o sub/two.o one.mak sub/two.mak &&
-> > +             touch one.untracked two.precious sub/also.precious &&
-> > +             git clean -fdx --keep-precious &&
-> > +             test_path_is_missing one.o &&
-> > +             test_path_is_missing sub/two.o &&
-> > +             test_path_is_missing one.untracked &&
-> > +             test_path_is_file .gitattributes &&
-> > +             test_path_is_file one.mak &&
-> > +             test_path_is_file sub/two.mak &&
-> > +             test_path_is_file two.precious &&
-> > +             test_path_is_file sub/also.precious
-> > +     )
-> > +'
->
-> AFAICT this is the first attribute intended purely to be set on files
-> that aren't tracked. I wonder if we should test for setting it on files
-> that are tracked, and whether we should e.g. warn about that? Maybe not,
-> but just raising it since I don't think it was discussed already...
+It's so we suggest the same option name in "git status" instead of
 
+ - git add/rm/retore <paths>
+ - git restore [--source] --staged <paths>
+ - git rm --cached <paths>
 
+It's in the name of consistency but perhaps it's just not worth it? It
+could also be seen as the continuation of adding --staged [1]
 
---=20
+[1] https://public-inbox.org/git/1225296936-1357-1-git-send-email-dsymonds@gmail.com/
+
+> Why did we need it for "restore-paths" in the
+> first place?  Is it because the target of restoring can be one of
+> the three (index+working-tree, index-only, or working-tree only),
+> not just the traditional two (index+working-tree that is signalled
+> by "--index", and index-only that is signalled by "--cached")?
+
+Yes.
+
+> I think it would make sense to introduce --staged to "git rm", if we
+> teach the third target (i.e. "working-tree only") to the command,
+> but otherwise, I am not sure if it would help reducing conflusion.
+
+I could add that. "git rm --worktree" then is almost like "rm" except
+that only tracked paths are affected. The default target of "git rm"
+is still "both worktree and index" though. I don't think we can ever
+change that (e.g. to match "git restore" which defaults to worktree
+only)
+-- 
 Duy
