@@ -2,98 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3BC620248
-	for <e@80x24.org>; Sat, 13 Apr 2019 07:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 015F520248
+	for <e@80x24.org>; Sat, 13 Apr 2019 09:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbfDMHjJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 03:39:09 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35892 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbfDMHjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 03:39:09 -0400
-Received: by mail-wm1-f66.google.com with SMTP id h18so13583597wml.1
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 00:39:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WK3oVa5q1bbJ/ca3HuiB2yPiprIPI/Xm37npBB0s800=;
-        b=SAf9zbH2NJQRXqFBl627ul7muq1N0a/enteK8kxvNm/QroO2+r6uyUkxjaltgIpEmW
-         c+GAART8D2VcjMyn7/tQi73nwG9nae/kWJ1iwlm1Ib3NiJjYglV61INOws9HwjyHnpSJ
-         atsbol1Ys4x+dICk3utFQEB9kgTlobnSwjFAc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WK3oVa5q1bbJ/ca3HuiB2yPiprIPI/Xm37npBB0s800=;
-        b=HFSN9eG2vYqTnt9RzR6rdNQRjjtfu0lOEAnK/dTwzAoTsJl1QAhwepO9zs8wkZPhtM
-         q8zQBhRxKuGO0eZd6KIk2A1CnLqNJ43WY4aLKW1OAgcZlb7Zq/Bzse1pS/0y8214ueao
-         th+u2koTgdt3wseQgSNzTjwzqufStHQWBznwvJAsEkh4R+j9j+eWk2JaS7wV6/lb5dKt
-         NorTD2BilELPrR23gkZw4Z0xYgxvNKyZd57R1tesafAL9Qq+e2sdbZ/d2K5mBXdKBsf4
-         XKbkOaA/XgDPITjQWXfr4iwja+9aemeaYzkR/lF1iriqHgt72i8bXYJEeM31xI5BTQJI
-         c4Rw==
-X-Gm-Message-State: APjAAAXuQoyAe//Mmji90/4wT4mgaY0nF6Mv0SpdPpWFyM3udDJh5WC9
-        V1T98yKChjtBtQiNnS7zbZlfHVe6VNR/+AZkTvEglQ==
-X-Google-Smtp-Source: APXvYqyLMWRMny17TsB3jFjoym0Ky68sp0D+mKmD1/TPnVIA8o9y2WtXN0idzUbpoNqFxbWmwwQMlXHR5eUNHaq8CKs=
-X-Received: by 2002:a1c:9942:: with SMTP id b63mr14460019wme.116.1555141147490;
- Sat, 13 Apr 2019 00:39:07 -0700 (PDT)
+        id S1726913AbfDMJVj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Apr 2019 05:21:39 -0400
+Received: from tschil.ethgen.ch ([5.9.7.51]:57682 "EHLO tschil.ethgen.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726278AbfDMJVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 05:21:39 -0400
+Received: from [192.168.17.4] (helo=ikki.ket)
+        by tschil.ethgen.ch with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <klaus@ethgen.ch>)
+        id 1hFEqu-0000sB-Ih
+        for git@vger.kernel.org; Sat, 13 Apr 2019 11:21:36 +0200
+Received: from klaus by ikki.ket with local (Exim 4.92)
+        (envelope-from <klaus@ethgen.ch>)
+        id 1hFEqu-00080W-CI
+        for git@vger.kernel.org; Sat, 13 Apr 2019 11:21:36 +0200
+Date:   Sat, 13 Apr 2019 10:21:36 +0100
+From:   Klaus Ethgen <Klaus@ethgen.ch>
+To:     git@vger.kernel.org
+Subject: Re: fatal: unable to read after commit - deeper analysis
+Message-ID: <20190413092136.GK12669@ikki.ethgen.ch>
+References: <20190411164440.GC12669@ikki.ethgen.ch>
+ <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.179.git.gitgitgadget@gmail.com> <52681aee0a9657691521baf13f792bcfb9eeb898.1555069181.git.gitgitgadget@gmail.com>
-In-Reply-To: <52681aee0a9657691521baf13f792bcfb9eeb898.1555069181.git.gitgitgadget@gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Sat, 13 Apr 2019 08:39:05 +0100
-Message-ID: <CAE5ih79dyauRN3Kc17JMAx+p6dWFsy-P_1G=jTug-i9T=RrKLw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t9822: skip tests if file names cannot be ISO-8895-1 encoded
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1; x-action=pgp-signed
+In-Reply-To: <CAP8UFD0bBBtOOz9ew_2URCp3nY1v0_OHMby1-N+T0nCDW82DRg@mail.gmail.com>
+OpenPGP: id=79D0B06F4E20AF1C;
+ url=http://www.ethgen.ch/~klaus/79D0B06F4E20AF1C.txt; preference=signencrypt
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 12 Apr 2019 at 12:39, Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Most notably, it seems that macOS' APFS does not allow that.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Did you mean in the subject "ISO-8895-1" encoded or "ISO-8859-1" encoded?
+Hi,
 
-It seems reasonable other than that!
+I did a deep analysis of the problem and found that the trouble finally
+was caused of some change in git (I did not search, when this changed.
+But maybe you can tell me.)
 
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t9822-git-p4-path-encoding.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encoding.sh
-> index c78477c19b..de0b46581d 100755
-> --- a/t/t9822-git-p4-path-encoding.sh
-> +++ b/t/t9822-git-p4-path-encoding.sh
-> @@ -7,6 +7,13 @@ test_description='Clone repositories with non ASCII paths'
->  UTF8_ESCAPED="a-\303\244_o-\303\266_u-\303\274.txt"
->  ISO8859_ESCAPED="a-\344_o-\366_u-\374.txt"
->
-> +ISO8859="$(printf "$ISO8859_ESCAPED")" &&
-> +echo content123 >"$ISO8859" &&
-> +rm "$ISO8859" || {
-> +       skip_all="fs does not accept ISO-8859-1 filenames"
-> +       test_done
-> +}
-> +
->  test_expect_success 'start p4d' '
->         start_p4d
->  '
-> --
-> gitgitgadget
->
+Finally, the error was a combination of 4 tools, git, vim, the mentioned
+vim-addon and task with a task-hook for committing pending.data.
+
+When I do a git commit which invokes vim, then the following variables
+are set:
+- - GIT_INDEX_FILE
+- - GIT_AUTHOR_DATE
+- - GIT_PREFIX
+- - GIT_EXEC_PATH
+
+And $GIT_INDEX_FILE is the source of trouble here. The task-hook clears
+respective sets the variables GIT_DIR and GIT_WORK_TREE. However, the
+GIT_INDEX_FILE environment is set (in some cases) to an absolute path
+pointing to .git/index.lock or .git/index (I have no idea when it is
+taking the .lock variant).
+
+Now we have a mismatch of GIT_DIR and GIT_WORK_TREE on one hand and the
+absolute path of GIT_INDEX_FILE on the other. So the trouble is set. The
+following "git add pending.data" did break all. It does something to an
+index that does not belong to the git repo.
+
+Mystery is when and why this changed in git. It was definitively changed
+in some recent version.
+
+Regards
+   Klaus
+- -- 
+Klaus Ethgen                                       http://www.ethgen.ch/
+pub  4096R/4E20AF1C 2011-05-16            Klaus Ethgen <Klaus@Ethgen.ch>
+Fingerprint: 85D4 CA42 952C 949B 1753  62B3 79D0 B06F 4E20 AF1C
+-----BEGIN PGP SIGNATURE-----
+Comment: Charset: ISO-8859-1
+
+iQGzBAEBCgAdFiEEMWF28vh4/UMJJLQEpnwKsYAZ9qwFAlyxqh8ACgkQpnwKsYAZ
+9qxXWAv/QI6XeQ4H+Y39K3nLi68JLZo2/VzcI1CfVw42PeckxzxZHg1YUTXrr5Qk
++bQ5drXcfzNMxWkCe1fh9CoHiyJyiAIPNfMjqiUaCB8881Ttr4SYd/lalvYVXPgt
+m0g7XO51Kh5LqPP6h7KcjBM0c6OSyQznE8Q6L0FSnDP4gCkBTW75AmxBytUk+sDq
+uOajtyOiOr1Fz1krn89VBaLJJPMVo+OInbNwetQUgOGIN7BsHsG68Ilwoimdlt+H
+7sd5HJwVrQ/w9VdXzniLPznzkG4l/3YlU8IQWKR13dRFf68LrT1ZR+F4TJpjlm/Y
+l/KKF0EcVKbhuJ47gLIUDf3faeLFxdF1iOviKkJ0A0cfg5Z8M4ds8hBoiqhMSr+X
+5fgINyhQfMurSTAuspZLJ0xjLu+Wv+h9Xt1jQZpW3YlPgi3O6Dn2K1V9ACaozP8G
+0EIIMOvTNvqVw9iLe4a6cBm1M+gXfWRRf7H6wqvDhDuuSVF2h1sGwMMQHiumlqm3
+au+0hEGQ
+=6ikc
+-----END PGP SIGNATURE-----
