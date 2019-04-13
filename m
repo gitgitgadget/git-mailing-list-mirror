@@ -2,231 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AAB520248
-	for <e@80x24.org>; Sat, 13 Apr 2019 10:16:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB42120248
+	for <e@80x24.org>; Sat, 13 Apr 2019 10:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbfDMKQR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 06:16:17 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:35418 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbfDMKQR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 06:16:17 -0400
-Received: by mail-pg1-f194.google.com with SMTP id g8so6372790pgf.2
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 03:16:17 -0700 (PDT)
+        id S1726647AbfDMKUO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Apr 2019 06:20:14 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:38989 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbfDMKUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 06:20:14 -0400
+Received: by mail-it1-f194.google.com with SMTP id 139so19820082ita.4
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 03:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IbrHRoZ6GiKWyKBohdQXCR7/SHdhzTAVrzgeb7Qp6+w=;
-        b=Iv+i3MmvfU4yLCzG0uoEl13idmXaaAWxNgoGekq+9j6ml6fjE5ppqyAoLpjH4p9DoQ
-         lHXTRVkkX/0AGZyVDF7MNWowcNhOJatercNWS1+kkpOz8JV9tIsGrFIvRc8Giw+tfEtn
-         yDwCHkqMfL8lVn1fYGH/Wyelsox9Hbcdcj2v4KCkdaP7DcwJd2bCzFTdfKbJ74yY/vnT
-         1Az9r2aWG6CX7L7tdCTkYwGEsQMw4pxgsOC4swpmKEmykzGvSh0bNsDasi0nq4C46nT2
-         7ucBMTze6nRoIvAG+1u2xKk2cB0IAUhCLvJPs974hpgS0ASN4lzR6g3ZvKGX/QXUSuBT
-         h/EQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=69kc6lzmXV38hq0x6S0dlX+/IvyVEeOkpOYVkrqlQog=;
+        b=QZz3VTAfcAjCa2z4Qz3yGfjTWIvtoB4YhypbYieWAcfmV8X/SQ4fapmdLFgQL2dwZM
+         +2CvVBMFAgfJ/7tPV33jX71ywrFbIgArW8ggbWnI9xbJtQtQ2UwV9QgSMkQyFJN+DZJa
+         PlKQn+Heu/k/qTqXFpwXNOeJwCF1kwm7AfuV9GX1d3TVQGuyEde1rcSDwR+mqwpQ8FLo
+         kqhwsBWffkkiikwZR7Igml8qKI6fobPq1doT4G8EyX4qbJwLs6JTAvQEWzhIpp/HYXIL
+         Epr9p9KjGrXFMrnvwsUG6CVO9WI7hNc/64JuoHarReGoqBPcjTOHC8cLqUvsZ8er/I1s
+         2yew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IbrHRoZ6GiKWyKBohdQXCR7/SHdhzTAVrzgeb7Qp6+w=;
-        b=swcBcWL8KZQjSiJD9X+/jfJGi4AhlSxk27sDHGPOa7fgmfiEWK3xwu0Dbe+V4BmYWt
-         uJwoUyF0inUwsgguMG4hwaOeSy8Tv44GUXt2yAczkmTayLr3w3z0dHWZ8VmfeK3yoG79
-         r3+1gRQ3FnZXt12t94vHdySO+JuWzeGvc6pu7oAMVOXhm0+9bS0NKYV/iCgq72lE9Bru
-         gkxL/iXbWjTeMjdw/UcLrTV2iFFRQryhY94V9WryKtnLOsc2+K0X8niUvpmsG4mUEYry
-         b3UtUn4HXM3J3AvTGVWId3sUwCRAz4BRyKdDsL5xS1g+u4Cr/b8ekN2KmWxgCCKro527
-         DD+Q==
-X-Gm-Message-State: APjAAAXaP12hfPO4eQkX5qOAtKCp8b2PIOQhnqB+3PFAEar5HsZrHP+Z
-        ae243VMDTu8kQRWP7yjs5W8=
-X-Google-Smtp-Source: APXvYqwqcyVjsz9Zwo504N0EchzjuQottFqhKW7/ttckURe+11fto3uyeAZ3UFgCFYDkrnzGKQXToA==
-X-Received: by 2002:a62:ed10:: with SMTP id u16mr63291511pfh.187.1555150575807;
-        Sat, 13 Apr 2019 03:16:15 -0700 (PDT)
-Received: from ash ([116.106.33.3])
-        by smtp.gmail.com with ESMTPSA id h20sm65120144pfj.40.2019.04.13.03.16.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 Apr 2019 03:16:11 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 13 Apr 2019 17:16:05 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     johannes.schindelin@gmx.de
-Cc:     dstolee@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        pclouds@gmail.com, stefanbeller@gmail.com, szeder.dev@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3* 11/33] commit.c: add repo_get_commit_tree()
-Date:   Sat, 13 Apr 2019 17:16:00 +0700
-Message-Id: <20190413101600.713-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.682.g30d2204636
-In-Reply-To: <nycvar.QRO.7.76.6.1904121624160.41@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1904121624160.41@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=69kc6lzmXV38hq0x6S0dlX+/IvyVEeOkpOYVkrqlQog=;
+        b=iq/fNrLnXnBWwxn4pvXgFusYM8PXkBAr0IwMHxSSoP9L8ygVUR5lQJtPLJb6zokncU
+         uoXl+Mof9vPGcgRqqnRValdavcPYr+EabihdWz+y7SKtTOJfIp+PcQRtf5S6HG0xnadE
+         xneyJCGYMsqnfzw3s8iFrd6p8/pjC7kF1k7Y30p9i6ShsR5ayTp1qRpfA7BFs7MdP0AR
+         ilxiUCf7BUUr2y0uY8KjxsP2YUkCkDqWMkp6fTwUsi1xU8t1ROC6iCPmSxaRIoDSPae6
+         oTVQNfxETRc5sndfCqWCpJ5rsvYlrX5g0FBeb/q9HLFgeNSZvXVPWAe+wDPEFzHnuzpZ
+         IT2A==
+X-Gm-Message-State: APjAAAWAM09/mtJOyQ5J4CCv4FFQ6xlJJGc9Pi/OqgliWr8zRfluC/L1
+        JRJmumgrLY58knblJAXgRO5t9P3Xmn7imUJDyqg=
+X-Google-Smtp-Source: APXvYqz6RLXnY2OPnZguFT929p+3hHoLhyNq8N0pMVyyeXLqzhQIK8YUM+RvOdPBzz1gZAJcyM0vZtgFG8j9IlMhixU=
+X-Received: by 2002:a24:5e06:: with SMTP id h6mr15578340itb.107.1555150813113;
+ Sat, 13 Apr 2019 03:20:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqqimvpb0bd.fsf@gitster-ct.c.googlers.com> <20190409102649.22115-1-pclouds@gmail.com>
+ <875zriga8f.fsf@evledraar.gmail.com>
+In-Reply-To: <875zriga8f.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 13 Apr 2019 17:19:47 +0700
+Message-ID: <CACsJy8AEZ-Lz6zgEsuNukvphB9TTa9FAC1gK05fhnie2xtfc9w@mail.gmail.com>
+Subject: Re: [PATCH] Introduce "precious" file concept
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the implicit dependency on the_repository in this function.
-It will be used in sha1-name.c functions when they are updated to take
-any 'struct repository'. get_commit_tree() remains as a compat wrapper,
-to be slowly replaced later.
+I've had enough. Please drop this nd/precious. I'm not updating it anymore.
 
-set_commit_tree() is added just to simplify the filtering in
-commit.cocci.
+On Sat, Apr 13, 2019 at 4:54 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Tue, Apr 09 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+> >  Here's the replacement patch that keeps "git clean" behavior the same
+> >  as before and only checks 'precious' attribute when --keep-precous is
+> >  specified.
+>
+> Cool to have the expected interaction with -x. Thanks.
+>
+> > -'git clean' [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <pa=
+th>...
+> > +'git clean' [<options>] [-d] [-f] [-i] [-n] [-x | -X] [--] <path>...
+>
+> For e.g. git-status(1) we just say:
+>
+>     git status [<options>...] [--] [<pathspec>...]
+>
+> And for git-add(1) we do:
+>
+>      git add [--verbose | -v] <very long exhaustive list of options
+>                               spanning 4 lines omitted>
+>
+>
+> Seems we should do one or the other here, i.e. either just add
+> --keep-precious to the list, or leave it at just:
+>
+>     git clean [<options>...] [--] [<pathspec>...]
+>
+> > +This attribute is set on files to indicate that their content is
+> > +valuable. Some commands will behave slightly different on precious
+> > +files. linkgit:git-clean[1] may leave precious files alone.
+>
+> As noted upthread I think it's better to start with "clean" and
+> "--keep-noclean", we can always alias it to "precious" later without
+> squatting on that more general term when we (IMO) don't have the full
+> picture yet & know if we even want that...
+>
+> But anyway, with that out of the way and assuming this is kept-as is
+> seems we could document this better if we're going to keep "precious",
+> e.g. maybe:
+>
+>     This attribute is set on files to indicate that they're important
+>     while not being tracked. This attribute is experimental and subject
+>     to future change as more commands are changed to support it.
+>
+>     Now it's only supported by linkgit:git-clean[1] which'll skip
+>     cleaning files marked ith `precious` when given the
+>     `--keep-precious` option. This can be useful in combination with
+>     linkgit:gitignore[5] to e.g. mark `*.o` build assets as both ignored
+>     and precious.
+>
+> I.e. say it's still early days, that it's "experimental" (not insisting
+> on that phrasing, but somehow signaling to users that if they set this
+> now it may do new/unexpected things in the future), and briefly describe
+> how it works with "clean" and what the main intended use-case is.
+>
+> > +test_expect_success 'git clean -xd --keep-precious leaves precious fil=
+es alone' '
+> > +     git init precious &&
+> > +     (
+> > +             cd precious &&
+> > +             test_commit one &&
+> > +             cat >.gitignore <<-\EOF &&
+> > +             *.o
+> > +             *.mak
+> > +             EOF
+> > +             cat >.gitattributes <<-\EOF &&
+> > +             *.mak precious
+> > +             .gitattributes precious
+> > +             *.precious precious
+> > +             EOF
+> > +             mkdir sub &&
+> > +             touch one.o sub/two.o one.mak sub/two.mak &&
+> > +             touch one.untracked two.precious sub/also.precious &&
+> > +             git clean -fdx --keep-precious &&
+> > +             test_path_is_missing one.o &&
+> > +             test_path_is_missing sub/two.o &&
+> > +             test_path_is_missing one.untracked &&
+> > +             test_path_is_file .gitattributes &&
+> > +             test_path_is_file one.mak &&
+> > +             test_path_is_file sub/two.mak &&
+> > +             test_path_is_file two.precious &&
+> > +             test_path_is_file sub/also.precious
+> > +     )
+> > +'
+>
+> AFAICT this is the first attribute intended purely to be set on files
+> that aren't tracked. I wonder if we should test for setting it on files
+> that are tracked, and whether we should e.g. warn about that? Maybe not,
+> but just raising it since I don't think it was discussed already...
 
-Any access to "maybe_tree" field directly will result in _broken_ code
-after running through commit.cocci because we can't know what is the
-right repository to use.
 
-the_repository would be correct most of the time. But we're relying less
-and less on the_repository and that assumption may no longer be
-true. The transformation now is more of a poor man replacement for a C++
-compiler catching access to private fields.
 
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- OK how about this? set_commit_tree() is added to keeps that long line
- in commit.cocci down. I also make commit.cocci generate invalid
- repo_get_commit_tree() code this time.
-
- commit-graph.c                  |  2 +-
- commit.c                        |  9 +++++----
- commit.h                        | 10 ++++++++--
- contrib/coccinelle/commit.cocci | 14 +++++---------
- merge-recursive.c               |  2 +-
- 5 files changed, 20 insertions(+), 17 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 47e9be0a3a..dcab53cda5 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -356,7 +356,7 @@ static int fill_commit_in_graph(struct repository *r,
- 	item->object.parsed = 1;
- 	item->graph_pos = pos;
- 
--	item->maybe_tree = NULL;
-+	set_commit_tree(item, NULL);
- 
- 	date_high = get_be32(commit_data + g->hash_len + 8) & 0x3;
- 	date_low = get_be32(commit_data + g->hash_len + 12);
-diff --git a/commit.c b/commit.c
-index a5333c7ac6..d852bf60c1 100644
---- a/commit.c
-+++ b/commit.c
-@@ -340,7 +340,8 @@ void free_commit_buffer(struct parsed_object_pool *pool, struct commit *commit)
- 	}
- }
- 
--struct tree *get_commit_tree(const struct commit *commit)
-+struct tree *repo_get_commit_tree(struct repository *r,
-+				  const struct commit *commit)
- {
- 	if (commit->maybe_tree || !commit->object.parsed)
- 		return commit->maybe_tree;
-@@ -348,7 +349,7 @@ struct tree *get_commit_tree(const struct commit *commit)
- 	if (commit->graph_pos == COMMIT_NOT_FROM_GRAPH)
- 		BUG("commit has NULL tree, but was not loaded from commit-graph");
- 
--	return get_commit_tree_in_graph(the_repository, commit);
-+	return get_commit_tree_in_graph(r, commit);
- }
- 
- struct object_id *get_commit_tree_oid(const struct commit *commit)
-@@ -358,7 +359,7 @@ struct object_id *get_commit_tree_oid(const struct commit *commit)
- 
- void release_commit_memory(struct parsed_object_pool *pool, struct commit *c)
- {
--	c->maybe_tree = NULL;
-+	set_commit_tree(c, NULL);
- 	c->index = 0;
- 	free_commit_buffer(pool, c);
- 	free_commit_list(c->parents);
-@@ -406,7 +407,7 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
- 	if (get_oid_hex(bufptr + 5, &parent) < 0)
- 		return error("bad tree pointer in commit %s",
- 			     oid_to_hex(&item->object.oid));
--	item->maybe_tree = lookup_tree(r, &parent);
-+	set_commit_tree(item, lookup_tree(r, &parent));
- 	bufptr += tree_entry_len + 1; /* "tree " + "hex sha1" + "\n" */
- 	pptr = &item->parents;
- 
-diff --git a/commit.h b/commit.h
-index 42728c2906..7342727e46 100644
---- a/commit.h
-+++ b/commit.h
-@@ -32,7 +32,7 @@ struct commit {
- 
- 	/*
- 	 * If the commit is loaded from the commit-graph file, then this
--	 * member may be NULL. Only access it through get_commit_tree()
-+	 * member may be NULL. Only access it through repo_get_commit_tree()
- 	 * or get_commit_tree_oid().
- 	 */
- 	struct tree *maybe_tree;
-@@ -143,9 +143,15 @@ void repo_unuse_commit_buffer(struct repository *r,
-  */
- void free_commit_buffer(struct parsed_object_pool *pool, struct commit *);
- 
--struct tree *get_commit_tree(const struct commit *);
-+struct tree *repo_get_commit_tree(struct repository *, const struct commit *);
-+#define get_commit_tree(c) repo_get_commit_tree(the_repository, c)
- struct object_id *get_commit_tree_oid(const struct commit *);
- 
-+static inline void set_commit_tree(struct commit *c, struct tree *t)
-+{
-+	c->maybe_tree = t;
-+}
-+
- /*
-  * Release memory related to a commit, including the parent list and
-  * any cached object buffer.
-diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
-index c49aa558f0..ee1dc29234 100644
---- a/contrib/coccinelle/commit.cocci
-+++ b/contrib/coccinelle/commit.cocci
-@@ -11,18 +11,14 @@ expression c;
- + get_commit_tree_oid(c)->hash
- 
- // These excluded functions must access c->maybe_tree direcly.
-+// Note that if c->maybe_tree is written somewhere outside of these
-+// functions, then the recommended transformation will be bogus with
-+// repo_get_commit_tree() on the LHS.
- @@
--identifier f !~ "^(get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit)$";
-+identifier f !~ "^(repo_get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit|set_commit_tree)$";
- expression c;
- @@
-   f(...) {<...
- - c->maybe_tree
--+ get_commit_tree(c)
-++ repo_get_commit_tree(specify_the_right_repo_here, c)
-   ...>}
--
--@@
--expression c;
--expression s;
--@@
--- get_commit_tree(c) = s
--+ c->maybe_tree = s
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 6c40c61c47..048fea71a0 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -170,7 +170,7 @@ static struct commit *make_virtual_commit(struct repository *repo,
- 	struct commit *commit = alloc_commit_node(repo);
- 
- 	set_merge_remote_desc(commit, comment, (struct object *)commit);
--	commit->maybe_tree = tree;
-+	set_commit_tree(commit, tree);
- 	commit->object.parsed = 1;
- 	return commit;
- }
--- 
-2.21.0.682.g30d2204636
-
+--=20
+Duy
