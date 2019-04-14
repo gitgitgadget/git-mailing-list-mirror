@@ -2,104 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BB5620248
-	for <e@80x24.org>; Sun, 14 Apr 2019 21:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A57320248
+	for <e@80x24.org>; Sun, 14 Apr 2019 21:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbfDNVTd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 17:19:33 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46901 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726233AbfDNVTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 17:19:31 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d1so12894587edd.13
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:19:31 -0700 (PDT)
+        id S1726531AbfDNVVB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 17:21:01 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39666 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726159AbfDNVVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 17:21:01 -0400
+Received: by mail-wm1-f65.google.com with SMTP id n25so17651586wmk.4
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:20:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=bmLxfGOYFkRPzwOfAScQZAJO4Qb6uuc5fdvNBwHewN0=;
-        b=m9B1DmyB4MSDE0tFEP48UHKZr3nL7TXIRyxWG6XBvMVo+AQdn3FMpFLooH5O+ZG/UY
-         R+YMojtiN0s/lYJAWk9uT3X3n/YsMqiNNoXdIkpRiGQSPYq/elSQIO1tYO2NK89lwgXk
-         WI+KH+3c4FFm4gyBX/MNdPC679MojJcTZzokdca40jwCABvoYLNQKh5ot1nk2xoRd2Xa
-         N0J8WH/vdWq7AWWtR+DO11TKXtBj6WeZLxwj2OmOeaSiySJMLnrrJK0qZm+J8yCEwCl8
-         GvVAnMKe96zb87nJZ+SfJKXWDnWC6D3X5kNSUp+jOqg8lkSeW21X24GGHqPoB5AskoSa
-         4aJQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ngXGWOUm9tY5goc/v7AfDX3+lAhDVF3je14UtzNpUl8=;
+        b=Ao40vQRwTwBO1zSW5OwLyht7dhID4REaVkQatnC3tJv2OKQVW97gwOzj2Z107fbAZe
+         QyK3Dyn0Mt/vKBD1B8OKklEiEl/cM1CPV73o5xy1fA7VGY0Tma1H9XZnh32ZUW9Svi9r
+         I8R0aVYswRK6MT1bT6qHpxB8oAfS1JoNjjSk/9+K7BjtJLvYf6prFg1QnEnhDzOppzNQ
+         D7Wuo/EhX7hYJtiiWikL2rN7lDMtXykxAmTNXmMlMJlUv0ayqv8FxzYfcQRwoNOqkPdA
+         rab4ZmP0TxhgHjV4NBZWTqxxs2MzOtNqmcFOLlsGGPAuegZBXlV3vNMR+0RhdXbID6te
+         25Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bmLxfGOYFkRPzwOfAScQZAJO4Qb6uuc5fdvNBwHewN0=;
-        b=h5Rm6h2W4WBCU/yG/2EhjoJhtpL1rswo70QNKnTWK9Uc17HStH94M/fCLfFHTPCcwh
-         1mXifPgu2C9m1HecjWPRz/Q1+2Nkb+P6mkCwqugJ2j3X/S9ILeBVVb4D+a2DTz+bqHXp
-         Bh9TiVTB685e9SlaGqK/1Qu7RNuHHpIuq/+vr5iZ25tsjHuc77+pfxKiSN3x4pGbTDKV
-         U6lJK3O5izuY7IMYGOL1DZWH9cuOnESWefjoZxtFU1keknQu5UDVJ0HZs/RINEKtdhfp
-         /PWrItDtNdPg3puLg+KDNby+c6ToHcKjFw4SgFUkGaC+3JZzLssGpoy5gRlgLwBMRkw5
-         5DXw==
-X-Gm-Message-State: APjAAAUfAwE++FGsobj+46TWozEmaEr3y6c/OItUAfhbsXZPGdqBvD+X
-        fETvhUAQl4AgNl6Ft3RWGZ4lrws0
-X-Google-Smtp-Source: APXvYqyv2rQpUpHGLXxK1jAvWwflBOS59uoYmbyddgpqulZVieYwK76+D1Y+e8jtAL1aD4euDM4j7Q==
-X-Received: by 2002:a17:906:7b58:: with SMTP id n24mr15995890ejo.224.1555276770418;
-        Sun, 14 Apr 2019 14:19:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k15sm5176536ejr.5.2019.04.14.14.19.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Apr 2019 14:19:29 -0700 (PDT)
-Date:   Sun, 14 Apr 2019 14:19:29 -0700 (PDT)
-X-Google-Original-Date: Sun, 14 Apr 2019 21:19:27 GMT
-Message-Id: <25be67b1b74e585571213c9af1a314b95969090b.1555276767.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.179.v2.git.gitgitgadget@gmail.com>
-References: <pull.179.git.gitgitgadget@gmail.com>
-        <pull.179.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 2/2] macOS: make sure that gettext is found
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ngXGWOUm9tY5goc/v7AfDX3+lAhDVF3je14UtzNpUl8=;
+        b=Ce22e9nAwS4o7I4/5/Qd365ffzttxNB74G7RM9IuuFsHPdsntPcfAtaZmqoS/NbCe4
+         TIx4I67Vdzamncb8Q8gpwz+Izw7YtFwrEfCOqK5ijLMHG6k0vdY7cJtGpzCB8rL/0HS0
+         mG0mce74k/3dWIAPUzoL5U7lCLleHT1IYmDZ8f7l7kvaUxMnPY6fwXiu4T4UcMaEfgOq
+         H6Y/OKP9I3G6O2lKm+JPjfVYB2Ln+aiE8f1G0eLthfN0nuv+jrVORGwByce7ReZEUVvR
+         BCmJ72cHp1uB9Ce9j6a9v7PRCI0cf+8Ys4b3ng37w3+i/rRk2EuP6iFxsuQE2iz3CSLd
+         YMlg==
+X-Gm-Message-State: APjAAAXRLdx33zYZR2cSyioxRt21rKFMMUdkImpDqsV8oFI2p7d+a80U
+        lnS+O6KkHYTotoKFgvPD0jkdnnvx
+X-Google-Smtp-Source: APXvYqwyTWs11R3goV0AufaM6PYhIKAjJyo8AE/PPgb/pucY38xb1BKti5AxZEA9UwgswSyFK5B3jw==
+X-Received: by 2002:a1c:dfc5:: with SMTP id w188mr18778887wmg.79.1555276859073;
+        Sun, 14 Apr 2019 14:20:59 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id 84sm28162044wme.43.2019.04.14.14.20.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 14 Apr 2019 14:20:57 -0700 (PDT)
+Date:   Sun, 14 Apr 2019 22:20:56 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: incorrect range-diff output?
+Message-ID: <20190414212056.GI32487@hank.intra.tgummerer.com>
+References: <20190411111729.GB5620@ash>
+ <20190411220532.GG32487@hank.intra.tgummerer.com>
+ <xmqqo95bxo4p.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo95bxo4p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 04/13, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > I'm not sure what the right solution for this is.  I think one thing
+> > I'd like range-diff to do is to add the filename, or some context
+> > (e.g. is this part of the commit message etc.) to the @@ line (not
+> > sure what that is called?).
+> 
+> Perhaps the inner diff can be done with the usual funcname/xfuncname
+> logic so that the real function name of the payload is on the @@
+> lines (they are internally called "hunk header" lines, I think).
 
-Due to reasons (some XCode versions seem to include gettext, some
-don't?), Homebrew does not expose the libraries and headers in
-/usr/local/ by default anymore.
+The inner diff is actually currently done this way, however we then
+strip out the funcname.  My understanding is that that is mostly done
+to get rid of the line numbers which can change between ranges, so I'm
+re-introducing that, while only stripping the actual line numbers
+out.
 
-Let's help find them again.
+I do feel like the filenames should probably have priority in the
+outer diffs hunk header lines though, as we can only add a limited
+amount of information there, and without the filename, the function
+name might be less useful (or it may be not useful at all, for things
+where we don't have proper funcnames, e.g. for documentation).
 
-Note: for some reason, this is a change of behavior caused by the
-upgrade to Mojave, identified in our Azure Pipeline; it seems that
-Homebrew used to add the /usr/local/ directories to the include and link
-search path before, but now it no longer does.
+> And then the outer diff (i.e. the one that compares two inner diff
+> output) can use a special funcname pattern that says "treat the
+> lines that begin with '@@ ' as the function name line", instead of
+> (or in addition to??) the logic that says "lines that begin with
+> 'diff --git' have interesting information" which led to a misleading
+> piece of information in the range-diff output under discussion,
+> perhaps?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- config.mak.uname | 2 ++
- 1 file changed, 2 insertions(+)
+I don't think there ever was a logic that says "lines that begin with
+'diff --git' have interesting information", but rather that's how the
+range-diff was interpreted, because there was no indication that those
+lines don't have interesting information.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 41e85fab1c..3605fead53 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -114,6 +114,8 @@ ifeq ($(uname_S),Darwin)
- 	HAVE_BSD_SYSCTL = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
- 	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
-+	BASIC_CFLAGS += -I/usr/local/include
-+	BASIC_LDFLAGS += -L/usr/local/lib
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
--- 
-gitgitgadget
+My series implements something very similar to  what you're describing
+though, except I'm introducing a new type of header for the filename,
+as I think that's more important, as mentioned above.
