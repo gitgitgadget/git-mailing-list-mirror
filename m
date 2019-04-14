@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 533A820248
-	for <e@80x24.org>; Sun, 14 Apr 2019 09:42:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E03B720248
+	for <e@80x24.org>; Sun, 14 Apr 2019 10:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725791AbfDNJlj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 05:41:39 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:40835 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfDNJlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 05:41:39 -0400
-Received: by mail-qt1-f195.google.com with SMTP id x12so16011891qts.7
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 02:41:38 -0700 (PDT)
+        id S1725805AbfDNKKI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 06:10:08 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:41568 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbfDNKKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 06:10:08 -0400
+Received: by mail-qk1-f194.google.com with SMTP id o129so8191777qke.8
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 03:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=platin-gs.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yCh+YjfcsJt5C3DW8nHJgSrhMqsuSfAask352ul39GE=;
-        b=PmLaNnJMXmkoC6htuyuaiv8lq9v2RRYv40pDT/K9+qEZKr1G8UGWfPtS2KDhY2jFbH
-         /ML+umXjwg/FAEpos5sHprXsFCglQXUzrXdJqV6XZ6UJ7EDBNzAQpHZ6YcXhsYLvEqV5
-         BkY0MhdnC7CF+QxP2M1qw7Xr4M2584YfA3aTDrseDwld4fDKWTLnzkhwRKNBmaX76kwu
-         WaNRVZoRlf0Y8B5LHNRZcDPWHpAsArSvAvQ2Y7Cjn/7NZyhOUZ1CfAgiAGS6CU+/nPbP
-         zZAUZIOUutQfRE0Gy+WnXoqvkcVeKleVvGWDYGhnK/yjjLjuSiLd9UpEFiS1D66fXeQ9
-         y7JA==
+        bh=CygmdP+BTsLWa4QSgrYhfejnG/ppnzJbMcfoI9V8WKo=;
+        b=QeXOOBuaxX6JJUmVeSmvIt3FdCeJICZLC236hubuKPr3Y+hRUE6BuZOr3UFuWrJywv
+         2d1r+HIn4Sit6nRyLLNLYNu24iY7xb0f8UF1ezRqeAZ4NT/Z5JvrA613Rcvgj6aeLOcC
+         2HBQ7JO3vib7VdIi8686fmUXiH9bT+/3LNIhByDOliFpIPhwptFU72cnxUwC51L54/GT
+         mqmopNnOseEf/7DwVggDYO3e3ucVMb5hXScCvlXmdcWM2iRU48a9vGKB1I5Lk9h1b857
+         toTGaw1vJbkg7yodiQxic6lvG2tRyYjAodAzlnEPLzSG6d5YD4sU5ZtU745XZqcsE+6O
+         KJlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yCh+YjfcsJt5C3DW8nHJgSrhMqsuSfAask352ul39GE=;
-        b=WMDwDR/MvQo4TR0eC6MysdKLjoTpW/VOpuGOLXTOraENoY8YuaEEEo7wmiWgP/2b03
-         B09MvcKrslQjs57lYWBnxDol8tVoj8rnY+U5xOV1nMJvjFKeTLxwWowrIutVda39344X
-         WEXOc6drHFUcAOHo7+Y2JD0g82+TmxRBCLhHMD/j2uAKrtYEqnaS2M2OHbkO0nF6VpUk
-         ZM/of27R77CabkSB/k6Y91CEEpXHCsDGy5Tqw1SbFkQUqBPJ0q6vIzB/kh9LIYXAxFeJ
-         OXnONRhMvcINb08XnbkuL24dwoR4xzUyRN0bgrSKuKqv49yB7ORI20+C4/Mhh5dj3uR0
-         Xpsg==
-X-Gm-Message-State: APjAAAXB2XaM2PBuBkUqpT7Xs84CgngCsK/iIGtVFQkLk8fdCXMzXstb
-        r1Bfbujxulhpt3FLN+4/OX0Y2cJNQkg5eHHNIDI=
-X-Google-Smtp-Source: APXvYqxKUSPBR7yYq6tN/Tb3mreRjq+mFDll8AKXQNCb+4jseGXCIZn9bo6HlSBKIGax69AwiY4F6qFoVKS9wbJuxng=
-X-Received: by 2002:a0c:9baa:: with SMTP id o42mr53958386qve.184.1555234898390;
- Sun, 14 Apr 2019 02:41:38 -0700 (PDT)
+        bh=CygmdP+BTsLWa4QSgrYhfejnG/ppnzJbMcfoI9V8WKo=;
+        b=ZaeN7lZxOPCiUah90551yzf6zTkvPSioxuKuhvaymst+5iJpELFWz6+Ajzjy0DIfqc
+         6w+HvkhZpbskkgWeG3nOvleNhDu+fOSbQWVUXZ9nSd3DA2ChXVoxNd2YP/Shfts5OFQc
+         gKXcKVa6tUNYcDLEdVIYSvb5LkQ0xvsEWPrg3Xr5fLtznRnJzjFkHg9Kybo5LKwGYiTs
+         uiiB58kgsSGDhAKI7Wu+Rawq5++A21+IGzENZyAQVoeuWOh2nG2LyCLWTuPpSk7SBU3a
+         xa4TIGEAb1vlaSKujaeMPI7uyiNKLrMiQkIrAdkUm2IniKrhqO7IuKAGiKQby11YgY5R
+         tydA==
+X-Gm-Message-State: APjAAAVTu7zwicFxX0kTH/hbdqFn8POOYASQ74G3KVHPOOJleEEvl1/j
+        WWi39ygzVaa7Aot+sgUEOftbDKEUKrYGaRi8udE=
+X-Google-Smtp-Source: APXvYqzg1V7RLsx0sMd320hXaMIwY4a/u2cDYP8BDmVSdwkQqt3ObKlvlytXo/ZG/NUs5oPLc0Q/u5LWnTDhBM2qbvI=
+X-Received: by 2002:ae9:ef07:: with SMTP id d7mr54277109qkg.100.1555236607140;
+ Sun, 14 Apr 2019 03:10:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-7-brho@google.com>
- <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
+References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-5-brho@google.com>
+ <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
 From:   Michael Platings <michael@platin.gs>
-Date:   Sun, 14 Apr 2019 10:41:26 +0100
-Message-ID: <CAJDYR9RHb89mjT65XVERJfo3cTySi++ZAwOFftBtyXkqfC=JOQ@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] blame: use a fingerprint heuristic to match
+Date:   Sun, 14 Apr 2019 11:09:55 +0100
+Message-ID: <CAJDYR9S8XFH=JnQX8WcfgOZ7cr+X6kk45k9g8t3u5aP5wwdu0Q@mail.gmail.com>
+Subject: Re: [PATCH v6 4/6] blame: add config options to handle output for
  ignored lines
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Barret Rhoden <brho@google.com>,
@@ -69,29 +69,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  - I wonder if the hash used here can replace what is used in
->    diffcore-delta.c as an improvement (or obviously vice versa), as
->    using two (or more) ad-hoc fingerprinting function without having
->    a clear reason why we need two instead of a unified one feels
->    like a bad idea.
+On Sun, 14 Apr 2019 at 04:45, Junio C Hamano <gitster@pobox.com> wrote:
+> Wouldn't this make it impossible to tell between what's done by such
+> a commit that was marked to be ignored, and what's done locally only
+> in the working tree, which the users have long accustomed to see
+> with the ^0*$ object name?  I think it would make a lot more sense
+> to show the object name of the "ignored" commit, which would be
+> recognizable by the user who fed such an object name to the command
+> in the first place.  Alternatively, perhaps the same idea as replacing
+> one of the hexdigits with '*' used by the other configuration can be
+> applied to this as well?
 
-Hi Junio,
-If I understand correctly, the algorithm in diffcore-delta.c is
-intended to match files that contain identical lines (or 64-byte
-chunks). The fingerprinting that Barret & I are talking about is
-intended to match lines that contain identical byte pairs.
-With significant refactoring, you could make the diffcore-delta
-algorithm apply in both cases but I think the end result would be
-longer and more complicated than keeping the two separate.
-Unlike hashing a line, hashing a byte pair is trivial. Unlike hashing
-lines, all except the first and last bytes are included in two
-"hashes" - "hello" is hashed to "he", "el", "ll", "lo".
-So based on my limited understanding of diffcore-delta.c I think the
-two are algorithms are sufficiently different in intent and in
-implementation that it's appropriate to keep them separate.
+I had the same objection to zeroing out hashes, but this option is off
+by default so I think it's OK.
+If you enable both blame.markIgnoredLines and
+blame.maskIgnoredUnblamables then the hash does appear as
+"*0000000000" like you suggest. I think it's appropriate that the '*'
+is only added if you opt in with the markIgnoredLines option.
 
-Regarding the "old heuristic" I think there may still be a use case
-for that but I'll expand on that later.
-
-Thanks,
--Michael
+If you only enable blame.markIgnoredLines then the hash for
+"unblamable" lines appears as e.g. "*3252488f5" - this doesn't seem
+right to me because the commit *wasn't* ignored, it is in fact the
+commit in which that line was added. I think '*' should denote "this
+information may be inaccurate" as that's what a typical user needs to
+be aware of. However given that "unblamable" lines tend to be either
+empty or a single character I'm not going to insist :)
