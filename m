@@ -2,95 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E03B720248
-	for <e@80x24.org>; Sun, 14 Apr 2019 10:10:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9090B20248
+	for <e@80x24.org>; Sun, 14 Apr 2019 10:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725805AbfDNKKI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 06:10:08 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41568 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbfDNKKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 06:10:08 -0400
-Received: by mail-qk1-f194.google.com with SMTP id o129so8191777qke.8
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 03:10:07 -0700 (PDT)
+        id S1726127AbfDNKYS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 06:24:18 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36485 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbfDNKYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 06:24:18 -0400
+Received: by mail-wm1-f66.google.com with SMTP id h18so16361864wml.1
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 03:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=platin-gs.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CygmdP+BTsLWa4QSgrYhfejnG/ppnzJbMcfoI9V8WKo=;
-        b=QeXOOBuaxX6JJUmVeSmvIt3FdCeJICZLC236hubuKPr3Y+hRUE6BuZOr3UFuWrJywv
-         2d1r+HIn4Sit6nRyLLNLYNu24iY7xb0f8UF1ezRqeAZ4NT/Z5JvrA613Rcvgj6aeLOcC
-         2HBQ7JO3vib7VdIi8686fmUXiH9bT+/3LNIhByDOliFpIPhwptFU72cnxUwC51L54/GT
-         mqmopNnOseEf/7DwVggDYO3e3ucVMb5hXScCvlXmdcWM2iRU48a9vGKB1I5Lk9h1b857
-         toTGaw1vJbkg7yodiQxic6lvG2tRyYjAodAzlnEPLzSG6d5YD4sU5ZtU745XZqcsE+6O
-         KJlg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HNfJPMbLi0sy+lIrcdhLbKiEFYkHSZpD2soUQc7N9bo=;
+        b=KJoGLFweT+zszJdDeaQnDJLamBuKLXKXc0X1Oh5O10Hzm8HzQzKXPTHOWV1kzM7Djk
+         QMVvoEOmkYSNQnrvsdPw3miiNC5ur7ZFftYqG/jHDXtsqFxHnwDgjnNSUHBU1ZfFjZKV
+         JAl0H7l7k++GzRTIMF0yp/VVMzEegEXz7y8zAHEpQ9WmMs7GgULiZeec5DTufrYc67yK
+         b63fE0EiUYWw9+DTJXJB0iZhkHI1K8WuhjfYi+ElNiMPhGPdAHaN54R/ZHwaUEFShKl2
+         p3f+8VhgLUSfW9GFUl68g4XrI9NCrGXpuhYxZBJ6tV/FO8k2Hjzd0etBvw9GxzG02p6f
+         nwIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CygmdP+BTsLWa4QSgrYhfejnG/ppnzJbMcfoI9V8WKo=;
-        b=ZaeN7lZxOPCiUah90551yzf6zTkvPSioxuKuhvaymst+5iJpELFWz6+Ajzjy0DIfqc
-         6w+HvkhZpbskkgWeG3nOvleNhDu+fOSbQWVUXZ9nSd3DA2ChXVoxNd2YP/Shfts5OFQc
-         gKXcKVa6tUNYcDLEdVIYSvb5LkQ0xvsEWPrg3Xr5fLtznRnJzjFkHg9Kybo5LKwGYiTs
-         uiiB58kgsSGDhAKI7Wu+Rawq5++A21+IGzENZyAQVoeuWOh2nG2LyCLWTuPpSk7SBU3a
-         xa4TIGEAb1vlaSKujaeMPI7uyiNKLrMiQkIrAdkUm2IniKrhqO7IuKAGiKQby11YgY5R
-         tydA==
-X-Gm-Message-State: APjAAAVTu7zwicFxX0kTH/hbdqFn8POOYASQ74G3KVHPOOJleEEvl1/j
-        WWi39ygzVaa7Aot+sgUEOftbDKEUKrYGaRi8udE=
-X-Google-Smtp-Source: APXvYqzg1V7RLsx0sMd320hXaMIwY4a/u2cDYP8BDmVSdwkQqt3ObKlvlytXo/ZG/NUs5oPLc0Q/u5LWnTDhBM2qbvI=
-X-Received: by 2002:ae9:ef07:: with SMTP id d7mr54277109qkg.100.1555236607140;
- Sun, 14 Apr 2019 03:10:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-5-brho@google.com>
- <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
-From:   Michael Platings <michael@platin.gs>
-Date:   Sun, 14 Apr 2019 11:09:55 +0100
-Message-ID: <CAJDYR9S8XFH=JnQX8WcfgOZ7cr+X6kk45k9g8t3u5aP5wwdu0Q@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] blame: add config options to handle output for
- ignored lines
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HNfJPMbLi0sy+lIrcdhLbKiEFYkHSZpD2soUQc7N9bo=;
+        b=GFhfjkKlFhM1gYUkbzoargJN4E5a8NR56h1NUpR4xRjDMoS2+wtIeYjFVIedeBnI5J
+         3VpjYAM/FIKdOlf4imCAq0/JEEwp1QcVlt6cvtXtq1ELBt9tfjy+oXrNT2xVw0WZHRhr
+         Q5UjM9NQae0xwky57Zsukl9vDc4zf85TGO+f0PdcuPVj3I2tdGWaVh1f2/nWSAASAaTA
+         0liFmmZyIMfkaH/sggzxxWUsJ4lIWtojc/JPI6dTe295lkpro6avcJ3lRMwCJ0rwtEPE
+         tEzkwdJh9RI2OOPOu33sf+VrhOQLbGzSO271n+Oa0hGqiLnxJUzq1QO6EF1xRJk/Zk3Y
+         HeuA==
+X-Gm-Message-State: APjAAAXm5l+z/WHgsbXxLB4iXHpz48Dstvkh16L4qKIe4xl0OtlskeGa
+        IpyhOD37tC6Xv4xuWGY0mss=
+X-Google-Smtp-Source: APXvYqy3kF5uAY9vS24f+N4dMeIUkxoL3E1PqWSv3qeMpm8HwzgD0z0v7zeAZ6UCsx6vbOa3wpjprA==
+X-Received: by 2002:a1c:2d0e:: with SMTP id t14mr16989586wmt.33.1555237456013;
+        Sun, 14 Apr 2019 03:24:16 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id x205sm18007533wmg.9.2019.04.14.03.24.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 14 Apr 2019 03:24:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Platings <michael@platin.gs>
 Cc:     Barret Rhoden <brho@google.com>,
         Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
         Jeff Smith <whydoubt@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Stefan Beller <stefanbeller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v6 4/6] blame: add config options to handle output for ignored lines
+References: <20190410162409.117264-1-brho@google.com>
+        <20190410162409.117264-5-brho@google.com>
+        <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
+        <CAJDYR9S8XFH=JnQX8WcfgOZ7cr+X6kk45k9g8t3u5aP5wwdu0Q@mail.gmail.com>
+Date:   Sun, 14 Apr 2019 19:24:14 +0900
+In-Reply-To: <CAJDYR9S8XFH=JnQX8WcfgOZ7cr+X6kk45k9g8t3u5aP5wwdu0Q@mail.gmail.com>
+        (Michael Platings's message of "Sun, 14 Apr 2019 11:09:55 +0100")
+Message-ID: <xmqqbm18x4tt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 14 Apr 2019 at 04:45, Junio C Hamano <gitster@pobox.com> wrote:
-> Wouldn't this make it impossible to tell between what's done by such
-> a commit that was marked to be ignored, and what's done locally only
-> in the working tree, which the users have long accustomed to see
-> with the ^0*$ object name?  I think it would make a lot more sense
-> to show the object name of the "ignored" commit, which would be
-> recognizable by the user who fed such an object name to the command
-> in the first place.  Alternatively, perhaps the same idea as replacing
-> one of the hexdigits with '*' used by the other configuration can be
-> applied to this as well?
+Michael Platings <michael@platin.gs> writes:
 
-I had the same objection to zeroing out hashes, but this option is off
-by default so I think it's OK.
-If you enable both blame.markIgnoredLines and
-blame.maskIgnoredUnblamables then the hash does appear as
-"*0000000000" like you suggest. I think it's appropriate that the '*'
-is only added if you opt in with the markIgnoredLines option.
+> If you only enable blame.markIgnoredLines then the hash for
+> "unblamable" lines appears as e.g. "*3252488f5" - this doesn't seem
+> right to me because the commit *wasn't* ignored,
 
-If you only enable blame.markIgnoredLines then the hash for
-"unblamable" lines appears as e.g. "*3252488f5" - this doesn't seem
-right to me because the commit *wasn't* ignored, it is in fact the
-commit in which that line was added. I think '*' should denote "this
-information may be inaccurate" as that's what a typical user needs to
-be aware of. However given that "unblamable" lines tend to be either
-empty or a single character I'm not going to insist :)
+I think you misunderstood me.  I was merely suggesting to use the
+approach to mark the line in a way other than using the NULLed out
+object name that has been reserved for something totally different,
+and hinting with "the same *idea*".
+
+And that idea is not even original to this series; the "^" marker
+that is used to say "the line is attributed to this commit, but that
+may only be because you blamed with commit range A..B and we reached
+the bottom of the range---if you dug further, you might find the
+line originates from another commit" is the origin of the same idea,
+and this topic borrows it and uses a different mark, i.e. '*', for
+the "we are not certain---take this with grain of salt" mark.
+
+If you ended up hitting the commit the user wanted to ignore,
+perhaps you can find another character that is different from '^' or
+'*' and use that, following the same idea.
+
+That is what I meant.  So you shouldn't be worried about using the
+same '*' making the result ambiguous.
+
+By the way, a configuration only feature is something we usually do
+not accept.  A feature must be guarded with --command-line-option
+and then optionally can have a corresponding configuration once the
+option proves to be useful enough that it becomes useful to be able
+to say "in this repository (or to this user), the feature is on by
+default".
