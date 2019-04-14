@@ -2,114 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A65620248
-	for <e@80x24.org>; Sun, 14 Apr 2019 21:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0F8320248
+	for <e@80x24.org>; Sun, 14 Apr 2019 21:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbfDNVMT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 17:12:19 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:46110 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726313AbfDNVMS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 17:12:18 -0400
-Received: by mail-wr1-f43.google.com with SMTP id t17so19120732wrw.13
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:12:17 -0700 (PDT)
+        id S1726464AbfDNVTc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 17:19:32 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:36261 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbfDNVTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 17:19:31 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u57so12290909edm.3
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9v6ugNwmxqnqHOvRHezbDciPth40pgVZTVs1ysrMd6s=;
-        b=sSJ86vckoUoAYH4jk5RyDAdnqmAHHoZ7VJJfRSAPXWOQfz5NeZF0kCfOht587QOqr+
-         s0SxJmMONaW9H2ZE5Fsgh41xiU60yEQuJhAjt6Y3nRwhVfpBCNXgsJJnSWPE6jmLEdHd
-         XcRnZFrP2eotxP/36OePyjb58ZyeoWTFldm/rbDh/z4Lp3nkddFRVWSY2uHgzEQaGd4j
-         bfj0s0vcGWpxWEISsyyGpW/H7bp8xt5MVlFwbHb+boYoQijN4sZUUkOSRzWpm4WFPDyt
-         B01B32oet+qJ98ntZefOrwDEt3iSEB1GNw5yH3IJP8smBaRBYZvOLe7gR8K592VpJ6/X
-         6dtA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=q4W6RUTbEpyt8sOoPj2gEL1SKt0Obj6uSXUTnkdR+Go=;
+        b=bjrdXTMTaas9ihHwrHtX4LVTR3cgsrJJAxqJmOs572elr7QUViJk88tG+Bpq7+8DJW
+         6BOF7BBxDUQ+YT5atCdks+MspD5eNooOvh8XjpostLKT/sSWgG8POvkHBo0Xx9q8FjOk
+         +CVkYaEoxT3YTbus2+X3ZFJkpyg6oE8GJHb6oZMrC0VA56KjBSdSWwZx/1uYvim+zRQL
+         aSnImdO7F5Yy2KB80RYKLsM/uq5n+Tnd3o7gyVtjW64NbMWnJVgpV0P5MX+D8ODMGGzC
+         7ZFjEHgYnvQBVyqlYkZ5NoTgy5iE/44HlETLnAfDlTzD6eNHLabHfiaVM8oZUH67ASVn
+         ah+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9v6ugNwmxqnqHOvRHezbDciPth40pgVZTVs1ysrMd6s=;
-        b=eQkfgjLdCxwNzehgHDGYxR6LfBwjr9QNHOAXJRWImjLyXPwOYYsVuVhAukfPQ/IfJ3
-         s9kRcwNkZcYfer4PNQFdjWjm+gYJi9UJg5wsHh2gUDNHHV6uikIhIICvq/5udoT0xb7O
-         Ie/LRqe153/+nfErc+d25JKAT0TNa7q3WrNd3o8azJ5Z9GNkiNgGk2NxDLGVpg2pL11I
-         qQxBJr1JBOz8WS+d+uaIS0P0WIODau1GubA2rioyyL9Pj5X/gQr5/sIe4xwBn7bliEiM
-         nkn9BJQCxDWHjXd112WqjqL72sZg7XNjOFqCYXP1EEWdtTG2Odl5GerWJW3vxxVXkATG
-         RHtg==
-X-Gm-Message-State: APjAAAUOELEuRCT7Q0x2Vje1Kp/0u6XV5KgYEitIMWTDdfVW0z2UGDt0
-        EsDB6wlBvfovrTL5GyJXlYQ=
-X-Google-Smtp-Source: APXvYqz7JHaFiKRk4FmKsDdS/0VC6cfz8M98o7zqXPPZ54t1kcKGH65iADtOUJjPlrCuztB6fO0c2Q==
-X-Received: by 2002:adf:c10e:: with SMTP id r14mr43249745wre.168.1555276336964;
-        Sun, 14 Apr 2019 14:12:16 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id f11sm65084466wrm.30.2019.04.14.14.12.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 14 Apr 2019 14:12:15 -0700 (PDT)
-Date:   Sun, 14 Apr 2019 22:12:14 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
-Subject: Re: incorrect range-diff output?
-Message-ID: <20190414211214.GH32487@hank.intra.tgummerer.com>
-References: <20190411111729.GB5620@ash>
- <20190411220532.GG32487@hank.intra.tgummerer.com>
- <nycvar.QRO.7.76.6.1904121038540.41@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=q4W6RUTbEpyt8sOoPj2gEL1SKt0Obj6uSXUTnkdR+Go=;
+        b=Ln8UVwg/ovBv6CtddutPaskv5urhizrIWFOGmzxuFzqox2QLyQW2Ltu9Bok9q9CIw/
+         A6swpDydKii1qqgBsgWX3UupsB220rwILI8zpKkL4t1wsrLOH4NW+T7LjGUvLxME+Hjo
+         /PIbyJNXGnqNwWcmHQGAJJChPGXGl24YwYdGR6p6jq7tjRxbBdlrXmD7lBHvmK+ioEDj
+         YC5xU33/wZY3/8rfeVVh+NhBO9XLosl90tpjycEoxBzBfQf8iHRD9MdB5mVFcsE898XO
+         ngXrhdnBkIriHTf5A6CzrWHAqet/YX/J/5BiU1ZCG1laAo0PxnzV7Yvevul5Rp2Ogoa+
+         yO+Q==
+X-Gm-Message-State: APjAAAX3rw3YSwGSOwE2NPQXFgCY8Azhq4MC6eSfD0bbpWAfYOuy2p2H
+        o/4D+Iponq6V3n/7r0o6I/CjfCZR
+X-Google-Smtp-Source: APXvYqxE0sG+7c0uKO4A4P7xUC8m0Qg4ILR4Qsk0NVa72//UgyhCNYVkPrsXeUSmSJZ28+koFr1qqA==
+X-Received: by 2002:a50:ec85:: with SMTP id e5mr3494038edr.232.1555276769658;
+        Sun, 14 Apr 2019 14:19:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h11sm8071040eds.44.2019.04.14.14.19.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 14 Apr 2019 14:19:29 -0700 (PDT)
+Date:   Sun, 14 Apr 2019 14:19:29 -0700 (PDT)
+X-Google-Original-Date: Sun, 14 Apr 2019 21:19:26 GMT
+Message-Id: <6161c76702246ab34a520dae8104ad489b89b6a1.1555276767.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.179.v2.git.gitgitgadget@gmail.com>
+References: <pull.179.git.gitgitgadget@gmail.com>
+        <pull.179.v2.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 1/2] t9822: skip tests if file names cannot be ISO-8859-1
+ encoded
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1904121038540.41@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+To:     git@vger.kernel.org
+Cc:     Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/12, Johannes Schindelin wrote:
-> Hi Thomas,
-> 
-> On Thu, 11 Apr 2019, Thomas Gummerer wrote:
-> 
-> > On 04/11, Duy Nguyen wrote:
-> > > Try
-> > >
-> > >     git range-diff from...to
-> > >
-> > > with those two branches from https://gitlab.com/pclouds/git.git. The
-> > > interesting part is this
-> > >
-> > >       diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-> > >       --- a/Documentation/gitcli.txt
-> > >     @@ -120,10 +111,11 @@
-> > >         * linkgit:git-commit[1] to advance the current branch.
-> > >
-> > >      -  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
-> > >     -+  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
-> > >     -     pathname parameters) to undo changes.
-> > >     +-    pathname parameters) to undo changes.
-> > >     ++  * linkgit:git-restore[1] to undo changes.
-> > >
-> > >         * linkgit:git-merge[1] to merge between local branches.
-> > >     +
-> > >
-> > > This particular hunk comes from giteveryday.txt, not gitcli.txt. And
-> > > the b/Documentation/gitcli.txt line is also missing.
-> >
-> > I think the output here is technically correct, even though it is very
-> > misleading.  range-diff doesn't currently show the filenames of the
-> > diff that changed, which makes this a bit hard to read.
-> 
-> True. In the spirit of the "funcname" feature of our `git diff` command,
-> we could add some (abbreviated) form of the corresponding `diff` lines
-> (maybe just the `a/` filename? Or maybe the `a/` file name, prefixed by
-> `-` or `+`, and if the `b/` filename is different, `old->new`? With
-> `/dev/null` substituted by `(new)` or `(deleted)`?).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yeah something like this is what I ended up doing.  Except I was a bit
-more verbose, so the filename would be prefixed with "modified file",
-"new file", "deleted file" or "renamed file".  Since this doesn't need
-to be machine readable in any way, I felt like that might be easiest
-to consume for humans. 
+Most notably, it seems that macOS' APFS does not allow that.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t9822-git-p4-path-encoding.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encoding.sh
+index c78477c19b..de0b46581d 100755
+--- a/t/t9822-git-p4-path-encoding.sh
++++ b/t/t9822-git-p4-path-encoding.sh
+@@ -7,6 +7,13 @@ test_description='Clone repositories with non ASCII paths'
+ UTF8_ESCAPED="a-\303\244_o-\303\266_u-\303\274.txt"
+ ISO8859_ESCAPED="a-\344_o-\366_u-\374.txt"
+ 
++ISO8859="$(printf "$ISO8859_ESCAPED")" &&
++echo content123 >"$ISO8859" &&
++rm "$ISO8859" || {
++	skip_all="fs does not accept ISO-8859-1 filenames"
++	test_done
++}
++
+ test_expect_success 'start p4d' '
+ 	start_p4d
+ '
+-- 
+gitgitgadget
+
