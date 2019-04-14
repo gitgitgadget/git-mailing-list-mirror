@@ -2,113 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7A5920248
-	for <e@80x24.org>; Sun, 14 Apr 2019 10:33:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 019CB20248
+	for <e@80x24.org>; Sun, 14 Apr 2019 10:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726159AbfDNKdn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 06:33:43 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54640 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbfDNKdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 06:33:43 -0400
-Received: by mail-wm1-f66.google.com with SMTP id c1so16735364wml.4
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 03:33:42 -0700 (PDT)
+        id S1726162AbfDNKmU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 06:42:20 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:46898 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbfDNKmU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 06:42:20 -0400
+Received: by mail-qt1-f194.google.com with SMTP id z17so16030298qts.13
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 03:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5hE3zE1mDc/MowbWwaHwvG5INIeR5VdtbMdB9brAbec=;
-        b=u1Taci2cnrZXqA0twoPiuOwlcEMJ9IBkZq0kwj10ynYfpnpQLgDAKSI2kK/Xg5abp6
-         rs1Mu+7sThTY2g6eVYMMwKBOWZ5SoPVCwb2uWLEryya/jaUFNsJqqDkMuq7oTEBLfY9z
-         lfYlSWv+7MJwGvluH0DUdDmoFsDfhe9SEKsOJY4cYoGk9lLXSf1Aaj/3KLjpgRTRQaEU
-         35BY+7NQSQJupGTpn8Ro3yelRPhyokA0teyuQudCK8L+/+kSo22KLMObgduyEye+BHv6
-         Nn4lIHlEmMk1ET/k2ewn+FwdZRthjown6Mm1daBW9oYmk6xqCKD+yoQAQNoI1LFLgTCV
-         dA7w==
+        d=platin-gs.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7iC4nb3GbzYiTfjHw7Wfi/VSWBzK/6U2ZpKHMhml3IA=;
+        b=HpQ7mrUmDnkNhi+p3rO17KTTNkAskn9tDtfQsrRDlvXxqnvnTgv/xRsEHs9xzUYH7C
+         /93sR1oE/FppBWC6tcsWVbW0vtIQVIRoFJiZ2aLHdBhFeyMADwPvPLmbEJ/f5QFs3+ew
+         D1m7hKyropzLwWpHeF751gyDvKT8NNRsSuAaJPm3XmbIp3C/9XSnjXSg7CZXWAJJQkqo
+         KPf6t0MAsxOWUmsrRmeq+Oh8o6b5LyQu+eBudZXUfOaHaw2wOXqk/GMJU9O529UgMEnc
+         F6xyK25CdwHQFkNOsxC6179ZfMtEUO7xc0up5By9n50ULfcndG0fYfwpE5L7MmRCIC14
+         ctWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5hE3zE1mDc/MowbWwaHwvG5INIeR5VdtbMdB9brAbec=;
-        b=KNSWaOJS8a+FR27gIXc9SS2nBen2F9/gV9oZkV7zg14tz5KFihsQjitGAN96+V6kcd
-         pf+/KZB7PjA+r2/PM5k1BqhriVBDTdOQdqFIxGmrYrSLYQIn39WMRh1uZn5dW3G9BPPH
-         Z8VG9zFZJmJCcyqTI6BmsdcC3XZnEfdfgCc1Y9Hv7n1e/voz3iIf0WHHI/JEz2vh+To6
-         kZsVxGm5XES1zdj3B2Ufv4JKD12Rl87TktHZQRUJeN10MordEQxG3nNisKthGdd8Ymr1
-         iWHWCx+5CNRXxzC437yfcF1gyhEFkIEtXCNBDlCwCCzI2Mc+LRIoZm9grFTOgy1gNtir
-         nHgQ==
-X-Gm-Message-State: APjAAAWu5frcSAOK13Bq+52xcAo87FQ/ctk4kYxeu3SN1PBRx1dp9nw2
-        1Ezfy5NYSdUSjgFm4PF9rqs=
-X-Google-Smtp-Source: APXvYqw1APWvmAMv6RzGM/77JFQ6JHsnHLOFn2IOaRMbso8YTy25k1lqpDTgG0vxCCdUTCKjHWxczg==
-X-Received: by 2002:a1c:1a46:: with SMTP id a67mr18405475wma.21.1555238020668;
-        Sun, 14 Apr 2019 03:33:40 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id f128sm14515646wme.28.2019.04.14.03.33.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 14 Apr 2019 03:33:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     peff@peff.net, git@vger.kernel.org, gitgitgadget@gmail.com,
-        johannes.schindelin@gmx.de
-Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with write_block_or_die()
-References: <20190413013451.GB2040@sigill.intra.peff.net>
-        <20190414043409.9547-1-rohit.ashiwal265@gmail.com>
-Date:   Sun, 14 Apr 2019 19:33:39 +0900
-In-Reply-To: <20190414043409.9547-1-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Sun, 14 Apr 2019 10:04:09 +0530")
-Message-ID: <xmqq7ebwx4e4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7iC4nb3GbzYiTfjHw7Wfi/VSWBzK/6U2ZpKHMhml3IA=;
+        b=lPrx2IlyHJ0x6zo0pZ2FLbr7Cqn8IUmto8fP8Y1F2tNfe6Fw11199kJIy73S23vUps
+         dnIV06k5E0i753WynfW+RUJKDsEI9n6TzyfaSoEddXfxA2LyHb6BDWI0TgGH1ml5wwma
+         KkTEPot1anpobXwXLa5Xmy3oCrRY5oOQsmzxtQmunNgxjsZUKfD3OvZYEVWdsiImt30q
+         p4xvOFU/ctnGfDKxJO/0Dyx30bClQRXDdj5pSZJfPSiBcbfwdkvo2aJqPSSKi6gFA5ge
+         sPYU5yZrPGXfiDQ7q0bB8cM298ud2rue8WLRLLXfBPZ4QsS0oCO0NSPEnbo2Ftr+7zcA
+         GL1w==
+X-Gm-Message-State: APjAAAXxE0fg0cdTZEQs2jXTIpwUuGnRrRKJG2yIcxDcVk/yMQo8znad
+        5eGSnzYRRTDTseFE4F3LZ2AVe/RSeqb7p/DcMdbbsNpvMAk=
+X-Google-Smtp-Source: APXvYqwcswfPsfF+ysI1ZjdtiI5Dze98xERRJDp55BDbAvgAj9CE0q1ICYHXu/tNnsuTeJSoe/oyu+TzI2gFCtWjOqA=
+X-Received: by 2002:ad4:42cb:: with SMTP id f11mr55743249qvr.53.1555238539738;
+ Sun, 14 Apr 2019 03:42:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-4-brho@google.com>
+ <878swhfzxb.fsf@evledraar.gmail.com>
+In-Reply-To: <878swhfzxb.fsf@evledraar.gmail.com>
+From:   Michael Platings <michael@platin.gs>
+Date:   Sun, 14 Apr 2019 11:42:08 +0100
+Message-ID: <CAJDYR9Q-ixsxWyMrm7aCojTv33SOj3+ALPwJYo9DJE7vLU=DEA@mail.gmail.com>
+Subject: Re: [PATCH v6 3/6] blame: add the ability to ignore commits and their changes
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Barret Rhoden <brho@google.com>,
+        Git mailing list <git@vger.kernel.org>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
-
-> On 2019-04-13  1:34 UTC Jeff King <peff@peff.net> wrote:
+> > +     the `blame.ignoreRevsFile` config option.  An empty file name, `""`, will
+> > +     clear the list of revs from previously processed files.
 >
->> What is gzwrite()?
->> [...]
->> I think it would be less confusing if this just factored out
->> write_block_or_die(), which starts as a thin wrapper and then grows the
->> gzip parts in the next patch.
->
-> You are right, it might appear to someone as a bit confusing, but I feel
-> like, this is the right commit to put it.
+> Maybe I haven't read this carefully enough but the use-case for this
+> doesn't seem to be explained, you need this for the option, but the
+> config file too? If I want to override fsck.skipList I do
+> `fsck.skipList=/dev/zero`. Isn't that enough for this use-case without
+> introducing config state-machine magic?
 
-Often, the original author is the worst judge about the patch series
-organization, because s/he has been staring at his or her own
-patches too long and knows too much about them.  Unless the author
-is very experienced and is good at pretending to be the first-time
-reader when proofreading his or her own patch, that is.
-
-FWIW, I tend to agree with Peff that the organization would become
-much easier to follow with "first refactor without new feature, and
-in gzip related step add gzip thing".
-
->> Is it OK for us to ask about the truthiness of this opaque type? That
->> works if it's really a pointer behind the scenes, but it seems like it
->> would be equally OK for zlib to declare it as a struct.
-
-Or a small integer indexing into an internal array the library keeps
-track of ;-) At that point, truthiness would be completely gone, and
-the compiler would not help catching "if (opaque)" as a syntax error
-(if the library implements the opaque thing as a structure, then we
-will be saved).
-
-> It would be perfectly sane on zlib's part to make gzFile a struct, and if
-> so happens, I'll be there to refactor the code.
-
-We do not trust any single developer enough with "I'll do so when
-needed"---in practice, it will often be done by somebody else, and
-more importantly, we would want anybody to be able to take things
-over, instead of relying on any one "indispensable contributor".
-
-If it is reasonable to expect that things can easily be broken by an
-external factor, I'd prefer to see us being defensive from day one.
-
+The difference between blame.ignoreRevsFile and fsck.skipList is that
+ignoreRevsFile can be specified repeatedly. This is useful if you have
+one file listing reformatting commits, another listing renaming
+commits etc. Or maybe a checked-in list of commits to ignore, and a
+personal list of commits to ignore. However sometimes you're going to
+want to *not* ignore those commits, so you need a way to discard the
+previously specified options. To accommodate all operating systems an
+empty string seems the best way to do this.
