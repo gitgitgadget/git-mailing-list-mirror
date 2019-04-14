@@ -7,64 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 959A420248
-	for <e@80x24.org>; Sun, 14 Apr 2019 03:54:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53DE820248
+	for <e@80x24.org>; Sun, 14 Apr 2019 03:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727137AbfDNDyy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 23:54:54 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44719 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726964AbfDNDyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 23:54:53 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y7so17085875wrn.11
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 20:54:52 -0700 (PDT)
+        id S1727178AbfDNDzv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Apr 2019 23:55:51 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41043 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726964AbfDNDzv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 23:55:51 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r4so17084751wrq.8
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 20:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=TzKEHRZGzMo0Mh3CYoWSwo+ZUlAm88XhaUHtU4Rukh0=;
-        b=iQzCEHsWlMvLp1xs6L4fgPqCidLFQ+pyYEkuNHtE9g/UsLUmkqKIuBd7pi2zmdWGCn
-         T2NoBcj+rzHJQPRwtN+7WIf8vw2cggW/gNB5TsHY3Gf1y2XBb6wx335nLxRI2fezqEEz
-         FDD/4yKLcwsoxa/8c5/6DAwy7tHrf2t8clPLi63qbenwSmPDMZwhPp+GuGdnmsHw1VF5
-         tLs9EdhDJ+ScWhnhFrNxj0SySE7ifJBUskMihl/JEGWSszZb9UM1AFmZSC3C0WnKAJxK
-         ogIVvivtr7xMfqfhmt0uQ5/IQtbiJ9HsmckvkJso3fDFO12siKDStl+39XVhsP2MW+8q
-         GqPA==
+        bh=zwqctMwpNf7dB2zWoAqq/Xp2sUiilcyfims9A3qRisg=;
+        b=Y4KDatV9Tudo1/do6Vq3H8puuXTJDLwJVESyAfmcMZrnBU+t0cKtUcMIMPsdGDAJ9k
+         m1rHe8ZfWiaT3e77liultDj9Jr9okWL2dAPG7X/qLEUgVOxqAOnP1SxuEzpfsiLgmFUm
+         ROc5W/YIbgenX1gOU35wBi70JHYHTvwuJVPjqV43Wgvk6TjzhZ0vXctThLrA1lT0Wlax
+         Ru0GsHUg6QQZlz3Isg0hGqBtoE65jkf0upV0gFR4sELlF4KojwrzY+BrLmamJo/Aqngn
+         1aUIByGViivk0CC63AA8WxgtDLfxMR1VoIEEoZNDVK51p2iPTJxxfSYjDmxiTCVeUA+s
+         lF9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=TzKEHRZGzMo0Mh3CYoWSwo+ZUlAm88XhaUHtU4Rukh0=;
-        b=JOEVP+kp+08S+rxBC1YANorzjltKtpwouHNllWrVTNFWK1vqfC8joMmdL+lagRFUXC
-         Nb08nxg0oCnzGepcbAR6K7UrU805cPcYt4cA3kVWfQ9syMqZY2EmuKw9hOJVeGU8CrWx
-         Vw/UlafOWlnK9QsG9DqOqY3ML+Ecus9LwsG+QEPbh/nnGrzqpB/DdoLtqXiZcEv3x4g4
-         Eyezfd5wGRHhomZPYOlhkJEJNNTSiJYsIr0MqZKr+r9swpwpjeQNpIVrgkWV+u3PIGmv
-         DvmO988FJzqDOIbCkRyZlIBfSNAMVgh8Cbk+eUtNfC/CiqRRWU0mjQJNBEZjT1tFkqJ0
-         ecjA==
-X-Gm-Message-State: APjAAAVIkX06RVYaAnTISyP7DgK40xh4MuaUfXYSlrocZmBCw9hM3PrP
-        xXyiIxnR6qiMMNvUf6CiZ30=
-X-Google-Smtp-Source: APXvYqwB33aZWCFFpaYn+XQhTcLhmiwJI5phD/5lfdx8ZubKpzPgHZ8Cb0ir6oUbdrIYThUyCOGdjQ==
-X-Received: by 2002:a5d:4751:: with SMTP id o17mr42129142wrs.121.1555214091831;
-        Sat, 13 Apr 2019 20:54:51 -0700 (PDT)
+        bh=zwqctMwpNf7dB2zWoAqq/Xp2sUiilcyfims9A3qRisg=;
+        b=IuQsMfxqkBDImTFY562VxhWKh9Sb7B6VVaGMtBaVuOtdT7Ce6m6PXXt2a1WVOdCGzH
+         yZsaMbuxzHzejq8FgAqs9sZSlWJzd+AHAocIhLcbUXIq/yzUNRwBc/whfxIt2l80tq99
+         BjwDBqcrj/m/50liubvPh7JQ8fpW0tW3PAPLT1gFHIC8ug/QGX6Mscl/rPziCPLp7Iuh
+         RwgV36vyVL38zSYkA7G1OAS/ezbHmkkrJgSz8/3/2cLr1W7w1MnTxEM9cd3JoFGG6Jyj
+         oFRiPUM5GAd9wX/3+NttWYRMx41y5qcsRjjLSr220OQi2jgRQQDTzCpq7qtWDGx9UB4O
+         W5GQ==
+X-Gm-Message-State: APjAAAXjAI2cJaJA+u5LNHZ6W7SAkab03fQfuYo+m6O87kZ8HuaKF9EA
+        rMEL+In/qacnbcWH4QGm4flIa+NrjHU=
+X-Google-Smtp-Source: APXvYqyYWDRa6+XrC9/QBnPNga3bN0sj3PJKEFNnWJcTCSmBuQVh9CVwWwQbL6jjjbz/kbkJ3eXTCw==
+X-Received: by 2002:adf:e74f:: with SMTP id c15mr40555582wrn.23.1555214149399;
+        Sat, 13 Apr 2019 20:55:49 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id t81sm26821878wmb.5.2019.04.13.20.54.50
+        by smtp.gmail.com with ESMTPSA id e12sm45007885wrt.94.2019.04.13.20.55.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 13 Apr 2019 20:54:51 -0700 (PDT)
+        Sat, 13 Apr 2019 20:55:48 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     git@vger.kernel.org, Michael Platings <michael@platin.gs>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v6 6/6] blame: use a fingerprint heuristic to match ignored lines
-References: <20190410162409.117264-1-brho@google.com>
-        <20190410162409.117264-7-brho@google.com>
-Date:   Sun, 14 Apr 2019 12:54:50 +0900
-In-Reply-To: <20190410162409.117264-7-brho@google.com> (Barret Rhoden's
-        message of "Wed, 10 Apr 2019 12:24:09 -0400")
-Message-ID: <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
+References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD2KsjPo7G0BtzXfA3gyoUyR7y_WsNLm3mn39O8h4n+Kfw@mail.gmail.com>
+Date:   Sun, 14 Apr 2019 12:55:48 +0900
+In-Reply-To: <CAP8UFD2KsjPo7G0BtzXfA3gyoUyR7y_WsNLm3mn39O8h4n+Kfw@mail.gmail.com>
+        (Christian Couder's message of "Thu, 11 Apr 2019 17:06:06 +0200")
+Message-ID: <xmqqftqlw88r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,44 +67,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Barret Rhoden <brho@google.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> This replaces the heuristic used to identify lines from ignored commits
-> with one that finds likely candidate lines in the parent's version of
-> the file.
+> I can send a new version where the top two commits have the following titles:
 >
-> The old heuristic simply assigned lines in the target to the same line
-> number (plus offset) in the parent.  The new function uses a
-> fingerprinting algorithm to detect similarity between lines.
->
-> The fingerprint code and the idea to use them for blame came from
-> Michael Platings <michael@platin.gs>.
->
-> For each line changed in the target, i.e. in a blame_entry touched by a
-> target's diff, guess_line_blames() finds the best line in the parent,
-> above a magic threshold.  Ties are broken by proximity of the parent
-> line number to the target's line.
->
-> We actually make two passes.  The first pass checks in the diff chunk
-> associated with the blame entry - specifically from blame_chunk().
-> Often times, those diff chunks are small; any 'context' in a normal diff
-> chunk is broken up into multiple calls to blame_chunk().  We make a
-> second pass over the entire parent, with a slightly higher threshold.
+>   - replace: peel tag when passing a tag first to --graft
+>   - replace: peel tag when passing a tag as parent to --graft
 
-Two thoughts.
+If/when there are other things that needs fixing in the series, that
+may be worth doing.
 
- - Unless the 'old heuristic' is still available as an option after
-   this step, a series that first begins with the 'old heuristic'
-   and then later replaces it with the 'new heuristic' feels
-   somewhat wasteful of reviewer resources, as the 'old heuristic'
-   does not contribute an iota to the end result.
-
-   It is OK while the series is still in RFC/WIP stage, though.  But
-   because I got an impression that this is close to completion, so...
-
- - I wonder if the hash used here can replace what is used in
-   diffcore-delta.c as an improvement (or obviously vice versa), as
-   using two (or more) ad-hoc fingerprinting function without having
-   a clear reason why we need two instead of a unified one feels
-   like a bad idea.
-
+Thanks.
