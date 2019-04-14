@@ -2,129 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D73C020248
-	for <e@80x24.org>; Sun, 14 Apr 2019 21:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A65620248
+	for <e@80x24.org>; Sun, 14 Apr 2019 21:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727020AbfDNVKm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 17:10:42 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:43771 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbfDNVKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 17:10:42 -0400
-Received: by mail-qk1-f194.google.com with SMTP id c20so8702493qkc.10
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:10:42 -0700 (PDT)
+        id S1726980AbfDNVMT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 17:12:19 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:46110 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726313AbfDNVMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 17:12:18 -0400
+Received: by mail-wr1-f43.google.com with SMTP id t17so19120732wrw.13
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=platin-gs.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Y0Ssvwf5ms8WDlBQIxNt5hMYANM7+3W3CKJi61gOEeA=;
-        b=bPrq7jAUCAJEfpmjoQY/zYi5k5gif+CETbARgWMVhEmLCBQgOsToD6z5noRVmZ4C7q
-         SePhaJZ3Ar7TLVOF+op31TdrauWX6jb3vyJF6PxtU+FK1/2o4GCz/cFB/drzUtSIG/JN
-         f8FOP3O6ayeQyNPy4/sfjGl8nnOuGRKpUhIEcrGLQwG1VtBxf1m0YjzXTlQzde9A4R2b
-         FAgAv9D1jvO0ihj3nD7sbaqdkspoFmuz0afuUFOKZrS1wsRS76g7PcogNEpmu0MYyl4O
-         aoXozUZxVxhuu6WukggDwSYM7Iz5hVnGetHyPUG1Mp1/DS96naYoNhhRb1KoswEx5oVb
-         OcTw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9v6ugNwmxqnqHOvRHezbDciPth40pgVZTVs1ysrMd6s=;
+        b=sSJ86vckoUoAYH4jk5RyDAdnqmAHHoZ7VJJfRSAPXWOQfz5NeZF0kCfOht587QOqr+
+         s0SxJmMONaW9H2ZE5Fsgh41xiU60yEQuJhAjt6Y3nRwhVfpBCNXgsJJnSWPE6jmLEdHd
+         XcRnZFrP2eotxP/36OePyjb58ZyeoWTFldm/rbDh/z4Lp3nkddFRVWSY2uHgzEQaGd4j
+         bfj0s0vcGWpxWEISsyyGpW/H7bp8xt5MVlFwbHb+boYoQijN4sZUUkOSRzWpm4WFPDyt
+         B01B32oet+qJ98ntZefOrwDEt3iSEB1GNw5yH3IJP8smBaRBYZvOLe7gR8K592VpJ6/X
+         6dtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Y0Ssvwf5ms8WDlBQIxNt5hMYANM7+3W3CKJi61gOEeA=;
-        b=BlI1S6hgzvlNsj2UX4V+aATG91oxv+bg27ShXf1O+xwYlEvltpYONwETuCQ+3344y7
-         fN2SS9s/w7VnKSy3RWP+obVcqGKyBOWWfG+8WYzw4snwjQsrgKw8Gv+ms6gmnnoZndlw
-         EknCGYzCiDVZ3aGtH32dh2Jc3PAKsmC0rpKzKmg0sdc8F9hEA/skjWzXSi9oVhec8a/K
-         1G0hYE3slzBzaIj+YcQ90vBJHHXqmki+2PxqomzfKj0ltMLAWqwabjBTEL/E+2EX75hN
-         PpCARWwGcW4szshIC8uIsUFfInuojj66623u/JpkIZSK1lnY70lqsqpnG/+SImGorBP8
-         GOwQ==
-X-Gm-Message-State: APjAAAUneMQ42b+qJG/4Ytb+GyCwRq3yaXj1L7p0bhF9envD8HEC5Gr4
-        bd3lUfim9Ic5GwZH7eY9/z8zeO4b43rvtnhD4as=
-X-Google-Smtp-Source: APXvYqxzeOuVNJvCsTJ4q0+M9L4EG7Rejc552SrskmAmRao0WyPPEGqkP7YnwSlbn6BfVl+/0l1ZI9vrO9epdb+wHC4=
-X-Received: by 2002:a37:4a12:: with SMTP id x18mr52430311qka.184.1555276241822;
- Sun, 14 Apr 2019 14:10:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9v6ugNwmxqnqHOvRHezbDciPth40pgVZTVs1ysrMd6s=;
+        b=eQkfgjLdCxwNzehgHDGYxR6LfBwjr9QNHOAXJRWImjLyXPwOYYsVuVhAukfPQ/IfJ3
+         s9kRcwNkZcYfer4PNQFdjWjm+gYJi9UJg5wsHh2gUDNHHV6uikIhIICvq/5udoT0xb7O
+         Ie/LRqe153/+nfErc+d25JKAT0TNa7q3WrNd3o8azJ5Z9GNkiNgGk2NxDLGVpg2pL11I
+         qQxBJr1JBOz8WS+d+uaIS0P0WIODau1GubA2rioyyL9Pj5X/gQr5/sIe4xwBn7bliEiM
+         nkn9BJQCxDWHjXd112WqjqL72sZg7XNjOFqCYXP1EEWdtTG2Odl5GerWJW3vxxVXkATG
+         RHtg==
+X-Gm-Message-State: APjAAAUOELEuRCT7Q0x2Vje1Kp/0u6XV5KgYEitIMWTDdfVW0z2UGDt0
+        EsDB6wlBvfovrTL5GyJXlYQ=
+X-Google-Smtp-Source: APXvYqz7JHaFiKRk4FmKsDdS/0VC6cfz8M98o7zqXPPZ54t1kcKGH65iADtOUJjPlrCuztB6fO0c2Q==
+X-Received: by 2002:adf:c10e:: with SMTP id r14mr43249745wre.168.1555276336964;
+        Sun, 14 Apr 2019 14:12:16 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id f11sm65084466wrm.30.2019.04.14.14.12.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 14 Apr 2019 14:12:15 -0700 (PDT)
+Date:   Sun, 14 Apr 2019 22:12:14 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
+Subject: Re: incorrect range-diff output?
+Message-ID: <20190414211214.GH32487@hank.intra.tgummerer.com>
+References: <20190411111729.GB5620@ash>
+ <20190411220532.GG32487@hank.intra.tgummerer.com>
+ <nycvar.QRO.7.76.6.1904121038540.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20190410162409.117264-1-brho@google.com>
-In-Reply-To: <20190410162409.117264-1-brho@google.com>
-From:   Michael Platings <michael@platin.gs>
-Date:   Sun, 14 Apr 2019 22:10:30 +0100
-Message-ID: <CAJDYR9SL9JCJjdARejV=NCf9GYn72=bfszXx84iDc416sZm31A@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] blame: add the ability to ignore commits
-To:     Barret Rhoden <brho@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1904121038540.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Barret,
+On 04/12, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> On Thu, 11 Apr 2019, Thomas Gummerer wrote:
+> 
+> > On 04/11, Duy Nguyen wrote:
+> > > Try
+> > >
+> > >     git range-diff from...to
+> > >
+> > > with those two branches from https://gitlab.com/pclouds/git.git. The
+> > > interesting part is this
+> > >
+> > >       diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+> > >       --- a/Documentation/gitcli.txt
+> > >     @@ -120,10 +111,11 @@
+> > >         * linkgit:git-commit[1] to advance the current branch.
+> > >
+> > >      -  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
+> > >     -+  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
+> > >     -     pathname parameters) to undo changes.
+> > >     +-    pathname parameters) to undo changes.
+> > >     ++  * linkgit:git-restore[1] to undo changes.
+> > >
+> > >         * linkgit:git-merge[1] to merge between local branches.
+> > >     +
+> > >
+> > > This particular hunk comes from giteveryday.txt, not gitcli.txt. And
+> > > the b/Documentation/gitcli.txt line is also missing.
+> >
+> > I think the output here is technically correct, even though it is very
+> > misleading.  range-diff doesn't currently show the filenames of the
+> > diff that changed, which makes this a bit hard to read.
+> 
+> True. In the spirit of the "funcname" feature of our `git diff` command,
+> we could add some (abbreviated) form of the corresponding `diff` lines
+> (maybe just the `a/` filename? Or maybe the `a/` file name, prefixed by
+> `-` or `+`, and if the `b/` filename is different, `old->new`? With
+> `/dev/null` substituted by `(new)` or `(deleted)`?).
 
-This works pretty well for the typical reformatting use case now. I've
-run it over every commit of every .c file in the git project root,
-both forwards and backwards with every combination of -w/-M/-C and
-can't get it to crash so I think it's good in that respect.
-
-However, it can still attribute lines to the wrong parent line. See
-https://pypi.org/project/autopep8/#usage for an example reformatting
-that it gets a bit confused on. The patch I submitted handles this
-case correctly because it uses information about the more similar
-lines to decide how more ambiguous lines should be matched.
-
-You also gave an example of:
-
-        commit-a 11) void new_func_1(void *x, void *y);
-        commit-b 12) void new_func_2(void *x, void *y);
-
-Being reformatted to:
-
-        commit-a 11) void new_func_1(void *x,
-        commit-b 12)                 void *y);
-        commit-b 13) void new_func_2(void *x,
-        commit-b 14)                 void *y);
-
-The patch I submitted handles this case correctly, assigning line 12
-to commit-a because it scales the parent line numbers according to the
-relative diff chunk sizes instead of assuming a 1-1 mapping.
-
-So I do ask that you incorporate more of my patch, including the test
-code. It is more complex but I hope this demonstrates that there are
-reasons for that. Happy to provide more examples or explanation if it
-would help. On the other hand if you have examples where it falls
-short then I'd be interested to know.
-
-The other major use case that I'm interested in is renaming. In this
-case, the git-hyper-blame approach of mapping line numbers 1-1 works
-perfectly. Here's an example. Before:
-
-        commit-a 11) Position MyClass::location(Offset O) {
-        commit-b 12)    return P + O;
-        commit-c 13) }
-
-After:
-
-        commit-a 11) Position MyClass::location(Offset offset) {
-        commit-a 12)    return position + offset;
-        commit-c 13) }
-
-With the fuzzy matching, line 12 gets incorrectly matched to parent
-line 11 because the similarity of "position" and "offset" outweighs
-the similarity of "return". I'm considering adding even more
-complexity to my patch such that parts of a line that have already
-been matched can't be matched again by other lines.
-
-But the other possibility is that we let the user choose the
-heuristic. For a commit where they know that line numbers haven't
-changed they could choose 1-1 matching, while for a reformatting
-commit they could use fuzzy matching. I welcome your thoughts.
-
--Michael
+Yeah something like this is what I ended up doing.  Except I was a bit
+more verbose, so the filename would be prefixed with "modified file",
+"new file", "deleted file" or "renamed file".  Since this doesn't need
+to be machine readable in any way, I felt like that might be easiest
+to consume for humans. 
