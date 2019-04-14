@@ -2,79 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53DE820248
-	for <e@80x24.org>; Sun, 14 Apr 2019 03:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB7120248
+	for <e@80x24.org>; Sun, 14 Apr 2019 04:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727178AbfDNDzv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 23:55:51 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41043 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726964AbfDNDzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 23:55:51 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r4so17084751wrq.8
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 20:55:50 -0700 (PDT)
+        id S1725768AbfDNEfT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 00:35:19 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38091 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725601AbfDNEfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 00:35:19 -0400
+Received: by mail-pg1-f193.google.com with SMTP id j26so7017852pgl.5
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 21:35:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zwqctMwpNf7dB2zWoAqq/Xp2sUiilcyfims9A3qRisg=;
-        b=Y4KDatV9Tudo1/do6Vq3H8puuXTJDLwJVESyAfmcMZrnBU+t0cKtUcMIMPsdGDAJ9k
-         m1rHe8ZfWiaT3e77liultDj9Jr9okWL2dAPG7X/qLEUgVOxqAOnP1SxuEzpfsiLgmFUm
-         ROc5W/YIbgenX1gOU35wBi70JHYHTvwuJVPjqV43Wgvk6TjzhZ0vXctThLrA1lT0Wlax
-         Ru0GsHUg6QQZlz3Isg0hGqBtoE65jkf0upV0gFR4sELlF4KojwrzY+BrLmamJo/Aqngn
-         1aUIByGViivk0CC63AA8WxgtDLfxMR1VoIEEoZNDVK51p2iPTJxxfSYjDmxiTCVeUA+s
-         lF9g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=IQzIXZlU8C9aTpb4anSBqHr6JonJxwNuyYJPdjOWqlw=;
+        b=WzbOCuA1cZsTtdz3CffDcg6xgLg2SqTsPajewQN3vjAaE74sRF8imtnySGhbj99VRU
+         ZQWggkPFjjfzAgyNbnF+KKBFN12gfm4Hu1YsoVYjM1T5WYPFDFk2G28+nVMt3kmK7ZCn
+         6FXCuu/OZIUXsjFRqlw2797EPuVzDroXfw0Dft0i21JerwHR6jrXppSaelLdEnsQhJeI
+         0OpI5rRMc8CP6/a3hAvQP0alC8e5xJLIR3n8ulZLAf6ZRd9P1OHBvPSwsnfSxBdIdNtb
+         QE9uJY23AfkLwWaK6LR5HRVZ6DbcZvHPQy0LYCWrpEPezL/+c0HSoMwIG5JIpnZnzTKV
+         BpJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zwqctMwpNf7dB2zWoAqq/Xp2sUiilcyfims9A3qRisg=;
-        b=IuQsMfxqkBDImTFY562VxhWKh9Sb7B6VVaGMtBaVuOtdT7Ce6m6PXXt2a1WVOdCGzH
-         yZsaMbuxzHzejq8FgAqs9sZSlWJzd+AHAocIhLcbUXIq/yzUNRwBc/whfxIt2l80tq99
-         BjwDBqcrj/m/50liubvPh7JQ8fpW0tW3PAPLT1gFHIC8ug/QGX6Mscl/rPziCPLp7Iuh
-         RwgV36vyVL38zSYkA7G1OAS/ezbHmkkrJgSz8/3/2cLr1W7w1MnTxEM9cd3JoFGG6Jyj
-         oFRiPUM5GAd9wX/3+NttWYRMx41y5qcsRjjLSr220OQi2jgRQQDTzCpq7qtWDGx9UB4O
-         W5GQ==
-X-Gm-Message-State: APjAAAXjAI2cJaJA+u5LNHZ6W7SAkab03fQfuYo+m6O87kZ8HuaKF9EA
-        rMEL+In/qacnbcWH4QGm4flIa+NrjHU=
-X-Google-Smtp-Source: APXvYqyYWDRa6+XrC9/QBnPNga3bN0sj3PJKEFNnWJcTCSmBuQVh9CVwWwQbL6jjjbz/kbkJ3eXTCw==
-X-Received: by 2002:adf:e74f:: with SMTP id c15mr40555582wrn.23.1555214149399;
-        Sat, 13 Apr 2019 20:55:49 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id e12sm45007885wrt.94.2019.04.13.20.55.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 13 Apr 2019 20:55:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Apr 2019, #02; Wed, 10)
-References: <xmqqr2ab2gs6.fsf@gitster-ct.c.googlers.com>
-        <CAP8UFD2KsjPo7G0BtzXfA3gyoUyR7y_WsNLm3mn39O8h4n+Kfw@mail.gmail.com>
-Date:   Sun, 14 Apr 2019 12:55:48 +0900
-In-Reply-To: <CAP8UFD2KsjPo7G0BtzXfA3gyoUyR7y_WsNLm3mn39O8h4n+Kfw@mail.gmail.com>
-        (Christian Couder's message of "Thu, 11 Apr 2019 17:06:06 +0200")
-Message-ID: <xmqqftqlw88r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=IQzIXZlU8C9aTpb4anSBqHr6JonJxwNuyYJPdjOWqlw=;
+        b=mwC2HLhii4WeAZ9xqYtMQAP+B9QioDnPbRXJRMAUv/QlErZSDzOM/Cm3x4oAiUXOEB
+         xG493ekGBRXDf4dteR6YOdVAQDDHBhqs2pQjLwjmP1QHNv697fo/dgVrlw8qVLTWBbUL
+         Q/6SB9gNmwLvvExf7k3ixK6VQsNzAKmME+0LmQx+EDJ0rFjyBMlF7tZnnm8OazYoAmLv
+         dctrXAih1mVVyA1uGBx8WShSwKyNNsrhygDc/BBFMI6EHEcIBwtusiQ20BkYV4mqB6fO
+         B/8mUhoD3JJeLOTWfszjfbzkwCQDlfomxqAUrYb+Ohx/Kc4u66zPHEJOxSyDIRu1u2nH
+         IhzQ==
+X-Gm-Message-State: APjAAAV73FpOGP7onUf4vcsF95kDpPbr1vQIQyzIgXD7Kuc8rKS7Z9y2
+        PCBJF9k0s1VIJVVKDTbtmuY=
+X-Google-Smtp-Source: APXvYqxJCsc4kXTXdk5ebkHEFQGMiVSD47wd3lhMR0jlI8zzf0Iobj2uCmqr4U488ndSd5bsIXhMDw==
+X-Received: by 2002:a65:610a:: with SMTP id z10mr16135220pgu.23.1555216518634;
+        Sat, 13 Apr 2019 21:35:18 -0700 (PDT)
+Received: from ar135.iitr.ernet.in ([103.37.201.80])
+        by smtp.gmail.com with ESMTPSA id m25sm61146219pfa.175.2019.04.13.21.35.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 Apr 2019 21:35:17 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     peff@peff.net
+Cc:     git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com,
+        johannes.schindelin@gmx.de, rohit.ashiwal265@gmail.com
+Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with write_block_or_die()
+Date:   Sun, 14 Apr 2019 10:04:09 +0530
+Message-Id: <20190414043409.9547-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190413013451.GB2040@sigill.intra.peff.net>
+References: <20190413013451.GB2040@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hey Peff!
 
-> I can send a new version where the top two commits have the following titles:
->
->   - replace: peel tag when passing a tag first to --graft
->   - replace: peel tag when passing a tag as parent to --graft
+On 2019-04-13  1:34 UTC Jeff King <peff@peff.net> wrote:
 
-If/when there are other things that needs fixing in the series, that
-may be worth doing.
+> What is gzwrite()?
+> [...]
+> I think it would be less confusing if this just factored out
+> write_block_or_die(), which starts as a thin wrapper and then grows the
+> gzip parts in the next patch.
 
-Thanks.
+You are right, it might appear to someone as a bit confusing, but I feel
+like, this is the right commit to put it.
+
+> Is it OK for us to ask about the truthiness of this opaque type? That
+> works if it's really a pointer behind the scenes, but it seems like it
+> would be equally OK for zlib to declare it as a struct.
+
+It would be perfectly sane on zlib's part to make gzFile a struct, and if
+so happens, I'll be there to refactor the code.
+
+Regards
+Rohit
+
