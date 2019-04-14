@@ -2,129 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81ED720248
-	for <e@80x24.org>; Sun, 14 Apr 2019 21:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D73C020248
+	for <e@80x24.org>; Sun, 14 Apr 2019 21:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726523AbfDNVJv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 17:09:51 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36961 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbfDNVJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 17:09:50 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w10so19199072wrm.4
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:09:49 -0700 (PDT)
+        id S1727020AbfDNVKm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 17:10:42 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:43771 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbfDNVKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 17:10:42 -0400
+Received: by mail-qk1-f194.google.com with SMTP id c20so8702493qkc.10
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oaAakVCjgt/IsKWlGITLLkRYvqHQoTy5lBbU516cqbQ=;
-        b=EbYnNDPb1IBkQMvqsLd0uZCC/X77A6cFA/cYhtpPN3yUBTv98uCIYDfQKOtOoDitj2
-         dHciuyJnIwnC9y4Zq47nAoMF0/95pJ9JBiWTmT2TyZa0jlROwuOezixFYrkcyQemhpBl
-         18TWlJHlJAsxMyXcyL+qbrxdoYAjBhWyvpSDvY769GZU446KrgHJmtLMA90ZL95t1Yff
-         u4WdivnKYW02e7w2ZIFjVdXKnWLa9DZPS+/5MPNsf+dSDISnwvqeXOf1AdngmYvSPMfr
-         vCCPQOvG7eUWTSCRowhqlSPGj9czSSwrgBboGDa0YhFg8LFAowts4PRbDV1VixzQl511
-         XAQA==
+        d=platin-gs.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y0Ssvwf5ms8WDlBQIxNt5hMYANM7+3W3CKJi61gOEeA=;
+        b=bPrq7jAUCAJEfpmjoQY/zYi5k5gif+CETbARgWMVhEmLCBQgOsToD6z5noRVmZ4C7q
+         SePhaJZ3Ar7TLVOF+op31TdrauWX6jb3vyJF6PxtU+FK1/2o4GCz/cFB/drzUtSIG/JN
+         f8FOP3O6ayeQyNPy4/sfjGl8nnOuGRKpUhIEcrGLQwG1VtBxf1m0YjzXTlQzde9A4R2b
+         FAgAv9D1jvO0ihj3nD7sbaqdkspoFmuz0afuUFOKZrS1wsRS76g7PcogNEpmu0MYyl4O
+         aoXozUZxVxhuu6WukggDwSYM7Iz5hVnGetHyPUG1Mp1/DS96naYoNhhRb1KoswEx5oVb
+         OcTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oaAakVCjgt/IsKWlGITLLkRYvqHQoTy5lBbU516cqbQ=;
-        b=TUA6SdYm34R7Sw4bZRS0tQ4RfRO+Wk84xkNTAJbau1r72j33ZNB16BPhDVjDiSzxVb
-         PJ+ydoXJQQi9OhRwF78WwGlLsmDO8zoc8gB0MRAEOwwEjQZmUBhzw8r8M6FOxx5kYuUb
-         TsPG+nBLr8G00G82HbPXyLM/5HQbv4DQhZZ164Gt/H6zeHQBzC69ZsJO/o0RZWWs6bjj
-         OPoVdseUdR1CVBvJ8sxEB9zzxgUDFHQKr6JoSp9qZSihTjH33kOqc3+MP8yurIa5iUFE
-         w3qxbwrxarn4oCF2GmmEGeI3oyos0UdqXnAboOGeG/87i/9TQkfHvv5L8kgZBtUZpfEj
-         vVWw==
-X-Gm-Message-State: APjAAAU75JY63ZEk4L1+HN/00JAgBLyc+xo3/V8yBn7OrfXP1Xkkm+Wq
-        FF7aK+YtcHL4Z093R4xDoBfHmXlE
-X-Google-Smtp-Source: APXvYqzRpTBHaRe8M62Fcy9SYgNF+8TH1S1XlTZQXJ8rsGsQ8VIAtnZrhD5tO5yxTwbCXWwkqRxxOw==
-X-Received: by 2002:adf:f1cc:: with SMTP id z12mr30837604wro.180.1555276188640;
-        Sun, 14 Apr 2019 14:09:48 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id y3sm16396543wmi.27.2019.04.14.14.09.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 14 Apr 2019 14:09:47 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y0Ssvwf5ms8WDlBQIxNt5hMYANM7+3W3CKJi61gOEeA=;
+        b=BlI1S6hgzvlNsj2UX4V+aATG91oxv+bg27ShXf1O+xwYlEvltpYONwETuCQ+3344y7
+         fN2SS9s/w7VnKSy3RWP+obVcqGKyBOWWfG+8WYzw4snwjQsrgKw8Gv+ms6gmnnoZndlw
+         EknCGYzCiDVZ3aGtH32dh2Jc3PAKsmC0rpKzKmg0sdc8F9hEA/skjWzXSi9oVhec8a/K
+         1G0hYE3slzBzaIj+YcQ90vBJHHXqmki+2PxqomzfKj0ltMLAWqwabjBTEL/E+2EX75hN
+         PpCARWwGcW4szshIC8uIsUFfInuojj66623u/JpkIZSK1lnY70lqsqpnG/+SImGorBP8
+         GOwQ==
+X-Gm-Message-State: APjAAAUneMQ42b+qJG/4Ytb+GyCwRq3yaXj1L7p0bhF9envD8HEC5Gr4
+        bd3lUfim9Ic5GwZH7eY9/z8zeO4b43rvtnhD4as=
+X-Google-Smtp-Source: APXvYqxzeOuVNJvCsTJ4q0+M9L4EG7Rejc552SrskmAmRao0WyPPEGqkP7YnwSlbn6BfVl+/0l1ZI9vrO9epdb+wHC4=
+X-Received: by 2002:a37:4a12:: with SMTP id x18mr52430311qka.184.1555276241822;
+ Sun, 14 Apr 2019 14:10:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190410162409.117264-1-brho@google.com>
+In-Reply-To: <20190410162409.117264-1-brho@google.com>
+From:   Michael Platings <michael@platin.gs>
+Date:   Sun, 14 Apr 2019 22:10:30 +0100
+Message-ID: <CAJDYR9SL9JCJjdARejV=NCf9GYn72=bfszXx84iDc416sZm31A@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] blame: add the ability to ignore commits
+To:     Barret Rhoden <brho@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [RFC PATCH 4/4] range-diff: add section headers to the outer hunk header
-Date:   Sun, 14 Apr 2019 22:09:33 +0100
-Message-Id: <20190414210933.20875-5-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e1
-In-Reply-To: <20190414210933.20875-1-t.gummerer@gmail.com>
-References: <20190411220532.GG32487@hank.intra.tgummerer.com>
- <20190414210933.20875-1-t.gummerer@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the section headers we introduced in the previous commit to the
-outer diff's hunk headers.  This makes it easier to understand which
-change we are actually looking at.  For example an outer hunk header
-might now look like:
+Hi Barret,
 
-    @@ -77,15 +78,43 @@ modified file Documentation/config/interactive.txt
+This works pretty well for the typical reformatting use case now. I've
+run it over every commit of every .c file in the git project root,
+both forwards and backwards with every combination of -w/-M/-C and
+can't get it to crash so I think it's good in that respect.
 
-while previously it would have only been
+However, it can still attribute lines to the wrong parent line. See
+https://pypi.org/project/autopep8/#usage for an example reformatting
+that it gets a bit confused on. The patch I submitted handles this
+case correctly because it uses information about the more similar
+lines to decide how more ambiguous lines should be matched.
 
-    @@ -77,15 +78,43 @@
+You also gave an example of:
 
-which doesn't give a lot of context for the change that follows.
+        commit-a 11) void new_func_1(void *x, void *y);
+        commit-b 12) void new_func_2(void *x, void *y);
 
-For completeness also add section headers for the commit metadata and
-the commit message, although they are arguably less important.
+Being reformatted to:
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- range-diff.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+        commit-a 11) void new_func_1(void *x,
+        commit-b 12)                 void *y);
+        commit-b 13) void new_func_2(void *x,
+        commit-b 14)                 void *y);
 
-diff --git a/range-diff.c b/range-diff.c
-index aa466060ef..15ac54f369 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -124,8 +124,10 @@ static int read_patches(const char *range, struct string_list *list)
- 			strbuf_addstr(&buf, " ##\n");
- 		} else if (in_header) {
- 			if (starts_with(line.buf, "Author: ")) {
-+				strbuf_addstr(&buf, " ## Metadata ##\n");
- 				strbuf_addbuf(&buf, &line);
- 				strbuf_addstr(&buf, "\n\n");
-+				strbuf_addstr(&buf, " ## Commit message ##\n");
- 			} else if (starts_with(line.buf, "    ")) {
- 				strbuf_rtrim(&line);
- 				strbuf_addbuf(&buf, &line);
-@@ -387,8 +389,8 @@ static void output_pair_header(struct diff_options *diffopt,
- 	fwrite(buf->buf, buf->len, 1, diffopt->file);
- }
- 
--static struct userdiff_driver no_func_name = {
--	.funcname = { "$^", 0 }
-+static struct userdiff_driver section_headers = {
-+	.funcname = { "^ ## (.*) ##$", REG_EXTENDED }
- };
- 
- static struct diff_filespec *get_filespec(const char *name, const char *p)
-@@ -400,7 +402,7 @@ static struct diff_filespec *get_filespec(const char *name, const char *p)
- 	spec->size = strlen(p);
- 	spec->should_munmap = 0;
- 	spec->is_stdin = 1;
--	spec->driver = &no_func_name;
-+	spec->driver = &section_headers;
- 
- 	return spec;
- }
--- 
-2.21.0.593.g511ec345e1
+The patch I submitted handles this case correctly, assigning line 12
+to commit-a because it scales the parent line numbers according to the
+relative diff chunk sizes instead of assuming a 1-1 mapping.
 
+So I do ask that you incorporate more of my patch, including the test
+code. It is more complex but I hope this demonstrates that there are
+reasons for that. Happy to provide more examples or explanation if it
+would help. On the other hand if you have examples where it falls
+short then I'd be interested to know.
+
+The other major use case that I'm interested in is renaming. In this
+case, the git-hyper-blame approach of mapping line numbers 1-1 works
+perfectly. Here's an example. Before:
+
+        commit-a 11) Position MyClass::location(Offset O) {
+        commit-b 12)    return P + O;
+        commit-c 13) }
+
+After:
+
+        commit-a 11) Position MyClass::location(Offset offset) {
+        commit-a 12)    return position + offset;
+        commit-c 13) }
+
+With the fuzzy matching, line 12 gets incorrectly matched to parent
+line 11 because the similarity of "position" and "offset" outweighs
+the similarity of "return". I'm considering adding even more
+complexity to my patch such that parts of a line that have already
+been matched can't be matched again by other lines.
+
+But the other possibility is that we let the user choose the
+heuristic. For a commit where they know that line numbers haven't
+changed they could choose 1-1 matching, while for a reformatting
+commit they could use fuzzy matching. I welcome your thoughts.
+
+-Michael
