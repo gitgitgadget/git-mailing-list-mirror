@@ -7,62 +7,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5FAB20248
-	for <e@80x24.org>; Sun, 14 Apr 2019 02:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F13D120248
+	for <e@80x24.org>; Sun, 14 Apr 2019 03:45:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727191AbfDNCgC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Apr 2019 22:36:02 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45233 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727178AbfDNCgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Apr 2019 22:36:02 -0400
-Received: by mail-wr1-f67.google.com with SMTP id s15so16970885wra.12
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 19:36:00 -0700 (PDT)
+        id S1727177AbfDNDpl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Apr 2019 23:45:41 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33481 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727156AbfDNDpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Apr 2019 23:45:41 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z6so3434728wmi.0
+        for <git@vger.kernel.org>; Sat, 13 Apr 2019 20:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=U+y0qQKcryO3zkX5E7J9dwbtw1EleBN5Q9J8qxEzLGQ=;
-        b=RkbdIjc6rtfZ6oPR895qxtkRDCKp8KcMXP7NO6rvzWxEl+3Qq4CmegJNoL87x2N9pr
-         gLySrIcsXE1+pBXvcSYeyGO9T50ufjPcqRyjLDv3UT72O8cKhlyGuirPSSPlpZ/P5PlB
-         t61ZGroT5GGwTgZ4FpJ650QiqeqW8HJSLCHR5nJZ3hknkahIlh1rICoUYZAb4AwxZCzs
-         uqO3Qtc6+WDjXSW+BgbyZMKHMKc3/TxHfZC130dIkYcxH6SeD/3B5obeoq/oVs1aeaNp
-         Tx2WxHIsUhTau3srYKsSKfwkQMrJXUeP7Z5ZeuN60V7kgqltUwb6a7LVn4h5lATBvtzQ
-         nX0w==
+        bh=BnDYf7ghYvxX+rnTHybJv51ORQWGCZv1Uq2EMLHJxGM=;
+        b=q88zgRGeMCASOAcsUbV1VBjSKE4RcVi2Td7ofOS9lXVcdsPu7uJMz7CME3NAeXusan
+         VO12FlZYcAHsiIszYbaMjcg0/9XUiXzADqABjnqRDOXh0A358lD5OVyzWO9DS2zjZ5ul
+         /oaLqHJ65y3bdXlcw0LFH1OOHefxpT7h5Jrwh2Fe5Ntevfa+KvFfvbh4td+hIBK7S5q1
+         rHxHxdi2lUWxBQKhDVTRLUupNhMWQdCrMEuQMUd/mpylgvaqroqiJw2aTFWc5paRFxZJ
+         0YYcWmY4pMhE61XBo4bD2rFH/j1DDI01Dc2bdxsHeAeG+kzr6nfVdZISu5gEKKgbfAHi
+         d+xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=U+y0qQKcryO3zkX5E7J9dwbtw1EleBN5Q9J8qxEzLGQ=;
-        b=NC3g/XAflhufDyjTFN82mZynqxXlCiIAf71kAQ5SJ3hikm0XIGqQS4TWrDouLp9MLE
-         /CpCdrLHlGo4dt5cRUDHdhXXSseu8uxLBxdBZWAaMUAT1Q5MgVIOX7aN1Hdh3JtV0orL
-         CVaXoEsARO2tskS5gYnj8xSVMR9sFAOrsZPyVeI2qHYXH9anHZv+7/VTlZw5dOaqAZqd
-         htUwH1exREGAOyi8OAvPWBW3ykocmD9c+cocyov2FlyECP9rP3cbbpCDFMqlHISeFQN8
-         6ZdghxYMA4AAMq1YuLrmhInctwPz8xIq81lblZQriKufxnPWqF+jcP/NHxw3b0h1Nart
-         BVJA==
-X-Gm-Message-State: APjAAAWdxkXDienCZ7G0DDfWpTrf6xUQ9+CU8Qyu3v2aHhgPtR6YLHdM
-        L/0Mfg65VaZApqoydRKYMrg=
-X-Google-Smtp-Source: APXvYqwJy+hngLBZIfKwGzDIVdkV1VhHaYjrwGJ9onQflJnE1D5ci9SI7PG7JZ7CPc/q0XYky1V7Xg==
-X-Received: by 2002:adf:f088:: with SMTP id n8mr43238033wro.112.1555209359830;
-        Sat, 13 Apr 2019 19:35:59 -0700 (PDT)
+        bh=BnDYf7ghYvxX+rnTHybJv51ORQWGCZv1Uq2EMLHJxGM=;
+        b=hjuxa0NUHBJNLm3muaFR6sxtlYCjhh7vaV/OM7fOAbJ+p2a4OPH3MAuIgHweexQFg0
+         QgSl7t17t5BUlwgjyfyi6BsnHuSeog5x2tmZDbz6gJndpGN+hUIHV86d4BrcXceTmMWB
+         u+bumft+mi5HwJTQiwnOLPXKPplg7t9EqDjA79Svfq6edKXYLv9XI7FP8aMeZYlTESav
+         uztwSPh9Mpn3VHkUJOBDfMOP7mrfWs/iRgwvCR0c+9d16SZBuhWJZWuiV34tm6mYMmwP
+         50xmgT9lscWzC0td0A3Z96GHj0i/v/Z7f5ftvw0/gUCV7+n4xUGfPnu3MFTeYCcqG7rJ
+         cxUQ==
+X-Gm-Message-State: APjAAAUyTu+/gepIrv3hgbc/IFd/m5GJ51qXvAY5TLUoSB6I3wLguQKZ
+        dZ02hFBa0cHgKu885QnI40w=
+X-Google-Smtp-Source: APXvYqwd0M+N0IFnPT8AtvfZEY3aGaW/hWkqQWsjiDUYWQYXm92a25ha3PoseaxITgPjggnTo60pKg==
+X-Received: by 2002:a1c:20cf:: with SMTP id g198mr16686709wmg.42.1555213539374;
+        Sat, 13 Apr 2019 20:45:39 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id r6sm10913100wmc.11.2019.04.13.19.35.58
+        by smtp.gmail.com with ESMTPSA id x18sm14762154wmi.6.2019.04.13.20.45.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 13 Apr 2019 19:35:59 -0700 (PDT)
+        Sat, 13 Apr 2019 20:45:38 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 8/8] tests: disallow the use of abbreviated options (by default)
-References: <pull.167.git.gitgitgadget@gmail.com>
-        <pull.167.v2.git.gitgitgadget@gmail.com>
-        <a27d316855a833aa1726fc20c905dc40e41adf2f.1555061837.git.gitgitgadget@gmail.com>
-Date:   Sun, 14 Apr 2019 11:35:58 +0900
-In-Reply-To: <a27d316855a833aa1726fc20c905dc40e41adf2f.1555061837.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 12 Apr 2019
-        02:37:24 -0700 (PDT)")
-Message-ID: <xmqqv9zhwbxt.fsf@gitster-ct.c.googlers.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Michael Platings <michael@platin.gs>
+Subject: Re: [PATCH v6 4/6] blame: add config options to handle output for ignored lines
+References: <20190410162409.117264-1-brho@google.com>
+        <20190410162409.117264-5-brho@google.com>
+Date:   Sun, 14 Apr 2019 12:45:37 +0900
+In-Reply-To: <20190410162409.117264-5-brho@google.com> (Barret Rhoden's
+        message of "Wed, 10 Apr 2019 12:24:07 -0400")
+Message-ID: <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,92 +74,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Barret Rhoden <brho@google.com> writes:
 
-> +	disallow_abbreviated_options =
-> +		git_env_bool("GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS", 0);
+> Sometimes we are unable to even guess at what commit touched a line.
+> These lines are 'unblamable.'  The second option,
+> blame.maskIgnoredUnblamables, will zero the hash of any unblamable line.
+>
+> For example, say we ignore e5e8d36d04cbe:
+> 	e5e8d36d04cbe (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
+> appears as:
+> 	0000000000000 (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
 
-... which means that the value of the environment variable follows
-the usual "true, yes and 1 all activate it"; very good,
-
-> diff --git a/t/README b/t/README
-> index 656288edce..9ed3051a1c 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -399,6 +399,10 @@ GIT_TEST_SIDEBAND_ALL=<boolean>, when true, overrides the
->  fetch-pack to not request sideband-all (even if the server advertises
->  sideband-all).
->  
-> +GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=<boolean>, when true (which is
-> +the default when running tests), errors out when an abbreviated option
-> +is used.
-
-OK.
-
-> +test_expect_success 'GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS works' '
-> +	env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false \
-> +		test-tool parse-options --ye &&
-> +	test_must_fail env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true \
-> +		test-tool parse-options --ye
-> +'
-
-The feature is activated for all tests unless otherwise noted, and
-the above marked the places that need to be "otherwise noted" in a
-reasonable way.  Good.
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 562c57e685..f1a0fea4e1 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -57,6 +57,13 @@ fi
->  . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
->  export PERL_PATH SHELL_PATH
->  
-> +# Disallow the use of abbreviated options in the test suite by default
-> +if test -n "${GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS:+isset}"
-> +then
-> +	GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true
-> +	export GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS
-> +fi
-
-If the original environment has it as flase, as it is set, the
-substitution will yield "isset" which is not an empty string, so we
-assign true.
-
-If the original environment is not set, or set to an empty, however,
-the substitution will yield an empty string, so we won't touch the
-variable.
-
-I am not sure in what situation the above behaviour becomes useful.
-
-Do you mean more like
-
-	if test -z "$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS"
-	then
-		... assignment ...
-	fi
-
-IOW, we'll take an explicit GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=false
-as a sign that the developer for whatever readon wants the disambiguation
-code in parse-options to kick in for all uses and allow a shortened option
-names?
-
-If on the other hand you are protecting our tests against those
-who casually have the environment set to false, because they know
-some of the scripts they use are sloppy *and* for whatever reason
-they anticipate that someday we will start to disallow abbrevated
-options by default?  If so, an unconditional assignment of true
-would be more appropriate.
-
-I think I can agree with either of the two positions (i.e. we let
-those who explicitly want to decline do so, or we unconditionally
-make sure we catch issues in our tests), and I do not think of a
-third position that are different from these two and that would make
-sense.  Between the two, I'd probably vote for the latter if I was
-pressed, but even then that is not a very strong preference.
-
-Thanks.  I very much like the premise of this series, and the above
-hunk stood out in the range-diff in 0/8.
-
-
+Wouldn't this make it impossible to tell between what's done by such
+a commit that was marked to be ignored, and what's done locally only
+in the working tree, which the users have long accustomed to see
+with the ^0*$ object name?  I think it would make a lot more sense
+to show the object name of the "ignored" commit, which would be
+recognizable by the user who fed such an object name to the command
+in the first place.  Alternatively, perhaps the same idea as replacing
+one of the hexdigits with '*' used by the other configuration can be
+applied to this as well?
