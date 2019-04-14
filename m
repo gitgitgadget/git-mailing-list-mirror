@@ -2,173 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8476D20248
-	for <e@80x24.org>; Sun, 14 Apr 2019 13:24:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60D5220248
+	for <e@80x24.org>; Sun, 14 Apr 2019 14:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725829AbfDNNYg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 09:24:36 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36297 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725805AbfDNNYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 09:24:36 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y13so18220794wrd.3
-        for <git@vger.kernel.org>; Sun, 14 Apr 2019 06:24:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=x+Q1qdXJ6jujMw1CiJpPb/s9fWJDLcY9DJ8llAFxNq0=;
-        b=oK5R52mkpGyhbGBKl+kcCOL6YkdepUu0VtU0xUJh4HdN6z3AnnMxIPA1fMYIxgoQ0j
-         2FwNpaa/oLuUAf1lUQ8mJ7cm2QtqTDDFiNebIR+/A5oj+tMWV6UFTp5PUzIj4rTqlhVC
-         iAVKhdIufiEdZx2qKT2sslLgBEHHm1hR8ORry3kpHHmH/qznAkuOTX43TpAvYFYTuevX
-         l4OCYocvdZdcxS0NzhI38Cs4LPbMCSHpqBdmdAUohAZr3jb4CO+q+YC6H289PYPPQZDI
-         8F/e/qlfQyQTzejvaD8lxAZuivwZUbggA0WWGAQNsQ5LU+Vn2D3LhSReCfF1a2onBKkO
-         WgLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=x+Q1qdXJ6jujMw1CiJpPb/s9fWJDLcY9DJ8llAFxNq0=;
-        b=lXjvJu8IGf4pI4Epzs9Xch4Ami0XmlLJ93JdqbMbLJUu/U2P0UBnec4IWopP6akmmf
-         a/f5+TARD7itI5gnaFwAbOVmS8vuB2hel2VoMYqFfrWV5ajgDQOBDtRVxtfRE3vRxxOc
-         zS0qEMCeTzpfflJZ8SGs9C3sc7fjRdPgLNchTVUxYqSraSYdZuL5wifvHOZ5zILDTF8y
-         yi5I1jIXO/1HUFZOolX1YvIh6pO/bxPb1xmeP68lV4rQyo4lfjLNQGHTpGvFwaQmPmnX
-         Hbkk6o49977JHOoWgdjzhzLBebLVI7IvqpSbJh9nlGcwA8/AJGyaSANDe7T5kboFc+xv
-         35tg==
-X-Gm-Message-State: APjAAAXtjl2VaRgF7M5h6HBkZIPGUNB96jFKA6EF8e5tRXJ9DAzm81Qh
-        HgwykL+RhdW98dTSeXDomUlGknRi
-X-Google-Smtp-Source: APXvYqzL8P1uBbGt0ubLiUv7ewKQoXAKsj5mGEzSFqx6UI0AHL7WBTbIWV7zQvmQ0MXsvy83ffvvsQ==
-X-Received: by 2002:adf:e443:: with SMTP id t3mr16601321wrm.257.1555248273875;
-        Sun, 14 Apr 2019 06:24:33 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id g10sm40552336wrq.2.2019.04.14.06.24.32
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Apr 2019 06:24:33 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [BUG] rebase --interactive silently overwrites ignored files
-To:     wh <microrffr@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-References: <CAL_tzDGRQ4BzJ4c6QypXfBXQNQYocbKbJSBOHhBBB2TwQQPCGA@mail.gmail.com>
- <2643a200-5356-f3bc-1715-3f34b5f19a5b@gmail.com>
- <CAL_tzDFQQtDYMStN+RDVYN_TzJmO+kufMhG9PGHwvsUWREpgWQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <a3c544e2-2087-1877-38e3-c85651db32f5@gmail.com>
-Date:   Sun, 14 Apr 2019 14:24:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726237AbfDNOeV convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 14 Apr 2019 10:34:21 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:30472 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbfDNOeV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 10:34:21 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x3EEYFrn044238
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 14 Apr 2019 10:34:16 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
+        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com> <874l71fxmg.fsf@evledraar.gmail.com> <20190413214736.GD15936@szeder.dev>
+In-Reply-To: <20190413214736.GD15936@szeder.dev>
+Subject: RE: [BUG] GIT_SSH_COMMAND is not being decomposed
+Date:   Sun, 14 Apr 2019 10:34:07 -0400
+Message-ID: <001401d4f2cf$21cafc10$6560f430$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <CAL_tzDFQQtDYMStN+RDVYN_TzJmO+kufMhG9PGHwvsUWREpgWQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGpuMnQep3MvtsjO/08o+Xas343GAFQ9z8cANXpddqmgPEg0A==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/04/2019 02:59, wh wrote:
-> Thanks for the info about the upcoming "precious" attribute. Looks useful.
-
-Hmm, unfortunately it's not looking so hopeful now [1]
-
-> I didn't get the impression that Git normally overwrites ignored
-> files. I ran some more experiments:
+On April 13, 2019 17:48, SZEDER Gábor wrote:
+> To: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Cc: Randall S. Becker <rsbecker@nexbridge.com>; git@vger.kernel.org
+> Subject: Re: [BUG] GIT_SSH_COMMAND is not being decomposed
 > 
-> git rebase FETCH_HEAD        # bails
-> git rebase -i FETCH_HEAD     # overwrites
-> git merge FETCH_HEAD         # bails
-> git reset --keep FETCH_HEAD  # bails
-> git reset --merge FETCH_HEAD # bails
-> git checkout FETCH_HEAD      # overwrites
-> # without feature 2 locally:
-> git merge FETCH_HEAD         # overwrites, fast-forwards
-> git merge --no-ff FETCH_HEAD # bails
+> On Sat, Apr 13, 2019 at 10:39:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > On Sat, Apr 13 2019, Randall S. Becker wrote:
+> > > I am encountering a problem on one of our NonStop platform variants
+> > > where the GIT_SSH_COMMAND string is not being broken into
+> > > constituent parts. This is causing SSH to not run properly. As
+> > > background, SSH is not in a standard location and has non-standard
+> > > required arguments. This also occurs with core.sshCommand. The
+> situation is:
+> > >
+> > > git config --global core.sshCommand '/G/system/zssh/sshossz5 -Q'
+> > >
+> > > which correctly sets .gitconfig as:
+> > >
+> > > [core]
+> > >         sshCommand = /G/system/zssh/sshossz5 -Q
+> > >
+> > > When git is run with GIT_TRACE=true GIT_PACKET_TRACE=true git fetch
+> > >
+> > > We get the partial trace:
+> > > 14:19:56.027088 trace: built-in: git fetch
+> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5 -Q' -G
+> > > user@host
+> > >
+> > > The same trace on our systems that actually do work results in:
+> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5' '-Q'
+> > > -G user@host
+> > >
+> > > I need help resolving why this is happening (as in where to look and
+> > > debug the situation).
+> >
+> > This doesn't seem to be documented *explicitly* (except between the
+> > lines & inferred), but it's only supported to pass a *command* there,
+> > i.e. the path of the ssh binary.
+> 
+> 'man git' it quite explicit about this:
+> 
+>   $GIT_SSH_COMMAND takes precedence over $GIT_SSH, and is interpreted
+>   by the shell, which allows additional arguments to be included.
+>   $GIT_SSH on the other hand must be just the path to a program (which
+>   can be a wrapper shell script, if additional arguments are needed).
+> 
+> Quick test shows that the implementation agrees with the
+> documentation:
+> 
+>   $ GIT_TRACE=2 GIT_SSH_COMMAND='/usr/bin/ssh -v' git push -n github
+>   23:39:02.048870 git.c:419               trace: built-in: git push -n github
+>   23:39:02.060821 run-command.c:643       trace: run_command: unset
+> GIT_PREFIX; '/usr/bin/ssh -v' git@github.com 'git-receive-pack
+> '\''/szeder/git'\'''
+>   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
+>   debug1: Reading configuration data /home/szeder/.ssh/config
+>   <... snipt rest of the verbose ssh output ...>
+> 
+> And the config setting works, too:
+> 
+>   $ GIT_TRACE=2 git -c core.sshCommand='/usr/bin/ssh -v' push -n github
+>   23:42:55.277776 git.c:439               trace: built-in: git push -n github
+>   23:42:55.285149 run-command.c:663       trace: run_command: unset
+> GIT_CONFIG_PARAMETERS GIT_PREFIX; '/usr/bin/ssh -v' git@github.com 'git-
+> receive-pack '\''/szeder/git'\'''
+>   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
+>   debug1: Reading configuration data /home/szeder/.ssh/config
+>   <...>
+> 
+> Note that in both cases the trace shows '/usr/bin/ssh -v', IOW neither
+> $GIT_SSH_COMMAND nor 'core.sshCommand' are broken up.
+> 
+> But this is just an avarage Linux box, so perhaps this is a NonStop-specific
+> issue?
 
-Thanks for sharing that, I was assuming the other commands behaved like 
-checkout, I'm intrigued that merge behaves differently to rebase -i as 
-they use the same underlying machinery, I'm a bit snowed under at the 
-moment but I'll try and take a look at what's going sometime in the not 
-too distant future.
+I'm sure it is a NonStop issue. It is interesting that 2.21.0 broke the string apart on the older NonStop variant and not the newer one. But looking at the code, I can't imagine how the string was broken up into parts. Makes no sense at all with xstrdup() and argv_array_push(). 
 
-Best Wishes
+> > See the code around get_ssh_command()
+> > in connect.c. The whole env/config value we look up gets passed as one.
+> >
+> > So if you need arguments you need to create a wrapper script and set
+> > ssh command to that script.
 
-Phillip
+Going forward, I'm going to use (and strongly recommend) a wrapper on both NonStop variants. It's the right way to go, and not only a trivial script but makes configuring communication with upstream servers much easier (there are potentially multiple TCP/IP stacks and multiple SSH d databases available that need to be selected on the sshoss command line). Managing all that in one place is easier than having each user worry about it changing over time.
 
-[1] 
-https://public-inbox.org/git/CACsJy8AEZ-Lz6zgEsuNukvphB9TTa9FAC1gK05fhnie2xtfc9w@mail.gmail.com/T/#u
-> On Fri, Apr 12, 2019 at 9:30 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi
->>
->> On 12/04/2019 00:56, wh wrote:
->>> I'm using git 2.20.1 from Debian. Git is usually careful not to
->>> overwrite untracked files, including ignored files.
->>
->> Git normally overwrites ignored files, so I think in your example rebase
->> -i is working as expected, I'm surprised that the am based rebase does
->> not overwrite the ignored file. There has been some discussion about
->> introducing 'precious' files that are ignored but protected in the same
->> way as untracked files [1].
->>
->> Best Wishes
->>
->> Phillip
->>
->> [1] https://public-inbox.org/git/20190409102649.22115-1-pclouds@gmail.com/
->>
->>    But interactive
->>> rebase doesn't detect this (non-interactive rebase works fine).
->>>
->>> Reproduction:
->>> -----
->>>
->>> #!/bin/sh
->>> mkdir upstream
->>> cd upstream
->>> git init
->>> echo 1 >feature-1
->>> git add feature-1
->>> git commit -m "feature 1"
->>>
->>> cd ..
->>> git clone upstream local
->>> cd local
->>> # write some tools for our own convenience
->>> echo ours >tools
->>> echo /tools >>.git/info/exclude
->>> # start working on a feature
->>> git checkout -b f2
->>> echo wip >feature-2
->>> git add feature-2
->>> git commit -m "wip"
->>>
->>> cd ../upstream
->>> # official tools are available
->>> echo theirs >tools
->>> git add tools
->>> git commit -m "tools"
->>>
->>> cd ../local
->>> git fetch ../upstream master
->>>
->>> # this would be okay
->>> #git rebase FETCH_HEAD
->>>
->>> # problem: overwrites tools silently
->>> GIT_EDITOR=true git rebase -i FETCH_HEAD
->>>
->>> cat tools
->>>
->>> -----
->>>
->>> Expected: `git rebase -i` fails because it would have to overwrite the
->>> untracked "tools" file. Contents of tools file remains `ours`.
->>>
->>> Actual: Contents of tools file becomes `theirs`.
->>>
+Thanks again,
+Randall
+
