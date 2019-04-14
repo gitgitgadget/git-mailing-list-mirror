@@ -2,72 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44BEC20248
-	for <e@80x24.org>; Sun, 14 Apr 2019 04:38:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 533A820248
+	for <e@80x24.org>; Sun, 14 Apr 2019 09:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725786AbfDNEhK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 00:37:10 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:36354 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725772AbfDNEhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 00:37:10 -0400
-Received: by mail-pg1-f194.google.com with SMTP id 85so7033879pgc.3
-        for <git@vger.kernel.org>; Sat, 13 Apr 2019 21:37:10 -0700 (PDT)
+        id S1725791AbfDNJlj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 05:41:39 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40835 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfDNJlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 05:41:39 -0400
+Received: by mail-qt1-f195.google.com with SMTP id x12so16011891qts.7
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 02:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eXze/Tys9MalNfasXRvdaEArHC2LVyqrh9zaP4/bWLs=;
-        b=Xar8NPtVsXnedstRQ9Vsxkpx1JWKKxsNBVyX3REHGmRFFN5zJ6Z56114OsCwr24YzG
-         RpAmykBDgVOJpPKxh/7STYkT1OkY/UzzSICXmDwEgYtKa+klr+AL6ooWjY9JHRJus45t
-         dkKUKI1ng6P+TkeMvW/Kt5kRyQ7MJEUooOvc8hCAjXuyxO89mA/vXXK+CjG0LHL4c2tx
-         V974vXa0LNSV87mehQdz7hjYUNaeX0qKcZVRs/DCjPb1awHWEZQ0XZzs+a3/O6+EpucY
-         cY2FydDmt29zPFNWvlzok5jX5PUtTsC+BlN6djI8jLwcTyZVMKeEpmsngSDzr5wHRoFv
-         m/xA==
+        d=platin-gs.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yCh+YjfcsJt5C3DW8nHJgSrhMqsuSfAask352ul39GE=;
+        b=PmLaNnJMXmkoC6htuyuaiv8lq9v2RRYv40pDT/K9+qEZKr1G8UGWfPtS2KDhY2jFbH
+         /ML+umXjwg/FAEpos5sHprXsFCglQXUzrXdJqV6XZ6UJ7EDBNzAQpHZ6YcXhsYLvEqV5
+         BkY0MhdnC7CF+QxP2M1qw7Xr4M2584YfA3aTDrseDwld4fDKWTLnzkhwRKNBmaX76kwu
+         WaNRVZoRlf0Y8B5LHNRZcDPWHpAsArSvAvQ2Y7Cjn/7NZyhOUZ1CfAgiAGS6CU+/nPbP
+         zZAUZIOUutQfRE0Gy+WnXoqvkcVeKleVvGWDYGhnK/yjjLjuSiLd9UpEFiS1D66fXeQ9
+         y7JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=eXze/Tys9MalNfasXRvdaEArHC2LVyqrh9zaP4/bWLs=;
-        b=C1IjT7IEVa2hhd9UZpdGl9sZijlMMyFoGi+/cPc2aOqTH+T/gLBc8CAmhnNTQu0nGm
-         Ah9qWn2VHHpG+6MzOql7xXf18aEGVz2f81YaAWX1g0+RwWxLLLRrCJVJHOlGoZY8hRSo
-         KdCmBoIP424sxQAPJX2+1JfeejmpOaCia2SnvnXD1fiTt0B1ELa8denbGoYJJ/CA3/UK
-         ZYiBjA69Ilo+4TqcFsQSll+IWGq5Ez/Yle0bcKPT1hMidsQAn46wGJRXFzUmHbJe+Y7t
-         2dTcWLl4hkzA1cH+AMfARTapdQucwSwI5xzeCOAgQAYUdNGWHudiSC9xb55OphCaxnxv
-         LeOQ==
-X-Gm-Message-State: APjAAAUm3C5DV8a6FDG+XRNz0ArcrTKxmpCg9JfbqekSBjT4rmwuQiGw
-        zn5KngYW4vxpwgn8mGpnzeY=
-X-Google-Smtp-Source: APXvYqxczEMgH6OzKV/LyCERSxLY6OQGc/AAiQfukjTgwcXeSCHxd9VEdVuNRaguaMra6anwYHCUdg==
-X-Received: by 2002:a62:41dc:: with SMTP id g89mr67711314pfd.109.1555216629619;
-        Sat, 13 Apr 2019 21:37:09 -0700 (PDT)
-Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id b7sm131336825pfj.67.2019.04.13.21.37.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 Apr 2019 21:37:08 -0700 (PDT)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, gitgitgadget@gmail.com,
-        johannes.schindelin@gmx.de, peff@peff.net,
-        rohit.ashiwal265@gmail.com
-Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with write_block_or_die()
-Date:   Sun, 14 Apr 2019 10:06:02 +0530
-Message-Id: <20190414043602.9729-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <xmqqzhouwizg.fsf@gitster-ct.c.googlers.com>
-References: <xmqqzhouwizg.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yCh+YjfcsJt5C3DW8nHJgSrhMqsuSfAask352ul39GE=;
+        b=WMDwDR/MvQo4TR0eC6MysdKLjoTpW/VOpuGOLXTOraENoY8YuaEEEo7wmiWgP/2b03
+         B09MvcKrslQjs57lYWBnxDol8tVoj8rnY+U5xOV1nMJvjFKeTLxwWowrIutVda39344X
+         WEXOc6drHFUcAOHo7+Y2JD0g82+TmxRBCLhHMD/j2uAKrtYEqnaS2M2OHbkO0nF6VpUk
+         ZM/of27R77CabkSB/k6Y91CEEpXHCsDGy5Tqw1SbFkQUqBPJ0q6vIzB/kh9LIYXAxFeJ
+         OXnONRhMvcINb08XnbkuL24dwoR4xzUyRN0bgrSKuKqv49yB7ORI20+C4/Mhh5dj3uR0
+         Xpsg==
+X-Gm-Message-State: APjAAAXB2XaM2PBuBkUqpT7Xs84CgngCsK/iIGtVFQkLk8fdCXMzXstb
+        r1Bfbujxulhpt3FLN+4/OX0Y2cJNQkg5eHHNIDI=
+X-Google-Smtp-Source: APXvYqxKUSPBR7yYq6tN/Tb3mreRjq+mFDll8AKXQNCb+4jseGXCIZn9bo6HlSBKIGax69AwiY4F6qFoVKS9wbJuxng=
+X-Received: by 2002:a0c:9baa:: with SMTP id o42mr53958386qve.184.1555234898390;
+ Sun, 14 Apr 2019 02:41:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190410162409.117264-1-brho@google.com> <20190410162409.117264-7-brho@google.com>
+ <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
+From:   Michael Platings <michael@platin.gs>
+Date:   Sun, 14 Apr 2019 10:41:26 +0100
+Message-ID: <CAJDYR9RHb89mjT65XVERJfo3cTySi++ZAwOFftBtyXkqfC=JOQ@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] blame: use a fingerprint heuristic to match
+ ignored lines
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Barret Rhoden <brho@google.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey jch!
+>  - I wonder if the hash used here can replace what is used in
+>    diffcore-delta.c as an improvement (or obviously vice versa), as
+>    using two (or more) ad-hoc fingerprinting function without having
+>    a clear reason why we need two instead of a unified one feels
+>    like a bad idea.
 
-I'll change the signature of the function in next revision.
+Hi Junio,
+If I understand correctly, the algorithm in diffcore-delta.c is
+intended to match files that contain identical lines (or 64-byte
+chunks). The fingerprinting that Barret & I are talking about is
+intended to match lines that contain identical byte pairs.
+With significant refactoring, you could make the diffcore-delta
+algorithm apply in both cases but I think the end result would be
+longer and more complicated than keeping the two separate.
+Unlike hashing a line, hashing a byte pair is trivial. Unlike hashing
+lines, all except the first and last bytes are included in two
+"hashes" - "hello" is hashed to "he", "el", "ll", "lo".
+So based on my limited understanding of diffcore-delta.c I think the
+two are algorithms are sufficiently different in intent and in
+implementation that it's appropriate to keep them separate.
 
-Thanks
-Rohit
+Regarding the "old heuristic" I think there may still be a use case
+for that but I'll expand on that later.
 
+Thanks,
+-Michael
