@@ -2,89 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CEF220248
-	for <e@80x24.org>; Sun, 14 Apr 2019 19:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3DD20248
+	for <e@80x24.org>; Sun, 14 Apr 2019 21:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726994AbfDNTi7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Apr 2019 15:38:59 -0400
-Received: from mout.gmx.net ([212.227.15.15]:43933 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725780AbfDNTi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Apr 2019 15:38:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555270732;
-        bh=O93VHpc0/6cKe38PNEJGwb7w4vtRVYMtWTX9EGDJeIo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IHHE9OwYf5UWuwR/6TCkqsNGx45avb6Vw4rW3YIbXvkcRbFVnOAt/ncgpPsJYcK62
-         3LYZcYwEjkXxaYrcDZlnQSW9d3d8gW2Ukf0rZSY91P+0utBi3edKd/dpedTPYFVVwW
-         0WvotQGScUBrLiNjzZXHsEuEgxGKBJvxFjYUFFPw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.172] ([37.201.192.14]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhny-1h5Le93HP4-00HBLE; Sun, 14
- Apr 2019 21:38:51 +0200
-Date:   Sun, 14 Apr 2019 21:38:52 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Luke Diamand <luke@diamand.org>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t9822: skip tests if file names cannot be ISO-8895-1
- encoded
-In-Reply-To: <CAE5ih79dyauRN3Kc17JMAx+p6dWFsy-P_1G=jTug-i9T=RrKLw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904142138130.45@tvgsbejvaqbjf.bet>
-References: <pull.179.git.gitgitgadget@gmail.com> <52681aee0a9657691521baf13f792bcfb9eeb898.1555069181.git.gitgitgadget@gmail.com> <CAE5ih79dyauRN3Kc17JMAx+p6dWFsy-P_1G=jTug-i9T=RrKLw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726283AbfDNVJn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Apr 2019 17:09:43 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36646 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbfDNVJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Apr 2019 17:09:43 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y13so19207771wrd.3
+        for <git@vger.kernel.org>; Sun, 14 Apr 2019 14:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8u5C4U8XEr12LGRS4G68qnbvO8+UjcyjxuJeQvM5c+c=;
+        b=bxwRGXVRWCJRN3INFGZFRqiH+bO4KhFLA5p7acB0ROj4vwkV9jvJL5S1krEo4SP27R
+         sBqoEq5aH7kqwriYrgfUDTk0r2ZxMR8ik+O03XLoKMtXt4n1924cC6ZvJT0MXSH+r/rg
+         NXZ7vPKKTPJJM0wa5kzWNhZaXpCOtioja3zPUUid5U0r6uMxTiIPho7Q2RMQlBKmHvKj
+         2LUwD7hoL6thi09HLnPXmSFQ9+GQSWS9ClT7dFk61jfOWWn4Z54VkxfofVfmRQeueDt0
+         X7txB8aQ4wMHE2mwvqViIu+gC+0I4JXGZ0D1rjIEtw/iQRU1d2sAV7saDBYtWiwUyoxI
+         7N/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8u5C4U8XEr12LGRS4G68qnbvO8+UjcyjxuJeQvM5c+c=;
+        b=ncUQzmRo+Y7pV1zeBjSax2XfkEIQGn6yylXwrCPZVFqMZhguTqBk+3EiyOBZMlQoHJ
+         8f4pcIwGkRTEG6eCGyJ+2SHrOc00xSdJnQ4pZXGWkp6Wvf94NXenXDyMMs6zaYeVWHNl
+         dQ6oKKboHt2jgClDdP/lLkfuiomY2aBqJPqqGs4Zg1P2bS9dGhJ/eAhr6y0Uls2XEs4H
+         oS9ZUynWw9QayZ3Lq/QyEaOs9re8Aj5Bo7HNUfRB25RxRa7E9lfdq+drVf+FTKL8FJxO
+         b0EBMPA00lCCwN/kE3DBZgBXiBqoPpoffCvwcxo70yKZXE1yG5DVbx7O8F7t5QxNbiop
+         z+WQ==
+X-Gm-Message-State: APjAAAUQtb2rf8CyWhoDJsqSBXvkzP+xYnGX66t9yRUU9UVhtGRCgdQH
+        N3IsJGUMeYmvUpCfCbtlaRBO1nq1
+X-Google-Smtp-Source: APXvYqxCUkAvHnacDd6pwgYJuvIidjzvZFAfqw+t4etteKzgV3/hbbbqx2riFsxgPv4oHzqewEiaUg==
+X-Received: by 2002:adf:cf05:: with SMTP id o5mr43232727wrj.8.1555276180418;
+        Sun, 14 Apr 2019 14:09:40 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id o12sm48002701wrx.92.2019.04.14.14.09.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 14 Apr 2019 14:09:38 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [RFC PATCH 0/4] output improvements for git range-diff
+Date:   Sun, 14 Apr 2019 22:09:29 +0100
+Message-Id: <20190414210933.20875-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.21.0.593.g511ec345e1
+In-Reply-To: <20190411220532.GG32487@hank.intra.tgummerer.com>
+References: <20190411220532.GG32487@hank.intra.tgummerer.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:EBmoVdDAlgy7J/if0rnGa8lTaS4wpYrSC0Ttz6V/5uUBaVfI+9D
- DDML5wRsp1gVwYx8x10ZrrkqsSNQ+bkEaWVpWZfZa6hHhZT+4nf2XyB4C5Pz38iqyNm6k9k
- dJ5cRqSf8cQo2Fv8ownYiVPfI44UETgGa8LPrR22EklXRt+u6sszYg73D/MSfyntDGn4d5B
- E0vMcwlY3x73P10fPqXAw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Vo92bjhsM4s=:7GIBy5zN3lx1br8Or/o4T/
- BN1vBouk4BRDgxtyJcZ4EC8cTI/GJ94ZkyPtdMGlhJYF3W7AhKJlMbw8QouHysPbulqK+tzaf
- LTtLM2kJtjXKso+PGdIeek5e6/xps2m2w54dw1QYO2HEq3XWf9mwCih43O805nGvXEds/pVN5
- JGL0RpDvmHvf8Nq+dwsKzMFvi+ezyXZ3084maVGmRVLeL2m0zQhQ4aras8+4DTmq5LMht5PTS
- YHq+7Y6YGWjpBy6eFOq0/bLRsJz++P1TgWYJW+DOUeVIzm5uIFGUch50pRePTGfxLbM2N/4+P
- wqa2JX+EBIaGMsGfl1JHoWtsoKCecSrdTYhSb5JZAAFTki/O2jZT5IW3M2//052UqizXM7WD5
- wKZIX2orI3x+K0A8oBgmExACtM5ebIVk+A9cNyHPr0Hwpd+zn+hl0QTCr18pL3HWDhxYX8V74
- Wk86mKa7uCceprdEd1nOy7drkf/fjNgEOJxZiJpM5HzOYsd4g8hU0le/fjne9VowTkKdEBV3s
- FXfb+Z2U50J7a/sQi2bdJvE6EOKn8Z/bC2lLqIIbv86ylacuq4TDcb7qfOGL7AvAuFvueuuEd
- HTcBL8SlpfBfafT1d2SogcEXSkxt0XCQUXw3bZ6039tSE5komwnmGWiPq42uHO7MQ1E9BekJE
- Vyc9ZgzPewciyH5vWJCTEDYgT8vlOIF1d5pdaXGHsWw1TJpvYdnK2Y9/zCFcxQTpxYc1ECwl+
- 35NzfGxpXZxF50xP9zIp8+RZ5X0Q7yWYEzZUewY9cBUbtENnt8TWFjS7HTwwzEyL2+s8h11mm
- g8bQC5zbk8V35+VqIIUNQmlfcQkITRKfKp227bW+mZAB/mRo9hC16ch2Xl1s5L4JFEXj3sqmH
- HtCnwk6K9GoMRtprZohe4N6Sj+z2vwQ35w8iOOL5mu5W+BG5TnBvmiwFY5mv3aEEopdxe11Da
- pHmBO4nRqSA==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Luke,
+This series aims at improving the output of 'git range-diff',
+especially in cases like the one mentioned in [*1*], where a diff
+header, that was before the outer diff's hunk header was
+misinterpreted as being the filename of the diff that followed it.
 
-On Sat, 13 Apr 2019, Luke Diamand wrote:
+It does so by substituting the diff header of the inner diff with a
+range-diff specific "section header", which is then parsed by a
+userdiff pattern, so it's included in the outer diff's hunk header.
 
-> On Fri, 12 Apr 2019 at 12:39, Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Most notably, it seems that macOS' APFS does not allow that.
->
-> Did you mean in the subject "ISO-8895-1" encoded or "ISO-8859-1" encoded=
-?
+Additionally, instead of stripping out the whole hunk header of the
+inner diff, and replacing it by just an "@@", only strip the line
+numbers from that hunk header, but keep the funcname/xfuncname.
 
-D'oh... Fixed in v2!
+This information is not added to the outer diff's hunk header, because
+it feels like that would end up in too much information, and I feel
+like the filename is the more useful bit of information if we have to
+pick one of them.
 
-> It seems reasonable other than that!
+As an example, here's what the relevant part of the range-diff from
+the original thread would look like now:
 
-Thanks,
-Dscho
+    @@ -99,10 +90,10 @@ modified file Documentation/git-revert.txt
+     -should see linkgit:git-checkout[1], specifically the `git checkout
+     -<commit> -- <filename>` syntax.  Take care with these alternatives as
+     +should see linkgit:git-restore[1], specifically the `--source`
+    -+option  Take care with these alternatives as
+    ++option. Take care with these alternatives as
+      both will discard uncommitted changes in your working directory.
+      
+    - OPTIONS
+    + See "Reset, restore and revert" in linkgit:git[1] for the differences
+     
+     
+     
+    @@ -129,10 +120,11 @@ modified file Documentation/giteveryday.txt
+        * linkgit:git-commit[1] to advance the current branch.
+      
+     -  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
+    -+  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
+    -     pathname parameters) to undo changes.
+    +-    pathname parameters) to undo changes.
+    ++  * linkgit:git-restore[1] to undo changes.
+      
+        * linkgit:git-merge[1] to merge between local branches.
+    + 
+      @@ Create a topic branch and develop.::
+      ------------
+      $ git switch -c alsa-audio <1>
+
+Note that this patch series doesn't modify or add any tests, and was
+just manually tested locally, thus it is still marked as RFC.  I'd
+love to get some feedback on the output format first, before touching
+any tests, as I expect there might be some discussion on the final
+format.
+
+*1*: <20190411111729.GB5620@ash>
+
+This series can also be fetched from
+https://github.com/tgummerer/git tg/range-diff-output
+
+Thomas Gummerer (4):
+  range-diff: fix function parameter indentation
+  range-diff: don't remove funcname from inner diff
+  range-diff: add section header instead of diff header
+  range-diff: add section headers to the outer hunk header
+
+ range-diff.c | 55 ++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 45 insertions(+), 10 deletions(-)
+
+-- 
+2.21.0.593.g511ec345e1
+
