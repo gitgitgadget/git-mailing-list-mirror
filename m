@@ -2,84 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E11520248
-	for <e@80x24.org>; Mon, 15 Apr 2019 14:40:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD4720248
+	for <e@80x24.org>; Mon, 15 Apr 2019 14:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727319AbfDOOkt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 10:40:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54543 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725789AbfDOOks (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 10:40:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555339230;
-        bh=KlC5r7wCLDvDUpyZrZ7h3mKMhEknkc7tyfyLxhv2fFw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZThAikPuAT/3lkigljGNXKwb4Eb/q5o3pevsZlGzP/3++RBDs+DDkJaa1/ClkDQym
-         sJO8Od6LpoxVWRWWZ3P+yzzXMCskI49S9LQpP8RMLq4U3HOPI5N4ZPt4pgugMBPHWJ
-         EOT9KPYWHkZ4VudxanBCe4Qgk5H9ENgjJ9ojISkg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MELdk-1h54QX3lIu-00FRUX; Mon, 15
- Apr 2019 16:40:30 +0200
-Date:   Mon, 15 Apr 2019 16:40:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "Robin H. Johnson" <robbat2@gentoo.org>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: regression AGAIN in output of git-pull --rebase --recurse-submodules=yes
- --quiet
-In-Reply-To: <robbat2-20190412T063235-859985527Z@orbis-terrarum.net>
-Message-ID: <nycvar.QRO.7.76.6.1904151635320.12614@tvgsbejvaqbjf.bet>
-References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net> <robbat2-20190410T062730-540884809Z@orbis-terrarum.net> <20190410111834.GA25638@ash> <robbat2-20190412T063235-859985527Z@orbis-terrarum.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727285AbfDOOup (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 10:50:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58486 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726298AbfDOOuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 10:50:44 -0400
+Received: (qmail 21847 invoked by uid 109); 15 Apr 2019 14:50:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Apr 2019 14:50:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2415 invoked by uid 111); 15 Apr 2019 14:51:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Apr 2019 10:51:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2019 10:50:42 -0400
+Date:   Mon, 15 Apr 2019 10:50:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 4/7] docs: exclude documentation for commands that have
+ been excluded
+Message-ID: <20190415145042.GA27540@sigill.intra.peff.net>
+References: <pull.168.git.gitgitgadget@gmail.com>
+ <31d8e43cbfaec36f662006a711b64bca47009e59.1555070430.git.gitgitgadget@gmail.com>
+ <CAPig+cTiF-9+pXnx19y0PUs3Nwek7N2cEg2r2jAPzEXPTvpxpA@mail.gmail.com>
+ <xmqqpnpoufp5.fsf@gitster-ct.c.googlers.com>
+ <CAPig+cQ3drZ+iE=SkSXTdHVfTxLkPTi=VTJCMJn7LKLxcpC-pQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lcGYdOIwgZsJBhcFDXPaHlKbt0yZbntqSXVTZgFhJ1Ph6wGBwUS
- yijcOoSQfP8zDs+0DsdDXniVGl0TJ95ndRBfBx+NT9FNv2I/dOC4CtvZymXQ5j+F3rE2sUN
- XsA2zyx5NCvIT4hvXsBb6gattwmQNv/FhIQyi9qO/Uc0L/0yoIYabqL2yRoeMfHLrqvk6Zx
- 9+ljk2Byu2pwKVF+5OBwg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SDPvVZ8BNtA=:o+PgPkRNDppadseGKEfUkO
- xjYxOJq8cLgEGihiGlM9RrX/2fERs+iC6xFj7Hl3dV7QZtk6NEHUYOmXoEv2gU/iYw5AUAoVO
- +53Tp6Cb0cYE7MDoB0tD6T6aVTsjERs97MhJ3YGwhNL3IGLINkR87a8viVS3a/PnLDHTY2816
- 8ZqIyjAX/kr4Ff7l9uTcJZUU0u/5M/l0TglVBZuOBUNv5KCmrFpWLn55eKqGkVQsye417PDig
- jCatnZQqI57BDezkC/SCK75aVvjSzqvr5oO7s7mRKO5CRyypf1pYFWwhMklmPWaDMUsQV+jIX
- oHJ0ps6q36wyqi55Z9Pnclm6KJRq/byeX2sR65p8SHnBQCDD5Cl6UusTU4osK+hK7p+l9hi76
- /zOGp2Nk9r8S7q2c2RGIEvP4HgEWHavwXDFnI28o/A2i0FK6Kqkk8VbX4YulnKELTUCJZaSQU
- irXtcEDLBzI+o1hY1acGGBDUdt2mF5g2Wiwne9KTGL2bGxhcG3a7oRZ0lq/ac49QAfQdnNMnn
- 7j2yBBGIRR/ASV85L4zOgZvc+JXEWLcWg2ZMJNR2KSN+hjbi2Dn5aOebmLG2ExzRLAYfMKPyp
- rjlqpxipYLEZEg6JTzo+hyjb6lKweM83DCeP/vsqeFeaAZRO6js3MMHLiiX2tY1fMwXycVYSZ
- 4KW8PJxJiIeqmc/wB/XTzwY09MwVaLManApJSoJnNKzWIXIkIDkZAx4T9/y/sDUbgJO/XHVPv
- 7IdXP0tPyVfZRoSUwHCtG0T7Xnun3HkiRdA3bU/gpjbcYVNs1cwdOk4us6sXIjPuJ5ZdJQmEZ
- TJxJmKACR+Md3a1vPAYyjkiP4HhJvFycb8Y/2lgXznyI7mYKT3E95DzM72U2YfuCzGqpvtKcw
- PZn8sECCDKdUTL7LEq0ZJCaugTV8zwqNFodrNOzY7+/0Y7OEM4hTZ3Y+RXnY3C0WPzNX/6oLi
- 1euGtkjkgRA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQ3drZ+iE=SkSXTdHVfTxLkPTi=VTJCMJn7LKLxcpC-pQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robin,
+On Mon, Apr 15, 2019 at 12:16:51AM -0400, Eric Sunshine wrote:
 
-On Fri, 12 Apr 2019, Robin H. Johnson wrote:
+> On Sun, Apr 14, 2019 at 11:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Eric Sunshine <sunshine@sunshineco.com> writes:
+> > >> +Documentation/GIT-EXCLUDED-PROGRAMS: Makefile config.mak.uname
+> > >> +       $(QUIET_GEN)echo "EXCLUDED_PROGRAMS := $(EXCLUDED_PROGRAMS)" >$@
+> > >
+> > > Should this rule also have a dependency upon "config.mak.autogen"?
+> >
+> > That is probably a good point.
+> >
+> > > Perhaps like this:
+> > >
+> > > Documentation/GIT-EXCLUDED-PROGRAMS: Makefile $(wildcard config.mak*)
+> >
+> > I'd rather not let changes to "config.mak-", which I keep in my
+> > working tree (untracked and disabled copy of config.mak, that can be
+> > readily activated by renaming), be part of dependency rules.
+> >
+> > If we know 'autogen' is the only dependency that optionally can
+> > exist, then depending explicitly on $(wildcard config.mak.autogen)
+> > would be a better alternative.
+> 
+> When composing that email, I originally wrote $(wildcard
+> config.mak.autogen) as the suggestion but changed it to the looser
+> $(wildcard config.mak*) when I realized that the developer's own
+> config.mak probably ought to be a dependency, as well. Taking your
+> objection into consideration, we could mention both explicitly:
+> 
+>     Documentation/GIT-EXCLUDED-PROGRAMS: Makefile \
+>         $(wildcard config.mak) $(wildcard config.mak.autogen)
 
-> Looking at git-rebase--preserve-merges.sh for this message, I think that
-> should be a separate patch to make it respect --quiet.
+What about command-line options that influence the outcome? It sounds
+like this is the same problem we have in lots of other places (like say,
+compiler flags being updated), that we solve by generating the proposed
+file output unconditionally and comparing it to what's on disk.  E.g.,
+see the way GIT-CFLAGS or GIT-BUILD-OPTIONS is generated.
 
-Please note that `git rebase --preserve-merges` will be deprecated as of
-the next Git version (see https://github.com/gitgitgadget/git/pull/158 for
-details).
-
-So I don't think it is worth the bother to fix that mode with respect to
---quiet.
-
-Ciao,
-Johannes
+-Peff
