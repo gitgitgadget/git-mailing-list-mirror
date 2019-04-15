@@ -2,131 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05A5220248
-	for <e@80x24.org>; Mon, 15 Apr 2019 19:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 896AD20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 19:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730826AbfDOTUV convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 15 Apr 2019 15:20:21 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:20591 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731253AbfDOTUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 15:20:21 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x3FJKFw6067783
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 15 Apr 2019 15:20:15 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
-        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com> <874l71fxmg.fsf@evledraar.gmail.com> <20190413214736.GD15936@szeder.dev>
-In-Reply-To: <20190413214736.GD15936@szeder.dev>
-Subject: RE: [BUG] GIT_SSH_COMMAND is not being decomposed
-Date:   Mon, 15 Apr 2019 15:20:07 -0400
-Message-ID: <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com>
+        id S1731149AbfDOTUy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 15:20:54 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34138 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730777AbfDOTJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 15:09:44 -0400
+Received: by mail-wr1-f65.google.com with SMTP id p10so23396127wrq.1
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 12:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HsVoUw7pXiCWJaYunFIbmYVnbCeKp4TjOjCZl3LNwho=;
+        b=IIm4StzmjuTGTHCnMJqju7z7DzTd7avV1iPZa4HTuEd9sC2vPozZQV2HnmYp2KYDwl
+         dxABtOMFw62+Oa0BTvnyUBYXYwP1RMvYmdNB69j05ywLHHD/TNNFwA6H7r4BrMCtdoLT
+         Er3zI8O9eXK3lhukWyd2nxUqKyH26DGx7VDKsEHW5T/q6KPpyRngXNuHaZ19uk6fqviI
+         s4YZaQRAoBv2ghMQt7Bshg6TY83GnlnDr0WZnApxGEmLNk8INfXFnaKa+SdMsUYcbF0O
+         EjA/pEKOLSe6ehkfKZalGLlqyr22drFe9EVh7RxTReWE4ZHXRcid/pJbBYGx5qNhVnO7
+         PAmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HsVoUw7pXiCWJaYunFIbmYVnbCeKp4TjOjCZl3LNwho=;
+        b=P4SMd5BHjBJ0qeES4bElIj90jnICnvUArqh5QmZyVSImH2xY+ljUb480mteeoLAH+c
+         w+SSzQq8qLwrtLd5hlEIqRnAGsPKDyDOqgBPZyeKKglozwel5lNoZjWRGu1eQqp/6PkE
+         G42P9Ari9iw2bOQJPJO0thmHNbyAS6OmHOecI8c/3BhsGYMvpKuWP8zZC+CtPzVJhWox
+         m0YLGmU/o2CKpMTdPqJf4AS6As9sNkuAGvs55DiJcHXyTYJJ15szxTB9NBRaCPSAJONR
+         r0iw/WmEeGRf+pNI/5LfgEfX1RG3lxOVlsi0Zk5bIGkp6S021aC59akzT1U1114v+f7P
+         hkuA==
+X-Gm-Message-State: APjAAAWwN6jATLgjeEVD/V781TUVpYjzNjFeABs96hfl5SVTRfL4W0NO
+        6jhue3E6exajiQG60z3PLdQ=
+X-Google-Smtp-Source: APXvYqw96VkUThqEXa4kzYvHdEk+bNd+omQM+j3zm+C37xmweQ3cDECEDtq8ePh75LdF179w7F/FtQ==
+X-Received: by 2002:a5d:684e:: with SMTP id o14mr52326459wrw.138.1555355382010;
+        Mon, 15 Apr 2019 12:09:42 -0700 (PDT)
+Received: from localhost ([2.25.81.3])
+        by smtp.gmail.com with ESMTPSA id s10sm23241393wmh.0.2019.04.15.12.09.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Apr 2019 12:09:40 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 20:09:39 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 3/4] range-diff: add section header instead of diff
+ header
+Message-ID: <20190415190939.GD1704@hank.intra.tgummerer.com>
+References: <20190411220532.GG32487@hank.intra.tgummerer.com>
+ <20190414210933.20875-1-t.gummerer@gmail.com>
+ <20190414210933.20875-4-t.gummerer@gmail.com>
+ <CAPig+cTJyYLGAfHM_PrZd9DDaZBcVUetcWFcANGCYPvaMh2qxA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1904151457310.44@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGpuMnQep3MvtsjO/08o+Xas343GAFQ9z8cANXpddqmgtPhEA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1904151457310.44@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 13, 2019 17:48, SZEDER Gábor wrote:
-> On Sat, Apr 13, 2019 at 10:39:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > On Sat, Apr 13 2019, Randall S. Becker wrote:
+On 04/15, Johannes Schindelin wrote:
+> Hi Eric,
+> 
+> On Sun, 14 Apr 2019, Eric Sunshine wrote:
+> 
+> > On Sun, Apr 14, 2019 at 5:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > > [...]
+> > > Introduce a new range diff hunk header, that's enclosed by "##",
+> > > similar to how line numbers in diff hunks are enclosed by "@@", and
+> > > give human readable information of what exactly happened to the file,
+> > > including the file name.
+> > > [...]
+> > > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > > ---
+> > > diff --git a/range-diff.c b/range-diff.c
+> > > @@ -90,8 +91,37 @@ static int read_patches(const char *range, struct string_list *list)
+> > > +               } else if (starts_with(line.buf, "--- ")) {
+> > > +                       if (!strcmp(line.buf, "--- /dev/null"))
+> > > +                               strbuf_remove(&line, 0, 4);
+> > > +                       else
+> > > +                               strbuf_remove(&line, 0, 6);
+> > > +                       strbuf_rtrim(&line);
+> > > +                       strbuf_reset(&filename_a);
+> > > +                       strbuf_addbuf(&filename_a, &line);
+> > > +               } else if (starts_with(line.buf, "+++ ")) {
 > >
-> > > I am encountering a problem on one of our NonStop platform variants
-> > > where the GIT_SSH_COMMAND string is not being broken into
-> > > constituent parts. This is causing SSH to not run properly. As
-> > > background, SSH is not in a standard location and has non-standard
-> > > required arguments. This also occurs with core.sshCommand. The
-> situation is:
-> > >
-> > > git config --global core.sshCommand '/G/system/zssh/sshossz5 -Q'
-> > >
-> > > which correctly sets .gitconfig as:
-> > >
-> > > [core]
-> > >         sshCommand = /G/system/zssh/sshossz5 -Q
-> > >
-> > > When git is run with GIT_TRACE=true GIT_PACKET_TRACE=true git fetch
-> > >
-> > > We get the partial trace:
-> > > 14:19:56.027088 trace: built-in: git fetch
-> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5 -Q' -G
-> > > user@host
-> > >
-> > > The same trace on our systems that actually do work results in:
-> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5' '-Q'
-> > > -G user@host
-> > >
-> > > I need help resolving why this is happening (as in where to look and
-> > > debug the situation).
+> > At this point, we know that line.buf starts with "+++"...
 > >
-> > This doesn't seem to be documented *explicitly* (except between the
-> > lines & inferred), but it's only supported to pass a *command* there,
-> > i.e. the path of the ssh binary.
-> 
-> 'man git' it quite explicit about this:
-> 
->   $GIT_SSH_COMMAND takes precedence over $GIT_SSH, and is interpreted
->   by the shell, which allows additional arguments to be included.
->   $GIT_SSH on the other hand must be just the path to a program (which
->   can be a wrapper shell script, if additional arguments are needed).
-> 
-> Quick test shows that the implementation agrees with the
-> documentation:
-> 
->   $ GIT_TRACE=2 GIT_SSH_COMMAND='/usr/bin/ssh -v' git push -n github
->   23:39:02.048870 git.c:419               trace: built-in: git push -n github
->   23:39:02.060821 run-command.c:643       trace: run_command: unset
-> GIT_PREFIX; '/usr/bin/ssh -v' git@github.com 'git-receive-pack
-> '\''/szeder/git'\'''
->   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
->   debug1: Reading configuration data /home/szeder/.ssh/config
->   <... snipt rest of the verbose ssh output ...>
-> 
-> And the config setting works, too:
-> 
->   $ GIT_TRACE=2 git -c core.sshCommand='/usr/bin/ssh -v' push -n github
->   23:42:55.277776 git.c:439               trace: built-in: git push -n github
->   23:42:55.285149 run-command.c:663       trace: run_command: unset
-> GIT_CONFIG_PARAMETERS GIT_PREFIX; '/usr/bin/ssh -v' git@github.com
-> 'git-receive-pack '\''/szeder/git'\'''
->   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
->   debug1: Reading configuration data /home/szeder/.ssh/config
->   <...>
-> 
-> Note that in both cases the trace shows '/usr/bin/ssh -v', IOW neither
-> $GIT_SSH_COMMAND nor 'core.sshCommand' are broken up.
-> 
-> But this is just an avarage Linux box, so perhaps this is a NonStop-specific
-> issue?
-> 
-> 
-> > See the code around get_ssh_command()
-> > in connect.c. The whole env/config value we look up gets passed as one.
+> > > +                       strbuf_addstr(&buf, " ## ");
+> > > +                       if (!strcmp(line.buf, "--- /dev/null"))
 > >
-> > So if you need arguments you need to create a wrapper script and set
-> > ssh command to that script.
+> > so, it seems unlikely that it's ever going to match "--- /dev/null".
 
-What is strange is that GIT_SSH_COMMAND='/usr/bin/ssh -v' should not execute if we are just looking at an object path. It should be broken into '/usr/bin/ssh' and '-v' otherwise spawn* or exec* will not execute it. I'm still trying to understand why I can successfully do things like the following:
+Ouch yup, this is some bad copy pasta, thanks for catching!
 
-$ GIT_SSH_COMMAND="ssh -i ~/.ssh/myid" git fetch
+> > > +                               strbuf_remove(&line, 0, 4);
+> > > +                       if (!strcmp(filename_a.buf, "/dev/null")) {
+> > > +                               strbuf_addstr(&buf, "new file ");
+> > > +                               strbuf_addbuf(&buf, &line);
+> > > +                       } else if (!strcmp(line.buf, "/dev/null")) {
+> > > +                               strbuf_addstr(&buf, "removed file ");
+> > > +                               strbuf_addbuf(&buf, &line);
+> > > +                       } else if (strbuf_cmp(&filename_a, &line)) {
+> > > +                               strbuf_addstr(&buf, "renamed file ");
+> > > +                               strbuf_addbuf(&buf, &filename_a);
+> > > +                               strbuf_addstr(&buf, " -> ");
+> > > +                               strbuf_addbuf(&buf, &line);
+> > > +                       } else {
+> > > +                               strbuf_addstr(&buf, "modified file ");
+> > > +                               strbuf_addbuf(&buf, &line);
+> > > +                       }
+> >
+> > All of these disposition strings end with "file", which seems
+> > redundant. Short and sweet "new", "removed", "renamed", "modified"
+> > provide just as much useful information.
+> >
+> > Also, should these strings be localizable?
+> 
+> I'd rather not.
 
-on virtually any platform at my disposal (Windows, Ubuntu, MacOS, the older NonStop variant), and have that work with no problem. Somewhere after get_ssh_command(), the command is being interpreted it its parts either as a shell or something else (still trying to find that).
+Dunno, why do you think they should not be localizable?  I'm tend to
+agree with Eric that they could be made localizable, after all this
+output is not supposed to be machine readable either way.  I don't
+have a strong opinion here though.
 
+> > Alternately, rather than using prose to describe the disposition,
+> > perhaps do so symbolically (thus universally), say with "+", "-", "->",
+> > "*" (or ""), respectively?
+> 
+> Or maybe streamline the common case (modified) by *not* saying anything,
+> then? I.e.
+> 
+> 	@@ Documentation/Makefile
+> 
+> for a modified file,
+> 
+> 	@@ builtin/psuh.c (new)
+> 
+> for a new file,
+> 
+> 	@@ git-add--interactive.perl (deleted)
+> 
+> for a removed one, and
+> 
+> 	@@ builtin/serve.c -> t/helper/test-serve-v2.c
+> 
+> for a renamed one.
 
+This looks like a good suggestion to me, thanks!
+
+> That should also give us a bit of wiggle room to append the function name
+> part of the inner hunk header, if any.
+> 
+> Ciao,
+> Dscho
