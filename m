@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3330320248
-	for <e@80x24.org>; Mon, 15 Apr 2019 20:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E83B20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 20:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727861AbfDOUju (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 16:39:50 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37078 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727806AbfDOUjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 16:39:49 -0400
-Received: by mail-ed1-f66.google.com with SMTP id f53so14324057ede.4
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
+        id S1727915AbfDOUjy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 16:39:54 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35908 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727852AbfDOUjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 16:39:51 -0400
+Received: by mail-ed1-f65.google.com with SMTP id u57so15266640edm.3
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 13:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
-        b=WhUrLyxk1qa5od4mG70sOAwY9Nh3/mljVNRmqI/ztt62jVTZOOxmbF0tcmyRU0eTsI
-         1ZZJk2AxItP0SLehUR9XosGlU9vhi///8ngsV4VjK4ov82+saIsSUGTjaluV7OWKtRO9
-         cBiogIhms3FnJKCUeHP2Ybhemoh3vZkF0j/B/+nL35za3Lukmw6QIynWdC24ShuJn8YZ
-         Bk/SaZWD/UtHD8cyBFNxFL/vrivDa2Oy+ghYL2DnccCoah395/Y1PE+e8hKrcAI8oucG
-         RInv8XHqDTWnce6I/VGA6QGOQwdryhYv9CUl3MNs3GkZlImyLq6xaj4wT1upmn1TI4eo
-         S6Tw==
+        bh=z8o12GckREM/bEMCMjMoq1w0AFX+e70lYNfbmVkvf6U=;
+        b=shgKXxfMbnY2VQrS6rMPI2hB5lJZOqcMnzcy3ORnGjF4inHDpgsfwUGbtVFByC86Yj
+         4nYeyy052hG5N9H7GxzRaVgSL7KfMwp3zSyc4Q/pChmbNyeX6ApcP06VPqV3JHEKjNbJ
+         VhEaHj1z3g3nTfsGWJo6ircl/jnGjfJ7T9lhGrV8rjiiPWb4/CHr5oXoeb/E7RO9qbI1
+         oGl2CrNEZy4slFHvqNjFVTCMeYpj6AaRDi+xHmP6j8k8gAuRmWw3c3gpoGLs2BFsDZKh
+         2l/+/i//VBg3Ou/wH4LJbl3xfqFrDvZX2S82uEUInoBQC5/BhX0qH2ijrEkQVChma3Mf
+         1EyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
-        b=TyBOYii9hvwhCnYyTwdovbdv70rQ6F0VXZteK2HPMVfyGZb13+L3wlBVCZcttcY1Qe
-         dJUy2jgvXgWj42Y1x/hAt05SkJkMc4LI3u5oc1Q4+vkD4ZaXf2hvzQm4DnMVdgBsg+vE
-         uaJh5a0osPJtLpAJRzVHzyBdKPlIOYBHcyJjnNfXylrb94YX/oPsmGo2GmaXk/txFXsq
-         AFlXbSJXvUgMwH3u5QXsArlrh4ds925EpX0x7n2Pua4bCuwYQxAGyy0F7U1x4ohwLH2r
-         bPdghLvZ5phwyuHQi6PdFPH7VXYn9ak0C3ATQ3fZ0QNyo4NDLVC4oJlkNklkKYRffbIL
-         bOug==
-X-Gm-Message-State: APjAAAUfVfwskG0qd4OqilMYsDAv84WeyiYgl/p9slAGuFugZyE0snV5
-        UhbxomHM5USzn7tzeKbvC7VOylOh
-X-Google-Smtp-Source: APXvYqzdxvdocqxCbK7Rg+E//+SSUWuWiXsUbzW+nFUAhHXOAFDrMNhRXb76C1WwV+FGRU8Sv+UXuw==
-X-Received: by 2002:a17:906:b202:: with SMTP id p2mr41532906ejz.266.1555360786924;
-        Mon, 15 Apr 2019 13:39:46 -0700 (PDT)
+        bh=z8o12GckREM/bEMCMjMoq1w0AFX+e70lYNfbmVkvf6U=;
+        b=JYo3x2TUkSO1cqK0f8EgiEEP0spNy9Rkf6/4/8jM42qJ38TjTUKm/g5wrckCHZ+i3A
+         RmJv+urd6w/REvOFKMFBevReufrXL+ThLqEyf25kmF/u2IshOFMjodF30xGe2yFsor63
+         /P/aZOmu9AZQDYFDiKmU0cQvZF+mAjehJrlGLkIsI2oeoBQj92S18qj1+4xGvO0LDh0Y
+         V07sxvHHIAmNnnMW77rvdgwot47ODBmbO3WHVRfxWQ+2L4A7j1eTwFy9Dgs+MvVWMknf
+         iNFGLCe27/12pPYccTl/3u6yoC23jKeZ9kvxfrCRtSX9AhF/2kzTTnxBS3HYWfuAckOQ
+         +e1w==
+X-Gm-Message-State: APjAAAWCtwkjYfHiiAlkWkS1vXoiqtHayHkc/y9xThuEOEVIX1vDBQtU
+        gQQm+dbWByvWUuaq+XX1P83vRXeA
+X-Google-Smtp-Source: APXvYqz3J1YqP+CW7e9TA3zkFwHtjtqDjm2K0qo/V6QWx/wXlogI8qFnhph4tNJVXEihW23Z9FyyAg==
+X-Received: by 2002:a17:906:a445:: with SMTP id cb5mr18201217ejb.196.1555360788641;
+        Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h16sm7346660eja.23.2019.04.15.13.39.46
+        by smtp.gmail.com with ESMTPSA id gf2sm9317951ejb.20.2019.04.15.13.39.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 13:39:46 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 13:39:46 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Apr 2019 20:39:35 GMT
-Message-Id: <b0fe1385f1a96efbcab38fe02a3d5b3c1b6eaa37.1555360780.git.gitgitgadget@gmail.com>
+        Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Apr 2019 20:39:37 GMT
+Message-Id: <56d8ce3fd60acc3808a5c8c1e5e1e6ba87fa1d5a.1555360780.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v4.git.gitgitgadget@gmail.com>
 References: <pull.169.v3.git.gitgitgadget@gmail.com>
         <pull.169.v4.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 05/10] config: add read_very_early_config()
+Subject: [PATCH v4 07/10] trace2: report peak memory usage of the process
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,92 +73,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Created an even lighter version of read_early_config() that
-only looks at system and global config settings.  It omits
-repo-local, worktree-local, and command-line settings.
+Teach Windows version of git to report peak memory usage
+during exit() processing.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- config.c | 23 ++++++++++++++++++++---
- config.h |  4 ++++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ common-main.c                            |  2 +-
+ compat/win32/trace2_win32_process_info.c | 50 ++++++++++++++++++++++--
+ trace2.c                                 |  2 +
+ trace2.h                                 | 14 +++++--
+ 4 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/config.c b/config.c
-index c809f76219..d7a08713a8 100644
---- a/config.c
-+++ b/config.c
-@@ -1688,14 +1688,15 @@ static int do_git_config_sequence(const struct config_options *opts,
- 		ret += git_config_from_file(fn, user_config, data);
+diff --git a/common-main.c b/common-main.c
+index 299ca62a72..582a7b1886 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -41,7 +41,7 @@ int main(int argc, const char **argv)
  
- 	current_parsing_scope = CONFIG_SCOPE_REPO;
--	if (repo_config && !access_or_die(repo_config, R_OK, 0))
-+	if (!opts->ignore_repo && repo_config &&
-+	    !access_or_die(repo_config, R_OK, 0))
- 		ret += git_config_from_file(fn, repo_config, data);
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
+-	trace2_collect_process_info();
++	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
  
- 	/*
- 	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
- 	 * But let's not complicate things before it's actually needed.
- 	 */
--	if (repository_format_worktree_config) {
-+	if (!opts->ignore_worktree && repository_format_worktree_config) {
- 		char *path = git_pathdup("config.worktree");
- 		if (!access_or_die(path, R_OK, 0))
- 			ret += git_config_from_file(fn, path, data);
-@@ -1703,7 +1704,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	}
+ 	git_setup_gettext();
  
- 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
--	if (git_config_from_parameters(fn, data) < 0)
-+	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
- 		die(_("unable to parse command-line config"));
+diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
+index 52bd62034b..8ccbd1c2c6 100644
+--- a/compat/win32/trace2_win32_process_info.c
++++ b/compat/win32/trace2_win32_process_info.c
+@@ -1,5 +1,6 @@
+ #include "../../cache.h"
+ #include "../../json-writer.h"
++#include "lazyload.h"
+ #include <Psapi.h>
+ #include <tlHelp32.h>
  
- 	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
-@@ -1794,6 +1795,22 @@ void read_early_config(config_fn_t cb, void *data)
- 	strbuf_release(&gitdir);
+@@ -137,11 +138,54 @@ static void get_is_being_debugged(void)
+ 				   "windows/debugger_present", 1);
  }
  
+-void trace2_collect_process_info(void)
 +/*
-+ * Read config but only enumerate system and global settings.
-+ * Omit any repo-local, worktree-local, or command-line settings.
++ * Emit JSON data with the peak memory usage of the current process.
 + */
-+void read_very_early_config(config_fn_t cb, void *data)
++static void get_peak_memory_info(void)
 +{
-+	struct config_options opts = { 0 };
++	DECLARE_PROC_ADDR(psapi.dll, BOOL, GetProcessMemoryInfo, HANDLE,
++			  PPROCESS_MEMORY_COUNTERS, DWORD);
 +
-+	opts.respect_includes = 1;
-+	opts.ignore_repo = 1;
-+	opts.ignore_worktree = 1;
-+	opts.ignore_cmdline = 1;
++	if (INIT_PROC_ADDR(GetProcessMemoryInfo)) {
++		PROCESS_MEMORY_COUNTERS pmc;
 +
-+	config_with_options(cb, data, NULL, &opts);
++		if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc,
++					 sizeof(pmc))) {
++			struct json_writer jw = JSON_WRITER_INIT;
++
++			jw_object_begin(&jw, 0);
++
++#define KV(kv) #kv, (intmax_t)pmc.kv
++
++			jw_object_intmax(&jw, KV(PageFaultCount));
++			jw_object_intmax(&jw, KV(PeakWorkingSetSize));
++			jw_object_intmax(&jw, KV(PeakPagefileUsage));
++
++			jw_end(&jw);
++
++			trace2_data_json("process", the_repository,
++					 "windows/memory", &jw);
++			jw_release(&jw);
++		}
++	}
 +}
 +
- static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
++void trace2_collect_process_info(enum trace2_process_info_reason reason)
  {
- 	struct config_set_element k;
-diff --git a/config.h b/config.h
-index ee5d3fa7b4..6a58d61d22 100644
---- a/config.h
-+++ b/config.h
-@@ -55,6 +55,9 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
+ 	if (!trace2_is_enabled())
+ 		return;
  
- struct config_options {
- 	unsigned int respect_includes : 1;
-+	unsigned int ignore_repo : 1;
-+	unsigned int ignore_worktree : 1;
-+	unsigned int ignore_cmdline : 1;
- 	const char *commondir;
- 	const char *git_dir;
- 	config_parser_event_fn_t event_fn;
-@@ -83,6 +86,7 @@ extern int git_config_from_blob_oid(config_fn_t fn, const char *name,
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void read_early_config(config_fn_t cb, void *data);
-+extern void read_very_early_config(config_fn_t cb, void *data);
- extern void git_config(config_fn_t fn, void *);
- extern int config_with_options(config_fn_t fn, void *,
- 			       struct git_config_source *config_source,
+-	get_is_being_debugged();
+-	get_ancestry();
++	switch (reason) {
++	case TRACE2_PROCESS_INFO_STARTUP:
++		get_is_being_debugged();
++		get_ancestry();
++		return;
++
++	case TRACE2_PROCESS_INFO_EXIT:
++		get_peak_memory_info();
++		return;
++
++	default:
++		BUG("trace2_collect_process_info: unknown reason '%d'", reason);
++	}
+ }
+diff --git a/trace2.c b/trace2.c
+index 490b3f071e..6baa65cdf9 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -213,6 +213,8 @@ int trace2_cmd_exit_fl(const char *file, int line, int code)
+ 	if (!trace2_enabled)
+ 		return code;
+ 
++	trace2_collect_process_info(TRACE2_PROCESS_INFO_EXIT);
++
+ 	tr2main_exit_code = code;
+ 
+ 	us_now = getnanotime() / 1000;
+diff --git a/trace2.h b/trace2.h
+index 894bfca7e0..888531eb08 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -391,13 +391,19 @@ void trace2_printf(const char *fmt, ...);
+  * Optional platform-specific code to dump information about the
+  * current and any parent process(es).  This is intended to allow
+  * post-processors to know who spawned this git instance and anything
+- * else the platform may be able to tell us about the current process.
++ * else that the platform may be able to tell us about the current process.
+  */
++
++enum trace2_process_info_reason {
++	TRACE2_PROCESS_INFO_STARTUP,
++	TRACE2_PROCESS_INFO_EXIT,
++};
++
+ #if defined(GIT_WINDOWS_NATIVE)
+-void trace2_collect_process_info(void);
++void trace2_collect_process_info(enum trace2_process_info_reason reason);
+ #else
+-#define trace2_collect_process_info() \
+-	do {                          \
++#define trace2_collect_process_info(reason) \
++	do {                                \
+ 	} while (0)
+ #endif
+ 
 -- 
 gitgitgadget
 
