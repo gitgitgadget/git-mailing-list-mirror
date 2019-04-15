@@ -2,103 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40A2E20248
-	for <e@80x24.org>; Mon, 15 Apr 2019 19:25:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC3420248
+	for <e@80x24.org>; Mon, 15 Apr 2019 20:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729540AbfDOTZS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 15:25:18 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42888 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728761AbfDOTZO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 15:25:14 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g3so23403613wrx.9
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 12:25:13 -0700 (PDT)
+        id S1727760AbfDOUjq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 16:39:46 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35900 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727201AbfDOUjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 16:39:45 -0400
+Received: by mail-ed1-f65.google.com with SMTP id u57so15266456edm.3
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 13:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dRBIggO33FOeKjymuo8Coa8fWFnkndYIMnk1aG50c2E=;
-        b=nrVtI7+z5yIgU6f7NBQ965UULGmabmU1ePE9E7rodoZWyBzqGWR+qPgWNr+pnnnO1S
-         B5ESAFiIYX1cziZnvK5iASN+BejDG2mbVuhsqMlklZBTNn34+6Esa4mvtg3thcw5ieyX
-         2KyXPJn7tj6PZqwKU3QN8h30K0rV7I1zzjesCpMDX4IsrXbQdzpxH+YcX0FD2NnannKq
-         XiPxtF2wyIBZcxCm35nP9cgBfb0atQU82O4llJDRSVDTcYrInX0krMUOugaJNsjctyRE
-         /X5m4Mxchqni+1gEVo3w/flJp/5ndMFy2bCohH5O+pGZutRIHrQ9PQZc/Hy9JVF4UtuN
-         l5Sg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NfHH3UDNYOYd6q8G9jtn9kGVoshe/kczU9BC8hWQY7E=;
+        b=FpMFZyzusatsip/Iaa9TmL8WaxqgFoMFHYdhVatgpqSQOmn192wtgeh7paVPsvOJl3
+         /mzOA6xWzc7J+1ZjKLxEsqjrWA0mAHBLS/Icam+vHDC6jnBMsIKQ2bd8o81ro7gWqt/M
+         OIaknGRIWhevz7uH7Uaxfk2ZMCSHPLlB83RSaNLZ59WrYECNyNH5EHLioowwZsBXsdDF
+         wUSZAamR1F29nigZOAWaOU3Kh0b4FXU33bMtLOHY91SVvSunHaisbXyrmSiFXKaI1pGS
+         oGU0Y2PgFgmCq0YcpyczFkwcq0+z4XlRyF1t+tVZ/s3psjcH7mDoSmfPhQEzQk+B3GUN
+         qoyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dRBIggO33FOeKjymuo8Coa8fWFnkndYIMnk1aG50c2E=;
-        b=ZQbOa+JHGksqB84GObi1SPBIPuMlBTrD0cz+TXbGRKoX/P1aNxzURXS0GngblZmYAV
-         073yKH4W970jh3G4tPZT0jMPn/eJT1xnhEoDqxkhEbRbLy2nX2l86podU6uJmBKq5Lmc
-         5lPvPDG1giMYr/WGzK7iOWazvCdojy7ZzCDyAHauTtRSDljYBa4u128je5SwOgcmuFgz
-         E1CTwnVxj0jVGgSwaeU3bTtLzwm8LMhRuUlP3OP1zkiHvFJaJ2uRFFfX/u/wFm23X6mw
-         EVxv57o6DRtOfrKfl2xJ5czFOlBx5e2MzA9dSHzTykCyuI2fXodiXqi+j7PfrsEjlGdn
-         ZXOw==
-X-Gm-Message-State: APjAAAWDQd9tjWSkKWscA6+hitiwDa1Y33z9OB84I2NKWxLBgx5CUDLd
-        IQvUnz4qv1Pc6VyLO/2or6M=
-X-Google-Smtp-Source: APXvYqxU90b86HCu/UKvymQv7+QH82K7TNm2GUAe7iD9Sq7+MotvIRhPDamhJbt5w+Mb1C91h04/GQ==
-X-Received: by 2002:a5d:4710:: with SMTP id y16mr40702709wrq.176.1555356312569;
-        Mon, 15 Apr 2019 12:25:12 -0700 (PDT)
-Received: from localhost ([2.25.81.3])
-        by smtp.gmail.com with ESMTPSA id o4sm28192638wmo.20.2019.04.15.12.25.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 15 Apr 2019 12:25:10 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 20:25:10 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/4] output improvements for git range-diff
-Message-ID: <20190415192510.GF1704@hank.intra.tgummerer.com>
-References: <20190411220532.GG32487@hank.intra.tgummerer.com>
- <20190414210933.20875-1-t.gummerer@gmail.com>
- <nycvar.QRO.7.76.6.1904151445250.44@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NfHH3UDNYOYd6q8G9jtn9kGVoshe/kczU9BC8hWQY7E=;
+        b=hr6QW+AlKeAtsQTYX5YEEs60UdQhTbhwSrLEYiLmrVIZ30PkyYRauDu7oCeZex1akD
+         h6RVDVNxVJiTSxWvP2rq/ykLJT21PWSiLvH8FSccaNRwd9JqqGTW0C8iky0VxO2Cbz8f
+         exEGEJMUXOQPU+MdKFNCPwtLFi4eGUkc7+r7IZMshyfa+Mu6rr8HrDknuV1pKfReP+F4
+         u4l5NP5A8TjnaCLTR1Tvj/I/Uct2v6OC9R3ZBDUsMLf8YRxOfO+YEN4QximKl6LMvJLb
+         uZ2pVnuHVdznaI0c+X5r7j5Gk3uyDnEhtY3ax4QerpUeVHhq1R2RGFT0xPMBhETK3M7f
+         /S/A==
+X-Gm-Message-State: APjAAAXKMarNlz0bw3jkQWfAPfVNsbdkDLszSd4Gh5lIceVJuAXzDGKF
+        20jBCMqQ+xZCLdHXGhCQgkLDkkL1
+X-Google-Smtp-Source: APXvYqwGrgZyc9oExqvbaJhKARQ8LLj+CHjInDxO0ay5ZrBhmN9/sk4Yeb0KiyJYEz+IgwKT9Is2kw==
+X-Received: by 2002:a50:f4ef:: with SMTP id v44mr48999592edm.193.1555360783576;
+        Mon, 15 Apr 2019 13:39:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s14sm4810775eda.26.2019.04.15.13.39.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Apr 2019 13:39:42 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 13:39:42 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Apr 2019 20:39:31 GMT
+Message-Id: <f6653f1c5914d4ed0edee87a56277a35625135ca.1555360780.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.169.v4.git.gitgitgadget@gmail.com>
+References: <pull.169.v3.git.gitgitgadget@gmail.com>
+        <pull.169.v4.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v4 01/10] config: initialize opts structure in
+ repo_read_config()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1904151445250.44@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, jrnieder@gmail.com,
+        steadmon@google.com, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/15, Johannes Schindelin wrote:
-> Hi Thomas,
-> 
-> On Sun, 14 Apr 2019, Thomas Gummerer wrote:
-> 
-> >     @@ -99,10 +90,10 @@ modified file Documentation/git-revert.txt
-> 
-> A better example might be a .c file, as the function name is often a
-> pretty useful piece of information.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Yeah, maybe with your suggestions, we could fit the function name or
-some of the function name into the outer hunk header.  I'll give it a
-try and see how it looks.
+Initialize opts structure in repo_read_config().
 
-> Read: I think it should be part of the outer hunk header.
-> 
-> Also, the text "modified file" takes up an awful lot of space. Maybe we do
-> not really need that information?
-> 
-> While at it, we could strip the line numbers, as this is not intended for
-> machine consumption, but for human consumption instead.
+This change fixes a crash in later commit after a new field is added
+to the structure.
 
-Yeah, that makes sense, the line numbers are really kind of pointless
-in a range-diff.
+In commit 3b256228a66f8587661481ef3e08259864f3ba2a, repo_read_config()
+was added.  It only initializes 3 fields in the opts structure.  It is
+passed to config_with_options() and then to do_git_config_sequence().
+However, do_git_config_sequence() drops the opts on the floor and calls
+git_config_from_file() rather than git_config_from_file_with_options(),
+so that may be why this hasn't been a problem in the past.
 
-> > [...]
-> > Note that this patch series doesn't modify or add any tests, and was
-> > just manually tested locally, thus it is still marked as RFC.
-> 
-> Oh, okay then ;-)
-> 
-> Thanks for working on this,
-> Dscho
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ config.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config.c b/config.c
+index 0f0cdd8c0f..c809f76219 100644
+--- a/config.c
++++ b/config.c
+@@ -2011,7 +2011,7 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
+ /* Functions use to read configuration from a repository */
+ static void repo_read_config(struct repository *repo)
+ {
+-	struct config_options opts;
++	struct config_options opts = { 0 };
+ 
+ 	opts.respect_includes = 1;
+ 	opts.commondir = repo->commondir;
+-- 
+gitgitgadget
+
