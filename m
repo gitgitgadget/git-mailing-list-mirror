@@ -2,369 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 872EE20248
-	for <e@80x24.org>; Mon, 15 Apr 2019 21:57:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C78120248
+	for <e@80x24.org>; Mon, 15 Apr 2019 22:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727569AbfDOV47 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 17:56:59 -0400
-Received: from alioth.uberspace.de ([185.26.156.45]:46034 "EHLO
-        alioth.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbfDOV47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 17:56:59 -0400
-Received: (qmail 25273 invoked from network); 15 Apr 2019 21:56:54 -0000
-Received: from localhost (HELO ?192.168.1.91?) (127.0.0.1)
-  by alioth.uberspace.de with SMTP; 15 Apr 2019 21:56:54 -0000
-Subject: Re: feature request: .blameignore
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Barret Rhoden <brho@google.com>
-References: <130b0ffd-ed84-59ea-751b-cc59241cab1f@nerdocs.at>
- <20190415211519.GG1704@hank.intra.tgummerer.com>
-From:   =?UTF-8?Q?Christian_Gonz=c3=a1lez?= <christian.gonzalez@nerdocs.at>
-Message-ID: <5df051ce-007c-cc12-6f02-345b33480c0a@nerdocs.at>
-Date:   Mon, 15 Apr 2019 23:56:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1728096AbfDOWBL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 18:01:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59190 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725804AbfDOWBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 18:01:11 -0400
+Received: (qmail 2528 invoked by uid 109); 15 Apr 2019 22:01:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Apr 2019 22:01:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6431 invoked by uid 111); 15 Apr 2019 22:01:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Apr 2019 18:01:40 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2019 18:01:08 -0400
+Date:   Mon, 15 Apr 2019 18:01:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Damien Robert <damien.olivier.robert@gmail.com>
+Cc:     git@vger.kernel.org,
+        Damien Robert <damien.olivier.robert+git@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/1] Fix %(push:track) in ref-filter
+Message-ID: <20190415220108.GD28128@sigill.intra.peff.net>
+References: <20190415210416.7525-1-damien.olivier.robert+git@gmail.com>
+ <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190415211519.GG1704@hank.intra.tgummerer.com>
-Content-Type: multipart/mixed;
- boundary="------------8F50E33DB88FF068D84C6526"
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------8F50E33DB88FF068D84C6526
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Apr 15, 2019 at 11:04:16PM +0200, Damien Robert wrote:
 
-Am 15.04.19 um 23:15 schrieb Thomas Gummerer:
-> This sounds roughly like what Barret Rhoden (added to Cc) has been
-> working on.  I haven't followed that patch series in detail, but you
-> can have a look at it atthe latest iteration at
-> https://public-inbox.org/git/20190410162409.117264-1-brho@google.com/.
+> In ref-filter.c, when processing the atom %(push:track), the
+> ahead/behind values are computed using `stat_tracking_info` which refers
+> to the upstream branch.
 
-As far as I can see this is an "automagic" way of creating those "blame
-skips" - which can be easier in some way, but until it works "perfect"
-It is prone to produce problems IMHO.
+Good catch. I think this has been broken since %(push) was added in
+29bc88505f (for-each-ref: accept "%(push)" format, 2015-05-21). I don't
+actually use the track option, so I never noticed.
 
-The git history is a "document" that _has_ not to be changed by design.
-So if this "heuristic" produces a wrong result, it's kind of
-unpredictable what was wrong.
+> Fix that by introducing a new function `stat_push_info` in remote.c
+> (exported in remote.h), which does the same thing but for the push
+> branch. Factorise the ahead/behind computation of `stat_tracking_info` into
+> `stat_compare_info` so that it can be reused for `stat_push_info`.
 
-I think it would be MUCH easier to mark chunks or whole commits as=C2=A0 =
-"not
-important" explicitly - by using a file.
+Makes sense.
 
-Look at .gitignore: git isn't trying to heuristically determine which
-files should be ignored when committing. This is done explicitly in a
-=2Egitignore file.
+> This bug was not detected in t/t6300-for-each-ref.sh because in the test
+> for push:track, both the upstream and the push branch were ahead by 1.
+> Change the test so that the upstream branch is ahead by 2 while the push
+> branch is ahead by 1, this allow us to test that %(push:track) refer to
+> the correct branch.
 
-For blames this could be done too.
+Nice. I wish all patches were this careful about thinking through
+details like this.
 
-Heuristics could lead to other kind of problems too, as the engine does
-not know anything about the project. Maybe there will be a programming
-language in near future where trailing whitespaces matter (bah, please
-not). But the project should decide, not git itself.
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 3aca105307..82e277222b 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1391,8 +1391,11 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>  	if (atom->u.remote_ref.option == RR_REF)
+>  		*s = show_ref(&atom->u.remote_ref.refname, refname);
+>  	else if (atom->u.remote_ref.option == RR_TRACK) {
+> -		if (stat_tracking_info(branch, &num_ours, &num_theirs,
+> -				       NULL, AHEAD_BEHIND_FULL) < 0) {
+> +		if ((atom->u.remote_ref.push ?
+> +		     stat_push_info(branch, &num_ours, &num_theirs,
+> +				    NULL, AHEAD_BEHIND_FULL) :
+> +		     stat_tracking_info(branch, &num_ours, &num_theirs,
+> +					NULL, AHEAD_BEHIND_FULL)) < 0) {
+>  			*s = xstrdup(msgs.gone);
+>  		} else if (!num_ours && !num_theirs)
 
-So IMHO project specific .*ignore files are the better way of handling
-this than doing the skipping on heuristics alone - which could be
-helpful though when *creating* that files, even during the commit
-process... like
+I'm a big fan of the "?" operator, but this ternary-within-an-if might
+be pushing even my boundaries of taste. :) I wonder if it would be more
+readable as:
 
-=C2=A0=C2=A0=C2=A0 git ccheckut
-=C2=A0=C2=A0=C2=A0 git: 'ccheckut' is not a git command. See 'git --help'=
-=2E
+  int ret;
+  if (atom->u.remote_ref.push)
+	stat_push_info(...);
+  else
+	stat_tracking_info(...);
+  if (ret < 0)
+	... gone ...
+  else if (!num_ours && !num_theirs)
+	... etc ...
 
-=C2=A0=C2=A0=C2=A0 The most similar command is
-=C2=A0=C2=A0=C2=A0 checkout
+I'd even be OK with a ternary for assigning "ret". :)
 
-Maybe a lazy:
+All that said, we would need to do the exact same conditional for
+":trackshort", wouldn't we? The tests don't pick it up because the
+symbol is still ">" for both branches (deja vu!). So it might be worth
+not just having push be 2 ahead, but have it actually be behind instead
+(or in addition to).
 
-=C2=A0=C2=A0=C2=A0 git commit -a -m "big, clunky, fixes everything and th=
-e rest"
+So since we have to do it twice, maybe that makes it worth factoring
+out something like:
 
-could produce a message like:
+  int stat_remote_ref(struct used_atom *atom, struct branch *branch,
+                      int *num_ours, int *num_theirs)
+  {
+        if (atom->u.remote_ref.push)
+                return stat_push_info(branch, &num_ours, &num_theirs,
+                                      NULL, AHEAD_BEHIND_FULL);
+        else
+                return stat_tracking_info(branch, &num_ours, &num_theirs,
+                                          NULL, AHEAD_BEHIND_FULL);
+  }
 
-=C2=A0=C2=A0=C2=A0 There are whitespace changes in files <file_a>, <file_=
-b> ... -
-=C2=A0=C2=A0=C2=A0 git automatically marked them as not important
-=C2=A0=C2=A0=C2=A0 commits. They are ignored when using git-blame.
+Or perhaps it argues for just giving access to the more generic stat_*
+function, and letting callers pass in a flag for push vs upstream (and
+either leaving stat_tracking_info() as a wrapper, or just updating its
+few callers).
 
-Christian
+> -int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+> -		       const char **upstream_name, enum ahead_behind_flags abf)
+> +
+> +int stat_compare_info(const char **branch_name, const char **base,
+> +		      int *num_ours, int *num_theirs,
+> +		      enum ahead_behind_flags abf)
 
---
+In the original, we need a pointer-to-pointer for upstream_name, because
+we return the string as an out-parameter. But here we're just taking two
+strings as input. We can drop the extra layer of indirection, like the
+patch below.
 
-Dr. Christian Gonz=C3=A1lez
-https://nerdocs.at
+Also, since this is an internal helper function for the file, we should
+mark it as static.
 
+diff --git a/remote.c b/remote.c
+index b2b37d1e8d..e6ca62dc19 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1895,23 +1895,23 @@ int resolve_remote_symref(struct ref *ref, struct ref *list)
+  * commits are different.
+  */
+ 
+-int stat_compare_info(const char **branch_name, const char **base,
+-		      int *num_ours, int *num_theirs,
+-		      enum ahead_behind_flags abf)
++static int stat_compare_info(const char *branch_name, const char *base,
++			     int *num_ours, int *num_theirs,
++			     enum ahead_behind_flags abf)
+ {
+ 	struct object_id oid;
+ 	struct commit *ours, *theirs;
+ 	struct rev_info revs;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 
+ 	/* Cannot stat if what we used to build on no longer exists */
+-	if (read_ref(*base, &oid))
++	if (read_ref(base, &oid))
+ 		return -1;
+ 	theirs = lookup_commit_reference(the_repository, &oid);
+ 	if (!theirs)
+ 		return -1;
+ 
+-	if (read_ref(*branch_name, &oid))
++	if (read_ref(branch_name, &oid))
+ 		return -1;
+ 	ours = lookup_commit_reference(the_repository, &oid);
+ 	if (!ours)
+@@ -1987,7 +1987,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	if (!base)
+ 		return -1;
+ 
+-	return stat_compare_info(&(branch->refname), &base, num_ours, num_theirs, abf);
++	return stat_compare_info(branch->refname, base, num_ours, num_theirs, abf);
+ }
+ 
+ /*
+@@ -2006,7 +2006,7 @@ int stat_push_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	if (!base)
+ 		return -1;
+ 
+-	return stat_compare_info(&(branch->refname), &base, num_ours, num_theirs, abf);
++	return stat_compare_info(branch->refname, base, num_ours, num_theirs, abf);
+ }
+ 
+ /*
 
---------------8F50E33DB88FF068D84C6526
-Content-Type: application/pgp-keys;
- name="pEpkey.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="pEpkey.asc"
+Of course if you buy my argument above that we should just let
+ref-filter call into the generic form of the function, then all of that
+would change. :)
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+> [...]
 
-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
-83adDFJpi8hzO9ei5A+bqtU2FzXoKqyKBntzQoXnK5o0FeCsDH+8T/Cq2yfqah80
-yx/z+SFpRdf4jkDrugkfKO1vqat59MXVJw4TyMxEdQcCsC3/Mdfw9WHzOMAnly1a
-4UC4a7pzm0wM0X0yl7+yh4f0y2aiTePecPZwMPpZjnC8glI+NA5yaF5IMvlQlBt7
-VwMdd+HVwzGPxo1nEz5hImYOYVmhB9r2Ac+SWMYL2Sl5vgCxrdPPKH9BYrQyQ2hy
-aXN0aWFuIEdvbnphbGV6IDxjaHJpc3RpYW4uZ29uemFsZXpAbWVkd29yeC5hdD6J
-AlcEMAEKAEEWIQTxMdqEvgeiWLaxRV1O2gXTLakv+QUCWk1K2yMdIEVtYWlsIGFk
-cmVzc2VzIG5vdCB1c2VkIGFueSBtb3JlLgAKCRBO2gXTLakv+fzxD/9HFE16qL4P
-Rt8b5uv1woM0r3CxxFSO+ApmGTnY1+Mh1lMoxgj28jMApilOt2ghiQrFgu9Nw0RG
-+CiZM4brUpy2g2uDLpPzmDOs0a+HCjyoh2x4oT55D95ZbsoXse/6cTDSJQbeixZB
-FK+V1Fz66PjEF5gEYZ60i74iKJD/TdGXKRHKJjiAAfDaQQr9k7rqdq/ambveHKGI
-F8suSBx/d4HuxI6hzFMzWa6b4+4SyBZ073PJ0deBIpDxDW/yvRoGPCYlPumW56TU
-7bx/KPUZqVccdlkVHuR9qtcmrwYuN3u0obrFFZTknAyD0BSwX9LiOmQ70FlnbQB4
-P1JfY7eKu0WMm53oOPFACn5f3HrgzO7nVD7z6OKv26jQRhbhEEIlGZ34GLMbLiXs
-luYgk5MjlJQWHlnOHiyZrSRg1Bk7QZvyj1FXaN10QsGirqwGdazQPqDD4kdadV0I
-mxVJX5xhu9KOYvws2coPTxT4i1I9q2A3FdAmEK1N4xP20I6t0GEWjvcDOh5RfuiI
-w2AOgrAfW7+d+duGdwxoBqO2ycbC0AoA6EI9AzAJmzQnPxoCgEWOreRXB8TsuOJg
-PBPLU0+TuiVPqyzWmHDNmKXs21P9ZbXZq4s2a2q4tkxaWJAUAkqr/NgSj0N1qlHL
-CkFYqYQAzPIPSlCL6EdleAp85F0yTVd5bYkCOAQTAQIAIgIbAwYLCQgHAwIGFQgC
-CQoLBBYCAwECHgECF4AFAlZtMGIACgkQTtoF0y2pL/mLdxAAwrfsFp1YND0h0+Bo
-lGnh/7BKk5eRd8clbQOnHPT0IP2JV1QXwxfVcsByQ96q/Irw2NZJ/+46qejlZ4ad
-gMadjXWZmUxRmv1MfDmMx9BqhdvCaa2w8jkAWiVJgV7g8flQvSGBOSi7MFLc8yM+
-BFxQMyk6OC52+HmnUOikQgkVWpsItEwnxSgwsNdVqRtuEk8gVUR+xOXwdOMarEOz
-NiaKfny1iPAuSanIvVw7WF8N5OUUCt5CQ4MGeRDo+499M+7hP0d3ukiKbKLHcFNP
-ffuvlWdxFzsXMwpsIpaJymGcZzAR09LWzzzc6SeZAvGmc7vUqohGGUxEEe0tWiJj
-fIdU5Iw2PZdXh0w4lC18E/jSFKK30b61mcFVw/1IGOln5vctXJ3+Q7UEXypv9zaS
-xmHqwqQdfden6sm2uWZku9XxFmkaj9DJKJ0Hb4K3up8yWFIj7y9j6IE6s5fbKjwD
-7Xti6dJwVfFv1fi2K4ew+ihtj5CIMz4vCv+/z8sPxepOvoqUiacvc9kCjxTExcoP
-J28t+QwGzIXc607z7LjUfIyo1vF/0HaImunUEivztAHOtr5PN6MYkOBeDLBLWPw4
-Tklv+bN1G9jzJTMsgPW+17q/ImNBuDdBFguna6E//U7h1xDsYYtonUlqK1YGGsJK
-NWr6Y6VLwPtMcqBclBsX7WmnEJKJAjgEEwECACIFAlOqu54CGwMGCwkIBwMCBhUI
-AgkKCwQWAgMBAh4BAheAAAoJEE7aBdMtqS/5u+gP/jv1FcPwHBc8thLyqgnjA7m+
-5N/4k3RpMxTa9RbcGY3oRYZgAyqWf0cIZRniP2QeFnEMCa0mcwtBwHbNRXO5jGgY
-s0w/+kl5H8Y1mhH+0rAwcgy/PraUjD83A+PfnqyRQ87Cu169AwzLVOun/G4fZPe8
-yCG6ostBCKekEU9l1wno8opE7Y5FdNuDV7UsqhlkB68bSMEgDuUOGegdAhMBPUrG
-NkgnrVspzcOVx0JqsF2hpU+Bcf+WmAPvzB9Uh2YavXUACcN1z4wg3/g+WQ1bS/IJ
-o6DA1l6c/PkJ0CY6JfzywvHoV+E1ONVw37evG11N5IsNEDd4nsHcRT68Bo6dzoBM
-Sg55f1n/ECpu+3lgvXfKXtY3u9oehVrMpvS+hN9ncORsa6Y64dsJd94x8fmRreh5
-MnS6zsZiNpzHOFW8riiaYkRaXIisQNbl4Kux9KLdUn1aiKiR+AyWqOmqld/7pnwQ
-FKZfncAcwn+aTibx61NYVMwGrpP4aWOpxAzYLfnoDE/WtFWO7yz+Inw+kcKoIxn+
-pT4HYXn7wwUg6rB7Qk4evXhZaknQ/wReRu+OhRJ5dU0BVUBoL224Yoj7sh81hDVB
-KKTULGRCBlEet8GtF3OAthSVl7mHhUXvgB6dJCXMPgo++pvhWttJdQ3JvGZCeE71
-V1Op14SNYUmtz4VVtpIJiQI7BBMBAgAlAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIe
-AQIXgAUCU6q75gIZAQAKCRBO2gXTLakv+eIcD/9uMWIYpOD85Efkvs9UTRgieFZg
-GvgsbHk/6hsjF6O8gFcog38qM24PzaO2WqtGAMsfCPzW3N1MNPxe3x+f2S3EWAiq
-1NykMFjzf1OFkppO8eBNUFzEZU06xveA8Yz2A6HVAY4bdRvMNcXEIcIUgk0zh4lp
-IQQrQrAf16m5+W29mOUPIl+vaxZt7BErMDHTvO+YmlmGZnchhMYqi02rPwAepTsC
-4n5447PL/Pm4Tawc58oO+cMAvkTtXKZYqmTJcgWmR3eRqWtCrDT6PF+mpFxdZWgV
-dBtNNT92Ssg5MXhOAmej47bnXPVi+I+hcZwkrKMlivR2rnJqNYIBLLiDsiLHM4Jk
-fF+njU9LbZ67jJ5xL5EQ6xdTJl/VyMX9G+XRrVRnpIJo3KtNNhlRboyTgtaJVwuY
-XCGsaU92+yZpcVaQTa24RFmNDq4eoOWS8RNrmIDDj9oGVbDhma/F8wSJDWM0HN+E
-SYAzHP+diRgo5pOqXV8eS21W6mQkEgeo40yN3GvW0evfp+c7NBBhjGjNJBKbZLfP
-5SPWF/X/46EDa6gYzkBdfoI1+O1kamuUVxMEym7XB6BG0Ok9F28pJK3OGBmgyYN3
-vNQUZVknP5c1ST5q/CALHm/hQCCVbgdKfY0T3XRzmUC2TfYgcpT7e+Z5H/7FttFa
-txZCJ8b/jsANhfncwLQxQ2hyaXN0aWFuIEEuIFJlaXRlciA8Y2hyaXN0aWFuLnJl
-aXRlckBtZWR3b3J4LmF0PokCVwQwAQoAQRYhBPEx2oS+B6JYtrFFXU7aBdMtqS/5
-BQJaTUrbIx0gRW1haWwgYWRyZXNzZXMgbm90IHVzZWQgYW55IG1vcmUuAAoJEE7a
-BdMtqS/5iB8QAM8VpAZj24wDzXXp+QTRlsCs1tXqPYbJHqaeVeMai64RR17J+I7a
-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
-2hG2r1XLJqDiLPCdPDFl
-=3DHSGC
------END PGP PUBLIC KEY BLOCK-----
+Other than that, the patch looked quite reasonable. I didn't dig too far
+into the ripple effects of the test changes, since I think we'll end up
+changing them again to make sure ":trackshort" is distinct.
 
---------------8F50E33DB88FF068D84C6526--
+Thanks for working on this.
+
+-Peff
