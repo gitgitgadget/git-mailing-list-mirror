@@ -2,123 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D25920248
-	for <e@80x24.org>; Mon, 15 Apr 2019 14:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80D1820248
+	for <e@80x24.org>; Mon, 15 Apr 2019 14:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726785AbfDOOYH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 10:24:07 -0400
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:37842 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726094AbfDOOYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 10:24:07 -0400
-Received: by mail-yb1-f195.google.com with SMTP id p134so6443585ybc.4
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 07:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jip6AopZo7irlaz+MyYqpDwBfi9WtmwVcPO/N8lkNok=;
-        b=tuncQrmgy69szKbIxrp8fNynXfqrQ2tpAdQ5o+yvLtyfCGwBXc2WJOA4ULpyVO0z3F
-         9IBPKb2SiloOn/6Fyu6BJA5qffj/VkQsRXwCb2QS+fXqxBfcBcEESwJrJ5bCVm4sY21H
-         kmLb3Etoy94zlBotNzC136Yv1AHIOBCTe6mSnmT8UYyHE+pDby4z2rCWUVnFJLnT96+D
-         AU2RycRQEoTCiopHrE//R6mvzqtX0V+wdAGh5AA1BYosPNm823pauT7veSpWpAiJmeHF
-         rmdO7zNYXu8gJB9hafv6DrvsYvoykiB+1qxHipdAEMlYKOkrla3amV0J45d7eVnAE1Xs
-         ub7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jip6AopZo7irlaz+MyYqpDwBfi9WtmwVcPO/N8lkNok=;
-        b=YQNGXVP9I7kXO4WbVl4L8/tRvzMDjsSwKpMjJ5E15UBRM8nSFzSow+ThnGG9iQ1YSp
-         XeKa4DWu0dLFrjjXHfL9JH7wNDlRsXyI+ZDgLOacXbtCLv7JvmMHZh83BavQhEiEWTx/
-         fJqlQh6ZCrK3yV8VtPJncLRuL+Qe4+1BmXXM7GUM9MdbT+231/bVbBjeAxaFppGcwsaw
-         ViGGfp84Vk9b+J+Utv8+1nvJRc8XVwYB9hRaOS6nuLut5tlvlQmXwkxrllIq0+wGKy6D
-         LHvBUv3g9vUDBB+Txjlh6eatpKMfDMQoSudoTFSuCXLNnGYVtWC6Y3GPVLhDGW9YxFDb
-         vi1w==
-X-Gm-Message-State: APjAAAWfDs6kd8X2xdxpsWp8XcPlOQiHDQPaW/XNv1iDXO/Cen44oo0o
-        q8nAMFAzUfK/cDvwhvX10Xk=
-X-Google-Smtp-Source: APXvYqxthAXtDJ2gq9/E3iNv2OArgK+ZnoU2MCNFIA8uJsmUrrgx9PGh0mpyIEoYME+08k/ERhcHgg==
-X-Received: by 2002:a25:dc9:: with SMTP id 192mr60022675ybn.192.1555338246644;
-        Mon, 15 Apr 2019 07:24:06 -0700 (PDT)
-Received: from [192.168.1.14] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id 74sm13434924ywe.81.2019.04.15.07.24.05
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 07:24:05 -0700 (PDT)
-Subject: Re: [PATCH v6 2/2] config: allow giving separate author and committer
- idents
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        William Hubbs <williamh@gentoo.org>, chutzpah@gentoo.org
-References: <20190204184850.10040-1-williamh@gentoo.org>
- <20190205195212.25550-3-avarab@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <15f17152-fcec-ee9a-acd3-f36cf2c98030@gmail.com>
-Date:   Mon, 15 Apr 2019 10:24:04 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
- Thunderbird/66.0
+        id S1727328AbfDOOfK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 10:35:10 -0400
+Received: from mout.gmx.net ([212.227.17.21]:48591 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727213AbfDOOfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 10:35:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555338892;
+        bh=/sBj8E9wQLpLbh24OumO8Qv7wsSfK42pPL6tAlPRvtg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=RrLkdX1EQ3DHyl7+jjGQnwRa+ObGKQDimZjHn9d9I2qUWHPArXBryPJEz70V9a984
+         lZGlNW2kCXgXpbZsyALkD6AFzxmVpa2Fn4JJ38ylYxV9bDEBZP39qFTHLIUa57UBwj
+         AnlEMgmcH6o7UpXLLpIKe/xBjPmteaRes0PYHnpw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0ME47n-1h4mxw3WaV-00HNCR; Mon, 15
+ Apr 2019 16:34:52 +0200
+Date:   Mon, 15 Apr 2019 16:34:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        steadmon@google.com, avarab@gmail.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 01/10] config: initialize opts structure in
+ repo_read_config()
+In-Reply-To: <20190412035220.GA26967@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1904151629020.12614@tvgsbejvaqbjf.bet>
+References: <pull.169.v2.git.gitgitgadget@gmail.com> <pull.169.v3.git.gitgitgadget@gmail.com> <ea8c199f911a84505b1aba5735a280ffc989e2a1.1554995916.git.gitgitgadget@gmail.com> <20190412035220.GA26967@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20190205195212.25550-3-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Sq/+oio8h0Pb5PXUTI66faGZQwqvYREkuyVjT7PMpv0Mr5Yhcqc
+ f/UZd/WRW0DRcJi8VkRAcUXLhIzwH8t6MI9s86NFkig217cqbHZSjdYs6qiRgHWJxKbgtwP
+ 4BQBgrmp74+B0gKp7xqXYG2CjgkHb2WrLe7dM/NPKp2ah/uRPhRWnTJ7H6vjWZpCuu1xdOm
+ yTFo4iuiHhNOcBSf0vt7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:P+L+Rs13tfw=:KA1OLzur8eErSoDGYPI8V5
+ zK/x/R6+EyQJAUzo175ueDa0op/N3VGnW21JZMfVfA0f6upxoMXb1jGoVptx03vpsvAX0dohk
+ 7enN/t7UEfAB5OVWjspm8HhcSwLiQX3B43ntTbDC5STFCO9wUtH32fcaXHKUtsh+Vr0OdGn1s
+ oNd5snpHesR4J9mzsETvuprI42k1jIinCgeAUkiZ5xR8P+j0NnZg4jPRNxU1M+zFVqnn8DaDg
+ 86eqVE094ZkRczWjY4Z3qjghbs+I57nxoNjEiAANJI5/oFWJqPCI3zqeHgNJf8J5PdnPSRT6E
+ cF+doNGRoriUTrY7Lql8fhx0yYH+n4ofDG7AqG0FBlRechwoB9eWPv3wzNVXBBkcvES18xJEH
+ hZgVi31Kh9ov3yN24CRx+U5R/IpA3Ge2nGoX2RDxdLM1nn0wH3rRB2ASpil/9UlwKdmnzv5BU
+ jaN7wELpd5+gJLwPB+l+TQMheQXnqpjfkAMUEBDY4GVevmRVuBHwLEm2Q13PiRtGM72muTUH5
+ Ww6cwr3lG//eTZGLAGsAb1VGVImWsp+oCBpBL3hzr/vY43P3jAtblzkyVu+n6B9ttf3K1+04X
+ 32MBY0gwGW8dUffR44xOeRZuDEfOJV0sseJsPT0/OZYm6vQfk4I4eTDQtwuJDceAQI6J6M7nt
+ DvkPH1OXjk0jXY+7Oyr05bmkoSPrFuclBtvLWafPyPHKiELDGUxsNpp/uu3jlTDrVymK3wntZ
+ RvYL0wra2Pi8dYHla0gZ8havKxc2OlG6isB3S/aJJWF305EY/vmXu73X16lEncGUqQyxg//cG
+ Y56vrb/bacvQSfRSKBAAP6lZLX7Ynizt6OX54HSCA0UAfRj7C84ysHzhaUhqg+kX+UWTtjZ76
+ Ox0ElRgUuOTbDq6xxnC88HLLUdEHc1ES51bBtKbEQu04+aVdRGH0lQ61Vvablv1LhwFBSqrbv
+ xEHiwxORerw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/5/2019 2:52 PM, Ævar Arnfjörð Bjarmason wrote:
-> From: William Hubbs <williamh@gentoo.org>
-> -const char *fmt_name(const char *name, const char *email)
-> +const char *fmt_name(enum want_ident whose_ident)
->  {
-> -	return fmt_ident(name, email, NULL, IDENT_STRICT | IDENT_NO_DATE);
-> +	char *name = NULL;
-> +	char *email = NULL;
-> +
-> +	switch (whose_ident) {
-> +	case WANT_BLANK_IDENT:
-> +		break;
-> +	case WANT_AUTHOR_IDENT:
-> +		name = getenv("GIT_AUTHOR_NAME");
-> +		email = getenv("GIT_AUTHOR_EMAIL");
-> +		break;
-> +	case WANT_COMMITTER_IDENT:
-> +		name = getenv("GIT_COMMITTER_NAME");
-> +		email = getenv("GIT_COMMITTER_EMAIL");
-> +		break;
-> +	}
-> +	return fmt_ident(name, email, whose_ident, NULL,
-> +			IDENT_STRICT | IDENT_NO_DATE);
->  }
+Hi Jonathan,
 
-William and Ævar,
+On Thu, 11 Apr 2019, Jonathan Nieder wrote:
 
-The "WANT_AUTHOR_IDENT" block of this switch statement does not
-appear to be hit by any tests, despite the tests included in this
-patch. My guess is that it is ignored because we have the following
-code in builtin/commit.c:
+> Jeff Hostetler wrote:
+>
+> > Initialize opts structure in repo_read_config().
+>
+> Good find.
 
-static void determine_author_info(struct strbuf *author_ident)
-{
-	char *name, *email, *date;
-	struct ident_split author;
+Heh, it really was our CI that found it, and it was I (with valgrind's
+help) who identified the problem and proposed the fix. So: thank you!
 
-	name = xstrdup_or_null(getenv("GIT_AUTHOR_NAME"));
-	email = xstrdup_or_null(getenv("GIT_AUTHOR_EMAIL"));
-	date = xstrdup_or_null(getenv("GIT_AUTHOR_DATE"));
-...
+> I wonder if there are some flags we can turn on with
+> DEVELOPER=3D1 to prevent this kind of issue going undetected in the
+> future (or maybe this means we need to get the valgrind or ASan
+> testing modes to be fast enough for people to consistently run them).
 
+Sadly, I do not think that either is an option. Such uninitialized memory
+is really hard to catch without in-depth analysis, so DEVELOPER=3D1 is out=
+.
+And `valgrind` (or the faster alternative, DrMemory) have to spend quite a
+bit of time to do what they do, and it is unlikely that that could ever be
+made faster.
 
-This is likely overriding the need to use fmt_name. Should we
-de-duplicate this use of the environment variable by using your
-new method at this spot in builtin/commit.c?
+A better approach might be static analysis (and I do not mean the diet
+coke of static analysis that we run as part of our CI, but something as
+powerful as Coverity).
 
-Thanks,
--Stolee
+Sadly, Coverity makes it super hard to switch off false positives
+regarding e.g. our use of FLEX_ARRAY or strbuf's strbuf_slopbuf.
+
+For quite a while, I wanted to play with [infer](https://fbinfer.com/), in
+the hopes that it would be possible to do customize what cannot be
+customized with Coverity. Alas, their use of OCaml (why do they make it so
+hard?) puts quite the bit of a road block ahead of me in that endeavor.
+
+Ciao,
+Dscho
