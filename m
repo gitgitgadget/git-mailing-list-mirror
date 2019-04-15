@@ -2,103 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 803D120374
-	for <e@80x24.org>; Mon, 15 Apr 2019 10:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21C3620248
+	for <e@80x24.org>; Mon, 15 Apr 2019 12:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbfDOKjn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 06:39:43 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37982 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725816AbfDOKjn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 06:39:43 -0400
-Received: by mail-ed1-f66.google.com with SMTP id d13so14231670edr.5
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 03:39:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PeuzKuq2df921+0dOZ7XduRNwbPfciuw7UUnVGK+BPY=;
-        b=P2K5QydwhUgreqbD9fHHpIeotq2cYWZhlxiYzR2fqTiDk0mA0B5tVmDrJSI5B7ShW6
-         Zr7KN6ynHBdabiKTLS4Vkhv/RSOhDY7FZiM5DNUU+8q8CUTia4MMX4kOXAv5iEuDKCv2
-         mAU+RKXpY4L+CfQTCHl8/viazkUPLpTkkbqw7xvzwUdJAbzpg1Kl5di8XryyPzp6HEof
-         jMDnaY83hwYR9praRjDGijGNPtnD9weQEVxAeR7uLwunCmn4J/IV2FjVLtiFmkSJvJe5
-         q20k5wUs/Jb1tRowCDB46Ilm38BR1ipgC4B11hejI53YnNI9YQoiKiUD5xsXfNkzWFQz
-         0x7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PeuzKuq2df921+0dOZ7XduRNwbPfciuw7UUnVGK+BPY=;
-        b=Q7O6AHDd6veieBXeXxCDU3lWuD2w1o8rgmYWlko1xBfJ7EJ75f7+x+c2dtiXdLD5P2
-         gkXVoI4DoBcHtS8e6Jm1CS4W3U+gazDId+AO5Vj/lYv6+X8KZyZWkB3664fF+lmrzsgn
-         PAyW1m6pSn8FjQ61vClZD5N/4o0Md73X2wxLN5h+r7MT2o6DW7FYl383WEDNOiRY8d11
-         QeLoQsJ2bXhwIkYnZuLEn0O4rRgexHdLOTNoiP7+8Blm0uGq+3hb8iZFEosJipCF5jjf
-         d+FdapO9xFs5fPXQw2ezBGF+IHMYitxs9AFGBTDL+vps1rTB0pryCs8msFw6iy2/p9Wn
-         VSWQ==
-X-Gm-Message-State: APjAAAVC5szKZAYjeSWZNfXTibjOvcfmgNUs7a2UXkuKoGVSWqgbUxZa
-        9Gw/micAAJst/nHIjqArBs6ioS9UHzvDoBULa8g=
-X-Google-Smtp-Source: APXvYqzX979NpA8dC2r/Vm4y8rK50Hhads+Elkffk7zcokuO1Fxt0iavshcF3bwZpYC3yoEFb6fhynKb0SoiWVMCRAE=
-X-Received: by 2002:a17:906:4aca:: with SMTP id u10mr38882341ejt.227.1555324781237;
- Mon, 15 Apr 2019 03:39:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190409161116.30256-1-chriscool@tuxfamily.org>
- <xmqqmukrr52m.fsf@gitster-ct.c.googlers.com> <xmqqimvfr25d.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimvfr25d.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 15 Apr 2019 12:39:29 +0200
-Message-ID: <CAP8UFD3nusWgF=MoaqF6-VdVZa0EJJg4E=Nxoc4Ra_SZ1nvDkw@mail.gmail.com>
-Subject: Re: [PATCH v5 00/16] Many promisor remotes
+        id S1727513AbfDOMhT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 08:37:19 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50701 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727529AbfDOMhS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 08:37:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555331832;
+        bh=mm/Y7Yn2B1l9XDXAuwS/dOuTvq8QgeYpfPpVGsW1D6A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=daTw8Jmu2f1IfjCQTKRQJ64clTSy2mj4Mko9BP/z0LC/KjSSyCwPWp3n3z/xgpjXB
+         6Fln4HjWVIRpZwxDEULRV+znHVsNZUbdsoHpdAj2sNsedVOt5df4yZoiZ6rE1VyyAs
+         Pwz0vs5hrd5xwOTqE9yQOxM18eb1nAAnO6NnMIkM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ7bs-1hYddc04kO-00L061; Mon, 15
+ Apr 2019 14:37:12 +0200
+Date:   Mon, 15 Apr 2019 14:37:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
+cc:     git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH v2 1/2] t9822: skip tests if file names cannot be ISO-8859-1
+ encoded
+In-Reply-To: <6161c76702246ab34a520dae8104ad489b89b6a1.1555276767.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904151434520.44@tvgsbejvaqbjf.bet>
+References: <pull.179.git.gitgitgadget@gmail.com>        <pull.179.v2.git.gitgitgadget@gmail.com> <6161c76702246ab34a520dae8104ad489b89b6a1.1555276767.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:VebTZR36nPevtZ22+sfssLtuok9tCUtKv6CXRcUW0RrFgtduF1m
+ naJ0JDy1aZY25Xmn4k3bbukP0prc0q3aSur8X5iaRofsdrciPcLS+EOUk/CkH4s3Zc6C4y0
+ sHA9CWIGzeFpJGzTIMpJ54zZ0YCPY48+a4MF99+Hip7FporOQ82TPXXdqWrucgtaimuAtcE
+ ZHRO4J4mGB4UtGgWj5HpQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:svvJI5EhIFE=:Azp9Nue1tpO5M5pWI7wfd/
+ UHhojztmljU6OY8iVpTNlsMekuDafIMqXvEO+hJMSdIELnR731slfWWDw4+x37BS6mqN7+Gmp
+ XBsJgI5VaxzoGk3Eon7CIAEmI4ZQLuDR07JzIQWRiH3KALZ/Lw4kdIRDZ5OpdbcdKgS5ivE5i
+ 5AD8pjvQVP9H6v0srgZaHElhfNtdAzWyN9wNmLeUx/Jgv4ezhfOCI0TfG6YD+tnuRUhQ0HZ/y
+ ZkJ1Qw+uQyxDwH+1aWJ5dmq4ZnX2sZ6yBayUoE37brENBFb21U9hsKuJklQcxZam8W3jUIkiX
+ 5mYavcFUwsey4MaOuwBGJmCxSob6IwGhRvl0K5xpTHXc7d5FPn07EBIqt5ysUNtynnBMFZzHI
+ MBPFMXjNMba2IyIlTst3R3cbu9sKjfMUwAwVTIetSnJsX09gydyxMk8qMBiiwSRSfWtrd93SY
+ 5swEofl2qfGzWhe7Bmu0NXw+rW3A/NDWHfcTys+wp/8MLsSKS8DC9al0cenYa/TpWu6tmI6wd
+ KCUAC7Y9ZbbvSLQbou2kMntL0VOIGBFZutm5EjJVvREQHK7GrBBmAPaXVRsgD9YevmFYV7hef
+ LSDrcCaLP78MtkJtVhkMpI4KC5TNat0ezkaFe2iTtFE0QitClfSq1yUTFdpWw1Q+M74I9XYZ3
+ n+3iXEisPLqXGoXX4D5wSPMSllDf2neVqnkflQ6RTfSIOOHzgf/1kpemTCiWi5VshLSTG2mA3
+ fQBWaBtOIvjdbXvCPMcFboiCdPMBjVjziMg1hEz2aMfy3HDwAjA/b8RQ9t+Jtzd6fhwQTYYRg
+ Z2A/K2SIUoUf4ydNUHxRZ9dUcCOiHuSr+/fQh5uoBh0pCUDcXPq0aoC9N6gcV5dKfW3QnW02E
+ hPqNaeK/gawIfMCQNS15VwmLA2WhqsAdQIq3klZ5nLzlVQ7luZ+euW8FqnMjLD7TrclsB0ThR
+ sOICoecJ4qw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 15, 2019 at 12:30 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> >> This patch series is based on:
-> >>
-> >> 763fb763b8 (Merge branch 'jt/batch-fetch-blobs-in-diff' into jch, 2019-04-08)
-> >>
-> >> to avoid issues with jt/batch-fetch-blobs-in-diff.
-> > ...
-> > If you really need to depend on another topic or two, please base
-> > your work on a merge between 'master' (or some well known ancestor
-> > of it) and the tips of the topics instead.
->
-> Well, I've done this myself by first queuing these on 763fb763b8 and
-> then made a merge between jt/batch-fetch-blobs-in-diff and master
-> and applied these pathes on top of the result.  You should be able
-> to see the resulting topic replacing the old one in 'pu' in todays
-> pushout.
+Hi Junio,
 
-Thanks, I will take a look.
+On Sun, 14 Apr 2019, Johannes Schindelin via GitGitGadget wrote:
 
-> Now I can lose the semantic conflict resolution the rebuilding
-> machinery was keeping, which makes things a bit simpler ;-)
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Most notably, it seems that macOS' APFS does not allow that.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yeah, nice!
+This is actually a quite important fix, really, as it makes *every* CI
+build fail in the macOS part, meaning that I am swamped with false
+positives until this is fixed.
+
+It seems not to have made it into the js/macos-gettext-build branch,
+though. Would you terribly mind picking it up, please?
+
+Thanks,
+Dscho
