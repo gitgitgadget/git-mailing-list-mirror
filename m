@@ -2,212 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C78120248
-	for <e@80x24.org>; Mon, 15 Apr 2019 22:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4029E20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 22:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728096AbfDOWBL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 18:01:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59190 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725804AbfDOWBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 18:01:11 -0400
-Received: (qmail 2528 invoked by uid 109); 15 Apr 2019 22:01:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Apr 2019 22:01:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6431 invoked by uid 111); 15 Apr 2019 22:01:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Apr 2019 18:01:40 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2019 18:01:08 -0400
-Date:   Mon, 15 Apr 2019 18:01:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Damien Robert <damien.olivier.robert@gmail.com>
-Cc:     git@vger.kernel.org,
-        Damien Robert <damien.olivier.robert+git@gmail.com>,
+        id S1728140AbfDOW3W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 18:29:22 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44903 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbfDOW3V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 18:29:21 -0400
+Received: by mail-pg1-f193.google.com with SMTP id i2so9267602pgj.11
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 15:29:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=I2gdflZsdPqtUK38DAYl5ZYeGaLjFYtpC/SF7vBD53c=;
+        b=T4115nu/ZXgjGamta71H9Zj7k/iVdhc1i2YUvFhYLDi1xUu+DslEJSHUjk2KxURHlD
+         oe01W/mO8eYGn6s66wEXPyhdxjZSOPmtd0cgal2fj5dhJFamJSNC+c1CvyirkXgW3Yq/
+         a+y8hozpiCAl+ewSgHZzyaG6OEXLz/vwr6mnQWil8n7W75yN0kmwcyHP0wcO9pH6XKsd
+         Wpr+Nd4hN9PgYlOdiQGO/NVUcFOoA8c0lV8t6vZEGapf9VluTDTGoEHr6cgCrAIbYgk3
+         NTbm41K7teToUtAUcFclnxqjRb3ngqmlDTT5KODXHaoVi7mu9asRM2BKK6ZJVr5+XL4b
+         CrJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=I2gdflZsdPqtUK38DAYl5ZYeGaLjFYtpC/SF7vBD53c=;
+        b=S64sJryZtRMkG9+DEYvJcJaSUee6BNUwCsQGKZgiiG4D7MsEN06QwKHRMmyFSvr7Oh
+         J96lVbqpbg/Y5S8ai0pUcIgbJe0nyjufXIbtKiwbUYhxdVsWNLSp68EI+q6OkGEk3glZ
+         KQ/WKY/IOG4xDjDXsK2y8fKOwaL7NRDRZmQOkOp1aNwZ52q6MfQPkAWD7O+Plm/mlviN
+         ywmQZJVdffDyVTn7sPnBs8jnAs/3rNdlKaZBf5k5J/yFq+iKdyMdmcneGdqcpseOfscX
+         72TKIZlurXFm2f0hVRkil7ZLBMJ/GYd4PeSI5Vc183ZYCfs0PeyhEmScBRs26HxORTwM
+         FhHw==
+X-Gm-Message-State: APjAAAXiyUhcXUVRDfS/9ldJlGyYlq7apqGZm9J4MIIW9AkmG42+VliZ
+        uuJujxS9EMML0jvj+5dc+Y9xsej1
+X-Google-Smtp-Source: APXvYqwVJ/vNCdC+Evr4DhBIs5AMEQYkqvgCZHvDXODhdkT4px2azwqA3H8y9TUYZZQMsaeG3snUQQ==
+X-Received: by 2002:a62:ed05:: with SMTP id u5mr51840828pfh.63.1555367360742;
+        Mon, 15 Apr 2019 15:29:20 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id h71sm23687954pge.49.2019.04.15.15.29.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Apr 2019 15:29:19 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 15:29:18 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 1/1] Fix %(push:track) in ref-filter
-Message-ID: <20190415220108.GD28128@sigill.intra.peff.net>
-References: <20190415210416.7525-1-damien.olivier.robert+git@gmail.com>
- <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v5 0/5] rebase: teach rebase --keep-base
+Message-ID: <cover.1555366891.git.liu.denton@gmail.com>
+References: <cover.1554500051.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1554500051.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 15, 2019 at 11:04:16PM +0200, Damien Robert wrote:
+Thanks for the example, Ævar, it clarified a lot. I think that _now_
+we're on the same page. ;)
 
-> In ref-filter.c, when processing the atom %(push:track), the
-> ahead/behind values are computed using `stat_tracking_info` which refers
-> to the upstream branch.
+I made can_fast_forward detect this case and now, it should behave as
+expected. The change can be seen in 4/5. Hopefully this saves you some
+work later.
 
-Good catch. I think this has been broken since %(push) was added in
-29bc88505f (for-each-ref: accept "%(push)" format, 2015-05-21). I don't
-actually use the track option, so I never noticed.
+---
 
-> Fix that by introducing a new function `stat_push_info` in remote.c
-> (exported in remote.h), which does the same thing but for the push
-> branch. Factorise the ahead/behind computation of `stat_tracking_info` into
-> `stat_compare_info` so that it can be reused for `stat_push_info`.
+This patchset now depends "[PATCH 1/8] tests (rebase): spell out the
+`--keep-empty` option" which is the first patch of Johannes's "Do not
+use abbreviated options in tests" patchset[1]. (Thanks for catching
+that, Johannes!)
 
-Makes sense.
+Changes since v1:
 
-> This bug was not detected in t/t6300-for-each-ref.sh because in the test
-> for push:track, both the upstream and the push branch were ahead by 1.
-> Change the test so that the upstream branch is ahead by 2 while the push
-> branch is ahead by 1, this allow us to test that %(push:track) refer to
-> the correct branch.
+* Squashed old set into one patch
+* Fixed indentation style and dangling else
+* Added more documentation after discussion with Ævar
 
-Nice. I wish all patches were this careful about thinking through
-details like this.
+Changes since v2:
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 3aca105307..82e277222b 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1391,8 +1391,11 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
->  	if (atom->u.remote_ref.option == RR_REF)
->  		*s = show_ref(&atom->u.remote_ref.refname, refname);
->  	else if (atom->u.remote_ref.option == RR_TRACK) {
-> -		if (stat_tracking_info(branch, &num_ours, &num_theirs,
-> -				       NULL, AHEAD_BEHIND_FULL) < 0) {
-> +		if ((atom->u.remote_ref.push ?
-> +		     stat_push_info(branch, &num_ours, &num_theirs,
-> +				    NULL, AHEAD_BEHIND_FULL) :
-> +		     stat_tracking_info(branch, &num_ours, &num_theirs,
-> +					NULL, AHEAD_BEHIND_FULL)) < 0) {
->  			*s = xstrdup(msgs.gone);
->  		} else if (!num_ours && !num_theirs)
+* Add testing for rebase --fork-point behaviour
+* Add testing for rebase fast-forward behaviour
+* Make rebase --onto fast-forward in more cases
+* Update documentation to include use-case
 
-I'm a big fan of the "?" operator, but this ternary-within-an-if might
-be pushing even my boundaries of taste. :) I wonder if it would be more
-readable as:
+Changes since v3:
 
-  int ret;
-  if (atom->u.remote_ref.push)
-	stat_push_info(...);
-  else
-	stat_tracking_info(...);
-  if (ret < 0)
-	... gone ...
-  else if (!num_ours && !num_theirs)
-	... etc ...
+* Fix tests failing on bash 4.2
+* Fix typo in t3431 comment
 
-I'd even be OK with a ternary for assigning "ret". :)
+Changes since v4:
 
-All that said, we would need to do the exact same conditional for
-":trackshort", wouldn't we? The tests don't pick it up because the
-symbol is still ">" for both branches (deja vu!). So it might be worth
-not just having push be 2 ahead, but have it actually be behind instead
-(or in addition to).
+* Make rebase --fork-point fast-forward in more cases
 
-So since we have to do it twice, maybe that makes it worth factoring
-out something like:
+[1]: https://public-inbox.org/git/a1b4b74b9167e279dae4cd8c58fb28d8a714a66a.1553537656.git.gitgitgadget@gmail.com/
 
-  int stat_remote_ref(struct used_atom *atom, struct branch *branch,
-                      int *num_ours, int *num_theirs)
-  {
-        if (atom->u.remote_ref.push)
-                return stat_push_info(branch, &num_ours, &num_theirs,
-                                      NULL, AHEAD_BEHIND_FULL);
-        else
-                return stat_tracking_info(branch, &num_ours, &num_theirs,
-                                          NULL, AHEAD_BEHIND_FULL);
-  }
+Denton Liu (5):
+  t3431: add rebase --fork-point tests
+  t3432: test rebase fast-forward behavior
+  rebase: fast-forward --onto in more cases
+  rebase: fast-forward --fork-point in more cases
+  rebase: teach rebase --keep-base
 
-Or perhaps it argues for just giving access to the more generic stat_*
-function, and letting callers pass in a flag for push vs upstream (and
-either leaving stat_tracking_info() as a wrapper, or just updating its
-few callers).
+ Documentation/git-rebase.txt     | 30 ++++++++++--
+ builtin/rebase.c                 | 77 +++++++++++++++++++++--------
+ t/t3400-rebase.sh                |  2 +-
+ t/t3404-rebase-interactive.sh    |  2 +-
+ t/t3416-rebase-onto-threedots.sh | 57 ++++++++++++++++++++++
+ t/t3431-rebase-fork-point.sh     | 57 ++++++++++++++++++++++
+ t/t3432-rebase-fast-forward.sh   | 83 ++++++++++++++++++++++++++++++++
+ 7 files changed, 284 insertions(+), 24 deletions(-)
+ create mode 100755 t/t3431-rebase-fork-point.sh
+ create mode 100755 t/t3432-rebase-fast-forward.sh
 
-> -int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
-> -		       const char **upstream_name, enum ahead_behind_flags abf)
-> +
-> +int stat_compare_info(const char **branch_name, const char **base,
-> +		      int *num_ours, int *num_theirs,
-> +		      enum ahead_behind_flags abf)
+-- 
+2.21.0.921.gb27c68c4e9
 
-In the original, we need a pointer-to-pointer for upstream_name, because
-we return the string as an out-parameter. But here we're just taking two
-strings as input. We can drop the extra layer of indirection, like the
-patch below.
-
-Also, since this is an internal helper function for the file, we should
-mark it as static.
-
-diff --git a/remote.c b/remote.c
-index b2b37d1e8d..e6ca62dc19 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1895,23 +1895,23 @@ int resolve_remote_symref(struct ref *ref, struct ref *list)
-  * commits are different.
-  */
- 
--int stat_compare_info(const char **branch_name, const char **base,
--		      int *num_ours, int *num_theirs,
--		      enum ahead_behind_flags abf)
-+static int stat_compare_info(const char *branch_name, const char *base,
-+			     int *num_ours, int *num_theirs,
-+			     enum ahead_behind_flags abf)
- {
- 	struct object_id oid;
- 	struct commit *ours, *theirs;
- 	struct rev_info revs;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	/* Cannot stat if what we used to build on no longer exists */
--	if (read_ref(*base, &oid))
-+	if (read_ref(base, &oid))
- 		return -1;
- 	theirs = lookup_commit_reference(the_repository, &oid);
- 	if (!theirs)
- 		return -1;
- 
--	if (read_ref(*branch_name, &oid))
-+	if (read_ref(branch_name, &oid))
- 		return -1;
- 	ours = lookup_commit_reference(the_repository, &oid);
- 	if (!ours)
-@@ -1987,7 +1987,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	if (!base)
- 		return -1;
- 
--	return stat_compare_info(&(branch->refname), &base, num_ours, num_theirs, abf);
-+	return stat_compare_info(branch->refname, base, num_ours, num_theirs, abf);
- }
- 
- /*
-@@ -2006,7 +2006,7 @@ int stat_push_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	if (!base)
- 		return -1;
- 
--	return stat_compare_info(&(branch->refname), &base, num_ours, num_theirs, abf);
-+	return stat_compare_info(branch->refname, base, num_ours, num_theirs, abf);
- }
- 
- /*
-
-Of course if you buy my argument above that we should just let
-ref-filter call into the generic form of the function, then all of that
-would change. :)
-
-> [...]
-
-Other than that, the patch looked quite reasonable. I didn't dig too far
-into the ripple effects of the test changes, since I think we'll end up
-changing them again to make sure ":trackshort" is distinct.
-
-Thanks for working on this.
-
--Peff
