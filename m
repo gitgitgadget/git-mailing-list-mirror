@@ -7,271 +7,480 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9292A20248
-	for <e@80x24.org>; Mon, 15 Apr 2019 18:24:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B97B20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 18:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727929AbfDOSY5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 14:24:57 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34529 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727143AbfDOSY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 14:24:57 -0400
-Received: by mail-pg1-f195.google.com with SMTP id v12so8998242pgq.1
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 11:24:56 -0700 (PDT)
+        id S1727997AbfDOSZB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 14:25:01 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:34533 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727143AbfDOSZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 14:25:00 -0400
+Received: by mail-pg1-f193.google.com with SMTP id v12so8998316pgq.1
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 11:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1fq8QBA+JmJgeuIiolNL9IzImRV+EmbfXcWM4sQVmHY=;
-        b=b3M5qHHAELvxGgySIHp3zuyyUVPR7WvN9wV9ArS4pp6z0pfXzKe09Oc9i6arI5m141
-         FPqn5rBDnAvYjJ+E8Mp/7bf/TAtu2PK4ZdFrjLaYszJI3/e3VrJLPxhvbo4enlLrg6+Q
-         3pJQsVpoM0Iw4sGD3fhioG7J/UhrkCrOskVeJY8pQhIcGrN44tKo2iBln6/tvvpwG9SR
-         Fm2z2olz3calflwqY7KoiUVMYkLI/o5lMJk1D06jpNI2E6IxlDtYRB3Y9DxpPyadGlB6
-         jUWKYZ2oSy6Ab4ahVgG992PDVvs7RWkAQ+iF55K9wzdG6uJQZmIO9GPmGiz7ryDmIZ6X
-         xBVA==
+        bh=vU70n46XcnR/PHyl5ZB3TWaImh4RvLtGcRG7i1q9KYU=;
+        b=sC6Jx31XLQ+FZKv1xTY0Ar7o1YxPBBnYRJNj2prAPtfTIJw9kOdbQkiuQKePKzhufR
+         31fmpiffxIMgIf7u80neF52EwBtD5gW/49yUzJBRofIJijx0ZP4OTxpOV/IZUIt7G1Nq
+         kYmkaWn3PtUlynWUqzQbqDzEliPentKZWlqCF2Lpgo0mMEEWe1PN1qxBMcJmOPb/+OJw
+         qMi24A7IT3Id8vCvURlTXhzpg7c3d5R8+dpbGilLgnnyivyccOyo3zHq6hUmMBav3whP
+         TZ4fVZbnDBxMiRHR52MDKteU+PJkmTjsmlqFkr8kFxOwqxZbqnZx9jB0c2sxtVZA1k/S
+         fvEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1fq8QBA+JmJgeuIiolNL9IzImRV+EmbfXcWM4sQVmHY=;
-        b=Quc47bJk0d26kguEivVBl1OHOG6uyZ+uqxLbdcplUfvIBe0dpqriEivNipqCPhJ08i
-         0zLMxfO8SlYcGfu0zt6u2TPv2j3w5siMaiaaFHeX0iGnkNw7/1f6rGKnsiPXvV9x5eOu
-         nXn7gmggew3tTy6OY/fYv5e2gHP+wDUembqT0B4qEeMNzG+XwbwRPejsUL7pO59KBlx/
-         FP4xKEwQVD7idSsI8d2ORVujK0HhLyBkakfDzWnLZAFgkwwcD7mrjxAJKsl0SlXBSti5
-         33KMg0w/dqmdkIamckAQSXH/jHGsf9fcu2RDGZ77ABKZJVomG6+DJbgq70k3yzG4Ryee
-         sJMA==
-X-Gm-Message-State: APjAAAV32wuaf1Qo4ld8k2TKMfe+4Mbo9fAbqLDgXYOw5AWmYwpOUsU4
-        6D5Q4KWOCQ5wrpz0/tJLtgvCE9Nx
-X-Google-Smtp-Source: APXvYqw4jRya+OfJ2pwo3X+P5jKNBNcpcaX4AWAXSriY34/9TnIcemG/jjGWQyy2+vz++K8+ogFOmA==
-X-Received: by 2002:a65:53cb:: with SMTP id z11mr70342585pgr.139.1555352695983;
-        Mon, 15 Apr 2019 11:24:55 -0700 (PDT)
+        bh=vU70n46XcnR/PHyl5ZB3TWaImh4RvLtGcRG7i1q9KYU=;
+        b=GRqXl7tsn0a7Q3rgZeaJuVJf4KteCvrCn4covPFn7HNRIl9IMU+IrCgfFjU6gvM3Iq
+         A4VgOd3FBc49VL0OMEMS63WIMXyl8Pdd6s+jOCR2LwKf6t2QD60pGOhZ7fXh1+m1dwsc
+         bsyUThCc2aWxM+CHZpumcDdpBTOdcinO4HnS1XRfvmN7ZywGP1y/f5BXkkHmok8vRLwJ
+         eNxg+Vkobxm4MjdTalLXS9A6a8M4Tuf8o4UWJO0DjtBRS0pAYUMwghR5tMnEz/883/er
+         t1j3XWXKLo/70pF4yBD+M7xTxw3q6egglHu2ytiDpttxlv7tfcNFGyfY+lQufmUy5RNB
+         lLvw==
+X-Gm-Message-State: APjAAAV1Y9H/ahzLO7QnXV0tSPvHLqXiRbmNc+zwqyrsJrxySy2mV02F
+        +aac/QzB59ChnhtHf2u3fK5eBeVp
+X-Google-Smtp-Source: APXvYqxCk2JjzppanksuUDYlN7hUnLs6c2WQyd+Kx8S1eNZq23biQ7FCGmplsEqdHAIBxb9yoskpoA==
+X-Received: by 2002:a62:1d94:: with SMTP id d142mr75195485pfd.83.1555352699269;
+        Mon, 15 Apr 2019 11:24:59 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id t5sm63011618pfh.141.2019.04.15.11.24.54
+        by smtp.gmail.com with ESMTPSA id 75sm98966422pfr.55.2019.04.15.11.24.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 11:24:54 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 11:24:53 -0700
+        Mon, 15 Apr 2019 11:24:58 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 11:24:57 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Emily Shaffer <emilyshaffer@google.com>
-Subject: [PATCH v2 0/3] remove extern from function declarations
-Message-ID: <cover.1555352526.git.liu.denton@gmail.com>
+Subject: [PATCH v2 2/3] *.[ch]: remove extern from function declarations
+ using sed
+Message-ID: <2b0e2a9f869ce9f8e8e840fc150a6d291a0b0395.1555352526.git.liu.denton@gmail.com>
 References: <3e3b9d6c8e54b326809b95adabd3be39d2d0770f.1555111963.git.liu.denton@gmail.com>
+ <cover.1555352526.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3e3b9d6c8e54b326809b95adabd3be39d2d0770f.1555111963.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1555352526.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all, thanks for the feedback.
+There has been a push to remove extern from function declarations.
+Finish the job by removing all instances of "extern" for function
+declarations in headers using sed.
 
-I didn't realise that Coccinelle could be used to remove modifiers but
-turns out I was wrong. However, Coccinelle seems to choke whenever
-there's an __attribute__ or when there are varargs and I couldn't figure
-out how to work around that. As a result, this patchset is written in
-two parts: one using spatch and another using sed to get the rest.
+This was done by running the following on my system with sed 4.2.2:
 
-Hopefully the sed patch is more easily digestable now.
+    $ git ls-files \*.{c,h} | xargs sed -i'' -e 's/^\(\s*\)extern \([^(]*([^*]\)/\1\2/'
 
-Change since v1:
+Then, leftover instances of extern were found by running
 
-* Use spatch with sed instead of sed alone
-* Fix sed expression to ignore function variables
+    $ git grep -w -C3 extern \*.{c,h}
 
-Denton Liu (3):
-  *.[ch]: remove extern from function declarations using spatch
-  *.[ch]: remove extern from function declarations using sed
-  cocci: prevent extern function declarations
+and manually checking the output. No other instances were found.
 
- advice.h                          |   2 +-
- archive.h                         |  14 +-
- bisect.h                          |  12 +-
- blame.h                           |   2 +-
- branch.h                          |  12 +-
- builtin.h                         | 252 +++++++++++-----------
- bulk-checkin.h                    |   6 +-
- cache.h                           | 344 +++++++++++++++---------------
- checkout.h                        |   2 +-
- column.h                          |  12 +-
- commit.h                          |  72 +++----
- compat/mingw.c                    |   2 +-
- compat/mingw.h                    |   6 +-
- compat/nedmalloc/malloc.c.h       |   6 +-
- compat/obstack.h                  |   8 +-
- compat/poll/poll.h                |   2 +-
- compat/regex/regex.h              |  28 +--
- compat/win32/pthread.h            |   6 +-
- config.h                          | 184 ++++++++--------
- connect.h                         |  20 +-
- contrib/coccinelle/noextern.cocci |   6 +
- csum-file.h                       |  20 +-
- decorate.h                        |   4 +-
- delta.h                           |  10 +-
- dir.h                             |  70 +++---
- exec-cmd.h                        |  16 +-
- fmt-merge-msg.h                   |   2 +-
- fsmonitor.h                       |  14 +-
- gettext.h                         |   8 +-
- git-compat-util.h                 | 128 +++++------
- grep.h                            |  22 +-
- hashmap.h                         |  30 +--
- help.h                            |  30 +--
- http.h                            |  52 ++---
- khash.h                           |  14 +-
- kwset.h                           |  10 +-
- line-log.h                        |  16 +-
- lockfile.h                        |  10 +-
- ls-refs.h                         |   2 +-
- mailinfo.h                        |   6 +-
- merge-blobs.h                     |   2 +-
- object-store.h                    |  16 +-
- object.h                          |  12 +-
- oidmap.h                          |  10 +-
- pack.h                            |  24 +--
- packfile.h                        |  74 +++----
- path.h                            |  32 +--
- pkt-line.h                        |   6 +-
- ppc/sha1.c                        |   2 +-
- prio-queue.h                      |  10 +-
- protocol.h                        |   6 +-
- quote.h                           |  32 +--
- reachable.h                       |   4 +-
- reflog-walk.h                     |  16 +-
- refs.h                            |   2 +-
- remote.h                          |  12 +-
- replace-object.h                  |   2 +-
- resolve-undo.h                    |  14 +-
- run-command.h                     |   8 +-
- serve.h                           |   4 +-
- sha1-lookup.h                     |   2 +-
- streaming.h                       |   8 +-
- string-list.h                     |   2 +-
- sub-process.h                     |   2 +-
- submodule-config.h                |  20 +-
- tag.h                             |  14 +-
- tempfile.h                        |  26 +--
- trace.h                           |  34 +--
- transport.h                       |   4 +-
- tree-walk.h                       |   4 +-
- upload-pack.h                     |   4 +-
- url.h                             |  16 +-
- urlmatch.h                        |   4 +-
- utf8.h                            |   2 +-
- varint.h                          |   4 +-
- vcs-svn/sliding_window.h          |   2 +-
- vcs-svn/svndiff.h                 |   2 +-
- worktree.h                        |  22 +-
- xdiff-interface.h                 |  10 +-
- 79 files changed, 969 insertions(+), 963 deletions(-)
- create mode 100644 contrib/coccinelle/noextern.cocci
+Note that the regex used specifically excludes function variables which
+_should_ be left as extern.
 
-Interdiff against v1:
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6b04514cdc..8e1ab3129e 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2483,7 +2483,7 @@ typedef struct {
- 	int newmode;
- } _startupinfo;
+Not the most elegant way to do it but it gets the job done.
+
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ cache.h                     |  4 ++--
+ commit.h                    |  2 +-
+ compat/nedmalloc/malloc.c.h |  2 +-
+ config.h                    |  2 +-
+ exec-cmd.h                  |  2 +-
+ git-compat-util.h           | 20 ++++++++++----------
+ khash.h                     | 14 +++++++-------
+ path.h                      | 30 +++++++++++++++---------------
+ quote.h                     |  2 +-
+ run-command.h               |  2 +-
+ trace.h                     | 18 +++++++++---------
+ worktree.h                  |  2 +-
+ 12 files changed, 50 insertions(+), 50 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index e21a10b380..1f42d5ecb1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1690,7 +1690,7 @@ extern const char *git_mailmap_blob;
+ /* IO helper functions */
+ void maybe_flush_or_die(FILE *, const char *);
+ __attribute__((format (printf, 2, 3)))
+-extern void fprintf_or_die(FILE *, const char *fmt, ...);
++void fprintf_or_die(FILE *, const char *fmt, ...);
  
--extern int __wgetmainargs(int *argc, wchar_t ***argv, wchar_t ***env, int glob,
-+int __wgetmainargs(int *argc, wchar_t ***argv, wchar_t ***env, int glob,
- 		_startupinfo *si);
- 
- static NORETURN void die_startup(void)
-diff --git a/compat/obstack.h b/compat/obstack.h
-index 1ff8f3fc1e..168d1d8b38 100644
---- a/compat/obstack.h
-+++ b/compat/obstack.h
-@@ -197,7 +197,7 @@ void obstack_free (struct obstack *, void *);
-    more memory.  This can be set to a user defined function which
-    should either abort gracefully or use longjump - but shouldn't
-    return.  The default action is to print a message and abort.  */
--void (*obstack_alloc_failed_handler) (void);
-+extern void (*obstack_alloc_failed_handler) (void);
- 
- /* Pointer to beginning of object being allocated or to be allocated next.
-    Note that this might not be the final address of the object
-diff --git a/contrib/coccinelle/noextern.cocci b/contrib/coccinelle/noextern.cocci
-new file mode 100644
-index 0000000000..8cb39ac947
---- /dev/null
-+++ b/contrib/coccinelle/noextern.cocci
-@@ -0,0 +1,6 @@
-+@@
-+type T;
-+identifier f;
-+@@
-+- extern
-+  T f(...);
-diff --git a/delta.h b/delta.h
-index 592bd9c27e..0fc3659633 100644
---- a/delta.h
-+++ b/delta.h
-@@ -13,7 +13,7 @@ struct delta_index;
-  * before free_delta_index() is called.  The returned pointer must be freed
-  * using free_delta_index().
+ #define COPY_READ_ERROR (-2)
+ #define COPY_WRITE_ERROR (-3)
+@@ -1724,7 +1724,7 @@ void write_file_buf(const char *path, const char *buf, size_t len);
+  *   write_file(path, "counter: %d", ctr);
   */
--extern struct delta_index *
-+struct delta_index *
- create_delta_index(const void *buf, unsigned long bufsize);
+ __attribute__((format (printf, 2, 3)))
+-extern void write_file(const char *path, const char *fmt, ...);
++void write_file(const char *path, const char *fmt, ...);
  
- /*
-@@ -40,7 +40,7 @@ unsigned long sizeof_delta_index(struct delta_index *index);
-  * returned and *delta_size is updated with its size.  The returned buffer
-  * must be freed by the caller.
-  */
--extern void *
-+void *
- create_delta(const struct delta_index *index,
- 	     const void *buf, unsigned long bufsize,
- 	     unsigned long *delta_size, unsigned long max_delta_size);
+ /* pager.c */
+ void setup_pager(void);
+diff --git a/commit.h b/commit.h
+index 26d0b51758..40744e1bed 100644
+--- a/commit.h
++++ b/commit.h
+@@ -379,6 +379,6 @@ int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused)
+ int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
+ 
+ LAST_ARG_MUST_BE_NULL
+-extern int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
++int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
+ 
+ #endif /* COMMIT_H */
+diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+index 9daedd046c..797bd8b98e 100644
+--- a/compat/nedmalloc/malloc.c.h
++++ b/compat/nedmalloc/malloc.c.h
+@@ -1899,7 +1899,7 @@ static MLOCK_T malloc_global_mutex = PTHREAD_MUTEX_INITIALIZER;
+ /* skipped internal declaration from pthread.h */
+ #ifdef linux
+ #ifndef PTHREAD_MUTEX_RECURSIVE
+-extern int pthread_mutexattr_setkind_np __P ((pthread_mutexattr_t *__attr,
++int pthread_mutexattr_setkind_np __P ((pthread_mutexattr_t *__attr,
+ 					   int __kind));
+ #define PTHREAD_MUTEX_RECURSIVE PTHREAD_MUTEX_RECURSIVE_NP
+ #define pthread_mutexattr_settype(x,y) pthread_mutexattr_setkind_np(x,y)
+diff --git a/config.h b/config.h
+index f9d5593c8b..1482b9b7fa 100644
+--- a/config.h
++++ b/config.h
+@@ -265,7 +265,7 @@ struct key_value_info {
+ 	enum config_scope scope;
+ };
+ 
+-extern NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
++NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
+ NORETURN void git_die_config_linenr(const char *key, const char *filename, int linenr);
+ 
+ #define LOOKUP_CONFIG(mapping, var) \
+diff --git a/exec-cmd.h b/exec-cmd.h
+index bddf5cb934..8cd1df28d3 100644
+--- a/exec-cmd.h
++++ b/exec-cmd.h
+@@ -10,7 +10,7 @@ void setup_path(void);
+ const char **prepare_git_cmd(struct argv_array *out, const char **argv);
+ int execv_git_cmd(const char **argv); /* NULL terminated */
+ LAST_ARG_MUST_BE_NULL
+-extern int execl_git_cmd(const char *cmd, ...);
++int execl_git_cmd(const char *cmd, ...);
+ char *system_path(const char *path);
+ 
+ #endif /* GIT_EXEC_CMD_H */
 diff --git a/git-compat-util.h b/git-compat-util.h
-index fbfc53df4b..cc2cd27f30 100644
+index 337bc9a7c3..cc2cd27f30 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -484,9 +484,9 @@ static inline int const_error(void)
+@@ -448,13 +448,13 @@ struct strbuf;
+ /* General helper functions */
+ void vreportf(const char *prefix, const char *err, va_list params);
+ NORETURN void usage(const char *err);
+-extern NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
+-extern void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
++NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
++NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
++int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
++void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
++void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
  
- void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
- void set_error_routine(void (*routine)(const char *err, va_list params));
--void (*get_error_routine(void))(const char *err, va_list params);
-+extern void (*get_error_routine(void))(const char *err, va_list params);
- void set_warn_routine(void (*routine)(const char *warn, va_list params));
--void (*get_warn_routine(void))(const char *warn, va_list params);
-+extern void (*get_warn_routine(void))(const char *warn, va_list params);
- void set_die_is_recursing_routine(int (*routine)(void));
+ #ifndef NO_OPENSSL
+ #ifdef APPLE_COMMON_CRYPTO
+@@ -769,7 +769,7 @@ FILE *git_fopen(const char*, const char*);
+ #undef snprintf
+ #endif
+ #define snprintf git_snprintf
+-extern int git_snprintf(char *str, size_t maxsize,
++int git_snprintf(char *str, size_t maxsize,
+ 			const char *format, ...);
+ #ifdef vsnprintf
+ #undef vsnprintf
+@@ -855,7 +855,7 @@ void *xrealloc(void *ptr, size_t size);
+ void *xcalloc(size_t nmemb, size_t size);
+ void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+-extern int xopen(const char *path, int flags, ...);
++int xopen(const char *path, int flags, ...);
+ ssize_t xread(int fd, void *buf, size_t len);
+ ssize_t xwrite(int fd, const void *buf, size_t len);
+ ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+@@ -966,7 +966,7 @@ static inline size_t xsize_t(off_t len)
+ }
  
- int starts_with(const char *str, const char *prefix);
-diff --git a/packfile.h b/packfile.h
-index dab50405e0..4eb4d5f521 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -43,7 +43,7 @@ void for_each_file_in_pack_dir(const char *objdir,
- #define PACKDIR_FILE_PACK 1
- #define PACKDIR_FILE_IDX 2
- #define PACKDIR_FILE_GARBAGE 4
--void (*report_garbage)(unsigned seen_bits, const char *path);
-+extern void (*report_garbage)(unsigned seen_bits, const char *path);
+ __attribute__((format (printf, 3, 4)))
+-extern int xsnprintf(char *dst, size_t max, const char *fmt, ...);
++int xsnprintf(char *dst, size_t max, const char *fmt, ...);
  
- void reprepare_packed_git(struct repository *r);
- void install_packed_git(struct repository *r, struct packed_git *pack);
-diff --git a/ppc/sha1.c b/ppc/sha1.c
-index ec6a1926d4..b5d8af4551 100644
---- a/ppc/sha1.c
-+++ b/ppc/sha1.c
-@@ -10,7 +10,7 @@
- #include <string.h>
- #include "sha1.h"
+ #ifndef HOST_NAME_MAX
+ #define HOST_NAME_MAX 256
+diff --git a/khash.h b/khash.h
+index 532109c87f..3d25667a82 100644
+--- a/khash.h
++++ b/khash.h
+@@ -70,13 +70,13 @@ static const double __ac_HASH_UPPER = 0.77;
+ 	} kh_##name##_t;
  
--extern void ppc_sha1_core(uint32_t *hash, const unsigned char *p,
-+void ppc_sha1_core(uint32_t *hash, const unsigned char *p,
- 			  unsigned int nblocks);
+ #define __KHASH_PROTOTYPES(name, khkey_t, khval_t)	 					\
+-	extern kh_##name##_t *kh_init_##name(void);							\
+-	extern void kh_destroy_##name(kh_##name##_t *h);					\
+-	extern void kh_clear_##name(kh_##name##_t *h);						\
+-	extern khint_t kh_get_##name(const kh_##name##_t *h, khkey_t key); 	\
+-	extern int kh_resize_##name(kh_##name##_t *h, khint_t new_n_buckets); \
+-	extern khint_t kh_put_##name(kh_##name##_t *h, khkey_t key, int *ret); \
+-	extern void kh_del_##name(kh_##name##_t *h, khint_t x);
++	kh_##name##_t *kh_init_##name(void);							\
++	void kh_destroy_##name(kh_##name##_t *h);					\
++	void kh_clear_##name(kh_##name##_t *h);						\
++	khint_t kh_get_##name(const kh_##name##_t *h, khkey_t key); 	\
++	int kh_resize_##name(kh_##name##_t *h, khint_t new_n_buckets); \
++	khint_t kh_put_##name(kh_##name##_t *h, khkey_t key, int *ret); \
++	void kh_del_##name(kh_##name##_t *h, khint_t x);
  
- int ppc_SHA1_Init(ppc_SHA_CTX *c)
+ #define __KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
+ 	SCOPE kh_##name##_t *kh_init_##name(void) {							\
+diff --git a/path.h b/path.h
+index ab9d8d86f2..0efbd4fb0d 100644
+--- a/path.h
++++ b/path.h
+@@ -13,19 +13,19 @@ struct strbuf;
+ /*
+  * Return a statically allocated path.
+  */
+-extern const char *mkpath(const char *fmt, ...)
++const char *mkpath(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+ /*
+  * Return a path.
+  */
+-extern char *mkpathdup(const char *fmt, ...)
++char *mkpathdup(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+ /*
+  * Construct a path and place the result in the provided buffer `buf`.
+  */
+-extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
++char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+ 
+ /*
+@@ -37,7 +37,7 @@ extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+  * Constructs a path into the common git directory of repository `repo` and
+  * append it in the provided buffer `sb`.
+  */
+-extern void strbuf_git_common_path(struct strbuf *sb,
++void strbuf_git_common_path(struct strbuf *sb,
+ 				   const struct repository *repo,
+ 				   const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+@@ -46,7 +46,7 @@ extern void strbuf_git_common_path(struct strbuf *sb,
+  * Return a statically allocated path into the main repository's
+  * (the_repository) common git directory.
+  */
+-extern const char *git_common_path(const char *fmt, ...)
++const char *git_common_path(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+ 
+@@ -66,7 +66,7 @@ extern const char *git_common_path(const char *fmt, ...)
+ /*
+  * Return a path into the git directory of repository `repo`.
+  */
+-extern char *repo_git_path(const struct repository *repo,
++char *repo_git_path(const struct repository *repo,
+ 			   const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+@@ -74,7 +74,7 @@ extern char *repo_git_path(const struct repository *repo,
+  * Construct a path into the git directory of repository `repo` and append it
+  * to the provided buffer `sb`.
+  */
+-extern void strbuf_repo_git_path(struct strbuf *sb,
++void strbuf_repo_git_path(struct strbuf *sb,
+ 				 const struct repository *repo,
+ 				 const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+@@ -83,13 +83,13 @@ extern void strbuf_repo_git_path(struct strbuf *sb,
+  * Return a statically allocated path into the main repository's
+  * (the_repository) git directory.
+  */
+-extern const char *git_path(const char *fmt, ...)
++const char *git_path(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+ /*
+  * Return a path into the main repository's (the_repository) git directory.
+  */
+-extern char *git_pathdup(const char *fmt, ...)
++char *git_pathdup(const char *fmt, ...)
+ 	__attribute__((format (printf, 1, 2)));
+ 
+ /*
+@@ -97,14 +97,14 @@ extern char *git_pathdup(const char *fmt, ...)
+  * and place it in the provided buffer `buf`, the contents of the buffer will
+  * be overridden.
+  */
+-extern char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
++char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+ /*
+  * Construct a path into the main repository's (the_repository) git directory
+  * and append it to the provided buffer `sb`.
+  */
+-extern void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
++void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+ /*
+@@ -112,7 +112,7 @@ extern void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
+  *
+  * If the repository doesn't have a worktree NULL is returned.
+  */
+-extern char *repo_worktree_path(const struct repository *repo,
++char *repo_worktree_path(const struct repository *repo,
+ 				const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+@@ -122,7 +122,7 @@ extern char *repo_worktree_path(const struct repository *repo,
+  *
+  * If the repository doesn't have a worktree nothing will be appended to `sb`.
+  */
+-extern void strbuf_repo_worktree_path(struct strbuf *sb,
++void strbuf_repo_worktree_path(struct strbuf *sb,
+ 				      const struct repository *repo,
+ 				      const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+@@ -131,7 +131,7 @@ extern void strbuf_repo_worktree_path(struct strbuf *sb,
+  * Return a path into a submodule's git directory located at `path`.  `path`
+  * must only reference a submodule of the main repository (the_repository).
+  */
+-extern char *git_pathdup_submodule(const char *path, const char *fmt, ...)
++char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
+ /*
+@@ -139,7 +139,7 @@ extern char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+  * append it to the provided buffer `sb`.  `path` must only reference a
+  * submodule of the main repository (the_repository).
+  */
+-extern int strbuf_git_path_submodule(struct strbuf *sb, const char *path,
++int strbuf_git_path_submodule(struct strbuf *sb, const char *path,
+ 				     const char *fmt, ...)
+ 	__attribute__((format (printf, 3, 4)));
+ 
+diff --git a/quote.h b/quote.h
+index 89f99e98fa..86c0d944b5 100644
+--- a/quote.h
++++ b/quote.h
+@@ -31,7 +31,7 @@ struct strbuf;
+ 
+ void sq_quote_buf(struct strbuf *, const char *src);
+ void sq_quote_argv(struct strbuf *, const char **argv);
+-extern void sq_quotef(struct strbuf *, const char *fmt, ...);
++void sq_quotef(struct strbuf *, const char *fmt, ...);
+ 
+ /*
+  * These match their non-pretty variants, except that they avoid
+diff --git a/run-command.h b/run-command.h
+index 31f6f2e57f..f769e03f01 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -69,7 +69,7 @@ int run_command(struct child_process *);
+  */
+ const char *find_hook(const char *name);
+ LAST_ARG_MUST_BE_NULL
+-extern int run_hook_le(const char *const *env, const char *name, ...);
++int run_hook_le(const char *const *env, const char *name, ...);
+ int run_hook_ve(const char *const *env, const char *name, va_list args);
+ 
+ #define RUN_COMMAND_NO_STDIN 1
+diff --git a/trace.h b/trace.h
+index 57faf3530a..4ca2a5a63f 100644
+--- a/trace.h
++++ b/trace.h
+@@ -28,23 +28,23 @@ uint64_t trace_performance_enter(void);
+ #ifndef HAVE_VARIADIC_MACROS
+ 
+ __attribute__((format (printf, 1, 2)))
+-extern void trace_printf(const char *format, ...);
++void trace_printf(const char *format, ...);
+ 
+ __attribute__((format (printf, 2, 3)))
+-extern void trace_printf_key(struct trace_key *key, const char *format, ...);
++void trace_printf_key(struct trace_key *key, const char *format, ...);
+ 
+ __attribute__((format (printf, 2, 3)))
+-extern void trace_argv_printf(const char **argv, const char *format, ...);
++void trace_argv_printf(const char **argv, const char *format, ...);
+ 
+ void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+ /* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
+ __attribute__((format (printf, 2, 3)))
+-extern void trace_performance(uint64_t nanos, const char *format, ...);
++void trace_performance(uint64_t nanos, const char *format, ...);
+ 
+ /* Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled. */
+ __attribute__((format (printf, 2, 3)))
+-extern void trace_performance_since(uint64_t start, const char *format, ...);
++void trace_performance_since(uint64_t start, const char *format, ...);
+ 
+ __attribute__((format (printf, 1, 2)))
+ void trace_performance_leave(const char *format, ...);
+@@ -132,18 +132,18 @@ void trace_performance_leave(const char *format, ...);
+ 
+ /* backend functions, use non-*fl macros instead */
+ __attribute__((format (printf, 4, 5)))
+-extern void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
++void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+ 				const char *format, ...);
+ __attribute__((format (printf, 4, 5)))
+-extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
++void trace_argv_printf_fl(const char *file, int line, const char **argv,
+ 				 const char *format, ...);
+ void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+ 			    const struct strbuf *data);
+ __attribute__((format (printf, 4, 5)))
+-extern void trace_performance_fl(const char *file, int line,
++void trace_performance_fl(const char *file, int line,
+ 				 uint64_t nanos, const char *fmt, ...);
+ __attribute__((format (printf, 4, 5)))
+-extern void trace_performance_leave_fl(const char *file, int line,
++void trace_performance_leave_fl(const char *file, int line,
+ 				       uint64_t nanos, const char *fmt, ...);
+ static inline int trace_pass_fl(struct trace_key *key)
+ {
+diff --git a/worktree.h b/worktree.h
+index ead36d6f54..2d6a1d207a 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -104,7 +104,7 @@ int is_worktree_being_bisected(const struct worktree *wt, const char *target);
+  * Similar to git_path() but can produce paths for a specified
+  * worktree instead of current one
+  */
+-extern const char *worktree_git_path(const struct worktree *wt,
++const char *worktree_git_path(const struct worktree *wt,
+ 				     const char *fmt, ...)
+ 	__attribute__((format (printf, 2, 3)));
+ 
 -- 
 2.21.0.921.gb27c68c4e9
 
