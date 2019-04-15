@@ -2,86 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13C6820374
-	for <e@80x24.org>; Mon, 15 Apr 2019 06:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85FD420248
+	for <e@80x24.org>; Mon, 15 Apr 2019 07:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726034AbfDOG2Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 02:28:25 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:60068 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725794AbfDOG2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 02:28:25 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44jJTz2bc1z5tlG;
-        Mon, 15 Apr 2019 08:28:23 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8005B2AA9;
-        Mon, 15 Apr 2019 08:28:22 +0200 (CEST)
-Subject: Re: [RFC PATCH 3/4] range-diff: add section header instead of diff
- header
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190411220532.GG32487@hank.intra.tgummerer.com>
- <20190414210933.20875-1-t.gummerer@gmail.com>
- <20190414210933.20875-4-t.gummerer@gmail.com>
- <CAPig+cTJyYLGAfHM_PrZd9DDaZBcVUetcWFcANGCYPvaMh2qxA@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <46e31ffc-60f6-1aef-5159-6796b7f13294@kdbg.org>
-Date:   Mon, 15 Apr 2019 08:28:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726029AbfDOHIi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 03:08:38 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38969 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725798AbfDOHIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 03:08:38 -0400
+Received: by mail-wm1-f67.google.com with SMTP id n25so18831791wmk.4
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 00:08:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=rm1i1+F/qnNE8IYWiRd/yQ6NYrbWE8HJFNMwKuMdbwI=;
+        b=cBj+Ef8WHKWKNjRA1ifh6H5eKn6USp0TTVpWzr+6j6Fo4bKCmkdXXc92opDmmQiUWT
+         mkOBvBSn47CHn+lapF+i2ZI7rQJUEyDQEhJ23DejTfGpzvWZUTsKmlkyRbFmqw7jO9VH
+         +69o0y/B1JN1CWKWiphASEakOWRGpvRqb1CnJeKj+URKyaQ8tz5/SvWVargkc+mxcPwB
+         dM15e831daHoFWS25clFUM01Cyl1l+wU9vsuFfZyM6FJhRSdhfRqqby52PSYVxQOwPEE
+         uHw2a1NMLD94OfIWNMYnDo0THtrsKLCJfA4GP/G0FFbqV0t8ACugAMIvUxdQ/QqKmXsE
+         p1iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=rm1i1+F/qnNE8IYWiRd/yQ6NYrbWE8HJFNMwKuMdbwI=;
+        b=EYMIxI5+gNPQtEsEOtZn+BN3odfFlgI5Fsj0GNzNdQ5gv4/FTQk0sbWUY9sir+Dt9t
+         HUiAo6G9gp+h3J2OrRvvGm2Lwdv4oCykzeJB3jbVNtiWEQ4KyopHGZjI/A3Uog2gx7gD
+         5VTdqGrT6LB8Pi/wS+BOFddL+vFX/ohvtfAMf/98ReED2U2z3g3zQ2V8Gatwxrt7jknA
+         6W+/CC9oT9UfKyJtDyg922C8vTrc7BO3qyAXNyit+p0MOFMEmMozsrAvh+VYbTVqMiKC
+         Wzw2MlLyrGo06/P9DtHRS+TkGpK0CFky289jYvwMJLhyjd58KdRCOW3J0TJ+KkyNppox
+         coFQ==
+X-Gm-Message-State: APjAAAXFfKoVqiPZ1poXxCJ+4jGP+t3WVwfD6vKlRRsHfirE/VTDUGLQ
+        b2BN6ONFoYqQDfR4r/Hnr/oOj7meXK8=
+X-Google-Smtp-Source: APXvYqzSENS0nuu1XCtjI0xomdLmWZxDp6Aqwdv7WqFiVsn8cHexlKiFkX333PnW5J5eVFaPd7cc7w==
+X-Received: by 2002:a1c:a70f:: with SMTP id q15mr20371777wme.28.1555312116183;
+        Mon, 15 Apr 2019 00:08:36 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id y17sm59537124wrh.60.2019.04.15.00.08.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Apr 2019 00:08:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/7] remote-testgit: move it into the support directory for t5801
+References: <pull.168.git.gitgitgadget@gmail.com>
+        <81c08b178be6329d51586fa9d615063d3c6f9625.1555070430.git.gitgitgadget@gmail.com>
+Date:   Mon, 15 Apr 2019 16:08:34 +0900
+Message-ID: <xmqqv9zfsq31.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cTJyYLGAfHM_PrZd9DDaZBcVUetcWFcANGCYPvaMh2qxA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.04.19 um 01:29 schrieb Eric Sunshine:
-> On Sun, Apr 14, 2019 at 5:10 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> +                               strbuf_remove(&line, 0, 4);
->> +                       if (!strcmp(filename_a.buf, "/dev/null")) {
->> +                               strbuf_addstr(&buf, "new file ");
->> +                               strbuf_addbuf(&buf, &line);
->> +                       } else if (!strcmp(line.buf, "/dev/null")) {
->> +                               strbuf_addstr(&buf, "removed file ");
->> +                               strbuf_addbuf(&buf, &line);
->> +                       } else if (strbuf_cmp(&filename_a, &line)) {
->> +                               strbuf_addstr(&buf, "renamed file ");
->> +                               strbuf_addbuf(&buf, &filename_a);
->> +                               strbuf_addstr(&buf, " -> ");
->> +                               strbuf_addbuf(&buf, &line);
->> +                       } else {
->> +                               strbuf_addstr(&buf, "modified file ");
->> +                               strbuf_addbuf(&buf, &line);
->> +                       }
-> 
-> All of these disposition strings end with "file", which seems
-> redundant. Short and sweet "new", "removed", "renamed", "modified"
-> provide just as much useful information.
-> 
-> Also, should these strings be localizable? Alternately, rather than
-> using prose to describe the disposition, perhaps do so symbolically
-> (thus universally), say with "+", "-", "->", "*" (or ""),
-> respectively?
-When the strings are translated, it would be preferable to not do this
-sentence lego at all and have format strings that are filled with the
-values.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Then the noise word "file" is probably not that bad, in particular, when
-translators tend to not add words that they don't see in the original.
-For example, German translations of "new %s" I anticipate "neues %s",
-"%s (neu)", "neu %s", all of which are awkward, but translations of "new
-file %s" lends itself naturally to "neue Datei %s", which is fine.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The `git-remote-testgit` script is really only used in
+> `t5801-remote-helpers.sh`. It does not even contain any `@@<MAGIC>@@`
+> placeholders that would need to be interpolated via `make
+> git-remote-testgit`.
+>
+> Let's just move it to a new home, decluttering the top-level directory
+> and clarifying that this is just a test helper, not an official Git
+> command that we would want to ever support.
 
--- Hannes
+Makes sense.
+
+> @@ -657,8 +656,6 @@ SCRIPT_PERL += git-svn.perl
+>  
+>  SCRIPT_PYTHON += git-p4.py
+>  
+> -NO_INSTALL += git-remote-testgit
+> -
+
+The line lost here was the last one that updated the value of
+NO_INSTALL, so we should be able to lose all the mentions of the
+make variable now.
+
+> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+> index aaaa722cca..d04f8007e0 100755
+> --- a/t/t5801-remote-helpers.sh
+> +++ b/t/t5801-remote-helpers.sh
+> @@ -8,6 +8,8 @@ test_description='Test remote-helper import and export commands'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-gpg.sh
+>  
+> +PATH="$TEST_DIRECTORY/t5801:$PATH"
+> +
+
+I guess this makes much more sense than having it next to other test
+helpers, as t5801 is the home for the remote-helper tests.
+
+Thanks, will queue.
