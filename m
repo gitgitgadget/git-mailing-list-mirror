@@ -7,51 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4029E20248
-	for <e@80x24.org>; Mon, 15 Apr 2019 22:29:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76BF720248
+	for <e@80x24.org>; Mon, 15 Apr 2019 22:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbfDOW3W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 18:29:22 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:44903 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbfDOW3V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 18:29:21 -0400
-Received: by mail-pg1-f193.google.com with SMTP id i2so9267602pgj.11
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 15:29:21 -0700 (PDT)
+        id S1727235AbfDOW3Y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 18:29:24 -0400
+Received: from mail-pl1-f175.google.com ([209.85.214.175]:42358 "EHLO
+        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbfDOW3Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 18:29:24 -0400
+Received: by mail-pl1-f175.google.com with SMTP id cv12so9288048plb.9
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 15:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=I2gdflZsdPqtUK38DAYl5ZYeGaLjFYtpC/SF7vBD53c=;
-        b=T4115nu/ZXgjGamta71H9Zj7k/iVdhc1i2YUvFhYLDi1xUu+DslEJSHUjk2KxURHlD
-         oe01W/mO8eYGn6s66wEXPyhdxjZSOPmtd0cgal2fj5dhJFamJSNC+c1CvyirkXgW3Yq/
-         a+y8hozpiCAl+ewSgHZzyaG6OEXLz/vwr6mnQWil8n7W75yN0kmwcyHP0wcO9pH6XKsd
-         Wpr+Nd4hN9PgYlOdiQGO/NVUcFOoA8c0lV8t6vZEGapf9VluTDTGoEHr6cgCrAIbYgk3
-         NTbm41K7teToUtAUcFclnxqjRb3ngqmlDTT5KODXHaoVi7mu9asRM2BKK6ZJVr5+XL4b
-         CrJA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=p+jGxpYpqOozD2fbHVzCIdAuOR4CHxaRcTMKY/8ZWXc=;
+        b=IucAF+bKJMYfvrSDe6qTd6/Av4W51oEsbzzuX1leLworaO9edVcOQ1yBbtLrhLRns2
+         xXR3dQnWC8eO0Alj1R1qNMxL6kKDRgrxVdUSuJ45VUBz+hmXcIvDKA7vY3lkWTF/9jJB
+         6+6Ldm2PvTxvhv+lf7S8lEmhy3MmbiMsj4X2S3dVbj/9V7Ot0JRx5fPpC5Oefe9PeJsp
+         MHAEmPvE7hr8/KfcEjByfzzsgXCu7N/IKafQd6PzdL4fslfDXW/mx+E8TMrDW1ldPkgU
+         XUPiSsLiRliCou9tUI8ulBEySuxRcbgdoDK/XaOvmtXh8ES+yH7MmGuL1Cb6pY7kAASE
+         QiDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=I2gdflZsdPqtUK38DAYl5ZYeGaLjFYtpC/SF7vBD53c=;
-        b=S64sJryZtRMkG9+DEYvJcJaSUee6BNUwCsQGKZgiiG4D7MsEN06QwKHRMmyFSvr7Oh
-         J96lVbqpbg/Y5S8ai0pUcIgbJe0nyjufXIbtKiwbUYhxdVsWNLSp68EI+q6OkGEk3glZ
-         KQ/WKY/IOG4xDjDXsK2y8fKOwaL7NRDRZmQOkOp1aNwZ52q6MfQPkAWD7O+Plm/mlviN
-         ywmQZJVdffDyVTn7sPnBs8jnAs/3rNdlKaZBf5k5J/yFq+iKdyMdmcneGdqcpseOfscX
-         72TKIZlurXFm2f0hVRkil7ZLBMJ/GYd4PeSI5Vc183ZYCfs0PeyhEmScBRs26HxORTwM
-         FhHw==
-X-Gm-Message-State: APjAAAXiyUhcXUVRDfS/9ldJlGyYlq7apqGZm9J4MIIW9AkmG42+VliZ
-        uuJujxS9EMML0jvj+5dc+Y9xsej1
-X-Google-Smtp-Source: APXvYqwVJ/vNCdC+Evr4DhBIs5AMEQYkqvgCZHvDXODhdkT4px2azwqA3H8y9TUYZZQMsaeG3snUQQ==
-X-Received: by 2002:a62:ed05:: with SMTP id u5mr51840828pfh.63.1555367360742;
-        Mon, 15 Apr 2019 15:29:20 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p+jGxpYpqOozD2fbHVzCIdAuOR4CHxaRcTMKY/8ZWXc=;
+        b=Sc4lGSl+LptCFBUW8nWgg3sgAIH5HwGUA8C0xepw92KjZG0Tp2LF6YA6ATu4sqp9r6
+         PDS07ve7goiq2YDEJJqIe+qqS/nxsOzawU63USIkoJke9a00c5eZcZff7vR1kffhfgr8
+         upX60LGUEXUkZmdLCQ5fbIrsSYKwcImFEjTMEAodyDXQr5QpcpTWs5Bjf2AgkcgCBAGo
+         vOosli9QV2Xbyhgt83B2SF/94DCdt/vGHUQJaSnbp9vz8lKIzwGZ68tuFlEOFXLzuE0R
+         heRnwKX0wdvOGYGflnc53iwMkuyfeBXnvd3BldswsLVpyrVPWWpVP9o1I3WnTWTgd5S+
+         CZsg==
+X-Gm-Message-State: APjAAAWjZuRpWJkdAc+2brZ/yAtctabEDejrJRzEussemJzmbUNdH4DS
+        Mw+fwywUKmuWKlpa4XGa8xjbSIgQ
+X-Google-Smtp-Source: APXvYqwJUlxVdJJOxLpmShdXNdCkmUgCi8+Zltqf4mP0ogwG8C2KscLkhvlYbHUL5RU1c76dugsReQ==
+X-Received: by 2002:a17:902:6bc5:: with SMTP id m5mr78080961plt.180.1555367363035;
+        Mon, 15 Apr 2019 15:29:23 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id h71sm23687954pge.49.2019.04.15.15.29.19
+        by smtp.gmail.com with ESMTPSA id t13sm58495888pgo.14.2019.04.15.15.29.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 15:29:19 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 15:29:18 -0700
+        Mon, 15 Apr 2019 15:29:21 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 15:29:20 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -60,76 +58,85 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v5 0/5] rebase: teach rebase --keep-base
-Message-ID: <cover.1555366891.git.liu.denton@gmail.com>
+Subject: [PATCH v5 1/5] t3431: add rebase --fork-point tests
+Message-ID: <0f1e9ac5c8b88649a378f676ee924a966ce0693c.1555366891.git.liu.denton@gmail.com>
 References: <cover.1554500051.git.liu.denton@gmail.com>
+ <cover.1555366891.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1554500051.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1555366891.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the example, Ævar, it clarified a lot. I think that _now_
-we're on the same page. ;)
-
-I made can_fast_forward detect this case and now, it should behave as
-expected. The change can be seen in 4/5. Hopefully this saves you some
-work later.
-
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
-
-This patchset now depends "[PATCH 1/8] tests (rebase): spell out the
-`--keep-empty` option" which is the first patch of Johannes's "Do not
-use abbreviated options in tests" patchset[1]. (Thanks for catching
-that, Johannes!)
-
-Changes since v1:
-
-* Squashed old set into one patch
-* Fixed indentation style and dangling else
-* Added more documentation after discussion with Ævar
-
-Changes since v2:
-
-* Add testing for rebase --fork-point behaviour
-* Add testing for rebase fast-forward behaviour
-* Make rebase --onto fast-forward in more cases
-* Update documentation to include use-case
-
-Changes since v3:
-
-* Fix tests failing on bash 4.2
-* Fix typo in t3431 comment
-
-Changes since v4:
-
-* Make rebase --fork-point fast-forward in more cases
-
-[1]: https://public-inbox.org/git/a1b4b74b9167e279dae4cd8c58fb28d8a714a66a.1553537656.git.gitgitgadget@gmail.com/
-
-Denton Liu (5):
-  t3431: add rebase --fork-point tests
-  t3432: test rebase fast-forward behavior
-  rebase: fast-forward --onto in more cases
-  rebase: fast-forward --fork-point in more cases
-  rebase: teach rebase --keep-base
-
- Documentation/git-rebase.txt     | 30 ++++++++++--
- builtin/rebase.c                 | 77 +++++++++++++++++++++--------
- t/t3400-rebase.sh                |  2 +-
- t/t3404-rebase-interactive.sh    |  2 +-
- t/t3416-rebase-onto-threedots.sh | 57 ++++++++++++++++++++++
- t/t3431-rebase-fork-point.sh     | 57 ++++++++++++++++++++++
- t/t3432-rebase-fast-forward.sh   | 83 ++++++++++++++++++++++++++++++++
- 7 files changed, 284 insertions(+), 24 deletions(-)
+ t/t3431-rebase-fork-point.sh | 53 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
  create mode 100755 t/t3431-rebase-fork-point.sh
- create mode 100755 t/t3432-rebase-fast-forward.sh
 
+diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+new file mode 100755
+index 0000000000..6d523123d0
+--- /dev/null
++++ b/t/t3431-rebase-fork-point.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++#
++# Copyright (c) 2019 Denton Liu
++#
++
++test_description='git rebase --fork-point test'
++
++. ./test-lib.sh
++
++# A---B---D---E       (master)
++#     \
++#      C*---F---G (side)
++#
++# C was formerly part of master but master was rewound to remove C
++#
++test_expect_success setup '
++	test_commit A &&
++	test_commit B &&
++	test_commit C &&
++	git branch -t side &&
++	git reset --hard HEAD^ &&
++	test_commit D &&
++	test_commit E &&
++	git checkout side &&
++	test_commit F &&
++	test_commit G
++'
++
++test_rebase() {
++	expected="$1" &&
++	shift &&
++	test_expect_success "git rebase $*" "
++		git checkout master &&
++		git reset --hard E &&
++		git checkout side &&
++		git reset --hard G &&
++		git rebase $* &&
++		test_write_lines $expected >expect &&
++		git log --pretty=%s >actual &&
++		test_cmp expect actual
++	"
++}
++
++test_rebase 'G F E D B A'
++test_rebase 'G F D B A' --onto D
++test_rebase 'G F C E D B A' --no-fork-point
++test_rebase 'G F C D B A' --no-fork-point --onto D
++test_rebase 'G F E D B A' --fork-point refs/heads/master
++test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
++test_rebase 'G F C E D B A' refs/heads/master
++test_rebase 'G F C D B A' --onto D refs/heads/master
++
++test_done
 -- 
 2.21.0.921.gb27c68c4e9
 
