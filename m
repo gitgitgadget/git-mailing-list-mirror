@@ -2,166 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C459920248
-	for <e@80x24.org>; Mon, 15 Apr 2019 13:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34ECF20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 14:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbfDONvm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 09:51:42 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:35395 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbfDONvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 09:51:42 -0400
-Received: by mail-qk1-f193.google.com with SMTP id a71so9867028qkg.2
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 06:51:41 -0700 (PDT)
+        id S1727319AbfDOODN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 10:03:13 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55301 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727364AbfDOODK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 10:03:10 -0400
+Received: by mail-wm1-f65.google.com with SMTP id o25so20811266wmf.5
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 07:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5RhhVevvpsfrXyaox0lE2oSa2tUAMUGY3jggr3oxdRI=;
-        b=v/s8WfH8FyR6d1K3O276gESO7wju9wZOSruha6bxCiy4qy9ju9aMp6kt285gvNYvjO
-         35evJ/cO4D2b5K9AB0832X432Wq5FOIREeoHkn0YC2GzGnmNzHUIe/9ClAtd0GgFDJ18
-         cra53cTr/UDzueZvS1emt+0HaGDJEoapso8TKQPBjO2JiVFDwQaZYz/LzwIsLg0mNVO6
-         /d4IPpd1DNsL5AHvu8VVdyuAulw1IZHJW/J1v1nmKDzCKx3bM8yhLcdJkuHQ0dSTdWgZ
-         t03g46wXHQ/77oyrFl2QSk33d6Ru3WzY+zhUzdCA6FPKTO6tI8cIFNCOLU9MMmBOCQlC
-         0r/Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=F2+0vwsqZMOWgdXhvChk8xV7vI4k1KkWF82FTbBM03k=;
+        b=a9C+MI3Xh2IRyE+BuhPsHZyxPcnnnBdJzGcXxPAkCoZYIBvyNIlzjhwMhhjn/rM5qT
+         djUnFIz2+SGmB0tkK38AXHqTkschltMkBR1DwbL+Ut0ocZr2/9gl2ViZxMECnIR6+Bvn
+         TfJdITCnF3g8Iu/Fq7lmF8TMw1IIp+s2dVqfkmOgW3ePv3FSvdDEeUOBdQ45SwWqeq+4
+         1eaTUAvauxZDGYoCwEkKdRs3jIaASfKvN2FQboFU2ZJLmBKgThjXLEmVgl2eP8O+1Kxd
+         oNTs/lrNwfUTX3NnLjRq5PY+T+Ibkzcc2kiVNYyWdxDSzvGkbxUX8JFeJyifg6BJ4lWV
+         +izA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5RhhVevvpsfrXyaox0lE2oSa2tUAMUGY3jggr3oxdRI=;
-        b=KUbuy21TEL39pgGCQuDykEP6I0YiyP+9glN/vIRGhJWV7v/UtmItMAc2U7HCYlEwS7
-         XuLOF7EZPWW9F4wh3dCHWX9UxX7eCkOqzNeqfA6Yf7L/Kf9drmZUEsOgaO7mQY6PZHl3
-         ll7dWWCJwkleRbuS+CJYUSLX6WJgWWD8KBR5vrGitkMD0rIXSCuEzYaFJbBFkuO3NR34
-         zy/Y5B5onv/uNC7OmxiYW+wrezhn/hbBcSncpdD8qhAzF1sRQkupF3YpgxuADbThiYkn
-         3JFXKLlYgIM8ykDL7FVtapTebYAngaoE1BPPelTCJ5DxqFNx4MBSrEF5lCYb9YJ9uegy
-         kwLw==
-X-Gm-Message-State: APjAAAXEQjytQ4Jlv9XVYxb9aQ7VqrXNcsgFwRxShIQTH6YMPEuKGAfg
-        +3Q4fI/BqHGz69CtoQdlFjcw0A==
-X-Google-Smtp-Source: APXvYqySwZPRFSAfVFB6mbleLxRGWqRXsrIBasbqFHo6hKMoOlYLmRNSUyJ4a3Ems9ghFErUbFDwzw==
-X-Received: by 2002:a37:4ed5:: with SMTP id c204mr59046489qkb.68.1555336300092;
-        Mon, 15 Apr 2019 06:51:40 -0700 (PDT)
-Received: from [192.168.1.10] (c-66-30-119-151.hsd1.ma.comcast.net. [66.30.119.151])
-        by smtp.gmail.com with ESMTPSA id k3sm34555845qtf.28.2019.04.15.06.51.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 06:51:39 -0700 (PDT)
-Subject: Re: [PATCH v6 4/6] blame: add config options to handle output for
- ignored lines
-To:     Michael Platings <michael@platin.gs>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Ren=c3=a9_Schar?= =?UTF-8?Q?fe?= <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-References: <20190410162409.117264-1-brho@google.com>
- <20190410162409.117264-5-brho@google.com>
- <xmqqo959w8pq.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9S8XFH=JnQX8WcfgOZ7cr+X6kk45k9g8t3u5aP5wwdu0Q@mail.gmail.com>
- <xmqqbm18x4tt.fsf@gitster-ct.c.googlers.com>
- <CAJDYR9TRk99Kwq5S7udVqYsXnupGD=t3o_Ss8ewvwWuTQOy_YQ@mail.gmail.com>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <1a1b3cd1-5f00-37c9-7382-72de000dd925@google.com>
-Date:   Mon, 15 Apr 2019 09:51:37 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=F2+0vwsqZMOWgdXhvChk8xV7vI4k1KkWF82FTbBM03k=;
+        b=eGyTUdKZv+YSadpoXGIIEAL41vxiCPExuULhbvR0Rq9jlupqJyTwUd8vUIsXXYQquX
+         glRR7R0UxO4KU2cQjcM8DdW5zDwaEJod9OFPaCt9EaUloKLJI7s51VvPnbEhOy2mEwe1
+         ZAeVHocb8kgEvAdSrRmiTs2xHqKWdMVaTfzQKqIt7wp/ZWD7ETleR9zfYx8fM6tn0enE
+         T6eBxBt+JhLGAgt/wybqFFKkw1JEQEHsGC1+iwoqvAgk6OJGZO2h6tzufApa5NSm9uxM
+         LRYyO83k9ulAnrgAixVh94QAkM32PQqSts/PLXy9Q4lE7VszRJ06YTYzVPDVVQatygeU
+         /PgA==
+X-Gm-Message-State: APjAAAXybSt8ZkrGF88LkNyKKEhcb5PXrRInD3R1+koyVCkeFAtiKKlX
+        fXUl4Twqmzy0HXh9z+bTztY=
+X-Google-Smtp-Source: APXvYqyGDSAS4n/CD7K1HkbIa8A1n6rQbSXW6HuNjbUkyV7mcl+/D8rfOhBgOxfjlExOdTSCyAfogQ==
+X-Received: by 2002:a1c:988d:: with SMTP id a135mr23987216wme.24.1555336983777;
+        Mon, 15 Apr 2019 07:03:03 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id c20sm88962675wre.28.2019.04.15.07.03.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Apr 2019 07:03:03 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 7/7] Turn `git serve` into a test helper
+References: <pull.168.git.gitgitgadget@gmail.com>
+        <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
+Date:   Mon, 15 Apr 2019 23:03:02 +0900
+In-Reply-To: <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 12 Apr 2019
+        05:00:37 -0700 (PDT)")
+Message-ID: <xmqqa7grqsbt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAJDYR9TRk99Kwq5S7udVqYsXnupGD=t3o_Ss8ewvwWuTQOy_YQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi -
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On 4/14/19 7:27 AM, Michael Platings wrote:
-> On Sun, 14 Apr 2019 at 11:24, Junio C Hamano <gitster@pobox.com> wrote:
->>> If you only enable blame.markIgnoredLines then the hash for
->>> "unblamable" lines appears as e.g. "*3252488f5" - this doesn't seem
->>> right to me because the commit *wasn't* ignored,
->>
->> I think you misunderstood me.  I was merely suggesting to use the
->> approach to mark the line in a way other than using the NULLed out
->> object name that has been reserved for something totally different,
->> and hinting with "the same *idea*".
-> 
-> Hi Junio, that paragraph wasn't targetted at yourself, more a comment
-> on the functionality as it exists in the latest patch series. Sorry
-> for not making that clear.
-> 
->> the "^" marker
->> that is used to say "the line is attributed to this commit, but that
->> may only be because you blamed with commit range A..B and we reached
->> the bottom of the range---if you dug further, you might find the
->> line originates from another commit" is the origin of the same idea,
->> and this topic borrows it and uses a different mark, i.e. '*', for
->> the "we are not certain---take this with grain of salt" mark.
-> 
-> So it sounds like we have many types of blame to consider:
-> 
-> 1) This commit is truly the last one to touch this line, and you
-> didn't ask to ignore it.
-> 2) This commit is truly the last one to touch this line, but you asked
-> to ignore it (AKA "unblamable").
-> 3) This commit is at the bottom of the range of commits (^)
-> 4) The "true" commit was ignored but we guess this is the one you're
-> actually interested in (*)
-> 5) The "true" commit was ignored and we've reached the bottom of the
-> range of commits (^*)?
-> 6) This commit is at the bottom of the range of commits, and you asked
-> to ignore it.
-> 
->> If you ended up hitting the commit the user wanted to ignore,
->> perhaps you can find another character that is different from '^' or
->> '*' and use that, following the same idea.
-> 
-> I personally don't find the "unblamable" lines interesting enough to
-> justify giving them a symbol. But if Barret strongly feels that such
-> lines should get a '*' then I won't fight it - these lines tend to be
-> as simple as "}".
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The `git serve` built-in was introduced in ed10cb952d31 (serve:
+> introduce git-serve, 2018-03-15) as a backend to serve Git protocol v2,
+> probably originally intended to be spawned by `git upload-pack`.
+>
+> However, in the version that the protocol v2 patches made it into core
+> Git, `git upload-pack` calls the `serve()` function directly instead of
+> spawning `git serve`; The only reason in life for `git serve` to survive
+> as a built-in command is to provide a way to test the protocol v2
+> functionality.
+>
+> Meaning that it does not even have to be a built-in that is installed
+> with end-user facing Git installations, but it can be a test helper
+> instead.
+>
+> Let's make it so.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I'm fine with not zeroing the hash, so long as there's some way to mark it.
+I've excluded this step from tonight's pushout, as I would want to
+hear from the people on the other side who have (once) thought that
+this was an addition we would want to have, before we remove/demote
+it.
 
-We could mark with another *, such that if we mark-ignored and 
-mark-unblamable you get "**hash".  You can't have an unblamable that 
-isn't from an ignored commit, so a single '*' has only one meaning, 
-based on your config options.
+I do not personally think, as the design of v2 stands, a standalone
+"serve" server that "can serve anything as long as it goes over
+protocol v2" makes much sense, but perhaps those who have been doing
+the v2 work may have different ideas, in which case let's hear what
+their plans are.
 
-If that works for you all, I can change this to markIgnoredUnblamables 
-(instead of 'mask') in the next version.
-
->> By the way, a configuration only feature is something we usually do
->> not accept.  A feature must be guarded with --command-line-option
->> and then optionally can have a corresponding configuration once the
->> option proves to be useful enough that it becomes useful to be able
->> to say "in this repository (or to this user), the feature is on by
->> default".
-> 
-> In that case we definitely need a --mark-ignored-lines option to git
-> blame, and I would strongly prefer that we also keep the
-> blame.markIgnoredLines option as I for one will be switching it on.
-
-I'd also keep this set.  I think the whole reason for these config 
-options was that everyone has a different preference, but that 
-preference rarely changes.  I don't want to have to type 
---mark-ignored-lines every time I run git blame.  If I had to, I'd have 
-to alias git blame or something.
-
-I think having config options for these sorts of things is fine, since 
-we know already that for a given user+repo, we want the feature on (or 
-off).  But if I have to remove it, then let me know.
-
-Thanks,
-
-Barret
+Thanks.
 
