@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76BF720248
-	for <e@80x24.org>; Mon, 15 Apr 2019 22:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4B420248
+	for <e@80x24.org>; Mon, 15 Apr 2019 22:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727235AbfDOW3Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 18:29:24 -0400
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:42358 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbfDOW3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 18:29:24 -0400
-Received: by mail-pl1-f175.google.com with SMTP id cv12so9288048plb.9
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 15:29:23 -0700 (PDT)
+        id S1728204AbfDOW30 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 18:29:26 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39142 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbfDOW3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 18:29:25 -0400
+Received: by mail-pl1-f195.google.com with SMTP id a96so9276244pla.6
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 15:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=p+jGxpYpqOozD2fbHVzCIdAuOR4CHxaRcTMKY/8ZWXc=;
-        b=IucAF+bKJMYfvrSDe6qTd6/Av4W51oEsbzzuX1leLworaO9edVcOQ1yBbtLrhLRns2
-         xXR3dQnWC8eO0Alj1R1qNMxL6kKDRgrxVdUSuJ45VUBz+hmXcIvDKA7vY3lkWTF/9jJB
-         6+6Ldm2PvTxvhv+lf7S8lEmhy3MmbiMsj4X2S3dVbj/9V7Ot0JRx5fPpC5Oefe9PeJsp
-         MHAEmPvE7hr8/KfcEjByfzzsgXCu7N/IKafQd6PzdL4fslfDXW/mx+E8TMrDW1ldPkgU
-         XUPiSsLiRliCou9tUI8ulBEySuxRcbgdoDK/XaOvmtXh8ES+yH7MmGuL1Cb6pY7kAASE
-         QiDQ==
+        bh=IQRgsrbz2ztUyDBhoaPa2jT2qJ3wAPV7lKCssfGs++Y=;
+        b=fNHj8kATadJof/sTVX6MNL67x4fMzAoWdC2kkkwCyWJmMYBnHty4m3YvJVfzrE1tLB
+         NUj7pQI1Gps9OkrI6RBY7B2jtXXGOOGuxqX3pOOttSThZGORu3YgHSHDc6zo/UdxfgMl
+         L+ZYCGJ0ZiScpe4/pl3c5aHhaFuNj+7w2qRmP081882VkUoT3TorPttccSrXdbwUmVc7
+         OmmHlmDUXTKR7Ypd1EIXlk7LnPB7kguo84Du2QV3rSQ+S6EKbhbtaHRJT5BMNg8obGV7
+         VL+MSjz678kIObFrv++i1KLRYBiZK/rQOhoDi1Caj6n5TNd1h2DeQ/c7+j9oFDPfZPch
+         WU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=p+jGxpYpqOozD2fbHVzCIdAuOR4CHxaRcTMKY/8ZWXc=;
-        b=Sc4lGSl+LptCFBUW8nWgg3sgAIH5HwGUA8C0xepw92KjZG0Tp2LF6YA6ATu4sqp9r6
-         PDS07ve7goiq2YDEJJqIe+qqS/nxsOzawU63USIkoJke9a00c5eZcZff7vR1kffhfgr8
-         upX60LGUEXUkZmdLCQ5fbIrsSYKwcImFEjTMEAodyDXQr5QpcpTWs5Bjf2AgkcgCBAGo
-         vOosli9QV2Xbyhgt83B2SF/94DCdt/vGHUQJaSnbp9vz8lKIzwGZ68tuFlEOFXLzuE0R
-         heRnwKX0wdvOGYGflnc53iwMkuyfeBXnvd3BldswsLVpyrVPWWpVP9o1I3WnTWTgd5S+
-         CZsg==
-X-Gm-Message-State: APjAAAWjZuRpWJkdAc+2brZ/yAtctabEDejrJRzEussemJzmbUNdH4DS
-        Mw+fwywUKmuWKlpa4XGa8xjbSIgQ
-X-Google-Smtp-Source: APXvYqwJUlxVdJJOxLpmShdXNdCkmUgCi8+Zltqf4mP0ogwG8C2KscLkhvlYbHUL5RU1c76dugsReQ==
-X-Received: by 2002:a17:902:6bc5:: with SMTP id m5mr78080961plt.180.1555367363035;
-        Mon, 15 Apr 2019 15:29:23 -0700 (PDT)
+        bh=IQRgsrbz2ztUyDBhoaPa2jT2qJ3wAPV7lKCssfGs++Y=;
+        b=I9wFr5eKmBBzpO2MeI33nr/URg7pQHTa7yJe3fp6oDOhWjlPhGIxv/pnc9/6z/ROOY
+         fdFCtRtfozqFOnR7Gm2dc/Y2b02ehSz7GNIEGUL1ltBnGz3MYeQ5cIdM/crInv28ZvXb
+         +w7JdwZRHK3AnqS42Ti1p/3mLlhc0oWLB6dRMV4V/WS7cB32PKEbHctWmDq0VjRZ+ob9
+         7GMObmWAD7fFmACXVAKuS5EIytAhhVkPf6qIRx9NLrHnmcaO5xypgCr/FspsxbqKSwhR
+         VaqjOXJU7ahfQqS5mYejqfrVT0srgbiB9ypNPiyRlIcMlQ8ieP6bjGeB00/iABNHm4Zy
+         kNOA==
+X-Gm-Message-State: APjAAAVD+QaZtPq+KWy5+1qySQe8vxINuOob45dCd1c2+GksRzN6wvWG
+        P68WDxgd9xKL76G/60fr+TW0N1fg
+X-Google-Smtp-Source: APXvYqw23Tlcf086kdw5w3/yAMPg9xKO38/EXu0ETNP3UTpy4qafylAAKlJxYrXQeJw2HuzCpxfMGQ==
+X-Received: by 2002:a17:902:f089:: with SMTP id go9mr75480866plb.309.1555367364448;
+        Mon, 15 Apr 2019 15:29:24 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id t13sm58495888pgo.14.2019.04.15.15.29.21
+        by smtp.gmail.com with ESMTPSA id i135sm66748143pgd.41.2019.04.15.15.29.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Apr 2019 15:29:21 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 15:29:20 -0700
+        Mon, 15 Apr 2019 15:29:23 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 15:29:23 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -58,8 +58,8 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v5 1/5] t3431: add rebase --fork-point tests
-Message-ID: <0f1e9ac5c8b88649a378f676ee924a966ce0693c.1555366891.git.liu.denton@gmail.com>
+Subject: [PATCH v5 2/5] t3432: test rebase fast-forward behavior
+Message-ID: <148027a14be9b0ee5dde741e4528255f2ca3577a.1555366891.git.liu.denton@gmail.com>
 References: <cover.1554500051.git.liu.denton@gmail.com>
  <cover.1555366891.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,69 +72,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When rebase is run on a branch that can be fast-forwarded, this should
+automatically be done. Create test to ensure this behavior happens.
+
+There are some cases that currently don't pass. The first case is where
+a feature and master have diverged, running
+"git rebase master... master" causes a full rebase to happen even though
+a fast-forward should happen.
+
+The second case is when we are doing "git rebase --fork-point" and a
+fork-point commit is found. Once again, a full rebase happens even
+though a fast-forward should happen.
+
+Mark these cases as failure so we can fix it later.
+
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3431-rebase-fork-point.sh | 53 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100755 t/t3431-rebase-fork-point.sh
+ t/t3432-rebase-fast-forward.sh | 72 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+ create mode 100755 t/t3432-rebase-fast-forward.sh
 
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
 new file mode 100755
-index 0000000000..6d523123d0
+index 0000000000..4f04d67fd7
 --- /dev/null
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -0,0 +1,53 @@
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -0,0 +1,72 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2019 Denton Liu
 +#
 +
-+test_description='git rebase --fork-point test'
++test_description='ensure rebase fast-forwards commits when possible'
 +
 +. ./test-lib.sh
 +
-+# A---B---D---E       (master)
-+#     \
-+#      C*---F---G (side)
-+#
-+# C was formerly part of master but master was rewound to remove C
-+#
 +test_expect_success setup '
 +	test_commit A &&
 +	test_commit B &&
 +	test_commit C &&
-+	git branch -t side &&
-+	git reset --hard HEAD^ &&
 +	test_commit D &&
-+	test_commit E &&
-+	git checkout side &&
-+	test_commit F &&
-+	test_commit G
++	git checkout -t -b side
 +'
 +
-+test_rebase() {
-+	expected="$1" &&
++test_rebase_same_head() {
++	status="$1" &&
 +	shift &&
-+	test_expect_success "git rebase $*" "
-+		git checkout master &&
-+		git reset --hard E &&
-+		git checkout side &&
-+		git reset --hard G &&
++	test_expect_$status "git rebase $* with $changes is no-op" "
++		oldhead=\$(git rev-parse HEAD) &&
++		test_when_finished 'git reset --hard \$oldhead' &&
 +		git rebase $* &&
-+		test_write_lines $expected >expect &&
-+		git log --pretty=%s >actual &&
-+		test_cmp expect actual
++		newhead=\$(git rev-parse HEAD) &&
++		test_cmp_rev \$oldhead \$newhead
 +	"
 +}
 +
-+test_rebase 'G F E D B A'
-+test_rebase 'G F D B A' --onto D
-+test_rebase 'G F C E D B A' --no-fork-point
-+test_rebase 'G F C D B A' --no-fork-point --onto D
-+test_rebase 'G F E D B A' --fork-point refs/heads/master
-+test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
-+test_rebase 'G F C E D B A' refs/heads/master
-+test_rebase 'G F C D B A' --onto D refs/heads/master
++changes='no changes'
++test_rebase_same_head success
++test_rebase_same_head success master
++test_rebase_same_head success --onto B B
++test_rebase_same_head success --onto B... B
++test_rebase_same_head success --onto master... master
++test_rebase_same_head success --no-fork-point
++test_rebase_same_head success --fork-point master
++test_rebase_same_head failure --fork-point --onto B B
++test_rebase_same_head failure --fork-point --onto B... B
++test_rebase_same_head success --fork-point --onto master... master
++
++test_expect_success 'add work to side' '
++	test_commit E
++'
++
++changes='our changes'
++test_rebase_same_head success
++test_rebase_same_head success master
++test_rebase_same_head success --onto B B
++test_rebase_same_head success --onto B... B
++test_rebase_same_head success --onto master... master
++test_rebase_same_head success --no-fork-point
++test_rebase_same_head success --fork-point master
++test_rebase_same_head failure --fork-point --onto B B
++test_rebase_same_head failure --fork-point --onto B... B
++test_rebase_same_head success --fork-point --onto master... master
++
++test_expect_success 'add work to upstream' '
++	git checkout master &&
++	test_commit F &&
++	git checkout side
++'
++
++changes='our and their changes'
++test_rebase_same_head success --onto B B
++test_rebase_same_head success --onto B... B
++test_rebase_same_head failure --onto master... master
++test_rebase_same_head failure --fork-point --onto B B
++test_rebase_same_head failure --fork-point --onto B... B
++test_rebase_same_head failure --fork-point --onto master... master
 +
 +test_done
 -- 
