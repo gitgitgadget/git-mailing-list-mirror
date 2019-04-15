@@ -8,58 +8,60 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4878420248
-	for <e@80x24.org>; Mon, 15 Apr 2019 12:47:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2B7F20248
+	for <e@80x24.org>; Mon, 15 Apr 2019 12:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727243AbfDOMrw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 08:47:52 -0400
-Received: from mout.gmx.net ([212.227.15.15]:39479 "EHLO mout.gmx.net"
+        id S1727485AbfDOMxn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 08:53:43 -0400
+Received: from mout.gmx.net ([212.227.17.21]:36271 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726094AbfDOMrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 08:47:52 -0400
+        id S1727381AbfDOMxn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 08:53:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555332466;
-        bh=6VYcdYrsheBmVGyiH4nF/s3M+YC53zZaicO4Ht5vjX0=;
+        s=badeba3b8450; t=1555332815;
+        bh=6mBmqwdbyHLFY43fJQknqRcuLv62V9E05xg52RsTeZ0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OS+aoaBzNCbomzlS4qh5KUB35el98g34nVgcgLgoNhbFgilS+NHZkkVdm7ivAIEGI
-         l1dUnoV0ExFUxTsmhIINO8RPRuEN2dWZWIPGS+x05Zd4wle61j0AFIMwrBtEtjSEeG
-         qk7v7KWL6keDvTnpkcA+1k7ua1lCZT2oCMMKO27I=
+        b=iD5x//Jni7twx182HxFjf5HQHa/wLMf2L/ldb0fR2sooTmo/cxWhCJSvf9Ec5f/KS
+         GUc9ygccKpchvmg8OcNxODzcd32Zi9VvJchLFBbhuTzNMVm34fygaLDt4NM8I6H68s
+         zoKLRDsu7v85gEceIBI7sgeHrZSd6xAU3mhHEr70=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MWBpJ-1hMlA32tmD-00XLeA; Mon, 15
- Apr 2019 14:47:46 +0200
-Date:   Mon, 15 Apr 2019 14:47:48 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MADqP-1h9eOk0iAD-00BJwp; Mon, 15
+ Apr 2019 14:53:35 +0200
+Date:   Mon, 15 Apr 2019 14:53:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/4] output improvements for git range-diff
-In-Reply-To: <20190414210933.20875-1-t.gummerer@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904151445250.44@tvgsbejvaqbjf.bet>
-References: <20190411220532.GG32487@hank.intra.tgummerer.com> <20190414210933.20875-1-t.gummerer@gmail.com>
+Subject: Re: [RFC PATCH 2/4] range-diff: don't remove funcname from inner
+ diff
+In-Reply-To: <20190414210933.20875-3-t.gummerer@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904151448530.44@tvgsbejvaqbjf.bet>
+References: <20190411220532.GG32487@hank.intra.tgummerer.com> <20190414210933.20875-1-t.gummerer@gmail.com> <20190414210933.20875-3-t.gummerer@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PhSVpw2t4xdn4+VHEKgi89AS7b2wrF2BTqXKfuudn9RCG6HtUx0
- UiDqu3iMQBmfDIoGL4ILVP5jCMDpKhvTXzjwXbV+Z1VBlVNfzbq2gwrt5Z3Jb98k4Pvgi8l
- N6hkKUdjFXX5PAstn6Vu/dT6ehm5u3mc/WSSKo9q9aVvcNHYl3hIbvY9XC2tpI5yRypK3ff
- BBpgqdFPSBrbwxI4F1bBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:po8wEz+CCTs=:h0Fpz5Jc0SMeCLvJPrhD4E
- 95ICmmkZtvGHrxjDgMvWGTJZnUGUw5B7kXfsdKYJXJTGRuNlF38EH4oJUNB9/uyFmJLlMtoEf
- ll0Y6ZoypuL6qGax/CAwpPhwnQxc5QO1UbBPJlklc8X1XmqrrvLqqJyKkQbawTbHHgz9dvKjK
- 1qkf9xXF9MPBtTtYr78RTFD8C4Gmzr+gcNgqVOLJ1Puh55qaLgTSlopCsLb7Rm0zmtfmRSrPD
- dfcg2GPijFTbFNIKsAP9dmFHrOpDXAYd1CZFGAt20izUCuTyfL5PTbNjbFWcyiaC1mHemmYz4
- QqPyfBBYTU7ct0XXkQFwlmJ5zZSmA+f659PNcSjznx04/vlNjcwsE9xyfd+Jjbm/gjjliQWYk
- w9C4g0JSHsKPko+c4BkXC8Ng6xMdTiYF9uRCLf5C1TBcFCpMr8n5wxUK03i1C0D833Fogr9a3
- AulK+s3XsKmsy6LeeHNaRD29GuFs2WDbymKY/sBnIE+AdD7MUc+QGdpT3fOXIewkF6ppkUGuU
- 2csBiFdg/35a7fvDJz2YiWUNBLcdYQB0PW08FAkQicQ6ciBgfw7WOfCOJVIgH/QlzBUCH+h1g
- d+HbIiykAnM7AayUjIFGKXdW4iM/i3KJTni8x0DhDz45i+61ELAVhtaukGx5YLHXyIVsVdzxO
- WHG+CxsBMLVCDDbz1JCgnvaSXSJtk0gJqmQt96AEGfdmZv7ugl2s69B4+IJKyaubEVhpL9kNk
- SWssyI4gldt18DDcNIqLPJo0oPfaxxiRjq3U3FBc7d5WvgFOPs+8bLujrTH+6eJ0EyZlr6U6L
- cgWfhPmazfzTje57OfGpqBP0jySkXWjzUhegUDEyKr1EEMAgjGcotjsElxJH3hqiQ/mUR62Wt
- D2NXYXQotUj+fBQHQ5V2K7/PBm9A7kRzGu/oY1W1R8QvvV6h9+sQEB1ZEG0VPlhRsTSo/LK2S
- X6NYRZ7WD1w==
+X-Provags-ID: V03:K1:Dlq1SO9yjXSGUJPXQoPDKknHW0HNpuihWJkSYt42P1xnnc/8dFB
+ Hjw52ZvEuxUxqyeTehiDg61le3rjI8QuBcgbvAkpml6CmiZksGH+imvefbpHU7uFxOhY7zj
+ C+NRNK8wOjr4DqzMPejtoUBkM4V3emxORuv/IcSsbcGAPcxt1FVrPiyJwH5Gl04RLHpwgE0
+ ZFxN0L5CuGRKTq35yJCyg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KcAoeazGTwc=:rP1fUxQXlgzdA0HPWqXYOM
+ w+UjMwkCD/avwEiIK+uMgIVP5AH68/47UC003pDBTeDXeEeHsB54idgS3cqLd58cg84RTuQj1
+ hjQCr6645C/sjHDCKuYtnPfP4qR2vzyf6jQ08fp2OeozktJCNRxP2+mX1wTpb6AovBmbe13zZ
+ VeqYsk0j3Ota7SQ1dFq77MBmuHxKDvLrdf+elOrPrV1trd5CtgxtNrHSBpqXo5nt0g0xuYGnF
+ LOASAeSidAupt9/raRtqIx2jCC+IFCLBFaT90aqbKsPRK84qF3xErqbp6HC/9aYrmqN1+eZ09
+ SmG9AzF14e7QD17dl3zDpq3vb3JfKe0pDXHjON7hU0sumgQhXU9V/+8uxSa9VEfr2umX2AUsr
+ 6Evj+r5JwHBYaxiQ2mG65zeONi651dguA6DuaE2WDhjbsVgCT7jIc3lbCKXnKtEEUnn8NOyPp
+ cNtvLq8cTSLlsMMakaoWVPxP9ABlh3Rnj0unBfsPXxyvTcuhXusjr/ek0GtoJrrdnsEzYOw5Q
+ HgDZ1y9G3bQ4WFuI3p2VZx8a2XdiWMMw3VRro/pbSrbMQZnUszrVpijUWA/6k79BN+uRBcLfm
+ ZVJWTKcjIQ/wISTeORNnyhzubvLTp7TORP5IOkD0XWZyjKsFj6ZNZMtbX4/CM+0ow13DuFiny
+ 6DCvWk+JXA8lTPG67rTPWqrnga1aMSkQePdDIa3kLrXy571wJwCAHiQN0sB0wImPiLP5drzpg
+ x/C5LamR63bJDE7OPsVo+9jX3B0Qj5yKPPFlxLhq5p5xqa1WXKNOIASumslhFYA/DJEiRu63n
+ HSedWJSXTVjhtanDGp2Tn5Je5Wp4CKH250XzEk2JctX55VGltJntXQn9RxDu6BIU7wcRY/zJg
+ L7kX0FySR+8VSImpUfRE2rR2O40EJLYzE1sWwrSR1Agu6ws4rfQIku1evQrGZPQUHVM4VipyK
+ HG2JNtXLjRQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,26 +69,73 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Thomas,
 
+
 On Sun, 14 Apr 2019, Thomas Gummerer wrote:
 
->     @@ -99,10 +90,10 @@ modified file Documentation/git-revert.txt
+> When postprocessing the inner diff in range-diff, we currently replace
+> the whole hunk header line with just "@@".  This matches how 'git
+> tbdiff' used to handle hunk headers as well.
+>
+> Most likely this is being done because line numbers in the hunk header
+> are not relevant without other changes.  They can for example easily
+> change if a range is rebased, and lines are added/removed before a
+> change that we actually care about in our ranges.
+>
+> However it can still be useful to have the function name that 'git
+> diff' extracts as additional context for the change.
+>
+> Note that it is not guaranteed that the hunk header actually shows up
+> in the range-diff, and this change only aims to improve the case where
+> a hunk header would already be included in the final output.
 
-A better example might be a .c file, as the function name is often a
-pretty useful piece of information.
+Makes sense.
 
-Read: I think it should be part of the outer hunk header.
+> diff --git a/range-diff.c b/range-diff.c
+> index 9242b8975f..f365141ade 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -102,9 +102,12 @@ static int read_patches(const char *range, struct s=
+tring_list *list)
+>  				strbuf_addch(&buf, '\n');
+>  			}
+>  			continue;
+> -		} else if (starts_with(line.buf, "@@ "))
+> -			strbuf_addstr(&buf, "@@");
+> -		else if (!line.buf[0] || starts_with(line.buf, "index "))
+> +		} else if (starts_with(line.buf, "@@ ")) {
+> +			char *skip_lineno =3D strstr(line.buf + 3, "@@");
 
-Also, the text "modified file" takes up an awful lot of space. Maybe we do
-not really need that information?
+Rather than using the magic constant "3", it would probably make sense to
+declare `skip_lineno` outside of the `if` construct, and use
+`skip_prefix(line.buf, "@@ ", &skip_lineno)` instead of
+`starts_with(...)`.
 
-While at it, we could strip the line numbers, as this is not intended for
-machine consumption, but for human consumption instead.
+We *will*, however, want to have a safeguard against `strstr()` not
+finding anything. Maybe re-use the `p` variable that we already have, and
+do this instead:
 
-> [...]
-> Note that this patch series doesn't modify or add any tests, and was
-> just manually tested locally, thus it is still marked as RFC.
+		} else if (skip_prefix(line.buf, "@@ ", &p) &&
+			   (p =3D strstr(p, "@@"))) {
 
-Oh, okay then ;-)
+> +			strbuf_remove(&line, 0, skip_lineno - line.buf);
+> +			strbuf_addch(&buf, ' ');
 
-Thanks for working on this,
+Shorter:
+
+			strbuf_splice(&line, 0, p - line.buf, " ", 1);
+
+(assuming that you accept my suggestion to use `p` instead of
+`skip_lineno`...)
+
+Thanks,
 Dscho
+
+> +			strbuf_addbuf(&buf, &line);
+> +		} else if (!line.buf[0] || starts_with(line.buf, "index "))
+>  			/*
+>  			 * A completely blank (not ' \n', which is context)
+>  			 * line is not valid in a diff.  We skip it
+> --
+> 2.21.0.593.g511ec345e1
+>
+>
