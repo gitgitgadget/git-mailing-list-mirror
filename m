@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89E6C20248
-	for <e@80x24.org>; Mon, 15 Apr 2019 20:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B464020248
+	for <e@80x24.org>; Mon, 15 Apr 2019 20:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727930AbfDOUj5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 16:39:57 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:36876 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727806AbfDOUjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 16:39:53 -0400
-Received: by mail-ed1-f54.google.com with SMTP id f53so14324188ede.4
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 13:39:51 -0700 (PDT)
+        id S1727942AbfDOUj7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 16:39:59 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45252 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727875AbfDOUjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 16:39:51 -0400
+Received: by mail-ed1-f68.google.com with SMTP id o26so15868222edv.12
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 13:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MoCGeeTDIpiPg6479hr8tszZ7UyZVIfv7RJYyJjZi4c=;
-        b=bDTQdtqRCKnzmAdf8rGLe19REhrMGlhGJzRO7/YyandoIWsTNUWlpIkHP8Rr+3LZBB
-         90SxKMbmYac+qqar9mavvrKhpli3lXXOJTadYJJf88jskAaIog33UFNznsXWg+KGn+WE
-         nYatUTIQm/c30unI+fjb7g3dzKQC9lvv2TQxhxnXiiZaKHwcUNqxrwEUEqhRCCAcvKU0
-         kZfB6z/8UP/lIk/QjT36mOPPgFsfRkANvWV/OKTLUQFnGq9uXePBb2qGGa09m3rkJBJz
-         rg0Fe8ruVtZhr/koaPcTbtJ/Uvb4e5ON4LZW9QWfvecwzex9UtbU9j3WYM8RXg9HgWUm
-         Ixww==
+        bh=Pqjpehq/KCxv/xITMTu3TGOqPYZ/ERIKSTRL7/VxKek=;
+        b=Nt31K6r2dsqXgkn3/b8qgVwlgJ0YcfENdnxAHaDjVl7TNFHBZ94IivbB77nKGU3tpX
+         toic8WIPx7pfZEh5MYgVe5BtAFdskvYEtySsVn4eB/Ks8qNyJrkmlWQsggU+OyxI0Lfo
+         QemNzv/6jJW4xF07DUwnR+qZ9+c9pt6qE6AkfWfGS3CcdjYTlT2U7kk9U+/FLmGeQsn6
+         3ccAld98x+4cWwWhhqOkRYNGbyOwayvwhzrLYqz+4ioAE4bI/4+LWDDnDU+VmxiHbPuZ
+         UEPdwuA2TNRea8wwTKF0ChJr9ANKctx2U6xdFfmaO70Y4UXsUOT5tVMY8KqWEzvOl3qs
+         c88w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MoCGeeTDIpiPg6479hr8tszZ7UyZVIfv7RJYyJjZi4c=;
-        b=DAjOqvTn0HdfU0UTumrvK2Cz6MMQAU/kCj7sSNuaHOILAvs1Tn+8WbqtW60CFhowmi
-         2tdr4xGZExxpCIE2CI8/6cCf5S0p7Q6VWf6OuZKTkahgFQRYfM1eO7ORgqF4soh0Bada
-         aGEojCB+FYzO9bXlHrS5ECyRW8PEKhP28gX7QTHxdN20IDzmHWxiX/jimRT34HUYbgqB
-         gOGk46bGUpYjD0kiq44jvw0U97mn1oX0wfxdAShu1fP0XNTGj8KHUj+DlEvvN1RAHvpi
-         6Hb/1t15i87h9V7PArM4J0z4xiJxGJ+mR4FDhmesSdyel2hGb69t70YU23UN9si9qGBL
-         4QAQ==
-X-Gm-Message-State: APjAAAXS8RJUXAgHDpbfB/r6CbKmDS7DaKxPpPvZBrfGQrOsbU3YrSD2
-        qhPwmP0EArrW74BvyF1cOQhNxMYG
-X-Google-Smtp-Source: APXvYqxIebsvjwxr4Y3Ox8IjZwr8NMApWpeMOt6sypEyZe/aCjQsImV5KIKdojjmdZB60cq6fEh46g==
-X-Received: by 2002:a50:b283:: with SMTP id p3mr424264edd.105.1555360790486;
-        Mon, 15 Apr 2019 13:39:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d23sm9342979eja.42.2019.04.15.13.39.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=Pqjpehq/KCxv/xITMTu3TGOqPYZ/ERIKSTRL7/VxKek=;
+        b=Tk0r4OFVrwQtWBLx6bgqJ6IjjCG/pzsBq69aamOc+8iJk161+6CYGPVOqJn1FsmIHi
+         A2zneXMZfXTw+UzWy3QndCEQ5Sb2V1PTDbGOePXzx61RgbS5sAr/LBga991474jwh1Mz
+         6SFUnu0zZIzOMDV05IQcyZtAd1/+B9VSpJtUja7KuFsYsIdUqeRBcz7IlagOnIvTAx98
+         aIHIyA++fMGAE+0U07fQXXahGzfU0sr+5wT7BXZ0K8ghqim+Os2z5uP/P1G9tr/ugRK0
+         kBjMQp9tJXsO+Bvyaw3XM9stGpig2ZpGvZT0zs9AOJCz84hyTXiqdccCJP72Hj8Fp7Ps
+         2JBA==
+X-Gm-Message-State: APjAAAWE92BASMmasJHIV6yV30SpCSEkQoHRBSqGJhTsXZ/5sPb17LJL
+        +znwnYmdYTcdI/pKrr6k/hS91Llu
+X-Google-Smtp-Source: APXvYqyQnwvFGb1C/8+oUJAtiPyiK3v46sKiNoTyFLL5cb2x8Ewq1z+dhkYk9Hoc1nM7+GLC9sChaA==
+X-Received: by 2002:a50:cb06:: with SMTP id g6mr30545726edi.89.1555360789447;
         Mon, 15 Apr 2019 13:39:49 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 13:39:49 -0700 (PDT)
-X-Google-Original-Date: Mon, 15 Apr 2019 20:39:39 GMT
-Message-Id: <9fdcb50140571f888712366f9187a23342d56ac7.1555360780.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 30sm1070108edr.2.2019.04.15.13.39.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
+Date:   Mon, 15 Apr 2019 13:39:48 -0700 (PDT)
+X-Google-Original-Date: Mon, 15 Apr 2019 20:39:38 GMT
+Message-Id: <196a9d2c852c110f951ccd19fc05741399ec59c1.1555360780.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v4.git.gitgitgadget@gmail.com>
 References: <pull.169.v3.git.gitgitgadget@gmail.com>
         <pull.169.v4.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 09/10] trace2: make SIDs more unique
+Subject: [PATCH v4 08/10] trace2: clarify UTC datetime formatting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,173 +73,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update SID component construction to use the current UTC datetime
-and a portion of the SHA1 of the hostname.
-
-Use an simplified date/time format to make it easier to use the
-SID component as a logfile filename.
+Update tr2_tbuf_utc_datetime to generate extended UTC format.
+Update tr2_tgt_event target to use extended format in 'time' columns.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-trace2.txt | 16 ++++----
- trace2/tr2_sid.c                       | 53 ++++++++++++++++++++++++--
- trace2/tr2_tbuf.c                      | 15 ++++++++
- trace2/tr2_tbuf.h                      |  1 +
- 4 files changed, 73 insertions(+), 12 deletions(-)
+ Documentation/technical/api-trace2.txt | 12 ++++++------
+ trace2/tr2_tbuf.c                      |  4 ++--
+ trace2/tr2_tbuf.h                      |  4 ++--
+ trace2/tr2_tgt_event.c                 |  2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index cdc00bcc5d..43adbf00eb 100644
+index baaa1153bb..cdc00bcc5d 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
 @@ -78,11 +78,11 @@ git version 2.20.1.155.g426c96fcdb
  +
  ------------
  $ cat ~/log.event
--{"event":"version","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
--{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
--{"event":"cmd_name","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
--{"event":"exit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
--{"event":"atexit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
-+{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
-+{"event":"start","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
-+{"event":"cmd_name","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
-+{"event":"exit","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
-+{"event":"atexit","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
+-{"event":"version","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.620713","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
+-{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621027","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
+-{"event":"cmd_name","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621122","file":"git.c","line":432,"name":"version","hierarchy":"version"}
+-{"event":"exit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621236","file":"git.c","line":662,"t_abs":0.001227,"code":0}
+-{"event":"atexit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621268","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
++{"event":"version","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
++{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
++{"event":"cmd_name","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
++{"event":"exit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
++{"event":"atexit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
  ------------
  
  == Enabling a Target
-@@ -540,11 +540,11 @@ The following key/value pairs are common to all events:
- ------------
- {
+@@ -542,7 +542,7 @@ The following key/value pairs are common to all events:
  	"event":"version",
--	"sid":"1547659722619736-11614",
-+	"sid":"20190408T191827.272759Z-H9b68c35f-P011764",
+ 	"sid":"1547659722619736-11614",
  	"thread":"main",
--	"time":"2019-01-16T17:28:42.620713Z",
-+	"time":"2019-04-08T19:18:27.282761Z",
+-	"time":"2019-01-16 17:28:42.620713",
++	"time":"2019-01-16T17:28:42.620713Z",
  	"file":"common-main.c",
--	"line":38,
-+	"line":42,
+ 	"line":38,
  	...
- }
- ------------
-diff --git a/trace2/tr2_sid.c b/trace2/tr2_sid.c
-index 984524a43c..5047095478 100644
---- a/trace2/tr2_sid.c
-+++ b/trace2/tr2_sid.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "trace2/tr2_tbuf.h"
- #include "trace2/tr2_sid.h"
- 
- #define TR2_ENVVAR_PARENT_SID "GIT_TR2_PARENT_SID"
-@@ -6,6 +7,53 @@
- static struct strbuf tr2sid_buf = STRBUF_INIT;
- static int tr2sid_nr_git_parents;
- 
-+/*
-+ * Compute the final component of the SID representing the current process.
-+ * This should uniquely identify the process and be a valid filename (to
-+ * allow writing trace2 data to per-process files).  It should also be fixed
-+ * length for possible use as a database key.
-+ *
-+ * "<yyyymmdd>T<hhmmss>.<fraction>Z-<host>-<process>"
-+ *
-+ * where <host> is a 9 character string:
-+ *    "H<first_8_chars_of_sha1_of_hostname>"
-+ *    "Localhost" when no hostname.
-+ *
-+ * where <process> is a 9 character string containing the least signifcant
-+ * 32 bits in the process-id.
-+ *    "P<pid>"
-+ * (This is an abribrary choice.  On most systems pid_t is a 32 bit value,
-+ * so limit doesn't matter.  On larger systems, a truncated value is fine
-+ * for our purposes here.)
-+ */
-+static void tr2_sid_append_my_sid_component(void)
-+{
-+	const struct git_hash_algo *algo = &hash_algos[GIT_HASH_SHA1];
-+	struct tr2_tbuf tb_now;
-+	git_hash_ctx ctx;
-+	pid_t pid = getpid();
-+	unsigned char hash[GIT_MAX_RAWSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
-+	char hostname[HOST_NAME_MAX + 1];
-+
-+	tr2_tbuf_utc_datetime(&tb_now);
-+	strbuf_addstr(&tr2sid_buf, tb_now.buf);
-+
-+	strbuf_addch(&tr2sid_buf, '-');
-+	if (xgethostname(hostname, sizeof(hostname)))
-+		strbuf_add(&tr2sid_buf, "Localhost", 9);
-+	else {
-+		algo->init_fn(&ctx);
-+		algo->update_fn(&ctx, hostname, strlen(hostname));
-+		algo->final_fn(hash, &ctx);
-+		hash_to_hex_algop_r(hex, hash, algo);
-+		strbuf_addch(&tr2sid_buf, 'H');
-+		strbuf_add(&tr2sid_buf, hex, 8);
-+	}
-+
-+	strbuf_addf(&tr2sid_buf, "-P%08"PRIx32, (uint32_t)pid);
-+}
-+
- /*
-  * Compute a "unique" session id (SID) for the current process.  This allows
-  * all events from this process to have a single label (much like a PID).
-@@ -20,7 +68,6 @@ static int tr2sid_nr_git_parents;
-  */
- static void tr2_sid_compute(void)
- {
--	uint64_t us_now;
- 	const char *parent_sid;
- 
- 	if (tr2sid_buf.len)
-@@ -38,9 +85,7 @@ static void tr2_sid_compute(void)
- 		tr2sid_nr_git_parents++;
- 	}
- 
--	us_now = getnanotime() / 1000;
--	strbuf_addf(&tr2sid_buf, "%" PRIuMAX "-%" PRIdMAX, (uintmax_t)us_now,
--		    (intmax_t)getpid());
-+	tr2_sid_append_my_sid_component();
- 
- 	setenv(TR2_ENVVAR_PARENT_SID, tr2sid_buf.buf, 1);
- }
 diff --git a/trace2/tr2_tbuf.c b/trace2/tr2_tbuf.c
-index eb1b240d8a..2498482d9a 100644
+index 0844910423..eb1b240d8a 100644
 --- a/trace2/tr2_tbuf.c
 +++ b/trace2/tr2_tbuf.c
-@@ -30,3 +30,18 @@ void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb)
+@@ -15,7 +15,7 @@ void tr2_tbuf_local_time(struct tr2_tbuf *tb)
+ 		  tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
+ }
+ 
+-void tr2_tbuf_utc_time(struct tr2_tbuf *tb)
++void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb)
+ {
+ 	struct timeval tv;
+ 	struct tm tm;
+@@ -26,7 +26,7 @@ void tr2_tbuf_utc_time(struct tr2_tbuf *tb)
+ 	gmtime_r(&secs, &tm);
+ 
+ 	xsnprintf(tb->buf, sizeof(tb->buf),
+-		  "%4d-%02d-%02d %02d:%02d:%02d.%06ld", tm.tm_year + 1900,
++		  "%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ", tm.tm_year + 1900,
  		  tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
  		  (long)tv.tv_usec);
  }
-+
-+void tr2_tbuf_utc_datetime(struct tr2_tbuf *tb)
-+{
-+	struct timeval tv;
-+	struct tm tm;
-+	time_t secs;
-+
-+	gettimeofday(&tv, NULL);
-+	secs = tv.tv_sec;
-+	gmtime_r(&secs, &tm);
-+
-+	xsnprintf(tb->buf, sizeof(tb->buf), "%4d%02d%02dT%02d%02d%02d.%06ldZ",
-+		  tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour,
-+		  tm.tm_min, tm.tm_sec, (long)tv.tv_usec);
-+}
 diff --git a/trace2/tr2_tbuf.h b/trace2/tr2_tbuf.h
-index 2a1d173ff2..fa853d8f42 100644
+index 9cdefa3957..2a1d173ff2 100644
 --- a/trace2/tr2_tbuf.h
 +++ b/trace2/tr2_tbuf.h
-@@ -19,5 +19,6 @@ void tr2_tbuf_local_time(struct tr2_tbuf *tb);
-  * Fill buffer with formatted UTC datatime string.
+@@ -16,8 +16,8 @@ struct tr2_tbuf {
+ void tr2_tbuf_local_time(struct tr2_tbuf *tb);
+ 
+ /*
+- * Fill buffer with formatted UTC time string.
++ * Fill buffer with formatted UTC datatime string.
   */
- void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb);
-+void tr2_tbuf_utc_datetime(struct tr2_tbuf *tb);
+-void tr2_tbuf_utc_time(struct tr2_tbuf *tb);
++void tr2_tbuf_utc_datetime_extended(struct tr2_tbuf *tb);
  
  #endif /* TR2_TBUF_H */
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 48d9193b2c..2c97cf54be 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -94,7 +94,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+ 	 */
+ 	if (!tr2env_event_be_brief || !strcmp(event_name, "version") ||
+ 	    !strcmp(event_name, "atexit")) {
+-		tr2_tbuf_utc_time(&tb_now);
++		tr2_tbuf_utc_datetime_extended(&tb_now);
+ 		jw_object_string(jw, "time", tb_now.buf);
+ 	}
+ 
 -- 
 gitgitgadget
 
