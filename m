@@ -2,91 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65F1420374
-	for <e@80x24.org>; Mon, 15 Apr 2019 19:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05A5220248
+	for <e@80x24.org>; Mon, 15 Apr 2019 19:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731350AbfDOTUD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 15:20:03 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33255 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728091AbfDOTUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 15:20:01 -0400
-Received: by mail-wm1-f66.google.com with SMTP id z6so648807wmi.0
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 12:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rUDHbBElEHXNnGwtFLINgJ5RJDkEdQqkFsRki55VfMk=;
-        b=WbZrBf/Q/KNFwQ9fmVfs4yQ2MO4Ltoi9MWybK0mDjc/ysHku3qRQIVWtPFVgmYxKKu
-         pDxSliH5CUp2ulWXyZP3+LsaXte4WwKK9e4INP8gGumlUo4VM56V0IqfMwMZUqoRM5gb
-         NaVzldafGHT4kl8l9V5IYIijZKbMMWB8bvyW8SmGn1RxclJVs1VNjZdjbBnAkvKVpZAq
-         I5vtQ2VDYhd3s9G+uvXrF+a1g2Z2jfnaggseO0AlINDd5Id3zchulljiPhotIfs5rl/C
-         CivhyArI9faNxgnRokswO3sP45ywd+0PxMBXHfAeSSSt8dhhoVzJuF3WYiuaGzxqjvMV
-         vUpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rUDHbBElEHXNnGwtFLINgJ5RJDkEdQqkFsRki55VfMk=;
-        b=Mflsp38t4Xx3s/pxu1QkbRyDaw2GMsf21v750mjWZvJC2/N1xgJvKNWGCiKMTTa1PR
-         wuqgc8pQdpB7L1bCokwoS9mlFLw6rKkRJ/TTZ/r/crBs2JZzN9cRU5TpMIpjxCP22uzu
-         OsdHS//XD+X4rD0ZzfdrjAEpSBjJJoNLZ2VENY/En+l3j7dwdbxy5OmJPcVbjl2zPK+5
-         YtUJtFXf0xFfSfnZjlPcPNca1CSfPqVzQ8MzT5bt84OmbDwQ8yt753fGt0PiwOF0x4R3
-         eTE6CBLrUjy/y4SLZVozQ+BOwA9ixoMtYwHH7VlOyG08OeugnvDU2KKstlEQ9mkdQMDr
-         8V2A==
-X-Gm-Message-State: APjAAAVqtnOl3xBlN2JQTjt6FMhUd878zSka0+WHpVCUR4xLmPpRRk5h
-        geCXjS8rD53NvMj6f6o8NiM=
-X-Google-Smtp-Source: APXvYqwd3ypQ+e+AoeCL+gIzDmZiKhn95o0DMQIEbOeiYL+nEk0sVv8u27kNifHdu5OFTn+HtEiT1g==
-X-Received: by 2002:a1c:4602:: with SMTP id t2mr24644192wma.120.1555355999492;
-        Mon, 15 Apr 2019 12:19:59 -0700 (PDT)
-Received: from localhost ([2.25.81.3])
-        by smtp.gmail.com with ESMTPSA id 204sm27243187wmc.1.2019.04.15.12.19.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 15 Apr 2019 12:19:56 -0700 (PDT)
-Date:   Mon, 15 Apr 2019 20:19:55 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 1/3] *.[ch]: remove extern from function declarations
- using spatch
-Message-ID: <20190415191955.GE1704@hank.intra.tgummerer.com>
-References: <3e3b9d6c8e54b326809b95adabd3be39d2d0770f.1555111963.git.liu.denton@gmail.com>
- <cover.1555352526.git.liu.denton@gmail.com>
- <7895255fdbe027b671a77dac6d0ee2e4700974be.1555352526.git.liu.denton@gmail.com>
+        id S1730826AbfDOTUV convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 15 Apr 2019 15:20:21 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:20591 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731253AbfDOTUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 15:20:21 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x3FJKFw6067783
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 15 Apr 2019 15:20:15 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
+        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com> <874l71fxmg.fsf@evledraar.gmail.com> <20190413214736.GD15936@szeder.dev>
+In-Reply-To: <20190413214736.GD15936@szeder.dev>
+Subject: RE: [BUG] GIT_SSH_COMMAND is not being decomposed
+Date:   Mon, 15 Apr 2019 15:20:07 -0400
+Message-ID: <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7895255fdbe027b671a77dac6d0ee2e4700974be.1555352526.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGpuMnQep3MvtsjO/08o+Xas343GAFQ9z8cANXpddqmgtPhEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/15, Denton Liu wrote:
-[...]
+On April 13, 2019 17:48, SZEDER Gábor wrote:
+> On Sat, Apr 13, 2019 at 10:39:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > On Sat, Apr 13 2019, Randall S. Becker wrote:
+> >
+> > > I am encountering a problem on one of our NonStop platform variants
+> > > where the GIT_SSH_COMMAND string is not being broken into
+> > > constituent parts. This is causing SSH to not run properly. As
+> > > background, SSH is not in a standard location and has non-standard
+> > > required arguments. This also occurs with core.sshCommand. The
+> situation is:
+> > >
+> > > git config --global core.sshCommand '/G/system/zssh/sshossz5 -Q'
+> > >
+> > > which correctly sets .gitconfig as:
+> > >
+> > > [core]
+> > >         sshCommand = /G/system/zssh/sshossz5 -Q
+> > >
+> > > When git is run with GIT_TRACE=true GIT_PACKET_TRACE=true git fetch
+> > >
+> > > We get the partial trace:
+> > > 14:19:56.027088 trace: built-in: git fetch
+> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5 -Q' -G
+> > > user@host
+> > >
+> > > The same trace on our systems that actually do work results in:
+> > > 14:19:56.029895 trace: run_command: '/G/system/zssh/sshossz5' '-Q'
+> > > -G user@host
+> > >
+> > > I need help resolving why this is happening (as in where to look and
+> > > debug the situation).
+> >
+> > This doesn't seem to be documented *explicitly* (except between the
+> > lines & inferred), but it's only supported to pass a *command* there,
+> > i.e. the path of the ssh binary.
+> 
+> 'man git' it quite explicit about this:
+> 
+>   $GIT_SSH_COMMAND takes precedence over $GIT_SSH, and is interpreted
+>   by the shell, which allows additional arguments to be included.
+>   $GIT_SSH on the other hand must be just the path to a program (which
+>   can be a wrapper shell script, if additional arguments are needed).
+> 
+> Quick test shows that the implementation agrees with the
+> documentation:
+> 
+>   $ GIT_TRACE=2 GIT_SSH_COMMAND='/usr/bin/ssh -v' git push -n github
+>   23:39:02.048870 git.c:419               trace: built-in: git push -n github
+>   23:39:02.060821 run-command.c:643       trace: run_command: unset
+> GIT_PREFIX; '/usr/bin/ssh -v' git@github.com 'git-receive-pack
+> '\''/szeder/git'\'''
+>   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
+>   debug1: Reading configuration data /home/szeder/.ssh/config
+>   <... snipt rest of the verbose ssh output ...>
+> 
+> And the config setting works, too:
+> 
+>   $ GIT_TRACE=2 git -c core.sshCommand='/usr/bin/ssh -v' push -n github
+>   23:42:55.277776 git.c:439               trace: built-in: git push -n github
+>   23:42:55.285149 run-command.c:663       trace: run_command: unset
+> GIT_CONFIG_PARAMETERS GIT_PREFIX; '/usr/bin/ssh -v' git@github.com
+> 'git-receive-pack '\''/szeder/git'\'''
+>   OpenSSH_7.2p2 Ubuntu-4ubuntu2.8, OpenSSL 1.0.2g  1 Mar 2016
+>   debug1: Reading configuration data /home/szeder/.ssh/config
+>   <...>
+> 
+> Note that in both cases the trace shows '/usr/bin/ssh -v', IOW neither
+> $GIT_SSH_COMMAND nor 'core.sshCommand' are broken up.
+> 
+> But this is just an avarage Linux box, so perhaps this is a NonStop-specific
+> issue?
+> 
+> 
+> > See the code around get_ssh_command()
+> > in connect.c. The whole env/config value we look up gets passed as one.
+> >
+> > So if you need arguments you need to create a wrapper script and set
+> > ssh command to that script.
 
-> -extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
-> -extern void *object_file_to_archive(const struct archiver_args *args,
-> +int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
-> +void *object_file_to_archive(const struct archiver_args *args,
->  				    const char *path, const struct object_id *oid,
->  				    unsigned int mode, enum object_type *type,
->  				    unsigned long *sizep);
+What is strange is that GIT_SSH_COMMAND='/usr/bin/ssh -v' should not execute if we are just looking at an object path. It should be broken into '/usr/bin/ssh' and '-v' otherwise spawn* or exec* will not execute it. I'm still trying to understand why I can successfully do things like the following:
 
-Just skimming this patch, I notice that this now leaves a bunch of
-oddly indented parameter lists behind.  We might want to re-indent
-those as well, as part of this patch or a follow up patch (so this
-patch can remain purely mechanical).
+$ GIT_SSH_COMMAND="ssh -i ~/.ssh/myid" git fetch
 
-Personally I dislike this inconsistent indentation more than the
-extern keyword, but not sure how others feel about it.
+on virtually any platform at my disposal (Windows, Ubuntu, MacOS, the older NonStop variant), and have that work with no problem. Somewhere after get_ssh_command(), the command is being interpreted it its parts either as a shell or something else (still trying to find that).
+
+
