@@ -2,63 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BE5F20374
-	for <e@80x24.org>; Mon, 15 Apr 2019 21:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09DD720248
+	for <e@80x24.org>; Mon, 15 Apr 2019 21:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728188AbfDOVap (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Apr 2019 17:30:45 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:55395 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726939AbfDOVan (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 17:30:43 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44jhW45sbQz5tlB;
-        Mon, 15 Apr 2019 23:30:40 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 304292AA9;
-        Mon, 15 Apr 2019 23:30:40 +0200 (CEST)
-Subject: Re: [BUG] GIT_SSH_COMMAND is not being decomposed
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     =?UTF-8?B?J1NaRURFUiBHw6Fib3In?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, git@vger.kernel.org
-References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com>
- <874l71fxmg.fsf@evledraar.gmail.com> <20190413214736.GD15936@szeder.dev>
- <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <275443bc-ec87-09a0-d4c5-cc3bb86be105@kdbg.org>
-Date:   Mon, 15 Apr 2019 23:30:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727929AbfDOVf6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Apr 2019 17:35:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59122 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726696AbfDOVf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Apr 2019 17:35:58 -0400
+Received: (qmail 1600 invoked by uid 109); 15 Apr 2019 21:35:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Apr 2019 21:35:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6212 invoked by uid 111); 15 Apr 2019 21:36:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Apr 2019 17:36:28 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Apr 2019 17:35:56 -0400
+Date:   Mon, 15 Apr 2019 17:35:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 2/2] archive: avoid spawning `gzip`
+Message-ID: <20190415213556.GB28128@sigill.intra.peff.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <44d5371ae6808ec40e8f52c3dc258a85c878b27e.1555110278.git.gitgitgadget@gmail.com>
+ <20190413015102.GC2040@sigill.intra.peff.net>
+ <8ef2164c-1d44-33bf-ea8a-49fa0b5c8abf@web.de>
 MIME-Version: 1.0
-In-Reply-To: <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8ef2164c-1d44-33bf-ea8a-49fa0b5c8abf@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.04.19 um 21:20 schrieb Randall S. Becker:
-> What is strange is that GIT_SSH_COMMAND='/usr/bin/ssh -v' should not
-> execute if we are just looking at an object path. It should be broken
-> into '/usr/bin/ssh' and '-v' otherwise spawn* or exec* will not
-> execute it. I'm still trying to understand why I can successfully do
-> things like the following:>
-> $ GIT_SSH_COMMAND="ssh -i ~/.ssh/myid" git fetch
-> 
-> on virtually any platform at my disposal (Windows, Ubuntu, MacOS, the
-> older NonStop variant), and have that work with no problem. Somewhere
-> after get_ssh_command(), the command is being interpreted it its
-> parts either as a shell or something else (still trying to find
-> that).
-Have a look at fill_ssh_args() and determine_ssh_variant() in connect.c.
-Quite a lot is going on there. I don't see immediately why it doesn't
-follow the usual logic in your case, though.
+On Sun, Apr 14, 2019 at 12:01:10AM +0200, René Scharfe wrote:
 
--- Hannes
+> >> As we already link to the zlib library, we can perform the compression
+> >> without even requiring gzip on the host machine.
+> >
+> > Very cool. It's nice to drop a dependency, and this should be a bit more
+> > efficient, too.
+> 
+> Getting rid of dependencies is good, and using zlib is the obvious way to
+> generate .tgz files. Last time I tried something like that, a separate gzip
+> process was faster, though -- at least on Linux [1].  How does this one
+> fare?
+
+I'd expect a separate gzip to be faster in wall-clock time for a
+multi-core machine, but overall consume more CPU. I'm slightly surprised
+that your timings show that it actually wins on total CPU, too.
+
+Here are best-of-five times for "git archive --format=tar.gz HEAD" on
+linux.git (the machine is a quad-core):
+
+  [before, separate gzip]
+  real	0m21.501s
+  user	0m26.148s
+  sys	0m0.619s
+
+  [after, internal gzwrite]
+  real	0m25.156s
+  user	0m25.059s
+  sys	0m0.096s
+
+which does show what I expect (longer overall, but less total CPU).
+
+Which one you prefer depends on your situation, of course. A user on a
+workstation with multiple cores probably cares most about end-to-end
+latency and using all of their available horsepower. A server hosting
+repositories and receiving many unrelated requests probably cares more
+about total CPU (though the differences there are small enough that it
+may not even be worth having a config knob to un-parallelize it).
+
+> Doing compression in its own thread may be a good idea.
+
+Yeah. It might even make the patch simpler, since I'd expect it to be
+implemented with start_async() and a descriptor, making it look just
+like a gzip pipe to the caller. :)
+
+-Peff
