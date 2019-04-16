@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F60420248
-	for <e@80x24.org>; Tue, 16 Apr 2019 09:36:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2ECA20248
+	for <e@80x24.org>; Tue, 16 Apr 2019 09:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729005AbfDPJge (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 05:36:34 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34095 "EHLO
+        id S1729048AbfDPJgm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 05:36:42 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36089 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726645AbfDPJgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 05:36:33 -0400
-Received: by mail-pf1-f194.google.com with SMTP id b3so10131194pfd.1
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 02:36:33 -0700 (PDT)
+        with ESMTP id S1729023AbfDPJgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 05:36:39 -0400
+Received: by mail-pf1-f194.google.com with SMTP id z5so10124433pfn.3
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 02:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EWJeBEVQ6y4/jgIZVFGfDqfjduHgcPTzI8Qo1NNEpcQ=;
-        b=TZIU2FYqU4d2y9SXOL0957N30t00eZbiR4KBPxyoOnEyaXZpb1uI3kk7wGxmofZZh9
-         z3DPfTzmbE+9fREcg2v6/0U3NN6y9BhE1Y5P1TYQJS3xYOQls9+qjCH04fH7dkqwhMkd
-         WK7TmrAdAscucfxqLUhXc2uEQilMWBKDwg0kVXA+k+uOGlA1JR/+GwFl7odaMwK1fg8H
-         T3p9Vwu9nE/AF8l0Xk6JCZse9xP+dvD6bWxJC+m3FvCF+Ka+yMP6z8/mOvulMrMDc15O
-         Aq30+myGAEeDtlciWqe4AoQ43/q/FwNNZYraJQauBq1GODIJ+riiOzy360TjCXIRSOMF
-         Ct5g==
+        bh=rVjU6r29pDbupTY7CdDKciCqM+l3iwaWNxGJE9kexEU=;
+        b=a6CXfe74QC9rI/8VSsxq1euhMmmPm3CEIW/LZujMGvhXT7HfQfJYj/+uE0rWxMoUSO
+         lvEJKNNM52KhbgL32k4fCqSOVxM1WowKCn/cH8VN5aG1FaMpxcWRgrgbJUX+18ua/X5z
+         RuGmYx9uaNBZ4hGT+4WhKEfcRHJfoLNKEFkaCv/elvwdDp96nsoFrHYNy77x9QvcAN6h
+         /sKR8h3Vpy3GmUFcyDVtBvRYxjVY9wdSwNEDtNJm0pGuMpoZh0wG7lXv/OoJy/3Qi2Cp
+         25P5pP2wkko4Ea8DuYbOtvW/Oc1h5V/ZxDMNQIo/pQx10JH023qGKW4d257VoslM8GEi
+         ceZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EWJeBEVQ6y4/jgIZVFGfDqfjduHgcPTzI8Qo1NNEpcQ=;
-        b=nXGtSxNC3/eyAD6Lp5OFPi3Qh+jqrYMfpcLJzXOo7o3VIczYKRBGDsEqwDoFbcOeOj
-         H7rEFuQVI/RVXu9iQlB0zeTEOr07vi5LnVAhSNVccz96Vh9lgFx/T1TUOEpqExGoRi9J
-         E94wkf+aMRnnfSWMB4KIODfEW69za3VqjmZWzAB9YA/Z1hqfFEnDIzGH3Bc+8xrSP+Pl
-         R82gh4W/9PFNIdTAguZd19a2nwRaRknRStQGu//kYyTyHc2puT4hiQy4iLzQ3DMKUhis
-         6SRqL+Dx4VerIrsDlNk0O5LFnAG0X08o8mRdVOkfUGpyGy53xglx0oiXRPxtZEpe5nZ3
-         5JrA==
-X-Gm-Message-State: APjAAAU7d7XR2PnoQo7cedHuUpCdfyzSvyBZGy4WT4ixO+FTbtWfaUB5
-        eOVA8lR5Dlf6pnUhN+Qp9Fk=
-X-Google-Smtp-Source: APXvYqwCWcqYVAM7BiYLSxGKCDSu6wKsut2G/VPbHq+2179dI6zG0ZQ7OCXOZ2th/f0C1bepepgOWw==
-X-Received: by 2002:a62:1b8a:: with SMTP id b132mr82145473pfb.19.1555407393326;
-        Tue, 16 Apr 2019 02:36:33 -0700 (PDT)
+        bh=rVjU6r29pDbupTY7CdDKciCqM+l3iwaWNxGJE9kexEU=;
+        b=EwJULrq/DnkdeX1XmKaCJ2c063z9xN+7lipCMHRcMkPV+I259JQEBmVkC36BXw8/2B
+         mrmmOwHgfAE10ysUmm/OxkykDg4PcodQ995LR7oOVx/qVWtXDMobPisuMQCN2h4aFw4M
+         iL2rvPC7Gxi8xk8meZjJte4ZXR2ul2kX1WPV/D9MtAnTDrxbB/6941dmQSGihzJsS02L
+         z/6S2S/IqkcHbNmJNmJFbWMbTTRDLNatzGZf7dEVU1dcpGd2e/BBWrKQ9JCGOogTz5Gb
+         ghEszSYzIcr+/uvZuSN0802wBPBXgww7apWtrQpLOIly+sVS2ayC5fk4SfWxfyAj4I7q
+         fG/A==
+X-Gm-Message-State: APjAAAV8A3jXqT7o/npJQ2E1Ws1pgPx1michaTSV0p97Pf4i/wbjgTUS
+        U0LsAk8sCM/rJ5ixMoSILXrh/tEn
+X-Google-Smtp-Source: APXvYqwWZWmKIYK1JH4v8uYjTqdVMd/3PFZgte/HWBk7sh5CeiSS+G9RZydYch0RFvEEzl7thT1cGw==
+X-Received: by 2002:a63:e915:: with SMTP id i21mr75255675pgh.297.1555407398962;
+        Tue, 16 Apr 2019 02:36:38 -0700 (PDT)
 Received: from ash ([116.106.33.3])
-        by smtp.gmail.com with ESMTPSA id 17sm121643759pfw.65.2019.04.16.02.36.30
+        by smtp.gmail.com with ESMTPSA id j62sm57760302pfg.6.2019.04.16.02.36.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Apr 2019 02:36:32 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Tue, 16 Apr 2019 16:36:28 +0700
+        Tue, 16 Apr 2019 02:36:38 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Tue, 16 Apr 2019 16:36:33 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
         stefanbeller@gmail.com, szeder.dev@gmail.com
-Subject: [PATCH v4 20/34] sha1-name.c: remove the_repo from interpret_branch_mark()
-Date:   Tue, 16 Apr 2019 16:33:27 +0700
-Message-Id: <20190416093341.17079-21-pclouds@gmail.com>
+Subject: [PATCH v4 21/34] sha1-name.c: add repo_interpret_branch_name()
+Date:   Tue, 16 Apr 2019 16:33:28 +0700
+Message-Id: <20190416093341.17079-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.682.g30d2204636
 In-Reply-To: <20190416093341.17079-1-pclouds@gmail.com>
 References: <20190406113453.5149-1-pclouds@gmail.com>
@@ -72,57 +72,73 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- sha1-name.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sha1-name.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/sha1-name.c b/sha1-name.c
-index af8bf5b351..7d9512ac44 100644
+index 7d9512ac44..49c62d5254 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -1412,9 +1412,9 @@ static int reinterpret(const char *name, int namelen, int len,
- 	return ret - used + len;
+@@ -1390,7 +1390,8 @@ static int interpret_empty_at(const char *name, int namelen, int len, struct str
+ 	return 1;
  }
  
--static void set_shortened_ref(struct strbuf *buf, const char *ref)
-+static void set_shortened_ref(struct repository *r, struct strbuf *buf, const char *ref)
+-static int reinterpret(const char *name, int namelen, int len,
++static int reinterpret(struct repository *r,
++		       const char *name, int namelen, int len,
+ 		       struct strbuf *buf, unsigned allowed)
  {
--	char *s = shorten_unambiguous_ref(ref, 0);
-+	char *s = refs_shorten_unambiguous_ref(get_main_ref_store(r), ref, 0);
- 	strbuf_reset(buf);
- 	strbuf_addstr(buf, s);
- 	free(s);
-@@ -1435,7 +1435,8 @@ static int branch_interpret_allowed(const char *refname, unsigned allowed)
- 	return 0;
- }
+ 	/* we have extra data, which might need further processing */
+@@ -1399,7 +1400,7 @@ static int reinterpret(const char *name, int namelen, int len,
+ 	int ret;
  
--static int interpret_branch_mark(const char *name, int namelen,
-+static int interpret_branch_mark(struct repository *r,
-+				 const char *name, int namelen,
- 				 int at, struct strbuf *buf,
- 				 int (*get_mark)(const char *, int),
- 				 const char *(*get_data)(struct branch *,
-@@ -1468,7 +1469,7 @@ static int interpret_branch_mark(const char *name, int namelen,
- 	if (!branch_interpret_allowed(value, allowed))
- 		return -1;
+ 	strbuf_add(buf, name + len, namelen - len);
+-	ret = interpret_branch_name(buf->buf, buf->len, &tmp, allowed);
++	ret = repo_interpret_branch_name(r, buf->buf, buf->len, &tmp, allowed);
+ 	/* that data was not interpreted, remove our cruft */
+ 	if (ret < 0) {
+ 		strbuf_setlen(buf, used);
+@@ -1482,20 +1483,18 @@ int repo_interpret_branch_name(struct repository *r,
+ 	const char *start;
+ 	int len;
  
--	set_shortened_ref(buf, value);
-+	set_shortened_ref(r, buf, value);
- 	return len + at;
- }
+-	if (r != the_repository)
+-		BUG("interpret_branch_name() does not really use 'r' yet");
+ 	if (!namelen)
+ 		namelen = strlen(name);
  
-@@ -1509,13 +1510,13 @@ int repo_interpret_branch_name(struct repository *r,
+ 	if (!allowed || (allowed & INTERPRET_BRANCH_LOCAL)) {
+-		len = interpret_nth_prior_checkout(the_repository, name, namelen, buf);
++		len = interpret_nth_prior_checkout(r, name, namelen, buf);
+ 		if (!len) {
+ 			return len; /* syntax Ok, not enough switches */
+ 		} else if (len > 0) {
+ 			if (len == namelen)
+ 				return len; /* consumed all */
+ 			else
+-				return reinterpret(name, namelen, len, buf, allowed);
++				return reinterpret(r, name, namelen, len, buf, allowed);
+ 		}
+ 	}
+ 
+@@ -1506,17 +1505,17 @@ int repo_interpret_branch_name(struct repository *r,
+ 		if (!allowed || (allowed & INTERPRET_BRANCH_HEAD)) {
+ 			len = interpret_empty_at(name, namelen, at - name, buf);
+ 			if (len > 0)
+-				return reinterpret(name, namelen, len, buf,
++				return reinterpret(r, name, namelen, len, buf,
  						   allowed);
  		}
  
--		len = interpret_branch_mark(name, namelen, at - name, buf,
-+		len = interpret_branch_mark(the_repository, name, namelen, at - name, buf,
+-		len = interpret_branch_mark(the_repository, name, namelen, at - name, buf,
++		len = interpret_branch_mark(r, name, namelen, at - name, buf,
  					    upstream_mark, branch_get_upstream,
  					    allowed);
  		if (len > 0)
  			return len;
  
--		len = interpret_branch_mark(name, namelen, at - name, buf,
-+		len = interpret_branch_mark(the_repository, name, namelen, at - name, buf,
+-		len = interpret_branch_mark(the_repository, name, namelen, at - name, buf,
++		len = interpret_branch_mark(r, name, namelen, at - name, buf,
  					    push_mark, branch_get_push,
  					    allowed);
  		if (len > 0)
