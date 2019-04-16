@@ -7,67 +7,64 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8861820248
-	for <e@80x24.org>; Tue, 16 Apr 2019 04:24:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B62720374
+	for <e@80x24.org>; Tue, 16 Apr 2019 06:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725865AbfDPEYw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 00:24:52 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42824 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725648AbfDPEYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 00:24:52 -0400
-Received: by mail-wr1-f66.google.com with SMTP id g3so24864374wrx.9
-        for <git@vger.kernel.org>; Mon, 15 Apr 2019 21:24:51 -0700 (PDT)
+        id S1728140AbfDPG0V (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 02:26:21 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35412 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726857AbfDPG0V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 02:26:21 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y197so11770393wmd.0
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 23:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=UXOioU2FwkRag5yDnsv0qvsudcaRW+KNUvrkoyNMqf8=;
-        b=mUtU04w8NWpXHt7NHfwm10Wg99Yi8kaUl/UCGonWzuQ+T2fooOsTCQBv5Dk7mftMkx
-         ropvnq8Ri3L1zEQdfhdOzGt62I1IVyKPjS5LXr95sC4hc2VkaszIlRyrq667QkgMcbgs
-         DwxdctPJmLzNZIdXWNF5X1A1Xk8ZeNcz3AuP2oIlwThgCuS4DSz/ucG4JOitRVRXeQyZ
-         xuElAFm6vLrMsDHsD7NrkN+niVoNez7p5A/VUtI1necyCpF8hxSc454mTcECUlieywog
-         /rObhmO3qWbzQErlwqjfZGsAEr6BQKXuUJ+tcLWHdaArMbNCYkoMzzmEYtMHVf3QCOQ6
-         qA/A==
+        bh=V31a+t5AshnyTfckzGf3wllN8kDs5d7sbxNfXarAgWg=;
+        b=kV89QoMPbS91raAGKEm/8hoh9j2/fyClo/lNWkj9Aan55HceU8OtofH6qd8MB/rtJU
+         uT5ea324fiBGuyi0icxQx7Odp4YOW0dhFGWQZA+r0jn8zyM8LqFgSA+xOyuFnosMJ/aw
+         UQpSeTXuR493iL4XedOTqgAmC0M70fNl47qhpGgGKKN9OtDMfUjNJ9G3e7gwVHpvaX5f
+         czQJ0gk5xkGTPez0d6RFhF3yi1Vx6XJJTPgqOVV4f0QLiWY9wqPb6RD1qW6jAjQK/wb0
+         HhJhOEVlLIBEOORpFxkBtYHuhyc/MujM5PhzUtvmEfLjP2XGiARWM4CgwduKpKsJIsrU
+         gmjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=UXOioU2FwkRag5yDnsv0qvsudcaRW+KNUvrkoyNMqf8=;
-        b=iLrNrE8j9ISEm3Aor4zYXOCUqGAIQBe7sD7LLj8JEC2VnrBA0ucpXheaxt+IacWKZc
-         GbaPagJ/+pWs2Whn97Ik2yG16k3usw7ziWKgPKwsA0i0YUXUj/CStf0DMPiLC6W9A+jY
-         8edjecpMQ8tuaf6I9Q1dr7dpG0cojZ3VUAWF8WUVdc6fwSN1QGxUrtId0w0uT8JKpW5j
-         G9WTlv5wPpLSF6ryAxqsU91O1CJeSSRGvEtsXG1SbKPWGz4X7BQl2+65GIoalnSryLKb
-         nTsDReD6LUNciuPuwKsc4+Yg1OqKLV8QmCr0+gJ9JWhpTVoz0HZdbeGVMIcOVwcQD94l
-         1kvA==
-X-Gm-Message-State: APjAAAUHxfYKWBW8MxcuZbV3nreUymdV5rUpSkfMeXqtKsyMpm7JZg4c
-        0LW0oK2DAaGgzeXSPYh7bIg=
-X-Google-Smtp-Source: APXvYqxzsvObUzd7IjCaIq0aLvxL62hSMzf7+iuWuX74x6Mmnj3+LM8EyR9UnRqkHUwvNh8jut82oA==
-X-Received: by 2002:adf:ee01:: with SMTP id y1mr52670048wrn.51.1555388690363;
-        Mon, 15 Apr 2019 21:24:50 -0700 (PDT)
+        bh=V31a+t5AshnyTfckzGf3wllN8kDs5d7sbxNfXarAgWg=;
+        b=GlvSOpCKvInwjaGO72SoUeLjoWBwtOjti9MTnSpSWH/daKc8ZhdTZeMVhPbXWODDYA
+         ShLl9z2EHzGkTx/TAy3dC1j44pYy68CiQpasrAF0KhJQcv0ZE2GTRPCMRDgw5krOGoyF
+         8HQdptsoPTHqhFU2A3pCNvE4zI6aT+5iYcVhRER8f0OrYA5azv4/C8Azb2TuC2VXvbSr
+         ri3UuZsw6U6KuzhJ2fWlr7iipTnhrKDHqlZQYVg0gvbgF1D8isTRzLkelQz+w5PpMAXk
+         JUpc7CD5LL4O06vbAlhehLaNZarTAI9kHNGlYmFYz2DJHflO5QfuV3Ya3STV/Ih2PEjW
+         uqkw==
+X-Gm-Message-State: APjAAAWYwtxZ4tuvTCU83rohGsAaEyJVj6tNpxcjEMzkaPRwtIMcACXn
+        jJ/OXwe9sEO7Uc+hmHlSRN4=
+X-Google-Smtp-Source: APXvYqxb7+sAqu8WPIEIybgVIG0sbvGSlHPWjZT/IwXrcut5u5Yt4kwJUrDjSCypzDDfVCIHVARlKA==
+X-Received: by 2002:a1c:6c09:: with SMTP id h9mr24779981wmc.130.1555395979027;
+        Mon, 15 Apr 2019 23:26:19 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 61sm170394283wre.50.2019.04.15.21.24.49
+        by smtp.gmail.com with ESMTPSA id d3sm41698884wmf.46.2019.04.15.23.26.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 15 Apr 2019 21:24:49 -0700 (PDT)
+        Mon, 15 Apr 2019 23:26:18 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Andreas Schwab'" <schwab@linux-m68k.org>,
-        =?utf-8?Q?'SZEDER_G=C3=A1?= =?utf-8?Q?bor'?= 
-        <szeder.dev@gmail.com>,
-        =?utf-8?Q?'=C3=86var_Arnfj?= =?utf-8?Q?=C3=B6r=C3=B0_Bjarmason'?= 
-        <avarab@gmail.com>, <git@vger.kernel.org>,
-        "Bill Honaker" <bhonaker@xid.com>
-Subject: Re: [BUG] GIT_SSH_COMMAND is not being decomposed
-References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com>
-        <874l71fxmg.fsf@evledraar.gmail.com>
-        <20190413214736.GD15936@szeder.dev>
-        <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com>
-        <87ef63ezt9.fsf@igel.home>
-        <008101d4f3db$56c20410$04460c30$@nexbridge.com>
-Date:   Tue, 16 Apr 2019 13:24:49 +0900
-In-Reply-To: <008101d4f3db$56c20410$04460c30$@nexbridge.com> (Randall
-        S. Becker's message of "Mon, 15 Apr 2019 18:34:02 -0400")
-Message-ID: <xmqqsguipofi.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v5 3/5] rebase: fast-forward --onto in more cases
+References: <cover.1554500051.git.liu.denton@gmail.com>
+        <cover.1555366891.git.liu.denton@gmail.com>
+        <ec55da07191e7f0a1d31342053c1496405ba7d3a.1555366891.git.liu.denton@gmail.com>
+Date:   Tue, 16 Apr 2019 15:26:17 +0900
+In-Reply-To: <ec55da07191e7f0a1d31342053c1496405ba7d3a.1555366891.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 15 Apr 2019 15:29:24 -0700")
+Message-ID: <xmqqo956pit2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,33 +73,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> As a suggestion, with people who know how to escape stuff properly
-> (or not), perhaps we can select the alternate behaviour explicitly
-> using a core.sshIgnoreEscape=true/false option. Thoughts on that?
+> Before, when we had the following graph,
+>
+> 	A---B---C (master)
+> 	    \
+> 	     D (side)
 
-The semantics of prepare_shell_cmd() is, regardless of any "funny
-characters" on the command line, the spawned command MUST behave AS
-IF it was run via the shell.  The strcspn() trick is there merely as
-a low-level optimization so that we do not have to say
+This is minor, but comparing the above with below
 
-	sh -c a-single-token
+> 		    F---G topic
+> 		   /
+> 	  A---B---C---D---E master
 
-which would be exactly the same as running
+you'll notice that branches growing downwards in your picture (this
+applies also to an illustration in your tests) are off by one
+column.
+		  D
+                 /
+	A---B---C
+                 \
+                  E
 
-	a-single-token
+> @@ -1682,13 +1699,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  
+>  	/*
+>  	 * Check if we are already based on onto with linear history,
+> -	 * but this should be done only when upstream and onto are the same
+> -	 * and if this is not an interactive rebase.
+> +	 * but this should be done if this is not an interactive rebase.
+>  	 */
 
-The most typical use of that strcspn() trick is to ensure that
+Two issues.
 
-	GIT_SSH_COMMAND="the-command and its arguments"
+ - One is shared with the original (i.e. not a problem with this
+   patch), but what "this" refers to is not what has already been
+   stated in the sentence.  We check, to see if we are in a
+   situation where a specific optimization is possible.  But this
+   (== optimization to fast-forward without actually replaying the
+   commit's changes) should be done only under such and such
+   condition.
 
-would not attempt to run a command with a long and funny name
-"the-command and its arguments" somewhere on the $PATH without any
-parameter, and instead run
+ - The other is more grave. "should be done if this is not an
+   interactive rebase" drops "only" from "only if" in the original,
+   which changes the meaning of the sentence (it can be read as "we
+   check if we can optimize, but the optimization should be done for
+   rebase-i regardless of the result of that said check", which is
+   not what you mean).
 
-	sh -c "the-command and its arguments"
+Perhaps
 
-i.e. run the "the-command" with three parameters (and perhaps more
-built-in parameters prepared by the caller in the ssh connection
-codepath).
+	Check if we are ..., in which case we could fast-forward
+	without replacing the commits with new commits recreated by
+	replaying their changes.  This optimization must not be done
+	if this is an interactive rebase.
+
