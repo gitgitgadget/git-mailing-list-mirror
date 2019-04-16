@@ -2,106 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF2820248
-	for <e@80x24.org>; Tue, 16 Apr 2019 15:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC53420248
+	for <e@80x24.org>; Tue, 16 Apr 2019 15:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728819AbfDPP1q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 11:27:46 -0400
-Received: from mail-qt1-f173.google.com ([209.85.160.173]:43039 "EHLO
-        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726753AbfDPP1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 11:27:45 -0400
-Received: by mail-qt1-f173.google.com with SMTP id v32so23707852qtc.10
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 08:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=RirCq7udz4Mtgx1wCRWbqSAp/RZs+tq3ceJGITrxEDs=;
-        b=NWa1urVffpqxxjgHygJtm6ExSgDr1QFjhob1xLlUFkNEqe6Yi37d2Dueu0bjuNYXPm
-         VV/rkT735OWdMCxNIaAlWiUiLvORfKYZbMx+mSDPe6xg+m4BBsUJWnAqtAn+RcRS3YQo
-         vBW5j3u8flDxGbBjjKWPwmVoFs1xO2MQ667dBEWUCO2LMvE0ljjJUcMGaMD8RJESgHg1
-         QW5HI6dnPGW1YIUHjpbSQNInLKzK37m5B0pHOeqDc1S2sUZ4szqw/auX20icIIOyOUZ5
-         jnc1pHo0w94XJyPfEOJNxZ0rI5ly1swa1ipAfp0ZyYYaMRoDN8F9/FXWBC2xp0GSvbOi
-         QeYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=RirCq7udz4Mtgx1wCRWbqSAp/RZs+tq3ceJGITrxEDs=;
-        b=HTRaFDDuXxd4HUkRrU6Voiy0jNFDRacnB2EtL3NrAdqjMi3OZ/KOxfqK958zqhpzf2
-         SsdAXGC1voTn9PrhvhGC7zTEcXXpTFXdqdol72wMN420WLIhsHFj28twD9f34Pm4EnZn
-         V7guxrRNRTmdOhgmrSIaoMF10Xrq6DqEUj/HSQ9Xlj97GzTRuv+iyM+mNjgOABxedgeg
-         MQLcz9zJsRkte9n14OHHQtEAas1Vm6DTMKF0TeQyoMDDFx/NSRa77aMaGmehmywpmhcW
-         UKo3nnd8j+qBpbtmnTLqfq5dkfmB1fYKM2TbQArxirJdl7NczM/d18cmvIx3DOHvV+Tc
-         UmPg==
-X-Gm-Message-State: APjAAAWXx5y8mV1MwmZa1EtLXxda9W2w7T6rkabEyx0IncJbS36tvObw
-        LEmUWYddd4EH1hC5WCDvLEZczpf3
-X-Google-Smtp-Source: APXvYqz8ykgZAfjIxKA849Ng/Ov2HlBap1Mif6xB+R8UETbOTE2RAPJ7lN59oygo4CceI4qUgoLo2Q==
-X-Received: by 2002:a0c:b3c4:: with SMTP id b4mr68695324qvf.176.1555428464036;
-        Tue, 16 Apr 2019 08:27:44 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id x2sm26843265qkj.59.2019.04.16.08.27.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Apr 2019 08:27:41 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Apr 2019, #03; Tue, 16)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <a65a261d-a8dd-7610-bcaf-47071df1d659@gmail.com>
-Date:   Tue, 16 Apr 2019 11:27:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1729855AbfDPPoo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 11:44:44 -0400
+Received: from mail.cmpwn.com ([45.56.77.53]:45172 "EHLO mail.cmpwn.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726860AbfDPPon (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 11:44:43 -0400
+X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Apr 2019 11:44:43 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
+        t=1555429056; bh=S6fRXu3pNy81AP8YnJr232ocum7dHhF77qBsEKRLRv4=;
+        h=Date:From:To:Subject;
+        b=FKqK6GhL0nQ/s2ogXUYlC+1yMOWbGlbaRU5pjcg7xaGa52zeJl4v+2FWM3yH0SdwZ
+         UsaedtnkuRwFxMz41FyZaXj1i/ch9+hcOGcIf2y/XL+R97vMRdjiNP06C+n54EYxfv
+         I3+ZKCRiQCt7k+++3TkRhsxhigHV10pCULrPj3B0=
+Date:   Tue, 16 Apr 2019 11:37:10 -0400
+From:   Drew DeVault <sir@cmpwn.com>
+To:     git@vger.kernel.org
+Subject: Generating a todo file for non-interactive rebasing
+Message-ID: <20190416153709.GA19000@homura.localdomain>
 MIME-Version: 1.0
-In-Reply-To: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GNU:  Terry Pratchett
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hiya!
 
+Whenever I do a particularly long rebase on a branch, sorting out
+conflicts from upstream, I find that it's often useful to have the
+additional context that you get during an interactive rebase, such as
+recent commands run, commands planned to run, and so on, to get a better
+idea of where I'm at during the rebase. These show when you run `git
+status` during an interactive rebase.
 
-On 4/16/2019 9:19 AM, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> Yet another batch of ~30 topics have graduated to 'master', and
-> 'next' has also gained ~25 topics.  We may want to start merging
-> down fixes to 'maint' for a 2.21.1.
-> 
-> You can find the changes described here in the integration branches
-> of the repositories listed at
-> 
->      http://git-blame.blogspot.com/p/git-public-repositories.html
-> 
-> --------------------------------------------------
+However, the code that generates this report relies on a todo list being
+generated in the rebase state directory. A todo list which consists only
+of "pick" commands is functionally equivalent to a non-interactive
+rebase, the only difference being that the editor isn't shown to the
+user.
 
-<snip>
+Is there any reason not to refactor the rebase command to always
+generate a todo list? This would simplify the internals and provide more
+context to the user during hairy rebases. It might also be useful to run
+--edit-todo if you realize your rebase strategy needs to change partway
+through a rebase which was initially non-interactive.
 
-> * bp/post-index-change-hook (2019-02-15) 1 commit
->    (merged to 'next' on 2019-03-11 at cb96d1d7c4)
->   + read-cache: add post-index-change hook
-> 
->   Originally merged to 'next' on 2019-02-23
-> 
->   A new hook "post-index-change" is called when the on-disk index
->   file changes, which can help e.g. a virtualized working tree
->   implementation.
-> 
->   Will cook in 'next'.
-> 
-> 
+Note: I'm a non-subscriber, please Cc me on replies.
 
-Anything in particular this is waiting for?  I'm unaware of any requests 
-for a re-roll. If something is needed, please let me know.
+-- 
+Drew DeVault
