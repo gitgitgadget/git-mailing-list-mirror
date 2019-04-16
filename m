@@ -2,159 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD8EF20248
-	for <e@80x24.org>; Tue, 16 Apr 2019 21:48:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41CDF20248
+	for <e@80x24.org>; Tue, 16 Apr 2019 21:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730360AbfDPVsp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 17:48:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60392 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728140AbfDPVsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 17:48:45 -0400
-Received: (qmail 10125 invoked by uid 109); 16 Apr 2019 21:48:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 16 Apr 2019 21:48:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15421 invoked by uid 111); 16 Apr 2019 21:49:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 16 Apr 2019 17:49:15 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2019 17:48:43 -0400
-Date:   Tue, 16 Apr 2019 17:48:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     Damien Robert <damien.olivier.robert@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 1/1] Fix %(push:track) in ref-filter
-Message-ID: <20190416214842.GA21429@sigill.intra.peff.net>
-References: <20190415210416.7525-1-damien.olivier.robert+git@gmail.com>
- <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
- <20190415220108.GD28128@sigill.intra.peff.net>
- <20190416123944.vtoremaitywtmkhj@mithrim>
+        id S1730360AbfDPV7u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 17:59:50 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37059 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727136AbfDPV7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 17:59:49 -0400
+Received: by mail-wr1-f65.google.com with SMTP id w10so29187255wrm.4
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 14:59:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Ubwrm5Uk4EXRsu7b7UMDUBl0JWo8CPVXQeDL6h4uBbI=;
+        b=g2rmKYvIB5o/mWDwVBXYx9lUq1Sr4o7heT3l0a7XifgMLlHh6BMpMLGaGepfaJjvKq
+         E7Nz7adcQ9xzMy8/HKy2JwOSVbbouGy+5/mWMe5CignKZPX4FdtQr2/Jd+lOsW/cz0k7
+         lb+Oaywgdh4mzrVDikV15qe5sUDR/RQp29hInuH8a370X4GhJx4sI4TLMRV+pXY6CNeU
+         RD7uTuGSV2grs1t2Uhv6P8o+i0XlPBSJ4Zf9FDJ1Bp4X4Nw5ZIKdjLZsxQGrmyPzvEhu
+         gUAfxnzpbX4ycrEFLXslXMORBRcxDWjPTRxuHw1fRqD9D1y9612Pcmnh/iEsz5NNT/1n
+         AzFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ubwrm5Uk4EXRsu7b7UMDUBl0JWo8CPVXQeDL6h4uBbI=;
+        b=F2WTVMj58fBfnWZKQSUJHJJjzb9xRgc20fGpnBv2ZhnB0VTwdnBWwsn+U0eVl1HJ8s
+         JoRhmF4KSQZUvQmxRY0C9YGHPTrY7KNJGMHGuu+p06jSQi8xherWJzBLP4YyB5j7swJ3
+         M69Z2v0cAt12rqjv9EEOv5Iis9fFDuIfLFS+95J0/SAVSVGjlcl2Ky2bM3zLIvi5+lnz
+         vZpz6vSwDDjdyuWtj9CO01InenETRGi/mXXDj5qmSWD2jJ97pjIhbYikxE331IPmL9es
+         ksUXA8uJ86KNohYOj2/yskF039laXmlh8l3GTtUcmU+OZf2RKfAYFmF1L6wgvoEzHmy+
+         /ozw==
+X-Gm-Message-State: APjAAAXFaIGDUmorJHBtd50RIPvt0PLYENuOlEDbNntYbGpevnV4ijSq
+        CuScia2oc0MRrHNzja95eRVAf8oM
+X-Google-Smtp-Source: APXvYqy99rkLBYgVZz7AlOETAHSztsI74kDhsjzPHLNY/y4iJVaOhHmhL6swvpGGkZT95Rxzc7QXhg==
+X-Received: by 2002:adf:e487:: with SMTP id i7mr25039291wrm.264.1555451988261;
+        Tue, 16 Apr 2019 14:59:48 -0700 (PDT)
+Received: from localhost ([2.25.81.3])
+        by smtp.gmail.com with ESMTPSA id m13sm474025wmg.42.2019.04.16.14.59.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 16 Apr 2019 14:59:46 -0700 (PDT)
+Date:   Tue, 16 Apr 2019 22:59:45 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Christian Vetter <christian@rasenplanscher.info>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] git stash --keep-index undeletes file
+Message-ID: <20190416215945.GV16414@hank.intra.tgummerer.com>
+References: <1555437849815.60450@rasenplanscher.info>
+ <20190416184816.GU16414@hank.intra.tgummerer.com>
+ <1555444649793.14863@rasenplanscher.info>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190416123944.vtoremaitywtmkhj@mithrim>
+In-Reply-To: <1555444649793.14863@rasenplanscher.info>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 16, 2019 at 02:39:45PM +0200, Damien Robert wrote:
+[please don't top post on this list]
 
-> > Or perhaps it argues for just giving access to the more generic stat_*
-> > function, and letting callers pass in a flag for push vs upstream (and
-> > either leaving stat_tracking_info() as a wrapper, or just updating its
-> > few callers).
+On 04/16, Christian Vetter wrote:
+> Thank you, Thomas!
 > 
-> So I went ahead with modifying `stat_tracking_info` to accept a 'for_push'
-> flag, and updated the few callers. This means that `stat_compare_info` is
-> only used by `stat_tracking_info` so I could reinline it, but I guess it
-> could still be useful latter.
+> Now that you explained this, I do understand the behaviour, and agree that it is correct.
+> While this seems to be clear with a deeper understanding of git than I have,
+> it might be a good idea to specifically point this out in the docs in the context of `--keep-index`.
+> That would have helped me.
 
-Reading this paragraph, my gut reaction was to say that it should stay
-as a single function. But actually looking at the code, I think it is a
-bit nicer to separate out "compare these two branches" from "figure out
-which branches to compare".
+On second thought, I might have been too quick to jump to conclusions
+here, and might have misunderstood --keep-index myself.  I think what
+you described here is actually a bug, although it's a pretty long
+standing one.  So I'm a bit surprised nobody noticed it before.
 
-The name "compare_info" is a bit vague. Perhaps "stat_branch_pair" or
-something would be more descriptive.
+Thanks for reporting it.
 
-> > Also, since this is an internal helper function for the file, we should
-> > mark it as static.
+> This does, however, bring me back to a related issue by which I stumbled across this:
+> If, in the given scenario, I run `git stash apply`, the file is not removed. `git status` still outputs this:
+> > On branch master
+> > Changes to be committed:
+> >   (use "git reset HEAD <file>..." to unstage)
+> >
+> >         deleted:    file
+> >
+> > Untracked files:
+> >   (use "git add <file>..." to include in what will be committed)
+> >
+> >         file
 > 
-> Yes. In fact in the first version of the patch I would call
-> `stat_compare_info` directly in `ref_filter.c` so I needed to export it in
-> `remote.h`, and then when I changed the patch I forgot to make it static.
+> Can you explain that behaviour as well?
+> The way I understand it, `git stash push --keep-index; git stash apply` should result in zero change to the output of `git status`.
+> What am I not getting?
 
-Heh. I wondered if that might have been the reason.
+Your interpretation of what should happen sounds like the right
+behaviour here, and what actually happens seems incorrect.  I don't
+have time to dig into this more right now though unfortunately.
 
-> > Thanks for working on this.
+> ________________________________________
+> From: Thomas Gummerer <t.gummerer@gmail.com>
+> Sent: Tuesday, April 16, 2019 20:48
+> To: Christian Vetter
+> Cc: git@vger.kernel.org
+> Subject: Re: [BUG] git stash --keep-index undeletes file
 > 
-> You are welcome. What's the standard way to acknowledge your help in
-> the Foo-By: trailers? I did not put a Reviewed-By: because you reviewed the
-> previous patch, not the current one :)
-
-Right, Reviewed-by wouldn't be quite right. As Christian noted,
-Helped-by can be used for this (but I am also fine without credit;
-suggestions are a normal part of review).
-
-Overall the patch looks good to me. I have a few extremely minor nits:
-
-> Subject: [v2 PATCH 1/1] Fix %(push:track) in ref-filter
-
-We'd usually say "area: do something" here, and it's nice to stay
-consistent so that reading --oneline output is easy. And it's nice if we
-can avoid vague terms like "fix". Maybe:
-
- ref-filter: use correct branch for %(push:track)
-
-or something?
-
-> This bug was not detected in t/t6300-for-each-ref.sh because in the test
-> for push:track, both the upstream and the push branches were behind by 1
-> from the local branch. Change the test so that the upstream branch is
-> behind by 1 while the push branch is ahead by 1. This allows us to test
-> that %(push:track) refer to the correct branch.
-
-s/refer/&s/
-
-> This change the expected value of some following tests (by introducing
-> new references), so update them too.
-
-s/change/&s/
-
->  	if (abf != AHEAD_BEHIND_FULL)
-> -		BUG("stat_tracking_info: invalid abf '%d'", abf);
-> +		BUG("stat_compare_info: invalid abf '%d'", abf);
-
-If we do the name change I mentioned above, don't forger this line. :)
-
-> +int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
-> +		       const char **upstream_name, int for_push,
-> +		       enum ahead_behind_flags abf)
-> +{
-
-Is it worth changing "upstream_name" since it sometimes is now not
-%(upstream)?
-
-> @@ -1977,7 +2003,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  	char *base;
->  	int upstream_is_gone = 0;
->  
-> -	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, abf);
-> +	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-
-I was tempted to suggest doing this refactor as a separate patch, so
-that we'd see less noise in the diff. But in fact half of the callers
-we'd have to touch are ones that would be modified to use for_push
-anyway. So I think it makes sense to just keep it all together as a
-single unit.
-
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> [...]
-> @@ -594,6 +603,7 @@ $(git rev-parse refs/tags/bogo) <committer@example.com> refs/tags/bogo
->  $(git rev-parse refs/tags/master) <committer@example.com> refs/tags/master
->  EOF
->  
-> +
->  test_expect_success 'Verify sort with multiple keys' '
->  	git for-each-ref --format="%(objectname) %(taggeremail) %(refname)" --sort=objectname --sort=taggeremail \
->  		refs/tags/bogo refs/tags/master > actual &&
-
-Leftover stray whitespace?
-
-For any one of those nits I'd probably say it was not worth a re-roll
-(and the maintainer could adjust them when he picks up the patch).  But
-there are just enough that it's probably worth making his life easier
-with a v3.
-
-You can put my Reviewed-by on it, too. :)
-
--Peff
+> On 04/16, Christian Vetter wrote:
+> > Steps to reproduce
+> > + mkdir git-stash-test
+> > + cd git-stash-test
+> > + git init
+> > + touch file
+> > + git add file
+> > + git commit -m init
+> > + git rm file
+> > + git stash push --keep-index
+> >
+> >
+> > Result:
+> > `git status` gives this output:
+> > > On branch master
+> > > Changes to be committed:
+> > >   (use "git reset HEAD <file>..." to unstage)
+> > >
+> > >         deleted:    file
+> > >
+> > > Untracked files:
+> > >   (use "git add <file>..." to include in what will be committed)
+> > >
+> > >         file
+> 
+> I think this is the correct result.  --keep-index keeps the changes
+> that are in the index, in this example that 'file' is deleted, but
+> restores the working tree to 'HEAD', where 'file' existed.  It's now
+> showing up as untracked because Git doesn't know about it.
+> 
+> Similarly if you just did 'git stash push' without --keep-index,
+> 'file' would be restored in your working tree, but 'git status' would
+> report the working tree as clean because it would also be restored in
+> the index.
+> 
+> > Expected:
+> > `git status` gives this output:
+> > > On branch master
+> > > Changes to be committed:
+> > >   (use "git reset HEAD <file>..." to unstage)
+> > >
+> > >         deleted:    file
+> 
+> This is what you get before 'git stash push --keep-index'.  Do you
+> think the documentation on '--keep-index' is unclear, and could be
+> improved?  Or why did you think that this is the correct output?
+> 
+> > Verified on:
+> > + Windows 10, git version 2.21.0.windows.1
+> > + Ubuntu 14.04, git version 2.21.0
