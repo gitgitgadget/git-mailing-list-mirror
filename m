@@ -2,285 +2,408 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBF8D20248
-	for <e@80x24.org>; Tue, 16 Apr 2019 10:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6A5920248
+	for <e@80x24.org>; Tue, 16 Apr 2019 12:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729030AbfDPKSz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 06:18:55 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35189 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbfDPKSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 06:18:53 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y197so12777838wmd.0
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 03:18:52 -0700 (PDT)
+        id S1728155AbfDPMjt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 08:39:49 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35674 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726907AbfDPMjt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 08:39:49 -0400
+Received: by mail-wr1-f65.google.com with SMTP id w1so26871820wrp.2
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 05:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=u7kCqJ9qNi3xnazzAy8usIS3JjkvlHaD3GHraxX3K3E=;
-        b=BCuhf1rfEVOpaBHcqEDxaP+g7uHmzLhAGDqpu3CXncfZKBZQGP2D9MAo7dNCZa/xu9
-         gzmlDhSLzTVH/q6I/l0VfUBCg2VXTzkVFoxgjZXjhrpTAxSrWg+ZEsWSO/+lKo2LRlQT
-         3WARCD2ck9vGLvCURODXd8rxag4kwrhvvqxsaNrGV8AkUIIGQmHWfAtIK2ScJICSbh2S
-         RKyNJ/If+B5YLaHQGHdczwVYgrKeuLjjBlTje8MdchAOSiUT0ITsMTkd6WqBBCc2vXEb
-         cFvS/McIjx+sApbPwzqg74tQCzgt0bY4OzVDSM57bhox7jZ7OvvLXIbrtEqp8CdIqk4s
-         9zow==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=jxgHTC35I3bgzeBQSbQ9flxWjdFeL44UBmhyEXTulHc=;
+        b=BpLHz4snGksZO9KO5ayAAN0X+qUd7JBrXHy7qvHFo7zzQZg93InETfhB3YeREmh9cQ
+         qW1RSpmFF0r20O81ZjbexTiZlrZjMXJ2gaC08S8T/UuSOAqGDvNAxfGqc27OzgPGgvXE
+         jRpjagxeTvmBqK/E/TNWY6NgIAmJcpTZDHvV3/PYbby70yzhZ6vytFQs8EV4aXVxwl0S
+         5R/ctote5NbL/yHDWzI0aH77yKBVj/WUhj+hk8BplUg7Jqko2oTb8OvaeQQU3jTdw5UF
+         g3pkNCqrOS36MAXIudoS06cfQCMWnwsbeUblJEqfx1q58iJ8yOIMmWOrhzj1ya9TewM1
+         iRZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=u7kCqJ9qNi3xnazzAy8usIS3JjkvlHaD3GHraxX3K3E=;
-        b=BWVRzop++9jZGyTh79DjVgea+aIbJ5tOpbbjhIOVJYHBvLXTixXrOQeuP81oB3dM1S
-         byucnrC4/uv8NJuSXxA9BOntwntmWHbq9TzIvas5+f1dVBk/decT9KJy6THBedmKu7Y9
-         nB2bUeWa4b8SROWkjCjmxS2kWisv5OJ3EDCTGilOaflC5NPJiEm7Ooo+8l43XWJXD6ya
-         AQnj14BTiB4zVx0k6H/ajBoUddtd/xqxqEPR7wkk84PSuqTal+O9eUTg8bm/M0mT2wjU
-         wi747H8AUGwhr5KqhlWLyL2YwH/rRi47feI0DysNMDhjIXFDKEkU+yfg3hvbriWNCYf2
-         buWw==
-X-Gm-Message-State: APjAAAUN7HAnV/MN+Tcz6YGjeuyNe0sRsY8CXuI5nhW88SMpRW5toBSE
-        ysoyA1A6U1SYkM78BpzAtYs0pABfqoE=
-X-Google-Smtp-Source: APXvYqyV+e15bZgTCCGd79K50nyYokutGKcSRmvAlYryzOu+B5QcJkonHUowcek6rcVSVVmA5tkiGw==
-X-Received: by 2002:a1c:244:: with SMTP id 65mr26751359wmc.42.1555409931475;
-        Tue, 16 Apr 2019 03:18:51 -0700 (PDT)
-Received: from lindisfarne.localdomain (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id t74sm3220118wmt.3.2019.04.16.03.18.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Apr 2019 03:18:51 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 2/2] fix cherry-pick/revert status after commit
-Date:   Tue, 16 Apr 2019 11:18:42 +0100
-Message-Id: <20190416101842.16556-3-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190416101842.16556-1-phillip.wood123@gmail.com>
-References: <20190329163009.493-1-phillip.wood123@gmail.com>
- <20190416101842.16556-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=jxgHTC35I3bgzeBQSbQ9flxWjdFeL44UBmhyEXTulHc=;
+        b=c6GH8WIaVV6Ni5xY85XNdJL9nnR8HF+Chd/XDtwecB/DC2JPzzHYNUuEHJWqLEK1Us
+         gRwGoTInDcb+DHPw6gwxpTNkRVXAaSH4cHQVIQ4vfZLXSvBIPvOyj0aBVqs7ueLzuS54
+         t/S5TVbUQ5DbLf2Y3VjEtP9kO5QWasThpfAdgAxAeEi3ilV8YYapJM81GvooH4+/NT8U
+         Zqz+7jttbjSWF1Mz3qBLFNKHpJ+64kaP7I4Vxu9n7tPOW2Bt6YZHwpkjWWuttsV191Ke
+         d8CNTs5V5Mv/4HvRs8Qj6l2hsemQwV7Q+BmKWCAoGyPyxKB2QS6yah+uNL4KA10gSR1/
+         kmBQ==
+X-Gm-Message-State: APjAAAWP+Gh1uqP/06ED5hU3Qlj8ESYXlA4Kb0OYVNNDwKnTPKXVw71x
+        PcyOOy0LWzQqx7kwTkBIByI=
+X-Google-Smtp-Source: APXvYqxJKqxlsuPNoz8HZpOtjPEIXVzFbbtK6AWVsgY8I7B9wfAkZFdMUrklbdbXHiyQ1OFKPGaJQQ==
+X-Received: by 2002:a05:6000:1291:: with SMTP id f17mr4069170wrx.201.1555418386581;
+        Tue, 16 Apr 2019 05:39:46 -0700 (PDT)
+Received: from mithrim ([147.210.21.27])
+        by smtp.gmail.com with ESMTPSA id b134sm36697027wmd.26.2019.04.16.05.39.45
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 16 Apr 2019 05:39:45 -0700 (PDT)
+Date:   Tue, 16 Apr 2019 14:39:45 +0200
+From:   Damien Robert <damien.olivier.robert@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/1] Fix %(push:track) in ref-filter
+Message-ID: <20190416123944.vtoremaitywtmkhj@mithrim>
+References: <20190415210416.7525-1-damien.olivier.robert+git@gmail.com>
+ <20190415210416.7525-2-damien.olivier.robert+git@gmail.com>
+ <20190415220108.GD28128@sigill.intra.peff.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190415220108.GD28128@sigill.intra.peff.net>
+X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
+X-Start-Date: Tue, 16 Apr 2019 14:28:41 +0200
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+From Jeff King, Mon 15 Apr 2019 at 18:01:08 (-0400) :
+> > +		if ((atom->u.remote_ref.push ?
+> > +		     stat_push_info(branch, &num_ours, &num_theirs,
+> > +				    NULL, AHEAD_BEHIND_FULL) :
+> > +		     stat_tracking_info(branch, &num_ours, &num_theirs,
+> > +					NULL, AHEAD_BEHIND_FULL)) < 0) {
 
-If the user commits a conflict resolution using `git commit` in the
-middle of a sequence of cherry-picks/reverts then `git status` missed
-the fact that a cherry-pick/revert is still in progress.
+> I'm a big fan of the "?" operator, but this ternary-within-an-if might
+> be pushing even my boundaries of taste. :)
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+I knew I was pushing the limit of readability a bit here :)
+
+> All that said, we would need to do the exact same conditional for
+> ":trackshort", wouldn't we?
+
+Crap, you are right, I wanted to handle this case too but forgot :-(
+
+> The tests don't pick it up because the
+> symbol is still ">" for both branches (deja vu!). So it might be worth
+> not just having push be 2 ahead, but have it actually be behind instead
+> (or in addition to).
+
+Done in the new version.
+
+> Or perhaps it argues for just giving access to the more generic stat_*
+> function, and letting callers pass in a flag for push vs upstream (and
+> either leaving stat_tracking_info() as a wrapper, or just updating its
+> few callers).
+
+So I went ahead with modifying `stat_tracking_info` to accept a 'for_push'
+flag, and updated the few callers. This means that `stat_compare_info` is
+only used by `stat_tracking_info` so I could reinline it, but I guess it
+could still be useful latter.
+
+> 
+> > -int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+> > -		       const char **upstream_name, enum ahead_behind_flags abf)
+> > +
+> > +int stat_compare_info(const char **branch_name, const char **base,
+> > +		      int *num_ours, int *num_theirs,
+> > +		      enum ahead_behind_flags abf)
+> 
+> In the original, we need a pointer-to-pointer for upstream_name, because
+> we return the string as an out-parameter. But here we're just taking two
+> strings as input. We can drop the extra layer of indirection, like the
+> patch below.
+
+Good catch, done.
+
+> Also, since this is an internal helper function for the file, we should
+> mark it as static.
+
+Yes. In fact in the first version of the patch I would call
+`stat_compare_info` directly in `ref_filter.c` so I needed to export it in
+`remote.h`, and then when I changed the patch I forgot to make it static.
+
+> Other than that, the patch looked quite reasonable. I didn't dig too far
+> into the ripple effects of the test changes, since I think we'll end up
+> changing them again to make sure ":trackshort" is distinct.
+
+There are now less impactful than before because the master branch in the
+test refers to the same commit as before; there is just a new commit for the
+'myfork' remote branch.
+
+> Thanks for working on this.
+
+You are welcome. What's the standard way to acknowledge your help in
+the Foo-By: trailers? I did not put a Reviewed-By: because you reviewed the
+previous patch, not the current one :)
+
+-- 
+Damien Robert
+http://www.normalesup.org/~robert/pro
+
+---- >8 -----
+From: Damien Robert <damien.olivier.robert+git@gmail.com>
+Date: Tue, 16 Apr 2019 14:16:46 +0200
+Subject: [v2 PATCH 1/1] Fix %(push:track) in ref-filter
+
+In ref-filter.c, when processing the atom %(push:track), the
+ahead/behind values are computed using `stat_tracking_info` which refers
+to the upstream branch.
+
+Fix that by introducing a new flag `for_push` in `stat_tracking_info`
+in remote.c, which does the same thing but for the push branch.
+Update the few callers of `stat_tracking_info` to handle this flag. This
+ensure that whenever we use this function in the future, we are careful
+to specify is this should apply to the upstream or the push branch.
+
+This bug was not detected in t/t6300-for-each-ref.sh because in the test
+for push:track, both the upstream and the push branches were behind by 1
+from the local branch. Change the test so that the upstream branch is
+behind by 1 while the push branch is ahead by 1. This allows us to test
+that %(push:track) refer to the correct branch.
+
+This change the expected value of some following tests (by introducing
+new references), so update them too.
+
+Signed-off-by: Damien Robert <damien.olivier.robert+git@gmail.com>
 ---
- sequencer.c            | 35 +++++++++++++++++++++++++++++++++++
- sequencer.h            |  2 ++
- t/t7512-status-help.sh | 36 ++++++++++++++++++++++++++++++++++++
- wt-status.c            | 39 ++++++++++++++++++++++++++++++++++-----
- 4 files changed, 107 insertions(+), 5 deletions(-)
+ ref-filter.c            |  6 ++--
+ remote.c                | 68 ++++++++++++++++++++++++++++-------------
+ remote.h                |  3 +-
+ t/t6300-for-each-ref.sh | 14 +++++++--
+ wt-status.c             |  4 +--
+ 5 files changed, 67 insertions(+), 28 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 7c7b8a07c4..c6a9a35422 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2142,6 +2142,41 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
- 	return !item->commit;
+diff --git a/ref-filter.c b/ref-filter.c
+index 3aca105307..31af81fb28 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1392,7 +1392,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		*s = show_ref(&atom->u.remote_ref.refname, refname);
+ 	else if (atom->u.remote_ref.option == RR_TRACK) {
+ 		if (stat_tracking_info(branch, &num_ours, &num_theirs,
+-				       NULL, AHEAD_BEHIND_FULL) < 0) {
++				       NULL, atom->u.remote_ref.push,
++				       AHEAD_BEHIND_FULL) < 0) {
+ 			*s = xstrdup(msgs.gone);
+ 		} else if (!num_ours && !num_theirs)
+ 			*s = xstrdup("");
+@@ -1410,7 +1411,8 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		}
+ 	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
+ 		if (stat_tracking_info(branch, &num_ours, &num_theirs,
+-				       NULL, AHEAD_BEHIND_FULL) < 0) {
++				       NULL, atom->u.remote_ref.push,
++				       AHEAD_BEHIND_FULL) < 0) {
+ 			*s = xstrdup("");
+ 			return;
+ 		}
+diff --git a/remote.c b/remote.c
+index 9cc3b07d21..e98c6f2a0a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1880,37 +1880,27 @@ int resolve_remote_symref(struct ref *ref, struct ref *list)
  }
  
-+int sequencer_get_last_command(struct repository *r, enum replay_action *action)
+ /*
+- * Lookup the upstream branch for the given branch and if present, optionally
+- * compute the commit ahead/behind values for the pair.
++ * Compute the commit ahead/behind values for the pair branch_name, base.
+  *
+  * If abf is AHEAD_BEHIND_FULL, compute the full ahead/behind and return the
+  * counts in *num_ours and *num_theirs.  If abf is AHEAD_BEHIND_QUICK, skip
+  * the (potentially expensive) a/b computation (*num_ours and *num_theirs are
+  * set to zero).
+  *
+- * The name of the upstream branch (or NULL if no upstream is defined) is
+- * returned via *upstream_name, if it is not itself NULL.
+- *
+- * Returns -1 if num_ours and num_theirs could not be filled in (e.g., no
+- * upstream defined, or ref does not exist).  Returns 0 if the commits are
+- * identical.  Returns 1 if commits are different.
++ * Returns -1 if num_ours and num_theirs could not be filled in (e.g., ref
++ * does not exist).  Returns 0 if the commits are identical.  Returns 1 if
++ * commits are different.
+  */
+-int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+-		       const char **upstream_name, enum ahead_behind_flags abf)
++
++static int stat_compare_info(const char *branch_name, const char *base,
++			     int *num_ours, int *num_theirs,
++			     enum ahead_behind_flags abf)
+ {
+ 	struct object_id oid;
+ 	struct commit *ours, *theirs;
+ 	struct rev_info revs;
+-	const char *base;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 
+-	/* Cannot stat unless we are marked to build on top of somebody else. */
+-	base = branch_get_upstream(branch, NULL);
+-	if (upstream_name)
+-		*upstream_name = base;
+-	if (!base)
+-		return -1;
+-
+ 	/* Cannot stat if what we used to build on no longer exists */
+ 	if (read_ref(base, &oid))
+ 		return -1;
+@@ -1918,7 +1908,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	if (!theirs)
+ 		return -1;
+ 
+-	if (read_ref(branch->refname, &oid))
++	if (read_ref(branch_name, &oid))
+ 		return -1;
+ 	ours = lookup_commit_reference(the_repository, &oid);
+ 	if (!ours)
+@@ -1932,7 +1922,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	if (abf == AHEAD_BEHIND_QUICK)
+ 		return 1;
+ 	if (abf != AHEAD_BEHIND_FULL)
+-		BUG("stat_tracking_info: invalid abf '%d'", abf);
++		BUG("stat_compare_info: invalid abf '%d'", abf);
+ 
+ 	/* Run "rev-list --left-right ours...theirs" internally... */
+ 	argv_array_push(&argv, ""); /* ignored */
+@@ -1966,6 +1956,42 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	return 1;
+ }
+ 
++/*
++ * Lookup the upstream branch for the given branch and if present, optionally
++ * compute the commit ahead/behind values for the pair.
++ *
++ * If abf is AHEAD_BEHIND_FULL, compute the full ahead/behind and return the
++ * counts in *num_ours and *num_theirs.  If abf is AHEAD_BEHIND_QUICK, skip
++ * the (potentially expensive) a/b computation (*num_ours and *num_theirs are
++ * set to zero).
++ *
++ * The name of the upstream branch (or NULL if no upstream is defined) is
++ * returned via *upstream_name, if it is not itself NULL.
++ *
++ * If for_push is true, then return the stats and name of the push branch
++ * rather than the upstream branch.
++ *
++ * Returns -1 if num_ours and num_theirs could not be filled in (e.g., no
++ * upstream defined, or ref does not exist).  Returns 0 if the commits are
++ * identical.  Returns 1 if commits are different.
++ */
++int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
++		       const char **upstream_name, int for_push,
++		       enum ahead_behind_flags abf)
 +{
-+	struct todo_item item;
-+	char *eol;
-+	const char *todo_file;
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = -1;
++	const char *base;
 +
-+	todo_file = git_path_todo_file();
-+	if (strbuf_read_file(&buf, todo_file, 0) < 0) {
-+		if (errno == ENOENT)
-+			return -1;
-+		else
-+			return error_errno("unable to open '%s'", todo_file);
-+	}
-+	eol = strchrnul(buf.buf, '\n');
-+	if (buf.buf != eol && eol[-1] == '\r')
-+		eol--; /* strip Carriage Return */
-+	if (parse_insn_line(r, &item, buf.buf, eol))
-+		goto fail;
-+	if (item.command == TODO_PICK)
-+		*action = REPLAY_PICK;
-+	else if (item.command == TODO_REVERT)
-+		*action = REPLAY_REVERT;
-+	else
-+		goto fail;
++	/* Cannot stat unless we are marked to build on top of somebody else. */
++	base = for_push ? branch_get_push(branch, NULL) :
++		branch_get_upstream(branch, NULL);
++	if (upstream_name)
++		*upstream_name = base;
++	if (!base)
++		return -1;
 +
-+	ret = 0;
-+
-+ fail:
-+	strbuf_release(&buf);
-+
-+	return ret;
++	return stat_compare_info(branch->refname, base, num_ours, num_theirs, abf);
 +}
 +
- static int parse_insn_buffer(struct repository *r, char *buf,
- 			     struct todo_list *todo_list)
- {
-diff --git a/sequencer.h b/sequencer.h
-index 6c7cf8d72f..c4b79165d3 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -145,3 +145,5 @@ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
- int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		      const char *onto, const char *orig_head);
- void sequencer_post_commit_cleanup(struct repository *r);
-+int sequencer_get_last_command(struct repository* r,
-+			       enum replay_action *action);
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 458608cc1e..c1eb72555d 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -780,6 +780,24 @@ EOF
- 	test_i18ncmp expected actual
- '
+ /*
+  * Return true when there is anything to report, otherwise false.
+  */
+@@ -1977,7 +2003,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 	char *base;
+ 	int upstream_is_gone = 0;
  
-+test_expect_success 'status when cherry-picking after committing conflict resolution' '
-+	git reset --hard cherry_branch &&
-+	test_when_finished "git cherry-pick --abort" &&
-+	test_must_fail git cherry-pick cherry_branch_second one_cherry &&
-+	echo end >main.txt &&
-+	git commit -a &&
-+	cat >expected <<EOF &&
-+On branch cherry_branch
-+Cherry-pick currently in progress.
-+  (run "git cherry-pick --continue" to continue)
-+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+-	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, abf);
++	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
+ 	if (sti < 0) {
+ 		if (!full_base)
+ 			return 0;
+diff --git a/remote.h b/remote.h
+index da53ad570b..0138b3fb98 100644
+--- a/remote.h
++++ b/remote.h
+@@ -253,7 +253,8 @@ enum ahead_behind_flags {
+ 
+ /* Reporting of tracking info */
+ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+-		       const char **upstream_name, enum ahead_behind_flags abf);
++		       const char **upstream_name, int for_push,
++		       enum ahead_behind_flags abf);
+ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			 enum ahead_behind_flags abf);
+ 
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 0ffd630713..836c985744 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -392,8 +392,15 @@ test_atom head upstream:track '[ahead 1]'
+ test_atom head upstream:trackshort '>'
+ test_atom head upstream:track,nobracket 'ahead 1'
+ test_atom head upstream:nobracket,track 'ahead 1'
+-test_atom head push:track '[ahead 1]'
+-test_atom head push:trackshort '>'
 +
-+nothing to commit (use -u to show untracked files)
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
++test_expect_success 'setup for push:track[short]' '
++	test_commit third &&
++	git update-ref refs/remotes/myfork/master master &&
++	git reset master~1
 +'
 +
- test_expect_success 'status showing detached at and from a tag' '
- 	test_commit atag tagging &&
- 	git checkout atag &&
-@@ -857,6 +875,24 @@ EOF
- 	test_i18ncmp expected actual
- '
++test_atom head push:track '[behind 1]'
++test_atom head push:trackshort '<'
  
-+test_expect_success 'status while reverting after committing conflict resolution' '
-+	test_when_finished "git revert --abort" &&
-+	git reset --hard new &&
-+	test_must_fail git revert old new &&
-+	echo reverted >to-revert.txt &&
-+	git commit -a &&
-+	cat >expected <<EOF &&
-+On branch master
-+Revert currently in progress.
-+  (run "git revert --continue" to continue)
-+  (use "git revert --abort" to cancel the revert operation)
+ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
+ 	test_must_fail git for-each-ref --format="%(refname:track)" 2>/dev/null &&
+@@ -420,8 +427,10 @@ test_expect_success 'Check for invalid refname format' '
+ test_expect_success 'set up color tests' '
+ 	cat >expected.color <<-EOF &&
+ 	$(git rev-parse --short refs/heads/master) <GREEN>master<RESET>
++	$(git rev-parse --short refs/remotes/myfork/master) <GREEN>myfork/master<RESET>
+ 	$(git rev-parse --short refs/remotes/origin/master) <GREEN>origin/master<RESET>
+ 	$(git rev-parse --short refs/tags/testtag) <GREEN>testtag<RESET>
++	$(git rev-parse --short refs/tags/third) <GREEN>third<RESET>
+ 	$(git rev-parse --short refs/tags/two) <GREEN>two<RESET>
+ 	EOF
+ 	sed "s/<[^>]*>//g" <expected.color >expected.bare &&
+@@ -594,6 +603,7 @@ $(git rev-parse refs/tags/bogo) <committer@example.com> refs/tags/bogo
+ $(git rev-parse refs/tags/master) <committer@example.com> refs/tags/master
+ EOF
+ 
 +
-+nothing to commit (use -u to show untracked files)
-+EOF
-+	git status --untracked-files=no >actual &&
-+	test_i18ncmp expected actual
-+'
-+
- test_expect_success 'prepare for different number of commits rebased' '
- 	git reset --hard master &&
- 	git checkout -b several_commits &&
+ test_expect_success 'Verify sort with multiple keys' '
+ 	git for-each-ref --format="%(objectname) %(taggeremail) %(refname)" --sort=objectname --sort=taggeremail \
+ 		refs/tags/bogo refs/tags/master > actual &&
 diff --git a/wt-status.c b/wt-status.c
-index 1f564b12d2..1dbb4d949c 100644
+index 445a36204a..5a7ec2cf99 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -17,6 +17,7 @@
- #include "utf8.h"
- #include "worktree.h"
- #include "lockfile.h"
-+#include "sequencer.h"
+@@ -1851,7 +1851,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
  
- static const char cut_line[] =
- "------------------------ >8 ------------------------\n";
-@@ -1369,12 +1370,22 @@ static void show_rebase_in_progress(struct wt_status *s,
- static void show_cherry_pick_in_progress(struct wt_status *s,
- 					 const char *color)
- {
--	status_printf_ln(s, color, _("You are currently cherry-picking commit %s."),
--			find_unique_abbrev(&s->state.cherry_pick_head_oid, DEFAULT_ABBREV));
-+	if (is_null_oid(&s->state.cherry_pick_head_oid))
-+		status_printf_ln(s, color,
-+			_("Cherry-pick currently in progress."));
-+	else
-+		status_printf_ln(s, color,
-+			_("You are currently cherry-picking commit %s."),
-+			find_unique_abbrev(&s->state.cherry_pick_head_oid,
-+					   DEFAULT_ABBREV));
-+
- 	if (s->hints) {
- 		if (has_unmerged(s))
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and run \"git cherry-pick --continue\")"));
-+		else if (is_null_oid(&s->state.cherry_pick_head_oid))
-+			status_printf_ln(s, color,
-+				_("  (run \"git cherry-pick --continue\" to continue)"));
- 		else
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git cherry-pick --continue\")"));
-@@ -1387,12 +1398,21 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
- static void show_revert_in_progress(struct wt_status *s,
- 				    const char *color)
- {
--	status_printf_ln(s, color, _("You are currently reverting commit %s."),
--			 find_unique_abbrev(&s->state.revert_head_oid, DEFAULT_ABBREV));
-+	if (is_null_oid(&s->state.revert_head_oid))
-+		status_printf_ln(s, color,
-+			_("Revert currently in progress."));
-+	else
-+		status_printf_ln(s, color,
-+			_("You are currently reverting commit %s."),
-+			find_unique_abbrev(&s->state.revert_head_oid,
-+					   DEFAULT_ABBREV));
- 	if (s->hints) {
- 		if (has_unmerged(s))
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and run \"git revert --continue\")"));
-+		else if (is_null_oid(&s->state.revert_head_oid))
-+			status_printf_ln(s, color,
-+				_("  (run \"git revert --continue\" to continue)"));
- 		else
- 			status_printf_ln(s, color,
- 				_("  (all conflicts fixed: run \"git revert --continue\")"));
-@@ -1563,6 +1583,7 @@ void wt_status_get_state(struct repository *r,
- {
- 	struct stat st;
- 	struct object_id oid;
-+	enum replay_action action;
- 
- 	if (!stat(git_path_merge_head(r), &st)) {
- 		wt_status_check_rebase(NULL, state);
-@@ -1580,7 +1601,15 @@ void wt_status_get_state(struct repository *r,
- 		state->revert_in_progress = 1;
- 		oidcpy(&state->revert_head_oid, &oid);
- 	}
--
-+	if (!sequencer_get_last_command(r, &action)) {
-+		if (action == REPLAY_PICK) {
-+			state->cherry_pick_in_progress = 1;
-+			oidcpy(&state->cherry_pick_head_oid, &null_oid);
-+		} else {
-+			state->revert_in_progress = 1;
-+			oidcpy(&state->revert_head_oid, &null_oid);
-+		}
-+	}
- 	if (get_detached_from)
- 		wt_status_get_detached_from(r, state);
- }
+ 	sti = stat_tracking_info(branch, &num_ours, &num_theirs, &base,
+-				 s->ahead_behind_flags);
++				 0, s->ahead_behind_flags);
+ 	if (sti < 0) {
+ 		if (!base)
+ 			goto conclude;
+@@ -1990,7 +1990,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+ 		branch = branch_get(branch_name);
+ 		base = NULL;
+ 		ab_info = stat_tracking_info(branch, &nr_ahead, &nr_behind,
+-					     &base, s->ahead_behind_flags);
++					     &base, 0, s->ahead_behind_flags);
+ 		if (base) {
+ 			base = shorten_unambiguous_ref(base, 0);
+ 			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
 -- 
-2.21.0
+Patched on top of v2.21.0-313-ge35b8cb8e2 (git version 2.21.0)
 
