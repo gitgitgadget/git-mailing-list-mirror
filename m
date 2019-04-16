@@ -2,337 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 046CE20248
-	for <e@80x24.org>; Tue, 16 Apr 2019 16:33:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 436CA20248
+	for <e@80x24.org>; Tue, 16 Apr 2019 17:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730056AbfDPQdx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 12:33:53 -0400
-Received: from alioth.uberspace.de ([185.26.156.45]:50794 "EHLO
-        alioth.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729832AbfDPQdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 12:33:53 -0400
-Received: (qmail 11825 invoked from network); 16 Apr 2019 16:33:48 -0000
-Received: from localhost (HELO ?192.168.1.91?) (127.0.0.1)
-  by alioth.uberspace.de with SMTP; 16 Apr 2019 16:33:48 -0000
-Subject: Re: feature request: .blameignore
-To:     Barret Rhoden <brho@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-References: <130b0ffd-ed84-59ea-751b-cc59241cab1f@nerdocs.at>
- <20190415211519.GG1704@hank.intra.tgummerer.com>
- <5df051ce-007c-cc12-6f02-345b33480c0a@nerdocs.at>
- <7cb3e28d-2f4a-9fa8-d3c5-3b9184e53149@google.com>
-From:   =?UTF-8?Q?Christian_Gonz=c3=a1lez?= <christian.gonzalez@nerdocs.at>
-Message-ID: <48c54a71-ea00-82be-0844-9e1c76308e1e@nerdocs.at>
-Date:   Tue, 16 Apr 2019 18:33:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <7cb3e28d-2f4a-9fa8-d3c5-3b9184e53149@google.com>
-Content-Type: multipart/mixed;
- boundary="------------8E8DE3F1DD9FDDEE2333F2C5"
-Content-Language: en-US
+        id S1730191AbfDPRcd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 13:32:33 -0400
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:36117 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727180AbfDPRcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 13:32:32 -0400
+Received: by mail-vs1-f73.google.com with SMTP id l4so4481585vsq.3
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 10:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=erqQ031STWe3w6DNnKr45oB9I2D3uwxPB4hOeR1UMp0=;
+        b=lPCP0hcFQJ6NICa9JZ127V/8wxptAhYaoSvjQdHDr073shbC528rg9UurKtBDZJl7P
+         K0/SXZeg8YJD35xTtQ6SXQ94ldRoLjo9zJB6kZhWWG80dEI5wW3DCIVmOkjBklMxpG7x
+         6zDkkABSV9N5XG9Zd0pxG6/haEWr6NkFQWTOu75klnHAgvM/adyUecmrVsb5vPd2G9tM
+         +6qlUTuPx9SEkzcQmeyFKU7+/JIbn1qBShJ4jal9AHmFBKzq4iWt5MXaw2AgD1clw9/N
+         zhg0Uw7htTL1e0a3DPcvG44vR6V7pwkjWMPskrMslw5QylhH/mSl+tM0KJ6B8LglG8/O
+         eevg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=erqQ031STWe3w6DNnKr45oB9I2D3uwxPB4hOeR1UMp0=;
+        b=g/riJEpdwSadVFZu8i1H6Un2ZMdz6+wrpjx/DUkC/x4Tqlm2iLnR5m6bD6UNjlBJUM
+         2AuRyOmVWGVau2/0amEut1ACZq+97fX0OkXVuEy0nFia19jMOUzfr04BC1KT9WDNh/Dn
+         znWRXUuVj6El4ZRv2pQcID8GlD62v4VACA/5OiHgQrrP8P9/5vlK8eKOnk5HcRhDynVO
+         Y2lulaYpALo9zvbfZ04Eb2PXX5WoX+aVWcOlAtQa9HfzgQuS5dAimfuTyRoSjhOmzAuc
+         TWi/7omP7oud94KTMZNvc27Ux0e3mEINHHHPwYrXL0YA0KwUR6kNgArKOzj6ejpqILSt
+         pyEA==
+X-Gm-Message-State: APjAAAUAXF2rxzNOW9xG6S4k3jW4mJY+sGUuqPfsrs8wd2MFZseDP7fN
+        9Ys5fQdfxo1ZSjRfntwcw4xSjsEvXiBOiohZA9BP
+X-Google-Smtp-Source: APXvYqyxskYTNnSisOp4F7p/kfGE38bgCx2UDfilsVvUCm5rAhXOu+LOfxKlbUFsuOHyr/cZ/muc8oweA+uhTjzk7RuY
+X-Received: by 2002:a1f:970f:: with SMTP id z15mr842559vkd.25.1555435951824;
+ Tue, 16 Apr 2019 10:32:31 -0700 (PDT)
+Date:   Tue, 16 Apr 2019 10:32:28 -0700
+In-Reply-To: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190416173228.232980-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.21.0.314.g8007d49101.dirty
+Subject: jt/clone-server-option (was What's cooking in git.git (Apr 2019, #03;
+ Tue, 16))
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------8E8DE3F1DD9FDDEE2333F2C5
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-
-> I think there's a slight misunderstanding.=C2=A0 In the patchset that
-> Michael and I are working on, the user specifies whole commits
-> explicitly.=C2=A0 This is usually done with a file, but can also be don=
-e
-> from the command line for "one-off" ignored commits.=C2=A0 That sounds =
-like
-> what you want.
+> * jt/clone-server-option (2019-04-15) 4 commits
+>  - SQUASH???
+>  - clone: send server options when using protocol v2
+>  - SQUASH???
+>  - transport: die if server options are unsupported
+> 
+>  "git clone" learned a new --server-option option when talking over
+>  the protocol version 2.
 >
-> The heuristics come in when we try to pass blame for specific *lines*
-> that an ignored commit touched.=C2=A0 We pass the blame to the parent
-> commit, but we also want to match the lines to a specific line in the
-> parent commit.=C2=A0 That way we can find the 'right' ancestor commmit.=
-=C2=A0
-> We're not able to always identify the 'right' commit, hence the
-> heuristics.
->
-Oh - that's something different, yes - thank you for clarifying!
-Misunderstanding on my side, yes. This is a really great feature! Is
-there a vague time schedule for a release? Still this year?
+>  Getting there.
 
-Thanks!
+With the two "SQUASH???" commits, I think that all outstanding comments
+have been addressed, and Jonathan Nieder has given his Reviewed-by [1]
+[2].
 
-Christian
+[1] https://public-inbox.org/git/20190409204525.GA92879@google.com/
+[2] https://public-inbox.org/git/20190409204616.GB92879@google.com/
 
+I understand that the following references are not exhaustive (in
+particular, Szeder made some comments too), but I'll address them:
 
---------------8E8DE3F1DD9FDDEE2333F2C5
-Content-Type: application/pgp-keys;
- name="pEpkey.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="pEpkey.asc"
+>  cf. <xmqqk1g342xi.fsf@gitster-ct.c.googlers.com>
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+This was about (1) what happens if the given option is not understood by
+the protocol-v2-supporting other side, and (2) what happens if protocol
+v2 is not used.
 
-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
-83adDFJpi8hzO9ei5A+bqtU2FzXoKqyKBntzQoXnK5o0FeCsDH+8T/Cq2yfqah80
-yx/z+SFpRdf4jkDrugkfKO1vqat59MXVJw4TyMxEdQcCsC3/Mdfw9WHzOMAnly1a
-4UC4a7pzm0wM0X0yl7+yh4f0y2aiTePecPZwMPpZjnC8glI+NA5yaF5IMvlQlBt7
-VwMdd+HVwzGPxo1nEz5hImYOYVmhB9r2Ac+SWMYL2Sl5vgCxrdPPKH9BYrQyQ2hy
-aXN0aWFuIEdvbnphbGV6IDxjaHJpc3RpYW4uZ29uemFsZXpAbWVkd29yeC5hdD6J
-AlcEMAEKAEEWIQTxMdqEvgeiWLaxRV1O2gXTLakv+QUCWk1K2yMdIEVtYWlsIGFk
-cmVzc2VzIG5vdCB1c2VkIGFueSBtb3JlLgAKCRBO2gXTLakv+fzxD/9HFE16qL4P
-Rt8b5uv1woM0r3CxxFSO+ApmGTnY1+Mh1lMoxgj28jMApilOt2ghiQrFgu9Nw0RG
-+CiZM4brUpy2g2uDLpPzmDOs0a+HCjyoh2x4oT55D95ZbsoXse/6cTDSJQbeixZB
-FK+V1Fz66PjEF5gEYZ60i74iKJD/TdGXKRHKJjiAAfDaQQr9k7rqdq/ambveHKGI
-F8suSBx/d4HuxI6hzFMzWa6b4+4SyBZ073PJ0deBIpDxDW/yvRoGPCYlPumW56TU
-7bx/KPUZqVccdlkVHuR9qtcmrwYuN3u0obrFFZTknAyD0BSwX9LiOmQ70FlnbQB4
-P1JfY7eKu0WMm53oOPFACn5f3HrgzO7nVD7z6OKv26jQRhbhEEIlGZ34GLMbLiXs
-luYgk5MjlJQWHlnOHiyZrSRg1Bk7QZvyj1FXaN10QsGirqwGdazQPqDD4kdadV0I
-mxVJX5xhu9KOYvws2coPTxT4i1I9q2A3FdAmEK1N4xP20I6t0GEWjvcDOh5RfuiI
-w2AOgrAfW7+d+duGdwxoBqO2ycbC0AoA6EI9AzAJmzQnPxoCgEWOreRXB8TsuOJg
-PBPLU0+TuiVPqyzWmHDNmKXs21P9ZbXZq4s2a2q4tkxaWJAUAkqr/NgSj0N1qlHL
-CkFYqYQAzPIPSlCL6EdleAp85F0yTVd5bYkCOAQTAQIAIgIbAwYLCQgHAwIGFQgC
-CQoLBBYCAwECHgECF4AFAlZtMGIACgkQTtoF0y2pL/mLdxAAwrfsFp1YND0h0+Bo
-lGnh/7BKk5eRd8clbQOnHPT0IP2JV1QXwxfVcsByQ96q/Irw2NZJ/+46qejlZ4ad
-gMadjXWZmUxRmv1MfDmMx9BqhdvCaa2w8jkAWiVJgV7g8flQvSGBOSi7MFLc8yM+
-BFxQMyk6OC52+HmnUOikQgkVWpsItEwnxSgwsNdVqRtuEk8gVUR+xOXwdOMarEOz
-NiaKfny1iPAuSanIvVw7WF8N5OUUCt5CQ4MGeRDo+499M+7hP0d3ukiKbKLHcFNP
-ffuvlWdxFzsXMwpsIpaJymGcZzAR09LWzzzc6SeZAvGmc7vUqohGGUxEEe0tWiJj
-fIdU5Iw2PZdXh0w4lC18E/jSFKK30b61mcFVw/1IGOln5vctXJ3+Q7UEXypv9zaS
-xmHqwqQdfden6sm2uWZku9XxFmkaj9DJKJ0Hb4K3up8yWFIj7y9j6IE6s5fbKjwD
-7Xti6dJwVfFv1fi2K4ew+ihtj5CIMz4vCv+/z8sPxepOvoqUiacvc9kCjxTExcoP
-J28t+QwGzIXc607z7LjUfIyo1vF/0HaImunUEivztAHOtr5PN6MYkOBeDLBLWPw4
-Tklv+bN1G9jzJTMsgPW+17q/ImNBuDdBFguna6E//U7h1xDsYYtonUlqK1YGGsJK
-NWr6Y6VLwPtMcqBclBsX7WmnEJKJAjgEEwECACIFAlOqu54CGwMGCwkIBwMCBhUI
-AgkKCwQWAgMBAh4BAheAAAoJEE7aBdMtqS/5u+gP/jv1FcPwHBc8thLyqgnjA7m+
-5N/4k3RpMxTa9RbcGY3oRYZgAyqWf0cIZRniP2QeFnEMCa0mcwtBwHbNRXO5jGgY
-s0w/+kl5H8Y1mhH+0rAwcgy/PraUjD83A+PfnqyRQ87Cu169AwzLVOun/G4fZPe8
-yCG6ostBCKekEU9l1wno8opE7Y5FdNuDV7UsqhlkB68bSMEgDuUOGegdAhMBPUrG
-NkgnrVspzcOVx0JqsF2hpU+Bcf+WmAPvzB9Uh2YavXUACcN1z4wg3/g+WQ1bS/IJ
-o6DA1l6c/PkJ0CY6JfzywvHoV+E1ONVw37evG11N5IsNEDd4nsHcRT68Bo6dzoBM
-Sg55f1n/ECpu+3lgvXfKXtY3u9oehVrMpvS+hN9ncORsa6Y64dsJd94x8fmRreh5
-MnS6zsZiNpzHOFW8riiaYkRaXIisQNbl4Kux9KLdUn1aiKiR+AyWqOmqld/7pnwQ
-FKZfncAcwn+aTibx61NYVMwGrpP4aWOpxAzYLfnoDE/WtFWO7yz+Inw+kcKoIxn+
-pT4HYXn7wwUg6rB7Qk4evXhZaknQ/wReRu+OhRJ5dU0BVUBoL224Yoj7sh81hDVB
-KKTULGRCBlEet8GtF3OAthSVl7mHhUXvgB6dJCXMPgo++pvhWttJdQ3JvGZCeE71
-V1Op14SNYUmtz4VVtpIJiQI7BBMBAgAlAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIe
-AQIXgAUCU6q75gIZAQAKCRBO2gXTLakv+eIcD/9uMWIYpOD85Efkvs9UTRgieFZg
-GvgsbHk/6hsjF6O8gFcog38qM24PzaO2WqtGAMsfCPzW3N1MNPxe3x+f2S3EWAiq
-1NykMFjzf1OFkppO8eBNUFzEZU06xveA8Yz2A6HVAY4bdRvMNcXEIcIUgk0zh4lp
-IQQrQrAf16m5+W29mOUPIl+vaxZt7BErMDHTvO+YmlmGZnchhMYqi02rPwAepTsC
-4n5447PL/Pm4Tawc58oO+cMAvkTtXKZYqmTJcgWmR3eRqWtCrDT6PF+mpFxdZWgV
-dBtNNT92Ssg5MXhOAmej47bnXPVi+I+hcZwkrKMlivR2rnJqNYIBLLiDsiLHM4Jk
-fF+njU9LbZ67jJ5xL5EQ6xdTJl/VyMX9G+XRrVRnpIJo3KtNNhlRboyTgtaJVwuY
-XCGsaU92+yZpcVaQTa24RFmNDq4eoOWS8RNrmIDDj9oGVbDhma/F8wSJDWM0HN+E
-SYAzHP+diRgo5pOqXV8eS21W6mQkEgeo40yN3GvW0evfp+c7NBBhjGjNJBKbZLfP
-5SPWF/X/46EDa6gYzkBdfoI1+O1kamuUVxMEym7XB6BG0Ok9F28pJK3OGBmgyYN3
-vNQUZVknP5c1ST5q/CALHm/hQCCVbgdKfY0T3XRzmUC2TfYgcpT7e+Z5H/7FttFa
-txZCJ8b/jsANhfncwLQxQ2hyaXN0aWFuIEEuIFJlaXRlciA8Y2hyaXN0aWFuLnJl
-aXRlckBtZWR3b3J4LmF0PokCVwQwAQoAQRYhBPEx2oS+B6JYtrFFXU7aBdMtqS/5
-BQJaTUrbIx0gRW1haWwgYWRyZXNzZXMgbm90IHVzZWQgYW55IG1vcmUuAAoJEE7a
-BdMtqS/5iB8QAM8VpAZj24wDzXXp+QTRlsCs1tXqPYbJHqaeVeMai64RR17J+I7a
-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
-2hG2r1XLJqDiLPCdPDFl
-=3DHSGC
------END PGP PUBLIC KEY BLOCK-----
+For (2), I have made the client die upon Jonathan Nieder's suggestion,
+similar to what "git push" does when the other side does not support
+push options. For (1), I have documented (in Documentation/ and in the
+commit message) that handling of server options are server-specific,
+just like push options (which are just sent directly to hooks).
 
---------------8E8DE3F1DD9FDDEE2333F2C5--
+>  cf. <20190406115728.GB219876@google.com>
+
+This was about (1) giving an example of what a server option can be used
+for, (2) using NODUP instead of DUP, and (3) a long line. (2) and (3)
+have been changed. As for (1), I replied in [3] that since it is
+server-specific, I don't think I can give a meaningful example.
+
+[3] https://public-inbox.org/git/20190408171149.125872-1-jonathantanmy@google.com/
