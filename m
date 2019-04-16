@@ -2,66 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E736C20374
-	for <e@80x24.org>; Mon, 15 Apr 2019 22:34:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E74120248
+	for <e@80x24.org>; Tue, 16 Apr 2019 04:10:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727243AbfDOWeQ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 15 Apr 2019 18:34:16 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:20759 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbfDOWeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Apr 2019 18:34:16 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x3FMY9vL079218
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 15 Apr 2019 18:34:10 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Andreas Schwab'" <schwab@linux-m68k.org>
-Cc:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
-        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, <git@vger.kernel.org>,
-        "Bill Honaker" <bhonaker@xid.com>
-References: <000d01d4f237$5cf2dc10$16d89430$@nexbridge.com>     <874l71fxmg.fsf@evledraar.gmail.com>    <20190413214736.GD15936@szeder.dev>     <004d01d4f3c0$3ff358d0$bfda0a70$@nexbridge.com> <87ef63ezt9.fsf@igel.home>
-In-Reply-To: <87ef63ezt9.fsf@igel.home>
-Subject: RE: [BUG] GIT_SSH_COMMAND is not being decomposed
-Date:   Mon, 15 Apr 2019 18:34:02 -0400
-Message-ID: <008101d4f3db$56c20410$04460c30$@nexbridge.com>
+        id S1725808AbfDPEKk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 00:10:40 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38974 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725770AbfDPEKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 00:10:40 -0400
+Received: by mail-wm1-f65.google.com with SMTP id n25so23217883wmk.4
+        for <git@vger.kernel.org>; Mon, 15 Apr 2019 21:10:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=sZ4VdHBlsw97S+m0JQve9n/IBeragAZn3pzFY39oqT4=;
+        b=Ub9Z+mKSh+tk1/YgEb44Zvj85h4zUWeeArIHrGRATF9cJwREKWTP3Z+naCn0HIKXXD
+         SlDm/YcYgGH7vFNs/yxLEWeVzkXTuu2cVLSBuHPnLAypCV1XGuaVr5H5f6ltr3RAw8ke
+         Xjy1FpTWXXYaWSTYv1G+sCPpeT8F+TywY1VjO86QfCdHP2SYrMO6ZZbHovjl7uvggH1a
+         qby3tPuUPHRP7HY8UdRU4GM8L/IqowsOt86Sz3rzQmULEUIWPv64Op8jIzBZkcK3MZ0M
+         dNnJbd1pdGU8ZMPUchdz9tE2KLubIqdpQrxkYtol0TYhNxrTogNmtxNADjYeiYp3WlHl
+         CAFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=sZ4VdHBlsw97S+m0JQve9n/IBeragAZn3pzFY39oqT4=;
+        b=G+vH08TI1HLCNJAuU94DQAXL3fJY3zEsF8B6jH/4iD41SASdN04dNkWQTtIFavs29j
+         ASuzHkUkLdHQgqIP212QfWlWPkCC6l2RD9Q2is5BbYqlBtzl8RvVFVEKXV1NN/lvdwxq
+         LbYFiBB/nDr+QwdnvWnVAaNUAaHZ6yzHNiOyB11YEKdxvFNoDCczulALLuREf1qbHmbP
+         msbJONIaV7H/zaa+GZOsWlEu6DZVM7tY1gS0dwLuP47WTEoQsjUdZ8w/gZ1inMiHxI0g
+         /F02h0xAXq3ZinWqA/RfOjY5Qw1aMP1msk49gYkPu78MEG3ozkAXHJrCmX+jHdb2NBwf
+         puzg==
+X-Gm-Message-State: APjAAAXKHw5lslXDOriAcs6XNFMxkYPhFdMjg2CgOyW6uGG8bkZuzqvH
+        1RpNtu/eGsisLIfsXd/bp8w=
+X-Google-Smtp-Source: APXvYqw2MMa8Fx1PvsV/A2y7KTYyOfK1ICwc0aQ5mBrdzqsAo8Zs5c7cuDew8tHnNLaHBcsMmrKWUQ==
+X-Received: by 2002:a1c:4d02:: with SMTP id o2mr24558873wmh.134.1555387838389;
+        Mon, 15 Apr 2019 21:10:38 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id d14sm71660904wro.79.2019.04.15.21.10.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Apr 2019 21:10:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org, Michael Platings <michael@platin.gs>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v6 6/6] blame: use a fingerprint heuristic to match ignored lines
+References: <20190410162409.117264-1-brho@google.com>
+        <20190410162409.117264-7-brho@google.com>
+        <xmqqk1fxw8ad.fsf@gitster-ct.c.googlers.com>
+        <4c7bbc6c-805e-da7f-593c-e73989fc37c0@google.com>
+Date:   Tue, 16 Apr 2019 13:10:37 +0900
+In-Reply-To: <4c7bbc6c-805e-da7f-593c-e73989fc37c0@google.com> (Barret
+        Rhoden's message of "Mon, 15 Apr 2019 10:03:10 -0400")
+Message-ID: <xmqq1s22r3nm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGpuMnQep3MvtsjO/08o+Xas343GAFQ9z8cANXpddoBVDFx7wLm7MIxpmEy9kA=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 15, 2019 17:14, Andreas Schwab wrote:
-> On Apr 15 2019, "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-> 
-> > on virtually any platform at my disposal (Windows, Ubuntu, MacOS, the
-> > older NonStop variant), and have that work with no problem. Somewhere
-> > after get_ssh_command(), the command is being interpreted it its parts
-> > either as a shell or something else (still trying to find that).
-> 
-> See run-command.c:prepare_shell_cmd, if the command contains shell meta
-> characters it is passed to sh -c without further quoting.
-> 
-> Andreas.
+Barret Rhoden <brho@google.com> writes:
 
-Well crap. That explains far too much about what is happening. 😊. One of the special parameters is specified as -S \$ZSSH2 (example, referring to the process name - which begin with $ and have to be escaped with \). This obviously triggers the alternate path and has been problematic. On the older systems, we found fewer (a.k.a just about none) uses of this parameter, so never encountered it. On the newer systems, virtually everyone is using -S. Ergo, behavioural differences. That explains a whole lot of why we need a wrapper script. Thanks for the pointer to the strcspn() reference. I can stop obsessing about this (thanks too Johannes, Szeder, Ævar) for the help.
+> Though the old heuristic is pretty basic - really just a couple lines
+> - 
+> and it may help to see it before looking at a more complicated
+> version.
 
-As a suggestion, with people who know how to escape stuff properly (or not), perhaps we can select the alternate behaviour explicitly using a core.sshIgnoreEscape=true/false option. Thoughts on that?
+OK, then.
 
-Regards,
-Randall
-
+Thanks.
