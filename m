@@ -2,93 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70F7E20374
-	for <e@80x24.org>; Tue, 16 Apr 2019 15:26:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF2820248
+	for <e@80x24.org>; Tue, 16 Apr 2019 15:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727902AbfDPP0y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 11:26:54 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39987 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbfDPP0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 11:26:53 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h4so27678669wre.7
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 08:26:53 -0700 (PDT)
+        id S1728819AbfDPP1q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 11:27:46 -0400
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:43039 "EHLO
+        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbfDPP1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 11:27:45 -0400
+Received: by mail-qt1-f173.google.com with SMTP id v32so23707852qtc.10
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 08:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=zeBuIbw2clP9WSPIPFpQdAOx6qewu7L0o71STys0T6E=;
-        b=BKsgSk/d7ujvxUJG6SygUVHDUFSGEqb8h06GepYyF9QeU0XZ9MASfn0K5+7qUl1wus
-         MxoPsLcqUtirxjLkMbK8atR6g78oAaoDhBNo0MkKJnFoMRq2T6+OEgS9wbHh079DhxcZ
-         2Xju0XTHN3vgY/GzfWsEgxtgzatCq73cO8wmbHAPvmzLdU7loxOhDcpruCY7X2ohLMBj
-         51ipvzmK5RaLAQtg/q9y1nlIX9+nvQGaVzaz8yayoLuxVvRY7kZE9eE9qbZSZVffgqc3
-         yF+bDPX44f3lmzoQUe7R43xMSseMwk2Z/gpC0fCEUSNFqwunW/S4rB1zxFzlfIiMIPdW
-         0U9w==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=RirCq7udz4Mtgx1wCRWbqSAp/RZs+tq3ceJGITrxEDs=;
+        b=NWa1urVffpqxxjgHygJtm6ExSgDr1QFjhob1xLlUFkNEqe6Yi37d2Dueu0bjuNYXPm
+         VV/rkT735OWdMCxNIaAlWiUiLvORfKYZbMx+mSDPe6xg+m4BBsUJWnAqtAn+RcRS3YQo
+         vBW5j3u8flDxGbBjjKWPwmVoFs1xO2MQ667dBEWUCO2LMvE0ljjJUcMGaMD8RJESgHg1
+         QW5HI6dnPGW1YIUHjpbSQNInLKzK37m5B0pHOeqDc1S2sUZ4szqw/auX20icIIOyOUZ5
+         jnc1pHo0w94XJyPfEOJNxZ0rI5ly1swa1ipAfp0ZyYYaMRoDN8F9/FXWBC2xp0GSvbOi
+         QeYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=zeBuIbw2clP9WSPIPFpQdAOx6qewu7L0o71STys0T6E=;
-        b=gM7MqQv5flujITtNltNX3ionDZ3cMoqzIvYj0aLZ+ezoL32npW3pA5U/bWqlX1eWEC
-         KWnkc6umPiZ6MD4pf0MOLe2qG7gXFFaW9vJTXvI8et3O8NEk72jJ3iQhEbcKJcxdONSN
-         dxGx2JtpUoW6DrvUuzRPu3va1hlIfyyoDYEV+kC18uirtTVKUwU5QFvV8GJ3pGRNIE4Z
-         IZkmWHSSnt5qQ7YSa7Cau1mJuwWjd+aaEEDD7t8gVOBtJGkZgGKy8+fqFv3qoda129Sd
-         lyVNqWf4UzqqoZSYXWzKylXLydqUxl++ke7m8UAet0WcqDKJAclzRjQkvrEGL/Fbonmm
-         lH5g==
-X-Gm-Message-State: APjAAAUEB/pQAZpGkx5LXXqhV4bmvcbu3ICuab1S2ToYp6p0BFP5n/WF
-        B+mTW4M4Hz/rVUTs6XCGPXk=
-X-Google-Smtp-Source: APXvYqx0jPShehgBk9lqRGdliGXdYzMIhxTWACYYghVaeji9VOkfq3mvtrvpBNDcV36giPWT1AQ4HQ==
-X-Received: by 2002:adf:fd0c:: with SMTP id e12mr18565566wrr.230.1555428412095;
-        Tue, 16 Apr 2019 08:26:52 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id v14sm69248058wrr.20.2019.04.16.08.26.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Apr 2019 08:26:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee <dstolee@microsoft.com>, Eric Wong <e@80x24.org>
+        bh=RirCq7udz4Mtgx1wCRWbqSAp/RZs+tq3ceJGITrxEDs=;
+        b=HTRaFDDuXxd4HUkRrU6Voiy0jNFDRacnB2EtL3NrAdqjMi3OZ/KOxfqK958zqhpzf2
+         SsdAXGC1voTn9PrhvhGC7zTEcXXpTFXdqdol72wMN420WLIhsHFj28twD9f34Pm4EnZn
+         V7guxrRNRTmdOhgmrSIaoMF10Xrq6DqEUj/HSQ9Xlj97GzTRuv+iyM+mNjgOABxedgeg
+         MQLcz9zJsRkte9n14OHHQtEAas1Vm6DTMKF0TeQyoMDDFx/NSRa77aMaGmehmywpmhcW
+         UKo3nnd8j+qBpbtmnTLqfq5dkfmB1fYKM2TbQArxirJdl7NczM/d18cmvIx3DOHvV+Tc
+         UmPg==
+X-Gm-Message-State: APjAAAWXx5y8mV1MwmZa1EtLXxda9W2w7T6rkabEyx0IncJbS36tvObw
+        LEmUWYddd4EH1hC5WCDvLEZczpf3
+X-Google-Smtp-Source: APXvYqz8ykgZAfjIxKA849Ng/Ov2HlBap1Mif6xB+R8UETbOTE2RAPJ7lN59oygo4CceI4qUgoLo2Q==
+X-Received: by 2002:a0c:b3c4:: with SMTP id b4mr68695324qvf.176.1555428464036;
+        Tue, 16 Apr 2019 08:27:44 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id x2sm26843265qkj.59.2019.04.16.08.27.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Apr 2019 08:27:41 -0700 (PDT)
 Subject: Re: What's cooking in git.git (Apr 2019, #03; Tue, 16)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
-        <87d0lmatr1.fsf@evledraar.gmail.com>
-Date:   Wed, 17 Apr 2019 00:26:50 +0900
-In-Reply-To: <87d0lmatr1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 16 Apr 2019 16:51:14 +0200")
-Message-ID: <xmqqa7gqots5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <a65a261d-a8dd-7610-bcaf-47071df1d659@gmail.com>
+Date:   Tue, 16 Apr 2019 11:27:41 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On Tue, Apr 16 2019, Junio C Hamano wrote:
->
->
->> * jc/gettext-test-fix (2019-04-15) 1 commit
->>  - gettext tests: export the restored GIT_TEST_GETTEXT_POISON
->>
->>  The GETTEXT_POISON test option has been quite broken ever since it
->>  was made runtime-tunable, which has been fixed.
->>
->>  Will merge to 'next'.
->
-> LGTM, but AFAICT this patch of yours never got sent to the list,
-> oversight?
 
-I am reasonably sure that
-<xmqqlg0bvppc.fsf_-_@gitster-ct.c.googlers.com> was sent with you on
-CC: line.
+On 4/16/2019 9:19 AM, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+> 
+> Yet another batch of ~30 topics have graduated to 'master', and
+> 'next' has also gained ~25 topics.  We may want to start merging
+> down fixes to 'maint' for a 2.21.1.
+> 
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+> 
+>      http://git-blame.blogspot.com/p/git-public-repositories.html
+> 
+> --------------------------------------------------
 
+<snip>
+
+> * bp/post-index-change-hook (2019-02-15) 1 commit
+>    (merged to 'next' on 2019-03-11 at cb96d1d7c4)
+>   + read-cache: add post-index-change hook
+> 
+>   Originally merged to 'next' on 2019-02-23
+> 
+>   A new hook "post-index-change" is called when the on-disk index
+>   file changes, which can help e.g. a virtualized working tree
+>   implementation.
+> 
+>   Will cook in 'next'.
+> 
+> 
+
+Anything in particular this is waiting for?  I'm unaware of any requests 
+for a re-roll. If something is needed, please let me know.
