@@ -7,59 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EDB420374
-	for <e@80x24.org>; Tue, 16 Apr 2019 07:48:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEA2D20248
+	for <e@80x24.org>; Tue, 16 Apr 2019 08:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727845AbfDPHs6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 03:48:58 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:35576 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbfDPHs5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 03:48:57 -0400
-Received: by mail-io1-f51.google.com with SMTP id p16so16896310iod.2
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 00:48:57 -0700 (PDT)
+        id S1728791AbfDPIxM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 04:53:12 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:53788 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727783AbfDPIxM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 04:53:12 -0400
+Received: by mail-it1-f194.google.com with SMTP id y204so31750622itf.3
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 01:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=MHuYQ9xZd2BC/6dO7noqoP7zy2V3MxuBT7/jcyoybEs=;
-        b=HJd0lT0Pf/FCwMkt479I2a3NLIZctu/4kDLCApXvTzUli+hGPpb0Xs3p2eBTGIOXcF
-         iUFkCBTBGGGzcPx0o7gc03k2HOnY3F8A9VkvH6WhR2LS932hXwcJ1GxwHqphmGqkA92C
-         ozrWJL4zTi99bIUFmlVAVGiVkxNITyFK7IX3JaPWcsWpw5Zu4Gkwn8msDjvnPxL7qN/o
-         1TjQzgwV5JW2cH4SAzjgWLION2NDD1i4aa2eaKJxnEdGgEgYlahMeWfMOybUe/peTZyd
-         x9dq28HKpZyJV19KO2jhy7/LgAOMhxb48Wn9Vztuy+nyJk4S2Qalru+gdhw7YXHH5zcl
-         ygug==
+        bh=RVBAqc1VGwCuDSaR/AHARCNBXsWDtceJfNZRqXpBM9w=;
+        b=KfJXIo4tvTC0PKkxotHf+trtu/mNL7mHkmUJPKmAAqNgwxFvz/x4fSX2W2vxvNjl+0
+         gR5hmy+xwj7lTDX0r2hoWH5b40HwO/G0tiq+CFDzcXXBg2/eGhlIWSHC/m9E5R1jZVx7
+         jqrQZ/kjmpwVVcBXRQ/a1wt05S9KM56k/T9mCiaCxt6nDeMIH0OkpcSR98AHBqZdX4s+
+         nLypm0vXhv/l/JJBwa3ORZ4oYVdMgOIn+5jNTt6i7E0nz1Da1XIQJq2M8e8nrv9XtACw
+         p6PNL2dDbDCAkDNBIqKIdh2wnXBqNDmJXg39dxsEERDWXjTIBGa3q4sT43YMDwQx5a5Z
+         RSgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MHuYQ9xZd2BC/6dO7noqoP7zy2V3MxuBT7/jcyoybEs=;
-        b=n3vbg0i/jIsIauHcfdOkHkFk4/t+Naa869VDgtlvsDStR5iXlFrhsgtpgjXpKQWyVy
-         ovmdSdAiWDCN9UOvccZcYmTW1MbEylE0COnruazWNmONypcu9kh7/iMm2p3Lrvy01RE8
-         7yzf7o+bOw6phlnzzlnkl7hak1iDREaCjcD1CEVd6mcufHdWLT7eNEUvtQPGxI06pJL+
-         4wCNTZOu8mNTDD3AYxxvFADJ87aztRkfTkxoU5eKqNnZ0MeyDNNXiJ7hVE81vbWcS46R
-         OK/QseUBZPsLO9gPFEwCdq9Y2FsPUHmNC6XA2gAWk3tfAh9FfBQPZOuZrrC7B5ezA7mc
-         38iw==
-X-Gm-Message-State: APjAAAUaYj6NzASFlcFGywkTrzy5w2oY9ei4B23cROqCuqkMgg6r6sDj
-        rZT612we4at+4kCAUzecFuQvZBbCuzgJx3/16ncMwg==
-X-Google-Smtp-Source: APXvYqwC5+DnofhJ6At9aCxK6onrwaSFNtQMju21P3f8CFdBuEqJhfMSz3/99nrJl7URfBkxq9DaYatdE58nrxQ3Wdk=
-X-Received: by 2002:a5d:840d:: with SMTP id i13mr45474115ion.186.1555400936891;
- Tue, 16 Apr 2019 00:48:56 -0700 (PDT)
+        bh=RVBAqc1VGwCuDSaR/AHARCNBXsWDtceJfNZRqXpBM9w=;
+        b=R9Lknp8cDyVWwQ3wKXMthY9R/YU3Sgr+43NraO50O7xXIp4qsEsYCNxEO5GHatG8pY
+         fWkea48JJoRWM4tpxLonUTZLVo20jCjyRSrm/8lXGVm41SYTd/EpQc2p1tAAJrlzc3Ok
+         sc4Ta5WXIgGe/I6ruzGH4yssfxuZruR2Tt46tOv95yhvHsRlCGiJtGCQZ0DJKALsqh4n
+         5robVi/zagIHM4KNRWVzzoOhfdi72BgNVoyfFuD36d+u6j1rqoDHWBXVb1MNYRCqX2AL
+         GoxYwDaSgGmTGNnn/vlLbc+cbudVXUQOzDD55NhVKeQMRXZPJP0BaqJxR9wdbEJsRe2P
+         3JIA==
+X-Gm-Message-State: APjAAAXv0pUxWxeiw0fA6Sve68386ZocX5x4U4ce4y/LE44o99w/QHNX
+        Cm3v7HLmowJZvWM034w8CIeMENzy8m7vjC6x3BY=
+X-Google-Smtp-Source: APXvYqwftT2kn35gWpY2Vq4NdqBLaE3MdzBsrX/PGoCiWY1ByaIlD0sqQHSZuhDlrH2n0r4LXZonEusMmeoT0ugqHqU=
+X-Received: by 2002:a24:5e06:: with SMTP id h6mr26262604itb.107.1555404791484;
+ Tue, 16 Apr 2019 01:53:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
- <robbat2-20190410T062730-540884809Z@orbis-terrarum.net> <20190410111834.GA25638@ash>
- <CAODn77oL6sj5zvxgPGw=4TNqmnSeBq4=j2r2nx_51YHooECo7w@mail.gmail.com>
-In-Reply-To: <CAODn77oL6sj5zvxgPGw=4TNqmnSeBq4=j2r2nx_51YHooECo7w@mail.gmail.com>
+References: <20190127003535.28341-1-pclouds@gmail.com> <20190127003535.28341-8-pclouds@gmail.com>
+ <02d2a828-b191-9d9a-7422-d76cdca69ef1@gmail.com>
+In-Reply-To: <02d2a828-b191-9d9a-7422-d76cdca69ef1@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 16 Apr 2019 14:48:30 +0700
-Message-ID: <CACsJy8AasZkzkR4apr1cywi1wpP92FOjAN2Oc7GYDYv4NPnXdQ@mail.gmail.com>
-Subject: Re: regression AGAIN in output of git-pull --rebase
- --recurse-submodules=yes --quiet
-To:     Paul Morelle <paul.morelle@gmail.com>
-Cc:     "Robin H. Johnson" <robbat2@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        Stefan Beller <stefanbeller@gmail.com>
+Date:   Tue, 16 Apr 2019 15:52:45 +0700
+Message-ID: <CACsJy8DDKuK5VYhh0GNYSJK1_y3MZgK5Vcq99N4jYcusVFnvQQ@mail.gmail.com>
+Subject: Re: [PATCH 07/14] parse-options: allow ll_callback with OPTION_CALLBACK
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -67,43 +64,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 16, 2019 at 1:31 PM Paul Morelle <paul.morelle@gmail.com> wrote=
-:
->> The problem here is the option parser of this command would try to
->> parse all options, so it considers both --quiet the same thing and are
->> to tell "submodule--foreach" to be quiet, the second --quiet is not
->> part of the "git pull" command anymore.
->>
->> So the fix would be to pass "--" to stop option parsing.
->> submodule--helper should not parse options it does not understand
->> anyway. Something like this should work.
+On Mon, Apr 15, 2019 at 9:06 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
+> On 1/26/2019 7:35 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> > @@ -238,7 +249,10 @@ static enum parse_opt_result parse_short_opt(struc=
+t parse_opt_ctx_t *p,
+> >                       len++;
+> >               arg =3D xmemdupz(p->opt, len);
+> >               p->opt =3D p->opt[len] ? p->opt + len : NULL;
+> > -             rc =3D (*numopt->callback)(numopt, arg, 0) ? (-1) : 0;
+> > +             if (numopt->callback)
+> > +                     rc =3D (*numopt->callback)(numopt, arg, 0) ? (-1)=
+ : 0;
+> > +             else
+> > +                     rc =3D (*numopt->ll_callback)(p, numopt, arg, 0);
+> >               free(arg);
+> >               return rc;
+> >       }
 >
-> My expectation as a user (and probably Robin's too) would be that `git su=
-bmodule foreach` stops parsing arguments at `--` or at the first not-recogn=
-ized argument, whichever is encountered first. The rest of the arguments wo=
-uld then be considered as the command.
+> Hi Duy,
+>
+> This "else" condition is unreachable. This block is only hit when we have=
+ a "-<n>"
+> option, using OPT_NUMBER_CALLBACK, which is implemented by filling "callb=
+ack", never
+> "ll_callback".
 
-I don't think I change any visible behavior though (or at least trying
-not to). There are two command line parsers, the "front" one is in
-git-submodule.sh and should do what you describe (or whatever the
-current behavior is) and there's an internal one for "git
-submodule--helper" which is more like internal API than anything.
+It does not mean ll_callback cannot be used in the future though. We
+have three options
 
-The change here is to stop the internal parser from accidentally
-interpret options that belong to the foreach's command. The "--" and
-first non-recognized argument should be handled correctly by the front
-parser.
+1. drop the else clause
+2. replace with "else BUG();"
+3. implement proper else clause
 
-The exact behavior of this front parser, I can't tell (I'm nowhere
-near expert level of submodules) but yeah it should stop at either
-`--` or the first non-option argument (e.g. something that does not
-start with '-'). An argument that looks like an option (i.e. starts
-with '-') but not recognized should result in an error. This is pretty
-much standard behavior for all other commands, but I have not tested
-this with git-submodule.sh.
+Option #1 to me sounds wrong. If you don't support something, yell up.
+Silently ignoring it only makes it harder to track down to this
+unsupported location when it becomes reachable, however unlikely that
+is.
 
-> This would slightly break the retrocompatibility, but would also avoid si=
-milar bugs in the future.
+Which leaves options #2 and #3. If you think this one line is risky
+enough, I'll send a patch to replace it with BUG().
+
+> I recommend reverting this diff segment, but please let me know if I'm mi=
+ssing something.
+>
+> Thanks,
+> -Stolee
+
+
+
 --=20
 Duy
