@@ -7,279 +7,103 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7054C20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 14:33:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ABCA20248
+	for <e@80x24.org>; Wed, 17 Apr 2019 14:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732553AbfDQOdP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 10:33:15 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36118 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732483AbfDQOdO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 10:33:14 -0400
-Received: by mail-wm1-f68.google.com with SMTP id h18so3904026wml.1
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:33:11 -0700 (PDT)
+        id S1732357AbfDQO7R (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 10:59:17 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:39856 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731454AbfDQO7R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 10:59:17 -0400
+Received: by mail-wr1-f53.google.com with SMTP id j9so32365670wrn.6
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=oxBRKvQ27Xk9sUIZnHEVJCPeVAkgflsfVxg5fYefr1s=;
-        b=E15psLeYq4ld4bd/icBwLMrY4P7hQdmCRwhJvLaupkSCKbqB92kieo9gjzizvBvuZZ
-         ghkWL2oiWWB42UwTx6kEazDGKqMf4B3p6QGs0GLEb5vwgJDTcxuG3cxhWJymmAjp4JOB
-         zYZxDkEKjvYGpLRrLhgpuj3wctp7hYWGyQmNPRnv9WrWXImGpWL8GlEBhXJB3XXMsboK
-         5BARzRCvdxusFILe7m5NFDnGW8spDCgH1oDQQWko/QYzxyymCpllT9UoMB2IOcVQ0qO9
-         hyRbVYA9styIO9vlxo8yZTM1cjFLqlJscKuP2chf+E78A+AQA4TzfNCSnpOPbRbjbF7W
-         CB2g==
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=vvZX/ZmDcs+gdHAmMokpO2QAzoM3pNzs0EK71SpbtYA=;
+        b=YqAvSWu5+KBMz8HBQOptvt8fewKHqdUE1PqR1KlxfQqXXqtey3j22K2P1Dsh+Lh7aO
+         J43Y2PXkaUPXG5cxY/XAy5xMfxrVh0KBJjccqJ8ZZ169xojkRkvYW5ayyQpecjeC4B81
+         L0yh956uFWfSdb0wlSyavr6nkb7HbinlsgWfEXdLak6lezCqwX/dq9Ut1mEWF02M5HaC
+         VP/F0zFHZOY0X1dn1ph8qist+ef7c0sqB9Rryj5PMz8Na6gVh19LKWjpcI4nG7fO/RzE
+         /a98dM8iNr7x6/3d50Dl1Bb9JS7ieuN6z/kTpigaxiyVmgNo8HwVz7izS+cTr7JpbVie
+         BsqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=oxBRKvQ27Xk9sUIZnHEVJCPeVAkgflsfVxg5fYefr1s=;
-        b=pJ8ArjDg4NnwiCY6pr1lPyP/w5hrrTgkdW8dsmH1cdOu6TUYhAldhTCVmeozD3IH+J
-         DIiD9tTcQ4BXx5Qc2/0CNndZIOgENxROHu8ao/kUo/LSsE7fSlNofdJb1lDVeO6ehnRu
-         j3h3UQQlYUGRvxLii8Jhl5hCaLaTkXaDvONFoEsYunh/JU8jtf7c384aiTU/h9pDSOqg
-         H/Z65cASCIU10Fxsmjz3E9tz0afyhis4VaUpUv9Ns44dsMeTE1Z+eYPG1xDsVcjJxf9Y
-         eWiERthidaWH9mxKhQxfD5f5hzSDxfTxg/GpIsXu08GNFLeeO3hDUV5PjWHTlczYcx6L
-         GNaw==
-X-Gm-Message-State: APjAAAX8AObwE8H7n5huFikzw5mQvGkVKoPCTVT3j0XZ2Z50tXfuQqPU
-        qooOTT73fwFbCVFSXwYaf/nmO64h940=
-X-Google-Smtp-Source: APXvYqxSkEakMTlvMb9qI/PEw0BSzWZe4KOYZ8kOdRrXLnbuwNTojpWPvRgolReRtm9k5hfqRVMwiA==
-X-Received: by 2002:a1c:9c03:: with SMTP id f3mr32593757wme.67.1555511590825;
-        Wed, 17 Apr 2019 07:33:10 -0700 (PDT)
-Received: from localhost.localdomain (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id t17sm52127726wrr.26.2019.04.17.07.33.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 07:33:10 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=vvZX/ZmDcs+gdHAmMokpO2QAzoM3pNzs0EK71SpbtYA=;
+        b=lCKhduguB2FIhv7wUsSLnE905psuLDBX6OvqKyx4xoyF+G5k8p9CHTOTWTR3gJGKUM
+         CER/wo0CU0wdD0mstNLoxPDL2/tMXRolEsTdwkcxFxoMwHUa5MCP0wjXTqmjH+vPUHQL
+         IJrdHKwcxfcNeOXcjBC0H09AUi8M7aH6S8Dhf0dVhrhYluYuj1hQKN33P5jdFtkkCSl2
+         I2sS0qUak/+ZWEK/nM5Gqv4QxAkt1aHXG9LrEX1VUoaPoL0YDAynmheXar6/dubZtDfV
+         ouSIoIail6ptMNqBjqe1zQG1TLO2BXwlaoxCpfidfWq6j7cm8uQD93NHJuwsjoxVR0Je
+         yrIg==
+X-Gm-Message-State: APjAAAU5/31SbmPPjr+tofH8Dv/YS36cs/r5bfixwKAbzMtqX0RZu71k
+        CTW3rmUJ6A2+7Oqg0V8Qh8vSxdztcuM=
+X-Google-Smtp-Source: APXvYqxXTC42KnPyGreGTzMuL7I1IiRP87o4oht0WFtbjbNoIMJ0GE8A1HcOA9Phbk+KYTAJ04hLmA==
+X-Received: by 2002:adf:fa47:: with SMTP id y7mr39411834wrr.27.1555513155383;
+        Wed, 17 Apr 2019 07:59:15 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-21-176.as13285.net. [92.22.21.176])
+        by smtp.gmail.com with ESMTPSA id i28sm149966016wrc.32.2019.04.17.07.59.14
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Apr 2019 07:59:14 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Generating a todo file for non-interactive rebasing
+To:     Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
+References: <20190416153709.GA19000@homura.localdomain>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 11/12] rebase: use a common action enum
-Date:   Wed, 17 Apr 2019 15:30:43 +0100
-Message-Id: <20190417143044.17655-12-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190417143044.17655-1-phillip.wood123@gmail.com>
-References: <20190319190317.6632-1-phillip.wood123@gmail.com>
- <20190417143044.17655-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <07e0259b-0d7a-b109-cd3c-ccfbf17ad573@gmail.com>
+Date:   Wed, 17 Apr 2019 15:59:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190416153709.GA19000@homura.localdomain>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Hi Drew
 
-cmd_rebase() and cmd_rebase__interactive() used different enums to hold
-the current action. Change to using a common enum so the values are the
-same when we change `rebase -i` to avoid forking `rebase--interactive`.
+On 16/04/2019 16:37, Drew DeVault wrote:
+> Hiya!
+> 
+> Whenever I do a particularly long rebase on a branch, sorting out
+> conflicts from upstream, I find that it's often useful to have the
+> additional context that you get during an interactive rebase, such as
+> recent commands run, commands planned to run, and so on, to get a better
+> idea of where I'm at during the rebase. These show when you run `git
+> status` during an interactive rebase.
+> 
+> However, the code that generates this report relies on a todo list being
+> generated in the rebase state directory. A todo list which consists only
+> of "pick" commands is functionally equivalent to a non-interactive
+> rebase, the only difference being that the editor isn't shown to the
+> user.
+> 
+> Is there any reason not to refactor the rebase command to always
+> generate a todo list? This would simplify the internals and provide more
+> context to the user during hairy rebases. It might also be useful to run
+> --edit-todo if you realize your rebase strategy needs to change partway
+> through a rebase which was initially non-interactive.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/rebase.c | 91 +++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 43 deletions(-)
+Things are moving in that direction. Currently --merge, --keep-empty, 
+--recreate-merges and --exec will result in a todo list being used 
+regardless of --interactive. There was some discussion a couple of 
+months ago about making --merge the default if there were no am specific 
+options given but I've not noticed a patch for that yet. There is also a 
+GSoC project that will implement some of the am specific options for the 
+interactive backend with the long term aim of removing the am based backend.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 277dbaadf4..0020e1ecf6 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -119,6 +119,29 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 	return replay;
- }
- 
-+enum action {
-+	ACTION_NONE = 0,
-+	ACTION_CONTINUE,
-+	ACTION_SKIP,
-+	ACTION_ABORT,
-+	ACTION_QUIT,
-+	ACTION_EDIT_TODO,
-+	ACTION_SHOW_CURRENT_PATCH,
-+	ACTION_SHORTEN_OIDS,
-+	ACTION_EXPAND_OIDS,
-+	ACTION_CHECK_TODO_LIST,
-+	ACTION_REARRANGE_SQUASH,
-+	ACTION_ADD_EXEC
-+};
-+
-+static const char *action_names[] = { "undefined",
-+				      "continue",
-+				      "skip",
-+				      "abort",
-+				      "quit",
-+				      "edit_todo",
-+				      "show_current_patch" };
-+
- static int add_exec_commands(struct string_list *commands)
- {
- 	const char *todo_file = rebase_path_todo();
-@@ -347,10 +370,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	unsigned flags = 0;
- 	int abbreviate_commands = 0, ret = 0;
- 	struct object_id squash_onto = null_oid;
--	enum {
--		NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
--		SHORTEN_OIDS, EXPAND_OIDS, CHECK_TODO_LIST, REARRANGE_SQUASH, ADD_EXEC
--	} command = 0;
-+	enum action command = ACTION_NONE;
- 	struct option options[] = {
- 		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
- 			   REBASE_FORCE),
-@@ -367,22 +387,22 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 			N_("display a diffstat of what changed upstream"),
- 			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
- 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
--			    CONTINUE),
--		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), SKIP),
-+			    ACTION_CONTINUE),
-+		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), ACTION_SKIP),
- 		OPT_CMDMODE(0, "edit-todo", &command, N_("edit the todo list"),
--			    EDIT_TODO),
-+			    ACTION_EDIT_TODO),
- 		OPT_CMDMODE(0, "show-current-patch", &command, N_("show the current patch"),
--			    SHOW_CURRENT_PATCH),
-+			    ACTION_SHOW_CURRENT_PATCH),
- 		OPT_CMDMODE(0, "shorten-ids", &command,
--			N_("shorten commit ids in the todo list"), SHORTEN_OIDS),
-+			N_("shorten commit ids in the todo list"), ACTION_SHORTEN_OIDS),
- 		OPT_CMDMODE(0, "expand-ids", &command,
--			N_("expand commit ids in the todo list"), EXPAND_OIDS),
-+			N_("expand commit ids in the todo list"), ACTION_EXPAND_OIDS),
- 		OPT_CMDMODE(0, "check-todo-list", &command,
--			N_("check the todo list"), CHECK_TODO_LIST),
-+			N_("check the todo list"), ACTION_CHECK_TODO_LIST),
- 		OPT_CMDMODE(0, "rearrange-squash", &command,
--			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
-+			N_("rearrange fixup/squash lines"), ACTION_REARRANGE_SQUASH),
- 		OPT_CMDMODE(0, "add-exec-commands", &command,
--			N_("insert exec commands in todo list"), ADD_EXEC),
-+			N_("insert exec commands in todo list"), ACTION_ADD_EXEC),
- 		{ OPTION_CALLBACK, 0, "onto", &opts.onto, N_("onto"), N_("onto"),
- 		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
- 		{ OPTION_CALLBACK, 0, "restrict-revision", &opts.restrict_revision,
-@@ -428,36 +448,36 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
- 	flags |= opts.rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
- 	flags |= opts.rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
--	flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
-+	flags |= command == ACTION_SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
- 
- 	if (opts.rebase_cousins >= 0 && !opts.rebase_merges)
- 		warning(_("--[no-]rebase-cousins has no effect without "
- 			  "--rebase-merges"));
- 
- 	switch (command) {
--	case NONE: {
-+	case ACTION_NONE: {
- 		if (!opts.onto && !opts.upstream)
- 			die(_("a base commit must be provided with --upstream or --onto"));
- 
- 		ret = do_interactive_rebase(&opts, flags);
- 		break;
- 	}
--	case SKIP: {
-+	case ACTION_SKIP: {
- 		struct string_list merge_rr = STRING_LIST_INIT_DUP;
- 
- 		rerere_clear(the_repository, &merge_rr);
- 	}
- 		/* fallthrough */
--	case CONTINUE: {
-+	case ACTION_CONTINUE: {
- 		struct replay_opts replay_opts = get_replay_opts(&opts);
- 
- 		ret = sequencer_continue(the_repository, &replay_opts);
- 		break;
- 	}
--	case EDIT_TODO:
-+	case ACTION_EDIT_TODO:
- 		ret = edit_todo_file(flags);
- 		break;
--	case SHOW_CURRENT_PATCH: {
-+	case ACTION_SHOW_CURRENT_PATCH: {
- 		struct child_process cmd = CHILD_PROCESS_INIT;
- 
- 		cmd.git_cmd = 1;
-@@ -466,17 +486,17 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 
- 		break;
- 	}
--	case SHORTEN_OIDS:
--	case EXPAND_OIDS:
-+	case ACTION_SHORTEN_OIDS:
-+	case ACTION_EXPAND_OIDS:
- 		ret = transform_todo_file(flags);
- 		break;
--	case CHECK_TODO_LIST:
-+	case ACTION_CHECK_TODO_LIST:
- 		ret = check_todo_list_from_file(the_repository);
- 		break;
--	case REARRANGE_SQUASH:
-+	case ACTION_REARRANGE_SQUASH:
- 		ret = rearrange_squash_in_todo_file();
- 		break;
--	case ADD_EXEC: {
-+	case ACTION_ADD_EXEC: {
- 		struct string_list commands = STRING_LIST_INIT_DUP;
- 
- 		split_exec_commands(opts.cmd, &commands);
-@@ -1417,22 +1437,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct strbuf revisions = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct object_id merge_base;
--	enum {
--		NO_ACTION,
--		ACTION_CONTINUE,
--		ACTION_SKIP,
--		ACTION_ABORT,
--		ACTION_QUIT,
--		ACTION_EDIT_TODO,
--		ACTION_SHOW_CURRENT_PATCH,
--	} action = NO_ACTION;
--	static const char *action_names[] = { "undefined",
--					      "continue",
--					      "skip",
--					      "abort",
--					      "quit",
--					      "edit_todo",
--					      "show_current_patch" };
-+	enum action action = ACTION_NONE;
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
- 	const char *rebase_merges = NULL;
-@@ -1599,7 +1604,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			     builtin_rebase_options,
- 			     builtin_rebase_usage, 0);
- 
--	if (action != NO_ACTION && total_argc != 2) {
-+	if (action != ACTION_NONE && total_argc != 2) {
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
- 	}
-@@ -1608,7 +1613,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
- 
--	if (action != NO_ACTION && !in_progress)
-+	if (action != ACTION_NONE && !in_progress)
- 		die(_("No rebase in progress?"));
- 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
- 
-@@ -1708,7 +1713,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.action = "show-current-patch";
- 		options.dont_finish_rebase = 1;
- 		goto run_rebase;
--	case NO_ACTION:
-+	case ACTION_NONE:
- 		break;
- 	default:
- 		BUG("action: %d", action);
--- 
-2.21.0
+Best Wishes
 
+Phillip
+> 
+> Note: I'm a non-subscriber, please Cc me on replies.
+> 
