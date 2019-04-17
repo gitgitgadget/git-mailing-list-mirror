@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AC6F20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 05:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0DB320248
+	for <e@80x24.org>; Wed, 17 Apr 2019 05:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730203AbfDQFkw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 01:40:52 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43298 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbfDQFkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 01:40:52 -0400
-Received: by mail-wr1-f67.google.com with SMTP id k17so25463393wrx.10
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 22:40:50 -0700 (PDT)
+        id S1728074AbfDQFmx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 01:42:53 -0400
+Received: from mail-pl1-f171.google.com ([209.85.214.171]:42937 "EHLO
+        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725811AbfDQFmx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 01:42:53 -0400
+Received: by mail-pl1-f171.google.com with SMTP id cv12so11490241plb.9
+        for <git@vger.kernel.org>; Tue, 16 Apr 2019 22:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zLWj56Avjdajbfamv9nEgn4TWiOfgGyXcFPZMjUn+zY=;
-        b=asx4iH8+9o3+IQ5UT2v6QLkEa5LoOPdzbhq2UZtZQW7Yoc06Md88VxrMuIOt9Olxxd
-         +sjA5aTisDWxvY4Fv09ow4tF0Q/E1ZI5LNpV2Ql8Mo2lsWUK0yOhegGE824ytMuRffVD
-         6oWYBCSok1gBc+WsSPmWAklqqYvu2Tva1Pj/F6j2dEDsmzeXwPzBYbC3Gxs/jeRv3UMh
-         hs9zmwzGXg69MpoeomlFF5j5N2vcmvLYrGu91LUYQpqV3tFkDAtzZ9prDDjnfzMJrBPI
-         AqwiflOsdAaoxrtiKk9yTF4Z40Dj9Vnfipr9fEFz1TaVfpFcVCaoKq2ShKbdJcPWcuCz
-         2+UA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kEaaj9dkKcqKTkWKBmOUTHNLphxK2fNiv2WXsrBvj2Q=;
+        b=dGd34Pew+HR+0s/T8Tx9fAChzPIa4Gc0ATwL7H+l4d+4Ll05+Xhc/dp5VnlN1DBT/j
+         bHp9iZoG9ndau9xF7cfXtni4oGmE7zaUP2qypMLHZYWMH94x250U0yHYlLtREoiapoJ8
+         dl2njHNe8UteVFxx93Nd1y5VXKi3Ku8tulPDh0pDfoUCOt3QL7VunUp/WD+Z0iXlhHXT
+         7TraKSiLRrknghqArhFrBG+jjtVDWkSGc1i5ShKqs+TKK0+leqITMFl/PCtSM42YxXn5
+         7ySODG9qhaqrdROgctg7K4qGAXR+cryRoFu4Ngr7070tcfUB1BTmvPK1XDevBsKu701q
+         5nZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zLWj56Avjdajbfamv9nEgn4TWiOfgGyXcFPZMjUn+zY=;
-        b=DwouO+MX4ycpw6NJ/HVDnO3FiiGkJ4zttLW7wLtuFnRO+GtIYh7slRtzNLgGMLu2UB
-         YkrFhxcH8s3+mSNLQFe/0trM0Fyy6TWRHQ5/3MXpUvbFn4UmNqA2Osn18LsZB/lhviQt
-         iSEYAl5616iG6YV3wn2gwdAjuDdFLuiPTRc1XViTZ6UV4NjnTbM6uT/VRNC9P0cYhvp1
-         XngrrZeuwN2g1xtCmNFmcxqL1TrHpfbW2bnkuVyDwBstkEOwQtcLe4yIHfqRR2gl776x
-         xii/EjoFoFPXa0YQXySIjakZT4vYV31OgQC54myOCvtaiQbwm4v19Ca76+Df7U8klVs2
-         oD3g==
-X-Gm-Message-State: APjAAAWSh1/tzeBWcesqawhRbb3URPrOu7GZFP5EE2NqL8WCjEip8ICl
-        jzklwaAn//Qyssib7f/P8Dg=
-X-Google-Smtp-Source: APXvYqyj8wS/N0HiFPVOk01imt160Ss/k0VuK2bMQNOs1x5g+c4joYYH+9pNEXbiryMr3g2DUSYnlQ==
-X-Received: by 2002:a5d:428c:: with SMTP id k12mr40896536wrq.279.1555479650050;
-        Tue, 16 Apr 2019 22:40:50 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id z11sm1383767wmf.12.2019.04.16.22.40.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Apr 2019 22:40:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 7/7] Turn `git serve` into a test helper
-References: <pull.168.git.gitgitgadget@gmail.com>
-        <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
-        <xmqqa7grqsbt.fsf@gitster-ct.c.googlers.com>
-        <20190417034621.GA19448@sigill.intra.peff.net>
-Date:   Wed, 17 Apr 2019 14:40:48 +0900
-In-Reply-To: <20190417034621.GA19448@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 16 Apr 2019 23:46:21 -0400")
-Message-ID: <xmqq36mhkx3z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kEaaj9dkKcqKTkWKBmOUTHNLphxK2fNiv2WXsrBvj2Q=;
+        b=sz+WCFJC2H6H2IbasFKGwMU193b7/s1y4pmubIQdx/RDo1JnlV3jQMjk+7Y6ab5T80
+         tHnteeQ1A52EJIR3v/W6Yjtc+LL32PtcYSHFz7yeVr7wO8FtmywgVhfLVElXwTQ4yQ/6
+         xSR4q4LnhJwR7dD9ZHp8dtL8CWcmAKXH9Me4V6NWRisNWNjJUpqhl9DIKnxDOJLkuSMK
+         QU8iw/hYd4PV9/5M8MIAcNR4PnDcq14y3FZaCjKC9BTnKrl5oDKCNEIj5LwoyXyCxLid
+         3X2Q2CUTNUGlZmg59gUx1JcFTNV19u2rnx0B9Q8EuEqy0ovJf/rFTHxDfRacnPoGAgTM
+         pplw==
+X-Gm-Message-State: APjAAAWrV4jJyShLxMX7g/MnoOLlRBkMi6IWGohqePBo9jTrJBz2Qgj/
+        i88MMs8GuD1y8aE0ERxLd2qZXAbwIByJZg==
+X-Google-Smtp-Source: APXvYqxBg5z4Lmb7GK1aoYpAD5Xf2OM39m9sQ4aTZ5aUZHRZ8GVX6b6M5bB3eXnIlVSOy7VnpFoBLg==
+X-Received: by 2002:a17:902:9a85:: with SMTP id w5mr44816923plp.157.1555479772541;
+        Tue, 16 Apr 2019 22:42:52 -0700 (PDT)
+Received: from localhost ([2601:602:9200:32b0:e0dc:83cd:66cb:9fa7])
+        by smtp.gmail.com with ESMTPSA id c25sm76865895pfo.69.2019.04.16.22.42.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Apr 2019 22:42:51 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Tue, 16 Apr 2019 22:42:50 -0700
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2019, #03; Tue, 16)
+Message-ID: <20190417054250.GA98165@Taylors-MBP.hsd1.wa.comcast.net>
+References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
+ <20190417023706.GA86159@Taylors-MBP.hsd1.wa.comcast.net>
+ <xmqq7ebtkx7p.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7ebtkx7p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> I do not personally think, as the design of v2 stands, a standalone
->> "serve" server that "can serve anything as long as it goes over
->> protocol v2" makes much sense, but perhaps those who have been doing
->> the v2 work may have different ideas, in which case let's hear what
->> their plans are.
+On Wed, Apr 17, 2019 at 02:38:34PM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> I too would like to hear more definite comments from people who think
-> git-serve is worth keeping. In the meantime, there's some discussion
-> from this thread in December:
-> ...
->   https://public-inbox.org/git/20181213195305.249059-1-jonathantanmy@google.com/
+> > Hi Junio,
+> >
+> > On Tue, Apr 16, 2019 at 10:19:45PM +0900, Junio C Hamano wrote:
+> >> * tb/unexpected (2019-04-10) 7 commits
+> >> ...
+> >>  Code tightening against a "wrong" object appearing where an object
+> >>  of a different type is expected, instead of blindly assuming that
+> >>  the connection between objects are correctly made.
+> >
+> > I sent a re-roll of this series in [1], which should be ready for
+> > 'next' if you feel comfortable queueing it.
+> >
+> > [1]: https://public-inbox.org/git/cover.1554861974.git.me@ttaylorr.com/
 >
-> (In case you do not feel like reading the whole thing, my opinion there
-> is that git-serve is probably not the right direction, and we would do
-> well to demote it as Dscho's patch does).
+> That's this one
+>
+>     Date: Tue, 9 Apr 2019 19:13:06 -0700 (1 week, 3 hours, 23 minutes ago)
+>     Subject: [PATCH v2 0/7] harden unexpected object types checks
+>
+> which I think is what has been queued and what is listed in the
+> message you are responding to.
 
-I guess we are more or less on the same page, then.  I'll let others
-chime in by waiting for a bit more but I won't wait forever ;-).
+Ah, perhaps you could clarify some confusion I have about the "What's
+Cooking" emails (or at least point me somewhere I could un-confuse
+myself).
 
-Thanks.
+This topic is in the "Cooking" section with a "-" (which I recall means
+that it's in 'pu'), but there is no "Will merge to ..." line below it
+from you.
+
+That makes sense to me, but I'm not sure whether or not that means it's
+queued. Do you say that a topic is queued once it's on your pu, or once
+you have written "Will merge to..."?
+
+Thanks in advance for your clarification.
+
+> Do you mean you have even newer ones?
+
+No, those are the latest.
+
+> Thanks.
+>
+Thanks,
+Taylor
