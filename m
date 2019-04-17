@@ -2,89 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDD0420248
-	for <e@80x24.org>; Wed, 17 Apr 2019 02:39:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26F6420248
+	for <e@80x24.org>; Wed, 17 Apr 2019 03:46:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729237AbfDQCj2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Apr 2019 22:39:28 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43462 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727063AbfDQCj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Apr 2019 22:39:28 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k17so25068570wrx.10
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 19:39:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=b9SjaDPyApQ7iunejGTUH5PJEdWK1AReLh/89psF/fI=;
-        b=JQXgx9Ge2YoxRcXbDJ+7DqVDqohmG3BH3urAGZZeqP5sikLlx5lPge4OUnYCw0dQX3
-         noVr6QVABn18SBZfKccA9Js3/xnuiRLJyTVYDifAEGc1lRZiWT8grEIIk5CX9S+x3fEM
-         daJuUkKoPNBXtPIDHhFfRahL9wIP/4xELnZHR/WErgyUTlOc8ThPtRkiTICph8oAJcYu
-         1waMzT9AMIZ6VzziHACozvPajiO8ks9/bAZ7JuNDI8869aWd9CsfUyOsk8x1E+y9PhxL
-         r/vcuMM6FCIN1f+pY0y+5uejxy4dvcnx20Mkss+0KK9I6OFhY0L+MfyNRaWPClBZ8soK
-         LoFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=b9SjaDPyApQ7iunejGTUH5PJEdWK1AReLh/89psF/fI=;
-        b=X4ycfanBvVzupZzlybvsJzlTnJyPr/B/rDFZrI5J/JH4V1b6IUeuhbDNJfLdWbty3S
-         oVPPmm9ds2V5LnwAZSmRoGrX5dlM7Wz5YGPs8Yr5cxVHWtuYQ6kR0xLC2cJdEuB1YE0V
-         nNvctW+Y+lXveZzCtKH+0V+zas3MsLr8T5gQnf8CbaPvoGJLlrQaEZZVBpeZEXzlcaEn
-         wKqQ6IgHvx5FvN1TGYL+gCQWL/sVZLhuOi9q1Z+3NsAL14sJCgq5zS/Ym2EjGzpES4Wn
-         4Inj+G/LB3N9RWtE5YXyaYY6LTiPAuayycMMwcoxiFpb/umFxZyl02iLQxruLmqfoOsb
-         7k6g==
-X-Gm-Message-State: APjAAAVoIRlYW1FnPukYLR7g0OjP18AYyNsMLtt4jby4c2uPJaAliy/C
-        uUx6BZY9Li9/Z7NLFA2q71VutJjPNmM=
-X-Google-Smtp-Source: APXvYqztcdbhw7j//eENhV8DGQcBUZQhfqr/KQ2nwR7AuHd0vxUJ2HmYctGZSBOsts9HJS6XbBInig==
-X-Received: by 2002:adf:ffc2:: with SMTP id x2mr28766282wrs.86.1555468766460;
-        Tue, 16 Apr 2019 19:39:26 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id z19sm1056849wml.44.2019.04.16.19.39.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Apr 2019 19:39:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: jt/clone-server-option (was What's cooking in git.git (Apr 2019, #03; Tue, 16))
-References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
-        <20190416173228.232980-1-jonathantanmy@google.com>
-Date:   Wed, 17 Apr 2019 11:39:25 +0900
-In-Reply-To: <20190416173228.232980-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 16 Apr 2019 10:32:28 -0700")
-Message-ID: <xmqqy349nyn6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729566AbfDQDqY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Apr 2019 23:46:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60628 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727219AbfDQDqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Apr 2019 23:46:23 -0400
+Received: (qmail 13375 invoked by uid 109); 17 Apr 2019 03:46:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Apr 2019 03:46:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18126 invoked by uid 111); 17 Apr 2019 03:46:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 16 Apr 2019 23:46:54 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Apr 2019 23:46:21 -0400
+Date:   Tue, 16 Apr 2019 23:46:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 7/7] Turn `git serve` into a test helper
+Message-ID: <20190417034621.GA19448@sigill.intra.peff.net>
+References: <pull.168.git.gitgitgadget@gmail.com>
+ <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
+ <xmqqa7grqsbt.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa7grqsbt.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Mon, Apr 15, 2019 at 11:03:02PM +0900, Junio C Hamano wrote:
 
->> * jt/clone-server-option (2019-04-15) 4 commits
->>  - SQUASH???
->>  - clone: send server options when using protocol v2
->>  - SQUASH???
->>  - transport: die if server options are unsupported
->> 
->>  "git clone" learned a new --server-option option when talking over
->>  the protocol version 2.
->>
->>  Getting there.
->
-> With the two "SQUASH???" commits, I think that all outstanding comments
-> have been addressed, and Jonathan Nieder has given his Reviewed-by [1]
-> [2].
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The `git serve` built-in was introduced in ed10cb952d31 (serve:
+> > introduce git-serve, 2018-03-15) as a backend to serve Git protocol v2,
+> > probably originally intended to be spawned by `git upload-pack`.
+> >
+> > However, in the version that the protocol v2 patches made it into core
+> > Git, `git upload-pack` calls the `serve()` function directly instead of
+> > spawning `git serve`; The only reason in life for `git serve` to survive
+> > as a built-in command is to provide a way to test the protocol v2
+> > functionality.
+> >
+> > Meaning that it does not even have to be a built-in that is installed
+> > with end-user facing Git installations, but it can be a test helper
+> > instead.
+> >
+> > Let's make it so.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> I've excluded this step from tonight's pushout, as I would want to
+> hear from the people on the other side who have (once) thought that
+> this was an addition we would want to have, before we remove/demote
+> it.
+> 
+> I do not personally think, as the design of v2 stands, a standalone
+> "serve" server that "can serve anything as long as it goes over
+> protocol v2" makes much sense, but perhaps those who have been doing
+> the v2 work may have different ideas, in which case let's hear what
+> their plans are.
 
-OK, so do you want me to do the squashing or are you sending the
-final version with jrnieder's reviewd-by's?  Either is fine, but
-I need to know to avoid waiting for an update that will not come.
+I too would like to hear more definite comments from people who think
+git-serve is worth keeping. In the meantime, there's some discussion
+from this thread in December:
 
+  https://public-inbox.org/git/20181211104236.GA6899@sigill.intra.peff.net/
+
+especially this sub-thread:
+
+  https://public-inbox.org/git/20181213195305.249059-1-jonathantanmy@google.com/
+
+(In case you do not feel like reading the whole thing, my opinion there
+is that git-serve is probably not the right direction, and we would do
+well to demote it as Dscho's patch does).
+
+-Peff
