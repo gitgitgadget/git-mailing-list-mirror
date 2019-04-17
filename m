@@ -7,60 +7,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ABCA20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 14:59:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CED8720248
+	for <e@80x24.org>; Wed, 17 Apr 2019 15:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732357AbfDQO7R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 10:59:17 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:39856 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731454AbfDQO7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 10:59:17 -0400
-Received: by mail-wr1-f53.google.com with SMTP id j9so32365670wrn.6
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:59:16 -0700 (PDT)
+        id S1731844AbfDQPEX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 11:04:23 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40563 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729356AbfDQPEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 11:04:23 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z24so4009920wmi.5
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 08:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=vvZX/ZmDcs+gdHAmMokpO2QAzoM3pNzs0EK71SpbtYA=;
-        b=YqAvSWu5+KBMz8HBQOptvt8fewKHqdUE1PqR1KlxfQqXXqtey3j22K2P1Dsh+Lh7aO
-         J43Y2PXkaUPXG5cxY/XAy5xMfxrVh0KBJjccqJ8ZZ169xojkRkvYW5ayyQpecjeC4B81
-         L0yh956uFWfSdb0wlSyavr6nkb7HbinlsgWfEXdLak6lezCqwX/dq9Ut1mEWF02M5HaC
-         VP/F0zFHZOY0X1dn1ph8qist+ef7c0sqB9Rryj5PMz8Na6gVh19LKWjpcI4nG7fO/RzE
-         /a98dM8iNr7x6/3d50Dl1Bb9JS7ieuN6z/kTpigaxiyVmgNo8HwVz7izS+cTr7JpbVie
-         BsqA==
+        bh=vKA0TVMAXxX4x6Oz3v8yXsxyXxCcCm8CGSxh4wljl/w=;
+        b=IkQSEDqGH5e1UwaszyRAfRVhcZ3A2leQEn0aDybEO08YP7fHYzzwGuneegvLXYBzsd
+         r6WYXzKgk+lHuweg3jvsMGuVIVhYlK35/kCwaF5XA1Cwfo5B7rWT3eFpxT5n+3CjTEkg
+         gQtXIxhkRNQIvIMV0tpVRwZA+fuyTFA6aPEvXPVs1Eq8x8ct9fTTHiEcYfO1YwW4Snvt
+         wW7kFqrhDIUGSTV8GnBkq1UCRmcrIpy+UbYz/SEc2uQ8DoE25EaOc80OptUsI/Qcqodc
+         BYsZpWZwrpDTyICHrGciceSgPHPMsRHrm3HdJ3t70frxT/pRXCri1BjErhgsMQkATH7N
+         72vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vvZX/ZmDcs+gdHAmMokpO2QAzoM3pNzs0EK71SpbtYA=;
-        b=lCKhduguB2FIhv7wUsSLnE905psuLDBX6OvqKyx4xoyF+G5k8p9CHTOTWTR3gJGKUM
-         CER/wo0CU0wdD0mstNLoxPDL2/tMXRolEsTdwkcxFxoMwHUa5MCP0wjXTqmjH+vPUHQL
-         IJrdHKwcxfcNeOXcjBC0H09AUi8M7aH6S8Dhf0dVhrhYluYuj1hQKN33P5jdFtkkCSl2
-         I2sS0qUak/+ZWEK/nM5Gqv4QxAkt1aHXG9LrEX1VUoaPoL0YDAynmheXar6/dubZtDfV
-         ouSIoIail6ptMNqBjqe1zQG1TLO2BXwlaoxCpfidfWq6j7cm8uQD93NHJuwsjoxVR0Je
-         yrIg==
-X-Gm-Message-State: APjAAAU5/31SbmPPjr+tofH8Dv/YS36cs/r5bfixwKAbzMtqX0RZu71k
-        CTW3rmUJ6A2+7Oqg0V8Qh8vSxdztcuM=
-X-Google-Smtp-Source: APXvYqxXTC42KnPyGreGTzMuL7I1IiRP87o4oht0WFtbjbNoIMJ0GE8A1HcOA9Phbk+KYTAJ04hLmA==
-X-Received: by 2002:adf:fa47:: with SMTP id y7mr39411834wrr.27.1555513155383;
-        Wed, 17 Apr 2019 07:59:15 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=vKA0TVMAXxX4x6Oz3v8yXsxyXxCcCm8CGSxh4wljl/w=;
+        b=qDdrrjP5ebiX/AAZX/Svl2uo1pk4yhxCKL7BOa3aZj0j5pCX0wzcfIcD7ZWWq4AUPP
+         PwNcFLfSlfFKIZvHwXZGRY4Bo6KTWFXYZkhoFgjksb/THwJa5vHDCsrp9uK0dmCftSBD
+         xy1Ip4tvNE1SCCSW20+SLHA+K1ztt6EmeBulGmWMbP80oRwXl4xXobLEJxj6WGNVJV6M
+         nKwEstVtZDFlZnABP9uKkD63Mt2a5SPQkJQqzqo/KRGZs2Da+K7YEq4CeeqZJtgKezz0
+         pPbb2vUWVxIwf7jD2azlUgLzHy1j+cd8XoX+tS6WpA1VZ3wexqtxHRHeIJ0zIyLQjVwR
+         iFfA==
+X-Gm-Message-State: APjAAAX5v9GSgx8nk8pSj8V6LrYDjP9M+D8L3b+JfLBxRt3NNzupPUhH
+        4EeeGWyCUThn9VKs9qMrrzrAdiRS4TE=
+X-Google-Smtp-Source: APXvYqwijJWyQYw2aw245KVS08OjvVHJCQBAaTiQXFcMn11UlVjGR0BRn3qh/O+ZMWDZiyXR8gg5ng==
+X-Received: by 2002:a1c:5459:: with SMTP id p25mr30695825wmi.20.1555513461637;
+        Wed, 17 Apr 2019 08:04:21 -0700 (PDT)
 Received: from [192.168.2.240] (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id i28sm149966016wrc.32.2019.04.17.07.59.14
+        by smtp.gmail.com with ESMTPSA id x18sm3453425wmi.6.2019.04.17.08.04.20
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 07:59:14 -0700 (PDT)
+        Wed, 17 Apr 2019 08:04:20 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Generating a todo file for non-interactive rebasing
-To:     Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
-References: <20190416153709.GA19000@homura.localdomain>
+Subject: Re: [PATCH v2 1/2] commit/reset: try to clean up sequencer state
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20190329163009.493-1-phillip.wood123@gmail.com>
+ <20190416101842.16556-1-phillip.wood123@gmail.com>
+ <20190416101842.16556-2-phillip.wood123@gmail.com>
+ <xmqqr2a1jenm.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1904171423370.46@tvgsbejvaqbjf.bet>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <07e0259b-0d7a-b109-cd3c-ccfbf17ad573@gmail.com>
-Date:   Wed, 17 Apr 2019 15:59:12 +0100
+Message-ID: <f1371b89-8f8b-d0b9-7bda-23f8cb5d0541@gmail.com>
+Date:   Wed, 17 Apr 2019 16:04:19 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190416153709.GA19000@homura.localdomain>
+In-Reply-To: <nycvar.QRO.7.76.6.1904171423370.46@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -69,41 +78,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Drew
+Hi Dscho
 
-On 16/04/2019 16:37, Drew DeVault wrote:
-> Hiya!
+On 17/04/2019 13:26, Johannes Schindelin wrote:
+> Hi,
 > 
-> Whenever I do a particularly long rebase on a branch, sorting out
-> conflicts from upstream, I find that it's often useful to have the
-> additional context that you get during an interactive rebase, such as
-> recent commands run, commands planned to run, and so on, to get a better
-> idea of where I'm at during the rebase. These show when you run `git
-> status` during an interactive rebase.
+> On Wed, 17 Apr 2019, Junio C Hamano wrote:
 > 
-> However, the code that generates this report relies on a todo list being
-> generated in the rebase state directory. A todo list which consists only
-> of "pick" commands is functionally equivalent to a non-interactive
-> rebase, the only difference being that the editor isn't shown to the
-> user.
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> Avoid this potential problem by removing the sequencer state if we're
+>>> committing or resetting the final pick in a sequence.
+>>
+>> The use-case story before this conclusion only mentioned "commit"
+>> that concluded the multi-step cherry-pick/revert, and never talked
+>> about "reset", which made my eyebrows to rise.
+>>
+>> As a part of "reset", we have already been removing CHERRY_PICK_HEAD
+>> and REVERT_HEAD, so "git reset" during a conflicted "cherry-pick"
+>> for example is already destructive and the user can no longer get
+>> back to continuing the cherry-pick anyway after running it, even
+>> without this patch.  So from that point of view, it does make sense
+>> to remove the other sequencer states at the same time.
 > 
-> Is there any reason not to refactor the rebase command to always
-> generate a todo list? This would simplify the internals and provide more
-> context to the user during hairy rebases. It might also be useful to run
-> --edit-todo if you realize your rebase strategy needs to change partway
-> through a rebase which was initially non-interactive.
+> Do you mean to say that a `git reset` during `git cherry-pick <range>`
+> aborts it?
 
-Things are moving in that direction. Currently --merge, --keep-empty, 
---recreate-merges and --exec will result in a todo list being used 
-regardless of --interactive. There was some discussion a couple of 
-months ago about making --merge the default if there were no am specific 
-options given but I've not noticed a patch for that yet. There is also a 
-GSoC project that will implement some of the am specific options for the 
-interactive backend with the long term aim of removing the am based backend.
+No I mean it removes CHERRY_PICK_HEAD/REVERT_HEAD and so cancels the 
+conflicting pick/revert, it does not abort the operation as a whole. If 
+the conflicting pick/revert was the last in a range then we want it to 
+remove .git/sequencer as well as the ..._HEAD file as it is easy to 
+forget to run --continue in that case.
 
 Best Wishes
 
 Phillip
+
+> In my experience, this is not the case. The advice printed out after a
+> conflict even recommends to run `git reset` (followed by `git cherry-pick
+> --continue`, in lieu of the `git cherry-pick --skip` we have yet to
+> implement).
 > 
-> Note: I'm a non-subscriber, please Cc me on replies.
+> So I don't think it is correct to say that `git reset` does not let the
+> user get back to continuing a cherry-pick...
+> 
+> Ciao,
+> Dscho
 > 
