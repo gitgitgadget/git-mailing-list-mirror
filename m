@@ -2,294 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC28A20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 06:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F05920248
+	for <e@80x24.org>; Wed, 17 Apr 2019 07:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730799AbfDQGoY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 02:44:24 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37141 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725814AbfDQGoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 02:44:24 -0400
-Received: by mail-pg1-f194.google.com with SMTP id e6so11540667pgc.4
-        for <git@vger.kernel.org>; Tue, 16 Apr 2019 23:44:24 -0700 (PDT)
+        id S1729446AbfDQHEt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 03:04:49 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40464 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729237AbfDQHEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 03:04:48 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h4so30422559wre.7
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 00:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=aEI3cTFXchaz2RE2cOPp2/xKnJ1TlTFpa3vYKCep3rI=;
-        b=ckZm5shRA61cpZzQP8DC3iQaj/vkb6uEfS1/aMZjcC0KN7A1HQL7MLdZcVZh7bLfID
-         6z0il9GNubwQei5yFvpH1DFivZf94Ex07HM7kdTgoPStOlHVuPowX7MyhMd6sXJGPEGJ
-         cemIUnf/W+0RtKkWIWc1vdOo28Bw3R82Fxbf52v2WTC10yWWitDM3YQylzHohna+K836
-         bBI0mEGFHT/hA9SP/ocR0NtBIBB4sQjgkV4kkWjgNYPVrlMwoFivZrMStehTBumpCWkW
-         tA9MNRlT7D7Rlyg5UT+2pQXBpzvBgoupKQW70OaqpFJWy+Db1o+fuVVhSBqVOxMGWZEA
-         oHaA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cOjVwEUWczTxsNGL/yiZTSzgPxIOcFunPETqBtP4ENs=;
+        b=WsdrTXoRbFFM9OCPhJrvlYlbfoCUjfOrlXVP3q5iDT3rTUZiCgHQUpqOGqqNI0iuYi
+         y/zG3ARtikA4OLT1TziwYWU5kVLG5HoNxKbuVWFlmFtaVRWtUfnzBq2l+iA1DypT+V7a
+         eqlLlu3EFBZl0KCQWDSu/e3TY0x+vlaSLXhqJYmrkWHtjx6lB3ug9KSLtOUKdNjzfEMk
+         YSYyic16YGZen/+uuiSXGXX6C1xa5K0GYdH/PnZRpqVNb++Rpp24jaNYF4KvGtpD4s7c
+         y9gY8cQex62nWb+rIRZY8HpCrL4oouxo1A1eAaPRAI+I2DpzXQofaxxWLWOMOSNk1Cri
+         vgcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aEI3cTFXchaz2RE2cOPp2/xKnJ1TlTFpa3vYKCep3rI=;
-        b=cyTgDYqQ4ASTu3qaZB5wnmnVHwgfir5srqqniM1yMBrATm848GBKDLFWf3HJomk6fj
-         jagaBOKkdaQUyhp8Tq+Yj5xxw7wQQumjugwA5eJYy25RwKLfhk4SIHkJrkaffdTjhU6z
-         lUxdPdxc59jM98OLC8fas6sYOB4F7OYMFUs0Ntd6l5/gBu4xviaccvA3KvQ6JeHCj65e
-         8sjW+LZ1esHu5aqWw0bJLJefeAlD5A5l0X9JhEGPMr0yxX/xLo0f79JRphaArzbR9twu
-         o65yPOeutZ+wbUyZgGIj2K8BxbcfTltlHxHwfumNXLL52dwaNkNbFu551Vyy3qalG3Pm
-         XMGQ==
-X-Gm-Message-State: APjAAAW9rd23gFpbruA5j5hyWzGH0EkUav4d9MZ+dXzFGkBvJOIRcce1
-        UmK3PvzsVHGxch6CUroaLus=
-X-Google-Smtp-Source: APXvYqwVvPZ6whvowXO+q4b3r14+gp3v1lAXRByKHD1/WfIZZpqH4Fao+iNJwbAczHG5kH6iJYSq2A==
-X-Received: by 2002:a62:e80f:: with SMTP id c15mr87323058pfi.93.1555483463443;
-        Tue, 16 Apr 2019 23:44:23 -0700 (PDT)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id g5sm40128142pfo.53.2019.04.16.23.44.22
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cOjVwEUWczTxsNGL/yiZTSzgPxIOcFunPETqBtP4ENs=;
+        b=QAz9JgiOo0m8WD0i/KPXeebY6Q4XCvz1tfgeB/qvabCV5XsrBxV7e20aMpMPDry7yW
+         exlp01BGU2F/NGSwXt5YLhV4eLUQe5f3Tc6KQX1T3Ah+5auWq1GXY0XcaxzhpUUyHFej
+         BxBfVH2rT2IGpiDNEx16s335BDBZiZHC6NmK1cNTP2PWyWhFBzXkCiuPQBgLct4QWeBG
+         7nCkOS/vZU2xRS+FEfxwvtZ5HrA4f++yMMyJTx65uk5QbGYJIbPwfxK1q31HVyCutROv
+         bSZ1C75qqdMEfdPcJ/uE5Xxi7vMuvOM5idrHNgMpodydCa54giFTgL0wmGeo/lgKXJfT
+         cR3A==
+X-Gm-Message-State: APjAAAUD/jR3f+GcdwJP+lYPiwthrigPdog6nNFhOpPCdX4ShBaX6pK0
+        o51dd/MgT6P2gzD4Yk2/CNk=
+X-Google-Smtp-Source: APXvYqyM/TTTmhEVdqPmE9xDBN1iWapveTZLtBXw8WfrSVVyNsyVmrgAnzns2V67115lkzOz61J/Ng==
+X-Received: by 2002:adf:e449:: with SMTP id t9mr53445986wrm.204.1555484686793;
+        Wed, 17 Apr 2019 00:04:46 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id s18sm1466751wmc.41.2019.04.17.00.04.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Apr 2019 23:44:22 -0700 (PDT)
-Date:   Tue, 16 Apr 2019 23:44:20 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     phillip.wood@dunelm.org.uk
+        Wed, 17 Apr 2019 00:04:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v5 3/5] rebase: fast-forward --onto in more cases
-Message-ID: <20190417064420.GA12818@archbookpro.localdomain>
-References: <cover.1554500051.git.liu.denton@gmail.com>
- <cover.1555366891.git.liu.denton@gmail.com>
- <ec55da07191e7f0a1d31342053c1496405ba7d3a.1555366891.git.liu.denton@gmail.com>
- <216aa032-d28e-79ba-6bc7-c4bd3de4321d@gmail.com>
+        Elijah Newren <newren@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 1/2] commit/reset: try to clean up sequencer state
+References: <20190329163009.493-1-phillip.wood123@gmail.com>
+        <20190416101842.16556-1-phillip.wood123@gmail.com>
+        <20190416101842.16556-2-phillip.wood123@gmail.com>
+Date:   Wed, 17 Apr 2019 16:04:45 +0900
+In-Reply-To: <20190416101842.16556-2-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Tue, 16 Apr 2019 11:18:41 +0100")
+Message-ID: <xmqqr2a1jenm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <216aa032-d28e-79ba-6bc7-c4bd3de4321d@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 16, 2019 at 02:59:12PM +0100, Phillip Wood wrote:
-> Hi Denton
-> 
-> It's good to see rebase fast-forwarding properly when it should
-> 
-> On 15/04/2019 23:29, Denton Liu wrote:
-> > Before, when we had the following graph,
-> > 
-> > 	A---B---C (master)
-> > 	    \
-> > 	     D (side)
-> > 
-> > running 'git rebase --onto master... master side' would result in D
-> > being always rebased, no matter what. However, the desired behavior is
-> > that rebase should notice that this is fast-forwardable and do that
-> > instead.
-> > 
-> > Add detection to `can_fast_forward` so that this case can be detected
-> > and a fast-forward will be performed. First of all, rewrite the function
-> > to use gotos which simplifies the logic. Next, since the
-> > 
-> > 	options.upstream &&
-> > 	!oidcmp(&options.upstream->object.oid, &options.onto->object.oid)
-> > 
-> > conditions were removed in `cmd_rebase`, we reintroduce a substitute in
-> > `can_fast_forward`. In particular, checking the merge bases of
-> > `upstream` and `head` fixes a failing case in t3416.
-> > 
-> > The abbreviated graph for t3416 is as follows:
-> > 
-> > 		    F---G topic
-> > 		   /
-> > 	  A---B---C---D---E master
-> > 
-> > and the failing command was
-> > 
-> > 	git rebase --onto master...topic F topic
-> > 
-> > Before, Git would see that there was one merge base (C), and the merge
-> > and onto were the same so it would incorrectly return 1, indicating that
-> > we could fast-forward. This would cause the rebased graph to be 'ABCFG'
-> > when we were expecting 'ABCG'.
-> > 
-> > With the additional logic, we detect that upstream and head's merge base
-> > is F. Since onto isn't F, it means we're not rebasing the full set of
-> > commits from master..topic. Since we're excluding some commits, a
-> > fast-forward cannot be performed and so we correctly return 0.
-> > 
-> > Add '-f' to test cases that failed as a result of this change because
-> > they were not expecting a fast-forward so that a rebase is forced.
-> > 
-> > While we're at it, remove a trailing whitespace from rebase.c.
-> > 
-> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > ---
-> >   builtin/rebase.c               | 40 +++++++++++++++++++++++-----------
-> >   t/t3400-rebase.sh              |  2 +-
-> >   t/t3404-rebase-interactive.sh  |  2 +-
-> >   t/t3432-rebase-fast-forward.sh |  4 ++--
-> >   4 files changed, 31 insertions(+), 17 deletions(-)
-> > 
-> > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 77deebc65c..7aa6a090d4 100644
-> > --- a/builtin/rebase.c
-> > +++ b/builtin/rebase.c
-> > @@ -895,12 +895,12 @@ static int is_linear_history(struct commit *from, struct commit *to)
-> >   	return 1;
-> >   }
-> > -static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
-> > -			    struct object_id *merge_base)
-> > +static int can_fast_forward(struct commit *onto, struct commit *upstream,
-> > +			    struct object_id *head_oid, struct object_id *merge_base)
-> >   {
-> >   	struct commit *head = lookup_commit(the_repository, head_oid);
-> > -	struct commit_list *merge_bases;
-> > -	int res;
-> > +	struct commit_list *merge_bases = NULL;
-> > +	int res = 0;
-> >   	if (!head)
-> >   		return 0;
-> > @@ -908,12 +908,29 @@ static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
-> >   	merge_bases = get_merge_bases(onto, head);
-> >   	if (merge_bases && !merge_bases->next) {
-> >   		oidcpy(merge_base, &merge_bases->item->object.oid);
-> > -		res = oideq(merge_base, &onto->object.oid);
-> > +		if (!oideq(merge_base, &onto->object.oid))
-> > +			goto done;
-> >   	} else {
-> >   		oidcpy(merge_base, &null_oid);
-> > -		res = 0;
-> > +		goto done;
-> >   	}
-> > +
-> > +	if (!upstream)
-> > +		goto done;
-> > +
-> >   	free_commit_list(merge_bases);
-> > +	merge_bases = get_merge_bases(upstream, head);
-> > +	if (merge_bases && !merge_bases->next) {
-> > +		if (!oideq(&onto->object.oid, &merge_bases->item->object.oid))
-> > +			goto done;
-> > +	} else
-> > +		goto done;
-> > +
-> > +	res = 1;
-> > +
-> > +done:
-> > +	if (merge_bases)
-> > +		free_commit_list(merge_bases);
-> >   	return res && is_linear_history(onto, head);
-> >   }
-> 
-> I had a hard time following all those gotos. When you 'goto done' in both
-> branches of an if statement it is hard to work out which cases fall through
-> to the rest of the code. If I've understood it correctly I think it is
-> clearer as
-> 
->         merge_bases = get_merge_bases(onto, head);
->         if (merge_bases && !merge_bases->next) {
->                 oidcpy(merge_base, &merge_bases->item->object.oid);
->                 if (oideq(merge_base, &onto->object.oid) && upstream) {
->                         free_commit_list(merge_bases);
->                         merge_bases = get_merge_bases(upstream, head);
->                         if (merge_bases && !merge_bases->next)
->                                 if (oideq(&onto->object.oid,
->                                            &merge_bases->item->object.oid))
->                                         res = 1;
->                 }
->         } else {
->                 oidcpy(merge_base, &null_oid);
->         }
-> 
->         if (merge_bases)
->                 free_commit_list(merge_bases);
->         return res && is_linear_history(onto, head);
-> }
-> 
-> The nested if's aren't great but I think it is easier to follow
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I am pretty impartial between gotos and ifs. If no one else has any
-strong opinions between the two, I'll reroll with ifs.
+> Avoid this
+> potential problem by removing the sequencer state if we're committing or
+> resetting the final pick in a sequence.
 
-> 
-> > @@ -1682,13 +1699,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-> >   	/*
-> >   	 * Check if we are already based on onto with linear history,
-> > -	 * but this should be done only when upstream and onto are the same
-> > -	 * and if this is not an interactive rebase.
-> > +	 * but this should be done if this is not an interactive rebase.
-> >   	 */
-> > -	if (can_fast_forward(options.onto, &options.orig_head, &merge_base) &&
-> > -	    !is_interactive(&options) && !options.restrict_revision &&
-> > -	    options.upstream &&
-> > -	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
-> > +	if (can_fast_forward(options.onto, options.upstream, &options.orig_head, &merge_base) &&
-> 
-> This is rather long, perhaps break the argument list
+The use-case story before this conclusion only mentioned "commit"
+that concluded the multi-step cherry-pick/revert, and never talked
+about "reset", which made my eyebrows to rise.
 
-Thanks, will do.
+As a part of "reset", we have already been removing CHERRY_PICK_HEAD
+and REVERT_HEAD, so "git reset" during a conflicted "cherry-pick"
+for example is already destructive and the user can no longer get
+back to continuing the cherry-pick anyway after running it, even
+without this patch.  So from that point of view, it does make sense
+to remove the other sequencer states at the same time.
 
-> 
-> Best Wishes
-> 
-> Phillip
-> > +	    !is_interactive(&options) && !options.restrict_revision) {
-> >   		int flag;
-> >   		if (!(options.flags & REBASE_FORCE)) {
-> > @@ -1782,7 +1796,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-> >   	strbuf_addf(&msg, "%s: checkout %s",
-> >   		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
-> >   	if (reset_head(&options.onto->object.oid, "checkout", NULL,
-> > -		       RESET_HEAD_DETACH | RESET_ORIG_HEAD |
-> > +		       RESET_HEAD_DETACH | RESET_ORIG_HEAD |
-> >   		       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
-> >   		       NULL, msg.buf))
-> >   		die(_("Could not detach HEAD"));
-> > diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> > index 460d0523be..604d624ff8 100755
-> > --- a/t/t3400-rebase.sh
-> > +++ b/t/t3400-rebase.sh
-> > @@ -295,7 +295,7 @@ test_expect_success 'rebase--am.sh and --show-current-patch' '
-> >   		echo two >>init.t &&
-> >   		git commit -a -m two &&
-> >   		git tag two &&
-> > -		test_must_fail git rebase --onto init HEAD^ &&
-> > +		test_must_fail git rebase -f --onto init HEAD^ &&
-> >   		GIT_TRACE=1 git rebase --show-current-patch >/dev/null 2>stderr &&
-> >   		grep "show.*$(git rev-parse two)" stderr
-> >   	)
-> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> > index b60b11f9f2..f054186cc7 100755
-> > --- a/t/t3404-rebase-interactive.sh
-> > +++ b/t/t3404-rebase-interactive.sh
-> > @@ -1066,7 +1066,7 @@ test_expect_success C_LOCALE_OUTPUT 'rebase --edit-todo does not work on non-int
-> >   	git reset --hard &&
-> >   	git checkout conflict-branch &&
-> >   	set_fake_editor &&
-> > -	test_must_fail git rebase --onto HEAD~2 HEAD~ &&
-> > +	test_must_fail git rebase -f --onto HEAD~2 HEAD~ &&
-> >   	test_must_fail git rebase --edit-todo &&
-> >   	git rebase --abort
-> >   '
-> > diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-> > index 4f04d67fd7..d0e5b1f3e6 100755
-> > --- a/t/t3432-rebase-fast-forward.sh
-> > +++ b/t/t3432-rebase-fast-forward.sh
-> > @@ -64,9 +64,9 @@ test_expect_success 'add work to upstream' '
-> >   changes='our and their changes'
-> >   test_rebase_same_head success --onto B B
-> >   test_rebase_same_head success --onto B... B
-> > -test_rebase_same_head failure --onto master... master
-> > +test_rebase_same_head success --onto master... master
-> >   test_rebase_same_head failure --fork-point --onto B B
-> >   test_rebase_same_head failure --fork-point --onto B... B
-> > -test_rebase_same_head failure --fork-point --onto master... master
-> > +test_rebase_same_head success --fork-point --onto master... master
-> >   test_done
-> > 
+Thanks.
