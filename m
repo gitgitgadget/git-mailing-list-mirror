@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9508120248
-	for <e@80x24.org>; Wed, 17 Apr 2019 14:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D752520248
+	for <e@80x24.org>; Wed, 17 Apr 2019 14:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732524AbfDQOdK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 10:33:10 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52270 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732476AbfDQOdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 10:33:09 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a184so3676921wma.2
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:33:07 -0700 (PDT)
+        id S1732549AbfDQOdO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 10:33:14 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39797 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732511AbfDQOdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 10:33:11 -0400
+Received: by mail-wm1-f68.google.com with SMTP id n25so3867079wmk.4
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=XMjIpNyaO5FyQdCuidnj3R1xFj9i6i3i8gEmKbtmaoU=;
-        b=WGxJGVy5MFAzt++0VXkBW6YPbJoYKbcTf4GiUUSYUWPD7VSnotO0ZPDvlC0sNaD064
-         AVwwIqAgGV1Ea7OiQbTEw9KV85wdhNZ2i2y4Lkw8i4THOH4HWJuZtKUjCM5bKzjkHtMj
-         Hz6A9oORDJP0fPhruQ22ftEb6ExN40O/vXJF4ZPokr+Bkt3KgfZ/rHNIYpMe8nUPHI6X
-         6Bcr8t29He/t1JNwZ21EsRhI1XgMym/PQIVoofTDbtz/Eag0THRkmQkNg3KbFJ8xeU1B
-         MNhQlmIC3Sih1lQVvIRxKwLp2t5PQqr0Hec+hVMKra2Aiv2wUoPrRs+KywA874TtU+M7
-         +kog==
+        bh=I09xJgZceWl+/W7xugirCKE0JWWD9NuXMK6hDBGJfrc=;
+        b=JHp1+MkvjQAmh44/Sc1gvYnZj9b4PLaCEJgxSy+xMCVgiUvq4fnC8EZvtkXoyi38d5
+         PVrcAd+2mxGusQP1byBsCSpm3V/Avi3RDvL91s+PlzDSkd822PXUTRIOF3UWHRoKnlNc
+         CvPMK7JdPphxanmdeUD258CZWCqLXisWELVncDLm7liGO3onSG1TX+ceZwGpNQ/275zo
+         KiCJODSJj7+wl+UxCJ2QmgxjTWG4sLdK+OT6qNNzED1Tjv34yw7ZOB5yLWzStvk7V1vp
+         7gDENIukYuKmx0NZtmQglUGZJOGcAXsdaoDVYpcF+kp3h+Hv9Oc/w3kPf7kuVAbTBRh6
+         oFjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=XMjIpNyaO5FyQdCuidnj3R1xFj9i6i3i8gEmKbtmaoU=;
-        b=lm5+yohIdF4zgZ9bRd5jRJgev/83tbgln+hcwUTwyRfWu6nXFVeN4R8y07O307gIW1
-         qQ3CwqnrUOVLV6mX1nm9w00qHOmuqAcvNVdyfxsIdYylYT8wwfLuqSGb1zu16IavEjTw
-         aEKMJV0tOB5MUfCieiTeh7QlDXNVfUbIwaMUFHZqQWleHMUk8NZkf5v6CC5yb1Zb2RbN
-         yi76CeYk3n3V6F26JbOWbhwyp4MhuF7D4YvOQE8NeFDKG/b8nHgbNRqPzeHkdflNvF2J
-         7WlrAFsgVVjIbNIWnDPdXx30RC1CUFm1anR8siwFnm5z2nCsZzUQdO354Vz7ArE1lo9i
-         4jnw==
-X-Gm-Message-State: APjAAAWNAskpNL6PjbBHAOTfMSEs5ZbsYV7GeFrVRT4+Q5DUArEJV/0V
-        XaGoHrXwICyB4o9dgqPeWLSZQG7S5xE=
-X-Google-Smtp-Source: APXvYqzBuecUrSGciT9N5FSDZhv+Vh1OUioZ/zUBgI/U4eQvxIOItDnTmRJ7IMxvfoTG3Ipp2ad35Q==
-X-Received: by 2002:a7b:c458:: with SMTP id l24mr30360362wmi.75.1555511586878;
-        Wed, 17 Apr 2019 07:33:06 -0700 (PDT)
+        bh=I09xJgZceWl+/W7xugirCKE0JWWD9NuXMK6hDBGJfrc=;
+        b=h5MSKWloskXgRxmT2x+zq8cU2v6ZwrzSsBgIknS9fHQ43ZFZVn0pdsZyK7tGcPQmC7
+         AxM6A/vRea4p1LszyzyW9C+zvA9x5krkDqCCw+W9bNf0+MNc4TGGukJnn2JBpqZmq51S
+         LeRSCF6GZ/5lPSONLhOxR0DcPJFQnJ/cPyuwTglBeMyON2CE5AF6m56AQhcU+JvfrP37
+         zr8hpDnLiFB8L/xLZlBwbYqfRor01SlomXulMWoV/FdOZ6qFkq/CFdhJcNYd5Vy11XD0
+         U7mWWrO8O0Q4ZL6Fw5yFcF1P16lZ5G1MkaF9xK3qihecIUkjoOUZWz3hreO7+x0jhC8K
+         fXqQ==
+X-Gm-Message-State: APjAAAVqaUF/XUlxcBrF4dq0tCWDyoxCTwlIQqFJm1+ndnTPCAsyRXmB
+        x/vKUYJWyrCnI8pxZJ3mIEwfJeYNB0M=
+X-Google-Smtp-Source: APXvYqzwm7C0Ae+kfeBcbGJeXh6V8BXQGR3L7aZ3hZGjHvhJ5ho9FMnO1JsucPXsjWJkAhsVPjNkUg==
+X-Received: by 2002:a1c:4602:: with SMTP id t2mr4343wma.120.1555511588292;
+        Wed, 17 Apr 2019 07:33:08 -0700 (PDT)
 Received: from localhost.localdomain (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id t17sm52127726wrr.26.2019.04.17.07.33.05
+        by smtp.gmail.com with ESMTPSA id t17sm52127726wrr.26.2019.04.17.07.33.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 07:33:06 -0700 (PDT)
+        Wed, 17 Apr 2019 07:33:07 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -59,9 +59,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Josh Steadmon <steadmon@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 08/12] rebase -i: use struct object_id for squash_onto
-Date:   Wed, 17 Apr 2019 15:30:40 +0100
-Message-Id: <20190417143044.17655-9-phillip.wood123@gmail.com>
+Subject: [PATCH v1 09/12] rebase -i: use struct rebase_options to parse args
+Date:   Wed, 17 Apr 2019 15:30:41 +0100
+Message-Id: <20190417143044.17655-10-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190417143044.17655-1-phillip.wood123@gmail.com>
 References: <20190319190317.6632-1-phillip.wood123@gmail.com>
@@ -76,129 +76,325 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-More preparation for using `struct rebase_options` in
-cmd_rebase__interactive(). Using a string was a hangover from the
-scripted version of rebase, update the functions that use `squash_onto`
-to take a `sturct object_id`.
+In order to run `rebase -i` without forking `rebase--interactive` it
+will be convenient to use the same structure when parsing the options in
+cmd_rebase() and cmd_rebase__interactive().
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c   | 21 +++++++++++++--------
- parse-options-cb.c | 17 +++++++++++++++++
- parse-options.h    |  3 +++
- 3 files changed, 33 insertions(+), 8 deletions(-)
+ builtin/rebase.c | 203 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 112 insertions(+), 91 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 06f6490ca3..3b9da69473 100644
+index 3b9da69473..aa97d81ab8 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -198,7 +198,7 @@ static int init_basic_state(struct replay_opts *opts, const char *head_name,
- static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 				 const char *switch_to, struct commit *upstream,
- 				 struct commit *onto, const char *onto_name,
--				 const char *squash_onto, const char *head_name,
-+				 struct object_id *squash_onto, const char *head_name,
- 				 struct commit *restrict_revision, char *raw_strategies,
- 				 struct string_list *commands, unsigned autosquash)
- {
-@@ -226,7 +226,8 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 	}
+@@ -50,6 +50,73 @@ enum rebase_type {
+ 	REBASE_PRESERVE_MERGES
+ };
  
- 	if (!upstream && squash_onto)
--		write_file(path_squash_onto(), "%s\n", squash_onto);
-+		write_file(path_squash_onto(), "%s\n",
-+			   oid_to_hex(squash_onto));
- 
- 	argv_array_pushl(&make_script_args, "", revisions, NULL);
- 	if (restrict_revision)
-@@ -267,10 +268,11 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, autosquash = 0;
- 	int abbreviate_commands = 0, rebase_cousins = -1, ret = 0;
--	const char *onto_name = NULL,
--		*squash_onto = NULL, *head_name = NULL,
--		*switch_to = NULL, *cmd = NULL;
-+	const char *onto_name = NULL, *head_name = NULL, *switch_to = NULL,
-+		*cmd = NULL;
- 	struct commit *onto = NULL, *upstream = NULL, *restrict_revision = NULL;
-+	struct object_id squash_onto = null_oid;
-+	struct object_id *squash_onto_opt = NULL;
- 	struct string_list commands = STRING_LIST_INIT_DUP;
- 	char *raw_strategies = NULL;
- 	enum {
-@@ -311,8 +313,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 		{ OPTION_CALLBACK, 0, "restrict-revision", &restrict_revision,
- 		  N_("restrict-revision"), N_("restrict revision"),
- 		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
--		OPT_STRING(0, "squash-onto", &squash_onto, N_("squash-onto"),
--			   N_("squash onto")),
-+		{ OPTION_CALLBACK, 0, "squash-onto", &squash_onto, N_("squash-onto"),
-+		  N_("squash onto"), PARSE_OPT_NONEG, parse_opt_object_id, 0 },
- 		{ OPTION_CALLBACK, 0, "upstream", &upstream, N_("upstream"),
- 		  N_("the upstream commit"), PARSE_OPT_NONEG, parse_opt_commit,
- 		  0 },
-@@ -349,6 +351,9 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 
- 	opts.gpg_sign = xstrdup_or_null(opts.gpg_sign);
- 
-+	if (!is_null_oid(&squash_onto))
-+		squash_onto_opt = &squash_onto;
++struct rebase_options {
++	enum rebase_type type;
++	const char *state_dir;
++	struct commit *upstream;
++	const char *upstream_name;
++	const char *upstream_arg;
++	char *head_name;
++	struct object_id orig_head;
++	struct commit *onto;
++	const char *onto_name;
++	const char *revisions;
++	const char *switch_to;
++	int root;
++	struct object_id *squash_onto;
++	struct commit *restrict_revision;
++	int dont_finish_rebase;
++	enum {
++		REBASE_NO_QUIET = 1<<0,
++		REBASE_VERBOSE = 1<<1,
++		REBASE_DIFFSTAT = 1<<2,
++		REBASE_FORCE = 1<<3,
++		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
++	} flags;
++	struct argv_array git_am_opts;
++	const char *action;
++	int signoff;
++	int allow_rerere_autoupdate;
++	int keep_empty;
++	int autosquash;
++	char *gpg_sign_opt;
++	int autostash;
++	char *cmd;
++	int allow_empty_message;
++	int rebase_merges, rebase_cousins;
++	char *strategy, *strategy_opts;
++	struct strbuf git_format_patch_opt;
++	int reschedule_failed_exec;
++};
 +
- 	flags |= keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
- 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
- 	flags |= rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
-@@ -373,7 +378,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 			die(_("a base commit must be provided with --upstream or --onto"));
- 
- 		ret = do_interactive_rebase(&opts, flags, switch_to, upstream, onto,
--					    onto_name, squash_onto, head_name, restrict_revision,
-+					    onto_name, squash_onto_opt, head_name, restrict_revision,
- 					    raw_strategies, &commands, autosquash);
- 		break;
- 	case SKIP: {
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 2206eb763c..28ad5cd94b 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -129,6 +129,23 @@ int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+int parse_opt_object_id(const struct option *opt, const char *arg, int unset)
-+{
-+	struct object_id oid;
-+	struct object_id *target = opt->value;
-+
-+	if (unset) {
-+		*target = null_oid;
-+		return 0;
++#define REBASE_OPTIONS_INIT {			  	\
++		.type = REBASE_UNSPECIFIED,	  	\
++		.flags = REBASE_NO_QUIET, 		\
++		.git_am_opts = ARGV_ARRAY_INIT,		\
++		.git_format_patch_opt = STRBUF_INIT	\
 +	}
-+	if (!arg)
-+		return -1;
-+	if (get_oid(arg, &oid))
-+		return error(_("malformed object name '%s'"), arg);
-+	*target = oid;
-+	return 0;
++
++static struct replay_opts get_replay_opts(const struct rebase_options *opts)
++{
++	struct replay_opts replay = REPLAY_OPTS_INIT;
++
++	replay.action = REPLAY_INTERACTIVE_REBASE;
++	sequencer_init_config(&replay);
++
++	replay.signoff = opts->signoff;
++	replay.allow_ff = !(opts->flags & REBASE_FORCE);
++	if (opts->allow_rerere_autoupdate)
++		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
++	replay.allow_empty = 1;
++	replay.allow_empty_message = opts->allow_empty_message;
++	replay.verbose = opts->flags & REBASE_VERBOSE;
++	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
++	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
++	replay.strategy = opts->strategy;
++
++	return replay;
 +}
 +
- int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+ static int add_exec_commands(struct string_list *commands)
  {
- 	int *target = opt->value;
-diff --git a/parse-options.h b/parse-options.h
-index 5a75646618..0ab1103bc7 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -264,7 +264,10 @@ int parse_opt_abbrev_cb(const struct option *, const char *, int);
- int parse_opt_expiry_date_cb(const struct option *, const char *, int);
- int parse_opt_color_flag_cb(const struct option *, const char *, int);
- int parse_opt_verbosity_cb(const struct option *, const char *, int);
-+/* value is struct oid_array* */
- int parse_opt_object_name(const struct option *, const char *, int);
-+/* value is struct object_id* */
-+int parse_opt_object_id(const struct option *, const char *, int);
- int parse_opt_commits(const struct option *, const char *, int);
- int parse_opt_commit(const struct option *, const char *, int);
- int parse_opt_tertiary(const struct option *, const char *, int);
+ 	const char *todo_file = rebase_path_todo();
+@@ -265,32 +332,30 @@ static const char * const builtin_rebase_interactive_usage[] = {
+ 
+ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ {
+-	struct replay_opts opts = REPLAY_OPTS_INIT;
+-	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, autosquash = 0;
+-	int abbreviate_commands = 0, rebase_cousins = -1, ret = 0;
+-	const char *onto_name = NULL, *head_name = NULL, *switch_to = NULL,
+-		*cmd = NULL;
+-	struct commit *onto = NULL, *upstream = NULL, *restrict_revision = NULL;
++	struct rebase_options opts = REBASE_OPTIONS_INIT;
++	unsigned flags = 0;
++	int abbreviate_commands = 0, ret = 0;
+ 	struct object_id squash_onto = null_oid;
+-	struct object_id *squash_onto_opt = NULL;
+ 	struct string_list commands = STRING_LIST_INIT_DUP;
+-	char *raw_strategies = NULL;
+ 	enum {
+ 		NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
+ 		SHORTEN_OIDS, EXPAND_OIDS, CHECK_TODO_LIST, REARRANGE_SQUASH, ADD_EXEC
+ 	} command = 0;
+ 	struct option options[] = {
+-		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+-		OPT_BOOL(0, "keep-empty", &keep_empty, N_("keep empty commits")),
++		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
++			   REBASE_FORCE),
++		OPT_BOOL(0, "keep-empty", &opts.keep_empty, N_("keep empty commits")),
+ 		OPT_BOOL(0, "allow-empty-message", &opts.allow_empty_message,
+ 			 N_("allow commits with empty messages")),
+-		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
+-		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
++		OPT_BOOL(0, "rebase-merges", &opts.rebase_merges, N_("rebase merge commits")),
++		OPT_BOOL(0, "rebase-cousins", &opts.rebase_cousins,
+ 			 N_("keep original branch points of cousins")),
+-		OPT_BOOL(0, "autosquash", &autosquash,
++		OPT_BOOL(0, "autosquash", &opts.autosquash,
+ 			 N_("move commits that begin with squash!/fixup!")),
+ 		OPT_BOOL(0, "signoff", &opts.signoff, N_("sign commits")),
+-		OPT__VERBOSE(&opts.verbose, N_("be verbose")),
++		OPT_BIT('v', "verbose", &opts.flags,
++			N_("display a diffstat of what changed upstream"),
++			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+ 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+ 			    CONTINUE),
+ 		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), SKIP),
+@@ -308,86 +373,86 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
+ 		OPT_CMDMODE(0, "add-exec-commands", &command,
+ 			N_("insert exec commands in todo list"), ADD_EXEC),
+-		{ OPTION_CALLBACK, 0, "onto", &onto, N_("onto"), N_("onto"),
++		{ OPTION_CALLBACK, 0, "onto", &opts.onto, N_("onto"), N_("onto"),
+ 		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+-		{ OPTION_CALLBACK, 0, "restrict-revision", &restrict_revision,
++		{ OPTION_CALLBACK, 0, "restrict-revision", &opts.restrict_revision,
+ 		  N_("restrict-revision"), N_("restrict revision"),
+ 		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+ 		{ OPTION_CALLBACK, 0, "squash-onto", &squash_onto, N_("squash-onto"),
+ 		  N_("squash onto"), PARSE_OPT_NONEG, parse_opt_object_id, 0 },
+-		{ OPTION_CALLBACK, 0, "upstream", &upstream, N_("upstream"),
++		{ OPTION_CALLBACK, 0, "upstream", &opts.upstream, N_("upstream"),
+ 		  N_("the upstream commit"), PARSE_OPT_NONEG, parse_opt_commit,
+ 		  0 },
+-		OPT_STRING(0, "head-name", &head_name, N_("head-name"), N_("head name")),
+-		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign, N_("key-id"),
++		OPT_STRING(0, "head-name", &opts.head_name, N_("head-name"), N_("head name")),
++		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign_opt, N_("key-id"),
+ 			N_("GPG-sign commits"),
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 		OPT_STRING(0, "strategy", &opts.strategy, N_("strategy"),
+ 			   N_("rebase strategy")),
+-		OPT_STRING(0, "strategy-opts", &raw_strategies, N_("strategy-opts"),
++		OPT_STRING(0, "strategy-opts", &opts.strategy_opts, N_("strategy-opts"),
+ 			   N_("strategy options")),
+-		OPT_STRING(0, "switch-to", &switch_to, N_("switch-to"),
++		OPT_STRING(0, "switch-to", &opts.switch_to, N_("switch-to"),
+ 			   N_("the branch or commit to checkout")),
+-		OPT_STRING(0, "onto-name", &onto_name, N_("onto-name"), N_("onto name")),
+-		OPT_STRING(0, "cmd", &cmd, N_("cmd"), N_("the command to run")),
+-		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_auto),
++		OPT_STRING(0, "onto-name", &opts.onto_name, N_("onto-name"), N_("onto name")),
++		OPT_STRING(0, "cmd", &opts.cmd, N_("cmd"), N_("the command to run")),
++		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_autoupdate),
+ 		OPT_BOOL(0, "reschedule-failed-exec", &opts.reschedule_failed_exec,
+ 			 N_("automatically re-schedule any `exec` that fails")),
+ 		OPT_END()
+ 	};
+ 
+-	sequencer_init_config(&opts);
++	opts.rebase_cousins = -1;
++
+ 	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
+ 
+-	opts.action = REPLAY_INTERACTIVE_REBASE;
+-	opts.allow_ff = 1;
+-	opts.allow_empty = 1;
+-
+ 	if (argc == 1)
+ 		usage_with_options(builtin_rebase_interactive_usage, options);
+ 
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+ 
+-	opts.gpg_sign = xstrdup_or_null(opts.gpg_sign);
+-
+ 	if (!is_null_oid(&squash_onto))
+-		squash_onto_opt = &squash_onto;
++		opts.squash_onto = &squash_onto;
+ 
+-	flags |= keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
++	flags |= opts.keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
+ 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
+-	flags |= rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
+-	flags |= rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
++	flags |= opts.rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
++	flags |= opts.rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
+ 	flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
+ 
+-	if (rebase_cousins >= 0 && !rebase_merges)
++	if (opts.rebase_cousins >= 0 && !opts.rebase_merges)
+ 		warning(_("--[no-]rebase-cousins has no effect without "
+ 			  "--rebase-merges"));
+ 
+-	if (cmd && *cmd) {
+-		string_list_split(&commands, cmd, '\n', -1);
++	if (opts.cmd && *opts.cmd) {
++		string_list_split(&commands, opts.cmd, '\n', -1);
+ 
+ 		/* rebase.c adds a new line to cmd after every command,
+ 		 * so here the last command is always empty */
+ 		string_list_remove_empty_items(&commands, 0);
+ 	}
+ 
+ 	switch (command) {
+-	case NONE:
+-		if (!onto && !upstream)
++	case NONE: {
++		struct replay_opts replay_opts = get_replay_opts(&opts);
++		if (!opts.onto && !opts.upstream)
+ 			die(_("a base commit must be provided with --upstream or --onto"));
+ 
+-		ret = do_interactive_rebase(&opts, flags, switch_to, upstream, onto,
+-					    onto_name, squash_onto_opt, head_name, restrict_revision,
+-					    raw_strategies, &commands, autosquash);
++		ret = do_interactive_rebase(&replay_opts, flags, opts.switch_to, opts.upstream, opts.onto,
++					    opts.onto_name, opts.squash_onto, opts.head_name, opts.restrict_revision,
++					    opts.strategy_opts, &commands, opts.autosquash);
+ 		break;
++	}
+ 	case SKIP: {
+ 		struct string_list merge_rr = STRING_LIST_INIT_DUP;
+ 
+ 		rerere_clear(the_repository, &merge_rr);
++	}
+ 		/* fallthrough */
+-	case CONTINUE:
+-		ret = sequencer_continue(the_repository, &opts);
++	case CONTINUE: {
++		struct replay_opts replay_opts = get_replay_opts(&opts);
++
++		ret = sequencer_continue(the_repository, &replay_opts);
+ 		break;
+ 	}
+ 	case EDIT_TODO:
+@@ -446,45 +511,6 @@ static int use_builtin_rebase(void)
+ 	return ret;
+ }
+ 
+-struct rebase_options {
+-	enum rebase_type type;
+-	const char *state_dir;
+-	struct commit *upstream;
+-	const char *upstream_name;
+-	const char *upstream_arg;
+-	char *head_name;
+-	struct object_id orig_head;
+-	struct commit *onto;
+-	const char *onto_name;
+-	const char *revisions;
+-	const char *switch_to;
+-	int root;
+-	struct object_id *squash_onto;
+-	struct commit *restrict_revision;
+-	int dont_finish_rebase;
+-	enum {
+-		REBASE_NO_QUIET = 1<<0,
+-		REBASE_VERBOSE = 1<<1,
+-		REBASE_DIFFSTAT = 1<<2,
+-		REBASE_FORCE = 1<<3,
+-		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+-	} flags;
+-	struct argv_array git_am_opts;
+-	const char *action;
+-	int signoff;
+-	int allow_rerere_autoupdate;
+-	int keep_empty;
+-	int autosquash;
+-	char *gpg_sign_opt;
+-	int autostash;
+-	char *cmd;
+-	int allow_empty_message;
+-	int rebase_merges, rebase_cousins;
+-	char *strategy, *strategy_opts;
+-	struct strbuf git_format_patch_opt;
+-	int reschedule_failed_exec;
+-};
+-
+ static int is_interactive(struct rebase_options *opts)
+ {
+ 	return opts->type == REBASE_INTERACTIVE ||
+@@ -1380,13 +1406,7 @@ static int check_exec_cmd(const char *cmd)
+ 
+ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ {
+-	struct rebase_options options = {
+-		.type = REBASE_UNSPECIFIED,
+-		.flags = REBASE_NO_QUIET,
+-		.git_am_opts = ARGV_ARRAY_INIT,
+-		.allow_empty_message = 1,
+-		.git_format_patch_opt = STRBUF_INIT,
+-	};
++	struct rebase_options options = REBASE_OPTIONS_INIT;
+ 	const char *branch_name;
+ 	int ret, flags, total_argc, in_progress = 0;
+ 	int ok_to_skip_pre_rebase = 0;
+@@ -1539,6 +1559,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	trace_repo_setup(prefix);
+ 	setup_work_tree();
+ 
++	options.allow_empty_message = 1;
+ 	git_config(rebase_config, &options);
+ 
+ 	strbuf_reset(&buf);
 -- 
 2.21.0
 
