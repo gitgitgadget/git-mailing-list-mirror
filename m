@@ -7,51 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B9B20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 18:01:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3B020248
+	for <e@80x24.org>; Wed, 17 Apr 2019 18:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730423AbfDQSB0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 14:01:26 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35127 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726751AbfDQSB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 14:01:26 -0400
-Received: by mail-pl1-f194.google.com with SMTP id w24so12393345plp.2
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 11:01:25 -0700 (PDT)
+        id S1730682AbfDQSB2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 14:01:28 -0400
+Received: from mail-pl1-f180.google.com ([209.85.214.180]:46755 "EHLO
+        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726751AbfDQSB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 14:01:27 -0400
+Received: by mail-pl1-f180.google.com with SMTP id y6so12366695pll.13
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 11:01:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=HkScEN5PpC/+tojUrClQmVvoONfdfonTu05yzWQoeMo=;
-        b=t93zk4Z408vLePOgdC/wtv+PBo9X7prmLyYF7QLYgQtg30qXRlvf7E7PWaqjzzNQKQ
-         yH95WtJkcT2DSB9gKOgNUtpg0Wg9uwR0l8UiKv2XKR8484M3s7t38BqXjjPAvDfsRzW0
-         A2Nqd1PNFlayZLDX3/ycAmQ4UlF4Z0yL2TY0bCG1xgDnig26EUW+UlGpeZP+hG0Q0rSf
-         Ggk1dhxYV6PcIfZn3O4p3qeTBijjHceQX3HdU1Hkc7Z8LUlLw7CvSBRE04m6uJzNSS4S
-         2o3TSGNlXgFS41loGN93UhEyDsQipvVzD0KyCGb7XfkZ3BhkrvhOGbtgQ5DR72SLaFbf
-         P5TQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=bbooXkmfFrU3lzEiQrq3qhvTIrSt4itjBeJHI2ai+q0=;
+        b=Sjc5Frjoe09SrQimI6GyCRcP8RRkRNy/bTKpSD0n4creklu1SY+GMfsR9gLO8lg86t
+         KDdsx0mZLBoiBBGVbcKQfQ3wkE93ik+d3EoSxDaw6Jo0pe6q28Bjl5Ay0rsfTLMsJVF9
+         /mo8SwResZDteOFwKN0gK3p2qImApWqZw0Le2Xsq7yOIIve/kHjEYieQrvGKy0cA8LOV
+         gss4rNU0GJN6Yqc/rTm7FOZUl5bRQSGunfj4h7OXCguRDaPnCft0K+NtcJcalJ/CyP1a
+         GgaJqvK58K+iN0UroSy/Su1mDWWQe4zoF7a3TdwTqPS0DphlquDMKs9NzHJnPFrzlDu+
+         H7ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HkScEN5PpC/+tojUrClQmVvoONfdfonTu05yzWQoeMo=;
-        b=HANKOGuw0nZBsa0RNQQZMPC7CEx5ZqLZDQhJcVYRTYOvVohD+gbeH97E9Q7+TZ7f3Z
-         XzbkH9o47Co5dJDphRvoJS3JHt0+fLaSz4XAhnSUwqJXoH50NKSeyIPAgH0ieG5mpGfY
-         DIIlIKuK6rPUwINbI7SxOs+qvoLFARdjVDosus+98nSKJF+zfr8tXhO6T1pyo8N7HQJA
-         g0Bsx/XVHztysgujmmQIR/SQpuHnuQVGLBx3DgB/lhkyQ/NW4x9wMHIv5ID/HiZ2hPVS
-         RHs2Hi/RHIkdgZPAGl1e5v6I3VqRGBlCIYJPd5pxQFgvnZ1B7TYzmvlrLEkNAoRyRoVG
-         jghg==
-X-Gm-Message-State: APjAAAXnfyG5QDv5WUthGww3wo00u27c2qBCXxzSJIYhZn8xToQQOwjp
-        BMh3ZXqg22rNT/PKk2frX2grrQ9BkKw=
-X-Google-Smtp-Source: APXvYqxSKR/l4WyvUG++Na5dG2fHeQ1NNKAvi5BjK2A5m4iD/8q4fxW8AwhrE0m+2xctNWSLsLpc1g==
-X-Received: by 2002:a17:902:4481:: with SMTP id l1mr26458275pld.75.1555524084771;
-        Wed, 17 Apr 2019 11:01:24 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bbooXkmfFrU3lzEiQrq3qhvTIrSt4itjBeJHI2ai+q0=;
+        b=iwUxv9tSyygrPRmHv1wA0X8V2GnmoNuIe7ETuops5pjCefPPWLTFkg29LOfcPKmYpj
+         J7c93AW2ndLrrltNBJ4wdsO+yx0zGmFj6hnwHa5IPNABDTxYB3Evuw5x+6QfLPL9Ph6H
+         2dFi4mGGVjE36JzvAZq7g3UoNFh0tRzdNVN3VzCo+RHqGFdzTDMR8BOH6jgHu8NyzQD7
+         JeK78SPVwmboLT4sTMvDj1cvXYwuPUs4lyLvYIJcBaUagjQqx/d2JL/bfVWEHFnvxk5A
+         x02MqUDiLkdR/MnHSmPqlhTNymgymw3+sKTk0K06byOwfJ/0dgYA6CJh2roS11T69Zst
+         sa9w==
+X-Gm-Message-State: APjAAAUGt2R5GVqe1AB/pwU04Zb6GRqB/7IoEAzRUVP2IbBvHobXHU4A
+        b5UljNfUV8cYXH/VFEjZ1HqCMwn/tMI=
+X-Google-Smtp-Source: APXvYqyKMeBoor0e6qFtp8lBeSCzxyxahy3ADmNBrfHszhmn/SKwahAfd1phgxHwlVF/vwT2d7wrGg==
+X-Received: by 2002:a17:902:9b83:: with SMTP id y3mr87707338plp.165.1555524086598;
+        Wed, 17 Apr 2019 11:01:26 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id l192sm48757354pge.42.2019.04.17.11.01.22
+        by smtp.gmail.com with ESMTPSA id i15sm79012768pfd.162.2019.04.17.11.01.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 11:01:23 -0700 (PDT)
-Date:   Wed, 17 Apr 2019 11:01:22 -0700
+        Wed, 17 Apr 2019 11:01:25 -0700 (PDT)
+Date:   Wed, 17 Apr 2019 11:01:24 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -60,210 +58,85 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v6 0/5] rebase: teach rebase --keep-base
-Message-ID: <cover.1555523176.git.liu.denton@gmail.com>
+Subject: [PATCH v6 1/6] t3431: add rebase --fork-point tests
+Message-ID: <eb64f6c91d27a6f9666c9829050995d9f9b52925.1555523176.git.liu.denton@gmail.com>
 References: <cover.1554500051.git.liu.denton@gmail.com>
+ <cover.1555523176.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1554500051.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1555523176.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the comments, Junio and Phillip.
-
-I've fixed the ASCII art graphs and also refactored the if-else into a
-goto tower.
-
-Hopefully, this will be the last reroll of this series ;)
-
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
-
-This patchset now depends "[PATCH 1/8] tests (rebase): spell out the
-`--keep-empty` option" which is the first patch of Johannes's "Do not
-use abbreviated options in tests" patchset[1]. (Thanks for catching
-that, Johannes!)
-
-Changes since v1:
-
-* Squashed old set into one patch
-* Fixed indentation style and dangling else
-* Added more documentation after discussion with Ævar
-
-Changes since v2:
-
-* Add testing for rebase --fork-point behaviour
-* Add testing for rebase fast-forward behaviour
-* Make rebase --onto fast-forward in more cases
-* Update documentation to include use-case
-
-Changes since v3:
-
-* Fix tests failing on bash 4.2
-* Fix typo in t3431 comment
-
-Changes since v4:
-
-* Make rebase --fork-point fast-forward in more cases
-
-Changes since v5:
-
-* Fix graph illustrations so that the "branch off" is visually in the
-  correct place
-* Refactor if-else in can_fast_forward into one-level-deep ifs to
-  increase clarity
-
-[1]: https://public-inbox.org/git/a1b4b74b9167e279dae4cd8c58fb28d8a714a66a.1553537656.git.gitgitgadget@gmail.com/
-
-Denton Liu (6):
-  t3431: add rebase --fork-point tests
-  t3432: test rebase fast-forward behavior
-  rebase: refactor can_fast_forward into goto tower
-  rebase: fast-forward --onto in more cases
-  rebase: fast-forward --fork-point in more cases
-  rebase: teach rebase --keep-base
-
- Documentation/git-rebase.txt     | 30 +++++++++--
- builtin/rebase.c                 | 86 +++++++++++++++++++++++---------
- t/t3400-rebase.sh                |  2 +-
- t/t3404-rebase-interactive.sh    |  2 +-
- t/t3416-rebase-onto-threedots.sh | 57 +++++++++++++++++++++
- t/t3431-rebase-fork-point.sh     | 57 +++++++++++++++++++++
- t/t3432-rebase-fast-forward.sh   | 83 ++++++++++++++++++++++++++++++
- 7 files changed, 289 insertions(+), 28 deletions(-)
+ t/t3431-rebase-fork-point.sh | 53 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
  create mode 100755 t/t3431-rebase-fork-point.sh
- create mode 100755 t/t3432-rebase-fast-forward.sh
 
-Range-diff against v5:
-1:  0f1e9ac5c8 ! 1:  eb64f6c91d t3431: add rebase --fork-point tests
-    @@ -18,9 +18,9 @@
-     +
-     +. ./test-lib.sh
-     +
-    -+# A---B---D---E       (master)
-    -+#     \
-    -+#      C*---F---G (side)
-    ++# A---B---D---E    (master)
-    ++#      \
-    ++#       C*---F---G (side)
-     +#
-     +# C was formerly part of master but master was rewound to remove C
-     +#
-2:  148027a14b = 2:  4c087ec041 t3432: test rebase fast-forward behavior
--:  ---------- > 3:  3d348d2c37 rebase: refactor can_fast_forward into goto tower
-3:  ec55da0719 ! 4:  2559ab54a2 rebase: fast-forward --onto in more cases
-    @@ -5,8 +5,8 @@
-         Before, when we had the following graph,
-     
-                 A---B---C (master)
-    -                \
-    -                 D (side)
-    +                 \
-    +                  D (side)
-     
-         running 'git rebase --onto master... master side' would result in D
-         being always rebased, no matter what. However, the desired behavior is
-    @@ -49,6 +49,7 @@
-     
-         While we're at it, remove a trailing whitespace from rebase.c.
-     
-    +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-         Signed-off-by: Denton Liu <liu.denton@gmail.com>
-     
-      diff --git a/builtin/rebase.c b/builtin/rebase.c
-    @@ -64,45 +65,26 @@
-     +			    struct object_id *head_oid, struct object_id *merge_base)
-      {
-      	struct commit *head = lookup_commit(the_repository, head_oid);
-    --	struct commit_list *merge_bases;
-    --	int res;
-    -+	struct commit_list *merge_bases = NULL;
-    -+	int res = 0;
-    - 
-    - 	if (!head)
-    - 		return 0;
-    + 	struct commit_list *merge_bases = NULL;
-     @@
-    - 	merge_bases = get_merge_bases(onto, head);
-    - 	if (merge_bases && !merge_bases->next) {
-    - 		oidcpy(merge_base, &merge_bases->item->object.oid);
-    --		res = oideq(merge_base, &onto->object.oid);
-    -+		if (!oideq(merge_base, &onto->object.oid))
-    -+			goto done;
-    - 	} else {
-    - 		oidcpy(merge_base, &null_oid);
-    --		res = 0;
-    -+		goto done;
-    - 	}
-    -+
-    + 	if (!oideq(merge_base, &onto->object.oid))
-    + 		goto done;
-    + 
-     +	if (!upstream)
-     +		goto done;
-     +
-    - 	free_commit_list(merge_bases);
-    ++	free_commit_list(merge_bases);
-     +	merge_bases = get_merge_bases(upstream, head);
-    -+	if (merge_bases && !merge_bases->next) {
-    -+		if (!oideq(&onto->object.oid, &merge_bases->item->object.oid))
-    -+			goto done;
-    -+	} else
-    ++	if (!merge_bases || merge_bases->next) {
-     +		goto done;
-    ++	}
-     +
-    -+	res = 1;
-    ++	if (!oideq(&onto->object.oid, &merge_bases->item->object.oid))
-    ++		goto done;
-     +
-    -+done:
-    -+	if (merge_bases)
-    -+		free_commit_list(merge_bases);
-    - 	return res && is_linear_history(onto, head);
-    - }
-    + 	res = 1;
-      
-    + done:
-     @@
-      
-      	/*
-    @@ -115,7 +97,8 @@
-     -	    !is_interactive(&options) && !options.restrict_revision &&
-     -	    options.upstream &&
-     -	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
-    -+	if (can_fast_forward(options.onto, options.upstream, &options.orig_head, &merge_base) &&
-    ++	if (can_fast_forward(options.onto, options.upstream, &options.orig_head,
-    ++		    &merge_base) &&
-     +	    !is_interactive(&options) && !options.restrict_revision) {
-      		int flag;
-      
-4:  2256a902c1 ! 5:  0a466e830f rebase: fast-forward --fork-point in more cases
-    @@ -27,8 +27,8 @@
-      {
-      	struct commit *head = lookup_commit(the_repository, head_oid);
-     @@
-    + 	if (!oideq(merge_base, &onto->object.oid))
-      		goto done;
-    - 	}
-      
-     +	if (restrict_revision && !oideq(&restrict_revision->object.oid, merge_base))
-     +		goto done;
-    @@ -40,7 +40,8 @@
-      	 * Check if we are already based on onto with linear history,
-      	 * but this should be done if this is not an interactive rebase.
-      	 */
-    --	if (can_fast_forward(options.onto, options.upstream, &options.orig_head, &merge_base) &&
-    +-	if (can_fast_forward(options.onto, options.upstream, &options.orig_head,
-    +-		    &merge_base) &&
-     -	    !is_interactive(&options) && !options.restrict_revision) {
-     +	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
-     +		    &options.orig_head, &merge_base) &&
-5:  d6e7e1ca4b = 6:  c542c7afc1 rebase: teach rebase --keep-base
+diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+new file mode 100755
+index 0000000000..9b517d87a3
+--- /dev/null
++++ b/t/t3431-rebase-fork-point.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++#
++# Copyright (c) 2019 Denton Liu
++#
++
++test_description='git rebase --fork-point test'
++
++. ./test-lib.sh
++
++# A---B---D---E    (master)
++#      \
++#       C*---F---G (side)
++#
++# C was formerly part of master but master was rewound to remove C
++#
++test_expect_success setup '
++	test_commit A &&
++	test_commit B &&
++	test_commit C &&
++	git branch -t side &&
++	git reset --hard HEAD^ &&
++	test_commit D &&
++	test_commit E &&
++	git checkout side &&
++	test_commit F &&
++	test_commit G
++'
++
++test_rebase() {
++	expected="$1" &&
++	shift &&
++	test_expect_success "git rebase $*" "
++		git checkout master &&
++		git reset --hard E &&
++		git checkout side &&
++		git reset --hard G &&
++		git rebase $* &&
++		test_write_lines $expected >expect &&
++		git log --pretty=%s >actual &&
++		test_cmp expect actual
++	"
++}
++
++test_rebase 'G F E D B A'
++test_rebase 'G F D B A' --onto D
++test_rebase 'G F C E D B A' --no-fork-point
++test_rebase 'G F C D B A' --no-fork-point --onto D
++test_rebase 'G F E D B A' --fork-point refs/heads/master
++test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
++test_rebase 'G F C E D B A' refs/heads/master
++test_rebase 'G F C D B A' --onto D refs/heads/master
++
++test_done
 -- 
 2.21.0.944.gce45564dfd
 
