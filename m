@@ -2,113 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C683420305
-	for <e@80x24.org>; Wed, 17 Apr 2019 10:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D635920248
+	for <e@80x24.org>; Wed, 17 Apr 2019 10:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728237AbfDQKXB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 06:23:01 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34084 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726695AbfDQKXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 06:23:01 -0400
-Received: by mail-ed1-f66.google.com with SMTP id a6so9250224edv.1
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 03:22:59 -0700 (PDT)
+        id S1731644AbfDQKY4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 06:24:56 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33505 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726695AbfDQKY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 06:24:56 -0400
+Received: by mail-wr1-f66.google.com with SMTP id q1so31255350wrp.0
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 03:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=L7qvD5AkoCaMe8tyvidYKtMOuP5VTkPiDZsjzPM11Sk=;
-        b=oiLKcbdX4dz43J5t1sFUwsqHi69hcayXqa1KDZB/C29FxGTSh+A01K3Xi3S/UVUhbo
-         l7XelBbwqByOxrwRavNNlsiSIVdHHjYawBgnFZLjjRH06U3ih9OqQizDM/SB4jimTr6v
-         oyd/zhQ1gfC77QJXosnrtXyudd6689LO4P1V2pgPK3G9EVyzjIEko6Y9Xv6xxeYOn7Nk
-         sBnc3i/Swritn1zxXRN8s8rNpGvn1GyhvrbnvaU4af3mK1Hax4i9qnHwFv9UGo1QU1lr
-         t0xWKJHOW0W3S6NpIQ0cqQZ8bljSgvKqWmvAxU4XzeStMv64ZI5wannoQJJlvg8dC5kN
-         S24w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=+KODscbYO1gGml6B0XfUizVXSk+DhqO7h8dzbbx0Hug=;
+        b=VwYqgzwLlvsBT3Srx+jCKRCVGndba+wY5Xl1Fy030Tgfh6dFGJbCPXwMOUXCXz9Pko
+         LPFWeXPUryNoy1yd4tYieQDdsb4ZDIVg3zb2BHB0NH64oIOKqomfH3NROzSySSCcq1TT
+         HbN5yBNSjFltSKJFdMUM5pebP9MgYh/mGYOmgaJC3ukse2Hfm1qb/AbVrVU/zBMOfkO3
+         nMs165xnbd1uqCuzsfMBPG67KSJwiMUdWoL8G1iQKlp2Zwr3QDToronCJWBmszRtOHgj
+         JkmoUUqwhzAZT8l5Goo5kdFeghahNziywsM+uSBmdz8YA2kBYelR1h88sHtdSYfXDb37
+         e7ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=L7qvD5AkoCaMe8tyvidYKtMOuP5VTkPiDZsjzPM11Sk=;
-        b=hfVS69eNG5vQbVZos+lgvw16JgpdL5egqkhG1w2KO8y9rTPl0ntaJZ8eq7OlxKWMPO
-         QOEcOysW2esvxxX/fLTwv3SvY06H/+GXg/jZF8s8BecUUp2UCj+d0QBiEp3gfurci4Fl
-         v/hEtuVBqFdI7R/9dR/d1chmzMZa5lVDE/0UPFneaMjOIin5e6bW+ZpJe6vqHV99RaNe
-         Xclr5d2vMprWnY38jYlziP37l1DLwFaB9vB0wgXZvZMbSybDmCt8cx2sQm2XDJXj1yae
-         XXGKXo2mLbw2KjacC0ExX9X9yGIgNCyFlAEQnlYgLX9TgNITN6DPB0pcddSrlnzogCWQ
-         m6uw==
-X-Gm-Message-State: APjAAAWlXePMfPAD619LmBgIozZbZWhzcGy6GJvNuSrnirqk+iz4SvNe
-        4gifFPRNm+Z6mJxXL90nx0s=
-X-Google-Smtp-Source: APXvYqyThepewRfWgcZA8805Rhioch9lc1tYch+vFePK9xMQdD85AeDxys5946C60rwUXZoHT3XdrQ==
-X-Received: by 2002:a17:906:251b:: with SMTP id i27mr46930836ejb.146.1555496579214;
-        Wed, 17 Apr 2019 03:22:59 -0700 (PDT)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id 30sm2715402edr.2.2019.04.17.03.22.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Apr 2019 03:22:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>, Eric Wong <e@80x24.org>
-Subject: Re: What's cooking in git.git (Apr 2019, #03; Tue, 16)
-References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com> <87d0lmatr1.fsf@evledraar.gmail.com> <adb4a578-9bc6-f017-5817-cd045dcb0a32@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <adb4a578-9bc6-f017-5817-cd045dcb0a32@gmail.com>
-Date:   Wed, 17 Apr 2019 12:22:54 +0200
-Message-ID: <87a7gpaq2p.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:reply-to:mime-version:content-transfer-encoding;
+        bh=+KODscbYO1gGml6B0XfUizVXSk+DhqO7h8dzbbx0Hug=;
+        b=S41pYCm/IqFM1fSpKR8MwrbzS51yXAvUW8TsP+N2SEZhC05fXWkB0bv3E8/lxAGMOQ
+         AAytZzcArHymg7/CtOhjLim9OWCdLrmGLKYWvp8ezocP7YIKQ+8Hxz2+dsC4jJ+Td70r
+         F8wWstKeU6ZkmQHpubMCCd6zyaNOchDHIIjUMOCIC55QETkqr/kEe/hOpVmb2tVO3gMs
+         C1tnu4OLv/eI6UP4JWg8GnJkUeqUUpbg0i/0BF+fu8lyxiyQX8gYkEYox7XonZPOVPva
+         QEBjdyKXVMbDhOpoXl14/yWzdNTuLbrQYmHEy2JI2t3MnCcQtjoXCRnjWqb/UA3TwrnW
+         CDfw==
+X-Gm-Message-State: APjAAAXQ2qQm2rAqlABNlK9Y+nG0w/DfuDQpU0/S1XUyOf6mX2N70Uw7
+        WDEeeLjsBqYcKN1KWJOuenVGQ2WH7/I=
+X-Google-Smtp-Source: APXvYqy67HxZb17lkNGyRljqvhc8isTumKEsIvsW2TUxLneptN+de9BXB/Dm0pR2QJOT/cDO7NyuKA==
+X-Received: by 2002:adf:fd04:: with SMTP id e4mr57610723wrr.190.1555496694623;
+        Wed, 17 Apr 2019 03:24:54 -0700 (PDT)
+Received: from lindisfarne.localdomain (host-92-22-21-176.as13285.net. [92.22.21.176])
+        by smtp.gmail.com with ESMTPSA id a11sm53399903wrx.5.2019.04.17.03.24.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Apr 2019 03:24:53 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v10 01/10] t7600: clean up style
+Date:   Wed, 17 Apr 2019 11:23:21 +0100
+Message-Id: <20190417102330.24434-2-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190417102330.24434-1-phillip.wood123@gmail.com>
+References: <cover.1553150827.git.liu.denton@gmail.com>
+ <20190417102330.24434-1-phillip.wood123@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Denton Liu <liu.denton@gmail.com>
 
-On Wed, Apr 17 2019, Phillip Wood wrote:
+Clean up the 'merge --squash c3 with c7' test by removing some
+unnecessary braces and removing a pipe.
 
-> On 16/04/2019 15:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->> On Tue, Apr 16 2019, Junio C Hamano wrote:
->>
->>> * pw/rebase-i-internal-rfc (2019-03-21) 12 commits
->>>   - rebase -i: run without forking rebase--interactive
->>>   - rebase: use a common action enum
->>>   - rebase -i: use struct rebase_options in do_interactive_rebase()
->>>   - rebase -i: use struct rebase_options to parse args
->>>   - rebase -i: use struct object_id for squash_onto
->>>   - rebase -i: use struct commit when parsing options
->>>   - rebase -i: remove duplication
->>>   - rebase -i: combine rebase--interactive.c with rebase.c
->>>   - rebase: use OPT_RERERE_AUTOUPDATE()
->>>   - rebase: rename write_basic_state()
->>>   - sequencer: always discard index after checkout
->>>   - Merge branch 'ag/sequencer-reduce-rewriting-todo' into pw/rebase-i-=
-internal-rfc
->>>   (this branch uses ag/sequencer-reduce-rewriting-todo.)
->>>
->>>   The internal implementation of "git rebase -i" has been updated to
->>>   avoid forking a separate "rebase--interactive" process.
->>>
->>>   Comments?  Is this ready?
->>
->> I gave this some stress testing/review in your infra, works for me so
->> far, and a good performance improvement.
->>
->> My only problem with it is that the commit message doesn't note just
->> quite how awesome it is, but I can live with that :)
->
-> Thanks for testing this, I'll send a re-roll that mentions the
-> performance improvement. I'm still surprised by it, are you seeing an
-> improvement in production as well as on the perf test you mentioned
-> before? I wonder if some of the improvement is due to
-> ag/sequencer-reduce-rewriting-todo if that wasn't in master when you
-> ran the benchmarks but I haven't had time to investigate.
+Also, generally cleanup style by unindenting a here-doc, removing stray
+spaces after a redirection operator and allowing sed to open its own
+input instead of redirecting input from the shell.
 
-Just the perf tests. I don't think it'll have much noticeable impact on
-a typical rebase, but everything helps...
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t7600-merge.sh | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
+
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 106148254d..2f4c2801fb 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -233,17 +233,16 @@ test_expect_success 'merge --squash c3 with c7' '
+ 	cat result.9z >file &&
+ 	git commit --no-edit -a &&
+ 
+-	{
+-		cat <<-EOF
+-		Squashed commit of the following:
++	cat >expect <<-EOF &&
++	Squashed commit of the following:
+ 
+-		$(git show -s c7)
++	$(git show -s c7)
+ 
+-		# Conflicts:
+-		#	file
+-		EOF
+-	} >expect &&
+-	git cat-file commit HEAD | sed -e '1,/^$/d' >actual &&
++	# Conflicts:
++	#	file
++	EOF
++	git cat-file commit HEAD >raw &&
++	sed -e '1,/^$/d' raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -680,10 +679,10 @@ cat >editor <<\EOF
+ (
+ 	echo "Merge work done on the side branch c1"
+ 	echo
+-	cat <"$1"
++	cat "$1"
+ ) >"$1.tmp" && mv "$1.tmp" "$1"
+ # strip comments and blank lines from end of message
+-sed -e '/^#/d' < "$1" | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' > expected
++sed -e '/^#/d' "$1" | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' >expected
+ EOF
+ chmod 755 editor
+ 
+@@ -768,14 +767,14 @@ test_expect_success 'set up mod-256 conflict scenario' '
+ 	git commit -m base &&
+ 
+ 	# one side changes the first line of each to "master"
+-	sed s/-1/-master/ <file >tmp &&
++	sed s/-1/-master/ file >tmp &&
+ 	mv tmp file &&
+ 	git commit -am master &&
+ 
+ 	# and the other to "side"; merging the two will
+ 	# yield 256 separate conflicts
+ 	git checkout -b side HEAD^ &&
+-	sed s/-1/-side/ <file >tmp &&
++	sed s/-1/-side/ file >tmp &&
+ 	mv tmp file &&
+ 	git commit -am side
+ '
+@@ -814,7 +813,7 @@ EOF
+ test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue' '
+ 	git reset --hard c0 &&
+ 	! "$SHELL_PATH" -c '\''
+-	  echo kill -TERM $$ >> .git/FAKE_EDITOR
++	  echo kill -TERM $$ >>.git/FAKE_EDITOR
+ 	  GIT_EDITOR=.git/FAKE_EDITOR
+ 	  export GIT_EDITOR
+ 	  exec git merge --no-ff --edit c1'\'' &&
+-- 
+2.21.0
+
