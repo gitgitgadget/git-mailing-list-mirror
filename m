@@ -2,367 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1201F20248
-	for <e@80x24.org>; Wed, 17 Apr 2019 16:02:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65E920248
+	for <e@80x24.org>; Wed, 17 Apr 2019 16:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732724AbfDQQCB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 12:02:01 -0400
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:52515 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729395AbfDQQCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 12:02:01 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id AFE33A01CE
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 18:01:58 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id fIyrn70OUYw4 for <git@vger.kernel.org>;
-        Wed, 17 Apr 2019 18:01:57 +0200 (CEST)
-Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 1EF9EA01E2
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 18:01:57 +0200 (CEST)
-Received: from Corentin-Linux.lan (134.214.126.172) by
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
- id 15.0.1263.5; Wed, 17 Apr 2019 18:01:56 +0200
-From:   Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
-To:     <corentin.bompard@etu.univ-lyon1.fr>
-CC:     <git@vger.kernel.org>, <matthieu.moy@univ-lyon1.fr>,
-        <nathan.berbezier@etu.univ-lyon1.fr>,
-        <pablo.chabanne@etu.univ-lyon1.fr>
-Subject: [PATCH] [WIP/RFC] add git pull and git fetch --set-upstream
-Date:   Wed, 17 Apr 2019 18:01:38 +0200
-Message-ID: <20190417160138.6114-1-corentin.bompard@etu.univ-lyon1.fr>
-X-Mailer: git-send-email 2.21.0-rc0
-In-Reply-To: <20190409125205.13754-1-corentin.bompard@etu.univ-lyon1.fr>
-References: <20190409125205.13754-1-corentin.bompard@etu.univ-lyon1.fr>
+        id S1732667AbfDQQF1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 12:05:27 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:56307 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732105AbfDQQF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 12:05:27 -0400
+Received: by mail-it1-f196.google.com with SMTP id y134so5466287itc.5
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 09:05:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=T8dpXSf4favAMxKO+FxQaQ1lE7EZsKwVRuqtMxUPWLw=;
+        b=tc7MQC2WhVdwnJarC/U+4XxMNPkJJP+GD4/VYMtFNwc25gbU0qpPj9jALMVo7Cgpzz
+         UCpaLqDEeouNPBkK31oOOOvvOt1QTm6ZCAlkphDWaRpFH6Wo1bPiRBxTPU4MPPtdmg8n
+         4ACh1GeGZdkSbQ9o5TUz+xQB00BmtLs2u8jPpjt5Z7COFaRkgf09sb7M0H4zj5aIof+2
+         OXCNcGkOj/IO0MEw73O+v5guUA03Lw6wChNJxDni55yhPu7w1dyqQSmydvBB7vWXwT04
+         GAX6GYCfezL+1Tvc5q5HStilfly7YkI3QQ8bhc4hbhAmeysDlQHvinBa1StlFDEcn+jU
+         3tUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=T8dpXSf4favAMxKO+FxQaQ1lE7EZsKwVRuqtMxUPWLw=;
+        b=OfOX7n6VIsCt4akj1KYknIGC0cRSp0UL4WS50K530Gjom8uSy1KvpkgxZ8YeV5NHV1
+         f9CWVG/fFIoCL6enhFZrNMzl8m7Au3Ad+E8MWxjlzS2F6L4SES1N4wWgYdsvjBCytYdF
+         0IcUP5Pm2kA0LDsu0osiB4r8+nsmRhuTvfhICjll+RgNijN6fwfUPGezLW7mpYboldpv
+         bC3cyNP/HufF82lmvm9skwe3W9f/z7bVVKE6hsycfO5M+BVLRd/iHNc/xJ837EVm8WgU
+         gwR/RW8wBNoIJ44T0884fRwUYV1+A3ZGcYpySLv94WMug5bIZeo9t3YQpmBHSWflQRld
+         htHw==
+X-Gm-Message-State: APjAAAUQMhPVAZ6NvSfmjDFVpAjeufBwq/IxjceJl8AtPh7jIQHtHB4/
+        RJNr+GaQSMtk33ouMcJhkMxe96HkkLeJm/Djr1w=
+X-Google-Smtp-Source: APXvYqysghF8ask8BksFBb3y7Dm3oMxM2Zjb+3RbjrLI8nFHbnwGd0yhNif+iOS0qBY6nljeGoG3qxsv5rSKxYeguV0=
+X-Received: by 2002:a24:4d8a:: with SMTP id l132mr35507219itb.70.1555517126015;
+ Wed, 17 Apr 2019 09:05:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [134.214.126.172]
-X-ClientProxiedBy: JEMBX2013-01.univ-lyon1.fr (134.214.201.249) To
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
+References: <20190325202329.26033-3-avarab@gmail.com> <20190417124438.8191-1-avarab@gmail.com>
+In-Reply-To: <20190417124438.8191-1-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 17 Apr 2019 23:04:59 +0700
+Message-ID: <CACsJy8D215hMvfCwz1G9mP2te-ZERVaMMRrnM=MK1_bc0oFsjw@mail.gmail.com>
+Subject: Re: [PATCH v2] parse-options: don't emit "ambiguous option" for aliases
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the --set-upstream option to git pull/fetch
-which lets the user set the upstream configuration
-for the current branch.
+On Wed, Apr 17, 2019 at 7:44 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> Change the option parsing machinery so that e.g. "clone --recurs ..."
+> doesn't error out because "clone" understands both "--recursive" and
+> "--recurse-submodules" to mean the same thing.
+>
+> Initially "clone" just understood --recursive until the
+> --recurses-submodules alias was added in ccdd3da652 ("clone: Add the
+> --recurse-submodules option as alias for --recursive",
+> 2010-11-04). Since bb62e0a99f ("clone: teach --recurse-submodules to
+> optionally take a pathspec", 2017-03-17) the longer form has been
+> promoted to the default.
+>
+> But due to the way the options parsing machinery works this resulted
+> in the rather absurd situation of:
+>
+>     $ git clone --recurs [...]
+>     error: ambiguous option: recurs (could be --recursive or --recurse-su=
+bmodules)
+>
+> Let's re-use the PARSE_OPT_NOCOMPLETE flag to mean "this option
+> doesn't contribute to abbreviation ambiguity". I was going to add a
+> new PARSE_OPT_NOABBREV flag, but it makes sense just to re-use
+> PARSE_OPT_NOCOMPLETE.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>
+> See
+> https://public-inbox.org/git/20190325202329.26033-1-avarab@gmail.com/
+> for v1. There wasn't consensus for 1/2 there, but this used-to-be 2/2
+> seems like a no-brainer bugfix.
+>
+> It conflicted with some recently-landed stuff in 'master', but now
+> cleanly applies to it and 'pu', and with pu's
+> GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS.
+>
+>  builtin/clone.c          | 4 ++--
+>  parse-options.c          | 3 ++-
+>  parse-options.h          | 2 ++
+>  t/t0040-parse-options.sh | 5 +++++
+>  4 files changed, 11 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 50bde99618..4dc26969a7 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -100,8 +100,8 @@ static struct option builtin_clone_options[] =3D {
+>                     N_("setup as shared repository")),
+>         { OPTION_CALLBACK, 0, "recursive", &option_recurse_submodules,
+>           N_("pathspec"), N_("initialize submodules in the clone"),
+> -         PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, recurse_submodules_cb,
+> -         (intptr_t)"." },
+> +         PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE,
 
-For example a typical use-case like
-    git clone http://example.com/my-public-fork
-    git remote add main http://example.com/project-main-repo
-    git pull main master --set-upstream
-or, instead of the last line
-    git fetch main master --set-upstream
-    git merge # or git rebase
+What happens if someone adds --recursive-hard? --recursi then
+resolving to --recursive-hard sounds wrong.
 
-This foncionality works like git push --set-upstream.
+But on the other hand I can see it's a bit more work to teach
+parse-options OPT_ALIAS to say "--recursive is just an alias of
+--recurse-submodules" and chances of --recursive-hard coming up are
+probably very low.
 
-Signed-off-by: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
-Signed-off-by: Nathan BERBEZIER <nathan.berbezier@etu.univ-lyon1.fr>
-Signed-off-by: Pablo CHABANNE <pablo.chabanne@etu.univ-lyon1.fr>
-Signed-off-by: Matthieu MOY <matthieu.moy@univ-lyon1.fr>
----
- Sorry for being so long.
+So I don't know but I thought I should point out.
 
- Documentation/fetch-options.txt |   5 ++
- builtin/fetch.c                 |  55 ++++++++++++-
- builtin/pull.c                  |   6 ++
- t/t5553-set-upstream.sh         | 142 ++++++++++++++++++++++++++++++++
- 4 files changed, 207 insertions(+), 1 deletion(-)
- create mode 100644 t/t5553-set-upstream.sh
+> +         recurse_submodules_cb, (intptr_t)"." },
+>         { OPTION_CALLBACK, 0, "recurse-submodules", &option_recurse_submo=
+dules,
+>           N_("pathspec"), N_("initialize submodules in the clone"),
+>           PARSE_OPT_OPTARG, recurse_submodules_cb, (intptr_t)"." },
+> diff --git a/parse-options.c b/parse-options.c
+> index cec74522e5..9899ce0171 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -292,7 +292,8 @@ static enum parse_opt_result parse_long_opt(
+>                 if (!rest) {
+>                         /* abbreviated? */
+>                         if (!(p->flags & PARSE_OPT_KEEP_UNKNOWN) &&
+> -                           !strncmp(long_name, arg, arg_end - arg)) {
+> +                           !strncmp(long_name, arg, arg_end - arg) &&
+> +                           !(options->flags & PARSE_OPT_NOCOMPLETE)) {
+>  is_abbreviated:
+>                                 if (abbrev_option) {
+>                                         /*
+> diff --git a/parse-options.h b/parse-options.h
+> index 74cce4e7fc..51c4b71ab0 100644
+> --- a/parse-options.h
+> +++ b/parse-options.h
+> @@ -96,6 +96,8 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct pa=
+rse_opt_ctx_t *ctx,
+>   *                             Useful for options with multiple paramete=
+rs.
+>   *   PARSE_OPT_NOCOMPLETE: by default all visible options are completabl=
+e
+>   *                        by git-completion.bash. This option suppresses=
+ that.
+> + *                        Will also skip this option when abbreviation i=
+s
+> + *                        considered.
+>   *   PARSE_OPT_COMP_ARG: this option forces to git-completion.bash to
+>   *                      complete an option as --name=3D not --name even =
+if
+>   *                      the option takes optional argument.
+> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+> index b8f366c442..e8f0371830 100755
+> --- a/t/t0040-parse-options.sh
+> +++ b/t/t0040-parse-options.sh
+> @@ -220,6 +220,11 @@ test_expect_success 'non ambiguous option (after two=
+ options it abbreviates)' '
+>         test-tool parse-options --expect=3D"string: 123" --st 123
+>  '
+>
+> +test_expect_success 'NOCOMPLETE options do not contribute to abbreviatio=
+n' '
+> +       test_when_finished "rm -rf A" &&
+> +       git clone --recurs . A
+> +'
+> +
+>  cat >typo.err <<\EOF
+>  error: did you mean `--boolean` (with two dashes ?)
+>  EOF
+> --
+> 2.21.0.593.g511ec345e18
+>
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index fa0a3151b..4d2d55643 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -165,6 +165,11 @@ ifndef::git-pull[]
- 	Disable recursive fetching of submodules (this has the same effect as
- 	using the `--recurse-submodules=no` option).
- 
-+--set-upstream::
-+	If the new URL remote is correct, pull and add upstream (tracking) 
-+	reference, used by argument-less linkgit:git-push[1] and other commands.
-+	For more information, see `branch.<name>.merge` in linkgit:git-config[1].
-+
- --submodule-prefix=<path>::
- 	Prepend <path> to paths printed in informative messages
- 	such as "Fetching submodule foo".  This option is used
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b620fd54b..b43a4e0a2 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -23,6 +23,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "commit-reach.h"
-+#include "branch.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -46,7 +47,7 @@ static int fetch_prune_tags_config = -1; /* unspecified */
- static int prune_tags = -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
- 
--static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative;
-+static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative, set_upstream;
- static int progress = -1;
- static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
- static int max_children = 1;
-@@ -113,6 +114,8 @@ static struct option builtin_fetch_options[] = {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "all", &all,
- 		 N_("fetch from all remotes")),
-+	OPT_BOOL(0, "set-upstream", &set_upstream,
-+		 N_("set upstream for git pull/fetch")),
- 	OPT_BOOL('a', "append", &append,
- 		 N_("append to .git/FETCH_HEAD instead of overwriting")),
- 	OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
-@@ -1317,6 +1320,56 @@ static int do_fetch(struct transport *transport,
- 		retcode = 1;
- 		goto cleanup;
- 	}
-+
-+	/* TODO: remove debug trace */
-+	if (set_upstream) {
-+		struct branch *branch = branch_get("HEAD");
-+		struct ref *rm;
-+		struct ref *source_ref = NULL;
-+		/*
-+		 * We're setting the upstream configuration for the current branch. The
-+		 * relevent upstream is the fetched branch that is meant to be merged with
-+		 * the current one, i.e. the one fetched to FETCH_HEAD.
-+		 *
-+		 * When there are several such branches, consider the request ambiguous and
-+		 * err on the safe side by doing nothing and just emit a waring.
-+		 */
-+		for (rm = ref_map; rm; rm = rm->next) {
-+			fprintf(stderr, "\n -%s", rm->name);
-+			if (rm->peer_ref) {
-+				fprintf(stderr, " -> %s", rm->peer_ref->name);
-+			} else {
-+				if (source_ref) {
-+					fprintf(stderr, " -> FETCH_HEAD\n");
-+					warning(_("Multiple branch detected, incompatible with set-upstream"));
-+					source_ref = NULL;
-+					goto skip;
-+				} else {
-+					source_ref = rm;
-+					fprintf(stderr, " -> FETCH_HEAD");
-+				}
-+			}
-+		}
-+		fprintf(stderr, "\n\n");
-+		if (source_ref) {
-+			if (!strcmp(source_ref->name, "HEAD") ||
-+				starts_with(source_ref->name, "refs/heads/")) {
-+				install_branch_config(0, branch->name,
-+							 transport->remote->name,
-+							 source_ref->name);
-+			} else if (starts_with(source_ref->name, "refs/remotes/")) {
-+				warning(_("Not setting upstream for a remote remote-tracking branch"));
-+			} else if (starts_with(source_ref->name, "refs/tags/")) {
-+				warning(_("Tag upstream not set"));
-+			} else {
-+				warning(_("Unknown branch type"));
-+			}
-+		} else {
-+			warning(_("No source branch found. \n You need to specify excatly "
-+						"one branch with the set-upstream option."));
-+		}
-+	}
-+ skip:
- 	free_refs(ref_map);
- 
- 	/* if neither --no-tags nor --tags was specified, do automated tag
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 701d1473d..06d7cddce 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -122,6 +122,7 @@ static char *opt_update_shallow;
- static char *opt_refmap;
- static char *opt_ipv4;
- static char *opt_ipv6;
-+static char *set_upstream;
- 
- static struct option pull_options[] = {
- 	/* Shared options */
-@@ -233,6 +234,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU('6',  "ipv6", &opt_ipv6, NULL,
- 		N_("use IPv6 addresses only"),
- 		PARSE_OPT_NOARG),
-+	OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
-+		N_("set upstream for git pull/fetch"),
-+		PARSE_OPT_NOARG),
- 
- 	OPT_END()
- };
-@@ -541,6 +545,8 @@ static int run_fetch(const char *repo, const char **refspecs)
- 		argv_array_push(&args, opt_ipv4);
- 	if (opt_ipv6)
- 		argv_array_push(&args, opt_ipv6);
-+	if (set_upstream)
-+		argv_array_push(&args, set_upstream);
- 
- 	if (repo) {
- 		argv_array_push(&args, repo);
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-new file mode 100644
-index 000000000..6126bb188
---- /dev/null
-+++ b/t/t5553-set-upstream.sh
-@@ -0,0 +1,142 @@
-+#!/bin/sh
-+
-+test_description='"git fetch/pull --set-upstream" basic tests.
-+
-+'
-+. ./test-lib.sh
-+
-+check_config() {
-+	(echo $2; echo $3) >expect.$1 &&
-+	(git config branch.$1.remote
-+	 git config branch.$1.merge) >actual.$1 &&
-+	test_cmp expect.$1 actual.$1
-+}
-+
-+check_config_empty() {
-+	test_must_fail git config branch.$1.remote &&
-+	test_must_fail git config branch.$1.merge
-+}
-+check_config_empty1() {
-+	git config branch.$1.remote >remote.$1
-+	test_must_be_empty remote.$1 &&
-+	git config branch.$1.merge >merge.$1
-+	test_must_be_empty merge.$1
-+}
-+
-+clear_config() {
-+	git config --unset branch.$1.remote
-+	git config --unset branch.$1.merge
-+}
-+
-+ensure_fresh_upstream() {
-+	rm -rf parent && git init --bare parent
-+}
-+
-+test_expect_success 'setup bare parent fetch' '
-+	ensure_fresh_upstream &&
-+	git remote add upstream parent &&
-+	git remote add up parent
-+'
-+
-+test_expect_success 'setup commit on master and other fetch' '
-+	test_commit one &&
-+	git push upstream master &&
-+	git checkout -b other &&
-+	test_commit two &&
-+	git push upstream other
-+'
-+
-+#tests for fetch --set-upstream
-+
-+test_expect_success 'fetch --set-upstream does not set upstream w/o branch' '
-+	git checkout master &&
-+	git fetch --set-upstream upstream &&
-+	check_config_empty master &&
-+	check_config_empty other
-+'
-+
-+test_expect_success 'fetch --set-upstream upstream master sets branch master but not other' '
-+	git fetch --set-upstream upstream master &&
-+	check_config master upstream refs/heads/master &&
-+	check_config_empty other
-+'
-+
-+test_expect_success 'fetch --set-upstream upstream other sets branch other' '
-+	git fetch --set-upstream upstream other &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_empty other
-+'
-+
-+test_expect_success 'fetch --set-upstream master:other does not set the branch other2' '
-+	git fetch --set-upstream upstream master:other2 &&
-+	check_config_empty other2
-+'
-+
-+test_expect_success 'fetch --set-upstream http://nosuchdomain.example.com fails with the bad url' '
-+	test_must_fail git fetch --set-upstream http://nosuchdomain.example.com &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_empty other &&
-+	check_config_empty other2
-+'
-+
-+#tests for pull --set-upstream
-+
-+test_expect_success 'setup bare parent pull' '
-+	git remote rm upstream &&
-+	ensure_fresh_upstream &&
-+	git remote add upstream parent
-+'
-+
-+test_expect_success 'setup commit on master and other pull' '
-+	test_commit three &&
-+	git push --tags upstream master &&
-+	test_commit four &&
-+	git push upstream other
-+'
-+
-+test_expect_success 'pull --set-upstream upstream master sets branch master but not other' '
-+	git pull --set-upstream upstream master &&
-+	check_config master upstream refs/heads/master &&
-+	check_config_empty other
-+'
-+
-+test_expect_success 'pull --set-upstream master:other2 does not set the branch other2' '
-+	git pull --set-upstream upstream master:other2 &&
-+	check_config_empty other2
-+'
-+
-+test_expect_success 'pull --set-upstream upstream other sets branch master' '
-+	git pull --set-upstream upstream other &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_empty other
-+'
-+
-+test_expect_success 'pull --set-upstream upstream tag does not set the tag' '
-+	git pull --tags --set-upstream upstream three &&
-+	check_config_empty three
-+'
-+
-+test_expect_success 'pull --set-upstream http://nosuchdomain.example.com fails with the bad url' '
-+	test_must_fail git pull --set-upstream http://nosuchdomain.example.com &&
-+	check_config master upstream refs/heads/other &&
-+	check_config_empty other &&
-+	check_config_empty other2 &&
-+	check_config_empty three
-+'
-+
-+test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD' '
-+	git pull --set-upstream upstream HEAD &&
-+	check_config master upstream HEAD &&
-+	git checkout other &&
-+	git pull --set-upstream upstream HEAD &&
-+	check_config other upstream HEAD
-+'
-+
-+test_expect_success 'pull --set-upstream upstream with more than one branch does nothing' '
-+	clear_config master &&
-+	git pull --set-upstream upstream master three &&
-+	check_config_empty master &&
-+	check_config_empty three
-+'
-+
-+test_done
--- 
-2.21.0-rc0
 
+--=20
+Duy
