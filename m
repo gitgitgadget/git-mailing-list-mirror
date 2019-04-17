@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7337620248
-	for <e@80x24.org>; Wed, 17 Apr 2019 14:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E30E20248
+	for <e@80x24.org>; Wed, 17 Apr 2019 14:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732507AbfDQOdH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 10:33:07 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55290 "EHLO
+        id S1732529AbfDQOdL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 10:33:11 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36108 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732476AbfDQOdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 10:33:06 -0400
-Received: by mail-wm1-f67.google.com with SMTP id c1so3655181wml.4
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:33:05 -0700 (PDT)
+        with ESMTP id S1732483AbfDQOdH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 10:33:07 -0400
+Received: by mail-wm1-f67.google.com with SMTP id h18so3903628wml.1
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 07:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=21Qog8pZirIkeGAb1gZg7FJQ0I7Py6Ff4WG4LddQpFk=;
-        b=p9JQlHgSzNR/efQOd0CEKN5FudZIzyl8SgbBhHqnLlVwBLKxkbx/Kgzhc5fseTGIHG
-         0wqM8IN/aTCQhkfw7N3l6wHlFd/e5CxYL1+7Pbjz4Ezw/XllW5ks5bU+qkZyjNuFbx9F
-         2T5mwdeMew2x+BjIcSWddFd/i+DL2rMRPvcHYMd3aQ6YJZpX6stCpYzye/QQbBSBuO8h
-         KCiF7Yus/t2bBRKMdeQ28HZPMDhh3Xp57lKV37nImSnR/sPccl2u+r5DeaN7uo8jXguj
-         jXH4naNdKb8QncfIo3XWHj2LIo5h9tJV0WlUR/3ECTaMGPIUMRAQYb4TsacTPCNPRC5S
-         0L9g==
+        bh=cLHWclJG2+LiBo4VnvLi4lU4hncTVSJawhWW/tPVPRo=;
+        b=KHfm18Omgkc88NoND1JuhD0UccqHUrqwKcZhliWfzuU4OJ8eHvzDaVh7kzm0M4w0pk
+         7NeQlF+j7A2INspbjJvlzPwIyJz+fQ+7D1hZ3cZlkj6iilc3oWI4izEOHEiXpJMWxp+f
+         G8dhB7kaR2znyLO4PKz3ZRThqTaa6TQbposfsHxC+CrxZ9uuvS3VXm+qd4atErjBqS6i
+         NlGS/KKwo3DEwSaMsI7QJvwK/bxqOqGYaDl7oQsJmdlP6qW4+AYdWCQ++McHOmfdb4Re
+         nTmElZ5EeGoV0RlyVAujtbwRdGY0NaufkJKqM6Kv7w5R90my8d0MHVJ1EShhPNPqe7Rs
+         PzLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=21Qog8pZirIkeGAb1gZg7FJQ0I7Py6Ff4WG4LddQpFk=;
-        b=ZmbYmcERhL1c8IqaATtsrRuSQZAFeVoQnknGon3H/RxptP+8Wp5bzz4TAM9eYYN+DY
-         lGvOxjkBJZghv2PJohTEuiYruDOLyb7NH8mz/F7ENi/yY1dJGPyW09BdOUtTfISsAM2Z
-         EInBkpNS8228GdmUs3NjIC5tN3MkiQRbCAB97mKzm8yAtAhlm2dJDAioP6kZhykQQH1M
-         7DA2OTmLspZhnSYNVz0X1rdRzSf+vkFqFoLADmDiQY/7w5vDdWo+6YfSx5cRn/pnp+Qc
-         q+8w9mGUOwfOOGJbhY0i920nF1Rfp8p9x21i/WBOpfKcI29R8P6vooi0Fmhmw1cEpuV2
-         zktw==
-X-Gm-Message-State: APjAAAVbG41s6mxBdehqXnR7s2xkRsme/mmosUnAu+JAshbNC6+ALLJX
-        GARaN+6dpkOy4fzKyCA+TshPlb9Kans=
-X-Google-Smtp-Source: APXvYqwUY2C3pz51L5PV+xmxF3qZ1Q3aFvTkZ77u9IgmDVECq7M8K3VSWyIc9WJE7EWGw/qfZcsvxQ==
-X-Received: by 2002:a1c:9c03:: with SMTP id f3mr32593362wme.67.1555511584353;
-        Wed, 17 Apr 2019 07:33:04 -0700 (PDT)
+        bh=cLHWclJG2+LiBo4VnvLi4lU4hncTVSJawhWW/tPVPRo=;
+        b=mL+t4EDP3mbkJo9sDX50zYkNEC2Kd9ce2hESI04ws3LEY28slKJmx61HJtjG93cG+p
+         2TajMmu7hhJqyIBnO2dVh+Yshm/3SUiEQhZ0F7Rqk7jqsO1MneMpCoFitxq956ez/NWS
+         x1boDawlmfxtHx1txKHfl5b2+RAO7yhaXh7qYgNTFn7Lj0Sr+yhvRV71Z6OpLnM0GU1R
+         SOsFasv9AyMuBZwRSPC3w281F32s/bNHYvaUdA6B6SKdPzorY19ixBARszgpeXYF9znU
+         bVfm64LOx5AXNvwTZ3Gkq5nFKkNnIftIsKX0PR2I73ptLZbfxxn4JiiJUIcvgSmSavFv
+         1ooA==
+X-Gm-Message-State: APjAAAVhGfdMJVjFdgua596WiPSkj91I3kxkfFwpdoRwzvQzi3MzSdAX
+        XsMTYlT87CrBpL/zZ3+HmatZV6Dz6oY=
+X-Google-Smtp-Source: APXvYqzbJ3DJeNSLRN5GA5Hocso2szE6r+TZxGIpq1KgkCULT25hcATROPMx4j7hXKmCeudmdQOGEw==
+X-Received: by 2002:a1c:6502:: with SMTP id z2mr29823983wmb.119.1555511585664;
+        Wed, 17 Apr 2019 07:33:05 -0700 (PDT)
 Received: from localhost.localdomain (host-92-22-21-176.as13285.net. [92.22.21.176])
-        by smtp.gmail.com with ESMTPSA id t17sm52127726wrr.26.2019.04.17.07.33.03
+        by smtp.gmail.com with ESMTPSA id t17sm52127726wrr.26.2019.04.17.07.33.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 07:33:03 -0700 (PDT)
+        Wed, 17 Apr 2019 07:33:05 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -59,9 +59,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Josh Steadmon <steadmon@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 06/12] rebase -i: remove duplication
-Date:   Wed, 17 Apr 2019 15:30:38 +0100
-Message-Id: <20190417143044.17655-7-phillip.wood123@gmail.com>
+Subject: [PATCH v1 07/12] rebase -i: use struct commit when parsing options
+Date:   Wed, 17 Apr 2019 15:30:39 +0100
+Message-Id: <20190417143044.17655-8-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190417143044.17655-1-phillip.wood123@gmail.com>
 References: <20190319190317.6632-1-phillip.wood123@gmail.com>
@@ -76,37 +76,266 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-path_state_dir() and merge_dir() refer to the same path so remove one of
-them.
+This is in preparation for using `struct rebase_options` when parsing
+options in cmd_rebase__interactive(). Using a string for onto,
+restrict_revision and upstream, was a hangover from the scripted version
+of rebase. The functions that use these variables are updated to take a
+`struct commit`.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ builtin/rebase.c   | 42 ++++++++++++++++++++++++------------------
+ parse-options-cb.c | 17 +++++++++++++++++
+ parse-options.h    |  1 +
+ sequencer.c        | 21 +++++++++++----------
+ sequencer.h        |  4 ++--
+ 5 files changed, 55 insertions(+), 30 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 57a3c9caf1..610b67827b 100644
+index 610b67827b..06f6490ca3 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -37,7 +37,6 @@ static char const * const builtin_rebase_usage[] = {
- 	NULL
- };
+@@ -147,27 +147,28 @@ static int edit_todo_file(unsigned flags)
+ 	return res;
+ }
  
--static GIT_PATH_FUNC(path_state_dir, "rebase-merge/")
- static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
- static GIT_PATH_FUNC(path_interactive, "rebase-merge/interactive")
- static GIT_PATH_FUNC(apply_dir, "rebase-apply")
-@@ -182,8 +181,8 @@ static int init_basic_state(struct replay_opts *opts, const char *head_name,
+-static int get_revision_ranges(const char *upstream, const char *onto,
++static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+ 			       const char **head_hash,
+ 			       char **revisions, char **shortrevisions)
+ {
+-	const char *base_rev = upstream ? upstream : onto, *shorthead;
++	struct commit *base_rev = upstream ? upstream : onto;
++	const char *shorthead;
+ 	struct object_id orig_head;
+ 
+ 	if (get_oid("HEAD", &orig_head))
+ 		return error(_("no HEAD?"));
+ 
+ 	*head_hash = find_unique_abbrev(&orig_head, GIT_MAX_HEXSZ);
+-	*revisions = xstrfmt("%s...%s", base_rev, *head_hash);
++	*revisions = xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oid),
++						   *head_hash);
+ 
+ 	shorthead = find_unique_abbrev(&orig_head, DEFAULT_ABBREV);
+ 
+ 	if (upstream) {
+ 		const char *shortrev;
+-		struct object_id rev_oid;
+ 
+-		get_oid(base_rev, &rev_oid);
+-		shortrev = find_unique_abbrev(&rev_oid, DEFAULT_ABBREV);
++		shortrev = find_unique_abbrev(&base_rev->object.oid,
++					      DEFAULT_ABBREV);
+ 
+ 		*shortrevisions = xstrfmt("%s..%s", shortrev, shorthead);
+ 	} else
+@@ -177,7 +178,7 @@ static int get_revision_ranges(const char *upstream, const char *onto,
+ }
+ 
+ static int init_basic_state(struct replay_opts *opts, const char *head_name,
+-			    const char *onto, const char *orig_head)
++			    struct commit *onto, const char *orig_head)
  {
  	FILE *interactive;
  
--	if (!is_directory(path_state_dir()) && mkdir_in_gitdir(path_state_dir()))
--		return error_errno(_("could not create temporary %s"), path_state_dir());
-+	if (!is_directory(merge_dir()) && mkdir_in_gitdir(merge_dir()))
-+		return error_errno(_("could not create temporary %s"), merge_dir());
+@@ -195,10 +196,10 @@ static int init_basic_state(struct replay_opts *opts, const char *head_name,
+ }
  
- 	delete_reflog("REBASE_HEAD");
+ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
+-				 const char *switch_to, const char *upstream,
+-				 const char *onto, const char *onto_name,
++				 const char *switch_to, struct commit *upstream,
++				 struct commit *onto, const char *onto_name,
+ 				 const char *squash_onto, const char *head_name,
+-				 const char *restrict_revision, char *raw_strategies,
++				 struct commit *restrict_revision, char *raw_strategies,
+ 				 struct string_list *commands, unsigned autosquash)
+ {
+ 	int ret;
+@@ -229,7 +230,8 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
  
+ 	argv_array_pushl(&make_script_args, "", revisions, NULL);
+ 	if (restrict_revision)
+-		argv_array_push(&make_script_args, restrict_revision);
++		argv_array_push(&make_script_args,
++				oid_to_hex(&restrict_revision->object.oid));
+ 
+ 	ret = sequencer_make_script(the_repository, &todo_list.buf,
+ 				    make_script_args.argc, make_script_args.argv,
+@@ -265,9 +267,10 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, autosquash = 0;
+ 	int abbreviate_commands = 0, rebase_cousins = -1, ret = 0;
+-	const char *onto = NULL, *onto_name = NULL, *restrict_revision = NULL,
+-		*squash_onto = NULL, *upstream = NULL, *head_name = NULL,
++	const char *onto_name = NULL,
++		*squash_onto = NULL, *head_name = NULL,
+ 		*switch_to = NULL, *cmd = NULL;
++	struct commit *onto = NULL, *upstream = NULL, *restrict_revision = NULL;
+ 	struct string_list commands = STRING_LIST_INIT_DUP;
+ 	char *raw_strategies = NULL;
+ 	enum {
+@@ -303,13 +306,16 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
+ 		OPT_CMDMODE(0, "add-exec-commands", &command,
+ 			N_("insert exec commands in todo list"), ADD_EXEC),
+-		OPT_STRING(0, "onto", &onto, N_("onto"), N_("onto")),
+-		OPT_STRING(0, "restrict-revision", &restrict_revision,
+-			   N_("restrict-revision"), N_("restrict revision")),
++		{ OPTION_CALLBACK, 0, "onto", &onto, N_("onto"), N_("onto"),
++		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
++		{ OPTION_CALLBACK, 0, "restrict-revision", &restrict_revision,
++		  N_("restrict-revision"), N_("restrict revision"),
++		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+ 		OPT_STRING(0, "squash-onto", &squash_onto, N_("squash-onto"),
+ 			   N_("squash onto")),
+-		OPT_STRING(0, "upstream", &upstream, N_("upstream"),
+-			   N_("the upstream commit")),
++		{ OPTION_CALLBACK, 0, "upstream", &upstream, N_("upstream"),
++		  N_("the upstream commit"), PARSE_OPT_NONEG, parse_opt_commit,
++		  0 },
+ 		OPT_STRING(0, "head-name", &head_name, N_("head-name"), N_("head name")),
+ 		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign, N_("key-id"),
+ 			N_("GPG-sign commits"),
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 2733393546..2206eb763c 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -96,6 +96,23 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++int parse_opt_commit(const struct option *opt, const char *arg, int unset)
++{
++	struct object_id oid;
++	struct commit *commit;
++	struct commit **target = opt->value;
++
++	if (!arg)
++		return -1;
++	if (get_oid(arg, &oid))
++		return error("malformed object name %s", arg);
++	commit = lookup_commit_reference(the_repository, &oid);
++	if (!commit)
++		return error("no such commit %s", arg);
++	*target = commit;
++	return 0;
++}
++
+ int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct object_id oid;
+diff --git a/parse-options.h b/parse-options.h
+index 7d83e2971d..5a75646618 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -266,6 +266,7 @@ int parse_opt_color_flag_cb(const struct option *, const char *, int);
+ int parse_opt_verbosity_cb(const struct option *, const char *, int);
+ int parse_opt_object_name(const struct option *, const char *, int);
+ int parse_opt_commits(const struct option *, const char *, int);
++int parse_opt_commit(const struct option *, const char *, int);
+ int parse_opt_tertiary(const struct option *, const char *, int);
+ int parse_opt_string_list(const struct option *, const char *, int);
+ int parse_opt_noop_cb(const struct option *, const char *, int);
+diff --git a/sequencer.c b/sequencer.c
+index ccc0160800..610b7ece14 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2418,14 +2418,15 @@ static void write_strategy_opts(struct replay_opts *opts)
+ }
+ 
+ int write_basic_state(struct replay_opts *opts, const char *head_name,
+-		      const char *onto, const char *orig_head)
++		      struct commit *onto, const char *orig_head)
+ {
+ 	const char *quiet = getenv("GIT_QUIET");
+ 
+ 	if (head_name)
+ 		write_file(rebase_path_head_name(), "%s\n", head_name);
+ 	if (onto)
+-		write_file(rebase_path_onto(), "%s\n", onto);
++		write_file(rebase_path_onto(), "%s\n",
++			   oid_to_hex(&onto->object.oid));
+ 	if (orig_head)
+ 		write_file(rebase_path_orig_head(), "%s\n", orig_head);
+ 
+@@ -3456,7 +3457,7 @@ int prepare_branch_to_be_rebased(struct repository *r, struct replay_opts *opts,
+ }
+ 
+ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+-			 const char *onto_name, const char *onto,
++			 const char *onto_name, const struct object_id *onto,
+ 			 const char *orig_head)
+ {
+ 	struct object_id oid;
+@@ -3465,7 +3466,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 	if (get_oid(orig_head, &oid))
+ 		return error(_("%s: not a valid OID"), orig_head);
+ 
+-	if (run_git_checkout(r, opts, onto, action)) {
++	if (run_git_checkout(r, opts, oid_to_hex(onto), action)) {
+ 		apply_autostash(opts);
+ 		sequencer_remove_state(opts);
+ 		return error(_("could not detach HEAD"));
+@@ -4741,16 +4742,16 @@ static int skip_unnecessary_picks(struct repository *r,
+ 
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    const char *onto, const char *orig_head, struct string_list *commands,
+-		    unsigned autosquash, struct todo_list *todo_list)
++		    struct commit *onto, const char *orig_head,
++		    struct string_list *commands, unsigned autosquash,
++		    struct todo_list *todo_list)
+ {
+ 	const char *shortonto, *todo_file = rebase_path_todo();
+ 	struct todo_list new_todo = TODO_LIST_INIT;
+ 	struct strbuf *buf = &todo_list->buf;
+-	struct object_id oid;
++	struct object_id oid = onto->object.oid;
+ 	int res;
+ 
+-	get_oid(onto, &oid);
+ 	shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
+ 
+ 	if (buf->len == 0) {
+@@ -4793,7 +4794,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) ||
+ 	    todo_list_check(todo_list, &new_todo)) {
+ 		fprintf(stderr, _(edit_todo_list_advice));
+-		checkout_onto(r, opts, onto_name, onto, orig_head);
++		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
+ 		todo_list_release(&new_todo);
+ 
+ 		return -1;
+@@ -4812,7 +4813,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 
+ 	todo_list_release(&new_todo);
+ 
+-	if (checkout_onto(r, opts, onto_name, oid_to_hex(&oid), orig_head))
++	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+ 		return -1;
+ 
+ 	if (require_clean_work_tree(r, "rebase", "", 1, 1))
+diff --git a/sequencer.h b/sequencer.h
+index 6c55aa4200..e640ca21f2 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -150,7 +150,7 @@ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ int check_todo_list_from_file(struct repository *r);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+-		    const char *onto, const char *orig_head, struct string_list *commands,
++		    struct commit *onto, const char *orig_head, struct string_list *commands,
+ 		    unsigned autosquash, struct todo_list *todo_list);
+ int todo_list_rearrange_squash(struct todo_list *todo_list);
+ 
+@@ -191,4 +191,4 @@ int read_author_script(const char *path, char **name, char **email, char **date,
+ 
+ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
+ int write_basic_state(struct replay_opts *opts, const char *head_name,
+-		      const char *onto, const char *orig_head);
++		      struct commit *onto, const char *orig_head);
 -- 
 2.21.0
 
