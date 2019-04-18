@@ -7,176 +7,135 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA5A520248
-	for <e@80x24.org>; Thu, 18 Apr 2019 10:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B86920248
+	for <e@80x24.org>; Thu, 18 Apr 2019 10:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388415AbfDRKMX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 06:12:23 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:54119 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387519AbfDRKMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 06:12:23 -0400
-Received: by mail-it1-f194.google.com with SMTP id y204so2464420itf.3
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 03:12:22 -0700 (PDT)
+        id S2388474AbfDRKU2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 06:20:28 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:51074 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388382AbfDRKU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 06:20:27 -0400
+Received: by mail-it1-f193.google.com with SMTP id q14so2521766itk.0
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 03:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Onc9pjiOtGeBa1DNay8MR6ucG2i1HL1tpMpCa+9KzAw=;
-        b=efuRs101KjqM4WcMTjuow0X4lE3F/WcjeSvFQgilNnDWVev1KLBz22zdTAacH+dAhh
-         uQi280GnvStkgmMXvPCJ/GaeShEhcPk30cMJhbMAb6fjrIcSKKmLgHvIIkhCGSL6TKQG
-         FjZyP0A5iJF0Tq2BwoWnOMzDzpvMRLUieHyDFqpjmoWf+PjhmbxExEnVFq7ezPxaL0+r
-         gJR9Aw45/gZgGO3E+bjcZkleduGGdnFLy+TBxJJ//m0tzvZfs+wKP+Aola563a64RwRs
-         zxkjiOi+QAjRji5zGPNeNwamJ2mrH/JuTjaRTYZN9cOAe/J83PWauv0GT+4OIeP1BrFm
-         86dQ==
+         :cc:content-transfer-encoding;
+        bh=mzqBr5zqDRpbTnVD0UEPHfnc8OaQmUbPJyoeBDPu6S0=;
+        b=WYkenXN1nhbAXPDCDF53bLDXoQrR491vCuqT3GwFqe6r4JzeFBpH3kvbv77d5xCkdo
+         W57IjN3JiYtIWi30CvH1bTcBmxPPPKGUo3alvW3EDD9FukKmHdouLJ+hMl8z77oW4Ckv
+         Z9kt7cplYIH0X5//eS6rFrg6OKmUUUQeG1YFfWHgFuIckcyz3DRiGhNyXmQ1eY+ILdm9
+         j/0TkEK73nuPnKeqQgBAm8TECT3PBVQbh1NDJ+OKUi40g2N8azEZn8YZdizCeAcnZPkZ
+         eMw6O3H+b8DbA3b7FBSKSZDjDTmFZMWUkhRbyfB9q25XSNsfti4vTiloFVPcmmF1ohye
+         4bAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Onc9pjiOtGeBa1DNay8MR6ucG2i1HL1tpMpCa+9KzAw=;
-        b=jFfEziYtRBey1EmBZSBSJ7fGVq7dvWyUhbbHXCac7qsnpc+/KV6SQCrKNZNz283gVY
-         nompk0lYbSEryCrw07AYhjQtcA2ssynNoef3HnlnJj33m1EgKwuo/ZBfZXH9Rn0nYcCt
-         wa9slQTUQKkURQmc08ehvHp9qN2WC5oj2+VXnT0sbEo6KKwxGr4lf6XBK3SOQNBO/g7l
-         KJHdqzI1TrmSleZWvDqR+zfr/s/Y3Rl1SKlfLr/1hafCFPjH+ambZ1naOmjLhLg7bouP
-         BICMoO5mnFfm0J8YUa1thyfg41JXYdjVLeQgAnwHLm84salkN5JiUlQt+Z0CBtFrTj9h
-         cnhQ==
-X-Gm-Message-State: APjAAAUPY+2Hbzk/GLOiSiULsvhTZfpFjPAqBVyWNc3THVmB4vQxe8mz
-        kMKy61O0ySBDH3dlb66mSrmb3y7+e2C7fIaEA/M=
-X-Google-Smtp-Source: APXvYqxiiKGkiHKA/QdlwEMMKNygYHyDhofOIpO5Up5jxmCaesc+A19dCbIhF0JeOncWcBjb10J2pxfqXkTVF4xdlIw=
-X-Received: by 2002:a24:4d8a:: with SMTP id l132mr2640656itb.70.1555582342090;
- Thu, 18 Apr 2019 03:12:22 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mzqBr5zqDRpbTnVD0UEPHfnc8OaQmUbPJyoeBDPu6S0=;
+        b=Anqw/ZF6u88jEJHknctkY0fsODqJpoqmX8nmIX8mSIrhrkQT976EQUG/8K+ZIQYxAR
+         lQr3gW2odpahSGNQvKrhAcdyLSm89xXh7DLnfcF1cBmcJNr+EenLZYo6JZ4jK5W1bw/a
+         28buq61YD5wjIoKcmkjZr8+AGQLoWDc5ktqoSxVylmokHnRFHRIzgrxp3OKiNMX7qZ9H
+         ZdrWYPAwpRLTfZ4G5FexDdhjy9Y4NucPpXKhqXJ8b5vAwAv9bLNlJRXDgj/7GDRm9hBf
+         yGdFcgFSRBPG9dV9npWFIwFcH7sd8mFpHj4brVNJ88XPcCxoEl8q1pQjqBgrnPEYc/du
+         oifg==
+X-Gm-Message-State: APjAAAWp3vj9lMBJ8pJnH+vEUz9/WonWIfKdIOSMc4QW/zieLLN2NLdO
+        EbLDsMK8BcL+2dg/8Bm07N4ewhA4W8QvJ5pkTYY=
+X-Google-Smtp-Source: APXvYqw4wBy69BCrXLcgNWa+RSJk66C5TrDWDiyCXKNstbWBj2Ob9Nbzp6icz80yz7hmJQXZdlwJU8LE0zdwcbXzOSI=
+X-Received: by 2002:a24:5493:: with SMTP id t141mr2347452ita.10.1555582826699;
+ Thu, 18 Apr 2019 03:20:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190417212128.52475-1-jonathantanmy@google.com>
-In-Reply-To: <20190417212128.52475-1-jonathantanmy@google.com>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190411131218.19195-1-pclouds@gmail.com>
+ <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com>
+ <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1904181201180.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1904181201180.46@tvgsbejvaqbjf.bet>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 18 Apr 2019 17:11:55 +0700
-Message-ID: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
-Subject: Re: [PATCH] worktree: update is_bare heuristics
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Mike Rappazzo <rappazzo@gmail.com>
+Date:   Thu, 18 Apr 2019 17:20:00 +0700
+Message-ID: <CACsJy8DR6gkzuvY71ka-4F0=1ZzHpc5pux7tCidqyw_dehqBuA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] Add new command 'restore'
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 18, 2019 at 4:22 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+On Thu, Apr 18, 2019 at 5:03 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> When "git branch -D <name>" is run, Git usually first checks if that
-> branch is currently checked out. But this check is not performed if the
-> Git directory of that repository is not at "<repo>/.git", which is the
-> case if that repository is a submodule that has its Git directory stored
-> as "super/.git/modules/<repo>", for example.
+> Hi,
 >
-> This is because get_main_worktree() in worktree.c sets is_bare on a
-> worktree only using the heuristic that a repo is bare if the worktree's
-> path ends in "/.git", and not bare otherwise. This is_bare code was
-> introduced in 92718b7438 ("worktree: add details to the worktree
-> struct", 2015-10-08), following a pre-core.bare heuristic. This patch
-> does 2 things:
+> On Thu, 18 Apr 2019, Junio C Hamano wrote:
 >
->  - Teach get_main_worktree() to use is_bare_repository() instead,
->    introduced in 7d1864ce67 ("Introduce is_bare_repository() and
->    core.bare configuration variable", 2007-01-07) and updated in
->    e90fdc39b6 ("Clean up work-tree handling", 2007-08-01). This solves
->    the "git branch -D <name>" problem described above. However...
+> > Duy Nguyen <pclouds@gmail.com> writes:
+> >
+> > > On Thu, Apr 11, 2019 at 8:12 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy <pclouds@gmail.com> wrote:
+> > >>
+> > >> This is the companion of "git switch" and is based on that topic.
+> > >> This command peforms the "checkout paths" from git-checkout, git-res=
+et
+> > >> and also has a third mode to reset only worktree, leaving the index
+> > >> alone.
+> > >
+> > > It does not have to be done now. But I'm just wondering, does anyone
+> > > think adding --dry-run is a good idea? This command is destructive by
+> > > default, so careful people might want it, I dunno.
+> >
+> > Yeah, "give --dry-run for anything potentially destructive" may be a
+> > good general principle, although we'd need to know where to stop.
+> > For example, I am not sure if "git reset --hard -n" would make all
+> > that much sense, as the sole point of running "reset --hard" is "I
+> > made an unrecoverable mess---get me back to a clean and known state
+> > no matter what" and in that context, "let me see which files in the
+> > working tree will be removed and checked out of the tree-ish and
+> > which paths in the index records a different blob than what is in
+> > the tree-ish, before deciding if I still want to stay in the
+> > unrecoverable mess or I want to get out of it" is something you
+> > could request, but at the same time, there is not much point in
+> > actually asking it.  Of course, a --dry-run that is not used often
+> > simply because it is not all that useful in practice is fine to have
+> > as long as it works correctly---I am saying that it's not something
+> > I'd personally prioritize myself.
+> >
+> > It would be an excellent addition to "restore-path" (and also to
+> > "checkout [<tree-ish> [--]] pathspec") to give "--dry-run".  Not
+> > just because it is destructive, but because unlike "reset --hard",
+> > it is selectively destructive.  Having a way to make sure that the
+> > given pathspec touches only the paths that the user intends to
+> > recover from the tree-ish or the index would be valuable.
+> >
+> > But it is a new feature, and I'd think it can (and probably should)
+> > be done as a follow-on series outside the main series you have been
+> > working on.  Let's make sure that we have the basics ready by the
+> > end of this cycle.
+>
+> Since this command is supposed to make our not-quite-user-friendly
+> command-line interface a lot more user-friendly, I think that we should
+> take a step back and think very hard about a way to make this recoverable
+> an action.
 
-You actually didn't spell out the problem with "git branch -D", or at
-least the consequence (i.e. the submodule branch is deleted even if
-it's checked out).
+backup-log can handle that (or at least provide the foundation) and it
+even allows to recover from accidental "git reset --hard". But since
+I'm not going to resubmit that again (I'm done with thinking hard
+about "git undo" or overwriting ignored files, I do not have the
+answer), I'll let --dry-run rest in peace.
 
->  - If a repository has core.bare=1 but the "git" command is being run
->    from one of its added worktrees, is_bare_repository() returns false
->    (which is fine, since there is a worktree available). However,
->    commands like "git worktree list" currently distinguish between a
->    repository that has core.bare=1 but has a worktree available, and a
->    repository that is truly non-bare (core.bare=0). To preserve this
->    distinction, also check core.bare when setting is_bare. If
->    core.bare=1, trust it, and otherwise, use is_bare_repository().
+> The recently discussed project to make `git stash` handle unmerged index
+> entries should be a good step in that direction.
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  t/t3200-branch.sh | 14 ++++++++++++++
->  worktree.c        |  7 +++----
->  2 files changed, 17 insertions(+), 4 deletions(-)
+> And I do not think that it would make a lot of sense to advance this
+> feature prematurely, i.e. without this safety hatch firmly in place.
 >
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 478b82cf9b..db5c411e76 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -264,6 +264,20 @@ test_expect_success 'git branch --list -d t should fail' '
->         test_must_fail git rev-parse refs/heads/t
->  '
->
-> +test_expect_success 'deleting checked-out branch from repo that is a submodule' '
-> +       test_when_finished "rm -rf repo1 repo2" &&
-> +
-> +       git init repo1 &&
-> +       git init repo1/sub &&
-> +       test_commit -C repo1/sub x &&
-> +       git -C repo1 submodule add ./sub &&
-> +       git -C repo1 commit -m "adding sub" &&
-> +
-> +       git clone --recurse-submodules repo1 repo2 &&
-> +       git -C repo2/sub checkout -b work &&
-> +       test_must_fail git -C repo2/sub branch -D work
-> +'
-> +
->  test_expect_success 'git branch --list -v with --abbrev' '
->         test_when_finished "git branch -D t" &&
->         git branch t &&
-> diff --git a/worktree.c b/worktree.c
-> index b45bfeb9d3..5d52b2ba53 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -49,18 +49,17 @@ static struct worktree *get_main_worktree(void)
->         struct worktree *worktree = NULL;
->         struct strbuf path = STRBUF_INIT;
->         struct strbuf worktree_path = STRBUF_INIT;
-> -       int is_bare = 0;
->
->         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
-> -       is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
-> -       if (is_bare)
-> +       if (!strbuf_strip_suffix(&worktree_path, "/.git"))
->                 strbuf_strip_suffix(&worktree_path, "/.");
-
-We can just call these two calls unconditionally, right? No harm done
-if we don't strip.
-
->
->         strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
->
->         worktree = xcalloc(1, sizeof(*worktree));
->         worktree->path = strbuf_detach(&worktree_path, NULL);
-> -       worktree->is_bare = is_bare;
-> +       worktree->is_bare = (is_bare_repository_cfg == 1) ||
-
-core.bare and core.worktree are special. When you access them standing
-from the main worktree, you'll see them. But when you stand from a
-secondary worktree, they are ignored. It's more obvious with
-core.worktree because if that affects all worktrees, what's the point
-of having multiple worktrees. Git will always go to the place
-core.worktree points out.
-
-So if this function is called from a secondary worktree, I'm not sure
-if it still works as expected because is_bare_repo may be false then.
-For the submodule case, you always stand at the submodule's main
-worktree, so it still works.
-
-I don't think multiple-worktrees-on-submodules will be coming soon, so
-it's probably ok. But maybe leave a note here.
-
-> +               is_bare_repository();
->         add_head_info(worktree);
->
->         strbuf_release(&path);
-> --
-> 2.21.0.392.gf8f6787159e-goog
->
-
-
--- 
+> Ciao,
+> Dscho
+--=20
 Duy
