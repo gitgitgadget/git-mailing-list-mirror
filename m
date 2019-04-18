@@ -1,112 +1,161 @@
 Return-Path: <git-owner@vger.kernel.org>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
+X-Spam-Level: 
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F6F320248
-	for <e@80x24.org>; Thu, 18 Apr 2019 06:58:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3CD20248
+	for <e@80x24.org>; Thu, 18 Apr 2019 08:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388040AbfDRG63 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 02:58:29 -0400
-Received: from mail1.fsfe.org ([217.69.89.151]:57360 "EHLO mail1.fsfe.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725886AbfDRG63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 02:58:29 -0400
-X-Greylist: delayed 499 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2019 02:58:28 EDT
-Message-ID: <f5a8939f2efddb194dadb59c946522a75c5bda53.camel@fsfe.org>
-Subject: Bug report: `git-ls-files --exclude-standard --ignored --others
- --directory` gives incomplete output
-From:   Carmen Bianca Bakker <carmenbianca@fsfe.org>
-To:     git@vger.kernel.org
-Date:   Thu, 18 Apr 2019 08:49:56 +0200
-Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="=-M4NCWj5JmQY+aPUB52kV"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+        id S2388195AbfDRI2w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 04:28:52 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:37207 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728074AbfDRI2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 04:28:51 -0400
+Received: by mail-lj1-f196.google.com with SMTP id v13so1180372ljk.4
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 01:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RQFV9VsonhYbFMaA9Ngx3Ze0QStFd9I3FgRKxEYLO4A=;
+        b=EKxei3ZDMJ1D9VMS3N63aB+xj/xfR3XsvMg7ZJnyEd+Ygm4QmfXUWgkVCitozBXFoC
+         /7KHm2QzKj3UYP+ZohKIL5EhKZaUp1sR7AysHgiiH7lAYSpdZonqH4Re827TX/NePlHX
+         N8bejgotFyBMcwWSd11lN+v/6dSc3QwpQEd9yRN4mGRAxwoRhOwvRXAYmk/g6O7QBG6O
+         H0H8Czc56t2PBFuS9VtH76LbkdGaaiF3PkhFcGAtF2HoX3WjJBW6umqfPfkzT62DkXYN
+         iMeizqO9QLzrFcMbkqC/Gs0lLcxPUjpLk3J3K+QzOiJ/3Rc5ZGkQ4cB76EaOPoO3Y4+q
+         NjNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RQFV9VsonhYbFMaA9Ngx3Ze0QStFd9I3FgRKxEYLO4A=;
+        b=JC4U1iA2bu2BEG6Viq/Dybnawf1uPfuJ6BoT/sR/m125ih6vEIznI9KEj/KYW3y/Sw
+         wkbWt7+prq8+qnwVxp0VRR1245wgvPcWPLfcr08K/Lgl7gd4hL3uQA65yuGNrPsy1v0M
+         m+gAAakx+B0LIANNsExH7zdcKxu9gimxoe9FZzlu2/KTNVVDQ6DCYe8Z6+XGUz5Pp33Z
+         MqEOhgOMmMcKwOgUGC62xpMBd/eTwaJPDV5PjKv9AbxSl5Ziswk5yrTSx8on73bVEexU
+         skBads/oWpZB8cWTYewUCsa9HXybHFWCGk/ktrSRID7YwUW5FfbVcSSMXPieFKFfqjNz
+         67+w==
+X-Gm-Message-State: APjAAAWLR5e6x1+E+sfyIUUMPrS/luCBui61Ibi8qhzXzmnUvKFu70v5
+        k1SqalkztNfc0/VrVZjYDvwJV3dQ
+X-Google-Smtp-Source: APXvYqywZg0gxeb7b83xzseCFRgGZMtRPzHIIWEA+4kfdjv0BdElPtnlOpIMGGDAo5aYzlW+EF5AEA==
+X-Received: by 2002:a2e:8618:: with SMTP id a24mr2733092lji.192.1555576129695;
+        Thu, 18 Apr 2019 01:28:49 -0700 (PDT)
+Received: from lwo1-lhp-f71841 ([195.234.74.207])
+        by smtp.gmail.com with ESMTPSA id d3sm267513ljc.15.2019.04.18.01.28.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Apr 2019 01:28:48 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 11:28:44 +0300
+From:   Vadym Kochan <vadim4j@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] configure.ac: Properly check for libintl
+Message-ID: <20190418082844.GA10068@lwo1-lhp-f71841>
+References: <20190418050419.21114-1-vadim4j@gmail.com>
+ <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---=-M4NCWj5JmQY+aPUB52kV
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 18, 2019 at 02:45:56PM +0900, Junio C Hamano wrote:
+> Vadim Kochan <vadim4j@gmail.com> writes:
+> 
+> > Some libc implementations like uclibc or musl provides
+> > gettext stubs via libintl library but this case is not checked
+> > by AC_CHECK_LIB(c, gettext ...) because gcc has gettext as builtin
+> > which passess the check.
+> >
+> > So check it with included libintl.h where gettext may unfold into
+> > libintl_gettext which will cause check to fail if libintl_gettext are
+> > needed to be linked with -lintl.
+> 
+> Let me make sure I can understand the above correctly (otherwise,
+> that is a sign that the proposed log message is lacking) by trying
+> to rephrase (iow, this is not me saying "your log message should be
+> rewritten like so"; it is "if I read what you wrote above correctly,
+> I think what I am going to write here is also correct"):
+> 
+>     Some libc implementations have function called gettext() that
+>     can be linked via -lc without -lintl, but these are mere stubs
+>     and do not do useful i18n.  On these systems, if a program that
+>     calls gettext() is built _with_ "#include <libintl.h>", the
+>     linker calls for the real version (e.g. libintl_gettext()) and
+>     that can be satisfied only by linking with -lintl.
+> 
+>     The current check to see if -lc provides with gettext() is
+>     sufficient for libc implementations like GNU libc that actually
+>     has full fledged gettext(); to detect libc with stub gettext()
+>     and libintl with real gettext(), aliased via <libintl.h>, the
+>     check to see if -lintl is necessary must be done with a sample
+>     source that #include's the header file.
+> 
+> Is that what is going on and why this patch is needed?
+> 
+> I think the only possibile kind of system this change could break
+> that currently is working is the one that has a usable gettext()
+> in -lc, but does not offer <libintl.h>, as the new test program
+> added by this patch will fail to compile, but I do not think that
+> is possible in practice---our own gettext.c #include's <libintl.h>
+> so there is no way such a hypothetical system that would be broken
+> by this change could possibly have built Git successfully.
+> 
+> Assuming that the way I read your log message is in line with what
+> you wanted to say, I think the patch looks good.
+> 
+> Thanks.
 
-Hi git developers,
+Yes you are correct. 'gettext' even might be defined as libintl_gettext.
+When I got build error I checked config.log and I saw that gcc claims
+that gettext builtin is used, so I think that was the reason why test
+passed for non-glibc. So, if to use <libintl.h> then gettext might be
+preprocessed to libintl_gettext in the test. The original error which I
+was fixing is:
 
-Apologies in advance if my mailing list etiquette isn't 100% perfect. I
-don't use mailing lists all that often. Please CC me in replies, because
-I am not subscribed.
+	http://autobuild.buildroot.net/results/8eeac7f7ddd97576eaeb87311bf0988d59d8b132/build-end.log
 
-I use `git-ls-files` in a project[1] to get a list of ignored
-files/directories, and to ignore them in my project.  I found that using
-`--directory` speeds things up by a lot, so I can ignore entire
-directories.
-
-However, I get inconsistent results between using the --directory flag
-and not.  To demonstrate this, I created a super tiny repository[2].=20
-The repository ignores all `*.mo` files.
-
-I then do:
-
-$ mkdir po/subdir
-$ touch eo.mo po/eo.mo po/subdir/eo.mo
-
-When I run `git ls-files --exclude-standard --ignored --others`, my
-output is:
-
-eo.mo
-po/eo.mo
-po/subdir/eo.mo
-
-But when I run `git ls-files --exclude-standard --ignored --others=20
---directory`, my output is:
-
-eo.mo
-po/eo.mo
-
-Rather strangely, when I alter the command to `git ls-files --exclude-
-standard --ignored --others --directory --no-empty-directory`, I get:
-
-eo.mo
-po/eo.mo
-po/subdir/
-
-This seems very counter-intuitive to me, because po/subdir/ is an empty
-directory in the sense that it contains no files tracked by git.
-
-Is this a bug, or is this a miscomprehension on my part about how `git-
-ls-files` is supposed to function?
-
-With kindness,
-Carmen
-
-
-[1]: <
-https://github.com/fsfe/reuse-tool/blob/75c8c1ba0b7fcefc3ab4e132b539f506e18=
-f721c/src/reuse/_util.py#L115
->
-[2]: <https://github.com/carmenbianca/git-ls-files>
-
---=-M4NCWj5JmQY+aPUB52kV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEaOz9p2Grh2PLV5z6duum9rbqLskFAly4HhQACgkQduum9rbq
-LskVRw//UGFqEKjgRQuxGMAgLIO9uDs2ANQCHIBcUqd7xxyMu0LKzEWSTVt/2Ul0
-OtJA4l2lJgtR9AsMdxg5WEVVX1dA88TpLIPDdNlwnLzUIklkuo2DeVa6GTVmpPa+
-78H7rVb5AQUbW0BY1dhdOknWbZaDwmr8rlV2DKUDucpg+nbobTyjkC2ktBKtmdUT
-U+4WD5VAHuvT7gPUZRAfvAgPEGUtZ8nC2/DOD3anbpK+8scFNuGGhmR0I2rhEwjF
-QtyBmmB+WzfMkhEwB8vW4cEPHPu+xSuIAU/Cl8XL01pr+mHrlId4ZIJ5GTP//g4K
-Oo2lsUxCozyyd4LC97tmPdAHSbDmDPBQAkLlecLaGHkkjBGij+dSiColvSCCugFx
-lYbafshNFt2YDVEUSmRjf56tYDAdMhl38cEs0S93nSCZw09U2FL2U5ycAb6fsU7/
-U0QMv7r6NnWkQNo0UqFCImKxAro77YNHq7zTt4D85JpvpThrc3yLhzY0S9ZWh/wB
-8RiYeUj3U6Hphn55qBFQfLGyzAnp/rpIunj37iUWMN4ZVXxRMvnLA4cu4t13DY1b
-nqEnzEupLQfizyeoI7AgFD88FbrmFYnkyG77N1TKykot92yTtpguCWldsvU/XnLp
-AJHHRppdPJ1JW0vxw20cMhjsrYdpiMTbrjQWoQyL3IB+y6hp+M0=
-=bFGq
------END PGP SIGNATURE-----
-
---=-M4NCWj5JmQY+aPUB52kV--
-
+> 
+> 
+> > Signed-off-by: Vadim Kochan <vadim4j@gmail.com>
+> > ---
+> >  configure.ac | 16 +++++++++++++---
+> >  1 file changed, 13 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/configure.ac b/configure.ac
+> > index e0d0da3c0c..be3b55f1cc 100644
+> > --- a/configure.ac
+> > +++ b/configure.ac
+> > @@ -763,9 +763,19 @@ AC_CHECK_LIB([c], [basename],
+> >  GIT_CONF_SUBST([NEEDS_LIBGEN])
+> >  test -n "$NEEDS_LIBGEN" && LIBS="$LIBS -lgen"
+> >  
+> > -AC_CHECK_LIB([c], [gettext],
+> > -[LIBC_CONTAINS_LIBINTL=YesPlease],
+> > -[LIBC_CONTAINS_LIBINTL=])
+> > +AC_DEFUN([LIBINTL_SRC], [
+> > +AC_LANG_PROGRAM([[
+> > +#include <libintl.h>
+> > +]],[[
+> > +char *msg = gettext("test");
+> > +]])])
+> > +
+> > +AC_MSG_CHECKING([if libc contains libintl])
+> > +AC_LINK_IFELSE([LIBINTL_SRC],
+> > +	[AC_MSG_RESULT([yes])
+> > +	LIBC_CONTAINS_LIBINTL=YesPlease],
+> > +	[AC_MSG_RESULT([no])
+> > +	LIBC_CONTAINS_LIBINTL=])
+> >  GIT_CONF_SUBST([LIBC_CONTAINS_LIBINTL])
+> >  
+> >  #
