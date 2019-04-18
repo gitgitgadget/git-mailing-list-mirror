@@ -2,95 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0054120248
-	for <e@80x24.org>; Thu, 18 Apr 2019 09:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2AE220248
+	for <e@80x24.org>; Thu, 18 Apr 2019 09:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388244AbfDRJlY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 05:41:24 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:38309 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387519AbfDRJlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 05:41:24 -0400
-Received: by mail-it1-f196.google.com with SMTP id f22so2377049ita.3
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 02:41:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MkhZXfsGNDbYLJK5+QnFR/lClFvZJQXrTP2GRfCbtx8=;
-        b=FQaNTBdkWqDfVUsUfyy5XZGKLcLJnMzh8Clm+8XbMbDz/MTj7tKwZqSvPNpYTAhINU
-         KvGiyBWfPa6a2xmKarX9cVqcC0iXd36AN35q8Uf0xdjCxHEjgxKlszlaqBs+8lxPtP7i
-         ujL8J6DPCFwowGVhnO0Q4E28EKZQuRIJr0QmjSM/m42u6csq8RrIwm3kqCS5X8PLHUWs
-         ATLOhn8QooVNenGcJLCpmP/lI2U1DpsiDfBfuoBWVhiNP2NHLZmz6p3ZKAakWfNUMQrZ
-         1NlTm7kXw1wiHiriDLDW6PnzGziggxTFNF7a//06G0LvsUDtuGTGpxV+3CBF3c+FTDxc
-         Rd6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MkhZXfsGNDbYLJK5+QnFR/lClFvZJQXrTP2GRfCbtx8=;
-        b=atb1ubBr75SlXza4/MDxVuhTHodeVcGIKNrnEeFUIK+eW8Kchtv2Ir8QhwGYvbU1Zp
-         oQQRaehC30HhSV3dnIFt6LYjjK1HV+/lIlBbIID0vS9T9rXtHlvAiZzXkk3wvEb0qXoA
-         NCNJEIi9AU8IYZL4hzEzvmIa0tQ9BLY7a9GIaSp9eSlMk5KFkjVp6V/1JfjygzO+xeLk
-         BPuENkdl4VMPIyko3tUIg+qCnBh2MDEqxfK6ZM8zoU551OHf9+LIt+exU9TPDRWqAT3k
-         JMchKvUyFzF9t3/7Xvdp0i3UInuYr89xDYjUFJetQucK/zMWXj6SzF8oPhV/DJUAXuZ+
-         RMHg==
-X-Gm-Message-State: APjAAAWE5+d5kqbUrN5nGWxLAU2JzUZhB4V512K/jW5BH8un56Jow6Xp
-        8jEV0ldC5fcOmEnWzL2e+zagsIPkFjcvYWeZafA=
-X-Google-Smtp-Source: APXvYqzgOj+V8zq6oTYFGrTVFBXXapD+LJo2WRx7G3z0a/z4kH0BDMJSR7y1B5qwRAzX5qhslXWCSvcbdBEK1S3C/YI=
-X-Received: by 2002:a24:5493:: with SMTP id t141mr2249241ita.10.1555580483644;
- Thu, 18 Apr 2019 02:41:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190411131218.19195-1-pclouds@gmail.com>
- <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com> <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 18 Apr 2019 16:40:56 +0700
-Message-ID: <CACsJy8CSQDpDteYUH86n-e+sXfqVGmvV3pgminunZgKOVQNivg@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] Add new command 'restore'
+        id S2388504AbfDRJvd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 05:51:33 -0400
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:39623
+        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388422AbfDRJvd (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Apr 2019 05:51:33 -0400
+X-IronPort-AV: E=Sophos;i="5.60,365,1549926000"; 
+   d="scan'208";a="303288269"
+Received: from dhcp-13-174.lip.ens-lyon.fr (HELO moylip) ([140.77.13.174])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/AES256-GCM-SHA384; 18 Apr 2019 11:51:29 +0200
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     BOMPARD CORENTIN p1603631 <corentin.bompard@etu.univ-lyon1.fr>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        BERBEZIER NATHAN p1601409 <nathan.berbezier@etu.univ-lyon1.fr>,
+        CHABANNE PABLO p1602176 <pablo.chabanne@etu.univ-lyon1.fr>
+Subject: Re: [PATCH] [WIP/RFC] add git pull and git fetch --set-upstream
+References: <20190409125205.13754-1-corentin.bompard@etu.univ-lyon1.fr>
+        <20190417160138.6114-1-corentin.bompard@etu.univ-lyon1.fr>
+        <36559daca9d84f7a91933add734020cd@BPMBX2013-01.univ-lyon1.fr>
+Date:   Thu, 18 Apr 2019 11:51:28 +0200
+In-Reply-To: <36559daca9d84f7a91933add734020cd@BPMBX2013-01.univ-lyon1.fr>
+        (Junio C. Hamano's message of "Thu, 18 Apr 2019 01:35:48 +0000")
+Message-ID: <86h8av7ian.fsf@univ-lyon1.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 18, 2019 at 7:38 AM Junio C Hamano <gitster@pobox.com> wrote:
-> It would be an excellent addition to "restore-path" (and also to
-> "checkout [<tree-ish> [--]] pathspec") to give "--dry-run".  Not
-> just because it is destructive, but because unlike "reset --hard",
-> it is selectively destructive.  Having a way to make sure that the
-> given pathspec touches only the paths that the user intends to
-> recover from the tree-ish or the index would be valuable.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yep. I thought about that complicated pathspec stuff but forgot to
-mention. When you start using wildcards and magic, it's sometimes hard
-to predict the outcome on the first try.
+>> --- a/Documentation/fetch-options.txt
+>> +++ b/Documentation/fetch-options.txt
+>> @@ -165,6 +165,11 @@ ifndef::git-pull[]
+>>  	Disable recursive fetching of submodules (this has the same effect as
+>>  	using the `--recurse-submodules=no` option).
+>>  
+>> +--set-upstream::
+>> +	If the new URL remote is correct, pull and add upstream (tracking) 
+>> +	reference, used by argument-less linkgit:git-push[1] and other commands.
+>
+> git-push and other commands?
 
-Also about git-checkout but that's kinda weird. git-checkout has two
-faces, the switching business is "safety first" and --dry-run does not
-make sense. The restoring paths can make use of --dry-run, but then
-we'll need to describe that this option only applies to one of the two
-cases, urghhh
+I think this is taken from the documentation of --set-upstream for push,
+which says:
 
-> But it is a new feature, and I'd think it can (and probably should)
-> be done as a follow-on series outside the main series you have been
-> working on.  Let's make sure that we have the basics ready by the
-> end of this cycle.
+-u::
+--set-upstream::
+	For every branch that is up to date or successfully pushed, add
+	upstream (tracking) reference, used by argument-less
+	linkgit:git-pull[1] and other commands. For more information,
+	see `branch.<name>.merge` in linkgit:git-config[1].
 
-Yeah, it's not going to happen now. I will also drop "rm --staged" in
-the next reroll to stop expanding the scope of this series. "rm
-[--staged] [--worktree]" may come back, but now is not its time.
+Probably the reasoning was to make a symmetry between "git push
+--set-upstream", which mentions "pull" in the doc, and the new "git pull
+--set-upstream". However, I do not think there should be such symmetry:
+
+Actually, the way I see it, the notion of uptream (i.e.
+branch.<branch>.remote and branch.<branch>.merge) is primarily about
+"pull" and friends, and "push" happens to use it also by default. But
+when branch.<branch>.pushRemote is set, upstream is really about
+pulling, and pushing goes to the pushRemote.
+
+>> +	/* TODO: remove debug trace */
+>
+> Perhaps do so before sending it out for the review?
+
+Yes. This is WIP for now, but it's time to get closer to a real patch,
+and these debug statements are counter-productive for that.
+
+>> +	test_must_be_empty merge.$1
+>> +}
+>
+> If this wanted to say "It is OK for the variable to be missing, and
+> it also is OK for the variable to have an empty string as its value;
+> all other cases are unacceptable",
+
+Actually, I don't think the "present but empty" case makes sense here,
+so just test_must_fail git config "$1" should do the trick.
+
+I agree with all other remarks.
+
 -- 
-Duy
+Matthieu Moy
+https://matthieu-moy.fr/
