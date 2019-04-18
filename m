@@ -2,265 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B545120248
-	for <e@80x24.org>; Thu, 18 Apr 2019 09:29:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0054120248
+	for <e@80x24.org>; Thu, 18 Apr 2019 09:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388407AbfDRJ3t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 05:29:49 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:44646 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387971AbfDRJ3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 05:29:49 -0400
-Received: by mail-pg1-f194.google.com with SMTP id i2so914257pgj.11
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 02:29:48 -0700 (PDT)
+        id S2388244AbfDRJlY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 05:41:24 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:38309 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387519AbfDRJlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 05:41:24 -0400
+Received: by mail-it1-f196.google.com with SMTP id f22so2377049ita.3
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 02:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FOMXWHIjj2MVzHk6M9WaehbuX7l1w/dtwHflII27r9Y=;
-        b=Y/W/2HjJjB0RvmkawdidXKbo+UuNrQVQ22HVJc0WByQ2cKlZrrOK9X1CmZe6iKMODI
-         dYcga8e98A0ysQbyHff+V5gTwPgD8m5gvj+gH0LhfAyGchAxDyKdNSy9p/0mOfav0muB
-         4R4zv4+/RKpEfn9NkdXdy3ElMH8HaP54UVCRRugx/VI/QyGS75XZob5gJAYXVi8iWl0B
-         hRr7vTWv0TxrLOcaSoXGhqJsCAqYgcZh+OB71HHj1fKQCKe/6sI2+uxCdwl3TaXxxpCz
-         5QuDSSMsmFy74dnKoP2iJW/GyhotPTi8SlMLjyJkHKyvfAvWIKa1Q6YW69eYrqxrWliq
-         dn1w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MkhZXfsGNDbYLJK5+QnFR/lClFvZJQXrTP2GRfCbtx8=;
+        b=FQaNTBdkWqDfVUsUfyy5XZGKLcLJnMzh8Clm+8XbMbDz/MTj7tKwZqSvPNpYTAhINU
+         KvGiyBWfPa6a2xmKarX9cVqcC0iXd36AN35q8Uf0xdjCxHEjgxKlszlaqBs+8lxPtP7i
+         ujL8J6DPCFwowGVhnO0Q4E28EKZQuRIJr0QmjSM/m42u6csq8RrIwm3kqCS5X8PLHUWs
+         ATLOhn8QooVNenGcJLCpmP/lI2U1DpsiDfBfuoBWVhiNP2NHLZmz6p3ZKAakWfNUMQrZ
+         1NlTm7kXw1wiHiriDLDW6PnzGziggxTFNF7a//06G0LvsUDtuGTGpxV+3CBF3c+FTDxc
+         Rd6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FOMXWHIjj2MVzHk6M9WaehbuX7l1w/dtwHflII27r9Y=;
-        b=p1hc/6jgZMUzAL+LsYqjRgDF0r+Pu6P9zCD4AnS/Grzg1C26bWFkHMOTr3naDwe1aN
-         5yIPnkCNS9Yjgo6tS2pJUi5sREpduxbuTBnGkokf/G5VtJEx0LfyaCwx6r5BD3sDV7P3
-         u/eChJLAy+6oQg5xDaAVLllDCNeSvK17HNy/NOE796/QzuPPpQzFt+N9IJVpNoj35vxU
-         k2vQpPG8+vnEDUGtTuEjNxS4xnaD3jCKI3g86obHikF0JRWUCiJu7PUNCnSmwYL8ldph
-         gRAyQ6SzcyfjI3mH42t9stwNuHRTwLly+yvh5+zuUpxI78+2j2Ne/r8m+eqggPSTJa6J
-         y7Ww==
-X-Gm-Message-State: APjAAAWXQYN71/8gypENP7/DA2/6KPm//LpwaBaaQLWOMKal8UL269+C
-        w3F/0zFNqRd65GalwoiNEr4=
-X-Google-Smtp-Source: APXvYqxFNcNVFzy6aH43qOcp5mKFj39Yg0BxxLgFXynnOFDWcu61mZ/wcBIAPvSpCPDXVKHxMy27cw==
-X-Received: by 2002:a65:5009:: with SMTP id f9mr5075816pgo.390.1555579787992;
-        Thu, 18 Apr 2019 02:29:47 -0700 (PDT)
-Received: from ash ([115.73.128.9])
-        by smtp.gmail.com with ESMTPSA id v19sm2805560pfa.138.2019.04.18.02.29.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 02:29:46 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 18 Apr 2019 16:29:41 +0700
-Date:   Thu, 18 Apr 2019 16:29:41 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v2] parse-options: don't emit "ambiguous option" for
- aliases
-Message-ID: <20190418092940.GA13484@ash>
-References: <20190325202329.26033-3-avarab@gmail.com>
- <20190417124438.8191-1-avarab@gmail.com>
- <CACsJy8D215hMvfCwz1G9mP2te-ZERVaMMRrnM=MK1_bc0oFsjw@mail.gmail.com>
- <xmqq4l6wjfyw.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MkhZXfsGNDbYLJK5+QnFR/lClFvZJQXrTP2GRfCbtx8=;
+        b=atb1ubBr75SlXza4/MDxVuhTHodeVcGIKNrnEeFUIK+eW8Kchtv2Ir8QhwGYvbU1Zp
+         oQQRaehC30HhSV3dnIFt6LYjjK1HV+/lIlBbIID0vS9T9rXtHlvAiZzXkk3wvEb0qXoA
+         NCNJEIi9AU8IYZL4hzEzvmIa0tQ9BLY7a9GIaSp9eSlMk5KFkjVp6V/1JfjygzO+xeLk
+         BPuENkdl4VMPIyko3tUIg+qCnBh2MDEqxfK6ZM8zoU551OHf9+LIt+exU9TPDRWqAT3k
+         JMchKvUyFzF9t3/7Xvdp0i3UInuYr89xDYjUFJetQucK/zMWXj6SzF8oPhV/DJUAXuZ+
+         RMHg==
+X-Gm-Message-State: APjAAAWE5+d5kqbUrN5nGWxLAU2JzUZhB4V512K/jW5BH8un56Jow6Xp
+        8jEV0ldC5fcOmEnWzL2e+zagsIPkFjcvYWeZafA=
+X-Google-Smtp-Source: APXvYqzgOj+V8zq6oTYFGrTVFBXXapD+LJo2WRx7G3z0a/z4kH0BDMJSR7y1B5qwRAzX5qhslXWCSvcbdBEK1S3C/YI=
+X-Received: by 2002:a24:5493:: with SMTP id t141mr2249241ita.10.1555580483644;
+ Thu, 18 Apr 2019 02:41:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4l6wjfyw.fsf@gitster-ct.c.googlers.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190411131218.19195-1-pclouds@gmail.com>
+ <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com> <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 18 Apr 2019 16:40:56 +0700
+Message-ID: <CACsJy8CSQDpDteYUH86n-e+sXfqVGmvV3pgminunZgKOVQNivg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] Add new command 'restore'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 18, 2019 at 09:48:39AM +0900, Junio C Hamano wrote:
-> > But on the other hand I can see it's a bit more work to teach
-> > parse-options OPT_ALIAS to say "--recursive is just an alias of
-> > --recurse-submodules" and chances of --recursive-hard coming up are
-> > probably very low.
-> 
-> The "bit more work" is something that is worth doing in this case, I
-> think.
+On Thu, Apr 18, 2019 at 7:38 AM Junio C Hamano <gitster@pobox.com> wrote:
+> It would be an excellent addition to "restore-path" (and also to
+> "checkout [<tree-ish> [--]] pathspec") to give "--dry-run".  Not
+> just because it is destructive, but because unlike "reset --hard",
+> it is selectively destructive.  Having a way to make sure that the
+> given pathspec touches only the paths that the user intends to
+> recover from the tree-ish or the index would be valuable.
 
-I had a look at it. Linking two options together is not exactly easy
-because the way we organize option data. And I also had difficulty
-defining the exact semantics of this OPT_ALIAS.
+Yep. I thought about that complicated pathspec stuff but forgot to
+mention. When you start using wildcards and magic, it's sometimes hard
+to predict the outcome on the first try.
 
-So an alternative is simply outsource the ambiguity decision back to
-git-clone. If the same situation appears again elsewhere, we'll need
-to sit back and fix it for real. But this way we don't potentially
-introduce any new traps.
+Also about git-checkout but that's kinda weird. git-checkout has two
+faces, the switching business is "safety first" and --dry-run does not
+make sense. The restoring paths can make use of --dry-run, but then
+we'll need to describe that this option only applies to one of the two
+cases, urghhh
 
-parse_options_extended() also makes it easier to extend parseopt
-functionality without changing all call sites. One thing I have in
-mind, which could maybe use this interface, is to remove
-parse_options_{start,step,end} from public API, avoid expose the
-parse_options_step internal result code. The caller just need to pass
-a callback to handle unknown options.
+> But it is a new feature, and I'd think it can (and probably should)
+> be done as a follow-on series outside the main series you have been
+> working on.  Let's make sure that we have the basics ready by the
+> end of this cycle.
 
--- 8< --
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..041cd43ddc 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -145,6 +145,29 @@ static struct option builtin_clone_options[] = {
- 	OPT_END()
- };
- 
-+/*
-+ * Avoid ambiguation error between --recursive and --recurse-submodule
-+ * because they are the same. --recurs can be expanded to any of them
-+ * and it still works.
-+ */
-+static int is_abbrev_ambiguous(const struct option *prev,
-+			       const struct option *next)
-+{
-+	const struct option *opts[] = { prev, next };
-+	int i, found = 0;
-+
-+	for (i = 0; i < ARRAY_SIZE(opts); i++) {
-+		if (!opts[i]->long_name)
-+			continue;
-+		if (!strcmp(opts[i]->long_name, "recursive"))
-+			found |= 1 << 0;
-+		if (!strcmp(opts[i]->long_name, "recurse-submodules"))
-+			found |= 1 << 1;
-+	}
-+
-+	return found != 3;
-+}
-+
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
- {
- 	static char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -905,14 +928,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	struct remote *remote;
- 	int err = 0, complete_refs_before_fetch = 1;
- 	int submodule_progress;
-+	struct parseopt_options parseopts = { 0 };
- 
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
- 
- 	fetch_if_missing = 0;
- 
- 	packet_trace_identity("clone");
--	argc = parse_options(argc, argv, prefix, builtin_clone_options,
--			     builtin_clone_usage, 0);
-+	parseopts.usagestr = builtin_clone_usage;
-+	parseopts.is_abbrev_ambiguous = is_abbrev_ambiguous;
-+	argc = parse_options_extended(argc, argv, prefix,
-+				      builtin_clone_options,
-+				      &parseopts);
- 
- 	if (argc > 2)
- 		usage_msg_opt(_("Too many arguments."),
-diff --git a/parse-options.c b/parse-options.c
-index cec74522e5..c0354e5a92 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -294,7 +294,8 @@ static enum parse_opt_result parse_long_opt(
- 			if (!(p->flags & PARSE_OPT_KEEP_UNKNOWN) &&
- 			    !strncmp(long_name, arg, arg_end - arg)) {
- is_abbreviated:
--				if (abbrev_option) {
-+				if (abbrev_option &&
-+				    p->is_abbrev_ambiguous(abbrev_option, options)) {
- 					/*
- 					 * If this is abbreviated, it is
- 					 * ambiguous. So when there is no
-@@ -450,6 +451,12 @@ static void parse_options_check(const struct option *opts)
- 		exit(128);
- }
- 
-+static int abbrev_is_always_ambiguous(const struct option *prev,
-+				      const struct option *next)
-+{
-+	return 1;
-+}
-+
- void parse_options_start(struct parse_opt_ctx_t *ctx,
- 			 int argc, const char **argv, const char *prefix,
- 			 const struct option *options, int flags)
-@@ -466,6 +473,7 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
- 	ctx->prefix = prefix;
- 	ctx->cpidx = ((flags & PARSE_OPT_KEEP_ARGV0) != 0);
- 	ctx->flags = flags;
-+	ctx->is_abbrev_ambiguous = abbrev_is_always_ambiguous;
- 	if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
- 	    (flags & PARSE_OPT_STOP_AT_NON_OPTION) &&
- 	    !(flags & PARSE_OPT_ONE_SHOT))
-@@ -702,13 +710,17 @@ int parse_options_end(struct parse_opt_ctx_t *ctx)
- 	return ctx->cpidx + ctx->argc;
- }
- 
--int parse_options(int argc, const char **argv, const char *prefix,
--		  const struct option *options, const char * const usagestr[],
--		  int flags)
-+int parse_options_extended(int argc, const char **argv, const char *prefix,
-+			   const struct option *options,
-+			   const struct parseopt_options *parseopts)
- {
- 	struct parse_opt_ctx_t ctx;
-+	const char * const * usagestr = parseopts->usagestr;
-+	int flags = parseopts->flags;
- 
- 	parse_options_start(&ctx, argc, argv, prefix, options, flags);
-+	if (parseopts->is_abbrev_ambiguous)
-+		ctx.is_abbrev_ambiguous = parseopts->is_abbrev_ambiguous;
- 	switch (parse_options_step(&ctx, options, usagestr)) {
- 	case PARSE_OPT_HELP:
- 	case PARSE_OPT_ERROR:
-@@ -734,6 +746,17 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 	return parse_options_end(&ctx);
- }
- 
-+int parse_options(int argc, const char **argv, const char *prefix,
-+		  const struct option *options, const char * const usagestr[],
-+		  int flags)
-+{
-+	struct parseopt_options parseopts = {0};
-+
-+	parseopts.flags = flags;
-+	parseopts.usagestr = usagestr;
-+	return parse_options_extended(argc, argv, prefix, options, &parseopts);
-+}
-+
- static int usage_argh(const struct option *opts, FILE *outfile)
- {
- 	const char *s;
-diff --git a/parse-options.h b/parse-options.h
-index 74cce4e7fc..31ebf4572c 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -198,6 +198,17 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 		  const struct option *options,
- 		  const char * const usagestr[], int flags);
- 
-+struct parseopt_options {
-+	int flags;
-+	const char * const * usagestr;
-+	int (*is_abbrev_ambiguous)(const struct option *prev,
-+				   const struct option *next);
-+};
-+
-+int parse_options_extended(int argc, const char **argv, const char *prefix,
-+			   const struct option *options,
-+			   const struct parseopt_options *parseopts);
-+
- NORETURN void usage_with_options(const char * const *usagestr,
- 				 const struct option *options);
- 
-@@ -256,6 +267,7 @@ struct parse_opt_ctx_t {
- 	const char *opt;
- 	int flags;
- 	const char *prefix;
-+	int (*is_abbrev_ambiguous)(const struct option *, const struct option *);
- };
- 
- void parse_options_start(struct parse_opt_ctx_t *ctx,
--- 8< --
-
-> 
-> Thanks.
+Yeah, it's not going to happen now. I will also drop "rm --staged" in
+the next reroll to stop expanding the scope of this series. "rm
+[--staged] [--worktree]" may come back, but now is not its time.
+-- 
+Duy
