@@ -2,209 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1579720248
-	for <e@80x24.org>; Thu, 18 Apr 2019 18:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 557E820248
+	for <e@80x24.org>; Thu, 18 Apr 2019 18:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391516AbfDRSQX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 14:16:23 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:40676 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390694AbfDRSQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 14:16:22 -0400
-Received: by mail-io1-f65.google.com with SMTP id i21so2081429iol.7
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 11:16:21 -0700 (PDT)
+        id S2390679AbfDRSaG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 14:30:06 -0400
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:40855 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389842AbfDRSaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 14:30:04 -0400
+Received: by mail-oi1-f202.google.com with SMTP id q82so1313568oif.7
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 11:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=corthon-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ByffnyAjI599etYtnE3n7PkaL+q2gGTgnUnSx5J4IPI=;
-        b=Q/mzwok0K9DWEuqbtRBAMAJY+x1HDStD0OYLlyrOdFvR8rFJQQqwE08aAfnu+TpcKW
-         k5xEuw9mSkzqnl0WR9lBSkDlFODjE//yS66SFStc41zcDmJWK/TVumnfa59ZQBdksV/6
-         +YN0IEoKsYpwhQow2ZwoCdSi5xmz61J0YaayyzfnQOtL/vF4VqZLMJ61RciWNKTOdDYg
-         dx3fgOZSdiJOmm+oFm79N5UL+1UrctMBwhPIAQg3QM+HDvYU3WlU42FhxWhKgYcN3DSQ
-         zbQliqnh1Jqyc+ZD8fGW7//lu5heZXxkYCXmM7pMd2PsSImHYnYipSycga9gRk/OqFyd
-         2nnw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8zGygdQZkWZA/LhVWii3lFkGBVtLcprBjTnMwUzgOIc=;
+        b=P1vRG2lbI+lnCv7srL2eqRaQ/2VTZYLY4qmyBwQ7kBq2Uj3Af8+BiERcBpqXk5Zoyh
+         idnoyVftTLKnmx34FanhGAK3LG2TNFSxMR/rOVnJ9s6OtfULJKZ/FQOzXgVmJK8nq060
+         pIWJjW0tTLKOxAiwOl6TGfjPDZ9n/WsPj9qjNkoRtzT+UH+lQxTxon6x+deu3dwFQWSK
+         Sx7oVOmzfQKolV9qKCB4qSVTC41pqpsccZptCFTZgyh7IyChaCXKYlsLHlqle5dDiW+b
+         tjJKLh51U3MPuT2n86yDswsWBQ3i3GTRGL8e3pxjnDVh5Lq+yJ+CukkfgHX5wg4sXiD7
+         9gew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ByffnyAjI599etYtnE3n7PkaL+q2gGTgnUnSx5J4IPI=;
-        b=Lu4OFKAOHUHkl7CvU5qgVJxsiw1c5uXIqlV0VN71zYCUzg9hsjREjwe4JzB1ddg23b
-         c4aHdZx+6WPHxVHFsKuPqVL67JtwZuJeKOtBRGBw0bORLglV6kAzPZ813mc2vbAx0PTG
-         ea1s9f8sUfcvpprJ0wjbwiC74tuTPx9SHsm7phuKhMlCPlRrwc03xzsMcG43ZIaBwqpZ
-         UzYhvYWSQwhNvJak6RiLQRGJbGE+uId2yMicnyKvazvAosw3U2C/vy5DaHSgLjZ0H51Y
-         JBQi4AAB2FVMW7bQ90ed+Vdkw30iYivkEb5oFP/3NTOEi4olD5GF1YiEyvo0HUz5wMhb
-         ReFQ==
-X-Gm-Message-State: APjAAAVPQFi9dxAUbBb1UsyiWVGj8fonUSLipXDnGRQUiKwBAn6Zbp9J
-        Yyutj8ybpxcGFs7d+34hWbc7l7vn+8KL9mGg1YY=
-X-Google-Smtp-Source: APXvYqzOqMJdPFH5UsYsTwG/O89O809s/OWFOS3n2hTsvV5UnSkIOojCB1Cik6ZpCRzkh/bUA8IFCFRZ6iYZVuHney0=
-X-Received: by 2002:a6b:7218:: with SMTP id n24mr2526324ioc.112.1555611381272;
- Thu, 18 Apr 2019 11:16:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com>
- <CAGyf7-HcncFOfmm5McEkOvCTkHNdePDSEQDZwEAK=z1bmC=QKw@mail.gmail.com>
- <CAGTkKag-fTy3iZAKJxEnWD6_b_3pfuYvQQKBkLaeSL8wKM2sfg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901091936420.41@tvgsbejvaqbjf.bet> <CAGTkKajkW-U9mhh_GmTXmZQbnceEKX_BcMtOF4hOhEDZe2u9Bw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet> <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com>
-In-Reply-To: <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com>
-From:   Bret Barkelew <bret@corthon.com>
-Date:   Thu, 18 Apr 2019 11:16:07 -0700
-Message-ID: <CAGTkKajYiyT_OtX1mQECvxjvKXndjBYAqwgKMimJrroPAAvZJA@mail.gmail.com>
-Subject: Re: git version 2.20.1.windows.1 throws file name too long in gitk
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8zGygdQZkWZA/LhVWii3lFkGBVtLcprBjTnMwUzgOIc=;
+        b=dxq428tMH/2D55fD0lWJVoh0D4ujfJ7o99CPt6Hehedt7NKUrFBm+iMkAD/ovdSeIT
+         Frsw0QHt/Z5JnH2TYj07TpH0vha7qlEUCvLyq+s24hkjSCl9lqXCTaj+/nRxhHP2JlWr
+         XlTVdtwbXmVLc5g2y5ztrfw3HBl+DUI8EyJEPl1uNJ/sCpWX4Us19DDMEaUGUV8XbTft
+         s8H6r13IwjBgwN81VhWfT9w+ly86V610jonarbXwYSYkSQlLNb+GWp1N1qJ3hdfnOG9D
+         nyShPcugPs79zFzWZq9Yg0joTF9rEJ1tQgMTEnO2N0CZQM3v1NMymYS2Alubi/v7nIWV
+         bM9A==
+X-Gm-Message-State: APjAAAWW9muQwsBonMXtQyiQ2h0LvryzsFYDyfJvmoicqtSPuom7vcK0
+        AOjvgFvKeqDn3mwYByFqqEZwl6n65q/STrgUakl9
+X-Google-Smtp-Source: APXvYqw7P/XHm6jT2+4lRg0y4UDs5lOzKUTuFzqp/tPz148eft4OAYt+4oR8UInS7xRf1pQuVn3fcUZAzhLf+RymXYOI
+X-Received: by 2002:aca:6289:: with SMTP id w131mr2877353oib.84.1555612203877;
+ Thu, 18 Apr 2019 11:30:03 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 11:30:00 -0700
+In-Reply-To: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
+Message-Id: <20190418183000.78138-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
+X-Mailer: git-send-email 2.21.0.314.g8007d49101.dirty
+Subject: Re: [PATCH] worktree: update is_bare heuristics
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     pclouds@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        Johannes.Schindelin@gmx.de, rappazzo@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This issue is now being reported by more users inside MS. I'll also
-reach out to the Git for Windows advocacy group to see if they have
-any ideas.
+> You actually didn't spell out the problem with "git branch -D", or at
+> least the consequence (i.e. the submodule branch is deleted even if
+> it's checked out).
 
-I have not had time to figure out the inner workings of Tcl/Tk. Is
-there any way to turn on tracing/logging in Git for which commands are
-being called by gitk?
+Thanks - I'll do that in the commit message.
 
-On Thu, Jan 10, 2019 at 10:55 AM Bret Barkelew <bret@corthon.com> wrote:
->
-> On Thu, Jan 10, 2019 at 7:20 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> >         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
+> > -       is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
+> > -       if (is_bare)
+> > +       if (!strbuf_strip_suffix(&worktree_path, "/.git"))
+> >                 strbuf_strip_suffix(&worktree_path, "/.");
+> 
+> We can just call these two calls unconditionally, right? No harm done
+> if we don't strip.
+
+We can, and no harm done. But this if/then pattern is also repeated in
+other parts of the file (e.g. get_linked_worktree()) so I'll leave it in
+for consistency. (Also, for what it's worth, it's slightly faster if
+only one strip is done.)
+
+> >         strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
 > >
-> > Hi Bret,
-> >
-> > in that case, please try to find a way to trace the commands in a Tcl/T=
-k
-> > program (which gitk is) and see which command triggers the error.
->
-> Er... that's a little out of my depth. I'll see if I can find time to lea=
-rn.
-> Meanwhile, is there any way to request better instrumentation for the
-> error dialog so this data could have been collected for me?
->
-> >
-> > Ciao,
-> > Johannes
-> >
-> >
-> > On Wed, 9 Jan 2019, Bret Barkelew wrote:
-> >
-> > > Will try to reply in-line, when appropriate.
-> > > The latest snapshot (git version 2.20.1.windows.1.5.g6b286585b1) stil=
-l
-> > > has the issue.
-> > >
-> > > - Bret
-> > >
-> > >
-> > > On Wed, Jan 9, 2019 at 10:39 AM Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
-> > > >
-> > > > Hi Bret,
-> > > >
-> > > >
-> > > > On Thu, 3 Jan 2019, Bret Barkelew wrote:
-> > > >
-> > > > > They are the exact same path (with a different drive letter).
-> > > >
-> > > > [it's a bit hard to follow the thread if you top-post a reply to an
-> > > > inline-replied answer, maybe imitate the style of other mails in th=
-e
-> > > > future.]
-> > > >
-> > > > > Another thing I've been able to confirm is I uninstalled git 2.20=
-.1
-> > > > > and installed 2.19.0 on the failing system, and the older version=
- of
-> > > > > Git works.
-> > > > > I've also tried a suggested fix I saw elsewhere to enable long pa=
-th
-> > > > > names in the Windows registry, which did not resolve the issue wi=
-th
-> > > > > git 2.20.1.
-> > > > >
-> > > > > Happy to collect any additional data.
-> > > >
-> > > > Please try the latest snapshot at
-> > > > https://wingit.blob.core.windows.net/files/index.html (I *think* th=
-e bug
-> > > > might be fixed via
-> > > > https://github.com/git-for-windows/MINGW-packages/pull/32).
-> > > >
-> > > > Ciao,
-> > > > Johannes
-> > > >
-> > > > > - Bret
-> > > > >
-> > > > > On Thu, Jan 3, 2019 at 7:10 PM Bryan Turner <bturner@atlassian.co=
-m> wrote:
-> > > > > >
-> > > > > > On Thu, Jan 3, 2019 at 6:21 PM Bret Barkelew <bret@corthon.com>=
- wrote:
-> > > > > >>
-> > > > > >> When I open gitk in a particular repository under this version=
- of Git
-> > > > > >> for Windows, I now get a dialog box that says "Error: couldn't=
- execute
-> > > > > >> "git": file name too long". I've noticed that the most pronoun=
-ced
-> > > > > >> effect is that I cannot see the file diffs (or sometimes the f=
-ile name
-> > > > > >> list) for any of the commits. I don't know the exact repro, bu=
-t I've
-> > > > > >> narrowed down the following things:
-> > > > > >>
-> > > > > >> - This does not happen with the same repo if I use a system th=
-at has
-> > > > > >> git 2.19.0.windows.1 on another machine.
-> > > > > >> - This does not happen on my current machine in a freshly clon=
-ed repo.
-> > > > > >
-> > > > > >
-> > > > > > How =E2=80=9Cdeep=E2=80=9D are the paths to the different clone=
-s on the different systems? Are all of the clones at exactly the same path =
-on disk?
-> > > > > >
-> > > > > > Git on Windows is (by defaulted) limited by MAX_PATH, which is =
-260 characters. That length is calculated including the path to the reposit=
-ory itself and then to the file inside the repository. That means, for exam=
-ple, a given repository cloned to C:\repo may not have issues, but the same=
- repository cloned to C:\Users\Bryan\Documents\workspaces\repo may.
-> > > > > >
-> > > > > >>
-> > > > > >> However, as soon as the remote updates with any changes on a g=
-iven
-> > > > > >> fetch/pull, the repo is put in a bad state permanently.
-> > > > > >>
-> > > > > >> I've pasted the output from gitk below...
-> > > > > >>
-> > > > > >> couldn't execute "git": file name too long
-> > > > > >> couldn't execute "git": file name too long
-> > > > > >>     while executing
-> > > > > >> "open $cmd r"
-> > > > > >>     (procedure "getallcommits" line 48)
-> > > > > >>     invoked from within
-> > > > > >> "getallcommits"
-> > > > > >>     (procedure "readcache" line 80)
-> > > > > >>     invoked from within
-> > > > > >> "readcache file827e200"
-> > > > > >>     ("eval" body line 1)
-> > > > > >>     invoked from within
-> > > > > >> "eval $script"
-> > > > > >>     (procedure "dorunq" line 11)
-> > > > > >>     invoked from within
-> > > > > >> "dorunq"
-> > > > > >>     ("after" script)
-> > > > > >>
-> > > > > >> Happy to gather whatever data needed.
-> > > > > >> Thanks!
-> > > > > >> - Bret Barkelew
-> > > > >
-> > >
+> >         worktree = xcalloc(1, sizeof(*worktree));
+> >         worktree->path = strbuf_detach(&worktree_path, NULL);
+> > -       worktree->is_bare = is_bare;
+> > +       worktree->is_bare = (is_bare_repository_cfg == 1) ||
+> 
+> core.bare and core.worktree are special. When you access them standing
+> from the main worktree, you'll see them. But when you stand from a
+> secondary worktree, they are ignored.
+
+Just checking: I think that is_bare_repository_cfg ignores core.bare
+only if the config.worktree file is present? In the t2402 test '"list"
+all worktrees from linked with a bare main', "git worktree list" still
+observes the main worktree as bare. But in any case, you are right that
+core.bare is sometimes ignored.
+
+> It's more obvious with
+> core.worktree because if that affects all worktrees, what's the point
+> of having multiple worktrees. Git will always go to the place
+> core.worktree points out.
+
+That's true.
+
+> So if this function is called from a secondary worktree, I'm not sure
+> if it still works as expected because is_bare_repo may be false then.
+
+I think you're right that is_bare_repository() will always return false
+here. So let's look at the cases where, running from a secondary
+worktree, we think that the main worktree should be observed as bare:
+
+ - main worktree did not define core.bare
+   - I don't know if this is possible (remember that we're running from
+     a secondary worktree). But if it is, it seems that
+     is_bare_repository_cfg will be -1, and worktree->is_bare will be
+     set to 0 regardless of whether or not it is bare.
+
+ - main worktree defines core.bare as 1; no config.worktree
+   - is_bare_repository_cfg is 1, so we see the main worktree as bare.
+     (This case is tested in t2402 '"list" all worktrees from linked
+     with a bare main'.)
+
+ - main worktree defines core.bare as 1, and secondary worktree defines
+   core.bare as 0
+   - I think that we'll see is_bare_repository_cfg as 0, so we won't see
+     the main worktree as bare.
+
+The only potentially problematic case seems to be the 3rd one.
+
+> For the submodule case, you always stand at the submodule's main
+> worktree, so it still works.
+
+Yes.
+
+> I don't think multiple-worktrees-on-submodules will be coming soon, so
+> it's probably ok. But maybe leave a note here.
+
+Observing that the problematic case is the 3rd one above, would this
+note work:
+
+  NEEDSWORK: If this function is called from a secondary worktree and
+  config.worktree is present, is_bare_repository_cfg will reflect the
+  contents of config.worktree, not the contents of the main worktree.
+  This means that worktree->is_bare may be set to 0 even if the main
+  worktree is configured to be bare.
