@@ -2,140 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B86920248
-	for <e@80x24.org>; Thu, 18 Apr 2019 10:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79C7820248
+	for <e@80x24.org>; Thu, 18 Apr 2019 11:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388474AbfDRKU2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 06:20:28 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:51074 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388382AbfDRKU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 06:20:27 -0400
-Received: by mail-it1-f193.google.com with SMTP id q14so2521766itk.0
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 03:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mzqBr5zqDRpbTnVD0UEPHfnc8OaQmUbPJyoeBDPu6S0=;
-        b=WYkenXN1nhbAXPDCDF53bLDXoQrR491vCuqT3GwFqe6r4JzeFBpH3kvbv77d5xCkdo
-         W57IjN3JiYtIWi30CvH1bTcBmxPPPKGUo3alvW3EDD9FukKmHdouLJ+hMl8z77oW4Ckv
-         Z9kt7cplYIH0X5//eS6rFrg6OKmUUUQeG1YFfWHgFuIckcyz3DRiGhNyXmQ1eY+ILdm9
-         j/0TkEK73nuPnKeqQgBAm8TECT3PBVQbh1NDJ+OKUi40g2N8azEZn8YZdizCeAcnZPkZ
-         eMw6O3H+b8DbA3b7FBSKSZDjDTmFZMWUkhRbyfB9q25XSNsfti4vTiloFVPcmmF1ohye
-         4bAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mzqBr5zqDRpbTnVD0UEPHfnc8OaQmUbPJyoeBDPu6S0=;
-        b=Anqw/ZF6u88jEJHknctkY0fsODqJpoqmX8nmIX8mSIrhrkQT976EQUG/8K+ZIQYxAR
-         lQr3gW2odpahSGNQvKrhAcdyLSm89xXh7DLnfcF1cBmcJNr+EenLZYo6JZ4jK5W1bw/a
-         28buq61YD5wjIoKcmkjZr8+AGQLoWDc5ktqoSxVylmokHnRFHRIzgrxp3OKiNMX7qZ9H
-         ZdrWYPAwpRLTfZ4G5FexDdhjy9Y4NucPpXKhqXJ8b5vAwAv9bLNlJRXDgj/7GDRm9hBf
-         yGdFcgFSRBPG9dV9npWFIwFcH7sd8mFpHj4brVNJ88XPcCxoEl8q1pQjqBgrnPEYc/du
-         oifg==
-X-Gm-Message-State: APjAAAWp3vj9lMBJ8pJnH+vEUz9/WonWIfKdIOSMc4QW/zieLLN2NLdO
-        EbLDsMK8BcL+2dg/8Bm07N4ewhA4W8QvJ5pkTYY=
-X-Google-Smtp-Source: APXvYqw4wBy69BCrXLcgNWa+RSJk66C5TrDWDiyCXKNstbWBj2Ob9Nbzp6icz80yz7hmJQXZdlwJU8LE0zdwcbXzOSI=
-X-Received: by 2002:a24:5493:: with SMTP id t141mr2347452ita.10.1555582826699;
- Thu, 18 Apr 2019 03:20:26 -0700 (PDT)
+        id S2388686AbfDRLqe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 07:46:34 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55059 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727807AbfDRLqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 07:46:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1555587987;
+        bh=RwTphXOW5sNLBZOaA54ipyu73WgTHMXuYN3QPUdHw1A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=R5IWID325GButcaI9GqS5fHFtw/Zw1AjSeoMJpIL9Mf+SISopUEIa3zYu8WQ8mApP
+         JVqtzZPiM6m0hdNUpZEF1EclUlATg7K5jyAbqJfBWn7tVmWLT31LNUTKjIe0v6CKtK
+         ZcQS85TjPRxf7Ovt+TCkqcI9U5Evg7O8rBn1HDR0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFgxF-1h5FX40A8T-00EdoD; Thu, 18
+ Apr 2019 13:46:27 +0200
+Date:   Thu, 18 Apr 2019 13:46:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/7] remote-testgit: move it into the support directory
+ for t5801
+In-Reply-To: <xmqqv9zfsq31.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1904181346050.46@tvgsbejvaqbjf.bet>
+References: <pull.168.git.gitgitgadget@gmail.com> <81c08b178be6329d51586fa9d615063d3c6f9625.1555070430.git.gitgitgadget@gmail.com> <xmqqv9zfsq31.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190411131218.19195-1-pclouds@gmail.com>
- <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com>
- <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1904181201180.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1904181201180.46@tvgsbejvaqbjf.bet>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 18 Apr 2019 17:20:00 +0700
-Message-ID: <CACsJy8DR6gkzuvY71ka-4F0=1ZzHpc5pux7tCidqyw_dehqBuA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] Add new command 'restore'
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wy/YIwtYYX5wT5mOZ6kK2Ejk1N1bigdzUqS46rgsrJdDpQF8VVV
+ 0/mjj6wpruYdO5kagvjzy1b5cmVZWua1GiOcfTYQe4S/5Rd+3ra4l2jpDKGCxMddmZ7z63K
+ 2P1WDBvXq4Xtqlu2Ww/IU+750Y8Cpvv8ylMv9aD+whXCBZOR2uIJpqVCmq3VbflScwYhI8N
+ N5ZdopKnqq7z6CxHwKu8Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oE1Ef8+HKLI=:5uey4JVz6UkVmQ+0Y89U8h
+ Dj+57HWlfE3e8oshfwUyA2FUmOWeU2CuhMKcMhQkzKCYxhaAq/RoSC4xNrYR1LXxILEULlt1u
+ 3H2oaMdVN5FAFXedSHu43q7cX/BtyU1nIa2ZfFcpsk2prouzy2v4VBn0zpxiOetQkjr4Is26s
+ ZqrRSy/yApJfF8ZRyfnJ+MAs1PvAPBjivjyM5Wdq1oqFotwyoY9U5vwo00i2l4wMVOeNOqYGa
+ DyOLhV4EieVxnD2h3nbqvCWgQP5Hej5WJO4OZX3NOYq+bwJb1HCHRJvJ53BgBET6FaRi/Iq0/
+ gZepcb6E2TEGzPdJOK+QiJiEPKA6BRHgNGPonQeuzpNZ2I0WMudoM3BkfxRds+ecfN+xWr/dQ
+ NMjL72INV+mdPbsrsdQPDCu8h0gEuw2fA5/eynDfb+C21UOJL4FgRIk5ZPOcC//q+Dt+aVlSF
+ HAeiX5NAnyXSWJuYekvV7hFdfWx9nu+OcH9M/dYOH2eYT5Q1UZm8QhFx+KeiJqlicUnhxpzwH
+ CmYHjvVOz/DLR9rYTsIBoK3/0rE6ny07UepWOF+sySvLYmHJtjh4d5eDlomsxA799VD039p4X
+ Jysnv0Wj0+TGn3gMw7qBcy+N42YxWMhedFTJMAQTtHX5B5eHVIUCsr0jeNawvhDL5QXt5ZaTq
+ 1ORJbi7Uz3vFxcRQpN/snmAdrZV1wPNmGACU5EJ71vELAguOOvV+2uTPs5e8M3bX+RNU+xOWR
+ /o+Fu/GMzOsvf5BcSJM0kOHngAw8qNmnMDolWs9WHWp+gAqjJy3bHpelYtyi9/+CBprTIJICD
+ ggWhJ/MNtRZnJzqTKkBMmoWW+JZLHNcAZVVMGBgx3jiTYh5rhQzuAPSGMMGToml/T6Pt5RrQX
+ WPlLq7Yt1o/rhnq0NkhyNYu+kNC+eBxpNGZ4Xzr8VQnibVR6GBu+KNw3+0No9KuImI0Fg7Q42
+ AvJzewnk6Hg==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 18, 2019 at 5:03 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
-> On Thu, 18 Apr 2019, Junio C Hamano wrote:
->
-> > Duy Nguyen <pclouds@gmail.com> writes:
-> >
-> > > On Thu, Apr 11, 2019 at 8:12 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy <pclouds@gmail.com> wrote:
-> > >>
-> > >> This is the companion of "git switch" and is based on that topic.
-> > >> This command peforms the "checkout paths" from git-checkout, git-res=
-et
-> > >> and also has a third mode to reset only worktree, leaving the index
-> > >> alone.
-> > >
-> > > It does not have to be done now. But I'm just wondering, does anyone
-> > > think adding --dry-run is a good idea? This command is destructive by
-> > > default, so careful people might want it, I dunno.
-> >
-> > Yeah, "give --dry-run for anything potentially destructive" may be a
-> > good general principle, although we'd need to know where to stop.
-> > For example, I am not sure if "git reset --hard -n" would make all
-> > that much sense, as the sole point of running "reset --hard" is "I
-> > made an unrecoverable mess---get me back to a clean and known state
-> > no matter what" and in that context, "let me see which files in the
-> > working tree will be removed and checked out of the tree-ish and
-> > which paths in the index records a different blob than what is in
-> > the tree-ish, before deciding if I still want to stay in the
-> > unrecoverable mess or I want to get out of it" is something you
-> > could request, but at the same time, there is not much point in
-> > actually asking it.  Of course, a --dry-run that is not used often
-> > simply because it is not all that useful in practice is fine to have
-> > as long as it works correctly---I am saying that it's not something
-> > I'd personally prioritize myself.
-> >
-> > It would be an excellent addition to "restore-path" (and also to
-> > "checkout [<tree-ish> [--]] pathspec") to give "--dry-run".  Not
-> > just because it is destructive, but because unlike "reset --hard",
-> > it is selectively destructive.  Having a way to make sure that the
-> > given pathspec touches only the paths that the user intends to
-> > recover from the tree-ish or the index would be valuable.
-> >
-> > But it is a new feature, and I'd think it can (and probably should)
-> > be done as a follow-on series outside the main series you have been
-> > working on.  Let's make sure that we have the basics ready by the
-> > end of this cycle.
->
-> Since this command is supposed to make our not-quite-user-friendly
-> command-line interface a lot more user-friendly, I think that we should
-> take a step back and think very hard about a way to make this recoverable
-> an action.
+Hi Junio,
 
-backup-log can handle that (or at least provide the foundation) and it
-even allows to recover from accidental "git reset --hard". But since
-I'm not going to resubmit that again (I'm done with thinking hard
-about "git undo" or overwriting ignored files, I do not have the
-answer), I'll let --dry-run rest in peace.
+On Mon, 15 Apr 2019, Junio C Hamano wrote:
 
-> The recently discussed project to make `git stash` handle unmerged index
-> entries should be a good step in that direction.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> And I do not think that it would make a lot of sense to advance this
-> feature prematurely, i.e. without this safety hatch firmly in place.
+> > @@ -657,8 +656,6 @@ SCRIPT_PERL +=3D git-svn.perl
+> >
+> >  SCRIPT_PYTHON +=3D git-p4.py
+> >
+> > -NO_INSTALL +=3D git-remote-testgit
+> > -
 >
-> Ciao,
-> Dscho
---=20
-Duy
+> The line lost here was the last one that updated the value of
+> NO_INSTALL, so we should be able to lose all the mentions of the
+> make variable now.
+
+Sure, I added a separate commit to make it so.
+
+Thanks,
+Dscho
