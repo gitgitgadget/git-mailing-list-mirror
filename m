@@ -8,98 +8,73 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97CFB20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 13:07:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6A3C20248
+	for <e@80x24.org>; Thu, 18 Apr 2019 13:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388528AbfDRNHF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 09:07:05 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49189 "EHLO mout.gmx.net"
+        id S2388263AbfDRNIL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 09:08:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52473 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727807AbfDRNHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 09:07:05 -0400
+        id S1727807AbfDRNIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 09:08:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555592811;
-        bh=DjgzJOypiplB8ox6O0ntu0KjSI0bz0MyxadbXLNww/g=;
+        s=badeba3b8450; t=1555592883;
+        bh=fB5nzjxoei5T5ZkIUDjcPyoIDeCethpYlh0NaLER4h4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YHLABXWzIGZZ+qeRQUs5M6zq8FCbYpbzcVi47C+s3FDuat0JZm0RkfzmR2XAWlKSO
-         qUVeWv0Wi3wV2U5Pa6fdgkfpzOe8eioWja/ZA+9YocpdgkUqK8twA4Ka2KWA6A1q/V
-         XWu9XkVjv6CFPfruRDxg7vxSW3a9nwBAIX30Fbz0=
+        b=eqXfdh6QrveE3MwWa1la/UhLqMU/SeHDRb+C3B3Bl5BoT3mJrytzEeM/B9dhYD78h
+         iPltdzL/b/6XkgPeePtFxCVcQ9LctfByWAHUdqEREFMgfQs777R5fyvm9i50DY5Q5B
+         Gb1RzQci9OwiHSpvH50GL8vGPcf+K+dsJ3dg3V6Y=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1Hdw-1hFSr335Gk-002o97; Thu, 18
- Apr 2019 15:06:51 +0200
-Date:   Thu, 18 Apr 2019 15:06:56 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh6lB-1hUUux43MH-00MHuW; Thu, 18
+ Apr 2019 15:08:03 +0200
+Date:   Thu, 18 Apr 2019 15:08:06 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>
 Subject: Re: [PATCH 4/7] docs: exclude documentation for commands that have
  been excluded
-In-Reply-To: <20190415145042.GA27540@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1904181505520.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAPig+cSHJ_g=KGBL2qoJK7Ddv6QhoC2Fq=2dyRF1qexAv63RiA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904181507240.46@tvgsbejvaqbjf.bet>
 References: <pull.168.git.gitgitgadget@gmail.com> <31d8e43cbfaec36f662006a711b64bca47009e59.1555070430.git.gitgitgadget@gmail.com> <CAPig+cTiF-9+pXnx19y0PUs3Nwek7N2cEg2r2jAPzEXPTvpxpA@mail.gmail.com> <xmqqpnpoufp5.fsf@gitster-ct.c.googlers.com>
- <CAPig+cQ3drZ+iE=SkSXTdHVfTxLkPTi=VTJCMJn7LKLxcpC-pQ@mail.gmail.com> <20190415145042.GA27540@sigill.intra.peff.net>
+ <CAPig+cQ3drZ+iE=SkSXTdHVfTxLkPTi=VTJCMJn7LKLxcpC-pQ@mail.gmail.com> <CAPig+cSHJ_g=KGBL2qoJK7Ddv6QhoC2Fq=2dyRF1qexAv63RiA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rKT14yf3tYReCIrKFraYDf7zpLvR0GqUp66Bj/uXeZC+wXwyrYM
- mlzbliBFRFchl50Zdm1thvzo17JHZvYYGIakyqTFnBvaWqhL85+9ZUwhSxKQYSSJOCc7Ele
- btlrXVyYWB1M38QYpVdi1Hk7lsosvkbbgDLhJfB9uRjq2/KpMVUTGzoCh6GsESqbGp2UMeU
- TdIl8WKaouJMwiAahYOrg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AsYPnTCoMRs=:aSUzrzgmLsVM96TJ0tTdt1
- 7VIvdWzw+l+4bwgklH0r4jzL2Su4qS5czSv6qhYx+6JSM8YX44TKnBvbpl1UtHt5OCmXpWZ4W
- OpTMu4+UpiKtYhTa7aAtY+SLtEkSn9QXINr4zD4m/gWCHtIPDnuMSwPHpBZ9qoZclhJ60irq/
- F3ewYCJ7QbDUekuyWzFyn0LzQLr+bqNa3yavOBNjfJXbeU25j808KksPYDtW+PtTV/BwDxN3a
- lJQjUl4Ud/TUaL4zeBz49vXw8YJ2QdhS3T7af93Pjc0VOuK3k3d2GV+OGi5dwcyq5ZAqHBKEC
- QpFysSx4zkjJMYgG6Bwhb+hrFhSrPOat+MfEy/3SwGBJBqpGlTU2O77fgORPst3SY/p1vAGat
- 2yWQx25Arlw1So6fRbwORjIIR1MiB16WnkdkQZxPhmewadUMa/HI00TgpTf9koJ4ILeIyjrH4
- 67YbeAtKgWWgJRQ0iFBD2uVUncJ/W6ed/U06/2s4oXzNwu1qkqWmkNuMLz6AMddvBrdtiJftv
- oRvbsIAbzyUbiSwWOJZlSpygljEkolMbr8QkCCgr2n8Mq+8b+baY5k6I1ls0+d/6viHfB1fI3
- rd9TblK1zCgd77eEEOEbkEpeSLLdKU4NvWUJOqkmj0iKvfoceYdjX80pQRARZt8fQ0kdFWcIc
- 7HmdfhOCKgmmQyzoWZmqKRMZ7soMlv03NC4fsdV8Apd7lt1NoIsbBXGQvvxXEBJPvSBpctxXU
- vkRE4+fupQYwmnTyJDyVYvOCj1D1tKvXZmAsBnVqlXoPLea4Y5kihL5TYVHDsxJAqzU6dqJs6
- sXORseO+tfMLvFgwsR45N1IJmdEgXHnvoCuJqI+rS8ipEiNCZUT3MVbWroqpTMh8RwBuu4i2o
- Triic6ikQoFiJDp16kaeBOpbk1aHmvdSyj1Kxw5OKKprSMMuNX/WWui8xPIKXKZ5a34CaYddr
- jukVZmKXhmw==
+X-Provags-ID: V03:K1:nWvgARf5CYrYp0gZkV0y1aazYVtXb/37zcvaSGWWHh+/XABaB96
+ JcbY6HnzIR/70eDVAQwklEbL8yTO0gOuPkulzJ7jL7+KWwSrFhjrPumztb0dQdBirFmK0Wf
+ rjSzMxBo97S0letrHwBZgYbT6XDn+K3h1zD3hqK+0XGHjILlufr17GdxY1gO4Zy909mSUOu
+ yEWH8OltYQYLPpyo6AAww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rjupFhhrfJU=:Qbge8p3+pzgbwIN9AfY8uI
+ eWRMHpFXBIGribwaapFi72LGqz0lLzt25+fcwvl7PUZl1wjMzRULA+V0IaBnBoPnS/5r9hi21
+ cexOauN68WB/TPtgisllMVu74+wsbV0vsF2EdS5aXqRcboF2bUgCgxRJ0CR8uSrhMSrzRR/+P
+ PxzFFKzmTWplS+nO5bWGJt9hig0CEv91cImX4gVNeOfGqrDZ8omTSLfon5zfG43/tZiSwbMc7
+ ZdAHL5Pl6kcxo9Rpd56llLrQoToxbqK9x6lSNRKP6zpVnYIq9zjeWRw0EPsEctI653E5k6+a4
+ LhGZiBDJ61i8t/WGfumKGxj4BW6n57ix3QHwRLgRUllTcKsP0gKQDinmAmw/35Wyr5ZN67gZn
+ TRJQEfefbH9zqvTa/RK9+pFw/zXeRcyWszGcNZnhcHKdGNq6peSDuFRctFQ7pmYIIjCT1fxR7
+ 8MdoRJx8k0QEVbLJPe7ULzGFxvdct6KCWckc6VTEBo76WJ931XJ9haBE6qtbk6INnuL53GP4Z
+ LfKo56JGHAxlbtYv+Zpw1qSDxLQwcNdB/DIAUiNwkRwe4rmoaQ3zktYxp/EInIt6ZMKF+1PrP
+ FtpIBKHjZuO4f1Zs31e/weUhGoHzaZ8UA6ptsT62Uwhg5lGWcOB85Po1kBFw0lttvVtdCI9gN
+ ta6q871QM+rX7W99zp3mJ0Bbl/UWruckylbP37Lc5DAajDOst5RiI4zPAuMDf+MjAmmbXue8t
+ zqoODcMAgrIrGo0VNrKEicciEnsIR3L+UEWaVAk537ZeHe/jUnK6Nh7R1o5tbcEvYriF41qM5
+ gUbJcdx60gx+eWdruSzkmPryswvJCcD6pOxR8gogCvtGNlz+A4PyiEZYMt9Xj1517GM515sSb
+ tBFh0sRSXDKHVsxLuExvzpmQNn+vYPfEF7DJ7wK6rqaaHS5C+hpOZYHi5YNRvkSdNuZvn7Wry
+ WrViIXoIA6Q==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Eric & Junio,
 
-On Mon, 15 Apr 2019, Jeff King wrote:
+On Mon, 15 Apr 2019, Eric Sunshine wrote:
 
-> On Mon, Apr 15, 2019 at 12:16:51AM -0400, Eric Sunshine wrote:
->
-> > On Sun, Apr 14, 2019 at 11:10 PM Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> > > Eric Sunshine <sunshine@sunshineco.com> writes:
-> > > >> +Documentation/GIT-EXCLUDED-PROGRAMS: Makefile config.mak.uname
-> > > >> +       $(QUIET_GEN)echo "EXCLUDED_PROGRAMS :=3D $(EXCLUDED_PROGR=
-AMS)" >$@
-> > > >
-> > > > Should this rule also have a dependency upon "config.mak.autogen"?
-> > >
-> > > That is probably a good point.
-> > >
-> > > > Perhaps like this:
-> > > >
-> > > > Documentation/GIT-EXCLUDED-PROGRAMS: Makefile $(wildcard config.ma=
-k*)
-> > >
-> > > I'd rather not let changes to "config.mak-", which I keep in my
-> > > working tree (untracked and disabled copy of config.mak, that can be
-> > > readily activated by renaming), be part of dependency rules.
-> > >
-> > > If we know 'autogen' is the only dependency that optionally can
-> > > exist, then depending explicitly on $(wildcard config.mak.autogen)
-> > > would be a better alternative.
-> >
+> On Mon, Apr 15, 2019 at 12:16 AM Eric Sunshine <sunshine@sunshineco.com>=
+ wrote:
 > > When composing that email, I originally wrote $(wildcard
 > > config.mak.autogen) as the suggestion but changed it to the looser
 > > $(wildcard config.mak*) when I realized that the developer's own
@@ -109,19 +84,15 @@ k*)
 > >     Documentation/GIT-EXCLUDED-PROGRAMS: Makefile \
 > >         $(wildcard config.mak) $(wildcard config.mak.autogen)
 >
-> What about command-line options that influence the outcome? It sounds
-> like this is the same problem we have in lots of other places (like say,
-> compiler flags being updated), that we solve by generating the proposed
-> file output unconditionally and comparing it to what's on disk.  E.g.,
-> see the way GIT-CFLAGS or GIT-BUILD-OPTIONS is generated.
+> Bleh, I forgot config.mak.uname from Dscho's original patch.
+>
+>     Documentation/GIT-EXCLUDED-PROGRAMS: Makefile config.mak.uname \
+>         $(wildcard config.mak) $(wildcard config.mak.autogen)
 
-*Sigh*
+Right.
 
-I really did not want to do that because I thought it would be tedious and
-more complicated and result in a longer patch.
+I had that locally in the meantime, but based on Peff's suggestion went
+for a GIT-CFLAGS like approach instead.
 
-Well, don't you know. The patch is actually *a lot* shorter now. So much
-so that range-diff thinks it is a different commit ;-)
-
-Thanks for the reality check/prod,
+Ciao,
 Dscho
