@@ -2,104 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA5F520305
-	for <e@80x24.org>; Thu, 18 Apr 2019 04:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B027620248
+	for <e@80x24.org>; Thu, 18 Apr 2019 05:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725864AbfDREyK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 00:54:10 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36232 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725710AbfDREyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 00:54:09 -0400
-Received: by mail-lj1-f196.google.com with SMTP id r24so722266ljg.3
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 21:54:08 -0700 (PDT)
+        id S1725987AbfDRFTH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 01:19:07 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36267 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfDRFTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 01:19:07 -0400
+Received: by mail-wm1-f68.google.com with SMTP id h18so1256157wml.1
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 22:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LNXlHzpPp/Le/TZ9O5YAczgs5QVGAOFV0ohYEkQKIi4=;
-        b=ipREz264+Nxnk7KuSo7qfg4QbDaQ6BjbNNrExmTGTcJ27mIa0k1MD5s5w3fz9Ih03P
-         Qz+GOLMO9g34vRm1GhiCiCzX5ZY7qRqouq6C5qfF7v3idzujEkgmwObVhv9BkDwtPKRY
-         Nwojdlmprrlsd2zQaxYMqMQRH7Hl7PwxYiamCKHqYkLyM1errTDVtLmFqu1s2YhzTBZG
-         HzEClGgF//0COogXW6Tps0fcr3odGogkuDGqzjP7+BtrE3NBn1zY6yze/IR+YC/ytSGN
-         iLSXkWyyrtHI1NtjG6XPyg6sDJ+RAYWYae2u/8uC8zFaeIrIS0VJ8exTqGaTKkfNAZXO
-         FDMQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Px1qOJVD4tf2w+9EdIekdYXydZNDIvbPLiY+nGs73JA=;
+        b=n0aq1/VdOOP2ci+q+eIfHFey3TyAq0jDVHSYCyOzeAtYMxO2ARYapgC4/YKp2tC4Yb
+         dNBTz1YUbyxnbJ6p57q9ryJ60VzKR/wcjTsONAWrpdLsO6zipAKKiW6sJIsKBxLbVBKh
+         Lzb/Q+6YfMJVRkzonE8e70ve/noQwJkWTUS5fqyAUmbG8zH0HAXFRQLaJoi20JQ9lIp1
+         xtb06xGCcjCf4PsB8fOiL6bGrrsifNuBwdBFzjfnpp24n6KHvMfPrUcrPsDJffe8W+c2
+         BhuzNggAsev4548uTLluTeIpws+H/XGXSuX5urKlRNHWJzvkNbzqfFhJ9/bDC4DAKjtD
+         spWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LNXlHzpPp/Le/TZ9O5YAczgs5QVGAOFV0ohYEkQKIi4=;
-        b=XS55lQBfPyWiMJJY+i8GK7l6wiC2lnhp19zg+E2q5tPQOWDM/1AiNzVxeT9Oh+lj5e
-         p+WclSMB/I2KsqCUg4Eq55FjuVtRS8qDxrZLWcrXRcU307suBjkKtljoSELWz9AhCeFp
-         XnlneBQK6NYQoQm2SNxvhVI/fQrCPdiNpBHne8aBytAhMK58K5KEONoURNjJP0X+eHNm
-         y4KVAgXJGvFDZn8D+dQ/aoOTR+3c+7v9xB07YTTYLrIg/8OxibWnqV2LB6XgDO1yJlz3
-         XNTTeMr/xAtvPdf1qJP0Tzh+fQq10ZDJQnrDnAoL2hOWucudAx2Nsd0LoYfDq7TcTKMR
-         OhZA==
-X-Gm-Message-State: APjAAAV5JPvpWaoIYgIHN/0r1tvVM5EuY/lrJ/R6ATfSUHxn2B6LaJkq
-        VRoXjN2qCueSWqF5z4EGmYXpckdv
-X-Google-Smtp-Source: APXvYqyRnA6MYtvCCh3EGXHnGofso+sj0s/H0616kTl/zhtgQPRX73Rv2qdntEJxo5QFD3X3EDNALA==
-X-Received: by 2002:a2e:8050:: with SMTP id p16mr2668969ljg.160.1555563247514;
-        Wed, 17 Apr 2019 21:54:07 -0700 (PDT)
-Received: from vkochan-ThinkPad-T470p.lan ([93.75.250.209])
-        by smtp.gmail.com with ESMTPSA id y23sm200849lfy.31.2019.04.17.21.54.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Apr 2019 21:54:06 -0700 (PDT)
-From:   Vadim Kochan <vadim4j@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Vadim Kochan <vadim4j@gmail.com>
-Subject: [PATCH 1/1] configure.ac: Properly check for libintl
-Date:   Thu, 18 Apr 2019 08:04:19 +0300
-Message-Id: <20190418050419.21114-1-vadim4j@gmail.com>
-X-Mailer: git-send-email 2.14.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Px1qOJVD4tf2w+9EdIekdYXydZNDIvbPLiY+nGs73JA=;
+        b=kD3tCQopM1R15DMZwNTkI5bMxcsOHMhYm/sEdD21RlZO4zUlyn4WNH4NhVZmDjRPjy
+         mrZypaI8DFS3AQf3wVvoQour4P0o8pYnOxN1RcXpzxym7LTzSljPdAftiWFeihXx/LKN
+         VAS4d7hpv44BmevN32CxLLXmuMxPLmkKMIq5qNm1x0JV2EkozYk16o1eyU8b8Z6cbuQI
+         4FU7Pl6zDiX2TrjtF60hMHjtmHqBQMTYb255KUo591rrMuiZDXtSmlnKENFtHvF5DsVX
+         ApBk4LuLU0JgNJhSt2DOIMtWn2qa4coWO+hTlrCHVg+aCDp5eeIHwR4wyewse217nk+t
+         uEiQ==
+X-Gm-Message-State: APjAAAVq1LZJXYG+9Ah+OwPLc6JayGjVAJMJSC7Kdpfo99GoTrGMLvGn
+        IF4hYh1BqAyKPy2T8jU8/YM=
+X-Google-Smtp-Source: APXvYqyyW3COtXVbPrIVRRowJdx30L8E463Z20ZueLFZ/bK8QEki7AkN3KZH/2ycFUY3psG5FJf+7g==
+X-Received: by 2002:a1c:dc43:: with SMTP id t64mr1423370wmg.19.1555564745525;
+        Wed, 17 Apr 2019 22:19:05 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id a8sm815668wmf.33.2019.04.17.22.19.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 17 Apr 2019 22:19:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v10 00/10] Fix scissors bug during conflict
+References: <cover.1553150827.git.liu.denton@gmail.com>
+        <20190417102330.24434-1-phillip.wood123@gmail.com>
+Date:   Thu, 18 Apr 2019 14:19:04 +0900
+In-Reply-To: <20190417102330.24434-1-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Wed, 17 Apr 2019 11:23:20 +0100")
+Message-ID: <xmqqk1frhovr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some libc implementations like uclibc or musl provides
-gettext stubs via libintl library but this case is not checked
-by AC_CHECK_LIB(c, gettext ...) because gcc has gettext as builtin
-which passess the check.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-So check it with included libintl.h where gettext may unfold into
-libintl_gettext which will cause check to fail if libintl_gettext are
-needed to be linked with -lintl.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> With Denton's blessing I've rebased his patches on top of my patch to
+> fix the message cleanup with cherry-pick --signoff and -x [1]. I've
+>
+> [1] https://public-inbox.org/git/20190329110842.30604-1-phillip.wood123@gmail.com/
 
-Signed-off-by: Vadim Kochan <vadim4j@gmail.com>
----
- configure.ac | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/configure.ac b/configure.ac
-index e0d0da3c0c..be3b55f1cc 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -763,9 +763,19 @@ AC_CHECK_LIB([c], [basename],
- GIT_CONF_SUBST([NEEDS_LIBGEN])
- test -n "$NEEDS_LIBGEN" && LIBS="$LIBS -lgen"
- 
--AC_CHECK_LIB([c], [gettext],
--[LIBC_CONTAINS_LIBINTL=YesPlease],
--[LIBC_CONTAINS_LIBINTL=])
-+AC_DEFUN([LIBINTL_SRC], [
-+AC_LANG_PROGRAM([[
-+#include <libintl.h>
-+]],[[
-+char *msg = gettext("test");
-+]])])
-+
-+AC_MSG_CHECKING([if libc contains libintl])
-+AC_LINK_IFELSE([LIBINTL_SRC],
-+	[AC_MSG_RESULT([yes])
-+	LIBC_CONTAINS_LIBINTL=YesPlease],
-+	[AC_MSG_RESULT([no])
-+	LIBC_CONTAINS_LIBINTL=])
- GIT_CONF_SUBST([LIBC_CONTAINS_LIBINTL])
- 
- #
--- 
-2.14.1
-
+Hmph, I certainly saw that patch, but I do not recall seeing any
+in-depth review of it.  How ready is it?  Was it because it was
+trivially obvious that we didn't see much activity on the patch?
