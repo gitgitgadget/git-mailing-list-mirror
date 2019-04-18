@@ -7,69 +7,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 226B020248
-	for <e@80x24.org>; Thu, 18 Apr 2019 00:39:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3FC520248
+	for <e@80x24.org>; Thu, 18 Apr 2019 00:49:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731108AbfDRAiL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 20:38:11 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43224 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728268AbfDRAiK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 20:38:10 -0400
-Received: by mail-wr1-f66.google.com with SMTP id k17so605887wrx.10
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 17:38:09 -0700 (PDT)
+        id S1730285AbfDRAsn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 20:48:43 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39855 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728268AbfDRAsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 20:48:42 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j9so651783wrn.6
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 17:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=jZBuUYKzsz3YIB7wRqInocryx3NyxkzkxL2qJDR5hAI=;
-        b=MT+Ee0C747sXedS9nUrMrMEaR7DQxv6HHHipdY1FbH71ZDdpF3SS/hKATV2gGcD9pw
-         PUjfodJwW3oRFWoa+wlmeYm2E3BP4UsP9ZxyOE2WjdzvEuXIuoG7Yynm0vD+n4S9+tj8
-         8+I5X7UlRRwua5eRbwfVtg51v9ERVQiy+AGWG0JMhz7jG+AdmH4VNrmJltXGBl/t8Nfx
-         Vd/4l7+N+lg9PZwjR8KOzownFU7UNObbZbB4IH708qKKdQpB+QAlSaMTKH6ba1aF9vUt
-         qIioCMojFxaj9WVTxEjXUs+aeBHnTx23mF37FhdafNR2hLOSWMCAtI0KFy1KVDLl0f29
-         ljuw==
+         :user-agent:mime-version;
+        bh=y39DMgZwkeJNTQbnIoOJsz93z9B5Ag4yQjjMHU8RFQM=;
+        b=AEVQOptpR5lpXL7JXTqU0XAEwRPHsgEGq3ErUC4+lnV//l0PwYa6W6t3fYT9pG03QR
+         6bz+Il7z1kuddwQNmzjdSYYpaZl/A343uNVmeov/YkiigNC4QShSXdYob+6M5gNl+cMD
+         UkWCtRY9BqDPY4XjeqdX0STlq6jRABU8dcY3qliX7L0BaHwDcsA5i25IJEfYD4aRtHKO
+         LlMug8g5+bclZOU/ybUr1maVlGo6FCJ5Pd+Lc+GDCfv1dowVWdspHbcon4Yec0uhnY4C
+         IdKh/P519fhuC/9sCxA71lZo1r0mZrkxdrQabnHYJ2kCHQ0E/zoP4WC1Q21ckkZBjgt2
+         HLng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=jZBuUYKzsz3YIB7wRqInocryx3NyxkzkxL2qJDR5hAI=;
-        b=F3Zgr4FtHUwfUSxQIz/rv0K48RM/msm4e+PRbt+dwT07YB6afRZSwa/2a+gLFoqWig
-         O21Bbc+fIbaBK48lGnoCsVXnAAILY0FwleBgA2SR/YfeqFxkxigrDskOwBrMs5dtFV9s
-         V6wwGL5a2n2sMgO0MCoGXgZGcU7TeDCZJX0kXmzL89dAPMeCJ8n3WILAZDhr2/BD/sE0
-         c/kNEzsLKjqDwlrVrLEa9FXmtMCBzS5+USjXPGuXCL3bciUHYYJMbJ/D7WOr4wm15QyW
-         yIydw21xQ0nal+JK0tOAhkyuO+MAuKUpcrd07qrH4UhmPUBooY4Bum0LgeEy3c/SCfLk
-         PRSQ==
-X-Gm-Message-State: APjAAAWNiwRRuZF6JnGtWevamQHwlES2BJ6FHWWtHK44/PaIgmGnMCv+
-        BXL7mrF3DhmGQnrl55OAzNs=
-X-Google-Smtp-Source: APXvYqzo9Yg/NJxVRiWNPK86WVCjTZ9ph8EAvRZvwJbZX3iKtStBUKbch7mDwAW1/djy3qI4huuIWg==
-X-Received: by 2002:adf:ea81:: with SMTP id s1mr12423873wrm.277.1555547888686;
-        Wed, 17 Apr 2019 17:38:08 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=y39DMgZwkeJNTQbnIoOJsz93z9B5Ag4yQjjMHU8RFQM=;
+        b=kcF8IQTB2cs/JGwMX5WACFDNqTKtAMvi8BlETMJAAxSUROTpkopxbNlwD0XKd8SXxj
+         6+ss3lr9WnbwgWOUckivQNeWaKWsxIunjpUbpMnphN6dYrVPgnaq9WQli33qe8rXTu/o
+         HDUwTUSlrPF+zQ6lDIfyHv+dqI/nxnXZ2VK3V6Uk0pusTe9WXx3qRoygWQ3YSbw2pnpN
+         0AwEICxZwtP2+CQbUl6G9dwZ/HoALJFGdfgvZBj5iEpMsGZfsMK42/8DNBIPh+HmP6Kd
+         dOUnSOig4GCLTj76bpjexbdq2ZHRx3qL5AQjseiVXUf5g7KZsbL79xDJeNN1ibg2zUj/
+         UUVA==
+X-Gm-Message-State: APjAAAVjU6nZP9jzuwHPmgwnznmiChouqS7iAzUrVWetMz58LOIjpbvg
+        iBFv4KR7iji603OAEno+7iM=
+X-Google-Smtp-Source: APXvYqy2dt4V3DZya0eAmW8IR2cuPthfmzAkfoln2kws9M8HhFUcaIh8tcnA2RObjFtVo1Th8A13Qg==
+X-Received: by 2002:a05:6000:1292:: with SMTP id f18mr15542787wrx.115.1555548520588;
+        Wed, 17 Apr 2019 17:48:40 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id w11sm448685wre.15.2019.04.17.17.38.07
+        by smtp.gmail.com with ESMTPSA id g132sm402351wme.3.2019.04.17.17.48.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Apr 2019 17:38:08 -0700 (PDT)
+        Wed, 17 Apr 2019 17:48:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 00/16] Add new command 'restore'
-References: <20190308101655.9767-1-pclouds@gmail.com>
-        <20190411131218.19195-1-pclouds@gmail.com>
-        <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com>
-Date:   Thu, 18 Apr 2019 09:38:07 +0900
-In-Reply-To: <CACsJy8A9xfR7FheOHUoywNz_D7W1X1fv=mUBz-uu82CGZqYfVA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 17 Apr 2019 17:04:26 +0700")
-Message-ID: <xmqqa7gojggg.fsf@gitster-ct.c.googlers.com>
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2] parse-options: don't emit "ambiguous option" for aliases
+References: <20190325202329.26033-3-avarab@gmail.com>
+        <20190417124438.8191-1-avarab@gmail.com>
+        <CACsJy8D215hMvfCwz1G9mP2te-ZERVaMMRrnM=MK1_bc0oFsjw@mail.gmail.com>
+Date:   Thu, 18 Apr 2019 09:48:39 +0900
+In-Reply-To: <CACsJy8D215hMvfCwz1G9mP2te-ZERVaMMRrnM=MK1_bc0oFsjw@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 17 Apr 2019 23:04:59 +0700")
+Message-ID: <xmqq4l6wjfyw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,46 +73,33 @@ X-Mailing-List: git@vger.kernel.org
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Thu, Apr 11, 2019 at 8:12 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->>
->> This is the companion of "git switch" and is based on that topic.
->> This command peforms the "checkout paths" from git-checkout, git-reset
->> and also has a third mode to reset only worktree, leaving the index
->> alone.
+>>         { OPTION_CALLBACK, 0, "recursive", &option_recurse_submodules,
+>>           N_("pathspec"), N_("initialize submodules in the clone"),
+>> -         PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, recurse_submodules_cb,
+>> -         (intptr_t)"." },
+>> +         PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE,
 >
-> It does not have to be done now. But I'm just wondering, does anyone
-> think adding --dry-run is a good idea? This command is destructive by
-> default, so careful people might want it, I dunno.
+> What happens if someone adds --recursive-hard? --recursi then
+> resolving to --recursive-hard sounds wrong.
 
-Yeah, "give --dry-run for anything potentially destructive" may be a
-good general principle, although we'd need to know where to stop.
-For example, I am not sure if "git reset --hard -n" would make all
-that much sense, as the sole point of running "reset --hard" is "I
-made an unrecoverable mess---get me back to a clean and known state
-no matter what" and in that context, "let me see which files in the
-working tree will be removed and checked out of the tree-ish and
-which paths in the index records a different blob than what is in
-the tree-ish, before deciding if I still want to stay in the
-unrecoverable mess or I want to get out of it" is something you
-could request, but at the same time, there is not much point in
-actually asking it.  Of course, a --dry-run that is not used often
-simply because it is not all that useful in practice is fine to have
-as long as it works correctly---I am saying that it's not something
-I'd personally prioritize myself.
+That was exactly my initial reaction.  Or "recurse-submodules" gets
+renamed away, and "recommend" gets added---now "--rec" is still not
+ambiguous as "recursive" is marked not to participate in the
+disambiguation (I think OPT_NOCOMPLETE should at least be renamed to
+OPT_NO_DISAMBIGUATION or something---if we were to use it for the
+purpose of marking an option as "not participating in
+disambiguation", but I am fairly negative on the approach).
 
-It would be an excellent addition to "restore-path" (and also to
-"checkout [<tree-ish> [--]] pathspec") to give "--dry-run".  Not
-just because it is destructive, but because unlike "reset --hard",
-it is selectively destructive.  Having a way to make sure that the
-given pathspec touches only the paths that the user intends to
-recover from the tree-ish or the index would be valuable.
+And my initial reaction was followed by "don't we want a more
+explicit link only between recursive and recurse-submodules?",
+which exactly matches what you said below ;-)
 
-But it is a new feature, and I'd think it can (and probably should)
-be done as a follow-on series outside the main series you have been
-working on.  Let's make sure that we have the basics ready by the
-end of this cycle.
+> But on the other hand I can see it's a bit more work to teach
+> parse-options OPT_ALIAS to say "--recursive is just an alias of
+> --recurse-submodules" and chances of --recursive-hard coming up are
+> probably very low.
+
+The "bit more work" is something that is worth doing in this case, I
+think.
 
 Thanks.
-
-
-
