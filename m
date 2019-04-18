@@ -2,148 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 557E820248
-	for <e@80x24.org>; Thu, 18 Apr 2019 18:30:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFA520248
+	for <e@80x24.org>; Thu, 18 Apr 2019 18:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390679AbfDRSaG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 14:30:06 -0400
-Received: from mail-oi1-f202.google.com ([209.85.167.202]:40855 "EHLO
-        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389842AbfDRSaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 14:30:04 -0400
-Received: by mail-oi1-f202.google.com with SMTP id q82so1313568oif.7
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 11:30:04 -0700 (PDT)
+        id S2390401AbfDRSAj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 14:00:39 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42427 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390388AbfDRSAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 14:00:37 -0400
+Received: by mail-lj1-f195.google.com with SMTP id v22so2650414lje.9
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 11:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=8zGygdQZkWZA/LhVWii3lFkGBVtLcprBjTnMwUzgOIc=;
-        b=P1vRG2lbI+lnCv7srL2eqRaQ/2VTZYLY4qmyBwQ7kBq2Uj3Af8+BiERcBpqXk5Zoyh
-         idnoyVftTLKnmx34FanhGAK3LG2TNFSxMR/rOVnJ9s6OtfULJKZ/FQOzXgVmJK8nq060
-         pIWJjW0tTLKOxAiwOl6TGfjPDZ9n/WsPj9qjNkoRtzT+UH+lQxTxon6x+deu3dwFQWSK
-         Sx7oVOmzfQKolV9qKCB4qSVTC41pqpsccZptCFTZgyh7IyChaCXKYlsLHlqle5dDiW+b
-         tjJKLh51U3MPuT2n86yDswsWBQ3i3GTRGL8e3pxjnDVh5Lq+yJ+CukkfgHX5wg4sXiD7
-         9gew==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oD84o5+7rBQoOPZFnh82DDzpQhdawm2wKaQWHgnBeWo=;
+        b=rU171XnuaoDVSJAA6+wHEcvMT6JNPB/NPCVc1Xd/zM8z3CiC6APLaKMuldZZ8VpeOm
+         aJ37yUVMMXf3XBURYkVPm9oaJV5cReIh9KhQkGCmfof/8K5f7/foCypU4GsZMtJo34Cz
+         mdcnzqy4uRkEgaTcHh4pgFOHlYK6nWHGSEKYntnsKgHBTHouReZCBxVjfx6r0MnnZ1tw
+         KJ1QR5BeTCyQl6Y0bhSJcSlKWQpFzxEOldf1X0qporpktxL462MNpT9Q4eMEbN/nqB37
+         Erz04AwLBeNEna+g4h6ccvRyrxFISRvOkCqf6rACQQ19umKxjJD9Tkr5bhLebSGsOQFq
+         bk4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=8zGygdQZkWZA/LhVWii3lFkGBVtLcprBjTnMwUzgOIc=;
-        b=dxq428tMH/2D55fD0lWJVoh0D4ujfJ7o99CPt6Hehedt7NKUrFBm+iMkAD/ovdSeIT
-         Frsw0QHt/Z5JnH2TYj07TpH0vha7qlEUCvLyq+s24hkjSCl9lqXCTaj+/nRxhHP2JlWr
-         XlTVdtwbXmVLc5g2y5ztrfw3HBl+DUI8EyJEPl1uNJ/sCpWX4Us19DDMEaUGUV8XbTft
-         s8H6r13IwjBgwN81VhWfT9w+ly86V610jonarbXwYSYkSQlLNb+GWp1N1qJ3hdfnOG9D
-         nyShPcugPs79zFzWZq9Yg0joTF9rEJ1tQgMTEnO2N0CZQM3v1NMymYS2Alubi/v7nIWV
-         bM9A==
-X-Gm-Message-State: APjAAAWW9muQwsBonMXtQyiQ2h0LvryzsFYDyfJvmoicqtSPuom7vcK0
-        AOjvgFvKeqDn3mwYByFqqEZwl6n65q/STrgUakl9
-X-Google-Smtp-Source: APXvYqw7P/XHm6jT2+4lRg0y4UDs5lOzKUTuFzqp/tPz148eft4OAYt+4oR8UInS7xRf1pQuVn3fcUZAzhLf+RymXYOI
-X-Received: by 2002:aca:6289:: with SMTP id w131mr2877353oib.84.1555612203877;
- Thu, 18 Apr 2019 11:30:03 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 11:30:00 -0700
-In-Reply-To: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
-Message-Id: <20190418183000.78138-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
-X-Mailer: git-send-email 2.21.0.314.g8007d49101.dirty
-Subject: Re: [PATCH] worktree: update is_bare heuristics
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     pclouds@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de, rappazzo@gmail.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oD84o5+7rBQoOPZFnh82DDzpQhdawm2wKaQWHgnBeWo=;
+        b=Yn99Dsj8eotDkHvh7qoAehlImjnho9x69QVjdXKKnGy5DsIfP2//JXE9eIx4+ghMrr
+         DBVmJjZMUJhOunXo5U6Bt7uSqlDm7v58b27pD2PTF7ds7pFTBZNRbO9634KYb3yXGfdg
+         YyPZvlQylUyZ01AX0hzCoSGVD1lVIcYI5t/NRf8bofl41HJ9fnd8M3thZUseNoSMdLP5
+         SrNCmALzny0lQlOAVKmgMxBxu8LTafp5COqlrYDwgPPZkmhiiru89uFZvGRBbxBNkcdH
+         Xvx0TmxS16hYPePfCDtLcZIpJmbzokr8GT7/uFWpCUBYs+i53ZVD1pBT0rMfPI9fYPJN
+         penA==
+X-Gm-Message-State: APjAAAUdVuZVuSmJNaEejADSkWcOCqHSBUMCWjp+W4qY9o6HcTOyJcJo
+        HcYBUhnDpSK5ZeCYeBXUYPU7YjfyB4G1n37K8Q7Y14rB
+X-Google-Smtp-Source: APXvYqyX9cno3WggJC8HRbWKjXbB/S3UGWfgJtcYeea2hh0p4ZAYE9PObb/kh0Kg+QZd9VPKF4skMRkHyVFl8rEqOj4=
+X-Received: by 2002:a2e:8618:: with SMTP id a24mr4350422lji.192.1555610435493;
+ Thu, 18 Apr 2019 11:00:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAGV3M54XhRMDXdhbfTon5nRV59VOjw8W4YrNP63TqPYm8pxd8Q@mail.gmail.com>
+ <878sw8bbby.fsf@evledraar.gmail.com> <xmqqtvewgj4c.fsf@gitster-ct.c.googlers.com>
+ <86o953z0b9.fsf@gmail.com>
+In-Reply-To: <86o953z0b9.fsf@gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Thu, 18 Apr 2019 11:00:23 -0700
+Message-ID: <CABURp0r_0pTY9JAsphm-TUBVCarK8h8SmO-v8zf7OPzf+7=SJw@mail.gmail.com>
+Subject: Re: Feature request: Allow to update commit ID in messages when rebasing
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Giuseppe_Crin=C3=B2?= <giuscri@gmail.com>,
+        Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> You actually didn't spell out the problem with "git branch -D", or at
-> least the consequence (i.e. the submodule branch is deleted even if
-> it's checked out).
+Wouldn't we need to extend this to cherry-pick, too?  Suppose I do this:
 
-Thanks - I'll do that in the commit message.
+    $ git log -2 --oneline --decorate foo
+    abcd123456  (foo)   Revert 123456aaaa
+    123456aaaa  Some useful commit for the future, but not now
 
-> >         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
-> > -       is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
-> > -       if (is_bare)
-> > +       if (!strbuf_strip_suffix(&worktree_path, "/.git"))
-> >                 strbuf_strip_suffix(&worktree_path, "/.");
-> 
-> We can just call these two calls unconditionally, right? No harm done
-> if we don't strip.
+    $ git checkout bar
+    $ git cherry-pick foo^ foo
 
-We can, and no harm done. But this if/then pattern is also repeated in
-other parts of the file (e.g. get_linked_worktree()) so I'll leave it in
-for consistency. (Also, for what it's worth, it's slightly faster if
-only one strip is done.)
+    $ git log -2 --oneline --decorate
+    badc0ffee  (bar)   Revert 123456aaaa
+    babeface0  Some useful commit for the future, but not now
 
-> >         strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+Now when I rebase bar, the revert appears to be untwinned.
+
+Similar problems arise for other history modifying tools like
+filter-branch, fast-export, reposurgeon, bfg, etc.
+
+I guess we can use 'git patch-id' to see if the companion commit is
+still in our history, but this seems tenuous.  Can we make it work
+anyway?
+
+
+On Thu, Apr 18, 2019 at 10:33 AM Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> >> On Wed, Apr 17 2019, Giuseppe Crin=C3=B2 wrote:
+> >>
+> >>> The feature I'm asking is to add an extra-step during rebasing,
+> >>> checking whether there's a reference to a commit that's not going to
+> >>> be included in history and asks the user whether the heuristics is
+> >>> correct and if she wants to update those references.
+> >>>
+> >>> Scenario: it can happen for a commit message to contain the ID of an
+> >>> ancestor commit. A typical example is a commit with the message
+> >>> "revert 01a9fe8". If 01a9fe8 and the commit that reverts it are
+> >>> involved in a rebase the message "revert 01a9fe8" is no longer valid
+> >>> -- the old 01a9fe8 has now a different hash. This will most likely be
+> >>> ignored by the person who's rebasing but will let the other people
+> >>> reading history confused.
+> >>
+> >> This would be useful. Done properly we'd need some machinery/command t=
+o
+> >> extract the commit id parts from the free-text of the commit
+> >> message. That would be useful for other parts of git, e.g. as discusse=
+d
+> >> here:
+> >> https://public-inbox.org/git/xmqqvaxp9oyp.fsf@gitster.mtv.corp.google.=
+com/
 > >
-> >         worktree = xcalloc(1, sizeof(*worktree));
-> >         worktree->path = strbuf_detach(&worktree_path, NULL);
-> > -       worktree->is_bare = is_bare;
-> > +       worktree->is_bare = (is_bare_repository_cfg == 1) ||
-> 
-> core.bare and core.worktree are special. When you access them standing
-> from the main worktree, you'll see them. But when you stand from a
-> secondary worktree, they are ignored.
-
-Just checking: I think that is_bare_repository_cfg ignores core.bare
-only if the config.worktree file is present? In the t2402 test '"list"
-all worktrees from linked with a bare main', "git worktree list" still
-observes the main worktree as bare. But in any case, you are right that
-core.bare is sometimes ignored.
-
-> It's more obvious with
-> core.worktree because if that affects all worktrees, what's the point
-> of having multiple worktrees. Git will always go to the place
-> core.worktree points out.
-
-That's true.
-
-> So if this function is called from a secondary worktree, I'm not sure
-> if it still works as expected because is_bare_repo may be false then.
-
-I think you're right that is_bare_repository() will always return false
-here. So let's look at the cases where, running from a secondary
-worktree, we think that the main worktree should be observed as bare:
-
- - main worktree did not define core.bare
-   - I don't know if this is possible (remember that we're running from
-     a secondary worktree). But if it is, it seems that
-     is_bare_repository_cfg will be -1, and worktree->is_bare will be
-     set to 0 regardless of whether or not it is bare.
-
- - main worktree defines core.bare as 1; no config.worktree
-   - is_bare_repository_cfg is 1, so we see the main worktree as bare.
-     (This case is tested in t2402 '"list" all worktrees from linked
-     with a bare main'.)
-
- - main worktree defines core.bare as 1, and secondary worktree defines
-   core.bare as 0
-   - I think that we'll see is_bare_repository_cfg as 0, so we won't see
-     the main worktree as bare.
-
-The only potentially problematic case seems to be the 3rd one.
-
-> For the submodule case, you always stand at the submodule's main
-> worktree, so it still works.
-
-Yes.
-
-> I don't think multiple-worktrees-on-submodules will be coming soon, so
-> it's probably ok. But maybe leave a note here.
-
-Observing that the problematic case is the 3rd one above, would this
-note work:
-
-  NEEDSWORK: If this function is called from a secondary worktree and
-  config.worktree is present, is_bare_repository_cfg will reflect the
-  contents of config.worktree, not the contents of the main worktree.
-  This means that worktree->is_bare may be set to 0 even if the main
-  worktree is configured to be bare.
+> > That's a helpful input.
+> >
+> > But in general we do not have an infrastructure to systematically
+> > keep track of "this commit was rewritten to produce that other
+> > commit", so even if a mention of an old/superseded commit can be
+> > identified reliably, there is no reliable source to rewrite it to
+> > the name of the corresponding commit in the new world.
+> >
+> > For that mapping, we'd need something like the "git change/evolve"
+> > Stefan Xenos was working on, which hasn't materialized.
+>
+> Well, what about limiting changes and rewriting only to the commits
+> being rewritten by [interactive] rebase?  I mean that we would rewrite
+> "revert 01a9fe8" only if:
+>
+> a.) the commit with this message is undergoing rewrite
+> b.) the commit 01a9fe8 is undergoing rewrite in the same command
+>
+> We could use the infrastructure from git-filter-branch for this.
+>
+> It is serious limitation, but that might be good enough for Giuseppe
+> Crin=C3=B2 use case.  Though for example there is a question what to do i=
+f
+> referred-to commit (01a9fe8 in the example) is simply dropped, or is
+> gets split in two?  Ask user?
+>
+>
+> Another possibility would be to provide a command line option to rebase
+> which would automatically generate replacements (in git-replace meaning)
+> from old pre-rebase name to new post-rebase name (assuming no splitting,
+> no dropping commits).  This would make references just work... well, as
+> long as refs/replace/* are in place (they are not copied by default).
+>
+> On the other hand some of our performance-improving features, like the
+> commit-graph, do not work if there are replacements.
+>
+>
+> Best,
+> --
+> Jakub Nar=C4=99bski
