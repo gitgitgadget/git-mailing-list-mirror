@@ -7,64 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B37DF20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 487B020248
+	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388681AbfDRNQl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 09:16:41 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43567 "EHLO
+        id S2388973AbfDRNQn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 09:16:43 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42047 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388369AbfDRNQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 09:16:40 -0400
-Received: by mail-ed1-f67.google.com with SMTP id j20so1756571edq.10
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
+        with ESMTP id S2388579AbfDRNQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 09:16:42 -0400
+Received: by mail-ed1-f67.google.com with SMTP id u23so1444824eds.9
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
-        b=iUDQJrYWJJp/evTDnPW3pN+K/tbpA6JN12GAnFkoGQFgK+68NiLuXq8MG9MTZA99F1
-         w1DcEADKt1adhdeBQxX61X7JgFACeWb2B4/TNOzYLl2s6FdvWb5wngjnxS4a4Att7dtv
-         JeW6mGHjx2/QEVvXVCKbModTcDKai6WfGsJ0uSzKjGwGF2Ftr/Fa/c0EgcRB2efmm78v
-         Beakki6gGrf4VCvPdtbMD5LvDzaICPNlFvZ6j+3q/M9mKmmN+V2Q1t639wDswwWh/OUY
-         0yPcOgjXE/wcLIwhlOdKiShqjthiDRl+t+4B3MinNJqYCOvdFFiMrvVRXbqAzJ4GpPy/
-         WCOA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=DyI7MH/iUolCbhUpIzane0afk+05CRO/9vWkd0HAMfI=;
+        b=Z1oNPFmrAW4n92Z/ezu7BmRZQjH0PCKx6uIPQhrGrVpZnni/fxBqFEP57rtzITC1qU
+         C39o2qBbo6OjsFl2X/YPC6XcdxE/Auz5hmhXgr7cF/jIfBjoSjMMK+lDVCKz6S4JeId0
+         OOqxJdPth/C5AUZCl3vkksVp8YRWr++LPPPRA3guOFr9SjKswBOnwQq38mps4q+nClv7
+         wTmPZsnaejgCSeDJYYOWWU8IXWp9purYnsf7JS+i9jIdjb0y/FbJ/Gqb5n4z9YUWtx+3
+         kbPk/uBCx7qFmAMHDXyv4i1ICrRpNYLNKgN8mDhiAEYSFhsp5o7SNlY1ntaHRkXTtlWF
+         cV8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
-        b=tFfxF7feHzfINdCIp7fhBbDTi6gy7NiY1WyXYIijmnSSXU2wuMJeAPdIn/6so9RmCv
-         CqzHYhcWqSMYptr8M+MOr/RRHc4BsPQot+u5uUIyQRpxNoH0234Lz82cDBIT7Lk1w5ps
-         AxfhK2CSgsmR6IU6yGPEW4nFhDCJGVGeEA0ELEp+4+QebPXBdnsvP0V2Cii0nvterpq8
-         zbnH76bN0n2rXiDk17RQzpCTrjwcKLvFd2W8nNCVIE2c7/7bwnB4ebYDuqUart9h5yG4
-         PtIzvmN3iopaSGgAUL19OfU0fttvJqlYn7y7iWTjLNMr8aqpuAxZBvhDdW9FJiA9UpBy
-         zPPg==
-X-Gm-Message-State: APjAAAUs9ZKF17ezsEzBgPNnlmfWhRMowm0IosZcNAg5ncsetArGDxTz
-        SPQEgByJ1sXEBkumoYoA68GegkVU
-X-Google-Smtp-Source: APXvYqxb3ZoWv3RCmmzgPqZrAJYBZx6tXNvyC/g2eFWj+8/sSm+J2lTosUXhH5UMAhKaMPmbtJds6Q==
-X-Received: by 2002:a50:9317:: with SMTP id m23mr11123008eda.114.1555593399026;
-        Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=DyI7MH/iUolCbhUpIzane0afk+05CRO/9vWkd0HAMfI=;
+        b=ibTOggL7XKv6Qz3VcPVXHUuW0q5oCjQNeKvCNZjfXmdbvtHaKDqbGZUsh/Mbkd6b8t
+         +eRtG5+jS5y52aay/VAtBtOdvUO2Nlb/11ARhJg+HO6vSIm7vEWSSWvZ0MTHPllK/gga
+         BtsX1lcCQIXbTLUFeVrL79m2r1LxjMx2/I5CBpNuJ7hXR3+gf/pkTJTzKYH3EQhM6Q47
+         sw/i1GysUIHe4EV3G3yD1Om5RSI+5SqDSXkd9vwCnzb43TfoSOQU9f1qW4Ciim8cDiW+
+         A8lHQQI1K16QCDqv485eklymBQBeWlfJkRIX7KEZF11+U0iNUo4UiPck3xb1e4MnHN4G
+         sz3g==
+X-Gm-Message-State: APjAAAXzKQXjoDhhYf+OdCVt3JPoHnq3EYEO/bYTqw/oQq3K9TnL60Hq
+        pitGam4lqVICVjRMTvoZmEAclMCT
+X-Google-Smtp-Source: APXvYqzsnm3s/0CFp1j5ZhhaNDBMPQPgxfR3L/ybQkCGuWRpsvxGtwxmLFipqEpmSYho5KoVW2Xovw==
+X-Received: by 2002:a17:906:b309:: with SMTP id n9mr51420592ejz.210.1555593400153;
+        Thu, 18 Apr 2019 06:16:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s13sm378962eju.89.2019.04.18.06.16.37
+        by smtp.gmail.com with ESMTPSA id a9sm485973edt.93.2019.04.18.06.16.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 06:16:38 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 06:16:38 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Apr 2019 13:16:29 GMT
-Message-Id: <81c08b178be6329d51586fa9d615063d3c6f9625.1555593396.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Apr 2019 13:16:30 GMT
+Message-Id: <fda0b10c84390d781d6d21a52c891dc5b54ef8d1.1555593396.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.v2.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
         <pull.168.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/8] remote-testgit: move it into the support directory for
- t5801
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH v2 2/8] Makefile: drop the NO_INSTALL variable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
@@ -76,76 +72,89 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `git-remote-testgit` script is really only used in
-`t5801-remote-helpers.sh`. It does not even contain any `@@<MAGIC>@@`
-placeholders that would need to be interpolated via `make
-git-remote-testgit`.
+The last user was just removed; There is no longer any need to carry it
+around. Should we ever run into a need for it again, it is easy enough
+to revert this commit.
 
-Let's just move it to a new home, decluttering the top-level directory
-and clarifying that this is just a test helper, not an official Git
-command that we would want to ever support.
-
-Suggested by Ævar Arnfjörð Bjarmason.
+It is unlikely, though, that we need `NO_INSTALL` again: as we saw with
+the just-removed item, `git-remote-testgit`, we have better locations
+to put executables and scripts that we do not want to install, e.g.
+a subdirectory in `t/`, or `contrib/`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .gitignore                                          | 1 -
- Makefile                                            | 3 ---
- t/t5801-remote-helpers.sh                           | 2 ++
- git-remote-testgit.sh => t/t5801/git-remote-testgit | 0
- 4 files changed, 2 insertions(+), 4 deletions(-)
- rename git-remote-testgit.sh => t/t5801/git-remote-testgit (100%)
+ Makefile | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 7374587f9d..de8fc2f5b1 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -135,7 +135,6 @@
- /git-remote-ftps
- /git-remote-fd
- /git-remote-ext
--/git-remote-testgit
- /git-remote-testpy
- /git-remote-testsvn
- /git-repack
 diff --git a/Makefile b/Makefile
-index 8654c130f8..26f8ed2228 100644
+index 26f8ed2228..f5be2f633e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -633,7 +633,6 @@ SCRIPT_SH += git-merge-resolve.sh
- SCRIPT_SH += git-mergetool.sh
- SCRIPT_SH += git-quiltimport.sh
- SCRIPT_SH += git-legacy-rebase.sh
--SCRIPT_SH += git-remote-testgit.sh
- SCRIPT_SH += git-request-pull.sh
- SCRIPT_SH += git-stash.sh
- SCRIPT_SH += git-submodule.sh
-@@ -657,8 +656,6 @@ SCRIPT_PERL += git-svn.perl
- 
- SCRIPT_PYTHON += git-p4.py
- 
--NO_INSTALL += git-remote-testgit
--
- # Generated files for scripts
- SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
+@@ -661,10 +661,6 @@ SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
  SCRIPT_PERL_GEN = $(patsubst %.perl,%,$(SCRIPT_PERL))
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index aaaa722cca..d04f8007e0 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -8,6 +8,8 @@ test_description='Test remote-helper import and export commands'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-gpg.sh
+ SCRIPT_PYTHON_GEN = $(patsubst %.py,%,$(SCRIPT_PYTHON))
  
-+PATH="$TEST_DIRECTORY/t5801:$PATH"
-+
- compare_refs() {
- 	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
- 	git --git-dir="$3/.git" rev-parse --verify $4 >actual &&
-diff --git a/git-remote-testgit.sh b/t/t5801/git-remote-testgit
-similarity index 100%
-rename from git-remote-testgit.sh
-rename to t/t5801/git-remote-testgit
+-SCRIPT_SH_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_SH_GEN))
+-SCRIPT_PERL_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_PERL_GEN))
+-SCRIPT_PYTHON_INS = $(filter-out $(NO_INSTALL),$(SCRIPT_PYTHON_GEN))
+-
+ # Individual rules to allow e.g.
+ # "make -C ../.. SCRIPT_PERL=contrib/foo/bar.perl build-perl-script"
+ # from subdirectories like contrib/*/
+@@ -674,11 +670,11 @@ build-sh-script: $(SCRIPT_SH_GEN)
+ build-python-script: $(SCRIPT_PYTHON_GEN)
+ 
+ .PHONY: install-perl-script install-sh-script install-python-script
+-install-sh-script: $(SCRIPT_SH_INS)
++install-sh-script: $(SCRIPT_SH_GEN)
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-perl-script: $(SCRIPT_PERL_INS)
++install-perl-script: $(SCRIPT_PERL_GEN)
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-python-script: $(SCRIPT_PYTHON_INS)
++install-python-script: $(SCRIPT_PYTHON_GEN)
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 
+ .PHONY: clean-perl-script clean-sh-script clean-python-script
+@@ -689,9 +685,9 @@ clean-perl-script:
+ clean-python-script:
+ 	$(RM) $(SCRIPT_PYTHON_GEN)
+ 
+-SCRIPTS = $(SCRIPT_SH_INS) \
+-	  $(SCRIPT_PERL_INS) \
+-	  $(SCRIPT_PYTHON_INS) \
++SCRIPTS = $(SCRIPT_SH_GEN) \
++	  $(SCRIPT_PERL_GEN) \
++	  $(SCRIPT_PYTHON_GEN) \
+ 	  git-instaweb
+ 
+ ETAGS_TARGET = TAGS
+@@ -2683,7 +2679,6 @@ endif
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ 
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+-all:: $(NO_INSTALL)
+ 
+ bin-wrappers/%: wrap-for-bin.sh
+ 	@mkdir -p bin-wrappers
+@@ -2967,7 +2962,7 @@ rpm::
+ 
+ artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
+ 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+-		$(NO_INSTALL) $(MOFILES)
++		$(MOFILES)
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
+ 		SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
+ 	test -n "$(ARTIFACTS_DIRECTORY)"
+@@ -3016,7 +3011,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(OBJECTS)
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+-	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
++	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) -r bin-wrappers $(dep_dirs)
+ 	$(RM) -r po/build/
 -- 
 gitgitgadget
 
