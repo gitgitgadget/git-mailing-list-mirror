@@ -2,95 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EEE420248
-	for <e@80x24.org>; Thu, 18 Apr 2019 00:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D49920248
+	for <e@80x24.org>; Thu, 18 Apr 2019 00:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730308AbfDRAMb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 20:12:31 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55797 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728268AbfDRAMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 20:12:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id o25so619751wmf.5
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 17:12:29 -0700 (PDT)
+        id S2387488AbfDRATX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 20:19:23 -0400
+Received: from mail-pg1-f178.google.com ([209.85.215.178]:47035 "EHLO
+        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729446AbfDRATX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 20:19:23 -0400
+Received: by mail-pg1-f178.google.com with SMTP id q1so289432pgv.13
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 17:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=A0jQEp8O419pTWr+75vS0P3TKZEv/GrFG3pmzDq3X74=;
-        b=WquNg6fnEFBa2i3Oy5/0VwUl5Ij601KN/XWCtkjb0z4RBG6EUsVUKTiOBKbuX4P5AR
-         ixl0zZxMPzA6JMxs52dOLPMG4UzBKqVMpnSwYn3Rt8vmusCgMD4dtbiDUkRti3j/BZeE
-         j+fan174a61tabl8ZHx+U4QzEUnd67BSlCuVvUgR+oQcPzIEx/GSgSzhLg5Xua5bIx7Z
-         IO9NHqk1SPmQMjG4Ph0aHkLHGDlHPMMd6GPkAjd9cWgCJdx3X4fjSt5nyjJZ2YsU7f+M
-         Gve0Icfu+LWXzlmxRsXKyNM/GQjhlW1tTMnzFDNufJ8KfPQI+9IlDgmXyjxSgDKDIhKY
-         0wqw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=D3HrZrkbTIZr5TP5e5WYIkxgax5uaHK8a0C7FkoF9Tg=;
+        b=CyW8tdJC/tlfZxCJ7urW3q7nK4ggpogaXHl1/Ovx1ZzhHIjJ45mFURr6SAm3HstRA9
+         BqrqYxxdRP5noucBQQKsU2g0erRvjAfsGWZ0drPrOa5Y35oIkskflyil1BchSk5Wep0p
+         fpqc117kl1c67GR1TSskczkLzI0YGbdEhKuJjsmgl2DV1HNeYjqMBGWdC0LnDgi3iHbB
+         xVS5Hiel//YJMy3JFYiGXPTH9YHS9Q00fjZDrhTDRzfTuD8qbE8V1noAHbfEA0gzDKC/
+         xMF9Hm5I9TgixI6E0L1Oxcik3dmKYuqFDTxKSg12zltR97JtdruGryGFnj5O4hoXkMSm
+         rt2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=A0jQEp8O419pTWr+75vS0P3TKZEv/GrFG3pmzDq3X74=;
-        b=UcYOqxu/Py0Qpp06DwwkXfzyakXtxtcmooBDuw+K3p3MtJLFbFGGFLY5Y1JBjaEDpH
-         rGOuii93ew0Kui1LziPDbRkGTlQNFPo2HfcbWk2Z5jVm1VPv+LSRElUm+MlOEGptvUs7
-         DLSQa8skRsah1VM81uOdTYYaEwZAgJXnIKNN9lPn6QkrKnEeLPiPoccKpwKtzV3CQhx6
-         jODLkbU6ZxT1fa+Uef7oZeeJ0itwAnOKNxkdPzGyjdPJl+v1usIb2qb7kcMj/in5Z2h4
-         LoaxTSHD2h3jtN4X4ZEZjRnOmb3TzdFIaoThWctS+ZLMgYOtJK5vy1NvG4oOeIeQwQra
-         Vbng==
-X-Gm-Message-State: APjAAAXHz4duF6ZT6r+f4ngowBYwBCO392psSz/dt/QZx+S4MVGDjclt
-        xcPq5PwgM0By5Nz5xyQfj34=
-X-Google-Smtp-Source: APXvYqw9oRb/kgqVtmR7Ac+2/EgGdjqKBCbuppNpBwB8bG6MZk/Ta1UNBaitoOfFMQgl206og6/H4A==
-X-Received: by 2002:a1c:7dc7:: with SMTP id y190mr785580wmc.149.1555546348828;
-        Wed, 17 Apr 2019 17:12:28 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id w14sm433215wrr.16.2019.04.17.17.12.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Apr 2019 17:12:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Derrick Stolee <dstolee@microsoft.com>, Eric Wong <e@80x24.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=D3HrZrkbTIZr5TP5e5WYIkxgax5uaHK8a0C7FkoF9Tg=;
+        b=pK9kOjpVuvqTKIK89P8K3lv3w6v/Sg1L0AE7q9OxbeH0A5oEByBqBCKH0W8Xq0V8bz
+         ONvEXV2Xeazui9bXlvxxohMm5VneyZroUmG7cuvm4NOon+DCSJ0ZuzTTXDL6i9z1tums
+         K06qjSqbB+8m8kq0YHqWtIsGEIlcVNLamchEkZWIe3k5uUZrM2eYQS7AXhRqokOCWuV1
+         ckG+3mwHXan7pTdyJFCHGqYCyi8wLflj/Cw0+R50W3ooehjpmZWVpsm2bCbq8jvDbKP0
+         4EdQuHLJMpBleYmX9W25Mf3pcaaoJBLs02ROzHFKCS1YjDXqPBOOkXmt7jXPbvrlgyld
+         k0AQ==
+X-Gm-Message-State: APjAAAV/roE4c6F+40oVgY1VRa2pfiD+pQ/tZqY8QN8y6a7KrYvgHBvj
+        wPDp+5nJgPqxuZgK+Dp86C0=
+X-Google-Smtp-Source: APXvYqwy+Y5oyxJU6sD9RYyWgezKbT2KNndgRc1fW5qiKrFr5EOvhInOGgx5RD2amnDeVk0ahv+TOg==
+X-Received: by 2002:a62:1690:: with SMTP id 138mr93827151pfw.28.1555546762726;
+        Wed, 17 Apr 2019 17:19:22 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id p9sm422200pfi.186.2019.04.17.17.19.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Apr 2019 17:19:21 -0700 (PDT)
+Date:   Wed, 17 Apr 2019 17:19:20 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Apr 2019, #03; Tue, 16)
+Message-ID: <20190418001920.GA31901@dev-l>
 References: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
-        <87d0lmatr1.fsf@evledraar.gmail.com>
-        <xmqqa7gqots5.fsf@gitster-ct.c.googlers.com>
-        <87bm15aymo.fsf@evledraar.gmail.com>
-Date:   Thu, 18 Apr 2019 09:12:27 +0900
-In-Reply-To: <87bm15aymo.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 17 Apr 2019 09:18:07 +0200")
-Message-ID: <xmqqimvcjhn8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqef62ozny.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi Junio,
 
->>> LGTM, but AFAICT this patch of yours never got sent to the list,
->>> oversight?
->>
->> I am reasonably sure that
->> <xmqqlg0bvppc.fsf_-_@gitster-ct.c.googlers.com> was sent with you on
->> CC: line.
->
-> My bad, missed it.
+On Tue, Apr 16, 2019 at 10:19:45PM +0900, Junio C Hamano wrote:
+> * dl/rebase-i-keep-base (2019-04-16) 6 commits
+>  - rebase: teach rebase --keep-base
+>  - rebase: fast-forward --fork-point in more cases
+>  - rebase: fast-forward --onto in more cases
+>  - t3432: test rebase fast-forward behavior
+>  - t3431: add rebase --fork-point tests
+>  + tests (rebase): spell out the `--keep-empty` option
+>  (this branch is tangled with js/spell-out-options-in-tests.)
+> 
+>  "git rebase --keep-base <upstream>" tries to find the original base
+>  of the topic being rebased and rebase on top of that same base, which
+>  is useful when running the "git rebase -i" (and its limited variant
+>  "git rebase -x").
+> 
+>  Will merge to 'next'.
 
-While juggling several dozens of topics in flight, I'm bound to
-screw up when it comes to work on and/or send out my own patch,
-which only happens occasionally with the current workload.
+Since this patchset has grown in scope, could we update the description
+to mention that rebase now fast-forwards in more cases? I think this
+would be useful information for users to know when we write the release
+notes.
 
-Erring on the side of caution and helping me by pointing out a
-potential mistake like you did was exactly what I would want to
-see and appreciate.
+Thanks,
 
-Thanks.
+Denton
