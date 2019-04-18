@@ -7,90 +7,101 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4894920248
-	for <e@80x24.org>; Thu, 18 Apr 2019 01:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E78A120248
+	for <e@80x24.org>; Thu, 18 Apr 2019 02:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387856AbfDRB6J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Apr 2019 21:58:09 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34979 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387442AbfDRB6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Apr 2019 21:58:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o12so825230wrn.2
-        for <git@vger.kernel.org>; Wed, 17 Apr 2019 18:58:08 -0700 (PDT)
+        id S2387443AbfDRCIz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Apr 2019 22:08:55 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:52312 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729331AbfDRCIz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Apr 2019 22:08:55 -0400
+Received: by mail-wm1-f66.google.com with SMTP id a184so849693wma.2
+        for <git@vger.kernel.org>; Wed, 17 Apr 2019 19:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=KHyhPFNe+xLy7xVTyOuMYn4Hcwg8PMU2KkH6371jwcA=;
-        b=ZiSAGMr5/6jk5dg7TH2GBHMy0UEmQCx25O4rth5HOA2LKs2R7bP4ViOR03ui+9Skan
-         xbZKd0hmIM7LI6cKPqw/WEXlqxm6R12v/27D4mm2jPFwJ1+E/F3tJpvN0Xei2DY63uwa
-         O9czUp8K+zCm4UAJ1lRMnk5qvEIkLOBPhR0LAecBecV2ezpJu/sz06rrCxyheF98W9b1
-         FU9inYpgsdHHihDZCopMqAgIBkdeZ5M3J1Ex6SHy5UDrrxn7FEYJqq8V0o9YwS/JRgdE
-         9KnFCsm/OeM9kQ8ezhaa8wrFKAOYTKyZo29K7g0pDEZHFBNdfMnReOfpY0Wr8jwfIdyk
-         1CdQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=8gkzPxR++UHm0+mpQ7YV3TeOf8i6PotBF5+D2XisT9w=;
+        b=cn5KlymhqWz06Bnf3UsLxv4SbCyRVoLqjWgIHuFGFuEyLqALtfRYcio8c6CpMlvaQk
+         BdkVIX0ll0kMMtZXzueuP5xgSDKwvraYlPKFWecZ9jMwUP+wpcHkxjxbWhu+rTQYS4S5
+         aFVsootovLQe79j51owjxP2p9SzBMonh2we/69ucgCGTQ//mn8h3T5UfjVh++QJewDmu
+         tXPkH6zzgaKfNTWQh6qyW8CE6ZtiOG1CXl5373e1TVmm+Fgvmez6iXE5cHZCpPpwnklY
+         niDH98B+n7gcZhbuACZ7tRvdUzEMqLdEyGCTXb2ntTOQHIyTbBTaPZEeO3a2ZpLuDPKh
+         K8cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=KHyhPFNe+xLy7xVTyOuMYn4Hcwg8PMU2KkH6371jwcA=;
-        b=VPYVt/7sTT2vOYbXChF6evGw4s1jTLxJuKDAtPxorSJrWNL70X9/UGJnJBFSxEIW2i
-         T75uRvtqTBieMrFHKdH24W0TBffmpUs3BY3Ri4CsVeGSysv0Z18kQFtAL8JGFM66tYN2
-         iuw++BEO5er3b7MIDFCTJP4/8+OJ7NmhD3jh1VOkDT7wq81sUwU/jOO8HAKJVUv7qUxV
-         haMsnFHndvDBnW47jnqr/ClLbT1wRYLiuPKConymPfrTjo6LNYWT6gTfNI+5f3SI3FeC
-         IS4MmU/N4JQegQPdP92JZFkDZfF8imJONWXz3J/AB5IjT8Q7CLyVJ8S0C2vWB+xm3zFC
-         z9cw==
-X-Gm-Message-State: APjAAAVD7naH0JmtGirpqoEP85yaHsf4rUmwis/+lDPPNIyZRuBJP8Je
-        PT6F6LNxk4rMJhQhGPMEJ8/nPmbe3JA=
-X-Google-Smtp-Source: APXvYqwN7c15c/4uAQtvcbesRz4aI3GC7DxMdr0202+J/lxX1gGMWznxtg+lJbuppZoquIoRkEigYQ==
-X-Received: by 2002:adf:f390:: with SMTP id m16mr5519764wro.25.1555552687161;
-        Wed, 17 Apr 2019 18:58:07 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=8gkzPxR++UHm0+mpQ7YV3TeOf8i6PotBF5+D2XisT9w=;
+        b=MxOJ7qPnRliQu9cV6gf88sIxdvlV/QK2t2b7jFbj8qOlw/3ADxl9DHrK7NjwtkfjBW
+         +B2OAXkBY3Oau1R2k684q8dnD+q5/b0MuAFCqOUhtacVhsdDFy79ap8Z45oB9NMYTdtx
+         buNGQsY0i9O3jF9driPEfB8JFEFG1DUk0/6XkJVm8qoSejl4aEqxVA8ZNQmTAbjjLxby
+         19cTHD3HpnWh3vomttZs961Vtj3dtJ9gwM4wghm0Q6RONCSBlXRPg649QfCF/G7t8XwV
+         CrHmgn3xILW0axYzxrnNJVDF5U6eYT3S+kKah/hGoWNkW4uXptakjly6RL7plWDPMtNg
+         R1Pg==
+X-Gm-Message-State: APjAAAWjWVos4ELije+PXdccY3VnNXrzVwY5wylUj8mShzldWfP1/gd1
+        wi78jG0CzwHuulkOYyiyZpE=
+X-Google-Smtp-Source: APXvYqzpTVIhZueAgQwEdup4bLUscST+wdKnE9UWtdEIMpS+IneNVR4T1Ckns88VNqI+nAv+khBv9Q==
+X-Received: by 2002:a1c:4e04:: with SMTP id g4mr987476wmh.127.1555553333028;
+        Wed, 17 Apr 2019 19:08:53 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o10sm527468wru.54.2019.04.17.18.58.06
+        by smtp.gmail.com with ESMTPSA id t76sm692085wmt.8.2019.04.17.19.08.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Apr 2019 18:58:06 -0700 (PDT)
+        Wed, 17 Apr 2019 19:08:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 7/7] Turn `git serve` into a test helper
-References: <pull.168.git.gitgitgadget@gmail.com>
-        <411587e4b80bd4e5a1cb9b1ec438cda7a0681465.1555070430.git.gitgitgadget@gmail.com>
-        <xmqqa7grqsbt.fsf@gitster-ct.c.googlers.com>
-        <20190417034621.GA19448@sigill.intra.peff.net>
-        <xmqq36mhkx3z.fsf@gitster-ct.c.googlers.com>
-        <20190417182200.GQ60888@google.com>
-Date:   Thu, 18 Apr 2019 10:58:06 +0900
-In-Reply-To: <20190417182200.GQ60888@google.com> (Josh Steadmon's message of
-        "Wed, 17 Apr 2019 11:22:00 -0700")
-Message-ID: <xmqqy348gjm9.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Giuseppe =?utf-8?Q?Crin=C3=B2?= <giuscri@gmail.com>,
+        git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Feature request: Allow to update commit ID in messages when rebasing
+References: <CAGV3M54XhRMDXdhbfTon5nRV59VOjw8W4YrNP63TqPYm8pxd8Q@mail.gmail.com>
+        <878sw8bbby.fsf@evledraar.gmail.com>
+Date:   Thu, 18 Apr 2019 11:08:51 +0900
+In-Reply-To: <878sw8bbby.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 17 Apr 2019 22:56:01 +0200")
+Message-ID: <xmqqtvewgj4c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On 2019.04.17 14:40, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->>  ...
->> I guess we are more or less on the same page, then.  I'll let others
->> chime in by waiting for a bit more but I won't wait forever ;-).
->> 
->> Thanks.
+> On Wed, Apr 17 2019, Giuseppe Crinò wrote:
 >
-> FWIW I used git-serve a fair amount while working on V2 support for
-> archiving, and everything I did with it would have been just as easy
-> with a test helper as with a builtin. So I have no objections to this
-> change.
+>> The feature I'm asking is to add an extra-step during rebasing,
+>> checking whether there's a reference to a commit that's not going to
+>> be included in history and asks the user whether the heuristics is
+>> correct and if she wants to update those references.
+>>
+>> Scenario: it can happen for a commit message to contain the ID of an
+>> ancestor commit. A typical example is a commit with the message
+>> "revert 01a9fe8". If 01a9fe8 and the commit that reverts it are
+>> involved in a rebase the message "revert 01a9fe8" is no longer valid
+>> -- the old 01a9fe8 has now a different hash. This will most likely be
+>> ignored by the person who's rebasing but will let the other people
+>> reading history confused.
+>
+> This would be useful. Done properly we'd need some machinery/command to
+> extract the commit id parts from the free-text of the commit
+> message. That would be useful for other parts of git, e.g. as discussed
+> here:
+> https://public-inbox.org/git/xmqqvaxp9oyp.fsf@gitster.mtv.corp.google.com/
 
-Well, let's queue the final step together with the others, than.
+That's a helpful input.
 
-Thanks, all.
+But in general we do not have an infrastructure to systematically
+keep track of "this commit was rewritten to produce that other
+commit", so even if a mention of an old/superseded commit can be
+identified reliably, there is no reliable source to rewrite it to
+the name of the corresponding commit in the new world.
+
+For that mapping, we'd need something like the "git change/evolve"
+Stefan Xenos was working on, which hasn't materialized.
+
