@@ -2,108 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EECA20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 09:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42B0820248
+	for <e@80x24.org>; Thu, 18 Apr 2019 09:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388324AbfDRJB4 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 18 Apr 2019 05:01:56 -0400
-Received: from smtppost.atos.net ([193.56.114.164]:6682 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733049AbfDRJBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 05:01:55 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2019 05:01:53 EDT
-Received: from mail2-ext.my-it-solutions.net (mail2-ext.my-it-solutions.net) by smarthost5.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-         id 6a3b_53aa_b7382217_86e1_4faa_a09c_6dd817face6f;
-        Thu, 18 Apr 2019 10:55:11 +0200
-Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
-        by mail2-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3I8tB0G022696
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 10:55:11 +0200
-Received: from DEFTHW99ETZMSX.ww931.my-it-solutions.net (defthw99etzmsx.ww931.my-it-solutions.net [10.86.142.54])
-        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3I8tAlc006983
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 10:55:10 +0200
-Received: from DEERLM99ETQMSX.ww931.my-it-solutions.net (10.86.142.102) by
- DEFTHW99ETZMSX.ww931.my-it-solutions.net (10.86.142.54) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Thu, 18 Apr 2019 10:55:11 +0200
-Received: from EUR04-VI1-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.102) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Thu, 18 Apr 2019 10:55:10 +0200
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
- AM6PR02MB4118.eurprd02.prod.outlook.com (20.177.115.218) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1813.12; Thu, 18 Apr 2019 08:55:09 +0000
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b]) by AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b%6]) with mapi id 15.20.1813.011; Thu, 18 Apr 2019
- 08:55:09 +0000
-From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] Makefile: use fileno macro work around on AIX
-Thread-Topic: [PATCH] Makefile: use fileno macro work around on AIX
-Thread-Index: AQHU9b30g0YvBtQV9EenTNqvceLDfw==
-Date:   Thu, 18 Apr 2019 08:55:09 +0000
-Message-ID: <AM6PR02MB4950A1A625EEA54D4423C1BCEA260@AM6PR02MB4950.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=clement.chigot@atos.net; 
-x-originating-ip: [193.56.241.24]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 33b2a667-7161-4ecd-e503-08d6c3db8fbe
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR02MB4118;
-x-ms-traffictypediagnostic: AM6PR02MB4118:
-x-microsoft-antispam-prvs: <AM6PR02MB4118A7C48DBE44964EFE952AEA260@AM6PR02MB4118.eurprd02.prod.outlook.com>
-x-forefront-prvs: 0011612A55
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(396003)(136003)(39860400002)(199004)(189003)(86362001)(7696005)(4744005)(6436002)(6916009)(66066001)(53346004)(256004)(68736007)(9686003)(99286004)(478600001)(53936002)(2501003)(6116002)(14454004)(3846002)(71200400001)(71190400001)(26005)(25786009)(5640700003)(81166006)(81156014)(186003)(33656002)(1730700003)(2906002)(6506007)(102836004)(97736004)(8676002)(316002)(7736002)(305945005)(5660300002)(55016002)(8936002)(486006)(2351001)(74316002)(476003)(52536014);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB4118;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: atos.net does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: sWxVa3l5fyx8cAx5GouNIGQfSlLbSrSyy0rT53Qz3yBGQYJzJKRm0GHYwNv/+KhYPNELbbMrSMt6dmqJ74J6DSCHtcy/qlK7echyAAQcPkrLaiiblWgNqoUwCCWQBxwPZcfI3Oq+i0AcOdmNg3EvW+w3wdYiS8rWZMxpC/nV/3hOG4HhVndi8MsWXdxu6ggFbeCi7+/zdRepi1hc2kJ7pMaMN8g3GCabJ8AXTjn88mHo3SPreAVZYCmKMYfLq3dxpV7DElE4fCUrn5wEqGKP4HELSzjP3o97bxHhTrw2x20EMT9V24b4dnhLIeFPHbxgahhDf8o3UanUsNlW0ljVDcHqKKI/DJ0EIhp19FKeUo1ymaRR713xqW93xESC48ZovLAvUWtTUsirQrsj8YRasIdQhpojnwltAly9cBuWkwk=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S2388346AbfDRJOg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 05:14:36 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42640 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfDRJOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 05:14:35 -0400
+Received: by mail-wr1-f65.google.com with SMTP id g3so2017070wrx.9
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 02:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=M7u6MP/gUDWMF6P3O6C/gI1VujgwwOdzQzc3+HVRmFA=;
+        b=Z5QlHuiFj3QaLEuWsgoIAK0C5XiX6b+G8znJf/qdomhiHmSlyycq4GjhRKVSJN3iAD
+         CjFPokAgzNDYNzJFV0amk7n5zBMmbskxsoarFIHUxHPmzSjdVvZDFC0ARjdyYI7Zq78X
+         yP2Dq0p78HBMK+aF6kLqq3TcTpdjcC+bMftGoTLPQvZXHMRVs/PYMC58AhLlbf57nAQT
+         uiLmHK1Wil+Dk/G3ClaxX+XudSwI3t1WmSZYe6CkiKeP2PVCFrUojf8cTiycyp9iDRoT
+         vBtcr37MwBqDUEWi7p9KiY1yZ+uTuAmqrD7VVGzFkmQM9uKb8sPx+4OX1JVW2zzdSG59
+         aCew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=M7u6MP/gUDWMF6P3O6C/gI1VujgwwOdzQzc3+HVRmFA=;
+        b=K7uIyOWHVb1B1sYpxyFpD34e9bDgSBhEd1x7sbLRBN4uFYQ0LUkfiSV6PmJMd2blE1
+         evE/Oz64kh4TboXt5bmAIyNvTuFKeB9pM1YxFeysz8077SD70cM2qsTcULn7R4geFx19
+         VL+k+cwc+h6bAMfuPta6osI6hefiNn5e50BX3QAPvi4g5wvBoVpzBWzI9vxvqLpImJeS
+         VjEJumRnXmZWisc0sRGJNdAxm+mHJR2hMcrwAnCVu+I3fWypPoGrUI05DyS44b+OC0pa
+         BGlzhf7aPuOu3OO7em3c38RrkszoZ2A9dGrBPt0CIZPjVARgVlrSoo/9QZbj3phSt7eK
+         IaMg==
+X-Gm-Message-State: APjAAAVQXDNMh/5x1W9A8AEaiLDuxZ6WL0UTcMZmuyBPT9YeHCNqba68
+        W5cfwjnLnj6ehNgnTHyEEOxaincfcJM=
+X-Google-Smtp-Source: APXvYqwKw4o99EqnoRIH78wVSxVIX4j98rBirwEDkoVXvgU9KgDzvzmtX6chqQsVqTaotFpnjlTNMQ==
+X-Received: by 2002:adf:dd8c:: with SMTP id x12mr30217259wrl.262.1555578874248;
+        Thu, 18 Apr 2019 02:14:34 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-21-176.as13285.net. [92.22.21.176])
+        by smtp.gmail.com with ESMTPSA id h84sm1337980wmf.15.2019.04.18.02.14.33
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Apr 2019 02:14:33 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v10 00/10] Fix scissors bug during conflict
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <cover.1553150827.git.liu.denton@gmail.com>
+ <20190417102330.24434-1-phillip.wood123@gmail.com>
+ <xmqqk1frhovr.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <c37e44d1-d088-2088-148e-fb1ee022ac41@gmail.com>
+Date:   Thu, 18 Apr 2019 10:14:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33b2a667-7161-4ecd-e503-08d6c3db8fbe
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Apr 2019 08:55:09.5669
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB4118
-X-OriginatorOrg: atos.net
+In-Reply-To: <xmqqk1frhovr.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Declare FILENO_IS_A_MACRO on AIX
+On 18/04/2019 06:19, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> With Denton's blessing I've rebased his patches on top of my patch to
+>> fix the message cleanup with cherry-pick --signoff and -x [1]. I've
 
-On AIX, fileno(fp) is a macro and need to use the work around already made for BSD's. 
+Note that the base is a merge of that patch (which is based on maint) 
+with 041f5ea1cf ("The third batch", 2019-03-20)
 
-Signed-off-by: Clément Chigot <clement.chigot@atos.net>
----
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
+>> [1] https://public-inbox.org/git/20190329110842.30604-1-phillip.wood123@gmail.com/
+> 
+> Hmph, I certainly saw that patch, but I do not recall seeing any
+> in-depth review of it.  How ready is it?  Was it because it was
+> trivially obvious that we didn't see much activity on the patch?
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 41e85fab1c..86cbe47627 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -269,6 +269,7 @@ ifeq ($(uname_S),AIX)
- 	INTERNAL_QSORT = UnfortunatelyYes
- 	NEEDS_LIBICONV = YesPlease
- 	BASIC_CFLAGS += -D_LARGE_FILES
-+	FILENO_IS_A_MACRO = UnfortunatelyYes
- 	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
- 		NO_PTHREADS = YesPlease
- 	else
--- 
-2.17.1
+I think it is ready (it's a fairly simple change). Dscho said he was 
+happy with it [1].
+
+[1] 
+https://public-inbox.org/git/nycvar.QRO.7.76.6.1903291651340.41@tvgsbejvaqbjf.bet/
+
+Best Wishes
+
+Phillip
