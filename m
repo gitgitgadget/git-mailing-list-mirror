@@ -7,56 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 778AE20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B37DF20248
+	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388911AbfDRNQl (ORCPT <rfc822;e@80x24.org>);
+        id S2388681AbfDRNQl (ORCPT <rfc822;e@80x24.org>);
         Thu, 18 Apr 2019 09:16:41 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45931 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388579AbfDRNQk (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43567 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388369AbfDRNQk (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Apr 2019 09:16:40 -0400
-Received: by mail-ed1-f65.google.com with SMTP id k92so1746072edc.12
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:38 -0700 (PDT)
+Received: by mail-ed1-f67.google.com with SMTP id j20so1756571edq.10
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:mime-version
          :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=H03PXG/M6PE7vLsHKTxGgbAqZFgS0uGIQZ3s3KjUgC0=;
-        b=OG7SsPPET5f29L09iq6fV7ufmsaItG7oyJ+lD0J9YRVW3ZLJEpe9aFWZBHoTovxEo7
-         q8/erZMJcOcUiTL2NQBffVJfrxDlGFkec0ePWySIwa1MQFO2dU+2rTFjuPe6HKiwoVQz
-         i6/4EY/a2u1dmbTz1CtDLKUp6JvXo6qlhRFPL7bTd5lIAaE6vU79/9AQBDaCZ+1q6Sgw
-         bMUZCCBvDXlAUd7W346H5e+0oRJ2BS/J10wUcf6h+2tl3YlPZIVNjWYvTX26gVKJADSF
-         hQWpLyYD/LP2d2b4DXNL4YzgckjES9j/pfNJ2Xup3L+IgbAnjAXBxfHrh0m6Vzb3TKwb
-         PBKg==
+        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
+        b=iUDQJrYWJJp/evTDnPW3pN+K/tbpA6JN12GAnFkoGQFgK+68NiLuXq8MG9MTZA99F1
+         w1DcEADKt1adhdeBQxX61X7JgFACeWb2B4/TNOzYLl2s6FdvWb5wngjnxS4a4Att7dtv
+         JeW6mGHjx2/QEVvXVCKbModTcDKai6WfGsJ0uSzKjGwGF2Ftr/Fa/c0EgcRB2efmm78v
+         Beakki6gGrf4VCvPdtbMD5LvDzaICPNlFvZ6j+3q/M9mKmmN+V2Q1t639wDswwWh/OUY
+         0yPcOgjXE/wcLIwhlOdKiShqjthiDRl+t+4B3MinNJqYCOvdFFiMrvVRXbqAzJ4GpPy/
+         WCOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:mime-version:content-transfer-encoding:fcc
          :content-transfer-encoding:to:cc;
-        bh=H03PXG/M6PE7vLsHKTxGgbAqZFgS0uGIQZ3s3KjUgC0=;
-        b=JPJs+VUcPgnJ3zaLSCGJV/rwoF4gleQJRZ78q5ujPlcBps8HNBx9PO3kAPNoAewUeK
-         U18NIOwC+YVG7OGtpSUF9MCqZOv3M6opXnF3INRwHeHJJjsE4YqKn1PSlt0/D0NfN7PT
-         gR2jWPrYVF+BsLUpigpX5dUfs0LOs0QrC5/nrP1pcxaGvh+U2LfbGghGcFBXpHedPqW/
-         6UIEP4TsK8rDQxVti97gNV5Ti2HJYtSJgyJIKz3GYAX3ywo3+HsF0p0LdkpKYLzRhIR5
-         ij/AkwfMB4i26a9pdUHfv02k2fdMjuH5axH+TAUDYNbqGciFl+aK9XBFOi1/Hp/8fjb4
-         ffUg==
-X-Gm-Message-State: APjAAAX/0RrrjLtaP5j6kd3hAItr/DsiehxjCFWFXSPjG6vyPxWMBZwI
-        Op/ETR+N4snL+heeDyaDOIIHuDxi
-X-Google-Smtp-Source: APXvYqxu4FW9fRVkjEfGvlFNHGEcCS97ena10GQO0KRqPoB1DOaicBpTVQNQd8Bi9hC3uZeFXLY0lg==
-X-Received: by 2002:a50:a90d:: with SMTP id l13mr60761772edc.45.1555593397683;
-        Thu, 18 Apr 2019 06:16:37 -0700 (PDT)
+        bh=fsRXmxsHknzStyOSzfru5tYTFJds2VIn7azXyKABgfM=;
+        b=tFfxF7feHzfINdCIp7fhBbDTi6gy7NiY1WyXYIijmnSSXU2wuMJeAPdIn/6so9RmCv
+         CqzHYhcWqSMYptr8M+MOr/RRHc4BsPQot+u5uUIyQRpxNoH0234Lz82cDBIT7Lk1w5ps
+         AxfhK2CSgsmR6IU6yGPEW4nFhDCJGVGeEA0ELEp+4+QebPXBdnsvP0V2Cii0nvterpq8
+         zbnH76bN0n2rXiDk17RQzpCTrjwcKLvFd2W8nNCVIE2c7/7bwnB4ebYDuqUart9h5yG4
+         PtIzvmN3iopaSGgAUL19OfU0fttvJqlYn7y7iWTjLNMr8aqpuAxZBvhDdW9FJiA9UpBy
+         zPPg==
+X-Gm-Message-State: APjAAAUs9ZKF17ezsEzBgPNnlmfWhRMowm0IosZcNAg5ncsetArGDxTz
+        SPQEgByJ1sXEBkumoYoA68GegkVU
+X-Google-Smtp-Source: APXvYqxb3ZoWv3RCmmzgPqZrAJYBZx6tXNvyC/g2eFWj+8/sSm+J2lTosUXhH5UMAhKaMPmbtJds6Q==
+X-Received: by 2002:a50:9317:: with SMTP id m23mr11123008eda.114.1555593399026;
+        Thu, 18 Apr 2019 06:16:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d17sm510372eda.91.2019.04.18.06.16.36
+        by smtp.gmail.com with ESMTPSA id s13sm378962eju.89.2019.04.18.06.16.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 06:16:37 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 06:16:37 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Apr 2019 13:16:28 GMT
-Message-Id: <pull.168.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.168.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2019 06:16:38 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 06:16:38 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Apr 2019 13:16:29 GMT
+Message-Id: <81c08b178be6329d51586fa9d615063d3c6f9625.1555593396.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.168.v2.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
+        <pull.168.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/8] Assorted Documentation-related fixes
+Subject: [PATCH v2 1/8] remote-testgit: move it into the support directory for
+ t5801
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,100 +67,85 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While working on better support for make check-docs on Windows, I noticed a
-couple more things, e.g. some "commands" were reported as being listed but
-not built, e.g. gitcli (i.e. the parts of command-list.txt that are marked
-as "guide").
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series cleans up those loose ends: after this, make check-docs 
-reports no issues on Windows.
+The `git-remote-testgit` script is really only used in
+`t5801-remote-helpers.sh`. It does not even contain any `@@<MAGIC>@@`
+placeholders that would need to be interpolated via `make
+git-remote-testgit`.
 
-Changes since v1:
+Let's just move it to a new home, decluttering the top-level directory
+and clarifying that this is just a test helper, not an official Git
+command that we would want to ever support.
 
- * There is now an extra patch that gets rid of the NO_INSTALL variable in
-   the Makefile altogether.
- * The generate-cmdlist.sh patch now results in more robust code (thanks,
-   Junio!).
- * Patch 2/7 has a much better commit message now, and instead of filtering
-   out excluded commands from the command-list.txt, it expects excluded
-   commands by looking not only at $(ALL_COMMANDS) but also at 
-   $(EXCLUDED_PROGRAMS).
- * Instead of the fragile logic to generate 
-   Documentation/GIT-EXCLUDED-PROGRAMS that I hoped would let me get away
-   with less work, I now imitate the logic of GIT-CFLAGS (and the resulting
-   patch is actually a lot easier to read).
+Suggested by Ævar Arnfjörð Bjarmason.
 
-Johannes Schindelin (8):
-  remote-testgit: move it into the support directory for t5801
-  Makefile: drop the NO_INSTALL variable
-  help -a: do not list commands that are excluded from the build
-  check-docs: allow command-list.txt to contain excluded commands
-  docs: exclude documentation for commands that have been excluded
-  check-docs: do not bother checking for legacy scripts' documentation
-  test-tool: handle the `-C <directory>` option just like `git`
-  Turn `git serve` into a test helper
-
- .gitignore                                    |  1 -
- Documentation/.gitignore                      |  1 +
- Documentation/Makefile                        |  3 ++
- Makefile                                      | 53 +++++++++++--------
- builtin.h                                     |  1 -
- generate-cmdlist.sh                           | 10 +++-
- git.c                                         |  1 -
- builtin/serve.c => t/helper/test-serve-v2.c   |  7 +--
- t/helper/test-tool.c                          | 20 +++++++
- t/helper/test-tool.h                          |  1 +
- t/t5701-git-serve.sh                          | 32 ++++++-----
- t/t5702-protocol-v2.sh                        |  5 +-
- t/t5703-upload-pack-ref-in-want.sh            | 16 +++---
- t/t5801-remote-helpers.sh                     |  2 +
- .../t5801/git-remote-testgit                  |  0
- 15 files changed, 101 insertions(+), 52 deletions(-)
- rename builtin/serve.c => t/helper/test-serve-v2.c (81%)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .gitignore                                          | 1 -
+ Makefile                                            | 3 ---
+ t/t5801-remote-helpers.sh                           | 2 ++
+ git-remote-testgit.sh => t/t5801/git-remote-testgit | 0
+ 4 files changed, 2 insertions(+), 4 deletions(-)
  rename git-remote-testgit.sh => t/t5801/git-remote-testgit (100%)
 
-
-base-commit: 5ee42463399ca3cc75b7e6e4368a3a5df5b010f2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-168%2Fdscho%2Fdocs-misc-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-168/dscho/docs-misc-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/168
-
-Range-diff vs v1:
-
- 1:  81c08b178b = 1:  81c08b178b remote-testgit: move it into the support directory for t5801
- -:  ---------- > 2:  fda0b10c84 Makefile: drop the NO_INSTALL variable
- 2:  7dc5293e9e ! 3:  9b498a6f21 help -a: do not list commands that are excluded from the build
-     @@ -70,7 +70,7 @@
-       
-       command_list () {
-      -	grep -v '^#' "$1"
-     -+	eval grep -ve '^#' $exclude_programs "$1"
-     ++	eval "grep -ve '^#' $exclude_programs" <"$1"
-       }
-       
-       get_categories () {
-     @@ -79,7 +79,7 @@
-       }
-       
-      +exclude_programs=
-     -+while test "a$1" = "a--exclude-program"
-     ++while test "--exclude-program" = "$1"
-      +do
-      +	shift
-      +	exclude_programs="$exclude_programs -e \"^$1 \""
- 3:  96ced7e17c < -:  ---------- check-docs: do not pretend that commands are listed which are excluded
- 4:  31d8e43cbf < -:  ---------- docs: exclude documentation for commands that have been excluded
- -:  ---------- > 4:  ac3670a805 check-docs: allow command-list.txt to contain excluded commands
- -:  ---------- > 5:  f8d133c597 docs: exclude documentation for commands that have been excluded
- 5:  fb3daa6427 = 6:  05d4ad62d6 check-docs: do not bother checking for legacy scripts' documentation
- 6:  2e19f538bc = 7:  cf73021574 test-tool: handle the `-C <directory>` option just like `git`
- 7:  411587e4b8 = 8:  88a5ab2332 Turn `git serve` into a test helper
-
+diff --git a/.gitignore b/.gitignore
+index 7374587f9d..de8fc2f5b1 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -135,7 +135,6 @@
+ /git-remote-ftps
+ /git-remote-fd
+ /git-remote-ext
+-/git-remote-testgit
+ /git-remote-testpy
+ /git-remote-testsvn
+ /git-repack
+diff --git a/Makefile b/Makefile
+index 8654c130f8..26f8ed2228 100644
+--- a/Makefile
++++ b/Makefile
+@@ -633,7 +633,6 @@ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-quiltimport.sh
+ SCRIPT_SH += git-legacy-rebase.sh
+-SCRIPT_SH += git-remote-testgit.sh
+ SCRIPT_SH += git-request-pull.sh
+ SCRIPT_SH += git-stash.sh
+ SCRIPT_SH += git-submodule.sh
+@@ -657,8 +656,6 @@ SCRIPT_PERL += git-svn.perl
+ 
+ SCRIPT_PYTHON += git-p4.py
+ 
+-NO_INSTALL += git-remote-testgit
+-
+ # Generated files for scripts
+ SCRIPT_SH_GEN = $(patsubst %.sh,%,$(SCRIPT_SH))
+ SCRIPT_PERL_GEN = $(patsubst %.perl,%,$(SCRIPT_PERL))
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index aaaa722cca..d04f8007e0 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -8,6 +8,8 @@ test_description='Test remote-helper import and export commands'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ 
++PATH="$TEST_DIRECTORY/t5801:$PATH"
++
+ compare_refs() {
+ 	git --git-dir="$1/.git" rev-parse --verify $2 >expect &&
+ 	git --git-dir="$3/.git" rev-parse --verify $4 >actual &&
+diff --git a/git-remote-testgit.sh b/t/t5801/git-remote-testgit
+similarity index 100%
+rename from git-remote-testgit.sh
+rename to t/t5801/git-remote-testgit
 -- 
 gitgitgadget
+
