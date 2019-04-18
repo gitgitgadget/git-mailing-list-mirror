@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43D4320248
-	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B316320248
+	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388343AbfDRNQt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 09:16:49 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46767 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388406AbfDRNQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 09:16:48 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d1so1741607edd.13
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:47 -0700 (PDT)
+        id S2389016AbfDRNQx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 09:16:53 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44340 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388996AbfDRNQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 09:16:52 -0400
+Received: by mail-ed1-f67.google.com with SMTP id i13so1749977edf.11
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=U/atmtP1TqN6Qofgb+CnGvxkPNH26y6LICkkBmVIcWM=;
-        b=MLCnDMuPBYc0HJjOCmPHpKZyOiHVXONBA6OBLr5EzIesMJtcMV87DJYyKZmlZXOuSa
-         COWH7OFHghhd/AO1qukzWKYcImAcofqBejmCh5bkZpQIWsC0JbIyso9/+jay4BNR1eds
-         zZz9fqofWsiDusM92mRp9PwwirwYMZphyp/oj7iFEwdtvBRZbxiPOEyBK1MAEyNN7Klq
-         2+IYv7o4MZKnTUJ8KLHe0yfGiHo31GwHvKksjJjV69do72gV5RMdqousoF3iJwuwLPHk
-         2K43nbJ2gmCjkcO7vfaSXEZzUVom0ICekYA5fJpyi4kAoL1hsGYLkQNlOuJD4V15N5ba
-         Ryyw==
+        bh=qN63TrtHggTAGtg/Fx+ZyXty2CY5YBwtv3fKIy6wnQw=;
+        b=qS73TIrG70t3zpkMfs+QVdWRyLRd6D2J0fV88YqMSEDj33pRRaymu8aQUxYbVkg75r
+         veqOFU6gD3pkwf3j1S6aUvILWP+NCVZjg106XsGUGcd1EMd4Z5AmGtiFFyaahYwoyDOW
+         5NdIzN8k0vlPq3b3x4DIDvQvndmn6/OFuWklCfz+xl+FT//Ql39gEEB65N0WCAjI1OpV
+         eDe/F3nvvabdl9BVMvFtSRIYvGMM9qMV2DuOIW2ZYz5B7c1dzvZ/ijdpQQQ4XGFwap6g
+         dB/9olhbQ5py9o1DVvbnCjcygo41KKOCxIKZcHQlU1HUeowMLusGAlz3+w9tJ4NdYLCB
+         Jrrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=U/atmtP1TqN6Qofgb+CnGvxkPNH26y6LICkkBmVIcWM=;
-        b=p3U7UQuqa+ffxwVIo/HpyS0vsDB2IJWa6oliOlCCyoPtCL8h04CuYAzzvGTzxuM6Fx
-         zy+W/ssYGTSa4/MatKlGI/u22pBEweGoJkYSZ5yoXV+PQlsoikRWFOClZQkJMxEkUzL4
-         U+lrpKayJJjHtn0Wavm2MDYluqSG8Av5mRwDPhIrPwJ9RhSjJ22lF0El1Vhk8++o/UVu
-         IgSX4BxQuHhEsCRWcPD10EeMDOUKfAIQS9snCfkOELkGT+jrCODQyxY0OdXDMHSfhLGe
-         SuiyxxGMGTJAG47PLQgGhXQCiHm4zy00yFINElVhYRCQmfKU7l4dq++x+2t+JofZEsxL
-         6PVA==
-X-Gm-Message-State: APjAAAUWZoA2h0w7D84yuTBiGlzOF6TEpOCfIeanBegRmLP/ZL/E9UBy
-        XKu5h1mr51UlCbr4LUE1YsMpJqdL
-X-Google-Smtp-Source: APXvYqxzpgkEuQDcQPyH9e+/d3A4Q22aZ3uZpkTv4aJprAiNWpXTj7T310ukf2g/UzngyYCYV5vlQw==
-X-Received: by 2002:a17:906:5ad6:: with SMTP id x22mr47256031ejs.79.1555593405875;
-        Thu, 18 Apr 2019 06:16:45 -0700 (PDT)
+        bh=qN63TrtHggTAGtg/Fx+ZyXty2CY5YBwtv3fKIy6wnQw=;
+        b=hnzAQr1mTxhmjHxDowutC2w3NNVcROKEBUGYoua17JkKCjFGRp4Fx3qPqZBfxBlHuk
+         NDVtvwNZEk/N8dYHTQCI13Z90ohFiCxsbxXlgqAjoFaw2jJ5YZ6oxTgI3Vmc8Co0JGNS
+         /r2WmxhROusi+LX3sjDh9NYYKM4VHhz2pF2zPOgr58Y3Xl9kMWTwoZ6xKLCDhM9LsHM/
+         BngtZlX/l8OXZNHrnScDatB2q5kQETcYFBqpfbgpBqsqVt8FRc+KM4MuN9W7lF7XteZN
+         VN3dMhb5L+l/Ha50DR5puSVGDfcrA3Em6UkwtuzTeTYQbbXcBclq8rTBeRTJ/+VaXDu/
+         xbCA==
+X-Gm-Message-State: APjAAAUzydtL1OQ7awrHWWAakvrYwEUsoTanMfFXBatxOA7+YXSBllDb
+        83ps3L8BlmbU4yQHRKwthVt1rEeH
+X-Google-Smtp-Source: APXvYqylXQABN8Vx6QSFZzkZFCrnA16USmG4+JPeUy3IrUjaiBr/EyBPkBhKMCeZlOIpXjdw2Yaqhw==
+X-Received: by 2002:a50:ad3a:: with SMTP id y55mr21480098edc.220.1555593410202;
+        Thu, 18 Apr 2019 06:16:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r29sm511166eda.37.2019.04.18.06.16.43
+        by smtp.gmail.com with ESMTPSA id gf2sm382221ejb.20.2019.04.18.06.16.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 06:16:44 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 06:16:44 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Apr 2019 13:16:33 GMT
-Message-Id: <f8d133c59725938afa85f6be349c2bba05fe98e7.1555593396.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2019 06:16:49 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 06:16:49 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Apr 2019 13:16:35 GMT
+Message-Id: <cf73021574a25f8f4f90dfa8a2b2ca827ef51723.1555593396.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.v2.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
         <pull.168.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 5/8] docs: exclude documentation for commands that have
- been excluded
+Subject: [PATCH v2 7/8] test-tool: handle the `-C <directory>` option just
+ like `git`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,82 +73,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When building with certain build options, some commands are excluded
-from the build. For example, `git-credential-cache` is skipped when
-building with `NO_UNIX_SOCKETS`.
-
-Let's not build or package documentation for those excluded commands.
-
-This issue was pointed out rightfully when running `make check-docs` on
-Windows, where we do not yet have Unix sockets, and therefore the
-`credential-cache` command is excluded (yet its documentation was built
-and shipped).
-
-Note: building the documentation via `make -C Documentation` leaves the
-build system with no way to determine which commands have been
-excluded. If called thusly, we gracefully fail to exclude their
-documentation. Only when building the documentation via the top-level
-Makefile will it get excluded properly, or after building
-`Documentation/GIT-EXCLUDED-PROGRAMS` manually.
+In preparation for moving `git serve` into `test-tool` (because it
+really is only used by the test suite), we teach the `test-tool` the
+useful trick to change the working directory before running the test
+command, which will avoid introducing subshells in the test code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/.gitignore | 1 +
- Documentation/Makefile   | 3 +++
- Makefile                 | 9 +++++++++
- 3 files changed, 13 insertions(+)
+ t/helper/test-tool.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index 3ef54e0adb..ea27148c59 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -13,3 +13,4 @@ mergetools-*.txt
- manpage-base-url.xsl
- SubmittingPatches.txt
- tmp-doc-diff/
-+/GIT-EXCLUDED-PROGRAMS
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index af0e2cf11a..e22ea2f57c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -7,7 +7,10 @@ ARTICLES =
- SP_ARTICLES =
- OBSOLETE_HTML =
- 
-+-include GIT-EXCLUDED-PROGRAMS
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 99db7409b8..2b21943f93 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -1,5 +1,11 @@
+ #include "git-compat-util.h"
+ #include "test-tool.h"
++#include "parse-options.h"
 +
- MAN1_TXT += $(filter-out \
-+		$(patsubst %,%.txt,$(EXCLUDED_PROGRAMS)) \
- 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
- 		$(wildcard git-*.txt))
- MAN1_TXT += git.txt
-diff --git a/Makefile b/Makefile
-index d83104d884..6f90cec590 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2451,6 +2451,14 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
++static const char * const test_tool_usage[] = {
++	"test-tool [-C <directory>] <command [<arguments>...]]",
++	NULL
++};
  
- export DEFAULT_EDITOR DEFAULT_PAGER
+ struct test_cmd {
+ 	const char *name;
+@@ -73,11 +79,24 @@ static NORETURN void die_usage(void)
+ int cmd_main(int argc, const char **argv)
+ {
+ 	int i;
++	const char *working_directory = NULL;
++	struct option options[] = {
++		OPT_STRING('C', NULL, &working_directory, "directory",
++			   "change the working directory"),
++		OPT_END()
++	};
  
-+Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
-+	@EXCLUDED='EXCLUDED_PROGRAMS := $(EXCLUDED_PROGRAMS)'; \
-+	    if test x"$$EXCLUDED" != \
-+		x"`cat Documentation/GIT-EXCLUDED-PROGRAMS 2>/dev/null`" ; then \
-+		echo >&2 "    * new documentation flags"; \
-+		echo "$$EXCLUDED" >Documentation/GIT-EXCLUDED-PROGRAMS; \
-+            fi
+ 	BUG_exit_code = 99;
++	argc = parse_options(argc, argv, NULL, options, test_tool_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION |
++			     PARSE_OPT_KEEP_ARGV0);
 +
- .PHONY: doc man man-perl html info pdf
- doc: man-perl
- 	$(MAKE) -C Documentation all
-@@ -3030,6 +3038,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
-+	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
- ifndef NO_PERL
- 	$(MAKE) -C gitweb clean
- 	$(RM) -r perl/build/
+ 	if (argc < 2)
+ 		die_usage();
+ 
++	if (working_directory && chdir(working_directory) < 0)
++		die("Could not cd to '%s'", working_directory);
++
+ 	for (i = 0; i < ARRAY_SIZE(cmds); i++) {
+ 		if (!strcmp(cmds[i].name, argv[1])) {
+ 			argv++;
 -- 
 gitgitgadget
 
