@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 803D020248
-	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43D4320248
+	for <e@80x24.org>; Thu, 18 Apr 2019 13:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389002AbfDRNQv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 09:16:51 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37341 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388406AbfDRNQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 09:16:50 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f53so1782991ede.4
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:49 -0700 (PDT)
+        id S2388343AbfDRNQt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 09:16:49 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46767 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388406AbfDRNQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 09:16:48 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d1so1741607edd.13
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 06:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MdJ+878JtdS4/ikdv6uI0o7PA3z3qdb78nWrWOTgHog=;
-        b=LHyI9DL9eg1YSKAJCTP0epwRIBb4uLjTctq8FRj3vFqC/gp22JpuvyNvnLKzX4zTtl
-         W5yG/6P/lCTGpOGbX+pOczkZVZ7uxz1NO2WfL1GrMzVeF2/LOhkiMg3PNwCAIf5NEujO
-         is9E9zcTH+2MFtFR5fU6dp3oc7e/J7z5/iS3OyTB8y1GA/yueuX+UR4CCyAvA+xlRSs1
-         S7Lpx7ObgO5vWxvLMSIA9IUXzBZKYu9QRWnybZyKXsFDkqAtmf08u1bITnmqx2lkujOd
-         zQc1nWxNAsNFLoHnuurH/9KXQRDSGIlps6GAK2dxdDFc9SaXV964k0d8vd3ELqDu485I
-         CVbA==
+        bh=U/atmtP1TqN6Qofgb+CnGvxkPNH26y6LICkkBmVIcWM=;
+        b=MLCnDMuPBYc0HJjOCmPHpKZyOiHVXONBA6OBLr5EzIesMJtcMV87DJYyKZmlZXOuSa
+         COWH7OFHghhd/AO1qukzWKYcImAcofqBejmCh5bkZpQIWsC0JbIyso9/+jay4BNR1eds
+         zZz9fqofWsiDusM92mRp9PwwirwYMZphyp/oj7iFEwdtvBRZbxiPOEyBK1MAEyNN7Klq
+         2+IYv7o4MZKnTUJ8KLHe0yfGiHo31GwHvKksjJjV69do72gV5RMdqousoF3iJwuwLPHk
+         2K43nbJ2gmCjkcO7vfaSXEZzUVom0ICekYA5fJpyi4kAoL1hsGYLkQNlOuJD4V15N5ba
+         Ryyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MdJ+878JtdS4/ikdv6uI0o7PA3z3qdb78nWrWOTgHog=;
-        b=mR0xkTWoudm4/Pp+E3D1ThcRzo72BsJ32zISup9MmKbkYKDZkGQeyr8CUbigsYU1pj
-         gz2VO5Kgzl4ps8/a7oeJ7fs65cGYinnolZka0a2kPcw055GQ99qpUJ2A21qfYhr3ThR1
-         YXSmThgmK0T5384V8s7pcGNwuRzOYEhdMogRLcXeC147qgkUbcmzPL7vOlFKzUaGxyCq
-         OwUaW0hatKdYAnguTFwK5HKxQYJ6evYI8jJKiSM9JIO5qzlcPEChkkmav/WllvRpWyFH
-         t+Kt02D0iuArohpDH7kbInvUhwE+l3s00dCHUxa1clrMlKSGlNb/Yw6zaFK6cZYIGQDU
-         54Yg==
-X-Gm-Message-State: APjAAAXtenXwptEz2uh57lPVuYeIoo6s6ID5kS8G6Ym24ls7S4FQchO2
-        Fq+aPYkcuHQCbV+iTZID+G40VIH+
-X-Google-Smtp-Source: APXvYqzWXiYHeMgD13Aoenm0iEi55wJUvALtShUhJXD+MX3GZAuTUP0VHVRmZXtJK9HrbolVYVZ6xA==
-X-Received: by 2002:a50:b4c9:: with SMTP id x9mr59700715edd.132.1555593408293;
-        Thu, 18 Apr 2019 06:16:48 -0700 (PDT)
+        bh=U/atmtP1TqN6Qofgb+CnGvxkPNH26y6LICkkBmVIcWM=;
+        b=p3U7UQuqa+ffxwVIo/HpyS0vsDB2IJWa6oliOlCCyoPtCL8h04CuYAzzvGTzxuM6Fx
+         zy+W/ssYGTSa4/MatKlGI/u22pBEweGoJkYSZ5yoXV+PQlsoikRWFOClZQkJMxEkUzL4
+         U+lrpKayJJjHtn0Wavm2MDYluqSG8Av5mRwDPhIrPwJ9RhSjJ22lF0El1Vhk8++o/UVu
+         IgSX4BxQuHhEsCRWcPD10EeMDOUKfAIQS9snCfkOELkGT+jrCODQyxY0OdXDMHSfhLGe
+         SuiyxxGMGTJAG47PLQgGhXQCiHm4zy00yFINElVhYRCQmfKU7l4dq++x+2t+JofZEsxL
+         6PVA==
+X-Gm-Message-State: APjAAAUWZoA2h0w7D84yuTBiGlzOF6TEpOCfIeanBegRmLP/ZL/E9UBy
+        XKu5h1mr51UlCbr4LUE1YsMpJqdL
+X-Google-Smtp-Source: APXvYqxzpgkEuQDcQPyH9e+/d3A4Q22aZ3uZpkTv4aJprAiNWpXTj7T310ukf2g/UzngyYCYV5vlQw==
+X-Received: by 2002:a17:906:5ad6:: with SMTP id x22mr47256031ejs.79.1555593405875;
+        Thu, 18 Apr 2019 06:16:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k17sm381031eja.41.2019.04.18.06.16.46
+        by smtp.gmail.com with ESMTPSA id r29sm511166eda.37.2019.04.18.06.16.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 06:16:46 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 06:16:46 -0700 (PDT)
-X-Google-Original-Date: Thu, 18 Apr 2019 13:16:34 GMT
-Message-Id: <05d4ad62d6559f3b041884dfe89cd30d6fa268ba.1555593396.git.gitgitgadget@gmail.com>
+        Thu, 18 Apr 2019 06:16:44 -0700 (PDT)
+Date:   Thu, 18 Apr 2019 06:16:44 -0700 (PDT)
+X-Google-Original-Date: Thu, 18 Apr 2019 13:16:33 GMT
+Message-Id: <f8d133c59725938afa85f6be349c2bba05fe98e7.1555593396.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.168.v2.git.gitgitgadget@gmail.com>
 References: <pull.168.git.gitgitgadget@gmail.com>
         <pull.168.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 6/8] check-docs: do not bother checking for legacy scripts'
- documentation
+Subject: [PATCH v2 5/8] docs: exclude documentation for commands that have
+ been excluded
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,40 +73,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the recent years, there has been a big push to convert more and more
-of Git's commands that are implemented as scripts to built-ins written
-in pure, portable C, for robustness, speed and portability.
+When building with certain build options, some commands are excluded
+from the build. For example, `git-credential-cache` is skipped when
+building with `NO_UNIX_SOCKETS`.
 
-One strategy that served us well is to convert those scripts
-incrementally, starting by renaming the scripts to
-`git-legacy-<command>`, then introducing a built-in that does nothing
-else at first than checking the config setting `<command>.useBuiltin`
-(which defaults to `false` at the outset) and handing off to the legacy
-script if so asked.
+Let's not build or package documentation for those excluded commands.
 
-Obviously, those `git-legacy-<command>` commands share the documentation
-with the built-in `git-<command>`, and are not intended to be called
-directly anyway. So let's not try to ensure that they are documented
-separately from their built-in versions.
+This issue was pointed out rightfully when running `make check-docs` on
+Windows, where we do not yet have Unix sockets, and therefore the
+`credential-cache` command is excluded (yet its documentation was built
+and shipped).
+
+Note: building the documentation via `make -C Documentation` leaves the
+build system with no way to determine which commands have been
+excluded. If called thusly, we gracefully fail to exclude their
+documentation. Only when building the documentation via the top-level
+Makefile will it get excluded properly, or after building
+`Documentation/GIT-EXCLUDED-PROGRAMS` manually.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/.gitignore | 1 +
+ Documentation/Makefile   | 3 +++
+ Makefile                 | 9 +++++++++
+ 3 files changed, 13 insertions(+)
 
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index 3ef54e0adb..ea27148c59 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -13,3 +13,4 @@ mergetools-*.txt
+ manpage-base-url.xsl
+ SubmittingPatches.txt
+ tmp-doc-diff/
++/GIT-EXCLUDED-PROGRAMS
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index af0e2cf11a..e22ea2f57c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -7,7 +7,10 @@ ARTICLES =
+ SP_ARTICLES =
+ OBSOLETE_HTML =
+ 
++-include GIT-EXCLUDED-PROGRAMS
++
+ MAN1_TXT += $(filter-out \
++		$(patsubst %,%.txt,$(EXCLUDED_PROGRAMS)) \
+ 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt))
+ MAN1_TXT += git.txt
 diff --git a/Makefile b/Makefile
-index 6f90cec590..f5fc977ee8 100644
+index d83104d884..6f90cec590 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3074,7 +3074,7 @@ check-docs::
- 		git-merge-octopus | git-merge-ours | git-merge-recursive | \
- 		git-merge-resolve | git-merge-subtree | \
- 		git-fsck-objects | git-init-db | \
--		git-remote-* | git-stage | \
-+		git-remote-* | git-stage | git-legacy-* | \
- 		git-?*--?* ) continue ;; \
- 		esac ; \
- 		test -f "Documentation/$$v.txt" || \
+@@ -2451,6 +2451,14 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
++Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
++	@EXCLUDED='EXCLUDED_PROGRAMS := $(EXCLUDED_PROGRAMS)'; \
++	    if test x"$$EXCLUDED" != \
++		x"`cat Documentation/GIT-EXCLUDED-PROGRAMS 2>/dev/null`" ; then \
++		echo >&2 "    * new documentation flags"; \
++		echo "$$EXCLUDED" >Documentation/GIT-EXCLUDED-PROGRAMS; \
++            fi
++
+ .PHONY: doc man man-perl html info pdf
+ doc: man-perl
+ 	$(MAKE) -C Documentation all
+@@ -3030,6 +3038,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(MAKE) -C Documentation/ clean
++	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
+ ifndef NO_PERL
+ 	$(MAKE) -C gitweb clean
+ 	$(RM) -r perl/build/
 -- 
 gitgitgadget
 
