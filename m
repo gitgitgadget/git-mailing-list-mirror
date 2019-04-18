@@ -2,160 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3CD20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 08:28:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EECA20248
+	for <e@80x24.org>; Thu, 18 Apr 2019 09:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388195AbfDRI2w (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 04:28:52 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:37207 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728074AbfDRI2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 04:28:51 -0400
-Received: by mail-lj1-f196.google.com with SMTP id v13so1180372ljk.4
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 01:28:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RQFV9VsonhYbFMaA9Ngx3Ze0QStFd9I3FgRKxEYLO4A=;
-        b=EKxei3ZDMJ1D9VMS3N63aB+xj/xfR3XsvMg7ZJnyEd+Ygm4QmfXUWgkVCitozBXFoC
-         /7KHm2QzKj3UYP+ZohKIL5EhKZaUp1sR7AysHgiiH7lAYSpdZonqH4Re827TX/NePlHX
-         N8bejgotFyBMcwWSd11lN+v/6dSc3QwpQEd9yRN4mGRAxwoRhOwvRXAYmk/g6O7QBG6O
-         H0H8Czc56t2PBFuS9VtH76LbkdGaaiF3PkhFcGAtF2HoX3WjJBW6umqfPfkzT62DkXYN
-         iMeizqO9QLzrFcMbkqC/Gs0lLcxPUjpLk3J3K+QzOiJ/3Rc5ZGkQ4cB76EaOPoO3Y4+q
-         NjNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RQFV9VsonhYbFMaA9Ngx3Ze0QStFd9I3FgRKxEYLO4A=;
-        b=JC4U1iA2bu2BEG6Viq/Dybnawf1uPfuJ6BoT/sR/m125ih6vEIznI9KEj/KYW3y/Sw
-         wkbWt7+prq8+qnwVxp0VRR1245wgvPcWPLfcr08K/Lgl7gd4hL3uQA65yuGNrPsy1v0M
-         m+gAAakx+B0LIANNsExH7zdcKxu9gimxoe9FZzlu2/KTNVVDQ6DCYe8Z6+XGUz5Pp33Z
-         MqEOhgOMmMcKwOgUGC62xpMBd/eTwaJPDV5PjKv9AbxSl5Ziswk5yrTSx8on73bVEexU
-         skBads/oWpZB8cWTYewUCsa9HXybHFWCGk/ktrSRID7YwUW5FfbVcSSMXPieFKFfqjNz
-         67+w==
-X-Gm-Message-State: APjAAAWLR5e6x1+E+sfyIUUMPrS/luCBui61Ibi8qhzXzmnUvKFu70v5
-        k1SqalkztNfc0/VrVZjYDvwJV3dQ
-X-Google-Smtp-Source: APXvYqywZg0gxeb7b83xzseCFRgGZMtRPzHIIWEA+4kfdjv0BdElPtnlOpIMGGDAo5aYzlW+EF5AEA==
-X-Received: by 2002:a2e:8618:: with SMTP id a24mr2733092lji.192.1555576129695;
-        Thu, 18 Apr 2019 01:28:49 -0700 (PDT)
-Received: from lwo1-lhp-f71841 ([195.234.74.207])
-        by smtp.gmail.com with ESMTPSA id d3sm267513ljc.15.2019.04.18.01.28.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Apr 2019 01:28:48 -0700 (PDT)
-Date:   Thu, 18 Apr 2019 11:28:44 +0300
-From:   Vadym Kochan <vadim4j@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] configure.ac: Properly check for libintl
-Message-ID: <20190418082844.GA10068@lwo1-lhp-f71841>
-References: <20190418050419.21114-1-vadim4j@gmail.com>
- <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
+        id S2388324AbfDRJB4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 18 Apr 2019 05:01:56 -0400
+Received: from smtppost.atos.net ([193.56.114.164]:6682 "EHLO
+        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733049AbfDRJBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 05:01:55 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Apr 2019 05:01:53 EDT
+Received: from mail2-ext.my-it-solutions.net (mail2-ext.my-it-solutions.net) by smarthost5.atos.net with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 6a3b_53aa_b7382217_86e1_4faa_a09c_6dd817face6f;
+        Thu, 18 Apr 2019 10:55:11 +0200
+Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
+        by mail2-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3I8tB0G022696
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 10:55:11 +0200
+Received: from DEFTHW99ETZMSX.ww931.my-it-solutions.net (defthw99etzmsx.ww931.my-it-solutions.net [10.86.142.54])
+        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3I8tAlc006983
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 10:55:10 +0200
+Received: from DEERLM99ETQMSX.ww931.my-it-solutions.net (10.86.142.102) by
+ DEFTHW99ETZMSX.ww931.my-it-solutions.net (10.86.142.54) with Microsoft SMTP
+ Server (TLS) id 14.3.439.0; Thu, 18 Apr 2019 10:55:11 +0200
+Received: from EUR04-VI1-obe.outbound.protection.outlook.com (10.86.142.137)
+ by hybridsmtp.it-solutions.atos.net (10.86.142.102) with Microsoft SMTP
+ Server (TLS) id 14.3.439.0; Thu, 18 Apr 2019 10:55:10 +0200
+Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
+ AM6PR02MB4118.eurprd02.prod.outlook.com (20.177.115.218) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1813.12; Thu, 18 Apr 2019 08:55:09 +0000
+Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
+ ([fe80::147e:c96e:accd:c32b]) by AM6PR02MB4950.eurprd02.prod.outlook.com
+ ([fe80::147e:c96e:accd:c32b%6]) with mapi id 15.20.1813.011; Thu, 18 Apr 2019
+ 08:55:09 +0000
+From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH] Makefile: use fileno macro work around on AIX
+Thread-Topic: [PATCH] Makefile: use fileno macro work around on AIX
+Thread-Index: AQHU9b30g0YvBtQV9EenTNqvceLDfw==
+Date:   Thu, 18 Apr 2019 08:55:09 +0000
+Message-ID: <AM6PR02MB4950A1A625EEA54D4423C1BCEA260@AM6PR02MB4950.eurprd02.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=clement.chigot@atos.net; 
+x-originating-ip: [193.56.241.24]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 33b2a667-7161-4ecd-e503-08d6c3db8fbe
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR02MB4118;
+x-ms-traffictypediagnostic: AM6PR02MB4118:
+x-microsoft-antispam-prvs: <AM6PR02MB4118A7C48DBE44964EFE952AEA260@AM6PR02MB4118.eurprd02.prod.outlook.com>
+x-forefront-prvs: 0011612A55
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(396003)(136003)(39860400002)(199004)(189003)(86362001)(7696005)(4744005)(6436002)(6916009)(66066001)(53346004)(256004)(68736007)(9686003)(99286004)(478600001)(53936002)(2501003)(6116002)(14454004)(3846002)(71200400001)(71190400001)(26005)(25786009)(5640700003)(81166006)(81156014)(186003)(33656002)(1730700003)(2906002)(6506007)(102836004)(97736004)(8676002)(316002)(7736002)(305945005)(5660300002)(55016002)(8936002)(486006)(2351001)(74316002)(476003)(52536014);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB4118;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: atos.net does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: sWxVa3l5fyx8cAx5GouNIGQfSlLbSrSyy0rT53Qz3yBGQYJzJKRm0GHYwNv/+KhYPNELbbMrSMt6dmqJ74J6DSCHtcy/qlK7echyAAQcPkrLaiiblWgNqoUwCCWQBxwPZcfI3Oq+i0AcOdmNg3EvW+w3wdYiS8rWZMxpC/nV/3hOG4HhVndi8MsWXdxu6ggFbeCi7+/zdRepi1hc2kJ7pMaMN8g3GCabJ8AXTjn88mHo3SPreAVZYCmKMYfLq3dxpV7DElE4fCUrn5wEqGKP4HELSzjP3o97bxHhTrw2x20EMT9V24b4dnhLIeFPHbxgahhDf8o3UanUsNlW0ljVDcHqKKI/DJ0EIhp19FKeUo1ymaRR713xqW93xESC48ZovLAvUWtTUsirQrsj8YRasIdQhpojnwltAly9cBuWkwk=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33b2a667-7161-4ecd-e503-08d6c3db8fbe
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Apr 2019 08:55:09.5669
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB4118
+X-OriginatorOrg: atos.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Declare FILENO_IS_A_MACRO on AIX
 
-On Thu, Apr 18, 2019 at 02:45:56PM +0900, Junio C Hamano wrote:
-> Vadim Kochan <vadim4j@gmail.com> writes:
-> 
-> > Some libc implementations like uclibc or musl provides
-> > gettext stubs via libintl library but this case is not checked
-> > by AC_CHECK_LIB(c, gettext ...) because gcc has gettext as builtin
-> > which passess the check.
-> >
-> > So check it with included libintl.h where gettext may unfold into
-> > libintl_gettext which will cause check to fail if libintl_gettext are
-> > needed to be linked with -lintl.
-> 
-> Let me make sure I can understand the above correctly (otherwise,
-> that is a sign that the proposed log message is lacking) by trying
-> to rephrase (iow, this is not me saying "your log message should be
-> rewritten like so"; it is "if I read what you wrote above correctly,
-> I think what I am going to write here is also correct"):
-> 
->     Some libc implementations have function called gettext() that
->     can be linked via -lc without -lintl, but these are mere stubs
->     and do not do useful i18n.  On these systems, if a program that
->     calls gettext() is built _with_ "#include <libintl.h>", the
->     linker calls for the real version (e.g. libintl_gettext()) and
->     that can be satisfied only by linking with -lintl.
-> 
->     The current check to see if -lc provides with gettext() is
->     sufficient for libc implementations like GNU libc that actually
->     has full fledged gettext(); to detect libc with stub gettext()
->     and libintl with real gettext(), aliased via <libintl.h>, the
->     check to see if -lintl is necessary must be done with a sample
->     source that #include's the header file.
-> 
-> Is that what is going on and why this patch is needed?
-> 
-> I think the only possibile kind of system this change could break
-> that currently is working is the one that has a usable gettext()
-> in -lc, but does not offer <libintl.h>, as the new test program
-> added by this patch will fail to compile, but I do not think that
-> is possible in practice---our own gettext.c #include's <libintl.h>
-> so there is no way such a hypothetical system that would be broken
-> by this change could possibly have built Git successfully.
-> 
-> Assuming that the way I read your log message is in line with what
-> you wanted to say, I think the patch looks good.
-> 
-> Thanks.
+On AIX, fileno(fp) is a macro and need to use the work around already made for BSD's. 
 
-Yes you are correct. 'gettext' even might be defined as libintl_gettext.
-When I got build error I checked config.log and I saw that gcc claims
-that gettext builtin is used, so I think that was the reason why test
-passed for non-glibc. So, if to use <libintl.h> then gettext might be
-preprocessed to libintl_gettext in the test. The original error which I
-was fixing is:
+Signed-off-by: Clément Chigot <clement.chigot@atos.net>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-	http://autobuild.buildroot.net/results/8eeac7f7ddd97576eaeb87311bf0988d59d8b132/build-end.log
-
-> 
-> 
-> > Signed-off-by: Vadim Kochan <vadim4j@gmail.com>
-> > ---
-> >  configure.ac | 16 +++++++++++++---
-> >  1 file changed, 13 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/configure.ac b/configure.ac
-> > index e0d0da3c0c..be3b55f1cc 100644
-> > --- a/configure.ac
-> > +++ b/configure.ac
-> > @@ -763,9 +763,19 @@ AC_CHECK_LIB([c], [basename],
-> >  GIT_CONF_SUBST([NEEDS_LIBGEN])
-> >  test -n "$NEEDS_LIBGEN" && LIBS="$LIBS -lgen"
-> >  
-> > -AC_CHECK_LIB([c], [gettext],
-> > -[LIBC_CONTAINS_LIBINTL=YesPlease],
-> > -[LIBC_CONTAINS_LIBINTL=])
-> > +AC_DEFUN([LIBINTL_SRC], [
-> > +AC_LANG_PROGRAM([[
-> > +#include <libintl.h>
-> > +]],[[
-> > +char *msg = gettext("test");
-> > +]])])
-> > +
-> > +AC_MSG_CHECKING([if libc contains libintl])
-> > +AC_LINK_IFELSE([LIBINTL_SRC],
-> > +	[AC_MSG_RESULT([yes])
-> > +	LIBC_CONTAINS_LIBINTL=YesPlease],
-> > +	[AC_MSG_RESULT([no])
-> > +	LIBC_CONTAINS_LIBINTL=])
-> >  GIT_CONF_SUBST([LIBC_CONTAINS_LIBINTL])
-> >  
-> >  #
+diff --git a/config.mak.uname b/config.mak.uname
+index 41e85fab1c..86cbe47627 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -269,6 +269,7 @@ ifeq ($(uname_S),AIX)
+ 	INTERNAL_QSORT = UnfortunatelyYes
+ 	NEEDS_LIBICONV = YesPlease
+ 	BASIC_CFLAGS += -D_LARGE_FILES
++	FILENO_IS_A_MACRO = UnfortunatelyYes
+ 	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
+ 		NO_PTHREADS = YesPlease
+ 	else
+-- 
+2.17.1
