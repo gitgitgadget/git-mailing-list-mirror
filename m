@@ -2,69 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F107320248
-	for <e@80x24.org>; Fri, 19 Apr 2019 19:28:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B01E220248
+	for <e@80x24.org>; Fri, 19 Apr 2019 19:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbfDST2d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 15:28:33 -0400
-Received: from mout.gmx.net ([212.227.17.20]:47737 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725961AbfDST2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 15:28:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1555702112;
-        bh=2TunPAqdSMYFlf64CFHGb3z/KGx1Wt0Gm7efSXrTogs=;
-        h=X-UI-Sender-Class:From:To:Subject:Date;
-        b=coQ/fwaCeYCfpbsmKBZxYQGIYDhSypNiNRyzKceX+8LWXbLK3/2LFypgLGswgU4DK
-         SF00BBxkkDVhRwFHlHJi0quGXolgqbu4G+5Vg3x6atUa0KI4+LfteO7PTTNZPpaRUZ
-         1HHYvRUSldcLU/pHhhKmkcCQkq5vI3X/MulOYR3o=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [80.134.142.3] ([80.134.142.3]) by web-mail.gmx.net
- (3c-app-gmx-bs44.server.lan [172.19.170.96]) (via HTTP); Fri, 19 Apr 2019
- 21:28:32 +0200
+        id S1727835AbfDSThS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 15:37:18 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37964 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727722AbfDSThR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 15:37:17 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f14so7435085wrj.5
+        for <git@vger.kernel.org>; Fri, 19 Apr 2019 12:37:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4qkbQ/lya0kqByMbg8FokNiNWMnM/p2Go5H8Q15AqwY=;
+        b=ZJgTpFt5/LMDXHy4oHLLfH1CAdqoBEP4PEptaEaG9oWnxRiZmkY7CLAFOLM6APcyQk
+         fNb6BSKM50em/KXAeLITPsX5iCEYmPDxuiTSIjCYYaEH7eHMMPu+pFimJeJoQ4wb2oxU
+         lLvM+v7/RL0VLXRst2D4Q84VawMKJY8IXl3ogsx2HARH/FzaqN9I0GVoixdgpQ9x23B4
+         vhdaWRDqPqUgYKnOJNg2f5VPNYXw49Bx4dd4Ngy3JCLm+bCXhqhcWkdJ3F/sBkeoDdRg
+         ZM6SVDV1CmT9xtv4zvpJ5DWCuGOFWES2fR41SKqHz6rdzfjOPfYRo9jLRPD0QB5NUsc6
+         d/9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4qkbQ/lya0kqByMbg8FokNiNWMnM/p2Go5H8Q15AqwY=;
+        b=DlbvTkmk3P4aDpaiEGd5BfPSMBCZ7vc1/BHDHDloUDX4DLuvDZhqpa7B7gdsQRTqcZ
+         3SZketDBtsDR08aJpmzDXzSxVQDEUWofY/OtZRgrmvSB12shX+dBO1JywijwtyXdkuIM
+         rkpKsvDhmSwMAbJlYKk24f1pfYZePZXNCaVIhbcQ6rr5k2+KiE3y90opZegYX/ZTWLXs
+         kfGhiByU8EnXjkulFZ9k/qw/OxIDKTlt8o7YzPhoFF7Lh8vA8PD+AJQX6iJ8aBF7hGko
+         kLzSW47SwJ0bi5oTLjiBf8tu0qkJJIEFgqWtrCD0S5JgaK0ctFe18uVJh5uvFJfO6b5S
+         mdaw==
+X-Gm-Message-State: APjAAAV0nJ02FBzR0oMPNpQvpKqf7eTJPqW7Nh+nUno0at3RIQj+G/rP
+        44Fg1BS+dXYdF0HhbdDFwazhVBOCtlU=
+X-Google-Smtp-Source: APXvYqwNsMqjOwoqu3YGBOCuE79mN7PpbPwrHqd1lg04ZYv2mvrRbmmqFYH9vIKRUR18wGQHqEkSYg==
+X-Received: by 2002:a5d:6687:: with SMTP id l7mr1560953wru.307.1555655826792;
+        Thu, 18 Apr 2019 23:37:06 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id d6sm4267307wrp.9.2019.04.18.23.37.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 18 Apr 2019 23:37:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vadim Kochan <vadim4j@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] configure.ac: Properly check for libintl
+References: <20190418050419.21114-1-vadim4j@gmail.com>
+        <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
+        <20190418082844.GA10068@lwo1-lhp-f71841>
+        <xmqqmukmegof.fsf@gitster-ct.c.googlers.com>
+        <20190419051249.oiypxcs6hexjdf2d@vkochan-ThinkPad-T470p>
+Date:   Fri, 19 Apr 2019 15:37:05 +0900
+In-Reply-To: <20190419051249.oiypxcs6hexjdf2d@vkochan-ThinkPad-T470p> (Vadim
+        Kochan's message of "Fri, 19 Apr 2019 08:12:49 +0300")
+Message-ID: <xmqqtveucxgu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Message-ID: <trinity-3f1323ca-ca26-46c1-8757-b30bb495bd3a-1555702112240@3c-app-gmx-bs44>
-From:   "Ax Da" <discussion@gmx.net>
-To:     git@vger.kernel.org
-Subject: Git config "ignorecase = true" has issues
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 19 Apr 2019 21:28:32 +0200
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K1:E6avHO8uQXC7eT6X/jVro5XbsKMYFmpVrZt9x0R2RTQsHRBn1oBuzY6zDhcpbBqyhDsRA
- Ntx/LSrG4AoxUSXfFgkNiqA8fvHH76dpr6vMnHF93H7xn/Lm8RFW2ce9KuQsy9xnNCl3h93eHa4m
- grUSehHH4HvXhUCTsYtaSvCUu4ZnpJ6Tq13MoIW7PIwM2BgZZzJIbfKTBiZqpfzxU8tKOKA/7w1B
- hWtA6tyS2anoJU7Df7IcbXCYi8dXbbmoCSTVmFY8XZeu8kP46R+13jYJf7+y5fs29a5mfULD62id
- yo=
-X-UI-Out-Filterresults: notjunk:1;V03:K0:c/e3AZHxkGQ=:Eg1TfT71FOqeNjMMiMIrLM
- luMTWIK1fnK/JUBBP2+cRl1SFV/Og8r380aOetG4uvJkcNODSqSOY+hzEQZ1rIE85yPbuGnb6
- v0kH0pOr+or02r7/y81HpA/ZqfaWIV8hqLdGIoLd0czrH0e1BoHxgdwLo8JOm2o4oT7k/f/ok
- QLySqUQP8mN5LthU1G11uDRWBEK//XmUra9Xng+6YbZfSaejxeuSqZ1yz5pld9lsb2hLzQ2ZO
- cAHeSsvylpEhDMO29DyCp5fegbkCZtVRPUq1z9+Of4Wvfr+yLpQ9tk7FCbAtEpyfqWDY1hLMz
- 4KJrOr6G7VAQkSgLoy2ioouTuLG1u4WEFoLPYSFx2jbeJhKRTbqk3vDAVZUj3CcPFF3aBvbTy
- l04NlnQtNgmesn9ggJ6q9IVEta0ZBQT49J3XMt6ETWNc7HSWJ3eVSgkQzhvLSFm/eLwyVV9pn
- nlk/+ofLCVHLXGID4SEJloo4R8ITTN2ZEC7nIR3RD1oRJrJCa5vTq8LdVS7YQujpUtsWYUSGJ
- Pd0cJSRvJqeA+YPKHbHsRF/+l2hQ60lSwury77Ke8DqZhAlA1ygEfLsqow855wE3sDr3E+u8y
- XZnqR1NMPQoO4wsziX7b7bPs56Y9LbanAoDx5Itz3Q2HBtO5SD73msdw==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Vadim Kochan <vadim4j@gmail.com> writes:
 
-We're working on Windows machines and have been experiencing issues with the current implementation of Git with config setting "core.ignorecase = true" (which is the default on Windows machines and repositories created on Windows machines):
+>> I think
+>> 
+>> 	autoconf: #include <libintl.h> when checking for gettext()
+>> 
+>> is probably a better title.  
+>> 
+>> Together with your originally proposed log message, which we now
+>> know explains why this inclusion makes a difference sufficiently to
+>> be understandable by an average Git developer, the resulting commit
+>> will communicate to our future developers the reason why we thought
+>> this was a good change clearly.
+>> 
+>> Thanks.
+>
+> Thanks! Should I re-submit patch with title updated v2 ?
 
-Renaming files in a repository by only changing their case (changing a capital letter to its small equivalent and vice versa) is ignored by Git. Git retains the original case in the repository and all contributors will continue to see the ole file name which leads to confusion and issues with Open Source tools programmed to not ignore file name case.
+You could if you feel like it, but in a case like this, responding
+with "Yeah, I agree with your suggestion" and telling me to retitle
+is sufficient, if you have nothing else to change in the v2.
 
-Currently there is no way to convey the new file name (only differing in case) to Git when "core.ignorecase = true".
+I've already did the retitling while queuing it, so no need to
+resend.
 
-Hence, I propose to alter the behaviour of Git when "core.ignorecase = true": A repository's file name changes should be recognized as a RENAME operation and be propagated to the repository even when the new file name only differs from the old file name in case.
-
-Thanks,
-Axel Dahmen
+Thanks.
