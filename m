@@ -2,105 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DB5720248
-	for <e@80x24.org>; Fri, 19 Apr 2019 01:33:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3F1C20248
+	for <e@80x24.org>; Fri, 19 Apr 2019 18:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727110AbfDSBdg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 21:33:36 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:39958 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726494AbfDSBdg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 21:33:36 -0400
-Received: by mail-it1-f196.google.com with SMTP id k64so6226423itb.5
-        for <git@vger.kernel.org>; Thu, 18 Apr 2019 18:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hu5LpjvKoT4N58ixqfVTlvNm6dBOzQ3qNLjJyBCD7u8=;
-        b=tO5cPMMWUK/cXxCACnQyIEG1g56H+Dg1OYdaqX0BI9J/8qJg6GFEUevpZbOXs5Pdxv
-         QsVXwM3AdZyd7fKa6STpxw1CGYJ9fFAE93SUAwWQCfoAlgJvd11JBovDipHttsw974ok
-         HzTf/eK24cfH7Lbu/zAi1Rp3nfo1xRNXrfo6iZy+xvoEoxljI5GaCvjdbj84WjT9Dec8
-         MEoTy2T1gJmyII5KufmDhP29EbiLR/Fi0RTK1uwVi6jLqZi7T1dkC9XiqfWszOsU9I96
-         cyOQhiQ4s5B9QMcuImh6er1klzNFn+8qeCJq0p8Bs0Scgl/MBP438RC7E/ucgtVGADk1
-         uPZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hu5LpjvKoT4N58ixqfVTlvNm6dBOzQ3qNLjJyBCD7u8=;
-        b=VkwwXa8x4j7fg+nS7kCafbd0yXihgtE1DRZt04qOZ3J/cZdXVbFDy8S0FnLxpiuC0d
-         L7MXK4BMWedWz26b1Q1UZ9evTXFOibp06F5zRZreJ60Ez1r3rz/sOLGiwkcGGrmAuscS
-         UQLS6aXdMZyeBa7PHzp40qgfjsbQds8QyhbLImn3dEgcz0aFFi+mcxLWksrJ1t9Un2yN
-         wmIujsZ23gyupVwudy3V5GVJAMB7r3ddZgyWI3GLpHtQX0+TWrejrAEl6ILrEeVBbcEB
-         UTZ+tCiOJvwL9/cOh/a4Fvh2Yn4BelzEdYRYKVla4tYordCH1IgnEyfWNCQjxS9Ondgi
-         v9cA==
-X-Gm-Message-State: APjAAAVr0EUyQmDrSZSXwc4mBO//nOWb25ekhk5Z+OjKVna46SirlVqX
-        //q/sfseDY1IKH4f4BFWNGpN10pPtqjoE2O1L2z6CCAm
-X-Google-Smtp-Source: APXvYqwJV/Nys2lnhJGClghSkeKqooqyNYDHcEeNK5Pw/Hx+3NAwgPDqCEEZxhOyc2SfAUhhex3aFD1yZCMI7GY/OiM=
-X-Received: by 2002:a24:4d8a:: with SMTP id l132mr968265itb.70.1555637615913;
- Thu, 18 Apr 2019 18:33:35 -0700 (PDT)
+        id S1727254AbfDSSRG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 14:17:06 -0400
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:38448 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727205AbfDSSRE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 14:17:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id C3136A0106;
+        Fri, 19 Apr 2019 18:01:31 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id Azk7OkcCVsy1; Fri, 19 Apr 2019 18:01:31 +0200 (CEST)
+Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 3C15DA0046;
+        Fri, 19 Apr 2019 18:01:31 +0200 (CEST)
+Received: from Corentin-Linux.lan (134.214.126.172) by
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
+ id 15.0.1263.5; Fri, 19 Apr 2019 18:01:28 +0200
+From:   Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+To:     <gitster@pobox.com>
+CC:     <corentin.bompard@etu.univ-lyon1.fr>, <git@vger.kernel.org>,
+        <matthieu.moy@univ-lyon1.fr>, <nathan.berbezier@etu.univ-lyon1.fr>,
+        <pablo.chabanne@etu.univ-lyon1.fr>
+Subject: Re: [PATCH] [WIP/RFC] add git pull and git fetch --set-upstream
+Date:   Fri, 19 Apr 2019 18:00:46 +0200
+Message-ID: <20190419160046.5283-1-corentin.bompard@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.21.0-rc0
+In-Reply-To: <xmqq7ebshz7v.fsf@gitster-ct.c.googlers.com>
+References: <xmqq7ebshz7v.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
- <20190418183000.78138-1-jonathantanmy@google.com> <20190418184205.GA12260@sigill.intra.peff.net>
-In-Reply-To: <20190418184205.GA12260@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 19 Apr 2019 08:33:09 +0700
-Message-ID: <CACsJy8C9TDK8OT89FxVAobMtdHMNMih+hevnCetMpo2M9bSsDw@mail.gmail.com>
-Subject: Re: [PATCH] worktree: update is_bare heuristics
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Mike Rappazzo <rappazzo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [134.214.126.172]
+X-ClientProxiedBy: JEMBX2013-02.univ-lyon1.fr (134.214.201.250) To
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 19, 2019 at 1:42 AM Jeff King <peff@peff.net> wrote:
+>Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr> writes:
 >
-> On Thu, Apr 18, 2019 at 11:30:00AM -0700, Jonathan Tan wrote:
+>> Add the --set-upstream option to git pull/fetch
+>> which lets the user set the upstream configuration
+>> for the current branch.
 >
-> > > >         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
-> > > > -       is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
-> > > > -       if (is_bare)
-> > > > +       if (!strbuf_strip_suffix(&worktree_path, "/.git"))
-> > > >                 strbuf_strip_suffix(&worktree_path, "/.");
-> > >
-> > > We can just call these two calls unconditionally, right? No harm done
-> > > if we don't strip.
-> >
-> > We can, and no harm done. But this if/then pattern is also repeated in
-> > other parts of the file (e.g. get_linked_worktree()) so I'll leave it in
-> > for consistency. (Also, for what it's worth, it's slightly faster if
-> > only one strip is done.)
+> I think it is a good idea to mention what you exactly mean by "the
+> upstream configuration" here.  
 >
-> I also think your version expresses the intent more clearly. We expect
-> to see one or the other, but not "foo/./.git". And so (just as the code
-> prior to your patch) we would not convert that to "foo".
->
-> I am not sure of exactly what the "/." is trying to accomplish, so maybe
-> that double-strip _would_ be desirable, but if so it is definitely
-> worthy of its own commit explaining why that is so.
->
-> Interestingly, the case in get_linked_worktree() makes a lot more sense
-> because it has added "." as an absolute path itself, and is just
-> cleaning up the results of its strbuf_add_absolute_path()[1]. Which
-> makes me wonder if the "/." stripping in get_main_worktree() is actually
-> cargo-culted and simply unnecessary.
+> Do you mean the "branch.<current-branch-name>.merge" configuration
+> variable?
 
-Yeah. It's added the same time get_linked_worktree() adds absolute
-paths and trims "/." in 5193490442 (worktree: add a function to get
-worktree details - 2015-10-08). Maybe it's because he wasn't sure if
-get_git_common_dir() could return ".", which makes it exactly the same
-as get_linked_worktree(). It's probably very unlikely that
-git_git_common_dir() could return ".", but I can't be sure either.
--- 
-Duy
+The upstream configuration means the branch.<current-branch-name>.merge 
+and branch.<current-branch-name>.remote
+
+>> +             /*
+>> +              * We're setting the upstream configuration for the current branch. The
+>> +              * relevent upstream is the fetched branch that is meant to be merged with
+>> +              * the current one, i.e. the one fetched to FETCH_HEAD.
+>> +              *
+>> +              * When there are several such branches, consider the request ambiguous and
+>> +              * err on the safe side by doing nothing and just emit a waring.
+>> +              */
+>> +             for (rm = ref_map; rm; rm = rm->next) {
+>> +                     fprintf(stderr, "\n -%s", rm->name);
+>> +                     if (rm->peer_ref) {
+>> +                             fprintf(stderr, " -> %s", rm->peer_ref->name);
+>> +                     } else {
+>> +                             if (source_ref) {
+>> +                                     fprintf(stderr, " -> FETCH_HEAD\n");
+>> +                                     warning(_("Multiple branch detected, incompatible with set-upstream"));
+>
+> Shouldn't this be diagnosed as an error and stop the "fetch" or
+> "pull", though?
+
+We can actually replace the warning with a die, but we think it's too harsh on the user, 
+and if the warning is showing the upstream stays the same.
+
+We fixed the spotted bugs/mistakes.
+
+The fixed patch will follow.
