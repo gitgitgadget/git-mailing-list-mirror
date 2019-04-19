@@ -2,161 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC33F20248
-	for <e@80x24.org>; Fri, 19 Apr 2019 18:37:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4917820305
+	for <e@80x24.org>; Fri, 19 Apr 2019 18:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728091AbfDSShM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 14:37:12 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46719 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbfDSShL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 14:37:11 -0400
-Received: by mail-wr1-f68.google.com with SMTP id t17so7832770wrw.13
-        for <git@vger.kernel.org>; Fri, 19 Apr 2019 11:37:09 -0700 (PDT)
+        id S1727428AbfDSSh2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 14:37:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46752 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbfDSSh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 14:37:27 -0400
+Received: by mail-wr1-f65.google.com with SMTP id t17so7833474wrw.13
+        for <git@vger.kernel.org>; Fri, 19 Apr 2019 11:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=z2vU6DebyIIfFO2E5mkm8/yZEw/q++sGvkj+PawdOm8=;
-        b=MKhp+daxZsR7sMwG2v/ET0GljmmkGuffxrO37OUpiHHE51gbnxO98tW8sGYCrPMZ1Y
-         jd0tsTENd0nWcghGEhGBg+M/cG+Et8XV41rymDo61L9HDFBPrJyYA8b7xbGrqS9vBpOI
-         Zey2j2zHeAARW+ilwCHmSg7TJz1EwQA5JvDpYUZn0MkWZk/ZGRMzgHby8RM0V5S1UBsp
-         jzZmq6T3qICTEw+H+JejlXwMksohlJXbG1d9WLyoQ8TRH2wNB/9m3pYmuyPcauuwwNlx
-         uVNMzNdV+0jaraGSbEvJn886lwrVZ75y9rixWuWtvsSKZOyeZY7lOzaaFuqHNqBYBSBf
-         aQzQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=4BW0xrMEt3mgPi4sVO4bRykGtYVQEI2JQhkNs3WYUlM=;
+        b=gRDy/X6SveVLO5aTB2UV0mpeum7eg/Kw8v9oNMfFCvuxSyWoimLNJ51HfxNzSKmn20
+         VwMFpcjqfa9jIkDKW+GIA+BE33WLvPrBGb7PFxo97U+iXbMFN7NoYhe/P+TbbTcgyfZp
+         K2iBc3uoFktUrN79ipqT2jOR+abwliNhdTjP0QfDP2tii8eWnxv91yXskhcRy1/iuIAy
+         MfNZ23fpdMZjEGX3J/KunA4x34z5A5iaTKelRvzD0o/4Y8Rfdj1K14SLS2p2rYEXxYis
+         pYMdE+caY0ydTHxoILx/d9R8YbGBauQNsjFO2l+mmlzcrAlSHA9S/kOQFeevsbn0rGw/
+         EnNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=z2vU6DebyIIfFO2E5mkm8/yZEw/q++sGvkj+PawdOm8=;
-        b=HcioSFIiovABEF3Ujr58PN3QkkQIVR5eocGkDLqEFSAmrRulkRrDGyDxctcU0Iqlwt
-         6VeebOvUp2O6EtxqJ4IVx3d9oOEirE/KFGMdN/knSW5SJMR8N2XOl/eaNtwBW5l9iD2V
-         1YWTriQ2H73vlUX2E4rLJAabfm7bZEwRvLo07mgrespxJ2pogmL5VxIsAAzV7CB50MlK
-         rWVzqK83SYGzSO/AAErzFHLWhOuJJ8d5E51HbFKJeQh9pbHJunbagTOsvLqlWFxKXNQq
-         HqhEqcfiuXiCo8Zix2hKEkwjuY8FvD5o5rmnuLnOT+rZ0bbb4OzxSezFnzqWx6lXSfSu
-         HjVQ==
-X-Gm-Message-State: APjAAAUlFRTUw1LO+Ew8sw/wZCtUqdGxmVxL5dIDMWszxZiMB3xgkRUv
-        iYv3fdBOkvc1FMrMf1k2O2ta4d5gfb0=
-X-Google-Smtp-Source: APXvYqyVJmFxZ8q89JFigfYsN4blhfazFBtEuq1KxVIP7mW8hf2ejelUW18CPHqEeqtvunkXeM/gZg==
-X-Received: by 2002:a05:6000:1:: with SMTP id h1mr1441254wrx.263.1555651999005;
-        Thu, 18 Apr 2019 22:33:19 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=4BW0xrMEt3mgPi4sVO4bRykGtYVQEI2JQhkNs3WYUlM=;
+        b=oOUO8sb4JmEI0RSs3s4SoV+PtGHXA8eSOv4YDLsO41M9Mm4Z1dSSEPVlviSZlCXsXV
+         bF1SY9zGbOtHu6SLhE7pujfRBshm24QChcWOYwyq061icvS15+/xictscxjtw1oqrV5w
+         Lz4lxKH+G76/j3pMPBe4+OacAgrmmlgCIJZDxSo0om5N+U5TFzdLAlkqO4XW64wnOEkk
+         6oeg9gPzpMuFt1t+bYt6iDNZ3vv66H+dXejs7wlA9fyrwS5ioJYV1A53k1Ihh4wRdnAZ
+         u9/xhoP/Z3g3olggYaMO0O1Nw/VGX0SL7vzxAv3wVcA31Cvzse4Axy4H4V7P7EWmjzkM
+         aPGQ==
+X-Gm-Message-State: APjAAAUwAd0BlbaNtMXPe63qcqJK1J1GbappSgn0oQmASWKiKLALSEiW
+        Bo0hbwL+QCjGczVJFjNReo8kSPLZdfM=
+X-Google-Smtp-Source: APXvYqyES0iOUtf04krECHu+V8dbxR+31RbDh1Q8Q4HJrNGYM8ngeln4poMEdp8J0RLFRg2J6ibV4A==
+X-Received: by 2002:adf:fc8f:: with SMTP id g15mr103473wrr.113.1555650071062;
+        Thu, 18 Apr 2019 22:01:11 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id s2sm2016408wrr.50.2019.04.18.22.33.18
+        by smtp.gmail.com with ESMTPSA id v16sm3872984wru.76.2019.04.18.22.01.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Apr 2019 22:33:18 -0700 (PDT)
+        Thu, 18 Apr 2019 22:01:10 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] untracked-cache: simplify parsing by dropping "next"
-References: <20190418211408.GA18011@sigill.intra.peff.net>
-        <20190418211738.GB18520@sigill.intra.peff.net>
-Date:   Fri, 19 Apr 2019 14:33:17 +0900
-In-Reply-To: <20190418211738.GB18520@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 18 Apr 2019 17:17:38 -0400")
-Message-ID: <xmqq5zraeezm.fsf@gitster-ct.c.googlers.com>
+To:     "CHIGOT\, CLEMENT" <clement.chigot@atos.net>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] Makefile: use fileno macro work around on AIX
+References: <AM6PR02MB4950A1A625EEA54D4423C1BCEA260@AM6PR02MB4950.eurprd02.prod.outlook.com>
+Date:   Fri, 19 Apr 2019 14:01:10 +0900
+In-Reply-To: <AM6PR02MB4950A1A625EEA54D4423C1BCEA260@AM6PR02MB4950.eurprd02.prod.outlook.com>
+        (CLEMENT CHIGOT's message of "Thu, 18 Apr 2019 08:55:09 +0000")
+Message-ID: <xmqqimvaegh5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"CHIGOT, CLEMENT" <clement.chigot@atos.net> writes:
 
-> When we parse an on-disk untracked cache, we have two pointers, "data"
-> and "next". As we parse, we point "next" to the end of an element, and
-> then later update "data" to match.
+> Declare FILENO_IS_A_MACRO on AIX
 >
-> But we actually don't need two pointers. Each parsing step can just
-> update "data" directly from other variables we hold (and we don't have
-> to worry about bailing in an intermediate state, since any parsing
-> failure causes us to immediately discard "data" and return).
+> On AIX, fileno(fp) is a macro and need to use the work around already made for BSD's. 
+>
+> Signed-off-by: Clément Chigot <clement.chigot@atos.net>
+> ---
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
 
-;-)  
-
-My first reaction was "you can do so now you have introduced
-eos--why didn't you do that in the previous step?", but losing
-'next' from the varint parsing step would certainly have been
-possible even before that change.  So I agree that it makes much
-more sense to do this step separately from the previous one.
-
-The code after the patch certainly reads easier and simpler.
+I do not have an AIX box, so I'll take this as-is.
 
 Thanks.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  dir.c | 20 +++++++-------------
->  1 file changed, 7 insertions(+), 13 deletions(-)
+
 >
-> diff --git a/dir.c b/dir.c
-> index 7b0513c476..17865f44df 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2732,50 +2732,44 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
->  			struct read_data *rd)
->  {
->  	struct untracked_cache_dir ud, *untracked;
-> -	const unsigned char *next, *data = rd->data, *end = rd->end;
-> +	const unsigned char *data = rd->data, *end = rd->end;
->  	const unsigned char *eos;
->  	unsigned int value;
->  	int i, len;
->  
->  	memset(&ud, 0, sizeof(ud));
->  
-> -	next = data;
-> -	value = decode_varint(&next);
-> -	if (next > end)
-> +	value = decode_varint(&data);
-> +	if (data > end)
->  		return -1;
->  	ud.recurse	   = 1;
->  	ud.untracked_alloc = value;
->  	ud.untracked_nr	   = value;
->  	if (ud.untracked_nr)
->  		ALLOC_ARRAY(ud.untracked, ud.untracked_nr);
-> -	data = next;
->  
-> -	next = data;
-> -	ud.dirs_alloc = ud.dirs_nr = decode_varint(&next);
-> -	if (next > end)
-> +	ud.dirs_alloc = ud.dirs_nr = decode_varint(&data);
-> +	if (data > end)
->  		return -1;
->  	ALLOC_ARRAY(ud.dirs, ud.dirs_nr);
-> -	data = next;
->  
->  	eos = memchr(data, '\0', end - data);
->  	if (!eos || eos == end)
->  		return -1;
->  	len = eos - data;
-> -	next = eos + 1;
->  
->  	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), len, 1));
->  	memcpy(untracked, &ud, sizeof(ud));
->  	memcpy(untracked->name, data, len + 1);
-> -	data = next;
-> +	data = eos + 1;
->  
->  	for (i = 0; i < untracked->untracked_nr; i++) {
->  		eos = memchr(data, '\0', end - data);
->  		if (!eos || eos == end)
->  			return -1;
->  		len = eos - data;
-> -		next = eos + 1;
->  		untracked->untracked[i] = xmemdupz(data, len);
-> -		data = next;
-> +		data = eos + 1;
->  	}
->  
->  	rd->ucd[rd->index++] = untracked;
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 41e85fab1c..86cbe47627 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -269,6 +269,7 @@ ifeq ($(uname_S),AIX)
+>  	INTERNAL_QSORT = UnfortunatelyYes
+>  	NEEDS_LIBICONV = YesPlease
+>  	BASIC_CFLAGS += -D_LARGE_FILES
+> +	FILENO_IS_A_MACRO = UnfortunatelyYes
+>  	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
+>  		NO_PTHREADS = YesPlease
+>  	else
