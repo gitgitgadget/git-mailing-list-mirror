@@ -2,123 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1652D20248
-	for <e@80x24.org>; Thu, 18 Apr 2019 21:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DB5720248
+	for <e@80x24.org>; Fri, 19 Apr 2019 01:33:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732180AbfDRVYH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Apr 2019 17:24:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34444 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728264AbfDRVYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Apr 2019 17:24:07 -0400
-Received: (qmail 5777 invoked by uid 109); 18 Apr 2019 21:24:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Apr 2019 21:24:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4735 invoked by uid 111); 18 Apr 2019 21:24:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Apr 2019 17:24:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Apr 2019 17:24:05 -0400
-Date:   Thu, 18 Apr 2019 17:24:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 4/3] untracked-cache: use FLEX_ALLOC to create internal
- structs
-Message-ID: <20190418212405.GA18623@sigill.intra.peff.net>
-References: <pull.178.git.gitgitgadget@gmail.com>
- <a7f75cefb682546862be4dd8b48f91c4034c5d5a.1554901006.git.gitgitgadget@gmail.com>
- <20190410162029.GA30818@sigill.intra.peff.net>
- <xmqq7ec00z9t.fsf@gitster-ct.c.googlers.com>
- <20190418211408.GA18011@sigill.intra.peff.net>
+        id S1727110AbfDSBdg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Apr 2019 21:33:36 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:39958 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726494AbfDSBdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Apr 2019 21:33:36 -0400
+Received: by mail-it1-f196.google.com with SMTP id k64so6226423itb.5
+        for <git@vger.kernel.org>; Thu, 18 Apr 2019 18:33:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hu5LpjvKoT4N58ixqfVTlvNm6dBOzQ3qNLjJyBCD7u8=;
+        b=tO5cPMMWUK/cXxCACnQyIEG1g56H+Dg1OYdaqX0BI9J/8qJg6GFEUevpZbOXs5Pdxv
+         QsVXwM3AdZyd7fKa6STpxw1CGYJ9fFAE93SUAwWQCfoAlgJvd11JBovDipHttsw974ok
+         HzTf/eK24cfH7Lbu/zAi1Rp3nfo1xRNXrfo6iZy+xvoEoxljI5GaCvjdbj84WjT9Dec8
+         MEoTy2T1gJmyII5KufmDhP29EbiLR/Fi0RTK1uwVi6jLqZi7T1dkC9XiqfWszOsU9I96
+         cyOQhiQ4s5B9QMcuImh6er1klzNFn+8qeCJq0p8Bs0Scgl/MBP438RC7E/ucgtVGADk1
+         uPZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hu5LpjvKoT4N58ixqfVTlvNm6dBOzQ3qNLjJyBCD7u8=;
+        b=VkwwXa8x4j7fg+nS7kCafbd0yXihgtE1DRZt04qOZ3J/cZdXVbFDy8S0FnLxpiuC0d
+         L7MXK4BMWedWz26b1Q1UZ9evTXFOibp06F5zRZreJ60Ez1r3rz/sOLGiwkcGGrmAuscS
+         UQLS6aXdMZyeBa7PHzp40qgfjsbQds8QyhbLImn3dEgcz0aFFi+mcxLWksrJ1t9Un2yN
+         wmIujsZ23gyupVwudy3V5GVJAMB7r3ddZgyWI3GLpHtQX0+TWrejrAEl6ILrEeVBbcEB
+         UTZ+tCiOJvwL9/cOh/a4Fvh2Yn4BelzEdYRYKVla4tYordCH1IgnEyfWNCQjxS9Ondgi
+         v9cA==
+X-Gm-Message-State: APjAAAVr0EUyQmDrSZSXwc4mBO//nOWb25ekhk5Z+OjKVna46SirlVqX
+        //q/sfseDY1IKH4f4BFWNGpN10pPtqjoE2O1L2z6CCAm
+X-Google-Smtp-Source: APXvYqwJV/Nys2lnhJGClghSkeKqooqyNYDHcEeNK5Pw/Hx+3NAwgPDqCEEZxhOyc2SfAUhhex3aFD1yZCMI7GY/OiM=
+X-Received: by 2002:a24:4d8a:: with SMTP id l132mr968265itb.70.1555637615913;
+ Thu, 18 Apr 2019 18:33:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190418211408.GA18011@sigill.intra.peff.net>
+References: <CACsJy8BygpTQg5=8+2KkFCpaJBEkKx+ocVZoa0yRBAQvnkXVSw@mail.gmail.com>
+ <20190418183000.78138-1-jonathantanmy@google.com> <20190418184205.GA12260@sigill.intra.peff.net>
+In-Reply-To: <20190418184205.GA12260@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 19 Apr 2019 08:33:09 +0700
+Message-ID: <CACsJy8C9TDK8OT89FxVAobMtdHMNMih+hevnCetMpo2M9bSsDw@mail.gmail.com>
+Subject: Re: [PATCH] worktree: update is_bare heuristics
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Mike Rappazzo <rappazzo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 18, 2019 at 05:14:08PM -0400, Jeff King wrote:
+On Fri, Apr 19, 2019 at 1:42 AM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Apr 18, 2019 at 11:30:00AM -0700, Jonathan Tan wrote:
+>
+> > > >         strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
+> > > > -       is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
+> > > > -       if (is_bare)
+> > > > +       if (!strbuf_strip_suffix(&worktree_path, "/.git"))
+> > > >                 strbuf_strip_suffix(&worktree_path, "/.");
+> > >
+> > > We can just call these two calls unconditionally, right? No harm done
+> > > if we don't strip.
+> >
+> > We can, and no harm done. But this if/then pattern is also repeated in
+> > other parts of the file (e.g. get_linked_worktree()) so I'll leave it in
+> > for consistency. (Also, for what it's worth, it's slightly faster if
+> > only one strip is done.)
+>
+> I also think your version expresses the intent more clearly. We expect
+> to see one or the other, but not "foo/./.git". And so (just as the code
+> prior to your patch) we would not convert that to "foo".
+>
+> I am not sure of exactly what the "/." is trying to accomplish, so maybe
+> that double-strip _would_ be desirable, but if so it is definitely
+> worthy of its own commit explaining why that is so.
+>
+> Interestingly, the case in get_linked_worktree() makes a lot more sense
+> because it has added "." as an absolute path itself, and is just
+> cleaning up the results of its strbuf_add_absolute_path()[1]. Which
+> makes me wonder if the "/." stripping in get_main_worktree() is actually
+> cargo-culted and simply unnecessary.
 
-> Just so we don't forget about it, I wrote this fix up as a patch. And in
-> fact it led to a few other cleanups. I think the first one is definitely
-> worth doing now, even if there are other similar cases lurking in the
-> rest of the index code.
-> 
-> The other two are optional, though I think they are worth it (and not
-> too hard to verify that they are doing the right thing).
-> 
-> These are on top of js/untracked-cache-allocfix (though they could
-> easily be ported to a separate topic if we want).
-> 
->   [1/3]: untracked-cache: be defensive about missing NULs in index
->   [2/3]: untracked-cache: simplify parsing by dropping "next"
->   [3/3]: untracked-cache: simplify parsing by dropping "len"
-
-I also wondered if we could just accept the cost of calloc() here and
-use FLEX_ALLOC to simplify things. That resulted in the patch below, but
-I didn't include it with the initial 3, because I think it's too
-subtle/gross for my tastes.
-
--- >8 --
-Subject: untracked-cache: use FLEX_ALLOC to create internal structs
-
-The untracked_cache_dir struct has a FLEX_ARRAY in it. Let's use
-FLEX_ALLOC_MEM to allocate it, which saves us having to compute the
-length ourselves.
-
-In theory this could be slightly slower, since the FLEX_ALLOC macros use
-calloc (and we just memcpy over most of the contents anyway). But in
-practice this distinction is not generally measurable.
-
-Note that because we then fill in the pre-flex elements of the struct
-using a memcpy, we need to take care to use the exact size of that
-space and _not_ "sizeof(ud)", since the latter may include padding (or
-even an extra byte on systems where FLEX_ARRAY is 1).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-If we wanted to go this route, I think it would make sense to provide a
-FLEX_ALLOC macro that takes a "template" set of bytes as a ptr/len pair,
-and writes it before we fill in the flex portion.
-
-Then we could do something like:
-
-  FLEX_ALLOC_COPY(untracked, &ud, sizeof(ud), name, data, eos - data);
-
-If this is the only such case, it's probably not worth it (I didn't
-really look around for more, though).
-
- dir.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 60438b2cdc..7cd4eec198 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2757,9 +2757,9 @@ static int read_one_dir(struct untracked_cache_dir **untracked_,
- 	if (!eos || eos == end)
- 		return -1;
- 
--	*untracked_ = untracked = xmalloc(st_add3(sizeof(*untracked), eos - data, 1));
--	memcpy(untracked, &ud, sizeof(ud));
--	memcpy(untracked->name, data, eos - data + 1);
-+	FLEX_ALLOC_MEM(untracked, name, data, eos - data);
-+	memcpy(untracked, &ud, offsetof(struct untracked_cache_dir, name));
-+	*untracked_ = untracked;
- 	data = eos + 1;
- 
- 	for (i = 0; i < untracked->untracked_nr; i++) {
+Yeah. It's added the same time get_linked_worktree() adds absolute
+paths and trims "/." in 5193490442 (worktree: add a function to get
+worktree details - 2015-10-08). Maybe it's because he wasn't sure if
+get_git_common_dir() could return ".", which makes it exactly the same
+as get_linked_worktree(). It's probably very unlikely that
+git_git_common_dir() could return ".", but I can't be sure either.
 -- 
-2.21.0.1092.g8b0302e9c4
-
+Duy
