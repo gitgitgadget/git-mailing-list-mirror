@@ -2,212 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDFB120248
-	for <e@80x24.org>; Fri, 19 Apr 2019 21:00:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B58620248
+	for <e@80x24.org>; Fri, 19 Apr 2019 21:47:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727601AbfDSVAS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 17:00:18 -0400
-Received: from mail-ot1-f74.google.com ([209.85.210.74]:48885 "EHLO
-        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726120AbfDSVAS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 17:00:18 -0400
-Received: by mail-ot1-f74.google.com with SMTP id 70so3355765otn.15
-        for <git@vger.kernel.org>; Fri, 19 Apr 2019 14:00:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=d3MpMh0soJSj8Xaa9q+qOECYi2fSFCnOT5SposoeIsY=;
-        b=engYvqMci89/YfBRhAZGS8qESHDU/pMBqOxeHr86pqWMdhc2sLW7gCd/8zuTDzBRyo
-         lBkVIHYtDoY3EuN09+qKjPUFUN+HSMcuoLTyA3fvScoLbnZn584XupAtrE5Oou7ivmV9
-         PY2MjmKX6YwjyZVzynf5e9ifdLGTHIe6L4Bd8o7vnCDXhvT5CerdvPe927sKPy0HL61U
-         QYwUKgnriNkPu3bDtwHcAPJNIGU0how6W+Tb7bVrESiGC3KvEtS51a4JF/rdIqC4f3tN
-         PcXQoKfJ93FxKtXlpGPVhGYzjkmKLnp5aIGP0UW3V3y25qQwDLNYpXbh7fwlhJ8zAg4R
-         kvpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=d3MpMh0soJSj8Xaa9q+qOECYi2fSFCnOT5SposoeIsY=;
-        b=pjIOHNShzVlNHM73n1RcszaUz1Xl4vZu4owrQOubCDvDNwEhR+hCWdQ6wsMJ62ej0Y
-         Ng7xgMZtuJq/cNiQ1T2qkxP9q4cYXYU4wmizjrenkfflZqlTHTz+icKdviL6ykHBDrbB
-         +EcWplmJXn3LThnzDCEDFvH9RPkyW0UOPZ8ILpIYK5QcoQlN9fLu8gYYOFvpliLozAcT
-         q93oHqgsdAvWfc7FvrxLM8MhL4iMyXc2bgnqzvaju42euQFq1cEwHNwPBFYXApEgwb6w
-         4jGt2P5Yp+xLGBpoNJ6WeTZ+sesnCthH10r8OWPHVLNDySKEg1KKKIPVvREB/9y6tXwc
-         QITg==
-X-Gm-Message-State: APjAAAXrvUtZ6QD6Rut1oaeIT2fZGgzV3rjKeTCqsnB1SeVOG2i1LFVW
-        qhqtGYAV5bg/1n+kFzzDJ2obP6PKA4mfzJrtr3PC7PGHgQeuIUFo/LuxyD980OdSI5kQahqcdW3
-        slDOhu3qgJCbq8ouRbVkiu5qwgIuDgsvxOZ7G+hZgtUd+QDbXQZHprLblUfMuJLQ=
-X-Google-Smtp-Source: APXvYqxDa/fUyttllDp4OzRIOf4M9MwlR5Gi91ZX/XIXz4rgUI6Y5diCgk3jhtAslucAozqwZunwGhweQcOXxw==
-X-Received: by 2002:aca:cf92:: with SMTP id f140mr2989915oig.48.1555707617196;
- Fri, 19 Apr 2019 14:00:17 -0700 (PDT)
-Date:   Fri, 19 Apr 2019 14:00:13 -0700
-In-Reply-To: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
-Message-Id: <b4a285e2a199ea059c165aa344d037374797fa40.1555707373.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <6de682d5e48186970644569586fc6613763d5caa.1554312374.git.steadmon@google.com>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e18-goog
-Subject: [PATCH v4] clone: do faster object check for partial clones
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        id S1726960AbfDSVrZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 17:47:25 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:55950 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726000AbfDSVrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 17:47:25 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id BC5A161528; Fri, 19 Apr 2019 21:47:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1555710443;
+        bh=KlEzeW1YFRpBRBzDHzCkX2MWavcZ7bEegUl5g9BW+7k=;
+        h=From:To:Subject:Date:From;
+        b=UGj9IvlQYuECkQpJjXL50LL5YYLGH2CXR1EKZwEVSQZpvVNi/kfaMsTzhj0DL33fJ
+         dMu0SDd6560oIl1/3rpteGBbvLyTevpwsfTdBZo1v3hymrdk+KmELC1aguNwm9Vtr3
+         MAsXpQvZ5TF4LAf3XRSYRpSBtlDYRotkyZaaRMmI=
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mfick@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 55722613A3
+        for <git@vger.kernel.org>; Fri, 19 Apr 2019 21:47:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1555710443;
+        bh=KlEzeW1YFRpBRBzDHzCkX2MWavcZ7bEegUl5g9BW+7k=;
+        h=From:To:Subject:Date:From;
+        b=UGj9IvlQYuECkQpJjXL50LL5YYLGH2CXR1EKZwEVSQZpvVNi/kfaMsTzhj0DL33fJ
+         dMu0SDd6560oIl1/3rpteGBbvLyTevpwsfTdBZo1v3hymrdk+KmELC1aguNwm9Vtr3
+         MAsXpQvZ5TF4LAf3XRSYRpSBtlDYRotkyZaaRMmI=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 55722613A3
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Resolving deltas dominates clone time
+Date:   Fri, 19 Apr 2019 15:47:22 -0600
+Message-ID: <259296914.jpyqiltySj@mfick-lnx>
+User-Agent: KMail/5.1.3 (Linux/4.4.0-137-generic; KDE/5.18.0; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For partial clones, doing a full connectivity check is wasteful; we skip
-promisor objects (which, for a partial clone, is all known objects), and
-enumerating them all to exclude them from the connectivity check can
-take a significant amount of time on large repos.
+We have a serious performance problem with one of our large repos. The repo is 
+our internal version of the android platform/manifest project. Our repo after 
+running a clean "repack -A -d -F" is close to 8G in size, has over 700K refs, 
+and it has over 8M objects. The repo takes around 40min to clone locally (same 
+disk to same disk) using git 1.8.2.1 on a high end machine (56 processors, 
+128GB RAM)! It takes around 10mins before getting to the resolving deltas 
+phase which then takes most of the rest of the time.
 
-At most, we want to make sure that we get the objects referred to by any
-wanted refs. For partial clones, just check that these objects were
-transferred.
+While this is a fairly large repo, a straight cp -r of the repo takes less 
+than 2mins, so I would expect a clone to be on the same order of magnitude in 
+time. For perspective, I have a kernel/msm repo with a third of the ref count 
+and double the object count which takes only around 20mins to clone on the 
+same machine (still slower than I would like).
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-This is an update of the original V1 approach (skipping the fully
-connectivity check when doing a partial clone) with updated commit
-message and comments to address the review concerns.
+I mention 1.8.2.1 because we have many old machines which need this. However, 
+I also tested this with git v2.18 and it actually is much slower even 
+(~140mins).
+
+Reading the advice on the net, people seem to think that repacking with 
+shorter delta-chains would help improve this. I have not had any success with 
+this yet.
+
+I have been thinking about this problem, and I suspect that this compute time 
+is actually spent doing SHA1 calculations, is that possible? Some basic back 
+of the envelope math and scripting seems to show that the repo may actually 
+contain about 2TB of data if you add up the size of all the objects in the 
+repo. Some quick research on the net seems to indicate that we might be able 
+to expect something around 500MB/s throughput on computing SHA1s, does that 
+seem reasonable? If I really have 2TB of data, should it then take around 
+66mins to get the SHA1s for all that data? Could my repo clone time really be 
+dominated by SHA1 math?
+
+Any advice on how to speed up cloning this repo, or what to pursue more 
+in my investigation?
+
+Thanks,
+
+-Martin
 
 
-Range-diff against v1:
-1:  9c29e1ce8d ! 1:  b4a285e2a1 clone: do faster object check for partial clones
-    @@ -4,8 +4,8 @@
-     
-         For partial clones, doing a full connectivity check is wasteful; we skip
-         promisor objects (which, for a partial clone, is all known objects), and
-    -    excluding them all from the connectivity check can take a significant
-    -    amount of time on large repos.
-    +    enumerating them all to exclude them from the connectivity check can
-    +    take a significant amount of time on large repos.
-     
-         At most, we want to make sure that we get the objects referred to by any
-         wanted refs. For partial clones, just check that these objects were
-    @@ -59,10 +59,12 @@
-      
-     +	if (opt->check_refs_only) {
-     +		/*
-    -+		 * For partial clones, we don't want to walk the full commit
-    -+		 * graph because we're skipping promisor objects anyway. We
-    -+		 * should just check that objects referenced by wanted refs were
-    -+		 * transferred.
-    ++		 * For partial clones, we don't want to have to do a regular
-    ++		 * connectivity check because we have to enumerate and exclude
-    ++		 * all promisor objects (slow), and then the connectivity check
-    ++		 * itself becomes a no-op because in a partial clone every
-    ++		 * object is a promisor object. Instead, just make sure we
-    ++		 * received the objects pointed to by each wanted ref.
-     +		 */
-     +		do {
-     +			if (!repo_has_object_file(the_repository, &oid))
-    @@ -86,8 +88,8 @@
-     +	/*
-     +	 * If non-zero, only check the top-level objects referenced by the
-     +	 * wanted refs (passed in as cb_data). This is useful for partial
-    -+	 * clones, where this can be much faster than excluding all promisor
-    -+	 * objects prior to walking the commit graph.
-    ++	 * clones, where enumerating and excluding all promisor objects is very
-    ++	 * slow and the commit-walk itself becomes a no-op.
-     +	 */
-     +	unsigned check_refs_only : 1;
-      };
-
- builtin/clone.c |  6 ++++--
- connected.c     | 17 +++++++++++++++++
- connected.h     |  8 ++++++++
- 3 files changed, 29 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..fdbbd8942a 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -657,7 +657,8 @@ static void update_remote_refs(const struct ref *refs,
- 			       const char *branch_top,
- 			       const char *msg,
- 			       struct transport *transport,
--			       int check_connectivity)
-+			       int check_connectivity,
-+			       int check_refs_only)
- {
- 	const struct ref *rm = mapped_refs;
- 
-@@ -666,6 +667,7 @@ static void update_remote_refs(const struct ref *refs,
- 
- 		opt.transport = transport;
- 		opt.progress = transport->progress;
-+		opt.check_refs_only = !!check_refs_only;
- 
- 		if (check_connected(iterate_ref_map, &rm, &opt))
- 			die(_("remote did not send all necessary objects"));
-@@ -1224,7 +1226,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
- 			   branch_top.buf, reflog_msg.buf, transport,
--			   !is_local);
-+			   !is_local, filter_options.choice);
- 
- 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
- 
-diff --git a/connected.c b/connected.c
-index 1bba888eff..1ab481fed6 100644
---- a/connected.c
-+++ b/connected.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "object-store.h"
- #include "run-command.h"
- #include "sigchain.h"
- #include "connected.h"
-@@ -49,6 +50,22 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		strbuf_release(&idx_file);
- 	}
- 
-+	if (opt->check_refs_only) {
-+		/*
-+		 * For partial clones, we don't want to have to do a regular
-+		 * connectivity check because we have to enumerate and exclude
-+		 * all promisor objects (slow), and then the connectivity check
-+		 * itself becomes a no-op because in a partial clone every
-+		 * object is a promisor object. Instead, just make sure we
-+		 * received the objects pointed to by each wanted ref.
-+		 */
-+		do {
-+			if (!repo_has_object_file(the_repository, &oid))
-+				return 1;
-+		} while (!fn(cb_data, &oid));
-+		return 0;
-+	}
-+
- 	if (opt->shallow_file) {
- 		argv_array_push(&rev_list.args, "--shallow-file");
- 		argv_array_push(&rev_list.args, opt->shallow_file);
-diff --git a/connected.h b/connected.h
-index 8d5a6b3ad6..ce2e7d8f2e 100644
---- a/connected.h
-+++ b/connected.h
-@@ -46,6 +46,14 @@ struct check_connected_options {
- 	 * during a fetch.
- 	 */
- 	unsigned is_deepening_fetch : 1;
-+
-+	/*
-+	 * If non-zero, only check the top-level objects referenced by the
-+	 * wanted refs (passed in as cb_data). This is useful for partial
-+	 * clones, where enumerating and excluding all promisor objects is very
-+	 * slow and the commit-walk itself becomes a no-op.
-+	 */
-+	unsigned check_refs_only : 1;
- };
- 
- #define CHECK_CONNECTED_INIT { 0 }
 -- 
-2.21.0.593.g511ec345e18-goog
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
 
