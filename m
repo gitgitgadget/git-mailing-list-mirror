@@ -2,109 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 752E420248
-	for <e@80x24.org>; Fri, 19 Apr 2019 19:19:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FEFF20248
+	for <e@80x24.org>; Fri, 19 Apr 2019 19:23:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727387AbfDSTTv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 15:19:51 -0400
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:55882 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfDSTTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 15:19:50 -0400
-Received: by mail-wm1-f46.google.com with SMTP id o25so7146333wmf.5
-        for <git@vger.kernel.org>; Fri, 19 Apr 2019 12:19:49 -0700 (PDT)
+        id S1727659AbfDSTW7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 15:22:59 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54205 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727574AbfDSTW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 15:22:58 -0400
+Received: by mail-wm1-f66.google.com with SMTP id q16so7168506wmj.3
+        for <git@vger.kernel.org>; Fri, 19 Apr 2019 12:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=XLoC0XQ/A+UTPnSmJniherRa7iIBBbiQJP/21twtqfk=;
-        b=KurLAg5QaWq+6v9msOtEigM9F827R4uAfRdv9P3Mqrcl96n3mlwFZG7zq1wpJj574q
-         hyRsNZ+wLzlVAKFzxU8ZaCj/l01fACoVCsKx+T6UPuP7RcRZW/ygTbhkvSllkXKYHSGc
-         nZZBwX0e4XTbNPJvuOJYAKY1LmC5sOhzaVOCdwMlAuKNXZo+T76IbBmN4/YDs8508bxg
-         ZRdH6Izn7bL6MhjiMfbT+1w0aCWB42PwR8O/aVWh35glRa8vML0MUGS1IcpRfKd6l6V/
-         V001EG2gy5lEXShGl2LDSECVNON/n9s7ZnG1N674NVK3a3oBDd/zDqM7JsP3dkK1Y2y/
-         WsmA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Fi1OJPJlNPQVX0KRDz9agXLXb7kDkbimfIym2hrbM3Q=;
+        b=aCnq+ILsJpD3AGBX/nCk0WZJH1wmzXl2zQV6ltWA1xTo2UNXTVIybJCmBG/vmrV4mm
+         97RwXUp0HKZPS8cGkUpr+IyDGUlgRNPu8BuHQg0uuLPtGz3GUPlsWAY0mh/Ms2m/9Gva
+         182cExZ8IKxmmQVybEcljZbExhw1YSsBB4p0QEp5JGoCPNtwhlD3LjmDmr8i7mzyyVvA
+         FO7/FCQYKdPnWfhyoQyqrFK/XxAteeUJq5u6jCUlYBNaRT8s7GqS+PUCV+CgM4PdC8sq
+         KGijhdYxWdFIxvLpAvU4ZD4J72ex9EcZhZXvuNyGDxMhJOk+ERUaQY8NvjRwQpeWOGNT
+         2rxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=XLoC0XQ/A+UTPnSmJniherRa7iIBBbiQJP/21twtqfk=;
-        b=S22PQpXEM99rW9MVjZ3DeD2VgbmZcCSddjk7FDn4qrcll08nSWk97jLnV1Jpp96qmg
-         3XLlf5KwslNy3CxftdpSEBqgT91HjdUpeErIoSfurqvxjaUih6XQ1U8Czj78el6i/jj9
-         70/syUvAO7nWw1jCFMBYeHnORaMeadtLxrBhshqa/NjP67rEIKRxOuzbgNxpxAY76+ap
-         EFmGAyfh82gRpcW3oAVaSBb6pKylsPe4YalsknXntLKFStXIELum0VNT+6CmOjeIIrXN
-         IlLVXUVvrCaXQ4APkTCe+XYQ78o5RTgJHT/eNuVyI59AbdDuFvi7fMkFmAS7snVOWA8V
-         8mLg==
-X-Gm-Message-State: APjAAAVvWwEzIEWNTB8V1Fu7pAJuOe21R8Oc1hO7ZCpCKxKgm/ciEQvK
-        OeOJOj5sW/h/+FAdp65cd334lvuYJeQ=
-X-Google-Smtp-Source: APXvYqz97610RwiVq7bwlutaRfYzYk9MS57GYBXvr6OKRjMMRM9wFsxTTrJhvXFX2MGKYR2sNvq8xA==
-X-Received: by 2002:a1c:9d8f:: with SMTP id g137mr2315492wme.26.1555670666285;
-        Fri, 19 Apr 2019 03:44:26 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (ejz242.neoplus.adsl.tpnet.pl. [83.21.167.242])
-        by smtp.gmail.com with ESMTPSA id z23sm3355719wma.0.2019.04.19.03.44.24
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Fi1OJPJlNPQVX0KRDz9agXLXb7kDkbimfIym2hrbM3Q=;
+        b=NOr5ZrA8Tqd1axz2U49HZYkaXcuY4q/hCqujQgGGcv2YxdhJvpwgdh5stmAVobkHEo
+         CVlaIr4LAkvuoXQEzP8dyXFVeBw45dT34RRd7FydMRnV8nyK7UHuNCeByFZ8lf/a7KJh
+         heCEBleDByS91cFmfQcUZQL2fypBKNayqVgzXIqWH3WAPTcJuveX9rra0kYWBAmF5osN
+         5+w3Zv2fGMyQuDvVHvTGs3ivkFM0aJrWhzt5LE+Tm+IxNat6Mt/0a8Tj69TKPZBzlinL
+         GoOtW4Y/a5QnI9eGpMw2LirdNseAvQvRvG86+Gx6cxBXa9seAaZgedsqqsLgCjDBKown
+         rgag==
+X-Gm-Message-State: APjAAAW3s0+opj95nv0XRqiB0ltikrXRdzgmI5lphDiH4Bm042YEKvbZ
+        8cN+pUlmiX1JZXwYi6+Cp+NKgno1tqE=
+X-Google-Smtp-Source: APXvYqwo9po1HZevqQ7Vlj8EdFmrxBAAg+7JVAqglj8O67r1hwN+XGcfpczsyStcqsFEqsBKzzWJfA==
+X-Received: by 2002:a1c:5588:: with SMTP id j130mr1397849wmb.72.1555653209678;
+        Thu, 18 Apr 2019 22:53:29 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id z6sm4525332wrh.45.2019.04.18.22.53.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 19 Apr 2019 03:44:25 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Giuseppe =?utf-8?Q?Crin=C3=B2?= <giuscri@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: Feature request: Allow to update commit ID in messages when rebasing
-References: <CAGV3M54XhRMDXdhbfTon5nRV59VOjw8W4YrNP63TqPYm8pxd8Q@mail.gmail.com>
-        <878sw8bbby.fsf@evledraar.gmail.com>
-        <xmqqtvewgj4c.fsf@gitster-ct.c.googlers.com>
-        <86o953z0b9.fsf@gmail.com>
-        <CAGV3M55di4Nc_x25RoT0=dREkeCVc5_LpNabEjVDF+mSHK+0nQ@mail.gmail.com>
-Date:   Fri, 19 Apr 2019 12:44:20 +0200
-In-Reply-To: <CAGV3M55di4Nc_x25RoT0=dREkeCVc5_LpNabEjVDF+mSHK+0nQ@mail.gmail.com>
-        ("Giuseppe \=\?utf-8\?Q\?Crin\=C3\=B2\=22's\?\= message of "Thu, 18 Apr 2019
- 19:58:23 +0200")
-Message-ID: <86imvaz33v.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        Thu, 18 Apr 2019 22:53:29 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH v1 02/12] rebase: don't translate trace strings
+References: <20190319190317.6632-1-phillip.wood123@gmail.com>
+        <20190417143044.17655-1-phillip.wood123@gmail.com>
+        <20190417143044.17655-3-phillip.wood123@gmail.com>
+Date:   Fri, 19 Apr 2019 14:53:28 +0900
+In-Reply-To: <20190417143044.17655-3-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Wed, 17 Apr 2019 15:30:34 +0100")
+Message-ID: <xmqqy346czhj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Giuseppe Crin=C3=B2 <giuscri@gmail.com> writes:
-> On Thu, Apr 18, 2019 at 7:32 PM Jakub Narebski <jnareb@gmail.com> wrote:
-
->> Well, what about limiting changes and rewriting only to the commits
->> being rewritten by [interactive] rebase?  I mean that we would rewrite
->> "revert 01a9fe8" only if:
->>
->> a.) the commit with this message is undergoing rewrite
->> b.) the commit 01a9fe8 is undergoing rewrite in the same command
->>
->> We could use the infrastructure from git-filter-branch for this.
->>
->> It is serious limitation, but that might be good enough for Giuseppe
->> Crin=C3=B2 use case.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> In which case you need to change the ID of "revert 01a9fe8" _even if_
-> 01a9fe8 is not involved in the rebase? Wouldn't be a solution to my
-> use-case an already complete solution?
+> commit b3a5d5a80c ("trace2:data: add subverb for rebase", 2019-02-22)
+> mistakenly marked the subverb names for translation and unnecessarily
+> NULL terminated the array.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/rebase.c | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 52114cbf0d..239a54ecfe 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1027,14 +1027,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		ACTION_EDIT_TODO,
+>  		ACTION_SHOW_CURRENT_PATCH,
+>  	} action = NO_ACTION;
+> -	static const char *action_names[] = { N_("undefined"),
+> -					      N_("continue"),
+> -					      N_("skip"),
+> -					      N_("abort"),
+> -					      N_("quit"),
+> -					      N_("edit_todo"),
+> -					      N_("show_current_patch"),
+> -					      NULL };
+> +	static const char *action_names[] = { "undefined",
+> +					      "continue",
+> +					      "skip",
+> +					      "abort",
+> +					      "quit",
+> +					      "edit_todo",
+> +					      "show_current_patch" };
 
-What I meant by "serious limitation" is that the condition a.) might mot
-hold true.  You might be rebasing / rewriting the commit 01a9fe8, but
-there might be some commit not undergoing rewrite (for example one on a
-separate branch) that refers to the commit being rewritten, e.g. by
-including "revert 01a9fe8" in the commit message.
+That's an improvement independent from the rest of the patches.
 
-We also need to assume that the commit referred to (i.e. 01a9fe8) is
-being rewritten earlier in sequence than referring commit (i.e. one with
-"revert 01a9fe8").
+Now we've had the C99 designated initialisers weather balloon
+changes for some time in our codebase, perhaps we can ensure that
+these entries match the intended & corresponding "enum action"
+constants?  If we can also ensure that the array is large enough so
+that the trace2 call done like so
 
-Regards,
---
-Jakub Nar=C4=99bski
+	trace2_cmd_mode(action_names[action])
+
+is safe, that would be good, but that is secondary.
+
+Thanks.
