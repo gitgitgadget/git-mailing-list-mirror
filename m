@@ -2,122 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_06_12,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCF8A20248
-	for <e@80x24.org>; Fri, 19 Apr 2019 18:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6159020248
+	for <e@80x24.org>; Fri, 19 Apr 2019 19:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726195AbfDSSuo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 14:50:44 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35953 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725882AbfDSSuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 14:50:44 -0400
-Received: by mail-lf1-f65.google.com with SMTP id u17so4636558lfi.3
-        for <git@vger.kernel.org>; Fri, 19 Apr 2019 11:50:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=I490JTuNqtzqygPkiyNm6D/BzafMflyQwBngyyVQP3E=;
-        b=lBS24raqIWU7+8PstkI8KQsy8kC0iUja9jEzlTaic0XNraNvhcSgEweSbgCNG6kwqr
-         Co32MyenBeFvmdofdGAFoAXrFxX3DpISa1SXSU5YISGNuU0yDO9NixTi1Y0dsJ3v03eD
-         tO8hRl9prFd1+7a7/ZJi1PKLYP8rH6aApaNWDLguVFQe87LnWHeu0w9Oah1ENk4Ysu/N
-         w+8mV0QX641wfH3SlvM9osSJlzb0CB+i7W81w0XYNiphe/Wdt7p5fgTkH9Sm4CDdc16r
-         BA6JdTHXbZMHkF2zCZoePtsRIHq2R7tZh7tz+6HfyLozSwX4t+HgHBGMgPMKiPOohttc
-         i/NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I490JTuNqtzqygPkiyNm6D/BzafMflyQwBngyyVQP3E=;
-        b=LTTbhxU1ma7+1RFcZZ1n0WlVrGPIRgqg+TOVy1zy2G1wVipPR9VfFkabLE2QZWn91x
-         xmfq3LEonumoLKmj4Mb6beld3mv5JriKFMrLWitdiTo8L2CuEv0BoYvv4oYdACDiJLe8
-         edmEgrOBJ077PgDxhxnY4alzCyBTVo9Fof/MwYke2qWb7B84Aokk6tZ/xAmLQPZVHddZ
-         N+SyCWhzKToMXMwLNjI1pdiT2/k0jwvmdKtDNlBW0jPo7w80BpZxtpLmr1dl4r+fw3Ps
-         zjqazOz3trQcPQXQ4oWBaOJL3AgKA4pRg1xcCjxLlrZeVP3zRuIArOScnxe7JZk89FvG
-         kYTg==
-X-Gm-Message-State: APjAAAWrxD+kpEM9WlBcX8YBl5Rlh/WUryUdI+C3Hd+5OMw2o7JODvp0
-        mKHPVCC7QbY7KDc9hNpVJOe6Z3dQ
-X-Google-Smtp-Source: APXvYqwXE1zMv3tHi/91gAoBDrRK/jPk52uxeuqB9AnpKdH4E8I+hxoVSgtEoPFHHGROazcseMHr8g==
-X-Received: by 2002:ac2:4186:: with SMTP id z6mr1025466lfh.50.1555650156784;
-        Thu, 18 Apr 2019 22:02:36 -0700 (PDT)
-Received: from vkochan-ThinkPad-T470p ([93.75.250.209])
-        by smtp.gmail.com with ESMTPSA id c7sm845282lja.90.2019.04.18.22.02.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Apr 2019 22:02:36 -0700 (PDT)
-Date:   Fri, 19 Apr 2019 08:12:49 +0300
-From:   Vadim Kochan <vadim4j@gmail.com>
+        id S1728936AbfDSTGw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 15:06:52 -0400
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:48729 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728803AbfDSTGt (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Apr 2019 15:06:49 -0400
+X-IronPort-AV: E=Sophos;i="5.60,369,1549926000"; 
+   d="scan'208";a="379321771"
+Received: from dhcp-13-174.lip.ens-lyon.fr (HELO moylip) ([140.77.13.174])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES256-GCM-SHA384; 19 Apr 2019 11:44:44 +0200
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] configure.ac: Properly check for libintl
-Message-ID: <20190419051249.oiypxcs6hexjdf2d@vkochan-ThinkPad-T470p>
-References: <20190418050419.21114-1-vadim4j@gmail.com>
- <xmqqftqfhnmz.fsf@gitster-ct.c.googlers.com>
- <20190418082844.GA10068@lwo1-lhp-f71841>
- <xmqqmukmegof.fsf@gitster-ct.c.googlers.com>
+Cc:     BOMPARD CORENTIN p1603631 <corentin.bompard@etu.univ-lyon1.fr>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        BERBEZIER NATHAN p1601409 <nathan.berbezier@etu.univ-lyon1.fr>,
+        CHABANNE PABLO p1602176 <pablo.chabanne@etu.univ-lyon1.fr>
+Subject: Re: [PATCH] [WIP/RFC] add git pull and git fetch --set-upstream
+References: <20190409125205.13754-1-corentin.bompard@etu.univ-lyon1.fr>
+        <20190417160138.6114-1-corentin.bompard@etu.univ-lyon1.fr>
+        <36559daca9d84f7a91933add734020cd@BPMBX2013-01.univ-lyon1.fr>
+        <86h8av7ian.fsf@univ-lyon1.fr>
+        <04f23ebf83bd4aff90ee9ca88cec984e@BPMBX2013-01.univ-lyon1.fr>
+Date:   Fri, 19 Apr 2019 11:44:44 +0200
+In-Reply-To: <04f23ebf83bd4aff90ee9ca88cec984e@BPMBX2013-01.univ-lyon1.fr>
+        (Junio C. Hamano's message of "Fri, 19 Apr 2019 04:46:04 +0000")
+Message-ID: <867ebq72ib.fsf@univ-lyon1.fr>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmukmegof.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, Apr 19, 2019 at 01:56:48PM +0900, Junio C Hamano wrote:
-> Vadym Kochan <vadim4j@gmail.com> writes:
-> 
-> >>     Some libc implementations have function called gettext() that
-> >>     can be linked via -lc without -lintl, but these are mere stubs
-> >>     and do not do useful i18n.  On these systems, if a program that
-> >>     calls gettext() is built _with_ "#include <libintl.h>", the
-> >>     linker calls for the real version (e.g. libintl_gettext()) and
-> >>     that can be satisfied only by linking with -lintl.
-> >> 
-> >>     The current check to see if -lc provides with gettext() is
-> >>     sufficient for libc implementations like GNU libc that actually
-> >>     has full fledged gettext(); to detect libc with stub gettext()
-> >>     and libintl with real gettext(), aliased via <libintl.h>, the
-> >>     check to see if -lintl is necessary must be done with a sample
-> >>     source that #include's the header file.
-> >> 
-> >> Is that what is going on and why this patch is needed?
-> >> 
-> > Yes you are correct. 'gettext' even might be defined as libintl_gettext.
-> 
-> With this exchange, I was aiming for extracting a more useful title
-> for this patch out of you ;-), and I think I accomplished my goal.
-> 
-> "Properly" is fairly a useless adverb in the context of a patch
-> title, as it does not tell us why we thought the way in which the
-> updated code works is more "proper".  In addition, because no code
-> is perfect, future developers are bound to find something inproperly
-> done in checking for libintl after this patch gets applied.  It is
-> better to say the most important thing the change does concisely and
-> concretely.
-> 
-> I think
-> 
-> 	autoconf: #include <libintl.h> when checking for gettext()
-> 
-> is probably a better title.  
-> 
-> Together with your originally proposed log message, which we now
-> know explains why this inclusion makes a difference sufficiently to
-> be understandable by an average Git developer, the resulting commit
-> will communicate to our future developers the reason why we thought
-> this was a good change clearly.
-> 
-> Thanks.
+> Matthieu Moy <Matthieu.Moy@univ-lyon1.fr> writes:
+>
+>> -u::
+>> --set-upstream::
+>> 	For every branch that is up to date or successfully pushed, add
+>> 	upstream (tracking) reference, used by argument-less
+>> 	linkgit:git-pull[1] and other commands. For more information,
+>> 	see `branch.<name>.merge` in linkgit:git-config[1].
+>>
+>> Probably the reasoning was to make a symmetry between "git push
+>> --set-upstream", which mentions "pull" in the doc, and the new "git pull
+>> --set-upstream". However, I do not think there should be such symmetry:
+>
+> Yeah, if "git push --set-upstream" affects the settings that is used
+> by "git pull", then the above description is good.  Does this new
+> "git pull --set-upstream" affect the settings used by "git push"?  I
+> somehow did not think so.  It records the remote and branch used by
+> this particular "git pull" invocation in branch.<name>.{remote,merge}
+> for use by future uses of "git pull", right?
 
-Thanks! Should I re-submit patch with title updated v2 ?
+It also affects push, in the absence of a branch.<name>.pushRemote
+setting (branch.<name>.remote will be used).
 
-Regards,
-Vadim Kochan
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
