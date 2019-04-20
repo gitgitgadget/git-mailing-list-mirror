@@ -2,89 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,URIBL_BLACK shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40AE920248
-	for <e@80x24.org>; Sat, 20 Apr 2019 20:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93C9120248
+	for <e@80x24.org>; Sat, 20 Apr 2019 21:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727374AbfDTUTj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Apr 2019 16:19:39 -0400
-Received: from pv50p00im-zteg10021301.me.com ([17.58.6.46]:60368 "EHLO
-        pv50p00im-zteg10021301.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725965AbfDTUTj (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Apr 2019 16:19:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=04042017; t=1555791578;
-        bh=Mz9vsMQ3ZNzsYrDDl64BQvJ7wILcUB5h72qTqNQkJXc=;
-        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
-        b=BckeALIE5HQCFXZcdC4OpmHZW9MlpvoDGTJ8n5WxyExzFkiTujmcVOgW8n2QYNXaF
-         uznWHxRhjfO9Cd7+lL8Ts9hiR2GmpxkdmGs5DmfvJwZpITkJS2hK4m5kIWxIxdA7ah
-         oLrouUs8DxvOG8Kfp4/mGqKBYlkQjSco5tz9n2CpkBl9SZgh9o6AlbPd3BYlD0qvc6
-         bdykKQxjnrseVartflOltPp2AU7O+CrDb+qLfhdi/HXinfUolDo9HhYp1WcgQ8qFp6
-         6ECi27UKJECa8szSWUuL5tWhw8Mg3QOfU84woyt/BuJvFmEWTsYeuatL8YHEL8RXEc
-         Pv7qXHblZBB0g==
-Received: from [192.168.1.100] (unknown [110.54.129.133])
-        by pv50p00im-zteg10021301.me.com (Postfix) with ESMTPSA id 9D0BA580100;
-        Sat, 20 Apr 2019 20:19:37 +0000 (UTC)
+        id S1726174AbfDTVB1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Apr 2019 17:01:27 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40065 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfDTVB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Apr 2019 17:01:27 -0400
+Received: by mail-qt1-f195.google.com with SMTP id v7so5093435qti.7
+        for <git@vger.kernel.org>; Sat, 20 Apr 2019 14:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KLWJS1hELkU1gyMW51Za00SGTQYcxpE1oQUUdjPDyKM=;
+        b=gsdt8FzIUORGOM/asQTkw/W/syVT8ux5jcx3EL5Vk/tBDhf2gOkZz+h3IcfTKGeIQK
+         wKzan6Y/WsJwE9oOILmF5SDsRyqTiYkSuTePXcA5NMHbMuMTKFxP8leCKdC9bMDGPCxq
+         +38TyvQ9aew1S9hl7onmHrA0H7GqKWF11AKYsSAz3REtD9OAnwgIVYL5EQMKGI71mRtE
+         GuGbVniXRIQ6+N3UeQDv+8PqRkxNK5F/jNidPpDiQ+C3KEM6VNIk02V/8Q+nCvz2q/Hy
+         THrdD/49k0MJ6CX7yLw4umEqzSKjaUp8Ef0SstHc7fvT1XVst3zQZm6PzT+c4pwL2ESM
+         KjHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KLWJS1hELkU1gyMW51Za00SGTQYcxpE1oQUUdjPDyKM=;
+        b=JMbDWkMT28Yc3NjUwCyz1o1kySIgxm9IjxWJrh+4es4+DoX9qhQ6p1drhVikR1+YqY
+         I3BNss5R4n722UKwx9xyYTLgSDywJHpVThmDb2eMiHCPmA3vaN05C5SVMaNBylcGvrFb
+         HpAQmE5ednBRZqRRmRHhn9TJybxvLfnHaY5wQrnjxPcINoknCeAjTqM+8bw7DkyUjlPI
+         u05t9pLd23AcvkGTHYM8eNgCFRA98dLpeGRYj1Dbh8Lf5E8d8mAcwOkfurWbG2iEppNk
+         5HqDdiYWprU1IxuLEBDTnQiCuxoHEsMmEKWKdNZCqtw00saNXIStmeIcIKiIXQvmf/U9
+         WWLA==
+X-Gm-Message-State: APjAAAWLd//BRZNs133Tx+6p77i5OrCKI7L3vnaNPioGGmowI0S3vn7t
+        oSE6BkKjYDEB3hkUEN4wCCg=
+X-Google-Smtp-Source: APXvYqwyeyY2/MA1EIQ4QScQkyi9d6NnKvQZV8cD4rOaEq12PJkGrpjwwZqGWe34Dh2p5Dtly9Xy5g==
+X-Received: by 2002:ac8:730c:: with SMTP id x12mr3125466qto.372.1555794086389;
+        Sat, 20 Apr 2019 14:01:26 -0700 (PDT)
+Received: from [10.0.1.4] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id a8sm5015739qtc.19.2019.04.20.14.01.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 20 Apr 2019 14:01:25 -0700 (PDT)
+Subject: Re: [PATCH] t5304: add a test for pruning with bitmaps
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20190214043127.GA19019@sigill.intra.peff.net>
+ <20190214043743.GB19183@sigill.intra.peff.net>
+ <49e2aa9b-ff22-a8d1-ba72-1c881ff5fab4@gmail.com>
+ <20190418194953.GA15249@sigill.intra.peff.net>
+ <20190418200827.GB15249@sigill.intra.peff.net>
+ <ba16afb4-25c1-8148-602e-130b0e17fc89@gmail.com>
+ <20190420032435.GA3559@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <78a60be8-414e-cd32-8eb2-36b47702c10d@gmail.com>
+Date:   Sat, 20 Apr 2019 17:01:23 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
+MIME-Version: 1.0
+In-Reply-To: <20190420032435.GA3559@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From:   =?utf-8?B?5bCP5r6k44Ko44Kk44OX44Oq44Or?= <asawaqoh001@icloud.com>
-Mime-Version: 1.0 (1.0)
-Date:   Sun, 21 Apr 2019 04:19:16 +0800
-Subject: Free Live Sex Cams - Live Sex Chat and XXX Live Porn Shows
-Message-Id: <0F6ED899-9872-4999-B87D-3EA0213188D7@icloud.com>
-To:     Gabriel888@shareit.com,
-        "192.1.68.1.100 Gabriel888" <reyesapriljoy01@gmail.com.org>,
-        "192.1.68.1.100 Gabriel888" <Gabriel888@gmail.com>,
-        Tonyo Montana <tonyomontana@gmail.com>,
-        help@team.shoeboxed.com, translate@mysms.com, support@apple.com,
-        "192.1.68.1.100 Gabriel888" <git@vger.kernel.org>,
-        =?utf-8?B?44GC44Gq44Gf44Gu44OW44Op44Km44K244O844Gn44GvIOOCqA==?=
-         =?utf-8?B?44Kk44OX44Oq44OrMTQ=?= <reyesapriljoy001@gmail.com>
-X-Mailer: iPhone Mail (16E227)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-04-20_06:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=probablespam policy=default score=71 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=71 clxscore=1015 mlxscore=71
- mlxlogscore=-38 adultscore=25 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1812120000 definitions=main-1904200154
-X-Suspected-Spam: true
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-&body=3Dhttps://bongacams.com/?bcs=3DbWlkcDIxNTViMDk0ZmM0YTk2OWZmMWJhMDk5MmI=
-4MzcwYWY1OjoxNzc1NTE6Ojo6TVRJeE1UaDhOek0yTlh4UVNIdzNmRFI4Zkh4cmFHSm9aWGRsYWp=
-KaE1UaDhmSHc6OjEyMTE4Xzo6NTc1NjQzOjowOjowOjowOjo6OjA6OmRlZmF1bHQ6OjA~=20
+On 4/19/2019 11:24 PM, Jeff King wrote:
+> Try running t5304 with this:
+> 
+> diff --git a/reachable.c b/reachable.c
+> index eba6f64e01..7ec73ef43f 100644
+> --- a/reachable.c
+> +++ b/reachable.c
+> @@ -191,6 +191,8 @@ static int mark_object_seen(const struct object_id *oid,
+>  	if (!obj)
+>  		die("unable to create object '%s'", oid_to_hex(oid));
+>  
+> +	if (!(obj->flags & SEEN))
+> +		die("seen flag not already there");
+>  	obj->flags |= SEEN;
+>  	return 0;
+>  }
+> 
+> which shows that we are indeed freshly setting SEEN on some objects.
 
+Good point! Thanks for clearing that up for me.
+ 
+> Interestingly, I don't _think_ you can cause an object to get pruned
+> accidentally here, because:
 
+[snip]
 
-=E2=80=9C< asawaqoh001@icloud.com >=E2=80=9D
-=E2=80=9C Tonyomontana@gmail.com.org =E2=80=9C
-=E2=80=9C reyesapriljoy01@gmail.com.org =E2=80=9C
- =E2=80=9C Gabriel888@gmail.com.org =E2=80=9C
-                                                                            =
-                        =20
+I appreciate the additional context that you gave (and I snipped). This
+makes me comfortable accepting this test as an exercise of the code (to
+guard against future changes that create failures like null-refs) and we
+will need to rely on the performance suite to catch issues like removing
+the SEEN markers that I had tested.
 
-           =20
-
-
-=E2=80=9C ( +63 2 730 1212 ) =E2=80=9C. =20
-=E2=80=9C ( +49 6386 9423 ) =E2=80=9C =20
-=E2=80=9C (  +49 4402 0814 ) =E2=80=9C
-=E2=80=9C. (  +43 316 228409 ) =E2=80=9C
-
-  =20
-
-
-
-
-
-
-=E2=80=9C =C2=AE=EF=B8=8F =E2=80=9C.=20=
+Thanks,
+-Stolee
 
