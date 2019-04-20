@@ -6,127 +6,125 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08C9120248
-	for <e@80x24.org>; Sat, 20 Apr 2019 03:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A80320248
+	for <e@80x24.org>; Sat, 20 Apr 2019 03:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726088AbfDTDYh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 23:24:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35714 "HELO cloud.peff.net"
+        id S1727754AbfDTD62 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 23:58:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35726 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725911AbfDTDYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 23:24:37 -0400
-Received: (qmail 10113 invoked by uid 109); 20 Apr 2019 03:24:37 -0000
+        id S1725911AbfDTD62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 23:58:28 -0400
+Received: (qmail 10346 invoked by uid 109); 20 Apr 2019 03:58:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 20 Apr 2019 03:24:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 20 Apr 2019 03:58:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15012 invoked by uid 111); 20 Apr 2019 03:25:08 -0000
+Received: (qmail 15066 invoked by uid 111); 20 Apr 2019 03:58:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Apr 2019 23:25:08 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Apr 2019 23:58:58 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2019 23:24:35 -0400
-Date:   Fri, 19 Apr 2019 23:24:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Apr 2019 23:58:25 -0400
+Date:   Fri, 19 Apr 2019 23:58:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5304: add a test for pruning with bitmaps
-Message-ID: <20190420032435.GA3559@sigill.intra.peff.net>
-References: <20190214043127.GA19019@sigill.intra.peff.net>
- <20190214043743.GB19183@sigill.intra.peff.net>
- <49e2aa9b-ff22-a8d1-ba72-1c881ff5fab4@gmail.com>
- <20190418194953.GA15249@sigill.intra.peff.net>
- <20190418200827.GB15249@sigill.intra.peff.net>
- <ba16afb4-25c1-8148-602e-130b0e17fc89@gmail.com>
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Resolving deltas dominates clone time
+Message-ID: <20190420035825.GB3559@sigill.intra.peff.net>
+References: <259296914.jpyqiltySj@mfick-lnx>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ba16afb4-25c1-8148-602e-130b0e17fc89@gmail.com>
+In-Reply-To: <259296914.jpyqiltySj@mfick-lnx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 19, 2019 at 09:01:50PM -0400, Derrick Stolee wrote:
+On Fri, Apr 19, 2019 at 03:47:22PM -0600, Martin Fick wrote:
 
-> > +test_expect_success 'trivial prune with bitmaps enabled' '
-> > +	git repack -adb &&
-> > +	blob=$(echo bitmap-unreachable-blob | git hash-object -w --stdin) &&
-> > +	git prune --expire=now &&
-> > +	git cat-file -e HEAD &&
-> > +	test_must_fail git cat-file -e $blob
-> > +'
-> > +
-> >  test_done
-> 
-> This test does cover the 'mark_object_seen()' method, which I tested by
-> removing the "!" in the "if (!obj) die();" condition.
-> 
-> However, my first inclination was to remove the line
-> 
-> 	obj->flags |= SEEN;
-> 
-> from the method, and I found that it still worked! This was confusing,
-> so I looked for places where the SEEN flag was added during bitmap walks,
-> and it turns out that the objects are marked as SEEN by prepare_bitmap_walk().
+> I have been thinking about this problem, and I suspect that this compute time 
+> is actually spent doing SHA1 calculations, is that possible? Some basic back 
+> of the envelope math and scripting seems to show that the repo may actually 
+> contain about 2TB of data if you add up the size of all the objects in the 
+> repo. Some quick research on the net seems to indicate that we might be able 
+> to expect something around 500MB/s throughput on computing SHA1s, does that 
+> seem reasonable? If I really have 2TB of data, should it then take around 
+> 66mins to get the SHA1s for all that data? Could my repo clone time really be 
+> dominated by SHA1 math?
 
-I think this is only _some_ objects. The full bitmap is created by
-reading the on-disk bitmaps, and then filling in any necessary gaps by
-doing a traditional traversal. We also set it on tip objects to de-dup
-the initial revs->pending list.
+That sounds about right, actually. 8GB to 2TB is a compression ratio of
+250:1. That's bigger than I've seen, but I get 51:1 in the kernel.
 
-Try running t5304 with this:
+Try this (with a recent version of git; your v1.8.2.1 won't have
+--batch-all-objects):
 
-diff --git a/reachable.c b/reachable.c
-index eba6f64e01..7ec73ef43f 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -191,6 +191,8 @@ static int mark_object_seen(const struct object_id *oid,
- 	if (!obj)
- 		die("unable to create object '%s'", oid_to_hex(oid));
- 
-+	if (!(obj->flags & SEEN))
-+		die("seen flag not already there");
- 	obj->flags |= SEEN;
- 	return 0;
- }
+  # count the on-disk size of all objects
+  git cat-file --batch-all-objects --batch-check='%(objectsize) %(objectsize:disk)' |
+  perl -alne '
+    $repo += $F[0];
+    $disk += $F[1];
+    END { print "$repo / $disk = ", $repo/$disk }
+  '
 
-which shows that we are indeed freshly setting SEEN on some objects.
+250:1 isn't inconceivable if you have large blobs which have small
+changes to them (and at 8GB for 8 million objects, you probably do have
+some larger blobs, since the kernel is about 1/8th the size for the same
+number of objects).
 
-Interestingly, I don't _think_ you can cause an object to get pruned
-accidentally here, because:
+So yes, if you really do have to hash 2TB of data, that's going to take
+a while. "openssl speed" on my machine gives per-second speeds of:
 
-  1. Any object that will miss its SEEN has to be in the bitmapped pack,
-     and not found through normal traversal.
+type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
+sha1            135340.73k   337086.10k   677821.10k   909513.73k  1007528.62k  1016916.65k
 
-  2. git-prune only removes loose objects, not packed ones.
+So it's faster on bigger chunks, but yeah 500-1000MB/s seems like about
+the best you're going to do. And...
 
-  3. Loose objects cannot be in the bitmapped pack. Therefore, no object
-     can hit both cases (1) and (2).
+> I mention 1.8.2.1 because we have many old machines which need this. However, 
+> I also tested this with git v2.18 and it actually is much slower even 
+> (~140mins).
 
-Even if that were the end of the story, I don't think I'd want to rely
-on it here. The post-condition of the function should be that SEEN is
-set on all reachable objects, whether bitmaps are used or not. And we do
-indeed use this elsewhere:
+I think v2.18 will have the collision-detecting sha1 on by default,
+which is slower. Building with OPENSSL_SHA1 should be the fastest (and
+are those numbers above). Git's internal (but not collision detecting)
+BLK_SHA1 is somewhere in the middle.
 
-We'll later call prune_shallow(), which uses SEEN to discard unreachable
-entries. I'm not sure it even makes sense to have a shallow repo with
-bitmaps, though.  Obviously we're lacking the full graph, but I wouldn't
-be surprised if the shallow code quietly pretends that all is well and
-we generate bogus bitmaps or something. Or maybe it even mostly works as
-long as you don't walk over the shallow cut-points.
+> Any advice on how to speed up cloning this repo, or what to pursue more 
+> in my investigation?
 
-mark_reachable_objects() is also used for reflog expiration with
---stale-fix. I tried generating a test that would fail with your patch,
-but I think it's not quite possible, because --stale-fix will do a
-follow-up walk of the graph to see which objects mentioned in the reflog
-we have and do not have. So it doesn't actually break things, it just
-makes them slower (because we erroneously fail to mark SEEN things that
-it's then forced to walk).
+If you don't mind losing the collision-detection, using openssl's sha1
+might help. The delta resolution should be threaded, too. So in _theory_
+you're using 66 minutes of CPU time, but that should only take 1-2
+minutes on your 56-core machine. I don't know at what point you'd run
+into lock contention, though. The locking there is quite coarse.
 
-So I don't _think_ your patch actually breaks anything user-visible, but
-it's a bit like leaving a live grenade in your living room for somebody
-to find.
+We also hash non-deltas while we're receiving them over the network.
+That's accounted for in the "receiving pack" part of the progress meter.
+If the time looks to be going to "resolving deltas", then that should
+all be threaded.
 
-And I think we are indeed covering lookup_object_by_type(), etc in the
-t5304 test I added. So AFAICT all of the new code is covered after that?
+If you want to replay the slow part, it should just be index-pack. So
+something like (with $old as a fresh clone of the repo):
+
+  git init --bare new-repo.git
+  cd new-repo.git
+  perf record git index-pack -v --stdin <$old/.git/objects/pack/pack-*.pack
+  perf report
+
+should show you where the time is going (substitute perf with whatever
+profiling tool you like).
+
+As far as avoiding that work altogether, there aren't a lot of options.
+Git clients do not trust the server, so the server sends only the raw
+data, and the client is responsible for computing the object ids. The
+only exception is a local filesystem clone, which will blindly copy or
+hardlink the .pack and .idx files from the source.
+
+In theory there could be a protocol extension to let the client say "I
+trust you, please send me the matching .idx that goes with this pack,
+and I'll assume there was no bitrot nor trickery on your part". I
+don't recall anybody ever discussing such a patch in the past, but I
+think Microsoft's VFS for Git project that backs development on Windows
+might do similar trickery under the hood.
 
 -Peff
