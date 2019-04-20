@@ -2,100 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B58620248
-	for <e@80x24.org>; Fri, 19 Apr 2019 21:47:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0910920248
+	for <e@80x24.org>; Sat, 20 Apr 2019 01:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726960AbfDSVrZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Apr 2019 17:47:25 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:55950 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbfDSVrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Apr 2019 17:47:25 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id BC5A161528; Fri, 19 Apr 2019 21:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1555710443;
-        bh=KlEzeW1YFRpBRBzDHzCkX2MWavcZ7bEegUl5g9BW+7k=;
-        h=From:To:Subject:Date:From;
-        b=UGj9IvlQYuECkQpJjXL50LL5YYLGH2CXR1EKZwEVSQZpvVNi/kfaMsTzhj0DL33fJ
-         dMu0SDd6560oIl1/3rpteGBbvLyTevpwsfTdBZo1v3hymrdk+KmELC1aguNwm9Vtr3
-         MAsXpQvZ5TF4LAf3XRSYRpSBtlDYRotkyZaaRMmI=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 55722613A3
-        for <git@vger.kernel.org>; Fri, 19 Apr 2019 21:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1555710443;
-        bh=KlEzeW1YFRpBRBzDHzCkX2MWavcZ7bEegUl5g9BW+7k=;
-        h=From:To:Subject:Date:From;
-        b=UGj9IvlQYuECkQpJjXL50LL5YYLGH2CXR1EKZwEVSQZpvVNi/kfaMsTzhj0DL33fJ
-         dMu0SDd6560oIl1/3rpteGBbvLyTevpwsfTdBZo1v3hymrdk+KmELC1aguNwm9Vtr3
-         MAsXpQvZ5TF4LAf3XRSYRpSBtlDYRotkyZaaRMmI=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 55722613A3
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Resolving deltas dominates clone time
-Date:   Fri, 19 Apr 2019 15:47:22 -0600
-Message-ID: <259296914.jpyqiltySj@mfick-lnx>
-User-Agent: KMail/5.1.3 (Linux/4.4.0-137-generic; KDE/5.18.0; x86_64; ; )
+        id S1725961AbfDTBBZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Apr 2019 21:01:25 -0400
+Received: from mail-qk1-f172.google.com ([209.85.222.172]:38448 "EHLO
+        mail-qk1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725858AbfDTBBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Apr 2019 21:01:25 -0400
+Received: by mail-qk1-f172.google.com with SMTP id g1so3715903qki.5
+        for <git@vger.kernel.org>; Fri, 19 Apr 2019 18:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=BwhgZ8egDsUH8zcK8qPtEwdRNf2sPThBekKUvHz/e1o=;
+        b=jFeHgAc8fdVR5BYBQsJi9VJeLp0OohCja8jMvXdEglb0B8nUMVngo5vQSUqgP7uFgO
+         ZvAmqitoyTX+TOPr1tKpE9PjzZKLcgEuWBMWquY3frevhpqvhzavONE1Vuhlr1Fpewv3
+         lhJSF9+UVvRct2BDqXupI7gtUUbRyFbvp0dYSX1+Pbi5zAjNRhM4LMXne7WJJBKvW8TA
+         8323RSVuIdZ3uEMXobiS3WKsxPyBEWRh0MWcR+zreURc+Yy5g2a7j2E4NfAcq61cOf8r
+         y5tvxTVNefDydJwBU3kjH6m7SCSBrejmp9TTcAUk6IcbiCX8xbEGmqKgbFamJHk1QeoB
+         slgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=BwhgZ8egDsUH8zcK8qPtEwdRNf2sPThBekKUvHz/e1o=;
+        b=Z4BP7DPVrf8qOW3oWtktTIZQ5MLoE6tSctOQEpomPnTkuOXYm0MKTsQdio2st99fFn
+         wUC+lEX4j2dR+q3qXS9dde88D6c9IsL+7nM8Lcl4fq8ZWwvIEAVw0h3+ObkbLxYhBUaH
+         tInOwxr3MhJUMj85Kr0ME9OO19ogfNQNXgzg3woPtcYnziC+8may06LL6w05qE15sRbz
+         m/J/VotRSUKPvg7wSyTpYWpOBBNrjVI/YWqIZUUh8FuqcIGFQ0spHkAWGcfCl4cP0MJd
+         UDzEA/1AAeKajXs57N2q3NOpolXbi04zd1ayAWXVlU3PrioaCB2WxCErN/8LE2rV4KYk
+         6q6g==
+X-Gm-Message-State: APjAAAUDdVU11A80UggcMybruAbBalMy/XFL5EaMHvMS+30C7k55PSxl
+        ZuJyvqXIE78ydTGBfv9/yRePrPee0YDpwu4yHBMxAe7M
+X-Google-Smtp-Source: APXvYqzq7xHUDPabiKr51INpG0jvYiHFhU2HJ/Us4+VKS2fc1G7+Q4TJtsd3EaQ2okt65Qm6+ynvuX7eXK+/BiPi2Gc=
+X-Received: by 2002:ae9:e012:: with SMTP id m18mr5662810qkk.267.1555722084221;
+ Fri, 19 Apr 2019 18:01:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+From:   Chris Jerdonek <chris.jerdonek@gmail.com>
+Date:   Fri, 19 Apr 2019 18:01:12 -0700
+Message-ID: <CAOTb1wc=qBmD4k4DH1bMckrYzc3ZzB=bBYDk7QUQWxKdtsXCHQ@mail.gmail.com>
+Subject: doc bug: update-ref --create-reflog also works with --stdin
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a serious performance problem with one of our large repos. The repo is 
-our internal version of the android platform/manifest project. Our repo after 
-running a clean "repack -A -d -F" is close to 8G in size, has over 700K refs, 
-and it has over 8M objects. The repo takes around 40min to clone locally (same 
-disk to same disk) using git 1.8.2.1 on a high end machine (56 processors, 
-128GB RAM)! It takes around 10mins before getting to the resolving deltas 
-phase which then takes most of the rest of the time.
+This is to report a bug in the docs, or at least suggest an improvement.
 
-While this is a fairly large repo, a straight cp -r of the repo takes less 
-than 2mins, so I would expect a clone to be on the same order of magnitude in 
-time. For perspective, I have a kernel/msm repo with a third of the ref count 
-and double the object count which takes only around 20mins to clone on the 
-same machine (still slower than I would like).
+The update-ref documentation says that --create-reflog can only be
+passed when providing a new ref to create and doesn't say it can also
+be used with --stdin:
 
-I mention 1.8.2.1 because we have many old machines which need this. However, 
-I also tested this with git v2.18 and it actually is much slower even 
-(~140mins).
+'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<oldvalue>] |
+[--create-reflog] <ref> <newvalue> [<oldvalue>] | --stdin [-z])
 
-Reading the advice on the net, people seem to think that repacking with 
-shorter delta-chains would help improve this. I have not had any success with 
-this yet.
+from: https://github.com/git/git/blob/ffac537e6cbbf934b08745a378932722df287a53/Documentation/git-update-ref.txt#L11
 
-I have been thinking about this problem, and I suspect that this compute time 
-is actually spent doing SHA1 calculations, is that possible? Some basic back 
-of the envelope math and scripting seems to show that the repo may actually 
-contain about 2TB of data if you add up the size of all the objects in the 
-repo. Some quick research on the net seems to indicate that we might be able 
-to expect something around 500MB/s throughput on computing SHA1s, does that 
-seem reasonable? If I really have 2TB of data, should it then take around 
-66mins to get the SHA1s for all that data? Could my repo clone time really be 
-dominated by SHA1 math?
-
-Any advice on how to speed up cloning this repo, or what to pursue more 
-in my investigation?
+My testing shows that it also works with --stdin, so it seems like it
+would help to document this.
 
 Thanks,
-
--Martin
-
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
+--Chris
