@@ -2,145 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF9D120248
-	for <e@80x24.org>; Sun, 21 Apr 2019 13:27:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A901220248
+	for <e@80x24.org>; Sun, 21 Apr 2019 13:53:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbfDUN11 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 09:27:27 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:36039 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725963AbfDUN11 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 21 Apr 2019 09:27:27 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 525CC20A3C;
-        Sun, 21 Apr 2019 09:27:26 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Sun, 21 Apr 2019 09:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=qLI/OSrYkXBsPj4AXtn0hOwMpF3nIH89IAitiMb+r
-        bg=; b=zU7NS6xAiKz2CIPu9JsVMP9ZefUpefvH2HeOW+bRE0xHFch5hjhqn3erT
-        rb5yp5Joh72YtdkeTXoRawCy4Lb0iinzjHisNamOmOaaLY/IFtZ+wqLH1ohq9Cm1
-        D8UkGTsLskjm8aXpzQ/IBwWrTJsGCvyA6oDjBRjvlKYA+aGNC94I2GAwpm/t3U6V
-        nPsIbSDkkvOs1b5zk8sPhZBiEl4a7sY9h86alMgE3/zvxPFEgwH5HRh52dRcd7Tp
-        G8NpIby077Himo3e6EAnzfQw5EQy2gysISqrODi9nACKM4aR4wJCfLH2veK1JU9m
-        54o52KNmAk/Bu3Y9IQwd0+HvotAtA==
-X-ME-Sender: <xms:vW-8XGxyuFPJRPtnKLV-wdaFdHdrQYt-NVwqcPL6f9mCBSJSyZoBgw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrgeeggdeghecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefuvfhfhffkffgfgggjtgfgsehtkeertddtfeejnecuhfhrohhmpeetnhgurhgv
-    ficulfgrnhhkvgcuoehflhhoshhssegrphhjrghnkhgvrdhnvghtqeenucffohhmrghinh
-    epghhithhhuhgsrdgtohhmpdhpuhgslhhitgdqihhnsghogidrohhrghenucfkphepieej
-    rddvgeehrddvvdeirdeffeenucfrrghrrghmpehmrghilhhfrhhomhepfhhlohhsshesrg
-    hpjhgrnhhkvgdrnhgvthenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:vW-8XJSAFOM8uRjeuCYzT3rZpecqkdK6RxXtw-cki8Ljj8ObQHKH-A>
-    <xmx:vW-8XNXEmWmAg1jUV0unk9mFioLp_ZdKf3CCi5pmNr9YtPm5hH_ohw>
-    <xmx:vW-8XLY6zCAL7nzjijBgO2l-IJCXd8ssWHIYH7vz_h3KfcQpbvZFkQ>
-    <xmx:vm-8XCQqflOgoKfTXRs1cPjlsfMyAjjM-K_S6g_j9sLuECgMxDoEKw>
-Received: from angharad.local (cpe-67-245-226-33.nyc.res.rr.com [67.245.226.33])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 8B146E432B;
-        Sun, 21 Apr 2019 09:27:25 -0400 (EDT)
-Subject: Re: gettext, multiple Preferred languages, and English
-To:     Philip Oakley <philipoakley@talktalk.net>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>
-References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
- <bd5ee770-a213-b663-208c-c9980a738fe9@talktalk.net>
-From:   Andrew Janke <floss@apjanke.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=floss@apjanke.net; prefer-encrypt=mutual;
- keydata= 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
-Message-ID: <ffac5d4b-190c-16d6-497c-4b0f1f12115c@apjanke.net>
-Date:   Sun, 21 Apr 2019 09:27:25 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.6.1
+        id S1727384AbfDUNxt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Apr 2019 09:53:49 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:37068 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725963AbfDUNxt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Apr 2019 09:53:49 -0400
+Received: from [192.168.1.12] ([92.21.144.249])
+        by smtp.talktalk.net with SMTP
+        id ICughWd78nuQZICughsvSH; Sun, 21 Apr 2019 14:53:46 +0100
+X-Originating-IP: [92.21.144.249]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=Dgn57AdRJ25t4HaDIyq3iQ==:117
+ a=Dgn57AdRJ25t4HaDIyq3iQ==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8 a=F8CdE76t_GhyGNHZFFAA:9
+ a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+Subject: Re: [PATCH v2] Give git-pull a --reset option
+To:     Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>, me@jramsay.com.au
+References: <20190421040823.24821-1-alexhenrie24@gmail.com>
+ <xmqqftqbdijl.fsf@gitster-ct.c.googlers.com>
+ <CAMMLpeRnwrcjn3UAgs5p532pf8=xAwBqh2qg7Cfqun6qsqD06w@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <e816c3d6-5948-5f4b-0a1e-67f7dee43f2d@iee.org>
+Date:   Sun, 21 Apr 2019 14:53:45 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <bd5ee770-a213-b663-208c-c9980a738fe9@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMMLpeRnwrcjn3UAgs5p532pf8=xAwBqh2qg7Cfqun6qsqD06w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfFmxpgHtHpS/nGekzSfrZLYE60+j0jhFDoEJutQ9K3Oj9NwpJnPF+yKIRVytBlo303ZEVZ5fduh9ZLt4w9kUv3rN/jYimYSL3kCbKs41DezYmEPWmLnx
+ hpoF1y5fLLgBW4aPnEJZxNoKs4gU3Lf46O6YdzB8z443HKKmYICa2g375s19mW2QHI5nn7nf9Q4Adeod/YQ45zD9fdmj0bCRhFqWBvNhB4ho19Lt8nTD6/S7
+ WgroCUgoypZ2k+ytKrWBQNwd5j+yKr/g2sy4mLl4ZwyA7tIDgRRKj1atSikvUpxc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Alex
 
-On 4/21/19 8:59 AM, Philip Oakley wrote:
-> Hi Andrew,
-> 
-> On 21/04/2019 12:08, Andrew Janke wrote:
-> https://public-inbox.org/git/d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net/
-> 
->> I don't think it would even have
->> to be actively maintained, because for new message strings that aren't
->> included in the .po file, it would fall back to the non-translated input
->> strings, which are in English anyway, which is the desired behavior.
-> Given the above comment, could the en.po file
-> (https://github.com/apjanke/git/blob/english-dummy-translation/po/en.po)
-> be some very very short version with only one 'translated' string?
+On 21/04/2019 08:01, Alex Henrie wrote:
+> On Sat, Apr 20, 2019 at 11:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Alex Henrie <alexhenrie24@gmail.com> writes:
+>>
+>>> A common workflow is to make a commit on a local branch, push the branch
+>>> to the remote, check out the remote branch on a second computer, amend
+>>> the commit on the second computer, force-push back to the remote branch,
+>>> and finally submit a pull request. However, if the user switches back to
+>>> the first computer, they must then run the cumbersome command
+>>> `git fetch && git reset --hard origin`.
+This will be quite a common occurrence especially for personal repos on 
+one of the hosting sites (GitHub, GitLab, etc), so we know that we are 
+the only user of that repo.
 
-Yes, I believe so. I only provided a full translation file because it
-was trivial for me to create using the "msginit" instructions I found in
-po/README. Since all the translations are just identity relationships, I
-believe that is effectively the same as their not being there in the
-first place.
+I've certainly used that style of technique for Windows vs Linux machine 
+transfers of Git work (when my old hack linux machine is functional:-).
+>> Doesn't anybody sense there is a larger problem if such a workflow
+>> is "common" in the first place?  In that sequence, when you come
+>> back to the first repository there is no guarantee that what you are
+>> losing is exactly what you are willing to lose and nothing else
+>> (i.e. your earlier WIP you sent to the second repository, which was
+>> further polished, making the earlier WIP you had here irrelevant).
+I'd agree that a public/joint repository could have issues if a user 
+blindly assumes that no one has cooperated with them and added more 
+commits, but that becomes a social issue (plus worthy of a documentation 
+mention!).
 
-I tested your approach locally, and it seems to work for me.
+There are still a few blind spots in the functionality of Git regarding 
+how users interact with their hosting provider, which is trying to be 
+(from a user perspective) both a backup and an independent repo (side 
+discussion at Git Merge). This would appear to be one of those cases 
+where one is collaborating with no-one (oneself), but from two machines.
 
-> This
-> may be a way-off comment, but if it could be such a simple maintenance
-> free file then that sounds sensible.
-> 
-> also adding in Jiang Xin <worldhello.net@gmail.com>, the coordinator for
-> extra comment.
-> 
-> Philip
+It may just be that we need to put aside `pull` because of its old 
+semantics, and start with a fresh command name for the 'fetch + sort 
+stuff out' for these use cases.
+> You may be right. On the other hand, you're expected to think about
+> what you're doing before running `git push --force` and clobbering a
+> remote branch. Similarly, you would be expected to think about what
+> you're doing before running `git pull --reset` and clobbering a local
+> branch. It's actually easier to recover from accidentally clobbering a
+> local branch than accidentally clobbering a remote branch because you
+> can use `git reflog` to find the lost commits.
+>
+>> If the last "recovery at the first repository" step were "pull --rebase",
+>> at least you would realize that you have the earlier WIP locally
+>> that either
+>>
+>>      (1) conflicts with the more polished work that have been
+>>          accepted at the upstream, in which case you can tell the
+>>          rebase machinery to drop that earlier WIP _after_ making
+>>          sure that it is only that stale WIP you not only are willing
+>>          to but actively do want to lose that is getting discarded.
+>>
+>>      (2) replays cleanly on top of the updated upstream, which hasn't
+>>          accepted your pull request made from the second repository
+>>          with the more polished version, in which case you'd realize
+>>          that you may have to work on the topic further.  And you
+>>          have a chance to inspect what you ended up with before using
+>>          "reset --hard" or "rebase -i" to discard what you no longer
+>>          need.
+> I understand that `git pull --rebase` followed by `git rebase --skip`
+> is a safer workflow. I just feel like an option like `git pull
+> --reset` should be there for users who know what they're doing, just
+> like `git push --force` is available for users who know what they're
+> doing.
+>
+>> At least, I think the longhand this attempts to replace, "fetch"
+>> followed by "reset --hard origin" is better because of two reasons.
+>> It is more explicit that the procedure is destructive, and more
+>> importantly, it can allow to have (and we should encourage users to
+>> make a habit to have) an extra step to inspect what the user is
+>> about to lose with "git log origin.." after "fetch" but before
+>> "reset --hard".
+> I'd be happy to emphasize the destructive nature of this option by
+> calling it `git pull --hard-reset` instead.
+>
+>> So I have a moderately strong suspicion that "git pull --reset"
+>> promotes a wrong workflow and should not exist.
+> It'd be great to get some feedback from other Git users, but in the
+> end it's up to you and I trust your decision.
+>
+> -Alex
+I though it worth chiming in that folks do use these simple dumb use cases.
+--
+Philip
