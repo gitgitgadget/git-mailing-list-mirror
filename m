@@ -2,139 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A901220248
-	for <e@80x24.org>; Sun, 21 Apr 2019 13:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2C120248
+	for <e@80x24.org>; Sun, 21 Apr 2019 17:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbfDUNxt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 09:53:49 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:37068 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725963AbfDUNxt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Apr 2019 09:53:49 -0400
-Received: from [192.168.1.12] ([92.21.144.249])
-        by smtp.talktalk.net with SMTP
-        id ICughWd78nuQZICughsvSH; Sun, 21 Apr 2019 14:53:46 +0100
-X-Originating-IP: [92.21.144.249]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=Dgn57AdRJ25t4HaDIyq3iQ==:117
- a=Dgn57AdRJ25t4HaDIyq3iQ==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8 a=F8CdE76t_GhyGNHZFFAA:9
- a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
-Subject: Re: [PATCH v2] Give git-pull a --reset option
-To:     Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>, me@jramsay.com.au
-References: <20190421040823.24821-1-alexhenrie24@gmail.com>
- <xmqqftqbdijl.fsf@gitster-ct.c.googlers.com>
- <CAMMLpeRnwrcjn3UAgs5p532pf8=xAwBqh2qg7Cfqun6qsqD06w@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <e816c3d6-5948-5f4b-0a1e-67f7dee43f2d@iee.org>
-Date:   Sun, 21 Apr 2019 14:53:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        id S1727502AbfDURHR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Apr 2019 13:07:17 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56277 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727228AbfDURHQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 21 Apr 2019 13:07:16 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id A98C321A7B;
+        Sun, 21 Apr 2019 13:07:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Sun, 21 Apr 2019 13:07:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+        reply-to:subject:to:cc:references:from:message-id:date
+        :mime-version:in-reply-to:content-type
+        :content-transfer-encoding; s=fm2; bh=+cKZP+A4ceUQjmVmPp7ZbBZ4R/
+        9trlNqCUBGXPel4Hc=; b=XpNlRcI8qqkoTiNAn5lsUldQrhXLn6u3IFKtd+H02O
+        bm59zjl3Ptl7tWCpu40zBavI/Z9tF/yIBcu8Bd+wRuBwPeK1P5CTKOktSAHl4G+v
+        kNHGEqXYWdN5HP2rqkRgfiI8IfsJSoM8FcUSNYcoNXxbrH4brY1r/rXuGMvTHOh0
+        9sj0t/IqyOuqMxTOPVfm4HdOOSVe09VjsFo5P0y4m38BGYUPcB3VMprWw8WMKk5c
+        2Pxcc3KyhoWN8XEytliD0u82lHD6D7LoDjxD3dhBoXYU51yTjZzcIr0It87vPN3H
+        yRs5acy5uNkVeW217Q0THrlHp7LmBM4EqR5d3byHxrgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :reply-to:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm2; bh=+cKZP+A4ceUQjmVmPp7ZbBZ4R/9tr
+        lNqCUBGXPel4Hc=; b=W8yziGwpt0zda2csgoIjUQ8ktk6Pwjl1ymmL1xbRC+r/H
+        L7YSm1toJfGsYEeEl67ZU2BiB4EuW7Fle/Ur5BSQh6/XDyEJliYgOIH1L/uKwqB+
+        51PdzgVFfAQpTIVqH7RanVKYCXmOiRt7dSBO51TmJld7NvHu1njDD67dAUH0+Foo
+        ca2CEIocu+ZuQD6lmo2VtlVIDDhCUgpPN1a07gPj4CV8qw2p4vfJMMPU+WIoq8hP
+        QC1fUAerKNw6/8rdwGnW2o5OLuhb7W9JOr0NQXczSE/lroJOMMpOTLUYrVZyHE4r
+        9NFCcE8xcuNgxoaehp4CrRAWNmMIoutWbmwvuOvtg==
+X-ME-Sender: <xms:Q6O8XCiPXE-Y-zFPHpxVJ_a1gpENsau0hIQWiGMBqNpculr8oaBAlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrgeeggdekiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpehruffvfhfhkffffgggjggtgfesthekredttdefjeenucfhrhhomheprhhosgcu
+    oegurhhrohgsuddttdesfhgrshhtmhgrihhlrdgtohhmqeenucffohhmrghinhepghhith
+    hhuhgsrdgtohhmnecukfhppeejvddrkeelrdeliedrudekkeenucfrrghrrghmpehmrghi
+    lhhfrhhomhepughrrhhosgdutddtsehfrghsthhmrghilhdrtghomhenucevlhhushhtvg
+    hrufhiiigvpedt
+X-ME-Proxy: <xmx:Q6O8XEWVuDnCEG1cYHRqhAPyZGYgRO1PL9hkRuaM0pTm7H-Y8Z9wFg>
+    <xmx:Q6O8XOuQfnZo5u2tUn2aZkwIqR_up465HmBl1raQLPdVD7qHpVTajw>
+    <xmx:Q6O8XN99djdkH8__ud9g8w7GZ8yR7dJdeJxQTs3dQ5ZOiCUsBNLJOQ>
+    <xmx:Q6O8XAaUZ4qKiZbfI-jhJeXn0fxC2PZik8HJCAcHRU_2C_CwNaodPw>
+Received: from [192.168.1.153] (pool-72-89-96-188.nycmny.fios.verizon.net [72.89.96.188])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 1C131E432B;
+        Sun, 21 Apr 2019 13:07:15 -0400 (EDT)
+Reply-To: rob@drrob1.com
+Subject: Re: I messed up my own git tree and I don't know how to fix it.
+To:     Philip Oakley <philipoakley@iee.org>, rob@drrob1.com,
+        Adrian H <adrianh.bsc@gmail.com>
+Cc:     git@vger.kernel.org
+References: <cb1f725f-1314-d320-104a-726ef1c906fa@fastmail.com>
+ <CAP_kE8XaFW=G1f_qrS2sEp+ELQ9otk=j0-ZtbF1dATQX8ZjrAA@mail.gmail.com>
+ <b0a8d228-78c5-a355-1ded-dc2904d8216e@fastmail.com>
+ <4b388e60-703d-8ac3-ef74-211924374249@iee.org>
+From:   rob <drrob100@fastmail.com>
+Message-ID: <b05fee72-5536-65d5-1237-f4e5c83db9e8@fastmail.com>
+Date:   Sun, 21 Apr 2019 13:07:14 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <CAMMLpeRnwrcjn3UAgs5p532pf8=xAwBqh2qg7Cfqun6qsqD06w@mail.gmail.com>
+In-Reply-To: <4b388e60-703d-8ac3-ef74-211924374249@iee.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfFmxpgHtHpS/nGekzSfrZLYE60+j0jhFDoEJutQ9K3Oj9NwpJnPF+yKIRVytBlo303ZEVZ5fduh9ZLt4w9kUv3rN/jYimYSL3kCbKs41DezYmEPWmLnx
- hpoF1y5fLLgBW4aPnEJZxNoKs4gU3Lf46O6YdzB8z443HKKmYICa2g375s19mW2QHI5nn7nf9Q4Adeod/YQ45zD9fdmj0bCRhFqWBvNhB4ho19Lt8nTD6/S7
- WgroCUgoypZ2k+ytKrWBQNwd5j+yKr/g2sy4mLl4ZwyA7tIDgRRKj1atSikvUpxc
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+possibly.  What do I do about that?
 
-On 21/04/2019 08:01, Alex Henrie wrote:
-> On Sat, Apr 20, 2019 at 11:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Alex Henrie <alexhenrie24@gmail.com> writes:
+--rob
+
+
+On 4/21/19 9:03 AM, Philip Oakley wrote:
+> Hi Rob,
+>
+> On 21/04/2019 13:34, rob wrote:
+>> didn't work.  I did not get any error messages, just didn't work.  
+>> After I did
 >>
->>> A common workflow is to make a commit on a local branch, push the branch
->>> to the remote, check out the remote branch on a second computer, amend
->>> the commit on the second computer, force-push back to the remote branch,
->>> and finally submit a pull request. However, if the user switches back to
->>> the first computer, they must then run the cumbersome command
->>> `git fetch && git reset --hard origin`.
-This will be quite a common occurrence especially for personal repos on 
-one of the hosting sites (GitHub, GitLab, etc), so we know that we are 
-the only user of that repo.
-
-I've certainly used that style of technique for Windows vs Linux machine 
-transfers of Git work (when my old hack linux machine is functional:-).
->> Doesn't anybody sense there is a larger problem if such a workflow
->> is "common" in the first place?  In that sequence, when you come
->> back to the first repository there is no guarantee that what you are
->> losing is exactly what you are willing to lose and nothing else
->> (i.e. your earlier WIP you sent to the second repository, which was
->> further polished, making the earlier WIP you had here irrelevant).
-I'd agree that a public/joint repository could have issues if a user 
-blindly assumes that no one has cooperated with them and added more 
-commits, but that becomes a social issue (plus worthy of a documentation 
-mention!).
-
-There are still a few blind spots in the functionality of Git regarding 
-how users interact with their hosting provider, which is trying to be 
-(from a user perspective) both a backup and an independent repo (side 
-discussion at Git Merge). This would appear to be one of those cases 
-where one is collaborating with no-one (oneself), but from two machines.
-
-It may just be that we need to put aside `pull` because of its old 
-semantics, and start with a fresh command name for the 'fetch + sort 
-stuff out' for these use cases.
-> You may be right. On the other hand, you're expected to think about
-> what you're doing before running `git push --force` and clobbering a
-> remote branch. Similarly, you would be expected to think about what
-> you're doing before running `git pull --reset` and clobbering a local
-> branch. It's actually easier to recover from accidentally clobbering a
-> local branch than accidentally clobbering a remote branch because you
-> can use `git reflog` to find the lost commits.
->
->> If the last "recovery at the first repository" step were "pull --rebase",
->> at least you would realize that you have the earlier WIP locally
->> that either
+>>   git reset --hard
 >>
->>      (1) conflicts with the more polished work that have been
->>          accepted at the upstream, in which case you can tell the
->>          rebase machinery to drop that earlier WIP _after_ making
->>          sure that it is only that stale WIP you not only are willing
->>          to but actively do want to lose that is getting discarded.
+>>   git status
 >>
->>      (2) replays cleanly on top of the updated upstream, which hasn't
->>          accepted your pull request made from the second repository
->>          with the more polished version, in which case you'd realize
->>          that you may have to work on the topic further.  And you
->>          have a chance to inspect what you ended up with before using
->>          "reset --hard" or "rebase -i" to discard what you no longer
->>          need.
-> I understand that `git pull --rebase` followed by `git rebase --skip`
-> is a safer workflow. I just feel like an option like `git pull
-> --reset` should be there for users who know what they're doing, just
-> like `git push --force` is available for users who know what they're
-> doing.
+>> I see the same 3 files that say changes not staged for commit: 
+>> modified and it lists the same 3 files.
+> Could this be that the file timestamps are being changed in the 
+> background and git is detecting those timestamp changes, even when 
+> there is no change to the files.
+> - Just as thought.
 >
->> At least, I think the longhand this attempts to replace, "fetch"
->> followed by "reset --hard origin" is better because of two reasons.
->> It is more explicit that the procedure is destructive, and more
->> importantly, it can allow to have (and we should encourage users to
->> make a habit to have) an extra step to inspect what the user is
->> about to lose with "git log origin.." after "fetch" but before
->> "reset --hard".
-> I'd be happy to emphasize the destructive nature of this option by
-> calling it `git pull --hard-reset` instead.
+> (In-line posting is preferred, so as to see the replies in context)
+> Philip
 >
->> So I have a moderately strong suspicion that "git pull --reset"
->> promotes a wrong workflow and should not exist.
-> It'd be great to get some feedback from other Git users, but in the
-> end it's up to you and I trust your decision.
+>>
+>> --rob
+>>
+>>
+>> On 4/21/19 1:03 AM, Adrian H wrote:
+>>> If I understand the commands you are using correctly, you are
+>>> referencing the remote repo.  You need to reference the local repo.
+>>> So try using the following commands:
+>>>
+>>> git checkout -- alecthomas/gometalinter
+>>> git checkout -- kisielk/errcheck
+>>> git checkout -- rogpeppe/godef
+>>>
+>>> Or if those are the only files that have been modified, then you can
+>>> use the following single command:
+>>>
+>>> git reset --hard
+>>>
+>>> and that will reset all files that have not been staged.
+>>>
+>>> HTH
+>>>
+>>>
+>>> A
+>>>
+>>>
+>>> On Sat, Apr 20, 2019 at 11:22 PM rob <drrob100@fastmail.com> wrote:
+>>>> I have my own code at a github repository, using Go.  Part of using Go
+>>>> libraries not part of the official Go people is by using a system they
+>>>> call go get.  This essentially uses git to, well, go get source code.
+>>>> Mine are at github.com and golang.org.  My computer runs LinuxMint 
+>>>> 19.1.
+>>>>
+>>>> I used goland IDE from jetbrains to run go fmt on my entire project.
+>>>> Now I am getting this message that I cannot get rid of:
+>>>>
+>>>> changes not staged for commit:
+>>>>
+>>>>     modified: github.com/alecthomas/gometalinter (modified content)
+>>>>
+>>>>     modified: github.com/kisielk/errcheck (modified content)
+>>>>
+>>>>     modified: github.com/rogpeppe/godef (modified content)
+>>>>
+>>>>
+>>>> I do not want any changes to central repos to be tracked or committed,
+>>>> but I cannot undo this.  I tried, for example,
+>>>>
+>>>> git checkout -- github.com/alecthomas/gometalinter
+>>>>
+>>>> I don't get an error message but it does not do anything. The file is
+>>>> not changes, and git status show me the same information, ie, these
+>>>> files have changes not staged for commit.
+>>>>
+>>>> I do not know how to restore these files to the state they were in in
+>>>> the repo, and to have my own git tree not to flag this as an unstaged
+>>>> alteration.  Running rm -rfv on the repos on my computer, then running
+>>>> go get to restore them does not change git status. It still sahs 
+>>>> changes
+>>>> not stated for commit: modified.
+>>>>
+>>>> This happens for the above 3 tree items.
+>>>>
+>>>> How do I restore these to the github remote repository condition 
+>>>> and not
+>>>> have my own git tree mark these as changed?
+>>>>
+>>>> --rob solomon
+>>>>
+>>>
 >
-> -Alex
-I though it worth chiming in that folks do use these simple dumb use cases.
---
-Philip
