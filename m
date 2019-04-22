@@ -2,103 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2EB01F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 18:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5431F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 18:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728668AbfDVSdU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 14:33:20 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:47351 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727190AbfDVSdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 14:33:20 -0400
-Received: from [10.0.2.15] ([80.189.70.228])
-        by smtp with ESMTPA
-        id Idkkh7KdwR9LaIdklhHAyb; Mon, 22 Apr 2019 19:33:19 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1555957999; bh=05wUgU+8LfKYBxmbD9SeFs2E5Sz22vVKeNGKDD9k9Hk=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=SWNUiWx84ZLCaLZOjnFHou7jeRMIaexbjiUofiFN4Ut18pnlM8Xr3K6aOVB/gcOLa
-         qWQ6gaviUEDxtQdaXzB6sbSuPDJirRAGWEvjh5iDu/8eq81P0aw9NSjDpgSQOGOl/O
-         RX3fw0WyVRaH/BURIfg256zwD6s+90S/+FD8Hbc7rHZDUy+LDHlS5iCZmahdVH3bFQ
-         KMDkJ68rr8dUbojASsikHAK9k83m61DZTT2FDLb9pVSH2BsjQeQq+7viP26LqCz+Sn
-         XUHIt8Ji56pL/WIBKt1XJ7GSKOah+MiW2hyfZxhL366s6IkduQm1yIKp6DtgmNYbpp
-         oMErju1tDWbzw==
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Qa0YQfTv c=1 sm=1 tr=0
- a=5/rI1lTgw+ttA0Fwm4j1LQ==:117 a=5/rI1lTgw+ttA0Fwm4j1LQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
- a=EBOSESyhAAAA:8 a=bsd20PeyeYF7KUxIzJoA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: jt/fetch-cdn-offload (was What's cooking in git.git (Apr 2019,
- #04; Mon, 22))
-To:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Cc:     git@vger.kernel.org, avarab@gmail.com
-References: <xmqqd0le8t9l.fsf@gitster-ct.c.googlers.com>
- <20190422175104.15471-1-jonathantanmy@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <6de01c91-2dbb-61b2-973a-22ba71302bbb@ramsayjones.plus.com>
-Date:   Mon, 22 Apr 2019 19:33:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727190AbfDVSeA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 14:34:00 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:37117 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726407AbfDVSeA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 14:34:00 -0400
+Received: by mail-pl1-f195.google.com with SMTP id w23so6200548ply.4
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 11:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EE9xICX4EVvKx9+RiCbulfYDUdRY2YLBhcAACE2jEek=;
+        b=UAiXbdiXzdaeZCb62wqae9EOfgMUfCNaUN9Gvnb4yq3aMwdpoOdOb90r0gdviFG5zJ
+         WmY/pjyC4n9nVmcJxnm9kfU6BCnV5pz610oRqsFfj6EjU4h8kuFy2kQ+53PCV1Y9CcxT
+         QPYZIylFalJwjZ9hIsucc0viGtBi8LjmZ9pufBVeyqcYbAJ0/ozld5o2A+ryQezP68Zd
+         +pG4GXML0bu90DtGUE1njqPzAPK/UMKVCnCAkf99i2mkicNIfElsAxF48ipPHPt63aIv
+         lN/qnlqE3erWuIVsd3JN7FtXCbDPF+DShMl1NA4w1GGhU987m4pOiS2MBexuPVHGffOj
+         qWpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EE9xICX4EVvKx9+RiCbulfYDUdRY2YLBhcAACE2jEek=;
+        b=YZ4gAke4SXjsHd3qk3WTZFqGHCO8QJMWejZL8cGfQ7I7nojTsxxctqixH4e5wKIvNI
+         tQcZlsxdCYZt3HG+yoEqDYmohbBAwyX1UtzLObv7HvxtIycnCwNHqeEvhkWK031m9UiI
+         uV0wMu0h+cWGcyg8DUFtlbsZV7Pmwo0dCiLHN9i+TIWwLgyA+mY9u5aKC2DH9BnXONFe
+         oGjbbOvsERlOGLvSj+73ZJ7jNZkm+KyZG0pAWLOzLCyViTtAqemE+B/aZqh7CQ9lJEwB
+         pP/9i6UmF/SjWfg6deOG2L++3wiGgrb0V0Vp503203Ea95gQ0F7rU5FNFOjOE4I6NRtI
+         5P+A==
+X-Gm-Message-State: APjAAAWtNAMybUxHJBbBPFp2n8tYrCadqDSVmB4dD1cGIOlMIglgFESi
+        1M7IvbfQ2eYvCRUlVG9ukjo=
+X-Google-Smtp-Source: APXvYqyARpZkPs8m1xDkz+vwb/hVO3ysGr/BRlkTpgCHtt4okNIt88FMhUiXjGEhnHA5e6JP7IR0uw==
+X-Received: by 2002:a17:902:8609:: with SMTP id f9mr20805401plo.32.1555958039127;
+        Mon, 22 Apr 2019 11:33:59 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id y10sm19845329pfm.27.2019.04.22.11.33.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Apr 2019 11:33:58 -0700 (PDT)
+Date:   Mon, 22 Apr 2019 11:33:56 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 5/5] difftool: fallback on merge.guitool
+Message-ID: <20190422183356.GA6730@dev-l>
+References: <cover.1555880168.git.liu.denton@gmail.com>
+ <fb7ac11439cbfd52d9181b78fdc8f8034a6b1064.1555880168.git.liu.denton@gmail.com>
+ <2a521a5c-4b5d-57aa-1e91-d4ec9b190fb7@jeffhostetler.com>
 MIME-Version: 1.0
-In-Reply-To: <20190422175104.15471-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEYkNP4n1lDymaE3CV3QTQgMnIOPRIfNwNtut8I4pHKVvU6lbSb9EllCK+4M22YmLFDRWU1o+bGbCZrSW4waR3nfFlI7NS7J/e8XVtk9z5erayFiZvIo
- zhNLQCSfGh9/eJ0EziyEByI7qc0wtR4xJOmZJNfpA+i5umTbS+jtjXSromTHa5kCwlQqmwwB8/VxYA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2a521a5c-4b5d-57aa-1e91-d4ec9b190fb7@jeffhostetler.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jeff,
 
-
-On 22/04/2019 18:51, Jonathan Tan wrote:
->> * jt/fetch-cdn-offload (2019-03-12) 9 commits
->>  - SQUASH???
->>  - upload-pack: send part of packfile response as uri
->>  - fetch-pack: support more than one pack lockfile
->>  - upload-pack: refactor reading of pack-objects out
->>  - Documentation: add Packfile URIs design doc
->>  - Documentation: order protocol v2 sections
->>  - http-fetch: support fetching packfiles by URL
->>  - http: improve documentation of http_pack_request
->>  - http: use --stdin when getting dumb HTTP pack
->>
->>  WIP for allowing a response to "git fetch" to instruct the bulk of
->>  the pack contents to be instead taken from elsewhere (aka CDN).
->>
->>  Waiting for the final version.
+On Mon, Apr 22, 2019 at 02:18:36PM -0400, Jeff Hostetler wrote:
 > 
-> Sorry for getting back to you late on this. The current status is that
-> v2 (this version) looks good to me, except that not many people seems to
-> be interested in this - I sent out v2 [1] with a relatively significant
-> protocol change to v1 (requiring the server to also send the packfile's
-> hash, meaning that a workflow that Ævar has described will no longer
-> work), but nobody replied to it except for Josh Steadmon (who did give
-> his Reviewed-By).
 > 
-> In the meantime, I have been working on a server-side JGit
-> implementation [2], but not all parts are done (and it will take some
-> time).
+> On 4/22/2019 1:07 AM, Denton Liu wrote:
+> >In git-difftool.txt, it says
+> >
+> >	'git difftool' falls back to 'git mergetool' config variables when the
+> >	difftool equivalents have not been defined.
+> >
+> >However, when `diff.guitool` is missing, it doesn't fallback to
+> >anything. Make git-difftool fallback to `merge.guitool` when `diff.guitool` is
+> >missing.
+> >
 > 
-> If this version is good with everyone, then this is the final version. I
-> know it has been some time, but if I squash "SQUASH???" onto
-> "upload-pack: refactor reading of pack-objects out" and then rebase onto
-> latest master (14c0f8d3ab ("The sixth batch", 2019-04-22)), there's only
-> one small merge conflict.
+> Is this a well-defined operation?
 
-... not forgetting the second hunk of [1], of course. ;-)
+I believe this is a yes.
 
-[1] https://public-inbox.org/git/5f0c12d5-6714-1516-3579-33d839ad7b7e@ramsayjones.plus.com/
+> 
+> I mean, we're assuming here that a 3-way gui merge tool (that probably
+> expects 3 input pathnames and maybe a 4th merge-result pathname (and
+> associated titles and etc)) can function sanely when only given the
+> pair that a diff would have.
+> 
+> That is, we're assuming that the selected merge tool has a 2-way diff
+> mode and that the command line args for the 2- and 3-way views are
+> compatible.
 
-ATB,
-Ramsay Jones
+If I read the code correctly, it seems like the only tool that is
+strictly "merge-only" is tortoisemerge. In mergetools/tortoisemerge, we
+have
 
+	can_diff () {
+		return 1
+	}
+
+which means it will refuse to run as a difftool.
+
+In the case where it fails like this, it'll loudly complain to the user,
+which'll give them a chance to fix their config. I believe that this is
+desired behaviour and the patch adds on top of that.
+
+Thanks,
+
+Denton
+
+> 
+> Just a thought
+> Jeff
+> 
+> 
