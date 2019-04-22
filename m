@@ -2,106 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E73A1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 19:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 622571F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 19:54:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731319AbfDVTw3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 15:52:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37208 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731317AbfDVTw2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 15:52:28 -0400
-Received: (qmail 4217 invoked by uid 109); 22 Apr 2019 19:52:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 19:52:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2293 invoked by uid 111); 22 Apr 2019 19:53:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 15:53:00 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 15:52:26 -0400
-Date:   Mon, 22 Apr 2019 15:52:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     "REIX, Tony" <tony.reix@atos.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git on AIX: daemon.c & t5570-git-daemon.sh
-Message-ID: <20190422195226.GB22798@sigill.intra.peff.net>
-References: <DB7PR02MB466360C2CBC44AE5FEC22CC586470@DB7PR02MB4663.eurprd02.prod.outlook.com>
- <DB7PR02MB46634F68900E0F81B0110AF586400@DB7PR02MB4663.eurprd02.prod.outlook.com>
+        id S1731486AbfDVTy0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 15:54:26 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44993 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730916AbfDVTtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 15:49:43 -0400
+Received: by mail-pf1-f195.google.com with SMTP id y13so6183651pfm.11
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 12:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5nLRFR6dnkzvMKwYRY2WN3lUtID3OneXji/QulcMezw=;
+        b=eyYe08jrQhvLXmEvPE1MueIlhua1Zm+oiXD90MU1z8u3oGr0OVM37kSqOCccXCaeJX
+         zRLWrJd2Xx5qCldqLqZBSB9wwTsB4RGAh9Ga4vdRTnS35+UGGbKd//sx1RYuTzfL9ofk
+         SPYRM1v2oD9Np4CKB0o+rIvNZZuKdjbNQDBaNHNHHLM6HDQyEVWpDudCNl3QnLVFvFZt
+         d8rJ81eYPAwJUPS6oDflnlEzc4EGw/AgFeudpvPJReuMgzH0KLTNQby3YBeZbo8zf9Fc
+         kAXJGMKoYcCWZgdO2e/gUwWrwS2vUJjQar4bNUPSXHqGviGvJ0uCp0lubU5w0xL1fXgC
+         +a4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5nLRFR6dnkzvMKwYRY2WN3lUtID3OneXji/QulcMezw=;
+        b=KvjPTVIaBcSgSYb/i9rkdlhq8chU5TYvzu7h87kj8aATmCOm60K0PS7XdwhJ+G4eSe
+         0a8eQr6nwEVlZeym6sm60Lk5y5HkjWM2CBoJE9qj/gtzTUKJeenvxmTFFLeyeqPgMbWM
+         /zObCpicW7sYZSVS8bA8a2ypHU7U8z3znXn0oycyv5uPVNe1Wc7cExP4ja/mGiOFmnp1
+         Ukm+aNPym9KxPn41RrohMpLZGLluYh8YuGyyhYQwGlhvRMQvC4qCuE0y0CiuckRPItvp
+         WSrUapXdlH4LnuVF2ZAKagopNffA4/PPI//cNjKFjFm/zk6BqFwGRYpI2A+TFU9o2IQC
+         ZlNA==
+X-Gm-Message-State: APjAAAXxVIUP2ljRgxACELXEtHzrSu6m9B/jBg4BlnKkd8qE18qtv2xD
+        O4kGaPbw2Ms7xk1RFNR4FRzJFQvh
+X-Google-Smtp-Source: APXvYqwN5pxX7YBbuVAyAWg/f+X3HF5b2DPGAKHyjhr5cYfa/4ARwdVcE2KZ9PNaE8M7js7mHwdsYw==
+X-Received: by 2002:a62:5a42:: with SMTP id o63mr23359206pfb.170.1555962582737;
+        Mon, 22 Apr 2019 12:49:42 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id b7sm23172588pfj.67.2019.04.22.12.49.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Apr 2019 12:49:42 -0700 (PDT)
+Date:   Mon, 22 Apr 2019 12:49:40 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+Message-ID: <20190422194940.GA10592@dev-l>
+References: <20190422000712.13584-1-phil.hord@gmail.com>
+ <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+ <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
+ <CABURp0r9DBxoxLjjynNj-px7mFBA5--ZS7SoNniNu7MLPZkqwg@mail.gmail.com>
+ <CABURp0pEB-3m=wbWsVc9C82d3Jf2UW4fXnsSZ+GnTHKWRJo0NQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DB7PR02MB46634F68900E0F81B0110AF586400@DB7PR02MB4663.eurprd02.prod.outlook.com>
+In-Reply-To: <CABURp0pEB-3m=wbWsVc9C82d3Jf2UW4fXnsSZ+GnTHKWRJo0NQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 19, 2019 at 09:05:49AM +0000, REIX, Tony wrote:
+Hi Phil,
 
-> When testing version 2.21.0 of git on AIX (6.1 & 7.2), I have found an
-> issue with daemon.c and test t5570-git-daemon.sh : within test 4, the
-> child_handler() code gets crazy and calls itself recursively till the
-> process crashes. We do not have a clear idea why this issue occurs.
-> Maybe that this issue also appears on other operating  systems.
+On Mon, Apr 22, 2019 at 12:20:29PM -0700, Phil Hord wrote:
+> On Mon, Apr 22, 2019 at 12:16 PM Phil Hord <phil.hord@gmail.com> wrote:
+> >
+> > I have the same need.  I plan to have some switch that invokes this
+> > "in-place rebase" behavior so that git can choose the upstream for me
+> > as `mergebase $sequence-edits`.  In fact, I want to make that the
+> > default for these switches, but that feels too surprising for the
+> > rebase command. I plan to progress like this:
+> >
+> >     # --in-place switch is not supported; manual upstream is given by user
+> >     git rebase --edit foo foo^
+> >
+> >      # --in-place switch is added; now we can say this
+> >      git rebase --edit foo --in-place
+> 
+> I originally CC'ed Denton on this thread because he recently added
+> --keep-base.  I initially hoped it would do something similar to
+> --in-place, but on reading the patch discussion, I think it's for
+> something different altogether.  :-\   It's similar, though, in the
+> same way that --fork-point is; which may be another way to say "not
+> very."
 
-Interesting. I think re-arming a signal() has been a well-understood
-technique for a while, but I am not too surprised that there would be a
-platform that doesn't like it. :)
+You're correct, --keep-base is a little more explicit than your proposed
+--in-place switch in that the former requires an upstream revision be
+specified whereas yours implicitly finds the base using the
+$sequence-edits. I suppose until --in-place is implemented, users could
+always use explicitly specify the upstream branch, such as:
 
-So I understand this hunk:
+	$ git rebase --edit foo --keep-base master
 
-> --- ./daemon.c.ORIGIN	2019-03-18 17:53:51 +0100
-> +++ ./daemon.c	2019-03-18 18:00:16 +0100
-> @@ -943,8 +943,11 @@
->  	 * Otherwise empty handler because systemcalls will get interrupted
->  	 * upon signal receipt
->  	 * SysV needs the handler to be rearmed
-> +	 * AIX does NOT like sometimes (t5570-git-daemon test 4) to rearm it.
->  	 */
-> +#ifndef _AIX
->  	signal(SIGCHLD, child_handler);
-> +#endif
->  }
+Anyway, I've been following along with the discussion and although there
+are kinks to iron out, I like the general idea. Although I use fixup and
+squash commits + rebase -i --keep-base for major branch polishing,
+sometimes after the branch is mostly polished, there are a few
+last-minute changes to be made. I think that your proposed solution
+would also match my use-case nicely.
 
-Although usually we would split this out to a Makefile knob. E.g., call
-it something like AVOID_REARMING_SIGNAL_HANDLERS or something, and then
-put it into config.mak.uname for AIX, so that it's turned on by default
-there. And then if other platforms need the same, they just need to add
-a similar Makefile line (and people can experiment by building with or
-without it). See how NO_INITGROUPS is used in daemon.c for prior art.
+Thanks,
 
-Did you test on a daemon with this patch that when serving multiple
-clients it continues to handle SIGCHLD properly after the first
-instance? Specifically, we'd want to make sure that our accept()
-continues to be interrupted and we run check_dead_children() promptly.
-
->  static int set_reuse_addr(int sockfd)
-> @@ -1155,7 +1158,19 @@
->  		pfd[i].events = POLLIN;
->  	}
->  
-> +#ifdef _AIX
-> +	/* AIX does NOT like sometimes (t5570-git-daemon test 4) to rearm the SIGCHLD handler */
-> +	struct sigaction sa;
-> +
-> +	bzero(&sa, sizeof(sa));
-> +	sa.sa_handler = child_handler;
-> +	sa.sa_flags   = 0;
-> +	sigemptyset(&sa.sa_mask);
-> +
-> +	sigaction(SIGCHLD, &sa, NULL);
-> +#else
->  	signal(SIGCHLD, child_handler);
-> +#endif
-
-This hunk I don't quite understand. This signal() should be run only
-once, so does it matter if it's done via sigaction() or signal()? Does
-AIX require using sigaction() without SA_RESETHAND in order to not need
-the re-arming behavior?
-
--Peff
+Denton
