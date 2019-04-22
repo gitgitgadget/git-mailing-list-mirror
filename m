@@ -2,144 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 474F11F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 18:43:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 705AA1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 19:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727419AbfDVSnc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 14:43:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37126 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727014AbfDVSnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 14:43:31 -0400
-Received: (qmail 2511 invoked by uid 109); 22 Apr 2019 18:43:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 18:43:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1442 invoked by uid 111); 22 Apr 2019 18:44:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 14:44:03 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 14:43:29 -0400
-Date:   Mon, 22 Apr 2019 14:43:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        "Jansen, Geert" <gerardu@amazon.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Resolving deltas dominates clone time
-Message-ID: <20190422184329.GA20304@sigill.intra.peff.net>
-References: <259296914.jpyqiltySj@mfick-lnx>
- <20190420035825.GB3559@sigill.intra.peff.net>
- <874l6tayzz.fsf@evledraar.gmail.com>
- <20190422155716.GA9680@sigill.intra.peff.net>
- <874l6pudg4.fsf@evledraar.gmail.com>
+        id S1727734AbfDVTQb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 15:16:31 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:40164 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726994AbfDVTQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 15:16:31 -0400
+Received: by mail-lf1-f68.google.com with SMTP id a28so9750892lfo.7
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 12:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qWRAmWU3T6RvgUB4S1FLXdSBxcOr4BbPWF1+DxfN21M=;
+        b=b/cCikW6/7oAsuiGCNja3JuRvVNHzUBeyBwLwk3WKfCSrXc3Z5F2VzClxLz5/MT3Pi
+         5vMZPZDRktPDZi4aFxz+jSNfl+IR34esm/6tuABL2FLxdv8quCf8r3WB1I1+e8LzfHAd
+         W0pf1M0utoLzt1NYIUd8kyeDz33klAfcFHsi9fyrjwa98H74D2272w2LnNvSX0JAWEvr
+         TiwoBn+rn/B74v5NXPoihei74yoacLKcjql4j6SQVncm6nFPdRA6l5dGTlE2cdooRpEf
+         6tIDU2T4kd7BupZyhkggLdcCBTYVW6xaAJ5aRU83LbWt5cO0kI8GoiFL9RdYcCGJKdyu
+         V4xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qWRAmWU3T6RvgUB4S1FLXdSBxcOr4BbPWF1+DxfN21M=;
+        b=ohOAA8GjtJ+sbngJLn9h6qbu8/PiKNro99BV29cQLByOphiVQjZcnUYkRprWbxZXXv
+         kXDjG3H87RrVw0lV+RygxPopx/RiY+246DtW/HvXucu+yRCphIKHPzlPxlczo/6O1tGr
+         PJnic9nXKN3rzVk4EGT1qsbSp06EMyl5OcNk3Wxa3TSKa7IsJ/CRONWCpXFvPpomuIZR
+         58uXG5kJJQAzVJRk4tr78ffI5raFg+P8wdktg7dB/m91Nfe9qbwMiszYg0Q9J9AGBXDR
+         rxB47WrgiVjeJ4ZbnkEL8jHsSdo79O7bzJlWmkj4JhlIRi+5TpI8V+3fYx7AK61U2Z+D
+         M0Kg==
+X-Gm-Message-State: APjAAAV/ljSdlu3kGeZx+hh8g3BWO0Vw3ek9xDHuZV/f8Cjhlhr/i/Kp
+        fDJyPmRU4oxK+pm9ifxANvGuRaBo+Pftx7mogeY=
+X-Google-Smtp-Source: APXvYqwWL/80Dt7LPJepPnjk/kTTCEydYuRkJU/cKu5cwA5Ofzmclg6UnelI8iNnLK9iMAblAQk8JjQbA6GjMryv7Qw=
+X-Received: by 2002:ac2:4465:: with SMTP id y5mr11121631lfl.82.1555960588774;
+ Mon, 22 Apr 2019 12:16:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874l6pudg4.fsf@evledraar.gmail.com>
+References: <20190422000712.13584-1-phil.hord@gmail.com> <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+ <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
+In-Reply-To: <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Mon, 22 Apr 2019 12:16:16 -0700
+Message-ID: <CABURp0r9DBxoxLjjynNj-px7mFBA5--ZS7SoNniNu7MLPZkqwg@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 22, 2019 at 08:01:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Apr 22, 2019 at 7:44 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> Doing "git rebase -i master" and then editing the todo list has the side
+> effect of rebasing the branch. Often I find I want to amend or reword a
+> commit without rebasing (for instance when preparing a re-roll). To do
+> this I use a script that runs something like
+>
+> GIT_SEQUENCE_EDITOR="sed -i s/pick $sha/edit $sha/" git rebase -i $sha^
+>
+> and I have my shell set up to interactively select a commit[1] so I
+> don't have to cut and paste the output from git log. I've found this
+> really useful as most of the time I just want to amend or reword a
+> commit or squash fixups rather than rearranging commits. The script
+> knows how to rewind a running rebase so I can amend several commits
+> without having to start a new rebase each time.
+>
+> So I can see a use for --edit, --reword & --drop if they selected a
+> suitable upstream to avoid unwanted rebases (I'm not so sure about the
+> others though). If you want to rebase as well then I agree you might as
+> well just edit the todo list.
 
-> > Your patch is optionally removing the "woah, we got an object with a
-> > duplicate sha1, let's check that the bytes are the same in both copies"
-> > check. But Martin's problem is a clone, so we wouldn't have any existing
-> > objects to duplicate in the first place.
-> 
-> Right, but we do anyway, as reported by Geert at @amazon.com preceding
-> that patch of mine. But it is 99.99% irrelevant to *performance* in this
-> case after the loose object cache you added (but before that could make
-> all the difference depending on the FS).
+I have the same need.  I plan to have some switch that invokes this
+"in-place rebase" behavior so that git can choose the upstream for me
+as `mergebase $sequence-edits`.  In fact, I want to make that the
+default for these switches, but that feels too surprising for the
+rebase command. I plan to progress like this:
 
-I scratched my head at this a bit. If we don't have any other objects,
-then what are we comparing against? But I think you mean that we have
-the overhead of doing the object lookups to find that out. Yes, that can
-add up if your filesystem has high latency, but I think in this case it
-is a drop in the bucket compared to dealing with the actual object data.
+    # --in-place switch is not supported; manual upstream is given by user
+    git rebase --edit foo foo^
 
-> I just mentioned it to plant a flag on another bit of the code where
-> index-pack in general has certain paranoias/validation the user might be
-> willing to optionally drop just at "clone" time.
+     # --in-place switch is added; now we can say this
+     git rebase --edit foo --in-place
 
-Yeah, I agree it may be worth pursuing independently. I just don't think
-it will help Martin's case in any noticeable way.
+     # prefer in-place edits as default when editing
+     git config --add rebase.in-place-edits true
+     git rebase --edit foo
 
-> > Right, that would work. I will note one thing, though: the total time to
-> > do a 1-depth clone followed by an unshallow is probably much higher than
-> > doing the whole clone as one unit, for two reasons:
-> 
-> Indeed. The hypothesis is that the user doesn't really care about the
-> clone-time, but the clone-to-repo-mostly-usable time.
+This --in-place switch would use `mergebase $sequence-edits` to find
+my upstream parameter if I didn't give one explicitly.
 
-There was a little bit of self-interest in there for me, too, as a
-server operator. While it does add to the end-to-end time, most of the
-resource use for the shallow fetch gets put on the server. IOW, I don't
-think we'd be happy to see clients doing this depth-1-and-then-unshallow
-strategy for every clone.
+This config option set to true would tell git to assume I meant to use
+--in-place whenever I use some sequence-edit switch and I don't
+specify an upstream.
 
-> > So in general, I think you'd need some cooperation from the server side
-> > to ask it to generate and send the .idx that matches the .pack it is
-> > sending you. Or even if not the .idx format itself, some stable list of
-> > sha1s that you could use to reproduce it without hashing each
-> > uncompressed byte yourself.
-> 
-> Yeah, depending on how jt/fetch-cdn-offload is designed (see my
-> https://public-inbox.org/git/87k1hv6eel.fsf@evledraar.gmail.com/) it
-> could be (ab)used to do this. I.e. you'd keep a "base" *.{pack,idx}
-> around for such a purpose.
-> 
-> So in such a case you'd serve up that recent-enough *.{pack,idx} for the
-> client to "wget", and the client would then trust it (or not) and do the
-> equivalent of a "fetch" from that point to be 100% up-to-date.
+I have written some of this code, but since I am running into
+conflicts with next and pu, I haven't ironed it out yet.
 
-I think it's sort of orthogonal. Either way you have to teach the client
-how to get a .pack/.idx combo. Whether it learns to receive it inline
-from the first fetch, or whether it is taught to expect it from the
-out-of-band fetch, most of the challenge is the same.
-
-> > This could even be stuffed into the pack format and stripped out by
-> > the receiving index-pack (i.e., each entry is prefixed with "and by
-> > the way, here is my sha1...").
-> 
-> That would be really interesting. I.e. just having room for that (or
-> anything else) in the pack format.
-> 
-> I wonder if it could be added to the delta-chain in the current format
-> as a nasty hack :)
-
-There's definitely not "room" in any sense of the word in the pack
-format. :) However, as long as all parties agreed, we can stick whatever
-we want into the on-the-wire format. So I was imagining something more
-like:
-
-  1. pack-objects learns a --report-object-id option that sticks some
-     additional bytes before each object (in its simplest form,
-     $obj_hash bytes of id)
-
-  2. likewise, index-pack learns a --parse-object-id option to receive
-     it and skip hashing the object bytes
-
-  3. we get a new protocol capability, "send-object-ids". If the server
-     advertises and the client requests it, then both sides turn on the
-     appropriate option
-
-You could even imagine generalizing it to "--report-object-metadata",
-and including 0 or more metadata packets before each object. With object
-id being one, but possibly other computable bits like "generation
-number" after that. I'm not convinced other metadata is worth the
-space/time tradeoff, though. After all, this is stuff that the client
-_could_ generate and cache themselves, so you're trading off bandwidth
-to save the client from doing the computation.
-
-Anyway, food for thought. :)
-
--Peff
+Phil
