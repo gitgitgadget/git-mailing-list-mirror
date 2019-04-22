@@ -2,142 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FAAB1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 15:50:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB1C91F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 15:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727714AbfDVPuw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 11:50:52 -0400
-Received: from mx0b-00256a01.pphosted.com ([67.231.153.242]:48572 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727139AbfDVPuw (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Apr 2019 11:50:52 -0400
-X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Apr 2019 11:50:51 EDT
-Received: from pps.filterd (m0119692.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3MFg4lY038658
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 11:43:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=20180315; bh=RIuPsqmKya6Z575AlE1abL2DsWWdpTv998HWfeF89i8=;
- b=leNgvjy7V0BmI5Sm4z+lThYmg+Bi/bmTPFvCPPxCTqKvflryktMyi9TgvSKMVOhXOkwk
- M2Steq/6IrpxCSXECOPLgmcfrx3vpFQ+8Dqu49Eo6BfONFXQ3dyyDqPXZBRQlQIHhnRi
- jpaAolOESGo32UD0ouSmmTFCYQaHeDN7ryJW72nxG//XBK83BjDF+N86vxvNWlra6T4B
- BKTdZ/Vp3cPOM1jUdI74wiLnTzEU9SrYAmhwOquu2fkJ1aFL6rpbcXOSZpcM3E5q9bpK
- rOCeQyJJ9v+0URaFLXu/bP8ATaRQke96bC6xH/qDaQwbvUpkE5Jfn1GnVHci3s2oBUFB lw== 
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2s0g9pju97-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 11:43:44 -0400
-Received: by mail-ot1-f69.google.com with SMTP id d38so7602950otb.22
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 08:43:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RIuPsqmKya6Z575AlE1abL2DsWWdpTv998HWfeF89i8=;
-        b=uPzagTQiGbOBvWOTjzOyDZ8oPakFxdJd383uMPw6NLOyNIc/EdXIRSLZtujHO+oA4y
-         F/Ow8Edga9xEiXxJt9FSGVU5vCHat2Xt3bgkVVh0i79FD5vfhHEDONVPI7u1BKxtG8Bf
-         lwfuVDTlrYEjLvn97aZwbSWAAQfLtlAvkRzK4SmHXrLdZID3dTX/XMABSMmH9SKSzJhR
-         dpMV0jWJABMSfnA8o/Um7p6pcBg6bH6hahByggPP9YuK76+X4DGixCviXs4+K1t0l7RZ
-         ZbXjzs2WZzMOCPKxCWFhYUy65x7rNPd8rMW3sUc8c1ygdDsuk0LE+dv1qhUK6Ao56Wmi
-         TQRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RIuPsqmKya6Z575AlE1abL2DsWWdpTv998HWfeF89i8=;
-        b=frHr/cI4K3V6iOzVl3BY0I4O1oPBiMRLH0NB5SJFQr1gpt4xU68B7WMAYnjS/LZ3qC
-         bD4/rsVntwygvDscEFGIYCBkX1HunH0W3Eqtqvywd/CtgzT1O0Re5nB57gea4Vjw/jvH
-         muVSWuoNYWpQ2cgqvommO3aUj9GwwYeVTZNFvi5q7Idg+kl1O95jYVam/GERyC1AGbPB
-         DD7U/bwA++WPfyKr635NHtA4HRBar4UttTiHDywltzMyqOqbWKZEgIa9qPKqvPG5MdKX
-         Ey/3jzgDF99H3EQ35GZ4M4PdWvJI19YM6dAQyqvzCANIBDpQTHcJfRgzQHFUbh1UicTV
-         H/9g==
-X-Gm-Message-State: APjAAAWoEwrc0NtySc+yAe7qnnToe5+UG3oz/NLs2jfBYDWA+sZg0wY3
-        yv18sZhCT0vdW0Etq5cneZS7y7eOMgY6z11mo1nDH5FSlobaI5wqKcDljt8xBcAzhExm4siqaxh
-        UKKQOgfT+ahg=
-X-Received: by 2002:aca:310a:: with SMTP id x10mr10905964oix.161.1555947823321;
-        Mon, 22 Apr 2019 08:43:43 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqykRbZFdP+UvIbojGzgi5eozQB16leu+Y2PvJs0p+L5EB3pXxNLX5pc1gByt4lynig1DPxQOw==
-X-Received: by 2002:aca:310a:: with SMTP id x10mr10905948oix.161.1555947823091;
-        Mon, 22 Apr 2019 08:43:43 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-140.natpool.nyu.edu. [216.165.95.140])
-        by smtp.gmail.com with ESMTPSA id q25sm5641308otl.60.2019.04.22.08.43.42
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Apr 2019 08:43:42 -0700 (PDT)
-Date:   Mon, 22 Apr 2019 11:43:41 -0400
-From:   Santiago Torres Arias <santiago@nyu.edu>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2019, #04; Mon, 22)
-Message-ID: <20190422154341.2uqudb645kja6fp7@LykOS.localdomain>
-References: <xmqqd0le8t9l.fsf@gitster-ct.c.googlers.com>
- <20190422145237.v5xjelebyjxb3uko@LykOS.localdomain>
- <20190422152842.GC1633@sigill.intra.peff.net>
+        id S1728089AbfDVP5T (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 11:57:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36882 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727378AbfDVP5T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 11:57:19 -0400
+Received: (qmail 31391 invoked by uid 109); 22 Apr 2019 15:57:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 15:57:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32601 invoked by uid 111); 22 Apr 2019 15:57:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 11:57:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 11:57:16 -0400
+Date:   Mon, 22 Apr 2019 11:57:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Resolving deltas dominates clone time
+Message-ID: <20190422155716.GA9680@sigill.intra.peff.net>
+References: <259296914.jpyqiltySj@mfick-lnx>
+ <20190420035825.GB3559@sigill.intra.peff.net>
+ <874l6tayzz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="lurbf2mbtui5e2pw"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190422152842.GC1633@sigill.intra.peff.net>
-X-Orig-IP: 209.85.210.69
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=7 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=663 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1904220118
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874l6tayzz.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Apr 20, 2019 at 09:59:12AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
---lurbf2mbtui5e2pw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > If you don't mind losing the collision-detection, using openssl's sha1
+> > might help. The delta resolution should be threaded, too. So in _theory_
+> > you're using 66 minutes of CPU time, but that should only take 1-2
+> > minutes on your 56-core machine. I don't know at what point you'd run
+> > into lock contention, though. The locking there is quite coarse.
+> 
+> There's also my (been meaning to re-roll)
+> https://public-inbox.org/git/20181113201910.11518-1-avarab@gmail.com/
+> *that* part of the SHA-1 checking is part of what's going on here. It'll
+> help a *tiny* bit, but of course is part of the "trust remote" risk
+> management...
 
-On Mon, Apr 22, 2019 at 11:28:42AM -0400, Jeff King wrote:
-> On Mon, Apr 22, 2019 at 10:52:38AM -0400, Santiago Torres Arias wrote:
-> > Hi,
-> >=20
-> > This is the second what's cooking that's gone by without mention of the
-> > RFC patch regarding verify_tag[1]. Is this due to lack of interest or is
-> > this an error on my side (f.e., did I forget to send something?).
->=20
-> I think anything marked "RFC" that does not get much discussion is
-> likely to get overlooked by a busy maintainer.=20
+I think we're talking about two different collision detections, and your
+patch wouldn't help at all here.
 
-Aha, I was afraid of that. I didn't want to add too much noise as I've
-seen there's a lot going on lately.
+Your patch is optionally removing the "woah, we got an object with a
+duplicate sha1, let's check that the bytes are the same in both copies"
+check. But Martin's problem is a clone, so we wouldn't have any existing
+objects to duplicate in the first place.
 
-> :) I had your patch on my todo list, and I just wrote up some comments
-> in that thread.
->=20
+The problem in his case is literally just that the actual SHA-1 is
+expensive, and that can be helped by using the optimized openssl
+implementation rather than the sha1dc (which checks not collisions with
+objects we _have_, but evidence of somebody trying to exploit weaknesses
+in sha1).
 
-Thanks!
--Santiago
+One thing we could do to make that easier is a run-time flag to switch
+between sha1dc and a faster implementation (either openssl or blk_sha1,
+depending on the build). That would let you flip the "trust" bit per
+operation, rather than having it baked into your build.
 
---lurbf2mbtui5e2pw
-Content-Type: application/pgp-signature; name="signature.asc"
+(Note that the oft-discussed "use a faster sha1 implementation for
+checksums, but sha1dc for object hashing" idea would not help here,
+because these really are object hashes whose time is dominating. We have
+to checksum 8GB of raw packfile but 2TB of object data).
 
------BEGIN PGP SIGNATURE-----
+> I started to write:
+> 
+>     I wonder if there's room for some tacit client/server cooperation
+>     without such a protocol change.
+> 
+>     E.g. the server sending over a pack constructed in such a way that
+>     everything required for a checkout is at the beginning of the
+>     data. Now we implicitly tend to do it mostly the other way around
+>     for delta optimization purposes.
+> 
+>     That would allow a smart client in a hurry to index-pack it as they
+>     go along, and as soon as they have enough to check out HEAD return
+>     to the client, and continue the rest in the background
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAly94S0ACgkQRo8SLOgW
-IpXd3Q/+JUzgGlj+5eVNe7+wZNo21F3JEo7hdfjt5myvB8fJs1tUdL5P9dFraji/
-kbOCLuPjY3mOPavCC47UmHqE83QSniBDRCrd4UFgyjSJlN5mAzXnqwBi6/+WQt6O
-P4Mpei12gnT+Z/xadU+HMdWuxqbPjwDuRgMVj4gQ5GjOibIQcoLUCmHBdJTOrwoq
-RqIFL5uZk4RPU7tTn0+SpQJKt0DbrRjIT7sS94THYU4o/vCS5WYr4UrDNDIANogX
-rrFkpGjW1Gimz9AvufV5mu3ADn43Zr7KWrdLw5vYxFmYXRI7Am35mYSKP5a9WS/2
-TCkOugFinbaR2H72f8mxjjpXnyK4//6u7hjRmQ/nh/ymkH/SeJuWQnEEHAaXjVrt
-7JwORHmMOhyi1wjQ7ryo/GLKs/GJlXnp8ubkFZXANYEdUUyEhy/OJBVGbDE9ZRl8
-2tHxvw8JGTs/mU/V59x5WMtjCBPfAiJlXAwTEmTMaWNjdMKg3Nh9tFRJoMUlpfu/
-LQuDiCUrkBbyJSILNd5Ka47Tq6B/0rob6HQq1wG7E26FpOGxgMta3IITCn3oCxTy
-VsKm1gyjDRTypPUFs0Lm+BTn8JjQniYfDlM+CEchOCD6yBJ3HhKovlJO/q9+5dai
-/Y258NjCaTjGAwINchfFnrHnuBlNSxWS5OtYFK/aMw275k7A8dU=
-=2J8s
------END PGP SIGNATURE-----
+Interesting idea. You're not reducing the total client effort, but
+you're improving latency of getting the user to a checkout. Of course
+that doesn't help if they want to run "git log" as their first
+operation. ;)
 
---lurbf2mbtui5e2pw--
+> But realized I was just starting to describe something like 'clone
+> --depth=1' followed by a 'fetch --unshallow' in the background, except
+> that would work better (if you did "just the tip" naïvely you'd get
+> 'missing object' on e.g. 'git log', with that ad-hoc hack we'd need to
+> write out two packs etc...).
+
+Right, that would work. I will note one thing, though: the total time to
+do a 1-depth clone followed by an unshallow is probably much higher than
+doing the whole clone as one unit, for two reasons:
+
+  1. The server won't use reachability bitmaps when serving the
+     follow-up fetch (because shallowness invalidates the reachability
+     data they're caching), so it will spend much more time in the
+     "Counting objects" phase.
+
+  2. The server has to throw away some deltas. Imagine version X of a
+     file in the tip commit is stored as a delta against version Y in
+     that commit's parent. The initial clone has to throw away the
+     on-disk delta of X and send you the whole object (because you are
+     not requesting Y at all). And then in the follow-up fetch, it must
+     either send you Y as a base object (wasting bandwidth), or it must
+     on-the-fly generate a delta from Y to X (wasting CPU).
+
+> But at this point I'm just starting to describe some shoddy version of
+> Documentation/technical/partial-clone.txt :), OTOH there's no "narrow
+> clone and fleshen right away" option.
+
+Yes. And partial-clone suffers from the problems above to an even
+greater extent. ;)
+
+> On protocol extensions: Just having a way to "wget" the corresponding
+> *.idx file from the server would be great, and reduce clone times by a
+> lot. There's the risk of trusting the server, but most people's use-case
+> is going to be pushing right back to the same server, which'll be doing
+> a full validation.
+
+One tricky thing is that the server may be handing you a bespoke .pack
+file. There is no matching ".idx" at all, neither in-memory nor on disk.
+And you would not want the whole on-disk .pack/.idx pair from a site
+like GitHub, where there are objects from many forks.
+
+So in general, I think you'd need some cooperation from the server side
+to ask it to generate and send the .idx that matches the .pack it is
+sending you. Or even if not the .idx format itself, some stable list of
+sha1s that you could use to reproduce it without hashing each
+uncompressed byte yourself. This could even be stuffed into the pack
+format and stripped out by the receiving index-pack (i.e., each entry is
+prefixed with "and by the way, here is my sha1...").
+
+> We could also defer that validation instead of skipping it. E.g. wget
+> *.{pack,idx} followed by a 'fsck' in the background. I've sometimes
+> wanted that anyway, i.e. "fsck --auto" similar to "gc --auto"
+> periodically to detect repository bitflips.
+> 
+> Or, do some "narrow" validation of such an *.idx file right
+> away. E.g. for all the trees/blobs required for the current checkout,
+> and background the rest.
+
+The "do we have all of the objects we need" is already separate from
+"figure out the sha1 of each object", so I think you'd get that
+naturally if you just took in an untrusted .idx (it also demonstrates
+that any .idx cost is really focusing on blobs, because the "do we have
+all objects" check is going to decompress every commit and tree in the
+repo anyway).
+
+-Peff
