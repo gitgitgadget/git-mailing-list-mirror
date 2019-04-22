@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E640320379
-	for <e@80x24.org>; Mon, 22 Apr 2019 06:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D087B20379
+	for <e@80x24.org>; Mon, 22 Apr 2019 06:30:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbfDVGZm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 02:25:42 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43765 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbfDVGZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 02:25:41 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k17so14668991wrx.10
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 23:25:40 -0700 (PDT)
+        id S1726443AbfDVGah (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 02:30:37 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36836 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725914AbfDVGah (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 02:30:37 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h18so13430267wml.1
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 23:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FDsNhPqLwPqJ6NTRs59+sPzC0rXI27TOQcZcIHQlp94=;
-        b=tbnpbmzDkzOg1URvPK1yUqRiEknKgePyayH/kqEpEreKvzuPVKtTPLvRI2y870siHa
-         vMPf44znJTTfn/AwqTo8bOXmQjkb5Cddu1hHIsoTpYEk/uVLtc8n6AGzqhp6AY9SKw0g
-         7eLRKgl7/vHuUwnQy1Uo7RbN8qz738RVEq5JDQ78VcY5dy19jxf3VGZ8zFU5LQ8p+Jb4
-         wUQ8CxPURy/TXTgbro3atYoxX67fqxoYiF3r1nLHpwpUIUSyOw85yvoDohJpotGKY3dO
-         Zy717waWSC0e/bhBymsBSDV8OSKqqfDAlCghHs1p9LvYHxJsTFZE+Myie1x1tNL2Kzn7
-         A04g==
+        bh=ZqzQXaB4IlUNUsGpyhRfACjcDdz5MDMU11/v0DB7XYA=;
+        b=WepPCR+QF38RO8kvDtPKnMCMEF21IW41abZx6Af/0fbZi1wRfo9P4KrfzmKeglA70q
+         PvVHH/pkZmPCVUSviE2CoUU2wYCdyk/Yhh8LZCwLI5M3uKG/keJI9BUT2bUy63Dro43a
+         VSHJQPJ2YH78zfwpcuCl06TmDYO3w8/qz9FXfVoDiIxA4wpJm47AtVZZFHbDfhGsUQ0f
+         tWL+oMWkS94o5tdIhW01OwgwdBNEQI9pbIq8K2aXqaWMy1VncJikveqzip+6ss4vrBTD
+         xHy28zgt7v7Jx4llGDit0+mfGpkYtN52b3gZb5dQtsZGzm6MFfrUooD3WUHFRRbZHGRA
+         L2TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FDsNhPqLwPqJ6NTRs59+sPzC0rXI27TOQcZcIHQlp94=;
-        b=V5oY0v5Bm7S8nTJuUJKd4NOs69H9vuQPsdMaIHuv69Q8JYyBZYpPqdlTYvJre6Y37r
-         0c9F7pbuH6/v360DcExwR4g0O4fN41KJKy21WgCDSMAcuB3OA7d+nAMBgasSugdBeWTi
-         jWhXolvGSfs8irXovCKmbnK7A9jqvU0SpuTJJAFGt/oBbwe8WTtruqfgEXsvKS7sL+03
-         54Y/YCQUjJZCol0rTQmjY2BJQNmP+UUgGvR/E4MT+r9E1NyyuLZa3/4q2TxvrgoNNTsN
-         LpuK3JVZ2KTqNJ93muRVhgxkmcJFfjTA6XbwGzBiyw+8HURTWjxouhDNtmr6SfUlmTX4
-         IrVw==
-X-Gm-Message-State: APjAAAUSzH02CV7m2ir634ZDteCPnfWQ80vNK9C68d1qxxdPge6M0BCE
-        kAj/GJWQEi7xAoKoE4T8xzg=
-X-Google-Smtp-Source: APXvYqzHDBs3DA5hiYVKW6Qg+QUrUqAAeAl1pnjlra9Szn5kTtUtP/xeiY6LsotF4lXPvPTIzh5cCw==
-X-Received: by 2002:adf:eb84:: with SMTP id t4mr11746581wrn.43.1555914339885;
-        Sun, 21 Apr 2019 23:25:39 -0700 (PDT)
+        bh=ZqzQXaB4IlUNUsGpyhRfACjcDdz5MDMU11/v0DB7XYA=;
+        b=s0BlRu1vOk8R6awNcCq72nwSUTJn2jeV2uAmYLeZCz6hGnuRubGwi6mB7XtMmjuSku
+         i2P2/n2xacQ6ufH/5kvmV9EqNTixiZist/uhwwidlujpWXuQQazYgDh+UcEWABcPfp1m
+         gMaontfc0XW9Xzf4Ulqq3+3M6Mny8BB+Jux7AgU22apUidv561Cwt5UlaRXt/TOGdPsN
+         7lzGDX1r6zmtbnOwxem/bLiTBg3rlTA/ueMK/gqSznng63lSj8/Ky/xQOXIJBbuiqwuX
+         29zKq8pL5r1GaZzv0hviJtPljtKeNHsCtwDGM55BGSFYDrU8qYNcV54MAANO7poA9oid
+         g0iA==
+X-Gm-Message-State: APjAAAVmhJwB6WlSdlJl81Bsogi5S5TrLrcjsQfwux2pIfHNE7pOOcYs
+        WdS7HbZiF3dBZJpGIR/et0s=
+X-Google-Smtp-Source: APXvYqxrXtVnjF5GX6Qr5Xll5mCzWYIsI5wp/+dol4l1+l9waXYFgWU7J8xq0TTM3dfSvc7HgFrVQg==
+X-Received: by 2002:a1c:dc09:: with SMTP id t9mr11098285wmg.142.1555914635482;
+        Sun, 21 Apr 2019 23:30:35 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id h9sm9296332wmb.5.2019.04.21.23.25.39
+        by smtp.gmail.com with ESMTPSA id z20sm10112147wmf.34.2019.04.21.23.30.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Apr 2019 23:25:39 -0700 (PDT)
+        Sun, 21 Apr 2019 23:30:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t5516: fix mismerge in 'next'
-References: <20190422044812.GA28493@sigill.intra.peff.net>
-Date:   Mon, 22 Apr 2019 15:25:38 +0900
-In-Reply-To: <20190422044812.GA28493@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 22 Apr 2019 00:48:12 -0400")
-Message-ID: <xmqq4l6q8skd.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] cache.h: fix mismerge of 'dl/no-extern-in-func-decl'
+References: <cover.1555487380.git.liu.denton@gmail.com>
+        <9d6c51b2118b24cd94f3e2951ff0e9ee82afbd98.1555911520.git.liu.denton@gmail.com>
+Date:   Mon, 22 Apr 2019 15:30:34 +0900
+In-Reply-To: <9d6c51b2118b24cd94f3e2951ff0e9ee82afbd98.1555911520.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Sun, 21 Apr 2019 22:44:04 -0700")
+Message-ID: <xmqqzhoi7drp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,39 +67,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> The merge of jk/fetch-reachability-error-fix conflicts with
-> jt/test-protocol-version, but the conflict resolution done by
-> b4ce8375c018 has a typo (looks like an editor mistake):
-> ...
+> After merging 'dl/no-extern-in-func-decl' into 'pu', it seems like the
+> conflict resolution mostly went well except for one spot, which this
+> patch should fix.
 
-Indeed it was.  Thanks for spotting.
+I do not think this is a mismerge per-se.
 
-> The same problem is present in the merges to pu, which is not surprising
-> since the 'next' merge was probably just resolved by rerere.
+That line is not touched since this February at 7589e636 ("Merge
+branch 'nd/the-index-final'", 2019-02-06).
 
-Yup, here is what I did:
-
-    $ git checkout b4ce8375c018
-    $ git am jk-t5516-fix.patch
-    $ CG=$(git describe)
-    $ git reset --hard b4ce8375c018^
-    $ git merge jk/fetch-reachability-error-fix
-    $ git rerere forget t/t5516-fetch-push.sh
-    $ git diff $CG ;# shows the typo
-    $ git checkout $CG t/t5516-fetch-push.sh
-    # I should learn to use 'git restore' one of these days.
-    $ git diff ;# shows --cc
-    $ git rerere
-    $ git reset --hard
-    $ git merge jk/fetch-reachability-error-fix
-    $ git diff $CG ;# shows no difference
-
-That should teach rerere about the right resolution.  And to carry
-the fix in 'next':
-
-    $ git checkout next
-    $ git am -s3 jk-t5516-fix.patch
+It is just that large scale churning on a common and busy file like
+cache.h is bound to cause painful conflicts with other topics, both
+textual and non-textual.  As these "extern" in *.h that explicitly
+marks that they are merely decls and not defunitions do not hurt
+anybody, I think it is better to leave it to a cleanup pass at the
+end of the tunnel after things gradulate to 'master' and start to
+calm down.
 
 Thanks.
