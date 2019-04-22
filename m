@@ -2,124 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5431F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 18:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 474F11F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 18:43:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727190AbfDVSeA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 14:34:00 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37117 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726407AbfDVSeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 14:34:00 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w23so6200548ply.4
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 11:33:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EE9xICX4EVvKx9+RiCbulfYDUdRY2YLBhcAACE2jEek=;
-        b=UAiXbdiXzdaeZCb62wqae9EOfgMUfCNaUN9Gvnb4yq3aMwdpoOdOb90r0gdviFG5zJ
-         WmY/pjyC4n9nVmcJxnm9kfU6BCnV5pz610oRqsFfj6EjU4h8kuFy2kQ+53PCV1Y9CcxT
-         QPYZIylFalJwjZ9hIsucc0viGtBi8LjmZ9pufBVeyqcYbAJ0/ozld5o2A+ryQezP68Zd
-         +pG4GXML0bu90DtGUE1njqPzAPK/UMKVCnCAkf99i2mkicNIfElsAxF48ipPHPt63aIv
-         lN/qnlqE3erWuIVsd3JN7FtXCbDPF+DShMl1NA4w1GGhU987m4pOiS2MBexuPVHGffOj
-         qWpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EE9xICX4EVvKx9+RiCbulfYDUdRY2YLBhcAACE2jEek=;
-        b=YZ4gAke4SXjsHd3qk3WTZFqGHCO8QJMWejZL8cGfQ7I7nojTsxxctqixH4e5wKIvNI
-         tQcZlsxdCYZt3HG+yoEqDYmohbBAwyX1UtzLObv7HvxtIycnCwNHqeEvhkWK031m9UiI
-         uV0wMu0h+cWGcyg8DUFtlbsZV7Pmwo0dCiLHN9i+TIWwLgyA+mY9u5aKC2DH9BnXONFe
-         oGjbbOvsERlOGLvSj+73ZJ7jNZkm+KyZG0pAWLOzLCyViTtAqemE+B/aZqh7CQ9lJEwB
-         pP/9i6UmF/SjWfg6deOG2L++3wiGgrb0V0Vp503203Ea95gQ0F7rU5FNFOjOE4I6NRtI
-         5P+A==
-X-Gm-Message-State: APjAAAWtNAMybUxHJBbBPFp2n8tYrCadqDSVmB4dD1cGIOlMIglgFESi
-        1M7IvbfQ2eYvCRUlVG9ukjo=
-X-Google-Smtp-Source: APXvYqyARpZkPs8m1xDkz+vwb/hVO3ysGr/BRlkTpgCHtt4okNIt88FMhUiXjGEhnHA5e6JP7IR0uw==
-X-Received: by 2002:a17:902:8609:: with SMTP id f9mr20805401plo.32.1555958039127;
-        Mon, 22 Apr 2019 11:33:59 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id y10sm19845329pfm.27.2019.04.22.11.33.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Apr 2019 11:33:58 -0700 (PDT)
-Date:   Mon, 22 Apr 2019 11:33:56 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 5/5] difftool: fallback on merge.guitool
-Message-ID: <20190422183356.GA6730@dev-l>
-References: <cover.1555880168.git.liu.denton@gmail.com>
- <fb7ac11439cbfd52d9181b78fdc8f8034a6b1064.1555880168.git.liu.denton@gmail.com>
- <2a521a5c-4b5d-57aa-1e91-d4ec9b190fb7@jeffhostetler.com>
+        id S1727419AbfDVSnc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 14:43:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37126 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727014AbfDVSnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 14:43:31 -0400
+Received: (qmail 2511 invoked by uid 109); 22 Apr 2019 18:43:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 18:43:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1442 invoked by uid 111); 22 Apr 2019 18:44:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 14:44:03 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 14:43:29 -0400
+Date:   Mon, 22 Apr 2019 14:43:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        "Jansen, Geert" <gerardu@amazon.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Resolving deltas dominates clone time
+Message-ID: <20190422184329.GA20304@sigill.intra.peff.net>
+References: <259296914.jpyqiltySj@mfick-lnx>
+ <20190420035825.GB3559@sigill.intra.peff.net>
+ <874l6tayzz.fsf@evledraar.gmail.com>
+ <20190422155716.GA9680@sigill.intra.peff.net>
+ <874l6pudg4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2a521a5c-4b5d-57aa-1e91-d4ec9b190fb7@jeffhostetler.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874l6pudg4.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On Mon, Apr 22, 2019 at 08:01:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Mon, Apr 22, 2019 at 02:18:36PM -0400, Jeff Hostetler wrote:
+> > Your patch is optionally removing the "woah, we got an object with a
+> > duplicate sha1, let's check that the bytes are the same in both copies"
+> > check. But Martin's problem is a clone, so we wouldn't have any existing
+> > objects to duplicate in the first place.
 > 
+> Right, but we do anyway, as reported by Geert at @amazon.com preceding
+> that patch of mine. But it is 99.99% irrelevant to *performance* in this
+> case after the loose object cache you added (but before that could make
+> all the difference depending on the FS).
+
+I scratched my head at this a bit. If we don't have any other objects,
+then what are we comparing against? But I think you mean that we have
+the overhead of doing the object lookups to find that out. Yes, that can
+add up if your filesystem has high latency, but I think in this case it
+is a drop in the bucket compared to dealing with the actual object data.
+
+> I just mentioned it to plant a flag on another bit of the code where
+> index-pack in general has certain paranoias/validation the user might be
+> willing to optionally drop just at "clone" time.
+
+Yeah, I agree it may be worth pursuing independently. I just don't think
+it will help Martin's case in any noticeable way.
+
+> > Right, that would work. I will note one thing, though: the total time to
+> > do a 1-depth clone followed by an unshallow is probably much higher than
+> > doing the whole clone as one unit, for two reasons:
 > 
-> On 4/22/2019 1:07 AM, Denton Liu wrote:
-> >In git-difftool.txt, it says
-> >
-> >	'git difftool' falls back to 'git mergetool' config variables when the
-> >	difftool equivalents have not been defined.
-> >
-> >However, when `diff.guitool` is missing, it doesn't fallback to
-> >anything. Make git-difftool fallback to `merge.guitool` when `diff.guitool` is
-> >missing.
-> >
+> Indeed. The hypothesis is that the user doesn't really care about the
+> clone-time, but the clone-to-repo-mostly-usable time.
+
+There was a little bit of self-interest in there for me, too, as a
+server operator. While it does add to the end-to-end time, most of the
+resource use for the shallow fetch gets put on the server. IOW, I don't
+think we'd be happy to see clients doing this depth-1-and-then-unshallow
+strategy for every clone.
+
+> > So in general, I think you'd need some cooperation from the server side
+> > to ask it to generate and send the .idx that matches the .pack it is
+> > sending you. Or even if not the .idx format itself, some stable list of
+> > sha1s that you could use to reproduce it without hashing each
+> > uncompressed byte yourself.
 > 
-> Is this a well-defined operation?
-
-I believe this is a yes.
-
+> Yeah, depending on how jt/fetch-cdn-offload is designed (see my
+> https://public-inbox.org/git/87k1hv6eel.fsf@evledraar.gmail.com/) it
+> could be (ab)used to do this. I.e. you'd keep a "base" *.{pack,idx}
+> around for such a purpose.
 > 
-> I mean, we're assuming here that a 3-way gui merge tool (that probably
-> expects 3 input pathnames and maybe a 4th merge-result pathname (and
-> associated titles and etc)) can function sanely when only given the
-> pair that a diff would have.
+> So in such a case you'd serve up that recent-enough *.{pack,idx} for the
+> client to "wget", and the client would then trust it (or not) and do the
+> equivalent of a "fetch" from that point to be 100% up-to-date.
+
+I think it's sort of orthogonal. Either way you have to teach the client
+how to get a .pack/.idx combo. Whether it learns to receive it inline
+from the first fetch, or whether it is taught to expect it from the
+out-of-band fetch, most of the challenge is the same.
+
+> > This could even be stuffed into the pack format and stripped out by
+> > the receiving index-pack (i.e., each entry is prefixed with "and by
+> > the way, here is my sha1...").
 > 
-> That is, we're assuming that the selected merge tool has a 2-way diff
-> mode and that the command line args for the 2- and 3-way views are
-> compatible.
-
-If I read the code correctly, it seems like the only tool that is
-strictly "merge-only" is tortoisemerge. In mergetools/tortoisemerge, we
-have
-
-	can_diff () {
-		return 1
-	}
-
-which means it will refuse to run as a difftool.
-
-In the case where it fails like this, it'll loudly complain to the user,
-which'll give them a chance to fix their config. I believe that this is
-desired behaviour and the patch adds on top of that.
-
-Thanks,
-
-Denton
-
+> That would be really interesting. I.e. just having room for that (or
+> anything else) in the pack format.
 > 
-> Just a thought
-> Jeff
-> 
-> 
+> I wonder if it could be added to the delta-chain in the current format
+> as a nasty hack :)
+
+There's definitely not "room" in any sense of the word in the pack
+format. :) However, as long as all parties agreed, we can stick whatever
+we want into the on-the-wire format. So I was imagining something more
+like:
+
+  1. pack-objects learns a --report-object-id option that sticks some
+     additional bytes before each object (in its simplest form,
+     $obj_hash bytes of id)
+
+  2. likewise, index-pack learns a --parse-object-id option to receive
+     it and skip hashing the object bytes
+
+  3. we get a new protocol capability, "send-object-ids". If the server
+     advertises and the client requests it, then both sides turn on the
+     appropriate option
+
+You could even imagine generalizing it to "--report-object-metadata",
+and including 0 or more metadata packets before each object. With object
+id being one, but possibly other computable bits like "generation
+number" after that. I'm not convinced other metadata is worth the
+space/time tradeoff, though. After all, this is stuff that the client
+_could_ generate and cache themselves, so you're trading off bandwidth
+to save the client from doing the computation.
+
+Anyway, food for thought. :)
+
+-Peff
