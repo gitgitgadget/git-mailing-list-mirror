@@ -2,130 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9D41F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 17:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3208A1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 17:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727480AbfDVRrf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 13:47:35 -0400
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:34305 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726132AbfDVRre (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 13:47:34 -0400
-Received: by mail-ed1-f42.google.com with SMTP id a6so10112654edv.1
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 10:47:34 -0700 (PDT)
+        id S1727480AbfDVRu7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 13:50:59 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:42107 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfDVRu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 13:50:58 -0400
+Received: by mail-lf1-f67.google.com with SMTP id w23so9570133lfc.9
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 10:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=BFhPnZ+PsDISt6xW6esKV+o5RGhkxAF5cah4Xtkix9s=;
-        b=WUxOceE9knuGyPKcMfr/lGTg5HB85aml5qGK3obqlFMbze9HdM2YLp7KeYurrAmZeC
-         dpylAY1dkgYwwDc1r6YTL+aYC3n0nWcsPcaHCoaRojXjTLnat9buAwZWTPIYg2COI042
-         NRJeOaNByzD4JBXmzdc9GjXAv3VOJsX59PVGLMP+HTOdKSxCMcvSCRyLrrTBf+y019y7
-         poBn4V1my1xSmn623SLbrIAJP4W8GamvcBke6F+6Ilzifu3Bhi8U4TYo/hRsYv9i3+FO
-         vDuisSYfoq9vh6uG2wzD0OL/U1xea51TgbTMENQTyNDilLT0AdqrauTLtIQqSZDHYlxh
-         SEbA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2WcTgN6VmJ0Cw9FoPMvQdqZUZ2DVXDCLKGv24MR+9Ss=;
+        b=u6Dj8Q+Tnz1gvKsYb+J1rW1CLbydJ3bCc7+t+hHICcUt33tGtrGvUt/UOz/zKWhn02
+         uVfexKyIyJK8vVOG09vJ7MAANNo1jUDLgCr4YdgMuz50KdS/yRZ6J6QjHM+pcFE27+ng
+         /0aMNG6ch3iO+tsc8kOcFkn/zR80pEm/+ABwcfJ47rlBHkCtpMVArUFtvgFDZad0AEKg
+         4iKQsilY8Mm1c/2j85kNsXcYG5JWp0KZ+AoBWj62Kgz9d+9fZbZANtXcBaGj4iSSK/qT
+         LV/EnZCwjAwiNRy6ZZ0zC4ael2yaU092TvtMsMH6jkWcr2K0sfFQOkDBGtxKotFexKh8
+         Gv+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=BFhPnZ+PsDISt6xW6esKV+o5RGhkxAF5cah4Xtkix9s=;
-        b=IKRjvCRhyP+PCicBHn1aWt5SyMiIq0/ALUcA2RFepAUNOiVDYkcrk6LhGs3KgYqwMn
-         Ge9E2QfILIP0jLZ8JkUak51n6/GJnqik/JsyDyB4lOGX9hcWXvG91pjoHhlgVQxO8f5J
-         8Vf0Rd3wjLJK+ubkRXtcnkZ5PTHFNAJMHVT3VFbKfZcUARYiL3SmmjFnQL/4NoW2GOBo
-         Ik0vL0vOLkywzhY+dH5CeDCw/5kcOzfrxcG0aHCt3XCPfQM3dRvjhJoW7Kzg39RD/Fvt
-         BTNkuhnn0VjjTRqyJfZBrm/f1Agz6kHq92fqPKNxuIBr3U84Gv3hyEryS5vGh0e5y2Fa
-         eaGA==
-X-Gm-Message-State: APjAAAXkOuOTq8reuLpr4tFkYcefpgfHH43tWXlkob1WUbZkGqbgW3vH
-        dgPgxmRxwTIgyOeZi+f+1fo=
-X-Google-Smtp-Source: APXvYqxmTm/MjczqgitjZ07jahOXZtzNzLIdlgQUFX4t7wDpAdWPyO+4f9aqC1yTsAKmWYc0xUtHrQ==
-X-Received: by 2002:a17:906:18a2:: with SMTP id c2mr10270734ejf.9.1555955253172;
-        Mon, 22 Apr 2019 10:47:33 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id q12sm2332421eja.45.2019.04.22.10.47.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Apr 2019 10:47:32 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Andrew Janke <floss@apjanke.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: gettext, multiple Preferred languages, and English
-References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net> <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com> <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
-Date:   Mon, 22 Apr 2019 19:47:31 +0200
-Message-ID: <875zr6szik.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2WcTgN6VmJ0Cw9FoPMvQdqZUZ2DVXDCLKGv24MR+9Ss=;
+        b=HQN6VA4KVX0ckvqqb2poo5VodBhbVUot00xr8dFlSNjosQpUEtXccM8xBFP/AMYIss
+         pTE3pwNa4fW3piVlxjoJ5Vkwm35pvPiL14N2bRJeMWj5MLRrj1WLNAvzwqBebpjAFUVF
+         lmd6h+UdYldfLaMLCK4uzFocldH9o9kp0Nj1a3LgfF5DSQSlD34xp7PiHis743ppA0Jd
+         mIeW3mYApL1psrNMqeHx9oHMsq5kbcPZEe37L2kAYEwRGLagsFTxj1vzpRWnZYREa2+q
+         cbJp9P7TATmWT1GDhMf/aKx/k7d5iJgc5/PHWS3kpI12Wm/9LTapzSLwjTZ9CC64uyty
+         gBbQ==
+X-Gm-Message-State: APjAAAXvEXrkjpgACyZg6if7JcC58tUus3AM0I8WzlA6FjoV06VjHj27
+        XfF8QUXj+6GyXyQtq3iGRdTOyw4k6fNQJHoTrCQ=
+X-Google-Smtp-Source: APXvYqwBTEk72DWwZYuYsgocXnLq+enDlrDRh0oLvDni25WZjRi530owgrr9udfFkyJFmbDNttCXV6tSZSJ2rkAJDIs=
+X-Received: by 2002:ac2:51ba:: with SMTP id f26mr11595663lfk.126.1555955456099;
+ Mon, 22 Apr 2019 10:50:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190422000712.13584-1-phil.hord@gmail.com> <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Mon, 22 Apr 2019 10:50:44 -0700
+Message-ID: <CABURp0oViG2VFOU2TbXuM3Q7omUFAtBZACH8teuQgPjBwRPL2A@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>, Denton Liu <liu.denton@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Apr 22 2019, Andrew Janke wrote:
-
-> On 4/21/19 8:35 PM, Duy Nguyen wrote:
->> On Sun, Apr 21, 2019 at 6:40 PM Andrew Janke <floss@apjanke.net> wrote:
->>>
->>> Hi, Git folks,
->>>
->>> This is a follow-up to https://marc.info/?l=git&m=154757938429747&w=2.
->>
->> This says the problem with "en" detection has been fixed. Would
->> upgrading gettext fix it?
->>
->> You would need to upgrade something (git or gettext) and if it's
->> already fixed in gettext I don't see why we need a workaround in git.
+On Sun, Apr 21, 2019 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From reading the bug report, that does sound like it would fix it. But
-> from what I can see, that fix hasn't made it out into a released version
-> of gettext yet. I haven't downloaded the development gettext to confirm
-> the fix.
+> Phil Hord <phil.hord@gmail.com> writes:
 >
-> Looking at the gettext ftp site at https://ftp.gnu.org/pub/gnu/gettext/,
-> it looks like gettext does not make frequent releases, and the last
-> release was two and a half years ago. Who knows when the next release
-> will be. And then it'll take longer to trickle down into Linux
-> distributions and such.
+> > Currently it supports these switches:
+> >
+> >     usage: git rebase [-i] [options] [--exec <cmd>] ...
+> >        :
+> >     --break <revision>    stop before the mentioned ref
+> >     --drop <revision>     drop the mentioned ref from the todo list
+> >     --edit <revision>     edit the mentioned ref instead of picking it
+> >     --reword <revision>   reword the mentioned ref instead of picking it
+> >
+> > I have plans to add these, but I don't like how their "onto" will be
+> > controlled. More thinking is needed here.
+> >
+> >     --fixup <revision>    fixup the mentioned ref instead of picking it
+> >     --squash <revision>   squash the mentioned ref instead of picking it
+> >     --pick <revision>     pick the mentioned ref onto the start of the list
 >
-> From your release history at https://github.com/git/git/releases, it
-> seems like Git is a lot more active in making releases than gettext. So
-> including this fix in Git would get it into the hands of affected users
-> sooner. And it seems like a pretty low-risk change to me.
+> Yeah, I can see that it may be very useful to shorten the sequence
+> to (1) learn what commits there are and think what you want to do
+> with each of them by looking at "git log --oneline master.." output
+> and then to (2) look at and edit todo in "git rebase -i master".
 >
-> Then once the new gettext release is out, their fix is confirmed, and it
-> makes it out into common distros, the workaround could be removed from Git.
+> I personally would be fine without the step (1), as what "rebase -i"
+> gives me in step (2) essentially is "log --oneline master..".
 
-What does Linux distro release schedule have to do with this? Your
-initial report and the linked-to bug on GNU savannah only talk about
-this being an issue on OSX. Is there some more general issue I'm
-missing?
+My example of "drop" is probably the worst one for simplification, but
+it nicely reduces the operation to one step if --interactive is not
+given.  More commonly I discover something I want to improve in commit
+message or in the code so I use --edit or --reword to fix it up before
+I submit it for review.
 
-People have reported issues with OSX's weird language selection in the
-past. I think it makes sense to do whatever we need to hack around it as
-long as it's some well-understood and OSX-only hack.
+> So I
+> am not quite getting in what way these command line options would be
+> more useful than without them, though, especially since I do not see
+> how well an option to reorder commits would fit with the way you
+> structured your UI.
 
-I'm paranoid that the suggestion of adding an en.po *in general* would
-break stuff elsewhere. I'd be surprised if the project linked-to
-upthread that used that hack is as widely ported as we are, and that
-includes a lot of i18n implementations, not just GNU's.
+I thought I might have "--pick-onto foo bar" but that requires two
+arguments to one switch, which I think is confusing and unprecedented.
+My current thinking is that --pick could pick some commit onto the
+beginning of the todo list, thereby picking it onto 'upstream'.  If
+the same commit appears later in the todo-list, I am inclined to drop
+it; but I might want to pick it anyway and let it evaporate as an
+empty commit, giving me the opportunity to split a commit in two
+places.  But this is still more exotic and confusing.
 
-Ultimately setlocale() is *supposed* to be a well-understood thing. You
-set your preferred locale, programs have translations, the OS takes care
-of it. I'm concerned that us trying to be specifically smart in git will
-backfire (e.g. it's been suggested in the past to have core.language or
-whatever..).
+I tried to have --fixup and --squash simply do their actions in-place,
+but that seems useless.  So I thought I might treat the same as pick,
+picking them onto upstream. But it's meaningless to fixup or squash on
+the first step in the todo, so it would have to be on the first child
+of the upstream.  This still feels forced and useless.
 
-But it looks like we don't need to go there, this seems like a
-workaround needed for some specific OSX version.
+A compromise that feels nice in practice is to do the fixup and squash
+in-place and then to use --interactive to open the editor.  Since I
+have syntax highlighting, the fixup and squash lines stand out boldly
+and I find it easier to move these into the right place as needed. But
+I think this mode could be confusing for users trying to understand
+the utility of these switches.
 
-That can just live behind a flag and be detected in config.mak.uname,
-no? And then we'd do whatever hack digs us out of that specific hole on
-OSX, e.g. maybe generating an en.po *just* there, and just for that list
-of known broken version(s) of OSX.
+> Having already said that, if I were to get in the habit of looking
+> at "log" first to decide and then running "rebase -i" after I made
+> up my mind, using a tweaked "log --oneline" output that looks
+> perhaps like this:
+>
+>         $ git log --oneline master.. | tac | cat -n
+>         1 xxxxxx prelim cleanly
+>         2 xxxxxx implement the feature
+>         3 xxxxxx document and test the feature
+>         4 xxxxxx the final step
+>         5 xxxxxx fixup! implement the feature
+>
+> I think I may appreciate such a feature in "rebase -i" even more, if
+> the UI were done a bit differently, e.g.
+>
+>         $ git rebase -i --edit="1 3 2 b f5 b r4" master..
+>
+> to mean "pick the first (i.e. bottommost) one, pick the third one
+> for testing, pick the second one, then break so that I can test,
+> fixup the fifth one, break to test, and finally pick the fourth
+> one but reword its log message", to come up with:
+>
+>         pick xxxxxx prelim cleanly
+>         pick xxxxxx document and test the feature
+>         pick xxxxxx implement the feature
+>         break
+>         fixup xxxxxx oops, the second one needs fixing
+>         break
+>         reword xxxxxx the final step
+
+This kind of gui brings more power and flexibility. I don't think I
+would use it since reordering in the editor feels right to me.  Maybe
+that's the real problem with reordering at all with these switches,
+and I should leave fixup/squash/pick out for good.
+
+> I am guessing that the way you did it, the above would be impossible
+> (as it requires reordering) but given that you would leave most of
+> the 'pick's intact and only tweak them in-place into drop, edit,
+> reword, etc., that may not be too bad, but I suspect that it would
+> become very verbose.
+>
+>         $ git rebase -i \
+>                 --pick HEAD~4 --pick HEAD~3 --break --fixup HEAD \
+>                 ...
+>
+> The --edit alternative I threw in in the above would make it
+> necessary for the user to spell out all the picks, and that would be
+> more cumbersome given our assumption that most picks will be left
+> intact, but then we could do something like
+>
+>         --edit="1-4 5e 6 8-" master..
+>
+> to say "pick 1 thru 4, edit 5, pick 6, drop 7 and pick 8 thru the
+> end".
+
+My own itch is to help the case when I am leaving most of the lines as
+picks.  That is, I don't really want to rebase to some new upstream
+commit; I don't want to enumerate all the changes that
+rebase--interactive helpfully chooses for me; I only want to fix one
+or two warts.
+
+As a trivial example, I can say
+
+        $ git commit --amend
+
+to reword my HEAD commit.  But I have no easy way to say that for
+HEAD^.  With this change I can.
+
+        $ git rebase --edit HEAD^ HEAD^^
+
+Ideally I wouldn't need to specify HEAD^^.  I'm thinking of a switch
+to say "use the mergebase of my mentioned edits", but that's still a
+wip.
