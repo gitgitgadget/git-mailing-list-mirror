@@ -2,60 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=AWL,BAYES_50,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62E3D1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 16:02:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E572C1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 16:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727021AbfDVQCO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 12:02:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36892 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726098AbfDVQCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 12:02:13 -0400
-Received: (qmail 31413 invoked by uid 109); 22 Apr 2019 16:02:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 16:02:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32626 invoked by uid 111); 22 Apr 2019 16:02:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 12:02:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 12:02:11 -0400
-Date:   Mon, 22 Apr 2019 12:02:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Santiago Torres Arias <santiago@nyu.edu>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.us
-Subject: Re: [RFC PATCH] builtin:tag:verify_tag: allow gpg output + pretty
-Message-ID: <20190422160211.GB9680@sigill.intra.peff.net>
-References: <20190412201432.11328-1-santiago@nyu.edu>
- <20190422152726.GB1633@sigill.intra.peff.net>
- <20190422154655.sxyrkee7rnywoh2w@LykOS.localdomain>
-MIME-Version: 1.0
+        id S1727343AbfDVQDe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 12:03:34 -0400
+Received: from pv50p00im-zteg10011401.me.com ([17.58.6.41]:45798 "EHLO
+        pv50p00im-zteg10011401.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726098AbfDVQDd (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Apr 2019 12:03:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=04042017; t=1555949012;
+        bh=q+YsNPB5ejisi5VURAwsFHocaMBB6lvvDCEhquE0r2A=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=N8Ui5LlHO69lN8kCXUeTjKpLxZBbzY8cD+eRSpuOpN0JEgGaLoNNBDOO0MiILQzUH
+         B88JGSkzL/4Yz9IBi1jLC/Xo5wUGzq9VB5ASjETQqoZQuGvGQKUs/DeAMPAbpXgRvz
+         WkJTiMdY7IwIsZpa6Qce9CmnqUv4pH6R039U+UPOTIsLIEHZclGwRJO1I9KxoTB7rc
+         923Syycmzq/mdGPWBDM3U9cwiYubFgze3/fZwaeh15QqRv3xpv3asO1UjUgKX9eoCf
+         7EnDHyNyDHwKWZ7WpmerIOpd1QwfLR+LHkBbR7PpVbudIbjgHoBk5Lg7pMEJYpzohD
+         zDOxrFeDDP9FQ==
+Received: from [192.168.1.100] (unknown [110.54.172.106])
+        by pv50p00im-zteg10011401.me.com (Postfix) with ESMTPSA id 8CC819000CC;
+        Mon, 22 Apr 2019 16:03:31 +0000 (UTC)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190422154655.sxyrkee7rnywoh2w@LykOS.localdomain>
+Content-Transfer-Encoding: quoted-printable
+From:   Gabriel Camaisa Reyes <asawaqoh001@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Tue, 23 Apr 2019 00:03:19 +0800
+Subject: me:twitter.login*
+Message-Id: <77FE20DD-424D-45EF-94BB-4B5C97925781@icloud.com>
+To:     Gabriel888@shareit.com,
+        =?utf-8?Q? "=282=29=C2=A0000=C2=A02007_shamilyendiaz" ?= 
+        <chukokdiaz23@gmail.com>, help@team.shoeboxed.com,
+        support@apple.com,
+        "192.1.68.1.100 Gabriel888" <reyesapriljoy01@gmail.com.org>,
+        "192.1.68.1.100 Gabriel888" <Gabriel888@gmail.com>,
+        translate@mysms.com, Tonyo Montana <tonyomontana@gmail.com>,
+        "192.1.68.1.100 Gabriel888" <git@vger.kernel.org>,
+        appleid@id.apple.com
+X-Mailer: iPhone Mail (16E227)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-04-22_01:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=677 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1812120000 definitions=main-1904220121
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 22, 2019 at 11:46:56AM -0400, Santiago Torres Arias wrote:
+https://twitter.com/account/send_password_reset?sfns=3Dmo
 
-> > In some ways I'm less concerned about verify-tag, though, because the
-> > point is that it should be scriptable. And scraping gpg's stderr is not
-> > ideal there. We should be parsing --status-fd ourselves and making the
-> > result available via format specifier, similar to the way "log
-> > --format=%G?" works.
-> 
-> I think that would be great, as we could make it simpler for verifiers
-> to parse gpg output.
 
-Alternatively, we could make it an option to dump the --status-fd output
-to stderr (or to a custom fd). That still leaves the caller with the
-responsibility to parse gpg's output, but at least they're parsing the
-machine-readable bits and not the regular human-readable stderr.
+=E2=80=9C< asawaqoh001@icloud.com >=E2=80=9D
+=E2=80=9C Tonyomontana@gmail.com.org =E2=80=9C
+=E2=80=9C reyesapriljoy01@gmail.com.org =E2=80=9C
+ =E2=80=9C Gabriel888@gmail.com.org =E2=80=9C
+                                                                            =
+                        =20
 
--Peff
+           =20
+
+
+=E2=80=9C ( +63 2 730 1212 ) =E2=80=9C. =20
+=E2=80=9C ( +49 6386 9423 ) =E2=80=9C =20
+=E2=80=9C (  +49 4402 0814 ) =E2=80=9C
+=E2=80=9C. (  +43 316 228409 ) =E2=80=9C
+
+  =20
+
+
+
+
+
+
+=E2=80=9C =C2=AE=EF=B8=8F =E2=80=9C.=20=
+
