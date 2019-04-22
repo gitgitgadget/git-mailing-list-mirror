@@ -7,126 +7,174 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DF831F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 12:35:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED851F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 14:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbfDVMfI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 08:35:08 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:36576 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726057AbfDVMfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 08:35:07 -0400
-Received: by mail-it1-f193.google.com with SMTP id y10so17923385itc.1
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 05:35:07 -0700 (PDT)
+        id S1727452AbfDVOoG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 10:44:06 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41952 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfDVOoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 10:44:06 -0400
+Received: by mail-wr1-f67.google.com with SMTP id c12so9891236wrt.8
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 07:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gCVsQvDiruF43P4k65fAlnNryd6v5Qx75mP7vDRmItU=;
-        b=GOZRXSaNyGEN4A26EQNEadmeyorO4aSyk9gb+iftL7YE6fTxEO1AlWOHMWOWjU1cJN
-         S+S+iVwZaI6iXBi7f06vl9bqoAn6dZ8o4R/kB+26I9BceD4DMz/qEUZL1/DWO5Fx2tr7
-         dew2dgBZsBgAzZK57JIGGXh33dA06Wp/YqRMqde+ScOW3U/j8zl1fSO5hwDyW/XPMmBm
-         mNkAYRYCX37AuoR5zkpZO+PjKqPnfrGwtUW8hqrHWJZQY0YnnkbDzwF6E9cu7z1z0nt3
-         PPZeD0otxa1Yax4awGsm8l/WdKFH9gV4xTt/OZP0kZjmrFo+JmcS8D2jgJiHXIphEPjq
-         J1BA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DUcNJBEseMK3JVP4zaeTvAIYxBWj1jGiZGenmvWY6qM=;
+        b=Q+6zVOeDXM7ZzzD0XhNGrh5KISeJQjo3oSGTzMdzlx6qlCu99r5QwHvKirwSI3VKrE
+         KVQlon6pay35Mq16Rdq24Y3QSRv+oWYEdWPCApOlv5AWLItuFwVw6jcCI7Jwn1iKizFq
+         L7o7vElrQAqjHODh72VZLE4qXxMMhR2rQpV2unie3pPpu1v7zqwiVMPlJoq8iKAJtGC5
+         v3n+Y2FgHVTJov+YyIzkW4NVTfAcbjJke0QCgfgod8NF4U84J+mdrtO1gywE65xULuze
+         w1d3OdsbVCmguJJ9TnLfbGlgU323Wz5L411PnR59FI20zqjN0Yi/+aGUKckVgkJooZ7s
+         vZyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gCVsQvDiruF43P4k65fAlnNryd6v5Qx75mP7vDRmItU=;
-        b=iR4upZ1rJD3BhEYlcYLSZ1PF4RpBv9T7mjIKFMGDbjXZxFtIHpAJQYxht460aVoYtB
-         m4ONjngR9MoB0GT6sBf1CjUXebqNbAKWlekE6hVBFrN6F48v3broZAMNXm4BYn6ksV8/
-         sB3R67e3hTu03tjf0b/ssPMlIWp19m98lfZvGpeF1SQbtkCGUPvlZC7t7/2Y64Qc11LT
-         L3Aui0ZppW0TBXqCTPScx6PjsKOQ3JXmPE7jkuXtjMqTEFMteL/HgKimvb9JNQfcgptw
-         ZfnWfklgFBfpdy61bJzXI+3g1aL9Yz1/us4I4rjvvTMNcrkFKHOgZOd9lc1zPdxusJzt
-         xRUA==
-X-Gm-Message-State: APjAAAXQtAx2elnVbJK+2uU9noaAY9rkFBknKNLxBFkNxdZb8Y6GpYPI
-        ifwK4wQ8rv1A4ZDUihqNv43h3jYsNkhE47wAt4Q=
-X-Google-Smtp-Source: APXvYqyGUS1IuevEMoxwvu74p01+lMc/5wUYotv0njeaH+ei5hccABK9MwoV6tfvl6hbD5e6OfyVP4dVS/ajOKLeMpo=
-X-Received: by 2002:a24:4d8a:: with SMTP id l132mr13130133itb.70.1555936507123;
- Mon, 22 Apr 2019 05:35:07 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=DUcNJBEseMK3JVP4zaeTvAIYxBWj1jGiZGenmvWY6qM=;
+        b=GjqarTLwMvVx5KNGSch6189Dpb/rSbHkS/t92U5jxzpCE95qW5HHL/pcaMxmr3Ljgh
+         nV5zZw/WclBSUgfVALR7VoOdAKv8MsSZBA98M0DsdJv+q8Xm9VWDCXrtVuoJTkZYtFAF
+         ep4Qjg00STk0EI3a5Ya+dmL7zR/lzild3Pzhdi7VgjkWWHzzahCFU5q89lMYA1wPzh7Q
+         tWr9yyizUN67jD8KWFus15dj1xXIWFc5ntaJlUpPqfNc+kS4e2l/2e9FKC0X/JGGWulf
+         HMoQexL9f05R1F1C6j283KDFaE4P9dPnd8jAm//oVUQAZuYu/K+Xbsb3sJvFQFkLJTk8
+         NJzw==
+X-Gm-Message-State: APjAAAXVbI3dvhF5oIkteC4TB47zxkyJ8dK6zx7cG+QwypPiLdKUQpaY
+        UhFtv1/I7HAwRhjpMZMc/of2kc0A
+X-Google-Smtp-Source: APXvYqw73I0yAPPvYiN9XHrCev1WeqED38pSUWPqgDACCUcZ6Dhutc6pX7/Cai2p5Z3LeCulwJhsuQ==
+X-Received: by 2002:a5d:5745:: with SMTP id q5mr13684661wrw.118.1555944243566;
+        Mon, 22 Apr 2019 07:44:03 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-7-19.as13285.net. [92.22.7.19])
+        by smtp.gmail.com with ESMTPSA id g84sm17530368wmf.25.2019.04.22.07.44.01
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Apr 2019 07:44:02 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+To:     Junio C Hamano <gitster@pobox.com>, Phil Hord <phil.hord@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+References: <20190422000712.13584-1-phil.hord@gmail.com>
+ <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
+Date:   Mon, 22 Apr 2019 15:44:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <xmqq1s1yfw24.fsf@gitster-ct.c.googlers.com> <20190422122250.15248-1-pclouds@gmail.com>
-In-Reply-To: <20190422122250.15248-1-pclouds@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Apr 2019 19:34:40 +0700
-Message-ID: <CACsJy8ByLxUn8vgSmkPJQvO5vV-=vSwyP=ug3QKJL7hhD11-KA@mail.gmail.com>
-Subject: Re: [PATCH] parse-options: don't emit "ambiguous option" for aliases
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 22, 2019 at 7:23 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
-> @@ -574,6 +615,70 @@ static int show_gitcomp(struct parse_opt_ctx_t *ctx,
->         return PARSE_OPT_COMPLETE;
->  }
->
-> +/*
-> + * Scan and may produce a new option[] array, which should be used
-> + * instead of the original 'options'.
-> + *
-> + * Right now this is only used to preprocess and substitue
-> + * OPTION_ALIAS.
-> + */
-> +static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
-> +                                        const struct option *options)
-> +{
-> +       struct option *newopt;
-> +       int i, nr, alias;
-> +       int nr_aliases =3D 0;
-> +
-> +       for (nr =3D 0; options[nr].type !=3D OPTION_END; nr++) {
-> +               if (options[nr].type =3D=3D OPTION_ALIAS)
-> +                       nr_aliases++;
-> +       }
-> +
-> +       if (!nr_aliases)
-> +               return NULL;
-> +
-> +       ALLOC_ARRAY(newopt, nr + 1);
-> +       COPY_ARRAY(newopt, options, nr + 1);
-> +
-> +       /* each alias has two string pointers and NULL */
-> +       CALLOC_ARRAY(ctx->alias_groups, 3 * (nr_aliases + 1));
-> +
-> +       for (alias =3D 0, i =3D 0; i < nr; i++) {
-> +               const char *source;
-> +               int j;
-> +
-> +               if (newopt[i].type !=3D OPTION_ALIAS)
-> +                       continue;
-> +
-> +               if (!newopt[i].long_name)
-> +                       BUG("An alias must have long option name");
-> +
-> +               source =3D newopt[i].value;
-> +
-> +               for (j =3D 0; j < nr; j++) {
-> +                       const char *name =3D options[j].long_name;
-> +
-> +                       if (!name || strcmp(name, source))
-> +                               continue;
-> +
-> +                       if (options[j].type =3D=3D OPTION_ALIAS)
-> +                               BUG("No please. Nested aliases are not su=
-pported.");
-> +
-> +                       memcpy(newopt + i, options + j, sizeof(*newopt));
+On 22/04/2019 02:13, Junio C Hamano wrote:
+> Phil Hord <phil.hord@gmail.com> writes:
+> 
+>> Currently it supports these switches:
+>>
+>>      usage: git rebase [-i] [options] [--exec <cmd>] ...
+>>         :
+>>      --break <revision>    stop before the mentioned ref
+>>      --drop <revision>     drop the mentioned ref from the todo list
+>>      --edit <revision>     edit the mentioned ref instead of picking it
+>>      --reword <revision>   reword the mentioned ref instead of picking it
+>>
+>> I have plans to add these, but I don't like how their "onto" will be
+>> controlled. More thinking is needed here.
+>>
+>>      --fixup <revision>    fixup the mentioned ref instead of picking it
+>>      --squash <revision>   squash the mentioned ref instead of picking it
+>>      --pick <revision>     pick the mentioned ref onto the start of the list
+> 
+> Yeah, I can see that it may be very useful to shorten the sequence
+> to (1) learn what commits there are and think what you want to do
+> with each of them by looking at "git log --oneline master.." output
+> and then to (2) look at and edit todo in "git rebase -i master".
+ >> I personally would be fine without the step (1), as what "rebase -i"
+> gives me in step (2) essentially is "log --oneline master..".  So I
+> am not quite getting in what way these command line options would be
+> more useful than without them, though, especially since I do not see
+> how well an option to reorder commits would fit with the way you
+> structured your UI.
 
-Eck. I need to restore newopt[i].long_name and .short_name after this
-memcpy, or we'll just have two --recurse-submodules instead. Luckily
-it still works after this bug is gone.
+Doing "git rebase -i master" and then editing the todo list has the side 
+effect of rebasing the branch. Often I find I want to amend or reword a 
+commit without rebasing (for instance when preparing a re-roll). To do 
+this I use a script that runs something like
 
-> +                       break;
-> +               }
---=20
-Duy
+GIT_SEQUENCE_EDITOR="sed -i s/pick $sha/edit $sha/" git rebase -i $sha^
+
+and I have my shell set up to interactively select a commit[1] so I 
+don't have to cut and paste the output from git log. I've found this 
+really useful as most of the time I just want to amend or reword a 
+commit or squash fixups rather than rearranging commits. The script 
+knows how to rewind a running rebase so I can amend several commits 
+without having to start a new rebase each time.
+
+So I can see a use for --edit, --reword & --drop if they selected a 
+suitable upstream to avoid unwanted rebases (I'm not so sure about the 
+others though). If you want to rebase as well then I agree you might as 
+well just edit the todo list.
+
+Best Wishes
+
+Phillip
+
+[1] Something like 
+https://public-inbox.org/git/87k3xli6mn.fsf@thomas.inf.ethz.ch/
+
+> Having already said that, if I were to get in the habit of looking
+> at "log" first to decide and then running "rebase -i" after I made
+> up my mind, using a tweaked "log --oneline" output that looks
+> perhaps like this:
+> 
+> 	$ git log --oneline master.. | tac | cat -n
+> 	1 xxxxxx prelim cleanly
+> 	2 xxxxxx implement the feature
+> 	3 xxxxxx document and test the feature
+> 	4 xxxxxx the final step
+> 	5 xxxxxx fixup! implement the feature
+> 
+> I think I may appreciate such a feature in "rebase -i" even more, if
+> the UI were done a bit differently, e.g.
+> 
+> 	$ git rebase -i --edit="1 3 2 b f5 b r4" master.. >
+> to mean "pick the first (i.e. bottommost) one, pick the third one
+> for testing, pick the second one, then break so that I can test,
+> fixup the fifth one, break to test, and finally pick the fourth
+> one but reword its log message", to come up with:
+> 
+> 	pick xxxxxx prelim cleanly
+> 	pick xxxxxx document and test the feature
+> 	pick xxxxxx implement the feature
+> 	break
+> 	fixup xxxxxx oops, the second one needs fixing
+>          break
+> 	reword xxxxxx the final step
+> 
+> I am guessing that the way you did it, the above would be impossible
+> (as it requires reordering) but given that you would leave most of
+> the 'pick's intact and only tweak them in-place into drop, edit,
+> reword, etc., that may not be too bad, but I suspect that it would
+> become very verbose.
+> 
+> 	$ git rebase -i \
+> 		--pick HEAD~4 --pick HEAD~3 --break --fixup HEAD \
+> 		...
+> 
+> The --edit alternative I threw in in the above would make it
+> necessary for the user to spell out all the picks, and that would be
+> more cumbersome given our assumption that most picks will be left
+> intact, but then we could do something like
+> 
+> 	--edit="1-4 5e 6 8-" master..
+> 
+> to say "pick 1 thru 4, edit 5, pick 6, drop 7 and pick 8 thru the
+> end".
+> 
+> I dunno.
+> 
