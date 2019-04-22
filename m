@@ -7,90 +7,109 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14B8B1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 05:07:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2A6B1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 05:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbfDVFHm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 01:07:42 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45351 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbfDVFHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 01:07:41 -0400
-Received: by mail-pg1-f196.google.com with SMTP id y3so5287903pgk.12
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 22:07:41 -0700 (PDT)
+        id S1726619AbfDVFHo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 01:07:44 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41409 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726434AbfDVFHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 01:07:44 -0400
+Received: by mail-pl1-f196.google.com with SMTP id d1so5246162plj.8
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 22:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=LGeuips4qj0xrgfIy8hpbh71Wo8TpSfc/2BPoGZKSug=;
-        b=UMabMb6KcaCG6ijslCHbnEWliqdxFek8ymVoY2uUKcDtsQSdiflb25+xEN+vKuuFAz
-         PNi0J77trRf3tTb3PDwvZNoiw7xrU7X+j6/Q1IIfZ4VV5vqaTAd2yOqroQbRKRi7qUyc
-         iiKRxX+6oKBV/SfysuaAsEOn3V4vuTrBU0eqBnkOY+KL2FXjREF/ROmAfD9gRdl35sW2
-         xVaJBwJ2v8y3At7EiaYqjlgCwqnzQ02kKdQ0RMiyfPiGurst+TYv0Y6xh9ukD6EZ+8Bs
-         Oi9oFqgoAMcVuv9soYdKipZ7toOLfoFYBbeLMbRd8hUoXHuzVtzikMGEqkhuASh3hyY3
-         YRRA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DPh8e7dGVsmC6NsPKDI2JOO/8WnAIRgcpwu2s66DnCI=;
+        b=H+d3CCd0l8sEBEGCEColBpQa3OHDKmb1e7KUshoGM1ntlwdNeer5Ml/ogEFSHNL34j
+         mUSlKDrrHR0OkqVCCKEZv7WePmLcOynl/Wt4wC6ggEfnMk8STtrFBX6C1Izhbgzt2Csc
+         mwYBZkhKVZlN56HoBIhmB1aT4GM+HzQuBWJSPJ/LE0Q3VR3E6Qfm5yQRvhmsV4MiKum2
+         x0ewVsXz+8rAaNL2HMb/u4yiLkpwSOwKYhpqvSfNgQ0w11zY3VemlGHz9WZq9HPkgLK6
+         ouF/zRNjqjs0EPd0okLIDOVJfADj51+v9ddpme/MYL42hhCEiLROu4AGg2zSO9s4A9rE
+         jRaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=LGeuips4qj0xrgfIy8hpbh71Wo8TpSfc/2BPoGZKSug=;
-        b=jXBbdawgr1xXRot9dC9bD8jGfGWQdsY4bh52yfvyq92kgFI079pk14l16GhWJnHT7o
-         bFqRbzaWjs5fopNerMiqaRxFwlBX/n1IgGFWjpwdx5cD1QX4DMJYRNM3WoyAFK+dG0Ck
-         2CKmJqPXL2WYSWLkCQJj9zWX9HBTfLrlVKjHl6I6eG3oov7pcTDtCon8i2GIZE73xh3K
-         KubIdm181jmUHV3n8sD/IArXVV3ev9JYj8yBe7vVlfxSB/dZQLHkGOqUUVMw8R0QIvmA
-         OUZg9RhszUaxw+/OCGe8lELd/IAaqEHeuQ2LqsVnSkg16kgLDAOwpMez9CY/NGbSDtAB
-         BmqQ==
-X-Gm-Message-State: APjAAAWclIcULAOvwUa/JamzQJVMIMFCuzt6zo9elVAhOYmGODBp5OT9
-        68LrsP13ePGtwQrCnWwYqj0eG2PY
-X-Google-Smtp-Source: APXvYqx5e14x0ysVWtWlLC/RKmJnR3xVVfmvKqNKFBnuQkDRBQNdrpReufyTn7VXutTAp991lynjag==
-X-Received: by 2002:aa7:92d1:: with SMTP id k17mr18723208pfa.91.1555909660872;
-        Sun, 21 Apr 2019 22:07:40 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DPh8e7dGVsmC6NsPKDI2JOO/8WnAIRgcpwu2s66DnCI=;
+        b=lcTaERMlrhQdDsYLUoT9BRyRCS+H9BUw+QrKPf9KYWHanhD2Tb3yNplMJYsK5CLzEA
+         bmS9Xx/zbu7KtOxjzHEDFhF6bgNbwaMgdRi3pVl87yanlcvBDWnXclvqgnffljDnY4ve
+         8rEgamb1Re9uEKhDTmD5h+C36ol4F+JrdPanXG5yZb9TYOfWjmgx56DmQv8aHyeIhw00
+         54U9IBjKva09wOClVVxeeae8MWXu30TRxHGOcuBOHAdDlCzGtF9DX/VFbkPhSkr+e7xI
+         FJifcaiRgV58swieUn8O4QDrFaxYdvQX+5+WLczjQmO9lscfTgtKu7kGiJzfBjRdNCFE
+         gKzw==
+X-Gm-Message-State: APjAAAXcZ35FnQZa/sJIkfgGvjCtW3qQ++oGzgdP7IHD9M1ymkeMAbQR
+        fvulUCD/4j+RkZMPn9VzrqUKvDPQ
+X-Google-Smtp-Source: APXvYqxvDzymYj5fkDFzv3J0iL1ElfPAe93/tMCRBHmOH1lVJrcByODvUY2EcO46MOdz+NMGD9VDOw==
+X-Received: by 2002:a17:902:b481:: with SMTP id y1mr18437365plr.161.1555909663212;
+        Sun, 21 Apr 2019 22:07:43 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id t64sm23698898pfa.86.2019.04.21.22.07.39
+        by smtp.gmail.com with ESMTPSA id m8sm20680760pgn.59.2019.04.21.22.07.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Apr 2019 22:07:40 -0700 (PDT)
-Date:   Sun, 21 Apr 2019 22:07:38 -0700
+        Sun, 21 Apr 2019 22:07:42 -0700 (PDT)
+Date:   Sun, 21 Apr 2019 22:07:41 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         David Aguilar <davvid@gmail.com>
-Subject: [PATCH 0/5] difftool and mergetool improvements
-Message-ID: <cover.1555880168.git.liu.denton@gmail.com>
+Subject: [PATCH 1/5] t7610: add mergetool --gui tests
+Message-ID: <678f9b11fc7df7d3ee2050388574bcaea86af331.1555880168.git.liu.denton@gmail.com>
+References: <cover.1555880168.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1555880168.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed earlier that when running 'git difftool --gui', we do not
-fallback to 'merge.guitool' when 'diff.guitool' isn't set, even though
-this behaviour exists for when we invoke 'git difftool' (i.e. it falls
-back from diff.tool to merge.tool).
+In 063f2bdbf7 (mergetool: accept -g/--[no-]gui as arguments,
+2018-10-24), mergetool was taught the --gui option but no tests were
+added to ensure that it was working properly. Add a test to ensure that
+it works.
 
-While fixing this bug up, I noticed a few other places where we could do
-some code cleanup/add tests so I did that as well.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t7610-mergetool.sh | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-Denton Liu (5):
-  t7610: add mergetool --gui tests
-  mergetool: use get_merge_tool function
-  mergetool: fallback to tool when guitool unavailable
-  difftool: make --gui, --tool and --extcmd exclusive
-  difftool: fallback on merge.guitool
-
- Documentation/git-difftool.txt       |  4 ++-
- Documentation/git-mergetool--lib.txt |  5 +++-
- Documentation/git-mergetool.txt      |  4 ++-
- builtin/difftool.c                   | 21 ++++++++------
- git-difftool--helper.sh              |  2 +-
- git-mergetool--lib.sh                | 33 ++++++++++++++--------
- git-mergetool.sh                     | 11 ++------
- t/t7610-mergetool.sh                 | 41 ++++++++++++++++++++++++++++
- t/t7800-difftool.sh                  | 24 ++++++++++++++++
- 9 files changed, 113 insertions(+), 32 deletions(-)
-
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index a9fb971615..5f37d7a1ff 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -145,6 +145,28 @@ test_expect_success 'custom mergetool' '
+ 	git commit -m "branch1 resolved with mergetool"
+ '
+ 
++test_expect_success 'gui mergetool' '
++	test_config merge.guitool myguitool &&
++	test_config mergetool.myguitool.cmd "(printf \"gui \" && cat \"\$REMOTE\") >\"\$MERGED\"" &&
++	test_config mergetool.myguitool.trustExitCode true &&
++	test_when_finished "git reset --hard" &&
++	git checkout -b test$test_count branch1 &&
++	git submodule update -N &&
++	test_must_fail git merge master >/dev/null 2>&1 &&
++	( yes "" | git mergetool --gui both >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool -g file1 file1 ) &&
++	( yes "" | git mergetool --gui file2 "spaced name" >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool --gui subdir/file3 >/dev/null 2>&1 ) &&
++	( yes "d" | git mergetool --gui file11 >/dev/null 2>&1 ) &&
++	( yes "d" | git mergetool --gui file12 >/dev/null 2>&1 ) &&
++	( yes "l" | git mergetool --gui submod >/dev/null 2>&1 ) &&
++	test "$(cat file1)" = "gui master updated" &&
++	test "$(cat file2)" = "gui master new" &&
++	test "$(cat subdir/file3)" = "gui master new sub" &&
++	test "$(cat submod/bar)" = "branch1 submodule" &&
++	git commit -m "branch1 resolved with mergetool"
++'
++
+ test_expect_success 'mergetool crlf' '
+ 	test_when_finished "git reset --hard" &&
+ 	# This test_config line must go after the above reset line so that
 -- 
 2.21.0.967.gf85e14fd49
 
