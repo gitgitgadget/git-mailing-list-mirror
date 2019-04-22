@@ -2,89 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190361F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 06:11:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE99B1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 06:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726434AbfDVGLg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 02:11:36 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:43940 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbfDVGLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 02:11:35 -0400
-Received: by mail-wr1-f47.google.com with SMTP id k17so14639834wrx.10
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 23:11:34 -0700 (PDT)
+        id S1726566AbfDVGMd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 02:12:33 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38584 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725914AbfDVGMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 02:12:33 -0400
+Received: by mail-pg1-f193.google.com with SMTP id j26so5364730pgl.5
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 23:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Ti8WRpX7UuheT0EkW7N3YsS3r3qhgRD6LkQl3K1KJQQ=;
-        b=eY4yqWLf+wpZM3H+zQOlKdfDcGzk39wQBcglAGfceG0RQkLuhWw7z6lihORHVPCljL
-         g8cFzmGTypH+SqPpjFL60nn+LQpxDd27EFjxIPM4sp49QrdhiTE1kpyrLmrVLxMncnxa
-         CL5N2vjm6fp3XHhrpMql5Y9IaaIbgxv9hX2RNhzr8u8UaXSodwyJ+iewUcGIzq5IIEc1
-         gpp5+ZcyT7aDWYMq4UpotSZxYZZ7j/YYFTPmd1XN13Nop5lJIO2H0fh8vzSDFDQfD/pN
-         /rAdnMVc0luF+EFc18IZjNEcw/P3/Nl1uE8UgDhgUIn61i8/h6/Dym6/R8P5Gn2fzUrY
-         cJsQ==
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=ZyWweYoW5OlOpRdXwrs72aAIwU03cymgayC9EfaBglM=;
+        b=hCs9IYo87OIyWaaDsoyTDE6ZIf2FvCIZaVK0HB9NUQjVYU+z1zrRHcPdZSMranYWvr
+         eIpzzFaHj/uvHpDdlm5NbomPYNDg1juBmytowqweelXArF4gbmV2edTkZFjwZEjxYdzI
+         bzbPnWtFvBhred4LlH7TW6Fz8Wd2a+dZ9cCedDJdtuVicX49DlSacJiTWF/gS8YnKnPt
+         Q8Hx2ZtCb0Is3Dkxv6VQ5UGYcrX3sTbP6Fx+hjZ6yeq3+p9TgoCOt5HlFm6XMdtTPZRf
+         GMAMWqTFybECVNWf8Kcz8B1FFeuF2SOSJiUijf/AJFiq6uXNvB4w6rVs9iA5Shk2mSQZ
+         ZcRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Ti8WRpX7UuheT0EkW7N3YsS3r3qhgRD6LkQl3K1KJQQ=;
-        b=Y8dGYg274U/He7Djay5Gl8eCsN+GJt/UBQhTLTQz1faEYJIknSlr7/xDPgixbshW+T
-         1wbxZW4HDHCQA9B7KIXPn71iiIRU8v6jA+juN5SWQkYpISPEvGXNZaU4D838HZ1LszTM
-         W9ZiNPOVVqJDKc6C3r4pPzcD0KAkCSCtg9m9VeorWmxfi/E87SFpi2pSacDaHBJ/vDc7
-         zHHMLxotQCzSTzSsdSfis+gzAVY+tyk2YabS3iXXiCxhuaZeTvoDxzApEyyE5l2FihAF
-         e05vgU0wG9n7IiCTsGKmKMOiyj92pTK5H+HcGVAq/aiZr/+8ERuflGtkweNSOdMhZeJj
-         HpZg==
-X-Gm-Message-State: APjAAAUqdJMRbiSyAYFVAJ6ckMnjac8BGJsDvvkMVKNpWD69M5/TVbde
-        V5oHMvMfsUc1QQ/afEME6wg=
-X-Google-Smtp-Source: APXvYqzjKZsLrZFgVuXUyUmEyYhFA3xnsvAdFqPN+wyFhVuBUdiwswimz4JRxTIxs+i96CAgVXapPA==
-X-Received: by 2002:a05:6000:12c8:: with SMTP id l8mr11283809wrx.80.1555913493664;
-        Sun, 21 Apr 2019 23:11:33 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o15sm14856753wrj.59.2019.04.21.23.11.32
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=ZyWweYoW5OlOpRdXwrs72aAIwU03cymgayC9EfaBglM=;
+        b=rq1wdQWEWBs2GnV2U4zkbWA5kD4r9wK97DXga1b6pDpNc7BX2NY/DTyVvaD1O0wL5l
+         zcPDSil1egmN8RlfdmHiPFJpbZEFEoRNlZf5IusKI9enNJAAlQ12Qu+pxWGDZ7uiKjdA
+         PmG0YTX9iu9gcSGVXCEQlOOFxkgdd76RYaHTYLvRdGDYqq4N+MYnt65euLDopY6sf2JT
+         LzZeYg/XrawZWOvyyFrqmhDGBMs92SJz1prTBT8b4rdZYU6KeAM4pX9q7u79k9IjMLZc
+         z1x75YFmtu59b3vnGr6+2EPwYooU3ORE9mqmvRPWqQgPTHHmWCP08ZvKF1CZ4eZ5Rf+M
+         G9RQ==
+X-Gm-Message-State: APjAAAX35ImqWAS3TLMEYOSyWRZSRjLarqi8cyAdfp7WQp6kCFSkX3/l
+        1Z7ICtX4C/mdWrs5vjwjWOBhCLR4
+X-Google-Smtp-Source: APXvYqyvr5pvY/fNprZg8swScJKHzeIMqBvre5HMvuPOqZ2diqk1AEKXVXr63/a87rrokX/P0Qgicw==
+X-Received: by 2002:a63:ed48:: with SMTP id m8mr17680840pgk.104.1555913552199;
+        Sun, 21 Apr 2019 23:12:32 -0700 (PDT)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id 6sm15689862pfj.95.2019.04.21.23.12.30
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Apr 2019 23:11:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] Makefile: dedup list of files obtained from ls-files
-References: <xmqqy343a43b.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cR5yMtdBA0HgLZ6k-j3NeMS+4UeEKgRiEpZ0YGrW_L0cg@mail.gmail.com>
-Date:   Mon, 22 Apr 2019 15:11:32 +0900
-In-Reply-To: <CAPig+cR5yMtdBA0HgLZ6k-j3NeMS+4UeEKgRiEpZ0YGrW_L0cg@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 21 Apr 2019 23:23:54 -0400")
-Message-ID: <xmqq8sw28t7v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Sun, 21 Apr 2019 23:12:31 -0700 (PDT)
+Date:   Sun, 21 Apr 2019 23:12:29 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] revisions.txt: mention <rev>~ form
+Message-ID: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+In revisions.txt, the '<rev>^' form is mentioned but the '<rev>~' form
+is missing. Although both forms are essentially equivalent (they each
+get the first parent of the specified revision), we should mention the
+latter for completeness. Make this change.
 
-> On Sun, Apr 21, 2019 at 9:19 AM Junio C Hamano <gitster@pobox.com> wrote:
->> diff --git a/Makefile b/Makefile
->> @@ -822,12 +822,12 @@ VCSSVN_LIB = vcs-svn/lib.a
->> -LIB_H := $(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
->> +LIB_H := $(shell (git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
->>         $(FIND) . \
->>         -name .git -prune -o \
->>         -name t -prune -o \
->>         -name Documentation -prune -o \
->> -       -name '*.h' -print)
->> +       -name '*.h' -print) | sort -u)
->
-> GNU make's "sort" function also de-dups, so an alternative is:
->
->     LIB_H := $(sort $(shell ...))
+While we're at it, the brief form of '<rev>^' makes it seem as if no
+numerical argument is accepted. Update documentation to make it obvious
+that an optional numerical argument is accepted.
 
-That is a much better solution.  Let me use that.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/revisions.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 2337a995ec..4ba7b4416a 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -131,7 +131,7 @@ from one location and push to another. In a non-triangular workflow,
+ This suffix is also accepted when spelled in uppercase, and means the same
+ thing no matter the case.
+ 
+-'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
++'<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+   '<rev>{caret}'
+@@ -139,7 +139,9 @@ thing no matter the case.
+   '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
+   object name of a tag object that refers to a commit object.
+ 
+-'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
++'<rev>{tilde}[<n>]', e.g. 'HEAD~, master{tilde}3'::
++  A suffix '{tilde}' to a revision parameter means the first parent of
++  that commit object.
+   A suffix '{tilde}<n>' to a revision parameter means the commit
+   object that is the <n>th generation ancestor of the named
+   commit object, following only the first parents.  I.e. '<rev>{tilde}3' is
+-- 
+2.21.0.1000.g11cd861522
+
