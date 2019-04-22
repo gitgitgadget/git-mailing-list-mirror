@@ -2,64 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F62A1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 03:24:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC49D1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 04:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbfDVDYE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 23:24:04 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:38030 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbfDVDYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Apr 2019 23:24:04 -0400
-Received: by mail-wr1-f42.google.com with SMTP id f14so13774388wrj.5
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 20:24:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fuBe6rNhJoqxrkAlfVHKw6eIcXvQP/MQX0ByT/7psks=;
-        b=eD/BZSqSV0F28XeKrzYlHzxMKzcRn+uAstQlT7bhpbrLHuC4F8ChcehbrkapbwWUKF
-         1XOrRKLgsuxSbFgRAegJEtxob8BxyO94dpEu+U3wS1nlda0PJB5fpOoEGbdRiPusR5pj
-         EqPn72d/I3oOq1NjlBZa+eKwyqF7OMAbjmfAd3+/83dXn6AE6Wxi5VJsaMlEn9/TYUiM
-         mP/D0B96YaHEZlWUZiGivDP1MDhm1ZIWm2rJNqr7W0ATHJlIzjFYjWIH4/HdHJDKmMZB
-         RrmqeH/zF8F6AD96E4eOrF+IAS4swENWcpdlTKTME88pBud66m8heNLdYSjj+8Z9Z+7V
-         NqmQ==
-X-Gm-Message-State: APjAAAUZGz6DVrlvH5xPq/JczIj3T6FjU+CuJ/zS6ep1CSNOBhvVLnjF
-        dNxOYhswCRLu5+szi9ma1LCgJIeGkPlKa+leHFE=
-X-Google-Smtp-Source: APXvYqy5SEU6U/2Ty07zKF6qCRn3axUWg5EaDSXlDiQRNC+VYRx/LrCTy+Ov92izgyosazHl4xpmfoGU9MXn7BKlrVU=
-X-Received: by 2002:a5d:5282:: with SMTP id c2mr862512wrv.88.1555903442408;
- Sun, 21 Apr 2019 20:24:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqy343a43b.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy343a43b.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 21 Apr 2019 23:23:54 -0400
-Message-ID: <CAPig+cR5yMtdBA0HgLZ6k-j3NeMS+4UeEKgRiEpZ0YGrW_L0cg@mail.gmail.com>
-Subject: Re: [PATCH/RFC] Makefile: dedup list of files obtained from ls-files
+        id S1726294AbfDVEsP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 00:48:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36480 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725904AbfDVEsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 00:48:15 -0400
+Received: (qmail 7244 invoked by uid 109); 22 Apr 2019 04:48:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Apr 2019 04:48:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28782 invoked by uid 111); 22 Apr 2019 04:48:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Apr 2019 00:48:46 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Apr 2019 00:48:12 -0400
+Date:   Mon, 22 Apr 2019 00:48:12 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: [PATCH] t5516: fix mismerge in 'next'
+Message-ID: <20190422044812.GA28493@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 21, 2019 at 9:19 AM Junio C Hamano <gitster@pobox.com> wrote:
-> diff --git a/Makefile b/Makefile
-> @@ -822,12 +822,12 @@ VCSSVN_LIB = vcs-svn/lib.a
-> -LIB_H := $(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
-> +LIB_H := $(shell (git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
->         $(FIND) . \
->         -name .git -prune -o \
->         -name t -prune -o \
->         -name Documentation -prune -o \
-> -       -name '*.h' -print)
-> +       -name '*.h' -print) | sort -u)
+The merge of jk/fetch-reachability-error-fix conflicts with
+jt/test-protocol-version, but the conflict resolution done by
+b4ce8375c018 has a typo (looks like an editor mistake):
 
-GNU make's "sort" function also de-dups, so an alternative is:
+  $ git show b4ce8375c018
+  [...]
+   -                      test_must_fail git fetch ../testrepo/.git $SHA1_3 &&
+   -                      test_must_fail git fetch ../testrepo/.git $SHA1_1 &&
+   +                      # Some protocol versions (e.g. 2) support fetching
+   +                      # unadvertised objects, so restrict this test to v0.
+  -                       test_must_fail ok=sigpipe env GIT_TEST_PROTOCOL_VERSION= \
+  -                               git fetch ../testrepo/.git $SHA1_3 &&
+  -                       test_must_fail ok=sigpipe env GIT_TEST_PROTOCOL_VERSION= \
+  ++                      test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
+  ++                              git fetepo/.git $SHA1_3 &&
+  ++                      test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
+   +                              git fetch ../testrepo/.git $SHA1_1 &&
 
-    LIB_H := $(sort $(shell ...))
+The tests don't notice the bogus command because we expect the command
+to fail.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The same problem is present in the merges to pu, which is not surprising
+since the 'next' merge was probably just resolved by rerere. We'd
+presumably want a fixup like this for 'next' until the next rewind, but
+the more important thing is to adjust the rerere cache so the eventual
+merge to 'master' is correct.
+
+ t/t5516-fetch-push.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 09e7178987..c81ca360ac 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1242,7 +1242,7 @@ do
+ 			# Some protocol versions (e.g. 2) support fetching
+ 			# unadvertised objects, so restrict this test to v0.
+ 			test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
+-				git fetepo/.git $SHA1_3 &&
++				git fetch ../testrepo/.git $SHA1_3 &&
+ 			test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
+ 				git fetch ../testrepo/.git $SHA1_1 &&
+ 			git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+-- 
+2.21.0.1179.g65a7c4fda7
