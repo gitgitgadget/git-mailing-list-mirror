@@ -2,90 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26C1620374
-	for <e@80x24.org>; Sun, 21 Apr 2019 23:44:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87C5420374
+	for <e@80x24.org>; Mon, 22 Apr 2019 00:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725908AbfDUXoW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 19:44:22 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:55381 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbfDUXoW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Apr 2019 19:44:22 -0400
-Received: by mail-wm1-f51.google.com with SMTP id o25so12603045wmf.5
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 16:44:21 -0700 (PDT)
+        id S1725961AbfDVAHc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Apr 2019 20:07:32 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:37173 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfDVAHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Apr 2019 20:07:32 -0400
+Received: by mail-pf1-f180.google.com with SMTP id 8so4881847pfr.4
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 17:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=C4JdThpuXyKTqrGTrv9y5R4n2x6d6eP+RYEjyG6kU3M=;
-        b=NZLpX+MMLWVu1pqE4Je8ftNigo8HXaXU1M2ZhT5kWNREhaWWIuWzGYrs1l1zCsKch7
-         +CjOe0LJNXGSP+9kNbuRxY+Uf8i+kOj0SV0HKjTbV6VhACV3M6Gmorh0gDHXm1u7OgD2
-         phTARdcXv7CB3YHyFEHlQjxfVJZmaNRlZE/fYmQ1MuW2VURdJewAMaUPK/viJzH105h2
-         ZjbE01JdJY+MrAPJT2qoHxI0JsR+epRmD86nA52+J7QwF84UdgP+c/dZIJyk8FjQEtQu
-         opkgnji5M0FhL4dQAP3gRe8hnzIi4A9NOeOqtV6iWD3O8HEBpHLUaFiXKYwT/EOTcOQC
-         InIw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6yYWCh1/OWxFUXOGLTo/ETvLFKHKCoeS/1bEU4ebzPk=;
+        b=g5p+Cwu8vrXmrKHhbGRmCkZ9SuXf5LVb0ZEsq+Kl2L1nww4zlj4KXSOr25DXrf8+dw
+         krFB9yzhgHScIBYctZd1J0nwsYimCtHfcWYD8C3dVJLRgfwtcNIcBOA52ToVfeS1oou2
+         6j9ckqO05HfMWJVFzCgWJCs3SmscAKonsurGxs0po79tE2q9qSjiNTmYrUb5ICfoCYcT
+         qobmV7LKjCBOyX+RdvzfaZyaCE5oP3LIEgOYkGbuxWYrhWKY2AXlmR9fKlqbSZOrV354
+         PdzB+97afOeX9rXxg9ZkOTdv5newzxrc0Ls4UZxrfERwaTF6xREZUB97g+ktBK32IYNe
+         F/+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=C4JdThpuXyKTqrGTrv9y5R4n2x6d6eP+RYEjyG6kU3M=;
-        b=crkVF5nnTiz3BtWbHuuZYO/32NsgFuhYv1k7euEiUIOAQQvCYNZMzY+2Z0p9jzMmal
-         EYQZ0C5oKpkJBq3tTEUwIcrSViC+bNsv1ewzxDTXNim0Ti17xxeQYTdDXDM09UCFfbVK
-         rtxRaH71Vp2eJQDWBLikTI+hKT2X1aIaIT6Am4p+DmaGsx6cNUB69PNVKaOTrky+S+sh
-         9coZuC9jdTCAfa5MLexb4AnykAVkjiqNglgYwEMQwThuwVmg0C1+H8NA9hfoPcTXQ4pG
-         OpcnwWQ+TG2iOiLWLtg3RJbt+oo7Gjz+LEthRGWdG/TXWxYvhvfQpA/S0iqrNl6pELcp
-         DOmw==
-X-Gm-Message-State: APjAAAVOkF9Ox2jjGBVU3kwt2zYen2ciLbDa0pkaxlatex4M8WcxupFg
-        gH05p5djcn0PdURyi2xIRlE=
-X-Google-Smtp-Source: APXvYqwrTHGvNg/YPB8y0c38L/7jG2TKOC520KpM5BJJtgEIWUSt+7Ini6V3JkgseWaTyFb3YooyWQ==
-X-Received: by 2002:a1c:3507:: with SMTP id c7mr9652209wma.20.1555890260252;
-        Sun, 21 Apr 2019 16:44:20 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id j190sm13363100wmb.19.2019.04.21.16.44.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Apr 2019 16:44:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@talktalk.net>
-Cc:     Andrew Janke <floss@apjanke.net>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: gettext, multiple Preferred languages, and English
-References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
-        <bd5ee770-a213-b663-208c-c9980a738fe9@talktalk.net>
-Date:   Mon, 22 Apr 2019 08:44:19 +0900
-In-Reply-To: <bd5ee770-a213-b663-208c-c9980a738fe9@talktalk.net> (Philip
-        Oakley's message of "Sun, 21 Apr 2019 13:59:48 +0100")
-Message-ID: <xmqqbm0yappo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6yYWCh1/OWxFUXOGLTo/ETvLFKHKCoeS/1bEU4ebzPk=;
+        b=VfOmvEzrVVt4qewfZOhlojz/X/V4lw+TxBH24+IIJWtNQ4JAFF5cZ0OSdZeiVgdO30
+         AwDNBtMakA4yxScwhwJATZhhbcYt2wI2F5afGWV5va0LiFZU7TNTGw3TEyXRnnZhuiE2
+         mG/Y/loC5PtlEpU31fZX8KHaW7EfCvcmc81BY4ZtCidwypEG+I2ghYUMKNp6DROvcxzg
+         BSNYnh0ihw3IQJuKnlnKarC/TG6nRxMXVTUB3+vhgImycDKqK2shFG10DmBJtxVYcsGY
+         6dB856DT+t6OwF4B0X31LlWJmeQr1mxNTDj0J9uR5sb3R3h3TzGwlr09KjYOK1NTz3fK
+         EyKQ==
+X-Gm-Message-State: APjAAAU0NPLh1/LjQjWGlUr95s0A/8HmfNfhhsF5ySfX5yaDTgqYtIv5
+        Ktl7rg0vjUJ+Z0woFKKTe/8sEP35
+X-Google-Smtp-Source: APXvYqwpIPMKePiEMcKgPy38/xuPShXw+o+7HNvbmDM/9Vc6n21cTSAVT8SoLoVvUL4ZkIcC0rM1JQ==
+X-Received: by 2002:aa7:960c:: with SMTP id q12mr17510917pfg.258.1555891650906;
+        Sun, 21 Apr 2019 17:07:30 -0700 (PDT)
+Received: from phord-x1.hsd1.ca.comcast.net ([2601:647:5701:455f:49f6:143c:5261:44c0])
+        by smtp.gmail.com with ESMTPSA id h189sm21163918pfc.125.2019.04.21.17.07.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 21 Apr 2019 17:07:29 -0700 (PDT)
+From:   Phil Hord <phil.hord@gmail.com>
+X-Google-Original-From: Phil Hord
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phil Hord <phil.hord@gmail.com>
+Subject: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+Date:   Sun, 21 Apr 2019 17:07:10 -0700
+Message-Id: <20190422000712.13584-1-phil.hord@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@talktalk.net> writes:
+From: Phil Hord <phil.hord@gmail.com>
 
-> On 21/04/2019 12:08, Andrew Janke wrote:
-> https://public-inbox.org/git/d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net/
->> I don't think it would even have
->> to be actively maintained, because for new message strings that aren't
->> included in the .po file, it would fall back to the non-translated input
->> strings, which are in English anyway, which is the desired behavior.
-> Given the above comment, could the en.po file
-> (https://github.com/apjanke/git/blob/english-dummy-translation/po/en.po)
-> be some very very short version with only one 'translated' string?
+I have a local patch to rebase--interactive.sh that adds "edit" switches
+to rebase, permitting me to say, for example,
 
-Or use LC_ALL=C and be done with it?
+    git rebase --drop $sha
 
-> This may be a way-off comment, but if it could be such a simple
-> maintenance free file then that sounds sensible.
->
-> also adding in Jiang Xin <worldhello.net@gmail.com>, the coordinator
-> for extra comment.
->
-> Philip
+This command creates a todo-list but drops the mentioned commit from the
+list by changing the "pick" to "drop". Other switches let me edit or
+reword a commit in my local history, greatly simplifying my branch
+grooming workflow.
+
+With the conversion to rebase.c (yay!) my tools are going away. I'm
+porting them to the rewritten rebase*.c and I want to submit them here.
+But rebase*.c is still in flux, and my changes have many conflicts with
+other inflight changes. I'm happy to wait for those, but in the
+meantime, I'd appreciate some feedback on the utility and acceptability
+of my plan.
+
+Here's my patch series as it stands today. It lacks documentation and
+tests, but it mostly works. Errors are not handled gracefully, but this
+will be rectified after I rebase onto pw/rebase-i-internal-rfc.
+
+Currently it supports these switches:
+
+    usage: git rebase [-i] [options] [--exec <cmd>] ...
+       :
+    --break <revision>    stop before the mentioned ref
+    --drop <revision>     drop the mentioned ref from the todo list
+    --edit <revision>     edit the mentioned ref instead of picking it
+    --reword <revision>   reword the mentioned ref instead of picking it
+
+I have plans to add these, but I don't like how their "onto" will be
+controlled. More thinking is needed here.
+
+    --fixup <revision>    fixup the mentioned ref instead of picking it
+    --squash <revision>   squash the mentioned ref instead of picking it
+    --pick <revision>     pick the mentioned ref onto the start of the list
+
+
+Phil Hord (2):
+  rebase: add switches for drop, edit and reword
+  rebase: add --break switch
+
+ builtin/rebase--interactive.c |  49 +++++++++++++++-
+ builtin/rebase.c              |  48 ++++++++++++++++
+ sequencer.c                   | 105 +++++++++++++++++++++++++++++-----
+ sequencer.h                   |  22 ++++++-
+ 4 files changed, 207 insertions(+), 17 deletions(-)
+
+--
+2.20.1
