@@ -2,206 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3D9C2037F
-	for <e@80x24.org>; Mon, 22 Apr 2019 17:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9D41F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 17:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727378AbfDVRPj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 13:15:39 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:43291 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726260AbfDVRPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 13:15:38 -0400
-Received: from [10.0.2.15] ([80.189.70.228])
-        by smtp with ESMTPA
-        id IcXXh7FKLR9LaIcXYhH9TX; Mon, 22 Apr 2019 18:15:37 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1555953337; bh=HeXjlAMWioDgyvDOXTj0uEvTA+GZdNL4FanwNLi2wHg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=NwtzVAzBNvxRMxBmzMXuLqfGXDBM5HR8c5Afm5RM1+dmikS7ZgkxiPmkHWAKQy8XS
-         MltXLBRaXQHBHmuvGumjZtHf8RnYv1omcAz/f+pfc4+vrNKMDFWaKSzkyFI8SqXT5W
-         lITcRso3K85ff0bDM/KfPaAubmbariERWY0TvqSU7hs+sRbVYQWnTiRZiL4IMbVETN
-         7ovecH2KrefUmXo1s6a0etwUuP/+mucHx6X7RpPAdXRj9w2KYZljI57Q+dzAz5ldh5
-         rezkkNhiGompMB87o79RKdfeeYb1Gg2yzzBmotyRczEErNQtVD8MipXfvzC7dm4+Cm
-         dsnaDufvmFN3g==
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Qa0YQfTv c=1 sm=1 tr=0
- a=5/rI1lTgw+ttA0Fwm4j1LQ==:117 a=5/rI1lTgw+ttA0Fwm4j1LQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=rBb2Hw9khP7VJvgNWCcA:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH/RFC] Makefile: dedup list of files obtained from ls-files
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqy343a43b.fsf@gitster-ct.c.googlers.com>
- <20190422144927.GA6519@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d869060a-a731-ff1d-3131-a146078fcf88@ramsayjones.plus.com>
-Date:   Mon, 22 Apr 2019 18:15:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727480AbfDVRrf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 13:47:35 -0400
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:34305 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfDVRre (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 13:47:34 -0400
+Received: by mail-ed1-f42.google.com with SMTP id a6so10112654edv.1
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 10:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=BFhPnZ+PsDISt6xW6esKV+o5RGhkxAF5cah4Xtkix9s=;
+        b=WUxOceE9knuGyPKcMfr/lGTg5HB85aml5qGK3obqlFMbze9HdM2YLp7KeYurrAmZeC
+         dpylAY1dkgYwwDc1r6YTL+aYC3n0nWcsPcaHCoaRojXjTLnat9buAwZWTPIYg2COI042
+         NRJeOaNByzD4JBXmzdc9GjXAv3VOJsX59PVGLMP+HTOdKSxCMcvSCRyLrrTBf+y019y7
+         poBn4V1my1xSmn623SLbrIAJP4W8GamvcBke6F+6Ilzifu3Bhi8U4TYo/hRsYv9i3+FO
+         vDuisSYfoq9vh6uG2wzD0OL/U1xea51TgbTMENQTyNDilLT0AdqrauTLtIQqSZDHYlxh
+         SEbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=BFhPnZ+PsDISt6xW6esKV+o5RGhkxAF5cah4Xtkix9s=;
+        b=IKRjvCRhyP+PCicBHn1aWt5SyMiIq0/ALUcA2RFepAUNOiVDYkcrk6LhGs3KgYqwMn
+         Ge9E2QfILIP0jLZ8JkUak51n6/GJnqik/JsyDyB4lOGX9hcWXvG91pjoHhlgVQxO8f5J
+         8Vf0Rd3wjLJK+ubkRXtcnkZ5PTHFNAJMHVT3VFbKfZcUARYiL3SmmjFnQL/4NoW2GOBo
+         Ik0vL0vOLkywzhY+dH5CeDCw/5kcOzfrxcG0aHCt3XCPfQM3dRvjhJoW7Kzg39RD/Fvt
+         BTNkuhnn0VjjTRqyJfZBrm/f1Agz6kHq92fqPKNxuIBr3U84Gv3hyEryS5vGh0e5y2Fa
+         eaGA==
+X-Gm-Message-State: APjAAAXkOuOTq8reuLpr4tFkYcefpgfHH43tWXlkob1WUbZkGqbgW3vH
+        dgPgxmRxwTIgyOeZi+f+1fo=
+X-Google-Smtp-Source: APXvYqxmTm/MjczqgitjZ07jahOXZtzNzLIdlgQUFX4t7wDpAdWPyO+4f9aqC1yTsAKmWYc0xUtHrQ==
+X-Received: by 2002:a17:906:18a2:: with SMTP id c2mr10270734ejf.9.1555955253172;
+        Mon, 22 Apr 2019 10:47:33 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id q12sm2332421eja.45.2019.04.22.10.47.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Apr 2019 10:47:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Andrew Janke <floss@apjanke.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: gettext, multiple Preferred languages, and English
+References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net> <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com> <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
+Date:   Mon, 22 Apr 2019 19:47:31 +0200
+Message-ID: <875zr6szik.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190422144927.GA6519@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPBwI1hy3SPVmaJo2r2a/SBK2uS9xc1YfbBGsr7A80QjnGcrV8dTsX0NNCzdbFJRS2S+i8mxpqZzS6AEk8QFWT95mb/NXLaAbM1baljbbkxjcRD6eOQe
- 73+zJ7GeiJthziYV+Rhp+1Bm1QIS9X3UCC2x66PLRTuHWvAKp+lfghlpNTPtFhaNgYpEl8wqnGX0BA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Mon, Apr 22 2019, Andrew Janke wrote:
 
-On 22/04/2019 15:49, Jeff King wrote:
-> On Sun, Apr 21, 2019 at 10:19:04PM +0900, Junio C Hamano wrote:
-> 
->>    I am not fan of adding the "| sort -u" of the whole thing,
->>    because there is no need to dedup the output of the $(FIND) side
->>    of the alternative, but "(ls-files | sort -u) || (find)" would
->>    obviously not work.  If we truly care, perhaps we should add a
->>    new option to ls-files to show each path only once, unless it is
->>    showing the stage number (i.e. "ls-files -s" or "ls-files -u"),
->>    but this gets the problem go away without code change, hence this
->>    RFC ;-)
-> 
-> FWIW, after reading your commit message my thoughts immediately turned
-> to "why can't ls-files have a mode that outputs each just once", but
-> then ended up at the same place as your patch: it's not that hard to
-> just de-dup the output.
+> On 4/21/19 8:35 PM, Duy Nguyen wrote:
+>> On Sun, Apr 21, 2019 at 6:40 PM Andrew Janke <floss@apjanke.net> wrote:
+>>>
+>>> Hi, Git folks,
+>>>
+>>> This is a follow-up to https://marc.info/?l=git&m=154757938429747&w=2.
+>>
+>> This says the problem with "en" detection has been fixed. Would
+>> upgrading gettext fix it?
+>>
+>> You would need to upgrade something (git or gettext) and if it's
+>> already fixed in gettext I don't see why we need a workaround in git.
+>
+> From reading the bug report, that does sound like it would fix it. But
+> from what I can see, that fix hasn't made it out into a released version
+> of gettext yet. I haven't downloaded the development gettext to confirm
+> the fix.
+>
+> Looking at the gettext ftp site at https://ftp.gnu.org/pub/gnu/gettext/,
+> it looks like gettext does not make frequent releases, and the last
+> release was two and a half years ago. Who knows when the next release
+> will be. And then it'll take longer to trickle down into Linux
+> distributions and such.
+>
+> From your release history at https://github.com/git/git/releases, it
+> seems like Git is a lot more active in making releases than gettext. So
+> including this fix in Git would get it into the hands of affected users
+> sooner. And it seems like a pretty low-risk change to me.
+>
+> Then once the new gettext release is out, their fix is confirmed, and it
+> makes it out into common distros, the workaround could be removed from Git.
 
-My immediate thought was "that is simply a bug, no?" :-D
+What does Linux distro release schedule have to do with this? Your
+initial report and the linked-to bug on GNU savannah only talk about
+this being an issue on OSX. Is there some more general issue I'm
+missing?
 
-I haven't used 'git ls-files' that much, so it's no great surprise
-that I had not noticed it odd behaviour!
+People have reported issues with OSX's weird language selection in the
+past. I think it makes sense to do whatever we need to hack around it as
+long as it's some well-understood and OSX-only hack.
 
-So, this evening, I decided to have a little play:
+I'm paranoid that the suggestion of adding an en.po *in general* would
+break stuff elsewhere. I'd be surprised if the project linked-to
+upthread that used that hack is as widely ported as we are, and that
+includes a lot of i18n implementations, not just GNU's.
 
-  $ git status
-  On branch master
-  You have unmerged paths.
-    (fix conflicts and run "git commit")
-    (use "git merge --abort" to abort the merge)
-  
-  Changes to be committed:
-  
-  	new file:   d
-  
-  Unmerged paths:
-    (use "git add <file>..." to mark resolution)
-  
-  	both modified:   a
-  
-  Changes not staged for commit:
-    (use "git add/rm <file>..." to update what will be committed)
-    (use "git checkout -- <file>..." to discard changes in working directory)
-  
-  	modified:   b
-  	deleted:    c
-  
-  Untracked files:
-    (use "git add <file>..." to include in what will be committed)
-  
-  	e
-  
-  $ git ls-files
-  a
-  a
-  a
-  b
-  c
-  d
-  $ git ls-files -c
-  a
-  a
-  a
-  b
-  c
-  d
-  $ git ls-files -m
-  a
-  a
-  a
-  b
-  c
-  $ git ls-files -d
-  c
-  $ git ls-files -u
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  $ git ls-files -s
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  100644 72ad562535b8551cdd6659e8fb6c7cf6830e6a07 0	d
-  $ git ls-files -sd
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  100644 72ad562535b8551cdd6659e8fb6c7cf6830e6a07 0	d
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  $ git ls-files -su
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  $ git ls-files -sm
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  100644 72ad562535b8551cdd6659e8fb6c7cf6830e6a07 0	d
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  $ git ls-files -sdu
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  $ git ls-files -sdum
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  $ git ls-files -sdumo
-  e
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4ef30bbfe26431a69c3820d3a683df54d688f2ec 1	a
-  100644 af72a79d2a6bd4b252b0aca22dba9946f7eedf86 2	a
-  100644 f8829dfb9bf82721903d239ef069fb5de395f3e7 3	a
-  100644 4f2e6529203aa6d44b5af6e3292c837ceda003f9 0	b
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  100644 a296d0bb611188cabb256919f36bc30117cca005 0	c
-  $ 
+Ultimately setlocale() is *supposed* to be a well-understood thing. You
+set your preferred locale, programs have translations, the OS takes care
+of it. I'm concerned that us trying to be specifically smart in git will
+backfire (e.g. it's been suggested in the past to have core.language or
+whatever..).
 
-Er, ... well, I obviously don't have a clue how it is supposed
-to work. This just looks broken to me. :(
+But it looks like we don't need to go there, this seems like a
+workaround needed for some specific OSX version.
 
-> So the patch itself looks good to me (though I agree that Eric's
-> suggestion to de-dup inside "make" is better still).
-
-Agreed.
-
-ATB,
-Ramsay Jones
-
+That can just live behind a flag and be detected in config.mak.uname,
+no? And then we'd do whatever hack digs us out of that specific hole on
+OSX, e.g. maybe generating an en.po *just* there, and just for that list
+of known broken version(s) of OSX.
