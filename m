@@ -2,44 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0ED1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 18:18:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2EB01F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 18:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728400AbfDVSSj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 14:18:39 -0400
-Received: from siwi.pair.com ([209.68.5.199]:36362 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726260AbfDVSSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 14:18:39 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 145313F4954;
-        Mon, 22 Apr 2019 14:18:38 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:3443:1387:8d77:9c9b] (unknown [IPv6:2001:4898:8010:0:1d79:1387:8d77:9c9b])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B77EA3F4953;
-        Mon, 22 Apr 2019 14:18:37 -0400 (EDT)
-Subject: Re: [PATCH 5/5] difftool: fallback on merge.guitool
-To:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Aguilar <davvid@gmail.com>
-References: <cover.1555880168.git.liu.denton@gmail.com>
- <fb7ac11439cbfd52d9181b78fdc8f8034a6b1064.1555880168.git.liu.denton@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <2a521a5c-4b5d-57aa-1e91-d4ec9b190fb7@jeffhostetler.com>
-Date:   Mon, 22 Apr 2019 14:18:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        id S1728668AbfDVSdU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 14:33:20 -0400
+Received: from avasout03.plus.net ([84.93.230.244]:47351 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727190AbfDVSdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 14:33:20 -0400
+Received: from [10.0.2.15] ([80.189.70.228])
+        by smtp with ESMTPA
+        id Idkkh7KdwR9LaIdklhHAyb; Mon, 22 Apr 2019 19:33:19 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1555957999; bh=05wUgU+8LfKYBxmbD9SeFs2E5Sz22vVKeNGKDD9k9Hk=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SWNUiWx84ZLCaLZOjnFHou7jeRMIaexbjiUofiFN4Ut18pnlM8Xr3K6aOVB/gcOLa
+         qWQ6gaviUEDxtQdaXzB6sbSuPDJirRAGWEvjh5iDu/8eq81P0aw9NSjDpgSQOGOl/O
+         RX3fw0WyVRaH/BURIfg256zwD6s+90S/+FD8Hbc7rHZDUy+LDHlS5iCZmahdVH3bFQ
+         KMDkJ68rr8dUbojASsikHAK9k83m61DZTT2FDLb9pVSH2BsjQeQq+7viP26LqCz+Sn
+         XUHIt8Ji56pL/WIBKt1XJ7GSKOah+MiW2hyfZxhL366s6IkduQm1yIKp6DtgmNYbpp
+         oMErju1tDWbzw==
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Qa0YQfTv c=1 sm=1 tr=0
+ a=5/rI1lTgw+ttA0Fwm4j1LQ==:117 a=5/rI1lTgw+ttA0Fwm4j1LQ==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
+ a=EBOSESyhAAAA:8 a=bsd20PeyeYF7KUxIzJoA:9 a=QEXdDO2ut3YA:10
+ a=PwKx63F5tFurRwaNxrlG:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: jt/fetch-cdn-offload (was What's cooking in git.git (Apr 2019,
+ #04; Mon, 22))
+To:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
+Cc:     git@vger.kernel.org, avarab@gmail.com
+References: <xmqqd0le8t9l.fsf@gitster-ct.c.googlers.com>
+ <20190422175104.15471-1-jonathantanmy@google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <6de01c91-2dbb-61b2-973a-22ba71302bbb@ramsayjones.plus.com>
+Date:   Mon, 22 Apr 2019 19:33:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <fb7ac11439cbfd52d9181b78fdc8f8034a6b1064.1555880168.git.liu.denton@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20190422175104.15471-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfEYkNP4n1lDymaE3CV3QTQgMnIOPRIfNwNtut8I4pHKVvU6lbSb9EllCK+4M22YmLFDRWU1o+bGbCZrSW4waR3nfFlI7NS7J/e8XVtk9z5erayFiZvIo
+ zhNLQCSfGh9/eJ0EziyEByI7qc0wtR4xJOmZJNfpA+i5umTbS+jtjXSromTHa5kCwlQqmwwB8/VxYA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -47,29 +60,45 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 4/22/2019 1:07 AM, Denton Liu wrote:
-> In git-difftool.txt, it says
+On 22/04/2019 18:51, Jonathan Tan wrote:
+>> * jt/fetch-cdn-offload (2019-03-12) 9 commits
+>>  - SQUASH???
+>>  - upload-pack: send part of packfile response as uri
+>>  - fetch-pack: support more than one pack lockfile
+>>  - upload-pack: refactor reading of pack-objects out
+>>  - Documentation: add Packfile URIs design doc
+>>  - Documentation: order protocol v2 sections
+>>  - http-fetch: support fetching packfiles by URL
+>>  - http: improve documentation of http_pack_request
+>>  - http: use --stdin when getting dumb HTTP pack
+>>
+>>  WIP for allowing a response to "git fetch" to instruct the bulk of
+>>  the pack contents to be instead taken from elsewhere (aka CDN).
+>>
+>>  Waiting for the final version.
 > 
-> 	'git difftool' falls back to 'git mergetool' config variables when the
-> 	difftool equivalents have not been defined.
+> Sorry for getting back to you late on this. The current status is that
+> v2 (this version) looks good to me, except that not many people seems to
+> be interested in this - I sent out v2 [1] with a relatively significant
+> protocol change to v1 (requiring the server to also send the packfile's
+> hash, meaning that a workflow that Ævar has described will no longer
+> work), but nobody replied to it except for Josh Steadmon (who did give
+> his Reviewed-By).
 > 
-> However, when `diff.guitool` is missing, it doesn't fallback to
-> anything. Make git-difftool fallback to `merge.guitool` when `diff.guitool` is
-> missing.
+> In the meantime, I have been working on a server-side JGit
+> implementation [2], but not all parts are done (and it will take some
+> time).
 > 
+> If this version is good with everyone, then this is the final version. I
+> know it has been some time, but if I squash "SQUASH???" onto
+> "upload-pack: refactor reading of pack-objects out" and then rebase onto
+> latest master (14c0f8d3ab ("The sixth batch", 2019-04-22)), there's only
+> one small merge conflict.
 
-Is this a well-defined operation?
+... not forgetting the second hunk of [1], of course. ;-)
 
-I mean, we're assuming here that a 3-way gui merge tool (that probably
-expects 3 input pathnames and maybe a 4th merge-result pathname (and
-associated titles and etc)) can function sanely when only given the
-pair that a diff would have.
+[1] https://public-inbox.org/git/5f0c12d5-6714-1516-3579-33d839ad7b7e@ramsayjones.plus.com/
 
-That is, we're assuming that the selected merge tool has a 2-way diff
-mode and that the command line args for the 2- and 3-way views are
-compatible.
-
-Just a thought
-Jeff
-
+ATB,
+Ramsay Jones
 
