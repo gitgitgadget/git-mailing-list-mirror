@@ -2,200 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA72820374
-	for <e@80x24.org>; Mon, 22 Apr 2019 00:07:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6985520374
+	for <e@80x24.org>; Mon, 22 Apr 2019 00:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726108AbfDVAHh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 20:07:37 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33412 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbfDVAHh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Apr 2019 20:07:37 -0400
-Received: by mail-pl1-f196.google.com with SMTP id t16so5000915plo.0
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 17:07:37 -0700 (PDT)
+        id S1725991AbfDVAgX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Apr 2019 20:36:23 -0400
+Received: from mail-io1-f46.google.com ([209.85.166.46]:37261 "EHLO
+        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfDVAgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Apr 2019 20:36:23 -0400
+Received: by mail-io1-f46.google.com with SMTP id a23so4632615iot.4
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 17:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=w1tC4Sn8n/CG6++68KI8Ka6GpuX0F9HdFURsFJy2urw=;
-        b=Rc90+/gyKJpjY3QaOBxr2jsZZFYvfNbLNEfYLgqAyUaehYT9vi9WbqulI+nZdKai0T
-         xZm1RprLKCpJtU/z2WvZJvXZxXvCMVvcxaniHw+mluesE5/dpljpXoAJ7vx7Gz7YSo//
-         fdwGVdiOHADpsvsznoQhOiEa2qinrydjaJyDYOxZoFtLoexxiUStFtfuEQj++2Ek8R/B
-         2aYcjPKoYwv1PmHoj2p6tvsKkdnruf+QfLXUiq2+Idjg6qqfkPUMAuTfVUdbgLbZsq4f
-         51LNZYf+rG50fs0SQaQZIbxAnqZEYQNjqIg2mg0nV6bOZYi5vSSitFJMgBt1U7H3bG7N
-         /5cQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jybQj0IAjx13qriIBUooJ4FFhY80nxSLfFXnvn058e4=;
+        b=hnEWjJwlshrst1VRaxV4qb7l+mTslDHZC6MGreqF4gZgAmVr21XmSrEtFr3nWu4r2N
+         VJWABsp2o0XA56E7gxD1mUrmJ7ja5wUkbBw4ALNb9xm0YmG5yC5Z8DeB4ZRUn7vv6UJs
+         DsyFzVtMOh5xWNEuemLBbzu3OG+aI741dT24l455RK0QTxjWHHfXxpoX8AjNqSISlAvg
+         iz9Ioy2BPo+gTQ0cMA4ZV+SYxXLo2kT999ZmrNWb8KLWkP0gIweEiMuocVdfzBkm07vJ
+         6nIYz/7ToHdnnJ8xYmf1n9MpkNQ5jYkIq2Xv8GHD+UXaNIBD11qcYhxYnTDGyjdmGqI+
+         GNdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=w1tC4Sn8n/CG6++68KI8Ka6GpuX0F9HdFURsFJy2urw=;
-        b=c2ksVpvbM1mLef6c3U8RfgSU2qqTeHRJcNIEkVlG5gfC/4d5Y6FRIfWArLKgLAs1JU
-         JsvMKY/4s0iqdoyeTqjcBJGQA5biEFHsDhtqgGtpX8ad9W/QNuVQjg7gMQkIdJxYjGR6
-         EKB+vfYlal2NnhWM4bqwhpJ3k1ZtHIMOM1BBVDgdoifOatGjRCFz3vCswFdZh6NnFkwk
-         PBLvwpkgJqNhOztQ0Q9nUcioCQiT+C/oQwlphZq7jdc96iOYD8O0JxDX2gm2JqCdq5bm
-         vD6Jkh46awixeFENYk8C89jPMq0Oh9m3TBPrDn1j8b0XxVpsf0kf3J1XX4uL2Dt23XJ4
-         iIaw==
-X-Gm-Message-State: APjAAAVzgS9eI7iSMiB61n9K1UL5/nTWt/JrLt3UDsTKYonK5og8rIK3
-        DEbL2oY1Piv1We7KLXnwuEE7r5aJ
-X-Google-Smtp-Source: APXvYqwXferr4Myecm265F7JlTWKFwORD4y9K1I/bVjPjI3gvDf/FB9OaoiUjkaS3Yxe9kHXXdZjQQ==
-X-Received: by 2002:a17:902:b605:: with SMTP id b5mr15544295pls.206.1555891656388;
-        Sun, 21 Apr 2019 17:07:36 -0700 (PDT)
-Received: from phord-x1.hsd1.ca.comcast.net ([2601:647:5701:455f:49f6:143c:5261:44c0])
-        by smtp.gmail.com with ESMTPSA id h189sm21163918pfc.125.2019.04.21.17.07.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Apr 2019 17:07:35 -0700 (PDT)
-From:   Phil Hord <phil.hord@gmail.com>
-X-Google-Original-From: Phil Hord
-To:     git@vger.kernel.org
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH/RFC 2/2] rebase: add --break switch
-Date:   Sun, 21 Apr 2019 17:07:12 -0700
-Message-Id: <20190422000712.13584-3-phil.hord@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190422000712.13584-1-phil.hord@gmail.com>
-References: <20190422000712.13584-1-phil.hord@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jybQj0IAjx13qriIBUooJ4FFhY80nxSLfFXnvn058e4=;
+        b=sxe6A5kpiTl8eySr3sfe2tDgnIyt52NMGv9+IXU8J6w/1z7Aq1KqnMEJREo6o4e5UT
+         /hMCvb2ejLal6GFt6jglX4pTLxr6PH0gHZbre7kHnDTsmqikjrsmMgdrrZVXJpE5DyVQ
+         ZQIv5HRESbS/wo1mAgyzYvp/KGMXVFGtHfJsu1V+RttOMtkrGbgIxkd+Zz5G8W6DQdDR
+         LSiyqmBv/VWpgWMnLG6KntoJTlYc2ydhzvJUcTCb/aLnjEhPi1YNMQxf4bOdfJNWUVXa
+         2OlfGuMXyMGAktKV1pNJFCsBaFLphUk7LdXtuuIEZqe2yJS21WWZQd/cz6fYD2S2I5W1
+         Kxzw==
+X-Gm-Message-State: APjAAAV8EY8VFWDBrgW0jEfUGMrixA8UwryPbrqIbHCr3am9Zt91yUiw
+        tlksQZD1MBSjiSyKyGXcgIZU3GazYZ+qbRaRCzSE2A==
+X-Google-Smtp-Source: APXvYqyEBAFWKjCA+s/q4BlNKpq2Zb9T3uRLeo4MxJNMDPTn5Be+ZvH2cSt5NzXtaX/4rkUq9/turjtB32gAsG+Opmw=
+X-Received: by 2002:a05:6602:58:: with SMTP id z24mr2031907ioz.118.1555893382528;
+ Sun, 21 Apr 2019 17:36:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
+In-Reply-To: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 22 Apr 2019 07:35:56 +0700
+Message-ID: <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com>
+Subject: Re: gettext, multiple Preferred languages, and English
+To:     Andrew Janke <floss@apjanke.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phil Hord <phil.hord@gmail.com>
+On Sun, Apr 21, 2019 at 6:40 PM Andrew Janke <floss@apjanke.net> wrote:
+>
+> Hi, Git folks,
+>
+> This is a follow-up to https://marc.info/?l=git&m=154757938429747&w=2.
 
-Expand the rebase edit switches to include the break switch. This
-switch lets the user add a "break" instruction to the todo-list
-before the mentioned reference.
+This says the problem with "en" detection has been fixed. Would
+upgrading gettext fix it?
 
-This switch is a little different from the ones added so far because
-it adds a new instruction between commits in the todo-list instead of
-changing the command used to include a commit. It is a little like
-"exec" in this regard, except it doesn't add the command after every
-commit.
+You would need to upgrade something (git or gettext) and if it's
+already fixed in gettext I don't see why we need a workaround in git.
 
-It is not immediately clear whether we should add the break command
-before or after the referenced commit.  That is, when the user says
-'--break ref', does she mean to break after ref is picked or before
-it?  The answer comes when we realize that a 'break' after a ref
-is functionally the same as '--edit ref'. Since the user didn't
-say '--edit ref', clearly she must have wanted to break _before_ ref
-is picked.  So, insert the break before the mentioned ref.
+> With the current git 2.21.0, some users, including myself, are still
+> having problems with git selecting the "wrong" language for localization.
+>
+> This happens on macOS in the situation where:
+> * The user has multiple Preferred languages defined in Language & Region
+> system preferences
+> * English is set as the Primary language
+> * Another language, for which git has a .po translation file defined, is
+> set as another Preferred language, for example, Spanish
+> * Environment variable $LANG is unset
+> * git was built with gettext support enabled
+>
+> In this situation, when git is run, it will use the translations from
+> the secondary Preferred language instead of displaying messages in
+> English, the Primary language.
+>
+> I've seen this situation with other gettext-enabled applications before.
+> I believe what's happening is that when selecting the language to use,
+> gettext goes through the Preferred languages in order, looking for a .po
+> translation file for each. It does not find one for English, but it does
+> find one for Spanish, so it uses that, instead of falling back to the
+> non-translated message strings.
+>
+> Some examples of this happening in the wild:
+> -
+> https://stackoverflow.com/questions/55145901/force-git-to-use-the-default-system-language/55160216
+> - https://github.com/Homebrew/homebrew-core/issues/37331
+> - https://github.com/Homebrew/homebrew-core/issues/31980
+>
+> I think an easy fix for this would be to add an "en.po" translation
+> file, so that when gettext does its translation selection, it finds that
+> first for when English is the Primary language (or a Preferred language
+> earlier in the order than other languages), and uses it. This .po file
+> would be an "identity" translation where the translated strings are all
+> just the same as the original strings. I don't think it would even have
+> to be actively maintained, because for new message strings that aren't
+> included in the .po file, it would fall back to the non-translated input
+> strings, which are in English anyway, which is the desired behavior.
+>
+> This would be a convenience for git users, because it would "just work"
+> without any modifications to the configure/build process, or requiring
+> users to force a $LANG setting.
+>
+> Would you consider adding this?
+>
+> I've put together a patch that does this:
+> https://github.com/apjanke/git/tree/english-dummy-translation
+> https://github.com/apjanke/git/commit/7e6704167018e1d47399af04230521927991811b
+> Not attaching a patch because it's kind of a large file. I have tested
+> it locally and it fixes the language selection problem for me. I'm not
+> sure if the appropriate thing to do is make a PR for this to the
+> git-l10n/git-po GitHub repo or not.
+>
+> Cheers,
+> Andrew Janke
 
-Annoyingly, however, when git stops at a break, it declares that the
-previous commit is the one we stopped on, which is always different
-from the one the user specified. Does anyone care?  Should --break
-effectively be an alias for --edit?
 
-    '--break <ref>' to stop the rebase before the mentioned commit
 
-Signed-off-by: Phil Hord <phil.hord@gmail.com>
----
- builtin/rebase--interactive.c | 3 +++
- builtin/rebase.c              | 4 ++++
- sequencer.c                   | 7 +++++++
- sequencer.h                   | 1 +
- 4 files changed, 15 insertions(+)
-
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index 9285d05443..a81fa9c1c5 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -164,6 +164,7 @@ static int resolve_commit_list(const struct string_list *str,
- static int resolve_edits_commit_list(struct sequence_edits *edits)
- {
- 	return resolve_commit_list(&edits->drop, &edits->revs) ||
-+	       resolve_commit_list(&edits->breaks, &edits->revs) ||
- 	       resolve_commit_list(&edits->edit, &edits->revs) ||
- 	       resolve_commit_list(&edits->reword, &edits->revs);
- }
-@@ -302,6 +303,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 			   N_("restrict-revision"), N_("restrict revision")),
- 		OPT_STRING(0, "squash-onto", &squash_onto, N_("squash-onto"),
- 			   N_("squash onto")),
-+		OPT_STRING_LIST(0, "break", &edits.breaks, N_("revision"),
-+				N_("stop before the mentioned ref")),
- 		OPT_STRING_LIST(0, "drop", &edits.drop, N_("revision"),
- 				N_("drop the mentioned ref from the "
- 				   "todo list")),
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index a8101630cf..02079c4172 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1053,6 +1053,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 					      NULL };
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
-+	struct string_list breaks = STRING_LIST_INIT_NODUP;
- 	struct string_list reword = STRING_LIST_INIT_NODUP;
- 	struct string_list edit = STRING_LIST_INIT_NODUP;
- 	struct string_list drop = STRING_LIST_INIT_NODUP;
-@@ -1138,6 +1139,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
- 				N_("add exec lines after each commit of the "
- 				   "editable list")),
-+		OPT_STRING_LIST(0, "break", &breaks, N_("revision"),
-+				N_("stop before the mentioned ref")),
- 		OPT_STRING_LIST(0, "drop", &drop, N_("revision"),
- 				N_("drop the mentioned ref from the "
- 				   "todo list")),
-@@ -1404,6 +1407,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.cmd = xstrdup(buf.buf);
- 	}
-
-+	forward_switches(&options, "--break", &breaks);
- 	forward_switches(&options, "--drop", &drop);
- 	forward_switches(&options, "--edit", &edit);
- 	forward_switches(&options, "--reword", &reword);
-diff --git a/sequencer.c b/sequencer.c
-index d7384d987c..4a1a371757 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4261,6 +4261,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
-
- void free_sequence_edits(struct sequence_edits *edits)
- {
-+	string_list_clear(&edits->breaks, 0);
- 	string_list_clear(&edits->drop, 0);
- 	string_list_clear(&edits->edit, 0);
- 	string_list_clear(&edits->reword, 0);
-@@ -4294,6 +4295,7 @@ static int check_unused_refs(const struct string_list *refs)
- static int check_unused_edits(const struct sequence_edits *edits)
- {
- 	return check_unused_refs(&edits->drop) ||
-+		check_unused_refs(&edits->breaks) ||
- 		check_unused_refs(&edits->edit) ||
- 		check_unused_refs(&edits->reword);
- }
-@@ -4320,6 +4322,11 @@ static void add_edit_todo_inst(struct strbuf *buf, const struct object_id *oid,
- {
- 	enum todo_command cmd = TODO_PICK;
-
-+	if (consume_oid(oid, &edits->breaks)) {
-+		add_todo_cmd(buf, TODO_BREAK, flags);
-+		strbuf_addstr(buf, "\n");
-+	}
-+
- 	if (consume_oid(oid, &edits->drop))
- 		cmd = TODO_DROP;
- 	else if (consume_oid(oid, &edits->edit))
-diff --git a/sequencer.h b/sequencer.h
-index 7887509fea..310829f222 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -139,6 +139,7 @@ int sequencer_remove_state(struct replay_opts *opts);
-  */
- struct sequence_edits {
- 	struct commit_list *revs;
-+	struct string_list breaks;
- 	struct string_list drop;
- 	struct string_list edit;
- 	struct string_list reword;
---
-2.20.1
+-- 
+Duy
