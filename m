@@ -2,84 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C66D520379
-	for <e@80x24.org>; Mon, 22 Apr 2019 06:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1AE11F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 07:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbfDVGcY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 02:32:24 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52409 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbfDVGcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 02:32:24 -0400
-Received: by mail-wm1-f66.google.com with SMTP id a184so13294850wma.2
-        for <git@vger.kernel.org>; Sun, 21 Apr 2019 23:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aj4kchaJyT22r7AH6E3d7VHkaharNL6q7mCpRwKw2Xs=;
-        b=UwMi5jViKA/VQyvitdh/kM8jPDixJ/0NNYXI2TkM6ya1EHHlTTSUQ8+unS8zuMFmQF
-         hJt2WjSovNtbwP/utW4x4NZJO+wDXGjc0bb619M1Lue7vPO1BC1cKWgqZ6BmOFHAIDBw
-         1jCH/6qUGjuBE+vnXxxHINZ8S/e/OxwloSKUYqo7vz64JhLf/OcahyeTtLciQplvves8
-         1MjwJLzEmaS58HwNAfHqzcd0VMD++nHJxZDBaOeYkLf5TGikTfWPnrsFgU5V57iAZXZ6
-         FU3wZHZuH1SfzvUJBy/7NqvPV6XA5I5CoVj1Q2KCpUi8H0yu8KaY3/OE773wvm0ALAXq
-         FMjQ==
+        id S1726619AbfDVHEE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 03:04:04 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45883 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725914AbfDVHEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 03:04:04 -0400
+Received: by mail-wr1-f68.google.com with SMTP id s15so14725806wra.12
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 00:04:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aj4kchaJyT22r7AH6E3d7VHkaharNL6q7mCpRwKw2Xs=;
-        b=ehPA3o+0gRTEtNBxc5U+pa1dWjMR0TOfN/O6pK95ojoRVNjT3OGQO25vBgnUPDWT0V
-         7NsZ+22mkylI4LfL3LR6u3fL5KIy2hnkNXCtFa8vLToDGQ+lPuWacTY9j9ZYyr4Bd4ii
-         ZotwmJ6pjVFuVAGtqaojNwaJcZ7vAOfqf1EGsslm6zx73MFSD/NKevkMZk2qXoADnkEK
-         75+pHBs9U7d79V6US7ne4HAwSKjgHHWom2g42Zc0A+ApVhuB5JYy5U8YxYQ53xvr78X0
-         x5TKAoN7bpOhvMTwPocd/a+ihoLgvIX5rGLtffUtSepaiofklq79Huj+gzEFmyEqBPEF
-         7wmQ==
-X-Gm-Message-State: APjAAAUymeKyYPgwiunql8AKitGRnJhz0Hd55FDwJDmIFI78lJO/gM2r
-        BbAedbVpRGhPbYsjAxWlfCA=
-X-Google-Smtp-Source: APXvYqxbFWvgI7TtH60rQJEt9OMzKr4/0bPnIhJ4gRp12b0BYaP5+ktZ8j4xgHy9bolPyuZr9JkA9Q==
-X-Received: by 2002:a1c:c504:: with SMTP id v4mr11508049wmf.45.1555914742580;
-        Sun, 21 Apr 2019 23:32:22 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id t15sm12386971wmt.2.2019.04.21.23.32.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Apr 2019 23:32:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] revisions.txt: mention <rev>~ form
-References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
-Date:   Mon, 22 Apr 2019 15:32:21 +0900
-In-Reply-To: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Sun, 21 Apr 2019 23:12:29 -0700")
-Message-ID: <xmqqv9z67doq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5jJmCkxJ9tJ8eTVs70nYdUJf8jxMri0SKDGC/IWxOw4=;
+        b=lQfYiV+sDiYndMTyrrexfJpVU0/BSZXP1F4Y/vNJ2gmOnWZ+vpNZfiu5ifMhfQ4fk4
+         Fbpyxt8NXzXC3KyJK3RQmWP54qmOH+SjAW0xMAw5YuC7ICXFwC094ISuYTNFisjd5KBG
+         dnjuefdmtvFW+JRbOQCsjAqgR99sIoOCNaqy2YqdDaae1QYND7cepjWuGmrowho+TnBU
+         v/InrI0j4DPjYCknUDUHfGbOon09QmU2+yZS7WBvr0WcNo+erfzNDgwT9slfMf3HbwFh
+         Usx4RNcQstRGfRk8TE2hrN6rG6ukFVtN8rnC7/IXI3bkOrFAsPoAczOoOjoWctXVLNgX
+         22gA==
+X-Gm-Message-State: APjAAAX1NW6sqJQPnHPZ2uTTt7DELfgnu6nQ7QaFYVXxj8Cp4kcDm3tT
+        D2hC7N0hesy/xFwUEjxEnjNQznLfK/Dvp/n/pSw=
+X-Google-Smtp-Source: APXvYqyzjCW11jb32bvm0/Vhs6bdUl0Z9cBsBx8NWjIILOeXs/uWjBKuoFB3ufc/4q9AEUq1lVkLQP1s1ulz3DLcsbk=
+X-Received: by 2002:a5d:6a89:: with SMTP id s9mr12542016wru.58.1555916642478;
+ Mon, 22 Apr 2019 00:04:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1555880168.git.liu.denton@gmail.com> <c019926b32016369e9f497d8e227107fdf192440.1555880168.git.liu.denton@gmail.com>
+In-Reply-To: <c019926b32016369e9f497d8e227107fdf192440.1555880168.git.liu.denton@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 22 Apr 2019 03:03:51 -0400
+Message-ID: <CAPig+cQQqLc16=6iO=z6bBDMKD_dnG0ZL=7_onGibfYxoJsN=g@mail.gmail.com>
+Subject: Re: [PATCH 4/5] difftool: make --gui, --tool and --extcmd exclusive
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Mon, Apr 22, 2019 at 1:07 AM Denton Liu <liu.denton@gmail.com> wrote:
+> In git-difftool, these options specify which tool to ultimately run. As
+> a result, they are logically conflicting. Explicitly disallow these
+> options from being used together.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> @@ -731,6 +731,15 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+> +       if (use_gui_tool)
+> +               count++;
+> +       if (difftool_cmd)
+> +               count++;
+> +       if (extcmd)
+> +               count++;
+> +       if (count > 1)
+> +               die(_("--gui, --tool and --extcmd are exclusive"));
 
-> @@ -139,7 +139,9 @@ thing no matter the case.
->    '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
->    object name of a tag object that refers to a commit object.
->  
-> -'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
-> +'<rev>{tilde}[<n>]', e.g. 'HEAD~, master{tilde}3'::
+The more typical way to check this condition in this codebase is:
 
-Why doesn't this example say "HEAD{tilde}, master{tilde}3" instead,
-I wonder?
+    if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
+        die(...);
 
-> +  A suffix '{tilde}' to a revision parameter means the first parent of
-> +  that commit object.
->    A suffix '{tilde}<n>' to a revision parameter means the commit
->    object that is the <n>th generation ancestor of the named
->    commit object, following only the first parents.  I.e. '<rev>{tilde}3' is
+Also, I think you might want: s/exclusive/mutually &/
