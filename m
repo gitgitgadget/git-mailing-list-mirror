@@ -7,120 +7,110 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B34CE1F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 07:39:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B9D1F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 08:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbfDVHjj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 03:39:39 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:34500 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726611AbfDVHji (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 03:39:38 -0400
-Received: by mail-pf1-f196.google.com with SMTP id b3so5335789pfd.1
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 00:39:38 -0700 (PDT)
+        id S1727012AbfDVIfV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 04:35:21 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:34421 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbfDVIfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 04:35:21 -0400
+Received: by mail-pf1-f195.google.com with SMTP id b3so5400143pfd.1
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 01:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=zDP2Za7zvcf1mCQ6MOKgqTHwfCJjZgHz2bDCmykirSk=;
-        b=prikyaywyvwKXTJc+cH34juRoW+1Q4Rp9Wvhn25fm3l3KSvpUUF52sF7P4I2/p3plr
-         Qr0CkM3zIRRSqQ9NbV5/3yZ5Kh2Q4Gy3TsXXv/J3gQW0TpVGJ7JHSwF7wAQQgUqGDGCj
-         M1GYUpQ1uc5yHu+25RSX0k+QHhnKbbmxxbK+rmrpNbqcHFOGS7nQEqNds6TBRGE6LJa8
-         oxQolE0cvoGhizNk/5qk7Aza3ZdGQ89UqcpUFaKNolcImYezUXqUvv7inPB4i43j66BB
-         UUKIVRWrFGXrPa2VJX2TtVAvlFUSllC7kuNGvrIDVDyYMXwzb4lLQgj8J19kzjTo4gxc
-         Qe2A==
+        bh=YfdTqHQaZdoovaf+CqdtTpE1Cg+EmKjt+M0amaZuGfI=;
+        b=JDTGXQKynfr0fRd64Lo1H3q4249Tm24INt6uD/FlN9LLxqaeiPgRAE0T835GgpPqUb
+         JF/H7h6n/TTdHrnT+ULdXjVQ/OxC15hzGBPj6TQqWj8H9tQKpfNW+l+aibEpqCAnjzz3
+         DW04MycbDdYKqsXw1EB4WT6Om2wN2sQkT9Y2b2m0z362+JVdnF1ZFNg3CI1WpsuMhxsY
+         PUNKwFGw6R9ye0VwotdZx8gU6o/ESvHedcXco8enC/tkfNdiASAQ3aNCAj8Ju/2r1WWu
+         WME9o4vZHVR8J4WPEN3YkzpqaGTvupNNzII8b6nD6IzTj4CDqb1BGFguwl3VBNmhOHRT
+         OThA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zDP2Za7zvcf1mCQ6MOKgqTHwfCJjZgHz2bDCmykirSk=;
-        b=otNPQLa714fVh6guHoZZ47Y4KFJvjR+YsrkqXiuzDljm7gE8Gza196HfkXi5FajaaU
-         MlpXk5T/oIsAwxETy7IeBk+BRlwQ5LB0tIrat6g3400XWAGNKhuQeP3S6rkYD/+9hJkS
-         jnBVhfmpVEXxYHFj80mAdKhZHC4zbRDB4tvm4ruGCJlq7zuFGgoKsDPKiRgNKkbVOsiG
-         YTnDfiVVZudq+sfOAebU0uPffNY4yH9/NWvKzosJoZlad+rrx2jvmWeSWzV9JQI1YSQw
-         F7U7zNZ8zTSZCMnmFgZ4rXCGd37fIQSMZb2tMgiCIrFQSNZYlUfWz2ZfwrqIYDYV0uM7
-         SxIg==
-X-Gm-Message-State: APjAAAXh+a3pWYH5Onbf0yxDxACB5ZIfmAJlT+xld3JcqeS88PmxlNpf
-        WIPRDgAMm5s2Y1UtxaKwCxWvMWdQ
-X-Google-Smtp-Source: APXvYqza0BOiX3J69L8PxGUYm3p9OUDsO+2/q9ZGGXmJ2VSTTO6FpfNjoLjE0d+7Q9IQMgTqafHo6Q==
-X-Received: by 2002:a63:6888:: with SMTP id d130mr17587410pgc.451.1555918777894;
-        Mon, 22 Apr 2019 00:39:37 -0700 (PDT)
+        bh=YfdTqHQaZdoovaf+CqdtTpE1Cg+EmKjt+M0amaZuGfI=;
+        b=haW7fKWvpVPUsJJVJXKvBAwLepFWGeiT4oohvs2w9SxhKzWsnQ+nVOT6V/L1rHws0s
+         Zh1fSpbakdr/tAQDSw9YmArIlnhnFAGAANy10Eb/zsIae2RbzmW7Y4TVmUemVCXKmF/J
+         /Eh2h5ObwBioHH5mx1S5DV141KCClI779WqK32BaTvLRbMwq3++QOuQj1pIukYgipJ/R
+         zAHWEoixF43a6BA9WqoNnoibUrZ33S7gb5rbh+0+ULHkAn8cbOexlLKUetmZBnsGRXu0
+         icx2kvLFUzo0eQJeNE2p1eVPf1IJKoia0ARxFfToe+bo8HMJfzOEBVz1PLys0+jJR5JC
+         vSbA==
+X-Gm-Message-State: APjAAAUR19JP6ok/euC0HyhreNy24EtCriopK9AXuuc7BsKONVercdxa
+        s8an5akwjrB6ep7v01X1/52f3/Ei
+X-Google-Smtp-Source: APXvYqx6pJI3+ALj5egfvRBIT+lPrxvvafGFcqPO7PJz7wxk/d1P0uqMlz5hbx3KGFvM7Ziyyb/iEA==
+X-Received: by 2002:a62:69c2:: with SMTP id e185mr19200290pfc.119.1555922120795;
+        Mon, 22 Apr 2019 01:35:20 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id n5sm13526650pgp.80.2019.04.22.00.39.36
+        by smtp.gmail.com with ESMTPSA id b14sm16047361pfi.92.2019.04.22.01.35.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Apr 2019 00:39:36 -0700 (PDT)
-Date:   Mon, 22 Apr 2019 00:39:35 -0700
+        Mon, 22 Apr 2019 01:35:19 -0700 (PDT)
+Date:   Mon, 22 Apr 2019 01:35:17 -0700
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] revisions.txt: mention <rev>~ form
-Message-ID: <20190422073935.GA7660@archbookpro.localdomain>
-References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
- <xmqqv9z67doq.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 2/5] mergetool: use get_merge_tool function
+Message-ID: <20190422083517.GA12094@archbookpro.localdomain>
+References: <cover.1555880168.git.liu.denton@gmail.com>
+ <692875cf4baaeee8b47fd7e95d0b787d1a08f64e.1555880168.git.liu.denton@gmail.com>
+ <CAPig+cTJf_2psxrtsOi2h7c3ZbDj25WqLGPNaLqBmoVpM+6FRg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqv9z67doq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAPig+cTJf_2psxrtsOi2h7c3ZbDj25WqLGPNaLqBmoVpM+6FRg@mail.gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 22, 2019 at 03:32:21PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
+Hi Eric,
+
+On Mon, Apr 22, 2019 at 03:07:25AM -0400, Eric Sunshine wrote:
+> On Mon, Apr 22, 2019 at 1:07 AM Denton Liu <liu.denton@gmail.com> wrote:
+> > [...]
+> > Rewrite `get_merge_tool` to return whether or not the tool was guessed
+> > and make git-mergetool call this function instead of duplicating the
+> > logic. Also, let `$GIT_MERGETOOL_GUI` be set to determine whether or not
+> > the guitool will be selected.
+> >
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> > diff --git a/Documentation/git-mergetool--lib.txt b/Documentation/git-mergetool--lib.txt
+> > @@ -28,7 +28,10 @@ to define the operation mode for the functions listed below.
+> >  get_merge_tool::
+> > -       returns a merge tool.
+> > +       returns '$is_guessed:$merge_tool'. '$is_guessed' is 'true' if
+> > +       the tool was guessed, else 'false'. '$merge_tool' is the merge
+> > +       tool to use. '$GIT_MERGETOOL_GUI' may be set to 'true' to search
+> > +       for the appropriate guitool.
 > 
-> > @@ -139,7 +139,9 @@ thing no matter the case.
-> >    '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
-> >    object name of a tag object that refers to a commit object.
-> >  
-> > -'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
-> > +'<rev>{tilde}[<n>]', e.g. 'HEAD~, master{tilde}3'::
-> 
-> Why doesn't this example say "HEAD{tilde}, master{tilde}3" instead,
-> I wonder?
+> What is the likelihood that code outside of our control is using this
+> function? If there is such code, this backward-incompatible change
+> will break that code. If the likelihood is excessively small, perhaps
+> it is not worth worrying about, otherwise, perhaps this warrants a new
+> function with a distinct name.
 
-According to the doc-diff, it doesn't really make a difference:
+Thanks for considering this, I hadn't thought about it myself. I assumed
+this was an internal function but I guess I was wrong.
 
-	diff --git a/14c0f8d3ab6c36672189cd2dd217f4617d12ccba/home/denton/share/man/man7/gitrevisions.7 b/18c8ed70602271a28c93df922eb3da8fb7563e2e/home/denton/share/man/man7/gitrevisions.7
-	index 6f0dc7b8fb..ef23d49e00 100644
-	--- a/14c0f8d3ab6c36672189cd2dd217f4617d12ccba/home/denton/share/man/man7/gitrevisions.7
-	+++ b/18c8ed70602271a28c93df922eb3da8fb7563e2e/home/denton/share/man/man7/gitrevisions.7
-	@@ -146,19 +146,20 @@ SPECIFYING REVISIONS
-				This suffix is also accepted when spelled in uppercase, and means
-				the same thing no matter the case.
-	 
-	-       <rev>^, e.g. HEAD^, v1.5.1^0
-	+       <rev>^[<n>], e.g. HEAD^, v1.5.1^0
-				A suffix ^ to a revision parameter means the first parent of that
-				commit object.  ^<n> means the <n>th parent (i.e.  <rev>^ is
-				equivalent to <rev>^1). As a special rule, <rev>^0 means the commit
-				itself and is used when <rev> is the object name of a tag object
-				that refers to a commit object.
-	 
-	-       <rev>~<n>, e.g. master~3
-	-           A suffix ~<n> to a revision parameter means the commit object that
-	-           is the <n>th generation ancestor of the named commit object,
-	-           following only the first parents. I.e.  <rev>~3 is equivalent to
-	-           <rev>^^^ which is equivalent to <rev>^1^1^1. See below for an
-	-           illustration of the usage of this form.
-	+       <rev>~[<n>], e.g. HEAD~, master~3
-	+           A suffix ~ to a revision parameter means the first parent of that
-	+           commit object. A suffix ~<n> to a revision parameter means the
-	+           commit object that is the <n>th generation ancestor of the named
-	+           commit object, following only the first parents. I.e.  <rev>~3 is
-	+           equivalent to <rev>^^^ which is equivalent to <rev>^1^1^1. See
-	+           below for an illustration of the usage of this form.
-	 
-			<rev>^{<type>}, e.g. v0.99.8^{commit}
-				A suffix ^ followed by an object type name enclosed in brace pair
+I did a bit of digging on GitHub and Google and I found that
+git-diffall[1] uses it, although it seems quite old and unmaintained.
+Aside from this, I can't find any other open-source programs which use
+git-mergetool--lib (and in particular, get_merge_tool) so I believe that
+it is pretty rare.
 
-That being said, this is a typo on my part and it should really say
-{tilde}.
+That being said, I'm open to writing a new function so that the change
+will be backwards compatible. I'll see what the list has to say.
 
-> 
-> > +  A suffix '{tilde}' to a revision parameter means the first parent of
-> > +  that commit object.
-> >    A suffix '{tilde}<n>' to a revision parameter means the commit
-> >    object that is the <n>th generation ancestor of the named
-> >    commit object, following only the first parents.  I.e. '<rev>{tilde}3' is
+Thanks,
+
+Denton
+
+[1]: https://github.com/thenigan/git-diffall
