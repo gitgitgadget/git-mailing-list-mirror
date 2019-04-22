@@ -2,114 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 622571F5CB
-	for <e@80x24.org>; Mon, 22 Apr 2019 19:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8AD41F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 20:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731486AbfDVTy0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 15:54:26 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44993 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730916AbfDVTtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 15:49:43 -0400
-Received: by mail-pf1-f195.google.com with SMTP id y13so6183651pfm.11
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 12:49:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5nLRFR6dnkzvMKwYRY2WN3lUtID3OneXji/QulcMezw=;
-        b=eyYe08jrQhvLXmEvPE1MueIlhua1Zm+oiXD90MU1z8u3oGr0OVM37kSqOCccXCaeJX
-         zRLWrJd2Xx5qCldqLqZBSB9wwTsB4RGAh9Ga4vdRTnS35+UGGbKd//sx1RYuTzfL9ofk
-         SPYRM1v2oD9Np4CKB0o+rIvNZZuKdjbNQDBaNHNHHLM6HDQyEVWpDudCNl3QnLVFvFZt
-         d8rJ81eYPAwJUPS6oDflnlEzc4EGw/AgFeudpvPJReuMgzH0KLTNQby3YBeZbo8zf9Fc
-         kAXJGMKoYcCWZgdO2e/gUwWrwS2vUJjQar4bNUPSXHqGviGvJ0uCp0lubU5w0xL1fXgC
-         +a4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5nLRFR6dnkzvMKwYRY2WN3lUtID3OneXji/QulcMezw=;
-        b=KvjPTVIaBcSgSYb/i9rkdlhq8chU5TYvzu7h87kj8aATmCOm60K0PS7XdwhJ+G4eSe
-         0a8eQr6nwEVlZeym6sm60Lk5y5HkjWM2CBoJE9qj/gtzTUKJeenvxmTFFLeyeqPgMbWM
-         /zObCpicW7sYZSVS8bA8a2ypHU7U8z3znXn0oycyv5uPVNe1Wc7cExP4ja/mGiOFmnp1
-         Ukm+aNPym9KxPn41RrohMpLZGLluYh8YuGyyhYQwGlhvRMQvC4qCuE0y0CiuckRPItvp
-         WSrUapXdlH4LnuVF2ZAKagopNffA4/PPI//cNjKFjFm/zk6BqFwGRYpI2A+TFU9o2IQC
-         ZlNA==
-X-Gm-Message-State: APjAAAXxVIUP2ljRgxACELXEtHzrSu6m9B/jBg4BlnKkd8qE18qtv2xD
-        O4kGaPbw2Ms7xk1RFNR4FRzJFQvh
-X-Google-Smtp-Source: APXvYqwN5pxX7YBbuVAyAWg/f+X3HF5b2DPGAKHyjhr5cYfa/4ARwdVcE2KZ9PNaE8M7js7mHwdsYw==
-X-Received: by 2002:a62:5a42:: with SMTP id o63mr23359206pfb.170.1555962582737;
-        Mon, 22 Apr 2019 12:49:42 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id b7sm23172588pfj.67.2019.04.22.12.49.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Apr 2019 12:49:42 -0700 (PDT)
-Date:   Mon, 22 Apr 2019 12:49:40 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
-Message-ID: <20190422194940.GA10592@dev-l>
-References: <20190422000712.13584-1-phil.hord@gmail.com>
- <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
- <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
- <CABURp0r9DBxoxLjjynNj-px7mFBA5--ZS7SoNniNu7MLPZkqwg@mail.gmail.com>
- <CABURp0pEB-3m=wbWsVc9C82d3Jf2UW4fXnsSZ+GnTHKWRJo0NQ@mail.gmail.com>
+        id S1728143AbfDVUVn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 16:21:43 -0400
+Received: from smtp.codeaurora.org ([198.145.29.96]:34380 "EHLO
+        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727190AbfDVUVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 16:21:43 -0400
+Received: by smtp.codeaurora.org (Postfix, from userid 1000)
+        id 37B6060FEE; Mon, 22 Apr 2019 20:21:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1555964502;
+        bh=5+hRRmYJY9Fa5tX/cT+qxqz2MbJyTdRfE+rQmnQYsTE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Bd+QzXT8iOdtHeoBNuLRvg2lqFjGoWw+eACp8rEM0499UdpEilXNeGz4X2SSBULMZ
+         JAGMK94/uqBAloZ0g/s4ZNC6VbW/g54xFwf3UPEz6bxuZHBwjV3CM04x6IlEK3yE1x
+         AzlFmJ27jHU5WwzQbgINijxL0YMBHh+dajEfzSd0=
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mfick@smtp.codeaurora.org)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8BDA660FE9;
+        Mon, 22 Apr 2019 20:21:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
+        s=default; t=1555964501;
+        bh=5+hRRmYJY9Fa5tX/cT+qxqz2MbJyTdRfE+rQmnQYsTE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=XpkF9RwOB7oquEX/gB1CmYy4ev7N+ui7TVt+aS/UU3KMiWdpRsSqlAPf4P92+waYe
+         yrthiKqFr4Chz46c8xnjQWPIcYvLLt5xFOGrEZT1fKhwJ61HCQ/DnW3XXy84nGUtz1
+         1U35eONvKUU7W82t0VghrgtcUxLoSW2dXdeBn5fY=
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8BDA660FE9
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Resolving deltas dominates clone time
+Date:   Mon, 22 Apr 2019 14:21:40 -0600
+Message-ID: <16052712.dFCfNLlQnN@mfick-lnx>
+User-Agent: KMail/5.1.3 (Linux/4.4.0-137-generic; KDE/5.18.0; x86_64; ; )
+In-Reply-To: <20190420035825.GB3559@sigill.intra.peff.net>
+References: <259296914.jpyqiltySj@mfick-lnx> <20190420035825.GB3559@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABURp0pEB-3m=wbWsVc9C82d3Jf2UW4fXnsSZ+GnTHKWRJo0NQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phil,
-
-On Mon, Apr 22, 2019 at 12:20:29PM -0700, Phil Hord wrote:
-> On Mon, Apr 22, 2019 at 12:16 PM Phil Hord <phil.hord@gmail.com> wrote:
-> >
-> > I have the same need.  I plan to have some switch that invokes this
-> > "in-place rebase" behavior so that git can choose the upstream for me
-> > as `mergebase $sequence-edits`.  In fact, I want to make that the
-> > default for these switches, but that feels too surprising for the
-> > rebase command. I plan to progress like this:
-> >
-> >     # --in-place switch is not supported; manual upstream is given by user
-> >     git rebase --edit foo foo^
-> >
-> >      # --in-place switch is added; now we can say this
-> >      git rebase --edit foo --in-place
+On Friday, April 19, 2019 11:58:25 PM MDT Jeff King wrote:
+> On Fri, Apr 19, 2019 at 03:47:22PM -0600, Martin Fick wrote:
+> > I have been thinking about this problem, and I suspect that this compute
+> > time is actually spent doing SHA1 calculations, is that possible? Some
+> > basic back of the envelope math and scripting seems to show that the repo
+> > may actually contain about 2TB of data if you add up the size of all the
+> > objects in the repo. Some quick research on the net seems to indicate
+> > that we might be able to expect something around 500MB/s throughput on
+> > computing SHA1s, does that seem reasonable? If I really have 2TB of data,
+> > should it then take around 66mins to get the SHA1s for all that data?
+> > Could my repo clone time really be dominated by SHA1 math?
 > 
-> I originally CC'ed Denton on this thread because he recently added
-> --keep-base.  I initially hoped it would do something similar to
-> --in-place, but on reading the patch discussion, I think it's for
-> something different altogether.  :-\   It's similar, though, in the
-> same way that --fork-point is; which may be another way to say "not
-> very."
+> That sounds about right, actually. 8GB to 2TB is a compression ratio of
+> 250:1. That's bigger than I've seen, but I get 51:1 in the kernel.
+> 
+> Try this (with a recent version of git; your v1.8.2.1 won't have
+> --batch-all-objects):
+> 
+>   # count the on-disk size of all objects
+>   git cat-file --batch-all-objects --batch-check='%(objectsize)
+> %(objectsize:disk)' | perl -alne '
+>     $repo += $F[0];
+>     $disk += $F[1];
+>     END { print "$repo / $disk = ", $repo/$disk }
+>   '
 
-You're correct, --keep-base is a little more explicit than your proposed
---in-place switch in that the former requires an upstream revision be
-specified whereas yours implicitly finds the base using the
-$sequence-edits. I suppose until --in-place is implemented, users could
-always use explicitly specify the upstream branch, such as:
+This has been running for a few hours now, I will update you with results when 
+its done.
 
-	$ git rebase --edit foo --keep-base master
+> 250:1 isn't inconceivable if you have large blobs which have small
+> changes to them (and at 8GB for 8 million objects, you probably do have
+> some larger blobs, since the kernel is about 1/8th the size for the same
+> number of objects).
 
-Anyway, I've been following along with the discussion and although there
-are kinks to iron out, I like the general idea. Although I use fixup and
-squash commits + rebase -i --keep-base for major branch polishing,
-sometimes after the branch is mostly polished, there are a few
-last-minute changes to be made. I think that your proposed solution
-would also match my use-case nicely.
+I think it's mostly xml files in the 1-10MB range.
 
-Thanks,
+> So yes, if you really do have to hash 2TB of data, that's going to take
+> a while.
 
-Denton
+I was hoping I was wrong. Unfortunately I sense that this is not likely 
+something we can improve with a better algorithm. It seems like the best way 
+to handle this long term is likely to use BUP's rolling hash splitting, it 
+would make this way better (assuming it made objects small enough). I think it 
+is interesting that this approach might end up being effective for more than 
+just large binary file repos. If I could get this repo into bup somehow, it 
+could potentially show us if this would drastically reduce the index-pack 
+time.
+
+> I think v2.18 will have the collision-detecting sha1 on by default,
+> which is slower.
+
+Makes sense.
+
+> If you don't mind losing the collision-detection, using openssl's sha1
+> might help. The delta resolution should be threaded, too. So in _theory_
+> you're using 66 minutes of CPU time, but that should only take 1-2
+> minutes on your 56-core machine. I don't know at what point you'd run
+> into lock contention, though. The locking there is quite coarse.
+
+I suspect at 3 threads, seems like the default?
+
+I am running some index packs to test the theory, I can tell you already that 
+the 56 thread versions was much slower, it took 397m25.622s. I am running a 
+few other tests also, but it will take a while to get an answer. Since things 
+take hours to test, I made a repo with a single branch (and the tags for that 
+branch) from this bigger repo using a git init/git fetch. The single branch 
+repo takes about 12s to clone, but it takes around 14s with 3 threads to run 
+index-pack, any ideas why it is slower than a clone?
+
+Here are some thread times for the single branch case:
+
+ Threads  Time
+ 56           49s
+ 12           34s
+ 5             20s
+ 4             15s
+ 3             14s
+ 2             17
+ 1             30
+
+So 3 threads appears optimal in this case.
+
+Perhaps the locking can be improved here to make threading more effective?
+
+> We also hash non-deltas while we're receiving them over the network.
+> That's accounted for in the "receiving pack" part of the progress meter.
+> If the time looks to be going to "resolving deltas", then that should
+> all be threaded.
+
+Would it make sense to make the receiving pack time also threaded because I 
+believe that time is still longer than the I/O time (2 or 3 times)?
+
+> If you want to replay the slow part, it should just be index-pack. So
+> something like (with $old as a fresh clone of the repo):
+> 
+>   git init --bare new-repo.git
+>   cd new-repo.git
+>   perf record git index-pack -v --stdin <$old/.git/objects/pack/pack-*.pack
+>   perf report
+> 
+> should show you where the time is going (substitute perf with whatever
+> profiling tool you like).
+
+I will work on profiling soon, but I wanted to give an update now.
+
+Thanks for the great feedback,
+ 
+-Martin
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+
