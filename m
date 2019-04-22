@@ -2,150 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9A820374
-	for <e@80x24.org>; Mon, 22 Apr 2019 00:57:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B5CB20374
+	for <e@80x24.org>; Mon, 22 Apr 2019 01:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725961AbfDVA53 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Apr 2019 20:57:29 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42437 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725869AbfDVA53 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 21 Apr 2019 20:57:29 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 995C621C48;
-        Sun, 21 Apr 2019 20:57:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Sun, 21 Apr 2019 20:57:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=X1+zQ5fTPX34mE57lhJcYXjiFB+NYx/+tBLq44T2e
-        +Y=; b=yFYPLpCF3hz+iG4WsTmEKu9hZrNE9ijufl3ouCQ3A6+s3COuhR1JfBkhI
-        pT9Dr0a6RIj/MnMBdCzRuqnKh4fQoJB3ZUpaJ+50ovEy05p7sEH79o/Jr2DUw733
-        HpJtN8pcUMDaijif9iqspUsfalC5oGryZx5nWlF3VjcyFByFEmixuyC0aL2J2LT5
-        HMtolhRByC7ph6gbLzVSb/n2hgUj+Nqu7HaMF0sxUF5MaRzzIJGlnTgBJg7qqxhl
-        EHKQ0SUGh5yiV4O+dD6Fd6BAQcxdTw86B1s7xNkzXAeYKNhUMd0BtCSP1cTNontm
-        sLwGWJxcTrbN6aR8xlR+u02d9Tdrg==
-X-ME-Sender: <xms:eBG9XCpqd3pCuMs7Gqc3eploO9fYZ1LkggUa0Gt9q3JELDQUjXo-pQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrgeehgdeflecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepuffvfhfhkffffgggjggtgfesthekre
-    dttdefjeenucfhrhhomheptehnughrvgifucflrghnkhgvuceofhhlohhsshesrghpjhgr
-    nhhkvgdrnhgvtheqnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpmhgrrhgtrdhinh
-    hfohdpghhnuhdrohhrghenucfkphepieejrddvgeehrddvvdeirdeffeenucfrrghrrghm
-    pehmrghilhhfrhhomhepfhhlohhsshesrghpjhgrnhhkvgdrnhgvthenucevlhhushhtvg
-    hrufhiiigvpedt
-X-ME-Proxy: <xmx:eBG9XAxxg8NGI6B0G3s13LJWt2S6pUqK8bweM6M3osFevHELDQ6ldw>
-    <xmx:eBG9XPLzamOMETi5DlCVJxxfKlLQ0jjUAs8Xjhg5166j-2OpPbnt5w>
-    <xmx:eBG9XKIK_I3xnGympZsXjmqwd6qYkGOmlxFAN2j7U75nFfGazbEi5Q>
-    <xmx:eBG9XMZXCsTD6RIjLs7f-WQpZz3u9gXk23BJDlQlQlACT1jk6thcmw>
-Received: from angharad.local (cpe-67-245-226-33.nyc.res.rr.com [67.245.226.33])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E630CE479F;
-        Sun, 21 Apr 2019 20:57:27 -0400 (EDT)
-Subject: Re: gettext, multiple Preferred languages, and English
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
- <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com>
-From:   Andrew Janke <floss@apjanke.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=floss@apjanke.net; prefer-encrypt=mutual;
- keydata= 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
-Message-ID: <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
-Date:   Sun, 21 Apr 2019 20:57:27 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.6.1
+        id S1726054AbfDVBNR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Apr 2019 21:13:17 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39760 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbfDVBNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Apr 2019 21:13:16 -0400
+Received: by mail-wr1-f67.google.com with SMTP id j9so14118859wrn.6
+        for <git@vger.kernel.org>; Sun, 21 Apr 2019 18:13:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=VCyJ2qxQ9syDxfN3v3dFpF1++DShnuvqPh+Eb2DIUHw=;
+        b=UCSU+3v97HvVintF8nr6GLuWV8NBz30Dsl0rxtr+oI/xUO6XuDUKw3jU06I6rL+efA
+         22MWo1JwJXtJPi31WKRvJkmyB/evG0HEtocNcz1ePUQ0PmahMbJF4QM/l+ew2MkzFc83
+         pfaT6Cn0ALXJ2Z6UQ8bUGttFFDSuY01givLx3Zw/2ElhDNBdgpOeljoK96mPOF33EHyx
+         NOIij8VEcG9VWYiBisXyOt3j1Zdk0NwKSQmuZdBUTYPuz7I97MIPNg+GJzcg6/blqFVp
+         zFjK28UdXP77s77WOzlgB6ag7ZSW7hDCi0/vA5yCdAkwPm4tJQREsVrCCqEARmyPkAYo
+         0CSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=VCyJ2qxQ9syDxfN3v3dFpF1++DShnuvqPh+Eb2DIUHw=;
+        b=qVWf41s6kSicIGb3eQZNZvU0qpUy7zCkKfn1+7kjY3JQslkb64gmc2bTgNqyaQX9J9
+         IBHxO/e5ETDYrMXL/mS7qgh7/PpheIkGa+g1axWTfyUf0pd5h57zq5JCpbvpkUzZjWbg
+         c/zBvFE5cEPABxD47BKZU8vzhYHTMta0SfDkcp1cVnI1MYlZGCWPqNzuJ08hkBIZDajU
+         WjKyrGbK8N1MQ/nF4jzjpHFPbxQcOCRgp/RSjFLJTW1Eow4kEf8eUMT0iXFGFf2ROUDi
+         6s8b1P5N7DXgc6jMVtO2PQ8vLMsb45TO8gA6WErY4I8N/uWgMTI1+ISJ0ZLnawUWSmrb
+         4XQw==
+X-Gm-Message-State: APjAAAVRMFYyMqc/RahfcT1+C9agtnw/gf4MYgIa8WPrrrbwV81ngr5M
+        BOUsMdBJKQ4psjKLrc3yJi4=
+X-Google-Smtp-Source: APXvYqzbs1Jy8mb73dmiZLc1caVf2xXz94YtI+4pps5DsyY3H9iwjR1HIS03Ws60PA5FeMJ0kcrMMQ==
+X-Received: by 2002:adf:eb03:: with SMTP id s3mr1322357wrn.170.1555895594580;
+        Sun, 21 Apr 2019 18:13:14 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id u2sm3016482wru.36.2019.04.21.18.13.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Apr 2019 18:13:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phil Hord <phil.hord@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+References: <20190422000712.13584-1-phil.hord@gmail.com>
+Date:   Mon, 22 Apr 2019 10:13:13 +0900
+In-Reply-To: <20190422000712.13584-1-phil.hord@gmail.com> (Phil Hord's message
+        of "Sun, 21 Apr 2019 17:07:10 -0700")
+Message-ID: <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phil Hord <phil.hord@gmail.com> writes:
 
+> Currently it supports these switches:
+>
+>     usage: git rebase [-i] [options] [--exec <cmd>] ...
+>        :
+>     --break <revision>    stop before the mentioned ref
+>     --drop <revision>     drop the mentioned ref from the todo list
+>     --edit <revision>     edit the mentioned ref instead of picking it
+>     --reword <revision>   reword the mentioned ref instead of picking it
+>
+> I have plans to add these, but I don't like how their "onto" will be
+> controlled. More thinking is needed here.
+>
+>     --fixup <revision>    fixup the mentioned ref instead of picking it
+>     --squash <revision>   squash the mentioned ref instead of picking it
+>     --pick <revision>     pick the mentioned ref onto the start of the list
 
-On 4/21/19 8:35 PM, Duy Nguyen wrote:
-> On Sun, Apr 21, 2019 at 6:40 PM Andrew Janke <floss@apjanke.net> wrote:
->>
->> Hi, Git folks,
->>
->> This is a follow-up to https://marc.info/?l=git&m=154757938429747&w=2.
-> 
-> This says the problem with "en" detection has been fixed. Would
-> upgrading gettext fix it?
-> 
-> You would need to upgrade something (git or gettext) and if it's
-> already fixed in gettext I don't see why we need a workaround in git.
+Yeah, I can see that it may be very useful to shorten the sequence
+to (1) learn what commits there are and think what you want to do
+with each of them by looking at "git log --oneline master.." output
+and then to (2) look at and edit todo in "git rebase -i master".
 
-From reading the bug report, that does sound like it would fix it. But
-from what I can see, that fix hasn't made it out into a released version
-of gettext yet. I haven't downloaded the development gettext to confirm
-the fix.
+I personally would be fine without the step (1), as what "rebase -i"
+gives me in step (2) essentially is "log --oneline master..".  So I
+am not quite getting in what way these command line options would be
+more useful than without them, though, especially since I do not see
+how well an option to reorder commits would fit with the way you
+structured your UI.
 
-Looking at the gettext ftp site at https://ftp.gnu.org/pub/gnu/gettext/,
-it looks like gettext does not make frequent releases, and the last
-release was two and a half years ago. Who knows when the next release
-will be. And then it'll take longer to trickle down into Linux
-distributions and such.
+Having already said that, if I were to get in the habit of looking
+at "log" first to decide and then running "rebase -i" after I made
+up my mind, using a tweaked "log --oneline" output that looks
+perhaps like this:
 
-From your release history at https://github.com/git/git/releases, it
-seems like Git is a lot more active in making releases than gettext. So
-including this fix in Git would get it into the hands of affected users
-sooner. And it seems like a pretty low-risk change to me.
+	$ git log --oneline master.. | tac | cat -n
+	1 xxxxxx prelim cleanly
+	2 xxxxxx implement the feature
+	3 xxxxxx document and test the feature
+	4 xxxxxx the final step
+	5 xxxxxx fixup! implement the feature
 
-Then once the new gettext release is out, their fix is confirmed, and it
-makes it out into common distros, the workaround could be removed from Git.
+I think I may appreciate such a feature in "rebase -i" even more, if
+the UI were done a bit differently, e.g.
 
-Cheers,
-Andrew
+	$ git rebase -i --edit="1 3 2 b f5 b r4" master..
+
+to mean "pick the first (i.e. bottommost) one, pick the third one
+for testing, pick the second one, then break so that I can test,
+fixup the fifth one, break to test, and finally pick the fourth
+one but reword its log message", to come up with:
+
+	pick xxxxxx prelim cleanly
+	pick xxxxxx document and test the feature
+	pick xxxxxx implement the feature
+	break
+	fixup xxxxxx oops, the second one needs fixing
+        break
+	reword xxxxxx the final step
+
+I am guessing that the way you did it, the above would be impossible
+(as it requires reordering) but given that you would leave most of
+the 'pick's intact and only tweak them in-place into drop, edit,
+reword, etc., that may not be too bad, but I suspect that it would
+become very verbose.
+
+	$ git rebase -i \
+		--pick HEAD~4 --pick HEAD~3 --break --fixup HEAD \
+		...
+
+The --edit alternative I threw in in the above would make it
+necessary for the user to spell out all the picks, and that would be
+more cumbersome given our assumption that most picks will be left
+intact, but then we could do something like
+
+	--edit="1-4 5e 6 8-" master..
+
+to say "pick 1 thru 4, edit 5, pick 6, drop 7 and pick 8 thru the
+end".
+
+I dunno.
