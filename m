@@ -2,139 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5852037F
-	for <e@80x24.org>; Mon, 22 Apr 2019 14:52:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2B241F5CB
+	for <e@80x24.org>; Mon, 22 Apr 2019 15:14:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727486AbfDVOwn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 10:52:43 -0400
-Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:38118 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726132AbfDVOwm (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Apr 2019 10:52:42 -0400
-Received: from pps.filterd (m0142701.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3MEqf4w193434
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 10:52:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=20180315; bh=FfdN6Pc2OADMKf5WFiiioETfnhx10gRdpFzL4YVmqdE=;
- b=wBw0QFbmeuYlrhxiFPv+WMNLwegmoHmbXQf5/xc5VX3UR8tE+KSXxYzSP4VgylFaRxG6
- rDjtJ0y5vC/RIpkO8mwFGmz3fBUpditfRGZJw/gY9/EFjyCxduQR12g01+6yD+6XObjF
- 3O59vO6pmNEFk4DUrHIs4gZ+pNxkn4Ns7dLzUZttRLRr3rxiEVNU75WwxGGCsGxp7B+v
- 9gFt4LWDrXl/FrsYRowreAn/lLUe2i9botMFfbPUZs2ssfGa/d0zix7BxWaZHurfmXdh
- zmvN8RTKQ8YkAnjMaHzyMEsWch7qHH9bCX64SokjfGRHORNs7fdE+ygaQmByna/QiDS/ zw== 
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2s0h06amy9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 10:52:41 -0400
-Received: by mail-ot1-f72.google.com with SMTP id c26so7502325otr.23
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 07:52:41 -0700 (PDT)
+        id S1727530AbfDVPOi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 11:14:38 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36233 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726132AbfDVPOi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 11:14:38 -0400
+Received: by mail-wm1-f65.google.com with SMTP id h18so14848977wml.1
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 08:14:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FfdN6Pc2OADMKf5WFiiioETfnhx10gRdpFzL4YVmqdE=;
-        b=CmYdI59FmQFaraxsGK/yzdUXhTgvljKBlyaRk88NiZcPKMWqUTNDzFcy5M1tOUe4I6
-         HV8q/F+WoThK4rT1BljT3E2iynUiAJSxdiq164e5H1cpb9qNQuC56D2uT9TYeIExcS2c
-         bjBj81VbpQ0sKQZ00fgkW6JyRj1BGKsxdE5hN0gSN80Ca62S8rEac9FTzOYgv9DgszMX
-         KHOni53N/omJWPIWeOdwF2zqjHniFkhD0rUP3tBU34PkvPbfV3/R7GIwhRpG1bejCnWc
-         HG8ajbkCCp9TPaxFG2TPQoYUYaiI7/YIoqEvJINReCJhZnsBhyFnh+GxltlnY3YEvVvG
-         LsHw==
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=o6Rw/SsaNDw1ZDZArmmQONRkCIKrlke/UBDeG/eEX4o=;
+        b=TZkiaA224ugAeJK3oss5uXpmpAXSYtnduPIKSoetwJ9ytoK6Aga3qGY5C5XjHMyjM5
+         +NAfEplCOavBkR/Wl0MBnZ0QUGcEGBT1LYcedZa7jPCey1XwSYYCyo31BFLGdH2UsYJT
+         rOB/0b+wrrFV7tbvWB1YDj/lkFuF09nUTTUuShDhKKqjOSHcOpGYd9aK20XieH3Xcv2p
+         qGcBGTrk9ty4CROVaLtzGNgrRXtFQeiLmOsqs2xDbxy5HA9c9lxeYRTsEyrbJbnMmuK4
+         Fb5YbU7tADJ+rnEI3ejMq4i/VXQTVG4Keb9E9WoZrcgPMlB0Gm8Gu9W5Km4p6E845ccw
+         U0sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FfdN6Pc2OADMKf5WFiiioETfnhx10gRdpFzL4YVmqdE=;
-        b=D2s9k9EPbzJyG0TvJgV/gCJ88tMplnbsfcAt4jCtuYxVOzCCfd0hiUN0ouKwFm8Vlb
-         43OTH7pG1lVvDQsxCwJ1TVnz3GoKIYOQBXSW3QFystgKFMeUVnjMjcemraBsLHYW+msK
-         nljwfhp3D9vmoDJzl3mDWSSAl2Ye+XT1oypmvX34cIIWWq8pk6hQuVgcU2ZiTQ0GRxbS
-         ro5lO4hw6RJTmqIxpi8P2OkiZR5yrmb7M8g7K6L+QfMux8vbbb/hb4v8KpksQF+xFeRD
-         G9WllqFc6CQDIcozW6DO4ZwYgLcqaIcowXEN4aJndOPyzCtUVzPvPHPYIxvKF8IPJBwt
-         Sa1w==
-X-Gm-Message-State: APjAAAW3F9eP18Th3x0+ed3WeD7faQ2shximnVkOJVxTLSFr1T9s0XU3
-        v2/VYKcDL2K2isaFzHvgwepZ3Ec/2sn2oSUbRehISoINa9ohpZmoSX8tvoKx6PnqmL6OU8xGE5O
-        bbqwiOSd+fME=
-X-Received: by 2002:aca:af56:: with SMTP id y83mr10327932oie.17.1555944760201;
-        Mon, 22 Apr 2019 07:52:40 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqzWFEgk5jgbhXjB60chC/mnFxyAF+rX/uCjwH5x2z5CehBcctzyXTzgMiYCr0iAvYLNfvwwGg==
-X-Received: by 2002:aca:af56:: with SMTP id y83mr10327924oie.17.1555944760000;
-        Mon, 22 Apr 2019 07:52:40 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-140.natpool.nyu.edu. [216.165.95.140])
-        by smtp.gmail.com with ESMTPSA id s124sm5742011oia.24.2019.04.22.07.52.39
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 22 Apr 2019 07:52:39 -0700 (PDT)
-Date:   Mon, 22 Apr 2019 10:52:38 -0400
-From:   Santiago Torres Arias <santiago@nyu.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2019, #04; Mon, 22)
-Message-ID: <20190422145237.v5xjelebyjxb3uko@LykOS.localdomain>
-References: <xmqqd0le8t9l.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=o6Rw/SsaNDw1ZDZArmmQONRkCIKrlke/UBDeG/eEX4o=;
+        b=R3RJqpmnNZbgwlKZq+WoY5Lroi7ugqrAtBYrBTH4pBifIiblkiYvynWVNqu9FeRIXw
+         dNacK9ryNtwuHXjM/cKQExXnrzWZ6jNumCajbjMJ35KBRoX75QAWpBt5g0gVIBQUvsxL
+         vEKIBnSYb3GytmVzDMu62/SSGdkkkcGeTpuqg0mab+sTOOQ50Y6LvfQlKzlbBztUgznh
+         4Zuwhgnh4Gjng7n7S5ubVYYKwX8XeSlslMGokFqr1CGNMbO0jPWXFda8hr0nAjqsvgq3
+         lEgDiGnNQNBZt442PvO1Rlh21VzJchXiEzr/eWkNUKvKT+U6m8fr8b3SeysoZ66aqcln
+         MZyQ==
+X-Gm-Message-State: APjAAAWzE2O+K06BLLv9LiSMPMhp1YJjMVQ7cPZh4ZHLGMxlb8OyZ8eE
+        ldxYjZt5/S77EQvZJ6Z4j28=
+X-Google-Smtp-Source: APXvYqwEyC0haxpp976GmlZ754evOC/650hz/RRdb3zr/Lkg4bKarDSbWOZ3FzGrFjrDiLooB+QA3w==
+X-Received: by 2002:a1c:2d91:: with SMTP id t139mr13226176wmt.102.1555946076272;
+        Mon, 22 Apr 2019 08:14:36 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-7-19.as13285.net. [92.22.7.19])
+        by smtp.gmail.com with ESMTPSA id c16sm19475759wme.31.2019.04.22.08.14.35
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Apr 2019 08:14:35 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] Give git-pull a --reset option
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com
+References: <20190421040823.24821-1-alexhenrie24@gmail.com>
+ <xmqqftqbdijl.fsf@gitster-ct.c.googlers.com>
+ <20190421211833.GC6316@genre.crustytoothpaste.net>
+ <xmqqftqb9bf1.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <02595523-3b16-b434-1ea9-a9399d7f1783@gmail.com>
+Date:   Mon, 22 Apr 2019 16:14:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="lu7pcvene4aylaht"
-Content-Disposition: inline
-In-Reply-To: <xmqqd0le8t9l.fsf@gitster-ct.c.googlers.com>
-X-Orig-IP: 209.85.210.72
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=957 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1904220113
+In-Reply-To: <xmqqftqb9bf1.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---lu7pcvene4aylaht
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 22, 2019 at 03:10:30PM +0900, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
->=20
-> You can find the changes described here in the integration branches
-> of the repositories listed at
+On 22/04/2019 00:38, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> 
+>> It may be helpful to point out that this is essentially the workflow I
+>> had ...
+>> I'm not sure if this email is an argument for or against this option,
+>> but maybe it provides some helpful perspective.
+> 
+> I think you and Phillip misread me.
+> 
+> I did not question if the workflow is common the message you are
+> responding to.  I've done my fair share of "I know what I have on my
+> laptop is stale as I pushed it out to elsewhere to continue working
+> on it, so let's get rid of it from the updated upstream and start
+> afresh" myself.
+> 
+> What I questioned was if it is sensible to ensure that it stays
+> common.
+> 
+> We'd be encouraging the dangerous workflow, instead of analysing the
+> situation where people employ it and trying to give them a better
+> alternative to deal with the situation. 
 
-Hi,
+I agree that it would be better to support this workflow in a safer 
+manner. I use a script that looks at the reflog of the local and remote 
+branches to work out if it is safe to reset --hard when pulling. If 
+there are local changes since the last push/pull (because I forget to 
+sync before starting work) then it will run rebase --onto <new-remote> 
+<last-sync>. If the remote branch and local branches have both been 
+rewritten it tells me to run range-diff to figure out how to fix it.
 
-This is the second what's cooking that's gone by without mention of the
-RFC patch regarding verify_tag[1]. Is this due to lack of interest or is
-this an error on my side (f.e., did I forget to send something?).
+The value of <last-sync> is the most recent push or pull that updated 
+the local branch. i.e. when both the local and remote refs pointed to 
+the same commit at the same time (rebase complicates this as the remote 
+we rebased onto does not appear in directly the local reflog - you have 
+to look for "rebase .*finish.* <local-ref> <remote-oid>". Also an ide 
+might auto fetch and update the remote ref while we're rebasing the 
+local work which stops the reflog coinciding exactly.) The <last-sync> 
+is also useful for making forced pushes safer. The script pushes with 
+--force-with-lease=<ref>:<last-sync> if the local branch has been 
+rewritten since the last sync so that any remote changes since the last 
+sync are not overwritten.
 
-Thanks!
--Santiago
+Using the reflog to figure out the last sync makes forced pushes and 
+pulls much safer. If we want to support this workflow in core git (and 
+it does seem to be fairly common) then I think it needs to be based on 
+something that prevents people from accidentally throwing away local 
+changes when pulling and remote changes when pushing. There was some 
+discussion of this with respect to pushing last summer[1]
 
-[1] https://public-inbox.org/git/20190412201609.hivppg2l37b6pzze@LykOS.loca=
-ldomain/
+Best Wishes
 
---lu7pcvene4aylaht
-Content-Type: application/pgp-signature; name="signature.asc"
+Phillip
 
------BEGIN PGP SIGNATURE-----
+[1] 
+https://public-inbox.org/git/CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com/T/#u
 
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAly91TUACgkQRo8SLOgW
-IpUxjw/+Pi0bQRgyWb7RNWXlVLYmRI2xVGk97nb4RMAkRnXiBWJKcC24eyy5KxxB
-mCLPzjMLJbXx4WvdwFxEXSF5EmUhxPRHYDD8ESh6N0lKiu+RFgdzr1DnH5kzt6Mx
-6MuXjn8KUcVZ/dmM2z5Uw7G0qx6V+R0BJpeuQCemOoorF6meuGiPwPpSS+uC7sJx
-Dyldni9rbUNsMSzxSwv0Ap1fWmcx38lxIk9V7lvu1QpUUuzmfoWdeypIoQoJYirT
-D4K7etTN+nTymacFL5wFVBUPwSt+yeR9EaFTqAnhCFpjEUn+o5RzpImZWSN4ejLT
-dXD+K35huvbitK1EqwVOUcIas53yu7Q9AY9/J6YLyjlOD8MxHch1kN4TAiZAU0Ic
-qWFbHBNzcKDddCdwSW99iSjsTWiPJAxFScFhgK53+3saTYzivlrQt4mAG/rDnpNS
-aZKodztEG7v+GWuDCPOHi2Bxcqr7OX5yjhy5JLD8LHShyRYKyWd3GxOAjHsZg+Gq
-qqGUPTbn2sqSqRW+c3KNr2DEtDm8PtpjS/SkejIdwcD5ZvGzD47z5dK4+zYfsFtt
-I6l2KNh1eDk5/bJlOvDW0u5e3O+OhNizjvC201tIX95mxLhC03vYxRNvuEwletJG
-1itT/49yROax3uH8Mx7BwXkdrzhG2h/oTewhaTM21JWqakY98ms=
-=+qdp
------END PGP SIGNATURE-----
-
---lu7pcvene4aylaht--
+  That is what we'd be doing
+> with "pull --reset", i.e. an easier to type short-hand that robs the
+> chance to double check in the middle of "fetch && inspect && reset"
+> sequence.
+> 
+> As to where the feature should go, if we decide that it is a good
+> idea to promote this workflow element as a supported feature, I
+> agree with Alex's design in the patch that it makes sense to have it
+> as "pull --reset".  Existing "pull --merge" and "pull -rebase" are
+> "fetch and then integrate by merging theirs into ours" and "fetch
+> and then integrate by rebasing our stuff on top of theirs"; the new
+> "pull --reset" would fit well sitting next to them with its "fetch
+> and then treat our stuff as valueless and replace it with theirs"
+> semantics.
+> 
