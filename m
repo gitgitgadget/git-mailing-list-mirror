@@ -2,136 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829A91F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 00:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1ABD1F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 01:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729892AbfDWAAe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 20:00:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35566 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729094AbfDWAAe (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Apr 2019 20:00:34 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D702460458;
-        Tue, 23 Apr 2019 00:00:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1555977632;
-        bh=EJw+yrCZo3wBRn9mRhjxh+fSQtKsIb0o0YvRhdEjNJ0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=DUvNWvHIBrWRP2HL7iDYLz0N6boS3hb3CSn8bIX+lgtC1TcjBF7gNFDoYZ/nuY4LC
-         3lcvtmj4C1r8E4kHx03mgGi3UHWoqsDIhSl0XAPvLUlftWnBlL45bhlyPUxyl21rkE
-         l+bWZQCeuKft0NrPTmrVYFoQiaiIoLyChqVNuIYyx1duSR92FjRYHFA6kZcUqugPD6
-         AosyTo91O+6nB7wkjSDs1UpMII3VJV9vph4wVPHrNWZlVDO0FmNUE1EzVYkB5L0ty+
-         F6GfFkMk7zj0GTFyN6BnlY23y592uhl871+D/iqK+dzW7qWLqVo/bPd4yrhRYLHpq7
-         1iw2k+uZEZ15Aie3GMPpdacLWSfCQLIYe0a29uK1T4T4ohN+vVWnyQv4Lb9aVicjK9
-         aP/kiR+MKc4fDuv/QH2WHr/kuttOO7rYXdtvtp4H+ptYlwi7uEQZshVxNpg9OOYNTZ
-         3BFXF8PxaiYdh3QNrF+to8Z15AMTXJFyvwIC+ilT9WgoJMQfMEL
-Date:   Tue, 23 Apr 2019 00:00:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Santiago Torres Arias <santiago@nyu.edu>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com,
-        sunshine@sunshineco.us
-Subject: Re: [RFC PATCH] builtin:tag:verify_tag: allow gpg output + pretty
-Message-ID: <20190423000026.GE6316@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Santiago Torres Arias <santiago@nyu.edu>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.us
-References: <20190412201432.11328-1-santiago@nyu.edu>
- <20190422152726.GB1633@sigill.intra.peff.net>
- <20190422154655.sxyrkee7rnywoh2w@LykOS.localdomain>
- <20190422160211.GB9680@sigill.intra.peff.net>
- <20190422230701.GD6316@genre.crustytoothpaste.net>
- <20190422232627.3mw3rejbjp5tb7zy@LykOS.localdomain>
+        id S1729081AbfDWBJ7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 21:09:59 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37754 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728615AbfDWBJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 21:09:59 -0400
+Received: by mail-wm1-f67.google.com with SMTP id v14so16493247wmf.2
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 18:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=iK/h4g/fHppybe8Hfx5RLsrk5a3Wz+sdXVhKk5xYFOk=;
+        b=eu3+WW4MsYyTRyKExkOTqeUZciGny+q486bau2t1uXXRscKLVJTdlVbjL2uBySOe/G
+         6t2XdiG/b/MMITuD+fpmkNM84v9oE1jr3Cgoo4L+b9hjn+dfSUkxEhOVqpWlsHr8EdZg
+         TEYRUCrjVPEdXY1HKTUGf+IMX0lTUGlnL6iQCd5izrcep6m+JUgutH1vks6V5knzPvVz
+         vszPyrJl7xa0HhrYTl6QhOabOdSKhRnZiw0e0gBFSNWQhQf2s21sckaiOA6jHoYqsJKB
+         upBT4onTEcqcH9i+NWUtHWwMcKzQL9CdMuyQWucJQy/P/AwoSW56f47JR3RLdrV7wEp8
+         /6fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=iK/h4g/fHppybe8Hfx5RLsrk5a3Wz+sdXVhKk5xYFOk=;
+        b=SMVzxBQil+TPZg3QGmkNMS1KKsaqhXzFNxXxjSXcM773Xs+i2veG+m+4t5xWNcL2SD
+         Q/CqN8mIbjhE7V5vPSHBlfzWJV/FR8UrscISmbIUcZ866lvVNGDAn/bHETZFYS6AGRIG
+         jX9Usgxnu408P79VYWWetXRgaClRdVJ94w7O4/4owr/W4f8jHyZs4Nj/1xxHxlKiUL/A
+         5mBIwSz+CXd7XN1z6yNAiV8Tq7IuU9mCrwVze83gcgNxn3/nvS9BMpprMDJPbvS+2/XW
+         RiLHVaSKWHrA/aIkfqvyTC57Z/viEyYlcBXCu6bG0GhMau5JecGeHojLEhQB/W+YeVZ/
+         FyFA==
+X-Gm-Message-State: APjAAAXBse/S9F94PHvRCOoHOWue0MZi0oP5y8dhPWvRC+CirDrlJyub
+        UiTopr1rDlS+oBfa3Rwd4ahA1OQNS0Q=
+X-Google-Smtp-Source: APXvYqzzglDY0WmGleaptoD14GCBmAtxBJch9Xr5wodbXUlY+L6ndqrx9FM8jBfcpbXb7IMtgk3mLw==
+X-Received: by 2002:a1c:dc43:: with SMTP id t64mr160109wmg.19.1555981797194;
+        Mon, 22 Apr 2019 18:09:57 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id d18sm92607wrx.56.2019.04.22.18.09.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Apr 2019 18:09:55 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] p5302: create the repo in each index-pack test
+References: <259296914.jpyqiltySj@mfick-lnx>
+        <20190420035825.GB3559@sigill.intra.peff.net>
+        <16052712.dFCfNLlQnN@mfick-lnx>
+        <20190422205653.GA30286@sigill.intra.peff.net>
+        <20190422211952.GA4728@sigill.intra.peff.net>
+Date:   Tue, 23 Apr 2019 10:09:54 +0900
+In-Reply-To: <20190422211952.GA4728@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 22 Apr 2019 17:19:52 -0400")
+Message-ID: <xmqqef5t7cil.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OzxllxdKGCiKxUZM"
-Content-Disposition: inline
-In-Reply-To: <20190422232627.3mw3rejbjp5tb7zy@LykOS.localdomain>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---OzxllxdKGCiKxUZM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Subject: [PATCH] p5302: create the repo in each index-pack test
+>
+> The p5302 script runs "index-pack --stdin" in each timing test. It does
+> two things to try to get good timings:
+>
+>   1. we do the repo creation in a separate (non-timed) setup test, so
+>      that our timing is purely the index-pack run
+>
+>   2. we use a separate repo for each test; this is important because the
+>      presence of existing objects in the repo influences the result
+>      (because we'll end up doing collision checks against them)
+>
+> But this forgets one thing: we generally run each timed test multiple
+> times to reduce the impact of noise. Which means that repeats of each
+> test after the first will be subject to the collision slowdown from
+> point 2, and we'll generally just end up taking the first time anyway.
 
-On Mon, Apr 22, 2019 at 07:26:29PM -0400, Santiago Torres Arias wrote:
-> On Mon, Apr 22, 2019 at 11:07:01PM +0000, brian m. carlson wrote:
-> > On Mon, Apr 22, 2019 at 12:02:11PM -0400, Jeff King wrote:
-> > > On Mon, Apr 22, 2019 at 11:46:56AM -0400, Santiago Torres Arias wrote:
-> > >=20
-> > > > I think that would be great, as we could make it simpler for verifi=
-ers
-> > > > to parse gpg output.
-> > >=20
-> > > Alternatively, we could make it an option to dump the --status-fd out=
-put
-> > > to stderr (or to a custom fd). That still leaves the caller with the
-> > > responsibility to parse gpg's output, but at least they're parsing the
-> > > machine-readable bits and not the regular human-readable stderr.
-> >=20
-> > Don't we already have that for verify-tag and verify-commit? I recall
-> > adding "--raw" for that very reason:
->=20
-> I think this interface only shows you raw gpg output, but not any
-> --format=3D specifiers that you may want. The idea would be to support
-> both. Or am I missing something?
+The above is very cleanly written to convince anybody that what the
+current test does contradicts with wish #2 above, and that the two
+wishes #1 and #2 are probably mutually incompatible.
 
-My response was mostly in reply to Peff's suggestion that we have an
-option to dump the --status-fd output, which we have. I think that
-behavior properly belongs to verify-tag and verify-commit, which are
-plumbing.
+But isn't the collision check a part of the real-life workload that
+Git users are made waiting for and care about the performance of?
+Or are we purely interested in the cost of resolving delta,
+computing the object name, and writing the result out to the disk in
+this test and the "overall experience" benchmark is left elsewhere?
 
-I'm not so sure that it's necessary to have the --status-fd output in git
-tag -v, which is more for interactive use, although I don't feel
-strongly about it. I think of --format as a tool I typically want to use
-on multiple of something, and while it's theoretically possible to
-distinguish multiple signatures by GnuPG's "NEWSIG", parsing multiple
-tags' worth of output between standard output and standard error is
-going to be pretty unpleasant.
+The reason why I got confused is because the test_description of the
+script leaves "the actual effects we're interested in measuring"
+unsaid, I think.  The log message of b8a2486f ("index-pack: support
+multithreaded delta resolving", 2012-05-06) that created this test
+does not help that much, either.
 
-As I said, I don't feel strongly about it, so if you want to implement
-it, feel free.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+In any case, the above "this forgets one thing" makes it clear that
+we at this point in time declare what we are interested in very
+clearly, and I agree that the solution described in the paragraph
+below clearly matches the goal.  Looks good.
 
---OzxllxdKGCiKxUZM
-Content-Type: application/pgp-signature; name="signature.asc"
+> Instead, let's create the repo in the test (effectively undoing point
+> 1). That does add a constant amount of extra work to each iteration, but
+> it's quite small compared to the actual effects we're interested in
+> measuring.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAly+VZoACgkQv1NdgR9S
-9ovkog//Z3zOpX5Ar66fggdK7+uFg1EdCRd+colWbi72qvT5LzBDYHC1KG7QTgCA
-GyWXjDIT/Cby31iFohquGf4Fezw39JxViQEaTC+ftICtARe+ooGPcSibV0tnXwvg
-jV22MEYIQkgl/AUU2unROXOTaKqDiDiRI9HJpFT0LY11DVyUH2apBfOUOvemRdG1
-L2Ol8qOrCGyx3TjcPYUoTHa2u3LVkGAC8sY/mFKU1+ZLkBeSk9eHdAS8q7ga8y3w
-+R+QzHL8RAHeNJdXEpaZypvqdwqYBktqZIyjOW88HFJzzWzYP4l07Iki72RavQWY
-gyVJIreOBRPe4hLUyuwRkNQiC2I273DwwmbHL+c8CkV8vDysKwd2VeYgpZ3I7iZB
-m+ytyLFKmalvC8rGp5s5iqsQvzPSNPpAgRzy2ovfntWi1eENDte5PEX8ZtKwoF15
-h6kWG9dIJbV7Bt9G34fr8oIfIjh1LwFdbhzpxx/MfR+kH4ksgrfJgNqVtg0sVKPr
-THmUCZYt6mwz0YEv1JBDpR3E3j2Sn10ZmR0i6bwCcdZix7PHP8FAImPvOIKVjjl7
-ma9pIB3vfw+hnoVy0go4D10qflGkmLER7sbU2rQAVALepe42J+mu/2YBsXZuqmVo
-U/jPyULvrZo6XerPzj+BpoDWbTqRqMB+ScPhKvxGZ8P2jjiM5yY=
-=CQYa
------END PGP SIGNATURE-----
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> The very first 0-thread one will run faster because it has less to "rm
+> -rf", but I think we can ignore that.
 
---OzxllxdKGCiKxUZM--
+OK.
+
+> -	GIT_DIR=t1 git index-pack --threads=1 --stdin < $PACK
+> +	rm -rf repo.git &&
+> +	git init --bare repo.git &&
+> +	GIT_DIR=repo.git git index-pack --threads=1 --stdin < $PACK
+
+This is obviously inherited from the original, but do we get scolded
+by some versions of bash for this line, without quoting the source path
+of the redirection, i.e.
+
+	... --stdin <"$PACK"
+
