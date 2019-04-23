@@ -2,198 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1591F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 07:07:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146501F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 08:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726004AbfDWHHK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 03:07:10 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38852 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725888AbfDWHHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 03:07:10 -0400
-Received: by mail-wr1-f68.google.com with SMTP id f14so18108266wrj.5
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 00:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PXeuCOM6FySw9d5mapjxjvYIQYS0olPALOqUjElMUVg=;
-        b=ZP+w2zB0iEUIot06ZjVbytjwcyl8ej2diFr1OlTxqd3ADR+6VXQkltiK7QMymgUYkc
-         HXIgecTIBhFhY8HqbOERNoRuIzLZZv5IEeuUmKxGk7imTtuvdJNMHmp6w+sXU7UIyrrb
-         SqbFaUA3Xh6r+eKtTUUnCsQGZe8klg5mQupI23nYUwu7/BStRTvHF/AvmTK5ErS+JWIB
-         e16nQJdPUChO8un+2p6uyP4aw63eoLEatORFxAXWTOLJZrEhmuxt3C0Mvh83pv+Tv8dK
-         rsNiO7jFUQEn9pW3bECLbq9rcsxMEKF+4YlpJKPNnTF/uRkbZiBMZwXnsduqPX1qdWgt
-         pZdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=PXeuCOM6FySw9d5mapjxjvYIQYS0olPALOqUjElMUVg=;
-        b=HfHzPIvGnt/0MlR65gpKU2IdN9XoGKnfm5UqNoLQ/GNxuA3F32J02Wj/4lGQ0GAPUd
-         K8d0GrUkZl5JWT+TlSePwIhZFfihzp17lGxMn0aZhiBhbSbawB6iE0YQFjGbsqMZXWId
-         LTnPHOmjqhyil6wY8/sFrdtTtUg+gvZLClePAqSxwuBk91R/mgi2jIopb5kOJeAi0t/v
-         vboMeRX1Tc27T6Y1aHWiNsoE50HgiWDIL5Yd5esdUIY3auQ2JkyZdpsgKJcttqsnQ3Uh
-         oDWDjSdthTD6OA05zA4k/JdZcQ3SeYBPLOUyeP2LL4SLKDalNNp0aK11QCxoNwPVBlHT
-         yDag==
-X-Gm-Message-State: APjAAAUCMxzXmR1jLLSdanmLoUIyFNHfnELmTY72K9jjZq94pA2hqVlS
-        w60Oz5+nBHmcDtdaQ+znBYw=
-X-Google-Smtp-Source: APXvYqzu583/lLfm94yGq23UnwwQS27aHAAKz8djdtYWWHrTYg2P8pYgvCBzsbhBWNCywvGOifEd3g==
-X-Received: by 2002:a5d:53cc:: with SMTP id a12mr7345266wrw.262.1556003228347;
-        Tue, 23 Apr 2019 00:07:08 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id q4sm16856606wrx.25.2019.04.23.00.07.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Apr 2019 00:07:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        "Jansen\, Geert" <gerardu@amazon.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Resolving deltas dominates clone time
-References: <259296914.jpyqiltySj@mfick-lnx> <20190420035825.GB3559@sigill.intra.peff.net> <874l6tayzz.fsf@evledraar.gmail.com> <20190422155716.GA9680@sigill.intra.peff.net> <874l6pudg4.fsf@evledraar.gmail.com> <20190422184329.GA20304@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190422184329.GA20304@sigill.intra.peff.net>
-Date:   Tue, 23 Apr 2019 09:07:06 +0200
-Message-ID: <8736m9td2d.fsf@evledraar.gmail.com>
+        id S1726674AbfDWIio convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 23 Apr 2019 04:38:44 -0400
+Received: from smtppost.atos.net ([193.56.114.166]:27288 "EHLO
+        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbfDWIio (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 04:38:44 -0400
+Received: from mail3-ext.my-it-solutions.net (mail3-ext.my-it-solutions.net) by smarthost3.atos.net with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 7189_70df_95966d7a_570b_4a37_8a23_a4eb898db489;
+        Tue, 23 Apr 2019 10:38:40 +0200
+Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
+        by mail3-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3N8ceuF022983
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 10:38:40 +0200
+Received: from DEERLM99ETZMSX.ww931.my-it-solutions.net ([10.86.142.48])
+        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3N8ceVB006088
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 10:38:40 +0200
+Received: from DEERLM99ETRMSX.ww931.my-it-solutions.net (10.86.142.103) by
+ DEERLM99ETZMSX.ww931.my-it-solutions.net (10.86.142.48) with Microsoft SMTP
+ Server (TLS) id 14.3.439.0; Tue, 23 Apr 2019 10:38:40 +0200
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (10.86.142.137)
+ by hybridsmtp.it-solutions.atos.net (10.86.142.103) with Microsoft SMTP
+ Server (TLS) id 14.3.439.0; Tue, 23 Apr 2019 10:38:39 +0200
+Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
+ AM6PR02MB4998.eurprd02.prod.outlook.com (20.178.91.147) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1813.16; Tue, 23 Apr 2019 08:38:38 +0000
+Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
+ ([fe80::147e:c96e:accd:c32b]) by AM6PR02MB4950.eurprd02.prod.outlook.com
+ ([fe80::147e:c96e:accd:c32b%6]) with mapi id 15.20.1835.010; Tue, 23 Apr 2019
+ 08:38:38 +0000
+From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH] git-compat-util: work around for access(X_OK) under root
+Thread-Topic: [PATCH] git-compat-util: work around for access(X_OK) under root
+Thread-Index: AQHU+a/BrB7ZLE29Jku4TzdCEFH6dA==
+Date:   Tue, 23 Apr 2019 08:38:38 +0000
+Message-ID: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=clement.chigot@atos.net; 
+x-originating-ip: [193.56.241.24]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2744e233-2705-4e5f-31a9-08d6c7c71534
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR02MB4998;
+x-ms-traffictypediagnostic: AM6PR02MB4998:
+x-microsoft-antispam-prvs: <AM6PR02MB49989D7FF7D92532E1D571CAEA230@AM6PR02MB4998.eurprd02.prod.outlook.com>
+x-forefront-prvs: 0016DEFF96
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(346002)(39860400002)(136003)(396003)(366004)(199004)(189003)(6506007)(14454004)(26005)(97736004)(305945005)(53346004)(14444005)(5660300002)(256004)(74316002)(86362001)(102836004)(25786009)(71190400001)(71200400001)(68736007)(6116002)(3846002)(186003)(7736002)(66574012)(6436002)(6916009)(2351001)(81166006)(33656002)(81156014)(99286004)(1730700003)(8676002)(7696005)(66066001)(8936002)(66446008)(73956011)(9686003)(66946007)(53936002)(64756008)(52536014)(316002)(55016002)(2906002)(478600001)(476003)(5640700003)(2501003)(486006)(66476007)(66556008)(76116006);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB4998;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: atos.net does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 4RD96PZ/hNJTW4UBZa+zyK6Ed/ZsevZYUgGb3k2bRK1MvPHbvhfDVK2Rzc5S/Yr9g1ht+Xo6Io/f3Pqv1IsO8iVs77NY0fU6wP4sS3Dnk2tQvK89H7Gs563FmLeR/yiKLzCjpucr/m6AjQDeIdDN1i1fETlr2dO+XPcAs9g8OwB7UUcpIPYTCUfxrjbLD/hSI/Tl1KEEU/elY36Io0JFl9Lad8krWheWPOngj5fr3RGA78ThT9Jq1TYTe4B3cn0mo6nQqlH+HbAuprB0gLSAs0sLj2LWrj//4dDEGpXrx594hZAizQ+udd9pBSpQlHFcR5TZMbYUFKE9b+GsZWERyd10TK4DPXKvhiiwfeffp4IQNRHSSoQCBGd1m4CNjYpP+mjkMiGb2/56e16WsLQcnuwF1w1I1UnqD52U410TYpY=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2744e233-2705-4e5f-31a9-08d6c7c71534
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2019 08:38:38.6914
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB4998
+X-OriginatorOrg: atos.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On some OSes like AIX, access with X_OK is always true if launched under
+root.
+Add NEED_ACCESS_ROOT_HANDLER in order to use an access helper function.
+It checks with stat if any executable flags is set when the current user
+is root.
 
-On Mon, Apr 22 2019, Jeff King wrote:
+Signed-off-by: Clément Chigot <clement.chigot@atos.net>
+---
+ Makefile          |  8 ++++++++
+ compat/access.c   | 29 +++++++++++++++++++++++++++++
+ config.mak.uname  |  1 +
+ git-compat-util.h |  8 ++++++++
+ 4 files changed, 46 insertions(+)
+ create mode 100644 compat/access.c
 
-> On Mon, Apr 22, 2019 at 08:01:15PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > Your patch is optionally removing the "woah, we got an object with a
->> > duplicate sha1, let's check that the bytes are the same in both copies"
->> > check. But Martin's problem is a clone, so we wouldn't have any existi=
-ng
->> > objects to duplicate in the first place.
->>
->> Right, but we do anyway, as reported by Geert at @amazon.com preceding
->> that patch of mine. But it is 99.99% irrelevant to *performance* in this
->> case after the loose object cache you added (but before that could make
->> all the difference depending on the FS).
->
-> I scratched my head at this a bit. If we don't have any other objects,
-> then what are we comparing against? But I think you mean that we have
-> the overhead of doing the object lookups to find that out. Yes, that can
-> add up if your filesystem has high latency, but I think in this case it
-> is a drop in the bucket compared to dealing with the actual object data.
+diff --git a/Makefile b/Makefile
+index 9f1b6e8926..513d835d01 100644
+--- a/Makefile
++++ b/Makefile
+@@ -439,6 +439,9 @@ all::
+ #
+ # Define FILENO_IS_A_MACRO if fileno() is a macro, not a real function.
+ #
++# Define NEED_ACCESS_ROOT_HANDLER if access() with X_OK returns always true
++# when launched as root.
++#
+ # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
+ # default environment variables to be passed when a pager is spawned, e.g.
+ #
+@@ -1833,6 +1836,11 @@ ifdef FILENO_IS_A_MACRO
+ 	COMPAT_OBJS += compat/fileno.o
+ endif
+ 
++ifdef NEED_ACCESS_ROOT_HANDLER
++	COMPAT_CFLAGS += -DNEED_ACCESS_ROOT_HANDLER
++	COMPAT_OBJS += compat/access.o
++endif
++
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+diff --git a/compat/access.c b/compat/access.c
+new file mode 100644
+index 0000000000..e4202d4585
+--- /dev/null
++++ b/compat/access.c
+@@ -0,0 +1,29 @@
++#include "../git-compat-util.h"
++
++/* Do the same thing access(2) does, but use the effective uid and gid,
++   and don't make the mistake of telling root that any file is
++   executable.  This version uses stat(2). */
++int git_access (const char *path, int mode)
++{
++	struct stat st;
++	uid_t euid = geteuid();
++	uid_t uid = getuid();
++
++	if (stat(path, &st) < 0)
++		return -1;
++
++	if (!(uid) || !(euid)) {
++		/* Root can read or write any file. */
++		if (!(mode & X_OK))
++			return 0;
++
++		/* Root can execute any file that has any one of the execute
++		   bits set. */
++		if (st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
++			return 0;
++		errno = EACCES;
++		return -1;
++	}
++
++	return access(path, X_OK);
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 86cbe47627..ce13ab8295 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -270,6 +270,7 @@ ifeq ($(uname_S),AIX)
+ 	NEEDS_LIBICONV = YesPlease
+ 	BASIC_CFLAGS += -D_LARGE_FILES
+ 	FILENO_IS_A_MACRO = UnfortunatelyYes
++	NEED_ACCESS_ROOT_HANDLER = UnfortunatelyYes
+ 	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
+ 		NO_PTHREADS = YesPlease
+ 	else
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 31b47932bd..bb8df9d2e5 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1242,6 +1242,14 @@ int git_fileno(FILE *stream);
+ # endif
+ #endif
+ 
++#ifdef NEED_ACCESS_ROOT_HANDLER
++#ifdef access
++#undef access
++#endif
++#define access git_access
++extern int git_access(const char *path, int mode);
++#endif
++
+ /*
+  * Our code often opens a path to an optional file, to work on its
+  * contents when we can successfully open it.  We can ignore a failure
+-- 
+2.17.1
 
-There was no "we have no objects" clause, so this bit is what dominated
-clone time before the loose object cache...
 
->> I just mentioned it to plant a flag on another bit of the code where
->> index-pack in general has certain paranoias/validation the user might be
->> willing to optionally drop just at "clone" time.
->
-> Yeah, I agree it may be worth pursuing independently. I just don't think
-> it will help Martin's case in any noticeable way.
 
-...indeed, as noted just mentioning this in the context of things in
-index-pack that *in general* might benefit from some "we had no objects
-before" special-case.
-
->> > Right, that would work. I will note one thing, though: the total time =
-to
->> > do a 1-depth clone followed by an unshallow is probably much higher th=
-an
->> > doing the whole clone as one unit, for two reasons:
->>
->> Indeed. The hypothesis is that the user doesn't really care about the
->> clone-time, but the clone-to-repo-mostly-usable time.
->
-> There was a little bit of self-interest in there for me, too, as a
-> server operator. While it does add to the end-to-end time, most of the
-> resource use for the shallow fetch gets put on the server. IOW, I don't
-> think we'd be happy to see clients doing this depth-1-and-then-unshallow
-> strategy for every clone.
-
-Just change from per-seat pricing to charging a premium for CPU &
-I/O. Now your problem is a solution :)
-
-More seriously, yeah I think we definitely need to be careful about
-changes to git that'll eat someone "free" server time to save the client
-time/work.
-
-At the same time we have dedicated internal operators who wouldn't mind
-spending that CPU. So hopefully we can in general find some reasonable
-middle-ground.
-
->> > So in general, I think you'd need some cooperation from the server side
->> > to ask it to generate and send the .idx that matches the .pack it is
->> > sending you. Or even if not the .idx format itself, some stable list of
->> > sha1s that you could use to reproduce it without hashing each
->> > uncompressed byte yourself.
->>
->> Yeah, depending on how jt/fetch-cdn-offload is designed (see my
->> https://public-inbox.org/git/87k1hv6eel.fsf@evledraar.gmail.com/) it
->> could be (ab)used to do this. I.e. you'd keep a "base" *.{pack,idx}
->> around for such a purpose.
->>
->> So in such a case you'd serve up that recent-enough *.{pack,idx} for the
->> client to "wget", and the client would then trust it (or not) and do the
->> equivalent of a "fetch" from that point to be 100% up-to-date.
->
-> I think it's sort of orthogonal. Either way you have to teach the client
-> how to get a .pack/.idx combo. Whether it learns to receive it inline
-> from the first fetch, or whether it is taught to expect it from the
-> out-of-band fetch, most of the challenge is the same.
-
-I think it is, but maybe we're talking about different things.
-
-I suspect a few of us have experimented with similar rsync-and-pull
-hacks as a replacement for "clone". It's much faster (often 50-90%
-faster).
-
-I.e. just an rsync of a recent-enough .git dir (or .git/objects),
-followed by a 'reset --hard' to get the worktree and then a 'git pull'.
-
->> > This could even be stuffed into the pack format and stripped out by
->> > the receiving index-pack (i.e., each entry is prefixed with "and by
->> > the way, here is my sha1...").
->>
->> That would be really interesting. I.e. just having room for that (or
->> anything else) in the pack format.
->>
->> I wonder if it could be added to the delta-chain in the current format
->> as a nasty hack :)
->
-> There's definitely not "room" in any sense of the word in the pack
-> format. :) However, as long as all parties agreed, we can stick whatever
-> we want into the on-the-wire format. So I was imagining something more
-> like:
->
->   1. pack-objects learns a --report-object-id option that sticks some
->      additional bytes before each object (in its simplest form,
->      $obj_hash bytes of id)
->
->   2. likewise, index-pack learns a --parse-object-id option to receive
->      it and skip hashing the object bytes
->
->   3. we get a new protocol capability, "send-object-ids". If the server
->      advertises and the client requests it, then both sides turn on the
->      appropriate option
->
-> You could even imagine generalizing it to "--report-object-metadata",
-> and including 0 or more metadata packets before each object. With object
-> id being one, but possibly other computable bits like "generation
-> number" after that. I'm not convinced other metadata is worth the
-> space/time tradeoff, though. After all, this is stuff that the client
-> _could_ generate and cache themselves, so you're trading off bandwidth
-> to save the client from doing the computation.
->
-> Anyway, food for thought. :)
+Clément Chigot
+ATOS Bull SAS
+1 rue de Provence - 38432 Échirolles - France
