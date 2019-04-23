@@ -2,122 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C6221F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 20:38:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224A91F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 21:21:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727216AbfDWUiI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 16:38:08 -0400
-Received: from mail-oi1-f202.google.com ([209.85.167.202]:35603 "EHLO
-        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726083AbfDWUiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 16:38:07 -0400
-Received: by mail-oi1-f202.google.com with SMTP id y126so1453108oia.2
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 13:38:07 -0700 (PDT)
+        id S1727045AbfDWVV5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 17:21:57 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33671 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfDWVV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 17:21:57 -0400
+Received: by mail-pf1-f194.google.com with SMTP id h5so8129257pfo.0
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 14:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Mc+/l0CuY4rEfrl17WhIxAdTc2jb/r6jt0ytYMZUzCE=;
-        b=Yxw51EHr4c6Q75ZfsCxFTg97SO2e1zJVyL9GBe3ZDUNSA0eaju9phEP4an5ZuzwViM
-         mpGf0vk93M58tvmj4wBnRDLvCAC02iqLdPprsgmieCAN4HFbFC4gn8UlGJcIBOGK1x7z
-         tHwgtHD8IrRwi1i8Nqe7VsZZEblOJktIB1zuSU5+pv7vYesrJNeN9MoiQ0ur0h+glLkF
-         lgTEHpT3sygIvFh9Cem5501Fjf5+rvpQMOMeza/vClE4jcmYugkWKeAktsAeEmeEO4SB
-         BG+6hXurLVjhhB85QdbQa8YDbIqbg2MMCfulvw0e4X4nro5qwBqbEPKQg/fSzGlMAV9R
-         j0YA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GHqF+HRtUM2+DVxBZOXmYps7tDMutovncShWnd4TGIg=;
+        b=Ovm83SLiDmC180RTB3ESueWRdIrnEsPi8DRYWoLvIsFy+AYIPfETqcmSH9HKBXznil
+         zqWIwYHxgQRf6RkDSyY/rPbtRMjVVcJ0a6fM3DqfwB9dFK1jtsIL6FU/Z8alI1jzGaOD
+         QgPyXg2Zt/upIAdkDnk3kKMLCkJBeXoQbZ3Hz8woPfW0unb4T/Z7rPColiIBkC0oxKZV
+         sM3e2z0gwgj2F00vrTACyHjHQVXBByQsgnlxcJanCa5JoORcaElEnJTXD2z/BqkZzHZF
+         7LgeZZs0wSM+rv/SvjSfcQhQUtemWHHGjL+JyYUGdRivdHzID8SgvMPeRrq3J6L/t6em
+         GJag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Mc+/l0CuY4rEfrl17WhIxAdTc2jb/r6jt0ytYMZUzCE=;
-        b=gBtGUDHWW/GNgOF7lDb7rGORvL9zocfSe1trbzSlS/Nu0gWjs7dO3jNQbNeT/AKx22
-         H6rz6qo7qmWK9ov3kzrra9aMt8C5GzzegWO++gm+rafmEQLiP9Y32JizhZCZJK94CkuD
-         7DS7dfozgvqKAqpQzN2iaU1HYhgnsvkUNTEK12ANBlpKDP00nPAdaVzFZmuayoImoucC
-         8QkItt6b9Jis4R6zb6baeEIgvbenA/7Nia2HD9YLozYbHoIS24XHqlZco5X8LR/QltB6
-         Gr0FfcTBJHTOyzIAmX/cy3kPiwhaOczSc2DD3M/uwvrf6j6ukdjDtYzrCWg8ib0gFRlA
-         8TFQ==
-X-Gm-Message-State: APjAAAVY1Np2soOWIFXLVb97bLqbWkSffHcs1IOPA4IRuFF60K/xdgbT
-        FQ1+obzoe8De08JGTRH1317aKHJZzhPAMB0t25kS
-X-Google-Smtp-Source: APXvYqxVXzcYrltUcdmx6iEqo+0aUCVCoeDndIjj9Ut+XpBGlQuM4FzQyG3qAnsJ1Nz4ko9kxZ71vWZ08A1O539ttKG3
-X-Received: by 2002:aca:b706:: with SMTP id h6mr2936374oif.7.1556051885600;
- Tue, 23 Apr 2019 13:38:05 -0700 (PDT)
-Date:   Tue, 23 Apr 2019 13:38:01 -0700
-In-Reply-To: <20190423053130.GA13162@sigill.intra.peff.net>
-Message-Id: <20190423203801.29156-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190423053130.GA13162@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e18-goog
-Subject: Re: [PATCH v2 5/8] Documentation: add Packfile URIs design doc
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, avarab@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GHqF+HRtUM2+DVxBZOXmYps7tDMutovncShWnd4TGIg=;
+        b=iLKHbX0KcqZdGMgOKLALnHufbhHOPfz8la6vRXqLwcvBMwekWc959r0spPXEBlLvX1
+         6oGb7JJbTLXcR8jGW/ZDMCRuK53GcMb3dlXFYt73b8fkdR3tUVAtDPCJ9Z1sEbC6Cba/
+         h88twNGXSuL3K8l67Hv3LVc9paK67Q/OocsD+xEhco/6mkBapvNNyZS+ftx4gKNvAWBh
+         Uho+weEzo56Alv+u1t6UgTFKYgMo5duhB2IAJ2CGqW4L1AIWgnXdSlLycEpnmqtXhzl7
+         CiFqBT7YVvq4f8nBNoYoNXB5U4Aohl6oB+sasaxcuiC/hlptFHquX2lmzLNQDET8CaQL
+         nOOw==
+X-Gm-Message-State: APjAAAW5ko/gDOr1DRaK6PzfitB0Hl2XA/9bH5/5wN7c/z4SYZjWXP7J
+        rkXtaMNQsvgpsspEhD1A3XC26A==
+X-Google-Smtp-Source: APXvYqw0Z8ZpGdqhnFW6brG691xZroySev2VyrA2o457OAfl1IGlpxCbO9GUPc3p641/I12gqJ/pSQ==
+X-Received: by 2002:a65:47c6:: with SMTP id f6mr27044305pgs.173.1556054516282;
+        Tue, 23 Apr 2019 14:21:56 -0700 (PDT)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.googlemail.com with ESMTPSA id z22sm17566028pgv.23.2019.04.23.14.21.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Apr 2019 14:21:55 -0700 (PDT)
+Subject: Re: [PATCH v6 0/6] blame: add the ability to ignore commits
+To:     michael@platin.gs, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <[PATCH v6 0/6] blame: add the ability to ignore commits>
+ <20190422222647.48628-1-michael@platin.gs>
+From:   Barret Rhoden <brho@google.com>
+Message-ID: <f6e2d990-e7c8-9636-ae2a-c824e140cebb@google.com>
+Date:   Tue, 23 Apr 2019 17:21:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
+MIME-Version: 1.0
+In-Reply-To: <20190422222647.48628-1-michael@platin.gs>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The problem I see is that the client doesn't get to vet the list of
-> URIs; it only gets to specify a protocol match. But there are many other
-> reasons it might want to reject a URI: we don't like the protocol, the
-> domain name is on a blacklist (or not on a whitelist), the domain name
-> can't resolve, we can't make a TCP connection to the server, we can't
-> successfully fetch the pack.
-> 
-> You'll note that those rise in complexity and time as you go down the
-> list. I'm not sure where on that spectrum we'd want our clients to stop
-> vetting (and it may even depend on config). But I think we ought to
-> design the protocol to put the decision in the hands of the client so
-> that it _can_ make those choices itself.
-> 
-> I.e., I think the conversation ought to be more like:
-> 
->   Server: I support packfile-uris X, Y, Z.
-> 
->   Client: Great. I'll use URIs X and Z.
-> 
->   Server: OK, here's your pack, minus any objects I know are in X and Z.
->           I'll send you the objects from Y as normal.
-> 
-> And then the client is free to pick and choose.
+Hi Michael -
 
-One drawback I see is that the server needs to compute objects to be
-sent twice - once to generate the URIs and once after the client has
-informed the server which URIs it wants.
+I cobbled something together that passes my old git tests and all but 
+one of your tests, though an assertion fails when I use it for real. 
+See below.
 
-If we expect some packfile-uris to not be usable sometimes (for any of
-the reasons you listed), this would be nice. The protocol in my patches
-support a rudimentary version of this (if any of the URIs don't work for
-any reason, just fetch again without advertising that we support
-packfile URIs) but the packfile received during the first patch is
-wasted.
+On 4/22/19 6:26 PM, michael@platin.gs wrote:
+[snip]
+> +static int *get_similarity(int *similarities, int max_search_distance_a,
+> +			   int local_line_a, int local_line_b,
+> +			   int closest_local_line_a) {
+> +	assert(abs(local_line_a - closest_local_line_a) <= max_search_distance_a);
 
-So the tradeoff is: in the good case, your suggestion means that we make
-another fetch request, increasing the load on the server and taking more
-time. In the bad case, your suggestions means that we avoid sending a
-useless packfile upon the first patch, and if the server is smart
-enough, even the second packfile will be smaller. It depends on how
-often we think the bad case occurs, if servers will typically send more
-than one packfile-uri, and how smart we think servers will typically be.
+This assert fails.  In my example,
+	local_line_a = 1
+	closest_local_line_a = 12
+	max_search_distance_a = 10
 
-> The initial server uri
-> list can come in the capabilities list, or it can be a separate request
-> once the client sees the server supports packfile-uris and wants to ask
-> about them.
+Backtrace tells me it was called here:
 
-I don't think this is possible - the URI list is dependent on the wants
-and haves.
+> +static void fuzzy_find_matching_lines_recurse(
 
-> We may need some way for the server to group the uris so
-> that the client knows which ones are alternates of each other (and which
-> ones are needed to make a complete set).
+[snip]
 
-My initial design didn't have this feature (in fact, it seems to me that
-each thing should have one canonical URL, which means that there is no
-need for an alternate) - do you think we should be thinking about this
-at this stage?
+> +	for (i = invalidate_min; i < invalidate_max; ++i) {
+> +		closest_local_line_a = get_closest_local_line(
+> +			start_a, i,
+> +			closest_line_calc_offset1,
+> +			closest_line_calc_offset2,
+> +			closest_line_calc_numerator,
+> +			closest_line_calc_denominator);
+> +		*get_similarity(similarities, max_search_distance_a,
+> +				most_certain_line_a - start_a, i,
+> +				closest_local_line_a) = -1;
+> +	}
+
+So it looks like that '12' came from get_closest_local_line(),  The args 
+to that call were:
+
+	start_a 258, i 3, off1 0, off2 258 num 83, denom 23
+
+The equation reduces to 12 + off2 - start_a = 12
+
+I don't know what those values mean, but it looks like A's values affect 
+off2 and start_a, but those are only used at the very end of the 
+calculation.  Does 'A' affect off1, numer, or denom?
+
+Any thoughts?  What all is going on here?
+
+If you want to play with it, it's at
+
+	git@github.com:brho/git.git (master)
+
+(Beware the push -f / forced update.  And I figured the repo would be 
+preferable to spamming with unrelated patches).
+
+If you want an example commit the assert fails on, it's this repo:
+	
+	git@github.com:brho/akaros.git
+	master branch
+	ignore-rev-file=.git-blame-ignore-revs
+	file user/vmm/virtio_mmio.c
+
+On an unrelated note:
+
+ > The significant change here is that when a line is matched, its 
+      > fingerprint is subtracted from the matched parent line's 
+fingerprint. > This prevents two lines matching the same part of a 
+parent line.
+
+Does this limit us so that our second pass (the fallback when fuzzy 
+failed) won't be able to match to a parent line that was already matched?
+
+
+The test that is failing is your Expand Lines test.  The 'final' diff was:
+
+--- a/1
++++ b/1
+@@ -1,5 +1,7 @@
+  aaa
+-bbb
++bbbx
++bbbx
+  ccc
+-ddd
++dddx
++dddx
+  eee
+
+Which should be two diff chunks and two calls to guess_line_blames().
+
+And the 'actual' was:
+
+1
+2
+Final  (not 2)
+3
+4
+Final  (not 2)
+5
+
+I didn't dig much, but your older stuff (when merged with mine) also 
+didn't pass that test.  Maybe something with the offset/parent_slno stuff.
+
+Thanks,
+
+Barret
+
