@@ -2,190 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 612831F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 17:31:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACCF81F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 18:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729106AbfDWRbD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 13:31:03 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34290 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727745AbfDWRbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 13:31:02 -0400
-Received: by mail-pf1-f194.google.com with SMTP id b3so7856402pfd.1
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 10:31:02 -0700 (PDT)
+        id S1726088AbfDWSNK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 14:13:10 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:41707 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbfDWSNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 14:13:10 -0400
+Received: by mail-pl1-f196.google.com with SMTP id d9so1989027pls.8
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 11:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DbRnMeELN5gwSdN+xrYWQfyKZ9NSASTGWpyunpgxx4w=;
-        b=skivMiviw16nWHkjYpVKjcrsUBpGLpJTkRS42mYhq+95GicC+EmDxi/7gEQB5SKl7a
-         JqM2p75fZvGla04EPlu24mLS1VN+xnUgNRj7rosYzYqrIOq8A3LuFTDYz0fGxOuNmIWR
-         KXfJW4ueLZ0zuZpKXjrouEiL3Tbx+bPep6sZ27+ol4MimrTVDHQGBSpO1ALBX8g4yspZ
-         ixlgH23AjAPzAJ1Z1UwkEvv6+WMX3ndMvlyuitwjtuJjORGcjRppvEatEmoAkIn1aqjH
-         19tFbkHcvB2wNbcISrkdHrb4gVJTJyYdogBX6TVKRjT9iqhaSAevx1JOq4ZOScg9Gesz
-         Onyg==
+        d=google.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=aUc9A3bwK6CHwZZqCSZoqIiVXNd8h5e7NTcNCmehQRg=;
+        b=oTCrKe+MFTf1er/fqwv7ZeqW6uC2XlJmSw0dZWnzFv7FOz82bUpdPQKeX5XdmZCibP
+         9EX8qeRvSsY1pNKBFjxhImXR7XuzQft/3KXugomqynSEEoPqcx9JaqKjIbvmyU8zNCqo
+         5t05eKwhpXiYdPmtnL4EEf6PsecaXtfLm3BekvBzGu8BrgKEqb1kd2sR2sQdkmIihF5k
+         SMJ0gZzTQp3KRxx/57ouMchMZ1x6cMK+jP6E4zLAkZ+Vyt8yrEswTul5q3rbZC5K7AdL
+         C+OUrvOdFpqoogkazy4aYw8SmBX/UbzDdyb8jjR+0GWYY7b5meWkJQiUK1hJ2r5m5Orq
+         Q9pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=DbRnMeELN5gwSdN+xrYWQfyKZ9NSASTGWpyunpgxx4w=;
-        b=m1AMimKHeAlOGuWv3iPOhQkcLZxDqepd8g+uT0ckqU6Koiz/K+SKPl7He/15NCHxPS
-         63cY9BNhbE8dGiBM5xIeSZf+4H3gVj4nQaB4R1Nb4KpeFjJbTKHA+lemSRf7l/x0vnkg
-         eYRSLEqOFlNS43unsr7hmMBvEpDjDJfSL+I3bzzeGND2k/vmWb9EO0U+6gEdxwh50KTI
-         0cT0BasVDp/EDRNDFe2OxFbRdrGL/SkSGZYpKx+dTvomKR4KL0zNTw5Ah2rl4D8pxHFl
-         nJsW4CmPtgnDySIcablPNqlHBggjpeWEhgdltalg2Zo58koz5hqx7qFW9+OCGeUSEcur
-         8DkQ==
-X-Gm-Message-State: APjAAAWkXJgW4CHlpgDhc+CzDJOj6iVw6HgEzx6vXHhJg5hBB13WBxDY
-        Xi1BVJ0sXa118TLUx5XFxLMx6Nq0
-X-Google-Smtp-Source: APXvYqzqgwV2nYtb507FpPGRPWNVP0191rwaUslhUlTy5MSGbvEEwOIMXdcGpqmetKvuq3FGtjl86Q==
-X-Received: by 2002:a65:6659:: with SMTP id z25mr25683957pgv.10.1556040661467;
-        Tue, 23 Apr 2019 10:31:01 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id a8sm27518784pfo.144.2019.04.23.10.31.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 23 Apr 2019 10:31:00 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH] Honor core.precomposeUnicode in more places
-Date:   Tue, 23 Apr 2019 10:30:56 -0700
-Message-Id: <20190423173056.28523-1-newren@gmail.com>
-X-Mailer: git-send-email 2.21.0.420.g4906d192b3
+        bh=aUc9A3bwK6CHwZZqCSZoqIiVXNd8h5e7NTcNCmehQRg=;
+        b=Rg81jvmq5SQOaBEYko5ctSTdDubUt8BpQKuN4PbO2/qmoyh8YQ6IKdJKHAazFMIOwq
+         smML+ppWXSNm3qm2kbrgWM6cfmqvy1tRnfQlONZc2NZjZ3ZWFZaO8pppsF+SNfwqHOn9
+         vK6Y20F4JEM80yhsbRb8oZu7FeLORw0BAm0SIcfJxYDGpMP6+Cq0k81jhE5p1+5ESbFX
+         a+CkGnkgkMarVCmTPDzHwDprbRSMXAOHbYBNCsMWCJqrLqS+Vix4PDlycYT5fu1xCNZW
+         BADe94GhBf/WBnP0jsT6Rarl9rWzRwW8k5ZyVDYY3PSFyN6JjiRkbyp4/lTbvcc09lv4
+         ggkQ==
+X-Gm-Message-State: APjAAAUqoBPJyZX0yFay1dJMOl4+/uwhginrFbVCE9cv6qzxddEBiLGS
+        Mjjoum4rQVh391k2wWFFUZ+1TA==
+X-Google-Smtp-Source: APXvYqyFf7ilIo+T6M7s4jkZ5AAZeNPSUAk4ePTLI26QGW0OfJi1tzzcNiPC2ZUFRgy6qt9rGZnx2g==
+X-Received: by 2002:a17:902:86:: with SMTP id a6mr27259000pla.277.1556043188959;
+        Tue, 23 Apr 2019 11:13:08 -0700 (PDT)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.googlemail.com with ESMTPSA id h8sm22778466pfo.149.2019.04.23.11.13.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Apr 2019 11:13:07 -0700 (PDT)
+Subject: Re: [PATCH v6 0/6] blame: add the ability to ignore commits
+To:     michael@platin.gs, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <[PATCH v6 0/6] blame: add the ability to ignore commits>
+ <20190422222647.48628-1-michael@platin.gs>
+From:   Barret Rhoden <brho@google.com>
+Message-ID: <533f7721-2af6-1137-17c1-065837e1321d@google.com>
+Date:   Tue, 23 Apr 2019 14:13:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190422222647.48628-1-michael@platin.gs>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mac's HFS ("Hilarious FileSystem"?  "Halfwitted FileSystem"?) --
-where git sets core.precomposeUnicode to true automatically by git
-init/clone -- when a user creates a simple unicode refname (in NFC
-format) such as españa:
+Hi Michael -
 
-  $ git branch españa
+On 4/22/19 6:26 PM, michael@platin.gs wrote:
+> +	int *matching_lines = fuzzy_find_matching_lines(parent->file.ptr,
+> +							target->file.ptr,
+> +							parent->line_starts,
+> +							target->line_starts,
+> +							e->s_lno + offset,
+> +							e->s_lno,
+> +							parent_len,
+> +							e->num_lines);
 
-different commands would display the branch name differently.  For
-example, git branch, git log --decorate, and git fast-export all used
+Here was the issue I ran into, and it's due to translations between 
+e->s_lno and the parent's "address space".
 
-  65 73 70 61 c3 b1 61  (or "espa\xc3\xb1a")
+The short version is that "e->s_lno + offset" is not always the 
+parent_slno, and parent_len is based off of parent_slno.
 
-(NFC form) while show-ref would use
+guess_line_blames() gives you parent_slno and parent_len, as well as 
+offset.  'offset' is how you convert from the target's space to the 
+parent's.  parent_slno and parent_len describe the whole chunk given to 
+us from the diff engine.  However, there may be multiple blame_entries 
+covering that chunk.
 
-  65 73 70 61 6e cc 83 61  (or "espan\xcc\x83a")
+So e->s_lno is in the target, but it's not necessarily the beginning of 
+the entire diff chunk.  This is related to that page fault you found a 
+while back.
 
-(NFD form).  A stress test for git filter-repo was tripped up by this
-inconsistency, though digging in I found that the problems could
-compound; for example, if the user ran
+Passing e->s_lno + offset for where fuzzy() starts looking in the parent 
+is fine, but then the length in the parent needs to be adjusted.  For 
+instance, I have this at the top of my modified 
+fuzzy_find_matching_lines() (changed to take the origins and variables 
+from guess_line_blames()):
 
-  $ git pack-refs --all
+         // XXX conversions to michael's variable names
+	int start_a = e->s_lno + offset;
+         //int length_a = parent_len;    // XXX this fails the test
+         int length_a = (parent_slno + parent_len) - (e->s_lno + offset);
 
-and then tried to check out the branch, they would be met with:
+	int start_b = e->s_lno;
+         int length_b = e->num_lines;
 
-  $ git checkout españa
-  error: pathspec 'españa' did not match any file(s) known to git
+Plus we need a check for length_a <= 0.  I had to work to make it be 
+negative, but it's possible.  parent_slno = tlno + offset, so we're 
+looking at:
 
-  $ git checkout españa --
-  fatal: invalid reference: españa
+	length_a = tlno + parent_len - e->s_lno;
 
-  $ git branch
-    españa
-  * master
+That just requires a blame entry split such that e->s_lno > tlno, and a 
+parent chunk that had 0 lines.  I found a case that did that.  Basically 
+in one commit you add a bunch of lines.  In another, you change one line 
+in the middle of that bunch.  That causes a split of the diff chunk into 
+more than one, such that e->s_lno > tlno.  That original commit only 
+added lines, so parent_len == 0.
 
-Note that the user could run the `git branch` command first and copy and
-paste the `españa` portion of the output and still see the same two
-errors.  Also, if the user added --no-prune to the pack-refs command,
-then they would see three branches: master, españa, and españa (those
-last two are NFC vs. NFD forms, even if they render the same).
+The intuition for the "negative length_a" isn't that the parent_len is 
+negative, it's that the e->s_lno chunk (when offset) is outside the 
+window of the parent's change.  I have a simple test for this.
 
-Further, if the user had the `españa` branch checked out before
-running `git pack-refs --all`, the user would be greeted with (note
-that I'm trimming trailing output with an ellipsis):
+Oh, and we have to length_a == 0, due to this:
 
-  $ git rev-parse HEAD
-  fatal: ambiguous argument 'HEAD': unknown revision or path...
+	max_search_distance = length_a - 1;
 
-  $ git status
-  On branch españa
+Anyway, I'll take what I've got and apply your latest and see what I 
+come up with.  =)  Plus, I have fixes for all of the other stuff brought 
+up in the v6 discussion.
 
-  No commits yet...
-
-Or worse, if the user didn't check this stuff first, running `git
-commit` will create a new commit with all changes of all of history
-being squashed into it.
-
-In addition to pack-refs, one could also get into this state with
-upload-pack or anything that calls either pack-refs or upload-pack (e.g.
-gc or clone).
-
-Add code in a few places (pack-refs, show-ref, upload-pack) to check and
-honor the setting of core.precomposeUnicode to avoid these bugs.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/pack-refs.c | 2 ++
- builtin/show-ref.c  | 3 +++
- upload-pack.c       | 2 ++
- 3 files changed, 7 insertions(+)
-
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index f3353564f9..cfbd5c36c7 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "config.h"
- #include "parse-options.h"
- #include "refs.h"
- #include "repository.h"
-@@ -16,6 +17,7 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "prune", &flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
- 		OPT_END(),
- 	};
-+	git_config(git_default_config, NULL);
- 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
- 		usage_with_options(pack_refs_usage, opts);
- 	return refs_pack_refs(get_main_ref_store(the_repository), flags);
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 6a706c02a6..6456da70cc 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "config.h"
- #include "refs.h"
- #include "object-store.h"
- #include "object.h"
-@@ -182,6 +183,8 @@ static const struct option show_ref_options[] = {
- 
- int cmd_show_ref(int argc, const char **argv, const char *prefix)
- {
-+	git_config(git_default_config, NULL);
-+
- 	argc = parse_options(argc, argv, prefix, show_ref_options,
- 			     show_ref_usage, 0);
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index d098ef5982..159f751ea4 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1064,6 +1064,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 		allow_ref_in_want = git_config_bool(var, value);
- 	} else if (!strcmp("uploadpack.allowsidebandall", var)) {
- 		allow_sideband_all = git_config_bool(var, value);
-+	} else if (!strcmp("core.precomposeunicode", var)) {
-+		precomposed_unicode = git_config_bool(var, value);
- 	}
- 
- 	if (current_config_scope() != CONFIG_SCOPE_REPO) {
--- 
-2.21.0.420.g4906d192b3
+Barret
 
