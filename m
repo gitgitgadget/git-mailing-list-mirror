@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9F731F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 01:18:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13E381F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 01:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729110AbfDWBSw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Apr 2019 21:18:52 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38891 "EHLO
+        id S1729175AbfDWBVf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Apr 2019 21:21:35 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40026 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726407AbfDWBSw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Apr 2019 21:18:52 -0400
-Received: by mail-wm1-f67.google.com with SMTP id w15so16507230wmc.3
-        for <git@vger.kernel.org>; Mon, 22 Apr 2019 18:18:51 -0700 (PDT)
+        with ESMTP id S1729104AbfDWBVf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Apr 2019 21:21:35 -0400
+Received: by mail-wm1-f67.google.com with SMTP id z24so16609936wmi.5
+        for <git@vger.kernel.org>; Mon, 22 Apr 2019 18:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=tp396Std37eZIRJRIWMz6fF0JZ5Tll0icjEAu4ZEnpM=;
-        b=bGD5rFVBZVMrwGvWK2yE87JWjpF2cZjWw2FOMB5CcFihomDJfnVPEAZg7RFtggT8Oz
-         bAb4fmRl5gkbBh1hElu67CWLHJB979P9aMpahBw2BAzXTHHTfuAvYQPT3y6PZS22QHWo
-         Aj5Hi4xA633kqM0Lo6pMINCKnFPo1HZBChlWP7sqdAf25RyUwQbeDgAeyJXh9jBFSzgU
-         cdmaSzinAoVkA6sd5HCwzEU5EdxswMQTmddPaz7eI3xkbgI7VGBw55ezFGH9gbJe75Su
-         v0UQEvYVVKiv6Zn6wm8evUYho6xoLl5ywBBniK3fItCIXkCQdVjiPt5TuXhwtjwEC5rd
-         PqaA==
+        bh=QvcMe/NdscFk0hY7h7hB6qgyJkduBaKwZQa5tvwz52k=;
+        b=aphPB2jDGK85mT+5I+lU+ilSmXcvWBwufY7iiHgHHqqmlUhR0xBtaAWeZDKVYxd4r+
+         EFI1Cu4AATgtoS6cw/glOsfSisljguSp8rD3vmntfYHrjaJwBjbeqzy0Si1c/c6cWorS
+         sSQPT4NA3pSnAjf4qSQMie8//irywl6i2fC3jKIkX+GczywEnyRkl7CEome63J5g89rn
+         BAsnIQIX1jQ7r/V1YrZJkGugVDMin0KO+JptemWQXJurscua7fwA0wUefTGgItEhyU/k
+         JgNSMpPIvP53B+80PSTijZLZbturYdXXQr9JyCe341VaF7dhNxjfxVe7WRxWRJi9vLyR
+         3v+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=tp396Std37eZIRJRIWMz6fF0JZ5Tll0icjEAu4ZEnpM=;
-        b=IJAn+FyX13B/kNXgBBikJAftjbKJGsCxwwwPp1UYPOQuoFyT1Q6wumOwJ7bNkg6KEM
-         6CGeeISkPbBUNSDH2OVBhKK3pyRcSYXWQ3lQl/zA80iFqqL+DGRxrhvSHSDfTI7NsreJ
-         jWfcsJQ0EFI1rWjLFFgXbUOZk70Td/zGjVe2PGNlhouinv8qJ86ieu8fEZmYJIMiWyI/
-         6wahDvuF2ESdX01Pi+I6tF1f4H+jMvcMs+HmkFeOgkzIcZjoPopMCxZNwkzk6C9W2Cra
-         s9PqAXIvWUaIhrbilD+Vro1OawKc1NPf0GUCwDzSKgsSTndcG3j1wOfNe8wv99fBbjF5
-         qfEQ==
-X-Gm-Message-State: APjAAAUiS0qFSHBVw3TiLQTB5SyKUFWEgwibKH+SXApd24Hx8MqfTwaD
-        K5gsUzu3z1op/fvLlzyvoBw=
-X-Google-Smtp-Source: APXvYqzAQnKREz447tZ895o49M7aWzqELH+1JciEktW2DypbJLt9Td6ZHm/M68oYPGoUDfUDCILtJw==
-X-Received: by 2002:a7b:c408:: with SMTP id k8mr182478wmi.69.1555982330146;
-        Mon, 22 Apr 2019 18:18:50 -0700 (PDT)
+        bh=QvcMe/NdscFk0hY7h7hB6qgyJkduBaKwZQa5tvwz52k=;
+        b=Or9mFn93537cJJrglneFI4p3OCNUaOFWleDuRky/d4J2j05lXfnqCST6tTCdkik0DY
+         gS1RZvEE/mSNmr3jQOopRMwuDtGnSm8FPOadlckZgQ3mxdvEwZYjWIn8MfRy5DzbYnVc
+         EXYy/Z6TotgRnxfxjOxwGmqMFLqVz0YJBg/OnKE60xeDWwsDoWkJ4Uni210G9jSKKK4T
+         3QwE0LhUw0jHL3nV77iraGV2z7FIDe4qID7MgVtZfHNraG7jmgr0Jw4H6xUYBRMjFbyX
+         LHSZn8iV4div/ZsEnmJV7NxkzuC5CmlPDzJt15Q2/SyPvViFG32oIsJJGi1Q75Ir2rUa
+         Vthg==
+X-Gm-Message-State: APjAAAWvCAdkM8Cib3CC/Liod3amHztfAag+QQ5qqfxsvYoZ5Ah5l+wh
+        TLOqW/8xnx12WJhA2sN6jSU=
+X-Google-Smtp-Source: APXvYqy1G0xdLoG18Hz4rhdcQrF/7TAt6B0p2rUk0S1Ik1UnRkFGUoAMrNjesS/y0vRwffPAw0JQCA==
+X-Received: by 2002:a05:600c:21c3:: with SMTP id x3mr193280wmj.90.1555982493567;
+        Mon, 22 Apr 2019 18:21:33 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id t15sm14247829wmt.2.2019.04.22.18.18.49
+        by smtp.gmail.com with ESMTPSA id o1sm20931902wmh.47.2019.04.22.18.21.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Apr 2019 18:18:49 -0700 (PDT)
+        Mon, 22 Apr 2019 18:21:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH/RFC] Makefile: dedup list of files obtained from ls-files
-References: <xmqqy343a43b.fsf@gitster-ct.c.googlers.com>
-        <20190422144927.GA6519@sigill.intra.peff.net>
-        <d869060a-a731-ff1d-3131-a146078fcf88@ramsayjones.plus.com>
-Date:   Tue, 23 Apr 2019 10:18:49 +0900
-In-Reply-To: <d869060a-a731-ff1d-3131-a146078fcf88@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Mon, 22 Apr 2019 18:15:34 +0100")
-Message-ID: <xmqq8sw17c3q.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] rebase: add switches to control todo-list setup
+References: <20190422000712.13584-1-phil.hord@gmail.com>
+        <xmqqk1fm9712.fsf@gitster-ct.c.googlers.com>
+        <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com>
+Date:   Tue, 23 Apr 2019 10:21:32 +0900
+In-Reply-To: <623d6ebd-60c4-916d-6295-4c648dbf3932@gmail.com> (Phillip Wood's
+        message of "Mon, 22 Apr 2019 15:44:00 +0100")
+Message-ID: <xmqq4l6p7bz7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,40 +69,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> FWIW, after reading your commit message my thoughts immediately turned
->> to "why can't ls-files have a mode that outputs each just once", but
->> then ended up at the same place as your patch: it's not that hard to
->> just de-dup the output.
->
-> My immediate thought was "that is simply a bug, no?" :-D
->
-> I haven't used 'git ls-files' that much, so it's no great surprise
-> that I had not noticed it odd behaviour!
+> Doing "git rebase -i master" and then editing the todo list has the
+> side effect of rebasing the branch. Often I find I want to amend or
+> reword a commit without rebasing (for instance when preparing a
+> re-roll).
 
-Yup, the real issue is that ls-files uses exactly the same code for
-tagged output, output with stage numbers and just plain list of
-paths, so as we saw in the motivating use case for this patch,
-unmerged paths give us one source of duplication when we are asking
-for list of paths without stages.
+I am not sure what you mean by "not rebasing".  Are you talking
+about --keep-base that uses the same --onto as the previous?
 
-It also considers, IIRC, deletion is merely one of the forms of
-modifications, so asking it to list modified paths and deleted paths
-at the same time would give you another source of duplication.
+I think that is often desired, but I do not think it has much to do
+with the topic of the proposal these two patches raises.
 
-Perhaps not-so-low-hanging fruit miniproject would be to teach
-"ls-files" a new "--dedup" option that does two things:
-
- * When -m and -d are asked at the same time, ignore '-d', because
-   '-d' will give duplicates for subsets of what '-m' would show
-   anyway; and
-
- * When neither -s nor -u is given, do not show the same path more
-   than once, even the ones with multiple stages.
-
-Perhaps it is safe to leave a #leftoverbits mark for the above, now
-that two people in addition to I noticed that the behaviour is less
-than ideal.
-
-
+And that (i.e. "this has nothing to do with the choice of 'onto'")
+was why I used the casual "rebase -i master" in my illustrations.
