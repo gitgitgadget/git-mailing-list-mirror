@@ -6,77 +6,87 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 049BC1F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 04:21:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A80A51F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 04:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727436AbfDWEVL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 00:21:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37710 "HELO cloud.peff.net"
+        id S1727715AbfDWEeW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 00:34:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37720 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726167AbfDWEVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 00:21:11 -0400
-Received: (qmail 17710 invoked by uid 109); 23 Apr 2019 04:21:12 -0000
+        id S1727486AbfDWEeW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 00:34:22 -0400
+Received: (qmail 17843 invoked by uid 109); 23 Apr 2019 04:34:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Apr 2019 04:21:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Apr 2019 04:34:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5770 invoked by uid 111); 23 Apr 2019 04:21:43 -0000
+Received: (qmail 5872 invoked by uid 111); 23 Apr 2019 04:34:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Apr 2019 00:21:43 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Apr 2019 00:34:54 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Apr 2019 00:21:09 -0400
-Date:   Tue, 23 Apr 2019 00:21:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Apr 2019 00:34:20 -0400
+Date:   Tue, 23 Apr 2019 00:34:20 -0400
 From:   Jeff King <peff@peff.net>
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Resolving deltas dominates clone time
-Message-ID: <20190423042109.GA19183@sigill.intra.peff.net>
-References: <259296914.jpyqiltySj@mfick-lnx>
- <16052712.dFCfNLlQnN@mfick-lnx>
- <20190422205653.GA30286@sigill.intra.peff.net>
- <19221376.OlD5LWjr85@mfick-lnx>
- <20190423015538.GA16369@sigill.intra.peff.net>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] t/perf: depend on perl JSON only when using --codespeed
+Message-ID: <20190423043419.GA11689@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190423015538.GA16369@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 22, 2019 at 09:55:38PM -0400, Jeff King wrote:
+Commit 05eb1c37ed (perf/aggregate: implement codespeed JSON output,
+2018-01-05) added a dependency on the perl JSON module to show output
+from aggregate.perl, but we only need it when the user asks for
+--codespeed output. While the module is pretty common, it's not part of
+the base system, and this dependency can get in the way of producing the
+default human-readable output.
 
-> Here are my p5302 numbers on linux.git, by the way.
-> 
->   Test                                           jk/p5302-repeat-fix
->   ------------------------------------------------------------------
->   5302.2: index-pack 0 threads                   307.04(303.74+3.30)
->   5302.3: index-pack 1 thread                    309.74(306.13+3.56)
->   5302.4: index-pack 2 threads                   177.89(313.73+3.60)
->   5302.5: index-pack 4 threads                   117.14(344.07+4.29)
->   5302.6: index-pack 8 threads                   112.40(607.12+5.80)
->   5302.7: index-pack default number of threads   135.00(322.03+3.74)
-> 
-> which still imply that "4" is a win over "3" ("8" is slightly better
-> still in wall-clock time, but the total CPU rises dramatically; that's
-> probably because this is a quad-core with hyperthreading, so by that
-> point we're just throttling down the CPUs).
+Let's bump the "use" down to a "require" in the code path that needs it,
+which will be interpreted at run-time instead of compile-time. People
+not using "--codespeed" won't even load the module, and anybody using it
+should see the same results (including the same perl error if they don't
+have it).
 
-And here's a similar test run on a 20-core Xeon w/ hyperthreading (I
-tweaked the test to keep going after eight threads):
+Note that this skips the importing step, so we'll have to fully qualify
+our function call. We could accomplish the same thing in other ways.
+E.g., calling JSON->import() ourselves, or wrapping "use JSON" in an
+eval. Since there's only one such call, this seems like the
+least-magical way of doing it.
 
-Test                            HEAD                
-----------------------------------------------------
-5302.2: index-pack 1 threads    376.88(364.50+11.52)
-5302.3: index-pack 2 threads    228.13(371.21+17.86)
-5302.4: index-pack 4 threads    151.41(387.06+21.12)
-5302.5: index-pack 8 threads    113.68(413.40+25.80)
-5302.6: index-pack 16 threads   100.60(511.85+37.53)
-5302.7: index-pack 32 threads   94.43(623.82+45.70) 
-5302.8: index-pack 40 threads   93.64(702.88+47.61) 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This bites me occasionally when running perf tests on many-core work
+machines where I can't just "apt-get install libjson-perl". So I finally
+decided look into it. :)
 
-I don't think any of this is _particularly_ relevant to your case, but
-it really seems to me that the default of capping at 3 threads is too
-low.
+ t/perf/aggregate.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
--Peff
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 494907a892..76dd48f890 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -3,7 +3,6 @@
+ use lib '../../perl/build/lib';
+ use strict;
+ use warnings;
+-use JSON;
+ use Getopt::Long;
+ use Git;
+ 
+@@ -342,7 +341,8 @@ sub print_codespeed_results {
+ 		}
+ 	}
+ 
+-	print to_json(\@data, {utf8 => 1, pretty => 1, canonical => 1}), "\n";
++	require JSON;
++	print JSON::to_json(\@data, {utf8 => 1, pretty => 1, canonical => 1}), "\n";
+ }
+ 
+ binmode STDOUT, ":utf8" or die "PANIC on binmode: $!";
+-- 
+2.21.0.1182.g3590c06d32
