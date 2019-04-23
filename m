@@ -2,98 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BBAE1F453
-	for <e@80x24.org>; Tue, 23 Apr 2019 22:52:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B664A1F453
+	for <e@80x24.org>; Tue, 23 Apr 2019 23:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728545AbfDWWwE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 18:52:04 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:41282 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726325AbfDWWwE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 18:52:04 -0400
-Received: by mail-pg1-f194.google.com with SMTP id f6so8314644pgs.8
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 15:52:03 -0700 (PDT)
+        id S1726342AbfDWXMr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 19:12:47 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40375 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726075AbfDWXMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 19:12:47 -0400
+Received: by mail-pf1-f195.google.com with SMTP id c207so8236447pfc.7
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 16:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/gI/yCH/c2AMui8221DsOkfpXmZwukKkQVhp+QufGKE=;
-        b=mvFHb1vyGzBhSo3p+PNnikgzlxYFKuX5IDQDvH1XHR8uMIaSg7rK4h028Gp+hBsAfG
-         kHoA9glvbegfRUjIlxELE2KneWXbdyzfgyZf8Gg7L5jBZoc2Kk58WNeJxkHJqdKOtsWu
-         pwl8H4/ke0eDU7uGZJFE1px/rh6fpH4aZNDLgOk8nzKC1UMDP+ecD4zJhhwNuZ3rOJmz
-         tRfZeGnvKABNLeIVEQun/2MeCJmSRbyUr54/h16u08WmgrDH/J1M5giG/nVVCR1mgtuP
-         HRnnvJhhcP6o3cF2R1egUUFyMmV7yzSchHgJQxR2JNKIvwSQrQANClhPFLoai1jn6ang
-         OmlQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=lbCfF0HJws/hwHKaO3OUek3eI0wosGbyBaSwxHNOOIU=;
+        b=G8yoD8kuyLs0RnpWOc77k0awyJPOZJCOun2xqPgNoRqGCQbnZs3+QPOby+XRZH63ry
+         32BVrwSZ241oJf+gFSPUW4IRxUHE0izUiBp8zTFjgtDXq3Ar4rlO2NCD/ZlVveYAbK67
+         /oWAfbDhhrygrEIhoh7mz0drf7s4VAHEALUrJHrOHsVnS9QjmaHekzkbCuR1y+54QGIb
+         HQbVugrH2iW8Xmtcemk+KntJb7wOMQ7Nbhhtg2RU/meD6XF6d4m96seIEVEZKdTFc96u
+         7G5N/QvaEFRkICFCdxPz0zaMsPU3Zxx1QVhOH8oUCPuiRzqz3XSSLPMmjoahLdnmx86n
+         lalA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/gI/yCH/c2AMui8221DsOkfpXmZwukKkQVhp+QufGKE=;
-        b=EhRWI4uy3eZuIdTdSU5dol9BQQTWa96UmB5Pc1npXeJO9SHwRFuuBHzN8TjG6EXSfi
-         Uj7ReRSzLS/rhsQdXV4/dqZ3uqysXS2Ww8SYXbgVpFDti1jTmu5D0NCQEBhpDzv5HIAH
-         slOgwU17IbemO37JFPDwf8rLwYcc+Q+BLxCXNByOi9NMyOsEi5KOp2u1IrTG9hXIWhlf
-         Rb5DfY/QeaHgrlCMwkQDwZOH5ZPlKHNSKQhSaEshI5/mLwlKboe1EdcQoqJQGDDOz1BO
-         XWVhNRV90R6ijoY76+gfxGYbiQn/fXsioPeCMbB6wujAD9tHiUq8OErWOMFrOX6eDVPV
-         zWJQ==
-X-Gm-Message-State: APjAAAWP9Wj7KmDK8RSAbmBOCIluSvA7c3VJndX33IQZiT60osGFjjnd
-        /h1mYeJaeF72mFC7OM7ZtJw=
-X-Google-Smtp-Source: APXvYqycVWoPGKE+zVSuYt5jQpBczx0S18BvPQlA+p2TEGUt9Izj2J+5nFq1GqAZAuwQWLTYrAVPBA==
-X-Received: by 2002:a63:df50:: with SMTP id h16mr14607749pgj.208.1556059923132;
-        Tue, 23 Apr 2019 15:52:03 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id f7sm8022755pgp.77.2019.04.23.15.51.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Apr 2019 15:51:54 -0700 (PDT)
-Date:   Tue, 23 Apr 2019 15:51:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 5/8] Documentation: add Packfile URIs design doc
-Message-ID: <20190423225152.GD98980@google.com>
-References: <20190423053130.GA13162@sigill.intra.peff.net>
- <20190423203801.29156-1-jonathantanmy@google.com>
- <871s1stlf4.fsf@evledraar.gmail.com>
- <20190423222249.GB98980@google.com>
- <87y340s6ax.fsf@evledraar.gmail.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lbCfF0HJws/hwHKaO3OUek3eI0wosGbyBaSwxHNOOIU=;
+        b=XZCcZ8CSn3F/KYAatCbG6jfEhDgcYoI+jOWQSNeuGb0qFuv1x8ewP3yQ/uwky21zpB
+         PPpMpUnTzIfl+giXYuUN0Gx2g9c3kzos1HiLHJdNYsw2nkRXrqPE/y03Gs2JFj5T0Juj
+         5wdCd1hE0evfO+ekZzsRpIb3zzQA8VZ7XX71Ot7DSTGPBXIm9P6ByxvZ9I5maO8jbDyB
+         1Nb0QJO3Yj2pQ5Y6ZS4VsVHv2Y6wjoRbTKnH4y/gmB8S7d589m49C2AyXYbgUMXwo5pc
+         BaMEiUUbw0QLWyn2wWedpdzQ7BQ1ep1yNzk74qklYq2KCA/eNSjCiLbiVkyswAzgX4Ae
+         qg3w==
+X-Gm-Message-State: APjAAAV73b3Hvs7ztqXlXPzNWTVleO2xpYA211zyLCknHZDHk0DtriZb
+        DpGExW3+XNdZIpM07DxSd7xJms9U
+X-Google-Smtp-Source: APXvYqzx0pd7jTwENaiDEbVZiOAXDdMpKeBWw9kB8c0AaxNrfgnD2j85oczO67zps31yM0388mMdbA==
+X-Received: by 2002:a63:ff0f:: with SMTP id k15mr26681202pgi.407.1556061165878;
+        Tue, 23 Apr 2019 16:12:45 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id q20sm387353pfi.166.2019.04.23.16.12.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Apr 2019 16:12:44 -0700 (PDT)
+Date:   Tue, 23 Apr 2019 16:12:43 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v7 1/6] t3431: add rebase --fork-point tests
+Message-ID: <20190423231243.GA14157@dev-l>
+References: <cover.1555523176.git.liu.denton@gmail.com>
+ <cover.1555832783.git.liu.denton@gmail.com>
+ <eb64f6c91d27a6f9666c9829050995d9f9b52925.1555832783.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y340s6ax.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <eb64f6c91d27a6f9666c9829050995d9f9b52925.1555832783.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Wed, Apr 24 2019, Jonathan Nieder wrote:
+Hi Junio,
 
->> Do you mean this for when a pack is self-contained and contains all
->> objects reachable from those "tip" commits?
->>
->> What would you do when a pack is not self-contained in that way?
->
-> Indeed, it had been a while since I read the first version of this. I
-> was assuming a "base pack" use-case, but it seems it's narrowly isolated
-> to just "N packs each containing one big blob", right?
+On Sun, Apr 21, 2019 at 01:11:18AM -0700, Denton Liu wrote:
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  t/t3431-rebase-fork-point.sh | 53 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100755 t/t3431-rebase-fork-point.sh
+> 
+> diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+> new file mode 100755
+> index 0000000000..9b517d87a3
+> --- /dev/null
+> +++ b/t/t3431-rebase-fork-point.sh
+> @@ -0,0 +1,53 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2019 Denton Liu
+> +#
+> +
+> +test_description='git rebase --fork-point test'
+> +
+> +. ./test-lib.sh
+> +
+> +# A---B---D---E    (master)
+> +#      \
+> +#       C*---F---G (side)
+> +#
+> +# C was formerly part of master but master was rewound to remove C
+> +#
+> +test_expect_success setup '
+> +	test_commit A &&
+> +	test_commit B &&
+> +	test_commit C &&
+> +	git branch -t side &&
+> +	git reset --hard HEAD^ &&
+> +	test_commit D &&
+> +	test_commit E &&
+> +	git checkout side &&
+> +	test_commit F &&
+> +	test_commit G
+> +'
+> +
+> +test_rebase() {
 
-The demo in this patch series covers the single isolated blob case.
-The protocol supports the "base pack" use case but many others as
-well:
+I read in an email thread earlier that the preferred style for function
+definitions is to include a space after the name. Sorry for not catching
+this earlier.
 
-* daily "catch-up fetch" packs
-* "base pack without blobs"
-* ... etc ...
+Could you please change this to `test_rebase () {` for me?
 
-Thanks,
-Jonathan
+Also, same comment applies to `test_rebase_same_head` in 2/6.
+
+Thanks so much,
+
+Denton
+
+> +	expected="$1" &&
+> +	shift &&
+> +	test_expect_success "git rebase $*" "
+> +		git checkout master &&
+> +		git reset --hard E &&
+> +		git checkout side &&
+> +		git reset --hard G &&
+> +		git rebase $* &&
+> +		test_write_lines $expected >expect &&
+> +		git log --pretty=%s >actual &&
+> +		test_cmp expect actual
+> +	"
+> +}
+> +
+> +test_rebase 'G F E D B A'
+> +test_rebase 'G F D B A' --onto D
+> +test_rebase 'G F C E D B A' --no-fork-point
+> +test_rebase 'G F C D B A' --no-fork-point --onto D
+> +test_rebase 'G F E D B A' --fork-point refs/heads/master
+> +test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
+> +test_rebase 'G F C E D B A' refs/heads/master
+> +test_rebase 'G F C D B A' --onto D refs/heads/master
+> +
+> +test_done
+> -- 
+> 2.21.0.967.gf85e14fd49
+> 
