@@ -2,130 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95A351F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 15:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE29F1F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 16:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728337AbfDWPVi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 11:21:38 -0400
-Received: from sella4.gpi.it ([89.190.163.252]:36638 "EHLO sella4.gpi.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727745AbfDWPVh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 11:21:37 -0400
-Received: from prdzimgpi03.gpi.it (prdmta.gpi.it [192.168.40.36])
-        by sella4.gpi.it (Postfix) with ESMTPS id 15053100069;
-        Tue, 23 Apr 2019 17:21:29 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by prdzimgpi03.gpi.it (Postfix) with ESMTP id 02B044373899;
-        Tue, 23 Apr 2019 17:21:29 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at prdzimgpi03.gpi.it
-Received: from prdzimgpi03.gpi.it ([127.0.0.1])
-        by localhost (prdzimgpi03.gpi.it [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id aqhGeVh8FHcB; Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
-Received: from prdzimgpi02.gpi.it (prdzimgpi02.gpi.it [10.192.1.151])
-        by prdzimgpi03.gpi.it (Postfix) with ESMTP id D2977437387F;
-        Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
-Date:   Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
-From:   Nicola Farina <nicola.farina@gpi.it>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     git <git@vger.kernel.org>
-Message-ID: <679633591.38274316.1556032888730.JavaMail.zimbra@gpi.it>
-In-Reply-To: <bba4ef95-7ec4-e755-23da-28c34abda8dc@iee.org>
-References: <1509193182.25902858.1554893159368.JavaMail.zimbra@gpi.it> <bba4ef95-7ec4-e755-23da-28c34abda8dc@iee.org>
-Subject: Re: Git subtree error on windows 10 with 2.21 version
+        id S1727831AbfDWQLO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 12:11:14 -0400
+Received: from mail-it1-f179.google.com ([209.85.166.179]:56169 "EHLO
+        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726655AbfDWQLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 12:11:13 -0400
+Received: by mail-it1-f179.google.com with SMTP id y134so1059049itc.5
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 09:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=KBWCeGFxXZD1ekMbv5eLz67Q15kQGZjQPxL+8zyHXf4=;
+        b=ZX+6tSmRpQ1+8+3407uKrHywv0oJcCPo8Zz4bhD2LKX45rAF/0fSe8hDIzQbZH6PMp
+         Dj3tDYO+j8z5ObNFX7kfaopd+d5Ng7jOC4JK5BmAnZcjiqmhD86oqGu/REbpaUEGbzz9
+         vkXHUENjXxirwouLZW/rYHABAqKRuwnMd15mvbtI4yIrH30deSLyzStmr/jw24qpuAXo
+         yZqerGDwitPmaIR6biK5hNSoQd6ylPRFJJLSQ83zweZvpUmrBPSzxjsO32z/DWwNQYnJ
+         wImt3rD0DNSa7UWdG3VckNyK7kjIiCG3mCTXhEZN81wQGmCWSd2uPBd/NvkWc418L1Ub
+         nN1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=KBWCeGFxXZD1ekMbv5eLz67Q15kQGZjQPxL+8zyHXf4=;
+        b=pS4MweLizzEmmd3htsQ9ai0fIc94d0sj0olWn0VMiuzBTPvj7guRua7SCeEib6XQWg
+         czDdg+thePeDwZXGBpEqFrM6k1k48n1llcxArivK9M9QcyZ/72g/sctvrb9NghacFWhz
+         vzQyMjZrCE2y9qHjkFR0AtCDUK+8k0q9j26gjJP/7Xy1XJTso0ptKel7lATDA9M6nHlF
+         +NQTTXlFirf28PAWJX6Ue9T0p1sJpDvCNhrXFRjTT4UE9NDSoeH0OJPJeZmfZwTYjRcn
+         GCQFmRuA6JRGrbYmvOXs73EECiIyZsonoFN2Fv/czgQeMRGdA6SvLyKAOKTEfftIpuru
+         BuyA==
+X-Gm-Message-State: APjAAAVV/HcUVU5XdnU2C0MxiCSg1nXLWQ+0x9fE5rh/5cNJ7qKYcJKb
+        Owt4AS3ZZnqfd2N4Gk6w1XZ6IL4VlKHsu9EuE/2tEFff
+X-Google-Smtp-Source: APXvYqwYR6qK7fjOYL1uTPBbWIu+m4FeSrQ0K0ADjUE2rGikhb2p8PG8RP5aVrxQPzb+9ui2YPpGVHTL+jW00DbdfWU=
+X-Received: by 2002:a24:5493:: with SMTP id t141mr2384294ita.10.1556035872810;
+ Tue, 23 Apr 2019 09:11:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.8.8_GA_2096 (ZimbraWebClient - GC73 (Win)/8.8.8_GA_1703)
-X-Authenticated-User: nicola.farina@gpi.it
-Thread-Topic: Git subtree error on windows 10 with 2.21 version
-Thread-Index: azLKB1zSBqzjYsjnkYjlmjH0P6yqCg==
-X-GPI-MailScanner-Information: Please contact sat@gpi.it for more information
-X-GPI-MailScanner-ID: 15053100069.ACC12
-X-GPI-MailScanner: Found to be clean
-X-GPI-MailScanner-MCPCheck: 
-X-GPI-MailScanner-SpamCheck: non spam, SpamAssassin (not cached,
-        punteggio=-2.9, necessario 5, autolearn=not spam, ALL_TRUSTED -1.00,
-        BAYES_00 -1.90)
-X-GPI-MailScanner-From: nicola.farina@gpi.it
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Tue, 23 Apr 2019 12:11:00 -0400
+Message-ID: <CAH8yC8=TNp2V9YkVxhmBoHAucZiEtdHJ780SSajYPXWAh6=aCA@mail.gmail.com>
+Subject: Select/copy/paste from Git Terminal not working as expected on Windows
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Everyone,
 
-Hi Philip
+When working on Windows I often use the Terminal provided by Git to
+SSH into other machines. I've noticed select/copy/paste does not work
+as expected when there is a lot of scrollback. It works, but it takes
+minutes to select the text and copy from the terminal.
 
-Thanks for answering.
-I will try to post an issue.
-The 408 line is simply this:
+For example, clear the terminal with 'reset', then build Git from
+sources. There will be a lot of scrollback, on the order of several
+thousand lines. Then, Right Click -> Select All. It will take a couple
+of minutes to select all of the text. Right Click again, and then
+Copy. It will take a couple of minutes to copy all of the text.
 
-			cat
+This has been going on for years. Cygwin terminals on the same machine are OK.
 
-(btw cat command alone seems to work in my pc)
-
-the 636 is more complex:
-
-		parents=$(git rev-parse "$rev^@")
-
-it is inside the process_split_commit ()  function
-
-Thanks again
-Bye
-Nicola
-
------ Messaggio originale -----
-Da: "Philip Oakley" <philipoakley@iee.org>
-A: "Farina Nicola" <nicola.farina@gpi.it>, "git" <git@vger.kernel.org>
-Inviato: Sabato, 20 aprile 2019 15:21:48
-Oggetto: Re: Git subtree error on windows 10 with 2.21 version
-
-Hi Nicola, 
-
-On 10/04/2019 11:45, Nicola Farina wrote: 
-> Hi 
-> 
-> After upgrading to 2.21 issuing this subtree command: 
-> 
-> git subtree push --prefix ouverture Shared-Ouverture master 
-> 
-> I get these errors: 
-> 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
-> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
-> 
-> I have installed git choosing the option "use git with bash only" 
-> 
-> thanks for any suggestions/help 
-> Nicola 
-I don't have any solution at the moment, but given it's Git-for-Windows 
-it is worth also logging it as an issue at 
-https://github.com/git-for-windows/git/issues and searching for 
-additional clues on the GitHub site (including closed items) 
-
-Also what are the commands at those lines in the code? 
--- 
-Philip 
-
+Jeff
