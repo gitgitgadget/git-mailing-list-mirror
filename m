@@ -2,281 +2,214 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFBC71F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 11:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A581F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 11:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbfDWLbQ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 Apr 2019 07:31:16 -0400
-Received: from smtppost.atos.net ([193.56.114.165]:25220 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfDWLbQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 07:31:16 -0400
-Received: from mail1-ext.my-it-solutions.net (mail1-ext.my-it-solutions.net) by smarthost4.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-         id 444b_758a_6cf809f4_9a5f_4208_857f_417b3703695f;
-        Tue, 23 Apr 2019 13:31:07 +0200
-Received: from mail2-int.my-it-solutions.net ([10.92.32.13])
-        by mail1-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3NBV6gG003508
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 23 Apr 2019 13:31:06 +0200
-Received: from DEFTHW99ETVMSX.ww931.my-it-solutions.net ([10.86.142.50])
-        by mail2-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3NBV6kI001201
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 23 Apr 2019 13:31:06 +0200
-Received: from DEFTHW99ETRMSX.ww931.my-it-solutions.net (10.86.142.99) by
- DEFTHW99ETVMSX.ww931.my-it-solutions.net (10.86.142.50) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Tue, 23 Apr 2019 13:31:05 +0200
-Received: from EUR02-HE1-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.99) with Microsoft SMTP Server
- (TLS) id 14.3.439.0; Tue, 23 Apr 2019 13:31:04 +0200
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
- AM6PR02MB5254.eurprd02.prod.outlook.com (20.178.90.159) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1835.12; Tue, 23 Apr 2019 11:31:03 +0000
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b]) by AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b%6]) with mapi id 15.20.1835.010; Tue, 23 Apr 2019
- 11:31:02 +0000
-From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-compat-util: work around for access(X_OK) under root
-Thread-Topic: [PATCH] git-compat-util: work around for access(X_OK) under root
-Thread-Index: AQHU+a/BrB7ZLE29Jku4TzdCEFH6dKZJjFlqgAAO6Kk=
-Date:   Tue, 23 Apr 2019 11:31:02 +0000
-Message-ID: <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-References: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>,<xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=clement.chigot@atos.net; 
-x-originating-ip: [193.56.241.24]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7374689d-2453-4757-0f19-08d6c7df2ad5
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR02MB5254;
-x-ms-traffictypediagnostic: AM6PR02MB5254:
-x-microsoft-antispam-prvs: <AM6PR02MB5254895E2CB03A8895F26D3EEA230@AM6PR02MB5254.eurprd02.prod.outlook.com>
-x-forefront-prvs: 0016DEFF96
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(39860400002)(366004)(376002)(396003)(346002)(199004)(189003)(68736007)(186003)(25786009)(86362001)(76176011)(6506007)(26005)(102836004)(97736004)(5660300002)(52536014)(6246003)(71190400001)(55016002)(9686003)(71200400001)(53936002)(7736002)(74316002)(305945005)(476003)(33656002)(53346004)(4326008)(446003)(486006)(11346002)(316002)(3846002)(6116002)(7696005)(99286004)(8676002)(66066001)(81156014)(81166006)(14454004)(8936002)(14444005)(256004)(6916009)(2906002)(66556008)(76116006)(73956011)(64756008)(66946007)(478600001)(66446008)(6436002)(66476007)(229853002);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB5254;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: atos.net does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: tA75IOm6JETzKpoTPrDzhpuhCVn+qmnPSKTPl9at1TYLbbtg0LI5uvKdKhTtlcKsiTODeBfXyW4+q47uNQHIBLNsCkV9K24JSaPs0YVb1VyMw7KPIpK5rk9+qh34TMJTZp8sjVw+cJCa8pQD+ja95r/niUgVGRaSNj9vJINNOvIxoeW4ErRGZmIYNA3ZTcUTUZqZswxtcSa5lJCfWj1EYQb9E6+H1WVo87AZfgFTxuy1AL7Huv3ya4RdUEnJt4R7TsLHDmcnUKOo2bAZ3i6q2Sqbq3n+FP9i7mAencukQ2SAyUuNOIjDfZPxIn0zX2A/RKJiVlFZ8F134tD4fY3iLXdOh9qqQbAhrIBwA+fe9y+XbGXvHYsdyD3jUf3+U8zJyA4Dj9UpyD7uUmp/+IYEgKZsxhhJbCodx/mMKlbRPwg=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1726659AbfDWLpu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 07:45:50 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54945 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726150AbfDWLpu (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Apr 2019 07:45:50 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id ECE7621C82;
+        Tue, 23 Apr 2019 07:45:48 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Tue, 23 Apr 2019 07:45:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; bh=p8qDIWzXV6RDqPPVTfSMhRF4PhF04eyARCwlPAeC7
+        Xc=; b=dnwIlqv0sUPjGijWdwoD6kUWRVE5dcl+RkWUgQG8YawcQvPLQjdJXvHr0
+        SdD8kQ0dlKi0y0Th54pFScmEw3P9J6O4wXHCZmJvRuOrfvIM46nLUhJ7QsePWjmz
+        y+cu3ybdxoxNygY0ACLIPAaHD/6HqQI6V+9BPGC5K15GovralYCadRdUg17+DMmL
+        Vsry8tIlYpBwlculFAQogGTdoNVlZ+K7/8Yze/keMZoL/jAXeieNL6RLP/98DJz/
+        IkFpc5GLDskeUFvGZGfpmFv314ihbISE4mYKYvBRz+YNJFJGuhHJ31hxOaBe+muY
+        D40airInSzH/rJTlT6LOC+oDz3rlg==
+X-ME-Sender: <xms:7Pq-XO_R1hOaRXOb9HJAOdDawIi_-LddrDM-UXrLyqB4LSTtqjC_Qg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrgeekgdefgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepuffvfhfhkffffgggjggtgfesthekre
+    dttdefjeenucfhrhhomheptehnughrvgifucflrghnkhgvuceofhhlohhsshesrghpjhgr
+    nhhkvgdrnhgvtheqnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpmhgrrhgtrdhinh
+    hfohdpghhnuhdrohhrghenucfkphepieejrddvgeehrddvvdeirdeffeenucfrrghrrghm
+    pehmrghilhhfrhhomhepfhhlohhsshesrghpjhgrnhhkvgdrnhgvthenucevlhhushhtvg
+    hrufhiiigvpedt
+X-ME-Proxy: <xmx:7Pq-XJYiFRy1U633a0ntuo62RlJkzPEk8u-3cUnbenfQqRNmqPZcTw>
+    <xmx:7Pq-XMtH3JWTtfsgd6xDNUw3exMTb4gSRa4gjRxqjh0eCc4FHn1sfQ>
+    <xmx:7Pq-XNmVZKqzr0LTYtZpGiI3T4m7hC0wgw3cpRuJlKPlL9C8H5ljXA>
+    <xmx:7Pq-XGeFRTQgz2zatV2jxxF8MOVtL9GVNhYabjp0tOFjHFeiIGUHYA>
+Received: from angharad.local (cpe-67-245-226-33.nyc.res.rr.com [67.245.226.33])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 679E6E424F;
+        Tue, 23 Apr 2019 07:45:48 -0400 (EDT)
+Subject: Re: gettext, multiple Preferred languages, and English
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <d001a2b5-57c3-1eb3-70fd-679919bb2eb6@apjanke.net>
+ <CACsJy8C1w0zJm71KFb21MC+c2NAGnRLDtE3KNK21hO7U4Ax7Hg@mail.gmail.com>
+ <9d7a2fb4-8bab-2d28-1066-fbace688a5cc@apjanke.net>
+ <875zr6szik.fsf@evledraar.gmail.com>
+From:   Andrew Janke <floss@apjanke.net>
+Openpgp: preference=signencrypt
+Autocrypt: addr=floss@apjanke.net; prefer-encrypt=mutual;
+ keydata= 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
+Message-ID: <0ef2b667-fedd-da66-c87a-452f70ffc570@apjanke.net>
+Date:   Tue, 23 Apr 2019 07:45:47 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.6.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7374689d-2453-4757-0f19-08d6c7df2ad5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2019 11:31:02.8653
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB5254
-X-OriginatorOrg: atos.net
+In-Reply-To: <875zr6szik.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <jch2355@gmail.com> on behalf of Junio C Hamano <gitster@pobox.com>
-> > On some OSes like AIX, access with X_OK is always true if launched under
-> > root.
+
+
+On 4/22/19 1:47 PM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> That may be the case, but you'd need to describe why it is a problem
-> here, before talking about the need for a "work around".
+> On Mon, Apr 22 2019, Andrew Janke wrote:
 > 
-> For example, if a directory on $PATH has a file called git-frotz
-> that has no executable bit, perhaps "git frotz" would execute that
-> file but only when you are running it as the root user, but not as
-> any other user.
+>> On 4/21/19 8:35 PM, Duy Nguyen wrote:
+>>> On Sun, Apr 21, 2019 at 6:40 PM Andrew Janke <floss@apjanke.net> wrote:
+>>>>
+>>>> Hi, Git folks,
+>>>>
+>>>> This is a follow-up to https://marc.info/?l=git&m=154757938429747&w=2.
+>>>
+>>> This says the problem with "en" detection has been fixed. Would
+>>> upgrading gettext fix it?
+>>>
+>>> You would need to upgrade something (git or gettext) and if it's
+>>> already fixed in gettext I don't see why we need a workaround in git.
+>>
+>> From reading the bug report, that does sound like it would fix it. But
+>> from what I can see, that fix hasn't made it out into a released version
+>> of gettext yet. I haven't downloaded the development gettext to confirm
+>> the fix.
+>>
+>> Looking at the gettext ftp site at https://ftp.gnu.org/pub/gnu/gettext/,
+>> it looks like gettext does not make frequent releases, and the last
+>> release was two and a half years ago. Who knows when the next release
+>> will be. And then it'll take longer to trickle down into Linux
+>> distributions and such.
+>>
+>> From your release history at https://github.com/git/git/releases, it
+>> seems like Git is a lot more active in making releases than gettext. So
+>> including this fix in Git would get it into the hands of affected users
+>> sooner. And it seems like a pretty low-risk change to me.
+>>
+>> Then once the new gettext release is out, their fix is confirmed, and it
+>> makes it out into common distros, the workaround could be removed from Git.
 > 
-> But that by itself does not sound like a problem to me.  After all,
-> a user with such a set-up on AIX may deliberately wanted to make
-> sure that a program like "git-frotz" that is only useful for
-> administrative purposes does not get in the way when using "git"
-> normally, but becomes available only when the user does "su".  IOW,
-> that sounds more like a feature an AIX user might want to take
-> advantage of.
+> What does Linux distro release schedule have to do with this? Your
+> initial report and the linked-to bug on GNU savannah only talk about
+> this being an issue on OSX. Is there some more general issue I'm
+> missing?
 > 
-> Perhaps the reason why you do not want to use access(X_OK) that
-> returns true for root may be different from the above, but without
-> knowing what it is, it is far from clear to me why this patch is a
-> good idea.  The patch needs to be justified a lot better.
+> People have reported issues with OSX's weird language selection in the
+> past. I think it makes sense to do whatever we need to hack around it as
+> long as it's some well-understood and OSX-only hack.
 > 
-> Everything below may become a moot point, as it is unclear if the
-> (untold) motivation behind this change makes sense in the first
-> place, but assuming that it is a good change that merely is poorly
-> explained, let's read on.
+> I'm paranoid that the suggestion of adding an en.po *in general* would
+> break stuff elsewhere. I'd be surprised if the project linked-to
+> upthread that used that hack is as widely ported as we are, and that
+> includes a lot of i18n implementations, not just GNU's.
+> 
+> Ultimately setlocale() is *supposed* to be a well-understood thing. You
+> set your preferred locale, programs have translations, the OS takes care
+> of it. I'm concerned that us trying to be specifically smart in git will
+> backfire (e.g. it's been suggested in the past to have core.language or
+> whatever..).
+> 
+> But it looks like we don't need to go there, this seems like a
+> workaround needed for some specific OSX version.
+> 
+> That can just live behind a flag and be detected in config.mak.uname,
+> no? And then we'd do whatever hack digs us out of that specific hole on
+> OSX, e.g. maybe generating an en.po *just* there, and just for that list
+> of known broken version(s) of OSX.
 > 
 
-This patch is needed in order to have hooks working on AIX. When run as root,
-access on hooks will return true even if a hook can't be executed. Therefore,
-as far as I know, git will try to execute it as is and we'll get this kind of
-error:
-"git commit -m content
- fatal: cannot exec '.git/hooks/pre-commit': Permission denied"
+Good point. I had forgotten this was OS X-specific; Linux release
+schedules are not relevant. (I don't know enough about language
+selection on Linux to know if would ever be relevant there.) There's no
+more general issue you're missing; as far as I know this only happens
+under OS X's multiple-Preferred-languages setup.
 
-I'm not fully aware about how git is using access and if it's adding some chmod,
-if it returns false. 
+Yeah, adding the workaround only on OS X sounds like it would work, and
+would be the more conservative thing to do. Generating a stub en.po just
+for OS X, and maybe just for affected versions of OS X and gettext,
+sounds sensible to me.
 
-We already know that there is some problems with access() as it has already
-occurs during our port of bash. Note that a part of this code comes from it.
+The bad behavior is due to gettext's interaction with OS X's language
+selection, so whether it happens is probably going to depend on both the
+version of OS X and the version of gettext you're building against. So
+if you want to generate it selectively, I think you'll need to check the
+version of gettext (in the expectation that a future version of gettext
+will fix this), as well as maybe the version of OS X. This
+multi-language-selection behavior seems to be by design in OS X; I
+wouldn't expect it to change in the future. But it seems like some older
+versions of OS X are not affected by it.
 
-We find this work around and thought it could be interesting to add it in the
-source code as some others OS (like Solaris according to bash) has the same kind
-of problems.
-However, you're right it's far from perfect and I might have
-submitted to soon, sorry about that.. 
+I can reproduce the bad-language-selection behavior on OS X 10.12,
+10.13, and 10.14.
+I cannot reproduce it on OS X 10.11, which is the oldest version of OS X
+I can get running these days. (I'm not sure if that's due to different
+OS behavior, or if I'm just doing something wrong on that box.) All my
+testing was done with git 2.21.0 and GNU gettext 0.19.8.1.
 
-> > diff --git a/compat/access.c b/compat/access.c
-> > new file mode 100644
-> > index 0000000000..e4202d4585
-> > --- /dev/null
-> > +++ b/compat/access.c
-> > @@ -0,0 +1,29 @@
-> > +#include "../git-compat-util.h"
-> 
-> This will get interesting.
-> 
-> > +/* Do the same thing access(2) does, but use the effective uid and gid,
-> > +   and don't make the mistake of telling root that any file is
-> > +   executable.  This version uses stat(2). */
-> 
->         /*
->          * Our multi-line comment looks more like
->          * this.  A slash-asterisk without anything else
->          * on its own line begins it, and it is concluded
->          * with  an asterisk-slash on its own line.
->          * Each line in between begins with an asterisk,
->          * and the asterisks align on a monospace terminal.
->          */
-> 
-> > +int git_access (const char *path, int mode)
-> 
-> No SP after function name before the parens that begins the
-> parameter list.
-> 
-> > +{
-> > +     struct stat st;
-> > +     uid_t euid = geteuid();
-> > +     uid_t uid = getuid();
-> > +
-> > +     if (stat(path, &st) < 0)
-> > +             return -1;
-> 
-> This stat is a wasted syscall if the running user is not root.
-> Structure the function more like
-> 
-> 
->         int git_access(const char *path, int mode)
->         {
->                 struct stat st;
-> 
->                 /* do not interfere a normal user */
->                 if (geteuid())
->                         return access(path, mode);
-> 
->                 if (stat(path, &st) < 0)
->                         return -1; /* errno apprpriately set by stat() */
->                 ... other stuff needed for the root user ...
->         }
-> 
-> Does the true UID matter for the purpose of permission/privilege
-> checking?  Why do we have to check anything other than the effective
-> UID?
->
-
-Actually, I don't know. Bash is doing it but I think EUID is enough. 
-
-> > +     if (!(uid) || !(euid)) {
-> > +             /* Root can read or write any file. */
-> > +             if (!(mode & X_OK))
-> > +                     return 0;
-> > +
-> > +             /* Root can execute any file that has any one of the execute
-> > +                bits set. */
-> > +             if (st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
-> > +                     return 0;
-> > +             errno = EACCES;
-> > +             return -1;
-> > +     }
-> > +
-> > +     return access(path, X_OK);
-> 
-> I think the last "fallback to the system access()" is wrong, as the
-> "special case for root" block seems to except that the function may
-> be called to check for Read or Write permission, not just for X_OK.
-
-That's a mistake from me. It should be "mode" instead of "X_OK". It seems that 
-most of the time, it's used only with X_OK or F_OK that's why it has worked. I'll 
-fix that. 
-
-> 
-> > +}
-> > diff --git a/config.mak.uname b/config.mak.uname
-> > index 86cbe47627..ce13ab8295 100644
-> > --- a/config.mak.uname
-> > +++ b/config.mak.uname
-> > @@ -270,6 +270,7 @@ ifeq ($(uname_S),AIX)
-> >        NEEDS_LIBICONV = YesPlease
-> >        BASIC_CFLAGS += -D_LARGE_FILES
-> >        FILENO_IS_A_MACRO = UnfortunatelyYes
-> > +     NEED_ACCESS_ROOT_HANDLER = UnfortunatelyYes
-> >        ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
-> >                NO_PTHREADS = YesPlease
-> >        else
-> > diff --git a/git-compat-util.h b/git-compat-util.h
-> > index 31b47932bd..bb8df9d2e5 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -1242,6 +1242,14 @@ int git_fileno(FILE *stream);
-> >  # endif
-> >  #endif
-> 
-> As I promised earlier, this will get interesting.
-> 
-> > +#ifdef NEED_ACCESS_ROOT_HANDLER
-> > +#ifdef access
-> > +#undef access
-> > +#endif
-> 
-> If a platform that needs git_access() wrapper happens to define
-> access(2) as a macro in its system header, you would lose the real
-> name of that function with this.
-> 
-> > +#define access git_access
-> > +extern int git_access(const char *path, int mode);
-> 
-> And in any source file that includes git-compat-util.h, when you
-> make a call to access(2), you'll end up calling git_access()
-> instead.
-> 
-> Remember what was in the end (in your original) or the early part of
-> git_access() that handled the case where the function is called for
-> a non-root user?  Yes, we write "access(path, mode)", expecting to
-> make a fallback call to the system-supplied access(2).  With this
-> include file, that will never happen---instead, it will recurse in
-> itself forever.
-> 
-> See how FILENO_IS_A_MACRO defined immediately before this part uses
-> the "#ifndef COMPAT_CODE" to guard against exactly the same problem.
-
-Alright, I now understand how this work. Actually, I haven't thought about that
-problem. But yeah this cannot work at the moment. I'll redo this patch and check
-if everything is still working.
-I'm sorry about these mistakes. I've made this patch quickly in order to have
-something else working. It seems to be too quickly. I'll fix that !  
-
-By the way, do I need to recreate a thread with [PATCH v2] ? Or I'll add the new
-version in this one ? I don't know how you're proceeding.  
-> 
-> 
-> Thanks.
+Cheers,
+Andrew
