@@ -2,199 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 146501F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 08:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 015CA1F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 08:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbfDWIio convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 Apr 2019 04:38:44 -0400
-Received: from smtppost.atos.net ([193.56.114.166]:27288 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbfDWIio (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 04:38:44 -0400
-Received: from mail3-ext.my-it-solutions.net (mail3-ext.my-it-solutions.net) by smarthost3.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-         id 7189_70df_95966d7a_570b_4a37_8a23_a4eb898db489;
-        Tue, 23 Apr 2019 10:38:40 +0200
-Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
-        by mail3-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3N8ceuF022983
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 10:38:40 +0200
-Received: from DEERLM99ETZMSX.ww931.my-it-solutions.net ([10.86.142.48])
-        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id x3N8ceVB006088
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 10:38:40 +0200
-Received: from DEERLM99ETRMSX.ww931.my-it-solutions.net (10.86.142.103) by
- DEERLM99ETZMSX.ww931.my-it-solutions.net (10.86.142.48) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Tue, 23 Apr 2019 10:38:40 +0200
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.103) with Microsoft SMTP
- Server (TLS) id 14.3.439.0; Tue, 23 Apr 2019 10:38:39 +0200
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com (20.177.199.143) by
- AM6PR02MB4998.eurprd02.prod.outlook.com (20.178.91.147) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1813.16; Tue, 23 Apr 2019 08:38:38 +0000
-Received: from AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b]) by AM6PR02MB4950.eurprd02.prod.outlook.com
- ([fe80::147e:c96e:accd:c32b%6]) with mapi id 15.20.1835.010; Tue, 23 Apr 2019
- 08:38:38 +0000
-From:   "CHIGOT, CLEMENT" <clement.chigot@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] git-compat-util: work around for access(X_OK) under root
-Thread-Topic: [PATCH] git-compat-util: work around for access(X_OK) under root
-Thread-Index: AQHU+a/BrB7ZLE29Jku4TzdCEFH6dA==
-Date:   Tue, 23 Apr 2019 08:38:38 +0000
-Message-ID: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=clement.chigot@atos.net; 
-x-originating-ip: [193.56.241.24]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2744e233-2705-4e5f-31a9-08d6c7c71534
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:AM6PR02MB4998;
-x-ms-traffictypediagnostic: AM6PR02MB4998:
-x-microsoft-antispam-prvs: <AM6PR02MB49989D7FF7D92532E1D571CAEA230@AM6PR02MB4998.eurprd02.prod.outlook.com>
-x-forefront-prvs: 0016DEFF96
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(346002)(39860400002)(136003)(396003)(366004)(199004)(189003)(6506007)(14454004)(26005)(97736004)(305945005)(53346004)(14444005)(5660300002)(256004)(74316002)(86362001)(102836004)(25786009)(71190400001)(71200400001)(68736007)(6116002)(3846002)(186003)(7736002)(66574012)(6436002)(6916009)(2351001)(81166006)(33656002)(81156014)(99286004)(1730700003)(8676002)(7696005)(66066001)(8936002)(66446008)(73956011)(9686003)(66946007)(53936002)(64756008)(52536014)(316002)(55016002)(2906002)(478600001)(476003)(5640700003)(2501003)(486006)(66476007)(66556008)(76116006);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR02MB4998;H:AM6PR02MB4950.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: atos.net does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 4RD96PZ/hNJTW4UBZa+zyK6Ed/ZsevZYUgGb3k2bRK1MvPHbvhfDVK2Rzc5S/Yr9g1ht+Xo6Io/f3Pqv1IsO8iVs77NY0fU6wP4sS3Dnk2tQvK89H7Gs563FmLeR/yiKLzCjpucr/m6AjQDeIdDN1i1fETlr2dO+XPcAs9g8OwB7UUcpIPYTCUfxrjbLD/hSI/Tl1KEEU/elY36Io0JFl9Lad8krWheWPOngj5fr3RGA78ThT9Jq1TYTe4B3cn0mo6nQqlH+HbAuprB0gLSAs0sLj2LWrj//4dDEGpXrx594hZAizQ+udd9pBSpQlHFcR5TZMbYUFKE9b+GsZWERyd10TK4DPXKvhiiwfeffp4IQNRHSSoQCBGd1m4CNjYpP+mjkMiGb2/56e16WsLQcnuwF1w1I1UnqD52U410TYpY=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1726304AbfDWIyA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 04:54:00 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38628 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbfDWIyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 04:54:00 -0400
+Received: by mail-pg1-f193.google.com with SMTP id j26so7262475pgl.5
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 01:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vxMRWAVx29917QCL7d03SOysm2dpwHyRMmq4quO0U0A=;
+        b=oIiKiubwtAZSMC6YyXi5D3koAZmzfXwemM4yETNa8mwdJv3EOOwTqpn4vE8ljoRA+T
+         saqBX7xFYNNtzjq78xfxnmaXTW1/FZlX3uGWxw6U89C39LZOWEbgEAKPXsGvEKXNB9SN
+         YSF/8Oa5hcGVyi6HHtDMzhXey8clk7lQ2TpULxSIaeTbfOPxRKvL8NhmCGUCCJrAho9t
+         4boWWsJSri07F1/KAf/HAa2ZEb6N2nq4jOy7+C15e5XiEgCtk5nP71Kgj7RzyUbVYd72
+         PO4y4BGAlgaityPfeBxc5b9weyuJ3aRTYXq2iwWW854Ikrzd9zI3LqXJPrycY8m1eQ/L
+         532w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vxMRWAVx29917QCL7d03SOysm2dpwHyRMmq4quO0U0A=;
+        b=FZ0XAMlgLtRmFeTm8/pYFmuCe5Q6YoKA1rqhLmpGgZYclTe94ccwbPOQJS7WtNAVTw
+         Q8R/CDYjVXWv3ZlYFS0tdkIw1AQDxgcTXkZsZ8T9vP3Bp5dLz9YIEl6oEGhxCbjXJiuX
+         593ZfJfi/NYwC8E5+ZJI0GEwDamxmjGgqBZ2iGe0Yc3OHAfPFqGUd2LI/KrTfwccXSAt
+         uhuiL4g3b7EVVcy2xNlg/4tnlf+GC/fG/QujgXSuSFHNXlqzVcj7UT4Tby//Zq2H9irH
+         fkksw3fBDy4gEG108eiCK7qcH4BsSxGIpv+pB8rGgsvPDT2xWa2rQGO1QmNuFB1ablfi
+         Z8UQ==
+X-Gm-Message-State: APjAAAX+m3/b0WsgH/eALx3xk5PMldSMQFGU56vJ+hlgJ5X8k++byWUP
+        TqYIvp2yIhAUTOZb/L6a5PyOYZsZ
+X-Google-Smtp-Source: APXvYqyzsqduXZo90qiFALxvW+iUKNbpFY9wrdcaYtX+G7H8ZOrOV0YO4ODStrA1cbf4czW+cjhfQw==
+X-Received: by 2002:a62:1194:: with SMTP id 20mr25664084pfr.224.1556009638466;
+        Tue, 23 Apr 2019 01:53:58 -0700 (PDT)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id k5sm4560184pgi.58.2019.04.23.01.53.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Apr 2019 01:53:57 -0700 (PDT)
+Date:   Tue, 23 Apr 2019 01:53:55 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/5] difftool and mergetool improvements
+Message-ID: <cover.1556009181.git.liu.denton@gmail.com>
+References: <cover.1555880168.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2744e233-2705-4e5f-31a9-08d6c7c71534
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2019 08:38:38.6914
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB4998
-X-OriginatorOrg: atos.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1555880168.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On some OSes like AIX, access with X_OK is always true if launched under
-root.
-Add NEED_ACCESS_ROOT_HANDLER in order to use an access helper function.
-It checks with stat if any executable flags is set when the current user
-is root.
+Thanks for the review, Eric.
 
-Signed-off-by: Clément Chigot <clement.chigot@atos.net>
+Hopefully, these changes have addressed the concerns that you've raised.
+
 ---
- Makefile          |  8 ++++++++
- compat/access.c   | 29 +++++++++++++++++++++++++++++
- config.mak.uname  |  1 +
- git-compat-util.h |  8 ++++++++
- 4 files changed, 46 insertions(+)
- create mode 100644 compat/access.c
 
-diff --git a/Makefile b/Makefile
-index 9f1b6e8926..513d835d01 100644
---- a/Makefile
-+++ b/Makefile
-@@ -439,6 +439,9 @@ all::
- #
- # Define FILENO_IS_A_MACRO if fileno() is a macro, not a real function.
- #
-+# Define NEED_ACCESS_ROOT_HANDLER if access() with X_OK returns always true
-+# when launched as root.
-+#
- # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
- # default environment variables to be passed when a pager is spawned, e.g.
- #
-@@ -1833,6 +1836,11 @@ ifdef FILENO_IS_A_MACRO
- 	COMPAT_OBJS += compat/fileno.o
- endif
- 
-+ifdef NEED_ACCESS_ROOT_HANDLER
-+	COMPAT_CFLAGS += -DNEED_ACCESS_ROOT_HANDLER
-+	COMPAT_OBJS += compat/access.o
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-diff --git a/compat/access.c b/compat/access.c
-new file mode 100644
-index 0000000000..e4202d4585
---- /dev/null
-+++ b/compat/access.c
-@@ -0,0 +1,29 @@
-+#include "../git-compat-util.h"
-+
-+/* Do the same thing access(2) does, but use the effective uid and gid,
-+   and don't make the mistake of telling root that any file is
-+   executable.  This version uses stat(2). */
-+int git_access (const char *path, int mode)
-+{
-+	struct stat st;
-+	uid_t euid = geteuid();
-+	uid_t uid = getuid();
-+
-+	if (stat(path, &st) < 0)
-+		return -1;
-+
-+	if (!(uid) || !(euid)) {
-+		/* Root can read or write any file. */
-+		if (!(mode & X_OK))
-+			return 0;
-+
-+		/* Root can execute any file that has any one of the execute
-+		   bits set. */
-+		if (st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
-+			return 0;
-+		errno = EACCES;
-+		return -1;
-+	}
-+
-+	return access(path, X_OK);
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index 86cbe47627..ce13ab8295 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -270,6 +270,7 @@ ifeq ($(uname_S),AIX)
- 	NEEDS_LIBICONV = YesPlease
- 	BASIC_CFLAGS += -D_LARGE_FILES
- 	FILENO_IS_A_MACRO = UnfortunatelyYes
-+	NEED_ACCESS_ROOT_HANDLER = UnfortunatelyYes
- 	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
- 		NO_PTHREADS = YesPlease
- 	else
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 31b47932bd..bb8df9d2e5 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1242,6 +1242,14 @@ int git_fileno(FILE *stream);
- # endif
- #endif
- 
-+#ifdef NEED_ACCESS_ROOT_HANDLER
-+#ifdef access
-+#undef access
-+#endif
-+#define access git_access
-+extern int git_access(const char *path, int mode);
-+#endif
-+
- /*
-  * Our code often opens a path to an optional file, to work on its
-  * contents when we can successfully open it.  We can ignore a failure
+Changes since v1:
+
+* Introduce get_merge_tool_guessed function instead of changing
+  get_merge_tool
+* Remove unnecessary if-tower in mutual exclusivity logic
+
+Denton Liu (5):
+  t7610: add mergetool --gui tests
+  mergetool: use get_merge_tool_guessed function
+  mergetool: fallback to tool when guitool unavailable
+  difftool: make --gui, --tool and --extcmd mutually exclusive
+  difftool: fallback on merge.guitool
+
+ Documentation/git-difftool.txt       |  4 ++-
+ Documentation/git-mergetool--lib.txt |  9 +++++-
+ Documentation/git-mergetool.txt      |  4 ++-
+ builtin/difftool.c                   | 13 ++++-----
+ git-mergetool--lib.sh                | 39 ++++++++++++++++++--------
+ git-mergetool.sh                     | 11 ++------
+ t/t7610-mergetool.sh                 | 41 ++++++++++++++++++++++++++++
+ t/t7800-difftool.sh                  | 24 ++++++++++++++++
+ 8 files changed, 114 insertions(+), 31 deletions(-)
+
+Range-diff against v1:
+1:  678f9b11fc = 1:  678f9b11fc t7610: add mergetool --gui tests
+2:  692875cf4b ! 2:  e928db892e mergetool: use get_merge_tool function
+    @@ -1,15 +1,19 @@
+     Author: Denton Liu <liu.denton@gmail.com>
+     
+    -    mergetool: use get_merge_tool function
+    +    mergetool: use get_merge_tool_guessed function
+     
+         In git-mergetool, the logic for getting which merge tool to use is
+         duplicated in git-mergetool--lib, except for the fact that it needs to
+         know whether the tool was guessed or not.
+     
+    -    Rewrite `get_merge_tool` to return whether or not the tool was guessed
+    -    and make git-mergetool call this function instead of duplicating the
+    -    logic. Also, let `$GIT_MERGETOOL_GUI` be set to determine whether or not
+    -    the guitool will be selected.
+    +    Write `get_merge_tool_guessed` to return whether or not the tool was
+    +    guessed in addition to the actual tool and make git-mergetool call this
+    +    function instead of duplicating the logic. Also, let
+    +    `$GIT_MERGETOOL_GUI` be set to determine whether or not the guitool will
+    +    be selected.
+    +
+    +    Make `get_merge_tool` use this function internally so that code
+    +    duplication is reduced.
+     
+         Signed-off-by: Denton Liu <liu.denton@gmail.com>
+     
+    @@ -17,38 +21,32 @@
+      --- a/Documentation/git-mergetool--lib.txt
+      +++ b/Documentation/git-mergetool--lib.txt
+     @@
+    + 
+      FUNCTIONS
+      ---------
+    - get_merge_tool::
+    --	returns a merge tool.
+    ++get_merge_tool_guessed::
+     +	returns '$is_guessed:$merge_tool'. '$is_guessed' is 'true' if
+     +	the tool was guessed, else 'false'. '$merge_tool' is the merge
+     +	tool to use. '$GIT_MERGETOOL_GUI' may be set to 'true' to search
+     +	for the appropriate guitool.
+    ++
+    + get_merge_tool::
+    +-	returns a merge tool.
+    ++	returns a merge tool. '$GIT_MERGETOOL_GUI' may be set to 'true'
+    ++	to search for the appropriate guitool.
+      
+      get_merge_tool_cmd::
+      	returns the custom command for a merge tool.
+     
+    - diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+    - --- a/git-difftool--helper.sh
+    - +++ b/git-difftool--helper.sh
+    -@@
+    - 	then
+    - 		merge_tool="$GIT_DIFF_TOOL"
+    - 	else
+    --		merge_tool="$(get_merge_tool)" || exit
+    -+		merge_tool="$(get_merge_tool | sed -e 's/^[a-z]*://')" || exit
+    - 	fi
+    - fi
+    - 
+    -
+      diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+      --- a/git-mergetool--lib.sh
+      +++ b/git-mergetool--lib.sh
+     @@
+    + 	echo "$merge_tool_path"
+      }
+      
+    - get_merge_tool () {
+    +-get_merge_tool () {
+    ++get_merge_tool_guessed () {
+     +	is_guessed=false
+      	# Check if a merge tool has been configured
+     -	merge_tool=$(get_configured_merge_tool)
+    @@ -61,6 +59,10 @@
+      	fi
+     -	echo "$merge_tool"
+     +	echo "$is_guessed:$merge_tool"
+    ++}
+    ++
+    ++get_merge_tool () {
+    ++	get_merge_tool_guessed | sed -e 's/^[a-z]*://'
+      }
+      
+      mergetool_find_win32_cmd () {
+    @@ -81,7 +83,7 @@
+     -			guessed_merge_tool=true
+     -		fi
+     +		IFS=':' read guessed_merge_tool merge_tool <<-EOF
+    -+		$(GIT_MERGETOOL_GUI=$gui_tool get_merge_tool)
+    ++		$(GIT_MERGETOOL_GUI=$gui_tool get_merge_tool_guessed)
+     +		EOF
+      	fi
+      	merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
+3:  de1b897a11 = 3:  24db1afeee mergetool: fallback to tool when guitool unavailable
+4:  a272594bd2 = 4:  6f65b5c913 difftool: make --gui, --tool and --extcmd mutually exclusive
+5:  4fc3f84bad = 5:  5a24772219 difftool: fallback on merge.guitool
 -- 
-2.17.1
+2.21.0.1000.g11cd861522
 
-
-
-Clément Chigot
-ATOS Bull SAS
-1 rue de Provence - 38432 Échirolles - France
