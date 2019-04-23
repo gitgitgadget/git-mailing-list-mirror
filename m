@@ -2,91 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D6BA1F453
-	for <e@80x24.org>; Tue, 23 Apr 2019 22:22:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02F6E1F453
+	for <e@80x24.org>; Tue, 23 Apr 2019 22:27:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728059AbfDWWWx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 18:22:53 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:34017 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726599AbfDWWWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 18:22:53 -0400
-Received: by mail-pl1-f193.google.com with SMTP id y6so8217615plt.1
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 15:22:53 -0700 (PDT)
+        id S1728458AbfDWW1I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 18:27:08 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33483 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726953AbfDWW1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 18:27:08 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d55so14144583ede.0
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 15:27:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=7sjbUfEO9Kv/pOevU+EWxpGW+L3Qw1uwDiB+ZITS6jg=;
-        b=aTryEZAPY5hbgIqQv5TBcnD2xzriTx6079F/M4eOwOZ13ZjR33p/VzXAjCELBzVlx7
-         mhkzgXSPETK1u3vA8pW5STrBy6TrATAd37q5xvG3DBkMKqLkmoC3AO2YLDS2sD4Oxvpy
-         9V5ASqt4/hTmRETRxqaUqhnhS3EGb0SCwsDZ7Dn/ILNuFeUdAqFcpixFTtf+QUxsJr7q
-         pWhPIiaMnZhx3GK+LJc/TyY9MOMpb6P+2aE/TYmMUlHxNv+jrD+z6x+0DSImsICtathd
-         0qa578zA8VB14BiR2cwTYl9yu+0lHRbhk4FjopqJfpjWISNeP9Haf2/WZybYksI4V13f
-         UNfA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=pTfGPbP8LpO/3iUZoBVq4HERHDsznvaD5K9+Mv8MW8Y=;
+        b=Cw+Y5gNfsx+tPeqUFAH1dZYltmyl+tcDX2yXxoWKQe1hcVlkMYlh5BosKp/H6HiJh8
+         uhiqJPRiYiyJA0Ni9H03xQjOyc/v98B49pbPhiXDgnR/PQ6vLxGWL4bhFfATAgBioSqE
+         /FFi1CYTBuPUc8RyAMR52LnsH1UKmvziegEMoG5dOOgV5A9AAUhFBHvc/SAoiC5EEXmK
+         FDeimnE4zMCmu8fqmFbRRMqkGD4CjIYwLvrnxBiFQ6Q2ydvEWEmTEep80bMW/AbPpO/q
+         1CR7hS4oz1A1VbSdaszhnyXA6gDs8SNRBlJdTadQnrAAfEz9at6pI9dkmSIv0hKmjBqj
+         4/1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=7sjbUfEO9Kv/pOevU+EWxpGW+L3Qw1uwDiB+ZITS6jg=;
-        b=il58Cs5qOI0OrbibECS/Rg6A3TTxPB7H8nO3EUzMm24PaDMd0eu6qvSXJZELYf/pxL
-         03yJdlvmzZQ5LSaQvEqnCqLBsExI+BpeRq1czvKzP7bDHLd7lXve1A5UPwJh3rrxEX8Z
-         IEqJOW0q+T4h4VtvkzfyZsudODCgkzO8Euo7jvGOyc4OZsurg6HEVOZwENgAgDGEwNEc
-         ObGzbdw0OiloSH+H1YMHZTIkc6ag+eGXgxbrxcJ9oZAe3hQpRaMHMPCPWWhbcHCa52HI
-         e7HKgdCA0kx2qATYc++2X6d2Ig8+t2zfp9/W2BJRbGyyHtPavwK7fnmxNadVQzOWmLSm
-         LaQQ==
-X-Gm-Message-State: APjAAAVljHGb9bn4rXZRySGZKgitfDZlGy9KMF9VLzHIeSXza4QK6Qoc
-        /NVbVDMuZ37eh8l3JersUuBN/26l
-X-Google-Smtp-Source: APXvYqzsJcVgEcp62lJWxY/1bZxgWi6cWdobzIeX4RVD/XOyuIJyPIXJf7VJfuqpCRFAJbGLOYo8UA==
-X-Received: by 2002:a17:902:61:: with SMTP id 88mr28292325pla.166.1556058172396;
-        Tue, 23 Apr 2019 15:22:52 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id d69sm33095005pfg.24.2019.04.23.15.22.51
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=pTfGPbP8LpO/3iUZoBVq4HERHDsznvaD5K9+Mv8MW8Y=;
+        b=g2ofKU7Uw5GUByVa/UZ55B3wUnSmSvmyLthuyg0M1/iOWUYkE4aJf3Su1fazbavSnL
+         tdVYF1QAFpieQTgXMtGq0lujJvwEua0jFM1PCu2Ljtgj9RvKw5ATjfDcIwj0JrgR97DU
+         hDSfHo+0zkb1Gtqd+CJqOtS2aRokap7PAmPizl/CrRGtwSi+GMIhGDjlW0XWDV1vBKGo
+         j1T2IcKHYeWppOaW+6fFvG+9E2WLrZK+E4aPrpIM6Z97WO+Cc0TlojYfvDiu40wm86d7
+         crKe0dqjYJMrqljxaRNwq+xDBOWVbp5POdrqM9T9v9ctMQ3Xn3e6K5qt/1IuZvt2XWW7
+         /YRg==
+X-Gm-Message-State: APjAAAVxduN9b/MxbuoDCQg/vCLuavWffjwq0iv7JOtMLlnyMCsoJvOY
+        AP9NNy48tjVAedOFq57bC4c=
+X-Google-Smtp-Source: APXvYqz16NzSG0mI5uIkjPsaKoQwKS+Ja8AMfoFq4LaLjPLXpK3pKzhmKJkb/K1v3DfR7zA1vCLSfg==
+X-Received: by 2002:a50:b78a:: with SMTP id h10mr18100479ede.65.1556058426790;
+        Tue, 23 Apr 2019 15:27:06 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id s27sm5146880edm.4.2019.04.23.15.27.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Apr 2019 15:22:51 -0700 (PDT)
-Date:   Tue, 23 Apr 2019 15:22:50 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
-        git@vger.kernel.org, gitster@pobox.com
+        Tue, 23 Apr 2019 15:27:06 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 5/8] Documentation: add Packfile URIs design doc
-Message-ID: <20190423222249.GB98980@google.com>
-References: <20190423053130.GA13162@sigill.intra.peff.net>
- <20190423203801.29156-1-jonathantanmy@google.com>
- <871s1stlf4.fsf@evledraar.gmail.com>
+References: <cover.1550963965.git.jonathantanmy@google.com> <cover.1552073690.git.jonathantanmy@google.com> <5ce56844d3fb740e29d2f3d4be2ade0b2ad5f7fd.1552073690.git.jonathantanmy@google.com> <20190423053130.GA13162@sigill.intra.peff.net> <20190423221159.GA98980@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190423221159.GA98980@google.com>
+Date:   Wed, 24 Apr 2019 00:25:13 +0200
+Message-ID: <87zhogs6k6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871s1stlf4.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Ævar Arnfjörð Bjarmason wrote:
+On Wed, Apr 24 2019, Jonathan Nieder wrote:
 
-> This is really orthagonal to this series, but wouldn't a better
-> resumption strategy here be to walk the pack we just downloaded, run the
-> equivalent of 'commit-graph write' on it to figure out likely "tip"
-> commits, and use those in "have" lines to negotiate with the server the
-> next time around?
+> Hi,
+>
+> Jeff King wrote:
+>> On Fri, Mar 08, 2019 at 01:55:17PM -0800, Jonathan Tan wrote:
+>
+>>> +If the 'packfile-uris' feature is advertised, the following argument
+>>> +can be included in the client's request as well as the potential
+>>> +addition of the 'packfile-uris' section in the server's response as
+>>> +explained below.
+>>> +
+>>> +    packfile-uris <comma-separated list of protocols>
+>>> +	Indicates to the server that the client is willing to receive
+>>> +	URIs of any of the given protocols in place of objects in the
+>>> +	sent packfile. Before performing the connectivity check, the
+>>> +	client should download from all given URIs. Currently, the
+>>> +	protocols supported are "http" and "https".
+>>
+>> This negotiation seems backwards to me, because it puts too much power
+>> in the hands of the server.
+>
+> Thanks.  Forgive me if this was covered earlier in the conversation, but
+> why do we need more than one protocol at all here?  Can we restrict this
+> to only-https, all the time?
 
-Do you mean this for when a pack is self-contained and contains all
-objects reachable from those "tip" commits?
+There was this in an earlier discussion about this:
+https://public-inbox.org/git/877eds5fpl.fsf@evledraar.gmail.com/
 
-What would you do when a pack is not self-contained in that way?
+It seems arbitrary to break it for new features if we support http in
+general, especially with a design as it is now where the checksum of the
+pack is transmitted out-of-band.
 
-Thanks,
-Jonathan
+> [...]
+>> The problem I see is that the client doesn't get to vet the list of
+>> URIs; it only gets to specify a protocol match. But there are many other
+>> reasons it might want to reject a URI: we don't like the protocol, the
+>> domain name is on a blacklist (or not on a whitelist), the domain name
+>> can't resolve, we can't make a TCP connection to the server, we can't
+>> successfully fetch the pack.
+>
+> Christian mentioned this desire to vet URIs before, and I'll admit I
+> found it hard to imagine a use case.  Why can't it work like e.g.
+> <frame> on the web, where if you don't like that domain, then you
+> don't get to access the page?  From a server operator's point of view,
+> if you want to support a second URI that more clients support, why
+> wouldn't you just always use that second URI instead of making clients
+> choose?
+>
+> Thanks and hope that helps,
+> Jonathan
