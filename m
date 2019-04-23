@@ -2,110 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2931F5CB
-	for <e@80x24.org>; Tue, 23 Apr 2019 14:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A351F5CB
+	for <e@80x24.org>; Tue, 23 Apr 2019 15:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727745AbfDWOXt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 10:23:49 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37501 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727690AbfDWOXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 10:23:49 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 8so7584165pfr.4
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 07:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=81bwgG3B1KZYQXuS1xtvsQf0zWyWMBXK3EljHy5W800=;
-        b=Luw8T606TYHsTHzsnIbqbCQhGaoSWs9nDpzVITltI5xkYXy7DjzisvTGraLmCmIki1
-         KlFT1kE5W8Y0adv3sdb+ChnXA3YvA6Y9WpKa1lHLizPhoRRz+uVSlAcgVZ8YC0w16PPp
-         sSsmJwCvd50S+xpsgEI7+z5lnjdQR4eHnCiw6on8QP7GEc7j39QFoE7iMdvnXK4aqYN2
-         CVdEvHIEQNavSGvuz+AaKE3UnLsAza0Re4xR6Sb+r09ohbgwdYKct/7wxuVxawvB0bKr
-         DsRxOKHv6UxNNkm1ONKZUPqCwv2sKN8HgsnghCkROfn5p5vI7Z9tudDE9xiQJRKU9FKk
-         sPHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=81bwgG3B1KZYQXuS1xtvsQf0zWyWMBXK3EljHy5W800=;
-        b=dlZzQ9Wn2w+wabwLcHGPBxy5V5k5bxrpq0sFaQ1+XF0FHPAB/IrE72LoJeLar4WInJ
-         h9D2JY213XcNgzOoQJrbA7AjgXNeD//WtG2TH5KSulVR+rDm4ArkMVdWrdwb/ZNCQ9eW
-         0VGwtuPQU1jnUXcRzrniQAvUsZTOx3WzpAZtqcf6e3f/EHKex7yy5K/x0YVLMnQUbjWG
-         sHsF+vBQcS2bLPVmFl1yy5o6OvM5mFKOZJEVgcnuSGXA+8umbaySukUszYNts9PCZf75
-         0HD00Mb3ezMWHcBK5KSnGPxajSrBnEuEk80NtqbFJyyYNdq9FiAC7A/k6baKoKqCQWJZ
-         ENow==
-X-Gm-Message-State: APjAAAWH+BkIpywWeyAOCJ7rhx5NS4qz8ZEW4OJsD+iolI72dRV9NnuD
-        Wrlq4DjNV0l1wyqpRQWYq/S8lQ==
-X-Google-Smtp-Source: APXvYqx8Er58QLdmVQ7//DPnTcmoA34Sm9YsY1nvk0WZ7a0IItq6OR5ys+79PpyXd/LrpQ4/Amjbbg==
-X-Received: by 2002:a63:6983:: with SMTP id e125mr23330389pgc.370.1556029427958;
-        Tue, 23 Apr 2019 07:23:47 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id c25sm24105059pfo.69.2019.04.23.07.23.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Apr 2019 07:23:46 -0700 (PDT)
-Subject: Re: [PATCH v6 0/6] blame: add the ability to ignore commits
-To:     michael@platin.gs, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <[PATCH v6 0/6] blame: add the ability to ignore commits>
- <20190422222647.48628-1-michael@platin.gs>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <cc1466bc-0610-784b-e57b-8612c2e8569f@google.com>
-Date:   Tue, 23 Apr 2019 10:23:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1728337AbfDWPVi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 11:21:38 -0400
+Received: from sella4.gpi.it ([89.190.163.252]:36638 "EHLO sella4.gpi.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727745AbfDWPVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 11:21:37 -0400
+Received: from prdzimgpi03.gpi.it (prdmta.gpi.it [192.168.40.36])
+        by sella4.gpi.it (Postfix) with ESMTPS id 15053100069;
+        Tue, 23 Apr 2019 17:21:29 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by prdzimgpi03.gpi.it (Postfix) with ESMTP id 02B044373899;
+        Tue, 23 Apr 2019 17:21:29 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at prdzimgpi03.gpi.it
+Received: from prdzimgpi03.gpi.it ([127.0.0.1])
+        by localhost (prdzimgpi03.gpi.it [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id aqhGeVh8FHcB; Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
+Received: from prdzimgpi02.gpi.it (prdzimgpi02.gpi.it [10.192.1.151])
+        by prdzimgpi03.gpi.it (Postfix) with ESMTP id D2977437387F;
+        Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
+Date:   Tue, 23 Apr 2019 17:21:28 +0200 (CEST)
+From:   Nicola Farina <nicola.farina@gpi.it>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     git <git@vger.kernel.org>
+Message-ID: <679633591.38274316.1556032888730.JavaMail.zimbra@gpi.it>
+In-Reply-To: <bba4ef95-7ec4-e755-23da-28c34abda8dc@iee.org>
+References: <1509193182.25902858.1554893159368.JavaMail.zimbra@gpi.it> <bba4ef95-7ec4-e755-23da-28c34abda8dc@iee.org>
+Subject: Re: Git subtree error on windows 10 with 2.21 version
 MIME-Version: 1.0
-In-Reply-To: <20190422222647.48628-1-michael@platin.gs>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 8.8.8_GA_2096 (ZimbraWebClient - GC73 (Win)/8.8.8_GA_1703)
+X-Authenticated-User: nicola.farina@gpi.it
+Thread-Topic: Git subtree error on windows 10 with 2.21 version
+Thread-Index: azLKB1zSBqzjYsjnkYjlmjH0P6yqCg==
+X-GPI-MailScanner-Information: Please contact sat@gpi.it for more information
+X-GPI-MailScanner-ID: 15053100069.ACC12
+X-GPI-MailScanner: Found to be clean
+X-GPI-MailScanner-MCPCheck: 
+X-GPI-MailScanner-SpamCheck: non spam, SpamAssassin (not cached,
+        punteggio=-2.9, necessario 5, autolearn=not spam, ALL_TRUSTED -1.00,
+        BAYES_00 -1.90)
+X-GPI-MailScanner-From: nicola.farina@gpi.it
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/22/19 6:26 PM, michael@platin.gs wrote:
-> From: Michael Platings <michael@platin.gs>
+
+Hi Philip
+
+Thanks for answering.
+I will try to post an issue.
+The 408 line is simply this:
+
+			cat
+
+(btw cat command alone seems to work in my pc)
+
+the 636 is more complex:
+
+		parents=$(git rev-parse "$rev^@")
+
+it is inside the process_split_commit ()  function
+
+Thanks again
+Bye
+Nicola
+
+----- Messaggio originale -----
+Da: "Philip Oakley" <philipoakley@iee.org>
+A: "Farina Nicola" <nicola.farina@gpi.it>, "git" <git@vger.kernel.org>
+Inviato: Sabato, 20 aprile 2019 15:21:48
+Oggetto: Re: Git subtree error on windows 10 with 2.21 version
+
+Hi Nicola, 
+
+On 10/04/2019 11:45, Nicola Farina wrote: 
+> Hi 
 > 
-> Hi Barret,
+> After upgrading to 2.21 issuing this subtree command: 
 > 
-> This patch is on top of your patch v6 4/6.
-
-Thanks, I'll take a look.  I was working on taking your old version and 
-integrating it with my v6 6/6.  That way it gets the 
-origin-fingerprint-filling code and can be easily compared to my 6/6 style.
-
-[snip]
-
+> git subtree push --prefix ouverture Shared-Ouverture master 
 > 
-> To address reordered lines I suggest a combination of this algorithm and your
-> algorithm - in the first path my algorithm tries to match lines within a
-> single chunk, and in the second pass your algorithm tries to find matches for
-> unblamed lines out of order and outside their chunk.
+> I get these errors: 
+> 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 408: /usr/bin/cat: No such file or directory 
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 636: /mingw64/libexec/git-core/git: No such file or directory 
+> 
+> I have installed git choosing the option "use git with bash only" 
+> 
+> thanks for any suggestions/help 
+> Nicola 
+I don't have any solution at the moment, but given it's Git-for-Windows 
+it is worth also logging it as an issue at 
+https://github.com/git-for-windows/git/issues and searching for 
+additional clues on the GitHub site (including closed items) 
 
-I was thinking something similar.  Yesterday I did this with your older 
-patch set - applied on my 6/6.  Two passes, one with your fuzzy matcher, 
-then if we didn't find anything, do a scan of the entire parent (as my 
-6/6 does now).
-
-This approached worked for the cases I had (e.g. "header reordering"). 
-I ran into an issue last night where your scan was finding matches where 
-it shouldn't - might have been an issue with how I hooked it up.  I'll 
-try your latest code and see how it goes.
-
-Thanks,
-
-Barret
+Also what are the commands at those lines in the code? 
+-- 
+Philip 
 
