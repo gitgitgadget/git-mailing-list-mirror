@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A79F21F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 19:58:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88F3B1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 19:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730133AbfDXT6K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 15:58:10 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46718 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727383AbfDXT6I (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730114AbfDXT6I (ORCPT <rfc822;e@80x24.org>);
         Wed, 24 Apr 2019 15:58:08 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d1so17020006edd.13
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 12:58:06 -0700 (PDT)
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38062 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730025AbfDXT6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 15:58:07 -0400
+Received: by mail-ed1-f68.google.com with SMTP id c1so11098650edk.5
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 12:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DgC9KrWThR7Gae7zyi+aJ3mpctAAVHMm8G1U10OCpnk=;
-        b=bJ6iBaUqUseGp/mAZEYARrekTvK77qd937alw5Dy9MIlkq8F5KZjQSkZTePmqmZvAl
-         FAPIkralT6+VXmmeFWIUAst45VjjEi+fI1iL2+IrWtK3rQwqyagmthJFgMpyRgvS9IjS
-         6CJjLpsVCWOxnSas4wQLmUr6MkLVFJgquftqRa4uy2E8vj82DycZcaHs3M6114/dkLsg
-         QO/xWHTV1IsDKy88JAhrbQxi1+yChgHLbaKmhXU8yGKnkUwoGHHht+yaZGTBTTSFSgci
-         uTm08PRn6gwYkMfMJTo1dfmQ3QYZj1FQ99GCy77+A6I+5GnU1C7oAn1J3i/1rqgSaJCd
-         CqxA==
+        bh=91CLf/0Fa4IGFdqP7ZFuF+HidVq58boyiBv6vdqWR78=;
+        b=jcABmiV6PwouhOoyWb88epToyP1eF8nNIarzUxoAqk133cUZRxWR6PKAUWOxHG/AgI
+         xVVzysg5yPI5oLHorT7hoIFJ2glLUbaMbJF229aizVGepNTwwT7ch1qgWuBBwTXgLKt9
+         HvLHHdsOInjRYF/96WwC5Kr/RMvWgnsPZhuT0IvK+l60M/K+eUyM+lmFab66m59be+Mx
+         ynKCjut4doWnj5DohlwrvSFuCYJ4GNhsJ7V4cZEd9qPaDaF0KGrGzntcV/q/MHFPpxXS
+         E1Lux5Rt7tK/63LBq0X3nrDMaapDshm9MyNp7kSmHW1fRODyqZAoj0tv0tI7NRgcKGEq
+         tiiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DgC9KrWThR7Gae7zyi+aJ3mpctAAVHMm8G1U10OCpnk=;
-        b=E5Yt5qnBRtkeZpVYZQ3NImatOqRpRlkmllK+/QIgtENhrIlTF+xaowTQC+izWjoT2m
-         RY5euXQ/wLD+fmcqslyvhbCgMMUQJWMVLfsxTp74B3rB1r4eHD02yKAxBOuLJyPqmwdB
-         TvUrghmcyhXEUHJeEs6BcOSABzqJtdsIrLayXMv7B5pIzaByBCvY7UC4o0qzidZJUdWA
-         T49iWy1UJRykldaB0yK4P4c33F6BHFth6JL7wq/qrmVIxWSwaqeqJ+dd7H0wZTYb1g9Y
-         Suv/7wu7e9oCGn7jfz+QLit5hUCGzlNYFX6lnUssDowKSUJV/+oX3UmKX+lmTF5gGwor
-         Xb5g==
-X-Gm-Message-State: APjAAAUhkxxxVjiWB41J4fAsIAV25EIfAJUNTPnsVeuiJc+l7kbH3GXs
-        Jx7pEff48TSIG6jxeETYf2DfByFs
-X-Google-Smtp-Source: APXvYqxjLtADHmHwz/4ZFiyJjALFvrMj5sc3Voaolk3M9Z/DkjdvqOczdaCCgwGcHbuNd0opjYS2kg==
-X-Received: by 2002:a17:906:364f:: with SMTP id r15mr17483135ejb.215.1556135886022;
-        Wed, 24 Apr 2019 12:58:06 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 30sm5905493edr.2.2019.04.24.12.58.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=91CLf/0Fa4IGFdqP7ZFuF+HidVq58boyiBv6vdqWR78=;
+        b=U7m/Fn2QJFoMAJxENRlMq4pO2+PuDHW2Tie5ml0++C+vn50xFP8mgUWbhXVyz36kAH
+         p65ZsWKaE0cVQ7Nhz4f4VKGpK2HcQ/Tbli6ENa+Y6kR8g8WxCja/YBnxtkOf6Cha64qn
+         SwssFZ0BF91cx7i4JpiaqZBiWNhnfgYVZSIiHjiQXH/lIL0d7VXO02pgJNvsqvYWT1Gq
+         lnAkWRZBsXFsToUwMx+gHhOKe5AidO8Qs61ebBoBuaQmWWXX0MSK22j99fKfJy2SyTTR
+         DhtcgqzCWtdw8Zx7rmVryknW0mD3AbaRqgpobEECUDa8wx3W4R6ft3Y/V5MssH0XaUr9
+         LbOw==
+X-Gm-Message-State: APjAAAVDwyu39S/pqJF2+k/jzUOQGhNXz0WExqd/AnK7QqKcP7VTciVL
+        wjIgJP9jFtQ7Cz7XSenlab+GOTZP
+X-Google-Smtp-Source: APXvYqy8aBlCA+tRl4saNw3CsYmflYzEHMnKq4pc3Lb43oxCYnupB0/ZpQzY6OFhPPL33XeLIwILEw==
+X-Received: by 2002:a50:901b:: with SMTP id b27mr21877241eda.250.1556135885144;
         Wed, 24 Apr 2019 12:58:05 -0700 (PDT)
-Date:   Wed, 24 Apr 2019 12:58:05 -0700 (PDT)
-X-Google-Original-Date: Wed, 24 Apr 2019 19:57:59 GMT
-Message-Id: <4ddb82916321f093d88282ef4bcab99993339fb5.1556135881.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i9sm5911312edk.56.2019.04.24.12.58.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Apr 2019 12:58:04 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 12:58:04 -0700 (PDT)
+X-Google-Original-Date: Wed, 24 Apr 2019 19:57:58 GMT
+Message-Id: <04f5df11351ec117a3a019c9186df38c19151d16.1556135881.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.112.v2.git.gitgitgadget@gmail.com>
 References: <pull.112.git.gitgitgadget@gmail.com>
         <pull.112.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/5] commit-graph: create new version flags
+Subject: [PATCH v2 2/5] commit-graph: collapse parameters into flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,148 +72,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In anticipation of a new commit-graph file format version, create
-a flag for the write_commit_graph() and write_commit_graph_reachable()
-methods to take a version number.
+The write_commit_graph() and write_commit_graph_reachable() methods
+currently take two boolean parameters: 'append' and 'report_progress'.
+We will soon expand the possible options to send to these methods, so
+instead of complicating the parameter list, first simplify it.
 
-When there is no specified version, the implementation selects a
-default value. Currently, the only valid value is 1.
-
-The file format will change the header information, so place the
-existing header logic inside a switch statement with only one case.
+Collapse these parameters into a 'flags' parameter, and adjust the
+callers to provide flags as necessary.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 58 +++++++++++++++++++++++++++++++++-----------------
- commit-graph.h |  1 +
- 2 files changed, 40 insertions(+), 19 deletions(-)
+ builtin/commit-graph.c | 8 +++++---
+ builtin/commit.c       | 2 +-
+ builtin/gc.c           | 4 ++--
+ commit-graph.c         | 9 +++++----
+ commit-graph.h         | 8 +++++---
+ 5 files changed, 18 insertions(+), 13 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 2e86251f02..828b1a713f 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -142,6 +142,7 @@ static int graph_write(int argc, const char **argv)
+ 	struct string_list *commit_hex = NULL;
+ 	struct string_list lines;
+ 	int result;
++	int flags = COMMIT_GRAPH_PROGRESS;
+ 
+ 	static struct option builtin_commit_graph_write_options[] = {
+ 		OPT_STRING(0, "object-dir", &opts.obj_dir,
+@@ -166,11 +167,13 @@ static int graph_write(int argc, const char **argv)
+ 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
+ 	if (!opts.obj_dir)
+ 		opts.obj_dir = get_object_directory();
++	if (opts.append)
++		flags |= COMMIT_GRAPH_APPEND;
+ 
+ 	read_replace_refs = 0;
+ 
+ 	if (opts.reachable)
+-		return write_commit_graph_reachable(opts.obj_dir, opts.append, 1);
++		return write_commit_graph_reachable(opts.obj_dir, flags);
+ 
+ 	string_list_init(&lines, 0);
+ 	if (opts.stdin_packs || opts.stdin_commits) {
+@@ -190,8 +193,7 @@ static int graph_write(int argc, const char **argv)
+ 	result = write_commit_graph(opts.obj_dir,
+ 				    pack_indexes,
+ 				    commit_hex,
+-				    opts.append,
+-				    1);
++				    flags);
+ 
+ 	UNLEAK(lines);
+ 	return result;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index b9ea7222fa..b001ef565d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1670,7 +1670,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		      "not exceeded, and then \"git reset HEAD\" to recover."));
+ 
+ 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
+-	    write_commit_graph_reachable(get_object_directory(), 0, 0))
++	    write_commit_graph_reachable(get_object_directory(), 0))
+ 		return 1;
+ 
+ 	repo_rerere(the_repository, 0);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3984addf73..df2573f124 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -665,8 +665,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (gc_write_commit_graph &&
+-	    write_commit_graph_reachable(get_object_directory(), 0,
+-					 !quiet && !daemonized))
++	    write_commit_graph_reachable(get_object_directory(),
++					 !quiet && !daemonized ? COMMIT_GRAPH_PROGRESS : 0))
+ 		return 1;
+ 
+ 	if (auto_gc && too_many_loose_objects())
 diff --git a/commit-graph.c b/commit-graph.c
-index b16c71fd82..e75e1655fb 100644
+index ee487a364b..b16c71fd82 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -25,9 +25,6 @@
+@@ -851,15 +851,14 @@ static int add_ref_to_list(const char *refname,
+ 	return 0;
+ }
  
- #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+-int write_commit_graph_reachable(const char *obj_dir, int append,
+-				 int report_progress)
++int write_commit_graph_reachable(const char *obj_dir, int flags)
+ {
+ 	struct string_list list = STRING_LIST_INIT_DUP;
+ 	int result;
  
--#define GRAPH_VERSION_1 0x1
--#define GRAPH_VERSION GRAPH_VERSION_1
--
- #define GRAPH_EXTRA_EDGES_NEEDED 0x80000000
- #define GRAPH_EDGE_LAST_MASK 0x7fffffff
- #define GRAPH_PARENT_NONE 0x70000000
-@@ -173,30 +170,35 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 	}
+ 	for_each_ref(add_ref_to_list, &list);
+ 	result = write_commit_graph(obj_dir, NULL, &list,
+-				    append, report_progress);
++				    flags);
  
- 	graph_version = *(unsigned char*)(data + 4);
--	if (graph_version != GRAPH_VERSION) {
-+	if (graph_version != 1) {
- 		error(_("commit-graph version %X does not match version %X"),
--		      graph_version, GRAPH_VERSION);
--		return NULL;
--	}
--
--	hash_version = *(unsigned char*)(data + 5);
--	if (hash_version != oid_version()) {
--		error(_("commit-graph hash version %X does not match version %X"),
--		      hash_version, oid_version());
-+		      graph_version, 1);
- 		return NULL;
- 	}
- 
- 	graph = alloc_commit_graph();
- 
-+	switch (graph_version) {
-+	case 1:
-+		hash_version = *(unsigned char*)(data + 5);
-+		if (hash_version != oid_version()) {
-+			error(_("commit-graph hash version %X does not match version %X"),
-+			      hash_version, oid_version());
-+			return NULL;
-+		}
-+
-+		graph->num_chunks = *(unsigned char*)(data + 6);
-+		chunk_lookup = data + 8;
-+		break;
-+	}
-+
- 	graph->hash_len = the_hash_algo->rawsz;
--	graph->num_chunks = *(unsigned char*)(data + 6);
- 	graph->graph_fd = fd;
- 	graph->data = graph_map;
- 	graph->data_len = graph_size;
- 
- 	last_chunk_id = 0;
- 	last_chunk_offset = 8;
--	chunk_lookup = data + 8;
- 	for (i = 0; i < graph->num_chunks; i++) {
- 		uint32_t chunk_id;
- 		uint64_t chunk_offset;
-@@ -888,10 +890,22 @@ int write_commit_graph(const char *obj_dir,
+ 	string_list_clear(&list, 0);
+ 	return result;
+@@ -868,7 +867,7 @@ int write_commit_graph_reachable(const char *obj_dir, int append,
+ int write_commit_graph(const char *obj_dir,
+ 		       struct string_list *pack_indexes,
+ 		       struct string_list *commit_hex,
+-		       int append, int report_progress)
++		       int flags)
+ {
+ 	struct packed_oid_list oids;
+ 	struct packed_commit_list commits;
+@@ -887,6 +886,8 @@ int write_commit_graph(const char *obj_dir,
+ 	struct strbuf progress_title = STRBUF_INIT;
+ 	unsigned long approx_nr_objects;
  	int res = 0;
- 	int append = flags & COMMIT_GRAPH_APPEND;
- 	int report_progress = flags & COMMIT_GRAPH_PROGRESS;
-+	int version = 0;
-+	int header_size = 0;
++	int append = flags & COMMIT_GRAPH_APPEND;
++	int report_progress = flags & COMMIT_GRAPH_PROGRESS;
  
  	if (!commit_graph_compatible(the_repository))
  		return 0;
- 
-+	if (flags & COMMIT_GRAPH_VERSION_1)
-+		version = 1;
-+	if (!version)
-+		version = 1;
-+	if (version != 1) {
-+		error(_("unsupported commit-graph version %d"),
-+		      version);
-+		return 1;
-+	}
-+
- 	oids.nr = 0;
- 	approx_nr_objects = approximate_object_count();
- 	oids.alloc = approx_nr_objects / 32;
-@@ -1076,10 +1090,16 @@ int write_commit_graph(const char *obj_dir,
- 
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
- 
--	hashwrite_u8(f, GRAPH_VERSION);
--	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
--	hashwrite_u8(f, 0); /* unused padding byte */
-+	hashwrite_u8(f, version);
-+
-+	switch (version) {
-+	case 1:
-+		hashwrite_u8(f, oid_version());
-+		hashwrite_u8(f, num_chunks);
-+		hashwrite_u8(f, 0); /* unused padding byte */
-+		header_size = 8;
-+		break;
-+	}
- 
- 	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
- 	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
-@@ -1090,7 +1110,7 @@ int write_commit_graph(const char *obj_dir,
- 		chunk_ids[3] = 0;
- 	chunk_ids[4] = 0;
- 
--	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
-+	chunk_offsets[0] = header_size + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
- 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
- 	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
- 	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
 diff --git a/commit-graph.h b/commit-graph.h
-index 390474047c..d7cd13deb3 100644
+index d15670bf46..390474047c 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -67,6 +67,7 @@ int generation_numbers_enabled(struct repository *r);
+@@ -65,12 +65,14 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+  */
+ int generation_numbers_enabled(struct repository *r);
  
- #define COMMIT_GRAPH_APPEND     (1 << 0)
- #define COMMIT_GRAPH_PROGRESS   (1 << 1)
-+#define COMMIT_GRAPH_VERSION_1  (1 << 2)
- 
- int write_commit_graph_reachable(const char *obj_dir, int flags);
+-int write_commit_graph_reachable(const char *obj_dir, int append,
+-				  int report_progress);
++#define COMMIT_GRAPH_APPEND     (1 << 0)
++#define COMMIT_GRAPH_PROGRESS   (1 << 1)
++
++int write_commit_graph_reachable(const char *obj_dir, int flags);
  int write_commit_graph(const char *obj_dir,
+ 		       struct string_list *pack_indexes,
+ 		       struct string_list *commit_hex,
+-		       int append, int report_progress);
++		       int flags);
+ 
+ int verify_commit_graph(struct repository *r, struct commit_graph *g);
+ 
 -- 
 gitgitgadget
 
