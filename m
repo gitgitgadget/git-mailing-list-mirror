@@ -2,173 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,FAKE_REPLY_C,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7EA1F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B73E1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726829AbfDXWrI (ORCPT <rfc822;e@80x24.org>);
+        id S1726995AbfDXWrK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 18:47:10 -0400
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:37086 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726966AbfDXWrI (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Apr 2019 18:47:08 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41153 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbfDXWrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 18:47:07 -0400
-Received: by mail-pg1-f196.google.com with SMTP id f6so10110246pgs.8
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 15:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sw448NwAPnuHRAOZn8IVLJkytIV16ZWjwj1QCC6oBng=;
-        b=uBFGGac6IZZxpeiZaNAX59rdH5KXpJ7w6xnKvKWdg0ryasIsHjaKoqKvtVD6ijj0lf
-         T4Gb6BE8vbEW8HroHR+c3vntpFmZwQzMjWTmAS1P3ErTkUGCzFagSueaHyn6/JYVA1qO
-         15FvhN7b0EepmUBLPUgSjo85xIs+4C3TQlw4Nz9nZeGiqs+ZkkRaQMtTDRUoB/NNUrwV
-         +uDuLeT9vND6eVN8KAuOaSas0MmVlFISMqhP2nncmvBkS6SrI9AMDcV1iCBeM0a04Us9
-         4wXajzjeWcEzn0hJ/cOdzMvpZS7BACgHTAesWVCqwhw9z2WrWjt23nx69KNX/50GV3K7
-         nkcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sw448NwAPnuHRAOZn8IVLJkytIV16ZWjwj1QCC6oBng=;
-        b=ahcPQwhTB2T7sksuKr5c1bhPQuA/FkY7AGkXWgZizZLAjTdpQUHwe+wIM3pNiQLHGc
-         W6OiW4ISztwYuFK7aexGwun43UQcaHD3BLQSshF0fyP/omlu5WPAHR3UIHxh4A8Ad7Xg
-         RzOWOMHXfuG/tv5OTLWIPMlPSkqoweTp9gqqxXynArAzg64amCnCXF5CDwRfRj4t9uj7
-         b7ShXOo/ZU84WxvTuqW2qu9vxlFPpaZsDuDe8gnXJ7Fm3+nfnfLcCehNBt3aNPOBHSr3
-         c/O13O5fB2zpn60ttIqEaIXotSGOdOpUapU6xdsZODzOcFkE0w/liVGtgr8N3klIXXKD
-         BOBg==
-X-Gm-Message-State: APjAAAWITdaWCEiFvOtBS12Aq33pcicv29b3x4Y5Tp3nNN1x7za1S5yi
-        NjRQCdHyVDedz/KsEuYC2QzEDn7Z
-X-Google-Smtp-Source: APXvYqwXa1wc2SF0E7ExABgcam9X3U8AYJaeRE2Bx1hw1MCmymXAGbMtnW2QWztzvkvF/R3YT++6xA==
-X-Received: by 2002:a65:6107:: with SMTP id z7mr32957163pgu.313.1556146026036;
-        Wed, 24 Apr 2019 15:47:06 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id g64sm38062305pfg.13.2019.04.24.15.47.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Apr 2019 15:47:05 -0700 (PDT)
-Date:   Wed, 24 Apr 2019 15:47:04 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Aguilar <davvid@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 6/6] difftool: fallback on merge.guitool
-Message-ID: <f39b15efbd5c765953737f99aa032230f066c074.1556142510.git.liu.denton@gmail.com>
-References: <cover.1556009181.git.liu.denton@gmail.com>
- <cover.1556142510.git.liu.denton@gmail.com>
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id D2ACE3C00D1;
+        Thu, 25 Apr 2019 00:47:04 +0200 (CEST)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 1zLCOq6g4p26; Thu, 25 Apr 2019 00:46:57 +0200 (CEST)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id A47683C0034;
+        Thu, 25 Apr 2019 00:46:57 +0200 (CEST)
+Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.439.0; Thu, 25 Apr
+ 2019 00:46:57 +0200
+Date:   Thu, 25 Apr 2019 00:46:54 +0200
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+CC:     <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Julia Lawall <julia.lawall@lip6.fr>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use
+ with -G
+Message-ID: <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <cover.1556142510.git.liu.denton@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87o94vs9cp.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.72.93.184]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-difftool.txt, it says
+Hi Ævar,
 
-	'git difftool' falls back to 'git mergetool' config variables when the
-	difftool equivalents have not been defined.
+Thanks for the amazingly fast reply and for the useful feature (yay!).
 
-However, when `diff.guitool` is missing, it doesn't fallback to
-anything. Make git-difftool fallback to `merge.guitool` when `diff.guitool` is
-missing.
+On Wed, Apr 24, 2019 at 05:37:10PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Apr 24 2019, Ævar Arnfjörð Bjarmason wrote:
+> 
+> > Add the ability for the -G<regex> pickaxe to search only through added
+> > or removed lines in the diff, or even through an arbitrary amount of
+> > context lines when combined with -U<n>.
+> >
+> > This has been requested[1][2] a few times in the past, and isn't
+> > currently possible. Instead users need to do -G<regex> and then write
+> > their own post-parsing script to see if the <regex> matched added or
+> > removed lines, or both. There was no way to match the adjacent context
+> > lines other than running and grepping the equivalent of a "log -p -U<n>".
+> >
+> > 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.com/
+> > 2. https://public-inbox.org/git/20190424102609.GA19697@vmlxhi-102.adit-jv.com/
+> 
+> I see now once I actually read Eugeniu Rosca's E-Mail upthread instead
+> of just knee-jerk sending out patches that this doesn't actually solve
+> his particular problem fully.
+> 
+> I.e. if you want some AND/OR matching support this --pickaxe-raw-diff
+> won't give you that, but it *does* make it much easier to script up such
+> an option. Run it twice with -G"\+<regex>" and -G"-<regex>", "sort |
+> uniq -c" the commit list, and see which things occur once or twice.
+> 
+> Of course that doesn't give you more complex nested and/or cases, but if
+> git-log grew support for that like git-grep has the -G option could use
+> that, although at that point we'd probably want to spend effort on
+> making the underlying machinery smarter to avoid duplicate work.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-difftool.txt |  4 +++-
- builtin/difftool.c             | 10 ++--------
- t/t7800-difftool.sh            | 16 ++++++++++++++++
- 3 files changed, 21 insertions(+), 9 deletions(-)
+Purely from user's standpoint, I feel more comfortable with `git grep`
+and `git log --grep` particularly b/c they support '--all-match' [2],
+allowing more flexible multi-line searches. Based on your feedback, it
+looks to me that `git log -G/-S` did not have a chance to develop their
+features to the same level.
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 96c26e6aa8..484c485fd0 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -90,7 +90,9 @@ instead.  `--no-symlinks` is the default on Windows.
- 	When 'git-difftool' is invoked with the `-g` or `--gui` option
- 	the default diff tool will be read from the configured
- 	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
--	option can be used to override this setting.
-+	option can be used to override this setting. If `diff.guitool`
-+	is not set, we will fallback in the order of `merge.guitool`,
-+	`diff.tool`, `merge.tool` until a tool is found.
- 
- --[no-]trust-exit-code::
- 	'git-difftool' invokes a diff tool individually on each file.
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 65bba90338..10660639c0 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -24,7 +24,6 @@
- #include "object-store.h"
- #include "dir.h"
- 
--static char *diff_gui_tool;
- static int trust_exit_code;
- 
- static const char *const builtin_difftool_usage[] = {
-@@ -34,11 +33,6 @@ static const char *const builtin_difftool_usage[] = {
- 
- static int difftool_config(const char *var, const char *value, void *cb)
- {
--	if (!strcmp(var, "diff.guitool")) {
--		diff_gui_tool = xstrdup(value);
--		return 0;
--	}
--
- 	if (!strcmp(var, "difftool.trustexitcode")) {
- 		trust_exit_code = git_config_bool(var, value);
- 		return 0;
-@@ -734,8 +728,8 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
- 		die(_("--gui, --tool and --extcmd are mutually exclusive"));
- 
--	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
--		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
-+	if (use_gui_tool)
-+		setenv("GIT_MERGETOOL_GUI", "true", 1);
- 	else if (difftool_cmd) {
- 		if (*difftool_cmd)
- 			setenv("GIT_DIFF_TOOL", difftool_cmd, 1);
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 107f31213d..ae90701a12 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -279,11 +279,27 @@ test_expect_success 'difftool + mergetool config variables' '
- 	echo branch >expect &&
- 	git difftool --no-prompt branch >actual &&
- 	test_cmp expect actual &&
-+	git difftool --gui --no-prompt branch >actual &&
-+	test_cmp expect actual &&
- 
- 	# set merge.tool to something bogus, diff.tool to test-tool
- 	test_config merge.tool bogus-tool &&
- 	test_config diff.tool test-tool &&
- 	git difftool --no-prompt branch >actual &&
-+	test_cmp expect actual &&
-+	git difftool --gui --no-prompt branch >actual &&
-+	test_cmp expect actual &&
-+
-+	# set merge.tool, diff.tool to something bogus, merge.guitool to test-tool
-+	test_config diff.tool bogus-tool &&
-+	test_config merge.guitool test-tool &&
-+	git difftool --gui --no-prompt branch >actual &&
-+	test_cmp expect actual &&
-+
-+	# set merge.tool, diff.tool, merge.guitool to something bogus, diff.guitool to test-tool
-+	test_config merge.guitool bogus-tool &&
-+	test_config diff.guitool test-tool &&
-+	git difftool --gui --no-prompt branch >actual &&
- 	test_cmp expect actual
- '
- 
+> 
+> Furthermore, and quoting Eugeniu upthread:
+> 
+>     In the context of [1], I would like to find all Linux commits which
+>     replaced:
+>     	'devm_request_threaded_irq(* IRQF_SHARED *)'
+>     by:
+>     	'devm_request_threaded_irq(* IRQF_ONESHOT *)'
+> 
+> Such AND/OR machinery would give you what you wanted *most* of the time,
+> but it would also find removed/added pairs that were "unrelated" as well
+> as "related". Solving *that* problem is more complex, but something the
+> diff machinery could in principle expose.
+
+I expect some false positives, since git is agnostic on the language
+used to write the versioned files (the latter sounds like a research
+topic to me - I hope there is somebody willing to experiment with that
+in future).
+
+> 
+> But the "-G<regex> --pickaxe-raw-diff" feature I have as-is is very
+> useful, 
+
+I agree. I am a bit bothered by the fact that
+`git log --oneline -Ux -G<regex> --pickaxe-raw-diff` outputs the
+contents/patch of a commit. My expectation is that we have the
+`log -p` knob for that?
+
+> I've had at least two people off-list ask me about a problem
+> that would be solved by it just in the last 1/2 year (unrelated to them
+> having seen the WIP patch I sent last October).
+> 
+> It's more general than Junio's suggested --pickaxe-ignore-{add,del}
+
+As a user, I would be happier to freely grep in the raw commit contents
+rather than learning a dozen of new options which provide small subsets
+of the same functionality. So, I personally vote for the approach taken
+by --pickaxe-raw-diff. This would also reduce the complexity of my
+current git aliases and/or allow dropping some of them altogether.
+
+Quite off topic, but I also needed to come up with a solution to get
+the C functions modified/touched by a git commit [3]. It is my
+understanding that --pickaxe-raw-diff can't help here and I still have
+to rely on parsing the output of `git log -p`?
+
+> options[1], but those could be implemented in terms of this underlying
+> code if anyone cared to have those as aliases. You'd just take the
+> -G<regex> and prefix the <regex> with "^\+" or "^-" as appropriate and
+> turn on the DIFF_PICKAXE_G_RAW_DIFF flag.
+> 
+> 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.com/
+
+Thanks!
+
+[2] https://gitster.livejournal.com/30195.html
+[3] https://stackoverflow.com/questions/50707171/how-to-get-all-c-functions-modified-by-a-git-commit
+
 -- 
-2.21.0.1000.g7817e26e80
-
+Best regards,
+Eugeniu.
