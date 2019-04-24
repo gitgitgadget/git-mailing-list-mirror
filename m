@@ -2,135 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 254731F453
-	for <e@80x24.org>; Tue, 23 Apr 2019 23:55:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD811F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 00:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727467AbfDWXzf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 19:55:35 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35580 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726325AbfDWXzf (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Apr 2019 19:55:35 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF8BD60FF7;
-        Tue, 23 Apr 2019 23:55:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556063732;
-        bh=szsWkj1GcuzkyZljUkv9KwrlcmKbijOvGe2gI3aZfz0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=DGpQBAVRrfWYuHr6A4eNACYoBF7r5O02htAGndhIsRk4jjZ1vOOXpm0VJ96SBqfy+
-         dSkp74quAeOfpe7Nm6p0Y27v6wTmVWEwd95NZOCEZxytUJBHVmjtS/It1cvn06Ai5E
-         gDQv8B7OXkeFoULnq8i6sALZKTkuGEZGQwZmwNKv8ycIDJ3vryQ84rgH07AVnyzMEJ
-         iC2/HquKMnQeVcgjAPpznsaZdK4mUYjYhGt4m+VPTBT9JXp9OMWdwXs3AMQdZtoJuY
-         HhQyXBZmaywqExPEGsSYmHGZrZyrL4BFqofYwNNV5uWLGvi0aLoWQsTbPhJWC/EVld
-         B0L6PZco2z3ABi6N3siGlFz/B7i/S9fuY+nmTgPvLvpdQ6pIfr3KPAuriFZEM77HdA
-         Uo+gPpRidZ82kkCDx5sLURpH6bdDSz3g3vHEu/6TBvcZXofkUjHxaCXBp4uNpg2Lw8
-         L9zsjpBXta7nD85zPjWKASft9zbBfmEZtNJk6I+yJzTTcg9D3uH
-Date:   Tue, 23 Apr 2019 23:55:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "CHIGOT, CLEMENT" <clement.chigot@atos.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        id S1728886AbfDXAsw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 20:48:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36163 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728615AbfDXAsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 20:48:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b1so11208985wru.3
+        for <git@vger.kernel.org>; Tue, 23 Apr 2019 17:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=a5BjhrlCxviy84XI77dTVwHebmXZTeyvt+e3ZkbiTqM=;
+        b=hbftwC/qADMU7xMHCuCb2qHZMX6VVv5CCdtS6oEfFF4KIMIlR1kYQv1feOqgCWrfo5
+         zhvJgjrcSO9RnGxUm5L326VpwKpnAlhxMoMoutFIMX5TJ+/p4DjVMB3CnyNYMCuzNpzJ
+         vFiAu1+/pVZM9EeGa1+jq/B/LOLJv579oABVcSKe/UJf8M512VQ/y7yp4/2nYODs22wi
+         CdI6rLMpBXuOL0aEGymfYgsrxaBgdWUTzt7igU38ZFerEJqbG8Ditcg4wHd2gUQdC5RO
+         9xEDAHtFtGrWsBJ/2McoKlYs5GqdSo4qNxHAv/rhUkld4F+Wyryl/G9Ap6fN2NHYgWGN
+         bMOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=a5BjhrlCxviy84XI77dTVwHebmXZTeyvt+e3ZkbiTqM=;
+        b=llK7zvvggwHz8D5NqSAQIcqIDDgB4iOxWldqX4JSjyGI+69GUwlRoYQhkuXOMTBy6J
+         h2zKRJeVnB82LlHicpAoyS+DkHveUP4sCVDB/+kJFvRm3AbvU1nvd6CnuFwWAremrsyM
+         CShZbQIKdQ2dePdvJbnwdZswixUv8nPa5/vTI4pPAPv5VVhPtfcsL7Ew5anbfvOVyHBg
+         m98OUerZLXefTT6seidfgPSuEHIokmBCy5IiX6XF0RpnKprk+tDO6OutRysBgZu7PHN9
+         iL/eTiny66vvX1cjORWr3dW8l/fIAZcacYSj0ES/ZKXJyZVXJdI71jFFPm/ioykfrwGm
+         QOjA==
+X-Gm-Message-State: APjAAAUEyTArPnOLu2BzfigEFlxyjGAXYOT/JxLn+P95N7gCVTgj+scx
+        V64tNddpG1UMk0FsxYQzIqE=
+X-Google-Smtp-Source: APXvYqzpKAjaA/AjmLXVHRlaq8XtcVWIIjahHrnBTi69OvIri54w7OYQ2E0VFpLq/oDCJcKTsnGZDQ==
+X-Received: by 2002:adf:f108:: with SMTP id r8mr3874980wro.252.1556066930093;
+        Tue, 23 Apr 2019 17:48:50 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id y3sm17095381wmi.27.2019.04.23.17.48.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 23 Apr 2019 17:48:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "CHIGOT\, CLEMENT" <clement.chigot@atos.net>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [PATCH] git-compat-util: work around for access(X_OK) under root
-Message-ID: <20190423235526.GF6316@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "CHIGOT, CLEMENT" <clement.chigot@atos.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
 References: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
- <xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
- <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="O8XZ+2Hy8Kj8wLPZ"
-Content-Disposition: inline
+        <xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
+        <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
+Date:   Wed, 24 Apr 2019 09:48:48 +0900
 In-Reply-To: <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        (CLEMENT CHIGOT's message of "Tue, 23 Apr 2019 11:31:02 +0000")
+Message-ID: <xmqqwojk449b.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"CHIGOT, CLEMENT" <clement.chigot@atos.net> writes:
 
---O8XZ+2Hy8Kj8wLPZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Junio C Hamano <jch2355@gmail.com> on behalf of Junio C Hamano <gitster@pobox.com>
+>> > On some OSes like AIX, access with X_OK is always true if launched under
+>> > root.
+>> 
+>> That may be the case, but you'd need to describe why it is a problem
+>> here, before talking about the need for a "work around".
+>> 
+>> For example, if a directory on $PATH has a file called git-frotz
+>> that has no executable bit, perhaps "git frotz" would execute that
+>> file but only when you are running it as the root user, but not as
+>> any other user.
+>> ...
+>
+> This patch is needed in order to have hooks working on AIX. When run as root,
+> access on hooks will return true even if a hook can't be executed.
 
-On Tue, Apr 23, 2019 at 11:31:02AM +0000, CHIGOT, CLEMENT wrote:
-> From: Junio C Hamano <jch2355@gmail.com> on behalf of Junio C Hamano <git=
-ster@pobox.com>
-> This patch is needed in order to have hooks working on AIX. When run as r=
-oot,
-> access on hooks will return true even if a hook can't be executed. Theref=
-ore,
-> as far as I know, git will try to execute it as is and we'll get this kin=
-d of
-> error:
-> "git commit -m content
->  fatal: cannot exec '.git/hooks/pre-commit': Permission denied"
+Ah, OK, so the issue is not that AIX allows the root to execute even
+files that have no executable bit, but X_OK check on it returns
+useless answer when we want to know if an attempted execution of the
+file by the user would succeed.
 
-I think this is the interesting part.
+That was exactly the kind of information expected in your log
+message to explain why this change is a good thing to have.
 
-What POSIX says on this is the following:
+>> Does the true UID matter for the purpose of permission/privilege
+>> checking?  Why do we have to check anything other than the effective
+>> UID?
+>>
+>
+> Actually, I don't know. Bash is doing it but I think EUID is enough. 
 
-  If any access permissions are checked, each shall be checked
-  individually, as described in XBD File Access Permissions, except that
-  where that description refers to execute permission for a process with
-  appropriate privileges, an implementation may indicate success for
-  X_OK even if execute permission is not granted to any user.
+I wasn't questioning if it is "enough".  If the root user "su"es to
+a normal user, does the issue that exec(path) and access(path, X_OK)
+are incoherent still happen?  If not, checking for !uid is actively
+wrong, not just unnecessary.
 
-The XBD File Access Permissions text says:
+>> > +     return access(path, X_OK);
+>> 
+>> I think the last "fallback to the system access()" is wrong, as the
+>> "special case for root" block seems to except that the function may
+>> be called to check for Read or Write permission, not just for X_OK.
+>
+> That's a mistake from me. It should be "mode" instead of "X_OK". It seems that 
+> most of the time, it's used only with X_OK or F_OK that's why it has worked. I'll 
+> fix that. 
 
-  If a process has appropriate privileges:
-    [=E2=80=A6]
-    If execute permission is requested, access shall be granted if
-    execute permission is granted to at least one user by the file
-    permission bits or by an alternate access control mechanism;
-    otherwise, access shall be denied.
+Yup, and have the function fall-back to the system supplied access()
+after doing geteuid() and finding that the user is not the root user
+without doing anything else---and use the remaining lines in the
+function for the special case.  That would make the function's logic
+easier to read, too.
 
-I believe that's what's occurring here. Your commit message, however,
-should contain some text that explains that AIX takes this liberty
-provided by POSIX, and why that causes problems for Git (i.e., what
-problems the user will see). Ideally, the reader of the commit message
-will know the relevant details about this issue from your commit message
-without needing to consult the standard itself.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+>> See how FILENO_IS_A_MACRO defined immediately before this part uses
+>> the "#ifndef COMPAT_CODE" to guard against exactly the same problem.
+>
+> Alright, I now understand how this work.
 
---O8XZ+2Hy8Kj8wLPZ
-Content-Type: application/pgp-signature; name="signature.asc"
+Good.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+> By the way, do I need to recreate a thread with [PATCH v2] ? Or I'll add the new
+> version in this one ? I don't know how you're proceeding.  
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAly/pe4ACgkQv1NdgR9S
-9ou+NA/+LNmBmPTcXn9q4znpzUwbCGENvFDwkZeA1lMw27zkLg+/+5EpPafp/gAI
-mHOtTo6YxaCr69hnb8XhO1yENR3CCEPLkByEI1Mc0tUiI8SAx08ai0Va44QJJBft
-W8WcNglljo1rGJf0vOtqLeR8XuKMbm9FkMadYkyTVZaSXurt4EiCu6vAuvRQb7MO
-yyZXTwk4X2JNwyK+w9LacPdLaGt3qN3vgNeaMWZTaZaKi4WUyZSUq0O/zQzA/T4S
-2lqdhLm9v7UPuDyXalHA3pvaiAL5dPllJxoUFS5DyhdsxqLU4ioDReFktWMDCAjT
-PhO4lFwiCMRLuohw2/jy8CDA85G632TbwJhzVu9xDCEbtrypZOsIc6eFio5lC8MX
-+oX1ol8P7Ki+jdgHUQihVrPvJ8oz5DPlfVjmveXfwo89mOUO5gUxgPdkTk58Jc5D
-I97erG5GL+GXf0eLsa0B9uM0lxY7AhW9JOt54PdmbD/GIQadtW/XoIBRiVh1tRQb
-3vO9XHhHapK5N/kAuLe6HKf4GNhfEd3i7Kia4UI2QSoFQKLjXFb4Z/WPMlYnwgSx
-GmmqdiEq5TZw6FkFP03ZVmYPV1dvwg3Mz3gIfbRAFeFeqtqkgPBjca2lbkV3t6Hu
-/eR0CoLnyptiEr/U76feNA4AdE2mdxn9r7dK5ANHZXuMZXPebHE=
-=qgcA
------END PGP SIGNATURE-----
+As the patch we are discussing in this exchange has not been
+accepted nor merged to the 'next' branch yet, you'd be sending a new
+version as a whole (i.e. not as an incremental patch on top of the
+version we have reviewed here) with "[PATCH v2]" on its subject
+header.
 
---O8XZ+2Hy8Kj8wLPZ--
+Emily Shaffer has been writing and revising a tutorial on the
+procedure recently, which may be of interest to you, and I am
+interested in using your fresh eyes to see if its expectation
+for the readers is set appropriately.
+
+  https://public-inbox.org/git/20190423193410.101803-1-emilyshaffer@google.com/
+
+Thanks.
