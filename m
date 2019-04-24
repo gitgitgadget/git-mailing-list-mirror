@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6970A1F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34E521F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbfDXWrE (ORCPT <rfc822;e@80x24.org>);
+        id S1726961AbfDXWrF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 18:47:05 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:40815 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726943AbfDXWrE (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Apr 2019 18:47:04 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:46460 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726953AbfDXWrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 18:47:03 -0400
-Received: by mail-pl1-f194.google.com with SMTP id o7so7792856pll.13
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 15:47:02 -0700 (PDT)
+Received: by mail-pg1-f193.google.com with SMTP id d31so10123072pgl.7
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 15:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=XIJbIHQzfHdxfZeP/nTLP6jFXfooj4YrKcl6/kwN2fs=;
-        b=nhLj74srvsxZy4ifiDpUUvo7HVL/yl9amIw0+2rK6wqBC7XDo48lIKVBEfds1OR6l9
-         HKzLCasoln8/YBk1gmcLcMftpA6+e694JG7qqAebJkBQpLVUG3ey+mXxI36JnYelotIU
-         oKG/TK4Ij1oG61QOzNxSg4KE09TO+oD6ucA6qDyOVdREYhCpPIUn36bhWqlkL4qkFQKu
-         eLx0y/AMdDL+Qt2HB0kH+a2aYOimsufnCb12tyAU3mnI9bWDAMFfKBPCRAg+PfXGo4uC
-         dtksqXbJa2dPGjH5QurclU42+71k7hSltB5++loqg6lCSl5OjWVKddSoyYcns5uWMOHL
-         kbgg==
+        bh=EHQRy47EInZUikXScYEE7BNiN2A7hVEVlc3fBZW5soA=;
+        b=bnejggjGHP1s9OKmhgEvaMEZpPoxcHy87Tq0Q4q9v/Gpvn7esNq+7vGb4hlUZKeATp
+         SF3gWDa9cH0BnoYb8rsnFKXz/4D+Rb9tJS0xn5IrmsDUG08E4h4ArvvBceITqr7yYlyr
+         357NZ/0tnZmQ9aC1yTgPSZNPV0jrqsazGWOVm5nH0w0Qy2iVVl63V/zaEnPmaBPjwJ1T
+         cXdMLdAnnulywdrIyfZDMxm4fvfztxHhf3HMj9a/TiqbnAheiJsroDuUW2RpelZPqRdA
+         mlB76Jcooeh1ypwHiFUc0HbcC8QVLrPoAmSh49A5umH8bj6YTFMK5cNFggsyTFMb14K5
+         UGsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XIJbIHQzfHdxfZeP/nTLP6jFXfooj4YrKcl6/kwN2fs=;
-        b=TqasAYqXq9Dn36pc+PRNpvRaWQXRD5WyfCsnRacqU2GIIEAKOK5YFH5I5QreapTf/t
-         cIRSPdw7/f0jTGPYlEseB6Pd3JJ70Sz3zAeQW+iruePmSeca+JpYVlH1tGYTdhizijx8
-         jCfDzKpQIeSSTPK+ZmhATfKDVWVml5NTYNRsCDhiv2+Ub1d1Pi4vKoHDQXcJikESvVm6
-         RHgOPplU3trt8Vv92DZSsRSOFcI989Ig3CYdNSJUtXk5FFT/t5Tn0ZqwHjvNhkCjqJ/q
-         HzAgrgxR89tYUzEwCWFMxH5OIByCtyXmqnw0ZNOCaJbp5oLCr70iPQBGF+NODS37e7jc
-         O0+A==
-X-Gm-Message-State: APjAAAW7nON+dqeHS4bVVlKu2WaNYmVcwsiH395sk5H/cZgkbEmALz5V
-        1t/li9afw8ixoD4l7+nqYQzFMgvC
-X-Google-Smtp-Source: APXvYqx+17mYspqg5cKrpeyk8MvJNpVmEkhIW/7GOvTAipiv9TeKK7+Cexysx3Niwium9gG5CXmpbw==
-X-Received: by 2002:a17:902:5a8f:: with SMTP id r15mr1440324pli.196.1556146021786;
-        Wed, 24 Apr 2019 15:47:01 -0700 (PDT)
+        bh=EHQRy47EInZUikXScYEE7BNiN2A7hVEVlc3fBZW5soA=;
+        b=LKn5PeKX+jtOMvTCXwOnDZHzk9kvWYJgzxxF8jznfKxfMobzRrHc8GktclELpuJOgM
+         Jpcd/p1GcNrV/ZX112lL0IpBe16zf9lLboyIrd3jrYwiFXNU6poaZ9+Tq5bSQ+XqlboZ
+         dXLLfIyMSMG1LDK+VZCOCmqTCrq4m7sZQa0OVtcsjtOU8uc5HRQvtF8pMsSBFWzltfnS
+         Kq1oh5lumnKf9tOLftxDCuSgsP7m8vIPhpBTYxWET66if8Q/xfkfd4iiDrlHSmm4y90B
+         nP9PUtjsk2YqyRo4XYvEzMpHJPyUpDKFED4maSrj27RtWsIhOZVQ+byIYn45ZmXo0O9o
+         UwxA==
+X-Gm-Message-State: APjAAAUrxlG7qxGIRqn/AfD3WZ0p08AoiAhm1B5pGSVKchhMgoVlEUrz
+        CTNdzyF8PVDhwP6N+67gK+jYy2VW
+X-Google-Smtp-Source: APXvYqyuoIiQmpfqfjSYeb9Sq+aq9xtd9FKB+UgdM4CvgQ+HCb7YXuB4FIivjzV+iRS0ihhBqUqdTg==
+X-Received: by 2002:a65:6282:: with SMTP id f2mr11382139pgv.152.1556146023084;
+        Wed, 24 Apr 2019 15:47:03 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id x8sm22707432pgp.48.2019.04.24.15.47.00
+        by smtp.gmail.com with ESMTPSA id n1sm20610917pgv.19.2019.04.24.15.47.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Apr 2019 15:47:01 -0700 (PDT)
-Date:   Wed, 24 Apr 2019 15:47:00 -0700
+        Wed, 24 Apr 2019 15:47:02 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 15:47:01 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -57,8 +57,8 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/6] mergetool: use get_merge_tool function
-Message-ID: <ff83d25ff2d0b9585b52c7e28cd7b93292b5304d.1556142510.git.liu.denton@gmail.com>
+Subject: [PATCH v3 4/6] mergetool: fallback to tool when guitool unavailable
+Message-ID: <e975fe4a8b206d8e40f9c4d7cd278fdb5c7358f0.1556142510.git.liu.denton@gmail.com>
 References: <cover.1556009181.git.liu.denton@gmail.com>
  <cover.1556142510.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,129 +71,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-mergetool, the logic for getting which merge tool to use is
-duplicated in git-mergetool--lib, except for the fact that it needs to
-know whether the tool was guessed or not.
+In git-difftool, if the tool is called with --gui but `diff.guitool` is
+not set, it falls back to `diff.tool`. Make git-mergetool also fallback
+from `merge.guitool` to `merge.tool` if the former is undefined.
 
-Rewrite `get_merge_tool` to return whether or not the tool was guessed
-through the return code and make git-mergetool call this function
-instead of duplicating the logic. Note that 1 was chosen to be the
-return code of when a tool is guessed because it seems like a slightly
-more abnormal condition than getting a tool that's explicitly specified
-but this is completely arbitrary.
+If git-difftool were to use `get_configured_mergetool`, it would also
+get the fallback behaviour in the following precedence:
 
-Also, let `$GIT_MERGETOOL_GUI` be set to determine whether or not the
-guitool will be selected.
-
-This change is not completely backwards compatible as there may be
-external users of git-mergetool--lib. However, only one user,
-git-diffall[1], was found from searching GitHub and Google. It seems
-very unlikely that there exists an external caller that would take into
-account the return code of `get_merge_tool` as it would always return 0
-before this change so this change probably does not affect any external
-users.
-
-[1]: https://github.com/thenigan/git-diffall
+1. diff.guitool
+2. merge.guitool
+3. diff.tool
+4. merge.tool
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-mergetool--lib.txt |  4 +++-
- git-difftool--helper.sh              |  2 +-
- git-mergetool--lib.sh                |  5 ++++-
- git-mergetool.sh                     | 12 ++++--------
- 4 files changed, 12 insertions(+), 11 deletions(-)
+ Documentation/git-mergetool.txt |  4 +++-
+ git-mergetool--lib.sh           | 27 ++++++++++++++++++---------
+ t/t7610-mergetool.sh            | 19 +++++++++++++++++++
+ 3 files changed, 40 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-mergetool--lib.txt b/Documentation/git-mergetool--lib.txt
-index 055550b2bc..4da9d24096 100644
---- a/Documentation/git-mergetool--lib.txt
-+++ b/Documentation/git-mergetool--lib.txt
-@@ -28,7 +28,9 @@ to define the operation mode for the functions listed below.
- FUNCTIONS
- ---------
- get_merge_tool::
--	returns a merge tool.
-+	returns a merge tool. the return code is 1 if we returned a guessed
-+	merge tool, else 0. '$GIT_MERGETOOL_GUI' may be set to 'true' to
-+	search for the appropriate guitool.
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index 0c7975a050..6b14702e78 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -83,7 +83,9 @@ success of the resolution after the custom tool has exited.
+ --gui::
+ 	When 'git-mergetool' is invoked with the `-g` or `--gui` option
+ 	the default merge tool will be read from the configured
+-	`merge.guitool` variable instead of `merge.tool`.
++	`merge.guitool` variable instead of `merge.tool`. If
++	`merge.guitool` is not set, we will fallback to the tool
++	configured under `merge.tool`.
  
- get_merge_tool_cmd::
- 	returns the custom command for a merge tool.
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 7bfb6737df..46af3e60b7 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -71,7 +71,7 @@ then
- 	then
- 		merge_tool="$GIT_DIFF_TOOL"
- 	else
--		merge_tool="$(get_merge_tool)" || exit
-+		merge_tool="$(get_merge_tool)"
- 	fi
- fi
- 
+ --no-gui::
+ 	This overrides a previous `-g` or `--gui` setting and reads the
 diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 83bf52494c..68ff26a0f7 100644
+index 68ff26a0f7..ada16acffc 100644
 --- a/git-mergetool--lib.sh
 +++ b/git-mergetool--lib.sh
-@@ -403,14 +403,17 @@ get_merge_tool_path () {
+@@ -350,20 +350,29 @@ guess_merge_tool () {
  }
  
- get_merge_tool () {
-+	not_guessed=true
- 	# Check if a merge tool has been configured
--	merge_tool=$(get_configured_merge_tool)
-+	merge_tool=$(get_configured_merge_tool $GIT_MERGETOOL_GUI)
- 	# Try to guess an appropriate merge tool if no tool has been set.
- 	if test -z "$merge_tool"
+ get_configured_merge_tool () {
+-	# If first argument is true, find the guitool instead
+-	if test "$1" = true
++	is_gui="$1"
++	sections="merge"
++	keys="tool"
++
++	if diff_mode
  	then
- 		merge_tool=$(guess_merge_tool) || exit
-+		not_guessed=false
+-		gui_prefix=gui
++		sections="diff $sections"
  	fi
- 	echo "$merge_tool"
-+	test "$not_guessed" = true
- }
  
- mergetool_find_win32_cmd () {
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 01b9ad59b2..88fa6a914a 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -389,7 +389,7 @@ print_noop_and_exit () {
- 
- main () {
- 	prompt=$(git config --bool mergetool.prompt)
--	gui_tool=false
-+	GIT_MERGETOOL_GUI=false
- 	guessed_merge_tool=false
- 	orderfile=
- 
-@@ -416,10 +416,10 @@ main () {
- 			esac
- 			;;
- 		--no-gui)
--			gui_tool=false
-+			GIT_MERGETOOL_GUI=false
- 			;;
- 		-g|--gui)
--			gui_tool=true
-+			GIT_MERGETOOL_GUI=true
- 			;;
- 		-y|--no-prompt)
- 			prompt=false
-@@ -449,12 +449,8 @@ main () {
- 
- 	if test -z "$merge_tool"
+-	# Diff mode first tries diff.(gui)tool and falls back to merge.(gui)tool.
+-	# Merge mode only checks merge.(gui)tool
+-	if diff_mode
++	if "$is_gui" = true
  	then
--		# Check if a merge tool has been configured
--		merge_tool=$(get_configured_merge_tool $gui_tool)
--		# Try to guess an appropriate merge tool if no tool has been set.
--		if test -z "$merge_tool"
-+		if ! merge_tool=$(get_merge_tool)
- 		then
--			merge_tool=$(guess_merge_tool) || exit
- 			guessed_merge_tool=true
- 		fi
+-		merge_tool=$(git config diff.${gui_prefix}tool || git config merge.${gui_prefix}tool)
+-	else
+-		merge_tool=$(git config merge.${gui_prefix}tool)
++		keys="guitool $keys"
  	fi
++
++	IFS=' '
++	for key in $keys
++	do
++		for section in $sections
++		do
++			merge_tool=$(git config $section.$key) && break 2
++		done
++	done
++
+ 	if test -n "$merge_tool" && ! valid_tool "$merge_tool"
+ 	then
+ 		echo >&2 "git config option $TOOL_MODE.${gui_prefix}tool set to unknown tool: $merge_tool"
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index dad607e186..5b61c10a9c 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -167,6 +167,25 @@ test_expect_success 'gui mergetool' '
+ 	git commit -m "branch1 resolved with mergetool"
+ '
+ 
++test_expect_success 'gui mergetool without merge.guitool set falls back to merge.tool' '
++	test_when_finished "git reset --hard" &&
++	git checkout -b test$test_count branch1 &&
++	git submodule update -N &&
++	test_must_fail git merge master &&
++	( yes "" | git mergetool --gui both ) &&
++	( yes "" | git mergetool -g file1 file1 ) &&
++	( yes "" | git mergetool --gui file2 "spaced name" ) &&
++	( yes "" | git mergetool --gui subdir/file3 ) &&
++	( yes "d" | git mergetool --gui file11 ) &&
++	( yes "d" | git mergetool --gui file12 ) &&
++	( yes "l" | git mergetool --gui submod ) &&
++	test "$(cat file1)" = "master updated" &&
++	test "$(cat file2)" = "master new" &&
++	test "$(cat subdir/file3)" = "master new sub" &&
++	test "$(cat submod/bar)" = "branch1 submodule" &&
++	git commit -m "branch1 resolved with mergetool"
++'
++
+ test_expect_success 'mergetool crlf' '
+ 	test_when_finished "git reset --hard" &&
+ 	# This test_config line must go after the above reset line so that
 -- 
 2.21.0.1000.g7817e26e80
 
