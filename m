@@ -2,140 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63CAB1F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 23:07:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623751F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 23:25:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbfDXXHx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 19:07:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35696 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727358AbfDXXHx (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Apr 2019 19:07:53 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2955F60FF7;
-        Wed, 24 Apr 2019 23:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556147270;
-        bh=REdr+egHsZQcCZOOlmKSGzqFZ4K37RL1ydZvmz/Ze5s=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=A/FBx0reg+Yn3bLcNwsRZXACQByR2UVbq+ZMCOnnRFr/gxHkMgl33QPt5wLDRwDj6
-         LyzHIRxFmbibs79Sex9pCYsS4spXJsvLCX7+hDMf6fbsQjLlxp4Wp0tx3TndSYhjbE
-         WZ7T0IrFcvu5sk1Iwk5d04fqjvTQLxr00gdaTsYf/P1GFjjWbYM3Iaz+zuPAFkMtKd
-         Ea4GpuSyYbbSYV9O2mGzny+15TgxvV2C9dNry2yqWKu3hmVi/x5f0rmYUjj7o9xl/f
-         tnRFLcvqhTbWpmbcfrfXbiee+katpq0+SGWArYBdmoCwwTR+5Y4IWB1fgQuAkq25xs
-         BKhRkcVg3wt7qeqs+malYgvCgEKo7feSAyFxDIT2OYz3JvyY/kEf7DQKSm/EyLX9TO
-         TqqTCb9cSqxImADOMc3GUrfuremmI8VIgBwdFC131YbujLlxi5Afyfej2S9wyKcFYz
-         2sY1MIMcOUBaGpIWdmCcybS+O9ZaIkm+UNInf8LjF9+67VT5CiM
-Date:   Wed, 24 Apr 2019 23:07:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] Multiple hook support
-Message-ID: <20190424230744.GL6316@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
- <20190424023438.GE98980@google.com>
+        id S1728159AbfDXXZC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 19:25:02 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45915 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728155AbfDXXZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 19:25:02 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k92so17496019edc.12
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 16:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=MQsXJRSBmrSlMe1V8fntsH0GUnlEAuqI6qHgA3sQwTk=;
+        b=omsQ3+sW8PiIWiNGHAbo/zisxnJDbV7YC8YfsCXBfDOjmetIp5siRpD7M4oQzk3ELu
+         ON4dWaW0vKZcQjwVNzHOPGsnBa/g71A/YCX41Fd2TezGsh2DWgLiKVQqtTSaaP/oYtn+
+         xBK9vMdI3MFVpXo6vqwvjOoylZ0O3tGTYC5TyMsLz2rPQuv2a9o6SeXGqYB9jb/L5Jqr
+         lc9OxkyV9Uj/ylaljsCLRlI4J511afSEqM+YQmnYl7ZDSGzyfAx1I71UUpKGa2RVYc3z
+         Yg2lDgRRgtOgdQUTtT2srJi4ZIQnvRMS6K+wuae14nT60PQ+4siTFGJOND6kewMMSUUz
+         ho7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=MQsXJRSBmrSlMe1V8fntsH0GUnlEAuqI6qHgA3sQwTk=;
+        b=fVZS7dh+Geg8Fi/KK+FtPfBT0lBzJ6P8dilWyDDmOtW8dQ5xsKgSaq5A2NQHE636/z
+         UNTaBunytQLSpmfzfqiHsrmPX1EwncoBhx4oCMk2F2hAQwJ2m2AcP180abMJmzHm+6B/
+         aOllJBZdEgqEeNcrXCDKYKeCwQnORCHNYvgXYzb1FFa/8S3bCXpnzF/mTEGHzGniN/R0
+         2SjHoEnrQ+LCvjccC/aZj2IPt/j2XR5XC1MkZcwa2fUwKM2WSsmYfHhRSj28CNXfLp9b
+         z6xumTQtvu9i8TQYBg6ymat33XxdXa8Z7WYg+Lezvu6aJQR3Lssu8WxQGAdYGXR5T5tK
+         J32Q==
+X-Gm-Message-State: APjAAAWnUSqFYU3diR9uE87H4HugHuz53NF7p4cBUzSgsXrKxKWuub2v
+        QwHPJWYwuOp7dJGuuRz+m0Fw0/a3SiI=
+X-Google-Smtp-Source: APXvYqxU4Jm4VN6CpK+vOIx5vJrwb0dr/paYKtdEM32abABCiWeHKUtIV3wD2Tfdin3i8VxG/HoakA==
+X-Received: by 2002:a17:906:4c92:: with SMTP id q18mr17833256eju.16.1556148300149;
+        Wed, 24 Apr 2019 16:25:00 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id p1sm3800846ejf.40.2019.04.24.16.24.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Apr 2019 16:24:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eugeniu Rosca <erosca@de.adit-jv.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Julia Lawall <julia.lawall@lip6.fr>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use with -G
+References: <87o94vs9cp.fsf@evledraar.gmail.com> <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
+Date:   Thu, 25 Apr 2019 01:24:56 +0200
+Message-ID: <87mukfrnp3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gw4vLALk08fVJy3V"
-Content-Disposition: inline
-In-Reply-To: <20190424023438.GE98980@google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---gw4vLALk08fVJy3V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 25 2019, Eugeniu Rosca wrote:
 
-On Tue, Apr 23, 2019 at 07:34:38PM -0700, Jonathan Nieder wrote:
-> Hi,
->=20
-> brian m. carlson wrote:
->=20
-> > I've talked with some people about this approach, and they've indicated
-> > they would prefer a configuration-based approach.
->=20
-> I would, too, mostly because that reduces the problem of securing
-> hooks to securing configuration.  See
-> https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google=
-=2Ecom/
-> for more on this subject.
+> Hi =C3=86var,
+>
+> Thanks for the amazingly fast reply and for the useful feature (yay!).
+>
+> On Wed, Apr 24, 2019 at 05:37:10PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Wed, Apr 24 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> > Add the ability for the -G<regex> pickaxe to search only through added
+>> > or removed lines in the diff, or even through an arbitrary amount of
+>> > context lines when combined with -U<n>.
+>> >
+>> > This has been requested[1][2] a few times in the past, and isn't
+>> > currently possible. Instead users need to do -G<regex> and then write
+>> > their own post-parsing script to see if the <regex> matched added or
+>> > removed lines, or both. There was no way to match the adjacent context
+>> > lines other than running and grepping the equivalent of a "log -p -U<n=
+>".
+>> >
+>> > 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers=
+.com/
+>> > 2. https://public-inbox.org/git/20190424102609.GA19697@vmlxhi-102.adit=
+-jv.com/
+>>
+>> I see now once I actually read Eugeniu Rosca's E-Mail upthread instead
+>> of just knee-jerk sending out patches that this doesn't actually solve
+>> his particular problem fully.
+>>
+>> I.e. if you want some AND/OR matching support this --pickaxe-raw-diff
+>> won't give you that, but it *does* make it much easier to script up such
+>> an option. Run it twice with -G"\+<regex>" and -G"-<regex>", "sort |
+>> uniq -c" the commit list, and see which things occur once or twice.
+>>
+>> Of course that doesn't give you more complex nested and/or cases, but if
+>> git-log grew support for that like git-grep has the -G option could use
+>> that, although at that point we'd probably want to spend effort on
+>> making the underlying machinery smarter to avoid duplicate work.
+>
+> Purely from user's standpoint, I feel more comfortable with `git grep`
+> and `git log --grep` particularly b/c they support '--all-match' [2],
+> allowing more flexible multi-line searches. Based on your feedback, it
+> looks to me that `git log -G/-S` did not have a chance to develop their
+> features to the same level.
+>
+>>
+>> Furthermore, and quoting Eugeniu upthread:
+>>
+>>     In the context of [1], I would like to find all Linux commits which
+>>     replaced:
+>>     	'devm_request_threaded_irq(* IRQF_SHARED *)'
+>>     by:
+>>     	'devm_request_threaded_irq(* IRQF_ONESHOT *)'
+>>
+>> Such AND/OR machinery would give you what you wanted *most* of the time,
+>> but it would also find removed/added pairs that were "unrelated" as well
+>> as "related". Solving *that* problem is more complex, but something the
+>> diff machinery could in principle expose.
+>
+> I expect some false positives, since git is agnostic on the language
+> used to write the versioned files (the latter sounds like a research
+> topic to me - I hope there is somebody willing to experiment with that
+> in future).
 
-I know this is a common issue, but fixing it is a non-goal for this
-series. Anything we do here is going to have to be backwards compatible,
-so we can't make any changes to the security model.
+I was thinking of something where the added/removed could be filtered to
+cases that occur in the same diff hunk.
 
-> Solving (1) without (2) feels like a bit of a missed opportunity to
-> me.  Ideally, what I would like is
->=20
->    i. A central registry of trustworthy Git hooks that can be upgraded
->       using the system package manager to address (2).  Perhaps just
->       git-hook-* commands on the $PATH.
->=20
->   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
->       run for each event in .git/config.
+>>
+>> But the "-G<regex> --pickaxe-raw-diff" feature I have as-is is very
+>> useful,
+>
+> I agree. I am a bit bothered by the fact that
+> `git log --oneline -Ux -G<regex> --pickaxe-raw-diff` outputs the
+> contents/patch of a commit. My expectation is that we have the
+> `log -p` knob for that?
 
-The problem I had with this when discussing it was that our
-configuration system lacks a good way to control inheritance from outer
-files. I recently was working with a system-wide gitconfig file that
-referred to files I didn't have, and my Git installation was subtly
-broken in a variety of ways.
+This is unrelated to --pickaxe-raw-diff, -U<n> just implies -p in
+general. See e.g. "git log -U1".
 
-If I have a system-wide hook to run for company code, but I have a
-checkout for my personal dotfiles on my machine where I don't want to
-run that hook, our configuration lacks a way for me to disable that
-system-wide configuration. However, using our current system, I can
-override core.hooksPath in this case and everything works fine.
+>> I've had at least two people off-list ask me about a problem
+>> that would be solved by it just in the last 1/2 year (unrelated to them
+>> having seen the WIP patch I sent last October).
+>>
+>> It's more general than Junio's suggested --pickaxe-ignore-{add,del}
+>
+> As a user, I would be happier to freely grep in the raw commit contents
+> rather than learning a dozen of new options which provide small subsets
+> of the same functionality. So, I personally vote for the approach taken
+> by --pickaxe-raw-diff. This would also reduce the complexity of my
+> current git aliases and/or allow dropping some of them altogether.
+>
+> Quite off topic, but I also needed to come up with a solution to get
+> the C functions modified/touched by a git commit [3]. It is my
+> understanding that --pickaxe-raw-diff can't help here and I still have
+> to rely on parsing the output of `git log -p`?
 
-I mentioned this for completeness, and because I hope that some of those
-people will get some time to chime in here, but I think without that
-feature, we end up with a worse experience than we have now.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Yeah, it doesn't help with that. When it runs we haven't generated the
+context line or the "@@" line yet, that's later. You can breakpoint on
+xdl_format_hunk_hdr and diffgrep_consume to see it in action.
 
---gw4vLALk08fVJy3V
-Content-Type: application/pgp-signature; name="signature.asc"
+It's a waste of CPU to generate that for all possible hunks, most of
+which we won't show at all.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+But it's of course possible to do so by running the full diff machinery
+over every commit and matching on the result, the current pickaxe is
+just taking shortcuts and not doing that.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzA7D8ACgkQv1NdgR9S
-9osXPRAAqSc4C1P8b9/FEp5DB9WBNeAZDoU2vQpsNlFnG7jnfKAxdd7LWe6/YDhp
-qfr8dRBahRWniTlK3s42Ke818CXzE1m99c1LkGBRMUAxOI0zP1pruWzyEhPGXHUG
-zwhlJg2ZlIsr9ANc04+dHdLXBGtr+2pSJJGapjx3MVmoXqM9OQS9/XhAi8wWQflY
-Ft5pcEGSFQdDoSpuAC7pwNzDV3kuMdTZgjdDRDIVsOVnB2MdYw1jaf33VAi1HYch
-4qqtCxp4tpsdxovR+ukggJgcpFBBQu2bCJ/sVnye8zDKVia/Xg6p23SCTWYvLr8p
-kFqvHQNk1NRXrJrKfvMkKVQeCIzfURRy6tFqrIBsozn3oYWLBueMSKJIY3y0IMDL
-wLuHHavf6ahhHNtbzIF9RnaYG8IaumS8xl9EGs2Sgut+5Gqq4AIiJiZYG2Tc2r6A
-AO/sPy0vOqowqYOe2htfWLunSuWpY45NfUcHgt8CB8raaSBvO8e5aU2W80Osy488
-YlWON3lHAUj0H0pvv8Gx+3r8530FOhTnfBcuIR4KKzi4cUuma+XlYKDTc9Lzcm9A
-p0NvF0k4tr8nihEw6waR4GXYmS2Qfla1k2Jj6B+VMvjIYzS/rTEUIv8SvouzPFdn
-t7X7JppBXLV7/4+EgCdCtscWAivt9aHWxkTyzAPuL1b51E9ogY0=
-=JVmR
------END PGP SIGNATURE-----
-
---gw4vLALk08fVJy3V--
+>> options[1], but those could be implemented in terms of this underlying
+>> code if anyone cared to have those as aliases. You'd just take the
+>> -G<regex> and prefix the <regex> with "^\+" or "^-" as appropriate and
+>> turn on the DIFF_PICKAXE_G_RAW_DIFF flag.
+>>
+>> 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.c=
+om/
+>
+> Thanks!
+>
+> [2] https://gitster.livejournal.com/30195.html
+> [3] https://stackoverflow.com/questions/50707171/how-to-get-all-c-functio=
+ns-modified-by-a-git-commit
