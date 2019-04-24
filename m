@@ -2,107 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12AD21F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 10:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC2951F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 11:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726790AbfDXKyA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 06:54:00 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:46405 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726271AbfDXKyA (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Apr 2019 06:54:00 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 4C1BF49D;
-        Wed, 24 Apr 2019 06:53:59 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 24 Apr 2019 06:53:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xkqr.org; h=from
-        :to:cc:cc:subject:in-reply-to:references:date:message-id
-        :mime-version:content-type; s=fm1; bh=J8ihio6up1evVKEqh/ogMKznEk
-        Ijud3pu+XThNW9bj0=; b=nwGQ6xkKJeRe3y2BFyHKz8YMi7Jn2kk46kVm0tcNMB
-        rAz03X4PCjHCP9u4Hlj780CT+/UEwH/e77+4lszvUHxkTaUGzVZPy/fadmNmTzy+
-        TeMloqLNK84mStY2aL2K8ANa7TR0PdzJfc6XfubjZkAh2YX1ncJSmkhb4pk9DbcD
-        hvYlET964mEdG4dJVccXAiRGHFjIPUNf9s2RJ6zG6p34kPiosCqh6Bk8EsGdYQdM
-        imq6QTAYBBQNTOQqQYL2MbrsOs28y8icyQf8vneiQiBNjXVCI9FE6XuOczavnUFq
-        QVitX8Qn9s8YEIl9ABAjos8Eg4B233qPNymVEut9hJTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=J8ihio
-        6up1evVKEqh/ogMKznEkIjud3pu+XThNW9bj0=; b=RmiCQzMdKF6j/CQ2IdPaS4
-        Q+ZHrY+tS5ng9oBhR5TvCDjvIx336g/ay2w28XpiMr5g/UChjf93T7K2KCYgFK+1
-        8m/B9OZ5K0E1nWDCx2hYsEpsbX9ShMg24mYI2GeU6MEu7Se6bNGW5cnevGVITfCZ
-        9zD4EpQcLJUKs+M/zYgaiEe8wtXe6QeHF5PEKLwqympY1YXw7I3v0WBTNx/oXHsD
-        L8pxk0QXX6lP9I3cbrsIlLuHM3gXyUlFDjrCkXFuDtW+Ncscvkuovi6cooqE9TTp
-        MGkTEOIx95LlBLI2BWcWKd5L2RQLZdKlodlB37Txk4SHqGjjk2A0nu0/6u73BGrw
-        ==
-X-ME-Sender: <xms:RkDAXPY5bzAcGMYJLrDh9bONZCO4RxEgCw-p2K8biSimI-GibJL6qg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrhedtgdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufgjfhffkfggtgesghdtreertd
-    dtjeenucfhrhhomhepvehhrhhishhtohhffhgvrhcuufhtjhgvrhhnlhpnfhcuoegrseig
-    khhqrhdrohhrgheqnecukfhppedutdelrdejgedrvddtiedrheehnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpegrseigkhhqrhdrohhrghenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:RkDAXCqnW_HpCewTOLkNr0lBW_8TeYtuhzk3OPRrDUGHd8PCc-IXBg>
-    <xmx:RkDAXM_VmGQvdluTnhTi0zNgbMMXLouSekNiAEXHSa8MmL9VAwvKfw>
-    <xmx:RkDAXJ8M_tBJBt8b4Uv4OLZZ19S8R0LZwgAyyF3FN3w5rCdPyxBlYw>
-    <xmx:RkDAXIlgiV_6NhIcwdpNIL30ddf6iHIERdZ0y6OnFTimHhbbk1x4gw>
-Received: from localhost (vps.xkqr.org [109.74.206.55])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1C184103C9;
-        Wed, 24 Apr 2019 06:53:58 -0400 (EDT)
-From:   Christoffer =?utf-8?Q?Stjernl=C3=B6f?= <a@xkqr.org>
+        id S1727463AbfDXLL2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 07:11:28 -0400
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:40863 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726441AbfDXLL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 07:11:28 -0400
+Received: by mail-wr1-f47.google.com with SMTP id h4so24553183wre.7
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 04:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nl+J6Qjk21WHvO3UiHPVUAU/tPxFafTIJcKXjKepvTU=;
+        b=ZvI0sEtBZsr5sGVRf2paXbad260u8lZThY8htfYGUe1T/aJ2VwdnJCZw3AqNau96JC
+         KMw/oxd32OX7CcZQrnVnLtcEDR9j/fnaOMgoqZBYAS7iybjQ/hUe9xcLmajijvpbR7tm
+         QemrD96L1ZFHjxwZKvQKTGLijrDYiyX+BUVSHDEHCrb4h4xp2JmR0PplAwTIJX4LMzKM
+         0RM12DmdqnAsUL1zkECeJntoLaVKWHwmtkucwYgoKG8Vc4kQJXf2Hzjizj8kQR6ffb6c
+         4pcS62YsDnO6FjdUBgXbOa8ZYrQKcFk4jfjpW+YcU6rgHop9dJoTVO8mJQb4qAhTbZw6
+         Gl4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nl+J6Qjk21WHvO3UiHPVUAU/tPxFafTIJcKXjKepvTU=;
+        b=td0cWvYFmBYi1bE0neMTERiZEWTeu55+QeHOfkKKec8tZKrMXZs/JLO11ZNZcYqHaW
+         dkz1Q4cYRzbaOyaaIZmrYWKMvI6MEUYRn0jtdWa8n7RKt93+GmHMlOwviWAm5t+2uIm/
+         Qy6QnX9DesgTjHaNq4jAcLT4olUGYZJq9Yh5JvHVr0/bg19B9KjWNgdh3kme6l00hgfd
+         AlYwdkY/eiP0pDlMpDCzgQfHeQL10mAuczUHBOzZTAi24Akn5Q46Fh5WlknbAvJa9WNR
+         cRb/dhpsZKjtr/pI7H+qjnwfHhwSYDhsdUb4ikgKCs5+EC6ctwFcYUU6A4CvazgpUoKW
+         oy7Q==
+X-Gm-Message-State: APjAAAWXvwH7ghZbAGltmw8AElA3ZaHeiariBOR8oVSqXq+ZU6GjRDNN
+        EJXhUZU6QPsh/DKSLPt20FE=
+X-Google-Smtp-Source: APXvYqwpqQmzXtBEzuT2DreAdug0aykZyl4taiYyteTE57y0tkZpyKAjG69ugu1+Tg/JYrS/uHM0kQ==
+X-Received: by 2002:adf:b60a:: with SMTP id f10mr20226398wre.116.1556104286238;
+        Wed, 24 Apr 2019 04:11:26 -0700 (PDT)
+Received: from szeder.dev (x4db31470.dyn.telefonica.de. [77.179.20.112])
+        by smtp.gmail.com with ESMTPSA id x18sm20769293wrw.14.2019.04.24.04.11.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Apr 2019 04:11:25 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 13:11:23 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+Cc:     Christoffer =?utf-8?Q?Stjernl=C3=B6f?= <a@xkqr.org>,
+        git@vger.kernel.org
 Subject: Re: Bug: git branch returns EXIT_SUCCESS when no branches found
-In-Reply-To: <xmqqimv31y3n.fsf@gitster-ct.c.googlers.com>
-References: <875zr3iucd.fsf@xkqr.org> <xmqqmukf1yh9.fsf@gitster-ct.c.googlers.com> <xmqqimv31y3n.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 24 Apr 2019 10:53:56 +0000
-Message-ID: <87wojjhdx7.fsf@xkqr.org>
+Message-ID: <20190424111123.GB8695@szeder.dev>
+References: <875zr3iucd.fsf@xkqr.org>
+ <xmqqmukf1yh9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha512; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmukf1yh9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Wed, Apr 24, 2019 at 07:36:34PM +0900, Junio C Hamano wrote:
+> 	if git merge-base --is-ancestor master "$DEV_BRANCH"
+> 	then
+> 		echo "master is an ancestor of $DEV_BRANCH"
+> 	else
+> 		echo "master has commits not in $DEV_BRANCH"
+> 		git --no-pager log "master..$DEV_BRANCH" --
+> 	fi
 
-Dear Junio,
+A non-zero exit code might indicate an error in 'git merge-base'
+itself; I had basically the same if-else condition in a script of my
+own that had to check the same thing...  until once I mistyped the
+branchname, and, well, undesired behavior ensued.  After that I
+added one more branch to the condition like this:
 
-Junio C Hamano (gitster@pobox.com) 2019-04-24:
-> if cs/topic branch does not exist, of if the branch
-> does not contain 'master', the command will show "here are the
-> branches that match the criteria you gave me" by giving no lines in
-> its standard output, and exits with 0 to signal that what you see on
-> the screen indeed was computed correctly (as opposed to the command
-> internally crashing and failing to produce a result, in which case
-> you would want to be told with non-zero exit status).
+  git merge-base --is-ancestor master "$DEV_BRANCH"
+  ret=$?
+  if test $ret -gt 1
+  then
+        die "uh-oh, git merge-base errored out"
+  elif test $ret -eq 0
+  then
+        echo "master is an ancestor of $DEV_BRANCH"
+  else
+        echo "master has commits not in $DEV_BRANCH"
+  fi
 
-Thank you for taking the time to elaborate on your already detailed
-answer. I can see the concern about separating internal command errors
-from correctly computed results, even if those results seem to indicate
-something being amiss. Is this not a place where different error codes
-can be useful?
-
-Sincerely yours,
-Christoffer
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQSnhhl1PrVuOSPiCuJ63EO1dkwMBQUCXMBARAAKCRB63EO1dkwM
-BaFMAQD1Ve9nLSWvitaNGi30r0xlCMNPqSWGJH2xdClI+lsc4gEAtsTyrzvTOCae
-8WIRYTckg6m06NkMJhowpMvtSpNZ/gs=
-=katU
------END PGP SIGNATURE-----
---=-=-=--
