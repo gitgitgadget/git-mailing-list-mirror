@@ -2,153 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,FAKE_REPLY_C,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B73E1F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9BDF1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 22:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726995AbfDXWrK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 18:47:10 -0400
-Received: from smtp1.de.adit-jv.com ([93.241.18.167]:37086 "EHLO
-        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726966AbfDXWrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 18:47:08 -0400
-Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
-        by smtp1.de.adit-jv.com (Postfix) with ESMTP id D2ACE3C00D1;
-        Thu, 25 Apr 2019 00:47:04 +0200 (CEST)
-Received: from smtp1.de.adit-jv.com ([127.0.0.1])
-        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 1zLCOq6g4p26; Thu, 25 Apr 2019 00:46:57 +0200 (CEST)
-Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        id S1727201AbfDXWt4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 18:49:56 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35686 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727146AbfDXWtv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 24 Apr 2019 18:49:51 -0400
+Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id A47683C0034;
-        Thu, 25 Apr 2019 00:46:57 +0200 (CEST)
-Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
- (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.439.0; Thu, 25 Apr
- 2019 00:46:57 +0200
-Date:   Thu, 25 Apr 2019 00:46:54 +0200
-From:   Eugeniu Rosca <erosca@de.adit-jv.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-CC:     <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Julia Lawall <julia.lawall@lip6.fr>,
-        Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use
- with -G
-Message-ID: <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 300D860FF7;
+        Wed, 24 Apr 2019 22:49:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1556146189;
+        bh=z5ZZWNfruJdfot+6AVexggeMAacioXqVnGCRqV5CfL8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=rwz/Z/ZBIZMfYXaa3z4F4OarYIwxEfCHV1fyFIjK6PDMXGUC/FbiFPIJILD+oWVj7
+         Qu00f+JSF8PZ1TnqQ7yOIK/cR0J/57PcqLlXl3Zzf46qwlDs4NJ7+79tv+qW+aIwYr
+         sFH9H/YKhORBUvsh4yOAEi9yOW+sGcYwmxFYEB7iC0W4u4Ql/Tt31m2ex/9S/p20oQ
+         G0QV7GhAYv83U2SGkmaghqEnHqy8wUtheqht3Ebuju3ZYJq2C+G3Jqa0KbYuMKarOJ
+         0J0WE8GxKFaT09osyY+7mlQqogoGfl6PKE/GlzDhjjtW0dwQqv3YU3ZXfEhe7g2oxe
+         nJO+5GGNEZahVUwbSWqoscQ5ZNiE54CEAxEDDJX9iohwKcmzWyzWnwmaltjYoPDrbd
+         y9a4y9LO7XtsGwVmjSJoBTMQ/2fXqciClWZInPQA7++vwOpHJbHovTfZaVI1R72Wpg
+         6Wm6QHBrPsmnF3VQ6zwpk8sD64f0onJtGIHm6PjIBC9HCaNyjHd
+Date:   Wed, 24 Apr 2019 22:49:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Multiple hook support
+Message-ID: <20190424224945.GK6316@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+ <CACsJy8CKwiNknEkEH_-DxuXYiBmpYvfdRAZvmSJCcqko_OYnTw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="RD6GsZsdEJvsf78O"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o94vs9cp.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.72.93.184]
+In-Reply-To: <CACsJy8CKwiNknEkEH_-DxuXYiBmpYvfdRAZvmSJCcqko_OYnTw@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-4-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
 
-Thanks for the amazingly fast reply and for the useful feature (yay!).
+--RD6GsZsdEJvsf78O
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 24, 2019 at 05:37:10PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Apr 24 2019, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > Add the ability for the -G<regex> pickaxe to search only through added
-> > or removed lines in the diff, or even through an arbitrary amount of
-> > context lines when combined with -U<n>.
-> >
-> > This has been requested[1][2] a few times in the past, and isn't
-> > currently possible. Instead users need to do -G<regex> and then write
-> > their own post-parsing script to see if the <regex> matched added or
-> > removed lines, or both. There was no way to match the adjacent context
-> > lines other than running and grepping the equivalent of a "log -p -U<n>".
-> >
-> > 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.com/
-> > 2. https://public-inbox.org/git/20190424102609.GA19697@vmlxhi-102.adit-jv.com/
-> 
-> I see now once I actually read Eugeniu Rosca's E-Mail upthread instead
-> of just knee-jerk sending out patches that this doesn't actually solve
-> his particular problem fully.
-> 
-> I.e. if you want some AND/OR matching support this --pickaxe-raw-diff
-> won't give you that, but it *does* make it much easier to script up such
-> an option. Run it twice with -G"\+<regex>" and -G"-<regex>", "sort |
-> uniq -c" the commit list, and see which things occur once or twice.
-> 
-> Of course that doesn't give you more complex nested and/or cases, but if
-> git-log grew support for that like git-grep has the -G option could use
-> that, although at that point we'd probably want to spend effort on
-> making the underlying machinery smarter to avoid duplicate work.
+On Wed, Apr 24, 2019 at 04:49:54PM +0700, Duy Nguyen wrote:
+> Heh you beat me to it. My config-hooks branch [1] has not been updated
+> for half a year. I only skimmed through quickly so no useful comments,
+> but I went with a slightly different design, introducing
+> for_each_hook() instead (see run-command.[ch] in the last patch).
 
-Purely from user's standpoint, I feel more comfortable with `git grep`
-and `git log --grep` particularly b/c they support '--all-match' [2],
-allowing more flexible multi-line searches. Based on your feedback, it
-looks to me that `git log -G/-S` did not have a chance to develop their
-features to the same level.
+I figured this was a common enough request that people wanted that it
+was worth doing. I'll take a look at your series and I may steal some
+code.
 
-> 
-> Furthermore, and quoting Eugeniu upthread:
-> 
->     In the context of [1], I would like to find all Linux commits which
->     replaced:
->     	'devm_request_threaded_irq(* IRQF_SHARED *)'
->     by:
->     	'devm_request_threaded_irq(* IRQF_ONESHOT *)'
-> 
-> Such AND/OR machinery would give you what you wanted *most* of the time,
-> but it would also find removed/added pairs that were "unrelated" as well
-> as "related". Solving *that* problem is more complex, but something the
-> diff machinery could in principle expose.
+> Back then I wasn't sure what would be the right policy for running
+> multiple hooks. By keeping the hook loop in one place, we could change
+> that policy much easier later (e.g. continue anyway in case of
+> failure, or stop as soon as you see a problem, or even run some
+> special hooks at the end even when there is an error earlier).
 
-I expect some false positives, since git is agnostic on the language
-used to write the versioned files (the latter sounds like a research
-topic to me - I hope there is somebody willing to experiment with that
-in future).
+Yeah, I think from feedback elsewhere, I'm going to roll it into a
+single function. The nature of callbacks in C makes it potentially
+messy, but I'll try to see if there's a tidy way to do it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> 
-> But the "-G<regex> --pickaxe-raw-diff" feature I have as-is is very
-> useful, 
+--RD6GsZsdEJvsf78O
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I agree. I am a bit bothered by the fact that
-`git log --oneline -Ux -G<regex> --pickaxe-raw-diff` outputs the
-contents/patch of a commit. My expectation is that we have the
-`log -p` knob for that?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.15 (GNU/Linux)
 
-> I've had at least two people off-list ask me about a problem
-> that would be solved by it just in the last 1/2 year (unrelated to them
-> having seen the WIP patch I sent last October).
-> 
-> It's more general than Junio's suggested --pickaxe-ignore-{add,del}
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzA6AgACgkQv1NdgR9S
+9ouoJA/7Bo2wI25tGWiHKV0FX9naDR4edlCWSIZPo+EqkFWzo0H1BCSc1Aetur96
+qZRlayeqoA9Ni7jPM2w4ACH6bTr5/pIm0ek+YUGXVy7ta5gBq8T9tmZOCxNb4tPf
+gc5vZfvrBuHag5yz0tjrDs5UVOnhmAYXN2FJUesWfYbvjdxAnXbJoJjihkjDmWi2
+ZxNJqlwBNnN48i0ylOoPbn2ddQsMOeA9aLYw8FMeHU/76Wvn9h/H+ji4RZvxBdoo
+PlLEQRbQVKnyE5Oj7If/N0lGoWQXz7EX3xSDXwoS3/50ChyS5UnWHcOGBFgmZMkv
+miYZvHHZaIg7Jih0Tcho92hVxaBUYyqBMDZby70jbD02vFjiGQZn/MrdzNXNiMBJ
+hR/TJ8hJnR1oYvjc15loYjIZ+chtcUKVrPAJj85QSaFOqSEWy7mEVRTAd9ToJUnc
+uG/0GqJyMbcuhaAyM8d5qidUA7CehjsTuBokgLpnCGl28BFNdYgbDo4nq5ODJHdl
+p+L++Q31FLaA/j5I7CMubcEVjU0t00KJitw2fa91zJ56LW2d4pNJ42vnd6EpFsun
+iWJ7BtISwBgKaG7uskGfcc0oNam2yOTPrblU7QnBJe1DnZ0gYCIyRtTrJsbEaNfh
+o+iG2RoYX1nt7wuTnVcLdeca0P5yaGj4jmHZy9OuUAUKyGBt4bk=
+=lHrZ
+-----END PGP SIGNATURE-----
 
-As a user, I would be happier to freely grep in the raw commit contents
-rather than learning a dozen of new options which provide small subsets
-of the same functionality. So, I personally vote for the approach taken
-by --pickaxe-raw-diff. This would also reduce the complexity of my
-current git aliases and/or allow dropping some of them altogether.
-
-Quite off topic, but I also needed to come up with a solution to get
-the C functions modified/touched by a git commit [3]. It is my
-understanding that --pickaxe-raw-diff can't help here and I still have
-to rely on parsing the output of `git log -p`?
-
-> options[1], but those could be implemented in terms of this underlying
-> code if anyone cared to have those as aliases. You'd just take the
-> -G<regex> and prefix the <regex> with "^\+" or "^-" as appropriate and
-> turn on the DIFF_PICKAXE_G_RAW_DIFF flag.
-> 
-> 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.com/
-
-Thanks!
-
-[2] https://gitster.livejournal.com/30195.html
-[3] https://stackoverflow.com/questions/50707171/how-to-get-all-c-functions-modified-by-a-git-commit
-
--- 
-Best regards,
-Eugeniu.
+--RD6GsZsdEJvsf78O--
