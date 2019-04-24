@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 030781F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7EA1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 22:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726985AbfDXWrG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 18:47:06 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:40414 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726943AbfDXWrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 18:47:05 -0400
-Received: by mail-pl1-f195.google.com with SMTP id b3so10036450plr.7
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 15:47:05 -0700 (PDT)
+        id S1726829AbfDXWrI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 18:47:08 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41153 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726984AbfDXWrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 18:47:07 -0400
+Received: by mail-pg1-f196.google.com with SMTP id f6so10110246pgs.8
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 15:47:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=J2vuqzzG3upXc10i7/iQLq6AzRVhy83EjkO8wxrcPVs=;
-        b=DoKBDLrMlbb6DVutmN5/ybw3Mhsl2XlPU6CvHuMfHrzSZH4MjdWGif6zJO7LkYTBhe
-         tq1SM0ekWv/jOpyxXrXl/vekCaVPUIcbx5SzSQZ4x7YUJHT67F3VjHZ+wT8a96HlnBaV
-         cTf5HFv9C2bkIZJFntS47e0Fr2dxoLM/gMJ8FEBgAFPDh3dIoRibZgOLUJmyXTCWETWU
-         Qv6svWkP8JlV+GN3YCYNfvDQnXxeJG7/R8hcOPVaG6xJwsToeOOug4E6QEnWPqvTNM4o
-         xDmX5HYyeSOyo8AHdz7rcalIyTbJ6GJdNgRekSHIfys/8zVaSz2Ug5BDofDdn62bQE3m
-         OkyA==
+        bh=sw448NwAPnuHRAOZn8IVLJkytIV16ZWjwj1QCC6oBng=;
+        b=uBFGGac6IZZxpeiZaNAX59rdH5KXpJ7w6xnKvKWdg0ryasIsHjaKoqKvtVD6ijj0lf
+         T4Gb6BE8vbEW8HroHR+c3vntpFmZwQzMjWTmAS1P3ErTkUGCzFagSueaHyn6/JYVA1qO
+         15FvhN7b0EepmUBLPUgSjo85xIs+4C3TQlw4Nz9nZeGiqs+ZkkRaQMtTDRUoB/NNUrwV
+         +uDuLeT9vND6eVN8KAuOaSas0MmVlFISMqhP2nncmvBkS6SrI9AMDcV1iCBeM0a04Us9
+         4wXajzjeWcEzn0hJ/cOdzMvpZS7BACgHTAesWVCqwhw9z2WrWjt23nx69KNX/50GV3K7
+         nkcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=J2vuqzzG3upXc10i7/iQLq6AzRVhy83EjkO8wxrcPVs=;
-        b=PvlDT1VP7gO/Kf8+/5xnmHGZ6XIEyxvP5xJTIJhGnTS5Ojo2GcUVCdamrYUf+lx/r0
-         zmVYq7DWthukbr7iEqk5MrJn6dV71RUuIT449eaGyi941NkeESxheI0Nb5c2uI28p+H4
-         AI8FLdCkh4hYgF53985OiyW0emgcqZe6558wSqiO9ZfIxYVM4Xq0RXAuyCZEP3c8A4X9
-         4wa2wvS1JUjMRkhLmUnq+4gX9Rq4IAhsgUJ0Z5hNV/XKoDeg8OXz5fYgTDR8e5HQFfH+
-         6UX0HpsavGydqqMQ+se0VjPJ3LKOrp8tAk1SSof6+ueKWS1I/jaLZ4QjQXiPeGQ2d6Z1
-         9HEQ==
-X-Gm-Message-State: APjAAAVUNAJRubLHyHfFCWZkUgethlwXD5iyNjPzVEvShWlIKKWFvjie
-        G3b0OKZhODFPXvsIW3r+EjokbGqy
-X-Google-Smtp-Source: APXvYqz0Ra2kza6ZAPDdpc7O0HidbRDVyxBZ2uiei7hHGxUQAFPTMA6DjNcXDv99nhXgdYOxxrU+Vw==
-X-Received: by 2002:a17:902:20c9:: with SMTP id v9mr35145690plg.239.1556146024828;
-        Wed, 24 Apr 2019 15:47:04 -0700 (PDT)
+        bh=sw448NwAPnuHRAOZn8IVLJkytIV16ZWjwj1QCC6oBng=;
+        b=ahcPQwhTB2T7sksuKr5c1bhPQuA/FkY7AGkXWgZizZLAjTdpQUHwe+wIM3pNiQLHGc
+         W6OiW4ISztwYuFK7aexGwun43UQcaHD3BLQSshF0fyP/omlu5WPAHR3UIHxh4A8Ad7Xg
+         RzOWOMHXfuG/tv5OTLWIPMlPSkqoweTp9gqqxXynArAzg64amCnCXF5CDwRfRj4t9uj7
+         b7ShXOo/ZU84WxvTuqW2qu9vxlFPpaZsDuDe8gnXJ7Fm3+nfnfLcCehNBt3aNPOBHSr3
+         c/O13O5fB2zpn60ttIqEaIXotSGOdOpUapU6xdsZODzOcFkE0w/liVGtgr8N3klIXXKD
+         BOBg==
+X-Gm-Message-State: APjAAAWITdaWCEiFvOtBS12Aq33pcicv29b3x4Y5Tp3nNN1x7za1S5yi
+        NjRQCdHyVDedz/KsEuYC2QzEDn7Z
+X-Google-Smtp-Source: APXvYqwXa1wc2SF0E7ExABgcam9X3U8AYJaeRE2Bx1hw1MCmymXAGbMtnW2QWztzvkvF/R3YT++6xA==
+X-Received: by 2002:a65:6107:: with SMTP id z7mr32957163pgu.313.1556146026036;
+        Wed, 24 Apr 2019 15:47:06 -0700 (PDT)
 Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id p128sm37453968pfp.30.2019.04.24.15.47.03
+        by smtp.gmail.com with ESMTPSA id g64sm38062305pfg.13.2019.04.24.15.47.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Apr 2019 15:47:03 -0700 (PDT)
-Date:   Wed, 24 Apr 2019 15:47:03 -0700
+        Wed, 24 Apr 2019 15:47:05 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 15:47:04 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -57,9 +57,8 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/6] difftool: make --gui, --tool and --extcmd mutually
- exclusive
-Message-ID: <bc3e2291714d48d0fc8c420c7cb54219c251887d.1556142510.git.liu.denton@gmail.com>
+Subject: [PATCH v3 6/6] difftool: fallback on merge.guitool
+Message-ID: <f39b15efbd5c765953737f99aa032230f066c074.1556142510.git.liu.denton@gmail.com>
 References: <cover.1556009181.git.liu.denton@gmail.com>
  <cover.1556142510.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,47 +71,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-difftool, these options specify which tool to ultimately run. As
-a result, they are logically conflicting. Explicitly disallow these
-options from being used together.
+In git-difftool.txt, it says
+
+	'git difftool' falls back to 'git mergetool' config variables when the
+	difftool equivalents have not been defined.
+
+However, when `diff.guitool` is missing, it doesn't fallback to
+anything. Make git-difftool fallback to `merge.guitool` when `diff.guitool` is
+missing.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/difftool.c  | 3 +++
- t/t7800-difftool.sh | 8 ++++++++
- 2 files changed, 11 insertions(+)
+ Documentation/git-difftool.txt |  4 +++-
+ builtin/difftool.c             | 10 ++--------
+ t/t7800-difftool.sh            | 16 ++++++++++++++++
+ 3 files changed, 21 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 96c26e6aa8..484c485fd0 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -90,7 +90,9 @@ instead.  `--no-symlinks` is the default on Windows.
+ 	When 'git-difftool' is invoked with the `-g` or `--gui` option
+ 	the default diff tool will be read from the configured
+ 	`diff.guitool` variable instead of `diff.tool`. The `--no-gui`
+-	option can be used to override this setting.
++	option can be used to override this setting. If `diff.guitool`
++	is not set, we will fallback in the order of `merge.guitool`,
++	`diff.tool`, `merge.tool` until a tool is found.
+ 
+ --[no-]trust-exit-code::
+ 	'git-difftool' invokes a diff tool individually on each file.
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index a3ea60ea71..65bba90338 100644
+index 65bba90338..10660639c0 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -731,6 +731,9 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
- 	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+@@ -24,7 +24,6 @@
+ #include "object-store.h"
+ #include "dir.h"
  
-+	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
-+		die(_("--gui, --tool and --extcmd are mutually exclusive"));
-+
- 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
- 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
+-static char *diff_gui_tool;
+ static int trust_exit_code;
+ 
+ static const char *const builtin_difftool_usage[] = {
+@@ -34,11 +33,6 @@ static const char *const builtin_difftool_usage[] = {
+ 
+ static int difftool_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcmp(var, "diff.guitool")) {
+-		diff_gui_tool = xstrdup(value);
+-		return 0;
+-	}
+-
+ 	if (!strcmp(var, "difftool.trustexitcode")) {
+ 		trust_exit_code = git_config_bool(var, value);
+ 		return 0;
+@@ -734,8 +728,8 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
+ 		die(_("--gui, --tool and --extcmd are mutually exclusive"));
+ 
+-	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
+-		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
++	if (use_gui_tool)
++		setenv("GIT_MERGETOOL_GUI", "true", 1);
  	else if (difftool_cmd) {
+ 		if (*difftool_cmd)
+ 			setenv("GIT_DIFF_TOOL", difftool_cmd, 1);
 diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index bb9a7f4ff9..107f31213d 100755
+index 107f31213d..ae90701a12 100755
 --- a/t/t7800-difftool.sh
 +++ b/t/t7800-difftool.sh
-@@ -705,4 +705,12 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+@@ -279,11 +279,27 @@ test_expect_success 'difftool + mergetool config variables' '
+ 	echo branch >expect &&
+ 	git difftool --no-prompt branch >actual &&
+ 	test_cmp expect actual &&
++	git difftool --gui --no-prompt branch >actual &&
++	test_cmp expect actual &&
+ 
+ 	# set merge.tool to something bogus, diff.tool to test-tool
+ 	test_config merge.tool bogus-tool &&
+ 	test_config diff.tool test-tool &&
+ 	git difftool --no-prompt branch >actual &&
++	test_cmp expect actual &&
++	git difftool --gui --no-prompt branch >actual &&
++	test_cmp expect actual &&
++
++	# set merge.tool, diff.tool to something bogus, merge.guitool to test-tool
++	test_config diff.tool bogus-tool &&
++	test_config merge.guitool test-tool &&
++	git difftool --gui --no-prompt branch >actual &&
++	test_cmp expect actual &&
++
++	# set merge.tool, diff.tool, merge.guitool to something bogus, diff.guitool to test-tool
++	test_config merge.guitool bogus-tool &&
++	test_config diff.guitool test-tool &&
++	git difftool --gui --no-prompt branch >actual &&
  	test_cmp expect actual
  '
  
-+test_expect_success 'difftool --gui, --tool and --extcmd are exclusive' '
-+	difftool_test_setup &&
-+	test_must_fail git difftool --gui --tool=test-tool &&
-+	test_must_fail git difftool --gui --extcmd=cat &&
-+	test_must_fail git difftool --tool=test-tool --extcmd=cat &&
-+	test_must_fail git difftool --gui --tool=test-tool --extcmd=cat
-+'
-+
- test_done
 -- 
 2.21.0.1000.g7817e26e80
 
