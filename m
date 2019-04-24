@@ -2,147 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD811F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 00:48:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 762BA1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 00:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728886AbfDXAsw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 20:48:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36163 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728615AbfDXAsw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 20:48:52 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b1so11208985wru.3
-        for <git@vger.kernel.org>; Tue, 23 Apr 2019 17:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=a5BjhrlCxviy84XI77dTVwHebmXZTeyvt+e3ZkbiTqM=;
-        b=hbftwC/qADMU7xMHCuCb2qHZMX6VVv5CCdtS6oEfFF4KIMIlR1kYQv1feOqgCWrfo5
-         zhvJgjrcSO9RnGxUm5L326VpwKpnAlhxMoMoutFIMX5TJ+/p4DjVMB3CnyNYMCuzNpzJ
-         vFiAu1+/pVZM9EeGa1+jq/B/LOLJv579oABVcSKe/UJf8M512VQ/y7yp4/2nYODs22wi
-         CdI6rLMpBXuOL0aEGymfYgsrxaBgdWUTzt7igU38ZFerEJqbG8Ditcg4wHd2gUQdC5RO
-         9xEDAHtFtGrWsBJ/2McoKlYs5GqdSo4qNxHAv/rhUkld4F+Wyryl/G9Ap6fN2NHYgWGN
-         bMOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=a5BjhrlCxviy84XI77dTVwHebmXZTeyvt+e3ZkbiTqM=;
-        b=llK7zvvggwHz8D5NqSAQIcqIDDgB4iOxWldqX4JSjyGI+69GUwlRoYQhkuXOMTBy6J
-         h2zKRJeVnB82LlHicpAoyS+DkHveUP4sCVDB/+kJFvRm3AbvU1nvd6CnuFwWAremrsyM
-         CShZbQIKdQ2dePdvJbnwdZswixUv8nPa5/vTI4pPAPv5VVhPtfcsL7Ew5anbfvOVyHBg
-         m98OUerZLXefTT6seidfgPSuEHIokmBCy5IiX6XF0RpnKprk+tDO6OutRysBgZu7PHN9
-         iL/eTiny66vvX1cjORWr3dW8l/fIAZcacYSj0ES/ZKXJyZVXJdI71jFFPm/ioykfrwGm
-         QOjA==
-X-Gm-Message-State: APjAAAUEyTArPnOLu2BzfigEFlxyjGAXYOT/JxLn+P95N7gCVTgj+scx
-        V64tNddpG1UMk0FsxYQzIqE=
-X-Google-Smtp-Source: APXvYqzpKAjaA/AjmLXVHRlaq8XtcVWIIjahHrnBTi69OvIri54w7OYQ2E0VFpLq/oDCJcKTsnGZDQ==
-X-Received: by 2002:adf:f108:: with SMTP id r8mr3874980wro.252.1556066930093;
-        Tue, 23 Apr 2019 17:48:50 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id y3sm17095381wmi.27.2019.04.23.17.48.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Apr 2019 17:48:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "CHIGOT\, CLEMENT" <clement.chigot@atos.net>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-compat-util: work around for access(X_OK) under root
-References: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-        <xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
-        <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-Date:   Wed, 24 Apr 2019 09:48:48 +0900
-In-Reply-To: <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
-        (CLEMENT CHIGOT's message of "Tue, 23 Apr 2019 11:31:02 +0000")
-Message-ID: <xmqqwojk449b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728927AbfDXAyY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 20:54:24 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35590 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728730AbfDXAyY (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Apr 2019 20:54:24 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1097B60FF7;
+        Wed, 24 Apr 2019 00:54:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1556067261;
+        bh=M1U0W6Nkrnnlz+VH+2kJIYbGpz8S29eUoGyeHjPYnLo=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=KmJeQolTp5EzoPM6qntYs6BVAZdQkpvkzoicdwGxQVp9Pa8uz2sjII5ktM8Z8YdfM
+         B8ebOdTlYLLsjHNsDIbYz2MAECU9Ya4aYi2XNmzzXkhuH0x9gWjsyG3p8cfZpYMXUG
+         EGLqjWyWKxd8+wUrrfXs4yVw2EG6ZdJ31sXF0jnGcYoxJGesJVdSl6qetiAB07yWpW
+         29RCB3EkgaaQW0B9BAn9a5parZfQ+4ubCblGWbn7kXysoBciMqWIHwYOQFy4wJ9o4h
+         pTuD8AXmaRJyj2Xr6PM2fKT/ppMxab0KwlWsU9o8ZMA+TZLCYj5eYZUrwBqKVuYJPS
+         vEfz9bWKByA3ye0bY4KNZBcoSVuSwJK228MyaxtRqFlSrDQ4vvEeYMrERMZqPJlbwF
+         AvrcCMYjfsg8yFfGZ/JQt4ayhN+nWgzfV+nkxMli6tE6wONNEjqYtFnPY9zXpTZQ6k
+         Ma8YnRBVVaHLOodfruNq6pgpl2cO17x7HWgnS93h4sdZvtOJnZT
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/5] Multiple hook support
+Date:   Wed, 24 Apr 2019 00:49:43 +0000
+Message-Id: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.21.0.593.g511ec345e18
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"CHIGOT, CLEMENT" <clement.chigot@atos.net> writes:
+Oftentimes, people want to use multiple of the same kind of hook. This
+may be because software or a project they use requires a given hook, but
+they would also like to have a custom hook, or because they're using
+multiple pieces of software that both require involvement with the same
+hook.
 
-> From: Junio C Hamano <jch2355@gmail.com> on behalf of Junio C Hamano <gitster@pobox.com>
->> > On some OSes like AIX, access with X_OK is always true if launched under
->> > root.
->> 
->> That may be the case, but you'd need to describe why it is a problem
->> here, before talking about the need for a "work around".
->> 
->> For example, if a directory on $PATH has a file called git-frotz
->> that has no executable bit, perhaps "git frotz" would execute that
->> file but only when you are running it as the root user, but not as
->> any other user.
->> ...
->
-> This patch is needed in order to have hooks working on AIX. When run as root,
-> access on hooks will return true even if a hook can't be executed.
+This series introduces support for multiple hooks by using a ".d"
+directory. For example, instead of using a single
+".git/hooks/post-checkout" file, you'd use multiple files within
+".git/hooks/post-checkout.d". This is the standard Unix paradigm for
+multiple files and should be familiar to most people. Hooks are executed
+in sorted order.
 
-Ah, OK, so the issue is not that AIX allows the root to execute even
-files that have no executable bit, but X_OK check on it returns
-useless answer when we want to know if an attempted execution of the
-file by the user would succeed.
+To preserve backwards compatibility, we don't run the hooks in the ".d"
+directory if the single file is a valid hook (i.e. it exists and is
+executable). This is because some people already have multiple hook
+scripts configured, and if we ran them both, we'd run the hooks twice.
+This would be bad for e.g. the prepare-commit-msg hook. This is also the
+least surprising behavior.
 
-That was exactly the kind of information expected in your log
-message to explain why this change is a good thing to have.
+We check each hook for its exit status, even if the hook normally
+ignores exit status, and if it fails, we abort executing further hooks.
+This provides an easy way to reason about what the exit status is when a
+hook fails; we need not consider how to handle multiple failing hooks.
+It's also consistent among all hooks, whether they care about exit
+status or not.
 
->> Does the true UID matter for the purpose of permission/privilege
->> checking?  Why do we have to check anything other than the effective
->> UID?
->>
->
-> Actually, I don't know. Bash is doing it but I think EUID is enough. 
+This series uses a test library to verify that we run the hooks for each
+command instead of writing the same tests multiple times. If there are
+other cases you'd like to see, please let me know.
 
-I wasn't questioning if it is "enough".  If the root user "su"es to
-a normal user, does the issue that exec(path) and access(path, X_OK)
-are incoherent still happen?  If not, checking for !uid is actively
-wrong, not just unnecessary.
+I've talked with some people about this approach, and they've indicated
+they would prefer a configuration-based approach. I've tried to make the
+series such that it can be replaced with such an approach if that's the
+decision we make. It should be easy enough to simply replace find_hooks
+with an appropriate implementation and update the test framework.
 
->> > +     return access(path, X_OK);
->> 
->> I think the last "fallback to the system access()" is wrong, as the
->> "special case for root" block seems to except that the function may
->> be called to check for Read or Write permission, not just for X_OK.
->
-> That's a mistake from me. It should be "mode" instead of "X_OK". It seems that 
-> most of the time, it's used only with X_OK or F_OK that's why it has worked. I'll 
-> fix that. 
+brian m. carlson (5):
+  run-command: add preliminary support for multiple hooks
+  builtin/receive-pack: add support for multiple hooks
+  sequencer: add support for multiple hooks
+  builtin/worktree: add support for multiple post-checkout hooks
+  transport: add support for multiple pre-push hooks
 
-Yup, and have the function fall-back to the system supplied access()
-after doing geteuid() and finding that the user is not the root user
-without doing anything else---and use the remaining lines in the
-function for the special case.  That would make the function's logic
-easier to read, too.
+ builtin/am.c                       |  28 ++--
+ builtin/commit.c                   |   5 +-
+ builtin/receive-pack.c             | 212 +++++++++++++++++------------
+ builtin/worktree.c                 |  40 ++++--
+ run-command.c                      | 117 ++++++++++++----
+ run-command.h                      |   9 +-
+ sequencer.c                        |  96 ++++++++-----
+ t/lib-hooks.sh                     | 156 +++++++++++++++++++++
+ t/t5403-post-checkout-hook.sh      |   8 ++
+ t/t5407-post-rewrite-hook.sh       |  15 ++
+ t/t5516-fetch-push.sh              |  29 ++++
+ t/t5571-pre-push-hook.sh           |  19 +++
+ t/t7503-pre-commit-hook.sh         |  15 ++
+ t/t7505-prepare-commit-msg-hook.sh |   9 ++
+ transport.c                        |  98 +++++++------
+ 15 files changed, 636 insertions(+), 220 deletions(-)
+ create mode 100644 t/lib-hooks.sh
 
->> See how FILENO_IS_A_MACRO defined immediately before this part uses
->> the "#ifndef COMPAT_CODE" to guard against exactly the same problem.
->
-> Alright, I now understand how this work.
-
-Good.
-
-> By the way, do I need to recreate a thread with [PATCH v2] ? Or I'll add the new
-> version in this one ? I don't know how you're proceeding.  
-
-As the patch we are discussing in this exchange has not been
-accepted nor merged to the 'next' branch yet, you'd be sending a new
-version as a whole (i.e. not as an incremental patch on top of the
-version we have reviewed here) with "[PATCH v2]" on its subject
-header.
-
-Emily Shaffer has been writing and revising a tutorial on the
-procedure recently, which may be of interest to you, and I am
-interested in using your fresh eyes to see if its expectation
-for the readers is set appropriately.
-
-  https://public-inbox.org/git/20190423193410.101803-1-emilyshaffer@google.com/
-
-Thanks.
