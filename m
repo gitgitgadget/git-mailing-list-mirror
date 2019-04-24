@@ -2,100 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F37201F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 02:03:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7CB1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 02:09:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728980AbfDXCDS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 22:03:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61659 "EHLO
+        id S1729201AbfDXCJO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 22:09:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62484 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbfDXCDS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Apr 2019 22:03:18 -0400
+        with ESMTP id S1726080AbfDXCJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 22:09:14 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A31613EDBE;
-        Tue, 23 Apr 2019 22:03:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=+psRUzrFV5YkKxn9fLxRlNJrjEs=; b=q3vdaAJ
-        Ay+y/dX/K7BWHw/Xy6ANJe3/NTWvawcW+TadC0F9Qa5so7mzS2EinWezU4tpUdhP
-        5dZ/VPW65Zcfvh2F6S7rD3RMUQj15+r2WQenrHhX/NSXNXzoWv6a5RCncxiVxAXw
-        zg2+5BhgVV8Ut//RS1E51mYxhaqPSptCEGBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=Hp4PFryIp4HHIq9KX82adeRGu607bQkCL
-        p/EPWyAzo1rULrxY4/x3+CLWs1+jOCziG9pM6nK7zKLChkKtPiJ/kyk7rSlUgMec
-        9hJQM+qJ7XY8y5w93jDokLwaNNtt7qsa4Ar0HkgucgjbP5/BCWGKBCKvPMDfmkBW
-        6BEbrrJoAQ=
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C4CA13EE38;
+        Tue, 23 Apr 2019 22:09:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hGt+Rgb/F/lYdUE5OIjq9qGon3E=; b=evG7z1
+        EjCGKQLuuyQTK5oPIWlGT4h9eDhhUSveere/hsg/cZ85E5s8getNzZwE2QwJ81Fp
+        Viix1utMQTLb1d/kc5jKfJSPkvQnFDL/sXErV9SLPsTmLFikjjp8Kf/Lrz2Eg/8Y
+        0u/4Jn4nnObNfYQkIlXaiCqHQRksn9hepcEsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cgJmsQi1CmZryxATgitSXrA6AaL7RkFV
+        P2MlyLN06gDTxYVFGXH+xr3Fv05GXnyRMg9BcoNpi0bIrtN19dIn4MniRZLg6rOS
+        ffdjHZcWthH+GlnxBR7FCu17p23MsBJyeYXfDQvRiinNJuvLFGyinx89D90JiX4T
+        jtDJjjGxPWI=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 10E8913EDBD;
-        Tue, 23 Apr 2019 22:03:16 -0400 (EDT)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2297E13EE35;
+        Tue, 23 Apr 2019 22:09:12 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8BBEC13EDBC;
-        Tue, 23 Apr 2019 22:03:15 -0400 (EDT)
-Date:   Tue, 23 Apr 2019 22:03:13 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc/ls-files: put nested list for "-t" option into block
-Message-ID: <20190424020313.GP3654@pobox.com>
-References: <20190422151541.GA1633@sigill.intra.peff.net>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8733F13EE34;
+        Tue, 23 Apr 2019 22:09:11 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Multiple hook support
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+Date:   Wed, 24 Apr 2019 11:09:10 +0900
+In-Reply-To: <20190424004948.728326-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 24 Apr 2019 00:49:43 +0000")
+Message-ID: <xmqqtveo2lyx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190422151541.GA1633@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 1F51CDA4-6635-11E9-9D12-DF19F34BB12D-09356542!pb-smtp2.pobox.com
+Content-Type: text/plain
+X-Pobox-Relay-ID: F37AA3DA-6635-11E9-B9F3-DF19F34BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Jeff King wrote:
-> The description for the "-t" option contains a sub-list of all of the
-> possible file status outputs. But because of the newline separating that
-> list from the description paragraph, asciidoc treats the sub-list
-> entries as a continuation of the overall options list, rather than as
-> children of the "-t" description.
-> 
-> We could fix it by adding a "+" before the sub-list to connect it to the
-> rest of the "-t" text. But using a pair of "--" to delimit the block is
-> perhaps more readable, and may have better compatibility with
-> asciidoctor, as in 39a869b2f2 (Documentation/rev-list-options: wrap
-> --date=<format> block with "--", 2019-03-30).
-> 
-> The extra blank line comes from 5bc0e247c4 (Document ls-files -t as
-> semi-obsolete., 2010-07-28), but the problem actually seems older than
-> that. Before then, we did:
-> 
->   -t:: some text...
->     H:: cached
->     M:: unmerged
->     etc...
-> 
-> but asciidoc also treats that as one big list. So this problem seems to
-> have been around forever.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Junio: I happened to notice this while hunting for "ls-files" options
->        that could make your makefile de-dup patch unnecessary (but
->        didn't find anything).
-> 
-> Todd: Just an FYI that your "--" strategy is spreading. :)
+> To preserve backwards compatibility, we don't run the hooks in the ".d"
+> directory if the single file is a valid hook (i.e. it exists and is
+> executable). This is because some people already have multiple hook
+> scripts configured, and if we ran them both, we'd run the hooks twice.
+> This would be bad for e.g. the prepare-commit-msg hook. This is also the
+> least surprising behavior.
 
-Heh, cool.  This is an obviously simple fix, but for good
-measure I checked the results with asciidoc 8.6.10 as well
-as asciidoctor 1.5.6 and 2.0.8.  The output from each of
-them looks good.
+OK.  An obvious alternative may be to see if the expected hooks path
+is a directory and use the contents.  If ".git/hooks/pre-commit" is
+a single file, we know it is the single hook as before, and if it is
+a directory, we know that is not a custom made (i.e. from the world
+before this series supported in the core-git) multi-hook setup.
 
--- 
-Todd
+> We check each hook for its exit status, even if the hook normally
+> ignores exit status, and if it fails, we abort executing further hooks.
+
+This part may become the most controversial in the whole topic, but
+a design discussion is helped by having a concrete proposal that
+makes its own design decision, and this is the simplest design of
+the failure case that is the easiest to understand.
+
+Thanks.  Let's see how the review discussion goes ;-)
+
+> brian m. carlson (5):
+>   run-command: add preliminary support for multiple hooks
+>   builtin/receive-pack: add support for multiple hooks
+>   sequencer: add support for multiple hooks
+>   builtin/worktree: add support for multiple post-checkout hooks
+>   transport: add support for multiple pre-push hooks
+>
+>  builtin/am.c                       |  28 ++--
+>  builtin/commit.c                   |   5 +-
+>  builtin/receive-pack.c             | 212 +++++++++++++++++------------
+>  builtin/worktree.c                 |  40 ++++--
+>  run-command.c                      | 117 ++++++++++++----
+>  run-command.h                      |   9 +-
+>  sequencer.c                        |  96 ++++++++-----
+>  t/lib-hooks.sh                     | 156 +++++++++++++++++++++
+>  t/t5403-post-checkout-hook.sh      |   8 ++
+>  t/t5407-post-rewrite-hook.sh       |  15 ++
+>  t/t5516-fetch-push.sh              |  29 ++++
+>  t/t5571-pre-push-hook.sh           |  19 +++
+>  t/t7503-pre-commit-hook.sh         |  15 ++
+>  t/t7505-prepare-commit-msg-hook.sh |   9 ++
+>  transport.c                        |  98 +++++++------
+>  15 files changed, 636 insertions(+), 220 deletions(-)
+>  create mode 100644 t/lib-hooks.sh
