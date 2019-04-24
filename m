@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4B091F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 07:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6794B1F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 07:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729565AbfDXHnv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 03:43:51 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53982 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726964AbfDXHnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 03:43:51 -0400
-Received: by mail-wm1-f65.google.com with SMTP id q16so3237498wmj.3
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 00:43:49 -0700 (PDT)
+        id S1729892AbfDXHsR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 03:48:17 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35014 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729565AbfDXHsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 03:48:16 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f7so1099861wrs.2
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 00:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=GD7GlVHmqV5JtLRyU5RKPoVRh2EZZHNJNI3ZL5jJ6pE=;
-        b=bC3/CqIggTf23NIio8u/yuCWr162sdcLxXqRQicU4P50kOduFMpseq/VqlpJUQaz/B
-         5hsyQFq8JrDvX8KfhXoim86l3Bdwd9RLGINjqNm/qitWP+9Yv/WTIICEH3chAHGfIXEj
-         LX1vN9yYfeebwf3OSSPFiJpi32dGj/HqqiUILpy7DQT9e+dRiS0+ACLqzJQukZhHAD8O
-         z2ecUnToPlutEGQ6hOsoMxQVFsXpb/d972udXyLnGtwrJhx8nr1FhiypAQo9kOoBrjcr
-         JmfljCnR3XsfKTPjsw5gV3VD1MUbtEQ6vXdexFlXhGb9aNESmvyYPFKGk5Uo9oFspLn0
-         vqRQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=u7IqQVUHeTJe1UyTSqTOJrdDNZmxtnSUB9s/IQBfIX4=;
+        b=RYBC+g2zuI/pV77zbK6YfPrr/OODX81KNl3xJ3jshWU0vMGm5Izg0WrUNddalc+Bsu
+         0270EyVHXPLxWETVhhHutlHw1FK1d2jrmMym2f+2nrT0c6Had3CMphtXNFnJ5PivumdB
+         sjOrxzKm0D1GTUAoS35mTdN9VGKoVGjj87SiyaqLFiphoEulLyvTw8BrNc+wS6/vuQT7
+         Z2Au4bCPvcRsoe1yNEHtjs8I56DPIre/sCFJtru93frWTfGAIr/uz9m/fvQUk7nWeCwq
+         Ce2V5SvmGMGpTfTch1yyMYyZHSNZrkhBfgCBGSW0tV+6qQl1DjKPtJSxlWLPWjcIfWmW
+         EeJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=GD7GlVHmqV5JtLRyU5RKPoVRh2EZZHNJNI3ZL5jJ6pE=;
-        b=jHXRzQr5CNf+CPT+OFmCCX7fajduJoVyaF9UwiT3YhSJLaS+3/QkQ6p0e2blF/jtQB
-         Z/quTosZzxxb5LYUy/+b9088+3g8Hy1j6HgxpbBwTNtRGVE++s5xOmDR6Fro9F4T2jAx
-         G7cI4IblE7Zi5+bM7dx0eDenP2NUfg9rA4EtBQya1aqPAWKchJRuWApb+dy4BuJYR2L9
-         N8fMRxO+I2e8FEunIP4h5+9DJ6JAASHXU7a4/ANVkYidrAfS9+8Sq0Lq+whFMQnTYBiq
-         gBRBuFtEBLaaViRBbQtytm9eglfp0Sc9sti3uIznyJQEcSkpmTTggrYsIJmiircDApie
-         bCjg==
-X-Gm-Message-State: APjAAAWUYBjIS3XUeqmNkWcMUIEbd397ZCs5WtRkSu9xvv0tcIfPutMA
-        IJm1H1bvEigFIGdWlZbJwic=
-X-Google-Smtp-Source: APXvYqxuW0v2+puit/h+RK3twPPdhQtWB2tx5FM8JKv0d2bJaLT/VbIZYQyWILwbhFf3udyGF0QuNw==
-X-Received: by 2002:a7b:cf18:: with SMTP id l24mr5108079wmg.132.1556091828752;
-        Wed, 24 Apr 2019 00:43:48 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=u7IqQVUHeTJe1UyTSqTOJrdDNZmxtnSUB9s/IQBfIX4=;
+        b=Y4thzLJO6YM1SMvjxKZl1vvH3bYsxzkT7sZzWxCyynI2KIGe/1dKziCs8lS+nZrQiP
+         uMVU9CvHqUwID4wsI8+D/JdyQRD9qW118zO5prubumNoWbRKYaRvuDq5qtFNcBnsi/bc
+         hvlrSSTP0B4LbIVp/0MbOcGds8g4eD4dfjYr+cw4iXrqqnwtCWVlTMW/v7Eykd5eoosB
+         53AKMD00xQGd7MyJ4S/7crxgJqRCpAMu7W4Up5EPG7PNnJBBGHMKQVN7uSvEZzWG8qrg
+         5yAJlubrJ83mGu28Ewrr4Dm7R7oaqcEdtx1FI7Z0yAMhywV7MUcQ30XpVy51r8rqf2MH
+         WO8A==
+X-Gm-Message-State: APjAAAURsRmHAXMNGE2n80paXqWrLHQYivPpwNBUKoXzA9ffihniDq+d
+        FGOPyoadM6gGJtJJ47+z5j4=
+X-Google-Smtp-Source: APXvYqz+tPzsRW7XslNp8hqxlfVtrfJm043joAfHfcH5d8jshuSds7F/yEry3Gae2sZFy2d8tlmrlQ==
+X-Received: by 2002:adf:f206:: with SMTP id p6mr10180405wro.168.1556092094744;
+        Wed, 24 Apr 2019 00:48:14 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id r9sm16963153wmh.38.2019.04.24.00.43.47
+        by smtp.gmail.com with ESMTPSA id h18sm16095296wrt.97.2019.04.24.00.48.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Apr 2019 00:43:47 -0700 (PDT)
+        Wed, 24 Apr 2019 00:48:13 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] Multiple hook support
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net> <20190424023438.GE98980@google.com>
+Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 5/8] Documentation: add Packfile URIs design doc
+References: <cover.1550963965.git.jonathantanmy@google.com> <cover.1552073690.git.jonathantanmy@google.com> <5ce56844d3fb740e29d2f3d4be2ade0b2ad5f7fd.1552073690.git.jonathantanmy@google.com> <20190423053130.GA13162@sigill.intra.peff.net> <20190423221159.GA98980@google.com> <87zhogs6k6.fsf@evledraar.gmail.com> <20190423224839.GC98980@google.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190424023438.GE98980@google.com>
-Date:   Wed, 24 Apr 2019 09:43:46 +0200
-Message-ID: <87wojjsv9p.fsf@evledraar.gmail.com>
+In-reply-to: <20190423224839.GC98980@google.com>
+Date:   Wed, 24 Apr 2019 09:48:13 +0200
+Message-ID: <87v9z3sv2a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,95 +71,114 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Apr 24 2019, Jonathan Nieder wrote:
 
-> brian m. carlson wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Wed, Apr 24 2019, Jonathan Nieder wrote:
+>>> Jeff King wrote:
+>>>> On Fri, Mar 08, 2019 at 01:55:17PM -0800, Jonathan Tan wrote:
+>
+>>>>> +If the 'packfile-uris' feature is advertised, the following argument
+>>>>> +can be included in the client's request as well as the potential
+>>>>> +addition of the 'packfile-uris' section in the server's response as
+>>>>> +explained below.
+>>>>> +
+>>>>> +    packfile-uris <comma-separated list of protocols>
+>>>>> +	Indicates to the server that the client is willing to receive
+>>>>> +	URIs of any of the given protocols in place of objects in the
+>>>>> +	sent packfile. Before performing the connectivity check, the
+>>>>> +	client should download from all given URIs. Currently, the
+>>>>> +	protocols supported are "http" and "https".
+>>>>
+>>>> This negotiation seems backwards to me, because it puts too much power
+>>>> in the hands of the server.
+>>>
+>>> Thanks.  Forgive me if this was covered earlier in the conversation, but
+>>> why do we need more than one protocol at all here?  Can we restrict this
+>>> to only-https, all the time?
+>>
+>> There was this in an earlier discussion about this:
+>> https://public-inbox.org/git/877eds5fpl.fsf@evledraar.gmail.com/
+>>
+>> It seems arbitrary to break it for new features if we support http in
+>> general, especially with a design as it is now where the checksum of the
+>> pack is transmitted out-of-band.
+>
+> Thanks for the pointer.  TLS provides privacy, too, but I can see why
+> in today's world it might not always be easy to set it up, and given
+> that we have integrity protection via that checksum, I can see why
+> some people might have a legitimate need for using plain "http" here.
+>
+> We may also want to support packfile-uris using SSH protocol in the
+> future.  Might as well figure out how the protocol negotiation works
+> now.  So let's delve more into it:
+>
+> Peff mentioned that it feels backwards for the client to specify what
+> protocols they support in the request, instead of the server
+> specifying them upfront in the capability advertisement.  I'm inclined
+> to agree: it's probably reasonable to put this in server capabilities
+> instead.  That would even allow the client to do something like
+>
+> 	This server only supports HTTP without TLS, which you have
+> 	indicated is a condition in which you want to be prompted.
+> 	Proceed?
+>
+> 	[Use HTTP packfiles]  [Use slower but safer inline packs]
+>
+> Peff also asked whether protocol scheme is the right granularity:
+> should the server list what domains they can serve packfiles from
+> instead?  In other words, once you're doing it for protocol schemes,
+> why not do it for whole URIs too?  I'm grateful for the question since
+> it's a way to probe at design assumptions.
+>
+> - protocol schemes are likely to be low in number because each has its
+>   own code path to handle it.  By comparison, domains or URIs may be
+>   too numerous to be something we want to jam into the capability
+>   advertisement.  (Or the server operator could always use the same
+>   domain as the Git repo, and then use a 302 to redirect to the CDN.
+>   I suspect this is likely to be a common setup anyway: it allows the
+>   Git server to generate a short-lived signed URL that it uses as the
+>   target of a 302.  But in this case, what is the point of a domain
+>   whitelist?)
+>
+> - relatedly, because the list of protocol schemes is small, it is
+>   feasible to test client behavior with each subset of protocol
+>   schemes enabled.  Finer-grained filtering would mean more esoteric
+>   client configurations for server operators to support and debug.
+>
+> - supported protocol schemes do not vary per request.  The actual
+>   packfile URI is dynamic and varies per request
+>
+> - separately from questions of preference or security policy,
+>   clients may have support for a limited subset of protocol schemes.
+>   For example, imagine a stripped-down client without SSH support.
+>   So we need a way to agree about this capability anyway.
+>
+> So I suspect that, at least to start, protocol scheme negotiation
+> should be enough and we don't need full URI negotiation.
+>
+> There are a few escape valves:
+>
+> - affected clients can complain to the server operator, who will then
+>   reconfigure the server to use more appropriate packfile URIs
+>
+> - if there is a need for different clients to use different packfile
+>   URIs, clients can pass a flag, using --server-option, to the server
+>   to help it choose.
+>
+> - a client can disable support for packfile URIs on a particular
+>   request and fall back to inline packs.
+>
+> - if and when an affected client materializes, they can help us
+>   improve the protocol to handle their needs.
+>
+> Sensible?
 
-brian: I'm very interested in this. I barked up this tree before almost
-exactly 3 years ago:
+Food for thought: would we consider ssh->https a "downgrade"? I think
+"maybe". We're going from whatever custom setting the user has
+(e.g. manually approve new hosts) to the CA system.
 
-    https://public-inbox.org/git/CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com/
-    https://public-inbox.org/git/1461367997-28745-1-git-send-email-avarab@gmail.com/
-
-If you haven't seen those threads you might find them interesting. In
-particular there's a previous discussion about the "exit on first fail"
-v.s. "run them all" semantics. I'll elaborate elsewhere in this thread.
-
-The only bit that landed from that was 867ad08a26 ("hooks: allow
-customizing where the hook directory is", 2016-05-04), which, in reply
-to JN below...:
-
->> I've talked with some people about this approach, and they've indicated
->> they would prefer a configuration-based approach.
->
-> I would, too, mostly because that reduces the problem of securing
-> hooks to securing configuration.  See
-> https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
-> for more on this subject.
->
-> More precisely, a few problems with the current hooks system:
->
->  1. There's not a standard way to have multiple hooks for a single event.
->     That's what this series is about.
->
->     (The recommended workaround has been to use a trampoline script as
->     your hook, and to make that trampoline script implement whatever
->     policy for the order of invocation and accumulation of results is
->     appropriate, but that's a bit of a cop-out.)
->
->  2. Because they are stored in the Git repository, they do not have a
->     way to be automatically updated.
->
->     (The recommended workaround is to use a trampoline script as your
->     hook and put the actual hook somewhere standard like $PATH where
->     it can be upgraded system-wide.  But that's a bit of a cop-out.)
-
-You can accomplish this with core.hooksPath, and presumably a
-combination of core.hooksPath and brian's patches here. That was my
-two-step plan in 2016, but I obviously never got to step #2.
-
-So in /etc/gitconfig on your server you set core.hooksPath=/etc/githooks
-and then your pre-receive hook will be /etc/githooks/pre-receive, or
-/etc/githooks/pre-receive.d/*.
-
->  3. Because they are part of the Git repository, it is very easy to
->     compromise a user's account by tricking them into running an
->     attacker-authored hook.  Attacks include "hey admin, can you tell
->     me why 'git commit' is failing in this repo?" and "here's a zip file
->     containing a Git repository with our fancy software.  Feel free
->     to look around, run 'git pull', etc".
->
->     Similar attacks, probably even worse, apply to shell prompt scripts
->     using commands from attacker-controlled .git/config.
->
->     (The recommended workaround is to inspect .git/config and
->     .git/hooks whenever you're looking at an untrusted repository, and
->     to write your shell prompt script defensively.)
->
-> Solving (1) without (2) feels like a bit of a missed opportunity to
-> me.  Ideally, what I would like is
->
->    i. A central registry of trustworthy Git hooks that can be upgraded
->       using the system package manager to address (2).  Perhaps just
->       git-hook-* commands on the $PATH.
->
->   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
->       run for each event in .git/config.
->
->  iii. For backward compatibility, perform a multi-stage migration.
->       In the stage I am most interested in:
->
->       When encountering a hook in .git/hooks, don't run it, but print
->       a message about how to migrate it to the modern scheme.
->
->       To make migration to the modern scheme painless, stick a
->       standard trampoline script in .git/hooks in all converted and
->       all newly "git init"ed repositories to allow old versions of Git
->       to respect the configuration from (i) and (ii).
->
-> That doesn't handle core.pager et al, but those we can handle
-> separately (for example by, at least optionally, not respecting values
-> for them in per-repo config at all).
->
-> Thanks for tackling this.  What do you think?
->
-> Thanks,
-> Jonathan
+But I think it would be fine to just only whitelist ssh->https and ban
+everything else behind a very scary config option or something, we could
+always fleshen out the semantics of upgrade/downgrade/switching later,
+and it would IMO suck less than outright banning a protcol we otherwise
+support in the design, and which (unlike git://) is something people are
+still finding uses for in the wild for non-legacy reasons.
