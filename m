@@ -2,139 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 379951F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 00:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CCD91F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 00:55:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729042AbfDXAye (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Apr 2019 20:54:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35618 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728985AbfDXAyc (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Apr 2019 20:54:32 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728986AbfDXAzJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Apr 2019 20:55:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60157 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728615AbfDXAzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Apr 2019 20:55:08 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A7831447E3;
+        Tue, 23 Apr 2019 20:55:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YvFT+xpLzlTRXySUrH6xkhPXq6Y=; b=j08L+e
+        mzr9jgbcYowh+zjeQxH4uSy3HmzliQobMl7gdHGO9uFmvI4F23cvuREC9mcAjygy
+        3wVXhRx+C+Q5gaUUsxv411WvbV6m09yj12uet8i0N/Jn8Dqwfas8qgxgbnnc555p
+        ZJuRfv0k8gRaxRhw7xHWv/AJMUceIfqDV1gSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cIaDuCrpWRoBQxWNpmCmddvf40oDTAD7
+        IoImaC59q/Ww2HYD1V5kOojdymfMmg8qyqDqtHamMFPNyZM9opoiGVfD0n9zZ0J6
+        utLtyyiHePsVPkyACuqFlYc+b07138k2y+p2ME5TbrwG9XNiS4HJNB7dt6u7sWsB
+        pj5otrOAqdc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 825261447E2;
+        Tue, 23 Apr 2019 20:55:06 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CCC2F61002;
-        Wed, 24 Apr 2019 00:54:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556067269;
-        bh=O1t0Oh4789kt9UwivGBZouF0W4VTRMivJax/eUp+gy4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=OqLCbh3jAfgbzvKqt3qRKD/fXmB0viQGMgrb74PNa2pfsFI4MIymqFbT7PiBcyVHU
-         wU5CjlaiZiFmMXMWnEfeNyxfG3UZyuJyLnIBWYqwny/n0aBAA0jvRNDLfN/USojUoT
-         GCgAj0ZaRlkl1kPQx3ga6is4oUrtEvsZkWZC8WTjPtKcWZmE/mpFGUyPD1Mc0WEr8r
-         AmaJMk4MSK6HMhmbyCJLFn7zZnvCo/48D755n8W+B8JMhdJJsnLtEM9A3t5Ayng2+2
-         ZxcBYilalyXJIYMCigyS6XTz55AzEp4qlTZbVG2y+3iF6ypCUe6txtw6d8x7d3nEgP
-         +2DyznhYuusorH+aueDg+sKzG8c9Vpb6mn02tgv6pJNntypvIP4IXUHKtwkQoR0tQj
-         EqPcdpi3zfAa/5PpkwykvGvHjGL2U5TT/FMYq87zt8Yhvgs/Mv36YRc87sI+uQXl3V
-         tzSUFZMwU9fb0MQuLYiijpePwci+cAL3E1DedNxO/q7sSK7NDYJ
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/5] builtin/worktree: add support for multiple post-checkout hooks
-Date:   Wed, 24 Apr 2019 00:49:47 +0000
-Message-Id: <20190424004948.728326-5-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e18
-In-Reply-To: <20190424004948.728326-1-sandals@crustytoothpaste.net>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D934A1447DD;
+        Tue, 23 Apr 2019 20:55:05 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "CHIGOT\, CLEMENT" <clement.chigot@atos.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] git-compat-util: work around for access(X_OK) under root
+References: <AM6PR02MB4950BB0152893633FF95DC99EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
+        <xmqq4l6p57x6.fsf@gitster-ct.c.googlers.com>
+        <AM6PR02MB495010DED643EC262D116DD0EA230@AM6PR02MB4950.eurprd02.prod.outlook.com>
+        <20190423235526.GF6316@genre.crustytoothpaste.net>
+Date:   Wed, 24 Apr 2019 09:55:04 +0900
+In-Reply-To: <20190423235526.GF6316@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 23 Apr 2019 23:55:26 +0000")
+Message-ID: <xmqqsgu843yv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 99A7C5B8-662B-11E9-99E3-1646B3964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for multiple post-checkout hooks. We test only one possible
-path in the multiple hook case because the same code path is used for
-all checkouts and we know the hooks work from earlier assertions.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/worktree.c            | 40 ++++++++++++++++++++++-------------
- t/t5403-post-checkout-hook.sh |  8 +++++++
- 2 files changed, 33 insertions(+), 15 deletions(-)
+> What POSIX says on this is the following:
+>
+>   If any access permissions are checked, each shall be checked
+>   individually, as described in XBD File Access Permissions, except that
+>   where that description refers to execute permission for a process with
+>   appropriate privileges, an implementation may indicate success for
+>   X_OK even if execute permission is not granted to any user.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d2a7e2f3f1..3126fa3a82 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -395,21 +395,31 @@ static int add_worktree(const char *path, const char *refname,
- 	 * is_junk is cleared, but do return appropriate code when hook fails.
- 	 */
- 	if (!ret && opts->checkout) {
--		const char *hook = find_hook("post-checkout");
--		if (hook) {
--			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
--			cp.git_cmd = 0;
--			cp.no_stdin = 1;
--			cp.stdout_to_stderr = 1;
--			cp.dir = path;
--			cp.env = env;
--			cp.argv = NULL;
--			cp.trace2_hook_name = "post-checkout";
--			argv_array_pushl(&cp.args, absolute_path(hook),
--					 oid_to_hex(&null_oid),
--					 oid_to_hex(&commit->object.oid),
--					 "1", NULL);
--			ret = run_command(&cp);
-+		struct string_list *hooks;
-+		hooks = find_hooks("post-checkout");
-+		if (hooks) {
-+			struct string_list_item *p;
-+			struct child_process cp;
-+			for_each_string_list_item(p, hooks) {
-+				const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
-+				child_process_init(&cp);
-+
-+				cp.git_cmd = 0;
-+				cp.no_stdin = 1;
-+				cp.stdout_to_stderr = 1;
-+				cp.dir = path;
-+				cp.env = env;
-+				cp.argv = NULL;
-+				cp.trace2_hook_name = "post-checkout";
-+				argv_array_pushl(&cp.args, absolute_path(p->string),
-+						 oid_to_hex(&null_oid),
-+						 oid_to_hex(&commit->object.oid),
-+						 "1", NULL);
-+				ret = run_command(&cp);
-+				if (ret)
-+					break;
-+			}
-+			free_hooks(hooks);
- 		}
- 	}
- 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index a39b3b5c78..aa265ce610 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -5,6 +5,7 @@
- 
- test_description='Test the post-checkout hook.'
- . ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-hooks.sh"
- 
- test_expect_success setup '
- 	mkdir -p .git/hooks &&
-@@ -73,4 +74,11 @@ test_expect_success 'post-checkout hook is triggered by clone' '
- 	test -f clone3/.git/post-checkout.args
- '
- 
-+cmd_rebase () {
-+	git checkout -B hook-test rebase-on-me^ &&
-+	git rebase rebase-on-me
-+}
-+
-+test_multiple_hooks post-checkout cmd_rebase
-+
- test_done
+Do I take this "not granted to any user" as "no +x bit is set for
+owner, group or other", and "a process with appropriate privileges"
+as "running as root"?
+
+The latter half feels iffy, if the system is still allowed to fail
+execution by "a process with appropriate privileges", leading to
+inconsistent answer from access(2) and behaviour by execv(2).  But
+at least that explains what was observed.
+
+> I believe that's what's occurring here. Your commit message, however,
+> should contain some text that explains that AIX takes this liberty
+> provided by POSIX, and why that causes problems for Git (i.e., what
+> problems the user will see). Ideally, the reader of the commit message
+> will know the relevant details about this issue from your commit message
+> without needing to consult the standard itself.
+
+Very true.
+
+Thanks.
