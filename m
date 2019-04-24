@@ -2,193 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 623751F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 23:25:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AC061F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 23:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728159AbfDXXZC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 19:25:02 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45915 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728155AbfDXXZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 19:25:02 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k92so17496019edc.12
-        for <git@vger.kernel.org>; Wed, 24 Apr 2019 16:25:00 -0700 (PDT)
+        id S1728163AbfDXX0f (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 19:26:35 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45694 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728155AbfDXX0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 19:26:35 -0400
+Received: by mail-pf1-f194.google.com with SMTP id e24so10095010pfi.12
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 16:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MQsXJRSBmrSlMe1V8fntsH0GUnlEAuqI6qHgA3sQwTk=;
-        b=omsQ3+sW8PiIWiNGHAbo/zisxnJDbV7YC8YfsCXBfDOjmetIp5siRpD7M4oQzk3ELu
-         ON4dWaW0vKZcQjwVNzHOPGsnBa/g71A/YCX41Fd2TezGsh2DWgLiKVQqtTSaaP/oYtn+
-         xBK9vMdI3MFVpXo6vqwvjOoylZ0O3tGTYC5TyMsLz2rPQuv2a9o6SeXGqYB9jb/L5Jqr
-         lc9OxkyV9Uj/ylaljsCLRlI4J511afSEqM+YQmnYl7ZDSGzyfAx1I71UUpKGa2RVYc3z
-         Yg2lDgRRgtOgdQUTtT2srJi4ZIQnvRMS6K+wuae14nT60PQ+4siTFGJOND6kewMMSUUz
-         ho7g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ElyUWcwAwURN2hWvzjtw98es3yTH4QVAfFe5v3UI/JA=;
+        b=UUh6TH3SMS4dwpRmq31wz94+/jrfWNUEzBG/bkXCZ3H6S+arqp2O/S2vblbOqXnCHC
+         vGtyps1wR7XI5a04UrjCwOiz6n+M2OUsKN9HL0O4kFs7j491uQ2heyscTVUFXS/ZsZ/P
+         OL1XfCKlf7I0+r/q+JCnPvh0BApCrvFfZ1XNd7p9EOU2Qz4d5eaCAoyNz+2Xwi7x5wRA
+         ERC/ZXXy6FTzTB3n4mT1SCU47krb5G/oEGeUii//Bxu+t8AkOgzVwgGQLcNGG9PuSHf3
+         cUcnmwjC6QNINmwNSt4S0L/Zu2kxpLwlTXEGMZvgSChNNHKD6cfjeqhdGtEkwr7G9U8l
+         HxAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=MQsXJRSBmrSlMe1V8fntsH0GUnlEAuqI6qHgA3sQwTk=;
-        b=fVZS7dh+Geg8Fi/KK+FtPfBT0lBzJ6P8dilWyDDmOtW8dQ5xsKgSaq5A2NQHE636/z
-         UNTaBunytQLSpmfzfqiHsrmPX1EwncoBhx4oCMk2F2hAQwJ2m2AcP180abMJmzHm+6B/
-         aOllJBZdEgqEeNcrXCDKYKeCwQnORCHNYvgXYzb1FFa/8S3bCXpnzF/mTEGHzGniN/R0
-         2SjHoEnrQ+LCvjccC/aZj2IPt/j2XR5XC1MkZcwa2fUwKM2WSsmYfHhRSj28CNXfLp9b
-         z6xumTQtvu9i8TQYBg6ymat33XxdXa8Z7WYg+Lezvu6aJQR3Lssu8WxQGAdYGXR5T5tK
-         J32Q==
-X-Gm-Message-State: APjAAAWnUSqFYU3diR9uE87H4HugHuz53NF7p4cBUzSgsXrKxKWuub2v
-        QwHPJWYwuOp7dJGuuRz+m0Fw0/a3SiI=
-X-Google-Smtp-Source: APXvYqxU4Jm4VN6CpK+vOIx5vJrwb0dr/paYKtdEM32abABCiWeHKUtIV3wD2Tfdin3i8VxG/HoakA==
-X-Received: by 2002:a17:906:4c92:: with SMTP id q18mr17833256eju.16.1556148300149;
-        Wed, 24 Apr 2019 16:25:00 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id p1sm3800846ejf.40.2019.04.24.16.24.57
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ElyUWcwAwURN2hWvzjtw98es3yTH4QVAfFe5v3UI/JA=;
+        b=uZZDpCw2U6pXhg7FrIGO4SWLbx0e/uYJW32WUk7skM1X8zTiZoPpMwR1kFZoUfQKTV
+         BKyAFcUf5qcdDdk9l3qUxhQ8AtT7F/ZpxrV6+xcaggbXqzgBIkWnSUg9rPRcG1C6UdSp
+         YAD5Jtsa5b8BIBKrq0W+0pWmlXHCaTKA3ex6eOasTTppwIMQFNmrIdzV9D/h6ufoNlZE
+         Gft6IwkFNpSI/Lz1PJVPveuyJBcNwH5+2d6EwvKmohc0VgszZdvGfJcMHj7nkvNMlJ58
+         mpurMDoKguCUDLWsDISGQ9AX9y7xp72ZgkG3EwnZROJ0Eliwj722t4p5bjf+3bJwk/Wn
+         os4Q==
+X-Gm-Message-State: APjAAAVwUIjWi2YhhF1Bkl3c7krq9Jpk+kf1qCLQwpqKp+zoeuE828ji
+        IQaq4nhdo9K9l24R+E2ei4k=
+X-Google-Smtp-Source: APXvYqwMznzNQ6Rt7zmKtLxl+3mPNEBYDHA0cm3cGlTYF2hRdrWWvqAOXB+tzfl3JdOqjvkhVmfXjA==
+X-Received: by 2002:aa7:8e0d:: with SMTP id c13mr37082975pfr.193.1556148394190;
+        Wed, 24 Apr 2019 16:26:34 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id k79sm49555116pfj.28.2019.04.24.16.26.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Apr 2019 16:24:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eugeniu Rosca <erosca@de.adit-jv.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Julia Lawall <julia.lawall@lip6.fr>,
-        Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use with -G
-References: <87o94vs9cp.fsf@evledraar.gmail.com> <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
-Date:   Thu, 25 Apr 2019 01:24:56 +0200
-Message-ID: <87mukfrnp3.fsf@evledraar.gmail.com>
+        Wed, 24 Apr 2019 16:26:33 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 16:26:31 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Multiple hook support
+Message-ID: <20190424232631.GA186980@google.com>
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+ <20190424023438.GE98980@google.com>
+ <20190424230744.GL6316@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190424230744.GL6316@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Thu, Apr 25 2019, Eugeniu Rosca wrote:
+brian m. carlson wrote:
+> On Tue, Apr 23, 2019 at 07:34:38PM -0700, Jonathan Nieder wrote:
+>> brian m. carlson wrote:
 
-> Hi =C3=86var,
+>>> I've talked with some people about this approach, and they've indicated
+>>> they would prefer a configuration-based approach.
+>>
+>> I would, too, mostly because that reduces the problem of securing
+>> hooks to securing configuration.  See
+>> https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
+>> for more on this subject.
 >
-> Thanks for the amazingly fast reply and for the useful feature (yay!).
->
-> On Wed, Apr 24, 2019 at 05:37:10PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Wed, Apr 24 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->> > Add the ability for the -G<regex> pickaxe to search only through added
->> > or removed lines in the diff, or even through an arbitrary amount of
->> > context lines when combined with -U<n>.
->> >
->> > This has been requested[1][2] a few times in the past, and isn't
->> > currently possible. Instead users need to do -G<regex> and then write
->> > their own post-parsing script to see if the <regex> matched added or
->> > removed lines, or both. There was no way to match the adjacent context
->> > lines other than running and grepping the equivalent of a "log -p -U<n=
->".
->> >
->> > 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers=
-.com/
->> > 2. https://public-inbox.org/git/20190424102609.GA19697@vmlxhi-102.adit=
--jv.com/
->>
->> I see now once I actually read Eugeniu Rosca's E-Mail upthread instead
->> of just knee-jerk sending out patches that this doesn't actually solve
->> his particular problem fully.
->>
->> I.e. if you want some AND/OR matching support this --pickaxe-raw-diff
->> won't give you that, but it *does* make it much easier to script up such
->> an option. Run it twice with -G"\+<regex>" and -G"-<regex>", "sort |
->> uniq -c" the commit list, and see which things occur once or twice.
->>
->> Of course that doesn't give you more complex nested and/or cases, but if
->> git-log grew support for that like git-grep has the -G option could use
->> that, although at that point we'd probably want to spend effort on
->> making the underlying machinery smarter to avoid duplicate work.
->
-> Purely from user's standpoint, I feel more comfortable with `git grep`
-> and `git log --grep` particularly b/c they support '--all-match' [2],
-> allowing more flexible multi-line searches. Based on your feedback, it
-> looks to me that `git log -G/-S` did not have a chance to develop their
-> features to the same level.
->
->>
->> Furthermore, and quoting Eugeniu upthread:
->>
->>     In the context of [1], I would like to find all Linux commits which
->>     replaced:
->>     	'devm_request_threaded_irq(* IRQF_SHARED *)'
->>     by:
->>     	'devm_request_threaded_irq(* IRQF_ONESHOT *)'
->>
->> Such AND/OR machinery would give you what you wanted *most* of the time,
->> but it would also find removed/added pairs that were "unrelated" as well
->> as "related". Solving *that* problem is more complex, but something the
->> diff machinery could in principle expose.
->
-> I expect some false positives, since git is agnostic on the language
-> used to write the versioned files (the latter sounds like a research
-> topic to me - I hope there is somebody willing to experiment with that
-> in future).
+> I know this is a common issue, but fixing it is a non-goal for this
+> series. Anything we do here is going to have to be backwards compatible,
+> so we can't make any changes to the security model.
 
-I was thinking of something where the added/removed could be filtered to
-cases that occur in the same diff hunk.
+I think it's worth bringing up because we should have some idea of where
+we want to head.
 
+I think the backward compatibility part is actually one of the easier
+aspects of this one.  We don't have to change the security model right
+away because there are similar places to exploit like core.pager.  To
+address that, we need a notion of configuration that individual repos
+and worktrees can't override, and using such a configuration item, we
+can provide a way to opt in to the new security model.  That provides
+a smooth path forward.
+
+[...]
+>> Solving (1) without (2) feels like a bit of a missed opportunity to
+>> me.  Ideally, what I would like is
 >>
->> But the "-G<regex> --pickaxe-raw-diff" feature I have as-is is very
->> useful,
->
-> I agree. I am a bit bothered by the fact that
-> `git log --oneline -Ux -G<regex> --pickaxe-raw-diff` outputs the
-> contents/patch of a commit. My expectation is that we have the
-> `log -p` knob for that?
-
-This is unrelated to --pickaxe-raw-diff, -U<n> just implies -p in
-general. See e.g. "git log -U1".
-
->> I've had at least two people off-list ask me about a problem
->> that would be solved by it just in the last 1/2 year (unrelated to them
->> having seen the WIP patch I sent last October).
+>>    i. A central registry of trustworthy Git hooks that can be upgraded
+>>       using the system package manager to address (2).  Perhaps just
+>>       git-hook-* commands on the $PATH.
 >>
->> It's more general than Junio's suggested --pickaxe-ignore-{add,del}
+>>   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
+>>       run for each event in .git/config.
 >
-> As a user, I would be happier to freely grep in the raw commit contents
-> rather than learning a dozen of new options which provide small subsets
-> of the same functionality. So, I personally vote for the approach taken
-> by --pickaxe-raw-diff. This would also reduce the complexity of my
-> current git aliases and/or allow dropping some of them altogether.
->
-> Quite off topic, but I also needed to come up with a solution to get
-> the C functions modified/touched by a git commit [3]. It is my
-> understanding that --pickaxe-raw-diff can't help here and I still have
-> to rely on parsing the output of `git log -p`?
+> The problem I had with this when discussing it was that our
+> configuration system lacks a good way to control inheritance from outer
+> files.
 
-Yeah, it doesn't help with that. When it runs we haven't generated the
-context line or the "@@" line yet, that's later. You can breakpoint on
-xdl_format_hunk_hdr and diffgrep_consume to see it in action.
+The standard approach in lists defined in Git configuration is for
+assigning an empty item to clear / restart the list.  See
+http.extraHeader for an example.
 
-It's a waste of CPU to generate that for all possible hunks, most of
-which we won't show at all.
-
-But it's of course possible to do so by running the full diff machinery
-over every commit and matching on the result, the current pickaxe is
-just taking shortcuts and not doing that.
-
->> options[1], but those could be implemented in terms of this underlying
->> code if anyone cared to have those as aliases. You'd just take the
->> -G<regex> and prefix the <regex> with "^\+" or "^-" as appropriate and
->> turn on the DIFF_PICKAXE_G_RAW_DIFF flag.
->>
->> 1. https://public-inbox.org/git/xmqqwoqrr8y2.fsf@gitster-ct.c.googlers.c=
-om/
->
-> Thanks!
->
-> [2] https://gitster.livejournal.com/30195.html
-> [3] https://stackoverflow.com/questions/50707171/how-to-get-all-c-functio=
-ns-modified-by-a-git-commit
+Thanks and hope that helps,
+Jonathan
