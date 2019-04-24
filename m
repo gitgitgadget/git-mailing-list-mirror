@@ -2,153 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 963D61F453
-	for <e@80x24.org>; Wed, 24 Apr 2019 07:27:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4B091F453
+	for <e@80x24.org>; Wed, 24 Apr 2019 07:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730161AbfDXH1X (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Apr 2019 03:27:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56664 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727137AbfDXH1X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Apr 2019 03:27:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAD1B56663;
-        Wed, 24 Apr 2019 03:27:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FAfCE29qBknXJvKENXe5BwDJeVA=; b=cno0tL
-        olk4/sZPBLhLBgubaoFQjLaEoxwH2/FuTcz3tODc89gVCX/KTFVLqVNX7mfYepEQ
-        oXA9kk+htlHrulwR898IsUoQmv6yuTFSol8G+123H61c8iHR/KjW4Rkj2jEvbTce
-        mkIUGp3DTdRh3EmTbSzxUt1Dvdjq6m8jK9raA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RW/Bpmw72NT8g9x5zbUHSLSdSsJsR2b1
-        i77zvLghREgGdNPb28q0YqWt8JAIQrZnRiM6IcVZ/8QOIGTfIjJoge370g/chKxH
-        jgIhMXVvp6QiI6SpjR6YUlqvmdnOVA7h/RCqjdWQKiYlGEVq1BwaIcU+XqP0cVtr
-        TwDpbiqv63I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C816C56662;
-        Wed, 24 Apr 2019 03:27:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E8C6856661;
-        Wed, 24 Apr 2019 03:27:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        David Aguilar <davvid@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/5] mergetool: use get_merge_tool_guessed function
-References: <cover.1555880168.git.liu.denton@gmail.com>
-        <cover.1556009181.git.liu.denton@gmail.com>
-        <e928db892e35bcb68fcdb52c9bf7158dbbb46616.1556009181.git.liu.denton@gmail.com>
-Date:   Wed, 24 Apr 2019 16:27:12 +0900
-In-Reply-To: <e928db892e35bcb68fcdb52c9bf7158dbbb46616.1556009181.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 23 Apr 2019 01:54:01 -0700")
-Message-ID: <xmqqr29r278v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729565AbfDXHnv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Apr 2019 03:43:51 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53982 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726964AbfDXHnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Apr 2019 03:43:51 -0400
+Received: by mail-wm1-f65.google.com with SMTP id q16so3237498wmj.3
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 00:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=GD7GlVHmqV5JtLRyU5RKPoVRh2EZZHNJNI3ZL5jJ6pE=;
+        b=bC3/CqIggTf23NIio8u/yuCWr162sdcLxXqRQicU4P50kOduFMpseq/VqlpJUQaz/B
+         5hsyQFq8JrDvX8KfhXoim86l3Bdwd9RLGINjqNm/qitWP+9Yv/WTIICEH3chAHGfIXEj
+         LX1vN9yYfeebwf3OSSPFiJpi32dGj/HqqiUILpy7DQT9e+dRiS0+ACLqzJQukZhHAD8O
+         z2ecUnToPlutEGQ6hOsoMxQVFsXpb/d972udXyLnGtwrJhx8nr1FhiypAQo9kOoBrjcr
+         JmfljCnR3XsfKTPjsw5gV3VD1MUbtEQ6vXdexFlXhGb9aNESmvyYPFKGk5Uo9oFspLn0
+         vqRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=GD7GlVHmqV5JtLRyU5RKPoVRh2EZZHNJNI3ZL5jJ6pE=;
+        b=jHXRzQr5CNf+CPT+OFmCCX7fajduJoVyaF9UwiT3YhSJLaS+3/QkQ6p0e2blF/jtQB
+         Z/quTosZzxxb5LYUy/+b9088+3g8Hy1j6HgxpbBwTNtRGVE++s5xOmDR6Fro9F4T2jAx
+         G7cI4IblE7Zi5+bM7dx0eDenP2NUfg9rA4EtBQya1aqPAWKchJRuWApb+dy4BuJYR2L9
+         N8fMRxO+I2e8FEunIP4h5+9DJ6JAASHXU7a4/ANVkYidrAfS9+8Sq0Lq+whFMQnTYBiq
+         gBRBuFtEBLaaViRBbQtytm9eglfp0Sc9sti3uIznyJQEcSkpmTTggrYsIJmiircDApie
+         bCjg==
+X-Gm-Message-State: APjAAAWUYBjIS3XUeqmNkWcMUIEbd397ZCs5WtRkSu9xvv0tcIfPutMA
+        IJm1H1bvEigFIGdWlZbJwic=
+X-Google-Smtp-Source: APXvYqxuW0v2+puit/h+RK3twPPdhQtWB2tx5FM8JKv0d2bJaLT/VbIZYQyWILwbhFf3udyGF0QuNw==
+X-Received: by 2002:a7b:cf18:: with SMTP id l24mr5108079wmg.132.1556091828752;
+        Wed, 24 Apr 2019 00:43:48 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id r9sm16963153wmh.38.2019.04.24.00.43.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Apr 2019 00:43:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Multiple hook support
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net> <20190424023438.GE98980@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190424023438.GE98980@google.com>
+Date:   Wed, 24 Apr 2019 09:43:46 +0200
+Message-ID: <87wojjsv9p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6212285A-6662-11E9-80FA-D01F9763A999-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
 
-> +get_merge_tool_guessed () {
-> +	is_guessed=false
->  	# Check if a merge tool has been configured
-> -	merge_tool=$(get_configured_merge_tool)
-> +	merge_tool=$(get_configured_merge_tool $GIT_MERGETOOL_GUI)
->  	# Try to guess an appropriate merge tool if no tool has been set.
->  	if test -z "$merge_tool"
->  	then
->  		merge_tool=$(guess_merge_tool) || exit
-> +		is_guessed=true
->  	fi
-> -	echo "$merge_tool"
-> +	echo "$is_guessed:$merge_tool"
-> +}
-> +
-> +get_merge_tool () {
-> +	get_merge_tool_guessed | sed -e 's/^[a-z]*://'
->  }
+On Wed, Apr 24 2019, Jonathan Nieder wrote:
 
-Yuck.  Returning a:b is fine if the main use is to match that string
-using shell builtins like "test" and "case", but piping to "sed"
-feels a bit too much overhead.  Especially given that the other
-reader in git-emrgetool.sh is not protected for $merge_tool that has
-a colon in it.  Do not try to be too cute and end up with a hack
-that is both inefficient and brittle at the same time.
+> brian m. carlson wrote:
 
-Possible alternatives:
+brian: I'm very interested in this. I barked up this tree before almost
+exactly 3 years ago:
 
- - Because variables in bourne family of shells are global, the
-   caller can easily peek at $is_guessed; or
+    https://public-inbox.org/git/CACBZZX6j6q2DUN_Z-Pnent1u714dVNPFBrL_PiEQyLmCzLUVxg@mail.gmail.com/
+    https://public-inbox.org/git/1461367997-28745-1-git-send-email-avarab@gmail.com/
 
- - One bit "did we guess, or did we get from the user?" boolean
-   choice can sufficiently be conveyed by ending the fuction like so
-   instead:
+If you haven't seen those threads you might find them interesting. In
+particular there's a previous discussion about the "exit on first fail"
+v.s. "run them all" semantics. I'll elaborate elsewhere in this thread.
 
-		...
-	fi
-		echo "$merge_tool"
-		test "$is_guessed" = true
-	}
+The only bit that landed from that was 867ad08a26 ("hooks: allow
+customizing where the hook directory is", 2016-05-04), which, in reply
+to JN below...:
 
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index 01b9ad59b2..63e4da1b2f 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -449,14 +449,9 @@ main () {
->  
->  	if test -z "$merge_tool"
->  	then
-> -		# Check if a merge tool has been configured
-> -		merge_tool=$(get_configured_merge_tool $gui_tool)
-> -		# Try to guess an appropriate merge tool if no tool has been set.
-> -		if test -z "$merge_tool"
-> -		then
-> -			merge_tool=$(guess_merge_tool) || exit
-> -			guessed_merge_tool=true
-> -		fi
-> +		IFS=':' read guessed_merge_tool merge_tool <<-EOF
-> +		$(GIT_MERGETOOL_GUI=$gui_tool get_merge_tool_guessed)
-> +		EOF
+>> I've talked with some people about this approach, and they've indicated
+>> they would prefer a configuration-based approach.
+>
+> I would, too, mostly because that reduces the problem of securing
+> hooks to securing configuration.  See
+> https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
+> for more on this subject.
+>
+> More precisely, a few problems with the current hooks system:
+>
+>  1. There's not a standard way to have multiple hooks for a single event.
+>     That's what this series is about.
+>
+>     (The recommended workaround has been to use a trampoline script as
+>     your hook, and to make that trampoline script implement whatever
+>     policy for the order of invocation and accumulation of results is
+>     appropriate, but that's a bit of a cop-out.)
+>
+>  2. Because they are stored in the Git repository, they do not have a
+>     way to be automatically updated.
+>
+>     (The recommended workaround is to use a trampoline script as your
+>     hook and put the actual hook somewhere standard like $PATH where
+>     it can be upgraded system-wide.  But that's a bit of a cop-out.)
 
-With the "let the return code speak" alternative, this would become
-something like
+You can accomplish this with core.hooksPath, and presumably a
+combination of core.hooksPath and brian's patches here. That was my
+two-step plan in 2016, but I obviously never got to step #2.
 
-	if merge_tool=$(GIT_MERGETOOL_GUI=$gui_tool; get_merge_tool_guessed)
-	then
-		guessed_merge_tool=true
-	else
-		guessed_merge_tool=false
-	fi
-	
-I do not know what you are trying with GIT_MERGETOOL_GUI=$gui_tool
-before the shell function, though.  It does not work as one-shot
-assignment to an environment variable.  I _think_ it is to feed the
-all-caps variable to get_configured_merge_tool that is invoked by
-the get_merge_tool_guessed function, so it does not have to be
-exported as an environment in the first place, so in the above
-illustration, I simply wrote an assignment statement, followed by a
-separate statement that is a parameterless call of a shell function,
-separated by a semicolon.
+So in /etc/gitconfig on your server you set core.hooksPath=/etc/githooks
+and then your pre-receive hook will be /etc/githooks/pre-receive, or
+/etc/githooks/pre-receive.d/*.
 
->  	fi
->  	merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
->  	merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
+>  3. Because they are part of the Git repository, it is very easy to
+>     compromise a user's account by tricking them into running an
+>     attacker-authored hook.  Attacks include "hey admin, can you tell
+>     me why 'git commit' is failing in this repo?" and "here's a zip file
+>     containing a Git repository with our fancy software.  Feel free
+>     to look around, run 'git pull', etc".
+>
+>     Similar attacks, probably even worse, apply to shell prompt scripts
+>     using commands from attacker-controlled .git/config.
+>
+>     (The recommended workaround is to inspect .git/config and
+>     .git/hooks whenever you're looking at an untrusted repository, and
+>     to write your shell prompt script defensively.)
+>
+> Solving (1) without (2) feels like a bit of a missed opportunity to
+> me.  Ideally, what I would like is
+>
+>    i. A central registry of trustworthy Git hooks that can be upgraded
+>       using the system package manager to address (2).  Perhaps just
+>       git-hook-* commands on the $PATH.
+>
+>   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
+>       run for each event in .git/config.
+>
+>  iii. For backward compatibility, perform a multi-stage migration.
+>       In the stage I am most interested in:
+>
+>       When encountering a hook in .git/hooks, don't run it, but print
+>       a message about how to migrate it to the modern scheme.
+>
+>       To make migration to the modern scheme painless, stick a
+>       standard trampoline script in .git/hooks in all converted and
+>       all newly "git init"ed repositories to allow old versions of Git
+>       to respect the configuration from (i) and (ii).
+>
+> That doesn't handle core.pager et al, but those we can handle
+> separately (for example by, at least optionally, not respecting values
+> for them in per-repo config at all).
+>
+> Thanks for tackling this.  What do you think?
+>
+> Thanks,
+> Jonathan
