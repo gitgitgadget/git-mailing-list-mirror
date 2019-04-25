@@ -7,64 +7,65 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 822551F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 11:06:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C35421F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 11:09:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730089AbfDYLGK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 07:06:10 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:44819 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726979AbfDYLGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 07:06:10 -0400
-Received: by mail-qt1-f193.google.com with SMTP id s10so13052638qtc.11
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 04:06:09 -0700 (PDT)
+        id S1730089AbfDYLJO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 07:09:14 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:37921 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbfDYLJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 07:09:14 -0400
+Received: by mail-qt1-f196.google.com with SMTP id d13so23868789qth.5
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 04:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+4lDOQA1RDcRVTOY77uQhImFQp8Pt3aVuMjyaXcPsQ8=;
-        b=HZDBx/dmtBrEqtNGPbOEK5QAWBWmYz9ZaZykFL4HefPfM0rFKsFg4brlguPQKbLQ6b
-         fCPGfFmLe2BYFd/c45O2Peb4h3Ol/ll3jTX3yd46EJniw1FZ+pG/9b/DKCtfk1+ypuMw
-         SdwyCsPSLrosltvzgktVU1Q6ePL/7SkTcFb9Q29/YmL5a8XIeXHYnQpbVqEE0s2go1m7
-         uLeI5TOs9LBMWaz4lZvSB4IHvae44m2sUVK190l8KInnD3l5N53UlKp00joahEYH1fJf
-         QMAqhniIxSOqnxWd9713lyxEECLhSMcfOopIoLfrJacNY8jk5OpPqe5lCLT2etUGF9fF
-         61JA==
+        bh=mAX5GgZha2TcofiNJRRU4sF2hrfOy7RqzwNdwZvGNfc=;
+        b=NqT9q3hCz/dRzw5ABgkry7TmZJV++gjuLMinOFeenief0+gBqZKtJqmNLeMPcAJO0c
+         Q5YQx6K1mu6IKKTqcg7E/t9LxoqiHFG2qVJpJ6wrV594fZ+0UlDi700x4Hm6pFmEcBN9
+         A5ft32nKNgpXbbe4kXc9h3fs5LKbAzcZAZQ0KV/kpOYd3pA0OatgjhDGVQ/oj4JLp0wB
+         tfbScbCOqVOekEaXUAecV8AjOi1vTSBxAjRzA7BDGZYGshqL7KBPws+Ihsb90cjqylNU
+         p+Yv+Lh9vFcG/lQRm4hhiJetTA7a6XcOhNfPB8rM1jBSNoyYzSbr7O461WTXz3bYvTsa
+         TCVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=+4lDOQA1RDcRVTOY77uQhImFQp8Pt3aVuMjyaXcPsQ8=;
-        b=rq1W2jTfbISeZlhT0urFD0eizrbPtT2dWEp7ETo1W4wkxuk+G6Jad2FlcCWNqrC0GZ
-         JRU6VgHHFsIJO0mmKw2ElF7hzicqN19JlhdyPu3cEpPtPNxSOkWrb2tKLxK0PmnqphpL
-         iOBxdh8AYb9gXrNBgCJHekQww3L3x/ONfIz7lN1ZVd93R+JHlHykf+rvJKifuZM72Dca
-         wylRAr5HeQKYo25N4CXJgky118qkZ6li0+zgkTFZOTs9kddn8HubZVVWMYO/PxYl3OjR
-         Mcw8fIQenl4+xPe/NXdoDdOLwtBrkfCrYWpleqdLerrw8TQthnv/oVzsheos/0b60yln
-         01Aw==
-X-Gm-Message-State: APjAAAVOz1G/HAubt5zcwaupmA50ciRgtr1GkUJRXgd/K7miahAyvi0E
-        wHQ7ATuHkk9FtAPulGzZsw4=
-X-Google-Smtp-Source: APXvYqwxC6utDUtxxbaSGVtJAJcMQCmHto4mcbCo0p+Lr56HwGaavh4wNzXJfHcn0tVcHzGP5ZNtbw==
-X-Received: by 2002:ac8:396e:: with SMTP id t43mr10288550qtb.1.1556190368816;
-        Thu, 25 Apr 2019 04:06:08 -0700 (PDT)
+        bh=mAX5GgZha2TcofiNJRRU4sF2hrfOy7RqzwNdwZvGNfc=;
+        b=THIeXot5sDp+HHZipMo9z/XCUSA2S3F4fRlV6FEvxQdrukKHgfb9rd4W0KuV8JgMA6
+         aSP2H0yFf5cj6++Hd+XZ7epb+iUZgSM1mJJEEUNRvxMzt1vtZZJyJf37pP4rAIlSmtWa
+         jyeYQ1UGlA36JU6s7EjaG3+MFBZhXrJgZaRQb5ucBzAw3Ad8Xwr9kZiwisUuTsJfDKah
+         4hkiorHQzNvm0xcCADIVw1NmZHGa42DOSg7Nm8gLEyzNkhaU94yd/wTWD178NlQS3pNN
+         9zxrqncMvd47eot37IE8qPmpcj10IXtbwTKEGfp04gbu9YpH0fe+cAlyozXcoKAaLsVv
+         rt/Q==
+X-Gm-Message-State: APjAAAXxcQrJghJCCGc7Pp3V1nHiTwi/eyA3vHeimacbHQuIc26GJ28+
+        qD+UiTYEs5rweRmOEplgARc=
+X-Google-Smtp-Source: APXvYqy64CrBGraGgm6BwQLPKs7K5YQ9eN2fW5fS8I4+jgLMQuN4WiGv0Z5AeQn/xRuNQ0vS82UdnQ==
+X-Received: by 2002:ac8:1c7c:: with SMTP id j57mr11533078qtk.58.1556190553116;
+        Thu, 25 Apr 2019 04:09:13 -0700 (PDT)
 Received: from [10.0.1.5] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id e6sm10453950qtr.56.2019.04.25.04.06.07
+        by smtp.gmail.com with ESMTPSA id u3sm10545737qkc.21.2019.04.25.04.09.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Apr 2019 04:06:08 -0700 (PDT)
-Subject: Re: [PATCH v5 00/11] Create 'expire' and 'repack' verbs for
- git-multi-pack-index
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        Thu, 25 Apr 2019 04:09:12 -0700 (PDT)
+Subject: Re: [PATCH v2 3/5] commit-graph: create new version flags
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         avarab@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.92.v4.git.gitgitgadget@gmail.com>
- <20190424151428.170316-1-dstolee@microsoft.com>
- <xmqqbm0uy78e.fsf@gitster-ct.c.googlers.com>
+References: <pull.112.git.gitgitgadget@gmail.com>
+ <pull.112.v2.git.gitgitgadget@gmail.com>
+ <4ddb82916321f093d88282ef4bcab99993339fb5.1556135881.git.gitgitgadget@gmail.com>
+ <xmqqftq6y7nv.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <651dd41f-4d16-8adf-e128-7ca2f5eff907@gmail.com>
-Date:   Thu, 25 Apr 2019 07:06:06 -0400
+Message-ID: <eb1ec575-601c-d50e-dfd1-beab1debcc96@gmail.com>
+Date:   Thu, 25 Apr 2019 07:09:09 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
  Thunderbird/66.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqbm0uy78e.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftq6y7nv.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -73,32 +74,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/25/2019 1:38 AM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On 4/25/2019 1:29 AM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> Updates in V5:
->>
->> * Fixed the error in PATCH 7 due to a missing line that existed in PATCH 8. Thanks, Josh Steadmon!
->>
->> * The 'repack' subcommand now computes the "expected size" of a pack instead of
->>   relying on the total size of the pack. This is actually really important to
->>   the way VFS for Git uses prefetch packs, and some packs are not being
->>   repacked because the pack size is larger than the batch size, but really
->>   there are only a few referenced objects.
->>
->> * The 'repack' subcommand now allows a batch size of zero to mean "create one
->>   pack containing all objects in the multi-pack-index". A new commit adds a
->>   test that hits the boundary cases here, but follows the 'expire' subcommand
->>   so we can show that cycle of repack-then-expire to safely replace the packs.
+>> +	int version = 0;
+>> ...
+>> +	if (flags & COMMIT_GRAPH_VERSION_1)
+>> +		version = 1;
+>> +	if (!version)
+>> +		version = 1;
+>> +	if (version != 1) {
+>> +		error(_("unsupported commit-graph version %d"),
+>> +		      version);
+>> +		return 1;
+>> +	}
 > 
-> I guess all of them need to tweak the authorship from the gmail
-> address to the work address on the Signed-off-by: trailer, which I
-> can do (as I noticed it before applying).
+> The above sequence had a certain "Huh?" factor before 5/5 introduced
+> the support for a later version that is in use by default.
+> 
+> Is it sensible to define VERSION_$N as if they are independent bits
+> in a single flags variable?  What does it mean for the flags variable
+> to have both GRAPH_VERSION_1 and GRAPH_VERSION_2 bits set?
+>
+> What I am getting at is if this is better done as a n-bit bitfield
+> that represents a small unsigned integer (e.g. "unsigned char" that
+> lets you play with up to 255 versions, or "unsigned version : 3"
+> that limits you to up to 7 versions).
+> 
+> You use an 8-bit byte in the file format anyway, so it might not be
+> so bad to have a separate version parameter that is not mixed with
+> the flag bits, perhaps?
 
-Sorry. Due to the conflicts, GitGitGadget prevented me from submitting in
-my normal way, so I pulled out format-patch and send-email for the first
-time in a very long time. I manually added new "From: " lines in the bodies
-of the patch files, but they got suppressed, I guess.
+This is a reasonable idea, as this is a "pick exactly one" option.
+It is still important to reduce the overall parameter count by combining
+the other boolean options into flags.
 
 Thanks,
 -Stolee
+ 
