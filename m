@@ -2,118 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD29F1F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 16:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D278E1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 17:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbfDYQ2F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 12:28:05 -0400
-Received: from mx.kolabnow.com ([95.128.36.42]:57876 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726435AbfDYQ2F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 12:28:05 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 51FEC403F7;
-        Thu, 25 Apr 2019 18:28:03 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:mime-version:content-type:content-type
-        :references:in-reply-to:date:date:from:from:subject:subject
-        :message-id:received:received:received; s=dkim20160331; t=
-        1556209682; x=1558024083; bh=lVFYw0J23BKf8p4ACZtpUf6OLM9hfHIOo6O
-        l1Y8XOC0=; b=Lz3EQnlXEMLyV4VaJpqBq7tOBxnA171pHvTwnCAOWyuVd/c+lsF
-        vwgjK6vuA9zbytyABjWMFj+gMvhloIAS89E16HNFEPwAR0nDuvX9LuBWX8q66/yh
-        x2OSFFgqINyHWrBeaAetwxftUnIhOhicq9rmeDhF2uOVOhcr3AwiTT8vDstzattO
-        iAbZ9ETK43p5yHMERtrHikcNCgCBsnOdZl+qlRJU/QSKR43IED6sUr1VnwLUvBUD
-        2iCCjks7yXu8jFuakrHMk59up1poqaYbI6r4bTgU3yQm/N6E4zIXItpYK44dikxl
-        Q5q/nkm9VCffh1ehX84tBcIKkR4aOpPo3ijR31pCe1mC08flrwV/zdxAlw/Oaz9p
-        YTAYhht3DvN5Ow2SuowhaqQD7T/lqeVcueQ615s6BPfSgidLAQIwpAlGAXauev1y
-        i1oLFuSW5gcXsiuldEv4vF9BxOX5oe8V0Bo107RGB5G7ABkI0s7gy+WflELY4Voc
-        Yfq/ks8rbYtxlrX/YjVgEPb3vxJ6yJO9S+jsFVN4St+4jCYyBWWIwPQWA8CPJGRZ
-        yIopgOuupPfnud83sKSANUlxIOb5ClyLkb95aTBQOdPwr9V5NUlAgNIRiGXdL/in
-        sauReEN+W9XmLvhaCwhZsUPzyEmCjNvaqBASxFphMJB7uoJ/Z0UqlZ64=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id g8ySPl4uKuYU; Thu, 25 Apr 2019 18:28:02 +0200 (CEST)
-Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 3526F402AA;
-        Thu, 25 Apr 2019 18:28:01 +0200 (CEST)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx002.mykolab.com (Postfix) with ESMTPS id D4B694F85;
-        Thu, 25 Apr 2019 18:28:01 +0200 (CEST)
-Message-ID: <dfc0a40233677ce0e1d9d073c41b6f0fea3bf746.camel@stellar.sh>
-Subject: Re: [PATCH] Documentation/merge-options: clarify --squash behavior
-From:   Vishal Verma <vishal@stellar.sh>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Rafael =?ISO-8859-1?Q?Ascens=E3o?= <rafa.almas@gmail.com>
-Date:   Thu, 25 Apr 2019 10:26:26 -0600
-In-Reply-To: <xmqqr29qyb1i.fsf@gitster-ct.c.googlers.com>
-References: <20190424212212.10039-1-vishal.l.verma@intel.com>
-         <xmqqr29qyb1i.fsf@gitster-ct.c.googlers.com>
+        id S1727210AbfDYRI5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 13:08:57 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:51319 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726071AbfDYRI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 13:08:57 -0400
+Received: by mail-pl1-f202.google.com with SMTP id g6so134648plp.18
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 10:08:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=S+aYmji8Uvl0Fyi1o8SV60lgG6qwX4jkdZPhWp4lRbY=;
+        b=vd7qna+CVbwpIRpqqvGr6U7Z2+1wDqUB74zSbfHg6eAHvn+OmnDi7no3OdKqlnuICy
+         6+LZNIfB1KDC3944apCjzY8xnpcEUnStHOFX0xIGPc0KD+cMpfSs1Vt1WdowqRoVssr2
+         /QqeDotUTtY/002pGwbpopMAMc6qHziNc9lTOVAmXs0VNc7bqPZexCtaQLAg0lr817/S
+         U4/UFILp0e67nTuGfptB/kiTNAa16R380jn7Yjv0peRcsakyM8k/Epkjhbd8+87R8nhd
+         wIT3IDeqY7KX0SzQZylCAkcKNT53VjXijwHpb0EA/0KrqQvRxKEXUUC8kcwY7GJuReZv
+         6JBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=S+aYmji8Uvl0Fyi1o8SV60lgG6qwX4jkdZPhWp4lRbY=;
+        b=lFcTSZG7P34tvdbC4npEILMT9z35jbfLPrHLYHrQA/LqZA4MaQk2Yx9qTurDwGF0wY
+         DLEjhsrmJaLfgen1fkQXRvsBtvFLOMLgHysfZFnNkva+IBpagYrZQZEtqIEdbH6c7HRD
+         7YErvhlX4GOZCneakm6pEWJKMMjvYvfv9eejruKoWccoHq5uQ2s1tQ36AIZNqf42hgIT
+         Jfrb2VhPNxsO5DnybLMRTFBnhQh5SJWoT/ukz0WNBYTJyzy1CbA2U/OlC9dIJTz+zURH
+         BlWpBn37O3rdNaf+5wmDKiNToaV+61MkA0UbvtPiD//8OTRqTT6VgyOSGkQUM03Rld9m
+         bNVA==
+X-Gm-Message-State: APjAAAWN6bvv77pPePf6MGninCcRRU3ptT19t913CY3b9NxhwWjTFESH
+        9kBT3sErxVxyerE14aXqnE/KM47g1zlNd4bMDXYgOyVeLnUzcTQIy5AZaSixJCt+j5YqqSnF5xY
+        s3I05T9Ub/A7g+QMMdAW8aKFW2bKcJaSXAV5TpVe2bNZXxvu7v2y6BniEYb/yt+w=
+X-Google-Smtp-Source: APXvYqyzI91gcVM27cXyzb4lx7YbJ0pyMSoFBcZ4K+ssfW9DTvO9wqHqRg+nvti8sNAT+0cPCKSq46NFIKEftQ==
+X-Received: by 2002:a63:1604:: with SMTP id w4mr33657901pgl.148.1556212136455;
+ Thu, 25 Apr 2019 10:08:56 -0700 (PDT)
+Date:   Thu, 25 Apr 2019 10:08:53 -0700
+Message-Id: <548a9b833f4569c526cf94c048ae115a76d54be9.1556211995.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.21.0.593.g511ec345e18-goog
+Subject: [PATCH] trace2: fix incorrect function pointer check
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix trace2_data_json_fl() to check for the presence of pfn_data_json_fl
+in its targets, rather than pfn_data_fl, which is not actually called.
 
-On Thu, 2019-04-25 at 13:16 +0900, Junio C Hamano wrote:
-> 
-> I think it is bad to silently ignore the option.  With or without
-> this documentation update, I think it is sensible to update the code
-> so that it errors out when "--squash --commit" are both given at the
-> same time, just like when "--squash --no-ff" is given.
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ trace2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yes that makes sense.
-
-> Or make it "just work" as you said.  Using a boolean variable as
-> tristate is something we do in many places and it by itself is not a
-> rocket science.  You initialize the variable to -1 (unset), let
-> parse_options() to set it to 0/1 when "--[no-]commit" is seen, and
-> inspect after parse_options() finishes.  If the variable is still
-> -1, you know the user wants "the default" behaviour.
-
-Ah I see - I was conflating OPT_BOOL with the parameter being a boolean
-as well without checking, but I see now that isn't the case.
-
-> 
-> The "default" behaviour you are proposing would probably be
-> something like
-> 
->         if (option_commit < 0) {
->                 /* 
->                  * default to record the result in a commit.
->                  * but --squash traditionally does not.
->                  */
->                 if (!squash)
->                         option_commit = 1;
->                 else
->                         option_commit = 0;
->         }
-> 
-> But I suspect that the option parsing part is the least difficult in
-> the "make it just work" change.  That is because I think that the
-> machinery to record the result in a commit is not expecting to be
-> asked to create a single-parent commit to record the result of the
-> squashing, so there may be need for adjusting to how the result
-> wants to be recorded before the code makes a commit.
-
-Yes I was going to try to allow the commit option as an experiment, and
-just see what happens. For now I'll send a v2 that has a doc update as
-well as prints a warning using the above technique.
-
-I'll dig more into what allowing --commit actually means (as time
-allows) - I'm definitely a newbie with git internals, and indeed this is
-my first posting here.
-
-Thanks for the feedback!
-
-	-Vishal
+diff --git a/trace2.c b/trace2.c
+index 8bbad56887..a73cfdf6fe 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -717,7 +717,7 @@ void trace2_data_json_fl(const char *file, int line, const char *category,
+ 	us_elapsed_region = tr2tls_region_elasped_self(us_now);
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+-		if (tgt_j->pfn_data_fl)
++		if (tgt_j->pfn_data_json_fl)
+ 			tgt_j->pfn_data_json_fl(file, line, us_elapsed_absolute,
+ 						us_elapsed_region, category,
+ 						repo, key, value);
+-- 
+2.21.0.593.g511ec345e18-goog
 
