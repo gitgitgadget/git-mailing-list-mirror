@@ -2,127 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A30A41F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 15:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C531A1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 15:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728936AbfDYP1I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 11:27:08 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45522 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726964AbfDYP1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 11:27:07 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k92so216590edc.12
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 08:27:06 -0700 (PDT)
+        id S1728614AbfDYPv1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 11:51:27 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38478 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbfDYPv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 11:51:27 -0400
+Received: by mail-pg1-f193.google.com with SMTP id j26so55868pgl.5
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 08:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=HGxegTF5hZP7+f7YMERNwoNJtnQLckDZhJMwooShGfE=;
-        b=r3vyDQ0FAORda1WKgbbNRdJn9To8amlbICMoj8Xm923O6EYMrv1Pqh/ka3jQiuolaJ
-         4s4+VFIIcZadBiGGU14UdeLW4wTEmujUVPmUb5uINWg2R+scL/kkR+dCe7N8hYGKo1uD
-         hB59MtQnK+gms3vejpImFWMEBv4thI8I2wgF/duZxqbg0tnzRhREEot/JQ/strjQDL5A
-         WWLPNuNqDCCiA0lOV88EbxJ8xt2cmUDBufnFO/k/ZVbBSGERTHddfEBat8695cw5eSPv
-         S6sZpG5jm33hgvCGkEWjPVgup5w5txL/n9xfxbJ8/tVn2PiqOnYUHt6e5Ix0qkz1iOA8
-         LKzA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xVD38Qrh96GxDTWbuwHslwPtydMrBbbBCjJbQugCy4U=;
+        b=aRHLx+aKPsWQZvUpt3b/luUd+SlTRy4Xd17F3zMQxpYZnv82lyhztdqRCPHYH05iMP
+         J/47etfo7iC1Q8GcYXZpL50Fwak/urZjcbZMX7PFYVu47R7+lr2/E7v9d+aEasj8R91Y
+         t8DS4+kyHKX5KfbvGucCtWiTogqwvInmBd5KD8VD2R3w2wluMFtjs66Mmlgp4aH3qPem
+         LNu5VS/5JrrzyokdlbBIFKbpIRy2yIlTzw7O2ZXiyTTlxG05bJzcZPBqc7PKK8oi1Mi+
+         ryCrhXy5Ro5ZUgoAn9UKB7oYJulXdy36j7WPp3ou+zykU0KXxsiFRukK7bfLPwP8nJRq
+         04fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=HGxegTF5hZP7+f7YMERNwoNJtnQLckDZhJMwooShGfE=;
-        b=r6sbgCwhVwx6r9hCU9AVxK54DGBCh4KKkkwXuM2rQtxuK8bBxc1T9Tqd/dbu16M2Zt
-         zHKc8vKmB4aLmgn0sp/ByJcYO+xUgIbD3UBI8ngEhlPTy7FjH0MQKfLmLc2DpCxgNoBZ
-         6gheCqYqI038dx/H3w5K+NBY8/pAtNtZTgupFUQ9aXCPuQqs3T6GB8l3mOURbkMwDeLS
-         tbpoZSB/XcfDEEgkHqVh+Nf5Seylejb2gM+nwQ3O/dZOsw3Hfw6XaMR5iyQaimp0Z9Lj
-         fqVZsDSZXTsKrUF6aKtkgXnzGiZdSOV/FXzCIQejmqq/iF3/vLlJCqIDsC4a7j6Pvf+k
-         ujrQ==
-X-Gm-Message-State: APjAAAXyUnGApDgEK5ydjtxJNrG8oBQQ18HYoXmrqKiis8rmJ2W8bfgQ
-        HvGm7OpMztkgj3ZhFU2jKUw=
-X-Google-Smtp-Source: APXvYqwb33PMp8IZvhfkpQGDq8dtgS/1vJMS0d17/zxqPujUBpGN2hbAfkm77kmMo1eejTxdAxZLwg==
-X-Received: by 2002:a17:906:1dc5:: with SMTP id v5mr19284985ejh.66.1556206025811;
-        Thu, 25 Apr 2019 08:27:05 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id b1sm4123734eje.7.2019.04.25.08.27.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Apr 2019 08:27:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Olaf Hering <olaf@aepfle.de>
-Subject: Re: How to undo previously set configuration? (again)
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net> <20190424023438.GE98980@google.com> <20190424230744.GL6316@genre.crustytoothpaste.net> <87k1fis8gq.fsf@evledraar.gmail.com> <20190425143614.GA91608@google.com> <74ea0269-3e4f-1f6a-c060-c5ac969b91e8@google.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <74ea0269-3e4f-1f6a-c060-c5ac969b91e8@google.com>
-Date:   Thu, 25 Apr 2019 17:27:01 +0200
-Message-ID: <87d0lartq2.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xVD38Qrh96GxDTWbuwHslwPtydMrBbbBCjJbQugCy4U=;
+        b=bLKHAzRYE9wpTq+9jfjRTVY01oDGVSbYZ+FnjnWALxRhKkCWmuVwQ1BoVUE5xo/EMJ
+         ZqQTNTblDcIw6FO2G4EjyHbEfLqklX8z4oGHvUlhHTxcRtntSiYvGHbUiUGUwC1JKPv5
+         hI9PQUADw/xJr7ax+SYWth70a/SrOXgp83Q47ZdEF6o8/cUcqR3UxwA+FMdd06onvsWf
+         +FTOz/ldExUA6BZvupaBZcd6Qwc4M82UBjZo62tZ2mV/MWMFWaTna8g2/fO0XTh1rwlU
+         gJ0IoE/Fgznj8feP0R1CX9ALwxWWgHF0aMCdqC2rCjAlNo/92mWPqWK8/5vLAO9Ke9iY
+         DNwQ==
+X-Gm-Message-State: APjAAAVt3+6gPTfQgai+u48/lpfMc9/d7j+oFvlSzj21RypB3Y+zLq17
+        Clcacl+xKm6+5HvEBHANsBVRoO8Q
+X-Google-Smtp-Source: APXvYqw4wGsyCJWS/7hKFMqVvrevGwpFOZFmpmIrFE80jhfXsv4Q+wNHhF8tv1qslcXh4mLZT/DHBA==
+X-Received: by 2002:aa7:9801:: with SMTP id e1mr10018105pfl.252.1556207485923;
+        Thu, 25 Apr 2019 08:51:25 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id e6sm15244914pfe.158.2019.04.25.08.51.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 Apr 2019 08:51:25 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/5] Fix and extend encoding handling in fast export/import
+Date:   Thu, 25 Apr 2019 08:51:13 -0700
+Message-Id: <20190425155118.7918-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.782.gb6cebc4909
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While stress testing `git filter-repo`, I noticed an issue with
+encoding; further digging led to the fixes and features in this series.
+See the individual commit messages for details.
 
-On Thu, Apr 25 2019, Barret Rhoden wrote:
+Elijah Newren (5):
+  t9350: fix encoding test to actually test reencoding
+  fast-import: support 'encoding' commit header
+  fast-export: avoid stripping encoding header if we cannot reencode
+  fast-export: differentiate between explicitly utf-8 and implicitly
+    utf-8
+  fast-export: do automatic reencoding of commit messages only if
+    requested
 
-> Hi -
->
-> On 4/25/19 10:36 AM, Jonathan Nieder wrote:
->> Hi,
->>
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>> Because we don't have some general config facility for this it keeps
->>> coming up, and various existing/proposed options have their own little
->>> custom hacks for doing it, e.g. this for Barret Rhoden's proposed "blame
->>> skip commits" feature
->>> https://public-inbox.org/git/878swhfzxb.fsf@evledraar.gmail.com/
->>> (b.t.w. I*meant*  /dev/null in that E-Mail, but due to PEBCAK wrote
->>> /dev/zero).
->> I'm confused.  Isn't that bog-standard Git usage, not a custom hack?
->> That is, I thought the intended behavior is always
->>
->>   1. For single-valued options, last value wins.
->>   2. For multi-valued options, empty clears the list.
->>   3. When there is a special behavior triggered by not supplying the
->>      option at all, offer an explicit value like "default" that triggers
->>      the same behavior, too.
->>
->> and that any instance of a command that isn't following that is a bug.
->
-> Not sure if it's meant to be the standard, but I just went with the
-> style used by credential.helper.  This was suggested to me by Johannes
-> in [1]:
+ Documentation/git-fast-import.txt |  7 ++++
+ builtin/fast-export.c             | 44 ++++++++++++++++++++----
+ fast-import.c                     | 12 +++++--
+ t/t9300-fast-import.sh            | 20 +++++++++++
+ t/t9350-fast-export.sh            | 57 ++++++++++++++++++++++++++-----
+ 5 files changed, 123 insertions(+), 17 deletions(-)
 
-Just to be clear I'm not picking on your patch, I think doing it that
-way makes perfect sense in the current system.
-
-Just as noted upthread using it as an example (that was fresh in my
-mind...) of a case where we want this, but it's a bespoke thing for
-every use-case, and not consistent (i.e. just supported for your new
-thing, but not for the existing fsck code that's mostly the same).
-
-> On 2019-01-18 at 10:47 Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> wrote:
->> A better idea IMHO would be to use an OPT_STRING_LIST() for
->> `--ignore-revs-file`, too, and to allow for multiple
->> `blame.ignoreRevsFile` config entries (with our usual trick of handling =
-an
->> empty setting by resetting the list of paths that were accumulated so
->> far, see e.g. how `credential.helper` is handled).
->
-> [1]
-> https://public-inbox.org/git/nycvar.QRO.7.76.6.1901181038540.41@tvgsbejva=
-qbjf.bet/
->
-> Barret
+-- 
+2.21.0.779.g2f4b9c5032
