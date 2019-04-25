@@ -3,106 +3,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE3001F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 04:16:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B68A1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 05:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726067AbfDYEQd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 00:16:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58239 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725900AbfDYEQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 00:16:33 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 956BE148F1C;
-        Thu, 25 Apr 2019 00:16:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f2HPY4zLsPeIwX0C8MvG5GUuTVQ=; b=CL+b/i
-        CLHBFd6dM3AajrIJZRrcp+k8EiajUjD2gmh98MeM5pvVTMZFNz+8EkooX/DuzYmB
-        8Qwmo4xitUlXGkHQosv0J7yjr+SANRqQJFPI286n40j8xfgzuVeSyzdcY+YgpKZ3
-        7muVkHb590w3CTue9n0PVTT89VLxjt6KGp/Zs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uscPXQz0l+XGvWuqIS+Xzu98hu4eYVrN
-        u1eoqUaXZ5A3nu4rzMZTrjzgPGhq1mFwLcwLDssbvchgGutZ3xZ3UmARyqWnkCSD
-        YjeJ7APjcaVNwEI0mTl4e1Yz0nwZxdJwNQOmNrHlfXuQE3mJBjquhMLDnVPvSnQN
-        yhWdWSc/yxs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B0CA148F13;
-        Thu, 25 Apr 2019 00:16:27 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D25A3148F12;
-        Thu, 25 Apr 2019 00:16:26 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vishal Verma <vishal.l.verma@intel.com>
-Cc:     <git@vger.kernel.org>,
-        Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Subject: Re: [PATCH] Documentation/merge-options: clarify --squash behavior
-References: <20190424212212.10039-1-vishal.l.verma@intel.com>
-Date:   Thu, 25 Apr 2019 13:16:25 +0900
-In-Reply-To: <20190424212212.10039-1-vishal.l.verma@intel.com> (Vishal Verma's
-        message of "Wed, 24 Apr 2019 15:22:12 -0600")
-Message-ID: <xmqqr29qyb1i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728970AbfDYFQZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 01:16:25 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39208 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728966AbfDYFQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 01:16:25 -0400
+Received: by mail-pf1-f196.google.com with SMTP id i17so10506781pfo.6
+        for <git@vger.kernel.org>; Wed, 24 Apr 2019 22:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6OzqSWuhgD6kVCumhjKVOmZlzSy1MZhjugQFuJR+CZ8=;
+        b=VZvHAr9trtDpcC75nCHDq3qoRlNq13aTI1ABYL0tKmRfRIl0rR/Q6l+7QfhthclJeV
+         38UvSraHdFrdCJXC5Ig/nEoF1VEpOyjsTqFAzEyJXpcMmPdA4dL/QYAgi4SZpOkpXwoD
+         IIbk8xNTDOhbRCLPxSPkwR3nn9R2H2Lm4FSEEPIGa7/7imkl447PP/ceN5lxzsVELdrV
+         07h/vC8Weba9AULpvFmeve0grYg0oLoKIt6+KUiRZTE+RqL4ywwecj9+ZsmIIl4a/wTx
+         bkCbwkLzYV8vNEdDgu0bNQbcX+TVsgM+I9WoJpAr9JJSOBgoK42XQ2wPWe+ngXhCqxUA
+         v61w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6OzqSWuhgD6kVCumhjKVOmZlzSy1MZhjugQFuJR+CZ8=;
+        b=Oe3S51vLx4RgReUdnCec7Kd4nQ9PiHvV2ndNwmHSqJNHbp3WPc2lM7zFxyh1mEN2xa
+         UcesRx0ub1/6m9V0qC+psku4LusjxJU54cl4Xn+3eAsVGonGtUBkgmIhYz6vpqSRGq41
+         IWJ5hixaM/dqVLNEQmxNaDw/9VuFed1KTrzkMMm9Kn09M6xbsXWoF+7OwuQlM9CiiT4L
+         BtTLnms9XzuWnenwwF3RhDBL2E5xaA4+Np5l/8VyTDhN/CdoyBDO9O992xC/9cjAtBP9
+         ZpZagG9FVPb1giTksscO750oADNmQI1pRO6OH9DChgUezq4wEBRW2UDD1SC40nMAcx9A
+         Q4gQ==
+X-Gm-Message-State: APjAAAXWglUX9umNnfVWl5zVMji3pw5bUK0oybVxDGuQMKGroe9mvzXd
+        TcOPXee7AaFn9+Q3fYKF568=
+X-Google-Smtp-Source: APXvYqxfRmWBC67TPHzxXkkbWYh7YD9+fuQ1RFXgQ1aiKBtX/i7NpAi8YxMNSIKEvDX/8YAdzcmNkg==
+X-Received: by 2002:a63:3dca:: with SMTP id k193mr35102546pga.146.1556169383579;
+        Wed, 24 Apr 2019 22:16:23 -0700 (PDT)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id o7sm14451001pgv.63.2019.04.24.22.16.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Apr 2019 22:16:22 -0700 (PDT)
+Date:   Wed, 24 Apr 2019 22:16:20 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        David Aguilar <davvid@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 4/6] mergetool: fallback to tool when guitool
+ unavailable
+Message-ID: <20190425051620.GA32457@archbookpro.localdomain>
+References: <cover.1556009181.git.liu.denton@gmail.com>
+ <cover.1556142510.git.liu.denton@gmail.com>
+ <e975fe4a8b206d8e40f9c4d7cd278fdb5c7358f0.1556142510.git.liu.denton@gmail.com>
+ <xmqq7ebizt1c.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4E357DC-6710-11E9-8843-DF19F34BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7ebizt1c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vishal Verma <vishal.l.verma@intel.com> writes:
+Hi Junio,
 
-> Add a note to the --squash option for git-merge to clarify its behavior
-> with respect to --commit. When --squash is supplied, 'option_commit' is
-> silently dropped. This can be surprising to a user who tries to override
-> the no-commit behavior of squash using --commit explicitly.
->
-> Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-> ---
->
-> There may be an argument to make --commit 'just work' with squash, but
-> that might involve changing option_commit from OPT_BOOL to something
-> that can distinguish between the default, what's requested on the
-> command line, or the --no- version.
+On Thu, Apr 25, 2019 at 12:02:23PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > In git-difftool, if the tool is called with --gui but `diff.guitool` is
+> > not set, it falls back to `diff.tool`. Make git-mergetool also fallback
+> > from `merge.guitool` to `merge.tool` if the former is undefined.
+> >
+> > If git-difftool were to use `get_configured_mergetool`, it would also
+> 
+> I agree that the precedence order below makes sense, but I am a bit
+> confused by "were to use" here.  Do you mean you'll make the change
+> to make difftool to look at mergetool configuraiton in a later step
+> in the series?  Or is there a way for the user to say "I want my
+> difftool to also pay attention to the mergetool configurations" (and
+> another "I do not want that" option)?  I'll come back to this later.
 
-I think it is bad to silently ignore the option.  With or without
-this documentation update, I think it is sensible to update the code
-so that it errors out when "--squash --commit" are both given at the
-same time, just like when "--squash --no-ff" is given.
+Correct, it means it'll be done in a future patch (i.e. 6/6).
 
-Or make it "just work" as you said.  Using a boolean variable as
-tristate is something we do in many places and it by itself is not a
-rocket science.  You initialize the variable to -1 (unset), let
-parse_options() to set it to 0/1 when "--[no-]commit" is seen, and
-inspect after parse_options() finishes.  If the variable is still
--1, you know the user wants "the default" behaviour.
+I guess I wasn't fully clear in the message. I meant something like, "If
+`git difftool --gui` were to use..." because difftool currently already
+uses this function in the non-gui case.
 
-The "default" behaviour you are proposing would probably be
-something like
+[snip]
+> 
+> > +	IFS=' '
+> > +	for key in $keys
+> > +	do
+> > +		for section in $sections
+> > +		do
+> > +			merge_tool=$(git config $section.$key) && break 2
+> > +		done
+> > +	done
+> 
+> And you do up to four iterations to cover the combination in the
+> precedence order.  Which makes sense.
+> 
+> I am not sure about the wisdom of setting IFS here, though.
+> 
+> As far as I can see, both $keys and $sections do not take any
+> arbitrary values, but just the two (for each) values you know that
+> do not have any funny characters, so I am not sure what you are
+> trying to achieve by that (i.e. benefit is unclear).
 
-        if (option_commit < 0) {
-                /* 
-                 * default to record the result in a commit.
-                 * but --squash traditionally does not.
-                 */
-                if (!squash)
-                        option_commit = 1;
-                else
-                        option_commit = 0;
-        }
+The reason why IFS is being set is because at the top of mergetool--lib,
+we set IFS to '\n'. As a result, without setting IFS, the strings
+won't parse properly into the for loop.
 
-But I suspect that the option parsing part is the least difficult in
-the "make it just work" change.  That is because I think that the
-machinery to record the result in a commit is not expecting to be
-asked to create a single-parent commit to record the result of the
-squashing, so there may be need for adjusting to how the result
-wants to be recorded before the code makes a commit.
+> 
+> As long as the get_configured_merge_tool function is called always
+> for string_emitted_to_stdout=$(that function), the updated setting
+> will not leak to the outside world so there is no risk to break its
+> callers, but it is not immediately obvious if helper functions
+> called in the remainder of this function are OK with the modified
+> value of IFS (i.e. safety is not obvious).
 
+When I was writing this, I didn't realise that the value of IFS bleeds
+out of this function. I'll reroll this to use a helper function just in
+case.
+
+> 
+> Now for the promised "come back to this later", I think you meant
+> "the get_configured_merge_tool function is already prepared to be
+> used from difftool in this step and when difftool starts to call it
+> here is what happens".  But I wonder if it makes the evolution of
+> the topic easier to follow if you defer it to a later step when you
+> actually make difftool to start calling it?  In other words, in this
+> step, your get_configured_merge_tool would look like
+> 
+> 	sections=merge
+> 
+> 	case "$1" in
+> 	true)
+> 		keys="guitool tool" ;;
+> 	*)
+> 		keys="tool" ;;
+> 	esac
+> 
+> 	for key in $keys
+> 	do
+> 		for section in $sections
+> 		do
+> 			merge_tool=$(git config ...) && break 2
+> 		done
+> 	done
+> 	...
+> 
+> and then in a later step (6/6?), the unconditional setting of
+> sections to 'merge' would be updated so that in diff_mode, you'll
+> iterate over two sections.
+> 
+> I dunno.
+
+As stated above, difftool currently uses this function in the non-gui
+case. I think that clarifying the log message on my part should make it
+easier to understand the evolution of this topic.
+
+Thanks for the careful review,
+
+Denton
