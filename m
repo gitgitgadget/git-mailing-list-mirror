@@ -2,166 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7F2B1F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 10:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 096041F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 10:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729371AbfDYKCo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 06:02:44 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54724 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfDYKCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 06:02:44 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c1so8428863wml.4
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 03:02:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KOs63o+7ynoXXniCVega0Oeq1omSGl0X8f7SK14hH7Q=;
-        b=CniCbhJbrfn+FYi04nZ1GQAeL98Tc4o8JPsVmdyahSlnhoEoxEsNZKdim2PvmlMpQd
-         9PJfL1ZEdj+tNjPjX6HovoSXxfxedtBcK9+nOciMUe0smqVIrVNJJjT1ekxZ9BYASJoI
-         DXgTPtHs4TH2STa/WJ6PZvZbobLeOk6dhoInhktwnCTbmFpvswMEKWuSBw/NIeuRdyck
-         boSBnoLXJha3igH7m+AuSCTiGcy+5bC2Avto/WGf1yW5z14Bcyase5iUF7sTKXx77JZQ
-         KO+TGX8KqFV+nMY1MU4suK6vDJbBP9PgNSSAvTzLCgUrpxf9aP+vWUByLghvE2azwMK2
-         Wp/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KOs63o+7ynoXXniCVega0Oeq1omSGl0X8f7SK14hH7Q=;
-        b=NYdZyVXSq6tsbfxzJqyYJclRHV7yOcKsu5sQt5lxmgpd97LRC/tSNjcyEIZG8s1Drv
-         ajjIeLBXtmzyaFVVApQaeXpiQnGzrwMR4Nn6eBwFT0B5H5e+bcLcdTq/rJ8KH+a7LWfd
-         l99hH6yQRFdRNn0DQec9KUetjptayptxY+I/DhrbvHCeZgEmwOVx0o0tPswggUscRyg0
-         Xygo56dQ/J9+CWS29OjsNeRdfY+l0oxm7CuGgAFspKSxyjtuUOkEbQ35guu0HH+ON8ua
-         tsgznM6R3+OAEVq7vLDF1smsZBW4VyYJK2ZTaGJ/O8/SlMVKRu59w8JXBJ3OfQF5UO7r
-         rHvQ==
-X-Gm-Message-State: APjAAAUUs6Pi7/VMkwf4WLuFgHPeXYXx8VlT+pHrMMPvdAIucrfw7evV
-        L0IeO0UXm47E/WRBUtUvIcU=
-X-Google-Smtp-Source: APXvYqzzJCgYvNXGWUpk58SScTdhLmosZ/dcuSandhTBFvjIHWgsCZKtyEZ+L5V61XcrSVbBtFmLcw==
-X-Received: by 2002:a1c:f205:: with SMTP id s5mr2902874wmc.124.1556186561683;
-        Thu, 25 Apr 2019 03:02:41 -0700 (PDT)
-Received: from [192.168.2.201] (host-92-26-127-169.as13285.net. [92.26.127.169])
-        by smtp.googlemail.com with ESMTPSA id u15sm5591087wrt.40.2019.04.25.03.02.40
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Apr 2019 03:02:41 -0700 (PDT)
-Subject: Re: [PATCH v6 15/27] switch: add --discard-changes
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     eckhard.s.maass@googlemail.com, git@vger.kernel.org,
-        gitster@pobox.com, jacob.keller@gmail.com, martin.agren@gmail.com,
-        newren@gmail.com, rybak.a.v@gmail.com, sunshine@sunshineco.com,
-        szeder.dev@gmail.com
-References: <20190321131655.15249-1-pclouds@gmail.com>
- <20190329103919.15642-1-pclouds@gmail.com>
- <20190329103919.15642-16-pclouds@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <17402ee1-68c1-e51f-dc32-0795e0b63bc8@gmail.com>
-Date:   Thu, 25 Apr 2019 11:02:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729834AbfDYKE1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 06:04:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55329 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727235AbfDYKE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 06:04:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A54B14FC07;
+        Thu, 25 Apr 2019 06:04:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=6Xdzoxig2zmR
+        BKBd1d8By+sXvIU=; b=U7tKX394UaeQWXYhL3VhmA0/Qyi2jSA5fSH2XUBQCXyd
+        yMZXNuEnPOZcCPwEG6TWa386NZEwD0QGgII0J04nKIOmLYwn35WGtESqYVhlG2lK
+        1uyqj/ru5EqT3cTAJPkmhn4YkVxwgEGZ9x4vwhLS5ofMQz94HRA7o2hb+RrgsKM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KfrcJI
+        pqTdX+mrb+X2acviJdX5wdvtNPGnu+ksvXIfBmgZ9o0SO1imi3V8dbDPSj6ArVZT
+        kJwmRxzEqvC52y42EujOS/RhKbZbjSyj70o+gdTpaw+mxFfybySLL8NCUkRk5TND
+        ZgjY59U4X7NWuOvf3dos68EKk2UuapoBVhWSA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01F2914FC06;
+        Thu, 25 Apr 2019 06:04:25 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6570F14FC05;
+        Thu, 25 Apr 2019 06:04:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] run-command: add preliminary support for multiple hooks
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+        <20190424004948.728326-2-sandals@crustytoothpaste.net>
+        <xmqqo94w2l3k.fsf@gitster-ct.c.googlers.com>
+        <8f79d251-58d9-f63b-7171-7f1fbd11c6f9@kdbg.org>
+        <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
+        <87lfzys9t1.fsf@evledraar.gmail.com>
+Date:   Thu, 25 Apr 2019 19:04:23 +0900
+In-Reply-To: <87lfzys9t1.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 25 Apr 2019 11:39:38 +0200")
+Message-ID: <xmqqwojiwgd4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190329103919.15642-16-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: 80E1A410-6741-11E9-AE46-1646B3964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/03/2019 10:39, Nguyễn Thái Ngọc Duy wrote:
-> --discard-changes is a better name than --force for this option since
-> it's what really happens.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I didn't realize when I suggested the name that --force overwrites
-untracked files as well as discarding changes from tracked files. I
-think we should document that. It would be nice if read-tree --reset -u
-took an optional argument so read-tree --reset=tracked -u would not
-overwrite untracked files. Then we could have --discard-changes just
-discard the changes and not overwrite untracked files. I had a quick
-look at unpack trees and it looks like a fairly straight forward change
-(famous last words) - perhaps I'll have a go at it next week.
+> To me this is another point in favor of bypassing this problem entirely
+> and adopting the semantics GitLab (and it seems others) use. I.e. in
+> order execute:
+>
+>     .git/hooks/pre-receive .git/hooks/pre-receive.d/*
 
-Best Wishes
-
-Phillip
-
-> --force is turned to an alias for
-> --discard-changes. But it's meant to be an alias for potentially more
-> force options in the future.
-> 
-> Side note. It's not obvious from the patch but --discard-changes also
-> affects submodules if --recurse-submodules is used. The knob to force
-> updating submodules is hidden behind unpack-trees.c
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/checkout.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 319ba372e3..6d0b2ef565 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -53,6 +53,7 @@ struct checkout_opts {
->  	int count_checkout_paths;
->  	int overlay_mode;
->  	int no_dwim_new_local_branch;
-> +	int discard_changes;
->  
->  	/*
->  	 * If new checkout options are added, skip_merge_working_tree
-> @@ -680,7 +681,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
->  		return error(_("index file corrupt"));
->  
->  	resolve_undo_clear();
-> -	if (opts->force) {
-> +	if (opts->discard_changes) {
->  		ret = reset_tree(get_commit_tree(new_branch_info->commit),
->  				 opts, 1, writeout_error);
->  		if (ret)
-> @@ -802,7 +803,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
->  	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->  		die(_("unable to write new index file"));
->  
-> -	if (!opts->force && !opts->quiet)
-> +	if (!opts->discard_changes && !opts->quiet)
->  		show_local_changes(&new_branch_info->commit->object, &opts->diff_options);
->  
->  	return 0;
-> @@ -1309,6 +1310,9 @@ static int checkout_branch(struct checkout_opts *opts,
->  	if (opts->force && opts->merge)
->  		die(_("'%s' cannot be used with '%s'"), "-f", "-m");
->  
-> +	if (opts->discard_changes && opts->merge)
-> +		die(_("'%s' cannot be used with '%s'"), "--discard-changes", "--merge");
-> +
->  	if (opts->force_detach && opts->new_branch)
->  		die(_("'%s' cannot be used with '%s'"),
->  		    "--detach", "-b/-B/--orphan");
-> @@ -1445,6 +1449,8 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
->  		opts->merge = 1; /* implied */
->  		git_xmerge_config("merge.conflictstyle", opts->conflict_style, NULL);
->  	}
-> +	if (opts->force)
-> +		opts->discard_changes = 1;
->  
->  	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
->  		die(_("-b, -B and --orphan are mutually exclusive"));
-> @@ -1600,6 +1606,8 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
->  			   N_("create and switch to a new branch")),
->  		OPT_STRING('C', "force-create", &opts.new_branch_force, N_("branch"),
->  			   N_("create/reset and switch to a branch")),
-> +		OPT_BOOL(0, "discard-changes", &opts.discard_changes,
-> +			 N_("throw away local modifications")),
->  		OPT_END()
->  	};
->  	int ret;
-> 
-
+But isn't that exactly what Brian wanted to avoid?  Consider those
+who run the current version of Git (which considers pre-receive.d/
+is just a floating cruft Git does not care), with their own
+implementation of pre-receive hook that goes over the contents of
+pre-receive.d/ directory and executes each in order.  If a new
+version of Git you release runs pre-receive followed by each of the
+files in pre-receive.d/ directory, especially because you designed
+to use *.d convention to match existing practice, doesn't your new
+version of Git end up running the scripts in *.d directory twice?
