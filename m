@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 412951F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 09:46:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD5D21F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 09:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728322AbfDYJqI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 05:46:08 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39163 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726439AbfDYJqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 05:46:07 -0400
-Received: by mail-pl1-f195.google.com with SMTP id e92so9031039plb.6
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 02:46:07 -0700 (PDT)
+        id S1728599AbfDYJqN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 05:46:13 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:46146 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726439AbfDYJqN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 05:46:13 -0400
+Received: by mail-pg1-f196.google.com with SMTP id n2so1788354pgg.13
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 02:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XEemIIYkjbjhzmj+mSDfFc9oGsyS5PASSxXEI3nKEno=;
-        b=G8mj7siNnH8WS+0mFW+PszZiV4IfpQDfNvdW6/SncVigpuXvc6yVnUPYyv8rUtUYm2
-         ff5NryWvvcvARx4L2hHngMxp7tx//9IODeNJusFvJsCx0jPSdck4tfTA40x6STv8nuLD
-         vGDW6ltqRrQWhqDDkpAJLWoD5jpGAIT+m7A0ZGrjqrnIi9eysWbfCKoupLEz/3hbxPRq
-         8I3Trd3V6796zXd53E7Xz0FSqdub8EFFyLv/E6SucneeFTBWLdoEaTgbZ+piwrFVkbUI
-         nmik29b9XGU2RsffcAetjjSpK73bUF6t6QMCapF+fzXXNecLg/7quiwRrFenwRTRsnME
-         7M9A==
+        bh=we4az9EhbXPRjyjiKdFFU2d1wbFPUO4G79josMtTf4E=;
+        b=ZiYO3Wt6zsTTeLu7yc/jhrmVw5pAa/HDXw/70A768fJeLR+gq+mjs5HQ5lgqmO+mqV
+         QxOAT1p3tl0+nG9VpWiExcflGkuqb7hlYeFPLZkr3esUXEEubyONI+tY+nmk3xH3QTAI
+         UhAzoI0es00WHLK8r5bG7cFlpBHjwPD7iNOxnxKR8VIEkCvVmiI04yZzeeC3iHqUeQpJ
+         tAdFCUKFCUfIXK3Jt4+y/c91Nf/Iqr53uaFem9lObTNLxm5+zLFwTSRngK/jkS28kUyQ
+         s1sokz9JubIn25jR5dMJr0aUaEzQp5VMtOQ4liHFy4o8TgD8PdEosPzPELSP+nLnuo0J
+         m5jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XEemIIYkjbjhzmj+mSDfFc9oGsyS5PASSxXEI3nKEno=;
-        b=bZx7MCD7uNU6DZVYGO6U3IPJppoVzkcKBwLiBq5Up7RAeqUwtrqFgshjMzQ8C/osec
-         c9RiG3tVN5UzJeayLHJruwleJPeBlariaiRiYmlhwrKWypL2jhdZcAIkkinc6sGrnw+f
-         HpzNIZh72pGuD0gMK/cHYB04FL60uaUZmcjlr2eC4xdVwkWSUbFPqS68Div2VPIotmk6
-         d+LXl9+hIh1heAOS0WDkZYtGgjF/mYpxISMQkhmiCzc6JOX3CeRXMoA0y0kyTZYw1mdm
-         Tvfo1iunXOVleYIRo/1SP0bGn4oHSyeSIAvtmN9fgRgeKdER7f591t4l63+ZlWfL3CGR
-         KkQQ==
-X-Gm-Message-State: APjAAAVm7dht3x+jHEU6oi4r+GEpE3PJKMT7x6VKqScnZSCUPuIlu+Zb
-        H6ZvbHIjrzHnUekWEY6hy2M=
-X-Google-Smtp-Source: APXvYqwRuysgcjYuVPA8NRqQErJqgyMmy6DZErzIg9ya70jWrtHZ6Dv6Tf6QSq+5a0JbNDlb/Y2ikw==
-X-Received: by 2002:a17:902:a01:: with SMTP id 1mr37915368plo.36.1556185566855;
-        Thu, 25 Apr 2019 02:46:06 -0700 (PDT)
+        bh=we4az9EhbXPRjyjiKdFFU2d1wbFPUO4G79josMtTf4E=;
+        b=OcNl0Gv1pl4453ToONi2qVIglvY7CRSOcpOjl+pS/jwp0GBLeTCGqELsFE8GNNMifO
+         naA/NeDeyCuSF1f8C7UL7JD99TmEbqMcDu++2gKEKHPrB3dn/YYY2NmiGrJfknscZbK0
+         eoNQkAS4FM8K3EUTwvvNXX/dpXLolmW5vCR8kSHD4RJNC98oQE/rCFYBpKsGxmTxhmuP
+         sArJjtVAY+/BrB6tYGpyygzha03DHlNRqieaGA/N6cduy8Qho7Wdb4b5yFlJYUFsCOD4
+         ps3HrH+zveklu/GjdBFN4ETRhTKxzav3kmh4l3dG96xu0yWUN4H/I0g2f0mFjikocx3y
+         N6uw==
+X-Gm-Message-State: APjAAAU80Zb7ZzwJGuWY/HzACa/sBq7XcM9/pwevrc9ymCJm9QtEAH3Z
+        DkworKVxy5I7kF+CdEu+eeQ=
+X-Google-Smtp-Source: APXvYqyd23lxhziEmkmGIZCmMU57xiXvhuj9uMDfg1piIkmR97ro/uansjaINeovCYilCcorwjzzYQ==
+X-Received: by 2002:aa7:914d:: with SMTP id 13mr39211716pfi.149.1556185572500;
+        Thu, 25 Apr 2019 02:46:12 -0700 (PDT)
 Received: from ash ([115.73.128.9])
-        by smtp.gmail.com with ESMTPSA id s19sm12669844pgj.62.2019.04.25.02.46.03
+        by smtp.gmail.com with ESMTPSA id q5sm32098735pff.97.2019.04.25.02.46.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Apr 2019 02:46:05 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 25 Apr 2019 16:46:01 +0700
+        Thu, 25 Apr 2019 02:46:11 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 25 Apr 2019 16:46:07 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
         jacob.keller@gmail.com, newren@gmail.com, rybak.a.v@gmail.com,
         sunshine@sunshineco.com
-Subject: [PATCH v3 00/16] Add new command 'restore'
-Date:   Thu, 25 Apr 2019 16:45:44 +0700
-Message-Id: <20190425094600.15673-1-pclouds@gmail.com>
+Subject: [PATCH v3 01/16] checkout: split part of it to new command 'restore'
+Date:   Thu, 25 Apr 2019 16:45:45 +0700
+Message-Id: <20190425094600.15673-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.854.ge34a79f761
-In-Reply-To: <20190411131218.19195-1-pclouds@gmail.com>
+In-Reply-To: <20190425094600.15673-1-pclouds@gmail.com>
 References: <20190411131218.19195-1-pclouds@gmail.com>
+ <20190425094600.15673-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,136 +71,475 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 changes are really small
+Previously the switching branch business of 'git checkout' becomes a
+new command 'switch'. This adds the restore command for the checking
+out paths path.
 
-- gitcli.txt is updated to mention the --staged/--worktree pair, in
-  comparison to --cached/--index which is also mention there.
+Similar to git-switch, a new man page is added to describe what the
+command will become. The implementation will be updated shortly to
+match the man page.
 
-- The patch 'rm --staged' is dropped. It could come back. But if it
-  does, it should be in a series where commands that take
-  --cached/--index will now take both --staged/--worktree. Those are
-  'rm', 'apply', 'check-attr', 'grep', 'diff' and maybe 'ls-files'.
-  
-  In other words we support --staged/--worktree everywhere while
-  --cached/--index still remains because of muscle memory. This is
-  of course only a good move if --staged/--worktree is much better
-  than --cached/--index.
+A couple main differences from 'git checkout <paths>':
 
-- Since there's a chance this series may end up in 'master' and get
-  released, and I'm still worried that I screwed up somewhere, the last
-  patch declares the two commands experimental for maybe one or two
-  release cycles.
-  
-  If the reception is good, we revert that patch. If something
-  horrible is found, we can still change the default behavior without
-  anybody yelling at us. Or worst case scenario, we remove both
-  commands and declare a failed experiment.
+- 'restore' by default will only update worktree. This matters more
+  when --source is specified ('checkout <tree> <paths>' updates both
+  worktree and index).
 
-PS. the intent-to-add support is still not in. But it should be in
-before the experimental status is removed.
+- 'restore --staged' can be used to restore the index. This command
+  overlaps with 'git reset <paths>'.
 
-Nguyễn Thái Ngọc Duy (16):
-  checkout: split part of it to new command 'restore'
-  restore: take tree-ish from --source option instead
-  restore: make pathspec mandatory
-  restore: disable overlay mode by default
-  checkout: factor out worktree checkout code
-  restore: add --worktree and --staged
-  restore: reject invalid combinations with --staged
-  restore: default to --source=HEAD when only --staged is specified
-  restore: replace --force with --ignore-unmerged
-  restore: support --patch
-  t: add tests for restore
-  completion: support restore
-  user-manual.txt: prefer 'merge --abort' over 'reset --hard'
-  doc: promote "git restore"
-  help: move git-diff and git-reset to different groups
-  Declare both git-switch and git-restore experimental
+- both worktree and index could also be restored at the same time
+  (from a tree) when both --staged and --worktree are specified. This
+  overlaps with 'git checkout <tree> <paths>'
 
- .gitignore                             |   1 +
- Documentation/config/interactive.txt   |   3 +-
- Documentation/git-checkout.txt         |   3 +-
- Documentation/git-clean.txt            |   2 +-
- Documentation/git-commit.txt           |   2 +-
- Documentation/git-format-patch.txt     |   2 +-
- Documentation/git-reset.txt            |  13 +-
- Documentation/git-restore.txt (new)    | 185 +++++++++++++++
- Documentation/git-revert.txt           |   7 +-
- Documentation/git-switch.txt           |   2 +
- Documentation/git.txt                  |  20 ++
- Documentation/gitcli.txt               |  16 +-
- Documentation/giteveryday.txt          |   5 +-
- Documentation/gittutorial-2.txt        |   4 +-
- Documentation/gittutorial.txt          |   2 +-
- Documentation/user-manual.txt          |  14 +-
- Makefile                               |   1 +
- builtin.h                              |   1 +
- builtin/checkout.c                     | 299 +++++++++++++++++++------
- builtin/clone.c                        |   2 +-
- builtin/commit.c                       |   2 +-
- command-list.txt                       |   7 +-
- contrib/completion/git-completion.bash |  15 ++
- git-add--interactive.perl              |  52 +++++
- git.c                                  |   1 +
- t/lib-patch-mode.sh                    |  12 +
- t/t2070-restore.sh (new +x)            |  99 ++++++++
- t/t2071-restore-patch.sh (new +x)      | 110 +++++++++
- t/t7508-status.sh                      |  82 +++----
- t/t7512-status-help.sh                 |  20 +-
- wt-status.c                            |  26 ++-
- 31 files changed, 850 insertions(+), 160 deletions(-)
- create mode 100644 Documentation/git-restore.txt
- create mode 100755 t/t2070-restore.sh
- create mode 100755 t/t2071-restore-patch.sh
+- default source for restoring worktree and index is the index and
+  HEAD respectively. A different (tree) source could be specified as
+  with --source (*).
 
-Range-diff dựa trên v2:
- 1:  41788fc2d2 !  1:  0d5ea2b7fe checkout: split part of it to new command 'restore'
-    @@ -342,6 +342,29 @@
-      Low-level commands (plumbing)
-      -----------------------------
-     
-    + diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-    + --- a/Documentation/gitcli.txt
-    + +++ b/Documentation/gitcli.txt
-    +@@
-    + http://marc.info/?l=git&m=119150393620273 for further
-    + information.
-    + 
-    ++Some other commands that also work on files in the working tree and/or
-    ++in the index can take `--staged` and/or `--worktree`.
-    ++
-    ++* `--staged` is exactly like `--cached`, which is used to ask a
-    ++  command to only work on the index, not the working tree.
-    ++
-    ++* `--worktree` is the opposite, to ask a command to work on the
-    ++  working tree only, not the index.
-    ++
-    ++* The two options can be specified together to ask a command to work
-    ++  on both the index and the working tree.
-    ++
-    + GIT
-    + ---
-    + Part of the linkgit:git[1] suite
-    +
-      diff --git a/Makefile b/Makefile
-      --- a/Makefile
-      +++ b/Makefile
- 2:  253dfb42ae =  2:  c3c6e7762a restore: take tree-ish from --source option instead
- 3:  0266c4d982 =  3:  0fbf963e7d restore: make pathspec mandatory
- 4:  ae4dd4c24e =  4:  2509bebf32 restore: disable overlay mode by default
- 5:  c51dd232c0 =  5:  206c507f7d checkout: factor out worktree checkout code
- 6:  6b19ddb1b3 =  6:  656bfcd659 restore: add --worktree and --staged
- 7:  3f1031cc23 =  7:  f2d3aa1027 restore: reject invalid combinations with --staged
- 8:  d6d9bed95c =  8:  57efad405d restore: default to --source=HEAD when only --staged is specified
- 9:  fca91f3cca =  9:  3c6b32c223 restore: replace --force with --ignore-unmerged
-10:  079273e2df = 10:  6665d7523b restore: support --patch
-11:  9d28d167fa = 11:  d7bda0c0cc t: add tests for restore
-12:  acd490f8b0 = 12:  e4622aff3d completion: support restore
-13:  336a7d8921 = 13:  787b0e485e user-manual.txt: prefer 'merge --abort' over 'reset --hard'
-14:  3b81b27255 = 14:  0df020c2c8 doc: promote "git restore"
-15:  ce7e890524 <  -:  ---------- rm: add --staged as alias for --cached
-16:  763aa1d6f1 = 15:  3302b1b0e1 help: move git-diff and git-reset to different groups
- -:  ---------- > 16:  ffeea858a7 Declare both git-switch and git-restore experimental
+- when both index and worktree are restored, --source must be
+  specified since the default source for these two individual targets
+  are different (**)
+
+- --no-overlay is enabled by default, if an entry is missing in the
+  source, restoring means deleting the entry
+
+(*) I originally went with --from instead of --source. I still think
+  --from is a better name. The short option -f however is already
+  taken by force. And I do think short option is good to have, e.g. to
+  write -s@ or -s@^ instead of --source=HEAD.
+
+(**) If you sit down and think about it, moving worktree's source from
+  the index to HEAD makes sense, but nobody is really thinking it
+  through when they type the commands.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ .gitignore                           |   1 +
+ Documentation/config/interactive.txt |   3 +-
+ Documentation/git-checkout.txt       |   3 +-
+ Documentation/git-reset.txt          |   7 +-
+ Documentation/git-restore.txt (new)  | 183 +++++++++++++++++++++++++++
+ Documentation/git-revert.txt         |   3 +
+ Documentation/git.txt                |  20 +++
+ Documentation/gitcli.txt             |  12 ++
+ Makefile                             |   1 +
+ builtin.h                            |   1 +
+ builtin/checkout.c                   |  26 ++++
+ command-list.txt                     |   1 +
+ git.c                                |   1 +
+ 13 files changed, 257 insertions(+), 5 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index c687b92b1c..fb377106be 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -143,6 +143,7 @@
+ /git-request-pull
+ /git-rerere
+ /git-reset
++/git-restore
+ /git-rev-list
+ /git-rev-parse
+ /git-revert
+diff --git a/Documentation/config/interactive.txt b/Documentation/config/interactive.txt
+index ad846dd7c9..a2d3c7ec44 100644
+--- a/Documentation/config/interactive.txt
++++ b/Documentation/config/interactive.txt
+@@ -2,7 +2,8 @@ interactive.singleKey::
+ 	In interactive commands, allow the user to provide one-letter
+ 	input with a single key (i.e., without hitting enter).
+ 	Currently this is used by the `--patch` mode of
+-	linkgit:git-add[1], linkgit:git-checkout[1], linkgit:git-commit[1],
++	linkgit:git-add[1], linkgit:git-checkout[1],
++	linkgit:git-restore[1], linkgit:git-commit[1],
+ 	linkgit:git-reset[1], and linkgit:git-stash[1]. Note that this
+ 	setting is silently ignored if portable keystroke input
+ 	is not available; requires the Perl module Term::ReadKey.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 58f18a0842..a294652dd6 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -570,7 +570,8 @@ $ git add frotz
+ 
+ SEE ALSO
+ --------
+-linkgit:git-switch[1]
++linkgit:git-switch[1],
++linkgit:git-restore[1]
+ 
+ GIT
+ ---
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index cbf901efb4..c25f8a95b9 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -25,7 +25,8 @@ The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
+ 	the current branch.)
+ +
+ This means that `git reset <paths>` is the opposite of `git add
+-<paths>`.
++<paths>`. This command is equivalent to
++`git restore [--source=<tree-ish>] --staged <paths>...`.
+ +
+ After running `git reset <paths>` to update the index entry, you can
+ use linkgit:git-checkout[1] to check the contents out of the index to
+@@ -86,8 +87,8 @@ but carries forward unmerged index entries.
+ 	changes, reset is aborted.
+ --
+ 
+-If you want to undo a commit other than the latest on a branch,
+-linkgit:git-revert[1] is your friend.
++See "Reset, restore and revert" in linkgit:git[1] for the differences
++between the three commands.
+ 
+ 
+ OPTIONS
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+new file mode 100644
+index 0000000000..b608f3f360
+--- /dev/null
++++ b/Documentation/git-restore.txt
+@@ -0,0 +1,183 @@
++git-restore(1)
++==============
++
++NAME
++----
++git-restore - Restore working tree files
++
++SYNOPSIS
++--------
++[verse]
++'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>...
++'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>...]
++
++DESCRIPTION
++-----------
++Restore specified paths in the working tree with some contents from a
++restore source. If a path is tracked but does not exist in the restore
++source, it will be removed to match the source.
++
++The command can also be used to restore the content in the index with
++`--staged`, or restore both the working tree and the index with
++`--staged --worktree`.
++
++By default, the restore sources for working tree and the index are the
++index and `HEAD` respectively. `--source` could be used to specify a
++commit as the restore source.
++
++See "Reset, restore and revert" in linkgit:git[1] for the differences
++between the three commands.
++
++OPTIONS
++-------
++-s <tree>::
++--source=<tree>::
++	Restore the working tree files with the content from the given
++	tree. It is common to specify the source tree by naming a
++	commit, branch or tag associated with it.
+++
++If not specified, the default restore source for the working tree is
++the index, and the default restore source for the index index is
++`HEAD`. When both `--staged` and `--worktree` are specified,
++`--source` must also be specified.
++
++-p::
++--patch::
++	Interactively select hunks in the difference between the
++	restore source and the restore location. See the ``Interactive
++	Mode'' section of linkgit:git-add[1] to learn how to operate
++	the `--patch` mode.
+++
++Note that `--patch` can accept no pathspec and will prompt to restore
++all modified paths.
++
++-W::
++--worktree::
++-S::
++--staged::
++	Specify the restore location. If neither option is specified,
++	by default the working tree is restored. Specifying `--staged`
++	will only restore the index. Specifying both restores both.
++
++-q::
++--quiet::
++	Quiet, suppress feedback messages. Implies `--no-progress`.
++
++--progress::
++--no-progress::
++	Progress status is reported on the standard error stream
++	by default when it is attached to a terminal, unless `--quiet`
++	is specified. This flag enables progress reporting even if not
++	attached to a terminal, regardless of `--quiet`.
++
++--ours::
++--theirs::
++	When restoring files in the working tree from the index, use
++	stage #2 ('ours') or #3 ('theirs') for unmerged paths.
+++
++Note that during `git rebase` and `git pull --rebase`, 'ours' and
++'theirs' may appear swapped. See the explanation of the same options
++in linkgit:git-checkout[1] for details.
++
++-m::
++--merge::
++	When restoring files on the working tree from the index,
++	recreate the conflicted merge in the unmerged paths.
++
++--conflict=<style>::
++	The same as `--merge` option above, but changes the way the
++	conflicting hunks are presented, overriding the
++	`merge.conflictStyle` configuration variable.  Possible values
++	are "merge" (default) and "diff3" (in addition to what is
++	shown by "merge" style, shows the original contents).
++
++--ignore-unmerged::
++	When restoring files on the working tree from the index, do
++	not abort the operation if there are unmerged entries and
++	neither `--ours`, `--theirs`, `--merge` or `--conflict` is
++	specified. Unmerged paths on the working tree are left alone.
++
++--ignore-skip-worktree-bits::
++	In sparse checkout mode, by default is to only update entries
++	matched by `<pathspec>` and sparse patterns in
++	$GIT_DIR/info/sparse-checkout. This option ignores the sparse
++	patterns and unconditionally restores any files in
++	`<pathspec>`.
++
++--overlay::
++--no-overlay::
++	In overlay mode, the command never removes files when
++	restoring. In no-overlay mode, tracked files that do not
++	appear in the `--source` tree are removed, to make them match
++	`<tree>` exactly. The default is no-overlay mode.
++
++EXAMPLES
++--------
++
++The following sequence switches to the `master` branch, reverts the
++`Makefile` to two revisions back, deletes hello.c by mistake, and gets
++it back from the index.
++
++------------
++$ git switch master
++$ git restore --source master~2 Makefile  <1>
++$ rm -f hello.c
++$ git restore hello.c                     <2>
++------------
++
++<1> take a file out of another commit
++<2> restore hello.c from the index
++
++If you want to restore _all_ C source files to match the version in
++the index, you can say
++
++------------
++$ git restore '*.c'
++------------
++
++Note the quotes around `*.c`.  The file `hello.c` will also be
++restored, even though it is no longer in the working tree, because the
++file globbing is used to match entries in the index (not in the
++working tree by the shell).
++
++To restore all files in the current directory
++
++------------
++$ git restore .
++------------
++
++or to restore all working tree files with 'top' pathspec magic (see
++linkgit:gitglossary[7])
++
++------------
++$ git restore :/
++------------
++
++To restore a file in the index to match the version in `HEAD` (this is
++the same as using linkgit:git-reset[1])
++
++------------
++$ git restore --staged hello.c
++------------
++
++or you can restore both the index and the working tree (this the same
++as using linkgit:git-checkout[1])
++
++------------
++$ git restore --source=HEAD --staged --worktree hello.c
++------------
++
++or the short form which is more practical but less readable:
++
++------------
++$ git restore -s@ -SW hello.c
++------------
++
++SEE ALSO
++--------
++linkgit:git-checkout[1],
++linkgit:git-reset[1]
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 837707a8fd..018ecf49d3 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -30,6 +30,9 @@ should see linkgit:git-checkout[1], specifically the `git checkout
+ <commit> -- <filename>` syntax.  Take care with these alternatives as
+ both will discard uncommitted changes in your working directory.
+ 
++See "Reset, restore and revert" in linkgit:git[1] for the differences
++between the three commands.
++
+ OPTIONS
+ -------
+ <commit>...::
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 00156d64aa..fbed007354 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -210,6 +210,26 @@ people via patch over e-mail.
+ 
+ include::cmds-foreignscminterface.txt[]
+ 
++Reset, restore and revert
++~~~~~~~~~~~~~~~~~~~~~~~~~
++There are three commands with similar names: `git reset`,
++`git restore` and `git revert`.
++
++* linkgit:git-revert[1] is about making a new commit that reverts the
++  changes made by other commits.
++
++* linkgit:git-restore[1] is about restoring files in the working tree
++  from either the index or another commit. This command does not
++  update your branch. The command can also be used to restore files in
++  the index from another commit.
++
++* linkgit:git-reset[1] is about updating your branch, moving the tip
++  in order to add or remove commits from the branch. This operation
++  changes the commit history.
+++
++`git reset` can also be used to restore the index, overlapping with
++`git restore`.
++
+ 
+ Low-level commands (plumbing)
+ -----------------------------
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 592e06d839..225513ef5e 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -209,6 +209,18 @@ See also http://marc.info/?l=git&m=116563135620359 and
+ http://marc.info/?l=git&m=119150393620273 for further
+ information.
+ 
++Some other commands that also work on files in the working tree and/or
++in the index can take `--staged` and/or `--worktree`.
++
++* `--staged` is exactly like `--cached`, which is used to ask a
++  command to only work on the index, not the working tree.
++
++* `--worktree` is the opposite, to ask a command to work on the
++  working tree only, not the index.
++
++* The two options can be specified together to ask a command to work
++  on both the index and the working tree.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 8e91db73ad..ffe7e4f58f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -799,6 +799,7 @@ BUILT_INS += git-format-patch$X
+ BUILT_INS += git-fsck-objects$X
+ BUILT_INS += git-init$X
+ BUILT_INS += git-merge-subtree$X
++BUILT_INS += git-restore$X
+ BUILT_INS += git-show$X
+ BUILT_INS += git-stage$X
+ BUILT_INS += git-status$X
+diff --git a/builtin.h b/builtin.h
+index c64e44450e..6830000e14 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -214,6 +214,7 @@ extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ extern int cmd_repack(int argc, const char **argv, const char *prefix);
+ extern int cmd_rerere(int argc, const char **argv, const char *prefix);
+ extern int cmd_reset(int argc, const char **argv, const char *prefix);
++extern int cmd_restore(int argc, const char **argv, const char *prefix);
+ extern int cmd_rev_list(int argc, const char **argv, const char *prefix);
+ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+ extern int cmd_revert(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0351735c6e..98dc2ded38 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -38,6 +38,11 @@ static const char * const switch_branch_usage[] = {
+ 	NULL,
+ };
+ 
++static const char * const restore_usage[] = {
++	N_("git restore [<options>] [<branch>] -- <file>..."),
++	NULL,
++};
++
+ struct checkout_opts {
+ 	int patch_mode;
+ 	int quiet;
+@@ -1622,3 +1627,24 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 	FREE_AND_NULL(options);
+ 	return ret;
+ }
++
++int cmd_restore(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts opts;
++	struct option *options = NULL;
++	int ret;
++
++	memset(&opts, 0, sizeof(opts));
++	opts.dwim_new_local_branch = 1;
++	opts.switch_branch_doing_nothing_is_ok = 0;
++	opts.accept_pathspec = 1;
++
++	options = parse_options_dup(options);
++	options = add_common_options(&opts, options);
++	options = add_checkout_path_options(&opts, options);
++
++	ret = checkout_main(argc, argv, prefix, &opts,
++			    options, restore_usage);
++	FREE_AND_NULL(options);
++	return ret;
++}
+diff --git a/command-list.txt b/command-list.txt
+index 13317f47d4..b9eae1c258 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -151,6 +151,7 @@ git-replace                             ancillarymanipulators           complete
+ git-request-pull                        foreignscminterface             complete
+ git-rerere                              ancillaryinterrogators
+ git-reset                               mainporcelain           worktree
++git-restore                             mainporcelain           worktree
+ git-revert                              mainporcelain
+ git-rev-list                            plumbinginterrogators
+ git-rev-parse                           plumbinginterrogators
+diff --git a/git.c b/git.c
+index 39582cf511..6d439e723f 100644
+--- a/git.c
++++ b/git.c
+@@ -558,6 +558,7 @@ static struct cmd_struct commands[] = {
+ 	{ "replace", cmd_replace, RUN_SETUP },
+ 	{ "rerere", cmd_rerere, RUN_SETUP },
+ 	{ "reset", cmd_reset, RUN_SETUP },
++	{ "restore", cmd_restore, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "rev-list", cmd_rev_list, RUN_SETUP | NO_PARSEOPT },
+ 	{ "rev-parse", cmd_rev_parse, NO_PARSEOPT },
+ 	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
 -- 
 2.21.0.854.ge34a79f761
 
