@@ -2,76 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0952E1F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 19:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0D7C1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 21:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726196AbfDYTki (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 15:40:38 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:19514 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725937AbfDYTki (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 15:40:38 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44qnbR5Sknz5tlF;
-        Thu, 25 Apr 2019 21:40:35 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 03B5641E6;
-        Thu, 25 Apr 2019 21:40:34 +0200 (CEST)
-Subject: Re: [PATCH 1/5] run-command: add preliminary support for multiple
- hooks
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
- <20190424004948.728326-2-sandals@crustytoothpaste.net>
- <xmqqo94w2l3k.fsf@gitster-ct.c.googlers.com>
- <8f79d251-58d9-f63b-7171-7f1fbd11c6f9@kdbg.org>
- <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <2a511c3c-ef8d-07c5-80e2-398780ee6ed4@kdbg.org>
-Date:   Thu, 25 Apr 2019 21:40:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1731100AbfDYVKh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 17:10:37 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:44328 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbfDYVKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 17:10:37 -0400
+Received: by mail-pg1-f193.google.com with SMTP id z16so442754pgv.11
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 14:10:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=fcZyyOOEwKmdz3zEK91QYfJGeBg6VIjt4tEE3uvAhuE=;
+        b=b5Mm2CzTCn/ZlLW2FZS9q7g5HpGD5hQq7ZTvHCN1Kp8Z0vnNQ4aRWk1apR15Vg6P0Z
+         pkhd2bduGAzbh+rnkxtltpO4UEQg7/iiIait69GcRgYgkF8HWBUIlHCGmYE+qeBItdh0
+         nMDOXk6GAZMtyxtRqhqQLi+592a5FUTib8MVIXIrF9AF/jbZYHxOxLS0VvST580WKUS5
+         CxyASm+0xyyqv+Ve9ETOw/jyVMRfslXXNGnaHUnDF4b52/2gmF33jRfmHBQUj8ErevL0
+         DGHqLIGwNgktdwmb5DLWDIoMuPMPsqtmLTRSjIS0/euH4CGi59OZJ7KRt0soK4Yq5x4E
+         YcIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=fcZyyOOEwKmdz3zEK91QYfJGeBg6VIjt4tEE3uvAhuE=;
+        b=QnNdbLqJYL52XpalR8LtsQdoiwLkxXX+9rS6+0tnuguC319boLATmm+gRiBGLj5yCP
+         SUUl4cfwABx1/gaBeohBNaGF7ns9FVoS9LWeYj4l66y3+JwNgsFlSr7l9E9cNRbOrSUu
+         2TBzfXgTe/6o+SHUTpL0C3LuMAzzsiHXvikbW7zxBZtOJjVnqzsRFAEOaCmorfXATczb
+         MvIMQn/s1jYSLbx3EklaxOp9TJoZTTFyTvv4RF6MQwsQ4pdB4hY9lOEChzkBvMhgDOcg
+         e3I43Hb6J/HLVlACFHYkho82y6Z6bhk/ehBZX2t8k7rDJpJLpEfnMdsNWncmK3/ZzQZ4
+         pFjQ==
+X-Gm-Message-State: APjAAAU/WnJ5IkTLBmP8ZCIH24iR/vPEhio2d44Pcx2tuPAx7FrF5K1t
+        6iHbbJZRi6ebl7ZBrrs2HeAtAGrP
+X-Google-Smtp-Source: APXvYqxnG/V5Vg8QzaaqZvTpZTX8LQfmlNyZEi//KWIt/sPfqqZuV4JjLipDjz5CE46ECe94+QlmyA==
+X-Received: by 2002:a63:5466:: with SMTP id e38mr40207098pgm.340.1556226635989;
+        Thu, 25 Apr 2019 14:10:35 -0700 (PDT)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id l9sm3097176pgq.48.2019.04.25.14.10.34
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Apr 2019 14:10:34 -0700 (PDT)
+Date:   Thu, 25 Apr 2019 14:10:34 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/3] checkout: allow -b/-B to work on a merge base
+Message-ID: <cover.1556226502.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.04.19 um 02:55 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Furthermore, basing a decision on whether a file is executable won't
->> work on Windows as intended. So, it is better to aim for an existence check.
-> 
-> That is a good point.
-> 
-> So it may be OK for "do we have a single hook script for this hook
-> name?" to say "no" when the path exists but not executable on
-> POSIXPERM systems, but it is better to say "yes" for consistency
-> across platforms (I think that is one of the reasons why we use
-> .sample suffix these days).
+I noticed earlier that running
 
-All correct.
+	$ git checkout -b test master...
 
-> And for the same reason, for the purpose of deciding "because we do
-> not have a single hook script, let's peek into .d directory
-> ourselves", mere presence of the file with that name, regardless of
-> the executable bit, should signal that we should not handle the .d
-> directory.
-> 
-> IOW, you think access(X_OK) should be more like access(F_OK)?
+would result in the following failure message:
 
-Yes, that's my conclusion.
+	fatal: Not a valid object name: 'master...'.
 
--- Hannes
+I believe that this is a bug, so this patchset will allow this to succeed.
+
+Denton Liu (3):
+  t2018: cleanup in current test
+  t2018: demonstrate checkout -b merge base bug
+  checkout: allow -b/-B to work on a merge base
+
+ builtin/checkout.c         |  4 ++-
+ t/t2018-checkout-branch.sh | 52 +++++++++++++++++++-------------------
+ 2 files changed, 29 insertions(+), 27 deletions(-)
+
+-- 
+2.21.0.1033.g0e8cc1100c
+
