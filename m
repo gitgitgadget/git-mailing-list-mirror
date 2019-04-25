@@ -7,51 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 726A31F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 09:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 387FE1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 09:54:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728418AbfDYJyf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 05:54:35 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38655 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728324AbfDYJye (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 05:54:34 -0400
-Received: by mail-pg1-f196.google.com with SMTP id j26so10935095pgl.5
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 02:54:34 -0700 (PDT)
+        id S1728579AbfDYJyi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 05:54:38 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:38742 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728324AbfDYJyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 05:54:37 -0400
+Received: by mail-pl1-f194.google.com with SMTP id f36so10820885plb.5
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 02:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=zGmu0NH5G0xLDbj9wXpqanCYZl3gHKarp7OZrHIHS40=;
-        b=adUiWC3q4BYH0GE2n2q3L3FsPx/S6VMIyrAdG7terwWwKm1ZljYzPixCurmUkjET/R
-         Vn8PswtQLC6H5MmkngI48rCsZyiFBfn9+SEGvoi3PvR33lTMxdGVufTUqQftK+t5rHXL
-         nl8syNzVgikXdtSEvBS0Y3jem0N8a91FgQwPeDtewQmvR02dRsqQdUt7NeLjWGokxzvJ
-         L+WmcoJY0SVEm+H9XABKwQCgQxMhCTBB/9B3VAdN0f9alr2FoAEMvZlKCiYH44HS2Itj
-         l8JPNqo2uW14qSSTDBEMqkWwop1mlesuhf4q8u2JG/snrQ81rp4Uede/CDD+JjshIbyo
-         6EfA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=JI/Lia72G0FNL112c0dOM2shPHSe/tqNtZcRPBwe5rk=;
+        b=jqBqjEUe+6YIerq+sRjAk6uF3FcHCYF+a56OQ9ndGqc6qIXxcFNnrVG+Q4g6STxUv/
+         TkbQqY8r4MeLnqPmzrGUYEAyLoz17TbhkjVMirlUdw1qdoewIhHVj3HjjPdQIFJtFcMF
+         M3i4DYNseQOwL4mAAHwG0GzPqkX1aT/kKvwo0qy/fLRubB/U5rEvOWDTjQPaChKe0rqh
+         fKlGcMfDwjAFA0W4duJc/j1m3k8FKAey5f6qRubXH/Zyk4iEO7o7+8qFMZ0qR+SjD7Kr
+         rZC4/OuKsjV0kY9zB6WCeWBxkJS325MSuGJiRSoXaviNQ2sGihJmvt1F3N79F8ePxvof
+         +BqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=zGmu0NH5G0xLDbj9wXpqanCYZl3gHKarp7OZrHIHS40=;
-        b=I7rNwz6SoHK2r1vdXNLbChwe7/KNNNlfvZ+WDc8AxdwKFzMRTsWfX5jxQISchEoMTY
-         Vbh4pgC1ePMrmpHPhPKK+ML0A9ImtFi+4h7AuHyVjnykzrKXpklkhRHDTheYeDkgAcG1
-         8WBvDtN9HwIzcf0vQhLbVWrhdEu974tOyrRqTdOTwzaqyjq60KMolr6ZtM7igkhbM8R3
-         UC60TL8aMCe7uwKk7tuDLDnOocV00CSYjPhK29bBnJ73VyrfZUofWBzJYY1PiBRDDgBZ
-         9nM3cF4L6Vtxv5Uf/rYYY3mi/R/nulz7gspYbctTBD7p1ql+Tj0OL7FfJa+s0dk5aOdl
-         iwZQ==
-X-Gm-Message-State: APjAAAUBbVv3OlPSH7kShYpI4iafNWpxKsLsKO5tRul1wbdhOhIhv4M5
-        AawLBu5tGInEeZcTmKDrZAdbUF7p
-X-Google-Smtp-Source: APXvYqzla2Htt/ZoAc7YJmmrP8liddPENz1uhopiVpZJ/0cGq5sqj5zslcdTlq+6SdJ2JT14+HOfZA==
-X-Received: by 2002:a63:4558:: with SMTP id u24mr34538040pgk.225.1556186073170;
-        Thu, 25 Apr 2019 02:54:33 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JI/Lia72G0FNL112c0dOM2shPHSe/tqNtZcRPBwe5rk=;
+        b=qpK/QmzsGvA5rJEMl+S0lPu3YvcBZ3Gg1v+b6LbwrOcBIyeUxzYhxvWjvdnhipMDfx
+         C9EEdaTpS9fZT2tz7HaBeY7Tne/15/yhjXLZoaSlMif829XB+pfzo5vdJtwb8rm1xaY7
+         cyDge2HYj+sfem3p31aI7GGHUF7WEobzdIwMHtmXqiECrdXjPwDfoM6xFhTuvD6BbxUW
+         ai9T1xkq/UkWH1fghCtMn5Mn4S5+G5yRNEE6ihLY1Ux+jbh7sXwTkTja6E+CrXMmeEYF
+         Bc/mPWpSgwO7cRGtYLeZhNjLtD/d7nuz3RgTC1bxhMkJZwoUD120iN55AtOZPSs3akBp
+         aQXg==
+X-Gm-Message-State: APjAAAUTisApYuunl/NU1SmuTjoFOpLjzact+8rkTN1I6+37LbQG0FUw
+        AadPGcDOS3oBJqonCbN6vSfLkPuV
+X-Google-Smtp-Source: APXvYqzL8l+gd2u3Ok+07AZgeYnYKQnZRJhfSEWAqq0MKIWRykeuz04JtlIrh8LpcDN7q2yj+PkCkA==
+X-Received: by 2002:a17:902:b597:: with SMTP id a23mr38285210pls.284.1556186075998;
+        Thu, 25 Apr 2019 02:54:35 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id j22sm29531195pfn.129.2019.04.25.02.54.31
+        by smtp.gmail.com with ESMTPSA id f71sm39073544pfc.109.2019.04.25.02.54.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Apr 2019 02:54:32 -0700 (PDT)
-Date:   Thu, 25 Apr 2019 02:54:30 -0700
+        Thu, 25 Apr 2019 02:54:35 -0700 (PDT)
+Date:   Thu, 25 Apr 2019 02:54:33 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -59,130 +57,284 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 0/6] difftool and mergetool improvements
-Message-ID: <cover.1556185345.git.liu.denton@gmail.com>
-References: <cover.1556142510.git.liu.denton@gmail.com>
+Subject: [PATCH v4 1/6] t7610: unsuppress output
+Message-ID: <9f9922cab341396a846edc2f52342c59d294379a.1556185345.git.liu.denton@gmail.com>
+References: <cover.1556185345.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1556142510.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1556185345.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for another review, Junio.
+The output for commands used to be suppressed by redirecting both stdout
+and stderr to /dev/null. However, this should not happen since the
+output is useful for debugging and, without the "-v" flag, test scripts
+don't output anyway.
 
-This should basically be the same as v3 except I've moved the IFS
-assignment into a subshell so its value does not leak out.
+Unsuppress the output by removing the redirections to /dev/null.
 
-I'd like the change in 4/6 to be reviewed carefully. t7610 and t7800
-run properly with dash on My Machineة, but I couldn't find a reference
-on whether my usage is POSIX legal or not.
-
-We do have precedent for using fors within a subshell, though, from a
-quick git grep:
-
-	t/t3202-show-branch-octopus.sh: git show-branch $(for i in $numbers; do echo branch$i; done) > out &&
-
-Thanks,
-
-Denton
-
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
+ t/t7610-mergetool.sh | 122 +++++++++++++++++++++----------------------
+ 1 file changed, 61 insertions(+), 61 deletions(-)
 
-Changes since v3:
-
-* Move nested for into a subshell so that IFS does not leak out of
-  function
-
-Changes since v2:
-
-* Unsuppress output in t7610
-* Make `get_merge_tool` return 1 on guessed so we don't have to deal
-  with parsing '$guessed:$merge_tool'
-
-Changes since v1:
-
-* Introduce get_merge_tool_guessed function instead of changing
-  get_merge_tool
-* Remove unnecessary if-tower in mutual exclusivity logic
-Denton Liu (6):
-  t7610: unsuppress output
-  t7610: add mergetool --gui tests
-  mergetool: use get_merge_tool function
-  mergetool: fallback to tool when guitool unavailable
-  difftool: make --gui, --tool and --extcmd mutually exclusive
-  difftool: fallback on merge.guitool
-
- Documentation/git-difftool.txt       |   4 +-
- Documentation/git-mergetool--lib.txt |   4 +-
- Documentation/git-mergetool.txt      |   4 +-
- builtin/difftool.c                   |  13 +--
- git-difftool--helper.sh              |   2 +-
- git-mergetool--lib.sh                |  37 ++++--
- git-mergetool.sh                     |  12 +-
- t/t7610-mergetool.sh                 | 163 +++++++++++++++++----------
- t/t7800-difftool.sh                  |  24 ++++
- 9 files changed, 172 insertions(+), 91 deletions(-)
-
-Range-diff against v3:
-1:  9f9922cab3 = 1:  9f9922cab3 t7610: unsuppress output
-2:  0f632ca6bf = 2:  0f632ca6bf t7610: add mergetool --gui tests
-3:  ff83d25ff2 = 3:  ff83d25ff2 mergetool: use get_merge_tool function
-4:  e975fe4a8b ! 4:  c799e871e2 mergetool: fallback to tool when guitool unavailable
-    @@ -6,14 +6,18 @@
-         not set, it falls back to `diff.tool`. Make git-mergetool also fallback
-         from `merge.guitool` to `merge.tool` if the former is undefined.
-     
-    -    If git-difftool were to use `get_configured_mergetool`, it would also
-    -    get the fallback behaviour in the following precedence:
-    +    If git-difftool, when called with `--gui`, were to use
-    +    `get_configured_mergetool` in a future patch, it would also get the
-    +    fallback behavior in the following precedence:
-     
-         1. diff.guitool
-         2. merge.guitool
-         3. diff.tool
-         4. merge.tool
-     
-    +    Note that the behavior for when difftool or mergetool are called without
-    +    `--gui` should be identical with or without this patch.
-    +
-         Signed-off-by: Denton Liu <liu.denton@gmail.com>
-     
-      diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-    @@ -61,14 +65,19 @@
-     +		keys="guitool $keys"
-      	fi
-     +
-    -+	IFS=' '
-    -+	for key in $keys
-    -+	do
-    -+		for section in $sections
-    ++	merge_tool=$(
-    ++		IFS=' '
-    ++		for key in $keys
-     +		do
-    -+			merge_tool=$(git config $section.$key) && break 2
-    -+		done
-    -+	done
-    ++			for section in $sections
-    ++			do
-    ++				if selected=$(git config $section.$key)
-    ++				then
-    ++					echo "$selected"
-    ++					return
-    ++				fi
-    ++			done
-    ++		done)
-     +
-      	if test -n "$merge_tool" && ! valid_tool "$merge_tool"
-      	then
-5:  bc3e229171 = 5:  7d7c936cd3 difftool: make --gui, --tool and --extcmd mutually exclusive
-6:  f39b15efbd = 6:  b642ed3b1e difftool: fallback on merge.guitool
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index a9fb971615..69711487dd 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -130,14 +130,14 @@ test_expect_success 'custom mergetool' '
+ 	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+-	test_must_fail git merge master >/dev/null 2>&1 &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
++	test_must_fail git merge master &&
++	( yes "" | git mergetool both ) &&
+ 	( yes "" | git mergetool file1 file1 ) &&
+-	( yes "" | git mergetool file2 "spaced name" >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
+-	( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file2 "spaced name" ) &&
++	( yes "" | git mergetool subdir/file3 ) &&
++	( yes "d" | git mergetool file11 ) &&
++	( yes "d" | git mergetool file12 ) &&
++	( yes "l" | git mergetool submod ) &&
+ 	test "$(cat file1)" = "master updated" &&
+ 	test "$(cat file2)" = "master new" &&
+ 	test "$(cat subdir/file3)" = "master new sub" &&
+@@ -153,15 +153,15 @@ test_expect_success 'mergetool crlf' '
+ 	# test_when_finished is LIFO.)
+ 	test_config core.autocrlf true &&
+ 	git checkout -b test$test_count branch1 &&
+-	test_must_fail git merge master >/dev/null 2>&1 &&
+-	( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool "spaced name" >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
+-	( yes "r" | git mergetool submod >/dev/null 2>&1 ) &&
++	test_must_fail git merge master &&
++	( yes "" | git mergetool file1 ) &&
++	( yes "" | git mergetool file2 ) &&
++	( yes "" | git mergetool "spaced name" ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "" | git mergetool subdir/file3 ) &&
++	( yes "d" | git mergetool file11 ) &&
++	( yes "d" | git mergetool file12 ) &&
++	( yes "r" | git mergetool submod ) &&
+ 	test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
+ 	test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
+ 	test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
+@@ -176,8 +176,8 @@ test_expect_success 'mergetool in subdir' '
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+-		test_must_fail git merge master >/dev/null 2>&1 &&
+-		( yes "" | git mergetool file3 >/dev/null 2>&1 ) &&
++		test_must_fail git merge master &&
++		( yes "" | git mergetool file3 ) &&
+ 		test "$(cat file3)" = "master new sub"
+ 	)
+ '
+@@ -188,14 +188,14 @@ test_expect_success 'mergetool on file in parent dir' '
+ 	git submodule update -N &&
+ 	(
+ 		cd subdir &&
+-		test_must_fail git merge master >/dev/null 2>&1 &&
+-		( yes "" | git mergetool file3 >/dev/null 2>&1 ) &&
+-		( yes "" | git mergetool ../file1 >/dev/null 2>&1 ) &&
+-		( yes "" | git mergetool ../file2 ../spaced\ name >/dev/null 2>&1 ) &&
+-		( yes "" | git mergetool ../both >/dev/null 2>&1 ) &&
+-		( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
+-		( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
+-		( yes "l" | git mergetool ../submod >/dev/null 2>&1 ) &&
++		test_must_fail git merge master &&
++		( yes "" | git mergetool file3 ) &&
++		( yes "" | git mergetool ../file1 ) &&
++		( yes "" | git mergetool ../file2 ../spaced\ name ) &&
++		( yes "" | git mergetool ../both ) &&
++		( yes "d" | git mergetool ../file11 ) &&
++		( yes "d" | git mergetool ../file12 ) &&
++		( yes "l" | git mergetool ../submod ) &&
+ 		test "$(cat ../file1)" = "master updated" &&
+ 		test "$(cat ../file2)" = "master new" &&
+ 		test "$(cat ../submod/bar)" = "branch1 submodule" &&
+@@ -209,9 +209,9 @@ test_expect_success 'mergetool skips autoresolved' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
+-	( yes "l" | git mergetool submod >/dev/null 2>&1 ) &&
++	( yes "d" | git mergetool file11 ) &&
++	( yes "d" | git mergetool file12 ) &&
++	( yes "l" | git mergetool submod ) &&
+ 	output="$(git mergetool --no-prompt)" &&
+ 	test "$output" = "No files need merging"
+ '
+@@ -259,9 +259,9 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
+ 	rm -rf .git/rr-cache &&
+ 	git checkout -b test$test_count branch1 &&
+ 	git submodule update -N &&
+-	test_must_fail git merge master >/dev/null 2>&1 &&
+-	( yes "l" | git mergetool --no-prompt submod >/dev/null 2>&1 ) &&
+-	( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
++	test_must_fail git merge master &&
++	( yes "l" | git mergetool --no-prompt submod ) &&
++	( yes "d" "d" | git mergetool --no-prompt ) &&
+ 	git submodule update -N &&
+ 	output="$(yes "n" | git mergetool --no-prompt)" &&
+ 	test "$output" = "No files need merging"
+@@ -369,9 +369,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git checkout -b test$test_count.a test$test_count &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "r" | git mergetool submod ) &&
+ 	rmdir submod && mv submod-movedaside submod &&
+ 	test "$(cat submod/bar)" = "branch1 submodule" &&
+@@ -386,9 +386,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "l" | git mergetool submod ) &&
+ 	test ! -e submod &&
+ 	output="$(git mergetool --no-prompt)" &&
+@@ -400,9 +400,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "r" | git mergetool submod ) &&
+ 	test ! -e submod &&
+ 	test -d submod.orig &&
+@@ -416,9 +416,9 @@ test_expect_success 'deleted vs modified submodule' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "l" | git mergetool submod ) &&
+ 	test "$(cat submod/bar)" = "master submodule" &&
+ 	git submodule update -N &&
+@@ -440,9 +440,9 @@ test_expect_success 'file vs modified submodule' '
+ 	git checkout -b test$test_count.a branch1 &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "r" | git mergetool submod ) &&
+ 	rmdir submod && mv submod-movedaside submod &&
+ 	test "$(cat submod/bar)" = "branch1 submodule" &&
+@@ -456,9 +456,9 @@ test_expect_success 'file vs modified submodule' '
+ 	git checkout -b test$test_count.b test$test_count &&
+ 	test_must_fail git merge master &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "l" | git mergetool submod ) &&
+ 	git submodule update -N &&
+ 	test "$(cat submod)" = "not a submodule" &&
+@@ -472,9 +472,9 @@ test_expect_success 'file vs modified submodule' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both >/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "r" | git mergetool submod ) &&
+ 	test -d submod.orig &&
+ 	git submodule update -N &&
+@@ -488,9 +488,9 @@ test_expect_success 'file vs modified submodule' '
+ 	git submodule update -N &&
+ 	test_must_fail git merge test$test_count &&
+ 	test -n "$(git ls-files -u)" &&
+-	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 >/dev/null 2>&1 ) &&
+-	( yes "" | git mergetool both>/dev/null 2>&1 ) &&
+-	( yes "d" | git mergetool file11 file12 >/dev/null 2>&1 ) &&
++	( yes "" | git mergetool file1 file2 spaced\ name subdir/file3 ) &&
++	( yes "" | git mergetool both ) &&
++	( yes "d" | git mergetool file11 file12 ) &&
+ 	( yes "l" | git mergetool submod ) &&
+ 	test "$(cat submod/bar)" = "master submodule" &&
+ 	git submodule update -N &&
+@@ -543,7 +543,7 @@ test_expect_success 'submodule in subdirectory' '
+ 	git add subdir/subdir_module &&
+ 	git commit -m "change submodule in subdirectory on test$test_count.b" &&
+ 
+-	test_must_fail git merge test$test_count.a >/dev/null 2>&1 &&
++	test_must_fail git merge test$test_count.a &&
+ 	(
+ 		cd subdir &&
+ 		( yes "l" | git mergetool subdir_module )
+@@ -554,7 +554,7 @@ test_expect_success 'submodule in subdirectory' '
+ 	git reset --hard &&
+ 	git submodule update -N &&
+ 
+-	test_must_fail git merge test$test_count.a >/dev/null 2>&1 &&
++	test_must_fail git merge test$test_count.a &&
+ 	( yes "r" | git mergetool subdir/subdir_module ) &&
+ 	test "$(cat subdir/subdir_module/file15)" = "test$test_count.b" &&
+ 	git submodule update -N &&
+@@ -641,7 +641,7 @@ test_expect_success 'filenames seen by tools start with ./' '
+ 	test_config mergetool.myecho.trustExitCode true &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool myecho -- both >actual &&
+-	grep ^\./both_LOCAL_ actual >/dev/null
++	grep ^\./both_LOCAL_ actual
+ '
+ 
+ test_lazy_prereq MKTEMP '
+@@ -658,8 +658,8 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
+ 	test_config mergetool.myecho.trustExitCode true &&
+ 	test_must_fail git merge master &&
+ 	git mergetool --no-prompt --tool myecho -- both >actual &&
+-	! grep ^\./both_LOCAL_ actual >/dev/null &&
+-	grep /both_LOCAL_ actual >/dev/null
++	! grep ^\./both_LOCAL_ actual &&
++	grep /both_LOCAL_ actual
+ '
+ 
+ test_expect_success 'diff.orderFile configuration is honored' '
 -- 
 2.21.0.1000.g11cd861522
 
