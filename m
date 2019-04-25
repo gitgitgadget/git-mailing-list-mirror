@@ -2,208 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7DB61F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 10:33:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F15CC1F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 10:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730396AbfDYKdS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 06:33:18 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45000 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730384AbfDYKdS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 06:33:18 -0400
-Received: by mail-wr1-f66.google.com with SMTP id c5so20687119wrs.11
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 03:33:16 -0700 (PDT)
+        id S1726366AbfDYKns (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 06:43:48 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:38347 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbfDYKns (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 06:43:48 -0400
+Received: by mail-it1-f195.google.com with SMTP id q19so11389573itk.3
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 03:43:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PM9K6BuFbollN8zmBRKvM0k11KMCw1PKijTqaMC3Dlw=;
-        b=er0QTHYX/78E9yuIdrWuBTQy3hm4a0piwiklmvphZp9j4FjHps+ARS9+QFNo50ZQqr
-         /8S/3KE/G6OiWstcreKkx/9xRA7I1OyR0SuHTefWMNJdIk4WZphcX7keK/3CbY98cBng
-         E4K61W+ty1c9kfTsDLr/GoE6LA8gz1DF5ojtjxdqpzEi1D4iVb6bI973MXiTzGD8OxEa
-         Hv3KJVDwuoghFgooq/mYLClJBlBCm5NEIZiCbFPcz8WDxl9MHWcIf++wG2zQGNHGE86C
-         ToLnMjuce2cU5w1PbwXk3AqVoRhC5xM6CTT7+tMj4yqJySdg1p6xGEZS5F0WcU4Ubi/C
-         bvVg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/QRAid7cYd9QO4l6gA+JnhvGRgCw7MK0V7bzL+IlT0A=;
+        b=blcQCiOFAWuz5yV4ClGgMWTbkvAYegbndpaeQB6m1+iVSGKLs9XrsI4mvPsJZhTeoh
+         Kxdl8T1QXfc8lzkrh+zYp9N+OH0o+IVD8u+xIfN9vVoAerOdirYnQEEfJnDU+g718dyF
+         Q4vX2qwaE7kf/VXTiB+Hu6Ij6o8Iejl9ekAl3sYMMS6cXcy0rndX0zLtIjCu9m7XQod+
+         BBqcwxulCAASbn0WmaExbfBILgWL9/W4lmEMx79KIUFerUIEopBBr0y4ZaQjvCbHY7ON
+         MPjJgveMR5PJjxZAEkxNbrimd3IpNbE4Foxe7vWqzaltLAbt/c9Cu0g8u26a1lbGI9VC
+         GqMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PM9K6BuFbollN8zmBRKvM0k11KMCw1PKijTqaMC3Dlw=;
-        b=MW7+riGnK0uwbgtvJS9AoBD5C7lhcjLrken+4VHuRdd4xk9HMPHKsYG23vBiylIWz8
-         7kdLTxiK7M0P8YJKejmKlfQ2f4BxfvFKUAjaRsmG9d9kR0C8JKMATd14dpKyV8uCyryb
-         ib3ys70j/prqEyGBbmfYPwan7ktSE5kKSz6Up6AIdQO0p+n49Q0r+YSMA4ZDdkP2kD5k
-         Gs5ukP04HjtLuSUx9VkIQVca9QawtrE4/JWPcgTlJ+MQzWpfHf7A17qq4r+muaJ28Rld
-         D4zyyyyDTb5bMm5ME5nq0uEsHa/U0fg/o0Jqh9QsVbF+zvwP2YqIYfgNmrV9jwkuihBp
-         PfJw==
-X-Gm-Message-State: APjAAAXm44vLM2TycX0tMBuPATI0mJmFX8ZWD06wr7Weh9zHP2MK0QZ/
-        QVKhvERgUkWM1KaGm6Q+sUY=
-X-Google-Smtp-Source: APXvYqyKcfqeOZ7/v7RXJq1gvvfBgGMZ1zZ0odWHXz8hUBGka9F+nLADJh7OpXfco16qx9Q3HGaA9A==
-X-Received: by 2002:a5d:62cf:: with SMTP id o15mr3867658wrv.45.1556188396141;
-        Thu, 25 Apr 2019 03:33:16 -0700 (PDT)
-Received: from [192.168.2.201] (host-92-26-127-169.as13285.net. [92.26.127.169])
-        by smtp.googlemail.com with ESMTPSA id t74sm30469725wmt.3.2019.04.25.03.33.14
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Apr 2019 03:33:15 -0700 (PDT)
-Subject: Re: [PATCH v6 23/27] switch: reject if some operation is in progress
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     eckhard.s.maass@googlemail.com, git@vger.kernel.org,
-        gitster@pobox.com, jacob.keller@gmail.com, martin.agren@gmail.com,
-        newren@gmail.com, rybak.a.v@gmail.com, sunshine@sunshineco.com,
-        szeder.dev@gmail.com
-References: <20190321131655.15249-1-pclouds@gmail.com>
- <20190329103919.15642-1-pclouds@gmail.com>
- <20190329103919.15642-24-pclouds@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <78c7c281-82ec-2ba9-a607-dd2ecba54945@gmail.com>
-Date:   Thu, 25 Apr 2019 11:33:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/QRAid7cYd9QO4l6gA+JnhvGRgCw7MK0V7bzL+IlT0A=;
+        b=tjOKO7E0K466MigVaN8HX27CnGjrxcR1NoumzLfi7zjBg7vIrqygYVmdRAvSIMVSi9
+         GIawOL9IT5Sl3LoSxY0qNp+1M3Lz501H+lMOcpwz8Ii8KFJbvi93t6vjQ/czcmh7B1Xp
+         3a+71nZjgrLg7BlY1G9IedZuopQQLCS6baUHY6AN+8gx6P5SOXuG94k3FhjEKbebOlfm
+         +0+F7tJN8M8/wJK3C34YIfxzstajKcBayIIL7yq6n/h1WR/zrzHI4RFWSFlZ7GHd5VMc
+         hfBEJYkE3v8CyqgXIC2G6WV1Sp4hkradcKDsL/XJPp5niE+6tistenLUckd622Cz6fxC
+         lQcQ==
+X-Gm-Message-State: APjAAAU/4jjG+J+vap2KndrrceqqugNmx82+cXbrbk7XZ0vIOSUCubED
+        vmPH5GL9Uda1zehpm7pPEcBPUqJ8PWXGRcUoEIk=
+X-Google-Smtp-Source: APXvYqxQhMHyd5fzxHb7YY9144wnAYkn7ccaiqbgIb58pfFeqdV1XITut7y3NyOFYTba9y9bUZ0nYGzfRgNuXEGoccc=
+X-Received: by 2002:a02:c64a:: with SMTP id k10mr18804347jan.30.1556189027591;
+ Thu, 25 Apr 2019 03:43:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190329103919.15642-24-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
+ <20190424023438.GE98980@google.com> <20190424230744.GL6316@genre.crustytoothpaste.net>
+ <87k1fis8gq.fsf@evledraar.gmail.com>
+In-Reply-To: <87k1fis8gq.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 25 Apr 2019 17:43:21 +0700
+Message-ID: <CACsJy8DSvEPfqJVGBL=G147B-mqoXd-XDeNK7jQZLQgRftWRpQ@mail.gmail.com>
+Subject: Re: How to undo previously set configuration? (again)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Barret Rhoden <brho@google.com>, Olaf Hering <olaf@aepfle.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/03/2019 10:39, Nguyễn Thái Ngọc Duy wrote:
-> Unless you know what you're doing, switching to another branch to do
-> something then switching back could be confusing. Worse, you may even
-> forget that you're in the middle of something. By the time you realize,
-> you may have done a ton of work and it gets harder to go back.
-> 
-> A new option --ignore-in-progress was considered but dropped because it
-> was not exactly clear what should happen. Sometimes you can switch away
-> and get back safely and resume the operation. Sometimes not. And the
-> git-checkout behavior is automatically clear merge/revert/cherry-pick,
-> which makes it a bit even more confusing [1].
-> 
-> We may revisit and add this option in the future. But for now play it
-> safe and not allow it (you can't even skip this check with --force).
+On Thu, Apr 25, 2019 at 5:08 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> >> Solving (1) without (2) feels like a bit of a missed opportunity to
+> >> me.  Ideally, what I would like is
+> >>
+> >>    i. A central registry of trustworthy Git hooks that can be upgraded
+> >>       using the system package manager to address (2).  Perhaps just
+> >>       git-hook-* commands on the $PATH.
+> >>
+> >>   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
+> >>       run for each event in .git/config.
+> >
+> > The problem I had with this when discussing it was that our
+> > configuration system lacks a good way to control inheritance from outer
+> > files. I recently was working with a system-wide gitconfig file that
+> > referred to files I didn't have, and my Git installation was subtly
+> > broken in a variety of ways.
+> >
+> > If I have a system-wide hook to run for company code, but I have a
+> > checkout for my personal dotfiles on my machine where I don't want to
+> > run that hook, our configuration lacks a way for me to disable that
+> > system-wide configuration. However, using our current system, I can
+> > override core.hooksPath in this case and everything works fine.
+> >
+> > I mentioned this for completeness, and because I hope that some of thos=
+e
+> > people will get some time to chime in here, but I think without that
+> > feature, we end up with a worse experience than we have now.
+>
+> I sent a proposal for this last year "How to undo previously set
+> configuration?":
+> https://public-inbox.org/git/874lkq11ug.fsf@evledraar.gmail.com/
 
-I think this is a good compromise, lets see how it goes (I think I
-broadly agree with Elijah's suggestion to allow the switch if we can
-safely switch back again if we want to add --ignore-in-progress in the
-future).
+While reading that mail, it occurs to me that perhaps we can reuse the
+.gitignore idea.
 
-> The
-> user is suggested to cancel the operation by themselves (and hopefully
-> they do consider the consequences, not blindly type the command), or to
-> create a separate worktree instead of switching. The third option is
-> the good old "git checkout", but it's not mentioned.
-> 
-> [1] CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/checkout.c | 40 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index f7967cdb7c..5f100c1552 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -24,6 +24,7 @@
->  #include "tree.h"
->  #include "tree-walk.h"
->  #include "unpack-trees.h"
-> +#include "wt-status.h"
->  #include "xdiff-interface.h"
->  
->  static const char * const checkout_usage[] = {
-> @@ -56,6 +57,7 @@ struct checkout_opts {
->  	int accept_pathspec;
->  	int switch_branch_doing_nothing_is_ok;
->  	int only_merge_on_switching_branches;
-> +	int can_switch_when_in_progress;
->  
->  	const char *new_branch;
->  	const char *new_branch_force;
-> @@ -1202,6 +1204,39 @@ static void die_expecting_a_branch(const struct branch_info *branch_info)
->  	die(_("a branch is expected, got '%s'"), branch_info->name);
->  }
->  
-> +static void die_if_some_operation_in_progress(void)
-> +{
-> +	struct wt_status_state state;
-> +
-> +	memset(&state, 0, sizeof(state));
-> +	wt_status_get_state(the_repository, &state, 0);
-> +
-> +	if (state.merge_in_progress)
-> +		die(_("cannot switch branch while merging\n"
-> +		      "Consider \"git merge --quit\" "
-> +		      "or \"git worktree add\"."));
+Instead of having a list of untracked files, we have a list of config
+keys. Instead of having .gitignore files associated to different
+directories to apply the rules to those dirs only, we have ignore
+rules that should apply on certain config files (probably based on
+path).
 
-I'm not sure merge --quit exists, 'git grep \"quit origin/pu' shows
-matches for builtin/{am.c,rebase.c,revert.c}. The --quit option for the
-sequencer command does not touch the index or working tree (that's the
-difference between --quit and --abort) so the switch can still fail due
-changes in the index and worktree that would be overwritten by the switch.
+A few differences from your reject/accept/priority example:
 
-Best Wishes
+- we don't redefine priority, inheritance rules apply the same way
+- reject/accept is handled the same way as positive/negative ignore
+rules. If we're lucky, we could even reuse the exclude code.
+- instead of special section names like
 
-Phillip
+    [config "section"]
 
-> +	if (state.am_in_progress)
-> +		die(_("cannot switch branch in the middle of an am session\n"
-> +		      "Consider \"git am --quit\" "
-> +		      "or \"git worktree add\"."));
-> +	if (state.rebase_interactive_in_progress || state.rebase_in_progress)
-> +		die(_("cannot switch branch while rebasing\n"
-> +		      "Consider \"git rebase --quit\" "
-> +		      "or \"git worktree add\"."));
-> +	if (state.cherry_pick_in_progress)
-> +		die(_("cannot switch branch while cherry-picking\n"
-> +		      "Consider \"git cherry-pick --quit\" "
-> +		      "or \"git worktree add\"."));
-> +	if (state.revert_in_progress)
-> +		die(_("cannot switch branch while reverting\n"
-> +		      "Consider \"git revert --quit\" "
-> +		      "or \"git worktree add\"."));
-> +	if (state.bisect_in_progress)
-> +		die(_("cannot switch branch while bisecting\n"
-> +		      "Consider \"git bisect reset HEAD\" "
-> +		      "or \"git worktree add\"."));
-> +}
-> +
->  static int checkout_branch(struct checkout_opts *opts,
->  			   struct branch_info *new_branch_info)
->  {
-> @@ -1257,6 +1292,9 @@ static int checkout_branch(struct checkout_opts *opts,
->  	    !new_branch_info->path)
->  		die_expecting_a_branch(new_branch_info);
->  
-> +	if (!opts->can_switch_when_in_progress)
-> +		die_if_some_operation_in_progress();
-> +
->  	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
->  	    !opts->ignore_other_worktrees) {
->  		int flag;
-> @@ -1514,6 +1552,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->  	opts.only_merge_on_switching_branches = 0;
->  	opts.accept_pathspec = 1;
->  	opts.implicit_detach = 1;
-> +	opts.can_switch_when_in_progress = 1;
->  
->  	options = parse_options_dup(checkout_options);
->  	options = add_common_options(&opts, options);
-> @@ -1549,6 +1588,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
->  	opts.switch_branch_doing_nothing_is_ok = 0;
->  	opts.only_merge_on_switching_branches = 1;
->  	opts.implicit_detach = 0;
-> +	opts.can_switch_when_in_progress = 0;
->  
->  	options = parse_options_dup(switch_options);
->  	options = add_common_options(&opts, options);
-> 
+we have something more like
 
+    [config "/this/path"] # (or pattern)
+
+this lets us handle even other config files included by [include] or [inclu=
+deIf]
+
+So, some examples
+
+[exclude]            # exclude from all inherited files
+    key =3D core.*     # exclude core.*
+    key =3D !core.bar  # but keep core.bar
+
+[excludeIf "path:/etc/config"] # rules apply for only this file
+   key =3D ...
+
+[excludeIf "glob:/home/*"]     # rules apply for these config paths
+   key =3D ...
+
+[excludeIf "system"]           # special names for convenience maybe
+   key =3D ...
+
+> Obviously the main bottleneck is someone like me working on patching it,
+
+Yes, manpower is always the problem.
+
+> but in this case it would be very useful if those who are interested in
+> this could look that proposal over and bikeshed it / point out issues I
+> may have missed, i.e. "no, this categorically won't work with this
+> proposed syntax due to XYZ you haven't thought of...".
+--=20
+Duy
