@@ -2,150 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA8671F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 07:16:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC2A91F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 09:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387404AbfDYHQ6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 03:16:58 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55915 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729910AbfDYHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 03:16:58 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD7CE6B100;
-        Thu, 25 Apr 2019 03:16:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=IUtPmPcZtaaj
-        w/lN63v2zI3R8k0=; b=lTbHklOB2r8U4MD05R24AJnE7rTwfGttJdrncOUJXI4a
-        maiY/yULnSVuDFLmwjS3noMqBzbNQ5MHXV5B9OsHSeByDIiDGHlvpoYFSPWR4AqO
-        Arz/0OlTSNJKxa0L38IKSQCvBve9DcdvtvvS8h2PORDpQKZcRijwMVlXnpDOrVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JHT0JD
-        VvC83yu8T4LI9aH97oTiGQe79FOU0ScpsCDCMmyTGbDsM65sDC2Szb0CEvdE7yrs
-        0BHvV4wpEkzwgdLCvnmj43lt9vTMM1uUpiCRPoVTqmKpUaULw7dr0S9gFWTVsV1D
-        R6zhpaoEB4gJ5sQDu57XW70nLPCQr29WuZqxk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C5C396B0FF;
-        Thu, 25 Apr 2019 03:16:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 011756B0FB;
-        Thu, 25 Apr 2019 03:16:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>, git@vger.kernel.org
-Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
-References: <20190214043127.GA19019@sigill.intra.peff.net>
-        <20190214043743.GB19183@sigill.intra.peff.net>
-        <20190309024944.zcbwgvn52jsw2a2e@dcvr>
-        <20190310233956.GB3059@sigill.intra.peff.net>
-        <20190312031303.5tutut7zzvxne5dw@dcvr>
-        <20190312104954.GA2023@sigill.intra.peff.net>
-        <20190313015133.n7f7lyujnlwfytre@dcvr>
-        <20190313145417.GA24101@sigill.intra.peff.net>
-        <20190314091254.nescpfp3n6mbjpmh@dcvr>
-        <87zhoz8b9o.fsf@evledraar.gmail.com>
-        <20190410225721.GA32262@sigill.intra.peff.net>
-Date:   Thu, 25 Apr 2019 16:16:46 +0900
-In-Reply-To: <20190410225721.GA32262@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 10 Apr 2019 18:57:21 -0400")
-Message-ID: <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728598AbfDYJjn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 05:39:43 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42299 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726304AbfDYJjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 05:39:43 -0400
+Received: by mail-ed1-f67.google.com with SMTP id l25so625454eda.9
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 02:39:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=A9N57p4croNYQNUt6WIMWXiG/5mcog4vtVZtIH2oFGQ=;
+        b=LGUuinmmxo0uYMf2N5zZufbZXWY/d2IS9O78GN9AhK1n4Y0DnGv7oWetE6NEwkxdMJ
+         D2/cjRP4fPhYN81z3KsghuDqGkz9BqiXmlKo9sGH7qHm+bWU4c7Whg9FDWIJwNNAbEKc
+         DuN2b2+OTFyWT02XeLJ9E5yULy5Es0mMf6U8w+MMdfU0RYVnh98NngNQRe48zLKLuntp
+         0ICnvCalIS5fEDG+C8JiuHumfzPzyrjLC73DAmzQR4Av7ptJv8UeqZPdjJC7tMsDPQxP
+         G5G69w565FPhxl9cct5drIOhVCrfgQQv3eFR6GbGnZ9o6PQ9nlvOLIgq3HMqftYSfGS5
+         I3lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=A9N57p4croNYQNUt6WIMWXiG/5mcog4vtVZtIH2oFGQ=;
+        b=oZhbqEVeC/4P1ffHy1WOj61x7HsHUCxeAy5xtMAwsaSeAEohSAMXs6GGpVubH21MKB
+         k/YEz0DLWBIgYJ73+CM32odfutKw5HU4gVvNb7a7eKredD4LCVgWa+26FeTZCRsl3mNL
+         6hgLlbC4OAZQkUIkWdXJXcrgoj3kVq1Bqk2mVy2P+C8U976j1zmdfpu19rboGcFRkAuX
+         55Qyji+Bt0F7UNqjadaWYYynW3YcfKfa211TvbRyb06x2+4tHzKhGRoq+V6WMbBvZy1X
+         5pbweXWZ06CybBNhwUdS8/JuSJ8AjXGklAPLwB+mghRSfq94VR9LnAEKmCIjyrVnYqxm
+         OUPw==
+X-Gm-Message-State: APjAAAVmg0QVVzlfSalS9T7Qc6g4dqdDThUoeu0jrHxBVwe7+GjFDFdz
+        aDZjhzozJ6iZjqgjipnYt/w=
+X-Google-Smtp-Source: APXvYqyZrBJQr6a/r+hu5oSN912jPOdbgKdE1LX3ZH7VcLFuZDZ+Cg2b+X1bqo5kgnfRuIpIH+iBpw==
+X-Received: by 2002:a50:a7a6:: with SMTP id i35mr23766184edc.96.1556185181340;
+        Thu, 25 Apr 2019 02:39:41 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id t2sm85119eda.41.2019.04.25.02.39.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 25 Apr 2019 02:39:40 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] run-command: add preliminary support for multiple hooks
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net> <20190424004948.728326-2-sandals@crustytoothpaste.net> <xmqqo94w2l3k.fsf@gitster-ct.c.googlers.com> <8f79d251-58d9-f63b-7171-7f1fbd11c6f9@kdbg.org> <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 25 Apr 2019 11:39:38 +0200
+Message-ID: <87lfzys9t1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 17637C28-672A-11E9-AC0F-EE24A11ADF13-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Tue, Apr 09, 2019 at 05:10:43PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->
->> I've found a case where turning bitmaps on does horrible things for
->> bitmap "push" performance.
->> [...]
->> I can't share the repo, but I had a report where just a "git push" of =
-a
->> topic branch that was 2/58 ahead/behind took ~2 minutes just in
->> "Enumerating objects", but ~500ms without bitmaps.
->
-> That's pretty bad, though I'm not terribly surprised.
+On Thu, Apr 25 2019, Junio C Hamano wrote:
 
-I was revisiting the recent "What's cooking" report, and I am not
-sure what the current status of the topic is.
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> Furthermore, basing a decision on whether a file is executable won't
+>> work on Windows as intended. So, it is better to aim for an existence check.
+>
+> That is a good point.
+>
+> So it may be OK for "do we have a single hook script for this hook
+> name?" to say "no" when the path exists but not executable on
+> POSIXPERM systems, but it is better to say "yes" for consistency
+> across platforms (I think that is one of the reasons why we use
+> .sample suffix these days).
+>
+> And for the same reason, for the purpose of deciding "because we do
+> not have a single hook script, let's peek into .d directory
+> ourselves", mere presence of the file with that name, regardless of
+> the executable bit, should signal that we should not handle the .d
+> directory.
+>
+> IOW, you think access(X_OK) should be more like access(F_OK)?
 
-I do not get a feel that the current bitmap implementation has been
-widely used in repositories that have vastly different access
-patterns---it probably has been tried only by those who can afford
-the engineering cost to see if the implementation happens to work
-well for their workload and some may have chosen to adopt it while
-others didn't.  So it may be very well tuned for the former people
-but once we merge this topic down, we'll hear from others with quite
-different workload, which may lead to us tuning the code to bit
-better to their workload while not hurting other existing users,
-hopefully.
+To me this is another point in favor of bypassing this problem entirely
+and adopting the semantics GitLab (and it seems others) use. I.e. in
+order execute:
 
-Or not.
+    .git/hooks/pre-receive .git/hooks/pre-receive.d/*
 
-I am somewhat tempted to make things more exciting by merging it to
-'next' soonish, but I guess =C3=86var and you are not quite ready for
-that excitement yet, judging from the following (which looks quite
-sensible suggestions)?
+Instead of going further down this avenue of:
 
-Thanks.
+    if exists_or_executable_or_whatever .git/hooks/pre-receive
+    then
+        .git/hooks/pre-receive
+    else
+        for hook in .git/hooks/pre-receive.d/*
+        do
+            $hook
+        done
+    fi
 
-> Yeah, that makes sense. By repacking you've taken all those new commits
-> and included them in on-disk bitmaps. So I'd expect the "wants" to get
-> much shorter, but the "haves" phase staying long means we could do a
-> better job of picking commits to have on-disk bitmaps.
->
-> So two avenues for exploration I think:
->
->   1. I've long suspected that the bitmap selection code isn't ideal.
->      Both in terms of what it picks, but also in its runtime (I think i=
-t
->      ends up walking the same slices of history multiple times in some
->      cases).
->
->   2. The answer we get from a bitmap versus a regular traversal are not
->      apples-to-apples equivalent. The regular traversal walks down to
->      the UNINTERESTING commits, marks the boundaries trees and blobs as
->      UNINTERESTING, and then adds in all the interesting trees and blob=
-s
->      minus the UNINTERESTING parts. So it can sometimes give the wrong
->      answer, claiming something is interesting when it is not.
->
->      Whereas with bitmaps we fill in the trees and blobs as we walk, an=
-d
->      you get the true answer. But it means we may open up a lot more
->      trees than the equivalent traversal would.
->
->      So one thing I've never really experimented with (and indeed, neve=
-r
->      really thought about until writing this email) is that the bitmaps
->      could try to do that looser style of traversal, knowing that we
->      might err on the side of calling things interesting in a few cases=
-.
->      But hopefully spending a lot less time opening trees.
->
->      I'm not even 100% sure what that would look like in code, but just
->      thinking about it from a high level, I don't there's a particular
->      mathematical reason it couldn't work.
->
-> -Peff
+It also:
+
+ 1) Makes it easier for users to experiment with more granular hooks if
+    they have one big pre-receive hook by adding pre-receive.d/* hooks
+    without having to move their existing pre-receive to
+    pre-receive.d/000-existing hook (which will be incompatible across
+    git versions!).
+
+ 2) Is compatible with any existing trampoline scripts you might want to
+    migrate from that *don't* use pre-receive.d/*, e.g. one script in
+    our infrastructure (that I didn't write) does:
+
+        my ($hook_phase, $dir) = fileparse($0);
+        my $exit = 0;
+        my @hooks = glob("${dir}${hook_phase}-*");
+        for my $hook (@hooks) {
+            next unless -x $hook;
+            $exit |= system $hook;
+        }
+        exit ($exit >> 8);
+
+   I.e. you have a ".git/hooks/pre-receive" trampoline and it runs
+   ".git/hooks/pre-receive-*" scripts.
+
+It occurs to me that we might want to make things configurable for the
+#2 case. I.e. have a core.hooksDSuffix=".d/" by default, but you could
+also set it to "-". So we'd then construct a glob of either
+"pre-receive.d/*" or "pre-receive-*" from that.
