@@ -7,92 +7,102 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 125771F453
-	for <e@80x24.org>; Thu, 25 Apr 2019 04:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE3001F453
+	for <e@80x24.org>; Thu, 25 Apr 2019 04:16:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725942AbfDYECt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 00:02:49 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54287 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725902AbfDYECt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 00:02:49 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 537546A415;
-        Thu, 25 Apr 2019 00:02:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726067AbfDYEQd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 00:16:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58239 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725900AbfDYEQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 00:16:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 956BE148F1C;
+        Thu, 25 Apr 2019 00:16:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k4iDRSME9gvJ2jXJgu8qHfW7DJ0=; b=qF9x6Y
-        6B9omnITtYqOhfm9UXzv7AzjUr/hHNDEgNySs5GRD5jeZASa/H1hG5SLa9a2z2bK
-        xxmk2a9g1J1leZqReYsJpGFpTUv+TLMWm9FuFHgS099bnrGwu14sJ8Xr9pU11IMn
-        tOA6I0E12+S0QGfwrC2snFlpcUn4Ow/oeG8cE=
+        :content-type; s=sasl; bh=f2HPY4zLsPeIwX0C8MvG5GUuTVQ=; b=CL+b/i
+        CLHBFd6dM3AajrIJZRrcp+k8EiajUjD2gmh98MeM5pvVTMZFNz+8EkooX/DuzYmB
+        8Qwmo4xitUlXGkHQosv0J7yjr+SANRqQJFPI286n40j8xfgzuVeSyzdcY+YgpKZ3
+        7muVkHb590w3CTue9n0PVTT89VLxjt6KGp/Zs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Gux9cxbUOwvG4L/H8ez2Elaf6OogRFiz
-        I5FZwCpuKB7qUhoe/YxWo/ZHGxWSDTbZu+ejJkDgzWTm1wVNzAXR/I3nOVIET6Kf
-        n+qLqVqC9uQ1JWHkRhNak+uLL3imSe6XTqX67RqAuJaaCsQuabR/UtOKOcVHj5gW
-        W/V5137yUu4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D7A86A414;
-        Thu, 25 Apr 2019 00:02:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=uscPXQz0l+XGvWuqIS+Xzu98hu4eYVrN
+        u1eoqUaXZ5A3nu4rzMZTrjzgPGhq1mFwLcwLDssbvchgGutZ3xZ3UmARyqWnkCSD
+        YjeJ7APjcaVNwEI0mTl4e1Yz0nwZxdJwNQOmNrHlfXuQE3mJBjquhMLDnVPvSnQN
+        yhWdWSc/yxs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B0CA148F13;
+        Thu, 25 Apr 2019 00:16:27 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7FB396A413;
-        Thu, 25 Apr 2019 00:02:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D25A3148F12;
+        Thu, 25 Apr 2019 00:16:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sitaram Chamarty <sitaramc@gmail.com>
-Cc:     Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Checkout file without changing index?
-References: <CAA01CsoJZMJ86mpybukqT0hVnvXi0FuRjZ23akM5kNPBdT754Q@mail.gmail.com>
-        <xmqq5zr31poo.fsf@gitster-ct.c.googlers.com>
-        <005b0aed-2c20-0c91-e4ad-98b0ec39359d@gmail.com>
-Date:   Thu, 25 Apr 2019 13:02:44 +0900
-In-Reply-To: <005b0aed-2c20-0c91-e4ad-98b0ec39359d@gmail.com> (Sitaram
-        Chamarty's message of "Thu, 25 Apr 2019 09:10:50 +0530")
-Message-ID: <xmqqv9z2ybob.fsf@gitster-ct.c.googlers.com>
+To:     Vishal Verma <vishal.l.verma@intel.com>
+Cc:     <git@vger.kernel.org>,
+        Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Subject: Re: [PATCH] Documentation/merge-options: clarify --squash behavior
+References: <20190424212212.10039-1-vishal.l.verma@intel.com>
+Date:   Thu, 25 Apr 2019 13:16:25 +0900
+In-Reply-To: <20190424212212.10039-1-vishal.l.verma@intel.com> (Vishal Verma's
+        message of "Wed, 24 Apr 2019 15:22:12 -0600")
+Message-ID: <xmqqr29qyb1i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FBED9106-670E-11E9-95AB-EE24A11ADF13-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: E4E357DC-6710-11E9-8843-DF19F34BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+Vishal Verma <vishal.l.verma@intel.com> writes:
 
-> I'm not in a position to use either of those on at least some of my
-> systems, but meanwhile, I thought I'd ask this: what is the difference
-> between this and "git show REF:PATH > PATH", in terms of side-effects.
+> Add a note to the --squash option for git-merge to clarify its behavior
+> with respect to --commit. When --squash is supplied, 'option_commit' is
+> silently dropped. This can be surprising to a user who tries to override
+> the no-commit behavior of squash using --commit explicitly.
 >
-> (I.e., any differences other than looking cleaner, not having to repeat
-> "PATH" etc.)
+> Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+> ---
+>
+> There may be an argument to make --commit 'just work' with squash, but
+> that might involve changing option_commit from OPT_BOOL to something
+> that can distinguish between the default, what's requested on the
+> command line, or the --no- version.
 
-For that matter, what's the difference between these two and
+I think it is bad to silently ignore the option.  With or without
+this documentation update, I think it is sensible to update the code
+so that it errors out when "--squash --commit" are both given at the
+same time, just like when "--squash --no-ff" is given.
 
-	git cat-file --filters REF:PATH >PATH
+Or make it "just work" as you said.  Using a boolean variable as
+tristate is something we do in many places and it by itself is not a
+rocket science.  You initialize the variable to -1 (unset), let
+parse_options() to set it to 0/1 when "--[no-]commit" is seen, and
+inspect after parse_options() finishes.  If the variable is still
+-1, you know the user wants "the default" behaviour.
 
-;-)
+The "default" behaviour you are proposing would probably be
+something like
 
-I think the major difference is that checkout and restore are facing
-an end-user who is typing the command to the terminal interactively,
-so it does not make it easy to deposit the contents to an arbitrary
-path while taking pathspecs to allow multiple files to be checked
-out.  On the other hand, these "get content for a single path out of
-the odb and then write it out to wherever I want to" may be more
-suited for scripting.
+        if (option_commit < 0) {
+                /* 
+                 * default to record the result in a commit.
+                 * but --squash traditionally does not.
+                 */
+                if (!squash)
+                        option_commit = 1;
+                else
+                        option_commit = 0;
+        }
 
-Between the two that are for the-content-at-a-single-path, I would
-further expect "git show REF:PATH" output would be less reliable
-over time, as we reserve the right to add frills to the output from
-the command to make it a more pleasant experience to humans (e.g. it
-is not totally inconceivable for the command to notice "ah, this is
-a JavaScript source file, so let's pass it through a syntax-aware
-highligher), as opposed to placing more emphasis on the byte for
-byte fidelity, which is desired for components used in scripts.
-Those who would want the latter should be using the plumbing
-cat-file.
+But I suspect that the option parsing part is the least difficult in
+the "make it just work" change.  That is because I think that the
+machinery to record the result in a commit is not expecting to be
+asked to create a single-parent commit to record the result of the
+squashing, so there may be need for adjusting to how the result
+wants to be recorded before the code makes a commit.
+
