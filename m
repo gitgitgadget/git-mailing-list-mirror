@@ -2,117 +2,269 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6145A1F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 14:54:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E2A81F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 15:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726228AbfDZOyY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 10:54:24 -0400
-Received: from mout.gmx.net ([212.227.17.22]:42691 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726169AbfDZOyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 10:54:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556290447;
-        bh=O322hojfrQoCOzGNvnsxgYqzi2c/Ru1IW8duG5utQ2s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UveFdUO6jt5toNlfaWuQlBO301D6yggmkfoi9C36QNOv4HCqNALEKKQ9auNh3xOOS
-         c8LnncEHH2zahQbEJcEyJmrr+ywr04g4d6T4P2mAZJqKYxO3yiGZmY0dYZhSKgnvQx
-         sre4iJRlCJylgSrv7R4dhu5lj9+a5fW7qTCFzpN8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.106.210.8] ([167.220.152.8]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Li0dC-1gxdfA2Nl4-00n8oE; Fri, 26
- Apr 2019 16:54:06 +0200
-Date:   Fri, 26 Apr 2019 10:54:04 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Jeff King <peff@peff.net>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 2/2] archive: avoid spawning `gzip`
-In-Reply-To: <20190413221646.GL12419@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1904261051310.45@tvgsbejvaqbjf.bet>
-References: <pull.145.git.gitgitgadget@gmail.com> <44d5371ae6808ec40e8f52c3dc258a85c878b27e.1555110278.git.gitgitgadget@gmail.com> <20190413015102.GC2040@sigill.intra.peff.net> <20190413221646.GL12419@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726181AbfDZPSr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 11:18:47 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40885 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725984AbfDZPSq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 11:18:46 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d46so3470037eda.7
+        for <git@vger.kernel.org>; Fri, 26 Apr 2019 08:18:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+L4l1rzL6vlYEHENuDByUUKvaRmCYXBuMPldbZBUGEU=;
+        b=lbUGdBQ9CDnADspQpwiJuVkIB8q6Ld4e9Tc5ArCsEC1Rs5II6StR6wRcowh8a26Dre
+         Fwr8MUoYp5aA7IrzWtOFMdZ2YRDfmQrKZm85TyCyDTUpiVWLcm/CjOCtIQmUXR8TnV7b
+         Jyl1/l8HBr3yEnS5ZXF/wRMy+1mjxnrSCjr1hnQsVFM54Flij16Fs3wLy8cYHSJNKF2T
+         pzEMt6P61tnEO0emVe3W6ZG/v2fK44LzHNgAMEG7Yw7jiiOpTkfKOSXc6mlczIzcpzSC
+         +MoUsdHohA/f2fKDX5AtppfYP9RzEzPOBZlhheAuCfGqGraSFCzPRL2yMTSKFHSe5hKB
+         29dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=+L4l1rzL6vlYEHENuDByUUKvaRmCYXBuMPldbZBUGEU=;
+        b=aLz37rSFolSjSn2BMkfnRPXLjwhoXIFCFPVU+HxyoLM4/kONJWIY4CZM91SDdbCR9S
+         Tuq65e5TZLPyzrPTxDsWhJ/frLnWEHrPVsX87jFG93/KmLFDxm+jipvE+kjwq1GzFWZU
+         JpbDcPM1cHByxYw/PLd3PvtabHJRP5UmQNZyJKTqmcBMsuSkPz60MyzLbSwKe5YbGf+W
+         fq6Vh2yS7//zw/Oc+cioNxchACHQ15KR9oXbO1I8+QPOYyA5anaBJk1VeYsHzwHuQbr5
+         L4ZHs2/X5QFVQkx2VsBFDIgQoX5o7ikrM1IvY8cMpzwWhWstzIjQd6/fFqQHxoCxsZVN
+         AIvw==
+X-Gm-Message-State: APjAAAU9Af66brAwQzmZbAY6qk3ymO5vZ1dbP9rpp/XlApG7IjZYdDxu
+        JzCtSEMZ1apvp2i9OJvjNzOtkbS7
+X-Google-Smtp-Source: APXvYqxvAYwf0SwmrKqBwtpUOYaLTWyL9/t14p7b3HL2x1GX3IMpX1z7Wz4TB6K1iRT1VweZp3AEIA==
+X-Received: by 2002:a50:901b:: with SMTP id b27mr29038247eda.250.1556291924517;
+        Fri, 26 Apr 2019 08:18:44 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id h15sm4601846ejc.78.2019.04.26.08.18.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 26 Apr 2019 08:18:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Barret Rhoden <brho@google.com>, Olaf Hering <olaf@aepfle.de>,
+        Paul Okstad <pokstad@gitlab.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: How to undo previously set configuration? (again)
+References: <20190424004948.728326-1-sandals@crustytoothpaste.net> <20190424023438.GE98980@google.com> <20190424230744.GL6316@genre.crustytoothpaste.net> <87k1fis8gq.fsf@evledraar.gmail.com> <CACsJy8DSvEPfqJVGBL=G147B-mqoXd-XDeNK7jQZLQgRftWRpQ@mail.gmail.com> <87imv2s3dz.fsf@evledraar.booking.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <87imv2s3dz.fsf@evledraar.booking.com>
+Date:   Fri, 26 Apr 2019 17:18:42 +0200
+Message-ID: <871s1osskt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GKV5GvArzALzQb0bPRgOKWLWi0BI/lKzloFMZzDwnH29kXKMDZi
- nfMsEN8Gz8Z4qLm3S0/YOk2rsHFfKj1Pnen2Vvr1zmVW+CFvP/TPfhVjKWXjfsjR7LRMufA
- W9XqXmnQG72gxPkiJpniMaRO09d5cH9MVzmm7qD23GnlLnW2pDPqv0w+ykgjP4FWKTFhazp
- qcRLhNd2/x+jKEmXCB5ww==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:e+/b5aIaSsY=:8qZOJpB6CagEXxdvZZvG/Q
- Z+vNnF8rSdcs6odfLyNTMhgggaCA3ewq6IfyecAsn59ryU1ggWDbhLZ/rioRLAKmNVHuIVj+V
- n1hvfcjl3kNLzvRESNxJ/1x9JU+ZVa239oMSCmFHMQyx4RbuOjI9NxoH5tYbZ8G5xUgfS/UD1
- ltPHhch8VfVL627Rl/KH+DPMQuWRFO8X4mzlHm3dIPb2EwofcR7f42PZbljE7FUp0185s7fhY
- LWWZ26mhjaId3P8VJ9/M/CGhymaKvRothXGBnbCgc7G3Hc3zZRghPS42NdKmRfVxFaS3ZdOG/
- rhkYyz2v3irNA8NJbW25G8uaK4Vb2KjrBoAL5lA91JRSqiqev/lWdhuRHDLI/2Wcnnwv2d8YB
- sqrHjvLHFDfNwtOD/AZTyn2FtlkgsYWdgCcaVF9rVU1vkhBgHa5tcmYnjiog/9C3ZmcMVledk
- ybZ7Z9UArZPsFI/7UFIU+5DJvX9OigASuam+ZFs02I8xSngMsjECnnckBS1sxF6X5jZkKAEZZ
- AkdwRyQ1VIdihWvWuMG7X2XTqFVBLE9DUSqOUzBj8TqfI9l9+sEXb6DzGr1eLW5zwTsAPiBVP
- J8DknGh4pRFQ24GphIaCzJ2Xsx8I4YJBsLxlhIidF770XwYdMzBVpzvBu0FW3PQyNJ0+8WbnH
- 7nld8XxPALkqEBLGGXXBsmtoCtdqpjX6rlUG1mHqQX8hMum1Z5YYbc0lIkTKxmruXE45ZfW0w
- oSConv1RKhuD/7IlUEssENjWNcriD06UuW7B9iuz66mbee8ybx6BBdfF7FXCpoHL9YZ0rZ7Dv
- XLKijfiDe3pQIQ5FNyrS2xGVwBNsPE+7CGYPd1oBEQIct0IPmzSOK8klUBg+bHkk7/7QJHtSJ
- FV2YgK9jg2KSQyyIwDwpccaGe8tKh6+H24tvsByow/q1nET4BALfU5ir0ulu8IBAVqpRilyxy
- fHZbIH3lXJA==
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
 
-On Sat, 13 Apr 2019, brian m. carlson wrote:
+On Thu, Apr 25 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> On Fri, Apr 12, 2019 at 09:51:02PM -0400, Jeff King wrote:
-> > I wondered how you were going to kick this in, since users can define
-> > arbitrary filters. I think it's kind of neat to automagically convert
-> > "gzip -cn" (which also happens to be the default). But I think we shou=
-ld
-> > mention that in the Documentation, in case somebody tries to use a
-> > custom version of gzip and wonders why it isn't kicking in.
-> >
-> > Likewise, it might make sense in the tests to put a poison gzip in the
-> > $PATH so that we can be sure we're using our internal code, and not ju=
-st
-> > calling out to gzip (on platforms that have it, of course).
-> >
-> > The alternative is that we could use a special token like ":zlib" or
-> > something to indicate that the internal implementation should be used
-> > (and then tweak the baked-in default, too). That might be less
-> > surprising for users, but most people would still get the benefit sinc=
-e
-> > they'd be using the default config.
+> On Thu, Apr 25 2019, Duy Nguyen wrote:
 >
-> I agree that a special value (or NULL, if that's possible) would be
-> nicer here. That way, if someone does specify a custom gzip, we honor
-> it, and it serves to document the code better. For example, if someone
-> symlinked pigz to gzip and used "gzip -cn", then they might not get the
-> parallelization benefits they expected.
+>> On Thu, Apr 25, 2019 at 5:08 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> >> Solving (1) without (2) feels like a bit of a missed opportunity to
+>>> >> me.  Ideally, what I would like is
+>>> >>
+>>> >>    i. A central registry of trustworthy Git hooks that can be upgrad=
+ed
+>>> >>       using the system package manager to address (2).  Perhaps just
+>>> >>       git-hook-* commands on the $PATH.
+>>> >>
+>>> >>   ii. Instead of putting hooks in .git/hooks, put a list of hooks to
+>>> >>       run for each event in .git/config.
+>>> >
+>>> > The problem I had with this when discussing it was that our
+>>> > configuration system lacks a good way to control inheritance from out=
+er
+>>> > files. I recently was working with a system-wide gitconfig file that
+>>> > referred to files I didn't have, and my Git installation was subtly
+>>> > broken in a variety of ways.
+>>> >
+>>> > If I have a system-wide hook to run for company code, but I have a
+>>> > checkout for my personal dotfiles on my machine where I don't want to
+>>> > run that hook, our configuration lacks a way for me to disable that
+>>> > system-wide configuration. However, using our current system, I can
+>>> > override core.hooksPath in this case and everything works fine.
+>>> >
+>>> > I mentioned this for completeness, and because I hope that some of th=
+ose
+>>> > people will get some time to chime in here, but I think without that
+>>> > feature, we end up with a worse experience than we have now.
+>>>
+>>> I sent a proposal for this last year "How to undo previously set
+>>> configuration?":
+>>> https://public-inbox.org/git/874lkq11ug.fsf@evledraar.gmail.com/
+>>
+>> While reading that mail, it occurs to me that perhaps we can reuse the
+>> .gitignore idea.
+>>
+>> Instead of having a list of untracked files, we have a list of config
+>> keys. Instead of having .gitignore files associated to different
+>> directories to apply the rules to those dirs only, we have ignore
+>> rules that should apply on certain config files (probably based on
+>> path).
+>>
+>> A few differences from your reject/accept/priority example:
+>>
+>> - we don't redefine priority, inheritance rules apply the same way
+>> - reject/accept is handled the same way as positive/negative ignore
+>> rules. If we're lucky, we could even reuse the exclude code.
+>> - instead of special section names like
+>>
+>>     [config "section"]
+>>
+>> we have something more like
+>>
+>>     [config "/this/path"] # (or pattern)
+>>
+>> this lets us handle even other config files included by [include] or [in=
+cludeIf]
+>>
+>> So, some examples
+>>
+>> [exclude]            # exclude from all inherited files
+>>     key =3D core.*     # exclude core.*
+>>     key =3D !core.bar  # but keep core.bar
+>>
+>> [excludeIf "path:/etc/config"] # rules apply for only this file
+>>    key =3D ...
+>>
+>> [excludeIf "glob:/home/*"]     # rules apply for these config paths
+>>    key =3D ...
+>>
+>> [excludeIf "system"]           # special names for convenience maybe
+>>    key =3D ...
+>>
+>>> Obviously the main bottleneck is someone like me working on patching it,
+>>
+>> Yes, manpower is always the problem.
+>>
+>>> but in this case it would be very useful if those who are interested in
+>>> this could look that proposal over and bikeshed it / point out issues I
+>>> may have missed, i.e. "no, this categorically won't work with this
+>>> proposed syntax due to XYZ you haven't thought of...".
+>
+> Thanks, I like this syntax/proposal much better than my initial one,
+> especially re-using the syntax we have in .gitignore. Also in that it's
+> more similar to the existing include syntax, which in retrospect with an
+> example is the obviously better choice both in terms of UI consistency
+> and flexibility.
+>
+> I.e. I didn't want config files by globs, because depending on compile
+> options the /etc/gitconfig may be in /opt/etc/gitconfig, but as your
+> '[excludeIf "system"]' and '[excludeIf "path:/etc/config"]' examples
+> show we can have our cake and eat it too, and as you demonstrate there's
+> other reasons to do path globs that excluding the "git config
+> --{system,global,local,worktree}" file doesn't cover.
+>
+> Re priorities: My "I don't really have a use-case for that" in 2018 is
+> still 95% true, just a couple of things:
+>
+>  1. Having it would be a really nice smoke test for this working
+>     properly, i.e. now all the config parsing is "streamed" to its
+>     consumers via callbacks, having priorities would require the ability
+>     to pre-buffer and re-arrange it, the "pre-buffer" you'd need for any
+>     exclude mechanism anyway.
+>
+>     Once we have that "priorities" should just be a quick sort of what
+>     order we loop over the files in.
+>
+>  2. There is the use-case of "I don't want to exclude core.* from config
+>     file <A>, I just want file <B> to override it". I can imagine
+>     especially if/when we have in-repo .gitconfig that you'd want to
+>     trust say core.* from there, but have you ~/.gitconfig override it
+>     if you've bothered to set any of them yourself.
+>
+>     But I think most of that use-case doesn't need priorities. It could
+>     just be another "exclude" syntax for common cases, e.g.:
+>
+>         # ...Having done something else previously to opt-in to scary
+>         # in-repo .gitconfig...
+>         [excludeIf "repo"]
+>         key =3D core.* # exclude core.*
+>         [excludeIf "repo"]
+>         existingKey =3D true # exclude any existing key
+>
+>     So e.g. you'd keep that .gitconfig's gc.bigPackThreshold or
+>     whatever, unless your ~/.gitconfig (parsed before, lower priority)
+>     had already set it.
 
-I went with `:zlib`. The `NULL` value would not really work, as there is
-no way to specify that via `archive.tgz.command`.
+A #3 I just encountered[1] where this settable "config priority" might
+be handy, but perhaps it's still stupid and exclusions are enough:
 
-About the symlinked thing: I do not really want to care to support such
-hacks. If you want a different compressor than the default (which can
-change), you should specify it specifically.
+ * Vendor's git server wants to run 'git -c gc.writeCommitGraph gc' to
+   get commit graphs. I might want to override it.
 
-> I'm fine overall with the idea of bringing the compression into the
-> binary using zlib, provided that we preserve the "-n" behavior
-> (producing reproducible archives).
+ * The vendor can't just add that to /etc/gitconfig because they don't
+   want to screw with the OS, or might not know which "git" they'll use
+   (their own or OS, so system "gitconfig" in different
+   places/inconsistent)
 
-Thanks for voicing this concern. I had a look at zlib's source code, and
-it looks like it requires an extra function call (that we don't call) to
-make the resulting file non-reproducible. In other words, it has the
-opposite default behavior from `gzip`.
+So something where they can just do that and I can in what *I* know to
+be the system "gitconfig" do:
 
-Ciao,
-Dscho
+    [configPriority "cli-at-cwd:/var/lib/vendor/git-storage/*"]
+    value =3D 5
+
+If I know they'll be be running those commands on that path, and I'd
+like to s/100/5/ the priority for "-c" there so it goes last (see the
+suggested priority numbers in [2]).
+
+Or maybe alternatively, we'd have something like "-c" (unfortunately
+"-C" is taken) to add a new config file to the mix, without making it an
+all-or-nothing like GIT_CONFIG_NOSYSTEM=3D1 and GIT_CONFIG=3D<path>). So
+they:
+
+    git --add-this-config-last-please=3D/var/lib/vendor/etc/gitaly/gitconfi=
+g gc
+
+And then I do in /etc/gitconfig:
+
+    [excludeIf "glob:/var/lib/vendor/etc/gitaly/gitconfig"]
+    key =3D gc.*
+
+But priorities might still be sensible. This use-case could be
+alternatively done without them with a more sensible version of
+"excludeIf.existingKey" discussed in the last mail. I.e. having
+"existingKey" be a glob, not "true":
+
+    [excludeIf "glob:/var/lib/vendor/etc/gitaly/gitconfig"]
+    existingKey =3D gc.*
+
+Ditto for "-c" values:
+
+    [excludeIf "cli-at-cwd:/var/lib/vendor/git-storage/*"]
+    existingKey =3D gc.*
+
+So maybe I've managed to talk myself out this whole notion of
+priorities.
+
+I.e. maybe we can always process config in a pre-determined order and
+just allow people to reach forward/backward with [excludeIf path/glob/-c
+at cwd] & [exclude], respectively.
+
+There's still the *theoretical* use-case of a user saying "I know the
+sysadmin here knows better, I want their /etc/gitconfig to go after my
+~/.gitconfig", but does anyone need/want it in practice? I don't know...
+
+1. https://gitlab.com/gitlab-org/gitaly/issues/1643
+2. https://public-inbox.org/git/874lkq11ug.fsf@evledraar.gmail.com/
