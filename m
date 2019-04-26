@@ -2,145 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8A01F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 20:59:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 897AE1F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 21:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726314AbfDZU7G (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 16:59:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35726 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725966AbfDZU7G (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 26 Apr 2019 16:59:06 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC25E60458;
-        Fri, 26 Apr 2019 20:59:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556312344;
-        bh=piuECw/7/5byBeI4zktNbhfn5Kl4/RTMvInRhCGHV10=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=i7Zu2T1+dTYOqE+0hjxRcZMO/HUgkjcbkcLmJlbJ1DlcuDDaoWwWM6LIj8u/uPJT1
-         OXnlMqVY9ZNDuO+h335uqfmEUlpageHRdD8c00R/oIHXiTvcM1YpUgYfUDN26ShWtD
-         B0gW5xB/VSfTL57lBGc5lVnHOfjGLySBQVHgJmR1yfiyXaswQzVwQ5OMtAzDD0GYjC
-         3GrqL1l1CQK/4pG+qQMWKYDalY9tAxlDhoTqe+YwwQK6+H62cfGT0iZ2mB1eCW3q6z
-         l53ozBtpTbw3+SgdhFdCGGs6Hlxou6HJ4R9pm9sdVamfbzUn56pR8MMC7N3CDpZroq
-         E7rmWjLaQ0vq+F0wcOwm9dgQzV7n9frlub2fefXOu3arcUGrrOsLimWunr7XGVSbUT
-         UykqXEdIg+Lk8lTdc56wCEKL3llz1xAgbt4PObUqIO3f/7FSUcbKbtUEHOCYPuI05e
-         wx7q1BM6CU+rRBQTJhP3nbYgOyNknoHR/LjVJZkbshlAl7T4hg5
-Date:   Fri, 26 Apr 2019 20:58:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] run-command: add preliminary support for multiple
- hooks
-Message-ID: <20190426205859.GO6316@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
- <20190424004948.728326-2-sandals@crustytoothpaste.net>
- <xmqqo94w2l3k.fsf@gitster-ct.c.googlers.com>
- <8f79d251-58d9-f63b-7171-7f1fbd11c6f9@kdbg.org>
- <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
- <2a511c3c-ef8d-07c5-80e2-398780ee6ed4@kdbg.org>
+        id S1726696AbfDZVQS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 17:16:18 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35275 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbfDZVQR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 17:16:17 -0400
+Received: by mail-pf1-f194.google.com with SMTP id t21so2298607pfh.2
+        for <git@vger.kernel.org>; Fri, 26 Apr 2019 14:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Pl5qKP105DNgCgE2ZrEjMSH9jy+HW58WQYOJuCncr/E=;
+        b=MMbWnlFMiZyBofhykJLLKTel5h5rC7HxhOaNz3mP3mcngDzffV7CmpmAHCRtvMkaAS
+         xfvNBR9/jwGHFv3fp5RN5spbrs8Y9xL07fb/r1IMK8FdsfJgM4WcLHRaQKDGUDzQsyOG
+         +T/bdio1KYeZMN+dfXimHqC5WheMD2lkZI+gkBJcUwY4khsZwHeIK+4nDOQYJgRbe8/j
+         GeI9+IbEEH/DGTAt/PGf95qY4ITxhru+hw08qiZg79qQb6RDXYpKcYXdAgAaIxgMPVI1
+         AEgo1/ujnfFpx7I08PK5Qd0h2Kr7NiLgdS86mv8n8fYyuSrm06ZQYgeaKRFOmPc1Whsj
+         j3nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Pl5qKP105DNgCgE2ZrEjMSH9jy+HW58WQYOJuCncr/E=;
+        b=FwsUdOTX3kal4m3ywGXDyaSe89nnrdPS7z9vVE1K3QDfBo2BSQbU6tnctJHyFlI/zP
+         TOCGxry+rqYSOdBcwGZ1ZPuseBbPlr50tVfVGhEjz8A2OH50l1mQlVZ5XxICng5HF5wz
+         EXiOmvNe1qVO+Zyb7hmx2FyHoe8VdDjmEgExJEbEuX5zaIU2dRAMmlY9+zm4aOm/an4s
+         Xns4hb6GNA4GOBv/qVjIT2xDTDItlqhJxrIT66XmXU5W/O4p1RPwteW+Wt2em11ITkmi
+         3K5iqGVJksk9HRrz8kxRy9bBmRp83LfSOdX/mXwpOg6aVoXQKh29d0ZkKXgCbHXekyKi
+         BOhA==
+X-Gm-Message-State: APjAAAXpS4/2dJPetTs+FXcQbCUPcLMOtT+vMWU230fpBtmHXschdVZ4
+        VEt5yYWnMdg+OKoW7pTUj90=
+X-Google-Smtp-Source: APXvYqyuTxCb512KEmWPyOXfogT76t6ZyGcf+uFKpWIHs61jGJ8MLWe8icx1XeuP8Hn91bo2wvjMtg==
+X-Received: by 2002:a63:40c2:: with SMTP id n185mr12128838pga.364.1556313376489;
+        Fri, 26 Apr 2019 14:16:16 -0700 (PDT)
+Received: from dev-l ([149.28.199.249])
+        by smtp.gmail.com with ESMTPSA id a10sm34267011pfc.21.2019.04.26.14.16.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Apr 2019 14:16:15 -0700 (PDT)
+Date:   Fri, 26 Apr 2019 14:16:13 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] revisions.txt: mention <rev>~ form
+Message-ID: <20190426211613.GA23370@dev-l>
+References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
+ <1d84c3bc-4e18-450e-edc6-96ac34f61c7a@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/NwG7NuG0/W8LcLh"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2a511c3c-ef8d-07c5-80e2-398780ee6ed4@kdbg.org>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <1d84c3bc-4e18-450e-edc6-96ac34f61c7a@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 26, 2019 at 10:55:35PM +0200, Andreas Heiduk wrote:
+> Am 22.04.19 um 08:12 schrieb Denton Liu:
+> > In revisions.txt, the '<rev>^' form is mentioned but the '<rev>~' form
+> > is missing. Although both forms are essentially equivalent (they each
+> > get the first parent of the specified revision), we should mention the
+> > latter for completeness. Make this change.
+> > 
+> > While we're at it, the brief form of '<rev>^' makes it seem as if no
+> > numerical argument is accepted. Update documentation to make it obvious
+> > that an optional numerical argument is accepted.
+> > 
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> >  Documentation/revisions.txt | 6 ++++--
+> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> > index 2337a995ec..4ba7b4416a 100644
+> > --- a/Documentation/revisions.txt
+> > +++ b/Documentation/revisions.txt
+> > @@ -131,7 +131,7 @@ from one location and push to another. In a non-triangular workflow,
+> >  This suffix is also accepted when spelled in uppercase, and means the same
+> >  thing no matter the case.
+> >  
+> > -'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+> > +'<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+> 
+> This
+> 
+> >    A suffix '{caret}' to a revision parameter means the first parent of
+> >    that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+> >    '<rev>{caret}'
+> > @@ -139,7 +139,9 @@ thing no matter the case.
+> >    '<rev>{caret}0' means the commit itself and is used when '<rev>' is the
+> >    object name of a tag object that refers to a commit object.
+> >  
+> > -'<rev>{tilde}<n>', e.g. 'master{tilde}3'::
+> > +'<rev>{tilde}[<n>]', e.g. 'HEAD~, master{tilde}3'::
+> 
+> and here: These would be the first and only places in revisions.txt
+> where [] denote optional syntax. Since *exactly* this place is already
+> riddled with special characters wich are either part of the syntax
+> (e.g. @, {}) or not (e.g. <n>) this would be confusing.
+> 
+> In other places of the file optional syntax is *displayed* like this:
+> 
+>        <branchname>@{upstream}, e.g. master@{upstream}, @{u}
 
---/NwG7NuG0/W8LcLh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In that case, would it make more sense to add [] to optional parameters
+across the whole file? The meaning of [] (like that of <>) is common
+knowledge across all of Git's documentation. As a result, since
+<branchname> is optional, this would mislead a reader unless they were
+to further read the examples (which imo, they should not have to do to
+fully understand it). In addition to this, since [] is not used in any
+rev syntax, there would be no ambiguity.
 
-On Thu, Apr 25, 2019 at 09:40:34PM +0200, Johannes Sixt wrote:
-> Am 25.04.19 um 02:55 schrieb Junio C Hamano:
-> > Johannes Sixt <j6t@kdbg.org> writes:
-> >=20
-> >> Furthermore, basing a decision on whether a file is executable won't
-> >> work on Windows as intended. So, it is better to aim for an existence =
-check.
-> >=20
-> > That is a good point.
-> >=20
-> > So it may be OK for "do we have a single hook script for this hook
-> > name?" to say "no" when the path exists but not executable on
-> > POSIXPERM systems, but it is better to say "yes" for consistency
-> > across platforms (I think that is one of the reasons why we use
-> > .sample suffix these days).
->=20
-> All correct.
+Thus, we'd rewrite the above as
 
-I would like to point out that we still have to perform an executability
-check before we run the hook or we'll get errors printed to the user. As
-I mentioned, there are many people with repositories that have the
-non-.sample files. For me, any repository older than about five years
-will likely have those files.
+	[<branchname>]@{upstream}, e.g. master@{upstream}, @{u}
 
-> > And for the same reason, for the purpose of deciding "because we do
-> > not have a single hook script, let's peek into .d directory
-> > ourselves", mere presence of the file with that name, regardless of
-> > the executable bit, should signal that we should not handle the .d
-> > directory.
-> >=20
-> > IOW, you think access(X_OK) should be more like access(F_OK)?
->=20
-> Yes, that's my conclusion.
+I'm not sure, what do you think?
 
-Right now, we have a standard way to handle the way we handle hooks: if
-they are not executable, we warn and pretend there's no hook. With this
-new paradigm, we have to check whether the main hook is executable, and
-if it's not, we then have to check whether it's present, and if so, we
-skip the multiple hooks.
-
-I understand the executable bit is not useful on Windows, but on Unix,
-we should be consistent with how we treat the hooks.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---/NwG7NuG0/W8LcLh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzDcRIACgkQv1NdgR9S
-9ovnKRAAl9N0M2RNZc2Dg9eLmz8zDUrKsN+mR4Ki7wQoihZh/3WqxF8JvgZ7Yvky
-cIGV3Ya2yjOeC6TLHK9GEM//OGfQGKiQXoA53/QBXczsBsgFo1T+HDTcCKtHeR60
-gI8Br4WOVKWNRBuV63YEUDV6Gzlp7vsY8j7RrrUmfCXtDgDfP3pNQCG3lZ7bvfy7
-Gwmcrcccvve7kviYDT03J/pBbB/BCcQIm7vSB0D+JOTBYnEVKkpCzQ5oi/pbkpnD
-qvfST8ZvuoU05uAf67oj3myMfeEZ0zCNmmkdDTpFjy6R44lZQPCRD68wIVlCpxLs
-/dIyWc+jN8WpSeDLjQiWH6U9fnZsYPs8oRfKxXcFpDoiu3DcbtUCeEpAT4QkqT2S
-Kpa2EnDEjR1qVwU0iqBKr4MQqwrjUM9wP55gbOOkNT/+69f//RuPjG5hCqqQUs6e
-wrG0FcaHH96ggq8yTHQQJdrRFsDZuZKm6C4WFi5hvGGzb4HlxKkhBooeJzk6WjwA
-7Ex2tFjVPTlQIHTm8BICfzkAJ4Z8E066UvVVsXglRenm8lkFA6/2+qE4NsUxr6V0
-6TtJOWNln9s6kvjrAnB0HGaO3yOwPTs2c/LJMwFdYOMM42H+ANFYfyuMR5niGR/j
-Oal3k0oil7fTPxYztPZBhBtW8kJPwGgWdB8RZN36tzthTFShV4U=
-=5zIJ
------END PGP SIGNATURE-----
-
---/NwG7NuG0/W8LcLh--
+> 
+> in that spirit somethind like this:
+> 
+> 	<rev>~<n>', e.g. 'HEAD~, master~3', master~
+> 
+> would be better to read.
+> 
+> 
+> > +  A suffix '{tilde}' to a revision parameter means the first parent of
+> > +  that commit object.
+> >    A suffix '{tilde}<n>' to a revision parameter means the commit
+> >    object that is the <n>th generation ancestor of the named
+> >    commit object, following only the first parents.  I.e. '<rev>{tilde}3' is
+> 
+> 
+> 
