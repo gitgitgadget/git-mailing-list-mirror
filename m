@@ -2,90 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2E9C1F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 21:53:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6421F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 23:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbfDZVxo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 17:53:44 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:16169 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726246AbfDZVxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 17:53:44 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44rSVY0nxlz5tlD;
-        Fri, 26 Apr 2019 23:53:41 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id F0FB941E9;
-        Fri, 26 Apr 2019 23:53:39 +0200 (CEST)
-Subject: Re: [PATCH 1/5] run-command: add preliminary support for multiple
- hooks
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
- <20190424004948.728326-2-sandals@crustytoothpaste.net>
- <xmqqo94w2l3k.fsf@gitster-ct.c.googlers.com>
- <8f79d251-58d9-f63b-7171-7f1fbd11c6f9@kdbg.org>
- <xmqqo94uzyxa.fsf@gitster-ct.c.googlers.com>
- <2a511c3c-ef8d-07c5-80e2-398780ee6ed4@kdbg.org>
- <20190426205859.GO6316@genre.crustytoothpaste.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-ID: <cf9818d5-6b58-49bf-8897-28ddb407f557@kdbg.org>
-Date:   Fri, 26 Apr 2019 23:53:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727210AbfDZXHm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 19:07:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62296 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727158AbfDZXHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 19:07:42 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CF6213C062;
+        Fri, 26 Apr 2019 19:07:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gbar+SujiY2RgqK4in1jqs+/LPU=; b=bgs8eJ
+        a8PUOaDUFyF7bJt5Dkig+w35+UV6Vg83CUM1ZZx/9rD3A2coUT5Wl4qO5JzfBIJb
+        97u8gaTbG6OYjOZuVSAcs5SM/vCBO7F8oEz/dV9VSMS/k/ONOhmYP2vIR7Bslqqc
+        82D+8u4XP7m2aJwRGyFOXd7TXskhrg3o5vCYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JrYzDn4qxKb2iCgZ1rdQf48QXDNPyQA1
+        9WgMwJlFHN6mKdRj4A0sXMPt48F5UIqrxzAJ/NjD9yjoUAK9YvvqFn7muvwj1NMp
+        7EcPsinw6uP3ejggMrOXhKcwq/yX0pHQ4a2tdmt6xBO8ThEgPwrzZioTT5cxYGe4
+        33YllR8lYEw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 94EDA13C060;
+        Fri, 26 Apr 2019 19:07:36 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0260213C05F;
+        Fri, 26 Apr 2019 19:07:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/3] allow checkout and branch to create branches on a merge base
+References: <cover.1556226502.git.liu.denton@gmail.com>
+        <cover.1556305561.git.liu.denton@gmail.com>
+Date:   Sat, 27 Apr 2019 08:07:34 +0900
+In-Reply-To: <cover.1556305561.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Fri, 26 Apr 2019 12:21:06 -0700")
+Message-ID: <xmqqlfzwtlft.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190426205859.GO6316@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 14777E0C-6878-11E9-83B5-1646B3964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.04.19 um 22:58 schrieb brian m. carlson:
-> On Thu, Apr 25, 2019 at 09:40:34PM +0200, Johannes Sixt wrote:
-> I would like to point out that we still have to perform an executability
-> check before we run the hook or we'll get errors printed to the user.
+Denton Liu <liu.denton@gmail.com> writes:
 
-That's fine. On Windows, when a hook is present, it is also executable.
+> Thanks for your comments, Eric and Junio.
+>
+> Eric, I've combined the `test_when_finished` calls together so that the
+> statements within appear in a more "logical" order.
+>
+> Junio, I've taken your suggestion and moved the change into
+> `create_branch`. Initially, I didn't want to do this because I didn't
+> want to change the semantics of git-branch but introducing the merge
+> base syntax seems to be a positive change so let's do it.
+> ...
+> Denton Liu (3):
+>   t2018: cleanup in current test
+>   t2018: demonstrate checkout -b merge base bug
+>   branch: make create_branch accept a merge base rev
 
-> Right now, we have a standard way to handle the way we handle hooks: if
-> they are not executable, we warn and pretend there's no hook. With this
-> new paradigm, we have to check whether the main hook is executable, and
-> if it's not, we then have to check whether it's present, and if so, we
-> skip the multiple hooks.
-> 
-> I understand the executable bit is not useful on Windows, but on Unix,
-> we should be consistent with how we treat the hooks.
+Because "checkout -b new" is supposed to be merely a short-hand for
+a "branch new" followed by "checkout new", the lack of "branch new
+A...B" is the same "bug" as the lack of "checkout -b new A...B".
 
-We want to check for two vastly different conditions:
+The second patch that does not talk about the former but singles out
+only the latter is being inconsistent.
 
-- Do we have to inspect the multi-hook directory? That decision should
-be based on existence.
+One person's lack of feature is a bug to another person, and indeed,
+when we did "checkout A...B" in 2009, we weren't interested in doing
+the same for "checkout -b new", and nobody thought about adding that
+until now, and/or considered the lack of feature as a bug.
 
-- Do we have to issue a warning? That can be based on the executable
-flag. (As I understand, this is just a convenience warning because we do
-not want the user to see a cryptic "cannot execute this thing" error or
-something.)
+We do not "demonstrate" the lack of a new feature in a patch with
+expect-failure, followed by another patch that adds the feature that
+flips expect-failure to expect-success.  A patch that teaches
+"checkout -b" about A...B, that is adding a missing feature, should
+not have to do so.  As it is shades of gray between a change being a
+bugfix and adding a new feature, switching the style of testing
+based on the distinction between them does not make much sense.  Be
+consistent and stick to just one style.  And having the test and the
+code change (be it adding a missing feature or fixing a bug) in a
+single patch makes patch management a lot simpler by making it
+harder to lose only one half.
 
-I can see that you sense an inconsistency when you treat "not
-executable" as "does not exist". But that is just too subtle in my book,
-hard to explain, and not the practice that we are exercising these days.
+Having a preliminary clean-up as a separate step is a good idea, but
+for this topic, I think the latter two should be combined into a
+single patch that changes the code and adds tests at the same time.
 
-I'm more concerned about the platform differences that we would have to
-note in the documentation:
-
-  "To have multple hooks, do X and Y and make sure the standard hook
-   file is not executable. Oh, and by the way, if you are on Windows,
-   you have to remove the file to make it not executable."
-
-Let's not go there.
-
--- Hannes
+Thanks.
