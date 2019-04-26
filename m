@@ -2,173 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E95111F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 11:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4B831F462
+	for <e@80x24.org>; Fri, 26 Apr 2019 12:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbfDZLs3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 07:48:29 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35385 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbfDZLs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 07:48:28 -0400
-Received: by mail-ed1-f66.google.com with SMTP id y67so2936176ede.2
-        for <git@vger.kernel.org>; Fri, 26 Apr 2019 04:48:26 -0700 (PDT)
+        id S1726025AbfDZMGL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 08:06:11 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41142 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbfDZMGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 08:06:11 -0400
+Received: by mail-pf1-f194.google.com with SMTP id 188so1622626pfd.8
+        for <git@vger.kernel.org>; Fri, 26 Apr 2019 05:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=arNfFjYvVaNgon3PnKrJaqDsb21ANtxqyxPwWxXM1QE=;
-        b=kqVfPgWKr1daAppTD4K/nMwlGbuJfiUfLAZQ0ONWdVRzhLSW5kakY7UhnAPc3WCEse
-         teI76zIefTKOzeu9funVhQwx8N3djUTeTzGNrKflMMpzwtVoGHSYYmgErOs8edrUBLl0
-         tjjn4soTwPuLCxdvT+r8N9Exq7/HgzVywjJGC80EyFI4MZY5noMGvo6inQBQs2S6E8rM
-         Vo/i073IXq1QqvvqO5+Wq7ktz/nNI6s4pjlpOf3un6uVo9j1Y4rf5GZD9YKrXhuo9/Gc
-         FH3zu8ltmEkqxDBmU9FH0aJr55LD9+YquFBFp6n/VgeBSGXC+jp8Jbriz6fROqylxB+M
-         d0Fg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Ybur98gM39SUafyZXFxnQTtietkum9F4SR+eDoUUrxM=;
+        b=DkcTFdQM4taBtRxuiMNJf+yueoEpR0VehuscdgtWUxVkxbxQgU8kzeiko6CrbF6WC+
+         t2ynhIGDWjFh8va2QRjnRGBmAfB/UIfWk5ZKhQWJiMSrdMR2CeieGb0Ss8w8Bpsw7VQL
+         GGE/P5s4H826WQMl0dwtMpTkcTcH/K6oLuCmzDXD3RCHbbhYxKoUdRxt32MNIQFtIKsC
+         3ltqjPQS8JUgeXNAVMMQQmq9pl5wJvr70tHQp83mQ1AJFP1irFMkGuGWWr+LubzJbz+w
+         3ymKK0aR2ouFg0vhzUHDzfAXJCmfyuXwoLebzdCDA6d9PTTu6BRdMGS4YLGyGvZUwXXh
+         kvpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=arNfFjYvVaNgon3PnKrJaqDsb21ANtxqyxPwWxXM1QE=;
-        b=NHTtdv64Y2+lcFMtdBa2yK3LaRa8eejYUlCIHrz6YwaKNiezjf9IFS5M+ZJ6geWXMx
-         FcBUHGCqADxRyqQ6EWBoRFjqW1DQjQAQNDSQHuf8SxUmvN0qrTXcjDHzRFy+gSFGs1D9
-         waWg3WlBvMMJ7kKOwA4hTusJYQ4gDiXxWGFSNwa0AVKk6fno+PLV6KurfjMJr6U4FOU8
-         MkyjDSY6YLZqctkpWdHHv5hEwti5MbB4htKTe6ZKoGGkVrRUVh+AHwgNIyGoniO3o3/9
-         MZy8pz+u0MWjJhQfcewp6UItJTnWU1YkRDNHMwpC4TJYi3tUghPi8NjFXmuUzCSjPiTi
-         zilg==
-X-Gm-Message-State: APjAAAVkt3+CgcidR8kSXHNBR+68qeaVRT5JW7cDvxCtTrLhGOw4z5jJ
-        k1PrSU1NVW7W5B38TFwAqJBX8xOs
-X-Google-Smtp-Source: APXvYqyObJSFH3pQeB9kOiQhWk9yJgTpWvC8MLuHWkjPDaY/jSI341dDPL5pF44V1DJItx1dvsXNig==
-X-Received: by 2002:a17:906:6548:: with SMTP id u8mr10299556ejn.275.1556279305614;
-        Fri, 26 Apr 2019 04:48:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f16sm3451638ede.15.2019.04.26.04.48.25
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Ybur98gM39SUafyZXFxnQTtietkum9F4SR+eDoUUrxM=;
+        b=dYxAwTCIUj0P3FNyzGs6BSbFCvvKim98cAjH1zXcL2G3J/Sbyz8D7KGcfBxpmkzQ6e
+         sFxyUWfgJiT+LVzzipTJiUT98Qth67caqL8GXCEpLNAUGFLUjhKM3XM+tGmZzcT2uD9d
+         Xdm6DXwUmFty8MV9LJKKLKmvFi7i/Hgufoy+1sawukAoQHZwC5fdCC7WA9Rv+YnFtaPx
+         pnyivsvISYXfRA75SS4zbp1UoPuW/2L+e7WTD2+MFAQ5X+XYXIIQIcWtZQb0nNR5Z7Lc
+         ZutS7O8hn5EO2mhynZIHUpiv4EL87rp2J+aLp5pP2qIbWCn93ihowce9Ozpo4DcigX5T
+         PvWQ==
+X-Gm-Message-State: APjAAAWftDxBOUZpjoeaiTKaLc6mQvNC+Yag2FZwdHl7TS1hu8vmem6H
+        Pqva4hYLpJnF/1biNSJPzfQ=
+X-Google-Smtp-Source: APXvYqyixP5R5v9UrxWJkOXkmlzyCMS+njJ2DTy3+sfTj2ZeMnL08UXPSxJ0CCaTcRoYBDc12L3sRQ==
+X-Received: by 2002:a62:292:: with SMTP id 140mr47719209pfc.206.1556280369612;
+        Fri, 26 Apr 2019 05:06:09 -0700 (PDT)
+Received: from ?IPv6:2001:4898:4070:37:d554:f398:c65:a8b7? ([2001:4898:8010:1:95ea:f398:c65:a8b7])
+        by smtp.gmail.com with ESMTPSA id 9sm13631124pgv.5.2019.04.26.05.06.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Apr 2019 04:48:25 -0700 (PDT)
-Date:   Fri, 26 Apr 2019 04:48:25 -0700 (PDT)
-X-Google-Original-Date: Fri, 26 Apr 2019 11:48:23 GMT
-Message-Id: <1751b479e79ba18990e4152ae2acdf60c8713340.1556279303.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.181.git.gitgitgadget@gmail.com>
-References: <pull.181.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] commit-graph: improve error messages
+        Fri, 26 Apr 2019 05:06:08 -0700 (PDT)
+Subject: Re: [PATCH v2 0/5] Create commit-graph file format v2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        Jeff King <peff@peff.net>
+References: <pull.112.git.gitgitgadget@gmail.com>
+ <pull.112.v2.git.gitgitgadget@gmail.com> <87a7gdspo4.fsf@evledraar.gmail.com>
+ <xmqqef5pwldc.fsf@gitster-ct.c.googlers.com>
+ <878svxrwsh.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0a8fb6ec-d35c-45d7-3442-0e8298efca4b@gmail.com>
+Date:   Fri, 26 Apr 2019 08:06:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <878svxrwsh.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 4/26/2019 4:33 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Apr 26 2019, Junio C Hamano wrote:
+>>
+>> Thanks always for your careful review and thoughtful comments, by
+>> the way.
 
-The error messages when reading a commit-graph have a few problems:
+I agree that these comments are extremely helpful.
 
-1. Some values are output in hexadecimal, but that is not made
-   clear by the message. Prepend "0x" to these values.
+>>> Now as noted in my series we now on 'master' downgrade that to a warning
+>>> (along with the rest of the errors):
+>>>
+>>>     $ ~/g/git/git --exec-path=$PWD status
+>>>     error: commit-graph version 2 does not match version 1
+>>>     On branch master
+>>>     [...]
+>>>
+>>> ...and this series sets the default version for all new graphs to v2.>>>> The phrasing seems odd.  It is unclear, even to me who is vaguely
+>> familiar with the word "commit-graph" and is aware of the fact that
+>> the file format is being updated, what
+>>
+>>     "commit-graph version 2 does not match version 1"
+> 
+> Yeah it should really say:
+> 
+>     "commit-graph is of version 2, our maximum supported version is 1"
 
-2. The version number does not need to be hexadecimal, and also
-   should mention a "maximum supported version". This has one
-   possible confusing case: we could have a corrupt commit-graph
-   file with version number zero, so the output would be
+I agree this phrasing is better. Please see the patch I just submitted [1]
+to try and improve these messages.
 
-   "commit-graph has version 0, our maximum supported version is 1"
+[1] https://public-inbox.org/git/pull.181.git.gitgitgadget@gmail.com/
+ 
+> Hindsight is 20/20, but more generally I wonder if we should have these
+> format versions match that of the git version (unlikely to change it
+> twice in the same release...) which would allow us to say things like:
+> 
+>     "commit-graph needs v2.22.0 or later, we have the version written by v2.18.0..v2.21.0"
+> 
+> But of course dealing with those larger integers in the code/gaps is
+> also messy :)
 
-   This will only happen with corrupt data. This error message is
-   designed instead for the case where a client is downgraded after
-   writing a newer file version.
+There are a couple issues with using the version numbers, from my
+perspective:
 
-Update t5318-commit-graph.sh to watch for these new error messages.
+1. We don't do that anywhere else, like the index file.
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c          | 10 +++++-----
- t/t5318-commit-graph.sh |  6 +++---
- 2 files changed, 8 insertions(+), 8 deletions(-)
+2. The microsoft/git fork takes certain performance changes faster
+   than core git, and frequently ships versions between major version
+   updates. Our 2.17 had the commit-graph, for instance. It's also
+   possible that we'd take commit-graph v2 earlier than the core Git
+   major release.
+ 
+>> wants to say.  Do I have version #2 on disk and the running binary
+>> only understands version #1?  Or do I have version #1 on disk and
+>> the binary expected version #2?  How would I get out of this
+>> situation?  Is it sufficient to do "rm -f .git/info/commit-graph*"
+>> and is it safe?
+> 
+> Yeah. An rm of .git/info/commit-graph is safe, so is "-c
+> core.commitGraph=false" as a workaround.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 66865acbd7..aba591913e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -167,21 +167,21 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+That is true. I'm not sure the error message is the right place to
+describe the workaround.
+
+> I'd say "let's improve the error", but that ship has sailed, and we can
+> do better than an error here, no matter how it's phrased...
+> 
+>>> I think this is *way* too aggressive of an upgrade path. If these
+>>> patches go into v2.22.0 then git clients on all older versions that grok
+>>> the commit graph (IIRC v2.18 and above) will have their git completely
+>>> broken if they're in a mixed-git-version environmen.>
+> I should note that "all older versions..." here is those that have
+> core.commitGraph=true set. More details in 43d3561805 ("commit-graph
+> write: don't die if the existing graph is corrupt", 2019-03-25).
+> 
+>>> Is it really so important to move to v2 right away that we need to risk
+>>> those breakages? I think even with my ab/commit-graph-fixes it's still
+>>> too annoying (I was mostly trying to fix other stuff...). If only we
+>>> could detect "we should make a new graph now" ....
+>>
+>> True.
+
+You are right, this is too aggressive and I should have known better. I'll
+update in the next version to keep a default to v1. Not only do we have this
+downgrade risk, there is no actual benefit in this series alone. This only
+sets up the ability for other features.
  
- 	graph_signature = get_be32(data);
- 	if (graph_signature != GRAPH_SIGNATURE) {
--		error(_("commit-graph signature %X does not match signature %X"),
-+		error(_("commit-graph signature 0x%X does not match signature 0x%X"),
- 		      graph_signature, GRAPH_SIGNATURE);
- 		return NULL;
- 	}
- 
- 	graph_version = *(unsigned char*)(data + 4);
- 	if (graph_version != GRAPH_VERSION) {
--		error(_("commit-graph version %X does not match version %X"),
-+		error(_("commit-graph has version %d, our maximum supported version is %d"),
- 		      graph_version, GRAPH_VERSION);
- 		return NULL;
- 	}
- 
- 	hash_version = *(unsigned char*)(data + 5);
- 	if (hash_version != oid_version()) {
--		error(_("commit-graph hash version %X does not match version %X"),
-+		error(_("commit-graph has hash version %d, our maximum supported version is %d"),
- 		      hash_version, oid_version());
- 		return NULL;
- 	}
-@@ -215,7 +215,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
- 
- 		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
--			error(_("commit-graph improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
-+			error(_("commit-graph improper chunk offset 0x%08x%08x"), (uint32_t)(chunk_offset >> 32),
- 			      (uint32_t)chunk_offset);
- 			free(graph);
- 			return NULL;
-@@ -252,7 +252,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 		}
- 
- 		if (chunk_repeated) {
--			error(_("commit-graph chunk id %08x appears multiple times"), chunk_id);
-+			error(_("commit-graph chunk id 0x%08x appears multiple times"), chunk_id);
- 			free(graph);
- 			return NULL;
- 		}
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index e80c1cac02..264ebb15b1 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -420,17 +420,17 @@ test_expect_success 'detect too small' '
- 
- test_expect_success 'detect bad signature' '
- 	corrupt_graph_and_verify 0 "\0" \
--		"graph signature"
-+		"commit-graph signature"
- '
- 
- test_expect_success 'detect bad version' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_VERSION "\02" \
--		"graph version"
-+		"commit-graph has version"
- '
- 
- test_expect_success 'detect bad hash version' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_HASH "\02" \
--		"hash version"
-+		"commit-graph has hash version"
- '
- 
- test_expect_success 'detect low chunk count' '
--- 
-gitgitgadget
+> Having slept on my earlier
+> https://public-inbox.org/git/87a7gdspo4.fsf@evledraar.gmail.com/ I think
+> I see a better way to deal with this than my earlier suggestion that we
+> perform some version flip-flop dance on the single "commit-graph" file:
+> 
+> How about just writing .git/objects/info/commit-graph-v2, and for the
+> upcoming plan when where they'll be split have some dir/prefix there
+> where we include the version?
+> 
+> That means that:
+> 
+>  1. If there's an existing v1 "commit-graph" file we don't write a v2 at
+>     that path in v2.22, although we might have some "write v1 (as well
+>     as v2?) for old client compat" config where we opt-in to do that.
+> 
+>  2. By default in v2.22 we read/write a "commit-graph-v2" file,
+>     preferring it over the v1 "commit-graph", falling back on earlier
+>     versions if it's not there (until gc --auto kicks in on v2.22 and
+>     makes a v2 graph).
+> 
+>  3. If you have concurrent v2.21 and v2.22 clients accessing the repo
+>     you might end up generating one commit-graph or the other depending
+>     on who happens to trigger "gc --auto".
+> 
+>     Hopefully that's a non-issue since an out-of-date graph isn't
+>     usually a big deal, and client versions mostly march forward. But
+>     v2.22 could also learn some "incremental gc" where it says "my v2 is
+>     older, v1 client must have refreshed it, I'll refresh mine/both".
+> 
+>  4. v2.22 and newer versions will have some code in git-gc where we'll
+>     eventually readdir() .git/objects/info and remove graphs that are
+>     too old per some new config (say
+>     "gc.pruneOlderCommitGraphVersions=180 days").
+> 
+> This means that:
+> 
+>  A. GOOD: Now and going forward we can fearlessly create new versions of
+>     the graph without worrying/testing how older clients deal with it.
+> 
+>  B. BAD: We are going to eat ~2x the disk space for commit-graphs while
+>     such transitions are underway. I think that's fine. They're
+>     relatively small compared to .git/objects, and we'll eventually "gc"
+>     the old ones.
+
+We could also write 'commit-graph-v2' and delete 'commit-graph' and if
+someone downgrades they would just have a performance issue, not a failure.
+
+>  C. BAD: Different versions of git might perform wildly differently (new
+>     version slower) since their respective preferred graph versions
+>     might have a very different/up-to-date number of commits v.s. what's
+>     in the packs.
+> 
+> I think "A" outweighs "B" && "C" in this case. It's "just" a caching
+> data structure, and git works without it. So we can be a lot looser than
+> say updating the index/pack format.
+> 
+> Worst case things slow down but still work, and as noted in #3 above if
+> we care it can be mitigated (but I don't, I think we can safely assume
+> "client versions march forward").
+
+While I agree that this downgrade path can be a problem, I don't like the
+idea of adding a version in the filename. The whole point of having a versioned
+file format is so we can make these changes without changing the filename.
+
+Is it sufficient to remove the auto-upgrade path, at least for a few major
+versions? And I can learn from past mistakes and change the response to
+the other version information in the v2 file (reach index version, hash version,
+unused value in 8th byte) and instead make them non-fatal warnings.
+
+Thanks,
+-Stolee
