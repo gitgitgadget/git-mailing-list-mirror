@@ -2,142 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 709891F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 17:58:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 326811F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 18:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726116AbfDZR6d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 13:58:33 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44222 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725875AbfDZR6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 13:58:33 -0400
-Received: by mail-pf1-f196.google.com with SMTP id y13so2069612pfm.11
-        for <git@vger.kernel.org>; Fri, 26 Apr 2019 10:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:autocrypt:subject:to:cc:from:message-id;
-        bh=0NKIo9sGdq/4f/x49RwthCAh51qWlaK1TS+fShzp3Rk=;
-        b=u8rRHsyGD7KBhGfwsOtlYZXjrZzTSYuWCiNbwhjFhuXx+FQYeZiI4/5GhehgY9ohcG
-         azIOYKQzUDb2dHsvuQiMBEUeMiUbJJPVJof/Cr0OFa3hQic9DyC+CfNCW5gjR9atAtwF
-         CgFXBi02sDcQMv2lJSxhtXXQA54nPfw+lrfXocYMYPDDgXeWMyBaUlP/HJKGQUBlBVCw
-         OAoSOwfzL5LNAxVEpp/KrfnFU4v/zVIMYeJvue4Qr5CfiFXBKB+e4Oe/1Q/HqpCsVUe3
-         +Tn9a3CBFUaz5vc1IMSnbHcPqDwlfz6D44QBvx0tXayy38ULF53/vGnNjSX4WAyejMbg
-         3dfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:autocrypt:subject:to:cc:from
-         :message-id;
-        bh=0NKIo9sGdq/4f/x49RwthCAh51qWlaK1TS+fShzp3Rk=;
-        b=cCQ6awsfXuaCcufPNqW70cQPu0xj5patZhW3QxZRtD2W7w6ZNd4Gp46zmzDc7ya3x9
-         eaJlmKl2nuKQrW1BCmkRJRNxJkHClouee4HFbrv0l6aprkGc92LekRhsMXRjmGaQD5oc
-         yIcvaWYiHh4sTIJoUt//mXEFa7ZQcGJtEqfCBf1CHrnH8M/jq7COGofCX2YM1I+hgqiU
-         NT2XLJYCyw14gIy7TDgF3f1PnsmQvHib/ElAND/83t3PK3i6qMQdQ49FX/ApE29nkpwb
-         zoaIO4+Bh5M37o6mxacm6fGNpKPhsHBdUR8V4zCKRrqMtVZ0EzF1GrZ69l+JucCliR9D
-         rCUQ==
-X-Gm-Message-State: APjAAAXRwu504W+FnyrVe9KC7A/rfJdiaUgBPYcFL+iQapXj4e7btqKD
-        OqKrt5XzJILEzAxAmszo87U=
-X-Google-Smtp-Source: APXvYqzWOwdNQvno0BIfk2qcBSJAUWEXS1Fj0n7ltMchltUsHB+xaCiQtHzzXzr0R4321w0LVs7TmQ==
-X-Received: by 2002:a65:51c5:: with SMTP id i5mr23325059pgq.189.1556301512466;
-        Fri, 26 Apr 2019 10:58:32 -0700 (PDT)
-Received: from [100.112.22.39] ([27.62.7.71])
-        by smtp.gmail.com with ESMTPSA id x128sm47502449pfx.103.2019.04.26.10.58.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Apr 2019 10:58:31 -0700 (PDT)
-Date:   Fri, 26 Apr 2019 23:28:24 +0530
-User-Agent: K-9 Mail for Android
-In-Reply-To: <xmqqd0l9uxv1.fsf@gitster-ct.c.googlers.com>
-References: <xmqqsgu6wfv9.fsf@gitster-ct.c.googlers.com> <20190426050531.GA7854@Taylors-MBP.hsd1.wa.comcast.net> <xmqqd0l9uxv1.fsf@gitster-ct.c.googlers.com>
+        id S1726271AbfDZS5A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 14:57:00 -0400
+Received: from mail-eopbgr810078.outbound.protection.outlook.com ([40.107.81.78]:6588
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725875AbfDZS47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 14:56:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=extremenetworks.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sTOw2j0QHeHstCrf2mVAyeGKGQMXfREbmrh/30Evfhs=;
+ b=IXDapiHAkXEkUXjcgEt2/2uoyPI2UpdivsI277l2ypv3muqMru86K2Qa2/q56QefehQujcFlRBFbRx4YK60MOSEZw11ZDcPq7Ztf3Cb2TDzoTrV1rAc06etYJa7VBXmgo3+4XT1fkJTIWP/y1FI/xfj7kZYtqO3jUfzWkvFfZxw=
+Received: from BN6PR04MB0962.namprd04.prod.outlook.com (10.174.95.26) by
+ BN6PR04MB0884.namprd04.prod.outlook.com (10.174.232.161) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1813.17; Fri, 26 Apr 2019 18:56:56 +0000
+Received: from BN6PR04MB0962.namprd04.prod.outlook.com
+ ([fe80::2962:7e84:d6d2:678d]) by BN6PR04MB0962.namprd04.prod.outlook.com
+ ([fe80::2962:7e84:d6d2:678d%5]) with mapi id 15.20.1835.010; Fri, 26 Apr 2019
+ 18:56:56 +0000
+From:   David Carson <DCarson@extremenetworks.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: add 'ls-remote' option to limit output records
+Thread-Topic: add 'ls-remote' option to limit output records
+Thread-Index: AQHU/GHRGljkv88MzkyC7TSUbc2L9w==
+Date:   Fri, 26 Apr 2019 18:56:55 +0000
+Message-ID: <560CCADB-511B-495E-B86B-F294486C088C@contoso.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/10.17.1.190326
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=DCarson@extremenetworks.com; 
+x-originating-ip: [12.38.14.10]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 8400342c-fc8d-441d-8cb5-08d6ca78f42f
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:BN6PR04MB0884;
+x-ms-traffictypediagnostic: BN6PR04MB0884:
+x-microsoft-antispam-prvs: <BN6PR04MB0884DD02B936B4FF8060A1D2A83E0@BN6PR04MB0884.namprd04.prod.outlook.com>
+x-forefront-prvs: 001968DD50
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(136003)(346002)(376002)(396003)(366004)(39860400002)(199004)(189003)(26005)(5660300002)(66066001)(6506007)(1730700003)(81156014)(68736007)(8936002)(305945005)(81166006)(86362001)(186003)(102836004)(6436002)(8676002)(6486002)(99286004)(316002)(58126008)(7736002)(486006)(5640700003)(256004)(36756003)(82746002)(66476007)(66556008)(4744005)(66946007)(72206003)(66446008)(71200400001)(76116006)(83716004)(64756008)(476003)(71190400001)(2351001)(6916009)(97736004)(53936002)(2906002)(478600001)(2501003)(14454004)(33656002)(80792005)(25786009)(3846002)(6512007)(9686003)(6116002)(73956011);DIR:OUT;SFP:1101;SCL:1;SRVR:BN6PR04MB0884;H:BN6PR04MB0962.namprd04.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: extremenetworks.com does not
+ designate permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: Lqhw0BGuUL3BCqF1q/e92mPvatiXTmH0nBkUNhW5B2f4yzGYJDyhynP02UGOoUfo9hy9J40cEl5V7H4tjYZofD4sznSBG+9ZxXLNJgqv4FP3I6z4XckVN3s2RFISyjnWWmtZwkj3/x5326rnUceiZq6mZGtlWxDy8ZGshy9eaVB0Fm4htg6+JYocX2kzgTfESXLup1EXzIPBmBi3mlK4dZ14uH2i92FTSasPcbXa7WrLOhv8Lp/XBPX5y8L7qLay6UqmlkEVEhzozWZixycAuhbxLvPrrfvYoPQyZP1hpNtuUmxyfFcCeNMhUn3d8mwUrGjPtsZHDg1U87lc4hjQEC50BIAgx4tbhASL/nKn4INHXZXp5eFQFTi/wLtcHVGPiLp1Miav5WGVq7TYeyN2EuINW2KKe1ET24hltUya9g0=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <CE1CD9FE94CC4841A6C8F597F859CDE0@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Autocrypt: addr=kaartic.sivaraam@gmail.com; keydata=
- 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
-Subject: Re: What's cooking in git.git (Apr 2019, #05; Thu, 25)
-To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-CC:     git@vger.kernel.org
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <E6B28E44-5859-436B-A620-2FB484EEB657@gmail.com>
+X-OriginatorOrg: extremenetworks.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8400342c-fc8d-441d-8cb5-08d6ca78f42f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Apr 2019 18:56:56.0096
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fc8c2bf6-914d-4c1f-b352-46a9adb87030
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR04MB0884
+X-MS-Exchange-CrossPremises-AuthAs: Internal
+X-MS-Exchange-CrossPremises-AuthMechanism: 04
+X-MS-Exchange-CrossPremises-AuthSource: BN6PR04MB0962.namprd04.prod.outlook.com
+X-MS-Exchange-CrossPremises-TransportTrafficType: Email
+X-MS-Exchange-CrossPremises-TransportTrafficSubType: 
+X-MS-Exchange-CrossPremises-SCL: 1
+X-MS-Exchange-CrossPremises-messagesource: StoreDriver
+X-MS-Exchange-CrossPremises-BCC: 
+X-MS-Exchange-CrossPremises-originalclientipaddress: 12.38.14.10
+X-MS-Exchange-CrossPremises-transporttraffictype: Email
+X-MS-Exchange-CrossPremises-transporttrafficsubtype: 
+X-MS-Exchange-CrossPremises-antispam-scancontext: DIR:Originating;SFV:NSPM;SKIP:0;
+X-MS-Exchange-CrossPremises-processed-by-journaling: Journal Agent
+X-OrganizationHeadersPreserved: BN6PR04MB0884.namprd04.prod.outlook.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-
-
-On 26 April 2019 11:11:38 GMT+05:30, Junio C Hamano <gitster@pobox=2Ecom> =
-wrote:
->
->Unfortunately, I do not know how to ask GitHub web UI to give us a
->simple "log --oneline" equivalent of list like gitweb did (sadly
->cgit is not much better wrt this), but I think clicking on the
->parent link starting from here
->
->https://github=2Ecom/git/git/commit/c49927fca0de4c213ae9b21dcb7eafb80e453=
-d27
->
->and remembering (or writing down X-<) the commit names would
->eventually give us the equivalent=2E
->
-
-May be you are searching for the following view which lists (similar to gi=
-t log --one-line) the commits starting from  97dd512 which is the last in t=
-he tb/unexpected series?
-
-https://github=2Ecom/git/git/commits/97dd512af7ce4afb4f638ef73b4770921c8ca=
-3aa
-
-
---=20
-Sivaraam
-
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+R2l2ZW4gdGhhdCAnbHMtcmVtb3RlJyBjYW4gYmUgc29ydGVkLCBpdCB3b3VsZCBiZSB1c2VmdWwg
+dG8gYmUgYWJsZSB0byBhc2sgZm9yIGEgc3Vic2V0IG9mIHRoZSB0b3RhbCBudW1iZXIgb2YgcmVz
+dWx0IHJlY29yZHMuDQoNCkZvciBleGFtcGxlLCBpZiBJIHdhbnQgdG8gcmV0cmlldmUgb25seSB0
+aGUgdGFnIHdpdGggdGhlIGhpZ2hlc3QgdmVyc2lvbiwgSSB3b3VsZCBkbyBzbyBieSBhZGRpbmcg
+dGhpcyBuZXcgb3B0aW9uICgtbjEgaW4gbXkgZXhhbXBsZSk6DQoNCgkkIGdpdCBscy1yZW1vdGUg
+LW4xIC0tdGFncyAtLXNvcnQ9djpyZWZuYW1lIG9yaWdpbiAidioiDQoNClRoYXQgd291bGQgc2F2
+ZSBmcm9tIGhhdmluZyB0byByZWNlaXZlIGEgbGFyZ2UgbGlzdCBvZiB0YWdzIGZyb20gdGhlIHJl
+bW90ZSwgb25seSBvbmUgb2Ygd2hpY2ggSSBjYXJlIGFib3V0Lg0KDQp+RGF2aWQNCg0KDQo=
