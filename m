@@ -2,291 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69D3E1F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 13:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5555D1F462
+	for <e@80x24.org>; Fri, 26 Apr 2019 14:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726155AbfDZNz5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 09:55:57 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34247 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726152AbfDZNz5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 09:55:57 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a6so3280369edv.1
-        for <git@vger.kernel.org>; Fri, 26 Apr 2019 06:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ueDYroBTgLr5cmVeG2OZHd84kAlkvf/qIAq26gbJJ3M=;
-        b=Vbs2R1ljldeLENw0P+BjNI//6meIh7UUnQkUSBnZptMjzKHJp5POHbBhzXXFhGcb5Z
-         9etkQX9QKBJ855hmDQSMDDCdTcyv3fMsqhzeuGXGQO8Kt58LfMJiel+TMr4XBgEVMNen
-         I8zK8Xm+Dgwj7/4DEZ1sLlP+vMGXGy5efF0HJEP2cjrbJg9O0P/NphBnGBXcUmjBj88m
-         4fcDNkWJYtxgJ7ifCPIso8CKZZ7HATXKMChi7JOJ6xhu+9QSvX4uWRYloKVtHs+gTcDD
-         EoDNTU43NlSeUPTGga+hv3ZDIUCAFkLfVRevrF4Q5KYXU8VMsIK6A82pNM+vmL8ajoKh
-         8IMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=ueDYroBTgLr5cmVeG2OZHd84kAlkvf/qIAq26gbJJ3M=;
-        b=nZtqdlLF7D1XUoHecr3MHxswnUm5wB3bP9j6HDldfYXmNDAc+uFRHihFpCpXXZygif
-         TOAvFjopRbqfc/N73yJBsO43nZnYYS1/VeuSJXrkcoIxgcRIjaT+xnrpG7ZCbrHaEkx6
-         fzIcgT8/cee/n9PjOCpziVXem3OYcwkJ5S6qhsGQ+G2rsSXavawxiYGwL8obobFFBpRT
-         ktQZ3L4ZNV4F0y3CyzQ/Vgxw7+zwy8MPJo26IhMgwVR5GdCtA3c/gMo3d41eMA5MQZVj
-         oc06/sW7rhCptGYAhbh8mbBPSbs8fqLTZ3Qz5Si8cIGY6UGwH5jelM4Jd0HQDGJ+B5Y0
-         aVAA==
-X-Gm-Message-State: APjAAAVyD6AkTUwP6p3zuZtCba4LIF4Vv0Ar7Je3WeieNP0Y2cSQxckl
-        bAICyzQYYvSwxYgJ5mXt3QI=
-X-Google-Smtp-Source: APXvYqwnkEqIg3cssn6Oor/zGcKZ+G12gQza+M9oHl8OOpOWrBgfdXeQ0/GgXlhXnRCZPfyfXSv1nQ==
-X-Received: by 2002:a50:b513:: with SMTP id y19mr5941262edd.100.1556286954233;
-        Fri, 26 Apr 2019 06:55:54 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id w10sm6998522edh.62.2019.04.26.06.55.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 26 Apr 2019 06:55:53 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Create commit-graph file format v2
-References: <pull.112.git.gitgitgadget@gmail.com> <pull.112.v2.git.gitgitgadget@gmail.com> <87a7gdspo4.fsf@evledraar.gmail.com> <xmqqef5pwldc.fsf@gitster-ct.c.googlers.com> <878svxrwsh.fsf@evledraar.gmail.com> <0a8fb6ec-d35c-45d7-3442-0e8298efca4b@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <0a8fb6ec-d35c-45d7-3442-0e8298efca4b@gmail.com>
-Date:   Fri, 26 Apr 2019 15:55:51 +0200
-Message-ID: <874l6kswew.fsf@evledraar.gmail.com>
+        id S1726253AbfDZO22 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 10:28:28 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56765 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726060AbfDZO21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 10:28:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1556288895;
+        bh=gPtri+9pmbKMcTR2UB2ip4RO2mHIzdlpW+Qbvga1GtM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Um1pfZ52hv6LXKfgLkTIP0DKuSSnsfpO1SX+LKQHMv16h+lzRuntr81FraSlxt/hA
+         uf7ctACHn7g/DyUQWEEz8YzHf6MzVRs6MXouv4xMp+DtvP2eZEJR0sAjqZxUdIxPGD
+         8g4+MZKIIBVLpQO6I5vvpLJ4V8eAw+Qczl2Ux3Ss=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.106.210.8] ([167.220.152.136]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgeoI-1gseh906V2-00h46h; Fri, 26
+ Apr 2019 16:28:15 +0200
+Date:   Fri, 26 Apr 2019 10:28:12 -0400 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with
+ write_block_or_die()
+In-Reply-To: <20190413013451.GB2040@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1904261026070.45@tvgsbejvaqbjf.bet>
+References: <pull.145.git.gitgitgadget@gmail.com> <7a9525a78a7b7b237150b9264cf675a4a0b37267.1555110278.git.gitgitgadget@gmail.com> <20190413013451.GB2040@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Ik9AMqhjCZ6xCP0D7iWJ4AO1WdWIcqOdjpnIJo4r6a7GtQ0TEGD
+ djqHn8j7Ssu3nTuXzHkkKgqbTJxeLtu1PjO0ayH606eyaJDmp+944YliAp2AjkNeziieWLj
+ QUteXv/CSe25Q/Z8GeXUIxjcT6kkDsDVNVqLg2uArzjbFgOhPp7h503dIYJGFH1YrzXqhOG
+ cm20+Ar1ZGI2KpH5PsSYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GTy80DHz/f0=:C5Z5zI02AaoYaJ7s6Myzco
+ RMImrPxBEywyf4TQXmyI/VMhz9Tup5e3/GNWaeVUg8sNqwVhoNyMDidU7p0yt2tTyK+u9kAQy
+ lc8FIBs8C9YcBQGBnA/SvPKKBAAInQU0Vt37cw/JZMm94MENZppVG/Aw2g6dWANZQQadikRua
+ BRleChRDCvWdR7uvs5O1IYidd4RShhpN2fHKd+JFcRpAlt/iNprSRCwUELCfRcMU9aFDAY2dS
+ sVsytepX5s0J88cXOI7I2UAX4DBvwYcdcXuVdIMMtq5cX1/v9R+eHOibWQzVLu386B7TZ/nLn
+ LzdxhAVRD2/bkOY3zT1cavOgz35a6DCTBG4DOuPbbHG/Vi3kyrrwbPu8bThNgrHIIlWxhdHT8
+ Y+S6U/cAek0tGBmZw3HcBleRP1V+a5xXvtxnEQM8CeB9gj+TBU/zzoM2WS65lvH3Qos2p1Z+3
+ XWlP62eIeCT96MBDupBwanPQkQjzda+DhyuZZfTrki0AWZZU6U7EaMbCIcDexkUE44s4Q0/wQ
+ 10A05r9UfHKilLUCB0Sjk8Rm44bzt7JkNcE9H1qw5tGPxHQxeG5YCjJzWq1IIcvN5p5Z9BsU2
+ fe9b/YzXBKuJVCJeH3KoYFdMR07G3LMX4HZDrB6cCwHNi9eN63hMuPUG6+vF6Ep3/D9dFUeQs
+ uNM8YHiTcTzPe/H6Uunaa/gIyVQ3ipxNlFMglEdmex8NhrT0M7itOgI06yesj7RrAwdVOFIGC
+ IG71vI9Mx81WZn7SEUfQQZyen04ETLvl+VCW62zlWLDEj1Do6YmluCbrJJ7oRVswUuUcMssM1
+ RHuo0uj/cA2dZ43kJzNzhDTvRsJXxuyKxW708dov8XMjhWpUuvjurQ9cHP4osWtHSeq/I5Sbk
+ XXSWJ3Mb441pCDTMLXk6TOsh5DtxhyMzCHA8IbUoN7zu4g5d/v3ScB3WwoDhbRVuo+LCHsY04
+ RZYbcV6CCzw==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
-On Fri, Apr 26 2019, Derrick Stolee wrote:
+On Fri, 12 Apr 2019, Jeff King wrote:
 
-> On 4/26/2019 4:33 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->> On Fri, Apr 26 2019, Junio C Hamano wrote:
->>>
->>> Thanks always for your careful review and thoughtful comments, by
->>> the way.
+> On Fri, Apr 12, 2019 at 04:04:39PM -0700, Rohit Ashiwal via GitGitGadget=
+ wrote:
 >
-> I agree that these comments are extremely helpful.
+> > From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> >
+> > MinGit for Windows comes without `gzip` bundled inside, git-archive us=
+es
+> > `gzip -cn` to compress tar files but for this to work, gzip needs to b=
+e
+> > present on the host system.
+> >
+> > In the next commit, we will change the gzip compression so that we no
+> > longer spawn `gzip` but let zlib perform the compression in the same
+> > process instead.
+> >
+> > In preparation for this, we consolidate all the block writes into a
+> > single function.
 >
->>>> Now as noted in my series we now on 'master' downgrade that to a warni=
-ng
->>>> (along with the rest of the errors):
->>>>
->>>>     $ ~/g/git/git --exec-path=3D$PWD status
->>>>     error: commit-graph version 2 does not match version 1
->>>>     On branch master
->>>>     [...]
->>>>
->>>> ...and this series sets the default version for all new graphs to v2.>=
->>> The phrasing seems odd.  It is unclear, even to me who is vaguely
->>> familiar with the word "commit-graph" and is aware of the fact that
->>> the file format is being updated, what
->>>
->>>     "commit-graph version 2 does not match version 1"
->>
->> Yeah it should really say:
->>
->>     "commit-graph is of version 2, our maximum supported version is 1"
+> Sounds like a good preparatory step. This part confused me, though:
 >
-> I agree this phrasing is better. Please see the patch I just submitted [1]
-> to try and improve these messages.
+> > @@ -38,11 +40,21 @@ static int write_tar_filter_archive(const struct a=
+rchiver *ar,
+> >  #define USTAR_MAX_MTIME 077777777777ULL
+> >  #endif
+> >
+> > +/* writes out the whole block, or dies if fails */
+> > +static void write_block_or_die(const char *block) {
+> > +	if (gzip) {
+> > +		if (gzwrite(gzip, block, (unsigned) BLOCKSIZE) !=3D BLOCKSIZE)
+> > +			die(_("gzwrite failed"));
+> > +	} else {
+> > +		write_or_die(1, block, BLOCKSIZE);
+> > +	}
+> > +}
 >
-> [1] https://public-inbox.org/git/pull.181.git.gitgitgadget@gmail.com/
+> What is gzwrite()? At first I thought this was an out-of-sequence bit of
+> the series, but it turns out that this is a zlib.h interface. So the
+> idea (I think) is that here we introduce a "gzip" variable that is
+> always false, and this first conditional arm is effectively dead code.
+> And then in a later patch we'd set up "gzip" and it would become
+> not-dead.
 >
->> Hindsight is 20/20, but more generally I wonder if we should have these
->> format versions match that of the git version (unlikely to change it
->> twice in the same release...) which would allow us to say things like:
->>
->>     "commit-graph needs v2.22.0 or later, we have the version written by=
- v2.18.0..v2.21.0"
->>
->> But of course dealing with those larger integers in the code/gaps is
->> also messy :)
+> I think it would be less confusing if this just factored out
+> write_block_or_die(), which starts as a thin wrapper and then grows the
+> gzip parts in the next patch.
+
+Yes, I missed this in my pre-submission review. Sorry about that!
+
+> A few nits on the code itself:
 >
-> There are a couple issues with using the version numbers, from my
-> perspective:
+> > +static gzFile gzip;
+> > [...]
+> > +       if (gzip) {
 >
-> 1. We don't do that anywhere else, like the index file.
+> Is it OK for us to ask about the truthiness of this opaque type? That
+> works if it's really a pointer behind the scenes, but it seems like it
+> would be equally OK for zlib to declare it as a struct.
 >
-> 2. The microsoft/git fork takes certain performance changes faster
->    than core git, and frequently ships versions between major version
->    updates. Our 2.17 had the commit-graph, for instance. It's also
->    possible that we'd take commit-graph v2 earlier than the core Git
->    major release.
+> It looks OK in my version of zlib, and that library tends to be fairly
+> conservative so I wouldn't be surprised if it was that way back to the
+> beginning and remains that way for eternity. But it feels like a bad
+> pattern.
 
-Good points. I'm just blathering on and playing architecture astronaut
-:)
+It is even part of the public API that `gzFile` is `typedef`'d to a
+pointer. So I think in the interest of simplicity, I'll leave it at that
+(but I'll mention this in the commit message).
 
->>> wants to say.  Do I have version #2 on disk and the running binary
->>> only understands version #1?  Or do I have version #1 on disk and
->>> the binary expected version #2?  How would I get out of this
->>> situation?  Is it sufficient to do "rm -f .git/info/commit-graph*"
->>> and is it safe?
->>
->> Yeah. An rm of .git/info/commit-graph is safe, so is "-c
->> core.commitGraph=3Dfalse" as a workaround.
+> > +		if (gzwrite(gzip, block, (unsigned) BLOCKSIZE) !=3D BLOCKSIZE)
 >
-> That is true. I'm not sure the error message is the right place to
-> describe the workaround.
-
-Yeah for sure, it should Just Work...
-
->> I'd say "let's improve the error", but that ship has sailed, and we can
->> do better than an error here, no matter how it's phrased...
->>
->>>> I think this is *way* too aggressive of an upgrade path. If these
->>>> patches go into v2.22.0 then git clients on all older versions that gr=
-ok
->>>> the commit graph (IIRC v2.18 and above) will have their git completely
->>>> broken if they're in a mixed-git-version environmen.>
->> I should note that "all older versions..." here is those that have
->> core.commitGraph=3Dtrue set. More details in 43d3561805 ("commit-graph
->> write: don't die if the existing graph is corrupt", 2019-03-25).
->>
->>>> Is it really so important to move to v2 right away that we need to risk
->>>> those breakages? I think even with my ab/commit-graph-fixes it's still
->>>> too annoying (I was mostly trying to fix other stuff...). If only we
->>>> could detect "we should make a new graph now" ....
->>>
->>> True.
+> This cast is interesting. All of the matching write_or_die() calls are
+> promoting it to a size_t, which is also unsigned.
 >
-> You are right, this is too aggressive and I should have known better. I'll
-> update in the next version to keep a default to v1. Not only do we have t=
-his
-> downgrade risk, there is no actual benefit in this series alone. This only
-> sets up the ability for other features.
->
->> Having slept on my earlier
->> https://public-inbox.org/git/87a7gdspo4.fsf@evledraar.gmail.com/ I think
->> I see a better way to deal with this than my earlier suggestion that we
->> perform some version flip-flop dance on the single "commit-graph" file:
->>
->> How about just writing .git/objects/info/commit-graph-v2, and for the
->> upcoming plan when where they'll be split have some dir/prefix there
->> where we include the version?
->>
->> That means that:
->>
->>  1. If there's an existing v1 "commit-graph" file we don't write a v2 at
->>     that path in v2.22, although we might have some "write v1 (as well
->>     as v2?) for old client compat" config where we opt-in to do that.
->>
->>  2. By default in v2.22 we read/write a "commit-graph-v2" file,
->>     preferring it over the v1 "commit-graph", falling back on earlier
->>     versions if it's not there (until gc --auto kicks in on v2.22 and
->>     makes a v2 graph).
->>
->>  3. If you have concurrent v2.21 and v2.22 clients accessing the repo
->>     you might end up generating one commit-graph or the other depending
->>     on who happens to trigger "gc --auto".
->>
->>     Hopefully that's a non-issue since an out-of-date graph isn't
->>     usually a big deal, and client versions mostly march forward. But
->>     v2.22 could also learn some "incremental gc" where it says "my v2 is
->>     older, v1 client must have refreshed it, I'll refresh mine/both".
->>
->>  4. v2.22 and newer versions will have some code in git-gc where we'll
->>     eventually readdir() .git/objects/info and remove graphs that are
->>     too old per some new config (say
->>     "gc.pruneOlderCommitGraphVersions=3D180 days").
->>
->> This means that:
->>
->>  A. GOOD: Now and going forward we can fearlessly create new versions of
->>     the graph without worrying/testing how older clients deal with it.
->>
->>  B. BAD: We are going to eat ~2x the disk space for commit-graphs while
->>     such transitions are underway. I think that's fine. They're
->>     relatively small compared to .git/objects, and we'll eventually "gc"
->>     the old ones.
->
-> We could also write 'commit-graph-v2' and delete 'commit-graph' and if
-> someone downgrades they would just have a performance issue, not a failur=
-e.
->
->>  C. BAD: Different versions of git might perform wildly differently (new
->>     version slower) since their respective preferred graph versions
->>     might have a very different/up-to-date number of commits v.s. what's
->>     in the packs.
->>
->> I think "A" outweighs "B" && "C" in this case. It's "just" a caching
->> data structure, and git works without it. So we can be a lot looser than
->> say updating the index/pack format.
->>
->> Worst case things slow down but still work, and as noted in #3 above if
->> we care it can be mitigated (but I don't, I think we can safely assume
->> "client versions march forward").
->
-> While I agree that this downgrade path can be a problem, I don't like the
-> idea of adding a version in the filename. The whole point of having a ver=
-sioned
-> file format is so we can make these changes without changing the filename.
->
-> Is it sufficient to remove the auto-upgrade path, at least for a few major
-> versions? And I can learn from past mistakes and change the response to
-> the other version information in the v2 file (reach index version, hash v=
-ersion,
-> unused value in 8th byte) and instead make them non-fatal warnings.
+> BLOCKSIZE is a constant. Should we be defining it with a "U" in the
+> first place?
 
-I think there's two things here, and for *me* just one of them would be
-enough for "screw it, let's write another file":
+Yep, good idea.
 
- 1. Our "you have v2" error reporting for all versions until the one we
-    haven't released yet sucks/hard errors.
-
-    So right *now* I think few people turn on core.commitGraph=3Dtrue, I
-    do, you do, I just convinced GitLab to do it (after doing it myself
-    & carrying patches...):
-    https://gitlab.com/gitlab-org/gitaly/issues/1627
-
-    I think we both want to get to a point where core.commitGraph=3Dtrue
-    is the default though, because it's cheap to make it, and it rocks
-    for a lot of use-cases, meanwhile people are toggling it on manually
-    at an increasing rate.
-
-    So that combined with some distros/OSs upgrading at a glacial pace
-    basically means that we'd *at least* need to do the equivalent of a
-    one-off "commit-graph" -> "commit-graph-verion-2-and-beyond",
-    because just like some OSs are still shipping with git 1.8.* or 2.11
-    whatever, we're also going to have the versions where this is hard
-    erroring in production somewhere for a long time.
-
-    It would suck with even a "conservative" upgrade path to need to
-    wait until 2022 or something just so I can have a commit graph that
-    by default has the number of objects or whatever other small thing
-    we add to it because we're paranoid that it hasn't been N versions
-    since we stopped hard-erroring on v2.
-
-    There's a lot of such mixed-version cases, e.g. running a server
-    cluster where the git data is on NFS and you're in the process of
-    updating git on some "client" nodes but not others, now if the git
-    version is one of the ones impacted and you e.g. run gitlab the new
-    version will ruin your day. Ditto a user on their laptop testing a
-    git from debian testing and going back to stable etc, only to find
-    that their repos broke.
-
- 2. While we *can* say a lost commit-graph is "just a performance issue,
-    not a failure", which is easy enough to make the case for v2.22 and
-    beyond if we fix a couple of things, I think this is becoming less
-    and less acceptable in practice.
-
-    E.g. I have some things now where I pretty much hard-rely on it if I
-    don't want a CPU/IO spike as some commands that take 5ms now start
-    taking 30s (e.g. "what branch is this on" in the GitLab UI)., which
-    would happen if we have one file and switch to v2 by default at some
-    point (and v3, ...).
-
+Ciao,
+Dscho
