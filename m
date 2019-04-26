@@ -7,61 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 240661F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 02:50:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1638C1F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 03:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729583AbfDZCuG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Apr 2019 22:50:06 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41945 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728983AbfDZCuG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Apr 2019 22:50:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id c12so2175376wrt.8
-        for <git@vger.kernel.org>; Thu, 25 Apr 2019 19:50:05 -0700 (PDT)
+        id S1726417AbfDZDCw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Apr 2019 23:02:52 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51946 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726026AbfDZDCw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Apr 2019 23:02:52 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 4so1816322wmf.1
+        for <git@vger.kernel.org>; Thu, 25 Apr 2019 20:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version;
-        bh=IJMWn/lIQsWotA+LWx+aMiUE5DLQzZvdV9/AAnqK0j0=;
-        b=O3R7SK/l5kV8LYdqMXo1337i9qyhp6SH8TfhtBom3/F/6xDSX6PiqmLpbaWOy08SLu
-         rE8X9B7ehHUPiWNzvPCrRwhVNMDoHLOfOJDPEXdXAZMRj9VkQhnNU+AGMqq6bleg4jmf
-         sGAR3VZqOvcueC/mrzwInhv7kIeMOAtACZHKUaQi7qWoTXpD6jO6cahuBavtHGSfdQ6h
-         R9/VBR5TK0/wgWA8YgdrGOfMVe5NmI0lnrtMChruurbCZGGactCcUp/33NTzQ1NTpOMm
-         ILZvVdA4KvxctYXLYz9X7BgYG778pOS8WKYY8dMqMOzCZBbo9NE09FYDU7u+t6Fyuday
-         OTmA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8/qcmkhYNMw90a3cUAyjHeVKXFB1lNuZm8r9W7Li8D4=;
+        b=hQFnUnIryN53PqeHqSyQKzeIjg9KiWkQouNcsw4P88Zs8+OtFfYfBofdWWkvGyv8J6
+         uVQ+O5Z9Aju/YlcJn3DdERKxLVlJYb52/GftD4v+vKVGNY1FtrBC/pF9PVZ1KWjm4BmP
+         IYf6DRKDvk00QFdaVewTmqui/N5wB9/gv0g9gpUjuKQPmUklFX9v82LKpHW55IVSnbTV
+         PdA9jxAAEAh3I4b3KTsNYJvMiZUzoLtlAl5VM0sXx5g6jVG89ulXqQ/d+1+a1c6mpIcT
+         KRxocIkufet8ghWCbFW2ojP46IIxILzgq/2Yr4iSNJ0Uz8cy8vo8yCQo5GVRAtXHICiD
+         O2zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=IJMWn/lIQsWotA+LWx+aMiUE5DLQzZvdV9/AAnqK0j0=;
-        b=DBA8KnP2Gy4WvgxuDRphZ0nN3ZPSwarUpHNg9tzh62tFIHknJhV/YGvag35HKZcLqo
-         OYBYlniBrg90jHHd2KxjEV/d+qAQjJQ5WaNKzUUVxbAj+s+3UgvRLxO5nbJlzhpBDm17
-         LUpUib7wvPcuSNyUURT+LolLQ/DUXCcEztLsWj1ccP8XbTxwHYLV0q7BshS8+/o98aHu
-         BvnCoI5iBsaEHbr7jJHFYInkF6HdicamRi/eNm5w5cDrC2tWavwhd0oZJLI3QhlpLG6o
-         olZQiD6gpBFQ8z9s89MEt54tVH8GXb8qIuKTBGYNcoVbuSE7dXDx5+kgBe/wHe4WNcZm
-         l5cQ==
-X-Gm-Message-State: APjAAAX1h4w+wTbqYyBJkgmFltWuddSaVK+N+3j1i/f2eErapFbjl0CC
-        ILgeCgrInQrtTb1VwWFp+aU=
-X-Google-Smtp-Source: APXvYqx9CN0sXhsn/x6sC8BXs5pqqdqQZghc0qqdLewqQswquMjP51EPwzeFZdEnJcaHN6KKfRb3NQ==
-X-Received: by 2002:a5d:674f:: with SMTP id l15mr5121530wrw.41.1556247004532;
-        Thu, 25 Apr 2019 19:50:04 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8/qcmkhYNMw90a3cUAyjHeVKXFB1lNuZm8r9W7Li8D4=;
+        b=nKpbdUWondCVBfFs+sFA045yGxAdoGGflh3NdzXFRmNUYNXyEYf6cASL4OMWCBXh47
+         chgqFC35KFNgnpGOymdZWG0G6c6UewfNMic8QbufuO/MlqE40KFfvNUoLuPx6Fyk8qdC
+         q6X0xxwN+DRjTeFYN6pNKtLdgXGSxIEUkFM5dHFQNRAqqRlY9rnzEZ6+0sTRmuyz4HS5
+         Y358c3z0iApq0BWOwJWCUUgdNL+nmQkHtXRTlUDrPy8IoWs/Sdnnf6vcgnksW6f9uLxE
+         iH+ktuWVgR1DE9EVVpLyO7dhbp338xnRcJY6cb99MR2qsXNhNYm8FJ0jwuMpS6Wu3qyY
+         eNqQ==
+X-Gm-Message-State: APjAAAV1UG6VStxSsdD+o0qxzJ7BdI4uA0eWbN67jZHj2JRqJC4k7fzR
+        IAPn2UJEg6ne4B1fkEMUzIg=
+X-Google-Smtp-Source: APXvYqyLSq3wvGRA1K6TjtEA1IDsrZBRp/BY7pWibDO3gBycR4GbuLf+8pUWK5Dz8TA7aS8RKEKRkw==
+X-Received: by 2002:a7b:c00b:: with SMTP id c11mr5477577wmb.23.1556247770431;
+        Thu, 25 Apr 2019 20:02:50 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id i17sm21378493wrs.44.2019.04.25.19.50.03
+        by smtp.gmail.com with ESMTPSA id z7sm17717300wml.40.2019.04.25.20.02.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Apr 2019 19:50:03 -0700 (PDT)
+        Thu, 25 Apr 2019 20:02:49 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] t2018: cleanup in current test
-In-Reply-To: <CAPig+cTdJv9-M+zmp+Jo2bjOrkO3NgsguJ2xM+aXhf38OjjEEw@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 25 Apr 2019 18:34:07 -0400")
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] checkout: allow -b/-B to work on a merge base
 References: <cover.1556226502.git.liu.denton@gmail.com>
-        <c0c7171e3d523e5d4a0ac01810378447a38854da.1556226502.git.liu.denton@gmail.com>
-        <CAPig+cTdJv9-M+zmp+Jo2bjOrkO3NgsguJ2xM+aXhf38OjjEEw@mail.gmail.com>
+        <031780431d790c16b3862d6f155693e197bb74ed.1556226502.git.liu.denton@gmail.com>
+Date:   Fri, 26 Apr 2019 12:02:49 +0900
+In-Reply-To: <031780431d790c16b3862d6f155693e197bb74ed.1556226502.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Thu, 25 Apr 2019 14:10:38 -0700")
+Message-ID: <xmqqmukdv57q.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date:   Fri, 26 Apr 2019 11:50:03 +0900
-Message-ID: <xmqqtvelv5t0.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -69,22 +67,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
->>  test_expect_success 'checkout -b to a new branch, set to HEAD' '
->> +       test_when_finished test_might_fail git branch -D branch2 &&
->> +       test_when_finished git checkout branch1 &&
->
-> I'm aware that when-finished actions fire in reverse order but the
-> inherent subtlety of ordering of these two invocations still caught me
-> off-guard for a moment since they are reverse the order in which one
-> logically thinks about the actions which need to be performed. I
-> wonder if it would be easier to digest if written like this:
->
->     test_when_finished '
->         git checkout branch1 &&
->         test_might_fail git branch -D branch2
->     ' &&
+> -	new_branch_info->name = arg;
+> +	new_branch_info->name = strstr(arg, "...") ?
+> +		xstrdup(oid_to_hex(rev)) :
+> +		arg;
 
-Perhaps.  Be careful in choosing the quotes between sq and dq,
-though.
+Can we do better?
+
+I am not sure why we want to hardcode the knowledge of "..." syntax
+like this here.  "git checkout A...B" introduced in 2009 needed only
+a single-liner change from get_sha1() to get_sha1_mb() without making
+the ugly implementation detail seep into this layer.
