@@ -2,112 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-5.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D82201F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 23:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB99D1F453
+	for <e@80x24.org>; Fri, 26 Apr 2019 23:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727114AbfDZXpG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 19:45:06 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59631 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727099AbfDZXpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 19:45:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6613B4A72F;
-        Fri, 26 Apr 2019 19:45:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2TFKPmGHNHVFh5W9rzEVlXPpWV8=; b=Qwb8Rj
-        pee8EMVJ6ljYEPVs8iQfTKC0/5oQKNpkYfBzYcjEiDTDXeAsaBi02nno2yTLg1vy
-        J+MjK2o+RdXYZHo+GHtUAi5Flg0UNZbKN5XH5gOm9C+ZBGFZpEpQUe2sc55YYRZn
-        eT4SYTKy1b3AB3434c55uAgfo8txhk9s64HYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iZQkp1Kvo4ZYNQFQR3KINF0Iv1sDBLgc
-        j+xETw6TnUV3I9A7e1jkx9h5tm6enYiMOBLq/qLRtEPD2kSLJZPAtF7h/WSAt+3S
-        w5F9KDXmV4w4tMPSZnA2iM+SeTHZAhjhQbWZwvFqd2z+AcMCny/HBVJYU7wN40/A
-        6MlrGX59HaI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E3804A72E;
-        Fri, 26 Apr 2019 19:45:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727138AbfDZXv6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 19:51:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:50468 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726382AbfDZXv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 19:51:58 -0400
+Received: from mail.kernel.org (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 06FC34A72C;
-        Fri, 26 Apr 2019 19:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with write_block_or_die()
-References: <pull.145.git.gitgitgadget@gmail.com>
-        <7a9525a78a7b7b237150b9264cf675a4a0b37267.1555110278.git.gitgitgadget@gmail.com>
-        <20190413013451.GB2040@sigill.intra.peff.net>
-        <xmqqzhouwizg.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1904261028220.45@tvgsbejvaqbjf.bet>
-Date:   Sat, 27 Apr 2019 08:44:58 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1904261028220.45@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 26 Apr 2019 10:29:45 -0400 (DST)")
-Message-ID: <xmqqd0l8tjph.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        by mail.kernel.org (Postfix) with ESMTPSA id BC53B206C1;
+        Fri, 26 Apr 2019 23:51:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1556322717;
+        bh=Vyy8QSkjtPbkZIzeDatyi+NkMeFvg8i09w7D3q4/T3w=;
+        h=From:To:Cc:Subject:Date:From;
+        b=BgiH/MQtOZX2Vn5aZ3ARbFrhZM2rFV+/9u5XiSg/+hi7QPBaDjXNhyEl8GEYEVIf5
+         S9bChmTPWBaWzjL/5+QiQjSUvJDwmOQT51MCqE/zzBolnNwM40J8qtAu+rlYDsUP0z
+         TtRhaZH04CwSiPVyzeOSvj8sJq0H4bwZRLRZVP1U=
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     git@vger.kernel.org
+Cc:     Xiaolong Ye <xiaolong.ye@intel.com>
+Subject: [PATCH 1/2] format-patch: Inform user that patch-id generation is unstable
+Date:   Fri, 26 Apr 2019 16:51:56 -0700
+Message-Id: <20190426235157.106350-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.21.0.593.g511ec345e18-goog
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4E9A3D7C-687D-11E9-85BC-EE24A11ADF13-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I tried out 'git format-patch --base' with a set of commits that
+modifies more than one file. It turns out that the way this command is
+implemented it actually uses the unstable version of patch-id instead of
+the stable version that's documented. When I tried to modify the
+existing test to use 'git patch-id --stable' vs. 'git patch-id
+--unstable' I found that it didn't matter, the test still passed.
 
->> >> +/* writes out the whole block, or dies if fails */
->> >> +static void write_block_or_die(const char *block) {
->> >> +	if (gzip) {
->> >> +		if (gzwrite(gzip, block, (unsigned) BLOCKSIZE) != BLOCKSIZE)
->> >> +			die(_("gzwrite failed"));
->> >> +	} else {
->> >> +		write_or_die(1, block, BLOCKSIZE);
->> >> +	}
->> >> +}
->>
->> I agree everything you said you your two review messages.
->>
->> One thing you did not mention but I found disturbing was that this
->> does not take size argument but hardcodes BLOCKSIZE.
->
-> That is very much on purpose, as this code really is specific to the `tar`
-> file format, which has a fixed, well-defined block size. It would make it
-> easier to introduce a bug if that was a parameter.
+Let's expand on the test here so it is a little more complicated and
+then use that to show that the patch-id generation is actually unstable
+vs. stable. Update the documentation as well.
 
-I am not so sure for two reasons.
+Cc: Xiaolong Ye <xiaolong.ye@intel.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ Documentation/git-format-patch.txt |  2 +-
+ t/t4014-format-patch.sh            | 36 +++++++++++++++++++++++++-----
+ 2 files changed, 32 insertions(+), 6 deletions(-)
 
-One is that its caller is full of BLOCKSIZE constants passed as
-parameters (instead of calling a specialized function that hardcodes
-the BLOCKSIZE without taking it as a parameter), and this being a
-file-scope static, it does not really matter with respect to an
-accidental bug of mistakenly changing BLOCKSIZE either in the caller
-or callee.
-
-Another is that I am not sure how your "fixed format" argument
-meshes with the "-b blocksize" parameter to affect the tar/pax
-output.  The format may be fixed, but it is parameterized.  If
-we ever need to grow the ability to take "-b", having the knowledge
-that our current code is limited to the fixed BLOCKSIZE in a single
-function (i.e. the caller of this function , not the callee) would 
-be less error prone.
-
-These two are in addition to the uniformity of the abstraction
-concerns I raised in my original review comment.
-
-So, sorry, I do not think your response makes much sense.
-
-Thanks.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 1af85d404f51..e8cc792e7f5d 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -583,7 +583,7 @@ of 'base commit' in topological order before the patches can be applied.
+ The 'base commit' is shown as "base-commit: " followed by the 40-hex of
+ the commit object name.  A 'prerequisite patch' is shown as
+ "prerequisite-patch-id: " followed by the 40-hex 'patch id', which can
+-be obtained by passing the patch through the `git patch-id --stable`
++be obtained by passing the patch through the `git patch-id --unstable`
+ command.
+ 
+ Imagine that on top of the public commit P, you applied well-known
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index b6e2fdbc4410..e82c6c7d9177 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -36,8 +36,27 @@ test_expect_success setup '
+ 	git checkout master &&
+ 	git diff-tree -p C2 | git apply --index &&
+ 	test_tick &&
+-	git commit -m "Master accepts moral equivalent of #2"
++	git commit -m "Master accepts moral equivalent of #2" &&
+ 
++	git checkout side &&
++	git checkout -b patchid &&
++	for i in 5 6 1 2 3 A 4 B C 7 8 9 10 D E F; do echo "$i"; done >file2 &&
++	for i in 1 2 3 A 4 B C 7 8 9 10 D E F 5 6; do echo "$i"; done >file3 &&
++	for i in 8 9 10; do echo "$i"; done >file &&
++	git add file file2 file3 &&
++	test_tick &&
++	git commit -m "patchid 1" &&
++	for i in 4 A B 7 8 9 10; do echo "$i"; done >file2 &&
++	for i in 8 9 10 5 6; do echo "$i"; done >file3 &&
++	git add file2 file3 &&
++	test_tick &&
++	git commit -m "patchid 2" &&
++	for i in 10 5 6; do echo "$i"; done >file &&
++	git add file &&
++	test_tick &&
++	git commit -m "patchid 3" &&
++
++	git checkout master
+ '
+ 
+ test_expect_success "format-patch --ignore-if-in-upstream" '
+@@ -1559,16 +1578,23 @@ test_expect_success 'format-patch -o overrides format.outputDirectory' '
+ '
+ 
+ test_expect_success 'format-patch --base' '
+-	git checkout side &&
++	git checkout patchid &&
+ 	git format-patch --stdout --base=HEAD~3 -1 | tail -n 7 >actual1 &&
+ 	git format-patch --stdout --base=HEAD~3 HEAD~.. | tail -n 7 >actual2 &&
+ 	echo >expected &&
+ 	echo "base-commit: $(git rev-parse HEAD~3)" >>expected &&
+-	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>expected &&
+-	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>expected &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --unstable | awk "{print \$1}")" >>expected &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --unstable | awk "{print \$1}")" >>expected &&
+ 	signature >> expected &&
+ 	test_cmp expected actual1 &&
+-	test_cmp expected actual2
++	test_cmp expected actual2 &&
++	echo >fail &&
++	echo "base-commit: $(git rev-parse HEAD~3)" >>fail &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~2 | git patch-id --stable | awk "{print \$1}")" >>fail &&
++	echo "prerequisite-patch-id: $(git show --patch HEAD~1 | git patch-id --stable | awk "{print \$1}")" >>fail &&
++	signature >> fail &&
++	! test_cmp fail actual1 &&
++	! test_cmp fail actual2
+ '
+ 
+ test_expect_success 'format-patch --base errors out when base commit is in revision list' '
+-- 
+Sent by a computer through tubes
 
