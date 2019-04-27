@@ -2,99 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E1B1F453
-	for <e@80x24.org>; Fri, 26 Apr 2019 23:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E744F1F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 00:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727123AbfDZXwY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 19:52:24 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42255 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727086AbfDZXwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 19:52:24 -0400
-Received: by mail-pl1-f196.google.com with SMTP id x15so2259226pln.9
-        for <git@vger.kernel.org>; Fri, 26 Apr 2019 16:52:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pXtsmVK0X26hZJpN35ahtvyIQboOj0Y+KBqTAB4xXYM=;
-        b=L4mPqRVJ3Hv0yUEBr0yOUMOr/kLA0QZFN3GrdO3AW4sz76OlK1Nhb4R0xkhNwCKMYa
-         MIg3SvGT1ywN3a4a6b3aXJR/voXm29bBQNmTYwahdYyVDVKqhb1FP8mumZ0dkL1JFi4f
-         FwSeBt/APU1LG4jcXN+B4w6LUomM8DkxoBGqtrUdlFLQjHYmVvM/2JN//fQA0k06n/L5
-         N8263lwSTwU/v+9nsNoCGfQhbdUmXl/1qvWlSBr+3bXYXXtuSZW2cbBH8D1XSpQGAawR
-         uzNhPsFSvC0QTfl03e4y/AV1CQXqWrpP4UC62kL1M/f/drCUIdPZELjZJ/3Jng3lSSNT
-         fdCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pXtsmVK0X26hZJpN35ahtvyIQboOj0Y+KBqTAB4xXYM=;
-        b=iULN6M8K2uBMoCwG9DFLdiNRcSE5vab7WL5zhLDb15VcFvPJs9iq+6jHk2A2FQDVz3
-         grNW8gK/6Efss0SfVxxAoppY1VX+aLrMIozEHNsllpNgu4f+VOaYjmB4gRwkfopo+zAm
-         ByRT2ubRnE1I/Yq94QuDIhI4Wte71ZvjJWd7u2Z9419FFJsToH7BsOA7Qqg7D60/6veq
-         rRethIQLMWtDbZ93w6S9CTi2X2zHylZ9PlYN3fVnaEBNOgJotoIcSemWmcUP9a36pnsH
-         b/+6HwN1YkUJMiy0W0dwf9D/iinnIt6WZJkYKhSSP2Mry0bIx9IHeJ2uTt8hXl1lI8Hg
-         cVpw==
-X-Gm-Message-State: APjAAAUhL3WPelb8EPsx0ddDbLvH50aDKTeXsN7B3w86EZvOrqHL4qes
-        GPcvmulbXUJaUqKH4LOw5ag7SiJ+
-X-Google-Smtp-Source: APXvYqzeCqsf+FPrlGqhb4dk7jiMK2iDxVvqzkv7HspI60mdrqdtKRw36WYL+PdaZwhKfcxg8ApeYg==
-X-Received: by 2002:a17:902:864b:: with SMTP id y11mr46149226plt.1.1556322743432;
-        Fri, 26 Apr 2019 16:52:23 -0700 (PDT)
-Received: from dev-l ([149.28.199.249])
-        by smtp.gmail.com with ESMTPSA id t13sm18085756pgj.49.2019.04.26.16.52.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Apr 2019 16:52:22 -0700 (PDT)
-Date:   Fri, 26 Apr 2019 16:52:20 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1727226AbfD0ABt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Apr 2019 20:01:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57370 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727086AbfD0ABt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Apr 2019 20:01:49 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39587157449;
+        Fri, 26 Apr 2019 20:01:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ALXszegLo/kN4G+M5hZeKTaUdQQ=; b=Z/0NfG
+        y/nqeOqydTbThGzWWpgOOF0opmtjjftJKnDnlLJhfa8QMjdE2+PsH9KQTzMiGe6q
+        meLylAs5Nn5TdvzHveC8vnZx4i4KvWUzRY8HQMM8XsZfrb2Dv5+TqXq92HWXtFBp
+        Wua0+0Z4JXDUalzc2v53RypUJxQoLDUbE74do=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pkrpwfoukK0jEzeeNd50V7Q1wmZLvF+j
+        5AU1J9mj8jl7zvrGT7NCE+3b+xfK5N8hkEqttig4lzqdZkknBg3QZEJR3C+bBtNP
+        FbhDytKU5dCrpitGBkCNvOcC6mEh4udI0kDleswkc4zbycyapzsqaMjAmVss28u0
+        XAR8O63DCMw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30CAF157448;
+        Fri, 26 Apr 2019 20:01:47 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 87CCB157447;
+        Fri, 26 Apr 2019 20:01:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/3] allow checkout and branch to create branches on a
- merge base
-Message-ID: <20190426235220.GB28055@dev-l>
+Subject: Re: [PATCH v2 0/3] allow checkout and branch to create branches on a merge base
 References: <cover.1556226502.git.liu.denton@gmail.com>
- <cover.1556305561.git.liu.denton@gmail.com>
- <xmqqlfzwtlft.fsf@gitster-ct.c.googlers.com>
- <20190426234024.GA28055@dev-l>
+        <cover.1556305561.git.liu.denton@gmail.com>
+        <xmqqlfzwtlft.fsf@gitster-ct.c.googlers.com>
+        <20190426234024.GA28055@dev-l> <20190426235220.GB28055@dev-l>
+Date:   Sat, 27 Apr 2019 09:01:45 +0900
+In-Reply-To: <20190426235220.GB28055@dev-l> (Denton Liu's message of "Fri, 26
+        Apr 2019 16:52:20 -0700")
+Message-ID: <xmqq8svwtixi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190426234024.GA28055@dev-l>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Pobox-Relay-ID: A5F1EDF2-687F-11E9-B49B-DF19F34BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 26, 2019 at 04:40:24PM -0700, Denton Liu wrote:
+Denton Liu <liu.denton@gmail.com> writes:
 
-[snip]
+> Out of respect for your time as the maintainer (since you have a lot of
+> topics to deal with), how do you prefer small fixups be submitted?
+>
+> * A complete reroll of the whole series
+> * A replacement for one patch in the series
+> * A follow-up email with an "oops, please change x to y"
 
-> I'm going send a reroll to update the documentation to mention "..." in
-> <start_point> and, while I'm at it, I'll do the squash.
+Depends on how small your "small" is, but in general, the above is a
+good approximation of the preference order.
 
-Actually, I have a quick question for you:
+Wholesale replacement without having to think is the easiest.  When
+the latest round is not from a distant past (i.e. less than two
+weeks old), replacement patches for only selected steps is also
+fine, as I can pretend it is a wholesale replacement by completing
+the missing patches by picking them from the mailbox while using the
+updated ones.
 
-Out of respect for your time as the maintainer (since you have a lot of
-topics to deal with), how do you prefer small fixups be submitted?
+"Please change x to y" is the least welcome, with a big exception
+that it is the easiest when it is a change to a few words in a
+single place, either in the log message or a file contents, of a
+single patch topic---in other words, something I can deal with
+"commit --amend" and needs less than 2 minutes to handle.  Anything
+larger than that size and requires me to fire up "rebase -i" starts
+to make me wonder why _I_ am doing that, not the topic owner.
 
-* A complete reroll of the whole series
-* A replacement for one patch in the series
-* A follow-up email with an "oops, please change x to y"
-
-Thanks,
-
-Denton
-
-> 
-> Thanks for your comments,
-> 
-> Denton
-> 
-> > 
-> > Thanks.
+Thanks.
