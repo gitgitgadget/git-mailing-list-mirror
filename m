@@ -2,185 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C49B91F453
-	for <e@80x24.org>; Sat, 27 Apr 2019 19:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62AE31F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 20:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726229AbfD0TZ3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Apr 2019 15:25:29 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:36649 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbfD0TZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Apr 2019 15:25:29 -0400
-Received: by mail-it1-f194.google.com with SMTP id v143so161615itc.1
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 12:25:28 -0700 (PDT)
+        id S1726413AbfD0UVl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Apr 2019 16:21:41 -0400
+Received: from mx0b-00256a01.pphosted.com ([67.231.153.242]:55482 "EHLO
+        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726198AbfD0UVl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 27 Apr 2019 16:21:41 -0400
+Received: from pps.filterd (m0144081.ppops.net [127.0.0.1])
+        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3RKCV1Z194075
+        for <git@vger.kernel.org>; Sat, 27 Apr 2019 16:21:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding;
+ s=20180315; bh=Q9U8+opaERDO/MLbDzMSUB+LrF7Mp4nrV3o3FuIaGpI=;
+ b=KKqLjPXIJn8HCavvMMDtRjPstBUvKKeLMtG+InH8qvK7A0RrB5B0xqAtklgXw/W4+Xaj
+ 1O5oa/nmCEDZb3CNG0t0Sp2DXOs97MvHXB8srty7ovMETe8OJDYc13MxXcLR3nqy08XO
+ x0zHcGj6w2fwCGd+fsXFdmLbZxjfrZsmF7pCy2B70rCVFh5MxBToUA5mgO/NwmuEBLMK
+ n3AwlqbP8d7JENbwmHM88El4Z87eu/2+5nYLH8+PeXJOfr3VI5d1KvL41v6p95a/dNf9
+ Jw0t8V+u8yE0kXsbnp8XGKxVe9OxiFipZzKLpuSTeD9WmF1hRqXCE1rS6iPS+FeS5yu4 yg== 
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+        by mx0b-00256a01.pphosted.com with ESMTP id 2s4jjpy47b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Sat, 27 Apr 2019 16:21:39 -0400
+Received: by mail-qk1-f200.google.com with SMTP id a12so5895681qkb.3
+        for <git@vger.kernel.org>; Sat, 27 Apr 2019 13:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A6wwXhxvUGk0qlqexR5mDaNagQnYK7A1s42cCu0LJc0=;
-        b=Cg/+pt33YKtu8qXB9XcgF4MtNMYPUGW1rUQ73g4+ddrj6opKHuU8fG12EkgBvto3sv
-         VKk4lZWNeJetc7WsB++A7RjXPGeohnDH5bxpBpm/5IiMgK0QU8aroHhtNgE1U39jR6FE
-         IHTfjxVbJmcNfxwlbwNomO1JBopWS7+9OnnMoMlHmjGW+wvgYDNhlT3QZ4Qp0yBmZB6+
-         Yzcii1qB3bIjuVnq46TZ6+EoDCFEAu3ViajTeKG2A3d6adYqQeINVXzvPSqT64MjM7Sx
-         P3cidelKMQhR/95qHdS5Ouk0I+B+KdK/STBwEaHEJU+4ThjG0J0x6hp5Ef1o7qsWr/8y
-         gPlg==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q9U8+opaERDO/MLbDzMSUB+LrF7Mp4nrV3o3FuIaGpI=;
+        b=zq4lTmqcNa6QRGlyVT5KVXPQXs2CqqYsfvi3AU2myXC+zipewIfCgbm5irMyso8eAQ
+         ViNvgG8H7PON2pFLtVegU8aplnNMbznchWA2NF60ENZYMVeMODK0aY9glyC+6xZ4BkuQ
+         Z51WpswADhmC6cVwEy9DWdhSN5cLY/7kZMOLtz63ZSOX8K/TAkoSx359IWRNQFo+hZoo
+         N98XiCkKNmG3wu3hoI73RdsKZHQVpBuwDw0LNAODBlcJXEyg+TiojtppRq3vd6rcI9x5
+         AAKrDF8YVBS5sumuiw5WNune3bCKGam0w+cGFjWzX8rrU26RUPucw3xdB5HI01Rm7ktk
+         m1GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A6wwXhxvUGk0qlqexR5mDaNagQnYK7A1s42cCu0LJc0=;
-        b=if17O3j8UN99E5xsnP1Z52Vdf/N9ylNx0K3nCqnMgTCYxlYVKuJE2rNd1ll233Nwry
-         bFfx77T6VFK4Bxlof1DA9HeeVhotFM/BVh7RYw2UQaJVbQUUMgLmMIDFt1uFlXtpxBWE
-         xC5vkvfT3Pi0uQ5r5gMv/+41X49IOOpNDmkDUF9XS+xvZD1JDoZJZqngyotF9TfaGsrO
-         TmSzYnaxV38KIKLiizr1OoQZgBn9KEDBveabdSv1sEhctQ/IbGh1JVLX0jsVP3n4OeZi
-         2MF0lemsdpt861OJ1smsbGyjO7ZktAJk+3LkoEmZ5gwSKTBm5mu/BYBxL/oOlz7WOxmY
-         BL7g==
-X-Gm-Message-State: APjAAAWx+VjfcHBUEexTFLgCoTONlYwCzcmVDMXzz25Xqa5A+LsMEdPM
-        0yEm7xWusKyFjK0H1kj1iQxTwY+Cdi0=
-X-Google-Smtp-Source: APXvYqwEejbiLUiV0e8hBlnDXmcA+eBRWHyeSXQoXHpLLOsDnUBk788JeeND9oFZaAuyJDi0m7Y8XQ==
-X-Received: by 2002:a24:df84:: with SMTP id r126mr13800298itg.113.1556393128155;
-        Sat, 27 Apr 2019 12:25:28 -0700 (PDT)
-Received: from archbookpro.localdomain (mobile-107-77-160-115.mobile.att.net. [107.77.160.115])
-        by smtp.gmail.com with ESMTPSA id w12sm8160478ioc.4.2019.04.27.12.25.27
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sat, 27 Apr 2019 12:25:27 -0700 (PDT)
-Date:   Sat, 27 Apr 2019 15:25:25 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/2] format-patch: teach format.notes config option
-Message-ID: <1338045be4a185cddc3ebf8adbe4b744551acf15.1556388260.git.liu.denton@gmail.com>
-References: <cover.1556388260.git.liu.denton@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Q9U8+opaERDO/MLbDzMSUB+LrF7Mp4nrV3o3FuIaGpI=;
+        b=HftErMx4bZhRn8qd1SoP5PIC7DeBrkAww27oEeN2A/gjvIhh8jw4KVSk4ycCaP0PRZ
+         tCJtLv2tycybpusyI5Nnf7geJFHheoQNx0bQNohSBsw3YXy9XHkleplktDwOUUm/mPH4
+         /u8Xfhw10Q3y8MTVPy1PegRYBUlCEA6/Qw9e01FdwDueOGajr4lfGl+5GhA5Ag7kheie
+         lt+tgLANWCue48x25kK3UeOLHply6+oLNOi+ctrBba1/XWB2vBA9VBO5x8PGsXurIuxI
+         ZAJeANZBnOgDhdxUfjJOpwG00mjKZF3ZwL7trBfxzuKJA1jl/EzR2SfV1C9VzArkBoOu
+         Q0PQ==
+X-Gm-Message-State: APjAAAXMf/GgfyKh8TEAZYz0BeFom6tKljVcw2btbp+cxAtxgTAqBUWN
+        D0caxVjRqacYt1qCiwbXWZUO1pLVPIDeJ4wu4ooawzOHk+9cxA8q+WZK5YSyq7wgx03e3ogb/Q+
+        qOXHfnqI3gek=
+X-Received: by 2002:a05:6214:188:: with SMTP id q8mr15633188qvr.105.1556396498667;
+        Sat, 27 Apr 2019 13:21:38 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqwSpy/NOZOBfmmi9P/hCapGE8teNywefA1CISHYb6nYI+mkOSQ6T8a+RGN+yg+SoKDXoxKa/g==
+X-Received: by 2002:a05:6214:188:: with SMTP id q8mr15633184qvr.105.1556396498558;
+        Sat, 27 Apr 2019 13:21:38 -0700 (PDT)
+Received: from LykOS.localdomain (cpe-68-173-125-182.nyc.res.rr.com. [68.173.125.182])
+        by smtp.gmail.com with ESMTPSA id o34sm2901285qtc.80.2019.04.27.13.21.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Apr 2019 13:21:37 -0700 (PDT)
+From:   santiago@nyu.edu
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
+        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
+Subject: [PATCH 0/2] tag verification: do not mute gpg output
+Date:   Sat, 27 Apr 2019 16:21:21 -0400
+Message-Id: <20190427202123.15380-1-santiago@nyu.edu>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1556388260.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Transfer-Encoding: 8bit
+X-Orig-IP: 209.85.222.200
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=629 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1904270145
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-format-patch, notes can be appended with the `--notes` option.
-However, this must be specified by the user on an
-invocation-by-invocation basis. If a user is not careful, it's possible
-that they may forget to include it and generate a patch series without
-notes.
+From: Santiago Torres <santiago@nyu.edu>
 
-Teach git-format-patch the `format.notes` config option where if its
-value is true, notes will automatically be appended. This option is
-overridable with the `--no-notes` option in case a user wishes not to
-append notes.
+The default behavior of the tag verification functions used to quiet
+down the gpg output if --format was passed. The rationale for this was
+to avoid --format to be litterred by the gpg output. However, this may
+be unnecessary because the gpg output is already streamed to stderr and
+thus can be easily multiplexed. 
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/config/format.txt    |  4 ++++
- Documentation/git-format-patch.txt |  3 +++
- builtin/log.c                      |  6 ++++++
- t/t4014-format-patch.sh            | 28 ++++++++++++++++++++++++++++
- 4 files changed, 41 insertions(+)
+Santiago Torres (2):
+  builtin/tag: do not omit -v gpg out for --format
+  builtin/verify-tag: do not omit gpg on --format
 
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index dc77941c48..55327b6511 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -85,3 +85,7 @@ format.outputDirectory::
- format.useAutoBase::
- 	A boolean value which lets you enable the `--base=auto` option of
- 	format-patch by default.
-+
-+format.notes::
-+	A boolean value which lets you enable the `--notes` option of
-+	format-patch by default.
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 2c3971390e..9ce5b8aaee 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -275,6 +275,9 @@ these explanations after `format-patch` has run but before sending,
- keeping them as Git notes allows them to be maintained between versions
- of the patch series (but see the discussion of the `notes.rewrite`
- configuration options in linkgit:git-notes[1] to use this workflow).
-++
-+The default is `--no-notes`, unless the `format.notes` configuration is
-+set.
- 
- --[no-]signature=<signature>::
- 	Add a signature to each message produced. Per RFC 3676 the signature
-diff --git a/builtin/log.c b/builtin/log.c
-index e43ee12fb1..3c6fd9b117 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -769,6 +769,7 @@ static const char *signature = git_version_string;
- static const char *signature_file;
- static int config_cover_letter;
- static const char *config_output_directory;
-+static int show_notes;
- 
- enum {
- 	COVER_UNSET,
-@@ -864,6 +865,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 			from = NULL;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.notes")) {
-+		show_notes = git_config_bool(var, value);
-+		return 0;
-+	}
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -1626,6 +1631,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	rev.max_parents = 1;
- 	rev.diffopt.flags.recursive = 1;
- 	rev.subject_prefix = fmt_patch_subject_prefix;
-+	rev.show_notes = show_notes;
- 	memset(&s_r_opt, 0, sizeof(s_r_opt));
- 	s_r_opt.def = "HEAD";
- 	s_r_opt.revarg_opt = REVARG_COMMITTISH;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index b6e2fdbc44..fe9522121a 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -738,6 +738,34 @@ test_expect_success 'format-patch --notes --signoff' '
- 	sed "1,/^---$/d" out | grep "test message"
- '
- 
-+test_expect_success 'format-patch notes output control' '
-+	git notes add -m "notes config message" HEAD &&
-+	test_when_finished git notes remove HEAD &&
-+
-+	git format-patch -1 --stdout >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes --notes >out &&
-+	grep "notes config message" out &&
-+
-+	test_config format.notes true &&
-+	git format-patch -1 --stdout >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes --notes >out &&
-+	grep "notes config message" out
-+'
-+
- echo "fatal: --name-only does not make sense" > expect.name-only
- echo "fatal: --name-status does not make sense" > expect.name-status
- echo "fatal: --check does not make sense" > expect.check
+ builtin/tag.c        | 6 +++---
+ builtin/verify-tag.c | 6 ++----
+ 2 files changed, 5 insertions(+), 7 deletions(-)
+
 -- 
-2.21.0.1033.g0e8cc1100c
+2.21.0
 
