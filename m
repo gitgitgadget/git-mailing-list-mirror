@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A2561F453
-	for <e@80x24.org>; Sat, 27 Apr 2019 12:16:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECA541F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 12:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbfD0MQH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Apr 2019 08:16:07 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44814 "EHLO
+        id S1726337AbfD0MQK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Apr 2019 08:16:10 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:40813 "EHLO
         mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725942AbfD0MQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Apr 2019 08:16:07 -0400
-Received: by mail-pl1-f196.google.com with SMTP id l2so62117plt.11
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 05:16:06 -0700 (PDT)
+        with ESMTP id S1726289AbfD0MQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Apr 2019 08:16:09 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b3so2827472plr.7
+        for <git@vger.kernel.org>; Sat, 27 Apr 2019 05:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=tePlataQsOxfarWLjHHzz+Gynn8IcVdvbrJWlwdEVcg=;
-        b=DFQe8aLh1p3cW9Qmx0WCWmsJTkg4GMA5hT1iADhBKCxC5+WNxLjeqWJFyRZO0A/VjH
-         ldNMyqcJyTP56CEKamrarXN+jC9lHP52Oo9jYv/ZZOy5o3ftys2NSAy0crUCOFtB9yr4
-         s87AeAafjWWn8QmGeDnyFeyri68vZBRnj31ZUNcTSEG3XONyZrJZcMzJ0l+JHPUDTg/u
-         ImXE4yIXsiUV5OHCT6KGLjiFGA+l0gyQpvOu6QvNGTn9g4YWQh8d2QG9OPMxUh4bmR5w
-         jTX0PHQORT+QZq9Ww3CObNk7hYz4xozHy/oSkTg91Zmr+MV4nxNnFlhdW5VX7Rx985HE
-         9Q8A==
+        bh=mx1UzFMzNKALVI1DVETOr4VjO0FPdiQEYI1RE/GGvcM=;
+        b=MQKdQhQlLMci2jBBikTbYd3fMmCq6YtmjRVNG2v2pzwLfKbNlZR2i1LJnd6Nq5LhNM
+         LZgDrtPQ+rRVmfoDJGz0QaxMAXUjyCgGfNuR/M0ONPkHxM86IJP8roFzjI1b+iq4tI1j
+         QcgqloI7LBJg9S424ZMTp/v3uYw3PM910AzCwyH+6pNEVWf+BaU2BiqvDG1rU1LFmReQ
+         nTV1qQTtmSzFWmA1427y0TmqngcN0oydCQMJPZECdpZoP5zNDZExiYS8FEWW1syTJWzy
+         PRqCLcqA9RJ8NMzKF6vl2qbg0YBMhmHgLJw13ZO/FMwj9/vFKWhiubHKlp3pbo/Hgtzj
+         j/Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tePlataQsOxfarWLjHHzz+Gynn8IcVdvbrJWlwdEVcg=;
-        b=t8bdJs9QChmJPBBjBKBBOKJuL9DY7ZomX2kBWDNlMWB3Wk2luMlcqEJ7eNcZ7pLFQ3
-         lv9JV62EwQVwzk4Nlsr6L0hnn/8e2bJYTvc3TBfgwzFu0sBGNdxgn7c4wspIGpcN4JX/
-         TBachUvV+pUzdaehpersBJqCjmbRYkpFmawIabG9de+dlObbXZiCxEbKFn7KcthlSXze
-         kmWmMUKp2SVqYD77aHwBstF36eI/NCeEaQvhJbieyyOtJcCc6iiCCm9Xoej+RI0rlD/s
-         q4VCOrUvlujHzuoSav+wmM71Sa3LHO4/nIkUPh9LuUb1PVwmj7skBmqHG2pieSOI+1E1
-         k0Ow==
-X-Gm-Message-State: APjAAAUt13h7vZSNlW9Gu//scSQOXWsd0UgEb6eoX/wuaTd2YlipYQ8h
-        jUu7i4zz+lru7h96CYyYQTEmgYJT
-X-Google-Smtp-Source: APXvYqzsMtwjWjeknTTv2O8hgQwLQNJWz3P3H4DshypvFLiNwm6uiuPBX3FmPAnKzo9gqWSeCBOw/w==
-X-Received: by 2002:a17:902:2b88:: with SMTP id l8mr51237627plb.262.1556367366225;
-        Sat, 27 Apr 2019 05:16:06 -0700 (PDT)
-Received: from archbookpro.localdomain ([216.9.110.9])
-        by smtp.gmail.com with ESMTPSA id a6sm62875648pgd.67.2019.04.27.05.16.05
+        bh=mx1UzFMzNKALVI1DVETOr4VjO0FPdiQEYI1RE/GGvcM=;
+        b=fnVYwj5ehes/g2FmymyXIexRYHWa3UmylCNTVNGFIoxAFtU039ACLbMr5QuNe2r5vb
+         XKk6KDvOI0mrETjMdcsGln7yNjbUv8+vw9uT7m8xf78vAKBROZR8S1PM9MXkIMCUrJjx
+         bPaRyuarcBRqJhswWO+IaKEPjwpvZcIOgfp85ixNA5O/8zie3s4XXebianCubd7GJYJa
+         bEcfTUtGo2IgPLmLsnT8DG76xbW/hQAYmPRNFhZY4hLJtQuEI5UvTHt7ONrmZxMfTGWh
+         5QPt6OA+2uDyMyU0E6nQInzOZt8nzzEMzxiFvoqGwSdPFDBBJyYZ/gK+Cd2OBOTpTAVz
+         BsYQ==
+X-Gm-Message-State: APjAAAUcvM1uMc0bk2Oc9xj+NYPmVH4REqLTEJ0aKAC7JdOz13gdDgG1
+        oyNDjr67HyfkflMqQIr5mmuJS3bj
+X-Google-Smtp-Source: APXvYqyNa8LLuTLSZIkYtIoLePXJbU1Phzoq+TG/b9Tm6iKC867iQiER9WuzIaePYwtcrVKeJaQVIw==
+X-Received: by 2002:a17:902:bb84:: with SMTP id m4mr15568821pls.302.1556367368932;
+        Sat, 27 Apr 2019 05:16:08 -0700 (PDT)
+Received: from archbookpro.localdomain ([216.9.110.1])
+        by smtp.gmail.com with ESMTPSA id d129sm51980947pfa.142.2019.04.27.05.16.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Apr 2019 05:16:05 -0700 (PDT)
-Date:   Sat, 27 Apr 2019 05:15:58 -0700
+        Sat, 27 Apr 2019 05:16:08 -0700 (PDT)
+Date:   Sat, 27 Apr 2019 05:16:06 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Andreas Heiduk <asheiduk@gmail.com>,
         Duy Nguyen <pclouds@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/3] revisions.txt: change "rev" to "<rev>"
-Message-ID: <e5b6d69eec80acab5b4b4c702011fc82a7367a79.1556367012.git.liu.denton@gmail.com>
+Subject: [PATCH v2 2/3] revisions.txt: mark optional rev arguments with []
+Message-ID: <90c787c219d25f38c1d53ae837160994a7bc6355.1556367012.git.liu.denton@gmail.com>
 References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
  <cover.1556367012.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -69,36 +69,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In revisions.txt, there were some instances of a rev argument being
-written as "rev". However, since they didn't mean the string literal,
-write "<rev>", instead.
+In revisions.txt, an optional rev argument was not distinguised.
+Instead, a user had to continue and read the description in order to
+learn that the argument was optional.
+
+Since the [] notation for an optional argument is common-knowledge in
+the Git documentation, mark optional arguments with [] so that it's more
+obvious for the reader.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/revisions.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/revisions.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 2337a995ec..e5f11691b1 100644
+index e5f11691b1..68cce2ca06 100644
 --- a/Documentation/revisions.txt
 +++ b/Documentation/revisions.txt
-@@ -159,12 +159,12 @@ thing no matter the case.
-   '<rev>{caret}0'
-   is a short-hand for '<rev>{caret}\{commit\}'.
- +
--'rev{caret}\{object\}' can be used to make sure 'rev' names an
--object that exists, without requiring 'rev' to be a tag, and
--without dereferencing 'rev'; because a tag is already an object,
-+'<rev>{caret}\{object\}' can be used to make sure '<rev>' names an
-+object that exists, without requiring '<rev>' to be a tag, and
-+without dereferencing '<rev>'; because a tag is already an object,
- it does not have to be dereferenced even once to get to an object.
- +
--'rev{caret}\{tag\}' can be used to ensure that 'rev' identifies an
-+'<rev>{caret}\{tag\}' can be used to ensure that '<rev>' identifies an
- existing tag object.
+@@ -95,7 +95,7 @@ some output processing may assume ref names in UTF-8.
+   The construct '@{-<n>}' means the <n>th branch/commit checked out
+   before the current one.
  
- '<rev>{caret}{}', e.g. 'v0.99.8{caret}{}'::
+-'<branchname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
++'[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
+   The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
+   refers to the branch that the branch specified by branchname is set to build on
+   top of (configured with `branch.<name>.remote` and
+@@ -103,7 +103,7 @@ some output processing may assume ref names in UTF-8.
+   current one. These suffixes are also accepted when spelled in uppercase, and
+   they mean the same thing no matter the case.
+ 
+-'<branchname>@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
++'[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
+   The suffix '@\{push}' reports the branch "where we would push to" if
+   `git push` were run while `branchname` was checked out (or the current
+   `HEAD` if no branchname is specified). Since our push destination is
+@@ -131,7 +131,7 @@ from one location and push to another. In a non-triangular workflow,
+ This suffix is also accepted when spelled in uppercase, and means the same
+ thing no matter the case.
+ 
+-'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
++'<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
+   '<rev>{caret}'
 -- 
 2.21.0.1000.g11cd861522
 
