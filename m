@@ -2,90 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E744F1F453
-	for <e@80x24.org>; Sat, 27 Apr 2019 00:01:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 476F61F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 05:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfD0ABt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Apr 2019 20:01:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57370 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727086AbfD0ABt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Apr 2019 20:01:49 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39587157449;
-        Fri, 26 Apr 2019 20:01:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ALXszegLo/kN4G+M5hZeKTaUdQQ=; b=Z/0NfG
-        y/nqeOqydTbThGzWWpgOOF0opmtjjftJKnDnlLJhfa8QMjdE2+PsH9KQTzMiGe6q
-        meLylAs5Nn5TdvzHveC8vnZx4i4KvWUzRY8HQMM8XsZfrb2Dv5+TqXq92HWXtFBp
-        Wua0+0Z4JXDUalzc2v53RypUJxQoLDUbE74do=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pkrpwfoukK0jEzeeNd50V7Q1wmZLvF+j
-        5AU1J9mj8jl7zvrGT7NCE+3b+xfK5N8hkEqttig4lzqdZkknBg3QZEJR3C+bBtNP
-        FbhDytKU5dCrpitGBkCNvOcC6mEh4udI0kDleswkc4zbycyapzsqaMjAmVss28u0
-        XAR8O63DCMw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30CAF157448;
-        Fri, 26 Apr 2019 20:01:47 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 87CCB157447;
-        Fri, 26 Apr 2019 20:01:46 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/3] allow checkout and branch to create branches on a merge base
-References: <cover.1556226502.git.liu.denton@gmail.com>
-        <cover.1556305561.git.liu.denton@gmail.com>
-        <xmqqlfzwtlft.fsf@gitster-ct.c.googlers.com>
-        <20190426234024.GA28055@dev-l> <20190426235220.GB28055@dev-l>
-Date:   Sat, 27 Apr 2019 09:01:45 +0900
-In-Reply-To: <20190426235220.GB28055@dev-l> (Denton Liu's message of "Fri, 26
-        Apr 2019 16:52:20 -0700")
-Message-ID: <xmqq8svwtixi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726005AbfD0FHK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 27 Apr 2019 01:07:10 -0400
+Received: from mail-lf1-f54.google.com ([209.85.167.54]:35385 "EHLO
+        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfD0FHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Apr 2019 01:07:10 -0400
+Received: by mail-lf1-f54.google.com with SMTP id j20so4022811lfh.2
+        for <git@vger.kernel.org>; Fri, 26 Apr 2019 22:07:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VH+2kSxxgrpM3YucYrDerk0efFoAsFW+6nxK+7CbKw4=;
+        b=fD2UxdXrwpCe2FpnXMZJKSN10YAHSJTPL7q8hva77yLF3Ae/qN+Nr40QMS/mgfifR1
+         ajuw+t6ZopK0A5A64V6uVHAX3x3zgHgu5coJL6EOCgvO1k+jiawjqpYJpTaPOgWS2vOd
+         DZD1OTO6XgraDUyNdPNG4L5ANr529/SHhmNqs4hWhqAdlI0QtDDzHEmItQ4M4Hc7GGWu
+         HzlsPNcwRSOolOd1ahFL0YfCGfLzfe3k8ug6mJ6CnNkMvrRA0Z6za4m1kc0O/2OHmYCD
+         2E30CtkVnTfUqgzkt0QnT5gx/4kEaXY/GZLZqLng9d1pHtKJ5cOsxGAwGnkBaL/WeuvO
+         jVvg==
+X-Gm-Message-State: APjAAAUjjcpnbGBCjG6OXBjDdcJIDNLrUUO6zkvNs7fx9vYDI4FuPvEp
+        BpwR6eu0itWi6wZqsKn8yTbndlqA6t3t8Y7zyP4/E//IVbA=
+X-Google-Smtp-Source: APXvYqwA0Fe1oFltplvZdBivVAle8scD9KRWukMNFY/YRc4iyEf4cD9jyyOuOA5vRvffILS2PdCih2cnfRMrByI2oDY=
+X-Received: by 2002:ac2:53b2:: with SMTP id j18mr14461915lfh.78.1556341628088;
+ Fri, 26 Apr 2019 22:07:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5F1EDF2-687F-11E9-B49B-DF19F34BB12D-77302942!pb-smtp2.pobox.com
+References: <xmqqsgu6wfv9.fsf@gitster-ct.c.googlers.com> <20190426050531.GA7854@Taylors-MBP.hsd1.wa.comcast.net>
+ <xmqqd0l9uxv1.fsf@gitster-ct.c.googlers.com> <E6B28E44-5859-436B-A620-2FB484EEB657@gmail.com>
+In-Reply-To: <E6B28E44-5859-436B-A620-2FB484EEB657@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 27 Apr 2019 14:06:55 +0900
+Message-ID: <CAPc5daVL5Jn2M-pban1wPPNOnkjyvUAKynJQBtVBeSzGQoxZ+w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2019, #05; Thu, 25)
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
-
-> Out of respect for your time as the maintainer (since you have a lot of
-> topics to deal with), how do you prefer small fixups be submitted?
+2019年4月27日(土) 2:58 Kaartic Sivaraam <kaartic.sivaraam@gmail.com>:
 >
-> * A complete reroll of the whole series
-> * A replacement for one patch in the series
-> * A follow-up email with an "oops, please change x to y"
+> May be you are searching for the following view which lists (similar to git log --one-line) the commits starting from  97dd512 which is the last in the tb/unexpected series?
+>
+> https://github.com/git/git/commits/97dd512af7ce4afb4f638ef73b4770921c8ca3aa
 
-Depends on how small your "small" is, but in general, the above is a
-good approximation of the preference order.
+Yes, exactly. The problem I have is it is not obvious how to get there
+starting from
+https://github.com/git/git/
 
-Wholesale replacement without having to think is the easiest.  When
-the latest round is not from a distant past (i.e. less than two
-weeks old), replacement patches for only selected steps is also
-fine, as I can pretend it is a wholesale replacement by completing
-the missing patches by picking them from the mailbox while using the
-updated ones.
+From that starting point, I can get to
+https://github.com/git/git/commits/next with
+two clicks, and get a "git log --oneline next" equivalent). In there,
+I can eyeball
+to find "Merge branch 'tb/unexpected' into next".
 
-"Please change x to y" is the least welcome, with a big exception
-that it is the easiest when it is a change to a few words in a
-single place, either in the log message or a file contents, of a
-single patch topic---in other words, something I can deal with
-"commit --amend" and needs less than 2 minutes to handle.  Anything
-larger than that size and requires me to fire up "rebase -i" starts
-to make me wonder why _I_ am doing that, not the topic owner.
-
-Thanks.
+I can click it and reach https://github.com/git/git/commit/c49927fca0d but then
+that is more like "git show c49927fca". I can even go to its second parent with
+one click, but that is equivalent to "git show 97dd512".  The page you showed,
+which is a rough equivalent to "git log --oneline 97dd512", is what I
+want to get
+to from there, but I am not sure how to get there X-<.
