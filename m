@@ -2,129 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9AE11F453
-	for <e@80x24.org>; Sat, 27 Apr 2019 20:21:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D92C1F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 23:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbfD0UVq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Apr 2019 16:21:46 -0400
-Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:58094 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726198AbfD0UVp (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 27 Apr 2019 16:21:45 -0400
-Received: from pps.filterd (m0142701.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x3RKDsNn110670
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 16:21:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=20180315;
- bh=GV+rQ07xi8j2LtL6XAUoM7MZ57iSwn8um14QL8fdFSY=;
- b=tszOoIzq3Mco8HlhXyGzDSQqmLWg33Op+zkVtKa7Q73GWzlb/bNSMfbZbkHtWumrnoQF
- Qu2XZ8RVi1KNytHQ6j7EG9Qa/RXTNGxQ44E5TdMrNuFvPipztj6waMalqGw6S6Q1zUIB
- +EKN80BOoM85aWXD7ylaUzodOAa1Uj+7LB9gkhJUNrRwO111asCrho3ZbpuU6lKmiiYk
- zkJ5m2IsMqELRLMFnLJx2KkXu7HSwPScq2cAhNMoxSVRHYoH3V7wMUMWTVo7yT1xf5qi
- FLjWW+uEcz2b+AueBZ9m7mYfrfOnlAoTaKqqmKefmoq+Qm8wiwHjfJp5r43D9Nh07hBU CQ== 
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2s4gdfggg0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 16:21:44 -0400
-Received: by mail-qt1-f198.google.com with SMTP id k20so677626qtk.13
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 13:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GV+rQ07xi8j2LtL6XAUoM7MZ57iSwn8um14QL8fdFSY=;
-        b=WfifTL/CHFCu2GSUwRFnV0Mv29B4YMqiy8EmKthsSYlWdnoTBeUPsQGrUgu0w1V/U3
-         gqysPqsFfeyFCz7k+yG1ZJDbCLStLXP67M+h4Luc4uRLD0VP4lyyNW13OB8bQ1yhGo3z
-         irs3/P3wa/AMztwjc/LRMBwXXp6dqDItX0CNDqYnnp6JfDR1qsesP2zfNeXCx/CsXjC0
-         zAtpP/s14K1yKtef2PxDyg2vnn8RVDtDYrvHL4wxyKDrdGdgXjyhg+TE2M6hzZqz+JhX
-         tGYo8Ov2FMmDLU4MNslDB1Q4VD3vKCVa9AkAWKW6oG2eltKmVnWDCvmXv7Aj+SRZQd33
-         OoOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GV+rQ07xi8j2LtL6XAUoM7MZ57iSwn8um14QL8fdFSY=;
-        b=nbraZ5CUoLHilU42SUVFk8+XitgL06/zqzcbsVFe0f9QYDt15NQheV6Ld2EW1iHLzO
-         ZEvpIJeu/sSauQI5xxllWRJL7x4d9Kk1uLA47bkaI3H6gRF9RLDxWGGf2VioaooFbMwb
-         fiNx2I8f5V6E1aw6pcY5+G5C5lBknAUDAOac6DMDhTa3vHekqmOtuHNhYkV2Ff4zkXkG
-         BjzPsnF2ipsU8OWzPdj3I6GcTvxDlzs/Pvk+jCNLz38gYCFpZ7QCzGhIi9USoFswUHyK
-         CBhWurpfyZKmyXHxtU2gg3H1J0oVI0TgJQjYr3gIprLTpJ0IeR12eUtZFzD5cMjGgUec
-         r7jA==
-X-Gm-Message-State: APjAAAWOXB7wBzI0TJL0hHDrcZTXM31o0NkbAd5Shqjd0Qpv6rnWvWfe
-        mobrbuC9cdRD1kJbvOhfMYstQ5GGKV6sKdVKmC7/CTULvNQUM6u0dOa6YQUgN/mtiMDKQKbiwcl
-        to3XqwLquQyQ=
-X-Received: by 2002:aed:3769:: with SMTP id i96mr43526624qtb.296.1556396503589;
-        Sat, 27 Apr 2019 13:21:43 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqw+zbJr5SG1SjWgC4miiO0llYHleGsV62s5RiPzB0S01lz6Td3ntB8ZO0/OZEHXvzk/oeQqnQ==
-X-Received: by 2002:aed:3769:: with SMTP id i96mr43526613qtb.296.1556396503458;
-        Sat, 27 Apr 2019 13:21:43 -0700 (PDT)
-Received: from LykOS.localdomain (cpe-68-173-125-182.nyc.res.rr.com. [68.173.125.182])
-        by smtp.gmail.com with ESMTPSA id o34sm2901285qtc.80.2019.04.27.13.21.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Apr 2019 13:21:43 -0700 (PDT)
-From:   santiago@nyu.edu
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, sunshine@sunshineco.com,
-        walters@verbum.org, Santiago Torres <santiago@nyu.edu>
-Subject: [PATCH 2/2] builtin/verify-tag: do not omit gpg on --format
-Date:   Sat, 27 Apr 2019 16:21:23 -0400
-Message-Id: <20190427202123.15380-3-santiago@nyu.edu>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190427202123.15380-1-santiago@nyu.edu>
-References: <20190427202123.15380-1-santiago@nyu.edu>
+        id S1726105AbfD0XUz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Apr 2019 19:20:55 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35695 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726049AbfD0XUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Apr 2019 19:20:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1556407248;
+        bh=rhkRK3Hyht905wLclLdqHucNx4R9I++o2XVAumGXbk0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=UOibWPG+r0rptE3j5F6oGhf0QN35u39PsgDsVXfU++6S+glx7Jeg+4qjw4j+k/Lmy
+         DCWrq5nk7ucYATBVJSSbgV1I+WU0mQte7ZoKYmFk7Hop0wCLPhNBNOW7ko3bofm6b3
+         ItDASqUtlmV3vKd9/f6Ghd1Ctfl/mqi8rBHqypR4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Gj-1hPlQC3kpP-005JSK; Sun, 28
+ Apr 2019 01:20:48 +0200
+Date:   Sat, 27 Apr 2019 19:20:42 -0400 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Bret Barkelew <bret@corthon.com>
+cc:     Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
+Subject: Re: git version 2.20.1.windows.1 throws file name too long in gitk
+In-Reply-To: <CAGTkKajYiyT_OtX1mQECvxjvKXndjBYAqwgKMimJrroPAAvZJA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904271722290.45@tvgsbejvaqbjf.bet>
+References: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com> <CAGyf7-HcncFOfmm5McEkOvCTkHNdePDSEQDZwEAK=z1bmC=QKw@mail.gmail.com> <CAGTkKag-fTy3iZAKJxEnWD6_b_3pfuYvQQKBkLaeSL8wKM2sfg@mail.gmail.com> <nycvar.QRO.7.76.6.1901091936420.41@tvgsbejvaqbjf.bet>
+ <CAGTkKajkW-U9mhh_GmTXmZQbnceEKX_BcMtOF4hOhEDZe2u9Bw@mail.gmail.com> <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet> <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com>
+ <CAGTkKajYiyT_OtX1mQECvxjvKXndjBYAqwgKMimJrroPAAvZJA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Orig-IP: 209.85.160.198
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=838 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1904270145
+Content-Type: multipart/mixed; boundary="8323328-696936068-1556407250=:45"
+X-Provags-ID: V03:K1:DnW5KyAcE0hl8rKSSGjh7zV7nI5lV1NNB03dacEYwVi1ZmWl9lb
+ T/oPxSlLS0VuBwusQqLAb1WSi2gTnrP5WBY4HlI/YLQI+ee6iqn/IxWI9VBN1XoZMu0KOCs
+ dQGoUIkZNXc0OmEfKWizceZSc2qjbx3fYuBjO/syCHXw1xUGBhwz6s/VKNpa8nHj5Leyjig
+ pCwAU0wkr2DlIQ6H3G5uQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HVOEfjrqlqk=:x+H2JWsMWecE5lVKAC41V0
+ vn/gnPaalUqgZXL7xK9RNXkqIY9U/xpwPJkFH8T9/ZDZxJnts9QHJaYQpf2cyrXsEDP9kWoEv
+ YyfoWoedQg/0uY16BYwEJ20/Ewh4KviTGqxVIqQ629Slus9qxCOb9erl70wxPa7qSJ8LNhStI
+ fJ8QSDlFRqixcUPCL6ruVZeOdvps+uwJuQvbuEcmXagyrBPXeZQp1rzZFp5QV8GLNQvEdYcsP
+ RkCL6rk3p/70z0S4tSQNOjdN5ZoCCNxsdu+pVdFA0Tnc18XhIu/UPSy+OVUS4RK7w5Ae35UBE
+ sCthCKTaBnA+0gVnVR4aZnZ5bH/mG/ntZR+lGT6L8c7lkYpnA2XuxBJipsHIxI/3NbCyh+/4u
+ uC47bmqWvGiO6WjiUG7okBiGDuseBU/5YeGKmu9uLXu2UCd48D/k9Oy4K/d2yKLEvtptDaGf7
+ mCX/LaZGKY7Xyt02uQZP2xenTasptwJg1s4+jHA/0eUU1LFjbYwnQPzWfcKPaBawzt/ZdBRxC
+ QF5V/ItjOukTz4AwYJ9F7JbbF1MFJafC9PbL2itsR1HGMR/TOaTzdtGS0ukxEss5dZyQ2noHH
+ 6Z7VOxIih+miasdPIqWWkmF91mrXD5x9/xKx9Dfj5JiYws29njFp1sjEWEnLKn5AfBctZu9CV
+ QX7/aMcbkUZdGw+pyaZNL+QBqqIAcnkDnoy7CJHqc8UMBy+oC5hjN98eut9NRzIqXXnYxptDW
+ Clip1G5OxzBleHqdSrk71I8QMq09DA4Lvn3+WFEQPcqRrDJ1n1hgLMHIiaj9dBSNDqmmXfdFp
+ POul8iWLF/l4Eun6mMrbdFqHB5VVZF+Vi6lVsCkjQj6ANX9RmANalfBwqCtx6jtPm+DxwWrIN
+ yiIYtP2yiFTxftcrRy5rc+WKYrQUYlhxrrPqA/dwUyJ8PW4g9nFu60R68jXYA18nl4OQc6IlB
+ BXr01/udoWdZfO70pUdgFQAuKkRDW+chRdPWk0FCjFuL36qOYzgCprP5kfOH4tFlBMmRrXpjK
+ mwmphje4+h2RHc2DgCuky0w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Santiago Torres <santiago@nyu.edu>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The current implementation of git-verify-tag omits the gpg output when
-the --format flag is passed. This may not be useful to users that want
-to see the gpg output *and* --format the output of git verify-tag.
-Instead, respect the --raw flag or the default gpg output.
+--8323328-696936068-1556407250=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Santiago Torres <santiago@nyu.edu>
----
- builtin/verify-tag.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Hi Bret,
 
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 6fa04b751a..262e73cb45 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -47,15 +47,13 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 	if (argc <= i)
- 		usage_with_options(verify_tag_usage, verify_tag_options);
- 
--	if (verbose)
-+	if (verbose && !format.format)
- 		flags |= GPG_VERIFY_VERBOSE;
- 
--	if (format.format) {
-+	if (format.format)
- 		if (verify_ref_format(&format))
- 			usage_with_options(verify_tag_usage,
- 					   verify_tag_options);
--		flags |= GPG_VERIFY_OMIT_STATUS;
--	}
- 
- 	while (i < argc) {
- 		struct object_id oid;
--- 
-2.21.0
+On Thu, 18 Apr 2019, Bret Barkelew wrote:
 
+> This issue is now being reported by more users inside MS. I'll also
+> reach out to the Git for Windows advocacy group to see if they have
+> any ideas.
+>
+> I have not had time to figure out the inner workings of Tcl/Tk. Is
+> there any way to turn on tracing/logging in Git for which commands are
+> being called by gitk?
+
+Thank you for reaching out with detailed information internally, I am
+happy to report that together with the help of Max Kirillov, this is now
+resolved and a snapshot is available from
+https://wingit.blob.core.windows.net/files/index.html that has the fix.
+
+Ciao,
+Johannes
+
+> On Thu, Jan 10, 2019 at 10:55 AM Bret Barkelew <bret@corthon.com> wrote:
+> >
+> > On Thu, Jan 10, 2019 at 7:20 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Hi Bret,
+> > >
+> > > in that case, please try to find a way to trace the commands in a Tc=
+l/Tk
+> > > program (which gitk is) and see which command triggers the error.
+> >
+> > Er... that's a little out of my depth. I'll see if I can find time to =
+learn.
+> > Meanwhile, is there any way to request better instrumentation for the
+> > error dialog so this data could have been collected for me?
+> >
+> > >
+> > > Ciao,
+> > > Johannes
+> > >
+> > >
+> > > On Wed, 9 Jan 2019, Bret Barkelew wrote:
+> > >
+> > > > Will try to reply in-line, when appropriate.
+> > > > The latest snapshot (git version 2.20.1.windows.1.5.g6b286585b1) s=
+till
+> > > > has the issue.
+> > > >
+> > > > - Bret
+> > > >
+> > > >
+> > > > On Wed, Jan 9, 2019 at 10:39 AM Johannes Schindelin
+> > > > <Johannes.Schindelin@gmx.de> wrote:
+> > > > >
+> > > > > Hi Bret,
+> > > > >
+> > > > >
+> > > > > On Thu, 3 Jan 2019, Bret Barkelew wrote:
+> > > > >
+> > > > > > They are the exact same path (with a different drive letter).
+> > > > >
+> > > > > [it's a bit hard to follow the thread if you top-post a reply to=
+ an
+> > > > > inline-replied answer, maybe imitate the style of other mails in=
+ the
+> > > > > future.]
+> > > > >
+> > > > > > Another thing I've been able to confirm is I uninstalled git 2=
+.20.1
+> > > > > > and installed 2.19.0 on the failing system, and the older vers=
+ion of
+> > > > > > Git works.
+> > > > > > I've also tried a suggested fix I saw elsewhere to enable long=
+ path
+> > > > > > names in the Windows registry, which did not resolve the issue=
+ with
+> > > > > > git 2.20.1.
+> > > > > >
+> > > > > > Happy to collect any additional data.
+> > > > >
+> > > > > Please try the latest snapshot at
+> > > > > https://wingit.blob.core.windows.net/files/index.html (I *think*=
+ the bug
+> > > > > might be fixed via
+> > > > > https://github.com/git-for-windows/MINGW-packages/pull/32).
+> > > > >
+> > > > > Ciao,
+> > > > > Johannes
+> > > > >
+> > > > > > - Bret
+> > > > > >
+> > > > > > On Thu, Jan 3, 2019 at 7:10 PM Bryan Turner <bturner@atlassian=
+.com> wrote:
+> > > > > > >
+> > > > > > > On Thu, Jan 3, 2019 at 6:21 PM Bret Barkelew <bret@corthon.c=
+om> wrote:
+> > > > > > >>
+> > > > > > >> When I open gitk in a particular repository under this vers=
+ion of Git
+> > > > > > >> for Windows, I now get a dialog box that says "Error: could=
+n't execute
+> > > > > > >> "git": file name too long". I've noticed that the most pron=
+ounced
+> > > > > > >> effect is that I cannot see the file diffs (or sometimes th=
+e file name
+> > > > > > >> list) for any of the commits. I don't know the exact repro,=
+ but I've
+> > > > > > >> narrowed down the following things:
+> > > > > > >>
+> > > > > > >> - This does not happen with the same repo if I use a system=
+ that has
+> > > > > > >> git 2.19.0.windows.1 on another machine.
+> > > > > > >> - This does not happen on my current machine in a freshly c=
+loned repo.
+> > > > > > >
+> > > > > > >
+> > > > > > > How =E2=80=9Cdeep=E2=80=9D are the paths to the different cl=
+ones on the different systems? Are all of the clones at exactly the same p=
+ath on disk?
+> > > > > > >
+> > > > > > > Git on Windows is (by defaulted) limited by MAX_PATH, which =
+is 260 characters. That length is calculated including the path to the rep=
+ository itself and then to the file inside the repository. That means, for=
+ example, a given repository cloned to C:\repo may not have issues, but th=
+e same repository cloned to C:\Users\Bryan\Documents\workspaces\repo may.
+> > > > > > >
+> > > > > > >>
+> > > > > > >> However, as soon as the remote updates with any changes on =
+a given
+> > > > > > >> fetch/pull, the repo is put in a bad state permanently.
+> > > > > > >>
+> > > > > > >> I've pasted the output from gitk below...
+> > > > > > >>
+> > > > > > >> couldn't execute "git": file name too long
+> > > > > > >> couldn't execute "git": file name too long
+> > > > > > >>     while executing
+> > > > > > >> "open $cmd r"
+> > > > > > >>     (procedure "getallcommits" line 48)
+> > > > > > >>     invoked from within
+> > > > > > >> "getallcommits"
+> > > > > > >>     (procedure "readcache" line 80)
+> > > > > > >>     invoked from within
+> > > > > > >> "readcache file827e200"
+> > > > > > >>     ("eval" body line 1)
+> > > > > > >>     invoked from within
+> > > > > > >> "eval $script"
+> > > > > > >>     (procedure "dorunq" line 11)
+> > > > > > >>     invoked from within
+> > > > > > >> "dorunq"
+> > > > > > >>     ("after" script)
+> > > > > > >>
+> > > > > > >> Happy to gather whatever data needed.
+> > > > > > >> Thanks!
+> > > > > > >> - Bret Barkelew
+> > > > > >
+> > > >
+>
+
+--8323328-696936068-1556407250=:45--
