@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6D191F453
-	for <e@80x24.org>; Sat, 27 Apr 2019 12:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E88A1F453
+	for <e@80x24.org>; Sat, 27 Apr 2019 12:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbfD0MCX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Apr 2019 08:02:23 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40746 "EHLO
+        id S1726326AbfD0MC0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Apr 2019 08:02:26 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:32899 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfD0MCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Apr 2019 08:02:23 -0400
-Received: by mail-pf1-f196.google.com with SMTP id s4so3001434pfh.7
-        for <git@vger.kernel.org>; Sat, 27 Apr 2019 05:02:23 -0700 (PDT)
+        with ESMTP id S1725912AbfD0MC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Apr 2019 08:02:26 -0400
+Received: by mail-pf1-f196.google.com with SMTP id h5so3022411pfo.0
+        for <git@vger.kernel.org>; Sat, 27 Apr 2019 05:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=uvhKIfcAiPmsH5rHeP8Iv+XIxjA5WOj+rvjTaPMcQm0=;
-        b=bKFGO2wGW98ZzYsNcRyXUzdL/lwouhIDN66z1bheI/mA8znfzdbf9UIsNZkgxLrV+O
-         Gaoelev9Wzs5q6lfHgyZye2crEmqM0CmTMtpZ3dYNOaH3iwzf9L+4DqZVyrWJOe2i6hi
-         ms1utMrbd98VWEbOvqnr0eE/YIq9NQUHG05ymmE3UJV/+BiUkfJHULV4fI1L7P0eglbZ
-         pAovBPDOrmPmdSXI95xGxaFK63NhQOkaZxHcixBKy5o5voud5omaTuAbsTxkPMUCp5f4
-         dd44GpsYwyWb/59C9DUaCC17Eex/mQv4MXCG1o3+ekoUZcfcgVNv942KBBY9GBnDVb4S
-         n3Vg==
+        bh=hCC4VKAHHPYaszMbc1dYi0iwBKhPoXUq+pCWS04bxFA=;
+        b=Ex78/i4xHWwhNvLkqMX2pOn0DZHZUBciYrS8kE9bCjza8h+TP1AaLd0DyoGEt8QGkf
+         h3dzvKqokuR44nMepP6vhJUkHfBgZd/xGH2IwF63AcJJAi7Ez0opUGuSzIgSFVKS+xgg
+         XYwb5ZyA0oUUDDw6eymp9AwDcdgjdjuQe+GxEN3HAeAj2eINnKGLs/QzbQ394PpyPJ+R
+         hU7tT89ya3Jur8fPJl+ZvwRBRvI1jcbdchKscNTIqheu7MCFxHGX+cj0az5fucx755CH
+         zFyOrfZGiT3lr6vTjofwBOLpVeIGb8B8uKkG7pfYMC3myaz6iBwXKYyJS1QyEpa3Hrbk
+         wjBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uvhKIfcAiPmsH5rHeP8Iv+XIxjA5WOj+rvjTaPMcQm0=;
-        b=rqYZWrtZWdzvekifBebWHPNfhTYLNMN/+4LpDIDqAEiRhFD+SHTaKr3rk4BZvqWP+s
-         Eqebv0mCcoGrPXu8DEAZIRi5bsndWjuqDVFU88XguDDKMLHepwj4ZKZJtrgrJoRCdU+T
-         pvBEd3OqlbwO3zWs6wNAsYFP6o+EWk42L6YPA509sqKdGAtlbznIGP87tfFl71+6SAy7
-         VckDHyeh3jqAzAT4PpuSJ/NiR4QGN0kP9OgkyB9Wwm6LFo+43UK5rQk4+5WbKuJWksVJ
-         TO7yjJNZOlQ1KlHL5D2j/WpDpY5mGiwdHXojwzMYc3tGq6VB2seAscMAisVSqwIDOztK
-         BEPQ==
-X-Gm-Message-State: APjAAAXfKNq3vkl83zPOz4GjbM3UTQOBMetnTd4zJERqun+vUBvQJfgC
-        3WIBD136AGQzYcZc7nTYmCGG/FSK
-X-Google-Smtp-Source: APXvYqzjF2b6L0VHrKO+dcxaV6Q5Ua39isj6gfKzKtQc2RZ0BOzHNzfClPPE9g35TNV70TJIVghXcw==
-X-Received: by 2002:a62:2c89:: with SMTP id s131mr29419527pfs.211.1556366542490;
-        Sat, 27 Apr 2019 05:02:22 -0700 (PDT)
-Received: from archbookpro.localdomain ([216.9.110.2])
-        by smtp.gmail.com with ESMTPSA id f5sm31591912pgo.75.2019.04.27.05.02.21
+        bh=hCC4VKAHHPYaszMbc1dYi0iwBKhPoXUq+pCWS04bxFA=;
+        b=QDXVmntzIu6h1iJqr9mndQByDd0wPN/6OvCmrit4bB9Z2PDr/W2zQiZMxGmTYaH06E
+         e9r1DpSPR+WNH+mEhvLv6vEcpby4o7A2LYOXkIDHDPBuEpSPwgJZ0gBXP9+trGCDBwHI
+         R8HjJZlFtzJI3UgyAFSBdK+DF+xz35WTze1KyVaAiHFjgiVAt6/YVolHA5CB0GotASOf
+         F4m4InruZS4clzQQuFq/pbQReHzQjXj0QQU2v7JpXVHC9bm5CJGWyjj7i0jQFrxBKvLd
+         DskokoVORjoLwBCFPGfDg9oWlYhkwt945TeUKJOZKIjdyTlfJls78HIcv8gSbxHBwAum
+         5rxA==
+X-Gm-Message-State: APjAAAWupagsF2N+De7IOj8E2C3lNFJyciSDHK7CT/pGevgqVOcKSSxf
+        AYQz29j9gnMJwYXuJR1/oo8ubc16
+X-Google-Smtp-Source: APXvYqyYrzgoIT/37LmeWh+C3pdLwhhAk8H4zOr4Ao989DT0hYQGJis7SSssB5ePBqmRacfvaSQ0VA==
+X-Received: by 2002:aa7:8dcf:: with SMTP id j15mr30307085pfr.175.1556366545164;
+        Sat, 27 Apr 2019 05:02:25 -0700 (PDT)
+Received: from archbookpro.localdomain ([216.9.110.14])
+        by smtp.gmail.com with ESMTPSA id x66sm64457769pfb.78.2019.04.27.05.02.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Apr 2019 05:02:21 -0700 (PDT)
-Date:   Sat, 27 Apr 2019 05:02:19 -0700
+        Sat, 27 Apr 2019 05:02:24 -0700 (PDT)
+Date:   Sat, 27 Apr 2019 05:02:22 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 1/2] t2018: cleanup in current test
-Message-ID: <9d04faf29dd61eb04ea292786d72eda0a3832e51.1556366347.git.liu.denton@gmail.com>
+Subject: [PATCH v3 2/2] branch: make create_branch accept a merge base rev
+Message-ID: <bb258527407126fa6e3d56de64dc76fd52c5d504.1556366347.git.liu.denton@gmail.com>
 References: <cover.1556305561.git.liu.denton@gmail.com>
  <cover.1556366347.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,124 +68,164 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, in t2018, if do_checkout failed to create `branch2`, the next
-test-case would run `git branch -D branch2` but then fail because it was
-expecting `branch2` to exist, even though it doesn't. As a result, an
-early failure could cause a cascading failure of tests.
+When we ran something like
 
-Make test-case responsible for cleaning up their own branches so that
-future tests can start with a sane environment.
+    $ git checkout -b test master...
 
+it would fail with the message
+
+    fatal: Not a valid object name: 'master...'.
+
+This was caused by the call to `create_branch` where `start_name` is
+expected to be a valid rev. However, git-checkout allows the branch to
+be a valid _merge base_ rev (i.e. with a "...") so it was possible for
+an invalid rev to be passed in.
+
+Make `create_branch` accept a merge base rev so that this case does not
+error out.
+
+As a side-effect, teach git-branch how to handle merge base revs as
+well.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t2018-checkout-branch.sh | 43 +++++++++++++++-----------------------
- 1 file changed, 17 insertions(+), 26 deletions(-)
+ Documentation/git-branch.txt   |  6 +++++-
+ Documentation/git-checkout.txt |  4 ++++
+ branch.c                       |  2 +-
+ t/t2018-checkout-branch.sh     | 13 +++++++++++++
+ t/t3200-branch.sh              | 14 ++++++++++----
+ 5 files changed, 33 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 0cd87ddeff..6ebd512b4f 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -45,7 +45,11 @@ argument is missing it defaults to `HEAD` (i.e. the tip of the current
+ branch).
+ 
+ The command's second form creates a new branch head named <branchname>
+-which points to the current `HEAD`, or <start-point> if given.
++which points to the current `HEAD`, or <start-point> if given. As a
++special case, for <start-point>, you may use `"A...B"` as a shortcut for
++the merge base of `A` and `B` if there is exactly one merge base. You
++can leave out at most one of `A` and `B`, in which case it defaults to
++`HEAD`.
+ 
+ Note that this will create the new branch, but it will not switch the
+ working tree to it; use "git checkout <newbranch>" to switch to the
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 877e5f503a..964f912d29 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -313,6 +313,10 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+ <start_point>::
+ 	The name of a commit at which to start the new branch; see
+ 	linkgit:git-branch[1] for details. Defaults to HEAD.
+++
++As a special case, you may use `"A...B"` as a shortcut for the
++merge base of `A` and `B` if there is exactly one merge base. You can
++leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+ 
+ <tree-ish>::
+ 	Tree to checkout from (when paths are given). If not specified,
+diff --git a/branch.c b/branch.c
+index 28b81a7e02..a84c8aaca2 100644
+--- a/branch.c
++++ b/branch.c
+@@ -268,7 +268,7 @@ void create_branch(struct repository *r,
+ 	}
+ 
+ 	real_ref = NULL;
+-	if (get_oid(start_name, &oid)) {
++	if (get_oid_mb(start_name, &oid)) {
+ 		if (explicit_tracking) {
+ 			if (advice_set_upstream_failure) {
+ 				error(_(upstream_missing), start_name);
 diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index c5014ad9a6..f1c7023e1a 100755
+index f1c7023e1a..822381dd9d 100755
 --- a/t/t2018-checkout-branch.sh
 +++ b/t/t2018-checkout-branch.sh
-@@ -60,38 +60,40 @@ test_expect_success 'setup' '
- '
- 
- test_expect_success 'checkout -b to a new branch, set to HEAD' '
-+	test_when_finished "
-+		git checkout branch1 &&
-+		test_might_fail git branch -D branch2" &&
+@@ -66,6 +66,13 @@ test_expect_success 'checkout -b to a new branch, set to HEAD' '
  	do_checkout branch2
  '
  
- test_expect_success 'checkout -b to a new branch, set to an explicit ref' '
--	git checkout branch1 &&
--	git branch -D branch2 &&
--
++test_expect_success 'checkout -b to a merge base' '
 +	test_when_finished "
 +		git checkout branch1 &&
 +		test_might_fail git branch -D branch2" &&
- 	do_checkout branch2 $HEAD1
- '
- 
- test_expect_success 'checkout -b to a new branch with unmergeable changes fails' '
--	git checkout branch1 &&
--
--	# clean up from previous test
--	git branch -D branch2 &&
--
- 	setup_dirty_unmergeable &&
- 	test_must_fail do_checkout branch2 $HEAD1 &&
- 	test_dirty_unmergeable
- '
- 
- test_expect_success 'checkout -f -b to a new branch with unmergeable changes discards changes' '
-+	test_when_finished "
-+		git checkout branch1 &&
-+		test_might_fail git branch -D branch2" &&
++	git checkout -b branch2 branch1...
++'
 +
- 	# still dirty and on branch1
- 	do_checkout branch2 $HEAD1 "-f -b" &&
- 	test_must_fail test_dirty_unmergeable
+ test_expect_success 'checkout -b to a new branch, set to an explicit ref' '
+ 	test_when_finished "
+ 		git checkout branch1 &&
+@@ -126,6 +133,12 @@ test_expect_success 'checkout -B to an existing branch resets branch to HEAD' '
+ 	do_checkout branch2 "" -B
  '
  
- test_expect_success 'checkout -b to a new branch preserves mergeable changes' '
--	git checkout branch1 &&
--
--	# clean up from previous test
--	git branch -D branch2 &&
-+	test_when_finished "
-+		git reset --hard &&
-+		git checkout branch1 &&
-+		test_might_fail git branch -D branch2" &&
++test_expect_success 'checkout -B to a merge base' '
++	git checkout branch1 &&
++
++	git checkout -B branch2 branch1...
++'
++
+ test_expect_success 'checkout -B to an existing branch from detached HEAD resets branch to HEAD' '
+ 	git checkout $(git rev-parse --verify HEAD) &&
  
- 	setup_dirty_mergeable &&
- 	do_checkout branch2 $HEAD1 &&
-@@ -99,27 +101,18 @@ test_expect_success 'checkout -b to a new branch preserves mergeable changes' '
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 478b82cf9b..acb16b62dd 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -42,6 +42,10 @@ test_expect_success 'git branch a/b/c should create a branch' '
+ 	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
  '
  
- test_expect_success 'checkout -f -b to a new branch with mergeable changes discards changes' '
--	# clean up from previous test
--	git reset --hard &&
--
--	git checkout branch1 &&
--
--	# clean up from previous test
--	git branch -D branch2 &&
--
-+	test_when_finished git reset --hard HEAD &&
- 	setup_dirty_mergeable &&
- 	do_checkout branch2 $HEAD1 "-f -b" &&
- 	test_must_fail test_dirty_mergeable
++test_expect_success 'git branch mb master... should create a branch' '
++	git branch mb master... && test_path_is_file .git/refs/heads/mb
++'
++
+ test_expect_success 'git branch HEAD should fail' '
+ 	test_must_fail git branch HEAD
  '
- 
- test_expect_success 'checkout -b to an existing branch fails' '
--	git reset --hard HEAD &&
--
-+	test_when_finished git reset --hard HEAD &&
- 	test_must_fail do_checkout branch2 $HEAD2
+@@ -292,8 +296,8 @@ test_expect_success 'git branch --list -v with --abbrev' '
+ test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expected <<\EOF &&
+-  a/b/c     bam       foo       l       * master    n         o/p       r
+-  abc       bar       j/k       m/m       master2   o/o       q
++  a/b/c     bam       foo       l       * master    mb        o/o       q
++  abc       bar       j/k       m/m       master2   n         o/p       r
+ EOF
+ 	test_cmp expected actual
  '
- 
- test_expect_success 'checkout -b to @{-1} fails with the right branch name' '
--	git reset --hard HEAD &&
- 	git checkout branch1 &&
- 	git checkout branch2 &&
- 	echo  >expect "fatal: A branch named '\''branch1'\'' already exists." &&
-@@ -160,6 +153,7 @@ test_expect_success 'checkout -f -B to an existing branch with unmergeable chang
+@@ -315,6 +319,7 @@ test_expect_success 'git branch --column with an extremely long branch name' '
+   m/m
+ * master
+   master2
++  mb
+   n
+   o/o
+   o/p
+@@ -332,8 +337,8 @@ test_expect_success 'git branch with column.*' '
+ 	git config --unset column.branch &&
+ 	git config --unset column.ui &&
+ 	cat >expected <<\EOF &&
+-  a/b/c   bam   foo   l   * master    n     o/p   r
+-  abc     bar   j/k   m/m   master2   o/o   q
++  a/b/c   bam   foo   l   * master    mb   o/o   q
++  abc     bar   j/k   m/m   master2   n    o/p   r
+ EOF
+ 	test_cmp expected actual
  '
- 
- test_expect_success 'checkout -B to an existing branch preserves mergeable changes' '
-+	test_when_finished git reset --hard &&
- 	git checkout branch1 &&
- 
- 	setup_dirty_mergeable &&
-@@ -168,9 +162,6 @@ test_expect_success 'checkout -B to an existing branch preserves mergeable chang
- '
- 
- test_expect_success 'checkout -f -B to an existing branch with mergeable changes discards changes' '
--	# clean up from previous test
--	git reset --hard &&
--
- 	git checkout branch1 &&
- 
- 	setup_dirty_mergeable &&
+@@ -357,6 +362,7 @@ test_expect_success 'git branch -v with column.ui ignored' '
+   m/m
+ * master
+   master2
++  mb
+   n
+   o/o
+   o/p
 -- 
 2.21.0.1000.g11cd861522
 
