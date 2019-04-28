@@ -2,83 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3F21F453
-	for <e@80x24.org>; Sun, 28 Apr 2019 08:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6DA11F453
+	for <e@80x24.org>; Sun, 28 Apr 2019 08:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbfD1IHJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Apr 2019 04:07:09 -0400
-Received: from 078.vps.ho.ua ([91.228.147.78]:54688 "EHLO vpa.nn.kiev.ua"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726466AbfD1IHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Apr 2019 04:07:09 -0400
-X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Apr 2019 04:07:08 EDT
-Received: by vpa.nn.kiev.ua (Postfix, from userid 1000)
-        id 826B894400E0; Sun, 28 Apr 2019 11:01:38 +0300 (EEST)
-Date:   Sun, 28 Apr 2019 11:01:38 +0300
-From:   Valentin Nechayev <netch@netch.kiev.ua>
-To:     git@vger.kernel.org
-Subject: [PATCH] gc: avoid permanent repacking if pack size limit is in effect
-Message-ID: <20190428080138.GM599@netch.kiev.ua>
+        id S1726317AbfD1IrX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Apr 2019 04:47:23 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42695 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbfD1IrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Apr 2019 04:47:22 -0400
+Received: by mail-pf1-f194.google.com with SMTP id w25so3814430pfi.9
+        for <git@vger.kernel.org>; Sun, 28 Apr 2019 01:47:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=AIVkSo1ryc43PN8Nmiu4Ey8Gy10ouUh7/aANNJnMe9w=;
+        b=Q1EqIyvWrdwU2IMR5KxyrbfNw+zKSb4hg0OnKRM4tOypx00THbM+Qe5dVCMwyeqFPR
+         7mcU/PwEmfXqIhF16PmPJec4JEQ250OIc5bobewyva4EsJEbFa/WEaXUE3Fp2uq1e1NO
+         2puAOeqs1UV3poeKLI1Eh06ybsb2Ccv53LG/WbDhQ0RsEWV8Ubgz/OyegHOhrw6sbSCD
+         YH2H2klfIqhdkvnxtQZQT8uVhpXasC4HSyrJqjzHbh1AxxzjT74zpKfgwCSU6ijXyoOw
+         F8kwfluo8MVs5Y95V7IIU8rkEIsTII7UQjsnJW3/njx2BXd/vnUHyqS3D1yPchRJQXJR
+         p/Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=AIVkSo1ryc43PN8Nmiu4Ey8Gy10ouUh7/aANNJnMe9w=;
+        b=p7WvKSlepEUpNb/xM51V3CE5dkC8WjkY6GVT5XoOzkPKAg5Hlo0Lm4EYRv9PbQ395O
+         61jShpqlfFBUMmfmyqx6aYr+OcOlgs2Es4HRBL7lOhB7Rzg+ejqcKtNtihwFQE67HA0Z
+         E+5UntON7rxjvCS7u+UQI3OJSLvtfHFmGGE7dXEJVz8AMhsuOqZd4AdI7Fh9hN4RTbQU
+         U11fmfqFjlv7tN3CfNTM+Q8RnStSBsXymJbU2SaAodHft8UNOeN6Zaadp5I8R7w1YsH0
+         Lt4pvvZc5XlMybvY0JxauyeGCOdjWyJRc2G1gHqzp6Fd7cc7rjCp/Nt2DE6u7wsGSLb1
+         OPMQ==
+X-Gm-Message-State: APjAAAV2XscPlk7TOQFT4F6zq9TOtAUgWCkMym6fmvjMSqNq1VEsdsj4
+        QV37cFgPOg63BaWJgKPNpm3E5Exn
+X-Google-Smtp-Source: APXvYqw5EFvXGieANZzgQ1Mzbiw+1HXeQWvlH2h6wbrOypjrh63PUkBC25snDLw/aolPyIA4j7X5fg==
+X-Received: by 2002:a62:1881:: with SMTP id 123mr56266652pfy.25.1556441241824;
+        Sun, 28 Apr 2019 01:47:21 -0700 (PDT)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id v12sm3577101pfm.186.2019.04.28.01.47.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 28 Apr 2019 01:47:20 -0700 (PDT)
+Date:   Sun, 28 Apr 2019 01:47:18 -0700
+From:   David Aguilar <davvid@gmail.com>
+To:     Cameron Steffen <cam.steffen94@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Stage or discard a hunk at a time?
+Message-ID: <20190428084718.GA21060@gmail.com>
+References: <CAAVFnNminTx_z9Y=jhzDnT0n5_zGD_k2SA84HQqMvKHJSvKcSA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <CAAVFnNminTx_z9Y=jhzDnT0n5_zGD_k2SA84HQqMvKHJSvKcSA@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With pack.packSizeLimit, a really huge repository can suffer from
-repacking on any operation with it, because git detects too many
-packs and tries merging them.
+On Wed, Jan 16, 2019 at 01:09:03PM -0600, Cameron Steffen wrote:
+> Hello,
+> 
+> I have this feature idea for git. There should be a command that
+> effectively combines git add -p and git checkout -p so that I can
+> navigate changed hunks and either stage or discard them.
+> 
+> There is already a SO question asking about this exactly...
+> https://stackoverflow.com/questions/11538650/simultaneously-git-add-p-and-git-checkout-p
+> 
+> Has this been discussed before? Is this a reasonable request? If so, I
+> might look into contributing the change myself.
+> 
+> Cameron
 
-Setting gc.autoPackLimit cures the symptom but causes small pack
-merge to be avoided at all, which isn't the good behavior we want.
+Install Git Cola.
 
-Fix this by counting only packs that are relatively small. With
-current filesystem behavior, the margin of 1/4 of pack size limit
-looks a good default.
----
- builtin/gc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+It's a powerful Git GUI with a keyboard-centric workflow.
+You can do this completely through keyboard shortcuts
+(or a mouse if you prefer).
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 8943bcc3..0273d6e5 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -48,6 +48,7 @@ static const char *gc_log_expire = "1.day.ago";
- static const char *prune_expire = "2.weeks.ago";
- static const char *prune_worktrees_expire = "3.months.ago";
- static unsigned long big_pack_threshold;
-+static unsigned long pack_size_limit = 0;
- static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- 
- static struct argv_array pack_refs_cmd = ARGV_ARRAY_INIT;
-@@ -155,6 +156,7 @@ static void gc_config(void)
- 	git_config_get_expiry("gc.logexpiry", &gc_log_expire);
- 
- 	git_config_get_ulong("gc.bigpackthreshold", &big_pack_threshold);
-+	git_config_get_ulong("pack.packsizelimit", &pack_size_limit);
- 	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
- 
- 	git_config(git_default_config, NULL);
-@@ -229,9 +231,11 @@ static int too_many_packs(void)
- 		if (p->pack_keep)
- 			continue;
- 		/*
--		 * Perhaps check the size of the pack and count only
--		 * very small ones here?
-+		 * Check the size of the pack and count only
-+		 * relatively small ones here.
- 		 */
-+		if (pack_size_limit > 0 && p->pack_size >= pack_size_limit / 4)
-+			continue;
- 		cnt++;
- 	}
- 	return gc_auto_pack_limit < cnt;
+Typically:
+
+	$ git cola
+
+	ctrl-k: focus the status widget
+	j,k: navigate up/down the file list
+	ctrl-s: stage files
+	ctrl-u: revert files to index
+
+	ctrl-j: focus the diff widget to operate at the line/hunk level
+	j, k: move the cursor up/down lines, hold shift to select lines
+	s: to stage selection, or current hunk if no lines are selected
+	ctrl-u: revert the selection, or current hunk, to match the index
+
+https://github.com/git-cola/git-cola
+
+https://git-cola.github.io/downloads.html
 -- 
-2.17.1
-
+David
