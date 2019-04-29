@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4060F1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 137F21F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729404AbfD2UOe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 16:14:34 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37021 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729384AbfD2UOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 16:14:24 -0400
-Received: by mail-ed1-f66.google.com with SMTP id w37so10313678edw.4
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:23 -0700 (PDT)
+        id S1729374AbfD2UOV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 16:14:21 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46144 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729363AbfD2UOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 16:14:19 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d1so10257738edd.13
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=h/2BuT5OdcPxgva6QWQm8jISfZIkti2FOlRI2eQeh0c=;
-        b=BesQowwEsNe0bKO8eskYkHoMVrVX4V66b07s9Xaihn7RmZV2LFj4xEWfFH6qvPV3EZ
-         se7ovAUZmhqWwZYfFcFs7mUqI7gy3Sxs+acgtmvtyN91BclK5asQrodKkDr9RgRbH61M
-         cAuLZmROObgMlpsomPT0s4fmMpCnCcDo7AvEWCOeQZb33NYvFCe8ZXuMs/K0FRwNB6jZ
-         kSl+xDgLebB0pvsZ2flH9g0uliAv57idLtc/pNH5kH/PnFDvVffWtG2fkcZjFL9hlmWd
-         UTQMQKHQWOFzluGx1Z+JBFxFD0MfJBcAHGCXqjhpjMQsy6I76ZrPiYX9jZBkpo6V+Lho
-         uOHw==
+        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
+        b=JrfSvwxuNeIarkQftKhPzQNKoDqLhlkf83LiCTDacbQMXcBjEpnRSz3n0ApaabuRDP
+         v+P1NP3ZLPupOCHOM36Cn+hrXeKfO/gBaQbRKL7+zRWij+6uaFzUjnkLvJHsn3KvxxTX
+         VzMUuE9enCokzyp4D89Tz2NfZJjYqHpS0M/W7nJCTAql3BJbaY3JBWIzqj36l3hiIyKP
+         f7czm2LQJcZELQdZUwlWMCqUXc18+YkpJ+n3wuls9saLt+Pu5WU4RKot+FvjKTU2f9I3
+         mZzFLb56gIg7qqo7Oh7/LE+vqn/Gx9sWza4HaPBQmvH65TOSzY+nVsItHc0Q6LmC0AbR
+         bNSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h/2BuT5OdcPxgva6QWQm8jISfZIkti2FOlRI2eQeh0c=;
-        b=D1XQYzHz0xHtCxii1V8xDsKSGEkoxejZfcW33LHtTAAa3or/9E6VDLiiWvS+9guRUN
-         uuc6jM8wipNKABekfH9ttsgMmdVQ+UnOX9zZ99zrkolkEY3hTECI4x13GVf+4StXgvfy
-         nwhRbXUWz/iRtqq7eoX0YiOePejB2BNhZMnYTJZ0BTXfC2EgFcjfz27Mab2J8Akm2cBm
-         V7nYD6wGBFSgVXD3b/jEcf7TVqIHAbYlh60JZNh/rWdmxmJn/WquVjyOcl5PULrq11yo
-         SkPhxg5yln/pJ6K3IuyuJU+D40W88hieAXgYDUg6TOCvK1f/YL9KUyZii2UcIdoASm+3
-         nJFw==
-X-Gm-Message-State: APjAAAXeV8/m/nywekYVtmRj2LWljhEs91/9uSvwp6Eq1W2F9zmXdipd
-        kxo5f/vseNVyNJ4xv+AtMYbQZhIA
-X-Google-Smtp-Source: APXvYqw/3di3ake0eADlAFLKF5s3gtAftQF0f353ChuKLOQv+Rxt/7v54euq3wgnf+nuIkMR/sPoAw==
-X-Received: by 2002:a50:8dcd:: with SMTP id s13mr4679738edh.247.1556568862197;
-        Mon, 29 Apr 2019 13:14:22 -0700 (PDT)
+        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
+        b=bSOmFoXjuWTVFB4CcRcm/Ma9rejLNYyePkfN66rdzw2P+30Ck9JNLmYRnf9n1sIRGN
+         lDYvq1ZMS0n/qpQhb8J7hhQKrIQ9YxkSu0kB6OXrVlhc+6W0+akEWEWTtA6ttWX/I8LF
+         VbDh1uDaNf8hY6cJTWsrz99zPr6n3BVbGzYSIyIBKPCbCcy2M6QbxOC+NOMrRLiuqzDZ
+         CBjTJF4rwv2MwhQOWfqrVS9eMLtsGp3rDQ1HzBFM3kJ9Z5GSHbFmIz9CtPfBhgmyp+nq
+         VjGTonVNixixVobgpdjlcEFYsVzEQyC3f4fsa19WreJIiRsrtyhsim8cVUNHGP3b00aS
+         o2Mw==
+X-Gm-Message-State: APjAAAUShfeqwGhNPfPS0974xC5fbuW9qPh9u4ZqxTQUu73e9kN0VPoc
+        p1JzPm9WJFM7Dvq6MQ1oIiVs2GuM
+X-Google-Smtp-Source: APXvYqxjHBBkDkowu/BOCF6EXPIgBZXGH0bvv58VfgcB5gwoE0wefp/sYkWidFIx1/xqZDghSLSqiA==
+X-Received: by 2002:a17:906:29c1:: with SMTP id y1mr30564197eje.251.1556568858012;
+        Mon, 29 Apr 2019 13:14:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w57sm9438167edd.19.2019.04.29.13.14.21
+        by smtp.gmail.com with ESMTPSA id h10sm9652160ede.21.2019.04.29.13.14.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Apr 2019 13:14:21 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 13:14:21 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 20:14:10 GMT
-Message-Id: <3414016d04fc1c457ba865822af561325ba0c753.1556568852.git.gitgitgadget@gmail.com>
+        Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 20:14:05 GMT
+Message-Id: <b0fe1385f1a96efbcab38fe02a3d5b3c1b6eaa37.1556568852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v5.git.gitgitgadget@gmail.com>
 References: <pull.169.v4.git.gitgitgadget@gmail.com>
         <pull.169.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 10/11] trace2: update docs to describe system/global config
- settings
+Subject: [PATCH v5 05/11] config: add read_very_early_config()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,382 +73,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Created an even lighter version of read_early_config() that
+only looks at system and global config settings.  It omits
+repo-local, worktree-local, and command-line settings.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/config.txt               |   2 +
- Documentation/config/trace2.txt        |  56 +++++++++
- Documentation/technical/api-trace2.txt | 151 ++++++++++++++-----------
- Documentation/trace2-target-values.txt |  10 ++
- 4 files changed, 152 insertions(+), 67 deletions(-)
- create mode 100644 Documentation/config/trace2.txt
- create mode 100644 Documentation/trace2-target-values.txt
+ config.c | 23 ++++++++++++++++++++---
+ config.h |  4 ++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d87846faa6..7e2a6f61f5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -422,6 +422,8 @@ include::config/submodule.txt[]
+diff --git a/config.c b/config.c
+index c809f76219..d7a08713a8 100644
+--- a/config.c
++++ b/config.c
+@@ -1688,14 +1688,15 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 		ret += git_config_from_file(fn, user_config, data);
  
- include::config/tag.txt[]
+ 	current_parsing_scope = CONFIG_SCOPE_REPO;
+-	if (repo_config && !access_or_die(repo_config, R_OK, 0))
++	if (!opts->ignore_repo && repo_config &&
++	    !access_or_die(repo_config, R_OK, 0))
+ 		ret += git_config_from_file(fn, repo_config, data);
  
-+include::config/trace2.txt[]
+ 	/*
+ 	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
+ 	 * But let's not complicate things before it's actually needed.
+ 	 */
+-	if (repository_format_worktree_config) {
++	if (!opts->ignore_worktree && repository_format_worktree_config) {
+ 		char *path = git_pathdup("config.worktree");
+ 		if (!access_or_die(path, R_OK, 0))
+ 			ret += git_config_from_file(fn, path, data);
+@@ -1703,7 +1704,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	}
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
+-	if (git_config_from_parameters(fn, data) < 0)
++	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
+ 		die(_("unable to parse command-line config"));
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
+@@ -1794,6 +1795,22 @@ void read_early_config(config_fn_t cb, void *data)
+ 	strbuf_release(&gitdir);
+ }
+ 
++/*
++ * Read config but only enumerate system and global settings.
++ * Omit any repo-local, worktree-local, or command-line settings.
++ */
++void read_very_early_config(config_fn_t cb, void *data)
++{
++	struct config_options opts = { 0 };
 +
- include::config/transfer.txt[]
- 
- include::config/uploadarchive.txt[]
-diff --git a/Documentation/config/trace2.txt b/Documentation/config/trace2.txt
-new file mode 100644
-index 0000000000..a5f409c1c1
---- /dev/null
-+++ b/Documentation/config/trace2.txt
-@@ -0,0 +1,56 @@
-+Trace2 config settings are only read from the system and global
-+config files; repository local and worktree config files and `-c`
-+command line arguments are not respected.
++	opts.respect_includes = 1;
++	opts.ignore_repo = 1;
++	opts.ignore_worktree = 1;
++	opts.ignore_cmdline = 1;
 +
-+trace2.normalTarget::
-+	This variable controls the normal target destination.
-+	It may be overridden by the `GIT_TR2` environment variable.
-+	The following table shows possible values.
++	config_with_options(cb, data, NULL, &opts);
++}
 +
-+trace2.perfTarget::
-+	This variable controls the performance target destination.
-+	It may be overridden by the `GIT_TR2_PERF` environment variable.
-+	The following table shows possible values.
-+
-+trace2.eventTarget::
-+	This variable controls the event target destination.
-+	It may be overridden by the `GIT_TR2_EVENT` environment variable.
-+	The following table shows possible values.
-++
-+include::../trace2-target-values.txt[]
-+
-+trace2.normalBrief::
-+	Boolean.  When true `time`, `filename`, and `line` fields are
-+	omitted from normal output.  May be overridden by the
-+	`GIT_TR2_BRIEF` environment variable.  Defaults to false.
-+
-+trace2.perfBrief::
-+	Boolean.  When true `time`, `filename`, and `line` fields are
-+	omitted from PERF output.  May be overridden by the
-+	`GIT_TR2_PERF_BRIEF` environment variable.  Defaults to false.
-+
-+trace2.eventBrief::
-+	Boolean.  When true `time`, `filename`, and `line` fields are
-+	omitted from event output.  May be overridden by the
-+	`GIT_TR2_EVENT_BRIEF` environment variable.  Defaults to false.
-+
-+trace2.eventNesting::
-+	Integer.  Specifies desired depth of nested regions in the
-+	event output.  Regions deeper than this value will be
-+	omitted.  May be overridden by the `GIT_TR2_EVENT_NESTING`
-+	environment variable.  Defaults to 2.
-+
-+trace2.configParams::
-+	A comma-separated list of patterns of "important" config
-+	settings that should be recorded in the trace2 output.
-+	For example, `core.*,remote.*.url` would cause the trace2
-+	output to contain events listing each configured remote.
-+	May be overridden by the `GIT_TR2_CONFIG_PARAMS` environment
-+	variable.  Unset by default.
-+
-+trace2.destinationDebug::
-+	Boolean.  When true Git will print error messages when a
-+	trace target destination cannot be opened for writing.
-+	By default, these errors are suppressed and tracing is
-+	silently disabled.  May be overridden by the
-+	`GIT_TR2_DST_DEBUG` environment variable.
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 43adbf00eb..8b6a5e6d4b 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -22,21 +22,41 @@ Targets are defined using a VTable allowing easy extension to other
- formats in the future.  This might be used to define a binary format,
- for example.
- 
-+Trace2 is controlled using `trace2.*` config values in the system and
-+global config files and `GIT_TR2*` environment variables.  Trace2 does
-+not read from repo local or worktree config files or respect `-c`
-+command line config settings.
-+
- == Trace2 Targets
- 
- Trace2 defines the following set of Trace2 Targets.
- Format details are given in a later section.
- 
--`GIT_TR2` (NORMAL)::
-+=== The Normal Format Target
-+
-+The normal format target is a tradition printf format and similar
-+to GIT_TRACE format.  This format is enabled with the `GIT_TR`
-+environment variable or the `trace2.normalTarget` system or global
-+config setting.
-+
-+For example
- 
--	a simple printf format like GIT_TRACE.
--+
- ------------
- $ export GIT_TR2=~/log.normal
- $ git version
- git version 2.20.1.155.g426c96fcdb
- ------------
--+
-+
-+or
-+
-+------------
-+$ git config --global trace2.normalTarget ~/log.normal
-+$ git version
-+git version 2.20.1.155.g426c96fcdb
-+------------
-+
-+yields
-+
- ------------
- $ cat ~/log.normal
- 12:28:42.620009 common-main.c:38                  version 2.20.1.155.g426c96fcdb
-@@ -46,17 +66,32 @@ $ cat ~/log.normal
- 12:28:42.621250 trace2/tr2_tgt_normal.c:124       atexit elapsed:0.001265 code:0
- ------------
- 
--`GIT_TR2_PERF` (PERF)::
-+=== The Performance Format Target
-+
-+The performance format target (PERF) is a column-based format to
-+replace GIT_TRACE_PERFORMANCE and is suitable for development and
-+testing, possibly to complement tools like gprof.  This format is
-+enabled with the `GIT_TR2_PERF` environment variable or the
-+`trace2.perfTarget` system or global config setting.
-+
-+For example
- 
--	a column-based format to replace GIT_TRACE_PERFORMANCE suitable for
--	development and testing, possibly to complement tools like gprof.
--+
- ------------
- $ export GIT_TR2_PERF=~/log.perf
- $ git version
- git version 2.20.1.155.g426c96fcdb
- ------------
--+
-+
-+or
-+
-+------------
-+$ git config --global trace2.perfTarget ~/log.perf
-+$ git version
-+git version 2.20.1.155.g426c96fcdb
-+------------
-+
-+yields
-+
- ------------
- $ cat ~/log.perf
- 12:28:42.620675 common-main.c:38                  | d0 | main                     | version      |     |           |           |            | 2.20.1.155.g426c96fcdb
-@@ -66,56 +101,46 @@ $ cat ~/log.perf
- 12:28:42.621259 trace2/tr2_tgt_perf.c:211         | d0 | main                     | atexit       |     |  0.001265 |           |            | code:0
- ------------
- 
--`GIT_TR2_EVENT` (EVENT)::
-+=== The Event Format Target
-+
-+The event format target is a JSON-based format of event data suitable
-+for telemetry analysis.  This format is enabled with the `GIT_TR2_EVENT`
-+environment variable or the `trace2.eventTarget` system or global config
-+setting.
-+
-+For example
- 
--	a JSON-based format of event data suitable for telemetry analysis.
--+
- ------------
- $ export GIT_TR2_EVENT=~/log.event
- $ git version
- git version 2.20.1.155.g426c96fcdb
- ------------
--+
--------------
--$ cat ~/log.event
--{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
--{"event":"start","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
--{"event":"cmd_name","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
--{"event":"exit","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
--{"event":"atexit","sid":"20190408T191610.507018Z-H9b68c35f-P028492","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
--------------
--
--== Enabling a Target
--
--A Trace2 Target is enabled when the corresponding environment variable
--(`GIT_TR2`, `GIT_TR2_PERF`, or `GIT_TR2_EVENT`) is set.  The following
--values are recognized.
--
--`0`::
--`false`::
--
--	Disables the target.
- 
--`1`::
--`true`::
-+or
- 
--	Enables the target and writes stream to `STDERR`.
--
--`[2-9]`::
-+------------
-+$ git config --global trace2.eventTarget ~/log.event
-+$ git version
-+git version 2.20.1.155.g426c96fcdb
-+------------
- 
--	Enables the target and writes to the already opened file descriptor.
-+yields
- 
--`<absolute-pathname>`::
-+------------
-+$ cat ~/log.event
-+{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
-+{"event":"start","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
-+{"event":"cmd_name","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
-+{"event":"exit","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
-+{"event":"atexit","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621268Z","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
-+------------
- 
--	Enables the target, opens and writes to the file in append mode.
-+=== Enabling a Target
- 
--`af_unix:[<socket_type>:]<absolute-pathname>`::
-+To enable a target, set the corresponding environment variable or
-+system or global config value to one of the following:
- 
--	Enables the target, opens and writes to a Unix Domain Socket
--	(on platforms that support them).
--+
--Socket type can be either `stream` or `dgram`.  If the socket type is
--omitted, Git will try both.
-+include::../trace2-target-values.txt[]
- 
- == Trace2 API
- 
-@@ -243,15 +268,16 @@ significantly affects program performance or behavior, such as
- 	Emits a "def_param" messages for "important" configuration
- 	settings.
- +
--The environment variable `GIT_TR2_CONFIG_PARAMS` can be set to a
-+The environment variable `GIT_TR2_CONFIG_PARAMS` or the `trace2.configParams`
-+config value can be set to a
- list of patterns of important configuration settings, for example:
- `core.*,remote.*.url`.  This function will iterate over all config
- settings and emit a "def_param" message for each match.
- 
- `void trace2_cmd_set_config(const char *key, const char *value)`::
- 
--	Emits a "def_param" message for a specific configuration
--	setting IFF it matches the `GIT_TR2_CONFIG_PARAMS` pattern.
-+	Emits a "def_param" message for a new or updated key/value
-+	pair IF `key` is considered important.
- +
- This is used to hook into `git_config_set()` and catch any
- configuration changes and update a value previously reported by
-@@ -418,9 +444,6 @@ recursive tree walk.
- 
- === NORMAL Format
- 
--NORMAL format is enabled when the `GIT_TR2` environment variable is
--set.
--
- Events are written as lines of the form:
- 
- ------------
-@@ -437,8 +460,8 @@ Events are written as lines of the form:
- Note that this may contain embedded LF or CRLF characters that are
- not escaped, so the event may spill across multiple lines.
- 
--If `GIT_TR2_BRIEF` is true, the `time`, `filename`, and `line` fields
--are omitted.
-+If `GIT_TR2_BRIEF` or `trace2.normalBrief` is true, the `time`, `filename`,
-+and `line` fields are omitted.
- 
- This target is intended to be more of a summary (like GIT_TRACE) and
- less detailed than the other targets.  It ignores thread, region, and
-@@ -446,9 +469,6 @@ data messages, for example.
- 
- === PERF Format
- 
--PERF format is enabled when the `GIT_TR2_PERF` environment variable
--is set.
--
- Events are written as lines of the form:
- 
- ------------
-@@ -508,8 +528,8 @@ This field is in anticipation of in-proc submodules in the future.
- 15:33:33.532712 wt-status.c:2331                  | d0 | main                     | region_leave | r1  |  0.127568 |  0.001504 | status     | label:print
- ------------
- 
--If `GIT_TR2_PERF_BRIEF` is true, the `time`, `file`, and `line`
--fields are omitted.
-+If `GIT_TR2_PERF_BRIEF` or `trace2.perfBrief` is true, the `time`, `file`,
-+and `line` fields are omitted.
- 
- ------------
- d0 | main                     | region_leave | r1  |  0.011717 |  0.009122 | index      | label:preload
-@@ -520,9 +540,6 @@ during development and is quite noisy.
- 
- === EVENT Format
- 
--EVENT format is enabled when the `GIT_TR2_EVENT` environment
--variable is set.
--
- Each event is a JSON-object containing multiple key/value pairs
- written as a single line and followed by a LF.
- 
-@@ -540,7 +557,7 @@ The following key/value pairs are common to all events:
- ------------
+ static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
  {
- 	"event":"version",
--	"sid":"20190408T191827.272759Z-H9b68c35f-P011764",
-+	"sid":"20190408T191827.272759Z-H9b68c35f-P00003510",
- 	"thread":"main",
- 	"time":"2019-04-08T19:18:27.282761Z",
- 	"file":"common-main.c",
-@@ -576,9 +593,9 @@ The following key/value pairs are common to all events:
- `"repo":<repo-id>`::
- 	when present, is the integer repo-id as described previously.
+ 	struct config_set_element k;
+diff --git a/config.h b/config.h
+index ee5d3fa7b4..6a58d61d22 100644
+--- a/config.h
++++ b/config.h
+@@ -55,6 +55,9 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
  
--If `GIT_TR2_EVENT_BRIEF` is true, the `file` and `line` fields are omitted
--from all events and the `time` field is only present on the "start" and
--"atexit" events.
-+If `GIT_TR2_EVENT_BRIEF` or `trace2.eventBrief` is true, the `file`
-+and `line` fields are omitted from all events and the `time` field is
-+only present on the "start" and "atexit" events.
- 
- ==== Event-Specific Key/Value Pairs
- 
-@@ -889,7 +906,7 @@ visited.
- The `category` field may be used in a future enhancement to
- do category-based filtering.
- +
--The `GIT_TR2_EVENT_NESTING` environment variable can be used to
-+`GIT_TR2_EVENT_NESTING` or `trace2.eventNesting` can be used to
- filter deeply nested regions and data events.  It defaults to "2".
- 
- `"region_leave"`::
-diff --git a/Documentation/trace2-target-values.txt b/Documentation/trace2-target-values.txt
-new file mode 100644
-index 0000000000..27d3c64e66
---- /dev/null
-+++ b/Documentation/trace2-target-values.txt
-@@ -0,0 +1,10 @@
-+--
-+* `0` or `false` - Disables the target.
-+* `1` or `true` - Writes to `STDERR`.
-+* `[2-9]` - Writes to the already opened file descriptor.
-+* `<absolute-pathname>` - Writes to the file in append mode.
-+* `af_unix:[<socket_type>:]<absolute-pathname>` - Write to a
-+Unix DomainSocket (on platforms that support them).  Socket
-+type can be either `stream` or `dgram`; if omitted Git will
-+try both.
-+--
+ struct config_options {
+ 	unsigned int respect_includes : 1;
++	unsigned int ignore_repo : 1;
++	unsigned int ignore_worktree : 1;
++	unsigned int ignore_cmdline : 1;
+ 	const char *commondir;
+ 	const char *git_dir;
+ 	config_parser_event_fn_t event_fn;
+@@ -83,6 +86,7 @@ extern int git_config_from_blob_oid(config_fn_t fn, const char *name,
+ extern void git_config_push_parameter(const char *text);
+ extern int git_config_from_parameters(config_fn_t fn, void *data);
+ extern void read_early_config(config_fn_t cb, void *data);
++extern void read_very_early_config(config_fn_t cb, void *data);
+ extern void git_config(config_fn_t fn, void *);
+ extern int config_with_options(config_fn_t fn, void *,
+ 			       struct git_config_source *config_source,
 -- 
 gitgitgadget
 
