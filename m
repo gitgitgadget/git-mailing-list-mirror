@@ -2,66 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6F631F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 22:06:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB2471F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 22:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729536AbfD2WGO (ORCPT <rfc822;e@80x24.org>);
+        id S1729541AbfD2WGQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 18:06:16 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33473 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729409AbfD2WGO (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Apr 2019 18:06:14 -0400
-Received: from mail-it1-f180.google.com ([209.85.166.180]:32935 "EHLO
-        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729412AbfD2WGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 18:06:13 -0400
-Received: by mail-it1-f180.google.com with SMTP id v8so1096726itf.0
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 15:06:13 -0700 (PDT)
+Received: by mail-ed1-f67.google.com with SMTP id n17so1888705edb.0
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 15:06:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TdLc4q7mgOl1LutkHGZ/Al+E7MrzyUQzQNhc7yIrZoU=;
-        b=LLxt8qrYpC5TciXYgk/ln9/nl2ITs25dGE5vqiW0CTJZreIt9WgXOkMRTRjYSPl6Xb
-         m5oUwOYBsnHGwiXMpmi2H0cOYbafQpUY0gNKOnNVUk8yLC1O8s/i1Wta1uOl/7r0uFIy
-         jptjH8DnyrWetQSs1Hy+GuoBMflVQM9jr+KEGbRnpFdikqa6FWfA8W2G3XMHTvpOa6b6
-         YK6YPOuWOUNBFxuXz5blVuLSBm9x2RC+5N7E+NPeWv42S/Z3wAtGmlGpTTFqK678eq7t
-         a8UEvcmtn4tia+FymRoTlXbtD3mOPgshTAhsD5qB9XdNxHcXTfb213BJk+ZiF/olxdpG
-         fDfQ==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=fJfRb/OjNO2VysV1p2BT4uetAdnPlmldDZnmzuJ0hTg=;
+        b=pDCv28AcRABT+2EwelHTIyf0dQxL7vkYKOHJsmta9sRf+2Apknr+umSb9cqDfyJ/PL
+         VPxGlwZa4IL9jiKRm+lXnNZuRNo3z+uPA3NyidUPXgC5PU4fx5TLx0TjSGEnFc0y9e10
+         IOSs7ZIEgEg1nxCGFOCA+vPRv9+vUkjI2P1l7yCw9aJvsqUOLnUcAcRXdTwrEmEXf2If
+         spjwrq1/CYBnzMeqKo82pbNvCdxka/9HRIpgX+42qCsQPWzPLUbTGRh2F8ORx0HOsVZX
+         AH24NpDa9KQvGqbdghOvi2TMJ/eqRty1kad1GLIN2ixdEzUUuLxQabamDF+3fhKeuYP6
+         gZLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TdLc4q7mgOl1LutkHGZ/Al+E7MrzyUQzQNhc7yIrZoU=;
-        b=YG+OfiP1HDOiA8D9lD04Afr0DJIzRA5rjoSxvzG1bJteLvrtdctXyiP03HmSpxDjk5
-         mDF6QxqJGO1rajCNxz2I/gcBiMR7kM306vci2Tbal+OP45OmuD+oIRiXnkCZyakkLNK+
-         igned6ges5lLHPEEsh1cRsk7hRpJEOnktx2qr/cUULomc2ZDoPxPRN3lnvnTVu8eGXKh
-         VBB+7JHJ+NtwCZnpb55j7bTJjlN0ZkKn8um76sQVhmShu0Ls9dbzqB5vKwQTdsYCkYF4
-         bYcmApQ7u0dbke05nZl6bOYHcKf1JJRUXKeZSdEZ5XHxJ1UGMeICNchLXk+TIht7NO7O
-         eCxw==
-X-Gm-Message-State: APjAAAW1Gw39IKhNCqwjIa0IHBdYp279CjwvQrTFTn94PDHqPpmv+oaM
-        7Tsgon0uAGJUcIcIFmQAefh2TLhgsPkb51fVpCWlNg6/5bw=
-X-Google-Smtp-Source: APXvYqz39RRxIfRQ6YFry6nDPjz88BN9rbGzipbbD7ag9T4ArMFPIBh7FQaAHz3aATq6ML93oOu5DOYu1kP0TpvdznQ=
-X-Received: by 2002:a24:6292:: with SMTP id d140mr1094009itc.12.1556575572540;
- Mon, 29 Apr 2019 15:06:12 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=fJfRb/OjNO2VysV1p2BT4uetAdnPlmldDZnmzuJ0hTg=;
+        b=FqOUhkDVm7VWVaSAvvrUXoT9lPJ/9VZNQ49seWJhQLsy/VoChEviF1UFRiyL9xFKIX
+         O7f4jbngqK8Qkyul6FhwZsA50r1rd16SVfA6QdbM+Gm1wnbkBhl8XDGEaRsEZBYspXGu
+         +4zsCbTnaN2E3jvN6PhbmGr3iVabrzbRqEsCbOAGdEV9+PN5VDJSJ4FXv2OLyq7nyKm8
+         4HLiEkGdvkpQbUCqoITaqmK8A8lkaptsjdcmM60CcsCCNyOpHZy3wzBMD4wqoQncVV3j
+         JqqjYE3uDUwmOE4jXbsK9Fzy4H/HPHxUPkfHdU4bZ7KbMpUecVoXGVBRnHDQLb1i+xfD
+         ouLQ==
+X-Gm-Message-State: APjAAAUACqjHSGajtkz7s9KBBrR3fTCyq2AlR1dYOMMRolZko/eVSkcB
+        K7AbZjNSV2umR3Jom89WZepNz7J0
+X-Google-Smtp-Source: APXvYqzx1/UKrIKwc5xFcUjfOim0RQpGh7lX4Am1EIluoPWpyrSdvnwDyfM9fiXke5PO6XzQDRK7gw==
+X-Received: by 2002:a50:b7e4:: with SMTP id i33mr26317315ede.32.1556575572137;
+        Mon, 29 Apr 2019 15:06:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a9sm9347247edt.93.2019.04.29.15.06.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 15:06:11 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 15:06:11 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 22:06:10 GMT
+Message-Id: <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.138.git.gitgitgadget@gmail.com>
+References: <pull.138.git.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?Jaros=C5=82aw=20Honkis?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Subject: [PATCH 1/1] credential: do not mask the username
 MIME-Version: 1.0
-From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
-Date:   Tue, 30 Apr 2019 06:06:01 +0800
-Message-ID: <CAKO26Ms3iN3UMV+ans-Gpv=0XVLkP8BkqWKCstbr_DdqB1HqbQ@mail.gmail.com>
-Subject: Do I need to create an issue before submitting a patch?
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Jaros=C5=82aw=20Honkis?= <yaras6@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+From: =?UTF-8?q?Jaros=C5=82aw=20Honkis?= <yaras6@gmail.com>
 
-I submitted a patch on 2019/4/23 with the title "[PATCH] status: add
-an empty line when there is no hint". However, it didn't get any
-review. Should I create an issue somewhere before submitting it? What
-should I do to get my patch reviewed? Thanks.
+When a user is asked for credentials there is no need to mask the
+username, so the PROMPT_ASKPASS flag on calling credential_ask_one for
+login is unnecessary.
 
-Best,
-John Lin
+The `credential_ask_one()` function internally uses `git_prompt()` which
+in case it is given the flag PROMPT_ASKPASS uses masked input method
+instead of git_terminal_prompt, which does not mask user input.
+
+This fixes https://github.com/git-for-windows/git/issue/675
+
+Signed-off-by: Jarosław Honkis <yaras6@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ credential.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/credential.c b/credential.c
+index 62be651b03..e9108a9e8a 100644
+--- a/credential.c
++++ b/credential.c
+@@ -136,7 +136,9 @@ static void credential_getpass(struct credential *c)
+ {
+ 	if (!c->username)
+ 		c->username = credential_ask_one("Username", c,
+-						 PROMPT_ASKPASS|PROMPT_ECHO);
++						 (getenv("GIT_ASKPASS") ?
++						  PROMPT_ASKPASS : 0) |
++						 PROMPT_ECHO);
+ 	if (!c->password)
+ 		c->password = credential_ask_one("Password", c,
+ 						 PROMPT_ASKPASS);
+-- 
+gitgitgadget
