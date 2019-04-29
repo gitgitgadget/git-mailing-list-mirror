@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 884001F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6E31F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729371AbfD2UOU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 16:14:20 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33069 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729283AbfD2UOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 16:14:19 -0400
-Received: by mail-ed1-f66.google.com with SMTP id n17so1651685edb.0
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
+        id S1729379AbfD2UOW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 16:14:22 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45694 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729351AbfD2UOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 16:14:18 -0400
+Received: by mail-ed1-f65.google.com with SMTP id g57so3733342edc.12
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yhflm1h/FZKF58Ok6RL8hgAJqkUeqZLAyJDxkCErf3w=;
-        b=e6+uSHZbUxQ+lsLUSimqqTjIlEETeYdT8OQwfB4/fSYjn67O1v7Jxsjk20ZBDHWCH0
-         88RbB83HEjI9kqo66qN1XkFm6ecjhcYqqxyz1I5HXcoGrpUcE8pjXk0R/A+gcBlQGhsn
-         6oi61VKYhf0tZLi9OOkW6YUcxgdCQzk4yX9FhBTS/D/RbGL8aR2pmjqtq2Kh6U3DX/N7
-         xRYxS1jwZ0CVSWXoBOnlmnY2L2RE1YvThPrN8hvgdJx/9cAQAESHjG7feTkvVvxRiInO
-         5BVxM2ZhSZpCYgILHdU7evY3wClZimz6F/HLI5hi2+/wBRFoIT/v6rFH8ubQo+PL/YNQ
-         ItqQ==
+        bh=ktNx9nrsRgI+0jnvlP8nBufSFfGnqbif1MQBkfUhywA=;
+        b=DevdYufcVxzt4AtHIthN3ZjFSa2DtZXYeibuE5unOCW29KaLH+W9lQIV1HLvc9hR2j
+         DsSTyF9N4rRDBLwOOYuGTyTjTZ3EpvFLxPOqvqx9EumrPj/9pOXTOgZSGZ7zG7q2Swei
+         Fz9I4p/2vz0diJR3l6NZPRQ03rFipSC3Q73zpq+ZEcNRLk1HoXtyhB4LASKtEQedbI+I
+         H2mkWinwTajCGRORscmdd2b7jhAskZv5CvRdr29m+lROfJ+4/KBSNM9y71hC9xNd+mb4
+         ix9IvysvtDIIcWYbPtni6IfUsTExScO1+LlRWsK3wjLWz5vyCMkehPvrgvrKaMu3MTp/
+         ENLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yhflm1h/FZKF58Ok6RL8hgAJqkUeqZLAyJDxkCErf3w=;
-        b=p/pIG7FqCEvERW4UxiJIw+wquRYNuNX7Q+WD94yHJCvxixRymRs74uxh/EQYT6bF+e
-         hLi4puUksQBTJ1/QNu+vadn/+jU0vq3oQuREn2Z0dXNDbuns+74ELDmVJ4RHfdMUIeOJ
-         x1LF/daAtLemmQx1hZOJjfe6k3+hxxhahLONSJdsp0tIKv0sD6hRbXS3E85yP4RxKugA
-         LwhOOY2XxpY657WxaCUG9X23mi5CWmdbMNtqXZmRr9EznFJCOhEu3Zr1W6gxBZnUS6pp
-         0TsBe4kxQWvSrV6l+UKMblAW8VXIc5TlNVSZkFe6xaeh1KqatuVPPi3AAg/oWsMrv4Nc
-         OzrA==
-X-Gm-Message-State: APjAAAWex/1f19RFrToAqukuWqfyWsM7VZQ0FLNRl7sI/T0BcpyX1UtH
-        1VIBEXQ1qPDv+FqOtPWs7FDW9b9b
-X-Google-Smtp-Source: APXvYqxWfWeamXhpS9NHf78sbYrDJKrFexrRtYby3O8nq2uJUeCrt3nPWgFP3saDPGIykWTjP8J8JQ==
-X-Received: by 2002:a50:9470:: with SMTP id q45mr9544779eda.269.1556568856400;
-        Mon, 29 Apr 2019 13:14:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm9474383edm.14.2019.04.29.13.14.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=ktNx9nrsRgI+0jnvlP8nBufSFfGnqbif1MQBkfUhywA=;
+        b=aih8AeDgeODjDZQkgK963/dIprTdhJi70amIFrRtzpg4v+ju+g2MUpI21+0JAJPgeJ
+         lV8BK6F2jq7uaNQfXdcpA1P6pnc5hpuwHBZUz+J7JoI6mmSHKNUsDamj4YV7Znlo8scj
+         Ogmx3yuoStQv8a1MqszN2ZeTwuAUYF34Si3Mvp/ZJbXhZl7oqL7AKZoSvNTt2zjFsVE1
+         wtN01VWOeXHbAXrbWxGN+zL9ul1uoF3akrmfSKli/YW5dcGWRgpW978qdhDNU3B97bN4
+         oP8/LmGbu74vTfFzzTWSzV8WNY+vgH09h3VQ0CkVR0BkO3NVqAC3ZPGvE2ZG6tFVYABq
+         d98w==
+X-Gm-Message-State: APjAAAUN40UZvqo+FEzVsPvvoEJFOiLsc5o65dhIrsCMb6RVVNU+bPfF
+        BZrdb8PNoMBBUwGAR0cPargysXj0
+X-Google-Smtp-Source: APXvYqx4Ew4ul2Y2QghoX0Weh+uN90H8Kvfb5A+Id8MirQjKGk3dN/cCUA4ZSKZ91T+tTTI70+WcVw==
+X-Received: by 2002:a50:a5fb:: with SMTP id b56mr17417137edc.262.1556568855615;
         Mon, 29 Apr 2019 13:14:15 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 13:14:15 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 20:14:03 GMT
-Message-Id: <175371fb54cbf41e5cf90d8d23ec5fde30036266.1556568852.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q56sm9514737edd.80.2019.04.29.13.14.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 13:14:14 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 13:14:14 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 20:14:02 GMT
+Message-Id: <48e34834b6a65b9f2c68d4f4e459586b2948b6cd.1556568852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v5.git.gitgitgadget@gmail.com>
 References: <pull.169.v4.git.gitgitgadget@gmail.com>
         <pull.169.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 03/11] trace2: add absolute elapsed time to start event
+Subject: [PATCH v5 02/11] trace2: refactor setting process starting time
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,224 +73,239 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add elapsed process time to "start" event to measure
-the performance of early process startup.
+Create trace2_initialize_clock() and call from main() to capture
+process start time in isolation and before other sub-systems are
+ready.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-trace2.txt | 11 ++++++-----
- t/t0211-trace2-perf.sh                 | 12 ++++++------
- trace2.c                               |  8 +++++++-
- trace2/tr2_tgt.h                       |  1 +
- trace2/tr2_tgt_event.c                 |  5 ++++-
- trace2/tr2_tgt_normal.c                |  3 ++-
- trace2/tr2_tgt_perf.c                  |  7 ++++---
- 7 files changed, 30 insertions(+), 17 deletions(-)
+ Documentation/technical/api-trace2.txt | 12 ++++++--
+ common-main.c                          |  2 ++
+ compat/mingw.c                         |  2 ++
+ trace2.c                               |  7 ++++-
+ trace2.h                               | 17 ++++++++++++
+ trace2/tr2_tls.c                       | 38 ++++++++++++++++----------
+ trace2/tr2_tls.h                       |  8 +++++-
+ 7 files changed, 67 insertions(+), 19 deletions(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index f37fccf1da..baaa1153bb 100644
+index 2de565fa3d..f37fccf1da 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
-@@ -60,7 +60,7 @@ git version 2.20.1.155.g426c96fcdb
- ------------
- $ cat ~/log.perf
- 12:28:42.620675 common-main.c:38                  | d0 | main                     | version      |     |           |           |            | 2.20.1.155.g426c96fcdb
--12:28:42.621001 common-main.c:39                  | d0 | main                     | start        |     |           |           |            | git version
-+12:28:42.621001 common-main.c:39                  | d0 | main                     | start        |     |  0.001173 |           |            | git version
- 12:28:42.621111 git.c:432                         | d0 | main                     | cmd_name     |     |           |           |            | version (version)
- 12:28:42.621225 git.c:662                         | d0 | main                     | exit         |     |  0.001227 |           |            | code:0
- 12:28:42.621259 trace2/tr2_tgt_perf.c:211         | d0 | main                     | atexit       |     |  0.001265 |           |            | code:0
-@@ -79,7 +79,7 @@ git version 2.20.1.155.g426c96fcdb
- ------------
- $ cat ~/log.event
- {"event":"version","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.620713","file":"common-main.c","line":38,"evt":"1","exe":"2.20.1.155.g426c96fcdb"}
--{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621027","file":"common-main.c","line":39,"argv":["git","version"]}
-+{"event":"start","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621027","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
- {"event":"cmd_name","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621122","file":"git.c","line":432,"name":"version","hierarchy":"version"}
- {"event":"exit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621236","file":"git.c","line":662,"t_abs":0.001227,"code":0}
- {"event":"atexit","sid":"1547659722619736-11614","thread":"main","time":"2019-01-16 17:28:42.621268","file":"trace2/tr2_tgt_event.c","line":163,"t_abs":0.001265,"code":0}
-@@ -601,6 +601,7 @@ from all events and the `time` field is only present on the "start" and
- {
- 	"event":"start",
- 	...
-+	"t_abs":0.001227, # elapsed time in seconds
- 	"argv":["git","version"]
- }
- ------------
-@@ -1118,7 +1119,7 @@ $ git status
+@@ -160,17 +160,23 @@ purposes.
  
- $ cat ~/log.perf
- d0 | main                     | version      |     |           |           |            | 2.20.1.160.g5676107ecd.dirty
--d0 | main                     | start        |     |           |           |            | git status
-+d0 | main                     | start        |     |  0.001173 |           |            | git status
- d0 | main                     | def_repo     | r1  |           |           |            | worktree:/Users/jeffhost/work/gfw
- d0 | main                     | cmd_name     |     |           |           |            | status (status)
- ...
-@@ -1163,7 +1164,7 @@ $ git status
- ...
- $ cat ~/log.perf
- d0 | main                     | version      |     |           |           |            | 2.20.1.162.gb4ccea44db.dirty
--d0 | main                     | start        |     |           |           |            | git status
-+d0 | main                     | start        |     |  0.001173 |           |            | git status
- d0 | main                     | def_repo     | r1  |           |           |            | worktree:/Users/jeffhost/work/gfw
- d0 | main                     | cmd_name     |     |           |           |            | status (status)
- ...
-@@ -1219,7 +1220,7 @@ $ git status
- ...
- $ cat ~/log.perf
- d0 | main                     | version      |     |           |           |            | 2.20.1.156.gf9916ae094.dirty
--d0 | main                     | start        |     |           |           |            | git status
-+d0 | main                     | start        |     |  0.001173 |           |            | git status
- d0 | main                     | def_repo     | r1  |           |           |            | worktree:/Users/jeffhost/work/gfw
- d0 | main                     | cmd_name     |     |           |           |            | status (status)
- d0 | main                     | region_enter | r1  |  0.001791 |           | index      | label:do_read_index .git/index
-diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
-index 953e2f7847..c9694b29f7 100755
---- a/t/t0211-trace2-perf.sh
-+++ b/t/t0211-trace2-perf.sh
-@@ -50,7 +50,7 @@ test_expect_success 'perf stream, return code 0' '
- 	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
- 	cat >expect <<-EOF &&
- 		d0|main|version|||||$V
--		d0|main|start|||||_EXE_ trace2 001return 0
-+		d0|main|start||_T_ABS_|||_EXE_ trace2 001return 0
- 		d0|main|cmd_name|||||trace2 (trace2)
- 		d0|main|exit||_T_ABS_|||code:0
- 		d0|main|atexit||_T_ABS_|||code:0
-@@ -64,7 +64,7 @@ test_expect_success 'perf stream, return code 1' '
- 	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
- 	cat >expect <<-EOF &&
- 		d0|main|version|||||$V
--		d0|main|start|||||_EXE_ trace2 001return 1
-+		d0|main|start||_T_ABS_|||_EXE_ trace2 001return 1
- 		d0|main|cmd_name|||||trace2 (trace2)
- 		d0|main|exit||_T_ABS_|||code:1
- 		d0|main|atexit||_T_ABS_|||code:1
-@@ -82,7 +82,7 @@ test_expect_success 'perf stream, error event' '
- 	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
- 	cat >expect <<-EOF &&
- 		d0|main|version|||||$V
--		d0|main|start|||||_EXE_ trace2 003error '\''hello world'\'' '\''this is a test'\''
-+		d0|main|start||_T_ABS_|||_EXE_ trace2 003error '\''hello world'\'' '\''this is a test'\''
- 		d0|main|cmd_name|||||trace2 (trace2)
- 		d0|main|error|||||hello world
- 		d0|main|error|||||this is a test
-@@ -128,15 +128,15 @@ test_expect_success 'perf stream, child processes' '
- 	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
- 	cat >expect <<-EOF &&
- 		d0|main|version|||||$V
--		d0|main|start|||||_EXE_ trace2 004child test-tool trace2 004child test-tool trace2 001return 0
-+		d0|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 004child test-tool trace2 001return 0
- 		d0|main|cmd_name|||||trace2 (trace2)
- 		d0|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 004child test-tool trace2 001return 0
- 		d1|main|version|||||$V
--		d1|main|start|||||_EXE_ trace2 004child test-tool trace2 001return 0
-+		d1|main|start||_T_ABS_|||_EXE_ trace2 004child test-tool trace2 001return 0
- 		d1|main|cmd_name|||||trace2 (trace2/trace2)
- 		d1|main|child_start||_T_ABS_|||[ch0] class:? argv: test-tool trace2 001return 0
- 		d2|main|version|||||$V
--		d2|main|start|||||_EXE_ trace2 001return 0
-+		d2|main|start||_T_ABS_|||_EXE_ trace2 001return 0
- 		d2|main|cmd_name|||||trace2 (trace2/trace2/trace2)
- 		d2|main|exit||_T_ABS_|||code:0
- 		d2|main|atexit||_T_ABS_|||code:0
+ These are concerned with the lifetime of the overall git process.
+ 
++`void trace2_initialize_clock()`::
++
++	Initialize the Trace2 start clock and nothing else.  This should
++	be called at the very top of main() to capture the process start
++	time and reduce startup order dependencies.
++
+ `void trace2_initialize()`::
+ 
+ 	Determines if any Trace2 Targets should be enabled and
+-	initializes the Trace2 facility.  This includes starting the
+-	elapsed time clocks and thread local storage (TLS).
++	initializes the Trace2 facility.  This includes setting up the
++	Trace2 thread local storage (TLS).
+ +
+ This function emits a "version" message containing the version of git
+ and the Trace2 protocol.
+ +
+ This function should be called from `main()` as early as possible in
+-the life of the process.
++the life of the process after essential process initialization.
+ 
+ `int trace2_is_enabled()`::
+ 
+diff --git a/common-main.c b/common-main.c
+index d484aec209..6137af0e63 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -27,6 +27,8 @@ int main(int argc, const char **argv)
+ {
+ 	int result;
+ 
++	trace2_initialize_clock();
++
+ 	/*
+ 	 * Always open file descriptors 0/1/2 to avoid clobbering files
+ 	 * in die().  It also avoids messing up when the pipes are dup'ed
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 6b04514cdc..a2f74aca6a 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2569,6 +2569,8 @@ void mingw_startup(void)
+ 	wchar_t **wenv, **wargv;
+ 	_startupinfo si;
+ 
++	trace2_initialize_clock();
++
+ 	maybe_redirect_std_handles();
+ 
+ 	/* get wide char arguments and environment */
 diff --git a/trace2.c b/trace2.c
-index 6dd51e6aa5..1c180062dd 100644
+index ccccd4ef09..6dd51e6aa5 100644
 --- a/trace2.c
 +++ b/trace2.c
-@@ -182,13 +182,19 @@ void trace2_cmd_start_fl(const char *file, int line, const char **argv)
+@@ -142,6 +142,11 @@ static void tr2main_signal_handler(int signo)
+ 	raise(signo);
+ }
+ 
++void trace2_initialize_clock(void)
++{
++	tr2tls_start_process_clock();
++}
++
+ void trace2_initialize_fl(const char *file, int line)
  {
  	struct tr2_tgt *tgt_j;
- 	int j;
-+	uint64_t us_now;
-+	uint64_t us_elapsed_absolute;
+@@ -428,7 +433,7 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
+ 	us_now = getnanotime() / 1000;
+ 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
  
- 	if (!trace2_enabled)
- 		return;
+-	tr2tls_create_self(thread_name);
++	tr2tls_create_self(thread_name, us_now);
  
-+	us_now = getnanotime() / 1000;
-+	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
-+
  	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_start_fl)
--			tgt_j->pfn_start_fl(file, line, argv);
-+			tgt_j->pfn_start_fl(file, line, us_elapsed_absolute,
-+					    argv);
- }
+ 		if (tgt_j->pfn_thread_start_fl)
+diff --git a/trace2.h b/trace2.h
+index ae5020d0e6..8f89e70c44 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -19,6 +19,23 @@ struct json_writer;
+  * [] trace2_printf*    -- legacy trace[1] messages.
+  */
  
- int trace2_cmd_exit_fl(const char *file, int line, int code)
-diff --git a/trace2/tr2_tgt.h b/trace2/tr2_tgt.h
-index 297bb8ffbe..7b90469212 100644
---- a/trace2/tr2_tgt.h
-+++ b/trace2/tr2_tgt.h
-@@ -15,6 +15,7 @@ typedef void(tr2_tgt_term_t)(void);
- typedef void(tr2_tgt_evt_version_fl_t)(const char *file, int line);
++/*
++ * Initialize the TRACE2 clock and do nothing else, in particular
++ * no mallocs, no system inspection, and no environment inspection.
++ *
++ * This should be called at the very top of main() to capture the
++ * process start time.  This is intended to reduce chicken-n-egg
++ * bootstrap pressure.
++ *
++ * It is safe to call this more than once.  This allows capturing
++ * absolute startup costs on Windows which uses a little trickery
++ * to do setup work before common-main.c:main() is called.
++ *
++ * The main trace2_initialize_fl() may be called a little later
++ * after more infrastructure is established.
++ */
++void trace2_initialize_clock(void);
++
+ /*
+  * Initialize TRACE2 tracing facility if any of the builtin TRACE2
+  * targets are enabled in the environment.  Emits a 'version' event.
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 8e65b0361d..e76d8c5d92 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -10,16 +10,30 @@
+ #define TR2_REGION_NESTING_INITIAL_SIZE (100)
  
- typedef void(tr2_tgt_evt_start_fl_t)(const char *file, int line,
-+				     uint64_t us_elapsed_absolute,
- 				     const char **argv);
- typedef void(tr2_tgt_evt_exit_fl_t)(const char *file, int line,
- 				    uint64_t us_elapsed_absolute, int code);
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 107cb5317d..89a4d3ae9a 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -122,13 +122,16 @@ static void fn_version_fl(const char *file, int line)
- 	jw_release(&jw);
- }
+ static struct tr2tls_thread_ctx *tr2tls_thread_main;
+-static uint64_t tr2tls_us_start_main;
++static uint64_t tr2tls_us_start_process;
  
--static void fn_start_fl(const char *file, int line, const char **argv)
-+static void fn_start_fl(const char *file, int line,
-+			uint64_t us_elapsed_absolute, const char **argv)
+ static pthread_mutex_t tr2tls_mutex;
+ static pthread_key_t tr2tls_key;
+ 
+ static int tr2_next_thread_id; /* modify under lock */
+ 
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
++void tr2tls_start_process_clock(void)
++{
++	if (tr2tls_us_start_process)
++		return;
++
++	/*
++	 * Keep the absolute start time of the process (i.e. the main
++	 * process) in a fixed variable since other threads need to
++	 * access it.  This allows them to do that without a lock on
++	 * main thread's array data (because of reallocs).
++	 */
++	tr2tls_us_start_process = getnanotime() / 1000;
++}
++
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++					     uint64_t us_thread_start)
  {
- 	const char *event_name = "start";
- 	struct json_writer jw = JSON_WRITER_INIT;
-+	double t_abs = (double)us_elapsed_absolute / 1000000.0;
+-	uint64_t us_now = getnanotime() / 1000;
+ 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
  
- 	jw_object_begin(&jw, 0);
- 	event_fmt_prepare(event_name, file, line, NULL, &jw);
-+	jw_object_double(&jw, "t_abs", 6, t_abs);
- 	jw_object_inline_begin_array(&jw, "argv");
- 	jw_array_argv(&jw, argv);
- 	jw_end(&jw);
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index 547183d5b6..57f3e18f5b 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -81,7 +81,8 @@ static void fn_version_fl(const char *file, int line)
- 	strbuf_release(&buf_payload);
+ 	/*
+@@ -29,7 +43,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
+ 	 */
+ 	ctx->alloc = TR2_REGION_NESTING_INITIAL_SIZE;
+ 	ctx->array_us_start = (uint64_t *)xcalloc(ctx->alloc, sizeof(uint64_t));
+-	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
++	ctx->array_us_start[ctx->nr_open_regions++] = us_thread_start;
+ 
+ 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+ 
+@@ -55,7 +69,7 @@ struct tr2tls_thread_ctx *tr2tls_get_self(void)
+ 	 * here and silently continue.
+ 	 */
+ 	if (!ctx)
+-		ctx = tr2tls_create_self("unknown");
++		ctx = tr2tls_create_self("unknown", getnanotime() / 1000);
+ 
+ 	return ctx;
+ }
+@@ -124,22 +138,18 @@ uint64_t tr2tls_absolute_elapsed(uint64_t us)
+ 	if (!tr2tls_thread_main)
+ 		return 0;
+ 
+-	return us - tr2tls_us_start_main;
++	return us - tr2tls_us_start_process;
  }
  
--static void fn_start_fl(const char *file, int line, const char **argv)
-+static void fn_start_fl(const char *file, int line,
-+			uint64_t us_elapsed_absolute, const char **argv)
+ void tr2tls_init(void)
  {
- 	struct strbuf buf_payload = STRBUF_INIT;
++	tr2tls_start_process_clock();
++
+ 	pthread_key_create(&tr2tls_key, NULL);
+ 	init_recursive_mutex(&tr2tls_mutex);
  
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index f0746fcf86..9c3b4d8a0f 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -159,15 +159,16 @@ static void fn_version_fl(const char *file, int line)
- 	strbuf_release(&buf_payload);
+-	tr2tls_thread_main = tr2tls_create_self("main");
+-	/*
+-	 * Keep a copy of the absolute start time of the main thread
+-	 * in a fixed variable since other threads need to access it.
+-	 * This also eliminates the need to lock accesses to the main
+-	 * thread's array (because of reallocs).
+-	 */
+-	tr2tls_us_start_main = tr2tls_thread_main->array_us_start[0];
++	tr2tls_thread_main =
++		tr2tls_create_self("main", tr2tls_us_start_process);
  }
  
--static void fn_start_fl(const char *file, int line, const char **argv)
-+static void fn_start_fl(const char *file, int line,
-+			uint64_t us_elapsed_absolute, const char **argv)
- {
- 	const char *event_name = "start";
- 	struct strbuf buf_payload = STRBUF_INIT;
+ void tr2tls_release(void)
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index bb80e3f8e7..b1e327a928 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -31,7 +31,8 @@ struct tr2tls_thread_ctx {
+  * In this and all following functions the term "self" refers to the
+  * current thread.
+  */
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name);
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++					     uint64_t us_thread_start);
  
- 	sq_quote_argv_pretty(&buf_payload, argv);
+ /*
+  * Get our TLS data.
+@@ -94,4 +95,9 @@ void tr2tls_release(void);
+  */
+ int tr2tls_locked_increment(int *p);
  
--	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
--			 &buf_payload);
-+	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
-+			 NULL, NULL, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
- 
++/*
++ * Capture the process start time and do nothing else.
++ */
++void tr2tls_start_process_clock(void);
++
+ #endif /* TR2_TLS_H */
 -- 
 gitgitgadget
 
