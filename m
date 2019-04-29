@@ -6,80 +6,64 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA3101F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 22:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D172E1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 22:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729583AbfD2WKR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 18:10:17 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37417 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728105AbfD2WKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 18:10:17 -0400
-Received: by mail-wm1-f68.google.com with SMTP id y5so1278596wma.2
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 15:10:15 -0700 (PDT)
+        id S1729554AbfD2WNG convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 29 Apr 2019 18:13:06 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51993 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729252AbfD2WNG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 18:13:06 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 4so1264463wmf.1
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 15:13:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eV2L8G2gp6Ww9yS8JpPU6hqyVRoTTFc5m+Y2187ynoA=;
-        b=aEJDNP/Ea+JE1LL/o5+OBWskfVI/30Jx+dzCIAYYpWo813KJDPOWiOsW/YGLF9QbcM
-         B5pqr4/Hz6aOEii+rxRN2sDyJFSyn2qmfPdTdYhMBPYlYc++i9MgUrI5LVOWpmKEpBdk
-         005QnAgqtFou6/tjj8Ady3hxsCvRoQcAH6BijVy4v1O0KHrXjHIZ8nsOgGHKX1I6fUMD
-         81Hmd7OuWu3rUzC/nfvf2fcxC+8yk/PFlWL1srbmjCrDnpTbXhT4lsSBqKU7q3epHyyA
-         Tw+esVdXEp6QrdiUZI9Egbl+GYHQUn7agdLbbVU1FSH7lZKuQ/9DhZIUOLQQDOalzrEE
-         tfaw==
-X-Gm-Message-State: APjAAAVwRozdYCnzDrvjZlsNmHnJjlVWmLBJCf9wcHpLnlynCrcayQMy
-        0SzvfVCN4Ngr5sodJI5oMrFP4OMcmSsKDMrrTt0=
-X-Google-Smtp-Source: APXvYqwVQAmLELuhFqYb7A0WnW37Rlwri/dPaD2mCazvYYuwS8RUuLPuSnhGnaNBabbu+d33+C9PyTGsOioXwxEr65c=
-X-Received: by 2002:a1c:9e55:: with SMTP id h82mr840320wme.134.1556575815006;
- Mon, 29 Apr 2019 15:10:15 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Rh289tJWTta9P8griAXaISSs1qIQr/qOb9QqnxELlg0=;
+        b=SUpQbRMCacEZ33QdhU1zFpWaHVBqCMzy84voiKxXBM9pZJabCyPmT+aPFwAh3Ja9R4
+         VcPIIMAxumZAd8KRXRx3hzXYzj4D5ToET9+B/eqJndtOiFjuYNkTNlQvmUwoEvkW4YLN
+         ulLe4wABU+wFT3lKrw7lpzWGy97i85DE30uPeqhsx9Bj8APffMV+7h2dB0hv3lo9iUGi
+         nS0nznQwdRpEDw7Dz2ANkwDhlVfdyCfi2GY1qhEVVwVknk22oWnxK1QpOHfVHgNl55Hp
+         DRLCejHX+oC5y860Uv8jROx2ZddKtO08ceusCIU4EVQCAt9xXGYO5kbEhyd21I6C7LOP
+         S6EA==
+X-Gm-Message-State: APjAAAWgitKdL8VhCetLjT/62Sj0wF02kCCIb54EA1Pn5jrViiKyf7NH
+        ZYo26BTP/e4bi5XdwqLLPdVfAAIonYYMPAhocmxG8g==
+X-Google-Smtp-Source: APXvYqyUCXUtVvXl+/p4w3ZKcAtMS+apRMLfF0ZIxbhcALt91EWwJukslEehv4vRvWjy+rVgSA1HlT7kli+bWECymhw=
+X-Received: by 2002:a1c:a184:: with SMTP id k126mr776849wme.71.1556575984276;
+ Mon, 29 Apr 2019 15:13:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.137.git.gitgitgadget@gmail.com> <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
-In-Reply-To: <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
+References: <pull.138.git.gitgitgadget@gmail.com> <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
+In-Reply-To: <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 29 Apr 2019 18:10:04 -0400
-Message-ID: <CAPig+cT1EP+HC5h4e0NGCu=1i6cZXPxERRgnnAdZJn+XeqpbFw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for transport
-To:     Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>
+Date:   Mon, 29 Apr 2019 18:12:54 -0400
+Message-ID: <CAPig+cSiv+4xh6bWDTggBiApywAmAx6eQLq+Dh116kO2+cf_kg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] credential: do not mask the username
+To:     =?UTF-8?Q?Jaros=C5=82aw_Honkis_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Braun <thomas.braun@byte-physics.de>
+        =?UTF-8?Q?Jaros=C5=82aw_Honkis?= <yaras6@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 29, 2019 at 6:04 PM Thomas Braun via GitGitGadget
+On Mon, Apr 29, 2019 at 6:06 PM Jarosław Honkis via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-> Since commit 0c499ea60f (send-pack: demultiplex a sideband stream with
-> status data, 2010-02-05) the built-in send-pack uses the side-band-64k
-> capability if advertised by the server.
+> When a user is asked for credentials there is no need to mask the
+> username, so the PROMPT_ASKPASS flag on calling credential_ask_one for
+> login is unnecessary.
 >
-> Unfortunately this breaks pushing over the dump git protocol if used
+> The `credential_ask_one()` function internally uses `git_prompt()` which
+> in case it is given the flag PROMPT_ASKPASS uses masked input method
+> instead of git_terminal_prompt, which does not mask user input.
+>
+> This fixes https://github.com/git-for-windows/git/issue/675
 
-s/dump/dumb/
+This link is dead. Is there a more modern URL to which this can point?
 
-> over a network connection when using MinGW (but *not* when using
-> mingw-w64).
-> [...]
-> The new config option "sendpack.sideband" allows to override the
-> side-band-64k capability of the server, and thus makes the dump git
-> protocol work.
-> [...]
-> Signed-off-by: Thomas Braun <thomas.braun@byte-physics.de>
+> Signed-off-by: Jarosław Honkis <yaras6@gmail.com>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/Documentation/config/sendpack.txt b/Documentation/config/sendpack.txt
-> @@ -0,0 +1,5 @@
-> +sendpack.sideband::
-> +       Allows to disable the side-band-64k capability for send-pack even
-> +       when it is advertised by the server. Makes it possible to work
-> +       around a limitation in the git for windows implementation together
-> +       with the dump git protocol. Defaults to true.
-
-s/dump/dumb/
-
-For someone who hasn't read the commit message of this patch, "work
-around a limitation in ... git for windows" doesn't mean much. Perhaps
-this documentation could explain in more precise terms under what
-circumstances this option should be used?
