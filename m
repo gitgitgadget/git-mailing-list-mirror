@@ -2,151 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB37C1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 16:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCF041F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 16:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728669AbfD2QPN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 12:15:13 -0400
-Received: from mout.gmx.net ([212.227.15.18]:45427 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728626AbfD2QPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 12:15:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556554467;
-        bh=GWzJqcN7Zqka8AVlZknnB9zilaRohN22u6pJGle83xU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GEPYi3lMrB5qpqr7a5C2wkM2A60v/k68kQCUMNTrhMorJn9qxxXwTaT0mNRBJ7OgL
-         2dXt9NYBvRhlZTkd7lF5r5PN7eSj1QjONdimRqsRTZ2VsZyehoT1PCjpDGt3FXiKHa
-         xmDNfUBmIDu2zrGuEmhk+o+CgCMNj2r4pDCaGIjI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.106.210.16] ([167.220.152.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LdHeL-1guZb005Ef-00iVfJ; Mon, 29
- Apr 2019 18:14:27 +0200
-Date:   Mon, 29 Apr 2019 12:14:29 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -r: always reword merge -c
-In-Reply-To: <20190426103332.9036-1-phillip.wood123@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904291208210.45@tvgsbejvaqbjf.bet>
-References: <20190426103332.9036-1-phillip.wood123@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728716AbfD2QS5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 12:18:57 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40499 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728592AbfD2QS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 12:18:57 -0400
+Received: by mail-ed1-f65.google.com with SMTP id e56so3368909ede.7
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 09:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=lpYY8Kr7wO/AyY7ykn3WrQWgpnZ6J8ab4BVifMJZG8U=;
+        b=KldTigRwaIl1iFTGuYVEJ+5Dym0jvEW/TAdt+/efpenVWmryWfM7+3s9C2nnUS0SUz
+         gxCHycR1AONGF6TNxc430C3vI1bG9Xq7oucYEDqdyi+p1SFkqeGS/8F4bvfzcyK/IgN6
+         Kup9Mb3cJaJ/syfhrzQSv4Mic5lvykcaUJNJvNc1IewyPp0pTZCEN6Gc31sPyKWB+4h0
+         OspRu2S/rrTXk/QTa2R8NmcQ/wnjX3t2OWBuzDHTlNmtkxu1WkVDyTK6TUdzKJtNTNxv
+         GuIu/TTnqhFkPNueSdASlOpUmLylV54MJaYWBTSZdin8CclI864SmtHDa/yaaBqS7a6k
+         93Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lpYY8Kr7wO/AyY7ykn3WrQWgpnZ6J8ab4BVifMJZG8U=;
+        b=Cd6TeLImuloExTr2W+eXegh+G9ix4VrePsJl4KkR8yxKGEO0YmTzSfZRVBZZjhBJ8r
+         +XliTgYEnmFAdLn/N2rFMBPgETCglOW5NhNZ/oD9ofZ/ZdG7+IAxZpCxWkq8tEkiBIVW
+         AnEXMJixG9iWuK6oAuPkDRulrxhiP6ifRH+2eLJosKnptqCbdoldOa1oSRbIfPLPMRaI
+         wYyCOFRTNbOPoVFzwZAiMLREDdJweV+79Q0gTVGepDWEq1iXPiMTUuTKD3UKUs/mfOit
+         1c4zLmrcsZr9xEGzezVmh0hF4TLhbPhDtdh3WeQkjE3ArEk9qujC1GhHQhbaxqdz08ts
+         7a0w==
+X-Gm-Message-State: APjAAAU06VsNFX55vSXXWCfYgLPdkFuL8+0SLEvwA0a7Ab5+Y+YHaF2m
+        DsWyd3bAk0vAPTCu+qgnxO40sbQU
+X-Google-Smtp-Source: APXvYqzY2v0D9Wi69H72c2pI1VgyG0r/cRQxhoxO1cGDCEbd4BZ8u3XzbfouPcBVS+xUL8L68ciFbw==
+X-Received: by 2002:a50:85c3:: with SMTP id q3mr11781341edh.84.1556554735286;
+        Mon, 29 Apr 2019 09:18:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r2sm1422139ejp.76.2019.04.29.09.18.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 09:18:54 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 09:18:54 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 16:18:52 GMT
+Message-Id: <pull.182.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] Multi-pack-index: Fix "too many file descriptors" bug
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LsWN1/qnc038h1aJ/6FFWt6UtLppmvxokV+bqLepilp+DGEfdlQ
- RyW7qatCJn0vUAk3NVCUAT9quZrxNGlkRsSgt8AfhzT+n9tR3Q6DuRAuSW5Q5t3Y8PJcBlB
- IaNs/4d1XOPGybH1TxXWRxC046bMsoe9xG9jYHwF1z3Y+YIcMPO59c0NmZSRhc1GWrfI1Lo
- 34CITozbvPly96ByeVU8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xaDjlpj7tso=:vC61VHPDPK81G0p7zBBF9y
- Wu0vx/lscrf/TLDMiOQ/La0hDiPZktbKCrAFs+znxfmbeLnp+wSSvq7sR1zQYRxkH+C+JVWPe
- U8ZZT8sprwWmJlXgUEpkDXCrl32I6fhnKWXRKw/I8Pgowl53diLfHrjTxGg1kE05eDCydsvXe
- LEpx7px31dOgC7hCShwrXdMghlfHY7m0/fNAz114GVb6TOctJYUc1reVh2oYix5hQ1d9ab+22
- 8SqJmQTz2ZjcvZrIj/bxK/HxeOIx1QrYSGNr60ejlZyTJWBPbAQ0+C5jw6Lk0TU6Jhq265/N6
- RzcBpnZyNLjJJNJggl4JotjmId+R7ohG1xIxy9HzBaLyqWlo8RbN+yzPatR7hbLneJ73hjvez
- Nx30fcsI/junStxwrsGNQLwJE2HY1faeJVG+qv/q9+QClQ/BwyBoPETiWTwISv+yqo/Xlm99P
- j1CvRCw7/geNmz12xrzV/hIoMMRzVXHNKcOaALCvmQ5yGj881ewr2uqcEEHWOm9Nncg4fdbHU
- UbHtCB0GnArrvD6n5m00m7QmXf547nNyTRUX0EZwCru3rQyIJ3LRVrJEzItivp8dDb6WimSkk
- mxgZlk904CwaoeUCe/uqBm3TgSrxhYdjyk3qrw5VySVArZsNFLGEITuce3FtC/e0CTAWKmr5L
- Kwjqe9HFa7ktybEeXLf4I0sBMo3DHxDyFK+u6vA88cNYzFA8tMq2Ub9umus5SPcXVYmCLieHZ
- QEgmeHpkg3E6vRSYMs8jtq7gmRtQS7xMY2frk12SiTgG8yefTZZYfqLtZjO6+XyM8RAgBqyxF
- jVq2eEyRhSD6ktVmkkH6JppJETdGTfNoLWvMCFgjyv32KK5NwZi4zI79Y7VLoyTkTJ3TmKG20
- PPQTyH1wvtIJYf6zBfgAw42WtQwtkXMvbAPe2BUV77QrJSQVuaWT4F8jaySqW6hOY7+pCqRq5
- mVxes5KJ8Lg==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     git@jeffhostetler.com, avarab@gmail.com, peff@peff.net,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Thanks to Jeff H for finding the problem with the multi-pack-index regarding
+many packs. Specifically: if we open too many packs, the close_one_pack()
+method cannot find the packs from the multi-pack-index to close.
 
-On Fri, 26 Apr 2019, Phillip Wood wrote:
+Jeff already fixed the problem explicitly in 'git multi-pack-index verify'
+which would hit this issue 100% of the time we had 2000+ packs. This issue
+could still happen in 'git rev-list --all --objects' if there are enough
+packs containing commits and trees. This series fixes the issue.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> If a merge can be fast-forwarded then make sure that we still edit the
-> commit message if the user specifies -c. The implementation follows the
-> same pattern that is used for ordinary rewords that are fast-forwarded.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+The basic solution is to add packs from the multi-pack-index into the
+packed_git struct as they are opened. To avoid performance issues, add a 
+multi_pack_index bit to the packed_git struct. Midx-aware algorithms can
+then ignore those packs.
 
-OMG I was bitten twice by this very bug in the past week, and planned on
-looking into it next week. Thanks for beating me to it.
+There was a very subtle issue that happens during a 'git repack': we clear
+the multi-pack-index after possibly reading some packs from it, thus leaving
+some packs in the packed_git struct but having a NULL multi_pack_index in
+the object store. This informs the change to close_midx().
 
-Two comments:
+I'm based on a recent 'master' commit that contains the following three
+branches due to nearby changes causing conflicts if I pick only Jeff's
+change as a base:
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 0db410d590..ff8565e7a8 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3248,6 +3248,10 @@ static int do_merge(struct repository *r,
->  		rollback_lock_file(&lock);
->  		ret =3D fast_forward_to(r, &commit->object.oid,
->  				      &head_commit->object.oid, 0, opts);
-> +		if (flags & TODO_EDIT_MERGE_MSG) {
-> +			run_commit_flags |=3D AMEND_MSG;
-> +			goto fast_forward_edit;
-> +		}
->  		goto leave_merge;
->  	}
->
-> @@ -3351,6 +3355,7 @@ static int do_merge(struct repository *r,
->  		 * value (a negative one would indicate that the `merge`
->  		 * command needs to be rescheduled).
->  		 */
-> +	fast_forward_edit:
+jh/midx-verify-too-many-packs jk/server-info-rabbit-hole
+bc/hash-transition-16
 
-It is *slightly* awkward that this is an `else` arm of an `if (ret)`, but
-I do not necessarily think that it would be better to move the label
-before the `if` than what you did; Your version comes out more readable,
-still.
+Thanks, -Stolee
 
->  		ret =3D !!run_git_commit(r, git_path_merge_msg(r), opts,
->  				       run_commit_flags);
->
-> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> index 4c69255ee6..3d484a3c72 100755
-> --- a/t/t3430-rebase-merges.sh
-> +++ b/t/t3430-rebase-merges.sh
-> @@ -164,6 +164,16 @@ test_expect_success 'failed `merge <branch>` does n=
-ot crash' '
->  	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
->  '
->
-> +test_expect_success 'fast-forward merge -c still rewords' '
-> +	git checkout -b fast-forward-merge-c H &&
-> +	set_fake_editor &&
+Derrick Stolee (2):
+  midx: pass a repository pointer
+  midx: add packs to packed_git linked list
 
-set_fake_editor affects global state AFAIR (setting and exporting
-`EDITOR`), therefore this would need to be run in a subshell, i.e.
-enclosed in parentheses.
+ builtin/multi-pack-index.c |  2 +-
+ builtin/pack-objects.c     |  2 +-
+ midx.c                     | 42 +++++++++++++++++++++++++-------------
+ midx.h                     |  7 ++++---
+ object-store.h             |  9 ++------
+ packfile.c                 | 30 ++++++++-------------------
+ sha1-name.c                |  6 ++++++
+ 7 files changed, 51 insertions(+), 47 deletions(-)
 
-> +	FAKE_COMMIT_MESSAGE=3Dedited GIT_SEQUENCE_EDITOR=3D"echo merge -c H G =
->" \
-> +		git rebase -ir @^ &&
-> +	echo edited >expected &&
-> +	git log --pretty=3Dformat:%B -1 >actual &&
-> +	test_cmp expected actual
-> +'
-> +
 
-The rest looks good, thank you!
-Dscho
-
->  test_expect_success 'with a branch tip that was cherry-picked already' =
-'
->  	git checkout -b already-upstream master &&
->  	base=3D"$(git rev-parse --verify HEAD)" &&
-> --
-> 2.21.0
->
->
+base-commit: 83232e38648b51abbcbdb56c94632b6906cc85a6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-182%2Fderrickstolee%2Fmany-packs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-182/derrickstolee/many-packs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/182
+-- 
+gitgitgadget
