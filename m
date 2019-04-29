@@ -7,105 +7,82 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADBA11F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 21:57:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6CA1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 21:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729451AbfD2V5C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 17:57:02 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34090 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729422AbfD2V47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 17:56:59 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a6so10553641edv.1
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 14:56:58 -0700 (PDT)
+        id S1729418AbfD2V6t (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 17:58:49 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42901 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729398AbfD2V6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 17:58:48 -0400
+Received: by mail-ed1-f65.google.com with SMTP id l25so10501684eda.9
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 14:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=zjtl1qclrDtVCF9j0VxvqBg/3kvhEV7o9wRud+DHZ00=;
-        b=Q8Do3fapggJc7EBvrFKFWY4hNBlXFKbD8YJgPv89G2Gs1wwUdVzfAKDrKjJkhokO8B
-         Dk30W8FZpcxQkHUgmKF1aYIES0KpI/ksm9MVlDVzSJ09oG3u+KliQPmhoNmMurClPifR
-         bWBUesBwFZBnFbH6qB+O/trUTDwzerJ0/qVewVrXBxAac1ga4C21ArVOgKJyODfAbGNg
-         I0JBMcCOu0EOqDN2G1jjL9xkPhN+/D827VXcxzR2DfeDlOxcoX8a98BtIiuvodvfLNOO
-         Y/lpMHEU7aN/mw/XNxyXGrEH6EAlneiaweYRE2OWyojNQkVdaGWv2f8ksFm7K+sz1wFn
-         jQFA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=1v1uqP2oZbM8zNm+2Q3C+T8SuSIImipR6NjYWh8KoiE=;
+        b=uRSyobknaYAizzZrfCrOkL8nNJ6vh9WTuoIqQU8biuOywpmI/IqwGxBt2L5UkXi0Ww
+         RAQeBpJ4M7fa4uRQUMFPhVaH5xcLNhSRQyr2v7t4VLf8FSePxx0e19aMyd6pqLQVy7sd
+         fDH7V//iUZhfXrTR77qkz5cC+eO22SszySkzEl1AFcQm/RxBj7wYib+51l65mOUomIIa
+         IWftYPmdB6drj1QnEulFRzLlBRJGGGgSZpxeM71+4g00KeLwwEbW4xD/ADuatytcxH+1
+         7MXk6hlr/2GLwTvcGYncV9j+wt+4HKXZ1siPS/pbYzd55hVwSJDhoMSraT9+wgj6spjy
+         IMSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=zjtl1qclrDtVCF9j0VxvqBg/3kvhEV7o9wRud+DHZ00=;
-        b=Zib3kfoBOrsJDsg7ZM+3qWZvDmOFu9t9Rv8dCwei/o0C5mi90GXjXLqhyLazQomXBL
-         2L37tUyUqZh9i2uM6sTbO4HM8gvPIMg03SreyMSeA0Jp2USiMLOC+A/qXnoUSg1uwNnp
-         dnwoX+ag0ck0O/S2+1FfePRRTalOb/wy4U5k27JEYPHFP6I6xLgCuVdQa4d/f4Av8CEA
-         CBfVNt4zTTfiC5nn+GSOdnn596DWmOqpEKlw8dMalloYRM0ePZsW6p8uLsqV/KIgYhfr
-         xllBvcYnG4fC9deJrGKg6sVUog4z/tq2ld7LP+Lny8pxCMgDw8Y1h0moPXlKWbP/0Fta
-         ToRg==
-X-Gm-Message-State: APjAAAV6vs1TkIS0No3nUEee3JY5ptH233rFdxJVVbOTCYygD9ow9LHU
-        11l2WaH16YLq+E+Ei38X1OBuS6sr
-X-Google-Smtp-Source: APXvYqz8C9B0RbLWY4iJCx56nP63CGLnNhdNRs9DOzpqkFhbpLubM69nK1HQJAShxYpUQiUgqRGYZg==
-X-Received: by 2002:a50:896a:: with SMTP id f39mr13206865edf.293.1556575017846;
-        Mon, 29 Apr 2019 14:56:57 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1v1uqP2oZbM8zNm+2Q3C+T8SuSIImipR6NjYWh8KoiE=;
+        b=YGgXTMwZbFVjlq+McBMc4sSod5CYhG6bgycKEYRYpLDXDUK8QMGn0v/fNiymgUXdrP
+         GUmosxe2iW5ZdY4HH0sgahckytxV2GsmI9UK23TdyYSL6kZkkF1DN36VwfY9QSB41/oP
+         S1rYe3cIJmnSVnSPsW11MPNEPxO/ryIS9Fjf2VI2RjPESskeSWznNrMFerP6JPHugMgv
+         rLJ7t39h88hkm/mIxbrc29jNgvY0bHBNrhDn8uJOBsDm0Q1xbGbZE8Aw4mU/Datc+h2h
+         lvIA2hWF7x69DkrO+pLR6POE/8yHoi3LPJq8Mcbck4mHTd4kL7tYnqrAn6EFUShXdZyC
+         G5gQ==
+X-Gm-Message-State: APjAAAWFDj+i8o2AEyGEKq8+19I5LnXYhvh3q0S8yqdilzrtDVG5Odqs
+        ZrARagd6dEevydAmXz1AeLyxrVa7
+X-Google-Smtp-Source: APXvYqyldUq+Af1aihresJrBoDCLZnXCoTJp9i2EPzgFispn/pPGr7KMZyrP0Pb1+hJQbEc6yjUGvg==
+X-Received: by 2002:a05:6402:1610:: with SMTP id f16mr7913517edv.171.1556575127284;
+        Mon, 29 Apr 2019 14:58:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r18sm1810253ejh.92.2019.04.29.14.56.57
+        by smtp.gmail.com with ESMTPSA id 10sm6003352ejn.37.2019.04.29.14.58.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Apr 2019 14:56:57 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 14:56:57 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 21:56:54 GMT
-Message-Id: <e6acdba58659d6176a03037aeb63b0ba84e126ff.1556575015.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.134.git.gitgitgadget@gmail.com>
-References: <pull.134.git.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] mingw: do not let ld strip relocations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 29 Apr 2019 14:58:46 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 14:58:46 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 21:58:45 GMT
+Message-Id: <pull.132.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Fix cvsexportcommit with CR/LF line endings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= <ismail@i10z.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= <ismail@i10z.com>
+When using CVSNT, we need to be prepared to grok CVS output with CR/LF line
+endings.
 
-This is the first step for enabling ASLR (Address Space Layout
-Randomization) support. We want to enable ASLR for better protection
-against exploiting security holes in Git: it makes it harder to attack
-software by making code addresses unpredictable.
+While we do not use CVSNT in Git for Windows, this patch made its way into
+Git's source code via the Git for Windows project (probably because of the
+ease of GitHub PRs), and we had not a single complaint for over 2 years, so
+I would consider this patch ready to be included in core Git.
 
-The problem fixed by this commit is that `ld.exe` seems to be stripping
-relocations which in turn will break ASLR support. We just make sure
-it's not stripping the main executable entry.
+Dustin Spicuzza (1):
+  cvsexportcommit: force crlf translation
 
-Signed-off-by: İsmail Dönmez <ismail@i10z.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- config.mak.uname | 2 ++
- 1 file changed, 2 insertions(+)
+ git-cvsexportcommit.perl | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b37fa8424c..e7c7d14e5f 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -573,10 +573,12 @@ else
- 		ifeq (MINGW32,$(MSYSTEM))
- 			prefix = /mingw32
- 			HOST_CPU = i686
-+			BASIC_LDFLAGS += -Wl,--pic-executable,-e,_mainCRTStartup
- 		endif
- 		ifeq (MINGW64,$(MSYSTEM))
- 			prefix = /mingw64
- 			HOST_CPU = x86_64
-+			BASIC_LDFLAGS += -Wl,--pic-executable,-e,mainCRTStartup
- 		else
- 			COMPAT_CFLAGS += -D_USE_32BIT_TIME_T
- 			BASIC_LDFLAGS += -Wl,--large-address-aware
+
+base-commit: 39ffebd23b1ef6830bf86043ef0b5c069d9299a9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-132%2Fdscho%2Fcvsexportcommit-crlf-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-132/dscho/cvsexportcommit-crlf-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/132
 -- 
 gitgitgadget
-
