@@ -2,125 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B821F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 19:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7743E1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 19:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729093AbfD2TDW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 15:03:22 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15172 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726725AbfD2TDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 15:03:21 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 923263F4024;
-        Mon, 29 Apr 2019 15:03:20 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:6436:1a0f:5a09:117b] (unknown [IPv6:2001:4898:8010:0:4d6c:1a0f:5a09:117b])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 06C803F4019;
-        Mon, 29 Apr 2019 15:03:19 -0400 (EDT)
-Subject: Re: [PATCH v4 06/10] trace2: use system/global config for default
- trace2 settings
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        jrnieder@gmail.com, steadmon@google.com, avarab@gmail.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.169.v3.git.gitgitgadget@gmail.com>
- <pull.169.v4.git.gitgitgadget@gmail.com>
- <550cad618923c6e5aa1bd5f901f2968791d7566b.1555360780.git.gitgitgadget@gmail.com>
- <20190427134316.GE8695@szeder.dev>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <465993c8-0eb2-d9fa-5d22-b8b584b3de15@jeffhostetler.com>
-Date:   Mon, 29 Apr 2019 15:03:19 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729232AbfD2T1j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 15:27:39 -0400
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:40970 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728928AbfD2T1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 15:27:38 -0400
+Received: by mail-qt1-f196.google.com with SMTP id f25so13334495qtc.8
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 12:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tPQ3s3WZUtdd1HwqICbicaudRzhLnuJcUzUr8TRY3Qs=;
+        b=aPQZyyynGpjHW5ebVEUgxbI3yyiYxmDQfB9s5LA0W+QDrJeOMn/2tMh4RDZRA0aWfk
+         ldwkQqbemECgjgMRkn1wjr8bYuvjJaYN/hAXNbO5pfqZQkubmycMQ3bxLWRlzZVUr+Hw
+         WFQv0vAY27PYBl88N4vtG0WTLdmZTBEz5vovWBq8usryuiU7ZdCxLdNI75PZmu25Ul2c
+         gqrX5Jf0HrpIkILKDGca7PDU36rQjjBVif1vNurw8OSgrNlgOAHIa1u6ShAWQ3L+4wbB
+         FsUFO4RgSM/ADJ6D0KVWOtXezvGMLP/VvmdSx+BmvQpFwfYKS0FSUQADU9wPc09dW8bw
+         m2aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tPQ3s3WZUtdd1HwqICbicaudRzhLnuJcUzUr8TRY3Qs=;
+        b=FfDyGrzYlfA+oXr6T6zkiHOcbskO1LrLNFE2q7yNvxwg44sBFAhqlCLmUO3yI5BWMN
+         jrhENdfJmRNifhZlaBLtnRm85czqCAHRsPsnrybsUcm/DMx4JE6SJF0dXoYkCf6Wg9bc
+         +PGDIAGKzEFiiz4r2chhGk2ZT3zApEryyKlmkNCicV4XCHfV7pcFZTkz9NGknmFkYeL/
+         PK0+PRxljD393Bh2f0rcm5A7MHa3mb/ePwmeXsxtJuCDq0qTCBpqwtEHXeU7LaJaxGvN
+         12Ynf66SsmpvylhWjunrH0sL6iBSyglegRSKbeDAR4JURjNlw5a6CKpwPrNVOqzy59CM
+         j9MA==
+X-Gm-Message-State: APjAAAX3GCYGyAAA2llrh1DPb2uTVLLQmYDzgsc/X/LC2OM6rhOPIOZF
+        N7IqI3VfGJUTz3o9M5mJd7MYCfLOPC4JZA0xbIo=
+X-Google-Smtp-Source: APXvYqwJV+F0vUB9jELuyiIcMbLjBJzgC4wU9TU404VkgAQWISZdIDQOGb480fnFv0m1WoTPnq/89uSXgxLEPZBShJw=
+X-Received: by 2002:ac8:2dba:: with SMTP id p55mr37161522qta.283.1556566057832;
+ Mon, 29 Apr 2019 12:27:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190427134316.GE8695@szeder.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190429051944.77164-1-nbelakovski@gmail.com> <20190429141224.GA9286@szeder.dev>
+In-Reply-To: <20190429141224.GA9286@szeder.dev>
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Mon, 29 Apr 2019 12:27:12 -0700
+Message-ID: <CAC05387vvSWD8Y-ufFU9VXkrtLWEDXCL+DP95UkGf3wWhytgsA@mail.gmail.com>
+Subject: Re: [PATCH v10 0/3]
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Testing with GETTEXT_POISON was broken since 6cdccfce (i18n: make
+> GETTEXT_POISON a runtime option, 2018-11-08), and didn't catch any of
+> these issues.  See:
+>
+>   https://public-inbox.org/git/xmqqlg0bvppc.fsf_-_@gitster-ct.c.googlers.com/T/#u
+>
+> The fix f88b9cb603 (gettext tests: export the restored
+> GIT_TEST_GETTEXT_POISON, 2019-04-15) was merged to master just last
+> week.
+>
 
-
-On 4/27/2019 9:43 AM, SZEDER Gábor wrote:
-> On Mon, Apr 15, 2019 at 01:39:47PM -0700, Jeff Hostetler via GitGitGadget wrote:
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teach git to read the system and global config files for
->> default Trace2 settings.  This allows system-wide Trace2 settings to
->> be installed and inherited to make it easier to manage a collection of
->> systems.
->>
->> The original GIT_TR2* environment variables are loaded afterwards and
->> can be used to override the system settings.
->>
->> Only the system and global config files are used.  Repo and worktree
->> local config files are ignored.  Likewise, the "-c" command line
->> arguments are also ignored.  These limits are for performance reasons.
->>
->> (1) For users not using Trace2, there should be minimal overhead to
->> detect that Trace2 is not enabled.  In particular, Trace2 should not
->> allocate lots of otherwise unused data strucutres.
->>
->> (2) For accurate performance measurements, Trace2 should be initialized
->> as early in the git process as possible, and before most of the normal
->> git process initialization (which involves discovering the .git directory
->> and reading a hierarchy of config files).
-> 
-> Reading the configuration that early causes unexpected and undesired
-> behavior change:
-> 
->    $ sudo chmod a-rwx /usr/local/etc/gitconfig
->    $ ./BUILDS/v2.21.0/bin/git
->    usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
->    <... snip rest of usage ...>
->    $ strace ./BUILDS/v2.21.0/bin/git 2>&1 |grep config -c
->    0
->    $ ./git
->    fatal: unable to access '/usr/local/etc/gitconfig': Permission denied
->    $ ./git --version
->    fatal: unable to access '/usr/local/etc/gitconfig': Permission denied
-> 
-> I think at least 'git', 'git --help', and 'git --version' should Just
-> Work, no matter what.
-> 
-> 
-> This breaks the 32 bit Linux build job on Travis CI, because:
-> 
->    - In the 32 bit Docker image we change UID from root to regular user
->      while preserving the environment, including $HOME.
->      
->    - Since $HOME is the default build prefix, Git will look for the
->      system-wide configuration under '/root/etc/gitconfig', which fails
->      as a regular user.
-> 
->    - Our test harness checks early (i.e. earlier than setting
->      GIT_CONFIG_NOSYSTEM=1) whether Git has been built successfully by
->      attempting to run '$GIT_BUILD_DIR}/git', which fails because of
->      the inaccessible system-wide config file, and in turn the harness
->      assumes that Git hasn't been built and aborts.
-> 
->    https://travis-ci.org/git/git/jobs/524403682#L1258
-> 
-
-It appears that config.c:do_git_config_sequence() passes flags = 0
-to access_or_die() rather than ACCESS_EACCES_OK as it does for the
-other scopes.  This causes the fatal error, rather than ignoring the
-problem.
-
-Reasons for this were discussed in:
-     4698c8feb1 config: allow inaccessible configuration under $HOME
-
-I'll push a fix shortly.
-
-Thanks
-Jeff
+Ah I see, thanks for the info.
