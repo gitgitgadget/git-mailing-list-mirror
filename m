@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 137F21F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3705B1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729374AbfD2UOV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 16:14:21 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46144 "EHLO
+        id S1729368AbfD2UOU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 16:14:20 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38578 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729363AbfD2UOT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729297AbfD2UOT (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Apr 2019 16:14:19 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d1so10257738edd.13
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:18 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id w11so3575914edl.5
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
-        b=JrfSvwxuNeIarkQftKhPzQNKoDqLhlkf83LiCTDacbQMXcBjEpnRSz3n0ApaabuRDP
-         v+P1NP3ZLPupOCHOM36Cn+hrXeKfO/gBaQbRKL7+zRWij+6uaFzUjnkLvJHsn3KvxxTX
-         VzMUuE9enCokzyp4D89Tz2NfZJjYqHpS0M/W7nJCTAql3BJbaY3JBWIzqj36l3hiIyKP
-         f7czm2LQJcZELQdZUwlWMCqUXc18+YkpJ+n3wuls9saLt+Pu5WU4RKot+FvjKTU2f9I3
-         mZzFLb56gIg7qqo7Oh7/LE+vqn/Gx9sWza4HaPBQmvH65TOSzY+nVsItHc0Q6LmC0AbR
-         bNSg==
+        bh=Vs307d+a1gx3jEA8oGCR7mKO5fqlVqvJOB3q3lxhDhc=;
+        b=nfjcEHc5MfnlLYuahReqdsTi/b2uupn9vj0JKvv36TuT9rLw3HtzuRRyxTDy/uTZz9
+         BW3frrSFdMwIQpmKRhuQ5raWbGAPfliOqUpdhlejDurJgkkR2bcgjwcJEtQy6cGpScGI
+         54ufJxG8K80R49c7myi1520LoQaeRZbC426+g9KvXiKal7crPF9M7aRa2fkYlSI4yZXC
+         hv+P2IbUGpPqfOFInZNeG58izMbsQ0lphPsvnHBcdOnKKCnw4I3FGlD7u5Rj6N0takhA
+         mSyqd4Y+c+PpkIlEU/uLUOlTIaJHJZeIxlrGIHc2WW3GWy1pk3CUcNx4rJJo3FAS5cLT
+         khrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CvkHYwybWMLmqCpofAtLBI5feF1IPZB3rdQguZg52VY=;
-        b=bSOmFoXjuWTVFB4CcRcm/Ma9rejLNYyePkfN66rdzw2P+30Ck9JNLmYRnf9n1sIRGN
-         lDYvq1ZMS0n/qpQhb8J7hhQKrIQ9YxkSu0kB6OXrVlhc+6W0+akEWEWTtA6ttWX/I8LF
-         VbDh1uDaNf8hY6cJTWsrz99zPr6n3BVbGzYSIyIBKPCbCcy2M6QbxOC+NOMrRLiuqzDZ
-         CBjTJF4rwv2MwhQOWfqrVS9eMLtsGp3rDQ1HzBFM3kJ9Z5GSHbFmIz9CtPfBhgmyp+nq
-         VjGTonVNixixVobgpdjlcEFYsVzEQyC3f4fsa19WreJIiRsrtyhsim8cVUNHGP3b00aS
-         o2Mw==
-X-Gm-Message-State: APjAAAUShfeqwGhNPfPS0974xC5fbuW9qPh9u4ZqxTQUu73e9kN0VPoc
-        p1JzPm9WJFM7Dvq6MQ1oIiVs2GuM
-X-Google-Smtp-Source: APXvYqxjHBBkDkowu/BOCF6EXPIgBZXGH0bvv58VfgcB5gwoE0wefp/sYkWidFIx1/xqZDghSLSqiA==
-X-Received: by 2002:a17:906:29c1:: with SMTP id y1mr30564197eje.251.1556568858012;
-        Mon, 29 Apr 2019 13:14:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h10sm9652160ede.21.2019.04.29.13.14.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=Vs307d+a1gx3jEA8oGCR7mKO5fqlVqvJOB3q3lxhDhc=;
+        b=k3vojbGTpWHMGpD0okN3CEOudav20PiYexsntHyMhiX/80Vjbz2gVer7MRbndS/IRs
+         R3CEn6bJZc8KBXO9595dC0VMsisWmx3XtL8ZV8KssEbnRC+ZOpNS31EPSNzzNUI9T5Uy
+         DAYB7eNykIHvo4CPNBBSPbvwil2TupYbXgVrQgCcuoxS3fBJz7s/ovmwdeeStta4Kz+D
+         +UD66OaQqVyGzu/ANkT8akVWFEqjrX93Ahm+l93fF02x4aAtHrRGrdJViIGXzHpxGb45
+         kWPdTqdx9m+ykzM4BNbktewhhOc7AEuCJcq3eXRKwXGCQp+5w+aV6mQpR7oaRPIi8m+I
+         QU9g==
+X-Gm-Message-State: APjAAAWcjpHGvJi+uWcmcWcPYBHZpn1vpsd8L0DQJ+rGRU+v6WQmQEji
+        kel0Gygfe5Pzmcl2x+93Fa9ccz9e
+X-Google-Smtp-Source: APXvYqxI6kvtaDcRZl9NOUVYR5zXYDLfzQpPdpAZhyaP3Ruj4tbkOW9CrTLC7n4Lre7IuPHySXcMXQ==
+X-Received: by 2002:a17:906:c350:: with SMTP id ci16mr3115110ejb.286.1556568857266;
         Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 13:14:17 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 20:14:05 GMT
-Message-Id: <b0fe1385f1a96efbcab38fe02a3d5b3c1b6eaa37.1556568852.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a13sm4917805ejp.26.2019.04.29.13.14.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 13:14:16 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 13:14:16 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 20:14:04 GMT
+Message-Id: <94729b284c4338aa40d4287eea909e835820ff4b.1556568852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v5.git.gitgitgadget@gmail.com>
 References: <pull.169.v4.git.gitgitgadget@gmail.com>
         <pull.169.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 05/11] config: add read_very_early_config()
+Subject: [PATCH v5 04/11] trace2: find exec-dir before trace2 initialization
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,92 +73,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Created an even lighter version of read_early_config() that
-only looks at system and global config settings.  It omits
-repo-local, worktree-local, and command-line settings.
+Teach Git to resolve the executable directory before initializing
+Trace2.  This allows the system configuration directory to be
+discovered earlier (because it is sometimes relative to the prefix
+or runtime-prefix).
+
+This will be used by the next commit to allow trace2 settings to
+be loaded from the system config.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- config.c | 23 ++++++++++++++++++++---
- config.h |  4 ++++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ common-main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index c809f76219..d7a08713a8 100644
---- a/config.c
-+++ b/config.c
-@@ -1688,14 +1688,15 @@ static int do_git_config_sequence(const struct config_options *opts,
- 		ret += git_config_from_file(fn, user_config, data);
+diff --git a/common-main.c b/common-main.c
+index 6137af0e63..299ca62a72 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -37,12 +37,12 @@ int main(int argc, const char **argv)
+ 	sanitize_stdfds();
+ 	restore_sigpipe_to_default();
  
- 	current_parsing_scope = CONFIG_SCOPE_REPO;
--	if (repo_config && !access_or_die(repo_config, R_OK, 0))
-+	if (!opts->ignore_repo && repo_config &&
-+	    !access_or_die(repo_config, R_OK, 0))
- 		ret += git_config_from_file(fn, repo_config, data);
- 
- 	/*
- 	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
- 	 * But let's not complicate things before it's actually needed.
- 	 */
--	if (repository_format_worktree_config) {
-+	if (!opts->ignore_worktree && repository_format_worktree_config) {
- 		char *path = git_pathdup("config.worktree");
- 		if (!access_or_die(path, R_OK, 0))
- 			ret += git_config_from_file(fn, path, data);
-@@ -1703,7 +1704,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	}
- 
- 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
--	if (git_config_from_parameters(fn, data) < 0)
-+	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
- 		die(_("unable to parse command-line config"));
- 
- 	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
-@@ -1794,6 +1795,22 @@ void read_early_config(config_fn_t cb, void *data)
- 	strbuf_release(&gitdir);
- }
- 
-+/*
-+ * Read config but only enumerate system and global settings.
-+ * Omit any repo-local, worktree-local, or command-line settings.
-+ */
-+void read_very_early_config(config_fn_t cb, void *data)
-+{
-+	struct config_options opts = { 0 };
++	git_resolve_executable_dir(argv[0]);
 +
-+	opts.respect_includes = 1;
-+	opts.ignore_repo = 1;
-+	opts.ignore_worktree = 1;
-+	opts.ignore_cmdline = 1;
-+
-+	config_with_options(cb, data, NULL, &opts);
-+}
-+
- static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
- {
- 	struct config_set_element k;
-diff --git a/config.h b/config.h
-index ee5d3fa7b4..6a58d61d22 100644
---- a/config.h
-+++ b/config.h
-@@ -55,6 +55,9 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
+ 	trace2_collect_process_info();
  
- struct config_options {
- 	unsigned int respect_includes : 1;
-+	unsigned int ignore_repo : 1;
-+	unsigned int ignore_worktree : 1;
-+	unsigned int ignore_cmdline : 1;
- 	const char *commondir;
- 	const char *git_dir;
- 	config_parser_event_fn_t event_fn;
-@@ -83,6 +86,7 @@ extern int git_config_from_blob_oid(config_fn_t fn, const char *name,
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void read_early_config(config_fn_t cb, void *data);
-+extern void read_very_early_config(config_fn_t cb, void *data);
- extern void git_config(config_fn_t fn, void *);
- extern int config_with_options(config_fn_t fn, void *,
- 			       struct git_config_source *config_source,
+-	git_resolve_executable_dir(argv[0]);
+-
+ 	git_setup_gettext();
+ 
+ 	initialize_the_repository();
 -- 
 gitgitgadget
 
