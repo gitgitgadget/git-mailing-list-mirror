@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6E31F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36C571F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 20:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729379AbfD2UOW (ORCPT <rfc822;e@80x24.org>);
+        id S1729381AbfD2UOX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 16:14:23 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:34908 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729369AbfD2UOW (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Apr 2019 16:14:22 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45694 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729351AbfD2UOS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 16:14:18 -0400
-Received: by mail-ed1-f65.google.com with SMTP id g57so3733342edc.12
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:16 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id y67so10331087ede.2
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 13:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ktNx9nrsRgI+0jnvlP8nBufSFfGnqbif1MQBkfUhywA=;
-        b=DevdYufcVxzt4AtHIthN3ZjFSa2DtZXYeibuE5unOCW29KaLH+W9lQIV1HLvc9hR2j
-         DsSTyF9N4rRDBLwOOYuGTyTjTZ3EpvFLxPOqvqx9EumrPj/9pOXTOgZSGZ7zG7q2Swei
-         Fz9I4p/2vz0diJR3l6NZPRQ03rFipSC3Q73zpq+ZEcNRLk1HoXtyhB4LASKtEQedbI+I
-         H2mkWinwTajCGRORscmdd2b7jhAskZv5CvRdr29m+lROfJ+4/KBSNM9y71hC9xNd+mb4
-         ix9IvysvtDIIcWYbPtni6IfUsTExScO1+LlRWsK3wjLWz5vyCMkehPvrgvrKaMu3MTp/
-         ENLA==
+        bh=z8o12GckREM/bEMCMjMoq1w0AFX+e70lYNfbmVkvf6U=;
+        b=HqOqcfHPC1cQJlT/l+NGLrhsZe4RI1H2odFSeK40y9e239WnPwDZLgfx6ovBAHr3ST
+         PXOYnmTAhe8nq2xTJu0CL5ODHUuqwYsOO/yyhTQ1NH1Ri0ckU3DXubYICc92XlsoTwf6
+         c6w2ChL7dzg7B2Z19inh6WtfJ+Roagt9yHx6UsfQU+IKrdAr5n4XdDwnPYr1Z0KqvqqK
+         v7Md013dUIZDuKYIVoC7tBuTkGF+f1UXsxYgA9Ap1ZYU1f8juoXkCJ9sPA3khwb55OZe
+         YNCKMnqA1Z/RpZCEEByBVJSIHl9n6Jgl9CH65fhxlcbpgrZNMloE8AarskxdXPLu8i49
+         zs1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ktNx9nrsRgI+0jnvlP8nBufSFfGnqbif1MQBkfUhywA=;
-        b=aih8AeDgeODjDZQkgK963/dIprTdhJi70amIFrRtzpg4v+ju+g2MUpI21+0JAJPgeJ
-         lV8BK6F2jq7uaNQfXdcpA1P6pnc5hpuwHBZUz+J7JoI6mmSHKNUsDamj4YV7Znlo8scj
-         Ogmx3yuoStQv8a1MqszN2ZeTwuAUYF34Si3Mvp/ZJbXhZl7oqL7AKZoSvNTt2zjFsVE1
-         wtN01VWOeXHbAXrbWxGN+zL9ul1uoF3akrmfSKli/YW5dcGWRgpW978qdhDNU3B97bN4
-         oP8/LmGbu74vTfFzzTWSzV8WNY+vgH09h3VQ0CkVR0BkO3NVqAC3ZPGvE2ZG6tFVYABq
-         d98w==
-X-Gm-Message-State: APjAAAUN40UZvqo+FEzVsPvvoEJFOiLsc5o65dhIrsCMb6RVVNU+bPfF
-        BZrdb8PNoMBBUwGAR0cPargysXj0
-X-Google-Smtp-Source: APXvYqx4Ew4ul2Y2QghoX0Weh+uN90H8Kvfb5A+Id8MirQjKGk3dN/cCUA4ZSKZ91T+tTTI70+WcVw==
-X-Received: by 2002:a50:a5fb:: with SMTP id b56mr17417137edc.262.1556568855615;
-        Mon, 29 Apr 2019 13:14:15 -0700 (PDT)
+        bh=z8o12GckREM/bEMCMjMoq1w0AFX+e70lYNfbmVkvf6U=;
+        b=bltTpl4T2rhxNtiIBq5s5AM8nqWvvT6J6+BJ7EEW19G8ar94zbCMcpn3S6rN3K/Hi8
+         Szf8RvZas25uIymclsXkazi18DMemFz8nF/vn/6PsTOc6cg600vSk+mhMGdokfjZm7ko
+         HZ1j9sKYUwh4xanKta/KKsUJK7TeuaFgRE4B/z/7oCP9GQHzm/kBEWeFC0ZAJJKkZm6U
+         EFb2n7SKFyOozrgPVv3lftwudomHiNP/YzEjUMTOCsANiwoBqdvJPgx1awn/IDtySThX
+         7+sk5DyYZLQE7RiuPak5QTw5pSAfhZyTQ510VxnLBdxL8OrP/X31wtDqhek2e51uwCrG
+         9YrQ==
+X-Gm-Message-State: APjAAAUl9I+BS6lSgJzja6lC0/V0gwOHHFG4cxeqYMd7K06hJ2YynjrU
+        bE3OCciAV+5KzSVHwXTeuJlclqwn
+X-Google-Smtp-Source: APXvYqyoZVMbMs2InJkQ0eGwPgtgE8Zw3L60CCDGtNO465D1TGw3GZQRdAweih188whdiVTxnfqeSw==
+X-Received: by 2002:a50:9143:: with SMTP id f3mr9738735eda.255.1556568859800;
+        Mon, 29 Apr 2019 13:14:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q56sm9514737edd.80.2019.04.29.13.14.14
+        by smtp.gmail.com with ESMTPSA id i35sm9651924eda.55.2019.04.29.13.14.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Apr 2019 13:14:14 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 13:14:14 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 20:14:02 GMT
-Message-Id: <48e34834b6a65b9f2c68d4f4e459586b2948b6cd.1556568852.git.gitgitgadget@gmail.com>
+        Mon, 29 Apr 2019 13:14:19 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 13:14:19 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 20:14:07 GMT
+Message-Id: <56d8ce3fd60acc3808a5c8c1e5e1e6ba87fa1d5a.1556568852.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.169.v5.git.gitgitgadget@gmail.com>
 References: <pull.169.v4.git.gitgitgadget@gmail.com>
         <pull.169.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 02/11] trace2: refactor setting process starting time
+Subject: [PATCH v5 07/11] trace2: report peak memory usage of the process
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,239 +73,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create trace2_initialize_clock() and call from main() to capture
-process start time in isolation and before other sub-systems are
-ready.
+Teach Windows version of git to report peak memory usage
+during exit() processing.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-trace2.txt | 12 ++++++--
- common-main.c                          |  2 ++
- compat/mingw.c                         |  2 ++
- trace2.c                               |  7 ++++-
- trace2.h                               | 17 ++++++++++++
- trace2/tr2_tls.c                       | 38 ++++++++++++++++----------
- trace2/tr2_tls.h                       |  8 +++++-
- 7 files changed, 67 insertions(+), 19 deletions(-)
+ common-main.c                            |  2 +-
+ compat/win32/trace2_win32_process_info.c | 50 ++++++++++++++++++++++--
+ trace2.c                                 |  2 +
+ trace2.h                                 | 14 +++++--
+ 4 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 2de565fa3d..f37fccf1da 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -160,17 +160,23 @@ purposes.
- 
- These are concerned with the lifetime of the overall git process.
- 
-+`void trace2_initialize_clock()`::
-+
-+	Initialize the Trace2 start clock and nothing else.  This should
-+	be called at the very top of main() to capture the process start
-+	time and reduce startup order dependencies.
-+
- `void trace2_initialize()`::
- 
- 	Determines if any Trace2 Targets should be enabled and
--	initializes the Trace2 facility.  This includes starting the
--	elapsed time clocks and thread local storage (TLS).
-+	initializes the Trace2 facility.  This includes setting up the
-+	Trace2 thread local storage (TLS).
- +
- This function emits a "version" message containing the version of git
- and the Trace2 protocol.
- +
- This function should be called from `main()` as early as possible in
--the life of the process.
-+the life of the process after essential process initialization.
- 
- `int trace2_is_enabled()`::
- 
 diff --git a/common-main.c b/common-main.c
-index d484aec209..6137af0e63 100644
+index 299ca62a72..582a7b1886 100644
 --- a/common-main.c
 +++ b/common-main.c
-@@ -27,6 +27,8 @@ int main(int argc, const char **argv)
- {
- 	int result;
+@@ -41,7 +41,7 @@ int main(int argc, const char **argv)
  
-+	trace2_initialize_clock();
-+
- 	/*
- 	 * Always open file descriptors 0/1/2 to avoid clobbering files
- 	 * in die().  It also avoids messing up when the pipes are dup'ed
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6b04514cdc..a2f74aca6a 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2569,6 +2569,8 @@ void mingw_startup(void)
- 	wchar_t **wenv, **wargv;
- 	_startupinfo si;
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
+-	trace2_collect_process_info();
++	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
  
-+	trace2_initialize_clock();
-+
- 	maybe_redirect_std_handles();
+ 	git_setup_gettext();
  
- 	/* get wide char arguments and environment */
-diff --git a/trace2.c b/trace2.c
-index ccccd4ef09..6dd51e6aa5 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -142,6 +142,11 @@ static void tr2main_signal_handler(int signo)
- 	raise(signo);
+diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
+index 52bd62034b..8ccbd1c2c6 100644
+--- a/compat/win32/trace2_win32_process_info.c
++++ b/compat/win32/trace2_win32_process_info.c
+@@ -1,5 +1,6 @@
+ #include "../../cache.h"
+ #include "../../json-writer.h"
++#include "lazyload.h"
+ #include <Psapi.h>
+ #include <tlHelp32.h>
+ 
+@@ -137,11 +138,54 @@ static void get_is_being_debugged(void)
+ 				   "windows/debugger_present", 1);
  }
  
-+void trace2_initialize_clock(void)
+-void trace2_collect_process_info(void)
++/*
++ * Emit JSON data with the peak memory usage of the current process.
++ */
++static void get_peak_memory_info(void)
 +{
-+	tr2tls_start_process_clock();
++	DECLARE_PROC_ADDR(psapi.dll, BOOL, GetProcessMemoryInfo, HANDLE,
++			  PPROCESS_MEMORY_COUNTERS, DWORD);
++
++	if (INIT_PROC_ADDR(GetProcessMemoryInfo)) {
++		PROCESS_MEMORY_COUNTERS pmc;
++
++		if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc,
++					 sizeof(pmc))) {
++			struct json_writer jw = JSON_WRITER_INIT;
++
++			jw_object_begin(&jw, 0);
++
++#define KV(kv) #kv, (intmax_t)pmc.kv
++
++			jw_object_intmax(&jw, KV(PageFaultCount));
++			jw_object_intmax(&jw, KV(PeakWorkingSetSize));
++			jw_object_intmax(&jw, KV(PeakPagefileUsage));
++
++			jw_end(&jw);
++
++			trace2_data_json("process", the_repository,
++					 "windows/memory", &jw);
++			jw_release(&jw);
++		}
++	}
 +}
 +
- void trace2_initialize_fl(const char *file, int line)
++void trace2_collect_process_info(enum trace2_process_info_reason reason)
  {
- 	struct tr2_tgt *tgt_j;
-@@ -428,7 +433,7 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
- 	us_now = getnanotime() / 1000;
- 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+ 	if (!trace2_is_enabled())
+ 		return;
  
--	tr2tls_create_self(thread_name);
-+	tr2tls_create_self(thread_name, us_now);
- 
- 	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_thread_start_fl)
-diff --git a/trace2.h b/trace2.h
-index ae5020d0e6..8f89e70c44 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -19,6 +19,23 @@ struct json_writer;
-  * [] trace2_printf*    -- legacy trace[1] messages.
-  */
- 
-+/*
-+ * Initialize the TRACE2 clock and do nothing else, in particular
-+ * no mallocs, no system inspection, and no environment inspection.
-+ *
-+ * This should be called at the very top of main() to capture the
-+ * process start time.  This is intended to reduce chicken-n-egg
-+ * bootstrap pressure.
-+ *
-+ * It is safe to call this more than once.  This allows capturing
-+ * absolute startup costs on Windows which uses a little trickery
-+ * to do setup work before common-main.c:main() is called.
-+ *
-+ * The main trace2_initialize_fl() may be called a little later
-+ * after more infrastructure is established.
-+ */
-+void trace2_initialize_clock(void);
-+
- /*
-  * Initialize TRACE2 tracing facility if any of the builtin TRACE2
-  * targets are enabled in the environment.  Emits a 'version' event.
-diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 8e65b0361d..e76d8c5d92 100644
---- a/trace2/tr2_tls.c
-+++ b/trace2/tr2_tls.c
-@@ -10,16 +10,30 @@
- #define TR2_REGION_NESTING_INITIAL_SIZE (100)
- 
- static struct tr2tls_thread_ctx *tr2tls_thread_main;
--static uint64_t tr2tls_us_start_main;
-+static uint64_t tr2tls_us_start_process;
- 
- static pthread_mutex_t tr2tls_mutex;
- static pthread_key_t tr2tls_key;
- 
- static int tr2_next_thread_id; /* modify under lock */
- 
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
-+void tr2tls_start_process_clock(void)
-+{
-+	if (tr2tls_us_start_process)
+-	get_is_being_debugged();
+-	get_ancestry();
++	switch (reason) {
++	case TRACE2_PROCESS_INFO_STARTUP:
++		get_is_being_debugged();
++		get_ancestry();
 +		return;
 +
-+	/*
-+	 * Keep the absolute start time of the process (i.e. the main
-+	 * process) in a fixed variable since other threads need to
-+	 * access it.  This allows them to do that without a lock on
-+	 * main thread's array data (because of reallocs).
-+	 */
-+	tr2tls_us_start_process = getnanotime() / 1000;
-+}
++	case TRACE2_PROCESS_INFO_EXIT:
++		get_peak_memory_info();
++		return;
 +
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+					     uint64_t us_thread_start)
- {
--	uint64_t us_now = getnanotime() / 1000;
- 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
- 
- 	/*
-@@ -29,7 +43,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name)
- 	 */
- 	ctx->alloc = TR2_REGION_NESTING_INITIAL_SIZE;
- 	ctx->array_us_start = (uint64_t *)xcalloc(ctx->alloc, sizeof(uint64_t));
--	ctx->array_us_start[ctx->nr_open_regions++] = us_now;
-+	ctx->array_us_start[ctx->nr_open_regions++] = us_thread_start;
- 
- 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
- 
-@@ -55,7 +69,7 @@ struct tr2tls_thread_ctx *tr2tls_get_self(void)
- 	 * here and silently continue.
- 	 */
- 	if (!ctx)
--		ctx = tr2tls_create_self("unknown");
-+		ctx = tr2tls_create_self("unknown", getnanotime() / 1000);
- 
- 	return ctx;
++	default:
++		BUG("trace2_collect_process_info: unknown reason '%d'", reason);
++	}
  }
-@@ -124,22 +138,18 @@ uint64_t tr2tls_absolute_elapsed(uint64_t us)
- 	if (!tr2tls_thread_main)
- 		return 0;
+diff --git a/trace2.c b/trace2.c
+index 490b3f071e..6baa65cdf9 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -213,6 +213,8 @@ int trace2_cmd_exit_fl(const char *file, int line, int code)
+ 	if (!trace2_enabled)
+ 		return code;
  
--	return us - tr2tls_us_start_main;
-+	return us - tr2tls_us_start_process;
- }
- 
- void tr2tls_init(void)
- {
-+	tr2tls_start_process_clock();
++	trace2_collect_process_info(TRACE2_PROCESS_INFO_EXIT);
 +
- 	pthread_key_create(&tr2tls_key, NULL);
- 	init_recursive_mutex(&tr2tls_mutex);
+ 	tr2main_exit_code = code;
  
--	tr2tls_thread_main = tr2tls_create_self("main");
--	/*
--	 * Keep a copy of the absolute start time of the main thread
--	 * in a fixed variable since other threads need to access it.
--	 * This also eliminates the need to lock accesses to the main
--	 * thread's array (because of reallocs).
--	 */
--	tr2tls_us_start_main = tr2tls_thread_main->array_us_start[0];
-+	tr2tls_thread_main =
-+		tr2tls_create_self("main", tr2tls_us_start_process);
- }
- 
- void tr2tls_release(void)
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index bb80e3f8e7..b1e327a928 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -31,7 +31,8 @@ struct tr2tls_thread_ctx {
-  * In this and all following functions the term "self" refers to the
-  * current thread.
+ 	us_now = getnanotime() / 1000;
+diff --git a/trace2.h b/trace2.h
+index 894bfca7e0..888531eb08 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -391,13 +391,19 @@ void trace2_printf(const char *fmt, ...);
+  * Optional platform-specific code to dump information about the
+  * current and any parent process(es).  This is intended to allow
+  * post-processors to know who spawned this git instance and anything
+- * else the platform may be able to tell us about the current process.
++ * else that the platform may be able to tell us about the current process.
   */
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name);
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+					     uint64_t us_thread_start);
- 
- /*
-  * Get our TLS data.
-@@ -94,4 +95,9 @@ void tr2tls_release(void);
-  */
- int tr2tls_locked_increment(int *p);
- 
-+/*
-+ * Capture the process start time and do nothing else.
-+ */
-+void tr2tls_start_process_clock(void);
 +
- #endif /* TR2_TLS_H */
++enum trace2_process_info_reason {
++	TRACE2_PROCESS_INFO_STARTUP,
++	TRACE2_PROCESS_INFO_EXIT,
++};
++
+ #if defined(GIT_WINDOWS_NATIVE)
+-void trace2_collect_process_info(void);
++void trace2_collect_process_info(enum trace2_process_info_reason reason);
+ #else
+-#define trace2_collect_process_info() \
+-	do {                          \
++#define trace2_collect_process_info(reason) \
++	do {                                \
+ 	} while (0)
+ #endif
+ 
 -- 
 gitgitgadget
 
