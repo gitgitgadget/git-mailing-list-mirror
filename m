@@ -2,152 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CDA31F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 14:30:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4634F1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 15:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbfD2Oan (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 10:30:43 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37131 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728240AbfD2Oam (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 10:30:42 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w37so9329066edw.4
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 07:30:41 -0700 (PDT)
+        id S1728401AbfD2PK6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 11:10:58 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37017 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728253AbfD2PK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 11:10:58 -0400
+Received: by mail-wm1-f65.google.com with SMTP id y5so15395162wma.2
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 08:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=LmnDb/2L3Sn8af5Uus0+w86PtN72yNg7uySL0ZL+gTI=;
-        b=cGQUpc638Fr2F9aa7Qwawx7PgvplERSmC/5Z5Ye92PzPa1bGSQkKUKmjavU294OW8j
-         Bv6NkAAGjS8PeOQA0iFXMReT+ZtjAMtLyxqZkemA2jTq3KZuqeQMX142cpdPv/d4hko2
-         zJe5kfX8sIDwyN24XDGDAm9xMURTQzoRlP69MXVAHje1r+lHacvN43dFUILDrO7PUIcT
-         +f0nN5d6NSGVsJFDWxg/Mjhk1QHtd5dJAMFJWnxOJoHxYAe7USIhM2lvey55vRYtwLbF
-         qHhrjvnaMbcRDTGFzQoXpdslzeMpNCorXpoLfilcCElZ6ddsIyWa3vzcht82iIz9VCvw
-         PyVg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=UrjlrnAH4+pfH7ahHkrJsR4AQnB3LsNW8VZQ8wXmj8g=;
+        b=D95hToh/feH6AkvAlfX/NEYIrDdtRwyHfRv66r1g/E0XfVPTs+kInPGDf7507ureIu
+         k5CbGvFR6gI2gERlcEos3w6T21uJwAdThBVtyQby+ubUPA7MJfWouWkhzRzuJ/nbGH2J
+         LysF8uX4aXIu0WTxJDlUf5E6s9YPZPJ4KYbCdD/QLa9aECS67c3RMx4E2VTMTxeG5xrS
+         WpP+qWHCXQEnYFy4lluyaGJSL4eXb8xc4sUSM98XDZHESfm8nOf2yFp5NYOQqqXnK56z
+         xtGxBRtWFewyMz9RHlgnLQ8nvUVzmpTTOjv+oESjp2QpDDlessuTkdMv/TiaXY21nyeC
+         sHiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=LmnDb/2L3Sn8af5Uus0+w86PtN72yNg7uySL0ZL+gTI=;
-        b=tiCnPMvBQ7Z2lkCUJ9r33v3nud+bHKy6yO3TbVixyQRD3Kyd1UxBqtyHwOVom8Ny8U
-         iKz2ooHEYstpBmGIJRh01Nd34SPkcFKfa8jeUV6lEaptLiCUgZgKd0AF5XpL73Jy5spt
-         9Cc3qQI7bpeHAfDb/MM4pnQDrX9hSv2lM80ExBBMcXPrtjcWaGLBa9tvCtbnJ03HRO4d
-         /iQyaoIvjQCPOB+Qqgdyd33rMnqo9xeXcgxe7SdoUwWJxbdDj0edzeXneJmVmgNe3cFO
-         DP9AOsNwYXpAdb5myAmTMwQmpuE4d1BUkXFEerdze3uA3phrCIWiKrkFkBFyNZ11zlKJ
-         /bdA==
-X-Gm-Message-State: APjAAAVl7esOy3zZEB/Eh6WKYVWF3avMlwoG67DgRTkTpjKNCVldj78w
-        fY+vdI5GlJjKCowmAFs69qjpcew0
-X-Google-Smtp-Source: APXvYqxVxFybyLNk/47cadx2OEGSHRKEpIwt4V4e+WwOmVHR74Q8ZSSD9YBoBzJB/VlRRoTGa9TFBQ==
-X-Received: by 2002:a50:d2d8:: with SMTP id q24mr38622215edg.129.1556548240135;
-        Mon, 29 Apr 2019 07:30:40 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id m7sm179210edd.64.2019.04.29.07.30.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Apr 2019 07:30:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=UrjlrnAH4+pfH7ahHkrJsR4AQnB3LsNW8VZQ8wXmj8g=;
+        b=M7GtUUH67RvM+iv1TjNGXUtgoYejpSwdn6ghJInpGVQhZsI6oUjFHaiVQ/DLiu2Roc
+         5mT5+Ot7oS6Ceaan6IqC5uNcurK52oxiPsUSGkDAoLKAuX0OiPryVKY+XjEwP79YLoR7
+         DlJsODtqRsUpzx4R+QIfkF1cAokHDIuTeZze8vBXPo3SzBIa2eum4jgcNp/tQY39Y7eF
+         fG8ywMiessPj2Zxer/TZvvh2cPmsHCsuWkXGMcspXBTRgjjMkaZodX6ee594l1lKcyr2
+         7Cxh7x38jnJ+Ln5YjRCsO7bGmW85Ru1va5JEuAnAYG7vca+S3giWE8IQzUWwoHMq+/mV
+         2l6w==
+X-Gm-Message-State: APjAAAUmOnmxRltHPwOFi2P/qxHTItplqNFBIIQe+M0U/5gLggCoBNtM
+        Brbutum0IX/DUkE+yGj1Els=
+X-Google-Smtp-Source: APXvYqxTNoVUcw0vynFLrIDN6gBuPKH1hi0uQ/sliTeRv8p56E2rJQjNFWTzxWy1fOmNPq2nrHkPPg==
+X-Received: by 2002:a7b:c141:: with SMTP id z1mr4501995wmi.84.1556550655270;
+        Mon, 29 Apr 2019 08:10:55 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id q3sm869655wrc.45.2019.04.29.08.10.53
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 08:10:54 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 23/27] switch: reject if some operation is in progress
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?UTF-8?Q?Eckhard_Maa=c3=9f?= <eckhard.s.maass@googlemail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v3 4/8] commit-graph: don't early exit(1) on e.g. "git status"
-References: <20190314214740.23360-1-avarab@gmail.com> <20190325120834.15529-5-avarab@gmail.com> <87y33vr41k.fsf@evledraar.gmail.com> <3518ad3e-bc4a-c2c3-d4bd-c87f9e828b1c@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <3518ad3e-bc4a-c2c3-d4bd-c87f9e828b1c@gmail.com>
-Date:   Mon, 29 Apr 2019 16:30:38 +0200
-Message-ID: <87wojcrii9.fsf@evledraar.gmail.com>
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20190321131655.15249-1-pclouds@gmail.com>
+ <20190329103919.15642-1-pclouds@gmail.com>
+ <20190329103919.15642-24-pclouds@gmail.com>
+ <78c7c281-82ec-2ba9-a607-dd2ecba54945@gmail.com>
+ <CACsJy8ASYRwUGV8VnVKLhBqdv9V+UTAhb6U3+4BUjJFnJ+2Viw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <38c4e7fb-0d32-7696-e2d0-83766027383d@gmail.com>
+Date:   Mon, 29 Apr 2019 16:10:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACsJy8ASYRwUGV8VnVKLhBqdv9V+UTAhb6U3+4BUjJFnJ+2Viw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Apr 29 2019, Derrick Stolee wrote:
-
-> On 4/27/2019 9:06 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On 29/04/2019 10:16, Duy Nguyen wrote:
+> On Thu, Apr 25, 2019 at 5:33 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>
->> There's still cases left where we'll exit early, e.g. if you do:
+>> On 29/03/2019 10:39, Nguyễn Thái Ngọc Duy wrote:
+>>> Unless you know what you're doing, switching to another branch to do
+>>> something then switching back could be confusing. Worse, you may even
+>>> forget that you're in the middle of something. By the time you realize,
+>>> you may have done a ton of work and it gets harder to go back.
+>>>
+>>> A new option --ignore-in-progress was considered but dropped because it
+>>> was not exactly clear what should happen. Sometimes you can switch away
+>>> and get back safely and resume the operation. Sometimes not. And the
+>>> git-checkout behavior is automatically clear merge/revert/cherry-pick,
+>>> which makes it a bit even more confusing [1].
+>>>
+>>> We may revisit and add this option in the future. But for now play it
+>>> safe and not allow it (you can't even skip this check with --force).
 >>
->>     $ git diff -U1
->>     diff --git a/commit-graph.c b/commit-graph.c
->>     index 66865acbd7..63773764ce 100644
->>     --- a/commit-graph.c
->>     +++ b/commit-graph.c
->>     @@ -1074,3 +1074,3 @@ void write_commit_graph(const char *obj_dir,
->>             chunk_offsets[1] =3D chunk_offsets[0] + GRAPH_FANOUT_SIZE;
->>     -       chunk_offsets[2] =3D chunk_offsets[1] + hashsz * commits.nr;
->>     +       chunk_offsets[2] =3D chunk_offsets[0] + hashsz * commits.nr;
->>             chunk_offsets[3] =3D chunk_offsets[2] + (hashsz + 16) * comm=
-its.nr;
+>> I think this is a good compromise, lets see how it goes (I think I
+>> broadly agree with Elijah's suggestion to allow the switch if we can
+>> safely switch back again if we want to add --ignore-in-progress in the
+>> future).
+> 
+> I probably will revisit this topic much sooner than I thought. I did a
+> bisect today and found out "git switch" would not let me choose some
+> "random" commit to test, which I suspected more likely where the
+> problem was, or at least helped reduce the bisect steps. I had to go
+> back to "git checkout" and was not so happy.
+
+Oh that's a pain, but should be safe as you describe below.
+
+> This probably falls under the "safe to switch" (and not even back)
+> category, as long as switching does not destroy any data, since bisect
+> is basically jumping between commits with a clean worktree/index until
+> you find the right one. >>> +static void die_if_some_operation_in_progress(void)
+>>> +{
+>>> +     struct wt_status_state state;
+>>> +
+>>> +     memset(&state, 0, sizeof(state));
+>>> +     wt_status_get_state(the_repository, &state, 0);
+>>> +
+>>> +     if (state.merge_in_progress)
+>>> +             die(_("cannot switch branch while merging\n"
+>>> +                   "Consider \"git merge --quit\" "
+>>> +                   "or \"git worktree add\"."));
 >>
->> Which is obviously bad, but something I encounterd while hacking up [1]
->> we'll still hard die as before this patch on:
->>
->>     $ git status
->>     fatal: invalid parent position 1734910766
->>     $
->
-> I really appreciate you digging in deep into these kinds of issues. You
-> seem to be hitting corrupted commit-graph files more often than we are
-> (in VFS for Git world).
+>> I'm not sure merge --quit exists, 'git grep \"quit origin/pu' shows
+>> matches for builtin/{am.c,rebase.c,revert.c}. The --quit option for the
+>> sequencer command does not touch the index or working tree (that's the
+>> difference between --quit and --abort) so the switch can still fail due
+>> changes in the index and worktree that would be overwritten by the switch.
+> 
+> Eck! Let me check if --abort is the same thing there or we need to add --quit...
 
-FWIW I've never encountered any of these in the wild. I just started
-poking at this in 2ac138d568 ("commit-graph: fix segfault on e.g. "git
-status"", 2019-03-25) because I was looking at the commit graph, running
-its tests with -d, and we'd segfault previously on e.g. "git status" in
-our own graph corruption tests.
+I think the --quit options generally leave the index and worktree alone, 
+they just remove the state files whereas abort resets the index and 
+worktree (with reset --mixed for merge and cherry-pick/revert, I think 
+rebase does reset --hard) and also rewinds HEAD for rebases and 
+sequences of cherry-picks and revert but that wont apply to merges as 
+they are one-shot operations.
 
-> However, we should be _very careful_ when turning some of these errors
-> to warnings. At the very least, we should do some high-level planning
-> for how to handle this case.
+Best Wishes
 
-Indeed. I should have been explicit, I don't think it's sane to do
-anything except return NULL up the stack and say "the graph is screwed,
-we can't use it" when initially parsing it/headers, but reading on...
+Phillip
 
-> The biggest issue is that we have some logic that is run after a call to
-> generation_numbers_enabled(), such as the `git rev-list --topo-order`
-> logic, that relies on the commit-graph for correctness. If we output a
-> warning and then stop using the commit-graph, then we will start having
-> commits with finite generation pointing to commits with infinite generati=
-on.
->
-> Perhaps, with some care, we can alert the algorithm to change the "minimum
-> generation" that limits how far we dequeue the priority-queue. Changing it
-> to zero will cause the algorithm to behave like the old algorithm.
->
-> But, having an algorithm that usually takes 0.1 seconds suddenly take 10+
-> seconds also violates some expectations.
->
-> Q: How should we handle a detectably-invalid commit-graph?
-
-...I don't think we need to do any paranoid algorithm fallback in
-general. As you point out that's going to be a PITA as we read the
-actual data in the graph in some cases.
-
-> I think most of your patches have done a good job so far of detecting
-> an invalid header, and responding by ignoring the commit-graph. This case
-> of a detectable error in the chunk data itself is not something we can
-> check on the first load without serious performance issues.
->
-> I hope we can decide on a good solution.
-
-...OK, so this is one of those PITA cases. I think it's fine to just
-leave it.
-
-Although maybe we'd still want to be more paranoid with O(n) cases like
-"--contains" or "--topo-order" and cases that are surely just "look up
-my immediate commit data", like "status" dying on this particular error.
-
-But I think it's fine to just decide to nothing about this. I mainly
-just wanted to make a note to myself & CC the list in case there was
-interest...
