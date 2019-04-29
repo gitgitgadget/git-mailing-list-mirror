@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 076281F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 06:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23861F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 06:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbfD2GVT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 02:21:19 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:34205 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbfD2GVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 02:21:18 -0400
-Received: by mail-io1-f65.google.com with SMTP id h26so8000960ioj.1
-        for <git@vger.kernel.org>; Sun, 28 Apr 2019 23:21:17 -0700 (PDT)
+        id S1727364AbfD2GVV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 02:21:21 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:40844 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727356AbfD2GVV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 02:21:21 -0400
+Received: by mail-it1-f195.google.com with SMTP id k64so7164411itb.5
+        for <git@vger.kernel.org>; Sun, 28 Apr 2019 23:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=NeWaZKf3Ow01SuTlE7rDRsZSrmPzfHC/zeYtkG1Ifew=;
-        b=rJOCIhbEz9FwI0GXltibG7Z2nFwQDeAeSiVhQ2o/n0kB2LkNlyuMpSHjSO4LyIHMZ/
-         FhocGNMx0eU2EXoSSX5wqystLq47xv3JhEsubL74gxWG2KddC7V3ck/JAcWORaQaXnCs
-         dvhfWF6envRAIzBx6x1mzLu62A5djumu84CZuzGO7iCXj4ahoPgZCRtE+R8J+BSqzXu7
-         j5I7yLz6CECzqVdnhwBLnzU0CXAUL8fyglLqWfq7zLLSH0vFTwhUiABp2DsnT5+Gvid2
-         0DSxxhoUaltWQocQZWf2DOSdlpDMAYyrW1yVA3mqM8b5zYyjcUbmHiVkQ/Zu0LcsNlNY
-         Vkrg==
+        bh=BaCYuxcCXPHPmO0EVxeDjh/HLg67x/u8MboMobGV+kA=;
+        b=GAngeAVv/9rTvpM/HMQfNBhq1DYsKP5Oy0MS+SJbVHza2mBRHeQCPnO99pOfOX4qPr
+         Ea7KlpXmG2iv22F1QkLrrNSAt7MwV6ZzQDN41+BYblbtvPICeCOxX4wOBvrPWnvjZyvK
+         ygPR0UIS4MR0B/hR3/ZySI4up3XEFEKlWPXYGvqVDPpaWqB7ZiL8Df5Sr17bPsRpW+RF
+         hyWKjHWLdCaRLO0FaQGpmN1tZwhEY9sXcMSwbeeXsRW/QClM6laVrlgixo96tb/NHXfm
+         7rc6mT9oln515BKN7md1NDW4Lp2zxZcIZXHIR2kwXijd0F7atdeyqQWEyJEJRS1cgG9x
+         Q3/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NeWaZKf3Ow01SuTlE7rDRsZSrmPzfHC/zeYtkG1Ifew=;
-        b=D8Q3/ZMiL1Oy7T3QpUDFFHBphCpxlU3zlwIHJPMukeMIRYIBWDFkKqDNNI4v+2Un4x
-         /k2JCCEjvU9hW8spw7t84JkPc4GM62Lveg+cOkxvMjVF23UBQ3X8+YmczMGD3RbBhXD1
-         QtFoS2olT9+732HwYBRUiSogG7uNa7cLWbtGDilzk80ynD8kwzUpbM060EwwZRcKRJrp
-         lkBl7HTqoUoPAd2tyElKtz61EifjRmlujwuA8cSk6g4BLAnXpHc31F099maUr7ZGsNXf
-         yflNgxHK0QcSvvLh+lRrN8Eye3Pjq5iW3LLGz4hCD0UN78uIciQ2WDh8L1nyjuUTEc1t
-         dqww==
-X-Gm-Message-State: APjAAAUjGzit1nWTvEtf2v/poiV2Z0gc7YUp8rrzvJ8DIviaiIgdGtz/
-        iRNAOMyIXCDVjUzcGriSUMOk5Yf+
-X-Google-Smtp-Source: APXvYqw7uK8apxnfm9m/AZlU6di3LRbSDBpCFBhcv4N7x3fc5kIsteQUU2vMVkqPQxYHbP0KLYtOqA==
-X-Received: by 2002:a5d:84d9:: with SMTP id z25mr17250971ior.301.1556518877408;
-        Sun, 28 Apr 2019 23:21:17 -0700 (PDT)
+        bh=BaCYuxcCXPHPmO0EVxeDjh/HLg67x/u8MboMobGV+kA=;
+        b=J+rqrqpk8RePRBSTdt0A3Vffd+He3YDt6HMZuJjQ1RWE+KLx/yGO3+/mKT3aNjvcdy
+         0q+VjpoPpbpBmwwxJGAFuYKwN4HNwP3zT5VpMfdIKcmw4dNPH/5d06nBRfBOUpXGzjo0
+         adga3a3R4rGk1HM+WjHf7dVqnn/A7azWhiCJ8mm8OZIyIxdUGihq+aJjYu3ZUrPVnUiG
+         dncyrQifTeR7yac4/frK+pAoaAJ3TLZq2pTHtuqR7quUZlcG5btP/YUcpBnau71SVJHP
+         68mgbnm6NQhvPlkogz/d5vHfAP4TWKrLMjrJZe8/VIetKVCjMHyoAsdipSnYXpUTSBqe
+         5LNQ==
+X-Gm-Message-State: APjAAAUSJIpxmmR4W6FZbGmYqF41nbN0ITWP+9Qstg9tiVfrY79ToZMB
+        ZuMei5IkIm6p2Gy3ZAnoh07pAVvz
+X-Google-Smtp-Source: APXvYqw6grslJSNN1LrwnbEL2HAhoSZ0u78J4ScgXdxcH3NQcrL2XK04IMXLL7vowPkY63pd6pF+Ow==
+X-Received: by 2002:a24:2458:: with SMTP id f85mr17151363ita.83.1556518880372;
+        Sun, 28 Apr 2019 23:21:20 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id u26sm11834155iob.78.2019.04.28.23.21.16
+        by smtp.gmail.com with ESMTPSA id f14sm12139272ion.46.2019.04.28.23.21.19
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Sun, 28 Apr 2019 23:21:16 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 02:21:14 -0400
+        Sun, 28 Apr 2019 23:21:19 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 02:21:17 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -57,8 +57,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 5/7] mergetool: fallback to tool when guitool unavailable
-Message-ID: <40413dbda11c282875811a1ddceff7542ae02aa7.1556518203.git.liu.denton@gmail.com>
+Subject: [PATCH v5 6/7] difftool: make --gui, --tool and --extcmd mutually
+ exclusive
+Message-ID: <c70789b689937f31bcde333f3d7cbe9099e53a0e.1556518203.git.liu.denton@gmail.com>
 References: <cover.1556185345.git.liu.denton@gmail.com>
  <cover.1556518203.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,157 +72,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-difftool, if the tool is called with --gui but `diff.guitool` is
-not set, it falls back to `diff.tool`. Make git-mergetool also fallback
-from `merge.guitool` to `merge.tool` if the former is undefined.
-
-If git-difftool, when called with `--gui`, were to use
-`get_configured_mergetool` in a future patch, it would also get the
-fallback behavior in the following precedence:
-
-1. diff.guitool
-2. merge.guitool
-3. diff.tool
-4. merge.tool
-
-The behavior for when difftool or mergetool are called without `--gui`
-should be identical with or without this patch.
-
-Note that the search loop could be written as
-
-	sections="merge"
-	keys="tool"
-	if diff_mode
-	then
-		sections="diff $sections"
-	fi
-	if gui_mode
-	then
-		keys="guitool $keys"
-	fi
-
-	merge_tool=$(
-		IFS=' '
-		for key in $keys
-		do
-			for section in $sections
-			do
-				selected=$(git config $section.$key)
-				if test -n "$selected"
-				then
-					echo "$selected"
-					return
-				fi
-			done
-		done)
-
-which would make adding a mode in the future much easier. However,
-adding a new mode will likely never happen as it is highly discouraged
-so, as a result, it is written in its current form so that it is more
-readable for future readers.
+In git-difftool, these options specify which tool to ultimately run. As
+a result, they are logically conflicting. Explicitly disallow these
+options from being used together.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-mergetool.txt |  4 +++-
- git-mergetool--lib.sh           | 35 ++++++++++++++++++++++++---------
- t/t7610-mergetool.sh            | 19 ++++++++++++++++++
- 3 files changed, 48 insertions(+), 10 deletions(-)
+ builtin/difftool.c  | 3 +++
+ t/t7800-difftool.sh | 8 ++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index 0c7975a050..6b14702e78 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -83,7 +83,9 @@ success of the resolution after the custom tool has exited.
- --gui::
- 	When 'git-mergetool' is invoked with the `-g` or `--gui` option
- 	the default merge tool will be read from the configured
--	`merge.guitool` variable instead of `merge.tool`.
-+	`merge.guitool` variable instead of `merge.tool`. If
-+	`merge.guitool` is not set, we will fallback to the tool
-+	configured under `merge.tool`.
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index a3ea60ea71..65bba90338 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -731,6 +731,9 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
+ 	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
+ 	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
  
- --no-gui::
- 	This overrides a previous `-g` or `--gui` setting and reads the
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 4ca170c8a7..696eb49160 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -354,19 +354,36 @@ guess_merge_tool () {
- }
- 
- get_configured_merge_tool () {
--	if gui_mode
--	then
--		gui_prefix=gui
--	fi
--
--	# Diff mode first tries diff.(gui)tool and falls back to merge.(gui)tool.
--	# Merge mode only checks merge.(gui)tool
-+	keys=
- 	if diff_mode
- 	then
--		merge_tool=$(git config diff.${gui_prefix}tool || git config merge.${gui_prefix}tool)
-+		if gui_mode
-+		then
-+			keys="diff.guitool merge.guitool diff.tool merge.tool"
-+		else
-+			keys="diff.tool merge.tool"
-+		fi
- 	else
--		merge_tool=$(git config merge.${gui_prefix}tool)
-+		if gui_mode
-+		then
-+			keys="merge.guitool merge.tool"
-+		else
-+			keys="merge.tool"
-+		fi
- 	fi
++	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
++		die(_("--gui, --tool and --extcmd are mutually exclusive"));
 +
-+	merge_tool=$(
-+		IFS=' '
-+		for key in $keys
-+		do
-+			selected=$(git config $key)
-+			if test -n "$selected"
-+			then
-+				echo "$selected"
-+				return
-+			fi
-+		done)
-+
- 	if test -n "$merge_tool" && ! valid_tool "$merge_tool"
- 	then
- 		echo >&2 "git config option $TOOL_MODE.${gui_prefix}tool set to unknown tool: $merge_tool"
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index dad607e186..5b61c10a9c 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -167,6 +167,25 @@ test_expect_success 'gui mergetool' '
- 	git commit -m "branch1 resolved with mergetool"
+ 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
+ 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
+ 	else if (difftool_cmd) {
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index bb9a7f4ff9..fd4a2a93b6 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -705,4 +705,12 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'gui mergetool without merge.guitool set falls back to merge.tool' '
-+	test_when_finished "git reset --hard" &&
-+	git checkout -b test$test_count branch1 &&
-+	git submodule update -N &&
-+	test_must_fail git merge master &&
-+	( yes "" | git mergetool --gui both ) &&
-+	( yes "" | git mergetool -g file1 file1 ) &&
-+	( yes "" | git mergetool --gui file2 "spaced name" ) &&
-+	( yes "" | git mergetool --gui subdir/file3 ) &&
-+	( yes "d" | git mergetool --gui file11 ) &&
-+	( yes "d" | git mergetool --gui file12 ) &&
-+	( yes "l" | git mergetool --gui submod ) &&
-+	test "$(cat file1)" = "master updated" &&
-+	test "$(cat file2)" = "master new" &&
-+	test "$(cat subdir/file3)" = "master new sub" &&
-+	test "$(cat submod/bar)" = "branch1 submodule" &&
-+	git commit -m "branch1 resolved with mergetool"
++test_expect_success 'difftool --gui, --tool and --extcmd are mutually exclusive' '
++	difftool_test_setup &&
++	test_must_fail git difftool --gui --tool=test-tool &&
++	test_must_fail git difftool --gui --extcmd=cat &&
++	test_must_fail git difftool --tool=test-tool --extcmd=cat &&
++	test_must_fail git difftool --gui --tool=test-tool --extcmd=cat
 +'
 +
- test_expect_success 'mergetool crlf' '
- 	test_when_finished "git reset --hard" &&
- 	# This test_config line must go after the above reset line so that
+ test_done
 -- 
 2.21.0.1033.g0e8cc1100c
 
