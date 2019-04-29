@@ -7,91 +7,85 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBAFE1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 21:58:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E93D1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 22:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729534AbfD2V6v (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 17:58:51 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46960 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729409AbfD2V6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 17:58:49 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d1so10479075edd.13
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 14:58:48 -0700 (PDT)
+        id S1729410AbfD2WEi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 18:04:38 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46440 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729252AbfD2WEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 18:04:37 -0400
+Received: by mail-ed1-f65.google.com with SMTP id d1so10489997edd.13
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 15:04:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Ls0/ZmAT3ESFZW2feYeDQBxXsm/Q812q5LHyqz9eatk=;
-        b=GR/ly4O8tQImbXeaHiCWRdtphl9A/0xM97i2wS21tZmE6NjO5EkP6rRBz7qexg6hq+
-         AJF7E2ajwgoGMpkPEjGzmE0laxi+5pq8nldBLl7/1znEOJJnUHi5gwvqYXQY2UBhWLX4
-         M7tfmrov0NPHT8BdWlF5n8WyQ5bAlkVcSSKbPGt3BhFqBEtWVlTKRHOFgVSj7xYYN2LD
-         2ZZ3nCPnyPb6BvjKd470Tryn6LfXxMQdfSv5svPwXPbcMtDmK8seJsP+jbl7NMhAGuFF
-         d0b0TtDqlphmIqimFLgQIHEXWNXWKUcblS24Oz9LU5Ust7QsGh5iWuQPPCPqZwf1nFTW
-         4DfA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=KlopGQ/MMO/LIP+VQxjiVSKplANtji/zeRKgUMZgros=;
+        b=YgqUgeqfuJWliqK5tx2OS5PjPaKfhArv4+dduel27515i30DLekyIsmAlM6oe5qiQp
+         Ir8xdzLUF192WCRotA/x1Cyza2a0NTuqb9kwklvCGiI4xSF6rkmCtaU5IPy0HNzL3tjl
+         ODvH0ghKblpbvZEVPvQ9sgA56um5pVyp7Ns6xYp198V8LLRKI1M0cwymHUM0KquXGvzM
+         cik7DB9GFiIVgVM11uvLWxbQpzc+EyoTFiIq619yBApo+yNJEXNZbJnUeUtMthzW+XpJ
+         0/+POBLZeqDT08kA5oveVuJnyfaoPqfLb71afJAqHFG2eOQJ0I0k7JmZXuF+o5sbREss
+         EJig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ls0/ZmAT3ESFZW2feYeDQBxXsm/Q812q5LHyqz9eatk=;
-        b=szmnmlVdZAAHviUKQYlXgF3IDpK/2bholg6dcK1uywfD8rS/AGbf/1J9JNokQOqbVU
-         GXxQJeRqrgqqEhNHfQnEaQk3LYi+KdmKPmHqJdFX72uReRmmVyw2ymf6kjIwoPuS78pq
-         vUwEne2+76lTU+HN8wKyYB1tfu3y6841ujZft4HRdtsnLVf6HCLXPdxwf8vhRwWdA6ZP
-         Au3gWh/PdR5LDmDaVmLNXZucsy2YUelkn7iWl2jS9SVFXNPSMoyP8aKqBn3w3wX83c6e
-         /ctmki8EoetF+x79WQhojWLEZbJjVBNYK7erVudiNGP0IG1HD3o+C7zkEftOst2CapmB
-         Lg1A==
-X-Gm-Message-State: APjAAAXSft8xb+yoDUEGyIhKJdj/d5Dv+VvbaqF/IDFgm1+5+QVtFgJD
-        xE/JpBFGtZYVKAEbgLLw/cr/rxob
-X-Google-Smtp-Source: APXvYqyR/bi11Fi07tsUsIKH8e/ihfKWSawos5KkxzqzbS1JXkMqmmFCIoz10+14mI5XDdIQUShKUg==
-X-Received: by 2002:a17:906:4911:: with SMTP id b17mr16123513ejq.144.1556575128016;
-        Mon, 29 Apr 2019 14:58:48 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KlopGQ/MMO/LIP+VQxjiVSKplANtji/zeRKgUMZgros=;
+        b=ppz9zluPrd4CQxaSky02GMhD9zrXL9xqKNu6NWNs+MkU3fAwl7Trus7NnLcbc848iK
+         5TPRpt65xsoEZ/lNYDhsREqUjRCNpV21F5lJZb+96JKY8O8vhjFTkIxvQjMX9VEpXRva
+         u4Q7w8iOiXeO57h7gfq2Y0fjHkHvt/cnnaVuYOsEbAy9kaXVJ/4+g9hiAub3NbAN65GF
+         UbJJ7Fl8ylgtWOc/YgUMyiIQ6gFt6sd3zIbbNipA1I5Eix6trwkDIyDaUPx+/CW1BY+3
+         RRz+U1kMTcEz/DFT7yq31c0nGbjtwy8Cutzf5QR8Lai/clp0Zm9MLAZSyrdeB0hnzz6F
+         zWcA==
+X-Gm-Message-State: APjAAAX8TiB7ABmGxiWN7A+oeQhyMlB4ULdporY1EiZ6VvrGZtz2XTIC
+        Q5BT+SRi/7BXcrf/eA28c82myxl2
+X-Google-Smtp-Source: APXvYqwqebtvOZCOMbo1zBIaSEaa8dIxXBn40EdR6elCJQsBJLIbEHBEwuuJrP4aja27oahCV+SLnw==
+X-Received: by 2002:a17:906:6406:: with SMTP id d6mr32804738ejm.103.1556575476212;
+        Mon, 29 Apr 2019 15:04:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm6064165ejb.19.2019.04.29.14.58.47
+        by smtp.gmail.com with ESMTPSA id t29sm1295834edb.30.2019.04.29.15.04.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Apr 2019 14:58:47 -0700 (PDT)
-Date:   Mon, 29 Apr 2019 14:58:47 -0700 (PDT)
-X-Google-Original-Date: Mon, 29 Apr 2019 21:58:46 GMT
-Message-Id: <9b508af11be125ce5fd80c40c732dbcaf45067fb.1556575126.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.132.git.gitgitgadget@gmail.com>
-References: <pull.132.git.gitgitgadget@gmail.com>
-From:   "Dustin Spicuzza via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] cvsexportcommit: force crlf translation
+        Mon, 29 Apr 2019 15:04:35 -0700 (PDT)
+Date:   Mon, 29 Apr 2019 15:04:35 -0700 (PDT)
+X-Google-Original-Date: Mon, 29 Apr 2019 22:04:34 GMT
+Message-Id: <pull.137.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Support git:// with old MinGW
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Dustin Spicuzza <dustin@virtualroadside.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dustin Spicuzza <dustin@virtualroadside.com>
+The MinGW project (which can now be considered "old", as mingw-w64 is the
+standard thing to use nowadays, since it also supports 64-bit builds) had
+some problems with our sideband feature, and in Git for Windows <2.x, we
+introduced a config setting to still allow using the git:// protocol by
+forcing off the sideband channel.
 
-When using cvsnt + msys + git, it seems like the output of cvs status
-had \r\n in it, and caused the command to fail.
+Let's contribute this patch to upstream Git, at long last.
 
-This fixes that.
+Thomas Braun (1):
+  mingw: optionally disable side-band-64k for transport
 
-Signed-off-by: Dustin Spicuzza <dustin@virtualroadside.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-cvsexportcommit.perl | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/config.txt          |  2 ++
+ Documentation/config/sendpack.txt |  5 +++++
+ send-pack.c                       | 14 +++++++++++++-
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/config/sendpack.txt
 
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index d13f02da95..fc00d5946a 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -431,6 +431,7 @@ END
- sub safe_pipe_capture {
-     my @output;
-     if (my $pid = open my $child, '-|') {
-+	binmode($child, ":crlf");
- 	@output = (<$child>);
- 	close $child or die join(' ',@_).": $! $?";
-     } else {
+
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-137%2Fdscho%2Fsideband-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-137/dscho/sideband-bug-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/137
 -- 
 gitgitgadget
