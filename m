@@ -2,108 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F298C1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 12:28:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 310D81F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 12:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728047AbfD2M2n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 08:28:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46277 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728006AbfD2M2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 08:28:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556540909;
-        bh=g14TfcTvrFtTncfK82TG6YeR3nbZCoroMQk3LHFwNOs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gRLgnnMn1gVEDuhC0HMKlXlsq40pvu5TUnDSGm1QjaDRVkVoywLQZKEkrpoDdqirB
-         6PIQd/dSEY8hw9p6WUz2+PpzzLUirlVvozu2PZDQcsALJ6lJXoaPqYDoPVeXpJESzh
-         LwvIdIhe6AkeBWFDGXQMh7DzBBvL2IM5zBHL86OU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.106.210.16] ([167.220.152.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAgvb-1hVlh81eVH-00BwGz; Mon, 29
- Apr 2019 14:28:29 +0200
-Date:   Mon, 29 Apr 2019 08:28:31 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 5/8] docs: exclude documentation for commands that
- have been excluded
-In-Reply-To: <xmqqef5yefkg.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1904290828090.45@tvgsbejvaqbjf.bet>
-References: <pull.168.git.gitgitgadget@gmail.com> <pull.168.v2.git.gitgitgadget@gmail.com> <f8d133c59725938afa85f6be349c2bba05fe98e7.1555593396.git.gitgitgadget@gmail.com> <xmqqef5yefkg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728156AbfD2Msz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 08:48:55 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:38863 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727956AbfD2Msy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 08:48:54 -0400
+Received: by mail-qt1-f194.google.com with SMTP id d13so11661199qth.5
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 05:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=clRl/Qdsj6BTWxIDMOdnuc2FXTDNuaOm73J50Gzrgvw=;
+        b=mQoNpbD9sFs1XlTyYO/aKfM/1aze1J80e1PjvYXf3D+plLj/UAbDCkh6CoV3jmaCOE
+         52GYo5gLM3ZACddAqO66xYkdvH9dkEZ7HUWFinhJi1KmFJmHvJckD/0Nfn64pnp/vAam
+         3bgUiKtSMMexQIwV+GR+tg5XEjvVhcdShPwkf0ug9VQz2vPSfJ44iCQ2Oxxg4WmyhSN9
+         104GEEQYmWCnpu5Pk7FsRo6zCEgWspeMmfqpZO/g5jVkmhZFKg1b+tVg5r7QGoaYCvYZ
+         lIqrLQaFnQT557NZ4VY5yK71zq4rpUJaZLo2cFMu1qBP+c1RJy+n7J+m/4k9FhJlw0Sd
+         HqzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=clRl/Qdsj6BTWxIDMOdnuc2FXTDNuaOm73J50Gzrgvw=;
+        b=qowIdcQEkGYktcRoJdnI/dzpRoU5Pecg4Nsco0FNnmSAXhS8EZM72fb/pc3Qa9xEsR
+         NluKXhdCUkMnAlQQrRw1p9ZmxGnSptNK8wX10mPGdoJdiY3r+0GkvcBYijHjXVpRgMuU
+         7e3wlwvQwf1xq6XuhQ2I1VlU0J/EK1vKm9IKjucsbGAJokZVLnQE/kSImpM+mMNBl1z/
+         mDc11+vwPbnjscoQn92LVGwYox0V8Ligzm4fVONcdhJSE74Tey6rMyFyCAvqQW9CMsn/
+         rHjqfjgIxFdurtb/+j7KguTIhssZRvy1L10STV1x4XoyOWWtwk9xvlPjMNeM3q4XGjFo
+         +5sw==
+X-Gm-Message-State: APjAAAXpqzNhuqyqLQ7vv6id5YCMggFFi0bzgMsQfN0t7B5zWkbOCNB7
+        qummbNH5mKpQiuMDifpDOx4=
+X-Google-Smtp-Source: APXvYqwjKEqp1e/CfSVE/A8wRj9yqHTHnh2yucen0NafBNVGREhclSkT1Wj7w4iq9V0jnRhxBIw9+g==
+X-Received: by 2002:a0c:9e9a:: with SMTP id r26mr47411540qvd.57.1556542133605;
+        Mon, 29 Apr 2019 05:48:53 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:44d4:80ba:e568:f586? ([2001:4898:8010:0:2e0a:80ba:e568:f586])
+        by smtp.gmail.com with ESMTPSA id r4sm10440370qkb.20.2019.04.29.05.48.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Apr 2019 05:48:52 -0700 (PDT)
+Subject: Re: [PATCH v3 4/8] commit-graph: don't early exit(1) on e.g. "git
+ status"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <20190314214740.23360-1-avarab@gmail.com>
+ <20190325120834.15529-5-avarab@gmail.com>
+ <87y33vr41k.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3518ad3e-bc4a-c2c3-d4bd-c87f9e828b1c@gmail.com>
+Date:   Mon, 29 Apr 2019 08:48:51 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dDyMCdSoBXifO2SPxlQPVjaDzr6K2tVCQUI83muVVrH6p1ITE9C
- WuSDI5aTPbfyq4pCexAQsTeugIxxnO6Gb1vFikBZlUkKGyKljcITzf5FeXwcEfw6dqaMA5d
- 9+ixVUz8/XqXvSc6UUZOksaYsim5NnIUab4jwfvFHyeax45dCwgVBETyRCFh7nzjovK32m5
- 3qNmxMKCJZMicxO+UDRKw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aJqy+Zn6pkU=:ERqR6KJoJTiA51f/jdfESp
- Vl31wpLvHVaC7Q93hmBMrijPU6yWcTYG3DSXBE5C2UPPu4ijus/OfiLjqEVJyCoJH1P/RioeH
- TFFYidyY+0YBeGD9w970FzfHYmOpMDvQM3rzh/vkDUtHakMoYkSEDl4tWh3w/bbp+bc+Ekadi
- 8NbxpXag+pJaLLg0jKw9X6aF0t85rr5JhRZhtfp9jNv50P6VhjecDa2JDbrSZ+jKZRIsJYX2L
- cxAUUdn0H9t0DasDotL1djvHsNQFC5bMrvOcKQr6Hh/yPO9cbLMmflv7DKu2b+vnhrYxj9YgO
- owV6541tuSnOi3z4yULt39cKUUcfgXYl8R6DnDhUqf8yVLN3hBnmCU1nIkF6KaRzQnXNY3oLR
- b6FgoY4oTpYPSl2I0XGZvTM5CoUGzNbnNbyc2WTAdU2AgQYgi9OaoxbUyUunEbsErln1kkNqh
- GeC7zFRbcRuDepFcNcAaix9L/O9lIE17pBYnXQvK2fWcohK079QC/NPs4bv3RtNT99qVFlHJW
- 2KCE7WHT02mTBbCeGcnxpdI0NEY2AD0jdc8mNNYCrfH8XupDYhHkZlltY8cIqKXIYMEjIP1Ed
- mKEVbDVE2uZO6Yx/mtn50rcZGoHyv0uWL4+BO4kHCo+/QthZht+lphmzIKq5gwU2eAAZRed88
- SoZ3G8tBDU8IzuowPcWD0OspCZ5Fnu4ZvOHYWCqFPFUIBc4GyuOLMBE2TJI0KVCCaZabwXY9L
- CnT+NJX3FzB6lydubQ1oNG4gA4RBttAdxcXFPWXfi2mc4ycfrT1vGr2kmn7yTE81gUMhttp0a
- pdX+xHs3wUEHagqOw1hKUnGSMyFVAbDtBz47pqrMFFTAhJcSTIo8YGYwi2D2D0/N5n4K0i3LM
- OxGq0lWV1jZOM7EbP+dfXSSHR3hKTLCoc16XDUccAP+v1DwXnbO4DH7qhTd/R93TpzoYy7tgK
- mLHhCxEqclQ==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87y33vr41k.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 4/27/2019 9:06 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> There's still cases left where we'll exit early, e.g. if you do:
+> 
+>     $ git diff -U1
+>     diff --git a/commit-graph.c b/commit-graph.c
+>     index 66865acbd7..63773764ce 100644
+>     --- a/commit-graph.c
+>     +++ b/commit-graph.c
+>     @@ -1074,3 +1074,3 @@ void write_commit_graph(const char *obj_dir,
+>             chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+>     -       chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
+>     +       chunk_offsets[2] = chunk_offsets[0] + hashsz * commits.nr;
+>             chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
+> 
+> Which is obviously bad, but something I encounterd while hacking up [1]
+> we'll still hard die as before this patch on:
+> 
+>     $ git status
+>     fatal: invalid parent position 1734910766
+>     $
 
-On Fri, 19 Apr 2019, Junio C Hamano wrote:
+I really appreciate you digging in deep into these kinds of issues. You
+seem to be hitting corrupted commit-graph files more often than we are
+(in VFS for Git world). However, we should be _very careful_ when turning
+some of these errors to warnings. At the very least, we should do some
+high-level planning for how to handle this case.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When building with certain build options, some commands are excluded
-> > from the build. For example, `git-credential-cache` is skipped when
-> > building with `NO_UNIX_SOCKETS`.
-> >
-> > Let's not build or package documentation for those excluded commands.
-> >
-> > This issue was pointed out rightfully when running `make check-docs` o=
-n
-> > Windows, where we do not yet have Unix sockets, and therefore the
-> > `credential-cache` command is excluded (yet its documentation was buil=
-t
-> > and shipped).
-> >
-> > Note: building the documentation via `make -C Documentation` leaves th=
-e
-> > build system with no way to determine which commands have been
-> > excluded. If called thusly, we gracefully fail to exclude their
-> > documentation. Only when building the documentation via the top-level
-> > Makefile will it get excluded properly, or after building
-> > `Documentation/GIT-EXCLUDED-PROGRAMS` manually.
->
-> I certainly know where you come from, but I am on the fence.  Being
-> able to omit documentation, without thinking, for what you do not
-> ship is surely handy, but at the same time, being able to format
-> everything you have the necessary material for is also valuable.
+The biggest issue is that we have some logic that is run after a call to
+generation_numbers_enabled(), such as the `git rev-list --topo-order`
+logic, that relies on the commit-graph for correctness. If we output a
+warning and then stop using the commit-graph, then we will start having
+commits with finite generation pointing to commits with infinite generation.
 
-I guess you need a maintainer's mode ;-)
+Perhaps, with some care, we can alert the algorithm to change the "minimum
+generation" that limits how far we dequeue the priority-queue. Changing it
+to zero will cause the algorithm to behave like the old algorithm.
 
-Ciao,
-Dscho
+But, having an algorithm that usually takes 0.1 seconds suddenly take 10+
+seconds also violates some expectations.
+
+Q: How should we handle a detectably-invalid commit-graph?
+
+I think most of your patches have done a good job so far of detecting
+an invalid header, and responding by ignoring the commit-graph. This case
+of a detectable error in the chunk data itself is not something we can
+check on the first load without serious performance issues.
+
+I hope we can decide on a good solution.
+
+Thanks,
+-Stolee
