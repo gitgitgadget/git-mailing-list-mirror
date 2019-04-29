@@ -8,123 +8,133 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2A81F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 21:25:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2D71F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 21:33:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729396AbfD2VZu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 17:25:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53781 "EHLO mout.gmx.net"
+        id S1729409AbfD2VdA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 17:33:00 -0400
+Received: from mout.gmx.net ([212.227.17.20]:40117 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729283AbfD2VZu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 17:25:50 -0400
+        id S1729370AbfD2VdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 17:33:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556573137;
-        bh=I6j8+Fg57g/KJLVbV3sjL7GKf4WEYUCyaBuBA21VPGg=;
+        s=badeba3b8450; t=1556573568;
+        bh=5z6n5zVfHXS0eZbuxBmba8WIcKEWStubRH94qs3t0Ng=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JTRj0f/vY4RRJ9WARITIwvzzwyNnRX1XGcsQyJP9HxfGjeP2t7lvpjGQ9G/knk3lZ
-         Fmda3uVaZuWSb/qxW2fMYT0l/B2F4jAH7SxhQphZQTyFv8+xX5vtvC/DQ1k/tWPwQx
-         JXQZva65IpBH812JiI4/qpRbHgDca6spk1dmCcuQ=
+        b=ZiaXQNErYdylYvRf8GvHJxKl2mD3tWQsQWKGnFCQQ2/7Ql65fMghhlcyvSRXYBEkb
+         2Z4sGQlsvrGK51pbtChRv8ryYC7gEWxfSLVdPFSNIZDXXTdnhNl+qs382wEGV38IY8
+         p97ID2mXxM3qkQr5TwX1GF4PNGcb7J80H/r63HZ0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHG8g-1hYP451hIm-00DHfj; Mon, 29
- Apr 2019 23:25:37 +0200
-Date:   Mon, 29 Apr 2019 17:25:39 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LoEcP-1gsUly3IUb-00gJK9; Mon, 29
+ Apr 2019 23:32:48 +0200
+Date:   Mon, 29 Apr 2019 17:32:50 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Jeff King <peff@peff.net>,
         Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 2/2] archive: avoid spawning `gzip`
-In-Reply-To: <45afd432-9e45-ea76-aa1b-e8cd1264e3a0@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1904291720120.45@tvgsbejvaqbjf.bet>
-References: <pull.145.git.gitgitgadget@gmail.com> <44d5371ae6808ec40e8f52c3dc258a85c878b27e.1555110278.git.gitgitgadget@gmail.com> <20190413015102.GC2040@sigill.intra.peff.net> <8ef2164c-1d44-33bf-ea8a-49fa0b5c8abf@web.de> <20190415213556.GB28128@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1904261047560.45@tvgsbejvaqbjf.bet> <f6f32bc0-109c-e0eb-f7d2-9e46647f260c@web.de> <45afd432-9e45-ea76-aa1b-e8cd1264e3a0@web.de>
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with
+ write_block_or_die()
+In-Reply-To: <xmqqd0l8tjph.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1904291732370.45@tvgsbejvaqbjf.bet>
+References: <pull.145.git.gitgitgadget@gmail.com> <7a9525a78a7b7b237150b9264cf675a4a0b37267.1555110278.git.gitgitgadget@gmail.com> <20190413013451.GB2040@sigill.intra.peff.net> <xmqqzhouwizg.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1904261028220.45@tvgsbejvaqbjf.bet>
+ <xmqqd0l8tjph.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1684098236-1556573142=:45"
-X-Provags-ID: V03:K1:2qs2CyNTU7mNSo4FUJ6kTAfoP6YZ2QzSM8lZIsM3uSOdQqMnnGK
- sLLAg0BJ+afE+WSNgl9zBcSc6mc89RbAVbyXw05M2MvRj2mu++IQ3HA2zWkFGCFRN7xkVOr
- EU8tL6gJ+9W2b7Byr5xCqG/uZRCZXRk1hFTNRbtGMYy90ncL3osIm+jSZB/4Unf1lTPFaYc
- LfBL23od8hO2MotpMdQYg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1+bkheZztXM=:iWil2KWHFnaqrVIq++dszl
- 9ks4RtDrz8YZDGeF2gDq9ufbE4iQaLGlXFrXcQtw9lKp3/Q9mwZvnRdtXdvNQy60C9MOKuw/V
- DgcE4Ydd7Pg0NnI97uO/Puhqp+/51yVm+rGv3+QpRwN4GsSoIgqOXY8kgQV83FBTWiCofR2nF
- jIhVdNctORrLaIaXyju7JaY/6fbvYKORVZi/xP9LlUDlW1RwE8xhzZszTq426A2581i0H4F93
- ph/PzjSZDgDblRJv4ZOr/FHcRZeZ4VtWeAuylgi0HNWvpnntyv28FQOATfXIyCmy0Pk+bkmSj
- kTfVKCkGfDjcjxOIuadb4CryMPFDBU9UsP3gSNHI/kj49i2T+8ewiXAVWL4AW4oqMzaP5BpKU
- eUawK9UuXDZLa4VfRcBdCw+fT1s1PhxRnuEAe6miFQUOe94XM8XDyrNiEqbwtSWLUT8AepzXd
- 6J/9koTwZ0xJm9+Gdmxyi9+XLs8DgSMAYfXj3xSRwiSNlwIk6sPImL17MbFEk6gYJyxbYcKaJ
- vSLC8RQrqKbWDQAPuEb1G/MAwBH37H/47JoqvqgBKk6WIJROlN6ubNtobOv8lKuht0mHYvYWg
- HbdJvYzsSkkTUZrEFTA+bA9s1mRCNLYXN222vEIwSXs7lkF8il4nJbNsYYx9ONhsdi2bvr0Sj
- 2gI8TZeb2mTzjH5ZL+MMn+Bg0SZ2fUX7+C8w9P5dx8BnUXty6x7aGtsu+WUmPPBhaCpuzjCg2
- 7DY9T2dO0JWrl4UmoZmJO6JeUZnt4snbW6TeNQRt9zgsbZo0IpL7xhNxDKoaFoMrmfLBcO8fv
- 6+OlMw1KHOF4UgjQNON7mL+4zI5a50SjVunCUpFQnW54EpnxAukH6YEC+qieG5inIUFSV3bUE
- 7YnLtDju4cl5aKCKHTU6ixggL7ms7k/no9WgTkyn+A1+dL8ZG7Lxa2dWmxi92pawQH1icrMQK
- bBAXObXGMqw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Dg+cGewTUgOw9RDFXnvQwXJEfqtskq7t4E1ZknLoM87zMh9LJ31
+ +UJebsEJlT3N28g5b3svda8qL1Bt+95DnpLOz1xKgmDAeTPPTwrlhdGY63xMtGWoTkZX7Fm
+ atLWUidHPaLUic125zcyzbDNCeIuvki8SnhDNXzipI9DFxNzbPPp2gPkmz+ohWibUuUCFfc
+ 9LcWksvNtnnwPqMik/xFg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bzzOEW6Dvx4=:0reNLg6UJKWobaTODMtP5M
+ 01eeRKmhNPNUr/3TuLB4TGsagCamYJD0XA0oTLzeetVfs8V0fDzx2sFQ6VciS6MfvQqQ0vftJ
+ eID1f5zs3wlmsX3D5p+06Pq9QD0F03Psnd6A9oAFmFbOoDuRHov/A0gFRv6BQYtFob2kudiVe
+ xyPuOVfcL4GBn/2khS6a/3PpqOBORX0m+F5cm1WunHonluVQFH73YWif01YdlOWsPpM+EnTUj
+ rBZt7t/8carVeINf0MbHVmZGbmhRRDFZiVved82UKPYuRlJeAzGKhIQelnoD/2FlRG94se7+I
+ EXpYDwjjv/2Gq0lxM/5UAaqvEArTBUECpKWpvwNA081BO7TpoEAyRoXSrufeVZfTXgtE/rt6Y
+ ky5ZboegXxOmc0wqHcOZSwhamTqmk7G8X0Dgt9fAu2/e2qkavtAnk/jVf3yOazvAmsOHnHJbX
+ WYJ81eICHR2msK6+8jqXrqHvChsxCMe495k7O3bx4/B91hAYlvPu5XEVRojmXBMcWfIeSecS2
+ ALz5bq2ErZ95kRgnrM/NMZTa4M4nTxsiI9lv/wC8uunt+fDyml6GKaUB23TFUBp1Glg4gQkZE
+ dsG4lfqz72Mb81zBdnXOgnvqmeNmjMdhuRxjtjO5JOGYltzYxhT831a51OXXxRKXesoonGvMT
+ F8g21xIjLPE/dt6g7hkK17BaJocvd4w9o/f5jaJIFY5zOL4ZXNx8ozfYKEOQYBw+MSdUXdFk1
+ TeXwfWNoGf5jXInoqmX3840CkfUSKYNvlg3bG4uRMeBt0vca4ylb/HNpmedtlqpycihi0RUwl
+ ALynqnnKDYWm9bfHTew/v74CsgGLvyalxHx2lTg8TVEdu6T/bQVCvJWzBwVODiaVLoeOT+t0v
+ WNsUFzRSHtCMC8e1RLXy6bbe3e620i/MT01JtYhJaQuROzVbk49xPLMSmKAjdzFGPELze7Hg2
+ xMZKzmeBzcg==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1684098236-1556573142=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 27 Apr 2019, Junio C Hamano wrote:
 
-Hi Ren=C3=A9,
-
-
-On Sat, 27 Apr 2019, Ren=C3=A9 Scharfe wrote:
-
-> Am 27.04.19 um 11:59 schrieb Ren=C3=A9 Scharfe:> Am 26.04.19 um 16:51 sc=
-hrieb
-> Johannes Schindelin:
-> >>
-> >> On Mon, 15 Apr 2019, Jeff King wrote:
-> >>
-> >>> On Sun, Apr 14, 2019 at 12:01:10AM +0200, Ren=C3=A9 Scharfe wrote:
-> >>>
-> >>>> Doing compression in its own thread may be a good idea.
-> >>>
-> >>> Yeah. It might even make the patch simpler, since I'd expect it to
-> >>> be implemented with start_async() and a descriptor, making it look
-> >>> just like a gzip pipe to the caller. :)
-> >>
-> >> Sadly, it does not really look like it is simpler.
-> >
-> > I have to agree -- at least I was unable to pull off the stdout
-> > plumbing trick.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> The simplest solution is of course to not touch the archive code.
+> >> >> +/* writes out the whole block, or dies if fails */
+> >> >> +static void write_block_or_die(const char *block) {
+> >> >> +	if (gzip) {
+> >> >> +		if (gzwrite(gzip, block, (unsigned) BLOCKSIZE) !=3D BLOCKSIZE)
+> >> >> +			die(_("gzwrite failed"));
+> >> >> +	} else {
+> >> >> +		write_or_die(1, block, BLOCKSIZE);
+> >> >> +	}
+> >> >> +}
+> >>
+> >> I agree everything you said you your two review messages.
+> >>
+> >> One thing you did not mention but I found disturbing was that this
+> >> does not take size argument but hardcodes BLOCKSIZE.
+> >
+> > That is very much on purpose, as this code really is specific to the `=
+tar`
+> > file format, which has a fixed, well-defined block size. It would make=
+ it
+> > easier to introduce a bug if that was a parameter.
+>
+> I am not so sure for two reasons.
+>
+> One is that its caller is full of BLOCKSIZE constants passed as
+> parameters (instead of calling a specialized function that hardcodes
+> the BLOCKSIZE without taking it as a parameter), and this being a
+> file-scope static, it does not really matter with respect to an
+> accidental bug of mistakenly changing BLOCKSIZE either in the caller
+> or callee.
 
-We could do that, of course, and we could avoid adding a new command that
-we have to support for eternity by introducing a command mode for `git
-archive` instead (think: `git archive --gzip -9`), and marking that
-command mode clearly as an internal implementation detail.
+I guess I can try to find some time next week to clean up those callers.
+But honestly, I do not really think that this cleanup falls squarely into
+the goal of this here patch series.
 
-But since the performance is still not quite on par with `gzip`, I would
-actually rather not, and really, just punt on that one, stating that
-people interested in higher performance should use `pigz`.
+> Another is that I am not sure how your "fixed format" argument
+> meshes with the "-b blocksize" parameter to affect the tar/pax
+> output.  The format may be fixed, but it is parameterized.  If
+> we ever need to grow the ability to take "-b", having the knowledge
+> that our current code is limited to the fixed BLOCKSIZE in a single
+> function (i.e. the caller of this function , not the callee) would
+> be less error prone.
 
-And who knows, maybe nobody will complain at all about the performance?
-It's not like `gzip` is really, really fast (IIRC LZO blows gzip out of
-the water, speed-wise).
+This argument would hold a lot more water if the following lines were not
+part of archive-tar.c:
 
-And if we get "bug" reports about this, we
+	#define RECORDSIZE      (512)
+	#define BLOCKSIZE       (RECORDSIZE * 20)
 
-1) have a very easy workaround:
+	static char block[BLOCKSIZE];
 
-	git config --global archive.tgz.command 'gzip -cn'
+If you can tell me how the `-b` (run-time) parameter can affect the
+(compile-time) `BLOCKSIZE` constant, maybe I can start to understand your
+concern.
 
-2) could always implement a pigz-like multi-threading solution.
-
-I strongly expect a YAGNI here, though.
+:-)
 
 Ciao,
 Dscho
 
---8323328-1684098236-1556573142=:45--
+P.S.: I just looked, and I do not even see a `-b` option of `git archive`,
+so I suspect that you talked about the generic tar file format? I was not
+talking about each and every implementation of the tar file format here, I
+was talking about the tar file format that Git generates.
