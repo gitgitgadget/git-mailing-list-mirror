@@ -2,130 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CDBC1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 23:19:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF3BC1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 23:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729015AbfD2XTh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 19:19:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35764 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728565AbfD2XTh (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Apr 2019 19:19:37 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B692260443;
-        Mon, 29 Apr 2019 23:19:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556579975;
-        bh=DtgMa4EXXXyhzU52k7VAEbqiBcAaqXk4ozGCiMzdMms=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ser632W7j/QRr1YVaoz5rPYV2G1FjiAJe52PxKTr6XMwlE5Y0J+dZqHyQH6U6zjE6
-         HnLA0RS9xnNvxPW1UerpYNc2Te05eswCzQLerI9LzVvgk5qcMHUt//jyWm1AE4v5Wm
-         V6b3GkSxU90PjnwIVTvz1pnwycWYjR6lKjSldbip0K2VOu2EEZ/zDNpsaU5WJuHzWP
-         UM8Dt+0cvy1gb2Fe82p4BoYMN2bo9+aOVF6WXRg/cRkqexMp209NszwqXJOt6tQOiq
-         GWjXm2VyI314PBmSDvauKU7YkCaPVtqsbKJ7dk8rMTQdsWwOiYxt+F0f3Z9lv9OYen
-         mWxW/eDkq8nDgOnJAG+61ZH6Cv5ibGBnfK/XU4QmBlTDa2b+yHi3t87/HT6YEYA+B4
-         GbiJsPXsEMd/GXeSX5bYiUryKNYgMXB92bpUmXn9xrgR6Bmk34tvrxb+Mzeg99JzNo
-         r7T0Qp+4Rz1jo7KfNFa9j6pXQWnZlU+4jByiXkJItJCFxSZ7RC7
-Date:   Mon, 29 Apr 2019 23:19:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Braun <thomas.braun@byte-physics.de>
-Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for transport
-Message-ID: <20190429231928.GQ6316@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1729016AbfD2Xka (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 19:40:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44182 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728748AbfD2Xka (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 19:40:30 -0400
+Received: (qmail 15567 invoked by uid 109); 29 Apr 2019 23:40:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Apr 2019 23:40:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5832 invoked by uid 111); 29 Apr 2019 23:41:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Apr 2019 19:41:04 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Apr 2019 19:40:28 -0400
+Date:   Mon, 29 Apr 2019 19:40:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?SmFyb3PFgmF3?= Honkis via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Braun <thomas.braun@byte-physics.de>
-References: <pull.137.git.gitgitgadget@gmail.com>
- <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
+        =?utf-8?B?SmFyb3PFgmF3?= Honkis <yaras6@gmail.com>
+Subject: Re: [PATCH 1/1] credential: do not mask the username
+Message-ID: <20190429234028.GA24069@sigill.intra.peff.net>
+References: <pull.138.git.gitgitgadget@gmail.com>
+ <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YkilVOb9qhI0mB+X"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Apr 29, 2019 at 03:06:11PM -0700, Jarosław Honkis via GitGitGadget wrote:
 
---YkilVOb9qhI0mB+X
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: =?UTF-8?q?Jaros=C5=82aw=20Honkis?= <yaras6@gmail.com>
+> 
+> When a user is asked for credentials there is no need to mask the
+> username, so the PROMPT_ASKPASS flag on calling credential_ask_one for
+> login is unnecessary.
+> 
+> The `credential_ask_one()` function internally uses `git_prompt()` which
+> in case it is given the flag PROMPT_ASKPASS uses masked input method
+> instead of git_terminal_prompt, which does not mask user input.
 
-On Mon, Apr 29, 2019 at 03:04:36PM -0700, Thomas Braun via GitGitGadget wro=
-te:
-> From: Thomas Braun <thomas.braun@byte-physics.de>
->=20
-> Since commit 0c499ea60f (send-pack: demultiplex a sideband stream with
-> status data, 2010-02-05) the built-in send-pack uses the side-band-64k
-> capability if advertised by the server.
->=20
-> Unfortunately this breaks pushing over the dump git protocol if used
-> over a network connection when using MinGW (but *not* when using
-> mingw-w64).
->=20
-> The detailed reasons for this, are courtesy of Jeff Preshing, quoted
-> from https://groups.google.com/d/msg/msysgit/at8D7J-h7mw/eaLujILGUWoJ:
->=20
-> 	MinGW wraps Windows sockets in CRT file descriptors in order to
-> 	mimic the functionality of POSIX sockets. This causes msvcrt.dll
-> 	to treat sockets as Installable File System (IFS) handles,
-> 	calling ReadFile, WriteFile, DuplicateHandle and CloseHandle on
-> 	them. This approach works well in simple cases on recent
-> 	versions of Windows, but does not support all usage patterns.
-> 	In particular, using this approach, any attempt to read & write
-> 	concurrently on the same socket (from one or more processes)
-> 	will deadlock in a scenario where the read waits for a response
-> 	from the server which is only invoked after the write. This is
-> 	what send_pack currently attempts to do in the use_sideband
-> 	codepath.
+This description (and the patch) doesn't make sense to me. The
+PROMPT_ASKPASS flag is just about whether we would trigger the askpass
+tool (e.g., if the user does not have a terminal).
 
-Since this is a platform-specific issue, can we address this using a
-compile-time constant instead of a config option? It would be better to
-do the right thing automatically in this case and not have to have
-people set a config option. It will also allow us to not to have to
-maintain a config option indefinitely if MinGW becomes more capable in
-the future.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The PROMPT_ECHO flag is what you want to tell the underlying code that
+the value can be shown to the user. And that's already set.
 
---YkilVOb9qhI0mB+X
-Content-Type: application/pgp-signature; name="signature.asc"
+Now there is a slight issue, which is that the askpass tool has no way
+for us to tell it to show the contents to the user.  There's no way
+around that without disabling askpass entirely, which I guess is the
+strategy this patch is trying to do. But in doing so it's going to break
+anybody who _doesn't_ have a terminal, because now we have no way to
+prompt there for their username!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+So I think our options are:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzHhoAACgkQv1NdgR9S
-9osQTBAAzhPQVuE5ec7UpRwB46kC8ojiCM6OryvTfegjc+mcuCXa6hR4gNz0fMzn
-k3TIobFLFBUXaeB8KkU/8TIoklNeSEQZDfzSQeL6h+zpYr+cU1pP1FVgAKhN6pkm
-M95p95+hKLZIfqLqkuaov6kRAW/d0DckMtaN5/q0OQ/8bmDZnEX7Rryz6J7XgY62
-OPMHfPbdMog9srk8I4gZx7+8u3e0d1EqGdfgRPgxq/hMCPzaH4UNRWTXzSVBNSeV
-FTdHy+HfMLw6o/sgnOSoH2ihifLLuSqP9ZS2bb+87LsKyFzC4TL5TbuT2gsp8dbi
-1SebhrzZ8baKhZHnQ96vcwjxZ7rfBGWru0QkR2+15zW0kCKbrtdjF6qj8dJgKlyH
-z6lOTT15vfUJiWspcamFD4WlnrMgBczQ9ie9JX6TH6wLFQ4gFeR44Q9Ja8cRj0iW
-/drmGBLBp8KsecHugR/RrQcsmRUmLFQ/CE3N1JnjyDO4qIKLUQZDKmpaks9D5Cb9
-4O4yUmfSfYNy25PnZaIkz1DRqCOZgbXosBKHUerc/ayCm9oVPvqVgkc0L9VWhjI7
-O0bpFiSxbl64vwmRcFIBViGADvMzkxuqEv3J7F+Olxrr5dCMgSUvc0YVTzgo6iuo
-e7xp4ovvMz0SgZxJZzKC2uVExKWjOlBMMePlbjskbZPbW6zgBEY=
-=5azj
------END PGP SIGNATURE-----
+  1. Leave it. If people don't want askpass to prompt them, they should
+     not set up askpass.
 
---YkilVOb9qhI0mB+X--
+  2. Use another tool besides askpass. I don't know of any askpass
+     implementations that take something like our ECHO flag, but there
+     are lots of other tools. I doubt there's any easy portable
+     solution, though. And anyway, credential helpers are a much more
+     advanced version of this anyway, so I'd probably steer people in
+     that direction.
+
+  3. If we really want to try to try to avoid using askpass for
+     usernames we can, but I don't think the logic in this patch is
+     right.
+
+     If we want to avoid regressing existing cases, then we'd have to
+     first check if there's a usable terminal. And only if _that_ fails,
+     try askpass. And then give up if neither work. I.e., invert the
+     order in git_prompt() when both ASKPASS and ECHO are set.
+
+     I think I'd still favor option 1 over this, though. Configuring
+     askpass has always overridden the terminal for usernames, and this
+     would change that. I come back to: if you don't want to use
+     askpass, then why are you configuring it?
+
+>  		c->username = credential_ask_one("Username", c,
+> -						 PROMPT_ASKPASS|PROMPT_ECHO);
+> +						 (getenv("GIT_ASKPASS") ?
+> +						  PROMPT_ASKPASS : 0) |
+> +						 PROMPT_ECHO);
+
+This logic is weird. It still uses askpass if GIT_ASKPASS isn't set. But
+_doesn't_ if it's set elsewhere, e.g. in core.askPass. Which makes
+little sense to me.
+
+Maybe the intent was that the original user has SSH_ASKPASS set, and
+that is kicking in (which would also explain why "if you don't like it,
+don't configure it" didn't work). You can get around that by setting
+GIT_ASKPASS (or core.askPass) to the empty string (I don't think that's
+documented anywhere, and I don't recall it being intentional, but it
+does look like that's how the code works).
+
+-Peff
