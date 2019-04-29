@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7FE1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 22:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A241E1F453
+	for <e@80x24.org>; Mon, 29 Apr 2019 22:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729628AbfD2WwY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 18:52:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:43227 "EHLO mout.gmx.net"
+        id S1729661AbfD2W6D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 18:58:03 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729593AbfD2WwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 18:52:23 -0400
+        id S1729601AbfD2W6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 18:58:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556578336;
-        bh=+pGJS9jvGrVZMjWHidjqNFyeSbiZiLM5MSmIZ7CKmjM=;
+        s=badeba3b8450; t=1556578677;
+        bh=ymbMyMYMqTeIfinsSCS5uxQTjZNA5TIKrWpMpNbTBOI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NGsrHxD8IFN4DLIUMTPeqDjO8BKH3Iu6H9kXzYf/BevWt6L7xNZJhWxy4yukvh57M
-         +DLjEMv81M03qxOpPhM25x7FIVzzDb6sb/2CeFnt0IaUk8bG5pi1+6veHQFIa+RA4B
-         V3IKPUSExy0erFF7i2XR5WbGs/uqOTXDpgQdgG1U=
+        b=AmrJD1+o97Fwc/xg2NVAhvHrz1cHzNpdkMxBV+BjbUp23UJnRaydFesVyaldfSPVr
+         KefsE+csDpUhqK4/ZgMFu50bbAdTJCGm1bM+rYLVEKmYfYuw19QGkCMa9MAV87wh3A
+         sDVabYD+SRcfBsJvnDu9TrTP5tVvOKU9ErmwGbok=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhiPD-1h7JBb1hZr-00MwIx; Tue, 30
- Apr 2019 00:52:16 +0200
-Date:   Mon, 29 Apr 2019 18:52:19 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQhyf-1hDNu40Ewf-00U2aG; Tue, 30
+ Apr 2019 00:57:57 +0200
+Date:   Mon, 29 Apr 2019 18:58:00 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 1/1] t5580: verify that alternates can be UNC paths
-In-Reply-To: <2c3c559da0a5e9b397f4dc80be233c66b8597678.1551104263.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904291851280.45@tvgsbejvaqbjf.bet>
-References: <pull.140.git.gitgitgadget@gmail.com> <2c3c559da0a5e9b397f4dc80be233c66b8597678.1551104263.git.gitgitgadget@gmail.com>
+To:     Tanushree Tumane via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH 1/1] mingw: remove obsolete IPv6-related code
+In-Reply-To: <1a5a1447f437c99cfcaac01a506093c3697a52b6.1551256992.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904291853550.45@tvgsbejvaqbjf.bet>
+References: <pull.144.git.gitgitgadget@gmail.com> <1a5a1447f437c99cfcaac01a506093c3697a52b6.1551256992.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ecd/nMZkGX8wHCVKTRa3WFBTiSIMZlWrPv6mNjMr1SSBnUJHMNo
- Kt4rnThYvj9EXVafPJEDPJwfc50z5GrmKz2SwDshPy4YtvCYzL0J7GDQWQOM003MMgQzuSU
- Sbn2o9aGjl4A8UIAsGwED/4KJP191MRTG4F5HkSj35kXOMogpng7FkDw65NLRRSZEsW0XMw
- JhlJP/Z8ZMe8YhxNXgwkA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jH593zRNqBs=:YCkT0vfPsSQF2zw2/kYt2i
- GYZwSozEBdPN50NotNcGSSXsiKIq6br15p8ZOqVi8NlX7b3LRlRQPhm/j/8yuF9n0t1kD32xa
- RbuojRKvIgK8wmRus1q+mphwOvzwZy4jFIvcoB9ovCsi2n9XfKT+pkYuiT5xrhb7GApYWtJcd
- CLCX0rotyvbZuRovOPgTFAK4+NbglMi21vQwQAWXmpNkLicFbO5hCWH+2QlqhO6135GybPsKJ
- W7cgl6O51iMRE3uu8oTGY54cMfXgDcI51k+dHosYAK1fc6ppHK1B7uDDjqWH8CRodOPzp1PgL
- c+FJ5Fii4b6cvCfaFc8qrpVM1nP1UePCQ3xRtLPioYkdWZeW2HpYoyDNRGdHBiWmZYpg1I75P
- MRVLEXMAD1gc569Wreu9RinGy96WMPvLiRDqcFIXPWu8g01dn5SqXReNt1WG8g4of8Eq9DqHs
- KAV23/lOPCcws2NzwNf1I1Hk6UpSu6hn43kc/S1/2iabs+r9ePqoXfCZC/2ETSYaHaSAZL7SY
- +vjuhJCd2dk71EeeraIEW13dJ+UWMI5yPsZQTvO/v/nZwJfpgeImn3lzXb6Bx0Iw3YYgbhvIt
- o1QMqFzeClUIt631FfSwBvuJatF44/ad468UrNB6C5lMfYU9YtlsoLLBaTSZMX4ucwc4kIzc/
- XN18YYEcALUnFdnZJ3RccrNyDF3Jz0h8KOME6AIQCKJcIh5roLe1wdyg/ahVACkWpcG9PRukT
- rxA/DP6sLpygA6Xz50eLwqmCHLJsGHoyjZXMwSRkxx48vzWEubmmdEHlxAeJyvGnqin5Qpx1g
- n+A6Zo4EFdJ6fM68lQRP77zv5BLhC1cVCzUTQTDy5NC2u1Xfw58KQIZaaV0ZhNI7G0YNCvBPZ
- xylhSx2c7/33FUNJ1gA+LpN+66JIaZ4gHDG0VY5MstnXgsrEClZ0V9CIZljQaVdx8c916ZwTI
- uAtruySO/bA==
+X-Provags-ID: V03:K1:/RVfxwvvKd3DoNJTqMnADkpNuq/R9E9LlfTmPTufZz8hzIrQBvX
+ hUboKQBdv8SCJ6Te6DXuKNRBZV9CLsW2Uf3RSxSKKFkm8uQ69qKERuUiWq3HiWUSzKKedqy
+ +efalgtbQ0mrpaeB3L6z/XFmfTGgRXvigBMtcXlPpKPQemkZ8HEnWdXt998jwA8am2F9x6p
+ t/gcQ1V9lnnQ8QEzfEfnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FC/dBIt0F7M=:pnsPq7QnyVIHHMDj+WsOoI
+ HWDYcc3BUEFwsbAk2DIeSK90l5suV0xF+wHBzVzc0HGKGWdtN9ciJqWkYRqxTPsJ+7bT4oUPD
+ etmpBbOnyhq/etYaFOX5RDc8rxqD3Q+gQwRVDZOALWjgSPNtdZv+gsdJZM8zNV6vspz799//G
+ wW3PvyB+Yu1Cwe3IqrWxTW88wHZ1E+LFUlBW6X8UY6OQ3j8kOVHSU4QYaivng3hfqMzWqZI+3
+ P+ErAmU79TYCu6KZp6f3Rlygpqvcp7iDjwp18pS7MlAGSaXLR6FLhRDGQvgRnuqPs9mSMyldP
+ 8oSK7liddktqREOVeHcReMOLa/lQU9hYx/pwfquPZiSzpqCIeIbDT4yypiPfl8/vfB7K+rGVZ
+ hwEvGKrNJBfB0gvmDTV9S2IgfWrPjCvPI6qud9sGM6ylSUMRtArtgEPcN2Wjp++DDZZxhWmD9
+ TPoI2XtZQhUpFzi+eLouSeq3/H3iJ8slsipSbWvx71QrFKZlTddqrhBm0/xWx1VMjqmbwZ0K0
+ eKM/luCqY8viu8TbVM9yfSK8d1Ven/hPYst48YlMbB0YVJWGGkJ7VVGecoS4pGmNGJlyZmReu
+ oJQeqbpwk6KhQfqho7x7JjmW0CMVz76AmWY8asRhBNBF+7ryqHDatLTPQilBkmwha8TG7aDYx
+ rtVtikiS38quQT/CUhqzu7HVICjTEUlHA67FgtiGjmYd6spRM8DaZo6LWT1dWHUw9CFBn47UE
+ fWFgBghA/N1/Sm4gOWzvdHtp8GATNCoikWiSiJoIL3z6cmD7WebipoKs1ssmzw3AJuoEGy1AT
+ GCDLHeuHp5hwsm7eKYEKgO3KRaAmUjbfEH/25xc8FxEEbtvC50BS2rF5jKTiYIE1SgQrvkOJV
+ 7r7+9tux2oqdZV5IF7zoliy92p0Jq8v3pwP0RGT5nYGqmxe+sFDKf5d9xy0UZd0TQI6CQJ67v
+ ZmGcQTcSKJA==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,50 +68,274 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-gentle ping: this patch was not picked up yet, although it should be
-pretty uncontroversial.
+it looks as if this patch was not yet picked up? This is a
+straight-forward code removal in favor of dropping Windows XP support
+(which we officially did, quite some time ago).
+
+Is there anything you want me to do to get this at least into `pu`?
 
 Ciao,
 Dscho
 
-On Mon, 25 Feb 2019, Johannes Schindelin via GitGitGadget wrote:
+On Wed, 27 Feb 2019, Tanushree Tumane via GitGitGadget wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> From: Tanushree Tumane <tanushreetumane@gmail.com>
 >
-> On Windows, UNC paths are a very convenient way to share data, and
-> alternates are all about sharing data.
+> To support IPv6, Git provided fall back functions for Windows versions
+> that did not support IPv6. However, as Git dropped support for Windows
+> XP and prior, those functions are not needed anymore.
 >
-> We fixed a bug where alternates specifying UNC paths were not handled
-> properly, and it is high time that we add a regression test to ensure
-> that this bug is not reintroduced.
+> Remove those fallbacks by reverting fe3b2b7b827c (Enable support for
+> IPv6 on MinGW, 2009-11-24) and using the functions directly (without
+> 'ipv6_' prefix).
 >
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  t/t5580-clone-push-unc.sh | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>  compat/mingw.c | 178 +------------------------------------------------
+>  compat/mingw.h |   8 ---
+>  2 files changed, 3 insertions(+), 183 deletions(-)
 >
-> diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-> index 217adf3a63..b3c8a92450 100755
-> --- a/t/t5580-clone-push-unc.sh
-> +++ b/t/t5580-clone-push-unc.sh
-> @@ -62,4 +62,16 @@ test_expect_success MINGW 'remote nick cannot contain=
- backslashes' '
->  	test_i18ngrep ! "unable to access" err
->  '
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 8141f77189..80b6b288a1 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1705,142 +1705,10 @@ int mingw_putenv(const char *namevalue)
+>  	return result ? 0 : -1;
+>  }
 >
-> +test_expect_success 'unc alternates' '
-> +	tree=3D"$(git rev-parse HEAD:)" &&
-> +	mkdir test-unc-alternate &&
-> +	(
-> +		cd test-unc-alternate &&
-> +		git init &&
-> +		test_must_fail git show $tree &&
-> +		echo "$UNCPATH/.git/objects" >.git/objects/info/alternates &&
-> +		git show $tree
-> +	)
-> +'
-> +
->  test_done
+> -/*
+> - * Note, this isn't a complete replacement for getaddrinfo. It assumes
+> - * that service contains a numerical port, or that it is null. It
+> - * does a simple search using gethostbyname, and returns one IPv4 host
+> - * if one was found.
+> - */
+> -static int WSAAPI getaddrinfo_stub(const char *node, const char *servic=
+e,
+> -				   const struct addrinfo *hints,
+> -				   struct addrinfo **res)
+> -{
+> -	struct hostent *h =3D NULL;
+> -	struct addrinfo *ai;
+> -	struct sockaddr_in *sin;
+> -
+> -	if (node) {
+> -		h =3D gethostbyname(node);
+> -		if (!h)
+> -			return WSAGetLastError();
+> -	}
+> -
+> -	ai =3D xmalloc(sizeof(struct addrinfo));
+> -	*res =3D ai;
+> -	ai->ai_flags =3D 0;
+> -	ai->ai_family =3D AF_INET;
+> -	ai->ai_socktype =3D hints ? hints->ai_socktype : 0;
+> -	switch (ai->ai_socktype) {
+> -	case SOCK_STREAM:
+> -		ai->ai_protocol =3D IPPROTO_TCP;
+> -		break;
+> -	case SOCK_DGRAM:
+> -		ai->ai_protocol =3D IPPROTO_UDP;
+> -		break;
+> -	default:
+> -		ai->ai_protocol =3D 0;
+> -		break;
+> -	}
+> -	ai->ai_addrlen =3D sizeof(struct sockaddr_in);
+> -	if (hints && (hints->ai_flags & AI_CANONNAME))
+> -		ai->ai_canonname =3D h ? xstrdup(h->h_name) : NULL;
+> -	else
+> -		ai->ai_canonname =3D NULL;
+> -
+> -	sin =3D xcalloc(1, ai->ai_addrlen);
+> -	sin->sin_family =3D AF_INET;
+> -	/* Note: getaddrinfo is supposed to allow service to be a string,
+> -	 * which should be looked up using getservbyname. This is
+> -	 * currently not implemented */
+> -	if (service)
+> -		sin->sin_port =3D htons(atoi(service));
+> -	if (h)
+> -		sin->sin_addr =3D *(struct in_addr *)h->h_addr;
+> -	else if (hints && (hints->ai_flags & AI_PASSIVE))
+> -		sin->sin_addr.s_addr =3D INADDR_ANY;
+> -	else
+> -		sin->sin_addr.s_addr =3D INADDR_LOOPBACK;
+> -	ai->ai_addr =3D (struct sockaddr *)sin;
+> -	ai->ai_next =3D NULL;
+> -	return 0;
+> -}
+> -
+> -static void WSAAPI freeaddrinfo_stub(struct addrinfo *res)
+> -{
+> -	free(res->ai_canonname);
+> -	free(res->ai_addr);
+> -	free(res);
+> -}
+> -
+> -static int WSAAPI getnameinfo_stub(const struct sockaddr *sa, socklen_t=
+ salen,
+> -				   char *host, DWORD hostlen,
+> -				   char *serv, DWORD servlen, int flags)
+> -{
+> -	const struct sockaddr_in *sin =3D (const struct sockaddr_in *)sa;
+> -	if (sa->sa_family !=3D AF_INET)
+> -		return EAI_FAMILY;
+> -	if (!host && !serv)
+> -		return EAI_NONAME;
+> -
+> -	if (host && hostlen > 0) {
+> -		struct hostent *ent =3D NULL;
+> -		if (!(flags & NI_NUMERICHOST))
+> -			ent =3D gethostbyaddr((const char *)&sin->sin_addr,
+> -					    sizeof(sin->sin_addr), AF_INET);
+> -
+> -		if (ent)
+> -			snprintf(host, hostlen, "%s", ent->h_name);
+> -		else if (flags & NI_NAMEREQD)
+> -			return EAI_NONAME;
+> -		else
+> -			snprintf(host, hostlen, "%s", inet_ntoa(sin->sin_addr));
+> -	}
+> -
+> -	if (serv && servlen > 0) {
+> -		struct servent *ent =3D NULL;
+> -		if (!(flags & NI_NUMERICSERV))
+> -			ent =3D getservbyport(sin->sin_port,
+> -					    flags & NI_DGRAM ? "udp" : "tcp");
+> -
+> -		if (ent)
+> -			snprintf(serv, servlen, "%s", ent->s_name);
+> -		else
+> -			snprintf(serv, servlen, "%d", ntohs(sin->sin_port));
+> -	}
+> -
+> -	return 0;
+> -}
+> -
+> -static HMODULE ipv6_dll =3D NULL;
+> -static void (WSAAPI *ipv6_freeaddrinfo)(struct addrinfo *res);
+> -static int (WSAAPI *ipv6_getaddrinfo)(const char *node, const char *ser=
+vice,
+> -				      const struct addrinfo *hints,
+> -				      struct addrinfo **res);
+> -static int (WSAAPI *ipv6_getnameinfo)(const struct sockaddr *sa, sockle=
+n_t salen,
+> -				      char *host, DWORD hostlen,
+> -				      char *serv, DWORD servlen, int flags);
+> -/*
+> - * gai_strerror is an inline function in the ws2tcpip.h header, so we
+> - * don't need to try to load that one dynamically.
+> - */
+> -
+> -static void socket_cleanup(void)
+> -{
+> -	WSACleanup();
+> -	if (ipv6_dll)
+> -		FreeLibrary(ipv6_dll);
+> -	ipv6_dll =3D NULL;
+> -	ipv6_freeaddrinfo =3D freeaddrinfo_stub;
+> -	ipv6_getaddrinfo =3D getaddrinfo_stub;
+> -	ipv6_getnameinfo =3D getnameinfo_stub;
+> -}
+> -
+>  static void ensure_socket_initialization(void)
+>  {
+>  	WSADATA wsa;
+>  	static int initialized =3D 0;
+> -	const char *libraries[] =3D { "ws2_32.dll", "wship6.dll", NULL };
+> -	const char **name;
+>
+>  	if (initialized)
+>  		return;
+> @@ -1849,35 +1717,7 @@ static void ensure_socket_initialization(void)
+>  		die("unable to initialize winsock subsystem, error %d",
+>  			WSAGetLastError());
+>
+> -	for (name =3D libraries; *name; name++) {
+> -		ipv6_dll =3D LoadLibraryExA(*name, NULL,
+> -					  LOAD_LIBRARY_SEARCH_SYSTEM32);
+> -		if (!ipv6_dll)
+> -			continue;
+> -
+> -		ipv6_freeaddrinfo =3D (void (WSAAPI *)(struct addrinfo *))
+> -			GetProcAddress(ipv6_dll, "freeaddrinfo");
+> -		ipv6_getaddrinfo =3D (int (WSAAPI *)(const char *, const char *,
+> -						   const struct addrinfo *,
+> -						   struct addrinfo **))
+> -			GetProcAddress(ipv6_dll, "getaddrinfo");
+> -		ipv6_getnameinfo =3D (int (WSAAPI *)(const struct sockaddr *,
+> -						   socklen_t, char *, DWORD,
+> -						   char *, DWORD, int))
+> -			GetProcAddress(ipv6_dll, "getnameinfo");
+> -		if (!ipv6_freeaddrinfo || !ipv6_getaddrinfo || !ipv6_getnameinfo) {
+> -			FreeLibrary(ipv6_dll);
+> -			ipv6_dll =3D NULL;
+> -		} else
+> -			break;
+> -	}
+> -	if (!ipv6_freeaddrinfo || !ipv6_getaddrinfo || !ipv6_getnameinfo) {
+> -		ipv6_freeaddrinfo =3D freeaddrinfo_stub;
+> -		ipv6_getaddrinfo =3D getaddrinfo_stub;
+> -		ipv6_getnameinfo =3D getnameinfo_stub;
+> -	}
+> -
+> -	atexit(socket_cleanup);
+> +	atexit((void(*)(void)) WSACleanup);
+>  	initialized =3D 1;
+>  }
+>
+> @@ -1895,24 +1735,12 @@ struct hostent *mingw_gethostbyname(const char *=
+host)
+>  	return gethostbyname(host);
+>  }
+>
+> -void mingw_freeaddrinfo(struct addrinfo *res)
+> -{
+> -	ipv6_freeaddrinfo(res);
+> -}
+> -
+> +#undef getaddrinfo
+>  int mingw_getaddrinfo(const char *node, const char *service,
+>  		      const struct addrinfo *hints, struct addrinfo **res)
+>  {
+>  	ensure_socket_initialization();
+> -	return ipv6_getaddrinfo(node, service, hints, res);
+> -}
+> -
+> -int mingw_getnameinfo(const struct sockaddr *sa, socklen_t salen,
+> -		      char *host, DWORD hostlen, char *serv, DWORD servlen,
+> -		      int flags)
+> -{
+> -	ensure_socket_initialization();
+> -	return ipv6_getnameinfo(sa, salen, host, hostlen, serv, servlen, flags=
+);
+> +	return getaddrinfo(node, service, hints, res);
+>  }
+>
+>  int mingw_socket(int domain, int type, int protocol)
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 30d9fb3e36..e883b40c7d 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -296,18 +296,10 @@ int mingw_gethostname(char *host, int namelen);
+>  struct hostent *mingw_gethostbyname(const char *host);
+>  #define gethostbyname mingw_gethostbyname
+>
+> -void mingw_freeaddrinfo(struct addrinfo *res);
+> -#define freeaddrinfo mingw_freeaddrinfo
+> -
+>  int mingw_getaddrinfo(const char *node, const char *service,
+>  		      const struct addrinfo *hints, struct addrinfo **res);
+>  #define getaddrinfo mingw_getaddrinfo
+>
+> -int mingw_getnameinfo(const struct sockaddr *sa, socklen_t salen,
+> -		      char *host, DWORD hostlen, char *serv, DWORD servlen,
+> -		      int flags);
+> -#define getnameinfo mingw_getnameinfo
+> -
+>  int mingw_socket(int domain, int type, int protocol);
+>  #define socket mingw_socket
+>
 > --
 > gitgitgadget
 >
