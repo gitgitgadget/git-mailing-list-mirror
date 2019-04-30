@@ -2,116 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF3BC1F453
-	for <e@80x24.org>; Mon, 29 Apr 2019 23:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5B11F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 01:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729016AbfD2Xka (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 19:40:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44182 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728748AbfD2Xka (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 19:40:30 -0400
-Received: (qmail 15567 invoked by uid 109); 29 Apr 2019 23:40:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 29 Apr 2019 23:40:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5832 invoked by uid 111); 29 Apr 2019 23:41:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Apr 2019 19:41:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Apr 2019 19:40:28 -0400
-Date:   Mon, 29 Apr 2019 19:40:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?SmFyb3PFgmF3?= Honkis via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?SmFyb3PFgmF3?= Honkis <yaras6@gmail.com>
-Subject: Re: [PATCH 1/1] credential: do not mask the username
-Message-ID: <20190429234028.GA24069@sigill.intra.peff.net>
-References: <pull.138.git.gitgitgadget@gmail.com>
- <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
+        id S1729737AbfD3BCd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 21:02:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49667 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728997AbfD3BCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 21:02:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1556586146;
+        bh=H11BXwE/0STlBWVigGAr4mDn7Xws3u56axhC43sbheA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Lwd5do0+TuqCEtr99hGh97Pk1P9UJ6iMspGolF8darorDKBkTRUbaxDmlp1NIeVnK
+         fkx7X68y5AhunzKodicV0SMfshzDyz8y23YNOTtVQ5fRteHMP33ZxqHIAwZIi3KJIz
+         opFc+kyDiC4Hcw8qnSeLn8/BBvcHr/9i82KvOeaw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MS3il-1hDweA49E3-00TTKB; Tue, 30
+ Apr 2019 03:02:26 +0200
+Date:   Mon, 29 Apr 2019 21:02:28 -0400 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 19/20] diff --no-index: use parse_options() instead
+ of diff_opt_parse()
+In-Reply-To: <20190324082014.2041-20-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904292055300.45@tvgsbejvaqbjf.bet>
+References: <20190320114703.18659-1-pclouds@gmail.com> <20190324082014.2041-1-pclouds@gmail.com> <20190324082014.2041-20-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e459e487d3848ae1b7f37676bd9d2a2f9c967430.1556575570.git.gitgitgadget@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1637733259-1556586151=:45"
+X-Provags-ID: V03:K1:ZVGX6tev1PXx500aYDydzFQ5YJ3Zde9JfyIFuqTNvC2wG6m4/7J
+ mTFbG+aYWj0CYTyc8FKEfpvbr/gzdTudAGa5vcTlmXFKbX356lL9oubbeLoMDa1CuqoJKBy
+ CCr3dQ0WSt5cAoIqM6ji/qUVL5F8fzefGag9N5ETBRzQD4MachsnCLJXpCPP/nqlB6gOvAK
+ d6yjtSH7VbJf3TZOBelMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:INCobmJilJw=:MrKdSJZKlCFLPXJ1027ou+
+ 6id7x9ys7edseaB0hQ1aFbRVkfhf7FYS3iuvT8zhRCHF5KQmHXqKWKfpxC9n53dkknF4AYkKD
+ VZpf/6MJcdTXlbB7kqXTGn795aPeJRCkDO5/X//vJDZMvw/ii320Qatt2twvh4OXaQgB2oa8E
+ dKIjnBa52srgkjYmdWg3Uhx02yXvIWNmL6KrDt5pwygbbRS8+mkjReV2n8aT9gUwPCxINvZEu
+ 2J5ZPnzPW2yOp1wdYhruP6FyiEj9ZfIX6Sj4ve6Vnftmm87WGU5GA6dUZUCDkIKjTZrgnUcle
+ nXsmRlw8jqcCCrseS8bddWk788xCRrIIZMqw5MbpRvsLYyFMtYpjZeOmErfMdF0RI1CbUg4eB
+ N7d/TBlU7Txk89bNXAGFEislJBz7IM/qwTsA7DceVpBkk8MM2Y4OoYhpWh4ee7tSYkXfgSmGD
+ oYS8mAvJnw+r2x18kdLPaNTzNMC0TQ0XcrHSZf2D81jz45XJhi+p+bplI85a+Qao7TNHC9fvE
+ sPBF3DEu2V/SK65IT/vtF8izj+6GFMqqEZ8Q6C37q0pdnywd03VeRvI/URTKcg1uojZsMXuhc
+ VoYBBY795uT2bub/rGTMvt0Zsa9w8dm0QoSAcdLE2442Br2G+QT7XWFV/vSOMpkJ/vhKZxuQ4
+ AM+LIOOo2SnEfKqh1LEMMkkKbLQwBH74bd+2FyxhpD3+h6EtSZ/kVyK9mxri+kmwDHiy9pqvo
+ MczSx03w17xe0Qj0s/iYKLbfFQ5LLs05NjRDZ09ypKTVsvAzLrvPx5x8G6JcQBoFGskAbWILq
+ n3Vu/0nHr0VU8drTBQcnhCYRRHM+PQFI0qk3l9VECjGn3/lflbwM6UIsUYouDPQVl3ZV6JqFW
+ /SE72RbW+LU7iwanoyl/ruEIGORXUZXCGAbtVgUjVKy+u/k85MYnxVXya2SRDz5d9be8Bwo8Z
+ BcfpTQTIyYQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 29, 2019 at 03:06:11PM -0700, Jarosław Honkis via GitGitGadget wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> From: =?UTF-8?q?Jaros=C5=82aw=20Honkis?= <yaras6@gmail.com>
-> 
-> When a user is asked for credentials there is no need to mask the
-> username, so the PROMPT_ASKPASS flag on calling credential_ask_one for
-> login is unnecessary.
-> 
-> The `credential_ask_one()` function internally uses `git_prompt()` which
-> in case it is given the flag PROMPT_ASKPASS uses masked input method
-> instead of git_terminal_prompt, which does not mask user input.
+--8323328-1637733259-1556586151=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This description (and the patch) doesn't make sense to me. The
-PROMPT_ASKPASS flag is just about whether we would trigger the askpass
-tool (e.g., if the user does not have a terminal).
+Hi Duy,
 
-The PROMPT_ECHO flag is what you want to tell the underlying code that
-the value can be shown to the user. And that's already set.
+On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Now there is a slight issue, which is that the askpass tool has no way
-for us to tell it to show the contents to the user.  There's no way
-around that without disabling askpass entirely, which I guess is the
-strategy this patch is trying to do. But in doing so it's going to break
-anybody who _doesn't_ have a terminal, because now we have no way to
-prompt there for their username!
+> While at there, move exit() back to the caller. It's easier to see the
+> flow that way than burying it in diff-no-index.c
 
-So I think our options are:
+I just noticed that this commit message is missing more than just a
+trailing period. It does not explain the change of behavior: previously,
+`GIT_EXTERNAL_DIFF=3Dheya git diff --no-index a b` would silently ignore t=
+he
+external diff, it would have required an explicit `--ext-diff` to pick it
+up.
 
-  1. Leave it. If people don't want askpass to prompt them, they should
-     not set up askpass.
+After this change, it is necessary to pass `--no-ext-diff` to reinstate
+the original behavior.
 
-  2. Use another tool besides askpass. I don't know of any askpass
-     implementations that take something like our ECHO flag, but there
-     are lots of other tools. I doubt there's any easy portable
-     solution, though. And anyway, credential helpers are a much more
-     advanced version of this anyway, so I'd probably steer people in
-     that direction.
+While this might seem like a desirable change, it is a
+backwards-incompatible change and would do with a *lot* more of a message
+to users whose scripts now potentially break.
 
-  3. If we really want to try to try to avoid using askpass for
-     usernames we can, but I don't think the logic in this patch is
-     right.
+Ciao,
+Johannes
 
-     If we want to avoid regressing existing cases, then we'd have to
-     first check if there's a usable terminal. And only if _that_ fails,
-     try askpass. And then give up if neither work. I.e., invert the
-     order in git_prompt() when both ASKPASS and ECHO are set.
-
-     I think I'd still favor option 1 over this, though. Configuring
-     askpass has always overridden the terminal for usernames, and this
-     would change that. I come back to: if you don't want to use
-     askpass, then why are you configuring it?
-
->  		c->username = credential_ask_one("Username", c,
-> -						 PROMPT_ASKPASS|PROMPT_ECHO);
-> +						 (getenv("GIT_ASKPASS") ?
-> +						  PROMPT_ASKPASS : 0) |
-> +						 PROMPT_ECHO);
-
-This logic is weird. It still uses askpass if GIT_ASKPASS isn't set. But
-_doesn't_ if it's set elsewhere, e.g. in core.askPass. Which makes
-little sense to me.
-
-Maybe the intent was that the original user has SSH_ASKPASS set, and
-that is kicking in (which would also explain why "if you don't like it,
-don't configure it" didn't work). You can get around that by setting
-GIT_ASKPASS (or core.askPass) to the empty string (I don't think that's
-documented anywhere, and I don't recall it being intentional, but it
-does look like that's how the code works).
-
--Peff
+--8323328-1637733259-1556586151=:45--
