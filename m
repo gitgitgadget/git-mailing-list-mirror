@@ -2,147 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD221F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 18:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDD531F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 18:59:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726209AbfD3SsN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 14:48:13 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:40366 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726006AbfD3SsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 14:48:12 -0400
-Received: by mail-ed1-f44.google.com with SMTP id e56so6918223ede.7
-        for <git@vger.kernel.org>; Tue, 30 Apr 2019 11:48:11 -0700 (PDT)
+        id S1727163AbfD3S7b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 14:59:31 -0400
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:42707 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbfD3S7a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 14:59:30 -0400
+Received: by mail-pl1-f195.google.com with SMTP id x15so7159782pln.9
+        for <git@vger.kernel.org>; Tue, 30 Apr 2019 11:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=MYshi+R8LbeUsoysrVUClNZTFzcxtrBxaXuHuI9BZoY=;
-        b=R2mgN76i/v0KcjH7VcS+/Iu/Ppek25lt/6aiy96xyYjNnPlFbas7VBsgRaDepX8A1n
-         PRbHEUK8lwrDc6zaIEt+ypLfFF6nCZzuhSaeTyCE/FBW0JI6ypVnLYBpoNu65+hcU2Cb
-         /L1ws3JWaeXhhByB7C4aw9YGUY4SJ5QcS+vGnGC8cOJnYx/VGtIwBj+ibX7x1gjz7APZ
-         U5DFUmOCEYeVruJSl6LZRFGle/Dl60MLctZuei/1++aOvvOWuawAgWQig2wZCpOvJDSH
-         8jGZ1bgdqlY7HEhnp8VjmZDm4p5O2osaFEsdxEQynz0QOll+NnaYP6hb8t9Ddoy8Lcl9
-         CZhw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IIrWZTmm22zSRAEa+6pbv4U23ZihN6gTxIxGTVlxGTA=;
+        b=D6/Khxhk4n6Kz30nqBi9YoRhAe/xRDXCPvazktsC16HcWGOM3RbT6wP441/2coot9y
+         1gJLl6RoTrYE0LHm45/ER8Q8fInPWlpUAIslxjdP+axIJfCJkXT+l5FcKsQLxZZfauE4
+         ZzyBdlHDrm24DacgP+XPz5aLXNSfRmNgJjnwaziJKUh/Tlz4agUJapzZ8y/s0P10L+PF
+         JEG4SUUg0EvZhBXhDiAk9UNJ1G73LeWRCKSJVwnmKrzQeD1ewopiHGUR1MUIA8k5FLko
+         byg7hzmTZsbGiv6lI75tWrVsihJ4ir4HvbEBzDyMvt/Ki3hs81gsYgYS6r59fmxgA49B
+         fAfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=MYshi+R8LbeUsoysrVUClNZTFzcxtrBxaXuHuI9BZoY=;
-        b=RCNiE8+qTU20wvqclSq03yWah9ocaMV0a81mG/wrSF4FNVuYvxRGV56h3P3fscGX0o
-         n+TbEYVyDce5T4L8ILLr5doZSKj90W6bFTJU68BSotalTNgx8AH/JLxHk6D9tRkdQF9H
-         jgXjR5B/iHQkrJ8CUjpoREjVodMzzr2eTQcK/0g9lGGahgzWWGyXhRnN9WOhSDojvYUs
-         D4QZhsFTFmgnsvi31hUNDC6WbW5sYV/3lGps/n0gSwaidUevEJ3GaP5SOoX/nxfl/DR2
-         5ADAVPOGvHQB7zGJmPhYpnyPA3KYKIdQ8v5HVIOmSoxrSAoarWuSKn1RgYXxi1alcbRs
-         iLlg==
-X-Gm-Message-State: APjAAAVS9/zyWDkxgH1s7/oCxHY+RI83kdNtoyPIPg7WadGVcu2SBVZU
-        SCURta/RPKqLSn8uXpv6pZI=
-X-Google-Smtp-Source: APXvYqzXcvGum6uCgcdBKZ9VIgJcC+pwfOp0COHrQsmlY1xlplI3Y/epHreMVt+wlZHI0T7e+l92GA==
-X-Received: by 2002:aa7:d908:: with SMTP id a8mr43157126edr.68.1556650090159;
-        Tue, 30 Apr 2019 11:48:10 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id v9sm10271738ede.32.2019.04.30.11.48.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=IIrWZTmm22zSRAEa+6pbv4U23ZihN6gTxIxGTVlxGTA=;
+        b=KW7FVjpKBFTrQwpmpk0c6E3wbHowk4WlWNJnWzWNIQTgM0VIMpuQVSO3kl+rZJNzRb
+         N0mw0EBrGQG1daQMeLYA7a29peX+JZRl6w5NYwxgpQMqSQVdixXw40xJumm+z/su1l9T
+         ZtSr3MNvxLPTdFBmXoGC3UcYDDoNdCwDR36YxyiufcPyO96TLw14RedzRVhUbDIV0hAH
+         Egy05mUl1qtxiNbmlEdxtAE2I2/f/ojzsslYLSGAN/3iMc3aJsm3K7jYqdW3Hzi6uJey
+         40ttEwahlU4OrqwKsyoYs279TNeE5W99lqR+/DjNTADi6XYEJu9WS7SoVIIVNtPVEcsJ
+         41NA==
+X-Gm-Message-State: APjAAAV3Y7ZTiK+glettaHWxrNwq5nPfkKcJ5ReceTt+o+38umfybZ4n
+        8AIPBC8vfv3Vg1dYAhZQYcY0r5WsEwgJMQ==
+X-Google-Smtp-Source: APXvYqzs03EerNEACtIAuU/LQ1R78V0vMTP31a69BYk6Y70h5cKCU1TiF/Dl/SPZri0Sw/c5QRmaDw==
+X-Received: by 2002:a17:902:b68d:: with SMTP id c13mr7991704pls.10.1556650769322;
+        Tue, 30 Apr 2019 11:59:29 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id m9sm3846538pfh.99.2019.04.30.11.59.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Apr 2019 11:48:09 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Martin Fick <mfick@codeaurora.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Resolving deltas dominates clone time
-References: <259296914.jpyqiltySj@mfick-lnx> <16052712.dFCfNLlQnN@mfick-lnx>
-        <20190422205653.GA30286@sigill.intra.peff.net>
-        <19221376.OlD5LWjr85@mfick-lnx>
-        <20190423015538.GA16369@sigill.intra.peff.net>
-        <20190423042109.GA19183@sigill.intra.peff.net>
-        <CACsJy8B7tjjpUZK+zH4rvOSk=uTLOHCOy6hk4FkkHXqCzNZU9g@mail.gmail.com>
-        <20190430175048.GB16729@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190430175048.GB16729@sigill.intra.peff.net>
-Date:   Tue, 30 Apr 2019 20:48:08 +0200
-Message-ID: <87sgtzqqhj.fsf@evledraar.gmail.com>
+        Tue, 30 Apr 2019 11:59:28 -0700 (PDT)
+Date:   Tue, 30 Apr 2019 11:59:23 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4] documentation: add tutorial for first contribution
+Message-ID: <20190430185923.GA26779@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20190419165709.123502-1-emilyshaffer@google.com>
+ <20190423193410.101803-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190423193410.101803-1-emilyshaffer@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Just a couple typo fixes listed below:
 
-On Tue, Apr 30 2019, Jeff King wrote:
 
-> On Tue, Apr 23, 2019 at 05:08:40PM +0700, Duy Nguyen wrote:
->
->> On Tue, Apr 23, 2019 at 11:45 AM Jeff King <peff@peff.net> wrote:
->> >
->> > On Mon, Apr 22, 2019 at 09:55:38PM -0400, Jeff King wrote:
->> >
->> > > Here are my p5302 numbers on linux.git, by the way.
->> > >
->> > >   Test                                           jk/p5302-repeat-fix
->> > >   ------------------------------------------------------------------
->> > >   5302.2: index-pack 0 threads                   307.04(303.74+3.30)
->> > >   5302.3: index-pack 1 thread                    309.74(306.13+3.56)
->> > >   5302.4: index-pack 2 threads                   177.89(313.73+3.60)
->> > >   5302.5: index-pack 4 threads                   117.14(344.07+4.29)
->> > >   5302.6: index-pack 8 threads                   112.40(607.12+5.80)
->> > >   5302.7: index-pack default number of threads   135.00(322.03+3.74)
->> > >
->> > > which still imply that "4" is a win over "3" ("8" is slightly better
->> > > still in wall-clock time, but the total CPU rises dramatically; that's
->> > > probably because this is a quad-core with hyperthreading, so by that
->> > > point we're just throttling down the CPUs).
->> >
->> > And here's a similar test run on a 20-core Xeon w/ hyperthreading (I
->> > tweaked the test to keep going after eight threads):
->> >
->> > Test                            HEAD
->> > ----------------------------------------------------
->> > 5302.2: index-pack 1 threads    376.88(364.50+11.52)
->> > 5302.3: index-pack 2 threads    228.13(371.21+17.86)
->> > 5302.4: index-pack 4 threads    151.41(387.06+21.12)
->> > 5302.5: index-pack 8 threads    113.68(413.40+25.80)
->> > 5302.6: index-pack 16 threads   100.60(511.85+37.53)
->> > 5302.7: index-pack 32 threads   94.43(623.82+45.70)
->> > 5302.8: index-pack 40 threads   93.64(702.88+47.61)
->> >
->> > I don't think any of this is _particularly_ relevant to your case, but
->> > it really seems to me that the default of capping at 3 threads is too
->> > low.
->>
->> Looking back at the multithread commit, I think the trend was the same
->> and I capped it because the gain was not proportional to the number of
->> cores we threw at index-pack anymore. I would not be opposed to
->> raising the cap though (or maybe just remove it)
->
-> I'm not sure what the right cap would be. I don't think it's static;
-> we'd want ~4 threads on the top case, and 10-20 on the bottom one.
->
-> It does seem like there's an inflection point in the graph at N/2
-> threads. But then maybe that's just because these are hyper-threaded
-> machines, so "N/2" is the actual number of physical cores, and the
-> inflated CPU times above that are just because we can't turbo-boost
-> then, so we're actually clocking slower. Multi-threaded profiling and
-> measurement is such a mess. :)
->
-> So I'd say the right answer is probably either online_cpus() or half
-> that. The latter would be more appropriate for the machines I have, but
-> I'd worry that it would leave performance on the table for non-intel
-> machines.
+On 2019.04.23 12:34, Emily Shaffer wrote:
+[snip]
+> +=== Implementation
+> +
+> +It's probably useful to do at least something besides printing out a string.
+> +Let's start by having a look at everything we get.
+> +
+> +Modify your `cmd_psuh` implementation to dump the args you're passed:
+> +
+> +----
+> +	int i;
+> +
+> +	...
+> +
+> +	printf(Q_("Your args (there is %d):\n",
+> +		  "Your args (there are %d):\n",
+> +		  argc),
+> +	       argc);
+> +	for (i = 0; i < argc; i++) {
+> +		printf("%d: %s\n", i, argv[i]);
+> +	}
+> +	printf(_("Your current working directory:\n<top-level>%s%s\n"),
+> +	       prefix ? "/" : "", prefix ? prefix : "");
+> +
+> +----
+> +
+> +Build and try it. As you may expect, there's pretty much just whatever we give
+> +on the command line, including the name of our command. (If `prefix` is empty
+> +for you, try `cd Documentation/ && ../bin-wrappers/git/ psuh`). That's not so
 
-It would be a nice #leftoverbits project to do this dynamically at
-runtime, i.e. hook up the throughput code in progress.c to some new
-utility functions where the current code using pthreads would
-occasionally stop and try to find some (local) maximum throughput given
-N threads.
+Looks like you have an errant "/" after "git".
 
-You could then dynamically save that optimum for next time, or adjust
-threading at runtime every X seconds, e.g. on a server with N=24 cores
-you might want 24 threads if you have one index-pack, but if you have 24
-index-packs you probably don't want each with 24 threads, for a total of
-576.
+
+[snip]
+> +=== Adding documentation
+> +
+> +Awesome! You've got a fantastic new command that you're ready to share with the
+> +community. But hang on just a minute - this isn't very user-friendly. Run the
+> +following:
+> +
+> +----
+> +$ ./bin-wrappers/git help psuh
+> +----
+> +
+> +Your new command is undocumented! Let's fix that.
+> +
+> +Take a look at `Documentation/git-*.txt`. These are the manpages for the
+> +subcommands that Git knows about. You can open these up and take a look to get
+> +acquainted with the format, but then go ahead and make a new file
+> +`Documentation/git-psuh.txt`. Like with most of the documentation in the Git
+> +project, help pages are written with AsciiDoc (see CodingGuidelines, "Writing
+> +Documentation" section). Use the following template to fill out your own
+> +manpage:
+> +
+> +// Surprisingly difficult to embed AsciiDoc source within AsciiDoc.
+> +[listing]
+> +....
+> +git-psuh(1)
+> +===========
+> +
+> +NAME
+> +----
+> +git-psuh - Delight users' typo with a shy horse
+> +
+> +
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git-psuh'
+> +
+> +DESCRIPTION
+> +-----------
+> +...
+> +
+> +OPTIONS[[OPTIONS]]
+> +------------------
+> +...
+> +
+> +OUTPUT
+> +------
+> +...
+> +
+> +
+> +GIT
+> +---
+> +Part of the linkgit:git[1] suite
+> +....
+> +
+> +The most important pieces of this to note are the file header, underlined by =,
+> +the NAME section, and the SYNOPSIS, which would normally contain the grammar if
+> +your command took arguments. Try to use well-established manpage headers so your
+> +documentation is consistent with other Git and UNIX manpages; this makes life
+> +easier for your user, who can skip to the section they know contains the
+> +information they need.
+> +
+> +Now that you've written your manpage, you'll need to build it explicitly. We
+> +convert your AsciiDoc to troff which is man-readable like so:
+> +
+> +----
+> +$ make all doc
+> +$ man Documentation/git-psuh.1
+> +----
+> +
+> +or
+> +
+> +----
+> +$ make -C Documentation/git-psuh.1
+
+Needs a space after "Documentation/".
