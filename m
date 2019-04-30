@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 359DD1F45F
-	for <e@80x24.org>; Tue, 30 Apr 2019 22:50:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1747D1F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727452AbfD3Wt7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 18:49:59 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53563 "EHLO mout.gmx.net"
+        id S1727673AbfD3Wvq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:51:46 -0400
+Received: from mout.gmx.net ([212.227.17.20]:44995 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727459AbfD3Wt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 18:49:58 -0400
+        id S1727639AbfD3Wvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:51:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556664589;
-        bh=xjTVN4ae7VNYuqo5W4G4WftvxL74Mxcy7rRqajjfRuU=;
+        s=badeba3b8450; t=1556664700;
+        bh=dTWF3vo+kf9AaNKrBtBca1G6sEtL7XZICTAp1Z+TVio=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HHoOe9rjCocoj2Zv8gKCQksDme6ElKkZdIER+286E0EqfjyakdSgTUB7Cw4vIx9i+
-         RwA0ve3CPRJZ/UJgnG/s3TZPsHkwfHW3zkUNNdTBgL32C7QXFTAblw8OFD8Xpc+KD4
-         m3WmEffqscwS9PFcCtAZDvyDMdYPmpH+9hsJgBww=
+        b=EiUmWEwk2Qy/DY9deKi0Z7emdk/ohUC/Nsg56tIz0SIbj/NLLiwpzi0zBTv9LPZnx
+         ijA7C2l2GNzBYbIrKkRNa0jCl24H2H8TveY+16Jp20vzWX2wu5RkJ0AD90n+EM5s/4
+         0Ml+PayJcv1rhu3Yf6XTknNol3KcObNaiJ46tyVk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9fLX-1hUB5W1tkt-00CxoB; Wed, 01
- May 2019 00:49:49 +0200
-Date:   Tue, 30 Apr 2019 18:49:47 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mdvqg-1gnvXW0cas-00b3b9; Wed, 01
+ May 2019 00:51:40 +0200
+Date:   Tue, 30 Apr 2019 18:51:38 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase --abort: cleanup refs/rewritten
-In-Reply-To: <a3d5dd8c-12a6-a1d8-a41f-ef75c15df024@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904301848510.45@tvgsbejvaqbjf.bet>
-References: <20190426103212.8097-1-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1904291207040.45@tvgsbejvaqbjf.bet> <a3d5dd8c-12a6-a1d8-a41f-ef75c15df024@gmail.com>
+Subject: Re: [PATCH] rebase -r: always reword merge -c
+In-Reply-To: <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904301850310.45@tvgsbejvaqbjf.bet>
+References: <20190426103332.9036-1-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1904291208210.45@tvgsbejvaqbjf.bet> <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Xta9uJGUNJx+6M0YqIBX0WJwW2F0wthjfFWSRsY2EH8GOiwEbI1
- NA85VaUDlwobjlVAbx0jBPOyYFJHy6NTRmx+Bb0rHZuH09/Sj7Mn8MZgtuPqZlcjvhBzupF
- DoibG70BHdafNripO+4IVeI+E90nzpj1haJ2dhidov0Tu3QpHm7Zk5kyZ+xB9XyUHvFbM+s
- /xhADYO7Iz11Sb/v/N0PA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iv1t5GZKivg=:+Q80prYqUwK9Oj1MELWTpa
- roj5wxQWL8MU9jKeT7rVKEi8x7Ld6IeW1aCGiIcPaBmuLbb7orFbI2Gxa87d7NCd0VECNyv/9
- scZl92sNBZEjp4gtAASu3Yevw8KRCEcPhLoXlR5hbWmPDfWg3uBD6itL+dVHCkOjxhnGeKrNR
- 8ShExprNDFLZo4wLHkHxkSPlBQjpdCxs6hS/RnAE6pEtsCcbz5g0OAa77Gtjd0tuDE1zvtlIZ
- 6LQ49wNhK3IZZPaoXrOA8zhKhwXerJc7XyIt23ny79ogHXA1V9t941q6VyStt8Bcb5qmrNJMv
- vIb3cTOMZ7u6EzooMNw6g35giDerpF3WfjQTfn4B9n+IxRx4/Sw2qDpmwY6xUFKQelhGvgpnP
- afl4jlmmFT1RNloP/ble4BaB0+3hiBwfFsVBq7aK+3nxwwiEaCaA1qvK2NfwyvB7j1fiw8VYW
- Pc4YlbSUDkPkxFWr5EzuG03sMv1fHqXArAmegsRgIFzEe81TWSuTfLsPLtNT2ejYYpHyhJPWK
- IFEC05OAuqaaEftrR51ZdAROo6bznkLGbE5qGGUff/tOVmAFwQzQombsA9rhTJnkOeUi9QHcQ
- EKVtMqAbCpRLY8dLVe34yeqliSnmmQ8utVi8v2HPkFkqo/55CMiybzxVZo4yxql4t1z0yzFz/
- vPmYNysx4uFT9afnir7PKrLu2pJEpGWiYlqibRIsKCbyA/mNQL23ik14hG8fWCkFmhZifQT4f
- YellupJOaU466VWRrhN32ZUGfaHEWfVM+R/Z1o+9l61Q5b2OrLuBCTT7hX0paTbJfgedvzoQf
- 5PNiGVcgu+6prcog9VNkOo9/MG4b8K1qI7JXlUTPFQvV4yfrPjBpwVteJGuxsLHDH6Ffvzv8W
- dS+yUvRqKH0mBCY67XdKi0uqpk0kD2gMY2UbofzBgEbPOxphKTrS4LBva5oyBKhFU2b4RpUca
- xy0jg+K5Ljw==
+X-Provags-ID: V03:K1:3Z37LxEnA2zcR30IYOWKQbAG8JFfwoUN6vvSDQVkpBEPShcuRz/
+ XPP9SqQYmm6YYzjVrqQ4dTpCPS/WY1ndZ5DvjNIxGJaLiiv7JmDKyVRSws2+XwsqDyHqGCp
+ S0DLt/+NV4L1TZzDXQbPQfV4y6zoFYDwXmxRQXti56cLzvELSYFoVIUG8nK9sIPk+4D1Jhb
+ ChtD6O1TyKWCOqh8VBysA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mfoR/9V+xz8=:xzsdej7eR/egMImRjSfnqC
+ 7SMMIGnC9ZYi13/S4cwIaBwUs+nHWKt2k39kCkAr3AQRUM4lJ67dN+ST69h2pBb6e3TWTMCCg
+ FYIpSQ5ePvT+BX/hAfZFaWgnTGw2OincQ2OoNu/eLtpuDbqGnvl6I9m3/Mm2eYYuwHqW3Id1n
+ nf32p5d6Th1km2snX1+TKlP6IoeDj993gJOW2Y5VQdcNZ0p22JUZMA7SojC8k1oi8KjgVX/DG
+ Ta+z9tTZnBt2tOG5qhKUH/uXfyRe6x9sKt0hVdSbNAxTt8SifODhbjHZxdy1vXP4P/ELrBiZK
+ 8AX3LyuDWpVSqOTmq4p+w40nkvruOmx3Zf0v7WemSm90I2TWF9hTdFpPQJrhpo8gB1KKSFVnl
+ zvQ/m+i/dg+nC1gMhZJ94Be42VWIEghKpBi6M/eoQYtlitCn0Ao9sRczFZFKWdMOXK/ikRjLW
+ ZjmW9LLGT+6fx23vlL6LmDNpxQUYpPJTRaRQiBN63qjMvZHWDBfLO99uUqT2Zt+TKlrNUra+Z
+ RX4aR2XAQhkjlC82enOrOW87VKO/GT9mfhrbgrCAI2wC0NVMeisHmukuwMB1Ve88D7hN+l+TH
+ yi+m9912Hi2+Hw7giQQelCVaA1J078aKFyKBjEdL/v58BxzVBjtydhE6x2r+MKOJ+FwPr8jX4
+ t0NhavMd22RLpz/XdXuDMUSRMBzlQyT1XNd5f+RmZlfsqN69/qSpPXy/yxblaljJ6Z8qX924w
+ h7TmSScInNmJwOK3Ma3vlG8JWQnexgCJnQl83GngYAvv91AwKLwGze/iFC1tR8kvstK7vVIJ/
+ frAQjZqQI/B2amsuW7beBhDx4ddnn9jzDkkjmi9SOHw1gq0zIJfp0WsYE5HKntsmZcfuJrrk/
+ P32nf8OgFHuyvmtFn0tq52y8Pvf4TthK4bwUOczx2vJ1juYEtouz9LY2u77WaOX2FzNR9c+zo
+ SSyloGO2KBA==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,45 +70,39 @@ Hi Phillip,
 
 On Tue, 30 Apr 2019, Phillip Wood wrote:
 
-> On 29/04/2019 17:07, Johannes Schindelin wrote:
+> On 29/04/2019 17:14, Johannes Schindelin wrote:
+> > Hi Phillip,
 > >
 > > On Fri, 26 Apr 2019, Phillip Wood wrote:
 > >
-> > > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > >     ret =3D !!run_git_commit(r, git_path_merge_msg(r), opts,
+> > >              run_commit_flags);
 > > >
-> > > When `rebase -r` finishes it removes any refs under refs/rewritten
-> > > that it has created. However if the rebase is aborted these refs are
-> > > not removed. This can cause problems for future rebases. For example=
- I
-> > > recently wanted to merge a updated version of a topic branch into an
-> > > integration branch so ran `rebase -ir` and removed the picks and lab=
-el
-> > > for the topic branch from the todo list so that
-> > >      merge -C <old-merge> topic
-> > > would pick up the new version of topic. Unfortunately
-> > > refs/rewritten/topic already existed from a previous rebase that had
-> > > been aborted so the rebase just used the old topic, not the new one.
+> > > diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> > > index 4c69255ee6..3d484a3c72 100755
+> > > --- a/t/t3430-rebase-merges.sh
+> > > +++ b/t/t3430-rebase-merges.sh
+> > > @@ -164,6 +164,16 @@ test_expect_success 'failed `merge <branch>` do=
+es not
+> > > crash' '
+> > >   	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
+> > >   '
 > > >
-> > > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > > ---
+> > > +test_expect_success 'fast-forward merge -c still rewords' '
+> > > +	git checkout -b fast-forward-merge-c H &&
+> > > +	set_fake_editor &&
 > >
-> > Makes a ton of sense, and I feel a bit embarrassed that I forgot about
-> > that item on my TODO list. The patch looks obviously correct!
+> > set_fake_editor affects global state AFAIR (setting and exporting
+> > `EDITOR`), therefore this would need to be run in a subshell, i.e.
+> > enclosed in parentheses.
 >
-> Thanks, after I sent it I realized that --quit should probably clear
-> refs/rewritten as well, so I'll re-roll with that added. (One could argu=
-e that
-> a user might want them after quitting the rebase but there is no way to =
-clean
-> them up safely once we've deleted the state files and I suspect most use=
-rs
-> would be suprised if they were left laying around)
+> The other test files are not very consistent about that. I'll re-roll. N=
+ote
+> that I do not export any FAKE_* variables, so later tests should not be
+> affected even if the fake editor runs.
 
-I am not so sure. `--quit` is essentially all about "leave the state
-as-is, but still abort the rebase".
-
-So if I were you, I would *not* remove the `refs/rewritten/` refs in the
-`--quit` case.
+AFAIR I tried my best to avoid `set_fake_editor` altogether and instead
+preferred `write_script`/`test_config core.editor` combos in t3430.
 
 Ciao,
 Dscho
