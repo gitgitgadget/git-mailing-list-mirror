@@ -8,136 +8,107 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB8551F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 22:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 359DD1F45F
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727130AbfD3Wlu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 18:41:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42825 "EHLO mout.gmx.net"
+        id S1727452AbfD3Wt7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:49:59 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53563 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726115AbfD3Wlu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 18:41:50 -0400
+        id S1727459AbfD3Wt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:49:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556664102;
-        bh=JEXFU5UcXlx70NTl/Tpy4QPIwQfrKgKMLYf+dA+9eCA=;
+        s=badeba3b8450; t=1556664589;
+        bh=xjTVN4ae7VNYuqo5W4G4WftvxL74Mxcy7rRqajjfRuU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WyiNyLJUA1On16FY3NF9U12IABgmU9int86hwOCwu575yG1igytlj0R8dhQk6uzYh
-         ODYtqvhP/yOUHT/DVNigLLuZ8/n4Rs0EAjZYAEwuhDzM+9yGHqpQWTYP2+uYUbhtEF
-         IsKWuChSVoYVPslNFcV75mesSi2GWwuq/r5xkjgM=
+        b=HHoOe9rjCocoj2Zv8gKCQksDme6ElKkZdIER+286E0EqfjyakdSgTUB7Cw4vIx9i+
+         RwA0ve3CPRJZ/UJgnG/s3TZPsHkwfHW3zkUNNdTBgL32C7QXFTAblw8OFD8Xpc+KD4
+         m3WmEffqscwS9PFcCtAZDvyDMdYPmpH+9hsJgBww=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN1Gu-1hNoNB3vHk-006gYM; Wed, 01
- May 2019 00:41:42 +0200
-Date:   Tue, 30 Apr 2019 18:41:29 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9fLX-1hUB5W1tkt-00CxoB; Wed, 01
+ May 2019 00:49:49 +0200
+Date:   Tue, 30 Apr 2019 18:49:47 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez?= <ismail@i10z.com>,
-        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
-In-Reply-To: <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
-References: <pull.134.git.gitgitgadget@gmail.com> <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com> <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
+Subject: Re: [PATCH] rebase --abort: cleanup refs/rewritten
+In-Reply-To: <a3d5dd8c-12a6-a1d8-a41f-ef75c15df024@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1904301848510.45@tvgsbejvaqbjf.bet>
+References: <20190426103212.8097-1-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1904291207040.45@tvgsbejvaqbjf.bet> <a3d5dd8c-12a6-a1d8-a41f-ef75c15df024@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1194319204-1556664102=:45"
-X-Provags-ID: V03:K1:I3XFiyR45d4KM8WwmwGK7Ae52jH6KuRlNqL9622odaBO9PxKAi7
- pO8j20Xg3ya3A4iZn/ZJvctwBvf4O2ePb6DbZMqcDG4UiOE1tun6DurIMTYOM7q6x5V+rRe
- AAMy6R4IlgMF1eeAaIR47cW0qFweC7vazIlc9Yikt3lzwi62LEIcajTlshrAs4DEmeTTsS9
- Hv+G/5ppkYbRyx18ui8gA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R6CVfTbeIDE=:YKyo/Qy5myY49pdRJhacHQ
- UxzTb31fEHoz7+HA5bgVXPJXdyBnCIu1LTA6jRfpRJhJe/odSdAxw78Dbt+rowx4ojwSLtsNT
- ZqY28q3m7fCvChBewRY0p0asOF8121oDQx2PKIUBxzE6YbxbDJxlc5yhIMKi554WBtIMLsG1o
- GDAL9nv3/XepsT8jbx9Ff5PYGBQFjndBhcYJT0tr0Z8Tc/qiEsL3N9GBlRnrByLvjT+myhRQg
- 0AXuRd+024kvVzraHgdyWzosB4Pf1wYZMaZGZay7onFWzdHv9ORWLsz0gtqEQGVyM3OEBBcjx
- l0qnA6E4lrSvBt7s+3IslTSx+h1LLV/U/75Skr/e4RrMRjOjP2rINbeXw39O/DozKGeL/LrH0
- QshXjEc/xcWfNZh0lE7mP7ouvQoSuedHJquQZCeQvkPBvp8Vpb1NEDXwOGu3CtFf3zn/ev72X
- 4sBJp0AtIzNIL+hPaVXtthJaywZO3/uFbDLyffFotSarIbazyayCSxYlibUopuIba1G0SRitj
- uPTxjnsB276pJG5lLlVJ4Emaxl1bQZb4jrEm7t8nL0ji4Oa+qwzPOlEFUvoKkhzf9AVI0tWR0
- 1/7dlfD6ERvz3ty2dkgc7udDFdozEimLGvf2iqDG8OhageLnq4W8HystNkK0pKUQ9HLyR8rGq
- 16dcoxrD8IQ4X+avlWxosmE4NUf75LqJti9hcxs8RETC4KqZY6lXq7DuXKf06AIjVUFu/f70l
- E1WAnR0XyQJmom47Zbe5S86qfotblv+G1D97u2sFSEWcqy1Dx1+KxYU0QMaOCDexS/jxznF+6
- JhE0gwtAtPQobAY+d10nl5nTifYUmX+G+TIYTQtH7T+vkufrbp+AW0azxqO6LUF/66lMnrfFK
- AZIY67sqM7a1PcKGoY2etG3/KS7ZkUZcQ52H5Lsb3dF/uJVa0n2llaamv0pPq7QXpv9a2vxeQ
- qEBQWTO5Zlw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Xta9uJGUNJx+6M0YqIBX0WJwW2F0wthjfFWSRsY2EH8GOiwEbI1
+ NA85VaUDlwobjlVAbx0jBPOyYFJHy6NTRmx+Bb0rHZuH09/Sj7Mn8MZgtuPqZlcjvhBzupF
+ DoibG70BHdafNripO+4IVeI+E90nzpj1haJ2dhidov0Tu3QpHm7Zk5kyZ+xB9XyUHvFbM+s
+ /xhADYO7Iz11Sb/v/N0PA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iv1t5GZKivg=:+Q80prYqUwK9Oj1MELWTpa
+ roj5wxQWL8MU9jKeT7rVKEi8x7Ld6IeW1aCGiIcPaBmuLbb7orFbI2Gxa87d7NCd0VECNyv/9
+ scZl92sNBZEjp4gtAASu3Yevw8KRCEcPhLoXlR5hbWmPDfWg3uBD6itL+dVHCkOjxhnGeKrNR
+ 8ShExprNDFLZo4wLHkHxkSPlBQjpdCxs6hS/RnAE6pEtsCcbz5g0OAa77Gtjd0tuDE1zvtlIZ
+ 6LQ49wNhK3IZZPaoXrOA8zhKhwXerJc7XyIt23ny79ogHXA1V9t941q6VyStt8Bcb5qmrNJMv
+ vIb3cTOMZ7u6EzooMNw6g35giDerpF3WfjQTfn4B9n+IxRx4/Sw2qDpmwY6xUFKQelhGvgpnP
+ afl4jlmmFT1RNloP/ble4BaB0+3hiBwfFsVBq7aK+3nxwwiEaCaA1qvK2NfwyvB7j1fiw8VYW
+ Pc4YlbSUDkPkxFWr5EzuG03sMv1fHqXArAmegsRgIFzEe81TWSuTfLsPLtNT2ejYYpHyhJPWK
+ IFEC05OAuqaaEftrR51ZdAROo6bznkLGbE5qGGUff/tOVmAFwQzQombsA9rhTJnkOeUi9QHcQ
+ EKVtMqAbCpRLY8dLVe34yeqliSnmmQ8utVi8v2HPkFkqo/55CMiybzxVZo4yxql4t1z0yzFz/
+ vPmYNysx4uFT9afnir7PKrLu2pJEpGWiYlqibRIsKCbyA/mNQL23ik14hG8fWCkFmhZifQT4f
+ YellupJOaU466VWRrhN32ZUGfaHEWfVM+R/Z1o+9l61Q5b2OrLuBCTT7hX0paTbJfgedvzoQf
+ 5PNiGVcgu+6prcog9VNkOo9/MG4b8K1qI7JXlUTPFQvV4yfrPjBpwVteJGuxsLHDH6Ffvzv8W
+ dS+yUvRqKH0mBCY67XdKi0uqpk0kD2gMY2UbofzBgEbPOxphKTrS4LBva5oyBKhFU2b4RpUca
+ xy0jg+K5Ljw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-1194319204-1556664102=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 30 Apr 2019, Phillip Wood wrote:
 
-Hi Hannes,
-
-On Tue, 30 Apr 2019, Johannes Sixt wrote:
-
-> [had to add Dscho as recipient manually, mind you]
-
-I usually pick up responses to GitGitGadget patch series even if I am not
-on explicit Cc: (but it might take a couple of days when I am too busy
-elsewhere to read the Git mailing list).
-
-> Am 29.04.19 um 23:56 schrieb =C4=B0smail D=C3=B6nmez via GitGitGadget:
-> > From: =3D?UTF-8?q?=3DC4=3DB0smail=3D20D=3DC3=3DB6nmez?=3D <ismail@i10z=
-.com>
+> On 29/04/2019 17:07, Johannes Schindelin wrote:
 > >
-> > Enable DEP (Data Execution Prevention) and ASLR (Address Space Layout
-> > Randomization) support. This applies to both 32bit and 64bit builds
-> > and makes it substantially harder to exploit security holes in Git by
-> > offering a much more unpredictable attack surface.
+> > On Fri, 26 Apr 2019, Phillip Wood wrote:
 > >
-> > ASLR interferes with GDB's ability to set breakpoints. A similar issue
-> > holds true when compiling with -O2 (in which case single-stepping is
-> > messed up because GDB cannot map the code back to the original source
-> > code properly). Therefore we simply enable ASLR only when an
-> > optimization flag is present in the CFLAGS, using it as an indicator
-> > that the developer does not want to debug in GDB anyway.
+> > > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > >
+> > > When `rebase -r` finishes it removes any refs under refs/rewritten
+> > > that it has created. However if the rebase is aborted these refs are
+> > > not removed. This can cause problems for future rebases. For example=
+ I
+> > > recently wanted to merge a updated version of a topic branch into an
+> > > integration branch so ran `rebase -ir` and removed the picks and lab=
+el
+> > > for the topic branch from the todo list so that
+> > >      merge -C <old-merge> topic
+> > > would pick up the new version of topic. Unfortunately
+> > > refs/rewritten/topic already existed from a previous rebase that had
+> > > been aborted so the rebase just used the old topic, not the new one.
+> > >
+> > > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > > ---
 > >
-> > Signed-off-by: =C4=B0smail D=C3=B6nmez <ismail@i10z.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  config.mak.uname | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/config.mak.uname b/config.mak.uname
-> > index e7c7d14e5f..a9edcc5f0b 100644
-> > --- a/config.mak.uname
-> > +++ b/config.mak.uname
-> > @@ -570,6 +570,12 @@ else
-> >  	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
-> >  		# MSys2
-> >  		prefix =3D /usr/
-> > +		# Enable DEP
-> > +		BASIC_LDFLAGS +=3D -Wl,--nxcompat
-> > +		# Enable ASLR (unless debugging)
-> > +		ifneq (,$(findstring -O,$(CFLAGS)))
-> > +			BASIC_LDFLAGS +=3D -Wl,--dynamicbase
-> > +		endif
-> >  		ifeq (MINGW32,$(MSYSTEM))
-> >  			prefix =3D /mingw32
-> >  			HOST_CPU =3D i686
-> >
+> > Makes a ton of sense, and I feel a bit embarrassed that I forgot about
+> > that item on my TODO list. The patch looks obviously correct!
 >
-> I'm a bit concerned that this breaks my debug sessions where I use -O0.
-> But I'll test without -O0 before I really complain.
+> Thanks, after I sent it I realized that --quit should probably clear
+> refs/rewritten as well, so I'll re-roll with that added. (One could argu=
+e that
+> a user might want them after quitting the rebase but there is no way to =
+clean
+> them up safely once we've deleted the state files and I suspect most use=
+rs
+> would be suprised if they were left laying around)
 
-Weird. Jameson Miller also mentioned this very concern in an internal
-review.
+I am not so sure. `--quit` is essentially all about "leave the state
+as-is, but still abort the rebase".
 
-I guess I'll do something like
-
-	ifneq (,$(findstring -O,$(filter-out -O0,$(CFLAGS))))
-
-Does that work for you?
+So if I were you, I would *not* remove the `refs/rewritten/` refs in the
+`--quit` case.
 
 Ciao,
 Dscho
-
---8323328-1194319204-1556664102=:45--
