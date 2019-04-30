@@ -8,161 +8,107 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7FCF1F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 22:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 807F81F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbfD3WZm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 18:25:42 -0400
-Received: from mout.gmx.net ([212.227.17.22]:44071 "EHLO mout.gmx.net"
+        id S1727137AbfD3Wd7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:33:59 -0400
+Received: from mout.gmx.net ([212.227.17.20]:40041 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727388AbfD3WZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 18:25:42 -0400
+        id S1726049AbfD3Wd7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:33:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556663137;
-        bh=5keiZxSCchT95Rf4Vwno4mWJLq7hSpUTLxo2m3zF0HY=;
+        s=badeba3b8450; t=1556663630;
+        bh=aalvSwoxNze4mUUy1bAcIaRZN+Dt/wskGG9uO+pVRL0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WbqAxR+wBUf8KUVF6iXXid+kwapwwL7M4OAZNtAMDjySj5OSUKIa4oM7ixJfUtmmW
-         tbqEA4yJmeVPkbFTkmVh+Hpr6SDe9VDEL+8i0gFqoCl2Ls1UpzdEFZ0MFXeOJ7AtaM
-         exoCTWk2rUfZyV7hkJyNqOJekF44126X7c+GSc78=
+        b=al5m4cQrzB7NXnclovDmxfAK5jUjivaz61QqZb5RwqaKVErhWgC1xTlWemD6GGvix
+         gOT0GWn3KBJpHR2bwqpnAbLKEVEdMj3ROWFSwJI36J6EhRfOFGJ8FzY2RVKcLqIgQ1
+         mAurABmHD4fL4rhaBzKI5fcZvtkLnGR1NTEbJQ3A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm6F-1hXSl137c3-00GM1g; Wed, 01
- May 2019 00:25:37 +0200
-Date:   Tue, 30 Apr 2019 18:25:35 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJFBe-1hJwcm0JeE-002q9D; Wed, 01
+ May 2019 00:33:50 +0200
+Date:   Tue, 30 Apr 2019 18:33:47 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] rebase: fix garbled progress display with '-x'
-In-Reply-To: <20190430142556.20921-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Braun <thomas.braun@byte-physics.de>
+Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for
+ transport
+In-Reply-To: <b8e799e2-356d-2a03-faa4-2792ec1b171d@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1904301832500.45@tvgsbejvaqbjf.bet>
+References: <pull.137.git.gitgitgadget@gmail.com> <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com> <CAPig+cT1EP+HC5h4e0NGCu=1i6cZXPxERRgnnAdZJn+XeqpbFw@mail.gmail.com> <nycvar.QRO.7.76.6.1904291916510.45@tvgsbejvaqbjf.bet>
+ <b8e799e2-356d-2a03-faa4-2792ec1b171d@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-52271464-1556663136=:45"
-X-Provags-ID: V03:K1:cqlAX7ASr+dN1B+Fb/fzapgkNq2lqOlsmgYQ+X2Qr/Zk/hWczBf
- vgKSkzxiOC405VL1vkTfpETBJcTuba4DLgL/MXsI8X5nHsxq78WywtbKtixsnmC9QJ3pBOO
- /rM90dNasV7Xxb5PxoQxe53HnwlU4EAc0XJ9sKSYYNO/D9Fusgg5TAVTBOq2xHQHD3ZEKAz
- vmXgcHzFds5wCsEJs65ow==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ehYG0UVN5qE=:EwELXb6UJypaCA3ErXdGvD
- +z5p7BDdasHDZTCz2paww9aZpJXj0w9+z9UX8NdtJOMxyXHhjCKXTwN3+rCmJciCz4/3K15Gr
- GNIry4fqU36qQEVgE+koJY6uW2oFm0eZhL7gFV+ld+3bA1SjEh2OwvuDjJxRpp3hQuBZlYVxX
- jZqTNCBZNGylw2eNOeVvlqv+Ex7YMxUn+XjCR+SDD0lo7Iu3TDiRoHMRxiyAoe6FAnzgM+Zas
- DruJw08uCT6MlQ3FiRmJ+nffz3LmM549XQZCuYnBDqPCNDoznClh21KI0/dvIC2VNQhX+nj6p
- 7mQw7NYANgoYa0u+ZephXX0RK8nfBmVIK59Vgwf3cp53Zb7uzVVnNQW6UWQWIxqmHj0BjsF6r
- 6HcVXEHNNCOyfs5af+11tm9YE88DxhYEHqd7VFXDUSlDeEpEV81cm0ueAyF/K12XpWg6ShftM
- XlyZZlaDHzvGbDSQHEbYSL7Nn2UzZc0Hy4jxdwmj4X16NYsjaksPF3XZBG0mhikx1UQtIp4iE
- 6efk9KjYxYSF+i+Cm8yUOYYeFXDcEwU0bfECXkit79QADTjkEQDBpl8kl0vQzHSzIl14A/FPF
- Ashb+AnH+R6uDKEYf0FQjln5VwPXpNyHuhLx1K9J19JKnBgePWrl6+uCfpDlxvOWZpngZizgY
- b2n3CfOgbMqAuoTZJXVyd3UNZTWPs53ZKdmKe03b0bzTQ+VxpT6wU2fezmU8CXDch/3OPaUVr
- IPM1SJR7HcQZQNcOJhAD/hn+XlL8T2bTxTATDr8MxoQvuRAQjhaIfRJBl8fEQwKKfN+jLC8EQ
- IeY3lSoya3e0u+RCRc/PBLVbhEw6x2Pb9mxF+N8/MT35lzUCFsCyERteNjNjXFnQBCvIO16za
- MWmwiOK6NOS3beo/CTBQSC3jgRzGf2VHDCQuKUigeMDIP9nBIcp2w9trduQxxatSuSPJ/p8bb
- MXdYU6+YsYQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:213daFejnqUXKYjGlwox2IjKeI6+7rep9Gxpk0JhrzYCLrn7SGV
+ ve9AUzQ1tGmBcC0hpiIhqYIUnng3MhRosBG/+KFZa5zPAq5Kk4BNuGNqk5WV4L5Is19JgmI
+ zpeAMyYcQN5GWNFvD9y6632fwDIUkWOncODLiniwWVCRuGLhVh9NKR64Nncn+xkNuYsgAbe
+ miBjJpz8nbzdboDQ8lj7Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UkkaHJ5R7Ak=:2IC0KAcQwtvvzSxRATneRR
+ yOi3Top9XWImdfnJrIhhXqTJ1naHRI+N7RuPWkkWFbQ7kng+tFjFUlt/mT2S4p21L3m7gcHN2
+ HXQwN8MRCcPQL5AbaDy9YDnS/T1NyIRJyIJTqCDIHpZiV9ppvDjwoJXdhLahlfHZVtxqXPQI9
+ 8ZadqOk5EkzHPjtIDi1evXw6qzSHOVG1C3oxKksYU3b6a1M0IAeUZegN4bR1kEn4Qn1YImx60
+ ZKkedpoa2e/LX7y319FyErbIhbMy2Sh2PqwLpfC1hIzfbXPVbmbfRLRlmOr/ueBKP3ztEApok
+ MeEvZaBliP2jc8y2vAZjLiv023+Dc6+udAmGSvt60KZqsuC/bqWfK+FXkxdWp9Neu66K0LdQz
+ kBMf4g5wBVI0sc/+3hhsPfl+NMJlK3g8LKKY4+GqOFfDbfoFKSG3j6dB2rVnRaFn9txZZDj2w
+ zQ42Dk7BsXDGw7XnK7jzSBSvMDtkXeq8O73AJMhRSmgV/MzHlX8RGqfVzl6SKRPo2ShngJhNq
+ DTpgxFvvoZbQOLrNEFH9DR0cdFG505CDpEfkRDY28sWjYU2grIEHD8EZA2ZZAbN8FOPx5o5RH
+ jpgjg5Q5r0ACxRD5irnJ7BBffjM47mL4q4TbkFSf/lQCKNLdwmW1yYNO37pv9+Xs7+Fk/fg33
+ 49WABJ9Td3wCwVEo9FVXprVGMwP0W/rA9tBg4t6gCgbhl3v321a4R5R760ye/3cvTg80sdMIl
+ vAq9nLTZPuzjG2wc5ONNf9li0PnzLdXhKx8Vu9xCNEqhBvCCAM+GPk0CAlQqkjcCm8pf1+ehn
+ vEqQa6R2R6tb+Ew4j/9M94iXd5CosppA2mCKRmkv2pSNp8hmyrBaqZ04q1TaUY8uGiodqEO1p
+ vumHxI+faIziJeUJ0Qtj8SccKZv6TyU46v16gcXU/ngJ4Xz9xpCwJsenyAhAb9WBcHUFuPxSl
+ OGjY3h5tCzA==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Hannes,
 
---8323328-52271464-1556663136=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 30 Apr 2019, Johannes Sixt wrote:
 
-Hi,
-
-On Tue, 30 Apr 2019, SZEDER G=C3=A1bor wrote:
-
-> When running a command with the 'exec' instruction during an
-> interactive rebase session, or for a range of commits using 'git
-> rebase -x', the output can be a bit garbled when the name of the
-> command is short enough:
+> Am 30.04.19 um 01:17 schrieb Johannes Schindelin:
+> > On Mon, 29 Apr 2019, Eric Sunshine wrote:
+> >> On Mon, Apr 29, 2019 at 6:04 PM Thomas Braun via GitGitGadget
+> >>> diff --git a/Documentation/config/sendpack.txt b/Documentation/confi=
+g/sendpack.txt
+> >>> @@ -0,0 +1,5 @@
+> >>> +sendpack.sideband::
+> >>> +       Allows to disable the side-band-64k capability for send-pack=
+ even
+> >>> +       when it is advertised by the server. Makes it possible to wo=
+rk
+> >>> +       around a limitation in the git for windows implementation to=
+gether
+> >>> +       with the dump git protocol. Defaults to true.
+> >>
+> >> s/dump/dumb/
+> >>
+> >> For someone who hasn't read the commit message of this patch, "work
+> >> around a limitation in ... git for windows" doesn't mean much. Perhap=
+s
+> >> this documentation could explain in more precise terms under what
+> >> circumstances this option should be used?
+> >
+> > You're right, this is confusing, especially since Git for Windows 2.x =
+does
+> > not have that bug.
 >
->   $ git rebase -x true HEAD~5
->   Executing: true
->   Executing: true
->   Executing: true
->   Executing: true
->   Executing: true)
->   Successfully rebased and updated refs/heads/master.
->
-> Note the ')' at the end of the last line.  It gets more garbled as the
-> range of commits increases:
->
->   $ git rebase -x true HEAD~50
->   Executing: true)
->   [ repeated 3 more times ]
->   Executing: true0)
->   [ repeated 44 more times ]
->   Executing: true00)
->   Successfully rebased and updated refs/heads/master.
->
-> Those extra numbers and ')' are remnants of the previously displayed
-> "Rebasing (N/M)" progress lines that are usually completely
-> overwritten by the "Executing: <cmd>" lines, unless 'cmd' is short and
-> the "N/M" part is long.
->
-> Make sure that the previously displayed "Rebasing (N/M)" line is
-> completely covered up by printing a terminal width worth of space
-> characters.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> If there is no bug, why do we need the patch?
 
-Makes sense.
+I thought you of all people (building with the ancient MSys/MINGW
+toolchains) would benefit from it :-)
 
-> This issue has already been present in the scripted rebase as well.
->
-> As far as I could tell, if any other rebase instruction prints a
-> message, then that tends to be so long (including abbreviated commit
-> OIDs and whatnot) that they practically always overwrite that
-> "Rebasing (N/M)" progress line (well, except, perhaps, when rebasing
-> billions of commits at a time?).
->
->  sequencer.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 546f281898..c2e4baa90e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3631,6 +3631,12 @@ static int pick_commits(struct repository *r,
->  			int saved =3D *end_of_arg;
->  			struct stat st;
->
-> +			if (!opts->verbose)
-> +				/*
-> +				 * Fully cover the previous "Rebasing (n/m)"
-> +				 * progress line.
-> +				 */
-> +				fprintf(stderr, "%*s\r", term_columns(), "");
-
-IIRC there are terminals (`cmd.exe`?) that would advance to the next row
-automatically when printing the exact number of columns in a row. So this
-would not work.
-
-But isn't there an ANSI sequence that we can use?
-
-*clicketyclick*
-
-Yes: https://github.com/git/git/blob/v2.21.0/editor.c#L101 (introduced in
-https://github.com/git/git/commit/abfb04d0c7#diff-cdeec438beb851e450b94a11=
-db9ab7edR89)
-
-So maybe we should do the same here, i.e.
-
-	fputs("\r\033[K", stderr);
+But if even you don't want it, I'll gladly drop it from Git for Windows'
+patches and be done with it.
 
 Ciao,
 Dscho
-
->  			*end_of_arg =3D '\0';
->  			res =3D do_exec(r, arg);
->  			*end_of_arg =3D saved;
-> --
-> 2.21.0.1181.g24122a4251
->
->
-
---8323328-52271464-1556663136=:45--
