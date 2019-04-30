@@ -2,212 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7A411F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 18:25:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD221F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 18:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727116AbfD3SZk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 14:25:40 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:41377 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727001AbfD3SZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 14:25:36 -0400
-Received: by mail-pg1-f193.google.com with SMTP id f6so7220963pgs.8
-        for <git@vger.kernel.org>; Tue, 30 Apr 2019 11:25:36 -0700 (PDT)
+        id S1726209AbfD3SsN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 14:48:13 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:40366 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbfD3SsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 14:48:12 -0400
+Received: by mail-ed1-f44.google.com with SMTP id e56so6918223ede.7
+        for <git@vger.kernel.org>; Tue, 30 Apr 2019 11:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dMp5MIhDBg7AJQkYnjKDso8E6+iFBTb7OFqk6GK4+Mg=;
-        b=LiV06WMCiCzl4MHChv1FAyb/zhjnje19XBHH5llsLj15eirkujnNEJNAgOuqc+D4S2
-         2Asp7KcnHO0aLRDrUtDsChEUr/Qfik5GS+V8HG1ELz7nOUc2EB1QKnk9/liTtKhymj5a
-         ZA6VzRKfBbFEHiqjs/JsVPni2xZ9fm7FVgtvKNTsLP6/J+0B3+5HqW0VUr0eBI+/MTLG
-         IbuqU3Xkl3dJAt5HgQMtOlUud91McFrfiNqIus/CkPOI9N/l2wJDhI5Gv76zamKV35j7
-         AfOuPMJUhX4oohvIH2Tsg/3UuIoUJrydymEFgpklqS3mr8+9siqEEK15R7OGTotveG+O
-         EHHQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=MYshi+R8LbeUsoysrVUClNZTFzcxtrBxaXuHuI9BZoY=;
+        b=R2mgN76i/v0KcjH7VcS+/Iu/Ppek25lt/6aiy96xyYjNnPlFbas7VBsgRaDepX8A1n
+         PRbHEUK8lwrDc6zaIEt+ypLfFF6nCZzuhSaeTyCE/FBW0JI6ypVnLYBpoNu65+hcU2Cb
+         /L1ws3JWaeXhhByB7C4aw9YGUY4SJ5QcS+vGnGC8cOJnYx/VGtIwBj+ibX7x1gjz7APZ
+         U5DFUmOCEYeVruJSl6LZRFGle/Dl60MLctZuei/1++aOvvOWuawAgWQig2wZCpOvJDSH
+         8jGZ1bgdqlY7HEhnp8VjmZDm4p5O2osaFEsdxEQynz0QOll+NnaYP6hb8t9Ddoy8Lcl9
+         CZhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dMp5MIhDBg7AJQkYnjKDso8E6+iFBTb7OFqk6GK4+Mg=;
-        b=ie3xz0mdfaDrHYqS38O0is8egax3/Gm8/Ncp+CS6z0ddDLzM08uE9du0R4CjWgsZT3
-         UenTo81w8pxrF1I6+Kdk/bomXCahEoJAwt9k/3+9rYt3i0OeILtV9ktIxLMtROCtrR30
-         lIJ4wOKh4aZvZcxuhjlRetCiGG2ne1FJyliui/woOKs43rciRYMjkQMMvfuXP5RiAcmg
-         qA8FpnYTdwEWIFjPEyoEF2xgELiujB7XMBqoWF2T2pbVM1ZAfEMMtV4oZHI2vRktnTfu
-         p5jMt1FZONa49iCCDmoh5UW5hSjmmeAWWHfpy2lufqYNxhRPNz/sbVcG2RK18UaHVTHI
-         QrIA==
-X-Gm-Message-State: APjAAAUwiTo/qsexJKbfbI17L/GqFZxzyAAumFSVvEaGUbhSrAG6/CJs
-        cvABHHGQADJPOaS50PglAQ8=
-X-Google-Smtp-Source: APXvYqxFGMUOfXrTsip/FsaU15uyC5u7NvGPtVrvyrvtonuoOrTEiEqU4m5L6D7qifn/Csvm2lz3nA==
-X-Received: by 2002:a63:6cc4:: with SMTP id h187mr55438685pgc.437.1556648735733;
-        Tue, 30 Apr 2019 11:25:35 -0700 (PDT)
-Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id p2sm111217508pfi.73.2019.04.30.11.25.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 Apr 2019 11:25:35 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 5/5] fast-export: do automatic reencoding of commit messages only if requested
-Date:   Tue, 30 Apr 2019 11:25:23 -0700
-Message-Id: <20190430182523.3339-6-newren@gmail.com>
-X-Mailer: git-send-email 2.21.0.782.g44aacb1a0b
-In-Reply-To: <20190430182523.3339-1-newren@gmail.com>
-References: <20190430182523.3339-1-newren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=MYshi+R8LbeUsoysrVUClNZTFzcxtrBxaXuHuI9BZoY=;
+        b=RCNiE8+qTU20wvqclSq03yWah9ocaMV0a81mG/wrSF4FNVuYvxRGV56h3P3fscGX0o
+         n+TbEYVyDce5T4L8ILLr5doZSKj90W6bFTJU68BSotalTNgx8AH/JLxHk6D9tRkdQF9H
+         jgXjR5B/iHQkrJ8CUjpoREjVodMzzr2eTQcK/0g9lGGahgzWWGyXhRnN9WOhSDojvYUs
+         D4QZhsFTFmgnsvi31hUNDC6WbW5sYV/3lGps/n0gSwaidUevEJ3GaP5SOoX/nxfl/DR2
+         5ADAVPOGvHQB7zGJmPhYpnyPA3KYKIdQ8v5HVIOmSoxrSAoarWuSKn1RgYXxi1alcbRs
+         iLlg==
+X-Gm-Message-State: APjAAAVS9/zyWDkxgH1s7/oCxHY+RI83kdNtoyPIPg7WadGVcu2SBVZU
+        SCURta/RPKqLSn8uXpv6pZI=
+X-Google-Smtp-Source: APXvYqzXcvGum6uCgcdBKZ9VIgJcC+pwfOp0COHrQsmlY1xlplI3Y/epHreMVt+wlZHI0T7e+l92GA==
+X-Received: by 2002:aa7:d908:: with SMTP id a8mr43157126edr.68.1556650090159;
+        Tue, 30 Apr 2019 11:48:10 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id v9sm10271738ede.32.2019.04.30.11.48.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Apr 2019 11:48:09 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Martin Fick <mfick@codeaurora.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Resolving deltas dominates clone time
+References: <259296914.jpyqiltySj@mfick-lnx> <16052712.dFCfNLlQnN@mfick-lnx>
+        <20190422205653.GA30286@sigill.intra.peff.net>
+        <19221376.OlD5LWjr85@mfick-lnx>
+        <20190423015538.GA16369@sigill.intra.peff.net>
+        <20190423042109.GA19183@sigill.intra.peff.net>
+        <CACsJy8B7tjjpUZK+zH4rvOSk=uTLOHCOy6hk4FkkHXqCzNZU9g@mail.gmail.com>
+        <20190430175048.GB16729@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190430175048.GB16729@sigill.intra.peff.net>
+Date:   Tue, 30 Apr 2019 20:48:08 +0200
+Message-ID: <87sgtzqqhj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Automatic re-encoding of commit messages (and dropping of the encoding
-header) hurts attempts to do reversible history rewrites (e.g. sha1sum
-<-> sha256sum transitions, some subtree rewrites), and seems
-inconsistent with the general principle followed elsewhere in
-fast-export of requiring explicit user requests to modify the output
-(e.g. --signed-tags=strip, --tag-of-filtered-object=rewrite).  Add a
---reencode flag that the user can use to specify, and like other
-fast-export flags, default it to 'abort'.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/fast-export.c  | 35 ++++++++++++++++++++++++++++++++---
- t/t9350-fast-export.sh | 29 ++++++++++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+On Tue, Apr 30 2019, Jeff King wrote:
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 66331fa401..43cc52331c 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -33,6 +33,7 @@ static const char *fast_export_usage[] = {
- static int progress;
- static enum { SIGNED_TAG_ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
- static enum { TAG_FILTERING_ABORT, DROP, REWRITE } tag_of_filtered_mode = TAG_FILTERING_ABORT;
-+static enum { REENCODE_ABORT, REENCODE_PLEASE, REENCODE_NEVER } reencode_mode = REENCODE_ABORT;
- static int fake_missing_tagger;
- static int use_done_feature;
- static int no_data;
-@@ -77,6 +78,20 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- 	return 0;
- }
- 
-+static int parse_opt_reencode_mode(const struct option *opt,
-+				   const char *arg, int unset)
-+{
-+	if (unset || !strcmp(arg, "abort"))
-+		reencode_mode = REENCODE_ABORT;
-+	else if (!strcmp(arg, "yes"))
-+		reencode_mode = REENCODE_PLEASE;
-+	else if (!strcmp(arg, "no"))
-+		reencode_mode = REENCODE_NEVER;
-+	else
-+		return error("Unknown reencoding mode: %s", arg);
-+	return 0;
-+}
-+
- static struct decoration idnums;
- static uint32_t last_idnum;
- 
-@@ -633,10 +648,21 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	}
- 
- 	mark_next_object(&commit->object);
--	if (anonymize)
-+	if (anonymize) {
- 		reencoded = anonymize_commit_message(message);
--	else if (!is_encoding_utf8(encoding))
--		reencoded = reencode_string(message, "UTF-8", encoding);
-+	} else if (encoding) {
-+		switch(reencode_mode) {
-+		case REENCODE_PLEASE:
-+			reencoded = reencode_string(message, "UTF-8", encoding);
-+			break;
-+		case REENCODE_NEVER:
-+			break;
-+		case REENCODE_ABORT:
-+			die("Encountered commit-specific encoding %s in commit "
-+			    "%s; use --reencode=<mode> to handle it",
-+			    encoding, oid_to_hex(&commit->object.oid));
-+		}
-+	}
- 	if (!commit->parents)
- 		printf("reset %s\n", refname);
- 	printf("commit %s\nmark :%"PRIu32"\n", refname, last_idnum);
-@@ -1091,6 +1117,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK(0, "tag-of-filtered-object", &tag_of_filtered_mode, N_("mode"),
- 			     N_("select handling of tags that tag filtered objects"),
- 			     parse_opt_tag_of_filtered_mode),
-+		OPT_CALLBACK(0, "reencode", &reencode_mode, N_("mode"),
-+			     N_("select handling of commit messages in an alternate encoding"),
-+			     parse_opt_reencode_mode),
- 		OPT_STRING(0, "export-marks", &export_filename, N_("file"),
- 			     N_("Dump marks to this file")),
- 		OPT_STRING(0, "import-marks", &import_filename, N_("file"),
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 67dd7ac7f4..92cfeb6cfc 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -94,14 +94,14 @@ test_expect_success 'fast-export --show-original-ids | git fast-import' '
- 	test $MUSS = $(git rev-parse --verify refs/tags/muss)
- '
- 
--test_expect_success 'iso-8859-7' '
-+test_expect_success 'reencoding iso-8859-7' '
- 
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_config i18n.commitencoding iso-8859-7 &&
- 	test_tick &&
- 	echo rosten >file &&
- 	git commit -s -m "$(printf "Pi: \360")" file &&
--	git fast-export wer^..wer >iso-8859-7.fi &&
-+	git fast-export --reencode=yes wer^..wer >iso-8859-7.fi &&
- 	sed "s/wer/i18n/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
-@@ -109,13 +109,36 @@ test_expect_success 'iso-8859-7' '
- 		 grep $(printf "\317\200") actual)
- '
- 
-+test_expect_success 'aborting on iso-8859-7' '
-+
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_config i18n.commitencoding iso-8859-7 &&
-+	echo rosten >file &&
-+	git commit -s -m "$(printf "Pi: \360")" file &&
-+	test_must_fail git fast-export --reencode=abort wer^..wer >iso-8859-7.fi
-+'
-+
-+test_expect_success 'preserving iso-8859-7' '
-+
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_config i18n.commitencoding iso-8859-7 &&
-+	echo rosten >file &&
-+	git commit -s -m "$(printf "Pi: \360")" file &&
-+	git fast-export --reencode=no wer^..wer >iso-8859-7.fi &&
-+	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi |
-+		(cd new &&
-+		 git fast-import &&
-+		 git cat-file commit i18n-no-recoding >actual &&
-+		 grep $(printf "\360") actual)
-+'
-+
- test_expect_success 'encoding preserved if reencoding fails' '
- 
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_config i18n.commitencoding iso-8859-7 &&
- 	echo rosten >file &&
- 	git commit -s -m "$(printf "Pi: \360; Invalid: \377")" file &&
--	git fast-export wer^..wer >iso-8859-7.fi &&
-+	git fast-export --reencode=yes wer^..wer >iso-8859-7.fi &&
- 	sed "s/wer/i18n-invalid/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--- 
-2.21.0.782.g44aacb1a0b
+> On Tue, Apr 23, 2019 at 05:08:40PM +0700, Duy Nguyen wrote:
+>
+>> On Tue, Apr 23, 2019 at 11:45 AM Jeff King <peff@peff.net> wrote:
+>> >
+>> > On Mon, Apr 22, 2019 at 09:55:38PM -0400, Jeff King wrote:
+>> >
+>> > > Here are my p5302 numbers on linux.git, by the way.
+>> > >
+>> > >   Test                                           jk/p5302-repeat-fix
+>> > >   ------------------------------------------------------------------
+>> > >   5302.2: index-pack 0 threads                   307.04(303.74+3.30)
+>> > >   5302.3: index-pack 1 thread                    309.74(306.13+3.56)
+>> > >   5302.4: index-pack 2 threads                   177.89(313.73+3.60)
+>> > >   5302.5: index-pack 4 threads                   117.14(344.07+4.29)
+>> > >   5302.6: index-pack 8 threads                   112.40(607.12+5.80)
+>> > >   5302.7: index-pack default number of threads   135.00(322.03+3.74)
+>> > >
+>> > > which still imply that "4" is a win over "3" ("8" is slightly better
+>> > > still in wall-clock time, but the total CPU rises dramatically; that's
+>> > > probably because this is a quad-core with hyperthreading, so by that
+>> > > point we're just throttling down the CPUs).
+>> >
+>> > And here's a similar test run on a 20-core Xeon w/ hyperthreading (I
+>> > tweaked the test to keep going after eight threads):
+>> >
+>> > Test                            HEAD
+>> > ----------------------------------------------------
+>> > 5302.2: index-pack 1 threads    376.88(364.50+11.52)
+>> > 5302.3: index-pack 2 threads    228.13(371.21+17.86)
+>> > 5302.4: index-pack 4 threads    151.41(387.06+21.12)
+>> > 5302.5: index-pack 8 threads    113.68(413.40+25.80)
+>> > 5302.6: index-pack 16 threads   100.60(511.85+37.53)
+>> > 5302.7: index-pack 32 threads   94.43(623.82+45.70)
+>> > 5302.8: index-pack 40 threads   93.64(702.88+47.61)
+>> >
+>> > I don't think any of this is _particularly_ relevant to your case, but
+>> > it really seems to me that the default of capping at 3 threads is too
+>> > low.
+>>
+>> Looking back at the multithread commit, I think the trend was the same
+>> and I capped it because the gain was not proportional to the number of
+>> cores we threw at index-pack anymore. I would not be opposed to
+>> raising the cap though (or maybe just remove it)
+>
+> I'm not sure what the right cap would be. I don't think it's static;
+> we'd want ~4 threads on the top case, and 10-20 on the bottom one.
+>
+> It does seem like there's an inflection point in the graph at N/2
+> threads. But then maybe that's just because these are hyper-threaded
+> machines, so "N/2" is the actual number of physical cores, and the
+> inflated CPU times above that are just because we can't turbo-boost
+> then, so we're actually clocking slower. Multi-threaded profiling and
+> measurement is such a mess. :)
+>
+> So I'd say the right answer is probably either online_cpus() or half
+> that. The latter would be more appropriate for the machines I have, but
+> I'd worry that it would leave performance on the table for non-intel
+> machines.
 
+It would be a nice #leftoverbits project to do this dynamically at
+runtime, i.e. hook up the throughput code in progress.c to some new
+utility functions where the current code using pthreads would
+occasionally stop and try to find some (local) maximum throughput given
+N threads.
+
+You could then dynamically save that optimum for next time, or adjust
+threading at runtime every X seconds, e.g. on a server with N=24 cores
+you might want 24 threads if you have one index-pack, but if you have 24
+index-packs you probably don't want each with 24 threads, for a total of
+576.
