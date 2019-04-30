@@ -2,100 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5B11F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 01:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 362A91F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 03:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbfD3BCd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Apr 2019 21:02:33 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49667 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728997AbfD3BCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Apr 2019 21:02:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556586146;
-        bh=H11BXwE/0STlBWVigGAr4mDn7Xws3u56axhC43sbheA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Lwd5do0+TuqCEtr99hGh97Pk1P9UJ6iMspGolF8darorDKBkTRUbaxDmlp1NIeVnK
-         fkx7X68y5AhunzKodicV0SMfshzDyz8y23YNOTtVQ5fRteHMP33ZxqHIAwZIi3KJIz
-         opFc+kyDiC4Hcw8qnSeLn8/BBvcHr/9i82KvOeaw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MS3il-1hDweA49E3-00TTKB; Tue, 30
- Apr 2019 03:02:26 +0200
-Date:   Mon, 29 Apr 2019 21:02:28 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 19/20] diff --no-index: use parse_options() instead
- of diff_opt_parse()
-In-Reply-To: <20190324082014.2041-20-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904292055300.45@tvgsbejvaqbjf.bet>
-References: <20190320114703.18659-1-pclouds@gmail.com> <20190324082014.2041-1-pclouds@gmail.com> <20190324082014.2041-20-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729998AbfD3DMU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Apr 2019 23:12:20 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:46162 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729981AbfD3DMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Apr 2019 23:12:19 -0400
+Received: by mail-lj1-f193.google.com with SMTP id h21so11282458ljk.13
+        for <git@vger.kernel.org>; Mon, 29 Apr 2019 20:12:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sB9NiW2ja0DTb+ZIl02y0wuszyBibD7T4ZAHda5D+6E=;
+        b=QtRwFnbMXiJ2oRqkgQIF7rSyjUiFu7ZiJfIrGzNFyB231S6CabVD5ETutg13Qx9W6Q
+         Idmwqj9ggGRnYbznByN/u9u9eK3N5x3Nvg3evfsA7nZvZ/mKSHqh7ThML9szShg0gKVk
+         6LGH2oaI2lD4LFAKQoSv7CJ7LH5mM7L12yJDBuVW3Ka8zphpQeoK9JB3yvgoe2U7Visp
+         yT+uWK/oo55vVemehvInFm139X3uTH0Lan52O6t9XPcHzXBPSnMDcbsbY0Ciyc5NHxoR
+         /WumO+mS/tVhyziylK5DAg6U7JvnaFmNz88q2IiCshdknyRxgy1IfMn+v9aaCVqDvpWO
+         FeXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sB9NiW2ja0DTb+ZIl02y0wuszyBibD7T4ZAHda5D+6E=;
+        b=bfM+gt/LU46zDWHj0I3LE4RzrTM7Ik13BzOQsJIb3QKXCdxq3YfyE7RgpW7BM89CS5
+         +sTBp64zy13if6t18D7n7XlK1whjEboYO3gIx54RrYcpRvu/2RAgEGEwjxNbC7WvRwEu
+         KLsCpUkNpskEDs6gCKSEWf0+Y+1rZNKwon/XHQNGtLdUtBVJ8r+NSvuTsJFKAeMalpG5
+         NyigEDTcUBEzYAD6veIXF/Buq7x4gtv6RZwTgUo4Ip2zEEYpTs3iRR0rdES1Jq6d4CJB
+         FGvssj9v4kiy68wKXValEIHpKB4zfn5RGk+A98STLSBGfQNTagROWCu+3w4n4fUGGLqc
+         u/Ig==
+X-Gm-Message-State: APjAAAXESj9c8aXicj+SOIDezbUCGaJFJTj9e6E2jM7en+pa3HqGHA6+
+        us3kVKb/8l4sX2IkF7mP7zBdAvEPLtXZvnRQxv2SvZFr
+X-Google-Smtp-Source: APXvYqzS522elCB0E6nsDfXM5pDCqoFvcCvZz+/2XxZiJ2Rh7yMTaF0kOYLWHVCH59ZDAD96QsrHNi3FraTFUou4R18=
+X-Received: by 2002:a2e:498:: with SMTP id a24mr6306908ljf.34.1556593937627;
+ Mon, 29 Apr 2019 20:12:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1637733259-1556586151=:45"
-X-Provags-ID: V03:K1:ZVGX6tev1PXx500aYDydzFQ5YJ3Zde9JfyIFuqTNvC2wG6m4/7J
- mTFbG+aYWj0CYTyc8FKEfpvbr/gzdTudAGa5vcTlmXFKbX356lL9oubbeLoMDa1CuqoJKBy
- CCr3dQ0WSt5cAoIqM6ji/qUVL5F8fzefGag9N5ETBRzQD4MachsnCLJXpCPP/nqlB6gOvAK
- d6yjtSH7VbJf3TZOBelMA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:INCobmJilJw=:MrKdSJZKlCFLPXJ1027ou+
- 6id7x9ys7edseaB0hQ1aFbRVkfhf7FYS3iuvT8zhRCHF5KQmHXqKWKfpxC9n53dkknF4AYkKD
- VZpf/6MJcdTXlbB7kqXTGn795aPeJRCkDO5/X//vJDZMvw/ii320Qatt2twvh4OXaQgB2oa8E
- dKIjnBa52srgkjYmdWg3Uhx02yXvIWNmL6KrDt5pwygbbRS8+mkjReV2n8aT9gUwPCxINvZEu
- 2J5ZPnzPW2yOp1wdYhruP6FyiEj9ZfIX6Sj4ve6Vnftmm87WGU5GA6dUZUCDkIKjTZrgnUcle
- nXsmRlw8jqcCCrseS8bddWk788xCRrIIZMqw5MbpRvsLYyFMtYpjZeOmErfMdF0RI1CbUg4eB
- N7d/TBlU7Txk89bNXAGFEislJBz7IM/qwTsA7DceVpBkk8MM2Y4OoYhpWh4ee7tSYkXfgSmGD
- oYS8mAvJnw+r2x18kdLPaNTzNMC0TQ0XcrHSZf2D81jz45XJhi+p+bplI85a+Qao7TNHC9fvE
- sPBF3DEu2V/SK65IT/vtF8izj+6GFMqqEZ8Q6C37q0pdnywd03VeRvI/URTKcg1uojZsMXuhc
- VoYBBY795uT2bub/rGTMvt0Zsa9w8dm0QoSAcdLE2442Br2G+QT7XWFV/vSOMpkJ/vhKZxuQ4
- AM+LIOOo2SnEfKqh1LEMMkkKbLQwBH74bd+2FyxhpD3+h6EtSZ/kVyK9mxri+kmwDHiy9pqvo
- MczSx03w17xe0Qj0s/iYKLbfFQ5LLs05NjRDZ09ypKTVsvAzLrvPx5x8G6JcQBoFGskAbWILq
- n3Vu/0nHr0VU8drTBQcnhCYRRHM+PQFI0qk3l9VECjGn3/lflbwM6UIsUYouDPQVl3ZV6JqFW
- /SE72RbW+LU7iwanoyl/ruEIGORXUZXCGAbtVgUjVKy+u/k85MYnxVXya2SRDz5d9be8Bwo8Z
- BcfpTQTIyYQ==
+References: <20190423091837.50290-1-johnlinp@gmail.com>
+In-Reply-To: <20190423091837.50290-1-johnlinp@gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Mon, 29 Apr 2019 20:12:05 -0700
+Message-ID: <CABURp0rSTT=8biNhBvsGP4fdEHBT4B5beVKsm=Mdp7Ei8Dw72w@mail.gmail.com>
+Subject: Re: [PATCH] status: add an empty line when there is no hint
+To:     John Lin <johnlinp@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+You should probably add some test that demonstrates what your change
+intends to do.  For that matter, though, your test already breaks at
+least two tests in t7508-status.sh:
 
---8323328-1637733259-1556586151=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+not ok 14 - status (advice.statusHints false)
+not ok 23 - status -uno (advice.statusHints false)
 
-Hi Duy,
+Phil
 
-On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-> While at there, move exit() back to the caller. It's easier to see the
-> flow that way than burying it in diff-no-index.c
-
-I just noticed that this commit message is missing more than just a
-trailing period. It does not explain the change of behavior: previously,
-`GIT_EXTERNAL_DIFF=3Dheya git diff --no-index a b` would silently ignore t=
-he
-external diff, it would have required an explicit `--ext-diff` to pick it
-up.
-
-After this change, it is necessary to pass `--no-ext-diff` to reinstate
-the original behavior.
-
-While this might seem like a desirable change, it is a
-backwards-incompatible change and would do with a *lot* more of a message
-to users whose scripts now potentially break.
-
-Ciao,
-Johannes
-
---8323328-1637733259-1556586151=:45--
+On Tue, Apr 23, 2019 at 2:21 AM John Lin <johnlinp@gmail.com> wrote:
+>
+> When typing "git status", there is an empty line between
+> the "Changes not staged for commit:" block and the list
+> of changed files. However, when typing "git commit" with
+> no files added, there are no empty lines between them.
+>
+> This patch adds empty lines in the above case and some
+> similar cases.
+>
+> Signed-off-by: John Lin <johnlinp@gmail.com>
+> ---
+>  wt-status.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index 445a36204a..0766e3ee12 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -175,7 +175,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+>         }
+>
+>         if (!s->hints)
+> -               return;
+> +               goto conclude;
+>         if (s->whence != FROM_COMMIT)
+>                 ;
+>         else if (!s->is_initial)
+> @@ -193,6 +193,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+>         } else {
+>                 status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
+>         }
+> +conclude:
+>         status_printf_ln(s, c, "%s", "");
+>  }
+>
+> @@ -202,13 +203,14 @@ static void wt_longstatus_print_cached_header(struct wt_status *s)
+>
+>         status_printf_ln(s, c, _("Changes to be committed:"));
+>         if (!s->hints)
+> -               return;
+> +               goto conclude;
+>         if (s->whence != FROM_COMMIT)
+>                 ; /* NEEDSWORK: use "git reset --unresolve"??? */
+>         else if (!s->is_initial)
+>                 status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
+>         else
+>                 status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
+> +conclude:
+>         status_printf_ln(s, c, "%s", "");
+>  }
+>
+> @@ -220,7 +222,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
+>
+>         status_printf_ln(s, c, _("Changes not staged for commit:"));
+>         if (!s->hints)
+> -               return;
+> +               goto conclude;
+>         if (!has_deleted)
+>                 status_printf_ln(s, c, _("  (use \"git add <file>...\" to update what will be committed)"));
+>         else
+> @@ -228,6 +230,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
+>         status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to discard changes in working directory)"));
+>         if (has_dirty_submodules)
+>                 status_printf_ln(s, c, _("  (commit or discard the untracked or modified content in submodules)"));
+> +conclude:
+>         status_printf_ln(s, c, "%s", "");
+>  }
+>
+> @@ -238,8 +241,9 @@ static void wt_longstatus_print_other_header(struct wt_status *s,
+>         const char *c = color(WT_STATUS_HEADER, s);
+>         status_printf_ln(s, c, "%s:", what);
+>         if (!s->hints)
+> -               return;
+> +               goto conclude;
+>         status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in what will be committed)"), how);
+> +conclude:
+>         status_printf_ln(s, c, "%s", "");
+>  }
+>
+> --
+> 2.21.0
+>
