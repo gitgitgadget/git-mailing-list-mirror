@@ -8,101 +8,113 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F7B61F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 23:19:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 381A21F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 23:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbfD3XT0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 19:19:26 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54529 "EHLO mout.gmx.net"
+        id S1726220AbfD3XVx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 19:21:53 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60497 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726086AbfD3XT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 19:19:26 -0400
+        id S1726086AbfD3XVx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 19:21:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556666362;
-        bh=XC4EW/iiT1i41UtGvu5xUrS1CFD/3bK9ivXei2JcBlU=;
+        s=badeba3b8450; t=1556666503;
+        bh=KEn/3a34Hsk0DbKxqsMcGOtgqYyYe2aGteiMja28BV0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EUxSppP2Ku8LSEblseySD3aHWpyjofXk+62+a6QC1aJneiL7s97b2PJyyFzOoFOrR
-         ruACw9Qb+2gzDqj/Ws/8MnpvuDicZsf+aZDWP6g1DG86+yJKpk3rsYCYEpbUwfrXc1
-         /9GGRzwgKBa2MCmnyc5Xf9RiZS92o+moAAlRhitM=
+        b=cAwRdHSLWtXY0etd3epbvkEHh87PGcEf3ejcQHgwFmMW6XeUUce5A4L/fcoqvuCw+
+         9pXklA1iuJvKsFGLYvs/M9g5NP3gNq8XG25cdWdCecDnl8NOgC+CvkRtmoM/gPG5v1
+         u3oWByfrOSKmxF4rTTptarBA2vEnC5bKTnxIwqic=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MILxX-1hLL302c6J-004Dyr; Wed, 01
- May 2019 01:19:21 +0200
-Date:   Tue, 30 Apr 2019 19:19:19 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGQjH-1hY09C1uE1-00GmB5; Wed, 01
+ May 2019 01:21:43 +0200
+Date:   Tue, 30 Apr 2019 19:21:40 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Cameron Steffen <cam.steffen94@gmail.com>, git@vger.kernel.org
-Subject: Re: Stage or discard a hunk at a time?
-In-Reply-To: <20190422192821.GA22798@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1904301918230.45@tvgsbejvaqbjf.bet>
-References: <CAAVFnNminTx_z9Y=jhzDnT0n5_zGD_k2SA84HQqMvKHJSvKcSA@mail.gmail.com> <20190422192821.GA22798@sigill.intra.peff.net>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v3 0/4] remove extern from function declarations
+In-Reply-To: <20190425120758.GD8695@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
+References: <cover.1555352526.git.liu.denton@gmail.com> <cover.1555487380.git.liu.denton@gmail.com> <20190422214901.GA14528@sigill.intra.peff.net> <20190425120758.GD8695@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7wKg7hWPHRjUjV8ZH0Oe+3TAEzpyrdvbBxxeg6CdpbJr4q1gF8O
- dqh3t+XZzmkAbCOxzxtVx6R43UZrqI2Nsdwtfs1kqjxKs+TAU5GsJYRCAc7kaQGoaSvyOM3
- yOb0tXyI8iyw3uU2L5oSFTquGm/irOMOvdLZ8/bzdO6oqm/Ezp+/Bw45LLqMjpo8IlbRp5F
- TsUOObxIsYaGR7HDTMyDA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:N83PFx55q4c=:f88K2kW0+4pPdkVpjHsztJ
- On0krHQZmWUIjmjlyiloB4TqI2HfuyWIP5o9nwICEdfjeTR8XRjABsvVK3vxmpz4hroIVIHVm
- UCLWfqW1lUKVFHPX0K3FWrYC9HzyqANHjNK84wHXo4AHatUGXgL9WwuDkQHoSqYYliKERNsay
- cYrPeLLiTAnfxoRqGYDjnIZp5P8UWEtatz9merwDxaiYpzXVLrub1tQfuVGSoOIzyY5kpXY4l
- EKHKfPf1F2N7dBggy3MkabZSop+WwEKLVYG5hQmj5SBNf3usJP5oa/Us1Ug7ouSz0KZ3MqLz/
- EYjCyoOQEj8/2S+hZwh+uA7c1xmvioK65f7YM4gF/btUF59HQfKTLXeaSRWV1+5eB7kLkT293
- zhQlYDcongj2qY8zU3ojU0JGgTGW14GJNh6UuzbzDZH0uCWvhUOWIUdBAh6qAMBIH2wyZuBNR
- kn4Tl1bJ0jh99WYIAjW0sM3Q85LzPUTR0p7OuBTbm7dcbL5SR2f1ASKwXot7NXnXZaOX2qoIT
- dkuRZYTfE7xDutPnJqoE7SXcSmbycF2Vrid/3Tym6oYcZvW3BOqDeQDgllJFnGeK//gyVtfAp
- Oi/+wpfClppnTVc7eSBIAAsU2m+nUFNscNXMnVG8Cy63GQxSHin6JSlE15XnJZYQSfiK9hb1c
- 0LLTge8MRO7l40NzGEq8CsWohpYis0Jnt450C79CMo9efy0GDOMGWQ3iYiTzM1iIP9IfI8hdL
- TnTeAloZFjUIfgSetpIgO8ViG+gyFAdYON677ic7dWnaeZCspNGfTSsqx9E8o61xWqqV3PWvN
- ryQsACIxYafU9gPYnTfmzVc1VeX8ytjxifgRzYXDUbhA9eSRA0WcPt7YpmJdOBWSPN1UMlVxs
- tpzb3bFfrFbtdhAkNMdY1v/TyrZvj8mRnINe/Iu3UCAcjD2Yxnql/J7/S+vCn9W9VMmZwffeo
- 3amUl+/0DuA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1024177324-1556666503=:45"
+X-Provags-ID: V03:K1:8nEX26NcSuV1dB1cBs0YCNPKno2pAQz14NDxBnmOPeWN5iJc/TF
+ DMyrrXwC4Q1Gc9MiZOJ9kjbKBOg2LTXAdAX58E13E9l+xb4yOBihXWON4/PKKXxsSFuUalS
+ 1RCL3bfUDUKanPHrV03NSR+eHqvnWHJR0GIcCSgbI5qgxFXpbVi57/HKzjGih7JTPObOGBu
+ cEwhYQ3+WqcP0OTNYfbOA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PMUnWeWE/FU=:RMYn+RQpwS/8jcCnXEjB4x
+ 54W0M+lOlwuX8o9UJpDGH5Wen8GC5V4EKe+z6et4WYzCDWkkadd0matAHo8ZigR8DeO2uJE9s
+ 6FdtiqgwYNWXIPN/OomXs3BdzMGP9GnB//ZGScbGTXpteK2DXma2m2Sy9yNk9cRFmaCaQrRdd
+ ywbpIFJ64o5m2Yaz19CXKeCzvUO/9zC0DOBUKGDvHeKrh4R6o/UW0rJjnazk3ZpMI0znD5xhx
+ D0CfAieJKHSIxVtkwOE3YWt0pxfHW14qwkXqPStqgo76V8ydUMQj15tVfl/M21raRgLwatyY9
+ GaAIh4EMz0dffL+/5dCYIi6UQWZOXnaFPBErB+d0VN8VRvubIPyqxk7G1+GbJQJaL5kksugEM
+ +U0TfgCdqquMv3Zk2f6LwXIH2BHs7kMcnbyl+kDG/zZdXe1KR+uytD9ARiXDMte0Yy3p7GxL3
+ RYMf2tYq9xKw9cbbRulCxz6RjbGWHX9ZwYJ3hSfpkXsbFQRl8TTPe+wsj2SUUVAy/YT+xdsxK
+ yi0QhYufhxv9yZeJwO4xT+VjBqmKp4+IJRL6iLrChDkHy3btHCJWdE6gJr/c8dxR/XcJA80Ap
+ bCUVQxV2W6to/gs1+ZETe3O7RazZoKL4W8CKryK8bQil81v3EW1f5Lk0/UMAwe0G0YJWDfzuV
+ T/tfCy8W4yFFduxp4vus4Ax7hwYkJu28qLztS+t+nioQijxKKIVXR8kt6w0pSSJZ89hxOeDCd
+ /21idSmx0w/hnnGPbiSprd5Zl27M/BXHeER2rB8NUogVpbscNi/M2KjauTvLTI8t52uRsYURE
+ Gs/54L2pMDN8KtvUveAvonBDDp++sHj9Wtcjs/HlxZkMKM51tFLKqE8sJNWGkyrBzmPxUAwoI
+ YRSJokqN+pux6WfC4UZIopsAby/dntzHH9TkwpRpm7eyU9UOk20dC/OJ78zGHOtK2sYxe9e0Z
+ +DuTGRkU80g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1024177324-1556666503=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
 Hi,
 
-On Mon, 22 Apr 2019, Jeff King wrote:
+On Thu, 25 Apr 2019, SZEDER G=C3=A1bor wrote:
 
-> On Wed, Jan 16, 2019 at 01:09:03PM -0600, Cameron Steffen wrote:
+> On Mon, Apr 22, 2019 at 05:49:01PM -0400, Jeff King wrote:
+> > On Wed, Apr 17, 2019 at 12:58:31AM -0700, Denton Liu wrote:
 >
-> > I have this feature idea for git. There should be a command that
-> > effectively combines git add -p and git checkout -p so that I can
-> > navigate changed hunks and either stage or discard them.
+> > >  compat/mingw.c                    |   2 +-
+> > >  compat/mingw.h                    |   6 +-
+> > >  compat/nedmalloc/malloc.c.h       |   6 +-
+> > >  compat/obstack.h                  |  14 +-
+> > >  compat/poll/poll.h                |   2 +-
+> > >  compat/regex/regex.h              |  66 ++---
+> > >  compat/win32/pthread.h            |   8 +-
 > >
-> > There is already a SO question asking about this exactly...
-> > https://stackoverflow.com/questions/11538650/simultaneously-git-add-p-=
-and-git-checkout-p
+> > We sometimes avoid touching compat/ code for style issues because it's
+> > copied from elsewhere. And diverging from upstream is more evil than a
+> > pure style issue. So potentially we could drop these hunks (though I
+> > think maybe mingw is our own thing?).
 > >
-> > Has this been discussed before? Is this a reasonable request? If so, I
-> > might look into contributing the change myself.
+> > >  contrib/coccinelle/noextern.cocci |   6 +
+> >
+> > I have mixed feelings on this cocci script.
 >
-> This is something I've sometimes wanted, too. I don't think it would be
-> _too_ hard to do by modifying the add-interactive code. Both of those
-> operations are driven by the same code; see the %patch_modes hash in
-> git-add--interactive.perl, which defines the various situations. You
-> would need to modify the actual code to handle the tri-state (there is
-> not just "yes, apply it" and "no, leave it alone", but now "apply /
-> discard / skip"). But it seems do-able.
+> I have actual bad experience with this :)
 >
-> If you do plan to work on it, be aware that the perl bits of
-> add--interactive are being re-written in C. So it might make sense to
-> target the new C implementation instead of modifying the perl.
+> v4 of this patch series excluded 'compat/' from the conversion, but
+> the semantic patch is applied to 'compat/' all the same, resulting in
+> failed CI builds because of the four 'extern's in 'compat/obstack.h',
+> and will continue to do so.
 
-The work on that is tracked in PRs 170-175 on
-https://github.com/gitgitgadget/git, i.e.
+Is it not possible to exclude certain directories for certain semantic
+patches?
 
-- https://github.com/gitgitgadget/git/pull/170
-- https://github.com/gitgitgadget/git/pull/171
-- https://github.com/gitgitgadget/git/pull/172
-- https://github.com/gitgitgadget/git/pull/173
-- https://github.com/gitgitgadget/git/pull/174
-- https://github.com/gitgitgadget/git/pull/175
+I guess we could also simply declare that *all* Coccinelle patches should
+leave `compat/` alone, on the basis that those files are likely coming
+from some sort of upstream. But then, `compat/mingw.c` and `compat/win32/`
+seem not to fall into that category...
 
 Ciao,
-Johannes
+Dscho
+
+--8323328-1024177324-1556666503=:45--
