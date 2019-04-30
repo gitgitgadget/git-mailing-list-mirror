@@ -2,107 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1747D1F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 22:51:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7D51F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbfD3Wvq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 18:51:46 -0400
-Received: from mout.gmx.net ([212.227.17.20]:44995 "EHLO mout.gmx.net"
+        id S1727327AbfD3WzX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:55:23 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:6855 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727639AbfD3Wvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 18:51:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556664700;
-        bh=dTWF3vo+kf9AaNKrBtBca1G6sEtL7XZICTAp1Z+TVio=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EiUmWEwk2Qy/DY9deKi0Z7emdk/ohUC/Nsg56tIz0SIbj/NLLiwpzi0zBTv9LPZnx
-         ijA7C2l2GNzBYbIrKkRNa0jCl24H2H8TveY+16Jp20vzWX2wu5RkJ0AD90n+EM5s/4
-         0Ml+PayJcv1rhu3Yf6XTknNol3KcObNaiJ46tyVk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mdvqg-1gnvXW0cas-00b3b9; Wed, 01
- May 2019 00:51:40 +0200
-Date:   Tue, 30 Apr 2019 18:51:38 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -r: always reword merge -c
-In-Reply-To: <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904301850310.45@tvgsbejvaqbjf.bet>
-References: <20190426103332.9036-1-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1904291208210.45@tvgsbejvaqbjf.bet> <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726190AbfD3WzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:55:22 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44txgr1jx2z5tlD;
+        Wed,  1 May 2019 00:55:20 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 9485949BA;
+        Wed,  1 May 2019 00:55:19 +0200 (CEST)
+Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for transport
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Braun <thomas.braun@byte-physics.de>
+References: <pull.137.git.gitgitgadget@gmail.com>
+ <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
+ <CAPig+cT1EP+HC5h4e0NGCu=1i6cZXPxERRgnnAdZJn+XeqpbFw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1904291916510.45@tvgsbejvaqbjf.bet>
+ <b8e799e2-356d-2a03-faa4-2792ec1b171d@kdbg.org>
+ <nycvar.QRO.7.76.6.1904301832500.45@tvgsbejvaqbjf.bet>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <890578de-6286-1726-37fc-d05bf4b359df@kdbg.org>
+Date:   Wed, 1 May 2019 00:55:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3Z37LxEnA2zcR30IYOWKQbAG8JFfwoUN6vvSDQVkpBEPShcuRz/
- XPP9SqQYmm6YYzjVrqQ4dTpCPS/WY1ndZ5DvjNIxGJaLiiv7JmDKyVRSws2+XwsqDyHqGCp
- S0DLt/+NV4L1TZzDXQbPQfV4y6zoFYDwXmxRQXti56cLzvELSYFoVIUG8nK9sIPk+4D1Jhb
- ChtD6O1TyKWCOqh8VBysA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mfoR/9V+xz8=:xzsdej7eR/egMImRjSfnqC
- 7SMMIGnC9ZYi13/S4cwIaBwUs+nHWKt2k39kCkAr3AQRUM4lJ67dN+ST69h2pBb6e3TWTMCCg
- FYIpSQ5ePvT+BX/hAfZFaWgnTGw2OincQ2OoNu/eLtpuDbqGnvl6I9m3/Mm2eYYuwHqW3Id1n
- nf32p5d6Th1km2snX1+TKlP6IoeDj993gJOW2Y5VQdcNZ0p22JUZMA7SojC8k1oi8KjgVX/DG
- Ta+z9tTZnBt2tOG5qhKUH/uXfyRe6x9sKt0hVdSbNAxTt8SifODhbjHZxdy1vXP4P/ELrBiZK
- 8AX3LyuDWpVSqOTmq4p+w40nkvruOmx3Zf0v7WemSm90I2TWF9hTdFpPQJrhpo8gB1KKSFVnl
- zvQ/m+i/dg+nC1gMhZJ94Be42VWIEghKpBi6M/eoQYtlitCn0Ao9sRczFZFKWdMOXK/ikRjLW
- ZjmW9LLGT+6fx23vlL6LmDNpxQUYpPJTRaRQiBN63qjMvZHWDBfLO99uUqT2Zt+TKlrNUra+Z
- RX4aR2XAQhkjlC82enOrOW87VKO/GT9mfhrbgrCAI2wC0NVMeisHmukuwMB1Ve88D7hN+l+TH
- yi+m9912Hi2+Hw7giQQelCVaA1J078aKFyKBjEdL/v58BxzVBjtydhE6x2r+MKOJ+FwPr8jX4
- t0NhavMd22RLpz/XdXuDMUSRMBzlQyT1XNd5f+RmZlfsqN69/qSpPXy/yxblaljJ6Z8qX924w
- h7TmSScInNmJwOK3Ma3vlG8JWQnexgCJnQl83GngYAvv91AwKLwGze/iFC1tR8kvstK7vVIJ/
- frAQjZqQI/B2amsuW7beBhDx4ddnn9jzDkkjmi9SOHw1gq0zIJfp0WsYE5HKntsmZcfuJrrk/
- P32nf8OgFHuyvmtFn0tq52y8Pvf4TthK4bwUOczx2vJ1juYEtouz9LY2u77WaOX2FzNR9c+zo
- SSyloGO2KBA==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1904301832500.45@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Am 01.05.19 um 00:33 schrieb Johannes Schindelin:
+> On Tue, 30 Apr 2019, Johannes Sixt wrote:
+>> Am 30.04.19 um 01:17 schrieb Johannes Schindelin:
+>>> You're right, this is confusing, especially since Git for Windows 2.x does
+>>> not have that bug.
+>>
+>> If there is no bug, why do we need the patch?
+> 
+> I thought you of all people (building with the ancient MSys/MINGW
+> toolchains) would benefit from it :-)
+> 
+> But if even you don't want it, I'll gladly drop it from Git for Windows'
+> patches and be done with it.
 
-On Tue, 30 Apr 2019, Phillip Wood wrote:
+Ah, this is only for the ancient MinGW! I do indeed not mind if you drop
+it as I have updated my toolchain to the one you provide long ago.
 
-> On 29/04/2019 17:14, Johannes Schindelin wrote:
-> > Hi Phillip,
-> >
-> > On Fri, 26 Apr 2019, Phillip Wood wrote:
-> >
-> > >     ret =3D !!run_git_commit(r, git_path_merge_msg(r), opts,
-> > >              run_commit_flags);
-> > >
-> > > diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> > > index 4c69255ee6..3d484a3c72 100755
-> > > --- a/t/t3430-rebase-merges.sh
-> > > +++ b/t/t3430-rebase-merges.sh
-> > > @@ -164,6 +164,16 @@ test_expect_success 'failed `merge <branch>` do=
-es not
-> > > crash' '
-> > >   	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
-> > >   '
-> > >
-> > > +test_expect_success 'fast-forward merge -c still rewords' '
-> > > +	git checkout -b fast-forward-merge-c H &&
-> > > +	set_fake_editor &&
-> >
-> > set_fake_editor affects global state AFAIR (setting and exporting
-> > `EDITOR`), therefore this would need to be run in a subshell, i.e.
-> > enclosed in parentheses.
->
-> The other test files are not very consistent about that. I'll re-roll. N=
-ote
-> that I do not export any FAKE_* variables, so later tests should not be
-> affected even if the fake editor runs.
+Thank you for being considerate!
 
-AFAIR I tried my best to avoid `set_fake_editor` altogether and instead
-preferred `write_script`/`test_config core.editor` combos in t3430.
-
-Ciao,
-Dscho
+-- Hannes
