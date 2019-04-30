@@ -2,99 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6334D1F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 21:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAE731F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726190AbfD3Vqi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 17:46:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:48373 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726166AbfD3Vqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 17:46:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556660796;
-        bh=YFYiy768ZauP65xhRZ0z4JNJSOg096PBBv7ai68Q/1I=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kjdejRDCIFGPcY4xBtoz/nzWWWeKRHoGWXV964JT+IZc9gK6AuSeceO/9Y2AxT/YI
-         gyT7GEeF8mnZdAXP5GqZSW9uoSIy2U8SpQGg7nQMtDTCgie8jic20AfYr1H9SjWvJl
-         Wes9+HINeMob62GsidspeIqFAy91+5wt3FFWUVTk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBFBB-1hVnqb0DKP-00AI4x; Tue, 30
- Apr 2019 23:46:36 +0200
-Date:   Tue, 30 Apr 2019 17:46:34 -0400 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v10 0/3]
-In-Reply-To: <CAC05385Mc7pqiCd5mb+1c4WM+v7K=h=GMHuvkw9xizhRFJXXBA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1904301740070.45@tvgsbejvaqbjf.bet>
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com> <20190429051944.77164-1-nbelakovski@gmail.com> <nycvar.QRO.7.76.6.1904291656550.45@tvgsbejvaqbjf.bet> <CAC05385Mc7pqiCd5mb+1c4WM+v7K=h=GMHuvkw9xizhRFJXXBA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727315AbfD3WHS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:07:18 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:45205 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726048AbfD3WHR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:07:17 -0400
+Received: by mail-qk1-f194.google.com with SMTP id d5so9228770qko.12
+        for <git@vger.kernel.org>; Tue, 30 Apr 2019 15:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=rmWKal27gJe0g1XA9acvtTwSGVIU3grLItyC6U5X6eM=;
+        b=q6w5g8j7hDxyKkBWWQH2YGcSgkrTFR89Lrn37/24j6YBRi7xDR+fBBqkku8ifPbtnz
+         LrStxgzwqjX2/KqfvNFgyyTy5SLkEfqhrOLU9OScgQ1CE7yAiHYCFNhVjhWn/pCA0bHQ
+         ORQ3FuYFZ9WxSQP3gRVr5TnIhGsP42Eip/V98TJnlw7IbfvGVjN2S7tDUyiFfzYnbnM4
+         ZKMnTCxgmyPro8BNGPDi6aFgeopCisl3b++Cq5XXFhCGdC/E0H1kgmmCU2mIExM6xpYo
+         t2I14kiLG4NrAJX2DuhxLTqIcCkWhHdnrnxIHbHaRyXjKcHNaZoguIrEds1aBw+I3Cyk
+         ePqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rmWKal27gJe0g1XA9acvtTwSGVIU3grLItyC6U5X6eM=;
+        b=H9gaQJthTwFY5jfkUC95itlHfN7GZo5Wgg4VQAaYp02U3VCQLOPsJyU5IzdF6wlxui
+         /yuUhuofoVXo34s/GMEsJnK8PEA6sT9lI2rpU1BEicEedK/kLzDqLsgUz4v3hlEcR/pL
+         AELJ8fQ0f9Y0YLnM0+l63Rw1Fh6a0Ch/9CI7d545ccsSyC9SX8s/YPMLSkfPAJXQCXgS
+         r25prdRdNxUBoGh0WFDCRfQ9VstypCyNdReIzkoRZUyYbx2Ov7IOj6CqQA2ihxoecdpk
+         3SmVOvF5IxQ35VCEUt9tgIdffbpFNSNyh1mu1GSky1if0eW1qA5kBg2Vo6LNMwHLS7Ku
+         5rzQ==
+X-Gm-Message-State: APjAAAUQeel7bT05NGkgR4mfUZyODvItNG/Yf2mbGFZAeJtfYbGvm4vQ
+        MKr2X7CfOt8XpESplMgosavXq+EursXl7KfIyZQ=
+X-Google-Smtp-Source: APXvYqzPsHN8YSLM4z9c5ssv2zAG1Ki0W/iNQvtTcY2B+EnpcIK0VzZ8pKylyb1PuvnIWH1JNvawyjpBN0kbpOrysB8=
+X-Received: by 2002:a37:658d:: with SMTP id z135mr42772165qkb.93.1556662036866;
+ Tue, 30 Apr 2019 15:07:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bhiAKMLSV+Wudee0irfMXGrQ6MXmBjv+2LDUSJeZ+nB8KOgrEY7
- 5OVm2NLE70EMkb+yHC7d/Q9fwe2Dia6BY4XMR0WazpS73raCRyL4gSwsUra2Kbvf33rm8Wc
- xYOVpwCjmAt5oC2BfAEiV+W84QqRG8Z7IPRIxvC3AKIWUs0mvTx9J7Nb+cye7TK0UAbcSRJ
- jy0kVSZyGlU/2nE8NKhRQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Nvo8bGsHq1U=:4VA3B6Z6NFF4GELQ8C43uL
- 4TnWRYoT1i8VI/QVDAOi6upgU64hl+dGFGroshGmJPebT8klvWsUN10A4JhPDT7nuNWiyxJBA
- JDlntiJX/8mc5jfWC1N4UQkECQ141Ro1Sj2q2/3WVgRAQ0XJ+jddQzel9bCD3FCO+DmMhgZyU
- e8vQum/0oDX0QxdjsQrtsGosEVAjlXUH+K0saEyRYdpujB8cjN7AXncZN11QTx4KYPNf/GKHQ
- L4LY0y/yBsLvo+USjYoIe4PrSJIA6zy8CG+627RLA6oC7M/ALqeP4ALdav5UPI4XD5a+mEC+J
- eqaxESJGsWetb8gyagiHdg4CYzTrppfKBKD3uyNFoe1Pj38wTIugfktJr1gbUjkOVbQpYH6UH
- ZqJgjCGkXC16qeV04LMbMIL8URs7HPl89/yDRg2pp4UxqZc/hrqiSN+ZdulV7TUKAA/UIX3YB
- aUfyG9+Sv74O5i47xuk480OH36/ikRKomAhIUGfM2jXxijjC3m8K85QwSL/6DvJP/JACDgvVH
- l6GsDxOefKLhrMwq8HhGJCmRaScI0UxtN4VVeiFMV6NEppJBNJ453JoZ3GDJIB96nvQxXAjWj
- Jvm4AgXB7eYBxAZ2HPdmbPboAOTVXr2JG0XN3YGKIBF548L1nhJVWsZiSAkDsvnDURqYnRsyh
- RIH2cXo00o45Y4WfLHIKjBSCbU9L1/J6rPjSyWpluy6J2dUEEpTrB2lMkypyIcc1Pmo5r8LHK
- RsJfsfYhCqLMd+2XcqCAsqegSrkhXbbPgnkr06PsLugs6rOEmm6M76Xm9AbC8Z/poZDTYUOLu
- PfDUjHeBjHUSC6GNJAMq+Htzu+WI2t04lfQO7sZRWt5mg7B5DnJMCo0I47U80ZweTYRbpXiUb
- 2Qt3iSKFzm6JVAeosGHo5WlD9zd+j26G62kEpAmQ9IU7/ZCiqk1N+9IR/GftAg7e6ns4+fF/k
- 1bg2T1qcNag==
+References: <20190324131755.26821-1-pclouds@gmail.com> <20190326094101.26294-1-pclouds@gmail.com>
+In-Reply-To: <20190326094101.26294-1-pclouds@gmail.com>
+From:   Jason Karns <jason.karns@gmail.com>
+Date:   Tue, 30 Apr 2019 18:07:06 -0400
+Message-ID: <CAKNmmv1Y48zfUZ0TvjDVdVngrMyA1YyNacdNbw7O05_E4FHsbQ@mail.gmail.com>
+Subject: Re: [PATCH v3] config: correct '**' matching in includeIf patterns
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Nickolai,
+On Tue, Mar 26, 2019 at 5:42 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+>
+> The current wildmatch() call for includeIf's gitdir pattern does not
+> pass the WM_PATHNAME flag. Without this flag, '*' is treated _almost_
+> the same as '**' (because '*' also matches slashes) with one exception:
+>
+> '/**/' can match a single slash. The pattern 'foo/**/bar' matches
+> 'foo/bar'.
+>
+> But '/*/', which is essentially what wildmatch engine sees without
+> WM_PATHNAME, has to match two slashes (and '*' matches nothing). Which
+> means 'foo/*/bar' cannot match 'foo/bar'. It can only match 'foo//bar'.
+>
+> The result of this is the current wildmatch() call works most of the
+> time until the user depends on '/**/' matching no path component. And
+> also '*' matches slashes while it should not, but people probably
+> haven't noticed this yet. The fix is straightforward.
+>
+> Reported-by: Jason Karns <jason.karns@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  v3 updates the test to avoid mkdir and cd, and break long lines.
+>
+>  config.c                  |  2 +-
+>  t/t1305-config-include.sh | 13 +++++++++++++
+>  2 files changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/config.c b/config.c
+> index 0f0cdd8c0f..c2846df3f1 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -242,7 +242,7 @@ static int include_by_gitdir(const struct config_opti=
+ons *opts,
+>         }
+>
+>         ret =3D !wildmatch(pattern.buf + prefix, text.buf + prefix,
+> -                        icase ? WM_CASEFOLD : 0);
+> +                        WM_PATHNAME | (icase ? WM_CASEFOLD : 0));
+>
+>         if (!ret && !already_tried_absolute) {
+>                 /*
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index 635918505d..579a86b7f8 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -229,6 +229,19 @@ test_expect_success 'conditional include, early conf=
+ig reading' '
+>         )
+>  '
+>
+> +test_expect_success 'conditional include with /**/' '
+> +       REPO=3Dfoo/bar/repo &&
+> +       git init $REPO &&
+> +       cat >>$REPO/.git/config <<-\EOF &&
+> +       [includeIf "gitdir:**/foo/**/bar/**"]
+> +       path=3Dbar7
+> +       EOF
+> +       echo "[test]seven=3D7" >$REPO/.git/bar7 &&
+> +       echo 7 >expect &&
+> +       git -C $REPO config test.seven >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_expect_success SYMLINKS 'conditional include, set up symlinked $HOM=
+E' '
+>         mkdir real-home &&
+>         ln -s real-home home &&
+> --
+> 2.21.0.479.g47ac719cd3
+>
 
-On Mon, 29 Apr 2019, Nickolai Belakovski wrote:
+Thank you all for looking into this! (and your work on git!) It is
+very much appreciated.
 
-> Sorry, I'm not very accustomed to mailing list development. I had assumed
-> that this was being threaded with the other messages in the series, hence
-> leaving the subject blank and only putting new info in the body.
-
-The openness of a mailing list-centric development is that everybody with
-an email address can participate [*1*].
-
-The downside is that *anybody* with *any* mail program can be a reader, so
-you cannot assume *anything* about how people will read your mails. Some
-will read it in a mail program that color-codes levels of quotation.
-Others will not have any color whatsoever. Some thread. Some don't. In
-most mail programs, you cannot even search for a Message-ID. Which can be
-non-unique.
-
-So the perceived benefits of this way to run a project come at a price.
-
-> In the future I'll add in an appropriate subject and brief re-hash in the
-> body. Thanks for bringing it up.
-
-Thank you,
-Johannes
-
-Footnote *1*: Of course, it is not *all* that open. If you cannot convince
-your mail program to send mails in plain text only, and to stop
-reformatting mails e.g. to make them look better on cell phones (refusing
-this is the price of requiring patches to be sent in whitespace-preserving
-plain text emails), then you're not invited to the party. This is why I
-sometimes say, not altogether without reason, that you can use *any*
-mail program to participate in the Git project as long as it is `mutt`.
+Jason
