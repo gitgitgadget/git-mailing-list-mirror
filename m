@@ -8,113 +8,120 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381A21F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 23:21:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24CA71F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 23:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726220AbfD3XVx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 19:21:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60497 "EHLO mout.gmx.net"
+        id S1726181AbfD3XkX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 19:40:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:46081 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726086AbfD3XVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 19:21:53 -0400
+        id S1726102AbfD3XkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 19:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556666503;
-        bh=KEn/3a34Hsk0DbKxqsMcGOtgqYyYe2aGteiMja28BV0=;
+        s=badeba3b8450; t=1556667609;
+        bh=z5t0Q5jVMFr0VqdrPB7x0fX2H/mgw99LqnfAFkJp6jw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cAwRdHSLWtXY0etd3epbvkEHh87PGcEf3ejcQHgwFmMW6XeUUce5A4L/fcoqvuCw+
-         9pXklA1iuJvKsFGLYvs/M9g5NP3gNq8XG25cdWdCecDnl8NOgC+CvkRtmoM/gPG5v1
-         u3oWByfrOSKmxF4rTTptarBA2vEnC5bKTnxIwqic=
+        b=LnQ9nrdD229oz14Wc3xofqQcxfJp04PMqJq0JBemVxIKqUNigVpiQIZecjNcRNYpg
+         tqkZpNnBDpi9Iqwa4qnDhKpwbz2r4GenRKa/uQP/LmmbO4BEwO003YzFRHN0DLqSPb
+         HGFlZQioykiVZQJIFHD/A0y4ZIj/pam1t/5F6bbE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGQjH-1hY09C1uE1-00GmB5; Wed, 01
- May 2019 01:21:43 +0200
-Date:   Tue, 30 Apr 2019 19:21:40 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgHHO-1h9yox18HW-00NenZ; Wed, 01
+ May 2019 01:40:09 +0200
+Date:   Tue, 30 Apr 2019 19:40:06 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 0/4] remove extern from function declarations
-In-Reply-To: <20190425120758.GD8695@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
-References: <cover.1555352526.git.liu.denton@gmail.com> <cover.1555487380.git.liu.denton@gmail.com> <20190422214901.GA14528@sigill.intra.peff.net> <20190425120758.GD8695@szeder.dev>
+To:     Jeff King <peff@peff.net>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/11] Start to implement a built-in version of `git add
+ --interactive`
+In-Reply-To: <20190418160633.GB8054@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1904301935400.45@tvgsbejvaqbjf.bet>
+References: <pull.170.git.gitgitgadget@gmail.com> <12978dc248a2cd07c90559691b8a2add84f45394.1554917868.git.gitgitgadget@gmail.com> <3149b9ba-2f5a-46ce-ad89-4105ec217795@jeffhostetler.com> <20190418160633.GB8054@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1024177324-1556666503=:45"
-X-Provags-ID: V03:K1:8nEX26NcSuV1dB1cBs0YCNPKno2pAQz14NDxBnmOPeWN5iJc/TF
- DMyrrXwC4Q1Gc9MiZOJ9kjbKBOg2LTXAdAX58E13E9l+xb4yOBihXWON4/PKKXxsSFuUalS
- 1RCL3bfUDUKanPHrV03NSR+eHqvnWHJR0GIcCSgbI5qgxFXpbVi57/HKzjGih7JTPObOGBu
- cEwhYQ3+WqcP0OTNYfbOA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PMUnWeWE/FU=:RMYn+RQpwS/8jcCnXEjB4x
- 54W0M+lOlwuX8o9UJpDGH5Wen8GC5V4EKe+z6et4WYzCDWkkadd0matAHo8ZigR8DeO2uJE9s
- 6FdtiqgwYNWXIPN/OomXs3BdzMGP9GnB//ZGScbGTXpteK2DXma2m2Sy9yNk9cRFmaCaQrRdd
- ywbpIFJ64o5m2Yaz19CXKeCzvUO/9zC0DOBUKGDvHeKrh4R6o/UW0rJjnazk3ZpMI0znD5xhx
- D0CfAieJKHSIxVtkwOE3YWt0pxfHW14qwkXqPStqgo76V8ydUMQj15tVfl/M21raRgLwatyY9
- GaAIh4EMz0dffL+/5dCYIi6UQWZOXnaFPBErB+d0VN8VRvubIPyqxk7G1+GbJQJaL5kksugEM
- +U0TfgCdqquMv3Zk2f6LwXIH2BHs7kMcnbyl+kDG/zZdXe1KR+uytD9ARiXDMte0Yy3p7GxL3
- RYMf2tYq9xKw9cbbRulCxz6RjbGWHX9ZwYJ3hSfpkXsbFQRl8TTPe+wsj2SUUVAy/YT+xdsxK
- yi0QhYufhxv9yZeJwO4xT+VjBqmKp4+IJRL6iLrChDkHy3btHCJWdE6gJr/c8dxR/XcJA80Ap
- bCUVQxV2W6to/gs1+ZETe3O7RazZoKL4W8CKryK8bQil81v3EW1f5Lk0/UMAwe0G0YJWDfzuV
- T/tfCy8W4yFFduxp4vus4Ax7hwYkJu28qLztS+t+nioQijxKKIVXR8kt6w0pSSJZ89hxOeDCd
- /21idSmx0w/hnnGPbiSprd5Zl27M/BXHeER2rB8NUogVpbscNi/M2KjauTvLTI8t52uRsYURE
- Gs/54L2pMDN8KtvUveAvonBDDp++sHj9Wtcjs/HlxZkMKM51tFLKqE8sJNWGkyrBzmPxUAwoI
- YRSJokqN+pux6WfC4UZIopsAby/dntzHH9TkwpRpm7eyU9UOk20dC/OJ78zGHOtK2sYxe9e0Z
- +DuTGRkU80g==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Nh7CIztKHMjFI7GXC5J77ZS58WwLLy8Sg0x3d25a0RpX1mnCyYj
+ 9npeL0kIjLowMmlFn750Io7uiQqNwM66D4lBqrgavkprm1fQvaEQ7/l/9E5ESZd3X2tta5j
+ 4UCCBrX3zy1k4QYCs4vD7W7Du6qnRHMbURR7AJ/Yg8WBuAYrhTjSAYaeUooECIHSAQKkix3
+ 8a2per7S0Hk5MWVmWrD1g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DOHDYWplkIw=:SfPzeQ+xRFzUca6o82ba/7
+ miUp4zuafxM/36ygpYqYh28rWfuVBs1DxLsZvBm4TumMzOM4WmDp6+ijnfDFgine57YZUEIcx
+ KayAP9mvVsV8S+SMUQEEpdNlep9LuPCqtKM7k8TNt6ZkFlAeYhFXQ/JJwMSauqPpF9t2/H0kV
+ 1/Hn59YN4JZVlVX3OyKx6s/L2RYxOTaooB0PykAIw7EpGCySbPR4nt2zR+1lemEwE0wny2sDS
+ w2aSBxaQlTD0WMxSO7V2iFqgI+zz/Wysiqp3+uD3sA5i3O3IwDTZQG2dVz3myBG9ferFY/ewg
+ KErh81Y+SOELBECc+fjC4uXVNpf6qrmck0HWUkKEqikw3b68j8bJcnYi+4MbqgC1iOZtRX2fB
+ r39DKoE0ZJ98eXsMiZ92ar/H5arTMhN9S+IpG05CWB+QaK560U9bKxp64FpxPsZeRHKy+7J2h
+ nNVJeo+IFx0yfU3ldcdfX/nACjCEJfHKJP+FvGEepJmwg+CEYjMmoe50OshxoDAfK+DaFSXmC
+ +kkUmP9F4mm1Vv44xcX37lYx2Yx5pfGKSrnOhi71ZkimRSWypJDwFQspGcReE+TrFCAJaHpjE
+ hTJgfSnklGKLp5KCVDOroqe5Fex8UrWeTxlqHP5Aehl+fxt/bAJf3GM8qQ7mPXGEMXswsI4ue
+ +InA9r85bntQ3IByrPDq5nWD9ZNnxDKTqarp98Unxpr50ELxexXUK1O2Zy91BC5+Mr0NROqXa
+ qN+e9tweAtN/vvFKvx1PeFpMwOBMbfMOym0dUge1AIhhZm0y1drOWJpRH1Ru6xlesCiA7XGrL
+ nZzgioynPv+BjwJBH4YYqbl5aQConzuudL8VUrXyPbkTNRr5or2F8GrrQ9KVikVKLCUURuSGv
+ 4cyW+MkUHyT5dqgm3o7c7j0fz1l1cX8ktG13ma0h0lRibrgpqeDiy1AKW92aBwjckXxJ9Hg9X
+ O8UXLgnl4ng==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Jeff & Jeff,
 
---8323328-1024177324-1556666503=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 18 Apr 2019, Jeff King wrote:
 
-Hi,
-
-On Thu, 25 Apr 2019, SZEDER G=C3=A1bor wrote:
-
-> On Mon, Apr 22, 2019 at 05:49:01PM -0400, Jeff King wrote:
-> > On Wed, Apr 17, 2019 at 12:58:31AM -0700, Denton Liu wrote:
+> On Thu, Apr 18, 2019 at 10:31:30AM -0400, Jeff Hostetler wrote:
 >
-> > >  compat/mingw.c                    |   2 +-
-> > >  compat/mingw.h                    |   6 +-
-> > >  compat/nedmalloc/malloc.c.h       |   6 +-
-> > >  compat/obstack.h                  |  14 +-
-> > >  compat/poll/poll.h                |   2 +-
-> > >  compat/regex/regex.h              |  66 ++---
-> > >  compat/win32/pthread.h            |   8 +-
+> > Currently, neither function looks at any other k/v pairs, so
+> > this is a bit of a moot point, but I'm wondering if this should
+> > look like this:
 > >
-> > We sometimes avoid touching compat/ code for style issues because it's
-> > copied from elsewhere. And diverging from upstream is more evil than a
-> > pure style issue. So potentially we could drop these hunks (though I
-> > think maybe mingw is our own thing?).
+> >     int add_config(...)
+> >     {
+> >         // give add-interactive.c a chance to look at k/v pair, but
+> >         // do not short-cut because we don't know yet whether we
+> >         // will be interactive or not yet.
+> >         (void)add_i_config(...);
 > >
-> > >  contrib/coccinelle/noextern.cocci |   6 +
+> >         ...ignore_add_errors...
+> >         ...use_builtin_add_i...
 > >
-> > I have mixed feelings on this cocci script.
+> >         return git_default_config(...);
+> >     }
 >
-> I have actual bad experience with this :)
+> Yeah, I agree this split seems a bit more natural. It is worth
+> propagating errors from add_i_config(), though, like:
 >
-> v4 of this patch series excluded 'compat/' from the conversion, but
-> the semantic patch is applied to 'compat/' all the same, resulting in
-> failed CI builds because of the four 'extern's in 'compat/obstack.h',
-> and will continue to do so.
+>   if (add_i_config(var, value, data))
+> 	return -1;
+>
+> so that any key-specific errors (e.g., config_error_nonbool) stop the
+> parsing in the usual way.
 
-Is it not possible to exclude certain directories for certain semantic
-patches?
+The only problem there is that `add_i_config()` (like all the other
+`git_config()` callbacks) does not report whether it consumed the
+key/value pair or not. I tried to avoid deviating from the standard
+practice to avoid calling `git_default_config()` when we already consumed
+the config setting.
 
-I guess we could also simply declare that *all* Coccinelle patches should
-leave `compat/` alone, on the basis that those files are likely coming
-from some sort of upstream. But then, `compat/mingw.c` and `compat/win32/`
-seem not to fall into that category...
+And I also tried pretty hard to *not* bleed any internal state of
+`add-interactive` into `builtin/add`, as I wanted the new code to be as
+libified as possible (in a nearby thread, somebody wished for a new `-p`
+mode that would essentially be a combined `git stash -p` and `git add -p`,
+and with properly libified code such a beast is a lot more feasible).
+
+Any idea how to deal with that?
+
+I guess I could invert the order, where `add_config()` would be called
+as a fall-back from `add_i_config()`...
+
+Or I invent a new convention where `add_i_config()` returns 1 when it
+consumed the key/value pair. But that would set a precedent that is
+inconsistent with the entire existing code base, something I am
+uncomfortable to do for the sake of `add -i`...
+
 
 Ciao,
 Dscho
-
---8323328-1024177324-1556666503=:45--
