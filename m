@@ -8,117 +8,136 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 386F01F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 22:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB8551F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 22:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727137AbfD3WhX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 18:37:23 -0400
-Received: from mout.gmx.net ([212.227.17.21]:45281 "EHLO mout.gmx.net"
+        id S1727130AbfD3Wlu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 18:41:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42825 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726056AbfD3WhW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 18:37:22 -0400
+        id S1726115AbfD3Wlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 18:41:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556663829;
-        bh=FpZDD5Cy0wXqbb6q6JoLI7nGGWT0BSpvrJcC/FoIXlQ=;
+        s=badeba3b8450; t=1556664102;
+        bh=JEXFU5UcXlx70NTl/Tpy4QPIwQfrKgKMLYf+dA+9eCA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=haPa7F+4/kAVLT2VknsGZca47tErBXGK4wvhgoCa23r/e+MRQsgGRLvqXpdbIVa8w
-         nO4sBuqz4zPVcYuEqhNAPjY/MEuOrV0K23nVEOleVnk062FS5LvS4JJLV2iSyfL+JS
-         IoR02UZ3L2JvU3RhOUuh4JJP9vgqNz0bIS82kcsE=
+        b=WyiNyLJUA1On16FY3NF9U12IABgmU9int86hwOCwu575yG1igytlj0R8dhQk6uzYh
+         ODYtqvhP/yOUHT/DVNigLLuZ8/n4Rs0EAjZYAEwuhDzM+9yGHqpQWTYP2+uYUbhtEF
+         IsKWuChSVoYVPslNFcV75mesSi2GWwuq/r5xkjgM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbyUS-1gwCFl0CUm-00jHeu; Wed, 01
- May 2019 00:37:09 +0200
-Date:   Tue, 30 Apr 2019 18:37:06 -0400 (DST)
+Received: from [172.20.96.188] ([12.174.135.204]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN1Gu-1hNoNB3vHk-006gYM; Wed, 01
+ May 2019 00:41:42 +0200
+Date:   Tue, 30 Apr 2019 18:41:29 -0400 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Braun <thomas.braun@byte-physics.de>
-Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for
- transport
-In-Reply-To: <20190429231928.GQ6316@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1904301834230.45@tvgsbejvaqbjf.bet>
-References: <pull.137.git.gitgitgadget@gmail.com> <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com> <20190429231928.GQ6316@genre.crustytoothpaste.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez?= <ismail@i10z.com>,
+        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
+In-Reply-To: <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
+References: <pull.134.git.gitgitgadget@gmail.com> <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com> <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Ps46aTls+ogQSYwPNxeWuI4SUtkOQZy5f9FfslAP9HniEMLcLuD
- w0tOiZYuw4VsFkZSGVgRDac2Ui70XtGrP4CknVssyKnUXqWnqjFvJeYZZO7JQmFauxMEj6p
- +7rq0KjRIYxBcJzQsuvpNdxXjjmv9D8X3CRrweCujdZQMIyd0DWX8PnJCsTRG0msVzTHYzK
- 4kSBK0WGJMNch7EzZpCKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mudEVTYhmc0=:xlD4oBXc0v73llQ0MZRJ1I
- RfnbUhQgKcgndVf1Bx4tm4d0QLEqSHiJR/ctDZr8zqYrC8uBFI3AVasAKsZG1ttI8I+s50bq/
- /4jThmjj9yqS75M2kWAK68uTK2Ch6UdSztvSlSfHSkMakWfK3/TUfEnS2GZrRHgrrzh7ZWseG
- zQF4qSVPQCeaxkXNlu6JNhLZbQcgge9tfvVNbdmxn1p/NWMzFk3EvKOnVqLSKzVopoTISadkh
- cGo7C2AYixG+AnIiFQg+QbAUEhlks9MDz9+mYrZrq+oOsvLavlglrfyUJby8ql2AbkcJ7tVZj
- OnDfAUMMcJBWYApQ1LAj9wF0Fyavi3dAEvTS2RwSBCmHYXKZL5IpV1rXEw8o0xJdQbNMzDEAe
- 29YHAjxsYZvtoSxknxhO1F9s6M2WRjU2fJQwcJspL+9tK/GeW3OKXDtoN2ofepL1OiV4SCOXg
- DPue/uN1qnm3HfwvhTpCCSzXbv0tNkBMZg7CEk/kcl9nDmWpZ/fUkIGxtZmZ49vXD1ZsgEi+7
- pYKZJgMy9ezerk5y/RiEagUpEbUFvVYjaINMLZjBTyqUe2a/6v8cMeg0NwHrRobQJkBmXPMvx
- kp3P8lPaJ4k/gjmKrjZhPQq45+CRSglUJbwUl+v9c3w/kfFsT7kHmR40uCsGC4mrQgiqH9JFD
- DiRxCC0V5M21/3zBCVwJYjpNraRE3WT+GTt/SC5hKkiG0b1t6hv3HK6j+TfeP/kxyqdVZfyJ9
- uTb4TG1HxbCSLqwZj1NKYdElJSE0v32PVtazHaajHoQW1A+lUXtN4NJSbN2YiDT2+8lscGw43
- M51jamgyPOCs72S/wgYOTOeMxN1RPtAUdTjq98TMniyceAm6rHC8/DWrAWUtgOyEzHCPBMU6V
- PFnIsjS+aJEQgJEjs0DK+Y0iidYKSLer5k2kLB/DuT2uo2Ny5FAOoPGzUr0xk37KHz/XMZ01k
- 5lX75282VwA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1194319204-1556664102=:45"
+X-Provags-ID: V03:K1:I3XFiyR45d4KM8WwmwGK7Ae52jH6KuRlNqL9622odaBO9PxKAi7
+ pO8j20Xg3ya3A4iZn/ZJvctwBvf4O2ePb6DbZMqcDG4UiOE1tun6DurIMTYOM7q6x5V+rRe
+ AAMy6R4IlgMF1eeAaIR47cW0qFweC7vazIlc9Yikt3lzwi62LEIcajTlshrAs4DEmeTTsS9
+ Hv+G/5ppkYbRyx18ui8gA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R6CVfTbeIDE=:YKyo/Qy5myY49pdRJhacHQ
+ UxzTb31fEHoz7+HA5bgVXPJXdyBnCIu1LTA6jRfpRJhJe/odSdAxw78Dbt+rowx4ojwSLtsNT
+ ZqY28q3m7fCvChBewRY0p0asOF8121oDQx2PKIUBxzE6YbxbDJxlc5yhIMKi554WBtIMLsG1o
+ GDAL9nv3/XepsT8jbx9Ff5PYGBQFjndBhcYJT0tr0Z8Tc/qiEsL3N9GBlRnrByLvjT+myhRQg
+ 0AXuRd+024kvVzraHgdyWzosB4Pf1wYZMaZGZay7onFWzdHv9ORWLsz0gtqEQGVyM3OEBBcjx
+ l0qnA6E4lrSvBt7s+3IslTSx+h1LLV/U/75Skr/e4RrMRjOjP2rINbeXw39O/DozKGeL/LrH0
+ QshXjEc/xcWfNZh0lE7mP7ouvQoSuedHJquQZCeQvkPBvp8Vpb1NEDXwOGu3CtFf3zn/ev72X
+ 4sBJp0AtIzNIL+hPaVXtthJaywZO3/uFbDLyffFotSarIbazyayCSxYlibUopuIba1G0SRitj
+ uPTxjnsB276pJG5lLlVJ4Emaxl1bQZb4jrEm7t8nL0ji4Oa+qwzPOlEFUvoKkhzf9AVI0tWR0
+ 1/7dlfD6ERvz3ty2dkgc7udDFdozEimLGvf2iqDG8OhageLnq4W8HystNkK0pKUQ9HLyR8rGq
+ 16dcoxrD8IQ4X+avlWxosmE4NUf75LqJti9hcxs8RETC4KqZY6lXq7DuXKf06AIjVUFu/f70l
+ E1WAnR0XyQJmom47Zbe5S86qfotblv+G1D97u2sFSEWcqy1Dx1+KxYU0QMaOCDexS/jxznF+6
+ JhE0gwtAtPQobAY+d10nl5nTifYUmX+G+TIYTQtH7T+vkufrbp+AW0azxqO6LUF/66lMnrfFK
+ AZIY67sqM7a1PcKGoY2etG3/KS7ZkUZcQ52H5Lsb3dF/uJVa0n2llaamv0pPq7QXpv9a2vxeQ
+ qEBQWTO5Zlw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 29 Apr 2019, brian m. carlson wrote:
+--8323328-1194319204-1556664102=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, Apr 29, 2019 at 03:04:36PM -0700, Thomas Braun via GitGitGadget =
-wrote:
-> > From: Thomas Braun <thomas.braun@byte-physics.de>
+Hi Hannes,
+
+On Tue, 30 Apr 2019, Johannes Sixt wrote:
+
+> [had to add Dscho as recipient manually, mind you]
+
+I usually pick up responses to GitGitGadget patch series even if I am not
+on explicit Cc: (but it might take a couple of days when I am too busy
+elsewhere to read the Git mailing list).
+
+> Am 29.04.19 um 23:56 schrieb =C4=B0smail D=C3=B6nmez via GitGitGadget:
+> > From: =3D?UTF-8?q?=3DC4=3DB0smail=3D20D=3DC3=3DB6nmez?=3D <ismail@i10z=
+.com>
 > >
-> > Since commit 0c499ea60f (send-pack: demultiplex a sideband stream with
-> > status data, 2010-02-05) the built-in send-pack uses the side-band-64k
-> > capability if advertised by the server.
+> > Enable DEP (Data Execution Prevention) and ASLR (Address Space Layout
+> > Randomization) support. This applies to both 32bit and 64bit builds
+> > and makes it substantially harder to exploit security holes in Git by
+> > offering a much more unpredictable attack surface.
 > >
-> > Unfortunately this breaks pushing over the dump git protocol if used
-> > over a network connection when using MinGW (but *not* when using
-> > mingw-w64).
+> > ASLR interferes with GDB's ability to set breakpoints. A similar issue
+> > holds true when compiling with -O2 (in which case single-stepping is
+> > messed up because GDB cannot map the code back to the original source
+> > code properly). Therefore we simply enable ASLR only when an
+> > optimization flag is present in the CFLAGS, using it as an indicator
+> > that the developer does not want to debug in GDB anyway.
 > >
-> > The detailed reasons for this, are courtesy of Jeff Preshing, quoted
-> > from https://groups.google.com/d/msg/msysgit/at8D7J-h7mw/eaLujILGUWoJ:
+> > Signed-off-by: =C4=B0smail D=C3=B6nmez <ismail@i10z.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  config.mak.uname | 6 ++++++
+> >  1 file changed, 6 insertions(+)
 > >
-> > 	MinGW wraps Windows sockets in CRT file descriptors in order to
-> > 	mimic the functionality of POSIX sockets. This causes msvcrt.dll
-> > 	to treat sockets as Installable File System (IFS) handles,
-> > 	calling ReadFile, WriteFile, DuplicateHandle and CloseHandle on
-> > 	them. This approach works well in simple cases on recent
-> > 	versions of Windows, but does not support all usage patterns.
-> > 	In particular, using this approach, any attempt to read & write
-> > 	concurrently on the same socket (from one or more processes)
-> > 	will deadlock in a scenario where the read waits for a response
-> > 	from the server which is only invoked after the write. This is
-> > 	what send_pack currently attempts to do in the use_sideband
-> > 	codepath.
+> > diff --git a/config.mak.uname b/config.mak.uname
+> > index e7c7d14e5f..a9edcc5f0b 100644
+> > --- a/config.mak.uname
+> > +++ b/config.mak.uname
+> > @@ -570,6 +570,12 @@ else
+> >  	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
+> >  		# MSys2
+> >  		prefix =3D /usr/
+> > +		# Enable DEP
+> > +		BASIC_LDFLAGS +=3D -Wl,--nxcompat
+> > +		# Enable ASLR (unless debugging)
+> > +		ifneq (,$(findstring -O,$(CFLAGS)))
+> > +			BASIC_LDFLAGS +=3D -Wl,--dynamicbase
+> > +		endif
+> >  		ifeq (MINGW32,$(MSYSTEM))
+> >  			prefix =3D /mingw32
+> >  			HOST_CPU =3D i686
+> >
 >
-> Since this is a platform-specific issue, can we address this using a
-> compile-time constant instead of a config option? It would be better to
-> do the right thing automatically in this case and not have to have
-> people set a config option. It will also allow us to not to have to
-> maintain a config option indefinitely if MinGW becomes more capable in
-> the future.
+> I'm a bit concerned that this breaks my debug sessions where I use -O0.
+> But I'll test without -O0 before I really complain.
 
-I was really not sure at the time whether this would be fixed in MinGW at
-some stage, and with the switch to mingw-w64 (by moving from MSys to MSYS2
-as of Git for Windows 2.x) we do not really have any concrete need for it
-anymore.
+Weird. Jameson Miller also mentioned this very concern in an internal
+review.
 
-I just thought that it might benefit somebody (it was my impression that
-Hannes Sixt still built his own copy with MSys/MinGW, and we do have a
-track record of maintaining certain things even for single users, see e.g.
-our insistence on creating the .git/branches/ directory upon `git init`).
+I guess I'll do something like
 
-But if the consensus is that we do not need this at all anymore, I'll be
-just as happy to drop that patch.
+	ifneq (,$(findstring -O,$(filter-out -O0,$(CFLAGS))))
+
+Does that work for you?
 
 Ciao,
 Dscho
+
+--8323328-1194319204-1556664102=:45--
