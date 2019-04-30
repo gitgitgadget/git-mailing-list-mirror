@@ -2,204 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3921D1F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 06:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23CC1F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 06:21:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726017AbfD3GCn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 02:02:43 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36379 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725554AbfD3GCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 02:02:43 -0400
-Received: by mail-pl1-f195.google.com with SMTP id w20so5615610plq.3
-        for <git@vger.kernel.org>; Mon, 29 Apr 2019 23:02:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DAl+iCvliRp9BdKezkKLww52S+nLkFhGysv4bsWkPFo=;
-        b=BsEe3lHTovVagqC3gjFLZwMHxwX+wYUfXgkxixykHTruKoNT0Q2/Fl8RRZ9Vj86GDz
-         pgNNLqCkL9x9ed7SlzOz21SYQFMqUKSnEvMB+atMZTvdnaKFK1S5MScCFgI630kCKdnr
-         5viDrDSD7Z6dl6rqdFrCH0PyqA1OmrRZZhKAtqC5HEu7kWbk46ACrrPDPuSOwBmGKKFE
-         C91Hp40E9JAesqVj8tuVLqinhbytE1HCeGbIEUQfqumt7WS8vBWYakzNwigmIqshxjyT
-         KNy+cJ2CytDZqiwHV2Ush9o7RqzG+45LsJ+zNPHvpn8FlM2dBQLCR3Q7isLhqZmnkQww
-         /UHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DAl+iCvliRp9BdKezkKLww52S+nLkFhGysv4bsWkPFo=;
-        b=TsO8q+N6tZREKPtuY7OenDSnUuoZQGTET8Iy8mhk7It5CDICX6nUIMNnfZRbCSJlWZ
-         DM4xF0JgcG6ZFAd/LjSYgErjO9TlGyBH9v9BsNi6MukdCYZGUiSsEfjLoBTyAHiM6EOR
-         5KvS2tqbsO+1K2BVhf10VRCF2Cr+TCCmRjO5kQB/PV4JhEki+pcKaZXPD0rEO3i61kZX
-         jn/cjG6Qo9bRbl2V/j4t2WpZAnDy8osaGs96mdn9sSgM4AP8Eakjac2L2VhZh4bOB4eU
-         1KnMLxm+ta1lFCf2Q/J70RG3SBdKtL404o37QC9CYFFmdLU9i+JA8R2fsJLX3NbMHc6v
-         ewVA==
-X-Gm-Message-State: APjAAAU7kMlBM/beONeKjwDCM8YWZ8at2v0sbF8hGH7HJupRxu+HElza
-        ha58gzvQgRaKKeD/q7KGzzPYLc4kJJA=
-X-Google-Smtp-Source: APXvYqwcz8EHnXR8UNQ+EPMty+MgC79Ux95+xSdzLH2JaXQQw+BAR3oZhj+KQ5jFiVd1n+BYOt7hDw==
-X-Received: by 2002:a17:902:758a:: with SMTP id j10mr2831056pll.221.1556604162124;
-        Mon, 29 Apr 2019 23:02:42 -0700 (PDT)
-Received: from localhost.localdomain (36-225-124-166.dynamic-ip.hinet.net. [36.225.124.166])
-        by smtp.gmail.com with ESMTPSA id m2sm16781950pfi.24.2019.04.29.23.02.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 29 Apr 2019 23:02:41 -0700 (PDT)
-From:   John Lin <johnlinp@gmail.com>
-To:     git@vger.kernel.org
-Cc:     John Lin <johnlinp@gmail.com>
-Subject: [PATCH v2] status: add an empty line when there is no hint
-Date:   Tue, 30 Apr 2019 14:02:10 +0800
-Message-Id: <20190430060210.79610-1-johnlinp@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1725996AbfD3GVt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 02:21:49 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:10407 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725799AbfD3GVt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 02:21:49 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44tWdQ0ySRz5tlC;
+        Tue, 30 Apr 2019 08:21:46 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 1B3834212;
+        Tue, 30 Apr 2019 08:21:45 +0200 (CEST)
+Subject: Re: [PATCH 1/1] mingw: optionally disable side-band-64k for transport
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Braun via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Braun <thomas.braun@byte-physics.de>
+References: <pull.137.git.gitgitgadget@gmail.com>
+ <31aa7bfcab834b753cc9f52fc9cc187f65e2d964.1556575475.git.gitgitgadget@gmail.com>
+ <CAPig+cT1EP+HC5h4e0NGCu=1i6cZXPxERRgnnAdZJn+XeqpbFw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1904291916510.45@tvgsbejvaqbjf.bet>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b8e799e2-356d-2a03-faa4-2792ec1b171d@kdbg.org>
+Date:   Tue, 30 Apr 2019 08:21:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1904291916510.45@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When typing "git status", there is an empty line between
-the "Changes not staged for commit:" block and the list
-of changed files. However, when typing "git commit" with
-no files added, there are no empty lines between them.
+Am 30.04.19 um 01:17 schrieb Johannes Schindelin:
+> On Mon, 29 Apr 2019, Eric Sunshine wrote:
+>> On Mon, Apr 29, 2019 at 6:04 PM Thomas Braun via GitGitGadget
+>>> diff --git a/Documentation/config/sendpack.txt b/Documentation/config/sendpack.txt
+>>> @@ -0,0 +1,5 @@
+>>> +sendpack.sideband::
+>>> +       Allows to disable the side-band-64k capability for send-pack even
+>>> +       when it is advertised by the server. Makes it possible to work
+>>> +       around a limitation in the git for windows implementation together
+>>> +       with the dump git protocol. Defaults to true.
+>>
+>> s/dump/dumb/
+>>
+>> For someone who hasn't read the commit message of this patch, "work
+>> around a limitation in ... git for windows" doesn't mean much. Perhaps
+>> this documentation could explain in more precise terms under what
+>> circumstances this option should be used?
+> 
+> You're right, this is confusing, especially since Git for Windows 2.x does
+> not have that bug.
 
-This patch adds empty lines in the above case and some
-similar cases.
+If there is no bug, why do we need the patch?
 
-Signed-off-by: John Lin <johnlinp@gmail.com>
----
- t/t7500-commit-template-squash-signoff.sh |  1 +
- t/t7508-status.sh                         |  5 +++++
- t/t7512-status-help.sh                    |  1 +
- wt-status.c                               | 12 ++++++++----
- 4 files changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 46a5cd4b73..0423e77d1d 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -345,6 +345,7 @@ cat >expected-template <<EOF
- #
- # On branch commit-template-check
- # Changes to be committed:
-+#
- #	new file:   commit-template-check
- #
- # Untracked files not listed
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index e1f11293e2..949b1dbcc4 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -204,12 +204,15 @@ Your branch and 'upstream' have diverged,
- and have 1 and 2 different commits each, respectively.
- 
- Changes to be committed:
-+
- 	new file:   dir2/added
- 
- Changes not staged for commit:
-+
- 	modified:   dir1/modified
- 
- Untracked files:
-+
- 	dir1/untracked
- 	dir2/modified
- 	dir2/untracked
-@@ -449,9 +452,11 @@ Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
- 
- Changes to be committed:
-+
- 	new file:   dir2/added
- 
- Changes not staged for commit:
-+
- 	modified:   dir1/modified
- 
- Untracked files not listed
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 458608cc1e..0a29fa66a2 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -714,6 +714,7 @@ rebase in progress; onto $ONTO
- You are currently rebasing branch '\''statushints_disabled'\'' on '\''$ONTO'\''.
- 
- Unmerged paths:
-+
- 	both modified:   main.txt
- 
- no changes added to commit
-diff --git a/wt-status.c b/wt-status.c
-index 445a36204a..0766e3ee12 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -175,7 +175,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
- 	}
- 
- 	if (!s->hints)
--		return;
-+		goto conclude;
- 	if (s->whence != FROM_COMMIT)
- 		;
- 	else if (!s->is_initial)
-@@ -193,6 +193,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
- 	} else {
- 		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
- 	}
-+conclude:
- 	status_printf_ln(s, c, "%s", "");
- }
- 
-@@ -202,13 +203,14 @@ static void wt_longstatus_print_cached_header(struct wt_status *s)
- 
- 	status_printf_ln(s, c, _("Changes to be committed:"));
- 	if (!s->hints)
--		return;
-+		goto conclude;
- 	if (s->whence != FROM_COMMIT)
- 		; /* NEEDSWORK: use "git reset --unresolve"??? */
- 	else if (!s->is_initial)
- 		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
- 	else
- 		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
-+conclude:
- 	status_printf_ln(s, c, "%s", "");
- }
- 
-@@ -220,7 +222,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
- 
- 	status_printf_ln(s, c, _("Changes not staged for commit:"));
- 	if (!s->hints)
--		return;
-+		goto conclude;
- 	if (!has_deleted)
- 		status_printf_ln(s, c, _("  (use \"git add <file>...\" to update what will be committed)"));
- 	else
-@@ -228,6 +230,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
- 	status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to discard changes in working directory)"));
- 	if (has_dirty_submodules)
- 		status_printf_ln(s, c, _("  (commit or discard the untracked or modified content in submodules)"));
-+conclude:
- 	status_printf_ln(s, c, "%s", "");
- }
- 
-@@ -238,8 +241,9 @@ static void wt_longstatus_print_other_header(struct wt_status *s,
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	status_printf_ln(s, c, "%s:", what);
- 	if (!s->hints)
--		return;
-+		goto conclude;
- 	status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in what will be committed)"), how);
-+conclude:
- 	status_printf_ln(s, c, "%s", "");
- }
- 
--- 
-2.21.0
-
+-- Hannes
