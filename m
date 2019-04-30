@@ -7,64 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 016791F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 09:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 917201F453
+	for <e@80x24.org>; Tue, 30 Apr 2019 11:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbfD3JB4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 05:01:56 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34443 "EHLO
+        id S1727106AbfD3LPl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 07:15:41 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45872 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbfD3JB4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 05:01:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id v16so17648683wrp.1
-        for <git@vger.kernel.org>; Tue, 30 Apr 2019 02:01:55 -0700 (PDT)
+        with ESMTP id S1726648AbfD3LPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 07:15:41 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s15so20495210wra.12
+        for <git@vger.kernel.org>; Tue, 30 Apr 2019 04:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7wOj98r4NOUfV4S/KjJnx2cBNLtBbjs3eR4bgHO2JFU=;
-        b=WRlP21QcfzrPP6/jolzS4ZlbTHldJiRCiaYzsQ7q4mk+Y63NCQlEC2o9uVi9rERO1l
-         K+Ifi+sNhxmj/p5gUNH5r8AbgMSTU9lpiHj1A2i2sqJiukCdjZi4N8uJTilmDE7vbig5
-         GMcw89tOI4XsiHUp2EQmP+rzYcM1VG/3l8OCkYCNew9dFHSViGb1oB1g4OIl6xvs2yms
-         L9uDBJprm7bUor7053C5rSdBRrrAduo3e4WT62NUg2pwo1peaSipuxuBHvbpAlkf3z9Z
-         6DaoJAqSLPRaTjU+SeVtYDkLifYBvz2gkCdelFL9sAJrRB5h41Po8OoRiOWTGmuD9ekg
-         G8qQ==
+        bh=fOMEoMkXn50RBkmUoPY+9lHkqvrVRQlppjhB2l9eHBk=;
+        b=oBisz4EH7Lifwp1/BlxtO0OctxYv5x/sw26M2a+yscmBmY9ZJwng1DHxn2pb7TynUY
+         yhbtngLr0TUNjotP1OlBbovpfatJb9kvzTsQVl30iAycWVwbWy0MSkh2flHO5P6OrzD/
+         AAyve5bBUNU+X7jZkjtzWdNRMQxqV9GrrVvYg8bu+1RPRDkqr2oeiGO+GgibYWEtaejg
+         2mdURAah6cKo5vNH7H+UFoSKSDaAnDeA0F5bSTr/IJJRyu+MbwK0a8OFPy78oTHC0P2k
+         aGHMSW+tvP4rqiGaiTpKe7qUyvNTy8frrNU+OyQzDzYXrhw/Po+2LvtUussSWi6Sg1p+
+         MXpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=7wOj98r4NOUfV4S/KjJnx2cBNLtBbjs3eR4bgHO2JFU=;
-        b=IHqvF/tAJ5nxOUfydRM3R8WNXWtledaJeBBeXDbYHUv7AAg7aR4/sF6HOWIcHLRF+P
-         9ZcxIfhyvqfzbzeJbNQyZocP8d3LGyDXG4CzhSa1Cm0pcZPzXzEUa1ciFC7jjTFk9khP
-         qKlss2kuZCxYWHefUWKvTCMnlbSTvMi9Aq0K7RJBZ+N7315K60IqhqzG82Jt1oYBlKaH
-         9/JJWhG9STQ780uAAffTtYYG88PN7wVchYYuyViCHYr1s4atjEqfj81ZCkS8IA6ylqoC
-         MfbYhUo1Zo3idgNXeTzde55WqzEMiF9axPT4A+GJmpQDvcTY1lLeCdOqfQ8FPat8xIyH
-         ikvQ==
-X-Gm-Message-State: APjAAAW4z9yvfpwIyhTWYWdVMqlwg1yoMgQTwBNDpFghBFNRlgiOtrrU
-        +CwEDFqoNhyLtygGdTcc8VM=
-X-Google-Smtp-Source: APXvYqzmU91ENvPpzVECrO3X1tV4wLkG2qie8IZFZP5dgnJjKd/gmSXJs/hZOQDuBwZJdfglh8gHSw==
-X-Received: by 2002:a5d:4392:: with SMTP id i18mr13421080wrq.239.1556614914602;
-        Tue, 30 Apr 2019 02:01:54 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fOMEoMkXn50RBkmUoPY+9lHkqvrVRQlppjhB2l9eHBk=;
+        b=UCwl1Rdispbr+T+Seyux2GozD5oh+3+14xRyuAUO1RQDrRIP9tu4TLjscI3KBtjyif
+         B5J2gWGsve7QVlWS4CDKnVIrLHFoHjAJwJtYfZ29FxzkHhul/TK0VZz4yiMPD4EnbCb5
+         P6pB/8WQprosPHio5lttW599aZgmuMCwkAK9vCaKDqtghKeC5ga8B3Ou5CMxBmdFge4m
+         YmdWZ9PBMed3jrHnMbxhqd5OpmlYqoId4BiE/45Ytz3RZjxv2lVIzFhdaIyr4x1rCLkU
+         Lx6a6n2HcnXZoQbSrzIf+hnPyHjx9BqWgGb+Vet892CZY246QWzXIL8vIQI6WZ3ujtf/
+         dQkQ==
+X-Gm-Message-State: APjAAAWSEFItFP4kYBebf0VKxSeb/sjMQiE7WFp6nzFbR8lbjhBIIsHT
+        eR9IMXCpWfn/wxguqucqd6hKQva/
+X-Google-Smtp-Source: APXvYqx/I2v+XvvXISF1UiE4+o6Z92wdEA3aUdmGITr8kws7adkJYz3H3P0UyhJy7yBu0AEhRxnshA==
+X-Received: by 2002:a5d:4805:: with SMTP id l5mr23567870wrq.279.1556622939029;
+        Tue, 30 Apr 2019 04:15:39 -0700 (PDT)
 Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id c9sm9652578wrv.62.2019.04.30.02.01.53
+        by smtp.gmail.com with ESMTPSA id o1sm2625498wmh.47.2019.04.30.04.15.38
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Apr 2019 02:01:54 -0700 (PDT)
+        Tue, 30 Apr 2019 04:15:38 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -r: always reword merge -c
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190426103332.9036-1-phillip.wood123@gmail.com>
- <nycvar.QRO.7.76.6.1904291208210.45@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH v2] status: add an empty line when there is no hint
+To:     John Lin <johnlinp@gmail.com>, git@vger.kernel.org
+References: <20190430060210.79610-1-johnlinp@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com>
-Date:   Tue, 30 Apr 2019 10:01:52 +0100
+Message-ID: <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
+Date:   Tue, 30 Apr 2019 12:15:37 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1904291208210.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <20190430060210.79610-1-johnlinp@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -73,99 +69,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+Hi John
 
-On 29/04/2019 17:14, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Fri, 26 Apr 2019, Phillip Wood wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> If a merge can be fast-forwarded then make sure that we still edit the
->> commit message if the user specifies -c. The implementation follows the
->> same pattern that is used for ordinary rewords that are fast-forwarded.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
-> 
-> OMG I was bitten twice by this very bug in the past week, and planned on
-> looking into it next week. Thanks for beating me to it.
-> 
-> Two comments:
-> 
->> diff --git a/sequencer.c b/sequencer.c
->> index 0db410d590..ff8565e7a8 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -3248,6 +3248,10 @@ static int do_merge(struct repository *r,
->>   		rollback_lock_file(&lock);
->>   		ret = fast_forward_to(r, &commit->object.oid,
->>   				      &head_commit->object.oid, 0, opts);
->> +		if (flags & TODO_EDIT_MERGE_MSG) {
->> +			run_commit_flags |= AMEND_MSG;
->> +			goto fast_forward_edit;
->> +		}
->>   		goto leave_merge;
->>   	}
->>
->> @@ -3351,6 +3355,7 @@ static int do_merge(struct repository *r,
->>   		 * value (a negative one would indicate that the `merge`
->>   		 * command needs to be rescheduled).
->>   		 */
->> +	fast_forward_edit:
-> 
-> It is *slightly* awkward that this is an `else` arm of an `if (ret)`, but
-> I do not necessarily think that it would be better to move the label
-> before the `if` than what you did; Your version comes out more readable,
-> still.
+On 30/04/2019 07:02, John Lin wrote:
+> When typing "git status", there is an empty line between
+> the "Changes not staged for commit:" block and the list
+> of changed files.
 
-I did wonder about adding braces but I'm not sure that makes it any 
-clearer. I agree having the label before the `if (ret)` would be less 
-clear as the reader has to then think what ret will be in that case to 
-work out what will happen.
+I'm a bit confused by this as you change a status test below by 
+inserting these blank lines into the expected output, implying they are 
+not there now. I think maybe the blank line is only shown when status 
+prints advice.
 
->>   		ret = !!run_git_commit(r, git_path_merge_msg(r), opts,
->>   				       run_commit_flags);
->>
->> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
->> index 4c69255ee6..3d484a3c72 100755
->> --- a/t/t3430-rebase-merges.sh
->> +++ b/t/t3430-rebase-merges.sh
->> @@ -164,6 +164,16 @@ test_expect_success 'failed `merge <branch>` does not crash' '
->>   	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
->>   '
->>
->> +test_expect_success 'fast-forward merge -c still rewords' '
->> +	git checkout -b fast-forward-merge-c H &&
->> +	set_fake_editor &&
-> 
-> set_fake_editor affects global state AFAIR (setting and exporting
-> `EDITOR`), therefore this would need to be run in a subshell, i.e.
-> enclosed in parentheses.
+> However, when typing "git commit" with
+> no files added, there are no empty lines between them.
 
-The other test files are not very consistent about that. I'll re-roll. 
-Note that I do not export any FAKE_* variables, so later tests should 
-not be affected even if the fake editor runs.
+I have to say looking at the changes to the output I prefer the 
+original, the lists are nicely indented so there is no need for a blank 
+line to separate the header from the list and having the header 
+immediately before the list means the blank line at the end of the block 
+makes the extent of the block clear. It also saves screen space which is 
+useful for small laptop screens. I can see why one might want a blank 
+line to separate the advice and list of changes (though even there the 
+indention of the list and advice is different) but for a one line header 
+I think it is better to start the list on the next line.
 
 Best Wishes
 
 Phillip
->> +	FAKE_COMMIT_MESSAGE=edited GIT_SEQUENCE_EDITOR="echo merge -c H G >" \
->> +		git rebase -ir @^ &&
->> +	echo edited >expected &&
->> +	git log --pretty=format:%B -1 >actual &&
->> +	test_cmp expected actual
->> +'
->> +
+
+> This patch adds empty lines in the above case and some
+> similar cases.
 > 
-> The rest looks good, thank you!
-> Dscho
+> Signed-off-by: John Lin <johnlinp@gmail.com>
+> ---
+>   t/t7500-commit-template-squash-signoff.sh |  1 +
+>   t/t7508-status.sh                         |  5 +++++
+>   t/t7512-status-help.sh                    |  1 +
+>   wt-status.c                               | 12 ++++++++----
+>   4 files changed, 15 insertions(+), 4 deletions(-)
 > 
->>   test_expect_success 'with a branch tip that was cherry-picked already' '
->>   	git checkout -b already-upstream master &&
->>   	base="$(git rev-parse --verify HEAD)" &&
->> --
->> 2.21.0
->>
->>
+> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+> index 46a5cd4b73..0423e77d1d 100755
+> --- a/t/t7500-commit-template-squash-signoff.sh
+> +++ b/t/t7500-commit-template-squash-signoff.sh
+> @@ -345,6 +345,7 @@ cat >expected-template <<EOF
+>   #
+>   # On branch commit-template-check
+>   # Changes to be committed:
+> +#
+>   #	new file:   commit-template-check
+>   #
+>   # Untracked files not listed
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index e1f11293e2..949b1dbcc4 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -204,12 +204,15 @@ Your branch and 'upstream' have diverged,
+>   and have 1 and 2 different commits each, respectively.
+>   
+>   Changes to be committed:
+> +
+>   	new file:   dir2/added
+>   
+>   Changes not staged for commit:
+> +
+>   	modified:   dir1/modified
+>   
+>   Untracked files:
+> +
+>   	dir1/untracked
+>   	dir2/modified
+>   	dir2/untracked
+> @@ -449,9 +452,11 @@ Your branch and '\''upstream'\'' have diverged,
+>   and have 1 and 2 different commits each, respectively.
+>   
+>   Changes to be committed:
+> +
+>   	new file:   dir2/added
+>   
+>   Changes not staged for commit:
+> +
+>   	modified:   dir1/modified
+>   
+>   Untracked files not listed
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index 458608cc1e..0a29fa66a2 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -714,6 +714,7 @@ rebase in progress; onto $ONTO
+>   You are currently rebasing branch '\''statushints_disabled'\'' on '\''$ONTO'\''.
+>   
+>   Unmerged paths:
+> +
+>   	both modified:   main.txt
+>   
+>   no changes added to commit
+> diff --git a/wt-status.c b/wt-status.c
+> index 445a36204a..0766e3ee12 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -175,7 +175,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+>   	}
+>   
+>   	if (!s->hints)
+> -		return;
+> +		goto conclude;
+>   	if (s->whence != FROM_COMMIT)
+>   		;
+>   	else if (!s->is_initial)
+> @@ -193,6 +193,7 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+>   	} else {
+>   		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" as appropriate to mark resolution)"));
+>   	}
+> +conclude:
+>   	status_printf_ln(s, c, "%s", "");
+>   }
+>   
+> @@ -202,13 +203,14 @@ static void wt_longstatus_print_cached_header(struct wt_status *s)
+>   
+>   	status_printf_ln(s, c, _("Changes to be committed:"));
+>   	if (!s->hints)
+> -		return;
+> +		goto conclude;
+>   	if (s->whence != FROM_COMMIT)
+>   		; /* NEEDSWORK: use "git reset --unresolve"??? */
+>   	else if (!s->is_initial)
+>   		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
+>   	else
+>   		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
+> +conclude:
+>   	status_printf_ln(s, c, "%s", "");
+>   }
+>   
+> @@ -220,7 +222,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
+>   
+>   	status_printf_ln(s, c, _("Changes not staged for commit:"));
+>   	if (!s->hints)
+> -		return;
+> +		goto conclude;
+>   	if (!has_deleted)
+>   		status_printf_ln(s, c, _("  (use \"git add <file>...\" to update what will be committed)"));
+>   	else
+> @@ -228,6 +230,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
+>   	status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to discard changes in working directory)"));
+>   	if (has_dirty_submodules)
+>   		status_printf_ln(s, c, _("  (commit or discard the untracked or modified content in submodules)"));
+> +conclude:
+>   	status_printf_ln(s, c, "%s", "");
+>   }
+>   
+> @@ -238,8 +241,9 @@ static void wt_longstatus_print_other_header(struct wt_status *s,
+>   	const char *c = color(WT_STATUS_HEADER, s);
+>   	status_printf_ln(s, c, "%s:", what);
+>   	if (!s->hints)
+> -		return;
+> +		goto conclude;
+>   	status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include in what will be committed)"), how);
+> +conclude:
+>   	status_printf_ln(s, c, "%s", "");
+>   }
+>   
+> 
