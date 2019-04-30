@@ -2,104 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AF531F453
-	for <e@80x24.org>; Tue, 30 Apr 2019 11:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 877481F45F
+	for <e@80x24.org>; Tue, 30 Apr 2019 12:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727489AbfD3LTY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Apr 2019 07:19:24 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:44147 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbfD3LTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Apr 2019 07:19:24 -0400
-Received: by mail-lj1-f169.google.com with SMTP id c6so5895026lji.11
-        for <git@vger.kernel.org>; Tue, 30 Apr 2019 04:19:23 -0700 (PDT)
+        id S1727527AbfD3Mhj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Apr 2019 08:37:39 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35943 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727334AbfD3Mhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Apr 2019 08:37:38 -0400
+Received: by mail-wr1-f65.google.com with SMTP id o4so8890184wra.3
+        for <git@vger.kernel.org>; Tue, 30 Apr 2019 05:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=v2u9qVZXXF6L5YkVLYAWDT9nf8EjTS5/g/VbJF5gEKo=;
-        b=DfNmyvfMk7lyzJm2AYtsYZLnjUaRsc+KhTTrq2pcqieWpBiFij2HhnWZcllvoyM/93
-         YFrqm4bpoHrJ4jkyyrzGjmy8dDEVNLCEykx/Iv8c1AU+xrtXjKy84DQR56TUyBQhiv0d
-         9I77AlUAnksD7MH/PyYyp/NL6HVGh6U9DuZBfGqKtklqP09qDAFaZY9TqisFW8nk3Ml6
-         QTPaGqFPtR48Ids64Ca6B4UvGzKKdzTyzi30G3u889Slf1NB0YOM8zkW2Vmlj1KTNAQ+
-         EQynp0OWjJ+u2FB79oh204n/M1eFLcRFzZqNa1mLPjHwbP+7OxLszQ+6FGTXDCP7Do+j
-         d79Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SpxPfQklDxEqtA/fmfK+FLcQcuRu/F8DzkrLtlOLq3U=;
+        b=gl9rzKEpG/7V+UpM/ARFnVVf90KgSfAN9axTLR5iPt05nUrW2BRuJtN1nCww2BqL9l
+         eDhEJ3Y6i9WzafqzQz8av97sPRIyTjd4dZjChgP8cXwtk9sCEm9a33+TPQuJqSe6xcdh
+         pRev2aZKY8RkfjRmlgfoyHEcg1LTMvFwqix41IfsyYyrBHGcxQAWKkDvdDz1kSmVX4av
+         ap62uum6jHllTLuaxlVBQ+MG3TvhXaUJ6+u5Xiag05Fuf1Qbl0UkUXT6E1psTGp9WUQ+
+         ELRvip5GO+PyLCwG4eVClg1YnKsnq5sr60zH3SGMm485vwxkJROtMmV5cXDhJPNl5gWc
+         XKzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v2u9qVZXXF6L5YkVLYAWDT9nf8EjTS5/g/VbJF5gEKo=;
-        b=Ur0v6Oj4ZlcfzDHApXZvgIvCJ9RjHW6/7xOA2z4kaMVOa3gnyCYVz+8r7k8fIoFzZ5
-         JG/5zbhnt1zaLhzVb60Ov6ryD5ifjcOpPEPIOvPaUGk4yjbSF/y/9BKLYFsCJmYjmBSZ
-         JlFe7qCcXJN/oyshsy0gzFs06OPoYVhjqn2VFCw3NCzn3sWbNsKSqzPW0usVjG0VgRRe
-         3znayMCAolvUTImKerSDcjO0fMlXEUhP53olZj+PUQbkDhLXnZG4vrgG4PR8xJR6uiZB
-         O234DRv/oO5ZAqmHqajPpuO7RzzqA7agdJe/4X36pKyP6SfwvLtkPxeg7eIHMhawzfjc
-         jQNQ==
-X-Gm-Message-State: APjAAAVjx7h0aUcWIZchDJsfBqAPmlp/CmXmoRg8xqYh1lD0E3QcWVqL
-        QHlhb1NbBcU2ouuXj3JzU0+yaFDXhwpvqHHbw5A=
-X-Google-Smtp-Source: APXvYqwpG4OiGk6L6IgPKrRoxHlVV82BA2YEsC7YuQA/2Qt3hYg7+CiNqQXkFzR+wHV7wcP16bb99mzYTgHM7sZKem4=
-X-Received: by 2002:a2e:a0c9:: with SMTP id f9mr3634989ljm.62.1556623162187;
- Tue, 30 Apr 2019 04:19:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SpxPfQklDxEqtA/fmfK+FLcQcuRu/F8DzkrLtlOLq3U=;
+        b=s7f6PoP6DDxKcY/HeTT7yx7dq2X0fulcOYyPoCEITrW7SD2S6TM6TGZZ0e778wVbTt
+         V5qdvWDFngJHdEdVKQiks8uuEyAZL4gRk+8vLWTSOfsTcvSqpfeec62lPn36c22nM6aM
+         d3jvVK9ds7e1GAaFjQj0YkVD10+Tni1oE3rhJJSLPLfvLG2ZDE69/UXvr7gNLO2GMulH
+         5AyguqDX9U6JXFaMywaOu7gnpwY8mnMo/O98ALeqUhE+FpLe0ZBjmqaSDotalMN00GNd
+         a13wv/d+siR6Jxr0zOpMVT8mIQyCE9VxcmPZ2TEOFYtnT/Br3bQfjyu/0bbk0tMUejk2
+         1pKw==
+X-Gm-Message-State: APjAAAUchvKoTxgqcxxROlacubfJowI0uy6YKJHj5MFc+s8PDy44XTsI
+        6k70e1/I5WM9o6+RVBPZqMf5A/nZ
+X-Google-Smtp-Source: APXvYqxGtSc9JRDuiyoBSRx6YSio+yllJE6RG7Z7u4AHXy26BXJMloyvWY6HDrkY4RDD1eN0k2qG8w==
+X-Received: by 2002:a5d:4712:: with SMTP id y18mr6461852wrq.23.1556627857074;
+        Tue, 30 Apr 2019 05:37:37 -0700 (PDT)
+Received: from localhost.localdomain (x4dbd75f4.dyn.telefonica.de. [77.189.117.244])
+        by smtp.gmail.com with ESMTPSA id o6sm70279690wre.60.2019.04.30.05.37.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 30 Apr 2019 05:37:36 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Wong <e@80x24.org>, Lars Schneider <larsxschneider@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] ci: install 'libsvn-perl' instead of 'git-svn'
+Date:   Tue, 30 Apr 2019 14:37:24 +0200
+Message-Id: <20190430123724.16150-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.21.0.1181.g24122a4251
 MIME-Version: 1.0
-References: <CAF8BazDu_GqoCPBQ-gEJ+q8n1aWSjf_TOV7bDE5VCQkDgBjyfQ@mail.gmail.com>
- <CAF8BazA-VYFns7o9F7gXfFZCspbM0yQKi+LQ+BnkpGH+EjPC9A@mail.gmail.com> <CACsJy8DSW2f3v1KpU-QrAz-EeLwG4mVm9ToDdA2=kXSmtsEAYw@mail.gmail.com>
-In-Reply-To: <CACsJy8DSW2f3v1KpU-QrAz-EeLwG4mVm9ToDdA2=kXSmtsEAYw@mail.gmail.com>
-From:   Aleksey Midenkov <midenok@gmail.com>
-Date:   Tue, 30 Apr 2019 14:19:11 +0300
-Message-ID: <CAF8BazBShg9F2uCuVQ_PM6196kOUNWOA1T9APkCXCoey7as2mQ@mail.gmail.com>
-Subject: Re: Bug: fatal: Unable to create '.../.git/index.lock': File exists.
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 29, 2019 at 2:35 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Mon, Apr 29, 2019 at 6:03 PM Aleksey Midenkov <midenok@gmail.com> wrote:
-> >
-> > Reproduce:
-> > ```
-> > cat << EOF >> /tmp/check.sh
-> > #!/bin/sh
-> > git log HEAD~..HEAD | cat
-> > # sleep 1
-> > EOF
-> > chmod +x /tmp/check.sh
-> > git rebase -p -x /tmp/check.sh base
-> > ```
-> > If the `base` is far away enough it fails with "fatal: Unable to
-> > create '.../.git/index.lock': File exists." at an arbitrary commit.
->
-> I gave it about 2000 commits (from v2.20.1 to master on git.git) to
-> rebase. No luck.
+Since e7e9f5e7a1 (travis-ci: enable Git SVN tests t91xx on Linux,
+2016-05-19) some of our Travis CI build jobs install the 'git-svn'
+package, because it was a convenient way to install its dependencies,
+which are necessary to run our 'git-svn' tests (we don't actually need
+the 'git-svn' package itself).  However, from those dependencies,
+namely the 'libsvn-perl', 'libyaml-perl', and 'libterm-readkey-perl'
+packages, only 'libsvn-perl' is necessary to run those tests, the
+others arent, not even to fulfill some prereqs.
 
-Please, try on this repo: git@github.com:tempesta-tech/mariadb
+So update 'ci/install-dependencies.sh' to install only 'libsvn-perl'
+instead of 'git-svn' and its additional dependencies.
 
-```
-git checkout 62a082f573
-git rebase -p -x /tmp/check.sh ca7fbcea6c4
-```
+Note that this change has more important implications than merely not
+installing three unnecessary packages, as it keeps our builds working
+with Travis CI's Xenial images.  In our '.travis.yml' we never
+explicitly specified which Linux image we want to use to run our Linux
+build jobs, and so far they have been run on the default Ubuntu 14.04
+Trusty image.  However, 14.04 just reached its EOL, and Travis CI has
+already began the transition to use 16.04 Xenial as the default Linux
+build environment [1].  Alas, our Linux Clang and GCC build jobs can't
+simply 'apt-get install git-svn' in the current Xenial images [2],
+like they did in the Trusty images, and, consequently, fail.
+Installing only 'libsvn-perl' avoids this issue, while the 'git svn'
+tests are still run as they should.
 
-On Tue, Apr 30, 2019 at 12:10 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-...
->
-> Does it work if you pass `-r` instead of `-p`? The latter will be
-> deprecated in favor of the former in the upcoming Git v2.22.
+[1] https://blog.travis-ci.com/2019-04-15-xenial-default-build-environment
 
-It also fails with `-r` but less frequently.
+[2] 'apt-get install git-svn' in the Xenial image fails with:
 
+      The following packages have unmet dependencies:
+       git-svn : Depends: git (< 1:2.7.4-.)
+      E: Unable to correct problems, you have held broken packages.
+
+    The reason is that both the Trusty and Xenial images contain the
+    'git' package installed from 'ppa:git-core/ppa', so it's
+    considerably newer than the 'git' package in the corresponding
+    standard Ubuntu package repositories.  The difference is that the
+    Trusty image still contains these third-party apt repositories, so
+    the 'git-svn' package was installed from the same PPA, and its
+    version matched the version of the already installed 'git'
+    package.  In the Xenial image, however, these third-party
+    apt-repositories are removed (to reduce the risk of unrelated
+    interference and faster 'apt-get update') [3], and the version of
+    the 'git-svn' package coming from the standard Ubuntu package
+    repositories doesn't match the much more recent version of the
+    'git' package installed from the PPA, resulting in this dependecy
+    error.
+
+    Adding back the 'ppa:git-core/ppa' package repository would solve
+    this dependency issue as well, but since the troublesome package
+    happens to be unnecessary, not installing it in the first place is
+    better.
+
+[3] https://docs.travis-ci.com/user/reference/xenial/#third-party-apt-repositories-removed
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 52a44c690a..7f6acdd803 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -12,7 +12,7 @@ case "$jobname" in
+ linux-clang|linux-gcc)
+ 	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+ 	sudo apt-get -q update
+-	sudo apt-get -q -y install language-pack-is git-svn apache2
++	sudo apt-get -q -y install language-pack-is libsvn-perl apache2
+ 	case "$jobname" in
+ 	linux-gcc)
+ 		sudo apt-get -q -y install gcc-8
 -- 
-All the best,
+2.21.0.1181.g24122a4251
 
-Aleksey Midenkov
-@midenok
