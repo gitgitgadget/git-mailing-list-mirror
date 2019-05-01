@@ -2,112 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A14A1F453
-	for <e@80x24.org>; Wed,  1 May 2019 09:28:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA9FF1F453
+	for <e@80x24.org>; Wed,  1 May 2019 09:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbfEAJ2d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 05:28:33 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45838 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726014AbfEAJ2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 05:28:33 -0400
-X-Greylist: delayed 1911 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 May 2019 05:28:30 EDT
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <glandium@glandium.org>)
-        id 1hLl2Z-0001rn-Qx; Wed, 01 May 2019 17:56:35 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH] Make fread/fwrite-like functions in http.c more like fread/fwrite.
-Date:   Wed,  1 May 2019 17:56:35 +0900
-Message-Id: <20190501085635.7125-1-mh@glandium.org>
-X-Mailer: git-send-email 2.21.0
+        id S1726268AbfEAJyL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 05:54:11 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:38154 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725959AbfEAJyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 05:54:11 -0400
+Received: by mail-io1-f67.google.com with SMTP id y6so14455100ior.5
+        for <git@vger.kernel.org>; Wed, 01 May 2019 02:54:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=n30ZYNrv0V4Hxaf4UAVVsP2kItRCMIYLFWzXSJGVGQw=;
+        b=KmXYaQtQwMkx5B/hcIyZgikGOsiIb0/Tu2RYr3BZovW08yMLZjqn68ck53KmbgOaK5
+         h27jfum1hyzk+Q21vvUyrG45AWItjhHaD7rea91na6tS5CsI9+zbAsio6aDTAs4ZS2jg
+         XK0QIK405nUn0chgd3V11lv77HurdGTVucuoaJgfXOJAeRGa3e10Bcj+RFDTyq+o4sUA
+         +OOfH+6amWDvxvYe67l1p0FRCHoJn0WUliGw+8ORX3QdklY0I1iKfehn0In7OhBLS2DY
+         3q5Rmg0u72xk0144I3UirZZLugxShK515FWniJy3MjNNVFsFrsArqKtn3bTbkEavdBkc
+         Ae9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=n30ZYNrv0V4Hxaf4UAVVsP2kItRCMIYLFWzXSJGVGQw=;
+        b=gMs5RWJZjV2mhROZENP+MRDFZ5uJF++847K0/rCueE1vXVajtpiXdeZE96mdd5p0Q5
+         mLUrUkZ3s6N8Soj/sVjH6nTrNWmJTF5DRC+O5tpmCg5VWjqiGYIsNowKY8ICD5qVAE1s
+         4decaBI/j8PLscUFzUOe3aQ1+CEshtfDbhp8Zo0hrEc0I9MFKxdU51I/w74EftKYwQMe
+         dN2rwXfqIi+Z/nbJOi+yDSSZNq6YaYco4ZmAcsMur9NPMjt9izzsXpQYU3/m/NqrVNtC
+         hhhFLf092WuaeYK0+P+FztPjkngqLxmu6jWT1QhTMPvhi6+lSalWj0zUTdwrqORYSHf5
+         Mr4g==
+X-Gm-Message-State: APjAAAUw9A90LMN0E22BFELc2y7Wxv4g+jZeayENKskLUMRsVPVns2KW
+        jSsb5zJLLx+p88u0voSgnmflAKxuxQNbahV/qI8=
+X-Google-Smtp-Source: APXvYqxAuUmtljEbbRRqPh8gwUfswr3/Lfse8JxeWEUUnCH8+7fjDCul4QG25WpXmSp1+RXgso6INtKWjPuzIANWZAQ=
+X-Received: by 2002:a5e:d702:: with SMTP id v2mr7778384iom.236.1556704450341;
+ Wed, 01 May 2019 02:54:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190320114703.18659-1-pclouds@gmail.com> <20190324082014.2041-1-pclouds@gmail.com>
+ <20190324082014.2041-20-pclouds@gmail.com> <nycvar.QRO.7.76.6.1904292055300.45@tvgsbejvaqbjf.bet>
+ <CACsJy8CUNVWqWff05Lg2xjnOj3L2T7RvVbZh+RZPjvFokvT_-A@mail.gmail.com> <nycvar.QRO.7.76.6.1904301811110.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1904301811110.45@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 1 May 2019 16:53:44 +0700
+Message-ID: <CACsJy8AGf81=_BTd6+idnBcHPB2AAj=dciJn6r_rCB8TJ1hvug@mail.gmail.com>
+Subject: Re: [PATCH v2 19/20] diff --no-index: use parse_options() instead of diff_opt_parse()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fread/fwrite-like functions in http.c, namely fread_buffer,
-fwrite_buffer, fwrite_null, fwrite_sha1_file all return the
-multiplication of the size and number of items they are being given.
+On Wed, May 1, 2019 at 5:12 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:>
+> Hi Duy,
+>
+> On Tue, 30 Apr 2019, Duy Nguyen wrote:
+>
+> > On Tue, Apr 30, 2019 at 8:02 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Hi Duy,
+> > >
+> > > On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> > >
+> > > > While at there, move exit() back to the caller. It's easier to see =
+the
+> > > > flow that way than burying it in diff-no-index.c
+> > >
+> > > I just noticed that this commit message is missing more than just a
+> > > trailing period. It does not explain the change of behavior: previous=
+ly,
+> > > `GIT_EXTERNAL_DIFF=3Dheya git diff --no-index a b` would silently ign=
+ore the
+> > > external diff, it would have required an explicit `--ext-diff` to pic=
+k it
+> > > up.
+> >
+> > Because I was not aware of the behavior change.
+>
+> Well, your patch removes an early return in favor of a later return that
+> allows plenty of diff options to be configured in a different way than
+> before.
 
-Practically speaking, it doesn't matter, because in all contexts where
-those functions are used, size is 1.
+No (and I was terse because I did not have time to look more into it).
+The code flow is the same, the number of option parsing is the same.
+Even post option processing is the same.
 
-But those functions being similar to fread and fwrite (the curl API is
-designed around being able to use fread and fwrite directly), it might
-be preferable to make them behave like fread and fwrite, which, from
-the fread/fwrite manual page, is:
-   On  success, fread() and fwrite() return the number of items read
-   or written.  This number equals the number of bytes transferred
-   only when size is 1.  If an error occurs, or the end of the file
-   is reached, the return value is a short item count (or zero).
+Bisecting points to 287ab28bfa (diff: reuse diff setup for --no-index
+case, 2019-02-16). From the description (i.e. "miss out some settings
+like --ext-diff...") the behavior change seems delibrate. Adding Jeff
+for clarification/
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- http.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> So while it is obvious
 
-diff --git a/http.c b/http.c
-index 98fb06df0b..8dbc91f607 100644
---- a/http.c
-+++ b/http.c
-@@ -176,7 +176,7 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	memcpy(ptr, buffer->buf.buf + buffer->posn, size);
- 	buffer->posn += size;
- 
--	return size;
-+	return nmemb;
- }
- 
- #ifndef NO_CURL_IOCTL
-@@ -204,12 +204,12 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	struct strbuf *buffer = buffer_;
- 
- 	strbuf_add(buffer, ptr, size);
--	return size;
-+	return nmemb;
- }
- 
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
- {
--	return eltsize * nmemb;
-+	return nmemb;
- }
- 
- static void closedown_active_slot(struct active_request_slot *slot)
-@@ -2319,14 +2319,14 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
- 			BUG("curl_easy_getinfo for HTTP code failed: %s",
- 				curl_easy_strerror(c));
- 		if (slot->http_code >= 300)
--			return size;
-+			return nmemb;
- 	}
- 
- 	do {
- 		ssize_t retval = xwrite(freq->localfile,
- 					(char *) ptr + posn, size - posn);
- 		if (retval < 0)
--			return posn;
-+			return posn / eltsize;
- 		posn += retval;
- 	} while (posn < size);
- 
-@@ -2339,7 +2339,7 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
- 		the_hash_algo->update_fn(&freq->c, expn,
- 					 sizeof(expn) - freq->stream.avail_out);
- 	} while (freq->stream.avail_in && freq->zret == Z_OK);
--	return size;
-+	return nmemb;
- }
- 
- struct http_object_request *new_http_object_request(const char *base_url,
--- 
-2.21.0
+I probably have problem understanding. The "commit message is missing"
+seems to imply I knew about this but chose not to mention it.
 
+> (and understandable) that you were not aware of
+> this behavior change, the real question is what we should do about this,
+> now that this patch is already in `master` and on its way into v2.22.0.
+>
+> Ciao,
+> Johannes
+
+
+
+--=20
+Duy
