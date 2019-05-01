@@ -7,148 +7,125 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECFF21F453
-	for <e@80x24.org>; Wed,  1 May 2019 15:36:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9F11F453
+	for <e@80x24.org>; Wed,  1 May 2019 17:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbfEAPg3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 11:36:29 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35778 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbfEAPg2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 11:36:28 -0400
-Received: by mail-wr1-f66.google.com with SMTP id f7so16489169wrs.2
-        for <git@vger.kernel.org>; Wed, 01 May 2019 08:36:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mxyvT5IZ9DtClXpBElYg67dN0Wc8G1cGHxmLuehU7kY=;
-        b=tIdsFaV+2lt3wx24DVBJ0Kr6F2FLW1lt1KcuwEcrW/PT9fbeirRaF7+jNaL067r5Jf
-         Hf/sDYLg6iaOwzvbn3Zu9rXGomHWLGsUuOuj/fc21fSuuFpH0/3LtAs5fn12MF0EPz2g
-         p1Q/KKDlhCwGltkgGS38FXEFxZh2Xac6mH8h7HV5WMPefY+fGTOkAyENRSR17QhzSLfa
-         RT5DZ13WNgIt52m9FdUcQbOVvkoSR1DVwTZXga9wIP6NuLQK7lzOKxo6qMBVCocwASiF
-         PBAlskQ8KUf4K81asz0rvEzaWWram29583EHPkbkOpLJjyNoeUmjoyWF2L7Z4GdmC3jU
-         2vsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=mxyvT5IZ9DtClXpBElYg67dN0Wc8G1cGHxmLuehU7kY=;
-        b=tUtCBrjbzaCRBfiZcj8WVW4YlAa3tGU+qMIeJcic7j5Ang2VeASRuTovFi7/qvZ9xt
-         au5eFkdU403CJC3QEfNOYEbM6oELDQ1irurobmmx89jAicovrada9CraL2EOHwT+8+o/
-         53NwOdYMSmiWdVbz+bdVEYDIoA4gXA30VursgQIeomD8D+717ICKvSMRrG3a9FqpEQ45
-         gvOekMtff72aS4sZR0irMJrGPp6CUMq4XL26U4P0KA3W8emCjjXxtWB2OamztBptmEC2
-         AnL1mEdt089sPpZgBXugLJ5BLIAowcWKHKpqXYPbigRb1R84m/socgfP1gSTE32yMMKC
-         usjA==
-X-Gm-Message-State: APjAAAVGYZwqfPjXgReBreK7r4/fMX/TAb1QowIa8ZzchFWx5PWWrrQQ
-        kcX1BZenO9aK59DcuRMf2Bn13DV+
-X-Google-Smtp-Source: APXvYqy0VtiGA7xKQhNnpcSkTVBVoJ0MneQswx0PBJvIiOGX1VGIr9sr6RrXH3jEB1Sm+lvdgEBIjA==
-X-Received: by 2002:adf:dcc7:: with SMTP id x7mr13610105wrm.197.1556724986734;
-        Wed, 01 May 2019 08:36:26 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id c20sm47642344wre.28.2019.05.01.08.36.25
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 08:36:26 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase --abort: cleanup refs/rewritten
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190426103212.8097-1-phillip.wood123@gmail.com>
- <nycvar.QRO.7.76.6.1904291207040.45@tvgsbejvaqbjf.bet>
- <a3d5dd8c-12a6-a1d8-a41f-ef75c15df024@gmail.com>
- <nycvar.QRO.7.76.6.1904301848510.45@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <4d486504-7f64-95fb-b7eb-51d424f3e6cc@gmail.com>
-Date:   Wed, 1 May 2019 16:36:24 +0100
+        id S1726366AbfEARpm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 13:45:42 -0400
+Received: from mout.web.de ([212.227.15.14]:33163 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726069AbfEARpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 13:45:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1556732727;
+        bh=MjzSObHEwzU6qqrdswoKefVegxaLUWvayrIx7/hAueY=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=A0COL42UylI0FRsO94aJ3EuJMVZEbLMG3nIckqBohEMRrEsocj0cVgfoTSHLlS8lO
+         WJ6qi9aRn2unCqcSdtxJprZINEvESLQl3eA8MaMTPHHE4nh7HhJiiaXpwFlLpdReVg
+         CpC3+BBa5uUkF39O+rkim+3S8zGULgo6At4mr9KM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.19.151]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lk8Ow-1gktaO3jOU-00c8GS; Wed, 01
+ May 2019 19:45:26 +0200
+Subject: Re: [PATCH 2/2] archive: avoid spawning `gzip`
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <44d5371ae6808ec40e8f52c3dc258a85c878b27e.1555110278.git.gitgitgadget@gmail.com>
+ <20190413015102.GC2040@sigill.intra.peff.net>
+ <8ef2164c-1d44-33bf-ea8a-49fa0b5c8abf@web.de>
+ <20190415213556.GB28128@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1904261047560.45@tvgsbejvaqbjf.bet>
+ <f6f32bc0-109c-e0eb-f7d2-9e46647f260c@web.de>
+ <45afd432-9e45-ea76-aa1b-e8cd1264e3a0@web.de>
+ <nycvar.QRO.7.76.6.1904291720120.45@tvgsbejvaqbjf.bet>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <05e97774-5dd1-7224-940f-e50558118d93@web.de>
+Date:   Wed, 1 May 2019 19:45:05 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1904301848510.45@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <nycvar.QRO.7.76.6.1904291720120.45@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:X6jDW9qpnDvLURtGxGbotsLWcMOnQ/4eNvRoDTjJZS7CixoSNNW
+ y2zmIAnQ4WKAd0h8PLn/+9su53qC3aG05NVH7Aii9NamZ+sT18zfJmox6K1WZpK1K1BFzk7
+ /YtRxYRRHDu842W0IkNYcfufLUa/0DElK6nrPWc7M2eiAB4dt5bPTmZvBVmjBzQQLDpuLNq
+ nlS7S2luPbw318RnoXOjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MwMqdIMoGPo=:/8YaV3VSBiubZsQBAU4jjm
+ 0/JQiBT1IhSz7BpfLcHzIljqolrX1r7MDpmKqLVC2nloBm8EloQS82udKCGmwAP0uQ6uZw04D
+ 7BzSz955XCC2hYmlyJ2MvMsYEisGSx0wlSZvzxRGv5oNd5CH6LPn5a69OegkyvBv/46bBHSQL
+ a+VEav6GFE2ED0vAf5qrel2RzGkl0gt5wOF6MHBDQT+nfT+B8yNIpyuCZZ+p8l9WjWsATEcaR
+ /oSyFvCf+5JGbE3p8c7Llag1rW7iyQtGehdvTJf27wY/tXuJrB5CwRXdzGiaBy4dPRS7FBiQZ
+ 1mPQ78QQ5KnkYl1bBNjrJtj4/q+m8XEalAZO2BtRZhQnYyRTuEhft4keRXpufMT/zoYKpD9qx
+ 33hwM9dpNY5GYtnLJIST9y8dqhrL2U9rKmL7iDC8ZNCfxacJ6TQ09u68B/7eaB4FIpDqsOhv+
+ fOkw9n6ClurMkA0YgcHPha2YnxfW3ftvWkZTtIrk+woVenlEv2N86AwaSeZMbpmFrTigo/Mj7
+ ed4sSzzO+zffiM0kZxh9qkutIvIneeM8spSa1sixwBicxpW100ZpZ0V5prOv5AiG3+3fGO/gb
+ 4K4cy8ULdC5fZaWewk5+8mZ5GsRGKaANb9h/6aBLVksUcbECXBugT1hCVwW09DS3NOU1CL7D2
+ 3N3tmjf/bDItZe0eaRWgM1y0nCyawXSz5o/lTZuzNCvDsmclPhEPP858Tqm8Om5XzTSCegCVy
+ 7Aw1kL9PXaMOQgxZNfnCm/nrjuKREyN3w84KHOkNjW4o+QEi17Fqpl7bzgivDd8wqrBOpjOgG
+ QjGfdBG0X9ubrTN49sx21crE00Egt3ZRw+T3lPRkHKjS2eB9OXsXOXGlbIVZhikS2LsK/wHzU
+ jXNVjqykP+Fl9gVwFgryTQzM2AeJhh91MU5PLp3JERDhHcfRlvCSsc3AHxewHM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+Hello Dscho,
 
-On 30/04/2019 23:49, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Tue, 30 Apr 2019, Phillip Wood wrote:
-> 
->> On 29/04/2019 17:07, Johannes Schindelin wrote:
->>>
->>> On Fri, 26 Apr 2019, Phillip Wood wrote:
->>>
->>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>
->>>> When `rebase -r` finishes it removes any refs under refs/rewritten
->>>> that it has created. However if the rebase is aborted these refs are
->>>> not removed. This can cause problems for future rebases. For example I
->>>> recently wanted to merge a updated version of a topic branch into an
->>>> integration branch so ran `rebase -ir` and removed the picks and label
->>>> for the topic branch from the todo list so that
->>>>       merge -C <old-merge> topic
->>>> would pick up the new version of topic. Unfortunately
->>>> refs/rewritten/topic already existed from a previous rebase that had
->>>> been aborted so the rebase just used the old topic, not the new one.
->>>>
->>>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>> ---
->>>
->>> Makes a ton of sense, and I feel a bit embarrassed that I forgot about
->>> that item on my TODO list. The patch looks obviously correct!
->>
->> Thanks, after I sent it I realized that --quit should probably clear
->> refs/rewritten as well, so I'll re-roll with that added. (One could argue that
->> a user might want them after quitting the rebase but there is no way to clean
->> them up safely once we've deleted the state files and I suspect most users
->> would be suprised if they were left laying around)
-> 
-> I am not so sure. `--quit` is essentially all about "leave the state
-> as-is, but still abort the rebase".
+Am 29.04.19 um 23:25 schrieb Johannes Schindelin:
+> On Sat, 27 Apr 2019, Ren=C3=A9 Scharfe wrote:
+>> The simplest solution is of course to not touch the archive code.
+>
+> We could do that, of course, and we could avoid adding a new command tha=
+t
+> we have to support for eternity by introducing a command mode for `git
+> archive` instead (think: `git archive --gzip -9`), and marking that
+> command mode clearly as an internal implementation detail.
 
-I think it depends on what you mean by "state" `--quit` is about 
-removing state specific to rebases while preserving HEAD, the index and 
-worktree. When "rebase --quit" was introduced in 9512177b68 ("rebase: 
-add --quit to cleanup rebase, leave everything else untouched", 
-2016-11-12) the start of the log message reads
+adding gzip as the 142nd git command and 18th pure helper *would* be a
+bit embarrassing, in particular for a command that's not directly
+related to version control and readily available on all platforms.
+Exposing it as a (hidden?) archive sub-command might be better.
 
-     rebase: add --quit to cleanup rebase, leave everything else untouched
+> But since the performance is still not quite on par with `gzip`, I would
+> actually rather not, and really, just punt on that one, stating that
+> people interested in higher performance should use `pigz`.
 
-     There are occasions when you decide to abort an in-progress rebase and
-     move on to do something else but you forget to do "git rebase --abort"
-     first. Or the rebase has been in progress for so long you forgot about
-     it. By the time you realize that (e.g. by starting another rebase)
-     it's already too late to retrace your steps. The solution is normally
+Here are my performance numbers for generating .tar.gz files again:
 
-         rm -r .git/<some rebase dir>
+master, using gzip(1):
+  Time (mean =C2=B1 =CF=83):     16.683 s =C2=B1  0.451 s    [User: 20.230=
+ s, System: 0.375 s]
+  Range (min =E2=80=A6 max):   16.308 s =E2=80=A6 17.852 s    10 runs
 
-     and continue with your life.
+using zlib sequentially:
+  Time (mean =C2=B1 =CF=83):     19.898 s =C2=B1  0.228 s    [User: 19.825=
+ s, System: 0.073 s]
+  Range (min =E2=80=A6 max):   19.627 s =E2=80=A6 20.355 s    10 runs
 
+using zlib asynchronously:
+  Time (mean =C2=B1 =CF=83):     17.300 s =C2=B1  0.198 s    [User: 20.825=
+ s, System: 0.356 s]
+  Range (min =E2=80=A6 max):   17.042 s =E2=80=A6 17.638 s    10 runs
 
-So `--quit` is used when the user has forgotten to run "rebase --abort". 
-They have moved onto something else and want to remove the rebase state 
-without changing the current HEAD, index or worktree, they are not 
-looking to use the refs under refs/rewritten. I think the refs rebase 
-creates under refs/rewritten is an implementation detail of "rebase -r" 
-and should be treated like files under .git/rebase-merge. I'm worried 
-that if we leave them lying around after --quit they will cause trouble 
-for future rebases in the same way they have after "rebase --abort"
+using a gzip-lookalike:
+  Time (mean =C2=B1 =CF=83):     17.256 s =C2=B1  0.299 s    [User: 20.380=
+ s, System: 0.294 s]
+  Range (min =E2=80=A6 max):   16.940 s =E2=80=A6 17.804 s    10 runs
 
-Best Wishes
+The last two have comparable system time, ca. 1% more user time and
+ca. 5% longer duration.  The second one has much better system time
+and 2% less user time and 19% longer duration.  Hmm.
 
-Phillip
+> And who knows, maybe nobody will complain at all about the performance?
 
-> So if I were you, I would *not* remove the `refs/rewritten/` refs in the
-> `--quit` case.
-> 
-> Ciao,
-> Dscho
-> 
+Probably.  And popular tarballs would be cached anyway, I guess.
+
+So I'll send comments on your series later this week.
+
+Ren=C3=A9
