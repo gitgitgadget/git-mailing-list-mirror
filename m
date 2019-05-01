@@ -2,103 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE29E1F453
-	for <e@80x24.org>; Wed,  1 May 2019 07:15:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 779B41F453
+	for <e@80x24.org>; Wed,  1 May 2019 08:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfEAHPd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 03:15:33 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:44458 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfEAHPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 03:15:32 -0400
-Received: by mail-lj1-f182.google.com with SMTP id c6so8385371lji.11
-        for <git@vger.kernel.org>; Wed, 01 May 2019 00:15:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6OLQJ5k2Wvsw3vIAagSOO+ysKjqTOCkE5f0f91RH6nQ=;
-        b=ilDXcPbzqFpPywTbHhtR3TuXkr3y6YCpA+Kl3W25BNkv/DrlUwI9rzLC8YVPPZlewV
-         NFTk2lB3WW8nsTsGqjyLD09u6bicDvVDH3f08CjMZ9yrGpfoVtf4GPzjEGCC0Rq/Px+l
-         1k/j9dBbFo9+6dDMb8ySPaEdv3o9g0Ct+tHAX8A6NmBWknuBflfUUa560jOi8tbNXKFt
-         E3WO6kb2sg2TGU2aVS0wGNS8E4FDaL5Zt1vzqWIsY6iLa16rM0hfQqMoF5n4ZASPAs1v
-         MnejBZw05NIIMZBqqkI1FsH059NBL0f8zoaMDcqHDUsgpZT4y1Xr6tAgBiIgEw0kGNte
-         Ugag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6OLQJ5k2Wvsw3vIAagSOO+ysKjqTOCkE5f0f91RH6nQ=;
-        b=ODL81X/ke2Cb1HFyzwD3eMv/hnpCAcPPVT80BDckhLi+5C382SlzjXi+gk4c4RINrT
-         Hj+XIeSto/ZJ5jwl5xk7g1dmWwD27BTbP9yaRXvUoxfC7g3kecWQ6XmLcaNnB5W256z0
-         svdnrnSuHNfxBDV38uq5QPDgpb3RioS9/dgMzXLai3ezA5p/SRJ29Du432oleVH1PKOQ
-         cUAHodXbQuLvhUrGrpFNenh6NnGw0Skl024n5LZclKp9bQh+C5Ug92mbRtRE+qb8KU3z
-         Cse9w1L2DfF6+PZv3l7qIQ3B9R5e/59cRbIl7s6J3Q2S1tJo0pUHLtAWNH5MKiTI3ZgI
-         MUvQ==
-X-Gm-Message-State: APjAAAWchdirTEWIyfwk2y2x85dLLtW3Eug4xYkzRvB+e93S9MIC8DZ9
-        yL801fpbcooPxYFAlSYhsTTYnfOAgL6G/nhZ2is=
-X-Google-Smtp-Source: APXvYqy3zuk7/mwe66lANwxSkceeXmfdagBn+mMnxXSx4Zsdj5welCeiuIs9GJVP6g4NhxO9LdSFSuSY0ZgOjTY+rH0=
-X-Received: by 2002:a2e:9d99:: with SMTP id c25mr5779607ljj.29.1556694930797;
- Wed, 01 May 2019 00:15:30 -0700 (PDT)
+        id S1726213AbfEAI7p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 04:59:45 -0400
+Received: from taro.getmail.no ([84.210.184.13]:34998 "EHLO
+        taro.get.c.bitbit.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1725776AbfEAI7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 04:59:45 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 May 2019 04:59:44 EDT
+Received: from montes.get.c.bitbit.net (unknown [10.7.88.21])
+        by taro.get.c.bitbit.net (Postfix) with ESMTPS id B2D25F9E2
+        for <git@vger.kernel.org>; Wed,  1 May 2019 10:52:48 +0200 (CEST)
+Received: from bouvier.getmail.no (unknown [10.7.88.12])
+        by montes.get.c.bitbit.net (Postfix) with ESMTPS id 333DB16AD
+        for <git@vger.kernel.org>; Wed,  1 May 2019 10:52:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by bouvier.getmail.no (Postfix) with ESMTP id 7DC0B40036;
+        Wed,  1 May 2019 10:52:42 +0200 (CEST)
+Received: from bouvier.getmail.no ([127.0.0.1])
+        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id EgOm6KDE73UH; Wed,  1 May 2019 10:52:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by bouvier.getmail.no (Postfix) with ESMTP id 8C9DF40034;
+        Wed,  1 May 2019 10:52:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at bouvier.get.c.bitbit.net
+Received: from bouvier.getmail.no ([127.0.0.1])
+        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id jBazdNOvEU5y; Wed,  1 May 2019 10:52:32 +0200 (CEST)
+Received: from perkele.intern.softwolves.pp.se (cm-84.209.6.62.getinternet.no [84.209.6.62])
+        by bouvier.getmail.no (Postfix) with ESMTPSA id 5FD354002E;
+        Wed,  1 May 2019 10:52:32 +0200 (CEST)
+Received: from peter (helo=localhost)
+        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.89)
+        (envelope-from <peter@softwolves.pp.se>)
+        id 1hLkye-0006t6-3b; Wed, 01 May 2019 10:52:32 +0200
+Date:   Wed, 1 May 2019 09:52:32 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff Schwartz <jefftschwartz@gmail.com>, git@vger.kernel.org
+Subject: Re: Request to add option to interactive rebase to preserve latest
+ commit date
+In-Reply-To: <xmqq4l6kvnuu.fsf@gitster-ct.c.googlers.com>
+Message-ID: <alpine.DEB.2.20.1905010900260.23829@perkele.intern.softwolves.pp.se>
+References: <CAL3M-FZ7b3H7Z+Vr9Wbey5iYVoWiUBnDKVEenyAMrUXeNfL56w@mail.gmail.com> <xmqq4l6kvnuu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 MIME-Version: 1.0
-References: <CAF8BazDu_GqoCPBQ-gEJ+q8n1aWSjf_TOV7bDE5VCQkDgBjyfQ@mail.gmail.com>
- <CAF8BazA-VYFns7o9F7gXfFZCspbM0yQKi+LQ+BnkpGH+EjPC9A@mail.gmail.com>
- <CACsJy8DSW2f3v1KpU-QrAz-EeLwG4mVm9ToDdA2=kXSmtsEAYw@mail.gmail.com>
- <CAF8BazBShg9F2uCuVQ_PM6196kOUNWOA1T9APkCXCoey7as2mQ@mail.gmail.com> <20190430174110.GA16729@sigill.intra.peff.net>
-In-Reply-To: <20190430174110.GA16729@sigill.intra.peff.net>
-From:   Aleksey Midenkov <midenok@gmail.com>
-Date:   Wed, 1 May 2019 10:15:19 +0300
-Message-ID: <CAF8BazBBP53uhh+oOroFuVCEL-FaqJheSYX5Q5_NQxGRt=g_xA@mail.gmail.com>
-Subject: Re: Bug: fatal: Unable to create '.../.git/index.lock': File exists.
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 30, 2019 at 8:41 PM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Apr 30, 2019 at 02:19:11PM +0300, Aleksey Midenkov wrote:
->
-> > > I gave it about 2000 commits (from v2.20.1 to master on git.git) to
-> > > rebase. No luck.
-> >
-> > Please, try on this repo: git@github.com:tempesta-tech/mariadb
-> >
-> > ```
-> > git checkout 62a082f573
-> > git rebase -p -x /tmp/check.sh ca7fbcea6c4
-> > ```
->
-> It doesn't reproduce for me.
->
-> Usually when we see racy contention on index.lock, the culprit turns out
-> to be another unrelated git process refreshing the index. Do you have
-> anything else running which might be using "git status" (e.g., magit in
-> emacs, vim git integration, etc)?
->
+Junio C Hamano:
 
-kdevelop which is git-aware. But if git fails on concurrent operation
-this is still not good. I would expect it to wait until lock releases
-for some time.
+>> Using interactive rebase has one flaw IMHO and that is the way it
+>> handles dating its commit. Can you add an option to interactive rebase
+>> that would make it use the date from the commit that is most recent
+>> and not the date from the commit that is the oldest?
+>
+> I am not sure what you mean by this.  If you interactively rebase
+> the topmost two commits (assuming that since three commits ago, you
+> have a linear history):
 
-I confirm, without kdevelop running it doesn't reproduce.
-
-> -Peff
-
-
+I sort of assume that this is when merging several fixup! or squash! 
+commits. I often end up adding lines the code to date these with the 
+current date, but the date of the last fixup'ed or squash'ed commit 
+would probably be better.
 
 -- 
-All the best,
-
-Aleksey Midenkov
-@midenok
+\\// Peter - http://www.softwolves.pp.se/
