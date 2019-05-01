@@ -8,68 +8,59 @@ X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A8A01F453
-	for <e@80x24.org>; Wed,  1 May 2019 22:02:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C74BF1F453
+	for <e@80x24.org>; Wed,  1 May 2019 22:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726266AbfEAWCY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 18:02:24 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:46767 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbfEAWCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 18:02:23 -0400
-Received: by mail-pg1-f195.google.com with SMTP id n2so62792pgg.13
-        for <git@vger.kernel.org>; Wed, 01 May 2019 15:02:23 -0700 (PDT)
+        id S1726183AbfEAWaJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 18:30:09 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33030 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbfEAWaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 18:30:09 -0400
+Received: by mail-pg1-f193.google.com with SMTP id k19so121020pgh.0
+        for <git@vger.kernel.org>; Wed, 01 May 2019 15:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=pyF7EmhBVcDmk85+yWNMA3xJx9nxIsWGVHzIYdUCLR0=;
-        b=BXBnizTBCn+xI3Py81G4htco8PL+SFlt3hsnbUcc2sc/CCx1ZCqNa0YpBYq48TqufR
-         CeYpUZpApU49aORLXndLT+hzR9iBfsBofG5XSzo6+ToRti1ytTG1PlaufUQImbFamDxu
-         Fqj30cP0xfAQOaZ0icTuf2kUFogg8oO0DAI438g2N6O97MWMs+nwzWgjKee+UYc7wrc3
-         wlSiE1NoBsClEVrPjNgtmefMJBluUJEfJmLCQXevgTcE6aDYqFLq6RdW86hRQCOEfri+
-         yIcboKXTi5Xz5+41lI+1KIgXzfYUPnDbmxeVfHAea4Tt9R7RZliZEl9LAvl00IELA6Gj
-         JYMQ==
+        bh=U6xdA3Jdb8bwWnGiUtj0AYLVxCpMtzYKDnFxA002kiI=;
+        b=cvr+0Nw1nGyCjUEjVYUgaKnEgf8PK407l5d6iF0uEXDx8ees6f+/ee3FqQffAGAaPQ
+         5vwAQkKA5SdUGAsT65NUKp5VAxBLyFYs1QhTdR1FklvBDAF13Tfx1sASlprMZop8i6LY
+         3n4dzwTvep0SSbLHG1B/N9P1FMK30+dWgvj/xoiKn2E2bZbW5vOFV2b4Zt3ms36Gaoh/
+         nbkj6QmE9X4bw66tw0cZDZfYCCFz1FzqifwUTAHN2w5lO/Sk7qky0oNoFIQ1e+3DADnR
+         NU49Te2bsOCzxibDckDT11F5FwTxROQTNTl344lprSqgISPO7jdmq9Jal3/WlxljeYu9
+         5P9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pyF7EmhBVcDmk85+yWNMA3xJx9nxIsWGVHzIYdUCLR0=;
-        b=py/TBiML2WzUKq7Q8GL1M5ZKVXTnmf6Q6jS3KJgQXJXlSJNRQUZIGwwIURHXoEGVsC
-         CAPopIpyi9RfG1WDGPxR2xN/QpoqH1rTUhBzE2l/EO4eLkKjQrKI/bGcLkujtx9MGQfY
-         Fn1jPt+1JH5fZZ+54G9CrqWv+yc0w9YQVXRHY2WWeRc79Ml2w/85OfhWu8ykBvahIAgj
-         0r/N2/GZbSjlc4gw8RRzoqouJa5LSP5FEWtSm/+rt089ovavfKXZpOl4FtVRPiDxJy4B
-         n6Sxrmc3EwqecAfjVvkel6arnMqa33BkryIQSL+8fMNgws0XPf0DBiMXUn6XM0bI4ThF
-         L9cw==
-X-Gm-Message-State: APjAAAX8HG9psiutJwHtBxAGPehfcYTMKceJnbGSs4QUGWdTqkLN1kay
-        m4yBpWthrW1TOzQoG3D/oyI=
-X-Google-Smtp-Source: APXvYqxBBKbolFpOCqJx3doFQ5GUijhJcvJjchoEVbx51K0zv381uC0k89eSLWGYE3nLkptwtiVsHg==
-X-Received: by 2002:a63:5953:: with SMTP id j19mr366955pgm.260.1556748142280;
-        Wed, 01 May 2019 15:02:22 -0700 (PDT)
+        bh=U6xdA3Jdb8bwWnGiUtj0AYLVxCpMtzYKDnFxA002kiI=;
+        b=TMvy8+id2zYqNuD3AleC1qU33hCwEQnxoSk+oVd0oUKMw34U4kl7MDEuRJyaO/LZjb
+         DilLT1L8f298Y+KzF2jPNuW55mQ9CcsxkeEUJPci+OYjFqaE4e1frDUm+Sn57KPxfJGp
+         FijdKZumlZq0mqWMEjI0lxp5AWSALegsSyAmrKJEcc20gW+RFOJo4hkTd6xsvTzymqZS
+         b9e9Woi/rWNVIyvbAkhP0Vd7x7izhbzCTBQd6i1VfHZFnBssq2XilL8vNQZj+FqoQMbs
+         YSSYWCBP+TENbsBM4EsbzTNiOZ3ToFRh/svj4N995k8APx4w2TGDTTyJSpfTamnjyv4O
+         T2BQ==
+X-Gm-Message-State: APjAAAUQ1lute4EzzETgebtH7xqYNHGQbV6k18t729m6xhA9DbvulKJw
+        vl8Fm0ZJN3Kn0C9sRVJmDTtUGoe7
+X-Google-Smtp-Source: APXvYqzsg1H20vzMpKKRydhpPujMRWc+Jvi9/5L+vWHRKRi58m7DQ8snDRL69aHggPvKEl3NXYi/XQ==
+X-Received: by 2002:a63:f809:: with SMTP id n9mr435823pgh.201.1556749808004;
+        Wed, 01 May 2019 15:30:08 -0700 (PDT)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id z127sm21513671pfb.53.2019.05.01.15.02.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 May 2019 15:02:20 -0700 (PDT)
-Date:   Wed, 1 May 2019 15:02:19 -0700
+        by smtp.gmail.com with ESMTPSA id r5sm24512410pgv.52.2019.05.01.15.30.06
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 01 May 2019 15:30:07 -0700 (PDT)
+Date:   Wed, 1 May 2019 15:30:05 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@i10z.com>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
-Message-ID: <20190501220219.GA42435@google.com>
-References: <pull.134.git.gitgitgadget@gmail.com>
- <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com>
- <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
- <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
- <20190501204631.GB13372@sigill.intra.peff.net>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: install: gitweb.cgi was not found anywhere
+Message-ID: <20190501223005.GB42435@google.com>
+References: <CAH8yC8kec2N0fkt6cWChOEGtGkrOE5S+QuZnQnDP1eM9mg_EOQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190501204631.GB13372@sigill.intra.peff.net>
+In-Reply-To: <CAH8yC8kec2N0fkt6cWChOEGtGkrOE5S+QuZnQnDP1eM9mg_EOQ@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -78,50 +69,92 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Jeff King wrote:
+Jeffrey Walton wrote:
 
-> I wonder if this points to this patch touching the wrong level. These
-> compiler flags are a thing that _some_ builds want (i.e., production
-> builds where people care most about security and not about debugging),
-> but not necessarily all.
->
-> I'd have expected this to be tweakable by a Makefile knob (either a
-> specific knob, or just the caller setting the right CFLAGS etc), and
-> then for the builds of Git for Windows to turn those knobs when making a
-> package to distribute.
->
-> Our internal package builds at GitHub all have this in their config.mak
-> (for Linux, of course):
->
->   CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1
->   CFLAGS += -fstack-protector-strong
->
->   CFLAGS += -fpie
->   LDFLAGS += -z relro -z now
->   LDFLAGS += -pie
->
-> and I wouldn't be surprised if other binary distributors (like the
-> Debian package) do something similar.
+> I'm attempting to install Git 2.21.0 on Solaris 11.3 x86_64.
+> /usr/gnu/bin is on-path.
+[...]
+> gmake -C gitweb install
+> gmake[1]: Entering directory `/export/home/build/git-2.21.0/gitw
+> eb'
+> gmake[2]: Entering directory `/export/home/build/git-2.21.0'
+> gmake[2]: `GIT-VERSION-FILE' is up to date.
+> gmake[2]: Leaving directory `/export/home/build/git-2.21.0'
+>     GEN gitweb.cgi
+>     GEN static/gitweb.js
+> install -d -m 755 '/usr/local/share/gitweb'
+> directory /usr/local/share/gitweb created
+> install -m 755 gitweb.cgi '/usr/local/share/gitweb'
+> find: cycle detected for /lib/secure/32/
+[...]
+> install: gitweb.cgi was not found anywhere!
 
-Yes, the Debian package uses
+Sounds like it's using "install" when it should be using "ginstall".
+config.mak.uname contains, under the SunOS category:
 
-	CFLAGS := -Wall \
-		$(shell dpkg-buildflags --get CFLAGS) \
-		$(shell dpkg-buildflags --get CPPFLAGS)
+	INSTALL = /usr/ucb/install
 
-and then passes CFLAGS='$(CFLAGS)' to "make".
+But gitweb/Makefile seems to forget to include ../config.mak.uname.
+How about this patch?
 
-That means we're using
+-- >8 --
+Subject: gitweb: use system-appropriate defaults for commands
 
-	-g -O2 -fstack-protector-strong -Wformat -Werror=format-security
-	-Wdate-time -D_FORTIFY_SOURCE=2
+Attempting to install gitweb on Solaris 11 produces
 
-Dscho's suggestion for the Windows build sounds fine to me (if
-checking for -Og, too).  Maybe it would make sense to factor out a
-makefile variable for this, that could be used for builds on other
-platforms, too.  That way, the autodetection can be in one place, and
-there is a standard way to override it when the user wants something
-else.
+ $ gmake install
+...
+ gmake -C gitweb install
+ gmake[1]: Entering directory `/export/home/build/git-2.21.0/gitweb'
+ gmake[2]: Entering directory `/export/home/build/git-2.21.0'
+ gmake[2]: `GIT-VERSION-FILE' is up to date.
+ gmake[2]: Leaving directory `/export/home/build/git-2.21.0'
+     GEN gitweb.cgi
+     GEN static/gitweb.js
+ install -d -m 755 '/usr/local/share/gitweb'
+ directory /usr/local/share/gitweb created
+ install -m 755 gitweb.cgi '/usr/local/share/gitweb'
+ find: cycle detected for /lib/secure/32/
+ find: cycle detected for /lib/32/
+ find: cycle detected for /lib/crypto/32/
+...
+ find: cycle detected for /usr/lib/gss/32/
+ install: gitweb.cgi was not found anywhere!
+ gmake[1]: *** [install] Error 2
+ gmake[1]: Leaving directory `/export/home/build/git-2.21.0/gitweb'
+
+This is because the default "install" tool on SunOS doesn't follow the
+convention we require.  Use the /usr/ucb/install command specified in
+config.mak.uname instead to fix it.
+
+This should also help on other platforms where the default "install"
+command is not functional enough.
+
+Reported-by: Jeffrey Walton <noloader@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Completely untested.  Junio, please don't apply this without Jeffrey's
+tested-by.
 
 Thanks,
 Jonathan
+
+ gitweb/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index cd194d057f..333aa58be0 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -39,7 +39,7 @@ GITWEB_SITE_HEADER =
+ GITWEB_SITE_FOOTER =
+ HIGHLIGHT_BIN = highlight
+ 
+-# include user config
++include ../config.mak.uname
+ -include ../config.mak.autogen
+ -include ../config.mak
+ -include config.mak
+-- 
+2.21.0.1020.gf2820cf01a
+
