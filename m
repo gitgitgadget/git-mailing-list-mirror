@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0C51F453
-	for <e@80x24.org>; Wed,  1 May 2019 19:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD5F01F453
+	for <e@80x24.org>; Wed,  1 May 2019 19:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726116AbfEAT4M (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 15:56:12 -0400
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:43760 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbfEAT4L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 15:56:11 -0400
-Received: by mail-qt1-f193.google.com with SMTP id g4so21161693qtq.10
-        for <git@vger.kernel.org>; Wed, 01 May 2019 12:56:11 -0700 (PDT)
+        id S1726116AbfEAT7j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 15:59:39 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:41601 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726004AbfEAT7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 15:59:38 -0400
+Received: by mail-qk1-f193.google.com with SMTP id l199so127531qke.8
+        for <git@vger.kernel.org>; Wed, 01 May 2019 12:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5RbkeeK16i6FoWlMoGsSlnUAbpMjPySJR5v285q1sZs=;
-        b=arcQKGffVjUyn7WgSajk/JvrT9gyt1Rakpa4Oad4ohipZUZFsREw2vz7Kh1xydCgoW
-         KZv8SAbGZewa6qUGpIljtjPLVKVEICok4HKHcqNxZO7RnzY7mymyg9YvH9gsYn/i7COv
-         rjoOpkeTJq4DbIw+iX9YvwkUuOuurRzSD0YggX+mv/RYcrSMPogo8f9IHOndCkpqyyPm
-         9kgwLowB4jxN9Mgm5dFt4LDiRXBIGJVYXJ5aWpeYpWAWeJUbebqf56mcYUqF1WSxd/Rd
-         IRY9kRjBPhb5X1yejSKPpccHtoulZFF/34KEPNwJ/5XdTKTFjwMT0Bdde+XwPs6Foi/B
-         P4sg==
+        bh=/0W3dvha+2QCf/8SzukJMDE0s1GVmygRIhh98Z8itLY=;
+        b=vUUgkwRYjediMs1k4spBd25cwq+7pMjiCPS9XI3lIe2JwBB6doP2c+PKkR4MmpY7Kk
+         OogjI7a7OU9Sec+wmmwWxiHcTwB5+6LwDtOQcjEdGp/Z+Cg8t8KRh0lxMsjL3NaqQk3H
+         m/FTZgKEM0wWYcqY6rfnehmzYCaqIhIo4LDrJ+DD5qcOzMCpfG+VP2ORa5/sEiExj/m7
+         3kbEFRfRUOuiOUbl700Yo1RaxBCpdstud5hzvqk+iEBThDDahG6XXgsCv9baGNaoGf/P
+         VmUSMripgmcRe/FQB2W7pQxsjbCVw3FdlVqLso9KMbJ2rOk0t6o14XGjMx74t5NZyIyv
+         gGXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=5RbkeeK16i6FoWlMoGsSlnUAbpMjPySJR5v285q1sZs=;
-        b=JEIKsroNruA3t6411gQPqOj2xg6AuYHtHAtwc+tSie3uOmZeIpiu/2k3tYiKwyXw77
-         2JU7/yxdmhmouz+jilXjVsFqxnxaj3T+LrTlZYMFJAtpKxEHTHYxz4BTJL2cIgdkwfn8
-         mVn7s0nFxTBrVNfxqtzf9gsakAxw0rXpfn0t5By4GwxNj/KGJtmAHVaVqSAoWLKs5qyP
-         DxIpepqI60KcU0915Jg4Xpt6R9e3Sxyzj/OVqd+kurxdCQgBzYSJIFJen3cWmBBf96M3
-         rJRM2GkFSA8Ac2Hc8MOkdYVOdjYwqTnOEgMZovJ5x2SnRuDH+7yFsdUvqd1X5sBT0Qmo
-         2aWA==
-X-Gm-Message-State: APjAAAXw7Ma014kXSJf8i2tfx5VgpgOBsJEZZuuL21tL8ZaSeqLuQuhK
-        pq/yhLGPqjSzUdLOIf1AvyY=
-X-Google-Smtp-Source: APXvYqylUr70DB+UH+R5mvNA41pT8h4t7eZ0zEGPz2wVvGAKhOJEfh7lI+aSpnVOQFWXbxtWMyY+mg==
-X-Received: by 2002:a0c:ee28:: with SMTP id l8mr24177qvs.67.1556740570699;
-        Wed, 01 May 2019 12:56:10 -0700 (PDT)
+        bh=/0W3dvha+2QCf/8SzukJMDE0s1GVmygRIhh98Z8itLY=;
+        b=YeOcYU6VMjWyecPe2rGUOw/xrpiS4F9OmO2D2G4ZMW739dy7NDCywyzL2k6LFuUxvf
+         P4p8fsBuhOb4xrkZh5vXdbYHMrZ4n243OL7ZsZOwtj6TC8QcuJ0tKkznoPNK4ysvJ+Mv
+         1pWcbfHNymbSM0lWbh8Z4EC05JBkhpSMhZqcGHC4PlLQ0i1jxlDYBQg1OZKQPE30xsHk
+         MfNIbS+3ryF7rd2tuamMyWRvazqI0LziF8SX6gn2XLduHK7goOBf+coGo5lShVL84mGJ
+         rKfUwZigIAmUSuTHhpMC5t6POkuQZCDHzjFjtanYX+7urtuU100KmpK6aDSnk9EGyEnE
+         rPfA==
+X-Gm-Message-State: APjAAAXVAf0Ck6HLk/q1XoGxyrvg3INd/erFUsLi68zlsrdpn85D5/M5
+        2DHSEBwSr6Eg2G0J4eTSA8o=
+X-Google-Smtp-Source: APXvYqws0lLCQJJcscsTZrr5xT0I3x0ZEbD6ri3QiCjGhWGOn65bMijkiaB4VgC0TsBbiW0aNY4Taw==
+X-Received: by 2002:a37:c207:: with SMTP id i7mr2543qkm.74.1556740777823;
+        Wed, 01 May 2019 12:59:37 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:3012:809d:d5f7:8e4e? ([2001:4898:8010:2:1946:809d:d5f7:8e4e])
-        by smtp.gmail.com with ESMTPSA id d55sm8507051qtb.59.2019.05.01.12.56.08
+        by smtp.gmail.com with ESMTPSA id t129sm20707230qkc.24.2019.05.01.12.59.36
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 12:56:09 -0700 (PDT)
-Subject: Re: [PATCH v3 5/6] commit-graph: implement file format version 2
+        Wed, 01 May 2019 12:59:36 -0700 (PDT)
+Subject: Re: [PATCH v3 6/6] commit-graph: remove Future Work section
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
@@ -58,15 +58,15 @@ Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.112.v2.git.gitgitgadget@gmail.com>
  <pull.112.v3.git.gitgitgadget@gmail.com>
- <cca8267dfeb382005ae3c5a4935f2281dabf26b4.1556716273.git.gitgitgadget@gmail.com>
- <87muk6q98k.fsf@evledraar.gmail.com>
+ <e72bca6c784c5fc727ae4cf661526eec346c478c.1556716273.git.gitgitgadget@gmail.com>
+ <87o94mql0a.fsf@evledraar.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4cf34654-4b2d-ab5c-40ae-b47dc9502135@gmail.com>
-Date:   Wed, 1 May 2019 15:56:08 -0400
+Message-ID: <c1c91314-477e-ffc7-25f5-fb46bc64db4e@gmail.com>
+Date:   Wed, 1 May 2019 15:59:36 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
  Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <87muk6q98k.fsf@evledraar.gmail.com>
+In-Reply-To: <87o94mql0a.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -75,48 +75,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/1/2019 3:12 PM, Ævar Arnfjörð Bjarmason wrote:
+On 5/1/2019 10:58 AM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> OK, let's try that then, on top of this series:
+> On Wed, May 01 2019, Derrick Stolee via GitGitGadget wrote:
 > 
->     diff --git a/commit-graph.c b/commit-graph.c
->     index 5eebba6a0f..36c8cdb950 100644
->     --- a/commit-graph.c
->     +++ b/commit-graph.c
->     @@ -1127,7 +1127,7 @@ int write_commit_graph(const char *obj_dir,
->             case 2:
->                     hashwrite_u8(f, num_chunks);
->                     hashwrite_u8(f, 1); /* reachability index version */
->     -               hashwrite_u8(f, 0); /* unused padding byte */
->     +               hashwrite_u8(f, 1); /* unused padding byte */
+>> The commit-graph feature began with a long list of planned
+>> benefits, most of which are now complete. The future work
+>> section has only a few items left.
+>>
+>> As for making more algorithms aware of generation numbers,
+>> some are only waiting for generation number v2 to ensure the
+>> performance matches the existing behavior using commit date.
+>>
+>> It is unlikely that we will ever send a commit-graph file
+>> as part of the protocol, since we would need to verify the
+>> data, and that is as expensive as writing a commit-graph from
+>> scratch. If we want to start trusting remote content, then
+>> that item can be investigated again.
 > 
-> Then:
+> My best of 3 times for "write" followed by "verify" on linux.git are
+> 8.7/7.9 real/user for "write" and 5.2/4.9 real/user for "write".
 > 
->     $ ~/g/git/git --exec-path=$PWD commit-graph write --version=2; ~/g/git/git --exec-path=$PWD status
->     Expanding reachable commits in commit graph: 100% (201645/201645), done.
->     Computing commit graph generation numbers: 100% (200556/200556), done.
->     error: unsupported value in commit-graph header
->     HEAD detached at pr-112/derrickstolee/graph/v2-head-v3
-> 
-> So we'll error out in the same way as if "2.0" was changed to "3.0" with
-> this "2.1" change, just with a more cryptic error message on this new v2
-> code.
-> 
-> I don't see how this is meaningfully different from just bumping the
-> version to "3". We abort parsing the graph just like with major version
-> changes.
+> So that's a reduction of ~40%. I have another big in-house repo where I
+> get similar numbers of 17/16 for "write" and 10/9 for "verify". Both for
+> a commit-graph file on the order of 50MB where it would be quicker for
+> me to download and verify it if the protocol supported it.
 
-Having a non-zero value here doesn't really mean "2.1" or "3". But I understand
-your apprehension.
+Keep in mind that your first "write" may have warmed up the file system
+and your pack-files parsed faster the second time around.
 
-I'm currently working on building the incremental file format, based on
-this series. This "unused" byte will be used to say "how many base commit-graph
-files does this graph have?" If non-zero, we do not currently understand
-how to stitch these files together into a "combined" graph at run time,
-so we should fail.
+You are right though, 'verify' doesn't do these things:
 
-If we should never have an intermediate version of Git that doesn't
-understand this byte, then this series can wait until that feature is ready.
+1. Sort a list of OIDs.
+2. Write a file.
+
+And perhaps some other things. I should mean that "the main task of
+'git commit-graph verify' is to parse commits from the object store,
+and this is the most expensive operation in 'git commit-graph write'."
 
 Thanks,
 -Stolee
