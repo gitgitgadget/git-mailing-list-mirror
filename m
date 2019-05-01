@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9426F1F453
-	for <e@80x24.org>; Wed,  1 May 2019 13:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 942D41F453
+	for <e@80x24.org>; Wed,  1 May 2019 13:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbfEANMB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 09:12:01 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34591 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbfEANMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 09:12:01 -0400
-Received: by mail-pg1-f194.google.com with SMTP id c13so7324937pgt.1
-        for <git@vger.kernel.org>; Wed, 01 May 2019 06:12:00 -0700 (PDT)
+        id S1726458AbfEANMG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 09:12:06 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39200 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbfEANMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 09:12:06 -0400
+Received: by mail-pf1-f196.google.com with SMTP id z26so4706807pfg.6
+        for <git@vger.kernel.org>; Wed, 01 May 2019 06:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DmG3b+PJKf3SDBzjvBJs10bElVE2m6jusL7sEtF/NY0=;
-        b=RK6sDombZ47QB4XExPXEY+wsc+NKLv+29Y3LK+5mH5CdOw5/xqOt6z1qDpMXpY6qh0
-         +AyVzDBED08qL3Rfpc7IDz9CXmiOe+doVUX7HaiQc1rWTzcp+SvzUzosdDRXuEdqOaa5
-         koKAuZ+ouauTTuQ1rrzfudLvb2esIo1WA4k8lg8dA0VjfYYn8IQNve/9guF3UIuupEzW
-         JSvP1bp5N76PmfWILjZTouJQNxvgwp4h/FkQPLlwMSx9+OI+kxIIPqUapMzXcc69Bxtc
-         fu+Oul1XpHr4RUd4Qduu8zXHEhz8AaO/6Xd50F/wngi86J5ZU3DURibPcHTxnoDmvQEO
-         0DQw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6QQqG96I/vuxysDJ/ikR8DpfmKzcXBv+IkmOY6ylQOQ=;
+        b=c1ijCDOYxk/g7XwHAXRI/x0rG1yV7JUlg0k5PoDp7JaT4uSebRyrQT9rhFr+7PFsLt
+         eCrkZmJEtNqbqvDRUKgQlQYql6IUnXdelWzh1eNGP2jdrBTMg01y+gAh53fUU+nF/bN7
+         FalEnHjIyGVcGuGnIwKmeLeL43gJ5Ndy9wc0GhZsVzXlGSQzgi9QfEu24HobIKHRNRpD
+         SkljzqWh1vE67scRXMKbG4RQJTLFqSurJrrMVzVi2pITWN7F6BzTkMnpKoMh+ny6PEB9
+         MSSy3/20xk+EybfJ2KERZTyE6qxZgsswkiNixLYVFc9CdAgzIaTSwfO4+XjepG8T9l84
+         LHqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DmG3b+PJKf3SDBzjvBJs10bElVE2m6jusL7sEtF/NY0=;
-        b=Q1YdQQMCf60gGn8TGIKVX4RfqSzYn9KhjZlsnAO4IDUyp9eKVpdi2Ly1lME757QClS
-         DkyGIIDavDe20iTgl/+pt9J2D1m8B5WoFBMjFhAQK8ndACkWKEeDKamtXklgO3C+6ZvT
-         AqYLsyvbWWtqSVfF2SnF8Bdg5owI8HayHLT9+/1iIw4sujcTtWEBuIs8JouvyB57OQt/
-         IppYNhX98O7vFW1ZNdvlVHFgFR12B9zqoPx07zHUUvqWb3UeHIcM6gu9ghEsMRa28F7P
-         AD8/Smh32JXXlPfemBFzC9ZlUWqOm/+bw4fNY5fRM3i7mSt1QDNWk8iU4IOCqdYPnfkH
-         V2mw==
-X-Gm-Message-State: APjAAAWKXOrs6qBxfv0NBXPuKR3dDYVmkm2Mx8jIIT5Jk11fvHsojfd7
-        a3fm9rHXviilFbHsh4hJEXr9rIKG
-X-Google-Smtp-Source: APXvYqyl4mIMLLaxCt71XzsEST9UEKrXKeKrt93gGOfkQscAAQL7Myf8yhrKdRrfKc5x5ImXQE5lKQ==
-X-Received: by 2002:a63:8741:: with SMTP id i62mr22792807pge.313.1556716320435;
-        Wed, 01 May 2019 06:12:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6QQqG96I/vuxysDJ/ikR8DpfmKzcXBv+IkmOY6ylQOQ=;
+        b=fFGEM2TnD9NLAq4/ERrWnQK8vZfml9LNUil8mlxcZJbprN0t/uKWYhvWSCceZh4WFB
+         puxRl/Hy0fkkbGZrUIVNUKHYYvmTxd49kyymeTHg9NbNRjTQZZxQhFub4rlZJI8+AukA
+         dOpB1k5qYny/YAXvID2MVaYTlWaXClbo3ohj599nN6AiuSK10ppG0ETbHbfaFlvj8eIS
+         hJpIWhZsFdfRT2X/mPcxTwy87uqzXlPfS70kCF/oklBUEx1nSX4YpBkrUqOIAw45g6Y3
+         VKLoCpe9isY8KLlElHLQ8yDewXWfjG8CnrKmVacrjuJkBljYjHBB5npqvRa5x581BUwG
+         iOrQ==
+X-Gm-Message-State: APjAAAXIskaphY6r35nJAOz5K3Ig75snDozL6pGPKsPW1BNLlbZ0A6yi
+        som+F+oS2Oa2gh6jLBfaTRsCC9pS
+X-Google-Smtp-Source: APXvYqxJ/K1Jf4+pgYEEeTYSiD/3zc+R3TDKgw9rf3kVG72hhsxgw3OI+dbNiOTHysam/T0lLuuANw==
+X-Received: by 2002:a62:e201:: with SMTP id a1mr9493247pfi.67.1556716325236;
+        Wed, 01 May 2019 06:12:05 -0700 (PDT)
 Received: from ash ([171.226.41.84])
-        by smtp.gmail.com with ESMTPSA id w65sm27425345pfb.59.2019.05.01.06.11.57
+        by smtp.gmail.com with ESMTPSA id g3sm28709572pfm.167.2019.05.01.06.12.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 06:11:59 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 01 May 2019 20:11:55 +0700
+        Wed, 01 May 2019 06:12:04 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 01 May 2019 20:12:00 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,10 +57,12 @@ Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 0/2] Add "git merge --quit"
-Date:   Wed,  1 May 2019 20:11:50 +0700
-Message-Id: <20190501131152.314-1-pclouds@gmail.com>
+Subject: [PATCH 1/2] merge: remove drop_save() in favor of remove_merge_branch_state()
+Date:   Wed,  1 May 2019 20:11:51 +0700
+Message-Id: <20190501131152.314-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.1110.g9614c01b33
+In-Reply-To: <20190501131152.314-1-pclouds@gmail.com>
+References: <20190501131152.314-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,24 +71,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-nd/switch-and-restore suggests 'git merge --quit' to get out of a merge
-even though this option is not implemented [1]. It's a soft dependency, no
-actual functionality is broken by the lack of --quit, so I'm sending
-it separately.
+Both remove_branch_state() and drop_save() delete almost the same set of
+files about the current merge state. The only difference is MERGE_RR but
+it should also be cleaned up after a successful merge, which is what
+drop_save() is for.
 
-[1] https://public-inbox.org/git/78c7c281-82ec-2ba9-a607-dd2ecba54945@gmail.com/
+Make a new function that deletes all merge-related state files and use
+it instead of drop_save(). This function will also be used in the next
+patch that introduces --quit.
 
-Nguyễn Thái Ngọc Duy (2):
-  merge: remove drop_save() in favor of remove_merge_branch_state()
-  merge: add --quit
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ branch.c        | 11 ++++++++---
+ branch.h        |  6 ++++++
+ builtin/merge.c | 17 +++++------------
+ 3 files changed, 19 insertions(+), 15 deletions(-)
 
- Documentation/git-merge.txt |  4 ++++
- branch.c                    | 11 ++++++++---
- branch.h                    |  6 ++++++
- builtin/merge.c             | 30 ++++++++++++++++++------------
- t/t7600-merge.sh            | 14 ++++++++++++++
- 5 files changed, 50 insertions(+), 15 deletions(-)
-
+diff --git a/branch.c b/branch.c
+index 28b81a7e02..1db0601a11 100644
+--- a/branch.c
++++ b/branch.c
+@@ -337,15 +337,20 @@ void create_branch(struct repository *r,
+ 	free(real_ref);
+ }
+ 
+-void remove_branch_state(struct repository *r)
++void remove_merge_branch_state(struct repository *r)
+ {
+-	unlink(git_path_cherry_pick_head(r));
+-	unlink(git_path_revert_head(r));
+ 	unlink(git_path_merge_head(r));
+ 	unlink(git_path_merge_rr(r));
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
++}
++
++void remove_branch_state(struct repository *r)
++{
++	unlink(git_path_cherry_pick_head(r));
++	unlink(git_path_revert_head(r));
+ 	unlink(git_path_squash_msg(r));
++	remove_merge_branch_state(r);
+ }
+ 
+ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+diff --git a/branch.h b/branch.h
+index 29c1afa4d0..c90ba9d7bf 100644
+--- a/branch.h
++++ b/branch.h
+@@ -60,6 +60,12 @@ extern int validate_branchname(const char *name, struct strbuf *ref);
+  */
+ extern int validate_new_branchname(const char *name, struct strbuf *ref, int force);
+ 
++/*
++ * Remove information about the merge state on the current
++ * branch. (E.g., MERGE_HEAD)
++ */
++void remove_merge_branch_state(struct repository *r);
++
+ /*
+  * Remove information about the state of working on the current
+  * branch. (E.g., MERGE_HEAD)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5ce8946d39..0fd448b403 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -37,6 +37,7 @@
+ #include "packfile.h"
+ #include "tag.h"
+ #include "alias.h"
++#include "branch.h"
+ #include "commit-reach.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+@@ -282,14 +283,6 @@ static struct option builtin_merge_options[] = {
+ 	OPT_END()
+ };
+ 
+-/* Cleans up metadata that is uninteresting after a succeeded merge. */
+-static void drop_save(void)
+-{
+-	unlink(git_path_merge_head(the_repository));
+-	unlink(git_path_merge_msg(the_repository));
+-	unlink(git_path_merge_mode(the_repository));
+-}
+-
+ static int save_state(struct object_id *stash)
+ {
+ 	int len;
+@@ -383,7 +376,7 @@ static void finish_up_to_date(const char *msg)
+ {
+ 	if (verbosity >= 0)
+ 		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
+-	drop_save();
++	remove_merge_branch_state(the_repository);
+ }
+ 
+ static void squash_message(struct commit *commit, struct commit_list *remoteheads)
+@@ -861,7 +854,7 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
+ 			&result_commit, NULL, sign_commit))
+ 		die(_("failed to write commit object"));
+ 	finish(head, remoteheads, &result_commit, "In-index merge");
+-	drop_save();
++	remove_merge_branch_state(the_repository);
+ 	return 0;
+ }
+ 
+@@ -888,7 +881,7 @@ static int finish_automerge(struct commit *head,
+ 	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
+ 	finish(head, remoteheads, &result_commit, buf.buf);
+ 	strbuf_release(&buf);
+-	drop_save();
++	remove_merge_branch_state(the_repository);
+ 	return 0;
+ }
+ 
+@@ -1466,7 +1459,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		finish(head_commit, remoteheads, &commit->object.oid, msg.buf);
+-		drop_save();
++		remove_merge_branch_state(the_repository);
+ 		goto done;
+ 	} else if (!remoteheads->next && common->next)
+ 		;
 -- 
 2.21.0.1110.g9614c01b33
 
