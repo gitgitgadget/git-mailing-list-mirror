@@ -2,156 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF311F45F
-	for <e@80x24.org>; Wed,  1 May 2019 23:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41A481F453
+	for <e@80x24.org>; Wed,  1 May 2019 23:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726145AbfEAXTA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 19:19:00 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40162 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbfEAXTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 19:19:00 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h4so579976wre.7
-        for <git@vger.kernel.org>; Wed, 01 May 2019 16:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=e4su812mQEFOW/+R1QeNHo7QCx9UliIleCTQ0VEP0uE=;
-        b=YqoGeYOWhviY1SwV/FkiJsV/JMycpjeO8VK3NVEm6RXUxP8HuLY6rx8tufJkB2YrrI
-         IDVpAaH9EcPTAM8JoRWZOZ3yTXBwILnYE/c1BWGlpgU6v8XUt3JEFBEdODUot5Pwevcb
-         XA99LIhpiixm66Ewy9NKli/8uPi9euF6mshvK5xXp5s3gD2x6HOjp0lJMgXluy+KsNoI
-         +h7Gr+CjRZici+L79R8jjiNF3jgtunnN9BEQsrXXV8XFt6zBiSxfp6orJxJCP5/65RC8
-         76BbvmkgUBlUt9GzhJFXMrV+pXS+s+OLe4wFTzsTHPzL8djX4g1oxQPxrXgtwAJf4KyH
-         g2uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=e4su812mQEFOW/+R1QeNHo7QCx9UliIleCTQ0VEP0uE=;
-        b=KNK6eyBno92Dg5gxkTNXVUgRP4oElzWmecypG9EIcfRJ0X+I4C9kPVtudGE4oJQTnn
-         W1Hs9euhXubXKDhkt0K2lXQ9r+wGYaplT+xq00HtXSEJn5rl9MFn2F5qe/YbKaGBT9Y/
-         Yi97MvavWUsoZMa1grrXba1ZoYw0qY3W4K3mhc8b9pYwFIyc10lUV/2XCnocYNA3R/G7
-         kpfqlPdzOQTx02qANum9Am9BZNciXuP7gRu3Vi7+p3Ey8303N2AkUufz6ZEhNuqlgeuE
-         cxhQ78ehKegwAZi4u0dzh0W1JuSWuS/2D/ha+RwsdZZSshn525pIjHdP7K11tVRMwUyP
-         3W4Q==
-X-Gm-Message-State: APjAAAUXQwOYn4N/yXwjZp69BThyQYWOoAEhcL+ZGH+YVMFp43HVVIHe
-        uJ3kzps2NKxQ2nVpGEs+hmqTcuAE
-X-Google-Smtp-Source: APXvYqwVYeHAiOJ3KnSBi8Fy1VJMD/E7V9gPLeROXQ3Wt6NsTj+MxlyQRwvJtDEaDghoqM/EzIgQsg==
-X-Received: by 2002:a5d:69cb:: with SMTP id s11mr362043wrw.315.1556752737397;
-        Wed, 01 May 2019 16:18:57 -0700 (PDT)
-Received: from szeder.dev (x4db31769.dyn.telefonica.de. [77.179.23.105])
-        by smtp.gmail.com with ESMTPSA id z6sm21212651wrw.87.2019.05.01.16.18.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 16:18:56 -0700 (PDT)
-Date:   Thu, 2 May 2019 01:18:54 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ci: install 'libsvn-perl' instead of 'git-svn'
-Message-ID: <20190501231854.GE14763@szeder.dev>
-References: <20190430123724.16150-1-szeder.dev@gmail.com>
- <nycvar.QRO.7.76.6.1904301816200.45@tvgsbejvaqbjf.bet>
+        id S1726183AbfEAXgu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 19:36:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35794 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726126AbfEAXgt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 May 2019 19:36:49 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D627B60443;
+        Wed,  1 May 2019 23:36:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1556753806;
+        bh=i+QQG9ePnbvks0e+FzrC/sk/AA6+1FxPCiHif45zmoE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=j0BsLN6PIzPYGGOVVYHxeih9yOzX9IRhb6cfnRWFcqpYh72ubxxXLfdhSBMyL2/zE
+         mj/26JmiHoUzQFWq6eELw5SoioiBGsYFo4/Jbj/fj0emf89ZI/J557TYVnn/SodwyD
+         Y1FN5lmBSSDOaNGAzy5SuOqCNniZscKzxB7uqW2VMTR0BO7GUMNlaFV+6IdwlmHNFU
+         6qgeGp1FKTBWNsjlHCaS46Oc28fk0sopbFQ9LZnzZ88wFYweBkgMooJw4q0r5cuG5D
+         8yLkoSz7XoCVdFF0Ex8+lQeseaqoHsQjqT2ftjF4zSEiCNQfvTOz6RhTIaqN8DbS7O
+         XsLsdv3OfylBUFayJ3jWYeFEhc4C143M/5S0n1SDfQekOpWzjIOc1OiYRezRDWHxJc
+         irYo/AQCbVo+AUA1GWw3Q5mEnQCVQfTC/914lZD4mObSc8KuZeKPNNs5Rg652sBRrh
+         gLrC0QgM+NAiV/O56CQahcRXfGGySVQsrbch5uqdnQpGEmkm+H6
+Date:   Wed, 1 May 2019 23:36:41 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@i10z.com>,
+        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
+Message-ID: <20190501233641.GC202237@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@i10z.com>,
+        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.134.git.gitgitgadget@gmail.com>
+ <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com>
+ <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
+ <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
+ <2e7be484-74d7-7258-954e-3a4a34a36c01@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6zdv2QT/q3FMhpsV"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1904301816200.45@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <2e7be484-74d7-7258-954e-3a4a34a36c01@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-4-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 30, 2019 at 06:16:48PM -0400, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 30 Apr 2019, SZEDER Gábor wrote:
-> 
-> > Since e7e9f5e7a1 (travis-ci: enable Git SVN tests t91xx on Linux,
-> > 2016-05-19) some of our Travis CI build jobs install the 'git-svn'
-> > package, because it was a convenient way to install its dependencies,
-> > which are necessary to run our 'git-svn' tests (we don't actually need
-> > the 'git-svn' package itself).  However, from those dependencies,
-> > namely the 'libsvn-perl', 'libyaml-perl', and 'libterm-readkey-perl'
-> > packages, only 'libsvn-perl' is necessary to run those tests, the
-> > others arent, not even to fulfill some prereqs.
-> >
-> > So update 'ci/install-dependencies.sh' to install only 'libsvn-perl'
-> > instead of 'git-svn' and its additional dependencies.
-> >
-> > Note that this change has more important implications than merely not
-> > installing three unnecessary packages, as it keeps our builds working
-> > with Travis CI's Xenial images.  In our '.travis.yml' we never
-> > explicitly specified which Linux image we want to use to run our Linux
-> > build jobs, and so far they have been run on the default Ubuntu 14.04
-> > Trusty image.  However, 14.04 just reached its EOL, and Travis CI has
-> > already began the transition to use 16.04 Xenial as the default Linux
-> > build environment [1].  Alas, our Linux Clang and GCC build jobs can't
-> > simply 'apt-get install git-svn' in the current Xenial images [2],
-> > like they did in the Trusty images, and, consequently, fail.
-> > Installing only 'libsvn-perl' avoids this issue, while the 'git svn'
-> > tests are still run as they should.
-> >
-> > [1] https://blog.travis-ci.com/2019-04-15-xenial-default-build-environment
-> >
-> > [2] 'apt-get install git-svn' in the Xenial image fails with:
-> >
-> >       The following packages have unmet dependencies:
-> >        git-svn : Depends: git (< 1:2.7.4-.)
-> >       E: Unable to correct problems, you have held broken packages.
-> >
-> >     The reason is that both the Trusty and Xenial images contain the
-> >     'git' package installed from 'ppa:git-core/ppa', so it's
-> >     considerably newer than the 'git' package in the corresponding
-> >     standard Ubuntu package repositories.  The difference is that the
-> >     Trusty image still contains these third-party apt repositories, so
-> >     the 'git-svn' package was installed from the same PPA, and its
-> >     version matched the version of the already installed 'git'
-> >     package.  In the Xenial image, however, these third-party
-> >     apt-repositories are removed (to reduce the risk of unrelated
-> >     interference and faster 'apt-get update') [3], and the version of
-> >     the 'git-svn' package coming from the standard Ubuntu package
-> >     repositories doesn't match the much more recent version of the
-> >     'git' package installed from the PPA, resulting in this dependecy
-> >     error.
-> >
-> >     Adding back the 'ppa:git-core/ppa' package repository would solve
-> >     this dependency issue as well, but since the troublesome package
-> >     happens to be unnecessary, not installing it in the first place is
-> >     better.
-> >
-> > [3] https://docs.travis-ci.com/user/reference/xenial/#third-party-apt-repositories-removed
-> >
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  ci/install-dependencies.sh | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> > index 52a44c690a..7f6acdd803 100755
-> > --- a/ci/install-dependencies.sh
-> > +++ b/ci/install-dependencies.sh
-> > @@ -12,7 +12,7 @@ case "$jobname" in
-> >  linux-clang|linux-gcc)
-> >  	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
-> >  	sudo apt-get -q update
-> > -	sudo apt-get -q -y install language-pack-is git-svn apache2
-> > +	sudo apt-get -q -y install language-pack-is libsvn-perl apache2
-> 
-> Makes sense.
-> 
-> I assume you verified that this works also with our Azure Pipeline?
 
-No, I didn't; only on Travis CI's 14.04 and 16.04 images and on a
-local 16.04 install.
+--6zdv2QT/q3FMhpsV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, May 01, 2019 at 08:39:22PM +0200, Alban Gruin wrote:
+> -Og also exists to debug[0], even if it=E2=80=99s far less known.  Perhap=
+s it=E2=80=99s
+> better to check for -g (and its variants[1]) as the user clearly states
+> their intent to debug the resulting binary, rather than checking for
+> special cases.
+
+I can't speak for the Windows folks, but Debian frequently builds with
+-O2 -g and strips the debugging symbols into a separate package that can
+be installed in case of a crash. So -g need not be an indication of
+non-production use.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--6zdv2QT/q3FMhpsV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.15 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzKLYkACgkQv1NdgR9S
+9ou6FA/+MDPWCqJ5K2d57vpSU/Je2rzXOEucoRibPhXyiJ5tYKXFuZiLbkgA26Va
+GB8beArNVgReCe1ooghr8/bw7Y48ewDgvojQmizhc9FKQvHOwPYl2g1/zkiUyisH
+QUlLyR967qdv0gjM4GcFptNRjIwNRMYulRy5YAEJLxl+SXnPvnApd9qLX7obJWSh
+bn0zIymFBMBjVIi5ChdsAg1ogV/eA7pXBZHxkJ+0OfqMzYr1tbdRUZG8+ReoE/hd
+Xm3RRZUvXN4GkX0DMj0Lv2CQE2wLcyiw4QD1rkhg+tXth8PWkpdijsWdSeWviwpP
+M8miAL2CPwzZ6R2ln7+WYq4GYqfkkryVDdg7SGZFBoieuJGMvRXEfsqk7MIeg0dt
+bAFLC0egoV/CTGC+s/I35ZXx82fvrflO8IAj4KJW/Mc3mM2TBGgw7YF74E6uYwSH
+IoJwZ6nJu6JsPehUvgBaXkIGjTd9XffkYWlGNVT1/aRbDNRBaMP4w53QZqsY4shC
+VomWQk+uNEjUPFhI1QFgx4F7eY8FkPr32YYUFn40PI7mI8sO6uBCqapXcIJ0OJSG
+qSXFrJoLPD35/atF53pBMzcQP7j0NGQqBonhecpyE2k03IgRyM1LUpt0r+1Ibc25
+SvtRRNSZ6uC/cX3Hi5Y7xgipDBEe10tkKuzBi7tGbe3whtuy2CQ=
+=bjd3
+-----END PGP SIGNATURE-----
+
+--6zdv2QT/q3FMhpsV--
