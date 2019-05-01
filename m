@@ -7,63 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41A481F453
-	for <e@80x24.org>; Wed,  1 May 2019 23:36:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA701F453
+	for <e@80x24.org>; Wed,  1 May 2019 23:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726183AbfEAXgu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 19:36:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35794 "EHLO
+        id S1726166AbfEAXpT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 19:45:19 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35804 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726126AbfEAXgt (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 May 2019 19:36:49 -0400
+        by vger.kernel.org with ESMTP id S1726133AbfEAXpT (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 May 2019 19:45:19 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D627B60443;
-        Wed,  1 May 2019 23:36:45 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7433960443;
+        Wed,  1 May 2019 23:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556753806;
-        bh=i+QQG9ePnbvks0e+FzrC/sk/AA6+1FxPCiHif45zmoE=;
+        s=default; t=1556754317;
+        bh=d/tMP/YZnKQIkbhCBFN2ZwKbRyRNix7bGA32uJUmTpM=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=j0BsLN6PIzPYGGOVVYHxeih9yOzX9IRhb6cfnRWFcqpYh72ubxxXLfdhSBMyL2/zE
-         mj/26JmiHoUzQFWq6eELw5SoioiBGsYFo4/Jbj/fj0emf89ZI/J557TYVnn/SodwyD
-         Y1FN5lmBSSDOaNGAzy5SuOqCNniZscKzxB7uqW2VMTR0BO7GUMNlaFV+6IdwlmHNFU
-         6qgeGp1FKTBWNsjlHCaS46Oc28fk0sopbFQ9LZnzZ88wFYweBkgMooJw4q0r5cuG5D
-         8yLkoSz7XoCVdFF0Ex8+lQeseaqoHsQjqT2ftjF4zSEiCNQfvTOz6RhTIaqN8DbS7O
-         XsLsdv3OfylBUFayJ3jWYeFEhc4C143M/5S0n1SDfQekOpWzjIOc1OiYRezRDWHxJc
-         irYo/AQCbVo+AUA1GWw3Q5mEnQCVQfTC/914lZD4mObSc8KuZeKPNNs5Rg652sBRrh
-         gLrC0QgM+NAiV/O56CQahcRXfGGySVQsrbch5uqdnQpGEmkm+H6
-Date:   Wed, 1 May 2019 23:36:41 +0000
+        b=Gj89h5xIr/2KPL5qqb3rhFkK9y7rCONvb4b9kx9ebUMd2Hr7xaQQrdU7B5zjjpb5n
+         22V4RpACpT39gFRxqyG3hpB48sXrzRhLAguLszGUTSnp2rGsRJgpcxHYq8Z0kd4ddm
+         Dob1Ds4GUAGBbs7X3AX5GysU6/9WaQCQozWf2pp6QO3DMvWo0bXkOchZ4ThdLNFDA1
+         i1mn8rtsH13QTZr7x3HzwRrqe7lpo3GcPYp0V4xt4T9l1tRw9zdRx06zblxEcxqMVF
+         wbY8s96RUaM4w9mgnBZCuL9iTm6jBNHOcfgy+QzML8naHx2qqVyKX/oG9LdNYPU4pc
+         mdb4lX4zXOH85cXMtdrjlnfsLiy27kPNkdd7oGMDoxGkBqQu0c0GKuB2RgERlLKcL8
+         c+jbTMYoZOFq9clukhbqw02vkEJy4PWHsgshh8peB/VvoNFmhsD8g/9BJtFRS8ptZy
+         H03XNM+ll2X18nG3tx+nalTyMQKB0eaEghtgdZVxuX6AE50HqHo
+Date:   Wed, 1 May 2019 23:45:12 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@i10z.com>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
-Message-ID: <20190501233641.GC202237@genre.crustytoothpaste.net>
+To:     phillip.wood@dunelm.org.uk
+Cc:     John Lin <johnlinp@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] status: add an empty line when there is no hint
+Message-ID: <20190501234512.GD202237@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@i10z.com>,
-        =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.134.git.gitgitgadget@gmail.com>
- <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com>
- <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org>
- <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
- <2e7be484-74d7-7258-954e-3a4a34a36c01@gmail.com>
+        phillip.wood@dunelm.org.uk, John Lin <johnlinp@gmail.com>,
+        git@vger.kernel.org
+References: <20190430060210.79610-1-johnlinp@gmail.com>
+ <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6zdv2QT/q3FMhpsV"
+        protocol="application/pgp-signature"; boundary="a2FkP9tdjPU2nyhF"
 Content-Disposition: inline
-In-Reply-To: <2e7be484-74d7-7258-954e-3a4a34a36c01@gmail.com>
+In-Reply-To: <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-4-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -74,45 +62,67 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---6zdv2QT/q3FMhpsV
+--a2FkP9tdjPU2nyhF
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 01, 2019 at 08:39:22PM +0200, Alban Gruin wrote:
-> -Og also exists to debug[0], even if it=E2=80=99s far less known.  Perhap=
-s it=E2=80=99s
-> better to check for -g (and its variants[1]) as the user clearly states
-> their intent to debug the resulting binary, rather than checking for
-> special cases.
+On Tue, Apr 30, 2019 at 12:15:37PM +0100, Phillip Wood wrote:
+> Hi John
+>=20
+> On 30/04/2019 07:02, John Lin wrote:
+> > When typing "git status", there is an empty line between
+> > the "Changes not staged for commit:" block and the list
+> > of changed files.
+>=20
+> I'm a bit confused by this as you change a status test below by inserting
+> these blank lines into the expected output, implying they are not there n=
+ow.
+> I think maybe the blank line is only shown when status prints advice.
+>=20
+> > However, when typing "git commit" with
+> > no files added, there are no empty lines between them.
+>=20
+> I have to say looking at the changes to the output I prefer the original,
+> the lists are nicely indented so there is no need for a blank line to
+> separate the header from the list and having the header immediately before
+> the list means the blank line at the end of the block makes the extent of
+> the block clear. It also saves screen space which is useful for small lap=
+top
+> screens. I can see why one might want a blank line to separate the advice
+> and list of changes (though even there the indention of the list and advi=
+ce
+> is different) but for a one line header I think it is better to start the
+> list on the next line.
 
-I can't speak for the Windows folks, but Debian frequently builds with
--O2 -g and strips the debugging symbols into a separate package that can
-be installed in case of a crash. So -g need not be an indication of
-non-production use.
+I actually was going to submit an equivalent patch eventually. The
+inconsistency between status and commit is bothersome to me and I think
+that adding the whitespace improves readability.
+
+I'd love to see this picked up.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---6zdv2QT/q3FMhpsV
+--a2FkP9tdjPU2nyhF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.15 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzKLYkACgkQv1NdgR9S
-9ou6FA/+MDPWCqJ5K2d57vpSU/Je2rzXOEucoRibPhXyiJ5tYKXFuZiLbkgA26Va
-GB8beArNVgReCe1ooghr8/bw7Y48ewDgvojQmizhc9FKQvHOwPYl2g1/zkiUyisH
-QUlLyR967qdv0gjM4GcFptNRjIwNRMYulRy5YAEJLxl+SXnPvnApd9qLX7obJWSh
-bn0zIymFBMBjVIi5ChdsAg1ogV/eA7pXBZHxkJ+0OfqMzYr1tbdRUZG8+ReoE/hd
-Xm3RRZUvXN4GkX0DMj0Lv2CQE2wLcyiw4QD1rkhg+tXth8PWkpdijsWdSeWviwpP
-M8miAL2CPwzZ6R2ln7+WYq4GYqfkkryVDdg7SGZFBoieuJGMvRXEfsqk7MIeg0dt
-bAFLC0egoV/CTGC+s/I35ZXx82fvrflO8IAj4KJW/Mc3mM2TBGgw7YF74E6uYwSH
-IoJwZ6nJu6JsPehUvgBaXkIGjTd9XffkYWlGNVT1/aRbDNRBaMP4w53QZqsY4shC
-VomWQk+uNEjUPFhI1QFgx4F7eY8FkPr32YYUFn40PI7mI8sO6uBCqapXcIJ0OJSG
-qSXFrJoLPD35/atF53pBMzcQP7j0NGQqBonhecpyE2k03IgRyM1LUpt0r+1Ibc25
-SvtRRNSZ6uC/cX3Hi5Y7xgipDBEe10tkKuzBi7tGbe3whtuy2CQ=
-=bjd3
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzKL4gACgkQv1NdgR9S
+9ovMxg/9Fr4v0vDay88/kS8ywf+nY/0uvzGlWULV2rvXnOfORuq4gKdCMIHT35Yu
+PovmfFyPtlwPSlX8/dqipPDTJPN39R/MoGVgY5DnhEGmn9NIYiT0WO5lhfFYoqSF
+Ilf45r5q5YBpHFy5IBBp3dEJudJnmYR+/EvDlan+xmWuT/cGFpzytzFjlUkOshsQ
+G6v2rcmTP6dnhp2s3AKq9ERkgTvUA1knW0jm+x2SqTmFOE0RTgafbd6ytdCPnvSc
+cEmIFb3L/52GM/yPTi3ENs9ipPWtACiD2bNMUhyH+J//0qOV2EDt3Ug6WnNXt5/z
+ycMFV0u7mxUN3ZrbAaeMcAcxyiILSNdiq+N8Tj7rNQuDhuFsRfjr7NQfVzbc8ghd
+qy1lNT4yOTBzhY5jqb8AflS+CtwscwOnqgBUmrdUA1XiTfo2Lp+LLe/xfu8aSbZG
+cjegdydSYxqyrqwyfWWcNn+aDSvIRsd3IM8WKkTrol7PMqnAnaJUWAxB5iusjMeK
+ZzyMpeByf8zLm/HaMqpN34l/4HfSRZSaq4jTPJsTAv6NMZpiosgbmXSnmRPn64c5
+PFHlvBqNmgYxcJz0crcG3pT6JOgAjqs4f7zzpmNagF6sl++rgKPCSGWOtUaSHDPw
+01NTlz/DXDvh6APMWkpwHHlOglpJNPCniyAGOnHrk94RKpI2qs8=
+=7fWd
 -----END PGP SIGNATURE-----
 
---6zdv2QT/q3FMhpsV--
+--a2FkP9tdjPU2nyhF--
