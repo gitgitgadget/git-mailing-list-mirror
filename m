@@ -2,106 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_EMPTY_SUBJ,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2811C1F45F
-	for <e@80x24.org>; Wed,  1 May 2019 21:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4A71F488
+	for <e@80x24.org>; Wed,  1 May 2019 21:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbfEAVP2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 17:15:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46366 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726088AbfEAVP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 17:15:27 -0400
-Received: (qmail 25096 invoked by uid 109); 1 May 2019 21:15:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 May 2019 21:15:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22818 invoked by uid 111); 1 May 2019 21:16:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 01 May 2019 17:16:02 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 May 2019 17:15:25 -0400
-Date:   Wed, 1 May 2019 17:15:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Barret Rhoden <brho@google.com>, Olaf Hering <olaf@aepfle.de>
-Subject: Re: How to undo previously set configuration? (again)
-Message-ID: <20190501211525.GB15902@sigill.intra.peff.net>
-References: <20190424004948.728326-1-sandals@crustytoothpaste.net>
- <20190424023438.GE98980@google.com>
- <20190424230744.GL6316@genre.crustytoothpaste.net>
- <87k1fis8gq.fsf@evledraar.gmail.com>
- <20190425143614.GA91608@google.com>
- <CACsJy8B5j2K=RU7N+h-i9HszuYuYd+fNmAftVDW-4nJ_o5z8Sw@mail.gmail.com>
- <20190430211415.GB16290@sigill.intra.peff.net>
- <CACsJy8B+hDqKnu+0tkPC42w+_6RhzYac1BxYtdyxctcARG=VCg@mail.gmail.com>
- <87r29iqsf9.fsf@evledraar.gmail.com>
+        id S1726327AbfEAV5l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 17:57:41 -0400
+Received: from mail-it1-f182.google.com ([209.85.166.182]:38357 "EHLO
+        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726144AbfEAV5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 17:57:40 -0400
+Received: by mail-it1-f182.google.com with SMTP id q19so4016itk.3
+        for <git@vger.kernel.org>; Wed, 01 May 2019 14:57:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=TWGretORS+Pi5Ezouvpbm5/pUN14v5E+xVOmJR2e2/U=;
+        b=AknOpE2XMdlawds11d7Vn5GyGQLoAl1N8xvilHPspXKcZVjHki4aMDH1yOKE4WXWns
+         RU5oXtgqMDOnz/IITJ3L6tTsg37/BtSDc7ArDC+cIgBLDPLAFt7gKSrAb4MnguL/Qn5H
+         AOJQSE87XmWK+Y0rJV9Y48Z69+YFVCDHdqrfJyOARuz6gxi516mgSQtRLGYg0i53czNo
+         xXynoqlqmSEr5hdbJ7orN+KN2wnk5V+fp7xJZ618LgUQykZF4Ogj0uxFLiMrUHXBzeyJ
+         kzF3+fVFA9N+NElnJ/49DSTK/dco+ZpNcrqSGOsXqQ+xTeRKzy5QWJVM8B1QixtcjGCp
+         V5yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=TWGretORS+Pi5Ezouvpbm5/pUN14v5E+xVOmJR2e2/U=;
+        b=VCsqqYnbZanbI406oMtXsNV7nPn1lCMeDzeIBzVGO99U7ful9iOCLncXL9QwM3wbMO
+         410mRz/AiN7s2nSglcP6hQmw5Q1Q47W6jxpUuGdGiNuRFVgNHAnJPtjP7s2oEbzMn2ST
+         rkfhlnG8Vv2MNpoqdENIDadCPsQXllpZxwvZmVejgyYnOxEwAwa8YuKHBpusubEooJdh
+         /nvUGnZKcQaEESk6UFKS55YNGPnO/Av/SUbwTLO2XsMJJzprrdP5RS+iLBtj+U1gqaw7
+         cpgw4qpybkQVLUPaucM7cW5YtKl7e/g83OhPzV51Bc2LKlNQV/JRPKhpS+XjwjoSSPse
+         X4xw==
+X-Gm-Message-State: APjAAAWkFR+m4xM7VGdqnTEek6UsCZD0/mFHZQ9/j2MDxdWCbNMktkIt
+        z0dik5PIpN2YqjYh0ho5zhp4tzcpUl39PpxBLqoFsXQc
+X-Google-Smtp-Source: APXvYqxQ+Mz2jbafBfGBnBM+ec9FEYYhmImc4phwGs+pN9j2NVgdviLLhn+ezisghIREjYFmojB+GVjavmQs9WyFnSs=
+X-Received: by 2002:a24:1104:: with SMTP id 4mr3301154itf.10.1556747860115;
+ Wed, 01 May 2019 14:57:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87r29iqsf9.fsf@evledraar.gmail.com>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Wed, 1 May 2019 17:57:24 -0400
+Message-ID: <CAH8yC8kec2N0fkt6cWChOEGtGkrOE5S+QuZnQnDP1eM9mg_EOQ@mail.gmail.com>
+Subject: 
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 01, 2019 at 02:18:34PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi Everyone,
 
-> We can make it fancier, but we already deal with this, e.g. if you do
-> "git config -l" we'll show "include{,if}" directives at the same "level"
-> as other "normal" keys.
+I'm attempting to install Git 2.21.0 on Solaris 11.3 x86_64.
+/usr/gnu/bin is on-path.
 
-We show them, but we _do_ interpret them if the caller asks for it with
---includes (which defaults to on when doing the usual "look in all
-files").
+'make' was OK, 'make check' had a few failures. 'make install' has troubles.
 
-I think we'd have something similar here, where the caller can ask to
-apply excludes or not.
+$ sudo gmake install
+...
 
-> We also provide no way in "git config" to properly interpret a
-> value. E.g. does a "user.email" showing up twice for me mean I have two
-> E-Mails at the same time, or does the last one win? We both know the
-> answer, but git-config itself doesn't, and that information lives in
-> docs/code outside of it.
-> 
-> Similarly we'd just print a sequence of:
-> 
->     user.name=foo
->     user.email=bar
->     exclude.key=user.*
->     user.name=baz
-> 
-> And it would be up to some "smarter" reader of the config data to
-> realize that the end result is one where we have no "user.email" set,
-> and "user.name=baz".
-> 
-> But yeah, optionally having some new --list-normalized or
-> --list-after-excludes or whatever would be great, and presumably not
-> hard if we had some central "excludes" mechanism...
+gmake -C gitweb install
+gmake[1]: Entering directory `/export/home/build/git-2.21.0/gitw
+eb'
+gmake[2]: Entering directory `/export/home/build/git-2.21.0'
+gmake[2]: `GIT-VERSION-FILE' is up to date.
+gmake[2]: Leaving directory `/export/home/build/git-2.21.0'
+    GEN gitweb.cgi
+    GEN static/gitweb.js
+install -d -m 755 '/usr/local/share/gitweb'
+directory /usr/local/share/gitweb created
+install -m 755 gitweb.cgi '/usr/local/share/gitweb'
+find: cycle detected for /lib/secure/32/
+find: cycle detected for /lib/32/
+find: cycle detected for /lib/crypto/32/
+find: cycle detected for /usr/lib/locale/en_US.UTF-8/LO_LTYPE/32/
+find: cycle detected for /usr/lib/locale/en_US.UTF-8/32/
+find: cycle detected for /usr/lib/locale/en_US.UTF-8/LC_CTYPE/32/
+find: cycle detected for /usr/lib/32/
+find: cycle detected for /usr/lib/security/32/
+find: cycle detected for /usr/lib/link_audit/32/
+find: cycle detected for /usr/lib/rad/client/c/32/
+find: cycle detected for /usr/lib/secure/32/
+find: cycle detected for /usr/lib/fm/topo/plugins/32/
+find: cycle detected for /usr/lib/lwp/32/
+find: cycle detected for /usr/lib/pool/32/
+find: cycle detected for /usr/lib/brand/solaris10/32/
+find: cycle detected for /usr/lib/elfedit/32/
+find: cycle detected for /usr/lib/gss/32/
+install: gitweb.cgi was not found anywhere!
+gmake[1]: *** [install] Error 2
+gmake[1]: Leaving directory `/export/home/build/git-2.21.0/gitweb'
+gmake: *** [install] Error 2
 
-I think that is all because "--list" really is just about dumping all
-values, not about interpreting. If we had an exclude mechanism, then I'd
-expect:
-
-  git config user.name
-
-to apply it just like git_config_get_string() would.
-
-Because of its lack of interpretation, I don't think --list is actually
-good for much besides debugging. Some scripts do use it to avoid making
-a bunch of individual git-config calls, but they'd be much better served
-by a --stdin mode which let you feed in a sequence of operations ("I want
-x.y.z, as a single last-one-wins value, and interpreted as a bool") and
-get a sequence of outputs.
-
--Peff
+Jeff
