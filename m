@@ -6,66 +6,74 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 560591F453
-	for <e@80x24.org>; Wed,  1 May 2019 18:23:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6BB01F453
+	for <e@80x24.org>; Wed,  1 May 2019 18:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbfEASXZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 14:23:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46056 "HELO cloud.peff.net"
+        id S1726120AbfEASbL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 14:31:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46084 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726004AbfEASXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 14:23:25 -0400
-Received: (qmail 23390 invoked by uid 109); 1 May 2019 18:23:25 -0000
+        id S1726069AbfEASbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 14:31:10 -0400
+Received: (qmail 23495 invoked by uid 109); 1 May 2019 18:31:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 May 2019 18:23:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 01 May 2019 18:31:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20917 invoked by uid 111); 1 May 2019 18:24:00 -0000
+Received: (qmail 20959 invoked by uid 111); 1 May 2019 18:31:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 01 May 2019 14:24:00 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 01 May 2019 14:31:45 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 May 2019 14:23:23 -0400
-Date:   Wed, 1 May 2019 14:23:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 01 May 2019 14:31:08 -0400
+Date:   Wed, 1 May 2019 14:31:08 -0400
 From:   Jeff King <peff@peff.net>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     David Carson <DCarson@extremenetworks.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: add 'ls-remote' option to limit output records
-Message-ID: <20190501182323.GD4109@sigill.intra.peff.net>
-References: <560CCADB-511B-495E-B86B-F294486C088C@contoso.com>
- <CAGyf7-G+FEDVe=WiVVNJr1ALn-ryA4862qbjdDCNXM+LhpjORQ@mail.gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 4/8] commit-graph: don't early exit(1) on e.g. "git
+ status"
+Message-ID: <20190501183108.GE4109@sigill.intra.peff.net>
+References: <20190314214740.23360-1-avarab@gmail.com>
+ <20190325120834.15529-5-avarab@gmail.com>
+ <87y33vr41k.fsf@evledraar.gmail.com>
+ <3518ad3e-bc4a-c2c3-d4bd-c87f9e828b1c@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGyf7-G+FEDVe=WiVVNJr1ALn-ryA4862qbjdDCNXM+LhpjORQ@mail.gmail.com>
+In-Reply-To: <3518ad3e-bc4a-c2c3-d4bd-c87f9e828b1c@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 26, 2019 at 12:32:51PM -0700, Bryan Turner wrote:
+On Mon, Apr 29, 2019 at 08:48:51AM -0400, Derrick Stolee wrote:
 
-> >         $ git ls-remote -n1 --tags --sort=v:refname origin "v*"
-> [...]
-> With the v2 wire protocol, the client could provide a prefix (like
-> `refs/tags/`, or potentially `refs/tags/v`) to reduce what the server
-> included in the ref advertisement, but even the v2 protocol doesn't
-> have anything for telling the server "Version parse these names and
-> then return the first N". That means the parsing, sorting and trimming
-> for the advertised tags would still all have to happen locally. (I'm
-> sure someone can correct me if I've misstated what protocol v2 can do
-> for filtering, but I don't see any "ls-refs" options that look like
-> they enable anything other than prefix matching.)
+> Q: How should we handle a detectably-invalid commit-graph?
+> 
+> I think most of your patches have done a good job so far of detecting
+> an invalid header, and responding by ignoring the commit-graph. This case
+> of a detectable error in the chunk data itself is not something we can
+> check on the first load without serious performance issues.
+> 
+> I hope we can decide on a good solution.
 
-No, that sounds right. The "--tags" in the original command should cause
-v2 to ask only for refs/tags/. But because of the way ls-remote matching
-works, "v*" is not a pure prefix match, and would find
-"refs/tags/foo/v1.2.3". So we can't use protocol-level matching to ask
-for "refs/tags/v*".
+I think it's OK to die() unceremoniously in these cases. We already have
+similar behavior when dealing with packfiles. While we try to just
+return an error for bit-flips in data (so we can try finding the object
+elsewhere), if there are things like nonsensical file offsets, we
+generally just give up.
 
-There are no provisions in the protocol for sorting, nor for limiting
-the output.
+So I think it makes sense to start with the _safe_ thing, which is just
+giving up on the operation and informing the user. If somebody wants to
+then loosen things up on a case by case basis (after seeing that it
+wouldn't produce incorrect results to do so), that can be future work.
 
-I didn't check, but I suspect some hosting-platform APIs might be able
-to answer this with a single query.
+For the commit-graph, though, and given that we're talking about file
+corruption, I don't know that it's even worth the effort. The solution
+is basically always going to be "delete the commit-graph file and
+regenerate it". It's perhaps slightly inconvenient compared to falling
+back, but this just isn't something we'd expect to happen often.
 
 -Peff
