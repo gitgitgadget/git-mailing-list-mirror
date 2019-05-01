@@ -8,171 +8,150 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1706A1F453
-	for <e@80x24.org>; Wed,  1 May 2019 23:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DF311F45F
+	for <e@80x24.org>; Wed,  1 May 2019 23:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726167AbfEAXQp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 19:16:45 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37672 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726125AbfEAXQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 19:16:45 -0400
-Received: by mail-wr1-f68.google.com with SMTP id k23so594272wrd.4
-        for <git@vger.kernel.org>; Wed, 01 May 2019 16:16:44 -0700 (PDT)
+        id S1726145AbfEAXTA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 19:19:00 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40162 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726133AbfEAXTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 19:19:00 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h4so579976wre.7
+        for <git@vger.kernel.org>; Wed, 01 May 2019 16:18:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=aIv2POI4h+vrN1yP2//zZ0NVbNkrGsxO/McWBtX5BuE=;
-        b=fGl3wcFfg5J5EK5N8vC/SUDJUvCvXs4b0H+uPaM7lH+bEGv/m7kdaX7oZJyfqILvRk
-         QKhdFAxUXozlqs2xrGPLiTaeHiHI9+SxGUplOye2731FkjMPnzzHEAfhE4EqdRulfrib
-         HU8ZdTMy0YG90azCvnUJ78dbpgxH2rsiO3TGNShIkNqGlVh3R3QjAbU7c7nslIUd0Ni7
-         orPVqQ+SqHjAlUvO1WbId8lOnBtvqI00t7dLvcd8hlKAeyxXA//jTzhCvsHRI2lWHDzs
-         WSeHlMiHgTnC4vCVt9yrXnHtXYKzoFgpXgLrey3PlFCwDVOBzHlb8b6ia659hsD3BBQm
-         hCdA==
+        bh=e4su812mQEFOW/+R1QeNHo7QCx9UliIleCTQ0VEP0uE=;
+        b=YqoGeYOWhviY1SwV/FkiJsV/JMycpjeO8VK3NVEm6RXUxP8HuLY6rx8tufJkB2YrrI
+         IDVpAaH9EcPTAM8JoRWZOZ3yTXBwILnYE/c1BWGlpgU6v8XUt3JEFBEdODUot5Pwevcb
+         XA99LIhpiixm66Ewy9NKli/8uPi9euF6mshvK5xXp5s3gD2x6HOjp0lJMgXluy+KsNoI
+         +h7Gr+CjRZici+L79R8jjiNF3jgtunnN9BEQsrXXV8XFt6zBiSxfp6orJxJCP5/65RC8
+         76BbvmkgUBlUt9GzhJFXMrV+pXS+s+OLe4wFTzsTHPzL8djX4g1oxQPxrXgtwAJf4KyH
+         g2uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=aIv2POI4h+vrN1yP2//zZ0NVbNkrGsxO/McWBtX5BuE=;
-        b=GfZQq6S4Emp9xQdsorJ+/puN3CM/JvrgmkKnfYqX/h11H2cmMMpSNOwVtnJXwuA5po
-         d03xoyCamppNLGt85x1+yvM+65DUOc7gFY5xQmNZQOVrMpb/C2JPVnLoDLM8C6kj005d
-         tXjEMjaABrP6giVVdLafkqLPbfm38f6L7OtrayPjhGW+k0l5c5kHqNK2m24zcknkMw3V
-         znTZ5FilYowm9p1v96zd4YRCuI3LPCTer34I8YIpLaL7aw/+AmtJYxfpzSu+2Ajh8iTx
-         JT/YGMeXwU0wwLx9Aa9m1JWXHnxjXeVUlzHJyx9bo6CWgoTuwlbZ86mtX/InAhU32Q6t
-         ugHg==
-X-Gm-Message-State: APjAAAVEZBlcSbfORQbukO1n1hIcYOQmmXB49VYt3DBPXJtEryZC5d8D
-        bFdNg+ur6n7NhoJRqsLC2HRYJeQr
-X-Google-Smtp-Source: APXvYqzwBf2l04/eWofEDIMmFUSly8P4/RstMFp3a7Hjymh1erZu2p1XN4gpjHqSmJzm8soQ+nFGyQ==
-X-Received: by 2002:adf:ead2:: with SMTP id o18mr402009wrn.156.1556752603737;
-        Wed, 01 May 2019 16:16:43 -0700 (PDT)
+        bh=e4su812mQEFOW/+R1QeNHo7QCx9UliIleCTQ0VEP0uE=;
+        b=KNK6eyBno92Dg5gxkTNXVUgRP4oElzWmecypG9EIcfRJ0X+I4C9kPVtudGE4oJQTnn
+         W1Hs9euhXubXKDhkt0K2lXQ9r+wGYaplT+xq00HtXSEJn5rl9MFn2F5qe/YbKaGBT9Y/
+         Yi97MvavWUsoZMa1grrXba1ZoYw0qY3W4K3mhc8b9pYwFIyc10lUV/2XCnocYNA3R/G7
+         kpfqlPdzOQTx02qANum9Am9BZNciXuP7gRu3Vi7+p3Ey8303N2AkUufz6ZEhNuqlgeuE
+         cxhQ78ehKegwAZi4u0dzh0W1JuSWuS/2D/ha+RwsdZZSshn525pIjHdP7K11tVRMwUyP
+         3W4Q==
+X-Gm-Message-State: APjAAAUXQwOYn4N/yXwjZp69BThyQYWOoAEhcL+ZGH+YVMFp43HVVIHe
+        uJ3kzps2NKxQ2nVpGEs+hmqTcuAE
+X-Google-Smtp-Source: APXvYqwVYeHAiOJ3KnSBi8Fy1VJMD/E7V9gPLeROXQ3Wt6NsTj+MxlyQRwvJtDEaDghoqM/EzIgQsg==
+X-Received: by 2002:a5d:69cb:: with SMTP id s11mr362043wrw.315.1556752737397;
+        Wed, 01 May 2019 16:18:57 -0700 (PDT)
 Received: from szeder.dev (x4db31769.dyn.telefonica.de. [77.179.23.105])
-        by smtp.gmail.com with ESMTPSA id k67sm6677473wmb.34.2019.05.01.16.16.42
+        by smtp.gmail.com with ESMTPSA id z6sm21212651wrw.87.2019.05.01.16.18.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 16:16:42 -0700 (PDT)
-Date:   Thu, 2 May 2019 01:16:40 +0200
+        Wed, 01 May 2019 16:18:56 -0700 (PDT)
+Date:   Thu, 2 May 2019 01:18:54 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] rebase: fix garbled progress display with '-x'
-Message-ID: <20190501231640.GD14763@szeder.dev>
-References: <20190430142556.20921-1-szeder.dev@gmail.com>
- <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
+Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] ci: install 'libsvn-perl' instead of 'git-svn'
+Message-ID: <20190501231854.GE14763@szeder.dev>
+References: <20190430123724.16150-1-szeder.dev@gmail.com>
+ <nycvar.QRO.7.76.6.1904301816200.45@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1904301816200.45@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 30, 2019 at 06:25:35PM -0400, Johannes Schindelin wrote:
+On Tue, Apr 30, 2019 at 06:16:48PM -0400, Johannes Schindelin wrote:
 > Hi,
 > 
 > On Tue, 30 Apr 2019, SZEDER Gábor wrote:
 > 
-> > When running a command with the 'exec' instruction during an
-> > interactive rebase session, or for a range of commits using 'git
-> > rebase -x', the output can be a bit garbled when the name of the
-> > command is short enough:
+> > Since e7e9f5e7a1 (travis-ci: enable Git SVN tests t91xx on Linux,
+> > 2016-05-19) some of our Travis CI build jobs install the 'git-svn'
+> > package, because it was a convenient way to install its dependencies,
+> > which are necessary to run our 'git-svn' tests (we don't actually need
+> > the 'git-svn' package itself).  However, from those dependencies,
+> > namely the 'libsvn-perl', 'libyaml-perl', and 'libterm-readkey-perl'
+> > packages, only 'libsvn-perl' is necessary to run those tests, the
+> > others arent, not even to fulfill some prereqs.
 > >
-> >   $ git rebase -x true HEAD~5
-> >   Executing: true
-> >   Executing: true
-> >   Executing: true
-> >   Executing: true
-> >   Executing: true)
-> >   Successfully rebased and updated refs/heads/master.
+> > So update 'ci/install-dependencies.sh' to install only 'libsvn-perl'
+> > instead of 'git-svn' and its additional dependencies.
 > >
-> > Note the ')' at the end of the last line.  It gets more garbled as the
-> > range of commits increases:
+> > Note that this change has more important implications than merely not
+> > installing three unnecessary packages, as it keeps our builds working
+> > with Travis CI's Xenial images.  In our '.travis.yml' we never
+> > explicitly specified which Linux image we want to use to run our Linux
+> > build jobs, and so far they have been run on the default Ubuntu 14.04
+> > Trusty image.  However, 14.04 just reached its EOL, and Travis CI has
+> > already began the transition to use 16.04 Xenial as the default Linux
+> > build environment [1].  Alas, our Linux Clang and GCC build jobs can't
+> > simply 'apt-get install git-svn' in the current Xenial images [2],
+> > like they did in the Trusty images, and, consequently, fail.
+> > Installing only 'libsvn-perl' avoids this issue, while the 'git svn'
+> > tests are still run as they should.
 > >
-> >   $ git rebase -x true HEAD~50
-> >   Executing: true)
-> >   [ repeated 3 more times ]
-> >   Executing: true0)
-> >   [ repeated 44 more times ]
-> >   Executing: true00)
-> >   Successfully rebased and updated refs/heads/master.
+> > [1] https://blog.travis-ci.com/2019-04-15-xenial-default-build-environment
 > >
-> > Those extra numbers and ')' are remnants of the previously displayed
-> > "Rebasing (N/M)" progress lines that are usually completely
-> > overwritten by the "Executing: <cmd>" lines, unless 'cmd' is short and
-> > the "N/M" part is long.
+> > [2] 'apt-get install git-svn' in the Xenial image fails with:
 > >
-> > Make sure that the previously displayed "Rebasing (N/M)" line is
-> > completely covered up by printing a terminal width worth of space
-> > characters.
+> >       The following packages have unmet dependencies:
+> >        git-svn : Depends: git (< 1:2.7.4-.)
+> >       E: Unable to correct problems, you have held broken packages.
+> >
+> >     The reason is that both the Trusty and Xenial images contain the
+> >     'git' package installed from 'ppa:git-core/ppa', so it's
+> >     considerably newer than the 'git' package in the corresponding
+> >     standard Ubuntu package repositories.  The difference is that the
+> >     Trusty image still contains these third-party apt repositories, so
+> >     the 'git-svn' package was installed from the same PPA, and its
+> >     version matched the version of the already installed 'git'
+> >     package.  In the Xenial image, however, these third-party
+> >     apt-repositories are removed (to reduce the risk of unrelated
+> >     interference and faster 'apt-get update') [3], and the version of
+> >     the 'git-svn' package coming from the standard Ubuntu package
+> >     repositories doesn't match the much more recent version of the
+> >     'git' package installed from the PPA, resulting in this dependecy
+> >     error.
+> >
+> >     Adding back the 'ppa:git-core/ppa' package repository would solve
+> >     this dependency issue as well, but since the troublesome package
+> >     happens to be unnecessary, not installing it in the first place is
+> >     better.
+> >
+> > [3] https://docs.travis-ci.com/user/reference/xenial/#third-party-apt-repositories-removed
 > >
 > > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> > ---
+> >  ci/install-dependencies.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index 52a44c690a..7f6acdd803 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -12,7 +12,7 @@ case "$jobname" in
+> >  linux-clang|linux-gcc)
+> >  	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+> >  	sudo apt-get -q update
+> > -	sudo apt-get -q -y install language-pack-is git-svn apache2
+> > +	sudo apt-get -q -y install language-pack-is libsvn-perl apache2
 > 
 > Makes sense.
 > 
-> > This issue has already been present in the scripted rebase as well.
-> >
-> > As far as I could tell, if any other rebase instruction prints a
-> > message, then that tends to be so long (including abbreviated commit
-> > OIDs and whatnot) that they practically always overwrite that
-> > "Rebasing (N/M)" progress line (well, except, perhaps, when rebasing
-> > billions of commits at a time?).
-> >
-> >  sequencer.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 546f281898..c2e4baa90e 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -3631,6 +3631,12 @@ static int pick_commits(struct repository *r,
-> >  			int saved = *end_of_arg;
-> >  			struct stat st;
-> >
-> > +			if (!opts->verbose)
-> > +				/*
-> > +				 * Fully cover the previous "Rebasing (n/m)"
-> > +				 * progress line.
-> > +				 */
-> > +				fprintf(stderr, "%*s\r", term_columns(), "");
-> 
-> IIRC there are terminals (`cmd.exe`?) that would advance to the next row
-> automatically when printing the exact number of columns in a row. So this
-> would not work.
+> I assume you verified that this works also with our Azure Pipeline?
 
-Hrm, I though about using 'term_columns()-1', or moving the '\r' from
-the format string to the string to be printed, but in the end didn't
-do either, because it seemed to work well as it is in the two
-terminals that I tried (on Linux).
-
-> But isn't there an ANSI sequence that we can use?
-> 
-> *clicketyclick*
-> 
-> Yes: https://github.com/git/git/blob/v2.21.0/editor.c#L101 (introduced in
-> https://github.com/git/git/commit/abfb04d0c7#diff-cdeec438beb851e450b94a11db9ab7edR89)
-> 
-> So maybe we should do the same here, i.e.
-> 
-> 	fputs("\r\033[K", stderr);
-
-Oh, that would be nice (and not only here, but it could have made the
-changes in 'sg/overlong-progress-fix' a bit simpler as well).
-Unfortunately, however, it only works on non-dumb terminals (note the
-'!is_terminal_dumb()' call in the preceeding condition), while rebase
-hasn't had such a limitation on the terminal yet.
-
-> Ciao,
-> Dscho
-> 
-> >  			*end_of_arg = '\0';
-> >  			res = do_exec(r, arg);
-> >  			*end_of_arg = saved;
-> > --
-> > 2.21.0.1181.g24122a4251
-> >
-> >
+No, I didn't; only on Travis CI's 14.04 and 16.04 images and on a
+local 16.04 install.
 
