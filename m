@@ -2,103 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E095B1F453
-	for <e@80x24.org>; Wed,  1 May 2019 22:55:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1706A1F453
+	for <e@80x24.org>; Wed,  1 May 2019 23:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726175AbfEAWz2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 18:55:28 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:34355 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbfEAWz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 18:55:28 -0400
-Received: by mail-it1-f195.google.com with SMTP id p18so4127598itm.1
-        for <git@vger.kernel.org>; Wed, 01 May 2019 15:55:28 -0700 (PDT)
+        id S1726167AbfEAXQp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 19:16:45 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37672 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbfEAXQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 19:16:45 -0400
+Received: by mail-wr1-f68.google.com with SMTP id k23so594272wrd.4
+        for <git@vger.kernel.org>; Wed, 01 May 2019 16:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=6Wi+CdZCy7kTSjHhURjcVPGwocShru5GhJj/wUxE2Vo=;
-        b=tpsJBbypfG8FgSxx59GYCo5xQgjvCrVnnzVmHroxuVkFK2SoOIqlmMXFzUBC+q2uUc
-         liUjfnMsWEKGEN4ZM9nkovDjM44ZWwGveJMXDrabe4bgvwtg18k1Hp/GkFcvPcQVYknc
-         S7MKOVkh4pk4eZR4L6Q9IieRWjwQbSAvsRrPLL3EzOJ9TAYhC2FjU38MlI8fr3wd1ilV
-         Cyf8nnBRgvvIXbbBt8SVsL4QedIf5aKKVK6Loedbde5VaBkqHUl1psPCLiVJoCF7r8yy
-         bUl3WncJ8baLoZGEi0D6JwdI1B4YIyDid7xTOKYGTdeZxXyngdBx4Q3vqz1QRr/kPCwW
-         gHfg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=aIv2POI4h+vrN1yP2//zZ0NVbNkrGsxO/McWBtX5BuE=;
+        b=fGl3wcFfg5J5EK5N8vC/SUDJUvCvXs4b0H+uPaM7lH+bEGv/m7kdaX7oZJyfqILvRk
+         QKhdFAxUXozlqs2xrGPLiTaeHiHI9+SxGUplOye2731FkjMPnzzHEAfhE4EqdRulfrib
+         HU8ZdTMy0YG90azCvnUJ78dbpgxH2rsiO3TGNShIkNqGlVh3R3QjAbU7c7nslIUd0Ni7
+         orPVqQ+SqHjAlUvO1WbId8lOnBtvqI00t7dLvcd8hlKAeyxXA//jTzhCvsHRI2lWHDzs
+         WSeHlMiHgTnC4vCVt9yrXnHtXYKzoFgpXgLrey3PlFCwDVOBzHlb8b6ia659hsD3BBQm
+         hCdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=6Wi+CdZCy7kTSjHhURjcVPGwocShru5GhJj/wUxE2Vo=;
-        b=pXSSzvmcjO3sh0GkUkuH0dQCqXdRPRtGdxnLRheD1h7Kp0byFwRuRDENrEHIVAYyCk
-         0slifcKbh3nBVYkBCU9TaAYxWn5qGpq/orkYb669zy0XUp1t11IamXbDojFL4CdSKMC8
-         f28Pmc0M3ZUUKjuHWv7gOTJc4WtFTgmdDWjxPeZ0W8zqlRaLcrMsG8iFh8NvYtmNdTN2
-         grxwBd3/3xEv4BvSvuAUg3/MB82upHH1JvZteUj1j4ryRj/kN39FAUJxmPvLHc3jYHJu
-         ocMuBa71tN2nKCczHvBfmy7G38LOiX5V2bY3uJUTWsieDIJLqdbGK89pqwl0lQepLwzq
-         YcfQ==
-X-Gm-Message-State: APjAAAWfOzkedcagi2doG/mpNG16BRbx8rAHY+gUDCcaZ8hBZ8JetOig
-        5KWHdjCAZ08tsDRsSiT7+fp2w88O8ApMeFW0kcA=
-X-Google-Smtp-Source: APXvYqzA18MVESAMJ0GP5PiQ+jcpLVCG3IoxeSZUf1slX91moriQM0Na5TWjbq3/u9vwBWgCYxCH88mf4hOT7GeTxYw=
-X-Received: by 2002:a24:1104:: with SMTP id 4mr112329itf.10.1556751328020;
- Wed, 01 May 2019 15:55:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=aIv2POI4h+vrN1yP2//zZ0NVbNkrGsxO/McWBtX5BuE=;
+        b=GfZQq6S4Emp9xQdsorJ+/puN3CM/JvrgmkKnfYqX/h11H2cmMMpSNOwVtnJXwuA5po
+         d03xoyCamppNLGt85x1+yvM+65DUOc7gFY5xQmNZQOVrMpb/C2JPVnLoDLM8C6kj005d
+         tXjEMjaABrP6giVVdLafkqLPbfm38f6L7OtrayPjhGW+k0l5c5kHqNK2m24zcknkMw3V
+         znTZ5FilYowm9p1v96zd4YRCuI3LPCTer34I8YIpLaL7aw/+AmtJYxfpzSu+2Ajh8iTx
+         JT/YGMeXwU0wwLx9Aa9m1JWXHnxjXeVUlzHJyx9bo6CWgoTuwlbZ86mtX/InAhU32Q6t
+         ugHg==
+X-Gm-Message-State: APjAAAVEZBlcSbfORQbukO1n1hIcYOQmmXB49VYt3DBPXJtEryZC5d8D
+        bFdNg+ur6n7NhoJRqsLC2HRYJeQr
+X-Google-Smtp-Source: APXvYqzwBf2l04/eWofEDIMmFUSly8P4/RstMFp3a7Hjymh1erZu2p1XN4gpjHqSmJzm8soQ+nFGyQ==
+X-Received: by 2002:adf:ead2:: with SMTP id o18mr402009wrn.156.1556752603737;
+        Wed, 01 May 2019 16:16:43 -0700 (PDT)
+Received: from szeder.dev (x4db31769.dyn.telefonica.de. [77.179.23.105])
+        by smtp.gmail.com with ESMTPSA id k67sm6677473wmb.34.2019.05.01.16.16.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 May 2019 16:16:42 -0700 (PDT)
+Date:   Thu, 2 May 2019 01:16:40 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] rebase: fix garbled progress display with '-x'
+Message-ID: <20190501231640.GD14763@szeder.dev>
+References: <20190430142556.20921-1-szeder.dev@gmail.com>
+ <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <CAH8yC8kec2N0fkt6cWChOEGtGkrOE5S+QuZnQnDP1eM9mg_EOQ@mail.gmail.com>
- <20190501223005.GB42435@google.com>
-In-Reply-To: <20190501223005.GB42435@google.com>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Wed, 1 May 2019 18:55:12 -0400
-Message-ID: <CAH8yC8=kntpNKwEFrQ32zHbRqrQyvAgSqejFmJcAu__B9KTC7Q@mail.gmail.com>
-Subject: Re: install: gitweb.cgi was not found anywhere
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1904301819540.45@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 1, 2019 at 6:30 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> ...
-> > install -m 755 gitweb.cgi '/usr/local/share/gitweb'
-> > find: cycle detected for /lib/secure/32/
-> [...]
-> > install: gitweb.cgi was not found anywhere!
->
-> Sounds like it's using "install" when it should be using "ginstall".
-> config.mak.uname contains, under the SunOS category:
->
->         INSTALL = /usr/ucb/install
->
-> But gitweb/Makefile seems to forget to include ../config.mak.uname.
-> How about this patch?
-> ...
->  gitweb/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/gitweb/Makefile b/gitweb/Makefile
-> index cd194d057f..333aa58be0 100644
-> --- a/gitweb/Makefile
-> +++ b/gitweb/Makefile
-> @@ -39,7 +39,7 @@ GITWEB_SITE_HEADER =
->  GITWEB_SITE_FOOTER =
->  HIGHLIGHT_BIN = highlight
->
-> -# include user config
-> +include ../config.mak.uname
->  -include ../config.mak.autogen
->  -include ../config.mak
->  -include config.mak
+On Tue, Apr 30, 2019 at 06:25:35PM -0400, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 30 Apr 2019, SZEDER Gábor wrote:
+> 
+> > When running a command with the 'exec' instruction during an
+> > interactive rebase session, or for a range of commits using 'git
+> > rebase -x', the output can be a bit garbled when the name of the
+> > command is short enough:
+> >
+> >   $ git rebase -x true HEAD~5
+> >   Executing: true
+> >   Executing: true
+> >   Executing: true
+> >   Executing: true
+> >   Executing: true)
+> >   Successfully rebased and updated refs/heads/master.
+> >
+> > Note the ')' at the end of the last line.  It gets more garbled as the
+> > range of commits increases:
+> >
+> >   $ git rebase -x true HEAD~50
+> >   Executing: true)
+> >   [ repeated 3 more times ]
+> >   Executing: true0)
+> >   [ repeated 44 more times ]
+> >   Executing: true00)
+> >   Successfully rebased and updated refs/heads/master.
+> >
+> > Those extra numbers and ')' are remnants of the previously displayed
+> > "Rebasing (N/M)" progress lines that are usually completely
+> > overwritten by the "Executing: <cmd>" lines, unless 'cmd' is short and
+> > the "N/M" part is long.
+> >
+> > Make sure that the previously displayed "Rebasing (N/M)" line is
+> > completely covered up by printing a terminal width worth of space
+> > characters.
+> >
+> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> 
+> Makes sense.
+> 
+> > This issue has already been present in the scripted rebase as well.
+> >
+> > As far as I could tell, if any other rebase instruction prints a
+> > message, then that tends to be so long (including abbreviated commit
+> > OIDs and whatnot) that they practically always overwrite that
+> > "Rebasing (N/M)" progress line (well, except, perhaps, when rebasing
+> > billions of commits at a time?).
+> >
+> >  sequencer.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 546f281898..c2e4baa90e 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -3631,6 +3631,12 @@ static int pick_commits(struct repository *r,
+> >  			int saved = *end_of_arg;
+> >  			struct stat st;
+> >
+> > +			if (!opts->verbose)
+> > +				/*
+> > +				 * Fully cover the previous "Rebasing (n/m)"
+> > +				 * progress line.
+> > +				 */
+> > +				fprintf(stderr, "%*s\r", term_columns(), "");
+> 
+> IIRC there are terminals (`cmd.exe`?) that would advance to the next row
+> automatically when printing the exact number of columns in a row. So this
+> would not work.
 
-No joy; same error.
+Hrm, I though about using 'term_columns()-1', or moving the '\r' from
+the format string to the string to be printed, but in the end didn't
+do either, because it seemed to work well as it is in the two
+terminals that I tried (on Linux).
 
-Is there an option to build and install only client tools? If so, I am
-happy to use it as I don't need server tools.
+> But isn't there an ANSI sequence that we can use?
+> 
+> *clicketyclick*
+> 
+> Yes: https://github.com/git/git/blob/v2.21.0/editor.c#L101 (introduced in
+> https://github.com/git/git/commit/abfb04d0c7#diff-cdeec438beb851e450b94a11db9ab7edR89)
+> 
+> So maybe we should do the same here, i.e.
+> 
+> 	fputs("\r\033[K", stderr);
 
-Do you want an account on the box? I need an authorized_keys file.
+Oh, that would be nice (and not only here, but it could have made the
+changes in 'sg/overlong-progress-fix' a bit simpler as well).
+Unfortunately, however, it only works on non-dumb terminals (note the
+'!is_terminal_dumb()' call in the preceeding condition), while rebase
+hasn't had such a limitation on the terminal yet.
 
-Jeff
+> Ciao,
+> Dscho
+> 
+> >  			*end_of_arg = '\0';
+> >  			res = do_exec(r, arg);
+> >  			*end_of_arg = saved;
+> > --
+> > 2.21.0.1181.g24122a4251
+> >
+> >
+
