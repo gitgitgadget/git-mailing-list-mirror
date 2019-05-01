@@ -2,126 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DFE51F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84FF21F453
 	for <e@80x24.org>; Wed,  1 May 2019 14:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbfEAO6d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 10:58:33 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:47071 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726488AbfEAO6c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 10:58:32 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r7so5134180wrr.13
-        for <git@vger.kernel.org>; Wed, 01 May 2019 07:58:31 -0700 (PDT)
+        id S1726831AbfEAO6t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 10:58:49 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41588 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726488AbfEAO6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 10:58:49 -0400
+Received: by mail-ed1-f65.google.com with SMTP id m4so15128743edd.8
+        for <git@vger.kernel.org>; Wed, 01 May 2019 07:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XwTsMqUTtBjYS/+bS1+v4LGBmEzs8w/a1He0lJnaUvk=;
-        b=R5ebly3tmBQG7Zl4jLNn0BBmk65y6SNSk6LNCgfSb+0nkKQCmhZSNzTshn/WPt4wnu
-         Owjiw5QlsPKUkubPD5z3VQO9BPo83X5FSeORtqKoJFRy8ifNMUXXTgIFrWCHa4xKiSUk
-         ma5tX9EDqA5/6umutXVfI7gL/vImpPPE6TkVsqQxc3TcuKL2+RFTlluc9fG0XIWbJMJL
-         tKpKOFrU/SRxSgRKi9FQ0j4LfTnGfFrlSgwBlTc5HbTbDGx2nby8DdV9n6zUfL6zN2ns
-         /1XVM4Ei66t5g7eWnZGwu1p/EblyUK54AmW3l4CeJfE7Mq84ynLuV5wGLx1D4xnoEIi5
-         9dDA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=IdU9kiPd2xUEIUrmh+Y1kxpBlZPWnQU+K4AvgSX1sz8=;
+        b=tKZThdboYfr/2OlsFzjtCPsG8pFElqQg5Az1jP0HdBVZGpb7mWuJyZkF5TXDX4QJG9
+         VDQlfWdEqQB0jvNe20+JSZ+10kggAKP/9ZwzJC1Xs+MiUKU1WuIyD+retoKGWvZB83P1
+         8TOqQr8EvEQL/DJOHUbssPXiDw3wv+EMlF9rn8CUqP5FO6NPmUPfvPuff5+teGhzkCN1
+         C5/42FhmM3EK9F20dcIxapG2O7mB1T4tRgoy8F0lqM378apqVf/n8/O+fth+BGUDwKc2
+         gKC0KW9mPagaSlmPEneq7JeWJZcWmZDf/b8zxdhU5QkNHlOUvG7ua5Z9v/uqLGy1z58n
+         B0rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=XwTsMqUTtBjYS/+bS1+v4LGBmEzs8w/a1He0lJnaUvk=;
-        b=XvfA5rwfYC35EvWoSXNhVRuwEc575uzQRB9QJRGEKLIpOFOJyP+J0uu6JjZWmyn97T
-         NWi7x4MXVWPYunR6dhXjPkx8Q/u+MRrcd5bJN5K/KNQf/0TWTeGzEMvOeOHRlH+Z1jfI
-         UL8kCVfT7Ymcuz9lz+YxWemJ/PlbKX1GqkCQ4ldoP+EHs62XMcjdxYe8KJeM970jI/Tr
-         NutniCRWprrgitngI+pIF76SwYumLNV0WbVyreTVUBbk4Nj0JuTpzVeqVH1YR62oH+ts
-         Pflfab1LQgF61pVm/k2Zd+N2d6KfABJ4iKBG6vx9gwkLRk215+lt6x7lTJL05Fqiid0A
-         zwig==
-X-Gm-Message-State: APjAAAXrmkzqT7tlb2hRz+b9KgYw+wRQW2A5f0I0V0hfhdX75OlxJvga
-        dWKpTBQ7PIA7ePTTeygXYSc=
-X-Google-Smtp-Source: APXvYqwDEdnJjDTL6r0dINsQv2JeRo3xUoYERgwdk+DQvXtq5oe+7sfPNetnRNQqVohHhvjTHcj5ow==
-X-Received: by 2002:adf:a28b:: with SMTP id s11mr8685369wra.16.1556722711337;
-        Wed, 01 May 2019 07:58:31 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id l21sm4056702wmh.35.2019.05.01.07.58.30
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 May 2019 07:58:30 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/2] read-tree: improve untracked file support
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190501101403.20294-1-phillip.wood123@gmail.com>
- <CACsJy8CNUEBXmBcQnRHqdeFJtTvBuZ9thP7QPAw-ZOD+2ty3VA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <d4c36a24-b40c-a6ca-7a05-572ab93a0101@gmail.com>
-Date:   Wed, 1 May 2019 15:58:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=IdU9kiPd2xUEIUrmh+Y1kxpBlZPWnQU+K4AvgSX1sz8=;
+        b=nULb4h3z4o+T8EDqRIn0uJTY1lTR9SBt9wrtSXAssIc9/3TIy5SCOceYs144O7QCHP
+         gD/O3x+ex3mo9TTEEblbpOAyKmgE+C9If4AuvSpClE3sa/Iw4gqi4IvLpblfBVqJlouO
+         mHLkNH4sS/0tMd2D2eWVdXMsYUtc3Xy4x9Tg8+8Yixbh5K23BWe1Qh2xmrN0SE/PejCm
+         2ECagsaO/QnqhgKCVEiH6LNY7QCkE06rYAmgeCS2hmI368mYgh1Hq4+zAQW+8Dm64LZQ
+         4Q3Nx+sJuTsELNmHFjlzT8aWKBDPFZDQRoQutWmyk4AKtMbgAyESMtL9vW4iXKeDp27e
+         Bf/g==
+X-Gm-Message-State: APjAAAVMS1W2zj/jGQv2Ewr01Vk5T+8BVIff6WIlMBngdYv7JtB6f7in
+        VgebTAEecb3U893sE4fEVmw=
+X-Google-Smtp-Source: APXvYqz6lX5SDvozPKqTnEmGG/NBQCQkoBuomRgC/moXqY7WsKie/pwtESjBiK3fmezufEq2+zaa6Q==
+X-Received: by 2002:a50:a953:: with SMTP id m19mr44616465edc.93.1556722727135;
+        Wed, 01 May 2019 07:58:47 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id y21sm1919827eds.31.2019.05.01.07.58.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 01 May 2019 07:58:46 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 6/6] commit-graph: remove Future Work section
+References: <pull.112.v2.git.gitgitgadget@gmail.com> <pull.112.v3.git.gitgitgadget@gmail.com> <e72bca6c784c5fc727ae4cf661526eec346c478c.1556716273.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <e72bca6c784c5fc727ae4cf661526eec346c478c.1556716273.git.gitgitgadget@gmail.com>
+Date:   Wed, 01 May 2019 16:58:45 +0200
+Message-ID: <87o94mql0a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CNUEBXmBcQnRHqdeFJtTvBuZ9thP7QPAw-ZOD+2ty3VA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Wed, May 01 2019, Derrick Stolee via GitGitGadget wrote:
 
-On 01/05/2019 11:31, Duy Nguyen wrote:
-> On Wed, May 1, 2019 at 5:14 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> These two patches teach read-tree how to avoid overwriting untracked
->> files when doing '--reset -u' and also how to respect all of git's
->> standard excludes files. I'd like to see the porcelain commands stop
->> overwriting untracked files, this is a first step on the way. I'm not
->> sure if we want to add options to the porcelain commands to protect
->> untracked files or just change their behavior and add an option to
->> override that. I'm leaning towards the latter but I'd be interested to
->> hear what others think.
-> 
-> For new commands like git-restore, it's definitely a good thing to not
-> overwrite untracked files.
+> The commit-graph feature began with a long list of planned
+> benefits, most of which are now complete. The future work
+> section has only a few items left.
+>
+> As for making more algorithms aware of generation numbers,
+> some are only waiting for generation number v2 to ensure the
+> performance matches the existing behavior using commit date.
+>
+> It is unlikely that we will ever send a commit-graph file
+> as part of the protocol, since we would need to verify the
+> data, and that is as expensive as writing a commit-graph from
+> scratch. If we want to start trusting remote content, then
+> that item can be investigated again.
 
-I agree, unfortunately this series does not help with git-restore, only 
-git-switch. For restore on an index without conflicts I think it could 
-just use the pathspec in struct unpack_trees_options and set opts.rest = 
-UNPACK_RESET_PROTECT_UNTRACKED but that does not help if we want to 
-handle conflicted paths differently to non-conflicted paths.
+My best of 3 times for "write" followed by "verify" on linux.git are
+8.7/7.9 real/user for "write" and 5.2/4.9 real/user for "write".
 
-> For existing commands I guess we have to go
-> over them one by one. For "git reset --hard", it should really just
-> overwrite whatever needed to get back to the known good state. "git
-> checkout -f" , not so sure (seems weird that we need force-level-two
-> option to override the protection provided by -f, if we change default
-> behavior)
+So that's a reduction of ~40%. I have another big in-house repo where I
+get similar numbers of 17/16 for "write" and 10/9 for "verify". Both for
+a commit-graph file on the order of 50MB where it would be quicker for
+me to download and verify it if the protocol supported it.
 
-I think it's fine for "checkout -f" to overwrite untracked files (and if 
-"switch --discard-changes" does not then there is no pressing need to 
-add such a mode to checkout), --force is a good name for an option that 
-nukes everything that gets in it's way. For "reset --hard" I'm not so 
-sure, if I have changes to an untracked file I don't wont them 
-overwritten by default. There is no porcelain equivalent to "read-tree 
---reset --protect-untracked -u" and I was hoping "reset --hard" may 
-become that porcelain equivalent with a new --force or 
---overwrite-untracked option.
+I'm not clamoring to make it part of the protocol, but the claim that
+"verify" needs to do the equivalent of "write" seems to be demonstrably
+wrong, or perhaps "verify" isn't doing all the work it should be doing?
 
-For the various "foo --abort" some (most?) are using "reset --merge" 
-which I think declines to overwrite untracked files but rebase uses 
-"reset --hard" which I'd like to change to protect untracked files in 
-the same way that rebase does for the initial checkout and when picking 
-commits. I haven't thought about stash.
+> While there is more work to be done on the feature, having
+> a section of the docs devoted to a TODO list is wasteful and
+> hard to keep up-to-date.
 
-Best Wishes
+Agreed, whatever we decide to do in the future I think it makes sense to
+remove this section from the docs, although perhaps the commit message
+should be amended per the above :)
 
-Phillip
-
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/technical/commit-graph.txt | 17 -----------------
+>  1 file changed, 17 deletions(-)
+>
+> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+> index 7805b0968c..fb53341d5e 100644
+> --- a/Documentation/technical/commit-graph.txt
+> +++ b/Documentation/technical/commit-graph.txt
+> @@ -127,23 +127,6 @@ Design Details
+>    helpful for these clones, anyway. The commit-graph will not be read or
+>    written when shallow commits are present.
+>
+> -Future Work
+> ------------
+> -
+> -- After computing and storing generation numbers, we must make graph
+> -  walks aware of generation numbers to gain the performance benefits they
+> -  enable. This will mostly be accomplished by swapping a commit-date-ordered
+> -  priority queue with one ordered by generation number. The following
+> -  operations are important candidates:
+> -
+> -    - 'log --topo-order'
+> -    - 'tag --merged'
+> -
+> -- A server could provide a commit-graph file as part of the network protocol
+> -  to avoid extra calculations by clients. This feature is only of benefit if
+> -  the user is willing to trust the file, because verifying the file is correct
+> -  is as hard as computing it from scratch.
+> -
+>  Related Links
+>  -------------
+>  [0] https://bugs.chromium.org/p/git/issues/detail?id=8
