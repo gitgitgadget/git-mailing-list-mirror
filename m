@@ -7,58 +7,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA9FF1F453
-	for <e@80x24.org>; Wed,  1 May 2019 09:54:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38D261F453
+	for <e@80x24.org>; Wed,  1 May 2019 09:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726268AbfEAJyL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 05:54:11 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:38154 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725959AbfEAJyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 05:54:11 -0400
-Received: by mail-io1-f67.google.com with SMTP id y6so14455100ior.5
-        for <git@vger.kernel.org>; Wed, 01 May 2019 02:54:10 -0700 (PDT)
+        id S1726133AbfEAJzw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 05:55:52 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:41306 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725959AbfEAJzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 05:55:52 -0400
+Received: by mail-io1-f66.google.com with SMTP id r10so14455259ioc.8
+        for <git@vger.kernel.org>; Wed, 01 May 2019 02:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=n30ZYNrv0V4Hxaf4UAVVsP2kItRCMIYLFWzXSJGVGQw=;
-        b=KmXYaQtQwMkx5B/hcIyZgikGOsiIb0/Tu2RYr3BZovW08yMLZjqn68ck53KmbgOaK5
-         h27jfum1hyzk+Q21vvUyrG45AWItjhHaD7rea91na6tS5CsI9+zbAsio6aDTAs4ZS2jg
-         XK0QIK405nUn0chgd3V11lv77HurdGTVucuoaJgfXOJAeRGa3e10Bcj+RFDTyq+o4sUA
-         +OOfH+6amWDvxvYe67l1p0FRCHoJn0WUliGw+8ORX3QdklY0I1iKfehn0In7OhBLS2DY
-         3q5Rmg0u72xk0144I3UirZZLugxShK515FWniJy3MjNNVFsFrsArqKtn3bTbkEavdBkc
-         Ae9w==
+        bh=HU/9+7PYSPht6Hqwg2noO5bB0VvqxpmVhcNVtHX6na0=;
+        b=dGvD24XIFvq38QDFREtMMXEr/hsDtM4bPRLjitPNsiaxP9GBPF15V8AwDonSrZIcpH
+         +Gn0plBAUHbaKyqbrsFeletc4H3+sBLTswpfOmDoAaPh2vjOmYuy8KYqVwfZd0zKtuD0
+         qsOUkn7/ZQsiBGZrV0B9BtDjtRrSnJe+AQcgRuqAQ1Sh0GVXdNQ5u4ImZIMz2xSVavUR
+         BnTT3RrmRZi8Mwv8+1Ta3Kq3vEvEWixYjBLqAPvQAY9HC7+dcUu6u8fD2caCFzGJgAo0
+         MznkqLaRa6/c2elhfV7db7h/OtvaMKejoLVBvjF+9sKYOa4rXVcz3eNf7TdZLLBq4p72
+         PouA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=n30ZYNrv0V4Hxaf4UAVVsP2kItRCMIYLFWzXSJGVGQw=;
-        b=gMs5RWJZjV2mhROZENP+MRDFZ5uJF++847K0/rCueE1vXVajtpiXdeZE96mdd5p0Q5
-         mLUrUkZ3s6N8Soj/sVjH6nTrNWmJTF5DRC+O5tpmCg5VWjqiGYIsNowKY8ICD5qVAE1s
-         4decaBI/j8PLscUFzUOe3aQ1+CEshtfDbhp8Zo0hrEc0I9MFKxdU51I/w74EftKYwQMe
-         dN2rwXfqIi+Z/nbJOi+yDSSZNq6YaYco4ZmAcsMur9NPMjt9izzsXpQYU3/m/NqrVNtC
-         hhhFLf092WuaeYK0+P+FztPjkngqLxmu6jWT1QhTMPvhi6+lSalWj0zUTdwrqORYSHf5
-         Mr4g==
-X-Gm-Message-State: APjAAAUw9A90LMN0E22BFELc2y7Wxv4g+jZeayENKskLUMRsVPVns2KW
-        jSsb5zJLLx+p88u0voSgnmflAKxuxQNbahV/qI8=
-X-Google-Smtp-Source: APXvYqxAuUmtljEbbRRqPh8gwUfswr3/Lfse8JxeWEUUnCH8+7fjDCul4QG25WpXmSp1+RXgso6INtKWjPuzIANWZAQ=
-X-Received: by 2002:a5e:d702:: with SMTP id v2mr7778384iom.236.1556704450341;
- Wed, 01 May 2019 02:54:10 -0700 (PDT)
+        bh=HU/9+7PYSPht6Hqwg2noO5bB0VvqxpmVhcNVtHX6na0=;
+        b=iS5z+UE9xGq1dtS9HGjycp96mjKyLNETlHh9F2zaBmjWpLv544zYWJk5RDGAATu2eU
+         EoL+CiS4t9JP3ndzv8RU/RpciRNexDZd8LwgkQ5usm54DKw/6X0HQ2UpqBgBXVgwk0Dv
+         E8IIHYI5ZCQ6iobsu8NzdiKgrxknHi5/gUk3eI5B9O6HZlRt63XvP4LXVTaiv9Id5AYs
+         OdvGX6NeTT22KNyTjCki6tuBWCsCVKgUTI6xzZt+OpOtohyCWsXJPPD59ch4y6aZ7JQN
+         j2TG8KxJaPRPUo8r/4l/yEGpRvw8kek1KYHjBOx3kmsw355qNfgT9VXxfXvv++eRc3A8
+         JI2g==
+X-Gm-Message-State: APjAAAXOHL4ovj4IxoM+B2rYt++V34ZeZtZJjpKLpMgRJkOe4YB3VOfm
+        Eo5J3G6Li6hfCzk/dmCKg5C404CRTK5+Cf/0bmqQ1w==
+X-Google-Smtp-Source: APXvYqw4CSequCg2COnzpDZreW68F0qtfWio4xeha7bAEmyGwgcmVt9lNMDyGxj5hhAUM6dehtNPF4NTMrLEAx/NPm0=
+X-Received: by 2002:a05:6602:58:: with SMTP id z24mr2273353ioz.118.1556704551222;
+ Wed, 01 May 2019 02:55:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190320114703.18659-1-pclouds@gmail.com> <20190324082014.2041-1-pclouds@gmail.com>
- <20190324082014.2041-20-pclouds@gmail.com> <nycvar.QRO.7.76.6.1904292055300.45@tvgsbejvaqbjf.bet>
- <CACsJy8CUNVWqWff05Lg2xjnOj3L2T7RvVbZh+RZPjvFokvT_-A@mail.gmail.com> <nycvar.QRO.7.76.6.1904301811110.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1904301811110.45@tvgsbejvaqbjf.bet>
+References: <20181227155611.10585-1-pclouds@gmail.com> <20181227155611.10585-4-pclouds@gmail.com>
+ <c8ff5919-5a27-8d1f-8583-241e94f0e196@gmail.com>
+In-Reply-To: <c8ff5919-5a27-8d1f-8583-241e94f0e196@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 May 2019 16:53:44 +0700
-Message-ID: <CACsJy8AGf81=_BTd6+idnBcHPB2AAj=dciJn6r_rCB8TJ1hvug@mail.gmail.com>
-Subject: Re: [PATCH v2 19/20] diff --no-index: use parse_options() instead of diff_opt_parse()
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
+Date:   Wed, 1 May 2019 16:55:25 +0700
+Message-ID: <CACsJy8BK0WhbmfSkzdNfji2xtqJ3tobokMMDM81QjYf49tmEdg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] config.c: add repo_config_set_worktree_gently()
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -66,58 +62,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 1, 2019 at 5:12 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:>
-> Hi Duy,
+On Tue, Apr 30, 2019 at 11:40 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On Tue, 30 Apr 2019, Duy Nguyen wrote:
+> On 12/27/2018 10:56 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> > diff --git a/config.h b/config.h
+> > index ee5d3fa7b4..62204dc252 100644
+> > --- a/config.h
+> > +++ b/config.h
+> > @@ -103,6 +103,9 @@ extern int git_config_color(char *, const char *, c=
+onst char *);
+> >  extern int git_config_set_in_file_gently(const char *, const char *, c=
+onst char *);
+> >  extern void git_config_set_in_file(const char *, const char *, const c=
+har *);
+> >  extern int git_config_set_gently(const char *, const char *);
+> > +extern int repo_config_set_gently(struct repository *, const char *, c=
+onst char *);
+> > +extern void repo_config_set(struct repository *, const char *, const c=
+har *);
+> > +extern int repo_config_set_worktree_gently(struct repository *, const =
+char *, const char *);
+> >  extern void git_config_set(const char *, const char *);
+> >  extern int git_config_parse_key(const char *, char **, int *);
+> >  extern int git_config_key_is_valid(const char *key);
 >
-> > On Tue, Apr 30, 2019 at 8:02 AM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > Hi Duy,
-> > >
-> > > On Sun, 24 Mar 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> > >
-> > > > While at there, move exit() back to the caller. It's easier to see =
-the
-> > > > flow that way than burying it in diff-no-index.c
-> > >
-> > > I just noticed that this commit message is missing more than just a
-> > > trailing period. It does not explain the change of behavior: previous=
-ly,
-> > > `GIT_EXTERNAL_DIFF=3Dheya git diff --no-index a b` would silently ign=
-ore the
-> > > external diff, it would have required an explicit `--ext-diff` to pic=
-k it
-> > > up.
-> >
-> > Because I was not aware of the behavior change.
->
-> Well, your patch removes an early return in favor of a later return that
-> allows plenty of diff options to be configured in a different way than
-> before.
+> I know this is an old thread, but the patch is still in 'pu'. These metho=
+ds
+> do not appear to have any callers. Perhaps this patch should be dropped
+> until there is a reason to include it?
 
-No (and I was terse because I did not have time to look more into it).
-The code flow is the same, the number of option parsing is the same.
-Even post option processing is the same.
+That series was broken down to test the water before the whole
+sumodule support on multiple worktree series enters. But since this
+series is not going anyway, don't worry I don't think it will ever
+enter 'master'.
 
-Bisecting points to 287ab28bfa (diff: reuse diff setup for --no-index
-case, 2019-02-16). From the description (i.e. "miss out some settings
-like --ext-diff...") the behavior change seems delibrate. Adding Jeff
-for clarification/
-
-> So while it is obvious
-
-I probably have problem understanding. The "commit message is missing"
-seems to imply I knew about this but chose not to mention it.
-
-> (and understandable) that you were not aware of
-> this behavior change, the real question is what we should do about this,
-> now that this patch is already in `master` and on its way into v2.22.0.
->
-> Ciao,
-> Johannes
+> Thanks,
+> -Stolee
 
 
 
