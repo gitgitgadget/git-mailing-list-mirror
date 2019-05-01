@@ -2,81 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 779B41F453
-	for <e@80x24.org>; Wed,  1 May 2019 08:59:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A14A1F453
+	for <e@80x24.org>; Wed,  1 May 2019 09:28:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbfEAI7p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 04:59:45 -0400
-Received: from taro.getmail.no ([84.210.184.13]:34998 "EHLO
-        taro.get.c.bitbit.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1725776AbfEAI7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 04:59:45 -0400
-X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 May 2019 04:59:44 EDT
-Received: from montes.get.c.bitbit.net (unknown [10.7.88.21])
-        by taro.get.c.bitbit.net (Postfix) with ESMTPS id B2D25F9E2
-        for <git@vger.kernel.org>; Wed,  1 May 2019 10:52:48 +0200 (CEST)
-Received: from bouvier.getmail.no (unknown [10.7.88.12])
-        by montes.get.c.bitbit.net (Postfix) with ESMTPS id 333DB16AD
-        for <git@vger.kernel.org>; Wed,  1 May 2019 10:52:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by bouvier.getmail.no (Postfix) with ESMTP id 7DC0B40036;
-        Wed,  1 May 2019 10:52:42 +0200 (CEST)
-Received: from bouvier.getmail.no ([127.0.0.1])
-        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id EgOm6KDE73UH; Wed,  1 May 2019 10:52:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by bouvier.getmail.no (Postfix) with ESMTP id 8C9DF40034;
-        Wed,  1 May 2019 10:52:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at bouvier.get.c.bitbit.net
-Received: from bouvier.getmail.no ([127.0.0.1])
-        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id jBazdNOvEU5y; Wed,  1 May 2019 10:52:32 +0200 (CEST)
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.6.62.getinternet.no [84.209.6.62])
-        by bouvier.getmail.no (Postfix) with ESMTPSA id 5FD354002E;
-        Wed,  1 May 2019 10:52:32 +0200 (CEST)
-Received: from peter (helo=localhost)
-        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.89)
-        (envelope-from <peter@softwolves.pp.se>)
-        id 1hLkye-0006t6-3b; Wed, 01 May 2019 10:52:32 +0200
-Date:   Wed, 1 May 2019 09:52:32 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff Schwartz <jefftschwartz@gmail.com>, git@vger.kernel.org
-Subject: Re: Request to add option to interactive rebase to preserve latest
- commit date
-In-Reply-To: <xmqq4l6kvnuu.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.DEB.2.20.1905010900260.23829@perkele.intern.softwolves.pp.se>
-References: <CAL3M-FZ7b3H7Z+Vr9Wbey5iYVoWiUBnDKVEenyAMrUXeNfL56w@mail.gmail.com> <xmqq4l6kvnuu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S1726213AbfEAJ2d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 05:28:33 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45838 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726014AbfEAJ2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 05:28:33 -0400
+X-Greylist: delayed 1911 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 May 2019 05:28:30 EDT
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <glandium@glandium.org>)
+        id 1hLl2Z-0001rn-Qx; Wed, 01 May 2019 17:56:35 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH] Make fread/fwrite-like functions in http.c more like fread/fwrite.
+Date:   Wed,  1 May 2019 17:56:35 +0900
+Message-Id: <20190501085635.7125-1-mh@glandium.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano:
+The fread/fwrite-like functions in http.c, namely fread_buffer,
+fwrite_buffer, fwrite_null, fwrite_sha1_file all return the
+multiplication of the size and number of items they are being given.
 
->> Using interactive rebase has one flaw IMHO and that is the way it
->> handles dating its commit. Can you add an option to interactive rebase
->> that would make it use the date from the commit that is most recent
->> and not the date from the commit that is the oldest?
->
-> I am not sure what you mean by this.  If you interactively rebase
-> the topmost two commits (assuming that since three commits ago, you
-> have a linear history):
+Practically speaking, it doesn't matter, because in all contexts where
+those functions are used, size is 1.
 
-I sort of assume that this is when merging several fixup! or squash! 
-commits. I often end up adding lines the code to date these with the 
-current date, but the date of the last fixup'ed or squash'ed commit 
-would probably be better.
+But those functions being similar to fread and fwrite (the curl API is
+designed around being able to use fread and fwrite directly), it might
+be preferable to make them behave like fread and fwrite, which, from
+the fread/fwrite manual page, is:
+   On  success, fread() and fwrite() return the number of items read
+   or written.  This number equals the number of bytes transferred
+   only when size is 1.  If an error occurs, or the end of the file
+   is reached, the return value is a short item count (or zero).
 
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ http.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/http.c b/http.c
+index 98fb06df0b..8dbc91f607 100644
+--- a/http.c
++++ b/http.c
+@@ -176,7 +176,7 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	memcpy(ptr, buffer->buf.buf + buffer->posn, size);
+ 	buffer->posn += size;
+ 
+-	return size;
++	return nmemb;
+ }
+ 
+ #ifndef NO_CURL_IOCTL
+@@ -204,12 +204,12 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	struct strbuf *buffer = buffer_;
+ 
+ 	strbuf_add(buffer, ptr, size);
+-	return size;
++	return nmemb;
+ }
+ 
+ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ {
+-	return eltsize * nmemb;
++	return nmemb;
+ }
+ 
+ static void closedown_active_slot(struct active_request_slot *slot)
+@@ -2319,14 +2319,14 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+ 			BUG("curl_easy_getinfo for HTTP code failed: %s",
+ 				curl_easy_strerror(c));
+ 		if (slot->http_code >= 300)
+-			return size;
++			return nmemb;
+ 	}
+ 
+ 	do {
+ 		ssize_t retval = xwrite(freq->localfile,
+ 					(char *) ptr + posn, size - posn);
+ 		if (retval < 0)
+-			return posn;
++			return posn / eltsize;
+ 		posn += retval;
+ 	} while (posn < size);
+ 
+@@ -2339,7 +2339,7 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+ 		the_hash_algo->update_fn(&freq->c, expn,
+ 					 sizeof(expn) - freq->stream.avail_out);
+ 	} while (freq->stream.avail_in && freq->zret == Z_OK);
+-	return size;
++	return nmemb;
+ }
+ 
+ struct http_object_request *new_http_object_request(const char *base_url,
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+2.21.0
+
