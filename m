@@ -7,79 +7,94 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E61B01F453
-	for <e@80x24.org>; Wed,  1 May 2019 10:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 374601F453
+	for <e@80x24.org>; Wed,  1 May 2019 10:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbfEAKMF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 06:12:05 -0400
-Received: from mail-it1-f169.google.com ([209.85.166.169]:38713 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726052AbfEAKMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 May 2019 06:12:05 -0400
-Received: by mail-it1-f169.google.com with SMTP id q19so9151202itk.3
-        for <git@vger.kernel.org>; Wed, 01 May 2019 03:12:05 -0700 (PDT)
+        id S1726376AbfEAKOT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 06:14:19 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41376 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726282AbfEAKOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 06:14:18 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c12so24077977wrt.8
+        for <git@vger.kernel.org>; Wed, 01 May 2019 03:14:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kQ/ivQ4cL9RIKgeXnYTUN3vpzR50H7WenYyDnU9GYHA=;
-        b=jsdXfRJ3WkkEd3oaghfLky/v4v19wUldgW5+yNeR8j6fZQMgMhw2d0EpBrJBETNSZ7
-         DDjnzTHQxKZCO3EfINyP5zC/YTVS5xE8SwG0R5D1XjDRkTOrsDQG21Jqa9ZUqGAn1qHD
-         7AAxxbZRd5LvUACjizU5Zte0l9o2EFByZOG5wMWdatkQxZp1f+ZPLhWsr8RAYBDEWeS4
-         /8dDXs5iq/d6tIh2e6sBjjXHVrk8XCvPeqqr8Z8lBiOgbV6u3GROZM7JLxl4A3kP0bSp
-         tpgvjcGhbd2nv7fHQMbnJ/iS9En7RD9k4dJdTC53MNx7nH9WuGmEk+mND2VA1YkalFlF
-         rW2w==
+        h=from:to:cc:subject:date:message-id:reply-to:mime-version
+         :content-transfer-encoding;
+        bh=DrOMdS6wf4nZR0J9eeE3AOMrOv2SwqK/spJ8ieFOLwY=;
+        b=kvwm3LjGwfSDOubCMMUrQB+eHV/FJUaYiMEKCgA2Lxp4aE6EG46PhbKY8LfWooopQ2
+         Mt+3CjNZPU/yP+hgOAuS8SDcqkOuBkvW85zYTkpsB0mJyxF92o7XBgz0boH25paPU8u/
+         tAwkAs8BDrRvq9tCntxEvIX97OZiheJJHY+PwJsI9yypRDxjRdJjNR/Kcd3q6Y9EtVs0
+         7PI9p791MExr+CUnVpGr7+9TUSKZ5V1aoEmAM48x93PjpMuWGRET4eAMBxTw+NJxgCVI
+         BL1Xuj+IGM0/XhBV5qfmMfquEMANALM46slUSUFrNyfjudQ/Kr+meUyPVhg6ZaFg5MOL
+         2isg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kQ/ivQ4cL9RIKgeXnYTUN3vpzR50H7WenYyDnU9GYHA=;
-        b=b9PtjKL7iBHZ8GvnJEOkRgaOPbMlvD9zx1glhVr+i/gzQ5SLrfCn0EK4HpLC6MmI5W
-         f3QaHmV/Yqw0Xl9FugHBytSYfDpCMzezrnoG4yyZU69QwW9E6jNcgHkewheaxWHPAipk
-         I4caydbQA6VqBluAc94ZjfDkJGD04uAKaoRBBJbBPggBB0hCJAh95+znLJMzAZjSeW8V
-         LXjBRqzd7wThiHz9yJe9bhdpWSpKgrWAEJwP3cIWKj4M8d7/VS5rvtZMsAHSbXJpccKE
-         Rqf2RLahCpYpmvZ2dD+XID0jbc3yN3TCkEOpJ5Ly20jTHR7xIZQ6Q/hApLIEXyf3Dryr
-         plAg==
-X-Gm-Message-State: APjAAAWcpkfbzccpFW3do+ZwB5Q59oW5i2DIiRVAnPzhJMbltqDKwns6
-        isvXEmnBUSRjoDGFAvl5vAAo1TXOxSR+OYr8KSo=
-X-Google-Smtp-Source: APXvYqw0zQDNV3FbAm9zF9xK8sxdsEs5wvdGln1Xl/Dj3+S3bIyxRJ+klOy/s7PFQBI3bptrhW8eUu51r4sL26lczkM=
-X-Received: by 2002:a24:4d8a:: with SMTP id l132mr7416058itb.70.1556705524625;
- Wed, 01 May 2019 03:12:04 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=DrOMdS6wf4nZR0J9eeE3AOMrOv2SwqK/spJ8ieFOLwY=;
+        b=gblae546SrlxVYlO4bQhJpzaCMzpYg10ZrFLlvvzyR69z31Gc3LwlxgRok027v/B6k
+         1ne+/uilWJI8LJc44VIb5/idnhTP94pBZ0kHWPkhUFMyFSEcuwm+EtE2ifybDhXX43zD
+         n8Mse0shTG3G8+xg6Zyk/s4Qpwoyq96SFNgtVyzAhgXM9tsK1wwFs480q2+bHw9HAGXf
+         O2mczvUX7dOMlCEKVXhv76odKp44VJv2JobAR9vA/rzHX1nTpHYtPxdb+WPB5wFKYkrf
+         zg9Jf6+t3ye9G6Avf9j3s0v88PxfRPGX+MHOvMCzB3zupgZgajrz1Kpk2X8AkbXFSzPe
+         1pfQ==
+X-Gm-Message-State: APjAAAVuAd3BbGjhxmI9ltvDbO9pnuDsrdXRQZXPmYq78S8Ff7cISivU
+        U1iy8uon7zmiHYnrOiSreylAsRRE
+X-Google-Smtp-Source: APXvYqxMsWRRAVN0v7eoIA/qQkmvyv3s++SQqRXki0wTysNV9c9jl5K6WQcSfIY0SDrd1rmXXw9H9A==
+X-Received: by 2002:adf:ce0b:: with SMTP id p11mr43232059wrn.196.1556705657151;
+        Wed, 01 May 2019 03:14:17 -0700 (PDT)
+Received: from lindisfarne.localdomain (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id d16sm38114498wra.54.2019.05.01.03.14.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 May 2019 03:14:16 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 0/2] read-tree: improve untracked file support
+Date:   Wed,  1 May 2019 11:14:01 +0100
+Message-Id: <20190501101403.20294-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.21.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-References: <CAHtYWY4g4BYDr_z7pfS-p=aX_YkVo4HzGR1Dsytn4RkzBo0GjA@mail.gmail.com>
-In-Reply-To: <CAHtYWY4g4BYDr_z7pfS-p=aX_YkVo4HzGR1Dsytn4RkzBo0GjA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 May 2019 17:11:38 +0700
-Message-ID: <CACsJy8DHH_PqZ9DQ5jpA_4AuLmVXmt3F3x6nYVGqZ1pNWnC5+Q@mail.gmail.com>
-Subject: Re: Contributing with documentation/translation
-To:     Priscila Gutierres <priscila.gutierres@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 1, 2019 at 1:10 AM Priscila Gutierres
-<priscila.gutierres@gmail.com> wrote:
->
-> Hi
-> I want to contribute to git by creating and/or translating
-> documentation. Where may I find the info to do this?
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-For translation, you could start at po/README. That's mostly UI
-translation. I think some team actually started document translation
-too [1], but I don't know the status.
+These two patches teach read-tree how to avoid overwriting untracked
+files when doing '--reset -u' and also how to respect all of git's
+standard excludes files. I'd like to see the porcelain commands stop
+overwriting untracked files, this is a first step on the way. I'm not
+sure if we want to add options to the porcelain commands to protect
+untracked files or just change their behavior and add an option to
+override that. I'm leaning towards the latter but I'd be interested to
+hear what others think.
 
-For creating/updating documents in English, I think our documents can
-use some improvements. Just pick one document under Documentation
-directory, read it and see if you can understand it (if not we
-probably need to rephrase or reorganize a bit, sometimes a lot). I'm
-not so sure about creating new documents. That's usually done when a
-new feature/command is added.
+Phillip Wood (2):
+  read-tree --reset: add --protect-untracked
+  read-tree: add --exclude-standard
 
-[1] The ground work for that seems done in 3d5b568f1a
-(Documentation/Makefile add optional targets for l10n, 2019-01-07)
+ Documentation/git-read-tree.txt | 19 ++++++++--
+ builtin/am.c                    |  8 +++--
+ builtin/checkout.c              |  2 +-
+ builtin/read-tree.c             | 61 +++++++++++++++++++++++++++++--
+ builtin/rebase.c                |  2 +-
+ builtin/reset.c                 |  2 +-
+ builtin/stash.c                 |  7 ++--
+ t/lib-read-tree.sh              | 11 ++++++
+ t/t1005-read-tree-reset.sh      | 63 +++++++++++++++++++++++++++++++--
+ t/t1013-read-tree-submodule.sh  |  3 +-
+ unpack-trees.c                  |  3 +-
+ unpack-trees.h                  | 10 ++++--
+ 12 files changed, 170 insertions(+), 21 deletions(-)
 
---
-Duy
+-- 
+2.21.0
+
