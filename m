@@ -2,127 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CA701F453
-	for <e@80x24.org>; Wed,  1 May 2019 23:45:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 570831F453
+	for <e@80x24.org>; Thu,  2 May 2019 00:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726166AbfEAXpT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 May 2019 19:45:19 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35804 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726133AbfEAXpT (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 May 2019 19:45:19 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:ace5:84c6:6a15:3d32])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7433960443;
-        Wed,  1 May 2019 23:45:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1556754317;
-        bh=d/tMP/YZnKQIkbhCBFN2ZwKbRyRNix7bGA32uJUmTpM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Gj89h5xIr/2KPL5qqb3rhFkK9y7rCONvb4b9kx9ebUMd2Hr7xaQQrdU7B5zjjpb5n
-         22V4RpACpT39gFRxqyG3hpB48sXrzRhLAguLszGUTSnp2rGsRJgpcxHYq8Z0kd4ddm
-         Dob1Ds4GUAGBbs7X3AX5GysU6/9WaQCQozWf2pp6QO3DMvWo0bXkOchZ4ThdLNFDA1
-         i1mn8rtsH13QTZr7x3HzwRrqe7lpo3GcPYp0V4xt4T9l1tRw9zdRx06zblxEcxqMVF
-         wbY8s96RUaM4w9mgnBZCuL9iTm6jBNHOcfgy+QzML8naHx2qqVyKX/oG9LdNYPU4pc
-         mdb4lX4zXOH85cXMtdrjlnfsLiy27kPNkdd7oGMDoxGkBqQu0c0GKuB2RgERlLKcL8
-         c+jbTMYoZOFq9clukhbqw02vkEJy4PWHsgshh8peB/VvoNFmhsD8g/9BJtFRS8ptZy
-         H03XNM+ll2X18nG3tx+nalTyMQKB0eaEghtgdZVxuX6AE50HqHo
-Date:   Wed, 1 May 2019 23:45:12 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     John Lin <johnlinp@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] status: add an empty line when there is no hint
-Message-ID: <20190501234512.GD202237@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        phillip.wood@dunelm.org.uk, John Lin <johnlinp@gmail.com>,
-        git@vger.kernel.org
-References: <20190430060210.79610-1-johnlinp@gmail.com>
- <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
+        id S1726173AbfEBAE1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 May 2019 20:04:27 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43579 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbfEBAE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 May 2019 20:04:27 -0400
+Received: by mail-wr1-f67.google.com with SMTP id a12so657158wrq.10
+        for <git@vger.kernel.org>; Wed, 01 May 2019 17:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/yixyYu0ft9xRZYqr8E0II8Un+ksJVV4X7saw6xlSZ4=;
+        b=KHlnZhETubxoIVhcY3AJeDMXSpkCaxO8z6urOQ74taZ1QvGVQjqj8ha/B6PbfmxAdk
+         as1uGt/gA9/8IztH0L7z2dmF91/QFEMPbNHYfNIcbeachAIn0PXok78+YeWEvJGcPVqM
+         Punp2LW0Dym0aAFw1irAZ1I+WGnusGyGohrU0diXDVEpYL4J+B+nesG8Th11no8GdhYM
+         gXu+f9uof4PoP+kIJ1hqU/dk+cPZAs+OdC16pM/v3m91I6UDX5mHiQqBnLfsdu053ZvS
+         rv/NRNQ2PjflsfvGilPBdkCrm8LjqYVLsJpiYdwproGwW7fwJ3/fKpXI/FtaOt89TDX/
+         dQjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/yixyYu0ft9xRZYqr8E0II8Un+ksJVV4X7saw6xlSZ4=;
+        b=cY+8A6DrIPPk6D4y0aRt5pjNHfgLYhA4xopk7lOg0+WGxQPoJMPCkeVxxghDnMcjLq
+         axzqnBLr2qCZS7GQrTwGxf7HXqbIEXbCkQtONbvZ0ksqeMgzZ6WyBhTscpfj/PN7HKr+
+         h1SuhK2BE3tiOrEiv6PuqZYw/lRzxP7SS6tuB98uiyuEINPDjp5FwZk9dovU6pbuhSYY
+         i4Y2qU0rcyWqPdWA3RXRsL+Q2q1hnxUF2RCybDFC5Ce//ltMIafqxrZXmtvBjEkwgczx
+         VFaiD226uVvZwBZBezkaHg8Xq38laUlqLBroPhJWFYKbt9OBf9VcTr5lJtxx5+xfEsLX
+         bqKA==
+X-Gm-Message-State: APjAAAX/I0CRviMvkWQsQldnfghfqw26LrtrMYV+QTkjDGb/fgSE3UMy
+        F1KrRa9AWHu0PFe3QfcGfCE=
+X-Google-Smtp-Source: APXvYqxy3WVPhgQfatxyKROjp8M0evU+SWCZzEO3XmEhVOItT7H6xv+XhLilOp4d7LnjImaoPjb/AA==
+X-Received: by 2002:adf:83a7:: with SMTP id 36mr458238wre.310.1556755465497;
+        Wed, 01 May 2019 17:04:25 -0700 (PDT)
+Received: from szeder.dev (x4db31769.dyn.telefonica.de. [77.179.23.105])
+        by smtp.gmail.com with ESMTPSA id a20sm6886348wrf.37.2019.05.01.17.04.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 May 2019 17:04:24 -0700 (PDT)
+Date:   Thu, 2 May 2019 02:04:22 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v3 0/4] remove extern from function declarations
+Message-ID: <20190502000422.GF14763@szeder.dev>
+References: <cover.1555352526.git.liu.denton@gmail.com>
+ <cover.1555487380.git.liu.denton@gmail.com>
+ <20190422214901.GA14528@sigill.intra.peff.net>
+ <20190425120758.GD8695@szeder.dev>
+ <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
+ <20190501100108.GA8954@archbookpro.localdomain>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="a2FkP9tdjPU2nyhF"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20190501100108.GA8954@archbookpro.localdomain>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, May 01, 2019 at 06:01:08AM -0400, Denton Liu wrote:
+> > Is it not possible to exclude certain directories for certain semantic
+> > patches?
+> > 
+> > I guess we could also simply declare that *all* Coccinelle patches should
+> > leave `compat/` alone, on the basis that those files are likely coming
+> > from some sort of upstream. But then, `compat/mingw.c` and `compat/win32/`
+> > seem not to fall into that category...
+> > 
+> > Ciao,
+> > Dscho
+> 
+> Deciding whether this is a good idea is above my paygrade ;)
+>
+> However, if this is a good idea, we could use this patch to make it
+> happen:
+> 
+> -- >8 --
+> Subject: [PATCH] Makefile: filter out compat/ from coccicheck
+> 
+> Since most files in compat/ are pulled from external sources, ensure
+> that they do not get modified when we run coccicheck because we do not
+> want them to differ from upstream as much as possible.
+> 
+> Make exceptions for mingw.c and win32/*.c as these are files that we
+> have created and not pulled from upstream.
 
---a2FkP9tdjPU2nyhF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm not sure that we really need these exceptions.
 
-On Tue, Apr 30, 2019 at 12:15:37PM +0100, Phillip Wood wrote:
-> Hi John
->=20
-> On 30/04/2019 07:02, John Lin wrote:
-> > When typing "git status", there is an empty line between
-> > the "Changes not staged for commit:" block and the list
-> > of changed files.
->=20
-> I'm a bit confused by this as you change a status test below by inserting
-> these blank lines into the expected output, implying they are not there n=
-ow.
-> I think maybe the blank line is only shown when status prints advice.
->=20
-> > However, when typing "git commit" with
-> > no files added, there are no empty lines between them.
->=20
-> I have to say looking at the changes to the output I prefer the original,
-> the lists are nicely indented so there is no need for a blank line to
-> separate the header from the list and having the header immediately before
-> the list means the blank line at the end of the block makes the extent of
-> the block clear. It also saves screen space which is useful for small lap=
-top
-> screens. I can see why one might want a blank line to separate the advice
-> and list of changes (though even there the indention of the list and advi=
-ce
-> is different) but for a one line header I think it is better to start the
-> list on the next line.
+C_SOURCES comes from C_OBJ, i.e. it is basically all '*.c' source
+files that we compile, taking the platform and Makefile knobs into
+account.  On Linux we don't compile 'compat/mingw.c' and
+'compat/win32/*.c', so when running 'make coccicheck' on Linux it
+won't look into these source files anyway, so we don't need these
+exceptions.  On Windows, however...  well, is it even possible to
+build and run Coccinelle on Windows in the first place, with all its
+OCaml dependencies?!  If not, then these exceptions won't do any good.
 
-I actually was going to submit an equivalent patch eventually. The
-inconsistency between status and commit is bothersome to me and I think
-that adding the whitespace improves readability.
+Anyway, if we do want these exceptions, then what about
+'compat/win32mmap.c' and 'compat/winansi.c'?  They look like "ours" as
+well.
 
-I'd love to see this picked up.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
 
---a2FkP9tdjPU2nyhF
-Content-Type: application/pgp-signature; name="signature.asc"
+FWIW, out of curiosity I've run 'make coccicheck' on Linux with
+'compat/mingw.c' and its friends explicitly added to C_SOURCES, and it
+seems to work...  it even found two places in 'mingw.c' where
+COPY_ARRAY could replace memcpy() :)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzKL4gACgkQv1NdgR9S
-9ovMxg/9Fr4v0vDay88/kS8ywf+nY/0uvzGlWULV2rvXnOfORuq4gKdCMIHT35Yu
-PovmfFyPtlwPSlX8/dqipPDTJPN39R/MoGVgY5DnhEGmn9NIYiT0WO5lhfFYoqSF
-Ilf45r5q5YBpHFy5IBBp3dEJudJnmYR+/EvDlan+xmWuT/cGFpzytzFjlUkOshsQ
-G6v2rcmTP6dnhp2s3AKq9ERkgTvUA1knW0jm+x2SqTmFOE0RTgafbd6ytdCPnvSc
-cEmIFb3L/52GM/yPTi3ENs9ipPWtACiD2bNMUhyH+J//0qOV2EDt3Ug6WnNXt5/z
-ycMFV0u7mxUN3ZrbAaeMcAcxyiILSNdiq+N8Tj7rNQuDhuFsRfjr7NQfVzbc8ghd
-qy1lNT4yOTBzhY5jqb8AflS+CtwscwOnqgBUmrdUA1XiTfo2Lp+LLe/xfu8aSbZG
-cjegdydSYxqyrqwyfWWcNn+aDSvIRsd3IM8WKkTrol7PMqnAnaJUWAxB5iusjMeK
-ZzyMpeByf8zLm/HaMqpN34l/4HfSRZSaq4jTPJsTAv6NMZpiosgbmXSnmRPn64c5
-PFHlvBqNmgYxcJz0crcG3pT6JOgAjqs4f7zzpmNagF6sl++rgKPCSGWOtUaSHDPw
-01NTlz/DXDvh6APMWkpwHHlOglpJNPCniyAGOnHrk94RKpI2qs8=
-=7fWd
------END PGP SIGNATURE-----
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  Makefile | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 9f1b6e8926..b083c038c3 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2782,11 +2782,14 @@ check: command-list.h
+>  	fi
+>  
+>  C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
+> +COCCI_COMPAT_SOURCES = $(addprefix compat/,mingw.c win32/%)
 
---a2FkP9tdjPU2nyhF--
+
+>  ifdef DC_SHA1_SUBMODULE
+> -COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+> +COCCI_SOURCES := $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+>  else
+> -COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
+> +COCCI_SOURCES := $(filter-out sha1dc/%,$(C_SOURCES))
+>  endif
+> +COCCI_SOURCES := $(filter-out compat/%,$(COCCI_SOURCES))
+> +COCCI_SOURCES += $(filter $(COCCI_COMPAT_SOURCES),$(C_SOURCES))
+>  
+>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+>  	@echo '    ' SPATCH $<; \
+> -- 
+> 2.21.0.1033.g0e8cc1100c
+> 
