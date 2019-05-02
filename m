@@ -7,151 +7,131 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0783E1F453
-	for <e@80x24.org>; Thu,  2 May 2019 20:29:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3EE1F453
+	for <e@80x24.org>; Thu,  2 May 2019 20:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726267AbfEBU3z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 May 2019 16:29:55 -0400
-Received: from mout.web.de ([212.227.15.14]:59557 "EHLO mout.web.de"
+        id S1726268AbfEBUaH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 May 2019 16:30:07 -0400
+Received: from mout.web.de ([212.227.15.4]:33119 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726022AbfEBU3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 May 2019 16:29:55 -0400
+        id S1726022AbfEBUaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 May 2019 16:30:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1556828980;
-        bh=2qNbZQUyCf0GiBQKCwapzvAipDWA9ZBW0GqrkhieWG8=;
+        s=dbaedf251592; t=1556828996;
+        bh=tHqEk7bVBbD3z4eql4X/i7qlnHqs2fpdwry23/O83DU=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=MZKHmP9L2aJhbM0euLJYyZJNmAweWx2lGbZNu1uX3l164Wc9Umz/6F68E4uJFl+UQ
-         XrDVuQiThpmmflW7i+FQsoW+SJjAnHtDBcBZ5P1GIfIbY7wS9r7x5gv7QJvqaphqCi
-         OIgu++3JQE+yyMvE8P9s7r3c/flTZq+j6CqELHzE=
+        b=aq2En1sMxlL8STJv9OJrgSjH9dfj5+IyqYlAXV1BiYwe7Bf2fk1TMelASXPCYyA1J
+         1L3JiIEVcl0kuaIA+OVVhOhevnSp2+O+5OySW03nYjsfsf83ugQdAcf3lprqxLybfp
+         vLGHpDIT1GauX8a6dcOvbFiograp9Fas8/jc4d/g=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.23] ([79.203.19.151]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6UmJ-1gWvlf13Jz-00yUXJ; Thu, 02
- May 2019 22:29:40 +0200
-Subject: Re: [PATCH v2 3/4] archive: optionally use zlib directly for gzip
- compression
-To:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MddXQ-1h7vFw1eyy-00PQzt; Thu, 02
+ May 2019 22:29:56 +0200
+Subject: Re: [PATCH 1/2] archive: replace write_or_die() calls with
+ write_block_or_die()
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 References: <pull.145.git.gitgitgadget@gmail.com>
- <pull.145.v2.git.gitgitgadget@gmail.com>
- <4ea94a8784876c3a19e387537edd81a957fc692c.1556321244.git.gitgitgadget@gmail.com>
+ <7a9525a78a7b7b237150b9264cf675a4a0b37267.1555110278.git.gitgitgadget@gmail.com>
+ <20190413013451.GB2040@sigill.intra.peff.net>
+ <xmqqzhouwizg.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1904261028220.45@tvgsbejvaqbjf.bet>
+ <xmqqd0l8tjph.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1904291732370.45@tvgsbejvaqbjf.bet>
+ <20190501180936.GB4109@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <927f1e99-baa3-2d8a-cb11-0aedef6adc5c@web.de>
-Date:   Thu, 2 May 2019 22:29:26 +0200
+Message-ID: <be339f04-33e0-ede1-dbc2-340d7fb6694f@web.de>
+Date:   Thu, 2 May 2019 22:29:55 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <4ea94a8784876c3a19e387537edd81a957fc692c.1556321244.git.gitgitgadget@gmail.com>
+In-Reply-To: <20190501180936.GB4109@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XB1QxWcNeJt8eyfueKiob3wFbDjMNY78Aic4gU0YKfDmG1+f8bS
- /HzRHdLpAVmk7qnISm8tEq2jGCLrw/hveF2qKjZ1rofxSJ8jV1CD7V21ffPQUavLXf7d8ak
- DOXmSlPvBtQtJWF9bDIVmY3Bw8xhkdcA7kFEQodTps3loRDjHdtHXUDQ+K4RY4skHEIGVpk
- uoG3ykSWnbIFGKFTpM4wA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RIZByJM8oxk=:FHoiJXKvIPeU6ydPuc7UnH
- YfBuKM34Dcql6MMeM7538fkGtT/WXh9QtMGxYQFUee++kQOzQhDsXWOMw7SacWni2u/QsLwsn
- unNzlfN0tdXLpEIYz6sn7++aBuAhDml1IpIrP+XFXrLtYWEhG3st81kHLM0HFL+PVDj1jWVBs
- VfWZAYARzhJj1tuy9UsRAXYBEEu7lcOCuvScINi491ArtrgeOR/FutMw0idE0h0lyd7tSklAT
- KY8GuAbujcO4HsLY0AQn6tBAMB5YgbIhK9K7RX6oZxIiHbN70SMWxAJhg/J34y+D287MHB37r
- cSdVXx2+jaZ+pE3fkaWvaBgXe2QveDL3zkUXHXAaK66+9PWb7vWR+3p+hSVL7+9zWFjd5TLwr
- kRS+xs7hHHb+4e7HZzqYouW6nX+UuX7NFF2qfivFcRvjYQ4n1i5TM0weCCASbCgqBU+rxocMu
- J6dThpwndXZ4Vf9l/3b7d5fVDcx8ZlNgUp3oI0P7brN/YWFYH2QQdIsSw7SZ3MG8jojUW4DQn
- JnO1OQ/AjEuH09Q8PNufM/uCCzrIVZy4TrmdyYsFMYQoaAf6JtfHIDDotZE09DyaFtK+5jsVn
- m7svQx5rAKvKMSzhMKjNU2qw+CUIGRYUSUIZBuMk+HcLdvrGH3AN+6VRkKBljOEUiD2h2Nyt4
- 1hsPi8kMmHqkTRKuOOQ0i/olY0zD/ajJNd8uYdZDLXHw1t2qyLZFsXrRurmsIO1DLseZZuP9Z
- tMjDns0XY+VquIad+qrxXFExIidZOqInAzOPynWmmPLDNLXKL0C0gEvgLyWmULY0ZqsPdK/fk
- mwDUF4ugzogClNS7BIUjU9Djl90XTGsbSVFJfL3ctYxghHyFqHOuBHJNVfPNTc7jaqH8u8IwH
- UhwtFsOUtcQe7ObTqJE3oflzqd6GxQ3ZFnsJLf075ZU7llnNFtoKWQpzgj6akq
+X-Provags-ID: V03:K1:RbJFsg+zcOIhV+pwzTgBLSow6bSU4CwgVjV3BdCWUfNwBYPYO9y
+ ZZF9AXT4MrpWB2LYZ897OMfmKXszBrOLMQuaalWCNVcQhLHCsBs9T2jjFoO+d+lPjXGEd1y
+ xlQ1JVkgYtL08vNBpq69QRKIxlz3cBVYPG8gX70MOecDwOJh8j4D2keUYq8OJkxbizMPRsm
+ xbBFHZ7zN20uHRYhRVFmg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7Nce2nEHrDk=:Ago4Bcc9OnF6697MoCdJka
+ hSc3wbMrnMXzLj0+cp/BWFJw5lYAmewStCoTG+LBKqDL1+iNmq+rP33MoJWORIUg0zWv6KC47
+ giS8Rny6Dn3O7eeCB641WHPFzreIDhBU/R1gK/6X7YqKlbhtnN7dYfGmuUPBYrybbnS+OMTHl
+ 7soafXCqakuDo6LFAWaV9bhf4Ea5vItx4Ey5TCG/Gvcqz3hqCG8W00H9xFJZSD9qaMx8qH6a7
+ Qmi1DZ87XClj0dCFEq8GzSrDEfY1NnnojG8arRguMXDuhyTDUxZI0IaOsN2CppZOa10HWsZem
+ miG03OYAhrR+efimyJ4sTYdz+YUxFxcKHRvjfIRJ3rudqIrxnTAzWjNl+dr7Gc2VSkj4i8b/z
+ asIHrhbsh7pUMUf1YO8GpnpKHUxpDRayLaUNLLFj3ary0kHVOtIeBx8EgZTE932QN/ANuGzYY
+ M5mTx4QPkwa66R2EJgUzfIr3qXvMW1K3CJjF4ka71zatN/zsqYOG82r5AjabAnrRciAXO6b6a
+ FvZvRvunzDmyHXhAI0Rb+LzE0f61ec36mGcViTlGunk8eWTYEMmPEMsJlvDRcsWU6q+O/B7OY
+ D/MAhjmoH+2g31LWn3z+t519/NHjcgja6T6KI6lQeTda3xQPb77z1abVy7WsiivbjFzyQryFT
+ u8DuD5oObAej0+iJ4MMPYVU77ntuMgh8wzlfDcDzLwG/nZsRldNMjf3FWe3MgtJQLYyhAIU+Z
+ ov+NAYIFgBR96eK2h4GDow/d0YAqBJg+A4w2VFlHieDGRY+ZqVRebr9DDd1LqXzOwegLO+uJt
+ fzaEBn75ANiTIc5WrLR1goGnQIJqN5awhk8cMDq4QtEaLc2Pay+73tXxc8M5EF/SzCHdwAj2A
+ uM3XPDNREbQ0Zvn3b2sw7X60+g9QXZsPnzkKnGPlemLpXfL/zTFPWL3Ijy2n55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.04.19 um 01:27 schrieb Rohit Ashiwal via GitGitGadget:
-> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Am 01.05.19 um 20:09 schrieb Jeff King:
+> On Mon, Apr 29, 2019 at 05:32:50PM -0400, Johannes Schindelin wrote:
 >
-> As we already link to the zlib library, we can perform the compression
-> without even requiring gzip on the host machine.
+>>> Another is that I am not sure how your "fixed format" argument
+>>> meshes with the "-b blocksize" parameter to affect the tar/pax
+>>> output.  The format may be fixed, but it is parameterized.  If
+>>> we ever need to grow the ability to take "-b", having the knowledge
+>>> that our current code is limited to the fixed BLOCKSIZE in a single
+>>> function (i.e. the caller of this function , not the callee) would
+>>> be less error prone.
+>>
+>> This argument would hold a lot more water if the following lines were n=
+ot
+>> part of archive-tar.c:
+>>
+>> 	#define RECORDSIZE      (512)
+>> 	#define BLOCKSIZE       (RECORDSIZE * 20)
+>>
+>> 	static char block[BLOCKSIZE];
+>>
+>> If you can tell me how the `-b` (run-time) parameter can affect the
+>> (compile-time) `BLOCKSIZE` constant, maybe I can start to understand yo=
+ur
+>> concern.
 >
-> Note: the `-n` flag that `git archive` passed to `gzip` wants to ensure
-> that a reproducible file is written, i.e. no filename or mtime will be
-> recorded in the compressed output. This is already the default for
-> zlib's `gzopen()` function (if the file name or mtime should be
-> recorded, the `deflateSetHeader()` function would have to be called
-> instead).
->
-> Note also that the `gzFile` datatype is defined as a pointer in
-> `zlib.h`, i.e. we can rely on the fact that it can be `NULL`.
->
-> At this point, this new mode is hidden behind the pseudo command
-> `:zlib`: assign this magic string to the `archive.tgz.command` config
-> setting to enable it.
+> FWIW, I agree with you here. These patches are not making anything worse
+> (and may even make them better, since we'd probably need to swap out the
+> BLOCKSIZE constant for a run-time "blocksize" variable in fewer places).
 
-Technically the patch emits the gzip format using the gz* functions.
-Raw zlib output with deflate* would be slightly different.  So I'd
-rather use "gzip" instead of "zlib" in the magic string.
+The block size is mostly relevant for writing tar archives to magnetic
+tapes.  You can do that with git archive and a tape drive that supports
+the blocking factor 20, which is the default for GNU tar and thus should
+be quite common.  You may get higher performance with a higher blocking
+factor, if supported.
 
-And I'm not sure about the colon as the only magic marker.  Perhaps
-throw in a "git " or "git-" instead or in addition?
+But so far this didn't come up on the mailing list, and I'd be surprised
+if people really wrote snapshots of git archives directly to tape.  So
+I'm not too worried about this define ever becoming a user-settable
+option.  Sealing the constant into a function a bit feels dirty, though.
+Mixing code and data makes the code more brittle.
 
-> @@ -459,18 +464,40 @@ static int write_tar_filter_archive(const struct a=
-rchiver *ar,
->  	filter.use_shell =3D 1;
->  	filter.in =3D -1;
->
-> -	if (start_command(&filter) < 0)
-> -		die_errno(_("unable to start '%s' filter"), argv[0]);
-> -	close(1);
-> -	if (dup2(filter.in, 1) < 0)
-> -		die_errno(_("unable to redirect descriptor"));
-> -	close(filter.in);
-> +	if (!strcmp(":zlib", ar->data)) {
-> +		struct strbuf mode =3D STRBUF_INIT;
-> +
-> +		strbuf_addstr(&mode, "wb");
-> +
-> +		if (args->compression_level >=3D 0 && args->compression_level <=3D 9)
-> +			strbuf_addf(&mode, "%d", args->compression_level);
+Another example of that is the hard-coded file descriptor in the same
+function, by the way.  It's a lot of busywork to undo in order to gain
+the ability to write to some other fd, for the questionable convenience
+of not having to pass that parameter along the call chain.  My bad.
 
-Using gzsetparams() to set the compression level numerically after gzdopen=
-()
-instead of baking it into the mode string feels cleaner.
+But anyway, I worry more about the fact that blocking is not needed when
+gzip'ing; gzwrite can be fed pieces of any size, not just 20 KB chunks.
+The tar writer just needs to round up the archive size to a multiple of
+20 KB and pad with NUL bytes at the end, in order to produce the same
+uncompressed output as non-compressing tar.
 
-> +
-> +		gzip =3D gzdopen(fileno(stdout), mode.buf);
-> +		if (!gzip)
-> +			die(_("Could not gzdopen stdout"));
-> +		strbuf_release(&mode);
-> +	} else {
-> +		if (start_command(&filter) < 0)
-> +			die_errno(_("unable to start '%s' filter"), argv[0]);
-> +		close(1);
-> +		if (dup2(filter.in, 1) < 0)
-> +			die_errno(_("unable to redirect descriptor"));
-> +		close(filter.in);
-> +	}
->
->  	r =3D write_tar_archive(ar, args);
->
-> -	close(1);
-> -	if (finish_command(&filter) !=3D 0)
-> -		die(_("'%s' filter reported error"), argv[0]);
-> +	if (gzip) {
-> +		int ret =3D gzclose(gzip);
-> +		if (ret =3D=3D Z_ERRNO)
-> +			die_errno(_("gzclose failed"));
-> +		else if (ret !=3D Z_OK)
-> +			die(_("gzclose failed (%d)"), ret);
-> +	} else {
-> +		close(1);
-> +		if (finish_command(&filter) !=3D 0)
-> +			die(_("'%s' filter reported error"), argv[0]);
-> +	}
->
->  	strbuf_release(&cmd);
->  	return r;
->
+If we'd wanted to be tape-friendly, then we'd have to block the gzip'ed
+output instead of the uncompressed tar file, but I'm not suggesting
+doing that.
+
+Note to self: I wonder if moving the blocking part out into an
+asynchronous function could simplify the code.
+
+Ren=C3=A9
