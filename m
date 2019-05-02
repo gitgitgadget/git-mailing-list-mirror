@@ -2,173 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BAF61F453
-	for <e@80x24.org>; Thu,  2 May 2019 21:45:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B724B1F453
+	for <e@80x24.org>; Thu,  2 May 2019 21:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726121AbfEBVpM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 May 2019 17:45:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47406 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726030AbfEBVpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 May 2019 17:45:11 -0400
-Received: (qmail 22309 invoked by uid 109); 2 May 2019 21:45:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 May 2019 21:45:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5791 invoked by uid 111); 2 May 2019 21:45:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 02 May 2019 17:45:46 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 May 2019 17:45:09 -0400
-Date:   Thu, 2 May 2019 17:45:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: js/partial-clone-connectivity-check (was: What's cooking in
- git.git (Apr 2019, #05; Thu, 25))
-Message-ID: <20190502214509.GA19188@sigill.intra.peff.net>
-References: <xmqqsgu6wfv9.fsf@gitster-ct.c.googlers.com>
- <20190425221657.GV60888@google.com>
- <20190502025206.GA25395@sigill.intra.peff.net>
+        id S1726244AbfEBVtl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 May 2019 17:49:41 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:36244 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726030AbfEBVtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 May 2019 17:49:41 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w20so1647992plq.3
+        for <git@vger.kernel.org>; Thu, 02 May 2019 14:49:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=hxIFxaqfEISTOPkk/PGKDejc4hT5n4NThS304ulMLUE=;
+        b=gEGUQIyucncC7SjygsFQnN7jIhTy+xjHt70vzlfnDq/O+j2qoo1Y+iZzg8ygIBpAe6
+         6Ok5Fg5/x+6ptbcEML1oH72wCAmhXc+/bOUGiUuxBe6MDoSANDstTMDApJgO8JqIvMFv
+         /bqNkIhcYbW5ejt64W1cgcqSWjgJZFeCJYLwh1siZ4eSBbjhJaqRsYWj+itMGrz6VTwy
+         28/H2J8JraktYm0jkqgb+FmiyNxreaqeSK5nGrvhhfDN+IqMLHHhHN/jm32OPkwt/k2l
+         +ZX3jDwIih4NfR5xfEj778JOvUALwr/62iUT87m7ynw38QuL52ySxhgitl71lImDlpXb
+         hqYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hxIFxaqfEISTOPkk/PGKDejc4hT5n4NThS304ulMLUE=;
+        b=haoi5k/tgBot6WsVtjqCybPKRB0Yd6CEbM53rJzuSmxGu/3K4qSNVtqxcBe0oJFirM
+         3hmqEyBD6uBTgNY649vMUjp0EVrFMP1rljOyLWJZF5fIPn4lomuQMk5sy5nbe5kGcmdh
+         m104kllWDOwHq70D/nrgOXVbiphqxk5LZmtVR+GdergeeHL5LNEbdGqLuuYFQMeAVO9J
+         wDhfxnMr1vs7/7ywjXvBEn2pnoH3xgrZ5ArrBEeDgfMxbFawILePPcSGgQN3ktGGO/iK
+         y0K6WUL5vofmx6OJnugfx/QPAmYJ18O72/xDpOU7FiQMHoFSrEJMOedXqQQ2uFswSgAF
+         Zkhg==
+X-Gm-Message-State: APjAAAWZa+1e/+nOEct3NtGElNJV/4Zc9oj9SyuynGSE8OCkTVCzV+vo
+        bFcazhktEW2CIhb5YsDolov7R98D4gd2/A==
+X-Google-Smtp-Source: APXvYqzMUzAzxYULQJuw/JwUh2hQgRkViHqGB4t7nvSd79MFbu5J3y5Z1G7guA7FmEhG6jLmtDgkaw==
+X-Received: by 2002:a17:902:b614:: with SMTP id b20mr5947533pls.200.1556833780430;
+        Thu, 02 May 2019 14:49:40 -0700 (PDT)
+Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
+        by smtp.gmail.com with ESMTPSA id f14sm233127pgn.77.2019.05.02.14.49.39
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 02 May 2019 14:49:39 -0700 (PDT)
+Date:   Thu, 2 May 2019 14:49:35 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] merge: add --quit
+Message-ID: <20190502214935.GA116416@google.com>
+References: <20190501131152.314-1-pclouds@gmail.com>
+ <20190501131152.314-3-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190502025206.GA25395@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190501131152.314-3-pclouds@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 01, 2019 at 10:52:06PM -0400, Jeff King wrote:
+They both look fine to me, besides a couple typos in the commit message
+in this one.
 
-> > > * js/partial-clone-connectivity-check (2019-04-21) 1 commit
-> > >   (merged to 'next' on 2019-04-25 at ebd8b4bffd)
-> > >  + clone: do faster object check for partial clones
-> > > 
-> > >  During an initial "git clone --depth=..." partial clone, it is
-> > >  pointless to spend cycles for a large portion of the connectivity
-> > >  check that enumerates and skips promisor objects (which by
-> > >  definition is all objects fetched from the other side).  This has
-> > >  been optimized out.
-> > > 
-> > >  Will merge to 'master'.
-> > 
-> > Peff asked for a perf test for this [1], but I haven't had time to write one
-> > yet. I can do that in a separate patch if you still want to merge this
-> > as-is.
-> 
-> I won't die without one, but it would be nice. It may also be that an
-> existing perf test, but I don't think we cover partial clones in t/perf
-> at all. Might be worth just a straight-up "git clone --filter=blob:none"
-> test.
+On Wed, May 01, 2019 at 08:11:52PM +0700, Nguyễn Thái Ngọc Duy wrote:
+> This allows to cancel the current merge without reseting worktree/index,
 
-Here's what I came up with. Note that there's a bug in 'master' right
-now which causes perf to produce nonsense results. It's due to my
-0baf78e7bc (perf-lib.sh: rely on test-lib.sh for --tee handling,
-2019-03-15). I'll fix that separately (the timing below is done with
-that commit reverted).
+"resetting".
 
--- >8 --
-Subject: [PATCH] t/perf: add perf script for partial clones
+> which is what --abort is for. Like other --quit(s), this is often used
+> when you forgot that you're in the middle of a merge and already
+> switched away, doing different things. By the time you're realize, you
+"By the time you've realized" ?
 
-We don't cover the partial clone feature at all in t/perf. Let's at
-least run a few basic tests so that we'll notice any regressions.
+> can't even continue the merge anymore.
 
-We'll do a no-blob clone, and split it into two parts: the actual object
-transfer, and the subsequent checkout (which will of course require
-another transfer to get the blobs). That will help us more clearly
-assess the performance of each.
-
-There are obviously a lot more possibilities besides just a no-blob
-partial clone, but this should serve as a canary that alerts us to any
-generic slow-downs (and we can add more tests later for cases that
-aren't exercised here).
-
-There are a few non-ideal things here that make this not an entirely
-accurate test, but are probably OK for our purposes:
-
-  1. We have to do some extra prep/cleanup work inside the timing tests,
-     since they impact the on-disk state and the perf harness may run
-     each one multiple times.
-
-     In practice this is probably OK, since these bits should be much
-     less expensive than the operations we are measuring.
-
-  2. The clone time is likely to be dominated by the server's object
-     enumeration. In the real world, a repo large enough to drive people
-     to partial clones is likely to have reachability bitmaps enabled.
-
-     And in the opposite direction, our object transfer is happening at
-     the speed of a local pipe, whereas in the real world it would
-     bottle-neck on the network.
-
-     So any percentage speedups should be taken with a grain of salt.
-     But hopefully any regressions will produce enough of an effect to
-     be noticeable.
-
-This script also demonstrates the recent improvement from dfa33a298d
-(clone: do faster object check for partial clones, 2019-04-19):
-
-  Test                          dfa33a298d^         dfa33a298d
-  -------------------------------------------------------------------------
-  5600.2: clone without blobs   18.41(22.72+1.09)   6.83(11.65+0.50) -62.9%
-  5600.3: checkout of result    1.82(3.24+0.26)     1.84(3.24+0.26) +1.1%
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-The speedup from dfa33a298d was larger than I expected. Doing a full
-`rev-list --objects --all` on a non-partial clone is only 3-4s. So how
-did we manage to save 11s by removing it? The answer is that the
-is_promisor check is super expensive: we have to walk all of those trees
-in the partial pack to find which blobs are mentioned, only to then walk
-them all again for the actual traversal and say "yep, this is in our
-promisor list". Yikes.
-
-Your patch makes all of that go away, but I do think there's room for us
-to be more clever here (but that leads us back down the rabbit hole you
-explored earlier, so I think it makes sense to take your patch now and
-deal with other optimizations separately).
-
- t/perf/p5600-partial-clone.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
- create mode 100755 t/perf/p5600-partial-clone.sh
-
-diff --git a/t/perf/p5600-partial-clone.sh b/t/perf/p5600-partial-clone.sh
-new file mode 100755
-index 0000000000..3e04bd2ae1
---- /dev/null
-+++ b/t/perf/p5600-partial-clone.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description='performance of partial clones'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+test_expect_success 'enable server-side config' '
-+	git config uploadpack.allowFilter true &&
-+	git config uploadpack.allowAnySHA1InWant true
-+'
-+
-+test_perf 'clone without blobs' '
-+	rm -rf bare.git &&
-+	git clone --no-local --bare --filter=blob:none . bare.git
-+'
-+
-+test_perf 'checkout of result' '
-+	rm -rf worktree &&
-+	mkdir -p worktree/.git &&
-+	tar -C bare.git -cf - . | tar -C worktree/.git -xf - &&
-+	git -C worktree config core.bare false &&
-+	git -C worktree checkout -f
-+'
-+
-+test_done
--- 
-2.21.0.1314.g224b191707
-
+Thanks,
+Emily
