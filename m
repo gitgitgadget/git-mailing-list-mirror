@@ -2,166 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C70AB1F453
-	for <e@80x24.org>; Thu,  2 May 2019 20:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0783E1F453
+	for <e@80x24.org>; Thu,  2 May 2019 20:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbfEBUU6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 May 2019 16:20:58 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46198 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbfEBUU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 May 2019 16:20:57 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f37so3298343edb.13
-        for <git@vger.kernel.org>; Thu, 02 May 2019 13:20:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XzTGLwzHvW2Pjm2r7hDzJ8lg+iEgNjMb7IsVCq9vn48=;
-        b=mscobI0RNBDdiKs4rzO0Tl7Qzetjc98EzvLnxYNQuiGb2ih3cU49tmmF5f4FQMAh/H
-         LybCIj5cvUbpGXGNOnXE+Kg8GI7FmObn5RcBoUU394OJ+GBiEzq2lO1o3a62/FuVM9l3
-         RypoqFlInHJWgEdf9EaG2GWBeKR8/s+bvrWZJ8wyimPLkqXGKHd7udzCe/PT004YUuQP
-         hPUaQ831UvtJAzU3Y9UtOuwGiyZC2mCRqZFxJsPjghl9hOFkegxPgwysv9Z2haOsdJWL
-         aqdTV5CGRay5k4yWDD7qU9Gjeo9+uFcWPa03KlC8uNKXn9tuWsV29rDEhBvEQ6QCbC2+
-         hWmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XzTGLwzHvW2Pjm2r7hDzJ8lg+iEgNjMb7IsVCq9vn48=;
-        b=ikoHOU0F7/qdFOESQbr3MRSgg6v0h/Rff31NccIiXpQbNrN5wCYCRN6bx3xd1NRbwB
-         9kV+wfPtk5WXH1fd6WCFHSG6hEhHw2E1CopOJd8EK2a2fzPXIjOzMK6ZfpqdPePuKYx4
-         CnB4jzfgscjJA6pUFZc1JwHcf8mSQxsHhKqKD70QxB+9Mc1/p4Dn7d8d+26lrOJNqPFW
-         HjyAhNZ/V9EbVkU+KXn0AHCkOzLGIUS1aMxU3i8/byPHVU3S9NGFywPDDCz39O9kQFTM
-         Mxe1eYvhBl0iVJBS/9oFl/gSQ35eHGJqQSTnrjZyZzWuxK9hAV+zHM7LVZpmoyuecRuO
-         2R8Q==
-X-Gm-Message-State: APjAAAVDtXKRqfI52K02g3W31LWoF1nt6LdRo3gd7owIedI2PxkeMAP2
-        8WdtGdivywA288TnzWKb104=
-X-Google-Smtp-Source: APXvYqwrQ+XOGVSYx+fpC+6gVJhQCbTg86Md51DGdm4fYZB9NLEyjClBl6gms+It6/M/7a+eHL5Cqg==
-X-Received: by 2002:a50:aeaf:: with SMTP id e44mr3944026edd.239.1556828455404;
-        Thu, 02 May 2019 13:20:55 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id f1sm17729edm.59.2019.05.02.13.20.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 May 2019 13:20:54 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        id S1726267AbfEBU3z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 May 2019 16:29:55 -0400
+Received: from mout.web.de ([212.227.15.14]:59557 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726022AbfEBU3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 May 2019 16:29:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1556828980;
+        bh=2qNbZQUyCf0GiBQKCwapzvAipDWA9ZBW0GqrkhieWG8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=MZKHmP9L2aJhbM0euLJYyZJNmAweWx2lGbZNu1uX3l164Wc9Umz/6F68E4uJFl+UQ
+         XrDVuQiThpmmflW7i+FQsoW+SJjAnHtDBcBZ5P1GIfIbY7wS9r7x5gv7QJvqaphqCi
+         OIgu++3JQE+yyMvE8P9s7r3c/flTZq+j6CqELHzE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.19.151]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6UmJ-1gWvlf13Jz-00yUXJ; Thu, 02
+ May 2019 22:29:40 +0200
+Subject: Re: [PATCH v2 3/4] archive: optionally use zlib directly for gzip
+ compression
+To:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
         Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 2/2] archive: avoid spawning `gzip`
 References: <pull.145.git.gitgitgadget@gmail.com>
-        <44d5371ae6808ec40e8f52c3dc258a85c878b27e.1555110278.git.gitgitgadget@gmail.com>
-        <20190413015102.GC2040@sigill.intra.peff.net>
-        <20190413221646.GL12419@genre.crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.1904261051310.45@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1904261051310.45@tvgsbejvaqbjf.bet>
-Date:   Thu, 02 May 2019 22:20:53 +0200
-Message-ID: <87ftpwip5m.fsf@evledraar.gmail.com>
+ <pull.145.v2.git.gitgitgadget@gmail.com>
+ <4ea94a8784876c3a19e387537edd81a957fc692c.1556321244.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <927f1e99-baa3-2d8a-cb11-0aedef6adc5c@web.de>
+Date:   Thu, 2 May 2019 22:29:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
+In-Reply-To: <4ea94a8784876c3a19e387537edd81a957fc692c.1556321244.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:XB1QxWcNeJt8eyfueKiob3wFbDjMNY78Aic4gU0YKfDmG1+f8bS
+ /HzRHdLpAVmk7qnISm8tEq2jGCLrw/hveF2qKjZ1rofxSJ8jV1CD7V21ffPQUavLXf7d8ak
+ DOXmSlPvBtQtJWF9bDIVmY3Bw8xhkdcA7kFEQodTps3loRDjHdtHXUDQ+K4RY4skHEIGVpk
+ uoG3ykSWnbIFGKFTpM4wA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RIZByJM8oxk=:FHoiJXKvIPeU6ydPuc7UnH
+ YfBuKM34Dcql6MMeM7538fkGtT/WXh9QtMGxYQFUee++kQOzQhDsXWOMw7SacWni2u/QsLwsn
+ unNzlfN0tdXLpEIYz6sn7++aBuAhDml1IpIrP+XFXrLtYWEhG3st81kHLM0HFL+PVDj1jWVBs
+ VfWZAYARzhJj1tuy9UsRAXYBEEu7lcOCuvScINi491ArtrgeOR/FutMw0idE0h0lyd7tSklAT
+ KY8GuAbujcO4HsLY0AQn6tBAMB5YgbIhK9K7RX6oZxIiHbN70SMWxAJhg/J34y+D287MHB37r
+ cSdVXx2+jaZ+pE3fkaWvaBgXe2QveDL3zkUXHXAaK66+9PWb7vWR+3p+hSVL7+9zWFjd5TLwr
+ kRS+xs7hHHb+4e7HZzqYouW6nX+UuX7NFF2qfivFcRvjYQ4n1i5TM0weCCASbCgqBU+rxocMu
+ J6dThpwndXZ4Vf9l/3b7d5fVDcx8ZlNgUp3oI0P7brN/YWFYH2QQdIsSw7SZ3MG8jojUW4DQn
+ JnO1OQ/AjEuH09Q8PNufM/uCCzrIVZy4TrmdyYsFMYQoaAf6JtfHIDDotZE09DyaFtK+5jsVn
+ m7svQx5rAKvKMSzhMKjNU2qw+CUIGRYUSUIZBuMk+HcLdvrGH3AN+6VRkKBljOEUiD2h2Nyt4
+ 1hsPi8kMmHqkTRKuOOQ0i/olY0zD/ajJNd8uYdZDLXHw1t2qyLZFsXrRurmsIO1DLseZZuP9Z
+ tMjDns0XY+VquIad+qrxXFExIidZOqInAzOPynWmmPLDNLXKL0C0gEvgLyWmULY0ZqsPdK/fk
+ mwDUF4ugzogClNS7BIUjU9Djl90XTGsbSVFJfL3ctYxghHyFqHOuBHJNVfPNTc7jaqH8u8IwH
+ UhwtFsOUtcQe7ObTqJE3oflzqd6GxQ3ZFnsJLf075ZU7llnNFtoKWQpzgj6akq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Apr 26 2019, Johannes Schindelin wrote:
-
-> Hi brian,
+Am 27.04.19 um 01:27 schrieb Rohit Ashiwal via GitGitGadget:
+> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 >
-> On Sat, 13 Apr 2019, brian m. carlson wrote:
+> As we already link to the zlib library, we can perform the compression
+> without even requiring gzip on the host machine.
 >
->> On Fri, Apr 12, 2019 at 09:51:02PM -0400, Jeff King wrote:
->> > I wondered how you were going to kick this in, since users can define
->> > arbitrary filters. I think it's kind of neat to automagically convert
->> > "gzip -cn" (which also happens to be the default). But I think we shou=
-ld
->> > mention that in the Documentation, in case somebody tries to use a
->> > custom version of gzip and wonders why it isn't kicking in.
->> >
->> > Likewise, it might make sense in the tests to put a poison gzip in the
->> > $PATH so that we can be sure we're using our internal code, and not ju=
-st
->> > calling out to gzip (on platforms that have it, of course).
->> >
->> > The alternative is that we could use a special token like ":zlib" or
->> > something to indicate that the internal implementation should be used
->> > (and then tweak the baked-in default, too). That might be less
->> > surprising for users, but most people would still get the benefit since
->> > they'd be using the default config.
->>
->> I agree that a special value (or NULL, if that's possible) would be
->> nicer here. That way, if someone does specify a custom gzip, we honor
->> it, and it serves to document the code better. For example, if someone
->> symlinked pigz to gzip and used "gzip -cn", then they might not get the
->> parallelization benefits they expected.
+> Note: the `-n` flag that `git archive` passed to `gzip` wants to ensure
+> that a reproducible file is written, i.e. no filename or mtime will be
+> recorded in the compressed output. This is already the default for
+> zlib's `gzopen()` function (if the file name or mtime should be
+> recorded, the `deflateSetHeader()` function would have to be called
+> instead).
 >
-> I went with `:zlib`. The `NULL` value would not really work, as there is
-> no way to specify that via `archive.tgz.command`.
+> Note also that the `gzFile` datatype is defined as a pointer in
+> `zlib.h`, i.e. we can rely on the fact that it can be `NULL`.
 >
-> About the symlinked thing: I do not really want to care to support such
-> hacks.
+> At this point, this new mode is hidden behind the pseudo command
+> `:zlib`: assign this magic string to the `archive.tgz.command` config
+> setting to enable it.
 
-It's the standard way by which a lot of systems do this, e.g. on my
-Debian box:
+Technically the patch emits the gzip format using the gz* functions.
+Raw zlib output with deflate* would be slightly different.  So I'd
+rather use "gzip" instead of "zlib" in the magic string.
 
-    $ find /{,s}bin /usr/{,s}bin -type l -exec file {} \;|grep /etc/alterna=
-tives|wc -l
-    108
+And I'm not sure about the colon as the only magic marker.  Perhaps
+throw in a "git " or "git-" instead or in addition?
 
-To write this E-Mail I'm invoking one such symlink :)
-
-> If you want a different compressor than the default (which can
-> change), you should specify it specifically.
-
-You might want to do so system-wide, or for each program at a time.
-
-I don't care about this for gzip myself, just pointing out it *is* a
-thing people use.
-
->> I'm fine overall with the idea of bringing the compression into the
->> binary using zlib, provided that we preserve the "-n" behavior
->> (producing reproducible archives).
+> @@ -459,18 +464,40 @@ static int write_tar_filter_archive(const struct a=
+rchiver *ar,
+>  	filter.use_shell =3D 1;
+>  	filter.in =3D -1;
 >
-> Thanks for voicing this concern. I had a look at zlib's source code, and
-> it looks like it requires an extra function call (that we don't call) to
-> make the resulting file non-reproducible. In other words, it has the
-> opposite default behavior from `gzip`.
+> -	if (start_command(&filter) < 0)
+> -		die_errno(_("unable to start '%s' filter"), argv[0]);
+> -	close(1);
+> -	if (dup2(filter.in, 1) < 0)
+> -		die_errno(_("unable to redirect descriptor"));
+> -	close(filter.in);
+> +	if (!strcmp(":zlib", ar->data)) {
+> +		struct strbuf mode =3D STRBUF_INIT;
+> +
+> +		strbuf_addstr(&mode, "wb");
+> +
+> +		if (args->compression_level >=3D 0 && args->compression_level <=3D 9)
+> +			strbuf_addf(&mode, "%d", args->compression_level);
 
-Just commenting on the overall thread: I like Ren=C3=A9's "new built-in"
-patch best.
+Using gzsetparams() to set the compression level numerically after gzdopen=
+()
+instead of baking it into the mode string feels cleaner.
 
-You mentioned "new command that we have to support for eternity". I
-think calling it "git gzip" is a bad idea. We'd make it "git
-archive--gzip" or "git archive--helper", and we could hide building it
-behind some compat flag.
-
-Then we'd carry no if/else internal/external code, and the portability
-issue that started this would be addressed, no?
-
-As a bonus we could also drop the "GZIP" prereq from the test suite
-entirely and just put that "gzip" in $PATH for the purposes of the
-tests.
-
-I spied on your yet-to-be-submitted patches and you could drop GZIP from
-the "git archive" tests, but we'd still need it in
-t/t5562-http-backend-content-length.sh, but not if we had a "gzip"
-compat helper.
-
-There's also a long-standing bug/misfeature in git-archive that I wonder
-about: When you combine --format with --remote you can only generate
-e.g. tar.gz if the remote is OK with it, if it says no you can't even if
-it supports "tar" and you could do the "gz" part locally. Would such a
-patch be harder with :zlib than if we always just spewed out to external
-"gzip" after satisfying some criteria?
+> +
+> +		gzip =3D gzdopen(fileno(stdout), mode.buf);
+> +		if (!gzip)
+> +			die(_("Could not gzdopen stdout"));
+> +		strbuf_release(&mode);
+> +	} else {
+> +		if (start_command(&filter) < 0)
+> +			die_errno(_("unable to start '%s' filter"), argv[0]);
+> +		close(1);
+> +		if (dup2(filter.in, 1) < 0)
+> +			die_errno(_("unable to redirect descriptor"));
+> +		close(filter.in);
+> +	}
+>
+>  	r =3D write_tar_archive(ar, args);
+>
+> -	close(1);
+> -	if (finish_command(&filter) !=3D 0)
+> -		die(_("'%s' filter reported error"), argv[0]);
+> +	if (gzip) {
+> +		int ret =3D gzclose(gzip);
+> +		if (ret =3D=3D Z_ERRNO)
+> +			die_errno(_("gzclose failed"));
+> +		else if (ret !=3D Z_OK)
+> +			die(_("gzclose failed (%d)"), ret);
+> +	} else {
+> +		close(1);
+> +		if (finish_command(&filter) !=3D 0)
+> +			die(_("'%s' filter reported error"), argv[0]);
+> +	}
+>
+>  	strbuf_release(&cmd);
+>  	return r;
+>
