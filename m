@@ -2,110 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02D381F453
-	for <e@80x24.org>; Thu,  2 May 2019 16:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08A481F453
+	for <e@80x24.org>; Thu,  2 May 2019 16:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbfEBQjT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 May 2019 12:39:19 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37266 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726468AbfEBQjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 May 2019 12:39:18 -0400
-Received: by mail-io1-f65.google.com with SMTP id j14so2237233ioj.4
-        for <git@vger.kernel.org>; Thu, 02 May 2019 09:39:18 -0700 (PDT)
+        id S1726596AbfEBQsK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 May 2019 12:48:10 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33389 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726091AbfEBQsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 May 2019 12:48:10 -0400
+Received: by mail-pf1-f194.google.com with SMTP id z28so1423064pfk.0
+        for <git@vger.kernel.org>; Thu, 02 May 2019 09:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KGt06nsJUqzfaBKrtwAoVEwCCavKJ6o9jalmQ4aEmrw=;
-        b=ABYeztGWP99tiCeY3urow1aDbGpB13bclM+ZWpMQ4qehkhJal+27Eh2oHTjys5L4rK
-         FU13cWPFS0nCj7483n8VwAZp01U1SIzwNm4UnScC0v0Ms7IdPzs/w7rmQY6u48k38a8o
-         L9HoCBGGcvKCQNpUv2dn3p7Zv6qzDLhd7USfs4RiqjWys2EgmOWPWDLjryTg+8eZu/3u
-         q3FELqpqaJsRD11OZ+UVLTwbOg89WSqSpjWC5BGYUW31gTZzWq6yHJKaTO4TUI8RrLO8
-         gvyLpiydSw56arWc7ZBHMJSiYTuSn7v/+Ib6mLh1/8bAtaEfrb9fbtChjMMYmPKXxF3/
-         PFoQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=aA3z995wMTdo4+gpkW5j3JvHMdsAZIbNA/UT+SGB+Vo=;
+        b=IvOH1Ft/vKH8ao85QA0Z6m8hLPGxUCanYFkhrDbxh5akFuCimjK0DG+XUhqYQR80fA
+         ZZ5cFK9yGCXxgTgn3ah/iWiLaC0IRUXAezctbqxYTbNOh348xWuMpcQbzA+NoGEy0CoI
+         zieu1JDgxCyJrZ0xT+v0L+DiZme3CxDVpoCTugLvy+A5by1nA6GJc4X4Pafxx8h1xro2
+         EOoJIjWihKDwvbLmEiGl/wRY6yZt5UdSzp/rhpj0hHZke61HFsWcgacT53pSq5cX/WWX
+         0Rn/XQjUMHRqpVe6lUMRKFRY7v3KUaXAGIhmaKDNn29eiIu0qXdseKPmS2zkv1h+SKN1
+         +6uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KGt06nsJUqzfaBKrtwAoVEwCCavKJ6o9jalmQ4aEmrw=;
-        b=kXE0WqC4P9OOqDp+ZBhgIZz7Q1UbKxeBMUhcZfBK4jU4VEuRg0kKYON/3XXelc2PF3
-         w1WOAA7N6aT+2EtIY9I8xEh9DMDYeqp6aEh2R6XJ3dc7dxInKjIbL4+nURAt1wdZRDx+
-         8NmhsATnrNFcy0xmHJBFVqtCQxre2DH21ETz0nw/0FU5cQqyprSiKKh9GxE3Jt1We41y
-         XSeNjXWF8Qx3OajHpfVmmvEbUKXwQTgTEP5suzKKJ0MFQ275a43XtjWifWt7wUHTMpAr
-         7IwZqJ7jTgfjyqWcSSUQj5sD5BTrYYllkHm2WjUZv3PdhfT/v2usxDX7I6+9hG6ntbTj
-         Pe1A==
-X-Gm-Message-State: APjAAAWxxLJARHtBEOseIW2ma2YUbFK5ryMbJwlZf0c1RIznq8GNJTM/
-        R3qMVNYGXZDqYtJGHAb8uBsGy57hl08RKvcmoE0=
-X-Google-Smtp-Source: APXvYqzJOz0II93ffFg/oH0pZeQXP4ENDaBZyT0d3PNvfgRq2KbWH8sVc8HQCsIRSpPmW+tFOQMS92/RlATotVXdpKM=
-X-Received: by 2002:a05:6602:2042:: with SMTP id z2mr2905848iod.282.1556815157692;
- Thu, 02 May 2019 09:39:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAF8BazDu_GqoCPBQ-gEJ+q8n1aWSjf_TOV7bDE5VCQkDgBjyfQ@mail.gmail.com>
- <CAF8BazA-VYFns7o9F7gXfFZCspbM0yQKi+LQ+BnkpGH+EjPC9A@mail.gmail.com>
- <CACsJy8DSW2f3v1KpU-QrAz-EeLwG4mVm9ToDdA2=kXSmtsEAYw@mail.gmail.com>
- <CAF8BazBShg9F2uCuVQ_PM6196kOUNWOA1T9APkCXCoey7as2mQ@mail.gmail.com>
- <20190430174110.GA16729@sigill.intra.peff.net> <CAF8BazBBP53uhh+oOroFuVCEL-FaqJheSYX5Q5_NQxGRt=g_xA@mail.gmail.com>
- <20190501183638.GF4109@sigill.intra.peff.net> <CAF8BazAK_s89XY8-AAsSSbgOFgP03CLRZ50bLGPsc89bfnN7kQ@mail.gmail.com>
- <20190502150701.GA14906@sigill.intra.peff.net>
-In-Reply-To: <20190502150701.GA14906@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 May 2019 23:38:51 +0700
-Message-ID: <CACsJy8Dimn9+ogDNEgy3xmLunyX_pStBq=g-1jrf74LsOW1xrA@mail.gmail.com>
-Subject: Re: Bug: fatal: Unable to create '.../.git/index.lock': File exists.
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=aA3z995wMTdo4+gpkW5j3JvHMdsAZIbNA/UT+SGB+Vo=;
+        b=nTGBeqCh37NzpQ+P/ONWVkD0T4TJXedcAznFCxfr/syhhJa8La4MEoFSqijpYPeNco
+         OqMx4XtTlnQjhL7Q0TeFbNEFlwRdWtpwTa/qrVCIzucDDnrj63fPFjx8JVjziU7/Byy4
+         BCJwLbHN/TzvgFmt1lIxW0wD1rwxKHhMX/XEJucPs8W+wjb74Qy+8KMQnMp4SByiNl3K
+         RPFFnDNHnLQsUWLulU+2KQASACPhupAc5DoGR18lrhte863TGEBXNDTiEqJkdF57dOu2
+         BApRsZfQJ8nABwW7G7Ub1PZ3kHMMfJJ28Oh9WeRd+schR8soL1WNwWsHfT8RtRsM1VuD
+         KZZg==
+X-Gm-Message-State: APjAAAWINWD+skiMTK25MTXfTPe3sb6OuAXMPXDjmc3PaNuOosvKHAm/
+        qxaKPQJBPd7Ag+C+1m4W+LH/Uw==
+X-Google-Smtp-Source: APXvYqw3BqzmhF1QOjCA9NScmXgDuFnA+fZi+qpJpZvvHYzAFh+lFuuM9M9UKp6IfkPoTKR0WXvSFQ==
+X-Received: by 2002:a65:5c89:: with SMTP id a9mr5059357pgt.334.1556815688737;
+        Thu, 02 May 2019 09:48:08 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id u7sm17628767pfu.157.2019.05.02.09.48.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 May 2019 09:48:07 -0700 (PDT)
+Date:   Thu, 2 May 2019 09:48:03 -0700
+From:   Josh Steadmon <steadmon@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Aleksey Midenkov <midenok@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: js/partial-clone-connectivity-check (was: What's cooking in
+ git.git (Apr 2019, #05; Thu, 25))
+Message-ID: <20190502164803.GB26779@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+References: <xmqqsgu6wfv9.fsf@gitster-ct.c.googlers.com>
+ <20190425221657.GV60888@google.com>
+ <20190502025206.GA25395@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190502025206.GA25395@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 2, 2019 at 10:07 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, May 02, 2019 at 04:45:36PM +0300, Aleksey Midenkov wrote:
->
-> > > Assuming that kdevelop is just running "git status" in the background,
-> > > though, there's an easier solution. If it uses "git --no-optional-locks
-> > > status" instead, that will instruct it not to take the index lock at
-> > > all.
-> >
-> > And can we disable optional locks at git configuration level? Because
-> > changing source code of each application that is not aware of this
-> > option is not an easier solution.
->
-> Since the decision of whether to use the locks is dependent on the
-> operation being performed, it's an environment variable and not a config
-> option.
+On 2019.05.01 22:52, Jeff King wrote:
+> On Thu, Apr 25, 2019 at 03:16:57PM -0700, Josh Steadmon wrote:
+> 
+> > On 2019.04.25 19:15, Junio C Hamano wrote:
+> > > * js/partial-clone-connectivity-check (2019-04-21) 1 commit
+> > >   (merged to 'next' on 2019-04-25 at ebd8b4bffd)
+> > >  + clone: do faster object check for partial clones
+> > > 
+> > >  During an initial "git clone --depth=..." partial clone, it is
+> > >  pointless to spend cycles for a large portion of the connectivity
+> > >  check that enumerates and skips promisor objects (which by
+> > >  definition is all objects fetched from the other side).  This has
+> > >  been optimized out.
+> > > 
+> > >  Will merge to 'master'.
+> > 
+> > Peff asked for a perf test for this [1], but I haven't had time to write one
+> > yet. I can do that in a separate patch if you still want to merge this
+> > as-is.
+> 
+> I won't die without one, but it would be nice. It may also be that an
+> existing perf test, but I don't think we cover partial clones in t/perf
+> at all. Might be worth just a straight-up "git clone --filter=blob:none"
+> test.
+> 
+> Also, in the proposed merge message above, it should be --filter, not
+> --depth, right?
 
-And there's also tradeoff for doing it. If git-status will not take
-locks, it cannot update the index to save refresh information and
-reuse the next time. git-status may become more and more expensive
-over time (*). Setting a config variable for this does not sound like
-a good idea at all. The same for setting GIT_OPTIONAL_LOCKS=0 in
-~/.bashrc to "fix" the problem once and for all.
-
-I might take a stab at the "wait and try to hold the lock again, doing
-necessary verification after if needed" idea. It sounds like the right
-way to go and we haven't had problems with refs doing the same thing
-(have we?).
-
-(*) not entirely true since other commands can also refresh and save.
-But in the ideal world when optional locks are used for all optional
-updates, it's true.
-
-> You should be able to do:
->
->   GIT_OPTIONAL_LOCKS=0 kdevelop
->
-> and any commands run by kdevelop will avoid taking locks when they can
-> (but for now, the only command which does this is git-status anyway).
--- 
-Duy
+Yes, thanks for the catch.
