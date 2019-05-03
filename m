@@ -2,142 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B5EA1F453
-	for <e@80x24.org>; Fri,  3 May 2019 09:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9DB1F453
+	for <e@80x24.org>; Fri,  3 May 2019 10:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbfECJsc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 05:48:32 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:32821 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbfECJsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 05:48:31 -0400
-Received: by mail-it1-f194.google.com with SMTP id u16so2871634itc.0
-        for <git@vger.kernel.org>; Fri, 03 May 2019 02:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=sZkOtSttLgFR3HJ3iedhx0AAVw/3JuLF2l/qtX3ax5w=;
-        b=LE4vP9HeytPWnsLRS9z2hXGdLofRjcB2ALLYxyIl7BcBiwBdFk3Oz35QcTD7qaCpxp
-         qdHjnsJ2+E/plhgnfoaWJP3Kett1gjVRpl23V0UBwZfb04gXqunk7KPgy6we56HwhgjC
-         RvWsbBuO/yBFjDW5Ox1ACdQLhA7Sonxk53D22rbU8jdslfEv4vra0vvD2wYmodrhIfuM
-         1PQp3/Mbq02Q0SuFTdJ400vl+Jk0Om5HQqtO4D3SU28fnk6fcE8v0CVLtGx4kFz0tnfD
-         PQ8MViUbXucc6s1Nc7wDPq+dIMt6uTYN2cX9RJKszCJuIHzW3L/VS28AjJg42Z0cSE1U
-         FiVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=sZkOtSttLgFR3HJ3iedhx0AAVw/3JuLF2l/qtX3ax5w=;
-        b=QuYVE06HPvtRQLQeXSZDblmpvBbULONnhM/nJaieH+fVMSbXo9WK3I9kNWDWRLpFdP
-         YJqOV2Jzx4ZgU02WiZAy0oqI6DnZaykOGFQCICpktAAiP/9GH2vhZfizgGFWIOA9VNYh
-         FiQTWs1m+Uj6dJtGQvvM7zUsl0i6QlQF2Ki85dswLP6KCoA9tcRvlknhq8d7acdl7+qW
-         OiNHuVxB8pAvrU3u76vLz+UHZWQA8nY25E91M4fjvBCp+sQh730lQ0hXijLFa8RU/FPT
-         TIKMAt/hhb3xihYx+DDbIdPEWiQmQu8IuD4/HR0tq7SnIW+XmxxVzmP2LHV4Asii5X+Q
-         tI4g==
-X-Gm-Message-State: APjAAAXmggHbQHaf2+aD5xug1HgIeGQNGN2D4kqP4e3oaVOZSZ3LHdVS
-        6NEl0LfUhvsE7IQKCV0+g6c=
-X-Google-Smtp-Source: APXvYqyLtzx6DgMkQcusGxCVMxh6ckI8l4FoJAWI2EJKh9See8gbF1Rq099d/bjKVPZ+wC5MuMiw2Q==
-X-Received: by 2002:a24:d245:: with SMTP id z66mr6004706itf.35.1556876431171;
-        Fri, 03 May 2019 02:40:31 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id a134sm819088itd.19.2019.05.03.02.40.29
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 03 May 2019 02:40:30 -0700 (PDT)
-Date:   Fri, 3 May 2019 05:40:27 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 0/4] remove extern from function declarations
-Message-ID: <20190503094027.GA1729@archbookpro.localdomain>
-References: <cover.1555352526.git.liu.denton@gmail.com>
- <cover.1555487380.git.liu.denton@gmail.com>
- <20190422214901.GA14528@sigill.intra.peff.net>
- <20190425120758.GD8695@szeder.dev>
- <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
- <20190501100108.GA8954@archbookpro.localdomain>
- <20190502000422.GF14763@szeder.dev>
+        id S1726914AbfECKCi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 06:02:38 -0400
+Received: from mout.kundenserver.de ([212.227.126.134]:48409 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725777AbfECKCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 06:02:38 -0400
+Received: from [192.168.2.106] ([87.135.183.222]) by mrelayeu.kundenserver.de
+ (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MOV26-1h6cKI225m-00PuF6 for <git@vger.kernel.org>; Fri, 03 May 2019 12:02:36
+ +0200
+To:     git@vger.kernel.org
+From:   Christian Spanier <cspanier@boxie.eu>
+Subject: bug: git pull may delete untracked files in submodule without notice
+Message-ID: <2e321dbe-42a3-7516-52aa-4bc50a3c403e@boxie.eu>
+Date:   Fri, 3 May 2019 10:02:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190502000422.GF14763@szeder.dev>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:RO45EBWEn6TC24W4wuaOl0oJKLZxLquohRm8zH5HN8UZoq0a0NW
+ muqG7NmEUVz5p+FBqd9rFqiGAIFsP9/b2I3lFNQOf+cw18UNJ7uJEGkKCqLOvRKD+GXycqB
+ KAb4JOvjqYOymTQhR2dhDvD6elF3J2Y4Vgomvoo53AaNp0DB/Zf1ql1dthHxiNUbNqsIucM
+ 69WpSIY0Oxh27kNUlEWgA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+jsTDTRxjxE=:OnpqpTAr6zaIyyWURhzCVa
+ FKj+AJHQ+c8MVcRVeQQ+PgopcOtVL8lFqSREtFUUznqo9x5yMZgFLu2HTg+2pAyEexz5Z/CZj
+ 0Q6muSjCrWsH1A2fBD9eu7oEkQmlG63x2rXU2cU91O99WQb/HkNQe+Dw0t6oLLFyIq3Ugid8J
+ RgTmqUH+/HIOYw9P4KfNbeanN4CXqx7/aO5sn8Zc7DRHzp9rSOEbkR3ECGdSAT2lQRyUXoZZd
+ DR/TR96Ele09YVuwBdGRRRjiNSScHlrFPnGrjIcAgJ31JZWJon3zbNvdoIX/8EDQTKku9UNPz
+ 4cQY85rFHCXp+tPGlM6sPeUmp3FkZVeZqHQh9Zu4VGg0kRMWI7FpcSJpAJIeQ/6lBKX9o8WXE
+ EwIFxf1ETqtGzZlHD32S8RmZJrEGBVXEpHmaKO+s4MQMGMfZ3kGW6xQoE9voileqQmkpnLHNc
+ AGxy6LzJxoEjF8D520obW+5t9476sHTIU+eeowet8qFWIJxjv5Jb1qdXXkK+2tZWGekbdwIrT
+ E1kNtbVVzA/ApKebuALCZdjAu0zSqiBbzjoesLRMenV4ILZAmMy8eEEgO4dBO2t2X/aL3vA8A
+ egEb9nI+Qvry2sipZzXi/KcWYWL5l8J2ZaiMS+FATjvUe1oLGkKk1upkSQVYaZPVqcQ+qpJ0m
+ iWvfz9f9TcAEKul2BhDsI3kSFxsqnCH0ZcPeirkUD9jtCLNRo/NbGMGrZPeVvEkxCzTtjeVl2
+ NCyTJYhKS8hO2M7HczS8DX3LuP3uyt+opz9vQcyquC8gSpwlBBKwveKW4Wc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 02, 2019 at 02:04:22AM +0200, SZEDER Gábor wrote:
-> On Wed, May 01, 2019 at 06:01:08AM -0400, Denton Liu wrote:
+Hi,
 
-[snip]
+I found a bug where Git may delete untracked files without notice in 
+certain situations. This bug effects Git 2.21.0 both on Linux and Windows.
+In summary this happens when git pull merges a commit that replaces a 
+submodule folder with a symlink. Any files within the folder are deleted 
+without notice.
+Check out the script below for details.
 
-> > 
-> > -- >8 --
-> > Subject: [PATCH] Makefile: filter out compat/ from coccicheck
-> > 
-> > Since most files in compat/ are pulled from external sources, ensure
-> > that they do not get modified when we run coccicheck because we do not
-> > want them to differ from upstream as much as possible.
-> > 
-> > Make exceptions for mingw.c and win32/*.c as these are files that we
-> > have created and not pulled from upstream.
-> 
-> I'm not sure that we really need these exceptions.
-> 
-> C_SOURCES comes from C_OBJ, i.e. it is basically all '*.c' source
-> files that we compile, taking the platform and Makefile knobs into
-> account.  On Linux we don't compile 'compat/mingw.c' and
-> 'compat/win32/*.c', so when running 'make coccicheck' on Linux it
-> won't look into these source files anyway, so we don't need these
-> exceptions.  On Windows, however...  well, is it even possible to
-> build and run Coccinelle on Windows in the first place, with all its
-> OCaml dependencies?!  If not, then these exceptions won't do any good.
+This happend on some developer's machine and deleted a repository 
+containing about 200GiB of files and tons of uncommited local scripts, 
+log files and whatever, just because some other dev accidentally 
+commited a temporary change.
 
-I assumed that Coccinelle runs on Windows but now that you mention it,
-Cocci's origin was as a Linux refactoring tool so I'm not really sure if
-it actually does run. Unfortunately, I don't have a Windows box
-available to test it out on so let's assume that it doesn't work on
-Windows, unless someone says otherwise.
+Greetings,
+Christian Spanier
 
-> 
-> Anyway, if we do want these exceptions, then what about
-> 'compat/win32mmap.c' and 'compat/winansi.c'?  They look like "ours" as
-> well.
+##### PREPARATION #####
 
-Good point, I wasn't really sure which ones were ours so I just went off
-of what Johannes said. If we decide to keep the exceptions, I'll dig
-through the log messages to find all of "our" files.
+# New empty repository #1
+mkdir rep1
+cd rep1
+git init --bare .
+cd ..
 
-> 
-> 
-> FWIW, out of curiosity I've run 'make coccicheck' on Linux with
-> 'compat/mingw.c' and its friends explicitly added to C_SOURCES, and it
-> seems to work...  it even found two places in 'mingw.c' where
-> COPY_ARRAY could replace memcpy() :)
-> 
+# New empty repository #2
+mkdir rep2
+cd rep2
+git init --bare .
+cd ..
 
-Since you mentioned this, shouldn't we run Coccinelle on all of our
-source files, not just the ones that are compiled? Since the
-Windows-files aren't checked, they are in a blindspot for us.
+# Clone repository #1 and create initial commit
+git clone rep1 clone_rep1_user1
+cd clone_rep1_user1
+touch README
+git add README
+git commit -m "initial commit"
+git push
+cd ..
 
-I guess a point against that would be if one were patching a file that
-they couldn't even test-compile, then it could be possible that faulty
-patches are sent, but I guess we have enough people on the mailing list
-that could verify the patches so I don't think that's a problem.
+# Clone repository #2 and create initial commit
+git clone rep2 clone_rep2
+cd clone_rep2
+touch README
+git add README
+git commit -m "initial commit"
+git push
+cd ..
 
-Perhaps we could implement a 'coccicheckall' target which excludes
-contrib/ but excepts mingw.c and friends?
+# Add repository #2 as a submodule to repository #1
+cd clone_rep1_user1
+git submodule add ../rep2
+git commit -m "add submodule"
+git push
+cd ..
+
+# User 2 also clones repository #1 and #2 recursively
+git clone --recursive rep1 clone_rep1_user2
+
+# User 2 starts working in his folder and adds an important local file 
+which is
+# not yet committed inside the submodule folder.
+cd clone_rep1_user2/rep2
+echo "important work" > uncommitted_file
+cd ../../
+
+# Meanwhile, user 1 temporarily switch out folder /clone_rep1_user1/rep2 
+with a
+# symbolic link to a different folder (for whatever reason, maybe a copy 
+of an
+# older version or anything).
+mkdir rep2_alternative
+cd clone_rep1_user1
+mv rep2 ../rep2_backup
+ln -s ../rep2_alternative rep2
+# On Windows this can be done with 'mklink /D rep2 ../rep2_alternative',
+# which requires admin privileges. The bug is not reproducible when
+# using a directory junction with 'mklink /D /J ...'.
+
+# He does some work on rep1 but then accidently adds the symbolic link 
+to his
+# next commit and pushes the changes. Notice the typechange of rep2.
+echo "some" > work
+git status
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working 
+directory)
+#
+#         typechange: rep2
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#         work
+#
+# no changes added to commit (use "git add" and/or "git commit -a")
+git add .
+git commit -m "do some work"
+git push
+cd ..
+
+# NOW THE BUG:
+
+# User 2 pulls the changes and loses his important work in
+# rep2/uncommitted_file because Git replaces the folder with a symlink
+# without checking for modified or uncommited files!
+# He should get an error in this case!
+cd clone_rep1_user2
+git pull
+cat rep2/uncommitted_file
+# cat: rep2/uncommitted_file: Not a directory
+# "important work" in rep2/uncommitted_file is gone :(
