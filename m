@@ -2,149 +2,457 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DBDB1F453
-	for <e@80x24.org>; Fri,  3 May 2019 15:12:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4AEA1F453
+	for <e@80x24.org>; Fri,  3 May 2019 15:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728182AbfECPMB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 11:12:01 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37921 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726514AbfECPMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 11:12:01 -0400
-Received: by mail-qt1-f196.google.com with SMTP id d13so7082958qth.5
-        for <git@vger.kernel.org>; Fri, 03 May 2019 08:11:56 -0700 (PDT)
+        id S1726514AbfECPU5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 11:20:57 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35356 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726289AbfECPU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 11:20:57 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y197so7190345wmd.0
+        for <git@vger.kernel.org>; Fri, 03 May 2019 08:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KhImMBDu0XVtSnPoyxOiumkOcQy0GRjNRfjBKsDNTzo=;
-        b=uu/i2nG72O17Uaj9kr8QPKbD8p0rGEGttr+ttPEQxMUgqM1Iqb4N7Y0j/f1aETFb/K
-         QU+t1eYLYSpvZYOnpsDLChXE1RwmvrEgwQdIUgHbTooUff0LTpvoE5lAfL0FJmSV3ryY
-         o8i2QwcfTrRQAAamGdiSrKKwh2jyJXMhRu7J++TB3pN316Z63QuCB1oTjCceODRbOTQI
-         wHdJWvkAcggVdq/LNGcvy7/HgDhLpKv6G5CQrm095DMy+bvbIvn/vnKKyed/oWe65Zri
-         WugF2hNtL7oPJ9e07yOq3f255h5DEcADL/EKOc4Jf2cNVCBWpjLIrsihvWB/CeIL0Vk7
-         R4zQ==
+        bh=ESl+bXN9QhMALyY8gptchB4MGYLlQXQrrNg+TSIAXz8=;
+        b=SQHMfHwPgIZD248zpbCQq+A2X45ZxsGV5n6LjG5QJvzRY8BQiUbDjiX7N+o2ZuYgjC
+         DF8+C+u1JZY6xiVOZzXOd7GjxznAD+RRfulcCTXOt1pgAbSAROLIPXEtPfPA28CIwk6X
+         r1Xnn+kYr6Vk4JpSROls5QK3s2Se7vpcJychRfttXLWv/ttyIc4IikwDHII8TUBp4Mm0
+         nIxx8Mj2hL8JjBi2LWTVR8Bd/HDEl+epxfOCD5YKTcQvOoVp6GWxcGpbgR1VVNtboiU6
+         NIvbqwRWs3oEynt1bgxThsZsnm9dBdlzy+d5OoQekWiaijlx7rqVHXgTLTci0vFabr9K
+         Bq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KhImMBDu0XVtSnPoyxOiumkOcQy0GRjNRfjBKsDNTzo=;
-        b=CGINawYg1ZW6y6QfYQmqkyc9jsagCVCaRmH+AgXdtiXlDHZz0+64yO+c3ZBJUo+Vjs
-         ChIHjcHqQRjlw/yezLDqg1fc6vgG2GBx8t5QQV1B0tM7ZxoSjAeWnKxJH6yEz3Bds7VA
-         ajVAuNvhRSGiXGUQzQnIiN2enDkNIvxTXq5R22DJV6AUWHDPkBGg0RP7+lvxomFCfvap
-         piINlH8HTDtxqzXTfscIqSeX8ft65Oz9jI9q2DAygNp7GwPggxXTEwLJ4fPNjrF0YIdB
-         nqAHA3yNVUNP+venYgo/lFNSQNRr5YtsLNXVvEewTON3q+QkK9VYscDUbBSPvOTESl1j
-         WtQw==
-X-Gm-Message-State: APjAAAUk5wn7Pv/yKNqS5pU0xVkGQf9M3nhv6qoyO31fHh77DhHy8obk
-        GXMxywAv+NtfR9y4ZyCfgsI=
-X-Google-Smtp-Source: APXvYqxfWsKYdBDTEK7neZ4BV0W3vVwwlY7Xypyym7I1O4r0SgnDuTRBsi3evmnwMAuA5VGzmeb7wQ==
-X-Received: by 2002:ac8:1ae1:: with SMTP id h30mr8656735qtk.208.1556896299001;
-        Fri, 03 May 2019 08:11:39 -0700 (PDT)
-Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id n201sm1217984qka.10.2019.05.03.08.11.37
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=ESl+bXN9QhMALyY8gptchB4MGYLlQXQrrNg+TSIAXz8=;
+        b=Yb2QYcQRFZHonpKWNdW1hgaDYY4sjsKh/dm2dcTxU52cyJ3yyED0c8AxVxEirsz+zA
+         5uMChAME2bmMOwbr/WDFqteShYWbfnlu1KZjqwlmcv6o6bvHKYctaOrvfQPzcK9uFOz8
+         6+4TyC6pOUVE9+nq2cBsO5r88zAqub9vYxEEQr8M18oveHR4jZt1Hi5eKZuHEDpYtU6H
+         Z28Zada3GpF7iWRxUpy141T3HMnmZGlcR5ISZbi4pRQ7pm06wa0O8oWYFWu9GnHQAeV1
+         qlKQXvDW92I8k/G+yEG6THCVUctzXeLYw/ilDlyykr+9+nHxrRWBePPHxDwjswhhNGNY
+         gbgg==
+X-Gm-Message-State: APjAAAX3x3WfzYODjGvAFawaJt4P640WNPgfPbxAUzwQs/+PSGou+UjG
+        UoP83zCxBbu0gIT38tnk9E8=
+X-Google-Smtp-Source: APXvYqyarHlH6C52E9J4AsgZd9nFpKcJkNa22sv+MfTGbL/iitiYWpU+1yghddr0XB030zKx7DRuDw==
+X-Received: by 2002:a1c:6783:: with SMTP id b125mr6485716wmc.79.1556896854712;
+        Fri, 03 May 2019 08:20:54 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id g3sm2275978wmf.9.2019.05.03.08.20.53
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 08:11:37 -0700 (PDT)
-Subject: Re: [PATCH v3 0/6] Create commit-graph file format v2
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        Fri, 03 May 2019 08:20:53 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] read-tree --reset: add --protect-untracked
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-References: <pull.112.v2.git.gitgitgadget@gmail.com>
- <pull.112.v3.git.gitgitgadget@gmail.com> <87lfzprkfc.fsf@evledraar.gmail.com>
- <bb0c22f9-9d0b-0fa6-e826-8e2ac146c6f9@gmail.com>
- <87h8acivkh.fsf@evledraar.gmail.com>
- <04ac97c5-ab2b-2b23-4c84-8ed8aab0e2f5@gmail.com>
- <20190503141613.GG14763@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <284b3398-0b7f-c51b-3417-af7ab521cf9d@gmail.com>
-Date:   Fri, 3 May 2019 11:11:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+References: <20190501101403.20294-1-phillip.wood123@gmail.com>
+ <20190501101403.20294-2-phillip.wood123@gmail.com>
+ <CACsJy8C731LL3z1zaF4mpWmag1k7V3Ny6+ar9dMmHR4hdw_9AA@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <15dad590-087e-5a48-9238-5d2826950506@gmail.com>
+Date:   Fri, 3 May 2019 16:20:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190503141613.GG14763@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8C731LL3z1zaF4mpWmag1k7V3Ny6+ar9dMmHR4hdw_9AA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/3/2019 10:16 AM, SZEDER Gábor wrote:
-> On Fri, May 03, 2019 at 08:47:25AM -0400, Derrick Stolee wrote:
->> It would be much simpler to restrict the model. Your idea of changing
->> the file name is the inspiration here.
+On 02/05/2019 11:38, Duy Nguyen wrote:
+> On Wed, May 1, 2019 at 5:14 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>
->> * The "commit-graph" file is the base commit graph. It is always
->>   closed under reachability (if a commit exists in this file, then
->>   its parents are also in this file). We will also consider this to
->>   be "commit-graph-0".
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> * A commit-graph-<N> exists, then we check for the existence of
->>   commit-graph-<N+1>. This file can contain commits whose parents
->>   are in any smaller file.
->>
->> I think this resolves the issue of back-compat without updating
->> the file format:
->>
->> 1. Old clients will never look at commit-graph-N, so they will
->>    never complain about an "incomplete" file.
->>
->> 2. If we always open a read handle as we move up the list, then
->>    a "merge and collapse" write to commit-graph-N will not
->>    interrupt an existing process reading that file.
+>> Currently there is no way to get git to discard changes to the
+>> worktree without overwriting untracked files. `reset --hard`,
+>> `checkout --force`, `checkout <rev> :/` and `read-tree --reset -u`
 > 
-> What if a process reading the commit-graph files runs short on file
-> descriptors and has to close some of them, while a second process is
-> merging commit-graph files?
+> "checkout <rev> :/" does not use unpack-trees, I think, so it does not
+> belong to this group.
 
-We will want to keep the number small so we never recycle the file
-handles. Instead, we will keep them open for the entire process.
+You're right that it does not use unpack-trees, but I'm making the point 
+that there is no way to discard changes to tracked files without 
+overwriting untracked files whatever one uses.
 
-The strategies for creating these graphs should include a "merge"
-strategy that keeps the number of commit-graph files very small
-(fewer than 5 should be sufficient).
- 
->> I'll start hacking on this model.
+>> will all overwrite untracked files. unpack_trees() has known how to
+>> avoid overwriting untracked files since commit fcc387db9b ("read-tree
+>> -m -u: do not overwrite or remove untracked working tree files.",
+>> 2006-05-17) in response to concerns about lost files [1] but those
+>> protections do not apply to --reset. This patch adds an
+>> --protect-untracked option for read-tree/unpack_trees() to apply th
+>> same protections with --reset.
 > 
-> Have fun! :)
+> Your enum makes me wonder if we should have --reset-tracked instead of
+> --protect-untracked (say what you want to reset seems tiny bit easier
+> to understand than "reset except untracked"). Which leads to another
+> question, do we ever need --reset-untracked (i.e. overwriting
+> untracked files but never ever touch tracked ones).
+> 
+> I have one use case that --reset-untracked might make sense. Suppose
+> you do "git reset HEAD^" where HEAD has some new files. The new files
+> will be left alone in worktree of course, but switching back to HEAD
+> after that, unpack-trees will cry murder because it would otherwise
+> overwrite untracked files (that have the exact same content).
+> 
+> --reset-untracked might be useful for that. I'm carrying a patch to
+> detect identical file content though which addresses this very
+> specific case. Maybe it's the only case that --reset-untracked may be
+> useful.
+
+That patch sounds useful (I played around with "hg update" the other day 
+and I think it does the same). I think that's probably a common case, it 
+also works if one does "git checkout <other-branch> file" then "git 
+reset HEAD" followed "git checkout <other-branch>". --reset-untracked is 
+just like --reset which we can't get rid of without breaking backwards 
+compatibility. Having --reset-tracked is maybe better than having a 
+--protect-tracked option that only works with --reset -u.
+
+>> It does not change the behavior of any
+>> of the porcelain commands but paves the way for adding options or
+>> changing the default for those in future.
+>>
+>> Note the actual change in unpack-trees.c is quite simple, the majority
+>> of this patch is converting existing callers to use the new
+>> unpack_trees_reset_type enum.
+> 
+> This could be split in a separate patch, then the actual change would
+> become small and more to the point.
+
+Yes that would make it clearer.
+
+Best Wishes
+
+Phillip
+
+> 
+>> [1] https://public-inbox.org/git/8aa486160605161500m1dd8428cj@mail.gmail.com/
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>
+>> Notes:
+>>      adding --protect-untracked to the invocation of
+>>      test_submodule_forced_switch() in t1013 fixes the known breakage of
+>>      tests 57 & 58 but breaks test 64 which relies on forcing. I'm not sure
+>>      that the expected results of 57 & 58 are correct if we're forcing.
+>>
+>>   Documentation/git-read-tree.txt | 10 +++++++--
+>>   builtin/am.c                    |  8 ++++---
+>>   builtin/checkout.c              |  2 +-
+>>   builtin/read-tree.c             | 12 +++++++++++
+>>   builtin/rebase.c                |  2 +-
+>>   builtin/reset.c                 |  2 +-
+>>   builtin/stash.c                 |  7 ++++---
+>>   t/lib-read-tree.sh              | 11 ++++++++++
+>>   t/t1005-read-tree-reset.sh      | 37 +++++++++++++++++++++++++++++++--
+>>   unpack-trees.c                  |  3 ++-
+>>   unpack-trees.h                  | 10 +++++++--
+>>   11 files changed, 88 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+>> index d271842608..67864c6bbc 100644
+>> --- a/Documentation/git-read-tree.txt
+>> +++ b/Documentation/git-read-tree.txt
+>> @@ -40,12 +40,18 @@ OPTIONS
+>>   --reset::
+>>          Same as -m, except that unmerged entries are discarded instead
+>>          of failing. When used with `-u`, updates leading to loss of
+>> -       working tree changes will not abort the operation.
+>> +       working tree changes will not abort the operation and
+>> +       untracked files will be overwritten. Use `--protect-untracked`
+>> +       to avoid overwriting untracked files.
+>>
+>>   -u::
+>>          After a successful merge, update the files in the work
+>>          tree with the result of the merge.
+>>
+>> +--protect-untracked::
+>> +       Prevent `--reset` `-u` from overwriting untracked files. Requires
+>> +       `--reset` and `-u` (`-m` never overwrites untracked files).
+>> +
+>>   -i::
+>>          Usually a merge requires the index file as well as the
+>>          files in the working tree to be up to date with the
+>> @@ -89,7 +95,7 @@ OPTIONS
+>>          existed in the original index file.
+>>
+>>   --exclude-per-directory=<gitignore>::
+>> -       When running the command with `-u` and `-m` options, the
+>> +       When using `-u` with `-m` or `--reset` `--protect-untracked` options, the
+>>          merge result may need to overwrite paths that are not
+>>          tracked in the current branch.  The command usually
+>>          refuses to proceed with the merge to avoid losing such a
+>> diff --git a/builtin/am.c b/builtin/am.c
+>> index 912d9821b1..a92394b682 100644
+>> --- a/builtin/am.c
+>> +++ b/builtin/am.c
+>> @@ -1854,7 +1854,8 @@ static void am_resolve(struct am_state *state)
+>>    * true, any unmerged entries will be discarded. Returns 0 on success, -1 on
+>>    * failure.
+>>    */
+>> -static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
+>> +static int fast_forward_to(struct tree *head, struct tree *remote,
+>> +                          enum unpack_trees_reset_type reset)
+>>   {
+>>          struct lock_file lock_file = LOCK_INIT;
+>>          struct unpack_trees_options opts;
+>> @@ -1942,7 +1943,8 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+>>
+>>          read_cache_unmerged();
+>>
+>> -       if (fast_forward_to(head_tree, head_tree, 1))
+>> +       if (fast_forward_to(head_tree, head_tree,
+>> +                           UNPACK_RESET_OVERWRITE_UNTRACKED))
+>>                  return -1;
+>>
+>>          if (write_cache_as_tree(&index, 0, NULL))
+>> @@ -1952,7 +1954,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+>>          if (!index_tree)
+>>                  return error(_("Could not parse object '%s'."), oid_to_hex(&index));
+>>
+>> -       if (fast_forward_to(index_tree, remote_tree, 0))
+>> +       if (fast_forward_to(index_tree, remote_tree, UNPACK_NO_RESET))
+>>                  return -1;
+>>
+>>          if (merge_tree(remote_tree))
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index ffa776c6e1..e9e70018f9 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+>> @@ -506,7 +506,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+>>          opts.head_idx = -1;
+>>          opts.update = worktree;
+>>          opts.skip_unmerged = !worktree;
+>> -       opts.reset = 1;
+>> +       opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+>>          opts.merge = 1;
+>>          opts.fn = oneway_merge;
+>>          opts.verbose_update = o->show_progress;
+>> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+>> index 5c9c082595..23735adde9 100644
+>> --- a/builtin/read-tree.c
+>> +++ b/builtin/read-tree.c
+>> @@ -114,6 +114,7 @@ static int git_read_tree_config(const char *var, const char *value, void *cb)
+>>   int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+>>   {
+>>          int i, stage = 0;
+>> +       int protect_untracked = -1;
+>>          struct object_id oid;
+>>          struct tree_desc t[MAX_UNPACK_TREES];
+>>          struct unpack_trees_options opts;
+>> @@ -140,6 +141,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+>>                    PARSE_OPT_NONEG },
+>>                  OPT_BOOL('u', NULL, &opts.update,
+>>                           N_("update working tree with merge result")),
+>> +               OPT_BOOL(0, "protect-untracked", &protect_untracked,
+>> +                        N_("do not overwrite untracked files")),
+>>                  { OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
+>>                    N_("gitignore"),
+>>                    N_("allow explicitly ignored files to be overwritten"),
+>> @@ -209,8 +212,17 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+>>          if ((opts.update || opts.index_only) && !opts.merge)
+>>                  die("%s is meaningless without -m, --reset, or --prefix",
+>>                      opts.update ? "-u" : "-i");
+>> +       if (protect_untracked >= 0) {
+>> +               if (!opts.reset || !opts.update)
+>> +                       die("-%s-protect-untracked requires --reset and -u",
+>> +                           protect_untracked ? "" : "-no");
+>> +               opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
+>> +       }
+>>          if ((opts.dir && !opts.update))
+>>                  die("--exclude-per-directory is meaningless unless -u");
+>> +       if (opts.dir && opts.reset == UNPACK_RESET_OVERWRITE_UNTRACKED)
+>> +               warning("--exclude-per-directory without --preserve-untracked "
+>> +                       "has no effect");
+>>          if (opts.merge && !opts.index_only)
+>>                  setup_work_tree();
+>>
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 2e41ad5644..feb30a71f5 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -398,7 +398,7 @@ static int reset_head(struct object_id *oid, const char *action,
+>>          unpack_tree_opts.update = 1;
+>>          unpack_tree_opts.merge = 1;
+>>          if (!detach_head)
+>> -               unpack_tree_opts.reset = 1;
+>> +               unpack_tree_opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+>>
+>>          if (repo_read_index_unmerged(the_repository) < 0) {
+>>                  ret = error(_("could not read index"));
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index 26ef9a7bd0..a39dd92fb2 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -70,7 +70,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
+>>                  opts.update = 1;
+>>                  /* fallthrough */
+>>          default:
+>> -               opts.reset = 1;
+>> +               opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+>>          }
+>>
+>>          read_cache_unmerged();
+>> diff --git a/builtin/stash.c b/builtin/stash.c
+>> index 2a8e6d09b4..175d1b62d3 100644
+>> --- a/builtin/stash.c
+>> +++ b/builtin/stash.c
+>> @@ -227,7 +227,8 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
+>>          return do_clear_stash();
+>>   }
+>>
+>> -static int reset_tree(struct object_id *i_tree, int update, int reset)
+>> +static int reset_tree(struct object_id *i_tree, int update,
+>> +                     enum unpack_trees_reset_type reset)
+>>   {
+>>          int nr_trees = 1;
+>>          struct unpack_trees_options opts;
+>> @@ -461,7 +462,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>>          }
+>>
+>>          if (has_index) {
+>> -               if (reset_tree(&index_tree, 0, 0))
+>> +               if (reset_tree(&index_tree, 0, UNPACK_NO_RESET))
+>>                          return -1;
+>>          } else {
+>>                  struct strbuf out = STRBUF_INIT;
+>> @@ -471,7 +472,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>>                          return -1;
+>>                  }
+>>
+>> -               if (reset_tree(&c_tree, 0, 1)) {
+>> +               if (reset_tree(&c_tree, 0, UNPACK_RESET_OVERWRITE_UNTRACKED)) {
+>>                          strbuf_release(&out);
+>>                          return -1;
+>>                  }
+>> diff --git a/t/lib-read-tree.sh b/t/lib-read-tree.sh
+>> index b95f485606..22f516d91f 100644
+>> --- a/t/lib-read-tree.sh
+>> +++ b/t/lib-read-tree.sh
+>> @@ -39,3 +39,14 @@ read_tree_u_must_fail () {
+>>          test_cmp pre-dry-run-wt post-dry-run-wt &&
+>>          test_must_fail git read-tree "$@"
+>>   }
+>> +
+>> +read_tree_u_must_fail_save_err () {
+>> +       git ls-files -s >pre-dry-run &&
+>> +       git diff-files -p >pre-dry-run-wt &&
+>> +       test_must_fail git read-tree -n "$@" &&
+>> +       git ls-files -s >post-dry-run &&
+>> +       git diff-files -p >post-dry-run-wt &&
+>> +       test_cmp pre-dry-run post-dry-run &&
+>> +       test_cmp pre-dry-run-wt post-dry-run-wt &&
+>> +       test_must_fail git read-tree "$@" 2>actual-err
+>> +}
+>> diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
+>> index 83b09e1310..6c9dd6805b 100755
+>> --- a/t/t1005-read-tree-reset.sh
+>> +++ b/t/t1005-read-tree-reset.sh
+>> @@ -19,15 +19,48 @@ test_expect_success 'setup' '
+>>          git add df &&
+>>          echo content >new &&
+>>          git add new &&
+>> -       git commit -m two
+>> +       git commit -m two &&
+>> +       git ls-files >expect-two
+>>   '
+>>
+>> -test_expect_success 'reset should work' '
+>> +test_expect_success '--protect-untracked option sanity checks' '
+>> +       read_tree_u_must_fail --reset --protect-untracked HEAD &&
+>> +       read_tree_u_must_fail --reset --no-protect-untracked HEAD &&
+>> +       read_tree_u_must_fail -m -u --protect-untracked HEAD &&
+>> +       read_tree_u_must_fail -m -u --no-protect-untracked
+>> +'
+>> +
+>> +test_expect_success 'reset should reset worktree' '
+>> +       echo changed >df &&
+>>          read_tree_u_must_succeed -u --reset HEAD^ &&
+>>          git ls-files >actual &&
+>>          test_cmp expect actual
+>>   '
+>>
+>> +test_expect_success 'reset --protect-untracked protects untracked file' '
+>> +       echo changed >new &&
+>> +       read_tree_u_must_fail_save_err -u --reset --protect-untracked HEAD &&
+>> +       echo "error: Untracked working tree file '\'new\'' would be overwritten by merge." >expected-err &&
+>> +       test_cmp expected-err actual-err
+>> +'
+>> +
+>> +test_expect_success 'reset --protect-untracked protects untracked directory' '
+>> +       rm new &&
+>> +       mkdir new &&
+>> +       echo untracked >new/untracked &&
+>> +       read_tree_u_must_fail_save_err -u --reset --protect-untracked HEAD &&
+>> +       echo "error: Updating '\'new\'' would lose untracked files in it" >expected-err &&
+>> +       test_cmp expected-err actual-err
+>> +'
+>> +
+>> +test_expect_success 'reset --protect-untracked resets' '
+>> +       rm -rf new &&
+>> +       echo changed >df/file &&
+>> +       read_tree_u_must_succeed -u --reset --protect-untracked HEAD &&
+>> +       git ls-files >actual-two &&
+>> +       test_cmp expect-two actual-two
+>> +'
+>> +
+>>   test_expect_success 'reset should remove remnants from a failed merge' '
+>>          read_tree_u_must_succeed --reset -u HEAD &&
+>>          git ls-files -s >expect &&
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 50189909b8..b1722730fe 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -1917,7 +1917,8 @@ static int verify_absent_1(const struct cache_entry *ce,
+>>          int len;
+>>          struct stat st;
+>>
+>> -       if (o->index_only || o->reset || !o->update)
+>> +       if (o->index_only || o->reset == UNPACK_RESET_OVERWRITE_UNTRACKED ||
+>> +           !o->update)
+>>                  return 0;
+>>
+>>          len = check_leading_path(ce->name, ce_namelen(ce));
+>> diff --git a/unpack-trees.h b/unpack-trees.h
+>> index d344d7d296..732b262c4d 100644
+>> --- a/unpack-trees.h
+>> +++ b/unpack-trees.h
+>> @@ -41,9 +41,15 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+>>    */
+>>   void clear_unpack_trees_porcelain(struct unpack_trees_options *opts);
+>>
+>> +enum unpack_trees_reset_type {
+>> +       UNPACK_NO_RESET = 0,
+>> +       UNPACK_RESET_OVERWRITE_UNTRACKED,
+>> +       UNPACK_RESET_PROTECT_UNTRACKED
+>> +};
+>> +
+>>   struct unpack_trees_options {
+>> -       unsigned int reset,
+>> -                    merge,
+>> +       enum unpack_trees_reset_type reset;
+>> +       unsigned int merge,
+>>                       update,
+>>                       clone,
+>>                       index_only,
+>> --
+>> 2.21.0
+>>
 > 
 > 
-> Semi-related, but I'm curious:  what are your plans for 'struct
-> commit's 'graph_pos' field, and how will it work with multiple
-> commit-graph files?
-
-Since we have a predefined "sequence" of graphs, the graph_pos
-will be the position in the "meta-order" given by concatenating
-the commit lists from each commit-graph. We then navigate to a commit
-in O(num graphs) instead of O(1).
-
-In the commit-graph format, we will use this "meta-order" number
-to refer to parent positions.
-
-> In particular: currently we use this 'graph_pos' field as an index
-> into the Commit Data chunk to find the metadata associated with a
-> given commit object.  But we could add any commit-specific metadata in
-> a new chunk, being an array ordered by commit OID, and then use
-> 'graph_pos' as an index into this chunk as well.  I find this quite
-> convenient.  However, with mulitple commit-graph files there will be
-> multiple arrays...
-
-Yes, this will continue to be useful*. To find the position inside
-a specific commit-graph-N file, take the graph_pos and subtract the
-number of commits in the "lower" commit-graph files.
-
-* For example, this meta-data information is necessary for the Bloom
-filter data [1].
-
-Thanks,
--Stolee
-
-[1] https://public-inbox.org/git/61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com/
