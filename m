@@ -2,129 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MISSING_SUBJECT,
+	PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8672C1F453
-	for <e@80x24.org>; Fri,  3 May 2019 08:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 352481F453
+	for <e@80x24.org>; Fri,  3 May 2019 08:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726323AbfECIN6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 04:13:58 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:56102 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfECIN5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 04:13:57 -0400
-Received: by mail-it1-f195.google.com with SMTP id i131so7786677itf.5
-        for <git@vger.kernel.org>; Fri, 03 May 2019 01:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=p0Kb4kKrTQyCDW/wNKz3utWoImc6jluWnyOQrSFVDeg=;
-        b=blG/kkkVszz7+twqou2AN4suZy9yKSx0GMfXJ1xG86rm0heQikswY70pqLPQ5OXaHa
-         Cd8dQtdS+GdLzmKK0jd88/OHKA5U3GKDzytCBXCgCuFg0zbkxtul9XNfhc3DH0RqxMrT
-         R9L8pUh+cMzIbgMGyQSMiW+5RK5ZVoa9UuRO1q5qTbCG4WsczHcBfC8FrugOKzumxKyp
-         OXbhfOv0A7usq/u5QQf3SOYIQEkJRSFzW/fcPa+XjO4wJMuQlZIsnSEQrLQkHdoT3738
-         /hzcBm8WblzTtqfbhrahIGzbZQmkUFhAy/n00D4cN0vK0jPpWdelh1LAeM5sZQuOh27k
-         Debw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=p0Kb4kKrTQyCDW/wNKz3utWoImc6jluWnyOQrSFVDeg=;
-        b=mxVNZcM5g7kVz+YkM11ItMPXXCWyDcJXR8/tGRaqayI1f1gtumGuDy7CO8YHlNXH9w
-         zBhYMDTWSsrJbO3h8kdAorruRLbTJVaq6so+PVeAsXdQ9/GcAZPLTMzKwCfjLR+66ARs
-         Y9EDEDLcqyyb4bFIljfRWUn+ql0VSHf2gSVfnQINRr+N9PWlPNfy3O9BqWL+ZAFIKHQZ
-         mqzq8AhfHh14JFYh+25/sX+dfEQetYe4T1SE27OvJvF83hFKjzuD9tYSc7BWpuc5WrCk
-         nN+oiN0okXzPacr/ymottNkpx9GIUNtkIEkPSuo9Yz+wkMweuDAVha/D7EpbfedHZp2f
-         P83A==
-X-Gm-Message-State: APjAAAX2OJozcC4UwNwsHXSlDDgYAYJD1EBotGWlN8Z3SFwnCVfoWQyu
-        /FcckL2f93Ut2oGBE17Rv78=
-X-Google-Smtp-Source: APXvYqxaoGSvY9trQ/3opGtnDJFVVLEkWDlIjCec2oexU6LwcdcjkvvSCAGfGMTSG4Bavgphccsvjg==
-X-Received: by 2002:a24:9b8b:: with SMTP id o133mr2101068itd.140.1556871236969;
-        Fri, 03 May 2019 01:13:56 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
-        by smtp.gmail.com with ESMTPSA id 19sm746221itm.6.2019.05.03.01.13.55
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 03 May 2019 01:13:55 -0700 (PDT)
-Date:   Fri, 3 May 2019 04:13:54 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Andreas Heiduk <asheiduk@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] cleanup revisions.txt
-Message-ID: <20190503081354.GA23442@archbookpro.localdomain>
-References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
- <cover.1556367012.git.liu.denton@gmail.com>
- <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
+        id S1726302AbfECIQH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 04:16:07 -0400
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:46079 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfECIQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 04:16:06 -0400
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id DCCBC3C00DD;
+        Fri,  3 May 2019 10:16:04 +0200 (CEST)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id dClYdghxUJWh; Fri,  3 May 2019 10:15:58 +0200 (CEST)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 74A163C0034;
+        Fri,  3 May 2019 10:15:58 +0200 (CEST)
+Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.439.0; Fri, 3 May 2019
+ 10:15:58 +0200
+Date:   Fri, 3 May 2019 10:15:58 +0200
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     Jeff King <peff@peff.net>
+CC:     Eugeniu Rosca <roscaeugeniu@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Julia Lawall <julia.lawall@lip6.fr>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>
+Message-ID: <20190503081558.GB4686@vmlxhi-102.adit-jv.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.72.93.184]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andreas,
+Bcc: 
+Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use
+ with -G
+Reply-To: 
+In-Reply-To: <20190503031531.GA19436@sigill.intra.peff.net>
 
-Thanks for the earlier corrections on 2/3.
-
-On Fri, May 03, 2019 at 10:01:08AM +0200, Andreas Heiduk wrote:
-> Am 27.04.19 um 14:15 schrieb Denton Liu:
+On Thu, May 02, 2019 at 11:15:31PM -0400, Jeff King wrote:
+> On Thu, Apr 25, 2019 at 02:54:48AM +0200, Eugeniu Rosca wrote:
 > 
-> While reading/reviewing I stumbled across another case for marking optional
-> clauses. But the solutions is not a one-liner. @Denton Would you please add
-> that one as Patch 4/4 to your series?
+> > > This is unrelated to --pickaxe-raw-diff, -U<n> just implies -p in
+> > > general. See e.g. "git log -U1".
+> > 
+> > Oops. Since I use `-U<n>` mostly with `git show`, I missed the
+> > implication. You are right. Then, my question is how users are
+> > going to (quote from commit description):
+> > 
+> > > >> > [..] search [..] through an arbitrary amount of
+> > > >> > context lines when combined with -U<n>.
+> > 
+> > and achieve a `git log --oneline` report, given that -U<n> unfolds
+> > the commits?
+> 
+> You can use "-s" to suppress patch output; as long as it comes after -U
+> on the command-line, it will countermand the patch-format part.
 
-Will do.
-
-Thanks,
-
-Denton
+That's a handy trick. Now the feature is really usable. Thanks.
 
 > 
-> ----------------- 8< ----------------------------
-> Subject: [PATCH] revisions.txt: remove ambibuity between <rev>:<path> and :<path>
+> (Of course it doesn't matter until we have a raw-diff grep, since
+> otherwise the context lines do not matter at all, and you should just
+> omit -U entirely).
+
+Yep. Agreed.
+
 > 
-> The revision ':README' is mentioned as an example for '<rev>:<path>'
-> but the explanation forwards to the ':<n>:<path>' syntax. At the same
-> time ':<n>:<path>' did not mark the '<n>:' as optional.
-> 
-> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-> ---
->  Documentation/revisions.txt | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 372b286755..f11d1edc57 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -196,19 +196,16 @@ existing tag object.
->    Depending on the given text, the shell's word splitting rules might
->    require additional quoting.
->  
-> -'<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
-> +'<rev>:<path>', e.g. 'HEAD:README', 'master:./README'::
->    A suffix ':' followed by a path names the blob or tree
->    at the given path in the tree-ish object named by the part
->    before the colon.
-> -  ':path' (with an empty part before the colon)
-> -  is a special case of the syntax described next: content
-> -  recorded in the index at the given path.
->    A path starting with './' or '../' is relative to the current working directory.
->    The given path will be converted to be relative to the working tree's root directory.
->    This is most useful to address a blob or tree from a commit or tree that has
->    the same tree structure as the working tree.
->  
-> -':<n>:<path>', e.g. ':0:README', ':README'::
-> +':[<n>:]<path>', e.g. ':0:README', ':README'::
->    A colon, optionally followed by a stage number (0 to 3) and a
->    colon, followed by a path, names a blob object in the
->    index at the given path. A missing stage number (and the colon
-> -- 
-> 2.21.0
+> -Peff
+
+-- 
+Best Regards,
+Eugeniu.
