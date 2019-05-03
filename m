@@ -7,65 +7,63 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA3831F453
-	for <e@80x24.org>; Fri,  3 May 2019 07:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C82B71F453
+	for <e@80x24.org>; Fri,  3 May 2019 08:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726559AbfECHfS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 03:35:18 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39782 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfECHfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 03:35:18 -0400
-Received: by mail-wm1-f65.google.com with SMTP id n25so5447114wmk.4
-        for <git@vger.kernel.org>; Fri, 03 May 2019 00:35:17 -0700 (PDT)
+        id S1726326AbfECIBM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 04:01:12 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39304 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725775AbfECIBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 04:01:11 -0400
+Received: by mail-wm1-f68.google.com with SMTP id n25so5539810wmk.4
+        for <git@vger.kernel.org>; Fri, 03 May 2019 01:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:openpgp:message-id:date:user-agent
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WZBysgEJfWZNkC+35DAYleN91pjrOB7xJAHEdbUCGs0=;
-        b=AeGWi0G5DdUdRoh5reoWkqepYnaMgHygYyVDkDyWTxvUdihclaNqDlt1KcI7AK1Zao
-         cCbcDM4kqpiYzGgg3HYWt9PYlE0cM7NiGs9TSwve+5Bhb1GCN/Y/6h/F3DWCfkgD9UJ3
-         jjGoW+ke8IHBEa3IGm7GW08RHOKZwXt83/bu3na2tQnkrCDAlBfHuygxTiNaCV/hoONR
-         pj/h89Ysin9FcHH/WApqPmDmAzLWmn3+7HJsirQshrYd6aQaMh6DzuBXXRRFbdOdNo1s
-         aMSXMxAB8Ih6zmOjKJziqMcgeFKJ/cgWFlCq8RH8l63qWbRfQu5hXFJ/vBiEmAu5Zixy
-         sgpw==
+        bh=93wRixw3kP78ek+3w+QqEagpOsnFZ8kjVPehlIoExyk=;
+        b=BOm4bU7Kxzg1BFMp/cuYur1f+2nO87ApBmEKV6Oo4K6Fs1CxyuJ9ZK/oyXIuSjkn0N
+         4Gk7DDznXYu7fIkpy2p/5SCUEjsRO3VqNp+r2li3dAkiyHYhtzQofFJYwi2YzAY0/OZ0
+         /1yNfypsmcT6QAf87rsJS11MQntLNC1A7u+NKDiDkRxqiU47ggkbS3AnhG9PoodXoRvt
+         /DBGa40yv8kVKHtrVTcjbvQlHPwbXPqHlZrN2VdptWTKW7yEavQ8W8rxxy8kZF6QZ4KM
+         3pI1Ev3dSfS1E/P10hVYlK9wAqDpfpzsgjt9WhPo+n+gE4qVG9K3chbaZ3zP8t6r2HL1
+         /Y/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:openpgp:message-id
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
          :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=WZBysgEJfWZNkC+35DAYleN91pjrOB7xJAHEdbUCGs0=;
-        b=gNO6zVa3K9q3r0a5g/Uv0nW28oQAmQaH5j7nmNobdFSaxjWymhC2/VWfffWet8Nhu5
-         8XKkKmNfBU1Hv17JD+5OwJfUFDqruIZKhx0KFEp8qbwv3pFg7VBxL5rhUBQNsn4HcoP7
-         iDVz1hpu3h20sAhX3LuLwAaW0PdtQ5cUO21GUcCVRxheL3rzFTdKgki6HFBxczgKuGMG
-         6JsooOu2A36stYmQOatwnXI1ffbRCu6QjAwzwQqmQK9/UXHbK94/dPvOx2Le6Q4u39JW
-         uKtYVrPhG8KOzZA+2+lMm67HZjkQZBxruDf21MtXm3iEagqqgYUfNNlimzrtquUKuW1j
-         dwVg==
-X-Gm-Message-State: APjAAAVcZVqWdQivqH3oXzc5x7kp9xwEQhgiCfLc33xr+YnxlwmBPe2n
-        GKp0HbZJbPZw3TUxd/NPuio=
-X-Google-Smtp-Source: APXvYqwOS5mhJe4fhEVMtb2tBX2xoAke+LmmYxf6qJeunAGJtfd4hqPy0DYpvJG7kaF3lS2lzkfclw==
-X-Received: by 2002:a1c:1c3:: with SMTP id 186mr4980197wmb.77.1556868916344;
-        Fri, 03 May 2019 00:35:16 -0700 (PDT)
+        bh=93wRixw3kP78ek+3w+QqEagpOsnFZ8kjVPehlIoExyk=;
+        b=Rth2OwUb3q0EwSQM7gAd1MNoDNhJICl2XGNkYM4uKakyL7/Sp9HLqxGIQww8uzLnRL
+         GrSzApONE0jfToqosBvVTHceLdPbPSUgLidZmRti9cXCjUDfaLHMDQyGxDbgnWrisDb8
+         TIe/OgmkSq2vNDGQ18//O+4JOAvRUpydyiySqTEKt/y8XKY0/qYUAvEp+akOnW/uRrJo
+         cLgAV8Btw7da4a4SGktNZ/hG9bINIMQRe7FmjGOR4WXDRMeIKw4Caz3j/8tT7L+xEuOg
+         5N/i6EMMbN7LlwndzHhf/nmK37OWf9zCslxAtn1XssVwUIoyKpnleFY+aEfsyhVoq/GN
+         Ccrw==
+X-Gm-Message-State: APjAAAX/w/vxDwZ9ngpnB7L3bOpWQCdzL4R+XNp7QfqJwzQo3PSznWUZ
+        pF4hZQI4h2yycawlt8AWu/8=
+X-Google-Smtp-Source: APXvYqwU8mRhF9wlG+tNQx/DlEtsPrOOdjBVKEyjtC374dITlxTwV3tCBHWm7J8BLMkQmEmIZ79NeA==
+X-Received: by 2002:a1c:7406:: with SMTP id p6mr280717wmc.125.1556870470453;
+        Fri, 03 May 2019 01:01:10 -0700 (PDT)
 Received: from ?IPv6:2001:a62:437:4001:fd44:6515:8790:2e05? ([2001:a62:437:4001:fd44:6515:8790:2e05])
-        by smtp.googlemail.com with ESMTPSA id y70sm2405388wmc.8.2019.05.03.00.35.15
+        by smtp.googlemail.com with ESMTPSA id m8sm2337831wrg.18.2019.05.03.01.01.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 00:35:15 -0700 (PDT)
-Subject: Re: [PATCH v2 2/3] revisions.txt: mark optional rev arguments with []
-From:   Andreas Heiduk <asheiduk@gmail.com>
+        Fri, 03 May 2019 01:01:09 -0700 (PDT)
+Subject: Re: [PATCH v2 0/3] cleanup revisions.txt
 To:     Denton Liu <liu.denton@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
  <cover.1556367012.git.liu.denton@gmail.com>
- <90c787c219d25f38c1d53ae837160994a7bc6355.1556367012.git.liu.denton@gmail.com>
- <1684a040-ebc0-2567-225e-d26aa13951a2@gmail.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
 Openpgp: preference=signencrypt
-Message-ID: <91924cb1-f1c5-eeb5-21d8-dc6123a223b1@gmail.com>
-Date:   Fri, 3 May 2019 09:35:14 +0200
+Message-ID: <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
+Date:   Fri, 3 May 2019 10:01:08 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <1684a040-ebc0-2567-225e-d26aa13951a2@gmail.com>
+In-Reply-To: <cover.1556367012.git.liu.denton@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: de-DE
 Content-Transfer-Encoding: 7bit
@@ -74,76 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.05.19 um 09:17 schrieb Andreas Heiduk:
-> Am 27.04.19 um 14:16 schrieb Denton Liu:
->> In revisions.txt, an optional rev argument was not distinguised.
->> Instead, a user had to continue and read the description in order to
->> learn that the argument was optional.
->>
->> Since the [] notation for an optional argument is common-knowledge in
->> the Git documentation, mark optional arguments with [] so that it's more
->> obvious for the reader.
->>
->> Signed-off-by: Denton Liu <liu.denton@gmail.com>
->> ---
->>  Documentation/revisions.txt | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
->> index e5f11691b1..68cce2ca06 100644
->> --- a/Documentation/revisions.txt
->> +++ b/Documentation/revisions.txt
-> 
-> I think I found another one here:
-> 
-> @@ -65,7 +65,7 @@ some output processing may assume ref names in UTF-8.
->  '@'::
->    '@' alone is a shortcut for `HEAD`.
->  
-> -'<refname>@{<date>}', e.g. 'master@\{yesterday\}', 'HEAD@{5 minutes ago}'::
-> +'[<refname>]@{<date>}', e.g. 'master@\{yesterday\}', 'HEAD@{5 minutes ago}'::
->    A ref followed by the suffix '@' with a date specification
->    enclosed in a brace
->    pair (e.g. '\{yesterday\}', '{1 month 2 weeks 3 days 1 hour 1
-> 
-> The doesn't give a hint that <refname> is optional but actually it is.
-> 
->> @@ -95,7 +95,7 @@ some output processing may assume ref names in UTF-8.
->>    The construct '@{-<n>}' means the <n>th branch/commit checked out
->>    before the current one.
->>  
->> -'<branchname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
->> +'[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
->>    The suffix '@\{upstream\}' to a branchname (short form '<branchname>@\{u\}')
->>    refers to the branch that the branch specified by branchname is set to build on
->>    top of (configured with `branch.<name>.remote` and
->> @@ -103,7 +103,7 @@ some output processing may assume ref names in UTF-8.
->>    current one. These suffixes are also accepted when spelled in uppercase, and
->>    they mean the same thing no matter the case.
->>  
->> -'<branchname>@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
->> +'[<branchname>]@\{push\}', e.g. 'master@\{push\}', '@\{push\}'::
->>    The suffix '@\{push}' reports the branch "where we would push to" if
->>    `git push` were run while `branchname` was checked out (or the current
->>    `HEAD` if no branchname is specified). Since our push destination is
->> @@ -131,7 +131,7 @@ from one location and push to another. In a non-triangular workflow,
->>  This suffix is also accepted when spelled in uppercase, and means the same
->>  thing no matter the case.
->>  
->> -'<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
->> +'<rev>{caret}[<n>]', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
->>    A suffix '{caret}' to a revision parameter means the first parent of
->>    that commit object.  '{caret}<n>' means the <n>th parent (i.e.
->>    '<rev>{caret}'
-> 
+Am 27.04.19 um 14:15 schrieb Denton Liu:
 
-And another one I've found after hitting "Send" :-(
+While reading/reviewing I stumbled across another case for marking optional
+clauses. But the solutions is not a one-liner. @Denton Would you please add
+that one as Patch 4/4 to your series?
 
-@@ -346,7 +346,7 @@ Revision Range Summary
-   as giving commit '<rev>' and then all its parents prefixed with
-   '{caret}' to exclude them (and their ancestors).
+----------------- 8< ----------------------------
+Subject: [PATCH] revisions.txt: remove ambibuity between <rev>:<path> and :<path>
+
+The revision ':README' is mentioned as an example for '<rev>:<path>'
+but the explanation forwards to the ':<n>:<path>' syntax. At the same
+time ':<n>:<path>' did not mark the '<n>:' as optional.
+
+Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+---
+ Documentation/revisions.txt | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 372b286755..f11d1edc57 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -196,19 +196,16 @@ existing tag object.
+   Depending on the given text, the shell's word splitting rules might
+   require additional quoting.
  
--'<rev>{caret}-<n>', e.g. 'HEAD{caret}-, HEAD{caret}-2'::
-+'<rev>{caret}-[<n>]', e.g. 'HEAD{caret}-, HEAD{caret}-2'::
- 	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
- 	given.
+-'<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
++'<rev>:<path>', e.g. 'HEAD:README', 'master:./README'::
+   A suffix ':' followed by a path names the blob or tree
+   at the given path in the tree-ish object named by the part
+   before the colon.
+-  ':path' (with an empty part before the colon)
+-  is a special case of the syntax described next: content
+-  recorded in the index at the given path.
+   A path starting with './' or '../' is relative to the current working directory.
+   The given path will be converted to be relative to the working tree's root directory.
+   This is most useful to address a blob or tree from a commit or tree that has
+   the same tree structure as the working tree.
+ 
+-':<n>:<path>', e.g. ':0:README', ':README'::
++':[<n>:]<path>', e.g. ':0:README', ':README'::
+   A colon, optionally followed by a stage number (0 to 3) and a
+   colon, followed by a path, names a blob object in the
+   index at the given path. A missing stage number (and the colon
+-- 
+2.21.0
