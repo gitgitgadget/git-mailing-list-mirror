@@ -2,190 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D59F1F453
-	for <e@80x24.org>; Fri,  3 May 2019 10:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 000E51F453
+	for <e@80x24.org>; Fri,  3 May 2019 12:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726304AbfECK3Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 06:29:16 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:56256 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbfECK3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 06:29:15 -0400
-Received: by mail-it1-f193.google.com with SMTP id i131so8282983itf.5
-        for <git@vger.kernel.org>; Fri, 03 May 2019 03:29:15 -0700 (PDT)
+        id S1728097AbfECMrc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 08:47:32 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:38751 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728077AbfECMr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 08:47:28 -0400
+Received: by mail-qt1-f193.google.com with SMTP id d13so6485751qth.5
+        for <git@vger.kernel.org>; Fri, 03 May 2019 05:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tYH/21y9v0abGC/B9LRXu1pD12y7OyIUa5KfaC2e+EE=;
-        b=T4VbOhPCou7vM26cx3GqXamUbcuCGaTgKvezL1u0aT+pvTgSoOxKYUPXmx/TFEm+8f
-         mD5UaCN40ayRbhmDsxvdtZaRiRDEyT8pMwFmhW3CaDkat3qtSVbL3DWq4zVxlAW1Ywhy
-         q3hnpvxkY/5ej8e7S+nUefnoOuN+/LoJvbqoOFCm3vrXZCx6osMvZhJtERFTcAoOI/XO
-         uHO+v8dbyho1m9JU6lv4PMrAlmga6506eSrnx5KKJo/VXdgr8c+RuKBvmxSwY0m2DZzC
-         oOL4rwb3nGBO7aJ4RYXNHitNrgs18Wcf/ftHnQkSl9z0U7CWrMipbrdQ0ymiS4kXUy89
-         GLpA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=azHVkWo+k6iwDwHpxfvGfuzEaIycJ7rOUciTe2awnQs=;
+        b=gY0BBxuca5VyCh/6yNaBJlJheZ3gr+Vw70MEDyh+jW9QbC+xq4SOOrwjlNRjynPe77
+         7x0A33bwUAqvTRfVTdYGCMO6JhAuoSet6yXhYfCJpGrryAUtEHRrWznLHnHA7lSGnLXA
+         7u0faJVWE521ZT6KM2qIy/R79UJDgHKmZ1NOrpn/0Vzql6ph7CVVe9rn0+0I6G4k3umf
+         jFyC1pZGh9zekW2SJgboV+memgvUfOVuMvC0Tf4rZ331Hbd5u2rdnTIQfkWt01pXMwN2
+         6daJv6H+n5uWGfxUVhxN2ZgeCb7Ov0tG0hxQ5RYFkrleFft3qZIRDAH66kmXJ56DD5M8
+         EtBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tYH/21y9v0abGC/B9LRXu1pD12y7OyIUa5KfaC2e+EE=;
-        b=kR1abi5k7Ey6pFHyjm19qiYsx7iG2p8O1QOu/5XBBB1fyPFWExUY6Gp/DX53hXhPCU
-         b9x8MkEJ7IFYvjYuxuD6f3oGKx2qnzno6CDfuWIrkA5Hzme7jXI6LCz15zKih2sx/DUu
-         TdBz39BkyrLDTV3pujGVJXQjXdfpOOOpaccSJ6QMj+hNYQT7uTB6tv0Op+NRuefPwKWb
-         iFhWkNoUFzGtochPUjz3z0+mZUDN46lpsCj7T9HgwvityAGzXxcT6CJSFDbD5I4SIm5p
-         KBcbi7CYbmb8TxooYWP3o6suCsgeSkCtEphkIaFlkFHaiX4d69b0uIxbJw0/mGoTbGml
-         DL2g==
-X-Gm-Message-State: APjAAAUsUxmg1N8f13bnofxUXQSGp3ZkzkhMQxySgCkJlsSX85lec4ZA
-        s3AtyJACwDHh0auT9HwW3+1xdX9sjveC/VBRCDhBng==
-X-Google-Smtp-Source: APXvYqys8BhWYJTkSFKkN9Vn2Kz1xOt+oLj16KF5Cd7QHRt0384Vzo11pNwtv5ppXW81aDmtcHoQI1AMwKpgKC8+VEw=
-X-Received: by 2002:a24:478a:: with SMTP id t132mr6118163itb.123.1556879354836;
- Fri, 03 May 2019 03:29:14 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=azHVkWo+k6iwDwHpxfvGfuzEaIycJ7rOUciTe2awnQs=;
+        b=b7Pg8QpvYKx27dn1duxnD/wS75gLLL6ZDPfIXq84DOuYEnacWZhQHK7Jy81iQMqutG
+         aaISa9beeFn2jg+Alty+4cndOkN4OI6Ke+hO2qvEtj6UiYEmyN52webPln1vXb7DXWm7
+         /nVG1kffCmZbv1hvkGHT0HGSNlrVDiP3aRs//JKGrjylariyklsn57O2IX+N21jjfh6C
+         0jS7Z0r7rA5NtNYszzg/e26kcrBXS0Ra8f/dc3RFusgyC7hu9MIJK6gZKPZB5mH51LDp
+         2V/4zEumnFDPyjyJlL3nvXk93EEPwg64MDcAXihrwDBhQpUStO5Ldm6KDCAgU8rlaWAP
+         tRXg==
+X-Gm-Message-State: APjAAAW+5hlORgNL2qAdiY9ShysvNLPJI1U3d03obT4RGPMuMpbbizjS
+        KY+CYfG7uZUwn/T6Yy+30jZT09N7Rxo=
+X-Google-Smtp-Source: APXvYqw+0ZbAQaeiN+QW/49cbPvQZTkJzR7hVBFNUtyYLHAcznzxJKxQO8A0WtGIIr59B4lH+86wRA==
+X-Received: by 2002:ac8:18e6:: with SMTP id o35mr8334474qtk.77.1556887647393;
+        Fri, 03 May 2019 05:47:27 -0700 (PDT)
+Received: from [10.0.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id b187sm1222781qkd.73.2019.05.03.05.47.25
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 May 2019 05:47:26 -0700 (PDT)
+Subject: Re: [PATCH v3 0/6] Create commit-graph file format v2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.112.v2.git.gitgitgadget@gmail.com>
+ <pull.112.v3.git.gitgitgadget@gmail.com> <87lfzprkfc.fsf@evledraar.gmail.com>
+ <bb0c22f9-9d0b-0fa6-e826-8e2ac146c6f9@gmail.com>
+ <87h8acivkh.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <04ac97c5-ab2b-2b23-4c84-8ed8aab0e2f5@gmail.com>
+Date:   Fri, 3 May 2019 08:47:25 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-References: <2e321dbe-42a3-7516-52aa-4bc50a3c403e@boxie.eu>
-In-Reply-To: <2e321dbe-42a3-7516-52aa-4bc50a3c403e@boxie.eu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 3 May 2019 17:28:48 +0700
-Message-ID: <CACsJy8ArJ9Lc1pA7SbJ1OE6hK+rprXpZViLDPUKPMcWG7Bre3A@mail.gmail.com>
-Subject: Re: bug: git pull may delete untracked files in submodule without notice
-To:     Christian Spanier <cspanier@boxie.eu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87h8acivkh.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 3, 2019 at 5:25 PM Christian Spanier <cspanier@boxie.eu> wrote:
+On 5/2/2019 2:02 PM, Ævar Arnfjörð Bjarmason wrote:
 >
-> Hi,
->
-> I found a bug where Git may delete untracked files without notice in
-> certain situations. This bug effects Git 2.21.0 both on Linux and Windows.
-> In summary this happens when git pull merges a commit that replaces a
-> submodule folder with a symlink. Any files within the folder are deleted
-> without notice.
+> But those are separate from any back-compat concerns, which is what I
+> think makes sense to focus on now.
 
-Maybe it's not the same, maybe it is. But Phillip recently did some
-work protecting untracked files and I think he touched a test case
-about submodule. Adding him so he can check, if he has time.
+Thinking more on this topic, I think I have a way to satisfy _all_ of
+your concerns by simplifying the plan for incremental commit-graph files.
 
-> Check out the script below for details.
->
-> This happend on some developer's machine and deleted a repository
-> containing about 200GiB of files and tons of uncommited local scripts,
-> log files and whatever, just because some other dev accidentally
-> commited a temporary change.
->
-> Greetings,
-> Christian Spanier
->
-> ##### PREPARATION #####
->
-> # New empty repository #1
-> mkdir rep1
-> cd rep1
-> git init --bare .
-> cd ..
->
-> # New empty repository #2
-> mkdir rep2
-> cd rep2
-> git init --bare .
-> cd ..
->
-> # Clone repository #1 and create initial commit
-> git clone rep1 clone_rep1_user1
-> cd clone_rep1_user1
-> touch README
-> git add README
-> git commit -m "initial commit"
-> git push
-> cd ..
->
-> # Clone repository #2 and create initial commit
-> git clone rep2 clone_rep2
-> cd clone_rep2
-> touch README
-> git add README
-> git commit -m "initial commit"
-> git push
-> cd ..
->
-> # Add repository #2 as a submodule to repository #1
-> cd clone_rep1_user1
-> git submodule add ../rep2
-> git commit -m "add submodule"
-> git push
-> cd ..
->
-> # User 2 also clones repository #1 and #2 recursively
-> git clone --recursive rep1 clone_rep1_user2
->
-> # User 2 starts working in his folder and adds an important local file
-> which is
-> # not yet committed inside the submodule folder.
-> cd clone_rep1_user2/rep2
-> echo "important work" > uncommitted_file
-> cd ../../
->
-> # Meanwhile, user 1 temporarily switch out folder /clone_rep1_user1/rep2
-> with a
-> # symbolic link to a different folder (for whatever reason, maybe a copy
-> of an
-> # older version or anything).
-> mkdir rep2_alternative
-> cd clone_rep1_user1
-> mv rep2 ../rep2_backup
-> ln -s ../rep2_alternative rep2
-> # On Windows this can be done with 'mklink /D rep2 ../rep2_alternative',
-> # which requires admin privileges. The bug is not reproducible when
-> # using a directory junction with 'mklink /D /J ...'.
->
-> # He does some work on rep1 but then accidently adds the symbolic link
-> to his
-> # next commit and pushes the changes. Notice the typechange of rep2.
-> echo "some" > work
-> git status
-> # On branch master
-> # Your branch is up to date with 'origin/master'.
-> #
-> # Changes not staged for commit:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working
-> directory)
-> #
-> #         typechange: rep2
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #         work
-> #
-> # no changes added to commit (use "git add" and/or "git commit -a")
-> git add .
-> git commit -m "do some work"
-> git push
-> cd ..
->
-> # NOW THE BUG:
->
-> # User 2 pulls the changes and loses his important work in
-> # rep2/uncommitted_file because Git replaces the folder with a symlink
-> # without checking for modified or uncommited files!
-> # He should get an error in this case!
-> cd clone_rep1_user2
-> git pull
-> cat rep2/uncommitted_file
-> # cat: rep2/uncommitted_file: Not a directory
-> # "important work" in rep2/uncommitted_file is gone :(
+My initial plan was to have the "commit-graph" file always be the "tip"
+file, and it would point to some number of "graph-{hash}.graph" files.
+Then, we would have some set of strategies to decide when we create a new
+.graph file or when we compact the files down into the "commit-graph"
+file.
 
+This has several issues regarding race conditions that I had not yet
+resolved (and maybe would always have problems).
 
+It would be much simpler to restrict the model. Your idea of changing
+the file name is the inspiration here.
 
--- 
-Duy
+* The "commit-graph" file is the base commit graph. It is always
+  closed under reachability (if a commit exists in this file, then
+  its parents are also in this file). We will also consider this to
+  be "commit-graph-0".
+
+* A commit-graph-<N> exists, then we check for the existence of
+  commit-graph-<N+1>. This file can contain commits whose parents
+  are in any smaller file.
+
+I think this resolves the issue of back-compat without updating
+the file format:
+
+1. Old clients will never look at commit-graph-N, so they will
+   never complain about an "incomplete" file.
+
+2. If we always open a read handle as we move up the list, then
+   a "merge and collapse" write to commit-graph-N will not
+   interrupt an existing process reading that file.
+
+I'll start hacking on this model.
+
+Thanks,
+-Stolee
