@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4AEA1F453
-	for <e@80x24.org>; Fri,  3 May 2019 15:20:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 641B81F461
+	for <e@80x24.org>; Fri,  3 May 2019 15:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbfECPU5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 11:20:57 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35356 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726289AbfECPU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 11:20:57 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y197so7190345wmd.0
-        for <git@vger.kernel.org>; Fri, 03 May 2019 08:20:55 -0700 (PDT)
+        id S1727986AbfECPlD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 11:41:03 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33057 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726476AbfECPlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 11:41:02 -0400
+Received: by mail-wm1-f68.google.com with SMTP id b188so5992249wmb.0
+        for <git@vger.kernel.org>; Fri, 03 May 2019 08:41:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ESl+bXN9QhMALyY8gptchB4MGYLlQXQrrNg+TSIAXz8=;
-        b=SQHMfHwPgIZD248zpbCQq+A2X45ZxsGV5n6LjG5QJvzRY8BQiUbDjiX7N+o2ZuYgjC
-         DF8+C+u1JZY6xiVOZzXOd7GjxznAD+RRfulcCTXOt1pgAbSAROLIPXEtPfPA28CIwk6X
-         r1Xnn+kYr6Vk4JpSROls5QK3s2Se7vpcJychRfttXLWv/ttyIc4IikwDHII8TUBp4Mm0
-         nIxx8Mj2hL8JjBi2LWTVR8Bd/HDEl+epxfOCD5YKTcQvOoVp6GWxcGpbgR1VVNtboiU6
-         NIvbqwRWs3oEynt1bgxThsZsnm9dBdlzy+d5OoQekWiaijlx7rqVHXgTLTci0vFabr9K
-         Bq7A==
+        bh=Xf5sEuTrkyyQz0q/xMXIZ/TZhsXT5VBk2Z7VIWDuEh0=;
+        b=d2KfBIC6VG917WYP/RMVNB+aspI/PQKOd/fEeRsPggEPuv+TNfOdiqv+tha6Q9XeLO
+         pSe5M7T5x+eytBo0TKmsQhZC6DeLpt46inBuUsp3dMV0vUE/kWzWhzFCflLu24rpc/J5
+         /vz4rn0zshU1Aii7Aom8m4c1J9oPjageZt/i9hw+TPyOJKJaEL3pZqsqLt7jrPUrxDxG
+         eB6neXQ24ZaKbWbWVK29T3wazYc6BorOWabTA/t5g6/pK7Aj3Ll1FXnQpakEEGJ0hDof
+         bsvyhNE4ysjH/rJ59yqERBh38stbVSUahaC7UGF/JAON2ihW86kmie/oyLp12APgeOS7
+         rNKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=ESl+bXN9QhMALyY8gptchB4MGYLlQXQrrNg+TSIAXz8=;
-        b=Yb2QYcQRFZHonpKWNdW1hgaDYY4sjsKh/dm2dcTxU52cyJ3yyED0c8AxVxEirsz+zA
-         5uMChAME2bmMOwbr/WDFqteShYWbfnlu1KZjqwlmcv6o6bvHKYctaOrvfQPzcK9uFOz8
-         6+4TyC6pOUVE9+nq2cBsO5r88zAqub9vYxEEQr8M18oveHR4jZt1Hi5eKZuHEDpYtU6H
-         Z28Zada3GpF7iWRxUpy141T3HMnmZGlcR5ISZbi4pRQ7pm06wa0O8oWYFWu9GnHQAeV1
-         qlKQXvDW92I8k/G+yEG6THCVUctzXeLYw/ilDlyykr+9+nHxrRWBePPHxDwjswhhNGNY
-         gbgg==
-X-Gm-Message-State: APjAAAX3x3WfzYODjGvAFawaJt4P640WNPgfPbxAUzwQs/+PSGou+UjG
-        UoP83zCxBbu0gIT38tnk9E8=
-X-Google-Smtp-Source: APXvYqyarHlH6C52E9J4AsgZd9nFpKcJkNa22sv+MfTGbL/iitiYWpU+1yghddr0XB030zKx7DRuDw==
-X-Received: by 2002:a1c:6783:: with SMTP id b125mr6485716wmc.79.1556896854712;
-        Fri, 03 May 2019 08:20:54 -0700 (PDT)
+        bh=Xf5sEuTrkyyQz0q/xMXIZ/TZhsXT5VBk2Z7VIWDuEh0=;
+        b=pviDoZXsRpUeQE9yf4bhCQHgyomCdBKFRyI8hrEFFssaW9Kpwl8kvX9lCg4O6bQDuY
+         Hv1LGbF0h6Ymsb89jSSbcEN0ci5Khtg+5VzEJZqSrMAIjUUoBrPAgmPPlkny5+4KInp5
+         nX/SR/YmlIKzU8BGtTSPFtLJ8GAQ8mIERygXK1vnpXxl2gTq+rzwmevcc2oufd42TDVj
+         iBPzP1TD5mMUsWs7ttjx4M/cYzo1/AQYO3X6uqBAFqMVI9qtzAM9POW8hLazMBzcfdgB
+         fx1QDV75T3nPjSxeMmNFO2dozGNIWHrfw4PnhKJUCdtKOhu+QyDb9+lu/tsWB4fnLq72
+         zksQ==
+X-Gm-Message-State: APjAAAXsea7qCxpM5it8YEmSQ9r0rhLAvViCYfd+6caNZI9m++ZhpLjY
+        fhIlkk4SnUAxWo2vYlQCkjfWpuGT
+X-Google-Smtp-Source: APXvYqyfiS9Rmcr7uuTMmatODeut6kUcrMrnjgzVgxcHzE9+uPUGtyxlBzYCRs+C5uNNE306V9yO6g==
+X-Received: by 2002:a7b:cd05:: with SMTP id f5mr6538173wmj.98.1556896203329;
+        Fri, 03 May 2019 08:10:03 -0700 (PDT)
 Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id g3sm2275978wmf.9.2019.05.03.08.20.53
+        by smtp.gmail.com with ESMTPSA id w15sm3744159wrg.43.2019.05.03.08.10.02
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 08:20:53 -0700 (PDT)
+        Fri, 03 May 2019 08:10:02 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] read-tree --reset: add --protect-untracked
+Subject: Re: bug: git pull may delete untracked files in submodule without
+ notice
 To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Christian Spanier <cspanier@boxie.eu>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190501101403.20294-1-phillip.wood123@gmail.com>
- <20190501101403.20294-2-phillip.wood123@gmail.com>
- <CACsJy8C731LL3z1zaF4mpWmag1k7V3Ny6+ar9dMmHR4hdw_9AA@mail.gmail.com>
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <2e321dbe-42a3-7516-52aa-4bc50a3c403e@boxie.eu>
+ <CACsJy8ArJ9Lc1pA7SbJ1OE6hK+rprXpZViLDPUKPMcWG7Bre3A@mail.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <15dad590-087e-5a48-9238-5d2826950506@gmail.com>
-Date:   Fri, 3 May 2019 16:20:52 +0100
+Message-ID: <6d985c61-d06f-b794-8533-c7f29444b148@gmail.com>
+Date:   Fri, 3 May 2019 16:10:01 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8C731LL3z1zaF4mpWmag1k7V3Ny6+ar9dMmHR4hdw_9AA@mail.gmail.com>
+In-Reply-To: <CACsJy8ArJ9Lc1pA7SbJ1OE6hK+rprXpZViLDPUKPMcWG7Bre3A@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -74,385 +74,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/05/2019 11:38, Duy Nguyen wrote:
-> On Wed, May 1, 2019 at 5:14 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On 03/05/2019 11:28, Duy Nguyen wrote:
+> On Fri, May 3, 2019 at 5:25 PM Christian Spanier <cspanier@boxie.eu> wrote:
 >>
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> Hi,
 >>
->> Currently there is no way to get git to discard changes to the
->> worktree without overwriting untracked files. `reset --hard`,
->> `checkout --force`, `checkout <rev> :/` and `read-tree --reset -u`
+>> I found a bug where Git may delete untracked files without notice in
+>> certain situations. This bug effects Git 2.21.0 both on Linux and Windows.
+>> In summary this happens when git pull merges a commit that replaces a
+>> submodule folder with a symlink. Any files within the folder are deleted
+>> without notice.
 > 
-> "checkout <rev> :/" does not use unpack-trees, I think, so it does not
-> belong to this group.
+> Maybe it's not the same, maybe it is. But Phillip recently did some
+> work protecting untracked files and I think he touched a test case
+> about submodule. Adding him so he can check, if he has time.
 
-You're right that it does not use unpack-trees, but I'm making the point 
-that there is no way to discard changes to tracked files without 
-overwriting untracked files whatever one uses.
-
->> will all overwrite untracked files. unpack_trees() has known how to
->> avoid overwriting untracked files since commit fcc387db9b ("read-tree
->> -m -u: do not overwrite or remove untracked working tree files.",
->> 2006-05-17) in response to concerns about lost files [1] but those
->> protections do not apply to --reset. This patch adds an
->> --protect-untracked option for read-tree/unpack_trees() to apply th
->> same protections with --reset.
-> 
-> Your enum makes me wonder if we should have --reset-tracked instead of
-> --protect-untracked (say what you want to reset seems tiny bit easier
-> to understand than "reset except untracked"). Which leads to another
-> question, do we ever need --reset-untracked (i.e. overwriting
-> untracked files but never ever touch tracked ones).
-> 
-> I have one use case that --reset-untracked might make sense. Suppose
-> you do "git reset HEAD^" where HEAD has some new files. The new files
-> will be left alone in worktree of course, but switching back to HEAD
-> after that, unpack-trees will cry murder because it would otherwise
-> overwrite untracked files (that have the exact same content).
-> 
-> --reset-untracked might be useful for that. I'm carrying a patch to
-> detect identical file content though which addresses this very
-> specific case. Maybe it's the only case that --reset-untracked may be
-> useful.
-
-That patch sounds useful (I played around with "hg update" the other day 
-and I think it does the same). I think that's probably a common case, it 
-also works if one does "git checkout <other-branch> file" then "git 
-reset HEAD" followed "git checkout <other-branch>". --reset-untracked is 
-just like --reset which we can't get rid of without breaking backwards 
-compatibility. Having --reset-tracked is maybe better than having a 
---protect-tracked option that only works with --reset -u.
-
->> It does not change the behavior of any
->> of the porcelain commands but paves the way for adding options or
->> changing the default for those in future.
->>
->> Note the actual change in unpack-trees.c is quite simple, the majority
->> of this patch is converting existing callers to use the new
->> unpack_trees_reset_type enum.
-> 
-> This could be split in a separate patch, then the actual change would
-> become small and more to the point.
-
-Yes that would make it clearer.
+That was a different case. I've just tried adding an untracked file to 
+the submodule directory in the test that replaces a submodule with a 
+file (patch below hopefully thunderbird does not break it) and it still 
+passes when running t1013-read-tree-submodule.sh (it's test 8) - so I 
+think there is something wrong with the detection of untracked files in 
+a submodule directory when we replace it with a file. Normally I'd ping 
+Stefan about submodules but he's not around at the moment.
 
 Best Wishes
 
 Phillip
 
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 5b56b23166..618176ae54 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -735,6 +735,7 @@ test_submodule_recursing_with_args_common() {
+                 reset_work_tree_to_interested add_sub1 &&
+                 (
+                         cd submodule_update &&
++                       echo untracked>sub1/untracked &&
+                         git branch -t replace_sub1_with_file 
+origin/replace_sub1_with_file &&
+                         $command replace_sub1_with_file &&
+                         test_superproject_content 
+origin/replace_sub1_with_file &&
+
+
 > 
->> [1] https://public-inbox.org/git/8aa486160605161500m1dd8428cj@mail.gmail.com/
+>> Check out the script below for details.
 >>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
+>> This happend on some developer's machine and deleted a repository
+>> containing about 200GiB of files and tons of uncommited local scripts,
+>> log files and whatever, just because some other dev accidentally
+>> commited a temporary change.
 >>
->> Notes:
->>      adding --protect-untracked to the invocation of
->>      test_submodule_forced_switch() in t1013 fixes the known breakage of
->>      tests 57 & 58 but breaks test 64 which relies on forcing. I'm not sure
->>      that the expected results of 57 & 58 are correct if we're forcing.
+>> Greetings,
+>> Christian Spanier
 >>
->>   Documentation/git-read-tree.txt | 10 +++++++--
->>   builtin/am.c                    |  8 ++++---
->>   builtin/checkout.c              |  2 +-
->>   builtin/read-tree.c             | 12 +++++++++++
->>   builtin/rebase.c                |  2 +-
->>   builtin/reset.c                 |  2 +-
->>   builtin/stash.c                 |  7 ++++---
->>   t/lib-read-tree.sh              | 11 ++++++++++
->>   t/t1005-read-tree-reset.sh      | 37 +++++++++++++++++++++++++++++++--
->>   unpack-trees.c                  |  3 ++-
->>   unpack-trees.h                  | 10 +++++++--
->>   11 files changed, 88 insertions(+), 16 deletions(-)
+>> ##### PREPARATION #####
 >>
->> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
->> index d271842608..67864c6bbc 100644
->> --- a/Documentation/git-read-tree.txt
->> +++ b/Documentation/git-read-tree.txt
->> @@ -40,12 +40,18 @@ OPTIONS
->>   --reset::
->>          Same as -m, except that unmerged entries are discarded instead
->>          of failing. When used with `-u`, updates leading to loss of
->> -       working tree changes will not abort the operation.
->> +       working tree changes will not abort the operation and
->> +       untracked files will be overwritten. Use `--protect-untracked`
->> +       to avoid overwriting untracked files.
+>> # New empty repository #1
+>> mkdir rep1
+>> cd rep1
+>> git init --bare .
+>> cd ..
 >>
->>   -u::
->>          After a successful merge, update the files in the work
->>          tree with the result of the merge.
+>> # New empty repository #2
+>> mkdir rep2
+>> cd rep2
+>> git init --bare .
+>> cd ..
 >>
->> +--protect-untracked::
->> +       Prevent `--reset` `-u` from overwriting untracked files. Requires
->> +       `--reset` and `-u` (`-m` never overwrites untracked files).
->> +
->>   -i::
->>          Usually a merge requires the index file as well as the
->>          files in the working tree to be up to date with the
->> @@ -89,7 +95,7 @@ OPTIONS
->>          existed in the original index file.
+>> # Clone repository #1 and create initial commit
+>> git clone rep1 clone_rep1_user1
+>> cd clone_rep1_user1
+>> touch README
+>> git add README
+>> git commit -m "initial commit"
+>> git push
+>> cd ..
 >>
->>   --exclude-per-directory=<gitignore>::
->> -       When running the command with `-u` and `-m` options, the
->> +       When using `-u` with `-m` or `--reset` `--protect-untracked` options, the
->>          merge result may need to overwrite paths that are not
->>          tracked in the current branch.  The command usually
->>          refuses to proceed with the merge to avoid losing such a
->> diff --git a/builtin/am.c b/builtin/am.c
->> index 912d9821b1..a92394b682 100644
->> --- a/builtin/am.c
->> +++ b/builtin/am.c
->> @@ -1854,7 +1854,8 @@ static void am_resolve(struct am_state *state)
->>    * true, any unmerged entries will be discarded. Returns 0 on success, -1 on
->>    * failure.
->>    */
->> -static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
->> +static int fast_forward_to(struct tree *head, struct tree *remote,
->> +                          enum unpack_trees_reset_type reset)
->>   {
->>          struct lock_file lock_file = LOCK_INIT;
->>          struct unpack_trees_options opts;
->> @@ -1942,7 +1943,8 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+>> # Clone repository #2 and create initial commit
+>> git clone rep2 clone_rep2
+>> cd clone_rep2
+>> touch README
+>> git add README
+>> git commit -m "initial commit"
+>> git push
+>> cd ..
 >>
->>          read_cache_unmerged();
+>> # Add repository #2 as a submodule to repository #1
+>> cd clone_rep1_user1
+>> git submodule add ../rep2
+>> git commit -m "add submodule"
+>> git push
+>> cd ..
 >>
->> -       if (fast_forward_to(head_tree, head_tree, 1))
->> +       if (fast_forward_to(head_tree, head_tree,
->> +                           UNPACK_RESET_OVERWRITE_UNTRACKED))
->>                  return -1;
+>> # User 2 also clones repository #1 and #2 recursively
+>> git clone --recursive rep1 clone_rep1_user2
 >>
->>          if (write_cache_as_tree(&index, 0, NULL))
->> @@ -1952,7 +1954,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
->>          if (!index_tree)
->>                  return error(_("Could not parse object '%s'."), oid_to_hex(&index));
+>> # User 2 starts working in his folder and adds an important local file
+>> which is
+>> # not yet committed inside the submodule folder.
+>> cd clone_rep1_user2/rep2
+>> echo "important work" > uncommitted_file
+>> cd ../../
 >>
->> -       if (fast_forward_to(index_tree, remote_tree, 0))
->> +       if (fast_forward_to(index_tree, remote_tree, UNPACK_NO_RESET))
->>                  return -1;
+>> # Meanwhile, user 1 temporarily switch out folder /clone_rep1_user1/rep2
+>> with a
+>> # symbolic link to a different folder (for whatever reason, maybe a copy
+>> of an
+>> # older version or anything).
+>> mkdir rep2_alternative
+>> cd clone_rep1_user1
+>> mv rep2 ../rep2_backup
+>> ln -s ../rep2_alternative rep2
+>> # On Windows this can be done with 'mklink /D rep2 ../rep2_alternative',
+>> # which requires admin privileges. The bug is not reproducible when
+>> # using a directory junction with 'mklink /D /J ...'.
 >>
->>          if (merge_tree(remote_tree))
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index ffa776c6e1..e9e70018f9 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -506,7 +506,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
->>          opts.head_idx = -1;
->>          opts.update = worktree;
->>          opts.skip_unmerged = !worktree;
->> -       opts.reset = 1;
->> +       opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
->>          opts.merge = 1;
->>          opts.fn = oneway_merge;
->>          opts.verbose_update = o->show_progress;
->> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
->> index 5c9c082595..23735adde9 100644
->> --- a/builtin/read-tree.c
->> +++ b/builtin/read-tree.c
->> @@ -114,6 +114,7 @@ static int git_read_tree_config(const char *var, const char *value, void *cb)
->>   int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->>   {
->>          int i, stage = 0;
->> +       int protect_untracked = -1;
->>          struct object_id oid;
->>          struct tree_desc t[MAX_UNPACK_TREES];
->>          struct unpack_trees_options opts;
->> @@ -140,6 +141,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->>                    PARSE_OPT_NONEG },
->>                  OPT_BOOL('u', NULL, &opts.update,
->>                           N_("update working tree with merge result")),
->> +               OPT_BOOL(0, "protect-untracked", &protect_untracked,
->> +                        N_("do not overwrite untracked files")),
->>                  { OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
->>                    N_("gitignore"),
->>                    N_("allow explicitly ignored files to be overwritten"),
->> @@ -209,8 +212,17 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->>          if ((opts.update || opts.index_only) && !opts.merge)
->>                  die("%s is meaningless without -m, --reset, or --prefix",
->>                      opts.update ? "-u" : "-i");
->> +       if (protect_untracked >= 0) {
->> +               if (!opts.reset || !opts.update)
->> +                       die("-%s-protect-untracked requires --reset and -u",
->> +                           protect_untracked ? "" : "-no");
->> +               opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
->> +       }
->>          if ((opts.dir && !opts.update))
->>                  die("--exclude-per-directory is meaningless unless -u");
->> +       if (opts.dir && opts.reset == UNPACK_RESET_OVERWRITE_UNTRACKED)
->> +               warning("--exclude-per-directory without --preserve-untracked "
->> +                       "has no effect");
->>          if (opts.merge && !opts.index_only)
->>                  setup_work_tree();
+>> # He does some work on rep1 but then accidently adds the symbolic link
+>> to his
+>> # next commit and pushes the changes. Notice the typechange of rep2.
+>> echo "some" > work
+>> git status
+>> # On branch master
+>> # Your branch is up to date with 'origin/master'.
+>> #
+>> # Changes not staged for commit:
+>> #   (use "git add <file>..." to update what will be committed)
+>> #   (use "git checkout -- <file>..." to discard changes in working
+>> directory)
+>> #
+>> #         typechange: rep2
+>> #
+>> # Untracked files:
+>> #   (use "git add <file>..." to include in what will be committed)
+>> #
+>> #         work
+>> #
+>> # no changes added to commit (use "git add" and/or "git commit -a")
+>> git add .
+>> git commit -m "do some work"
+>> git push
+>> cd ..
 >>
->> diff --git a/builtin/rebase.c b/builtin/rebase.c
->> index 2e41ad5644..feb30a71f5 100644
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -398,7 +398,7 @@ static int reset_head(struct object_id *oid, const char *action,
->>          unpack_tree_opts.update = 1;
->>          unpack_tree_opts.merge = 1;
->>          if (!detach_head)
->> -               unpack_tree_opts.reset = 1;
->> +               unpack_tree_opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+>> # NOW THE BUG:
 >>
->>          if (repo_read_index_unmerged(the_repository) < 0) {
->>                  ret = error(_("could not read index"));
->> diff --git a/builtin/reset.c b/builtin/reset.c
->> index 26ef9a7bd0..a39dd92fb2 100644
->> --- a/builtin/reset.c
->> +++ b/builtin/reset.c
->> @@ -70,7 +70,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
->>                  opts.update = 1;
->>                  /* fallthrough */
->>          default:
->> -               opts.reset = 1;
->> +               opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
->>          }
->>
->>          read_cache_unmerged();
->> diff --git a/builtin/stash.c b/builtin/stash.c
->> index 2a8e6d09b4..175d1b62d3 100644
->> --- a/builtin/stash.c
->> +++ b/builtin/stash.c
->> @@ -227,7 +227,8 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
->>          return do_clear_stash();
->>   }
->>
->> -static int reset_tree(struct object_id *i_tree, int update, int reset)
->> +static int reset_tree(struct object_id *i_tree, int update,
->> +                     enum unpack_trees_reset_type reset)
->>   {
->>          int nr_trees = 1;
->>          struct unpack_trees_options opts;
->> @@ -461,7 +462,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->>          }
->>
->>          if (has_index) {
->> -               if (reset_tree(&index_tree, 0, 0))
->> +               if (reset_tree(&index_tree, 0, UNPACK_NO_RESET))
->>                          return -1;
->>          } else {
->>                  struct strbuf out = STRBUF_INIT;
->> @@ -471,7 +472,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->>                          return -1;
->>                  }
->>
->> -               if (reset_tree(&c_tree, 0, 1)) {
->> +               if (reset_tree(&c_tree, 0, UNPACK_RESET_OVERWRITE_UNTRACKED)) {
->>                          strbuf_release(&out);
->>                          return -1;
->>                  }
->> diff --git a/t/lib-read-tree.sh b/t/lib-read-tree.sh
->> index b95f485606..22f516d91f 100644
->> --- a/t/lib-read-tree.sh
->> +++ b/t/lib-read-tree.sh
->> @@ -39,3 +39,14 @@ read_tree_u_must_fail () {
->>          test_cmp pre-dry-run-wt post-dry-run-wt &&
->>          test_must_fail git read-tree "$@"
->>   }
->> +
->> +read_tree_u_must_fail_save_err () {
->> +       git ls-files -s >pre-dry-run &&
->> +       git diff-files -p >pre-dry-run-wt &&
->> +       test_must_fail git read-tree -n "$@" &&
->> +       git ls-files -s >post-dry-run &&
->> +       git diff-files -p >post-dry-run-wt &&
->> +       test_cmp pre-dry-run post-dry-run &&
->> +       test_cmp pre-dry-run-wt post-dry-run-wt &&
->> +       test_must_fail git read-tree "$@" 2>actual-err
->> +}
->> diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
->> index 83b09e1310..6c9dd6805b 100755
->> --- a/t/t1005-read-tree-reset.sh
->> +++ b/t/t1005-read-tree-reset.sh
->> @@ -19,15 +19,48 @@ test_expect_success 'setup' '
->>          git add df &&
->>          echo content >new &&
->>          git add new &&
->> -       git commit -m two
->> +       git commit -m two &&
->> +       git ls-files >expect-two
->>   '
->>
->> -test_expect_success 'reset should work' '
->> +test_expect_success '--protect-untracked option sanity checks' '
->> +       read_tree_u_must_fail --reset --protect-untracked HEAD &&
->> +       read_tree_u_must_fail --reset --no-protect-untracked HEAD &&
->> +       read_tree_u_must_fail -m -u --protect-untracked HEAD &&
->> +       read_tree_u_must_fail -m -u --no-protect-untracked
->> +'
->> +
->> +test_expect_success 'reset should reset worktree' '
->> +       echo changed >df &&
->>          read_tree_u_must_succeed -u --reset HEAD^ &&
->>          git ls-files >actual &&
->>          test_cmp expect actual
->>   '
->>
->> +test_expect_success 'reset --protect-untracked protects untracked file' '
->> +       echo changed >new &&
->> +       read_tree_u_must_fail_save_err -u --reset --protect-untracked HEAD &&
->> +       echo "error: Untracked working tree file '\'new\'' would be overwritten by merge." >expected-err &&
->> +       test_cmp expected-err actual-err
->> +'
->> +
->> +test_expect_success 'reset --protect-untracked protects untracked directory' '
->> +       rm new &&
->> +       mkdir new &&
->> +       echo untracked >new/untracked &&
->> +       read_tree_u_must_fail_save_err -u --reset --protect-untracked HEAD &&
->> +       echo "error: Updating '\'new\'' would lose untracked files in it" >expected-err &&
->> +       test_cmp expected-err actual-err
->> +'
->> +
->> +test_expect_success 'reset --protect-untracked resets' '
->> +       rm -rf new &&
->> +       echo changed >df/file &&
->> +       read_tree_u_must_succeed -u --reset --protect-untracked HEAD &&
->> +       git ls-files >actual-two &&
->> +       test_cmp expect-two actual-two
->> +'
->> +
->>   test_expect_success 'reset should remove remnants from a failed merge' '
->>          read_tree_u_must_succeed --reset -u HEAD &&
->>          git ls-files -s >expect &&
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index 50189909b8..b1722730fe 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -1917,7 +1917,8 @@ static int verify_absent_1(const struct cache_entry *ce,
->>          int len;
->>          struct stat st;
->>
->> -       if (o->index_only || o->reset || !o->update)
->> +       if (o->index_only || o->reset == UNPACK_RESET_OVERWRITE_UNTRACKED ||
->> +           !o->update)
->>                  return 0;
->>
->>          len = check_leading_path(ce->name, ce_namelen(ce));
->> diff --git a/unpack-trees.h b/unpack-trees.h
->> index d344d7d296..732b262c4d 100644
->> --- a/unpack-trees.h
->> +++ b/unpack-trees.h
->> @@ -41,9 +41,15 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
->>    */
->>   void clear_unpack_trees_porcelain(struct unpack_trees_options *opts);
->>
->> +enum unpack_trees_reset_type {
->> +       UNPACK_NO_RESET = 0,
->> +       UNPACK_RESET_OVERWRITE_UNTRACKED,
->> +       UNPACK_RESET_PROTECT_UNTRACKED
->> +};
->> +
->>   struct unpack_trees_options {
->> -       unsigned int reset,
->> -                    merge,
->> +       enum unpack_trees_reset_type reset;
->> +       unsigned int merge,
->>                       update,
->>                       clone,
->>                       index_only,
->> --
->> 2.21.0
->>
+>> # User 2 pulls the changes and loses his important work in
+>> # rep2/uncommitted_file because Git replaces the folder with a symlink
+>> # without checking for modified or uncommited files!
+>> # He should get an error in this case!
+>> cd clone_rep1_user2
+>> git pull
+>> cat rep2/uncommitted_file
+>> # cat: rep2/uncommitted_file: Not a directory
+>> # "important work" in rep2/uncommitted_file is gone :(
+> 
 > 
 > 
