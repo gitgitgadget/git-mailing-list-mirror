@@ -7,114 +7,124 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C82B71F453
-	for <e@80x24.org>; Fri,  3 May 2019 08:01:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8672C1F453
+	for <e@80x24.org>; Fri,  3 May 2019 08:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726326AbfECIBM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 04:01:12 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39304 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbfECIBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 04:01:11 -0400
-Received: by mail-wm1-f68.google.com with SMTP id n25so5539810wmk.4
-        for <git@vger.kernel.org>; Fri, 03 May 2019 01:01:11 -0700 (PDT)
+        id S1726323AbfECIN6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 04:13:58 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:56102 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfECIN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 04:13:57 -0400
+Received: by mail-it1-f195.google.com with SMTP id i131so7786677itf.5
+        for <git@vger.kernel.org>; Fri, 03 May 2019 01:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=93wRixw3kP78ek+3w+QqEagpOsnFZ8kjVPehlIoExyk=;
-        b=BOm4bU7Kxzg1BFMp/cuYur1f+2nO87ApBmEKV6Oo4K6Fs1CxyuJ9ZK/oyXIuSjkn0N
-         4Gk7DDznXYu7fIkpy2p/5SCUEjsRO3VqNp+r2li3dAkiyHYhtzQofFJYwi2YzAY0/OZ0
-         /1yNfypsmcT6QAf87rsJS11MQntLNC1A7u+NKDiDkRxqiU47ggkbS3AnhG9PoodXoRvt
-         /DBGa40yv8kVKHtrVTcjbvQlHPwbXPqHlZrN2VdptWTKW7yEavQ8W8rxxy8kZF6QZ4KM
-         3pI1Ev3dSfS1E/P10hVYlK9wAqDpfpzsgjt9WhPo+n+gE4qVG9K3chbaZ3zP8t6r2HL1
-         /Y/g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p0Kb4kKrTQyCDW/wNKz3utWoImc6jluWnyOQrSFVDeg=;
+        b=blG/kkkVszz7+twqou2AN4suZy9yKSx0GMfXJ1xG86rm0heQikswY70pqLPQ5OXaHa
+         Cd8dQtdS+GdLzmKK0jd88/OHKA5U3GKDzytCBXCgCuFg0zbkxtul9XNfhc3DH0RqxMrT
+         R9L8pUh+cMzIbgMGyQSMiW+5RK5ZVoa9UuRO1q5qTbCG4WsczHcBfC8FrugOKzumxKyp
+         OXbhfOv0A7usq/u5QQf3SOYIQEkJRSFzW/fcPa+XjO4wJMuQlZIsnSEQrLQkHdoT3738
+         /hzcBm8WblzTtqfbhrahIGzbZQmkUFhAy/n00D4cN0vK0jPpWdelh1LAeM5sZQuOh27k
+         Debw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=93wRixw3kP78ek+3w+QqEagpOsnFZ8kjVPehlIoExyk=;
-        b=Rth2OwUb3q0EwSQM7gAd1MNoDNhJICl2XGNkYM4uKakyL7/Sp9HLqxGIQww8uzLnRL
-         GrSzApONE0jfToqosBvVTHceLdPbPSUgLidZmRti9cXCjUDfaLHMDQyGxDbgnWrisDb8
-         TIe/OgmkSq2vNDGQ18//O+4JOAvRUpydyiySqTEKt/y8XKY0/qYUAvEp+akOnW/uRrJo
-         cLgAV8Btw7da4a4SGktNZ/hG9bINIMQRe7FmjGOR4WXDRMeIKw4Caz3j/8tT7L+xEuOg
-         5N/i6EMMbN7LlwndzHhf/nmK37OWf9zCslxAtn1XssVwUIoyKpnleFY+aEfsyhVoq/GN
-         Ccrw==
-X-Gm-Message-State: APjAAAX/w/vxDwZ9ngpnB7L3bOpWQCdzL4R+XNp7QfqJwzQo3PSznWUZ
-        pF4hZQI4h2yycawlt8AWu/8=
-X-Google-Smtp-Source: APXvYqwU8mRhF9wlG+tNQx/DlEtsPrOOdjBVKEyjtC374dITlxTwV3tCBHWm7J8BLMkQmEmIZ79NeA==
-X-Received: by 2002:a1c:7406:: with SMTP id p6mr280717wmc.125.1556870470453;
-        Fri, 03 May 2019 01:01:10 -0700 (PDT)
-Received: from ?IPv6:2001:a62:437:4001:fd44:6515:8790:2e05? ([2001:a62:437:4001:fd44:6515:8790:2e05])
-        by smtp.googlemail.com with ESMTPSA id m8sm2337831wrg.18.2019.05.03.01.01.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 01:01:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p0Kb4kKrTQyCDW/wNKz3utWoImc6jluWnyOQrSFVDeg=;
+        b=mxVNZcM5g7kVz+YkM11ItMPXXCWyDcJXR8/tGRaqayI1f1gtumGuDy7CO8YHlNXH9w
+         zBhYMDTWSsrJbO3h8kdAorruRLbTJVaq6so+PVeAsXdQ9/GcAZPLTMzKwCfjLR+66ARs
+         Y9EDEDLcqyyb4bFIljfRWUn+ql0VSHf2gSVfnQINRr+N9PWlPNfy3O9BqWL+ZAFIKHQZ
+         mqzq8AhfHh14JFYh+25/sX+dfEQetYe4T1SE27OvJvF83hFKjzuD9tYSc7BWpuc5WrCk
+         nN+oiN0okXzPacr/ymottNkpx9GIUNtkIEkPSuo9Yz+wkMweuDAVha/D7EpbfedHZp2f
+         P83A==
+X-Gm-Message-State: APjAAAX2OJozcC4UwNwsHXSlDDgYAYJD1EBotGWlN8Z3SFwnCVfoWQyu
+        /FcckL2f93Ut2oGBE17Rv78=
+X-Google-Smtp-Source: APXvYqxaoGSvY9trQ/3opGtnDJFVVLEkWDlIjCec2oexU6LwcdcjkvvSCAGfGMTSG4Bavgphccsvjg==
+X-Received: by 2002:a24:9b8b:: with SMTP id o133mr2101068itd.140.1556871236969;
+        Fri, 03 May 2019 01:13:56 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.89.95])
+        by smtp.gmail.com with ESMTPSA id 19sm746221itm.6.2019.05.03.01.13.55
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 03 May 2019 01:13:55 -0700 (PDT)
+Date:   Fri, 3 May 2019 04:13:54 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 0/3] cleanup revisions.txt
-To:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Message-ID: <20190503081354.GA23442@archbookpro.localdomain>
 References: <18c8ed70602271a28c93df922eb3da8fb7563e2e.1555913472.git.liu.denton@gmail.com>
  <cover.1556367012.git.liu.denton@gmail.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
-Date:   Fri, 3 May 2019 10:01:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <cover.1556367012.git.liu.denton@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7e9ab65d-aee9-b900-c294-8810e0109721@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.04.19 um 14:15 schrieb Denton Liu:
+Hi Andreas,
 
-While reading/reviewing I stumbled across another case for marking optional
-clauses. But the solutions is not a one-liner. @Denton Would you please add
-that one as Patch 4/4 to your series?
+Thanks for the earlier corrections on 2/3.
 
------------------ 8< ----------------------------
-Subject: [PATCH] revisions.txt: remove ambibuity between <rev>:<path> and :<path>
+On Fri, May 03, 2019 at 10:01:08AM +0200, Andreas Heiduk wrote:
+> Am 27.04.19 um 14:15 schrieb Denton Liu:
+> 
+> While reading/reviewing I stumbled across another case for marking optional
+> clauses. But the solutions is not a one-liner. @Denton Would you please add
+> that one as Patch 4/4 to your series?
 
-The revision ':README' is mentioned as an example for '<rev>:<path>'
-but the explanation forwards to the ':<n>:<path>' syntax. At the same
-time ':<n>:<path>' did not mark the '<n>:' as optional.
+Will do.
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/revisions.txt | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Thanks,
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 372b286755..f11d1edc57 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -196,19 +196,16 @@ existing tag object.
-   Depending on the given text, the shell's word splitting rules might
-   require additional quoting.
- 
--'<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
-+'<rev>:<path>', e.g. 'HEAD:README', 'master:./README'::
-   A suffix ':' followed by a path names the blob or tree
-   at the given path in the tree-ish object named by the part
-   before the colon.
--  ':path' (with an empty part before the colon)
--  is a special case of the syntax described next: content
--  recorded in the index at the given path.
-   A path starting with './' or '../' is relative to the current working directory.
-   The given path will be converted to be relative to the working tree's root directory.
-   This is most useful to address a blob or tree from a commit or tree that has
-   the same tree structure as the working tree.
- 
--':<n>:<path>', e.g. ':0:README', ':README'::
-+':[<n>:]<path>', e.g. ':0:README', ':README'::
-   A colon, optionally followed by a stage number (0 to 3) and a
-   colon, followed by a path, names a blob object in the
-   index at the given path. A missing stage number (and the colon
--- 
-2.21.0
+Denton
+
+> 
+> ----------------- 8< ----------------------------
+> Subject: [PATCH] revisions.txt: remove ambibuity between <rev>:<path> and :<path>
+> 
+> The revision ':README' is mentioned as an example for '<rev>:<path>'
+> but the explanation forwards to the ':<n>:<path>' syntax. At the same
+> time ':<n>:<path>' did not mark the '<n>:' as optional.
+> 
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> ---
+>  Documentation/revisions.txt | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 372b286755..f11d1edc57 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -196,19 +196,16 @@ existing tag object.
+>    Depending on the given text, the shell's word splitting rules might
+>    require additional quoting.
+>  
+> -'<rev>:<path>', e.g. 'HEAD:README', ':README', 'master:./README'::
+> +'<rev>:<path>', e.g. 'HEAD:README', 'master:./README'::
+>    A suffix ':' followed by a path names the blob or tree
+>    at the given path in the tree-ish object named by the part
+>    before the colon.
+> -  ':path' (with an empty part before the colon)
+> -  is a special case of the syntax described next: content
+> -  recorded in the index at the given path.
+>    A path starting with './' or '../' is relative to the current working directory.
+>    The given path will be converted to be relative to the working tree's root directory.
+>    This is most useful to address a blob or tree from a commit or tree that has
+>    the same tree structure as the working tree.
+>  
+> -':<n>:<path>', e.g. ':0:README', ':README'::
+> +':[<n>:]<path>', e.g. ':0:README', ':README'::
+>    A colon, optionally followed by a stage number (0 to 3) and a
+>    colon, followed by a path, names a blob object in the
+>    index at the given path. A missing stage number (and the colon
+> -- 
+> 2.21.0
