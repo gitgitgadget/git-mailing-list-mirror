@@ -8,115 +8,147 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FA3C1F453
-	for <e@80x24.org>; Fri,  3 May 2019 14:16:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B1341F453
+	for <e@80x24.org>; Fri,  3 May 2019 14:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbfECOQU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 10:16:20 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39426 "EHLO
+        id S1726932AbfECOmS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 10:42:18 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54686 "EHLO
         mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726679AbfECOQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 10:16:20 -0400
-Received: by mail-wm1-f66.google.com with SMTP id n25so6923124wmk.4
-        for <git@vger.kernel.org>; Fri, 03 May 2019 07:16:19 -0700 (PDT)
+        with ESMTP id S1725283AbfECOmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 10:42:17 -0400
+Received: by mail-wm1-f66.google.com with SMTP id b10so7431528wmj.4
+        for <git@vger.kernel.org>; Fri, 03 May 2019 07:42:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8JdqmEGwly3sY9s6+2oI3Ad+EjmKL9qgo17KMXYcitU=;
-        b=isq19gm4Tay2qHALn8+O7iek5eHFhqZYkFzA/siUeV4hyovvHrQRGo+6bUlYiX3NdZ
-         pSpN+CHrz2H+p9is4xoAEwNAcKXVlv4PkGi69mNH/GkwOFMzpnwzlAFhczx+mAP3CG1p
-         bZ4JZF8QwEztd0KZnKf13TnI/tBxaE0V01ezXHiOXRr96q2NQRdCcC1YAW4anY4Y3LEB
-         Ubw99OpLA13amjauSxrkOxT41xGwhdhnrr5Spzoa7wk75OejcGKdsYfuRhQZERW9fKaV
-         9dThlzkl6/qd1vRER3hVR+Y6dhhPU9DW26veSG3WU8N8crvzG+Vj30K0I9ed05aBASpT
-         FVBA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Er5r9QFDyYMDUvkF8hEtfqkjOQa+hmUlxGx8MyUluHc=;
+        b=fYNNK5V8Lva2+gzcTC/GT1YNEMMr/YGvmlzVDdg3DiMTS53JRih4/frcv6I82vV8VS
+         yHD94qcv4nmupBT3vrN8suIVqj9sVOgQjJ0dFMW4B3koXqOfeAHteXu4H4YN3zRD1zpg
+         sl/VPNWlgJWylEITOkE0z+kHd4C5q+fIgM8BrpkUJ6nVH3SsR9WuU8tgejrnexY2JcDm
+         Z6bXDyMmNkzX+3bEF7Xza5mvxVOOt0p+C4X7YGZ/MUCAgyh5tWKN7GrZHp1S8jEBs4H3
+         50qgjX99wbUD7w5VbK864DYUp6Ey/qsDBsDNmgB4ifwEn1x+NcMZ6+BqgPE/cruJoMF5
+         WZsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8JdqmEGwly3sY9s6+2oI3Ad+EjmKL9qgo17KMXYcitU=;
-        b=cRJkGSckjwdalTZ038Ovp24R3YqSqm6OVr5+WO582BGOC3+VhaBUnEkmH8C+2rpxjU
-         tGMI4t13dVLTVtx6vEoXWl0dqlhpNgZ2SFovhRrJzkARhYD2ZUQpDjrWIbbHIMq1Pfhu
-         SSfVKzrut233owe/ZY1TK2/PhCqz8y3pSgQIhN6Jj6mEHJZ2KxwR8UgtSSSkSstr+qyK
-         8mPK2SaFbGStBiiZmf2UrTSyaXuT7wwzMY2hT1PpmOIXqZ3US0Dw2SIrFM53JuyhOViQ
-         22iJ6+8CBfSPTfNb4UZ34TNXwwD0STMUlkfZb6OqYyHUQXWgN9tqJz1CNhewoqK4Oz9F
-         w4qw==
-X-Gm-Message-State: APjAAAXRAWC1FenY1I2V96IXpXrUmdU6lvuMYlDobO+yGiA5Gx7Pln5/
-        ISwiuEKR4lusWaf2r88GEqwihXC8
-X-Google-Smtp-Source: APXvYqyL2IR1R+detlCGnFPuIPvaOSbIJ1KatMmfG0hRtOq5gXXvEWkiHc8683mxRbDcsq/8UHZAVw==
-X-Received: by 2002:a1c:44d7:: with SMTP id r206mr6194047wma.129.1556892978518;
-        Fri, 03 May 2019 07:16:18 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Er5r9QFDyYMDUvkF8hEtfqkjOQa+hmUlxGx8MyUluHc=;
+        b=hs4cZDMehx7F7TmGdrMXMkn0leJc8QiLdQmMniQJxY9s7ZmlLGzGrrAWuJeAVnQ9h6
+         +nXImNC0I/yhBR3AqjeEo44XMSb42AJUm5r/eE/7PEzIVbGTObLQj6x5wFvzdW6rVhPi
+         QAB35nm21fqWV4UULvsvN1+WqCxs6AroJXd+ZaB1DGNBM+oTFR8v0LVkX5jeaQXxv/SF
+         +PCfpGKw2BtyJCPauNZEh1b9oJgDk/dBsFEhe6Pe+dTF9cWMz0ZL08MQ04082xsap1hm
+         ecu0ieqPeXMztPSAgHM1raGbn2DdQ+gqTK4YlpQWCYfHHqx+EcSiBHoidrvFl6sRGN3z
+         wavQ==
+X-Gm-Message-State: APjAAAW7QPvDLsPDXIEDjDT+uO46nSQyeGJHe+fXWvpBaezj1HMjEnie
+        8ksYqqkmNUeiIf7EuvdL7ws=
+X-Google-Smtp-Source: APXvYqzGpa1WpNNG3MZVjSn4AP+8903XPcACk7BIXJrtjvLqhUChXCTlQg6NlXVtZqQ6eBVnVwXITA==
+X-Received: by 2002:a7b:c954:: with SMTP id i20mr6401232wml.59.1556894535672;
+        Fri, 03 May 2019 07:42:15 -0700 (PDT)
 Received: from szeder.dev (x4db507c5.dyn.telefonica.de. [77.181.7.197])
-        by smtp.gmail.com with ESMTPSA id u2sm4461272wru.36.2019.05.03.07.16.16
+        by smtp.gmail.com with ESMTPSA id y7sm4522272wrg.45.2019.05.03.07.42.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 May 2019 07:16:17 -0700 (PDT)
-Date:   Fri, 3 May 2019 16:16:14 +0200
+        Fri, 03 May 2019 07:42:14 -0700 (PDT)
+Date:   Fri, 3 May 2019 16:42:11 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/6] Create commit-graph file format v2
-Message-ID: <20190503141613.GG14763@szeder.dev>
-References: <pull.112.v2.git.gitgitgadget@gmail.com>
- <pull.112.v3.git.gitgitgadget@gmail.com>
- <87lfzprkfc.fsf@evledraar.gmail.com>
- <bb0c22f9-9d0b-0fa6-e826-8e2ac146c6f9@gmail.com>
- <87h8acivkh.fsf@evledraar.gmail.com>
- <04ac97c5-ab2b-2b23-4c84-8ed8aab0e2f5@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v3 0/4] remove extern from function declarations
+Message-ID: <20190503144211.GH14763@szeder.dev>
+References: <cover.1555352526.git.liu.denton@gmail.com>
+ <cover.1555487380.git.liu.denton@gmail.com>
+ <20190422214901.GA14528@sigill.intra.peff.net>
+ <20190425120758.GD8695@szeder.dev>
+ <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
+ <20190501100108.GA8954@archbookpro.localdomain>
+ <20190502000422.GF14763@szeder.dev>
+ <nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <04ac97c5-ab2b-2b23-4c84-8ed8aab0e2f5@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 03, 2019 at 08:47:25AM -0400, Derrick Stolee wrote:
-> It would be much simpler to restrict the model. Your idea of changing
-> the file name is the inspiration here.
+On Fri, May 03, 2019 at 11:32:32AM +0200, Johannes Schindelin wrote:
+> Hi,
 > 
-> * The "commit-graph" file is the base commit graph. It is always
->   closed under reachability (if a commit exists in this file, then
->   its parents are also in this file). We will also consider this to
->   be "commit-graph-0".
+> On Thu, 2 May 2019, SZEDER Gábor wrote:
 > 
-> * A commit-graph-<N> exists, then we check for the existence of
->   commit-graph-<N+1>. This file can contain commits whose parents
->   are in any smaller file.
+> > On Wed, May 01, 2019 at 06:01:08AM -0400, Denton Liu wrote:
+> > > > Is it not possible to exclude certain directories for certain semantic
+> > > > patches?
+> > > >
+> > > > I guess we could also simply declare that *all* Coccinelle patches should
+> > > > leave `compat/` alone, on the basis that those files are likely coming
+> > > > from some sort of upstream. But then, `compat/mingw.c` and `compat/win32/`
+> > > > seem not to fall into that category...
+> > > >
+> > > > Ciao,
+> > > > Dscho
+> > >
+> > > Deciding whether this is a good idea is above my paygrade ;)
 > 
-> I think this resolves the issue of back-compat without updating
-> the file format:
+> :-)
 > 
-> 1. Old clients will never look at commit-graph-N, so they will
->    never complain about an "incomplete" file.
+> As a software developer, you surely have an opinion, though :-D
+
+I don't even have an opinion yet. :)
+
+> > FWIW, out of curiosity I've run 'make coccicheck' on Linux with
+> > 'compat/mingw.c' and its friends explicitly added to C_SOURCES, and it
+> > seems to work...  it even found two places in 'mingw.c' where
+> > COPY_ARRAY could replace memcpy() :)
 > 
-> 2. If we always open a read handle as we move up the list, then
->    a "merge and collapse" write to commit-graph-N will not
->    interrupt an existing process reading that file.
+> TBH I had not even known that those files were excluded from coccicheck by
+> default.
 
-What if a process reading the commit-graph files runs short on file
-descriptors and has to close some of them, while a second process is
-merging commit-graph files?
+Well, there was this line in the patch context:
+
+    C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
+
+> I had assumed that all of Git's sources (and not just the
+> Linux-specific ones) were included in the target.
+> 
+> Since you *could* include it, I now assume that Coccinelle does not need
+> to follow the `#include`s (otherwise, it would have complained about not
+> finding the `windows.h` header in your setup).
+
+We invoke Coccinelle/spatch with the '--all-includes' option, see the
+SPATCH_FLAGS make variable.  And it does indeed include header files:
+I've seen it find something to transform in 'cache.h', and then the
+resulting 'contrib/coccinelle/<whatever>.cocci.patch' included the
+exact same transformation as many times as the number of files
+including 'cache.h'... which is a lot :)
+
+I don't really know what can cause 'spatch' to error out (besides
+unknown command line option or non-existing file specified on the
+command line), and this is all that 'man spatch' has to say:
+
+       --all-includes
+              causes all available include files to be used
+
+Since it explicitly mentions _available_ include files, I would
+venture to guess that non-available include files are not used, and
+since it doesn't explicitly mention that such a file causes an error,
+it doesn't.
 
 
-> I'll start hacking on this model.
-
-Have fun! :)
-
-
-Semi-related, but I'm curious:  what are your plans for 'struct
-commit's 'graph_pos' field, and how will it work with multiple
-commit-graph files?
-
-In particular: currently we use this 'graph_pos' field as an index
-into the Commit Data chunk to find the metadata associated with a
-given commit object.  But we could add any commit-specific metadata in
-a new chunk, being an array ordered by commit OID, and then use
-'graph_pos' as an index into this chunk as well.  I find this quite
-convenient.  However, with mulitple commit-graph files there will be
-multiple arrays...
+> If this new assumption is true, I wonder why we cannot make my former
+> assumption true as well: why not include *all* of Git's `.c` files in
+> `coccicheck`?
+> 
+> Ciao,
+> Dscho
 
