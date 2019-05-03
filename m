@@ -2,92 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71A861F453
-	for <e@80x24.org>; Fri,  3 May 2019 08:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 141841F453
+	for <e@80x24.org>; Fri,  3 May 2019 08:37:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbfECIdK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 04:33:10 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58069 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725789AbfECIdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 04:33:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1556872380;
-        bh=/s1VJmWaAzjxEAJiHzxyy6LMnqfbYDOii5E0NU6wNIA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HDCGOOxXVFBW5rq3A2JmCRB8P3pE2XqGeyTwp62q/RtUi5w08GSLwxPNih/LE3D4/
-         n6ACj21posLN6fJwWygT5XitGceTObrCmclz4gh2xWRd2aZhUM98DeLkK9PHy1vdWI
-         6yVVVhjYlSZ0I4cmsAHoiQ4xOEuPw0NeTZJ6jej0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.49.123.157] ([95.208.58.119]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTzb8-1hD1iA045S-00QzLM; Fri, 03
- May 2019 10:33:00 +0200
-Date:   Fri, 3 May 2019 10:32:59 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ci: install 'libsvn-perl' instead of 'git-svn'
-In-Reply-To: <20190501231854.GE14763@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1905031032030.45@tvgsbejvaqbjf.bet>
-References: <20190430123724.16150-1-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1904301816200.45@tvgsbejvaqbjf.bet> <20190501231854.GE14763@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726486AbfECIhM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 04:37:12 -0400
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:46291 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725777AbfECIhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 04:37:11 -0400
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id 48E9B3C00C1;
+        Fri,  3 May 2019 10:37:10 +0200 (CEST)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id Iti5MGPYrklc; Fri,  3 May 2019 10:37:03 +0200 (CEST)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 6EB373C0034;
+        Fri,  3 May 2019 10:37:03 +0200 (CEST)
+Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.439.0; Fri, 3 May 2019
+ 10:37:03 +0200
+Date:   Fri, 3 May 2019 10:37:00 +0200
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Julia Lawall <julia.lawall@lip6.fr>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>
+Subject: Re: [PATCH 2/2] diffcore-pickaxe: add --pickaxe-raw-diff for use
+ with -G
+Message-ID: <20190503083700.GA6115@vmlxhi-102.adit-jv.com>
+References: <87o94vs9cp.fsf@evledraar.gmail.com>
+ <20190424224539.GA23849@vmlxhi-102.adit-jv.com>
+ <87mukfrnp3.fsf@evledraar.gmail.com>
+ <xmqqsgu6zzev.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-916072089-1556872380=:45"
-X-Provags-ID: V03:K1:DkXqJRyyK+cAUb+52OMARRU4ZnMPnIvk9Hxppc1Q3xrrm+sT9Vf
- PZAQhrkHJMCJxIl9W2LZpa7iPjdYAPhYeB/i14wdsRWfhzZBP5u/hUocnXwEJ0Zepc2xmRl
- Vo6/kFdI+a7XCUaMGV3+t0Z2GZm+UbAQTBrx5BYNjBTxG/DjoyOlxRBw/bLxYYzF+3lIaYZ
- Dc23h6MnjpUit6iw2b+2A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QQoRl6wF1cU=:6C3N2BBv8v+93pw6VG/WLV
- 1AqfcBuyUacQ619SAzsoKW9PYkooPx6k5/VecUVhv2+ZPb76SBTMA1DDd7bEa4VUgBxOsQ8ZK
- PyMyiPlWN6ovgtN4i5w58ZvEIyYcJZ8if3Ed2TOzFr2mvXNDU3L9a30BTLSPzylx8dmNyqw2Z
- sgJDnXHNgW1YO/7MZueRK/wTEyj92WXpPdKkok+Rh0J4LgPJmY9X7w8Qr+eaRBtQ2Xk1OahdH
- aWDuTY0Lv6yb1U3V3LljmmroMBxAuwe65wY1UZscL+/2z9SiZ3KSrxQ06aQ9ToCx/CH7BokWH
- HphioIeugMZoqvAaGLt7kue17KHDY/ogQJ648yUQ6itykrCCaSH23S6zTAoYt4pmCMgWmB9j3
- HXinYBMRlTcyUzywhmdNi1LYsfGSQurSbkR72GvkZpKlTdviwEwZ+E2sVFNQU1tEQfuBQvB2L
- 0ArwGsV1RDwOCa7Wc/fa7eUiEisOHVHV9d5lgz9/1Fqk4VtCj+sTVHcq7Jph1SymswpJ+zQ5x
- EUinCSpg3zfDKok5Tuxp6qfoMOc4qk83yQclRu+fO5FDE4CuUkYmiA1CuDg9ys/1RHp25ZKfv
- MQxHHe0hPXUpApCHamjvW6DsogPahrJ2R7cmM9sGhp7/TSjUz8efj6FP+peyosFkxT6KVeyMw
- sC3OrhQ51XlfBjjFqvZghXsmcvgbCtsH2CTznnhNh5VrM8gM+jbvnAIkAttLuHS8O2lP+NRT3
- D8pf3ba2FtPH/tnalatZjTQ4j3GBYxsVfVd2q6GmvtnsJLAgvdUS77QmOjo8mxza5jAEz3ack
- 8tlNLTqgVCis1znvK9+OxRHZ5lnqpc2w0YmgukxNXL8yJR+M5lBRxoAC17Chm4NSWddiSJqLu
- CJeGoM94WHN+0LTW2opTrMf+UprdZBxsXVL5cPWViSBX2tY9EmApreCSev5R5NmbIXXMzA6LW
- yY49rHRgsCQ==
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <xmqqsgu6zzev.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.72.93.184]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Apr 25, 2019 at 09:44:40AM +0900, Junio C Hamano wrote:
+[..]
+> So the user would be able to say something like
+> 
+> 	git log -Ux --since=6.months |
+> 	git patch-grep \
+> 		--commit-names-only \
+> 		--all-match \
+> 		-e '+.*devm_request_threaded_irq(IRQF_SHARED)' \
+>                 -e '-.*devm_request_threaded_irq(IRQF_ONESHOT)' |
+> 	xargs git show --oneline -s
+[..]
 
---8323328-916072089-1556872380=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+JFTR/FWIW, this looks quite user friendly to me, but I believe users
+like me can (and likely do) already handcraft their own variants of
+'git patch-grep', since the above model implies piping (as opposed to
+in-git processing done by --pickaxe-raw-diff).
 
-Hi,
-
-On Thu, 2 May 2019, SZEDER G=C3=A1bor wrote:
-
-> On Tue, Apr 30, 2019 at 06:16:48PM -0400, Johannes Schindelin wrote:
->
-> > > [...]
-> >
-> > I assume you verified that this works also with our Azure Pipeline?
->
-> No, I didn't; only on Travis CI's 14.04 and 16.04 images and on a
-> local 16.04 install.
-
-I guess we'll find out once things hit `pu`...
-
-Ciao,
-Dscho
-
---8323328-916072089-1556872380=:45--
+-- 
+Best Regards,
+Eugeniu.
