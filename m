@@ -2,104 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 628391F45F
-	for <e@80x24.org>; Sat,  4 May 2019 10:19:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FF881F461
+	for <e@80x24.org>; Sat,  4 May 2019 13:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727055AbfEDKTN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 May 2019 06:19:13 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:58252 "EHLO
-        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726552AbfEDKTN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 4 May 2019 06:19:13 -0400
-Received: from 200116b846b6490018e5a619c583e3e8.dip.versatel-1u1.de ([2001:16b8:46b6:4900:18e5:a619:c583:e3e8] helo=adam-MS-7A63.fritz.box); authenticated
-        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hMrl8-0004DR-Uk; Sat, 04 May 2019 12:19:11 +0200
-From:   "Dr. Adam Nielsen" <admin@in-ici.net>
-To:     git@vger.kernel.org
-Cc:     "Dr. Adam Nielsen" <admin@in-ici.net>
-Subject: [PATCH] make slash rules more readable
-Date:   Sat,  4 May 2019 12:19:05 +0200
-Message-Id: <20190504101905.7522-1-admin@in-ici.net>
-X-Mailer: git-send-email 2.17.1
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1556965152;5cc2401d;
-X-HE-SMSGID: 1hMrl8-0004DR-Uk
+        id S1726552AbfEDNXw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 May 2019 09:23:52 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36895 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfEDNXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 May 2019 09:23:52 -0400
+Received: by mail-wm1-f68.google.com with SMTP id y5so9816768wma.2
+        for <git@vger.kernel.org>; Sat, 04 May 2019 06:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=qxU8h1e7r4r2zo5QIB6hzs7GsyybuKtPaoE7OTrxuq8=;
+        b=iScvseOpohhu27zhoicnu9s6H6qSWw35/Fpmbx5Dk6rnX2l2SfTzLAvrEbbYSPgNsh
+         +AWFD1Fvu04SbS4UhjVmgb/Bp+Kj2UM691c36wa1Vp6v8UkxCcJFLYhW+3xNzTqe81fb
+         F6xXQRh/rcPzjqlO0UhAX8orUCCVS76UWecaHXUkkOqcFkmHOgGJVrvsC2XAyNZ8AviJ
+         QZWCPyJXIDk71AisxZfSYm2yYtqr2du8/z/rSWnasFjmOYvT21kf3J/mPc5Gci5jUJP7
+         zJtacW/D+jL9ZYXX7E8plJ/bw6Xl4yfKFwO7r7WXqExY0dPb8LNvEInF9eddrl2HAG1c
+         XQhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=qxU8h1e7r4r2zo5QIB6hzs7GsyybuKtPaoE7OTrxuq8=;
+        b=K+SXmbwncZdjjFDYDggz3c1u65M9qILS6DSvJey+4+gvrcQJ1uJfRUbl1h+fQg6nIC
+         7Sl3cFYI8P1yGofx9/9v2Ob/HBqRBDyirNJ5hmh0s2y5LqNUytTo3odllAch0fDAYbOx
+         mnt1g0BaqjQCzvBUwUPgX2y/9aExdjlNuXoU+VpXFa3ZVpi4k8oekqVuEaejOR+Uf/nQ
+         X7/nyFRWfbPyMaFa+a6wgHOMI4Ur1cSIbJuQW3R+nTZ3M34NYfL3PwDVrAWYI1bxTxm3
+         uP7+fYODQU7Ns+cLkGJgbdc9SD3c+T7fwK8g5fcBsi3dtXD1T/+Yf8cyYnQcWk7ZYx6a
+         olkA==
+X-Gm-Message-State: APjAAAV92pdAksy1fYYhKcq4Dm28euqunp5L06VItn5v8hCxUlFVA8gW
+        +smCcEL+CK3CCOhZCPMD7e4=
+X-Google-Smtp-Source: APXvYqxTvHi2Nr3/Vm3MjTMGu2Cz5c8p0rgSg5j8vLng8c3iOZcHBlrmqSlGQip0esOFbgncYlIUCQ==
+X-Received: by 2002:a1c:6704:: with SMTP id b4mr9929662wmc.108.1556976230420;
+        Sat, 04 May 2019 06:23:50 -0700 (PDT)
+Received: from szeder.dev (x4dbd09c8.dyn.telefonica.de. [77.189.9.200])
+        by smtp.gmail.com with ESMTPSA id u14sm3418532wrn.30.2019.05.04.06.23.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 04 May 2019 06:23:49 -0700 (PDT)
+Date:   Sat, 4 May 2019 15:23:47 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+Message-ID: <20190504132346.GK14763@szeder.dev>
+References: <20190312031303.5tutut7zzvxne5dw@dcvr>
+ <20190312104954.GA2023@sigill.intra.peff.net>
+ <20190313015133.n7f7lyujnlwfytre@dcvr>
+ <20190313145417.GA24101@sigill.intra.peff.net>
+ <20190314091254.nescpfp3n6mbjpmh@dcvr>
+ <87zhoz8b9o.fsf@evledraar.gmail.com>
+ <20190410225721.GA32262@sigill.intra.peff.net>
+ <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com>
+ <20190504013713.GC17551@sigill.intra.peff.net>
+ <87a7g2iuem.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a7g2iuem.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gitignore.txt: make slash-rules more readable
+On Sat, May 04, 2019 at 08:52:01AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> As an aside this is the Nth time I notice how crappy that "Enumerating
+> objects" progress bar is.
 
-Make all paragraphs valid, even if they are not read
-in strict order. Make paragraph better understandable
-for pattern without slash. Add paragraph for pattern 
-with slash. Be precise whenever a trailing slashes
-would make a difference. Add some examples.
+And don't forget that the commit-graph progress bar still prints
+nonsense :)
 
-Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
-
----
- Documentation/gitignore.txt | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index b5bc9dbff0..3a6fb9117c 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -89,24 +89,35 @@ PATTERN FORMAT
-    Put a backslash ("`\`") in front of the first "`!`" for patterns
-    that begin with a literal "`!`", for example, "`\!important!.txt`".
- 
-- - If the pattern ends with a slash, it is removed for the
--   purpose of the following description, but it would only find
-+ - If the pattern ends with a slash, it would only find
-    a match with a directory.  In other words, `foo/` will match a
-    directory `foo` and paths underneath it, but will not match a
-    regular file or a symbolic link `foo` (this is consistent
-    with the way how pathspec works in general in Git).
- 
-- - If the pattern does not contain a slash '/', Git treats it as
--   a shell glob pattern and checks for a match against the
--   pathname relative to the location of the `.gitignore` file
--   (relative to the toplevel of the work tree if not from a
--   `.gitignore` file).
--
-- - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
--   anything except "`/`", "`?`" matches any one character except "`/`"
--   and "`[]`" matches one character in a selected range. See
--   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
--   description.
-+ - If the pattern contains no slash "`/`" (except an optional trailing slash),
-+   the pattern is matched against all files and folders (recursively)
-+   from the location of the `.gitignore` file.
-+   For example, `frotz/` matches `frotz` and `a/frotz` that
-+   is a directory (relative from the `.gitignore` file). 
-+
-+ - A pattern that contains a non-trailing slash is matched relative to the 
-+   location of the `.gitignore` file.
-+   For example, `doc/frotz/` matches `doc/frotz` directory, but not 
-+   `a/doc/frotz` (relative from the `.gitignore` file). 
-+   Note that the pattern `doc/frotz` and `/doc/frotz`  
-+   have the same effect in any `.gitignore` file, while `/bar` and `bar` 
-+   have not the same effect (`/bar` will not match `foo/bar`).
-+
-+ - An asterisk "`*`" matches anything except a slash.  A
-+   pattern "foo/*", for example, matches "foo/test.json" (a
-+   regular file), "foo/bar" (a diretory), but it does not match
-+   "foo/bar/hello.c" (a regular file), as the asterisk in the
-+   patter does not match "bar/hello.c" which has a slash in it.
-+   The character "`?`" matches any one character except "`/`"
-+   The range notation, e.g. `[a-zA-Z]`, can be used to match
-+   one of the characters in a range. See fnmatch(3) and the 
-+   FNM_PATHNAME flag for a more detailed description.
- 
-  - A leading slash matches the beginning of the pathname.
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
--- 
-2.17.1
+  https://public-inbox.org/git/87ef6ydds8.fsf@evledraar.gmail.com/
 
