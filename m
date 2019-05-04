@@ -2,121 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C601F453
-	for <e@80x24.org>; Fri,  3 May 2019 20:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395AD1F45F
+	for <e@80x24.org>; Sat,  4 May 2019 01:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726900AbfECU4l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 May 2019 16:56:41 -0400
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:37090 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726022AbfECU4l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 May 2019 16:56:41 -0400
-Received: by mail-pl1-f171.google.com with SMTP id z8so3252043pln.4
-        for <git@vger.kernel.org>; Fri, 03 May 2019 13:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=W+uqNQyyj1VByiPnvFqCX6H29p5f0TE+GS26NTKRawQ=;
-        b=eSXcRCn411mSmLYlw2qavEvoYG3Yvnx2iBNZfAfVacnel3oCybqK3LvkKZREANwqKX
-         zzrdVxnvbg+ckXg0+tnGvqX2Qx78FrEaRACxOPn1TtiWlCqFkzmAfWnMKoQIxh1gK8Lg
-         BZ+srrax51L2Am7dd9AS7rsL6gq/D9NsvfDZD6zhEU64ma0BcxnQHoYExoi4zlEAUuG8
-         QEq6pmPZ6FuLQ/aqBayVvqvBnZxwJV0vcT50A4deLQj2qizrs9U6jHWWxenxYBC764cr
-         V2LyMb80rlVESILn5MgmAkeNwxG58mYhhhujdRz20we9vo458V8w4FdwarwUeqteskcP
-         LRqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=W+uqNQyyj1VByiPnvFqCX6H29p5f0TE+GS26NTKRawQ=;
-        b=rLUPUmyleW87FR+4qAO/Of0zvTJdALPeJJuGms7xdywPnCzQoCnfo6Uvg0TnmkKjlb
-         5qEotwRRybzIcBBNL/qNA09MDTH7w4R/8Leig44KKQNENw+KmrV/iH0NmAaFidpBsIfS
-         ZNHoe0s0el2ik8F9UM2INiKObJAus6WSN9yH0q+OSFNOVPQ2/kgC7l3GBjaAvspL9Al+
-         sGNWz6clYiu5VBa1OY4UpTFhPJAyOVtwOeorusJLBEEHSF7wzzobYF1ncIqUMEvbwuNj
-         WT4Fv7eyzfNfaAM3PSQMbHadotjhc2VJjTBe0A4FXSkLJje80thNE5RfRSYf63bl83Ki
-         C7CA==
-X-Gm-Message-State: APjAAAVlgIxExksTcl0YrVDV+LUXQ5lZmtrMeXY/Y0xnNBajQCtmrpKN
-        rFriyPeiMHJkieTyaVyhgFo=
-X-Google-Smtp-Source: APXvYqx+ELxIfoSvGWqtNKO00+X/7X/6D3+YfBPiiReecN2lbHnjKfaKZGK1IHCklIP+lZxEqcy12w==
-X-Received: by 2002:a17:902:b181:: with SMTP id s1mr13732769plr.9.1556916999615;
-        Fri, 03 May 2019 13:56:39 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id r5sm3226037pgv.52.2019.05.03.13.56.38
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 03 May 2019 13:56:38 -0700 (PDT)
-Date:   Fri, 3 May 2019 13:56:37 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: install: gitweb.cgi was not found anywhere
-Message-ID: <20190503205637.GC42435@google.com>
-References: <CAH8yC8kec2N0fkt6cWChOEGtGkrOE5S+QuZnQnDP1eM9mg_EOQ@mail.gmail.com>
- <20190501223005.GB42435@google.com>
- <CAH8yC8=AB1E=U7vCTkOLELQ9z1vW2up_WCYziW25Uqe0jXZBaA@mail.gmail.com>
+        id S1726654AbfEDBhP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 May 2019 21:37:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48314 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726042AbfEDBhP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 May 2019 21:37:15 -0400
+Received: (qmail 16114 invoked by uid 109); 4 May 2019 01:37:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 04 May 2019 01:37:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16405 invoked by uid 111); 4 May 2019 01:37:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 03 May 2019 21:37:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 May 2019 21:37:13 -0400
+Date:   Fri, 3 May 2019 21:37:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+Message-ID: <20190504013713.GC17551@sigill.intra.peff.net>
+References: <20190309024944.zcbwgvn52jsw2a2e@dcvr>
+ <20190310233956.GB3059@sigill.intra.peff.net>
+ <20190312031303.5tutut7zzvxne5dw@dcvr>
+ <20190312104954.GA2023@sigill.intra.peff.net>
+ <20190313015133.n7f7lyujnlwfytre@dcvr>
+ <20190313145417.GA24101@sigill.intra.peff.net>
+ <20190314091254.nescpfp3n6mbjpmh@dcvr>
+ <87zhoz8b9o.fsf@evledraar.gmail.com>
+ <20190410225721.GA32262@sigill.intra.peff.net>
+ <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8=AB1E=U7vCTkOLELQ9z1vW2up_WCYziW25Uqe0jXZBaA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeffrey Walton wrote:
-> On Wed, May 1, 2019 at 6:30 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Thu, Apr 25, 2019 at 04:16:46PM +0900, Junio C Hamano wrote:
 
->> Sounds like it's using "install" when it should be using "ginstall".
->> config.mak.uname contains, under the SunOS category:
->>
->>         INSTALL = /usr/ucb/install
->
-> Thanks again Jonathan.
->
-> /usr/ucb/install no longer exists in Solaris 11.3 i86pc:
->
->     solaris3:~$ ls -Al /usr/ucb/install
->     /usr/ucb/install: No such file or directory
->     solaris3:~$ uname -a
->     SunOS solaris3. 5.11 11.3 i86pc i386 i86pc
->
-> The config files need to be patched:
-[...]
-> Related to /usr/ucb, also see
-> https://blogs.oracle.com/solaris/preparing-for-the-upcoming-removal-of-ucb-utilities-from-the-next-version-of-solaris-v2
+> I was revisiting the recent "What's cooking" report, and I am not
+> sure what the current status of the topic is.
+> 
+> I do not get a feel that the current bitmap implementation has been
+> widely used in repositories that have vastly different access
+> patterns---it probably has been tried only by those who can afford
+> the engineering cost to see if the implementation happens to work
+> well for their workload and some may have chosen to adopt it while
+> others didn't.  So it may be very well tuned for the former people
+> but once we merge this topic down, we'll hear from others with quite
+> different workload, which may lead to us tuning the code to bit
+> better to their workload while not hurting other existing users,
+> hopefully.
+> 
+> Or not.
 
-Hm.  How about this, in combination with the previous one?
+Note that Ævar's case was somebody running bitmaps locally and trying to
+push, which I think is generally not a good match for bitmaps (even when
+they work, they cost more to generate than what you save if you're only
+pushing once).
 
-If it looks good, I can send it out as a series for real.
+The goal of Eric's patch was that by kicking in for bare repos, we'd
+mostly be hitting servers that are serving up fetches. So if by
+"workload" you mean that we some people might use bare repos for other
+cases, yeah, there's a potential for confusion or regression there.
 
-[...]
-> I also removed a bunch of old patches and hacks that don't seem to be
-> needed for Git 2.21.0. Between both of them I am building Git on
-> Solaris again.
+If you mean that bitmaps might not work for some workloads even when
+we're serving a lot of fetches, I won't say that's _not_ true, but my
+experience is that they are generally a net win. Both for the smaller
+repositories we see on github.com, but also for big, busy ones that our
+on-premises customers use.
 
-To be clear, does that mean you are using unpatched source now, or
-that you still needed some patches?  In the latter case, can you point
-me to them so we can get something sufficient upstream?
+  Actually, there is one curiosity with Eric's patch that I haven't
+  tested. As I've mentioned before, we store "forks" as single
+  repositories pointing to a single shared alternates repository. Since
+  the bitmap code only handles one .bitmap per invocation, you really
+  want just one big one in the shared repo. If "git repack" in the forks
+  started generating one, that would be surprising and annoying.
 
-Thanks,
-Jonathan
+  In practice this is a pretty extreme corner case. And a lot would
+  depend on how you're using "repack" in the fork (e.g., a partial
+  repack would know that it can't generate bitmaps anyway). I'm pretty
+  sure it would not even impact our setup at all, but I can probably
+  come up with a devils advocate one where it would.
 
-diff --git i/config.mak.uname w/config.mak.uname
-index d916d1dc7a..41ad90c76a 100644
---- i/config.mak.uname
-+++ w/config.mak.uname
-@@ -162,7 +162,7 @@ ifeq ($(uname_S),SunOS)
- 		NO_STRTOUMAX = YesPlease
- 		GIT_TEST_CMP = cmp
- 	endif
--	INSTALL = /usr/ucb/install
-+	INSTALL = ginstall
- 	TAR = gtar
- 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
- endif
+> I am somewhat tempted to make things more exciting by merging it to
+> 'next' soonish, but I guess Ævar and you are not quite ready for
+> that excitement yet, judging from the following (which looks quite
+> sensible suggestions)?
+
+It's OK with me for this to go to 'next'. Note that the other two
+patches from me could actually graduate separately. One is a
+straight-out test fix, and the other should always be a win (and does
+nothing if you're not already generating bitmaps).
+
+By the way, there were some timing puzzles mentioned in that second
+commit. I re-ran them today and everything was what I'd expect. So I
+wonder if I just screwed up the timings before. I can re-write that
+commit message if it hasn't made it to 'next' yet.
+
+-Peff
