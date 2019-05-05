@@ -2,85 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C64561F45F
-	for <e@80x24.org>; Sun,  5 May 2019 19:43:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 051C91F461
+	for <e@80x24.org>; Sun,  5 May 2019 20:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727343AbfEETnN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 May 2019 15:43:13 -0400
-Received: from mail-io1-f42.google.com ([209.85.166.42]:41259 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726636AbfEETnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 May 2019 15:43:13 -0400
-Received: by mail-io1-f42.google.com with SMTP id a17so1215176iot.8
-        for <git@vger.kernel.org>; Sun, 05 May 2019 12:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=r1XqctzI+fAY0MSHWDVrILFNt1qUscFjD2JplG4zZWo=;
-        b=imcJpfnUJTkVgHt8TY0dh0BtL/Jg3hhBAFBeksfPM9aFc3K82xPdDskYhVvRdhjxIM
-         V917EVEnhmUSQW1RW4vKBX3q5BQiUw0taBkhF9CePmCNeOfL9QMNyPU+7GY3NM5VhSYm
-         DbBSaRHivfvc9kM0VR+2fP9dRWwCEF5wHxrYgGG9Jg70E4aWR/BfvgGEgYLmhcXqSxbH
-         aM2xrzhwMs0czkAK31V0kqepBsxnD1O8SVyz7Hhatgin37HzfPOo0+nQlIgrr5PYLk8s
-         kx//cGeOazxYkpHMZMKYRdTOb+5C6ZjObKCQjLxNLYXICqbQ9dqfqV6f9sqPJc1bMU/K
-         fE0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=r1XqctzI+fAY0MSHWDVrILFNt1qUscFjD2JplG4zZWo=;
-        b=DlnjBSIFbNtmsIIFXnKxZlAl3erCF5Gu4pXxUVEaoe7IOPmUlNJTl9zqEHOUT8yMfv
-         NPoEs94W6COqBJVyU0UU0YpHB/I3KjW6Ls8edOtlP0qjKPpGEgaBOfiqp2NuvJGF1jQm
-         7Cl4KnXFymTbTNsOFeLsh/lcppIIKyUfodvRJwvQIqXIkndMoOerYa5EgvnqdH+Ouim0
-         upbQSzyZaZEHYJExXcgjzR4jDUz2Cr0BXmWdZed1pqA3CTW6/egteMmluyNgXASeVhym
-         GDfOqGPBBLwK4NmKwguCWoKNFUA5Nvtk4swmQFVN8SPPXXGImgM2Ka4y05gM9rmBMrb+
-         6PtA==
-X-Gm-Message-State: APjAAAW7ToYoAQzjfCv0qaizPwns6qjOxlzdfARfG6dTLk/J3vZkdQUa
-        UDRyGF3o2jPUenRdu0O0DHUOM9HS0yKI1xisaKui9/yY
-X-Google-Smtp-Source: APXvYqznWxiGnX5qnalJVzB9Lt2czPTp2kcvgBGJyFfO7kiHTTg+DAjjwhpjrAhtaAvQiy3P5oe3UBuaz/SEFB5JD2k=
-X-Received: by 2002:a5d:8357:: with SMTP id q23mr524431ior.10.1557085392260;
- Sun, 05 May 2019 12:43:12 -0700 (PDT)
-MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sun, 5 May 2019 15:42:45 -0400
-Message-ID: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
-Subject: Git build on antique PowerMac
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727539AbfEEUMN convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 5 May 2019 16:12:13 -0400
+Received: from mx4.uni-regensburg.de ([194.94.157.149]:48754 "EHLO
+        mx4.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbfEEUMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 May 2019 16:12:13 -0400
+X-Greylist: delayed 591 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 May 2019 16:12:12 EDT
+Received: from mx4.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id E45306000055
+        for <git@vger.kernel.org>; Sun,  5 May 2019 22:02:18 +0200 (CEST)
+Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by mx4.uni-regensburg.de (Postfix) with ESMTP id CF0BF600004E
+        for <git@vger.kernel.org>; Sun,  5 May 2019 22:02:18 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
+        with Novell_GroupWise; Sun, 05 May 2019 22:02:18 +0200
+Message-Id: <5CCF414A020000A10003108C@gwsmtp.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.1.1 
+Date:   Sun, 05 May 2019 22:02:18 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     <git@vger.kernel.org>
+Subject: Surprising semantics of "git add file"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Everyone,
+Hi!
 
-I have a PowerMac I use for testing. It provides several testing
-differentiators, like OS X 10.5, Bash 3.2, GCC 4.0.1, Apple cc-tools
-linker, and big-endian PowerPC. (I think Gentoo provides a Linux image
-for the hardware, but I don't use it).
+Reading the manual, I realized that "it is the way it is (it works as documented)", but to me it's surprising, meaning: I feel it's wrong:
+(git-2.16.4)
+I have staged several files, and then I do "git add -interactive file" to add some selected changes from file.
+After that a "git diff --cached file" just shows the changes added interactively, but when I "git add file" to commit those changes), even the unstaged changes from file are committed.
+I feel this is inconsistent: At least "git diff --cached file" should behave like "git commit file", meaning "git commit file" should be fixed IMHO.
+Or are there any reasonable use cased for that?
 
-The Git libraries and programs build fine out of the box. They also
-seem to work as expected once installed.
+Regards,
+Ulrich Windl
 
-The pain point is the self self tests, which I have never been able to
-build (or execute). I'd like to close this gap.
 
-make -C templates  SHELL_PATH='/bin/sh' PERL_PATH='/usr/bin/perl'
-: no custom templates yet
-make -C t/ all
-rm -f -r 'test-results'
-readline() on unopened filehandle       test_must_fail
-run_sub_test_lib_test  at check-non-portable-shell.pl line 34.
-Modification of a read-only value attempted at
-check-non-portable-shell.pl line 34.
-make[1]: *** [test-lint-shell-syntax] Error 255
 
-Does anyone want to take a shot at this antique system? I can provide
-SSH access with root.
-
-Jeff
