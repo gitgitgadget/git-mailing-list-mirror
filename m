@@ -2,132 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25D8F1F45F
-	for <e@80x24.org>; Mon,  6 May 2019 19:28:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FC861F45F
+	for <e@80x24.org>; Mon,  6 May 2019 19:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbfEFT2F (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 15:28:05 -0400
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:32845 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726249AbfEFT2F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 15:28:05 -0400
-Received: by mail-yw1-f73.google.com with SMTP id c4so27281521ywd.0
-        for <git@vger.kernel.org>; Mon, 06 May 2019 12:28:04 -0700 (PDT)
+        id S1726241AbfEFTq3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 15:46:29 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33309 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726175AbfEFTq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 15:46:29 -0400
+Received: by mail-pg1-f194.google.com with SMTP id h17so1000004pgv.0
+        for <git@vger.kernel.org>; Mon, 06 May 2019 12:46:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=rRbtEhTMVAjZ8jwEYcAsPBoAS3X7ZHTyKdmsHm1B6OE=;
-        b=H6WSI7PMWj7VrZXfl9hvNms70sTenLOII7y+G8QjxrOor5hhmw8+neUpJFT10x8yjm
-         ba27T+4RDc7OeOkr+0ZVTUT56uDMjsZbckIhkdCtsodt0IPCPK+bo4AjYYBYz/R81Vmc
-         6LiDX/I4oQIiVYsT4Y3KY1Wt7jL+VrTr/sx7IJUCjR+flQwR9crIzpcUOFKlak+AaD2F
-         nKzSC6exI9I3DoA7nVhy3cr5k9ST8R5568mKY/61iWSv1w1lsGPxEesR5cXekyacNzVp
-         cWxZXxW6LqdfYduusc5Nsp5i2PdncdBSWIFTUMSr9wxxGRR+pOFzjzy2fN31DmXvtAyr
-         YEQQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bbPXZ2y5DOuY6vWVfWIRHUdDO9XRnicvosSHOKolzHY=;
+        b=QzfDHfC7qe0vxTgyg9wyTc1lTxHysXP73RK7sqfZwn1keLY702Nx96p28bj9nQoNKd
+         kEPptNbPf2ux6L6/nZwQQNYYwl+yBnNdG5O/tskaYJb/C2X5AuPuaxhNucDO65jq5FG6
+         10BlK+O48TtJ540YLLqCnSenoVQpNHR+GbhNVXgxPhhD64BBaK2JZ17w22XZZPN/lUqI
+         gJZ7C9ahqIm2oCk0Ghsgai6070C7pdBGSpScmSg33QcsOKX9CqsJ0lgOc2W/ZlO1NWDR
+         7yBcHyqE4+gLe3CVtnGlSJAlsAyNHCj3V3URawdjrJeyKyghxq0gdI4Li3IxYmPWNGoe
+         HKTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=rRbtEhTMVAjZ8jwEYcAsPBoAS3X7ZHTyKdmsHm1B6OE=;
-        b=s8P2q9d+bhv+LxBrG0J7uS0vr3tQOoYYBoR3YSt8L6/yknjRHK1CXnCCvISDwSyToG
-         a0tJi1UMXZC3tYzEiDlyqqUbrGHeR4F+CdYZ4HgclBO+trcr91ubnMuYcflw4yQpwDnQ
-         tkgHM1/34ieoLIjgoO4zmTrwM2T8htAaasXizcO4Y6YfAlAPeeLgHKYcB4kZKUjgqbXU
-         y2ikmQpa6+4sjk9jsHGHjWoKeYWkuxU3aKa64YkQXlZbhDnprOD77Esg44OeK7FNSR08
-         JD3lJqlP7EK7Kc3skLZpXjxnU3mJLuUQQd9rcS5Iqbc4d8RNVRrS59b/6weNvInT3cQb
-         hhoA==
-X-Gm-Message-State: APjAAAV5TowSuYFhrsF7WHxwIS3Mqr7NKE6r5P3RC8EuTt3zfttorje6
-        yvTBEgchJEkSe+slSArMDZkqOsz/o+m2Jal/HDEI
-X-Google-Smtp-Source: APXvYqyzkEYocm/EZrYoDMbf0mUSZ6LF6eGl7ULZl1HeaZclulbNYjbmjYQBIxLgNWmG22vIkgoRPjAnX6bZBfC0E37R
-X-Received: by 2002:a25:6893:: with SMTP id d141mr16928020ybc.441.1557170884076;
- Mon, 06 May 2019 12:28:04 -0700 (PDT)
-Date:   Mon,  6 May 2019 12:28:00 -0700
-In-Reply-To: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
-Message-Id: <20190506192800.213716-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bbPXZ2y5DOuY6vWVfWIRHUdDO9XRnicvosSHOKolzHY=;
+        b=UeevhQyPncOXgsLuF3twRQa2xHiCCpAPi0ZSDZdMH3AbgstRTPv5gwpoB3j6NwlfHz
+         GcapKo3VT/mHI18WeG6drEiDk0qjNcuxXruP2o8LK8vaDxFOogtE6RmNrBvk+mDFjNlG
+         TNkoqWgyQglAWMQquenghaj1jAQUH7RZ9h6VWMhQ3boqq6bBxojYmBRbTT2ScO7gPwId
+         LtU4CnABZzaFGYGIbmofClKp7xlHKtyCMsECZmFDOGF5NkOsopS5hmoGUTEF5Wx/F27m
+         F+7eXFdxv1xpshQ3DiN2V/YHk5rU4MQ8l9dlbAg+7sccAdJyKfl1W3UXjtKgG39MG3OL
+         +3jA==
+X-Gm-Message-State: APjAAAUmGXG0GT4SoyMUArZ5EEO/8TSA233P2ddFAIVUm3pvUUBO6zqq
+        GEJjvAkMSabpmzAvQTniXU8=
+X-Google-Smtp-Source: APXvYqxJH0tWuAzIxRCRwpkEPgY/JUUrqyeq9MNteqseXqcMBS9Mm/NyFs/w92JNCwja9L+YMlqCcQ==
+X-Received: by 2002:a63:6103:: with SMTP id v3mr34783910pgb.48.1557171987897;
+        Mon, 06 May 2019 12:46:27 -0700 (PDT)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id a129sm14145039pfa.152.2019.05.06.12.46.26
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 06 May 2019 12:46:27 -0700 (PDT)
+Date:   Mon, 6 May 2019 12:46:25 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     matvore@google.com, git@vger.kernel.org
 Subject: Re: Proposal: object negotiation for partial clones
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, jrn@google.com, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <20190506194625.GB57368@google.com>
+References: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
+ <20190506192800.213716-1-jonathantanmy@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190506192800.213716-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I'm considering implementing a feature in the Git protocol which would
-> enable efficient and accurate object negotiation when the client is a
-> partial clone. I'd like to refine and get some validation of my
-> approach before I start to write any code, so I've written a proposal
-> for anyone interested to review. Your comments would be appreciated.
+Hi,
 
-Thanks. Let me try to summarize: The issue is that, during a fetch,
-normally the client can say "have" to inform the server that it has a
-commit and all its referenced objects (barring shallow lines), but we
-can't do the same if the client is a partial clone (because having a
-commit doesn't necessarily mean that we have all referenced objects).
-And not doing this means that the server sends a lot of unnecessary
-objects in the sent packfile. The solution is to do the fetch in 2
-parts: one to get the list of objects that would be sent, and after the
-client filters that, one to get the objects themselves.
+Jonathan Tan wrote:
+> Matthew DeVore wrote:
 
-It was unclear to me whether this is meant for (1) fetches directly
-initiated by the user that fetch commits (e.g. "git fetch origin",
-reusing the configured "core.partialclonefilter") and/or for (2) lazy
-fetching of missing objects. My assumption is that this is only for (2).
+>> I'm considering implementing a feature in the Git protocol which would
+>> enable efficient and accurate object negotiation when the client is a
+>> partial clone. I'd like to refine and get some validation of my
+>> approach before I start to write any code, so I've written a proposal
+>> for anyone interested to review. Your comments would be appreciated.
+>
+> Thanks. Let me try to summarize: The issue is that, during a fetch,
+> normally the client can say "have" to inform the server that it has a
+> commit and all its referenced objects (barring shallow lines), but we
+> can't do the same if the client is a partial clone (because having a
+> commit doesn't necessarily mean that we have all referenced objects).
 
-My main question is: we can get the same list of objects (in the form of
-tree objects) if we fetch with "blob:none" filter. Admittedly, we will
-get extra data (file names, etc.) - if the extra bandwidth saving is
-necessary, this should be called out. (And some of the savings will be
-offset by the fact that we will actually need some of those tree
-objects.)
+Ah, interesting.  When this was discussed before, the proposal has been
+that the client can say "have" anyway.  They don't have the commit and
+all referenced objects, but they have the commit and a *promise* that
+they can obtain all referenced objects, which is almost as good.
+That's what "git fetch" currently implements.
 
-Assuming that we do need that bandwidth saving, here's my review of that
-document.
+But there's a hitch: when doing the fetch-on-demand for an object
+access, the client currently does not say "have".  Sure, even there,
+they have a *promise* that they can obtain all referenced objects, but
+this could get out of hand: the first pack may contain a delta against
+an object the client doesn't have, triggering another fetch which
+contains a delta against another object they don't have, and so on.
+Too many round trips.
 
-The document describes the 1st request exactly as I envision - a
-specific parameter sent by the client, and the server responds with a
-list of object names.
+> And not doing this means that the server sends a lot of unnecessary
+> objects in the sent packfile. The solution is to do the fetch in 2
+> parts: one to get the list of objects that would be sent, and after the
+> client filters that, one to get the objects themselves.
 
-For the 2nd request, the document describes it as repeating the original
-query of the 1st request while also giving the full list of objects
-wanted as "choose-refs". I'm still not convinced that repeating the
-original query is necessary - I would just give the list of objects as
-wants. The rationale given for repeating the original query is:
+This helps with object selection but not with delta base selection.
 
-> The original query is helpful because it means the server only needs
-> to do a single reachability check, rather than many separate ones.
+For object selection, I think the current approach already works okay,
+at least where tree and blob filters are involved.  For commit
+filters, in the current approach the fetch-on-demand sends way too
+much because there's no "filter=commit:none" option to pass.  Is that
+what this proposal aims to address?
 
-But this omits the fact that, if doing it the document's way, the server
-needs to perform an object walk in addition to the "single reachability
-check", and it is not true that if doing it my way, "many separate ones"
-need to be done because the server can check reachability of all objects
-at once.
+For blob filters, if I ignore the capability advertisements (there's
+an optimization that hasn't yet been implemented to allow
+single-round-trip fetches), the current behavior takes the same number
+of round trips as this proposal.  Where the current approach has been
+lacking is in delta base selection during fetch-on-demand.  Ideas for
+improving that?
 
-Also, my way means that supporting the 2nd request does not require any
-code or protocol change - it already works today. Assuming we follow my
-approach, the discussion thus lies in supporting the 1st request.
-
-Some more thoughts:
-
-- Changes in server and client scalability: Currently, the server checks
-  reachability of all wants, then enumerates, then sends all objects.
-  With this change, the server checks reachability of all wants, then
-  enumerates, then sends an object list, then checks reachability of all
-  objects in the filtered list, then sends some objects. There is
-  additional overhead in the extra reachability check and lists of
-  objects being sent twice (once by server and once by client), but
-  sending fewer objects means that I/O (server, network, client) and
-  disk space usage (client) is reduced.
-
-- Usefulness outside partial clone: If the user ever wants a list of
-  objects referenced by an object but without their file names, the user
-  could use this, but I can't think of such a scenario.
+Thanks,
+Jonathan
