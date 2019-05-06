@@ -2,121 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FC861F45F
-	for <e@80x24.org>; Mon,  6 May 2019 19:46:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DA3A1F45F
+	for <e@80x24.org>; Mon,  6 May 2019 20:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726241AbfEFTq3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 15:46:29 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:33309 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbfEFTq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 15:46:29 -0400
-Received: by mail-pg1-f194.google.com with SMTP id h17so1000004pgv.0
-        for <git@vger.kernel.org>; Mon, 06 May 2019 12:46:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bbPXZ2y5DOuY6vWVfWIRHUdDO9XRnicvosSHOKolzHY=;
-        b=QzfDHfC7qe0vxTgyg9wyTc1lTxHysXP73RK7sqfZwn1keLY702Nx96p28bj9nQoNKd
-         kEPptNbPf2ux6L6/nZwQQNYYwl+yBnNdG5O/tskaYJb/C2X5AuPuaxhNucDO65jq5FG6
-         10BlK+O48TtJ540YLLqCnSenoVQpNHR+GbhNVXgxPhhD64BBaK2JZ17w22XZZPN/lUqI
-         gJZ7C9ahqIm2oCk0Ghsgai6070C7pdBGSpScmSg33QcsOKX9CqsJ0lgOc2W/ZlO1NWDR
-         7yBcHyqE4+gLe3CVtnGlSJAlsAyNHCj3V3URawdjrJeyKyghxq0gdI4Li3IxYmPWNGoe
-         HKTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bbPXZ2y5DOuY6vWVfWIRHUdDO9XRnicvosSHOKolzHY=;
-        b=UeevhQyPncOXgsLuF3twRQa2xHiCCpAPi0ZSDZdMH3AbgstRTPv5gwpoB3j6NwlfHz
-         GcapKo3VT/mHI18WeG6drEiDk0qjNcuxXruP2o8LK8vaDxFOogtE6RmNrBvk+mDFjNlG
-         TNkoqWgyQglAWMQquenghaj1jAQUH7RZ9h6VWMhQ3boqq6bBxojYmBRbTT2ScO7gPwId
-         LtU4CnABZzaFGYGIbmofClKp7xlHKtyCMsECZmFDOGF5NkOsopS5hmoGUTEF5Wx/F27m
-         F+7eXFdxv1xpshQ3DiN2V/YHk5rU4MQ8l9dlbAg+7sccAdJyKfl1W3UXjtKgG39MG3OL
-         +3jA==
-X-Gm-Message-State: APjAAAUmGXG0GT4SoyMUArZ5EEO/8TSA233P2ddFAIVUm3pvUUBO6zqq
-        GEJjvAkMSabpmzAvQTniXU8=
-X-Google-Smtp-Source: APXvYqxJH0tWuAzIxRCRwpkEPgY/JUUrqyeq9MNteqseXqcMBS9Mm/NyFs/w92JNCwja9L+YMlqCcQ==
-X-Received: by 2002:a63:6103:: with SMTP id v3mr34783910pgb.48.1557171987897;
-        Mon, 06 May 2019 12:46:27 -0700 (PDT)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id a129sm14145039pfa.152.2019.05.06.12.46.26
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 12:46:27 -0700 (PDT)
-Date:   Mon, 6 May 2019 12:46:25 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     matvore@google.com, git@vger.kernel.org
-Subject: Re: Proposal: object negotiation for partial clones
-Message-ID: <20190506194625.GB57368@google.com>
-References: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
- <20190506192800.213716-1-jonathantanmy@google.com>
+        id S1726348AbfEFUYy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 16:24:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49410 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726268AbfEFUYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 16:24:53 -0400
+Received: (qmail 6058 invoked by uid 109); 6 May 2019 20:24:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 May 2019 20:24:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3517 invoked by uid 111); 6 May 2019 20:25:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 May 2019 16:25:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2019 16:24:51 -0400
+Date:   Mon, 6 May 2019 16:24:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] perf-lib.sh: make "./run <revisions>" use the correct
+ gits
+Message-ID: <20190506202451.GA19850@sigill.intra.peff.net>
+References: <20190502222409.GA15631@sigill.intra.peff.net>
+ <20190506191611.16770-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190506192800.213716-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190506191611.16770-1-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, May 06, 2019 at 09:16:11PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Jonathan Tan wrote:
-> Matthew DeVore wrote:
+> Perhaps there's some better way to fix this, but it seems to me that
+> the best solution is to just make this behavior less magical. We know
+> in run_dirs_helper() that we're about to run performance tests on a
+> given <revision>, so let's just set GIT_TEST_INSTALLED to an absolute
+> path there, and then make getting logging target from a previously
+> relative path less magical, we'll just explicitly pass down the
+> relative path as a variable.
+> 
+> This makes e.g. these cases all work:
+> 
+>     ./run . $PWD/../../ origin/master origin/next HEAD -- <tests>
+> 
+> As well as just a plain one-off:
+> 
+>     ./run <tests>
 
->> I'm considering implementing a feature in the Git protocol which would
->> enable efficient and accurate object negotiation when the client is a
->> partial clone. I'd like to refine and get some validation of my
->> approach before I start to write any code, so I've written a proposal
->> for anyone interested to review. Your comments would be appreciated.
->
-> Thanks. Let me try to summarize: The issue is that, during a fetch,
-> normally the client can say "have" to inform the server that it has a
-> commit and all its referenced objects (barring shallow lines), but we
-> can't do the same if the client is a partial clone (because having a
-> commit doesn't necessarily mean that we have all referenced objects).
+Doing this naively would break anybody doing:
 
-Ah, interesting.  When this was discussed before, the proposal has been
-that the client can say "have" anyway.  They don't have the commit and
-all referenced objects, but they have the commit and a *promise* that
-they can obtain all referenced objects, which is almost as good.
-That's what "git fetch" currently implements.
+  GIT_TEST_INSTALLED=some-relative-path ./p1234-foo.sh
 
-But there's a hitch: when doing the fetch-on-demand for an object
-access, the client currently does not say "have".  Sure, even there,
-they have a *promise* that they can obtain all referenced objects, but
-this could get out of hand: the first pack may contain a delta against
-an object the client doesn't have, triggering another fetch which
-contains a delta against another object they don't have, and so on.
-Too many round trips.
+but I doubt that actually matters in practice (notably this already does
+not work with non-perf tests, as test-lib.sh does not do any
+normalization).
 
-> And not doing this means that the server sends a lot of unnecessary
-> objects in the sent packfile. The solution is to do the fetch in 2
-> parts: one to get the list of objects that would be sent, and after the
-> client filters that, one to get the objects themselves.
+I don't think your patch does, because it leaves the extra absolutizing
+in perf-lib.sh. But then it doesn't feel like it's really simplified
+anything. ;)
 
-This helps with object selection but not with delta base selection.
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> index 169f92eae3..b15ee1d262 100644
+> --- a/t/perf/perf-lib.sh
+> +++ b/t/perf/perf-lib.sh
+> @@ -32,6 +32,10 @@ TEST_NO_MALLOC_CHECK=t
+>  if test -z "$GIT_TEST_INSTALLED"; then
+>  	perf_results_prefix=
+>  else
+> +	if test -n "$GIT_PERF_DIR_MYDIR_REL"
+> +	then
+> +		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
+> +	fi
+>  	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
+>  	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
+>  fi
 
-For object selection, I think the current approach already works okay,
-at least where tree and blob filters are involved.  For commit
-filters, in the current approach the fetch-on-demand sends way too
-much because there's no "filter=commit:none" option to pass.  Is that
-what this proposal aims to address?
+So we reset GIT_TEST_INSTALLED to the relative path here (ignoring
+what's in it!), and then afterwards set it to the absolute path. That
+still seems rather magical. :)
 
-For blob filters, if I ignore the capability advertisements (there's
-an optimization that hasn't yet been implemented to allow
-single-round-trip fetches), the current behavior takes the same number
-of round trips as this proposal.  Where the current approach has been
-lacking is in delta base selection during fetch-on-demand.  Ideas for
-improving that?
+What if instead we:
 
-Thanks,
-Jonathan
+  - taught test-lib.sh to make GIT_TEST_INSTALLED absolute (since after
+    all it is the one who is planning to chdir and wreck the relative
+    path)
+
+  - let callers pass in $GIT_PERF_RESULTS_PREFIX instead of guessing at
+    it ourselves from the path name. Then the "run" script could quite
+    reasonably just pass in the tree oid it already has instead of us
+    trying to decode it. And nobody would care about whether
+    $GIT_TEST_INSTALLED has been mangled.
+
+I thought about going this route for my original patch, but I wanted to
+fix the regression (which I agree is quite serious and embarrassing) as
+quickly and simply as possible.
+
+-Peff
