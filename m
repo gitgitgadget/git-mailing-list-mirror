@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 187601F488
-	for <e@80x24.org>; Mon,  6 May 2019 23:23:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0ED1F45F
+	for <e@80x24.org>; Mon,  6 May 2019 23:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbfEFXXY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 19:23:24 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45765 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfEFXXW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 19:23:22 -0400
-Received: by mail-wr1-f67.google.com with SMTP id s15so19456735wra.12
-        for <git@vger.kernel.org>; Mon, 06 May 2019 16:23:21 -0700 (PDT)
+        id S1726435AbfEFXX0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 19:23:26 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45015 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726236AbfEFXXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 19:23:25 -0400
+Received: by mail-wr1-f65.google.com with SMTP id c5so19477961wrs.11
+        for <git@vger.kernel.org>; Mon, 06 May 2019 16:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GFiAb1vsIOdXPqDxPleEnq0KfXfWff123bUIOOCpK1E=;
-        b=I8g6iDVqFFdGd1DZZs5cZFU1hlCQ9SDjJk/2ujryEfuQDyvHMVNcXChjCGxOWzUuaW
-         j5AhiLVW3WwQOUEzf1BP6E4aTjpqvZBKXIKeS/K8oYo0Y886f0NQ1Zb429026RS3OAwR
-         jy3gEfwjlq0+5y3JDTHHZ7caZYVwXgaxUMtpOtFhv2YE3I5ww90XZVW95/XVnwXAdZRH
-         CLLuHM/3pSs+qhpmXqiNzqyQuu9qsC+RvsWoZ4CQl3Bxbd/Wo8/+J69yDsO1I+VMHP9o
-         jPub3aBC/euZ1ADfkuU9Kn7si1zIikvysLjlMjch6vnNmNAYA5mLKtmwdRPSCofj0Fm7
-         9YKw==
+        bh=bwSyaE7yhM+s7i8oZTsc1is77iqY7ySNlzb05eRwAgs=;
+        b=JRjpPYw8wOnVZGw4k0bAFSc9k7JV8DNF9s5C+jmmxfGKooA84wrExwfxjvco3VLT4Y
+         nzMgH5RVyelsEMpDvSlB0O5qfybXwSnGG3yEIWj3AIVKkPEE/cM+Qr+Yr5gkRetZGKVW
+         PwKJ1Lf9tEF8tM0VGihbb+9TzfEQJw+yOTLWhe0A9BbtYQ56MI9grvQNP5KPxP+3pkw8
+         lR/P0fufJP6omNV2V1grH1Ne1x+c4aCCp+VjsWVcN6hmcryPTx6m5tRieEZ7ZCa+m9Gm
+         JywKzmEOlsLPgJNMVUqzTL8xBtpw8fiytmij2KMdsZkRfO/iLAnmhJ8pjQS68+C5E9Ek
+         rYtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GFiAb1vsIOdXPqDxPleEnq0KfXfWff123bUIOOCpK1E=;
-        b=Dm58eTILB8HJ3yayZgQo4Ud8l0ORxEjbF24YEaJG8zQkeRIlHzFEotR9+iqT2NfYg/
-         dFQnQe9+t5xCVkH5MAIrOca9W4j6vIhZbO5Jnt4CUdDIN7PQvqtqDwUc89ucqPyXwNkC
-         Y2Q8itSOOD4wKslH3n4jS745+UedK3xGK/z/fTpfWjJqmLFVxiCpelctBQVRubJmIPMl
-         NZybxqCcUrpxHWqTSa/7vroQmlWffjJB9/lLdkPrDMFNYCgy3FE8m9CG/urDw322fqAs
-         yJgRq9SDodxu8DkZKVEcjHZhURB0p4dl+l80gmsN2hSae2ly1FYQNbPN3Dtgp9s0GRIb
-         Ln/w==
-X-Gm-Message-State: APjAAAVpsCxWTFoEvfWLipilph/bM3dTcBFz6slvUjlU0f/ginfqqspU
-        df5ODHMeNMlLOhlxdVJkDQYrxsC1UD8=
-X-Google-Smtp-Source: APXvYqy9ypKERtqIf+9T8B0CxTEuyLN4xCkhAInaYlH+00+lfm2vCvc498ZT3wZZ2rWMoRvJwOufYw==
-X-Received: by 2002:a05:6000:11cf:: with SMTP id i15mr9184496wrx.94.1557185000197;
-        Mon, 06 May 2019 16:23:20 -0700 (PDT)
+        bh=bwSyaE7yhM+s7i8oZTsc1is77iqY7ySNlzb05eRwAgs=;
+        b=tBP5nT58+0dnNvfXHS5RmfjzJucurlKc7Jk4v8J+SknEC4oCFCyuetwjtRYUhDWFMJ
+         Ot+y14xb72rNUmxbgI/D+VYqu+GCsqTtZWzqRkfO54ZJOdrAPVfFdMTNM+KgLKLoeZZZ
+         Mvk1z8Pr6c/2NeIjl97ksAa3d7ib4m7DAHuO6mcFx11xw87iM4dzbGVR531pMtFUOcDP
+         ofRUckNxcvZFYMDPHvHr6J32CI+ZT0GXbu4dgfH6dHojUKAyEB+OblpqaKg4eLMtBco4
+         QfG7mzAzmed/XACKmDqHTQLDdbbpGYUNtaugIM0AXiljIIOePBp2meWHMb3BSWtaTYEZ
+         kCmg==
+X-Gm-Message-State: APjAAAXZsG18tYsD+wHEE9rTijQY7rC/HZS5UkXXJQoBpPOUn2rBQgDI
+        kDjoDYJ8BNp1shS5vYEYCfrLORXzUWA=
+X-Google-Smtp-Source: APXvYqzutdcnElYVCu+YWrMtBlU1sxjv01ElOYCcMyr1scpsNGXo4eeDwxRzgeMwZkvAli0P9u52QA==
+X-Received: by 2002:adf:f588:: with SMTP id f8mr7898342wro.282.1557185002383;
+        Mon, 06 May 2019 16:23:22 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c131sm9094436wma.31.2019.05.06.16.23.19
+        by smtp.gmail.com with ESMTPSA id c131sm9094436wma.31.2019.05.06.16.23.21
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 16:23:19 -0700 (PDT)
+        Mon, 06 May 2019 16:23:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/2] perf-lib.sh: make "./run <revisions>" use the correct gits
-Date:   Tue,  7 May 2019 01:23:08 +0200
-Message-Id: <20190506232309.28538-2-avarab@gmail.com>
+Subject: [PATCH v2 2/2] perf-lib.sh: remove GIT_TEST_INSTALLED from perf-lib.sh
+Date:   Tue,  7 May 2019 01:23:09 +0200
+Message-Id: <20190506232309.28538-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.593.g511ec345e18
 In-Reply-To: <20190506202451.GA19850@sigill.intra.peff.net>
 References: <20190506202451.GA19850@sigill.intra.peff.net>
@@ -70,92 +70,210 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a really bad regression in 0baf78e7bc ("perf-lib.sh: rely on
-test-lib.sh for --tee handling", 2019-03-15). Since that change all
-runs of different <revisions> of git have used the git found in the
-user's $PATH, e.g. /usr/bin/git instead of the <revision> we just
-built and wanted to performance test.
+Follow-up my preceding change which fixed the immediate "./run
+<revisions>" regression in 0baf78e7bc ("perf-lib.sh: rely on
+test-lib.sh for --tee handling", 2019-03-15) and entirely get rid of
+GIT_TEST_INSTALLED from perf-lib.sh (and aggregate.perl).
 
-The problem starts with GIT_TEST_INSTALLED not working like our
-non-perf tests with the "run" script. I.e. you can't run performance
-tests against a given installed git. Instead we expect to use it
-ourselves to point GIT_TEST_INSTALLED to the <revision> we just built.
+As noted in that change the dance we're doing with GIT_TEST_INSTALLED
+perf-lib.sh isn't necessary, but there I was doing the most minimal
+set of changes to quickly fix a regression.
 
-However, we had been relying on '$(cd "$GIT_TEST_INSTALLED" && pwd)'
-to resolve that relative $GIT_TEST_INSTALLED to an absolute
-path *before* test-lib.sh was loaded, in cases where it was
-e.g. "build/<rev>/bin-wrappers" and we wanted "<abs_path>build/...".
+But it's much simpler to never deal with the "GIT_TEST_INSTALLED" we
+were setting in perf-lib.sh at all. Instead the run_dirs_helper() sets
+the previously inferred $PERF_RESULTS_PREFIX directly.
 
-This change post-dates another proposed solution by a few days[1], I
-didn't notice that version when I initially wrote this. I'm doing the
-most minimal thing to solve the regression here, a follow-up change
-will move this result prefix selection logic entirely into the "run"
-script.
+Setting this at the callsite that's already best positioned to
+exhaustively know about all the different cases we need to handle
+where PERF_RESULTS_PREFIX isn't what we want already (the empty
+string) makes the most sense. In one-off cases like:
 
-This makes e.g. these cases all work:
+    ./run ./p0000-perf-lib-sanity.sh
+    ./p0000-perf-lib-sanity.sh
 
-    ./run . $PWD/../../ origin/master origin/next HEAD -- <tests>
+We'll just do the right thing because PERF_RESULTS_PREFIX will be
+empty, and test-lib.sh takes care of finding where our git is.
 
-As well as just a plain one-off:
+Refactoring this revealed a few bugs, e.g. while a relative git path
+was supported via e.g.:
 
-    ./run <tests>
+    ./run ../../ -- <test>
 
-And, since we're passing down the new GIT_PERF_DIR_MYDIR_REL we make
-sure the bug relating to aggregate.perl not finding our files as
-described in 0baf78e7bc doesn't happen again.
+We'd just print out ".." as the header, since we'd always take the
+content after the last slash. Now we'll always resolve the absolute
+path to something we detect to be be a manually supplied bindir, and
+print the full path in the aggregation.
 
-What *doesn't* work is setting GIT_TEST_INSTALLED to a relative path,
-this will subtly fail in test-lib.sh. This has always been the case
-even before 0baf78e7bc, and as documented in t/README the
-GIT_TEST_INSTALLED variable should be set to an absolute path (needs
-to be set "to the bindir", which is always absolute). Perhaps that
-should be dealt with in the future, but I'm leaving that alone for
-now.
+There was also a long-standing bug in the codespeed output where the
+"environment" for N number of tests would be whatever our
+GIT_TEST_INSTALLED had been set to by the last of those N runs. Let's
+instead just fall back to "uname -r", which is a more sensible
+"environment" than some random build directory path, even for the N=1
+case.
 
-1. https://public-inbox.org/git/20190502222409.GA15631@sigill.intra.peff.net/
+Also simplify the "[_*]" on the RHS of "tr -c", we're trimming
+everything to "_", so we don't need that.
+
+https://public-inbox.org/git/20190502222409.GA15631@sigill.intra.peff.net/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/perf/perf-lib.sh | 4 ++++
- t/perf/run         | 8 ++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ t/perf/aggregate.perl | 13 ++++++-------
+ t/perf/perf-lib.sh    | 15 +--------------
+ t/perf/run            | 45 +++++++++++++++++++++++++++++--------------
+ 3 files changed, 38 insertions(+), 35 deletions(-)
 
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 494907a892..c8f4a78903 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -6,6 +6,7 @@
+ use JSON;
+ use Getopt::Long;
+ use Git;
++use Cwd qw(realpath);
+ 
+ sub get_times {
+ 	my $name = shift;
+@@ -103,13 +104,14 @@ sub format_size {
+ 	if (! -d $arg) {
+ 		my $rev = Git::command_oneline(qw(rev-parse --verify), $arg);
+ 		$dir = "build/".$rev;
++	} elsif ($arg eq '.') {
++		$dir = '.';
+ 	} else {
+-		$arg =~ s{/*$}{};
+-		$dir = $arg;
+-		$dirabbrevs{$dir} = $dir;
++		$dir = realpath($arg);
++		$dirnames{$dir} = $dir;
+ 	}
+ 	push @dirs, $dir;
+-	$dirnames{$dir} = $arg;
++	$dirnames{$dir} ||= $arg;
+ 	my $prefix = $dir;
+ 	$prefix =~ tr/^a-zA-Z0-9/_/c;
+ 	$prefixes{$dir} = $prefix . '.';
+@@ -312,9 +314,6 @@ sub print_codespeed_results {
+ 		$environment = $reponame;
+ 	} elsif (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
+ 		$environment = $ENV{GIT_PERF_REPO_NAME};
+-	} elsif (exists $ENV{GIT_TEST_INSTALLED} and $ENV{GIT_TEST_INSTALLED} ne "") {
+-		$environment = $ENV{GIT_TEST_INSTALLED};
+-		$environment =~ s|/bin-wrappers$||;
+ 	} else {
+ 		$environment = `uname -r`;
+ 		chomp $environment;
 diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 169f92eae3..b15ee1d262 100644
+index b15ee1d262..9cdccba222 100644
 --- a/t/perf/perf-lib.sh
 +++ b/t/perf/perf-lib.sh
-@@ -32,6 +32,10 @@ TEST_NO_MALLOC_CHECK=t
- if test -z "$GIT_TEST_INSTALLED"; then
- 	perf_results_prefix=
- else
-+	if test -n "$GIT_PERF_DIR_MYDIR_REL"
-+	then
-+		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
-+	fi
- 	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
- 	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
- fi
+@@ -21,25 +21,12 @@
+ # because it will change our working directory.
+ TEST_DIRECTORY=$(pwd)/..
+ TEST_OUTPUT_DIRECTORY=$(pwd)
+-ABSOLUTE_GIT_TEST_INSTALLED=$(
+-	test -n "$GIT_TEST_INSTALLED" && cd "$GIT_TEST_INSTALLED" && pwd)
+ 
+ TEST_NO_CREATE_REPO=t
+ TEST_NO_MALLOC_CHECK=t
+ 
+ . ../test-lib.sh
+ 
+-if test -z "$GIT_TEST_INSTALLED"; then
+-	perf_results_prefix=
+-else
+-	if test -n "$GIT_PERF_DIR_MYDIR_REL"
+-	then
+-		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
+-	fi
+-	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
+-	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
+-fi
+-
+ # Variables from test-lib that are normally internal to the tests; we
+ # need to export them for test_perf subshells
+ export TEST_DIRECTORY TRASH_DIRECTORY GIT_BUILD_DIR GIT_TEST_CMP
+@@ -183,7 +170,7 @@ test_wrapper_ () {
+ 		base=$(basename "$0" .sh)
+ 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
+ 		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
+-		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
++		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
+ 		"$test_wrapper_func_" "$@"
+ 	fi
+ 
 diff --git a/t/perf/run b/t/perf/run
-index 9aaa733c77..0a7c8744ab 100755
+index 0a7c8744ab..85b7bd31d5 100755
 --- a/t/perf/run
 +++ b/t/perf/run
-@@ -91,10 +91,14 @@ run_dirs_helper () {
- 	if test "$mydir" = .; then
- 		unset GIT_TEST_INSTALLED
- 	else
--		GIT_TEST_INSTALLED="$mydir/bin-wrappers"
-+		GIT_PERF_DIR_MYDIR_REL=$mydir
-+		GIT_PERF_DIR_MYDIR_ABS=$(cd $mydir && pwd)
-+		export GIT_PERF_DIR_MYDIR_REL GIT_PERF_DIR_MYDIR_ABS
+@@ -70,6 +70,22 @@ build_git_rev () {
+ 	) || die "failed to build revision '$mydir'"
+ }
+ 
++set_git_test_installed () {
++	mydir=$1
 +
-+		GIT_TEST_INSTALLED="$GIT_PERF_DIR_MYDIR_ABS/bin-wrappers"
- 		# Older versions of git lacked bin-wrappers; fallback to the
- 		# files in the root.
--		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$mydir
-+		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_ABS
- 		export GIT_TEST_INSTALLED
++	mydir_abs=$(cd $mydir && pwd)
++	mydir_abs_wrappers="$mydir_abs_wrappers/bin-wrappers"
++	if test -d "$mydir_abs_wrappers"
++	then
++		GIT_TEST_INSTALLED=$mydir_abs_wrappers
++	else
++		# Older versions of git lacked bin-wrappers;
++		# fallback to the files in the root.
++		GIT_TEST_INSTALLED=$mydir_abs
++	fi
++	export GIT_TEST_INSTALLED
++}
++
+ run_dirs_helper () {
+ 	mydir=${1%/}
+ 	shift
+@@ -79,7 +95,16 @@ run_dirs_helper () {
+ 	if test $# -gt 0 -a "$1" = --; then
+ 		shift
  	fi
+-	if [ ! -d "$mydir" ]; then
++
++	PERF_RESULTS_PREFIX=
++	if test "$mydir" = "."
++	then
++		unset GIT_TEST_INSTALLED
++	elif test -d "$mydir"
++	then
++		PERF_RESULTS_PREFIX=$(cd $mydir && printf "%s" "$(pwd)" | tr -c "[a-zA-Z0-9]" "_").
++		set_git_test_installed "$mydir"
++	else
+ 		rev=$(git rev-parse --verify "$mydir" 2>/dev/null) ||
+ 		die "'$mydir' is neither a directory nor a valid revision"
+ 		if [ ! -d build/$rev ]; then
+@@ -87,20 +112,12 @@ run_dirs_helper () {
+ 		fi
+ 		build_git_rev $rev "$mydir"
+ 		mydir=build/$rev
++
++		PERF_RESULTS_PREFIX=build_$rev.
++		set_git_test_installed "$mydir"
+ 	fi
+-	if test "$mydir" = .; then
+-		unset GIT_TEST_INSTALLED
+-	else
+-		GIT_PERF_DIR_MYDIR_REL=$mydir
+-		GIT_PERF_DIR_MYDIR_ABS=$(cd $mydir && pwd)
+-		export GIT_PERF_DIR_MYDIR_REL GIT_PERF_DIR_MYDIR_ABS
+-
+-		GIT_TEST_INSTALLED="$GIT_PERF_DIR_MYDIR_ABS/bin-wrappers"
+-		# Older versions of git lacked bin-wrappers; fallback to the
+-		# files in the root.
+-		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_ABS
+-		export GIT_TEST_INSTALLED
+-	fi
++	export PERF_RESULTS_PREFIX
++
  	run_one_dir "$@"
+ }
+ 
 -- 
 2.21.0.593.g511ec345e18
 
