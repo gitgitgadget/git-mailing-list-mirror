@@ -2,96 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 491D11F45F
-	for <e@80x24.org>; Mon,  6 May 2019 23:31:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 994CE1F45F
+	for <e@80x24.org>; Mon,  6 May 2019 23:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726477AbfEFXbO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 19:31:14 -0400
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:44412 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbfEFXbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 19:31:13 -0400
-Received: by mail-ed1-f52.google.com with SMTP id b8so16932869edm.11
-        for <git@vger.kernel.org>; Mon, 06 May 2019 16:31:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=6IxvSOcwOf6C6exeAYC5FqH7hZagLvsGgvEmTuHNQ6I=;
-        b=jVxs5uw79Tiw1OJHtFEwJRobj9+FqWfI7J4qYkSJdth4wmQOQoL1cmJf878VsAWPas
-         stFYE700FFHd+0A9H/hZotHfv7pLvh+F+32BE9UQ8nctyNx9M7NBt3Zk1xKAPNMr2FtA
-         fGa67id8VxZ4e3KYdLhLuC6kncCWKtSkIlhvzH8iZu+zoo+JxzAv23FAue9ulzswCCfv
-         hC/xjloId3BhlIi0pE8vl8Nu54SCFKmuHYKly+ACp1d1/awJoenW1rvmAhMIhbYs9T0/
-         I/7a8DjnLGzOGcCUspjdVinpE9Qy14PHhXeKtnkMp3bUObynWxk4/FWdtX54QaBumh/b
-         Sagw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=6IxvSOcwOf6C6exeAYC5FqH7hZagLvsGgvEmTuHNQ6I=;
-        b=XWqRaD2yiCqyN2e6maXIYKKAK45eS3Lq2YwWW6qd7Z8co8ELYTbVKNMlOZBIYZxtXG
-         g4NCacTn18BYLPkAuESR1d3GKxBNFC6QuBipfIQhMHTVzmJS/EWFkBcSknbqLM8/fbaZ
-         mmMPqSJF9gmKNGg5VZMzLc6oxDniRwjanei3zWS+Shxme+RUCuVjW7ninIJJGFhLFzR7
-         Q8IwV3jcAoXSRN5oGQHtYbHri6Mgw5efyQSy0N1zcrrqSD63j5naHl6c5nZqx7aWvMQh
-         pusaHbSiEMXZRR3q6OkWtINOl7AQx7h/rJH/CyMqcyUkcGrKXstAAMJLFj841TOZ3M+P
-         PNhw==
-X-Gm-Message-State: APjAAAVfTqBTIHJPVBld+DvJyhDnyjShInSbqeINjdSXLLWSGSK+W8/t
-        EUuHzpkQsAkJpBQvbFFtwNs=
-X-Google-Smtp-Source: APXvYqzrdrMSQ1EAUSOfd5Y/irWsr7ulb4KZ0YIGIkNZZ3xKiZWffFdt/BD2b5zVzZPv+XqIc/FeaA==
-X-Received: by 2002:a17:906:899:: with SMTP id n25mr21748619eje.131.1557185472130;
-        Mon, 06 May 2019 16:31:12 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id d33sm495720ede.10.2019.05.06.16.31.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 May 2019 16:31:11 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Palauzov\, Dilyan" <dilyan.palauzov@sit-extern.fraunhofer.de>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: .git/config validations by (for silly errors) by git fsck
-References: <36d37bdd70fba719ecee2c5572a8b85bc9940944.camel@sit-extern.fraunhofer.de>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <36d37bdd70fba719ecee2c5572a8b85bc9940944.camel@sit-extern.fraunhofer.de>
-Date:   Tue, 07 May 2019 01:31:10 +0200
-Message-ID: <875zqni2ip.fsf@evledraar.gmail.com>
+        id S1726383AbfEFXnh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 19:43:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49608 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726197AbfEFXnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 19:43:37 -0400
+Received: (qmail 9428 invoked by uid 109); 6 May 2019 23:43:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 May 2019 23:43:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5381 invoked by uid 111); 6 May 2019 23:44:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 May 2019 19:44:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 May 2019 19:43:34 -0400
+Date:   Mon, 6 May 2019 19:43:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH] coccicheck: optionally batch spatch invocations
+Message-ID: <20190506234334.GA13296@sigill.intra.peff.net>
+References: <20190425120758.GD8695@szeder.dev>
+ <nycvar.QRO.7.76.6.1904301919580.45@tvgsbejvaqbjf.bet>
+ <20190501100108.GA8954@archbookpro.localdomain>
+ <20190502000422.GF14763@szeder.dev>
+ <nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet>
+ <20190503144211.GH14763@szeder.dev>
+ <20190503174503.GA8242@sigill.intra.peff.net>
+ <CA+P7+xoRGVAP4nHE=neUZGkn9RX_hxN9xVzfWexR79ZWT0ejSQ@mail.gmail.com>
+ <20190506051148.GB30003@sigill.intra.peff.net>
+ <CACsJy8CLjUdHCro8QJfTozMB0xVWppHuFRSLCvFSaeKO_PxAog@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CLjUdHCro8QJfTozMB0xVWppHuFRSLCvFSaeKO_PxAog@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, May 06, 2019 at 04:34:09PM +0700, Duy Nguyen wrote:
 
-On Mon, May 06 2019, Palauzov, Dilyan wrote:
+> > However, it comes at a cost. The RSS of each spatch process goes from
+> > ~50MB to ~1500MB (and peak memory usage may be even higher if make runs
+> 
+> 1.5G should be fine. Trying...
+> 
+> Even with no -j, my htop's RES column goes up 6GB and put my laptop in
+> "swap every bit of memory out, including the bits handling the screen"
+> mode :( I don't think it was even the peak.
 
-> I added manually a remote to .git/config, but updated only the url= line, forgetting to update the fetch= line.  So two
-> remotes had
->   fetch = +refs/heads/*:refs/remotes/origin/*
->
-> and fetching from the one or the other has overwritten origin/master.  git fsck has not helped.
->
-> Please introduce a check in git fcsk that triggers, when two different remotes share the same fetch line, or if the
-> fetch line does not reference the remote name.
+Interesting if you have a different version of spatch. I'm using 1.0.4
+from Debian unstable.
 
-Pehaps we need a 0bc8d71b99 ("fetch: stop clobbering existing tags
-without --force", 2018-08-31) but for remote branches :)
+I had just been eyeballing the values in "top" before, but I actually
+measured more carefully. My peak was actually ~1900MB.
 
-There could be room for something like this in some config-lint tool,
-but what you're suggesting is not an error in the general case. There's
-many use-cases for having remotes with overlapping or identical fetch
-refspecs, e.g. maybe you fetch the "same" repo from two different URLs,
-or one is a superset of the other (and can clobber the subset).
+> It's probably a bit too much to ask, but is it possible to handle N
+> files at a time (instead of all files), which consumes less memory and
+> runs a bit slower, but still better than the default mode? I can see
+> it already gets tricky doing complicated stuff in Makefile so "no" is
+> perfectly ok.
 
-When you remove a remote there's even a check for this, we discover if
-the refspecs exclusively "belong" to it (and then remove the remote
-tracking branches), not if other remotes overlap.
+I almost did this initially but I feared that nobody would actually use
+it. :) So given at least one person who wants it, I took a look. If we
+rely on xargs, then it is really not too bad (and is in fact shorter
+than the current code). I also wrote up a pure-shell version, but it's
+rather verbose even after taking some shortcuts with whitespace
+splitting.
 
-Whether such a check would be viable would be one thing, but it wouldn't
-currently belong in git-fsck, its job is to check the object database
-for sanity, but perhaps there's cases where it makes sense to expand
-that (e.g. shallow/narrow clones where you want a "full" check).
+So here's what I think we should apply:
+
+-- >8 --
+Subject: [PATCH] coccicheck: optionally batch spatch invocations
+
+In our "make coccicheck" rule, we currently feed each source file to its
+own individual invocation of spatch. This has a few downsides:
+
+  - it repeats any overhead spatch has for starting up and reading the
+    patch file
+
+  - any included header files may get processed from multiple
+    invocations. This is slow (we see the same header files multiple
+    times) and may produce a resulting patch with repeated hunks (which
+    cannot be applied without further cleanup)
+
+Ideally we'd just invoke a single instance of spatch per rule-file and
+feed it all source files. But spatch can be rather memory hungry when
+run in this way. I measured the peak RSS going from ~90MB for a single
+file to ~1900MB for all files. Multiplied by multiple rule files being
+processed at the same time (for "make -j"), this can make things slower
+or even cause them to fail (e.g., this is reported to happen on our
+Travis builds).
+
+Instead, let's provide a tunable knob. We'll leave the default at "1",
+but it can be cranked up to "999" for maximum CPU/memory tradeoff, or
+people can find points in between that serve their particular machines.
+
+Here are a few numbers running a single rule via:
+
+  SIZES='1 4 16 999'
+  RULE=contrib/coccinelle/object_id.cocci
+  for i in $SIZES; do
+    make clean
+    /usr/bin/time -o $i.out --format='%e | %U | %S | %M' \
+      make $RULE.patch SPATCH_BATCH_SIZE=$i
+  done
+  for i in $SIZES; do
+    printf '%4d | %s\n' $i "$(cat $i.out)"
+  done
+
+which yields:
+
+     1 | 97.73 | 93.38 | 4.33 | 100128
+     4 | 52.80 | 51.14 | 1.69 | 135204
+    16 | 35.82 | 35.09 | 0.76 | 284124
+   999 | 23.30 | 23.13 | 0.20 | 1903852
+
+The implementation is done with xargs, which should be widely available;
+it's in POSIX, we rely on it already in the test suite. And "coccicheck"
+is really a developer-only tool anyway, so it's not a big deal if
+obscure systems can't run it.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I left the default at 1 for safety. Probably 4 or 16 would be an OK
+default, but I don't have any interest in figuring out exactly what
+Travis or some hypothetical average machine can handle. I'll be setting
+mine to 999. ;)
+
+Making "0" work as "unlimited" might be nice, but xargs doesn't support
+that and I didn't want to make the recipe any more unreadable than it
+already is.
+
+ Makefile | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9f1b6e8926..daba958b8f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1174,8 +1174,10 @@ PTHREAD_CFLAGS =
+ SPARSE_FLAGS ?=
+ SP_EXTRA_FLAGS =
+ 
+-# For the 'coccicheck' target
++# For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
++# usually result in less CPU usage at the cost of higher peak memory.
+ SPATCH_FLAGS = --all-includes --patch .
++SPATCH_BATCH_SIZE = 1
+ 
+ include config.mak.uname
+ -include config.mak.autogen
+@@ -2790,12 +2792,9 @@ endif
+ 
+ %.cocci.patch: %.cocci $(COCCI_SOURCES)
+ 	@echo '    ' SPATCH $<; \
+-	ret=0; \
+-	for f in $(COCCI_SOURCES); do \
+-		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
+-			{ ret=$$?; break; }; \
+-	done >$@+ 2>$@.log; \
+-	if test $$ret != 0; \
++	if ! echo $(COCCI_SOURCES) | xargs -n $(SPATCH_BATCH_SIZE) \
++		$(SPATCH) --sp-file $< $(SPATCH_FLAGS) \
++		>$@+ 2>$@.log; \
+ 	then \
+ 		cat $@.log; \
+ 		exit 1; \
+-- 
+2.21.0.1314.g224b191707
+
