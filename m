@@ -2,278 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0ED1F45F
-	for <e@80x24.org>; Mon,  6 May 2019 23:23:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D84801F45F
+	for <e@80x24.org>; Mon,  6 May 2019 23:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbfEFXX0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 19:23:26 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45015 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726236AbfEFXXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 19:23:25 -0400
-Received: by mail-wr1-f65.google.com with SMTP id c5so19477961wrs.11
-        for <git@vger.kernel.org>; Mon, 06 May 2019 16:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bwSyaE7yhM+s7i8oZTsc1is77iqY7ySNlzb05eRwAgs=;
-        b=JRjpPYw8wOnVZGw4k0bAFSc9k7JV8DNF9s5C+jmmxfGKooA84wrExwfxjvco3VLT4Y
-         nzMgH5RVyelsEMpDvSlB0O5qfybXwSnGG3yEIWj3AIVKkPEE/cM+Qr+Yr5gkRetZGKVW
-         PwKJ1Lf9tEF8tM0VGihbb+9TzfEQJw+yOTLWhe0A9BbtYQ56MI9grvQNP5KPxP+3pkw8
-         lR/P0fufJP6omNV2V1grH1Ne1x+c4aCCp+VjsWVcN6hmcryPTx6m5tRieEZ7ZCa+m9Gm
-         JywKzmEOlsLPgJNMVUqzTL8xBtpw8fiytmij2KMdsZkRfO/iLAnmhJ8pjQS68+C5E9Ek
-         rYtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bwSyaE7yhM+s7i8oZTsc1is77iqY7ySNlzb05eRwAgs=;
-        b=tBP5nT58+0dnNvfXHS5RmfjzJucurlKc7Jk4v8J+SknEC4oCFCyuetwjtRYUhDWFMJ
-         Ot+y14xb72rNUmxbgI/D+VYqu+GCsqTtZWzqRkfO54ZJOdrAPVfFdMTNM+KgLKLoeZZZ
-         Mvk1z8Pr6c/2NeIjl97ksAa3d7ib4m7DAHuO6mcFx11xw87iM4dzbGVR531pMtFUOcDP
-         ofRUckNxcvZFYMDPHvHr6J32CI+ZT0GXbu4dgfH6dHojUKAyEB+OblpqaKg4eLMtBco4
-         QfG7mzAzmed/XACKmDqHTQLDdbbpGYUNtaugIM0AXiljIIOePBp2meWHMb3BSWtaTYEZ
-         kCmg==
-X-Gm-Message-State: APjAAAXZsG18tYsD+wHEE9rTijQY7rC/HZS5UkXXJQoBpPOUn2rBQgDI
-        kDjoDYJ8BNp1shS5vYEYCfrLORXzUWA=
-X-Google-Smtp-Source: APXvYqzutdcnElYVCu+YWrMtBlU1sxjv01ElOYCcMyr1scpsNGXo4eeDwxRzgeMwZkvAli0P9u52QA==
-X-Received: by 2002:adf:f588:: with SMTP id f8mr7898342wro.282.1557185002383;
-        Mon, 06 May 2019 16:23:22 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c131sm9094436wma.31.2019.05.06.16.23.21
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 16:23:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] perf-lib.sh: remove GIT_TEST_INSTALLED from perf-lib.sh
-Date:   Tue,  7 May 2019 01:23:09 +0200
-Message-Id: <20190506232309.28538-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e18
-In-Reply-To: <20190506202451.GA19850@sigill.intra.peff.net>
-References: <20190506202451.GA19850@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726160AbfEFX2p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 19:28:45 -0400
+Received: from resqmta-po-05v.sys.comcast.net ([96.114.154.164]:37424 "EHLO
+        resqmta-po-05v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725994AbfEFX2p (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 May 2019 19:28:45 -0400
+X-Greylist: delayed 488 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 May 2019 19:28:45 EDT
+Received: from resomta-po-05v.sys.comcast.net ([96.114.154.229])
+        by resqmta-po-05v.sys.comcast.net with ESMTP
+        id NcVXhgt0f3hFENmuShm2f0; Mon, 06 May 2019 23:20:36 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1557184836;
+        bh=ZWGaIePD18v6Z0mQKfn76Gr8bgv+piPNe2ORPvRZXxk=;
+        h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+         Message-Id:To;
+        b=xxbWoXaEHqSkKPEEPoj81iZTsX4Hrq85iyscvRnYvUu1ngEeATVnMUWZMih0rFnBF
+         RBqtLGdlBUW3OqY3HHu7+milVpKldGu4Y11z69wrCJPKNYXZROe2nwLanJ3XGdK9Ze
+         5vPFUI5kmnHdCyhoNg+7le+W0mPat5X2J/A/jwAqE0uuwx9OEupmZqwjawg1OxR+v8
+         u/B7Sf6hI6p9411+7hW7f5zfzgghU8v0AiJR7QUo8OUGIHBkrABLRu7MUyE8IV+yEb
+         OuZhZ+QrIJJkY8GCCPhULa27oQft3W7m05ouKP+O7E2AgZoUYiiR2W+QhJCxSZ1EbA
+         CN+Az34rx6Umw==
+Received: from [IPv6:2620::100e:913:17f:4067:58eb:5bb2] ([IPv6:2620:0:100e:913:17f:4067:58eb:5bb2])
+        by resomta-po-05v.sys.comcast.net with ESMTPA
+        id NmuBh2Kgb5czHNmuGhTCjK; Mon, 06 May 2019 23:20:34 +0000
+X-Xfinity-VMeta: sc=-100;st=legit
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
+Subject: Re: Proposal: object negotiation for partial clones
+From:   Matthew DeVore <matvore@comcast.net>
+In-Reply-To: <20190506194625.GB57368@google.com>
+Date:   Mon, 6 May 2019 16:20:19 -0700
+Cc:     Jonathan Tan <jonathantanmy@google.com>, matvore@google.com,
+        git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EA2BD2A8-2641-4B71-8439-66994DE9589F@comcast.net>
+References: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
+ <20190506192800.213716-1-jonathantanmy@google.com>
+ <20190506194625.GB57368@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-up my preceding change which fixed the immediate "./run
-<revisions>" regression in 0baf78e7bc ("perf-lib.sh: rely on
-test-lib.sh for --tee handling", 2019-03-15) and entirely get rid of
-GIT_TEST_INSTALLED from perf-lib.sh (and aggregate.perl).
 
-As noted in that change the dance we're doing with GIT_TEST_INSTALLED
-perf-lib.sh isn't necessary, but there I was doing the most minimal
-set of changes to quickly fix a regression.
 
-But it's much simpler to never deal with the "GIT_TEST_INSTALLED" we
-were setting in perf-lib.sh at all. Instead the run_dirs_helper() sets
-the previously inferred $PERF_RESULTS_PREFIX directly.
+> On 2019/05/06, at 12:46, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>=20
+> Hi,
+>=20
+> Jonathan Tan wrote:
+>> Matthew DeVore wrote:
+>=20
+>>> I'm considering implementing a feature in the Git protocol which =
+would
+>>> enable efficient and accurate object negotiation when the client is =
+a
+>>> partial clone. I'd like to refine and get some validation of my
+>>> approach before I start to write any code, so I've written a =
+proposal
+>>> for anyone interested to review. Your comments would be appreciated.
+>>=20
+>> Thanks. Let me try to summarize: The issue is that, during a fetch,
+>> normally the client can say "have" to inform the server that it has a
+>> commit and all its referenced objects (barring shallow lines), but we
+>> can't do the same if the client is a partial clone (because having a
+>> commit doesn't necessarily mean that we have all referenced objects).
+>=20
+> Ah, interesting.  When this was discussed before, the proposal has =
+been
+> that the client can say "have" anyway.  They don't have the commit and
+> all referenced objects, but they have the commit and a *promise* that
+> they can obtain all referenced objects, which is almost as good.
+> That's what "git fetch" currently implements.
+Doesn=E2=80=99t that mean the =E2=80=9Chave=E2=80=9D may indicate that =
+the client has the entire repository already, even though it=E2=80=99s =
+only a partial clone? If so, then the client intends to ask for some =
+tree plus trees and blobs 2-3 levels down deeper, how would the server =
+distinguish between those objects the client *really* has and those that =
+were just promised to them? Because the whole purpose of this =
+hypothetical request is to get a bunch of promises fulfilled of which =
+0-99% are fulfilled already.
 
-Setting this at the callsite that's already best positioned to
-exhaustively know about all the different cases we need to handle
-where PERF_RESULTS_PREFIX isn't what we want already (the empty
-string) makes the most sense. In one-off cases like:
+>=20
+> For blob filters, if I ignore the capability advertisements (there's
+> an optimization that hasn't yet been implemented to allow
+> single-round-trip fetches), the current behavior takes the same number
+> of round trips as this proposal.  Where the current approach has been
+> lacking is in delta base selection during fetch-on-demand.  Ideas for
+> improving that?
 
-    ./run ./p0000-perf-lib-sanity.sh
-    ./p0000-perf-lib-sanity.sh
+Maybe something like this (conceptually based on original proposal) ?
 
-We'll just do the right thing because PERF_RESULTS_PREFIX will be
-empty, and test-lib.sh takes care of finding where our git is.
+1. Client sends request for an object or objects with an extra flag =
+which means =E2=80=9CI can=E2=80=99t really tell you what I already have =
+since it=E2=80=99s a chaotic subset of the object database of the =
+repo=E2=80=9D
 
-Refactoring this revealed a few bugs, e.g. while a relative git path
-was supported via e.g.:
+2. Server responds back with set of objects, represented by deltas if =
+that is how the server has them on disk, along with a list of object-IDs =
+needed in order to resolve the content of all the objects. These =
+object-IDs can go several layers of deltas back, and they go back as far =
+as it takes to get to an object stored in its entirety by the server.
 
-    ./run ../../ -- <test>
+3. Client responds back with another request (this time the extra flag =
+sent from step 1 is not necessary) which has =E2=80=9Cwant=E2=80=9Ds for =
+every object the server named which the client already has.
 
-We'd just print out ".." as the header, since we'd always take the
-content after the last slash. Now we'll always resolve the absolute
-path to something we detect to be be a manually supplied bindir, and
-print the full path in the aggregation.
-
-There was also a long-standing bug in the codespeed output where the
-"environment" for N number of tests would be whatever our
-GIT_TEST_INSTALLED had been set to by the last of those N runs. Let's
-instead just fall back to "uname -r", which is a more sensible
-"environment" than some random build directory path, even for the N=1
-case.
-
-Also simplify the "[_*]" on the RHS of "tr -c", we're trimming
-everything to "_", so we don't need that.
-
-https://public-inbox.org/git/20190502222409.GA15631@sigill.intra.peff.net/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/perf/aggregate.perl | 13 ++++++-------
- t/perf/perf-lib.sh    | 15 +--------------
- t/perf/run            | 45 +++++++++++++++++++++++++++++--------------
- 3 files changed, 38 insertions(+), 35 deletions(-)
-
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 494907a892..c8f4a78903 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -6,6 +6,7 @@
- use JSON;
- use Getopt::Long;
- use Git;
-+use Cwd qw(realpath);
- 
- sub get_times {
- 	my $name = shift;
-@@ -103,13 +104,14 @@ sub format_size {
- 	if (! -d $arg) {
- 		my $rev = Git::command_oneline(qw(rev-parse --verify), $arg);
- 		$dir = "build/".$rev;
-+	} elsif ($arg eq '.') {
-+		$dir = '.';
- 	} else {
--		$arg =~ s{/*$}{};
--		$dir = $arg;
--		$dirabbrevs{$dir} = $dir;
-+		$dir = realpath($arg);
-+		$dirnames{$dir} = $dir;
- 	}
- 	push @dirs, $dir;
--	$dirnames{$dir} = $arg;
-+	$dirnames{$dir} ||= $arg;
- 	my $prefix = $dir;
- 	$prefix =~ tr/^a-zA-Z0-9/_/c;
- 	$prefixes{$dir} = $prefix . '.';
-@@ -312,9 +314,6 @@ sub print_codespeed_results {
- 		$environment = $reponame;
- 	} elsif (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
- 		$environment = $ENV{GIT_PERF_REPO_NAME};
--	} elsif (exists $ENV{GIT_TEST_INSTALLED} and $ENV{GIT_TEST_INSTALLED} ne "") {
--		$environment = $ENV{GIT_TEST_INSTALLED};
--		$environment =~ s|/bin-wrappers$||;
- 	} else {
- 		$environment = `uname -r`;
- 		chomp $environment;
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index b15ee1d262..9cdccba222 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -21,25 +21,12 @@
- # because it will change our working directory.
- TEST_DIRECTORY=$(pwd)/..
- TEST_OUTPUT_DIRECTORY=$(pwd)
--ABSOLUTE_GIT_TEST_INSTALLED=$(
--	test -n "$GIT_TEST_INSTALLED" && cd "$GIT_TEST_INSTALLED" && pwd)
- 
- TEST_NO_CREATE_REPO=t
- TEST_NO_MALLOC_CHECK=t
- 
- . ../test-lib.sh
- 
--if test -z "$GIT_TEST_INSTALLED"; then
--	perf_results_prefix=
--else
--	if test -n "$GIT_PERF_DIR_MYDIR_REL"
--	then
--		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
--	fi
--	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
--	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
--fi
--
- # Variables from test-lib that are normally internal to the tests; we
- # need to export them for test_perf subshells
- export TEST_DIRECTORY TRASH_DIRECTORY GIT_BUILD_DIR GIT_TEST_CMP
-@@ -183,7 +170,7 @@ test_wrapper_ () {
- 		base=$(basename "$0" .sh)
- 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
- 		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
--		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
-+		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
- 		"$test_wrapper_func_" "$@"
- 	fi
- 
-diff --git a/t/perf/run b/t/perf/run
-index 0a7c8744ab..85b7bd31d5 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -70,6 +70,22 @@ build_git_rev () {
- 	) || die "failed to build revision '$mydir'"
- }
- 
-+set_git_test_installed () {
-+	mydir=$1
-+
-+	mydir_abs=$(cd $mydir && pwd)
-+	mydir_abs_wrappers="$mydir_abs_wrappers/bin-wrappers"
-+	if test -d "$mydir_abs_wrappers"
-+	then
-+		GIT_TEST_INSTALLED=$mydir_abs_wrappers
-+	else
-+		# Older versions of git lacked bin-wrappers;
-+		# fallback to the files in the root.
-+		GIT_TEST_INSTALLED=$mydir_abs
-+	fi
-+	export GIT_TEST_INSTALLED
-+}
-+
- run_dirs_helper () {
- 	mydir=${1%/}
- 	shift
-@@ -79,7 +95,16 @@ run_dirs_helper () {
- 	if test $# -gt 0 -a "$1" = --; then
- 		shift
- 	fi
--	if [ ! -d "$mydir" ]; then
-+
-+	PERF_RESULTS_PREFIX=
-+	if test "$mydir" = "."
-+	then
-+		unset GIT_TEST_INSTALLED
-+	elif test -d "$mydir"
-+	then
-+		PERF_RESULTS_PREFIX=$(cd $mydir && printf "%s" "$(pwd)" | tr -c "[a-zA-Z0-9]" "_").
-+		set_git_test_installed "$mydir"
-+	else
- 		rev=$(git rev-parse --verify "$mydir" 2>/dev/null) ||
- 		die "'$mydir' is neither a directory nor a valid revision"
- 		if [ ! -d build/$rev ]; then
-@@ -87,20 +112,12 @@ run_dirs_helper () {
- 		fi
- 		build_git_rev $rev "$mydir"
- 		mydir=build/$rev
-+
-+		PERF_RESULTS_PREFIX=build_$rev.
-+		set_git_test_installed "$mydir"
- 	fi
--	if test "$mydir" = .; then
--		unset GIT_TEST_INSTALLED
--	else
--		GIT_PERF_DIR_MYDIR_REL=$mydir
--		GIT_PERF_DIR_MYDIR_ABS=$(cd $mydir && pwd)
--		export GIT_PERF_DIR_MYDIR_REL GIT_PERF_DIR_MYDIR_ABS
--
--		GIT_TEST_INSTALLED="$GIT_PERF_DIR_MYDIR_ABS/bin-wrappers"
--		# Older versions of git lacked bin-wrappers; fallback to the
--		# files in the root.
--		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_ABS
--		export GIT_TEST_INSTALLED
--	fi
-+	export PERF_RESULTS_PREFIX
-+
- 	run_one_dir "$@"
- }
- 
--- 
-2.21.0.593.g511ec345e18
+Very hand-wavey, but I think you see my idea.
 
