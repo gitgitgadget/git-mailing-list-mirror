@@ -2,184 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664401F45F
-	for <e@80x24.org>; Mon,  6 May 2019 19:16:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 934401F45F
+	for <e@80x24.org>; Mon,  6 May 2019 19:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726903AbfEFTQ6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 15:16:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35360 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726145AbfEFTQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 15:16:24 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w12so5285739wrp.2
-        for <git@vger.kernel.org>; Mon, 06 May 2019 12:16:22 -0700 (PDT)
+        id S1726383AbfEFTTG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 15:19:06 -0400
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:47024 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726145AbfEFTTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 15:19:06 -0400
+Received: by mail-oi1-f202.google.com with SMTP id h186so4755195oia.13
+        for <git@vger.kernel.org>; Mon, 06 May 2019 12:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oMAsUV2MEZUjegykoXrywirxQS3PcZNq/1/7DlLQ0v8=;
-        b=Pe0nOGtE8PQogTon4JJQTfmsjciBdHEJi1tvkvsWGL34RrgMId6drR6tXxHB+3i19m
-         mbH10Vx+u0BIeWzG+R7cSIbbfUAChj8zk1npRGRAbagHKuq1Zn60uSlSmvmLgUFMdBXN
-         aPDiX6gS4hR+QyZc/jlQ2leNamLuRGvk5JAW3oMoTpZWrXp0pKKQPXQGmw35zWSgfq4T
-         lHDf9YQWM76EMT80sbQWU8i8ALy0ej3rTk/rfRShZj2di4R3B7SdiyXhs30+W9tyKPsb
-         ftvNjBGkH2D+mPCpVGfNmkUxh+D7OaZfC9f7jdYCxFNI1N2Lbn96BsMwywpHsZZs6S2X
-         O4ug==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Ln9fHQ147E3Ly7K6/Svv5T7x7y91lPUVHOsq3ZDPVEQ=;
+        b=VTcy2KCi0/4sPn7dFxE5mR++vEAjFTL2zLpVxC8X5cp4+qJl7J5hZqzZXa0cxVLlTD
+         2Ltm2Mwsj4XktfTgkmDzkC1gZLMpVLCok+OricBJBlf9DCPZs8R5i+ds1pIC4eW8azmU
+         zdlgtiGsO0XsIbzB0A04F/aSP0FIP34WPx/DttBW5rhmaPNbxZH3AyoX1QJ0irZuElI6
+         F9bC5VGKiVkywXMD7SdqXqsFryzSWBitWSHnXsEujQb04g3lnFpwUJTKVOwWlh1jvYSl
+         ABLdR6LV6Lbw8aL662tJc/G5l0pXc21c3UUAWiw6V89KkgEfW+fpZ8JQOybaxBLmyoNF
+         FFPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oMAsUV2MEZUjegykoXrywirxQS3PcZNq/1/7DlLQ0v8=;
-        b=SsLcjtCTU7yP0DHkS4Wa2Qg3jQS8lAM4/W2Fcn2wojmvvhsu8cEEr+hAl+VmrrsJly
-         zzZyomQu1v25iDomzV+TZ2wNqxafDl9qhnppP4YN+JP4Q3/awu50L11bbS7Xx2RphaQt
-         HtNI3xvpqdCy8FWFMq2ABFoTO+A4RAoOyNw87LFWVjNhloXbU7QeoR2DnR0l8o8PuHB3
-         nayk+hur5DN5bLGSvz1GPj781KUKp2NRjPwgfhaORw7qDW8Ujl7CE/3B7qWaNCCilGxS
-         JFY0AAYnT84d5OXPZU/87ml9wqgFpMprg+X1DqBXKnJMCLdWswqp8+KXDdRHbhFmKwcD
-         2yBg==
-X-Gm-Message-State: APjAAAUutOwokOI6yUIQ5KWt4Xf2h8JCb3P6x4T3D2fSQejbkjXmXHjf
-        34Ep6Rkcjm5QmI8aesi9UXcBjpRWiyE=
-X-Google-Smtp-Source: APXvYqyZndhvazSYR5koBP19E+qZntF/Mj+WS+8Qn6hdrUpaNW0LgbkBBMT5wfawVCBTC4v/MCikTw==
-X-Received: by 2002:adf:80c3:: with SMTP id 61mr19980667wrl.123.1557170181571;
-        Mon, 06 May 2019 12:16:21 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w7sm15385870wmm.16.2019.05.06.12.16.20
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 12:16:20 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] perf-lib.sh: make "./run <revisions>" use the correct gits
-Date:   Mon,  6 May 2019 21:16:11 +0200
-Message-Id: <20190506191611.16770-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.593.g511ec345e18
-In-Reply-To: <20190502222409.GA15631@sigill.intra.peff.net>
-References: <20190502222409.GA15631@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Ln9fHQ147E3Ly7K6/Svv5T7x7y91lPUVHOsq3ZDPVEQ=;
+        b=LDI6pz+/2LYaYlwIx0JKZcBHd1Tzg1DVpTgXckmIqRmf0+sOncg4U9bKZrGT/PAMzD
+         QrqXsOCaM91nYz/PmftCbrFfIIluF3TBHJOwmI0h020jXXalOr02ceOyvFAYsdcVRsUZ
+         Zv084yMShau51RPT0jNCjKFCUbn1xwUucH0HGH6KR60VdQpI+iCHd3NAqS5QkMZwZr9t
+         Wpj7aoyYsTLOP7CIF1PgElXVX1wHhaZOiy2zc5VjtO83cv3Nu3xrAaQUMImJ3FAbIHTR
+         3OsSiiWeQH2d5KR0naRHyNpwj7w+CEyWP7l3FULf2YhmT8e64OviNEXjN/c9OXcsBHiQ
+         8cFw==
+X-Gm-Message-State: APjAAAXvoXf59BD29j3t5h+wOYgUcTN9bSb0Tpk5ZSI7BpdVnqt1bi4T
+        MaGJduUxd9wJGWBAc0O+CUfu5ViFHgEgnXaHGdfD
+X-Google-Smtp-Source: APXvYqxdXZNnbB3DRKKT03GmbCjpzO7reFDO7PgTqQ2HI4IuL03q+aqF1Wv3nIBr7t3EA6+XZ0y9UtQgy6uUEVBOP7Wa
+X-Received: by 2002:a9d:d63:: with SMTP id 90mr19166156oti.333.1557170345571;
+ Mon, 06 May 2019 12:19:05 -0700 (PDT)
+Date:   Mon,  6 May 2019 12:19:01 -0700
+In-Reply-To: <CAP8UFD1EwUbjSx3+q=9T8KgDz=vv5UH9ObV2z-8VRaQejera7w@mail.gmail.com>
+Message-Id: <20190506191901.212221-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAP8UFD1EwUbjSx3+q=9T8KgDz=vv5UH9ObV2z-8VRaQejera7w@mail.gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+Subject: Re: jt/fetch-cdn-offload (was What's cooking in git.git (Apr 2019,
+ #04; Mon, 22))
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     christian.couder@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a really bad regression in 0baf78e7bc ("perf-lib.sh: rely on
-test-lib.sh for --tee handling", 2019-03-15). Since that change all
-runs of different <revisions> of git have used the git found in the
-user's $PATH, e.g. /usr/bin/git instead of the <revision> we just
-built and wanted to performance test.
+> There has been no answer to my comments in:
+> 
+> https://public-inbox.org/git/CAP8UFD3SWNu=btPxV2vV=neYrofbgKPzz_WLvsJbv6bKjRoCpQ@mail.gmail.com/
+> 
+> especially the part related to the "-o avoid-cdn=badcdn.example.com"
+> example that Jonathan Nieder gave.
 
-The problem starts with GIT_TEST_INSTALLED not working like our
-non-perf tests with the "run" script. I.e. you can't run performance
-tests against a given installed git. Instead we expect to use it
-ourselves to point GIT_TEST_INSTALLED to the <revision> we just built.
+It seems to me that if you use a server option to blacklist, you can
+also use a server option to whitelist. But I don't think this is the
+main issue, as you state below.
 
-However, we had been relying on '$(cd "$GIT_TEST_INSTALLED" && pwd)'
-to resolve that relative $GIT_TEST_INSTALLED to an absolute
-path *before* test-lib.sh was loaded, in cases where it was
-e.g. "build/<rev>/bin-wrappers" and we wanted "<abs_path>build/...".
+> > If this version is good with everyone, then this is the final version.
+> 
+> It is not good for me as I think the "-o
+> avoid-cdn=badcdn.example.com", or even "-o usecdn=goodcdn.example.com"
+> options, (that has been the only thing suggested to work around
+> problems with CDNs that people cannot use or don't want to use,) will
+> likely end up to be some other kind of promisor remote but not quite a
+> real promisor remote.
 
-Perhaps there's some better way to fix this, but it seems to me that
-the best solution is to just make this behavior less magical. We know
-in run_dirs_helper() that we're about to run performance tests on a
-given <revision>, so let's just set GIT_TEST_INSTALLED to an absolute
-path there, and then make getting logging target from a previously
-relative path less magical, we'll just explicitly pass down the
-relative path as a variable.
+I think that the resemblance between promisor remotes and the targets of
+"packfile-uri" (CDNs) is not that deep. Even if we have a sufficiently
+smart remote helper that does not require Git-specific logic in the
+service hosting the remote, promisor remotes operate on the blob level
+(maybe tree at most) and does not require much coordination with the
+server that you originally fetched from; for example, a server can just
+as easily serve "blob:limit=43" as it does "blob:limit=42" without
+coordinating with the promisor remote.
 
-This makes e.g. these cases all work:
+But this is not the same with the CDNs. CDNs operate on the packfile
+level - we do not want to send individual objects. And the coordination
+between the CDN and the server that you originally fetched from has to
+be greater - due to the numbers of objects in packfiles, the server will
+need to know what is served by the CDN on a higher level (e.g. things
+like "everything in refs/heads/* after <date>"), and if we want to even
+slightly shift what the CDN serves and what the server serves, both need
+to know.
 
-    ./run . $PWD/../../ origin/master origin/next HEAD -- <tests>
+(Also, I'm not convinced that a sufficiently smart remote helper can be
+built that can turn a generic CDN into a performant promisor remote that
+we want - in particular, if partial clones with "tree:0" filter become
+more popular, servers might need to be able to send trees with various
+filters: the tree alone, the tree with all its subtrees recursively
+(maybe with a maximum depth), and the tree with all its subtrees and
+blobs recursively.)
 
-As well as just a plain one-off:
+> In a more general way I don't understand why I was repeatedly asked
+> (especially by Jonathen Nieder, you and Junio) to dump ODB remotes in
+> favor of promisor remotes because promisor remotes would be more
+> unified, and now you develop something that is not unified with
+> promisor remote, though it could very well be.
 
-    ./run <tests>
-
-And, since we're passing down the new GIT_PERF_DIR_MYDIR_REL we make
-sure the bug relating to aggregate.perl not finding our files as
-described in 0baf78e7bc doesn't happen again.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Fri, May 03 2019, Jeff King wrote:
-
-> On Thu, May 02, 2019 at 05:45:09PM -0400, Jeff King wrote:
->
->> Here's what I came up with. Note that there's a bug in 'master' right
->> now which causes perf to produce nonsense results. It's due to my
->> 0baf78e7bc (perf-lib.sh: rely on test-lib.sh for --tee handling,
->> 2019-03-15). I'll fix that separately (the timing below is done with
->> that commit reverted).
->
-> And here's the fix for that. It's rather subtle, so I hope I explained
-> it sufficiently. I didn't notice it while working on the original
-> because everything _appears_ to run fine, but you just get timings from
-> the wrong version of Git. Which is only noticeable if you're literally
-> testing two versions that you expect to differ.
-
-I ran into this today and it took me an embarrasingly long time to
-figure out why my code wasn't making things faster.
-
-So I wrote this up before seeing your patch, since it wasn't queued in
-"pu" and my naïve ML search didn't include inline patches (again,
-*sigh*).
-
-Anyway, I wonder if something closer to this patch, or some sort of
-merge of the two (e.g. to still get rid of the
-ABSOLUTE_GIT_TEST_INSTALLED variable) is better. I.e. why try to
-magically detect all of this in perf-lib.sh itself, we know we're
-going to invoke it like this in the "run" script, so we can just set
-the appropriate variables there instead of this hard-to-explain magic
-of $GIT_TEST_INSTALLED being one value the first time, but another one
-the second time around.
-
- t/perf/perf-lib.sh | 4 ++++
- t/perf/run         | 8 ++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 169f92eae3..b15ee1d262 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -32,6 +32,10 @@ TEST_NO_MALLOC_CHECK=t
- if test -z "$GIT_TEST_INSTALLED"; then
- 	perf_results_prefix=
- else
-+	if test -n "$GIT_PERF_DIR_MYDIR_REL"
-+	then
-+		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
-+	fi
- 	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
- 	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
- fi
-diff --git a/t/perf/run b/t/perf/run
-index 9aaa733c77..0a7c8744ab 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -91,10 +91,14 @@ run_dirs_helper () {
- 	if test "$mydir" = .; then
- 		unset GIT_TEST_INSTALLED
- 	else
--		GIT_TEST_INSTALLED="$mydir/bin-wrappers"
-+		GIT_PERF_DIR_MYDIR_REL=$mydir
-+		GIT_PERF_DIR_MYDIR_ABS=$(cd $mydir && pwd)
-+		export GIT_PERF_DIR_MYDIR_REL GIT_PERF_DIR_MYDIR_ABS
-+
-+		GIT_TEST_INSTALLED="$GIT_PERF_DIR_MYDIR_ABS/bin-wrappers"
- 		# Older versions of git lacked bin-wrappers; fallback to the
- 		# files in the root.
--		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$mydir
-+		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_ABS
- 		export GIT_TEST_INSTALLED
- 	fi
- 	run_one_dir "$@"
--- 
-2.21.0.593.g511ec345e18
-
+I don't remember saying this (although perhaps I did), but ODB remotes
+are similar to promisor remotes in that they both operate on the object
+level. As for CDNs, they operate on the packfile level, so unification
+with promisor remote is not so easy. (And there is the sufficiently
+smart remote helper issue.)
