@@ -2,104 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC6151F45F
-	for <e@80x24.org>; Mon,  6 May 2019 21:58:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7041F45F
+	for <e@80x24.org>; Mon,  6 May 2019 22:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726393AbfEFV6h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 17:58:37 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:45786 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbfEFV6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 17:58:37 -0400
-Received: by mail-pf1-f196.google.com with SMTP id e24so7456570pfi.12
-        for <git@vger.kernel.org>; Mon, 06 May 2019 14:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VuDRSUbUzNOCLpq6o0UD+vLSySu4ErTTzfGPistrAyY=;
-        b=kbC/8a+GVGHIinyZIJLP7pfp+B3MoR4V9QmNgfEOoy9rWLdasQK0K8L7bg+diRa1sz
-         QslJrOWy8Eq9q58AVN9gwZOR88lWrBaTmh95pCu5IcKrcgiPQUIgP+Jvry/DPIVivpnv
-         e7yw+W1/ODOfoKUCKmAQcny3XYGYtKvL9eOPOAT0D7ehk+M6B5gsEfEUOpoxFhjhFLvM
-         6ON69S1z3EOPk5sRApY+Zq++szm9n9gVw4AOKWKX2KDRAvM2YaO/Rnc6jI/llt1XBNAf
-         rQ5okzLNRIJJg5pMllLzcWrzpcNqOUukSx2v75ko9qIUnjhVR8xaJ41c2gMIiqVADxjO
-         tcIg==
+        id S1726321AbfEFWZf convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 6 May 2019 18:25:35 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50347 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725994AbfEFWZf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 18:25:35 -0400
+Received: by mail-wm1-f66.google.com with SMTP id p21so17731952wmc.0
+        for <git@vger.kernel.org>; Mon, 06 May 2019 15:25:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VuDRSUbUzNOCLpq6o0UD+vLSySu4ErTTzfGPistrAyY=;
-        b=e2jhXOC3+S0W0uQLqVN5v+SvicpggxUjYmYaDzwcnTPOGH6wQ6QCBK9Q+hf+/Sv319
-         ixjhIne3Vmvv9fq5/R32SN79iVQ5laGVas3HEPZktJr7fpKsls/y3LxNBu96XgzUANIh
-         TEPm+D5dV6HglXvwux78P4xBOOpMoshpCfEvtGC8MNbRlYthMrWMt9x/yuLW0TRGPKS6
-         gUE30f2rpSje1vwqKz29O97P4kWT/2rhDjPxyBqxAMdud+LEXe+VXnKTtgyaBO5D9BiK
-         G5afnT0GSjHgfNCOCbhLfF9bXdiaznzm3MKkkP2q6pmlfjgiRTVL4hjAItrZ3o1JMzT6
-         mXDQ==
-X-Gm-Message-State: APjAAAW6dfqzbp+OZ4YGOPolygOmr0mXpcAh10LKdlpmC1gc5U8ur5ik
-        F+0t4PyJH0dLZiPFFV0Llm5ftg==
-X-Google-Smtp-Source: APXvYqz2sV1sJ7K1DDKy/v1uFxOdSmoXPIs6YYLDa9gqKIK5nJQR+krj93M3nMHkYicDGeCetaC5Hg==
-X-Received: by 2002:a63:6ac3:: with SMTP id f186mr35004942pgc.326.1557179916325;
-        Mon, 06 May 2019 14:58:36 -0700 (PDT)
-Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
-        by smtp.gmail.com with ESMTPSA id w125sm18702706pfw.69.2019.05.06.14.58.35
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 14:58:35 -0700 (PDT)
-Date:   Mon, 6 May 2019 14:58:31 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, stolee@gmail.com
-Subject: Re: [PATCH] commit-graph: fix memory leak
-Message-ID: <20190506215831.GB85211@google.com>
-References: <f4ab2a50873b2fd91926d7401f784479504d1b10.1557178485.git.steadmon@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VijAtcm0KV7AR5WoD2e8VSNyVts/cN907+aqGTMT04s=;
+        b=emdN9EROU19dpWuVQ09N0MYdtpqmpKih15M+70WXOE50udqKfZRUo+b8XHuhtzgchK
+         vxtU3iAryrNP7SO+T+pKVsv+fSY033sSFAh97jlcbngRCajH9UEYv5ezL+t+6wo/nf9E
+         wp1f9F8/XRtGMVA7c4IIqoUt9A5eo1tH2+HYMgTgRImbzABNxKacd94IbMIhAomMPxCo
+         ngZhjEvGDN8I31Gok5q9U04PujMbTIwgpmgvzm8ZUa6+GtsPwH48RPropGS9qxVvjgpN
+         p4bUZWRSCG02wU07ksmTyu7EZBnY8VgKe38KdRl5G2OU6/Xaa4RpSthCa1eoKRrnmFPI
+         TqzQ==
+X-Gm-Message-State: APjAAAVNbdiYY2VirIR2uF5CIl5joMDd9o9TDeDHDW0qxmFxVgIsdss1
+        V3pqC4RS6/R+qHvZTIHiRBoE1BvEtFUKy2vGywOOlzNT
+X-Google-Smtp-Source: APXvYqyH1H4GH46sQUzdL64dmYSKUZF85dr4y45Om+a4yKZ50+ZdkCd7srGIIrMyn1ilNZme09/Qu1C6FyjatYgNfYI=
+X-Received: by 2002:a1c:cb85:: with SMTP id b127mr19252364wmg.76.1557181533058;
+ Mon, 06 May 2019 15:25:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f4ab2a50873b2fd91926d7401f784479504d1b10.1557178485.git.steadmon@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <1556895855.30374.0@yandex.ru> <20190506203003.GA85211@google.com>
+In-Reply-To: <20190506203003.GA85211@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 6 May 2019 18:25:22 -0400
+Message-ID: <CAPig+cTC8aGkM3ksG9cEapz33-FcjsvoO9ejeJzjmkyXHjvoJQ@mail.gmail.com>
+Subject: Re: [RFE] Allow for "interactive"-like actions in non-interactive rebase
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Konstantin Kharlamov <hi-angel@yandex.ru>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, May 6, 2019 at 4:30 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> On Fri, May 03, 2019 at 06:04:15PM +0300, Konstantin Kharlamov wrote:
+> > Interactive rebase (i.e. for example "git rebase -i HEAD~10") is used most
+> > often to apply an action to a single commit, e.g. "rename", "edit", "fixup",
+> > etc…
+> >
+> > Instead, it would be nice to have native support in git to start "rebase"
+> > for a given commit, and pass the "interactive action" to use on that commit.
+> >
+> > $ git rebase -i HEAD~10 --action edit
+> > $ git rebase -i HEAD~10 --action rename
+> > $ git rebase -i HEAD~10 --action fixup
+>
+> I would totally use this. The equivalent workflow right now is a pretty
+> large number of steps for, say, fixing a typo.
 
-This change looks good to me, and like good evidence for the benefits of
-automated tooling :)
+Isn't this pretty much what Phil Hord's RFC patch series[1] was about?
+However, Junio outlined[2] a generalization of that approach providing
+more flexibility and control.
 
-Thanks!
- - Emily
-
-On Mon, May 06, 2019 at 02:36:58PM -0700, Josh Steadmon wrote:
-> Free the commit graph when verify_commit_graph_lite() reports an error.
-> Credit to OSS-Fuzz for finding this leak.
-> 
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  commit-graph.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 66865acbd7..4bce70d35c 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -267,8 +267,10 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
->  		last_chunk_offset = chunk_offset;
->  	}
->  
-> -	if (verify_commit_graph_lite(graph))
-> +	if (verify_commit_graph_lite(graph)) {
-> +		free(graph);
->  		return NULL;
-> +	}
->  
->  	return graph;
->  }
-> -- 
-> 2.21.0.1020.gf2820cf01a-goog
-> 
+[1]: https://public-inbox.org/git/20190422000712.13584-1-phil.hord@gmail.com/
+[2]: https://public-inbox.org/git/xmqqk1fm9712.fsf@gitster-ct.c.googlers.com/
