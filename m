@@ -2,97 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0366A1F45F
-	for <e@80x24.org>; Mon,  6 May 2019 15:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95D811F45F
+	for <e@80x24.org>; Mon,  6 May 2019 15:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfEFPel (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 11:34:41 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:40143 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725994AbfEFPel (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 11:34:41 -0400
-Received: by mail-io1-f67.google.com with SMTP id s20so1762836ioj.7
-        for <git@vger.kernel.org>; Mon, 06 May 2019 08:34:41 -0700 (PDT)
+        id S1726509AbfEFPi0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 11:38:26 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:32934 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726298AbfEFPi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 11:38:26 -0400
+Received: by mail-lj1-f193.google.com with SMTP id f23so11515881ljc.0
+        for <git@vger.kernel.org>; Mon, 06 May 2019 08:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=CMMELclvNjXhfIIozD5GOIDdgf1lbp6vnJftDgrMEas=;
-        b=t+enr5d46s3nIH7F4BhM7BjolAowDCLhduD33NRPjr8tZucryjHwD1wovS9bCb5mWG
-         hpo5NOGrQjpXAQMo+zrSu9bxcnTaG3arxaZxzR33MH+i4gftgF+ioPfqcXRqEsdgoUDG
-         HwEMN5rxr6pBkYwLHZhMRLss4C0evacL013386qqIKKWbkQeDIKBzENoJOOLj2Cxumdt
-         3yjT+/QeurUFP9WqCOrjr/PklhZMAFudfjt9FmgJTL7m7F86TfI9Z7LeaZKBoW2rGfyx
-         Oe/iob630yxcLnHyD9/68aWoSrrq3CQoWv6jRKnuxAIl8MDiHkOhpA/Z+q8CYMFYDm4g
-         XrGw==
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=YXs6oRrPlqy9hZ4jnnj6Vbn/B1+GO89uhoT7ECpJShw=;
+        b=XYL1OMLU70suvC2RI8qudPh91HgESVHmEbowHE1RSi36aEa5/7CG47SfxUM2FDyzpE
+         RTy7VcwhPgImSJB1NzWkOlNhrwqeHsyYxz97uOmZdPQny8PfW9mTr7x+COThU1Qs4u3Y
+         EpUnUWEEclxr0gk2dGbatbCOYGLfn32ZnxeR4lIy1mtClj4K34hcU//KaD56/N4QA8XD
+         LH/VgnnM2y6P7KfFQ2wYYWYeZ+cKX+/kQ0s3v0eZaukzcvKFBnn3c9CU8Jcaj9ZdgRDX
+         ghwLOm0Vn2xtk6L6ZxOo4OKKJrOQZQlz39JXDAixMQywuVs+GlYpgIe0/yB174RHBVPf
+         4SzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CMMELclvNjXhfIIozD5GOIDdgf1lbp6vnJftDgrMEas=;
-        b=VYRTBFLTmk/ZjvuGqsaPZ1Fyx7/ki9vdray8MWiMruOzMUuM/hYzzUHnlwTSQUU7Z8
-         oOj61aKcTSncQgTADFMLSOmjL2nq0qaMFl2OW0msPxt7g+6cAs3Y9IWsmIe58uzdl9X8
-         YgmWBjGzbL7y1gDPNEhtAP160u2j/iIAMGbZJIwnL8fdB/Q3aEPtgxEPRa/NsZvV56UJ
-         jd6hmnKUGnr746M4aO22SZ8V6pGJt2n6+QvTSsAmtBgDBbmzBTc/sFGDpAqvfKePyKVw
-         5qo+2Wng4EBeHc4LuFSN4WhL8LjKOLXmaCDQnurkLo6w9GwzB/NvgFffQiq8FfCRH8fd
-         dZmA==
-X-Gm-Message-State: APjAAAVdX/8gXKh0we/LN/lpLea0s5JChtm39OXn8B/NlT4KUWpFsTSY
-        Z0+ylybr/Q6xj399uM4TPFM=
-X-Google-Smtp-Source: APXvYqw0pdpCiv3Lp5vLlmdnVPp2DEeggAw0oE12fBU6wYUSIe2wZtFigF/je8m42D5NLnpq8pcvXw==
-X-Received: by 2002:a6b:8ed0:: with SMTP id q199mr11465576iod.181.1557156880692;
-        Mon, 06 May 2019 08:34:40 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
-        by smtp.gmail.com with ESMTPSA id m3sm3811664ion.69.2019.05.06.08.34.38
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 06 May 2019 08:34:39 -0700 (PDT)
-Date:   Mon, 6 May 2019 11:34:37 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v5 0/3] *** SUBJECT HERE ***
-Message-ID: <20190506153437.GA1170@archbookpro.localdomain>
-References: <cover.1556062365.git.liu.denton@gmail.com>
- <cover.1556526308.git.liu.denton@gmail.com>
- <20190429083042.GA22366@archbookpro.localdomain>
- <877eb3j145.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=YXs6oRrPlqy9hZ4jnnj6Vbn/B1+GO89uhoT7ECpJShw=;
+        b=Iq9J4VZ+21qDO9z/f9IcyEh89w3kWzRsOBfAjfWv8qPrVCUBCTBzvxY/5k5vw2Wu8t
+         fV+an8jiaW6nMcfvs6kkse9odbV4dWupwFEUH2gg34lFZKN9CqjlAsHDaLYN1Esp/6Vz
+         nNmfAQ53TsZiiV7Bf76wjNR/TdRmm/8RZpXvTzYRZYl9bdSJu3smwmzfqykFjVBd1MIa
+         LRDYEUzs5nNSdehMTKetWKl+YA40h1zCbU142j3S6HqiTXmD5+yYXV5WcYHgBEhYUTSm
+         WMaaIIIjY3SBZKdkm6tIDDIWXpapfpqK1eHFCXyVVnPxdjdn7bu+DKqv7lJ+YDR/xJrX
+         JF/Q==
+X-Gm-Message-State: APjAAAV3wv8r23VVgqIdqvnMTA8RG17plo3szrkP/Z4uUpBepOJHY8uJ
+        Lz9hUlQBNSe75uIYhmmlo24Y7RSNj7Bs3/U9anWoGQ==
+X-Google-Smtp-Source: APXvYqzHqNVFuxgQnaGh6Y1byVXpUB5Vo+cdabaxmbS5NsvrHXEeJWD+6ike003IRyx7nWOkAnqv+P6uN7h86OBgNtU=
+X-Received: by 2002:a2e:9e47:: with SMTP id g7mr13693004ljk.48.1557157104461;
+ Mon, 06 May 2019 08:38:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877eb3j145.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
+ <20190503191231.GA5426@esm>
+In-Reply-To: <20190503191231.GA5426@esm>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 6 May 2019 10:38:12 -0500
+X-Google-Sender-Auth: jCdnvDm1vCKNbvLfWfkZYsseCfg
+Message-ID: <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
+Subject: Re: Merge commit diff results are confusing and inconsistent
+To:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 06, 2019 at 01:03:54PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Apr 29 2019, Denton Liu wrote:
-> 
-> >> Subject: [PATCH v5 0/3] *** SUBJECT HERE ***
-> >
-> > I forgot to change the subject... Embarassing.
-> 
-> Do you use git-send-email with --force? We should detect & stop these
-> being sent out otherwise. See a03bc5b6ad ("send-email: Refuse to send
-> cover-letter template subject", 2009-06-08).
-> 
-> Don't worry about the E-Mail itself, shit happens :) Just wondering if
-> that detection case is buggy, or if you used --force, or maybe sent the
-> E-Mails through another method than git-send-email...
+I feel like you got hung up too much on exact wording of what I was
+trying to describe. I do apologize I don't have the background to
+explain things 100% accurately, especially at a low level. My
+explanations are mostly intended to be as a user, based on what is
+observable, and based on intent. I'll clarify in the quotes below...
 
-No, when I started doing work on Git, I couldn't get git-send-email to
-work and, since then, I've just used Mutt to send my patches. So the
-only bug is in my workflow ;)
+On Fri, May 3, 2019 at 2:12 PM Eckhard Maa=C3=9F
+<eckhard.s.maass@googlemail.com> wrote:
+> Hold on. Basically, there is no such thing as "committed directly" for a
+> merge. You only have differences of the commit to its parents. What you
+> aim for are changes that you cannot find in either preimage - and this
+> can be observed best with the --cc option. Maybe also interesting would
+> be -c for showing a comined diff and -m for showing diffs to parents
+> after one another.
+
+"Committed directly" here means that I made some changes, none of
+which is part of a parent commit. Since no additional commits were
+made following the merge, I assume that within the merge commit is
+some type of diff. If I perform a merge, make some changes, and amend
+those changes into the merge, in mind they ARE contained in that merge
+commit. The underlying machinery doesn't matter here: This is the
+observable state to the user.
+
+Maybe the machinery, which I have no knowledge of or transparency
+into, is important because it is affecting the behavior I'm seeing
+when I do the diffs? Not sure...
+
+> There shouldn't be "just the diff of <commit>" - you always have to tell
+> where to diff it too, intrinsically Git does not save patches, but the
+> whole content, after all.
+
+I do understand this. But again, I'm not trying to be super technical
+here. In plain english, all I'm trying to say is that I want to see
+the changes that 1 commit introduces into the code base. So when it
+comes to communicating the end result I want, I talk about it in terms
+of 1 commit (the merge commit). The means to get that output is part
+of my question and overall confusion. But as a baseline, I want to
+clarify that I do understand a range is required input for the diff
+command. In the case of merge commits, the way you specify the ranges
+has many forms so I'm not sure based on the results I see, which one
+is correct or what they all mean.
+
+> Somebody else might know better why the diff actually produced the
+> results you were looking for. I admit it is puzzling to me - I would
+> have expected to error it out on the output of git rev-parse as there
+> are three items.
+
+Actually I can't think of any other command that can show me what
+revision ranges translate to in "raw" commits. To me the raw forms are
+always <sha1> and ^<sha1>, repeated as many times and in as many
+orders necessary. Don't all of the vanity revision specifications
+ultimately boil down to "from this parent" and "not from this parent"?
