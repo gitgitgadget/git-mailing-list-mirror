@@ -2,266 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F50A1F45F
-	for <e@80x24.org>; Mon,  6 May 2019 22:28:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A05C1F45F
+	for <e@80x24.org>; Mon,  6 May 2019 22:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbfEFW2t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 18:28:49 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:56349 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbfEFW2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 18:28:49 -0400
-Received: by mail-qk1-f202.google.com with SMTP id t5so15928557qkt.23
-        for <git@vger.kernel.org>; Mon, 06 May 2019 15:28:48 -0700 (PDT)
+        id S1726181AbfEFWrS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 May 2019 18:47:18 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:40044 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725994AbfEFWrS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 May 2019 18:47:18 -0400
+Received: by mail-it1-f195.google.com with SMTP id g71so7589175ita.5
+        for <git@vger.kernel.org>; Mon, 06 May 2019 15:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=c9psTsrfYzedOKjo1YK0IqHAi2VdXIwgZuWD1lb97gs=;
-        b=HU9UQwiqDQiMnF2sH8JgPwUNNQeVDxnBOo5OQkHCTmNdII+MQwWo1xmfDUBM4kqj9Q
-         b3Y1QIxvvvqDTUmeAMY+s/lFO4SlImQtFUVNyqfExqWrCkpvWRT3JhiqzuLcAWH7q7lQ
-         VAWxWvoRbYMCAf92jDNJgqmkfxAR/tAmyc1I7Ti0lXvkOMBFn6l/0OVg4e6Ozh3fpnnR
-         gtY4toQ7AWzZ/sqA3FMvKX+Q8tx6ie91v6PLcCoonOGDs2Kt6li4dgGdDAgGn3FOxgkX
-         N4XVPbX1VoPCsvFpl3LDF65NiARDPsSCfQ5bWkau8NauQ1iFwVoGYpDpYxB6djEMqHKZ
-         eKIg==
+        bh=3m0JdV5OrWJVakEYTpQZRGJfDI22RS/87UI6AKck3sc=;
+        b=tHjKhui6kQf2MTwS0TqJlYHdsVB9jVjzdpz515kOpZrvmyr8oDEOx+9rqSLhJTg/Ef
+         KYdJd/jg9YcSev/fWy77ZJW6pLeC/uysOIMnRVnAVss9GYFxkfUTe8imC1oPRIhPS7pj
+         G2rGy7YzmxRbcduD2w8/uhmJyu/JlVYlE5auJ8ikHKZyrzyQArLwy7705jfeDGrFezkf
+         TRLh0j2jInqq1+V0+6TrSTXf7O69aEh1vnetGqiWEhs+rTtYEEjEWHZeLI53vUkrvpOb
+         aSvO4cyLl1pOz2F7fr6vQgi4YpuWh2Qp3l3AYaUcVFr8MBGAj5aNfCi/ceymZcyA1+PL
+         oLtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=c9psTsrfYzedOKjo1YK0IqHAi2VdXIwgZuWD1lb97gs=;
-        b=Pgxqsg+tjWuVDJTrKxKl2DC3ilZxCMKMaF4cwR9UWVeuwP8KPkxQjcSRLYcQcSMohv
-         t6PDvJvYhWucl5A+34UesVwr2lnnohXGWNe2UaaUNVwwknUfvNOY4PwCnYKv8EbmsDMi
-         YKJ1AcRxzu+qTFzQjgCR8vXYkJmnTBQFpp1fyXdv0HrlFjGGe1RmN/9NJ9kodKLU4OIm
-         /PtrFI2AyZ+TB0H47zZXXLrZKpzBJsrtvYXiqw7SPnkjJFOWXHczGk0LHm12HHmhXNW4
-         gMfYr4slJ5UIWtFWMwdZd9J/rJaOZkdOsWyMAkpqVDqYKi9WFH8/dGCWM18v1fRo0Gn9
-         +7Qw==
-X-Gm-Message-State: APjAAAX3EKZkmDSl1D0XPukmHGGRy11BoMDeGAgas6rYfUUCHtNREkOD
-        VQYbqiEZMZdMdy54R3BPIE+xCDXn4/lYOEGRk41v
-X-Google-Smtp-Source: APXvYqzf0vC8f+tCpHRl8/jfbyxVC35UKD5B/M885g1MwUjtIM8ph3DpAjyT9SCAQhIv+gRuWBIOkZn/UdVAC0PAfgBF
-X-Received: by 2002:ac8:930:: with SMTP id t45mr6981114qth.357.1557181728184;
- Mon, 06 May 2019 15:28:48 -0700 (PDT)
-Date:   Mon,  6 May 2019 15:28:44 -0700
-In-Reply-To: <20190423193410.101803-1-emilyshaffer@google.com>
-Message-Id: <20190506222844.261788-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190423193410.101803-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: Re: [PATCH v4] documentation: add tutorial for first contribution
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
-        Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3m0JdV5OrWJVakEYTpQZRGJfDI22RS/87UI6AKck3sc=;
+        b=VMATQBDxLZPqFFfZlM4fZS1WEkpLhQrAo+MnmWT0fyXrWJGCkQyLuHv02cE01LvaW8
+         Kc16Hqjke+g4XusrwdGN7XF1llCBwshaKaojugE3u8Xc76Ue9yHvd5CK0FQzTDpV8+r0
+         Mt5g7MF3uiEgCjxZAU1ZDI2rv6BYMCmj8UbHWUKapC77BJaq5J6JcXL2otdlQxoqZyag
+         sLehN6VULJmHZvoALnEWrON+/sWeyowDJ0wcjLL567Iwee6W3yto3nWKs6NfypJUZsqq
+         4JZvqx3Pj9ZzEt/r9OBrNORcQ/PLtyrRIxbCo2hYYpsmg7bd7mo7ARknqqnTP8hxhdx2
+         5H2A==
+X-Gm-Message-State: APjAAAVJ7hclJ7VZTfS6ALV2+MvpDg2Wcm6Npbl3MmrsZLmFepol39y7
+        iSy15a6kXgidPtZoRlZl25fu8WhgYB0BfPUZs2wy
+X-Google-Smtp-Source: APXvYqzP7QDZgKqk0+5J5/NG2Lapw4pAxvvY9c4ejtQfQNzlWWRA3LzClOsOJpSN7LhV2dIx+Ww8DV9CBRgKbFgynes=
+X-Received: by 2002:a02:b0c5:: with SMTP id w5mr20765004jah.95.1557182837099;
+ Mon, 06 May 2019 15:47:17 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAMfpvhKYRVwTVNLfRJYcjhHtg=FNLNPbnw8xtY93nJu228v6=g@mail.gmail.com>
+ <20190506192800.213716-1-jonathantanmy@google.com>
+In-Reply-To: <20190506192800.213716-1-jonathantanmy@google.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Mon, 6 May 2019 15:47:05 -0700
+Message-ID: <CAMfpvh+jbPcU2waU5n6nToxGEsC29WGOFPLR+ibXbhXL6WBb6w@mail.gmail.com>
+Subject: Re: Proposal: object negotiation for partial clones
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrn@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for not looking at this sooner. 
+On Mon, May 6, 2019 at 12:28 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> > I'm considering implementing a feature in the Git protocol which would
+> > enable efficient and accurate object negotiation when the client is a
+> > partial clone. I'd like to refine and get some validation of my
+> > approach before I start to write any code, so I've written a proposal
+> > for anyone interested to review. Your comments would be appreciated.
+>
+> Thanks. Let me try to summarize: The issue is that, during a fetch,
+> normally the client can say "have" to inform the server that it has a
+> commit and all its referenced objects (barring shallow lines), but we
+> can't do the same if the client is a partial clone (because having a
+> commit doesn't necessarily mean that we have all referenced objects).
+> And not doing this means that the server sends a lot of unnecessary
+> objects in the sent packfile. The solution is to do the fetch in 2
+> parts: one to get the list of objects that would be sent, and after the
+> client filters that, one to get the objects themselves.
+>
+> It was unclear to me whether this is meant for (1) fetches directly
+> initiated by the user that fetch commits (e.g. "git fetch origin",
+> reusing the configured "core.partialclonefilter") and/or for (2) lazy
+> fetching of missing objects. My assumption is that this is only for (2).
+Yes, that was my intention. The client doesn't really know anything
+about the hashes reported, so it can't really make an informed
+selection from the candidate list given by the server after the first
+request. I guess if we wanted to just reject *all* objects on the
+initial clone, this feature would make that possible. But that can
+also be achieved more embracively with a better filter system.
 
-Firstly, I'm not sure if this file should be named without the ".txt",
-like SubmittingPatches.
+>
+> My main question is: we can get the same list of objects (in the form of
+> tree objects) if we fetch with "blob:none" filter. Admittedly, we will
+> get extra data (file names, etc.) - if the extra bandwidth saving is
+> necessary, this should be called out. (And some of the savings will be
+> offset by the fact that we will actually need some of those tree
+> objects.)
+That's a very good point. The data the first request gives us is
+basically the tree objects minus file names and modes. So I think a
+better feature to implement would be combining of multiple filters.
+That way, the client can combine "tree:<some small number>" and
+"blob:none" and basically get an "enumeration" of available objects.
 
-As for my other comments below, the Makefile comment below is the only
-one I feel strongly about; feel free to disagree with the rest (which I
-think are subjective).
+>
+> Assuming that we do need that bandwidth saving, here's my review of that
+> document.
+>
+> The document describes the 1st request exactly as I envision - a
+> specific parameter sent by the client, and the server responds with a
+> list of object names.
+>
+> For the 2nd request, the document describes it as repeating the original
+> query of the 1st request while also giving the full list of objects
+> wanted as "choose-refs". I'm still not convinced that repeating the
+> original query is necessary - I would just give the list of objects as
+> wants. The rationale given for repeating the original query is:
+>
+> > The original query is helpful because it means the server only needs
+> > to do a single reachability check, rather than many separate ones.
+>
+> But this omits the fact that, if doing it the document's way, the server
+> needs to perform an object walk in addition to the "single reachability
+> check", and it is not true that if doing it my way, "many separate ones"
+> need to be done because the server can check reachability of all objects
+> at once.
+After considering more carefully how reachability works (and getting
+your explanation of it out-of-band), I would assume that my approach
+is no better than marginally faster, and possibly worse, than just
+doing a plain reachability check of multiple objects using the current
+implementation. My current priorities preclude this kind of
+benchmarking+micro-optimization. So I believe what is more important
+to me is to simply enable combining multiple filters.
 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 26a2342bea..fddc3c3c95 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -74,6 +74,7 @@ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technica
->  SP_ARTICLES += $(API_DOCS)
->  
->  TECH_DOCS += SubmittingPatches
-> +TECH_DOCS += MyFirstContribution
+>
+> Also, my way means that supporting the 2nd request does not require any
+> code or protocol change - it already works today. Assuming we follow my
+> approach, the discussion thus lies in supporting the 1st request.
+>
+> Some more thoughts:
+>
+> - Changes in server and client scalability: Currently, the server checks
+>   reachability of all wants, then enumerates, then sends all objects.
+>   With this change, the server checks reachability of all wants, then
+>   enumerates, then sends an object list, then checks reachability of all
+>   objects in the filtered list, then sends some objects. There is
+>   additional overhead in the extra reachability check and lists of
+>   objects being sent twice (once by server and once by client), but
+>   sending fewer objects means that I/O (server, network, client) and
+>   disk space usage (client) is reduced.
+Agreed, and this is still true in the new approach we've agreed on.
 
-Any reason not to keep this alphabetized?
-
-> +=== Pull the Git codebase
-> +
-> +Git is mirrored in a number of locations. https://git-scm.com/downloads
-> +suggests one of the best places to clone from is GitHub.
-> +
-> +----
-> +$ git clone https://github.com/git/git git
-> +----
-
-I would rename the header to "Clone the Git repository" instead, since
-"pull" has a specific meaning. Also, I think that "one of the best
-places" is unnecessary (I would just say "Clone the Git repository from
-one of its many mirrors, e.g.:"), but perhaps you want to leave it in
-there to maintain the informal tone.
-
-> +We'll also need to add the extern declaration of psuh; open up `builtin.h`,
-> +find the declaration for `cmd_push`, and add a new line for `psuh` immediately
-> +before it, in order to keep the declarations sorted:
-> +
-> +----
-> +extern int cmd_psuh(int argc, const char **argv, const char *prefix);
-> +----
-
-I was going to say to not include the "extern", but I see that builtin.h
-has them already, so it's probably better to leave it there for
-consistency.
-
-> +The list of commands lives in `git.c`. We can register a new command by adding
-> +a `cmd_struct` to the `commands[]` array. `struct cmd_struct` takes a string
-> +with the command name, a function pointer to the command implementation, and a
-> +setup option flag. For now, let's keep cheating off of `push`. Find the line
-> +where `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing
-> +the new line in alphabetical order.
-
-For an international audience, it might be better to replace "cheating
-off" with its literal meaning. It took me a while to understand that
-"cheating off" was meant to evoke a so-called cheat sheet.
-
-> +Go ahead and inspect your new commit with `git show`. "psuh:" indicates you
-> +have modified mainly the `psuh` command. The subject line gives readers an idea
-> +of what you've changed. The sign-off line (`-s`) indicates that you agree to
-> +the Developer's Certificate of Origin 1.1 (see the
-> +`Documentation/SubmittingPatches` +++[[dco]]+++ header). If you wish to add some
-> +context to your change, go ahead with `git commit --amend`.
-
-I think the last sentence is confusing - didn't we already add the
-context? (And if it's meant more along the lines of "if you want to
-change your commit message for whatever reason, use --amend", I don't
-think that's necessary here, since we are assuming that the user knows
-how to use Git.)
-
-> +=== Implementation
-> +
-> +It's probably useful to do at least something besides printing out a string.
-> +Let's start by having a look at everything we get.
-> +
-> +Modify your `cmd_psuh` implementation to dump the args you're passed:
-> +
-> +----
-> +	int i;
-> +
-> +	...
-> +
-> +	printf(Q_("Your args (there is %d):\n",
-> +		  "Your args (there are %d):\n",
-> +		  argc),
-> +	       argc);
-> +	for (i = 0; i < argc; i++) {
-> +		printf("%d: %s\n", i, argv[i]);
-> +	}
-> +	printf(_("Your current working directory:\n<top-level>%s%s\n"),
-> +	       prefix ? "/" : "", prefix ? prefix : "");
-
-Follow the Git style by not using braces around the single-line `for`
-block.
-
-> +Still, it'd be nice to know what the user's working context is like. Let's see
-> +if we can print the name of the user's current branch. We can cheat off of the
-> +`git status` implementation; the printer is located in `wt-status.c` and we can
-> +see that the branch is held in a `struct wt_status`.
-
-Same comment about "cheat off" as previously.
-
-> +----
-> +$ git send-email --to=target@example.com
-> +----
-
-Hmm...don't you need to specify a directory?
-
-> +You will also need to go and find the Message-Id of your previous cover letter.
-> +You can either note it when you send the first series, from the output of `git
-> +send-email`, or you can look it up on the
-> +https://public-inbox.org/git[mailing list]. Find your cover letter in the
-> +archives, click on it, then click "permalink" or "raw" to reveal the Message-Id
-> +header. It should match:
-> +
-> +----
-> +Message-Id: <foo.12345.author@example.com>
-> +----
-> +
-> +Your Message-Id is `<foo.12345.author@example.com>`. This example will be used
-> +below as well; make sure to replace it with the correct Message-Id for your
-> +**previous cover letter** - that is, if you're sending v2, use the Message-Id
-> +from v1; if you're sending v3, use the Message-Id from v2.
-
-I think it's better to describe the message ID as without the angle
-brackets. Reading the RFC (https://tools.ietf.org/html/rfc2392), the
-message-id doesn't have them.
-
-[snip]
-
-> +----
-> +$ git send-email --to=target@example.com
-> +		 --in-reply-to=<foo.12345.author@example.com>
-> +----
-
-The angle brackets can be omitted. Also, directory (or glob expression
-in this case)?
-
-> +=== Bonus Chapter: One-Patch Changes
-
-This is not truly a bonus - the mailing list prefers this if the patch
-set contains only one patch.
-
-> +In some cases, your very small change may consist of only one patch. When that
-> +happens, you only need to send one email. Your commit message should already be
-> +meaningful and explain the at a high level the purpose (what is happening and
-> +why) of your patch, but if you need to supply even more context, you can do so
-> +below the `---` in your patch. Take the example below, generated with
-> +`git format-patch` on a single commit:
-
-It's not clear to me how `git format-patch` can generate the extra
-paragraph below. The user would either have to include "---" in the
-commit message (in which case there would be an extra "---" below the
-extra paragraph, which is perfectly safe) or edit the email *after*
-`git-format-patch` has generated the email.
-
-> +----
-> +From 1345bbb3f7ac74abde040c12e737204689a72723 Mon Sep 17 00:00:00 2001
-> +From: A U Thor <author@example.com>
-> +Date: Thu, 18 Apr 2019 15:11:02 -0700
-> +Subject: [PATCH] README: change the grammar
-> +
-> +I think it looks better this way. This part of the commit message will
-> +end up in the commit-log.
-> +
-> +Signed-off-by: A U Thor <author@example.com>
-> +---
-> +Let's have a wild discussion about grammar on the mailing list. This
-> +part of my email will never end up in the commit log. Here is where I
-> +can add additional context to the mailing list about my intent, outside
-> +of the context of the commit log.
-> +
-> + README.md | 2 +-
-> + 1 file changed, 1 insertion(+), 1 deletion(-)
-> +
-> +diff --git a/README.md b/README.md
-> +index 88f126184c..38da593a60 100644
-
-[snip]
-
-There's also the issue of titles having Capital Initials raised in
-another review [1]. I think it's better to use sentence case, like in
-SubmittingPatches.
-
-[1] https://public-inbox.org/git/CABURp0rE23SCxB4VD0-kVWp6OfS7-4O6biyD7zMqSUQvR_RZxg@mail.gmail.com/
-
-Overall, thanks for writing this. I think it's a good overview of what a
-contributor should do when they write a set of patches for inclusion in
-Git.
-
-I had a meta-concern about the length of this document, but I think most
-(if not all) of the information contained herein is useful, so I think
-that the length is fine.
-
-The other meta-concern is maintaining the informal tone when we update
-this document (for example, when we add features like range-diff which
-can be used when sending v2 - well, somebody can add information about
-that to this document once it has been merged); but I don't think that
-is a concern in practice (either we keep the tone or there is a slight
-tone mismatch, and I don't think that either is a big deal).
+>
+> - Usefulness outside partial clone: If the user ever wants a list of
+>   objects referenced by an object but without their file names, the user
+>   could use this, but I can't think of such a scenario.
+Neither can I.
