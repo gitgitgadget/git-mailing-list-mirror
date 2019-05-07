@@ -2,96 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A6681F45F
-	for <e@80x24.org>; Tue,  7 May 2019 15:55:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B49F71F45F
+	for <e@80x24.org>; Tue,  7 May 2019 16:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbfEGPzK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 11:55:10 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:40866 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726438AbfEGPzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 11:55:10 -0400
-Received: by mail-wr1-f45.google.com with SMTP id h4so3812890wre.7
-        for <git@vger.kernel.org>; Tue, 07 May 2019 08:55:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=J86PZPHVbbMp7voDfoLJdo+o/wYFakRR5zw4+Z6cQhE=;
-        b=RgofxhpnBOepIqFBzdH4I/wwvfaJOVs8dnj5mELbHx3ZLSpa44U0uaNjlCtIyEzv4X
-         Kb3BYfr4Bgvy6KqnOW9cYSz9wRM47Al+yngwLN2Qh1EXLrg5z/XPzOijE93N4vN2MXHp
-         UyUxMuO+/6hC+U1l8Hfm0dUsqPI6AtDb91qiZr43xQ4oo+LvisDAl6yC6Ef+M3RlW8B1
-         VTTQFk13kS+lu8Rd1ZJBdlr0NkUWITlvBLc4wRDviXvQk5Clw7sQRp5A1GKYftDJZL4z
-         2qyLB/xK08xgBU1Vr7JRiOTx/ZJv3PBf/DVkjzYYtWeOw5SDLO+kogAwR2KJaMMNRCmV
-         aj7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=J86PZPHVbbMp7voDfoLJdo+o/wYFakRR5zw4+Z6cQhE=;
-        b=rqKEXQrdbTF9wEyIXtRlIggDFWiXtRTLl0YsTQQkbohe+P74T1yRlpq/MPIQl0QjAw
-         R5ReVUuw5XSrN7UYExgHYeZygGPPDunxo504H81dTJnpg+1EMeZ/S0s6EUJ7dQWP5B5E
-         RFd94rbEN+/Em3VXsMGOqhh0tOg3xBOxkygngTneHldY8peN/RNx37GjYhYPM67RV1VI
-         CvwPmyzP/6MpiRqZ38LlB5MixpQ5EmOgY/6DvPSN8dceGlVC7hEMv2jfExglCPb1URWK
-         QNWIb2uJe8NajVLKePnn2ZW86WxDS3kJM1dtfmojUzIdZ5R9iXC++a2YirL1tJJRyeDy
-         jgbw==
-X-Gm-Message-State: APjAAAXwDNexovXIRY+2YitYLUU29mzWMCoy6ie4HjBlJc17KSF4wPvm
-        Vhnvld1xzJWfZbHAGY3mKbSLsUXM
-X-Google-Smtp-Source: APXvYqxxc5VuwEOtrB7PJ79diUF5rfkmZGAOsuYngX6TBQ4SZbTmcuob5zAHy2cymHNR38BCLwszLw==
-X-Received: by 2002:a5d:52c6:: with SMTP id r6mr24317854wrv.131.1557244508293;
-        Tue, 07 May 2019 08:55:08 -0700 (PDT)
-Received: from esm (ipbcc038b1.dynamic.kabel-deutschland.de. [188.192.56.177])
-        by smtp.gmail.com with ESMTPSA id j71sm14319795wmj.44.2019.05.07.08.55.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 May 2019 08:55:07 -0700 (PDT)
-From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
-X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
-Date:   Tue, 7 May 2019 17:55:05 +0200
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@googlemail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: Merge commit diff results are confusing and inconsistent
-Message-ID: <20190507155505.GA31344@esm>
-References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
- <20190503191231.GA5426@esm>
- <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
- <874l67i1ie.fsf@evledraar.gmail.com>
- <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
- <20190507145849.GA6313@archbookpro.localdomain>
+        id S1726847AbfEGQHc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 12:07:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64886 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726777AbfEGQHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 12:07:32 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6F19149F2F;
+        Tue,  7 May 2019 12:07:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=nt2cJI1f19ft
+        Ul03luM25A7lWOQ=; b=bRxxom2HNIju4/oLJO+JmZ+2qIb85ZE66cfRx/S3NwNf
+        t3/FcadIJFE/N8GWUaihItte5nRpW4b4EUnKG7uXcP3Z+K6wCo9RgLY6H0lHdU10
+        5x0Lof2UjC2ucLkGuxiWTRhAbNQhMrfm+simD3lTDJuQr3cW5kJaUUwAEC2Sac8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KiQ+LI
+        X7i0mjz1m0yrxfDamDVWpwEF8mCNZFUnO/EC5Rbibxb5LNRisvvsn6Argi59S1Zm
+        man1SNYcPrK9sY//y1aVTCStltyW+5lBUKqJtlYcverJQyi3x0gcrWT/OU8dz5fy
+        NKXhsNLOQy3BTW+1pXXnnRDj248PqoiSabGnU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC947149F2E;
+        Tue,  7 May 2019 12:07:29 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 298E4149F2D;
+        Tue,  7 May 2019 12:07:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase --abort: cleanup refs/rewritten
+References: <20190426103212.8097-1-phillip.wood123@gmail.com>
+        <20190507151530.GO14763@szeder.dev>
+Date:   Wed, 08 May 2019 01:07:27 +0900
+In-Reply-To: <20190507151530.GO14763@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Tue, 7 May 2019 17:15:31 +0200")
+Message-ID: <xmqqpnoujlj4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190507145849.GA6313@archbookpro.localdomain>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3690802A-70E2-11E9-9E19-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 07, 2019 at 10:58:49AM -0400, Denton Liu wrote:
-> For more details, this code[2] just blindly diffs the first two
-> endpoints returned preceding `repo_init_revisions`.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-If you throw in more than two endpoints, the result is a combined diff
-with respect to the first commit. You can have some fun with that, eg
-"git diff -c @ @~4 @^^2~4".
+> This patch and the topic 'pw/rebase-abort-clean-rewritten' can't be
+> compiled on its own, because it starts using 'struct replay_opts'
+> here, which is defined in 'sequencer.h', but 'builtin/rebase.c'
+> doesn't include that header yet.  (Though 'pu' already builds fine,
+> because commit 0609b741a4 (rebase -i: combine rebase--interactive.c
+> with rebase.c, 2019-04-17) in the parallel topic
+> 'pw/rebase-i-internal' adds the necessary #include.)
 
-> Also, not to rehash an old discussion but I'll let this thread be my
-> argument *against* allowing range-notation in git-diff.
+Thanks; that's entirely my fault.  I needed to find a good fork
+point and failed to do so.  FTR, when there are too many topics
+I need to queue on a given day, I may not have time to compile
+check individual topic branches before merging them to the
+integration branches, testing the integration branches and pushing
+them out.  That was what happened here.
 
-Well, I think the most confusing part is to have this undocumented
-around. The range notation are basically just the same symbols for
-git-diff, but the meaning seems to be quite different. If this is going
-to stay - shouldn't there be at least some documentation for people
-trying such stuff out? And that we can point to? Or is there a reason to
-keep this undocumented?
+> So, to keep future bisects from potentially tipping over the compiler
+> error, this patch should either #include "sequencer.h", or be applied
+> on top of 'pw/rebase-i-internal'.
 
-Greetings,
-Eckhard
+I suspect that the latter was how the patch originally was
+developed.
