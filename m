@@ -6,67 +6,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE57B1F45F
-	for <e@80x24.org>; Tue,  7 May 2019 07:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3B5D1F488
+	for <e@80x24.org>; Tue,  7 May 2019 07:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbfEGHTc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 03:19:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49864 "HELO cloud.peff.net"
+        id S1726449AbfEGHdY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 03:33:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49874 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726828AbfEGHTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 03:19:31 -0400
-Received: (qmail 17892 invoked by uid 109); 7 May 2019 07:19:31 -0000
+        id S1726085AbfEGHdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 03:33:24 -0400
+Received: (qmail 18361 invoked by uid 109); 7 May 2019 07:33:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 May 2019 07:19:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 May 2019 07:33:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8894 invoked by uid 111); 7 May 2019 07:20:07 -0000
+Received: (qmail 8958 invoked by uid 111); 7 May 2019 07:34:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 07 May 2019 03:20:07 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 07 May 2019 03:34:00 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2019 03:19:29 -0400
-Date:   Tue, 7 May 2019 03:19:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2019 03:33:22 -0400
+Date:   Tue, 7 May 2019 03:33:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 1/2] perf-lib.sh: make "./run <revisions>" use the
- correct gits
-Message-ID: <20190507071929.GC28060@sigill.intra.peff.net>
-References: <20190506202451.GA19850@sigill.intra.peff.net>
- <20190506232309.28538-2-avarab@gmail.com>
+To:     opal hart <opal@wowana.me>
+Cc:     git@vger.kernel.org
+Subject: Re: Cannot access git-scm.com with Tor
+Message-ID: <20190507073322.GD28060@sigill.intra.peff.net>
+References: <20190507070028.54c291af@clamav.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190506232309.28538-2-avarab@gmail.com>
+In-Reply-To: <20190507070028.54c291af@clamav.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 07, 2019 at 01:23:08AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, May 07, 2019 at 07:00:28AM +0000, opal hart wrote:
 
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index 169f92eae3..b15ee1d262 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -32,6 +32,10 @@ TEST_NO_MALLOC_CHECK=t
->  if test -z "$GIT_TEST_INSTALLED"; then
->  	perf_results_prefix=
->  else
-> +	if test -n "$GIT_PERF_DIR_MYDIR_REL"
-> +	then
-> +		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
-> +	fi
->  	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
->  	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
->  fi
+> I assume this community is at least slightly familiar with Tor and its
+> usefulness, so I'll cut to the chase. The Git website git-scm.com is
+> behind Cloudflare, which is currently configured to block suspicious
+> requests which unfortunately include Tor users. It would be greatly
+> appreciated to lower Cloudflare security settings to allow Tor users.
+> If the additional traffic really becomes an issue (I see the website
+> uses RoR backend [1]) then consider caching pages if that isn't already
+> done.
 
-I still like my fix better, as it works completely within perf-lib.sh,
-and so is a more direct fix.  And doesn't have this weird exported
-MYDIR_ABS that nobody actually uses.
+The "security settings" toggle for the site on Cloudflare is already set
+to "low", and there are no other restrictions. Is it actually blocking?
+Or is it asking for a CAPTCHA?
 
-But I don't actually think this topic is worth spending too many brain
-cycles on. So I am fine with either fix, as long as we do something.
+I can drop it to "essentially off". I don't think the site is very high
+risk.  The site is _basically_[1] serving up static content (which isn't
+to say there couldn't be some attack against the rails infrastructure,
+but it's not like people are logging in, or that there's any non-public
+data on the site).
+
+Using Cloudflare or some other caching layer is a necessity. We serve
+about 50-60GB of traffic daily, over 98% of which is cached. The load
+was quite high when the caching was all done at the Rails layer (though
+I wouldn't rule out that there are ways to configure Rails to make this
+more optimal; none of the people active in maintaining the site is
+particularly knowledgeable there).
 
 -Peff
+
+[1] It actually could be a static site entirely; there was some push in
+    that direction a while ago, but there's a lot of tedious work that
+    never got finished. Of course, we'd still need a caching layer.
