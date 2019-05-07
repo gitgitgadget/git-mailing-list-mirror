@@ -2,356 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1BE1F45F
-	for <e@80x24.org>; Tue,  7 May 2019 21:31:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2D241F45F
+	for <e@80x24.org>; Tue,  7 May 2019 21:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728643AbfEGVb3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 17:31:29 -0400
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:53966 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbfEGVb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 17:31:29 -0400
-Received: by mail-pg1-f201.google.com with SMTP id j36so6363157pgb.20
-        for <git@vger.kernel.org>; Tue, 07 May 2019 14:31:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=RrT4+AcIGS5hiG8y2qjrnrdmr/XaTAcjUhitzuhb2ok=;
-        b=oGum1yrcGudUrUhSM+tFqq9HjmqzDBPUZzK4c6i7f8xeIZRORkoeWSnJiS0yjsNOuv
-         HJArWvFX2Q0Y0THw/LeLE/5C8iSxHI+m6aBjHFyUhkJc8eyb/n9yAr4b5iaOH5104t8Z
-         9z+4SdIUTae71lCswJZktrbS4jKGG4pWGSlQi7b3p8dQRqghkDhZ8riUrCHfPo2Eibt6
-         1jOHYor+KofM3ay1dp3hBT1+ayWxFs79dIw90roIA/iPoLKENlzWYijDoYmyqMQ6cbts
-         1BNcA0LTnNHZ1ZBZzR6t52PRhufFA4Ue/4XVTJU3XyGlf//KzQs7niP2d8i5DLxONWEZ
-         T1sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=RrT4+AcIGS5hiG8y2qjrnrdmr/XaTAcjUhitzuhb2ok=;
-        b=ZS4GcxUDvh7koAC2OnbJJU1nKPCRE1GBVqaOA41lUyM/jmXdJi0nCwi/wV018e3rYw
-         O7I9RSDPcznGK1bmTOguYbw0f9uZvpTwtsLdauqfRgT4Nwr9CMIMunfDeaV3rSaa3ytp
-         uX8DZj2o1g4n5tiOHjJZP2cjKB+75rtdHWbZI/wPQ4cUOzIi1ROeX3TgqpxYvqx+03ml
-         MoN/3NmUXf1Sg87ncWTGEwz3IyQuL4KdoOp9IFaXv04448AdjfILc1LdBVQbSGKzhJVM
-         udqmqNN/Hfe7M9RNVabH82lmDvkjVoTD2GNCUkmjPXbw/Btf5o21sNYsAr+7Jng8/4wm
-         YXYQ==
-X-Gm-Message-State: APjAAAVNTINWLGrDYN1p2RLFCTJeHln4BsprppfcPWaHycgp6VhqIUUv
-        GK2zdhcFCJqxUNWxcE4cE+wRxsVKFjkvh7IUkFiZoqKCkJH3bAUcC+qLRzcvOQVfKs5E8oB1N6t
-        RyUzWHS0kz33Qnv8tOgAQO3ies6nJ/3Q/Kwg/GEb56Hl8kk2iae5VpUpy9YRMZLyAi5d/nvHHpw
-        ==
-X-Google-Smtp-Source: APXvYqzm/Jzrz6vFTh0dzdHmF/S09009ReKOGQGu01CCj60bVPIrEXAhwHGtMWMLm5lhyPKSe58KXEKYbTyFXjZJrrU=
-X-Received: by 2002:a63:c601:: with SMTP id w1mr43198573pgg.190.1557264688295;
- Tue, 07 May 2019 14:31:28 -0700 (PDT)
-Date:   Tue,  7 May 2019 14:30:40 -0700
-In-Reply-To: <20190507213040.151799-1-emilyshaffer@google.com>
-Message-Id: <20190507213040.151799-3-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20190423193410.101803-1-emilyshaffer@google.com> <20190507213040.151799-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: [PATCH v5 2/2] documentation: add anchors to MyFirstContribution
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1728650AbfEGVgO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 17:36:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50936 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726650AbfEGVgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 17:36:14 -0400
+Received: (qmail 13778 invoked by uid 109); 7 May 2019 21:36:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 May 2019 21:36:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17010 invoked by uid 111); 7 May 2019 21:36:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 07 May 2019 17:36:51 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2019 17:36:12 -0400
+Date:   Tue, 7 May 2019 17:36:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 0/6] perf-lib.sh: fix 0baf78e7bc regression, refactor
+ & fix bugs
+Message-ID: <20190507213612.GB19955@sigill.intra.peff.net>
+References: <20190506232309.28538-1-avarab@gmail.com>
+ <20190507105434.9600-1-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190507105434.9600-1-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During the course of review for MyFirstContribution.txt, the suggestion
-came up to include anchors to make it easier for veteran contributors to
-link specific sections of this documents to newbies. To make life easier
-for reviewers, add these anchors in their own commit. See review context
-here: https://public-inbox.org/git/20190507195938.GD220818@google.com/
+On Tue, May 07, 2019 at 12:54:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-AsciiDoc does not support :sectanchors: and the anchors are not
-discoverable, but they are referenceable. So a link to
-"foo.com/MyFirstContribution.html#prerequisites" will still work if that
-file was generated with AsciiDoc. The inclusion of :sectanchors: does
-not create warnings or errors while compiling directly with `asciidoc -b
-html5 Documentation/MyFirstContribution.txt` or while compiling with
-`make doc`.
+> So here as a 6-parter given some of the feedback on v2. Maybe Jeff
+> still hates it :), but this time around some of the changes are split
+> up and should be easier to understand in isolation, as well as some
+> more "noticed while I was at it" things fixed.
 
-AsciiDoctor does support :sectanchors: and displays a paragraph link on
-mouseover. When the anchor is included above or inline with a section
-(as in this change), the link provided points to the custom ID contained
-within [[]] instead of to an autogenerated ID. Practically speaking,
-this means we have .../MyFirstContribution.html#summary instead of
-.../MyFirstContribution.html#_summary. In addition to being prettier,
-the custom IDs also enable anchor linking to work with
-asciidoc-generated pages. This change compiles with no warnings using
-`asciidoctor -b html5 Documentation/MyFirstContribution.txt`.
+Thanks, the split did make things easier to understand.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/MyFirstContribution.txt | 35 +++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+These all look reasonable to me, and I confirmed by re-running a few of
+the problematic perf tests that everything is behaving as expected after
+the patches.
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 0f9a7fed93..a0380d5dc8 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -1,16 +1,20 @@
- My First Contribution to the Git Project
- ========================================
-+:sectanchors:
- 
-+[[summary]]
- == Summary
- 
- This is a tutorial demonstrating the end-to-end workflow of creating a change to
- the Git tree, sending it for review, and making changes based on comments.
- 
-+[[prerequisites]]
- === Prerequisites
- 
- This tutorial assumes you're already fairly familiar with using Git to manage
- source code.  The Git workflow steps will largely remain unexplained.
- 
-+[[related-reading]]
- === Related Reading
- 
- This tutorial aims to summarize the following documents, but the reader may find
-@@ -19,8 +23,10 @@ useful additional context:
- - `Documentation/SubmittingPatches`
- - `Documentation/howto/new-command.txt`
- 
-+[[getting-started]]
- == Getting Started
- 
-+[[cloning]]
- === Clone the Git Repository
- 
- Git is mirrored in a number of locations. Clone the repository from one of them;
-@@ -31,6 +37,7 @@ the official mirror on GitHub.
- $ git clone https://github.com/git/git git
- ----
- 
-+[[identify-problem]]
- === Identify Problem to Solve
- 
- ////
-@@ -44,6 +51,7 @@ of invocation during users' typical daily workflow.
- (We've seen some other effort in this space with the implementation of popular
- commands such as `sl`.)
- 
-+[[setup-workspace]]
- === Set Up Your Workspace
- 
- Let's start by making a development branch to work on our changes. Per
-@@ -62,11 +70,13 @@ $ git checkout -b psuh origin/master
- We'll make a number of commits here in order to demonstrate how to send a topic
- with multiple patches up for review simultaneously.
- 
-+[[code-it-up]]
- == Code It Up!
- 
- NOTE: A reference implementation can be found at
- https://github.com/nasamuffin/git/tree/psuh.
- 
-+[[add-new-command]]
- === Adding a New Command
- 
- Lots of the subcommands are written as builtins, which means they are
-@@ -195,6 +205,7 @@ For the remainder of the tutorial, the subject line only will be listed for the
- sake of brevity. However, fully-fleshed example commit messages are available
- on the reference implementation linked at the top of this document.
- 
-+[[implementation]]
- === Implementation
- 
- It's probably useful to do at least something besides printing out a string.
-@@ -359,6 +370,7 @@ about. Neat! Let's commit that as well.
- $ git commit -sm "psuh: display the top of origin/master"
- ----
- 
-+[[add-documentation]]
- === Adding Documentation
- 
- Awesome! You've got a fantastic new command that you're ready to share with the
-@@ -446,6 +458,7 @@ sees that your command has been implemented as well as documented) by running
- 
- Go ahead and commit your new documentation change.
- 
-+[[add-usage]]
- === Adding Usage Text
- 
- Try and run `./bin-wrappers/git psuh -h`. Your command should crash at the end.
-@@ -502,6 +515,7 @@ your command terminated before anything else interesting happens. Great!
- 
- Go ahead and commit this one, too.
- 
-+[[testing]]
- == Testing
- 
- It's important to test your code - even for a little toy command like this one.
-@@ -516,11 +530,13 @@ So let's write some tests.
- 
- Related reading: `t/README`
- 
-+[[overview-test-structure]]
- === Overview of Testing Structure
- 
- The tests in Git live in `t/` and are named with a 4-digit decimal number using
- the schema shown in the Naming Tests section of `t/README`.
- 
-+[[write-new-test]]
- === Writing Your Test
- 
- Since this a toy command, let's go ahead and name the test with t9999. However,
-@@ -569,6 +585,7 @@ You can get an idea of whether you created your new test script successfully
- by running `make -C t test-lint`, which will check for things like test number
- uniqueness, executable bit, and so on.
- 
-+[[local-test]]
- === Running Locally
- 
- Let's try and run locally:
-@@ -592,6 +609,7 @@ dependencies. `prove` also makes the output nicer.
- 
- Go ahead and commit this change, as well.
- 
-+[[ready-to-share]]
- == Getting Ready to Share
- 
- You may have noticed already that the Git project performs its code reviews via
-@@ -614,6 +632,7 @@ Regardless of which method you choose, your engagement with reviewers will be
- the same; the review process will be covered after the sections on GitGitGadget
- and `git send-email`.
- 
-+[[howto-ggg]]
- == Sending Patches via GitGitGadget
- 
- One option for sending patches is to follow a typical pull request workflow and
-@@ -624,6 +643,7 @@ mirror of the Git project, and does some magic to turn the PR into a set of
- emails and send them out for you. It also runs the Git continuous integration
- suite for you. It's documented at http://gitgitgadget.github.io.
- 
-+[[create-fork]]
- === Forking `git/git` on GitHub
- 
- Before you can send your patch off to be reviewed using GitGitGadget, you will
-@@ -633,6 +653,7 @@ you have a GitHub account.
- Head to the https://github.com/git/git[GitHub mirror] and look for the Fork
- button. Place your fork wherever you deem appropriate and create it.
- 
-+[[upload-to-fork]]
- === Uploading to Your Own Fork
- 
- To upload your branch to your own fork, you'll need to add the new fork as a
-@@ -678,6 +699,7 @@ $ git push remotename psuh
- 
- Now you should be able to go and check out your newly created branch on GitHub.
- 
-+[[send-pr-ggg]]
- === Sending a PR to GitGitGadget
- 
- In order to have your code tested and formatted for review, you need to start by
-@@ -689,6 +711,7 @@ appear with the name of your newly pushed branch.
- Review the PR's title and description, as it's used by GitGitGadget as the cover
- letter for your change. When you're happy, submit your pull request.
- 
-+[[run-ci-ggg]]
- === Running CI and Getting Ready to Send
- 
- If it's your first time using GitGitGadget (which is likely, as you're using
-@@ -713,15 +736,18 @@ your patch is accepted into `next`.
- TODO https://github.com/gitgitgadget/gitgitgadget/issues/83
- It'd be nice to be able to verify that the patch looks good before sending it
- to everyone on Git mailing list.
-+[[check-work-ggg]]
- === Check Your Work
- ////
- 
-+[[send-mail-ggg]]
- === Sending Your Patches
- 
- Now that your CI is passing and someone has granted you permission to use
- GitGitGadget with the `/allow` command, sending out for review is as simple as
- commenting on your PR with `/submit`.
- 
-+[[responding-ggg]]
- === Updating With Comments
- 
- Skip ahead to <<reviewing,Responding to Reviews>> for information on how to
-@@ -743,6 +769,7 @@ of what they're looking at. When the CI is done running, you can comment once
- more with `/submit` - GitGitGadget will automatically add a v2 mark to your
- changes.
- 
-+[[howto-git-send-email]]
- == Sending Patches with `git send-email`
- 
- If you don't want to use GitGitGadget, you can also use Git itself to mail your
-@@ -751,6 +778,7 @@ subject line (for example, being able to use the tag [RFC PATCH] in the subject)
- and being able to send a ``dry run'' mail to yourself to ensure it all looks
- good before going out to the list.
- 
-+[[setup-git-send-email]]
- === Prerequisite: Setting Up `git send-email`
- 
- Configuration for `send-email` can vary based on your operating system and email
-@@ -762,6 +790,7 @@ determine the right way to configure it to use your SMTP server; again, as this
- configuration can change significantly based on your system and email setup, it
- is out of scope for the context of this tutorial.
- 
-+[[format-patch]]
- === Preparing Initial Patchset
- 
- Sending emails with Git is a two-part process; before you can prepare the emails
-@@ -800,6 +829,7 @@ but want reviewers to look at what they have so far. You can add this flag with
- Check and make sure that your patches and cover letter template exist in the
- directory you specified - you're nearly ready to send out your review!
- 
-+[[cover-letter]]
- === Preparing Email
- 
- In addition to an email per patch, the Git community also expects your patches
-@@ -863,6 +893,7 @@ The one generated for `psuh` from the sample implementation looks like this:
- Finally, the letter will include the version of Git used to generate the
- patches. You can leave that string alone.
- 
-+[[sending-git-send-email]]
- === Sending Email
- 
- At this point you should have a directory `psuh/` which is filled with your
-@@ -887,6 +918,7 @@ press `y` or `a` at these prompts your emails will be sent! Congratulations!
- Awesome, now the community will drop everything and review your changes. (Just
- kidding - be patient!)
- 
-+[[v2-git-send-email]]
- === Sending v2
- 
- Skip ahead to <<reviewing,Responding to Reviews>> for information on how to
-@@ -945,6 +977,7 @@ $ git send-email --to=target@example.com
- 		 psuh/v2*
- ----
- 
-+[[single-patch]]
- === Bonus Chapter: One-Patch Changes
- 
- In some cases, your very small change may consist of only one patch. When that
-@@ -992,6 +1025,7 @@ index 88f126184c..38da593a60 100644
- 2.21.0.392.gf8f6787159e-goog
- ----
- 
-+[[now-what]]
- == My Patch Got Emailed - Now What?
- 
- [[reviewing]]
-@@ -1035,6 +1069,7 @@ changing history, but since it's local history which you haven't shared with
- anyone, that is okay for now! (Later, it may not make sense to do this; take a
- look at the section below this one for some context.)
- 
-+[[after-approval]]
- === After Review Approval
- 
- The Git project has four integration branches: `pu`, `next`, `master`, and
--- 
-2.21.0.1020.gf2820cf01a-goog
+> This series ends with outright forbidding the user from directly
+> setting GIT_TEST_INSTALLED. As discussed it makes things easier for
+> us, and as noted in 1/6 the demand for that in the wild seems
+> non-existent, since the way we've been documenting how you could do
+> that with an environment variable has been broken since 2012.
 
+I think this is reasonable, especially with the feature in patch 6 to
+tell the caller they're doing it wrong, instead of just silently
+producing nonsense results.
+
+Junio, if you haven't been following closely, this can replace my patch
+from jk/perf-installed-fix.
+
+-Peff
