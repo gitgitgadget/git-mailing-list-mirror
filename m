@@ -7,144 +7,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 665081F45F
-	for <e@80x24.org>; Tue,  7 May 2019 04:44:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28421F45F
+	for <e@80x24.org>; Tue,  7 May 2019 04:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbfEGEoH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 00:44:07 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60308 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726095AbfEGEoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 00:44:07 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3D48625E9;
-        Tue,  7 May 2019 00:44:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1726322AbfEGEwe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 00:52:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50738 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbfEGEwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 00:52:34 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B7A7E145655;
+        Tue,  7 May 2019 00:52:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k+e5IIJELFU9TvBZvNmtzVFqsaQ=; b=keZmrH
-        PTtthAe/9KA/ks4vkM/O6zDq0b4ZQRsRZhORnIP8NNRC7OgTpSQwkDoAORKt/ORe
-        3zqwV3RmxSBT1m4V9xpMs7LRU9sddk8wjtYi8AhPo7Yzhl9CnYFRzIuUem10/zz7
-        e1zZy/YOFlk96obd5mciPW+4tvzozdq0Zg+YY=
+        :content-type; s=sasl; bh=z3nbEKP44h62XJntJSR/eIDMlQg=; b=P/oYz3
+        nwBe+3PLQRHm5XadDAf1iRImyohsaL8K5lB5fLunubI+7hy/EBD2khn65+HvaVdY
+        w4YYTCTPU+eKwESk9BW+ssNfpjZ/CXRb0sZQyDDnf/ReWxo2dywmC7z6/+sOEP8H
+        ZxvP1K8A9sBDHy6n2wiYtN5eQ79q5UevR5Yhk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IhhhMdM/J94fq9bBtunuKawZqkLNOuQn
-        A5iLQ3gQFVpvaG9Pis0QPQTmKWst4Nv0aYEjFiIawXXOV7u0CfFNdt4yuvAQnT2v
-        QhoBxXFYJBL2/VpDe/5GneMiyvwzotf5ELXDfhDcUWEWLzdWxUsUgoKcwBYnLriA
-        Y75fcidue+s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9ABC8625E8;
-        Tue,  7 May 2019 00:44:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=wwkxq4uBLIbGlkXQ00u3pXTtZ6a6Ho34
+        N+EmM6ViaEQcGzZ/cftBCsPNRhdxXpX89s2p3Ubc5fBg85i74AbFC71rg13fTIil
+        IO+Lp/5Pdu9o3+x9RsyVVGmgq8hu0ZwlDmErWgzsoWNOsjPhp+JfbqXHDDu+si8i
+        iWuyzeWV524=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AEDCF145653;
+        Tue,  7 May 2019 00:52:33 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7BC31625E5;
-        Tue,  7 May 2019 00:44:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 263C7145651;
+        Tue,  7 May 2019 00:52:33 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] format-patch: teach format.notes config option
-References: <cover.1556388260.git.liu.denton@gmail.com>
-        <1338045be4a185cddc3ebf8adbe4b744551acf15.1556388260.git.liu.denton@gmail.com>
-Date:   Tue, 07 May 2019 13:43:59 +0900
-In-Reply-To: <1338045be4a185cddc3ebf8adbe4b744551acf15.1556388260.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Sat, 27 Apr 2019 15:25:25 -0400")
-Message-ID: <xmqqlfzinab4.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] coccicheck: optionally batch spatch invocations
+References: <20190501100108.GA8954@archbookpro.localdomain>
+        <20190502000422.GF14763@szeder.dev>
+        <nycvar.QRO.7.76.6.1905031127170.45@tvgsbejvaqbjf.bet>
+        <20190503144211.GH14763@szeder.dev>
+        <20190503174503.GA8242@sigill.intra.peff.net>
+        <CA+P7+xoRGVAP4nHE=neUZGkn9RX_hxN9xVzfWexR79ZWT0ejSQ@mail.gmail.com>
+        <20190506051148.GB30003@sigill.intra.peff.net>
+        <CACsJy8CLjUdHCro8QJfTozMB0xVWppHuFRSLCvFSaeKO_PxAog@mail.gmail.com>
+        <20190506234334.GA13296@sigill.intra.peff.net>
+        <xmqq7eb3nfxn.fsf@gitster-ct.c.googlers.com>
+        <20190507025501.GA3417@sigill.intra.peff.net>
+Date:   Tue, 07 May 2019 13:52:32 +0900
+In-Reply-To: <20190507025501.GA3417@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 6 May 2019 22:55:01 -0400")
+Message-ID: <xmqqh8a6n9wv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BC174018-7082-11E9-95DE-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: ED0F4746-7083-11E9-A68E-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> In git-format-patch, notes can be appended with the `--notes` option.
-> However, this must be specified by the user on an
-> invocation-by-invocation basis. If a user is not careful, it's possible
-> that they may forget to include it and generate a patch series without
-> notes.
+> Yes, 2^31-1 is probably a better number, but it's harder to write out. :)
 >
-> Teach git-format-patch the `format.notes` config option where if its
-> value is true, notes will automatically be appended. This option is
-> overridable with the `--no-notes` option in case a user wishes not to
-> append notes.
+> Here's what a patch might look like to implement "0". By still using
+> xargs in the unlimited code path, it's not too bad. I dunno.
+
+
+
+As somebody who is too used to run "diff -U999" and be happy, I
+cannot claim that I care enough, but the result does not look
+too bad.
+
 >
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
->  Documentation/config/format.txt    |  4 ++++
->  Documentation/git-format-patch.txt |  3 +++
->  builtin/log.c                      |  6 ++++++
->  t/t4014-format-patch.sh            | 28 ++++++++++++++++++++++++++++
->  4 files changed, 41 insertions(+)
+> diff --git a/Makefile b/Makefile
+> index daba958b8f..0765a59b7a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2792,7 +2792,12 @@ endif
+>  
+>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+>  	@echo '    ' SPATCH $<; \
+> -	if ! echo $(COCCI_SOURCES) | xargs -n $(SPATCH_BATCH_SIZE) \
+> +	if test $(SPATCH_BATCH_SIZE) = 0; then \
+> +		limit=; \
+> +	else \
+> +		limit='-n $(SPATCH_BATCH_SIZE)'; \
+> +	fi; \
+> +	if ! echo $(COCCI_SOURCES) | xargs $$limit \
+>  		$(SPATCH) --sp-file $< $(SPATCH_FLAGS) \
+>  		>$@+ 2>$@.log; \
+>  	then \
 >
-> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> index dc77941c48..55327b6511 100644
-> --- a/Documentation/config/format.txt
-> +++ b/Documentation/config/format.txt
-> @@ -85,3 +85,7 @@ format.outputDirectory::
->  format.useAutoBase::
->  	A boolean value which lets you enable the `--base=auto` option of
->  	format-patch by default.
-> +
-> +format.notes::
-> +	A boolean value which lets you enable the `--notes` option of
-> +	format-patch by default.
-
-Whoa.  Why should this be a boolean?
-
-I think I can do
-
-	git format-patch --notes=amlog master..
-
-and was hoping that this can be used to configure the option out of
-my command line typing.
-
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index b6e2fdbc44..fe9522121a 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -738,6 +738,34 @@ test_expect_success 'format-patch --notes --signoff' '
->  	sed "1,/^---$/d" out | grep "test message"
->  '
-
-And if you look at the existing test above this, you'd notice that
-the command is tested is in "format-patch --notes=test" form.  We
-should make sure that the same is done with the config in the new
-test, too.
-
-> +test_expect_success 'format-patch notes output control' '
-> +	git notes add -m "notes config message" HEAD &&
-> +	test_when_finished git notes remove HEAD &&
-> +
-> +	git format-patch -1 --stdout >out &&
-> +	! grep "notes config message" out &&
-> +	git format-patch -1 --stdout --notes >out &&
-> +	grep "notes config message" out &&
-> +	git format-patch -1 --stdout --no-notes >out &&
-> +	! grep "notes config message" out &&
-> +	git format-patch -1 --stdout --notes --no-notes >out &&
-> +	! grep "notes config message" out &&
-> +	git format-patch -1 --stdout --no-notes --notes >out &&
-> +	grep "notes config message" out &&
-> +
-> +	test_config format.notes true &&
-> +	git format-patch -1 --stdout >out &&
-> +	grep "notes config message" out &&
-> +	git format-patch -1 --stdout --notes >out &&
-> +	grep "notes config message" out &&
-> +	git format-patch -1 --stdout --no-notes >out &&
-> +	! grep "notes config message" out &&
-> +	git format-patch -1 --stdout --notes --no-notes >out &&
-> +	! grep "notes config message" out &&
-> +	git format-patch -1 --stdout --no-notes --notes >out &&
-> +	grep "notes config message" out
-> +'
-> +
->  echo "fatal: --name-only does not make sense" > expect.name-only
->  echo "fatal: --name-status does not make sense" > expect.name-status
->  echo "fatal: --check does not make sense" > expect.check
+> -Peff
