@@ -2,133 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0FD61F45F
-	for <e@80x24.org>; Tue,  7 May 2019 04:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F71A1F45F
+	for <e@80x24.org>; Tue,  7 May 2019 04:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725878AbfEGES7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 00:18:59 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:39908 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725839AbfEGES7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 00:18:59 -0400
-Received: by mail-io1-f66.google.com with SMTP id m7so10834619ioa.6
-        for <git@vger.kernel.org>; Mon, 06 May 2019 21:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=webstech-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XXZoURWjNMENUOHC8ffRuwq1BftoTw/HLNgbJn5fyLk=;
-        b=tZupat50CQNJ1g37CJmn2dDG0UGVcYBqTSm1lxu6R7H6vGm5Bw5zXEgGsLrinYr5ic
-         kEu0ICxelr9pw6/wFqdaN6QCV2IoPpFo8sisw6g+Umop4yIG8ucQ8JQ6rTQpj2cITNev
-         gqarp/eTh08DpEjVTe07WysQQXNZIuXQ4jzqlN86+jpYfPpD26OAwq3PQR/9jSo1NcI8
-         PS+0J5w247eqfD4yYobx/ieT4sz06Yyu202rdvAEIP1NS4ttsPOI4hEI4Eqi8D7KF0qH
-         pdhmoW4l0rsaM281pXYqOdH6lfPRTBXR7FHYa5FyOaZfc2zzsJ/q9TiZYOPitZ0O4fb9
-         xkPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XXZoURWjNMENUOHC8ffRuwq1BftoTw/HLNgbJn5fyLk=;
-        b=hndKYPNHuGyRe3/jA7F/T5EGdxjAmbIfy1NKmId5E6YTtD9qzlw6wdvLkU0XZn7IJ4
-         aL7Ws59qBJ3FrFrbwGm9lrhceMHK2WwsiqaYGxJhehFXzHZdA/lPvXHGgYc/Em1HKROo
-         aGiRF0uHmXF9ZDCHbzWOBw7WXaC9dtPZVRubiORpb+vPZzQjm2b0uStCKxZItFIUeMSW
-         KIpa/eh//yCQRkeotvFFdfSeRUia+sX4kAK6m+/+8xBBzvA/9E601XpQxF+9Fo4Vc3m6
-         KtNRJIAaxuDhTvOzRvCiR5icZb6zOdVAPcQThh4G701lxIwmhq+nGY+xKZpT7HtD/HcJ
-         W0Xw==
-X-Gm-Message-State: APjAAAUxi3ofP9xHmR37ea1YKdxh61/RMGxk/I3yRVZ4VKJwOEf/+wOS
-        MZOkrdyKoSVk3BVeE8O6Rx65QE7pB9hs9C274/35pg==
-X-Google-Smtp-Source: APXvYqx34fuf72VW417ncGryMYyiVIDSbqEcA6DrIWc4Zk5qQN3jnh/LbaoyNuj12gtUg4Iy7pRmB/ryglxS5AjcZiU=
-X-Received: by 2002:a5e:890f:: with SMTP id k15mr19592679ioj.68.1557202738128;
- Mon, 06 May 2019 21:18:58 -0700 (PDT)
+        id S1725994AbfEGETm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 00:19:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53200 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbfEGETm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 00:19:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0CAED6234F;
+        Tue,  7 May 2019 00:19:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EvOOcgp4Fu5TgPmGnFYRISXWRL8=; b=T4qsii
+        zF1+PkhjI7kWroG7znICDIR2PYZf8wUz28rq+EICXwyFh73fuXRBY9mRwsveloI+
+        XgbILHjpP69CgtgYhV4bIzomuap1exKpzIaGY4FJ4CsWOmacDit9EL0vbUfFep9Q
+        SLptC1qe9ZLQo5Xq73WjUOGoB/rqiYyNOkCFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KXYYXWZCcTYGRdcsGoHJGukBt8KZiWml
+        wJpY5j+UExCD13rlDLpvYkgtk37VQWRFr2KkaopH0RueX0wERN2RB7JJPBUwY0Dq
+        7LyRzo/3Hg8SFR7JQewR6U/IgYO6OC5mOEBKCS4g4Hix+xTLFA7QLVNyaf0pbejM
+        LDilPNGmODY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 043C06234E;
+        Tue,  7 May 2019 00:19:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2C5156234C;
+        Tue,  7 May 2019 00:19:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Peter Krefting <peter@softwolves.pp.se>
+Cc:     Jeff Schwartz <jefftschwartz@gmail.com>, git@vger.kernel.org
+Subject: Re: Request to add option to interactive rebase to preserve latest commit date
+References: <CAL3M-FZ7b3H7Z+Vr9Wbey5iYVoWiUBnDKVEenyAMrUXeNfL56w@mail.gmail.com>
+        <xmqq4l6kvnuu.fsf@gitster-ct.c.googlers.com>
+        <alpine.DEB.2.20.1905010900260.23829@perkele.intern.softwolves.pp.se>
+Date:   Tue, 07 May 2019 13:19:32 +0900
+In-Reply-To: <alpine.DEB.2.20.1905010900260.23829@perkele.intern.softwolves.pp.se>
+        (Peter Krefting's message of "Wed, 1 May 2019 09:52:32 +0100 (CET)")
+Message-ID: <xmqqtve6nbfv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.59.git.gitgitgadget@gmail.com> <pull.59.v2.git.gitgitgadget@gmail.com>
- <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.1811061501210.86@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1811061501210.86@tvgsbejvaqbjf.bet>
-From:   Chris Webster <chris@webstech.net>
-Date:   Mon, 6 May 2019 21:18:55 -0700
-Message-ID: <CAGT1KpVn536+B6-8=opNAVnz3_w13Kx3LyED0Gbk+4DtwmoP6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX and Windows
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 517FAFB8-707F-11E9-86EF-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I know these can take some time but is this pending any update from
-me?  The accepted changes will be merged back into the diff-so-fancy
-project.
+Peter Krefting <peter@softwolves.pp.se> writes:
 
-There was a question about other uses of /dev/null.  In the contrib
-directory, there are a couple of uses.
+> Junio C Hamano:
+>
+>>> Using interactive rebase has one flaw IMHO and that is the way it
+>>> handles dating its commit. Can you add an option to interactive rebase
+>>> that would make it use the date from the commit that is most recent
+>>> and not the date from the commit that is the oldest?
+>>
+>> I am not sure what you mean by this.  If you interactively rebase
+>> the topmost two commits (assuming that since three commits ago, you
+>> have a linear history):
+>
+> I sort of assume that this is when merging several fixup! or squash!
+> commits. I often end up adding lines the code to date these with the
+> current date, but the date of the last fixup'ed or squash'ed commit
+> would probably be better.
 
-contrib/buildsystems/engine.pl - not clear if this is still of use or
-always expects to always be running in a mingw type environment.
-contrib/mw-to-git/git-remote-mediawiki.perl - this is cloned from a
-separately maintained github project.  Should any changes be issues on
-that project?
+Ah, I see.  So if you have (time flows left to right, as usual):
 
-thanks,
-...chris.
+	A---B---C
 
-On Tue, Nov 6, 2018 at 6:02 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> List,
->
-> I have no idea why this mail made it to GitGitGadget's email account but
-> not to the Git mailing list... Sorry about that.
->
-> Ciao,
-> Johannes
->
-> On Wed, 31 Oct 2018, Chris. Webster via GitGitGadget wrote:
->
-> > From: "Chris. Webster" <chris@webstech.net>
-> >
-> > Use File::Spec->devnull() for output redirection to avoid messages
-> > when Windows version of Perl is first in path.  The message 'The
-> > system cannot find the path specified.' is displayed each time git is
-> > run to get colors.
-> >
-> > Signed-off-by: Chris. Webster <chris@webstech.net>
-> > ---
-> >  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-> > index 536754583b..7440aa1c46 100644
-> > --- a/contrib/diff-highlight/DiffHighlight.pm
-> > +++ b/contrib/diff-highlight/DiffHighlight.pm
-> > @@ -4,6 +4,11 @@ use 5.008;
-> >  use warnings FATAL => 'all';
-> >  use strict;
-> >
-> > +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
-> > +use File::Spec;
-> > +
-> > +my $NULL = File::Spec->devnull();
-> > +
-> >  # Highlight by reversing foreground and background. You could do
-> >  # other things like bold or underline if you prefer.
-> >  my @OLD_HIGHLIGHT = (
-> > @@ -134,7 +139,7 @@ sub highlight_stdin {
-> >  # fallback, which means we will work even if git can't be run.
-> >  sub color_config {
-> >       my ($key, $default) = @_;
-> > -     my $s = `git config --get-color $key 2>/dev/null`;
-> > +     my $s = `git config --get-color $key 2>$NULL`;
-> >       return length($s) ? $s : $default;
-> >  }
-> >
-> > --
-> > gitgitgadget
-> >
+where B and C are fixup for A, the question is what's the author
+ident and author time should be for the resulting single commit.
+
+I think we currently use the ident and time from the original A, and
+that is the only right thing to do, as I view
+
+	$ git commit -m A
+	$ edit
+	$ git commit -a --fixup HEAD ;# create B to fix A
+	$ edit
+	$ git commit -a --fixup HEAD^ ;# create C to fix A
+	$ git rebase --autosquash -i HEAD~3 ;# squash B and C into A
+
+as merely a different way to do the following:
+
+	$ git commit -m A
+	$ edit
+	$ edit further ;# working tree has an equivalent of C
+	$ git commit --amend -a
+
+The principle is "the bulk of the work was done in A, no matter what
+is done incrementally by squashing in or amending small refinements;
+the primary authorship date and time stays the same as the original".
+
+When the person who is correcting other's change with --amend makes
+a contribution that is substantial enough such that the amended HEAD
+no longer resembles the original HEAD, there is a mechanism to let
+the amender take authorship, i.e. do this at the last step instead
+
+	$ git commit --reset-author --amend -a
+
+in the second sequence.  I do not think there currently is an
+equivalent in "rebase -i" language to do so.  
+
+I am still not convinced it is a good idea, but I can see how
+another verb that behaves like existing "fixup" or "squash" but use
+the authorship not from the updated but from the updating commit
+might seem useful.
