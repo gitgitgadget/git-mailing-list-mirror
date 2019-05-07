@@ -2,103 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6C141F45F
-	for <e@80x24.org>; Tue,  7 May 2019 10:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCB631F45F
+	for <e@80x24.org>; Tue,  7 May 2019 10:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbfEGKhX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 06:37:23 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:34874 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbfEGKhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 06:37:23 -0400
-Received: by mail-it1-f194.google.com with SMTP id l140so24924044itb.0
-        for <git@vger.kernel.org>; Tue, 07 May 2019 03:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DpDeQdpqQEf5POncCxIkYJej0iPeRcZYFQX1GJrHsh0=;
-        b=cUngAVfL0a7BJxDBQkk73qKwdBagnHRqJUX1mmrNVIlljydN8dN5J9iU+xFnqzU6wl
-         5QR2gZSgkb4042YH7luehfo78ttHA+WyHRTU2M5F8QBAK0mdLefx0PKhfhkocDZZJC3U
-         PntRVO+IFxVMPiqr9Z1ueaBpQIew8ha8S5Ncy6M0ZLQC6G99I9VRIGUJg5y7tcSNhow/
-         ehmf84rRTwukairoXX2D8pRCYGXQbVxQEt74V/nRz+Wa37TsvyeDC7FOUeb2vGJYrNEk
-         HRppj0eosFgh8o+QSYzpmUmyu80XckNYEttGsu3Hz2XtQv42wc1gcMFG101n/xTKBMoQ
-         jPlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DpDeQdpqQEf5POncCxIkYJej0iPeRcZYFQX1GJrHsh0=;
-        b=DUiQXfIeFF2EXxpM3E/rFBJSv0r1wHuZpq0rTg/vEniCou9gvBjjwxN9jyHx0V75B1
-         u72vjfyCZPTXB339RmfmP7Exhc5M4HRG+NSDPsSsaUEDFluMLeVYiQrrzV4qlB3LnZvd
-         jjZo1C8idB9Agpd/eEIzEvHngxTcWMRJtCu2uDlMBOdOTFtp7KnXxw+tXushGBzwT2MJ
-         PlbF88ZcYfqNRCebDF79LeTB1ls/nI6QUCh4hZb/4yxUaoaUKNweMv5ewSndMzeS64qj
-         T6i6aBjUoMWP4X+d+C5BVxCh+HOeDkbfwqkZS2Sd+/K1gZnJLB0OjZSn1WAsAZBDmiHN
-         +YKA==
-X-Gm-Message-State: APjAAAV9AC9JyzHyKdAnNi5BIRoFGHFtea9v0KTGgxwqekpRm+tYOiea
-        5LV27wyQ2m6nKjbm0zFCVd0yMO+AAmiYZu9Y2BI=
-X-Google-Smtp-Source: APXvYqx8HBidvAT5f5NUMWxbFgxRdW3L6kNFMe2H6ikJBbGBtZf42VI3kE8Cgt+NpvgjcJhNZY6G0BM8KayNOQaKQew=
-X-Received: by 2002:a05:660c:34e:: with SMTP id b14mr1112550itl.10.1557225442619;
- Tue, 07 May 2019 03:37:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190411131218.19195-1-pclouds@gmail.com> <20190425094600.15673-1-pclouds@gmail.com>
- <20190507022127.GA220818@google.com>
-In-Reply-To: <20190507022127.GA220818@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 7 May 2019 17:36:56 +0700
-Message-ID: <CACsJy8DSVJuwNWfEcA1pv1vdoCn=EKTmhBncRtKLZedQiEj0AA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/16] Add new command 'restore'
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726383AbfEGKpp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 06:45:45 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:58026 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725844AbfEGKpp (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 May 2019 06:45:45 -0400
+Received: from 200116b8467f8b0031021c7e41c85f0b.dip.versatel-1u1.de ([2001:16b8:467f:8b00:3102:1c7e:41c8:5f0b] helo=adam-MS-7A63.fritz.box); authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hNxbS-0006OS-PX; Tue, 07 May 2019 12:45:42 +0200
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+To:     git@vger.kernel.org
+Cc:     "Dr. Adam Nielsen" <admin@in-ici.net>
+Subject: [PATCH] make slash-rules more readable
+Date:   Tue,  7 May 2019 12:45:07 +0200
+Message-Id: <20190507104507.18735-1-admin@in-ici.net>
+X-Mailer: git-send-email 2.17.1
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1557225944;ee5f28a8;
+X-HE-SMSGID: 1hNxbS-0006OS-PX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 7, 2019 at 9:21 AM Emily Shaffer <emilyshaffer@google.com> wrote:
-> I've got a usability comment, as we're giving restore a try within
-> Google for now.
+gitignore.txt: make slash-rules more readable
 
-Thanks. I thought I was the only guinea pig :D and obviously not a
-good one since I know too much (which is not a good thing as a
-tester).
+Make all paragraphs valid, even if they are not read
+in strict order. Make paragraph better understandable
+for pattern without slash. Add paragraph for pattern
+with slash. Be precise whenever a trailing slashes
+would make a difference. Add some examples.
 
-> I found myself in a situation where I had accidentally
-> staged all my changes to tracked files (I think resulting from a stash
-> pop which generated a merge conflict?) and didn't see a good way to
-> unstage everything using restore.
->
-> I tried out `git restore --staged *` and it tried to restore every build
-> artifact in my working tree, all of which should be ignored, made a lot of
-> noisy errors, and left me with my changes still staged.
+Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
 
-For the record, "git restore --staged :/" should do the trick and it
-is documented as an example (but without --staged).
+---
+ Documentation/gitignore.txt | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
-Either way. I think you raise a good point about "*" (or patterns
-matching more than expected in general). I need to sleep on it and see
-if the old way of handling pattern matching failure is still a good
-way to go.
-
-> Finally explicitly naming each file which I needed to restore worked,
-> but I have very little interest in doing this for more than a handful of
-> files, especially since the output of `git status` is not easy to paste
-> into the command line (due to the "modified:" etc marker).
-
-For just a couple files, you could also use "-p" to go through them
-and either "a" to restore all or "d" to skip the file. Maybe adding
-"-i/--interactive" to git-restore too, just like "git add". Hmm...
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index b5bc9dbff0..7d7fbd202e 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -89,24 +89,35 @@ PATTERN FORMAT
+    Put a backslash ("`\`") in front of the first "`!`" for patterns
+    that begin with a literal "`!`", for example, "`\!important!.txt`".
+ 
+- - If the pattern ends with a slash, it is removed for the
+-   purpose of the following description, but it would only find
++ - If the pattern ends with a slash, it would only find
+    a match with a directory.  In other words, `foo/` will match a
+    directory `foo` and paths underneath it, but will not match a
+    regular file or a symbolic link `foo` (this is consistent
+    with the way how pathspec works in general in Git).
+ 
+- - If the pattern does not contain a slash '/', Git treats it as
+-   a shell glob pattern and checks for a match against the
+-   pathname relative to the location of the `.gitignore` file
+-   (relative to the toplevel of the work tree if not from a
+-   `.gitignore` file).
+-
+- - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
+-   anything except "`/`", "`?`" matches any one character except "`/`"
+-   and "`[]`" matches one character in a selected range. See
+-   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
+-   description.
++ - If the pattern contains no slash "`/`" (except an optional trailing slash),
++   the pattern is matched against all files and folders (recursively)
++   from the location of the `.gitignore` file.
++   For example, `frotz/` matches `frotz` and `a/frotz` that
++   is a directory (relative from the `.gitignore` file).
++
++ - A pattern that contains a non-trailing slash is matched
++   relative to the location of the `.gitignore` file.
++   For example, `doc/frotz/` matches `doc/frotz` directory, but not
++   `a/doc/frotz` (relative from the `.gitignore` file).
++   Note that the pattern `doc/frotz` and `/doc/frotz` have the
++   same effect in any `.gitignore` file, while `/bar` and `bar`
++   have not the same effect (`/bar` will not match `foo/bar`).
++
++ - An asterisk "`*`" matches anything except a slash.
++   A pattern "foo/*", for example, matches "foo/test.json"
++   (a regular file), "foo/bar" (a diretory), but it does not match
++   "foo/bar/hello.c" (a regular file), as the asterisk in the
++   patter does not match "bar/hello.c" which has a slash in it.
++   The character "`?`" matches any one character except "`/`".
++   The range notation, e.g. `[a-zA-Z]`, can be used to match
++   one of the characters in a range. See fnmatch(3) and the
++   FNM_PATHNAME flag for a more detailed description.
+ 
+  - A leading slash matches the beginning of the pathname.
+    For example, "/{asterisk}.c" matches "cat-file.c" but not
 -- 
-Duyh
+2.17.1
+
