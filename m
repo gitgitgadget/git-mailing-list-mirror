@@ -2,234 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1980A1F45F
-	for <e@80x24.org>; Tue,  7 May 2019 03:43:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0FD61F45F
+	for <e@80x24.org>; Tue,  7 May 2019 04:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727350AbfEGDnI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 May 2019 23:43:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58295 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726947AbfEGDnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 May 2019 23:43:08 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 940A913CC49;
-        Mon,  6 May 2019 23:43:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=S1VXCcdhSsp2
-        BSlJIb6ozLaWa6k=; b=SDfh+n7ESMYMyRmOl3vznEptHbdGGTXLI6mJet+TnVVg
-        lLN6kVfduMILRVrSLxOZPMCaC374mXyK108G0vB4346L2hEaAT4NCOo4XEbgk3tT
-        7/KXhZVrOEAc1r11ivNxwz0y8CNTjqaS2zQSOWifpcmt+12qfLcy0gR48jNxd1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rENr7u
-        5JiRjik+pIKneJbLG7hBHnSU9z6gdLpC6nIPfvdsMG7+71gXWzL4eu+VpC3L3ZU0
-        lErzmVrXOScw05utDr15tLwG//TQTK5rctzfbos3D94BKotBdw+xprCs8EocV4b7
-        e2U9h6wL6p/nG/1ReUvZgnoUZho/dxCGnaeqE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B6BB13CC48;
-        Mon,  6 May 2019 23:43:03 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EFFAA13CC45;
-        Mon,  6 May 2019 23:43:02 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        liu.denton@gmail.com
-Subject: Re: [PATCH v2] parse-options: don't emit "ambiguous option" for aliases
-References: <20190422122250.15248-1-pclouds@gmail.com>
-        <20190429100525.32045-1-pclouds@gmail.com>
-Date:   Tue, 07 May 2019 12:43:01 +0900
-In-Reply-To: <20190429100525.32045-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 29 Apr 2019 17:05:25 +0700")
-Message-ID: <xmqq1s1bnd4q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1725878AbfEGES7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 00:18:59 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:39908 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbfEGES7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 00:18:59 -0400
+Received: by mail-io1-f66.google.com with SMTP id m7so10834619ioa.6
+        for <git@vger.kernel.org>; Mon, 06 May 2019 21:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=webstech-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XXZoURWjNMENUOHC8ffRuwq1BftoTw/HLNgbJn5fyLk=;
+        b=tZupat50CQNJ1g37CJmn2dDG0UGVcYBqTSm1lxu6R7H6vGm5Bw5zXEgGsLrinYr5ic
+         kEu0ICxelr9pw6/wFqdaN6QCV2IoPpFo8sisw6g+Umop4yIG8ucQ8JQ6rTQpj2cITNev
+         gqarp/eTh08DpEjVTe07WysQQXNZIuXQ4jzqlN86+jpYfPpD26OAwq3PQR/9jSo1NcI8
+         PS+0J5w247eqfD4yYobx/ieT4sz06Yyu202rdvAEIP1NS4ttsPOI4hEI4Eqi8D7KF0qH
+         pdhmoW4l0rsaM281pXYqOdH6lfPRTBXR7FHYa5FyOaZfc2zzsJ/q9TiZYOPitZ0O4fb9
+         xkPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XXZoURWjNMENUOHC8ffRuwq1BftoTw/HLNgbJn5fyLk=;
+        b=hndKYPNHuGyRe3/jA7F/T5EGdxjAmbIfy1NKmId5E6YTtD9qzlw6wdvLkU0XZn7IJ4
+         aL7Ws59qBJ3FrFrbwGm9lrhceMHK2WwsiqaYGxJhehFXzHZdA/lPvXHGgYc/Em1HKROo
+         aGiRF0uHmXF9ZDCHbzWOBw7WXaC9dtPZVRubiORpb+vPZzQjm2b0uStCKxZItFIUeMSW
+         KIpa/eh//yCQRkeotvFFdfSeRUia+sX4kAK6m+/+8xBBzvA/9E601XpQxF+9Fo4Vc3m6
+         KtNRJIAaxuDhTvOzRvCiR5icZb6zOdVAPcQThh4G701lxIwmhq+nGY+xKZpT7HtD/HcJ
+         W0Xw==
+X-Gm-Message-State: APjAAAUxi3ofP9xHmR37ea1YKdxh61/RMGxk/I3yRVZ4VKJwOEf/+wOS
+        MZOkrdyKoSVk3BVeE8O6Rx65QE7pB9hs9C274/35pg==
+X-Google-Smtp-Source: APXvYqx34fuf72VW417ncGryMYyiVIDSbqEcA6DrIWc4Zk5qQN3jnh/LbaoyNuj12gtUg4Iy7pRmB/ryglxS5AjcZiU=
+X-Received: by 2002:a5e:890f:: with SMTP id k15mr19592679ioj.68.1557202738128;
+ Mon, 06 May 2019 21:18:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3770D02A-707A-11E9-8773-E828E74BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.59.git.gitgitgadget@gmail.com> <pull.59.v2.git.gitgitgadget@gmail.com>
+ <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1811061501210.86@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1811061501210.86@tvgsbejvaqbjf.bet>
+From:   Chris Webster <chris@webstech.net>
+Date:   Mon, 6 May 2019 21:18:55 -0700
+Message-ID: <CAGT1KpVn536+B6-8=opNAVnz3_w13Kx3LyED0Gbk+4DtwmoP6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX and Windows
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+I know these can take some time but is this pending any update from
+me?  The accepted changes will be merged back into the diff-so-fancy
+project.
 
-> But due to the way the options parsing machinery works this resulted
-> in the rather absurd situation of:
+There was a question about other uses of /dev/null.  In the contrib
+directory, there are a couple of uses.
+
+contrib/buildsystems/engine.pl - not clear if this is still of use or
+always expects to always be running in a mingw type environment.
+contrib/mw-to-git/git-remote-mediawiki.perl - this is cloned from a
+separately maintained github project.  Should any changes be issues on
+that project?
+
+thanks,
+...chris.
+
+On Tue, Nov 6, 2018 at 6:02 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
->     $ git clone --recurs [...]
->     error: ambiguous option: recurs (could be --recursive or --recurse-=
-submodules)
+> List,
 >
-> Add OPT_ALIAS() to express this link between two or more options and us=
-e
-> it in git-clone. Multiple aliases of an option could be written as
+> I have no idea why this mail made it to GitGitGadget's email account but
+> not to the Git mailing list... Sorry about that.
 >
->     OPT_ALIAS(0, "alias1", "original-name"),
->     OPT_ALIAS(0, "alias2", "original-name"),
->     ...
+> Ciao,
+> Johannes
 >
-> The current implementation is not exactly optimal in this case. But we
-> can optimize it when it becomes a problem. So far we don't even have tw=
-o
-> aliases of any option.
-
-Sounds good enough for any practical need I can forsee ;-)  Thanks.
-
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index 800b3ea5f5..cebc77fab0 100755
-> --- a/t/t0040-parse-options.sh
-> +++ b/t/t0040-parse-options.sh
-> @@ -48,6 +48,12 @@ Standard options
->      -q, --quiet           be quiet
->      --expect <string>     expected output in the variable dump
-> =20
-> +Alias
-> +    -A, --alias-source <string>
-> +                          get a string
-> +    -Z, --alias-target <string>
-> +                          get a string
-> +
->  EOF
-
-This is not a new problem per-se, as there already is a line before
-the precontext of this hunk that shares the same issue, but to
-prevent future problems, I am very much tempted to apply the
-attached on top.
-
--- >8 --
-Subject: t0040: protect lines that are indented by spaces
-
-This block is byte-for-byte identical expected output, that contains a
-few lines that are indented in many spaces, which makes "git diff --check=
-"
-unhappy and will break the test when "git am --whitespace=3Dfix" is
-allowed to "correct" them.
-
-Protect the left edge with a marker character, and strip it with
-sed, which is used as a standard way to deal with this issue in our
-test suite.
-
-Signed-off-by: Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Of course, if the right-edge need to be protected, we can do so
-   as well.
-
- t/t0040-parse-options.sh | 94 ++++++++++++++++++++++++------------------=
-------
- 1 file changed, 47 insertions(+), 47 deletions(-)
-
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index cebc77fab0..26373b5b72 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -7,53 +7,53 @@ test_description=3D'our own option parser'
-=20
- . ./test-lib.sh
-=20
--cat >expect <<\EOF
--usage: test-tool parse-options <options>
--
--    A helper function for the parse-options API.
--
--    --yes                 get a boolean
--    -D, --no-doubt        begins with 'no-'
--    -B, --no-fear         be brave
--    -b, --boolean         increment by one
--    -4, --or4             bitwise-or boolean with ...0100
--    --neg-or4             same as --no-or4
--
--    -i, --integer <n>     get a integer
--    -j <n>                get a integer, too
--    -m, --magnitude <n>   get a magnitude
--    --set23               set integer to 23
--    -L, --length <str>    get length of <str>
--    -F, --file <file>     set file to <file>
--
--String options
--    -s, --string <string>
--                          get a string
--    --string2 <str>       get another string
--    --st <st>             get another string (pervert ordering)
--    -o <str>              get another string
--    --list <str>          add str to list
--
--Magic arguments
--    --quux                means --quux
--    -NUM                  set integer to NUM
--    +                     same as -b
--    --ambiguous           positive ambiguity
--    --no-ambiguous        negative ambiguity
--
--Standard options
--    --abbrev[=3D<n>]        use <n> digits to display SHA-1s
--    -v, --verbose         be verbose
--    -n, --dry-run         dry run
--    -q, --quiet           be quiet
--    --expect <string>     expected output in the variable dump
--
--Alias
--    -A, --alias-source <string>
--                          get a string
--    -Z, --alias-target <string>
--                          get a string
--
-+sed -e 's/^|//' >expect <<\EOF
-+|usage: test-tool parse-options <options>
-+|
-+|    A helper function for the parse-options API.
-+|
-+|    --yes                 get a boolean
-+|    -D, --no-doubt        begins with 'no-'
-+|    -B, --no-fear         be brave
-+|    -b, --boolean         increment by one
-+|    -4, --or4             bitwise-or boolean with ...0100
-+|    --neg-or4             same as --no-or4
-+|
-+|    -i, --integer <n>     get a integer
-+|    -j <n>                get a integer, too
-+|    -m, --magnitude <n>   get a magnitude
-+|    --set23               set integer to 23
-+|    -L, --length <str>    get length of <str>
-+|    -F, --file <file>     set file to <file>
-+|
-+|String options
-+|    -s, --string <string>
-+|                          get a string
-+|    --string2 <str>       get another string
-+|    --st <st>             get another string (pervert ordering)
-+|    -o <str>              get another string
-+|    --list <str>          add str to list
-+|
-+|Magic arguments
-+|    --quux                means --quux
-+|    -NUM                  set integer to NUM
-+|    +                     same as -b
-+|    --ambiguous           positive ambiguity
-+|    --no-ambiguous        negative ambiguity
-+|
-+|Standard options
-+|    --abbrev[=3D<n>]        use <n> digits to display SHA-1s
-+|    -v, --verbose         be verbose
-+|    -n, --dry-run         dry run
-+|    -q, --quiet           be quiet
-+|    --expect <string>     expected output in the variable dump
-+|
-+|Alias
-+|    -A, --alias-source <string>
-+|                          get a string
-+|    -Z, --alias-target <string>
-+|                          get a string
-+|
- EOF
-=20
- test_expect_success 'test help' '
+> On Wed, 31 Oct 2018, Chris. Webster via GitGitGadget wrote:
+>
+> > From: "Chris. Webster" <chris@webstech.net>
+> >
+> > Use File::Spec->devnull() for output redirection to avoid messages
+> > when Windows version of Perl is first in path.  The message 'The
+> > system cannot find the path specified.' is displayed each time git is
+> > run to get colors.
+> >
+> > Signed-off-by: Chris. Webster <chris@webstech.net>
+> > ---
+> >  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
+> >  1 file changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
+> > index 536754583b..7440aa1c46 100644
+> > --- a/contrib/diff-highlight/DiffHighlight.pm
+> > +++ b/contrib/diff-highlight/DiffHighlight.pm
+> > @@ -4,6 +4,11 @@ use 5.008;
+> >  use warnings FATAL => 'all';
+> >  use strict;
+> >
+> > +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
+> > +use File::Spec;
+> > +
+> > +my $NULL = File::Spec->devnull();
+> > +
+> >  # Highlight by reversing foreground and background. You could do
+> >  # other things like bold or underline if you prefer.
+> >  my @OLD_HIGHLIGHT = (
+> > @@ -134,7 +139,7 @@ sub highlight_stdin {
+> >  # fallback, which means we will work even if git can't be run.
+> >  sub color_config {
+> >       my ($key, $default) = @_;
+> > -     my $s = `git config --get-color $key 2>/dev/null`;
+> > +     my $s = `git config --get-color $key 2>$NULL`;
+> >       return length($s) ? $s : $default;
+> >  }
+> >
+> > --
+> > gitgitgadget
+> >
