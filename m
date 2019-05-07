@@ -2,113 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4D61F45F
-	for <e@80x24.org>; Tue,  7 May 2019 23:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A155A1F45F
+	for <e@80x24.org>; Tue,  7 May 2019 23:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbfEGXD7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 19:03:59 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:45348 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726091AbfEGXD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 19:03:58 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <glandium@glandium.org>)
-        id 1hO97q-0007Sd-B4; Wed, 08 May 2019 08:03:54 +0900
-From:   Mike Hommey <mh@glandium.org>
+        id S1726360AbfEGX0D (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 19:26:03 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:33115 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726276AbfEGX0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 19:26:03 -0400
+Received: by mail-pg1-f196.google.com with SMTP id h17so3094830pgv.0
+        for <git@vger.kernel.org>; Tue, 07 May 2019 16:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=T/JAm4edHB8umQQtnwQ7XebTjK0Arbeh8Q0WYBTR83Y=;
+        b=ImUyI9HLTUi9e+6497777P1wVlcTc+Qza10l5n99lbpmhhyrHuXG7rhN/DifsI7yrd
+         HtNvC0RruavHLxadfTxN5acsuSQZqUrCThOXbPB8eCaWRt08Mt5m84Yz1sC43pJGh0V5
+         XjFufgizPjJ3Whb5c445XvNJdyhoPNA/LykvF0Bjutec6xLxSPgpNWQAleh3xmCJ6fzp
+         KMUv+P1Lgn05rFYXwCamOQWEqYaFPhkLwDvJez+LXJu51OVbeaYpxBMQEwdmitZrXdym
+         4sJSWBwBjtwO1+b22CzLegN6W4kvfhoo7iqdIDCpbqP1NW04iSBahG3AfcCSgjfBYDIm
+         0mKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=T/JAm4edHB8umQQtnwQ7XebTjK0Arbeh8Q0WYBTR83Y=;
+        b=bV9q1EyLqwv7hnG9k+he/gn2rTiplDL7KW2QLFMmgi4ZrtfmfqHn5UbcBo+SbFNWb7
+         mx3d03Yv5lTf3ZuBB5gnI1bDxAuZqWKv+4kwziqe/DjLObnA1SGoAF7Nt1STX+Vf9AdB
+         5PpT3ga3dKP3imPM/Ypz6WKLAwKphgwRVvoDhE6sTpsh6B0LtdtGADAUaEylfI+bdZnP
+         opJX79L6W7SkCs2J5eUJjH6/AkFPMEvYoya0iyV9fc5baaju8keixwXp3J30wXzcOBQp
+         p0COP3D8Afn6/IcGbhXeGSpG/jVpksw8pdN8U29SBQSMjzzcMfsPOcd2k+bZV4567SxY
+         7woQ==
+X-Gm-Message-State: APjAAAUV6cuyLf0HAks5OvhCrEfmI/ZaZ3+N0EUjtYciav/77LLQRSH6
+        3gX9h1HHQrCagYB5tySBo8Wpm6hlC74ePA==
+X-Google-Smtp-Source: APXvYqzhEmLJjU4Dd+ywQiDOTu+WB+s3QLRPDvbPRXCOUGcMD+iy9bRLujHxGJqScs/0TfaY1bs+0g==
+X-Received: by 2002:a63:6849:: with SMTP id d70mr41986635pgc.21.1557271561120;
+        Tue, 07 May 2019 16:26:01 -0700 (PDT)
+Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
+        by smtp.gmail.com with ESMTPSA id j14sm18050873pfa.57.2019.05.07.16.25.59
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 07 May 2019 16:26:00 -0700 (PDT)
+Date:   Tue, 7 May 2019 16:25:55 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v2] Make fread/fwrite-like functions in http.c more like fread/fwrite.
-Date:   Wed,  8 May 2019 08:03:54 +0900
-Message-Id: <20190507230354.28638-1-mh@glandium.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190507214658.GC19955@sigill.intra.peff.net>
-References: <20190507214658.GC19955@sigill.intra.peff.net>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v5 1/2] documentation: add tutorial for first contribution
+Message-ID: <20190507232555.GA188866@google.com>
+References: <20190423193410.101803-1-emilyshaffer@google.com>
+ <20190507213040.151799-1-emilyshaffer@google.com>
+ <20190507213040.151799-2-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190507213040.151799-2-emilyshaffer@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fread/fwrite-like functions in http.c, namely fread_buffer,
-fwrite_buffer, fwrite_null, fwrite_sha1_file all return the
-multiplication of the size and number of items they are being given.
+> +Add a line to `#include "config.h"`. Then, add the following bits to the
+> +function body:
+> +
+> +----
+> +	const char *cfg_name;
+> +
+> +...
+> +
+> +	git_config(git_default_config, NULL)
+> +	if (git_config_get_string_const("user.name", &cfg_name) > 0) {
+> +		printf(_("No name is found in config\n"));
+> +	} else {
+> +		printf(_("Your name: %s\n"), cfg_name);
+> +	}
 
-Practically speaking, it doesn't matter, because in all contexts where
-those functions are used, size is 1.
+Just noticed the braces here, too. I have removed them from my local
+copy and will upload again if I hear other comments warranting a v6.
 
-But those functions being similar to fread and fwrite (the curl API is
-designed around being able to use fread and fwrite directly), it might
-be preferable to make them behave like fread and fwrite, which, from
-the fread/fwrite manual page, is:
-   On  success, fread() and fwrite() return the number of items read
-   or written.  This number equals the number of bytes transferred
-   only when size is 1.  If an error occurs, or the end of the file
-   is reached, the return value is a short item count (or zero).
-
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- http.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/http.c b/http.c
-index 98fb06df0b..27aa0a3192 100644
---- a/http.c
-+++ b/http.c
-@@ -176,7 +176,7 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	memcpy(ptr, buffer->buf.buf + buffer->posn, size);
- 	buffer->posn += size;
- 
--	return size;
-+	return size / eltsize;
- }
- 
- #ifndef NO_CURL_IOCTL
-@@ -204,12 +204,12 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	struct strbuf *buffer = buffer_;
- 
- 	strbuf_add(buffer, ptr, size);
--	return size;
-+	return nmemb;
- }
- 
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
- {
--	return eltsize * nmemb;
-+	return nmemb;
- }
- 
- static void closedown_active_slot(struct active_request_slot *slot)
-@@ -2319,14 +2319,14 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
- 			BUG("curl_easy_getinfo for HTTP code failed: %s",
- 				curl_easy_strerror(c));
- 		if (slot->http_code >= 300)
--			return size;
-+			return nmemb;
- 	}
- 
- 	do {
- 		ssize_t retval = xwrite(freq->localfile,
- 					(char *) ptr + posn, size - posn);
- 		if (retval < 0)
--			return posn;
-+			return posn / eltsize;
- 		posn += retval;
- 	} while (posn < size);
- 
-@@ -2339,7 +2339,7 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
- 		the_hash_algo->update_fn(&freq->c, expn,
- 					 sizeof(expn) - freq->stream.avail_out);
- 	} while (freq->stream.avail_in && freq->zret == Z_OK);
--	return size;
-+	return nmemb;
- }
- 
- struct http_object_request *new_http_object_request(const char *base_url,
--- 
-2.21.0
-
+ - Emily
