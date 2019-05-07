@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9E91F45F
-	for <e@80x24.org>; Tue,  7 May 2019 11:10:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B11131F45F
+	for <e@80x24.org>; Tue,  7 May 2019 11:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726603AbfEGLKe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 07:10:34 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33945 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbfEGLKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 07:10:34 -0400
-Received: by mail-wr1-f68.google.com with SMTP id f7so11425558wrq.1
-        for <git@vger.kernel.org>; Tue, 07 May 2019 04:10:32 -0700 (PDT)
+        id S1726659AbfEGLKh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 07:10:37 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34172 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726145AbfEGLKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 07:10:35 -0400
+Received: by mail-wm1-f68.google.com with SMTP id m20so7536531wmg.1
+        for <git@vger.kernel.org>; Tue, 07 May 2019 04:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hZ09F0zIC1aRUXkCpfJu/ka2c41fGJ/Me7TwSVoH/Lg=;
-        b=KOdXZawkV45Zr7HLPf6TMUNjI38UgylJkwrrNYbn5Ucllr/K7zujDtEpOGYbvGlPUD
-         mHi0Xz2kG71KZEvouCtUSGXeUYpJMaqo44PYWjGZumJ4vyz8SFLDX3yaO4oKrwx7H5MY
-         aSzmF57Q9xXDd4qt3YnHbXqu7asAcjSk0g72K0m12ZtUnvw+spmtlBCAEv4r9o0Asq/v
-         ABgN/jhP2d+6tSSbWsNOTpSqtzjvcMvilwIKlPA2Lo0gVrZ3V2Qg6Cr+fmtzxr9csM8L
-         e1zPLmsLOu4tNSh+7J/b9GlYA5sy3VfNjININ+81w6B0Pl9Rdtae+yLPTTBf3Lbq+dW/
-         AD5Q==
+        bh=Fi1MRes8xG2MpgWAWGY8AUAG26rheJ1uLYAwixIjeDY=;
+        b=QHohVY6X1ChwmL+4Itd5pK/rYpG+1sZGYQEN7zojrwe5zaP/QnmMPOfKWTFMwm8eN2
+         43t2bnCBGjQYgUaCd7J8TQswdoXRQ9SB8akP0KoXJ2ZFdipjicQD5m7gouu4VkngO1bn
+         O8+mlv5+3p/CRMflMAenJ2ZuqAYhWtAsbsY8fQLKJAYNOlPY+gdlzO+dSJVU+NIyuLxG
+         q02tHlnIs6VKavzcVN4SrLAHFs5B9vlRM/E6fx5Z3G2wwYvZpuzX4aIDEyS5+c722yfl
+         YQyD7eJq3whEgsZGLsAwCNJdqfFlJbs/kJ1WOAEDs3B9m4YfszGToA7K7WbOlXJZFFf9
+         1X8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hZ09F0zIC1aRUXkCpfJu/ka2c41fGJ/Me7TwSVoH/Lg=;
-        b=f67Hn4wJY2ET/PsyAD0oIRK7Rxf+IMVswARBGhHdpsv2RbBdaMskMNJH0G49SfwBln
-         Sr7Acy5YKpOB+cuR3BChwgIUFX7bxqAkdFMg0u01Wwzl7BqaPSi7Zw9EiIITbgdykK+Z
-         cLWZbLA/8m0ZHGRZTeVsgEWGo2VYhNXFFGLFyYgZwIFfqugT73HS/ug+TC06LeZjWquo
-         SkCsHDmQnICELdupGVS7OQ9vyxopo7M6GJl6Mha7f6PMYzSUg3i1QMEykKOZ8VpcQ4Ek
-         fXIl8O9B23A1dYxsmwxMArzVmsooaG08r2NclSFLPtu+PHzinQPENrrxRenJ7n7jaS4l
-         fdbQ==
-X-Gm-Message-State: APjAAAVL/q3XVcCVwRVxZ32j0sGi8RXds9yCjM7CCA49ADTe7YjYQfyF
-        dUuXkVy0yWtYZ1gEaRvB6C9e4xRSBZY=
-X-Google-Smtp-Source: APXvYqwO/3K4TZb/yY8Lv9JI/AgV/I2rQEpHFEbEdE2u3c4YVzNFOnn/c5LbOkfvaKJM3p/CNFUYdA==
-X-Received: by 2002:adf:9c87:: with SMTP id d7mr16371061wre.68.1557227431536;
-        Tue, 07 May 2019 04:10:31 -0700 (PDT)
+        bh=Fi1MRes8xG2MpgWAWGY8AUAG26rheJ1uLYAwixIjeDY=;
+        b=AuRWz39akoNDfyH0HFplLqZyuVKB4vJNimNUoZcvXFR1mdhOUC2qk3g2WmHTpB6aaz
+         +jgXlgvEGMIPkd+Sy4zRc2Ch+V6dQjnNxWpCgm1jGap9gzhxMTu0+WAx2LpVAJcWrGsP
+         vC8mIQZ4gcUWvb/ze8D24jmSDBQ8MjP/zTrDfOrXfrZNyYFu7X8Zmge0cEW1TmFnfsNd
+         +1Rd2n7kFMfcDi04fMvJ1t8guee0ucCxcxKVXGD4FuZB1L4qhw/PFyeJ5ZO9EFGKgn8F
+         Rw1FdvdRlojKTxK2fi3/FyzI/2CAOgeBbAjhlgUw6irhEw0Qm4G6Ii+htrzXcRx/OelY
+         x4OA==
+X-Gm-Message-State: APjAAAUR8ufSB3ZmicOVphG3Q0MOn6LBo3DA73MrC9fYN+pHUlIVb9V2
+        4M+eR7BcThztR6ip8xBcM7ZklLDf4XU=
+X-Google-Smtp-Source: APXvYqxRx9Crd07hB2Uvwjvt1YC4mLYf1qa/kQeC3FLZvF0sq6kUo1NwCrUHJfxi5aIVcm5KZ4ZYUA==
+X-Received: by 2002:a05:600c:3cb:: with SMTP id z11mr9332832wmd.140.1557227433464;
+        Tue, 07 May 2019 04:10:33 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d14sm11246108wre.78.2019.05.07.04.10.30
+        by smtp.gmail.com with ESMTPSA id d14sm11246108wre.78.2019.05.07.04.10.32
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 07 May 2019 04:10:30 -0700 (PDT)
+        Tue, 07 May 2019 04:10:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,11 +56,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Ben Peart <benpeart@microsoft.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 0/2] Fix fsmonitor after discard_index()
-Date:   Tue,  7 May 2019 13:10:19 +0200
-Message-Id: <20190507111021.12840-1-avarab@gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v3 1/2] fsmonitor: demonstrate that it is not refreshed after discard_index()
+Date:   Tue,  7 May 2019 13:10:20 +0200
+Message-Id: <20190507111021.12840-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.593.g511ec345e18
 In-Reply-To: <pull.165.v2.git.gitgitgadget@gmail.com>
 References: <pull.165.v2.git.gitgitgadget@gmail.com>
@@ -72,60 +71,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This v3 is all Johannes's patches. The outstanding review on v2 could
-be clarified with a commit message change, which I've addressed, and
-v2 conflicted with a cache.h change that's since landed in "master",
-which I've rebased this on.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Junio: We're getting closer to the release so it would be great to
-have this. It's been broken for a long time, but having this finaly
-fixed in v2.22 would be great. The functional code changes are also
-isolated to the fsmonitor code path, which reduces the risk and makes
-this easier to review/reason about.
+This one is tricky.
 
-Johannes Schindelin (2):
-  fsmonitor: demonstrate that it is not refreshed after discard_index()
-  fsmonitor: force a refresh after the index was discarded
+When `core.fsmonitor` is set, a `refresh_index()` will not perform a
+full scan of files that might be modified, but will query the fsmonitor
+and refresh only the ones that have been actually touched.
 
- cache.h                     |  3 ++-
- fsmonitor.c                 |  5 ++---
- read-cache.c                |  1 +
+Due to implementation details, the fsmonitor is queried in
+`refresh_cache_ent()`, but of course it only has to be queried once, so
+we set a flag when we did that. But when the index was discarded, we did
+not re-set that flag.
+
+So far, this is only covered by our test suite when running with
+GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all, and only due to the way the
+built-in stash interacts with the recursive merge machinery.
+
+Let's introduce a straight-forward regression test for this.
+
+We simply extend the "read & discard index" loop in `test-tool
+read-cache` to optionally refresh the index, report on a given file's
+status, and then modify that file. Due to the bug described above, only
+the first refresh will actually query the fsmonitor; subsequent loop
+iterations will not.
+
+This problem was reported by Ævar Arnfjörð Bjarmason.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/helper/test-read-cache.c  | 24 +++++++++++++++++++++++-
  t/t7519-status-fsmonitor.sh |  8 ++++++++
- 5 files changed, 36 insertions(+), 5 deletions(-)
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
-Range-diff:
-1:  51a7edf22a = 1:  c31f834b07 fsmonitor: demonstrate that it is not refreshed after discard_index()
-2:  79fdd0d586 ! 2:  7bf5f9f610 fsmonitor: force a refresh after the index was discarded
-    @@ -6,8 +6,10 @@
-         flag that says whether the fsmonitor hook has been run, i.e. it is now
-         per-index.
-     
-    -    It also gets re-set when the index is discarded, fixing the bug where
-    -    fsmonitor-enabled Git would miss updates under certain circumstances.
-    +    It also gets re-set when the index is discarded, fixing the bug
-    +    demonstrated by the "test_expect_failure" test added in the preceding
-    +    commit. In that case fsmonitor-enabled Git would miss updates under
-    +    certain circumstances, see that preceding commit for details.
-     
-         Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-     
-    @@ -15,11 +17,11 @@
-      --- a/cache.h
-      +++ b/cache.h
-     @@
-    - 	struct cache_time timestamp;
-    - 	unsigned name_hash_initialized : 1,
-      		 initialized : 1,
-    --		 drop_cache_tree : 1;
-    -+		 drop_cache_tree : 1,
-    + 		 drop_cache_tree : 1,
-    + 		 updated_workdir : 1,
-    +-		 updated_skipworktree : 1;
-    ++		 updated_skipworktree : 1,
-     +		 fsmonitor_has_run_once : 1;
-      	struct hashmap name_hash;
-      	struct hashmap dir_hash;
+diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+index d674c88ba0..7e79b555de 100644
+--- a/t/helper/test-read-cache.c
++++ b/t/helper/test-read-cache.c
+@@ -1,14 +1,36 @@
+ #include "test-tool.h"
+ #include "cache.h"
++#include "config.h"
+ 
+ int cmd__read_cache(int argc, const char **argv)
+ {
+-	int i, cnt = 1;
++	int i, cnt = 1, namelen;
++	const char *name = NULL;
++
++	if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
++		namelen = strlen(name);
++		argc--;
++		argv++;
++	}
++
+ 	if (argc == 2)
+ 		cnt = strtol(argv[1], NULL, 0);
+ 	setup_git_directory();
++	git_config(git_default_config, NULL);
+ 	for (i = 0; i < cnt; i++) {
+ 		read_cache();
++		if (name) {
++			int pos;
++
++			refresh_index(&the_index, REFRESH_QUIET,
++				      NULL, NULL, NULL);
++			pos = index_name_pos(&the_index, name, namelen);
++			if (pos < 0)
++				die("%s not in index", name);
++			printf("%s is%s up to date\n", name,
++			       ce_uptodate(the_index.cache[pos]) ? "" : " not");
++			write_file(name, "%d\n", i);
++		}
+ 		discard_cache();
+ 	}
+ 	return 0;
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 3e0a61db23..afd8fa7532 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -346,4 +346,12 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
+ 	test_cmp before after
+ '
+ 
++test_expect_failure 'discard_index() also discards fsmonitor info' '
++	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
++	test_might_fail git update-index --refresh &&
++	test-tool read-cache --print-and-refresh=tracked 2 >actual &&
++	printf "tracked is%s up to date\n" "" " not" >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.21.0.593.g511ec345e18
 
