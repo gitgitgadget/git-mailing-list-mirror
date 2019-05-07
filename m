@@ -2,112 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB6B01F45F
-	for <e@80x24.org>; Tue,  7 May 2019 14:29:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9575A1F45F
+	for <e@80x24.org>; Tue,  7 May 2019 14:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726640AbfEGO3x (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 10:29:53 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:37870 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726708AbfEGO3s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 10:29:48 -0400
-Received: by mail-it1-f194.google.com with SMTP id r85so26029907itc.2
-        for <git@vger.kernel.org>; Tue, 07 May 2019 07:29:47 -0700 (PDT)
+        id S1726586AbfEGOlO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 10:41:14 -0400
+Received: from mail-lf1-f54.google.com ([209.85.167.54]:33217 "EHLO
+        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726497AbfEGOlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 10:41:14 -0400
+Received: by mail-lf1-f54.google.com with SMTP id x132so1126258lfd.0
+        for <git@vger.kernel.org>; Tue, 07 May 2019 07:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FI9kuH4j90dpqVT1GHQY/sqC0EXWKRgKypnXP3uXAH8=;
-        b=To5HUATJLMGPZjsCFkQRJ3weKfOwBN3G1Pp1fsfFXDTjqtydv9h5zvDTtlQXk/IR95
-         5KyZARJrYgY9zqWJirfW5OlMX+7o44fIW9WwquRJeCnNh/9kJNuO5Rz2xNQ/VK44teb9
-         pcnI+YZen6OUnTsh6eumHRVO/xPIDb7tCIasC35gfAab9EUhky4pxhSwInryaIZaZbHp
-         FX8+fgFBD0VFPzv+tvY30mSPqD055Sie+veHdNutiT9LTNh6uVGhkwprls5SXw0cAZbG
-         2SkhE6iXz1racrjwDqCnSS5FzgEaMjVjP1cRCgSsmgtfbZkVpIM4VOaiLPn4JUjwZpI5
-         Mbaw==
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc;
+        bh=aydSB0c3NahvTus3q4cQ8v8htiB0/2NDF8vsGlq5Ors=;
+        b=lSwwlW55GFhLLnJzKVLnqNBpgp/TrOh+LgiPJhR7NRWrtfLHsfvW+A/8PbTOkCisEd
+         Nt5aZuYp599BqCakDnelkll8opRaEuae3vkGg2Cm/kX2LPs2YSjeEveqpkQPIewgvQ1P
+         qoZmSZ60KnPGrCcj/XX7P39euAKu/5bgkCyc4IAj1JhhjbJ4cxMCA8kEgJCdvoq2N0hc
+         C6Po6FDsCxs4b+Khd5fjpSkF5wrThYJUGasAAJz0ByGvbCGow8N4eU1VVsEzO7odq3c4
+         P8NlsHfOMRHRy+G7jtLQLEtvMMPGhrsseyOEmx0/lCwyNQU4Icrvj7dh5MEUJhPPx5hb
+         gLdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FI9kuH4j90dpqVT1GHQY/sqC0EXWKRgKypnXP3uXAH8=;
-        b=hK4x5L5EB/vy5sCqvuDXlBsY7GnhbVrBf1/l+CnalqYzp+BlCGOWMoA9xnFzGTy6qu
-         cXwnhFZ/q3nRWipQoCvKZQ9QKMBb9eGeKRW5vKP3Ht5DxmNp4yCS18OK0Eh8swfL7Fqd
-         Ni71q0cCYhpTxqS4EFLpZfnM8CoQ77dkFbYZZyEkBK/d1n9PhAXn4d+VRAALcYdklld9
-         ZfPO3CD5SvjoY8cBs6vUuXsFW0R9Tb808R1zBUhtwteVjotGxggt8z9J/40+GXIbuuzS
-         +ASNkRW0cprpnwVzkYFhEu0ex8TO0V9XgKPiIRzDpeAtzFLSypTpW6ppX6+PfWLurP1c
-         TWSQ==
-X-Gm-Message-State: APjAAAWG3P2KdPd/yMjF1zvXDoa9htnH52rT/HHAoFqJVcdXsC8peWhB
-        MXpBURgIAh4fHSkU4dORMX2WGs/y
-X-Google-Smtp-Source: APXvYqxQLV8nwP/RvnXo4Aso7gQOePYivtrFOqE2rYkNlWjwJ9V5jz/xzffFHP2VbBsDKDJDiEtBJQ==
-X-Received: by 2002:a24:8c:: with SMTP id 134mr22983058ita.24.1557239386925;
-        Tue, 07 May 2019 07:29:46 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:780:ed13:bfd5:1bea:adb7])
-        by smtp.gmail.com with ESMTPSA id b12sm4757863ioq.31.2019.05.07.07.29.45
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 07 May 2019 07:29:45 -0700 (PDT)
-Date:   Tue, 7 May 2019 10:29:38 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Andreas Heiduk <asheiduk@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/4] cleanup revisions.txt
-Message-ID: <20190507142938.GA3769@archbookpro.localdomain>
-References: <cover.1557071877.git.liu.denton@gmail.com>
- <cover.1557072286.git.liu.denton@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc;
+        bh=aydSB0c3NahvTus3q4cQ8v8htiB0/2NDF8vsGlq5Ors=;
+        b=GzhRv3leGftQCZV3JkS2IGdixiFlbFzzaGE5/11tiLvwvxbhNWYrK85HHYle+BtVvQ
+         NXtgOI/a3PckvFVFOhoZCIcoZehdD3WbhIRMiXqVcfiWNzBoNXag4nQBKIW7FiX0H5hU
+         lWqwRL/0NCHcwf9Di+kNX4t6YMAuFEiEOrpoXHEkOuo6hns5ZBTpS8803WgxQpkmSy6u
+         +OP/hoRyM2Wx95xpWqlIoYP9G0q1Cq6dtilaoM+6SPCGBk0Gobjok2ZxOUwcHfSfgmYI
+         /md8e4rKIC9nCxDejcAXP3yGyCfpxWdz9C+N7kNEnnMOMzu/lvc1YDExuilNLPiJieyk
+         jIxg==
+X-Gm-Message-State: APjAAAVg4ZsDxCt7CSUE/l+vQlzPvIxumWdlUXIThRCrJM72K30pMvBO
+        2ThrvuoSMBAw1DbKsQ1gMA29WYL3bFAVlTK/1O14r5mT
+X-Google-Smtp-Source: APXvYqxUtLIWB5h/20ECREXnKUtkSCV+imyOf+NlkaE0ayYwantKzpeUrNnvv7Y1mhE1wyTR2tQIFJcB5o9DbA0aasM=
+X-Received: by 2002:a19:6a06:: with SMTP id u6mr966109lfu.26.1557240072115;
+ Tue, 07 May 2019 07:41:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1557072286.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
+ <20190503191231.GA5426@esm> <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
+ <874l67i1ie.fsf@evledraar.gmail.com> <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
+In-Reply-To: <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Tue, 7 May 2019 09:41:00 -0500
+X-Google-Sender-Auth: eppS9ORsTK9u-klVwEGuNllB9BY
+Message-ID: <CAHd499DvwcHGkSF6DjivvceUaMRO994Q8e1JrjNqjzpQkhDMFg@mail.gmail.com>
+Subject: Re: Merge commit diff results are confusing and inconsistent
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, May 7, 2019 at 9:10 AM Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> Your example is very helpful. I understand what you're saying for
+> conflicted lines. But the "whatever the default merge resolution would
+> have been" doesn't exist, because there's no reality where line 1 in
+> color.txt can be something "automatic" (i.e. deduced by git). The only
+> reality for the merge commit is some hand-edited replacement to line
+> 1. So there is no "diff what I see with some alternate reality".
+>
+> The majority use case I'm interested in is seeing net-positive changes
+> that happen in merge commits. Normally I take for granted that merge
+> commits have nothing meaningful in them (meaningful here defined as
+> something unexpected for a merge commit). But what if someone makes a
+> poor decision and does some crazy refactoring in 1 file and amends it
+> into a merge commit? Let's also say that these changes are done to a
+> file that wasn't modified in any parent (say a unrelated.txt next to
+> your color.txt). Since neither parent cares about that file for the
+> purposes of the merge, I am trying to make sense of a revision
+> specification that can be used to see what they did to that file.
+>
+> Even ignoring that issue, the more concerning observation of mine is
+> that `diff @^!` produces any output at all. If you exclude both
+> parents, why do I see a diff for parent 2 (I see the complete diff of
+> the branch that was merged in)?
+>
+> Again, thank you for your example, you definitely made things very
+> clear for me. I see where the confusion is. And I think --cc is a good
+> way to get more context. At this point I'm just concerned about the
+> @^! behavior with merge commits & diff.
 
-I noticed that there are both `dl/rev-tilde-doc-clarify` and
-`dl/revisions-doc-update` branches. The latter comes from this patchset
-and is a complete replacement for the former.
+Also I'm really confused how you got diff-tree to work. If I pick any
+arbitrary SHA1 of a merge commit in my existing repo's history,
+diff-tree produces only a SHA1 as the result:
 
-Thanks,
+$ git diff-tree --cc bdd47a73d
+bdd47a73d18948aa46a8a7aa964543f0d989ffd4
 
-Denton
-
-On Sun, May 05, 2019 at 12:06:54PM -0400, Denton Liu wrote:
-> Thanks again for the comments, Andreas! I've incorporated all of them
-> into this reroll.
-> 
-> ---
-> 
-> Changes since v2:
-> 
-> * Marked more optional arguments with []
-> * Added Andreas' "revisions.txt: remove ambibuity between <rev>:<path>
->   and :<path>" patch
-> 
-> Changes since v1:
-> 
-> * Added patch to fix instances of "rev" to "<rev>"
-> * Marked all optional rev arguments with []
-> 
-> 
-> Andreas Heiduk (1):
->   revisions.txt: remove ambibuity between <rev>:<path> and :<path>
-> 
-> Denton Liu (3):
->   revisions.txt: change "rev" to "<rev>"
->   revisions.txt: mark optional rev arguments with []
->   revisions.txt: mention <rev>~ form
-> 
->  Documentation/revisions.txt | 29 ++++++++++++++---------------
->  1 file changed, 14 insertions(+), 15 deletions(-)
-> 
-> -- 
-> 2.21.0.1049.geb646f7864
-> 
+I tried with just `-c` as well; same result.
