@@ -2,185 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A3EB1F45F
-	for <e@80x24.org>; Tue,  7 May 2019 14:10:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B43621F45F
+	for <e@80x24.org>; Tue,  7 May 2019 14:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbfEGOK2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 10:10:28 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:40304 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbfEGOK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 10:10:27 -0400
-Received: by mail-lf1-f67.google.com with SMTP id o16so11959739lfl.7
-        for <git@vger.kernel.org>; Tue, 07 May 2019 07:10:26 -0700 (PDT)
+        id S1726444AbfEGOTq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 10:19:46 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:38988 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726399AbfEGOTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 10:19:46 -0400
+Received: by mail-it1-f194.google.com with SMTP id m186so1225683itd.4
+        for <git@vger.kernel.org>; Tue, 07 May 2019 07:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:sender:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=9v6Nfhecyi102+QYCy1oJhtzPmUr4S/3a0z4i0Vv/Iw=;
-        b=BKXJkcieB7eAUIOYPYJbsPLkhFFMZfd8GElFRBljpsnEGfxyH9C8ndfO8NkqSWjpWW
-         S1cO1nGtbSbQ+HDoWeHjqmoecYf02GXAKjfAJFHxKQ4GhPCrrlmVdNxz+spqb3tml3dj
-         u6dQZ0fxISrt5EARGQghXulPrRJupR2evhpKy4Eh0bV8NtEKDkHlWNxOuHMRSoxTm7M8
-         Oxq/tRDTLqmMgyxlvdTI5sa6gJZOV2XhZ08LDcLm0orrMS7Oeqt4ctqNlZac3kXA14yc
-         g1UiUyuPCr69DUi1nyNJWTKP8PMDP4nLfN6pJEGWvdgWJawhKV8NJYIoUTWEFxIRZ85T
-         EfuA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vxHpSfD1S7JtnYPpj4saw+iL6jSfv0H1I3Srvu27tUs=;
+        b=Bsgq468Ozo8yLQlyFuE1Hb70q4F4fM1ncR1WHXLe2mHEy7GEvgUSAyJaZvj7cu3M2d
+         1HAaZv2j8LlbF+kAqPMbWAWUmwASa77kJHogDEVQ+7yTQCkNAKtoZPj+tx6viPthUu/h
+         t9SbY8rwB96ylGF710O4TcAcRjSBQTLy09+eNiXRXzPzgbzvVSA8XCkyIlAdYpFXGkLS
+         AtgbdD5QJXKVZaBLcU6fqeC19UgLh8c1hYqZzviFij0O4Zybjusk5y74jMgI0g0cSrWU
+         tWxuVyiLsP2iDAGlCdBGHgxsqTB5Ij8+PLgplPuzDHGaJ13QzUWnzlOYPdVWneNWS8CX
+         Wwcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=9v6Nfhecyi102+QYCy1oJhtzPmUr4S/3a0z4i0Vv/Iw=;
-        b=CT7Dea+fzQcs9QlWSDSEXH7fuUj/OeC3K3VhCCSgQMJOm1Bc79K1U/66buUZ1s12np
-         h75c5xQetnQ66PBC44TbsKQGQ3yTPAt3rLlcM/PdGWHiDUgh3FFTrFypKjldFLlS2/2R
-         nRSereoraJj/B2A07RzbMKvLq/4CgaaLriF9mwenxJgo/h8JQjl4SshpMDog7xv0s5Kc
-         KgRiTMkPARGR8gvaQ3bq1c5DHPSyjnCBzsWMsXtLHrO4e+VHRm3Z+1tF5m5RyGk27Glk
-         JqcZn9cE2GTE+RZZW5sTQmCh2uByS58/KlYKySV6hMIYTEKawvWrgFqJ0P02E4zTBCnv
-         kt0A==
-X-Gm-Message-State: APjAAAWhWTOkJxmoh+cqA/ocP+aAUkC68C6mLxs1jyLe/9UXkenqnFPZ
-        oigOCHMMtnRgfXGBYkFoJXbjcnY+0T/yf8N9cgY=
-X-Google-Smtp-Source: APXvYqyx3kj7OOs09+KoYpnZEGz3WKG/xYNzpzVxlH0CWcL+kEGaijxx48t42v1LTTZTttrNxtiISy/+LYy4j+sT/B0=
-X-Received: by 2002:ac2:428f:: with SMTP id m15mr16655002lfh.40.1557238225378;
- Tue, 07 May 2019 07:10:25 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vxHpSfD1S7JtnYPpj4saw+iL6jSfv0H1I3Srvu27tUs=;
+        b=J0Mfvmjk/s7o2Exz9S5qQ1JRnvt2dBRDTtapjT0BsxcgEyMUkhrIszW3Jcnvum9Zp8
+         aGRtn1JQtEMA7ZNqZhgwlxu4iGySi3ry99HVLiLiSrtc6mHpGZjxQSOKayTFktdgiRY6
+         jzeixvB2OyNuKtp/z4P0I2xDASSeECxg/fYXNcxcKIG25sXBndoD1M5yGU3JLYdiv3pg
+         4vKP6VSD20pSHMp1HiCguTl44VTkNgW0ZH923CaPOoN8K13SvdsUDJTx9rK3YdrJbb9o
+         EkHCoLoCyCmdt/eLI9mEQnU6793QBOXdtcO6i5PRHrN5S1Z7YXhibdj7I+1Vh5LIx+gf
+         U+Ag==
+X-Gm-Message-State: APjAAAUOBWjiu1QECkV5RZ5K2hmP4QBLLRAYMQ3DSF72iuJYctiK6YO2
+        xnK+Nc9xEAJi+SpA6eMtouE=
+X-Google-Smtp-Source: APXvYqxdW66QlmfXRamFV9mkrKkKJAeeXPrYrYXpFwxDaE36N69R0m4sJgbJY73Z7PYld5vNOr57DQ==
+X-Received: by 2002:a24:8583:: with SMTP id r125mr21879330itd.69.1557238785475;
+        Tue, 07 May 2019 07:19:45 -0700 (PDT)
+Received: from archbookpro.localdomain ([2620:101:f000:780:ed13:bfd5:1bea:adb7])
+        by smtp.gmail.com with ESMTPSA id j16sm4811076iok.64.2019.05.07.07.19.43
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 07 May 2019 07:19:44 -0700 (PDT)
+Date:   Tue, 7 May 2019 10:19:42 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/7] teach branch-specific options for format-patch
+Message-ID: <20190507141942.GA359@archbookpro.localdomain>
+References: <cover.1557072929.git.liu.denton@gmail.com>
+ <xmqq4l66myn3.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
- <20190503191231.GA5426@esm> <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
- <874l67i1ie.fsf@evledraar.gmail.com>
-In-Reply-To: <874l67i1ie.fsf@evledraar.gmail.com>
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Tue, 7 May 2019 09:10:12 -0500
-X-Google-Sender-Auth: -rgMmAH1m_EY_zR1bKoQe7OM-jo
-Message-ID: <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
-Subject: Re: Merge commit diff results are confusing and inconsistent
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4l66myn3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 6, 2019 at 6:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> Maybe an example helps, let's say you have two paint buckets, one with
-> red paint, one with yellow paint. You mix them. What happens?
->
->     (
->         rm -rf /tmp/git &&
->         git init /tmp/git &&
->         cd /tmp/git &&
->         git checkout -b red &&
->
->         echo red >color.txt &&
->         git add color.txt &&
->         git commit -m"red" &&
->
->         git checkout --orphan green &&
->         git reset --hard &&
->         echo green >color.txt &&
->         git add color.txt &&
->         git commit -m"green" &&
->
->         git merge --allow-unrelated-histories red;
->         echo yellow >color.txt &&
->         git add color.txt &&
->         git commit -m"red + green =3D yellow"
->     )
->
-> I *think* what you're alluding to is trying to discover some sort of
-> change to whatever the default merge resolution would have been, which
-> in this case would be closer to:
->
->     (echo green && echo red) >color.txt
->
-> But it's important to understand that the whole business of suggesting
-> how you should merge is just sugar that isn't in any way represented in
-> the object model that makes it into the repository.
->
-> In that model we just had one branch with "color.txt" containing "red",
-> and another with "green". Then we merged the two together and that
-> commit merged two histories together, did something to yield an end
-> result, and now the "color.txt" file contains "yellow".
->
-> But what single thing can you look at to describe how you ended up with
-> "yellow"? There isn't such a single thing, I just know that I have a
-> commit with two parents:
->
->     $ git cat-file -p HEAD
->     tree 6318a50d67e6de533498a4a0c9f46360cff6908a
->     parent 2332fc6b40c1cbf9f5daf809f09eb4defdd2ce30
->     parent 1707f13d2d236d61ac7496962ecebc50ffff5be3
->
-> And that if I diff against the 1st parent we went from green to yellow:
->
->     $ git diff HEAD^1..HEAD
->     diff --git a/color.txt b/color.txt
->     index a5b73ed..d1ed081 100644
->     --- a/color.txt
->     +++ b/color.txt
->     @@ -1 +1 @@
->     -green
->     +yellow
->
-> And the other from red to yellow:
->
->     $ git diff HEAD^2..HEAD
->     diff --git a/color.txt b/color.txt
->     index a9d1386..d1ed081 100644
->     --- a/color.txt
->     +++ b/color.txt
->     @@ -1 +1 @@
->     -red
->     +yellow
->
-> To the extent that we can show a single diff at all that's diff-tree's
-> --cc option:
->
->     $ git diff-tree --cc HEAD
->     e89ef1f780d7c979c18cc0f03fd74c560466ef03
->     diff --cc color.txt
->     index a5b73ed,a9d1386..d1ed081
->     --- a/color.txt
->     +++ b/color.txt
->     @@@ -1,1 -1,1 +1,1 @@@
->     - green
->      -red
->     ++yellow
->
-> Sometimes it makes things better, sometimes it's just more
-> confusing. It's what "git show" will use to render merge commits.
+Hi Junio,
 
-Your example is very helpful. I understand what you're saying for
-conflicted lines. But the "whatever the default merge resolution would
-have been" doesn't exist, because there's no reality where line 1 in
-color.txt can be something "automatic" (i.e. deduced by git). The only
-reality for the merge commit is some hand-edited replacement to line
-1. So there is no "diff what I see with some alternate reality".
+On Tue, May 07, 2019 at 05:56:00PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+>
+> > Currently, format-patch only accepts branch.<name>.description as a
+> > branch-specific configuration variable. However, there are many other
+> > options which would be useful to have on a branch-by-branch basis,
+> > namely cover letter subject and To: and Cc: headers.
+> >
+> > Teach format-patch to recognise these branch-specific configuration
+> > options.
+> >
+> > Note that this patchset[1] was created using these new configuration
+> > options:
+> >
+> > 	[branch "submitted/fix-revisions-txt"]
+> > 		coverSubject = "cleanup revisions.txt"
+> > 		cc = "Andreas Heiduk <asheiduk@gmail.com>"
+> > 		cc = "Duy Nguyen <pclouds@gmail.com>"
+> > 		cc = "Junio C Hamano <gitster@pobox.com>"
+>
+> Do we have format.<something> configuration for these things?
 
-The majority use case I'm interested in is seeing net-positive changes
-that happen in merge commits. Normally I take for granted that merge
-commits have nothing meaningful in them (meaningful here defined as
-something unexpected for a merge commit). But what if someone makes a
-poor decision and does some crazy refactoring in 1 file and amends it
-into a merge commit? Let's also say that these changes are done to a
-file that wasn't modified in any parent (say a unrelated.txt next to
-your color.txt). Since neither parent cares about that file for the
-purposes of the merge, I am trying to make sense of a revision
-specification that can be used to see what they did to that file.
+Currently, we have format.{to,cc} but not format.coverSubject. The
+reason why is that for the cover-subject, I didn't think that it would
+make a lot of sense to have a general configuration for this since it
+varies between branches, just like how branch.<name>.description does
+not have a matching format.description.
 
-Even ignoring that issue, the more concerning observation of mine is
-that `diff @^!` produces any output at all. If you exclude both
-parents, why do I see a diff for parent 2 (I see the complete diff of
-the branch that was merged in)?
+>
+> What I am trying to get at is if these are better structured similar
+> to http options where http.<something> supplies the overall default
+> for <something>, while http.<destination>.<something> gives a more
+> destination site specific override of that default.  I.e. format.cc
+> is used as fallback, while format.<branch>.cc is used to override.
 
-Again, thank you for your example, you definitely made things very
-clear for me. I see where the confusion is. And I think --cc is a good
-way to get more context. At this point I'm just concerned about the
-@^! behavior with merge commits & diff.
+The reason why I chose to use branch.<name>.* is because format-patch
+currently reads from branch.<name>.description and I wanted to build on
+top of that. In addition, I didn't want to scatter branch-specific
+configs in two different place (i.e. have a branch.<branchName>.description
+alongside a format.<branchName>.coverSubject).
+
+>
+> In any case, it smells to me that branch.<branch>.cc does not hint
+> strongly enough that they are meant to affect format-patch.
+>
+>
+
+Would you suggest moving to a format.<branchname>.* approach or would it
+make sense to rename the configs to something like
+branch.<name>.{emailCoverSubject,emailTo,emailCc}?
+
+Thanks,
+
+Denton
