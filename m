@@ -2,134 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96A541F45F
-	for <e@80x24.org>; Tue,  7 May 2019 14:03:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A3EB1F45F
+	for <e@80x24.org>; Tue,  7 May 2019 14:10:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726740AbfEGODd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 10:03:33 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39675 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726063AbfEGODc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 10:03:32 -0400
-Received: by mail-wm1-f67.google.com with SMTP id n25so20183375wmk.4
-        for <git@vger.kernel.org>; Tue, 07 May 2019 07:03:32 -0700 (PDT)
+        id S1726695AbfEGOK2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 10:10:28 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:40304 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726340AbfEGOK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 10:10:27 -0400
+Received: by mail-lf1-f67.google.com with SMTP id o16so11959739lfl.7
+        for <git@vger.kernel.org>; Tue, 07 May 2019 07:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cx/0qy8TPzhy4UubZs0dpvzQSR0yTPYdy/66gVmMFhw=;
-        b=h19B2+++QGZ0UZ7DDaTWH/ed3IVnRKXSTJN/p2P4Y/wjwMi57DmXbBx7Ch4Obxnfps
-         GE09bGDshDqh++juY9HTR8qIWuWYNw+C5G/nFxPZKFI6sBM2KuZaPb0Ojzlg30u/X+7r
-         dcz5DGUgK6qFBgU3JOIXXleBvGA27iPJCSxypdPhuFxDJJA+1EKbFhGkVNC6q0NCyXma
-         xQfbDhbf8laBxk/LPetDe3X8VSjMaF5zYXoU5dhq5Upm7i5rJ2YQjdtiB4cnJkSjlQYf
-         ejn9SQzDTPEEkqP2xItD46jhdpRxFlOLjTzNETAsJzQH98pPSpR0kHz/OM2oKX9mEydv
-         VJ1g==
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=9v6Nfhecyi102+QYCy1oJhtzPmUr4S/3a0z4i0Vv/Iw=;
+        b=BKXJkcieB7eAUIOYPYJbsPLkhFFMZfd8GElFRBljpsnEGfxyH9C8ndfO8NkqSWjpWW
+         S1cO1nGtbSbQ+HDoWeHjqmoecYf02GXAKjfAJFHxKQ4GhPCrrlmVdNxz+spqb3tml3dj
+         u6dQZ0fxISrt5EARGQghXulPrRJupR2evhpKy4Eh0bV8NtEKDkHlWNxOuHMRSoxTm7M8
+         Oxq/tRDTLqmMgyxlvdTI5sa6gJZOV2XhZ08LDcLm0orrMS7Oeqt4ctqNlZac3kXA14yc
+         g1UiUyuPCr69DUi1nyNJWTKP8PMDP4nLfN6pJEGWvdgWJawhKV8NJYIoUTWEFxIRZ85T
+         EfuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=cx/0qy8TPzhy4UubZs0dpvzQSR0yTPYdy/66gVmMFhw=;
-        b=W5LGkxWwVORt5ka1l2Be0EMeOiOfDCt/hAclLf/lGFdo1n1XjCJdZiR8fXVgF4XU/4
-         bbC44E5cAMgP8sTlU+ONgEj5Aa+m0wuFTrWwSjh80oPh/K4ffDsHAKYysIVRVqdje8th
-         AbEcvF+EqZ+4b88xR5s8obz0f94dZjWYuq+wsw0jp8FRPTXMtbTpWfb63qdiWHWmPiua
-         //FjnqqNqQgbMobqrJs6uc1AdekpfaooDR6FaR191fO9YiRaAFmW28d3BJuxuTw89D1J
-         avjoY274OfKMA2lXODLiISDJSFjllr1KqM0faT9N/ge+wTMTF+MEj6KfTS1jKsFzVP2O
-         AFYw==
-X-Gm-Message-State: APjAAAXsgHPRJUJZsw9kaqeQdZnIMQ3poW8yP2wN7PTuTYASgk3oh5SP
-        s292ijVQPWBM6ze9FX1QWBwQinRt
-X-Google-Smtp-Source: APXvYqwL5S0oc8nwDTrMIJus5MgyKPbHAxlImYkYbc9/RM5LbrhUmfpbzbl3OWWMEv+uHlOYlSf9IA==
-X-Received: by 2002:a1c:9689:: with SMTP id y131mr22484550wmd.74.1557237811380;
-        Tue, 07 May 2019 07:03:31 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.gmail.com with ESMTPSA id r9sm13327345wrv.82.2019.05.07.07.03.29
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 May 2019 07:03:30 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [BUG] rebase --interactive silently overwrites ignored files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     wh <microrffr@gmail.com>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <CAL_tzDGRQ4BzJ4c6QypXfBXQNQYocbKbJSBOHhBBB2TwQQPCGA@mail.gmail.com>
- <2643a200-5356-f3bc-1715-3f34b5f19a5b@gmail.com>
- <CAL_tzDFQQtDYMStN+RDVYN_TzJmO+kufMhG9PGHwvsUWREpgWQ@mail.gmail.com>
- <3bf0f04d-83d4-ef13-8e19-a679b4153793@gmail.com>
- <xmqq4l69tupt.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <76bb6944-d448-66b9-dd4e-ed3e262e9a96@gmail.com>
-Date:   Tue, 7 May 2019 15:03:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=9v6Nfhecyi102+QYCy1oJhtzPmUr4S/3a0z4i0Vv/Iw=;
+        b=CT7Dea+fzQcs9QlWSDSEXH7fuUj/OeC3K3VhCCSgQMJOm1Bc79K1U/66buUZ1s12np
+         h75c5xQetnQ66PBC44TbsKQGQ3yTPAt3rLlcM/PdGWHiDUgh3FFTrFypKjldFLlS2/2R
+         nRSereoraJj/B2A07RzbMKvLq/4CgaaLriF9mwenxJgo/h8JQjl4SshpMDog7xv0s5Kc
+         KgRiTMkPARGR8gvaQ3bq1c5DHPSyjnCBzsWMsXtLHrO4e+VHRm3Z+1tF5m5RyGk27Glk
+         JqcZn9cE2GTE+RZZW5sTQmCh2uByS58/KlYKySV6hMIYTEKawvWrgFqJ0P02E4zTBCnv
+         kt0A==
+X-Gm-Message-State: APjAAAWhWTOkJxmoh+cqA/ocP+aAUkC68C6mLxs1jyLe/9UXkenqnFPZ
+        oigOCHMMtnRgfXGBYkFoJXbjcnY+0T/yf8N9cgY=
+X-Google-Smtp-Source: APXvYqyx3kj7OOs09+KoYpnZEGz3WKG/xYNzpzVxlH0CWcL+kEGaijxx48t42v1LTTZTttrNxtiISy/+LYy4j+sT/B0=
+X-Received: by 2002:ac2:428f:: with SMTP id m15mr16655002lfh.40.1557238225378;
+ Tue, 07 May 2019 07:10:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4l69tupt.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
+ <20190503191231.GA5426@esm> <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
+ <874l67i1ie.fsf@evledraar.gmail.com>
+In-Reply-To: <874l67i1ie.fsf@evledraar.gmail.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Tue, 7 May 2019 09:10:12 -0500
+X-Google-Sender-Auth: -rgMmAH1m_EY_zR1bKoQe7OM-jo
+Message-ID: <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
+Subject: Re: Merge commit diff results are confusing and inconsistent
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+On Mon, May 6, 2019 at 6:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> Maybe an example helps, let's say you have two paint buckets, one with
+> red paint, one with yellow paint. You mix them. What happens?
+>
+>     (
+>         rm -rf /tmp/git &&
+>         git init /tmp/git &&
+>         cd /tmp/git &&
+>         git checkout -b red &&
+>
+>         echo red >color.txt &&
+>         git add color.txt &&
+>         git commit -m"red" &&
+>
+>         git checkout --orphan green &&
+>         git reset --hard &&
+>         echo green >color.txt &&
+>         git add color.txt &&
+>         git commit -m"green" &&
+>
+>         git merge --allow-unrelated-histories red;
+>         echo yellow >color.txt &&
+>         git add color.txt &&
+>         git commit -m"red + green =3D yellow"
+>     )
+>
+> I *think* what you're alluding to is trying to discover some sort of
+> change to whatever the default merge resolution would have been, which
+> in this case would be closer to:
+>
+>     (echo green && echo red) >color.txt
+>
+> But it's important to understand that the whole business of suggesting
+> how you should merge is just sugar that isn't in any way represented in
+> the object model that makes it into the repository.
+>
+> In that model we just had one branch with "color.txt" containing "red",
+> and another with "green". Then we merged the two together and that
+> commit merged two histories together, did something to yield an end
+> result, and now the "color.txt" file contains "yellow".
+>
+> But what single thing can you look at to describe how you ended up with
+> "yellow"? There isn't such a single thing, I just know that I have a
+> commit with two parents:
+>
+>     $ git cat-file -p HEAD
+>     tree 6318a50d67e6de533498a4a0c9f46360cff6908a
+>     parent 2332fc6b40c1cbf9f5daf809f09eb4defdd2ce30
+>     parent 1707f13d2d236d61ac7496962ecebc50ffff5be3
+>
+> And that if I diff against the 1st parent we went from green to yellow:
+>
+>     $ git diff HEAD^1..HEAD
+>     diff --git a/color.txt b/color.txt
+>     index a5b73ed..d1ed081 100644
+>     --- a/color.txt
+>     +++ b/color.txt
+>     @@ -1 +1 @@
+>     -green
+>     +yellow
+>
+> And the other from red to yellow:
+>
+>     $ git diff HEAD^2..HEAD
+>     diff --git a/color.txt b/color.txt
+>     index a9d1386..d1ed081 100644
+>     --- a/color.txt
+>     +++ b/color.txt
+>     @@ -1 +1 @@
+>     -red
+>     +yellow
+>
+> To the extent that we can show a single diff at all that's diff-tree's
+> --cc option:
+>
+>     $ git diff-tree --cc HEAD
+>     e89ef1f780d7c979c18cc0f03fd74c560466ef03
+>     diff --cc color.txt
+>     index a5b73ed,a9d1386..d1ed081
+>     --- a/color.txt
+>     +++ b/color.txt
+>     @@@ -1,1 -1,1 +1,1 @@@
+>     - green
+>      -red
+>     ++yellow
+>
+> Sometimes it makes things better, sometimes it's just more
+> confusing. It's what "git show" will use to render merge commits.
 
-On 05/05/2019 05:02, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I've had a look at the rebase -i code and I think it only overwrites
->> ignored files when it is fast-forwarding. This matches what merge does
->> when fast-forwarding but I'm not convinced either of them should be
->> doing this by default (I think checkout doing it is probably asking
->> for trouble)...
-> 
->> I'll put a patch together to fix rebase -i, I'd like to see the
->> defaults for merge and checkout changed but I'm not sure that would be
->> popular.
-> 
-> I suspect that such a change in behaviour for "rebase -i" is not a
-> fix but a regression.  Shouldn't it be consistent with checkout and
-> merge?
+Your example is very helpful. I understand what you're saying for
+conflicted lines. But the "whatever the default merge resolution would
+have been" doesn't exist, because there's no reality where line 1 in
+color.txt can be something "automatic" (i.e. deduced by git). The only
+reality for the merge commit is some hand-edited replacement to line
+1. So there is no "diff what I see with some alternate reality".
 
-My problem is that I don't really understand why some operations should 
-overwrite ignored files and others shouldn't. Having nearly all rebase 
-operations preserve ignored files and only overwriting them for a 
-fast-forward seems confusing and probably surprising to users. Is it a 
-bug that pull does not overwrite ignored files when fast-forwarding but 
-merge does? Why is it ok to overwrite ignored files when merge 
-fast-forwards but not otherwise?
+The majority use case I'm interested in is seeing net-positive changes
+that happen in merge commits. Normally I take for granted that merge
+commits have nothing meaningful in them (meaningful here defined as
+something unexpected for a merge commit). But what if someone makes a
+poor decision and does some crazy refactoring in 1 file and amends it
+into a merge commit? Let's also say that these changes are done to a
+file that wasn't modified in any parent (say a unrelated.txt next to
+your color.txt). Since neither parent cares about that file for the
+purposes of the merge, I am trying to make sense of a revision
+specification that can be used to see what they did to that file.
 
->> It does seem like surprising behavior though when most
->> operations try to preserve untracked files.
-> 
-> Are you conflating untracked and ignored?
-> 
-> Because we haven't adopted 'precious' (or whatever the final name
-> would be), which is "ignored but not expendable", ignored files are
-> by definition "ignored and expendable".  
+Even ignoring that issue, the more concerning observation of mine is
+that `diff @^!` produces any output at all. If you exclude both
+parents, why do I see a diff for parent 2 (I see the complete diff of
+the branch that was merged in)?
 
-My confusion is that they are only "ignored and expendable" in certain 
-circumstances. Many git operations actually fail if they are going to 
-overwrite an ignored file [1] - I don't understand if that is 
-intentional or not.
-
-Best Wishes
-
-Phillip
-
-[1] 
-https://public-inbox.org/git/CAL_tzDFQQtDYMStN+RDVYN_TzJmO+kufMhG9PGHwvsUWREpgWQ@mail.gmail.com/
-
-> When checkout (and merge
-> that is its more general form) needs to match the working tree to
-> the index contents and an ingored file is in the way, it should
-> overwrite it.
-> 
-> Until we introduce "ignored but not expendable" class, that is.
-> 
+Again, thank you for your example, you definitely made things very
+clear for me. I see where the confusion is. And I think --cc is a good
+way to get more context. At this point I'm just concerned about the
+@^! behavior with merge commits & diff.
