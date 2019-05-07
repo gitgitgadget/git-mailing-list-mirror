@@ -6,102 +6,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3CDB1F488
-	for <e@80x24.org>; Tue,  7 May 2019 07:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68CE31F45F
+	for <e@80x24.org>; Tue,  7 May 2019 07:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfEGHpI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 03:45:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49890 "HELO cloud.peff.net"
+        id S1726821AbfEGHwB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 03:52:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49916 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726249AbfEGHpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 03:45:08 -0400
-Received: (qmail 18777 invoked by uid 109); 7 May 2019 07:45:08 -0000
+        id S1726563AbfEGHwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 03:52:00 -0400
+Received: (qmail 18951 invoked by uid 109); 7 May 2019 07:52:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 May 2019 07:45:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 May 2019 07:52:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9025 invoked by uid 111); 7 May 2019 07:45:44 -0000
+Received: (qmail 9084 invoked by uid 111); 7 May 2019 07:52:37 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 07 May 2019 03:45:44 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 07 May 2019 03:52:37 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2019 03:45:06 -0400
-Date:   Tue, 7 May 2019 03:45:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 May 2019 03:51:58 -0400
+Date:   Tue, 7 May 2019 03:51:58 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
-Message-ID: <20190507074506.GF28060@sigill.intra.peff.net>
-References: <20190312031303.5tutut7zzvxne5dw@dcvr>
- <20190312104954.GA2023@sigill.intra.peff.net>
- <20190313015133.n7f7lyujnlwfytre@dcvr>
- <20190313145417.GA24101@sigill.intra.peff.net>
- <20190314091254.nescpfp3n6mbjpmh@dcvr>
- <87zhoz8b9o.fsf@evledraar.gmail.com>
- <20190410225721.GA32262@sigill.intra.peff.net>
- <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com>
- <20190504013713.GC17551@sigill.intra.peff.net>
- <87a7g2iuem.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH 0/4] gc docs: modernize and fix the documentation
+Message-ID: <20190507075158.GG28060@sigill.intra.peff.net>
+References: <20190318161502.7979-1-avarab@gmail.com>
+ <20190318215107.GH29661@sigill.intra.peff.net>
+ <87ftrjer8s.fsf@evledraar.gmail.com>
+ <20190319001829.GL29661@sigill.intra.peff.net>
+ <878svjj4t5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a7g2iuem.fsf@evledraar.gmail.com>
+In-Reply-To: <878svjj4t5.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 04, 2019 at 08:52:01AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, May 06, 2019 at 11:44:06AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> > Note that Ævar's case was somebody running bitmaps locally and trying to
-> > push, which I think is generally not a good match for bitmaps (even when
-> > they work, they cost more to generate than what you save if you're only
-> > pushing once).
+> Maybe there's some case I haven't thought of that makes this stupid, but
+> I wonder if something like a "gc quarantine" might be a fix fo both of
+> the the issues you noted above.
 > 
-> Right. It was *not* caused by this "enable bitmaps by default on bare
-> repos" patch (which I wasn't even running with), but *is* indicative of
-> a pretty big edge case with enabling bitmaps that *will* happen for some
-> on such bare repos if we ship the patch.
-
-Yeah. To clarify my comments a bit: I do think it would be possible to
-hit a weird case like this while serving fetches (i.e., as far as I know
-there is nothing in what you saw that is inherent to pushes). But I do
-think for serving fetches, bitmaps are overall a big net win (based on
-my experiences).
-
-So I think it may come down to a tradeoff: enabling this by default
-would probably be a net win across the population, but that's little
-comfort to the unlucky somebody who may see it as a regression. I'm not
-sure which is more important to maintain.
-
-> As an aside this is the Nth time I notice how crappy that "Enumerating
-> objects" progress bar is. We do a *lot* of things there, including this
-> bitmap calculation.
+> I.e. it seems to me that the main issue is that we conflate "mtime 2
+> weeks old because it's unreferenced for 2 weeks" v.s. "mtime 2 weeks old
+> because we haven't gotten around to a 'gc'".
 > 
-> But just splitting it up might result in either no progress (all
-> individually below 2 seconds), or a lot of noise as you have 20 things
-> that each take 2 seconds. I wonder if someone's looked at supporting:
+> So in such a "gc quarantine" mode when we discover an object/pack that's
+> unreachable/purely made up of unreachable objects we'd move the relevant
+> loose object/"loose" pack to such a quarantine, which would just be
+> .git/unreferenced-objects/{??,pack}/ or whatever.
 > 
->     Enumerating Objects (X%) => Calculating bitmaps (Y%)
+> AFAICT both cases you mentioned above would be mitigated by this because
+> we'd no longer conflate "haven't gc'd this yet and it's 2 weeks old"
+> v.s. "hasn't been referenced in 2 weeks".
+
+Michael Haggerty and I have (off-list) discussed variations on that, but
+it opens up a lot of new issues.  Moving something into quarantine isn't
+atomic. So you've still corrupted the repo, but now it's recoverable by
+reaching into the quarantine. Who notices that the repo is corrupt, and
+how? When do we expire objects from quarantine?
+
+I think the heart of the issue is really the lack of atomicity in the
+operations. You need some way to mark "I am using this now" in a way
+that cannot race with "looks like nobody is using this, so I'll delete
+it".
+
+And ideally without traversing large bits of the graph on the writing
+side, and without requiring any stop-the-world locks during pruning.
+
+> I started looking at this initially because I was wondering if the
+> --keep-unreachable mode you modified in e26a8c4721 ("repack: extend
+> --keep-unreachable to loose objects", 2016-06-13) could be made to write
+> out such "unreferenced" objects into their *own* pack, so we could
+> delete them all at once as a batch, and wouldn't create the "ref
+> explosions" mentioned in [1].
 > 
-> Where X% is the total progres, and %Y is the sub-progress. I eyeballed
-> doing this once by "chaining" the progress structs, but there's probably
-> a less crappy way...
+> But of course without an accompanying quarantine described above doing
+> that would just make this race condition worse.
 
-I don't think it needs to be split; I think we just need to update the
-object count while we're traversing the bitmaps. The problem is that the
-progress object is known to pack-objects.c. Without bitmaps, as the
-revision machinery walks the graph, our callbacks bump the progress
-meter every time we see an object.
-
-With bitmaps, all that walking happens behind the scenes, and the bitmap
-code delivers us the final answer. So we pause for a long time, and then
-suddenly it shoots forward.
-
-I think we'd want a way to tell the bitmap code to update our progress
-meter as it traverses (both single objects, but also taking into account
-when it finds a bitmap and then suddenly bumps the value by a large
-amount).
+I'm not sure it really makes it worse. The pack would have the same
+mtime as the loose objects would.
 
 -Peff
