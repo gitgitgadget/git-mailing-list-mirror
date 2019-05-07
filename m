@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5BD1F45F
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63E41F45F
 	for <e@80x24.org>; Tue,  7 May 2019 10:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727367AbfEGKyw (ORCPT <rfc822;e@80x24.org>);
+        id S1727369AbfEGKyw (ORCPT <rfc822;e@80x24.org>);
         Tue, 7 May 2019 06:54:52 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37697 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727359AbfEGKyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 06:54:50 -0400
-Received: by mail-wr1-f66.google.com with SMTP id a12so11560115wrn.4
-        for <git@vger.kernel.org>; Tue, 07 May 2019 03:54:49 -0700 (PDT)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36174 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727354AbfEGKyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 06:54:49 -0400
+Received: by mail-wm1-f65.google.com with SMTP id j187so3289180wmj.1
+        for <git@vger.kernel.org>; Tue, 07 May 2019 03:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4Zkkgp/ob9zkgDuNnkdRdtmUJHUeS94yO2FeDQ/OFv0=;
-        b=YIUOO043SdUG/VCIYYD4hVW4NVv9CBATe99H6b03WSmevGqBLIrEz0jS1gLMsrEJUr
-         5M9TUvVNwsEDuJv4OZUqAnVjt3N4Ik9Ey/iimuDDurQhbE3jS6EKv4DUazuHcTGHJKN+
-         KcHTmxv+lcqCc19IZbbhfJ8wyySv9fnHDdeYCuoZfaCTCiKJVQyVe29SYk2rqf5PIdeB
-         iqGScedO5fDryGJ1QN4ERdmjkzFMxjd0L4GXnVmI1QJOuIjpufHWMrDXGva1EV45vjiw
-         JTNSC2t1L2FYEGxre0+6hwEYs7rxdFGn1ImBMV1s4QTFdXHCdZlzfYUGpr3ChhtjrGAm
-         Ll/A==
+        bh=67X3eJEK2kUN9OVcYHnwirUCcjlHUs+buTtJhANNXLU=;
+        b=NdqXUu/uI8GPxWCzdyJe1MR3dLkrcVhtW9yY+ycCyNolDrGTr0/fO03YruQxMz11j+
+         zUZwqOIyvw0+uwnSoZcbKGnUex/jxHnf9kEHC0avn2UWKZPCFx4ZTJqCwECEU1B6lfVy
+         T00cSDdjZ+03/7Jkkb/ezLB08o+VvUU9/jIg33cUlbQBRNGdd4caUGuhOAqW8nXUGDb9
+         +9k1DcZP3dkZiX9rkDVZOOHYYZ5LpMnemGxwCTNFYuD3yVRmeElzxo/ol3RAZOmMByil
+         sjRgsOL3Fh/cFNvO21jQwls2vcJluttexz0K1xQzlXzJ1l7AesvKQqOnQjNOqyd01LPC
+         1HkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4Zkkgp/ob9zkgDuNnkdRdtmUJHUeS94yO2FeDQ/OFv0=;
-        b=ik2AY1p5h15LPW9LyvWu+fVrAJauBgq+ucxxls2wII+zsDYiyqWfYbYjUZLa/WqbWA
-         BvzHCIml0nh/qRHaEzQ0p3CV0b1pl3SWSo7HfU6VFZMRYzRBWiOkfJqmlQ1GIAmEhZWz
-         KTHlITTrOSQsYpOSR/FhzCjNoBIIdzAiUbe3JLOpeJZObQPB2blGWBo0JGKLusIN/B4s
-         v/kX6DmSC1j2rDgYYNKcXh2L1zEL1apQKwMRR33In71oGrgPVCwfq9a7coFV8vqWTwYI
-         Mw9GOo1lfFytfQg4erJoLlH5pNF8f0pngYXpbqK6ilwXiHWZdrUwwr2001/IIQnzEKLS
-         Ucuw==
-X-Gm-Message-State: APjAAAX6qdrfurvy1JL9gw1H/Y6T15OLKe8d0wjUINug6Qdd35eN8XLm
-        AEU/o4HFY+1YSE4pL+aAn8/nsafu+eE=
-X-Google-Smtp-Source: APXvYqz35Zg66vYG8dyB6nCrQ/7CT3N+AiyDT/G4bjiHn+PrVc4E3HYYrn3C3a1IRn1o3PrRZYUWuA==
-X-Received: by 2002:adf:e712:: with SMTP id c18mr6452576wrm.202.1557226488535;
-        Tue, 07 May 2019 03:54:48 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c11sm11029573wmb.12.2019.05.07.03.54.47
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        bh=67X3eJEK2kUN9OVcYHnwirUCcjlHUs+buTtJhANNXLU=;
+        b=ARaBym049VMimH67MjsyOYxCg1yIA9g1sUj76neuV/TvjYmhqN515M+v+rIqzvx4r8
+         NKoFbZ+4HwJ30fYklk8HTzhTmOe+RjrsTEn5pwXZmCHCNX7WKVsXMVcrX7xzln2IZ3Au
+         cdZBOhpMPkYLOHyxG08M0XkwOFey8eDXc/BhXGgoUNwCymxLz/y4EnS5tHeQfUNq8Ai1
+         eFP/2K4YRdHS2hYuotrI8+CIe53XzrFyN9fMbaqdTBbUBFXSSBoyo0OfzVT/v9HsriQ3
+         4o+NTKSz1wQouVehQgOh/Bi57x77Dk5JkiCh0tyYKL24nJvPg57BIhKn6iJjOJa8hVDC
+         AN6A==
+X-Gm-Message-State: APjAAAVbxLaTy11Fm4YNGKwyC2C4+0n6VRomHtK8YmYworzR1WLg1J/n
+        w09dnKZDAJ/fZR6qENQugiuUEeobc0A=
+X-Google-Smtp-Source: APXvYqxFYX89PASRRCGd9QtSn3m+RZBdP37VN9wCb5SSA0i55F6W1ALdG/8jX4ajvVc1erpn+SvB5g==
+X-Received: by 2002:a05:600c:506:: with SMTP id i6mr5342477wmc.3.1557226487078;
         Tue, 07 May 2019 03:54:47 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c11sm11029573wmb.12.2019.05.07.03.54.46
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 07 May 2019 03:54:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/6] perf-lib.sh: make "./run <revisions>" use the correct gits
-Date:   Tue,  7 May 2019 12:54:31 +0200
-Message-Id: <20190507105434.9600-4-avarab@gmail.com>
+Subject: [PATCH v3 2/6] perf aggregate: remove GIT_TEST_INSTALLED from --codespeed
+Date:   Tue,  7 May 2019 12:54:30 +0200
+Message-Id: <20190507105434.9600-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.593.g511ec345e18
 In-Reply-To: <20190506232309.28538-1-avarab@gmail.com>
 References: <20190506232309.28538-1-avarab@gmail.com>
@@ -70,96 +70,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a really bad regression in 0baf78e7bc ("perf-lib.sh: rely on
-test-lib.sh for --tee handling", 2019-03-15). Since that change all
-runs of different <revisions> of git have used the git found in the
-user's $PATH, e.g. /usr/bin/git instead of the <revision> we just
-built and wanted to performance test.
+Remove the setting of the "environment" from the --codespeed output. I
+don't think this is useful, and it helps with a later refactoring
+where we GIT_TEST_INSTALLED stop munging/reading GIT_TEST_INSTALLED in
+the perf tests in so many places.
 
-The problem starts with GIT_TEST_INSTALLED not working like our
-non-perf tests with the "run" script. I.e. you can't run performance
-tests against a given installed git. Instead we expect to use it
-ourselves to point GIT_TEST_INSTALLED to the <revision> we just built.
+This was added in 05eb1c37ed ("perf/aggregate: implement codespeed
+JSON output", 2018-01-05), but since the "run" scripts uses
+"GIT_TEST_INSTALLED" internally this was only ever useful for one-off
+runs of a single revision as all the "environment" values would be
+ones for whatever directory the "run" script ran last.
 
-However, we had been relying on '$(cd "$GIT_TEST_INSTALLED" && pwd)'
-to resolve that relative $GIT_TEST_INSTALLED to an absolute
-path *before* test-lib.sh was loaded, in cases where it was
-e.g. "build/<rev>/bin-wrappers" and we wanted "<abs_path>build/...".
-
-This change post-dates another proposed solution by a few days[1], I
-didn't notice that version when I initially wrote this. I'm doing the
-most minimal thing to solve the regression here, a follow-up change
-will move this result prefix selection logic entirely into the "run"
-script.
-
-This makes e.g. these cases all work:
-
-    ./run . $PWD/../../ origin/master origin/next HEAD -- <tests>
-
-As well as just a plain one-off:
-
-    ./run <tests>
-
-And, since we're passing down the new GIT_PERF_DIR_MYDIR_REL we make
-sure the bug relating to aggregate.perl not finding our files as
-described in 0baf78e7bc doesn't happen again.
-
-What *doesn't* work is setting GIT_TEST_INSTALLED to a relative path,
-this will subtly fail in test-lib.sh. This has always been the case
-even before 0baf78e7bc, and as documented in t/README the
-GIT_TEST_INSTALLED variable should be set to an absolute path (needs
-to be set "to the bindir", which is always absolute), and the "perf"
-framework expects to munge it itself.
-
-Perhaps that should be dealt with in the future to allow manually
-setting GIT_TEST_INSTALLED, but as a preceding commit showed the user
-can just use the "run" script, which'll also pick the right output
-directory for the test results as expected by aggregate.perl.
-
-1. https://public-inbox.org/git/20190502222409.GA15631@sigill.intra.peff.net/
+Let's instead fall back on the "uname -r" case, which is the sort of
+thing the environment should be set to, not something that duplicates
+other parts of the codpseed output. For setting the "environment" to
+something custom the perf.repoName variable can be used. See
+19cf57a92e ("perf/run: read GIT_PERF_REPO_NAME from perf.repoName",
+2018-01-05).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/perf/perf-lib.sh | 4 ++++
- t/perf/run         | 8 ++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ t/perf/aggregate.perl | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 169f92eae3..b15ee1d262 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -32,6 +32,10 @@ TEST_NO_MALLOC_CHECK=t
- if test -z "$GIT_TEST_INSTALLED"; then
- 	perf_results_prefix=
- else
-+	if test -n "$GIT_PERF_DIR_MYDIR_REL"
-+	then
-+		GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_REL
-+	fi
- 	perf_results_prefix=$(printf "%s" "${GIT_TEST_INSTALLED%/bin-wrappers}" | tr -c "[a-zA-Z0-9]" "[_*]")"."
- 	GIT_TEST_INSTALLED=$ABSOLUTE_GIT_TEST_INSTALLED
- fi
-diff --git a/t/perf/run b/t/perf/run
-index 9aaa733c77..0a7c8744ab 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -91,10 +91,14 @@ run_dirs_helper () {
- 	if test "$mydir" = .; then
- 		unset GIT_TEST_INSTALLED
- 	else
--		GIT_TEST_INSTALLED="$mydir/bin-wrappers"
-+		GIT_PERF_DIR_MYDIR_REL=$mydir
-+		GIT_PERF_DIR_MYDIR_ABS=$(cd $mydir && pwd)
-+		export GIT_PERF_DIR_MYDIR_REL GIT_PERF_DIR_MYDIR_ABS
-+
-+		GIT_TEST_INSTALLED="$GIT_PERF_DIR_MYDIR_ABS/bin-wrappers"
- 		# Older versions of git lacked bin-wrappers; fallback to the
- 		# files in the root.
--		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$mydir
-+		test -d "$GIT_TEST_INSTALLED" || GIT_TEST_INSTALLED=$GIT_PERF_DIR_MYDIR_ABS
- 		export GIT_TEST_INSTALLED
- 	fi
- 	run_one_dir "$@"
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 494907a892..f6518339dc 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -312,9 +312,6 @@ sub print_codespeed_results {
+ 		$environment = $reponame;
+ 	} elsif (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
+ 		$environment = $ENV{GIT_PERF_REPO_NAME};
+-	} elsif (exists $ENV{GIT_TEST_INSTALLED} and $ENV{GIT_TEST_INSTALLED} ne "") {
+-		$environment = $ENV{GIT_TEST_INSTALLED};
+-		$environment =~ s|/bin-wrappers$||;
+ 	} else {
+ 		$environment = `uname -r`;
+ 		chomp $environment;
 -- 
 2.21.0.593.g511ec345e18
 
