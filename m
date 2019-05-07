@@ -7,95 +7,125 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2934A1F45F
-	for <e@80x24.org>; Tue,  7 May 2019 11:02:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9E91F45F
+	for <e@80x24.org>; Tue,  7 May 2019 11:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfEGLCm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 07:02:42 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:51550 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726383AbfEGLCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 07:02:41 -0400
-Received: by mail-it1-f195.google.com with SMTP id s3so13428534itk.1
-        for <git@vger.kernel.org>; Tue, 07 May 2019 04:02:41 -0700 (PDT)
+        id S1726603AbfEGLKe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 07:10:34 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33945 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbfEGLKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 07:10:34 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f7so11425558wrq.1
+        for <git@vger.kernel.org>; Tue, 07 May 2019 04:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hduXHfZK2DMf+SHdhWhnUX91YNxbGmxsbv1ojJ4yOn4=;
-        b=ptBccLIuA2zahc2lszTa/FWW5CS8xFCszaM2PXt/oqJSSeJ0pjBQzplU2SsBXTZ1RC
-         MQy/rKygko+AAXuLJHk6zqNDYB+cgjqrR2HGJ4UBBFCvxaDakYtJjhWIAnAKPVYyXX/7
-         vvNcJ69HdAfgSXgiyBannxSXSg8XRMeFaZ0e5fS6J0SsTz2yeT177VDlElJKpoHY7pYW
-         6cn4xJdRfOyiBy3fwHreCgHmmtuQS0fQh14AqmovSKWUcPy98/GYJg0K54cg2/T/T8uB
-         JDwuN+6dGSSzbGQuViLv8Hh03G+NY/Jh1xlXIvPrVcgS0A7kZ10fRaeecVQ880uFj04M
-         KxzA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hZ09F0zIC1aRUXkCpfJu/ka2c41fGJ/Me7TwSVoH/Lg=;
+        b=KOdXZawkV45Zr7HLPf6TMUNjI38UgylJkwrrNYbn5Ucllr/K7zujDtEpOGYbvGlPUD
+         mHi0Xz2kG71KZEvouCtUSGXeUYpJMaqo44PYWjGZumJ4vyz8SFLDX3yaO4oKrwx7H5MY
+         aSzmF57Q9xXDd4qt3YnHbXqu7asAcjSk0g72K0m12ZtUnvw+spmtlBCAEv4r9o0Asq/v
+         ABgN/jhP2d+6tSSbWsNOTpSqtzjvcMvilwIKlPA2Lo0gVrZ3V2Qg6Cr+fmtzxr9csM8L
+         e1zPLmsLOu4tNSh+7J/b9GlYA5sy3VfNjININ+81w6B0Pl9Rdtae+yLPTTBf3Lbq+dW/
+         AD5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hduXHfZK2DMf+SHdhWhnUX91YNxbGmxsbv1ojJ4yOn4=;
-        b=ek+Vd4UJ7JkS0+jV4gTWLbEbFxGFtOKIa/mjnZCQIcE5ZW5aLeNsxme4cZlhbxyel6
-         vDQgwTgG3Kaoj39FZTB2y8LAW97DGiQhJVrG7jRezvBE5iY65H57gQnDMaa4AvKVL+Yo
-         BduHV2MCv2QQ0zog6IcDecY4Xjn0vRs5xB5DbUmFDgcZ9XaTJfTB3RfRSZxO4W12euHJ
-         ebBX0goeMjMoSYO/hGtusDhHVGOzAF1oJdOEZPUOa6bL2pFP0uY8aObcgoiAQw5iGokH
-         3nRpxAOsLl3Isj682bUpAfC4s2Lrm6X7JRZxNMDkuN5MhFTxViBLvVezLD2l3HGWxk5e
-         ju8A==
-X-Gm-Message-State: APjAAAWXnlzL8oWyYvyVSMwAIyLB9zD0DC/8PklFhZz8y+3XtzSx2BHB
-        9rRPdjW/2+rSEAJnLnGQoyvghJ1IpoSkVNAP6UY=
-X-Google-Smtp-Source: APXvYqz6XXJCt/+VyTYCk05gIw4nQpQAt0JwrD7faPu8dBnLe/gQYHYl2hLbthNud6hggrD6uOU/9fAY0M3gUAvX5vA=
-X-Received: by 2002:a05:660c:34e:: with SMTP id b14mr1173118itl.10.1557226960872;
- Tue, 07 May 2019 04:02:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hZ09F0zIC1aRUXkCpfJu/ka2c41fGJ/Me7TwSVoH/Lg=;
+        b=f67Hn4wJY2ET/PsyAD0oIRK7Rxf+IMVswARBGhHdpsv2RbBdaMskMNJH0G49SfwBln
+         Sr7Acy5YKpOB+cuR3BChwgIUFX7bxqAkdFMg0u01Wwzl7BqaPSi7Zw9EiIITbgdykK+Z
+         cLWZbLA/8m0ZHGRZTeVsgEWGo2VYhNXFFGLFyYgZwIFfqugT73HS/ug+TC06LeZjWquo
+         SkCsHDmQnICELdupGVS7OQ9vyxopo7M6GJl6Mha7f6PMYzSUg3i1QMEykKOZ8VpcQ4Ek
+         fXIl8O9B23A1dYxsmwxMArzVmsooaG08r2NclSFLPtu+PHzinQPENrrxRenJ7n7jaS4l
+         fdbQ==
+X-Gm-Message-State: APjAAAVL/q3XVcCVwRVxZ32j0sGi8RXds9yCjM7CCA49ADTe7YjYQfyF
+        dUuXkVy0yWtYZ1gEaRvB6C9e4xRSBZY=
+X-Google-Smtp-Source: APXvYqwO/3K4TZb/yY8Lv9JI/AgV/I2rQEpHFEbEdE2u3c4YVzNFOnn/c5LbOkfvaKJM3p/CNFUYdA==
+X-Received: by 2002:adf:9c87:: with SMTP id d7mr16371061wre.68.1557227431536;
+        Tue, 07 May 2019 04:10:31 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id d14sm11246108wre.78.2019.05.07.04.10.30
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 07 May 2019 04:10:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/2] Fix fsmonitor after discard_index()
+Date:   Tue,  7 May 2019 13:10:19 +0200
+Message-Id: <20190507111021.12840-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.593.g511ec345e18
+In-Reply-To: <pull.165.v2.git.gitgitgadget@gmail.com>
+References: <pull.165.v2.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20190501101403.20294-1-phillip.wood123@gmail.com>
- <CACsJy8CNUEBXmBcQnRHqdeFJtTvBuZ9thP7QPAw-ZOD+2ty3VA@mail.gmail.com>
- <d4c36a24-b40c-a6ca-7a05-572ab93a0101@gmail.com> <CACsJy8AAj8cRAc+PnS4OJy8M=K7FjCHUsL6Cx-6+RTAbTA_1fQ@mail.gmail.com>
- <994d4687-39ed-91b9-cdf9-d4be39cbb2ba@gmail.com>
-In-Reply-To: <994d4687-39ed-91b9-cdf9-d4be39cbb2ba@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 7 May 2019 18:02:14 +0700
-Message-ID: <CACsJy8A+EjymUsSHD8Wj3y3=SfCkaWtfYhjqv+OyaXpkrQXkVg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] read-tree: improve untracked file support
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 7, 2019 at 5:02 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > My (biased, obviously) view is that "git reset --hard" is very
-> > dangerous and I'm not trying to change that, especially when its
-> > behavior has been like this since forever and I'm sure it's used in
-> > scripts.
-> >
-> > Instead "git restore" should be used when you need "git reset --hard
-> > HEAD", the most often use case. And since it's new, changing default
-> > behavior is not a problem. Which brings us back to git-restore :)
->
-> Does restore clean up the branch state like reset? It's tricky because
-> you only want to do that if there is no pathspec (or the pathspec is :/
-> or equivalent - I can't remember if restore always requires paths or not)
+This v3 is all Johannes's patches. The outstanding review on v2 could
+be clarified with a commit message change, which I've addressed, and
+v2 conflicted with a cache.h change that's since landed in "master",
+which I've rebased this on.
 
-Nope. git-restore cares about files, not branches. Yes git-restore
-always requires paths, just in case people type "git restore" and
-expect to see help usage or something.
+Junio: We're getting closer to the release so it would be great to
+have this. It's been broken for a long time, but having this finaly
+fixed in v2.22 would be great. The functional code changes are also
+isolated to the fsmonitor code path, which reduces the risk and makes
+this easier to review/reason about.
 
-> > But either way, git-restore or git-reset, I still don't see why
-> > untracked files are more valuable in this case than tracked ones to
-> > change the default.
->
-> My issue is that is easy to see what changes you're going to lose in
-> tracked files by running diff. For untracked files diff just says a new
-> file will be created, it ignores the current contents as the path is in
-> the index so it is easy to overwrite changes without realizing. There's
-> also a philosophical point that git should not be stomping on paths that
-> it is not tracking though that's a bit moot if a path is tracked in one
-> revision but not another.
+Johannes Schindelin (2):
+  fsmonitor: demonstrate that it is not refreshed after discard_index()
+  fsmonitor: force a refresh after the index was discarded
 
-Ah good point about diff. If only we had "git reset --dry-run" (that
-shows the diff, including untracked files; or perhaps --diff would be
-a better name for that imaginary option)
+ cache.h                     |  3 ++-
+ fsmonitor.c                 |  5 ++---
+ read-cache.c                |  1 +
+ t/helper/test-read-cache.c  | 24 +++++++++++++++++++++++-
+ t/t7519-status-fsmonitor.sh |  8 ++++++++
+ 5 files changed, 36 insertions(+), 5 deletions(-)
+
+Range-diff:
+1:  51a7edf22a = 1:  c31f834b07 fsmonitor: demonstrate that it is not refreshed after discard_index()
+2:  79fdd0d586 ! 2:  7bf5f9f610 fsmonitor: force a refresh after the index was discarded
+    @@ -6,8 +6,10 @@
+         flag that says whether the fsmonitor hook has been run, i.e. it is now
+         per-index.
+     
+    -    It also gets re-set when the index is discarded, fixing the bug where
+    -    fsmonitor-enabled Git would miss updates under certain circumstances.
+    +    It also gets re-set when the index is discarded, fixing the bug
+    +    demonstrated by the "test_expect_failure" test added in the preceding
+    +    commit. In that case fsmonitor-enabled Git would miss updates under
+    +    certain circumstances, see that preceding commit for details.
+     
+         Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     
+    @@ -15,11 +17,11 @@
+      --- a/cache.h
+      +++ b/cache.h
+     @@
+    - 	struct cache_time timestamp;
+    - 	unsigned name_hash_initialized : 1,
+      		 initialized : 1,
+    --		 drop_cache_tree : 1;
+    -+		 drop_cache_tree : 1,
+    + 		 drop_cache_tree : 1,
+    + 		 updated_workdir : 1,
+    +-		 updated_skipworktree : 1;
+    ++		 updated_skipworktree : 1,
+     +		 fsmonitor_has_run_once : 1;
+      	struct hashmap name_hash;
+      	struct hashmap dir_hash;
 -- 
-Duy
+2.21.0.593.g511ec345e18
+
