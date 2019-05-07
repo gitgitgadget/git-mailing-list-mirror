@@ -2,100 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 547D61F488
-	for <e@80x24.org>; Tue,  7 May 2019 14:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 449611F45F
+	for <e@80x24.org>; Tue,  7 May 2019 15:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726515AbfEGO6x (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 10:58:53 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:40169 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbfEGO6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 10:58:53 -0400
-Received: by mail-io1-f65.google.com with SMTP id s20so4782317ioj.7
-        for <git@vger.kernel.org>; Tue, 07 May 2019 07:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8CN5L1S3F80CE1PHtICLaNKX8kky6widEEkkANkHVR0=;
-        b=nZ/maVfqoUCZ7c3+8+oXfdsBNhfdA6TLrNBcRP8NlTOeGxZk7zt6MSTN8rKyvEA+tY
-         ZXZWSEbrhJnPyigw1hHKqfuDbhP5ZsnhkPGx1RacDFUNiMcFbLdcKW0J5U+togThvi9u
-         7yB6SEhH+2eLEMMsAN1RLmTqeLA3MZRsiEeFpLJZkwD8uwP8rULByxLFty/twRaVdYyL
-         bcdydGVYCuQWyJ2q1J1DzqjauHGL8Yd/0/AG7AHTK6Db8qlJLGKvXOwPegYiw8gEgczm
-         whbzN8kkvI0XwVl7i3yZCLldurrvys1g3XROluy97BVjwKuci5tH2g3b6Quf6WgBuV23
-         Fv8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8CN5L1S3F80CE1PHtICLaNKX8kky6widEEkkANkHVR0=;
-        b=Kv8X7kGRZ7U/XWrugQFLTjGrAwawxucP93Ttu46QeZViD9VvmFFkDg5voyaFZpGrX+
-         HCsxx+ifrhtFZuMSlm43/WllM+dt1A9dpTxrXyo8jA/lgIlmv5aUWUrb7vg6SbpSWzsb
-         uPo/84B0xCMEKjLuIqOCuJfhJ9CAkel6T+JFSH+GxIWtrHtOHIAqm7ByaMPGkKFXnREQ
-         UGlbAg6WveqjQxSKWGlVyrwHEgDzPVR8QtWDO4YjmcijMlUR+gklZuT2tyxmUD+pegvJ
-         2B1v0jAnKhiT7IjsDjM/G6fvDSTp9J6S74DKtpPWVp5twRPsX6ndGzNB92MB7tB3aHNQ
-         aOiQ==
-X-Gm-Message-State: APjAAAWMvwJKVH4jCl0CwCjgZYv8rUV+1xQWMAV8EqZrIcaW7IrTDHAJ
-        WPQHuGTIc1yNFwdbBuqfhvU=
-X-Google-Smtp-Source: APXvYqywck9mzJiHvLAm0puweXXxV8xygR9K38sN6C+jVAEXi1gVd4C0XKLawATVrMwH+7HaT9NIPg==
-X-Received: by 2002:a6b:f305:: with SMTP id m5mr14584610ioh.271.1557241132181;
-        Tue, 07 May 2019 07:58:52 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:780:ed13:bfd5:1bea:adb7])
-        by smtp.gmail.com with ESMTPSA id 129sm5057041iow.32.2019.05.07.07.58.50
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 07 May 2019 07:58:50 -0700 (PDT)
-Date:   Tue, 7 May 2019 10:58:49 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@googlemail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: Merge commit diff results are confusing and inconsistent
-Message-ID: <20190507145849.GA6313@archbookpro.localdomain>
-References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
- <20190503191231.GA5426@esm>
- <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
- <874l67i1ie.fsf@evledraar.gmail.com>
- <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
+        id S1726429AbfEGPFv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 11:05:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61051 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726324AbfEGPFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 11:05:50 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1E8A1496E2;
+        Tue,  7 May 2019 11:05:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QOjyl6WYZmsmyujoNhpkO/TLpMs=; b=XclpMX
+        VW3BWkfUtqxZUemb6PaleRZeakHjOuboroh3Wi3pi3U1I6Rn3pO9Qbp8TpaS+GiK
+        a7jqXs1OBefw0juryuIfoRT0jX7BOuk0PxhGqdPCVwo2pAKMwEZlPp8P3khBOrwg
+        uiXSEmS2cdog/OWRgedGagUForY4CHCaTfEQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eVrS5zueuWmJUd/U+CS0bYwJZAqBIrjQ
+        DlRCoTOVNggLQ7GNuUcUxscbkDuKHsCzGIBzvTLhP1wTnFgvNzrUJ8X8Y6vh+0bO
+        QIWCfqICshaa6UkKx7/7pd3mT51p7c++lF20n7fDKFNOvlMkFZWCHkeFRwLkPMBx
+        5ntnbBV5CWM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B94C31496E1;
+        Tue,  7 May 2019 11:05:45 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D20D1496E0;
+        Tue,  7 May 2019 11:05:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/7] teach branch-specific options for format-patch
+References: <cover.1557072929.git.liu.denton@gmail.com>
+        <xmqq4l66myn3.fsf@gitster-ct.c.googlers.com>
+        <20190507141942.GA359@archbookpro.localdomain>
+Date:   Wed, 08 May 2019 00:05:43 +0900
+In-Reply-To: <20190507141942.GA359@archbookpro.localdomain> (Denton Liu's
+        message of "Tue, 7 May 2019 10:19:42 -0400")
+Message-ID: <xmqq36lql2yg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96C6DB82-70D9-11E9-8E75-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Robert,
+Denton Liu <liu.denton@gmail.com> writes:
 
-On Tue, May 07, 2019 at 09:10:12AM -0500, Robert Dailey wrote:
+> The reason why I chose to use branch.<name>.* is because format-patch
+> currently reads from branch.<name>.description and I wanted to build on
+> top of that. In addition, I didn't want to scatter branch-specific
+> configs in two different place (i.e. have a branch.<branchName>.description
+> alongside a format.<branchName>.coverSubject).
 
-[snip]
+The "branch.<name>.description" variable lives at a lot higher level
+of abstraction than "use this for the default value of option X of
+the command Y".  It gives a place for the user to state what the
+branch is about.  It makes 100% sense not to have it under format.*
+hierarchy, because it is designed to be agnostic to what individual
+command uses it for.  It is there to talk about what the branch is
+for, and what the variable says about the branch to its users,
+i.e. various tools, does not change depending on who is listening to
+it.
 
-> Even ignoring that issue, the more concerning observation of mine is
-> that `diff @^!` produces any output at all. If you exclude both
-> parents, why do I see a diff for parent 2 (I see the complete diff of
-> the branch that was merged in)?
-> 
-> Again, thank you for your example, you definitely made things very
-> clear for me. I see where the confusion is. And I think --cc is a good
-> way to get more context. At this point I'm just concerned about the
-> @^! behavior with merge commits & diff.
+The format-patch command may use it as a hint for writing the cover
+letter message.  Repository browsers may use it while listing the
+branches when more descriptive text than the branch name is desired.
+Request-pull tool may use it when preparing the branch summary.
 
-@^! is undocumented behaviour. Junio touched on why it behaves this way
-here[1], in case you're interested.
+The point is that "description" is about "what that *branch* is",
+not "what that branch means for the format-patch user".
 
-For more details, this code[2] just blindly diffs the first two
-endpoints returned preceding `repo_init_revisions`.
+You cannot compare that with something like "when format-patch
+prepares an e-mail, add CC: header to this address", which is very
+specific to the single command, i.e. "how command X uses it".  I
+think that is the gist of the new variables you are adding.
 
-Also, not to rehash an old discussion but I'll let this thread be my
-argument *against* allowing range-notation in git-diff.
+>> In any case, it smells to me that branch.<branch>.cc does not hint
+>> strongly enough that they are meant to affect format-patch.
+>
+> Would you suggest moving to a format.<branchname>.* approach or would it
+> make sense to rename the configs to something like
+> branch.<name>.{emailCoverSubject,emailTo,emailCc}?
 
-[1]: https://public-inbox.org/git/xmqqef7ch80v.fsf@gitster-ct.c.googlers.com/
-[2]: https://github.com/gitster/git/blob/master/builtin/diff.c#L385
+So if I have to pick between the two, I would probably vote for the
+former from the philosophical ground, but operationally, I suspect
+that the latter would be much simpler to use.  You could even have
+"git branch -d <name>" to get rid of them at the same time.
+
+But as I may have hinted in the message you are responding to, I am
+not quite convinced we want these configuration variables in the
+first place.  Why should both description and coverSubject need to
+exist?  Perhaps we should add a heuristic like "If the branch
+description looks like a single line, optionally followed by 'a
+blank line and more paragraphs', use the first line as the subject
+of the cover letter (and the remainder as the body of the cover
+letter) or something?
+
