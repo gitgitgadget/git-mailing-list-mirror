@@ -2,75 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A5671F45F
-	for <e@80x24.org>; Tue,  7 May 2019 15:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 492CF1F45F
+	for <e@80x24.org>; Tue,  7 May 2019 15:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727141AbfEGPQQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 11:16:16 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63071 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727029AbfEGPQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 11:16:16 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E960B663AE;
-        Tue,  7 May 2019 11:16:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=20ZSrPHCg1J9uKAAiISmEGE+uHk=; b=bG39fz
-        GHAaR8H5Ucq78yhu18jw4XI7vT2zhoI5x6nAIKBwOW2ZSzRidMpbOKhPYtnvs7eb
-        rWQekTobyPVbmqsG8X+6Q0zqw+CFNEAlnb+8oU1zdeNgUNMPRChkoY2g8j+AWgcm
-        BH2eSh9HJy+zZDPhPnCR7hEePvdY8oqkKb2vs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=flf7N7e3xb3EtOg7bf/fQHt5E2NClLZg
-        XE4fyEXlDM1aXoebDwB+oayTyXY+TWzaTwNHJl4/LbSCxhfelawFWK4pf16B1L5/
-        yxe8btL1ArvRj8n8ZTWk8L5NbfjiEsU6Fs3JUXE0c2H/u8oL5jKC+QWrs0b2kXfu
-        KoNe6H/hXlo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E1484663AD;
-        Tue,  7 May 2019 11:16:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1A50F663AB;
-        Tue,  7 May 2019 11:16:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Andreas Heiduk <asheiduk@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 0/4] cleanup revisions.txt
-References: <cover.1557071877.git.liu.denton@gmail.com>
-        <cover.1557072286.git.liu.denton@gmail.com>
-        <20190507142938.GA3769@archbookpro.localdomain>
-Date:   Wed, 08 May 2019 00:16:08 +0900
-In-Reply-To: <20190507142938.GA3769@archbookpro.localdomain> (Denton Liu's
-        message of "Tue, 7 May 2019 10:29:38 -0400")
-Message-ID: <xmqqv9ymjnwn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726444AbfEGPVW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 11:21:22 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:36917 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726386AbfEGPVV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 11:21:21 -0400
+Received: by mail-it1-f193.google.com with SMTP id l7so1759ite.2
+        for <git@vger.kernel.org>; Tue, 07 May 2019 08:21:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=N0PZAI/T/wRjf+cDU5bIqYwd/Kjhy6pmiHRwk147We0=;
+        b=IzEsWaC0+f8AW48J2wTROV1IU1PtqttuIwn5KY7X8Ub2Z/40eMctqINsClszkBX5qp
+         N0IIHr/Wy03VpbsdMTvOn2DCl+adpvzg9BP5MyaCDlsC4wm35FjmTuC/Xs9F5v9ffcYr
+         uGiC1PwYKKXRTnDlGUuVxiufy6bjoXteCgm7CPX9pEY2U6/Eei8ockIRzeCdTOhQdJS+
+         EYLZk0cFC9ncsfa5AjIZcTxDwpdnhysrYnCMIOwp8AgDdDHCn5f1vVwFhqfHMBvw4Pqi
+         RYX+PH0tjL9ThdCFkgJLl+Y0YZPLlWHFxJH2Qzfj60TO/k3MEkFcHgomTvBY9WKTs6dz
+         iF8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=N0PZAI/T/wRjf+cDU5bIqYwd/Kjhy6pmiHRwk147We0=;
+        b=kGN7LBCGdfFIy3pDL6VDR8JHJxYS+wpieACci8JZdSsWO7oR+o8A6NeuNOdcOsUyiI
+         w+CLTfoTF7fo+7pUQ90pRsiTv3qUjwLU8AkubqCZlvEeE9fdWfInq+TtCuNSV+08nm79
+         rMuVTppI4Urxn6BzyxS/MRa8Mi//cxlln2zPCGtxEIqpRxM0YzPH6TptOuNR5TaDc6hC
+         fgykDgGz3B4WMAroCjBdFa+TMxn1Zb2aDWEdvp9M0F/wr9vycxsQXRowePlKqbcnu9V1
+         27qbIUFu68DmbjnLcrcnzXik+mggya5WcGUWvuzqVCN0x0+ZzMIxEvjqH+1guhX2CgkD
+         wg6Q==
+X-Gm-Message-State: APjAAAUopXmjHtWhKWUl+PBcDWzdEp5+7a5S7XJSaq3BWNB5MiAKT2AH
+        nn4VVJ2KkEAEJPN6HScxCLRI4uuk
+X-Google-Smtp-Source: APXvYqxW8ltj6J8mIEhQHHLbrfGv4SBItaGJqLXckDT0Yn2Z1TgLb1PatyaP9Wvxi64y5PyBRWKC9g==
+X-Received: by 2002:a24:d241:: with SMTP id z62mr1234157itf.141.1557242480971;
+        Tue, 07 May 2019 08:21:20 -0700 (PDT)
+Received: from archbookpro.localdomain ([2620:101:f000:780:ed13:bfd5:1bea:adb7])
+        by smtp.gmail.com with ESMTPSA id h21sm6725559ith.8.2019.05.07.08.21.19
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 07 May 2019 08:21:20 -0700 (PDT)
+Date:   Tue, 7 May 2019 11:21:18 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/7] teach branch-specific options for format-patch
+Message-ID: <20190507152118.GA12057@archbookpro.localdomain>
+References: <cover.1557072929.git.liu.denton@gmail.com>
+ <xmqq4l66myn3.fsf@gitster-ct.c.googlers.com>
+ <20190507141942.GA359@archbookpro.localdomain>
+ <xmqq36lql2yg.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0BE58D2C-70DB-11E9-9689-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36lql2yg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Wed, May 08, 2019 at 12:05:43AM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
 
-> I noticed that there are both `dl/rev-tilde-doc-clarify` and
-> `dl/revisions-doc-update` branches. The latter comes from this patchset
-> and is a complete replacement for the former.
+[snip]
 
-Thanks for spotting.  Will replace the former with the updated
-patches.
+> >
+> > Would you suggest moving to a format.<branchname>.* approach or would it
+> > make sense to rename the configs to something like
+> > branch.<name>.{emailCoverSubject,emailTo,emailCc}?
+> 
+> So if I have to pick between the two, I would probably vote for the
+> former from the philosophical ground, but operationally, I suspect
+> that the latter would be much simpler to use.  You could even have
+> "git branch -d <name>" to get rid of them at the same time.
+> 
+> But as I may have hinted in the message you are responding to, I am
+> not quite convinced we want these configuration variables in the
+> first place.  Why should both description and coverSubject need to
+> exist?  Perhaps we should add a heuristic like "If the branch
+> description looks like a single line, optionally followed by 'a
+> blank line and more paragraphs', use the first line as the subject
+> of the cover letter (and the remainder as the body of the cover
+> letter) or something?
+> 
 
-Thanks.
+I considered doing something like that but I opted not to because it
+wouldn't be a backwards compatible change and I didn't want to surprise
+any future users with a change like this.
+
+For branch.<branchname>.{to,cc}, I wanted these config options because
+the current method for format-patch to handle Cc-lists is just manually
+keeping track of the people who have responded and entering them into
+the --cc option of format-patch.
