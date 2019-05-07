@@ -2,73 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 269A91F45F
-	for <e@80x24.org>; Tue,  7 May 2019 09:41:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 666561F45F
+	for <e@80x24.org>; Tue,  7 May 2019 09:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbfEGJlQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 05:41:16 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62086 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbfEGJlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 05:41:16 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17C795024F;
-        Tue,  7 May 2019 05:41:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W1FeqC16cFGf/ah9XkzprNBT/TA=; b=Fwf/2C
-        /83S0jCliBI/e8UAbca9GMxgrdzYKeBB1DlkgjxspHs1KPHhl+o7OhSAW0DcOSck
-        OV7V2f7JwN6ls4nXj+frW0MLTg163pR1knc9bCHdNRunVXpChiLSQm1eAOQRKlud
-        qFf8FyAvl02orBYCeknfZ/jDI7rF6Ph/p3HX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DuUP+aabfZXQJejmpxkN2Ot0BxEn8IVG
-        4LzGiBuu/VsbwirHBemGUKm+umRMCWQOvzctVFkXNdtK0n0mxHlpS60Gy2m9QqAk
-        b1CcAVg5qVW5OIjEwD1uLQpAz5IhIkrWYMsTgc/tMKlNy3pt8zQCLXxvzP3n7J2s
-        vca3aQCOdBA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E36715024E;
-        Tue,  7 May 2019 05:41:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F1E5E5024D;
-        Tue,  7 May 2019 05:41:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 1/1] t5580: verify that alternates can be UNC paths
-References: <pull.140.git.gitgitgadget@gmail.com>
-        <2c3c559da0a5e9b397f4dc80be233c66b8597678.1551104263.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1904291851280.45@tvgsbejvaqbjf.bet>
-Date:   Tue, 07 May 2019 18:41:10 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1904291851280.45@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 29 Apr 2019 18:52:19 -0400 (DST)")
-Message-ID: <xmqqpnoulhzd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726369AbfEGJtp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 05:49:45 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41080 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726063AbfEGJto (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 05:49:44 -0400
+Received: by mail-ed1-f65.google.com with SMTP id m4so18110985edd.8
+        for <git@vger.kernel.org>; Tue, 07 May 2019 02:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=LgkJsWNU805Wh0ErJR85C+70115g5FhT16yYMvzT2AM=;
+        b=D2CvfRNCj5g6SCilc5J/5UgZ9gO7ph48SpfqyZd6cQg/2ObC9aol437su0bbNHurdS
+         pdqyhaXm1wM8TLW81vOSJVBoj8uvL+O20feoeuwkoI/V68tP/xiF/FvdLHyfj5r3rte5
+         z+eFtUee54PmiN6huxyQxuXKOxrnX/+MsX874iLHnxh+HzYA9FMyGf0HGBm9jp5ZNrOk
+         +GCCpc/XIaZuhQk/AsBk+lZQW18fQ3ZVs3G3WiEkCrBaVehcoO4uQRb0vDN7oAJNfjRX
+         2hw4I/f+KZxG7HrfujejN5lNQSLrQLz2FwjcCVZymcnjsyn3oAs1GNdJvR0N0J3r9t2F
+         Lgpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=LgkJsWNU805Wh0ErJR85C+70115g5FhT16yYMvzT2AM=;
+        b=kNpFm9puJSGwBiQ+EAx7SGng85yjFlhK4WlUYgSbuyOOUDUX6913fdErCwI6eRIZu3
+         QUc2grJkW3vK0gmqlNTL9DiJEYKXDMq1iK3qkimptS6fXc9ilRe0Cd4hfuxeALF7cuUj
+         sC0EulfpTfjedENsB30nzuOoHjVOlF4BHMJY1aoi0v5GRjJArS84inguYxmWrn+Oz4qy
+         XxlKvjb5Rnc1fBtNUQClzEQ9yxhQbFAZzHt0UNM9CDsOdLoL+ZhjchauRZ+F2GyDdxXL
+         nmUxvRZvWXbDA64I6Sg4wedp9xLvMNabXxdC8gyobp4iAZFgqA79K/mcjL1RX6TfJpYg
+         jZ6g==
+X-Gm-Message-State: APjAAAVTfoV1VgL9sIAvmzgtgzTq96WeRoCyVXHIeEFXGxTVl9HYhjJj
+        d0lIva4zEQzFttDEHgxurx0=
+X-Google-Smtp-Source: APXvYqx4FY9xRUgyq3r9E+Ewgx4uFYABv4U1Iz3w+fPr2/D1f+Djwjliw5QWrPfMMw+zZaiHTkVzHw==
+X-Received: by 2002:a50:a495:: with SMTP id w21mr31561852edb.78.1557222583123;
+        Tue, 07 May 2019 02:49:43 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id g24sm841796ejr.60.2019.05.07.02.49.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 May 2019 02:49:42 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH] commit-graph: fix memory leak
+References: <f4ab2a50873b2fd91926d7401f784479504d1b10.1557178485.git.steadmon@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <f4ab2a50873b2fd91926d7401f784479504d1b10.1557178485.git.steadmon@google.com>
+Date:   Tue, 07 May 2019 11:49:41 +0200
+Message-ID: <87zhnyh9vu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 407BE088-70AC-11E9-8F7D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Junio,
+On Mon, May 06 2019, Josh Steadmon wrote:
+
+> Free the commit graph when verify_commit_graph_lite() reports an error.
+> Credit to OSS-Fuzz for finding this leak.
 >
-> gentle ping: this patch was not picked up yet, although it should be
-> pretty uncontroversial.
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  commit-graph.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 66865acbd7..4bce70d35c 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -267,8 +267,10 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+>  		last_chunk_offset = chunk_offset;
+>  	}
+>
+> -	if (verify_commit_graph_lite(graph))
+> +	if (verify_commit_graph_lite(graph)) {
+> +		free(graph);
+>  		return NULL;
+> +	}
+>
+>  	return graph;
+>  }
 
-Thanks.  It does look it fell through the cracks without sound.
-Will pick it up.
+This is obviously correct, FWIW the leak was there before the
+verify_commit_graph_lite() refactoring I did, but I read the rest of the
+surrounding code (but haven't run valgrind etc.) and it seems to be the
+only one.
+
+I wonder in general if there's a more sustainable solution to these
+one-at-a-time memory leak fixes we're doing to these
+libraries. E.g. marking some tests in the test suite as passing cleanly
+with valgrind's leak checker, and adding a test mode to run those tests.
