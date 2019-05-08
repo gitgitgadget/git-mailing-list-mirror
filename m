@@ -2,129 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EB591F45F
-	for <e@80x24.org>; Wed,  8 May 2019 15:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA911F488
+	for <e@80x24.org>; Wed,  8 May 2019 16:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727861AbfEHPyH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 11:54:07 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36080 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727839AbfEHPyE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 11:54:04 -0400
-Received: by mail-ed1-f67.google.com with SMTP id a8so22554601edx.3
-        for <git@vger.kernel.org>; Wed, 08 May 2019 08:54:03 -0700 (PDT)
+        id S1727573AbfEHQOC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 12:14:02 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40299 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727054AbfEHQOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 12:14:02 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h4so8698394wre.7
+        for <git@vger.kernel.org>; Wed, 08 May 2019 09:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=p96xa/X4tw+yqZyrXz07+namZBiZMo8owflm8h6gj90=;
-        b=tuzIpFhUoSlBZoNPW3gGqDXpLzzJb6El0rsTctG03hp/HF/tn79KIg6cRRzM3VOYqQ
-         5T7MouDmVPq/rgwue6zG+yda1pZhy8tQBs6A7I0dn5ZmAMqsnJWerBzDBzSMlFlWw7m9
-         37tyym3oeFvM97yVUeur4ln5BSpC4q19+38bKBrAJdy3BRpaFor2UoK72e1iv9vzsCkb
-         /SLnFKyBVNRGbgYDLA8qyPdOp3Uv+meg0tCpMC565GsTtC2uiw/8Fu4GIZRbS4iRJyH5
-         Z1BFM41Xn6qi9WNaRRBgYyVR0sGHymNsWUrIKe79ShWjGyOIs0pq99+37+0oO7KSyKjm
-         5p+A==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=csNgXy6y//H7PYCxq2yFGnq5i7bkr720RII7TMGdtyo=;
+        b=XEX7vjFxrFI4pqQJ7CrgqBd3ZgAN/G4AMxeK0+tnL1AM4RRsguJyKWMui0foOj7qy3
+         Khc7k5+V2lVkvMmxQLJ9HetAQpHM5R9YKtTS/qBvTN8hk8pk9iZv0wI8I7vHJzq/7Pjc
+         ppFWBeTHHnThMZkCcfHw7yC1O12CoLk5R7WKZ1GYQYuWsdkRlDpsSsh/I9pHWGYCMPc/
+         jdDrHAklRNct0dtoBbrAAUzf32cRuPIGgA5scavrHSIxmSvc5h4tK5Vb0J8GpGfNSRrf
+         wPYh2crnu6eN7n5c4Z8HrAIfv94As+gUGky0wTxmSfixZGa5pulQisu8H08rCDbLTIdP
+         guFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p96xa/X4tw+yqZyrXz07+namZBiZMo8owflm8h6gj90=;
-        b=sZ5/wDUXxH+znTQUq3MmXveWjFgH+BUfodHCDr5zH/y9xbPglkkd896/nYxmaG5Kic
-         c4G6oo/IslqPjJgKYMg5GgKwNXb0NLa3fyVhPQkMxEn0DuXEL3AHat+o8xVqtSpy2GxG
-         3FinVTp1wLo4F/7CFA2ihkjwof0z89baHtNTZgdJL9pz6eTlkzR6zgy8dZM2QNiE2OZA
-         hPA7tn0xAj82k0ovdmyHjyrGIJ+sN98+WtnB/VY+5bSjNfodiCtBQhVsplPtOzaRLlRp
-         RH0aTkfVq6aRsJUE2Rlo0Ev5Rde4Epiih+vcD76dMWHSAt+xZn4QzNAKnqm1bW86TWtE
-         FvwQ==
-X-Gm-Message-State: APjAAAVA5cfORH/N+LAp/CXrm+AFeU0qentEmKWop2TC/5hna2+bAHNn
-        1lVUDgAntoVPuoWkHAQowQCzUO8e/80=
-X-Google-Smtp-Source: APXvYqzw8VfJdOCWNFT9aWGOcs165lWUd7VDo5FjChVT6R2ZQ+FrxJSrbTFmjT9aF3FgbgR4r4tnBw==
-X-Received: by 2002:a17:907:104e:: with SMTP id oy14mr30306976ejb.253.1557330842502;
-        Wed, 08 May 2019 08:54:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f8sm5223713edd.15.2019.05.08.08.54.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 08:54:02 -0700 (PDT)
-Date:   Wed, 08 May 2019 08:54:02 -0700 (PDT)
-X-Google-Original-Date: Wed, 08 May 2019 15:53:46 GMT
-Message-Id: <3c52385e5696887c40cab4a6b9b7923d60a0567c.1557330827.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.184.git.gitgitgadget@gmail.com>
-References: <pull.184.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 17/17] fetch: add fetch.writeCommitGraph config setting
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=csNgXy6y//H7PYCxq2yFGnq5i7bkr720RII7TMGdtyo=;
+        b=obl00vIJ/h/dxl3jSf5ADtmXWDa/QtSO2azx5s9HMQJnZbq9+GMQKSSkFzmMfhBTA3
+         uh4tLoJQDTw1OLgcsgWAiY8W4ELfvv2+65FwDODTT5aNET4riA/J6l3VspOJWRcldfbt
+         apWE7JoOEeX6obeW9M1szXZDJ6I28qgWIF9Sh9oUENGwEUg00sTC9KWsA6z+QMazTQ1c
+         /fE4brOByBPN1c6SAsW8VyJqPt6MzPXvxdmslmt0cOplcXSsHNZEz9/aGGPDjb9AehFa
+         r95bD4N1+tEbP6k37Lcwf3Kv75OR3m9iWHtovE353ciCKbCd8n5C42h+I0ky4ZqFXSI9
+         o6Dw==
+X-Gm-Message-State: APjAAAUWeTJcmk3WcGcHyVRj3PtCrZab3ryNH9jg0x/ZKGeWmNLNtnq9
+        h0DwMgrutnl0/MCy1iB/Bl2z5hgCzZc=
+X-Google-Smtp-Source: APXvYqw+vyvY3YL7dOtQHjij16sDM+W+Qsw4OVilLsXGc4V7BNq2WKcoAaTCekk9E/JtOPu+dxZSHw==
+X-Received: by 2002:adf:e3c3:: with SMTP id k3mr21236521wrm.20.1557332040054;
+        Wed, 08 May 2019 09:14:00 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id q24sm3216957wmc.18.2019.05.08.09.13.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 May 2019 09:13:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+References: <20190313015133.n7f7lyujnlwfytre@dcvr> <20190313145417.GA24101@sigill.intra.peff.net> <20190314091254.nescpfp3n6mbjpmh@dcvr> <87zhoz8b9o.fsf@evledraar.gmail.com> <20190410225721.GA32262@sigill.intra.peff.net> <xmqq1s1qy2ox.fsf@gitster-ct.c.googlers.com> <20190504013713.GC17551@sigill.intra.peff.net> <87a7g2iuem.fsf@evledraar.gmail.com> <20190507074506.GF28060@sigill.intra.peff.net> <8736lqisyx.fsf@evledraar.gmail.com> <20190508071105.GA14043@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190508071105.GA14043@sigill.intra.peff.net>
+Date:   Wed, 08 May 2019 18:13:58 +0200
+Message-ID: <87sgtohqk9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/fetch.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+On Wed, May 08 2019, Jeff King wrote:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b620fd54b4..cf0944bad5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -23,6 +23,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "commit-reach.h"
-+#include "commit-graph.h"
- 
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -62,6 +63,7 @@ static const char *submodule_prefix = "";
- static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
- static int shown_url = 0;
-+static int fetch_write_commit_graph = 0;
- static struct refspec refmap = REFSPEC_INIT_FETCH;
- static struct list_objects_filter_options filter_options;
- static struct string_list server_options = STRING_LIST_INIT_DUP;
-@@ -79,6 +81,11 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.writecommitgraph")) {
-+		fetch_write_commit_graph = 1;
-+		return 0;
-+	}
-+
- 	if (!strcmp(k, "submodule.recurse")) {
- 		int r = git_config_bool(k, v) ?
- 			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
-@@ -1670,6 +1677,16 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	string_list_clear(&list, 0);
- 
-+	if (fetch_write_commit_graph) {
-+		int commit_graph_flags = COMMIT_GRAPH_SPLIT;
-+
-+		if (progress)
-+			commit_graph_flags |= COMMIT_GRAPH_PROGRESS;
-+
-+		write_commit_graph_reachable(get_object_directory(),
-+					     commit_graph_flags);
-+	}
-+
- 	close_all_packs(the_repository->objects);
- 
- 	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
--- 
-gitgitgadget
+> On Tue, May 07, 2019 at 10:12:06AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> > I think we'd want a way to tell the bitmap code to update our progress
+>> > meter as it traverses (both single objects, but also taking into accou=
+nt
+>> > when it finds a bitmap and then suddenly bumps the value by a large
+>> > amount).
+>>
+>> Not splitting it will fix the progress bar stalling, so it fixes the
+>> problem that the user is wondering if the command is entirely hanging.
+>>
+>> But I was hoping to give the user an idea of roughly where we're
+>> spending our time, e.g. so you can see how much the pack.useSparse
+>> setting is helping (or not).
+>
+> Yeah, I think that's a bigger and more complicated problem. I admit that
+> my main annoyance is just the stall while we fill in the bitmaps (and
+> it's easy because the bitmap traversal is the same unit of work as a
+> regular traversal).
+>
+>> So something where we report sub-progress as we go along, and perhaps
+>> print some brief summary at the end if it took long enough, e.g.:
+>>
+>>     Enumerating Objects (X^1%) =3D> Marking trees (Y^1%)
+>>     Enumerating Objects (X^2%) =3D> Calculating bitmaps (Y^2%)
+>>
+>> And at the end:
+>>
+>>     Enumerating Objects (100%) in ~2m30s -- (~10s marking trees, ~2m10s =
+bitmaps, ~10s other)
+>>
+>> I.e. bringing the whole "nested" trace2 regions full circle with the
+>> progress bar where we could elect to trace/show some of that info, and
+>> then you could turn on some trace2 mode/verbose progress to see more.
+>
+> I do wonder if this really needs to be part of the progress bar. The
+> goal of the progress bar is to give the user a sense that work is
+> happening, and (if possible, but not for "enumerating") an idea of when
+> it might finish. If the trace code can already do detailed timings, then
+> shouldn't we just be encouraging people to use that?
+
+To just show work happening we could save ourselves some horizontal
+space and the debates over counting v.s. enumerating with:
+
+     diff --git a/progress.c b/progress.c
+     index 0318bdd41b..83336ca391 100644
+     --- a/progress.c
+     +++ b/progress.c
+     @@ -226,3 +226,3 @@ static struct progress *start_progress_delay(const=
+ char *title, uint64_t total,
+             struct progress *progress =3D xmalloc(sizeof(*progress));
+     -       progress->title =3D title;
+     +       progress->title =3D "Reticulating splines";
+             progress->total =3D total;
+
+:)
+
+Obviously that's silly, but the point is we do show some user messaging
+with these now, and e.g. the other day here on-list (can't be bothered
+to find the msgid) someone was lamenting that the N progressbars we show
+on "push" were too verbose.
+
+So by coalescing some of the existing bars that do one logical operation
+(push) in N steps we could be less verbose without losing the "stuff's
+happening" part of it, and would see if something odd was going on,
+e.g. the "I/O write" part being proportionally slower on this box than
+the other, or when they upgrade bitmaps suddenly showing up as >95% of
+the time.
+
+The bit I find interesting about tying it into trace2 is that once you
+do that the trace logs can contain e.g. min/max/avg/median/percentile
+time for doing some operation we can break into N steps same/similar
+steps, which might be interesting for performance analysis.
