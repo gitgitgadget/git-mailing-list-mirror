@@ -2,114 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 172B51F45F
-	for <e@80x24.org>; Wed,  8 May 2019 11:45:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF43F1F45F
+	for <e@80x24.org>; Wed,  8 May 2019 12:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728119AbfEHLpp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 07:45:45 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50987 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728049AbfEHLpo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 07:45:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557315926;
-        bh=a3ldyyWi3XI7kpj4pNMV/2rVEEAPhPXRytTDrNNgiLs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kyXlIQISRwgf7Zt3ayzc/2IFrMIK03Dd6JLI2VFVSiYgtOY3OUMQczX5ojkmef8RJ
-         sNwwh9G6xmwzXBh1vtzKmsm8hB43VreCuncjPhF+FyeJnM4G0Q07riZb8JQtalekd3
-         02p1hKn67kp7O9/o2zOIDOyNibA8D/oXaqJHpTXU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXq3L-1hBx463pJf-00WjaQ; Wed, 08
- May 2019 13:45:26 +0200
-Date:   Wed, 8 May 2019 13:45:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] archive-tar: mark RECORDSIZE/BLOCKSIZE as
- unsigned
-In-Reply-To: <d960966d-a7d4-dc3e-ca0a-70e9e5d1abf3@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1905081334260.44@tvgsbejvaqbjf.bet>
-References: <pull.145.git.gitgitgadget@gmail.com> <pull.145.v2.git.gitgitgadget@gmail.com> <ac2b2488a1b42b3caf8a84594c48eca796748e59.1556321244.git.gitgitgadget@gmail.com> <d960966d-a7d4-dc3e-ca0a-70e9e5d1abf3@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728488AbfEHMgO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 08:36:14 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:35089 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727575AbfEHMgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 08:36:14 -0400
+Received: by mail-it1-f195.google.com with SMTP id u186so3570786ith.0
+        for <git@vger.kernel.org>; Wed, 08 May 2019 05:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Wt9XjFDU2JBTCwmtwOT+RlrcMwAStHRcOWAVXCPnXi8=;
+        b=Yr2xX0cJcOTlj6MqkzXoodX14/1+VETKHiS32Ea1wJPPFdXCL9oOSohi4SZSw/htoN
+         2xFggbIiRh0/ZbIYrki/Z8GYJ17J5hnBhRwR4CGqhaxrtYXxkIu3th7d66cxWK6pkccS
+         QBk6Rb48eZ/5eQQ/l5PClPzLE4i9aZK16oyTQTpi3bA+Yu5z01lqG0dheYlVREksziZg
+         JLch5+MQDjZI4/P9K/hveUPbyIJNLy5BcdHuHc2nGJtlJbFWEXEUNneKYJgodEGRaUYN
+         GxjmczNkF0woDLgZA/V/X7N8sTe2RMCvspLYHmU62g2YB4JytjQzdxHQ3uzYLg0KvjZ+
+         r/mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Wt9XjFDU2JBTCwmtwOT+RlrcMwAStHRcOWAVXCPnXi8=;
+        b=OVOlavDzdJEswSL44x+OETSTxmGtlrddy0bH+M6aoYs3mMLUcKy0N4S/GRTstupy86
+         x679myRdp/+ZH4Foj5YP4dFPFQcjvfvk+YWMXLQWclp9zk30rtDKz/LbCHqbHtwN56MM
+         /xkHUCeA0B3Goro5JOd75FpaCoXRHeYsTI0UZfhkHIeBOJL+J+Ea5YqvbgxtuFmrSY7o
+         8cStp0ofc1HyjZZS97b1K6mCHwVvevoJu4tPJ3Dtq6/zt3eYvIBmHGeuMZj/555ZbdQH
+         CB1e2fFfylG9F7KU/J9AIMjnjN6vjmx81fKkeid4q415WFNQhkcFhfw9JSnc/3VrUCu/
+         MqQA==
+X-Gm-Message-State: APjAAAX2Fnm4fnvQzHqk1aoDvv9HXai4Mt9wvH9Pc/p+ttGiRSvR58Fm
+        Cc4FkdFvQOcXsxWTTKutqsg=
+X-Google-Smtp-Source: APXvYqzAN1AC39QQfUVgSKvPf+0PQKU5xQDsiIcNABvMjb5VfCCRLMFt2IFICrJRiUcHDnK/162Cpg==
+X-Received: by 2002:a24:3a13:: with SMTP id m19mr2790089itm.88.1557318973689;
+        Wed, 08 May 2019 05:36:13 -0700 (PDT)
+Received: from archbookpro.localdomain ([2620:101:f000:740:70fe:227e:c32b:d104])
+        by smtp.gmail.com with ESMTPSA id 70sm1155664itz.42.2019.05.08.05.36.11
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 08 May 2019 05:36:12 -0700 (PDT)
+Date:   Wed, 8 May 2019 08:36:10 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] coccicheck: optionally batch spatch invocations
+Message-ID: <20190508123610.GA19502@archbookpro.localdomain>
+References: <20190503144211.GH14763@szeder.dev>
+ <20190503174503.GA8242@sigill.intra.peff.net>
+ <CA+P7+xoRGVAP4nHE=neUZGkn9RX_hxN9xVzfWexR79ZWT0ejSQ@mail.gmail.com>
+ <20190506051148.GB30003@sigill.intra.peff.net>
+ <CACsJy8CLjUdHCro8QJfTozMB0xVWppHuFRSLCvFSaeKO_PxAog@mail.gmail.com>
+ <20190506234334.GA13296@sigill.intra.peff.net>
+ <xmqq7eb3nfxn.fsf@gitster-ct.c.googlers.com>
+ <20190507025501.GA3417@sigill.intra.peff.net>
+ <xmqqh8a6n9wv.fsf@gitster-ct.c.googlers.com>
+ <20190508070754.GA9195@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1070412990-1557315926=:44"
-X-Provags-ID: V03:K1:VppydjTAPX2Wcfo5ZTlCLZowve0Wh25uh3F2QmNDVvT1+eemlfF
- EZedjxsZJG+tB+oUv9IKTgrSbQC0JOIyvKgfNzoQcjYyfAjqa3RgulHbInM1J1FeN3WMStV
- ZgGOcWO1IY/ykaSXFSszT823VmMtk6nGsOiblUVK/WXC3NDogzQzpOE4r/ajJfYWIKch19c
- g7dpMHkNKxZev1dU7SxuQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ay28UV1ygGs=:0Y1kQHtNfaFWJ9iSJbEFQG
- 1np3Coj85pYDx7wiWIXLzFo7sPyOjS5jVTr/yJvpBryncie1McrzamRgX/wu8t7q6eT5ilUsQ
- 5KHCVm68xsaohP0efde9PFO/Rq7lAhyB33ayTSFAOyTGgEj1JTDR7EvZOcaHmgVw8K963l5FO
- /hrA795GjIXv1rKosgd1Xxj7Yqz0UgyZQ/qiDWUjkFU6PuAlZcjnGGltcxF7KhT+rYSNwK9SS
- tYON77nWPCd2sVtmTl0OrkwyfSTWkH+94ael/nVmRkxcOhRwK6LPMhdp4frxCnnwzpq+BA+/A
- Dt2QKqztuVUyjM1kfM1Y+TguxtY/xgDHnZG93plnua9rrfgM4fQH5G/N5iix8++P734os695j
- Hn9dHQ86QgCt35DffQiKlEFNDPVFcG7gD1llnOs5/JAUOch1nBHBMHLE4eR92sRVFyFkh/KsB
- AGk0hmUojFufkBo2LDpD2mwcAFvhZijkPlF7GxnB9XK9lk0y39ZaHKI7znNpKKswwh4bfoHq8
- pOpuPPteoG7Mq4IlaAHw1VMOnPAJai6J2YByEDeKkRkgyTXafTMY6ygjn4Yg+PvMmqeimSgg6
- PMXfnzgOCfvZ+R6BhSqwbN0f4DZUDwhyovfUZLoW/6Ycn7UNnRF8qXVioZbyKu2SkRoosINHE
- K5eDUdbdGhJUdTQEr0oac3sxzbQ1xhiTW2jymtrBgKmfGbbDFmhpg9FVsv/d0TMhj8pXET6IF
- oIEpVq+yGujCwcZhQtqJwnW5u04nKQ9/zXhwDyVja0bKn5m6HB9k3n16N28+FzqoQQhWNnmWi
- zfxpxYM2/1g17bknUh6OPVTioipBh/IOcc5ctcwfOvZrZGaCR25VQrXhseL9d3UEPw5TEgCcW
- AMEtgnasW/a9drRoHSy+2qjDUCcFFgLscijfbctFeRaY3lSnnJLLyAqXeCFSYwkdSEQ03pn/g
- QKGgIOFhX8Q==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190508070754.GA9195@sigill.intra.peff.net>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Jeff,
 
---8323328-1070412990-1557315926=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, May 08, 2019 at 03:07:54AM -0400, Jeff King wrote:
+> On Tue, May 07, 2019 at 01:52:32PM +0900, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > Yes, 2^31-1 is probably a better number, but it's harder to write out. :)
+> > >
+> > > Here's what a patch might look like to implement "0". By still using
+> > > xargs in the unlimited code path, it's not too bad. I dunno.
+> > 
+> > As somebody who is too used to run "diff -U999" and be happy, I
+> > cannot claim that I care enough, but the result does not look
+> > too bad.
+> 
+> OK. With two "not too bad" comments (plus my own similar feeling), let's
+> just do it. Here it is as a patch on top. It can also be squashed into
+> the tip of jk/cocci-batch, but then we should probably s/999/0/ in the
+> commit message. :)
+> 
+> -- >8 --
+> Subject: [PATCH] coccicheck: make batch size of 0 mean "unlimited"
+> 
+> If you have the memory to handle it, the ideal case is to run a single
+> spatch invocation with all of the source files. But the only way to do
+> so now is to pick an arbitrarily large batch size. Let's make "0" do
+> this, which is a little friendlier (and doesn't otherwise have a useful
+> meaning).
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Makefile | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index daba958b8f..9cea614523 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1176,6 +1176,7 @@ SP_EXTRA_FLAGS =
+>  
+>  # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
+>  # usually result in less CPU usage at the cost of higher peak memory.
+> +# Setting it to 0 will feed all files in a single spatch invocation.
+>  SPATCH_FLAGS = --all-includes --patch .
+>  SPATCH_BATCH_SIZE = 1
+>  
+> @@ -2792,7 +2793,12 @@ endif
+>  
+>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+>  	@echo '    ' SPATCH $<; \
+> -	if ! echo $(COCCI_SOURCES) | xargs -n $(SPATCH_BATCH_SIZE) \
+> +	if test $(SPATCH_BATCH_SIZE) = 0; then \
+> +		limit=; \
+> +	else \
+> +		limit='-n $(SPATCH_BATCH_SIZE)'; \
+> +	fi; \
 
-Hi Ren=C3=A9,
+Could we pull `limit` out of the recipe and into a make variable? You
+mentioned earlier that you wanted to do this but it was too complicated
+but now that it's written like this, it seem like it'd be pretty easy to
+do.
 
-On Thu, 2 May 2019, Ren=C3=A9 Scharfe wrote:
-
-> Am 27.04.19 um 01:27 schrieb Johannes Schindelin via GitGitGadget:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > They really are unsigned, and we are using e.g. BLOCKSIZE as `size_t`
-> > parameter to pass to `write_or_die()`.
->
-> True, but the compiler converts that value correctly to size_t without
-> complaint already, doesn't it?  What am I missing?
-
-Are you talking about a specific compiler? It sure sounds as if you did.
-
-I really do not want to fall into the "you can build Git with *any*
-compiler, as long as that compiler happens to be GCC, oh, and as long it
-is version X" trap.
-
-We *already* rely on GCC's optimization in way too many places for my
-liking, e.g. when we adapted the `hasheq()` code *specifically* to make
-GCC's particular optimization strategies to kick in.
-
-Or the way we defined the `SWAP()` macro: it depends on GCC's ability to
-see through the veil and out-guess the code, deducing its intent rather
-than what it *says* ("Do As I Want, Not As I Say", anyone?). We *do* want
-to swap registers when possible (instead of forcing register variables to
-be written to memory just for the sake of being swapped, as our code says
-rather explicitly).
-
-Essentially, we build a cruise ship of a dependency on GCC here. Which
-should not make anybody happy (except maybe the GCC folks).
-
-Let's not make things worse.
-
-Ciao,
-Dscho
-
---8323328-1070412990-1557315926=:44--
+> +	if ! echo $(COCCI_SOURCES) | xargs $$limit \
+>  		$(SPATCH) --sp-file $< $(SPATCH_FLAGS) \
+>  		>$@+ 2>$@.log; \
+>  	then \
+> -- 
+> 2.21.0.1314.g224b191707
+> 
