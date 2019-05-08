@@ -2,105 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF9A1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 21:52:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 443E91F45F
+	for <e@80x24.org>; Wed,  8 May 2019 22:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728677AbfEHVwp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 17:52:45 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43379 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728648AbfEHVwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 17:52:43 -0400
-Received: by mail-ed1-f67.google.com with SMTP id w33so169035edb.10
-        for <git@vger.kernel.org>; Wed, 08 May 2019 14:52:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Tu2KeUxgY576gkfhH99kk1/g+nBv0r1E0vIo+/95qvE=;
-        b=C32MVFXlqmbq/xNfQ0xS24gYh/iU2LakC/0Hlg84HqoXMzcwr1IJrNSUHP7snGu5/W
-         6609u0gdGhb9JZirr4q5bAMsJfWqXERnKrB3AtfcxJ1q1eY/pH2pDgz+j+vPsCvT8bd4
-         JKakTp+dIWaYRNWFJZ/nBdm+dnwLNEm7TLIuQL1+3a9kdITWXnKxQX0NYrR7C51Eo9e+
-         6xj7mSU8NdAuvQLtx7vvBQvNxlazkREBH1Lz6TC/d95wk00jIf4+RNj7AmTT5PVHiiLv
-         gnhkFwPk2tsTLDNHM5WyMYvRk40IMp1uuAgzRoYd/Guf3xyXASSQb8jY1XHa3ehK0clF
-         SA0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Tu2KeUxgY576gkfhH99kk1/g+nBv0r1E0vIo+/95qvE=;
-        b=eoBOgYOttbrLAbp3ucqCYJn5BqHLkCMTdBHkvEi54UBCviq01Yj06gFfjbzmljyTy1
-         nm+g+Q28vT/77ERxL5GQbuqJtvpyiz69BbZhLUzk6vFBLQYuvbSobPS0aRU4Ms6UPLhO
-         2yuyolDHlyljph2lo16xFYZVKYSsWlrvZm1vi59/awsjiZIWa6COnNY771sVwQqCKECA
-         qYnbt8A6i9EJEw20YUUCylLtnga+NJW1liWZjxfD7tKH3VFwOAYXKyKeHInjYP28adhX
-         nsiLUS+YmMbwEZgpIoX0lcHJ4LR3xlQX3a7V+kwwqNrC1KNVvJmeUIHr+h3Y6TMB4QlQ
-         Hunw==
-X-Gm-Message-State: APjAAAVrjwXCj06Y/Sw2i3QrEa6xUnOTzUM2ve5P0gRj/GmTPQ+NA6FK
-        i0u/xkQNrTgnkhgI3//dhh5ajqOnQK4=
-X-Google-Smtp-Source: APXvYqwRcyKsoFz8VUx8aS+tUBwQDKqQR4sTWSzvwN1dICKor8c6rGOFbASpjIjFRTe9yh7WDo3yFA==
-X-Received: by 2002:a50:94a1:: with SMTP id s30mr94948eda.4.1557352361696;
-        Wed, 08 May 2019 14:52:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k37sm55522edb.11.2019.05.08.14.52.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 14:52:41 -0700 (PDT)
-Date:   Wed, 08 May 2019 14:52:41 -0700 (PDT)
-X-Google-Original-Date: Wed, 08 May 2019 21:52:39 GMT
-Message-Id: <9f2ee5ef0b84b348d07fedc47fced8d4772a9c43.1557352359.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.186.git.gitgitgadget@gmail.com>
-References: <pull.186.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] difftool --no-index: error out on --dir-diff (and don't
- crash)
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1728776AbfEHWNT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 18:13:19 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:40186 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726837AbfEHWNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 18:13:19 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1hOUoO-0007ce-8h
+        for git@vger.kernel.org; Thu, 09 May 2019 07:13:16 +0900
+Date:   Thu, 9 May 2019 07:13:16 +0900
+From:   Mike Hommey <mh@glandium.org>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] git-cinnabar 0.5.1
+Message-ID: <20190508221316.otsflud4qlcpwaeb@glandium.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-In `--no-index` mode, we now no longer require a worktree nor a
-repository. But some code paths in `difftool` expect those to be
-present.
+Git-cinnabar is a git remote helper to interact with mercurial
+repositories. It allows to clone, pull and push from/to mercurial remote
+repositories, using git.
 
-The most notable such code path is the `--dir-diff` one: we use the
-existing checkout machinery to copy the files, and that machinery looks
-up replacement refs, looks at alternate ODBs, wants to use the worktree
-path, etc.
+Code on https://github.com/glandium/git-cinnabar
+This release on
+https://github.com/glandium/git-cinnabar/releases/tag/0.5.1
 
-Rather than running into segmentation faults, let's die with an
-informative error message.
+What's new since 0.5.0?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/difftool.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+- Updated git to 2.21.0 for the helper.
+- Experimental native mercurial support (used when mercurial libraries are not available) now has feature parity.
+- Try to read the git system config from the same place as git does. This fixes native HTTPS support with Git on Windows.
+- Avoid pushing more commits than necessary in some corner cases (see e.g. https://bugzilla.mozilla.org/show_bug.cgi?id=1529360).
+- Added an --abbrev argument for `git cinnabar {git2hg,hg2git}` to display shortened sha1s.
+- Can now pass multiple revisions to `git cinnabar fetch`.
+- Don't require the requests python module for `git cinnabar download`.
+- Fixed `git cinnabar fsck` file checks to actually report errors.
+- Properly return an error code from `git cinnabar rollback`.
+- Track last fsck'ed metadata and allow `git cinnabar rollback --fsck` to go back to last known good metadata directly.
+- `git cinnabar reclone` can now be rolled back.
+- Added support for git bundles as cinnabarclone source.
+- Added alternate styles of remote refs.
+- More resilient to interruptions when HTTP Range requests are supported.
+- Fixed off-by-one when storing mercurial heads.
+- Better handling of mercurial branchmap tips.
+- Better support for end of parts in bundle v2.
+- Improvements handling urls to local mercurial repositories.
+- Fixed compatibility with (very) old mercurial servers when using mercurial 5.0 libraries.
+- Converted Continuous Integration scripts to Python 3.
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 4fff1e83f9..5704a76088 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -735,7 +735,8 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 		setup_work_tree();
- 		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
- 		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
--	}
-+	} else if (dir_diff)
-+		die(_("--dir-diff is incompatible with --no-index"));
- 
- 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
- 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
--- 
-gitgitgadget
+Mike
