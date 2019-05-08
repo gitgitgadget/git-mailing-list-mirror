@@ -7,226 +7,159 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EE1A1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 07:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 034951F45F
+	for <e@80x24.org>; Wed,  8 May 2019 08:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726764AbfEHHrH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 03:47:07 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55960 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbfEHHrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 03:47:06 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B1CC150656;
-        Wed,  8 May 2019 03:47:01 -0400 (EDT)
+        id S1727065AbfEHISJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 04:18:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58935 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726411AbfEHISI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 04:18:08 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED07D148CE2;
+        Wed,  8 May 2019 04:18:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l2vnyilLOTFizLg8VL31H0mYas0=; b=hRUyqF
-        KeyvMAKAoBEaeToHApeJE7swQaCXfGmCcuMzDH9uAO13iTNaog8L1SpVo4pBDXrl
-        KsOgLiqAZvkOKVU8gcqZ9T17NUnQaEZEMyPbtw6frk5vgsSeX/LaWje054woPEw/
-        hzNvC/LuggrZiU+jWh+2jIK9mNSbkilADI1xw=
+        :content-type; s=sasl; bh=NXgM0EbzxscXygeS9ZpeZ+hxpZ8=; b=rEjwls
+        4NGY2goQ6OXXMxessgKjCKAB2bExfoaDqGy4ZZIyL+q8crCTVxHK9N5VaMnYOSC9
+        ajxzTDOYANgo1G5JCOLI7Ny6AFJPKCu7NrYPWSPxx2X8kNO7oL0jJkGEBfgt0P8e
+        8tuvDVThuqlDWdMtXKNP1xJOLaSSgEVkGJ7MQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qTdxfsBpZiqJjHV7HgRuiR/zm8PyQStT
-        4tnyH9Y/MQrLA9Kky2NNrcdgqlO4spOW95lD2bctjKrV6uWvpWcSMb7Dc0Ms252A
-        1VGMXLWsJqoxrLOusqMylZfzhfzAVb1nOZXA89jrm/KQ54z1xsf53JKUS+gon0cL
-        wrL5tFcZD2k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90674150655;
-        Wed,  8 May 2019 03:47:01 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sX4e3ZnG7QdYpkLTpnwlUwdY45ok0H8E
+        o22py/bnURiPcZVN6fzdkJkK0KVa+WfT5HdjsT0CQBO+Q2UVexgriX71OBSlMwX3
+        gIcFrO3eoVuyAZGtMvRGKHK7TuIX5pda7IWW/AZ10/7rTma/YuiPnkv6TwqEoz+l
+        K9StBH7rEVw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E4320148CE1;
+        Wed,  8 May 2019 04:18:04 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C421D150652;
-        Wed,  8 May 2019 03:47:00 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 502BA148CDF;
+        Wed,  8 May 2019 04:18:04 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan McGregor <dkm560@usask.ca>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        "McGregor\, Dan" <dan.mcgregor@usask.ca>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
-        <20190209023621.75255-1-dan.mcgregor@usask.ca>
-        <20190212134537.GA26137@ash>
-        <D8E7C7D0-04E5-4802-80FA-2477F2C0D240@usask.ca>
-Date:   Wed, 08 May 2019 16:46:59 +0900
-In-Reply-To: <D8E7C7D0-04E5-4802-80FA-2477F2C0D240@usask.ca> (Dan McGregor's
-        message of "Sat, 16 Feb 2019 02:33:27 +0000")
-Message-ID: <xmqqk1f1gzgs.fsf@gitster-ct.c.googlers.com>
+To:     Heinrich Schuchardt <xypron.glpk@gmx.de>
+Cc:     Brian M Carlson <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re* [PATCH 1/1] send-email: fix transferencoding config option
+References: <20190409192733.10173-1-xypron.glpk@gmx.de>
+        <20190409215856.GD92879@google.com>
+        <xmqq8swi34h5.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 08 May 2019 17:18:03 +0900
+In-Reply-To: <xmqq8swi34h5.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 10 Apr 2019 12:48:38 +0900")
+Message-ID: <xmqqef59gy10.fsf_-_@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 76AD7284-7165-11E9-88A0-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CD6C11EE-7169-11E9-B93E-E828E74BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan McGregor <dkm560@usask.ca> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->>I don't think this is enough. At least fbsd defines this
->>
->>#define    fileno(p)    (!__isthreaded ? __sfileno(p) : (fileno)(p))
->>
->>so one of the two functions will be used depending on __isthreaded
->>flag. Your forcing to use fileno, ignoring __sfileno, is technically
->>not correct.
->>
->>For the record, at least fbsd also defines feof, ferror, clearerr,
->>getc and putc in the same way. But at least I don't see how something
->>like feof(fp++) could cause bad side effects.
->>
->>So, how about something like this? A teeny bit longer than your
->>version, but I think it's easier to control long term.
->
-> Yes, this looks pretty reasonable to me too.
+> I wonder if we can follow the pattern used by the code to handle the
+> fallback for %config_bool_settings we can see immediately after
+> these two calls to read_config()?  That is, each of the element in
+> the %config_* hash is not merely a pointer to where the value is
+> stored, but also knows what the default fallback value should be,
+> and a loop _in the caller of_ read_config(), after it finishes
+> making calls to the read_config function, fills in the missing
+> default?
 
-Sorry for pinging this ancient thread, but while reviewing the
-stalled topics, this one caught my attention.  The very original
-<20190201193004.88736-1-dan.mcgregor@usask.ca> said that the problem
-it wants to solve was that the code that passes (void*) parameter to
-fileno(), fflush() and rewind() misbehaved, as these are all macros
-on your system.
-
-We solved the problem for fileno() being a macro eventually with
-18a4f6be ("git-compat-util: work around fileno(fp) that is a macro",
-2019-02-12), but what about the other two?
-
-Here comes a weather-balloon to see if we should pursue tying this
-loose end.
-
-One thing to note is that this reveals that the build rule for
-vcs-svn stuff may be cleaned up before we do this as a separate
-step, but I think I saw another topics to move it out of the main
-build so perhaps I'll leave it out and leave it to be worried about
-separately ;-)
+So, here is a two-patch series that tries to do so, primarily done
+to gauge if there still is the level of interest needed to make it
+worth for us to pursue this topic.  Here is the first one; I'll send
+the second one that takes advantage of this change separately (but
+it should be trivial to imagine what that step would involve).
 
 -- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Wed, 8 May 2019 16:12:20 +0900
-Subject: [PATCH] git-compat-util: rewind(fp)/fflush(fp) could be macros
+Subject: [PATCH 1/2] send-email: update the mechanism to set default configuration values
 
-On various BSD's, rewind(fp) is implemented as a macro that directly
-accesses the fields in the FILE * object, which breaks a function
-that accepts a "void *fp" parameter and calls rewind(fp) and expect
-it to work.  The same issue has been resolved for fileno(fp) earlier,
-which is shared by fflush(fp) as well.
-
-Work it around by adding a compile-time knob REWIND_IS_A_MACRO and
-FFLUSH_IS_A_MACRO for these two other functions that tells us to
-insert a real helper function in the middle of the callchain.
-
-I'll leave it up to those who do work on affected platforms to add
-entries to config.mak.uname.
+The program has a good mechanism to specify the fallback default
+values for boolean configuration variables after two invocations of
+read_config() for "sendmail.$ident.$var" and "sendemail.$var" have
+not found any configuration.  Imitate it so that we can set the
+default values for non-boolean variables as well.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile          | 18 ++++++++++++++++--
- compat/fflush.c   |  7 +++++++
- compat/rewind.c   |  7 +++++++
- git-compat-util.h | 16 ++++++++++++++++
- 4 files changed, 46 insertions(+), 2 deletions(-)
- create mode 100644 compat/fflush.c
- create mode 100644 compat/rewind.c
+ git-send-email.perl | 51 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 6e8d017e8e..1e18092583 100644
---- a/Makefile
-+++ b/Makefile
-@@ -433,6 +433,10 @@ all::
- #
- # Define HAVE_GETDELIM if your system has the getdelim() function.
- #
-+# Define FFLUSH_IS_A_MACRO if fflush() is a macro, not a real function.
-+#
-+# Define REWIND_IS_A_MACRO if rewind() is a macro, not a real function.
-+#
- # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
- # default environment variables to be passed when a pager is spawned, e.g.
- #
-@@ -1795,6 +1799,16 @@ ifdef HAVE_WPGMPTR
- 	BASIC_CFLAGS += -DHAVE_WPGMPTR
- endif
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f4c07908d2..ca7faff094 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -250,28 +250,28 @@ sub do_edit {
+ );
  
-+ifdef FFLUSH_IS_A_MACRO
-+	COMPAT_CFLAGS += -DFFLUSH_IS_A_MACRO
-+	COMPAT_OBJS += compat/fflush.o
-+endif
-+
-+ifdef REWIND_IS_A_MACRO
-+	COMPAT_CFLAGS += -DREWIND_IS_A_MACRO
-+	COMPAT_OBJS += compat/rewind.o
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -2404,8 +2418,8 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
- 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
+ my %config_settings = (
+-    "smtpserver" => \$smtp_server,
+-    "smtpserverport" => \$smtp_server_port,
+-    "smtpserveroption" => \@smtp_server_options,
+-    "smtpuser" => \$smtp_authuser,
+-    "smtppass" => \$smtp_authpass,
+-    "smtpdomain" => \$smtp_domain,
+-    "smtpauth" => \$smtp_auth,
+-    "smtpbatchsize" => \$batch_size,
+-    "smtprelogindelay" => \$relogin_delay,
+-    "to" => \@initial_to,
+-    "tocmd" => \$to_cmd,
+-    "cc" => \@initial_cc,
+-    "cccmd" => \$cc_cmd,
+-    "aliasfiletype" => \$aliasfiletype,
+-    "bcc" => \@bcclist,
+-    "suppresscc" => \@suppress_cc,
+-    "envelopesender" => \$envelope_sender,
+-    "confirm"   => \$confirm,
+-    "from" => \$sender,
+-    "assume8bitencoding" => \$auto_8bit_encoding,
+-    "composeencoding" => \$compose_encoding,
+-    "transferencoding" => \$target_xfer_encoding,
++    "smtpserver" => [\$smtp_server],
++    "smtpserverport" => [\$smtp_server_port],
++    "smtpserveroption" => [\@smtp_server_options],
++    "smtpuser" => [\$smtp_authuser],
++    "smtppass" => [\$smtp_authpass],
++    "smtpdomain" => [\$smtp_domain],
++    "smtpauth" => [\$smtp_auth],
++    "smtpbatchsize" => [\$batch_size],
++    "smtprelogindelay" => [\$relogin_delay],
++    "to" => [\@initial_to],
++    "tocmd" => [\$to_cmd],
++    "cc" => [\@initial_cc],
++    "cccmd" => [\$cc_cmd],
++    "aliasfiletype" => [\$aliasfiletype],
++    "bcc" => [\@bcclist],
++    "suppresscc" => [\@suppress_cc],
++    "envelopesender" => [\$envelope_sender],
++    "confirm"   => [\$confirm],
++    "from" => [\$sender],
++    "assume8bitencoding" => [\$auto_8bit_encoding],
++    "composeencoding" => [\$compose_encoding],
++    "transferencoding" => [\$target_xfer_encoding],
+ );
  
- git-remote-testsvn$X: remote-testsvn.o GIT-LDFLAGS $(GITLIBS) $(VCSSVN_LIB)
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS) \
--	$(VCSSVN_LIB)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-+	$(VCSSVN_LIB) $(LIBS)
+ my %config_path_settings = (
+@@ -446,6 +446,13 @@ sub read_config {
+ 	${$setting->[0]} = $setting->[1] unless (defined (${$setting->[0]}));
+ }
  
- $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
- 	$(QUIET_LNCP)$(RM) $@ && \
-diff --git a/compat/fflush.c b/compat/fflush.c
-new file mode 100644
-index 0000000000..55ac3e5542
---- /dev/null
-+++ b/compat/fflush.c
-@@ -0,0 +1,7 @@
-+#define COMPAT_CODE_FFLUSH
-+#include "../git-compat-util.h"
-+
-+int git_fflush(FILE *stream)
-+{
-+	return fflush(stream);
++# fall back to builtin defaults
++for my $setting (values %config_settings) {
++	if (@$setting == 2 && !defined (${$setting->[0]})) {
++		${$setting->[0]} = $setting->[1];
++	}
 +}
-diff --git a/compat/rewind.c b/compat/rewind.c
-new file mode 100644
-index 0000000000..e56656ff96
---- /dev/null
-+++ b/compat/rewind.c
-@@ -0,0 +1,7 @@
-+#define COMPAT_CODE_REWIND
-+#include "../git-compat-util.h"
 +
-+void git_rewind(FILE *stream)
-+{
-+	rewind(stream);
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 29a19902aa..f35a857785 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1234,6 +1234,22 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
- #define getc_unlocked(fh) getc(fh)
- #endif
+ # 'default' encryption is none -- this only prevents a warning
+ $smtp_encryption = '' unless (defined $smtp_encryption);
  
-+#ifdef FFLUSH_IS_A_MACRO
-+int git_fflush(FILE *stream);
-+# ifndef COMPAT_CODE_FFLUSH
-+#  undef fflush
-+#  define fflush(p) git_fflush(p)
-+# endif
-+#endif
-+
-+#ifdef REWIND_IS_A_MACRO
-+void git_rewind(FILE *stream);
-+# ifndef COMPAT_CODE_REWIND
-+#  undef rewind
-+#  define rewind(p) git_rewind(p)
-+# endif
-+#endif
-+
- /*
-  * Our code often opens a path to an optional file, to work on its
-  * contents when we can successfully open it.  We can ignore a failure
 -- 
 2.21.0-777-g83232e3864
-
-
 
