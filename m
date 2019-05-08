@@ -2,128 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD66A1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 15:52:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE7331F45F
+	for <e@80x24.org>; Wed,  8 May 2019 15:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726992AbfEHPwu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 11:52:50 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:43741 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfEHPwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 11:52:50 -0400
-Received: by mail-qt1-f194.google.com with SMTP id r3so13882390qtp.10
-        for <git@vger.kernel.org>; Wed, 08 May 2019 08:52:49 -0700 (PDT)
+        id S1727655AbfEHPxv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 11:53:51 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45676 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727633AbfEHPxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 11:53:50 -0400
+Received: by mail-ed1-f65.google.com with SMTP id g57so22505863edc.12
+        for <git@vger.kernel.org>; Wed, 08 May 2019 08:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O/aDiSuabA1UT37pqiZvNnDJtwV7VDCXoIckMsQFjk0=;
-        b=DB48ugNRFe2qcEC8JO63VpC6po9oedRiKmtldDYZw/9rAI4WzujGL1/Jm/5UY90ON2
-         zQsArDXzQpiGGlzmENHhEOa8eMlQrG9ir8F8EgKd1qXQ1ICNGiLtqQ33Kre6EgW+an3B
-         dWMlmdXifQoVJvyi327eo32fE/Mic+ExA864HLyqJG82e0ZUhskzkX9PCs8N2xYdYxht
-         NAyd7E9WkMYZ7ll+8UuJlC9kZeGjUy6OJTKzJjBZ7ZeNeqoZnvuFsg1v7JOZmIfSvyl0
-         UPzp+V3+uhZ9IoQwh3Ta7JzZWHu0xAgeuyZDrrhOm9aovX26zHO9d+zn9BsYqjbdrmKZ
-         PclQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=eSEy4lb7WYgAWpgS/k1w9gk9+9sz/RGuF/mmdJjwxO0=;
+        b=IAtylEVphJ+LXcE9Oy0ooQGee8H5bTCXmeFecHNL3tGEp8Zf+tc5rKEhNnSaHPcI7M
+         ViC9/3jvKiNEmHepgH8kfJACXKQgDFQD320dKjdzUlyaRoc1vPsZZAvKEMbh7Mq4ve2R
+         +fXG46jF7zszzH9gLdzNVuK17PqDg2De3+VCARvnznf+Levmid0rukKmQdIPXkoMFy9S
+         E9fEV16cAxs4+Xf3cazxMsry/h9xvaHBdSUwvBf69CjdksrXC6YYysqioTx9W2r0YIGl
+         tlLPMH34oyak0yTraPYUTgFY7eNTTtKC+k5VbgsZ0f6gv7Xgb11M9OcERwCasneZlhwF
+         pFMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O/aDiSuabA1UT37pqiZvNnDJtwV7VDCXoIckMsQFjk0=;
-        b=PimNEj2CQx1Dnx40XMOqk57DTEfieKUmayUtNgh81HCDnVkkQn4aobYx20Y10OeTn4
-         Oj8YnvpahMmhxDf/DWZIafkzZhceZ9DVYydkkLUy3/UyK9QZgp1Xpno4occgqHuEbUgu
-         PSKL/3vl0yEjnOR/KTpxH6tiQPxYCSumxjWSeKikrk1APowoz8pYqJDTruQ1YWVX0lz0
-         sGS5x9sXYm9+n0+ISAWyQlsYI5cpdIlO3UOfo4vR4QDS6TCu+yQLU83hsLY7vCd588FX
-         J60dSK/T0ylIkBsRfgWtbLyGIAMnxaMSwmYTdIDpKZqFEnye5DzPte5pKTIOgzJLDUTO
-         Iohg==
-X-Gm-Message-State: APjAAAVInHEGeTJjeb0jBYFf2gQZ21I/25ZvwtgjKHv+XD8I8IknQPwp
-        oYbRlfm6E8VnzZfSTIFx264MNq0ZQNk=
-X-Google-Smtp-Source: APXvYqxWup5azo9lsacQWlUMyiahJYlSh1QqmYbdDIgvUxSdI/OpPoncGeVfyzfe9lJty/mTzI06oQ==
-X-Received: by 2002:ac8:7082:: with SMTP id y2mr21736582qto.329.1557330768863;
-        Wed, 08 May 2019 08:52:48 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:99f3:ebb2:d83a:c7d8? ([2001:4898:8010:0:8329:ebb2:d83a:c7d8])
-        by smtp.gmail.com with ESMTPSA id n66sm9298733qkc.36.2019.05.08.08.52.47
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 08:52:48 -0700 (PDT)
-Subject: Re: [PATCH 01/19] revision.h: avoid bit fields in struct rev_info
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20190508111249.15262-1-pclouds@gmail.com>
- <20190508111249.15262-2-pclouds@gmail.com>
- <0509589b-7a92-6c05-e404-65a9b2bf5666@gmail.com>
- <CACsJy8DEjBS-aiWqDe2AU56rJBVZ4Po6c-C7GxR4QDNiGSiZoQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d018ea8c-6f7f-1587-d56b-af3225d6cf0b@gmail.com>
-Date:   Wed, 8 May 2019 11:52:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
-MIME-Version: 1.0
-In-Reply-To: <CACsJy8DEjBS-aiWqDe2AU56rJBVZ4Po6c-C7GxR4QDNiGSiZoQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=eSEy4lb7WYgAWpgS/k1w9gk9+9sz/RGuF/mmdJjwxO0=;
+        b=rl93s9FpW7ZhPYQrXn4aGWOJMkDH/1QLB/xQSn6lKC9drdBvUldefu//iemYXnz00O
+         YOu4ngY1uk1sijOvCkbCCorNwnB7wQ6Tabe/+YQJIfYjdgNi58+kuv/Ws30nq0G6SpHr
+         ZG/mqz1i6ShpKhK1H8Yt5bkcocCk2lzsypVDDhPyyuQOSnY211arXCp4NhZ827oC1bBe
+         j2+ilyPNnuk6mJZApPuWQ8taieM4AmgSVJxjUs+tkwU80vaKORt5ZxvUVro3z0siKmT2
+         e2N1KW9eukxEXPuUJf+NGSFlcwjfAo7NENIWyzToH/8HSLQiB6u4EinXycEG28cIPRJF
+         t2jg==
+X-Gm-Message-State: APjAAAWq1KTBorZywacdVGvDi5W3SLdSGeKffbJaYhBchfUKhad95F+N
+        oirbzYaWFa4xmBnHDI5MqRgoqUYSOCg=
+X-Google-Smtp-Source: APXvYqwIGpJlF8GsvYcoLJadapU5bl1/Y3SJvdsWTjDiTNxFbEqSNGHR9bB0SsKVGEARuSOCoT70IA==
+X-Received: by 2002:a50:be01:: with SMTP id a1mr34975230edi.12.1557330828988;
+        Wed, 08 May 2019 08:53:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y5sm2611587ejc.41.2019.05.08.08.53.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 May 2019 08:53:48 -0700 (PDT)
+Date:   Wed, 08 May 2019 08:53:48 -0700 (PDT)
+X-Google-Original-Date: Wed, 08 May 2019 15:53:30 GMT
+Message-Id: <0be7713a255d6f52c51ccb19299d0c9797e9a03f.1557330826.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.184.git.gitgitgadget@gmail.com>
+References: <pull.184.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 01/17] commit-graph: fix the_repository reference
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
+        jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/8/2019 10:41 AM, Duy Nguyen wrote:
-> On Wed, May 8, 2019 at 9:07 PM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 5/8/2019 7:12 AM, Nguyễn Thái Ngọc Duy wrote:
->>> Bitfield addresses cannot be passed around in a pointer. This makes it
->>> hard to use parse-options to set/unset them. Turn this struct to
->>> normal integers. This of course increases the size of this struct
->>> multiple times, but since we only have a handful of rev_info variables
->>> around, memory consumption is not at all a concern.
->>
->> I think you are right that this memory trade-off shouldn't be a problem.
->>
->> What worries me instead is that we are using an "internal" data structure
->> for option parsing. Would it make more sense to create a struct for use
->> in the parse_opts method and a method that translates those options into
->> the bitfield in struct rev_info?
-> 
-> But we are doing that now (option parsing) using the same data
-> structure. Why would changing from a custom parser to parse_options()
-> affect what fields it should or should not touch in rev_info? Genuine
-> question. Maybe you could elaborate more about "internal". I probably
-> missed something. Or maybe this is a good opportunity to separate
-> intermediate option parsing variables from the rest of rev_info?
+From: Derrick Stolee <dstolee@microsoft.com>
 
-You're right. I was unclear.
+The parse_commit_buffer() method takes a repository pointer, so it
+should not refer to the_repository anymore.
 
-rev_info stores a lot of data. Some of the fields are important
-in-memory structures that are crucial to the workings of revision.c
-and are never used by builtin/rev-list.c. Combining this purpose
-with the option parsing seems smelly to me.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thinking more on it, I would prefer a more invasive change that may
-pay off in the long term. These options, along with the "starting list"
-values, could be extracted to a 'struct rev_options' that contains these
-integers and the commit list. Then your option parsing changes could be
-limited to a rev_options struct, which is later inserted into a rev_info
-struct during setup_revisions().
+diff --git a/commit.c b/commit.c
+index a5333c7ac6..e4d1233226 100644
+--- a/commit.c
++++ b/commit.c
+@@ -443,7 +443,7 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
+ 	item->date = parse_commit_date(bufptr, tail);
+ 
+ 	if (check_graph)
+-		load_commit_graph_info(the_repository, item);
++		load_commit_graph_info(r, item);
+ 
+ 	return 0;
+ }
+-- 
+gitgitgadget
 
-Generally, the rev_info struct has too many members and could be split
-into smaller pieces according to purpose. I created the topo_walk_info
-struct as a way to not make the situation worse, but doesn't fix existing
-pain.
-
-My ramblings are mostly complaining about old code that grew organically
-across many many quality additions. It is definitely hard to understand
-the revision-walking code, and perhaps it would be easier to understand
-with a little more structure.
-
-The biggest issue with my suggestion is that it requires changing the
-consumers of the options, as they would no longer live directly on the
-rev_info struct. That would be a big change, even if it could be done
-with string replacement.
-
-Thanks,
--Stolee 
