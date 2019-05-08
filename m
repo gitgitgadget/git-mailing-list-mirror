@@ -2,111 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF2DD1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 08:20:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF2A11F45F
+	for <e@80x24.org>; Wed,  8 May 2019 08:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbfEHIUt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 04:20:49 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56325 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfEHIUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 04:20:49 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 299F36C894;
-        Wed,  8 May 2019 04:20:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kY8R49DuhvdVWnQayxp07YPjByk=; b=S57S9S
-        q7Iwp9V0BFT4/MvVWAUC2XNKkyTvRAJ/BYELejTf8dIUL/rNE1g2eyMPwhHbgA62
-        86GW4bWZK3ytCKmuT07siNk0b2DIfJsSxSoPpCwcDTxeBc1xkQMBuLtRp3ocFfeJ
-        akgOBPXhGHfKvKvxZYond5vFy+xHNXK0N/tXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PAK6pxK/15I/9Npx1SflvjIkzrpwg1/z
-        Dp/2yeUGCDG+vrWVXAjboVu9jVPaTt/QlF0arjM/Uwu1H6oIxcQrPlm2eRe6FWTn
-        tzX+q3fdfncb7thREpGM1NLYLSGyzuIL5fHUDeKrJGfRb5jeL23OgSk1auCgR4py
-        vglBv4Dm3+0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21BFC6C893;
-        Wed,  8 May 2019 04:20:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 51A426C892;
-        Wed,  8 May 2019 04:20:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heinrich Schuchardt <xypron.glpk@gmx.de>
-Cc:     Brian M Carlson <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] send-email: honor transferencoding config option again
-References: <20190409192733.10173-1-xypron.glpk@gmx.de>
-        <20190409215856.GD92879@google.com>
-        <xmqq8swi34h5.fsf@gitster-ct.c.googlers.com>
-        <xmqqef59gy10.fsf_-_@gitster-ct.c.googlers.com>
-Date:   Wed, 08 May 2019 17:20:44 +0900
-In-Reply-To: <xmqqef59gy10.fsf_-_@gitster-ct.c.googlers.com> (Junio
-        C. Hamano's message of "Wed, 08 May 2019 17:18:03 +0900")
-Message-ID: <xmqqa7fxgxwj.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726602AbfEHIj3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 8 May 2019 04:39:29 -0400
+Received: from mx1.volatile.bz ([185.163.46.97]:36566 "EHLO mx1.volatile.bz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726487AbfEHIj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 04:39:29 -0400
+Received: from clamav.local (unknown [198.18.45.2])
+        by mx1.volatile.bz (Postfix) with ESMTPSA id 56F692986;
+        Wed,  8 May 2019 08:39:26 +0000 (UTC)
+Date:   Wed, 8 May 2019 08:39:17 +0000
+From:   opal hart <opal@wowana.me>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Cannot access git-scm.com with Tor
+Message-ID: <20190508083917.50f2cf59@clamav.local>
+In-Reply-To: <20190507073322.GD28060@sigill.intra.peff.net>
+References: <20190507070028.54c291af@clamav.local>
+        <20190507073322.GD28060@sigill.intra.peff.net>
+Organization: Volatile
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-alpine-linux-musl)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2DFC253A-716A-11E9-9D8F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+X-MC-Transport: 185.163.46.97 to 209.132.180.67 on Wed May  8 11:39:29 2019 +0300 (EEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since e67a228cd8a ("send-email: automatically determine
-transfer-encoding"), the value of sendmail.transferencoding in the
-configuration file is ignored, because $target_xfer_encoding is
-already defined read_config sub parses the configuration file.
+On Tue, 7 May 2019 03:33:22 -0400
+Jeff King <peff@peff.net> wrote:
 
-Instead of initializing variable $target_xfer_encoding to 'auto' on
-definition, we have to set it to the default value of 'auto' if is
-undefined after calling read_config() twice to parsing the
-configuration files for "sendemail.transferencoding" and
-"sendemail.$ident.transferencoding".
+> The "security settings" toggle for the site on Cloudflare is already set
+> to "low", and there are no other restrictions. Is it actually blocking?
+> Or is it asking for a CAPTCHA?
 
-This is made trivial by the previous change.
+Sorry, it is indeed asking for a CAPTCHA. Google reCAPTCHA does not do
+a great job at accomodating Tor users; it effectively blocks us with an
+endless barrage of puzzles unless we log in to a Google account.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> I can drop it to "essentially off". I don't think the site is very high
+> risk.  The site is _basically_[1] serving up static content (which isn't
+> to say there couldn't be some attack against the rails infrastructure,
+> but it's not like people are logging in, or that there's any non-public
+> data on the site).
 
- * And this is the second one.  Totally untested, though.
+> Using Cloudflare or some other caching layer is a necessity. We serve
+> about 50-60GB of traffic daily, over 98% of which is cached.
 
- git-send-email.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+That's fine to use it as a CDN/cache; setting the site protection to
+"essentially off" should indeed help. For whatever reason, Cloudflare
+still isn't smart enough to allow greylisted IP addresses during times
+of low/no abuse -- either that or a lot of people use CF with the
+misconception that it's for anti-spam on blogs and forums, so it's
+easier to just block Tor. CF representatives have been involved in
+public discussions elsewhere, claiming they are working to improve the
+experience for Tor Browser users, but these discussions have been going
+on for years now, so I wouldn't hold my breath. That's why I have to
+make webmasters aware of this, because not everyone realises how
+inaccessible the web becomes for people who use Tor. Personally I use
+it although I'm in a relatively free country, but there are others who
+use it to escape censorship. And when services like Cloudflare
+inadvertently act as censors, it defeats the purpose of Tor for this
+group of people.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ca7faff094..7458a0d1ef 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -231,7 +231,7 @@ sub do_edit {
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- my ($compose_encoding);
--my $target_xfer_encoding = 'auto';
-+my ($target_xfer_encoding);
- 
- my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
- 
-@@ -271,7 +271,7 @@ sub do_edit {
-     "from" => [\$sender],
-     "assume8bitencoding" => [\$auto_8bit_encoding],
-     "composeencoding" => [\$compose_encoding],
--    "transferencoding" => [\$target_xfer_encoding],
-+    "transferencoding" => [\$target_xfer_encoding, 'auto'],
- );
- 
- my %config_path_settings = (
+> The load
+> was quite high when the caching was all done at the Rails layer (though
+> I wouldn't rule out that there are ways to configure Rails to make this
+> more optimal; none of the people active in maintaining the site is
+> particularly knowledgeable there).
+
+Yeah, if caching *is* handled directly on git-scm's side, I would
+recommend something more suited for caching such as Varnish or
+memcached (depending on the type of caching you're doing). Personally I
+use memcached on a Tor hidden service I host and it seems to cut down
+on server pressure from bot requests. This is why I even suggest to
+webmasters to reconsider their use of CF; I'm not naïve and I do have
+some experience with handling webserver abuse. But again, I won't argue
+if the site genuinely benefits from using CF as a CDN.
+
+> [1] It actually could be a static site entirely; there was some push in
+>     that direction a while ago, but there's a lot of tedious work that
+>     never got finished. Of course, we'd still need a caching layer.
+
+It is indeed a lot of effort to change a site's inner workings. I'm
+glad that this possibility is at least considered and I hope it's an
+accomplishable goal in the future. It'd be nice to see the web revert
+to its more static, sustainable days.
+
 -- 
-2.21.0-777-g83232e3864
-
+wowaname <https://wowana.me/pgp>
