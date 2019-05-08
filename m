@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FBDB1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 11:31:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84F3C1F45F
+	for <e@80x24.org>; Wed,  8 May 2019 11:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728219AbfEHLbB (ORCPT <rfc822;e@80x24.org>);
+        id S1728222AbfEHLbD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 07:31:03 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33279 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727785AbfEHLbB (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 May 2019 07:31:01 -0400
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:41506 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728208AbfEHLbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 07:31:00 -0400
-Received: by mail-ed1-f41.google.com with SMTP id m4so21745068edd.8
-        for <git@vger.kernel.org>; Wed, 08 May 2019 04:30:58 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id n17so21777717edb.0
+        for <git@vger.kernel.org>; Wed, 08 May 2019 04:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:mime-version
          :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=++0yCHsE/WTprSlxmP/vfxbwY1Nqqky/Kxg4+fK3L+4=;
-        b=OeUEvbLhuC53usXKkegGlizcv+XuAgNVcK9pHKWu3hYh64tF0od1IgUeu6suSCQHdp
-         PxPzI6BwWvDCosJdS4rbLSp7iqO55DIfITNq+V0yzVFcoHMaMSBjL/Unvp8KIgPvALzp
-         3pV21Pa0QtPyH6HsaL/q8Bjr1oCIooiM/h55Ks+Fkz8ktYCvBqbh7hjI//ziKfyKa/1o
-         dsWgE5jY7zQqwaHUnbjDG1Kq4fFnfEoOX6l/LxJgzQbBqvQtSlJuCklGwJ8N7ngJcHBs
-         seyzXfTk0QFeVMVQYuIV+rfEV1o0mKnNMBzsC5c7oOcNdib7q1q8iyJUpwwr1W9SRrnp
-         zYHw==
+        bh=j8V88721/2PumHPJ2ELxOkBogxH+i+VuMHTZqzmnrw0=;
+        b=P24/6R/lwkNOADhur+gegbWbfmz0FWQ6oBO3AidwKmdgA+kfQWLj2oyu0dX5/ko91x
+         /l2U9UZ6TfAnbj3WLzFFelm/UvIj6YeWTbjokgAYfjdRn+TbnZxlW06iiVKCQwgzsbxJ
+         v4ah83q0UUfLwnTz9tpz3qJMq/uwJdEY6k1A3FNfsurV1+HZshm5O8c6aBfihT+PTyHR
+         V3Sba4DDouN07IhyAQtADM4fuR5brplTJ4dCXF3k2UZQ1Z2FcNoT97yXlzkLC1MQQ6U4
+         WycXGlsnmZBsTMQYkjGb8qkYoxk02USWV5C7odRFip6YN3V8OnEbPaEdvNF4rI7rDy4z
+         5ClQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:mime-version:content-transfer-encoding:fcc
          :content-transfer-encoding:to:cc;
-        bh=++0yCHsE/WTprSlxmP/vfxbwY1Nqqky/Kxg4+fK3L+4=;
-        b=VUUxo+tiuOfkPV88XDppUazHkQSq05IveummpVSj4S708FdCZDqigJxXdno0fHN889
-         GaGMwOpKjMrCdzecSiNIoB4P/UgKqa9AXCKiGbXkJk74B7coT1WrAQcT/FR/JifWdXVy
-         je2rHWsAmsgSWUEHo0mwEDrBjF7xNK3V9Le7bQaO6LdLaNMlyIpC6dcWCXn+OrpAvrf8
-         bMb9R9xHI1jnRJEwzuUyYkHaqnNtMhMXCJHUHVmZvISy4ZXKTZubV9GtRqoDjqDe2Ltg
-         QgI/AHtJFsFp+zJasRfKkq+WK8cyfFmY4nwGU8UAZdYtRhaBX9BhQY5oswDjxiuOAiuK
-         d77Q==
-X-Gm-Message-State: APjAAAVJcNXeKx+qC3vy7HlvBF9n4n61IaDTQPR7VFDtyXjuZ9BubJTb
-        8yDk+2OI4lkEwQgKMd9F52V938nXBpc=
-X-Google-Smtp-Source: APXvYqyIgBK0B+xtQeNf3mMIfU0gF6R2JyZKN9NTk85Cf/YwJVaH8NRZ3+wP93BlfPeeIoeS4v32uQ==
-X-Received: by 2002:a50:ce45:: with SMTP id k5mr39118647edj.202.1557315058195;
-        Wed, 08 May 2019 04:30:58 -0700 (PDT)
+        bh=j8V88721/2PumHPJ2ELxOkBogxH+i+VuMHTZqzmnrw0=;
+        b=gpJDGmAGmZ+lCw3eKG3hCxsw1BAOWt0K/bray68s/nmnYl+0bxgU/oXEVw4hkWafjc
+         LCWtIdQxIcaNo9gJdR1hZvXLmTwyyqamgvKKoOoD0/94ARmKMuFJOC3I4k783EtAVeWB
+         IYoFeuim3r4Gingt5QN1c7U1IgRZ7vBH/UuHRTbUEm74tEVsigAdEWoEtdcxp4ARL8Xw
+         VvBkMi5y6/E7jCVO/xGbq3mDC/2ju8Z50zgdAGLbpu/AXJUwjiGbomqPOmQg/RCCn21C
+         CYbfW/rCYDkdCjPhDAPf5ctbhyy77uXOCOTqdjFCBAwjDD+3sLRY5HqR4oTWrBLI9kxg
+         wUPA==
+X-Gm-Message-State: APjAAAWzu9fzEMS7wU1aulIT40I6+IcWX+FSjGKfDaaMQr3Wm6PpYZW1
+        WDb6A5QFNQrEHSnSgRpNEUoD44YOoHQ=
+X-Google-Smtp-Source: APXvYqzwQ+bSEYQhmEjU6Cg3+qfFXX1lnVV1wQu5HlNfXUzwTs8eZlBqprBzD5Y4W9G8lQZHs4PVFA==
+X-Received: by 2002:a17:906:c78f:: with SMTP id cw15mr8870589ejb.179.1557315059780;
+        Wed, 08 May 2019 04:30:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b21sm732309ejq.54.2019.05.08.04.30.57
+        by smtp.gmail.com with ESMTPSA id t2sm5439140eda.41.2019.05.08.04.30.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 04:30:57 -0700 (PDT)
-Date:   Wed, 08 May 2019 04:30:57 -0700 (PDT)
-X-Google-Original-Date: Wed, 08 May 2019 11:30:55 GMT
-Message-Id: <pull.134.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.134.git.gitgitgadget@gmail.com>
+        Wed, 08 May 2019 04:30:59 -0700 (PDT)
+Date:   Wed, 08 May 2019 04:30:59 -0700 (PDT)
+X-Google-Original-Date: Wed, 08 May 2019 11:30:57 GMT
+Message-Id: <9f1da73829c2275f6f65f7a6e385426aa7afa6c5.1557315057.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.134.v2.git.gitgitgadget@gmail.com>
 References: <pull.134.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/2] Enable Data Execution Protection and Address Space Layout Randomization on
- Windows
+        <pull.134.v2.git.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Subject: [PATCH v2 2/2] mingw: enable DEP and ASLR
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,59 +66,49 @@ Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= <ismail@i10z.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two techniques make it harder to come up with exploits, by reducing
-what is commonly called the "attack surface" in security circles: by making
-the addresses less predictable, and by making it harder to inject data that
-is then (mis-)interpreted as code, this hardens Git's executables on
-Windows.
+From: =?UTF-8?q?=C4=B0smail=20D=C3=B6nmez?= <ismail@i10z.com>
 
-These patches have been carried in Git for Windows for over 3 years, and
-should therefore be considered battle-tested.
+Enable DEP (Data Execution Prevention) and ASLR (Address Space Layout
+Randomization) support. This applies to both 32bit and 64bit builds
+and makes it substantially harder to exploit security holes in Git by
+offering a much more unpredictable attack surface.
 
-Changes since v1:
+ASLR interferes with GDB's ability to set breakpoints. A similar issue
+holds true when compiling with -O2 (in which case single-stepping is
+messed up because GDB cannot map the code back to the original source
+code properly). Therefore we simply enable ASLR only when an
+optimization flag is present in the CFLAGS, using it as an indicator
+that the developer does not want to debug in GDB anyway.
 
- * When determining whether we build with optimization, -O0 and -Og are
-   explicitly ignored.
+Signed-off-by: İsmail Dönmez <ismail@i10z.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ config.mak.uname | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-İsmail Dönmez (2):
-  mingw: do not let ld strip relocations
-  mingw: enable DEP and ASLR
-
- config.mak.uname | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-
-base-commit: 83232e38648b51abbcbdb56c94632b6906cc85a6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-134%2Fdscho%2Faslr-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-134/dscho/aslr-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/134
-
-Range-diff vs v1:
-
- 1:  e6acdba586 = 1:  828913e96c mingw: do not let ld strip relocations
- 2:  e142c1396e ! 2:  9f1da73829 mingw: enable DEP and ASLR
-     @@ -21,13 +21,13 @@
-       --- a/config.mak.uname
-       +++ b/config.mak.uname
-      @@
-     - 	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
-     + 	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
-       		# MSys2
-       		prefix = /usr/
-      +		# Enable DEP
-      +		BASIC_LDFLAGS += -Wl,--nxcompat
-      +		# Enable ASLR (unless debugging)
-     -+		ifneq (,$(findstring -O,$(CFLAGS)))
-     ++		ifneq (,$(findstring -O,$(filter-out -O0 -Og,$(CFLAGS))))
-      +			BASIC_LDFLAGS += -Wl,--dynamicbase
-      +		endif
-       		ifeq (MINGW32,$(MSYSTEM))
-
+diff --git a/config.mak.uname b/config.mak.uname
+index f2ac755753..ea0df3fe1b 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -573,6 +573,12 @@ else
+ 	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
+ 		# MSys2
+ 		prefix = /usr/
++		# Enable DEP
++		BASIC_LDFLAGS += -Wl,--nxcompat
++		# Enable ASLR (unless debugging)
++		ifneq (,$(findstring -O,$(filter-out -O0 -Og,$(CFLAGS))))
++			BASIC_LDFLAGS += -Wl,--dynamicbase
++		endif
+ 		ifeq (MINGW32,$(MSYSTEM))
+ 			prefix = /mingw32
+ 			HOST_CPU = i686
 -- 
 gitgitgadget
