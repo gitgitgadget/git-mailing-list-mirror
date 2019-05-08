@@ -2,113 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 514401F45F
-	for <e@80x24.org>; Wed,  8 May 2019 10:20:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB3A01F45F
+	for <e@80x24.org>; Wed,  8 May 2019 10:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726937AbfEHKUr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 06:20:47 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:40222 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfEHKUr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 06:20:47 -0400
-Received: by mail-io1-f68.google.com with SMTP id s20so6993479ioj.7
-        for <git@vger.kernel.org>; Wed, 08 May 2019 03:20:46 -0700 (PDT)
+        id S1726503AbfEHKqG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 06:46:06 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:44537 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbfEHKqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 06:46:06 -0400
+Received: by mail-ed1-f43.google.com with SMTP id b8so21606088edm.11
+        for <git@vger.kernel.org>; Wed, 08 May 2019 03:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4I5VidBrWpYjXTGCZVxOI9K5VC8/Et7xS4QR1M4jz3U=;
-        b=CPANGDvi4rd+RCWhzSEfZnRHluuZxe2Tul7FRjo3uEa/tVWrFPXrj8Gr4t5zQOBMmf
-         3wJYnTPA7sf2FiIvLy139bxkE1isFUcuvzAWW7aET3UTsBmVQQGcmEzYthj3hH6gEclD
-         YJpGGpJqmS5E2Mz3QvdCkBOG+xfSNon1bRv+QTHJlmXoRo2ArdAETPZs75t7jBHq4K0K
-         ivss0d5wPmmF1B2nt0e9J/+P7rQSC6R/9F1UcxfVEGHuUc/opKQXE/FliyGZzqUGsm5K
-         FppZwcxfnHETxGhuiPYNpvx+vq5oQVZYkkqV7+5x3EeVgGJdUZypXqhKyXLkaP94jdLy
-         Li9A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=Uq7pXYc+9KMZU6NRfMZaffoWvxTGFzkO6etEL+iRzz4=;
+        b=PMUN5l8i4DtTZgmGpUq8UnfScilc+rD+ZNEk3y0HG3fyo/dNEDpXJe/GPnOLaGCyCK
+         hkqa9hrcyQCE+H5VPKVuh9kNQ2T2uE0Y+GO/Nwwbz3hLa7uh2MjbS+YPFyBXnoKlP3FD
+         ybcVMMYM+IbxIBHu+Z4yo5yuL72eSNvb4si1emSEjBYnAaI08UVMIopACpqG009Kkems
+         YSCB/E2H4MpXKnrzzBXL/io6EuqMu87toSjMtl9M5MlwFn5MzfllKY9pE9X2coEtADR3
+         3VOXWTsXkDzCT+PhSgVlTYeAGSMs4TPmUuDBlXp3S7crvseSC0fj7ZowUeWC8fn4htHt
+         hf+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4I5VidBrWpYjXTGCZVxOI9K5VC8/Et7xS4QR1M4jz3U=;
-        b=IptqXKrrMI/owek3+eGNodT5rvNUTLQ0eflQNUye47Qk0f0qa5pGB98vRvdmNNR7A2
-         caRMvsPMuzoujkBkAMa1nZZvXsjJbZILQYoAevLR1xJKp3GNMIeHpIBMttYExxQERBId
-         AtoYzqAMVcM5DcdhlF2VOYzCyl/bVrNhroiWskuvTUmIXiKhaewgmr5bjCDyWIDlEhUw
-         9rOv2CBx5P7O7BKoxQfMXeDUPWapKZUbcpxcwdxDkr5jANh6qZ5LOWKsALr5OwW1Ak1D
-         fYcZviPOv3nJG/AMHieFT2FeTlI5ul4EKMaEilExKcAnHaJ2tXWcD55lKfriaeaXvcDI
-         399A==
-X-Gm-Message-State: APjAAAVxRrPIK5oW1ED2B/qu4TwyDVSKtVmd7bqjL2cchxAc+FXQhfdS
-        FYVbbCOxf6jZDSBCQxUECDNrCanrlXjuvmDePHolFQ==
-X-Google-Smtp-Source: APXvYqxXIKNrUQ/7dD2JkjVr6hoIWdCu4QbtBAl4G1UR95MuZ5s0VEjauC2PsHEoRCpFlGQ5u+IErWeN1ypzbVKlbcM=
-X-Received: by 2002:a6b:ef12:: with SMTP id k18mr14592697ioh.236.1557310846376;
- Wed, 08 May 2019 03:20:46 -0700 (PDT)
+         :message-id:subject:to;
+        bh=Uq7pXYc+9KMZU6NRfMZaffoWvxTGFzkO6etEL+iRzz4=;
+        b=pQov3w362rBtcmpnHxxNQQTbEVlQ+RY+KpkCxGGx1E5zFE5ulEverzze2eba2IbRys
+         GmdIZ+plxTA6ipbci/OfPovSvNjqKqAP3ORaI52oDtpV5+5QjJ4xcYXUVLOlV+/t6y4m
+         fey/SC5hUZggTSijtODk8YGXO0U+JtjEwtRBlZQnu9SpTZgnXAWlRRV2FoWpFhhv4oaf
+         knlIDp+STCHKiFwJP7AmlCiU2sVwbktpp3F37d7LvO4nCU6wov2Z3T4KxlBvjN+PAnqc
+         XGHw/Eqt394Ym2jHdL/YgqueDuuRgdVEh0Ivj4D8LA5o6kYms5SfHPkVYd9158IUXeCk
+         QUrw==
+X-Gm-Message-State: APjAAAWMzr74MKKlw50Jq5YlOjgDFUD1PkU3Z7qA6aw4VqZQFxs45zvr
+        o7NHb1jPPOvUdKGGqVb+K+A1ShpCTF7wbD/KUuNYFUl7olUpG/vk
+X-Google-Smtp-Source: APXvYqxvFVOUSRYJub9xEwGO36WkT35rZtgf4xkrBjOr72SiZ03skxPT4785reZNGjufrLD0cMksGinIAw1coyTfmdc=
+X-Received: by 2002:a50:c942:: with SMTP id p2mr37469090edh.39.1557312364373;
+ Wed, 08 May 2019 03:46:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190411131218.19195-1-pclouds@gmail.com> <20190425094600.15673-1-pclouds@gmail.com>
- <20190507022127.GA220818@google.com> <CACsJy8DSVJuwNWfEcA1pv1vdoCn=EKTmhBncRtKLZedQiEj0AA@mail.gmail.com>
- <20190507183104.GB220818@google.com>
-In-Reply-To: <20190507183104.GB220818@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 8 May 2019 17:20:20 +0700
-Message-ID: <CACsJy8Axv6WeDQaU_Gm-oX7gSHRB0QWJz=gYh+GAgfo7gUYWcQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/16] Add new command 'restore'
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+References: <pull.59.git.gitgitgadget@gmail.com> <pull.59.v2.git.gitgitgadget@gmail.com>
+ <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+In-Reply-To: <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+From:   Git Gadget <gitgitgadget@gmail.com>
+Date:   Wed, 8 May 2019 12:45:53 +0200
+Message-ID: <CANg4QoEPWcnPpbUYcgR4PmECzjCOmroAmH2fMoX-vhw+W_dVnQ@mail.gmail.com>
+Subject: Fwd: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX
+ and Windows
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        chris <chris@webstech.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 8, 2019 at 1:31 AM Emily Shaffer <emilyshaffer@google.com> wrote:
-> > > I found myself in a situation where I had accidentally
-> > > staged all my changes to tracked files (I think resulting from a stash
-> > > pop which generated a merge conflict?) and didn't see a good way to
-> > > unstage everything using restore.
-> > >
-> > > I tried out `git restore --staged *` and it tried to restore every build
-> > > artifact in my working tree, all of which should be ignored, made a lot of
-> > > noisy errors, and left me with my changes still staged.
-> >
-> > For the record, "git restore --staged :/" should do the trick and it
-> > is documented as an example (but without --staged).
->
-> Yeah, this worked, and today I also noted `git restore --staged .`
-> works, as does Junio's suggestion on the other mail (`git restore
-> --staged revision.\*`), and quoting the * (`git restore --staged '*'`).
-> So maybe I didn't think outside the box enough before mailing :)
+Forwarding this mail to the Git mailing list, as the original did not
+make it there (for reasons unknown).
 
-No it's good. It actually got me thinking. Actually I take that back.
-It's bad, I'm quite stuck at thinking here :D
+---------- Forwarded message ---------
+From: Chris. Webster via GitGitGadget <gitgitgadget@gmail.com>
+Date: Wed, Oct 31, 2018 at 11:58 PM
+Subject: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX
+and Windows
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Chris. Webster <chris@webstech.net>
 
-> > Either way. I think you raise a good point about "*" (or patterns
-> > matching more than expected in general). I need to sleep on it and see
-> > if the old way of handling pattern matching failure is still a good
-> > way to go.
->
-> I think it's worth considering, especially as `git reset HEAD *` and
-> `git reset HEAD` both work. (`git restore --staged` complains that it
-> hasn't got any paths, but reset seems to figure you just mean
-> everything.) It was a surprising failure to me coming away from years of
-> using reset.
 
-Yeah I agree that doing it the "git reset" way makes sense for
---staged because shell expansion is tied to worktree files, and
---staged is completely disconnected from worktree. Shell expansion
-cannot get this case right, no point punishing the user because of it.
+From: "Chris. Webster" <chris@webstech.net>
 
-My problem is "what about the other two cases, --worktree alone or
---worktree with --staged (iow do we care about consistency)? what
-about git-checkout? does the old way even make sense for git-checkout?
-any better way to do if the reason behind is still valid?". I
-obviously haven't worked it all out yet.
--- 
-Duy
+Use File::Spec->devnull() for output redirection to avoid messages
+when Windows version of Perl is first in path.  The message 'The
+system cannot find the path specified.' is displayed each time git is
+run to get colors.
+
+Signed-off-by: Chris. Webster <chris@webstech.net>
+---
+ contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/diff-highlight/DiffHighlight.pm
+b/contrib/diff-highlight/DiffHighlight.pm
+index 536754583b..7440aa1c46 100644
+--- a/contrib/diff-highlight/DiffHighlight.pm
++++ b/contrib/diff-highlight/DiffHighlight.pm
+@@ -4,6 +4,11 @@ use 5.008;
+ use warnings FATAL => 'all';
+ use strict;
+
++# Use the correct value for both UNIX and Windows (/dev/null vs nul)
++use File::Spec;
++
++my $NULL = File::Spec->devnull();
++
+ # Highlight by reversing foreground and background. You could do
+ # other things like bold or underline if you prefer.
+ my @OLD_HIGHLIGHT = (
+@@ -134,7 +139,7 @@ sub highlight_stdin {
+ # fallback, which means we will work even if git can't be run.
+ sub color_config {
+        my ($key, $default) = @_;
+-       my $s = `git config --get-color $key 2>/dev/null`;
++       my $s = `git config --get-color $key 2>$NULL`;
+        return length($s) ? $s : $default;
+ }
+
+--
+gitgitgadget
