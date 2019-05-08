@@ -2,119 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE0D51F45F
-	for <e@80x24.org>; Wed,  8 May 2019 10:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5E671F45F
+	for <e@80x24.org>; Wed,  8 May 2019 10:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726837AbfEHKJc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 06:09:32 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35451 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbfEHKJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 06:09:32 -0400
-Received: by mail-io1-f68.google.com with SMTP id p2so5428708iol.2
-        for <git@vger.kernel.org>; Wed, 08 May 2019 03:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HYX/DYznliDqnpkBrswV6zhUlEbFlFXCdi4IpP/4wi4=;
-        b=fHPrA0H3RWaWSRxOADl+RvP5vaj427Y6NmexAeladtgy4LNY2o2gcKxSrVl4fyC4n6
-         OAB5PNfyWjMzOTdNWNlnPZqopLOQfhsqVPk/oTy2Rj2K4PdmAYToJWWN6ri32DExCyIO
-         y7vfJ4W5Hd0gcm03R+2w21XJldcSBuYT9ze4EeTDa5bCFk+bjSvfaeruLFFIr5Dr3Qiq
-         LTngaUmaPfGRgZwUvDX6JJiXfqQVEk8lW0Sl9aeEG7VJp9RGa8p4GuuXBu0vohu6A2oJ
-         becy3R7POKPYqfzmU+Gh7MeInki6Y8Xg05Ir+7VHTDlGMM9k0fsLFbVKHX2GZs4RgjW0
-         5bfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HYX/DYznliDqnpkBrswV6zhUlEbFlFXCdi4IpP/4wi4=;
-        b=beEeZ/IaMnKi1OQx1AXqZOAuHIc4pXdGyANQcZ2UU+vNMF7FQyn0u7jGUNID3iI4nz
-         j/JpbYSFyh+rfwN2y6qIk4lB3nbnHKOkPgZPamnOBCp+0+AG2o7JctCNAA+dVyZAoMsC
-         gkxWm3PWkMt5+7A0gLHF0K4RvePZML1TkdxgogiiY/EVGmqxSxAi+fqsNbbCsykbe2oQ
-         RKfxDPG8Vcj6zvBvbpy8j3Qp77ZdvK13M1knXuNF+Btfr22FJRar2bPNz95cSRjg26pL
-         Lz8owb2qjRT2kyMlO4fbSsrcvSGNHutduZiigekaEZBfBZIFgr3kftek1NRHHqtL3uEv
-         LH7g==
-X-Gm-Message-State: APjAAAVBUWUsV+PoWPrT/h8aGk3QelgROwuPiCdLNuw9Ovxy870A/bZ3
-        AWwW3wZrBPYbtoFOK/QCDcqaqy8nfzOQyYEGUlw=
-X-Google-Smtp-Source: APXvYqyxDrqf0blKTDmHE5Ugre5j9ziy5jLjoBG5jaVxQXpB1Zn9HMYGHL+0E2YUKBN+sHl4E790d0KOHZa0iI/SJPE=
-X-Received: by 2002:a05:6602:58:: with SMTP id z24mr111720ioz.118.1557310171895;
- Wed, 08 May 2019 03:09:31 -0700 (PDT)
+        id S1726980AbfEHKN4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 06:13:56 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51592 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726523AbfEHKN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 06:13:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4EB505B1EE;
+        Wed,  8 May 2019 06:13:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l8co/TVmzEgFLHnUVJgHpH1Eev0=; b=KeFfP7
+        pcfZ4LqXt6pQOqEy5o2XNt8jcD6chPjRr2I7e39qcj6w6NyheFfUZTIWc7u3RxUB
+        L4b4whjUwbGJhxAIm6Gf2n7RG5N0USEWW9fSEgL4GFN794dn41dNHiD3fjEoyJzE
+        V+H9a2TGnO2kNt7EDEDpcEUMawFyn9rXUnOPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OjQehIRS+H7Mo6ckpacwQBjldlhhJlPd
+        hgQY+zkSG5Ktm5s1IqKvB29H+JtbqJEFLaIharsBTG6GD5+CrK3jlgJT2CGUixf+
+        Ex8w8Qvx0XENnBV7K9VKE+Z6VH892M8foDRWKr7xY9DHxi+4G4BadzBPTl2a9TMN
+        wT1spuPxTQA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46E7B5B1ED;
+        Wed,  8 May 2019 06:13:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 71F7D5B1EC;
+        Wed,  8 May 2019 06:13:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Heinrich Schuchardt <xypron.glpk@gmx.de>
+Cc:     Brian M Carlson <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Re* [PATCH 1/1] send-email: fix transferencoding config option
+References: <20190409192733.10173-1-xypron.glpk@gmx.de>
+        <20190409215856.GD92879@google.com>
+        <xmqq8swi34h5.fsf@gitster-ct.c.googlers.com>
+        <xmqqef59gy10.fsf_-_@gitster-ct.c.googlers.com>
+Date:   Wed, 08 May 2019 19:13:46 +0900
+In-Reply-To: <xmqqef59gy10.fsf_-_@gitster-ct.c.googlers.com> (Junio
+        C. Hamano's message of "Wed, 08 May 2019 17:18:03 +0900")
+Message-ID: <xmqqzhnxfe3p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca> <20190209023621.75255-1-dan.mcgregor@usask.ca>
- <20190212134537.GA26137@ash> <D8E7C7D0-04E5-4802-80FA-2477F2C0D240@usask.ca> <xmqqk1f1gzgs.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1f1gzgs.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 8 May 2019 17:09:05 +0700
-Message-ID: <CACsJy8BcyD199L4qGv6-TP-8HD+GS+ZDNN5jspkh5uVaWekkoQ@mail.gmail.com>
-Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Dan McGregor <dkm560@usask.ca>,
-        "McGregor, Dan" <dan.mcgregor@usask.ca>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F873E1F4-7179-11E9-85EF-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 8, 2019 at 2:47 PM Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> So, here is a two-patch series that tries to do so, primarily done
+> to gauge if there still is the level of interest needed to make it
+> worth for us to pursue this topic.  Here is the first one; I'll send
+> the second one that takes advantage of this change separately (but
+> it should be trivial to imagine what that step would involve).
 >
-> Dan McGregor <dkm560@usask.ca> writes:
+> -- >8 --
+> Subject: [PATCH 1/2] send-email: update the mechanism to set default configuration values
 >
-> >>I don't think this is enough. At least fbsd defines this
-> >>
-> >>#define    fileno(p)    (!__isthreaded ? __sfileno(p) : (fileno)(p))
-> >>
-> >>so one of the two functions will be used depending on __isthreaded
-> >>flag. Your forcing to use fileno, ignoring __sfileno, is technically
-> >>not correct.
-> >>
-> >>For the record, at least fbsd also defines feof, ferror, clearerr,
-> >>getc and putc in the same way. But at least I don't see how something
-> >>like feof(fp++) could cause bad side effects.
-> >>
-> >>So, how about something like this? A teeny bit longer than your
-> >>version, but I think it's easier to control long term.
-> >
-> > Yes, this looks pretty reasonable to me too.
+> The program has a good mechanism to specify the fallback default
+> values for boolean configuration variables after two invocations of
+> read_config() for "sendmail.$ident.$var" and "sendemail.$var" have
+> not found any configuration.  Imitate it so that we can set the
+> default values for non-boolean variables as well.
 >
-> Sorry for pinging this ancient thread, but while reviewing the
-> stalled topics, this one caught my attention.  The very original
-> <20190201193004.88736-1-dan.mcgregor@usask.ca> said that the problem
-> it wants to solve was that the code that passes (void*) parameter to
-> fileno(), fflush() and rewind() misbehaved, as these are all macros
-> on your system.
->
-> We solved the problem for fileno() being a macro eventually with
-> 18a4f6be ("git-compat-util: work around fileno(fp) that is a macro",
-> 2019-02-12), but what about the other two?
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  git-send-email.perl | 51 ++++++++++++++++++++++++++-------------------
+>  1 file changed, 29 insertions(+), 22 deletions(-)
 
-I don't think the other two were the problem. Even in the mail you
-pointed to, only fileno() is acknowledged the problem in the commit
-message.
+This one was embarrassingly buggy, and needs the following squashed
+in.
 
-At least for BSDs fflush() and rewind() are not macros. BSDs optimize
-a couple functions for the no-pthread case by inlining some short
-expressions directly [1]. This works well for read-only functions such
-as fileno(), feof(), ferror().. and pushing the limits a bit with
-fputc() and fgetc(), but fflush() and rewind() are (I think) just too
-complicated to do it this way.
+Sorry about that.
 
-[1] https://github.com/freebsd/freebsd/blob/master/include/stdio.h#L451-L519
-[2] https://public-inbox.org/git/20190209023621.75255-1-dan.mcgregor@usask.ca/
+ git-send-email.perl | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-> Here comes a weather-balloon to see if we should pursue tying this
-> loose end.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ca7faff094..831947c7ed 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -411,7 +411,7 @@ sub read_config {
+ 	}
+ 
+ 	foreach my $setting (keys %config_settings) {
+-		my $target = $config_settings{$setting};
++		my $target = $config_settings{$setting}->[0];
+ 		next if $setting eq "to" and defined $no_to;
+ 		next if $setting eq "cc" and defined $no_cc;
+ 		next if $setting eq "bcc" and defined $no_bcc;
+@@ -447,10 +447,13 @@ sub read_config {
+ }
+ 
+ # fall back to builtin defaults
+-for my $setting (values %config_settings) {
+-	if (@$setting == 2 && !defined (${$setting->[0]})) {
+-		${$setting->[0]} = $setting->[1];
+-	}
++while (my ($name, $setting) = each %config_settings) {
++	next unless @$setting == 2;
++
++	my ($target, $default) = @$setting;
++	if (ref($target) eq "SCALAR") {
++		$$target = $default unless defined $target;
++	} # elsif ... for other types later.
+ }
+ 
+ # 'default' encryption is none -- this only prevents a warning
 
-Let's see if there are still problems with more exotic platforms. I'm
-reluctant of adding unused compat/ code because to me compat/ is
-scary. I often don't have the right systems to test whenever I need to
-make changes in compat/
--- 
-Duy
