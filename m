@@ -2,87 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C21241F45F
-	for <e@80x24.org>; Wed,  8 May 2019 19:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15AF91F45F
+	for <e@80x24.org>; Wed,  8 May 2019 19:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727960AbfEHTXH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 15:23:07 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:45655 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726687AbfEHTXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 15:23:07 -0400
-Received: by mail-qt1-f196.google.com with SMTP id t1so4375298qtc.12
-        for <git@vger.kernel.org>; Wed, 08 May 2019 12:23:06 -0700 (PDT)
+        id S1726783AbfEHT1s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 15:27:48 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39606 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726658AbfEHT1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 15:27:48 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v10so3437006wrt.6
+        for <git@vger.kernel.org>; Wed, 08 May 2019 12:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=9FaP4lTO9Q74s57SprXkfUso4nuAsmpjur1fpuUqris=;
-        b=cZnx6IdoZpPgsi1Ep4zHwsJviFCM3aLc01yPtLIG8qS/64ZS3E/oMwMpvvqeqx95MB
-         GMNmNjMnyzkPBb692P08Y1e4kbeHZNnPmqj9mCIJCHyjim4WKAGK4b3o9AWFiBYV5tMk
-         ibBwJy4iKDYPf/BHFCNcNlspy1Sg8eiUBiz6z3GtZNMYLD3rEkEP34Ib72byeUQ9yuMT
-         L0+s1IGK2cKIte69G7WqXxkLYOSVdc3Xb9gJdvICX3CHbEEd+5ew1cZDZadT8JieOgrF
-         P0C1iM3R/bvuve/w+uf3B8wBc3KRJry2DnSkgnjhQRU1lAmAwOdbJJKAuj5yb64PzpJj
-         of5A==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=+sPf3ejrJGSiIqonOFqEARk2kzRzJigFYS5XDUNE1nk=;
+        b=OrJEQOQFQwCBEQ+riNX9Yc6zhXXo4GnCZkSCFLAexqoUEILISsGedrsPspmJucnar8
+         DxQvTy3bwavJE1LmfsyPXxutmc/65HXEdmCoBskacC22Bde2vVJMe0If8H+i51HyHyb/
+         w2210EtLzIh0Acy6oDycckiZus7orYkvQVOuEQYa/u1T0HCxndKLrGwdZXUE+163dhao
+         vjRzl6iWSihUh6uDWlJOi6Mbu4GM8EW1eljYIc3wb2spyOGihLne28UM8ofN9BvaCSBG
+         HBmEFcpK1FR/ohPWsCfGVfY8LfUKUuyG3IteV7l12Hw2Dt5tPUo32hVzP+++59EXhyw0
+         sWUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9FaP4lTO9Q74s57SprXkfUso4nuAsmpjur1fpuUqris=;
-        b=uR2F2WcwVrq5BnqYADM278K6Gq88MiRcXYgJXjHe3mZI/uiTUOG30qKUXzt+7ZVhNr
-         A+JB0IK2Kuyb0blW6I9/s77bF8DXI5N31wTLgbvEbMVAXoZ2S/osRVVYe/6+3PUxUMwb
-         fakQ7kuyzK/c+eCzppALFhwZv4BniiAotJbb+u9ehyD+u9ztGVk22xZ7MX+INXNmo16f
-         Hm9t4CTWD++6X8h5q+ISqPLN4+alklNJye16iWHMCq1s9Ig4KfRQVokpgCxxzb2z3Fla
-         xyUGrhX5fRoDnLxTaTSPmpAMR5bQXBwRlb29hXQLLocPfQDhzjRUbOzF8BJXvHTStr2p
-         II0g==
-X-Gm-Message-State: APjAAAVoq5dsl/v2Me36RHrkg5xeQ18dJRav5p3pn+w8svKMvAREPtSY
-        gAwkBdkWxWkkGenuurr3kNbZAgW8J5o=
-X-Google-Smtp-Source: APXvYqzc5+JsV7gReflLxcbqyJ5TIbXX5asIOS3Hx/w3yTMuBhui2Vz/6NOrU0sdrLeGSh+lhD19FQ==
-X-Received: by 2002:aed:3827:: with SMTP id j36mr32723509qte.196.1557343385892;
-        Wed, 08 May 2019 12:23:05 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d14c:17a3:d28e:9336? ([2001:4898:8010:2:ba80:17a3:d28e:9336])
-        by smtp.gmail.com with ESMTPSA id 20sm11437191qtu.51.2019.05.08.12.23.04
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 12:23:05 -0700 (PDT)
-Subject: Re: [PATCH] Doc: add missing backticks to pull.rebase value
-To:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <0e185c7c4b7ecb20631e1d330ce70ecf78427621.1557340984.git.liu.denton@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <aa4e4eef-01f2-5d64-afbf-eec41cefe15f@gmail.com>
-Date:   Wed, 8 May 2019 15:23:04 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=+sPf3ejrJGSiIqonOFqEARk2kzRzJigFYS5XDUNE1nk=;
+        b=GAiTQrqjmF6hktOoYsZNlABN62ex+ibkjDTgjv0BsXRlO7S4Or8xGhZnhSn1Hf+KRJ
+         HW9dUg3OHQT157bmwW+XaxA5Jqq+mILJgkZd9ZTUwA3JIeWd6EguhZrY1cirtf6kfc/O
+         vGKHm6zaCnqp6XWgtrV9CR/ykziu4HOIAOFl1EK7tlf0iYB2N7bL/xr+E/Vg4N72A0X3
+         V27NKEYB6AmDr/mxO/v+4SXH/pk0D0kC6jWOv8XTscThJaohQGoSaokxU2SeFsBESOnc
+         ySublzFGqaxIauRhHceilZxYyOoqLnIOPXGEzBhaFePSiicHoHKSKMQb+eA7kp7GVxJt
+         MfZw==
+X-Gm-Message-State: APjAAAX0yc9xK34Zk4R6NOfiU+usOcgXERUY8RnANRHcQTlYV9FZx0ib
+        qUiCJ6isluJlv5UMlOm1SlE=
+X-Google-Smtp-Source: APXvYqz/elOKEFDdGIBStZQnb/vzxR9SPi/glk2pVVtZ139G3ejAa2Z8W0pEJbCUv7nLKMdq3xI24g==
+X-Received: by 2002:a5d:4707:: with SMTP id y7mr3678418wrq.59.1557343666180;
+        Wed, 08 May 2019 12:27:46 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id m8sm30450450wrg.18.2019.05.08.12.27.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 May 2019 12:27:44 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, git@jeffhostetler.com,
+        jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/17] [RFC] Commit-graph: Write incremental files
+References: <pull.184.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <pull.184.git.gitgitgadget@gmail.com>
+Date:   Wed, 08 May 2019 21:27:43 +0200
+Message-ID: <87r298hhlc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <0e185c7c4b7ecb20631e1d330ce70ecf78427621.1557340984.git.liu.denton@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/8/2019 2:43 PM, Denton Liu wrote:
-> In the documentation for pull.rebase, all of the valid values are
-> surrounded with backticks except for "true". Surround "true" with these
-> missing backticks.
 
-This would make the rendered docs [1] look a bit better, but I think this series
-is incomplete. Looking just a little bit further down in the 'push' config options,
-I see more with this same problem [2].
+On Wed, May 08 2019, Derrick Stolee via GitGitGadget wrote:
 
-While you are here, could you track down the other similar issues?
+> This patch series is marked as RFC quality because it is missing some key
+> features and tests, but hopefully starts a concrete discussion of how the
+> incremental commit-graph writes can work. If this is a good direction, then
+> it would replace ds/commit-graph-format-v2.
 
-Thanks,
--Stolee
+I have some comments on 12/17 that I'll put there.
 
-[1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-pullrebase
+I think it would be best to start by submitting 1-11 for inclusion so we
+can get minor cleanups/refactoring out of the way. I've only skimmed
+those patches, but they seem to be obviously correct, although the diff
+move detection (and with -w) doesn't help much with them.
 
-[2] https://github.com/git/git/blob/master/Documentation/config/push.txt#L59
+This next bit sounds petty, but I honestly don't mean it that way :)
+
+One minor thing I want to note is 04/17. The change itself I 100% agree
+on (in-tree docs are bad places for TODO lists), but the commit message
+*still* says that a "verify" is just as slow as "write", even though I
+noted a ~40% difference in [1].
+
+Do I care about that tiny isolated thing? Nope. But I *do* think it's
+indicative of a general thing that could be improved in these RFC
+iterations that I found a bit frustrating in reading through
+it. I.e. you're getting some of the "C[comments]", but then there's
+re-rolled patches that don't address those things.
+
+What we say in the commit message for 4/17 obviously doesn't matter much
+at all. But there's other outstanding feedback on the last iteration
+that from reading this one still mostly/entirely applies.
+
+So I'll just leave this reply at "I have a lot of comments", but that
+they're still sitting there.
+
+1. https://public-inbox.org/git/87o94mql0a.fsf@evledraar.gmail.com/
