@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2951F45F
+	by dcvr.yhbt.net (Postfix) with ESMTP id B720C1F45F
 	for <e@80x24.org>; Wed,  8 May 2019 15:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727837AbfEHPyD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 11:54:03 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41754 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727724AbfEHPx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 11:53:59 -0400
-Received: by mail-ed1-f65.google.com with SMTP id m4so22540270edd.8
-        for <git@vger.kernel.org>; Wed, 08 May 2019 08:53:57 -0700 (PDT)
+        id S1727846AbfEHPyE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 11:54:04 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42954 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727633AbfEHPyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 11:54:01 -0400
+Received: by mail-ed1-f67.google.com with SMTP id l25so22545226eda.9
+        for <git@vger.kernel.org>; Wed, 08 May 2019 08:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WApkO7gw8Q6Vx5z25239OQBkt/ImHB6i0jsiyxFuzMw=;
-        b=ST7Wlosu7auY/7hZmvBrlR/InwqmAc/K+AOxXKTMh040351dbrrzCCIPRrkQG20gN2
-         JT4Q/yAX9j8nnCwdckRmXOKD4TApXbji7NxaBTMpy5p8YEEbZq86lr4kavcx0sCH/x8L
-         duGtsPH6+Fkogjh49EuDV2xQSDKI5cgSfSDe4lvm1Jm1joh8NG0uOOCnzUf7jJlxg5hg
-         zOPpWJokJ5x25PXRxIf277JshLNHUbbtM78HD96/SFdQpxhZz+jrcuCAnRtnWG54sUtM
-         42w7kpzuhiXJCZ3O19RVfJtSvKjZSjC4exWU3nT1hPLLxdRo8VxlzH530eNmk/ha2m8h
-         OIXQ==
+        bh=ibXD4VXTMXGnlMM9YEUkI0HK/qlR9EFckprf4R02f8E=;
+        b=Rf1xIHUzhbRJRQOlFKxhIhWvOprq1inDZEYrpyeSBvxKzh3NBHGyx6u0lhZDf1DZcO
+         0xnpPP1nyGkaJd3hkbyRUEzDGLgt2FLnhVnyx+H7l6XBPsrNgXU2KTsQMFXgzPvRJ1II
+         Wy0v2FlUfqV13yo6jjHV8tV3wtG1EZMlgDeT7N1CRdNYEpGH8Lc3e3Y45Y5k36E5b2LV
+         K/t7HQ8qjPQFllr/TEkOIBkwQ4gkIdkHVwMCsgdLYEgQHKI4KMNEBxuN2ig5hr1PcHKp
+         yxDzdt8XZCY8Ok7CBn1rbKLBE7TowfavwBqzFrpGvBm+cXSBC9TxpwX6BCR2TsAdIn7d
+         NaAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WApkO7gw8Q6Vx5z25239OQBkt/ImHB6i0jsiyxFuzMw=;
-        b=tXWjnZy8DTr2Q7poWY+DDoyO4kX4SF1YP8hdRCrq99MRgjEeMpfMojhtsE/GLRiysZ
-         U+gA5vf4fMNrIsaJHj5yuNWeIzDZ8lwPWFRETHCVMub/22owwXiYZ7iyxAG92R9aumbS
-         OQxI1Ybmr+j9JTdmyNH2hFFn8fqqMitcyizvBJLd3WuKaEkB8xDg77418G8R6xGyogRR
-         g0cf2rOhTiPbwTIFa0DWSr0mi8WYHFvKWz8iysjR7iGEJsZwScHPl+OwYbMDJF25jr6D
-         hOrsj8E9QrsHlTm59yBp9WdO7zpVBu17T7k0Q34IAeGCmVSvcZU4TP2+vDgMhVJhRE50
-         VqGg==
-X-Gm-Message-State: APjAAAVK2AQ1Sr3r0D1z1a+KLYg1UJ2lxi64o2zhp2dYNNZqpO5yTC/A
-        yR8MV34HBwZPtEAKJxUO+CDozd9VuCU=
-X-Google-Smtp-Source: APXvYqwl1m4Vn0UBSGpHpuaPXYyt7nIaYNWTXkLT05BEbSFIqDJA5tUE+xMxnGT63b7nUmPKMDxw4Q==
-X-Received: by 2002:a05:6402:1256:: with SMTP id l22mr41019931edw.22.1557330837057;
-        Wed, 08 May 2019 08:53:57 -0700 (PDT)
+        bh=ibXD4VXTMXGnlMM9YEUkI0HK/qlR9EFckprf4R02f8E=;
+        b=m4XRQeJ4C6YbkddsOfW51NQh8gPwSIWrwOrHCL900il+M44KvjC+8Rd+aV84lsbmJb
+         8rNDUSmAI9aobI4EvBR7sjXe+ulkAbiAGZtilQ9VpPulFPekGdlKJYkIz69afybEY43f
+         oUxogGRH6J9FknsHD5QmTkQedZtXWgbZl1t1iRUw8ZBxEE002KZ76maIPSP8jP4XdXe3
+         zbnYq5wkOdckyypZxvW3rPbLs/5cVndPq/5wfKH84HEdEmNBdARYrSmH6dI7ngSVlXi1
+         IsO+qmJTzb96b/YzkxI0gCLAM0z7i6FyqctEwlnYCQ26INnPjPTonMtTxlacOPHHLE1z
+         Lhfg==
+X-Gm-Message-State: APjAAAXTq6WR5ODVsCwHHUxmYVkDktxUa7hGqbIPVicOwwucHQ4uRGdL
+        MHBQTc3gAIDObF65TKUyFD10hiaKJ28=
+X-Google-Smtp-Source: APXvYqxRyRt2NUAZpuU4gAHg99g1yto+fuuLyQovDKh3+XFAG3/iEoM346YKQTRwZnDFNYtShGdl3w==
+X-Received: by 2002:a17:906:7201:: with SMTP id m1mr4716706ejk.96.1557330838885;
+        Wed, 08 May 2019 08:53:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g30sm3500737edg.57.2019.05.08.08.53.56
+        by smtp.gmail.com with ESMTPSA id x37sm725766edb.75.2019.05.08.08.53.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 08:53:56 -0700 (PDT)
-Date:   Wed, 08 May 2019 08:53:56 -0700 (PDT)
-X-Google-Original-Date: Wed, 08 May 2019 15:53:40 GMT
-Message-Id: <3eee3667cf32c1049fa1f39264d36a33aa31d0f0.1557330827.git.gitgitgadget@gmail.com>
+        Wed, 08 May 2019 08:53:58 -0700 (PDT)
+Date:   Wed, 08 May 2019 08:53:58 -0700 (PDT)
+X-Google-Original-Date: Wed, 08 May 2019 15:53:42 GMT
+Message-Id: <9d0e966a3d47a0dff2cb5ec24f8225f5f63c6e8f.1557330827.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.git.gitgitgadget@gmail.com>
 References: <pull.184.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 11/17] commit-graph: extract write_commit_graph_file()
+Subject: [PATCH 13/17] commit-graph: lay groundwork for incremental files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,199 +72,147 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The write_commit_graph() method is too complex, so we are
-extracting methods one by one.
-
-Extract write_commit_graph_file() that takes all of the information
-in the context struct and writes the data to a commit-graph file.
-
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 155 +++++++++++++++++++++++++------------------------
- 1 file changed, 80 insertions(+), 75 deletions(-)
+ commit-graph.c | 66 ++++++++++++++++++++++++++++++++++++++++++++------
+ commit-graph.h |  4 +++
+ 2 files changed, 62 insertions(+), 8 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 16cdd7afb2..7723156964 100644
+index 7723156964..f790f44a9c 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1015,21 +1015,91 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
- 	stop_progress(&ctx->progress);
+@@ -371,6 +371,25 @@ static int bsearch_graph(struct commit_graph *g, struct object_id *oid, uint32_t
+ 			    g->chunk_oid_lookup, g->hash_len, pos);
  }
  
--int write_commit_graph(const char *obj_dir,
--		       struct string_list *pack_indexes,
--		       struct string_list *commit_hex,
--		       unsigned int flags)
-+static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- {
--	struct write_commit_graph_context *ctx;
-+	uint32_t i;
- 	struct hashfile *f;
--	uint32_t i, count_distinct = 0;
--	char *graph_name = NULL;
- 	struct lock_file lk = LOCK_INIT;
- 	uint32_t chunk_ids[5];
- 	uint64_t chunk_offsets[5];
--	int num_chunks;
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
-+	int num_chunks = ctx->num_extra_edges ? 4 : 3;
++static void load_oid_from_graph(struct commit_graph *g, int pos, struct object_id *oid)
++{
++	if (!g)
++		BUG("NULL commit-graph");
 +
-+	ctx->graph_name = get_commit_graph_filename(ctx->obj_dir);
-+	if (safe_create_leading_directories(ctx->graph_name)) {
-+		UNLEAK(ctx->graph_name);
-+		error(_("unable to create leading directories of %s"),
-+			ctx->graph_name);
-+		return errno;
++	if (pos < g->num_commits_in_base) {
++		load_oid_from_graph(g->base_graph, pos, oid);
++		return;
 +	}
 +
-+	hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
-+	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
++	if (pos >= g->num_commits + g->num_commits_in_base)
++		BUG("position %d is beyond the scope of this commit-graph (%d local + %d base commits)",
++		    pos, g->num_commits, g->num_commits_in_base);
 +
-+	hashwrite_be32(f, GRAPH_SIGNATURE);
++	pos -= g->num_commits_in_base;
 +
-+	hashwrite_u8(f, GRAPH_VERSION);
-+	hashwrite_u8(f, oid_version());
-+	hashwrite_u8(f, num_chunks);
-+	hashwrite_u8(f, 0); /* unused padding byte */
-+
-+	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
-+	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
-+	chunk_ids[2] = GRAPH_CHUNKID_DATA;
-+	if (ctx->num_extra_edges)
-+		chunk_ids[3] = GRAPH_CHUNKID_EXTRAEDGES;
-+	else
-+		chunk_ids[3] = 0;
-+	chunk_ids[4] = 0;
-+
-+	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
-+	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
-+	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
-+	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
-+	chunk_offsets[4] = chunk_offsets[3] + 4 * ctx->num_extra_edges;
-+
-+	for (i = 0; i <= num_chunks; i++) {
-+		uint32_t chunk_write[3];
-+
-+		chunk_write[0] = htonl(chunk_ids[i]);
-+		chunk_write[1] = htonl(chunk_offsets[i] >> 32);
-+		chunk_write[2] = htonl(chunk_offsets[i] & 0xffffffff);
-+		hashwrite(f, chunk_write, 12);
-+	}
-+
-+	if (ctx->report_progress) {
-+		strbuf_addf(&progress_title,
-+			    Q_("Writing out commit graph in %d pass",
-+			       "Writing out commit graph in %d passes",
-+			       num_chunks),
-+			    num_chunks);
-+		ctx->progress = start_delayed_progress(
-+			progress_title.buf,
-+			num_chunks * ctx->commits.nr);
-+	}
-+	write_graph_chunk_fanout(f, ctx);
-+	write_graph_chunk_oids(f, hashsz, ctx);
-+	write_graph_chunk_data(f, hashsz, ctx);
-+	if (ctx->num_extra_edges)
-+		write_graph_chunk_extra_edges(f, ctx);
-+	stop_progress(&ctx->progress);
-+	strbuf_release(&progress_title);
-+
-+	close_commit_graph(ctx->r);
-+	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
-+	commit_lock_file(&lk);
-+
-+	return 0;
++	hashcpy(oid->hash, g->chunk_oid_lookup + g->hash_len * pos);
 +}
 +
-+int write_commit_graph(const char *obj_dir,
-+		       struct string_list *pack_indexes,
-+		       struct string_list *commit_hex,
-+		       unsigned int flags)
-+{
-+	struct write_commit_graph_context *ctx;
-+	uint32_t i, count_distinct = 0;
- 	int res = 0;
+ static struct commit_list **insert_parent_or_die(struct repository *r,
+ 						 struct commit_graph *g,
+ 						 uint64_t pos,
+@@ -379,10 +398,10 @@ static struct commit_list **insert_parent_or_die(struct repository *r,
+ 	struct commit *c;
+ 	struct object_id oid;
  
- 	if (!commit_graph_compatible(the_repository))
-@@ -1096,75 +1166,10 @@ int write_commit_graph(const char *obj_dir,
+-	if (pos >= g->num_commits)
++	if (pos >= g->num_commits + g->num_commits_in_base)
+ 		die("invalid parent position %"PRIu64, pos);
  
- 	compute_generation_numbers(ctx);
+-	hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * pos);
++	load_oid_from_graph(g, pos, &oid);
+ 	c = lookup_commit(r, &oid);
+ 	if (!c)
+ 		die(_("could not find commit %s"), oid_to_hex(&oid));
+@@ -393,7 +412,7 @@ static struct commit_list **insert_parent_or_die(struct repository *r,
+ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g, uint32_t pos)
+ {
+ 	const unsigned char *commit_data = g->chunk_commit_data + GRAPH_DATA_WIDTH * pos;
+-	item->graph_pos = pos;
++	item->graph_pos = pos + g->num_commits_in_base;
+ 	item->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+ }
  
--	num_chunks = ctx->num_extra_edges ? 4 : 3;
--
--	ctx->graph_name = get_commit_graph_filename(ctx->obj_dir);
--	if (safe_create_leading_directories(ctx->graph_name)) {
--		UNLEAK(ctx->graph_name);
--		error(_("unable to create leading directories of %s"),
--			ctx->graph_name);
--		res = errno;
--		goto cleanup;
--	}
--
--	hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
--	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
--
--	hashwrite_be32(f, GRAPH_SIGNATURE);
--
--	hashwrite_u8(f, GRAPH_VERSION);
--	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
--	hashwrite_u8(f, 0); /* unused padding byte */
--
--	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
--	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
--	chunk_ids[2] = GRAPH_CHUNKID_DATA;
--	if (ctx->num_extra_edges)
--		chunk_ids[3] = GRAPH_CHUNKID_EXTRAEDGES;
--	else
--		chunk_ids[3] = 0;
--	chunk_ids[4] = 0;
--
--	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
--	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
--	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
--	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
--	chunk_offsets[4] = chunk_offsets[3] + 4 * ctx->num_extra_edges;
--
--	for (i = 0; i <= num_chunks; i++) {
--		uint32_t chunk_write[3];
--
--		chunk_write[0] = htonl(chunk_ids[i]);
--		chunk_write[1] = htonl(chunk_offsets[i] >> 32);
--		chunk_write[2] = htonl(chunk_offsets[i] & 0xffffffff);
--		hashwrite(f, chunk_write, 12);
--	}
--
--	if (ctx->report_progress) {
--		strbuf_addf(&progress_title,
--			    Q_("Writing out commit graph in %d pass",
--			       "Writing out commit graph in %d passes",
--			       num_chunks),
--			    num_chunks);
--		ctx->progress = start_delayed_progress(
--			progress_title.buf,
--			num_chunks * ctx->commits.nr);
--	}
--	write_graph_chunk_fanout(f, ctx);
--	write_graph_chunk_oids(f, hashsz, ctx);
--	write_graph_chunk_data(f, hashsz, ctx);
--	if (ctx->num_extra_edges)
--		write_graph_chunk_extra_edges(f, ctx);
--	stop_progress(&ctx->progress);
--	strbuf_release(&progress_title);
--
--	close_commit_graph(ctx->r);
--	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
--	commit_lock_file(&lk);
-+	res = write_commit_graph_file(ctx);
+@@ -405,10 +424,25 @@ static int fill_commit_in_graph(struct repository *r,
+ 	uint32_t *parent_data_ptr;
+ 	uint64_t date_low, date_high;
+ 	struct commit_list **pptr;
+-	const unsigned char *commit_data = g->chunk_commit_data + (g->hash_len + 16) * pos;
++	const unsigned char *commit_data;
  
- cleanup:
--	free(graph_name);
-+	free(ctx->graph_name);
- 	free(ctx->commits.list);
- 	free(ctx->oids.list);
- 	free(ctx);
+-	item->object.parsed = 1;
++	if (pos < g->num_commits_in_base)
++		return fill_commit_in_graph(r, item, g->base_graph, pos);
++
++	if (pos >= g->num_commits + g->num_commits_in_base)
++		BUG("position %d is beyond the scope of this commit-graph (%d local + %d base commits)",
++		    pos, g->num_commits, g->num_commits_in_base);
++
++	/*
++	 * Store the "full" position, but then use the
++	 * "local" position for the rest of the calculation.
++	 */
+ 	item->graph_pos = pos;
++	pos -= g->num_commits_in_base;
++
++	commit_data = g->chunk_commit_data + (g->hash_len + 16) * pos;
++
++	item->object.parsed = 1;
+ 
+ 	item->maybe_tree = NULL;
+ 
+@@ -452,7 +486,18 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+ 		*pos = item->graph_pos;
+ 		return 1;
+ 	} else {
+-		return bsearch_graph(g, &(item->object.oid), pos);
++		struct commit_graph *cur_g = g;
++		uint32_t pos_in_g;
++
++		while (cur_g && !bsearch_graph(cur_g, &(item->object.oid), &pos_in_g))
++			cur_g = cur_g->base_graph;
++
++		if (cur_g) {
++			*pos = pos_in_g + cur_g->num_commits_in_base;
++			return 1;
++		}
++
++		return 0;
+ 	}
+ }
+ 
+@@ -492,8 +537,13 @@ static struct tree *load_tree_for_commit(struct repository *r,
+ 					 struct commit *c)
+ {
+ 	struct object_id oid;
+-	const unsigned char *commit_data = g->chunk_commit_data +
+-					   GRAPH_DATA_WIDTH * (c->graph_pos);
++	const unsigned char *commit_data;
++
++	if (c->graph_pos < g->num_commits_in_base)
++		return load_tree_for_commit(r, g->base_graph, c);
++
++	commit_data = g->chunk_commit_data +
++			GRAPH_DATA_WIDTH * (c->graph_pos - g->num_commits_in_base);
+ 
+ 	hashcpy(oid.hash, commit_data);
+ 	c->maybe_tree = lookup_tree(r, &oid);
+diff --git a/commit-graph.h b/commit-graph.h
+index 70f4caf0c7..170920720d 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -48,10 +48,14 @@ struct commit_graph {
+ 	uint32_t num_commits;
+ 	struct object_id oid;
+ 
++	uint32_t num_commits_in_base;
++	struct commit_graph *base_graph;
++
+ 	const uint32_t *chunk_oid_fanout;
+ 	const unsigned char *chunk_oid_lookup;
+ 	const unsigned char *chunk_commit_data;
+ 	const unsigned char *chunk_extra_edges;
++	const unsigned char *chunk_base_graph;
+ };
+ 
+ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st);
 -- 
 gitgitgadget
 
