@@ -2,142 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD3F91F45F
-	for <e@80x24.org>; Wed,  8 May 2019 11:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FBDB1F45F
+	for <e@80x24.org>; Wed,  8 May 2019 11:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727395AbfEHL12 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 07:27:28 -0400
-Received: from mout.gmx.net ([212.227.15.15]:38167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725778AbfEHL12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 07:27:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557314830;
-        bh=NMg4xJ/F1EKFLIKXriEacXsS2AAO8+ksl7cDyWWL6JQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TZK2fGDKPopuHlyHo44GH//ZOVmruisqdYdttYSnXPWs3dwbPG1GBwp50/cf0LLo1
-         YyEHcp3Yh9dSzCVLnjFSJoeaEmwcT9uNa68lwzlARyd6/SMdGufZhtbjuzMNWpF1l2
-         ni4Z5CXL/mLpTY/KfPApc+L6/uesjKuALMFd4IF0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiJV6-1gl85z332c-00fPCH; Wed, 08
- May 2019 13:27:09 +0200
-Date:   Wed, 8 May 2019 13:27:08 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez?= <ismail@i10z.com>,
-        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
-In-Reply-To: <20190501220219.GA42435@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1905081319570.44@tvgsbejvaqbjf.bet>
-References: <pull.134.git.gitgitgadget@gmail.com> <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com> <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org> <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
- <20190501204631.GB13372@sigill.intra.peff.net> <20190501220219.GA42435@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728219AbfEHLbB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 07:31:01 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:41506 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728208AbfEHLbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 07:31:00 -0400
+Received: by mail-ed1-f41.google.com with SMTP id m4so21745068edd.8
+        for <git@vger.kernel.org>; Wed, 08 May 2019 04:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=++0yCHsE/WTprSlxmP/vfxbwY1Nqqky/Kxg4+fK3L+4=;
+        b=OeUEvbLhuC53usXKkegGlizcv+XuAgNVcK9pHKWu3hYh64tF0od1IgUeu6suSCQHdp
+         PxPzI6BwWvDCosJdS4rbLSp7iqO55DIfITNq+V0yzVFcoHMaMSBjL/Unvp8KIgPvALzp
+         3pV21Pa0QtPyH6HsaL/q8Bjr1oCIooiM/h55Ks+Fkz8ktYCvBqbh7hjI//ziKfyKa/1o
+         dsWgE5jY7zQqwaHUnbjDG1Kq4fFnfEoOX6l/LxJgzQbBqvQtSlJuCklGwJ8N7ngJcHBs
+         seyzXfTk0QFeVMVQYuIV+rfEV1o0mKnNMBzsC5c7oOcNdib7q1q8iyJUpwwr1W9SRrnp
+         zYHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=++0yCHsE/WTprSlxmP/vfxbwY1Nqqky/Kxg4+fK3L+4=;
+        b=VUUxo+tiuOfkPV88XDppUazHkQSq05IveummpVSj4S708FdCZDqigJxXdno0fHN889
+         GaGMwOpKjMrCdzecSiNIoB4P/UgKqa9AXCKiGbXkJk74B7coT1WrAQcT/FR/JifWdXVy
+         je2rHWsAmsgSWUEHo0mwEDrBjF7xNK3V9Le7bQaO6LdLaNMlyIpC6dcWCXn+OrpAvrf8
+         bMb9R9xHI1jnRJEwzuUyYkHaqnNtMhMXCJHUHVmZvISy4ZXKTZubV9GtRqoDjqDe2Ltg
+         QgI/AHtJFsFp+zJasRfKkq+WK8cyfFmY4nwGU8UAZdYtRhaBX9BhQY5oswDjxiuOAiuK
+         d77Q==
+X-Gm-Message-State: APjAAAVJcNXeKx+qC3vy7HlvBF9n4n61IaDTQPR7VFDtyXjuZ9BubJTb
+        8yDk+2OI4lkEwQgKMd9F52V938nXBpc=
+X-Google-Smtp-Source: APXvYqyIgBK0B+xtQeNf3mMIfU0gF6R2JyZKN9NTk85Cf/YwJVaH8NRZ3+wP93BlfPeeIoeS4v32uQ==
+X-Received: by 2002:a50:ce45:: with SMTP id k5mr39118647edj.202.1557315058195;
+        Wed, 08 May 2019 04:30:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b21sm732309ejq.54.2019.05.08.04.30.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 May 2019 04:30:57 -0700 (PDT)
+Date:   Wed, 08 May 2019 04:30:57 -0700 (PDT)
+X-Google-Original-Date: Wed, 08 May 2019 11:30:55 GMT
+Message-Id: <pull.134.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.134.git.gitgitgadget@gmail.com>
+References: <pull.134.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/2] Enable Data Execution Protection and Address Space Layout Randomization on
+ Windows
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:59qD0tZ/7sKpHDFrzVCa3ByyZr9xr+Z+mjItWh+PRivHn96uV9J
- YBNaJktbpygHW7AmPI4PQpF7dVXAIwej/9JFcHo7JJv3kcmVOD1fKGXt8dwk/9MZlry5BRl
- 4QV7t9RJqp+pUcaGOL2GVO2p0MvWS2554EOruFFDYO3W6Z05ysSmuEAIqwBzgn/jo6lUHM6
- gAtjZR6Lz1q9lfRsxGejg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WYox6IAcwJ8=:l5/4YqANdWYDIQq/4ART/+
- /qFszudX/QrCDabhV3Y3GvAM6SpbvjkfAF4MXT2XXx2C1dCVX21jjzJgWZfyz4BHdZSN1K9O/
- Ver38iYSK5XUghS3zKie5habYNr4Kk+nsShSwejQZ9SvsQW0QURStaP7RGok/1+sNQ5wjbQPh
- DfT5PqCYDJ29QDZye4xpQoOEaw2xNEJ4qdz5yZ9AahxsahD1S3S13WrjCbt9kgf295Cfy9w/P
- eWLvVB+3qIVYdD29a7AISkZQkOrO+SZcM22F9SxreTWSG4H6Tb19enVV06csUcXXCLC5UO9ON
- c4sQ39GqOkAuugj366v7HIOZq6irshfsgkfoJEAQPc2lbM+GjE6SsVlmzi7aqZIHfDDFpBwOT
- g/s/7BEpBd72ed3Q1ranalZ/PmvdFs+dGdpY4/yx4liOeDCM6sjndrctJEUPriwOFjSXBhQjE
- OR7CKtLx6JP3Mg4xQEk97E7hlC05dAFmubREAHzI4gq2C9CT1EYw/ocpgyiYRiLA4MFmr+1/t
- 58lTvkus8H54Qs9uM+6ohSInDl6ajWg/Iwlzp6d8IzpFdvbmNiHmQIuCyAb7Zsrh72kvso92J
- e/3vO0Hhyf9XnmecqAUSh8s189vAlZAuX3Jb8QteAPscdTtPHqgHc08aooIBY5Q/N7cw2FXeB
- wEAZ8iZ1XMaUWeQRc6hO0a5ddHdnnWzjvOJhen+kPozOSOTUeCa7WxjGtZ0AovuZSyFhEwXRw
- VgJD6neM+nzM8voVV6TY4T/arMPbFC7EicuNSoo1wUEyBS+QptGtNBORLrF0/q7L9axGpvr1S
- RakRnzGzjqA3CmM3KFR9JZsh6Py5WTBZgIV6ZHs0OxXhMDSW1A3cKRK4+at1Q6oASGQ6zRwar
- S3E2kLUEkCwxn4F1e+U0255F97xnSBIY3W4ZyZRPVq8loWlZXdUFNOwRdEXZ/+10WYANpgKzY
- yjCQCcPuE7Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan & Peff,
+These two techniques make it harder to come up with exploits, by reducing
+what is commonly called the "attack surface" in security circles: by making
+the addresses less predictable, and by making it harder to inject data that
+is then (mis-)interpreted as code, this hardens Git's executables on
+Windows.
 
-On Wed, 1 May 2019, Jonathan Nieder wrote:
+These patches have been carried in Git for Windows for over 3 years, and
+should therefore be considered battle-tested.
 
-> Jeff King wrote:
->
-> > I wonder if this points to this patch touching the wrong level. These
-> > compiler flags are a thing that _some_ builds want (i.e., production
-> > builds where people care most about security and not about debugging),
-> > but not necessarily all.
-> >
-> > I'd have expected this to be tweakable by a Makefile knob (either a
-> > specific knob, or just the caller setting the right CFLAGS etc), and
-> > then for the builds of Git for Windows to turn those knobs when making=
- a
-> > package to distribute.
-> >
-> > Our internal package builds at GitHub all have this in their config.ma=
-k
-> > (for Linux, of course):
-> >
-> >   CFLAGS +=3D -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3D1
-> >   CFLAGS +=3D -fstack-protector-strong
-> >
-> >   CFLAGS +=3D -fpie
-> >   LDFLAGS +=3D -z relro -z now
-> >   LDFLAGS +=3D -pie
-> >
-> > and I wouldn't be surprised if other binary distributors (like the
-> > Debian package) do something similar.
->
-> Yes, the Debian package uses
->
-> 	CFLAGS :=3D -Wall \
-> 		$(shell dpkg-buildflags --get CFLAGS) \
-> 		$(shell dpkg-buildflags --get CPPFLAGS)
->
-> and then passes CFLAGS=3D'$(CFLAGS)' to "make".
->
-> That means we're using
->
-> 	-g -O2 -fstack-protector-strong -Wformat -Werror=3Dformat-security
-> 	-Wdate-time -D_FORTIFY_SOURCE=3D2
->
-> Dscho's suggestion for the Windows build sounds fine to me (if
-> checking for -Og, too).  Maybe it would make sense to factor out a
-> makefile variable for this, that could be used for builds on other
-> platforms, too.  That way, the autodetection can be in one place, and
-> there is a standard way to override it when the user wants something
-> else.
+Changes since v1:
 
-Indeed, if I was to add a generic "are we building for production?"
-function, this would be incorrect.
+ * When determining whether we build with optimization, -O0 and -Og are
+   explicitly ignored.
 
-But this is not the case here, we are doing something very specific,
-Windows-only here, and for the sole reason to keep debuggability (for
-which the presence of the `-g` option indeed would not be a good
-indicator: in Git for Windows, we build `.pdb` files so that stackdumps
-can be more meaningful, but we do not want to have full debug information
-in those executables).
+İsmail Dönmez (2):
+  mingw: do not let ld strip relocations
+  mingw: enable DEP and ASLR
 
-In the long run, I think we need to become more explicit about this, by
-adding a "FOR_PRODUCTION" flag. It's really no good if we use
-implementation details such as CFLAGS to deduce intent.
+ config.mak.uname | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-That's for another patch series, though, as it is pretty clear-cut here:
-If you build with optimization flags using Git for Windows' SDK, you
-cannot use gdb for single-stepping, likewise if you use ASLR, so we can
-totally piggyback the latter onto the former.
 
-Ciao,
-Dscho
+base-commit: 83232e38648b51abbcbdb56c94632b6906cc85a6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-134%2Fdscho%2Faslr-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-134/dscho/aslr-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/134
+
+Range-diff vs v1:
+
+ 1:  e6acdba586 = 1:  828913e96c mingw: do not let ld strip relocations
+ 2:  e142c1396e ! 2:  9f1da73829 mingw: enable DEP and ASLR
+     @@ -21,13 +21,13 @@
+       --- a/config.mak.uname
+       +++ b/config.mak.uname
+      @@
+     - 	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
+     + 	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
+       		# MSys2
+       		prefix = /usr/
+      +		# Enable DEP
+      +		BASIC_LDFLAGS += -Wl,--nxcompat
+      +		# Enable ASLR (unless debugging)
+     -+		ifneq (,$(findstring -O,$(CFLAGS)))
+     ++		ifneq (,$(findstring -O,$(filter-out -O0 -Og,$(CFLAGS))))
+      +			BASIC_LDFLAGS += -Wl,--dynamicbase
+      +		endif
+       		ifeq (MINGW32,$(MSYSTEM))
+
+-- 
+gitgitgadget
