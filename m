@@ -2,155 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5101F45F
-	for <e@80x24.org>; Wed,  8 May 2019 11:14:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD3F91F45F
+	for <e@80x24.org>; Wed,  8 May 2019 11:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727462AbfEHLOr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 07:14:47 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44721 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727367AbfEHLOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 07:14:46 -0400
-Received: by mail-pl1-f195.google.com with SMTP id d3so5754919plj.11
-        for <git@vger.kernel.org>; Wed, 08 May 2019 04:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pYFvXswZZAhhwYgFDZ33FbFbJT3r9AF6X/nOYYgaju0=;
-        b=FbMyAjJx3gvlH8fKE0nCiZycIZ/oDADeF5+ZIgNhHZ1bdgczRUO3dHkvw1tEKjyZZu
-         iYlFY0Rt0mDaG0LjVuMM7JdtXuKDTjC5pvLajIU5byJP4yiXA1Om5W+xywjaQaPNRH2k
-         KB1aJsJ5Tt+JPVAy7PM6CqJTmzAe+EwwAtCvvTQ6sJ5ANXaO+zZcFSWSNUnSgyvt20bx
-         iMb+d2f9X8RdYr5iNndkoyNx3jwKlZJW+bSYe691NduL6XoVnIFilPjwCzKlukGPt1Sn
-         u5G69PSNEuQXGPGeCIdty7hIVjuOyRjPPPZOTJmhiLxYd+arxL3L56my52lXTaVb7a/5
-         qSdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pYFvXswZZAhhwYgFDZ33FbFbJT3r9AF6X/nOYYgaju0=;
-        b=dPSGPv1vk35vwDJv+rDAn/Pl03CstlGAwW1MleaAQy207Td17o+B/yVdmChJPqGwuZ
-         3DwK8xnQtsXLmajG/5qkb9z7jz0KlJklJiW4sZ+DwKEcmYwTp91I+Dg2DG0q8hWXXisT
-         qukhpbMzPbJEXLHZigMi4RzNLgXMIlR2iKzuJhe61j3VEWh319Tr6sierqlEqXLiY3it
-         VeifJlVMuaO4jneoM+bum3feVW1ze+qqGluC7eh+SCWPE4mQXCInnr8xpb46nlF4csb2
-         4SPz7SMjSrXx/mE6SMNT6Acx7TgoXITgCG8QvpIsPV5lqmGDYzOqOqIZvwKiNziDWhNZ
-         RO4A==
-X-Gm-Message-State: APjAAAUkml0qeOYcjyGzHpQiGHNFwRUqTiJwfLD0CVQN3lYknJhfnWlu
-        dIw5QOEiQtooKtlOt0iV4+ut6lqO
-X-Google-Smtp-Source: APXvYqx++45S3rNGowKpXAdSLMtEDD3EYmQr/dJF/+v/LnQ7XcBZMHRk7Du8WDlNg4lzDJB+j7yOdA==
-X-Received: by 2002:a17:902:2962:: with SMTP id g89mr46456472plb.190.1557314085913;
-        Wed, 08 May 2019 04:14:45 -0700 (PDT)
-Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id x4sm20432667pfm.19.2019.05.08.04.14.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 04:14:45 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 08 May 2019 18:14:41 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 19/19] rev-parseopt: convert --min-age and --max-age
-Date:   Wed,  8 May 2019 18:12:49 +0700
-Message-Id: <20190508111249.15262-20-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.1141.gd54ac2cb17
-In-Reply-To: <20190508111249.15262-1-pclouds@gmail.com>
-References: <20190508111249.15262-1-pclouds@gmail.com>
+        id S1727395AbfEHL12 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 07:27:28 -0400
+Received: from mout.gmx.net ([212.227.15.15]:38167 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725778AbfEHL12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 07:27:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557314830;
+        bh=NMg4xJ/F1EKFLIKXriEacXsS2AAO8+ksl7cDyWWL6JQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=TZK2fGDKPopuHlyHo44GH//ZOVmruisqdYdttYSnXPWs3dwbPG1GBwp50/cf0LLo1
+         YyEHcp3Yh9dSzCVLnjFSJoeaEmwcT9uNa68lwzlARyd6/SMdGufZhtbjuzMNWpF1l2
+         ni4Z5CXL/mLpTY/KfPApc+L6/uesjKuALMFd4IF0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiJV6-1gl85z332c-00fPCH; Wed, 08
+ May 2019 13:27:09 +0200
+Date:   Wed, 8 May 2019 13:27:08 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez?= <ismail@i10z.com>,
+        =?UTF-8?Q?=C4=B0smail_D=C3=B6nmez_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] mingw: enable DEP and ASLR
+In-Reply-To: <20190501220219.GA42435@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1905081319570.44@tvgsbejvaqbjf.bet>
+References: <pull.134.git.gitgitgadget@gmail.com> <e142c1396ec3541486317819e885cf42be24af34.1556575015.git.gitgitgadget@gmail.com> <8e59dbf6-a339-74f3-4e60-e56b3817aea5@kdbg.org> <nycvar.QRO.7.76.6.1904301838400.45@tvgsbejvaqbjf.bet>
+ <20190501204631.GB13372@sigill.intra.peff.net> <20190501220219.GA42435@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:59qD0tZ/7sKpHDFrzVCa3ByyZr9xr+Z+mjItWh+PRivHn96uV9J
+ YBNaJktbpygHW7AmPI4PQpF7dVXAIwej/9JFcHo7JJv3kcmVOD1fKGXt8dwk/9MZlry5BRl
+ 4QV7t9RJqp+pUcaGOL2GVO2p0MvWS2554EOruFFDYO3W6Z05ysSmuEAIqwBzgn/jo6lUHM6
+ gAtjZR6Lz1q9lfRsxGejg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WYox6IAcwJ8=:l5/4YqANdWYDIQq/4ART/+
+ /qFszudX/QrCDabhV3Y3GvAM6SpbvjkfAF4MXT2XXx2C1dCVX21jjzJgWZfyz4BHdZSN1K9O/
+ Ver38iYSK5XUghS3zKie5habYNr4Kk+nsShSwejQZ9SvsQW0QURStaP7RGok/1+sNQ5wjbQPh
+ DfT5PqCYDJ29QDZye4xpQoOEaw2xNEJ4qdz5yZ9AahxsahD1S3S13WrjCbt9kgf295Cfy9w/P
+ eWLvVB+3qIVYdD29a7AISkZQkOrO+SZcM22F9SxreTWSG4H6Tb19enVV06csUcXXCLC5UO9ON
+ c4sQ39GqOkAuugj366v7HIOZq6irshfsgkfoJEAQPc2lbM+GjE6SsVlmzi7aqZIHfDDFpBwOT
+ g/s/7BEpBd72ed3Q1ranalZ/PmvdFs+dGdpY4/yx4liOeDCM6sjndrctJEUPriwOFjSXBhQjE
+ OR7CKtLx6JP3Mg4xQEk97E7hlC05dAFmubREAHzI4gq2C9CT1EYw/ocpgyiYRiLA4MFmr+1/t
+ 58lTvkus8H54Qs9uM+6ohSInDl6ajWg/Iwlzp6d8IzpFdvbmNiHmQIuCyAb7Zsrh72kvso92J
+ e/3vO0Hhyf9XnmecqAUSh8s189vAlZAuX3Jb8QteAPscdTtPHqgHc08aooIBY5Q/N7cw2FXeB
+ wEAZ8iZ1XMaUWeQRc6hO0a5ddHdnnWzjvOJhen+kPozOSOTUeCa7WxjGtZ0AovuZSyFhEwXRw
+ VgJD6neM+nzM8voVV6TY4T/arMPbFC7EicuNSoo1wUEyBS+QptGtNBORLrF0/q7L9axGpvr1S
+ RakRnzGzjqA3CmM3KFR9JZsh6Py5WTBZgIV6ZHs0OxXhMDSW1A3cKRK4+at1Q6oASGQ6zRwar
+ S3E2kLUEkCwxn4F1e+U0255F97xnSBIY3W4ZyZRPVq8loWlZXdUFNOwRdEXZ/+10WYANpgKzY
+ yjCQCcPuE7Q==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- parse-options-cb.c |  8 ++++++++
- parse-options.h    |  4 ++++
- revision.c         | 10 ++++------
- 3 files changed, 16 insertions(+), 6 deletions(-)
+Hi Jonathan & Peff,
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 6e2e8d6273..7cdbbf5f6d 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -39,6 +39,14 @@ int parse_opt_expiry_date_cb(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+int parse_opt_timestamp_cb(const struct option *opt,
-+			   const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+	*(timestamp_t *)opt->value = atoi(arg);
-+	return 0;
-+}
-+
- int parse_opt_color_flag_cb(const struct option *opt, const char *arg,
- 			    int unset)
- {
-diff --git a/parse-options.h b/parse-options.h
-index cc9230adac..7637864c41 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -168,6 +168,9 @@ struct option {
- #define OPT_EXPIRY_DATE(s, l, v, h) \
- 	{ OPTION_CALLBACK, (s), (l), (v), N_("expiry-date"),(h), 0,	\
- 	  parse_opt_expiry_date_cb }
-+#define OPT_TIMESTAMP(s, l, v, h) \
-+	{ OPTION_CALLBACK, (s), (l), (v), N_("timestamp"),(h), \
-+	  PARSE_OPT_NONEG, parse_opt_timestamp_cb }
- #define OPT_CALLBACK(s, l, v, a, h, f) OPT_CALLBACK_F(s, l, v, a, h, 0, f)
- #define OPT_NUMBER_CALLBACK(v, h, f) \
- 	{ OPTION_NUMBER, 0, NULL, (v), NULL, (h), \
-@@ -275,6 +278,7 @@ struct option *parse_options_concat(struct option *a, struct option *b);
- /*----- some often used options -----*/
- int parse_opt_abbrev_cb(const struct option *, const char *, int);
- int parse_opt_expiry_date_cb(const struct option *, const char *, int);
-+int parse_opt_timestamp_cb(const struct option *, const char *, int);
- int parse_opt_color_flag_cb(const struct option *, const char *, int);
- int parse_opt_verbosity_cb(const struct option *, const char *, int);
- int parse_opt_object_name(const struct option *, const char *, int);
-diff --git a/revision.c b/revision.c
-index 42d466cd08..0c28b67978 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1999,6 +1999,10 @@ static void make_rev_options(struct rev_info *revs)
- 		OPT_INTEGER_F(0, "skip", &revs->skip_count,
- 			      N_("skip a number of commits before starting to show"),
- 			      PARSE_OPT_NONEG),
-+		OPT_TIMESTAMP(0, "min-age", &revs->min_age,
-+			      N_("limit the commits output to a specified time range")),
-+		OPT_TIMESTAMP(0, "max-age", &revs->max_age,
-+			      N_("limit the commits output to a specified time range")),
- 		OPT_END(),
- 	};
- 	revs->options = parse_options_concat(options, revs->diffopt.parseopts);
-@@ -2045,18 +2049,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		    revs->max_count < 0)
- 			die("'%s': not a non-negative integer", arg + 1);
- 		revs->no_walk = 0;
--	} else if ((argcount = parse_long_opt("max-age", argv, &optarg))) {
--		revs->max_age = atoi(optarg);
--		return argcount;
- 	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
- 	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
- 		revs->max_age = approxidate(optarg);
- 		return argcount;
--	} else if ((argcount = parse_long_opt("min-age", argv, &optarg))) {
--		revs->min_age = atoi(optarg);
--		return argcount;
- 	} else if ((argcount = parse_long_opt("before", argv, &optarg))) {
- 		revs->min_age = approxidate(optarg);
- 		return argcount;
--- 
-2.21.0.1141.gd54ac2cb17
+On Wed, 1 May 2019, Jonathan Nieder wrote:
 
+> Jeff King wrote:
+>
+> > I wonder if this points to this patch touching the wrong level. These
+> > compiler flags are a thing that _some_ builds want (i.e., production
+> > builds where people care most about security and not about debugging),
+> > but not necessarily all.
+> >
+> > I'd have expected this to be tweakable by a Makefile knob (either a
+> > specific knob, or just the caller setting the right CFLAGS etc), and
+> > then for the builds of Git for Windows to turn those knobs when making=
+ a
+> > package to distribute.
+> >
+> > Our internal package builds at GitHub all have this in their config.ma=
+k
+> > (for Linux, of course):
+> >
+> >   CFLAGS +=3D -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3D1
+> >   CFLAGS +=3D -fstack-protector-strong
+> >
+> >   CFLAGS +=3D -fpie
+> >   LDFLAGS +=3D -z relro -z now
+> >   LDFLAGS +=3D -pie
+> >
+> > and I wouldn't be surprised if other binary distributors (like the
+> > Debian package) do something similar.
+>
+> Yes, the Debian package uses
+>
+> 	CFLAGS :=3D -Wall \
+> 		$(shell dpkg-buildflags --get CFLAGS) \
+> 		$(shell dpkg-buildflags --get CPPFLAGS)
+>
+> and then passes CFLAGS=3D'$(CFLAGS)' to "make".
+>
+> That means we're using
+>
+> 	-g -O2 -fstack-protector-strong -Wformat -Werror=3Dformat-security
+> 	-Wdate-time -D_FORTIFY_SOURCE=3D2
+>
+> Dscho's suggestion for the Windows build sounds fine to me (if
+> checking for -Og, too).  Maybe it would make sense to factor out a
+> makefile variable for this, that could be used for builds on other
+> platforms, too.  That way, the autodetection can be in one place, and
+> there is a standard way to override it when the user wants something
+> else.
+
+Indeed, if I was to add a generic "are we building for production?"
+function, this would be incorrect.
+
+But this is not the case here, we are doing something very specific,
+Windows-only here, and for the sole reason to keep debuggability (for
+which the presence of the `-g` option indeed would not be a good
+indicator: in Git for Windows, we build `.pdb` files so that stackdumps
+can be more meaningful, but we do not want to have full debug information
+in those executables).
+
+In the long run, I think we need to become more explicit about this, by
+adding a "FOR_PRODUCTION" flag. It's really no good if we use
+implementation details such as CFLAGS to deduce intent.
+
+That's for another patch series, though, as it is pretty clear-cut here:
+If you build with optimization flags using Git for Windows' SDK, you
+cannot use gdb for single-stepping, likewise if you use ASLR, so we can
+totally piggyback the latter onto the former.
+
+Ciao,
+Dscho
