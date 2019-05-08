@@ -2,255 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 843241F45F
-	for <e@80x24.org>; Wed,  8 May 2019 15:02:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD66A1F45F
+	for <e@80x24.org>; Wed,  8 May 2019 15:52:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727341AbfEHPCS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 11:02:18 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45955 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726649AbfEHPCS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 11:02:18 -0400
-Received: by mail-io1-f68.google.com with SMTP id b3so11649232iob.12
-        for <git@vger.kernel.org>; Wed, 08 May 2019 08:02:17 -0700 (PDT)
+        id S1726992AbfEHPwu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 11:52:50 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:43741 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbfEHPwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 11:52:50 -0400
+Received: by mail-qt1-f194.google.com with SMTP id r3so13882390qtp.10
+        for <git@vger.kernel.org>; Wed, 08 May 2019 08:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GsrmezleQJpT1av+fMClQqA8GAh9SF4urUTtqMqyZAU=;
-        b=LMwT38CeWnRTvN6IpNfqX1WA5f14Nt+N567obvslyCaX1/ws0R9D/SPP+GUDFJXky0
-         aI0Us7AFsSqlqHZFcbEwK0oKtuySUrGiSovnaPJ/8+Af2BbePjKYz3WnAExLlrXlBN56
-         vLx38VtEOA+jk6kVikg+Pp/iNHZ0sVEUMx4EkqPTgaAfz9v5EazIha5Zbmf31rco6SPb
-         Fnc5Du2bQ10s+SwSLw8mN6TzRRLjRbS+Nz/35kCdlzs602Tfq1lIGiax7/E2D3x9hpVr
-         gZrmnt7LcQEpu1SqcbtYJ3oSL+6xJ3N7AnF0+f31SPsDb94xiiZbu3x8AraLbCgAKf42
-         Xx/A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=O/aDiSuabA1UT37pqiZvNnDJtwV7VDCXoIckMsQFjk0=;
+        b=DB48ugNRFe2qcEC8JO63VpC6po9oedRiKmtldDYZw/9rAI4WzujGL1/Jm/5UY90ON2
+         zQsArDXzQpiGGlzmENHhEOa8eMlQrG9ir8F8EgKd1qXQ1ICNGiLtqQ33Kre6EgW+an3B
+         dWMlmdXifQoVJvyi327eo32fE/Mic+ExA864HLyqJG82e0ZUhskzkX9PCs8N2xYdYxht
+         NAyd7E9WkMYZ7ll+8UuJlC9kZeGjUy6OJTKzJjBZ7ZeNeqoZnvuFsg1v7JOZmIfSvyl0
+         UPzp+V3+uhZ9IoQwh3Ta7JzZWHu0xAgeuyZDrrhOm9aovX26zHO9d+zn9BsYqjbdrmKZ
+         PclQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GsrmezleQJpT1av+fMClQqA8GAh9SF4urUTtqMqyZAU=;
-        b=HYquPuTeuDxp/cxz8wfRtHPsc4FdKhrqzk90g76mHsBIBp5HE1hxozyf67KmLzoZrB
-         28nOzIREMCSZFPyVEucfKSK7N8zU3hX7n5oJpcT1KVX1KIVa7CRUSGhcHTPzw7U5QEIH
-         aaZL3ZLFefrVSqyECtApp81oZoKa1qbpUAY2KimJO7uGWk+MYKr+Ks5MPXeY54BBdIte
-         p3CfX63op6wX7kF4GbZmeLAm9NyodRU+A1Kwi5zdqjWcqFEtEA0CVg3VTwZPWBoF+jUN
-         QyzQXl34cyLilDlJe27bSXpzEXyL0UdSQw/66LLCZ1/J6CupB69ZxYIzL7sQnp4FC+QT
-         7ARw==
-X-Gm-Message-State: APjAAAW9YsCMirdcgw7A8Zu/k87YH61aUBEMqRGSpvOvlY7QD0+qcpx4
-        4JlKiqc0LplYyjIoSvHblbY3z+Dq
-X-Google-Smtp-Source: APXvYqwjz3IJ0opKH3w4q0eq3H2/J1SEygsZT0VsnjiIBCpyzZEW/az+ln6l2dBG2M1SFzRMvQRaoA==
-X-Received: by 2002:a6b:3e04:: with SMTP id l4mr4184770ioa.80.1557327736697;
-        Wed, 08 May 2019 08:02:16 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:780:ed13:bfd5:1bea:adb7])
-        by smtp.gmail.com with ESMTPSA id a196sm1319174itc.1.2019.05.08.08.02.15
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 08 May 2019 08:02:15 -0700 (PDT)
-Date:   Wed, 8 May 2019 11:02:14 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] format-patch: teach format.notes config option
-Message-ID: <fe674bf63e8d5b8a06a3f880db4dc4bcfd2183f6.1557327652.git.liu.denton@gmail.com>
-References: <cover.1556388260.git.liu.denton@gmail.com>
- <cover.1557327652.git.liu.denton@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=O/aDiSuabA1UT37pqiZvNnDJtwV7VDCXoIckMsQFjk0=;
+        b=PimNEj2CQx1Dnx40XMOqk57DTEfieKUmayUtNgh81HCDnVkkQn4aobYx20Y10OeTn4
+         Oj8YnvpahMmhxDf/DWZIafkzZhceZ9DVYydkkLUy3/UyK9QZgp1Xpno4occgqHuEbUgu
+         PSKL/3vl0yEjnOR/KTpxH6tiQPxYCSumxjWSeKikrk1APowoz8pYqJDTruQ1YWVX0lz0
+         sGS5x9sXYm9+n0+ISAWyQlsYI5cpdIlO3UOfo4vR4QDS6TCu+yQLU83hsLY7vCd588FX
+         J60dSK/T0ylIkBsRfgWtbLyGIAMnxaMSwmYTdIDpKZqFEnye5DzPte5pKTIOgzJLDUTO
+         Iohg==
+X-Gm-Message-State: APjAAAVInHEGeTJjeb0jBYFf2gQZ21I/25ZvwtgjKHv+XD8I8IknQPwp
+        oYbRlfm6E8VnzZfSTIFx264MNq0ZQNk=
+X-Google-Smtp-Source: APXvYqxWup5azo9lsacQWlUMyiahJYlSh1QqmYbdDIgvUxSdI/OpPoncGeVfyzfe9lJty/mTzI06oQ==
+X-Received: by 2002:ac8:7082:: with SMTP id y2mr21736582qto.329.1557330768863;
+        Wed, 08 May 2019 08:52:48 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:99f3:ebb2:d83a:c7d8? ([2001:4898:8010:0:8329:ebb2:d83a:c7d8])
+        by smtp.gmail.com with ESMTPSA id n66sm9298733qkc.36.2019.05.08.08.52.47
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 May 2019 08:52:48 -0700 (PDT)
+Subject: Re: [PATCH 01/19] revision.h: avoid bit fields in struct rev_info
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190508111249.15262-1-pclouds@gmail.com>
+ <20190508111249.15262-2-pclouds@gmail.com>
+ <0509589b-7a92-6c05-e404-65a9b2bf5666@gmail.com>
+ <CACsJy8DEjBS-aiWqDe2AU56rJBVZ4Po6c-C7GxR4QDNiGSiZoQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d018ea8c-6f7f-1587-d56b-af3225d6cf0b@gmail.com>
+Date:   Wed, 8 May 2019 11:52:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1557327652.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <CACsJy8DEjBS-aiWqDe2AU56rJBVZ4Po6c-C7GxR4QDNiGSiZoQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-format-patch, notes can be appended with the `--notes` option.
-However, this must be specified by the user on an
-invocation-by-invocation basis. If a user is not careful, it's possible
-that they may forget to include it and generate a patch series without
-notes.
+On 5/8/2019 10:41 AM, Duy Nguyen wrote:
+> On Wed, May 8, 2019 at 9:07 PM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 5/8/2019 7:12 AM, Nguyễn Thái Ngọc Duy wrote:
+>>> Bitfield addresses cannot be passed around in a pointer. This makes it
+>>> hard to use parse-options to set/unset them. Turn this struct to
+>>> normal integers. This of course increases the size of this struct
+>>> multiple times, but since we only have a handful of rev_info variables
+>>> around, memory consumption is not at all a concern.
+>>
+>> I think you are right that this memory trade-off shouldn't be a problem.
+>>
+>> What worries me instead is that we are using an "internal" data structure
+>> for option parsing. Would it make more sense to create a struct for use
+>> in the parse_opts method and a method that translates those options into
+>> the bitfield in struct rev_info?
+> 
+> But we are doing that now (option parsing) using the same data
+> structure. Why would changing from a custom parser to parse_options()
+> affect what fields it should or should not touch in rev_info? Genuine
+> question. Maybe you could elaborate more about "internal". I probably
+> missed something. Or maybe this is a good opportunity to separate
+> intermediate option parsing variables from the rest of rev_info?
 
-Teach git-format-patch the `format.notes` config option its value is a
-notes ref that will be automatically be appended. The special value of
-"standard" can be used to specify the standard notes. This option is
-overridable with the `--no-notes` option in case a user wishes not to
-append notes.
+You're right. I was unclear.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-One thing I'm worried about is that I'm not really sure using "standard"
-as the special value is a good idea. Would "auto" be a better special
-value?
+rev_info stores a lot of data. Some of the fields are important
+in-memory structures that are crucial to the workings of revision.c
+and are never used by builtin/rev-list.c. Combining this purpose
+with the option parsing seems smelly to me.
 
- Documentation/config/format.txt    | 13 ++++++
- Documentation/git-format-patch.txt |  3 ++
- builtin/log.c                      | 18 +++++++-
- t/t4014-format-patch.sh            | 70 ++++++++++++++++++++++++++++++
- 4 files changed, 103 insertions(+), 1 deletion(-)
+Thinking more on it, I would prefer a more invasive change that may
+pay off in the long term. These options, along with the "starting list"
+values, could be extracted to a 'struct rev_options' that contains these
+integers and the commit list. Then your option parsing changes could be
+limited to a rev_options struct, which is later inserted into a rev_info
+struct during setup_revisions().
 
-diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-index dc77941c48..e25f9cfc61 100644
---- a/Documentation/config/format.txt
-+++ b/Documentation/config/format.txt
-@@ -85,3 +85,16 @@ format.outputDirectory::
- format.useAutoBase::
- 	A boolean value which lets you enable the `--base=auto` option of
- 	format-patch by default.
-+
-+format.notes::
-+	A ref which specifies where to get the notes (see
-+	linkgit:git-notes[1]) that are appended for the commit after the
-+	three-dash line.
-++
-+If the special value of "standard" is specified, then the standard notes
-+ref is used (i.e. the notes ref used by `git notes` when no `--ref`
-+argument is specified). If one wishes to use the ref
-+`ref/notes/standard`, please use that literal instead.
-++
-+This configuration can be specified multiple times in order to allow
-+multiple notes refs to be included.
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 2c3971390e..9ce5b8aaee 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -275,6 +275,9 @@ these explanations after `format-patch` has run but before sending,
- keeping them as Git notes allows them to be maintained between versions
- of the patch series (but see the discussion of the `notes.rewrite`
- configuration options in linkgit:git-notes[1] to use this workflow).
-++
-+The default is `--no-notes`, unless the `format.notes` configuration is
-+set.
- 
- --[no-]signature=<signature>::
- 	Add a signature to each message produced. Per RFC 3676 the signature
-diff --git a/builtin/log.c b/builtin/log.c
-index e43ee12fb1..24954e42b0 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -779,6 +779,8 @@ enum {
- 
- static int git_format_config(const char *var, const char *value, void *cb)
- {
-+	struct rev_info *rev = cb;
-+
- 	if (!strcmp(var, "format.headers")) {
- 		if (!value)
- 			die(_("format.headers without value"));
-@@ -864,6 +866,20 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 			from = NULL;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.notes")) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		rev->show_notes = 1;
-+		if (!strcmp(value, "standard"))
-+			rev->notes_opt.use_default_notes = 1;
-+		else {
-+			strbuf_addstr(&buf, value);
-+			expand_notes_ref(&buf);
-+			string_list_append(&rev->notes_opt.extra_notes_refs,
-+					strbuf_detach(&buf, NULL));
-+		}
-+		return 0;
-+	}
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -1617,8 +1633,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	extra_to.strdup_strings = 1;
- 	extra_cc.strdup_strings = 1;
- 	init_log_defaults();
--	git_config(git_format_config, NULL);
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	git_config(git_format_config, &rev);
- 	rev.commit_format = CMIT_FMT_EMAIL;
- 	rev.expand_tabs_in_log_default = 0;
- 	rev.verbose_header = 1;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index b6e2fdbc44..e0127282ba 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -738,6 +738,76 @@ test_expect_success 'format-patch --notes --signoff' '
- 	sed "1,/^---$/d" out | grep "test message"
- '
- 
-+test_expect_success 'format-patch notes output control' '
-+	git notes add -m "notes config message" HEAD &&
-+	test_when_finished git notes remove HEAD &&
-+
-+	git format-patch -1 --stdout >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes --notes >out &&
-+	grep "notes config message" out &&
-+
-+	test_config format.notes standard &&
-+	git format-patch -1 --stdout >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes >out &&
-+	grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --notes --no-notes >out &&
-+	! grep "notes config message" out &&
-+	git format-patch -1 --stdout --no-notes --notes >out &&
-+	grep "notes config message" out
-+'
-+
-+test_expect_success 'format-patch with multiple notes refs' '
-+	git notes --ref note1 add -m "this is note 1" HEAD &&
-+	test_when_finished git notes --ref note1 remove HEAD &&
-+	git notes --ref note2 add -m "this is note 2" HEAD &&
-+	test_when_finished git notes --ref note2 remove HEAD &&
-+
-+	git format-patch -1 --stdout >out &&
-+	! grep "this is note 1" out &&
-+	! grep "this is note 2" out &&
-+	git format-patch -1 --stdout --notes=note1 >out &&
-+	grep "this is note 1" out &&
-+	! grep "this is note 2" out &&
-+	git format-patch -1 --stdout --notes=note2 >out &&
-+	! grep "this is note 1" out &&
-+	grep "this is note 2" out &&
-+	git format-patch -1 --stdout --notes=note1 --notes=note2 >out &&
-+	grep "this is note 1" out &&
-+	grep "this is note 2" out &&
-+
-+	test_config format.notes note1 &&
-+	git format-patch -1 --stdout >out &&
-+	grep "this is note 1" out &&
-+	! grep "this is note 2" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "this is note 1" out &&
-+	! grep "this is note 2" out &&
-+	git format-patch -1 --stdout --notes=note2 >out &&
-+	grep "this is note 1" out &&
-+	grep "this is note 2" out &&
-+	git format-patch -1 --stdout --no-notes --notes=note2 >out &&
-+	! grep "this is note 1" out &&
-+	grep "this is note 2" out &&
-+
-+	git config --add format.notes note2 &&
-+	git format-patch -1 --stdout >out &&
-+	grep "this is note 1" out &&
-+	grep "this is note 2" out &&
-+	git format-patch -1 --stdout --no-notes >out &&
-+	! grep "this is note 1" out &&
-+	! grep "this is note 2" out
-+'
-+
- echo "fatal: --name-only does not make sense" > expect.name-only
- echo "fatal: --name-status does not make sense" > expect.name-status
- echo "fatal: --check does not make sense" > expect.check
--- 
-2.21.0.1049.geb646f7864
+Generally, the rev_info struct has too many members and could be split
+into smaller pieces according to purpose. I created the topo_walk_info
+struct as a way to not make the situation worse, but doesn't fix existing
+pain.
 
+My ramblings are mostly complaining about old code that grew organically
+across many many quality additions. It is definitely hard to understand
+the revision-walking code, and perhaps it would be easier to understand
+with a little more structure.
+
+The biggest issue with my suggestion is that it requires changing the
+consumers of the options, as they would no longer live directly on the
+rev_info struct. That would be a big change, even if it could be done
+with string replacement.
+
+Thanks,
+-Stolee 
