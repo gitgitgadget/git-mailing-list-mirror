@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB021F45F
-	for <e@80x24.org>; Wed,  8 May 2019 15:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6A41F45F
+	for <e@80x24.org>; Wed,  8 May 2019 15:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727735AbfEHPxz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 11:53:55 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35802 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727633AbfEHPxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 11:53:54 -0400
-Received: by mail-ed1-f68.google.com with SMTP id p26so4698705edr.2
-        for <git@vger.kernel.org>; Wed, 08 May 2019 08:53:53 -0700 (PDT)
+        id S1727787AbfEHPx6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 11:53:58 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38580 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbfEHPx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 11:53:57 -0400
+Received: by mail-ed1-f66.google.com with SMTP id w11so22544512edl.5
+        for <git@vger.kernel.org>; Wed, 08 May 2019 08:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0ay1OwqMXDNzHrxRUO+Eyr9+cg6irR7gpIuycBbKZLI=;
-        b=obB9+JavDe0FJfP32bBaHMjKB3qt0A2fYSks9R7BAoU5Au38g04k5GVihE9yPtY7cJ
-         1yRhNvWVSLD/TmS4oWyhCcggy0GDz7FcwuRWSS7Dq8t9hqcM6VnUtuWMupdlhcKHJJcX
-         GwuQk90hm1jGqCYWxO1l8N0uhJS4T15y6pWO/5uijW7pzuCaPfUoowT1kM1gaogT1jZz
-         HzH0eBWtgKBFec5e6a3yIqUcjsYbV+mNI/ffvgHBgjsw1j097YhFDVCJ0QRhzNGuI+Mm
-         yVDdwy+8VrEWNx2/BBwUqETm7/HdZG8RsBmKd2duiDj0QKFodzfUejIXRnrf63Kc0joM
-         2Z8A==
+        bh=68iiDnJ65hUNnWIwGjDVkylpNqJV3qybbZTGBNgM03I=;
+        b=haVr3k8I7JaTbrVTClJfB2GpqWUH1LG5K3IsbrFTeWOQjDJW2LVlN2e2i6PByKSSXd
+         drY39M/OMwHreZrusEIhp1hRkcw5q1qedgULQk9YgV3/B1empc7EEAZCy2NDt0HjC4Wm
+         ULo0FFt/RDpSYJVrV8HjrNG8sGy61sRl50JiaQKA7raNThOEITFHBcNbVJYrfyjSWuMt
+         jEfXZkQD8EzHmfkbdbJoaP/JwyjlKsOMgw36LoC43RYhI5911ToKyJ0SDc+WhR/9O1l2
+         AV1jFCyBQUhw7avCyoNlMWKv6Ol1cDJPkS1VV9PlVcTg6PIz+nkpSPxa65iAgVc14Bzt
+         VW8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0ay1OwqMXDNzHrxRUO+Eyr9+cg6irR7gpIuycBbKZLI=;
-        b=sWXG/dHWre8CviVCHaSqETZhvPTuZzdV6Xnny0EtQt6e8fgeccJS3hD8S5wD6BzqBM
-         2q5KdERbqrIFyDUQ3kl56tj2D18IFBAl7H1/mmUNJFGql49moX5K7bc9Lpd3FDdGbZ6M
-         9ftgmAdLChSK/P9Bt+t0728M/bBtRvb9IbnfOwew2Gw7wRPFi+6ygeh1KUQY8yR1z9en
-         sygNKlTN7V8Kr3FbsKwOzSkDsQfjEpBgFe8wvcMtbwY+DuFuJ61dfVLEzrttSpzRM2N3
-         9RdMkJkxhR2A9sJbT3Wtr8ZEFZrLyAUfUeSJIioyEF+cZ3mzNJ/qgcVTl3kUN7Ltv1IR
-         PV8w==
-X-Gm-Message-State: APjAAAWzyzyyUledeDuzbxUY8BY80tLHgEhp9UDeOoes4iCymqiGGIYQ
-        qle7cYspvnkJudgE89foGajZsa0rxks=
-X-Google-Smtp-Source: APXvYqyC0xlNKr2AjRtmhaJSGtHO5AkUhr9mwxdYRXZa4hizZRSsAK9K5GTMWWgKb9OYPC8beBO6uA==
-X-Received: by 2002:a50:b33d:: with SMTP id q58mr40341764edd.46.1557330832947;
-        Wed, 08 May 2019 08:53:52 -0700 (PDT)
+        bh=68iiDnJ65hUNnWIwGjDVkylpNqJV3qybbZTGBNgM03I=;
+        b=JjWwEcRKEUbH5scvDGQF+pnAtPy4ZTuNJPEeK4v8z259rK05/Lpp5JFk4c5tYRG4FV
+         r1AQg7I7pmsqfWCrNUxc3UIvR9jIFmxfv+bcoEFu43TF5O/X/wtDbRlBhz4g6i1+f3xD
+         iCCZ3hGx19Mf1A+IINCIx882kMJeQrEhAGqCsRwfe/IwVsyhEJmgN5SgDqF8CqNaGEry
+         rQEdpldKoBbF2gYr+gESL3/nYgS3a6F52j0XqMGBYQEhAJF5MsSySeBN6jw0xEHX+axk
+         o+GbAUdobcd5jsYMkjVS0JYFyI4O1AmO1CZHFK4F1EhpTgvjRgDBXn+Sb0urohfichTf
+         91ZQ==
+X-Gm-Message-State: APjAAAUR/Yb4d8qkyzV2Wlz5qrB1G1EP+jxIt4Sk3lRdYvp9iZ58Ov55
+        eF4KM2IknjiJLbVN/C7lEGVTkeDZS7E=
+X-Google-Smtp-Source: APXvYqxCnL7i2E4YiAnZhoBp5HxSHQNefYHjRUXcgl6Qa80X2noB1nNDEFM90k1IyDL1E0W/QEXtPA==
+X-Received: by 2002:a50:a55b:: with SMTP id z27mr39720198edb.68.1557330836254;
+        Wed, 08 May 2019 08:53:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r20sm775513edx.46.2019.05.08.08.53.52
+        by smtp.gmail.com with ESMTPSA id p60sm579292edp.0.2019.05.08.08.53.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 May 2019 08:53:52 -0700 (PDT)
-Date:   Wed, 08 May 2019 08:53:52 -0700 (PDT)
-X-Google-Original-Date: Wed, 08 May 2019 15:53:35 GMT
-Message-Id: <54817ef50b857257d826d1880714400ee4019980.1557330827.git.gitgitgadget@gmail.com>
+        Wed, 08 May 2019 08:53:55 -0700 (PDT)
+Date:   Wed, 08 May 2019 08:53:55 -0700 (PDT)
+X-Google-Original-Date: Wed, 08 May 2019 15:53:39 GMT
+Message-Id: <ebd665468e1347752dabc0c963c890530ea0ea55.1557330827.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.git.gitgitgadget@gmail.com>
 References: <pull.184.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 06/17] commit-graph: extract fill_oids_from_packs()
+Subject: [PATCH 10/17] commit-graph: extract copy_oids_to_commits()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,115 +75,97 @@ From: Derrick Stolee <dstolee@microsoft.com>
 The write_commit_graph() method is too complex, so we are
 extracting methods one by one.
 
-This extracts fill_oids_from_packs() that reads the given
-pack-file list and fills the oid list in the context.
+Extract copy_oids_to_commits(), which fills the commits list
+with the distinct commits from the oids list. During this loop,
+it also counts the number of "extra" edges from octopus merges.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 83 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 47 insertions(+), 36 deletions(-)
+ commit-graph.c | 57 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 58f0f0ae34..80c7069aaa 100644
+index f7419c919b..16cdd7afb2 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -867,6 +867,51 @@ int write_commit_graph_reachable(const char *obj_dir, unsigned int flags)
- 	return result;
+@@ -984,6 +984,37 @@ static uint32_t count_distinct_commits(struct write_commit_graph_context *ctx)
+ 	return count_distinct;
  }
  
-+static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
-+				struct string_list *pack_indexes)
++static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
 +{
 +	uint32_t i;
-+	struct strbuf progress_title = STRBUF_INIT;
-+	struct strbuf packname = STRBUF_INIT;
-+	int dirlen;
++	struct commit_list *parent;
 +
-+	strbuf_addf(&packname, "%s/pack/", ctx->obj_dir);
-+	dirlen = packname.len;
-+	if (ctx->report_progress) {
-+		strbuf_addf(&progress_title,
-+			    Q_("Finding commits for commit graph in %d pack",
-+			       "Finding commits for commit graph in %d packs",
-+			       pack_indexes->nr),
-+			    pack_indexes->nr);
-+		ctx->progress = start_delayed_progress(progress_title.buf, 0);
-+		ctx->progress_done = 0;
-+	}
-+	for (i = 0; i < pack_indexes->nr; i++) {
-+		struct packed_git *p;
-+		strbuf_setlen(&packname, dirlen);
-+		strbuf_addstr(&packname, pack_indexes->items[i].string);
-+		p = add_packed_git(packname.buf, packname.len, 1);
-+		if (!p) {
-+			error(_("error adding pack %s"), packname.buf);
-+			return 1;
-+		}
-+		if (open_pack_index(p)) {
-+			error(_("error opening index for %s"), packname.buf);
-+			return 1;
-+		}
-+		for_each_object_in_pack(p, add_packed_commits, ctx,
-+					FOR_EACH_OBJECT_PACK_ORDER);
-+		close_pack(p);
-+		free(p);
-+	}
++	ctx->num_extra_edges = 0;
++	if (ctx->report_progress)
++		ctx->progress = start_delayed_progress(
++			_("Finding extra edges in commit graph"),
++			ctx->oids.nr);
++	for (i = 0; i < ctx->oids.nr; i++) {
++		int num_parents = 0;
++		display_progress(ctx->progress, i + 1);
++		if (i > 0 && oideq(&ctx->oids.list[i - 1], &ctx->oids.list[i]))
++			continue;
 +
++		ctx->commits.list[ctx->commits.nr] = lookup_commit(ctx->r, &ctx->oids.list[i]);
++		parse_commit_no_graph(ctx->commits.list[ctx->commits.nr]);
++
++		for (parent = ctx->commits.list[ctx->commits.nr]->parents;
++		     parent; parent = parent->next)
++			num_parents++;
++
++		if (num_parents > 2)
++			ctx->num_extra_edges += num_parents - 1;
++
++		ctx->commits.nr++;
++	}
 +	stop_progress(&ctx->progress);
-+	strbuf_reset(&progress_title);
-+	strbuf_release(&packname);
-+
-+	return 0;
 +}
 +
  int write_commit_graph(const char *obj_dir,
  		       struct string_list *pack_indexes,
  		       struct string_list *commit_hex,
-@@ -916,42 +961,8 @@ int write_commit_graph(const char *obj_dir,
- 	}
+@@ -997,7 +1028,6 @@ int write_commit_graph(const char *obj_dir,
+ 	uint32_t chunk_ids[5];
+ 	uint64_t chunk_offsets[5];
+ 	int num_chunks;
+-	struct commit_list *parent;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 	struct strbuf progress_title = STRBUF_INIT;
+ 	int res = 0;
+@@ -1056,30 +1086,7 @@ int write_commit_graph(const char *obj_dir,
+ 	ctx->commits.alloc = count_distinct;
+ 	ALLOC_ARRAY(ctx->commits.list, ctx->commits.alloc);
  
- 	if (pack_indexes) {
--		struct strbuf packname = STRBUF_INIT;
--		int dirlen;
--		strbuf_addf(&packname, "%s/pack/", obj_dir);
--		dirlen = packname.len;
--		if (ctx->report_progress) {
--			strbuf_addf(&progress_title,
--				    Q_("Finding commits for commit graph in %d pack",
--				       "Finding commits for commit graph in %d packs",
--				       pack_indexes->nr),
--				    pack_indexes->nr);
--			ctx->progress = start_delayed_progress(progress_title.buf, 0);
--			ctx->progress_done = 0;
--		}
--		for (i = 0; i < pack_indexes->nr; i++) {
--			struct packed_git *p;
--			strbuf_setlen(&packname, dirlen);
--			strbuf_addstr(&packname, pack_indexes->items[i].string);
--			p = add_packed_git(packname.buf, packname.len, 1);
--			if (!p) {
--				error(_("error adding pack %s"), packname.buf);
--				res = 1;
--				goto cleanup;
--			}
--			if (open_pack_index(p)) {
--				error(_("error opening index for %s"), packname.buf);
--				res = 1;
--				goto cleanup;
--			}
--			for_each_object_in_pack(p, add_packed_commits, ctx,
--						FOR_EACH_OBJECT_PACK_ORDER);
--			close_pack(p);
--			free(p);
--		}
--		stop_progress(&ctx->progress);
--		strbuf_reset(&progress_title);
--		strbuf_release(&packname);
-+		if ((res = fill_oids_from_packs(ctx, pack_indexes)))
-+			goto cleanup;
- 	}
+-	ctx->num_extra_edges = 0;
+-	if (ctx->report_progress)
+-		ctx->progress = start_delayed_progress(
+-			_("Finding extra edges in commit graph"),
+-			ctx->oids.nr);
+-	for (i = 0; i < ctx->oids.nr; i++) {
+-		int num_parents = 0;
+-		display_progress(ctx->progress, i + 1);
+-		if (i > 0 && oideq(&ctx->oids.list[i - 1], &ctx->oids.list[i]))
+-			continue;
+-
+-		ctx->commits.list[ctx->commits.nr] = lookup_commit(ctx->r, &ctx->oids.list[i]);
+-		parse_commit_no_graph(ctx->commits.list[ctx->commits.nr]);
+-
+-		for (parent = ctx->commits.list[ctx->commits.nr]->parents;
+-		     parent; parent = parent->next)
+-			num_parents++;
+-
+-		if (num_parents > 2)
+-			ctx->num_extra_edges += num_parents - 1;
+-
+-		ctx->commits.nr++;
+-	}
+-	stop_progress(&ctx->progress);
++	copy_oids_to_commits(ctx);
  
- 	if (commit_hex) {
+ 	if (ctx->commits.nr >= GRAPH_EDGE_LAST_MASK) {
+ 		error(_("too many commits to write graph"));
 -- 
 gitgitgadget
 
