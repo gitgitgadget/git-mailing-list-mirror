@@ -7,94 +7,106 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3156F1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 03:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE85A1F45F
+	for <e@80x24.org>; Wed,  8 May 2019 03:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727041AbfEHDqw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 23:46:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58310 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbfEHDqw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 23:46:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1A4926B2F6;
-        Tue,  7 May 2019 23:46:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1727020AbfEHDxs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 23:53:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57888 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726727AbfEHDxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 23:53:48 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EA7D14F065;
+        Tue,  7 May 2019 23:53:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oDHWTHCr8CoaDNRD4zaqjOzTr7A=; b=llJdC2
-        o8xAIFzcP9Nk7WTjDR7XqLvOz+QZmavKSDpQ4nJGcHQaS+Y6OZgrf+Du2cwmdJa3
-        ucRW4Jq4xrDh2pUl/s4I4+Y+PLHjVyqUfDrUrL00gYZqFpFM4pdHS9KZKJfe8ro6
-        FaQI3rDbBJYwnDnUizDFIR88a1LX/9Eljic78=
+        :content-type; s=sasl; bh=ElRIa30dtpo6aQjRN7tmBVGY0tk=; b=T8nzRd
+        ay6B/Jvmp2t6cfTsGjLzd6pQEvNhiwqBkSlDHTG8zK6oOsxfSvgubp4b+FH5cyI0
+        byS7pPVp3DlYPrtCWI8nM1OSwRY491MAkwkvR1FcC8OzyZzK6NuFzyLBsWCPc7we
+        cADImdsJm6S4qdHrHd6swNcKkNIXlJSWm0R3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=djQP8nY770JIe/0p04/b2iQRzNfrkB4D
-        QjqNQi1+lFqUCgbUv6ocZ00xIeLigXd+mNoMEsxHN9zhcmkXy0IrbdKoJKP3nUqn
-        lIhzMU0DJEb9snRqnnDRubsrYnrmnH+bw+e1bb2MngoiKfXKhusg3+IiQv7x5+XS
-        +ouH/InmPzg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 136C36B2F5;
-        Tue,  7 May 2019 23:46:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=ZaIGMiHIN6jcAY1PxW1xJxxhVDVL9pJi
+        46qHkwut8G6zGL7PTFT8GfzdtywCI/Z4wRUfh4yyvEdYCOZo+t/UrwijJOdEOS7+
+        Y42HNtmnBucHFKrACY+5ccYvAKCV+sUcmbTm1Jm4OC/9BhebOpoWhMr9LUQzRA4X
+        xfjrji7OluM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4502414F064;
+        Tue,  7 May 2019 23:53:43 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 40D086B2F4;
-        Tue,  7 May 2019 23:46:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 77E9314F063;
+        Tue,  7 May 2019 23:53:42 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v5 1/2] documentation: add tutorial for first contribution
-References: <20190423193410.101803-1-emilyshaffer@google.com>
-        <20190507213040.151799-1-emilyshaffer@google.com>
-        <20190507213040.151799-2-emilyshaffer@google.com>
-Date:   Wed, 08 May 2019 12:46:47 +0900
-In-Reply-To: <20190507213040.151799-2-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Tue, 7 May 2019 14:30:39 -0700")
-Message-ID: <xmqqimulip5k.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] t6500(mingw): use the Windows PID of the shell
+References: <pull.185.git.gitgitgadget@gmail.com>
+        <ba78a47b873c5f044cbfb147b30a801cc90fb0ac.1557265888.git.gitgitgadget@gmail.com>
+        <CAPig+cQG4+A+G+i+8RqpDAY2PveULVJ5iNR4HYEUPAd_4Ub04w@mail.gmail.com>
+Date:   Wed, 08 May 2019 12:53:41 +0900
+In-Reply-To: <CAPig+cQG4+A+G+i+8RqpDAY2PveULVJ5iNR4HYEUPAd_4Ub04w@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 7 May 2019 18:25:20 -0400")
+Message-ID: <xmqqef59iou2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E8BA92D4-7143-11E9-B049-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: DF07E812-7144-11E9-984B-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> +=== Clone the Git Repository
-> +
-> +Git is mirrored in a number of locations. Clone the repository from one of them;
-> +https://git-scm.com/downloads suggests one of the best places to clone from is
-> +the official mirror on GitHub.
+> On Tue, May 7, 2019 at 5:51 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> [...]
+>> Let's fix this by making sure that the Windows PID is written into
+>> `gc.pid` in this test script soo that `git.exe` is able to understand
+>> that that process does indeed still exist.
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>> @@ -162,7 +162,15 @@ test_expect_success 'background auto gc respects lock for all operations' '
+>> +       shell_pid=$$ &&
+>> +       if test_have_prereq MINGW && test -f /proc/$shell_pid/winpid
+>> +       then
+>> +               # In Git for Windows, Bash (actually, the MSYS2 runtime) has a
+>> +               # different idea of PIDs than git.exe (actually Windows). Use
+>> +               # the Windows PID in this case.
+>> +               shell_pid=$(cat /proc/$shell_pid/winpid)
+>> +       fi &&
+>> +       printf "%d %s" "$shell_pid" "$hostname" >.git/gc.pid &&
+>
+> I wonder if it would make sense to abstract this away behind a shell
+> function named shell_pid() which can be specialized for MINGW, much
+> like the shell function pwd() is specialized on Windows.
 
-I didn't want to have to get into fine-grained wordsmithing (let
-alone bikeshedding) this late in the iteration of the topic, but
-"the official mirror" is not something anybody suggested in the
-recent reviews (JTan's rephrasing, which I already said that I am OK
-with, said something like "one of the many mirrors").
+It would be, especially when we need the next such invocation.  I'd
+find it easier to follow if it were
 
-And "official" is a phrase I have trouble with in this context.  A
-mirror does not have to be blessed as official; that's the point of
-a mirror---anybody can make one to help users with better
-connectivity or availability, as long as its users trust the mirror
-maintainer for mirror's correctness and freshness.
+	if test_have_prereq ...
+	then
+		shell_pid=$(cat /proc/$$/winpid)
+	else
+		shell_pid=$$
+	fi &&
+	...
 
-So perhaps "... clone from is the mirror maintained by GitHub folks"
-or just simply "is the mirror on GitHub"?
+simply because in each of the cases the mental burden gets smaller
+(those trying to see what happens on MINGW do not have to recall
+shell_pid was originally taken from $$ after seeing 'then'; others
+do not have to wonder if lack of 'else' to cover the platforms they
+are reading for is deliberate and shell_pid is the only thing
+expected out of the if/then/fi construct)
 
-> +$ git send-email --to=target@example.com
-> +		 --in-reply-to="<foo.12345.author@example.com>"
+And I would suggest doing such a rewrite when it becomes a helper
+shell function, but what is written here is good enough until then,
+I would think.
 
-Very nice attention to the detail here.  I like it (the earlier
-round did not have dq around the message ID).
 
-> +		 psuh/v2*
-> +----
-
-All other edits relative to the previous round look very sensible to
-me.  Thanks.
