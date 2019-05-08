@@ -2,132 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F46F1F45F
-	for <e@80x24.org>; Wed,  8 May 2019 00:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 564201F45F
+	for <e@80x24.org>; Wed,  8 May 2019 01:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbfEHAN3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 May 2019 20:13:29 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:43641 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726371AbfEHAN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 May 2019 20:13:27 -0400
-Received: by mail-wr1-f48.google.com with SMTP id r4so9361395wro.10
-        for <git@vger.kernel.org>; Tue, 07 May 2019 17:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ATjesDCqNXRXQO91KyuQlWriuIIiLHrV0/Z8/14T2pE=;
-        b=KMUKHLDI5uE/tsCDZEi15jaUla5g5k0tyUyVfOSO3c78C3VD1nXDhRaD7QwVmgwj37
-         QFkvotO4s1NB7fpErplprkx7kHQWVvIUhYQQl7q/8Zv1XOCMA26WxgQ+fAUY4yVYer5A
-         9zhgrJPLbhvErfOEW+BWOnaZ8b7QGej+OiS72AP63msJ8NNlvAcCzkr4MgCV/TYBZ2ON
-         cllLCPO1ahe1kF/jNxbHA/BpvyyxWvU0MG7c9N9RzmHy60vcNrL2/8P3G4C7Dnwiu6aR
-         Zypx/70IAzX3NTgEsQNTsj9SwBdfL19KYNhVtEr+28FgiSpUGIkFgWzSOBnIsF3SjH7X
-         OzEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ATjesDCqNXRXQO91KyuQlWriuIIiLHrV0/Z8/14T2pE=;
-        b=W4etiCrxHvJEEvwBBsJn4FTrxe3UJ2gf+xLYCkQimurwehf9vGOJevpO0Km/E8fF9W
-         BmYbN+Gpc9+7VyV5xXtq652DLuetqCALF3e4Sp7WFtx9mki+IIh/aHh2tCnwFms4aILm
-         TforT0GC+P940KUViHLe4u9U4VQ435rES9tLLOeeh+KUyUlTPJ5Z9cPXTGsiJOCnpLE3
-         11XnExN8HEgBQjVBkV150Z3eQXMFhZ8UzSBNTJYsLVZSY/AGwimD8ryhTqnS0z4RvdJC
-         AjzxezZIDP0WArpeIDYAP53XdGaj3Sr2noZIyBke8o0eyjz0jHPZemurfhFE9rIaMBww
-         AzlA==
-X-Gm-Message-State: APjAAAWfXfxlXMdupxiNl0UpEqbBp+HcvUzlWsgaf0ZYNqA1vtIb+stN
-        sO/5cm9rGG/wunS2Z8MS+t91SLmiYnw=
-X-Google-Smtp-Source: APXvYqx3RV15fIEMx8V0V9KFFNkZAgTsTEN3AyKSDzRjiFE+9DFgmS5sc90N9mDHQvSPi02oJgd45Q==
-X-Received: by 2002:a5d:60cd:: with SMTP id x13mr5181712wrt.291.1557274405141;
-        Tue, 07 May 2019 17:13:25 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n15sm5167825wrp.58.2019.05.07.17.13.23
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 07 May 2019 17:13:24 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC WIP PATCH v8 13/13] WIP: can_fast_forward() support for --preserve-merges and --rebase-merges
-Date:   Wed,  8 May 2019 02:12:52 +0200
-Message-Id: <20190508001252.15752-14-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
-In-Reply-To: <cover.1555832783.git.liu.denton@gmail.com>
-References: <cover.1555832783.git.liu.denton@gmail.com>
+        id S1726381AbfEHBm2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 May 2019 21:42:28 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63478 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726276AbfEHBm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 May 2019 21:42:28 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FA766A7FF;
+        Tue,  7 May 2019 21:42:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zqWe1ScPGfwJMVztnuiJ6mmRvj8=; b=gM+Bfj
+        yK6mmNmaIy/CzkO3+gdtSPUh4y7YMc2PMD/uC2Y5jPSi5oxOBVSCTd3o08fXOpLu
+        r3phJF2yoousbj2QA4mAm6lN9dLkiZxZK29T3maNTp5NAJIT7j5G7qhaKoyevr8o
+        WsCx3Jot/Upi6cZ3IXWBm4tMP3I5aHc0IQY0Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=S2BIODmq5fOrlaBewWXUZyazHJog4djr
+        lEu/PwWY5mpIWJeEhSl8iY8LoOGbvth5vgUpi6p4/ZtNooigu3J2pBSbhQ9lVguO
+        3+TLtrzzKt4OdiPqr1fretfM50Rb1kTMSR2flSnKnB47lAJ/CKDVt3VleFuVvvsT
+        8lAJFHD9uXk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 374306A7FE;
+        Tue,  7 May 2019 21:42:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68EEF6A7FB;
+        Tue,  7 May 2019 21:42:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Dr. Adam Nielsen" <admin@in-ici.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] make slash rules more readable
+References: <20190504101905.7522-1-admin@in-ici.net>
+        <xmqqlfzilgrm.fsf@gitster-ct.c.googlers.com>
+        <6549e684-ac91-4a66-afa0-73c0e8c658f8@in-ici.net>
+Date:   Wed, 08 May 2019 10:42:21 +0900
+In-Reply-To: <6549e684-ac91-4a66-afa0-73c0e8c658f8@in-ici.net> (Adam Nielsen's
+        message of "Tue, 7 May 2019 12:23:02 +0200")
+Message-ID: <xmqqlfzhk9he.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 86BEA068-7132-11E9-9ED0-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This seems to work, needs more tests etc...
+"Dr. Adam Nielsen" <admin@in-ici.net> writes:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/rebase.c               | 6 ++++++
- t/t3432-rebase-fast-forward.sh | 7 +++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+> On 07.05.19 12:07, Junio C Hamano wrote:
+>> "Dr. Adam Nielsen" <admin@in-ici.net> writes:
+>>
+>>> gitignore.txt: make slash-rules more readable
+>>>
+>>> Make all paragraphs valid, even if they are not read
+>>> in strict order. Make paragraph better understandable
+>>> for pattern without slash. Add paragraph for pattern
+>>> with slash. Be precise whenever a trailing slashes
+>>> would make a difference. Add some examples.
+>>>
+>>> Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
+>>>
+>>
+>> Have you run "git diff --check" before committing the change?  It
+>> seems that many updated lines end in trailing spaces.
+>>
+>
+> Uh, I forgot that. I will send a clean version in a moment.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 167d4fcf67..de1c5cacb8 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -892,6 +892,12 @@ static void populate_merge_bases(struct commit *head, struct commit *onto,
- 
- static int should_fast_forward(struct rebase_options *opts)
- {
-+	if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
-+		if (opts->rebase_merges)
-+			return 1;
-+		if (opts->type == REBASE_PRESERVE_MERGES)
-+			return 1;
-+	}
- 	return !is_interactive(opts);
- }
- 
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index e8a9bf42b6..d3e1815057 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -44,12 +44,13 @@ test_rebase_same_head_ () {
- 	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
- 		oldhead=\$(git rev-parse HEAD) &&
- 		test_when_finished 'git reset --hard \$oldhead' &&
--		git rebase$flag $* >stdout &&
-+		git rebase$flag $* >stdout 2>stderr &&
- 		if test $what = work
- 		then
- 			# Must check this case first, for 'is up to
- 			# date, rebase forced[...]rewinding head' cases
--			test_i18ngrep 'rewinding head' stdout
-+			test_i18ngrep 'rewinding head' stdout ||
-+			test_i18ngrep 'is up to date, rebase forced' stdout
- 		elif test $what = noop
- 		then
- 			test_i18ngrep 'is up to date' stdout &&
-@@ -79,6 +80,8 @@ test_rebase_same_head success noop same success noop-force same --keep-base mast
- test_rebase_same_head success noop same success noop-force same --keep-base
- test_rebase_same_head success noop same success noop-force same --no-fork-point
- test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
-+test_rebase_same_head success noop same success noop-force same --preserve-merges
-+test_rebase_same_head success noop same success noop-force same --rebase-merges
- test_rebase_same_head success noop same success work same --fork-point master
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
--- 
-2.21.0.1020.gf2820cf01a
-
+It's OK; "git am --whitespace=fix" can rescue a gotcha like this.
