@@ -2,99 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B44681F45F
-	for <e@80x24.org>; Thu,  9 May 2019 18:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 663291F45F
+	for <e@80x24.org>; Thu,  9 May 2019 18:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfEISEf convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 9 May 2019 14:04:35 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36418 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbfEISEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 14:04:35 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o4so4303340wra.3
-        for <git@vger.kernel.org>; Thu, 09 May 2019 11:04:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bQ+gL+4oicLodTXtkX1txMPcIHfBqb4quK3iEzfQQJM=;
-        b=mPl2MPJo4MFoDn5fasnESs7Thg6dt5SFEk3VQlAthy6MeZcFzeP5tv8dL0r7Gsdte6
-         3TPvysVzjVlh8etfZRNKRIMWs7DFQPjOTIfZOa84aLZgq6BVh366p/SGPUvb4EmNgBpV
-         3bOSzZGnSaptsKAz63bka/unVR4fJSkz3+0NqaJNu/X7Owzfa9QGbtrghZHWHQx7eZqh
-         uhby6Wwz3x0z9EROhgSbvreqtKtze6+t2ZNYazZl9S/mbxq12X8YtYSEaxuCcwvf59JP
-         wONUdin7Dq7cp2bqjEo1xOnBMlBufCXmyC4lEhMDZwEuzElh9TfSRCUPsUUiiXSwKxj/
-         NZ7w==
-X-Gm-Message-State: APjAAAV9CXKpZrL7xfHlJ1SM6jYYMMi69x4wb92lN7IV1VdtVMJ5ITY1
-        RRdDKbtgmTGX9EhU/A99EeE81sStwcf3TM+Bh4hWIIVN
-X-Google-Smtp-Source: APXvYqxiE+QTGLYByu3BFL8XUvQKO+Lg6suPz1fZSWjelZUoGxY2iiDYfUUj6I/Nl2c7UmU8nIyN1+J9mNUiylZhsTI=
-X-Received: by 2002:a5d:4206:: with SMTP id n6mr4443775wrq.58.1557425074102;
- Thu, 09 May 2019 11:04:34 -0700 (PDT)
+        id S1726686AbfEISi6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 14:38:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53526 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726632AbfEISi5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 14:38:57 -0400
+Received: (qmail 7765 invoked by uid 109); 9 May 2019 18:38:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 May 2019 18:38:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5247 invoked by uid 111); 9 May 2019 18:39:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 May 2019 14:39:34 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 May 2019 14:38:55 -0400
+Date:   Thu, 9 May 2019 14:38:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] archive-tar: mark RECORDSIZE/BLOCKSIZE as unsigned
+Message-ID: <20190509183855.GA28107@sigill.intra.peff.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <pull.145.v2.git.gitgitgadget@gmail.com>
+ <ac2b2488a1b42b3caf8a84594c48eca796748e59.1556321244.git.gitgitgadget@gmail.com>
+ <d960966d-a7d4-dc3e-ca0a-70e9e5d1abf3@web.de>
+ <nycvar.QRO.7.76.6.1905081334260.44@tvgsbejvaqbjf.bet>
+ <20190508230420.GC19990@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905091605070.44@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20190508105607.178244-1-gitster@pobox.com> <20190509114830.29647-4-avarab@gmail.com>
-In-Reply-To: <20190509114830.29647-4-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 9 May 2019 14:04:23 -0400
-Message-ID: <CAPig+cTJFTkJ7N+ksrN-nHeLzNmCbDpVgLRBJZtMjTsKSE_ijA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in
- that order
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Brian M Carlson <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1905091605070.44@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 9, 2019 at 7:48 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Change the git-send-email command-line argument parsing and config
-> reading code to parse those two in the right order. I.e. first we set
-> our hardcoded defaults, then we read our config, and finally we read
-> the command-line, with later sets overriding earlier sets.
->
-> This fixes a bug introduced in e67a228cd8 ("send-email: automatically
-> determine transfer-encoding", 2018-07-08). That change broke the broke
+On Thu, May 09, 2019 at 04:06:22PM +0200, Johannes Schindelin wrote:
 
-s/broke the broke/broke/
+> > I don't this this has anything to do with gcc. The point is that we
+> > already have this line:
+> >
+> >   write_or_die(fd, buf, BLOCKSIZE);
+> >
+> > which does not cast and nobody has complained,
+> 
+> I mistook this part of your reply in
+> https://public-inbox.org/git/20190413013451.GB2040@sigill.intra.peff.net/
+> as precisely such a complaint:
+> 
+> 	BLOCKSIZE is a constant. Should we be defining it with a "U" in
+> 	the first place?
 
-> the reading of sendmail.transferencoding because it wasn't careful to
-> update our fragile code dealing with doing this in the previous
-> "defaults -> getopt -> config" order..
+Ah, sorry to introduce confusion. I mostly meant "if we need to cast,
+why not just define as unsigned in the first place?". But I think René
+was pointing out that we do not even need to cast, and I am fine with
+that approach.
 
-s/\.\.$/./
+I do dream of a world where we do not have a bunch of implicit
+conversions (both signedness but also truncation) in our code base, and
+can compile cleanly with -Wconversion We know that this case is
+perfectly fine, but I am sure there are many that are not. However, I'm
+not sure if we'll ever get there, and in the meantime I don't think it's
+worth worrying too much about individual cases like this.
 
-> But as we can see from the history for this file doing it this way was
-> never what we actually wanted, it just something we grew organically
-
-s/it/it's/
-
-> as of 5483c71d7a ("git-send-email: make options easier to configure.",
-> 2007-06-27) and have been dealing with the fallout since, e.g. in
-> 463b0ea22b ("send-email: Fix %config_path_settings handling",
-> 2011-10-14).
->
-> As can be seen in this change the only place where we actually want to
-> do something clever is with the to/cc/bcc variables, where setting
-> them on the command-line (or using --no-{to,cc,bcc}) should clear out
-> values we grab from the config.
->
-> All the rest are things where the command-line should simply override
-> the config values, and by reading the config first the config code
-> doesn't need all this "let's not set it was on the command-line"
-
-ECANTPARSE "let's not set it was on the command-line"
-
-> special-casing, as [1] shows we'd otherwise need to care about the
-> difference between whether something was a default or present in
-> config to fix the bug in e67a228cd8.
->
-> 1. https://public-inbox.org/git/20190508105607.178244-2-gitster@pobox.com/
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+-Peff
