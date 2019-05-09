@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEC791F45F
-	for <e@80x24.org>; Thu,  9 May 2019 14:22:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D07E1F45F
+	for <e@80x24.org>; Thu,  9 May 2019 14:22:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfEIOWr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 10:22:47 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40648 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726714AbfEIOWk (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726721AbfEIOWk (ORCPT <rfc822;e@80x24.org>);
         Thu, 9 May 2019 10:22:40 -0400
-Received: by mail-ed1-f66.google.com with SMTP id j12so1456652eds.7
-        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:39 -0700 (PDT)
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38440 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726709AbfEIOWj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 10:22:39 -0400
+Received: by mail-ed1-f66.google.com with SMTP id w11so2202855edl.5
+        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=b8z93/FWqgWVwgTgqfbO0pDDEkvy23xDqCRgy86Cg5s=;
-        b=jrWoeQfF4V3itgsLzq9Iv5YmaY8UrnM3dd99QHwi/13Ek4OYgi3cRDa89sqn2K4O3y
-         YkMwNnEIAXcEE2KuidN+Gp6IwlUgaK2NOxg/ZuEOtvCGOtpuR1MLgiuz4vpMKGuOy0Of
-         qPNY2PCsoXrbDQFfCj1iOyT96E6Rl2txPequyEbIgHRXxOr0zv07mLDdG6UJ1NBU+pEt
-         7uuVs++TX3I2krVl+OUNiwqFjLtHHh8OUUgnqt2RvH+SYYgzMhzyXQ85ogy0PeJzruns
-         plZNVItbGkImNCBG8eMENK1J82g0lZkLDKnXM0JxGrqeBsEB0Db59UWeXEW+FGqyD5xQ
-         i+hA==
+        bh=Xs0dnuZT2HlSNFfGJN34jFbb8FsInMLoBcXOCQalhbA=;
+        b=mJ0oAA1ZDzW65ui0LgsydxCQL6UmYJ2OG2s6K2zzli0/z9JvsXpDlp3ar+kCmSf9Kx
+         wMgzLOepvV2gRsFi1fk0gpzwOvzVemoXRiMDZayEedS9O09GwvB1pbtKjCo5fzk4JAEI
+         Rd8GJnMD2iQbnadyeq633opdtI74jxVHRWHI73YA3CILAQnJ6JQY7XjL6Gud0jyLB0C7
+         yjnuQN11YzvYmDReSoOA5oI9gG2+jahBSesSzTsFF599BgV2jmfqI41mTLYP6VlSeKBq
+         q+Wnz5vH/N/z71uj8blL5zWO82FMSx4apCr1kvDP4iutzAQ9UfF2tFLKX94zYzmVSf6g
+         gQQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b8z93/FWqgWVwgTgqfbO0pDDEkvy23xDqCRgy86Cg5s=;
-        b=VgOXw5Y4OW+1fP6X+WpqnnDQhmURB6yqsH/0PE+EZj5tTkeEEBDp1G6vb369EWZw2u
-         3jUFyDA6kdQI+rVLlVQ80NR+bXPwlYtuNLuHc4l2Pc9K8ZIuxqMyWj9H8GLUK714Cl5l
-         hxw+lQI2RPLKCyP69UepaQnFMgfepzNAN03krwXP4ZIJoqnu+BVfHb9TlR6qfg/icp/v
-         IT8y0LjrH+pgozhm8d4UZHodRuNZChpN3QXoyw128GN8f0PZHVsEGNbiEMelTlfQUgmh
-         dVXhXbQQsHrj9EDgXaU/PaBScQSafwE1n9glNTeKJ3NRewN3uoMcvVLMGaaR4na29fJz
-         HnQg==
-X-Gm-Message-State: APjAAAWP+iyl9lCBkBkAQe7xHufDo7w8XAjH27Rjc+EW3oYkvni8gTRd
-        sZ33AXOxPn3o9883UEisG0iQ6/9Z
-X-Google-Smtp-Source: APXvYqzcDtEfOsm/VcctIJiJFeRQ0F/AWS2HY9yYcdUKN5Uo4HC1Ddo/47jGRlaAWdFz709e08RYNw==
-X-Received: by 2002:a17:906:7d0f:: with SMTP id u15mr3474377ejo.79.1557411759023;
-        Thu, 09 May 2019 07:22:39 -0700 (PDT)
+        bh=Xs0dnuZT2HlSNFfGJN34jFbb8FsInMLoBcXOCQalhbA=;
+        b=kORho+TDe2gCztb2y9btdn2AmjE6QMJ4hM36gI6tyN3AL3lK/21LthREIoA36M8kex
+         qfDrtuLotD5TPSvgkXmyqEtkZpeKMRYDVb15g97r1opq7ns/3a80XR9TgSN2FLQ5qbqY
+         tLGMjXx9g9NTasHpseJkmXU7fF9t+8IVZ/aIlFYy/f9ExYeL5nPj3KjjQ3DMC7QagEi0
+         JcJY1IklO+PWOzESuZTu/US93ZTLZzFaMxzaczrMSUZWadfHi0JI9jnHAaBztb6VQn1g
+         OK7h1hzOqsMn8SkypclEAvt8g1IYUZFA5NiJ+8D3tYqs7SzjEKdzsaTR/qqnbzpHBQP5
+         8F1g==
+X-Gm-Message-State: APjAAAVigk2O9mxX0xWkNtm+NrbrxoOk2+k6r5IaazXh2QpVu0GYhKT4
+        WXjibV0xhU27qbnaO6U3TZqSrgW5
+X-Google-Smtp-Source: APXvYqxhJXK8DZQPe9DpLea8cHOOH5Otj1l/ByLMNRlLSFZzoJicMYl/FB7Ro0PU8zIvo0ScGa8wlg==
+X-Received: by 2002:a50:907a:: with SMTP id z55mr4417981edz.140.1557411757479;
+        Thu, 09 May 2019 07:22:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j1sm608024edc.48.2019.05.09.07.22.38
+        by smtp.gmail.com with ESMTPSA id u47sm610693edm.86.2019.05.09.07.22.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 May 2019 07:22:38 -0700 (PDT)
-Date:   Thu, 09 May 2019 07:22:38 -0700 (PDT)
-X-Google-Original-Date: Thu, 09 May 2019 14:22:27 GMT
-Message-Id: <a37548745b91cb275c0294aab15abdd2c4d3207a.1557411749.git.gitgitgadget@gmail.com>
+        Thu, 09 May 2019 07:22:36 -0700 (PDT)
+Date:   Thu, 09 May 2019 07:22:36 -0700 (PDT)
+X-Google-Original-Date: Thu, 09 May 2019 14:22:25 GMT
+Message-Id: <8cb2613dfa5cad1f6872a1fe1cf8e317a1bc400e.1557411749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.112.v4.git.gitgitgadget@gmail.com>
 References: <pull.112.v3.git.gitgitgadget@gmail.com>
         <pull.112.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 09/11] commit-graph: extract count_distinct_commits()
+Subject: [PATCH v4 07/11] commit-graph: extract fill_oids_from_commit_hex()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,67 +75,104 @@ From: Derrick Stolee <dstolee@microsoft.com>
 The write_commit_graph() method is too complex, so we are
 extracting methods one by one.
 
-Extract count_distinct_commits(), which sorts the oids list, then
-iterates through to find duplicates.
+Extract fill_oids_from_commit_hex() that reads the given commit
+id list and fille the oid list in the context.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 35 ++++++++++++++++++++++-------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ commit-graph.c | 72 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 32 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 730d529815..f7419c919b 100644
+index 80c7069aaa..fb25280df1 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -963,6 +963,27 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
- 	stop_progress(&ctx->progress);
+@@ -912,6 +912,44 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
+ 	return 0;
  }
  
-+static uint32_t count_distinct_commits(struct write_commit_graph_context *ctx)
++static void fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
++				      struct string_list *commit_hex)
 +{
-+	uint32_t i, count_distinct = 1;
++	uint32_t i;
++	struct strbuf progress_title = STRBUF_INIT;
 +
-+	if (ctx->report_progress)
++	if (ctx->report_progress) {
++		strbuf_addf(&progress_title,
++			    Q_("Finding commits for commit graph from %d ref",
++			       "Finding commits for commit graph from %d refs",
++			       commit_hex->nr),
++			    commit_hex->nr);
 +		ctx->progress = start_delayed_progress(
-+			_("Counting distinct commits in commit graph"),
-+			ctx->oids.nr);
-+	display_progress(ctx->progress, 0); /* TODO: Measure QSORT() progress */
-+	QSORT(ctx->oids.list, ctx->oids.nr, commit_compare);
++					progress_title.buf,
++					commit_hex->nr);
++	}
++	for (i = 0; i < commit_hex->nr; i++) {
++		const char *end;
++		struct object_id oid;
++		struct commit *result;
 +
-+	for (i = 1; i < ctx->oids.nr; i++) {
 +		display_progress(ctx->progress, i + 1);
-+		if (!oideq(&ctx->oids.list[i - 1], &ctx->oids.list[i]))
-+			count_distinct++;
++		if (commit_hex->items[i].string &&
++		    parse_oid_hex(commit_hex->items[i].string, &oid, &end))
++			continue;
++
++		result = lookup_commit_reference_gently(ctx->r, &oid, 1);
++
++		if (result) {
++			ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
++			oidcpy(&ctx->oids.list[ctx->oids.nr], &(result->object.oid));
++			ctx->oids.nr++;
++		}
 +	}
 +	stop_progress(&ctx->progress);
-+
-+	return count_distinct;
++	strbuf_release(&progress_title);
 +}
 +
  int write_commit_graph(const char *obj_dir,
  		       struct string_list *pack_indexes,
  		       struct string_list *commit_hex,
-@@ -1024,19 +1045,7 @@ int write_commit_graph(const char *obj_dir,
+@@ -965,38 +1003,8 @@ int write_commit_graph(const char *obj_dir,
+ 			goto cleanup;
+ 	}
  
- 	close_reachable(ctx);
- 
--	if (ctx->report_progress)
--		ctx->progress = start_delayed_progress(
--			_("Counting distinct commits in commit graph"),
--			ctx->oids.nr);
--	display_progress(ctx->progress, 0); /* TODO: Measure QSORT() progress */
--	QSORT(ctx->oids.list, ctx->oids.nr, commit_compare);
--	count_distinct = 1;
--	for (i = 1; i < ctx->oids.nr; i++) {
--		display_progress(ctx->progress, i + 1);
--		if (!oideq(&ctx->oids.list[i - 1], &ctx->oids.list[i]))
--			count_distinct++;
+-	if (commit_hex) {
+-		if (ctx->report_progress) {
+-			strbuf_addf(&progress_title,
+-				    Q_("Finding commits for commit graph from %d ref",
+-				       "Finding commits for commit graph from %d refs",
+-				       commit_hex->nr),
+-				    commit_hex->nr);
+-			ctx->progress = start_delayed_progress(
+-						progress_title.buf,
+-						commit_hex->nr);
+-		}
+-		for (i = 0; i < commit_hex->nr; i++) {
+-			const char *end;
+-			struct object_id oid;
+-			struct commit *result;
+-
+-			display_progress(ctx->progress, i + 1);
+-			if (commit_hex->items[i].string &&
+-			    parse_oid_hex(commit_hex->items[i].string, &oid, &end))
+-				continue;
+-
+-			result = lookup_commit_reference_gently(ctx->r, &oid, 1);
+-
+-			if (result) {
+-				ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
+-				oidcpy(&ctx->oids.list[ctx->oids.nr], &(result->object.oid));
+-				ctx->oids.nr++;
+-			}
+-		}
+-		stop_progress(&ctx->progress);
+-		strbuf_reset(&progress_title);
 -	}
--	stop_progress(&ctx->progress);
-+	count_distinct = count_distinct_commits(ctx);
++	if (commit_hex)
++		fill_oids_from_commit_hex(ctx, commit_hex);
  
- 	if (count_distinct >= GRAPH_EDGE_LAST_MASK) {
- 		error(_("the commit graph format cannot write %d commits"), count_distinct);
+ 	if (!pack_indexes && !commit_hex) {
+ 		if (ctx->report_progress)
 -- 
 gitgitgadget
 
