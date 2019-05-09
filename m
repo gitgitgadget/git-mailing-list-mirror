@@ -2,167 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CEB51F45F
-	for <e@80x24.org>; Thu,  9 May 2019 10:10:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1A871F45F
+	for <e@80x24.org>; Thu,  9 May 2019 10:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726406AbfEIKK4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 06:10:56 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:45209 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbfEIKK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 06:10:56 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i21so954623pgi.12
-        for <git@vger.kernel.org>; Thu, 09 May 2019 03:10:56 -0700 (PDT)
+        id S1725963AbfEIKVL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 06:21:11 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:45082 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725869AbfEIKVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 06:21:10 -0400
+Received: by mail-io1-f53.google.com with SMTP id b3so1155667iob.12
+        for <git@vger.kernel.org>; Thu, 09 May 2019 03:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9NpdX/cj2EMNcXjXiyMhTDfB0uHfpWtkQgY09RzRmf0=;
-        b=HI0KfNDhvtHJVJ8bM/HufrMgADrTbClFcLII0bkrSU0W/C7WuBbEh49tFcTKkBqOwI
-         rSLPoUAofZ32NP3ol8C2chU2sLjhRlMcLqzocGR6aHe0qrjUx3FmOcC4NgRPbbylRmUT
-         m8e6jbJ9jSVgpV7QH8jLAty2L9sip8tUjBE5v1vNhxxetnfa2WzBprpg9ilsHfz2KgRN
-         M46okEvnJ02t7sCLDm0E5JXjPTuTzn52dFNcmXqdAnyj6TiJhe4IF29VObjqbBWYUkon
-         dnxvYsT3Hp8x8+L4+ZT2dltKMwZZdrwiNu3DvJfyyjCKjWE5IlkxwVl62JDq0eZdy1hk
-         YDUg==
+        bh=GLYqGsOhPk4Fi+GasIIMn+pikz8kj5g0mPctwb7qhl0=;
+        b=XitFTkOE2tRnTGwBmLtXmPbOZWC2t9UtCyibtG1aXJ5TTdkGBZFvFi0DOoZuy4fP9d
+         KMlUyD76iXL1xDkq/TQxfxW5fVF6CyfYqixRClHQQvDiXkpSdeAP0W8/MMxKgfo+VGvo
+         djQjb3UjeNQMq1ND6SARZLggRi5ctv3JiV02metPoLCNbewvuiIhmcHJgp2cWqJDH7EZ
+         JEfCq2cynhE0XbqhfPvOwKy46xNY2Xqkx0vKpL4NgCqhrQmNyCi7Lo1OGbawvTW2dcmV
+         R8+P8M94GNYrK+xOrGFRn5hTyMFGMg/EsDlzI4qHhUzV/gKJNr8dGE5MAy6p7fcaXLDe
+         YzSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9NpdX/cj2EMNcXjXiyMhTDfB0uHfpWtkQgY09RzRmf0=;
-        b=IGL13jQki99R4Yw42RAXInewbFrIwbl6r1vcEF2InOWtW0yt0t2LpO7O3D0LltxmMW
-         iB3SW+cEX+guh/E/ADqoITVm0xDmbYRBRuIAQkqNPWCOzZESDN70tZM3pUIZ6pM0qnys
-         zYjCiXfaqdGf7OUUovAK39bz2Ku3KMyifHKSaDUJUqPrdj78ogxEXJHxXes3GzfpHnqe
-         Z2qnpBsT4LJnFVBQRPDOYJymvxCz53SCfXee7gdf3miGlgrj44L3dZ7Zq+H4PMLpG5DF
-         WARm+UHrLOvJWoKtlOTzOP/QB9Ezib6t0+NUh/O8O02757/kN2+SHDkAbsc6YUkY1N0i
-         2kWQ==
-X-Gm-Message-State: APjAAAWjRKOpmMbA6vx7P9KkpRCmgmIrklGr7zLvSlHoghVteF4MB3Yr
-        fv5Tw0S1rZDC8FI4NZgyiQM=
-X-Google-Smtp-Source: APXvYqy2EFezzGAQIKLRg23S7KdXsAv8FNVPoW9rZg6TN0it70Ng3cVvhG2x3GP6dGglKfXYlJ7YRg==
-X-Received: by 2002:a63:fb45:: with SMTP id w5mr4195857pgj.397.1557396655701;
-        Thu, 09 May 2019 03:10:55 -0700 (PDT)
-Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id d66sm124440pfg.183.2019.05.09.03.10.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 May 2019 03:10:55 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 09 May 2019 17:10:51 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
-Subject: [PATCH v2 2/2] merge: add --quit
-Date:   Thu,  9 May 2019 17:10:28 +0700
-Message-Id: <20190509101028.24656-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.1141.gd54ac2cb17
-In-Reply-To: <20190509101028.24656-1-pclouds@gmail.com>
-References: <20190501131152.314-1-pclouds@gmail.com>
- <20190509101028.24656-1-pclouds@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=GLYqGsOhPk4Fi+GasIIMn+pikz8kj5g0mPctwb7qhl0=;
+        b=OwgX8JdZegbnyY37Z9n1n1Vostn7j8aCoj46mJLt2w00dAbkMv5gTU7MnT2yg7xWxq
+         gP803VH+AtL83xp+mPTxiJHZVPExXOvvBfJVthkLPtqVpKPAhl3jvZtZMbREbE5l4KV1
+         pjvDuz4YCSEeMGLRbn5l8QhY9Z0saLPS7tGM46gcdufoAAwsTPR4qw2dENsAPuM1Er0l
+         TRWuFRRuqYNZUorYPESF7qFdsFFcIAKGtJlt5ocxfDdRWhv9fqhKitab1OOyOvj0hM/d
+         5A0WI4KuzmU9KvVMffMhkaHBvuFONdtaqfbqPVD5pezT6upBHJfM/H2NxA7uqLUxB+AS
+         7k/A==
+X-Gm-Message-State: APjAAAWByqdj7gRCKzAy58fREmbNXg8rY/SJMgeY0eRIY1Z/sqlaDm46
+        kee/N4lRbTGqydhue2HlDwLl3ubT
+X-Google-Smtp-Source: APXvYqyQ1KAS87RGxREnpk4b9ROs6Yu/IwOqGT17VgSufy92vYO8rBvjK54/lb1axyFnGsaPU6HaLA==
+X-Received: by 2002:a6b:e510:: with SMTP id y16mr1402088ioc.259.1557397269575;
+        Thu, 09 May 2019 03:21:09 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id c62sm783258itd.17.2019.05.09.03.21.08
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 09 May 2019 03:21:08 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeffrey Walton <noloader@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] check-non-portable-shell: support Perl versions older than 5.10
+Date:   Thu,  9 May 2019 06:20:37 -0400
+Message-Id: <20190509102037.27044-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.21.0.1084.g81c186ecd2
+In-Reply-To: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
+References: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This allows to cancel the current merge without resetting worktree/index,
-which is what --abort is for. Like other --quit(s), this is often used
-when you forgot that you're in the middle of a merge and already
-switched away, doing different things. By the time you've realized, you
-can't even continue the merge anymore.
+For thoroughness when checking for one-shot environment variable
+assignments at shell function call sites, check-non-portable-shell
+stitches together incomplete lines (those ending with backslash). This
+allows it to correctly flag such undesirable usage even when the
+variable assignment and function call are split across lines, for
+example:
 
-This also makes all in-progress commands, am, merge, rebase, revert and
-cherry-pick, take all three --abort, --continue and --quit (bisect has a
-different UI).
+    FOO=bar \
+    func
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+where 'func' is a shell function.
+
+The stitching is accomplished like this:
+
+    while (<>) {
+        chomp;
+        # stitch together incomplete lines (those ending with "\")
+        while (s/\\$//) {
+            $_ .= readline;
+            chomp;
+        }
+        # detect unportable/undesirable shell constructs
+        ...
+    }
+
+Although this implementation is well supported in reasonably modern Perl
+versions (5.10 and later), it fails in a couple ways with older versions
+(such as Perl 5.8 shipped with ancient Mac OS 10.5).
+
+In particular, in older Perl versions, 'readline' is not connected to
+the file handle associated with the "magic" while (<>) {...} construct,
+so 'readline' throws a "readline() on unopened filehandle" error.
+Furthermore, $_ assigned by the outer while-loop is read-only, so the
+attempt to modify it via "$_ .= readline" in the inner while-loop fails
+with a "Modification of a read-only value" error.
+
+Avoid both problems by collecting the stitched-together line in a
+variable other than $_ and dropping the inner loop entirely.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/git-merge.txt |  4 ++++
- builtin/merge.c             | 13 +++++++++++++
- t/t7600-merge.sh            | 14 ++++++++++++++
- 3 files changed, 31 insertions(+)
+ t/check-non-portable-shell.pl | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 4cc86469f3..b7d581fc76 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -99,6 +99,10 @@ commit or stash your changes before running 'git merge'.
- 'git merge --abort' is equivalent to 'git reset --merge' when
- `MERGE_HEAD` is present.
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+index 166d64d4a2..60e607ba42 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -27,14 +27,14 @@ sub err {
+ 	close $f;
+ }
  
-+--quit::
-+	Forget about the current merge in progress. Leave the index
-+	and the working tree as-is.
-+
- --continue::
- 	After a 'git merge' stops due to conflicts you can conclude the
- 	merge by running 'git merge --continue' (see "HOW TO RESOLVE
-diff --git a/builtin/merge.c b/builtin/merge.c
-index e9663f027a..598d56edfe 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -73,6 +73,7 @@ static int option_renormalize;
- static int verbosity;
- static int allow_rerere_auto;
- static int abort_current_merge;
-+static int quit_current_merge;
- static int continue_current_merge;
- static int allow_unrelated_histories;
- static int show_progress = -1;
-@@ -267,6 +268,8 @@ static struct option builtin_merge_options[] = {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "abort", &abort_current_merge,
- 		N_("abort the current in-progress merge")),
-+	OPT_BOOL(0, "quit", &quit_current_merge,
-+		N_("--abort but leave index and working tree alone")),
- 	OPT_BOOL(0, "continue", &continue_current_merge,
- 		N_("continue the current in-progress merge")),
- 	OPT_BOOL(0, "allow-unrelated-histories", &allow_unrelated_histories,
-@@ -1252,6 +1255,16 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		goto done;
- 	}
++my $line = '';
+ while (<>) {
+ 	chomp;
++	$line .= $_;
+ 	# stitch together incomplete lines (those ending with "\")
+-	while (s/\\$//) {
+-		$_ .= readline;
+-		chomp;
+-	}
++	next if $line =~ s/\\$//;
  
-+	if (quit_current_merge) {
-+		if (orig_argc != 2)
-+			usage_msg_opt(_("--quit expects no arguments"),
-+				      builtin_merge_usage,
-+				      builtin_merge_options);
-+
-+		remove_merge_branch_state(the_repository);
-+		goto done;
-+	}
-+
- 	if (continue_current_merge) {
- 		int nargc = 1;
- 		const char *nargv[] = {"commit", NULL};
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 106148254d..ea82cb744b 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -822,4 +822,18 @@ test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue'
- 	verify_parents $c0 $c1
- '
- 
-+test_expect_success 'merge --quit' '
-+	git reset --hard side &&
-+	test_must_fail git -c rerere.enabled=true merge master &&
-+	test_path_is_file .git/MERGE_HEAD &&
-+	test_path_is_file .git/MERGE_MODE &&
-+	test_path_is_file .git/MERGE_MSG &&
-+	test_path_is_file .git/MERGE_RR &&
-+	git merge --quit &&
-+	test_path_is_missing .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_MODE &&
-+	test_path_is_missing .git/MERGE_MSG &&
-+	test_path_is_missing .git/MERGE_RR
-+'
-+
- test_done
++	local $_ = $line;
+ 	/\bcp\s+-a/ and err 'cp -a is not portable';
+ 	/\bsed\s+-[^efn]\s+/ and err 'sed option not portable (use only -n, -e, -f)';
+ 	/\becho\s+-[neE]/ and err 'echo with option is not portable (use printf)';
+@@ -48,6 +48,7 @@ sub err {
+ 	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (use FOO=bar && export FOO)';
+ 	/^\s*([A-Z0-9_]+=(\w+|(["']).*?\3)\s+)+(\w+)/ and exists($func{$4}) and
+ 		err '"FOO=bar shell_func" assignment extends beyond "shell_func"';
++	$line = '';
+ 	# this resets our $. for each file
+ 	close ARGV if eof;
+ }
 -- 
-2.21.0.1141.gd54ac2cb17
+2.21.0.1084.g81c186ecd2
 
