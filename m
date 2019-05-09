@@ -2,147 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1A871F45F
-	for <e@80x24.org>; Thu,  9 May 2019 10:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FA9E1F45F
+	for <e@80x24.org>; Thu,  9 May 2019 11:48:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725963AbfEIKVL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 06:21:11 -0400
-Received: from mail-io1-f53.google.com ([209.85.166.53]:45082 "EHLO
-        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725869AbfEIKVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 06:21:10 -0400
-Received: by mail-io1-f53.google.com with SMTP id b3so1155667iob.12
-        for <git@vger.kernel.org>; Thu, 09 May 2019 03:21:10 -0700 (PDT)
+        id S1726448AbfEILsn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 07:48:43 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:36421 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbfEILsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 07:48:43 -0400
+Received: by mail-wr1-f50.google.com with SMTP id o4so2632167wra.3
+        for <git@vger.kernel.org>; Thu, 09 May 2019 04:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GLYqGsOhPk4Fi+GasIIMn+pikz8kj5g0mPctwb7qhl0=;
-        b=XitFTkOE2tRnTGwBmLtXmPbOZWC2t9UtCyibtG1aXJ5TTdkGBZFvFi0DOoZuy4fP9d
-         KMlUyD76iXL1xDkq/TQxfxW5fVF6CyfYqixRClHQQvDiXkpSdeAP0W8/MMxKgfo+VGvo
-         djQjb3UjeNQMq1ND6SARZLggRi5ctv3JiV02metPoLCNbewvuiIhmcHJgp2cWqJDH7EZ
-         JEfCq2cynhE0XbqhfPvOwKy46xNY2Xqkx0vKpL4NgCqhrQmNyCi7Lo1OGbawvTW2dcmV
-         R8+P8M94GNYrK+xOrGFRn5hTyMFGMg/EsDlzI4qHhUzV/gKJNr8dGE5MAy6p7fcaXLDe
-         YzSQ==
+        bh=3LSZ1hIrLVlRdMmoZSkLQeYd1WQcZAG4PQTaYAAmUtk=;
+        b=PKdX5JIv4MUSMUSfmGBxcsJWMQ2sfFWg6wD876PPV9jN9tT35bsuW5GJWdTYQgLZ6h
+         9Jaz2OYMCo8TvUWvFqHbCOGkjbd6MSzVksfRJ7WO5EOfbMMnZVehYMoNv4h2HglCZS5b
+         oPbcpgxyAPQVZ6Qk8F2GzrWVrg6Y/5XmIqOGjk4BYg0HZhL9AISFCwjHp5tOJxSiHaEH
+         EPj3wmN5/Zi72lh57HVH2JO8sJJc+FLlqZpRHQs2w3uDLyXDTgYCVplzM/D9wsKS4yf2
+         Bh63z0xbmIufJGADNgLUdgijbe1hK5/fkkbpuvxDuxsjac2oU8wkd92Lx71pJ2fJoLqt
+         5eig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=GLYqGsOhPk4Fi+GasIIMn+pikz8kj5g0mPctwb7qhl0=;
-        b=OwgX8JdZegbnyY37Z9n1n1Vostn7j8aCoj46mJLt2w00dAbkMv5gTU7MnT2yg7xWxq
-         gP803VH+AtL83xp+mPTxiJHZVPExXOvvBfJVthkLPtqVpKPAhl3jvZtZMbREbE5l4KV1
-         pjvDuz4YCSEeMGLRbn5l8QhY9Z0saLPS7tGM46gcdufoAAwsTPR4qw2dENsAPuM1Er0l
-         TRWuFRRuqYNZUorYPESF7qFdsFFcIAKGtJlt5ocxfDdRWhv9fqhKitab1OOyOvj0hM/d
-         5A0WI4KuzmU9KvVMffMhkaHBvuFONdtaqfbqPVD5pezT6upBHJfM/H2NxA7uqLUxB+AS
-         7k/A==
-X-Gm-Message-State: APjAAAWByqdj7gRCKzAy58fREmbNXg8rY/SJMgeY0eRIY1Z/sqlaDm46
-        kee/N4lRbTGqydhue2HlDwLl3ubT
-X-Google-Smtp-Source: APXvYqyQ1KAS87RGxREnpk4b9ROs6Yu/IwOqGT17VgSufy92vYO8rBvjK54/lb1axyFnGsaPU6HaLA==
-X-Received: by 2002:a6b:e510:: with SMTP id y16mr1402088ioc.259.1557397269575;
-        Thu, 09 May 2019 03:21:09 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id c62sm783258itd.17.2019.05.09.03.21.08
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 09 May 2019 03:21:08 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3LSZ1hIrLVlRdMmoZSkLQeYd1WQcZAG4PQTaYAAmUtk=;
+        b=Dj9AwdsTWeMGARctOeZAw5b9i0vH9sTcNTsTsXxAsab+AedHmZW+S9Qx3+phT7TKCV
+         ATFTiABlKnaN/eIS1pmm018ZtoaB6MpyzMug1/Cro8+Ltn0dQiFS24xj2hV1z8W5ZZj2
+         2RPJTWtjCF8aPWeM/mlcTvP4qLGH9jXayrgiuNSG5RlM16CA1Y5TK6ZieCF4OirFz9WE
+         WhUqlxADQa1t5YlBAOyfTvQc7ghT1fljiSXXvnFnpoqW4kQO+D3RT7JtVL/ULDhlgb9v
+         SpDYNyonf8j3kuPHJ7aKztGIXLMdyKwbUgvGt31BjtD0m73+zDmcxnpdFAAZsEwHfJty
+         3/Tg==
+X-Gm-Message-State: APjAAAUbQm7kXz+9jYBs8SnWknfPi0sJqFexXRv+ufuTKW3ylcQB0EQn
+        dDM00CrbWM5DwjvSlEo3xaDmYcMB
+X-Google-Smtp-Source: APXvYqyy8A2NrYVlnmrpH+ukvpbePZ+XoUhfTofVPShuHdzlJLV1Y32U259jgGJRhWS/+SEnEamH7g==
+X-Received: by 2002:adf:978b:: with SMTP id s11mr2645530wrb.169.1557402521214;
+        Thu, 09 May 2019 04:48:41 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id f1sm1610807wrc.93.2019.05.09.04.48.40
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 09 May 2019 04:48:40 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Heinrich Schuchardt <xypron.glpk@gmx.de>,
+        Brian M Carlson <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jeffrey Walton <noloader@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] check-non-portable-shell: support Perl versions older than 5.10
-Date:   Thu,  9 May 2019 06:20:37 -0400
-Message-Id: <20190509102037.27044-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.21.0.1084.g81c186ecd2
-In-Reply-To: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
-References: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/3] send-email: fix cli->config parsing crazyness
+Date:   Thu,  9 May 2019 13:48:27 +0200
+Message-Id: <20190509114830.29647-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
+In-Reply-To: <20190508105607.178244-1-gitster@pobox.com>
+References: <20190508105607.178244-1-gitster@pobox.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For thoroughness when checking for one-shot environment variable
-assignments at shell function call sites, check-non-portable-shell
-stitches together incomplete lines (those ending with backslash). This
-allows it to correctly flag such undesirable usage even when the
-variable assignment and function call are split across lines, for
-example:
+This is a proposed replacement for Junio's version of the
+sendemail.transferencoding bugfix. As explained in 3/3 I think the
+root cause is that we're needlessly doing the config->cli parsing in
+the wrong order, so let's just fix that.
 
-    FOO=bar \
-    func
+It fixes the bug at hand, and makes the coge less fragile for future
+maintenance.
 
-where 'func' is a shell function.
+Ævar Arnfjörð Bjarmason (3):
+  send-email: move the read_config() function above getopts
+  send-email: rename the @bcclist variable for consistency
+  send-email: do defaults -> config -> getopt in that order
 
-The stitching is accomplished like this:
+ git-send-email.perl   | 179 ++++++++++++++++++++++--------------------
+ t/t9001-send-email.sh |  13 ++-
+ 2 files changed, 105 insertions(+), 87 deletions(-)
 
-    while (<>) {
-        chomp;
-        # stitch together incomplete lines (those ending with "\")
-        while (s/\\$//) {
-            $_ .= readline;
-            chomp;
-        }
-        # detect unportable/undesirable shell constructs
-        ...
-    }
-
-Although this implementation is well supported in reasonably modern Perl
-versions (5.10 and later), it fails in a couple ways with older versions
-(such as Perl 5.8 shipped with ancient Mac OS 10.5).
-
-In particular, in older Perl versions, 'readline' is not connected to
-the file handle associated with the "magic" while (<>) {...} construct,
-so 'readline' throws a "readline() on unopened filehandle" error.
-Furthermore, $_ assigned by the outer while-loop is read-only, so the
-attempt to modify it via "$_ .= readline" in the inner while-loop fails
-with a "Modification of a read-only value" error.
-
-Avoid both problems by collecting the stitched-together line in a
-variable other than $_ and dropping the inner loop entirely.
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/check-non-portable-shell.pl | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index 166d64d4a2..60e607ba42 100755
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -27,14 +27,14 @@ sub err {
- 	close $f;
- }
- 
-+my $line = '';
- while (<>) {
- 	chomp;
-+	$line .= $_;
- 	# stitch together incomplete lines (those ending with "\")
--	while (s/\\$//) {
--		$_ .= readline;
--		chomp;
--	}
-+	next if $line =~ s/\\$//;
- 
-+	local $_ = $line;
- 	/\bcp\s+-a/ and err 'cp -a is not portable';
- 	/\bsed\s+-[^efn]\s+/ and err 'sed option not portable (use only -n, -e, -f)';
- 	/\becho\s+-[neE]/ and err 'echo with option is not portable (use printf)';
-@@ -48,6 +48,7 @@ sub err {
- 	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (use FOO=bar && export FOO)';
- 	/^\s*([A-Z0-9_]+=(\w+|(["']).*?\3)\s+)+(\w+)/ and exists($func{$4}) and
- 		err '"FOO=bar shell_func" assignment extends beyond "shell_func"';
-+	$line = '';
- 	# this resets our $. for each file
- 	close ARGV if eof;
- }
 -- 
-2.21.0.1084.g81c186ecd2
+2.21.0.1020.gf2820cf01a
 
