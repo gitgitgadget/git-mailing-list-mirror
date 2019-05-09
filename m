@@ -2,112 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E28C41F45F
-	for <e@80x24.org>; Thu,  9 May 2019 00:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1BB1F45F
+	for <e@80x24.org>; Thu,  9 May 2019 03:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726889AbfEIAUH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 May 2019 20:20:07 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37652 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726709AbfEIAUH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 May 2019 20:20:07 -0400
-Received: by mail-pl1-f195.google.com with SMTP id p15so203891pll.4
-        for <git@vger.kernel.org>; Wed, 08 May 2019 17:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VRC7MtRSv4VShlNXgj9+DiMyA7VznxOySSaoWi0viEk=;
-        b=kKjzdjWFEbVYrNcy1lVAUjhe1/xXpPFMSOlNn2IDkKKqEWSsd0goJEZvEABVz4jeN7
-         hOFRboacHQLvcUr8HpcpWVdrX8LRDW9mDNCXB1qGDaYGkUrQKI8sJf40P8wiyK7M6dyT
-         8gaALkGNWlxJMa8ZEytE/HXUtbt54nvJJwfRD85xjgdx+f9MTVO3dzd04YmdyHBYsLau
-         vFOp6wDy0Zs40S9zonFxxZxILN2QSo/iRMQgjN0qTYK08wRtFXSlBvgm5tn0iHlK7Gi4
-         y+gWIo0H2RmolZgwCIht8S2BWipwX4vB1v/1aC16lxPqbJIGoO85DxjTDHKv1au92NjV
-         GVpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VRC7MtRSv4VShlNXgj9+DiMyA7VznxOySSaoWi0viEk=;
-        b=buxQ9j6u0U61k/IcmBRzUkDvD2lwrQSicK64oT4a8cEv6uBOF8mf2D7AownQrWmqOz
-         BD4PNp65ua3OOWGDq8hzydrcn6OKlXsm1fUp+ypNZv29acMvui6rL9ORo1qNsDsfeQx1
-         3PhCdk3ZU+qaYc1RkcutGaocpP7EnZ99y7DNoHbcKoUYzyxOBZICBGRLbBlOx9ICTwc0
-         hPJEsNw1S+E4rXdzL4a/LFPaggZpMCdAomR73dMho5t/sQqucI4Qu7+hyME0irJOtaCG
-         m7vFDd/cyVZswCwZeKvGkHJP1bcB0AzEZcJc4JEdlF4BoDQ5f2n17gVWe3cs6IhGs20C
-         SIpw==
-X-Gm-Message-State: APjAAAXRpQKI5YH+2k40zzSEOBaiTleKTfsePhAB38COm33316eaRTn2
-        kw757JSxxneEKZ0cLmCNqmGG4VeeENzOZg==
-X-Google-Smtp-Source: APXvYqy4OFQlHIxf88mV+wkOzjtwr1lROh5LWbO3Po22KkGUedJyaV68mzei2O8JLnoQphcfx9AelQ==
-X-Received: by 2002:a17:902:7e04:: with SMTP id b4mr870682plm.211.1557361205308;
-        Wed, 08 May 2019 17:20:05 -0700 (PDT)
-Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
-        by smtp.gmail.com with ESMTPSA id p2sm532274pfi.73.2019.05.08.17.20.04
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 08 May 2019 17:20:04 -0700 (PDT)
-Date:   Wed, 8 May 2019 17:19:59 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Proposal: Remembering message IDs sent with git send-email
-Message-ID: <20190509001959.GB14000@google.com>
-References: <20190508231013.GA25216@homura.localdomain>
+        id S1726739AbfEIDTy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 May 2019 23:19:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53723 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbfEIDTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 May 2019 23:19:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFDDD54478;
+        Wed,  8 May 2019 23:19:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yVNuLABD3aGa8tEqzfevSVW5g1Y=; b=ftYARt
+        xtqMPMAZ03xVF5KFpHu4Xv+Qbkzrci4Ydlc9vdQRNF8S/evpOsHwKh0P3oh2HJcs
+        Xg8XwYlHtz1fDKNI3re/t9A121mL8Tn8KoldyHuKRxlNVn1IMs8780aNPtAokPXm
+        y6chnirSbk3f0Z5LXr8ePOqEYzjYo53zHfNqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kRcMSNnCrMgSGoJDlD/KxfMmbMmGraXv
+        3IpUlcTlc/A43joQtVLFzj3QrdL27hZyh+MkF7f3ykdz4Fa4mVTZB8pZKjXjALmc
+        Uux8B35B9pwRNcu22ggioAudPW3BNKpU9v6UVfltRljpkXCiuaXzMTA/cczgWdvw
+        LhrBvDTcu/w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B860554477;
+        Wed,  8 May 2019 23:19:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E6DC954475;
+        Wed,  8 May 2019 23:19:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Git Gadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, chris <chris@webstech.net>
+Subject: Re: Fwd: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX and Windows
+References: <pull.59.git.gitgitgadget@gmail.com>
+        <pull.59.v2.git.gitgitgadget@gmail.com>
+        <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>
+        <CANg4QoEPWcnPpbUYcgR4PmECzjCOmroAmH2fMoX-vhw+W_dVnQ@mail.gmail.com>
+Date:   Thu, 09 May 2019 12:19:43 +0900
+In-Reply-To: <CANg4QoEPWcnPpbUYcgR4PmECzjCOmroAmH2fMoX-vhw+W_dVnQ@mail.gmail.com>
+        (Git Gadget's message of "Wed, 8 May 2019 12:45:53 +0200")
+Message-ID: <xmqqh8a4fh68.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190508231013.GA25216@homura.localdomain>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4B9192AC-7209-11E9-80B2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 08, 2019 at 07:10:13PM -0400, Drew DeVault wrote:
-> I want to gather some thoughts about this. Say you've written a patch
-> series and are getting ready to send a -v2. If you set
-> --in-reply-to=ask, it'll show you a list of emails you've recently sent,
-> and their subject lines, and ask you to pick one to use the message ID
-> from. It'll set the In-Reply-To header to your selection.
+Git Gadget <gitgitgadget@gmail.com> writes:
 
-It sounds to me like you mean to call this during `git format-patch` -
-that is, `git format-patch -v2 --cover-letter --in-reply-to=ask master..branch
--o branch/`. That should set the In-Reply-To: header on your cover
-letter.
+> Forwarding this mail to the Git mailing list, as the original did not
+> make it there (for reasons unknown).
 
-There's also the possibility that you mean `git send-email
---in-reply-to=ask branch/v2*` - in which case I imagine the In-Reply-To:
-is added as the message is sent, but not added to the cover letter text
-file.
+It seems that the forwarding mechansim (if this weren't manual---I
+cannot tell) mangles whitespaces?  No need to resend, as the
+receiving end manually fixed them up.
 
-> 
-> I'd also like to add a custom header, X-Patch-Supersedes: <message ID>,
-> with a similar behavior & purpose.
+Thanks.
 
-Is the hope to store the message ID you choose from --in-reply-to=ask
-into the X-Patch-Supersedes: header? I'm not sure I understand what
-you're trying to solve; if you use `git format-patch --in-reply-to` it
-sounds like the X-Patch-Supersedes: and In-Reply-To: would be redundant.
-
-Is it possible you mean you want (sorry for pseudocode scribblings)
-[PATCH v2 1/1]->X-Patch-Supersedes = [PATCH 1/1]->Message-Id ? I think that
-wouldn't look good in a threaded mail client?
-
-> 
-> Thoughts?
-
-Or maybe I totally misunderstood :)
-
-What I think might be useful (and what I was hoping you were going to
-talk about when I saw the subject line) would be if the Message-Id is
-conveniently stored during `git send-email` on v1 and somehow saved in a
-useful place in order to apply to the In-Reply-To field on v2
-automatically upon `git format-patch -v2`. I'll admit I didn't know
-about --in-reply-to=ask and that helps with the pain point I've
-experienced sending out v2 before.
-
- - Emily
+>
+> ---------- Forwarded message ---------
+> From: Chris. Webster via GitGitGadget <gitgitgadget@gmail.com>
+> Date: Wed, Oct 31, 2018 at 11:58 PM
+> Subject: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for UNIX
+> and Windows
+> To: <git@vger.kernel.org>
+> Cc: Junio C Hamano <gitster@pobox.com>, Chris. Webster <chris@webstech.net>
+>
+>
+> From: "Chris. Webster" <chris@webstech.net>
+>
+> Use File::Spec->devnull() for output redirection to avoid messages
+> when Windows version of Perl is first in path.  The message 'The
+> system cannot find the path specified.' is displayed each time git is
+> run to get colors.
+>
+> Signed-off-by: Chris. Webster <chris@webstech.net>
+> ---
+>  contrib/diff-highlight/DiffHighlight.pm | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/diff-highlight/DiffHighlight.pm
+> b/contrib/diff-highlight/DiffHighlight.pm
+> index 536754583b..7440aa1c46 100644
+> --- a/contrib/diff-highlight/DiffHighlight.pm
+> +++ b/contrib/diff-highlight/DiffHighlight.pm
+> @@ -4,6 +4,11 @@ use 5.008;
+>  use warnings FATAL => 'all';
+>  use strict;
+>
+> +# Use the correct value for both UNIX and Windows (/dev/null vs nul)
+> +use File::Spec;
+> +
+> +my $NULL = File::Spec->devnull();
+> +
+>  # Highlight by reversing foreground and background. You could do
+>  # other things like bold or underline if you prefer.
+>  my @OLD_HIGHLIGHT = (
+> @@ -134,7 +139,7 @@ sub highlight_stdin {
+>  # fallback, which means we will work even if git can't be run.
+>  sub color_config {
+>         my ($key, $default) = @_;
+> -       my $s = `git config --get-color $key 2>/dev/null`;
+> +       my $s = `git config --get-color $key 2>$NULL`;
+>         return length($s) ? $s : $default;
+>  }
+>
+> --
+> gitgitgadget
