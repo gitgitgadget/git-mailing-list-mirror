@@ -2,98 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96A541F45F
-	for <e@80x24.org>; Thu,  9 May 2019 18:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3E11F45F
+	for <e@80x24.org>; Thu,  9 May 2019 19:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728711AbfEISw2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 14:52:28 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39273 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727718AbfEISw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 14:52:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557427939;
-        bh=x0W+2qk39w43Q+2rwdAy2rriIsS7s2Yn2DOi6iHCq10=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bzJKwsT6iigclX/YN4iOpiCTBk54dlZM/cyRfOBNKwkz/KsdlHSUnHRCcs4KiIq3V
-         cLMM8OYpaYONgcCcTCnscYIT5hsNlRQNve8u2hq/FA3FWHz9IRkrjF5E+nfB1n9rtU
-         o6qhSmSEXgEADHPQ+O4KPNV2kuHkiljmGIajdDxo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV67y-1hFLfh1J8o-00S5M0; Thu, 09
- May 2019 20:52:19 +0200
-Date:   Thu, 9 May 2019 20:52:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Git Gadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        chris <chris@webstech.net>
-Subject: Re: Fwd: [PATCH v2 1/1] diff-highlight: Use correct /dev/null for
- UNIX and Windows
-In-Reply-To: <xmqqh8a4fh68.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905092048130.44@tvgsbejvaqbjf.bet>
-References: <pull.59.git.gitgitgadget@gmail.com>        <pull.59.v2.git.gitgitgadget@gmail.com>        <bcbffa141116f869db40e4572f9824a3d090c20c.1541026721.git.gitgitgadget@gmail.com>        <CANg4QoEPWcnPpbUYcgR4PmECzjCOmroAmH2fMoX-vhw+W_dVnQ@mail.gmail.com>
- <xmqqh8a4fh68.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727463AbfEITAU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 15:00:20 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:42687 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728344AbfEISvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 14:51:43 -0400
+Received: by mail-pg1-f182.google.com with SMTP id 145so1654721pgg.9
+        for <git@vger.kernel.org>; Thu, 09 May 2019 11:51:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Y3SOUsmOb5d58lM4AwxJDyPV6FttcEVXL5Ct4i7rrOU=;
+        b=Gkf5tAKimfIoMd4y6Y4WlAU2XayiwdvEj643LSgH/uWpMSquSkE77t6Q9yoN3KsSqH
+         OdHy5a1J9RLeWtl8QxGZWIQd7E5vzM4vdyoLrAxiJrr+/xHrTAQyO/tcvI6GJJu4EM1U
+         uuUdsjUaY4mgMeWa/ap9mAxJJdWtyQEvkl5IMDNiYXS9QipPothjfl2uK2JzyM4lkjgn
+         ev37ruufWYRvEiA+ObijDXCIShKzFsRW9udZaBLnzsTTqC0J/mXMsndWoyYo6vThdL0Z
+         knEiVEWX18YSnQ/tlK10Ix6MHLYAvX4ftz7upw+fOJGj0T90z5Z1pd/LK0EOFSXpoJVK
+         RrCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Y3SOUsmOb5d58lM4AwxJDyPV6FttcEVXL5Ct4i7rrOU=;
+        b=IrLFd7F58h5x0a2Y9S7jNoL/p0E/qs3VYLJWEsPdsnNmIwcN0ce5IbvuRewCGzp/ku
+         qRwUJWdFtkZtIYe8XY6bLwcTJspUV4CqvrKARTaSTFJqTEM+XmADXOk3ZyUBYWNQM+UP
+         d+GHAC4ky8ZamRDLmkq62kOc86dlPFk1ybyG2/d10xON5gPJ2YlmtI1Kb4/3p5gnsSEZ
+         ceEvjY18vqKr1rslJTEqJzYb14IiO1qlKsWU8vTsMBIUlFqR/tadHCmCgWKM7Lq0hYyu
+         gtWfchw4HkBpjZICj5aAcEM0O5lRQ5m7/iS9mmuggFGKGM6elbAhln5UdM+z6DoZbGFg
+         Q5Yw==
+X-Gm-Message-State: APjAAAWeIossSucB/Bkv6r9tfxxX+ykekIaXPjE4jQHA+Zdx3CH0MNJg
+        uHoYhPs9gpyiVtrKbs/XcX7edCfdovacxw==
+X-Google-Smtp-Source: APXvYqwxwRu4ONzxpxx+pk09+YRgR9Sh/FTHy0HdgF5XGdFqmsEUpDEBs/sapG0IutvaVV2JDLVDWw==
+X-Received: by 2002:a62:479b:: with SMTP id p27mr7800195pfi.111.1557427901560;
+        Thu, 09 May 2019 11:51:41 -0700 (PDT)
+Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
+        by smtp.gmail.com with ESMTPSA id b20sm6198028pff.118.2019.05.09.11.51.40
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 09 May 2019 11:51:40 -0700 (PDT)
+Date:   Thu, 9 May 2019 11:51:36 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Proposal: Remembering message IDs sent with git send-email
+Message-ID: <20190509185136.GC14000@google.com>
+References: <20190508231013.GA25216@homura.localdomain>
+ <20190509001959.GB14000@google.com>
+ <20190509165025.GA18342@homura.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ncNbvsMUhnZHOTSRzzyNjOJUDT8H1KnC1dWgittoXe7LHhhpt4Z
- 8B9hPKoyDX6iHErfL8Tr0xLdQaqrReoJE/jxLKqBqM+ne2VqlbeiRZgeliBcGHwp5VCKm0s
- 8ziEFiaREP+nHUZMWHdvijhaBKWAoupOOvT3rg2xcM3krpDu7QArjm3Jo9rjzuJ9T+VffWe
- 8AYCB9IM1ZfYqs7iL+h1A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TdRxF/vzgJg=:3zBT3KkMAhVT8HW/Wb5pbV
- 4LYJAhHch2ahI1w5M2TYYnHObIdCEk+mrHVB3E3wLrHttpeWuZXiTGNWRwwHfz9gPcCY1G7xT
- Gtmvjug5NwxWhj7LTx0XYVMWyzxhAxGb3+al5GhmBftcDIZyGFC81w3E18trsl6asSfEpyzIY
- YudTMzCp/CX00/7Zlxy6MO3fmoo9rQZStxNdsyPo45k1Uso5YjgczWzlGcnca/Wo627QYUm50
- NquxmuyRDpPCf6+ugk8ZHnEqAcYk2a+/zqGOBy/8zHE/tyOvohp5MhanPyTN004ui6LcWI4Ya
- VP/negvBdDzCf6yVkTsl+yawXCxnXAn+iJ4aW33WfFV/g+M1TYAIBgxVrdkEYnovJ0XphL/gj
- F+yHiIwnB9K4KyEoE/qN293afGxjzQij7ZzHYOvmVv1sGbK7l5bS/V2WHKTBif3wapcnI/+SE
- BxCFfQJhQ5wbBFyrKBRiPAwIwZvsluAObqgZ3LAxPzh+I/nsiA87+rsXgScqXzeQ+kaDLI13v
- D/y+jzzi68o/QModX+5hKK/SXCORCNk5azT8wY3hgJCypWS8cnVrHLyf2AZc1Gr7RGBTNcuLO
- mgmFxTIIKtfEavzOj33FmifhM/iD44KqnJxpfUDVTO6C+ZwWk+4YcfiaedUruE9whYbjorXhA
- NgHuvmwL5UndpPv7+CraPG3067VYgISMm6Myrv414ChTsbFqhF6dfSGU/oCDyj3Ru2uvmJwEl
- 3L6Fyt4d5DCF+wAGKdgx2dwvJrlX+w4PUPHVOUe7ZFl/kL967MYmXF0Gut4oFJIOX5LEb0qUS
- HX2tcsFhjMNTazw/d3UKucPuF6t8TtbdHLyXgqpwCgGptdw00d3ModiLFsCkuIbG2Prdp13Ee
- K6dT8dlqRb2ME+6Ry5Sjc7d6uApoXPmAz1TBLcl5NEyutjp39YhrTFh2Hu2HV5WnlifxKCv+2
- qh5IeotMkgQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190509165025.GA18342@homura.localdomain>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, May 09, 2019 at 12:50:25PM -0400, Drew DeVault wrote:
+> On 2019-05-08  5:19 PM, Emily Shaffer wrote:
+> > What I think might be useful (and what I was hoping you were going to
+> > talk about when I saw the subject line) would be if the Message-Id is
+> > conveniently stored during `git send-email` on v1 and somehow saved in a
+> > useful place in order to apply to the In-Reply-To field on v2
+> > automatically upon `git format-patch -v2`. I'll admit I didn't know
+> > about --in-reply-to=ask and that helps with the pain point I've
+> > experienced sending out v2 before.
+> 
+> --in-reply-to=ask doesn't exist, that's what I'm looking to add. This
+> convenient storage mechanism is exactly what I'm talking about. Sorry
+> for the confusion.
 
-On Thu, 9 May 2019, Junio C Hamano wrote:
+Looking at the documentation, I suppose I hadn't realized before that
+--thread will generate a Message-Id for your cover letter. It does seem
+like we could teach --thread to check for the previous patch's cover
+letter in the directory provided by -o. Of course, this wouldn't work
+if the author was generating v2 and didn't have the v1 files available
+(i.e. different workstation or different author picking up the set).
 
-> Git Gadget <gitgitgadget@gmail.com> writes:
->
-> > Forwarding this mail to the Git mailing list, as the original did not
-> > make it there (for reasons unknown).
->
-> It seems that the forwarding mechansim (if this weren't manual---I
-> cannot tell) mangles whitespaces?  No need to resend, as the
-> receiving end manually fixed them up.
+I'm still not sure I see the value of the extra header proposed here.
+I'd appreciate an explanation of how you think it would be used, Drew.
 
-I did send it manually, via the GMail interface (which I seem to be unable
-to use effectively).
+I don't know much about emailed workflows outside of Git; is this
+something likely to be useful to other communities?
 
-Sorry for the trouble, and thanks for fixing it up.
-
-For the record, you could also always just fetch from the tag. The mails
-GitGitGadget sends (unless I manually forward mails) are generated from
-those tags, so (modulo bugs) the sent patch and the commit(s) reachable
-from the published tag are identical.
-
-In this instance, it would have been:
-
-	git fetch https://github.com/gitgitgadget/git \
-		pr-59/webstech/master-v2
-
-Thank you,
-Dscho
+ - Emily
