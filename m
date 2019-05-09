@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 376811F45F
-	for <e@80x24.org>; Thu,  9 May 2019 14:22:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3775D1F45F
+	for <e@80x24.org>; Thu,  9 May 2019 14:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726704AbfEIOWg (ORCPT <rfc822;e@80x24.org>);
+        id S1726706AbfEIOWh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 10:22:37 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37833 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726658AbfEIOWg (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 May 2019 10:22:36 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42312 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbfEIOWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 10:22:36 -0400
-Received: by mail-ed1-f67.google.com with SMTP id l25so2189097eda.9
-        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:33 -0700 (PDT)
+Received: by mail-ed1-f65.google.com with SMTP id w37so2205034edw.4
+        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=o0VmYP5pan6TPGnMAxI3fBzP60VjKr8r7bD9oEmRVBg=;
-        b=BMZpMgXWItJajWkWGc+oT1srn0fzmJb4TtJigpJPHHOXVcIz8bjp6zzuP3+05WQ+o5
-         bICAJy+jjVRGjUx28qXL9KjeVlOFYjQKG7T5LW/6vUqbd3Zh0RFMt9bi2nk5yOOcC1Da
-         KqKk5NOu9dvBRQENHHdiXEhzLkGK5dmcoArDLJsLS0etC+FmuPA+ADOfLPvsHxAxAwPn
-         XUXAHxHb91rAPpZ8YkgvXnpKOwhs2MWkf4YAI5zfLRg97Td6aEU+9dCtbfHFJkiCkLaK
-         A9zwKhaluKzHQDHDMNyFjVLEOiAkqB+WZqQFcZ2PcvtP5StQzskYbS2kDD3NH2cUCoqr
-         cTpQ==
+        bh=Sv5vmWbc5juRCAMsYYTWzW/PZHLWJqBOAvm+GWswM1Q=;
+        b=kn8SIihooLn+wj/xGcs42SOyEt0gBTNW7qvd19DG16FGv3z5cOtKUVFKntjRqmpKKa
+         JvuztAsEx38KUoqcrxfSzch4EZ4qc1hoyS5GJTzn7lE0RFzEQDdvd9gfEu/78F0zPf47
+         p5eLZR219llX0z/vUQ76B42WPPi+63st/Z6iP0es7Cnk7OfOuyCLoOgHtYmLL0Uou4qF
+         Y7zf5OXXXoCSuDI6idAKsNCL9Du90Atz3VMMhxtsSJVsLKtoYQ8zQaavNHEliuRGFx95
+         5q+l9ACNl1XXrW1+IXL6CR/8g0jUp6QX6wniQrdRoTQL6Lgzy0I6I/edRaZETO0S+Kl7
+         TPdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o0VmYP5pan6TPGnMAxI3fBzP60VjKr8r7bD9oEmRVBg=;
-        b=dTcAbFZnwvubL3fWJ/iIsaNVWrn8F6P2AnvrHDchTCIryYwU4aeLGTtijVRXe8P9Qu
-         IuAuRZBDB3OjGJGZgrOkWMqi9/HJZJQdJSwyENHKZCoX02FN6+YrbbTDsqbuqtvxRq0G
-         rZGt/kKUCAMrbJ3FAGe1NAme7no8Z5Cbp4UYNkUY/pQTM8DGWN7ZYW/dmySLHIIXSs7l
-         1VN1g6NPqk1Uxw7FAKEh9QwtIQEvBufv7DZyoX/1cl4a5f+WLag17ef0OBI6agBTHhRI
-         jy0gRHqJKpuc2AgWp0VPTEbIm3wWOBr2ix7zj6O/EC/us5XPHCXwZqVFTs553m358I9c
-         PVRg==
-X-Gm-Message-State: APjAAAVasbnMT/1qix+5JLX5S+OrQQ/L/8TYLqAol5cASIbpubFOXzWg
-        ltt3BlIIHPsgEWjwcSGULU2YF8xf
-X-Google-Smtp-Source: APXvYqygPx7TWvEaJkVo2XD93WTPrCPyyWWJMd02hOmNEC2S1oDyUDvbaP/7OmafbQ2OZxd/z7+0Qg==
-X-Received: by 2002:aa7:c402:: with SMTP id j2mr4386772edq.165.1557411752886;
-        Thu, 09 May 2019 07:22:32 -0700 (PDT)
+        bh=Sv5vmWbc5juRCAMsYYTWzW/PZHLWJqBOAvm+GWswM1Q=;
+        b=YviI+Jt6HTKJuSDVzQyC1arjY50zpUDcN11wmXtt6GnSuC2PzOuPXu/xaufS1qs1tS
+         937mIXd89WxQCzpowHb/HwClaO6UbBHdvLxbarsBLd/v8qH9OlgqXq6ZARRnHotAVkys
+         eQTpPBnOCZM9Qvk3hfcDOYOPsGRD5Uq6dkt6FiJiVuJs8FO4Th8iwdafEEO+f2XSNhZF
+         HUopdf3V98/3gPsZ/vLDFTuGvhqmpFx6Uz/9+2oAnzlHpxXk6XDRmYYrZylc0mOzFfj+
+         3NyWgROlqRuElDC9vfHJ2dxRLtWEUH0lpeO2r2RyXweSUXtXqs7cRX9btwOfmhj2GZpJ
+         2p5w==
+X-Gm-Message-State: APjAAAX4QwedS4hK6HXOt12pZAN5dJbS4qMzkunO8rsEH+z3iF4Ko6Zf
+        Ub6HuQaG59H+jlRwwakak5ynkCE2
+X-Google-Smtp-Source: APXvYqz7QBW9SmQirl2VLypLBUQrwXoeOkSDaMWlmZWEJSOofM9qAiAWBvbPc0POLvz7Snu3gewmWg==
+X-Received: by 2002:aa7:c387:: with SMTP id k7mr4351976edq.73.1557411754809;
+        Thu, 09 May 2019 07:22:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f8sm618884edd.15.2019.05.09.07.22.32
+        by smtp.gmail.com with ESMTPSA id v26sm343361eju.42.2019.05.09.07.22.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 May 2019 07:22:32 -0700 (PDT)
-Date:   Thu, 09 May 2019 07:22:32 -0700 (PDT)
-X-Google-Original-Date: Thu, 09 May 2019 14:22:20 GMT
-Message-Id: <a4082b827eb1999f6e46780b4147962d6dd87975.1557411749.git.gitgitgadget@gmail.com>
+        Thu, 09 May 2019 07:22:34 -0700 (PDT)
+Date:   Thu, 09 May 2019 07:22:34 -0700 (PDT)
+X-Google-Original-Date: Thu, 09 May 2019 14:22:22 GMT
+Message-Id: <130007d0e1ba274e5260aacd510c8104073fd7d1.1557411749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.112.v4.git.gitgitgadget@gmail.com>
 References: <pull.112.v3.git.gitgitgadget@gmail.com>
         <pull.112.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 02/11] commit-graph: return with errors during write
+Subject: [PATCH v4 04/11] commit-graph: remove Future Work section
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,285 +72,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The write_commit_graph() method uses die() to report failure and
-exit when confronted with an unexpected condition. This use of
-die() in a library function is incorrect and is now replaced by
-error() statements and an int return type.
+The commit-graph feature began with a long list of planned
+benefits, most of which are now complete. The future work
+section has only a few items left.
 
-Now that we use 'goto cleanup' to jump to the terminal condition
-on an error, we have new paths that could lead to uninitialized
-values. New initializers are added to correct for this.
+As for making more algorithms aware of generation numbers,
+some are only waiting for generation number v2 to ensure the
+performance matches the existing behavior using commit date.
 
-The builtins 'commit-graph', 'gc', and 'commit' call these methods,
-so update them to check the return value.
+It is unlikely that we will ever send a commit-graph file
+as part of the protocol, since we would need to verify the
+data, and that is expensive. If we want to start trusting
+remote content, then that item can be investigated again.
+
+While there is more work to be done on the feature, having
+a section of the docs devoted to a TODO list is wasteful and
+hard to keep up-to-date.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/commit-graph.c  | 19 +++++++------
- builtin/commit.c        |  5 ++--
- builtin/gc.c            |  7 ++---
- commit-graph.c          | 60 ++++++++++++++++++++++++++++-------------
- commit-graph.h          | 10 +++----
- t/t5318-commit-graph.sh |  8 ++++++
- 6 files changed, 70 insertions(+), 39 deletions(-)
+ Documentation/technical/commit-graph.txt | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 537fdfd0f0..2e86251f02 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -141,6 +141,7 @@ static int graph_write(int argc, const char **argv)
- 	struct string_list *pack_indexes = NULL;
- 	struct string_list *commit_hex = NULL;
- 	struct string_list lines;
-+	int result;
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+index 7805b0968c..fb53341d5e 100644
+--- a/Documentation/technical/commit-graph.txt
++++ b/Documentation/technical/commit-graph.txt
+@@ -127,23 +127,6 @@ Design Details
+   helpful for these clones, anyway. The commit-graph will not be read or
+   written when shallow commits are present.
  
- 	static struct option builtin_commit_graph_write_options[] = {
- 		OPT_STRING(0, "object-dir", &opts.obj_dir,
-@@ -168,10 +169,8 @@ static int graph_write(int argc, const char **argv)
- 
- 	read_replace_refs = 0;
- 
--	if (opts.reachable) {
--		write_commit_graph_reachable(opts.obj_dir, opts.append, 1);
--		return 0;
--	}
-+	if (opts.reachable)
-+		return write_commit_graph_reachable(opts.obj_dir, opts.append, 1);
- 
- 	string_list_init(&lines, 0);
- 	if (opts.stdin_packs || opts.stdin_commits) {
-@@ -188,14 +187,14 @@ static int graph_write(int argc, const char **argv)
- 		UNLEAK(buf);
- 	}
- 
--	write_commit_graph(opts.obj_dir,
--			   pack_indexes,
--			   commit_hex,
--			   opts.append,
--			   1);
-+	result = write_commit_graph(opts.obj_dir,
-+				    pack_indexes,
-+				    commit_hex,
-+				    opts.append,
-+				    1);
- 
- 	UNLEAK(lines);
--	return 0;
-+	return result;
- }
- 
- int cmd_commit_graph(int argc, const char **argv, const char *prefix)
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2986553d5f..b9ea7222fa 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1669,8 +1669,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		      "new_index file. Check that disk is not full and quota is\n"
- 		      "not exceeded, and then \"git reset HEAD\" to recover."));
- 
--	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
--		write_commit_graph_reachable(get_object_directory(), 0, 0);
-+	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
-+	    write_commit_graph_reachable(get_object_directory(), 0, 0))
-+		return 1;
- 
- 	repo_rerere(the_repository, 0);
- 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 020f725acc..3984addf73 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -664,9 +664,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		clean_pack_garbage();
- 	}
- 
--	if (gc_write_commit_graph)
--		write_commit_graph_reachable(get_object_directory(), 0,
--					     !quiet && !daemonized);
-+	if (gc_write_commit_graph &&
-+	    write_commit_graph_reachable(get_object_directory(), 0,
-+					 !quiet && !daemonized))
-+		return 1;
- 
- 	if (auto_gc && too_many_loose_objects())
- 		warning(_("There are too many unreachable loose objects; "
-diff --git a/commit-graph.c b/commit-graph.c
-index 66865acbd7..ee487a364b 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -851,27 +851,30 @@ static int add_ref_to_list(const char *refname,
- 	return 0;
- }
- 
--void write_commit_graph_reachable(const char *obj_dir, int append,
--				  int report_progress)
-+int write_commit_graph_reachable(const char *obj_dir, int append,
-+				 int report_progress)
- {
- 	struct string_list list = STRING_LIST_INIT_DUP;
-+	int result;
- 
- 	for_each_ref(add_ref_to_list, &list);
--	write_commit_graph(obj_dir, NULL, &list, append, report_progress);
-+	result = write_commit_graph(obj_dir, NULL, &list,
-+				    append, report_progress);
- 
- 	string_list_clear(&list, 0);
-+	return result;
- }
- 
--void write_commit_graph(const char *obj_dir,
--			struct string_list *pack_indexes,
--			struct string_list *commit_hex,
--			int append, int report_progress)
-+int write_commit_graph(const char *obj_dir,
-+		       struct string_list *pack_indexes,
-+		       struct string_list *commit_hex,
-+		       int append, int report_progress)
- {
- 	struct packed_oid_list oids;
- 	struct packed_commit_list commits;
- 	struct hashfile *f;
- 	uint32_t i, count_distinct = 0;
--	char *graph_name;
-+	char *graph_name = NULL;
- 	struct lock_file lk = LOCK_INIT;
- 	uint32_t chunk_ids[5];
- 	uint64_t chunk_offsets[5];
-@@ -883,15 +886,17 @@ void write_commit_graph(const char *obj_dir,
- 	uint64_t progress_cnt = 0;
- 	struct strbuf progress_title = STRBUF_INIT;
- 	unsigned long approx_nr_objects;
-+	int res = 0;
- 
- 	if (!commit_graph_compatible(the_repository))
--		return;
-+		return 0;
- 
- 	oids.nr = 0;
- 	approx_nr_objects = approximate_object_count();
- 	oids.alloc = approx_nr_objects / 32;
- 	oids.progress = NULL;
- 	oids.progress_done = 0;
-+	commits.list = NULL;
- 
- 	if (append) {
- 		prepare_commit_graph_one(the_repository, obj_dir);
-@@ -932,10 +937,16 @@ void write_commit_graph(const char *obj_dir,
- 			strbuf_setlen(&packname, dirlen);
- 			strbuf_addstr(&packname, pack_indexes->items[i].string);
- 			p = add_packed_git(packname.buf, packname.len, 1);
--			if (!p)
--				die(_("error adding pack %s"), packname.buf);
--			if (open_pack_index(p))
--				die(_("error opening index for %s"), packname.buf);
-+			if (!p) {
-+				error(_("error adding pack %s"), packname.buf);
-+				res = 1;
-+				goto cleanup;
-+			}
-+			if (open_pack_index(p)) {
-+				error(_("error opening index for %s"), packname.buf);
-+				res = 1;
-+				goto cleanup;
-+			}
- 			for_each_object_in_pack(p, add_packed_commits, &oids,
- 						FOR_EACH_OBJECT_PACK_ORDER);
- 			close_pack(p);
-@@ -1006,8 +1017,11 @@ void write_commit_graph(const char *obj_dir,
- 	}
- 	stop_progress(&progress);
- 
--	if (count_distinct >= GRAPH_EDGE_LAST_MASK)
--		die(_("the commit graph format cannot write %d commits"), count_distinct);
-+	if (count_distinct >= GRAPH_EDGE_LAST_MASK) {
-+		error(_("the commit graph format cannot write %d commits"), count_distinct);
-+		res = 1;
-+		goto cleanup;
-+	}
- 
- 	commits.nr = 0;
- 	commits.alloc = count_distinct;
-@@ -1039,16 +1053,21 @@ void write_commit_graph(const char *obj_dir,
- 	num_chunks = num_extra_edges ? 4 : 3;
- 	stop_progress(&progress);
- 
--	if (commits.nr >= GRAPH_EDGE_LAST_MASK)
--		die(_("too many commits to write graph"));
-+	if (commits.nr >= GRAPH_EDGE_LAST_MASK) {
-+		error(_("too many commits to write graph"));
-+		res = 1;
-+		goto cleanup;
-+	}
- 
- 	compute_generation_numbers(&commits, report_progress);
- 
- 	graph_name = get_commit_graph_filename(obj_dir);
- 	if (safe_create_leading_directories(graph_name)) {
- 		UNLEAK(graph_name);
--		die_errno(_("unable to create leading directories of %s"),
--			  graph_name);
-+		error(_("unable to create leading directories of %s"),
-+			graph_name);
-+		res = errno;
-+		goto cleanup;
- 	}
- 
- 	hold_lock_file_for_update(&lk, graph_name, LOCK_DIE_ON_ERROR);
-@@ -1107,9 +1126,12 @@ void write_commit_graph(const char *obj_dir,
- 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
- 	commit_lock_file(&lk);
- 
-+cleanup:
- 	free(graph_name);
- 	free(commits.list);
- 	free(oids.list);
-+
-+	return res;
- }
- 
- #define VERIFY_COMMIT_GRAPH_ERROR_HASH 2
-diff --git a/commit-graph.h b/commit-graph.h
-index 7dfb8c896f..d15670bf46 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -65,12 +65,12 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
-  */
- int generation_numbers_enabled(struct repository *r);
- 
--void write_commit_graph_reachable(const char *obj_dir, int append,
-+int write_commit_graph_reachable(const char *obj_dir, int append,
- 				  int report_progress);
--void write_commit_graph(const char *obj_dir,
--			struct string_list *pack_indexes,
--			struct string_list *commit_hex,
--			int append, int report_progress);
-+int write_commit_graph(const char *obj_dir,
-+		       struct string_list *pack_indexes,
-+		       struct string_list *commit_hex,
-+		       int append, int report_progress);
- 
- int verify_commit_graph(struct repository *r, struct commit_graph *g);
- 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index e80c1cac02..3b6fd0d728 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -23,6 +23,14 @@ test_expect_success 'write graph with no packs' '
- 	test_path_is_file info/commit-graph
- '
- 
-+test_expect_success 'close with correct error on bad input' '
-+	cd "$TRASH_DIRECTORY/full" &&
-+	echo doesnotexist >in &&
-+	{ git commit-graph write --stdin-packs <in 2>stderr; ret=$?; } &&
-+	test "$ret" = 1 &&
-+	test_i18ngrep "error adding pack" stderr
-+'
-+
- test_expect_success 'create commits and repack' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	for i in $(test_seq 3)
+-Future Work
+------------
+-
+-- After computing and storing generation numbers, we must make graph
+-  walks aware of generation numbers to gain the performance benefits they
+-  enable. This will mostly be accomplished by swapping a commit-date-ordered
+-  priority queue with one ordered by generation number. The following
+-  operations are important candidates:
+-
+-    - 'log --topo-order'
+-    - 'tag --merged'
+-
+-- A server could provide a commit-graph file as part of the network protocol
+-  to avoid extra calculations by clients. This feature is only of benefit if
+-  the user is willing to trust the file, because verifying the file is correct
+-  is as hard as computing it from scratch.
+-
+ Related Links
+ -------------
+ [0] https://bugs.chromium.org/p/git/issues/detail?id=8
 -- 
 gitgitgadget
 
