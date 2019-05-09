@@ -2,110 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 839881F45F
-	for <e@80x24.org>; Thu,  9 May 2019 18:00:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B44681F45F
+	for <e@80x24.org>; Thu,  9 May 2019 18:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbfEISAb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 14:00:31 -0400
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:46575 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbfEISAb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 14:00:31 -0400
-Received: by mail-pf1-f202.google.com with SMTP id a141so2096619pfa.13
-        for <git@vger.kernel.org>; Thu, 09 May 2019 11:00:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=lZmNgah7ZiHwZu0VOztyTEEez+7Zf2eSwCoqx6cVSBM=;
-        b=K+BcddSYZ7pOLqnJyiAUD08nkPn3+GLhSMTnAItnoVwTR8X3uSNESszmpQRsmZA8w3
-         uHdvpGjBTXQ8DwGeSQu+kqv5e8zc322ruDuSAU2XDCVNmDg4HThQKLzqgIvrCGELTL54
-         B87aH2863KeohHq4J8CRnpzsYjRQwU+TTWJ4zhANH5CBfIPJQbOQmJOYce+yUhTxpVYE
-         k4Bfibm43PojPyyLaE7Vxkgagq7tihYOTsLbHC21IIwhmS9zYxVtiu6tPOMTOT1CqdmZ
-         V58KNJwyvvLZJEcedcvhBoZX87FBZ3rELP4wS0jG2WfmWqx7Aiv4OZm66A0DwkFMDnvY
-         gViw==
+        id S1726686AbfEISEf convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 9 May 2019 14:04:35 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36418 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbfEISEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 14:04:35 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o4so4303340wra.3
+        for <git@vger.kernel.org>; Thu, 09 May 2019 11:04:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=lZmNgah7ZiHwZu0VOztyTEEez+7Zf2eSwCoqx6cVSBM=;
-        b=NJDIYODsYhMz7aeRE1TL/bkLeJmC999tc4Gl3fM1BJMNh6Zq/q52F5RONELtMhO8wq
-         HZJnoUaGbhKLrIT0qwEB1Wd5jq+AJyildX///Z4hn2Tm7cBjGqmU4R0FiSfsuufP1nTu
-         QTnnJ9GfBSvjXSD6tO2mnRlLQ2T1Ir7OFyR5hnPsP8lq2JwxTjCyMc9PZCCYT1xaBqN4
-         F/QU8LvIOx6SgP856EKEqxnF6VlSUoDnMernkTBnJ0rxvSp2ecebocWUuMOxRfZRhKOT
-         Jrk9wQGGMxmnhcSSzDwN2MoERQ7R7H+u5wraPzZY+wJWDQEN3X9CngaQo+D+MWrugWVk
-         O03A==
-X-Gm-Message-State: APjAAAXP5qw4V4W8qn6bosQX0N+Ae8RSzo/pLaOHfID5A+Wh92CNUZmw
-        OwC+8dSfLGwihNKJgL9nW2kTCXfVsFlC1FRj4obt
-X-Google-Smtp-Source: APXvYqyY5p8TxZefoWTVuRVS9vUZxDFIzxAtwDfYMy5m6tPgdKzPLacDY8z2T2CuQjgc85u1pl/INWvDX/78viNSslKG
-X-Received: by 2002:a63:295:: with SMTP id 143mr7359126pgc.279.1557424830177;
- Thu, 09 May 2019 11:00:30 -0700 (PDT)
-Date:   Thu,  9 May 2019 11:00:22 -0700
-In-Reply-To: <A0ADEE11-E3E1-4DE0-81BA-40771C783E4E@comcast.net>
-Message-Id: <20190509180022.91700-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <A0ADEE11-E3E1-4DE0-81BA-40771C783E4E@comcast.net>
-X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
-Subject: Re: Proposal: object negotiation for partial clones
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@comcast.net
-Cc:     jonathantanmy@google.com, matvore@google.com, git@vger.kernel.org,
-        jrn@google.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bQ+gL+4oicLodTXtkX1txMPcIHfBqb4quK3iEzfQQJM=;
+        b=mPl2MPJo4MFoDn5fasnESs7Thg6dt5SFEk3VQlAthy6MeZcFzeP5tv8dL0r7Gsdte6
+         3TPvysVzjVlh8etfZRNKRIMWs7DFQPjOTIfZOa84aLZgq6BVh366p/SGPUvb4EmNgBpV
+         3bOSzZGnSaptsKAz63bka/unVR4fJSkz3+0NqaJNu/X7Owzfa9QGbtrghZHWHQx7eZqh
+         uhby6Wwz3x0z9EROhgSbvreqtKtze6+t2ZNYazZl9S/mbxq12X8YtYSEaxuCcwvf59JP
+         wONUdin7Dq7cp2bqjEo1xOnBMlBufCXmyC4lEhMDZwEuzElh9TfSRCUPsUUiiXSwKxj/
+         NZ7w==
+X-Gm-Message-State: APjAAAV9CXKpZrL7xfHlJ1SM6jYYMMi69x4wb92lN7IV1VdtVMJ5ITY1
+        RRdDKbtgmTGX9EhU/A99EeE81sStwcf3TM+Bh4hWIIVN
+X-Google-Smtp-Source: APXvYqxiE+QTGLYByu3BFL8XUvQKO+Lg6suPz1fZSWjelZUoGxY2iiDYfUUj6I/Nl2c7UmU8nIyN1+J9mNUiylZhsTI=
+X-Received: by 2002:a5d:4206:: with SMTP id n6mr4443775wrq.58.1557425074102;
+ Thu, 09 May 2019 11:04:34 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190508105607.178244-1-gitster@pobox.com> <20190509114830.29647-4-avarab@gmail.com>
+In-Reply-To: <20190509114830.29647-4-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 9 May 2019 14:04:23 -0400
+Message-ID: <CAPig+cTJFTkJ7N+ksrN-nHeLzNmCbDpVgLRBJZtMjTsKSE_ijA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in
+ that order
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Heinrich Schuchardt <xypron.glpk@gmx.de>,
+        Brian M Carlson <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > On 2019/05/07, at 11:34, Jonathan Tan <jonathantanmy@google.com> wrote:
-> >
-> > To get an enumeration of available objects, don't you need to use only
-> > "blob:none"? Combining filters (once that's implemented) will get all
-> > objects only up to a certain depth.
-> >
-> > Combining "tree:<n>" and "blob:none" would allow us to reduce the numbe=
-r
-> > of trees transmitted, but I would imagine that the savings would be
-> > significant only for very large repositories. Do you have a specific us=
-e
-> > case in mind that isn't solved by "blob:none"?
->=20
-> I am interested in supporting large repositories. The savings seem to be =
-larger than one may expect. I tried the following command on two huge repos=
- to find out how much it costs to fetch =E2=80=9Cblob:none=E2=80=9D for a s=
-ingle commit:
->=20
-> $ git rev-list --objects --filter=3Dblob:none HEAD: | xargs -n 2 bash -c =
-'git cat-file -s $1' | awk '{ total +=3D $1; print total }'
->=20
-> Note the =E2=80=9C:=E2=80=9D after HEAD - this limits it to the current c=
-ommit.
->=20
-> And the results were:
->  - Linux: 2 684 054 bytes
->  - Chromium: > 16 139 570 bytes (then I got tired of waiting for it to fi=
-nish)
+On Thu, May 9, 2019 at 7:48 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Change the git-send-email command-line argument parsing and config
+> reading code to parse those two in the right order. I.e. first we set
+> our hardcoded defaults, then we read our config, and finally we read
+> the command-line, with later sets overriding earlier sets.
+>
+> This fixes a bug introduced in e67a228cd8 ("send-email: automatically
+> determine transfer-encoding", 2018-07-08). That change broke the broke
 
-Thanks for the numbers. Let me think about it some more, but I'm still
-reluctant to introduce multiple filter support in the protocol and the
-implementation for the following reasons:
+s/broke the broke/broke/
 
-- For large projects like Linux and Chromium, it may be reasonable to
-  expect that an infrequent checkout would result in a few-megabyte
-  download.
-- (After some in-office discussion) It may be possible to mitigate much
-  of that by sending root trees that we have as "have" (e.g. by
-  consulting the reflog), and that wouldn't need any protocol change.
-- Supporting any combination of filter means that we have more to
-  implement and test, especially if we want to support more filters in
-  the future. In particular, the different filters (e.g. blob, tree)
-  have different code paths now in Git. One way to solve it would be to
-  combine everything into one monolith, but I would like to avoid it if
-  possible (after having to deal with revision walking a few times...)
+> the reading of sendmail.transferencoding because it wasn't careful to
+> update our fragile code dealing with doing this in the previous
+> "defaults -> getopt -> config" order..
+
+s/\.\.$/./
+
+> But as we can see from the history for this file doing it this way was
+> never what we actually wanted, it just something we grew organically
+
+s/it/it's/
+
+> as of 5483c71d7a ("git-send-email: make options easier to configure.",
+> 2007-06-27) and have been dealing with the fallout since, e.g. in
+> 463b0ea22b ("send-email: Fix %config_path_settings handling",
+> 2011-10-14).
+>
+> As can be seen in this change the only place where we actually want to
+> do something clever is with the to/cc/bcc variables, where setting
+> them on the command-line (or using --no-{to,cc,bcc}) should clear out
+> values we grab from the config.
+>
+> All the rest are things where the command-line should simply override
+> the config values, and by reading the config first the config code
+> doesn't need all this "let's not set it was on the command-line"
+
+ECANTPARSE "let's not set it was on the command-line"
+
+> special-casing, as [1] shows we'd otherwise need to care about the
+> difference between whether something was a default or present in
+> config to fix the bug in e67a228cd8.
+>
+> 1. https://public-inbox.org/git/20190508105607.178244-2-gitster@pobox.com/
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
