@@ -7,86 +7,87 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 659A31F45F
-	for <e@80x24.org>; Thu,  9 May 2019 20:46:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F771F45F
+	for <e@80x24.org>; Thu,  9 May 2019 20:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726792AbfEIUqR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 16:46:17 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43893 "EHLO mout.gmx.net"
+        id S1726851AbfEIUyX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 16:54:23 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54715 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726682AbfEIUqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 16:46:16 -0400
+        id S1725992AbfEIUyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 16:54:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557434770;
-        bh=EVquBM4ipucH84dZl13UumgxWPtP5Yjm5z+YhtDJbPc=;
+        s=badeba3b8450; t=1557435258;
+        bh=dtFd4oTA3mPbyjqjR2hS0DP6HzYJreBI9BW2ssAo6J8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZQw2ngKf8RqJdwMo868oWbUxaSMSsSHaQLoEWA+uPCwp6HtJDIvSg7sQUbqKlCiEA
-         Wm20OrkhOIZZY4nCwimrLE8++uwRPz7NRpKwuKbZMiRfpM8H3wCY6sXZ5wlk47+iL0
-         VWjVFAC4dO0E4fJxZhtKRkR1SsQtTKr2gX3Ot+Ls=
+        b=l2STg/nJU5fr2BAAtNrbA6udoKtWwxwPKIsiiOGetDwome5cq/YTG5MmKXkKJaHRY
+         2sT4Fi4wbg79tpcWJP17+V44JgeYWc3t7a4cmvUol1SzaUimde67whZ3NaT0VPPSE/
+         akdTtNrkrObqWX4LOlGMkmaEQ8hvMCAwqeqU0t2s=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8pKi-1hYmdC2DfQ-00CDoi; Thu, 09
- May 2019 22:46:10 +0200
-Date:   Thu, 9 May 2019 22:45:54 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1gcwDj44zy-014nql; Thu, 09
+ May 2019 22:54:18 +0200
+Date:   Thu, 9 May 2019 22:54:01 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
 cc:     git@vger.kernel.org
-Subject: en/fast-export-encoding, was Re: What's cooking in git.git (May
- 2019, #01; Thu, 9)
+Subject: nd/merge-quit, was Re: What's cooking in git.git (May 2019, #01;
+ Thu, 9)
 In-Reply-To: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905092243080.44@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1905092251200.44@tvgsbejvaqbjf.bet>
 References: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kkMScXFJ5t79b9s1OY/cCTGNx5E3dFWBlNk2GYAUdtQpRbTOE0m
- YfahuNcKsQFlztq4+2sjDo3xXdI26fAO/qiQh9f6D67Hm4nl1KNi72Km0s/Ui03gRdwBp4D
- kgu9kbbY8uPkAkIUEYU83PzHzhjwbsReV/Qt3tqpQ4Gf/vEfH1qfYsLy3pozp70c9KlGw1R
- VyOl9bQRs8DljEDLO+p/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BUuIZXaYdnM=:CDYpNPGsixVoKZ43hRQ/jl
- c+0vLikv8/vfOUJvDYVkcuuWzTMwzpbVYDVeE59nFDHLIRoQ7psGQ5ohvvLPR5OrRU6MINdqY
- G9EoWCS10L2V7s/17oakMEaQ/ExtEvTOv6iPglQ2Z86uv59C7q9Ba5EzKtX/lotS0wY5mYZEW
- rH27oZ8YiVlW6JGayOHvGX27gd1jdquecRJR3cpniwan2g5yJiggwekRIeVriitcP1AaimYDX
- X1VbgTVCU2KUF51/2wY+mfQFbUfqg62tR/tkPdV+VaSKy5wBEpyFdXcSfseKmR8DRqOJR5PL1
- cMOazGa8VmO2BsrehIII04vGAhC6KHwiXSlWgHX2+TRpse4WfUaCnlZqRvIIRBS9oK3+a1z/h
- AWn1bmGW/R8pOa4Jbq3risZHbBWrPb6GZFiDiLe6Pv21ocWV6fhtxtYlX3xiw3DsA0TtQbq8O
- QAXFnAhIZiWkbaDGKiFj5S4TkiXPbdc/0uasPgSqQ1JVggmd1PgGLxFZ7aHw36A17IwV0CwTD
- ROzKdPDewQdKBRiadVu1kv5cZscR7fDjJERv4XwXUH6zM8GQf5S1qvtuwpSaQVSzqEFPVAhmN
- t22deHCRflbC87WhUdxLvmfajNM7XqeSr68hDhOHSrqFQ1HysOhmLDPDdt2v6IpnuE1C6/nRd
- 23xOhwR1Am0IFFofdeAStWKZ5JMecSmqLH/+/hHjxFAI9pxZPQmIqwQgD2sBTxF8qxTLo51Gh
- zNp3+rVI8BkMxG6PrEK5PTbxrQikxgatRQWis20C/XqqMIjzIGikanTCSXUJJ0cMO9+Zs9hEt
- +gF8cOLPL6Wwrm3rtBXv6EKmTAT8q5VtfwtLy7ku0Hu5wL+wROwMxbHMfcUxxTIK5Z+yBav+/
- IuUEjYJhduNwT0/C02tdZHdlloaOIWnjhWIuePa/z6mAUhscqHb1IPCR0VoAZW4GeQapI1dLT
- iZJ25JazJkw==
+X-Provags-ID: V03:K1:JaKqxiWsShktWNJEaCXrukqKftZLN/05eyx/TjOnNY6UV3Y1GLo
+ ek3VP1ws/S7axs3Tf4hGrWPCtz/ljTT9NxEXlXxQyqncnFlFTnrEyPrMCqXHtn5cwBaypNA
+ nBkHolMVRjU1Fv1HfAhbu9iQ1PApQYUg/WI88wF3x806Buw6AaKm03BXBsEr9BsnnTmUM8u
+ tYH5iYMLXPY5HhEu8hPCg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+K1TZrKFDYA=:BacUlK8Do8uIpxyUUmu5S2
+ 96laPnAWnTVPEfVwlHQ1/puI/aRSiO9OhwIxcXNAglxYS+wPNfZ/QCFe4d5D3xOtRVyDxUtoW
+ UX5n8jRA7fPMjNdLt7l7yTe6CNniBvhWyRZxpuIG5Lw71NYrzgWbMb9nBwfQpRQU74/H31DBO
+ Dj36lmhtgf6f8tpe8HTRcuyUNfIR6z2y4NXFLuCSB4SeQdX1nZ3V5qqFGLdD649kbC8m4Vw7h
+ J9ZjY08wbgjFbmiG/mgMuOIhDfqi2QqCIDI4oVsmXhh3KC7VD2+PExIVRnLUrCRYztFUw0Gdm
+ aC4DrD15kcMQwMVpRherr2Fl/799u+Qg0bxeUYK+lPF8nDCvW8eOIHYwWZsSH6LawTyZqMl5h
+ K1h2QLToTRsZAEu66Mxv0vjFUEFsCGI30hiZXqNetCfB3eqVdnLdyET6PNr5tFLMX4MLvPgGs
+ PwDxZ5YE6BJ2ga2dNgxsLX+heRt6qqCexEZcmpssUEo00hlMghx3V8xYQ2dVlqAhVYNvAZL2x
+ l4ZzWNmL2v9up/9azLf68c3h7WpdwZd43DVgpw6rnv3Io7xeWCoVq37rexMnf3+F9Y+g4acZT
+ YOnB9IQBZUX2tMrBMRXHYHj6oG4dYvgLQn4fgAU8NxxPwo2LdoEG8sFWUOXZWHL3f8sjn8kby
+ g+JzCr2uS7Rw+6MPLrCBBQg0WGTyfGrFOD66KdqtD4rZM95NAzXRcPsOV4yyf/+DomJrmTU+x
+ JCPmsuIF3H33Z1oIO2OPHSlBOz50Je08/ExdJihahp0SHjbcSM7xT0+gSM9DDxtQpZCiDwx3o
+ MRehpHstCWRoNtlb+qZf5AnZN3mLOWH0OQlqRu76LwKVE57mUCvSM5kOBSCJznsviM9YGQ0Ta
+ IP7zfl+vKQTW1Uo1JlrTlyCWYSQAX0mLnxo8ik+wudOopU3/tr14q1GPZILDsXklQ7tuySbsI
+ 853jmybeTYQ==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Elijah,
+Hi Junio & Duy,
 
 On Thu, 9 May 2019, Junio C Hamano wrote:
 
-> * en/fast-export-encoding (2019-05-07) 5 commits
->  - fast-export: do automatic reencoding of commit messages only if reque=
-sted
->  - fast-export: differentiate between explicitly utf-8 and implicitly ut=
-f-8
->  - fast-export: avoid stripping encoding header if we cannot reencode
->  - fast-import: support 'encoding' commit header
->  - t9350: fix encoding test to actually test reencoding
+> * nd/merge-quit (2019-05-07) 2 commits
+>  - merge: add --quit
+>  - merge: remove drop_save() in favor of remove_merge_branch_state()
 >
->  The "git fast-export/import" pair has been taught to handle commits
->  with log messages in encoding other than UTF-8 better.
+>  "git merge" learned "--quit" option that cleans up the in-progress
+>  merge while leaving the working tree and the index still in a mess.
+>
+>  Hmph, why is this a good idea?
 
-This breaks on Windows, see
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D8298&view=
+It also seems to work *only* on Linux. At least the tests break on macOS
+and on Windows:
+
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D8313&view=
 =3Dms.vss-test-web.build-test-results-tab
 
-Sadly, I ran out of time looking at it in detail.
+Sadly, I ran out of time do look into this (I am pretty busy preparing Git
+for Windows for v2.22.0-rc0).
 
 Ciao,
 Dscho
