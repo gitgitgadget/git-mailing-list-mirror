@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B7B51F45F
-	for <e@80x24.org>; Thu,  9 May 2019 21:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F6371F45F
+	for <e@80x24.org>; Thu,  9 May 2019 21:28:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbfEIV1e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 17:27:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53660 "HELO cloud.peff.net"
+        id S1726952AbfEIV2x (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 17:28:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53666 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726704AbfEIV1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 17:27:34 -0400
-Received: (qmail 10020 invoked by uid 109); 9 May 2019 21:27:33 -0000
+        id S1726946AbfEIV2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 17:28:53 -0400
+Received: (qmail 10036 invoked by uid 109); 9 May 2019 21:28:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 May 2019 21:27:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 May 2019 21:28:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6419 invoked by uid 111); 9 May 2019 21:28:10 -0000
+Received: (qmail 6437 invoked by uid 111); 9 May 2019 21:29:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 May 2019 17:28:10 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 May 2019 17:29:30 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 May 2019 17:27:31 -0400
-Date:   Thu, 9 May 2019 17:27:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 May 2019 17:28:51 -0400
+Date:   Thu, 9 May 2019 17:28:51 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 02/14] submodule: drop unused prefix parameter from some
- functions
-Message-ID: <20190509212731.GB15837@sigill.intra.peff.net>
+Subject: [PATCH 03/14] builtin: consistently pass cmd_* prefix to
+ parse_options
+Message-ID: <20190509212850.GC15837@sigill.intra.peff.net>
 References: <20190509212558.GA15438@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,120 +40,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We stopped using the "prefix" parameter of
-relocate_single_git_dir_into_superproject() and its callers in
-202275b96b (submodule.c: get_super_prefix_or_empty, 2017-03-14), where
-we switched to using the environment global directly.
+If a builtin uses RUN_SETUP to request that git.c enter the repository
+directory, we'll get passed in a "prefix" variable with the path to the
+original directory.  It's important to pass this to parse_options(),
+since we may use it to fix up relative OPT_FILENAME() options. Some
+builtins don't bother; let's make sure we do so consistently.
+
+There may not be any particular bugs fixed here; OPT_FILENAME is
+actually pretty rare, and none of these commands use it directly.
+However, this does future-proof us against somebody adding an option
+that uses it and creating a subtle bug that only shows up when you're in
+a subdirectory of the repository.
+
+In some cases, like hash-object and upload-pack, we don't specify
+RUN_SETUP, so we know the prefix will always be empty. It's still worth
+passing the variable along to keep the idiom consistent across all
+builtins (and of course it protects us if they ever _did_ switch to
+using RUN_SETUP).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/rm.c                |  6 +++---
- builtin/submodule--helper.c |  3 +--
- submodule.c                 | 10 ++++------
- submodule.h                 |  3 +--
- 4 files changed, 9 insertions(+), 13 deletions(-)
+ builtin/column.c              | 2 +-
+ builtin/hash-object.c         | 2 +-
+ builtin/range-diff.c          | 2 +-
+ builtin/rebase--interactive.c | 2 +-
+ builtin/upload-pack.c         | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 90cbe896c9..be8edc6d1e 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -61,7 +61,7 @@ static void print_error_files(struct string_list *files_list,
- 	}
- }
+diff --git a/builtin/column.c b/builtin/column.c
+index 5228ccf37a..e815e148aa 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -43,7 +43,7 @@ int cmd_column(int argc, const char **argv, const char *prefix)
  
--static void submodules_absorb_gitdir_if_needed(const char *prefix)
-+static void submodules_absorb_gitdir_if_needed(void)
- {
+ 	memset(&copts, 0, sizeof(copts));
+ 	copts.padding = 1;
+-	argc = parse_options(argc, argv, "", options, builtin_column_usage, 0);
++	argc = parse_options(argc, argv, prefix, options, builtin_column_usage, 0);
+ 	if (argc)
+ 		usage_with_options(builtin_column_usage, options);
+ 	if (real_command || command) {
+diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+index e055c11103..640ef4ded5 100644
+--- a/builtin/hash-object.c
++++ b/builtin/hash-object.c
+@@ -108,7 +108,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
  	int i;
- 	for (i = 0; i < list.nr; i++) {
-@@ -83,7 +83,7 @@ static void submodules_absorb_gitdir_if_needed(const char *prefix)
- 			continue;
+ 	const char *errstr = NULL;
  
- 		if (!submodule_uses_gitfile(name))
--			absorb_git_dir_into_superproject(prefix, name,
-+			absorb_git_dir_into_superproject(name,
- 				ABSORB_GITDIR_RECURSE_SUBMODULES);
- 	}
- }
-@@ -313,7 +313,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	}
+-	argc = parse_options(argc, argv, NULL, hash_object_options,
++	argc = parse_options(argc, argv, prefix, hash_object_options,
+ 			     hash_object_usage, 0);
  
- 	if (!index_only)
--		submodules_absorb_gitdir_if_needed(prefix);
-+		submodules_absorb_gitdir_if_needed();
+ 	if (flags & HASH_WRITE_OBJECT)
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index 784bd19321..9202e75544 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -32,7 +32,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	repo_diff_setup(the_repository, &diffopt);
  
- 	/*
- 	 * If not forced, the file, the index and the HEAD (if exists)
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8c72ea864c..7262f1a000 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2107,8 +2107,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 		return 1;
+ 	options = parse_options_concat(range_diff_options, diffopt.parseopts);
+-	argc = parse_options(argc, argv, NULL, options,
++	argc = parse_options(argc, argv, prefix, options,
+ 			     builtin_range_diff_usage, 0);
  
- 	for (i = 0; i < list.nr; i++)
--		absorb_git_dir_into_superproject(prefix,
--				list.entries[i]->name, flags);
-+		absorb_git_dir_into_superproject(list.entries[i]->name, flags);
+ 	diff_setup_done(&diffopt);
+diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
+index 4535523bf5..72fd4b53a8 100644
+--- a/builtin/rebase--interactive.c
++++ b/builtin/rebase--interactive.c
+@@ -302,7 +302,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 	if (argc == 1)
+ 		usage_with_options(builtin_rebase_interactive_usage, options);
  
- 	return 0;
- }
-diff --git a/submodule.c b/submodule.c
-index 2cfaba0599..0f199c5137 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1910,7 +1910,7 @@ int submodule_move_head(const char *path,
- 	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
- 		if (old_head) {
- 			if (!submodule_uses_gitfile(path))
--				absorb_git_dir_into_superproject("", path,
-+				absorb_git_dir_into_superproject(path,
- 					ABSORB_GITDIR_RECURSE_SUBMODULES);
- 		} else {
- 			char *gitdir = xstrfmt("%s/modules/%s",
-@@ -1997,8 +1997,7 @@ int submodule_move_head(const char *path,
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
-  */
--static void relocate_single_git_dir_into_superproject(const char *prefix,
--						      const char *path)
-+static void relocate_single_git_dir_into_superproject(const char *path)
- {
- 	char *old_git_dir = NULL, *real_old_git_dir = NULL, *real_new_git_dir = NULL;
- 	const char *new_git_dir;
-@@ -2040,8 +2039,7 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
-  * having its git directory within the working tree to the git dir nested
-  * in its superprojects git dir under modules/.
-  */
--void absorb_git_dir_into_superproject(const char *prefix,
--				      const char *path,
-+void absorb_git_dir_into_superproject(const char *path,
- 				      unsigned flags)
- {
- 	int err_code;
-@@ -2082,7 +2080,7 @@ void absorb_git_dir_into_superproject(const char *prefix,
- 		char *real_common_git_dir = real_pathdup(get_git_common_dir(), 1);
+-	argc = parse_options(argc, argv, NULL, options,
++	argc = parse_options(argc, argv, prefix, options,
+ 			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
  
- 		if (!starts_with(real_sub_git_dir, real_common_git_dir))
--			relocate_single_git_dir_into_superproject(prefix, path);
-+			relocate_single_git_dir_into_superproject(path);
+ 	opts.gpg_sign = xstrdup_or_null(opts.gpg_sign);
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index 42dc4da5a1..6da8fa2607 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -33,7 +33,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 	packet_trace_identity("upload-pack");
+ 	read_replace_refs = 0;
  
- 		free(real_sub_git_dir);
- 		free(real_common_git_dir);
-diff --git a/submodule.h b/submodule.h
-index 9e18e9b807..8072e6d6dd 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -141,8 +141,7 @@ void submodule_unset_core_worktree(const struct submodule *sub);
- void prepare_submodule_repo_env(struct argv_array *out);
+-	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
++	argc = parse_options(argc, argv, prefix, options, upload_pack_usage, 0);
  
- #define ABSORB_GITDIR_RECURSE_SUBMODULES (1<<0)
--void absorb_git_dir_into_superproject(const char *prefix,
--				      const char *path,
-+void absorb_git_dir_into_superproject(const char *path,
- 				      unsigned flags);
- 
- /*
+ 	if (argc != 1)
+ 		usage_with_options(upload_pack_usage, options);
 -- 
 2.21.0.1382.g4c6032d436
 
