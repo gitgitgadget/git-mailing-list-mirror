@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE5F1F45F
-	for <e@80x24.org>; Thu,  9 May 2019 14:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 334C51F45F
+	for <e@80x24.org>; Thu,  9 May 2019 14:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726739AbfEIOWk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 10:22:40 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38444 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726711AbfEIOWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 10:22:39 -0400
-Received: by mail-ed1-f66.google.com with SMTP id w11so2202908edl.5
-        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:39 -0700 (PDT)
+        id S1726743AbfEIOWl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 10:22:41 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40642 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726658AbfEIOWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 10:22:38 -0400
+Received: by mail-ed1-f68.google.com with SMTP id j12so1456520eds.7
+        for <git@vger.kernel.org>; Thu, 09 May 2019 07:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uzybkjUBKgSztD4N3xI6wIUUgBNDjyuAwYKjXy2pLIo=;
-        b=DO+fCmJjiTxBIjSkEW2QASefCY35Hih5Y1+jv/bIDgs1/N1J03C41HEVqTcpcZ1Z7n
-         tYolbdKdY5DZPjphM78cncSHhKiJvVlwSKBq3p7B0XvbGuBbr9RZMb47S8sMwF02MgrX
-         GZyF0cKq72tFCTOgDnHezxxQQDKk1P1po7HkhnieDcexZktLSvIVmCCHGgV92lrT2acP
-         xMBk+5hwuXIazZ0jCSCcWWnpuJZcnhAWZzaRlaLj2mJj2uUOzna9lYV8Q32z9i92HH0p
-         LzvA4WLECUdxmg7fmjJBqXgjhd2JLE2bsIVxmLXgyFmKDZsPn1aQO249Y14QCm+GYv/U
-         Xaig==
+        bh=0ay1OwqMXDNzHrxRUO+Eyr9+cg6irR7gpIuycBbKZLI=;
+        b=ceD25EIsGaz3ItbwTrT+a3MYTwNRstO05hNBBeDiFHVyteTtSQG6bSQuQJx4BTOiLj
+         4HasZXQHrI+hyww7mYSatO39Ebs/xRHcXry4f7HgZYzB+a/Rt3UGOfR8vjxFl15ksBG8
+         TMG4mQ1K3fhy1VnpT7oqqkiDf9NBb/IHKFtDE/MOTnVzZX/uiixvtuDg/l/BhitWtlwC
+         6yKGPT7UpHIcbQdDqVLenoyvXeONt6rrlkqL4dvcPQMD+8SLa7JmcrytFe6MfSb+tu2G
+         AeCuxFYZ1awRvctGleYiWf2alTt0SzGmvE46rdxhkfbiwH9HLtQ+oWOV4IiLTTftZr2P
+         F72Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uzybkjUBKgSztD4N3xI6wIUUgBNDjyuAwYKjXy2pLIo=;
-        b=HwTc2j7Eck2tMf5KR/SLDyk58ur5jwDOolgZz8mKP3eNK8ZBRLQmL1d2YK/glLABVG
-         G4bP7ZsTXPPE7Ifjk9QMqmowS3k+E8J+13FHjML6gciFM17fYeA2wEuovYhczCo9/3p1
-         TGI49jcw8G2SVn7KdboKRqf6B4YAAWWCtAC39oQMvyoLDNwh3bQfKhn6DO2R77j3lpb5
-         Ms24XnyRJdTaPB7SZUcx5ta0i0LdYbRzu/vmMgvIRvmiL514r/KQXZ+Fr2AOo5NjHRhd
-         t2315sUi6epmPh85j1kqMwOx0WJiRKegve/snG1g8YXkTOrc7xMSVR/iWwHxQ3sthc/R
-         sxkg==
-X-Gm-Message-State: APjAAAUuqV7unY5l9DnjO1v2IRN+EW2YTkOrHcKeOrLj4YB7yuhyqjTP
-        rCdiswSeK/yCgPsLABNJt9dy7fYC
-X-Google-Smtp-Source: APXvYqzN9PbyZOMC+SdSTPeFabGaFyIkRxW/CvHHzprkM8UxMip6lyS7/6PppFfyitLUHzNbtQvh/Q==
-X-Received: by 2002:a50:fd0a:: with SMTP id i10mr4290589eds.117.1557411758230;
-        Thu, 09 May 2019 07:22:38 -0700 (PDT)
+        bh=0ay1OwqMXDNzHrxRUO+Eyr9+cg6irR7gpIuycBbKZLI=;
+        b=gEcyITrkZQr+wVO0h5hMJx/v4jxapw8qkZwPp55Izl0LW5FXd+xfW7vBsmCS17JSAi
+         203zDONI/Qa9YJDhAs6D6j1GQ7h0+5TV51vLQQAaL8bolb2zP+PUvqyQU4X9BIuj+sf5
+         /GZqMPprioxoUV31MF1TKNEysSTouH6U+V5CnNHZfsoSzwoN3nwITGBQsC9hEJBRYzCp
+         L6KtcX49jud9YK2Ypk6IGNazipOnlcZ2mtKI8Se3UBCGLUquIdjKz58xr1aTtzjBqzJT
+         OLTmLXirYvOLM3McunlC7cXJdeJw2cJ3tsXImE4V88nevJ8iAP7qCJa59nR6UrsW0GfQ
+         OV5Q==
+X-Gm-Message-State: APjAAAWtNuVAsuOEGXz1JvLo5/ofdl9L4xRMCvqFKkgcIXeyJmQiBxPe
+        WaEFR+GdfYxcBflyTXjITLp3K9jj
+X-Google-Smtp-Source: APXvYqwbwY/tRHNeMlVyOMhUfPQ/K9ToFzmME5XRnlVpsAljmIqsLcyYWwH8dgnVTfmT/peu5xsNwg==
+X-Received: by 2002:a05:6402:6d2:: with SMTP id n18mr4440693edy.122.1557411756638;
+        Thu, 09 May 2019 07:22:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w54sm650175edw.40.2019.05.09.07.22.37
+        by smtp.gmail.com with ESMTPSA id o9sm588021edh.95.2019.05.09.07.22.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 May 2019 07:22:37 -0700 (PDT)
-Date:   Thu, 09 May 2019 07:22:37 -0700 (PDT)
-X-Google-Original-Date: Thu, 09 May 2019 14:22:26 GMT
-Message-Id: <8f7129672a15514138a3d677ce22522f21b43ec0.1557411749.git.gitgitgadget@gmail.com>
+        Thu, 09 May 2019 07:22:36 -0700 (PDT)
+Date:   Thu, 09 May 2019 07:22:36 -0700 (PDT)
+X-Google-Original-Date: Thu, 09 May 2019 14:22:24 GMT
+Message-Id: <30c1b618b139e637122d9476f54d5eb8ce8e0d57.1557411749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.112.v4.git.gitgitgadget@gmail.com>
 References: <pull.112.v3.git.gitgitgadget@gmail.com>
         <pull.112.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 08/11] commit-graph: extract fill_oids_from_all_packs()
+Subject: [PATCH v4 06/11] commit-graph: extract fill_oids_from_packs()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,58 +75,115 @@ From: Derrick Stolee <dstolee@microsoft.com>
 The write_commit_graph() method is too complex, so we are
 extracting methods one by one.
 
-Extract fill_oids_from_all_packs() that reads all pack-files
-for commits and fills the oid list in the context.
+This extracts fill_oids_from_packs() that reads the given
+pack-file list and fills the oid list in the context.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ commit-graph.c | 83 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 47 insertions(+), 36 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index fb25280df1..730d529815 100644
+index 58f0f0ae34..80c7069aaa 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -950,6 +950,19 @@ static void fill_oids_from_commit_hex(struct write_commit_graph_context *ctx,
- 	strbuf_release(&progress_title);
+@@ -867,6 +867,51 @@ int write_commit_graph_reachable(const char *obj_dir, unsigned int flags)
+ 	return result;
  }
  
-+static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
++static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
++				struct string_list *pack_indexes)
 +{
-+	if (ctx->report_progress)
-+		ctx->progress = start_delayed_progress(
-+			_("Finding commits for commit graph among packed objects"),
-+			ctx->approx_nr_objects);
-+	for_each_packed_object(add_packed_commits, ctx,
-+			       FOR_EACH_OBJECT_PACK_ORDER);
-+	if (ctx->progress_done < ctx->approx_nr_objects)
-+		display_progress(ctx->progress, ctx->approx_nr_objects);
++	uint32_t i;
++	struct strbuf progress_title = STRBUF_INIT;
++	struct strbuf packname = STRBUF_INIT;
++	int dirlen;
++
++	strbuf_addf(&packname, "%s/pack/", ctx->obj_dir);
++	dirlen = packname.len;
++	if (ctx->report_progress) {
++		strbuf_addf(&progress_title,
++			    Q_("Finding commits for commit graph in %d pack",
++			       "Finding commits for commit graph in %d packs",
++			       pack_indexes->nr),
++			    pack_indexes->nr);
++		ctx->progress = start_delayed_progress(progress_title.buf, 0);
++		ctx->progress_done = 0;
++	}
++	for (i = 0; i < pack_indexes->nr; i++) {
++		struct packed_git *p;
++		strbuf_setlen(&packname, dirlen);
++		strbuf_addstr(&packname, pack_indexes->items[i].string);
++		p = add_packed_git(packname.buf, packname.len, 1);
++		if (!p) {
++			error(_("error adding pack %s"), packname.buf);
++			return 1;
++		}
++		if (open_pack_index(p)) {
++			error(_("error opening index for %s"), packname.buf);
++			return 1;
++		}
++		for_each_object_in_pack(p, add_packed_commits, ctx,
++					FOR_EACH_OBJECT_PACK_ORDER);
++		close_pack(p);
++		free(p);
++	}
++
 +	stop_progress(&ctx->progress);
++	strbuf_reset(&progress_title);
++	strbuf_release(&packname);
++
++	return 0;
 +}
 +
  int write_commit_graph(const char *obj_dir,
  		       struct string_list *pack_indexes,
  		       struct string_list *commit_hex,
-@@ -1006,17 +1019,8 @@ int write_commit_graph(const char *obj_dir,
- 	if (commit_hex)
- 		fill_oids_from_commit_hex(ctx, commit_hex);
+@@ -916,42 +961,8 @@ int write_commit_graph(const char *obj_dir,
+ 	}
  
--	if (!pack_indexes && !commit_hex) {
--		if (ctx->report_progress)
--			ctx->progress = start_delayed_progress(
--				_("Finding commits for commit graph among packed objects"),
--				ctx->approx_nr_objects);
--		for_each_packed_object(add_packed_commits, ctx,
--				       FOR_EACH_OBJECT_PACK_ORDER);
--		if (ctx->progress_done < ctx->approx_nr_objects)
--			display_progress(ctx->progress, ctx->approx_nr_objects);
+ 	if (pack_indexes) {
+-		struct strbuf packname = STRBUF_INIT;
+-		int dirlen;
+-		strbuf_addf(&packname, "%s/pack/", obj_dir);
+-		dirlen = packname.len;
+-		if (ctx->report_progress) {
+-			strbuf_addf(&progress_title,
+-				    Q_("Finding commits for commit graph in %d pack",
+-				       "Finding commits for commit graph in %d packs",
+-				       pack_indexes->nr),
+-				    pack_indexes->nr);
+-			ctx->progress = start_delayed_progress(progress_title.buf, 0);
+-			ctx->progress_done = 0;
+-		}
+-		for (i = 0; i < pack_indexes->nr; i++) {
+-			struct packed_git *p;
+-			strbuf_setlen(&packname, dirlen);
+-			strbuf_addstr(&packname, pack_indexes->items[i].string);
+-			p = add_packed_git(packname.buf, packname.len, 1);
+-			if (!p) {
+-				error(_("error adding pack %s"), packname.buf);
+-				res = 1;
+-				goto cleanup;
+-			}
+-			if (open_pack_index(p)) {
+-				error(_("error opening index for %s"), packname.buf);
+-				res = 1;
+-				goto cleanup;
+-			}
+-			for_each_object_in_pack(p, add_packed_commits, ctx,
+-						FOR_EACH_OBJECT_PACK_ORDER);
+-			close_pack(p);
+-			free(p);
+-		}
 -		stop_progress(&ctx->progress);
--	}
-+	if (!pack_indexes && !commit_hex)
-+		fill_oids_from_all_packs(ctx);
+-		strbuf_reset(&progress_title);
+-		strbuf_release(&packname);
++		if ((res = fill_oids_from_packs(ctx, pack_indexes)))
++			goto cleanup;
+ 	}
  
- 	close_reachable(ctx);
- 
+ 	if (commit_hex) {
 -- 
 gitgitgadget
 
