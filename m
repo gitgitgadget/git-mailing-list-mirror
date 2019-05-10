@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED5E11F45F
-	for <e@80x24.org>; Fri, 10 May 2019 12:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0967C1F45F
+	for <e@80x24.org>; Fri, 10 May 2019 12:20:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727225AbfEJMKw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 08:10:52 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:46498 "EHLO
+        id S1727258AbfEJMT7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 08:19:59 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:36484 "EHLO
         mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbfEJMKw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 08:10:52 -0400
-Received: by mail-yw1-f68.google.com with SMTP id a130so4513295ywe.13
-        for <git@vger.kernel.org>; Fri, 10 May 2019 05:10:52 -0700 (PDT)
+        with ESMTP id S1727071AbfEJMT7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 08:19:59 -0400
+Received: by mail-yw1-f68.google.com with SMTP id q185so4577697ywe.3
+        for <git@vger.kernel.org>; Fri, 10 May 2019 05:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=Ttz7cFugtbVJDauhmT/ZXn7HdfdNqIE7rDigK4LwdYY=;
-        b=k9Z5ieR3g0lB5bvC0Lw9d7/1iQJP3eUW6lJNdWi6ohxu+/Uui6C8hRcxoAJZh8Pcn6
-         fp8Son6gntbMb+YAn6izouFqWSCJETiAUn38kchwx5PXKAJDlo72wWwY5izkpmBHc1a3
-         2k6MibTtdq9Xp8uOObQxwEG2T+kiOfLXTi5KgxyHl4fHtIFh19Ih0LAAac39pwp0wzGF
-         BaSW2C8uFKiFzbMTGKSTlG83DaO2J9WRI5xKxB5G3LP+Usn9/rM4K2lD4Dlj3HhZZ7vN
-         MzhyovhVSS977mt/h/1Lgu4UsgcpytXkvyX+XPcXRFZQ1eo6Psj48Kjxzrf9pNGKTBQu
-         9ATQ==
+        bh=BKWtSgMc33v5axEm7FritOkdPgzXgNusPTq+6xqE6mE=;
+        b=ZKtYLXzORBSmwrWjL/d9iiu6wMa1sguJNqyrsF5qshuQAu4ApZ/iqvzAAlKfXpzAvc
+         3fTFY3Xy/KaaGusoDq9crWDNb8r07hERqTdcXPQ/yMj8l7K9EfPps81WoAknUUk+HB3u
+         tmvG0lxb1NjsVPm315kvQfyX48079r7Vq9BoNIRsB+db2A+zlRB59Qi/UiK1BkOD17fq
+         5CuSYd4K2FlCkPwyNEeCfoU7M3b2g+QE48Ai4Zc5zz9VIMKIegssxd0lyQE8wULaB6t1
+         KiEDT4XSyRXbHi3gWwcTZ/mS+12hLjblMXPjAZVJb7aeWlSbdg26VRBq5TBFLWZj38AL
+         kTFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Ttz7cFugtbVJDauhmT/ZXn7HdfdNqIE7rDigK4LwdYY=;
-        b=pO3wOUzpfeowYKXuEwk8nq3IxErFOQDPK4gaVoTlJZzdnVTT0VoJQneUtzw+63pAX2
-         3wnw9XVzH6aMFW1HWk/Ou0pqoTV8XDC3lDghOB1Dx7E4aqs1J2ceZwGaC5Amz+W5yNlK
-         GXq0i5fxdKDZTk21FccsPQ3ByVjQdmxfHwMNlkkT+w3foJ7u5QEVxToJX4Mi75V7miLw
-         j/+F3Vz1GzFkYlaUy+JS/vsCVVu4zFqxt4+GptW+9EV8cvyq107NJqFQ1WO+CeEfTWJ0
-         oZedtQfR7LansyJrm6xooQNvxYjgeCoykPpV8zBREjEzfSR72NKP5J0jSWkm0Fnha565
-         SDPA==
-X-Gm-Message-State: APjAAAVJe2Uo5P8J2W7Coe3yzE2ifonl5mtLVM66919HnvdWSn4+2aNn
-        6QQN/ggtqSNmAA0ME5oFKJvpLVso3pI=
-X-Google-Smtp-Source: APXvYqxHZtYMGzNgfYeErnsK02QydQyvKYToQ+pFrYO8kAHEdeYHcncbaMB7wMM8VXrwZPcHSruDlA==
-X-Received: by 2002:a81:5cd6:: with SMTP id q205mr5095833ywb.13.1557490251282;
-        Fri, 10 May 2019 05:10:51 -0700 (PDT)
+        bh=BKWtSgMc33v5axEm7FritOkdPgzXgNusPTq+6xqE6mE=;
+        b=EIVQo7Wu4eee0zzpWa6OYVgel+nt6vN+FZToluQPmzoODwOuGF05eEUnqWAs9nVlaT
+         gvdSczGyqD4tFZLxrU6wiRy18FVvwV6SlT5+lbFVp9c0Rge+BkUtWFUuFrWKZjt/D968
+         hOJiV2I6mn5nCKW+uoc9lk5naAKf3YunD+B2fOoDgaGHMxlK/0ZsHuLpc5ndwB4LuNHe
+         bXQ1hqIhtIlR6J9UWdHDdhuzDPWl6ZKsFKqrlbSFQEy2f4rxXmGTS+IdBiZzwvxEiyrx
+         Gv3VNShJ5Fv6vMoY/q7k1PByrTS6ze3RPsJX0cTBAff/IkBupy5XvQoJVX5tgGGxRihz
+         9PNg==
+X-Gm-Message-State: APjAAAVasTv/mxAVbSNt7Q/r7pTthnjWQlObPAgIiD91ZPXnMggt4zlk
+        5WmLhctsn6H1PGNCs6FRmE33ZaOKePs=
+X-Google-Smtp-Source: APXvYqw/LE95+MuH3GjemI19lZNZxPB0HQ981EBfzrKFwiH5wfw0cdN3lk/tuQx53AmChul/MuNQAg==
+X-Received: by 2002:a0d:ec10:: with SMTP id v16mr5522631ywe.15.1557490798465;
+        Fri, 10 May 2019 05:19:58 -0700 (PDT)
 Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id a11sm2801333ywh.49.2019.05.10.05.10.50
+        by smtp.gmail.com with ESMTPSA id t206sm1433113ywt.109.2019.05.10.05.19.57
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 May 2019 05:10:50 -0700 (PDT)
-Subject: Re: [PATCH 03/14] builtin: consistently pass cmd_* prefix to
- parse_options
+        Fri, 10 May 2019 05:19:57 -0700 (PDT)
+Subject: Re: [PATCH 14/14] verify-commit: simplify parameters to
+ run_gpg_verify()
 To:     Jeff King <peff@peff.net>, git@vger.kernel.org
 References: <20190509212558.GA15438@sigill.intra.peff.net>
- <20190509212850.GC15837@sigill.intra.peff.net>
+ <20190509213229.GN15837@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3851512b-9957-8e77-f4f7-3a859f808676@gmail.com>
-Date:   Fri, 10 May 2019 08:10:49 -0400
+Message-ID: <f0d06858-038b-793e-b1fe-faedff7963ef@gmail.com>
+Date:   Fri, 10 May 2019 08:19:56 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
  Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <20190509212850.GC15837@sigill.intra.peff.net>
+In-Reply-To: <20190509213229.GN15837@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -70,28 +70,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/9/2019 5:28 PM, Jeff King wrote:
-> If a builtin uses RUN_SETUP to request that git.c enter the repository
-> directory, we'll get passed in a "prefix" variable with the path to the
-> original directory.  It's important to pass this to parse_options(),
-> since we may use it to fix up relative OPT_FILENAME() options. Some
-> builtins don't bother; let's make sure we do so consistently.
-> 
-> There may not be any particular bugs fixed here; OPT_FILENAME is
-> actually pretty rare, and none of these commands use it directly.
-> However, this does future-proof us against somebody adding an option
-> that uses it and creating a subtle bug that only shows up when you're in
-> a subdirectory of the repository.
-> 
-> In some cases, like hash-object and upload-pack, we don't specify
-> RUN_SETUP, so we know the prefix will always be empty. It's still worth
-> passing the variable along to keep the idiom consistent across all
-> builtins (and of course it protects us if they ever _did_ switch to
-> using RUN_SETUP).
+On 5/9/2019 5:32 PM, Jeff King wrote:
+> Instead, let's do our type check by loading the object via
+> parse_object(). That will attach the buffer to the struct so it can be
+> used later by check_commit_signature(). And it ensures that
+> lookup_commit() will return something sane.
 
-Good explanation that we _should_ be using these parameters. Forgetting
-to add these prefix uses would probably not be obvious if a patch added
-RUN_SETUP.
+This is a good idea.
+  
+> -static int run_gpg_verify(const struct object_id *oid, const char *buf, unsigned long size, unsigned flags)
+> +static int run_gpg_verify(struct commit *commit, unsigned flags)
+>  {
+>  	struct signature_check signature_check;
+>  	int ret;
+>  
+>  	memset(&signature_check, 0, sizeof(signature_check));
+>  
+> -	ret = check_commit_signature(lookup_commit(the_repository, oid),
+> -				     &signature_check);
+> +	ret = check_commit_signature(commit, &signature_check);
+>  	print_signature_buffer(&signature_check, flags);
+
+Bonus drop of the_repository.
+
+>  
+>  	signature_check_clear(&signature_check);
+> @@ -38,26 +37,20 @@ static int run_gpg_verify(const struct object_id *oid, const char *buf, unsigned
+>  
+>  static int verify_commit(const char *name, unsigned flags)
+>  {
+> -	enum object_type type;
+>  	struct object_id oid;
+> -	char *buf;
+> -	unsigned long size;
+> -	int ret;
+> +	struct object *obj;
+>  
+>  	if (get_oid(name, &oid))
+>  		return error("commit '%s' not found.", name);
+>  
+> -	buf = read_object_file(&oid, &type, &size);
+> -	if (!buf)
+> +	obj = parse_object(the_repository, &oid);
+
+...and it is back, but "higher" up. That's fine.
+
+> +	if (!obj)
+>  		return error("%s: unable to read file.", name);
+> -	if (type != OBJ_COMMIT)
+> +	if (obj->type != OBJ_COMMIT)
+>  		return error("%s: cannot verify a non-commit object of type %s.",
+> -				name, type_name(type));
+> -
+> -	ret = run_gpg_verify(&oid, buf, size, flags);
+> +				name, type_name(obj->type));
+>  
+> -	free(buf);
+> -	return ret;
+> +	return run_gpg_verify((struct commit *)obj, flags);
+>  }
+
+You pointed out that you thought this patch was subtle. I agree that
+there is a slightly changed functionality, but it seems to be
+improving a possibly wrong behavior.
 
 Thanks,
 -Stolee
