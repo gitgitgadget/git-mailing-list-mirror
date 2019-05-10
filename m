@@ -2,85 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03CF31F45F
-	for <e@80x24.org>; Fri, 10 May 2019 15:10:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 822A71F45F
+	for <e@80x24.org>; Fri, 10 May 2019 15:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbfEJPKD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 11:10:03 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:34384 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727346AbfEJPKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 11:10:02 -0400
-Received: by mail-ed1-f51.google.com with SMTP id p27so5599583eda.1
-        for <git@vger.kernel.org>; Fri, 10 May 2019 08:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=BUXexiY/bamQKT9TqST9MiImqvhd2w4nQTkXXWLpcm4=;
-        b=lBflIeB5NERZfBnApQHDpdAExk1O8Edq89tCLedS6RZ+AAtMtjsce6sMg4s2KWzQvw
-         RnWG8u+lcD7YuIsCkq5dA6iBBwnphkbQx/TdkGX6c8S22UyFRh7ldZ9aIOcl31//NSIO
-         rsaoBAxOlNgvf/+a+xcre0KyWN6VraL8BSta5SS+O7WWzBMiuufehadY7Y0AkG/LyHmX
-         qAxiaLrfi3doViukTouQuE7pfa7qZeVTT9YyGvzGJyLdO4XGS8TxOkd+y+Jt1nAdcipI
-         dqgIC2dUUUfrGxQdGtvdore95J34PXmeEe9nHRP1aFN0e10Ijwcw29UjKN5RGsobOJtv
-         6rcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=BUXexiY/bamQKT9TqST9MiImqvhd2w4nQTkXXWLpcm4=;
-        b=sY/5QzoJOJ15wRFZCx+yuBt3uzb9m6/gKuQBxBLaF113LOAj1mChcXAJ+NIq1uvAVy
-         bVDE+Gb5nWDQcoJG0MTwH/QXlgvLe1qSs5YS4klSeOmOW505nO1Pkc5GTCqSpTmyXrID
-         Aryod2aTfdu/IShAXHgQEK2HBgns5GQG7rcMt0iEGQL8oXmHthiJiOkjsSvvMpXjOz5Q
-         txwLLd/v7HUFDDiUppfx2is/iES63vqeZM5OJ4Ax0jy9fc6wwWHdQnBZdMvH9xw6Uwch
-         msPuDQF2kEt+arkvPWzd3hc4wwl8JNQJfD9w+g6/e8ku7ZfoWZ8KCF6VWBQAy0bZRPIW
-         s16g==
-X-Gm-Message-State: APjAAAVQVbsTuVXNiAwSuOMZmAuIlzO06kjElR+Lmi2En8d7PPAcNaDy
-        lTnF2utKRle2XJ+f1Bh6lgqYAIW3jWU=
-X-Google-Smtp-Source: APXvYqzAOaa0vZfuA117UhLPEyp3O4Cc8z92VLFVdOQELXDWsMGHJP5ZcOvKkkcorz5ob6WmfIxWjw==
-X-Received: by 2002:a50:acc1:: with SMTP id x59mr11485840edc.264.1557501000559;
-        Fri, 10 May 2019 08:10:00 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id x30sm1516368edd.74.2019.05.10.08.09.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 10 May 2019 08:09:59 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: I made a flame graph renderer for git's trace2 output
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-Date:   Fri, 10 May 2019 17:09:58 +0200
-Message-ID: <87zhnuwdkp.fsf@evledraar.gmail.com>
+        id S1727600AbfEJPKm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 11:10:42 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:36656 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727346AbfEJPKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 11:10:42 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id P7AVhhwc1draxP7AVhwmig; Fri, 10 May 2019 16:10:40 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=aulWLQ49AAAA:20 a=EDlGl3OzOG1hMp6laB0A:9
+ a=QEXdDO2ut3YA:10 a=APqgjxcRD6nqXdMuohh7:22
+Subject: Re: How to exchange rerere/redo resolutions?
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <b8e56556-6c83-9e37-38e9-ac67f51b5cd2@iee.org>
+ <20190510140539.77elozdmfnlkys3v@tb-raspi4>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <744473e7-14e6-fed0-664b-ac0a75e80919@iee.org>
+Date:   Fri, 10 May 2019 16:10:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20190510140539.77elozdmfnlkys3v@tb-raspi4>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfGFPSG3CXdMigRpMKPIq+0S0+Y9tA4o+oYNcC5+8CGWUI6HqNvXPR0XwwgFMjTCvfkLPZAFy3gAA1FRcAVTgR9ReGzTvTnnHSC6/HWfLxafZiMs/pfC4
+ aaXO4aNZ8hDb+fTkYhfUrmRgqdWXJnPsvr2aUUr1Cqpg2umkWyKYV+kyAmT5eYBBafKyXLDvDE9zalx3sWixh1avi81bid04cwPOEiEDBJaM1ulqbYTXgzAZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a flamegraph of where git's test suite spends its time on my box:
-https://vm.nix.is/~avar/noindex/git-tests.svg
+Hi Torsten,
 
-I hacked up a script for this today to plot trace2 production data, as
-noted there it's at:
-https://github.com/avar/FlameGraph/tree/stackcollapse-git-tr2-event
-
-What are flamegraphs? See http://www.brendangregg.com/flamegraphs.html
-
-As noted in TODOs in the script there's various stuff I'd like to do
-better, and this also shows how we need a lot more trace regions to get
-granular data.
-
-But it's already quite cool, and I'll keep improving it. I'll submit a
-PR to Brendan's parent repo once I'm happy enough with it, I figure it
-makes more sense there than in git.git, but maybe we'd eventually want
-to teach the test suite to optionally use something like this.
+On 10/05/2019 15:05, Torsten Bögershausen wrote:
+> On Fri, May 10, 2019 at 12:23:28AM +0100, Philip Oakley wrote:
+>> Hi,
+>>
+>> Is there a mechanism for exchanging the rerere resolutions, so that future
+>> fixups, e.g. future clashes on pu rather than master, can be sent with patch
+>> series?
+>>
+>> My current use case that there is a large patch [1] for updating long to
+>> size_t for use on Windows, which notes that it will have clashes with pu,
+>> but doesn't appear to have any method  of sending a rerere resolution (which
+>> the author is already aware of) to the list. Being able to flag up such
+>> fixes should simplify such conflict resolutions.
+>>
+>> I had some very rough ideas about how the resolutions should look rather
+>> similar to three-way conflict markers, with the resolution as the 'base'
+>> (between the ||| - ||| marks), which would be resolved via a --base merge
+>> strategy.
+>>
+>> However if there is already a method for exchanging resolutions, where
+>> should I look?
+>>
+>> Philip
+>>
+>> [1] <20190413151850.29037-1-tboegi@web.de> [PATCH v3 1/1] Use size_t instead
+>> of 'unsigned long' for data in memory
+>>
+>> --
+>> Philip
+>>
+> That is not an answer to the question.
+> If it helps, I can rebase the first patch onto git.git/master, and the
+> cherry-pick the next patches. That can happen next week or so.
+> And then let it go through the normal pu->next->master->git-for-windows workflow.
+>
+Thanks for the offer, but I should be OK. dscho has already asked that 
+for testing on Git for Windows I rebase my series back onto master, 
+rather than pu. The series is at 
+https://github.com/git-for-windows/git/pull/2179#issuecomment-491095412
+--
+Philip
