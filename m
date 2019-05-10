@@ -2,79 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 009151F45F
-	for <e@80x24.org>; Fri, 10 May 2019 13:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 989EC1F45F
+	for <e@80x24.org>; Fri, 10 May 2019 13:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727814AbfEJNvA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 09:51:00 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50235 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727787AbfEJNu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 09:50:59 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C38956E8A2;
-        Fri, 10 May 2019 09:50:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Eq/OypYETv7y
-        MxywFjo55ksmP5w=; b=AxIrZfQtiKYoSzlUCl9G3grvGWR+tTPwozV1JLMiDH/m
-        +oPKMlSwx5Vh7BnyKiwxEjiaOkHcE7yWOuUNs41eTsw141NMUkbVEskdKgM76mlK
-        O6rI7dbBn6rGHpPD7/96IUOGxH8xrCYOeMkIMucfalw9J7Dr1YDDCaAlev4cXIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=up5UAu
-        Tohu6McbNXdAHrdTfXo0Tj9i9x6Gdbb5nI1Ztn+r39CuA+sopN22FAvCYVokjMuu
-        +qhNvHf5eXjXj+Xk31YNIZJn/TT5wo/vb47ZrTEPmySVca+pqsOdm5+ZHl7pv5E/
-        DjePesKOy7GQETgnqQeRzS5wcGXSPFz3KcoEA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB9006E8A1;
-        Fri, 10 May 2019 09:50:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EDA576E878;
-        Fri, 10 May 2019 09:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Brian M Carlson <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/3] send-email: fix cli->config parsing crazyness
-References: <20190508105607.178244-1-gitster@pobox.com>
-        <20190509114830.29647-1-avarab@gmail.com>
-Date:   Fri, 10 May 2019 22:50:52 +0900
-In-Reply-To: <20190509114830.29647-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 9 May 2019 13:48:27 +0200")
-Message-ID: <xmqqr296e7ur.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727727AbfEJNy3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 09:54:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49935 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727249AbfEJNy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 09:54:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557496463;
+        bh=6L0UcH1T89vXDlkdhccgS6M9u1YK3DcLMlBI+H+pRCc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BQ4KBVPEFL92UkJJ/9VXBYQh9iJvPPfmpP99ui9pLlW+Ktyz3peRCPPwH32z5oGSF
+         mbkdtlAoasbr2Vg7ZnmbM7akfCXZP1LWO0HzOrYj2Q5WNwmkUjASQym72FYo8ulj4R
+         Z9dcJianNWjgywyUgBGDApHLVBmTY6W6/FTEKL2Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOfcU-1hKAIb2jlG-0067n5; Fri, 10
+ May 2019 15:54:23 +0200
+Date:   Fri, 10 May 2019 15:54:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: en/fast-export-encoding, was Re: What's cooking in git.git (May
+ 2019, #01; Thu, 9)
+In-Reply-To: <f8eb246f-a936-e9df-4bb4-068b86a62baf@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1905101551110.44@tvgsbejvaqbjf.bet>
+References: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905092243080.44@tvgsbejvaqbjf.bet> <CABPp-BGfLrggLTmo+9LuLH_iGJoRNv7SHATw4XQCNx4Rk6wc7g@mail.gmail.com> <f8eb246f-a936-e9df-4bb4-068b86a62baf@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A1AE548C-732A-11E9-8971-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OM80ZQoMXITuVCC2OHG1PJRLIo6ZZ29hDDWCqg6ifEUhC1OfkiR
+ 0e1R5z+Ip6Hh5Zdjv23aBPUuM8TbwiKyJtiLS8WK2N50t9gd1jhB2e7EX6aL3jYxEdGJlVp
+ kh1vPSHF0sA69aJb1Nrsty99D2h/mmZuc9owT3NJkcoWy9TQTN5CZ7vMq7AbMkjAHgQVLuP
+ q6fevDppWYr9g2nI0HqhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PeWEl0EOVRI=:gtwWGTLyAUQVc1huUzFbuv
+ Ej4laa0Fcqr+p22QBbpRpNL7c/NQHoTpibQtqku8VS9TkX2xw7Q0xZsoQ2diQb2aCHFjUuEJn
+ oLCGqpaIw5dUUT8qQkJ4ZziAvZzaWMhqk0oOZEv0bKzpT5zY/IRD4LVHPDPA8VKxBmU5AAFxv
+ Jnr/L2snUpQpZyn4/LiQ0Ar/Lct0OstMfiMgJ63SfetR4bZ/6PXf3bjdDZaQ60w5xEyKYehJh
+ 4MAUaquo5SOl+W/j5MYGpPJvHDHwYoHfEbmOPr7QsB4egdMAp6ivexhbIJsmECWTJ6KKuYlpB
+ dFKCxnM400LaLPKSri9PfcMp65b5dVI627XXVvftyDTe03xl04B/SyKutCGC/0/hmCGP2unH3
+ pDFdVRSiHlSsz6AnjQZldQNihJxDjgjwNduOyc+W4E5ojOEoNuT2LMXhlMlNypsITvh1mKGms
+ oAVfDMg4MNu32S7Pzd5Io9qdi2OEoMlk1PAaAlzHm8YKqnesrRBWRaaivWIcK7s/XuHfVsqG/
+ 0ADYuQHCHps8hUa/C5mTqqr+POxUP91pFPquzmCs7Nup1mwpwSJ21bkQP5HQPkapA+YPlMM7z
+ 0USG9HZ4m2p0u5AnQw1VTsVeyrxCcOUPy2YJZPNi+9ldb7utr0tGkP45q5kDgBHRnv139bmpx
+ v3EYlxIbvIa1sNRk2UuA6D1AQyZKqsg7Dna+WqoU5G4+0OuZuhJ2d55TGpSxm+yC74I6p0Pv5
+ AGdB63ArMpnaNAqVFJ2kGpOCuj1QjttJ3SxKKqzVgDElL7jnb48vi90ejmMSzHjGqQtIHh8It
+ DVgLNAilhPI6JDFVVBKwi6ZEXuUHENC2ygFG+/4kQ8U1mtSlO14YqbbIsSaYEanAaBzlNgxjc
+ yvT9zQ16B9KRjdwSZi+FT3e/L+vIJk/tkFy8eELMj6A0bfXjbUC3+GwtR+oSJxrcpdGhxIBNh
+ gepJ1MfiKjg==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi Hannes & Elijah,
 
-> This is a proposed replacement for Junio's version of the
-> ... the
-> root cause is that we're needlessly doing the config->cli parsing in
-> the wrong order, so let's just fix that.
+On Fri, 10 May 2019, Johannes Sixt wrote:
 
-Yup, that's absolutely the right approach.  I just wanted to avoid
-restructuring that heavily, but I have no problem as long as it is
-somebody else, and somebody who is more competent in writing Perl
-than I am, doing the heavy lifting ;-)
+> Am 10.05.19 um 02:14 schrieb Elijah Newren:
+> > Hi Johannes,
+> >
+> > On Thu, May 9, 2019 at 1:46 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> >>
+> >> Hi Junio & Elijah,
+> >>
+> >> On Thu, 9 May 2019, Junio C Hamano wrote:
+> >>
+> >>> * en/fast-export-encoding (2019-05-07) 5 commits
+> >>>  - fast-export: do automatic reencoding of commit messages only if r=
+equested
+> >>>  - fast-export: differentiate between explicitly utf-8 and implicitl=
+y utf-8
+> >>>  - fast-export: avoid stripping encoding header if we cannot reencod=
+e
+> >>>  - fast-import: support 'encoding' commit header
+> >>>  - t9350: fix encoding test to actually test reencoding
+> >>>
+> >>>  The "git fast-export/import" pair has been taught to handle commits
+> >>>  with log messages in encoding other than UTF-8 better.
+> >>
+> >> This breaks on Windows, see
+> >> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D8298&=
+view=3Dms.vss-test-web.build-test-results-tab
+> >>
+> >> Sadly, I ran out of time looking at it in detail.
+> >
+> > Thanks for the heads up, and for taking some time to check it out.
+> > The error doesn't seem obvious from the log.  Does Azure Pipelines
+> > have anything like CircleCI's "Debug with SSH" feature[1]?  (Where one
+> > can click a "Rerun job with SSH", and it'll restart the pipeline but
+> > also print out an ssh command someone can use to directly access the
+> > box on which the test is running, in order to be able to investigate.)
+> >  Failing that, assuming I can find a Windows system somewhere, is
+> > there a list of steps for setting up a development environment and
+> > building git on Windows?
+>
+> I'll just tell you why things go wrong here:
+>
+> In these cases, a byte that is intended to be an ISO8859-something
+> characters is passed via the command line. This cannot work as intended
+> on Windows, because the command line is not just a stream of bytes, but
+> a string of characters. On Windows (and presumably also on macOS), the
+> command line bytes are interpreted as UTF-8. As such, the bytes undergo
+> some encoding conversions between UTF-8 and UTF-16LE. That cannot work
+> when the bytes are not correct UTF-8 characters.
+>
+> To make the tests pass you have to pass the ISO8859-something characters
+> via a file.
 
+Thanks for the explanation. Yes, we cannot rely on command-lines (or for
+that matter, environment variables) being opaque byte sequences, as that
+does not work on Windows: byte sequences *always* have an encoding, and
+are pretty much always converted into UTF-16 before continuing.
+
+As to Debug with SSH: this is not possible in Azure Pipelines. What I
+frequently do is to edit azure-pipelines.yml (usually restricting to one
+particular job, e.g. Windows build, and to one particular test script) and
+ci/ and t/ heavily, to get tons of debug information, then open a PR on
+GitGitGadget to start a build.
+
+That's how I investigated the macOS Mojave breakages, for example.
+
+Ciao,
+Dscho
