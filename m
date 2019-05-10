@@ -2,96 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 782791F45F
-	for <e@80x24.org>; Fri, 10 May 2019 20:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 795451F45F
+	for <e@80x24.org>; Fri, 10 May 2019 20:40:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbfEJUXQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 16:23:16 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39063 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727762AbfEJUXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 16:23:16 -0400
-Received: by mail-ed1-f65.google.com with SMTP id e24so6720467edq.6
-        for <git@vger.kernel.org>; Fri, 10 May 2019 13:23:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4QNvdvHWjuYSMULHK1kCc0ynrC23uWd54jQ9w+ujNfw=;
-        b=N5rRi7MM+W+InpEKVwDj8kjKDw4bzh9fWRfXyfT444Wg4NLkPzjk7uV64JdyRHn4Y1
-         M0IpzJ5BzSWPNB4QUnbQ1Jh4vI3WwEwSrEh+/Xj74tDq9jolnVOJ26u4nAE6njv3rjPM
-         SGM6VC03+e1MDCy2Nn4XP8xM3YVlQjSpZj4iTgvJFJyr1r5/UEGYuRQKKqxeEdHHpDri
-         iYu4yw6HqddZTI3EOapgMogvdxd74VtiCpawEQi7HXyyuePYFAZZeM/XW7K7MwKEGwUc
-         7ic0EFVNSRnzxkV9RTyxWzw7JYaI9nTxdeaqHCM3J9aEQRALVY6W4YIE8RSphxv3gIoq
-         GWLg==
+        id S1727878AbfEJUkN convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 10 May 2019 16:40:13 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43065 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727676AbfEJUkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 16:40:13 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r4so9184991wro.10
+        for <git@vger.kernel.org>; Fri, 10 May 2019 13:40:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4QNvdvHWjuYSMULHK1kCc0ynrC23uWd54jQ9w+ujNfw=;
-        b=MPReTa5g/BunEoZIs/qSmL9A5OPq4ccPES2m27qG7cS+5mAIKookU6RAvskVV4nNv2
-         vhmKP01A0dVLX7iq7G1wAwaD4RCu5EmXEo4mJwxdM676beWPjNgFvj7BYF+QrHMy1d0P
-         LBnIOs2AInGNc8UDgyj2rDSyfac8Up/+EsSnHmcWct1rbPBM4KYL0SAo8rTLkAid58F3
-         xK/+GUvrpMyJk3yt2LnFR0e2uJMF2SF/uhwEmK1zmTc0I7Ejz7Sq3hGLCzd0Cvvvk1Mg
-         MEI3fstLEv31ZnFkHKkjR5T25RHhJJCfcE7zZR3KPCqMNQAjGVGvAXJYLPjwwg8SCtOA
-         fhaQ==
-X-Gm-Message-State: APjAAAXKf2Lq4B0TKM7dxhTyBugq3MgDJlcggGVShuse+W4Fd47qfq+b
-        /QoqDNEapY0DtqqJ49H2Z5tfFTTa
-X-Google-Smtp-Source: APXvYqzWDeqgY0ADrxtPpZo6l/qpcfcl6utB3EmqXQsVQ+NPeJTEiTP/2yCab62Rt5DkgewKm/ZSxA==
-X-Received: by 2002:a50:ba1a:: with SMTP id g26mr13736092edc.90.1557519794608;
-        Fri, 10 May 2019 13:23:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f25sm66423ede.44.2019.05.10.13.23.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 May 2019 13:23:14 -0700 (PDT)
-Date:   Fri, 10 May 2019 13:23:14 -0700 (PDT)
-X-Google-Original-Date: Fri, 10 May 2019 20:23:11 GMT
-Message-Id: <ec9eed5c88b062b7bdfdb5f82b3716f1341ce01c.1557519792.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.188.git.gitgitgadget@gmail.com>
-References: <pull.188.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] status: fix display of rebase -ir's `label` command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tLPqJnrTjNPCVz8p7UezKVS5WaCJTEKDtAhQ5XijUmM=;
+        b=B3oyfkXJXMiDYt05ivmuhLmVZF0fjIjk/Jm0+EhIhp3Emo6cMKv+YygZmdb6nJy/gt
+         D+tcGB+wpBtKQgVB9mTpX2p/BaEz27P1Y2iFoR1aueJPjHyePZsjSO3Uy8pqhD+yJF2D
+         Cxzl+bfOcopTlZbhbGouvdHHQY4K6ktGHzh7mr3KhWQAfggtS0PWK5GIz9qSzzXC9hzX
+         4GX24JN8slK/N+vpjlVtZszRCDNGsn7HqVazg4Ior4vAYEAProWdisbrWKDQyXdRjrtd
+         VqNPpDeBfLCN4WndhAPkbT/CR3B4j3/vi0u2SnWOrtL5n/JgdKUrYvcB4AFn0swzKcSU
+         m8mw==
+X-Gm-Message-State: APjAAAWpoGnBgNxynM+XuhaCjUGR5qd2i/AOb8Ha9x5BXULqIpXZ1DKP
+        HyTHwLBJ2yTyv01Gjp11J/UIpW88WCT22HteSL9uLiGk
+X-Google-Smtp-Source: APXvYqzQWGik33oqDpD1phD+D845emrx3yeHLnqPrPC3aUVgfdLDbH1dKchRdmW8o9MffSsPoIoRSnbGsZz53+FwBSs=
+X-Received: by 2002:a5d:4206:: with SMTP id n6mr1330388wrq.58.1557520811683;
+ Fri, 10 May 2019 13:40:11 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CAH8yC8nTyq5Fjc-6fUNn1iwkCO9i1Vrc0vFqxEVg4Eor3h-0Lw@mail.gmail.com>
+ <20190509102037.27044-1-sunshine@sunshineco.com> <87ftpnhknn.fsf@evledraar.gmail.com>
+In-Reply-To: <87ftpnhknn.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 10 May 2019 16:39:58 -0400
+Message-ID: <CAPig+cR30dnurYq=G_Ki2Nf7vFCkebcR+egvhbGE5w8XSBKQBA@mail.gmail.com>
+Subject: Re: [PATCH] check-non-portable-shell: support Perl versions older
+ than 5.10
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeffrey Walton <noloader@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, May 9, 2019 at 8:33 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> On Thu, May 09 2019, Eric Sunshine wrote:
+> > Although this implementation is well supported in reasonably modern Perl
+> > versions (5.10 and later), it fails in a couple ways with older versions
+> > (such as Perl 5.8 shipped with ancient Mac OS 10.5).
+> > [...]
+> > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+>
+> This fix is fine, but just for the record: There's no problem with
+> assigning to $_, it just throws an error about $_ *because* of the
+> readline() issue, i.e. it'll fail, clobber $_ to a read-only value, and
+> off we go.
+> So just assigning to $_ is fine, and you don't need to localize it.
 
-The argument of a `label` command does *not* want to be turned into an
-abbreviated SHA-1.
+Thanks for the clarification. I'll drop the misleading discussion of
+$_ from the commit message and eliminate $_ localization from the
+patch proper.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- wt-status.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> Anyway, I tested this on 5.8, it works, then looked at the output and
+> wondered if I could improve it, came up with this:
+> [...large WIP patch snipped...]
+> I figured it was better than the current output just squashing such a
+> long line together [...]
 
-diff --git a/wt-status.c b/wt-status.c
-index 1f564b12d2..5fc7de6027 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1197,7 +1197,9 @@ static void abbrev_sha1_in_line(struct strbuf *line)
- 	int i;
- 
- 	if (starts_with(line->buf, "exec ") ||
--	    starts_with(line->buf, "x "))
-+	    starts_with(line->buf, "x ") ||
-+	    starts_with(line->buf, "label ") ||
-+	    starts_with(line->buf, "l "))
- 		return;
- 
- 	split = strbuf_split_max(line, ' ', 3);
--- 
-gitgitgadget
+That could be done, though it is outside the scope of this
+portability-fix patch.
+
+Also, the existing output with its sufficiently clear problem
+explanations is probably "good enough" to clue in the developer of new
+test code as to what needs fixing, so I'm also not sure that it's
+worth that much effort to prettify what should be a relatively rare
+warning message from code which has not yet made it into the project.
+I wouldn't be opposed to someone working on it, but I don't plan on
+tackling it myself.
