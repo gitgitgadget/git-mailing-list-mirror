@@ -2,100 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89C6D1F45F
-	for <e@80x24.org>; Fri, 10 May 2019 13:50:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 009151F45F
+	for <e@80x24.org>; Fri, 10 May 2019 13:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727775AbfEJNuE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 09:50:04 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58831 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727247AbfEJNuE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 09:50:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557496196;
-        bh=ApzuMYqPEdmuziZ6q7WWlCJcCT5HkGrepGy3ZR/QCOI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LRpVZyfYDn2n7E7P+gjNzQNd4PvjY0s8ZaBb+rVWJYbum7g0tynRPhBdgQimk9OEy
-         /dS6KyG3I5OFNDRiuBodGCtlABuz1LAWtUCE9aeksrHcoBmZSaqKngZmQ/MK0JySUR
-         7+BDhbsZKNBG7SRtbHKZfjCUTFoAbsJaigIZyUMA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MmlTC-1gy3620Xfq-00jtPJ; Fri, 10
- May 2019 15:49:56 +0200
-Date:   Fri, 10 May 2019 15:49:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (May 2019, #01; Thu, 9)
-In-Reply-To: <6726f99a-ec27-b72f-39d7-03eecb555197@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905101549180.44@tvgsbejvaqbjf.bet>
-References: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com> <6726f99a-ec27-b72f-39d7-03eecb555197@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727814AbfEJNvA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 09:51:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50235 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727787AbfEJNu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 09:50:59 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C38956E8A2;
+        Fri, 10 May 2019 09:50:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Eq/OypYETv7y
+        MxywFjo55ksmP5w=; b=AxIrZfQtiKYoSzlUCl9G3grvGWR+tTPwozV1JLMiDH/m
+        +oPKMlSwx5Vh7BnyKiwxEjiaOkHcE7yWOuUNs41eTsw141NMUkbVEskdKgM76mlK
+        O6rI7dbBn6rGHpPD7/96IUOGxH8xrCYOeMkIMucfalw9J7Dr1YDDCaAlev4cXIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=up5UAu
+        Tohu6McbNXdAHrdTfXo0Tj9i9x6Gdbb5nI1Ztn+r39CuA+sopN22FAvCYVokjMuu
+        +qhNvHf5eXjXj+Xk31YNIZJn/TT5wo/vb47ZrTEPmySVca+pqsOdm5+ZHl7pv5E/
+        DjePesKOy7GQETgnqQeRzS5wcGXSPFz3KcoEA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB9006E8A1;
+        Fri, 10 May 2019 09:50:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EDA576E878;
+        Fri, 10 May 2019 09:50:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Heinrich Schuchardt <xypron.glpk@gmx.de>,
+        Brian M Carlson <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/3] send-email: fix cli->config parsing crazyness
+References: <20190508105607.178244-1-gitster@pobox.com>
+        <20190509114830.29647-1-avarab@gmail.com>
+Date:   Fri, 10 May 2019 22:50:52 +0900
+In-Reply-To: <20190509114830.29647-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 9 May 2019 13:48:27 +0200")
+Message-ID: <xmqqr296e7ur.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Uz6qmB8hBXdeGT3Il4FjC+N96gmzDSa725XsQchNN05a71CDxNP
- mP9QrwEmNP36UJPfNsttJTAhrOcKNBnkxgHK1xOQTbPePQve6KEVftux384O4iTeQvDvxet
- 9BE9qotgdUr8SjHXY4F2A/xO4zE8hFXXg+ONazxhiWLFmV+POVUWJBE9vf5xHSg+ZjfTavv
- ee7dgT4SrhDPLPzdqIUog==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hKie7Z86PUc=:+rap7uNPRw0y1gD5I6N48L
- hThTyCcpTtNZ4pkJdN0fTcz0EdaQOkT9oc190WdnjUQ+CzfBr1jlhyNXSJejjUSKnUHShkgf3
- ByszxT72DAQ5Nd3oz4gNmV3CVmGnJjYXWxPP807YLDnA4CjscxQjCR07Kun1mCY5klpPr6u5R
- iWJsLkmBTOzQEuIt1B2EvifPc0D21ZuKXkRMWQRy5qxScLoPCaaIJy06mP+kZ3+iA6/Oy30T0
- 7S1alsZLqRf2bhV/d3DBDO2D5HaSsWVHaGoTVs+cRVxCGDpHrah5Fry6tNlRV5Y8/vCcMrSct
- XDOUPSWO0jRDJbE1U0//s0Kyp/tc6dkEhg0X2w+Lde6HRnlR8tZ249XwI1p1+P/biCCjjad9D
- Zb7GI2kXQd/RHZbQk5UP0FMB0mcYEqE4nNOkb26uJ5k8PxsuuzOol6PF7kxyX/CnfFBZE7MvP
- fYA3ZI1Fn/91cu56q1XVkBMnyOf8Lo21I6Gb3saWVW8zyddTuxkc1o04Vq51ZV7t3gWExQ+qf
- VDdEW8OBavnK7/E1cHy/qSgcE16ZAdKfqDNpxYdUlKBpZS2mt7IlazAQiwgzEOa3DadOw2bZ0
- hb8DuCNDBXEnZkpjpHwTLz13HyQ3NJjBzUsNY+SqLn1lX43b8NqC43gd2zozQWmNTmQpq5NOB
- fmviik9m1OSGM7CTz/gxfKlDxEJCAJH+lBuCdW4wpC8qHg0KIaOPMzja8l82qATkwF+cHh5ZX
- VrUYzAOiiZrhskQT3DuFx9m7UJ/pWsZ9Ln7+iedHIce8K1u63Kym+zy2CDPuD3N2/EztM5mSY
- +nIp68NFtDnMCdi5OiXAoI0KNHgn5ZWbttKG3T1iC88enxO64pXWLHF6n5Gmu5CXmpMxFw8vm
- V51F3PPFxrnY7DY0zbldVOW8htd6OYwJv27z9Zo40XadirRuHZqQRZrN5oP/O5c1ZFVitmR+v
- OVJWnibYrCg==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A1AE548C-732A-11E9-8971-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Thu, 9 May 2019, Phillip Wood wrote:
+> This is a proposed replacement for Junio's version of the
+> ... the
+> root cause is that we're needlessly doing the config->cli parsing in
+> the wrong order, so let's just fix that.
 
-> On 08/05/2019 18:23, Junio C Hamano wrote:
-> > * pw/rebase-abort-clean-rewritten (2019-05-08) 1 commit
-> >   - rebase --abort: cleanup refs/rewritten
-> >   (this branch uses pw/rebase-i-internal.)
-> >
-> >   "git rebase --abort" used to leave refs/rewritten/ when concluding
-> >   "git rebase -r", which has been corrected.
-> >
-> >   Will merge to 'next'.
->
-> Can you hold off on this one please, I think we should clean up
-> refs/rewritten/ on --quit as well (I'm not sure I've convinced dscho abo=
-ut
-> that yet though [1])
+Yup, that's absolutely the right approach.  I just wanted to avoid
+restructuring that heavily, but I have no problem as long as it is
+somebody else, and somebody who is more competent in writing Perl
+than I am, doing the heavy lifting ;-)
 
-You have convinced me ;-)
-
-Thanks for your consideration,
-Dscho
-
-> Thanks
->
-> Phillip
->
-> [1]
-> https://public-inbox.org/git/4d486504-7f64-95fb-b7eb-51d424f3e6cc@gmail.=
-com/#t
->
->
