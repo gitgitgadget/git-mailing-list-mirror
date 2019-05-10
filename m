@@ -2,80 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D5201F45F
-	for <e@80x24.org>; Fri, 10 May 2019 21:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28C761F45F
+	for <e@80x24.org>; Fri, 10 May 2019 21:15:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbfEJVD1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 17:03:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54542 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727677AbfEJVD1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 17:03:27 -0400
-Received: (qmail 1044 invoked by uid 109); 10 May 2019 21:03:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 May 2019 21:03:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15859 invoked by uid 111); 10 May 2019 21:04:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 10 May 2019 17:04:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 May 2019 17:03:24 -0400
-Date:   Fri, 10 May 2019 17:03:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
+        id S1728107AbfEJVPJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 17:15:09 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51995 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727767AbfEJVPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 17:15:08 -0400
+Received: by mail-wm1-f68.google.com with SMTP id o189so8855425wmb.1
+        for <git@vger.kernel.org>; Fri, 10 May 2019 14:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=kG6RCReL9zrw+znvxTnqil7OfQVm3pyK4/jJ6MmTMGI=;
+        b=QkyhCfdhaXftwKHSPx24kjHtMRICrD79Qt2VlHBRKdL9zSNAn2ifHZ460891UA8cps
+         zMf7cMKsx7Xh7vu1WRN73tgf/37jK57SFxG17XSxlrARGgp1KtT1B0acLl2m5ItGuJ2K
+         YD7YZnVYPjlDbo7QZLiW61XftNzr19BpCDifBwhhPEoD8QWCUNdgdrBJeAV3lwVko5dy
+         g5jLGllelnovHFOkVeCMOLxMGUKyU+zCMKefsAXVIIrXFB7zdlmBYyYiELoAelpDpbZZ
+         j/ciZkW/Lha+DSAps2CT4gWQ0EaR8kfvs6RN+Ao9GJKvQTF8itT3tWOsBadu2NQW/oM9
+         Z6og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=kG6RCReL9zrw+znvxTnqil7OfQVm3pyK4/jJ6MmTMGI=;
+        b=DLu00iCSemXmsJR06BxJ+NJpSI/RE7Hb95kruN9TLJbp5Mv83/4gllYQnUlQpeHHFz
+         4s6JGosxKT31agJXJ4Woj0dymcWpLlgZGcTOJFzKWH7PWnnzZIjG7l5zF/cR75bLe+x4
+         DaCVboBBVdXGxZIrnFSYRTIzcTS+xNFNhPT2osSAnqqsI2O8SAuNtX3q7cxvlomdHRgk
+         QIv60DdjKbo6oOuPK7AOeXpJdEnMyQGZSV/O0WbZIJg3iAHCG3DMxpd+9Ctnl8FvrJjX
+         9kHSfzOJUmY9A3IdsuzGmCa3SKI+UiXroNcIjP+3wSV5H6vGQX2zxwt20DE45dXi2b41
+         7eMQ==
+X-Gm-Message-State: APjAAAXAZHgebtQT+992enivjOM0ySt97cV+ECu+wuwRWDgQkkyyiH1a
+        uLv2YUh/AcyIiTTASfQh7Eo=
+X-Google-Smtp-Source: APXvYqz8roC5ClIg9OM0m0lwMUlhY7RwUPJTQMTbtM1EVbFwOKzrT7ev80+Rp+tGUP6RnnVyEKpaPg==
+X-Received: by 2002:a1c:3:: with SMTP id 3mr599070wma.44.1557522906235;
+        Fri, 10 May 2019 14:15:06 -0700 (PDT)
+Received: from szeder.dev (x4d0c00f2.dyn.telefonica.de. [77.12.0.242])
+        by smtp.gmail.com with ESMTPSA id h24sm10494165wmb.40.2019.05.10.14.15.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 May 2019 14:15:05 -0700 (PDT)
+Date:   Fri, 10 May 2019 23:15:02 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, git@jeffhostetler.com,
         Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: I made a flame graph renderer for git's trace2 output
-Message-ID: <20190510210324.GA30947@sigill.intra.peff.net>
-References: <87zhnuwdkp.fsf@evledraar.gmail.com>
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] trace2: Add variable description to git.txt
+Message-ID: <20190510211502.GS14763@szeder.dev>
+References: <pull.189.git.gitgitgadget@gmail.com>
+ <768bdf1c210fd34776f667b080a23eb6f9e17125.1557517464.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zhnuwdkp.fsf@evledraar.gmail.com>
+In-Reply-To: <768bdf1c210fd34776f667b080a23eb6f9e17125.1557517464.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 10, 2019 at 05:09:58PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> As noted in TODOs in the script there's various stuff I'd like to do
-> better, and this also shows how we need a lot more trace regions to get
-> granular data.
+Thanks for the quick turnaround.
 
-Hmm. My gut reaction was: doesn't "perf record -g make test" already
-give us that granular data? I know "perf" isn't available everywhere,
-but the idea of the FlameGraph repo is that it takes input from a lot of
-sources (though I don't know if it supports any Windows-specific formats
-yet, which is presumably a point of interesting to trace-2 authors).
 
-But having generated such a flamegraph, it's not all that helpful. It
-mainly tells us that we spend a lot of time on fork/exec. Which is no
-surprise, since the test suite is geared not towards heavy workloads,
-but lots of tiny functionality tests.
+On Fri, May 10, 2019 at 12:44:26PM -0700, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> Documentation/technical/api-trace2.txt contains the full details
+> of the trace2 API and the GIT_TR2* environment variables. However,
+> most environment variables are included in Documentation/git.txt,
+> including the GIT_TRACE* variables.
+> 
+> Add a brief description of the GIT_TR2* variables with links to
+> the full technical details. The biggest difference from the
+> original variables is that we can specify a Unix Domain Socket.
+> Mention this difference, but leave the details to the technical
+> documents.
 
-TBH, I'm not sure that flame-graphing the test suite is going to be all
-that useful in the long run. It's going to be heavily weighted by the
-types of things the test suite does. Flamegraphs are good for
-understanding where your time is going for a particular workload, but
-the workload of the test suite is not that interesting.
+I think that it would be better to spell out the details instead of
+linking to the technical docs, because the link will only really work
+if you view the docs in a browser and you have the full docs
+available.  OTOH, in 'man git' there are no links to conveniently
+click on, and the git packages from e.g. Ubuntu only include the man
+pages, the technical docs and the docs in html format are in the
+separate 'git-doc' package.
 
-And once you do have a particular workload of interest that you can
-replay, then I think the granular "perf" results really can be helpful.
 
-I think the trace2 flamegraph would be most useful if you were
-collecting across a broad spectrum of workloads done by a user. You
-_can_ do that with perf or similar tools, but it can be a bit awkward.
-I do wonder how painful it would be to alias "git" to "perf record git"
-for a day or something.
-
--Peff
+> Reported-by: Szeder Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git.txt | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+> 
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 00156d64aa..e802886999 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -661,6 +661,27 @@ of clones and fetches.
+>  	When a curl trace is enabled (see `GIT_TRACE_CURL` above), do not dump
+>  	data (that is, only dump info lines and headers).
+>  
+> +`GIT_TR2`::
+> +	Enables more detailed trace messages from the "trace2" library.
+> +	Output from `GIT_TR2` is a simple text-based format for human
+> +	readability.
+> ++
+> +The `GIT_TR2` variables can take many values. Any value available to
+> +the `GIT_TRACE` variables is also available to `GIT_TR2`. The `GIT_TR2`
+> +variables can also specify a Unix Domain Socket. See
+> +link:technical/api-trace2.html[Trace2 documentation] for full details.
+> +
+> +`GIT_TR2_EVENT`::
+> +	This setting writes a JSON-based format that is suited for machine
+> +	interpretation. See link:technical/api-trace2.html[Trace2 documentation]
+> +	for full details.
+> +
+> +`GIT_TR2_PERF`::
+> +	In addition to the text-based messages available in `GIT_TR2`, this
+> +	setting writes a column-based format for understanding nesting
+> +	regions. See link:technical/api-trace2.html[Trace2 documentation]
+> +	for full details.
+> +
+>  `GIT_REDACT_COOKIES`::
+>  	This can be set to a comma-separated list of strings. When a curl trace
+>  	is enabled (see `GIT_TRACE_CURL` above), whenever a "Cookies:" header
+> -- 
+> gitgitgadget
