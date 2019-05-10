@@ -2,141 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28C761F45F
-	for <e@80x24.org>; Fri, 10 May 2019 21:15:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BCD41F45F
+	for <e@80x24.org>; Fri, 10 May 2019 21:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbfEJVPJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 May 2019 17:15:09 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51995 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727767AbfEJVPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 May 2019 17:15:08 -0400
-Received: by mail-wm1-f68.google.com with SMTP id o189so8855425wmb.1
-        for <git@vger.kernel.org>; Fri, 10 May 2019 14:15:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=kG6RCReL9zrw+znvxTnqil7OfQVm3pyK4/jJ6MmTMGI=;
-        b=QkyhCfdhaXftwKHSPx24kjHtMRICrD79Qt2VlHBRKdL9zSNAn2ifHZ460891UA8cps
-         zMf7cMKsx7Xh7vu1WRN73tgf/37jK57SFxG17XSxlrARGgp1KtT1B0acLl2m5ItGuJ2K
-         YD7YZnVYPjlDbo7QZLiW61XftNzr19BpCDifBwhhPEoD8QWCUNdgdrBJeAV3lwVko5dy
-         g5jLGllelnovHFOkVeCMOLxMGUKyU+zCMKefsAXVIIrXFB7zdlmBYyYiELoAelpDpbZZ
-         j/ciZkW/Lha+DSAps2CT4gWQ0EaR8kfvs6RN+Ao9GJKvQTF8itT3tWOsBadu2NQW/oM9
-         Z6og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kG6RCReL9zrw+znvxTnqil7OfQVm3pyK4/jJ6MmTMGI=;
-        b=DLu00iCSemXmsJR06BxJ+NJpSI/RE7Hb95kruN9TLJbp5Mv83/4gllYQnUlQpeHHFz
-         4s6JGosxKT31agJXJ4Woj0dymcWpLlgZGcTOJFzKWH7PWnnzZIjG7l5zF/cR75bLe+x4
-         DaCVboBBVdXGxZIrnFSYRTIzcTS+xNFNhPT2osSAnqqsI2O8SAuNtX3q7cxvlomdHRgk
-         QIv60DdjKbo6oOuPK7AOeXpJdEnMyQGZSV/O0WbZIJg3iAHCG3DMxpd+9Ctnl8FvrJjX
-         9kHSfzOJUmY9A3IdsuzGmCa3SKI+UiXroNcIjP+3wSV5H6vGQX2zxwt20DE45dXi2b41
-         7eMQ==
-X-Gm-Message-State: APjAAAXAZHgebtQT+992enivjOM0ySt97cV+ECu+wuwRWDgQkkyyiH1a
-        uLv2YUh/AcyIiTTASfQh7Eo=
-X-Google-Smtp-Source: APXvYqz8roC5ClIg9OM0m0lwMUlhY7RwUPJTQMTbtM1EVbFwOKzrT7ev80+Rp+tGUP6RnnVyEKpaPg==
-X-Received: by 2002:a1c:3:: with SMTP id 3mr599070wma.44.1557522906235;
-        Fri, 10 May 2019 14:15:06 -0700 (PDT)
-Received: from szeder.dev (x4d0c00f2.dyn.telefonica.de. [77.12.0.242])
-        by smtp.gmail.com with ESMTPSA id h24sm10494165wmb.40.2019.05.10.14.15.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 May 2019 14:15:05 -0700 (PDT)
-Date:   Fri, 10 May 2019 23:15:02 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] trace2: Add variable description to git.txt
-Message-ID: <20190510211502.GS14763@szeder.dev>
-References: <pull.189.git.gitgitgadget@gmail.com>
- <768bdf1c210fd34776f667b080a23eb6f9e17125.1557517464.git.gitgitgadget@gmail.com>
+        id S1728125AbfEJVUn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 May 2019 17:20:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54562 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727835AbfEJVUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 May 2019 17:20:42 -0400
+Received: (qmail 1421 invoked by uid 109); 10 May 2019 21:20:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 May 2019 21:20:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15950 invoked by uid 111); 10 May 2019 21:21:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 10 May 2019 17:21:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 May 2019 17:20:39 -0400
+Date:   Fri, 10 May 2019 17:20:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/4] archive-tar: mark RECORDSIZE/BLOCKSIZE as unsigned
+Message-ID: <20190510212039.GA20767@sigill.intra.peff.net>
+References: <pull.145.git.gitgitgadget@gmail.com>
+ <pull.145.v2.git.gitgitgadget@gmail.com>
+ <ac2b2488a1b42b3caf8a84594c48eca796748e59.1556321244.git.gitgitgadget@gmail.com>
+ <d960966d-a7d4-dc3e-ca0a-70e9e5d1abf3@web.de>
+ <nycvar.QRO.7.76.6.1905081334260.44@tvgsbejvaqbjf.bet>
+ <20190508230420.GC19990@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905091605070.44@tvgsbejvaqbjf.bet>
+ <20190509183855.GA28107@sigill.intra.peff.net>
+ <f380b182-633f-f347-ed2e-f90548d7f3c9@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <768bdf1c210fd34776f667b080a23eb6f9e17125.1557517464.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <f380b182-633f-f347-ed2e-f90548d7f3c9@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, May 10, 2019 at 07:18:44PM +0200, René Scharfe wrote:
 
-Thanks for the quick turnaround.
-
-
-On Fri, May 10, 2019 at 12:44:26PM -0700, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+> Am 09.05.19 um 20:38 schrieb Jeff King:
+> > I do dream of a world where we do not have a bunch of implicit
+> > conversions (both signedness but also truncation) in our code base, and
+> > can compile cleanly with -Wconversion We know that this case is
+> > perfectly fine, but I am sure there are many that are not. However, I'm
+> > not sure if we'll ever get there, and in the meantime I don't think it's
+> > worth worrying too much about individual cases like this.
 > 
-> Documentation/technical/api-trace2.txt contains the full details
-> of the trace2 API and the GIT_TR2* environment variables. However,
-> most environment variables are included in Documentation/git.txt,
-> including the GIT_TRACE* variables.
-> 
-> Add a brief description of the GIT_TR2* variables with links to
-> the full technical details. The biggest difference from the
-> original variables is that we can specify a Unix Domain Socket.
-> Mention this difference, but leave the details to the technical
-> documents.
+> Here's a rough take on how to silence that warning for archive-tar.c using
+> GCC 8.3.  Some of the changes are worth polishing and submitting.  Some
+> are silly.  The one for regexec_buf() is scary; I don't see a clean way of
+> dealing with that size_t to int conversion.
 
-I think that it would be better to spell out the details instead of
-linking to the technical docs, because the link will only really work
-if you view the docs in a browser and you have the full docs
-available.  OTOH, in 'man git' there are no links to conveniently
-click on, and the git packages from e.g. Ubuntu only include the man
-pages, the technical docs and the docs in html format are in the
-separate 'git-doc' package.
+This is actually slightly less tedious than I had imagined it to be, but
+still pretty bad. I dunno. If somebody wants to tackle it, I do think it
+would make the world a better place. But I'm not sure if it is worth the
+effort involved.
 
+>  static void write_trailer(void)
+>  {
+> -	int tail = BLOCKSIZE - offset;
+> +	size_t tail = BLOCKSIZE - offset;
 
-> Reported-by: Szeder Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/git.txt | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index 00156d64aa..e802886999 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -661,6 +661,27 @@ of clones and fetches.
->  	When a curl trace is enabled (see `GIT_TRACE_CURL` above), do not dump
->  	data (that is, only dump info lines and headers).
->  
-> +`GIT_TR2`::
-> +	Enables more detailed trace messages from the "trace2" library.
-> +	Output from `GIT_TR2` is a simple text-based format for human
-> +	readability.
-> ++
-> +The `GIT_TR2` variables can take many values. Any value available to
-> +the `GIT_TRACE` variables is also available to `GIT_TR2`. The `GIT_TR2`
-> +variables can also specify a Unix Domain Socket. See
-> +link:technical/api-trace2.html[Trace2 documentation] for full details.
-> +
-> +`GIT_TR2_EVENT`::
-> +	This setting writes a JSON-based format that is suited for machine
-> +	interpretation. See link:technical/api-trace2.html[Trace2 documentation]
-> +	for full details.
-> +
-> +`GIT_TR2_PERF`::
-> +	In addition to the text-based messages available in `GIT_TR2`, this
-> +	setting writes a column-based format for understanding nesting
-> +	regions. See link:technical/api-trace2.html[Trace2 documentation]
-> +	for full details.
-> +
->  `GIT_REDACT_COOKIES`::
->  	This can be set to a comma-separated list of strings. When a curl trace
->  	is enabled (see `GIT_TRACE_CURL` above), whenever a "Cookies:" header
-> -- 
-> gitgitgadget
+These kinds of int/size_t conversions are the ones I think are the most
+valuable (because the size_t's are often used to allocate or access
+arrays, and truncated or negative values there can cause other security
+problems). _Most_ of them are harmless, of course, but it's hard to
+separate the important ones from the mundane.
+
+> @@ -414,7 +432,7 @@ static int git_tar_config(const char *var, const char *value, void *cb)
+>  			tar_umask = umask(0);
+>  			umask(tar_umask);
+>  		} else {
+> -			tar_umask = git_config_int(var, value);
+> +			tar_umask = (mode_t)git_config_ulong(var, value);
+>  		}
+
+It's nice that the cast here shuts up the compiler, and I agree it is
+not likely to be a problem in this instance. But we'd probably want some
+kind of "safe cast" helper. To some degree, if you put 2^64-1 in your
+"umask" value you get what you deserve, but it would be nice if we could
+detect such nonsense (less for this case, but more for others where we
+do cast).
+
+> @@ -1119,7 +1119,22 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+>  {
+>  	assert(nmatch > 0 && pmatch);
+>  	pmatch[0].rm_so = 0;
+> -	pmatch[0].rm_eo = size;
+> +	pmatch[0].rm_eo = (regoff_t)size;
+> +	if (pmatch[0].rm_eo != size) {
+> +		if (((regoff_t)-1) < 0) {
+> +			if (sizeof(regoff_t) == sizeof(int))
+> +				pmatch[0].rm_eo = (regoff_t)INT_MAX;
+> +			else if (sizeof(regoff_t) == sizeof(long))
+> +				pmatch[0].rm_eo = (regoff_t)LONG_MAX;
+> +			else
+> +				die("unable to determine maximum value of regoff_t");
+> +		} else {
+> +			pmatch[0].rm_eo = (regoff_t)-1;
+> +		}
+> +		warning("buffer too big (%"PRIuMAX"), "
+> +			"will search only the first %"PRIuMAX" bytes",
+> +			(uintmax_t)size, (uintmax_t)pmatch[0].rm_eo);
+> +	}
+>  	return regexec(preg, buf, nmatch, pmatch, eflags | REG_STARTEND);
+>  }
+
+I think a helper could make things less awful here, too. Our xsize_t()
+is sort of like this, but of course it dies. But I think it would be
+possible to write a macro to let you do:
+
+  if (ASSIGN_CAST(pmatch[0].rm_eo, size))
+	warning(...);
+
+This is definitely a rabbit-hole that I've been afraid to go down. :)
+
+-Peff
