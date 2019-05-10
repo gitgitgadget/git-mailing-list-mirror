@@ -2,100 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3DAD1F45F
-	for <e@80x24.org>; Fri, 10 May 2019 00:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9DE41F45F
+	for <e@80x24.org>; Fri, 10 May 2019 00:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726716AbfEJAPI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 May 2019 20:15:08 -0400
-Received: from mail-vk1-f173.google.com ([209.85.221.173]:37284 "EHLO
-        mail-vk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbfEJAPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 May 2019 20:15:08 -0400
-Received: by mail-vk1-f173.google.com with SMTP id o187so1050212vkg.4
-        for <git@vger.kernel.org>; Thu, 09 May 2019 17:15:07 -0700 (PDT)
+        id S1726734AbfEJArf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 May 2019 20:47:35 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44197 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbfEJArf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 May 2019 20:47:35 -0400
+Received: by mail-pf1-f195.google.com with SMTP id g9so2201019pfo.11
+        for <git@vger.kernel.org>; Thu, 09 May 2019 17:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=syWJScqxQqqSzKRj/hYGwX0Lhzq57H+Mr3KL9uwJxVM=;
-        b=O8lNwHZZi12g/AvX1sjkZghvcpzM18YHy5fZ61iFaN3dQetwzAG64IIoWvDn5I4K4s
-         RzTXuq8CgpaAHkQarVrsLCR6khmC3wyr2m4JHo83HUJotS/FppuDnniKCBmIyeH6YpuK
-         Fj+Ox48bQhLYCPyJceYXcnop+Q+uUQx2QZfAHNf9015IFAPWrfMDKSY3zk4nz9gznCsj
-         pZ/eDQnMhAjbYyzhkQz1LVa0tmaryVuxquS6zG/DtU5vPKmMiKDn+r3s7kAs6gMLgKuO
-         CMpXbpdtYznkdKu0gbP6IMAH3F+NZ8czt5VKviCFwNuTcRTKOt8GHbKRklVfQDuGSxC0
-         xhvg==
+        d=connect-hku-hk.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KrhLZLjcVvBluw0AHFWx0sSuZ83gjQTP2KF7cl243R8=;
+        b=nOB5kcvSxPqAOY6Tk8KpuEW9JKa+CuUizF9XO2e4szJPNgUGYACGOZ+7MWA2oy6f79
+         dozBMSvT/jXvA5Qq9npjGrMGUoXykvp2178JRvNl4e0c2iMRrbnpV3E68Ro8zWh4Xb7c
+         1rUMw8yDV9tXcGDyyZpB9kFx0dSswV7tvlBhaN4E/y27eztgL/2+G688WUYTFOg1smyj
+         mi4pHvw+vAfaYFDEl1YYfHqkii6oaw/xHSNm7wJBA4yeVQXevPqxnkEqMnu3CzkfixpF
+         Y5bzsI7jJFOBbrlfNqNxfI/M5pUPROEekgSV+FQEI6OMY/cnghVZcbFheP6jZL3IJS8W
+         UyWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=syWJScqxQqqSzKRj/hYGwX0Lhzq57H+Mr3KL9uwJxVM=;
-        b=NqF0XVxB5CadfUuRJEIMaao9qnD6A1GavtNByKvAlcmIsRJE7LW51kqj+SOFKZ3J4f
-         Kx5FCyhGrG2rsRHM67DOuoSLJbFd3rZG0lSKqtKA0AvI0uOd4lk3D1ohAqVIa2VzfVv+
-         Yua+LZv8LtV7wH9pkylqPwAYf62+qk98cmTeIt0GCaIHXl8XLR7Nhf+0EchE5fAmnWGS
-         bhMv87ztJaSnpsYRAM2FnetSpwKMqhzweik4XdTF2uyrbri6iirFMYMcFzq00Y0qlfaN
-         6VdbZlIDZfWDjsFxVyDFVz/pj0UCb7uFaGhJGClPg4Oy9qZEYbDcRKmBrr8Q8/rDiMEk
-         SSZg==
-X-Gm-Message-State: APjAAAW1vn2nW8uLITzre64Zd0T3yrXP+NLmsuznEcgXZSSN9qwD3qK/
-        /uzHjL8gjykMWUZztr7GpQrbo+Aath/2okF19Os=
-X-Google-Smtp-Source: APXvYqwH5j992vrAsAtkJbisEoNoXJMbwrE8lXO3e8pDGlRxlNRo0VV7goqBRcxq/BvyM8cYyDy2/fyi1ZlFkNbhYxI=
-X-Received: by 2002:a1f:104d:: with SMTP id g74mr2634378vki.1.1557447306932;
- Thu, 09 May 2019 17:15:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KrhLZLjcVvBluw0AHFWx0sSuZ83gjQTP2KF7cl243R8=;
+        b=WqjWRcoQ+Dvg44NMaZpIbfDxwIxl6AXcBIYwCSlA45n2KXOjWquZX++uu8w6EhnMiL
+         tcZg7o77AemW98VarQBr2Nn2ZcRVPvKaK2057ZvS2AyE6uSwQWEIsL59Hc1/dFgbleSx
+         57B1GFv+eZHWnlexGS+sDJgj41iFl9+SEiyc+QaYOh5Ydd4NzPgm/TFY60zAvw/7dgM0
+         woFb7jDlP4AJisfgyzoHhvHAawbVC0cuKly6FxnboO+C/Xs9uYNlgmOjmWcqUT3GHp8j
+         iRhQZsfDd8NlJJsmSDKUGjSS3Fond3/FvBygvGnr5ygYfnWAShK0a0PBHn4TwZsT01PL
+         AtnQ==
+X-Gm-Message-State: APjAAAUoF7gWdOBWAIl4RDhmCYHeuxy1EANKEKP9OnU2BGhPELpE0B6U
+        CEG6UZs2RDRAdprqn88xmYszT1w75KE=
+X-Google-Smtp-Source: APXvYqxpej2kAJ6J5u4GIogW/YF21n0ShRan+b9TP/YyaIz2IyU8tcCt0jodUEi34NHfAF6HsXKtoA==
+X-Received: by 2002:a63:754b:: with SMTP id f11mr9787896pgn.32.1557449254512;
+        Thu, 09 May 2019 17:47:34 -0700 (PDT)
+Received: from MBP.local.hk ([175.159.177.114])
+        by smtp.gmail.com with ESMTPSA id r29sm6940719pgn.14.2019.05.09.17.47.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 09 May 2019 17:47:33 -0700 (PDT)
+From:   Boxuan Li <liboxuan@connect.hku.hk>
+To:     git@vger.kernel.org
+Cc:     Boxuan Li <liboxuan@connect.hku.hk>
+Subject: [PATCH] doc/gitattributes: add Octave
+Date:   Fri, 10 May 2019 08:47:15 +0800
+Message-Id: <20190510004715.29298-1-liboxuan@connect.hku.hk>
+X-Mailer: git-send-email 2.21.0.777.g83232e3864
 MIME-Version: 1.0
-References: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905092243080.44@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1905092243080.44@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 May 2019 17:14:55 -0700
-Message-ID: <CABPp-BGfLrggLTmo+9LuLH_iGJoRNv7SHATw4XQCNx4Rk6wc7g@mail.gmail.com>
-Subject: Re: en/fast-export-encoding, was Re: What's cooking in git.git (May
- 2019, #01; Thu, 9)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+`matlab` pattern is also suitable for source code
+in the GNU Octave language.
 
-On Thu, May 9, 2019 at 1:46 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Junio & Elijah,
->
-> On Thu, 9 May 2019, Junio C Hamano wrote:
->
-> > * en/fast-export-encoding (2019-05-07) 5 commits
-> >  - fast-export: do automatic reencoding of commit messages only if requested
-> >  - fast-export: differentiate between explicitly utf-8 and implicitly utf-8
-> >  - fast-export: avoid stripping encoding header if we cannot reencode
-> >  - fast-import: support 'encoding' commit header
-> >  - t9350: fix encoding test to actually test reencoding
-> >
-> >  The "git fast-export/import" pair has been taught to handle commits
-> >  with log messages in encoding other than UTF-8 better.
->
-> This breaks on Windows, see
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=8298&view=ms.vss-test-web.build-test-results-tab
->
-> Sadly, I ran out of time looking at it in detail.
+Signed-off-by: Boxuan Li <liboxuan@connect.hku.hk>
+---
+ Documentation/gitattributes.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks for the heads up, and for taking some time to check it out.
-The error doesn't seem obvious from the log.  Does Azure Pipelines
-have anything like CircleCI's "Debug with SSH" feature[1]?  (Where one
-can click a "Rerun job with SSH", and it'll restart the pipeline but
-also print out an ssh command someone can use to directly access the
-box on which the test is running, in order to be able to investigate.)
- Failing that, assuming I can find a Windows system somewhere, is
-there a list of steps for setting up a development environment and
-building git on Windows?
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 4fb20cd0e9..1b28381bda 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -819,7 +819,7 @@ patterns are available:
+ 
+ - `java` suitable for source code in the Java language.
+ 
+-- `matlab` suitable for source code in the MATLAB language.
++- `matlab` suitable for source code in the MATLAB/Octave language.
+ 
+ - `objc` suitable for source code in the Objective-C language.
+ 
+-- 
+2.21.0.777.g83232e3864
 
-Elijah
-
-[1] https://circleci.com/docs/2.0/ssh-access-jobs/
