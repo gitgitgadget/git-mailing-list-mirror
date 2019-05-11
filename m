@@ -2,95 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 207E61F461
-	for <e@80x24.org>; Sat, 11 May 2019 13:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF4361F461
+	for <e@80x24.org>; Sat, 11 May 2019 14:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728572AbfEKNIM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 May 2019 09:08:12 -0400
-Received: from mail-pf1-f174.google.com ([209.85.210.174]:37129 "EHLO
-        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728033AbfEKNIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 May 2019 09:08:12 -0400
-Received: by mail-pf1-f174.google.com with SMTP id g3so4700332pfi.4
-        for <git@vger.kernel.org>; Sat, 11 May 2019 06:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ybeSLghUeZDSHL7bmTOyYYwqAN3xNlzY33NlZURj+zc=;
-        b=JlM2MKKk8FlwnUNH2KCbCo7pxEJ8M/I8qMT+vxjVkKmrlHBBi+w9vrlgVXbthITHin
-         V6rDhKoNOsaMi00MYIPPmQR45OT7vZgkP3MveIH7RzsCztSUOGdC+3X25vrB6mck4hE1
-         weD7IKO1BIZ5JmM1qxr/1NMN8U1pjCVtVHZkPNyX1FC/Ixhsj21u50enKt7V4fBzmZD4
-         RUs6cYWgt6reznpLCQuVyiqBMOLBNM+NXk/nSZuHF9Uw7Lcle++QyPh1IV6rAgGT5SYK
-         GkVlevU+VPP/lwVcagGhLqcppM4I2pdgT65xo846thq6Aa2liAvET60LNRKumnKX1/+F
-         H8Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ybeSLghUeZDSHL7bmTOyYYwqAN3xNlzY33NlZURj+zc=;
-        b=qYZ2VNWcritcjzj2ET0xYEt53wcEirg37NaSLq/BOxuNABlj7mYbesflYrs8XZwt20
-         HK7JEkQyr3SIyAfYWFcXdC4GxmOBHenmm0cRWnIPCKmsPATdIossLaiYixWpmtvmAfDL
-         F2DpgF/IFmKC08cMy4ddR0bZFaQA8Z6upOZajMqZtrsYkvr8rDuWofUujj6df7BzF/Fz
-         Na8m6ILZQk9XMtWuw+j2nApEcUxgiircTfldxe/ZffJGHgodU4EgQZolJQ7aNK9kQZaL
-         zzI7ji8h1IDYWAQH3FUYMPHZiyYM2K+3pFDyMk+O7NLPEeombPVGgBdVSxhxl1dOnWj6
-         mc+w==
-X-Gm-Message-State: APjAAAV7i/zrB4UH6anQ68uyXwfzgw+TT6SVJyN2pf9c7BPb9YspqFpr
-        F490/fwrz3W9V/FFKRlzpGE=
-X-Google-Smtp-Source: APXvYqw/VwQcZq5UKfHViYTVH2lBf5z3WiZ2EfncZ5e2buNEQkz2CaSAHwGCZspzhmXRMmN2r06cFQ==
-X-Received: by 2002:a63:360e:: with SMTP id d14mr15873623pga.188.1557580091407;
-        Sat, 11 May 2019 06:08:11 -0700 (PDT)
-Received: from ?IPv6:2406:7400:bb:59c2:f0e0:62b8:91d2:79fa? ([2406:7400:bb:59c2:f0e0:62b8:91d2:79fa])
-        by smtp.gmail.com with ESMTPSA id r11sm15377158pgb.31.2019.05.11.06.08.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 May 2019 06:08:10 -0700 (PDT)
-Subject: Re: GSoC students and mentors 2019
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-References: <20190508171941.GC2068@hank.intra.tgummerer.com>
-From:   "Kaartic.Sivaraam" <kaartic.sivaraam@gmail.com>
-Message-ID: <fd9b5a9d-9f29-b18e-4c68-e37120df45f1@gmail.com>
-Date:   Sat, 11 May 2019 18:38:04 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        id S1728559AbfEKOIm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 May 2019 10:08:42 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:29588 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726147AbfEKOIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 May 2019 10:08:42 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id PSg3hoaqWniZTPSg3hohJV; Sat, 11 May 2019 15:08:39 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=B8HHL9lM c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=xtxXYLxNAAAA:8 a=UlqV6C1OAAAA:20
+ a=mLdvbiE05gHgHIVpi6kA:9 a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22
+ a=xts0dhWdiJbonKbuqhAr:22
+Subject: Re: Merge commit diff results are confusing and inconsistent
+To:     Robert Dailey <rcdailey.lists@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?Q?Eckhard_Maa=c3=9f?= <eckhard.s.maass@googlemail.com>,
+        Git <git@vger.kernel.org>
+References: <CAHd499BEHd79zL76um2oB4YMdScM2icrMXstg1g=xwdBqk43EQ@mail.gmail.com>
+ <20190503191231.GA5426@esm>
+ <CAHd499CUOnFVkNGEG-MmG5OsUPpmWHET2X1j1fjNuGUkELf-5w@mail.gmail.com>
+ <874l67i1ie.fsf@evledraar.gmail.com>
+ <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <7cfb151e-346a-0eb5-aaa9-0a3e1da0fb2a@iee.org>
+Date:   Sat, 11 May 2019 15:08:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <20190508171941.GC2068@hank.intra.tgummerer.com>
+In-Reply-To: <CAHd499BkdpsA2BdB0Hsv3xXzpMyMzW8CSuYf2gQX0Jf7OoYBGw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfKPvMz/ppHiRgZWF7d6tMiiveN+3S2L7IkPtYL8mwRvrnT/FyDaThqWM86NZzi0y2Injf2Kuf6wtuRE4aKxIXBjJdsLb2lyMqe9p4DxDV9dp8FejRQfV
+ iQcehPLftdTllt7RsRCrFsLx5kyxLiT6t0Ou0HCVhsZRqQjmMqUcNwKwFMYri/qDJEs/igbnHLhmLCI4gOaSx3v4mE4q+iPrYDKJKSyYXn4//I5Zs0BUCGc3
+ omm9kXbSV/31EiRpjZCq/w35kz1EsKj4yQGRlQwVo7k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit and Matheus,
+Hi Robert,
 
-Congrats both for getting selected to contribute to the Git project. 
-Hope to see your contributions improve usability of Git in the upcoming 
-version :-)
+On 07/05/2019 15:10, Robert Dailey wrote:
+> The majority use case I'm interested in is seeing net-positive changes
+> that happen in merge commits. Normally I take for granted that merge
+> commits have nothing meaningful in them (meaningful here defined as
+> something unexpected for a merge commit). But what if someone makes a
+> poor decision and does some crazy refactoring in 1 file and amends it
+> into a merge commit? Let's also say that these changes are done to a
+> file that wasn't modified in any parent (say a unrelated.txt next to
+> your color.txt). Since neither parent cares about that file for the
+> purposes of the merge, I am trying to make sense of a revision
+> specification that can be used to see what they did to that file.
 
-Wishing you the best on completing your projects!
+I see that you are specifically interested in seeing 'net-positive' changes.
+
+Part of the problem is that for a merge commit there are multiple 
+choices as to the implied initial central merge, where A and B are 
+combined to create X [which I just called the central merge], to which 
+further changes are made to create the final merge commit C. (Note: X is 
+never committed, and is somewhat 'mythical')
+
+These cases where there needs to be 'further changes', either to resolve 
+conflicts because we never got a cleanly merged X, or the user added 
+changes, we an "Evil Commit/Merge". Definitions vary slightly between 
+different protagonists in the VCS world as to the best evil merge 
+resolution starategies.
+
+For your 'net-positive' changes, what is needed is to effectively 
+generate that mythical clean initial merge X where either we delete from 
+both sides, or we have a simple addition only from one side 
+(addition/deletion normally being of whole lines). It is only that way 
+that allows the changes from X to C to be addition only.
+
+Unfortunately there is currently no diff representation that does that, 
+as there is no method of indicating that middle X state. In the worst 
+case there are always pathological cases.
+
+A similar problem exists for the “reuse recorded resolution” (rerere / 
+redo) storage of conflict resolutions. At present there isn't a way of 
+exchanging such resolutions in a mechanism similar to a diff. In fact I 
+was only just asking about that [1]  within the last two days! There is 
+some discussion about the rerere database in [2], should you want a look.
+--
+Philip
 
 
--- 
-Sivaraam
-
-QUOTE:
-
-"The reasonable man adapts himself to the conditions that surround him...
-  The unreasonable man adapts surrounding conditions to himself...
-  All progress depends on the unreasonable man."
-
-	- George Bernard Shaw
-
+[1] rerere - 
+https://public-inbox.org/git/b8e56556-6c83-9e37-38e9-ac67f51b5cd2@iee.org/
+[2] 
+https://github.com/git/git/blob/master/Documentation/technical/rerere.txt
