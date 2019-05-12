@@ -2,169 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_HK_NAME_DR shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7671F461
-	for <e@80x24.org>; Sun, 12 May 2019 09:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34AE1F461
+	for <e@80x24.org>; Sun, 12 May 2019 10:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726232AbfELJ4S (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 May 2019 05:56:18 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:43076 "EHLO
-        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726100AbfELJ4S (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 May 2019 05:56:18 -0400
-Received: from 200116b8469b650098850f1638ad2e80.dip.versatel-1u1.de ([2001:16b8:469b:6500:9885:f16:38ad:2e80]); authenticated
-        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hPlDL-0002R2-Db; Sun, 12 May 2019 11:56:15 +0200
-From:   "Dr. Adam Nielsen" <admin@in-ici.net>
-Subject: Re: [PATCH] make slash-rules more readable
-To:     git@vger.kernel.org
-References: <20190507104507.18735-1-admin@in-ici.net>
- <xmqqzhnxh5nm.fsf@gitster-ct.c.googlers.com>
-Message-ID: <094f3746-67c9-0284-0593-eb6b24d5c4a3@in-ici.net>
-Date:   Sun, 12 May 2019 11:56:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726355AbfELKNC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 May 2019 06:13:02 -0400
+Received: from mail-ot1-f46.google.com ([209.85.210.46]:45168 "EHLO
+        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726100AbfELKNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 May 2019 06:13:02 -0400
+Received: by mail-ot1-f46.google.com with SMTP id t24so546795otl.12
+        for <git@vger.kernel.org>; Sun, 12 May 2019 03:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5SKFNJ6ZLlO+s7JpCWQnCyauVTR9u6YgQNAmTMmUfSk=;
+        b=DIzNA8Yiw+ROWoKguQN2rEkpljVSgKc2TAGIdN2rGsAWHT3HVe76l6UiPQGIdYOehw
+         KmQmgFC3LBMjVYejX+n21JdoOSVbldv9L2FtIAp+BVNWz3i8PyFwQ7N0hl8oD/HPE8yj
+         4rqhDp0okU8vKggC5LVUfLmvAUc/u7MMz3jxRJT39ItMsyoDYhqaTTMDQKRFhdjisNle
+         jiNPD236LV6rAuH0bPPBw4fvZ549pkmqlJcfbidtXFuYzg9/SKukHqH9KiwMmwAm+10H
+         nv2CbbAkyMpU/5xtYmBetlKFYrGTGKAwpjTmZlv+pxTvjdAE3w6XnkI8rTfg7ULgYUAI
+         UUAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5SKFNJ6ZLlO+s7JpCWQnCyauVTR9u6YgQNAmTMmUfSk=;
+        b=hrxBEJ7D9lUuz8fksIT2NNGHjJjsrltvrLoWFgaMhzEKa4FSiWt0291CmjOZhk2pib
+         YLYlwYa26Z45u4jlmIu+xO54cX4s4/FyNvRDuCsoe5/MpXDmJa54m9qb1d1rDFEo1qWi
+         uG+oOKlZbmTofQ+q0mNU29B2VdYaMO6AJ5a72c5jjX9cMV+6xtoUTdH3B+AcafIW/4KZ
+         GlnNn4YcS2gi5AO6iiuyL9MYakI4AaEm5BkZIZmv1ni8gJgLwZ5occ1Ln3ZeO2az63hi
+         qEKDXyguePJtH5gM683WbPJ66L1/8HI/e5qbvytbbpDC3FO97AbNvb5+NrnogVLe8/Dw
+         VJNQ==
+X-Gm-Message-State: APjAAAWBJXG1GH37MzgGQLz8p+SHkK09C5ij/9/N5V2Ah2SaOvd97Tk4
+        +M2orGpxBqpQrU7q5FH/MkYU4GzxEhJIMcfyxONMl0sp2No=
+X-Google-Smtp-Source: APXvYqxFtisR4TUa+G6fL2xUc7uJb3srELImpM7gjUFAm50U6DWddoi3O62axpgY6ZmWFu2399cf6lQUA4hF/fd7TYw=
+X-Received: by 2002:a9d:638f:: with SMTP id w15mr782247otk.16.1557655981647;
+ Sun, 12 May 2019 03:13:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhnxh5nm.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1557654977;bce7a29b;
-X-HE-SMSGID: 1hPlDL-0002R2-Db
+From:   Shaheed Haque <shaheedhaque@gmail.com>
+Date:   Sun, 12 May 2019 11:12:50 +0100
+Message-ID: <CAHAc2je-Yz4oej-sqvp+G+2Wv+eBABeJWUMm4scRwF2z_diUXw@mail.gmail.com>
+Subject: "add worktree" fails with "fatal: Invalid path" error
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+I'm running git v.2.20.1 on Ubuntu from a program which follows the pattern:
 
-On 08.05.19 07:33, Junio C Hamano wrote:
-> "Dr. Adam Nielsen" <admin@in-ici.net> writes:
-> 
->> + - A pattern that contains a non-trailing slash is matched  relative to the location of the `.gitignore` file.
->> +   For example, `doc/frotz/` matches `doc/frotz` directory, but not
->> +   `a/doc/frotz` (relative from the `.gitignore` file).
->> +   Note that the pattern `doc/frotz` and `/doc/frotz` have the
->> +   same effect in any `.gitignore` file, while `/bar` and `bar`
->> +   have not the same effect (`/bar` will not match `foo/bar`).
-> 
-> The "note" is not incorrect per-se.  The behaviour described is
-> because the leading slash is removed for the purpose of textual
-> matching against paths, but still counts as a non-trailing slash for
-> the purpose of anchoring the pattern to the level of recursion.
-> 
-> I am not sure if that is obvious to the readers, though.
+============
+1. create a temporary directory /tmp/tmpabc
+2. in a loop:
+    2a. create a second level of temporary directory /tmp/tmpabc/tmpworktree123
+    2b. use "git worktree add" on the second level directory
+    2c. do something
+3. cleanup
+    3b. "git branch -D" on each basename(second level directory)
+    3a. "git worktree prune"
+============
 
-Yes, its not explained to the reader that the leading slash is removed 
-for the purpose of textual matching. But maybe this is not necessary in 
-order to understand the effect of the pattern.
+The loop size is of the order of 8-20. In step 2b, I often get errors
+like this (from a Bash reproducer):
 
->  Especially
-> because the "a leading slash matches the beginning of ..." which was
-> in the original is still left and appears two bullet points after
-> this one, the presentation order seem a bit suboptimal.
+============
+$ git worktree add /tmp/tmpgtxug4y9/git_worktree.gBGqnfnU
+Preparing worktree (new branch 'git_worktree.gBGqnfnU')
+fatal: Invalid path '/tmp/tmp1q9ysvyl': No such file or directory
+============
 
-I agree. The paragraph "a leading slash matches the beginning of ..." 
-should be deleted, because its already covered by the top rule plus an 
-example.
+I can see that the problematic path exists in the "gitdir" file of
+what must be an earlier worktree from an older run (the branch is
+gone, but the tree is still there). The path appear to relate to the
+older run's first level directory:
 
-> 
-> How about deleting that "A leading slash matches the beginning..."
-> bullet, and then splitting the above bullet into two?  That is
-> 
-> - A pattern that contains a non-trailing slash is matched
-is matched relative to the location of the `.gitignore` file.
->    For example, `doc/frotz/` matches `doc/frotz` directory, but not
->    `a/doc/frotz` (relative from the `.gitignore` file).
-> 
+============
+$ grep -r /tmp/tmp1q9ysvyl ../.git/worktrees/
+../.git/worktrees/git_worktree.frcwtjt_/gitdir:/tmp/tmp1q9ysvyl/git_worktree.frcwtjt_/.git
+$ git worktree list
+...
+/tmp/tmp1q9ysvyl/git_worktree.frcwtjt_  edde3f25 (detached HEAD)
+...
+$ git branch | grep frcwtjt_
+<no matches>
+============
 
-I agree that the case of a leading slash is important and deserves its 
-own paragraph, especially if we remove the last bullet.
+NOTE: I've not yet had to try deleting the worktree, since "add
+worktree" does appear to work some of the time, so I am able to limp
+along.
 
+I have these questions:
 
-> - A leading slash, if any, is implicitly removed before matching the
->    pattern with the pathname, but the pattern still counts as having
->    a non-trailing slash for the purpose of the above rule.  For
+1. There is no branch or first level directory, but "git prune" has
+not deleted the worktree, is this expected?
+2. Is there something wrong with the sequence of steps I am following?
 
-I would try to avoid ambiguous words like  `implicitly removed ` and 
-`pathname` that have not been used before. Also I am not sure if 
-explaining the reader how the algorithm works is the best approach.
+Thanks, Shaheed
 
->    example, a pattern `{asterisk}.c` does not have any slash in it,
->    so it would match a file or a directory whose name ends with `.c`
->    anywhere in the directory that has `.gitignore` file in it
->    (e.g. `sub/foo.c`, `bar.c`).
-
-A similar example is already in the  "If the pattern contains no 
-slash.." paragraph. I think it takes a bit too much space just to 
-explain the difference when a leading slash appears.
-
-> By prefixing a slash to make it
->    `/{asterisk}.c`, it can be limited to match only at the current
->    level (i.e. `bar.c` but not `sub/foo.c`).
-
-How about we split it like this:
-
-   - A pattern that contains a non-trailing slash is matched
-     relative to the location of the `.gitignore` file.
-     For example, `doc/frotz/` matches `doc/frotz` directory, but not
-     `a/doc/frotz` (relative from the `.gitignore` file; note that the
-     example has a trailing and a non-trailing slash at the same time).
-
-   - Note: A pattern with a leading slash has a non-trailing slash
-     and is therefore effected by the previous paragraph.
-     For example, the pattern `/bar` only matches the file or
-     folder `bar` that is at the same location as the `gitignore` file.
-     Whereas the pattern `bar` would also match in folders below the
-     `gitignore`  file.
-     On the other hand,  the pattern `doc/frotz` and `/doc/frotz`
-     have the same effect in any `.gitignore` file, because both
-     have a non-trailing slash.
-
-> 
->> + - An asterisk "`*`" matches anything except a slash.
->> +   A pattern "foo/*", for example, matches "foo/test.json"
->> +   (a regular file), "foo/bar" (a diretory), but it does not match
->> +   "foo/bar/hello.c" (a regular file), as the asterisk in the
->> +   patter does not match "bar/hello.c" which has a slash in it.
-> 
-> s/patter/&n/
-> 
->> +   The character "`?`" matches any one character except "`/`".
->> +   The range notation, e.g. `[a-zA-Z]`, can be used to match
->> +   one of the characters in a range. See fnmatch(3) and the
->> +   FNM_PATHNAME flag for a more detailed description.
->>   
->>    - A leading slash matches the beginning of the pathname.
->>      For example, "/{asterisk}.c" matches "cat-file.c" but not
-> 
-> Then this last paragraph can be removed.
-
-Agree.
--
-
-Another thing that I noticed is that its not mentioned anywhere that the 
-pattern use a slash as a directory separator (instead of a backslash), 
-its only clear from the examples. Maybe its worth to mention it in the 
-"PATTERN FORMAT" section. Also its maybe worth to introduce the term 
-"leading slash" and "trailing slash" because they will be of importance 
-of the following paragraphs. Something like this after the paragraph of "!":
-
-     [...] for example, "\!important!.txt".
-
-     A slash `/` is used as a directory separator.
-     A leading slash (that is if the pattern begins with a slash)
-     or a trailing slash (that is if the pattern ends with a slash)
-     have special meaning and are explained below.
-
-     If the pattern contains a trailing slash, it would only find
-     a match with a directory. [...]
-
-
-
-
-
+P.S. I have an strace of a failing worktree add if needed.
