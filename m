@@ -2,148 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3A41F461
-	for <e@80x24.org>; Mon, 13 May 2019 16:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA7B11F461
+	for <e@80x24.org>; Mon, 13 May 2019 17:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730655AbfEMQzB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 12:55:01 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:41827 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727774AbfEMQzA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 12:55:00 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id CEB8820E15;
-        Mon, 13 May 2019 12:54:59 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 13 May 2019 12:54:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=mesmtp; bh=IGETVBWdtYXFLu8XJDJCdvfU
-        iwXi+neXw3cQuoOrUGM=; b=14umwjN8UR/3AooDRDh/bm0Adxjss8CGrYnIAlNm
-        sfLtBfNsR7yo/EhZ6t/R4YgmyLH1AgGAmkQ3S0IwaJp3hgngWSIWxM6khL5jzgbx
-        xL4Nc5MB7cOgQC5g+Q7x6DrCONUzQi4gFYanuD3xbNdu47nHZqAL/XtOOoLQnNJK
-        pR4=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=IGETVB
-        WdtYXFLu8XJDJCdvfUiwXi+neXw3cQuoOrUGM=; b=ppPG5+TuzDj/oUb3bBr976
-        lflpr1JiO8cPNRG0d9oqKCGnsUF3H3MJaHoeYmQTEcNwcmMqWwt3XyPmiurMaHqF
-        sMUwoBsfkwtFr0jEx3lbCDZe6k2/TPxjHWZTD6sSwGqPVOVLJNYgD/UjllSLpPo9
-        yqLuoSE5tMN6fDO2sfMUXVX6cRsz1fhTvot5wpZwm3BHyJ6zo9iZ1v8BRSFfqc5d
-        sy7V0woSpS2jdxbHBm1l6JB8PPwmkTOc68v7LC1gPxLkZ8vjXfRohiaqkWykzlDg
-        Oj3dh3zpnjHUdNRcG4/FBDrsxQox8kdbqbuOYnMYo4uG1Is2opGkZ0X6v2XAwZFw
-        ==
-X-ME-Sender: <xms:Y6HZXInLvfVr0NjmSTpvPY64gsHnuvM84ojKsgd_s3Hw-83Qas0BLw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrleeggddutdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheptehlhihsshgrucftohhsshcuoehhihesrghlhihsshgrrdhi
-    sheqnecukfhppedukeehrdeiledrudeghedrudeigeenucfrrghrrghmpehmrghilhhfrh
-    homhephhhisegrlhihshhsrgdrihhsnecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:Y6HZXLwGI2XhoZJ2GeJm6604jaT656lUARW572jFnX0ddGrhLTgigQ>
-    <xmx:Y6HZXPIFBA6lIEM2_eqjRZ7MBkGpuu2fDhFUvJ-S1r3dsC2nMdPqlg>
-    <xmx:Y6HZXOIEAl6WUnS43JtXDDMhuHZR0813LRzv_1sV3TEKsApuSbq4Ag>
-    <xmx:Y6HZXO8QYW8xal0Xf13SbAal6Ad6Y4XAHYoeea-Rl1L5YGVjMSm7DA>
-Received: from localhost (unknown [185.69.145.164])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E580210379;
-        Mon, 13 May 2019 12:54:58 -0400 (EDT)
-Date:   Mon, 13 May 2019 16:54:55 +0000
-From:   Alyssa Ross <hi@alyssa.is>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: explain why file: URLs and bundles don't mix
-Message-ID: <20190513165140.vq225fscfvemol7k@x220.qyliss.net>
-References: <20190513002355.25031-1-hi@alyssa.is>
- <xmqqv9yebwzp.fsf@gitster-ct.c.googlers.com>
+        id S1731717AbfEMR15 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 13:27:57 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44671 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731668AbfEMR15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 13:27:57 -0400
+Received: by mail-ed1-f67.google.com with SMTP id b8so18670903edm.11
+        for <git@vger.kernel.org>; Mon, 13 May 2019 10:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
+        b=YuCrYniw3DtHH+anCYTpqneUMVnkIkQNp6OA40X1sI0P1y0EKkgMrrT7OS4AEsaQ7E
+         g0zq5BseS6pm4x0K1uNXTnpiX3pYsNZLnjjoZrhdxXkT7gb8+7oc3RP6EW39YG7S6B+W
+         qYiPbVSSgSDcZaZzTyewlceVJmHGfg/aJvrkpem0otHHPMWe9yogIOFtS6I2aGEtvwl6
+         YaYWw7pp2yzso4jfcGZlPvbgxXDo5VVitEVEvgVI5sJq3rAB8XO2MOVFfaEI282LXIdm
+         rC7yJD+xXGsN4uHghYs34l8fOLGFo6fu2uBxOCHKpx5z7fR+apPfInWnPoba6CiHPZ4h
+         Zzdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NmPrKBH95W/J/xZgv+G4CsKw6zBPtFdY24F+BBhsbJU=;
+        b=AghuyMapfcOYByxqAnRdGULh6poUIcMGJaA0dZ4oJWqLxfFXvadqV6+LJlTcKLXYTo
+         zRGuIKYHylA7i5PeYc5LzJjcmmC3gt0P7KyT6PKzXnC0LAbWXPhLrndzYADJIPI9l+Aw
+         GAzMFQYwjKyGGU7JOYb6xQr82hO5MEpAIBHcxLoru/3/4E+zxxxjFSjreAbZ64xthFCH
+         43hEVIo25hwMzsJ5jXuzULGbvGpZ56knPLoIr9PcQbao2xH7hf9bDYiZ833RUkAsST0s
+         mHJ9VW+lrjtup3DBS46gv3XjwJJTDZ5z0mPerzEIV/rktmLZI0F/OAC65l9ErOCgQAwR
+         SAJw==
+X-Gm-Message-State: APjAAAWhVihjyhPOmrtMpAGemhlB0HuAI0whfwkXibsffmJM0ElcR5op
+        Pk56ZJ+GS8wmEDZ9g4mfXE9D41mx
+X-Google-Smtp-Source: APXvYqz5XPJUGC9UmEHqprDHuXuQgbxk6s5iqhlt2dDydJ40QICejid5xEMCTLEqjKiHVW0rpcVCsg==
+X-Received: by 2002:a50:9490:: with SMTP id s16mr31151625eda.260.1557768475315;
+        Mon, 13 May 2019 10:27:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f13sm1777163eja.17.2019.05.13.10.27.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 May 2019 10:27:54 -0700 (PDT)
+Date:   Mon, 13 May 2019 10:27:54 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 May 2019 17:27:42 GMT
+Message-Id: <bc99009fbf0e01e9bbe77aa6410489beadf454dc.1557768471.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.170.v2.git.gitgitgadget@gmail.com>
+References: <pull.170.git.gitgitgadget@gmail.com>
+        <pull.170.v2.git.gitgitgadget@gmail.com>
+From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 02/11] diff: export diffstat interface
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="iewqv3osc34ozlmf"
-Content-Disposition: inline
-In-Reply-To: <xmqqv9yebwzp.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Daniel Ferreira <bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Daniel Ferreira <bnmvco@gmail.com>
 
---iewqv3osc34ozlmf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Make the diffstat interface (namely, the diffstat_t struct and
+compute_diffstat) no longer be internal to diff.c and allow it to be used
+by other parts of git.
 
-> > +- When cloning, the former implies --local option. See
-> > +  linkgit:git-clone[1] for details.
-> > +
-> > +- The latter is implemented using linkgit:git-upload-pack[1], which
-> > +  expects its repository to be a directory, and therefore does not
-> > +  work for bundles (see linkgit:git-bundle[1]).
->
-> Hmm, I do not think this is quite true.
->
-> If "git clone /path/to/repo.bndl" implied --local, we would end up
-> trying to hardlink into /path/to/repo.bndl/objects and would fail.
->
-> I think what is closer to the reaility is that we check if the
-> source is a bundle when the local filesystem path is used and try to
-> clone from the bundle, before using the local filesystem path as a
-> directory we can "clone --local" from.  On the other hand, when the
-> <scheme>://<path> syntax is used, we do not even bother seeing if
-> the named resource is a bundle, or if --local optimization is
-> possible (because we do not bother seeing if the named resource is a
-> local filesystem entity, either).
+This is helpful for code that may want to easily extract information
+from files using the diff machinery, while flushing it differently from
+how the show_* functions used by diff_flush() do it. One example is the
+builtin implementation of git-add--interactive's status.
 
-Would the following work better for you?
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diff.c | 37 +++++++++++++++----------------------
+ diff.h | 19 +++++++++++++++++++
+ 2 files changed, 34 insertions(+), 22 deletions(-)
 
-When cloning, the former will check to see if the source is a bundle.
-If it is, it will clone from the bundle, otherwise it will behave as if
-given --local. The latter performs neither of these checks, and
-therefore does not support bundles.
+diff --git a/diff.c b/diff.c
+index 5306c48652..daa5f3a736 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2489,22 +2489,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
+ 	}
+ }
+ 
+-struct diffstat_t {
+-	int nr;
+-	int alloc;
+-	struct diffstat_file {
+-		char *from_name;
+-		char *name;
+-		char *print_name;
+-		const char *comments;
+-		unsigned is_unmerged:1;
+-		unsigned is_binary:1;
+-		unsigned is_renamed:1;
+-		unsigned is_interesting:1;
+-		uintmax_t added, deleted;
+-	} **files;
+-};
+-
+ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 					  const char *name_a,
+ 					  const char *name_b)
+@@ -6001,12 +5985,7 @@ void diff_flush(struct diff_options *options)
+ 	    dirstat_by_line) {
+ 		struct diffstat_t diffstat;
+ 
+-		memset(&diffstat, 0, sizeof(struct diffstat_t));
+-		for (i = 0; i < q->nr; i++) {
+-			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p))
+-				diff_flush_stat(p, options, &diffstat);
+-		}
++		compute_diffstat(options, &diffstat, q);
+ 		if (output_format & DIFF_FORMAT_NUMSTAT)
+ 			show_numstat(&diffstat, options);
+ 		if (output_format & DIFF_FORMAT_DIFFSTAT)
+@@ -6306,6 +6285,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
+ 	return ignored;
+ }
+ 
++void compute_diffstat(struct diff_options *options,
++		      struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q)
++{
++	int i;
++
++	memset(diffstat, 0, sizeof(struct diffstat_t));
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (check_pair_status(p))
++			diff_flush_stat(p, options, diffstat);
++	}
++}
++
+ void diff_addremove(struct diff_options *options,
+ 		    int addremove, unsigned mode,
+ 		    const struct object_id *oid,
+diff --git a/diff.h b/diff.h
+index b512d0477a..ae9bedfab8 100644
+--- a/diff.h
++++ b/diff.h
+@@ -240,6 +240,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
+ void diff_emit_submodule_pipethrough(struct diff_options *o,
+ 				     const char *line, int len);
+ 
++struct diffstat_t {
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *from_name;
++		char *name;
++		char *print_name;
++		const char *comments;
++		unsigned is_unmerged:1;
++		unsigned is_binary:1;
++		unsigned is_renamed:1;
++		unsigned is_interesting:1;
++		uintmax_t added, deleted;
++	} **files;
++};
++
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+@@ -328,6 +344,9 @@ void diff_change(struct diff_options *,
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
++void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q);
++
+ #define DIFF_SETUP_REVERSE      	1
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
+-- 
+gitgitgadget
 
-> A possibly interesting tangent to think about is what would happen
-> if we slightly tweak the above design.  What it would require for
-> the code to take "git clone https://site/repo.bndl", realize that
-> the named resource is a bundle file, curl/wget it and clone from
-> that downloaded bundle?  And if it is feasible to implement, would
-> it even be a good idea to begin with?  I do not have a ready answer
-> to either of these questions myself.
-
-I was very surprised to find that cloning from a bundle didn't even work
-with a file URL, especially since the documentation seemed to imply that
-it should. I assumed that file URLs not supporting bundles was an
-oversight, and made some attempt to read the code with a view to fixing
-it. Once I realised that file URLs went through a completely different
-code path to paths, I decided it was better to just document things as
-they were.
-
-I think it would be nice if, at least for file URLs, bundles were
-supported. I doubt supporting cloning a bundle over a network would
-inherently cause problems (although I'm by no means qualified to make
-such an assessment) -- if it's not clear whether it's a good idea to do
-so, it could always be implemented without being advertised.
-
---iewqv3osc34ozlmf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEH9wgcxqlHM/ARR3h+dvtSFmyccAFAlzZoToACgkQ+dvtSFmy
-ccAbcw/8CdqSW6n4liLEsUVyAwoIdqpjxZbEoH+21Hx64tCizdsUV9C9xqzl4Npi
-PMncgghkgOuIazB+73eXMFm2sCewQuMO49wvFNV/J8xsx+qexvL+nYb5xVn+Ssoe
-kpP71OPfi74cks0LA0pJTWuzM2It8OtQnKXxEYriMVlzo1p38gR25Alt0eCsHiAp
-Q6F6FFhPdR4mCCFiCfLwyMmYmqwAppL6xwV78ZoBznIGpeC1gC0ZW9oaehYTDWOR
-6HP6UqubwMcmkzyuyPgCcK+iLJRjToJWj/Gv1nL7D865BqBl0f8O6fK+fvvgMsqt
-t2APpHKtENXnE1a+/jiw/d4h8Qdf+uPb1ORbLXPdZvEmZV+84TqPSN0bNS9VweAW
-gzr9TUXgK6Lk3IXQlaNYnE3OOtZlIs2+OZmVviY+068Tdjdssi+vzpmgd7jj16C1
-VDO4pS8bz5mx0WCsf5UFneuurtky35hByNCXkBVD/jYEik63Q5OXW1vPwA2zYlc5
-tFt87WseOLv40ZQ6jau7DPhkG6X3pBktkWuqf/sUsCC1AnM/DDI7yxSkXJCJAKo0
-a/8ZuyBRG/yrw1Sk7iVG9SnBH5uua/xkcI3468nDnEB3XStBy3XBNqBk3up5spwU
-rHCRE9tL8AcE5iTFJt9QlNrEybXgmMa1ebnQFLaO0RG8Szpz++k=
-=ghEG
------END PGP SIGNATURE-----
-
---iewqv3osc34ozlmf--
