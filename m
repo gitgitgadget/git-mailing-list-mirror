@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 978141F461
-	for <e@80x24.org>; Mon, 13 May 2019 23:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01B581F461
+	for <e@80x24.org>; Mon, 13 May 2019 23:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbfEMXRf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 19:17:35 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40525 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726233AbfEMXRf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 19:17:35 -0400
-Received: by mail-pl1-f194.google.com with SMTP id b3so7220357plr.7
-        for <git@vger.kernel.org>; Mon, 13 May 2019 16:17:34 -0700 (PDT)
+        id S1726537AbfEMXRh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 19:17:37 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:34552 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726233AbfEMXRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 19:17:36 -0400
+Received: by mail-pg1-f194.google.com with SMTP id c13so7562674pgt.1
+        for <git@vger.kernel.org>; Mon, 13 May 2019 16:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ENQym6SZUXSoUK+EF+ZwoUUP9JgvRLCp/ygSlStBV40=;
-        b=AN2/qXqd5jce2ZaXRLnmNaclS1ZVh6PuGESh4nXDCV75/v3eaVHFlB9YpoxJ3AOOFc
-         UHHK0tUvYIHTY1KiRhDiqSW5uEMF2UDS798Ei5R904j5EO4PyQdXmgQRGnw2IFwVWUmt
-         hu+eouPfu/H5T245gtGgt4w/Pdovc0FalYwjxTpSTQEMnGXexyyxI0czKvi/bEZyaRqU
-         5ckYT0V6bahVgPOOwLHEsJ8z1bwhxhz4RjjlepO9/W07A3PuslqACE0+AyM5hcOC5ULw
-         HHowYS2Tkuk14jwb3IxbTPncevLay5zu5yLDVHcHDu2+4wdFgrhbvTSQ+wKKS+pZUKP7
-         X3Wg==
+        bh=dqsMqqElwe2xM0IWZVcICVsuQDuXVAJPknzhLFA7feU=;
+        b=Qbo08iwheCZNUGxSlRKSsnTivytVclLV1wNK1JTt49KVkQRIhU+aoiE6Zx5mr7u7v3
+         nO5A4QFKAJQJUTWoSARC63EN6X4VUlpn1i1azG30Il6TdDmEtia0qGYWa7HjOXgPydPE
+         YlBruDCeT86rOGTOHHJFyNHzHNAgGMWNl/uWhvkj8UGMtRrRAhpubJfbPKKH6nFLSIqb
+         6L6fpgeslzr0z3XTDevXMzFkz5SO6vpKOqU5daA8ZOd19+4SCsidlHHDqxABLvXEOYT0
+         1NKYvfSsNp1+Lf7+pobK36JTz9m08GzU6Q4FDvZVsGH0jpgygCLMIBRbufGhgpkLZjwk
+         nhUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ENQym6SZUXSoUK+EF+ZwoUUP9JgvRLCp/ygSlStBV40=;
-        b=tEBO6ztYIb3sXr6kVfhL4/9D4BhR6DVnLiWOMC9Cv4gt2yKxeHTfpndrabnwfEAqV6
-         m95xmyOwJBwmwRgxdVut54yxukrVTBh156F3Xecbr3IhprRZwFb19sVRG4TutV23vIbA
-         bQAHScvGAmmHdVdTuqwI7NQXiNJiGZTO4NQcT+R1/jsRPV4H+OuNpxc+cznMl4FuSRO6
-         Bvl8hevkIJocErK5XDeMFj6wHCiFv2hJDKVD2WEiTEH+kLmGpQc5uKAU9RRWw3a2vZVO
-         MirWhJ2IW67xwzQA+2hPKIEPugAtHjV+gSgYpd5w1saGSzzvyKuFrirpZV2X2MOubvwc
-         Ylaw==
-X-Gm-Message-State: APjAAAUJKqHxekepEnLq36+1r08EUv6dVzgJxV56Zju3YHFDdSrVCBj5
-        hVzd2G1sShMGg8dMs5fHtwQ=
-X-Google-Smtp-Source: APXvYqyt4c7T5tXnNyatNv0MaJw6WqALd1lxcl0QarngFDoaqmtQaHllhByYm7L34ougGlFSPs24KQ==
-X-Received: by 2002:a17:902:a510:: with SMTP id s16mr34168339plq.334.1557789454149;
-        Mon, 13 May 2019 16:17:34 -0700 (PDT)
+        bh=dqsMqqElwe2xM0IWZVcICVsuQDuXVAJPknzhLFA7feU=;
+        b=Mic7JHp95hqQHgTGbMBbIqpS6Kk2R1AkloFjAWQaW89IhVzl6q51gj4oMq285GfspR
+         mZ0bDk52A0tn1mSpsenO5cBYy/EX9/F6iy6EuRmceDLy6ZlXd79a7OMcEj5hya+GLboP
+         PQGX8zDOalDIPiTAY3O6Cn621h/VGmZdfPAIdSZeDmJ0bDL4lJzpp2wgBDZdHpjZv7hF
+         puOo72JFu822zjqhaS7f+llqSuahOJ23bxN8Z+sJbIZOeuPnHchZsfsATDHCxNg3ivV3
+         7CE2Cq24tyRLsG7pvaDcIlbFSHbuQTvBgTZd0EjYDCNJ/f3aUIMnslF0BRH/b3GprxuU
+         bePw==
+X-Gm-Message-State: APjAAAWFL7/O+tRSqdNaPYqLaY5hyM2l06PeLWwp98Ua5/zcrlHgsdH1
+        4P/cKqSUp+elkMRo3fhngNk=
+X-Google-Smtp-Source: APXvYqxwzYPrwh3phDW+TeoDypJYtS4C/YcPMCb1ZQHm2N+ZMYczs1m4qjLsDTlBphaEX7EMroP2VQ==
+X-Received: by 2002:a63:1160:: with SMTP id 32mr34669815pgr.106.1557789455529;
+        Mon, 13 May 2019 16:17:35 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id g10sm30664307pfg.153.2019.05.13.16.17.32
+        by smtp.gmail.com with ESMTPSA id g10sm30664307pfg.153.2019.05.13.16.17.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 May 2019 16:17:33 -0700 (PDT)
+        Mon, 13 May 2019 16:17:34 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
@@ -56,111 +56,96 @@ Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 0/5] Fix and extend encoding handling in fast export/import
-Date:   Mon, 13 May 2019 16:17:21 -0700
-Message-Id: <20190513231726.16218-1-newren@gmail.com>
+Subject: [PATCH v5 1/5] t9350: fix encoding test to actually test reencoding
+Date:   Mon, 13 May 2019 16:17:22 -0700
+Message-Id: <20190513231726.16218-2-newren@gmail.com>
 X-Mailer: git-send-email 2.21.0.782.gd8be4ee826
-In-Reply-To: <20190513164722.31534-1-newren@gmail.com>
+In-Reply-To: <20190513231726.16218-1-newren@gmail.com>
 References: <20190513164722.31534-1-newren@gmail.com>
+ <20190513231726.16218-1-newren@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While stress testing `git filter-repo`, I noticed an issue with
-encoding; further digging led to the fixes and features in this series.
-See the individual commit messages for details.
+This test used an author with non-ascii characters in the name, but
+no special commit message.  It then grep'ed for those non-ascii
+characters, but those are guaranteed to exist regardless of the
+reencoding process since the reencoding only affects the commit message,
+not the author or committer names.  As such, the test would work even if
+the re-encoding process simply stripped the commit message entirely.
+Modify the test to actually check that the reencoding in utf-8 worked.
 
-Changes since v4 (full range-diff below):
-  * Used git_parse_maybe_bool()
-  * Updated Documentation/git-fast-export.txt to document the new option
-
-Elijah Newren (5):
-  t9350: fix encoding test to actually test reencoding
-  fast-import: support 'encoding' commit header
-  fast-export: avoid stripping encoding header if we cannot reencode
-  fast-export: differentiate between explicitly utf-8 and implicitly
-    utf-8
-  fast-export: do automatic reencoding of commit messages only if
-    requested
-
- Documentation/git-fast-export.txt            |  7 ++
- Documentation/git-fast-import.txt            |  7 ++
- builtin/fast-export.c                        | 55 ++++++++++++--
- fast-import.c                                | 11 ++-
- t/t9300-fast-import.sh                       | 20 +++++
- t/t9350-fast-export.sh                       | 78 +++++++++++++++++---
- t/t9350/broken-iso-8859-7-commit-message.txt |  1 +
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t9350-fast-export.sh                       | 27 ++++++++++++--------
  t/t9350/simple-iso-8859-7-commit-message.txt |  1 +
- 8 files changed, 163 insertions(+), 17 deletions(-)
- create mode 100644 t/t9350/broken-iso-8859-7-commit-message.txt
+ 2 files changed, 18 insertions(+), 10 deletions(-)
  create mode 100644 t/t9350/simple-iso-8859-7-commit-message.txt
 
-Range-diff:
-1:  37a68a0ffd = 1:  37a68a0ffd t9350: fix encoding test to actually test reencoding
-2:  3d84f4613d = 2:  3d84f4613d fast-import: support 'encoding' commit header
-3:  baa8394a3a = 3:  baa8394a3a fast-export: avoid stripping encoding header if we cannot reencode
-4:  49960164c6 = 4:  49960164c6 fast-export: differentiate between explicitly utf-8 and implicitly utf-8
-5:  571613a09e ! 5:  d8be4ee826 fast-export: do automatic reencoding of commit messages only if requested
-    @@ -13,6 +13,24 @@
-     
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-     
-    + diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-    + --- a/Documentation/git-fast-export.txt
-    + +++ b/Documentation/git-fast-export.txt
-    +@@
-    + 	for intermediary filters (e.g. for rewriting commit messages
-    + 	which refer to older commits, or for stripping blobs by id).
-    + 
-    ++--reencode=(yes|no|abort)::
-    ++	Specify how to handle `encoding` header in commit objects.  When
-    ++	asking to 'abort' (which is the default), this program will die
-    ++	when encountering such a commit object.  With 'yes', the commit
-    ++	message will be reencoded into UTF-8.  With 'no', the original
-    ++	encoding will be preserved.
-    ++
-    + --refspec::
-    + 	Apply the specified refspec to each ref exported. Multiple of them can
-    + 	be specified.
-    +
-      diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-      --- a/builtin/fast-export.c
-      +++ b/builtin/fast-export.c
-    @@ -31,14 +49,25 @@
-     +static int parse_opt_reencode_mode(const struct option *opt,
-     +				   const char *arg, int unset)
-     +{
-    -+	if (unset || !strcmp(arg, "abort"))
-    ++	if (unset) {
-     +		reencode_mode = REENCODE_ABORT;
-    -+	else if (!strcmp(arg, "yes") || !strcmp(arg, "true") || !strcmp(arg, "on"))
-    -+		reencode_mode = REENCODE_YES;
-    -+	else if (!strcmp(arg, "no") || !strcmp(arg, "false") || !strcmp(arg, "off"))
-    ++		return 0;
-    ++	}
-    ++
-    ++	switch (git_parse_maybe_bool(arg)) {
-    ++	case 0:
-     +		reencode_mode = REENCODE_NO;
-    -+	else
-    -+		return error("Unknown reencoding mode: %s", arg);
-    ++		break;
-    ++	case 1:
-    ++		reencode_mode = REENCODE_YES;
-    ++		break;
-    ++	default:
-    ++		if (arg && !strcasecmp(arg, "abort"))
-    ++			reencode_mode = REENCODE_ABORT;
-    ++		else
-    ++			return error("Unknown reencoding mode: %s", arg);
-    ++	}
-    ++
-     +	return 0;
-     +}
-     +
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 5690fe2810..c721026260 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -94,22 +94,30 @@ test_expect_success 'fast-export --show-original-ids | git fast-import' '
+ 	test $MUSS = $(git rev-parse --verify refs/tags/muss)
+ '
+ 
+-test_expect_success 'iso-8859-1' '
++test_expect_success 'iso-8859-7' '
+ 
+-	git config i18n.commitencoding ISO8859-1 &&
+-	# use author and committer name in ISO-8859-1 to match it.
+-	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
++	test_when_finished "git reset --hard HEAD~1" &&
++	test_config i18n.commitencoding iso-8859-7 &&
+ 	test_tick &&
+ 	echo rosten >file &&
+-	git commit -s -m den file &&
+-	git fast-export wer^..wer >iso8859-1.fi &&
+-	sed "s/wer/i18n/" iso8859-1.fi |
++	git commit -s -F "$TEST_DIRECTORY/t9350/simple-iso-8859-7-commit-message.txt" file &&
++	git fast-export wer^..wer >iso-8859-7.fi &&
++	sed "s/wer/i18n/" iso-8859-7.fi |
+ 		(cd new &&
+ 		 git fast-import &&
++		 # The commit object, if not re-encoded, would be 240 bytes.
++		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
++		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
++		 # to \xCF\x80 (\317\200) in utf-8 adds a byte.  Check for
++		 # the expected size.
++		 test 221 -eq "$(git cat-file -s i18n)" &&
++		 # ...and for the expected translation of bytes.
+ 		 git cat-file commit i18n >actual &&
+-		 grep "Áéí óú" actual)
+-
++		 grep $(printf "\317\200") actual &&
++		 # Also make sure the commit does not have the "encoding" header
++		 ! grep ^encoding actual)
+ '
++
+ test_expect_success 'import/export-marks' '
+ 
+ 	git checkout -b marks master &&
+@@ -224,7 +232,6 @@ GIT_COMMITTER_NAME='C O Mitter'; export GIT_COMMITTER_NAME
+ 
+ test_expect_success 'setup copies' '
+ 
+-	git config --unset i18n.commitencoding &&
+ 	git checkout -b copy rein &&
+ 	git mv file file3 &&
+ 	git commit -m move1 &&
+diff --git a/t/t9350/simple-iso-8859-7-commit-message.txt b/t/t9350/simple-iso-8859-7-commit-message.txt
+new file mode 100644
+index 0000000000..8b3f0c3dba
+--- /dev/null
++++ b/t/t9350/simple-iso-8859-7-commit-message.txt
+@@ -0,0 +1 @@
++Pi: �
+\ No newline at end of file
 -- 
 2.21.0.782.gd8be4ee826
 
