@@ -3,77 +3,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A35D1F461
-	for <e@80x24.org>; Mon, 13 May 2019 22:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 379211F461
+	for <e@80x24.org>; Mon, 13 May 2019 22:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbfEMWet (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 18:34:49 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64515 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbfEMWet (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 18:34:49 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 350AF15C503;
-        Mon, 13 May 2019 18:34:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wKVzPS85EzAe
-        bSBr4NMz1aIMzFU=; b=xBHzD68ejyUhH4hTEf46iSsUmToTDEvkcgxNM4hafSPN
-        TYjJcOdkn/A23hKK5RlwdLHgyZy2cRblJ6zkAOZB/GBmMV0ydT+CJbonrvybZRBI
-        7tHkLVOiKB824oV7CB1Yv4n0sO2Su0lqLJO0h1K8q76FGKa6qgYwBMc0y6u0SiE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JBrZF+
-        W9Bf3Ym0Ep4n2l2/Nog91r/6iBPEw7uYHmEg0TPO6U940mAxY73JJRTwXwIstOtj
-        jfW5T4NPKAdjTJpqcoSEr2SW2JnYXDGSSuLCTIcQS9sHWtK/E4hC7swDVJ17De8l
-        R82suiuEMAyAM4wZc45jxTjHE+IUoxX4JWsKw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2CB2715C502;
-        Mon, 13 May 2019 18:34:48 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9567815C4FF;
-        Mon, 13 May 2019 18:34:47 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Git v2.22.0-rc0
-References: <xmqqef52baih.fsf@gitster-ct.c.googlers.com>
-        <87pnomvvml.fsf@evledraar.gmail.com>
-Date:   Tue, 14 May 2019 07:34:46 +0900
-In-Reply-To: <87pnomvvml.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 14 May 2019 00:26:42 +0200")
-Message-ID: <xmqq1s12asqh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726319AbfEMWnS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 18:43:18 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:46524 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726233AbfEMWnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 18:43:18 -0400
+Received: by mail-ed1-f41.google.com with SMTP id f37so19798096edb.13
+        for <git@vger.kernel.org>; Mon, 13 May 2019 15:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=MtdhK1tJigEt/b+BgcMBDjKqzJlYNjEs43WLqIJ7iac=;
+        b=En0PNZ9kWoCjFBiBIVq3F6QsiTMAr7iz9HGwH94nD1KyJ9TA3auVekuHO5oiCHekeP
+         3TimtQ156wtL6qEC3mv1/bSpunmWAEklhVo36povcihOK6rioSLVyGvjvYkzmt/czAWz
+         CdJuWHmh//e6xpSlX4M5xXTXezZYseSWBf1geS/BiOu43FNXgEK+f24+vTQQzCT4ccwp
+         hGthSXknS8pmHxaNmPnHwotihkuWRs8d7IjcBc8dnMBlWpF5kZ2q2ilKgreAlSZEvsLS
+         8gBaPnBX31QP5LMim4DqrHvAb5nNMpf/5swvlIZJoeyfMudzcmxgCq9dgF90mkVRR4NE
+         T/bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MtdhK1tJigEt/b+BgcMBDjKqzJlYNjEs43WLqIJ7iac=;
+        b=cZAT9Vs38LftN7RlGQuLAoNxRdXmFKUDh+vNf9scaeuTz6eSDgqN11uwK9ip6Zdiw5
+         xd5kjiugVet8ABQVQOA8+xi38IC2r8xZxSMz8b8cUvBHv/+SIkpGLYCy6yabfGtultWN
+         bXB14U0b4xSd10Od1q02gcCX0wB0uioEonU5+EMH/hb+t3CHfFZavogQKv4QcM1W2Evw
+         GBG29Wy69FjpRHo/SIdeUhToy8h9Y8oSX8pfZwzcWtlAczixxS7wkgjMIf4EFPMoutpO
+         eFfv2dW0iRc5rCsFVjDtVs4DkM6XdZA+P4XXkoCyqCcM9D5DZF/RiZY5fXqa0niaqGE+
+         L0nQ==
+X-Gm-Message-State: APjAAAWFv11RArXXwHKqSf2HeFphYMy30E8a+YKMVuqAaCkRSLFL2w5G
+        ZRFPOhhROYxKiKtvXJ9lNc1nXGlR
+X-Google-Smtp-Source: APXvYqyzjFzwT04ulp8jXL8XAxGJM70rblZ1yba+dx4MA5MEts8uF8lTJQWxhn3QwOxzvN7sWmhfBw==
+X-Received: by 2002:a50:bdc2:: with SMTP id z2mr31766319edh.245.1557787396117;
+        Mon, 13 May 2019 15:43:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c26sm4101762ede.32.2019.05.13.15.43.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 May 2019 15:43:15 -0700 (PDT)
+Date:   Mon, 13 May 2019 15:43:15 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 May 2019 22:43:12 GMT
+Message-Id: <pull.192.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] pkt-line: fix incorrect function declaration
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 503B4DD8-75CF-11E9-80CD-46F8B7964D18-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+MS Visual C detected a mismatch between the declaration and the definition
+of set_packet_header(): it is declared with its second parameter missing the 
+const attribute.
 
-> -CC lkml & git-packagers.
->
-> Some suggestions for fixes in RelNotes & last-minute observations:
+It also detected a mismatch between the declaration and the definition of 
+parse_opt_unknown_cb().
 
-Thanks.
+These problems must have been introduced very recently; I do not recall
+seeing them before today in any of Git for Windows' ever-green branches
+(i.e. master semi-automatically rebased continously onto pu, next, master 
+and maint).
 
->>  * "git stash" has been rewritten in C.
->
-> I just noticed that stash.useBuiltin added in 90a462725e ("stash:
-> optionally use the scripted version again", 2019-02-25) doesn't have
-> docs like rebase.useBuiltin d8d0a546f0 ("rebase doc: document
-> rebase.useBuiltin", 2018-11-14).
+You could not have seen it in git.git's own Azure Pipeline, as Git for
+Windows' version already has support to build with MSVC (I plan to submit
+this directly after v2.22.0 is out).
 
-Yeah, that may be a good low-hanging fruit to pick.
+Johannes Schindelin (2):
+  pkt-line: fix declaration of `set_packet_header()`
+  parse-options: adjust `parse_opt_unknown_cb()`s declared return type
+
+ parse-options.h | 4 +++-
+ pkt-line.h      | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+
+base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-192%2Fdscho%2Ffix-set_packet_header-signature-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-192/dscho/fix-set_packet_header-signature-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/192
+-- 
+gitgitgadget
