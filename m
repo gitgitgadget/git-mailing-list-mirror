@@ -2,85 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4889B1F461
-	for <e@80x24.org>; Mon, 13 May 2019 21:14:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDC4B1F461
+	for <e@80x24.org>; Mon, 13 May 2019 21:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726342AbfEMVOB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 17:14:01 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43508 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfEMVOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 17:14:01 -0400
-Received: by mail-ed1-f68.google.com with SMTP id w33so19547275edb.10
-        for <git@vger.kernel.org>; Mon, 13 May 2019 14:14:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=G7G+6S89S6xT4oVsLJX4lEA9ZGOvq5sWSHsZcMyy4gQ=;
-        b=kKRzj07OHZ6VsdK1AeC/z0Ix6FZEwpe9cN1ejs9TO5ssrN4YPjHu4zPDDiuMb6UPBo
-         e6fCsq0WOyEHcIZFjbUrwld/HFYFAYYxPxweIvFouBOsfi6XQ1HKHkytF/8Xld8HUslX
-         EWw8mIPs5M6g2DXuGk8Le5ccpLMG3TX4KbfqOPtPFcyJGJVCodvkWaiGwozHWmbiO7Uf
-         nSKuoRv7bcheUC/r8aMAEHRAM7srPjdickFbBA2uFWCLbK/JLNhqST1x3DlM9o/T1YAu
-         WpR48bdNc2+NoBezAFaTy3dxGNQ6z9Z2zm0voX3zbo5EooSAV0HjaNTKRzBBR292I1Fw
-         Wr/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=G7G+6S89S6xT4oVsLJX4lEA9ZGOvq5sWSHsZcMyy4gQ=;
-        b=l+NSQR52WBtiYdqkZsxP7kCYLjptfGXDsmtKPl/wqQGOTKB3GPjCLQfuYJSHRycBQg
-         XKc4b/kNPL6Fo1IbvFEJQdx4Ni7PsUCy3StVxilCQCHTDV0SCU6Z7vd4+qI4ij9fjx8O
-         Twqp32G6u3yC2DpyDiwG6yZFe/QQC///XxRdmNptui5Pu93bi6fHfsj7rGFDg6EhLSGm
-         kbYplH2iQtYkGUGPNoHwpapmbh2RUjMN97Pl0ouMgkK/bU2WWcBCvEsCXD4s+/mcWqRT
-         otDtsykj/gfL/vJTHbAZP2wOzb9aD8aGW2VAnhCeJCtVfED5HT+WAbEMhdvGY+NW5CJz
-         8iPg==
-X-Gm-Message-State: APjAAAWmf8DrxBLEBo17q6sVWKuyr80jpDc9U3//sKf8v//LGGtiLi4w
-        xVw0M7lEZKX1tuflc8CmReQ=
-X-Google-Smtp-Source: APXvYqxI13+0Xeb1ok88/A5/UAghRaZyJE3TG8UBmEpyJSPRpz7r5VEF6NWrq/SRtmtyRwNl8PD5Ww==
-X-Received: by 2002:a50:9490:: with SMTP id s16mr32267079eda.260.1557782039566;
-        Mon, 13 May 2019 14:13:59 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id k57sm4020301ede.17.2019.05.13.14.13.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 May 2019 14:13:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Heinrich Schuchardt <xypron.glpk@gmx.de>,
-        Brian M Carlson <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in that order
-References: <20190508105607.178244-1-gitster@pobox.com> <20190509114830.29647-4-avarab@gmail.com> <xmqqmujqbuw4.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <xmqqmujqbuw4.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 13 May 2019 23:13:57 +0200
-Message-ID: <87r292vyzu.fsf@evledraar.gmail.com>
+        id S1726460AbfEMVzt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 17:55:49 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:18256 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbfEMVzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 17:55:49 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id QIvDhxYtqniZTQIvDhqptv; Mon, 13 May 2019 22:55:47 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=B8HHL9lM c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=ThujBkUneqCIAknskawA:9 a=QEXdDO2ut3YA:10
+Subject: Re: git --help not actually showing the git(1) help page..
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <0d37203a-e738-bad3-41e1-05204abc138b@iee.org>
+ <20190513205301.GA22745@sigill.intra.peff.net>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <a0afd3c4-93ff-31e6-a622-5751c6b5a549@iee.org>
+Date:   Mon, 13 May 2019 22:55:47 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190513205301.GA22745@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfELioyWC5HJrvRIoutb8RMjLKGE/hkFxwiGj3OJSM8gkLFMpvFQQ99DRfhTirIMXyYnw+z7WTiB/zJwELHikLx+PLLUqGQAC/GU9h1CLkj/KF3POJ1FS
+ dLl4QaqB3FaUcQZ9qZRO1Vep9VD3Ch3BS3g0ZsiXsdKKmj/HFJ00Cb9NpqHtc23WiDYYTb1eJF87box8bOW6mm/8d0WIEJqCR0dQGIMweCX4j60+IcvA45Ho
+ GsqjPClaJEqRTXR2nUPH3Ugh0ffZMUuIxmgZxmrhkYY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, May 13 2019, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi Peff
+On 13/05/2019 21:53, Jeff King wrote:
+> On Mon, May 13, 2019 at 09:47:27PM +0100, Philip Oakley wrote:
 >
->>  # Variables we fill in automatically, or via prompting:
->> -my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@initial_bcc,$no_bcc,=
-@xh,
->> +my (@to,@cc,,@xh,$envelope_sender,
+>> Is there a cli way, especially on Git for Windows bash, to get the html man
+>> page of git(1)? I have it on my system, so can go via another page but..
+>>
+>> All the `git <cmd> --help` appear to work, but I can't determine the correct
+>> invocation for bringing up the stupid content tracker's page in the browser.
+>> Previously I'd have expected either `git --help` or `git git --help` to work
+>> (can't remember which). The former only produces the short form -h help in
+>> the bash window, the latter says 'git' isn't a command.
+> Try "git help git".
+Ahh, that's the one. I'd totally forgot about that method.
 >
-> ,,???
+> It might be worth mentioning it in the paragraph at the end of "git
+> help".
+True. I'll stick on my todo list, along with adding to the general usage 
+message. Possibly "Or `git help git`."
 
-Just a typo. I see you fixed this and the other issues noted in your
-push-out to "next", thanks! Sorry about not getting to this before that.
+On GfW I commonly use the `git <cmd> --help` when things go wrong, so 
+making the response to that give the right advice would be good. (It's 
+almost the same isue as `git --version`).
+
+> --
+Philip
