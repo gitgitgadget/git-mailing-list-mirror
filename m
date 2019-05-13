@@ -3,106 +3,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8738B1F461
-	for <e@80x24.org>; Mon, 13 May 2019 09:18:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D21B81F461
+	for <e@80x24.org>; Mon, 13 May 2019 09:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728268AbfEMJSc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 05:18:32 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57602 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727747AbfEMJSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 05:18:31 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFBB177CDA;
-        Mon, 13 May 2019 05:18:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lU7FeIuhouG0fqzFhIPUNanvLZc=; b=g8Mt7K
-        FfFVtNef8kFoOAiKWn/6AtcczFNPpZKe4PNhpR5IivMrSaYv2gk71DPnohKgK/FB
-        MU/BvaLSHx9w0slocrJfQf7hGNBARDkId1mA8irHPo/97TabyH7aV7ihFDM+FAka
-        fs6Qcizg8kitgWF6Frp7X+e0j9HXInyxEcFjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CwGNubCkDB2fSB6VrPGUFJo1DMKpKi7e
-        CX8akptSiTob3yW7FDfPYz5T9sT/2fbxm6LrZroudmxoXTZPmvrgAGogK1HeQEW3
-        3iQBwAEFB9VHDB3jLsuu3WqepHNFMl0JssMYP9aDIHq5RpcGqlXAp2qoBBZFktCs
-        Y+/UZdNkWaY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B690777CD9;
-        Mon, 13 May 2019 05:18:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E675877CD8;
-        Mon, 13 May 2019 05:18:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     git@vger.kernel.org
-Subject: Re: push docs: inaccurate description of omitted destination?
-References: <87sgtj6mo3.fsf@kyleam.com>
-Date:   Mon, 13 May 2019 18:18:21 +0900
-In-Reply-To: <87sgtj6mo3.fsf@kyleam.com> (Kyle Meyer's message of "Sun, 12 May
-        2019 23:47:08 -0400")
-Message-ID: <xmqqimuebtlu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1728217AbfEMJVJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 05:21:09 -0400
+Received: from mail-it1-f172.google.com ([209.85.166.172]:39779 "EHLO
+        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727992AbfEMJVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 05:21:09 -0400
+Received: by mail-it1-f172.google.com with SMTP id 9so11953161itf.4
+        for <git@vger.kernel.org>; Mon, 13 May 2019 02:21:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xYtPguvL78c96GuPEgdeNznAv+BTOA8Wmh9CQNtXdxA=;
+        b=AcSW0tc2DfjhMFbyeG2MV5UCzu+P/b0v7J0P7P6vQZR5E/18Sewcp4SVZDxyKnvJ4b
+         93bxKoOmBilFU2qT97/s80mJuKoLOc4//6mqmpO4N0FUnYmFjTOYqCZUtbIg4oBJyiwz
+         DpFPfoOiUWrQbGzd/8lt7bkgUHLEUqKo+0vh3pILsXMo3zk/kIB6n4dAiN/y7VDtyAta
+         Owy9ESrGlRlCBgAs3nURWVbt/yzTdKzEtifrFJyvWJrlmpuWvERx5bVZ6a6iViVyaTEU
+         nRJ2569o8AABjLF5wgS0bu8OhpHlJFrNQB0OY+4CfLnV68aOkgVEuiYLcHRjot9q5O89
+         NZ7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xYtPguvL78c96GuPEgdeNznAv+BTOA8Wmh9CQNtXdxA=;
+        b=o10TWFS9riW/kUpQfmebuIT8KF1EfM6pPjzbJ8Eh8gQ/o2q9oOw/Pmh23Kzpmr1irT
+         RLV0IfMkq1EB6dYKFSQ4L7Fof6Jzv0rFNXRI0KnbWXF6dQs85dXBpwQ4yNd4qi8FFD3T
+         hrh1lxxToGKMwbSpKKPgIBUmTpRTiGlGDKYGMvRtxdBbpmGB3141eAcY5rKlW5PmzzQ7
+         gehKpR0fB8Wz/A+kJLFvkeHeyymVlcWIHVEwIWxC5txv3260TaSLLDueUi7/rp5J3vrP
+         bVQFSCEHKqevyAEt/gC5XKlzf3UCrPqjaD0mLKHSYd6dgGsfTA2WVGp21YyUO2s4EX0F
+         b/0g==
+X-Gm-Message-State: APjAAAW3w/cWs1QVxeAcgruz/rKNBgcr4BST6fBi8xo8BYGPEsQ5gzyn
+        ZoqtJnTY4ac/HV2ppJ8NlVeeCOUw9AJsZO3VlVA=
+X-Google-Smtp-Source: APXvYqzkBvkHAPBgI7mOxmYda8UQoNSoLtbynH1wn3vAQHyNDgzX3rNuJuCu4L4xJvHKfebzyZLKOjGHns3G39c3NZw=
+X-Received: by 2002:a24:56c1:: with SMTP id o184mr4816288itb.123.1557739268558;
+ Mon, 13 May 2019 02:21:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0EF2CFD2-7560-11E9-A16C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <CAHAc2je-Yz4oej-sqvp+G+2Wv+eBABeJWUMm4scRwF2z_diUXw@mail.gmail.com>
+In-Reply-To: <CAHAc2je-Yz4oej-sqvp+G+2Wv+eBABeJWUMm4scRwF2z_diUXw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 13 May 2019 16:20:42 +0700
+Message-ID: <CACsJy8C++Ds4kfs_Wc8UiVQgni-ypbyJ+0bFg1m5brt+s0Tfig@mail.gmail.com>
+Subject: Re: "add worktree" fails with "fatal: Invalid path" error
+To:     Shaheed Haque <shaheedhaque@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kyle Meyer <kyle@kyleam.com> writes:
-
-> It seems to me that push's manpage contains a couple of inaccurate (or
-> at least confusingly incomplete) statements about omitting the
-> destination part of the refspec.
+On Sun, May 12, 2019 at 5:14 PM Shaheed Haque <shaheedhaque@gmail.com> wrote:
 >
-> First, the refspec section of the manpage has this to say:
+> Hi,
 >
->     If `git push [<repository>]` without any `<refspec>` argument is set to
->     update some ref at the destination with `<src>` with
->     `remote.<repository>.push` configuration variable, `:<dst>` part can
->     be omitted--such a push will update a ref that `<src>` normally updates
->     without any `<refspec>` on the command line.  Otherwise, missing
->     `:<dst>` means to update the same ref as the `<src>`.
+> I'm running git v.2.20.1 on Ubuntu from a program which follows the pattern:
 >
-> Reading that, I'd think that, if I haven't configured
-> remote.<repository>.push in a way that involves <src>, omitting <dst>
-> will update the remote ref with the same name.
+> ============
+> 1. create a temporary directory /tmp/tmpabc
 
-... if such a push would update the ref at the remote with the same
-name, yes.  Otherwise no.  And that is determined by what push mode
-is being used (e.g. are we using the matching mode?  The current
-mode?  Something else?).
+When is this directory deleted? After step 3a?
 
->  But push.default is also
-> consulted before falling back entirely to using the remote ref with the
-> same name:
-
-Yes.  The push.default configuration participates in the selection
-of the ref at the remote that gets updated, given a refspec element
-with a missing :<dst>.  And you do not have to write :<dst> to name
-the ref that a refspec with missing :<dst> would update anyway.
-
->     `git push origin master`::
->        Find a ref that matches `master` in the source repository
->        (most likely, it would find `refs/heads/master`), and update
->        the same ref (e.g. `refs/heads/master`) in `origin` repository
->        with it.  If `master` did not exist remotely, it would be
->        created.
+> 2. in a loop:
+>     2a. create a second level of temporary directory /tmp/tmpabc/tmpworktree123
+>     2b. use "git worktree add" on the second level directory
+>     2c. do something
+> 3. cleanup
+>     3b. "git branch -D" on each basename(second level directory)
+>     3a. "git worktree prune"
+> ============
 >
-> Perhaps I'm misreading that, but I'd interpret that as saying the remote
-> ref with the same name will always be updated,...
+> The loop size is of the order of 8-20. In step 2b, I often get errors
+> like this (from a Bash reproducer):
+>
+> ============
+> $ git worktree add /tmp/tmpgtxug4y9/git_worktree.gBGqnfnU
+> Preparing worktree (new branch 'git_worktree.gBGqnfnU')
+> fatal: Invalid path '/tmp/tmp1q9ysvyl': No such file or directory
+> ============
+>
+> I can see that the problematic path exists in the "gitdir" file of
+> what must be an earlier worktree from an older run (the branch is
+> gone, but the tree is still there). The path appear to relate to the
+> older run's first level directory:
+>
+> ============
+> $ grep -r /tmp/tmp1q9ysvyl ../.git/worktrees/
+> ../.git/worktrees/git_worktree.frcwtjt_/gitdir:/tmp/tmp1q9ysvyl/git_worktree.frcwtjt_/.git
+> $ git worktree list
+> ...
+> /tmp/tmp1q9ysvyl/git_worktree.frcwtjt_  edde3f25 (detached HEAD)
+> ...
+> $ git branch | grep frcwtjt_
+> <no matches>
+> ============
 
-That part is random listing of examples with vanilla configuration,
-so depending on what setting you personally have, the behaviour may
-be different.
+Yeah I think I know where that "Invalid path" comes from and it should
+not be there (at least it should not be a fatal error). I'll need to
+reproduce this first. But I'm certain you've given me enough
+information to do so.
+
+> NOTE: I've not yet had to try deleting the worktree, since "add
+> worktree" does appear to work some of the time, so I am able to limp
+> along.
+
+It's probably best to stay clean and delete things after you're done.
+At least you should be able to avoid this problem this way until it's
+fixed.
+
+>
+> I have these questions:
+>
+> 1. There is no branch or first level directory, but "git prune" has
+> not deleted the worktree, is this expected?
+
+I assume you meant "git worktree prune", not "git prune". See
+gc.worktreePruneExpire. Dead worktree info stays for a while until
+it's deleted, so that you can recover stuff if you need to.
+
+> 2. Is there something wrong with the sequence of steps I am following?
+
+Nope. I mean, you could try "git worktree remove" to be on the safe
+side. But it should work even without that. To me this looks very much
+like a bug.
+
+> Thanks, Shaheed
+>
+> P.S. I have an strace of a failing worktree add if needed.
+-- 
+Duy
