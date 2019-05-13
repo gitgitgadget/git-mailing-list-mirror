@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1B331F461
-	for <e@80x24.org>; Mon, 13 May 2019 10:15:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C8451F461
+	for <e@80x24.org>; Mon, 13 May 2019 10:23:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728756AbfEMKPV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 06:15:21 -0400
-Received: from mout.gmx.net ([212.227.17.20]:40685 "EHLO mout.gmx.net"
+        id S1726866AbfEMKXx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 06:23:53 -0400
+Received: from mout.gmx.net ([212.227.15.19]:35131 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727272AbfEMKPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 06:15:21 -0400
+        id S1725980AbfEMKXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 06:23:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557742516;
-        bh=UTXh9WV1gIBHwb2UyuaAHWETc06rVM4nwu4btdxrolA=;
+        s=badeba3b8450; t=1557743026;
+        bh=+RFnKrcr6GTVWGlBEXvQgFzfAs2KQi6y4otx+1AAzmQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Jtfq1UiwgpONRqnRPwV5BvGLQ+ifoGDA9FX4jNknsfUxKPlzzrkzVSdUIpQhXU2MR
-         QE983nrOEymKSxaa+cOXy0sh7Lv+bA8NRcY4U7wdIK5GGVtppne/hiIVgkDBKQUYdN
-         CxOxI04BZZbDjFfeB4FKeqLV9cFupYCpGOKZ24LY=
+        b=eSZXWwTyZg5mbBMlV0+Ya1Bof0VV9liPDeedhy7TMcXtGwGzHe+gZdarMUN2jdl8a
+         xfVbbD77dKuHmCWZ9ADuW/OiydqUprZVUCTVKZgIVlnSy6ANn8gUtZG6hoAInB+Eqn
+         XJJ6fJsQBXXNz/axpXSzDXycyC4+tUsD/4CnLvho=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2cDB-1gaEBq3tzx-00sJPL; Mon, 13
- May 2019 12:15:16 +0200
-Date:   Mon, 13 May 2019 12:14:59 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lhwt0-1gw4Y42bXm-00nDZn; Mon, 13
+ May 2019 12:23:46 +0200
+Date:   Mon, 13 May 2019 12:23:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
-cc:     gitster@pobox.com, git@vger.kernel.org,
+cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 0/5] Fix and extend encoding handling in fast
- export/import
-In-Reply-To: <20190510205335.19968-1-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905131214260.44@tvgsbejvaqbjf.bet>
-References: <20190430182523.3339-1-newren@gmail.com> <20190510205335.19968-1-newren@gmail.com>
+Subject: Re: [PATCH v3 5/5] fast-export: do automatic reencoding of commit
+ messages only if requested
+In-Reply-To: <CABPp-BEzaSW_eY1yTpLr8tXHei0WV54PFGXmjCLAJNN03Zi3eQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905131219490.44@tvgsbejvaqbjf.bet>
+References: <20190430182523.3339-1-newren@gmail.com> <20190510205335.19968-1-newren@gmail.com> <20190510205335.19968-6-newren@gmail.com> <20190511210704.w2mxw3jv2ra2dr7w@tb-raspi4> <CABPp-BEzaSW_eY1yTpLr8tXHei0WV54PFGXmjCLAJNN03Zi3eQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TNd1Zt99MpN2rBKOlITQfql1SwKTdZdrYJlh5KGEoOfBNxQKBM3
- hVZkmRcsnSInThSmhCYhg3wVjs987WJAAOafWAsaPv7IqZqZMmN/D3bLyEOnBdxWpdslpJF
- 1ZShjzVxkPk1D2m3ShAqTV2JQzR87dNvB3xNTqVa28iAemLQHrh4kJs2VjQJXEYVsW5vGx3
- wxOMkBvLkFxCh7InxurVA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0CoKDZp9WZo=:2udesqXP5LjMgUkjMgp8hX
- o3WpI/Xsm8bpyx+8M1OhUTJVu7Ik1woBmQPkHIIvkL2SJU07xJzyYUbbrzNw2K2apxbw+pgBy
- 7roMrFCgxN/xWH7amXho5Za088N4z+Zf2Q/eUsznwZJWe/MWbIEObNDTVrvxUtMq5agQaWMEX
- rsHtK5xZ4mAdGWFtFwcupIl+kjmRuAvmFkvfDwLXTLy17DmphDdaP2cqAf7nbRsu1+t8jcrN7
- xvSNQ/k+QgwEX9KtKhJTsAksSeqBuKIADS5jnqsHv/URRhsLhXh4hORc5fShdsUp6WlZGL63/
- lrn8f7/a62AXeOrQMnkfS8HzfMWwUr6EvzPNxWQu4HYWo3AL86GFRz+T8jJMekgBldn8di3x7
- SzFM8hj4IhHahBl4oT9wBm2Fj04Ii300ACFn8aLxGb7fF8D9AdFsPJWRV2XXfRj5Ghzd4Oui8
- GiezDC5SRLaLkV1nyqQIGkVCHyhGy7IxEFAFTS070Pc1e1PcbwZywGCPVaCR70rZIuii52Tkj
- Aa1NMfdaFRvCU2fgZ3tAPeHjgNyw8vDqNe0qsFpFw2LzLOzTSDhLMsOKdJ4uNsntMY+zptAA5
- 6nOimvqF5foOexH889sb95BYsqa8/WhXHAbZ3wHVhGLmkQcUMwUaMjsv31WJy/tU8p+lVJTUj
- wgPPR1gjiCD2D5IAnkYwvhU4B700l7pZuqte/PmvyuzLrPQFo+xEGrJSGr/PcQD468MZsoDz6
- aoHjHseBQztdSgBn+ntIQy5rr0X5NFaYtV5uRBaAkCR64/hDXmBKIudFvZ2RTGgLwRndo62tJ
- 4MWuEri3M5BYlWnqJDvdB8apabnOijOXnsXLmNKsZoaqCR1WQMeykE1lpb87H/lZmjIP08z4a
- 0QD0u8gtMxaca7EP7onyAzbi3qAC3jrtIfN6YeFl95g92PrbBBsE067h6GuLbKHAjdImROQkM
- nB9CkyQuAiQ==
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:qZN1YqCHGFn1T2c76XGJ4noGAyS0s0JskbaxHWMc3hO1nX9mvKH
+ unI8HPA4+aTNtKoaYh9YwTbGFeFfdY0SPJmntgJWMLtUvEZdzY+YyK7R0PB6xCsiDpp/v2q
+ fSgivz0rHTfTv5Hp1+AIsm5Tj1/L/LPnPMyxIihaDoKK2ceHfgFHXY0VEhgV6E2ec9w8Ma5
+ +IatXDF/7fghnetpLZabg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ccVJxZpqjiE=:06iMOuuoDOmpslS8C45MQF
+ Mcc85ZUF99BKVi16UU5p2WU3ewYcGD9AXVcg/iii02hL/jbLNzVjKZ/NIpo1FCMhQb5SFb7bI
+ gqQUv8VldZJ5jrLq0OnHpDML6Oyq2XBH3xgjZQ7gc41lLR/SIh4gLDOqtaRskxegQgrJIrMfd
+ TuVDx9+0Aefh2rHpo00j60UGBkNaOzX10RbbDR43gOnnuoj8aNulQ5xvQhlNnxYA7n0thMJU2
+ JzwJmkzM2vn5OPHP659zEU72pupFKWDCsdkyaejoVDgkLEJQyU+B6py58Gt/m8H49pVzpHxS7
+ t5dlyBWAUFFe9fvK0iYJNM+gwbtVNrDTsog+horULUhY1k8CxIEaHKuwEyeRGHDk/Z7BiJbmS
+ MZ6xiY03mdCYHOgxePfR7OSl9Wm2X//pPg83BiE1mznfBAyJUiiFjc83XxLB20oKKNtv/judT
+ 4fVmpQbeQPpa2sahhYJmetxQqNHhVQ6piT7K5bJk8pIOssF6/eyBQApY36DfIVyrI7fLv6xrh
+ tnie8Xb1pacJL6Umj6u8lKcXEnW+O35Gh7XELGY33dL8TXSZJjOQWYkrTFdFO5kKEA4VdvAqz
+ LCxVi5fF88VLv/bptEnKHHWT83YiDzSzwFqsm2hrqANnuyzrNN3bph1Q80F35iZwoX9PjCN3Y
+ Ylu/VnGvzmmhNp1CKVjrBB+QT03IqcqeaqPAoCVSpziSSSdHK4d+zfhPAuacuu1gu5GaEhbIZ
+ OSx1FOED+U2tzuDD+8Iqsply1l20sP/e94erwXfAz5Puzmj15MACegg3C/1fHrshrgYP3yzRv
+ 2pYYhGD9IaxooE53gNy1/PE7qTfmmEEyXQBUTsvY6YaCSBrDc1JRm6PDKE2w88BuIg5wcYrbb
+ dYJ05v4l3gRaqa7hNRjTLvsDimcIUISHAita6DiN/9CKlZJ/UQ1lAsOFCK/BfrQrYkjSP98vg
+ ZMNC+yAmXBg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,22 +71,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
-On Fri, 10 May 2019, Elijah Newren wrote:
+On Sat, 11 May 2019, Elijah Newren wrote:
 
->   * Modified the testcases to pass on Windows[1], as verified via
->     gitgitgadget pull request[2].  Required adding a couple new files
->     (which store the desired bytes) and checking the size of the output
->     instead of checking for particular bytes (but the lengths of the
->     expected byte sequences differ so this works fine...).
->
-> [1] Failures of previous patchset on Windows noticed and reported by Dsc=
-ho;
->     explanation from Hannes is that Windows munges users' command lines =
-to
->     force them to be characters instead of bytes.
-> [2] https://github.com/gitgitgadget/git/pull/187
+> [...] the craziness is based on how Windows behaves; it seems insane to
+> me that Windows decides to munge user data (in the form of the command
+> line provided), so much so that it makes me wonder if I really
+> understood Hannes' and Dscho's explanations of what it is doing.
 
-Excellent! Thank you!
+It is not the user data that is munged by *Windows*, but by *Git for
+Windows*. The user data on Windows is encoded in UTF-16 (or some slight
+variant thereof). Git *cannot* handle UTF-16. Git's test suite *cannot*
+handle UTF-16. So we convert. That's all there is to it.
 
 Ciao,
 Dscho
+
+P.S.: Of course it is not *all* there is to it. There is also a current
+code page which depends on the current user's current locale. We can
+definitely not rely on that, as Git has no idea about this and would quite
+positively produce incorrect output because of it. So we really just use
+the `*W()` functions of the Win32 API (i.e. the ones accepting wide
+Unicode characters and strings, i.e. UTF-16). I don't think we can do
+better than that.
