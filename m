@@ -2,101 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C80D21F461
-	for <e@80x24.org>; Mon, 13 May 2019 13:24:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9AA1F461
+	for <e@80x24.org>; Mon, 13 May 2019 13:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728409AbfEMNYw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 09:24:52 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:40262 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727680AbfEMNYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 09:24:52 -0400
-Received: by mail-vs1-f67.google.com with SMTP id c24so7973196vsp.7
-        for <git@vger.kernel.org>; Mon, 13 May 2019 06:24:51 -0700 (PDT)
+        id S1729249AbfEMN3O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 09:29:14 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:46469 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728409AbfEMN3O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 09:29:14 -0400
+Received: by mail-wr1-f46.google.com with SMTP id r7so14650419wrr.13
+        for <git@vger.kernel.org>; Mon, 13 May 2019 06:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Krin/i/cigeWmiXoIQ0Kg0MaN4tmn9oTWR680ghQZh0=;
-        b=TPyJII+WqKaK4Igg9wMKAd11744ckV/nk5ZY/mNUCwDDqNli7oVYq4QaKEHiSnR5Ru
-         c5jyXOfn/8SqlBXUZI167TfP/hRFuuZLXOSCglTf+VFuDidKbv7i5Hm8WUH7TO0EZBDk
-         2u8+sjusUVpmC+90ZT3hNFFMpJNwHbWX6xuDOGUnALC5KNrdpOnIEtPqAAFo1S1BS0aS
-         yXpPc4JFjoL7ZWlesBSA7v322/ZPhd54wDVdv2e/SST2z3npu2CNLgmTj7jAuGiS7PmK
-         qQ92q7QeKjv6m0fjovg/BP3t7AxNVK/oSAobUvz+I/5mgYXUcfSzUh6YLj3R7jRzxpCJ
-         eF1w==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mcnbA9RoGIzuFRwmzL2kxXigA/HWQYQwV87dFdv7Scs=;
+        b=Pker36XgMso6QZcvBchFGuN4eeuV8IpvDB8coKjsR0mVXphcFYjgWxEVtZe/3GlJsk
+         ugHEvVLAKpDLGdACy9WJrtkbG/uM93wOFHWPS2jN6OTyZSArrvjpHqwoojQ3u3F3zZ3b
+         oW7OpNX9A22UtO561fUbj++11xQcHF3BUJsY79u/R8PX1lWvgjb1WeOjChjl86YXb1rq
+         KXAvd/u4ZcolhFHt1+EE2UZvVInKc182mUh1QJ6h/+tLCNCd6GQZNFyWO6Em8CVkQWZB
+         VVF6PVa51wXeTlSZtOFGRL3fitxIrameuX4i1cnmRBpsEbZRX/zfxBx+kDNaZVWv6ksv
+         5z2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Krin/i/cigeWmiXoIQ0Kg0MaN4tmn9oTWR680ghQZh0=;
-        b=mjNUgcZEL7SCaiDWl+L6AutGjeiKH1yyjHfrym3dFiG73uCqDGiwRJtdBTICFbbyJn
-         QobaWfxTN0eQorojWDQDw5n/YbDKXS22jUZTKBD7mKGE6+7uKCPEdff4J3cBMOBBwFQ7
-         2LLdcz6RdPLMcDUq4nJ6W2JFRUVqyIxeveTWKg14vlZctKsFVlqq0Qxr5KuIwBNgF8dv
-         262cgOaHBilMs9SkTon7PBHJtfynjbVuBwyIqWcHcJ/adnAqOVf4z+4QzJOqNlKQcpIv
-         9KZRci1yusBkv5pZUgG1T5i4i6P557S7mfRHagE/FtwhrXrsQa2qapectqQOjNpbKNiB
-         EKDQ==
-X-Gm-Message-State: APjAAAU+AU1Ctwcip1mSVIWlueONQgsgNzJj+5gjzd7I+tZy1l6ZRt1U
-        ws1ClbfilE76QDvHCrUwYkEhxfe4XO5tO81Hcl4=
-X-Google-Smtp-Source: APXvYqwdh2co5m6+h0msr1BwiVIld1du65FYFmqnSQLvUWo63xYAGHY7q47tSGo8eubyfIt03GLBSR16gYykj+HyEsY=
-X-Received: by 2002:a67:f985:: with SMTP id b5mr13597401vsq.136.1557753890967;
- Mon, 13 May 2019 06:24:50 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=mcnbA9RoGIzuFRwmzL2kxXigA/HWQYQwV87dFdv7Scs=;
+        b=MTgysTph1esCVUKNuYCyEsLImocMJlgm5aSohuVitAckH1tuYx8WqB2/33o6mzRtSJ
+         iSAfWLcBK2yqLF7qkxmnhwh1XIlLDinbtlb4IJVO+rKhxN1SvoTA64F/NOnzDtFKCpER
+         jj8H+nMasxS8cUgx7BzIjIn/u7LahjRnOgKGx6zbFWWhHgJSx8EVLqEYg/2fSOchgNMM
+         jcop0Z4uhRSo9doe8WHpTC+zNLZXopI/sL8wZtHrdPVmA8Om6xomtJA7wyVTEjOYXSFd
+         KwErJCV9tzyT2ky8G5QbQyVEnGI5CNj+fyyUo1H8MPOuA79pHXjEIIStKrcjkzF261TG
+         jgVQ==
+X-Gm-Message-State: APjAAAXzNaN35Na/+tcpq7i5Ioc0k4UXdVcATRjuLzQ58DmiwT80Im5S
+        Gjf9gWLTSkp6H0BbVeoMa+qymM6l
+X-Google-Smtp-Source: APXvYqzwk5+yaIiEmvgUBucT9D3MbBBxq4ZloCTIBo1n4Irr4XflOuFNmI7Z7WlgLTin+YuK9qVJXA==
+X-Received: by 2002:adf:db0b:: with SMTP id s11mr17641565wri.180.1557754151789;
+        Mon, 13 May 2019 06:29:11 -0700 (PDT)
+Received: from [192.168.2.240] (host-89-242-178-164.as13285.net. [89.242.178.164])
+        by smtp.gmail.com with ESMTPSA id l8sm3842539wrw.56.2019.05.13.06.29.10
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 May 2019 06:29:10 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: What's cooking in git.git (May 2019, #01; Thu, 9)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <xmqqlfzgg8s3.fsf@gitster-ct.c.googlers.com>
+ <6726f99a-ec27-b72f-39d7-03eecb555197@gmail.com>
+ <nycvar.QRO.7.76.6.1905101549180.44@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <68adf0b3-e643-42e2-acfd-804d16c2695c@gmail.com>
+Date:   Mon, 13 May 2019 14:29:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190430182523.3339-1-newren@gmail.com> <20190510205335.19968-1-newren@gmail.com>
- <20190510205335.19968-6-newren@gmail.com> <20190511210704.w2mxw3jv2ra2dr7w@tb-raspi4>
- <CABPp-BEzaSW_eY1yTpLr8tXHei0WV54PFGXmjCLAJNN03Zi3eQ@mail.gmail.com> <xmqq1s12dcci.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq1s12dcci.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 May 2019 06:24:40 -0700
-Message-ID: <CABPp-BGmbvpjWep8F0XGczKyKWVHwQNaJQ4zS=Y1zGrHT7O7DQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] fast-export: do automatic reencoding of commit
- messages only if requested
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1905101549180.44@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 13, 2019 at 12:48 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Sat, May 11, 2019 at 2:07 PM Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> >> On Fri, May 10, 2019 at 01:53:35PM -0700, Elijah Newren wrote:
-> >
-> >> This one is good:
-> >> > +     if (unset || !strcmp(arg, "abort"))
-> >> > +             reencode_mode =3D REENCODE_ABORT;
-> >>
-> >> But here: does it make sense to use REENCODE_YES/NO to be more consist=
-ant ?
-> >> > +     else if (!strcmp(arg, "yes"))
-> >> > +             reencode_mode =3D REENCODE_PLEASE;
-> >> > +     else if (!strcmp(arg, "no"))
-> >> > +             reencode_mode =3D REENCODE_NEVER;
-> >
-> > Didn't realize there was any such convention, and even have difficulty
-> > finding it with grep (CONTAINS_{YES,NO} appears to be the only example
-> > I can find), but the alternate wording seems fine; I'm happy to adopt
-> > it.
->
-> I am OK with Yes/No.
->
-> Don't we want to treat this as "bool or literal 'abort'", though?
-> Other options that are "bool or something else" tend to accept
-> "true" as a synonym for "yes", and I am wondering if we want to
-> follow suit here, too.
+Hi Dscho
 
-Makes sense; will do.
+On 10/05/2019 14:49, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Thu, 9 May 2019, Phillip Wood wrote:
+> 
+>> On 08/05/2019 18:23, Junio C Hamano wrote:
+>>> * pw/rebase-abort-clean-rewritten (2019-05-08) 1 commit
+>>>    - rebase --abort: cleanup refs/rewritten
+>>>    (this branch uses pw/rebase-i-internal.)
+>>>
+>>>    "git rebase --abort" used to leave refs/rewritten/ when concluding
+>>>    "git rebase -r", which has been corrected.
+>>>
+>>>    Will merge to 'next'.
+>>
+>> Can you hold off on this one please, I think we should clean up
+>> refs/rewritten/ on --quit as well (I'm not sure I've convinced dscho about
+>> that yet though [1])
+> 
+> You have convinced me ;-)
+
+Thanks, I'll try and send a re-roll tomorrow
+
+Best Wishes
+
+Phillip
+
+> Thanks for your consideration,
+> Dscho
+> 
+>> Thanks
+>>
+>> Phillip
+>>
+>> [1]
+>> https://public-inbox.org/git/4d486504-7f64-95fb-b7eb-51d424f3e6cc@gmail.com/#t
+>>
+>>
