@@ -2,74 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F8CE1F461
-	for <e@80x24.org>; Mon, 13 May 2019 22:24:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83C861F461
+	for <e@80x24.org>; Mon, 13 May 2019 22:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726461AbfEMWYo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 18:24:44 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:26360 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726407AbfEMWYn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 18:24:43 -0400
-Received: from [192.168.1.22] ([92.1.197.142])
-        by smtp.talktalk.net with SMTP
-        id QJNBhxcFoniZTQJNBhqr4p; Mon, 13 May 2019 23:24:41 +0100
-X-Originating-IP: [92.1.197.142]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=B8HHL9lM c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
- a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=yfvn1nA9lu61BVH--AoA:9 a=QEXdDO2ut3YA:10
-Subject: Re: How to exchange rerere/redo resolutions?
-From:   Philip Oakley <philipoakley@iee.org>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <b8e56556-6c83-9e37-38e9-ac67f51b5cd2@iee.org>
- <871s17xk79.fsf@evledraar.gmail.com>
- <37ccaad0-40b4-ca63-e057-791119d7fa69@talktalk.net>
-Message-ID: <d139d79a-f35a-e00c-3790-104146b066c7@iee.org>
-Date:   Mon, 13 May 2019 23:24:41 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726574AbfEMW0p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 18:26:45 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35793 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726407AbfEMW0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 18:26:45 -0400
+Received: by mail-ed1-f68.google.com with SMTP id p26so19802099edr.2
+        for <git@vger.kernel.org>; Mon, 13 May 2019 15:26:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=sxIDFaPdI9UnmOo2IYAOhTIginE4kEg2RRMxCsA9bqQ=;
+        b=QMHm9SZvCqtBm6jW3YwKo2KpMhlYfHf0x/zNezNrQNHmRc8DFZ0SZOpfDsPyBAesbW
+         ir9psncTR8LqRmkPXhATvGJ3seXDetkewS1ddZ9K5BBMYqePm2VYmJ0WyIchUtKnk2zk
+         ZSqZ5UOQzfC0S72xnwq/aFcEqGNfQjEhO2DszEIt9cU4gpwyJ7U7JEabC6CvKtySEipB
+         E2hQ7Pn3qCTM5f/ZWpoiXr7e3HNpO65RCsnKY5KVJ3IXDk61GJXVRbvLv/4x/q1W9xaq
+         aixLMWY9BCgIkOBvkXfKAOtjrGbd3uhA5Dq7I/JDcGrEJYJ0n96fgmnB3HTQEJveZXwB
+         W0Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=sxIDFaPdI9UnmOo2IYAOhTIginE4kEg2RRMxCsA9bqQ=;
+        b=pv4kI+x0rc1ZCQOyJosRN6n9zJQgEm9DID0aAWBJ8nrjKSaAjNBKJs5sHMyX4pZ3Qw
+         yWj0mmLoU0i8igby1EiFUZRcJYoxSjS4EyuWV9Szo0tFkCPaErNa+1Zr11syALv16TId
+         kRK+PRJRGoKOzUZVRpAxREViDMCB338K0O55JhZ+WAfr5QRmofyx+0n9wHd3gBA9PB+Z
+         M0l9aBdQNDQ2pyelV/BcIpgTtl17OHZhPhsb09W8V22y9XgRdU4/s5UrN7Dob/3dskEj
+         tzhcCtiw4HHxzhlmr2i5FxZqlwarsSzrrdtM2rj2PZtZdDYgk5WG5XtOIJQawf6MBt3z
+         5P6Q==
+X-Gm-Message-State: APjAAAXrwZZhi5fs74WPk1wX69F1ZXd2I9t5HjuuspyKdrR+K/idNfP/
+        RgabgOg61OoJ0Igz/5446JQ=
+X-Google-Smtp-Source: APXvYqy60DYUif2TY8RLwZ+6Y9lJGyFlBa3P23AsCHtdexkz0DXnRwGSLi7umrqD7+Q6gBrkqBch7w==
+X-Received: by 2002:a50:ba13:: with SMTP id g19mr31745492edc.236.1557786403852;
+        Mon, 13 May 2019 15:26:43 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id i33sm4108197ede.47.2019.05.13.15.26.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 May 2019 15:26:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [ANNOUNCE] Git v2.22.0-rc0
+References: <xmqqef52baih.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <xmqqef52baih.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 14 May 2019 00:26:42 +0200
+Message-ID: <87pnomvvml.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <37ccaad0-40b4-ca63-e057-791119d7fa69@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfPR1wxLncsGukMxW8uCNFApX0hjBE0Fj5MXJkrckteCiByuayvsrt7qrQmxRHZL0fmBoViPffL28hIgOES8dPoDY4xyt2xdXgmSnsP5KWgAOYcgK+Zo2
- JviNh2B8PRMRcR/arqQAn50kRpKsCU58Dj6rfKKDbkZcLs0p7Exm3WmnFJKpsXdrBWCCrWErd5GuQm9ylUp3ToLOLEyZnuljZ1hafQU4mtLN2w4YELG0vQH6
- GlPY9HOb1XwLlJk2BAf/OA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
 
-On 10/05/2019 15:59, Philip Oakley wrote:
->> You can publish your merged branch somewhere, and others can use
->> contrib/rerere-train.sh to learn from the resolution.
->>
->> Supposedly, I've never actually used it...
+-CC lkml & git-packagers.
 
-Does the contrib/rerere-train.sh actually work? I'm reading the code to 
-ensure I understand what rerere/redo is doing, and in the training it 
-tries to detect MERGE_RR via L87
+Some suggestions for fixes in RelNotes & last-minute observations:
 
-     if test -s "$GIT_DIR/MERGE_RR"
+On Mon, May 13 2019, Junio C Hamano wrote:
 
-It's not clear if that is an internal implementation detail, or a 
-mistaken use of a historic path name. Can anyone enlighten me?
+>  * "git stash" has been rewritten in C.
 
-> The tricky part is when the patch series doesn't apply so the conflict 
-> isn't yet on any branch.. 
-When copying patches across to Git for Windows, the conflict resolution 
-can be tricky.
---
-Philip
+I just noticed that stash.useBuiltin added in 90a462725e ("stash:
+optionally use the scripted version again", 2019-02-25) doesn't have
+docs like rebase.useBuiltin d8d0a546f0 ("rebase doc: document
+rebase.useBuiltin", 2018-11-14).
 
+>  * Mechanically and systematically drop "extern" from function
+>    declarlation.
+
+s/declarlation/declaration/
+
+>
+>  * The script to aggregate perf result unconditionally depended on
+>    libjson-perl even though it did not have to, which has been
+>    corrected.
+
+Trivial, but maybe s/libjson-perl/JSON.pm/, i.e. use the Perl way of
+referring to it, not Debian's package name.
+
+>  * Build update for SHA-1 with collision detection.
+>    (merge 07a20f569b jk/sha1dc later to maint).
+
+Hopefully my just-sent follow-up to this will make it for 2.22.0...
+
+>  * "git chery-pick" (and "revert" that shares the same runtime engine)
+
+s/chery-pick/cherry-pick/
