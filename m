@@ -2,151 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D845A1F461
-	for <e@80x24.org>; Mon, 13 May 2019 11:07:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3251F461
+	for <e@80x24.org>; Mon, 13 May 2019 11:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729264AbfEMLHn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 07:07:43 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33181 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728159AbfEMLHn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 07:07:43 -0400
-Received: by mail-qt1-f194.google.com with SMTP id m32so11087282qtf.0
-        for <git@vger.kernel.org>; Mon, 13 May 2019 04:07:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=udbDbo/0Wo6jpArJB0h+Ek74vctQdjql0tqya/SP2k4=;
-        b=LmqtQ9c7WcbHkCLOujX4qGFpOT3vdRsWoY8741JaZcpNS8HsIuaV0xIlfTGxlazPG4
-         NRb3M4OyEi7Cf4pSLoJxDlsmSdNlurJ3TRpGgJC+TXsq+C6SRBP016cv9MWxGjwwRlg5
-         WFqCarKxX5k+oOYYBRIKXpvnbfUXLZKehVmE/liS6UbrdCRJOUqTUA7+dw6myr1Y4JeL
-         nj5vLZ0bfZycp50G3RkHx6i4+sNndwxY47KZBTYBZb3nSh5ply1EDoIIXH8hFFFOty71
-         bzHV6a29IXcYv+twYch6kgYteXIxdeN5QHseuVd9mnSusTayCjGVPSgEm1dwmpidgnj/
-         TcBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=udbDbo/0Wo6jpArJB0h+Ek74vctQdjql0tqya/SP2k4=;
-        b=kCyGKUmyR9uUUXeAQNyUQX/m2jEyBMNmpVoyOXFsI47brRB3M6HpIPhoHOLLvhMYF+
-         HKb00uTGoBsho73Ywmb4iwBX5uDcC9WgBzr0BRJ5Nm+35ibdI2lwX4sW+yNayB9uMQnV
-         B4B/vVztcGvWD8YrhTl36/B1JNf0dTugBj21TkRucLW2soj4v98uC8TWOhMoukbLDHK1
-         5MdigfO6yH1hYQTcOWST1xcS1HyR2qYWbHfcwU4Pc5VmIz7UDfSViyraX0zoa3s8JFEm
-         cEUB9KLAq26cRtNDX5s0bL7cQU6kM0gzzEoEs7DGALZupiUcR7MyCFPZpWwODssBq5z+
-         33OA==
-X-Gm-Message-State: APjAAAVqbrhh1ERWjVjs6Lxgmk0c5v/Pk1oLUhisGRzirGgR+zrjMA+6
-        hvpYi7TU+8HD+vZQoOfTJhc=
-X-Google-Smtp-Source: APXvYqywcdlvXHEnziPEgtsGIFVwn9TC5A1p8QDjFS4Jyk5XaTQb5enWkYsck7Bp2JnImHbpnfTqXg==
-X-Received: by 2002:ac8:415e:: with SMTP id e30mr23725605qtm.279.1557745662361;
-        Mon, 13 May 2019 04:07:42 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:3130:3ffc:dbb9:1565? ([2001:4898:8010:0:1a66:3ffc:dbb9:1565])
-        by smtp.gmail.com with ESMTPSA id 74sm6512790qta.15.2019.05.13.04.07.41
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2019 04:07:41 -0700 (PDT)
-Subject: Re: [PATCH v4 03/11] commit-graph: collapse parameters into flags
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        avarab@gmail.com, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.112.v3.git.gitgitgadget@gmail.com>
- <pull.112.v4.git.gitgitgadget@gmail.com>
- <469d0c9a32ba5a3f797b5bb50f37d6ac7746385b.1557411749.git.gitgitgadget@gmail.com>
- <xmqqy33bc91q.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ad42ab76-76c9-c91c-55a2-a613080c2a01@gmail.com>
-Date:   Mon, 13 May 2019 07:07:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        id S1729357AbfEMLPJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 07:15:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60573 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729346AbfEMLPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 07:15:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557746093;
+        bh=zVg6DdB1NjjxyHNWaTZgVCi7snD5J+/VqIwUovfq490=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iv4UzjV0EKcueW8q1WMW+6UDgl7PjpDSbA+1cc5q4Idj+GcGnML+SHbfKjSUAC5eC
+         sIiRWEzpcboLwH3pViIJS1132dimSiffkcAwz7V4FQ168ANkbHKx3mTtBQFTcbBHbu
+         Zi3QwtYSG/LMTqLgWDKgIgaU+cNTcONoTPJJEWvg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPD8G-1hLj4f1KBU-004UYa; Mon, 13
+ May 2019 13:14:53 +0200
+Date:   Mon, 13 May 2019 13:14:36 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/11] Start to implement a built-in version of `git add
+ --interactive`
+In-Reply-To: <20190501022123.GA22549@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1905131313180.44@tvgsbejvaqbjf.bet>
+References: <pull.170.git.gitgitgadget@gmail.com> <12978dc248a2cd07c90559691b8a2add84f45394.1554917868.git.gitgitgadget@gmail.com> <3149b9ba-2f5a-46ce-ad89-4105ec217795@jeffhostetler.com> <20190418160633.GB8054@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1904301935400.45@tvgsbejvaqbjf.bet> <20190501022123.GA22549@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy33bc91q.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:bO6yDX0HMFz4C5DIlGy9hJxSasbG4KURTETkhJcSoH8XIEJrqov
+ D7EDuX6yGJWpnIgj4/VUyBloRGiYNzopmldPDiLuPfF00UdD3Qcv3uhcMvgx/A7qlLtC+ge
+ 7YA13IskahHSaV1GF08zEcTQM+zmrtawhifB2dQMOFropSjJj/HjRI/UdVIJD5nnumg8eOC
+ VjYMx8/+M+mPWjPC2fG9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WrEZNSwoBnY=:4UzEtRgYA6b3DKCOiRAxMS
+ 2FFFqgcFkIF2kcLQ1RwShEB5MRhD4pzs84Q2swMQE6REu2gAiDg2sKbCP6XfzNNqAVb6yUDFm
+ pIjSdg2KEiJu7rZFn827ocEKHhEhNQ4EJLTbOlbUwKsUBwFLp4l1md3yVV8pbLy8s9z+6qBmQ
+ aq7Qeezr6XkRShXJ9CSUUS5ZCvAl/rhaGXfnINRNT+j95EJY6cZamqi0uMI1477dAXSjvv7Ci
+ CCWIZ4NW7miJKNcJhI5R7v7DRfhfeUHFWIc9/mdFfW8oS87xMRZl1tVJtQnOtWDzVbIjkkQWj
+ 7uDCtT17Rbxa4BhnWXjz/Vw283msKSPnzHVU8Yb8i5lfJtFEooU4hySaVjJqdjnJMhYARzT/a
+ 82Z97dUzRZHiic5RQ+1PozGoqwDpFim2wtgKozupeODAoP6xyH70K0pBeP0+KFU0sVHheT1rn
+ YUacbUpU85SS4y58hIyJ3PainlZtBHnkpzC98Qg8N+0iC+JQHUEnv4NVA+CwZGo6tf1UFfcvk
+ AsHhng9SyA48KgYgj7tfytKZJyDioOMBbey4wbhB8YM+xLurRJbIQN/0btCpC29fZnKE2dxBP
+ 3ryGm+V9VDZNkcIKR8vv5fY/49A8R2YC5Pj8cmxVyisuEopDCBKFR2V701E5g+2fhd6M8s27r
+ jM+ZOWehJZBPfU4HQ6r0jHEUyd4HPbAYfy2eSgz0UoVU/xqAld0RugVxDt/igpWLWWH86pSjH
+ XkGaFKgUbrO7YDTTCrXYGRwfC92pEKcOZ7dTfYpt1RAPGZS/BCC+bgGo896U92POpUjssU1S3
+ 8dcRBMOQnNjZOGuSss2++4mqecpDn6aeEeZONfT5Ln0mXsTnRbVQrZWSdbu9aJ2gr6ca8acta
+ AaXmsQVeC4Uf1x2d1tj2A6NiZvJRzlbAng+oYr//GR7IcqgGawi0eV43iIUhgcBEEH7gegQnH
+ Y6QMoqLNtrQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/12/2019 11:44 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The write_commit_graph() and write_commit_graph_reachable() methods
->> currently take two boolean parameters: 'append' and 'report_progress'.
->> We will soon expand the possible options to send to these methods, so
->> instead of complicating the parameter list, first simplify it.
-> 
-> I think this change to introduce "flags" and pack these two into a
-> single parameter, even if there is no plan to add code that starts
-> using third and subsequent bits immediately.
-> 
-> We are no longer adding anything beyond PROGRESS and APPEND in this
-> series, no?
+Hi Peff,
 
-In this series, we are no longer expanding the options. I will add
-a flag when I update the incremental file format series. I can modify
-the message to no longer hint at an immediate addition.
+On Tue, 30 Apr 2019, Jeff King wrote:
 
->>
->> Collapse these parameters into a 'flags' parameter, and adjust the
->> callers to provide flags as necessary.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>  builtin/commit-graph.c | 8 +++++---
->>  builtin/commit.c       | 2 +-
->>  builtin/gc.c           | 4 ++--
->>  commit-graph.c         | 9 +++++----
->>  commit-graph.h         | 8 +++++---
->>  5 files changed, 18 insertions(+), 13 deletions(-)
->>
->> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
->> index 2e86251f02..828b1a713f 100644
->> --- a/builtin/commit-graph.c
->> +++ b/builtin/commit-graph.c
->> @@ -142,6 +142,7 @@ static int graph_write(int argc, const char **argv)
->>  	struct string_list *commit_hex = NULL;
->>  	struct string_list lines;
->>  	int result;
->> +	int flags = COMMIT_GRAPH_PROGRESS;
-> 
-> Make it a habit to use "unsigned" not a signed type, when you pack a
-> collection of bits into a flag word, unless you are treating the MSB
-> specially, e.g. checking to see if it is negative is cheaper than
-> masking with MSB to see if it is set.
+> On Tue, Apr 30, 2019 at 07:40:06PM -0400, Johannes Schindelin wrote:
+>
+> > And I also tried pretty hard to *not* bleed any internal state of
+> > `add-interactive` into `builtin/add`, as I wanted the new code to be
+> > as libified as possible (in a nearby thread, somebody wished for a new
+> > `-p` mode that would essentially be a combined `git stash -p` and `git
+> > add -p`, and with properly libified code such a beast is a lot more
+> > feasible).
+> >
+> > Any idea how to deal with that?
+>
+> The most lib-ified thing is to just use the configset code. I.e.,
+> wherever you need the config, just load it on demand via
+> git_config_get_int or whatever.
 
-Ah sorry. I missed this one after changing the parameter in your earlier
-feedback.
- 
->> ...
->>  	result = write_commit_graph(opts.obj_dir,
->>  				    pack_indexes,
->>  				    commit_hex,
->> -				    opts.append,
->> -				    1);
->> +				    flags);
->> ...
->> -int write_commit_graph_reachable(const char *obj_dir, int append,
->> -				 int report_progress)
->> +int write_commit_graph_reachable(const char *obj_dir, unsigned int flags)
->> ...
->>  int write_commit_graph(const char *obj_dir,
->>  		       struct string_list *pack_indexes,
->>  		       struct string_list *commit_hex,
->> -		       int append, int report_progress)
->> +		       unsigned int flags)
-> 
-> OK, so the receivers of the flags word know the collection is
-> unsigned; it's just the user of the API in graph_write() that gets
-> the signedness wrong.  OK, easy enough to correct, I guess.
-> 
+True.
 
+And it cost me *quite* a few days to implement the changes. But the result
+is definitely a lot better, in my opinion.
+
+> > Or I invent a new convention where `add_i_config()` returns 1 when it
+> > consumed the key/value pair. But that would set a precedent that is
+> > inconsistent with the entire existing code base, something I am
+> > uncomfortable to do for the sake of `add -i`...
+>
+> Yes, don't do that. :) That was the same thing we finally got rid of for
+> userdiff_config().
+
+Thanks for stopping me. I did not remember about the userdiff_config()
+thing.
+
+Ciao,
+Dscho
