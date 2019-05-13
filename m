@@ -7,87 +7,92 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E88A71F461
-	for <e@80x24.org>; Mon, 13 May 2019 06:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2F3C1F461
+	for <e@80x24.org>; Mon, 13 May 2019 07:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbfEMGM5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 02:12:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51597 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727272AbfEMGM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 02:12:57 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E44BB14EDD0;
-        Mon, 13 May 2019 02:12:56 -0400 (EDT)
+        id S1727900AbfEMHsR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 03:48:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56987 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727598AbfEMHsR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 03:48:17 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DFDC156F98;
+        Mon, 13 May 2019 03:48:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=faYcLocTa8ke
-        nPh42mvpim/d84g=; b=v8K3/UUzbDuENi/2TZ3nryYRw47ViY52FjptmhRbfI0K
-        Wf9XXOEbe32n/ia7NAUH1BEkPUMEHeIiEuaO/H/yubHJkVsih0TxeFPqvJvj7/Fq
-        3Djg+GwY1TzIf9QP/TE/om7zflsDUS6OGQMmxQUFRhT2npjyELI0MocUt/s3YU0=
+        :content-type:content-transfer-encoding; s=sasl; bh=PioQTmUj6Qg+
+        11UpKJezb0Er0fk=; b=VlfE4peSFwRas+jONSR9mVOxV/zKud2FvmffYRhq2Q0/
+        kt1uMsUb/QEXcyTPUg3Kxm2Uktj15GMtfcIWoKM7HthaVOmTrkD+5kchT8/y49c9
+        0GsBq2iVwjG1xN+SECVQAnA0g9wpPiAU6UwIfzv9NQ+3fCeq1kKwXRNd3n2Qh5g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PtBRHr
-        yM/jyZBPpGzXsVL8eaHTUj46pt+u08ecLeSObePPUCsCCJVNl6W9K20neO9uIlEl
-        EBq5BCm11jGf7EUKk/huWRdjQJ6r/cEsh6w4KEHrnc0aqaM4dGdVmLyzRFpr+aT7
-        lyBnIcFlEHvccgLxFfKntzm/PJINihHWbt5+0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DCE4D14EDCF;
-        Mon, 13 May 2019 02:12:56 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AqBK7z
+        AhLb5GAUEDfDbhpC7h+AtiOc6CehqjBcHda61pvkma0hhbR2qoMzkg4EUh5Bq6y+
+        NJReOpysP3BzkOkpupV59unDq42tZno6o3KqiwBsrj1HEv3M4ZV8oBosWzvXfF0y
+        ghQRG+RLRdi1R0QzG6lrx4SBBbqzGRmhC2Nr0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34A45156F97;
+        Mon, 13 May 2019 03:48:15 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CC1414EDCE;
-        Mon, 13 May 2019 02:12:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 91406156F96;
+        Mon, 13 May 2019 03:48:14 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] init: make --template path relative to $CWD
-References: <20190510104657.26585-1-pclouds@gmail.com>
-Date:   Mon, 13 May 2019 15:12:55 +0900
-In-Reply-To: <20190510104657.26585-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 10 May 2019 17:46:57 +0700")
-Message-ID: <xmqq5zqedgrc.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 5/5] fast-export: do automatic reencoding of commit messages only if requested
+References: <20190430182523.3339-1-newren@gmail.com>
+        <20190510205335.19968-1-newren@gmail.com>
+        <20190510205335.19968-6-newren@gmail.com>
+        <20190511210704.w2mxw3jv2ra2dr7w@tb-raspi4>
+        <CABPp-BEzaSW_eY1yTpLr8tXHei0WV54PFGXmjCLAJNN03Zi3eQ@mail.gmail.com>
+Date:   Mon, 13 May 2019 16:48:13 +0900
+In-Reply-To: <CABPp-BEzaSW_eY1yTpLr8tXHei0WV54PFGXmjCLAJNN03Zi3eQ@mail.gmail.com>
+        (Elijah Newren's message of "Sat, 11 May 2019 14:42:17 -0700")
+Message-ID: <xmqq1s12dcci.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 265CF0D6-7546-11E9-B813-E828E74BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 76B9684A-7553-11E9-BD77-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> During git-init we chdir() to the target directory, but --template is
-> not adjusted. So it's relative to the target directory instead of
-> current directory.
-
-> It would be ok if it's documented, but --template in git-init.txt
-> mentions nothing about this behavior. Change it to be relative to $CWD,
-> which is much more intuitive.
+> On Sat, May 11, 2019 at 2:07 PM Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+>> On Fri, May 10, 2019 at 01:53:35PM -0700, Elijah Newren wrote:
 >
-> The changes in the test suite show that this relative-to-target behavio=
-r
-> is actually used. I just hope that it's only used in the test suite and
-> it's safe to change. Otherwise, the other option is just document
-> it (i.e. relative to target dir) and move on.
+>> This one is good:
+>> > +     if (unset || !strcmp(arg, "abort"))
+>> > +             reencode_mode =3D REENCODE_ABORT;
+>>
+>> But here: does it make sense to use REENCODE_YES/NO to be more consist=
+ant ?
+>> > +     else if (!strcmp(arg, "yes"))
+>> > +             reencode_mode =3D REENCODE_PLEASE;
+>> > +     else if (!strcmp(arg, "no"))
+>> > +             reencode_mode =3D REENCODE_NEVER;
+>
+> Didn't realize there was any such convention, and even have difficulty
+> finding it with grep (CONTAINS_{YES,NO} appears to be the only example
+> I can find), but the alternate wording seems fine; I'm happy to adopt
+> it.
 
-Yeah, that other option does sound safer, but ...
+I am OK with Yes/No. =20
 
->  	mkdir template-source &&
->  	echo content >template-source/file &&
-> -	git init --template=3D../template-source template-custom &&
-> +	git init --template=3Dtemplate-source template-custom &&
+Don't we want to treat this as "bool or literal 'abort'", though?
+Other options that are "bool or something else" tend to accept
+"true" as a synonym for "yes", and I am wondering if we want to
+follow suit here, too.
 
-... the example may show that the updated behaviour may match the
-end-user expectation better.  It certainly is more in line with how
-the "--reference" option of "git clone" uses a relative path.
-
-It also makes it easier to <TAB> complete if these things were
-relative to the current directory at the time of command
-invocation.  I often find it frustrating when I have to create a
-symbolic link in a directory I am not yet in that points to
-somewhere using a relative path for the exact reason ;-)
+Thanks.
