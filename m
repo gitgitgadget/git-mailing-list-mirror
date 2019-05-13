@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32FEF1F461
+	by dcvr.yhbt.net (Postfix) with ESMTP id C501E1F461
 	for <e@80x24.org>; Mon, 13 May 2019 23:17:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726604AbfEMXRj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 19:17:39 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40952 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726584AbfEMXRi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 19:17:38 -0400
-Received: by mail-pf1-f196.google.com with SMTP id u17so8003428pfn.7
-        for <git@vger.kernel.org>; Mon, 13 May 2019 16:17:38 -0700 (PDT)
+        id S1726607AbfEMXRk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 19:17:40 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38711 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726598AbfEMXRk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 19:17:40 -0400
+Received: by mail-pg1-f195.google.com with SMTP id j26so7545740pgl.5
+        for <git@vger.kernel.org>; Mon, 13 May 2019 16:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yt+wTGv/xE0igXogS+6fzV8Emv9In2cdvRwxnsAd848=;
-        b=LZPjLG8eNSTykDU8OlMbmOqBZrlzv5hOOVHhgHLBtmuM9dNNvfpCeS0AjLK/DLVIQu
-         ys1rLZMTa0/b4cN1b1sTuWln5GWA7zDxYMgGKiIRxRTv9H79WVs7cASUd2d3DwcRgIU+
-         QlVbpyNuJWuCDCwxlMcP/iraBIgXxi7U/Oe+1WFMV9DbNgC4vZzwpP/ne3dhOstfgiL/
-         D8JT03eWr6SodV/K70k4I85aV9ZSGFZyUwcpRTcd3AdHbtPqM0TVd7iNDm9L9OBmF2ol
-         qH8sAmHzJ/Vb9mfcdWHJd0mFt6NTb8YnT2Z1qUZNDd6I1hn6Ym3CqOMlrzPmgypIBVl1
-         dlvw==
+        bh=K5KGWlgLIaFfGbNmAYY2dGdpfN8dIpTvYhklN2HMICA=;
+        b=RMNU14uBAkFuHHNH7SNM4TzBnAvzILqjR/1+IcO3Hu92Lzjn+R3d/e8XetVyf8e259
+         1drMpfhA+GBl66qnhOBAoNzWOX5/OvCLoT0jdTG1bMpgQk5iqQoHACsAHK60V7lIEUc3
+         E3B5EHM3zTbMlYibxNoFeolATJQNMrSj1Zlijsa9GZxYmm/xHNGRaZUDjKnWOUXPFcg8
+         bWLSx+D9IaDeYRVOHHE85a13K7gbKg5uXACN9fGzIycQpaYEaIMiQaPNE7wQFU37GZ5W
+         y7v2r0M5wJrksvB1wXmjwe4M4HQG0VRaazJDr08pdu8i6FYDp0zILJ9jrTJZEBLy/Lwa
+         chsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yt+wTGv/xE0igXogS+6fzV8Emv9In2cdvRwxnsAd848=;
-        b=sEuMrgC1qtL/e43WArzuWtaC4ArDncQxpoSoMe525lxt9oKnhRTTJUcyKgZlmsXpwi
-         SvwwmgkclLISt/2SC5VLr5/v1I5fxaurmjjrVsDVg53eO7ps7DH4jve94tVA/X8inUuI
-         pKkAiNjfB2Q5X7dad0tL+IUhJNLsUz2CYM15UBLyIGqs4rwOYzZ2a8KLHO8vdGC7ZWo3
-         akH4n6XJ91G7Ji9VxHGUU/mrU3CbE2Djlo/fFn3M0oplbeS+LVRDIJLKna2IfYu5CBdi
-         lHu970wBrCcHBLyollW/MVYcB1o229H1hDtK1wRXSnwOk+XtdlSsGua05mw/xY1t4IwQ
-         85IA==
-X-Gm-Message-State: APjAAAXe/svrQIHl8qNQyvOfw+yBMI1jOV/WKV5SSe/FwvMK1T+tnbcN
-        xcru6NYiMv1/P6ZQHUk6xYk=
-X-Google-Smtp-Source: APXvYqzgj1zy7LqFhgfeT2ZfsA245DmxV+O6vDO/8/HiO6hVY1Ch413eyCIKiHf/tU9f3Q8jxjqmMQ==
-X-Received: by 2002:aa7:8a81:: with SMTP id a1mr36449589pfc.121.1557789457774;
-        Mon, 13 May 2019 16:17:37 -0700 (PDT)
+        bh=K5KGWlgLIaFfGbNmAYY2dGdpfN8dIpTvYhklN2HMICA=;
+        b=DmI95x+wT2TlhaNQXV+E/gRzo8kmwextLh74Kfh08ZNO2bkgngSwambgiDxkXX9kjZ
+         dVCuz+AxBZHEDv8APi6k5IOxdRpkXKn7IIX38PjBuiD/f57kBVfEj8UCXviv/YVae9qY
+         ghg1mUYooaxUW8fDqhnYozJfA4DcQTt6RLnm9obgKxDJ8vY0+r2/muEqaZ9cQo9Rtg0E
+         /kDKZtwZRpq9M45+S38JAa6b9dMV7bdImafCI+60bcoz6vn94Pf3Lehh/AjT5IQ4nDxs
+         k0YYjF3g27oHVMrXhrPQXVbXXMWwk7RxdDr2sckrR+2uwpGtyrW7xzt3bLl5gKMLSdqU
+         4how==
+X-Gm-Message-State: APjAAAU6uu9MR/EUlIT5mrb7xvm3HBr+uqD08xBNvJrW9W1buwK85m75
+        GqvPfZb0lETrUny7w6oKoN4=
+X-Google-Smtp-Source: APXvYqwd+sPwDnZZxF8W4fUPkIcU2cJG9950XqLzDt4RoMUXSa0z7RYmHKKjEPzgd+iPQ0Z7DOAgZQ==
+X-Received: by 2002:aa7:808d:: with SMTP id v13mr5819870pff.198.1557789459251;
+        Mon, 13 May 2019 16:17:39 -0700 (PDT)
 Received: from newren2-linux.yojoe.local ([8.4.231.67])
-        by smtp.gmail.com with ESMTPSA id g10sm30664307pfg.153.2019.05.13.16.17.36
+        by smtp.gmail.com with ESMTPSA id g10sm30664307pfg.153.2019.05.13.16.17.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 May 2019 16:17:37 -0700 (PDT)
+        Mon, 13 May 2019 16:17:38 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
@@ -56,96 +56,47 @@ Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 3/5] fast-export: avoid stripping encoding header if we cannot reencode
-Date:   Mon, 13 May 2019 16:17:24 -0700
-Message-Id: <20190513231726.16218-4-newren@gmail.com>
+Subject: [PATCH v5 4/5] fast-export: differentiate between explicitly utf-8 and implicitly utf-8
+Date:   Mon, 13 May 2019 16:17:25 -0700
+Message-Id: <20190513231726.16218-5-newren@gmail.com>
 X-Mailer: git-send-email 2.21.0.782.gd8be4ee826
 In-Reply-To: <20190513231726.16218-1-newren@gmail.com>
 References: <20190513164722.31534-1-newren@gmail.com>
  <20190513231726.16218-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fast-export encounters a commit with an 'encoding' header, it tries
-to reencode in utf-8 and then drops the encoding header.  However, if it
-fails to reencode in utf-8 because e.g. one of the characters in the
-commit message was invalid in the old encoding, then we need to retain
-the original encoding or otherwise we lose information needed to
-understand all the other (valid) characters in the original commit
-message.
+The find_encoding() function returned the encoding used by a commit
+message, returning a default of git_commit_encoding (usually utf-8).
+Although the current code does not differentiate between a commit which
+explicitly requested utf-8 and one where we just assume utf-8 because no
+encoding is set, it will become important when we try to preserve the
+encoding header.  Since is_encoding_utf8() returns true when passed
+NULL, we can just return NULL from find_encoding() instead of returning
+git_commit_encoding.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/fast-export.c                        |  7 +++++--
- t/t9350-fast-export.sh                       | 21 ++++++++++++++++++++
- t/t9350/broken-iso-8859-7-commit-message.txt |  1 +
- 3 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100644 t/t9350/broken-iso-8859-7-commit-message.txt
+ builtin/fast-export.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 9e283482ef..7734a9f5a5 100644
+index 7734a9f5a5..66331fa401 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -642,9 +642,12 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	printf("commit %s\nmark :%"PRIu32"\n", refname, last_idnum);
- 	if (show_original_ids)
- 		printf("original-oid %s\n", oid_to_hex(&commit->object.oid));
--	printf("%.*s\n%.*s\ndata %u\n%s",
-+	printf("%.*s\n%.*s\n",
- 	       (int)(author_end - author), author,
--	       (int)(committer_end - committer), committer,
-+	       (int)(committer_end - committer), committer);
-+	if (!reencoded && encoding)
-+		printf("encoding %s\n", encoding);
-+	printf("data %u\n%s",
- 	       (unsigned)(reencoded
- 			  ? strlen(reencoded) : message
- 			  ? strlen(message) : 0),
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index c721026260..4fd637312a 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -118,6 +118,27 @@ test_expect_success 'iso-8859-7' '
- 		 ! grep ^encoding actual)
- '
- 
-+test_expect_success 'encoding preserved if reencoding fails' '
-+
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_config i18n.commitencoding iso-8859-7 &&
-+	echo rosten >file &&
-+	git commit -s -F "$TEST_DIRECTORY/t9350/broken-iso-8859-7-commit-message.txt" file &&
-+	git fast-export wer^..wer >iso-8859-7.fi &&
-+	sed "s/wer/i18n-invalid/" iso-8859-7.fi |
-+		(cd new &&
-+		 git fast-import &&
-+		 git cat-file commit i18n-invalid >actual &&
-+		 # Make sure the commit still has the encoding header
-+		 grep ^encoding actual &&
-+		 # Verify that the commit has the expected size; i.e.
-+		 # that no bytes were re-encoded to a different encoding.
-+		 test 252 -eq "$(git cat-file -s i18n-invalid)" &&
-+		 # ...and check for the original special bytes
-+		 grep $(printf "\360") actual &&
-+		 grep $(printf "\377") actual)
-+'
-+
- test_expect_success 'import/export-marks' '
- 
- 	git checkout -b marks master &&
-diff --git a/t/t9350/broken-iso-8859-7-commit-message.txt b/t/t9350/broken-iso-8859-7-commit-message.txt
-new file mode 100644
-index 0000000000..d06ad75b44
---- /dev/null
-+++ b/t/t9350/broken-iso-8859-7-commit-message.txt
-@@ -0,0 +1 @@
-+Pi: ð; Invalid: ÿ
-\ No newline at end of file
+@@ -453,7 +453,7 @@ static const char *find_encoding(const char *begin, const char *end)
+ 	bol = memmem(begin, end ? end - begin : strlen(begin),
+ 		     needle, strlen(needle));
+ 	if (!bol)
+-		return git_commit_encoding;
++		return NULL;
+ 	bol += strlen(needle);
+ 	eol = strchrnul(bol, '\n');
+ 	*eol = '\0';
 -- 
 2.21.0.782.gd8be4ee826
 
