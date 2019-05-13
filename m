@@ -2,377 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B4EC1F461
-	for <e@80x24.org>; Mon, 13 May 2019 17:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8D31F461
+	for <e@80x24.org>; Mon, 13 May 2019 18:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731723AbfEMR2Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 13:28:16 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46251 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730002AbfEMR17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 13:27:59 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f37so18648123edb.13
-        for <git@vger.kernel.org>; Mon, 13 May 2019 10:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=c/R2dZb6ZVsXRFPYfEejUWiHzv9Altu2bvDiSFnlx+Y=;
-        b=iRasOkbu3mqlW2z328RvcmPY+y8aFHS2+C44gW+WSiSMrRVLfpQz97r08X+WsfbYAQ
-         7fWJd7OimkPUEwpJdUPE85n9vvZUpNrqlTVR0CJ9xvobtjaZ4KJOxNZzM4LJ+bV9J7vP
-         cpGG274bIobGRSU15EK4sbNgRroLocLyi6vyB452/DTiYLnlt1zZ/TC6Dkn7SpN7ngi2
-         osZWLKVzqRql8xLwFwlOl9Or/J46X+pLZ0fa/uQpzIsU50ZlsEtbd9sBzpHyWAGdmKQH
-         ldsUOeyVoO4rPqCM2rZeOce+SRUAA2Q3gvAdkFiimXeDmT/XShFgChHdFJ/8o1NLX556
-         KB6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c/R2dZb6ZVsXRFPYfEejUWiHzv9Altu2bvDiSFnlx+Y=;
-        b=Ar1eB7NV9a82k18LtRfFc2SvdTk13jug1h0N3veLrhU0OEWsi86MLBSZk5i5tl3IcA
-         Vmn6oynwMTmKKQu8w7BLc8JWaVWAX2EZ/2n7z6rSBh90k+y4R443iPYjY9yYjS0/1T+S
-         3oWi+laH7YuGhPFcdjY06aR8L7adHiRo6Y8DJ09QSG9wxCS9ztFdF1NR4Tae111s+uuZ
-         XLXSS3QrXwiSMOkscdvaA8w9xXNsTzyqwo0dgXlsN35EwJHVakq6jUHfCzTV5weciLsm
-         dFYsx+VZ4qlMiU8cwVbBNBdYjF8xmj97nlFNJbcZTBBpltfN6Fx7ZqIOwq7BX5ziGnUI
-         grvg==
-X-Gm-Message-State: APjAAAUxqOOSJ5n/Q7/jUHFatiWw5Yx5dFVkc5IBO/uL4ZSwjp6CSWjs
-        HfZlgDOBEs824FjozU34gQESLmLJ
-X-Google-Smtp-Source: APXvYqwbAA1O9k0bt599sZmg8ok1bgFShiE5ilelsGmnCSi8NvcaKGKEZup6HpGlqQRWkchTA98ocA==
-X-Received: by 2002:aa7:d617:: with SMTP id c23mr30751521edr.74.1557768476239;
-        Mon, 13 May 2019 10:27:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v35sm3936474edc.4.2019.05.13.10.27.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2019 10:27:55 -0700 (PDT)
-Date:   Mon, 13 May 2019 10:27:55 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 May 2019 17:27:43 GMT
-Message-Id: <5e23c0756b5ee543437d0dbf4e9f685df6341bdf.1557768471.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.170.v2.git.gitgitgadget@gmail.com>
-References: <pull.170.git.gitgitgadget@gmail.com>
-        <pull.170.v2.git.gitgitgadget@gmail.com>
-From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 03/11] built-in add -i: implement the `status` command
-Fcc:    Sent
+        id S1726421AbfEMSPV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 14:15:21 -0400
+Received: from outmail148095.authsmtp.com ([62.13.148.95]:29787 "EHLO
+        outmail148095.authsmtp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726107AbfEMSPU (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 14:15:20 -0400
+X-Greylist: delayed 969 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 May 2019 14:15:19 EDT
+Received: from punt24.authsmtp.com (punt24.authsmtp.com [62.13.128.105])
+        by punt16.authsmtp.com. (8.15.2/8.15.2) with ESMTP id x4DHx8ws000429
+        for <git@vger.kernel.org>; Mon, 13 May 2019 18:59:08 +0100 (BST)
+        (envelope-from bavison@riscosopen.org)
+Received: from mail-c233.authsmtp.com (mail-c233.authsmtp.com [62.13.128.233])
+        by punt24.authsmtp.com. (8.15.2/8.15.2) with ESMTP id x4DHx8Cu039951;
+        Mon, 13 May 2019 18:59:08 +0100 (BST)
+        (envelope-from bavison@riscosopen.org)
+Received: from rool-work.lan ([37.152.216.162])
+        (authenticated bits=128)
+        by mail.authsmtp.com (8.15.2/8.15.2) with ESMTPSA id x4DHx7ar017625
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 13 May 2019 18:59:07 +0100 (BST)
+        (envelope-from bavison@riscosopen.org)
+Received: from rool-work.lan (localhost [127.0.0.1])
+        by rool-work.lan (8.15.2/8.15.2/Debian-3) with ESMTP id x4DHx6AI126125;
+        Mon, 13 May 2019 18:59:06 +0100
+Received: (from bavison@localhost)
+        by rool-work.lan (8.15.2/8.15.2/Submit) id x4DHx6c5126124;
+        Mon, 13 May 2019 18:59:06 +0100
+X-Authentication-Warning: rool-work.lan: bavison set sender to bavison@riscosopen.org using -f
+From:   Ben Avison <bavison@riscosopen.org>
+To:     git@vger.kernel.org
+Cc:     Ben Avison <bavison@riscosopen.org>
+Subject: [PATCH] clone: add `--remote-submodules` flag
+Date:   Mon, 13 May 2019 18:59:03 +0100
+Message-Id: <20190513175903.126079-1-bavison@riscosopen.org>
+X-Mailer: git-send-email 2.21.0.896.g6a6c0f10a7.dirty
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
+X-Server-Quench: cda5717b-75a8-11e9-a01e-84349711df28
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd1YggXA1ZfRRob ESQCJDVBUg4iPRpU DBlFKhFVNl8UURhQ KkJXbgASJgRHAnRQ SnkJW1VdQFx5U2Z8 YQpWIwZafEtLXRto UU5XQ1RQCwdtHh1P ThpqKlF1JkdGeXl2 Z0MsX3FbW0A0JhIs R0lVEj8bYmIxYH0e URVRalJUcVZXdhtG bll4VXJZN2cPKBEA NjMYHwV5NjFYLikH CggBIRoaBAMREzs7 Wx1HBiglGEoJWiE+ NBRuJFoVEy4u
+X-Authentic-SMTP: 61633632303230.1021:706
+X-AuthFastPath: 0 (Was 255)
+X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Ferreira <bnmvco@gmail.com>
+When using `git clone --recurse-submodules` there was previously no way to
+pass a `--remote` switch to the implicit `git submodule update` command for
+any use case where you want the submodules to be checked out on their
+remote-tracking branch rather than with the SHA-1 recorded in the superproject.
 
-This implements the `status` command of `git add -i`. The data
-structures introduced in this commit will be extended as needed later.
+This patch rectifies this situation. It actually passes `--no-fetch` to
+`git submodule update` as well on the grounds they the submodule has only just
+been cloned, so fetching from the remote again only serves to slow things down.
 
-At this point, we re-implement only part of the `list_and_choose()`
-function of the Perl script `git-add--interactive.perl` and call it
-`list()`. It does not yet color anything, or do columns, or allow user
-input.
-
-Over the course of the next commits, we will introduce a
-`list_and_choose()` function that uses `list()` to display the list of
-options and let the user choose one or more of the displayed items. This
-will be used to implement the main loop of the built-in `git add -i`, at
-which point the new `status` command can actually be used.
-
-Note that we pass the list of items as a `struct item **` as opposed to
-a `struct item *`, to allow for the actual items to contain much more
-information than merely the name.
-
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Ben Avison <bavison@riscosopen.org>
 ---
- add-interactive.c | 265 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 264 insertions(+), 1 deletion(-)
+ Documentation/git-clone.txt        |  9 ++++-
+ builtin/clone.c                    |  8 +++++
+ t/t5617-clone-submodules-remote.sh | 54 ++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 1 deletion(-)
+ create mode 100755 t/t5617-clone-submodules-remote.sh
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 482e458dc6..59b28011f7 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -1,7 +1,270 @@
- #include "cache.h"
- #include "add-interactive.h"
-+#include "diffcore.h"
-+#include "revision.h"
-+#include "refs.h"
-+
-+struct item {
-+	const char *name;
-+};
-+
-+struct list_options {
-+	const char *header;
-+	void (*print_item)(int i, struct item *item, void *print_item_data);
-+	void *print_item_data;
-+};
-+
-+static void list(struct item **list, size_t nr, struct list_options *opts)
-+{
-+	int i;
-+
-+	if (!nr)
-+		return;
-+
-+	if (opts->header)
-+		printf("%s\n", opts->header);
-+
-+	for (i = 0; i < nr; i++) {
-+		opts->print_item(i, list[i], opts->print_item_data);
-+		putchar('\n');
-+	}
-+}
-+
-+struct adddel {
-+	uintmax_t add, del;
-+	unsigned seen:1, binary:1;
-+};
-+
-+struct file_list {
-+	struct file_item {
-+		struct item item;
-+		struct adddel index, worktree;
-+	} **file;
-+	size_t nr, alloc;
-+};
-+
-+static void add_file_item(struct file_list *list, const char *name)
-+{
-+	struct file_item *item;
-+
-+	FLEXPTR_ALLOC_STR(item, item.name, name);
-+
-+	ALLOC_GROW(list->file, list->nr + 1, list->alloc);
-+	list->file[list->nr++] = item;
-+}
-+
-+static void reset_file_list(struct file_list *list)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < list->nr; i++)
-+		free(list->file[i]);
-+	list->nr = 0;
-+}
-+
-+static void release_file_list(struct file_list *list)
-+{
-+	reset_file_list(list);
-+	FREE_AND_NULL(list->file);
-+	list->alloc = 0;
-+}
-+
-+static int file_item_cmp(const void *a, const void *b)
-+{
-+	const struct file_item * const *f1 = a;
-+	const struct file_item * const *f2 = b;
-+
-+	return strcmp((*f1)->item.name, (*f2)->item.name);
-+}
-+
-+struct pathname_entry {
-+	struct hashmap_entry ent;
-+	size_t index;
-+	char pathname[FLEX_ARRAY];
-+};
-+
-+static int pathname_entry_cmp(const void *unused_cmp_data,
-+			      const void *entry, const void *entry_or_key,
-+			      const void *pathname)
-+{
-+	const struct pathname_entry *e1 = entry, *e2 = entry_or_key;
-+
-+	return strcmp(e1->pathname,
-+		      pathname ? (const char *)pathname : e2->pathname);
-+}
-+
-+struct collection_status {
-+	enum { FROM_WORKTREE = 0, FROM_INDEX = 1 } phase;
-+
-+	const char *reference;
-+
-+	struct file_list *list;
-+	struct hashmap file_map;
-+};
-+
-+static void collect_changes_cb(struct diff_queue_struct *q,
-+			       struct diff_options *options,
-+			       void *data)
-+{
-+	struct collection_status *s = data;
-+	struct diffstat_t stat = { 0 };
-+	int i;
-+
-+	if (!q->nr)
-+		return;
-+
-+	compute_diffstat(options, &stat, q);
-+
-+	for (i = 0; i < stat.nr; i++) {
-+		const char *name = stat.files[i]->name;
-+		int hash = strhash(name);
-+		struct pathname_entry *entry;
-+		size_t file_index;
-+		struct file_item *file;
-+		struct adddel *adddel;
-+
-+		entry = hashmap_get_from_hash(&s->file_map, hash, name);
-+		if (entry)
-+			file_index = entry->index;
-+		else {
-+			FLEX_ALLOC_STR(entry, pathname, name);
-+			hashmap_entry_init(entry, hash);
-+			entry->index = file_index = s->list->nr;
-+			hashmap_add(&s->file_map, entry);
-+
-+			add_file_item(s->list, name);
-+		}
-+		file = s->list->file[file_index];
-+
-+		adddel = s->phase == FROM_INDEX ? &file->index : &file->worktree;
-+		adddel->seen = 1;
-+		adddel->add = stat.files[i]->added;
-+		adddel->del = stat.files[i]->deleted;
-+		if (stat.files[i]->is_binary)
-+			adddel->binary = 1;
-+	}
-+}
-+
-+static int get_modified_files(struct repository *r, struct file_list *list,
-+			      const struct pathspec *ps)
-+{
-+	struct object_id head_oid;
-+	int is_initial = !resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
-+					     &head_oid, NULL);
-+	struct collection_status s = { FROM_WORKTREE };
-+
-+	if (repo_read_index_preload(r, ps, 0) < 0)
-+		return error(_("could not read index"));
-+
-+	s.list = list;
-+	hashmap_init(&s.file_map, pathname_entry_cmp, NULL, 0);
-+
-+	for (s.phase = FROM_WORKTREE; s.phase <= FROM_INDEX; s.phase++) {
-+		struct rev_info rev;
-+		struct setup_revision_opt opt = { 0 };
-+
-+		opt.def = is_initial ?
-+			empty_tree_oid_hex() : oid_to_hex(&head_oid);
-+
-+		init_revisions(&rev, NULL);
-+		setup_revisions(0, NULL, &rev, &opt);
-+
-+		rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+		rev.diffopt.format_callback = collect_changes_cb;
-+		rev.diffopt.format_callback_data = &s;
-+
-+		if (ps)
-+			copy_pathspec(&rev.prune_data, ps);
-+
-+		if (s.phase == FROM_INDEX)
-+			run_diff_index(&rev, 1);
-+		else {
-+			rev.diffopt.flags.ignore_dirty_submodules = 1;
-+			run_diff_files(&rev, 0);
-+		}
-+	}
-+	hashmap_free(&s.file_map, 1);
-+
-+	/* While the diffs are ordered already, we ran *two* diffs... */
-+	QSORT(list->file, list->nr, file_item_cmp);
-+
-+	return 0;
-+}
-+
-+static void populate_wi_changes(struct strbuf *buf,
-+				struct adddel *ad, const char *no_changes)
-+{
-+	if (ad->binary)
-+		strbuf_addstr(buf, _("binary"));
-+	else if (ad->seen)
-+		strbuf_addf(buf, "+%"PRIuMAX"/-%"PRIuMAX,
-+			    (uintmax_t)ad->add, (uintmax_t)ad->del);
-+	else
-+		strbuf_addstr(buf, no_changes);
-+}
-+
-+struct print_file_item_data {
-+	const char *modified_fmt;
-+	struct strbuf buf, index, worktree;
-+};
-+
-+static void print_file_item(int i, struct item *item,
-+			    void *print_file_item_data)
-+{
-+	struct file_item *c = (struct file_item *)item;
-+	struct print_file_item_data *d = print_file_item_data;
-+
-+	strbuf_reset(&d->index);
-+	strbuf_reset(&d->worktree);
-+	strbuf_reset(&d->buf);
-+
-+	populate_wi_changes(&d->worktree, &c->worktree, _("nothing"));
-+	populate_wi_changes(&d->index, &c->index, _("unchanged"));
-+	strbuf_addf(&d->buf, d->modified_fmt,
-+		    d->index.buf, d->worktree.buf, item->name);
-+
-+	printf(" %2d: %s", i + 1, d->buf.buf);
-+}
-+
-+static int run_status(struct repository *r, const struct pathspec *ps,
-+		      struct file_list *files, struct list_options *opts)
-+{
-+	reset_file_list(files);
-+
-+	if (get_modified_files(r, files, ps) < 0)
-+		return -1;
-+
-+	if (files->nr)
-+		list((struct item **)files->file, files->nr, opts);
-+	putchar('\n');
-+
-+	return 0;
-+}
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index a0f14b51f2..5fc97f14de 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -15,7 +15,8 @@ SYNOPSIS
+ 	  [--dissociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+ 	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+-	  [--jobs <n>] [--] <repository> [<directory>]
++	  [--[no-]remote-submodules] [--jobs <n>] [--] <repository>
++	  [<directory>]
  
- int run_add_i(struct repository *r, const struct pathspec *ps)
- {
--	die(_("No commands are available in the built-in `git add -i` yet!"));
-+	struct print_file_item_data print_file_item_data = {
-+		"%12s %12s %s", STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
-+	};
-+	struct list_options opts = {
-+		NULL, print_file_item, &print_file_item_data
-+	};
-+	struct strbuf header = STRBUF_INIT;
-+	struct file_list files = { NULL };
-+	int res = 0;
+ DESCRIPTION
+ -----------
+@@ -260,6 +261,12 @@ or `--mirror` is given)
+ --[no-]shallow-submodules::
+ 	All submodules which are cloned will be shallow with a depth of 1.
+ 
++--[no-]remote-submodules::
++	All submodules which are cloned will use the status of the submodule’s
++	remote-tracking branch to update the submodule, rather than the
++	superproject’s recorded SHA-1. Equivalent to passing `--remote` to
++	`git submodule update`.
 +
-+	strbuf_addstr(&header, "      ");
-+	strbuf_addf(&header, print_file_item_data.modified_fmt,
-+		    _("staged"), _("unstaged"), _("path"));
-+	opts.header = header.buf;
+ --separate-git-dir=<git dir>::
+ 	Instead of placing the cloned repository where it is supposed
+ 	to be, place the cloned repository at the specified directory,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 31a47d190a..9e5752ee41 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -67,6 +67,7 @@ static int max_jobs = -1;
+ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
+ static struct list_objects_filter_options filter_options;
+ static struct string_list server_options = STRING_LIST_INIT_NODUP;
++static int option_remote_submodules;
+ 
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -145,6 +146,8 @@ static struct option builtin_clone_options[] = {
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
+ 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
++	OPT_BOOL(0, "remote-submodules", &option_remote_submodules,
++		    N_("any cloned submodules will use their remote-tracking branch")),
+ 	OPT_END()
+ };
+ 
+@@ -792,6 +795,11 @@ static int checkout(int submodule_progress)
+ 		if (option_verbosity < 0)
+ 			argv_array_push(&args, "--quiet");
+ 
++		if (option_remote_submodules == 1) {
++			argv_array_push(&args, "--remote");
++			argv_array_push(&args, "--no-fetch");
++		}
 +
-+	res = run_status(r, ps, &files, &opts);
+ 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 		argv_array_clear(&args);
+ 	}
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
+new file mode 100755
+index 0000000000..3ba9a55341
+--- /dev/null
++++ b/t/t5617-clone-submodules-remote.sh
+@@ -0,0 +1,54 @@
++#!/bin/sh
 +
-+	release_file_list(&files);
-+	strbuf_release(&print_file_item_data.buf);
-+	strbuf_release(&print_file_item_data.index);
-+	strbuf_release(&print_file_item_data.worktree);
-+	strbuf_release(&header);
++test_description='Test cloning repos with submodules using remote-tracking branches'
 +
-+	return res;
- }
++. ./test-lib.sh
++
++pwd=$(pwd)
++
++test_expect_success 'setup' '
++	git checkout -b master &&
++	test_commit commit1 &&
++	mkdir sub &&
++	(
++		cd sub &&
++		git init &&
++		test_commit subcommit1 &&
++		git tag sub_when_added_to_super
++	) &&
++	git submodule add "file://$pwd/sub" sub &&
++	git commit -m "add submodule" &&
++	(
++		cd sub &&
++		test_commit subcommit2
++	)
++'
++
++test_expect_success 'clone with --no-remote-submodules' '
++	test_when_finished "rm -rf super_clone" &&
++	git clone --recurse-submodules --no-remote-submodules "file://$pwd/." super_clone &&
++	(
++		cd super_clone/sub &&
++		git diff --exit-code sub_when_added_to_super
++	)
++'
++
++test_expect_success 'clone with --remote-submodules' '
++	test_when_finished "rm -rf super_clone" &&
++	git clone --recurse-submodules --remote-submodules "file://$pwd/." super_clone &&
++	(
++		cd super_clone/sub &&
++		git diff --exit-code remotes/origin/master
++	)
++'
++
++test_expect_success 'check the default is --no-remote-submodules' '
++	test_when_finished "rm -rf super_clone" &&
++	git clone --recurse-submodules --no-remote-submodules "file://$pwd/." super_clone &&
++	(
++		cd super_clone/sub &&
++		git diff --exit-code sub_when_added_to_super
++	)
++'
++
++test_done
 -- 
-gitgitgadget
+2.21.0.896.g6a6c0f10a7.dirty
 
