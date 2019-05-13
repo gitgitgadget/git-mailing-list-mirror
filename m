@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160251F461
-	for <e@80x24.org>; Mon, 13 May 2019 17:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13EDD1F461
+	for <e@80x24.org>; Mon, 13 May 2019 17:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731734AbfEMR2G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 13:28:06 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41819 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731680AbfEMR2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 13:28:04 -0400
-Received: by mail-ed1-f66.google.com with SMTP id m4so18674585edd.8
-        for <git@vger.kernel.org>; Mon, 13 May 2019 10:28:02 -0700 (PDT)
+        id S1731729AbfEMR2D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 13:28:03 -0400
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:36051 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731719AbfEMR2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 13:28:02 -0400
+Received: by mail-ed1-f42.google.com with SMTP id a8so18692377edx.3
+        for <git@vger.kernel.org>; Mon, 13 May 2019 10:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tmPfGYqL+lfGw92CHugkAF+zx/YMo+COjgbZPSOyQWE=;
-        b=Lyl50dyBHCjmSjF5Tc9vnyDtLLLYWPDurNyVo6EJwYn4O7JUdq9KZdp/xACLPW5Ry/
-         W2xhXZAWGh6yhxZPxsEaRSCIXlM44ZLy9OHp4QnIEMKzkQHWKdNzBrpMo3KsY+rj39UE
-         0JXEvS9JSG6L8l4JeUb65sPoJokt8UtveOEFd86gYXH+5tpHrOuNYFeLUnnoLAHrCHN3
-         Wqo/sCO1Urio+OSYnrE3gpBXeJo8Tt3/Y8wdb7PmKnLSFU/Mz914LI1O+2YE1qVFijZC
-         hrXOK0mWZ7P12YvVlTsxPk0eYVzy+K6+ogguvM3wQSsCd8jzgNVBXw8Ja1L2Vargw1bM
-         C0gQ==
+        bh=ixYXw8fT/8FZkxOeJ2DHrv5O1KDRx4t4Dnxjc2qMUc8=;
+        b=hrgf6blpVprU50PwFGdacadDKMkdV1V/ne5TxLzoP/gfyQWONTpwsb6yqLegGV+EdB
+         g4Y6R1dmfYuyVAOy7HYZYdqIDHZREMWoFVnAKtI7RP2T/Tu6HstYm6da0Yttj//2hxUL
+         Lvb/76BvfCKsq7rodwQl1H5CC8D2TtxJ66jISVuOofjBEmoW/3jHceBi0+zdGYdm7Wy0
+         z7YIiMEsOuh/yk9iSOmXl4KaTZNKj7qFaQVsqscZKjlo4N6/947vkQetEcs72MjMUhIF
+         jPG2e/DA/GwJbL8bvFHZywNN23xR/e1pPPXh7h0sFoBCjYy9WZF1cSy/dwlR7yCYiO7d
+         wq1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tmPfGYqL+lfGw92CHugkAF+zx/YMo+COjgbZPSOyQWE=;
-        b=gfw0XL6N/zj1zbD7MUymHYaMO7UHt1y4XLPncpHAiB9IwbYCQKI37jSSSOpMLbtBVz
-         k8FIiFjODHPoN5M9r5GqQqt85TIh5TuWhT7/m6D5pYJ5HTee/bJ0RWrPwDqHmN7eKuhy
-         slKtzAWryBhfmb4MeFDFjZ0N6vOBeE5jnosPmPy0/EC2oHaFCo4IKWKg5pZYcdmsuuJN
-         8KCTY3UhZSvIYtCCrrBU8fvOMcIXKfH+iJVb/iAT1ior7ZK4wlgunDLiruCWhSkzN1Pq
-         SPc24x7chOhEFDB+//fVEOlrsJdfRLpenqJIexKskguPXVHxAIvWxA7QRhHtVQbsL1Ku
-         fk3A==
-X-Gm-Message-State: APjAAAUdTUIMyy07WSF7WbFA3gs9YvKxaLLiQ4e6EFYVX3MV/rAsdKS4
-        CTyF3+dXvGapHA4tQEtLXs0iqjRp
-X-Google-Smtp-Source: APXvYqwmqgRkMM9RJRz6hOe6bRChGm8dqq8yNyuykk9zqKVC7boRjhul/eGJqbWbA+biRH8yhG6dGQ==
-X-Received: by 2002:a05:6402:54a:: with SMTP id i10mr31108064edx.162.1557768481867;
-        Mon, 13 May 2019 10:28:01 -0700 (PDT)
+        bh=ixYXw8fT/8FZkxOeJ2DHrv5O1KDRx4t4Dnxjc2qMUc8=;
+        b=lu4kr7Wj3P/ZG7QATeuE9CR5ne0s/ERu3fej+usbTK0i322SYq5GPuQDeQYlmkbQp7
+         eH0yYDP7Prpv2iH0FFP/1nqjODQLV1SBB138XUwm70vtepymLkTzu8nbRsVekosH5q6D
+         Eqc9e7NcyasBFi8m89pbiOYN6H8JjZXfYyuADLnvvXgKkBgArb4Q6zhvSs/QqDL/ENy/
+         D/4qYo5Y9g64595ta7ofdOy6eCUG8gbg3gzQeLu5rdixxrWiUjvABn93ZF/gkvu7x+ER
+         eRZKxWQoHzrGdDjnW3bATfFELTpTBaV/PvWBVZDHv9Bl6y58PkWn46rJEMI1SpzzrZSL
+         3Wsg==
+X-Gm-Message-State: APjAAAVAohMt7Cze44cv9q/XWFN7vZD5vrhDbcUFzSPSrN4aOnsCAvfC
+        FFqWq8p2wZx0OCKdFMSBqhkIXjgX
+X-Google-Smtp-Source: APXvYqy2yDXauI4LBua+Aoq6IGjzAEb2tNuDafvD4vwOlkWM7Q0mJUD+9VddeTStGGgJSiTh9JPFmw==
+X-Received: by 2002:a17:906:ef1:: with SMTP id x17mr23435838eji.15.1557768479376;
+        Mon, 13 May 2019 10:27:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i2sm1006117edg.81.2019.05.13.10.28.01
+        by smtp.gmail.com with ESMTPSA id c49sm3916366eda.58.2019.05.13.10.27.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 May 2019 10:28:01 -0700 (PDT)
-Date:   Mon, 13 May 2019 10:28:01 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 May 2019 17:27:50 GMT
-Message-Id: <36edef85e625ac6b84a10f8ce5738b7ef5902ebc.1557768472.git.gitgitgadget@gmail.com>
+        Mon, 13 May 2019 10:27:58 -0700 (PDT)
+Date:   Mon, 13 May 2019 10:27:58 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 May 2019 17:27:47 GMT
+Message-Id: <e02a52c3acf64657c012744108d7ccc3ecdf1b43.1557768471.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v2.git.gitgitgadget@gmail.com>
 References: <pull.170.git.gitgitgadget@gmail.com>
         <pull.170.v2.git.gitgitgadget@gmail.com>
 From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 10/11] built-in add -i: use color in the main loop
+Subject: [PATCH v2 07/11] Add a function to determine unique prefixes for a
+ list of strings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,113 +73,332 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Slavica Djukic <slawica92@hotmail.com>
 
-The error messages as well as the unique prefixes are colored in `git
-add -i` by default; We need to do the same in the built-in version.
+In the `git add -i` command, we show unique prefixes of the commands and
+files, to give an indication what prefix would select them.
+
+Naturally, the C implementation looks a lot different than the Perl
+implementation: in Perl, a trie is much easier implemented, while we
+already have a pretty neat hashmap implementation in C that we use for
+the purpose of storing (not necessarily unique) prefixes.
+
+The idea: for each item that we add, we generate prefixes starting with
+the first letter, then the first two letters, then three, etc, until we
+find a prefix that is unique (or until the prefix length would be
+longer than we want). If we encounter a previously-unique prefix on the
+way, we adjust that item's prefix to make it unique again (or we mark it
+as having no unique prefix if we failed to find one). These partial
+prefixes are stored in a hash map (for quick lookup times).
+
+To make sure that this function works as expected, we add a test using a
+special-purpose test helper that was added for that purpose.
+
+Note: We expect the list of prefix items to be passed in as a list of
+pointers rather than as regular list to avoid having to copy information
+(the actual items will most likely contain more information than just
+the name and the length of the unique prefix, but passing in `struct
+prefix_item *` would not allow for that).
 
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 37 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 5 deletions(-)
+ Makefile                   |   2 +
+ prefix-map.c               | 109 +++++++++++++++++++++++++++++++++++++
+ prefix-map.h               |  40 ++++++++++++++
+ t/helper/test-prefix-map.c |  58 ++++++++++++++++++++
+ t/helper/test-tool.c       |   1 +
+ t/helper/test-tool.h       |   1 +
+ t/t0016-prefix-map.sh      |  10 ++++
+ 7 files changed, 221 insertions(+)
+ create mode 100644 prefix-map.c
+ create mode 100644 prefix-map.h
+ create mode 100644 t/helper/test-prefix-map.c
+ create mode 100755 t/t0016-prefix-map.sh
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 1435c12be9..538658dfa7 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -12,6 +12,9 @@ struct add_i_state {
- 	int use_color;
- 	char header_color[COLOR_MAXLEN];
- 	char help_color[COLOR_MAXLEN];
-+	char prompt_color[COLOR_MAXLEN];
-+	char error_color[COLOR_MAXLEN];
-+	char reset_color[COLOR_MAXLEN];
- };
- 
- static void init_color(struct repository *r, struct add_i_state *s,
-@@ -45,6 +48,9 @@ static int init_add_i_state(struct repository *r, struct add_i_state *s)
- 
- 	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
- 	init_color(r, s, "help", s->help_color, GIT_COLOR_BOLD_RED);
-+	init_color(r, s, "prompt", s->prompt_color, GIT_COLOR_BOLD_BLUE);
-+	init_color(r, s, "error", s->error_color, GIT_COLOR_BOLD_RED);
-+	init_color(r, s, "reset", s->reset_color, GIT_COLOR_RESET);
- 
- 	return 0;
- }
-@@ -134,7 +140,8 @@ static ssize_t list_and_choose(struct prefix_item **items, size_t nr,
- 
- 		list(items, nr, s, &opts->list_opts);
- 
--		printf("%s%s", opts->prompt, "> ");
-+		color_fprintf(stdout, s->prompt_color, "%s", opts->prompt);
-+		fputs("> ", stdout);
- 		fflush(stdout);
- 
- 		if (strbuf_getline(&input, stdin) == EOF) {
-@@ -175,7 +182,8 @@ static ssize_t list_and_choose(struct prefix_item **items, size_t nr,
- 				index = find_unique(p, items, nr);
- 
- 			if (index < 0 || index >= nr)
--				printf(_("Huh (%s)?\n"), p);
-+				color_fprintf_ln(stdout, s->error_color,
-+						 _("Huh (%s)?"), p);
- 			else {
- 				res = index;
- 				break;
-@@ -420,15 +428,21 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
- 	return 0;
- }
- 
-+struct print_command_item_data {
-+	const char *color, *reset;
+diff --git a/Makefile b/Makefile
+index 18e656a32f..8299b3f17d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -754,6 +754,7 @@ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+ TEST_BUILTINS_OBJS += test-path-utils.o
+ TEST_BUILTINS_OBJS += test-pkt-line.o
++TEST_BUILTINS_OBJS += test-prefix-map.o
+ TEST_BUILTINS_OBJS += test-prio-queue.o
+ TEST_BUILTINS_OBJS += test-reach.o
+ TEST_BUILTINS_OBJS += test-read-cache.o
+@@ -967,6 +968,7 @@ LIB_OBJS += patch-ids.o
+ LIB_OBJS += path.o
+ LIB_OBJS += pathspec.o
+ LIB_OBJS += pkt-line.o
++LIB_OBJS += prefix-map.o
+ LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
+ LIB_OBJS += prio-queue.o
+diff --git a/prefix-map.c b/prefix-map.c
+new file mode 100644
+index 0000000000..747ddb4ebc
+--- /dev/null
++++ b/prefix-map.c
+@@ -0,0 +1,109 @@
++#include "cache.h"
++#include "prefix-map.h"
++
++static int map_cmp(const void *unused_cmp_data,
++		   const void *entry,
++		   const void *entry_or_key,
++		   const void *unused_keydata)
++{
++	const struct prefix_map_entry *a = entry;
++	const struct prefix_map_entry *b = entry_or_key;
++
++	return a->prefix_length != b->prefix_length ||
++		strncmp(a->name, b->name, a->prefix_length);
++}
++
++static void add_prefix_entry(struct hashmap *map, const char *name,
++			     size_t prefix_length, struct prefix_item *item)
++{
++	struct prefix_map_entry *result = xmalloc(sizeof(*result));
++	result->name = name;
++	result->prefix_length = prefix_length;
++	result->item = item;
++	hashmap_entry_init(result, memhash(name, prefix_length));
++	hashmap_add(map, result);
++}
++
++static void init_prefix_map(struct prefix_map *prefix_map,
++			    int min_prefix_length, int max_prefix_length)
++{
++	hashmap_init(&prefix_map->map, map_cmp, NULL, 0);
++	prefix_map->min_length = min_prefix_length;
++	prefix_map->max_length = max_prefix_length;
++}
++
++static void add_prefix_item(struct prefix_map *prefix_map,
++			    struct prefix_item *item)
++{
++	struct prefix_map_entry e = { { NULL } }, *e2;
++	int j;
++
++	e.item = item;
++	e.name = item->name;
++
++	for (j = prefix_map->min_length;
++	     j <= prefix_map->max_length && e.name[j]; j++) {
++		/* Avoid breaking UTF-8 multi-byte sequences */
++		if (!isascii(e.name[j]))
++			break;
++
++		e.prefix_length = j;
++		hashmap_entry_init(&e, memhash(e.name, j));
++		e2 = hashmap_get(&prefix_map->map, &e, NULL);
++		if (!e2) {
++			/* prefix is unique at this stage */
++			item->prefix_length = j;
++			add_prefix_entry(&prefix_map->map, e.name, j, item);
++			break;
++		}
++
++		if (!e2->item)
++			continue; /* non-unique prefix */
++
++		if (j != e2->item->prefix_length || memcmp(e.name, e2->name, j))
++			BUG("unexpected prefix length: %d != %d (%s != %s)",
++			    j, (int)e2->item->prefix_length, e.name, e2->name);
++
++		/* skip common prefix */
++		for (; j < prefix_map->max_length && e.name[j]; j++) {
++			if (e.item->name[j] != e2->item->name[j])
++				break;
++			add_prefix_entry(&prefix_map->map, e.name, j + 1,
++					 NULL);
++		}
++
++		/* e2 no longer refers to a unique prefix */
++		if (j < prefix_map->max_length && e2->name[j]) {
++			/* found a new unique prefix for e2's item */
++			e2->item->prefix_length = j + 1;
++			add_prefix_entry(&prefix_map->map, e2->name, j + 1,
++					 e2->item);
++		}
++		else
++			e2->item->prefix_length = 0;
++		e2->item = NULL;
++
++		if (j < prefix_map->max_length && e.name[j]) {
++			/* found a unique prefix for the item */
++			e.item->prefix_length = j + 1;
++			add_prefix_entry(&prefix_map->map, e.name, j + 1,
++					 e.item);
++		} else
++			/* item has no (short enough) unique prefix */
++			e.item->prefix_length = 0;
++
++		break;
++	}
++}
++
++void find_unique_prefixes(struct prefix_item **list, size_t nr,
++			  int min_length, int max_length)
++{
++	int i;
++	struct prefix_map prefix_map;
++
++	init_prefix_map(&prefix_map, min_length, max_length);
++	for (i = 0; i < nr; i++)
++		add_prefix_item(&prefix_map, list[i]);
++	hashmap_free(&prefix_map.map, 1);
++}
+diff --git a/prefix-map.h b/prefix-map.h
+new file mode 100644
+index 0000000000..ce3b8a4a32
+--- /dev/null
++++ b/prefix-map.h
+@@ -0,0 +1,40 @@
++#ifndef PREFIX_MAP_H
++#define PREFIX_MAP_H
++
++#include "hashmap.h"
++
++struct prefix_item {
++	const char *name;
++	size_t prefix_length;
 +};
 +
- static void print_command_item(int i, struct prefix_item *item,
- 			       void *print_command_item_data)
- {
-+	struct print_command_item_data *d = print_command_item_data;
++struct prefix_map_entry {
++	struct hashmap_entry e;
++	const char *name;
++	size_t prefix_length;
++	/* if item is NULL, the prefix is not unique */
++	struct prefix_item *item;
++};
 +
- 	if (!item->prefix_length ||
- 	    !is_valid_prefix(item->name, item->prefix_length))
- 		printf(" %2d: %s", i + 1, item->name);
- 	else
--		printf(" %3d: [%.*s]%s", i + 1,
--		       (int)item->prefix_length, item->name,
-+		printf(" %2d: %s%.*s%s%s", i + 1,
-+		       d->color, (int)item->prefix_length, item->name, d->reset,
- 		       item->name + item->prefix_length);
- }
- 
-@@ -453,8 +467,9 @@ static void command_prompt_help(struct add_i_state *s)
- int run_add_i(struct repository *r, const struct pathspec *ps)
- {
- 	struct add_i_state s = { NULL };
-+	struct print_command_item_data data;
- 	struct list_and_choose_options main_loop_opts = {
--		{ 4, N_("*** Commands ***"), print_command_item, NULL },
-+		{ 4, N_("*** Commands ***"), print_command_item, &data },
- 		N_("What now"), command_prompt_help
- 	};
- 	struct command_item
-@@ -477,6 +492,18 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	if (init_add_i_state(r, &s))
- 		return error("could not parse `add -i` config");
- 
-+	/*
-+	 * When color was asked for, use the prompt color for
-+	 * highlighting, otherwise use square brackets.
-+	 */
-+	if (s.use_color) {
-+		data.color = s.prompt_color;
-+		data.reset = s.reset_color;
-+	} else {
-+		data.color = "[";
-+		data.reset = "]";
-+	}
++struct prefix_map {
++	struct hashmap map;
++	int min_length, max_length;
++};
 +
- 	strbuf_addstr(&header, "      ");
- 	strbuf_addf(&header, print_file_item_data.modified_fmt,
- 		    _("staged"), _("unstaged"), _("path"));
++/*
++ * Find unique prefixes in a given list of strings.
++ *
++ * Typically, the `struct prefix_item` information will be but a field in the
++ * actual item struct; For this reason, the `list` parameter is specified as a
++ * list of pointers to the items.
++ *
++ * The `min_length`/`max_length` parameters define what length the unique
++ * prefixes should have.
++ *
++ * If no unique prefix could be found for a given item, its `prefix_length`
++ * will be set to 0.
++ */
++void find_unique_prefixes(struct prefix_item **list, size_t nr,
++			  int min_length, int max_length);
++
++#endif
+diff --git a/t/helper/test-prefix-map.c b/t/helper/test-prefix-map.c
+new file mode 100644
+index 0000000000..3f1c90eaf0
+--- /dev/null
++++ b/t/helper/test-prefix-map.c
+@@ -0,0 +1,58 @@
++#include "test-tool.h"
++#include "cache.h"
++#include "prefix-map.h"
++
++static size_t test_count, failed_count;
++
++static void check(int succeeded, const char *file, size_t line_no,
++		  const char *fmt, ...)
++{
++	va_list ap;
++
++	test_count++;
++	if (succeeded)
++		return;
++
++	va_start(ap, fmt);
++	fprintf(stderr, "%s:%d: ", file, (int)line_no);
++	vfprintf(stderr, fmt, ap);
++	fputc('\n', stderr);
++	va_end(ap);
++
++	failed_count++;
++}
++
++#define EXPECT_SIZE_T_EQUALS(expect, actual, hint) \
++	check(expect == actual, __FILE__, __LINE__, \
++	      "size_t's do not match: %" \
++	      PRIdMAX " != %" PRIdMAX " (%s) (%s)", \
++	      (intmax_t)expect, (intmax_t)actual, #actual, hint)
++
++int cmd__prefix_map(int argc, const char **argv)
++{
++#define NR 5
++	struct prefix_item items[NR] = {
++		{ "unique" },
++		{ "hell" },
++		{ "hello" },
++		{ "wok" },
++		{ "world" },
++	};
++	struct prefix_item *list[NR] = {
++		items, items + 1, items + 2, items + 3, items + 4
++	};
++
++	find_unique_prefixes(list, NR, 1, 3);
++
++#define EXPECT_PREFIX_LENGTH_EQUALS(expect, index) \
++	EXPECT_SIZE_T_EQUALS(expect, list[index]->prefix_length, \
++			     list[index]->name)
++
++	EXPECT_PREFIX_LENGTH_EQUALS(1, 0);
++	EXPECT_PREFIX_LENGTH_EQUALS(0, 1);
++	EXPECT_PREFIX_LENGTH_EQUALS(0, 2);
++	EXPECT_PREFIX_LENGTH_EQUALS(3, 3);
++	EXPECT_PREFIX_LENGTH_EQUALS(3, 4);
++
++	return !!failed_count;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 99db7409b8..d6a92a8699 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -32,6 +32,7 @@ static struct test_cmd cmds[] = {
+ 	{ "parse-options", cmd__parse_options },
+ 	{ "path-utils", cmd__path_utils },
+ 	{ "pkt-line", cmd__pkt_line },
++	{ "prefix-map", cmd__prefix_map },
+ 	{ "prio-queue", cmd__prio_queue },
+ 	{ "reach", cmd__reach },
+ 	{ "read-cache", cmd__read_cache },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 25abed1cf2..33a089ee4e 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -29,6 +29,7 @@ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+ int cmd__path_utils(int argc, const char **argv);
+ int cmd__pkt_line(int argc, const char **argv);
++int cmd__prefix_map(int argc, const char **argv);
+ int cmd__prio_queue(int argc, const char **argv);
+ int cmd__reach(int argc, const char **argv);
+ int cmd__read_cache(int argc, const char **argv);
+diff --git a/t/t0016-prefix-map.sh b/t/t0016-prefix-map.sh
+new file mode 100755
+index 0000000000..187fa92aec
+--- /dev/null
++++ b/t/t0016-prefix-map.sh
+@@ -0,0 +1,10 @@
++#!/bin/sh
++
++test_description='basic tests for prefix map'
++. ./test-lib.sh
++
++test_expect_success 'prefix map' '
++	test-tool prefix-map
++'
++
++test_done
 -- 
 gitgitgadget
 
