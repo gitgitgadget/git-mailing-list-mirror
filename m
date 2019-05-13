@@ -2,637 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE2931F4B6
-	for <e@80x24.org>; Mon, 13 May 2019 23:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 978141F461
+	for <e@80x24.org>; Mon, 13 May 2019 23:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfEMXRK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 19:17:10 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:56224 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726233AbfEMXRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 19:17:10 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id EF1681F461;
-        Mon, 13 May 2019 23:17:08 +0000 (UTC)
-Date:   Mon, 13 May 2019 23:17:08 +0000
-From:   Eric Wong <e@80x24.org>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v3] update-server-info: avoid needless overwrites
-Message-ID: <20190513231708.sdxs3krilrer4fga@dcvr>
-References: <20190511013455.5886-1-e@80x24.org>
+        id S1726525AbfEMXRf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 19:17:35 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40525 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726233AbfEMXRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 19:17:35 -0400
+Received: by mail-pl1-f194.google.com with SMTP id b3so7220357plr.7
+        for <git@vger.kernel.org>; Mon, 13 May 2019 16:17:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ENQym6SZUXSoUK+EF+ZwoUUP9JgvRLCp/ygSlStBV40=;
+        b=AN2/qXqd5jce2ZaXRLnmNaclS1ZVh6PuGESh4nXDCV75/v3eaVHFlB9YpoxJ3AOOFc
+         UHHK0tUvYIHTY1KiRhDiqSW5uEMF2UDS798Ei5R904j5EO4PyQdXmgQRGnw2IFwVWUmt
+         hu+eouPfu/H5T245gtGgt4w/Pdovc0FalYwjxTpSTQEMnGXexyyxI0czKvi/bEZyaRqU
+         5ckYT0V6bahVgPOOwLHEsJ8z1bwhxhz4RjjlepO9/W07A3PuslqACE0+AyM5hcOC5ULw
+         HHowYS2Tkuk14jwb3IxbTPncevLay5zu5yLDVHcHDu2+4wdFgrhbvTSQ+wKKS+pZUKP7
+         X3Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ENQym6SZUXSoUK+EF+ZwoUUP9JgvRLCp/ygSlStBV40=;
+        b=tEBO6ztYIb3sXr6kVfhL4/9D4BhR6DVnLiWOMC9Cv4gt2yKxeHTfpndrabnwfEAqV6
+         m95xmyOwJBwmwRgxdVut54yxukrVTBh156F3Xecbr3IhprRZwFb19sVRG4TutV23vIbA
+         bQAHScvGAmmHdVdTuqwI7NQXiNJiGZTO4NQcT+R1/jsRPV4H+OuNpxc+cznMl4FuSRO6
+         Bvl8hevkIJocErK5XDeMFj6wHCiFv2hJDKVD2WEiTEH+kLmGpQc5uKAU9RRWw3a2vZVO
+         MirWhJ2IW67xwzQA+2hPKIEPugAtHjV+gSgYpd5w1saGSzzvyKuFrirpZV2X2MOubvwc
+         Ylaw==
+X-Gm-Message-State: APjAAAUJKqHxekepEnLq36+1r08EUv6dVzgJxV56Zju3YHFDdSrVCBj5
+        hVzd2G1sShMGg8dMs5fHtwQ=
+X-Google-Smtp-Source: APXvYqyt4c7T5tXnNyatNv0MaJw6WqALd1lxcl0QarngFDoaqmtQaHllhByYm7L34ougGlFSPs24KQ==
+X-Received: by 2002:a17:902:a510:: with SMTP id s16mr34168339plq.334.1557789454149;
+        Mon, 13 May 2019 16:17:34 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id g10sm30664307pfg.153.2019.05.13.16.17.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 May 2019 16:17:33 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v5 0/5] Fix and extend encoding handling in fast export/import
+Date:   Mon, 13 May 2019 16:17:21 -0700
+Message-Id: <20190513231726.16218-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.782.gd8be4ee826
+In-Reply-To: <20190513164722.31534-1-newren@gmail.com>
+References: <20190513164722.31534-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190511013455.5886-1-e@80x24.org>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Do not change the existing info/refs and objects/info/packs
-files if they match the existing content on the filesystem.
-This is intended to preserve mtime and make it easier for dumb
-HTTP pollers to rely on the If-Modified-Since header.
+While stress testing `git filter-repo`, I noticed an issue with
+encoding; further digging led to the fixes and features in this series.
+See the individual commit messages for details.
 
-Combined with stdio and kernel buffering; the kernel should be
-able to avoid block layer writes and reduce wear for small files.
+Changes since v4 (full range-diff below):
+  * Used git_parse_maybe_bool()
+  * Updated Documentation/git-fast-export.txt to document the new option
 
-As a result, the --force option is no longer needed.  So stop
-documenting it, but let it remain for compatibility (and
-debugging, if necessary).
+Elijah Newren (5):
+  t9350: fix encoding test to actually test reencoding
+  fast-import: support 'encoding' commit header
+  fast-export: avoid stripping encoding header if we cannot reencode
+  fast-export: differentiate between explicitly utf-8 and implicitly
+    utf-8
+  fast-export: do automatic reencoding of commit messages only if
+    requested
 
-v3: perform incremental comparison while generating to avoid
-    OOM with giant files.  Remove documentation for --force.
+ Documentation/git-fast-export.txt            |  7 ++
+ Documentation/git-fast-import.txt            |  7 ++
+ builtin/fast-export.c                        | 55 ++++++++++++--
+ fast-import.c                                | 11 ++-
+ t/t9300-fast-import.sh                       | 20 +++++
+ t/t9350-fast-export.sh                       | 78 +++++++++++++++++---
+ t/t9350/broken-iso-8859-7-commit-message.txt |  1 +
+ t/t9350/simple-iso-8859-7-commit-message.txt |  1 +
+ 8 files changed, 163 insertions(+), 17 deletions(-)
+ create mode 100644 t/t9350/broken-iso-8859-7-commit-message.txt
+ create mode 100644 t/t9350/simple-iso-8859-7-commit-message.txt
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
-  OK, performing the incremental comparison wasn't nearly as
-  bad as thought it'd be.  I might be suffering from
-  compiler-linker-slowness PTSD :x
-
-Interdiff:
-  diff --git a/Documentation/git-update-server-info.txt b/Documentation/git-update-server-info.txt
-  index bd0e36492f..969bb2e15f 100644
-  --- a/Documentation/git-update-server-info.txt
-  +++ b/Documentation/git-update-server-info.txt
-  @@ -9,7 +9,7 @@ git-update-server-info - Update auxiliary info file to help dumb servers
-   SYNOPSIS
-   --------
-   [verse]
-  -'git update-server-info' [--force]
-  +'git update-server-info'
-   
-   DESCRIPTION
-   -----------
-  @@ -19,15 +19,6 @@ $GIT_OBJECT_DIRECTORY/info directories to help clients discover
-   what references and packs the server has.  This command
-   generates such auxiliary files.
-   
-  -
-  -OPTIONS
-  --------
-  -
-  --f::
-  ---force::
-  -	Update the info files from scratch.
-  -
-  -
-   OUTPUT
-   ------
-   
-  diff --git a/server-info.c b/server-info.c
-  index 11515804d4..e68f785c2f 100644
-  --- a/server-info.c
-  +++ b/server-info.c
-  @@ -8,41 +8,54 @@
-   #include "object-store.h"
-   #include "strbuf.h"
-   
-  -static int files_differ(FILE *fp, const char *path)
-  +struct update_info_ctx {
-  +	FILE *cur_fp;
-  +	FILE *old_fp; /* becomes NULL if it differs from cur_fp */
-  +	struct strbuf cur_sb;
-  +	struct strbuf old_sb;
-  +};
-  +
-  +static void uic_mark_stale(struct update_info_ctx *uic)
-   {
-  -	struct stat st;
-  -	git_hash_ctx c;
-  -	struct object_id oid_old, oid_new;
-  -	struct strbuf tmp = STRBUF_INIT;
-  -	long new_len = ftell(fp);
-  +	fclose(uic->old_fp);
-  +	uic->old_fp = NULL;
-  +}
-   
-  -	if (new_len < 0 || stat(path, &st) < 0)
-  -		return 1;
-  -	if (!S_ISREG(st.st_mode))
-  -		return 1;
-  -	if ((off_t)new_len != st.st_size)
-  -		return 1;
-  +static int uic_is_stale(const struct update_info_ctx *uic)
-  +{
-  +	return uic->old_fp == NULL;
-  +}
-   
-  -	rewind(fp);
-  -	if (strbuf_fread(&tmp, (size_t)new_len, fp) != (size_t)new_len) {
-  -		strbuf_release(&tmp);
-  -		return 1;
-  -	}
-  -	the_hash_algo->init_fn(&c);
-  -	the_hash_algo->update_fn(&c, tmp.buf, tmp.len);
-  -	the_hash_algo->final_fn(oid_new.hash, &c);
-  -	strbuf_release(&tmp);
-  +static int uic_printf(struct update_info_ctx *uic, const char *fmt, ...)
-  +{
-  +	va_list ap;
-  +	int ret = -1;
-   
-  -	if (strbuf_read_file(&tmp, path, (size_t)st.st_size) < 0) {
-  -		strbuf_release(&tmp);
-  -		return 1;
-  +	va_start(ap, fmt);
-  +
-  +	if (uic_is_stale(uic)) {
-  +		ret = vfprintf(uic->cur_fp, fmt, ap);
-  +	} else {
-  +		ssize_t r;
-  +		struct strbuf *cur = &uic->cur_sb;
-  +		struct strbuf *old = &uic->old_sb;
-  +
-  +		strbuf_reset(cur);
-  +		strbuf_vinsertf(cur, 0, fmt, ap);
-  +
-  +		strbuf_reset(old);
-  +		strbuf_grow(old, cur->len);
-  +		r = fread(old->buf, 1, cur->len, uic->old_fp);
-  +		if (r != cur->len || memcmp(old->buf, cur->buf, r))
-  +			uic_mark_stale(uic);
-  +
-  +		if (fwrite(cur->buf, 1, cur->len, uic->cur_fp) == cur->len)
-  +			ret = 0;
-   	}
-  -	the_hash_algo->init_fn(&c);
-  -	the_hash_algo->update_fn(&c, tmp.buf, tmp.len);
-  -	the_hash_algo->final_fn(oid_old.hash, &c);
-  -	strbuf_release(&tmp);
-   
-  -	return hashcmp(oid_old.hash, oid_new.hash);
-  +	va_end(ap);
-  +
-  +	return ret;
-   }
-   
-   /*
-  @@ -50,31 +63,61 @@ static int files_differ(FILE *fp, const char *path)
-    * it into place. The contents of the file come from "generate", which
-    * should return non-zero if it encounters an error.
-    */
-  -static int update_info_file(char *path, int (*generate)(FILE *), int force)
-  +static int update_info_file(char *path,
-  +			int (*generate)(struct update_info_ctx *),
-  +			int force)
-   {
-   	char *tmp = mkpathdup("%s_XXXXXX", path);
-   	int ret = -1;
-   	int fd = -1;
-  -	FILE *fp = NULL, *to_close;
-  -	int do_update;
-  +	FILE *to_close;
-  +	struct update_info_ctx uic = {
-  +		.cur_fp = NULL,
-  +		.old_fp = NULL,
-  +		.cur_sb = STRBUF_INIT,
-  +		.old_sb = STRBUF_INIT
-  +	};
-   
-   	safe_create_leading_directories(path);
-   	fd = git_mkstemp_mode(tmp, 0666);
-   	if (fd < 0)
-   		goto out;
-  -	to_close = fp = fdopen(fd, "w+");
-  -	if (!fp)
-  +	to_close = uic.cur_fp = fdopen(fd, "w");
-  +	if (!uic.cur_fp)
-   		goto out;
-   	fd = -1;
-  -	ret = generate(fp);
-  +
-  +	/* no problem on ENOENT and old_fp == NULL, it's stale, now */
-  +	if (!force)
-  +		uic.old_fp = fopen_or_warn(path, "r");
-  +
-  +	/*
-  +	 * uic_printf will compare incremental comparison aginst old_fp
-  +	 * and mark uic as stale if needed
-  +	 */
-  +	ret = generate(&uic);
-   	if (ret)
-   		goto out;
-   
-  -	do_update = force || files_differ(fp, path);
-  -	fp = NULL;
-  +	/* new file may be shorter than the old one, check here */
-  +	if (!uic_is_stale(&uic)) {
-  +		struct stat st;
-  +		long new_len = ftell(uic.cur_fp);
-  +		int old_fd = fileno(uic.old_fp);
-  +
-  +		if (new_len < 0) {
-  +			ret = -1;
-  +			goto out;
-  +		}
-  +		if (fstat(old_fd, &st) || (st.st_size != (size_t)new_len))
-  +			uic_mark_stale(&uic);
-  +	}
-  +
-  +	uic.cur_fp = NULL;
-   	if (fclose(to_close))
-   		goto out;
-  -	if (do_update) {
-  +
-  +	if (uic_is_stale(&uic)) {
-   		if (adjust_shared_perm(tmp) < 0)
-   			goto out;
-   		if (rename(tmp, path) < 0)
-  @@ -87,40 +130,44 @@ static int update_info_file(char *path, int (*generate)(FILE *), int force)
-   out:
-   	if (ret) {
-   		error_errno("unable to update %s", path);
-  -		if (fp)
-  -			fclose(fp);
-  +		if (uic.cur_fp)
-  +			fclose(uic.cur_fp);
-   		else if (fd >= 0)
-   			close(fd);
-   		unlink(tmp);
-   	}
-   	free(tmp);
-  +	if (uic.old_fp)
-  +		fclose(uic.old_fp);
-  +	strbuf_release(&uic.old_sb);
-  +	strbuf_release(&uic.cur_sb);
-   	return ret;
-   }
-   
-   static int add_info_ref(const char *path, const struct object_id *oid,
-   			int flag, void *cb_data)
-   {
-  -	FILE *fp = cb_data;
-  +	struct update_info_ctx *uic = cb_data;
-   	struct object *o = parse_object(the_repository, oid);
-   	if (!o)
-   		return -1;
-   
-  -	if (fprintf(fp, "%s	%s\n", oid_to_hex(oid), path) < 0)
-  +	if (uic_printf(uic, "%s	%s\n", oid_to_hex(oid), path) < 0)
-   		return -1;
-   
-   	if (o->type == OBJ_TAG) {
-   		o = deref_tag(the_repository, o, path, 0);
-   		if (o)
-  -			if (fprintf(fp, "%s	%s^{}\n",
-  +			if (uic_printf(uic, "%s	%s^{}\n",
-   				oid_to_hex(&o->oid), path) < 0)
-   				return -1;
-   	}
-   	return 0;
-   }
-   
-  -static int generate_info_refs(FILE *fp)
-  +static int generate_info_refs(struct update_info_ctx *uic)
-   {
-  -	return for_each_ref(add_info_ref, fp);
-  +	return for_each_ref(add_info_ref, uic);
-   }
-   
-   static int update_info_refs(int force)
-  @@ -281,14 +328,14 @@ static void free_pack_info(void)
-   	free(info);
-   }
-   
-  -static int write_pack_info_file(FILE *fp)
-  +static int write_pack_info_file(struct update_info_ctx *uic)
-   {
-   	int i;
-   	for (i = 0; i < num_pack; i++) {
-  -		if (fprintf(fp, "P %s\n", pack_basename(info[i]->p)) < 0)
-  +		if (uic_printf(uic, "P %s\n", pack_basename(info[i]->p)) < 0)
-   			return -1;
-   	}
-  -	if (fputc('\n', fp) == EOF)
-  +	if (uic_printf(uic, "\n") < 0)
-   		return -1;
-   	return 0;
-   }
-
- Documentation/git-update-server-info.txt |  11 +-
- server-info.c                            | 140 +++++++++++++++++++----
- t/t5200-update-server-info.sh            |  41 +++++++
- 3 files changed, 158 insertions(+), 34 deletions(-)
- create mode 100755 t/t5200-update-server-info.sh
-
-diff --git a/Documentation/git-update-server-info.txt b/Documentation/git-update-server-info.txt
-index bd0e36492f..969bb2e15f 100644
---- a/Documentation/git-update-server-info.txt
-+++ b/Documentation/git-update-server-info.txt
-@@ -9,7 +9,7 @@ git-update-server-info - Update auxiliary info file to help dumb servers
- SYNOPSIS
- --------
- [verse]
--'git update-server-info' [--force]
-+'git update-server-info'
- 
- DESCRIPTION
- -----------
-@@ -19,15 +19,6 @@ $GIT_OBJECT_DIRECTORY/info directories to help clients discover
- what references and packs the server has.  This command
- generates such auxiliary files.
- 
--
--OPTIONS
---------
--
---f::
----force::
--	Update the info files from scratch.
--
--
- OUTPUT
- ------
- 
-diff --git a/server-info.c b/server-info.c
-index 41274d098b..e68f785c2f 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -6,82 +6,174 @@
- #include "tag.h"
- #include "packfile.h"
- #include "object-store.h"
-+#include "strbuf.h"
-+
-+struct update_info_ctx {
-+	FILE *cur_fp;
-+	FILE *old_fp; /* becomes NULL if it differs from cur_fp */
-+	struct strbuf cur_sb;
-+	struct strbuf old_sb;
-+};
-+
-+static void uic_mark_stale(struct update_info_ctx *uic)
-+{
-+	fclose(uic->old_fp);
-+	uic->old_fp = NULL;
-+}
-+
-+static int uic_is_stale(const struct update_info_ctx *uic)
-+{
-+	return uic->old_fp == NULL;
-+}
-+
-+static int uic_printf(struct update_info_ctx *uic, const char *fmt, ...)
-+{
-+	va_list ap;
-+	int ret = -1;
-+
-+	va_start(ap, fmt);
-+
-+	if (uic_is_stale(uic)) {
-+		ret = vfprintf(uic->cur_fp, fmt, ap);
-+	} else {
-+		ssize_t r;
-+		struct strbuf *cur = &uic->cur_sb;
-+		struct strbuf *old = &uic->old_sb;
-+
-+		strbuf_reset(cur);
-+		strbuf_vinsertf(cur, 0, fmt, ap);
-+
-+		strbuf_reset(old);
-+		strbuf_grow(old, cur->len);
-+		r = fread(old->buf, 1, cur->len, uic->old_fp);
-+		if (r != cur->len || memcmp(old->buf, cur->buf, r))
-+			uic_mark_stale(uic);
-+
-+		if (fwrite(cur->buf, 1, cur->len, uic->cur_fp) == cur->len)
-+			ret = 0;
-+	}
-+
-+	va_end(ap);
-+
-+	return ret;
-+}
- 
- /*
-  * Create the file "path" by writing to a temporary file and renaming
-  * it into place. The contents of the file come from "generate", which
-  * should return non-zero if it encounters an error.
-  */
--static int update_info_file(char *path, int (*generate)(FILE *))
-+static int update_info_file(char *path,
-+			int (*generate)(struct update_info_ctx *),
-+			int force)
- {
- 	char *tmp = mkpathdup("%s_XXXXXX", path);
- 	int ret = -1;
- 	int fd = -1;
--	FILE *fp = NULL, *to_close;
-+	FILE *to_close;
-+	struct update_info_ctx uic = {
-+		.cur_fp = NULL,
-+		.old_fp = NULL,
-+		.cur_sb = STRBUF_INIT,
-+		.old_sb = STRBUF_INIT
-+	};
- 
- 	safe_create_leading_directories(path);
- 	fd = git_mkstemp_mode(tmp, 0666);
- 	if (fd < 0)
- 		goto out;
--	to_close = fp = fdopen(fd, "w");
--	if (!fp)
-+	to_close = uic.cur_fp = fdopen(fd, "w");
-+	if (!uic.cur_fp)
- 		goto out;
- 	fd = -1;
--	ret = generate(fp);
-+
-+	/* no problem on ENOENT and old_fp == NULL, it's stale, now */
-+	if (!force)
-+		uic.old_fp = fopen_or_warn(path, "r");
-+
-+	/*
-+	 * uic_printf will compare incremental comparison aginst old_fp
-+	 * and mark uic as stale if needed
-+	 */
-+	ret = generate(&uic);
- 	if (ret)
- 		goto out;
--	fp = NULL;
-+
-+	/* new file may be shorter than the old one, check here */
-+	if (!uic_is_stale(&uic)) {
-+		struct stat st;
-+		long new_len = ftell(uic.cur_fp);
-+		int old_fd = fileno(uic.old_fp);
-+
-+		if (new_len < 0) {
-+			ret = -1;
-+			goto out;
-+		}
-+		if (fstat(old_fd, &st) || (st.st_size != (size_t)new_len))
-+			uic_mark_stale(&uic);
-+	}
-+
-+	uic.cur_fp = NULL;
- 	if (fclose(to_close))
- 		goto out;
--	if (adjust_shared_perm(tmp) < 0)
--		goto out;
--	if (rename(tmp, path) < 0)
--		goto out;
-+
-+	if (uic_is_stale(&uic)) {
-+		if (adjust_shared_perm(tmp) < 0)
-+			goto out;
-+		if (rename(tmp, path) < 0)
-+			goto out;
-+	} else {
-+		unlink(tmp);
-+	}
- 	ret = 0;
- 
- out:
- 	if (ret) {
- 		error_errno("unable to update %s", path);
--		if (fp)
--			fclose(fp);
-+		if (uic.cur_fp)
-+			fclose(uic.cur_fp);
- 		else if (fd >= 0)
- 			close(fd);
- 		unlink(tmp);
- 	}
- 	free(tmp);
-+	if (uic.old_fp)
-+		fclose(uic.old_fp);
-+	strbuf_release(&uic.old_sb);
-+	strbuf_release(&uic.cur_sb);
- 	return ret;
- }
- 
- static int add_info_ref(const char *path, const struct object_id *oid,
- 			int flag, void *cb_data)
- {
--	FILE *fp = cb_data;
-+	struct update_info_ctx *uic = cb_data;
- 	struct object *o = parse_object(the_repository, oid);
- 	if (!o)
- 		return -1;
- 
--	if (fprintf(fp, "%s	%s\n", oid_to_hex(oid), path) < 0)
-+	if (uic_printf(uic, "%s	%s\n", oid_to_hex(oid), path) < 0)
- 		return -1;
- 
- 	if (o->type == OBJ_TAG) {
- 		o = deref_tag(the_repository, o, path, 0);
- 		if (o)
--			if (fprintf(fp, "%s	%s^{}\n",
-+			if (uic_printf(uic, "%s	%s^{}\n",
- 				oid_to_hex(&o->oid), path) < 0)
- 				return -1;
- 	}
- 	return 0;
- }
- 
--static int generate_info_refs(FILE *fp)
-+static int generate_info_refs(struct update_info_ctx *uic)
- {
--	return for_each_ref(add_info_ref, fp);
-+	return for_each_ref(add_info_ref, uic);
- }
- 
--static int update_info_refs(void)
-+static int update_info_refs(int force)
- {
- 	char *path = git_pathdup("info/refs");
--	int ret = update_info_file(path, generate_info_refs);
-+	int ret = update_info_file(path, generate_info_refs, force);
- 	free(path);
- 	return ret;
- }
-@@ -236,14 +328,14 @@ static void free_pack_info(void)
- 	free(info);
- }
- 
--static int write_pack_info_file(FILE *fp)
-+static int write_pack_info_file(struct update_info_ctx *uic)
- {
- 	int i;
- 	for (i = 0; i < num_pack; i++) {
--		if (fprintf(fp, "P %s\n", pack_basename(info[i]->p)) < 0)
-+		if (uic_printf(uic, "P %s\n", pack_basename(info[i]->p)) < 0)
- 			return -1;
- 	}
--	if (fputc('\n', fp) == EOF)
-+	if (uic_printf(uic, "\n") < 0)
- 		return -1;
- 	return 0;
- }
-@@ -254,7 +346,7 @@ static int update_info_packs(int force)
- 	int ret;
- 
- 	init_pack_info(infofile, force);
--	ret = update_info_file(infofile, write_pack_info_file);
-+	ret = update_info_file(infofile, write_pack_info_file, force);
- 	free_pack_info();
- 	free(infofile);
- 	return ret;
-@@ -269,7 +361,7 @@ int update_server_info(int force)
- 	 */
- 	int errs = 0;
- 
--	errs = errs | update_info_refs();
-+	errs = errs | update_info_refs(force);
- 	errs = errs | update_info_packs(force);
- 
- 	/* remove leftover rev-cache file if there is any */
-diff --git a/t/t5200-update-server-info.sh b/t/t5200-update-server-info.sh
-new file mode 100755
-index 0000000000..21a58eecb9
---- /dev/null
-+++ b/t/t5200-update-server-info.sh
-@@ -0,0 +1,41 @@
-+#!/bin/sh
-+
-+test_description='Test git update-server-info'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' 'test_commit file'
-+
-+test_expect_success 'create info/refs' '
-+	git update-server-info &&
-+	test_path_is_file .git/info/refs
-+'
-+
-+test_expect_success 'modify and store mtime' '
-+	test-tool chmtime =0 .git/info/refs &&
-+	test-tool chmtime --get .git/info/refs >a
-+'
-+
-+test_expect_success 'info/refs is not needlessly overwritten' '
-+	git update-server-info &&
-+	test-tool chmtime --get .git/info/refs >b &&
-+	test_cmp a b
-+'
-+
-+test_expect_success 'info/refs can be forced to update' '
-+	git update-server-info -f &&
-+	test-tool chmtime --get .git/info/refs >b &&
-+	! test_cmp a b
-+'
-+
-+test_expect_success 'info/refs updates when changes are made' '
-+	test-tool chmtime =0 .git/info/refs &&
-+	test-tool chmtime --get .git/info/refs >b &&
-+	test_cmp a b &&
-+	git update-ref refs/heads/foo HEAD &&
-+	git update-server-info &&
-+	test-tool chmtime --get .git/info/refs >b &&
-+	! test_cmp a b
-+'
-+
-+test_done
+Range-diff:
+1:  37a68a0ffd = 1:  37a68a0ffd t9350: fix encoding test to actually test reencoding
+2:  3d84f4613d = 2:  3d84f4613d fast-import: support 'encoding' commit header
+3:  baa8394a3a = 3:  baa8394a3a fast-export: avoid stripping encoding header if we cannot reencode
+4:  49960164c6 = 4:  49960164c6 fast-export: differentiate between explicitly utf-8 and implicitly utf-8
+5:  571613a09e ! 5:  d8be4ee826 fast-export: do automatic reencoding of commit messages only if requested
+    @@ -13,6 +13,24 @@
+     
+         Signed-off-by: Elijah Newren <newren@gmail.com>
+     
+    + diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+    + --- a/Documentation/git-fast-export.txt
+    + +++ b/Documentation/git-fast-export.txt
+    +@@
+    + 	for intermediary filters (e.g. for rewriting commit messages
+    + 	which refer to older commits, or for stripping blobs by id).
+    + 
+    ++--reencode=(yes|no|abort)::
+    ++	Specify how to handle `encoding` header in commit objects.  When
+    ++	asking to 'abort' (which is the default), this program will die
+    ++	when encountering such a commit object.  With 'yes', the commit
+    ++	message will be reencoded into UTF-8.  With 'no', the original
+    ++	encoding will be preserved.
+    ++
+    + --refspec::
+    + 	Apply the specified refspec to each ref exported. Multiple of them can
+    + 	be specified.
+    +
+      diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+      --- a/builtin/fast-export.c
+      +++ b/builtin/fast-export.c
+    @@ -31,14 +49,25 @@
+     +static int parse_opt_reencode_mode(const struct option *opt,
+     +				   const char *arg, int unset)
+     +{
+    -+	if (unset || !strcmp(arg, "abort"))
+    ++	if (unset) {
+     +		reencode_mode = REENCODE_ABORT;
+    -+	else if (!strcmp(arg, "yes") || !strcmp(arg, "true") || !strcmp(arg, "on"))
+    -+		reencode_mode = REENCODE_YES;
+    -+	else if (!strcmp(arg, "no") || !strcmp(arg, "false") || !strcmp(arg, "off"))
+    ++		return 0;
+    ++	}
+    ++
+    ++	switch (git_parse_maybe_bool(arg)) {
+    ++	case 0:
+     +		reencode_mode = REENCODE_NO;
+    -+	else
+    -+		return error("Unknown reencoding mode: %s", arg);
+    ++		break;
+    ++	case 1:
+    ++		reencode_mode = REENCODE_YES;
+    ++		break;
+    ++	default:
+    ++		if (arg && !strcasecmp(arg, "abort"))
+    ++			reencode_mode = REENCODE_ABORT;
+    ++		else
+    ++			return error("Unknown reencoding mode: %s", arg);
+    ++	}
+    ++
+     +	return 0;
+     +}
+     +
 -- 
-EW
+2.21.0.782.gd8be4ee826
+
