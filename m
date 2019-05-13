@@ -2,106 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9FA1F461
-	for <e@80x24.org>; Mon, 13 May 2019 12:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D959C1F461
+	for <e@80x24.org>; Mon, 13 May 2019 12:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729586AbfEMME1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 08:04:27 -0400
-Received: from mout.gmx.net ([212.227.15.15]:49345 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727487AbfEMME1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 08:04:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557749057;
-        bh=MIGzknGa9zqGVDcJ32LLnfjHo1wSIbMzztosXdS8yo8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MRond7eO+u0dIp/yQ86a2lyWLt3KSL/esPRPHt/FX5h7P+opQRTKAEQAmpA3EM8Z9
-         CP8N05OvKim2CcQtLyWbwo17RS3ntSdC174BpRbt0qPGmHMxLBplZx8M/wbu62NFLe
-         pn86kGLmuAr6Y/Yw8vakQCxaBSbX9g6J67xkVji4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ml6mE-1gyohR0dKu-00lWWF; Mon, 13
- May 2019 14:04:17 +0200
-Date:   Mon, 13 May 2019 14:04:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler <git@jeffhostetler.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/11] built-in add -i: implement the main loop
-In-Reply-To: <27ebbb44-1208-563c-2419-edfc6570fefb@jeffhostetler.com>
-Message-ID: <nycvar.QRO.7.76.6.1905131401510.44@tvgsbejvaqbjf.bet>
-References: <pull.170.git.gitgitgadget@gmail.com> <93b3151b6c8abeeab0674919badae72e39eea68d.1554917868.git.gitgitgadget@gmail.com> <27ebbb44-1208-563c-2419-edfc6570fefb@jeffhostetler.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729378AbfEMMm6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 08:42:58 -0400
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:45614 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728015AbfEMMm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 May 2019 08:42:57 -0400
+Received: by mail-oi1-f196.google.com with SMTP id w144so3652951oie.12
+        for <git@vger.kernel.org>; Mon, 13 May 2019 05:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tgVf3EYfeS6rfcChj0MswrxSCZgMGX7TO7GVp6KPcVg=;
+        b=WqWTZzidAcdk8ZoeKO7F5kyGDPiHg4DTyoGIcVHUzjfFnCFeo63daGCB5YXK9WK2T/
+         3RO5vNTfKara6Bf1mUlk9Xg1sjxFeIhKOoGUR60cUOoCUZ/PghQgVCZsbJRG6N7l1w/v
+         odD7kWs1I0ImVhLYyON6h59vwAZRQcljQDYigDyY+6Mt/IVI0bhL4LU++rQuTIFFeSYJ
+         YyehS3mPdOI9vTM2ugceAGezhJLda3qqBAxVmPris3Gg/9MJhOta3q+NkvaytmcqXc2+
+         kctuqlJr4YpmF2j7YmLq1vBXRKKKNrl4FCqW6OGC7rXNh9U5sbII7r+m+JaaNapQjZIv
+         vT/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tgVf3EYfeS6rfcChj0MswrxSCZgMGX7TO7GVp6KPcVg=;
+        b=tdZ1Rc5HihWSAdHdEfBDDkTvkdo590oQSRk6FAx1u7v1E8SUXhntH31aS9hOYzBOCk
+         jotDF/YlDDwkpKVVZOp8SkK4Rd6amhiAb6dIV7dV6I+OdJ9XOrr/DjClLj9+8l/ik5YZ
+         3gy/wLdA+pduTo6Oz8rI58CE90NjO2BjRCHNwNwwT6CtDb8Yq7uH+1qFLSren0cv7/BM
+         fZ+748KEykWmKVMd5qEutJQCiYiMWDZJMWyCs0rkfbgCEo4TMzhwCJ8cpiOWTjKO1uw3
+         kvjEKSzF66KaMKWHRQ/wspcDDiexnyTpmxAmbuMs+iciBSvgousC6rRdwHSWt5Gj/i+7
+         KeSQ==
+X-Gm-Message-State: APjAAAUe/VQhvM8x+2iFMPUDHv8rfomokGwT1zr8szIRaHO/IVC8WSjc
+        xXoOOyzzqRxdj9PBY2/Fz9ZViXOb96DqCRKP/zI=
+X-Google-Smtp-Source: APXvYqwXdZ9eorUKZhfSj+0jPQLLAaG8ae997LNykGJRd2vbf9ni4+FJWpms3OziYStZwq3xVQQm0ccEyiou04X9qFo=
+X-Received: by 2002:aca:bd02:: with SMTP id n2mr13364921oif.70.1557751376890;
+ Mon, 13 May 2019 05:42:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RBm/Kv27M2fTFZ152hJl0iPwVgEBL9ONmplBM/7ugdYB8SqUhZT
- 1NJQvxo/ySRUNPYBz9E79JNN132G3eqxmvflZgMa04bnAJ808U8GNDRy2+KHsNG51qZ0Rbk
- GkXoaZHJqP1k3oXver6BQMl3wJORhW+KFm58QVFUBe13vzmzMpVxAsdmkeUZujivBpXPVG5
- 6GMCXzlYvOur5av+BLiPw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QUq6cdeXeiQ=:nIM28p+Xht9h7BM1yX0gTk
- P7FHjUbSj9h4cnvHSgR6oMql/Mhl7JKhRI2gpUOjMBt0Eg+kUjKVNRnkI8lBaRoexde96dJ/N
- EjbKP+sTCe2SXtAEuYnhW65kNqWuFj9mSJVi09SxIACve0zHONSpZn+zQovbtMaFwDBJCcfwP
- QhAVbLsDJs+/LqEDoWPZEXfwItg2ToSd6VRYCmlP3N2znd3saKJwVw3L/4jc0p0JwaspRHaGd
- O+cbxUs0gHhcHI+BTr0cEs6h3qcSA9gh7iSnQE57OXYYTTgXULCdiJVKIgYJUq03zhpxXiXV3
- Bt2WEVIY9VriFTDKeC7/3AwD4+LryLdBbyAw5ZPOiTYj/NQ74DNFR8KNipea20IjVe0F5FLY1
- UCG4O4f6VLzeVxPTGgCOg+yNXO86f6IoXBU3JNqslJT4AJH3QoIbozf2gWgyIUVACOpmxbbKa
- rlo2/lMnr6aAZjgOdrI+yfYBE4tOhgWTRZ28KEaFpqxr1y9NFvDcZT4vKdW/uex9gGGyQRWJ/
- LpIJu1CY4v5qJONF0kb5iJjXf98/CZKBFowg3SRQd04LOtoE98m3hmLTPrT3zx16o5GrcEmHt
- ib8EJC/ITCP2bADaWAWfMlQA2H2u7VyqNNIkuHBXn/zEJPmcZ2TEdIl4GPV9Zu/ETghSzuL4g
- osEOgbXbKlVcH43YFnBMbyY/MC5ZOILm6IJ/acv6HauAc4KmAHB7RS8sER85HqURmM+3seSJD
- Gx0g+iOENs/jPaFVpnnT/VmaqOwzYvsSMzS9+sj0uwN2z57+KyHuqrhdnmAzfEJeHrH6KaIAr
- ObD9RjYe8AgCjuaXsNdClMYI8LrTperUCNsMqXrxEkBpwirbfZUh0wQFyJQzXcCAWzoT3VBU3
- j7YVp524g1hlaLwwU7Acevr+JTbj0OdElDFATKq1uly+TvV0m/6pUXge0y20dx8spT3TWOX6h
- vR8jllT0E3g==
+References: <CAHAc2je-Yz4oej-sqvp+G+2Wv+eBABeJWUMm4scRwF2z_diUXw@mail.gmail.com>
+ <20190513104944.20367-1-pclouds@gmail.com>
+In-Reply-To: <20190513104944.20367-1-pclouds@gmail.com>
+From:   Shaheed Haque <shaheedhaque@gmail.com>
+Date:   Mon, 13 May 2019 13:42:46 +0100
+Message-ID: <CAHAc2jeFva3MLpuXEiBbwa7U5HuZiaqawkc3udsyPCaFR4FAnA@mail.gmail.com>
+Subject: Re: [PATCH] worktree add: be tolerant of corrupt worktrees
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+Hi Nguy=E1=BB=85n,
 
-On Thu, 18 Apr 2019, Jeff Hostetler wrote:
+Thanks for the quick response. While I leave the code to the experts,
+I can confirm that restoring the missing directory (but no content in
+it) does allow "worktree add" to function again.
 
-> On 4/10/2019 1:37 PM, Johannes Schindelin via GitGitGadget wrote:
+One point may be worth clarifying...
+
+On Mon, 13 May 2019 at 11:50, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pc=
+louds@gmail.com> wrote:
 >
-> > [...]
-> > +
-> > +/*
-> > + * Returns the selected index.
-> > + */
-> > +static ssize_t list_and_choose(struct item **items, size_t nr,
-> > +			       struct list_and_choose_options *opts)
-> > +{
-> > +	struct strbuf input =3D STRBUF_INIT;
-> > +	ssize_t res =3D -1;
-> > +
-> > +	for (;;) {
-> > +		char *p, *endp;
-> > +
-> > +		strbuf_reset(&input);
-> > +
-> > +		list(items, nr, &opts->list_opts);
-> > +
-> > +		printf("%s%s", opts->prompt, "> ");
-> > +		fflush(stdout);
-> > +
-> > +		if (strbuf_getline(&input, stdin) =3D=3D EOF) {
-> > +			putchar('\n');
-> > +			res =3D -2;
+> find_worktree() can die() unexpectedly because it uses real_path()
+> instead of the gentler version. When it's used in 'git worktree add' [1]
+> and there's a bad worktree, this die() could prevent people from adding
+> new worktrees.
 >
-> It would be nice to know what -1 and -2 mean if
-> they get returned to our caller.  Maybe a #define
-> for these??
+> The "bad" condition to trigger this is when a parent of the worktree's
+> location is deleted. Then real_path() will complain.
+>
+> Use the other version so that bad worktrees won't affect 'worktree
+> add'. The bad ones will eventually be pruned, we just have to tolerate
+> them for a bit.
 
-Makes a total lot of sense. I changed that.
+...as I mentioned, from my experiments, trying a "worktree prune" did
+NOT resolve the issue for me. But since I don't know the logic that
+prune uses, there may have been some other reason for this.
 
-Thanks!
-Dscho
+Thanks again, Shaheed
+
+> [1] added in cb56f55c16 (worktree: disallow adding same path multiple
+>     times, 2018-08-28), or since v2.20.0. Though the real bug in
+>     find_worktree() is much older.
+>
+> Reported-by: Shaheed Haque <shaheedhaque@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+>  t/t2025-worktree-add.sh | 12 ++++++++++++
+>  worktree.c              |  7 +++++--
+>  2 files changed, 17 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index 286bba35d8..d83a9f0fdc 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -570,4 +570,16 @@ test_expect_success '"add" an existing locked but mi=
+ssing worktree' '
+>         git worktree add --force --force --detach gnoo
+>  '
+>
+> +test_expect_success '"add" should not fail because of another bad worktr=
+ee' '
+> +       git init add-fail &&
+> +       (
+> +               cd add-fail &&
+> +               test_commit first &&
+> +               mkdir sub &&
+> +               git worktree add sub/to-be-deleted &&
+> +               rm -rf sub &&
+> +               git worktree add second
+> +       )
+> +'
+> +
+>  test_done
+> diff --git a/worktree.c b/worktree.c
+> index d6a0ee7f73..c79b3e42bb 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -222,9 +222,12 @@ struct worktree *find_worktree(struct worktree **lis=
+t,
+>                 free(to_free);
+>                 return NULL;
+>         }
+> -       for (; *list; list++)
+> -               if (!fspathcmp(path, real_path((*list)->path)))
+> +       for (; *list; list++) {
+> +               const char *wt_path =3D real_path_if_valid((*list)->path)=
+;
+> +
+> +               if (wt_path && !fspathcmp(path, wt_path))
+>                         break;
+> +       }
+>         free(path);
+>         free(to_free);
+>         return *list;
+> --
+> 2.21.0.1141.gd54ac2cb17
+>
