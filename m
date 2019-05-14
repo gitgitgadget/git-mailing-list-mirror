@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAA451F461
-	for <e@80x24.org>; Tue, 14 May 2019 00:24:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90E261F461
+	for <e@80x24.org>; Tue, 14 May 2019 00:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726813AbfENAYN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 20:24:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36456 "EHLO
+        id S1726821AbfENAYO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 20:24:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36474 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726804AbfENAYM (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:24:12 -0400
+        by vger.kernel.org with ESMTP id S1726811AbfENAYO (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:24:14 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:89af:9dea:d4e0:996c])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C61F360822;
-        Tue, 14 May 2019 00:24:09 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2302960825;
+        Tue, 14 May 2019 00:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1557793450;
-        bh=TlbC/tVQ/AUhI66bSwUfO41yMQ4vF6rZIkXKBfC6+Mw=;
+        s=default; t=1557793451;
+        bh=tXkwZBie4yZ08BeN/2OOShqFaVZ0FAhWy+7epQChYlM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=exyF8xc+c0jfuIcwiANChnGCVPy5uiK0qARC9+/uYm+61e3Ox+eVuEfK+fcERHgad
-         V9RqbxxZ3d9CfDC1lJJ+O4mdy/WBvSahAFqJqWyc2MDyCs1nwOUdEII1qo8+fYTPTZ
-         Oq+sXCZoGdVsTCmKsDexNXYfLSyWB2G8hN9iUgZj6AY2rUOriA6wuEogol7l9t0YW7
-         JgjrPJFsLoWQauTJO0t7iVxlkTZL6f+BuYAiOzGSClgljA+XuBc/ueWhQQBAJAyTFZ
-         O2tCCA8FCHeuzeD9slNJTTakObtjY5iVXdlZ0MbCPq66jRS9Nt2iCrGrZGvwvqQNW4
-         20tcGnztvQrSEeH3hEHSdXeLYB79kYVD8ncdVXdwGfe2SougpQBaET6bQJX8nd5DhH
-         9q1DyTrZWHJTXwmi/2l9yJYZA6YYhUCc1T8bd7ZWJpwYNhXqn1Xp8ydC2OAa1Pcfbc
-         gL681gp1FPhLB+BdEj9usJvt+xqm3ahbyNfZePlJevFuPOXtD59
+        b=oCbG0Ta2moYhRXAZqGgyjfm/KFlMO6YlIMuW9uoQl4vKfBv2mlTcxTjk3zklIQ3xG
+         2rvyjpmglIgyNWqYGv6oJT54sXDS50VeVrdpjyX5DSFOnfBq+p/i2eN5V2XIYNpboz
+         nncM4qzvPrhd6qLs3aoTyK5wA1/GvcoqyJdLMMksQ8t+Cgky9MoOxE/DD3EH8Sw+xB
+         xFaKNfCUXNdIwVYoDgzvSXLE+CUL57ZpSEp8i82+O6aXEzDpGOP5ykqAzpBxfVyaXz
+         84nCPUHM+/5P1gmJgfLgh5avGm5d3zMN5/x9kR/VyQUHE4Tlf88RGC3exA+fQ9rHDZ
+         d87I2pvAESEJwLQt8qNop6zsTiQOjgV+DLtGfwmb0pmAOBcLoikhkAqIIa+FJKvd1T
+         u6ecBv2fqne6dV5ubl7+lpCzT6U3do2BUu/aNTznqh1ODW33aeLcV5MliH7PXagYB7
+         /iRfjj7w1xX3x34qvAsXSAXrHZMS22kmf+zcQlvYke4bjsiECh3
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
@@ -44,9 +44,9 @@ Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 6/7] config: allow configuration of multiple hook error behavior
-Date:   Tue, 14 May 2019 00:23:31 +0000
-Message-Id: <20190514002332.121089-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 7/7] docs: document multiple hooks
+Date:   Tue, 14 May 2019 00:23:32 +0000
+Message-Id: <20190514002332.121089-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 In-Reply-To: <20190514002332.121089-1-sandals@crustytoothpaste.net>
 References: <20190514002332.121089-1-sandals@crustytoothpaste.net>
@@ -58,284 +58,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are a variety of situations in which a user may want an error
-behavior for multiple hooks other than the default. Add a config option,
-hook.<name>.errorBehavior to allow users to customize this behavior on a
-per-hook basis. Provide options for the default behavior (exiting
-early), executing all hooks and succeeding if all hooks succeed, or
-executing all hooks and succeeding if any hook succeeds.
+Document the semantics and behavior of multiple hooks, including the
+configuration options and requirements for them to be run.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- config.c       |  27 +++++++++++++
- run-command.c  |  42 +++++++++++++++++---
- run-command.h  |   5 +++
- t/lib-hooks.sh | 106 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 173 insertions(+), 7 deletions(-)
+ Documentation/config.txt      |  2 ++
+ Documentation/config/hook.txt | 19 +++++++++++++++++++
+ Documentation/githooks.txt    |  9 +++++++++
+ 3 files changed, 30 insertions(+)
+ create mode 100644 Documentation/config/hook.txt
 
-diff --git a/config.c b/config.c
-index c2846df3f1..9cba4061a9 100644
---- a/config.c
-+++ b/config.c
-@@ -19,6 +19,7 @@
- #include "utf8.h"
- #include "dir.h"
- #include "color.h"
-+#include "run-command.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index d87846faa6..f62b8ce494 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -350,6 +350,8 @@ include::config/guitool.txt[]
  
- struct config_source {
- 	struct config_source *prev;
-@@ -1093,6 +1094,29 @@ int git_config_color(char *dest, const char *var, const char *value)
- 	return 0;
- }
+ include::config/help.txt[]
  
-+static int git_default_hook_config(const char *key, const char *value)
-+{
-+	const char *hook;
-+	size_t key_len;
-+	uintptr_t behavior;
++include::config/hook.txt[]
 +
-+	key += strlen("hook.");
-+	if (strip_suffix(key, ".errorbehavior", &key_len)) {
-+		hook = xmemdupz(key, key_len);
-+		if (!strcmp(value, "stop-on-first"))
-+			behavior = HOOK_ERROR_STOP_ON_FIRST;
-+		else if (!strcmp(value, "report-any-error"))
-+			behavior = HOOK_ERROR_REPORT_ANY_ERROR;
-+		else if (!strcmp(value, "report-any-success"))
-+			behavior = HOOK_ERROR_REPORT_ANY_SUCCESS;
-+		else
-+			die(_("invalid mode for hook %s error behavior: %s"), hook, value);
-+		string_list_insert(&hook_error_behavior, hook)->util = (void *)behavior;
-+		return 0;
-+	}
-+	return 0;
-+}
-+
- static int git_default_core_config(const char *var, const char *value, void *cb)
- {
- 	/* This needs a better name */
-@@ -1450,6 +1474,9 @@ int git_default_config(const char *var, const char *value, void *cb)
- 	    starts_with(var, "committer."))
- 		return git_ident_config(var, value, cb);
+ include::config/http.txt[]
  
-+	if (starts_with(var, "hook."))
-+		return git_default_hook_config(var, value);
-+
- 	if (starts_with(var, "i18n."))
- 		return git_default_i18n_config(var, value);
+ include::config/i18n.txt[]
+diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
+new file mode 100644
+index 0000000000..4585cc7f55
+--- /dev/null
++++ b/Documentation/config/hook.txt
+@@ -0,0 +1,19 @@
++hook.<name>.errorBehavior::
++  Control the error behavior when using multiple hooks.
+++
++--
++* `stop-on-first` - If a hook fails, do not execute further hooks, even if the
++  command normally ignores whether hooks succeed or fail, and return its exit
++  code as the exit code of the hook set. If all hooks succeed, the exit code is 0.
++  This is the default.
++* `report-any-error` - Always execute all hooks, but return the exit code of the
++  first failing hook as the exit code of the hook set. If all hooks succeed, the
++  exit code of the hook set is 0.
++* `report-any-success` - Always execute all hooks, and if any hook succeeds,
++  return 0 as the exit code of the hook set. If all hooks fail, the exit code of
++  the hook set is 1.
++--
+++
++If the exit code of the hook set is zero, then the hooks are considered to have
++succeeded; otherwise, they are considered to have failed. Note that the success
++or failure of some hooks is ignored (see linkgit:githooks[5] for more).
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 786e778ab8..c680e575b3 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -31,6 +31,15 @@ Hooks can get their arguments via the environment, command-line
+ arguments, and stdin. See the documentation for each hook below for
+ details.
  
-diff --git a/run-command.c b/run-command.c
-index 191d6f6f7e..70fb19a55b 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1308,6 +1308,8 @@ int async_with_fork(void)
- #endif
- }
- 
-+struct string_list hook_error_behavior = STRING_LIST_INIT_NODUP;
++It is possible to provide multiple hooks for a single function. If the
++main hook file is absent, hooks are additionally looked for in a
++directory with the name of the main hook file with a `.d` appended.
++(That is, if `post-receive` is missing, `post-receive.d` is inspected
++for any hooks that might be present.) Each of these hooks is executed in order,
++sorted by file name. By default, if a hook fails, additional hooks are not
++executed, but this can be controlled with the `hook.*.errorBehavior` setting
++(see linkgit:git-config[1]).
 +
- /*
-  * Return 1 if a hook exists at path (which may be modified) using access(2)
-  * with check (which should be F_OK or X_OK), 0 otherwise. If strip is true,
-@@ -1401,18 +1403,48 @@ int for_each_hook(const char *name,
- 		  void *data)
- {
- 	struct string_list paths = STRING_LIST_INIT_DUP;
--	int i, ret = 0;
-+	int i, hret = 0;
-+	uintptr_t behavior = HOOK_ERROR_STOP_ON_FIRST;
-+	struct string_list_item *item;
-+	/* Use -2 as sentinel because failure to exec is -1. */
-+	int ret = -2;
-+
-+	item = string_list_lookup(&hook_error_behavior, name);
-+	if (item)
-+		behavior = (uintptr_t)item->util;
- 
- 	find_hooks(name, &paths);
- 	for (i = 0; i < paths.nr; i++) {
- 		const char *p = paths.items[i].string;
- 
--		ret = handler(name, p, data);
--		if (ret)
--			break;
-+		hret = handler(name, p, data);
-+		switch (behavior) {
-+			case HOOK_ERROR_STOP_ON_FIRST:
-+				if (hret) {
-+					ret = hret;
-+					goto out;
-+				}
-+				break;
-+			case HOOK_ERROR_REPORT_ANY_SUCCESS:
-+				if (ret == -2)
-+					ret = 1;
-+				if (!hret)
-+					ret = 0;
-+				break;
-+			case HOOK_ERROR_REPORT_ANY_ERROR:
-+				if (ret == -2)
-+					ret = 0;
-+				if (hret)
-+					ret = hret;
-+				break;
-+			default:
-+				BUG("unknown hook error behavior");
-+		}
- 	}
--
-+out:
- 	string_list_clear(&paths, 0);
-+	if (ret == -2)
-+		return 0;
- 	return ret;
- }
- 
-diff --git a/run-command.h b/run-command.h
-index 15974e26d4..879ebb768f 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -63,6 +63,11 @@ int finish_command(struct child_process *);
- int finish_command_in_signal(struct child_process *);
- int run_command(struct child_process *);
- 
-+#define HOOK_ERROR_STOP_ON_FIRST 1
-+#define HOOK_ERROR_REPORT_ANY_ERROR 2
-+#define HOOK_ERROR_REPORT_ANY_SUCCESS 3
-+extern struct string_list hook_error_behavior;
-+
- /*
-  * Returns the paths to all hook files, or NULL if all hooks are missing or
-  * disabled.
-diff --git a/t/lib-hooks.sh b/t/lib-hooks.sh
-index 721250aea0..c1d7688313 100644
---- a/t/lib-hooks.sh
-+++ b/t/lib-hooks.sh
-@@ -121,7 +121,7 @@ test_multiple_hooks () {
- 		! test -f "$OUTPUTDIR/c"
- 	'
- 
--	test_expect_success "$hook: multiple hooks, all successful" '
-+	test_expect_success "$hook: multiple hooks, all successful by default" '
- 		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
- 		rm -f "$HOOK" &&
- 		create_multihooks 0 0 0 &&
-@@ -131,7 +131,40 @@ test_multiple_hooks () {
- 		test -f "$OUTPUTDIR/c"
- 	'
- 
--	test_expect_success "$hook: hooks after first failure not executed" '
-+	test_expect_success "$hook: multiple hooks, all successful with stop-on-first" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" stop-on-first &&
-+		rm -f "$HOOK" &&
-+		create_multihooks 0 0 0 &&
-+		$cmd content-stop-on-first &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: multiple hooks, all successful with report-any-error" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-error &&
-+		rm -f "$HOOK" &&
-+		create_multihooks 0 0 0 &&
-+		$cmd content-report-any-error &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: multiple hooks, all successful with report-any-success" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-success &&
-+		rm -f "$HOOK" &&
-+		create_multihooks 0 0 0 &&
-+		$cmd content-report-any-success &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: hooks after first failure not executed by default" '
- 		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
- 		create_multihooks 0 1 0 &&
- 		$must_fail $cmd more-content &&
-@@ -140,6 +173,75 @@ test_multiple_hooks () {
- 		! test -f "$OUTPUTDIR/c"
- 	'
- 
-+	test_expect_success "$hook: hooks after first failure not executed with stop-on-first" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" stop-on-first &&
-+		create_multihooks 0 1 0 &&
-+		$must_fail $cmd more-content-stop-on-first &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		! test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: hooks after first failure executed with report-any-error" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-error &&
-+		create_multihooks 0 1 0 &&
-+		$must_fail $cmd more-content-report-any-error &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: hooks after first failure executed with report-any-success" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-success &&
-+		create_multihooks 0 1 0 &&
-+		$cmd more-content-report-any-success &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: failing hooks by default" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		create_multihooks 1 1 1 &&
-+		$must_fail $cmd most-content &&
-+		test -f "$OUTPUTDIR/a" &&
-+		! test -f "$OUTPUTDIR/b" &&
-+		! test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: failing hooks with stop-on-first" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" stop-on-first &&
-+		create_multihooks 1 1 1 &&
-+		$must_fail $cmd most-content-stop-on-first &&
-+		test -f "$OUTPUTDIR/a" &&
-+		! test -f "$OUTPUTDIR/b" &&
-+		! test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: failing hooks with report-any-error" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-error &&
-+		create_multihooks 1 1 1 &&
-+		$must_fail $cmd most-content-report-any-error &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
-+	test_expect_success "$hook: failing hooks with report-any-success" '
-+		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
-+		test_config "hook.$hook.errorbehavior" report-any-success &&
-+		create_multihooks 1 1 1 &&
-+		$must_fail $cmd most-content-report-any-success &&
-+		test -f "$OUTPUTDIR/a" &&
-+		test -f "$OUTPUTDIR/b" &&
-+		test -f "$OUTPUTDIR/c"
-+	'
-+
- 	test_expect_success POSIXPERM "$hook: non-executable hook not executed" '
- 		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
- 		create_multihooks 0 1 0 &&
+ `git init` may copy hooks to the new repository, depending on its
+ configuration. See the "TEMPLATE DIRECTORY" section in
+ linkgit:git-init[1] for details. When the rest of this document refers
