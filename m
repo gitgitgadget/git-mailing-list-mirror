@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 138AE1F461
-	for <e@80x24.org>; Tue, 14 May 2019 09:13:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0FCC1F461
+	for <e@80x24.org>; Tue, 14 May 2019 09:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbfENJNl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 05:13:41 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33645 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725916AbfENJNk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 05:13:40 -0400
-Received: by mail-pf1-f196.google.com with SMTP id z28so8819867pfk.0
-        for <git@vger.kernel.org>; Tue, 14 May 2019 02:13:40 -0700 (PDT)
+        id S1726342AbfENJNp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 05:13:45 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46303 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725916AbfENJNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 05:13:45 -0400
+Received: by mail-pf1-f194.google.com with SMTP id y11so8780787pfm.13
+        for <git@vger.kernel.org>; Tue, 14 May 2019 02:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o/nY+vlGwvNAAR4EUzy4yU4bO93HCB+tRyYacQUc7uo=;
-        b=gu9grvVbnfS1dn/nmIKpjSKLh4VMqKfSYP2qkdYgjRFigEp5uY3LubYZCeQwRS/WOA
-         z3WfXpnBPqASH+y167zdYkcPwpyZYJCgbzfl2cC10Q65CzVbGPa9JhdwjLBQaYXa0NWI
-         INgjB/3m+gc9tntsXD+TKcyhfw7XXjvcpt0jioZ1McYX8bN9i7UCE6ir3mjV3pcoQV11
-         BhurZYdEQbjUApFCfHupAG3JdVGD3tfCoq6/DQrciQcmYiXCwq39HSwax3UJOJ1YXydc
-         ZuoHWRozTYZV8m9hOEr5H8uZ1OfU8E15WZ5hs6jpbFcxQzPgeL5DiQJyDXe67ooZyHQW
-         0Etw==
+        bh=XCIWdJ6SsVAizM/TaHLgiPpIdsWd2y2kO+5HHQzh/E8=;
+        b=VZyntAXF47icuCf+3WNy/oy1jpMH6pPQSPJEx0bw7ahUXJjCFZClG42iGd2Q6QGn6E
+         c/Q3OPK7EHX1hZTOyz3W3PZM04yBBAmnTmIE/RalAlpHnNGimtUWAbBmmqtu2oolpSy3
+         xhBNKgFVBwXKS4FMrq7gHJwd5yR1NVTr2X6zL+qtHnrjdI6M5i/x7yx6VjJqjXT30EOZ
+         wCtwezj9Zl9lvR/nkm3Rb+CdIVxJ9zraL0eM+x+/OuZxg483rGIiya/ccStmVjC8o7Y0
+         KfFLndwj3qVA9W4kT3a/nZp9g2Ibdl8T5KwuexOCfyGfQJPWrb60pweE9faYTl+1Y7bB
+         MiEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o/nY+vlGwvNAAR4EUzy4yU4bO93HCB+tRyYacQUc7uo=;
-        b=AeeDCWAIUA4XaO0gabk6UdF0lRz6suQCA3fc4OBpNp9BX+Kt7clXcVg5yDK2f9ZLRL
-         bOZonjlsbhc968BFEGoIKcZ6bfy5Wxvc+eP2A1FWiDstdzwp5j/BZSv2EQksLX9uOCcO
-         nnYFToQy0VbyuQI7yzPY7cvfLJCxqUKwD6WGsq3pa5k28UDZvdsop64+MtmocgGBYoeR
-         3IwabDVhYMQfjYZWiuZA0U3r/uQjR6cTr5ag6mpsUjsLOA0rMNMfr2YdzUq/XXnuXlnH
-         T3Pe7dhW93l5/0cLq59jhdu1HL/Gwf63wFYwwYW4T9f3nc8I4do+5BURclpNozRlh1LU
-         tqZg==
-X-Gm-Message-State: APjAAAX8eTUQva8yfWHboTlOJbM2moKW0UYa9ZdFdFapWK1EUic3qhL8
-        x0Yd2Q+1plikBNE6dnG08iDuQ770
-X-Google-Smtp-Source: APXvYqxtmHQqKGiGs8R59x2cydfMor7zSWgeUKlo0FEJl6aoZGcoVZs20O0rmR7owXHKZKY5Tbi09A==
-X-Received: by 2002:a63:1d09:: with SMTP id d9mr36917998pgd.289.1557825219857;
-        Tue, 14 May 2019 02:13:39 -0700 (PDT)
+        bh=XCIWdJ6SsVAizM/TaHLgiPpIdsWd2y2kO+5HHQzh/E8=;
+        b=D+g8F6PZ6VLwGHMwlDpDE8eoSjIUqlOJohPg+N9Uk5PIvMQ8F8OBzoXIyoCYEJ3MQ0
+         sv7ovsAJsKygT60/1LcmdWHdJTZ7nXWdalQzdVdOpAYeCVp4go/8Lc2liEBCagMJ0L27
+         mEFJFUzFL7D2yBPDqNJLnxNPW1AnTB6d7gPFyF5KWfjUbN4/5u3haziY/P8+cQdHSCnv
+         NQFL0bQAuAwYQjmANSCCHuOi8Asu+TEXOInrFrObABofPiyoJkKbgFIkONAiLTIEOGZe
+         ZIeZhERRDInYykN3YwT93onOaGY31O0nWMRiRVsHiPXpuY28i7Swk+iwy7wF9SuzW4Gm
+         axsQ==
+X-Gm-Message-State: APjAAAWatbfYudBCeIBszfae6yz4iQUze3pKKxOnCFsWK3YXAGF85kma
+        BzURrOppnzhJuAnMH/Gr13aOb7Ol
+X-Google-Smtp-Source: APXvYqz3tA+4L16bzqVDE7hzvM4hNt4MuOmD4Q91glYVceEKoTs73/Vaaj8bGn8KgN5CrduP9PQG7Q==
+X-Received: by 2002:a63:2d6:: with SMTP id 205mr36715444pgc.114.1557825225047;
+        Tue, 14 May 2019 02:13:45 -0700 (PDT)
 Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id k9sm22073815pfa.180.2019.05.14.02.13.36
+        by smtp.gmail.com with ESMTPSA id i12sm18295013pgb.61.2019.05.14.02.13.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 May 2019 02:13:39 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Tue, 14 May 2019 16:13:35 +0700
+        Tue, 14 May 2019 02:13:44 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Tue, 14 May 2019 16:13:40 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 1/2] merge: remove drop_save() in favor of remove_merge_branch_state()
-Date:   Tue, 14 May 2019 16:13:21 +0700
-Message-Id: <20190514091322.12427-2-pclouds@gmail.com>
+Subject: [PATCH v3 2/2] merge: add --quit
+Date:   Tue, 14 May 2019 16:13:22 +0700
+Message-Id: <20190514091322.12427-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.1141.gd54ac2cb17
 In-Reply-To: <20190514091322.12427-1-pclouds@gmail.com>
 References: <20190509101028.24656-1-pclouds@gmail.com>
@@ -70,131 +70,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Both remove_branch_state() and drop_save() delete almost the same set of
-files about the current merge state. The only difference is MERGE_RR but
-it should also be cleaned up after a successful merge, which is what
-drop_save() is for.
+This allows to cancel the current merge without resetting worktree/index,
+which is what --abort is for. Like other --quit(s), this is often used
+when you forgot that you're in the middle of a merge and already
+switched away, doing different things. By the time you've realized, you
+can't even continue the merge anymore.
 
-Make a new function that deletes all merge-related state files and use
-it instead of drop_save(). This function will also be used in the next
-patch that introduces --quit.
+This also makes all in-progress commands, am, merge, rebase, revert and
+cherry-pick, take all three --abort, --continue and --quit (bisect has a
+different UI).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- branch.c        | 11 ++++++++---
- branch.h        |  6 ++++++
- builtin/merge.c | 17 +++++------------
- 3 files changed, 19 insertions(+), 15 deletions(-)
+ Documentation/git-merge.txt |  4 ++++
+ builtin/merge.c             | 13 +++++++++++++
+ t/t7600-merge.sh            | 14 ++++++++++++++
+ 3 files changed, 31 insertions(+)
 
-diff --git a/branch.c b/branch.c
-index 28b81a7e02..1db0601a11 100644
---- a/branch.c
-+++ b/branch.c
-@@ -337,15 +337,20 @@ void create_branch(struct repository *r,
- 	free(real_ref);
- }
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 4cc86469f3..b7d581fc76 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -99,6 +99,10 @@ commit or stash your changes before running 'git merge'.
+ 'git merge --abort' is equivalent to 'git reset --merge' when
+ `MERGE_HEAD` is present.
  
--void remove_branch_state(struct repository *r)
-+void remove_merge_branch_state(struct repository *r)
- {
--	unlink(git_path_cherry_pick_head(r));
--	unlink(git_path_revert_head(r));
- 	unlink(git_path_merge_head(r));
- 	unlink(git_path_merge_rr(r));
- 	unlink(git_path_merge_msg(r));
- 	unlink(git_path_merge_mode(r));
-+}
++--quit::
++	Forget about the current merge in progress. Leave the index
++	and the working tree as-is.
 +
-+void remove_branch_state(struct repository *r)
-+{
-+	unlink(git_path_cherry_pick_head(r));
-+	unlink(git_path_revert_head(r));
- 	unlink(git_path_squash_msg(r));
-+	remove_merge_branch_state(r);
- }
- 
- void die_if_checked_out(const char *branch, int ignore_current_worktree)
-diff --git a/branch.h b/branch.h
-index 29c1afa4d0..c90ba9d7bf 100644
---- a/branch.h
-+++ b/branch.h
-@@ -60,6 +60,12 @@ extern int validate_branchname(const char *name, struct strbuf *ref);
-  */
- extern int validate_new_branchname(const char *name, struct strbuf *ref, int force);
- 
-+/*
-+ * Remove information about the merge state on the current
-+ * branch. (E.g., MERGE_HEAD)
-+ */
-+void remove_merge_branch_state(struct repository *r);
-+
- /*
-  * Remove information about the state of working on the current
-  * branch. (E.g., MERGE_HEAD)
+ --continue::
+ 	After a 'git merge' stops due to conflicts you can conclude the
+ 	merge by running 'git merge --continue' (see "HOW TO RESOLVE
 diff --git a/builtin/merge.c b/builtin/merge.c
-index e47d77baee..e9663f027a 100644
+index e9663f027a..598d56edfe 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -37,6 +37,7 @@
- #include "packfile.h"
- #include "tag.h"
- #include "alias.h"
-+#include "branch.h"
- #include "commit-reach.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
-@@ -279,14 +280,6 @@ static struct option builtin_merge_options[] = {
- 	OPT_END()
- };
- 
--/* Cleans up metadata that is uninteresting after a succeeded merge. */
--static void drop_save(void)
--{
--	unlink(git_path_merge_head(the_repository));
--	unlink(git_path_merge_msg(the_repository));
--	unlink(git_path_merge_mode(the_repository));
--}
--
- static int save_state(struct object_id *stash)
- {
- 	int len;
-@@ -380,7 +373,7 @@ static void finish_up_to_date(const char *msg)
- {
- 	if (verbosity >= 0)
- 		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
--	drop_save();
-+	remove_merge_branch_state(the_repository);
- }
- 
- static void squash_message(struct commit *commit, struct commit_list *remoteheads)
-@@ -858,7 +851,7 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
- 			&result_commit, NULL, sign_commit))
- 		die(_("failed to write commit object"));
- 	finish(head, remoteheads, &result_commit, "In-index merge");
--	drop_save();
-+	remove_merge_branch_state(the_repository);
- 	return 0;
- }
- 
-@@ -885,7 +878,7 @@ static int finish_automerge(struct commit *head,
- 	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
- 	finish(head, remoteheads, &result_commit, buf.buf);
- 	strbuf_release(&buf);
--	drop_save();
-+	remove_merge_branch_state(the_repository);
- 	return 0;
- }
- 
-@@ -1463,7 +1456,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		}
- 
- 		finish(head_commit, remoteheads, &commit->object.oid, msg.buf);
--		drop_save();
-+		remove_merge_branch_state(the_repository);
+@@ -73,6 +73,7 @@ static int option_renormalize;
+ static int verbosity;
+ static int allow_rerere_auto;
+ static int abort_current_merge;
++static int quit_current_merge;
+ static int continue_current_merge;
+ static int allow_unrelated_histories;
+ static int show_progress = -1;
+@@ -267,6 +268,8 @@ static struct option builtin_merge_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "abort", &abort_current_merge,
+ 		N_("abort the current in-progress merge")),
++	OPT_BOOL(0, "quit", &quit_current_merge,
++		N_("--abort but leave index and working tree alone")),
+ 	OPT_BOOL(0, "continue", &continue_current_merge,
+ 		N_("continue the current in-progress merge")),
+ 	OPT_BOOL(0, "allow-unrelated-histories", &allow_unrelated_histories,
+@@ -1252,6 +1255,16 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
  		goto done;
- 	} else if (!remoteheads->next && common->next)
- 		;
+ 	}
+ 
++	if (quit_current_merge) {
++		if (orig_argc != 2)
++			usage_msg_opt(_("--quit expects no arguments"),
++				      builtin_merge_usage,
++				      builtin_merge_options);
++
++		remove_merge_branch_state(the_repository);
++		goto done;
++	}
++
+ 	if (continue_current_merge) {
+ 		int nargc = 1;
+ 		const char *nargv[] = {"commit", NULL};
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 106148254d..d453710ef6 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -822,4 +822,18 @@ test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue'
+ 	verify_parents $c0 $c1
+ '
+ 
++test_expect_success 'merge --quit' '
++	git reset --hard c2 &&
++	test_must_fail git -c rerere.enabled=true merge master &&
++	test_path_is_file .git/MERGE_HEAD &&
++	test_path_is_file .git/MERGE_MODE &&
++	test_path_is_file .git/MERGE_MSG &&
++	test_path_is_file .git/MERGE_RR &&
++	git merge --quit &&
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_MODE &&
++	test_path_is_missing .git/MERGE_MSG &&
++	test_path_is_missing .git/MERGE_RR
++'
++
+ test_done
 -- 
 2.21.0.1141.gd54ac2cb17
 
