@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1961B1F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:04:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 624641F461
+	for <e@80x24.org>; Tue, 14 May 2019 12:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726409AbfENMEd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:04:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56816 "HELO cloud.peff.net"
+        id S1726279AbfENMFH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:05:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56824 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726075AbfENMEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:04:33 -0400
-Received: (qmail 4202 invoked by uid 109); 14 May 2019 12:04:32 -0000
+        id S1726075AbfENMFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:05:07 -0400
+Received: (qmail 4217 invoked by uid 109); 14 May 2019 12:05:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 12:04:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 12:05:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12251 invoked by uid 111); 14 May 2019 12:05:11 -0000
+Received: (qmail 12269 invoked by uid 111); 14 May 2019 12:05:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 08:05:11 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 08:05:45 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 08:04:31 -0400
-Date:   Tue, 14 May 2019 08:04:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 08:05:05 -0400
+Date:   Tue, 14 May 2019 08:05:05 -0400
 From:   Jeff King <peff@peff.net>
 To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
 Cc:     git@vger.kernel.org
-Subject: [PATCH 1/2] help_unknown_ref(): duplicate collected refnames
-Message-ID: <20190514120430.GA27229@sigill.intra.peff.net>
+Subject: [PATCH 2/2] help_unknown_ref(): check for refname ambiguity
+Message-ID: <20190514120505.GB27229@sigill.intra.peff.net>
 References: <20190514120220.GA7714@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,67 +40,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When "git merge" sees an unknown refname, we iterate through the refs to
-try to suggest some possible alternates. We do so with for_each_ref(),
-and in the callback we add some of the refnames we get to a
-string_list that is declared with NODUP, directly adding a pointer into
-the refname string our callback received.
+When the user asks to merge "foo" and we suggest "origin/foo" instead,
+we do so by simply chopping off "refs/remotes/" from the front of the
+suggested ref. This is usually fine, but it's possible that the
+resulting name is ambiguous (e.g., you have "refs/heads/origin/foo",
+too).
 
-But the for_each_ref() machinery does not promise that the refname
-string will remain valid, and as a result we may print garbage memory.
+Let's use shorten_unambiguous_ref() to do this the right way, which
+should usually yield the same "origin/foo", but "remotes/origin/foo" if
+necessary.
 
-The code in question dates back to its inception in e56181060e (help:
-add help_unknown_ref(), 2013-05-04). But back then, the refname strings
-generally did remain stable, at least immediately after the
-for_each_ref() call. Later, in d1cf15516f (packed_ref_iterator_begin():
-iterate using `mmapped_ref_iterator`, 2017-09-25), we started
-consistently re-using a separate buffer for packed refs.
-
-The fix is simple: duplicate the strings we intend to collect. We
-already call string_list_clear(), so the memory is correctly freed.
+Note that in this situation there may be other options (e.g., we could
+suggest "heads/origin/foo" as well). I'll leave that up for debate; the
+focus here is just to avoid giving advice that does not actually do what
+we expect.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- help.c           |  2 +-
- t/t7600-merge.sh | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ help.c           | 6 +++---
+ t/t7600-merge.sh | 6 ++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/help.c b/help.c
-index a9e451f2ee..d3b3f64e3c 100644
+index d3b3f64e3c..5261d83ecf 100644
 --- a/help.c
 +++ b/help.c
-@@ -766,7 +766,7 @@ static int append_similar_ref(const char *refname, const struct object_id *oid,
- static struct string_list guess_refs(const char *ref)
+@@ -754,12 +754,12 @@ static int append_similar_ref(const char *refname, const struct object_id *oid,
  {
- 	struct similar_ref_cb ref_cb;
--	struct string_list similar_refs = STRING_LIST_INIT_NODUP;
-+	struct string_list similar_refs = STRING_LIST_INIT_DUP;
+ 	struct similar_ref_cb *cb = (struct similar_ref_cb *)(cb_data);
+ 	char *branch = strrchr(refname, '/') + 1;
+-	const char *remote;
  
- 	ref_cb.base_ref = ref;
- 	ref_cb.similar_refs = &similar_refs;
+ 	/* A remote branch of the same name is deemed similar */
+-	if (skip_prefix(refname, "refs/remotes/", &remote) &&
++	if (starts_with(refname, "refs/remotes/") &&
+ 	    !strcmp(branch, cb->base_ref))
+-		string_list_append(cb->similar_refs, remote);
++		string_list_append_nodup(cb->similar_refs,
++					 shorten_unambiguous_ref(refname, 1));
+ 	return 0;
+ }
+ 
 diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 7f9c68cbe7..7551ae3488 100755
+index 7551ae3488..2286b0799d 100755
 --- a/t/t7600-merge.sh
 +++ b/t/t7600-merge.sh
-@@ -867,4 +867,18 @@ test_expect_success EXECKEEPSPID 'killed merge can be completed with --continue'
- 	verify_parents $c0 $c1
+@@ -881,4 +881,10 @@ test_expect_success 'merge suggests matching remote refname' '
+ 	grep origin/not-local stderr
  '
  
-+test_expect_success 'merge suggests matching remote refname' '
-+	git commit --allow-empty -m not-local &&
-+	git update-ref refs/remotes/origin/not-local HEAD &&
-+	git reset --hard HEAD^ &&
-+
-+	# This is white-box testing hackery; we happen to know
-+	# that reading packed refs is more picky about the memory
-+	# ownership of strings we pass to for_each_ref() callbacks.
-+	git pack-refs --all --prune &&
-+
++test_expect_success 'suggested names are not ambiguous' '
++	git update-ref refs/heads/origin/not-local HEAD &&
 +	test_must_fail git merge not-local 2>stderr &&
-+	grep origin/not-local stderr
++	grep remotes/origin/not-local stderr
 +'
 +
  test_done
 -- 
 2.21.0.1388.g2b1efd806f
-
