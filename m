@@ -2,105 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB5771F461
-	for <e@80x24.org>; Tue, 14 May 2019 07:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 923141F461
+	for <e@80x24.org>; Tue, 14 May 2019 08:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbfENHdK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 03:33:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55704 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbfENHdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 03:33:10 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 177E713AC74;
-        Tue, 14 May 2019 03:33:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PpwhBxVx/A6oWf/QeBCHYAd4JAw=; b=YxrbY6
-        NvSKDityA4exxmjZbtG3Cg5hagcjtvgNhuU1V7lYBHhOEv8M/U5eDylkZieurcNl
-        tCSuHSqXqvMvdcyx7BX+YQxKnVqJu2qpoGSydbvWHlop4gxF1pm+e1QcWZOALi4X
-        gjhETj5Th0I/fSTvTu55KBMXZb79DUwrfEjPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yjrdE9m1OXB0xK22zaZwVKY7hl/dQRbP
-        yvN2ZITxx5I5Yap9LiPnOI9/1p4LX2IPMIxHKKPke8vfzHZi7REp53Jb93cQ5hEG
-        2pBbu8YRua43wrVMmNhOgaXdGQh9MujgeZEGFXePTxJje2j9L0KezE036wdLgQVH
-        R2R2AKG/xYY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0EEB713AC73;
-        Tue, 14 May 2019 03:33:06 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 794ED13AC72;
-        Tue, 14 May 2019 03:33:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>,
-        Git <git@vger.kernel.org>, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] status: add an empty line when there is no hint
-References: <20190430060210.79610-1-johnlinp@gmail.com>
-        <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
-        <20190501234512.GD202237@genre.crustytoothpaste.net>
-        <CAKO26MvXmOMHgqWSoVrmdwyDFyqDrChkMOHq6iuJAX8pvHzZoA@mail.gmail.com>
-        <20190502231537.GE202237@genre.crustytoothpaste.net>
-        <CAKO26MuisScMPp0SxRo896y7waEgR3HjU3A8+VM73eS0xgU8RQ@mail.gmail.com>
-        <CAKO26Mtn+KDnkHWsKf8mAyTmeaCYK0gjdNad5bxJe-qxjKs=xw@mail.gmail.com>
-        <xmqqh89ydhqu.fsf@gitster-ct.c.googlers.com>
-        <20190514020416.GH7458@genre.crustytoothpaste.net>
-Date:   Tue, 14 May 2019 16:33:04 +0900
-In-Reply-To: <20190514020416.GH7458@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 14 May 2019 02:04:16 +0000")
-Message-ID: <xmqqftpha3tb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726201AbfENIJ1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 04:09:27 -0400
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:35887 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbfENIJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 04:09:26 -0400
+Received: by mail-ed1-f45.google.com with SMTP id a8so21561153edx.3
+        for <git@vger.kernel.org>; Tue, 14 May 2019 01:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ieV6u/chlkg4OXy2SxyS+P/WbfCnNgBLkjvRUkbG32E=;
+        b=pGWTJYO7QbT+CO7WHqCCg2fMsq7J4ayWuEHKzxu1KCLciN6WzGW3f6mSrYb+VfRp4X
+         fYreU1hmluPhM3Z9KsKexhT0vo6EfeuQIVPo7NktaSIUsSZFG/zjEr33kORrjpnKazMi
+         KHLnF/u/fL/vjHIRq6yRrYPwd0K4aN/NroqLo/3BLlycnu3Ko/NrHjm1kcTqGMObBLTb
+         e7LEPuZ9yzM/nCzXWjSgxBxgFNEFcOZGdlF+Ab5c98tSCHCjgXg2/AGJMX1QBG3C8lqr
+         TEC3H8GDzPKhSvrYlWfmhfAjMveTg9J7oSKIZ4BqB1BS8C2DCxvVpii05xTAECR7Xd/H
+         lBNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=ieV6u/chlkg4OXy2SxyS+P/WbfCnNgBLkjvRUkbG32E=;
+        b=YDEj5vxDCUnWnhrbrAJKSycURR/inRtR1HlIDvkWbWLmCriY5oGa7FsUG2QLR43b/a
+         AwyUKERrQbKLqTS5vA0lNPtpWMWl0LpY8HS0YeChJDwktTWsqYFEZctGEK9Ix+L3Y0F+
+         cnN4322if7tijlLCIqu5brFVTmRBVYCVQWQIlHo95aDziAFDA3taw6qm5wCJhI/pDWha
+         HYBSphlb8GncPnZfiMsB+z+edJhSD4PgOCLZ8IKp6z2wNR/LY9gERlkZ3XYW7zp+3RQv
+         Req/SUnaxAX3sT0HjCTYXq1dm2kXki4vrGa2+7T0WoVm5zffKRFWp4Nku4nYStzW+GXP
+         z/rg==
+X-Gm-Message-State: APjAAAWsKWRkegU8E989iYorRsMQzJpPAoAmeA1MV6OoVQxgHRvVQyY3
+        oaUnGjRf8ZIeo4agIpaV4d0=
+X-Google-Smtp-Source: APXvYqxq6/spttBaIipbbsL012b+E68QqSHF8ZXf9OkUuX0EI6zFIFcQ5EEDQeEgf9zJX+NbyCqASA==
+X-Received: by 2002:a17:906:6a8e:: with SMTP id p14mr25691348ejr.295.1557821364708;
+        Tue, 14 May 2019 01:09:24 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id a13sm4404202eda.87.2019.05.14.01.09.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 May 2019 01:09:23 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: try harder to ensure a working jgit
+References: <20190514020520.GI3654@pobox.com> <20190514023245.GB34155@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190514023245.GB34155@google.com>
+Date:   Tue, 14 May 2019 10:09:23 +0200
+Message-ID: <87o945wj7w.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 834557FA-761A-11E9-9C08-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Mon, May 13, 2019 at 02:51:37PM +0900, Junio C Hamano wrote:
->> If the difference between "status" and "commit" bothers you so much,
->> i.e.
->> 
->>     When typing "git status", there is an empty line between the
->>     "Changes not staged for commit:" block and the list of changed
->>     files. However, when typing "git commit" with no files added,
->>     there are no empty lines between them.
->> 
->> it may not be a bad idea to try making them consistent by removing
->> the blank line that is given after the advice messages, perhaps?
+On Tue, May 14 2019, Jonathan Nieder wrote:
+
+> Todd Zullinger wrote:
 >
-> I personally think the extra blank line aids readability, especially on
-> screens with small text, but I'll defer to your decision on this.
+>> The JGIT prereq uses 'type jgit' to determine whether jgit is present.
+>> While this should be sufficient, if the jgit found is broken we'll waste
+>> time running tests which fail due to no fault of our own.
+>>
+>> Use 'jgit --version' instead, to catch some badly broken jgit
+>> installations.
+>>
+>> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+>> ---
+>> I ran into such a broken jgit on Fedora >=3D 30=C2=B9.  This is clearly a
+>> problem in the Fedora jgit package which will hopefully be resolved
+>> soon.  But it may be good to avoid wasting time debugging tests which
+>> fail due to a broken tool outside of our control.
+>>
+>> =C2=B9 https://bugzilla.redhat.com/1709624
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> It would be nice to describe that bug in the commit message, to save
+> readers some head scratching.
 
-Heh, now we established that this is primarily of personal tastes,
-if you leave it up to me, my preference would be different from what
-was said in the thread so far.
+FWIW the jgit in Debian testing/unstable is similarly broken right now:
 
- - I do not mind having an extra blank line in the log message
-   editor session "git commit" gives me, primarily because at that
-   point I am in a full-screen editor that I can scroll up and down
-   at ease.
+    $ apt policy jgit-cli
+    jgit-cli:
+      Installed: 3.7.1-6
+      Candidate: 3.7.1-6
+      Version table:
+     *** 3.7.1-6 900
+            900 http://ftp.nl.debian.org/debian testing/main amd64 Packages
+            800 http://ftp.nl.debian.org/debian unstable/main amd64 Packages
+            100 /var/lib/dpkg/status
+         3.7.1-4 700
+            700 http://ftp.nl.debian.org/debian stable/main amd64 Packages
+    $ jgit --version; echo $?
+    Error: A JNI error has occurred, please check your installation and try=
+ again
+    Exception in thread "main" java.lang.NoClassDefFoundError: org/kohsuke/=
+args4j/CmdLineException
+            at java.lang.Class.getDeclaredMethods0(Native Method)
+            at java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+            at java.lang.Class.privateGetMethodRecursive(Class.java:3048)
+            at java.lang.Class.getMethod0(Class.java:3018)
+            at java.lang.Class.getMethod(Class.java:1784)
+            at sun.launcher.LauncherHelper.validateMainClass(LauncherHelper=
+.java:544)
+            at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.=
+java:526)
+    Caused by: java.lang.ClassNotFoundException: org.kohsuke.args4j.CmdLine=
+Exception
+            at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+            at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+            at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+            at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+            ... 7 more
+    1
 
- - "git status" output, on the other hand, is shown in the context
-   where vertical screen real estate is more precious (I do not say
-   "git -p status"); I'd probably be happier without these empty
-   lines.
+So rather than describe specific bugs on RedHat/Debian maybe just say:
 
-But following the above two would mean that the result will still
-leave difference between the commands; the original justificaiton
-will not apply to such a change.
-
-At the same time, I think I've been happy enough with the current
-output from both commands, so if you let me bikeshed freely, I'd
-probably pick "let's not change anything then" ;-)
+    This guards against cases where jgit is present on the system, but
+    will fail to run, e.g. because of some JRE issue, or missing Java
+    dependencies. Seeing if it gets far enough to process the
+    "--version" argument isn't perfect, but seems to be good enough in
+    practice. It's also consistent with how we detect some other
+    dependencies, see e.g. the CURL and UNZIP prerequisites.
