@@ -2,108 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9CB71F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA80E1F461
+	for <e@80x24.org>; Tue, 14 May 2019 12:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbfENMhw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:37:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:53935 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725893AbfENMhw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:37:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557837466;
-        bh=Gld61BGofGHPrpFgqmlQLEY/YGiJNTZGdGJ/z36XBak=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=enlIehzyLknzcpe+CZp6sOesZ1U8gwjQsPB2ERoFsTtD0lxRl0H3cRmrVzK+wxE1w
-         /Z87mLta4YYcCoyiXMfaiMYUul6KPfYOqfUrkHSPLnaaWNTLIYlBy6TINsU66TlNpE
-         WpV98CD068YyzAHH+TuTS77tpH9D7GHPU9bYr8NU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlXnX-1gs0gX0qBD-00bM8f; Tue, 14
- May 2019 14:37:46 +0200
-Date:   Tue, 14 May 2019 14:37:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH] tests: add a special setup where prerequisites fail
-In-Reply-To: <87lfz9wexs.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1905131531000.44@tvgsbejvaqbjf.bet> <20190513183242.10600-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1905140945220.44@tvgsbejvaqbjf.bet> <87lfz9wexs.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726265AbfENMqo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:46:44 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:41705 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfENMqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:46:44 -0400
+Received: by mail-io1-f66.google.com with SMTP id a17so12896942iot.8
+        for <git@vger.kernel.org>; Tue, 14 May 2019 05:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ClAomCRXLcJGawwvkLn8jjfSkM0UjirWYn3rKCwtQtg=;
+        b=T4QuRZOtqrap5G3ky8Jwag1aZ/9HJ6dqal/Ogk3YQmOAgiOb4Gbpv7LJy1sIXRtYtC
+         IrUFkVnBoc7JjF4kHaot+MnHFq6StWd14R9mg+hJgZ4+cLhAPMDjdEtv5MMIL3UAt3Ie
+         Wvi79YWsW4+ImTMJtJeRGy8mNqN4lf8henm0lrgqU2es6uNRfKi8FEkXgusm23Mt1VlX
+         H9ZTH9yQocJwKjs1HR/Hk9Cq2DlKx2n7WKfhSU1fBk6sxSWw9oHPp1pmmXS4NaxLByQM
+         YzBB971rKeIq6qsjri0mbvNHElgOuZ7M6zpDmfkA+UFXZaw4FMcu6xY7BEPZ1z/4oOAi
+         DalA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ClAomCRXLcJGawwvkLn8jjfSkM0UjirWYn3rKCwtQtg=;
+        b=CWgdO8WA/vNMMVVO0NhWkDrWsOqQgQJSKcTWgVRvFk/Z+24yyLnhWv0TTF2pEOfLmK
+         XR3tjrlcWy5rgJ2rSonVHeyXkveE9P0JYn10TWSgaqvRd8ew5mc81MYfW2z1j04iL4pB
+         wmwHyq91gyap3gj0kYR7SeML5FpRtQXHMGZSmx5G/2NQnM4GDblfTEVv7tx+VG1VkNhi
+         78kgldAUfzHWOl9it0SQo8bNTj+uZgpwEQcP1bVL16Nu81tQD+UQRZaZqW7cdSNgY4Le
+         seaJLRcfs868BaWCIVGxi+npxBZHYMP+4Wet1JAAbREHhPF1/TRbWYUvhrb0IKto2qnp
+         Y+jg==
+X-Gm-Message-State: APjAAAUmJ/nKHa+fM4I2UYeSEnhHmSbjqwrrDY4z80Y7+be0dWlMYFcK
+        1y6lN5pygAx/JqtDJ4kOlMTnR0BX/FCznMrFkDQ=
+X-Google-Smtp-Source: APXvYqytQ1RRo9Hpp1pC2cULc72H/q2DQpseqg1kUq3uwRBsmyi09tfZhhe5+Fj0J3pdEnRv9G6dTpeQNkd7I31PQmQ=
+X-Received: by 2002:a6b:8e84:: with SMTP id q126mr1099288iod.118.1557838003210;
+ Tue, 14 May 2019 05:46:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1665868500-1557837466=:44"
-X-Provags-ID: V03:K1:yeSbqBMLM1lsG/YUkv1flurR4sb5ZWLhzHzhRnjfJFthNjsmb1F
- wMFmX3Wwr+zEjjDrlA9kcHj2obh0DNKUPZlFrXdSaTIsKjgQOG8f2SQaCfEIElP/7oN35KT
- YiCQQF3c+sH6NFtb4vHSG742FDMDIoxMVD1IgyYXT/D7LOr7vkbnMQxQXiPA9un0QbFaRvV
- XJIUyqqzCoyzPgM2PBuqA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NY6to3Q2f20=:gDX/BxATFbp+CuMkD50EnW
- v2fNCPf8ZXUYy6QHQIhpDOZVHNWuRqemKTP4YuOSwlAwdhEoQM3PeIE+jR9jCj2faE35Q/b5u
- B6VEfekADgWo84wbSIyepb2fLxY1zHrLQ3m6Gcc4V4LbUh+90mg1j1RJIqpy8nvxHx3PZUjbV
- k+/qC2rQazZ8SGahMbN2oTITVBFPYfRKklDVcppMzxtPY+QpYf4rz09qyAdfEFlQsPJgZa37Q
- vd+HkK7RcstYRbTAYBIFvD/zV5/sfByVHzDyxq+YEIL692H20w8cdCBc6TNeaXPZyWVV2TZi9
- dBpQWf3fBNIj1FcLlElb2tyTllUYDpnPHfcR7tXiu/iBXOUzPmYxYlV7CHoTl0ocHxcMLGbNN
- hKC+rBlYgyVXashdq6VtbDgoAvHWRWbq6WjOG7tvGMXf9pkOr8ntpYUJLhv9Ry1fjKfPqLU7m
- 39Webgc8zbVCIlXrK/7pbnnW21/aUHYw6BRWpTeRKCL0x/xszH6ztfcGJGTDvO76Rz4+THYha
- /BEXCt3gesPGTnvUKSmWaWBBf3K9LQ7ckFe0a9MDai0SdEF7OBfceQy4CyvJ0sYmHprQc3+Nc
- FfimbJRFfalvIcwCG2N8y9btj6xnPFM/eAPR/05JGx0jz7kT4qjixs0X7LHb4btOrMaxNpqHx
- 9etlW5I+Y4NJBr3iuPEMGwTb+57q0Y44B1QlVWC/GzGSWQAyeeedJ3zF3fnoGEHR8o1iGFBrs
- AuZ9Kov0juDlusUBrsSaYbFn2Afsvj2MGRZ77cFM37QC9KlG2WNKjRPACWTK9zJ3Am75nS6pm
- i9mIRn3yK8qEpBwDa7JZ4sECc1ys6umfdaUC0FuEHdnGrjODwvS5Co0jSJk+fh79rnRy415Y/
- 5z03GjyIWWs6xUL+1wdgwWz6Xwsg+pCMs6oeCLkFQPMFZ7s3HSK457XoY5hXA7AuSZ4eYMdyu
- uoa2HKY0scQ==
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20190514002332.121089-2-sandals@crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 14 May 2019 19:46:17 +0700
+Message-ID: <CACsJy8Ba98baQ2wZnMZyEva6gxO1ROZ4qJFTOdrCUXDMwrHnXA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] run-command: add preliminary support for multiple hooks
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, May 14, 2019 at 7:24 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 
---8323328-1665868500-1557837466=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi =C3=86var,
-
-On Tue, 14 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Tue, May 14 2019, Johannes Schindelin wrote:
+> -int run_hook_ve(const char *const *env, const char *name, va_list args)
+> +int find_hooks(const char *name, struct string_list *list)
+>  {
+> -       struct child_process hook = CHILD_PROCESS_INIT;
+> -       const char *p;
+> +       struct strbuf path = STRBUF_INIT;
+> +       DIR *d;
+> +       struct dirent *de;
 >
-> > What would you think about a mode where random test cases are skipped?
-> > It would have to make sure to provide a way to recreate the problem,
-> > e.g. giving a string that defines exactly which test cases were
-> > skipped.
-> >
-> > I am *sure* that tons of test scripts would fail with that, and we
-> > would probably have to special-case the `setup` "test cases", and we
-> > would have to clean up quite a few scripts to *not* execute random
-> > stuff outside of `test_expect_*`...
+> -       p = find_hook(name);
+> -       if (!p)
+> +       /*
+> +        * We look for a single hook. If present, return it, and skip the
+> +        * individual directories.
+> +        */
+> +       strbuf_git_path(&path, "hooks/%s", name);
+> +       if (has_hook(&path, 1, X_OK)) {
+> +               if (list)
+> +                       string_list_append(list, path.buf);
+> +               return 1;
+> +       }
+> +
+> +       if (has_hook(&path, 1, F_OK))
+>                 return 0;
 >
-> I think it would be neat, but unrelated to and overkill for spotting the
-> practical problem we have now, which is that we *know* we skip some of
-> this now on some platforms/setups due to prereqs.
+> -       argv_array_push(&hook.args, p);
+> -       while ((p = va_arg(args, const char *)))
+> -               argv_array_push(&hook.args, p);
+> -       hook.env = env;
+> +       strbuf_reset(&path);
+> +       strbuf_git_path(&path, "hooks/%s.d", name);
+> +       d = opendir(path.buf);
+> +       if (!d) {
+> +               if (list)
+> +                       string_list_clear(list, 0);
+> +               return 0;
+> +       }
+> +       while ((de = readdir(d))) {
+> +               if (!strcmp(de->d_name, ".") || !strcmp(de->d_name, ".."))
+> +                       continue;
+> +               strbuf_reset(&path);
+> +               strbuf_git_path(&path, "hooks/%s.d/%s", name, de->d_name);
+> +               if (has_hook(&path, 0, X_OK)) {
 
-I understand, but I am still worried that this is a lot of work for an
-incomplete fix.
+Do we want to support hooks in subdirectories as well (if so, using
+dir-iterator.h might be more appropriate)
 
-For example, the t7600-merge.sh test script that set off this conversation
-has two prereqs that are unmet on Windows: GPG and EXECKEEPSPID. On Azure
-Pipelines' macOS agents, it is only GPG that is unmet. So switching off
-all prereqs would not help macOS with e.g. a bug where the GPG test cases
-are skipped but the EXECKEEPSPID test case is not.
+If not, what happens when "path" is a directory. X_OK could be set
+(and often are) on them too.
 
-Ciao,
-Dscho
+> +                       if (list)
+> +                               string_list_append(list, path.buf);
+> +                       else
+> +                               return 1;
+> +               }
+> +       }
+> +       closedir(d);
+> +       strbuf_reset(&path);
+> +       if (!list->nr) {
+> +               return 0;
+> +       }
+> +
+> +       string_list_sort(list);
 
---8323328-1665868500-1557837466=:44--
+This is going to be interesting on case-insensitive filesystems
+because we do strcmp by default, not the friendlier fspathcmp. And the
+".exe" suffix might affect sort order too.
+
+But I suppose we just need to be clear here (in documentation). They
+can always prefix with a number to keep hook files in expected order.
+
+> +       return 1;
+> +}
+> +
+
+> diff --git a/run-command.h b/run-command.h
+> index a6950691c0..1b3677fcac 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -4,6 +4,7 @@
+>  #include "thread-utils.h"
+>
+>  #include "argv-array.h"
+> +#include "string-list.h"
+
+'struct string_list;' should be enough (and a bit lighter) although I
+don't suppose it really matters.
+
+>
+>  struct child_process {
+>         const char **argv;
+-- 
+Duy
