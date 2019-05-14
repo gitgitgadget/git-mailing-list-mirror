@@ -2,99 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 624641F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:05:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849D31F4B6
+	for <e@80x24.org>; Tue, 14 May 2019 12:13:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726279AbfENMFH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:05:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56824 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726075AbfENMFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:05:07 -0400
-Received: (qmail 4217 invoked by uid 109); 14 May 2019 12:05:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 12:05:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12269 invoked by uid 111); 14 May 2019 12:05:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 08:05:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 08:05:05 -0400
-Date:   Tue, 14 May 2019 08:05:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     git@vger.kernel.org
-Subject: [PATCH 2/2] help_unknown_ref(): check for refname ambiguity
-Message-ID: <20190514120505.GB27229@sigill.intra.peff.net>
-References: <20190514120220.GA7714@sigill.intra.peff.net>
+        id S1726211AbfENMNv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:13:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43354 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726036AbfENMNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:13:51 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 8FF8A1F461;
+        Tue, 14 May 2019 12:13:50 +0000 (UTC)
+Date:   Tue, 14 May 2019 12:13:50 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: dumb HTTP things I want to do
+Message-ID: <20190514121350.jugxtegpvcxr4vjs@dcvr>
+References: <20190511013455.5886-1-e@80x24.org>
+ <87v9ygwoj0.fsf@evledraar.gmail.com>
+ <20190512040825.GA25370@sigill.intra.peff.net>
+ <87tve0w3ao.fsf@evledraar.gmail.com>
+ <20190514094729.GA12256@sigill.intra.peff.net>
+ <20190514115047.oncvfq24fhnp64re@dcvr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190514120220.GA7714@sigill.intra.peff.net>
+In-Reply-To: <20190514115047.oncvfq24fhnp64re@dcvr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the user asks to merge "foo" and we suggest "origin/foo" instead,
-we do so by simply chopping off "refs/remotes/" from the front of the
-suggested ref. This is usually fine, but it's possible that the
-resulting name is ambiguous (e.g., you have "refs/heads/origin/foo",
-too).
+Eric Wong <e@80x24.org> wrote:
+> Jeff King <peff@peff.net> wrote:
+> > That's my reading, too, but I didn't want to be responsible for
+> > regressing some obscure case. At least Eric seems to _use_
+> > update-server-info. ;)
+> 
+> I also have something else on my mind for abusing info files with :>
+> (another email)
 
-Let's use shorten_unambiguous_ref() to do this the right way, which
-should usually yield the same "origin/foo", but "remotes/origin/foo" if
-necessary.
+I'm not sure when/if I'll have time for this; but this ought to
+be possible:
 
-Note that in this situation there may be other options (e.g., we could
-suggest "heads/origin/foo" as well). I'll leave that up for debate; the
-focus here is just to avoid giving advice that does not actually do what
-we expect.
+	GIT_DIR=$HTTP_URL git <any read-only command>
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- help.c           | 6 +++---
- t/t7600-merge.sh | 6 ++++++
- 2 files changed, 9 insertions(+), 3 deletions(-)
+And possible without existing admins to setup or change
+anything on their server.
 
-diff --git a/help.c b/help.c
-index d3b3f64e3c..5261d83ecf 100644
---- a/help.c
-+++ b/help.c
-@@ -754,12 +754,12 @@ static int append_similar_ref(const char *refname, const struct object_id *oid,
- {
- 	struct similar_ref_cb *cb = (struct similar_ref_cb *)(cb_data);
- 	char *branch = strrchr(refname, '/') + 1;
--	const char *remote;
- 
- 	/* A remote branch of the same name is deemed similar */
--	if (skip_prefix(refname, "refs/remotes/", &remote) &&
-+	if (starts_with(refname, "refs/remotes/") &&
- 	    !strcmp(branch, cb->base_ref))
--		string_list_append(cb->similar_refs, remote);
-+		string_list_append_nodup(cb->similar_refs,
-+					 shorten_unambiguous_ref(refname, 1));
- 	return 0;
- }
- 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 7551ae3488..2286b0799d 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -881,4 +881,10 @@ test_expect_success 'merge suggests matching remote refname' '
- 	grep origin/not-local stderr
- '
- 
-+test_expect_success 'suggested names are not ambiguous' '
-+	git update-ref refs/heads/origin/not-local HEAD &&
-+	test_must_fail git merge not-local 2>stderr &&
-+	grep remotes/origin/not-local stderr
-+'
-+
- test_done
--- 
-2.21.0.1388.g2b1efd806f
+Right now, I could do it by setting up a WebDAV server
+and using fusedav[1] on the client.
+
+But, not everybody runs a WebDAV server which allows PROPFIND
+for listing files...  However, info/refs and objects/info/packs
+can give us all the info we need without needing PROPFIND.  All
+we'd need is the common GET/HEAD HTTP methods for read-only
+access.
+
+git doesn't need mmap; and curl + Range requests ought to be
+able to get us what we need to emulate pread.  It'd be great for
+low-latency LANs, maybe not so great with high latency; but
+probably better in many cases than cloning a giant repo to cat
+one blob.
+
+Also, cloning on a static bundle ought to be doable with:
+
+	git clone $REMOTE_OR_LOCAL_PATH/foo.bundle
+
+And yeah, it also sucks that bundles double storage overhead
+for admins; it would be nice if I could use bundles as alternates
+or packs...
+
+Anyways, all of this is probably a lot of work and I don't hack
+much, anymore.
+
+
+[1] I have many patches for fusedav, and the debian maintainer
+    seems dead, and upstream's moved on: https://bugs.debian.org/fusedav
+    davfs2 can't do Range requests, so it won't work for big repos...
