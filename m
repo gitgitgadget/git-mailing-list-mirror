@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA80E1F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:46:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF3F1F461
+	for <e@80x24.org>; Tue, 14 May 2019 12:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbfENMqo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:46:44 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41705 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfENMqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:46:44 -0400
-Received: by mail-io1-f66.google.com with SMTP id a17so12896942iot.8
-        for <git@vger.kernel.org>; Tue, 14 May 2019 05:46:43 -0700 (PDT)
+        id S1725928AbfENM5Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:57:16 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:33414 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725562AbfENM5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:57:16 -0400
+Received: by mail-io1-f65.google.com with SMTP id z4so12941260iol.0
+        for <git@vger.kernel.org>; Tue, 14 May 2019 05:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ClAomCRXLcJGawwvkLn8jjfSkM0UjirWYn3rKCwtQtg=;
-        b=T4QuRZOtqrap5G3ky8Jwag1aZ/9HJ6dqal/Ogk3YQmOAgiOb4Gbpv7LJy1sIXRtYtC
-         IrUFkVnBoc7JjF4kHaot+MnHFq6StWd14R9mg+hJgZ4+cLhAPMDjdEtv5MMIL3UAt3Ie
-         Wvi79YWsW4+ImTMJtJeRGy8mNqN4lf8henm0lrgqU2es6uNRfKi8FEkXgusm23Mt1VlX
-         H9ZTH9yQocJwKjs1HR/Hk9Cq2DlKx2n7WKfhSU1fBk6sxSWw9oHPp1pmmXS4NaxLByQM
-         YzBB971rKeIq6qsjri0mbvNHElgOuZ7M6zpDmfkA+UFXZaw4FMcu6xY7BEPZ1z/4oOAi
-         DalA==
+        bh=mOz7Vnbunrp1/vSG0EZWb0FeZogcXZTJZdVGsLjYbW0=;
+        b=ioEQZjikoMqv/YAJPicxwochlr0BSre2dHlJfpixhhG2ApAD8pE55LNMQHHj5vRaLb
+         3NpJVO71cpmTtjRhWvkC2xhKfiB423Uu8nAwnt8m87CQQIRG05IjK9eltF0wCrhOFN9G
+         eoUFCa+6nr2I11Z+J5Vfv5fnEm3QMteVt1fkSsWFr5Rqp5xRSRhvKc4UbvmAZlWTUSQn
+         c96zkJ/ZTVrryCwLvAbFcBvwBwWi/YdjcdIl13q4BmiAeT01werNRVKoTwpyDwCZg+3D
+         Qm9+3KOkDepeaNM32JgES9SaFZXRd4+qKAucme9d1et8uytw+Fkpm45zQldCFRNHsQHm
+         7E6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ClAomCRXLcJGawwvkLn8jjfSkM0UjirWYn3rKCwtQtg=;
-        b=CWgdO8WA/vNMMVVO0NhWkDrWsOqQgQJSKcTWgVRvFk/Z+24yyLnhWv0TTF2pEOfLmK
-         XR3tjrlcWy5rgJ2rSonVHeyXkveE9P0JYn10TWSgaqvRd8ew5mc81MYfW2z1j04iL4pB
-         wmwHyq91gyap3gj0kYR7SeML5FpRtQXHMGZSmx5G/2NQnM4GDblfTEVv7tx+VG1VkNhi
-         78kgldAUfzHWOl9it0SQo8bNTj+uZgpwEQcP1bVL16Nu81tQD+UQRZaZqW7cdSNgY4Le
-         seaJLRcfs868BaWCIVGxi+npxBZHYMP+4Wet1JAAbREHhPF1/TRbWYUvhrb0IKto2qnp
-         Y+jg==
-X-Gm-Message-State: APjAAAUmJ/nKHa+fM4I2UYeSEnhHmSbjqwrrDY4z80Y7+be0dWlMYFcK
-        1y6lN5pygAx/JqtDJ4kOlMTnR0BX/FCznMrFkDQ=
-X-Google-Smtp-Source: APXvYqytQ1RRo9Hpp1pC2cULc72H/q2DQpseqg1kUq3uwRBsmyi09tfZhhe5+Fj0J3pdEnRv9G6dTpeQNkd7I31PQmQ=
-X-Received: by 2002:a6b:8e84:: with SMTP id q126mr1099288iod.118.1557838003210;
- Tue, 14 May 2019 05:46:43 -0700 (PDT)
+        bh=mOz7Vnbunrp1/vSG0EZWb0FeZogcXZTJZdVGsLjYbW0=;
+        b=SpPNmkz0An4O6bAToGdtiCn5zNWyyV5/6GnmemHKsqsbyyi5HNKM88jVH/xYbtDTOB
+         yyVmF68OUaHyGAsSoP0GkmNkYzqRy4i27yootEkiwhTRT4OY7HqhkcKfGDgzrZy0C+f9
+         o6yiz4rfqK+igOb1CGbGXQIj1fZqTZ9bFtZxdzlvO7DPyzJodT5naIo5AU12bDMblWa5
+         Hfve09xycLzONVU+REpgdAEml09yIGsbUruInkCcYNOsYnKSPsKxU2e6Mk77rgSTn7jl
+         62Wf/wi95Q9ZBQoydG1NFIfONuQjKaVWE8TBG7QUmboFCRpcZBF8fxXxvlaTpW/f+53g
+         FQog==
+X-Gm-Message-State: APjAAAX56OIselsbOA7OJVv3wCD7yoh2erFvMpm6aUT49rHpX359zmTP
+        btmnBhI63BbE9X+Hn8vJVkob8rMJ3jXMI/1bUSc=
+X-Google-Smtp-Source: APXvYqx0R8unNvJWMvd0XFzwbbtrSgStSx8AlqElCHFKUN3HKWlsRTFJ5JmgcmNAxgODU/PXGQFUQqFcMg3fUKs18+g=
+X-Received: by 2002:a5e:d60f:: with SMTP id w15mr17181247iom.282.1557838635532;
+ Tue, 14 May 2019 05:57:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20190514002332.121089-2-sandals@crustytoothpaste.net>
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20190514002332.121089-4-sandals@crustytoothpaste.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 14 May 2019 19:46:17 +0700
-Message-ID: <CACsJy8Ba98baQ2wZnMZyEva6gxO1ROZ4qJFTOdrCUXDMwrHnXA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] run-command: add preliminary support for multiple hooks
+Date:   Tue, 14 May 2019 19:56:49 +0700
+Message-ID: <CACsJy8CnCoMK7ahjRotKfiC2ic-U0hdhKuQAeF-TtVt8N+bU2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/7] rebase: add support for multiple hooks
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -68,97 +68,48 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, May 14, 2019 at 7:24 AM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-
-> -int run_hook_ve(const char *const *env, const char *name, va_list args)
-> +int find_hooks(const char *name, struct string_list *list)
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 912d9821b1..340eacbd44 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -441,24 +441,8 @@ static int run_applypatch_msg_hook(struct am_state *state)
+>   */
+>  static int run_post_rewrite_hook(const struct am_state *state)
 >  {
-> -       struct child_process hook = CHILD_PROCESS_INIT;
-> -       const char *p;
-> +       struct strbuf path = STRBUF_INIT;
-> +       DIR *d;
-> +       struct dirent *de;
->
-> -       p = find_hook(name);
-> -       if (!p)
-> +       /*
-> +        * We look for a single hook. If present, return it, and skip the
-> +        * individual directories.
-> +        */
-> +       strbuf_git_path(&path, "hooks/%s", name);
-> +       if (has_hook(&path, 1, X_OK)) {
-> +               if (list)
-> +                       string_list_append(list, path.buf);
-> +               return 1;
-> +       }
+> -       struct child_process cp = CHILD_PROCESS_INIT;
+> -       const char *hook = find_hook("post-rewrite");
+> -       int ret;
+> -
+> -       if (!hook)
+> -               return 0;
+> -
+> -       argv_array_push(&cp.args, hook);
+> -       argv_array_push(&cp.args, "rebase");
+> -
+> -       cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+> -       cp.stdout_to_stderr = 1;
+> -       cp.trace2_hook_name = "post-rewrite";
+> -
+> -       ret = run_command(&cp);
+> -
+> -       close(cp.in);
+
+In the old code, we close cp.in...
+
+> +int post_rewrite_rebase_hook(const char *name, const char *path, void *input)
+> +{
+> +       struct child_process child = CHILD_PROCESS_INIT;
 > +
-> +       if (has_hook(&path, 1, F_OK))
->                 return 0;
->
-> -       argv_array_push(&hook.args, p);
-> -       while ((p = va_arg(args, const char *)))
-> -               argv_array_push(&hook.args, p);
-> -       hook.env = env;
-> +       strbuf_reset(&path);
-> +       strbuf_git_path(&path, "hooks/%s.d", name);
-> +       d = opendir(path.buf);
-> +       if (!d) {
-> +               if (list)
-> +                       string_list_clear(list, 0);
-> +               return 0;
-> +       }
-> +       while ((de = readdir(d))) {
-> +               if (!strcmp(de->d_name, ".") || !strcmp(de->d_name, ".."))
-> +                       continue;
-> +               strbuf_reset(&path);
-> +               strbuf_git_path(&path, "hooks/%s.d/%s", name, de->d_name);
-> +               if (has_hook(&path, 0, X_OK)) {
+> +       child.in = open(input, O_RDONLY);
+> +       child.stdout_to_stderr = 1;
+> +       child.trace2_hook_name = "post-rewrite";
 
-Do we want to support hooks in subdirectories as well (if so, using
-dir-iterator.h might be more appropriate)
+maybe use "name" and avoid hard coding "post-rewrite".
 
-If not, what happens when "path" is a directory. X_OK could be set
-(and often are) on them too.
+> +       argv_array_push(&child.args, path);
+> +       argv_array_push(&child.args, "rebase");
+> +       return run_command(&child);
 
-> +                       if (list)
-> +                               string_list_append(list, path.buf);
-> +                       else
-> +                               return 1;
-> +               }
-> +       }
-> +       closedir(d);
-> +       strbuf_reset(&path);
-> +       if (!list->nr) {
-> +               return 0;
-> +       }
-> +
-> +       string_list_sort(list);
-
-This is going to be interesting on case-insensitive filesystems
-because we do strcmp by default, not the friendlier fspathcmp. And the
-".exe" suffix might affect sort order too.
-
-But I suppose we just need to be clear here (in documentation). They
-can always prefix with a number to keep hook files in expected order.
-
-> +       return 1;
-> +}
-> +
-
-> diff --git a/run-command.h b/run-command.h
-> index a6950691c0..1b3677fcac 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -4,6 +4,7 @@
->  #include "thread-utils.h"
->
->  #include "argv-array.h"
-> +#include "string-list.h"
-
-'struct string_list;' should be enough (and a bit lighter) although I
-don't suppose it really matters.
-
->
->  struct child_process {
->         const char **argv;
+... but in the new one we don't. Smells fd leaking to me.
 -- 
 Duy
