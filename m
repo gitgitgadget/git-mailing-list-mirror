@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BFC21F461
-	for <e@80x24.org>; Tue, 14 May 2019 00:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65A961F461
+	for <e@80x24.org>; Tue, 14 May 2019 00:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfENAXy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 20:23:54 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36410 "EHLO
+        id S1726769AbfENAX4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 20:23:56 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36420 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726623AbfENAXx (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:23:53 -0400
+        by vger.kernel.org with ESMTP id S1726623AbfENAX4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:23:56 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:89af:9dea:d4e0:996c])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 14E326081E;
-        Tue, 14 May 2019 00:23:50 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF8ED60443;
+        Tue, 14 May 2019 00:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1557793430;
-        bh=7DlsO1mFZm0RqwF6/9Pqs4pYRp8J2urx1klf493ot6k=;
+        s=default; t=1557793433;
+        bh=KN2MXrk3t7ueXlyghaXXv6/LYX3nQ3f0ZEcuyaYpS6U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=zEfmKZaeI61VukC3Y+9Bj3Jmp4Nw4aSFR7+xqxAsEpAVALpLRh6zpydvnErFH1W37
-         rpDWXz5LtTniBETcfN8tsaj9U7vmzQOGkBlmaCPMv5wXm2MPjqKuaFq+82kFQPC93D
-         8+HDwO+ukwLLfHRwyL5sScv+GveOdbykbkZBcI03gT4etPXz2SOaYV2Qm/hXWCr2ND
-         hcZP9SWQE0lceVRvqHPj4jr59VCPbgvJGVzqkAjM8ponelnTaX0o6wx+t7ulwFqH5N
-         aM0uMF6gubq/ERf1NyOX3nQ9mdV3OCXRr5ekVrWhZXn5vwucjgZ0YWnZNjkjgXbxRu
-         76+rxVLeHStxUhsZ2md+CHoedr6R+01KSTsvdxzyZ2l595KMgFR2OFau3LJz8icWa8
-         QPRFUoRrRI2hwlFKmjs5Wxz71SZ1CDf3zyOjOJz1u+hJU1l+CnAP1FaZRVXelwcUVG
-         JtMN882QvhwMXe6JrdHNhsSyLyS8kdKbTkCAwr2e7EE1L43Os78
+        b=ar4aGnoVaY8zxqYTmOLn1/oN6EcZ3Oczq2RffRTBov8Kv6NdAf3hALZpqGW/oTfaj
+         5r2pEFYL6n2qQ8hR25csRzZad65W7BQUSkByaDtnIWh+ntJWs6UA9AMq3HGo0SsBXp
+         cXL2Rldrceha83Dj0YblaSK95WjHECfXVuogDkyD5ny+bo9E2NAjL49FVS/URoeOO+
+         jYFYk309sZ4CZy8fx1gPjKIpEpAewaNEVHOppcL+WNhmRDLSYexh/Xm46JjB0jgM97
+         iY/LBvexojIkQmed0A0pxGTOGs+uUp9cn9WD4WZk/s37qCJjKjVo/3h6CWajsim+WP
+         7pcd0o4oHx9PhJa1fG+2EwsjTW6l+sw13u5lfsyXxZVnanByLKj0tx0qD6nr+MNIIr
+         ZYrXS014T0XmfmF3cBuWMcarPSHub7dJ+JZC3fNRK5jRcNrJPCMEd32oIIZPLtOyQl
+         v6m/M4f3gZc7ogOJxoYw/UixwAX0w+y7IZmyHv4E1/wQcn8gyEQ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
@@ -44,9 +44,9 @@ Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 2/7] builtin/receive-pack: add support for multiple hooks
-Date:   Tue, 14 May 2019 00:23:26 +0000
-Message-Id: <20190514002332.121089-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 3/7] rebase: add support for multiple hooks
+Date:   Tue, 14 May 2019 00:23:27 +0000
+Message-Id: <20190514002332.121089-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 In-Reply-To: <20190514002332.121089-1-sandals@crustytoothpaste.net>
 References: <20190514002332.121089-1-sandals@crustytoothpaste.net>
@@ -58,239 +58,235 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for multiple hooks for the pre-receive, post-receive,
-update, post-update, and push-to-checkout hooks. Add tests for these
-hooks using the multiple hook test framework.
+Add support for multiple post-rewrite hooks, both for "git commit
+--amend" and "git rebase". Unify the hook handling between the am-based
+and sequencer-based code paths.
 
-Because the invocations of test_multiple_hooks contain multiple test
-assertions, they (and the cd commands that surround them) must occur
-outside of a subshell, or a failing test will not be noticed.
+Additionally add support for multiple prepare-commit-msg hooks.
+
+Note that the prepare-commit-msg hook is not passed a set of hooks
+directly because these are discovered later when the code calls
+run_hooks_le.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/receive-pack.c | 78 ++++++++++++++++++++++++++----------------
- t/t5516-fetch-push.sh  | 30 ++++++++++++++++
- 2 files changed, 78 insertions(+), 30 deletions(-)
+ builtin/am.c                       | 20 +---------
+ sequencer.c                        | 59 ++++++++++++++++++------------
+ sequencer.h                        |  2 +
+ t/t5407-post-rewrite-hook.sh       | 15 ++++++++
+ t/t7505-prepare-commit-msg-hook.sh |  9 +++++
+ 5 files changed, 63 insertions(+), 42 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 29f165d8bd..5940f6969a 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -669,6 +669,8 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 	}
+diff --git a/builtin/am.c b/builtin/am.c
+index 912d9821b1..340eacbd44 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -441,24 +441,8 @@ static int run_applypatch_msg_hook(struct am_state *state)
+  */
+ static int run_post_rewrite_hook(const struct am_state *state)
+ {
+-	struct child_process cp = CHILD_PROCESS_INIT;
+-	const char *hook = find_hook("post-rewrite");
+-	int ret;
+-
+-	if (!hook)
+-		return 0;
+-
+-	argv_array_push(&cp.args, hook);
+-	argv_array_push(&cp.args, "rebase");
+-
+-	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+-	cp.stdout_to_stderr = 1;
+-	cp.trace2_hook_name = "post-rewrite";
+-
+-	ret = run_command(&cp);
+-
+-	close(cp.in);
+-	return ret;
++	return for_each_hook("post-rewrite", post_rewrite_rebase_hook,
++			     (void *)am_path(state, "rewritten"));
  }
  
-+typedef int (*feed_fn)(void *, const char **, size_t *);
-+
- struct receive_hook_feed_state {
- 	struct command *cmd;
- 	int skip_broken;
-@@ -676,34 +678,36 @@ struct receive_hook_feed_state {
- 	const struct string_list *push_options;
- };
+ /**
+diff --git a/sequencer.c b/sequencer.c
+index 546f281898..b899209f76 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1084,30 +1084,32 @@ int update_head_with_reflog(const struct commit *old_head,
+ 	return ret;
+ }
  
--typedef int (*feed_fn)(void *, const char **, size_t *);
--static int run_and_feed_hook(const char *hook_name, feed_fn feed,
--			     struct receive_hook_feed_state *feed_state)
-+struct receive_hook_data {
-+	feed_fn fn;
-+	struct receive_hook_feed_state *state;
+-static int run_rewrite_hook(const struct object_id *oldoid,
+-			    const struct object_id *newoid)
++struct rewrite_hook_data {
++	const struct object_id *oldoid;
++	const struct object_id *newoid;
 +};
 +
-+static int do_run_and_feed_hook(const char *name, const char *path, void *cbp)
++static int do_run_rewrite_hook(const char *name, const char *path, void *p)
  {
--	struct child_process proc = CHILD_PROCESS_INIT;
-+	struct receive_hook_data *data = cbp;
-+	struct child_process proc;
- 	struct async muxer;
- 	const char *argv[2];
--	int code;
++	struct rewrite_hook_data *data = p;
+ 	struct child_process proc = CHILD_PROCESS_INIT;
++	struct strbuf sb = STRBUF_INIT;
+ 	const char *argv[3];
+ 	int code;
+-	struct strbuf sb = STRBUF_INIT;
 -
--	argv[0] = find_hook(hook_name);
+-	argv[0] = find_hook("post-rewrite");
 -	if (!argv[0])
 -		return 0;
-+	int code = 0;
  
 +	argv[0] = path;
- 	argv[1] = NULL;
+ 	argv[1] = "amend";
+ 	argv[2] = NULL;
  
-+	child_process_init(&proc);
  	proc.argv = argv;
  	proc.in = -1;
  	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = hook_name;
+-	proc.trace2_hook_name = "post-rewrite";
 +	proc.trace2_hook_name = name;
  
--	if (feed_state->push_options) {
-+	if (data->state->push_options) {
- 		int i;
--		for (i = 0; i < feed_state->push_options->nr; i++)
-+		for (i = 0; i < data->state->push_options->nr; i++)
- 			argv_array_pushf(&proc.env_array,
- 				"GIT_PUSH_OPTION_%d=%s", i,
--				feed_state->push_options->items[i].string);
-+				data->state->push_options->items[i].string);
- 		argv_array_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT=%d",
--				 feed_state->push_options->nr);
-+				 data->state->push_options->nr);
- 	} else
- 		argv_array_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT");
- 
-@@ -734,7 +738,7 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 	while (1) {
- 		const char *buf;
- 		size_t n;
--		if (feed(feed_state, &buf, &n))
-+		if (data->fn(data->state, &buf, &n))
- 			break;
- 		if (write_in_full(proc.in, buf, n) < 0)
- 			break;
-@@ -748,6 +752,13 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+ 	code = start_command(&proc);
+ 	if (code)
+ 		return code;
+-	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
++	strbuf_addf(&sb, "%s %s\n", oid_to_hex(data->oldoid), oid_to_hex(data->newoid));
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 	write_in_full(proc.in, sb.buf, sb.len);
+ 	close(proc.in);
+@@ -1116,6 +1118,25 @@ static int run_rewrite_hook(const struct object_id *oldoid,
  	return finish_command(&proc);
  }
  
-+static int run_and_feed_hook(const char *hook_name, feed_fn feed,
-+			     struct receive_hook_feed_state *feed_state)
++static int run_rewrite_hook(const struct object_id *oldoid,
++			    const struct object_id *newoid)
 +{
-+	struct receive_hook_data data = { feed, feed_state };
-+	return for_each_hook(hook_name, do_run_and_feed_hook, &data);
++	struct rewrite_hook_data data = { oldoid, newoid };
++	return for_each_hook("post-rewrite", do_run_rewrite_hook, &data);
 +}
 +
- static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
- {
- 	struct receive_hook_feed_state *state = state_;
-@@ -790,16 +801,14 @@ static int run_receive_hook(struct command *commands,
- 	return status;
- }
++int post_rewrite_rebase_hook(const char *name, const char *path, void *input)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	child.in = open(input, O_RDONLY);
++	child.stdout_to_stderr = 1;
++	child.trace2_hook_name = "post-rewrite";
++	argv_array_push(&child.args, path);
++	argv_array_push(&child.args, "rebase");
++	return run_command(&child);
++}
++
+ void commit_post_rewrite(struct repository *r,
+ 			 const struct commit *old_head,
+ 			 const struct object_id *new_head)
+@@ -1368,7 +1389,7 @@ static int try_to_commit(struct repository *r,
+ 		goto out;
+ 	}
  
--static int run_update_hook(struct command *cmd)
-+static int do_run_update_hook(const char *name, const char *path, void *data)
- {
--	const char *argv[5];
-+	struct command *cmd = data;
- 	struct child_process proc = CHILD_PROCESS_INIT;
-+	const char *argv[5];
- 	int code;
+-	if (find_hook("prepare-commit-msg")) {
++	if (find_hooks("prepare-commit-msg", NULL)) {
+ 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+ 		if (res)
+ 			goto out;
+@@ -3763,8 +3784,6 @@ static int pick_commits(struct repository *r,
+ 		if (!stat(rebase_path_rewritten_list(), &st) &&
+ 				st.st_size > 0) {
+ 			struct child_process child = CHILD_PROCESS_INIT;
+-			const char *post_rewrite_hook =
+-				find_hook("post-rewrite");
  
--	argv[0] = find_hook("update");
--	if (!argv[0])
--		return 0;
+ 			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
+ 			child.git_cmd = 1;
+@@ -3774,18 +3793,10 @@ static int pick_commits(struct repository *r,
+ 			/* we don't care if this copying failed */
+ 			run_command(&child);
+ 
+-			if (post_rewrite_hook) {
+-				struct child_process hook = CHILD_PROCESS_INIT;
 -
-+	argv[0] = path;
- 	argv[1] = cmd->ref_name;
- 	argv[2] = oid_to_hex(&cmd->old_oid);
- 	argv[3] = oid_to_hex(&cmd->new_oid);
-@@ -819,6 +828,11 @@ static int run_update_hook(struct command *cmd)
- 	return finish_command(&proc);
- }
+-				hook.in = open(rebase_path_rewritten_list(),
+-					O_RDONLY);
+-				hook.stdout_to_stderr = 1;
+-				hook.trace2_hook_name = "post-rewrite";
+-				argv_array_push(&hook.args, post_rewrite_hook);
+-				argv_array_push(&hook.args, "rebase");
+-				/* we don't care if this hook failed */
+-				run_command(&hook);
+-			}
++			/* we don't care if this hook failed */
++			for_each_hook("post-rewrite",
++				      post_rewrite_rebase_hook,
++				      (void *)rebase_path_rewritten_list());
+ 		}
+ 		apply_autostash(opts);
  
-+static int run_update_hook(struct command *cmd)
-+{
-+	return for_each_hook("update", do_run_update_hook, cmd);
-+}
+diff --git a/sequencer.h b/sequencer.h
+index a515ee4457..710ef5c18c 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -154,6 +154,8 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		    unsigned autosquash, struct todo_list *todo_list);
+ int todo_list_rearrange_squash(struct todo_list *todo_list);
+ 
++int post_rewrite_rebase_hook(const char *name, const char *path, void *input);
 +
- static int is_ref_checked_out(const char *ref)
- {
- 	if (is_bare_repository())
-@@ -1011,7 +1025,7 @@ static const char *update_worktree(unsigned char *sha1)
+ /*
+  * Append a signoff to the commit message in "msgbuf". The ignore_footer
+  * parameter specifies the number of bytes at the end of msgbuf that should
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 7344253bfb..f8ce32fe3b 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -5,6 +5,7 @@
  
- 	argv_array_pushf(&env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+ test_description='Test the post-rewrite hook.'
+ . ./test-lib.sh
++. "$TEST_DIRECTORY/lib-hooks.sh"
  
--	if (!find_hook(push_to_checkout_hook))
-+	if (!find_hooks(push_to_checkout_hook, NULL))
- 		retval = push_to_deploy(sha1, &env, work_tree);
- 	else
- 		retval = push_to_checkout(sha1, &env, work_tree);
-@@ -1170,25 +1184,23 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	}
- }
- 
--static void run_update_post_hook(struct command *commands)
-+static int do_run_update_post_hook(const char *name, const char *path, void *data)
- {
-+	struct command *commands = data;
- 	struct command *cmd;
- 	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *hook;
- 
--	hook = find_hook("post-update");
--	if (!hook)
--		return;
-+	child_process_init(&proc);
- 
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
- 		if (!proc.args.argc)
--			argv_array_push(&proc.args, hook);
-+			argv_array_push(&proc.args, path);
- 		argv_array_push(&proc.args, cmd->ref_name);
- 	}
- 	if (!proc.args.argc)
--		return;
-+		return 0;
- 
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
-@@ -1198,8 +1210,14 @@ static void run_update_post_hook(struct command *commands)
- 	if (!start_command(&proc)) {
- 		if (use_sideband)
- 			copy_to_sideband(proc.err, -1, NULL);
--		finish_command(&proc);
-+		return finish_command(&proc);
- 	}
-+	return -1;
-+}
-+
-+static void run_update_post_hook(struct command *commands)
-+{
-+	for_each_hook("post-update", do_run_update_post_hook, commands);
- }
- 
- static void check_aliased_update_internal(struct command *cmd,
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index c81ca360ac..697c3ab074 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -15,6 +15,7 @@ This test checks the following functionality:
+ test_expect_success 'setup' '
+ 	test_commit A foo A &&
+@@ -263,4 +264,18 @@ test_expect_success 'git rebase -i (exec)' '
+ 	verify_hook_input
  '
+ 
++cmd_rebase () {
++	git reset --hard D &&
++	FAKE_LINES="1 fixup 2" git rebase -i B
++}
++
++cmd_amend () {
++	git reset --hard D &&
++	echo "D new message" > newmsg &&
++	git commit -Fnewmsg --amend
++}
++
++test_multiple_hooks --ignore-exit-status post-rewrite cmd_rebase
++test_multiple_hooks --ignore-exit-status post-rewrite cmd_amend
++
+ test_done
+diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
+index ba8bd1b514..287e13e29d 100755
+--- a/t/t7505-prepare-commit-msg-hook.sh
++++ b/t/t7505-prepare-commit-msg-hook.sh
+@@ -3,6 +3,7 @@
+ test_description='prepare-commit-msg hook'
  
  . ./test-lib.sh
 +. "$TEST_DIRECTORY/lib-hooks.sh"
  
- D=$(pwd)
- 
-@@ -1712,4 +1713,33 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
- 	)
+ test_expect_success 'set up commits for rebasing' '
+ 	test_commit root &&
+@@ -317,4 +318,12 @@ test_expect_success C_LOCALE_OUTPUT 'with failing hook (cherry-pick)' '
+ 	test $(grep -c prepare-commit-msg actual) = 1
  '
  
-+test_expect_success 'setup' '
-+	mk_test_with_hooks hooktest heads/master
-+'
-+
-+cmd_receive () {
-+	git reset --hard &&
-+	echo "$1" >>../file &&
-+	git -C .. add file &&
-+	git -C .. commit -m "$1" &&
-+	git -C .. push hooktest refs/heads/master:refs/heads/master
++cherry_pick_command () {
++	git checkout -f master &&
++	git checkout -B other b &&
++	git cherry-pick rebase-1
 +}
 +
-+cd hooktest
-+test_multiple_hooks pre-receive cmd_receive
-+test_multiple_hooks --ignore-exit-status post-receive cmd_receive
-+test_multiple_hooks update cmd_receive
-+test_multiple_hooks --ignore-exit-status post-update cmd_receive
-+cd ..
-+
-+test_expect_success 'setup' '
-+	rm -fr hooktest &&
-+	git init hooktest &&
-+	git -C hooktest config receive.denyCurrentBranch updateInstead
-+'
-+
-+cd hooktest
-+test_multiple_hooks push-to-checkout cmd_receive
-+cd ..
++test_multiple_hooks prepare-commit-msg cherry_pick_command
 +
  test_done
