@@ -2,105 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 710D31F461
-	for <e@80x24.org>; Tue, 14 May 2019 11:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E6281F461
+	for <e@80x24.org>; Tue, 14 May 2019 11:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbfENLVR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 07:21:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56722 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725893AbfENLVR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 07:21:17 -0400
-Received: (qmail 3900 invoked by uid 109); 14 May 2019 11:21:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 11:21:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11919 invoked by uid 111); 14 May 2019 11:21:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 07:21:55 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 07:21:15 -0400
-Date:   Tue, 14 May 2019 07:21:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     git@vger.kernel.org
-Subject: Re: some git confusion (where git's advice didn't help)
-Message-ID: <20190514112115.GA26957@sigill.intra.peff.net>
-References: <5CDA9063020000A10003131D@gwsmtp.uni-regensburg.de>
+        id S1726546AbfENLWc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 07:22:32 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35364 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbfENLWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 07:22:32 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p26so22356080edr.2
+        for <git@vger.kernel.org>; Tue, 14 May 2019 04:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=91N9RP5ay9Tjj0AoB7+cyRGeEh+JSOQ6CqjF9TWM/dw=;
+        b=sESOOJPfchWj83AHWp167qGfs4MAAlzJVz91Sk4LAfHkil+7WkLwNdQqnaegr12Tmv
+         khUFCHJ7Kk5zeZbUXt1Ei69MDm+pdURR8R1xx0WjbJRJzWBHK+7CyFnXAgNpA1rDjvTZ
+         X/sWLxtF3iPoYbuYDQmLW7p/8fVcHj2Da4+UK2EEPy60xz98HDv0KszdnBx+HY2sBMd1
+         LU5abi4LdrUCIHWKWQxWeojbxGwN9qksra3d3IKzswphGSaPkuXfuVSHm1FU+ITYIM7j
+         CzHS9HXsCqECYWsNQD099ZZAWv0sWKvgQC7uCWrSsJ+iilDOZnYBp6hwMlHBZH/6lGLs
+         aRGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=91N9RP5ay9Tjj0AoB7+cyRGeEh+JSOQ6CqjF9TWM/dw=;
+        b=UV23+/l/TgHBH1TaJOQ9DfgEGELM3fKA41cyvhQbx3hwZhANI1weIdg1jjSyA7JwpD
+         0KAJs1mY63Ct2D2CLpBSYxH6sxGmruGSX/zScHP4m1TkYO1dJZ3yaW1fYAagwf0WMFeL
+         Lnys/0gnvIUVcmCWU1f4fwxP9c1j9/phXy/+TjHirsjMhywOcaasbwHjlyW+XMg1jk2F
+         P/iX6JE9HmXmEWmNY0L2+7QNRIaVCcqlbPqfYHgeyMPOWmrMoMhh/2dhO4X6zSqBGH6V
+         eKSchuUwO/LL388Xkn5YB5Lrt5WY9X/rpIMy0p56xNCFfZeDDpD1I6Fajx+h0r5pdE5a
+         SxTQ==
+X-Gm-Message-State: APjAAAX9T1jPqZH52/3jVgr6RZZCJss+ZBAHj4U0tP6IY6PILmj4UIwz
+        urEwaxwdIeqQyb7HrWZfvv7fPQPE
+X-Google-Smtp-Source: APXvYqzcGSQbqT74f++msyWXGUAqIJQ9kgwFw47wuCOOsGWvwL4TxazzYs8as7NCiHIkyhferYGrmw==
+X-Received: by 2002:a17:906:e8c:: with SMTP id p12mr26264582ejf.18.1557832950844;
+        Tue, 14 May 2019 04:22:30 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q11sm4581928edd.51.2019.05.14.04.22.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 May 2019 04:22:30 -0700 (PDT)
+Date:   Tue, 14 May 2019 04:22:30 -0700 (PDT)
+X-Google-Original-Date: Tue, 14 May 2019 11:22:24 GMT
+Message-Id: <pull.194.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/5] Clean up after the removal of the scripted rebase
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5CDA9063020000A10003131D@gwsmtp.uni-regensburg.de>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 11:54:43AM +0200, Ulrich Windl wrote:
+Technically, there is still one part that is scripted: git rebase
+--preserve-merges. But that is already deprecated, and the remaining parts
+really are no longer scripted.
 
-> > git branch --track origin/f-gcc-4.8
-> Branch origin/f-gcc-4.8 set up to track local branch next.
-> > git fetch
-> > git branch
->   f-systemd
->   integration
->   master
-> * next
->   origin/f-gcc-4.8
-> > git merge f-gcc-4.8
-> merge: f-gcc-4.8 - not something we can merge
-> 
-> Did you mean this?
->         origin/f-gcc-4.8
-> > git merge origin/f-gcc-4.8
-> warning: refname 'origin/f-gcc-4.8' is ambiguous.
-> Already up-to-date.
-> 
-> ### So actually this advice wasn't helpful at all. Cause of the
-> problem most likely was "git branch --track origin/f-gcc-4.8" that
-> "imported" the branch under the same name as the remote branch is
-> referenced.
+Meaning that we do not need git-rebase--am.sh.
 
-Right, that was the source of the problem. Having both
-"refs/heads/origin/f-gcc-4.8" and "refs/remotes/origin/f-gcc-4.8" is
-going to lead to confusion, and you're best off deleting the mistaken
-branch as soon as possible.
+While at it, clean up a few other places that reference the scripted rebase,
+and also move the functions from git-rebase--common.sh directly into the -p 
+backend (because it is the sole remaining user).
 
-But I agree we could be more helpful in the messages.
+Johannes Schindelin (5):
+  Drop unused git-rebase--am.sh
+  t3400: stop referring to the scripted rebase
+  .gitignore: there is no longer a built-in `git-rebase--interactive`
+  sequencer: the `am` and `rebase--interactive` scripts are gone
+  rebase: fold git-rebase--common into the -p backend
 
-The "did you mean?" advice just blindly says "oh, you asked for X and
-refs/remotes/ABC/X exists, so let's suggest ABC/X", without checking for
-ambiguities. It should probably do this:
+ .gitignore                     |  3 --
+ Makefile                       |  2 -
+ builtin/rebase.c               |  7 +--
+ git-rebase--am.sh              | 85 ----------------------------------
+ git-rebase--common.sh          | 69 ---------------------------
+ git-rebase--preserve-merges.sh | 55 ++++++++++++++++++++++
+ sequencer.c                    |  2 +-
+ t/t3400-rebase.sh              |  2 +-
+ 8 files changed, 58 insertions(+), 167 deletions(-)
+ delete mode 100644 git-rebase--am.sh
+ delete mode 100644 git-rebase--common.sh
 
-diff --git a/help.c b/help.c
-index a9e451f2ee..108ca54af3 100644
---- a/help.c
-+++ b/help.c
-@@ -759,7 +759,8 @@ static int append_similar_ref(const char *refname, const struct object_id *oid,
- 	/* A remote branch of the same name is deemed similar */
- 	if (skip_prefix(refname, "refs/remotes/", &remote) &&
- 	    !strcmp(branch, cb->base_ref))
--		string_list_append(cb->similar_refs, remote);
-+		string_list_append(cb->similar_refs,
-+				   shorten_unambiguous_ref(refname, 1));
- 	return 0;
- }
- 
 
-which would print "ABC/X" in most cases, but "remotes/ABC/X" for your
-ambiguous case. Incidentally, the existing code also has a memory
-problem! It blindly skips past "refs/remotes/" in the refname and saves
-the pointer away in a NODUP string-list. But that refname pointer isn't
-ours, and isn't guaranteed to last past our for_each_ref() callback. The
-hunk above fixes it because shorten_unambiguous_ref() always returns a
-newly allocated string. :)
-
-I also think the "warning: refname ... is ambiguous" message would
-probably be a bit more helpful if it showed _which_ candidates it found
-(and which one it chose!).
-
--Peff
+base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-194%2Fdscho%2Fdrop-rebase--am.sh-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-194/dscho/drop-rebase--am.sh-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/194
+-- 
+gitgitgadget
