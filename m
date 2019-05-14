@@ -2,114 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF3F1F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:57:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0C621F461
+	for <e@80x24.org>; Tue, 14 May 2019 12:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725928AbfENM5Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:57:16 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:33414 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725562AbfENM5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:57:16 -0400
-Received: by mail-io1-f65.google.com with SMTP id z4so12941260iol.0
-        for <git@vger.kernel.org>; Tue, 14 May 2019 05:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mOz7Vnbunrp1/vSG0EZWb0FeZogcXZTJZdVGsLjYbW0=;
-        b=ioEQZjikoMqv/YAJPicxwochlr0BSre2dHlJfpixhhG2ApAD8pE55LNMQHHj5vRaLb
-         3NpJVO71cpmTtjRhWvkC2xhKfiB423Uu8nAwnt8m87CQQIRG05IjK9eltF0wCrhOFN9G
-         eoUFCa+6nr2I11Z+J5Vfv5fnEm3QMteVt1fkSsWFr5Rqp5xRSRhvKc4UbvmAZlWTUSQn
-         c96zkJ/ZTVrryCwLvAbFcBvwBwWi/YdjcdIl13q4BmiAeT01werNRVKoTwpyDwCZg+3D
-         Qm9+3KOkDepeaNM32JgES9SaFZXRd4+qKAucme9d1et8uytw+Fkpm45zQldCFRNHsQHm
-         7E6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mOz7Vnbunrp1/vSG0EZWb0FeZogcXZTJZdVGsLjYbW0=;
-        b=SpPNmkz0An4O6bAToGdtiCn5zNWyyV5/6GnmemHKsqsbyyi5HNKM88jVH/xYbtDTOB
-         yyVmF68OUaHyGAsSoP0GkmNkYzqRy4i27yootEkiwhTRT4OY7HqhkcKfGDgzrZy0C+f9
-         o6yiz4rfqK+igOb1CGbGXQIj1fZqTZ9bFtZxdzlvO7DPyzJodT5naIo5AU12bDMblWa5
-         Hfve09xycLzONVU+REpgdAEml09yIGsbUruInkCcYNOsYnKSPsKxU2e6Mk77rgSTn7jl
-         62Wf/wi95Q9ZBQoydG1NFIfONuQjKaVWE8TBG7QUmboFCRpcZBF8fxXxvlaTpW/f+53g
-         FQog==
-X-Gm-Message-State: APjAAAX56OIselsbOA7OJVv3wCD7yoh2erFvMpm6aUT49rHpX359zmTP
-        btmnBhI63BbE9X+Hn8vJVkob8rMJ3jXMI/1bUSc=
-X-Google-Smtp-Source: APXvYqx0R8unNvJWMvd0XFzwbbtrSgStSx8AlqElCHFKUN3HKWlsRTFJ5JmgcmNAxgODU/PXGQFUQqFcMg3fUKs18+g=
-X-Received: by 2002:a5e:d60f:: with SMTP id w15mr17181247iom.282.1557838635532;
- Tue, 14 May 2019 05:57:15 -0700 (PDT)
+        id S1726107AbfENM5Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:57:25 -0400
+Received: from mout.gmx.net ([212.227.17.21]:48961 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725562AbfENM5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:57:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557838637;
+        bh=1/yKzp1VvLNy01hRFutPbfg4tPFnZg7VfPkQ9Adpwug=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Lh+hVTJdHvjbiFZv+HNjzOb8HoUTJAfH5H1bYay0C7Y1TsoNRbwlXXCTccnd4pylr
+         0qA7zkFYlcnYrQ3K5t/asP8LUw+0bbh0Ogx8MSZZAyFg9jJaNbsx/Xmf5YIkY2kqg+
+         d/0sXtxNVJJaIRY6fqmumbC9VNZG826zbio1dDb4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCwbX-1hZ1Ac2zLf-009l8D; Tue, 14
+ May 2019 14:57:17 +0200
+Date:   Tue, 14 May 2019 14:57:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pkt-line: fix declaration of `set_packet_header()`
+In-Reply-To: <xmqqo9469buw.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905141454510.44@tvgsbejvaqbjf.bet>
+References: <pull.192.git.gitgitgadget@gmail.com> <a6bfec76c85bbe9187b536ff78252b82e30e20d3.1557787395.git.gitgitgadget@gmail.com> <xmqqo9469buw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-4-sandals@crustytoothpaste.net>
-In-Reply-To: <20190514002332.121089-4-sandals@crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 14 May 2019 19:56:49 +0700
-Message-ID: <CACsJy8CnCoMK7ahjRotKfiC2ic-U0hdhKuQAeF-TtVt8N+bU2Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] rebase: add support for multiple hooks
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7qmhlVpWWUtfDuUynMhXy8tos6B/RMC8+3mRtZtBIf30QKNIcPr
+ 5j+CZAc66FLQ++bnaQUYpXeUMjdmY0NVfxGrDweArS5bHsUX/g5ozE9D7lwcYPjg+aUNXwi
+ JvW8hOWMPrdgSUzgqoUDiaeg/k5tMQgxv5K+JW3Ml5LdACOIaMO6KTXuT30sJq+okcyoI4T
+ HrM0sAVvsfzjuNsuG4YgA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/+DxVix2bAI=:eLc+pxzVlvwBVcdJlJ1d5m
+ FXKnP+JfB8yf7rarOy6twsUIHgIpvStiVrxquJmgYWvBAe6xtdnqwCBPgWx+GVljgrkNrAdtJ
+ 9/wBKd+oovdpWSsNgUba5sEFLm/CGI44D4bgLwNvWRa8+lr7uijfE0xWi30EjInPhakZvxQXk
+ iShqGhuzokU2Gheee4SoxEpoEXHavg/ExMyl6xUdr3V7vIgl+LlV/+EailxlArZqdR6s3S+HM
+ vd+HWA9zhCZ4EF9Sirek/CqAsT7bDQlZAQj8rMRlZNyjpkXGmvmm1DSN2S5/4l3M0d5HFzkEK
+ GdsW/GvrhBlG3hA1wdkfCyJUJ11EQzQODQ5xcWU1depPs62ugJZRPYZwUOm5oYNoR9vQW+8j1
+ HpWY2SdTKCnfuBG+D/XJUUg0AjGc/cg0SYkbAdoU35sr4SfMaexYab0SUldupKGwef0BPjZLi
+ WHZV03exBLqkxxHWjIJX3PUy5CLwYd2qhXZUbbMZ/+Jmsf+2up+Rz6lncJXDrqUE/H5rUk+rE
+ zaxvXitXV1K2Sgu3mr4TVNyn2tFnnZs55I0PjZeLTR66RksWRYuWcj2ZtAHOHFli2a7axhbG3
+ Xm2Gf4hq8QrbEI2aIEIs9dLN7+kJUE2db8DSb9lbKiesIILPKHdkA/SIS4J9w72DrEuNlOdQ3
+ epuIbwNFwQTbNchoSHRWkkxCL4/onVHSiMpucmInqa0cgdXNnRtW3Vfe0nsNStVqxXN81vyWc
+ mMXT3uHSNAh3JUyh8rz/n+Jaa2DLn1NZ+GPjhRuLZ5kYl1cl0NNpurtv6s5NYDGqYuSdn8655
+ RPAaN/Bb2itIHC10LPVitKXOI2JxePBQRT6MWQG1lh4LlBs0+U+M7b6sjuS2VBDPu0PWahDzZ
+ sjrPJKDqFDqkKw8DlHZfTkz/mlVPGtWXBDsPjP7wt+Z30Pbh18PwkcCr4aK1J6o18WbjYY3mB
+ UtztzaSzoRA==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 7:24 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 912d9821b1..340eacbd44 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -441,24 +441,8 @@ static int run_applypatch_msg_hook(struct am_state *state)
->   */
->  static int run_post_rewrite_hook(const struct am_state *state)
->  {
-> -       struct child_process cp = CHILD_PROCESS_INIT;
-> -       const char *hook = find_hook("post-rewrite");
-> -       int ret;
-> -
-> -       if (!hook)
-> -               return 0;
-> -
-> -       argv_array_push(&cp.args, hook);
-> -       argv_array_push(&cp.args, "rebase");
-> -
-> -       cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
-> -       cp.stdout_to_stderr = 1;
-> -       cp.trace2_hook_name = "post-rewrite";
-> -
-> -       ret = run_command(&cp);
-> -
-> -       close(cp.in);
+Hi Junio,
 
-In the old code, we close cp.in...
+On Tue, 14 May 2019, Junio C Hamano wrote:
 
-> +int post_rewrite_rebase_hook(const char *name, const char *path, void *input)
-> +{
-> +       struct child_process child = CHILD_PROCESS_INIT;
-> +
-> +       child.in = open(input, O_RDONLY);
-> +       child.stdout_to_stderr = 1;
-> +       child.trace2_hook_name = "post-rewrite";
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When this function was changed in a97d00799a19 (remote-curl: use
+> > post_rpc() for protocol v2 also, 2019-02-21) from file-local to global=
+,
+> > the declaration was incorrectly missing the `const` qualifier.
+>
+> I do not quite get it.  Back when the function was file-scope
+> static, it did not even have a separate declaration, and the
+> definition the said commit added looks correct to me.
 
-maybe use "name" and avoid hard coding "post-rewrite".
+Right, I should have said "the new declaration" instead of "the
+declaration".
 
-> +       argv_array_push(&child.args, path);
-> +       argv_array_push(&child.args, "rebase");
-> +       return run_command(&child);
+> Having "const int size" parameter in the definition of a function
+> does help the compilers and the developers by making sure any
+> earlier reference to the parameter in the function would not modify
+> it and cause later reference to obtain a different value.
+>
+> But the parameter treated as a constant without getting modified
+> during the invocation of the function is an implementation detail of
+> the function; there is no point exposing that implementation detail
+> to its callers.  It does not even help the compilers handling the
+> caller's compilation unit---the parameter is passed by value, so the
+> caller knows that the callee would not modify it without "const"
+> there.
+>
+> Does the language even allow flagging "const int in the definition,
+> int in the declaration" as a warning-worthy discrepancy?
 
-... but in the new one we don't. Smells fd leaking to me.
--- 
-Duy
+Apparently it does, as MS Visual C does issue a warning (and with `/Wall`,
+it fails).
+
+In any case, I don't think that it makes sense to have a function
+declaration whose signature differs from the definition's.
+
+Ciao,
+Dscho
+
+> > -void set_packet_header(char *buf, int size);
+> > +void set_packet_header(char *buf, const int size);
+>
