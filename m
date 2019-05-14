@@ -2,105 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0F11F461
-	for <e@80x24.org>; Mon, 13 May 2019 23:29:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E80621F4B6
+	for <e@80x24.org>; Tue, 14 May 2019 00:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbfEMX3N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 19:29:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63930 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726233AbfEMX3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 19:29:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71ABC15CA08;
-        Mon, 13 May 2019 19:29:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sg1kRNTidVVnR3Ben9Ue1GdpSc8=; b=Cbgu+F
-        7DPwx7hlYSDQm77fZYworhPZszpvS+7cavtlYvX39p9hHEsDwgbzk5AxCaVC/8el
-        DlfB2+sw4424Tn8DCackEvhmQw8X6ZTOKHEx2FjsLSRKYR4W0aZhKK7GRuZ8ejYz
-        NYsj/PnVpnNixVj6h4lJ4kO/QKAshlIKZofKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nhX5b6vZfBIqyst2t2/y0t0YroxJcjE6
-        +YF4w2krSfg3yrRJmsFm/AYdjaa9PNJfbzKwqWTQ8Yrjofv7AW1ctkuSK16TyUsM
-        TBiK/5P6Kra1Di3bWTMG2O+UnvIWP4dwsh6S1A/f2D3yx28E/j175G/kYdofVooz
-        uBHrF/aZ9lY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68CD015CA07;
-        Mon, 13 May 2019 19:29:10 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CBABB15CA05;
-        Mon, 13 May 2019 19:29:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] parse-options: adjust `parse_opt_unknown_cb()`s declared return type
-References: <pull.192.git.gitgitgadget@gmail.com>
-        <dd283736b72d3e52bd298b0360ab66ffd15c1cf9.1557787395.git.gitgitgadget@gmail.com>
-Date:   Tue, 14 May 2019 08:29:08 +0900
-In-Reply-To: <dd283736b72d3e52bd298b0360ab66ffd15c1cf9.1557787395.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 13 May 2019
-        15:43:17 -0700 (PDT)")
-Message-ID: <xmqqk1eu9bnf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E8AB7852-75D6-11E9-AD2E-46F8B7964D18-77302942!pb-smtp1.pobox.com
+        id S1726787AbfENAJT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 20:09:19 -0400
+Received: from resqmta-po-07v.sys.comcast.net ([96.114.154.166]:53300 "EHLO
+        resqmta-po-07v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726598AbfENAJT (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:09:19 -0400
+Received: from resomta-po-15v.sys.comcast.net ([96.114.154.239])
+        by resqmta-po-07v.sys.comcast.net with ESMTP
+        id QKu9hM8DvC2gEQL0QhJo2k; Tue, 14 May 2019 00:09:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1557792558;
+        bh=/Go+PeB37mwTwoc6TFFWK6oH9B3hM8kaF37qcaP2vek=;
+        h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+         Message-Id:To;
+        b=fI15HprypVBCPKvr9ObvZJeMrMoMUnvNEpsgI4ATFxBZ3uxingLWC1eECKa1G2ELR
+         hrJ92PZZnCo2wELgdzPPLiXReWSe9k2w3VgRFWZsy/kD6AS2O28MJTyunalSZORMHV
+         3sRDjPEkbq7MzbjjBFFHD4Q3BSvlhcFpitLwd2os/uxb9uqzLTkQwZ3bEYnF3Np2Ma
+         yF3hSY4XAlGDcqnjNp7gTO00JpOTQV43z71ybagTjnl3ZYOhunpCNE+OiiogLZIGWO
+         P4SnXWBz9jzuA/+WnGDwzy4+/g1BhVpVhXp+sUAX1Y0kxZ2MAdQqhB0qar3vFZf4Gh
+         HQsghuRhD/86w==
+Received: from [IPv6:2620::100e:913:30:a620:8e2a:82b3] ([IPv6:2620:0:100e:913:30:a620:8e2a:82b3])
+        by resomta-po-15v.sys.comcast.net with ESMTPA
+        id QL09hKJTS4A00QL0DhH9OL; Tue, 14 May 2019 00:09:16 +0000
+X-Xfinity-VMeta: sc=0;st=legit
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
+Subject: Re: Proposal: object negotiation for partial clones
+From:   Matthew DeVore <matvore@comcast.net>
+In-Reply-To: <20190509180022.91700-1-jonathantanmy@google.com>
+Date:   Mon, 13 May 2019 17:09:00 -0700
+Cc:     matvore@google.com, git@vger.kernel.org, jrn@google.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4A3BD0B7-894F-4FB0-A3BA-15675F60046C@comcast.net>
+References: <A0ADEE11-E3E1-4DE0-81BA-40771C783E4E@comcast.net>
+ <20190509180022.91700-1-jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+X-Mailer: Apple Mail (2.3445.104.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In f41179f16ba2 (parse-options: avoid magic return codes, 2019-01-27),
-> the signature of the low-level parse-opt callback function was changed
-> to return an `enum`.
->
-> And while the implementations were changed, one declaration was left
-> unchanged, still claiming to return `int`.
->
-> This can potentially lead to problems, as compilers are free to choose
-> any integral type for an `enum` as long as it can represent all declared
-> values.
 
-The enum is meant to represent "these magic negative numbers", and
-if the compiler chose "long" for it and the implementation of the
-function returned a "long", while the caller thought it would yield
-an "int", things will break.
+> On 2019/05/09, at 11:00, Jonathan Tan <jonathantanmy@google.com> =
+wrote:
+>=20
+> Thanks for the numbers. Let me think about it some more, but I'm still
+> reluctant to introduce multiple filter support in the protocol and the
+> implementation for the following reasons:
 
-Looks good to make callers' expectation and what callee does
-consistent.
+Correction to the original command - I was tweaking it in the middle of =
+running it, and introduced an error that I didn=E2=80=99t notice. Here =
+is one that will work for an entire repo:
 
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  parse-options.h | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/parse-options.h b/parse-options.h
-> index bd00cf0049..cd756833a9 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -286,7 +286,9 @@ int parse_opt_commit(const struct option *, const char *, int);
->  int parse_opt_tertiary(const struct option *, const char *, int);
->  int parse_opt_string_list(const struct option *, const char *, int);
->  int parse_opt_noop_cb(const struct option *, const char *, int);
-> -int parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx, const struct option *, const char *, int);
-> +enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
-> +					   const struct option *,
-> +					   const char *, int);
->  int parse_opt_passthru(const struct option *, const char *, int);
->  int parse_opt_passthru_argv(const struct option *, const char *, int);
+$ git rev-list --objects --filter=3Dblob:none HEAD: | awk '{print $1}' | =
+xargs -n 1 git cat-file -s  | awk '{ total +=3D $1; print total }'
+
+When run to completion, Chromium totaled 17 301 144 bytes.
+
+>=20
+> - For large projects like Linux and Chromium, it may be reasonable to
+>  expect that an infrequent checkout would result in a few-megabyte
+>  download.
+
+Anyone developing on Chromium would definitely consider a 17 MB original =
+clone to be an improvement over the status quo, but it is still not =
+ideal.
+
+And the 17MB initial download is only incurred once *assuming* the next =
+idea is implemented:
+
+> - (After some in-office discussion) It may be possible to mitigate =
+much
+>  of that by sending root trees that we have as "have" (e.g. by
+>  consulting the reflog), and that wouldn't need any protocol change.
+
+This would complicate the code - not in Git itself, but in my =
+FUSE-related logic. We would have to explore the reflog and try to find =
+the closest commits in history to the target commit being checked out. =
+This is sounding a bit hacky and round-about, and it assumes that at the =
+FUSE layer we can detect when a checkout is happening cleanly and =
+sufficiently early (rather than when one of the sub-sub-trees is being =
+accessed).
+
+> - Supporting any combination of filter means that we have more to
+>  implement and test, especially if we want to support more filters in
+>  the future. In particular, the different filters (e.g. blob, tree)
+>  have different code paths now in Git. One way to solve it would be to
+>  combine everything into one monolith, but I would like to avoid it if
+>  possible (after having to deal with revision walking a few times...)
+
+I don=E2=80=99t believe there is any need to introduce monolithic code. =
+The bulk of the filter implementation is in list-objects-filter.c, and I =
+don=E2=80=99t think the file will get much longer with an additional =
+filter that =E2=80=9Ccombines=E2=80=9D the existing filter. The new =
+filter is likely simpler than the sparse filter. Once I add the new =
+filter and send out the initial patch set, we can discuss splitting up =
+the file, if it appears to be necessary.
+
+My idea - if it is not clear already - is to add another OO-like =
+interface to list-objects-filter.c which parallels the 5 that are =
+already there.
+
