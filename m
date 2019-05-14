@@ -2,89 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 247701F461
-	for <e@80x24.org>; Tue, 14 May 2019 11:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF01B1F461
+	for <e@80x24.org>; Tue, 14 May 2019 11:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbfENLKE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 07:10:04 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:36644 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfENLKE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 07:10:04 -0400
-Received: from [192.168.1.22] ([92.1.197.142])
-        by smtp.talktalk.net with SMTP
-        id QVJqhIsUwWIpcQVJqhwUpO; Tue, 14 May 2019 12:10:02 +0100
-X-Originating-IP: [92.1.197.142]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
- a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=uPZiAMpXAAAA:8 a=_MSeebai26lSIMIXgSkA:9
- a=QEXdDO2ut3YA:10 a=xts0dhWdiJbonKbuqhAr:22
-Subject: Re: Missing branches after clone
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        Git Mailing List <git@vger.kernel.org>
-References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
- <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
- <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
- <CACsJy8D9wDiTOfKP4sdMFQrR66qa4cLZuqqn32yH83_q0XjKRg@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <aeb83b28-3db1-f37c-6cb0-6be5622da114@iee.org>
-Date:   Tue, 14 May 2019 12:10:02 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        id S1726314AbfENLRf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 07:17:35 -0400
+Received: from goliath.siemens.de ([192.35.17.28]:54104 "EHLO
+        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726272AbfENLRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 07:17:35 -0400
+Received: from mail2.siemens.de (mail2.siemens.de [139.25.208.11])
+        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id x4EBHQdw028085
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 14 May 2019 13:17:26 +0200
+Received: from [147.54.65.49] (MD11GXTC.ad001.siemens.net [147.54.65.49])
+        by mail2.siemens.de (8.15.2/8.15.2) with ESMTP id x4EBHQh6006381;
+        Tue, 14 May 2019 13:17:26 +0200
+Subject: Re: [PATCH] sha1dc: update from upstream
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <3cabed9e-3949-93cc-2c9c-500a9cd9d4cd@siemens.com>
+ <20190513221701.1837-1-avarab@gmail.com>
+From:   "Osipov, Michael" <michael.osipov@siemens.com>
+Message-ID: <09f64da1-b8aa-3cd7-89d7-475b8722e176@siemens.com>
+Date:   Tue, 14 May 2019 13:17:27 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8D9wDiTOfKP4sdMFQrR66qa4cLZuqqn32yH83_q0XjKRg@mail.gmail.com>
+In-Reply-To: <20190513221701.1837-1-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfNxBLoow0IbPaYYZ2jvRpXhbQ7hCaVb8ghx2+uQC3jv2WOwXxWSRvpBLSOiXJLsQSN1QTyCikRI4bK/tmTwGgtqh1QltJ94FglslhZUk2gLwVM35qzvy
- RSnqrfMP2JUTeqca8Mri+F7W1QhneCmYzmKS4rSm4q7apVN8/dsps6AXxfZdx867BhEiw2nX6U/YCfbGq/ga+TpI4PXMjbzhb+iUjrbehLeJnTh60d5oy15+
- wPgDfqixJdx2PMkDWQOe5A==
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Hi,
 
-On 14/05/2019 11:53, Duy Nguyen wrote:
-> On Tue, May 14, 2019 at 5:33 PM Philip Oakley <philipoakley@iee.org> wrote:
->> Hi Ulrich,
->> On 14/05/2019 11:12, Duy Nguyen wrote:
->>>> Then I foundhttps://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches  which handles the subject...
->>>> But still the most common solution there still looks like an ugly hack.
->>>> Thus I suggest to improve the man-pages (unless done already)
->>> Yeah I expected to see at least some definition of remote-tracking
->>> branches (vs local ones) but I didn't see one. Room for improvement.
->> Yes, the 'remote tracking branch' name [RTB] is very 'French' in its
->> backwardness (see NATO/OTAN).
-> The name is not that bad to me.
-It was something that I struggled with initially, and its sounds like 
-Ulrich had a similar issue.
-
-I expect that those who grow up with the development of Git have an 
-organic knowledge that is deeply rooted so the terms will be solidly 
-founded for them (along with many other terms and implementation details 
-that catch me out ;-).
->> It is a 'branch which tracks a remote', and it is has the 'last time I
->> looked' state of the branch that is on the remote server, which may
->> have, by now, advanced or changed.
+Am 2019-05-14 um 00:17 schrieb Ævar Arnfjörð Bjarmason:
+> Update sha1dc from the latest version by the upstream
+> maintainer[1]. See 07a20f569b ("Makefile: fix unaligned loads in
+> sha1dc with UBSan", 2019-03-12) for the last update.
+> 
+> This fixes an issue where HP-UX IA64 was wrongly detected as a
+> Little-endian instead of a Big-endian system, see [2] and [3].
+> 
+> 1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/855827c583bc30645ba427885caa40c5b81764d2
+> 2. https://public-inbox.org/git/603989bd-f86d-c61d-c6f5-fb6748a65ba9@siemens.com/
+> 3. https://github.com/cr-marcstevens/sha1collisiondetection/pull/50
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> n Thu, May 09 2019, Osipov, Michael wrote:
+> 
+>> Hey there,
 >>
->> So you need to have the three distinct views in your head of 'My branch,
->> held locally', 'my copy of Their branch, from when I last looked', and
->> 'Their branch, on a remote server, in a state I haven't seen recently'.
-> What I was looking for is this. I don't think we have something like
-> this in the man pages (I only checked a few though) and not even sure
-> where it should be if it should be added to the man pages, git-branch?
-> git-remote? git-fetch? git-branch.txt might be the best place because
-> this is still about branches.
->
-At the moment its in `git help glossary`, but could be improved, and 
-references to it given in the various man pages.
---
-Philip
+>> Am 2019-05-09 um 09:32 schrieb Ævar Arnfjörð Bjarmason:
+>>>
+>>> On Wed, May 08 2019, Osipov, Michael wrote:
+>>>
+>>>> Hi folks,
+>>>
+>>> Hi see Documentation/SubmittingPatches for how to submit patches inline
+>>> instead of as attachments.
+>>
+>> Do you want me to resend the configure.ac change as per wiki article?
+>> I can also create a PR on GitHub. I am happy with both as long as I
+>> don't have to retain the patch for myself only ;-)
+> 
+> Yeah that patch to git.git should be done separately. I see your PR
+> went in upstream, here's a patch to update our code to match.
+
+To avoid misunderstandings, I have factored out the Git patch and 
+created a PR: https://github.com/git/git/pull/608
+
+Looks good to me now:
+> osipovmi@deblndw024v:~/git
+> $ uname -a
+> HP-UX deblndw0 B.11.31 U ia64 HP-UX
+> osipovmi@deblndw024v:~/git
+> $ ./git --version
+> git version 2.22.0.rc0.dirty
+> osipovmi@deblndw024v:~/git
+> $ ldd ./git
+> 
+> ./git:
+>         libz.so =>      /opt/ports/lib/hpux32/libz.so
+>         libiconv.so.8 =>        /opt/ports/lib/hpux32/libiconv.so.8
+>         libintl.so.9 => /opt/ports/lib/hpux32/libintl.so.9
+>         libc.so.1 =>    /usr/lib/hpux32/libc.so.1
+>         libc.so.1 =>    /usr/lib/hpux32/libc.so.1
+>         libc.so.1 =>    /usr/lib/hpux32/libc.so.1
+>         libc.so.1 =>    /usr/lib/hpux32/libc.so.1
+>         libdl.so.1 =>   /usr/lib/hpux32/libdl.so.1
+
+Looking forward for a merge.
+
+Regards,
+
+Michael
