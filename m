@@ -2,100 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4B291F461
-	for <e@80x24.org>; Tue, 14 May 2019 08:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4EC1F461
+	for <e@80x24.org>; Tue, 14 May 2019 08:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726201AbfENIVL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 04:21:11 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36341 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfENIVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 04:21:11 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a8so21605646edx.3
-        for <git@vger.kernel.org>; Tue, 14 May 2019 01:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=ikfsTqO0DHlYQKcLkyzMg15pzFYWqGeykTdFIzh4cok=;
-        b=angiFC9uUt01fs9fhuadlAavWtIRwYw9Mh7U67xVXQ1erbEcAnhRFrtMR5V9r4Iuo+
-         eswFAVerigXuXzkgtEUOlzEgAVKsUdy9j0RnYFAbzzMsS1cMpSArgvowq/cQW+dQHGE5
-         OZnZ+BzMh7c7TlGs32Z8cdd/2F28Tkdrh6w7KOlY0aTSPAaZC7tPUvkjbW4PKyMGDqJU
-         LL3GeYn1X8B0+YAdBHlO1Oah2m+E3J0B4JoJBBXd1yNdYuI1TFd31/FeW18uX3dSNCO9
-         txlRFPd3gvBrW89M6qPA7Nk5nle6YLCYBtLNs//T0UJFzSYzijvETfON4HXqOW9vi5XL
-         eDjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=ikfsTqO0DHlYQKcLkyzMg15pzFYWqGeykTdFIzh4cok=;
-        b=O3NsvuRb6W2IgDzY7uFKF3DcGlkqvE+vwC8Iuo22351p4C11IwrpG37O6O5fTtgTGe
-         92Uqv3F2ZwaOdtPnwSOpneZyS+AKABvoQoZI7si2thJ7+jjaSCoPJlsJCvuORM1QnLAF
-         vNfRjy48YfNK9zl06Yuh1hwiLyw2eZwN/MATdgd5eaq91vpKyIjFz57inclYZWGmRiAH
-         ohvA3IOGltyIU3PIQs4/SzdLtRjLFNaOTYeaGZAm47pP10p1//f4FUPyu3p/sb+pLm1Y
-         UYleyVfn6sfY505heFKP/70ks1JpLGuJlYxITBT4c083sZGCmaYT/Kjme2scX9aqLN5y
-         H/Kg==
-X-Gm-Message-State: APjAAAWawxc/WrXaPUaRj8Jkmw7hgCHbM5P5fjyjLG2aSaYr97BLxoa6
-        Bvrw6byYkocK0W34Vbam8WiMmbiF9DU=
-X-Google-Smtp-Source: APXvYqxEKo65lEj1W2sC2UoAWD4zhMZR7YpLPjQ8KBwAoaidnWz6HdnhA3AjrWM/JJueTx4iiwbrTg==
-X-Received: by 2002:aa7:ca54:: with SMTP id j20mr34482664edt.23.1557822069886;
-        Tue, 14 May 2019 01:21:09 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id z10sm2089145ejg.36.2019.05.14.01.21.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 May 2019 01:21:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Git List <git@vger.kernel.org>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to exchange rerere/redo resolutions?
-References: <b8e56556-6c83-9e37-38e9-ac67f51b5cd2@iee.org> <871s17xk79.fsf@evledraar.gmail.com> <37ccaad0-40b4-ca63-e057-791119d7fa69@talktalk.net> <d139d79a-f35a-e00c-3790-104146b066c7@iee.org>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <d139d79a-f35a-e00c-3790-104146b066c7@iee.org>
-Date:   Tue, 14 May 2019 10:21:06 +0200
-Message-ID: <87mujpwiod.fsf@evledraar.gmail.com>
+        id S1726143AbfENIpg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 04:45:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56526 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725916AbfENIpg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 04:45:36 -0400
+Received: (qmail 2178 invoked by uid 109); 14 May 2019 08:45:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 08:45:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10072 invoked by uid 111); 14 May 2019 08:46:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 04:46:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 04:45:34 -0400
+Date:   Tue, 14 May 2019 04:45:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: try harder to ensure a working jgit
+Message-ID: <20190514084534.GA9567@sigill.intra.peff.net>
+References: <20190514020520.GI3654@pobox.com>
+ <20190514021419.GI7458@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190514021419.GI7458@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 14, 2019 at 02:14:19AM +0000, brian m. carlson wrote:
 
-On Tue, May 14 2019, Philip Oakley wrote:
+> On Mon, May 13, 2019 at 10:05:20PM -0400, Todd Zullinger wrote:
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 908ddb9c46..599fd70e14 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1522,7 +1522,7 @@ test_lazy_prereq NOT_ROOT '
+> >  '
+> >  
+> >  test_lazy_prereq JGIT '
+> > -	type jgit
+> > +	jgit --version
+> >  '
+> 
+> I think this is an improvement, not only because of the reasons you
+> mentioned, but because we remove the use of "type", which is not
+> guaranteed to be present in a POSIX shell.
 
-> Hi All,
->
-> On 10/05/2019 15:59, Philip Oakley wrote:
->>> You can publish your merged branch somewhere, and others can use
->>> contrib/rerere-train.sh to learn from the resolution.
->>>
->>> Supposedly, I've never actually used it...
->
-> Does the contrib/rerere-train.sh actually work? I'm reading the code
-> to ensure I understand what rerere/redo is doing, and in the training
-> it tries to detect MERGE_RR via L87
->
->     if test -s "$GIT_DIR/MERGE_RR"
->
-> It's not clear if that is an internal implementation detail, or a
-> mistaken use of a historic path name. Can anyone enlighten me?
+Isn't it? I have always treated it as the most-portable option for this
+(compared to, say, `which`).  It is in POSIX as a utility (albeit marked
+with XSI), which even says (in APPLICATION USAGE):
 
-Historic? No, this is path.c now on master:
+  Since type must be aware of the contents of the current shell
+  execution environment (such as the lists of commands, functions, and
+  built-ins processed by hash), it is always provided as a shell regular
+  built-in.
 
-    path.c:1454:REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+All that said, I think Todd's patch makes perfect sense even without
+wanting to avoid "type".
 
-Internal, sure. We don't document it so it could change in theory, but
-then we'd probably change rerere-train.sh along with it...
-
->> The tricky part is when the patch series doesn't apply so the
->> conflict isn't yet on any branch..
-> When copying patches across to Git for Windows, the conflict
-> resolution can be tricky.
+-Peff
