@@ -2,100 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC581F461
-	for <e@80x24.org>; Tue, 14 May 2019 13:38:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACC3E1F461
+	for <e@80x24.org>; Tue, 14 May 2019 13:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726009AbfENNie (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 09:38:34 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:51907 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725854AbfENNid (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 09:38:33 -0400
-Received: by mail-it1-f193.google.com with SMTP id s3so4998540itk.1
-        for <git@vger.kernel.org>; Tue, 14 May 2019 06:38:33 -0700 (PDT)
+        id S1726060AbfENNjJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 09:39:09 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45679 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725854AbfENNjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 09:39:09 -0400
+Received: by mail-ed1-f65.google.com with SMTP id g57so22913613edc.12
+        for <git@vger.kernel.org>; Tue, 14 May 2019 06:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=A5dxkG+6DEqJ1u5/i8h9z7umRyntsv/xbDdceAJ49kE=;
-        b=Ky5kt64x3B1FBFqnbaOxULKHC68RAeC+P9X1bJ0HkkQa32uX/v820JmzYK93z19xAn
-         lljSwQ7qEcrOiWpM70RDTX3rGKy7gJjHaWzNbZ/wYlzRAoXCrZnrBh1G0AsL4K/14RiY
-         35m9PLMCFox+eCDNKJnMsLpY4As7wGGUlMmgJOHPGY26P2WLML99Ok4SYdZ+7ZLZm5KD
-         +wrFP7l3qGfWiaxYhy1Fb16zfAsozf3hyDsT/TtONECQhHASZG/WH2hFyrvFIqb6rzlL
-         S4qtJPn5PUn6wnEHNboAeRCZrXcswzZkhoXbEp5CBVdKSh0dDlnyumtqsDUMmfbdOTo4
-         dRsg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=CpVnl7luspytUxumuET3NX9TotIw1A/lI3Ofepvsr4k=;
+        b=UUxDM6/zwTCiYrWBJz/mwp75DWLa5ZerhI+VA85xUF1VKb3VZFq8R+UR9IIiUtvWEU
+         D1MV+8JydkesIEvifkV9vF+ZFlSlsuIpLdYXhKOZhW1odn3pzfVPZ2KBfsmDDdzfTk7O
+         Zi44mTOsxWhviwz6t2n/peo2K8Ib3BXz7cMdPMt2sTuN0EEInKhlEa5y+2iiTuARzDga
+         m6e1GyLsp4BP/BKrpTDX2k5ql+Yydlmte6rTRcK/FD/bcl+WL7XLtoGesm0Ve2YsYshw
+         ntGt8rc+nanAWwOJgdsRII6DwL6XJpoDARH275jXX2DlpE1ZPTmP7mbl/4pqj/8mKgOY
+         uBwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=A5dxkG+6DEqJ1u5/i8h9z7umRyntsv/xbDdceAJ49kE=;
-        b=eiSNfopOzDIbhnKooxPvf6n+Pe4iag3JOIfsWagW7xM4oUobiT0FeDUe8QH2D+EKo+
-         nDES9je2ob52vY46r+yOHYQtAfKpjGYInsdaRJLzL85R12x6pl/jZ3KZ7kJ5ZAoU9oZF
-         1sxLwNJeBjZqmXu6LxsIFKgHu8dioZYZbsP6iTciRMPkn3olJZFpRI3J18kKV1RoaYEs
-         s009NgX7adBuiDAYKa7/WECw1KL6VyVWvWDR2BQ44GRtRB990Rs8vA2BwqnRthfBATgf
-         X1xdbvDD12GLPN7HsexETDTPe9wRaAHf5oST782bR9kswBnaIOMRhUzPn28h4bZF2gy8
-         9OKw==
-X-Gm-Message-State: APjAAAXjqgFDJL8GnYOW9ZWW9eWtKz/4/VCpwyRB2HwDt2GLv0sk76st
-        8PzlZcTKBWaQJ7TGmkZ9BWQNO5cTD+TC+06nn9Y=
-X-Google-Smtp-Source: APXvYqxP6qMLlCasy0XWk4q9EmWAND3j9ftNh7Gyko7SWrFUXkNyvcHks/LkaTqfRdmRR+IT1AYPnbTwIV+ByeQdRO8=
-X-Received: by 2002:a05:660c:34e:: with SMTP id b14mr3117636itl.10.1557841113096;
- Tue, 14 May 2019 06:38:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=CpVnl7luspytUxumuET3NX9TotIw1A/lI3Ofepvsr4k=;
+        b=PsIz+OFUOZmmp7gYTvztUM5UhdquBtm+VfjsGg4K7dlMDEfvkNZSs9yL/ILN3ZImp5
+         qvlMuHpQa5AeeGrl/55ZNgTOS4ovIWRK0ae/uis1egFpgFdqooj2UskBPeBltFaVpWDf
+         A8BmR3NQu1Ips7Q0vkMhOl8npy5JwDifHe/RTvruco5SX059xtJfrljsFOTj2gQWx4q6
+         x3y+RB2JABzLFXG3ydpqoCD6KR5pMtUlHSODtb/sd25NxLqLHOblgdb7n/GA+tVg2Z0H
+         1qRIjt+WVHBurJ/mAEuBobcwWNPR/yepdTNfnHJxJoDqYyFPsI8Gu2OiPM9p9I2X+PZ1
+         +mUQ==
+X-Gm-Message-State: APjAAAX1+lGn0tigrQ4TG5NFUWh+Pc+k78i6pqcqAXynKUq08y56D3cE
+        HZk3AUnjkeGch4a22Uf++Ps=
+X-Google-Smtp-Source: APXvYqzJYOJHf0bfgUiVLAc94MkQFiGWOFfhUsGydr+TY3YUiXsYm0at3F5SokuHNnKUU14GjZF7TQ==
+X-Received: by 2002:a17:906:4d57:: with SMTP id b23mr27129369ejv.254.1557841147492;
+        Tue, 14 May 2019 06:39:07 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id g47sm3555236edc.33.2019.05.14.06.39.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 May 2019 06:39:06 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Slavica Djukic <slawica92@hotmail.com>
+Subject: Re: [PATCH] tests: add a special setup where prerequisites fail
+References: <nycvar.QRO.7.76.6.1905131531000.44@tvgsbejvaqbjf.bet> <20190513183242.10600-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1905140945220.44@tvgsbejvaqbjf.bet> <87lfz9wexs.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
+Date:   Tue, 14 May 2019 15:39:06 +0200
+Message-ID: <87ef51w3yd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-9-sandals@crustytoothpaste.net>
-In-Reply-To: <20190514002332.121089-9-sandals@crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 14 May 2019 20:38:06 +0700
-Message-ID: <CACsJy8B-qn9Vqrm5xF4Eg0j+dfw=WqtnJK5-Jz4kDKvJTNv_tw@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] docs: document multiple hooks
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 7:24 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> +It is possible to provide multiple hooks for a single function. If the
-> +main hook file is absent,
 
-If I remember 1/7 correctly, if the hook "file" is a directory, you
-ignore it and check for hook.d too.
+On Tue, May 14 2019, Johannes Schindelin wrote:
 
-Which makes me think, can we just check if hooks/<hook> is a directory
-and use it instead of hooks/<hook>.d? [1]
+> Hi =C3=86var,
+>
+> On Tue, 14 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Tue, May 14 2019, Johannes Schindelin wrote:
+>>
+>> > What would you think about a mode where random test cases are skipped?
+>> > It would have to make sure to provide a way to recreate the problem,
+>> > e.g. giving a string that defines exactly which test cases were
+>> > skipped.
+>> >
+>> > I am *sure* that tons of test scripts would fail with that, and we
+>> > would probably have to special-case the `setup` "test cases", and we
+>> > would have to clean up quite a few scripts to *not* execute random
+>> > stuff outside of `test_expect_*`...
+>>
+>> I think it would be neat, but unrelated to and overkill for spotting the
+>> practical problem we have now, which is that we *know* we skip some of
+>> this now on some platforms/setups due to prereqs.
+>
+> I understand, but I am still worried that this is a lot of work for an
+> incomplete fix.
+>
+> For example, the t7600-merge.sh test script that set off this conversation
+> has two prereqs that are unmet on Windows: GPG and EXECKEEPSPID. On Azure
+> Pipelines' macOS agents, it is only GPG that is unmet. So switching off
+> all prereqs would not help macOS with e.g. a bug where the GPG test cases
+> are skipped but the EXECKEEPSPID test case is not.
 
-The only advantage of <hook>.d that I can see is if we support some
-sort of combination of <hook> and <hook>.d.
+It won't catch such cases, but will catch cases where a later new test
+assumes that whatever the state of the test repo it gets is what's
+always going to be there. In practice I think that'll catch most such
+issues.
 
-[1] Of course if you're really strict on backward compatibility then
-this is out of question.
+The other GIT_TEST_* modes assume similar non-combinatorial explosion
+failure scenarios.
 
-> hooks are additionally looked for in a
-> +directory with the name of the main hook file with a `.d` appended.
-> +(That is, if `post-receive` is missing, `post-receive.d` is inspected
-> +for any hooks that might be present.) Each of these hooks is executed in order,
-> +sorted by file name. By default, if a hook fails, additional hooks are not
-> +executed, but this can be controlled with the `hook.*.errorBehavior` setting
-> +(see linkgit:git-config[1]).
-> +
->  `git init` may copy hooks to the new repository, depending on its
->  configuration. See the "TEMPLATE DIRECTORY" section in
->  linkgit:git-init[1] for details. When the rest of this document refers
-
-
-
--- 
-Duy
+I haven't gone back through the test suite's commit history to try to
+dig for other cases, so perhaps this mode is premature etc.
