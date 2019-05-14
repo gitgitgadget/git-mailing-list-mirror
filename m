@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06EF51F461
-	for <e@80x24.org>; Tue, 14 May 2019 00:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39A7C1F461
+	for <e@80x24.org>; Tue, 14 May 2019 00:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbfENAXu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 20:23:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36384 "EHLO
+        id S1726732AbfENAXw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 May 2019 20:23:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36398 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726623AbfENAXt (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:23:49 -0400
+        by vger.kernel.org with ESMTP id S1726623AbfENAXv (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 May 2019 20:23:51 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:89af:9dea:d4e0:996c])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D7F7860443;
-        Tue, 14 May 2019 00:23:46 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 634B56081D;
+        Tue, 14 May 2019 00:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1557793427;
-        bh=hYJXGNq2qZgrtUnI9JQ0+Rn43aYVkHFBBuPjxm8xVqU=;
-        h=From:To:Cc:Subject:Date:Content-Type:From:Reply-To:Subject:Date:
-         To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
-         References:Content-Type:Content-Disposition;
-        b=wj8D/irzjw6gM5x2LPD5G1+qMMuYdlQ5HsWBj6Vl0lLcX76wmZs36tSoqztNiMXbb
-         0CtKWwehcst7bTZc+kS0yKL4loUZh7ekO/5B3p8b0qGwSekAKkEq3Be4sPQgyPBQrh
-         OTJX4Fck2m+lC1Meejhe1Jooz8pvwiYfRRW3BaYoWdnHMAVAYjLbyU0/4tmLWsr/95
-         EZv8liI3aBRiT0GQtMGj0Hh6oY0qKLt0UNZrQNZLxALFYx3DYmuGOna3rcVhoc0N7n
-         aI7+qS97Q55oRlv7Y8KBh/3uqvHc2PfMByoEFGYtWX+qHbHaVmzWWRxUTUcLKvyao9
-         Taf8Gpsd9w54MLC0+OR0A/MW5gvPbJ5aiGHsPOFp5LYHJknz02GRe1G+jAV8mBQHCN
-         5BnjQh5MzI9NtSDdiVIZFf2zOfEcQWlJ8NA9mRhnpx3sQrXUi5HS6YSqKwoepIZwZJ
-         0fJgtmcWqk9YqwqzyjUEb6CZDwv8xLtezSl/0A/eV3ORkciEXWF
+        s=default; t=1557793429;
+        bh=x5Gk5KjbdXVxXq1GK3c2GUBbQW+lU5HF1SnzXoTDJGc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=O+NuPCCKZOYr8RmRoByqezBSIaR7pVE8/E61phVb5psMCyNYpk55g102QPoPzI48p
+         EWqa8lNIh+sBhZ9GcHQahpa9IZc8WkVvLFfyaAlo34CDdbakR4zpwcRdIcOWlYzLV1
+         EIiiHncHnGjR8NI+5F05YgUx+Fl+bSxd4+Hj/8XvKZH4j7oXn3EW0GCnCJ5QtW0yUv
+         /XX1kLatdAYshQdGmghXYff24c/ZwJ/JcV9G5dCu49/x7eQOEYQjTql00e2YO9Dzfh
+         X9ifV6ZAcjuOqjxWrv+9GSjZSQAp0ZS5K4xInGKorSrEHKMFtIbvdSTLXmW+VdDNW+
+         9liFOVwkxJgguG8h8+ao7Ri+bc+0Z45yCXjNcdMRaOJgZhXJpopIIn2HjQGD1DUHm9
+         ndz5fMJIt7Lp1YXXTBknqrt5DoMTEYiYJwddn9Wsd49orLMHKWgA3Kx+ryxy3Gy2BR
+         sBYU9ArfDCLG+ihgtmJvZzMi6scj9TISiwSHiRAHdELVCOd+/GA
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
@@ -44,10 +44,12 @@ Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 0/7] Multiple hook support
-Date:   Tue, 14 May 2019 00:23:24 +0000
-Message-Id: <20190514002332.121089-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 1/7] run-command: add preliminary support for multiple hooks
+Date:   Tue, 14 May 2019 00:23:25 +0000
+Message-Id: <20190514002332.121089-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
+In-Reply-To: <20190514002332.121089-1-sandals@crustytoothpaste.net>
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -57,70 +59,499 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series introduces multiple hook support.
+A variety of types of software take advantage of Git's hooks. However,
+if a user would like to integrate multiple pieces of software which use
+a particular hook, they currently must manage those hooks themselves,
+which can be burdensome. Sometimes various pieces of software try to
+overwrite each other's hooks, leading to problems.
 
-I've thought a lot about the discussion over whether this series should
-use the configuration as the source for multiple hooks. Ultimately, I've
-come to the decision that it's not a good idea. Even adopting the empty
-entry as a reset marker, the fact that inheritance in the configuration
-is in-order and can't be easily modified means that it's not likely to
-be very useful, but it is likely to be quite surprising for the average
-user. I think a solution that sticks with the existing model and builds
-off a design used by other systems people are familiar with, like cron
-and run-parts, is going to be a better choice. Moreover, this is the
-design that people have already built with outside tooling, which is a
-further argument in favor of it.
+To solve this problem, introduce a framework for running multiple hooks
+using a ".d" directory named similarly to the hook, running each hook in
+order sorted by name. Wire this framework up for those functions using
+run_hook_le or run_hook_ve. To preserve backwards compatibility, ensure
+that multiple hooks run only if there is no hook using the current hook
+style.
 
-I have adopted one configuration-based option, which is the per-hook
-errorBehavior option that Peff suggested. I think this reduces concerns
-over what the best error handling strategy is and is a good thing to
-have as part of a minimum viable product. I picked the names that Peff
-chose, but if people like different names better, they can be changed.
+If we are running multiple hooks and one of them exits nonzero, don't
+execute the remaining hooks and return that exit code immediately. This
+allows hooks to fail fast and it avoids having to deal with what happens
+if multiple hooks fail with different exit statuses.
 
-Just as a preview of what's coming down the line, I plan to build on
-this series to notify hooks when --quiet and --dry-run options have been
-specified to commands so that they may honor them if they choose.
+Create a test framework for testing multiple hooks with different
+commands. This is necessary because not all hooks use run_hook_ve or
+run_hook_le and we'll want to ensure all the various hooks work without
+needing to write lots of duplicative test code.
 
-Changes from v1:
-* Adopted several improvements from Duy's series, including an improved
-  find_hooks prototype and a helper function.
-* Switched to existence checks instead of executability checks for
-  determining whether to invoke multiple hooks.
-* Adjusted the commit message for patch 3.
-* Added error behavior control using the names Peff provided in his
-  comment.
-* Added documentation.
+Test the pre-commit hook to verify that the run_hook_ve implementation
+works correctly.
 
-brian m. carlson (7):
-  run-command: add preliminary support for multiple hooks
-  builtin/receive-pack: add support for multiple hooks
-  rebase: add support for multiple hooks
-  builtin/worktree: add support for multiple post-checkout hooks
-  transport: add support for multiple pre-push hooks
-  config: allow configuration of multiple hook error behavior
-  docs: document multiple hooks
-
- Documentation/config.txt           |   2 +
- Documentation/config/hook.txt      |  19 ++
- Documentation/githooks.txt         |   9 +
- builtin/am.c                       |  20 +--
- builtin/commit.c                   |   2 +-
- builtin/receive-pack.c             |  78 ++++----
- builtin/worktree.c                 |  44 +++--
- config.c                           |  27 +++
- run-command.c                      | 175 +++++++++++++++---
- run-command.h                      |  22 ++-
- sequencer.c                        |  59 ++++---
- sequencer.h                        |   2 +
- t/lib-hooks.sh                     | 274 +++++++++++++++++++++++++++++
- t/t5403-post-checkout-hook.sh      |   8 +
- t/t5407-post-rewrite-hook.sh       |  15 ++
- t/t5516-fetch-push.sh              |  30 ++++
- t/t5571-pre-push-hook.sh           |  19 ++
- t/t7503-pre-commit-hook.sh         |  15 ++
- t/t7505-prepare-commit-msg-hook.sh |   9 +
- transport.c                        |  29 +--
- 20 files changed, 730 insertions(+), 128 deletions(-)
- create mode 100644 Documentation/config/hook.txt
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/commit.c           |   2 +-
+ run-command.c              | 173 +++++++++++++++++++++++++++++--------
+ run-command.h              |  15 ++++
+ t/lib-hooks.sh             | 172 ++++++++++++++++++++++++++++++++++++
+ t/t7503-pre-commit-hook.sh |  15 ++++
+ 5 files changed, 342 insertions(+), 35 deletions(-)
  create mode 100644 t/lib-hooks.sh
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 833ecb316a..29bf80e0d1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -943,7 +943,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
+ 
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && find_hooks("pre-commit", NULL)) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/run-command.c b/run-command.c
+index 3449db319b..eb075ac86b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1308,53 +1308,143 @@ int async_with_fork(void)
+ #endif
+ }
+ 
++/*
++ * Return 1 if a hook exists at path (which may be modified) using access(2)
++ * with check (which should be F_OK or X_OK), 0 otherwise. If strip is true,
++ * additionally consider the same filename but with STRIP_EXTENSION added.
++ * If check is X_OK, warn if the hook exists but is not executable.
++ */
++static int has_hook(struct strbuf *path, int strip, int check)
++{
++	if (access(path->buf, check) < 0) {
++		int err = errno;
++
++		if (strip) {
++#ifdef STRIP_EXTENSION
++			strbuf_addstr(path, STRIP_EXTENSION);
++			if (access(path->buf, check) >= 0)
++				return 1;
++			if (errno == EACCES)
++				err = errno;
++#endif
++		}
++
++		if (err == EACCES && advice_ignored_hook) {
++			static struct string_list advise_given = STRING_LIST_INIT_DUP;
++
++			if (!string_list_lookup(&advise_given, path->buf)) {
++				string_list_insert(&advise_given, path->buf);
++				advise(_("The '%s' hook was ignored because "
++					 "it's not set as executable.\n"
++					 "You can disable this warning with "
++					 "`git config advice.ignoredHook false`."),
++				       path->buf);
++			}
++		}
++		return 0;
++	}
++	return 1;
++}
++
+ const char *find_hook(const char *name)
+ {
+ 	static struct strbuf path = STRBUF_INIT;
+ 
+ 	strbuf_reset(&path);
+ 	strbuf_git_path(&path, "hooks/%s", name);
+-	if (access(path.buf, X_OK) < 0) {
+-		int err = errno;
+-
+-#ifdef STRIP_EXTENSION
+-		strbuf_addstr(&path, STRIP_EXTENSION);
+-		if (access(path.buf, X_OK) >= 0)
+-			return path.buf;
+-		if (errno == EACCES)
+-			err = errno;
+-#endif
+-
+-		if (err == EACCES && advice_ignored_hook) {
+-			static struct string_list advise_given = STRING_LIST_INIT_DUP;
+-
+-			if (!string_list_lookup(&advise_given, name)) {
+-				string_list_insert(&advise_given, name);
+-				advise(_("The '%s' hook was ignored because "
+-					 "it's not set as executable.\n"
+-					 "You can disable this warning with "
+-					 "`git config advice.ignoredHook false`."),
+-				       path.buf);
+-			}
+-		}
+-		return NULL;
++	if (has_hook(&path, 1, X_OK)) {
++		return path.buf;
+ 	}
+-	return path.buf;
++	return NULL;
+ }
+ 
+-int run_hook_ve(const char *const *env, const char *name, va_list args)
++int find_hooks(const char *name, struct string_list *list)
+ {
+-	struct child_process hook = CHILD_PROCESS_INIT;
+-	const char *p;
++	struct strbuf path = STRBUF_INIT;
++	DIR *d;
++	struct dirent *de;
+ 
+-	p = find_hook(name);
+-	if (!p)
++	/*
++	 * We look for a single hook. If present, return it, and skip the
++	 * individual directories.
++	 */
++	strbuf_git_path(&path, "hooks/%s", name);
++	if (has_hook(&path, 1, X_OK)) {
++		if (list)
++			string_list_append(list, path.buf);
++		return 1;
++	}
++
++	if (has_hook(&path, 1, F_OK))
+ 		return 0;
+ 
+-	argv_array_push(&hook.args, p);
+-	while ((p = va_arg(args, const char *)))
+-		argv_array_push(&hook.args, p);
+-	hook.env = env;
++	strbuf_reset(&path);
++	strbuf_git_path(&path, "hooks/%s.d", name);
++	d = opendir(path.buf);
++	if (!d) {
++		if (list)
++			string_list_clear(list, 0);
++		return 0;
++	}
++	while ((de = readdir(d))) {
++		if (!strcmp(de->d_name, ".") || !strcmp(de->d_name, ".."))
++			continue;
++		strbuf_reset(&path);
++		strbuf_git_path(&path, "hooks/%s.d/%s", name, de->d_name);
++		if (has_hook(&path, 0, X_OK)) {
++			if (list)
++				string_list_append(list, path.buf);
++			else
++				return 1;
++		}
++	}
++	closedir(d);
++	strbuf_reset(&path);
++	if (!list->nr) {
++		return 0;
++	}
++
++	string_list_sort(list);
++	return 1;
++}
++
++int for_each_hook(const char *name,
++		  int (*handler)(const char *name, const char *path, void *),
++		  void *data)
++{
++	struct string_list paths = STRING_LIST_INIT_DUP;
++	int i, ret = 0;
++
++	find_hooks(name, &paths);
++	for (i = 0; i < paths.nr; i++) {
++		const char *p = paths.items[i].string;
++
++		ret = handler(name, p, data);
++		if (ret)
++			break;
++	}
++
++	string_list_clear(&paths, 0);
++	return ret;
++}
++
++struct hook_data {
++	const char *const *env;
++	struct string_list *args;
++};
++
++static int do_run_hook_ve(const char *name, const char *path, void *cb)
++{
++	struct hook_data *data = cb;
++	struct child_process hook = CHILD_PROCESS_INIT;
++	struct string_list_item *arg;
++
++	argv_array_push(&hook.args, path);
++	for_each_string_list_item(arg, data->args) {
++		argv_array_push(&hook.args, arg->string);
++	}
++
++	hook.env = data->env;
+ 	hook.no_stdin = 1;
+ 	hook.stdout_to_stderr = 1;
+ 	hook.trace2_hook_name = name;
+@@ -1362,6 +1452,21 @@ int run_hook_ve(const char *const *env, const char *name, va_list args)
+ 	return run_command(&hook);
+ }
+ 
++int run_hook_ve(const char *const *env, const char *name, va_list args)
++{
++	struct string_list arglist = STRING_LIST_INIT_DUP;
++	struct hook_data data = {env, &arglist};
++	const char *p;
++	int ret = 0;
++
++	while ((p = va_arg(args, const char *)))
++		string_list_append(&arglist, p);
++
++	ret = for_each_hook(name, do_run_hook_ve, &data);
++	string_list_clear(&arglist, 0);
++	return ret;
++}
++
+ int run_hook_le(const char *const *env, const char *name, ...)
+ {
+ 	va_list args;
+diff --git a/run-command.h b/run-command.h
+index a6950691c0..1b3677fcac 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -4,6 +4,7 @@
+ #include "thread-utils.h"
+ 
+ #include "argv-array.h"
++#include "string-list.h"
+ 
+ struct child_process {
+ 	const char **argv;
+@@ -68,6 +69,20 @@ int run_command(struct child_process *);
+  * overwritten by further calls to find_hook and run_hook_*.
+  */
+ extern const char *find_hook(const char *name);
++/*
++ * Returns the paths to all hook files, or NULL if all hooks are missing or
++ * disabled.
++ * Returns 1 if there are hooks; 0 otherwise. If hooks is not NULL, stores the
++ * names of the hooks into them in the order they should be executed.
++ */
++int find_hooks(const char *name, struct string_list *hooks);
++/*
++ * Invokes the handler function once for each hook. Returns 0 if all hooks were
++ * successful, or the exit status of the first failing hook.
++ */
++int for_each_hook(const char *name,
++		  int (*handler)(const char *name, const char *path, void *),
++		  void *data);
+ LAST_ARG_MUST_BE_NULL
+ extern int run_hook_le(const char *const *env, const char *name, ...);
+ extern int run_hook_ve(const char *const *env, const char *name, va_list args);
+diff --git a/t/lib-hooks.sh b/t/lib-hooks.sh
+new file mode 100644
+index 0000000000..721250aea0
+--- /dev/null
++++ b/t/lib-hooks.sh
+@@ -0,0 +1,172 @@
++create_multihooks () {
++	mkdir -p "$MULTIHOOK_DIR"
++	for i in "a $1" "b $2" "c $3"
++	do
++		echo "$i" | (while read script ex
++		do
++			mkdir -p "$MULTIHOOK_DIR"
++			write_script "$MULTIHOOK_DIR/$script" <<-EOF
++			mkdir -p "$OUTPUTDIR"
++			touch "$OUTPUTDIR/$script"
++			exit $ex
++			EOF
++		done)
++	done
++}
++
++# Run the multiple hook tests.
++# Usage: test_multiple_hooks [--ignore-exit-status] HOOK COMMAND [SKIP-COMMAND]
++# HOOK:  the name of the hook to test
++# COMMAND: command to test the hook for; takes a single argument indicating test
++# name.
++# SKIP-COMMAND: like $1, except the hook should be skipped.
++# --ignore-exit-status: the command does not fail if the exit status from the
++# hook is nonzero.
++test_multiple_hooks () {
++	local must_fail cmd skip_cmd hook
++	if test "$1" = "--ignore-exit-status"
++	then
++		shift
++	else
++		must_fail="test_must_fail"
++	fi
++	hook="$1"
++	cmd="$2"
++	skip_cmd="$3"
++
++	HOOKDIR="$(git rev-parse --absolute-git-dir)/hooks"
++	OUTPUTDIR="$(git rev-parse --absolute-git-dir)/../hook-output"
++	HOOK="$HOOKDIR/$hook"
++	MULTIHOOK_DIR="$HOOKDIR/$hook.d"
++	rm -f "$HOOK" "$MULTIHOOK_DIR" "$OUTPUTDIR"
++
++	test_expect_success "$hook: with no hook" '
++		$cmd foo
++	'
++
++	if test -n "$skip_cmd"
++	then
++		test_expect_success "$hook: skipped hook with no hook" '
++			$skip_cmd bar
++		'
++	fi
++
++	test_expect_success 'setup' '
++		mkdir -p "$HOOKDIR" &&
++		write_script "$HOOK" <<-EOF
++		mkdir -p "$OUTPUTDIR"
++		touch "$OUTPUTDIR/simple"
++		exit 0
++		EOF
++	'
++
++	test_expect_success "$hook: with succeeding hook" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		$cmd more &&
++		test -f "$OUTPUTDIR/simple"
++	'
++
++	if test -n "$skip_cmd"
++	then
++		test_expect_success "$hook: skipped but succeeding hook" '
++			test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++			$skip_cmd even-more &&
++			! test -f "$OUTPUTDIR/simple"
++		'
++	fi
++
++	test_expect_success "$hook: with both simple and multiple hooks, simple success" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		create_multihooks 0 1 0 &&
++		$cmd yet-more &&
++		test -f "$OUTPUTDIR/simple" &&
++		! test -f "$OUTPUTDIR/a" &&
++		! test -f "$OUTPUTDIR/b" &&
++		! test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success 'setup' '
++		rm -fr "$MULTIHOOK_DIR" &&
++
++		# now a hook that fails
++		write_script "$HOOK" <<-EOF
++		mkdir -p "$OUTPUTDIR"
++		touch "$OUTPUTDIR/simple"
++		exit 1
++		EOF
++	'
++
++	test_expect_success "$hook: with failing hook" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		$must_fail $cmd another &&
++		test -f "$OUTPUTDIR/simple"
++	'
++
++	if test -n "$skip_cmd"
++	then
++		test_expect_success "$hook: skipped but failing hook" '
++			test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++			$skip_cmd stuff &&
++			! test -f "$OUTPUTDIR/simple"
++		'
++	fi
++
++	test_expect_success "$hook: with both simple and multiple hooks, simple failure" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		create_multihooks 0 1 0 &&
++		$must_fail $cmd more-stuff &&
++		test -f "$OUTPUTDIR/simple" &&
++		! test -f "$OUTPUTDIR/a" &&
++		! test -f "$OUTPUTDIR/b" &&
++		! test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success "$hook: multiple hooks, all successful" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		rm -f "$HOOK" &&
++		create_multihooks 0 0 0 &&
++		$cmd content &&
++		test -f "$OUTPUTDIR/a" &&
++		test -f "$OUTPUTDIR/b" &&
++		test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success "$hook: hooks after first failure not executed" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		create_multihooks 0 1 0 &&
++		$must_fail $cmd more-content &&
++		test -f "$OUTPUTDIR/a" &&
++		test -f "$OUTPUTDIR/b" &&
++		! test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success POSIXPERM "$hook: non-executable hook not executed" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\"" &&
++		create_multihooks 0 1 0 &&
++		chmod -x "$MULTIHOOK_DIR/b" &&
++		$cmd things &&
++		test -f "$OUTPUTDIR/a" &&
++		! test -f "$OUTPUTDIR/b" &&
++		test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success POSIXPERM "$hook: multiple hooks not executed if simple hook present" '
++		test_when_finished "rm -fr \"$OUTPUTDIR\" && rm -f \"$HOOK\"" &&
++		write_script "$HOOK" <<-EOF &&
++		mkdir -p "$OUTPUTDIR"
++		touch "$OUTPUTDIR/simple"
++		exit 0
++		EOF
++		create_multihooks 0 1 0 &&
++		chmod -x "$HOOK" &&
++		$cmd other-things &&
++		! test -f "$OUTPUTDIR/simple" &&
++		! test -f "$OUTPUTDIR/a" &&
++		! test -f "$OUTPUTDIR/b" &&
++		! test -f "$OUTPUTDIR/c"
++	'
++
++	test_expect_success 'cleanup' '
++		rm -fr "$MULTIHOOK_DIR"
++	'
++}
+diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+index 984889b39d..d63d059e04 100755
+--- a/t/t7503-pre-commit-hook.sh
++++ b/t/t7503-pre-commit-hook.sh
+@@ -3,6 +3,7 @@
+ test_description='pre-commit hook'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY/lib-hooks.sh"
+ 
+ test_expect_success 'with no hook' '
+ 
+@@ -136,4 +137,18 @@ test_expect_success 'check the author in hook' '
+ 	git show -s
+ '
+ 
++commit_command () {
++	echo "$1" >>file &&
++	git add file &&
++	git commit -m "$1"
++}
++
++commit_no_verify_command () {
++	echo "$1" >>file &&
++	git add file &&
++	git commit --no-verify -m "$1"
++}
++
++test_multiple_hooks pre-commit commit_command commit_no_verify_command
++
+ test_done
