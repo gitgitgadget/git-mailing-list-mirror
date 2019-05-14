@@ -2,105 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 998891F461
-	for <e@80x24.org>; Tue, 14 May 2019 03:01:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEBB91F461
+	for <e@80x24.org>; Tue, 14 May 2019 04:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726783AbfENDBd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 May 2019 23:01:33 -0400
-Received: from mout.web.de ([212.227.17.11]:52931 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726327AbfENDBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 May 2019 23:01:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1557802884;
-        bh=zbCG1/02MjOLhbkbh7QzZCCqVR6jl30cH8RhO7MGzt8=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=LHh1UYjC2kB/lsTyUcRRnr0jfrar+nEaT3kamXm3k++HjxHPOpJyoan3cPGJ28wUw
-         3sGbToutPkr8eWhgIOf21CHMY6+kF6HnrbG2+2VVJGrzF0GTaTsYNAxuN7NET+LmlV
-         Du4keadNI/MGdUqrpRuOkV1dLc/MyPhHD0OXrOE8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Md4l4-1h8Ibu34YE-00IFvO; Tue, 14
- May 2019 05:01:24 +0200
-Date:   Tue, 14 May 2019 05:01:23 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        id S1725901AbfENEbL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 00:31:11 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44720 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725562AbfENEbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 00:31:11 -0400
+Received: by mail-pf1-f193.google.com with SMTP id g9so8374927pfo.11
+        for <git@vger.kernel.org>; Mon, 13 May 2019 21:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=q0DOeFHbhQx8Te52vA2Pf+kMCO5i1F/NiI5kqz/ZMdk=;
+        b=K2ysvSPSIgwkVebZWR8WwETI7uPZgQA1H78gWpFGiV3WD9w4PgLQ0/tdd4Yqq1Gxqm
+         gu0JOT/yw36wR1fhVvCiq/Gp8Z6FRWgF3dDX7zfGyEYwFED/huqzi+1zZuGTMMA5zB16
+         jggYqzsX+d509up0n58EKwMW2oft4dsqvnXICUlBqryr6+41N/CCZtnSV0UE348OBYzn
+         NnmZL9rF2Iw+dn76RdrFmDOZysB549bJcvjQVmEt5hj1ZX2BJu0eBE2aDku5JlZlHKn2
+         0MNYy03Ys7NjkdZsKD05VSDiEvd0X2ooejY1KVUjW8K49tWH+Fqmvuv922Aa5M74gxRG
+         f3Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=q0DOeFHbhQx8Te52vA2Pf+kMCO5i1F/NiI5kqz/ZMdk=;
+        b=mY1MWLeM3K2tUcEepvJR29WY8Iz4Tt0HX3nqI6HK1IOma6QxymvnGe+RN5neqxX/no
+         Jy+khabuC61hxkFPpldKN6Cx//XUqfmAWNqcZhdAmF0jCIeMpi1fyy6JvnGNXLj+v7ya
+         vQJOqPmuy8Eo0ClqkWZlEKJZs27k/Jyik8ZVwKurDQg153no1Apa9NfUn4uKqxbNTkzf
+         hdRkdITXNCKofSvQE/GNuZxFVdBokqj5Rd+wSkt91B3XKWMQCB33XyRBGV3R9uNSKdlA
+         aZdohPADaOjeVTiU8s0qYTS/41FnH5paiC8Oq0unsIF3dyQK59/LRJJCRepVWPio7XCR
+         Ka8A==
+X-Gm-Message-State: APjAAAU0H9kvubjDCVlJXmPOLzvjNZRhRUf0KysPTLwpj9B1C51DEyi7
+        vt3gPDJjNdtjp3SH4gAEmoE=
+X-Google-Smtp-Source: APXvYqyDiYV+IWEi6lLFwdwyojTxA3YzaggMvighimG6mLxawFQkoPjuvzMEcdcelWlAMu3U2FI5iw==
+X-Received: by 2002:aa7:8212:: with SMTP id k18mr37944144pfi.50.1557808269829;
+        Mon, 13 May 2019 21:31:09 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id j12sm18331265pff.148.2019.05.13.21.31.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 May 2019 21:31:08 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v5 4/5] fast-export: differentiate between explicitly
- utf-8 and implicitly utf-8
-Message-ID: <20190514030123.atqguzxh4v55ydty@tb-raspi4>
-References: <20190513164722.31534-1-newren@gmail.com>
- <20190513231726.16218-1-newren@gmail.com>
- <20190513231726.16218-5-newren@gmail.com>
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v6 0/5] Fix and extend encoding handling in fast export/import
+Date:   Mon, 13 May 2019 21:30:57 -0700
+Message-Id: <20190514043102.31979-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.782.gd18f03d1bf
+In-Reply-To: <20190513231726.16218-1-newren@gmail.com>
+References: <20190513231726.16218-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190513231726.16218-5-newren@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:8PITnAmE8fFv5EyZIt6bVggUY09w3/6xZOJlDXxjGXiMk6blugc
- IB02OVBCOQfJW86DI5/17gUlHHCSmVU7qq90QKA9WSy9j2Fq3aRTwbEQkQNYjjPoV8sJHJ3
- GMA4G1Xm59NQpwuuTDp9Qg+DIeU6WcwJZUT+tk2TKvbd7in59ZETMHQA5DxXomxV+8k7iI/
- kcbSuaHVu87ILVwY7gePg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ibdpGjqz3IA=:dMd/uWFcj2q4GmtmLOXtJi
- MziBw5XUXHjDXJfhIhmcpghJyl3cZaLabkJfc4HThwPLKu0OWc4G+TKA/rHBkdRaNyk4ihZPI
- GqMyydGq7PjpZuGp9ihnmthnsmsABbQOKYgmuBr37l9UodroxhgcGy9ilcPkqI+vM5FC18uzb
- xzEYImY0tDsCYsZkYRbStWY90HyDwnmK8EaltGZFhQmN3zm1IP50FBwPPOY0MTCm9xI0Pyg2w
- MkO7gVMpsQaYpqiZIjuSra9rKpZTeoDpYglLOfzpcwLLxqDG8IsEDNnfht5AgAMmtWINJDsS6
- 6aTqO1DkUFJ/SufOikpnE/KHKu+EB6fLgqgi5rw751Je7dgrQdJUmMZ2mNgyFwAgxQvlyWovW
- KecSs6oF+3NbhRkLiRVjkM6MaDvdtFKaC56IdsRmpQvrbvWAjjaiDEYfuq3EyrefNncU+pD9n
- LEc1J1LIxReU7NFlPCsibvx8N9uF6o9Vs+lSppX0HobBaLUp1jJAjdmUylqM5iNSrs7+O8BWN
- b3a1khKDQp/428Igpujv+O6Vg7lvG2ppHLmf4xFaeI1JdB8HAquCB6z9teQxkKLdU7xaGmFUa
- xmQGfFAnkGH4r87oUOYI1PEI0C2RV99kHlP3FelXGEfPz051ZcsWqwqDL48TDlX0xAlhkZ11/
- ctdQ4FYVq2+HjJH7P8jjaqLrPV3Nf7P6j5xVkLVQWGL1jNAnjbOG/1Bf8qy5UAQdxYi+xBCCH
- taI634Q7CnwOCa0iIhT+T4TljB1xQcwmeFqK5h5Je9SeQirEDNdQLN0ZWmh+rbm57OtlX1YqX
- ms32t1jja8glfj4bfEKuDDNzTZKUg55fIt4h3DMz6bFy+5B0V5yED67NB3Eiz38Exdw3nnkzN
- ULou3gKbaeQYC9RyTbIjvwb0RC++bF2j0bTq9gZW/uTn3FmvueoSjqz4yTvFvX
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 13, 2019 at 04:17:25PM -0700, Elijah Newren wrote:
-> The find_encoding() function returned the encoding used by a commit
-> message, returning a default of git_commit_encoding (usually utf-8).
-I think "UTF-8" is preferred over "utf-8".
-Unless it is a function name like is_encoding_utf8()
+While stress testing `git filter-repo`, I noticed an issue with
+encoding; further digging led to the fixes and features in this series.
+See the individual commit messages for details.
 
-> Although the current code does not differentiate between a commit which
-> explicitly requested utf-8 and one where we just assume utf-8 because no
-> encoding is set, it will become important when we try to preserve the
-> encoding header.  Since is_encoding_utf8() returns true when passed
-> NULL, we can just return NULL from find_encoding() instead of returning
-> git_commit_encoding.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  builtin/fast-export.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 7734a9f5a5..66331fa401 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -453,7 +453,7 @@ static const char *find_encoding(const char *begin, =
-const char *end)
->  	bol =3D memmem(begin, end ? end - begin : strlen(begin),
->  		     needle, strlen(needle));
->  	if (!bol)
-> -		return git_commit_encoding;
-> +		return NULL;
->  	bol +=3D strlen(needle);
->  	eol =3D strchrnul(bol, '\n');
->  	*eol =3D '\0';
-> --
-> 2.21.0.782.gd8be4ee826
->
+Changes since v5 (full range-diff below):
+  * s/utf-8/UTF-8/, as pointed out by Torsten (in commit messages and comments)
+  * small code cleanup pointed out by Eric
+  * rewrap the first commit message
+
+Elijah Newren (5):
+  t9350: fix encoding test to actually test reencoding
+  fast-import: support 'encoding' commit header
+  fast-export: avoid stripping encoding header if we cannot reencode
+  fast-export: differentiate between explicitly UTF-8 and implicitly
+    UTF-8
+  fast-export: do automatic reencoding of commit messages only if
+    requested
+
+ Documentation/git-fast-export.txt            |  7 ++
+ Documentation/git-fast-import.txt            |  7 ++
+ builtin/fast-export.c                        | 55 ++++++++++++--
+ fast-import.c                                | 11 ++-
+ t/t9300-fast-import.sh                       | 20 +++++
+ t/t9350-fast-export.sh                       | 78 +++++++++++++++++---
+ t/t9350/broken-iso-8859-7-commit-message.txt |  1 +
+ t/t9350/simple-iso-8859-7-commit-message.txt |  1 +
+ 8 files changed, 163 insertions(+), 17 deletions(-)
+ create mode 100644 t/t9350/broken-iso-8859-7-commit-message.txt
+ create mode 100644 t/t9350/simple-iso-8859-7-commit-message.txt
+
+Range-diff:
+1:  37a68a0ffd ! 1:  b5dcdab662 t9350: fix encoding test to actually test reencoding
+    @@ -2,13 +2,13 @@
+     
+         t9350: fix encoding test to actually test reencoding
+     
+    -    This test used an author with non-ascii characters in the name, but
+    -    no special commit message.  It then grep'ed for those non-ascii
+    -    characters, but those are guaranteed to exist regardless of the
+    -    reencoding process since the reencoding only affects the commit message,
+    -    not the author or committer names.  As such, the test would work even if
+    -    the re-encoding process simply stripped the commit message entirely.
+    -    Modify the test to actually check that the reencoding in utf-8 worked.
+    +    This test used an author with non-ascii characters in the name, but no
+    +    special commit message.  It then grep'ed for those non-ascii characters,
+    +    but those are guaranteed to exist regardless of the reencoding process
+    +    since the reencoding only affects the commit message, not the author or
+    +    committer names.  As such, the test would work even if the re-encoding
+    +    process simply stripped the commit message entirely.  Modify the test to
+    +    actually check that the reencoding into UTF-8 worked.
+     
+         Signed-off-by: Elijah Newren <newren@gmail.com>
+     
+    @@ -40,7 +40,7 @@
+     +		 # The commit object, if not re-encoded, would be 240 bytes.
+     +		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
+     +		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
+    -+		 # to \xCF\x80 (\317\200) in utf-8 adds a byte.  Check for
+    ++		 # to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
+     +		 # the expected size.
+     +		 test 221 -eq "$(git cat-file -s i18n)" &&
+     +		 # ...and for the expected translation of bytes.
+2:  3d84f4613d ! 2:  af7d4e18fa fast-import: support 'encoding' commit header
+    @@ -2,7 +2,7 @@
+     
+         fast-import: support 'encoding' commit header
+     
+    -    Since git supports commit messages with an encoding other than utf-8,
+    +    Since git supports commit messages with an encoding other than UTF-8,
+         allow fast-import to import such commits.  This may be useful for folks
+         who do not want to reencode commit messages from an external system, and
+         may also be useful to achieve reversible history rewrites (e.g. sha1sum
+3:  baa8394a3a ! 3:  d5b300692a fast-export: avoid stripping encoding header if we cannot reencode
+    @@ -3,8 +3,8 @@
+         fast-export: avoid stripping encoding header if we cannot reencode
+     
+         When fast-export encounters a commit with an 'encoding' header, it tries
+    -    to reencode in utf-8 and then drops the encoding header.  However, if it
+    -    fails to reencode in utf-8 because e.g. one of the characters in the
+    +    to reencode in UTF-8 and then drops the encoding header.  However, if it
+    +    fails to reencode in UTF-8 because e.g. one of the characters in the
+         commit message was invalid in the old encoding, then we need to retain
+         the original encoding or otherwise we lose information needed to
+         understand all the other (valid) characters in the original commit
+4:  49960164c6 ! 4:  2cef40c613 fast-export: differentiate between explicitly utf-8 and implicitly utf-8
+    @@ -1,11 +1,11 @@
+     Author: Elijah Newren <newren@gmail.com>
+     
+    -    fast-export: differentiate between explicitly utf-8 and implicitly utf-8
+    +    fast-export: differentiate between explicitly UTF-8 and implicitly UTF-8
+     
+         The find_encoding() function returned the encoding used by a commit
+    -    message, returning a default of git_commit_encoding (usually utf-8).
+    +    message, returning a default of git_commit_encoding (usually UTF-8).
+         Although the current code does not differentiate between a commit which
+    -    explicitly requested utf-8 and one where we just assume utf-8 because no
+    +    explicitly requested UTF-8 and one where we just assume UTF-8 because no
+         encoding is set, it will become important when we try to preserve the
+         encoding header.  Since is_encoding_utf8() returns true when passed
+         NULL, we can just return NULL from find_encoding() instead of returning
+5:  d8be4ee826 ! 5:  d18f03d1bf fast-export: do automatic reencoding of commit messages only if requested
+    @@ -62,7 +62,7 @@
+     +		reencode_mode = REENCODE_YES;
+     +		break;
+     +	default:
+    -+		if (arg && !strcasecmp(arg, "abort"))
+    ++		if (!strcasecmp(arg, "abort"))
+     +			reencode_mode = REENCODE_ABORT;
+     +		else
+     +			return error("Unknown reencoding mode: %s", arg);
+    @@ -156,7 +156,7 @@
+     +		 # The commit object, if not re-encoded, is 240 bytes.
+     +		 # Removing the "encoding iso-8859-7\n" header would drops 20
+     +		 # bytes.  Re-encoding the Pi character from \xF0 (\360) in
+    -+		 # iso-8859-7 to \xCF\x80 (\317\200) in utf-8 adds a byte.
+    ++		 # iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
+     +		 # Check for the expected size...
+     +		 test 240 -eq "$(git cat-file -s i18n-no-recoding)" &&
+     +		 # ...as well as the expected byte.
+-- 
+2.21.0.782.gd18f03d1bf
+
