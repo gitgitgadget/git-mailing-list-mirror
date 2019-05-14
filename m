@@ -2,95 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1468A1F461
-	for <e@80x24.org>; Tue, 14 May 2019 11:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8254D1F4B6
+	for <e@80x24.org>; Tue, 14 May 2019 11:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbfENLWk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 07:22:40 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44303 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbfENLWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 07:22:34 -0400
-Received: by mail-ed1-f66.google.com with SMTP id b8so22323969edm.11
-        for <git@vger.kernel.org>; Tue, 14 May 2019 04:22:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gg8KfPiBx8a9+doXQfeNNHQeZGqR92Fu8BJkJTGi5yM=;
-        b=aHHOiW4mtE3AGwilFO80vieuHsb8Azo0GV+n7C+7MKZl8sU8UiJDxZNBGXFNCvicg2
-         ck8PZRyKMpyiN3I0DmdjtkXECf/5Tdl4oZuWrcFU2BfqJQufsZWjmYEDYwxRS1UJQP/L
-         wfuZcfKQ1bXq6ZNd4hFhKtP2aluz+1yyUvwdWmnuMxBga8i4/NENMRoBzg5YimSm2Jms
-         AcWuEryxMxduZdL/8RYK043RlvKHUsi2qrdYQmcy+nwZkUBYzzuJDMrMZtZOf4tMNRMk
-         /4a/PpQy1xq9xYiCUD113/8qNp60eFfsb57umnHySE+47FwUEI1vEAlOaUX75Ih2hWbv
-         uFLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gg8KfPiBx8a9+doXQfeNNHQeZGqR92Fu8BJkJTGi5yM=;
-        b=rmUTW6z8CHzwxKn+l2IPSvOYHvElax+akHcccpaBwUYEPSavo0ysga08BAMroufvBw
-         PgdQ0QgVumYz4f1keprbOC6hjbpSHJtSDpYK9We3oo/IEhH4836S7xkCp2hvlPHhJ5lj
-         NaIkAp/rrqyJnF41HBToUeisp1RYxBsJ/pWTsND8xqv2FFaQ4db/mjzl1dksZP5NHFz+
-         +7ReRHOQrte4cW/O+gbvIs3aT/LuE1S6TfT6LftkVM0/2qDtxaXZor0qv6jZpThZBKBh
-         aisZ6NfuoZIHQrqOXcBY6LoFFKaNJFOzWJu35cY6yd6lrfFrPdpyFNzqKRwnEoeU3Ory
-         TMDg==
-X-Gm-Message-State: APjAAAUe0GplesfHNXS6qif3Ls5E28SxypaaQEWCrK/CpZmWdkMXpL6q
-        vMV03aJ+i0LJPIAQYnrcOUiTD+ST
-X-Google-Smtp-Source: APXvYqwYAgTWDdY3X488MlYUzaP1sWYJEfG44ftnXLe8vyYUP2mAsUrQjfthuj87dqJ5SKro08P3bg==
-X-Received: by 2002:a17:906:54d2:: with SMTP id c18mr26857648ejp.50.1557832953130;
-        Tue, 14 May 2019 04:22:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i2sm1570697edg.81.2019.05.14.04.22.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 May 2019 04:22:32 -0700 (PDT)
-Date:   Tue, 14 May 2019 04:22:32 -0700 (PDT)
-X-Google-Original-Date: Tue, 14 May 2019 11:22:27 GMT
-Message-Id: <ab1fc1ad2ac88360b2edfe6d621d92adc7f9c03c.1557832949.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.194.git.gitgitgadget@gmail.com>
-References: <pull.194.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/5] .gitignore: there is no longer a built-in
- `git-rebase--interactive`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726265AbfENLYy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 07:24:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56754 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726036AbfENLYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 07:24:53 -0400
+Received: (qmail 3937 invoked by uid 109); 14 May 2019 11:24:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 May 2019 11:24:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12019 invoked by uid 111); 14 May 2019 11:25:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 07:25:32 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 07:24:51 -0400
+Date:   Tue, 14 May 2019 07:24:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] update-server-info: avoid needless overwrites
+Message-ID: <20190514112451.GB26957@sigill.intra.peff.net>
+References: <20190511013455.5886-1-e@80x24.org>
+ <87v9ygwoj0.fsf@evledraar.gmail.com>
+ <20190512040825.GA25370@sigill.intra.peff.net>
+ <87tve0w3ao.fsf@evledraar.gmail.com>
+ <20190514094729.GA12256@sigill.intra.peff.net>
+ <87imudwck8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87imudwck8.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, May 14, 2019 at 12:33:11PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-This went away in 0609b741a4 (rebase -i: combine rebase--interactive.c
-with rebase.c, 2019-04-17).
+> > I think it would work because any update-server-info, whether from A or
+> > B, will take into account the full current repo state (and we don't look
+> > at that state until we take the lock). So you might get an interleaved
+> > "A-push, B-push, B-maint, A-maint", but that's OK. A-maint will
+> > represent B's state when it runs.
+> 
+> Maybe we're talking about different things. I mean the following
+> sequence:
+> 
+>  1. Refs "X" and "Y" are at X=A Y=A
+>  2. Concurrent push #1 happens, updating X from A..F
+>  3. Concurrent push #2 happens, updating Y from A..F
+>  4. Concurrent push #1 succeeds
+>  5. Concurrent push #1 starts update-server-info. Reads X=F Y=A
+>  5. Concurrent push #2 succeeds
+>  6. Concurrent push #2 starts update-server-info. Reads X=F Y=F
+>  7. Concurrent push #2's update-server-info finishes, X=F Y=F written to "info"
+>  8. Concurrent push #1's update-server-info finishes, X=A Y=F written to "info"
+> 
+> I.e. because we have per-ref locks and no lock at all on
+> update-server-info (but that would need to be a global ref lock, not
+> just on the "info" files) we can have a push that's already read "X"'s
+> value as "A" while updating "Y" win the race against an
+> update-server-info that updated "X"'s value to "F".
+> 
+> It will get fixed on the next push (at least as far as "X"'s value
+> goes), but until that time dumb clients will falsely see that "X" hasn't
+> been updated.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .gitignore | 1 -
- 1 file changed, 1 deletion(-)
+That's the same situation. But I thought we were talking about having an
+update-server-info lock. In which case the #2 update-server-info or the
+#1 update-server-info runs in its entirety, and cannot have their read
+and write steps interleaved (that's what I meant by "don't look at the
+state until we take the lock"). Then that gives us a strict ordering: we
+know that _some_ update-server-info (be it #1 or #2's) will run after
+any given update.
 
-diff --git a/.gitignore b/.gitignore
-index 875f3fc6e8..bcee4fda81 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -123,7 +123,6 @@
- /git-read-tree
- /git-rebase
- /git-rebase--common
--/git-rebase--interactive
- /git-rebase--preserve-merges
- /git-receive-pack
- /git-reflog
--- 
-gitgitgadget
-
+-Peff
