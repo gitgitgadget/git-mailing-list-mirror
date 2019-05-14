@@ -2,216 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 434791F461
-	for <e@80x24.org>; Tue, 14 May 2019 17:01:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 310821F461
+	for <e@80x24.org>; Tue, 14 May 2019 17:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726143AbfENRBL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 13:01:11 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:52179 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725916AbfENRBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 13:01:11 -0400
-Received: by mail-it1-f193.google.com with SMTP id s3so6205554itk.1
-        for <git@vger.kernel.org>; Tue, 14 May 2019 10:01:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OaSgiiQxvJM6yjV+FBF8HO4IRsz2uo4vD7F3db7r07I=;
-        b=EK5vvvL+QoNT55AQ6ze/0XiMTbfRHCC3ScCrTbEc+AxH7C7syzCdCsyHlTSPEPJ2Bv
-         WM3rAIiBJpSTd1hxeCKnzdtQVbDZk7DeHAavvQWslNCVZ1uvtH3lkvAhByuEr+KCAYFz
-         K6R+eDHbE1oZUpp8TrP/30+Re4sJuykK5da/YQ/chrC6EMS89u1QPd5+LbPwn0HIYye4
-         05g02hbHoFtLy1cJDOM8qFPUqLOnJ3s0Xor01KEfYLYeDNHX0FioWV5KIbAsjiU7GGjS
-         4hKhqkmKm3EqEvxQnipLKyO9UYYZu7OePs7wVUM96HW2oKgE81NB/ytSBG5BXhNGqlS3
-         JUow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OaSgiiQxvJM6yjV+FBF8HO4IRsz2uo4vD7F3db7r07I=;
-        b=aztjeIm40CDtLPMf/VdQzKS65Ykeqv53OKo50L1SS6FfC7fDrGgPmJzxFpCfi+Kjq7
-         dqLE6V+/hzCJ/iMJmODv7h1BP7btK6WpXZLXX9lGuGrKjeSwm1agnl75Fk6WqBEM6BRH
-         TICYoQqabUUQDJhJorSgC+xSjA8YvH0n/on+YZj4Hc+c4wmLS2gsooFfpn1+KVX3LJSP
-         y/2iQ7Dr1y4pAuHfPJ9yh4BNrIVH0C0WqooUfdDo7hKuHHPrwDiZjLwfu/adOR3NXFbX
-         p5SAwRgo1BNJJ2oU+QQkZT0DG2HqF+sOGG/Wrpyx/M+yV5B2SdprB1gbIlx4MwTv+Wgw
-         O0sg==
-X-Gm-Message-State: APjAAAXRlS//zRIVXmO9SYOEfdCwTqmjfBFL863jG1x3RI9TznDA8UQ/
-        kb8O6WxtjOHB8d0rilb9ueg=
-X-Google-Smtp-Source: APXvYqxMBIP4I6YwDV6/nzFi97EFMj/2dUs/wnaG2pKEBDE3JeM0M6siUluKpjut/e/YqEOLhczeUg==
-X-Received: by 2002:a24:5512:: with SMTP id e18mr4303062itb.112.1557853270596;
-        Tue, 14 May 2019 10:01:10 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
-        by smtp.gmail.com with ESMTPSA id h191sm1821936ith.5.2019.05.14.10.01.08
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 14 May 2019 10:01:09 -0700 (PDT)
-Date:   Tue, 14 May 2019 13:01:07 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v3 2/2] format-patch: teach format.notes config option
-Message-ID: <20190514170107.GA4151@archbookpro.localdomain>
-References: <cover.1557327652.git.liu.denton@gmail.com>
- <cover.1557513353.git.liu.denton@gmail.com>
- <df864c4adf4dcab5f959007f87b1c4d0eafecb52.1557513353.git.liu.denton@gmail.com>
- <xmqqimufdqey.fsf@gitster-ct.c.googlers.com>
+        id S1727270AbfENR7A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 13:59:00 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:40028 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726481AbfENR67 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 13:58:59 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 453QRN4bJKz5tlF;
+        Tue, 14 May 2019 19:58:56 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 34EAD2084;
+        Tue, 14 May 2019 19:58:55 +0200 (CEST)
+Subject: Re: [PATCH v2 3/7] rebase: add support for multiple hooks
+To:     Duy Nguyen <pclouds@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net>
+ <20190514002332.121089-4-sandals@crustytoothpaste.net>
+ <CACsJy8CnCoMK7ahjRotKfiC2ic-U0hdhKuQAeF-TtVt8N+bU2Q@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <68ebbf52-3925-901d-b4c1-c6144c7f60b7@kdbg.org>
+Date:   Tue, 14 May 2019 19:58:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqimufdqey.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <CACsJy8CnCoMK7ahjRotKfiC2ic-U0hdhKuQAeF-TtVt8N+bU2Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Am 14.05.19 um 14:56 schrieb Duy Nguyen:
+> On Tue, May 14, 2019 at 7:24 AM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+>> diff --git a/builtin/am.c b/builtin/am.c
+>> index 912d9821b1..340eacbd44 100644
+>> --- a/builtin/am.c
+>> +++ b/builtin/am.c
+>> @@ -441,24 +441,8 @@ static int run_applypatch_msg_hook(struct am_state *state)
+>>   */
+>>  static int run_post_rewrite_hook(const struct am_state *state)
+>>  {
+>> -       struct child_process cp = CHILD_PROCESS_INIT;
+>> -       const char *hook = find_hook("post-rewrite");
+>> -       int ret;
+>> -
+>> -       if (!hook)
+>> -               return 0;
+>> -
+>> -       argv_array_push(&cp.args, hook);
+>> -       argv_array_push(&cp.args, "rebase");
+>> -
+>> -       cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+>> -       cp.stdout_to_stderr = 1;
+>> -       cp.trace2_hook_name = "post-rewrite";
+>> -
+>> -       ret = run_command(&cp);
+>> -
+>> -       close(cp.in);
+> 
+> In the old code, we close cp.in...
+> 
+>> +int post_rewrite_rebase_hook(const char *name, const char *path, void *input)
+>> +{
+>> +       struct child_process child = CHILD_PROCESS_INIT;
+>> +
+>> +       child.in = open(input, O_RDONLY);
+>> +       child.stdout_to_stderr = 1;
+>> +       child.trace2_hook_name = "post-rewrite";
+> 
+>> +       argv_array_push(&child.args, path);
+>> +       argv_array_push(&child.args, "rebase");
+>> +       return run_command(&child);
+> 
+> ... but in the new one we don't. Smells fd leaking to me.
 
-On Mon, May 13, 2019 at 11:44:21AM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > @@ -864,6 +866,20 @@ static int git_format_config(const char *var, const char *value, void *cb)
-> >  			from = NULL;
-> >  		return 0;
-> >  	}
-> > +	if (!strcmp(var, "format.notes")) {
-> > +		struct strbuf buf = STRBUF_INIT;
-> > +
-> > +		rev->show_notes = 1;
-> > +		if (!strcmp(value, "standard")) {
-> > +			rev->notes_opt.use_default_notes = 1;
-> > +		} else {
-> > +			strbuf_addstr(&buf, value);
-> > +			expand_notes_ref(&buf);
-> > +			string_list_append(&rev->notes_opt.extra_notes_refs,
-> > +					strbuf_detach(&buf, NULL));
-> > +		}
-> > +		return 0;
-> > +	}
-> 
-> Unlike the command line option parser, this does not seem to touch
-> rev->show_notes_given at all.  Intended?  I am wondering how well
-> this implementation meshes with what 66b2ed09 ("Fix "log" family not
-> to be too agressive about showing notes", 2010-01-20) wanted to do,
-> which 894a9d33 ("Support showing notes from more than one notes
-> tree", 2010-03-12) later extended.
+IIRC, run_command always closes the fds that it receives (even on error
+paths). Therefore, the old code is incorrect and should not call
+close(cp.in).
 
-This was intended but I'm not 100% sure that it's correct.
-
-From what I could gleam from reading the code, `show_notes_given` is
-only used by the `cmd_log_init` function, which is not called by
-format-patch. As a result, I opted to not set that flag since it's not
-really "given" in the sense that a user didn't explicitly pass in a
-command-line option indicating they wanted notes.
-
-> 
-> > +test_expect_success 'format-patch notes output control' '
-> > +	git notes add -m "notes config message" HEAD &&
-> > +	test_when_finished git notes remove HEAD &&
-> > +
-> > +	git format-patch -1 --stdout >out &&
-> > +	! grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --notes >out &&
-> > +	grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --no-notes >out &&
-> > +	! grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --notes --no-notes >out &&
-> > +	! grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --no-notes --notes >out &&
-> > +	grep "notes config message" out &&
-> > +
-> > +	test_config format.notes standard &&
-> 
-> I think we tend to spell these things "default".
-> 
-> Alternatively, the format.notes configuration can be "bool or text",
-> and make the variable set to 'true' mean "show notes, using the
-> default ref".
-
-I think I'l go with this approach.
-
-> 
-> > +	git format-patch -1 --stdout >out &&
-> > +	grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --notes >out &&
-> > +	grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --no-notes >out &&
-> > +	! grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --notes --no-notes >out &&
-> > +	! grep "notes config message" out &&
-> > +	git format-patch -1 --stdout --no-notes --notes >out &&
-> > +	grep "notes config message" out
-> > +'
-> 
-> OK.
-> 
-> > +test_expect_success 'format-patch with multiple notes refs' '
-> > +	git notes --ref note1 add -m "this is note 1" HEAD &&
-> > +	test_when_finished git notes --ref note1 remove HEAD &&
-> > +	git notes --ref note2 add -m "this is note 2" HEAD &&
-> > +	test_when_finished git notes --ref note2 remove HEAD &&
-> > + ...
-> > +	git format-patch -1 --stdout --notes=note1 --notes=note2 >out &&
-> > +	grep "this is note 1" out &&
-> > +	grep "this is note 2" out &&
-> 
-> Do we promise the order in which these two lines appear in the output?
-
-According to the code, the order is stable. However, I just read through
-the documentation and I realised that the ablility to provide multiple
-notes refs is undocumented.
-
-In a future reroll, I'll document the fact that --notes can be provided
-multiple times.
-
-> 
-> > +	test_config format.notes note1 &&
-> > +	git format-patch -1 --stdout >out &&
-> > +	grep "this is note 1" out &&
-> > +	! grep "this is note 2" out &&
-> > +	git format-patch -1 --stdout --no-notes >out &&
-> > +	! grep "this is note 1" out &&
-> > +	! grep "this is note 2" out &&
-> > +	git format-patch -1 --stdout --notes=note2 >out &&
-> > +	grep "this is note 1" out &&
-> > +	grep "this is note 2" out &&
-> 
-> So format.notes say note1 but the command line explicitly asks it
-> wants note from note2, but the command still gives from note1
-> anyway.
-> 
-> > +	git format-patch -1 --stdout --no-notes --notes=note2 >out &&
-> > +	! grep "this is note 1" out &&
-> > +	grep "this is note 2" out &&
-> 
-> And there is a way to work it around, i.e. clear everything
-> configured with --no-notes and then name the one you want from the
-> command line.
-> 
-> I am not sure if the above is consistent with how our options and
-> configurations interact in general.  Shouldn't the --notes=note2
-> alone in the earlier example cancel format.notes=note1 configured?
-
-I borrowed this behaviour from how format.to behaves. In format-patch,
-`--to` gives a recipient that is used _in addition_ to any format.to
-variables. `--no-to` can override this. I made format.notes behave
-similarly.
-
-> 
-> > +	git config --add format.notes note2 &&
-> > +	git format-patch -1 --stdout >out &&
-> > +	grep "this is note 1" out &&
-> > +	grep "this is note 2" out &&
-> > +	git format-patch -1 --stdout --no-notes >out &&
-> > +	! grep "this is note 1" out &&
-> > +	! grep "this is note 2" out
-> > +'
-> > +
-> >  echo "fatal: --name-only does not make sense" > expect.name-only
-> >  echo "fatal: --name-status does not make sense" > expect.name-status
-> >  echo "fatal: --check does not make sense" > expect.check
+-- Hannes
