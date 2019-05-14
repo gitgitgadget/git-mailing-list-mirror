@@ -2,74 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3F571F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:34:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9CB71F461
+	for <e@80x24.org>; Tue, 14 May 2019 12:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726290AbfENMeG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:34:06 -0400
-Received: from mail-it1-f173.google.com ([209.85.166.173]:55828 "EHLO
-        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbfENMeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:34:06 -0400
-Received: by mail-it1-f173.google.com with SMTP id q132so4608981itc.5
-        for <git@vger.kernel.org>; Tue, 14 May 2019 05:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p41Iulnd6jeA2Cnp6DdMwzRyjp6+wUFaY/O+ThyDzxM=;
-        b=T0nFK613KOcrGWk2dw1KzuzNRGWuycqUWzwiQsYj9JLXBoPcLtF1znYb4q3J1n7rJc
-         oUXotMmTYgE9wq/c4Z7Npes+KWcU3efbdUbyHAhGPGZfXubxXztPLxeYmmshDn5l5x7P
-         nfuPibRPQO4VcBEBmZNaYzhPCWrkic+ShRVHf/UbPpgz+M8P0uHE2znWEErMMUeYnKx1
-         Q+1PULc2aCJRyQ7RLhdz3jYBlFnQ0ZlI/X9awZ3NuYhVq8W4AnOJZnYU/eHiMQG+Cgqv
-         yVX3iU6858+5g2GPpleftU23d79oIRDn+asZf2zcK//41VwqFbSBOjcFrH0xQSVRUnQf
-         dIZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p41Iulnd6jeA2Cnp6DdMwzRyjp6+wUFaY/O+ThyDzxM=;
-        b=UI4ILAHYi4LDFVOV9dr5nnRLkTs2r+fWUlDFe94URxSux7mVbLuf8PujLFujZ7Ip4p
-         TJLMxHqIqTBQwIkdQKg7gHZ5erAlN2oy3e1cpvqXWhN/aKdo65JDYNPZFaSgzE6zWpHB
-         7jpDRWd58d53L8XaQZkQo0JjWyzId1xbXFspoLbWboGoHmZLxdlEVIeBZmiMT9AyqDZ7
-         tszkxxKCm9yW1WPCKxZYY9osr66ijMfOhJ/Xs6UyBGt3zQoDiImJ9OpQA4XarQQaY2X5
-         LwirOk4Dh7vbTdQpl9lgQ3bZHFc9Qe9vCaD8JZC4I0HgOe2830fGBoEJqgAOuH6G+Ns2
-         oBOw==
-X-Gm-Message-State: APjAAAWvOCKoELZt5hxb+s0G1qGdGhQ2YJ8NhZyE+jDnTpaliDEwn56x
-        U/h360vboO9OSLi3FZTbpYJ2AOVAQ15YZL/44i4=
-X-Google-Smtp-Source: APXvYqzxMkuFQoA+YCHcGrpXfQ4WIQrLYEfmvr+6Z0hQwYuiPK4rOPnmu7OPx63UCcPesL7A4CwU87rG7qeK1XOGAW0=
-X-Received: by 2002:a24:56c1:: with SMTP id o184mr3235085itb.123.1557837245605;
- Tue, 14 May 2019 05:34:05 -0700 (PDT)
+        id S1726174AbfENMhw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 08:37:52 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53935 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725893AbfENMhw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 08:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557837466;
+        bh=Gld61BGofGHPrpFgqmlQLEY/YGiJNTZGdGJ/z36XBak=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=enlIehzyLknzcpe+CZp6sOesZ1U8gwjQsPB2ERoFsTtD0lxRl0H3cRmrVzK+wxE1w
+         /Z87mLta4YYcCoyiXMfaiMYUul6KPfYOqfUrkHSPLnaaWNTLIYlBy6TINsU66TlNpE
+         WpV98CD068YyzAHH+TuTS77tpH9D7GHPU9bYr8NU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlXnX-1gs0gX0qBD-00bM8f; Tue, 14
+ May 2019 14:37:46 +0200
+Date:   Tue, 14 May 2019 14:37:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Slavica Djukic <slawica92@hotmail.com>
+Subject: Re: [PATCH] tests: add a special setup where prerequisites fail
+In-Reply-To: <87lfz9wexs.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1905131531000.44@tvgsbejvaqbjf.bet> <20190513183242.10600-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1905140945220.44@tvgsbejvaqbjf.bet> <87lfz9wexs.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAHAc2je-Yz4oej-sqvp+G+2Wv+eBABeJWUMm4scRwF2z_diUXw@mail.gmail.com>
- <CACsJy8C++Ds4kfs_Wc8UiVQgni-ypbyJ+0bFg1m5brt+s0Tfig@mail.gmail.com> <CAHAc2jf2Ojve=NaEshXx9qk8rtD4NHxqLEpqZq8c9t0yE4m_Qw@mail.gmail.com>
-In-Reply-To: <CAHAc2jf2Ojve=NaEshXx9qk8rtD4NHxqLEpqZq8c9t0yE4m_Qw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 14 May 2019 19:33:39 +0700
-Message-ID: <CACsJy8DnmQxO+r3ybg2zpCSMZJaTwc_C8V3QMCDjvga09sBigw@mail.gmail.com>
-Subject: Re: "add worktree" fails with "fatal: Invalid path" error
-To:     Shaheed Haque <shaheedhaque@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-1665868500-1557837466=:44"
+X-Provags-ID: V03:K1:yeSbqBMLM1lsG/YUkv1flurR4sb5ZWLhzHzhRnjfJFthNjsmb1F
+ wMFmX3Wwr+zEjjDrlA9kcHj2obh0DNKUPZlFrXdSaTIsKjgQOG8f2SQaCfEIElP/7oN35KT
+ YiCQQF3c+sH6NFtb4vHSG742FDMDIoxMVD1IgyYXT/D7LOr7vkbnMQxQXiPA9un0QbFaRvV
+ XJIUyqqzCoyzPgM2PBuqA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NY6to3Q2f20=:gDX/BxATFbp+CuMkD50EnW
+ v2fNCPf8ZXUYy6QHQIhpDOZVHNWuRqemKTP4YuOSwlAwdhEoQM3PeIE+jR9jCj2faE35Q/b5u
+ B6VEfekADgWo84wbSIyepb2fLxY1zHrLQ3m6Gcc4V4LbUh+90mg1j1RJIqpy8nvxHx3PZUjbV
+ k+/qC2rQazZ8SGahMbN2oTITVBFPYfRKklDVcppMzxtPY+QpYf4rz09qyAdfEFlQsPJgZa37Q
+ vd+HkK7RcstYRbTAYBIFvD/zV5/sfByVHzDyxq+YEIL692H20w8cdCBc6TNeaXPZyWVV2TZi9
+ dBpQWf3fBNIj1FcLlElb2tyTllUYDpnPHfcR7tXiu/iBXOUzPmYxYlV7CHoTl0ocHxcMLGbNN
+ hKC+rBlYgyVXashdq6VtbDgoAvHWRWbq6WjOG7tvGMXf9pkOr8ntpYUJLhv9Ry1fjKfPqLU7m
+ 39Webgc8zbVCIlXrK/7pbnnW21/aUHYw6BRWpTeRKCL0x/xszH6ztfcGJGTDvO76Rz4+THYha
+ /BEXCt3gesPGTnvUKSmWaWBBf3K9LQ7ckFe0a9MDai0SdEF7OBfceQy4CyvJ0sYmHprQc3+Nc
+ FfimbJRFfalvIcwCG2N8y9btj6xnPFM/eAPR/05JGx0jz7kT4qjixs0X7LHb4btOrMaxNpqHx
+ 9etlW5I+Y4NJBr3iuPEMGwTb+57q0Y44B1QlVWC/GzGSWQAyeeedJ3zF3fnoGEHR8o1iGFBrs
+ AuZ9Kov0juDlusUBrsSaYbFn2Afsvj2MGRZ77cFM37QC9KlG2WNKjRPACWTK9zJ3Am75nS6pm
+ i9mIRn3yK8qEpBwDa7JZ4sECc1ys6umfdaUC0FuEHdnGrjODwvS5Co0jSJk+fh79rnRy415Y/
+ 5z03GjyIWWs6xUL+1wdgwWz6Xwsg+pCMs6oeCLkFQPMFZ7s3HSK457XoY5hXA7AuSZ4eYMdyu
+ uoa2HKY0scQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 13, 2019 at 7:55 PM Shaheed Haque <shaheedhaque@gmail.com> wrote:
-> The original code used the more obvious "git worktree remove" rather
-> than "git worktree prune" but I switched partly because remove seemed
-> slow (I cannot now quantify what caused me to think that), and partly
-> because I was having other issues which, I now realise, you probably
-> addressed in your recent "stat versus mkdir race" change.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It should be as slow as "git status; rm -r". The first command _could_
-be slow. But if you find it significantly slower than that, I will be
-glad to receive another bug report.
--- 
-Duy
+--8323328-1665868500-1557837466=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi =C3=86var,
+
+On Tue, 14 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Tue, May 14 2019, Johannes Schindelin wrote:
+>
+> > What would you think about a mode where random test cases are skipped?
+> > It would have to make sure to provide a way to recreate the problem,
+> > e.g. giving a string that defines exactly which test cases were
+> > skipped.
+> >
+> > I am *sure* that tons of test scripts would fail with that, and we
+> > would probably have to special-case the `setup` "test cases", and we
+> > would have to clean up quite a few scripts to *not* execute random
+> > stuff outside of `test_expect_*`...
+>
+> I think it would be neat, but unrelated to and overkill for spotting the
+> practical problem we have now, which is that we *know* we skip some of
+> this now on some platforms/setups due to prereqs.
+
+I understand, but I am still worried that this is a lot of work for an
+incomplete fix.
+
+For example, the t7600-merge.sh test script that set off this conversation
+has two prereqs that are unmet on Windows: GPG and EXECKEEPSPID. On Azure
+Pipelines' macOS agents, it is only GPG that is unmet. So switching off
+all prereqs would not help macOS with e.g. a bug where the GPG test cases
+are skipped but the EXECKEEPSPID test case is not.
+
+Ciao,
+Dscho
+
+--8323328-1665868500-1557837466=:44--
