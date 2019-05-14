@@ -2,112 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACC3E1F461
-	for <e@80x24.org>; Tue, 14 May 2019 13:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCDE41F461
+	for <e@80x24.org>; Tue, 14 May 2019 13:44:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbfENNjJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 09:39:09 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45679 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725854AbfENNjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 09:39:09 -0400
-Received: by mail-ed1-f65.google.com with SMTP id g57so22913613edc.12
-        for <git@vger.kernel.org>; Tue, 14 May 2019 06:39:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=CpVnl7luspytUxumuET3NX9TotIw1A/lI3Ofepvsr4k=;
-        b=UUxDM6/zwTCiYrWBJz/mwp75DWLa5ZerhI+VA85xUF1VKb3VZFq8R+UR9IIiUtvWEU
-         D1MV+8JydkesIEvifkV9vF+ZFlSlsuIpLdYXhKOZhW1odn3pzfVPZ2KBfsmDDdzfTk7O
-         Zi44mTOsxWhviwz6t2n/peo2K8Ib3BXz7cMdPMt2sTuN0EEInKhlEa5y+2iiTuARzDga
-         m6e1GyLsp4BP/BKrpTDX2k5ql+Yydlmte6rTRcK/FD/bcl+WL7XLtoGesm0Ve2YsYshw
-         ntGt8rc+nanAWwOJgdsRII6DwL6XJpoDARH275jXX2DlpE1ZPTmP7mbl/4pqj/8mKgOY
-         uBwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=CpVnl7luspytUxumuET3NX9TotIw1A/lI3Ofepvsr4k=;
-        b=PsIz+OFUOZmmp7gYTvztUM5UhdquBtm+VfjsGg4K7dlMDEfvkNZSs9yL/ILN3ZImp5
-         qvlMuHpQa5AeeGrl/55ZNgTOS4ovIWRK0ae/uis1egFpgFdqooj2UskBPeBltFaVpWDf
-         A8BmR3NQu1Ips7Q0vkMhOl8npy5JwDifHe/RTvruco5SX059xtJfrljsFOTj2gQWx4q6
-         x3y+RB2JABzLFXG3ydpqoCD6KR5pMtUlHSODtb/sd25NxLqLHOblgdb7n/GA+tVg2Z0H
-         1qRIjt+WVHBurJ/mAEuBobcwWNPR/yepdTNfnHJxJoDqYyFPsI8Gu2OiPM9p9I2X+PZ1
-         +mUQ==
-X-Gm-Message-State: APjAAAX1+lGn0tigrQ4TG5NFUWh+Pc+k78i6pqcqAXynKUq08y56D3cE
-        HZk3AUnjkeGch4a22Uf++Ps=
-X-Google-Smtp-Source: APXvYqzJYOJHf0bfgUiVLAc94MkQFiGWOFfhUsGydr+TY3YUiXsYm0at3F5SokuHNnKUU14GjZF7TQ==
-X-Received: by 2002:a17:906:4d57:: with SMTP id b23mr27129369ejv.254.1557841147492;
-        Tue, 14 May 2019 06:39:07 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id g47sm3555236edc.33.2019.05.14.06.39.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 May 2019 06:39:06 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH] tests: add a special setup where prerequisites fail
-References: <nycvar.QRO.7.76.6.1905131531000.44@tvgsbejvaqbjf.bet> <20190513183242.10600-1-avarab@gmail.com> <nycvar.QRO.7.76.6.1905140945220.44@tvgsbejvaqbjf.bet> <87lfz9wexs.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1905141434040.44@tvgsbejvaqbjf.bet>
-Date:   Tue, 14 May 2019 15:39:06 +0200
-Message-ID: <87ef51w3yd.fsf@evledraar.gmail.com>
+        id S1726036AbfENNov (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 09:44:51 -0400
+Received: from mout.gmx.net ([212.227.17.20]:35483 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725899AbfENNov (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 09:44:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557841486;
+        bh=6MUgi+bOcRBvsEFQqYhmmXrSHPnuCrGxKV0wGb/GM/8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=B8tPg4h5wPibtcQznO8zKwVMhHFFlHyjChfzij3RGrKVc7laT0dpqjfUSQeDt2qcA
+         nDDW8tVFSZUkR464uC/eiHMof9Qi+thnJLLcC67NxM5jCWNDSPmgxmEbBGDR9g6uEj
+         5QhwNSWeE7rDkfgqDOjYAlcOdfmbtsqtFeGARraI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCwbX-1hZ6K50ESZ-009l2p; Tue, 14
+ May 2019 15:44:46 +0200
+Date:   Tue, 14 May 2019 15:44:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] merge: add --quit
+In-Reply-To: <20190514091322.12427-3-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905141540300.44@tvgsbejvaqbjf.bet>
+References: <20190509101028.24656-1-pclouds@gmail.com> <20190514091322.12427-1-pclouds@gmail.com> <20190514091322.12427-3-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-111578576-1557841486=:44"
+X-Provags-ID: V03:K1:Jqsty75zmxdS+aN2WWX670bF0stBTd7uBIBrr4tY8ZqUCTW2VPz
+ DCq9TCNNXlGwpAsA8pPWbyx0joM5bKlurjwkVthqGIpxr7cOcXBM8ruWug0Y18zpZSG8jHJ
+ ET+ihwnW59nsMfh+UlOtrwHLrOt13Q6Pa8hldoyGibKHozkVd4WXlE3Rg0yIyYo2gzmtzwc
+ 17iWC7F0vuQAz4G5NfSEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kIQWHVjUVVs=:cBsYmZh10BMHIDXoVCu47v
+ 7HxrOidwosw9G/AZv3bK0RPwuJK0NcjMqkprWc8XwsZ/U0il7uKu6FINcmND5Va0IkZ6BQDZb
+ cj+UHwCes4cu2jL3NDxZhS+0YZHVdE2gCnbCJRoHtMSS9qA7/frOql+NnhAH4spuAnWB12Y9g
+ HWb+EJtEcu52tcKl47hgdxqpz/hGIYpvWUdU9Ip25V1F3MBj1BjulZD57wFuDQBTT+YgrYlIM
+ qczGe3lpfX5D/4z19xoFGFyoasmUm7nSV7D/obG+eAqL4s5PmBJgvEPuZYrqtsOHTQQUdax8f
+ Tc+DCbbFdaL/czrwHDC5dQtiiUHpefd2SsQsBxj9DpC1WywsMGwmyn4ZwU/cnWXZzk0RycYrW
+ FSPQ3joOepuXxIf5T6GmUBD6ag3/UeSyM6Lr6wZHJI3SRUokHrIhZR8EPNcqO6RJg2/qVdd1Z
+ c4Ftl+frbMHH6yFAPjHThM0PZwXYjdFRs7TL4XiqimUSWQjaXQeyHk3rA8HpVG73rsAF4NQgN
+ Uu7E62mh5Fkt/1C7rTo1GrIh+/KiS0DQR5lylshGMt7gmDRoc2ayTwm3BeZZBbfKe4i0o6Y6I
+ jqLLT3tqK8V+wmfIY1QejzkpFtHVGHloz7MKtFdo4L/3RA+HXWuz0wSbwBxQUqsIWf6zCKtdt
+ zbtQeTFc7xqZRhW5UmqnrB4VR+nNE2DpGE1YvdpKiQd22t85cl9KypIiZCJZ3583RyaX9iujn
+ gJYPmXzv38ObUYiYj8Q2uAcWJh9FWz0yc4gSKQ8zUvGPLU3783fkVGV95GwEnu22MB4qr75vM
+ ojoh9oWbH0ZN9gwmXJt13b2wgeBuggijgcKa5/m6kmCqg64Lmg+eF50fYr7qbQRSSRy4Y4kKt
+ PTHqW7b+3wXDt/JEABS0cEq0obO5JDPq8WDhbKRTo86525LlzWSLk/RChj2xKvN50tVSoOJri
+ Xoy2BZEKvRQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, May 14 2019, Johannes Schindelin wrote:
+--8323328-111578576-1557841486=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Hi =C3=86var,
+Hi Duy,
+
+On Tue, 14 May 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 106148254d..d453710ef6 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -822,4 +822,18 @@ test_expect_success EXECKEEPSPID 'killed merge can =
+be completed with --continue'
+>  	verify_parents $c0 $c1
+>  '
 >
-> On Tue, 14 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Tue, May 14 2019, Johannes Schindelin wrote:
->>
->> > What would you think about a mode where random test cases are skipped?
->> > It would have to make sure to provide a way to recreate the problem,
->> > e.g. giving a string that defines exactly which test cases were
->> > skipped.
->> >
->> > I am *sure* that tons of test scripts would fail with that, and we
->> > would probably have to special-case the `setup` "test cases", and we
->> > would have to clean up quite a few scripts to *not* execute random
->> > stuff outside of `test_expect_*`...
->>
->> I think it would be neat, but unrelated to and overkill for spotting the
->> practical problem we have now, which is that we *know* we skip some of
->> this now on some platforms/setups due to prereqs.
->
-> I understand, but I am still worried that this is a lot of work for an
-> incomplete fix.
->
-> For example, the t7600-merge.sh test script that set off this conversation
-> has two prereqs that are unmet on Windows: GPG and EXECKEEPSPID. On Azure
-> Pipelines' macOS agents, it is only GPG that is unmet. So switching off
-> all prereqs would not help macOS with e.g. a bug where the GPG test cases
-> are skipped but the EXECKEEPSPID test case is not.
+> +test_expect_success 'merge --quit' '
+> +	git reset --hard c2 &&
+> +	test_must_fail git -c rerere.enabled=3Dtrue merge master &&
 
-It won't catch such cases, but will catch cases where a later new test
-assumes that whatever the state of the test repo it gets is what's
-always going to be there. In practice I think that'll catch most such
-issues.
+This makes me really worried. It is the same `master` (i.e. *not* a tag)
+that broke this test case in the previous round.
 
-The other GIT_TEST_* modes assume similar non-combinatorial explosion
-failure scenarios.
+> +	test_path_is_file .git/MERGE_HEAD &&
+> +	test_path_is_file .git/MERGE_MODE &&
+> +	test_path_is_file .git/MERGE_MSG &&
+> +	test_path_is_file .git/MERGE_RR &&
 
-I haven't gone back through the test suite's commit history to try to
-dig for other cases, so perhaps this mode is premature etc.
+Isn't this a clear implementation details of `git rerere` that you just
+taught `git merge`'s regression test?
+
+That's *prone* to become a test failure without a bug.
+
+It would probably make a ton more sense to look at the output of `git
+rerere status` instead.
+
+Ciao,
+Johannes
+
+> +	git merge --quit &&
+> +	test_path_is_missing .git/MERGE_HEAD &&
+> +	test_path_is_missing .git/MERGE_MODE &&
+> +	test_path_is_missing .git/MERGE_MSG &&
+> +	test_path_is_missing .git/MERGE_RR
+> +'
+> +
+>  test_done
+> --
+> 2.21.0.1141.gd54ac2cb17
+>
+>
+
+--8323328-111578576-1557841486=:44--
