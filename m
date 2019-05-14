@@ -2,116 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0C621F461
-	for <e@80x24.org>; Tue, 14 May 2019 12:57:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E19311F4B7
+	for <e@80x24.org>; Tue, 14 May 2019 13:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726107AbfENM5Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 08:57:25 -0400
-Received: from mout.gmx.net ([212.227.17.21]:48961 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725562AbfENM5Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 08:57:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557838637;
-        bh=1/yKzp1VvLNy01hRFutPbfg4tPFnZg7VfPkQ9Adpwug=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Lh+hVTJdHvjbiFZv+HNjzOb8HoUTJAfH5H1bYay0C7Y1TsoNRbwlXXCTccnd4pylr
-         0qA7zkFYlcnYrQ3K5t/asP8LUw+0bbh0Ogx8MSZZAyFg9jJaNbsx/Xmf5YIkY2kqg+
-         d/0sXtxNVJJaIRY6fqmumbC9VNZG826zbio1dDb4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCwbX-1hZ1Ac2zLf-009l8D; Tue, 14
- May 2019 14:57:17 +0200
-Date:   Tue, 14 May 2019 14:57:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] pkt-line: fix declaration of `set_packet_header()`
-In-Reply-To: <xmqqo9469buw.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905141454510.44@tvgsbejvaqbjf.bet>
-References: <pull.192.git.gitgitgadget@gmail.com> <a6bfec76c85bbe9187b536ff78252b82e30e20d3.1557787395.git.gitgitgadget@gmail.com> <xmqqo9469buw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725928AbfENNUi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 09:20:38 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:53030 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725854AbfENNUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 09:20:38 -0400
+Received: by mail-it1-f194.google.com with SMTP id q65so4889316itg.2
+        for <git@vger.kernel.org>; Tue, 14 May 2019 06:20:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GQS9eBwgFWETSJrN8o98igr9WE+Mtvl7/4FRYG1JucM=;
+        b=bW7/nVSUsba/KL9O/Qsj27cSQ2wPR8hplKYIVwYh6Mr2LYbQx/T/x/hflthBtz0Z4H
+         5jSo/WFfHgRy0Azg9/MQt+g1XMFuma0Khukt+P8O0VFqGTw81Lsa2CEo6Scce6wFUrTi
+         zb+RxkaB8ZRJLxpNTVxOZt3d5X5wt2m1khWMPEZXhh7wO6Sgz5KfBrOqUL2BXNG+6hrY
+         HNgD/UFjAIHABBDLh9oNxbRkyPBae+Y0rGrVTD/2cFzefLHM+u4x9rcLtC8F2mOyvtyH
+         fG5qMR2+fbqc/1kLHGFidi+GMij3jsst1ad0dLfK7NEKOrKCnrTlfOYjmn9vNO+b7Wnh
+         uNrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GQS9eBwgFWETSJrN8o98igr9WE+Mtvl7/4FRYG1JucM=;
+        b=oYuYV+xXRozkSjepIFOVZlNK9fQypmT71alVm3seKqzAhMrlL4PVQ40KmQ2nx2BD19
+         8JCQSEYbYk7mH3wVjEGWsNNUKnUeZoHKRiC4jTmdlMIKWc7BTwE1s5jnYtBOfEUuk/Gk
+         N0cfUSyZsDqghQS8cQdSIEXVkUlArJsqj2ITemZ5tnp2O3jWXlyAzAEJyS0DJJQ/y19c
+         WmeKXtnwG6Q6UP8MsvINDEZk8EFES8q/J7otSBShChF+QGnGxCegzgtvRPKf5ScS/1UA
+         yJlnrWbkq5nP92YbcTxoGVqKHx6gcKj1FJADt8sBs4tEbVuKNwXgF1zOmUOcCU54dBvG
+         eqIw==
+X-Gm-Message-State: APjAAAVOxEjBWyZFLy5NROTGubqaSImF/Vfl+xc/cIbBkfN9p3tOD6EH
+        gC1CJLXbZwvfV3aWVNfal3RZ/0mW251DPWowmgczI9v8
+X-Google-Smtp-Source: APXvYqwogJ1G16jDSxsrpPxHfh6QFAnRIZxEhmepYfk/MDVN2jVu1oPBiD7LrF3Pe3dXRWhryfJLpjx2uoZ6fiFsDXc=
+X-Received: by 2002:a05:660c:34e:: with SMTP id b14mr3052825itl.10.1557840036916;
+ Tue, 14 May 2019 06:20:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7qmhlVpWWUtfDuUynMhXy8tos6B/RMC8+3mRtZtBIf30QKNIcPr
- 5j+CZAc66FLQ++bnaQUYpXeUMjdmY0NVfxGrDweArS5bHsUX/g5ozE9D7lwcYPjg+aUNXwi
- JvW8hOWMPrdgSUzgqoUDiaeg/k5tMQgxv5K+JW3Ml5LdACOIaMO6KTXuT30sJq+okcyoI4T
- HrM0sAVvsfzjuNsuG4YgA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/+DxVix2bAI=:eLc+pxzVlvwBVcdJlJ1d5m
- FXKnP+JfB8yf7rarOy6twsUIHgIpvStiVrxquJmgYWvBAe6xtdnqwCBPgWx+GVljgrkNrAdtJ
- 9/wBKd+oovdpWSsNgUba5sEFLm/CGI44D4bgLwNvWRa8+lr7uijfE0xWi30EjInPhakZvxQXk
- iShqGhuzokU2Gheee4SoxEpoEXHavg/ExMyl6xUdr3V7vIgl+LlV/+EailxlArZqdR6s3S+HM
- vd+HWA9zhCZ4EF9Sirek/CqAsT7bDQlZAQj8rMRlZNyjpkXGmvmm1DSN2S5/4l3M0d5HFzkEK
- GdsW/GvrhBlG3hA1wdkfCyJUJ11EQzQODQ5xcWU1depPs62ugJZRPYZwUOm5oYNoR9vQW+8j1
- HpWY2SdTKCnfuBG+D/XJUUg0AjGc/cg0SYkbAdoU35sr4SfMaexYab0SUldupKGwef0BPjZLi
- WHZV03exBLqkxxHWjIJX3PUy5CLwYd2qhXZUbbMZ/+Jmsf+2up+Rz6lncJXDrqUE/H5rUk+rE
- zaxvXitXV1K2Sgu3mr4TVNyn2tFnnZs55I0PjZeLTR66RksWRYuWcj2ZtAHOHFli2a7axhbG3
- Xm2Gf4hq8QrbEI2aIEIs9dLN7+kJUE2db8DSb9lbKiesIILPKHdkA/SIS4J9w72DrEuNlOdQ3
- epuIbwNFwQTbNchoSHRWkkxCL4/onVHSiMpucmInqa0cgdXNnRtW3Vfe0nsNStVqxXN81vyWc
- mMXT3uHSNAh3JUyh8rz/n+Jaa2DLn1NZ+GPjhRuLZ5kYl1cl0NNpurtv6s5NYDGqYuSdn8655
- RPAaN/Bb2itIHC10LPVitKXOI2JxePBQRT6MWQG1lh4LlBs0+U+M7b6sjuS2VBDPu0PWahDzZ
- sjrPJKDqFDqkKw8DlHZfTkz/mlVPGtWXBDsPjP7wt+Z30Pbh18PwkcCr4aK1J6o18WbjYY3mB
- UtztzaSzoRA==
-Content-Transfer-Encoding: quoted-printable
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-8-sandals@crustytoothpaste.net>
+In-Reply-To: <20190514002332.121089-8-sandals@crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 14 May 2019 20:20:10 +0700
+Message-ID: <CACsJy8BN32Jm62MQPLsRwKST8DDNZ7NxnJbsqBO3PJ0K2qU-Ng@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] config: allow configuration of multiple hook error behavior
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Tue, 14 May 2019, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Tue, May 14, 2019 at 7:24 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When this function was changed in a97d00799a19 (remote-curl: use
-> > post_rpc() for protocol v2 also, 2019-02-21) from file-local to global=
-,
-> > the declaration was incorrectly missing the `const` qualifier.
+> There are a variety of situations in which a user may want an error
+> behavior for multiple hooks other than the default. Add a config option,
+> hook.<name>.errorBehavior to allow users to customize this behavior on a
+
+An alternative name is onError, probably more often used for event
+callbacks. But I don't know, maybe errorBehavior is actually better.
+
+> per-hook basis. Provide options for the default behavior (exiting
+
+should we fall back to hook.errorBehavior? That allows people to set
+global policy, then customize just a small set of weird hooks.
+
+> early), executing all hooks and succeeding if all hooks succeed, or
+> executing all hooks and succeeding if any hook succeeds.
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  config.c       |  27 +++++++++++++
+>  run-command.c  |  42 +++++++++++++++++---
+>  run-command.h  |   5 +++
+>  t/lib-hooks.sh | 106 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>  4 files changed, 173 insertions(+), 7 deletions(-)
 >
-> I do not quite get it.  Back when the function was file-scope
-> static, it did not even have a separate declaration, and the
-> definition the said commit added looks correct to me.
-
-Right, I should have said "the new declaration" instead of "the
-declaration".
-
-> Having "const int size" parameter in the definition of a function
-> does help the compilers and the developers by making sure any
-> earlier reference to the parameter in the function would not modify
-> it and cause later reference to obtain a different value.
+> diff --git a/config.c b/config.c
+> index c2846df3f1..9cba4061a9 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -19,6 +19,7 @@
+>  #include "utf8.h"
+>  #include "dir.h"
+>  #include "color.h"
+> +#include "run-command.h"
 >
-> But the parameter treated as a constant without getting modified
-> during the invocation of the function is an implementation detail of
-> the function; there is no point exposing that implementation detail
-> to its callers.  It does not even help the compilers handling the
-> caller's compilation unit---the parameter is passed by value, so the
-> caller knows that the callee would not modify it without "const"
-> there.
+>  struct config_source {
+>         struct config_source *prev;
+> @@ -1093,6 +1094,29 @@ int git_config_color(char *dest, const char *var, const char *value)
+>         return 0;
+>  }
 >
-> Does the language even allow flagging "const int in the definition,
-> int in the declaration" as a warning-worthy discrepancy?
+> +static int git_default_hook_config(const char *key, const char *value)
+> +{
+> +       const char *hook;
+> +       size_t key_len;
+> +       uintptr_t behavior;
+> +
+> +       key += strlen("hook.");
+> +       if (strip_suffix(key, ".errorbehavior", &key_len)) {
+> +               hook = xmemdupz(key, key_len);
+> +               if (!strcmp(value, "stop-on-first"))
 
-Apparently it does, as MS Visual C does issue a warning (and with `/Wall`,
-it fails).
+maybe stop-on-first-error (or if you go with the "onError" name, I
+think "stop" is enough). I know "stop on/after first hook" does not
+really make any sense when you think about it. Maybe stop-on-first is
+sufficient.
 
-In any case, I don't think that it makes sense to have a function
-declaration whose signature differs from the definition's.
+I was going to suggest strcasecmp. But core.whitespace (also has
+multiple-word-values) already sets a precedent on strcmp. I think
+we're good. Or mostly good, I don't know, we still accept False, false
+and FALSE.
 
-Ciao,
-Dscho
+> +                       behavior = HOOK_ERROR_STOP_ON_FIRST;
 
-> > -void set_packet_header(char *buf, int size);
-> > +void set_packet_header(char *buf, const int size);
+This is basically the logical "and" behavior in a C expression. Which
+makes me think if anybody's crazy enough to need the "or" counterpart
+(i.e. run hooks, expect failure, keep going until the first success).
+
+I guess it's a crazy mode. We should not care about until a real use
+case shows up.
+
+> +               else if (!strcmp(value, "report-any-error"))
+
+I couldn't guess based on this name alone, whether we continue or stop
+after the reporting part. The 7/7 document makes it clear though. So
+all good.
+
+> diff --git a/run-command.c b/run-command.c
+> index 191d6f6f7e..70fb19a55b 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1308,6 +1308,8 @@ int async_with_fork(void)
+>  #endif
+>  }
 >
+> +struct string_list hook_error_behavior = STRING_LIST_INIT_NODUP;
+
+Maybe stick this in 'struct repository'. I know most config variables
+are still global. But I think we have to move/reorganize them at some
+point. Most may end up in 'struct repository'.
+
+> @@ -1401,18 +1403,48 @@ int for_each_hook(const char *name,
+>                   void *data)
+>  {
+>         struct string_list paths = STRING_LIST_INIT_DUP;
+> -       int i, ret = 0;
+> +       int i, hret = 0;
+> +       uintptr_t behavior = HOOK_ERROR_STOP_ON_FIRST;
+> +       struct string_list_item *item;
+> +       /* Use -2 as sentinel because failure to exec is -1. */
+> +       int ret = -2;
+> +
+> +       item = string_list_lookup(&hook_error_behavior, name);
+> +       if (item)
+> +               behavior = (uintptr_t)item->util;
+>
+>         find_hooks(name, &paths);
+>         for (i = 0; i < paths.nr; i++) {
+>                 const char *p = paths.items[i].string;
+>
+> -               ret = handler(name, p, data);
+> -               if (ret)
+> -                       break;
+> +               hret = handler(name, p, data);
+> +               switch (behavior) {
+> +                       case HOOK_ERROR_STOP_ON_FIRST:
+> +                               if (hret) {
+> +                                       ret = hret;
+> +                                       goto out;
+> +                               }
+> +                               break;
+> +                       case HOOK_ERROR_REPORT_ANY_SUCCESS:
+> +                               if (ret == -2)
+> +                                       ret = 1;
+> +                               if (!hret)
+> +                                       ret = 0;
+> +                               break;
+> +                       case HOOK_ERROR_REPORT_ANY_ERROR:
+> +                               if (ret == -2)
+> +                                       ret = 0;
+> +                               if (hret)
+> +                                       ret = hret;
+> +                               break;
+> +                       default:
+> +                               BUG("unknown hook error behavior");
+
+maybe BUG(".. behavior %d", behavior);
+
+> +               }
+>         }
+> -
+> +out:
+>         string_list_clear(&paths, 0);
+> +       if (ret == -2)
+> +               return 0;
+>         return ret;
+>  }
+>
+-- 
+Duy
