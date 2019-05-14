@@ -2,104 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8DD51F461
-	for <e@80x24.org>; Tue, 14 May 2019 21:21:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD7B81F461
+	for <e@80x24.org>; Tue, 14 May 2019 23:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbfENVVB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 17:21:01 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38263 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726089AbfENVVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 17:21:01 -0400
-Received: by mail-pl1-f196.google.com with SMTP id f97so217015plb.5
-        for <git@vger.kernel.org>; Tue, 14 May 2019 14:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PwXy2A8FgraI2/6++7dH5O70cJFGmfHYix7jzD+aJPs=;
-        b=D9OyVfU4GoKXd0JqW6791U6OOHuvlNPe2QA0Q//jFNaGY5NHuYt4tGP7yoyvIj0G7b
-         Gii/i9+Q80Z6Deuzaq+OkuRDv/TsYr591LBFG4gMLQEGxEbmpJUwXbOLQgRjQj3svaxI
-         qREgzjTPO4p0JgFn7XN3P6L2thEZz7JaOEaXcm+D6rMgpo7G2McY2tvA41AWDWZ4ejHK
-         3shKbsPzKrg9JkMpGC0TNf2xw4DTpoaz2MuDYIpN0A+BXx9oXiCSQsoLIN6b2ZFN2ksT
-         v+lKkDpzp2U/+Ch5phjTrpurs029QhfIDCkdGghGVwOiDaQXiRp1VxaAc2LOfbo/nKod
-         5zSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PwXy2A8FgraI2/6++7dH5O70cJFGmfHYix7jzD+aJPs=;
-        b=CNRkxQaifR3IsxsbeQ1NlCVbGC50ziQkcEKM1SmTmdwc57FEcFSXiZXrmqNx16WPqd
-         c+/4zvm9wDsPZYWSKlJt5LgoXfwHad0ZFJqMSOEQwxKUQPF4DJdQcMOiJFpnnv6xjDdT
-         3x7IY3sap+2X+sILbuWvFVmaaUm3HV8mEE5Osmhpd0z/cHiWW4oGvsxu8HNPzdBmjaK/
-         77sHLHfeww9iU3djsplIEv3NtEo3gwQEKuGxp6vzTsaekqQOzmi/xZ32RhQ8ySCFgquf
-         cTSfuZGhs2TPqAF2OJyw1f7MHaCHQVm+Mw+wpkyj6cSdRW80r+8pan6xxnebQ1PlmNxO
-         yP5w==
-X-Gm-Message-State: APjAAAXhKSoP78ZwDA282QSpa3X7V0Wb6kuKvnQStcaxeLP/SeeGDA3+
-        AREYPspFrl/8xmS4SnUpZ0O1563I
-X-Google-Smtp-Source: APXvYqxEUj1lfaEbN0FfpsgJD5TuZDIlyUL5vez9drUeOnjYfQ4YleMr6+SVwuSrqaWGvJobmVXH/A==
-X-Received: by 2002:a17:902:a40b:: with SMTP id p11mr12059796plq.306.1557868860302;
-        Tue, 14 May 2019 14:21:00 -0700 (PDT)
-Received: from localhost.localdomain ([205.209.24.227])
-        by smtp.gmail.com with ESMTPSA id e123sm48339pgc.29.2019.05.14.14.20.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 14 May 2019 14:20:59 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2] http-push: prevent format overflow warning with gcc >= 9
-Date:   Tue, 14 May 2019 14:11:17 -0700
-Message-Id: <20190514211117.63739-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1726447AbfENXLL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 19:11:11 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:31149 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbfENXLK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 19:11:10 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id QgZghTJMqp7QXQgZghYBqn; Wed, 15 May 2019 00:11:09 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=drql9Go4 c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=kviXuzpPAAAA:8 a=D6MqCBOtqYAtU9Hh2O0A:9
+ a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=qrIFiuKZe2vaD64auk6j:22
+Subject: Re: How to exchange rerere/redo resolutions?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <b8e56556-6c83-9e37-38e9-ac67f51b5cd2@iee.org>
+ <871s17xk79.fsf@evledraar.gmail.com>
+ <37ccaad0-40b4-ca63-e057-791119d7fa69@talktalk.net>
+ <d139d79a-f35a-e00c-3790-104146b066c7@iee.org>
+ <87mujpwiod.fsf@evledraar.gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <acad0bcf-e124-156d-569e-21024b7617a7@iee.org>
+Date:   Wed, 15 May 2019 00:11:09 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <87mujpwiod.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfFQq7NfIrAbuFaHOheFZW8sv2FJibtlxk8caZD2qk6Ic8dYC6+FY2RA727hkqoEFTfmnF/gzR5bS3ldzr9egYi+pFwYMuZwDGjc/0U1LtSSvKuoeT48+
+ EthS1MFbtB4LacNz2vmvwNkEcZ9xPFnTmx7EuANkFYMXTKACqmvoAQa+os9w9E9KMpDqQ2fLdcxjBPEFF7/jicLmGFupfR58A3z9/mSoY/Mk68u/rCdyJcbi
+ aECmmQ98gHc5C7kjcR7Rjg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In function 'finish_request',
-    inlined from 'process_response' at http-push.c:248:2:
-http-push.c:587:4: warning: '%s' directive argument is null [-Wformat-overflow=]
-  587 |    fprintf(stderr, "Unable to get pack file %s\n%s",
-      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  588 |     request->url, curl_errorstr);
-      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hi Ævar,
 
-request->url is needed for the error message if there was a failure
-during fetch but was being cleared unnecessarily earlier.
+On 14/05/2019 09:21, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, May 14 2019, Philip Oakley wrote:
+>
+>> Hi All,
+>>
+>> On 10/05/2019 15:59, Philip Oakley wrote:
+>>>> You can publish your merged branch somewhere, and others can use
+>>>> contrib/rerere-train.sh to learn from the resolution.
+>>>>
+>>>> Supposedly, I've never actually used it...
+>> Does the contrib/rerere-train.sh actually work? I'm reading the code
+>> to ensure I understand what rerere/redo is doing, and in the training
+>> it tries to detect MERGE_RR via L87
+>>
+>>      if test -s "$GIT_DIR/MERGE_RR"
+>>
+>> It's not clear if that is an internal implementation detail, or a
+>> mistaken use of a historic path name. Can anyone enlighten me?
+> Historic? No, this is path.c now on master:
+Hmm, I'd now agree it's not a mistake, but the implementation detail is 
+historic. I've now found [1,2,3,4] from before I knew of Git! And it's 
+not mentioned in any of the documentation.
+>
+>      path.c:1454:REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+>
+> Internal, sure. We don't document it so it could change in theory, but
+> then we'd probably change rerere-train.sh along with it...
+Hopefully it'll be integrated into rerere/redo before that ;-), along 
+with a bit more documentation on the capability for those who arrived 
+late to the party. The use of this implementation detail came up 
+yesterday in [5].
+>>> The tricky part is when the patch series doesn't apply so the
+>>> conflict isn't yet on any branch..
+>> When copying patches across to Git for Windows, the conflict
+>> resolution can be tricky.
+--
+Philip
 
-note that the leak is prevented by calling release_request unconditionally
-at the end.
+[1] git-rerere: reuse recorded resolve, 29 Jan 2006, 
+https://public-inbox.org/git/7v4q3no0v7.fsf@assigned-by-dhcp.cox.net/
+[2] StGIT and rerere, 26 Oct 2006, 
+https://public-inbox.org/git/7vfydbkn64.fsf@assigned-by-dhcp.cox.net/
+[3] git-explain, 04 Dec 2006, 
+https://public-inbox.org/git/7vwt57j94c.fsf_-_@assigned-by-dhcp.cox.net/
+[4] Make git-rerere a builtin, 20 Dec 2006, 
+https://public-inbox.org/git/Pine.LNX.4.63.0612201738000.19693@wbgn013.biozentrum.uni-wuerzburg.de/ 
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
----
- http-push.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/http-push.c b/http-push.c
-index f675a96316..e36561a6db 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -526,8 +526,8 @@ static void finish_request(struct transfer_request *request)
- 	if (request->headers != NULL)
- 		curl_slist_free_all(request->headers);
- 
--	/* URL is reused for MOVE after PUT */
--	if (request->state != RUN_PUT) {
-+	/* URL is reused for MOVE after PUT and used during FETCH */
-+	if (request->state != RUN_PUT && request->state != RUN_FETCH_PACKED) {
- 		FREE_AND_NULL(request->url);
- 	}
- 
--- 
-2.21.0
-
+[5] merge: add --quit, 14 May 2019 , 
+https://public-inbox.org/git/nycvar.QRO.7.76.6.1905141540300.44@tvgsbejvaqbjf.bet/
