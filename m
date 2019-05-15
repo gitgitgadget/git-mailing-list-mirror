@@ -2,109 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B21751F461
-	for <e@80x24.org>; Wed, 15 May 2019 14:52:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D47AA1F461
+	for <e@80x24.org>; Wed, 15 May 2019 15:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728039AbfEOOwj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 10:52:39 -0400
-Received: from mail-qk1-f175.google.com ([209.85.222.175]:41990 "EHLO
-        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727336AbfEOOwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 10:52:39 -0400
-Received: by mail-qk1-f175.google.com with SMTP id d4so127417qkc.9
-        for <git@vger.kernel.org>; Wed, 15 May 2019 07:52:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6YvgKJFyzBjiBOKtsl+S8XJCxqj9oALAiOqCpMmGD7o=;
-        b=h/E5xcSn2BVTXYlL3lbNoqTzpTblFHmfNEJo9IfWs50v4g34k5T2BLxjlObeVBiQih
-         EeX2j6sNUqu6Qw2nMgLliaFqvVTWZpkFqkJ79il9IJp+Fu8/Ua1MReMhqZOUGCY58Q2r
-         3M6kRuPStW2t04arPK/7AsSu8/3dZoMAj1AGIOwsoZ3pgKyacoNwB+ZZq8zM0zY91y8z
-         JrN6aYns2QwsdU/iFSrTqGxkBomOuJrI73e7E2NyWBtPh7MlazdSK1M+jNyEoJ+KpWYv
-         +7IrKQ5wlyqEkF5arDcGgNBec8M6LbhHx8UXOZPFjILZFgqIfU/y1dD0pr6lSjzSIUob
-         qaDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6YvgKJFyzBjiBOKtsl+S8XJCxqj9oALAiOqCpMmGD7o=;
-        b=dPHT47VgrqQMlj7dfk/nkt/IfHEpR9clkw5kEQIu+e2J7k70wu2qzb3RpkRWrSzHop
-         yabQvJ4p2BfZaWmaOPqMIHj3Jq2GtarA5BaipRQGP/PihR5SQYz3TtGPnQyh11whS0yN
-         kmfOjD9KTq6HMezn6YC0TvNKmnliCm24ECPQAyg1mWa8nUffzmlj4hll2HjpGmZquMMC
-         daSMIS1IQIF7GChsuKz1GNZujdbk+FwqFj8UGrC7yeK81Fq6anWd3Yn3UyiSbN/xsau+
-         H/SqRrwIOY9j0Gti7M3bGdCehjsC5EylRAjzlpuqsZOtCi3NATMcbH2YVn7hvD4/jgmD
-         BtRw==
-X-Gm-Message-State: APjAAAWNrxmzPobOTn1AQPdPhUZFVoNtZ3naCm0vJ10SLsW2lytxZidk
-        fQNft/KgUzeMjyBbKCYTPS+eWe3JCW/xkC4lor7bS7p5
-X-Google-Smtp-Source: APXvYqzzweTN5zVHWr8uxQYKoHbrABHRFKrx76Vy9WM9rfePxuTtBA6ymF6cok1DNjw/1oatZ8akc2SjQCCwxGFc0MI=
-X-Received: by 2002:a05:620a:1641:: with SMTP id c1mr33911450qko.103.1557931957880;
- Wed, 15 May 2019 07:52:37 -0700 (PDT)
+        id S1726738AbfEOPAS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 11:00:18 -0400
+Received: from mout.gmx.net ([212.227.15.18]:42433 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725939AbfEOPAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 11:00:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557932411;
+        bh=IOlMHGT9XfsTmyk+24bAI/5+iOs/Y6K16w6pA5YW5ZI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PT31hHrvTeeB3q24dhLFGIUex6O7oEExzENCxO7owejCyDbuhkc96c1Q84g7eEK/s
+         YIUuM9sh/o5C6pJMXaNROQhyAofBNkx5c5ow2PI65p4I6iACoXZnPWTyAI1sXPs/WC
+         miRcFLOT8yDfQc0P+Lr4gNKjAUskQcroFy7suPpk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.49.190.205] ([95.208.59.243]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M70Td-1gV88N41GH-00wp54; Wed, 15
+ May 2019 17:00:11 +0200
+Date:   Wed, 15 May 2019 17:00:17 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] merge: add --quit
+In-Reply-To: <xmqqlfz877ba.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905151658090.46@tvgsbejvaqbjf.bet>
+References: <20190509101028.24656-1-pclouds@gmail.com> <20190514091322.12427-1-pclouds@gmail.com> <20190514091322.12427-3-pclouds@gmail.com> <nycvar.QRO.7.76.6.1905141540300.44@tvgsbejvaqbjf.bet> <xmqqlfz877ba.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Date:   Wed, 15 May 2019 16:52:26 +0200
-Message-ID: <CAA01CsoJf+_-iowdm0EFWd52vOWE1Uo0GGZ55d3RyPJzg6gwgQ@mail.gmail.com>
-Subject: Merging (joining/stiching/rewriting) history of "unrelated" git repositories
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OTib8kkGxpWgCzwpjbTuHIXOL0Y7Mj5EpzXFYbi8Y0/zZpXSyd7
+ pmXCC6/pJTJf+VMi3GU3MpV2WBJSQaNIfhvIU3smFkJpSC2QDCq3WYULPd7lpc0dxY8L3Ck
+ 3hdXiU6s4JHih5roi/RYhhgr0KIb3OsKxQCPsxg7qnJ2TksKGMxKBaoW7GUjFLLbAJjizA8
+ 4a4uHfQn4xmsStx195WEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hvKZXnJMygY=:QA/7gU1AMUEMtcMZDcfpo3
+ +meZPKlGTIO5FsliEm9y1A9drDgsDCnO9lWHHSpaQA5Yf1VCDN9wnwwaDG0ZQCi7Z7Qb1pKtQ
+ Ds6HM++9+xAWrIiBA4Eef04CzdnCzuLotafTb0VFwvhQYupHksVCzdex5EsLy6GktdwJwX50Z
+ QQpd96B/bXCAFftm3+kemv4E+fqzI9Fzi9UX3/1eEru10KbPACydM0mq+eJzE3kiX++YTBgnQ
+ d762VtI9eiUVH2jUOoqyvsGANlhNS8EnjS4EpAqgxa/o/e7t/Z7abVmlyq89Bc/uTAe+CRVBz
+ 6zbYlGbreCajCnOVIrN21enSe5Yey+cmtu47gNJABHVbdIWDUzJ3mp3a1GUCyH23IPe4aVYLV
+ k2qcO83Hyg81hQarufwj3yW8Vwd75pOVsPQ/wFrY8g+NjcGl4BGhcWuoMYSRzZ2Tc7RnoJ5M1
+ BxUmVrr5CHjv9t4dDsAhz0N/ZWhiDMfDwW7dcuNJF1qGWMEWK6K3VofCa4oNm9QyM+M3ekDST
+ 9dsJRUEzO15aK0/yriahJrdQZ+bmIVoZnABtAtfuK+fVYbfmtS7dYOoBspXmIuDGcD2YEEVb9
+ ed6JuoAJJfmGx7H1sNsu8Lp7Psqg7Ee1ZFjJGLjEpSeQAe0P7YEQ0F8772qoyWB12zB8DCf9W
+ Z89SRSRT78gqGaWKIpYBFoi3+wufMRoI4kW0jOQGoVZEbMLJqtUHWqieN/LOf2BQ2zecORIgd
+ lKC+3B+HtrNRjushqZiYIj1oD9RAHadyTCFh+ATIPMbThhiZbpRMgqLaytD/vuWMjpO2CNDZa
+ Z7pv3/Vzgkib6fBAP/QsoCdynfcdnmGqQlUIgXtK++TNnlql1NARhaWV27qkkvKeSzmGY66qO
+ RqAb3vpevWbE2GXHBdOYe3iRQmdAkFGe4Y7HGu4okZ+L1jGjAc4Ulp+QFrep/qlZKoE+W+04q
+ SkmIb7q9IDA==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Junio,
 
-I'm migrating two repositories from svn. I already did svn->git
-migration (git-svn clone) and now have two git repositories.
+On Wed, 15 May 2019, Junio C Hamano wrote:
 
-I would like to merge them into 1 git repository, but to merge also
-history - branches and tags.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> +	test_path_is_file .git/MERGE_HEAD &&
+> >> +	test_path_is_file .git/MERGE_MODE &&
+> >> +	test_path_is_file .git/MERGE_MSG &&
+> >> +	test_path_is_file .git/MERGE_RR &&
+> >
+> > Isn't this a clear implementation details of `git rerere` that you jus=
+t
+> > taught `git merge`'s regression test?
+> > ...
+> > It would probably make a ton more sense to look at the output of `git
+> > rerere status` instead.
+>
+> While I understand your concern, it is not the business of this test
+> to detect a bug in "git rerere status", either.  The safest thing to
+> do would be to test both ;-)
+>
+> t4151 that tests "am --abort" already looks at MERGE_RR for the same
+> "we want to make sure that the rerere state is cleared" purpose, so
+> I'd not be worried too much about this particular test.
 
-The reason is that the svn repositories in fact represent one
-"project" - you had to download both of then, they are not useful
-separately. Tags were applied to both repositories, also list of
-branches is almost identical for both.
+I spend *way* too much time chasing regression test failures that turn out
+not to show any bugs in the code they want to safeguard, but instead the
+bugs are found in the *assumptions* of the regression tests. So much time,
+in fact, that I have to disagree with you here. t4151 is just as wrong.
 
-So right now I have:
-
-    - projectA:
-       master: r1, r4, r5, r7
-       branch1: r10, r11, r13
-    - projectB:
-       master: r2, r3, r6
-       branch1: r12, r14
-
-The content of projectA and projectB is different (let's say projectA
-is in subfolder A and projectB is in subfolder B). So revisions on
-projectA branches have only A folder, and revisions on projectB
-branches have only B folder.
-
-But I would like to have:
-
-    - projectAB:
-       master: r1', r2', r3', r4', r5', r6', r7'
-       branch1: r10', r11', r12', r13', r14'
-
-Where all revisions have content from both projects. For example, the
-r5' should have the "A" folder content the same as r5, but also should
-have "B" folder content the same as in r3 (because r3 was the last
-commit to projectB (date-wise) before commit r5 to projectA).
-
-There's additional difficulty of handling merges...
-
-
-Any suggestions on what's the best way to do it?
-
-
-Currently I'm testing join-git-repos.py script
-(https://github.com/mbitsnbites/git-tools/blob/master/join-git-repos.py)
-but it's slow, memory inefficient and handles "master" branch only...
-
-
-Thanks,
-
--- 
-Piotr Krukowiecki
+Ciao,
+Dscho
