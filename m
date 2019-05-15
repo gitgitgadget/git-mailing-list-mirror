@@ -2,79 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79CEE1F461
-	for <e@80x24.org>; Wed, 15 May 2019 17:49:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30BB21F461
+	for <e@80x24.org>; Wed, 15 May 2019 17:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727334AbfEORt0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 13:49:26 -0400
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:41465 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbfEORt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 13:49:26 -0400
-Received: by mail-oi1-f171.google.com with SMTP id y10so417742oia.8
-        for <git@vger.kernel.org>; Wed, 15 May 2019 10:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=iVvwTNHweJiB+qBcGsASfYRUyDbbKac7t0DF3uVYnsA=;
-        b=OSaBgruQs7ic02JFOHqEoK/nPSCaXomg4gavMAdOIEugibKMzmQgbYg56/kdMPo0zl
-         8sIta/BVGZLfBKogb2Vu/8howv6hNfDOfdywgD9CC4VyWM4DVjy7sfTtB+XvwpuhjwX8
-         yjLjsYzE5oaWs9SlUo3yDK7cmOJs4cD2I+ZChvuHHm65w4wdcZGqBbZWg0TCyyMgNjF1
-         EyI+clsdnuH4OjUjDyux671fdfSCOWmQnMuDvoSO/5OHUMs0489peegg+UAuVQtLhHg6
-         AoqxmBIgT7NuWxr65jkfyR0GbtTcquk4zHHLiaL+h6H4xL0cvsjtYTGCozTuRO9fvkNk
-         tFAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=iVvwTNHweJiB+qBcGsASfYRUyDbbKac7t0DF3uVYnsA=;
-        b=ARBC5Mk63lbN0Pam2l7Y5maz0Hl+vhgrkgLBcj1pOAJ2DySZgy0FGAfOoEneKHyfM+
-         vjBd6zNDGENV9xpDqjT7/VRF/HUxU7rMUMjPvwzWEdaD/qla/m5Fh+JdrrTvT+/ezULo
-         vU1UyrsQzeBhobCUyHW88tcb4U6U/GSaHvFS3FyEj/E3bthuZSeaurktS9JV9/94wwxO
-         sjI/mjxgyKLDUkQ+2s0JYhPQ7PTDnGqQ+kXayvy/3ABXbyD9U7cCvDOoTWKkCj27nyTf
-         9dxxsDFRL8diO4WZ6eTQMgWpohI/R2p1liEsTc4L/tj6kVVoazsrDY9TAAHjm3apaapA
-         9HvQ==
-X-Gm-Message-State: APjAAAVQqLi/hjRCizvedoS4sih/uVzv0IVyvTaWYlX6nEsNEUriSJ8A
-        wpsCdAqhR2x6DWtLQXE5Lbhwnel1UIFKDlimdqhM7FA171g=
-X-Google-Smtp-Source: APXvYqxsXv1yLqVkm9ELuQYUC2/L4BEgHv/wWwwU0QFXc0BLjbgWLVGcBVEPDbNbcKmaCLffLvIA8GHCZ4NPeLPxwQw=
-X-Received: by 2002:aca:6c83:: with SMTP id h125mr7473886oic.109.1557942565308;
- Wed, 15 May 2019 10:49:25 -0700 (PDT)
+        id S1727244AbfEOR7w (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 13:59:52 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:44969 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726335AbfEOR7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 13:59:51 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 4542Px4NWzz5tl9;
+        Wed, 15 May 2019 19:59:49 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 32B9020BA;
+        Wed, 15 May 2019 19:59:49 +0200 (CEST)
+Subject: Re: Closing fds twice when using remote helpers
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org
+References: <20190515105609.sucfjvuumeyyrmjb@glandium.org>
+ <87bm04vt81.fsf@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b6ff2486-a1c2-4e89-4338-9e4e56d528bc@kdbg.org>
+Date:   Wed, 15 May 2019 19:59:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Wed, 15 May 2019 13:49:11 -0400
-Message-ID: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
-Subject: Git ransom campaign incident report - May 2019
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87bm04vt81.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Spotted this on the internet...
+Am 15.05.19 um 13:43 schrieb Ævar Arnfjörð Bjarmason:
+> 
+> On Wed, May 15 2019, Mike Hommey wrote:
+> 
+>> Hi,
+>>
+>> I started getting a weird error message during some test case involving
+>> git-cinnabar, which is a remote-helper to access mercurial
+>> repositories.
+>>
+>> The error says:
+>> fatal: mmap failed: Bad file descriptor
+>>
+>> ... which was not making much sense. Some debugging later, and it turns
+>> out this is what happens:
+>>
+>> - start_command is called for fast-import
 
-https://github.blog/2019-05-14-git-ransom-campaign-incident-report/
+I guess, you request fast_import->out = -1.
 
-Haven't hacked on git for a while, and I am not affiliated with any of
-the stakeholders. However, reading it, I wanted to slam my head on the
-desk.
+>> - start_command is called again for git-remote-hg, passing the
+>>   fast_import->out as cmd->in.
 
-IIRC, git will sanely store a password elsewhere if it gets to prompt
-for it. Should we be trying to unpack usernames/passwords from HTTP
-urls, and DTRT with them?
+OK.
 
-Are there other ways this could be made better?
+>> - in start_command, we end up on the line of code that does
+>>   close(cmd->in), so fast_import->out/cmd->in is now closed
 
-cheers,
+Yes. That's how the interface is specified.
 
+>> - much later, in disconnect_helper, we call close(data->helper->out),
+>>   where data->helper is the cmd for fast-import, and that fd was already
+>> closed above.
 
-martin
--- 
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+That must is wrong. Passing a fd to start_command() relinquishes
+responsibility.
+
+>> - Except, well, fds being what they are, we in fact just closed a fd
+>>   from a packed_git->pack_fd. So, when use_pack is later called, and
+>>   tries to mmap data from that pack, it fails because the file
+>>   descriptor was closed.
+
+Either dup() the file descriptor, or mmap() before you call the
+consuming start_command().
+
+>> I'm not entirely sure how to address this... Any ideas?
+>>
+>> Relatedly, use_pack calls xmmap, which does its own error handling and
+>> die()s in case of error, but then goes on to do its own check with a
+>> different error message (which, in fact, could be more useful in other
+>> cases). It seems like it should call xmmap_gently instead.
+> 
+> The "obvious" hacky fix is to pass in some "I own it, don't close it"
+> new flag in the child_process struct.
+> 
+> In fact we used to have such a thing in the code, see e72ae28895
+> ("start_command(), .in/.out/.err = -1: Callers must close the file
+> descriptor", 2008-02-16).
+
+That's a different thing. -1 tells that a pipe end should be passed back
+to the caller. Of course, it must not be closed by start_command.
+
+But if the caller passes their own fd *into* start_command/run_command,
+then the caller must not close it.
+
+> So we could bring it back, but I wonder if a better long-term solution
+> is to refactor the API to have explicit start_command() ->
+> free_command() steps, even if the free() is something that happens
+> implicitly unless some "gutsy" function is called.
+
+*Shrug* I'd use C++ to make the interface a no-brainer.
+
+-- Hannes
