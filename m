@@ -2,82 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7151F461
-	for <e@80x24.org>; Wed, 15 May 2019 17:46:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79CEE1F461
+	for <e@80x24.org>; Wed, 15 May 2019 17:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727424AbfEORqW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 13:46:22 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:50433 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726466AbfEORqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 13:46:22 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45426M3GsHz5tlC;
-        Wed, 15 May 2019 19:46:19 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D6BDF496D;
-        Wed, 15 May 2019 19:46:18 +0200 (CEST)
-Subject: Re: [PATCH v3] userdiff.c & doc/gitattributes.txt: add Octave
-To:     "LI, BO XUAN" <liboxuan@connect.hku.hk>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        philipoakley@iee.org
-References: <CALM0=-mTLakSBW67vqHNX84p=uw990QDbpeUfh1HKq9N0CiiLA@mail.gmail.com>
- <20190511041331.51642-1-liboxuan@connect.hku.hk>
- <aa86f483-9c73-eb6d-1a73-80fd4894c093@kdbg.org>
- <CALM0=-n_=8K4RWE9MvwPFT26UwN-rAA09ryqdTfEF4GJ57YBjg@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a2455214-9ce5-71e3-74bc-114af6fcfca7@kdbg.org>
-Date:   Wed, 15 May 2019 19:46:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727334AbfEORt0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 13:49:26 -0400
+Received: from mail-oi1-f171.google.com ([209.85.167.171]:41465 "EHLO
+        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbfEORt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 13:49:26 -0400
+Received: by mail-oi1-f171.google.com with SMTP id y10so417742oia.8
+        for <git@vger.kernel.org>; Wed, 15 May 2019 10:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iVvwTNHweJiB+qBcGsASfYRUyDbbKac7t0DF3uVYnsA=;
+        b=OSaBgruQs7ic02JFOHqEoK/nPSCaXomg4gavMAdOIEugibKMzmQgbYg56/kdMPo0zl
+         8sIta/BVGZLfBKogb2Vu/8howv6hNfDOfdywgD9CC4VyWM4DVjy7sfTtB+XvwpuhjwX8
+         yjLjsYzE5oaWs9SlUo3yDK7cmOJs4cD2I+ZChvuHHm65w4wdcZGqBbZWg0TCyyMgNjF1
+         EyI+clsdnuH4OjUjDyux671fdfSCOWmQnMuDvoSO/5OHUMs0489peegg+UAuVQtLhHg6
+         AoqxmBIgT7NuWxr65jkfyR0GbtTcquk4zHHLiaL+h6H4xL0cvsjtYTGCozTuRO9fvkNk
+         tFAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iVvwTNHweJiB+qBcGsASfYRUyDbbKac7t0DF3uVYnsA=;
+        b=ARBC5Mk63lbN0Pam2l7Y5maz0Hl+vhgrkgLBcj1pOAJ2DySZgy0FGAfOoEneKHyfM+
+         vjBd6zNDGENV9xpDqjT7/VRF/HUxU7rMUMjPvwzWEdaD/qla/m5Fh+JdrrTvT+/ezULo
+         vU1UyrsQzeBhobCUyHW88tcb4U6U/GSaHvFS3FyEj/E3bthuZSeaurktS9JV9/94wwxO
+         sjI/mjxgyKLDUkQ+2s0JYhPQ7PTDnGqQ+kXayvy/3ABXbyD9U7cCvDOoTWKkCj27nyTf
+         9dxxsDFRL8diO4WZ6eTQMgWpohI/R2p1liEsTc4L/tj6kVVoazsrDY9TAAHjm3apaapA
+         9HvQ==
+X-Gm-Message-State: APjAAAVQqLi/hjRCizvedoS4sih/uVzv0IVyvTaWYlX6nEsNEUriSJ8A
+        wpsCdAqhR2x6DWtLQXE5Lbhwnel1UIFKDlimdqhM7FA171g=
+X-Google-Smtp-Source: APXvYqxsXv1yLqVkm9ELuQYUC2/L4BEgHv/wWwwU0QFXc0BLjbgWLVGcBVEPDbNbcKmaCLffLvIA8GHCZ4NPeLPxwQw=
+X-Received: by 2002:aca:6c83:: with SMTP id h125mr7473886oic.109.1557942565308;
+ Wed, 15 May 2019 10:49:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CALM0=-n_=8K4RWE9MvwPFT26UwN-rAA09ryqdTfEF4GJ57YBjg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Martin Langhoff <martin.langhoff@gmail.com>
+Date:   Wed, 15 May 2019 13:49:11 -0400
+Message-ID: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
+Subject: Git ransom campaign incident report - May 2019
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.05.19 um 08:15 schrieb LI, BO XUAN:
-> On Wed, May 15, 2019 at 1:57 PM Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> Am 11.05.19 um 06:13 schrieb Boxuan Li:
->>> Octave pattern is almost the same as matlab. Besides,
->>> octave also uses '%%%' or '##' to begin code sections.
->>>
->>
->>> @@ -60,6 +60,11 @@ PATTERNS("java",
->>>  PATTERNS("matlab",
->>>        "^[[:space:]]*((classdef|function)[[:space:]].*)$|^%%[[:space:]].*$",
->>>        "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
->>> +PATTERNS("octave",
->>> +      /* Mostly the same as matlab. In addition, Octave
->>> +       * supports '##' and '%%%' for code sections */
->>> +      "^[[:space:]]*((classdef|function)[[:space:]].*)$|^(%%%?|##)[[:space:]].*$",
->>> +      "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
->>>  PATTERNS("objc",
->>>        /* Negate C statements that can look like functions */
->>>        "!^[ \t]*(do|for|if|else|return|switch|while)\n"
->>>
->>
->> In Matlab, are %%% and ## valid syntax? If not, instead of introducing a
->> new language, please just extend the Matlab rule to treat %%% and ## as
->> you need for Octave and mark your Octave files as Matlab.
-> 
-> '##' is not valid syntax in Matlab scripts.
-> 
-> '%%%' is valid syntax in Matlab. However, it is not used as a section divider.
+Spotted this on the internet...
 
-In Matlab, is %%% followed by space at the beginning of a line
-*commonly* used for something different? If I were to make a guess, I
-would say no. If I'm right, it does not hurt to merge the Octave rules
-into the Matlab rules.
+https://github.blog/2019-05-14-git-ransom-campaign-incident-report/
 
--- Hannes
+Haven't hacked on git for a while, and I am not affiliated with any of
+the stakeholders. However, reading it, I wanted to slam my head on the
+desk.
+
+IIRC, git will sanely store a password elsewhere if it gets to prompt
+for it. Should we be trying to unpack usernames/passwords from HTTP
+urls, and DTRT with them?
+
+Are there other ways this could be made better?
+
+cheers,
+
+
+martin
+-- 
+ martin.langhoff@gmail.com
+ - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
+ - don't be distracted        ~  http://github.com/martin-langhoff
+   by shiny stuff
