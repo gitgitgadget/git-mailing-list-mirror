@@ -2,201 +2,254 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 117511F461
-	for <e@80x24.org>; Wed, 15 May 2019 08:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FEDB1F461
+	for <e@80x24.org>; Wed, 15 May 2019 08:46:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbfEOIpS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 04:45:18 -0400
-Received: from mx3.uni-regensburg.de ([194.94.157.148]:53724 "EHLO
-        mx3.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725929AbfEOIpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 04:45:18 -0400
-Received: from mx3.uni-regensburg.de (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id 0692B600005F
-        for <git@vger.kernel.org>; Wed, 15 May 2019 10:45:15 +0200 (CEST)
-Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-        by mx3.uni-regensburg.de (Postfix) with ESMTP id C28F3600004D
-        for <git@vger.kernel.org>; Wed, 15 May 2019 10:45:14 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
-        with Novell_GroupWise; Wed, 15 May 2019 10:45:14 +0200
-Message-Id: <5CDBD199020000A10003136F@gwsmtp.uni-regensburg.de>
-X-Mailer: Novell GroupWise Internet Agent 18.1.1 
-Date:   Wed, 15 May 2019 10:45:13 +0200
-From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To:     <philipoakley@iee.org>, <git@vger.kernel.org>
-Subject: Re: Antw: Re: Missing branches after clone
-References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
- <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
- <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
- <5CDAAB56020000A100031334@gwsmtp.uni-regensburg.de>
- <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>
-In-Reply-To: <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
+        id S1726393AbfEOIqi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 04:46:38 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54003 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725902AbfEOIqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 04:46:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557909995;
+        bh=QE8+iyvQgzOsHFr+wezadUdKHqUYH9tdEM1/dahzhJo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ys9D9ez9BN7wP8RDvlBPKF2mBjZsSAfbsIKMbXDjrbS/tnxdt8CN/RsSXeDBAqRqH
+         gAEP5UpD8GWaV8ULZndJPzP60FLt5KllOkdpz6WGtENLlaP1REf5jNnnaaH2vfid7T
+         Pl8MHg4SkARrb1BVcnCPj6CCQjLgfJObInBsgYa8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Md31i-1h8cBN1ZiM-00I9wW; Wed, 15
+ May 2019 10:46:35 +0200
+Date:   Wed, 15 May 2019 10:46:42 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
+In-Reply-To: <4fcaa4481b5fd2a76aa21263f997e00913db0e0f.1557868134.git.jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1905151040240.44@tvgsbejvaqbjf.bet>
+References: <cover.1557868134.git.jonathantanmy@google.com> <4fcaa4481b5fd2a76aa21263f997e00913db0e0f.1557868134.git.jonathantanmy@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HSPVl9Cp5o2dMVTJ3pvD5EBzGX7qujIIUjlly6flFR/ESw9PxB4
+ FCFO1+ecFM5JZ1bqiEaCOI+IUDYFB95+HqUeyS7hTm5KtEvY3MBh+s+NhMtihSGx5W4Vi3H
+ DcIVc5NjoNjNpfRoQu8DvStO9KBirkqfsHo+esbMuJaE5X6pAOPF4iFvgiYYI+NdKdi2aog
+ VUwlqqErsbt1pEVBc1uBQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PRG1ZUCD8As=:vfUxLGppLsJitqx56YdRWo
+ q/DP2aMUOnKHUQ0EHH2TF8/6V66RCpZsrcxW/pv7YMxEok/NB6SzAP+icuSl4wOFXDjI75uzs
+ 40OFHeHzIZZ01UjIlSNhK9N3zcNTBR8AG0iVORbWdWveZJePS8v/i+WG4h4epsJU8X67+7TZd
+ iOzBKwrq+29CHUXL2YQ982RVsFbNKRb/ndxNwtluoBi/l//8pAirto10xfJSFx4pfY1CVuryR
+ OvuQkbdBeK6k6lUi7dvMNJhftHktOZwdsn+l/OUVFWIT50sz3FVlIcyGLh0i8Qm2kF1tEpcDZ
+ Qe0gQ1R97M2roJ/1v4b56HPHIEPhbyUimJyTy2LbfgeAFwnjqnUOLrnnM3Ue3nSm8QUSZiJGe
+ xcQSjeaBsdnkLTP2ml6Rmdq3VJ85VsovDdttOWR9apPAu0FlhsQq9+M2i4FkF94KkmoSOCdYs
+ 8BNU/YcddksMoXDjhinYBsnqcQLw+ZSFQ7KL57DX4Xz0g6nvJCQcdt5xq77ZpmGoWbt7jz2o1
+ Czc76tQiG/ubImMikCbhag3NFAZbU8tW/Xg2eTQconGmKdyyUMDb7sr4VM5ZPVA8XEOrhb0Dj
+ lJ957NXHrBy0hJ0A7Xh20YDNmtN/aPVODvj+kFb2LPJ+o/PQSIhHoTudCL8Swy39r53KLzL21
+ sjMdGx2eiDYhlQLuOBgadBhCH3zKH83n3CKzcAuy9DD3MAFbIpRpUlo6rMQFT0LciismW9ccn
+ 3n/23JnfrRmEgn2nB+8F9QYvD4iOJpYWrjdq2obypSVI+ZiBrA7E52NlbDgdgpKd29amK3Psa
+ so2LSavMejRi4P6tcYB99Tb1fzQbWMD84FlNXlLJnIGkzM7D5Rt+DAZLHIcj++exWBBrps9j9
+ YVoLMfikKiDVoE0ogovhZL9YFXzVVQZw70ce7/5WpUMoYS0Ftvnl1dWuGfYS2PXOOY8syKA2g
+ 6dZJn8wl1qQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> Philip Oakley <philipoakley@iee.org> schrieb am 15.05.2019 um 09:34 in
-Nachricht <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>:
-> On 14/05/2019 12:49, Ulrich Windl wrote:
->> Hi!
->>
->> The confusing part actually is for me:
->> "git clone" does NOT "Clone a repository into a new directory", but "clone
+Hi Jonathan,
 
-> the current branch into a new directory" (IMHO).
->> So I was surprised that I couldn't merge branches under the same name in
-the 
-> cloned "repository".
->> Only "git clone --bare" actually seems to clone "the repository".
->> I think this is very confusing to new users. At least I didn't quite get
-the 
-> reasoning for that.
-> It's that you are missing the idea behind the "Branches that track the 
-> remote", which are local copies, but not YOUR branches. see below.
-> I clone the GitHub test repo. I get (a copy of) it all (the rtb's). Git 
-> _creates_ a local branch 'master' for me. Git checks out the lead remote 
-> branch into it. Command prompt returns. I cd into the new repo. I ask 
-> what branches _I_ have - just 'master'. I ask about all the branches the 
-> repo has - voila, I see all those rtb's in _my_ repo. They are all 
-> perfectly valid branch refs.
+On Tue, 14 May 2019, Jonathan Tan wrote:
 
-Yes, I can mostly follow you there with one exception: In the cloned
-repository the branches are not available under the same name as in the
-original repository (unless I'm totally confused). Therefore a beginner would
-simply assume "they are missing".
-I knew that (which was my use case) git optimizes local copies by linking as
-much as possible, but I don't understand why cloned branches are "soooo
-complicated". (I could understand it as an optimization for network copies)
-
-> 
-> It will take a little while to appreciate this extra layer and how to 
-> use it, and how Git can 'dwim' (do what I mean) the usage of shortened 
-> refs and branch names, so it you try checking out 'change-the-title', 
-> git will know to fall back to using the rtb if you haven't created a 
-> local version.
-> Hope That Helps.
-> Philip
-> 
-> phili@Philip-Win10 MINGW64 / (master)
-> $ cd usr/src
-> 
-> phili@Philip-Win10 MINGW64 /usr/src (master)
-> $ git clone https://github.com/octocat/Spoon-Knife.git 
-> Cloning into 'Spoon-Knife'...
-> remote: Enumerating objects: 16, done.
-> remote: Total 16 (delta 0), reused 0 (delta 0), pack-reused 16
-> Unpacking objects: 100% (16/16), done.
-> 
-> phili@Philip-Win10 MINGW64 /usr/src (master)
-> $ cd Spoon-Knife/
-> 
-> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
-> $ git branch
-> * master
-> 
-> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
-> $ git branch -a
-> * master
->    remotes/origin/HEAD -> origin/master
->    remotes/origin/change-the-title
->    remotes/origin/master
->    remotes/origin/test-branch
-> 
-> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
-> $
-> 
-> --
-> PS What change to the [clone?] man page would have helped you here?
-
-Maybe confirm this: At this state I could "checkout test-branch" (for
-example), but I could not "merge test-branch", right?
-(Another level of confusion is bash-completion which does not know those
-hidden branches)
-
-OK, reading git-clone again, the following might apply:
-Explain (or refer to) what a "remote-tracking branch" is.
-
-"checks out an initial branch that is forked from the cloned repository’s
-currently active branch" could be simplified to "checks out the active branch
-in the cloned repository"?
-
-Maybe add a paragraph at the end of the DESCRIPTION starting like: "To use
-another branch in the clones repository..."
-
-Maybe also add a pointer to the meanings of "origin" and "remote" (I know that
-the clone source becomes remote/origin)
-
-I wonder whether "This default configuration is achieved by creating
-references to the
-remote branch heads under refs/remotes/origin and by initializing
-remote.origin.url and remote.origin.fetch configuration variables." should
-become "The original repository's URL will be visible as remote/origin in the
-cloned reporitory"
-
-Maybe point out the differences between a "default clone" mand a "--mirror
-clone" in the DESCRIPTION.
-
-The example "Clone from upstream while borrowing from an existing local
-directory:" could benefit from a few explaining words (why would one want to do
-that, i.e. what's the effect?)
-
-None of the examples refers to using another branch than the default branch.
-Maybe add two examples:
-1: checking out a different branch, 2:merging a different branch to the
-current one
-
-That's what I think.
-
-Regards,
-Ulrich
-
-
-> 
->>> Philip Oakley <philipoakley@iee.org> schrieb am 14.05.2019 um 12:33 in
->> Nachricht <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>:
->>> Hi Ulrich,
->>> On 14/05/2019 11:12, Duy Nguyen wrote:
->>>>> Then I
->>> 
+> When fetching, the client sends "have" commit IDs indicating that the
+> server does not need to send any object referenced by those commits,
+> reducing network I/O. When the client is a partial clone, the client
+> still sends "have"s in this way, even if it does not have every object
+> referenced by a commit it sent as "have".
 >
-foundhttps://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branch
->>> es  which handles the subject...
->>>>> But still the most common solution there still looks like an ugly hack.
->>>>> Thus I suggest to improve the man-pages (unless done already)
->>>> Yeah I expected to see at least some definition of remote-tracking
->>>> branches (vs local ones) but I didn't see one. Room for improvement.
->>> Yes, the 'remote tracking branch' name [RTB] is very 'French' in its
->>> backwardness (see NATO/OTAN).
->>>
->>> It is a 'branch which tracks a remote', and it is has the 'last time I
->>> looked' state of the branch that is on the remote server, which may
->>> have, by now, advanced or changed.
->>>
->>> So you need to have the three distinct views in your head of 'My branch,
->>> held locally', 'my copy of Their branch, from when I last looked', and
->>> 'Their branch, on a remote server, in a state I haven't seen recently'.
->>>
->>> Finding a better name for the "RTB", one with an easier cognitive load
->>> for those trying to understand Git, would be an improvement.
->>>
->>> Though there has been a similar issue with 'staging the index'.
->>> Ultimately it is a new way of thinking about artefacts (perfect
->>> duplicates, no originals, no master, no copies, just verification
->>> hashes) so needs new terms and a difficult learning experience.
->>> -- 
->>> Philip
->>
->>
->>
+> If a server omits such an object, it is fine: the client could lazily
+> fetch that object before this fetch, and it can still do so after.
+>
+> The issue is when the server sends a thin pack containing an object that
+> is a REF_DELTA against such a missing object: index-pack fails to fix
+> the thin pack. When support for lazily fetching missing objects was
+> added in 8b4c0103a9 ("sha1_file: support lazily fetching missing
+> objects", 2017-12-08), support in index-pack was turned off in the
+> belief that it accesses the repo only to do hash collision checks.
+> However, this is not true: it also needs to access the repo to resolve
+> REF_DELTA bases.
+>
+> Support for lazy fetching should still generally be turned off in
+> index-pack because it is used as part of the lazy fetching process
+> itself (if not, infinite loops may occur), but we do need to fetch the
+> REF_DELTA bases. (When fetching REF_DELTA bases, it is unlikely that
+> those are REF_DELTA themselves, because we do not send "have" when
+> making such fetches.)
+>
+> To resolve this, prefetch all missing REF_DELTA bases before attempting
+> to resolve them. This both ensures that all bases are attempted to be
+> fetched, and ensures that we make only one request per index-pack
+> invocation, and not one request per missing object.
 
+Hmm. I wonder whether this can lead to *really* undesirable behavior, e.g.
+with deep delta chains. The client would possibly have to fetch the
+REF_DELTA object, but that would also be delivered in a thin pack with
+*another* REF_DELTA object, and the same over and over again, with plenty
+of round trips that kill performance really well.
 
+Wouldn't it make more sense to introduce a new term like `promised`
+(instead of `have`)? Both client and server will have to know about this,
+and it would be a new capability, of course, but that way the server could
+know that it has to send the entire delta chain.
 
+Of course, this would be quite a bit more involved than the current patch
+:-(
+
+Ciao,
+Dscho
+
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/index-pack.c     | 26 +++++++++++++++--
+>  t/t5616-partial-clone.sh | 61 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 85 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index ccf4eb7e9b..0d55f73b0b 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -14,6 +14,7 @@
+>  #include "thread-utils.h"
+>  #include "packfile.h"
+>  #include "object-store.h"
+> +#include "fetch-object.h"
+>
+>  static const char index_pack_usage[] =3D
+>  "git index-pack [-v] [-o <index-file>] [--keep | --keep=3D<msg>] [--ver=
+ify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+> @@ -1351,6 +1352,25 @@ static void fix_unresolved_deltas(struct hashfile=
+ *f)
+>  		sorted_by_pos[i] =3D &ref_deltas[i];
+>  	QSORT(sorted_by_pos, nr_ref_deltas, delta_pos_compare);
+>
+> +	if (repository_format_partial_clone) {
+> +		/*
+> +		 * Prefetch the delta bases.
+> +		 */
+> +		struct oid_array to_fetch =3D OID_ARRAY_INIT;
+> +		for (i =3D 0; i < nr_ref_deltas; i++) {
+> +			struct ref_delta_entry *d =3D sorted_by_pos[i];
+> +			if (!oid_object_info_extended(the_repository, &d->oid,
+> +						      NULL,
+> +						      OBJECT_INFO_FOR_PREFETCH))
+> +				continue;
+> +			oid_array_append(&to_fetch, &d->oid);
+> +		}
+> +		if (to_fetch.nr)
+> +			fetch_objects(repository_format_partial_clone,
+> +				      to_fetch.oid, to_fetch.nr);
+> +		oid_array_clear(&to_fetch);
+> +	}
+> +
+>  	for (i =3D 0; i < nr_ref_deltas; i++) {
+>  		struct ref_delta_entry *d =3D sorted_by_pos[i];
+>  		enum object_type type;
+> @@ -1650,8 +1670,10 @@ int cmd_index_pack(int argc, const char **argv, c=
+onst char *prefix)
+>  	int report_end_of_input =3D 0;
+>
+>  	/*
+> -	 * index-pack never needs to fetch missing objects, since it only
+> -	 * accesses the repo to do hash collision checks
+> +	 * index-pack never needs to fetch missing objects except when
+> +	 * REF_DELTA bases are missing (which are explicitly handled). It only
+> +	 * accesses the repo to do hash collision checks and to check which
+> +	 * REF_DELTA bases need to be fetched.
+>  	 */
+>  	fetch_if_missing =3D 0;
+>
+> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> index 7cc0c71556..f1baf83502 100755
+> --- a/t/t5616-partial-clone.sh
+> +++ b/t/t5616-partial-clone.sh
+> @@ -339,4 +339,65 @@ test_expect_success 'when partial cloning, tolerate=
+ server not sending target of
+>  	! test -e "$HTTPD_ROOT_PATH/one-time-sed"
+>  '
+>
+> +test_expect_success 'tolerate server sending REF_DELTA against missing =
+promisor objects' '
+> +	SERVER=3D"$HTTPD_DOCUMENT_ROOT_PATH/server" &&
+> +	rm -rf "$SERVER" repo &&
+> +	test_create_repo "$SERVER" &&
+> +	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
+> +	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
+> +
+> +	# Create a commit with a blob to be used as a delta base.
+> +	for i in $(test_seq 10)
+> +	do
+> +		echo "this is a line" >>"$SERVER/foo.txt"
+> +	done &&
+> +	git -C "$SERVER" add foo.txt &&
+> +	git -C "$SERVER" commit -m bar &&
+> +	git -C "$SERVER" rev-parse HEAD:foo.txt >deltabase &&
+> +
+> +	git -c protocol.version=3D2 clone --no-checkout \
+> +		--filter=3Dblob:none $HTTPD_URL/one_time_sed/server repo &&
+> +
+> +	# Sanity check to ensure that the client does not have that blob.
+> +	git -C repo rev-list --objects --exclude-promisor-objects \
+> +		-- $(cat deltabase) >objlist &&
+> +	test_line_count =3D 0 objlist &&
+> +
+> +	# Another commit. This commit will be fetched by the client.
+> +	echo "abcdefghijklmnopqrstuvwxyz" >>"$SERVER/foo.txt" &&
+> +	git -C "$SERVER" add foo.txt &&
+> +	git -C "$SERVER" commit -m baz &&
+> +
+> +	# Pack a thin pack containing, among other things, HEAD:foo.txt
+> +	# delta-ed against HEAD^:foo.txt.
+> +	printf "%s\n--not\n%s\n" \
+> +		$(git -C "$SERVER" rev-parse HEAD) \
+> +		$(git -C "$SERVER" rev-parse HEAD^) |
+> +		git -C "$SERVER" pack-objects --thin --stdout >thin.pack &&
+> +
+> +	# Ensure that the pack contains one delta against HEAD^:foo.txt. Since
+> +	# the delta contains at least 26 novel characters, the size cannot be
+> +	# contained in 4 bits, so the object header will take up 2 bytes. The
+> +	# most significant nybble of the first byte is 0b1111 (0b1 to indicate
+> +	# that the header continues, and 0b111 to indicate REF_DELTA), followe=
+d
+> +	# by any 3 nybbles, then the OID of the delta base.
+> +	git -C "$SERVER" rev-parse HEAD^:foo.txt >deltabase &&
+> +	printf "f.,..%s" $(intersperse "," <deltabase) >want &&
+> +	hex_unpack <thin.pack | intersperse "," >have &&
+> +	grep $(cat want) have &&
+> +
+> +	replace_packfile thin.pack &&
+> +
+> +	# Use protocol v2 because the sed command looks for the "packfile"
+> +	# section header.
+> +	test_config -C "$SERVER" protocol.version 2 &&
+> +
+> +	# Fetch the thin pack and ensure that index-pack is able to handle the
+> +	# REF_DELTA object with a missing promisor delta base.
+> +	git -C repo -c protocol.version=3D2 fetch &&
+> +
+> +	# Ensure that the one-time-sed script was used.
+> +	! test -e "$HTTPD_ROOT_PATH/one-time-sed"
+> +'
+> +
+>  test_done
+> --
+> 2.21.0.1020.gf2820cf01a-goog
+>
+>
