@@ -2,102 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF8DB1F461
-	for <e@80x24.org>; Wed, 15 May 2019 06:15:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1A541F461
+	for <e@80x24.org>; Wed, 15 May 2019 06:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725876AbfEOGPv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 02:15:51 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:38174 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbfEOGPv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 02:15:51 -0400
-Received: by mail-yb1-f196.google.com with SMTP id a13so556957ybm.5
-        for <git@vger.kernel.org>; Tue, 14 May 2019 23:15:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=connect-hku-hk.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Fm/iFzK+g9IY4I5E13iXe8AY0rPC8IxpkXY+n3LU/7I=;
-        b=ZTRU8W+tZYAZGhqRtB6Nuwf7KZBSlPYqdnWHV+Zv2LlVAlcZebvVginsSY+39iUA3b
-         Yx75THA2GhDdxANM4+sfhIL30mE0armTrAsIKMzd63azRnaHEnTvZyY00UCHoDmcNEH2
-         Tek+hpvsCXB7aFRlFYkmX0R9O1uDRwOT1a6JPS5cQdIqbUit+0bevUaWYjs79RCD21yZ
-         SKzsb/qbnRTuIHl5hM7G/5qNjE4IVzjOlci/t6fKNbnKtNfcAFWcyTBktgyF++qTFwOM
-         lgQ3D4MvR6CzOV3U7Zs2o1Zj853SittevrDZaT5BfP9Pg2PJb/DyFVChi2EkVU4xb6DW
-         DQjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Fm/iFzK+g9IY4I5E13iXe8AY0rPC8IxpkXY+n3LU/7I=;
-        b=n52hpuEv/0XcuEEfVaLKlPv7pf7CIETA9VtRcGJ7RkbvNizqj6Bn1HS66wv9TR3bXk
-         q/EM47Sayc+BA1fqnLFM+A0yqcCg896x8ldbzPvoO4H32POBCgn7JSVzsvtXOI3S1WRs
-         I5+u0AXzC5Rcxv0LJuAxUc1ui+b4TRcyVvW9flQcSqYAHS/GClpf11e7Ek5QSbSuvqAm
-         2KWzDaZqhQ79gKqvnORZH1sZX3cfhrTKyHJpo1djeUOtFYrvfgAAzAJNaVUYzFAt/NzP
-         tKKUUqL11lfWblCWQVc15iO9rxGWuHY7aDwMDuyuFGXKTZ9Cqwsfsp9PPjcIVucp//uA
-         NVTw==
-X-Gm-Message-State: APjAAAWljmc8GUFWcH5GuMXf5EXBo4OAqY0puGSqVr8TdfLyfgiojCl2
-        XJeUuQYwGHHpQ/+slAJUuvpgM16brsauOsDB98zFig==
-X-Google-Smtp-Source: APXvYqylu1OzcapWa+E2OsjKFU+RaYslYJYfmC8Be5BcRAdbjmjuDdAMK9+MCx/d4YoSkdjqvTqeKv/+Rll+vEpBwCk=
-X-Received: by 2002:a25:850e:: with SMTP id w14mr19521793ybk.13.1557900950387;
- Tue, 14 May 2019 23:15:50 -0700 (PDT)
+        id S1725912AbfEOGg5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 02:36:57 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:16491 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725875AbfEOGg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 02:36:56 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id QnX4hxBoKdraxQnX4hzzBn; Wed, 15 May 2019 07:36:54 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=ziHN62G_dDiyvSgrBlIA:9 a=QEXdDO2ut3YA:10
+ a=xts0dhWdiJbonKbuqhAr:22
+Subject: Re: [PATCH] git.c: show usage for accessing the git(1) help page
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <3cd065d1-9db5-f2e6-ddff-aa539746d45e@iee.org>
+ <20190514152450.15220-1-philipoakley@iee.org>
+ <20190515001717.GA138048@google.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <78710149-4e0c-01a1-ccbf-592adadbfd08@iee.org>
+Date:   Wed, 15 May 2019 07:36:55 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CALM0=-mTLakSBW67vqHNX84p=uw990QDbpeUfh1HKq9N0CiiLA@mail.gmail.com>
- <20190511041331.51642-1-liboxuan@connect.hku.hk> <aa86f483-9c73-eb6d-1a73-80fd4894c093@kdbg.org>
-In-Reply-To: <aa86f483-9c73-eb6d-1a73-80fd4894c093@kdbg.org>
-From:   "LI, BO XUAN" <liboxuan@connect.hku.hk>
-Date:   Wed, 15 May 2019 14:15:14 +0800
-Message-ID: <CALM0=-n_=8K4RWE9MvwPFT26UwN-rAA09ryqdTfEF4GJ57YBjg@mail.gmail.com>
-Subject: Re: [PATCH v3] userdiff.c & doc/gitattributes.txt: add Octave
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        philipoakley@iee.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190515001717.GA138048@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfHzRsUDbg7I9T5O5ifc107GN1oJfgXgPRJirDUwZykO5UC15fyQs4+4Dy41a+IiJti+dcJWxPXvB9iHcW4rdWJW6hq6NNDJxh407+wncZd0UWzLy6vLc
+ XUoZJVDjE8VRlhI9LAq7RNbEsHeaG3R1bN6kdSUPbE/QktPGSEAQfu7B8A6V3yVmYt1zDPdsng0dqPD7ilTxTlBygXWlPtKpUzvN8zND/urmSVGxWQFMiUze
+ sJlc5ULlOW8D28XWaabvIdtVQGfXgImYQFcNjEyTUfuREgYuDxzG71Ea0HT2/APN1u+c8q5AAMpAQFs2seeiDSL0HgIJNeeUuvDBT5aXxHU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 15, 2019 at 1:57 PM Johannes Sixt <j6t@kdbg.org> wrote:
+Hi Emily,
+
+On 15/05/2019 01:17, Emily Shaffer wrote:
+> On Tue, May 14, 2019 at 04:24:50PM +0100, Philip Oakley wrote:
+>> It is not immediately obvious how to use the `git help` system
+>> to show the git(1) page, with all its background and ccordinating
+>> material, such as environment variables.
+>>
+>> Let's simply list it as the last few words of the last usage line.
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> ---
+>> This follows from the discussion <3cd065d1-9db5-f2e6-ddff-aa539746d45e@iee.org>
+>> ---
+>>   git.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/git.c b/git.c
+>> index 2324ac0b7e..9a852b09c1 100644
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -33,7 +33,7 @@ const char git_usage_string[] =
+>>   const char git_more_info_string[] =
+>>   	N_("'git help -a' and 'git help -g' list available subcommands and some\n"
+>>   	   "concept guides. See 'git help <command>' or 'git help <concept>'\n"
+>> -	   "to read about a specific subcommand or concept.");
+>> +	   "to read about a specific subcommand or concept. Or use 'git help git'.");
+> I'm not sure the wording makes sense here. It sounds like you're saying,
+> "Or use 'git help git' to read about specific subcommands or concepts."
+> which isn't really what I think you're trying to say.
+True.
 >
-> Am 11.05.19 um 06:13 schrieb Boxuan Li:
-> > Octave pattern is almost the same as matlab. Besides,
-> > octave also uses '%%%' or '##' to begin code sections.
-> >
+> What about, "Or, use 'git help git' for a detailed guide of the Git
+> system as a whole."
+I had thought about a longer sentence, but was squeezing it in, given 
+that we (I) had to add in the other parts of that help footnote...
 >
-> > @@ -60,6 +60,11 @@ PATTERNS("java",
-> >  PATTERNS("matlab",
-> >        "^[[:space:]]*((classdef|function)[[:space:]].*)$|^%%[[:space:]].*$",
-> >        "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
-> > +PATTERNS("octave",
-> > +      /* Mostly the same as matlab. In addition, Octave
-> > +       * supports '##' and '%%%' for code sections */
-> > +      "^[[:space:]]*((classdef|function)[[:space:]].*)$|^(%%%?|##)[[:space:]].*$",
-> > +      "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
-> >  PATTERNS("objc",
-> >        /* Negate C statements that can look like functions */
-> >        "!^[ \t]*(do|for|if|else|return|switch|while)\n"
-> >
+> (I'm still not sure that's quite it - since `git help git` mostly
+> details the flags you can pass to git before invoking a subcommand. But
+> I'm not sure that `git --help` is the place to say that...)
+It's more that we are updating the system's response to a misunderstood 
+command, hopefully with something that includes a link to our putative 
+top level man page. It's tricky to get to without already knowing it's 
+there.
 >
-> In Matlab, are %%% and ## valid syntax? If not, instead of introducing a
-> new language, please just extend the Matlab rule to treat %%% and ## as
-> you need for Octave and mark your Octave files as Matlab.
->
-> -- Hannes
-
-Hi Hannes,
-
-'##' is not valid syntax in Matlab scripts.
-
-'%%%' is valid syntax in Matlab. However, it is not used as a section divider.
-
-ref: https://www.mathworks.com/help/matlab/matlab_prog/run-sections-of-programs.html
-ref: https://octave.org/doc/interpreter/Sections.html
-
-Best regards,
-Boxuan
+>>   
+>>   static int use_pager = -1;
+>>   
+>> -- 
+>> 2.21.0.windows.1.1517.gbad5f960a3.dirty
+>>
+Philip
