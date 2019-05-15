@@ -2,165 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 677DB1F461
-	for <e@80x24.org>; Wed, 15 May 2019 10:30:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8171F4B6
+	for <e@80x24.org>; Wed, 15 May 2019 10:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbfEOKai (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 06:30:38 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45807 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbfEOKai (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 06:30:38 -0400
-Received: by mail-pf1-f194.google.com with SMTP id s11so1131904pfm.12
-        for <git@vger.kernel.org>; Wed, 15 May 2019 03:30:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OENvZeaVFhmPJLpD3Pwz/jDXHbprWvz73uyQfzXAe0I=;
-        b=qLVdbom5M/na3kw/VGB1veUijr4cwAF9gyDyfLCD7oFgAxBhxjf0lE/GIwpBfkmo0M
-         6ricUmPY4zOakuwqsfeRpK/nTPwkUEFRYYCx26wAv04YuctguHBEjTIaGg8rqS/MSnV2
-         a+qvfqUN3v27RfG8r8SyCjgPFpWwJTtOZOtJEOYk3noVwOqGWUoM2+pI7RsMkOtV0lsz
-         ydmiLjtksXHk9Jc2T3bB4yabIx8lrJK+++DP6XXSTIV2CBs92N0kcC2AyaiGvx7qzYbB
-         JK3nfTJ0Ppjr2/yt2nWBsQBxC7G+gvZjBVrxwBul4jkgIO245ZB876WRG0HBpg99hK5Q
-         PPbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OENvZeaVFhmPJLpD3Pwz/jDXHbprWvz73uyQfzXAe0I=;
-        b=e2Dn3y+1bFyx0Eo/YWsGirPVHoQrvxOrW9aETqVVbxnicbW9ui+m0xzl94Qlm2q5qx
-         AWn6vmBlcntcsq9L7aq0IMuhI/uTrTJh+ANu9rMF5zh9a9wEfk4ImaprFGXBpIy4Zthl
-         9Js4ay/L+oJYm0rVp/NJ45i3jI192AL6kPFdk9mZZQm3GBlN78P0GgNOJi0uOBJGAb8N
-         nLIRYqrZdB7/bapQsvXLd74PY8udNjOJNT7gOmDJSPsnPJ5BYtAVIP1g8yR6MDFKGuXE
-         +zPGHbllPr6kFxxUIs9aNtpS6AO1oXOrX9w6zFgv23qU8yaGoKx7vKHE3sc2B8w80XXr
-         I2Gg==
-X-Gm-Message-State: APjAAAUi9hL2ySKp+YcU/OC1hvYtQquJ8pXtx+JY9a3soRuiz//xsgbz
-        uLLPOC/ZWu5sxRmpqRL6MEM=
-X-Google-Smtp-Source: APXvYqxMFiTm9yMFCKl9Qpn6hOrlu8gzZSUZ16ig7bGzbSPwEsh/Cg+uTOZW9B8a9JEQUxMPVyaiyA==
-X-Received: by 2002:a62:2e46:: with SMTP id u67mr47460222pfu.206.1557916237058;
-        Wed, 15 May 2019 03:30:37 -0700 (PDT)
-Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id g17sm2634540pfk.55.2019.05.15.03.30.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 May 2019 03:30:35 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 15 May 2019 17:30:31 +0700
-Date:   Wed, 15 May 2019 17:30:31 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Poughon Victor <Victor.Poughon@cnes.fr>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feedback on git-restore
-Message-ID: <20190515103031.GA29149@ash>
-References: <3E55146A6A81B44A9CB69CAB65908CEA6B91353C@TW-MBX-P01.cnesnet.ad.cnes.fr>
+        id S1726335AbfEOKjI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 06:39:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57037 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725939AbfEOKjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 06:39:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1557916737;
+        bh=tfl+UzUc8V+4NUda1lVsVBykkMXAR5cKu41Y3KS27H8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Wwf9c+OZ0raBB4uF4ELMqzAsLceA5m2nzWAbvLMm5GycH0b/e6VSLrhKfBmiRtlDP
+         w5mFjEyr3GBTJ6DuBWoZ44qX1ZvZi+fCVtzJJGIP0Ru6vtAgKiIc1pebamYRrX2xP4
+         52/28k772gwopNm84WPzzjaYN4hJMG3ScCbQxMiI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8GQs-1geEsb31Ga-014DR4; Wed, 15
+ May 2019 12:38:57 +0200
+Date:   Wed, 15 May 2019 12:39:04 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pkt-line: fix declaration of `set_packet_header()`
+In-Reply-To: <xmqqa7fo8pdg.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905151234370.44@tvgsbejvaqbjf.bet>
+References: <pull.192.git.gitgitgadget@gmail.com> <a6bfec76c85bbe9187b536ff78252b82e30e20d3.1557787395.git.gitgitgadget@gmail.com> <xmqqo9469buw.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905141454510.44@tvgsbejvaqbjf.bet> <20190514144305.GA28530@sigill.intra.peff.net>
+ <xmqqa7fo8pdg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3E55146A6A81B44A9CB69CAB65908CEA6B91353C@TW-MBX-P01.cnesnet.ad.cnes.fr>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jGRbaGGMrZWXUagvMhhtBvl5/ZMB8SO7NSJ4YdSkQf5gMYX6rk+
+ u3srIbev/GoxQ0W9VuOzom5/RdhU8emJ3YdVjwTWwjPtazcydBA68H1AxW5f6xDsZ1x5V8y
+ 8htm/X5vKQH7agM2K8G4lCJ6SgOy5Qf1gZ6vZ5kAvQO1k24nEUg8x4eck2aPP+KYmmBAmjl
+ 9ZEphpi/8wuy0Jh9db+DQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DNT5jqavBkg=:zDLUzO9wP6JAxctkCz2OzX
+ jxsrnFf2sy2ZjVuKQRRUx3WjQQPzx3LUUokzZ+ynkGvo9STwBYpfhj5e7txpBzK0iQV7dH2EZ
+ iLMiSPrk7vOkUscR5VJIdKlvfXbXx4LRjLoM5BpuCwPyozWR7ziGR/9+kvPngJ75+W/gGAKEb
+ fMWq7/7IVNbv6bUTOMcIyhjMDDpRQQhBGU9mnb3gtvEDO6Y7aPUlfgt3PqWpEZNvoB2HmRgwo
+ YS7gauLFX2i6JFXDkooRNnCQW+nG1B0eCPhTcgJXOFJLg4xjBl4del/L8lb3js5pOO9rMQSQ1
+ LPIzW3//PJQpd2IdQM3ewrqtWrJlDZmmHatFM/6F64tkF2Wu6B0/Im+iQ31Z9Ek4TcDQMw6nH
+ jE05nsAe7g9hdvAseutK9IL3KhbXPFLPzjk+hC7f2xPJFUOFEsHNDZCHD4296vtIyKKmTO3yJ
+ tnw7iF0FdxYAk0w5GateoRSmU++m7qWxom8vj9NFtFDBWnvhH8aFRRF9ZJBW5d4XSS06OFYA8
+ hqhAeGaX9q6rhdMqRa0JFB0EZOwYGuFfViti3uK6dRqSjb6i6gYCXv7Mg0aOAZT65QiEvdW63
+ OtweKd/TlYfDY52O8LT9EOs6dNN7xIOCqTaiUmS7pIPKSZCB9nu05k0XDwHraTgZtu5V8QDeO
+ c8eyIw4r49yFFuIgx7H+Wks8VsVYXQ4nCuRgZdZZM29/GZGTBW1jFREzmFAuUb9/tc1e3Uyt7
+ UxQzCPiiwJ1EqJUAWuT1JYUwKvZZmRs52c0Zr3tVUjex0C7MPNZBtbHvoRnFsdVXE6GvMcN7I
+ sIagMYXInY7jbTv5u0n5inhvgsHFuxAuZgBtewyuNoFisth35yeoip9pSV7jLL5HG8A/qGYyU
+ lU7OgoUpuYWSgsmXmHYpcqPrgxCXC/7Wuy72DO1578zTv9RVe9qqQWc0FzCBBd+BPeZMu3q4n
+ 0tAEGLJ7VYw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 15, 2019 at 09:38:59AM +0000, Poughon Victor wrote:
-> Hi
-> 
-> I came across a description of a new git command currently in
-> development called 'git restore'. Since it's still not out, and the
-> original poster [1] seemed to ask for feedback, I though I'd send
-> some here. Hope that's ok!
+Hi Junio,
+
+On Wed, 15 May 2019, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 >
-
-Absolutely. And this is even better because other people could also
-comment on.
-
-> Reading the documentation [2] I find it very confusing. In
-> particular when comparing the following two commands:
-> 
-> $ git restore --staged file
-> $ git restore --worktree file
-> 
-> With the current proposal, the first will restore the index from
-> HEAD, while the second will restore the worktree from the index. In
-> other words, the source for the restore is different in both
-> commands, even though neither specify a source!
+> > I do have a slight preference for going the _other_ way. There is no
+> > need to mark the parameter as const in the definition. It is passed by
+> > value, so nobody except the function body cares either way. And we hav=
+e
+> > many function bodies where value-passed parameters (or local variables=
+!)
+> > are not marked as const, even though they are only assigned to once.
 >
-> This means that git-restore really does two different things
-> depending on some other not obvious context. Unfortunately that's
-> typical of the (often criticized) obscure interface of git. To be
-> fair that behavior is documented in [2]. But still, having a
-> variable default value for --source depending on other arguments is
-> very confusing.
+> That would be more like this patch, then?
 
-I think it depends on whether use actively use the index, or you
-mostly ignore it and always do "git commit -a" and friends.
+I can live very well with this patch.
 
-When you do use the index, the "worktree <-> index <-> HEAD" is the
-three stages that you are aware, in that order, and restoring from the
-"next" stage is expected.
+Just two minor comments:
 
-It does feel natural for me that we "restore worktree from the index"
-and "restore index from HEAD". But maybe I'm just too used to the old
-way of thinking? Let's see what other people say.
+> -- >8 --
+> Subject: pkt-line: drop 'const'-ness of a param to set_packet_header()
+>
+> The fact that the incoming parameter is used as read-only in the
+> fuction is an implementation detail that the callers should not have
+> to know, and the prototype defined for the function in pkt-line.h
+> lacked the "const" for that reason, but apparently some compilers
+> complain about the parameter type mismatch.
 
-This is also consistent with other commands, for example "git diff
---staged/--cached" compares the index and HEAD and "git diff" compares
-worktree and the index. You would need extra effort e.g. "git diff
-HEAD" to compare the worktree and HEAD.
+We could be more explicit, as we know exactly that it is MS Visual C 2017
+that is complaining.
 
-If your workflow ignores the index, which should always match HEAD,
-then different default source is practically gone, since
-index == HEAD.
+> Let's squelch it by removing the "const" that is pointless for a
+> small function like this, which would not help optimizing compilers
 
-> So in summary, I'd make two recommendations for this command's UX:
-> 1. Make --source default value always HEAD if unspecified
-> 2. Rename --staged to --index
+It is not pointless because of the size of the function, but because `int`
+is already a type that is always passed by value, never by reference.
 
-This --index vs --staged was discussed and --staged is a compromise.
-The problem is --index means something different in existing
-commands. It specifies that you want to target both the index _and_
-worktree. --cached on the other hand only targets the index [1].
+If at all, it would make a difference if the function was inlined, so I
+would argue that it would be pointless for large functions.
 
-It's confusing, yes. But --index/--cached is part of Git and we cannot
-just ignore our baggage and redefine --index to "just index". That
-will create more confusion and inconsistency between commands.
-"--index" is simply not available.
+But both aspects are moot and more philosophical than anything else in
+this context.
 
-So the compromise is we leave --index/--cached alone and gradually
-move to the --staged/--worktree combo (for other commands as well).
-Eventually I hope people will move to the second pair and mostly
-forget about --index/--cached. And in a very long long time in the
-future, maybe we can deprecate/remove/redefine --index/--cached.
+Thanks,
+Dscho
 
-[1] https://github.com/git/git/blob/pu/Documentation/gitcli.txt#L179-L199
-
-> Some examples of those:
-> 
-> $ git restore --index file # reset the index from HEAD
-> $ git restore --worktree file # reset the worktree from HEAD
-
-I should also note that --worktree is the default, you can just write
-
-$ git restore file
-
-and achieve the same thing. Writing --worktree is only needed when you
-want to make it clear to the reader you're restoring the worktree.
-
-> $ git restore --worktree --source=index file # reset the worktree from the index
-> $ git restore --index --worktree file # reset both the index and worktree from HEAD
-> $ git restore file # reset the worktree from HEAD 
-> 
-> [1] https://news.ycombinator.com/item?id=19907960
-> [2] https://github.com/git/git/blob/pu/Documentation/git-restore.txt
-> 
-> Best,
-> Victor
-> 
-> 
-> 
+> nor reading humans that much.
+>
+> Noticed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  pkt-line.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/pkt-line.c b/pkt-line.c
+> index c9ed780d0b..a0e87b1e81 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -119,7 +119,7 @@ void packet_buf_delim(struct strbuf *buf)
+>  	strbuf_add(buf, "0001", 4);
+>  }
+>
+> -void set_packet_header(char *buf, const int size)
+> +void set_packet_header(char *buf, int size)
+>  {
+>  	static char hexchar[] =3D "0123456789abcdef";
+>
+>
