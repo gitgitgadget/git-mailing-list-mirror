@@ -2,106 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 132E81F461
-	for <e@80x24.org>; Wed, 15 May 2019 00:46:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 862401F461
+	for <e@80x24.org>; Wed, 15 May 2019 00:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726272AbfEOAq4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 20:46:56 -0400
-Received: from mail-it1-f172.google.com ([209.85.166.172]:39950 "EHLO
-        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbfEOAq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 20:46:56 -0400
-Received: by mail-it1-f172.google.com with SMTP id g71so1805261ita.5
-        for <git@vger.kernel.org>; Tue, 14 May 2019 17:46:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aVN38tc1rhE5sbykJCgupuvhqh3ZG6Ouc9w8vcW3qbQ=;
-        b=j/VYwJ/p/x7sss/qgZD91jXFMfpVXFkRPokD3bmG4UtG3KB0Ar2E3Mdh6p9sTSq+p3
-         16p9rYe3zOfcmz9+F4IQ9BoBbWtljO/TVylb5xjR/sm2N3kTtW2hRu+dWyGsnOYpxzaV
-         mzREpMs5q5zOivHb2yLtZ58Pk/j14Z081VZ74qtILePcUSYvqBts19HUmX6rPKPdgKPt
-         YjnhdO6il1OuS0pDQrrNpjjJ21thxyoQZm7ZcVHFnp08KcMiNX26DijQe2JfsP+nAO6z
-         voZW/JLGiq+KlWbfWvNrju2AnBp11axjJgHgqrsrdtypWt/04R1G8OZ+r+DSdEvUthmf
-         d7eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aVN38tc1rhE5sbykJCgupuvhqh3ZG6Ouc9w8vcW3qbQ=;
-        b=SMIluWhoMAppdZPsaqUW+LYHu1an3yVd7/QxK9IXt6TiuLXh2egPqHnFvOwOLT7PVI
-         ByUU7QboyzDERMmdn6/RmKf45dvPvIRgF0ftrRnA+KQI04yQOZjH+DVDUEor6OkvXUU9
-         xRMYQ5z5fYqPYy7mdNWLvPRIQHoH4sos8tbxMMs6dFZVFJB2IpolFNm80ycw5CXK1f0Y
-         CivglcTfxUqaiJr45oF8xUDNCTn/C8aoo6M2GLpertM/cVng8CRxkgyLHFNLOPEVwRn6
-         ClM2MilWHY2/dkiSqez/i5fYRVxfdlJMThSwuzRdiU0YnRhOmpSm//Lg1W8UpJx/3ygb
-         9JHQ==
-X-Gm-Message-State: APjAAAXMdKzWyXAjf0BmuajHj12BOukAU9jx0Qifb1vMwc05JCFykCxu
-        mRPabo6Eoc3hTcmlqlqwZYCFusFr1SChWklWStPORSo58FE=
-X-Google-Smtp-Source: APXvYqzK/13Uy4ZqsmjPyd0lXEBA2/PqK0UTqNJoPwdnH4mfN9IlRvlU99YDM7Sxfk6iYUgIvnycTWXkElNDeGUccy0=
-X-Received: by 2002:a24:734c:: with SMTP id y73mr5388710itb.72.1557881214851;
- Tue, 14 May 2019 17:46:54 -0700 (PDT)
+        id S1726261AbfEOAst (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 20:48:49 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63335 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfEOAst (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 20:48:49 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E8B414274F;
+        Tue, 14 May 2019 20:48:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=9jGRd+YEZ+eI
+        l/pWd5eGFHDpVK0=; b=e0IhrWxE3waoQ6Vhl6gHncqaKk/xgio+oWXtvEQXNNX6
+        f7+Vcb23JgUD+493sOz3L2JUJM6qJYfr6qD4UvJY6KpwKOA+T7A8xX/EVm1lBb1r
+        M7fGvv1jdFKxyxzlGhpuUyYuXcy3WWyd3LzBcMHK2OJSFPrKx7GQZ/g8oDUZu6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ktFeUm
+        EevWAUS4cb/JD+sxiHuH9aHXCpD8PSEPM1uH7TE1sE4frrgPSlf6BqK6pXGERJaN
+        29vHR8qxeS9KiKYwieL0yY3AmFGNlxMIxBRil+1wEw2HL+NrNsldzmsJRa+UfKA5
+        IxpqJpJnC2BjQvFppom8Zq12IR3Q/1NcbJNRg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 25EDE14274E;
+        Tue, 14 May 2019 20:48:47 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7DD4914274D;
+        Tue, 14 May 2019 20:48:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] status: add an empty line when there is no hint
+References: <20190430060210.79610-1-johnlinp@gmail.com>
+        <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
+        <20190501234512.GD202237@genre.crustytoothpaste.net>
+        <CAKO26MvXmOMHgqWSoVrmdwyDFyqDrChkMOHq6iuJAX8pvHzZoA@mail.gmail.com>
+        <20190502231537.GE202237@genre.crustytoothpaste.net>
+        <CAKO26MuisScMPp0SxRo896y7waEgR3HjU3A8+VM73eS0xgU8RQ@mail.gmail.com>
+        <CAKO26Mtn+KDnkHWsKf8mAyTmeaCYK0gjdNad5bxJe-qxjKs=xw@mail.gmail.com>
+        <xmqqh89ydhqu.fsf@gitster-ct.c.googlers.com>
+        <20190514020416.GH7458@genre.crustytoothpaste.net>
+        <xmqqftpha3tb.fsf@gitster-ct.c.googlers.com>
+        <CAKO26Msqj93hwKVduB0op=sMXs3egM2zvyfcJgpoqTWn4ywHHw@mail.gmail.com>
+Date:   Wed, 15 May 2019 09:48:45 +0900
+In-Reply-To: <CAKO26Msqj93hwKVduB0op=sMXs3egM2zvyfcJgpoqTWn4ywHHw@mail.gmail.com>
+        (=?utf-8?B?Iuael+iHquWdhyIncw==?= message of "Tue, 14 May 2019 17:43:45
+ +0800")
+Message-ID: <xmqq4l5wa6fm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
-In-Reply-To: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 14 May 2019 17:46:43 -0700
-Message-ID: <CAGyf7-GtnCqfqPWVpBAELB4xAE6syn7+DfKXgfhL0UoMfvbn4A@mail.gmail.com>
-Subject: Re: Running 'git worktree add' in 'pre-commit' hook
-To:     Cosmin Polifronie <oppturbv@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3234E646-76AB-11E9-A7FD-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 7:53 AM Cosmin Polifronie <oppturbv@gmail.com> wrote:
->
-> Hello! I am trying to run 'git worktree add <path> HEAD' in the
-> 'pre-commit' hook, more specifically in a Python script that is being
-> called from the hook. When doing so, I am greeted with the following
-> error:
->
-> On Windows 10:
-> Preparing worktree (detached HEAD cbfef18)
-> fatal: Unable to create 'C:/Users/meh/Desktop/abc/.git/index.lock': No
-> such file or directory
->
-> On Arch Linux:
-> Preparing worktree (detached HEAD cbfef18)
-> fatal: Unable to create '/home/cosmin/Downloads/abc/.git/index.lock':
-> Not a directory
->
-> Is it forbidden to call this command from a hook? If yes, what kind of
-> alternatives do I have? I need to make a copy of the repo in its HEAD
-> state, process it and then decide if I will pass the current commit or
-> not.
+=E6=9E=97=E8=87=AA=E5=9D=87 <johnlinp@gmail.com> writes:
 
-I can't speak to whether `git worktree add` should succeed or fail
-inside a `pre-commit` hook, but...
-
-Why do you need a new work tree, versus whatever working copy you're
-running `git commit` in? Is there a reason whatever validation needs
-to be done can't be done in the existing working copy? `HEAD` is the
-_previous, existing commit_, not the new, currently-being-created
-commit, so your validation in the new work tree, if you actually
-managed to create one, would be applied to the _latest existing
-commit_, not the new changes you're trying to commit. Even trying to
-copy the changes over wouldn't necessarily result in the same state,
-because there may be unstaged changes.
-
-What type of validation are you trying to do? I think the failure
-you're running into is an alarm bell indicating what you're trying to
-do may not make sense. However, without any insight into what "process
-it and then decide if I will pass the current commit or not" actually
-looks like, it's hard to offer you much help.
-
-Bryan
-
+> I was not talking about the messages in the editor session. I was
+> talking about "git commit" without "git add" anything.
 >
-> Thanks! :)
+> For example:
+>
+> ```
+> $ touch newfile.txt
+> $ git commit
+> On branch master
+> Untracked files:
+>         newfile.txt
+>
+> nothing added to commit but untracked files present
+> ```
+>
+> My current patch is trying to add an empty line between
+> "Untracked files:" and "newfile.txt".
+
+I do not think that one is paged, so if you ask me, I'd say we
+shouldn't add an extra blank there.  Is that message also reused in
+the editor session, or do two different codepaths produce a similar
+looking message, one for the above case direct to the terminal and
+the other for the editor session?
+
+But again...
+
+>> At the same time, I think I've been happy enough with the current
+>> output from both commands, so if you let me bikeshed freely, I'd
+>> probably pick "let's not change anything then" ;-)
+
