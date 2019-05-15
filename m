@@ -2,102 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B7E31F461
-	for <e@80x24.org>; Wed, 15 May 2019 18:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62841F461
+	for <e@80x24.org>; Wed, 15 May 2019 18:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727153AbfEOS2R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 14:28:17 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:34518 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbfEOS2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 14:28:17 -0400
-Received: by mail-qt1-f202.google.com with SMTP id o32so704138qtf.1
-        for <git@vger.kernel.org>; Wed, 15 May 2019 11:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=he1bo+zC+OknOSea9ViSvf/SH08RX4uKXcWgTjZBfjE=;
-        b=Fkdyjr3awnkylcuaR71SKmULqguYsAUt2k5AnkS3Vjn1AEy0axDCAIQuKLYNMqg7Vh
-         +EUob1/jYNUH9TYHSYW0aaeABuZ1yGmB2VNJm33mDKg0gbVeZDJ0CQqsm/sDH4d6yrzW
-         EpAuZfOsnKV/8/F3wWYyruM+zCaq9vFjg6R+d6mn9Wiresy5EK+uMlzFgHxQfg/vSUPT
-         Hnycw5BNZxnxhje4NtTy/D5XS828m6kz8cd5fvITQyuwKRpmce2NkF5l7yhvkQWpivjU
-         oKUemn4Fpo4lGc4g1uzT9zg4NRLbzlAyoe2oZr9WrmE6Y9grcZ2SVFtY5sGslXsJJ/eW
-         SxEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=he1bo+zC+OknOSea9ViSvf/SH08RX4uKXcWgTjZBfjE=;
-        b=dThkGz6fCVLrRpMg23Ee+u6QL7KG7DYZskX2ForS2Fd7t84L0Ymha+XPf5AW4H/sez
-         I4ceK//EwOLG263TXBC5BoICIwLiX9bfQ3ifrtyc61w1Q6Hbl/ICcrO3XvqakS/sZZZM
-         3oN9024dXYYWxeAdGrd51WKXwz/2DlG+KsCWxnicD17NcJPTOSKetTmEHJchNd5VGmZi
-         Ztcai/NZXBLuphe3/6SuPKJD4ZPoDGu8Q38I18FnTeZMf6ny9+7KhD+5ssI3+lNiCYh/
-         WI/3Kk1wqybvpcJnxws3mufPzABdFfz5DXk0nr3Us06bl+Vk/u8oemhhWRFRkoGJXVA6
-         HKdw==
-X-Gm-Message-State: APjAAAWKfU1EMEMSbda0mEeqqwiddT3UeGH3LSRHa+Nojotv3crIYAhl
-        UpZNDKgUaZqIvl3U1xPeFt1cYUOdw3AWdTT9UjU4
-X-Google-Smtp-Source: APXvYqxsEvcmCv27557zIlfCYtz1T0vaErb9Xmje9haoouilxiummH2NhisjFeZ5a0PSJFq7u3xZUHSDEKt+nT/I6Oio
-X-Received: by 2002:ae9:c30d:: with SMTP id n13mr34548160qkg.347.1557944896068;
- Wed, 15 May 2019 11:28:16 -0700 (PDT)
-Date:   Wed, 15 May 2019 11:28:12 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1905151040240.44@tvgsbejvaqbjf.bet>
-Message-Id: <20190515182812.107420-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <nycvar.QRO.7.76.6.1905151040240.44@tvgsbejvaqbjf.bet>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Johannes.Schindelin@gmx.de
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1727526AbfEOSeR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 14:34:17 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:15190 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726392AbfEOSeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 14:34:17 -0400
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 5C1EBC0586D8
+        for <git@vger.kernel.org>; Wed, 15 May 2019 18:34:17 +0000 (UTC)
+Received: from localhost (ovpn-112-27.ams2.redhat.com [10.36.112.27])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id A63CA5D9C3;
+        Wed, 15 May 2019 18:34:16 +0000 (UTC)
+From:   marcandre.lureau@redhat.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <mlureau@redhat.com>,
+        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] RFC: userdiff: add built-in pattern for rust
+Date:   Wed, 15 May 2019 20:34:15 +0200
+Message-Id: <20190515183415.31383-1-marcandre.lureau@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 15 May 2019 18:34:17 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > To resolve this, prefetch all missing REF_DELTA bases before attempting
-> > to resolve them. This both ensures that all bases are attempted to be
-> > fetched, and ensures that we make only one request per index-pack
-> > invocation, and not one request per missing object.
-> 
-> Hmm. I wonder whether this can lead to *really* undesirable behavior, e.g.
-> with deep delta chains. The client would possibly have to fetch the
-> REF_DELTA object, but that would also be delivered in a thin pack with
-> *another* REF_DELTA object, and the same over and over again, with plenty
-> of round trips that kill performance really well.
+From: Marc-André Lureau <mlureau@redhat.com>
 
-When the client fetches the REF_DELTA base, it won't be a REF_DELTA
-object itself because Git makes these fetches without any "have" lines,
-so the server doesn't know anything to delta against. Admittedly, this
-is just due how to we implemented it - if later we find a way to
-optimize the lazy fetches by adding "have", then we'll have to revisit
-this.
+This adds xfuncname and word_regex patterns for Rust, a quite
+popular programming language. It also includes test cases for the
+xfuncname regex (t4018) and updated documentation.
 
-Quoting from the commit message:
+The word_regex pattern finds identifiers, integers, floats and
+operators, according to the Rust Reference Book.
 
-> > (When fetching REF_DELTA bases, it is unlikely that
-> > those are REF_DELTA themselves, because we do not send "have" when
-> > making such fetches.)
+RFC: since I don't understand why when there are extra lines such as the
+one with FIXME, the funcname is not correctly reported. Help welcome!
 
-I tried to address this point with this sentence in the commit message.
-If you think that this should be addressed more clearly in the commit
-message, let me know if you have any suggestions.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ Documentation/gitattributes.txt | 2 ++
+ t/t4018-diff-funcname.sh        | 1 +
+ t/t4018/rust-fn                 | 5 +++++
+ t/t4018/rust-struct             | 5 +++++
+ t/t4018/rust-trait              | 5 +++++
+ userdiff.c                      | 9 +++++++++
+ 6 files changed, 27 insertions(+)
+ create mode 100644 t/t4018/rust-fn
+ create mode 100644 t/t4018/rust-struct
+ create mode 100644 t/t4018/rust-trait
 
-> Wouldn't it make more sense to introduce a new term like `promised`
-> (instead of `have`)? Both client and server will have to know about this,
-> and it would be a new capability, of course, but that way the server could
-> know that it has to send the entire delta chain.
-> 
-> Of course, this would be quite a bit more involved than the current patch
-> :-(
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 4fb20cd0e9..07da08fb27 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -833,6 +833,8 @@ patterns are available:
+ 
+ - `ruby` suitable for source code in the Ruby language.
+ 
++- `rust` suitable for source code in the Rust language.
++
+ - `tex` suitable for source code for LaTeX documents.
+ 
+ 
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 22f9f88f0a..9261d6d3a0 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -43,6 +43,7 @@ diffpatterns="
+ 	php
+ 	python
+ 	ruby
++	rust
+ 	tex
+ 	custom1
+ 	custom2
+diff --git a/t/t4018/rust-fn b/t/t4018/rust-fn
+new file mode 100644
+index 0000000000..f450590d6c
+--- /dev/null
++++ b/t/t4018/rust-fn
+@@ -0,0 +1,5 @@
++pub(self) fn RIGHT<T>(x: &[T]) where T: Debug {
++    let _ = x;
++    // FIXME: extra lines break match?
++    let a = ChangeMe;
++}
+diff --git a/t/t4018/rust-struct b/t/t4018/rust-struct
+new file mode 100644
+index 0000000000..76aff1c0d8
+--- /dev/null
++++ b/t/t4018/rust-struct
+@@ -0,0 +1,5 @@
++#[derive(Debug)]
++pub(super) struct RIGHT<'a> {
++    name: &'a str,
++    age: ChangeMe,
++}
+diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
+new file mode 100644
+index 0000000000..ea397f09ed
+--- /dev/null
++++ b/t/t4018/rust-trait
+@@ -0,0 +1,5 @@
++unsafe trait RIGHT<T> {
++    fn len(&self) -> u32;
++    fn ChangeMe(&self, n: u32) -> T;
++    fn iter<F>(&self, f: F) where F: Fn(T);
++}
+diff --git a/userdiff.c b/userdiff.c
+index 3a78fbf504..9e1e2fa03f 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -130,6 +130,15 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
+ 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
+ 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
++PATTERNS("rust",
++	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(struct|enum|union|mod)[ \t].*)$\n"
++	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(unsafe[\t ]+)?trait[ \t].*)$\n"
++	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?((const|unsafe|extern(([\t ]+)*\"[^)]+\")?)[\t ]+)*fn[ \t].*)$\n",
++	 /* -- */
++	 "[a-zA-Z_][a-zA-Z0-9_]*"
++	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
++	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
++	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+ 	 "[={}\"]|[^={}\" \t]+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
 
-I think this can also be solved by omitting "thin-pack". We might want
-to do this once we optimize the lazy fetches by adding "have".
+base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
+-- 
+2.22.0.rc0.1.g4f1097ba08
 
-Thanks for taking a look at this.
