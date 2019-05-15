@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A713F1F461
-	for <e@80x24.org>; Wed, 15 May 2019 21:45:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62671F461
+	for <e@80x24.org>; Wed, 15 May 2019 21:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbfEOVpP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 17:45:15 -0400
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:53909 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726425AbfEOVpP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 17:45:15 -0400
-Received: by mail-yw1-f73.google.com with SMTP id p13so1252738ywm.20
-        for <git@vger.kernel.org>; Wed, 15 May 2019 14:45:14 -0700 (PDT)
+        id S1726774AbfEOVpR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 17:45:17 -0400
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:50852 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbfEOVpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 17:45:17 -0400
+Received: by mail-oi1-f202.google.com with SMTP id p83so573487oih.17
+        for <git@vger.kernel.org>; Wed, 15 May 2019 14:45:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=TNtplq/GbNklR0dAEKtItRIT2oCPbZq83bP1sbtd1hA=;
-        b=WXQYpIKbZLaUp7mNh4ewvAzWG7buRXUcGN/lcn9KqFcaV5BCskZJATxy9kmVducuTy
-         yKbEHH6Wsibo0FwiozvJJJ928oq6Jqywgalp79VCfJfeY7pAVwWU0ihtvdpIiwq4njq2
-         BLKxT687fVd/Tzgxe610dGYqJJH5VCTuMv1paJvSlIFAW+urbMFcpH+AHHIFWjJfLE/Q
-         o2Ba6hoA/N3vkkYZqKnxyTbTZbNxCPNlrLjC8MOPd9Z/OI+3JE9OwvyYpbgN+LT1M7Ng
-         5KR8hE/j/Kk4veb/rM6OAZs0qFj2//cG95hB6cno2sIxUlgxNNvxsofNUBak0KqkdPLY
-         +/vg==
+        bh=gRRG9XpZZpvbGu2aPerK8AG7XWvPXSC6hS0TzDRS8C4=;
+        b=lZIO8++Nwpsf4+FrBzXpdI8iHjlwkVON5WEYZP+hqQ9goKl0Yq81HGlLKC/TusEXag
+         i2p0VeOWDkPVlhNuBESSYrjkKNtcUygjICggnsGikbMc1WI43pMB+XCYGlInZtYCKOLz
+         HdGMrUrUJPqUHRoXnMbc4dfXxvAcPSfbmeBvKtamL1t+610n8LVoAR/z11LOaN/Fr6Ze
+         VJvTHuTYU7MB5dxvWyueGvQ7Zpi+Hxo3ev+S2YNHlo3eV26jeZPF+uY9eDI34IcXsp4E
+         zkOGglShPCvoUf0vMqhCYTwY8O/RahzafvJ6ARmFAat5F2Rp8w5GYlrZOu4ob17OirnC
+         npbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=TNtplq/GbNklR0dAEKtItRIT2oCPbZq83bP1sbtd1hA=;
-        b=b0R5SG9XWAvQ31/WrvJ2nOAexA/UbrDLQa3hwKLmXYlsVfLD6OvAwxz3r3GIuYGMBH
-         0T/gTB3QJfPRdi12zk+jHMq09cgBd2LmGaTk9CZoHGzsByhNJy2v3nSIGLz1IoMlJ/ew
-         1tkOHYwX3GseKY2WANg7r7EASSHTFbvQ05vpUgf8ePFW6Qng42AB4jrSoM79pz02poel
-         n0fsw5mFyF5ptiZcegeCfkA7GdtK0IjT4EN2SAN96LAARK+Kx7b14eLHFqalo6Vwhbfc
-         pQggMIxXN2gOdLtnQ0WskADaTBRTgpJ+TuEu9UmCD3vvbeaRlP0gQ6MKzNiUAOcEMl/u
-         8HxQ==
-X-Gm-Message-State: APjAAAV6iQj//nZPgqMQY51d4BRxAwpJcH1+ejLEcxm+mWkeMnVOfTyI
-        YaQYXFskDmQ8aXatYsV/p9r06A11PfhxyY8PtPUo/6NmgtRwu+R//4yWdp8HV8yrTwfmiBcr5BK
-        rza6SfMM4jXjyyCEsJSXWOClDD++6Y3HYr2ZLtBenrB52TTYmWsAV
-X-Google-Smtp-Source: APXvYqwJofWfxVuIyy2CVaE0EvpQh4oxondMP7lo7qPJr6K9WtM6wYnvs0c82rIhaETruDtHCO8PdUB3
-X-Received: by 2002:a25:3813:: with SMTP id f19mr21262245yba.454.1557956714060;
- Wed, 15 May 2019 14:45:14 -0700 (PDT)
-Date:   Wed, 15 May 2019 17:44:56 -0400
+        bh=gRRG9XpZZpvbGu2aPerK8AG7XWvPXSC6hS0TzDRS8C4=;
+        b=l/aJu0bOZB6TsuM0jVff6uI497BvUiHRUSE3xTJtnF8Bz+QWefmKu59jhJiMCQrxoA
+         c+hfn62y/KmFuIGVw1bpmkItwZqoKWGY3NJKgS0twoure6K2xrucCHrW8U6wNwBiscKU
+         EIUMW9XyDZ1D5Tq6sZxKLr7m9a8t2RV8GTjz3mwrEsnEgBPf8YLqTyntE+G+I147Pxy7
+         jxLmvfOefndt3y0RLmT2EvEXaAc0Zx4Hee1t1Wi7VEmZ0Ryqey16V/fTATao/fQsfrue
+         qjLFwEbOrx1PXZ+SKeVD4+o6xgUtuGwV7v1czhhrCWkDB6OjQJL+41goCx+gxeG+gEYs
+         ReLQ==
+X-Gm-Message-State: APjAAAXXjvMEL6dXXEn9oUVzGY7gbfQH2+792uYm+ntk9lVOM/QPiJDP
+        BWyZSYLHJnQWYfPh1MU9SCk9JzPiKTjjNQ/FFYlrIo6ecr0z3L2juhFzgTMJSIjGF0VDeeNn88J
+        Oqbh1xPaAP6yOuFVQfqmDD6Cltw7ACMWnuXbDEgfzjdi6D1Wk43+e
+X-Google-Smtp-Source: APXvYqzK8/KudH4nhx+2Fu6xjIoUb6aMi8Hzr4Hnxz1+3WDCSkfR9zw7eQw0TLhc6/ygM8CrU+VgDR8H
+X-Received: by 2002:aca:c5d7:: with SMTP id v206mr8296437oif.20.1557956716603;
+ Wed, 15 May 2019 14:45:16 -0700 (PDT)
+Date:   Wed, 15 May 2019 17:44:57 -0400
 In-Reply-To: <20190515214503.77162-1-brho@google.com>
-Message-Id: <20190515214503.77162-2-brho@google.com>
+Message-Id: <20190515214503.77162-3-brho@google.com>
 Mime-Version: 1.0
 References: <20190515214503.77162-1-brho@google.com>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: [PATCH v7 1/8] fsck: rename and touch up init_skiplist()
+Subject: [PATCH v7 2/8] Move oidset_parse_file() to oidset.c
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -69,127 +69,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-init_skiplist() took a file consisting of SHA-1s and comments and added
-the objects to an oidset.  This functionality is useful for other
-commands and will be moved to oidset.c in a future commit.
-
-In preparation for that move, this commit renames it to
-oidset_parse_file() to reflect its more generic usage and cleans up a
-few of the names.
-
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- fsck.c                          | 18 +++++++++---------
- t/t5504-fetch-receive-strict.sh | 14 +++++++-------
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ fsck.c   | 35 -----------------------------------
+ oidset.c | 35 +++++++++++++++++++++++++++++++++++
+ oidset.h |  8 ++++++++
+ 3 files changed, 43 insertions(+), 35 deletions(-)
 
 diff --git a/fsck.c b/fsck.c
-index 4703f5556145..a28cba6b05dd 100644
+index a28cba6b05dd..58ff3c4de992 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -181,7 +181,7 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+@@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
  	return msg_type;
  }
  
--static void init_skiplist(struct fsck_options *options, const char *path)
-+void oidset_parse_file(struct oidset *set, const char *path)
+-void oidset_parse_file(struct oidset *set, const char *path)
+-{
+-	FILE *fp;
+-	struct strbuf sb = STRBUF_INIT;
+-	struct object_id oid;
+-
+-	fp = fopen(path, "r");
+-	if (!fp)
+-		die("could not open object name list: %s", path);
+-	while (!strbuf_getline(&sb, fp)) {
+-		const char *p;
+-		const char *name;
+-
+-		/*
+-		 * Allow trailing comments, leading whitespace
+-		 * (including before commits), and empty or whitespace
+-		 * only lines.
+-		 */
+-		name = strchr(sb.buf, '#');
+-		if (name)
+-			strbuf_setlen(&sb, name - sb.buf);
+-		strbuf_trim(&sb);
+-		if (!sb.len)
+-			continue;
+-
+-		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+-			die("invalid object name: %s", sb.buf);
+-		oidset_insert(set, &oid);
+-	}
+-	if (ferror(fp))
+-		die_errno("Could not read '%s'", path);
+-	fclose(fp);
+-	strbuf_release(&sb);
+-}
+-
+ static int parse_msg_type(const char *str)
  {
- 	FILE *fp;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -189,26 +189,26 @@ static void init_skiplist(struct fsck_options *options, const char *path)
- 
- 	fp = fopen(path, "r");
- 	if (!fp)
--		die("Could not open skip list: %s", path);
+ 	if (!strcmp(str, "error"))
+diff --git a/oidset.c b/oidset.c
+index fe4eb921df81..584be63e520a 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
+ 	kh_release_oid(&set->set);
+ 	oidset_init(set, 0);
+ }
++
++void oidset_parse_file(struct oidset *set, const char *path)
++{
++	FILE *fp;
++	struct strbuf sb = STRBUF_INIT;
++	struct object_id oid;
++
++	fp = fopen(path, "r");
++	if (!fp)
 +		die("could not open object name list: %s", path);
- 	while (!strbuf_getline(&sb, fp)) {
- 		const char *p;
--		const char *hash;
++	while (!strbuf_getline(&sb, fp)) {
++		const char *p;
 +		const char *name;
- 
- 		/*
- 		 * Allow trailing comments, leading whitespace
- 		 * (including before commits), and empty or whitespace
- 		 * only lines.
- 		 */
--		hash = strchr(sb.buf, '#');
--		if (hash)
--			strbuf_setlen(&sb, hash - sb.buf);
++
++		/*
++		 * Allow trailing comments, leading whitespace
++		 * (including before commits), and empty or whitespace
++		 * only lines.
++		 */
 +		name = strchr(sb.buf, '#');
 +		if (name)
 +			strbuf_setlen(&sb, name - sb.buf);
- 		strbuf_trim(&sb);
- 		if (!sb.len)
- 			continue;
- 
- 		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
--			die("Invalid SHA-1: %s", sb.buf);
--		oidset_insert(&options->skiplist, &oid);
++		strbuf_trim(&sb);
++		if (!sb.len)
++			continue;
++
++		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
 +			die("invalid object name: %s", sb.buf);
 +		oidset_insert(set, &oid);
- 	}
- 	if (ferror(fp))
- 		die_errno("Could not read '%s'", path);
-@@ -284,7 +284,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
- 		if (!strcmp(buf, "skiplist")) {
- 			if (equal == len)
- 				die("skiplist requires a path");
--			init_skiplist(options, buf + equal + 1);
-+			oidset_parse_file(&options->skiplist, buf + equal + 1);
- 			buf += len + 1;
- 			continue;
- 		}
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 7bc706873c5b..fdfe179b1188 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -164,9 +164,9 @@ test_expect_success 'fsck with unsorted skipList' '
- test_expect_success 'fsck with invalid or bogus skipList input' '
- 	git -c fsck.skipList=/dev/null -c fsck.missingEmail=ignore fsck &&
- 	test_must_fail git -c fsck.skipList=does-not-exist -c fsck.missingEmail=ignore fsck 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "could not open.*: does-not-exist" err &&
- 	test_must_fail git -c fsck.skipList=.git/config -c fsck.missingEmail=ignore fsck 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err
-+	test_i18ngrep "invalid object name: \[core\]" err
- '
++	}
++	if (ferror(fp))
++		die_errno("Could not read '%s'", path);
++	fclose(fp);
++	strbuf_release(&sb);
++}
+diff --git a/oidset.h b/oidset.h
+index 14f18f791fea..2dbca84d798f 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -61,6 +61,14 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
+  */
+ void oidset_clear(struct oidset *set);
  
- test_expect_success 'fsck with other accepted skipList input (comments & empty lines)' '
-@@ -193,7 +193,7 @@ test_expect_success 'fsck no garbage output from comments & empty lines errors'
- test_expect_success 'fsck with invalid abbreviated skipList input' '
- 	echo $commit | test_copy_bytes 20 >SKIP.abbreviated &&
- 	test_must_fail git -c fsck.skipList=SKIP.abbreviated fsck 2>err-abbreviated &&
--	test_i18ngrep "^fatal: Invalid SHA-1: " err-abbreviated
-+	test_i18ngrep "^fatal: invalid object name: " err-abbreviated
- '
- 
- test_expect_success 'fsck with exhaustive accepted skipList input (various types of comments etc.)' '
-@@ -226,10 +226,10 @@ test_expect_success 'push with receive.fsck.skipList' '
- 	test_must_fail git push --porcelain dst bogus &&
- 	git --git-dir=dst/.git config receive.fsck.skipList does-not-exist &&
- 	test_must_fail git push --porcelain dst bogus 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "could not open.*: does-not-exist" err &&
- 	git --git-dir=dst/.git config receive.fsck.skipList config &&
- 	test_must_fail git push --porcelain dst bogus 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
-+	test_i18ngrep "invalid object name: \[core\]" err &&
- 
- 	git --git-dir=dst/.git config receive.fsck.skipList SKIP &&
- 	git push --porcelain dst bogus
-@@ -255,10 +255,10 @@ test_expect_success 'fetch with fetch.fsck.skipList' '
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec &&
- 	git --git-dir=dst/.git config fetch.fsck.skipList does-not-exist &&
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
--	test_i18ngrep "Could not open skip list: does-not-exist" err &&
-+	test_i18ngrep "could not open.*: does-not-exist" err &&
- 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/config &&
- 	test_must_fail git --git-dir=dst/.git fetch "file://$(pwd)" $refspec 2>err &&
--	test_i18ngrep "Invalid SHA-1: \[core\]" err &&
-+	test_i18ngrep "invalid object name: \[core\]" err &&
- 
- 	git --git-dir=dst/.git config fetch.fsck.skipList dst/.git/SKIP &&
- 	git --git-dir=dst/.git fetch "file://$(pwd)" $refspec
++/**
++ * Add the contents of the file 'path' to an initialized oidset.  Each line is
++ * an unabbreviated object name.  Comments begin with '#', and trailing comments
++ * are allowed.  Leading whitespace and empty or white-space only lines are
++ * ignored.
++ */
++void oidset_parse_file(struct oidset *set, const char *path);
++
+ struct oidset_iter {
+ 	kh_oid_t *set;
+ 	khiter_t iter;
 -- 
 2.21.0.1020.gf2820cf01a-goog
 
