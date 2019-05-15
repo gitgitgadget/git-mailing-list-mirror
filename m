@@ -2,456 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8F5A1F461
-	for <e@80x24.org>; Wed, 15 May 2019 06:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30F891F461
+	for <e@80x24.org>; Wed, 15 May 2019 07:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725929AbfEOG5x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 02:57:53 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:41676 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfEOG5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 02:57:53 -0400
-Received: by mail-ua1-f68.google.com with SMTP id s30so610967uas.8
-        for <git@vger.kernel.org>; Tue, 14 May 2019 23:57:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nanocritical.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=B7SaUWDkfE6axP/sUSVIgrAsvwUmQQ5Ohp1ReihAy5o=;
-        b=Sv6AwbwqzQkJ6EC40hgZClSRqekEBmtOuopjcXp64wefR33w26UBGrv0A8vIi0bdV7
-         4f+SEIneBl0lPbmSEBkY9iObI8UjP2h9+m2MOkl4CR98aqFqRv4cPaEukW2IlZXlqfzw
-         YNDibQ/aPh6C2Ti5BCtY9fprelSCRaCzGBYu4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B7SaUWDkfE6axP/sUSVIgrAsvwUmQQ5Ohp1ReihAy5o=;
-        b=e8IHzzzjfxBtqyfXPpsK9q8MCPCVMYgGuIg7O6+R7uO3NTM6kiNcL/JCNF3ABasQem
-         93KPNi8tEmgb4Xi3HJKfxQLLleC71PXQ8G+pb0F3SkLby5zoOv7VB5J62lNTDz1ZncCD
-         XmEJjE2nsInRf7LkryBAXaPoyFeJiRgP1uaSzPmrfnBs5iOfmOcsr2u4AyxtVaxEcZ72
-         AH+W2rWgia/KC/sFeFwiAK2ltoZgQxVHtX90viAP9r+9RHo1flCa9w/dnf4/CBFGacAo
-         x7BU6hODE+mp/J0zrs6yDhPb+703ka8b9vMkn2WhDNoaJE+dbRvD5bS+W5TZHJIZaTd7
-         /e/w==
-X-Gm-Message-State: APjAAAVP4/cG6mwraT87emApHGOb0W6Bs5H78VlaLIWlKvhUwG4JIk9x
-        cg8c7SJO8R1inkaMtpZYea+z2ZzU/xs1gcG1ubybbw==
-X-Google-Smtp-Source: APXvYqwmO5oxYPzurMaFrf+ltTFGq2bZY3bWiIz0AgTJNmpcjlrJl60WuvAytMI+eEX3WXyiO6AebLrfQJQkaq53i5A=
-X-Received: by 2002:ab0:e08:: with SMTP id g8mr3906087uak.32.1557903471941;
- Tue, 14 May 2019 23:57:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <ad63393c24c7346c5b606b29579dfacad4d307f3.1557477247.git.e@nanocritical.com>
- <xmqq8sv8709a.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8sv8709a.fsf@gitster-ct.c.googlers.com>
-From:   Eric Rannaud <e@nanocritical.com>
-Date:   Tue, 14 May 2019 23:57:40 -0700
-Message-ID: <CAH_=xoZfx3aLpc+HZQ0FLZnRTkYW1wW7XN0huuOsT9bRJKzOKg@mail.gmail.com>
-Subject: Re: [PATCH v3] fast-import: checkpoint: only write out refs and tags
- if we changed them
+        id S1725933AbfEOHNU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 03:13:20 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:41739 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725902AbfEOHNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 03:13:19 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id Qo6IhxGmKdraxQo6Ih00Ii; Wed, 15 May 2019 08:13:18 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=kspQJiOlhAF2Xo9PEWgA:9 a=QEXdDO2ut3YA:10
+ a=xts0dhWdiJbonKbuqhAr:22
+Subject: Re: Missing branches after clone
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        Jeremy Serror <jeremy.serror@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Git Mailing List <git@vger.kernel.org>
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+ <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+ <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
+ <xmqq5zqc8ozn.fsf@gitster-ct.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <a05fb45a-69d7-a12b-e76c-f11e985f4a65@iee.org>
+Date:   Wed, 15 May 2019 08:13:19 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <xmqq5zqc8ozn.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfOC0bQe6sxOk+oQnsOekeR8oEnegWeZPpJW3VfI3WZ+KhGQjVYOO6LBeOMRwj5r5F4V2PGrDxkIEZNyIf8E2FgXuP6NLmG0v8/IG/4FKZ/VdnrGGGidu
+ Mj3cDD76yL3u0abxNhPxIIGyS7CDGNQfUzdnsgzWl4OCf710HkQd6gf+W1Q4HL1nwjMDPRIJTpMrXX3Ign5epRNxECfEJxoWs8COOpreFyejF/BnVnQV8r+J
+ pEdH4Nz6PXNEksfVNEHPrLT6NkTvG4WiOZCdQkHwAE0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 10:30 PM Junio C Hamano <gitster@pobox.com> wrote:
+On 15/05/2019 02:50, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.org> writes:
 >
-> "Eric Rannaud" <e@nanocritical.com> writes:
+>> It is a 'branch which tracks a remote', and it is has the 'last time I
+>> looked' state of the branch that is on the remote server, which may
+>> have, by now, advanced or changed.
+> Yup, I thought we long time ago decided to discourage use of "remote
+> branch(es)" in our documentation to help unconfuse users and stick
+> to the term "a remote-tracking branch" (the "remote-tracking" is a
+> hyphenated one word)?
+I believe we are consistent in using the 'rtb' phrase (I've not checked 
+the hyphen), but for those uninitiated in the duplicitous ways of 
+distributed versioning systems, they can still think that the phrase is 
+simply saying that local branch A will be updated to the state of remote 
+branch B when do a fetch from that remote.
+
+I.e. they think tracking is a direct linkage via fetch, rather than an 
+indirect linkage via a local rtb (a concept that has not yet entered 
+their head, and if if they are aware of the possibility, they haven't 
+joined the dots). Hence my spelling it out the 'French' way.
+>> So you need to have the three distinct views in your head of 'My
+>> branch, held locally', 'my copy of Their branch, from when I last
+>> looked', and 'Their branch, on a remote server, in a state I haven't
+>> seen recently'.
+> Yup.  FWIW, when I need to refer to the last one, I'd always say "a
+> branch at the remote" to avoid the confusing term "remote branch".
 >
-> > We now keep track of whether branches and tags have been changed by this
-> > fast-import process since our last checkpoint (or startup). At the next
-> > checkpoint, only refs and tags that new commands have changed are
-> > written to disk.
->
-> And when we notice that we have been competing with some other
-> process and the ref that we wanted to update has already been
-> updated to a different value, what happens?  That should be part of
-> the description of the new behaviour (aka "fix") written here.
-
-This isn't addressed by this change, that behavior remains the same as
-before. This change does not introduce a new failure mode. That is, we
-still overwrite external changes if fast-import has itself been
-instructed to change the ref since the last checkpoint (but without
---force it must be a fast forward wrt the current state on disk).
-
-With this change applied:
-
-        1> $ git fast-import --force
-        1> reset refs/heads/master
-        1> from $A
-        1> checkpoint
-        2> $ git branch -f refs/heads/master $B
-        1> reset refs/heads/master
-        1> from $C
-        1> checkpoint
-
-master points to $C.
-
-I can update the commit message with more details.
-
-We could provide more complete transactional semantics, I suppose,
-i.e. only update a ref if:
-    - (1) fast-import has been instructed to change it (changed == 1)
-since the last checkpoint (this patch),
-    - and (2) the ref on disk is identical to the one fast-import
-wrote at the previous checkpoint (or is identical to the one loaded
-from disk if we never modified it).
-Would we also need a command to get fast-import to read some/all refs
-from disk and update its internal state? But maybe this is going too
-far.
-
-In any case, the sequence above would then fail. But how should we
-fail? The same way we do for checkpoints which would result in non-FF
-when --force is not supplied? That is: don't update this ref, print a
-warning, update other refs, continue processing the input, then
-eventually exit with 1.
-
-One problem with the current warning is that it goes to stderr and
-there is no reliable way to detect on --cat-blob-fd that a checkpoint
-failed. It is typical to use things like:
-
-        checkpoint
-        progress checkpoint
-
-and wait to read "progress checkpoint" on --cat-blob-fd to know when a
-checkpoint is complete. It works fine if checkpoints cannot fail. For
-a long-running fast-import process, an error would not necessarily be
-noticed until EOF or "done", and you wouldn't easily be able to tell
-which checkpoint actually failed.
-
-If we want to improve things beyond what this patch does, I think that
-a reasonable balance would be:
-
-    - (a) improve the existing FF-only transaction by providing an
-immediate error on --cat-blob-fd if a checkpoint fails (the error
-should specify the list of refs that were not updated); for simplicity
-of processing the output of fast-import, we likely want to also print
-something for successful checkpoints: "git fast-import
---checkpoint-success", and checkpoint prints on --cat-blob-fd:
-
-        [checkpoint failed <ref> LF]*
-        checkpoint complete LF
-
-    - (b) add a --force option to the "checkpoint" command, bypassing
-the FF-only check on demand so that an interactive program can retry a
-checkpoint after reading the state on disk, and maybe eventually give
-up and force the update.
-
-
-> > ---
->
-> Missing sign-off.
-
-
-Thanks. I will resend with a better explanation and sign-off.
-
-
-On Tue, May 14, 2019 at 10:30 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Eric Rannaud" <e@nanocritical.com> writes:
->
-> > We now keep track of whether branches and tags have been changed by this
-> > fast-import process since our last checkpoint (or startup). At the next
-> > checkpoint, only refs and tags that new commands have changed are
-> > written to disk.
->
-> And when we notice that we have been competing with some other
-> process and the ref that we wanted to update has already been
-> updated to a different value, what happens?  That should be part of
-> the description of the new behaviour (aka "fix") written here.
->
-> > ---
->
-> Missing sign-off.
->
-> It sounds like a worthwhile thing to do.
->
-> It seems that Elijah has been active in fast-import/export area in
-> the last 12 months, so let's borrow a second set of eyes from him.
->
-> Thanks.
->
-> >  fast-import.c          |  14 ++++++
-> >  t/t9300-fast-import.sh | 106 ++++++++++++++++++++++++++++++++++-------
-> >  2 files changed, 104 insertions(+), 16 deletions(-)
-> >
-> >
-> > v2 and v1 were sent in Oct 2018. Only difference since is that the new
-> > test cases in t9300 don't use sleep to implement the asynchronous dance.
-> >
-> > Thanks.
-> >
-> >
-> > diff --git a/fast-import.c b/fast-import.c
-> > index f38d04fa5851..e9c3ea23ae42 100644
-> > --- a/fast-import.c
-> > +++ b/fast-import.c
-> > @@ -103,6 +103,7 @@ struct branch {
-> >       uintmax_t num_notes;
-> >       unsigned active : 1;
-> >       unsigned delete : 1;
-> > +     unsigned changed : 1;
-> >       unsigned pack_id : PACK_ID_BITS;
-> >       struct object_id oid;
-> >  };
-> > @@ -110,6 +111,7 @@ struct branch {
-> >  struct tag {
-> >       struct tag *next_tag;
-> >       const char *name;
-> > +     unsigned changed : 1;
-> >       unsigned int pack_id;
-> >       struct object_id oid;
-> >  };
-> > @@ -581,6 +583,7 @@ static struct branch *new_branch(const char *name)
-> >       b->branch_tree.versions[1].mode = S_IFDIR;
-> >       b->num_notes = 0;
-> >       b->active = 0;
-> > +     b->changed = 0;
-> >       b->pack_id = MAX_PACK_ID;
-> >       branch_table[hc] = b;
-> >       branch_count++;
-> > @@ -1571,6 +1574,10 @@ static int update_branch(struct branch *b)
-> >       struct object_id old_oid;
-> >       struct strbuf err = STRBUF_INIT;
-> >
-> > +     if (!b->changed)
-> > +             return 0;
-> > +     b->changed = 0;
-> > +
-> >       if (is_null_oid(&b->oid)) {
-> >               if (b->delete)
-> >                       delete_ref(NULL, b->name, NULL, 0);
-> > @@ -1636,6 +1643,10 @@ static void dump_tags(void)
-> >               goto cleanup;
-> >       }
-> >       for (t = first_tag; t; t = t->next_tag) {
-> > +             if (!t->changed)
-> > +                     continue;
-> > +             t->changed = 0;
-> > +
-> >               strbuf_reset(&ref_name);
-> >               strbuf_addf(&ref_name, "refs/tags/%s", t->name);
-> >
-> > @@ -2679,6 +2690,7 @@ static void parse_new_commit(const char *arg)
-> >
-> >       if (!store_object(OBJ_COMMIT, &new_data, NULL, &b->oid, next_mark))
-> >               b->pack_id = pack_id;
-> > +     b->changed = 1;
-> >       b->last_commit = object_count_by_type[OBJ_COMMIT];
-> >  }
-> >
-> > @@ -2763,6 +2775,7 @@ static void parse_new_tag(const char *arg)
-> >               t->pack_id = MAX_PACK_ID;
-> >       else
-> >               t->pack_id = pack_id;
-> > +     t->changed = 1;
-> >  }
-> >
-> >  static void parse_reset_branch(const char *arg)
-> > @@ -2783,6 +2796,7 @@ static void parse_reset_branch(const char *arg)
-> >               b = new_branch(arg);
-> >       read_next_command();
-> >       parse_from(b);
-> > +     b->changed = 1;
-> >       if (command_buf.len > 0)
-> >               unread_command_buf = 1;
-> >  }
-> > diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> > index 3668263c4046..12abaebb22b6 100755
-> > --- a/t/t9300-fast-import.sh
-> > +++ b/t/t9300-fast-import.sh
-> > @@ -3121,14 +3121,23 @@ test_expect_success 'U: validate root delete result' '
-> >  ### series V (checkpoint)
-> >  ###
-> >
-> > -# The commands in input_file should not produce any output on the file
-> > -# descriptor set with --cat-blob-fd (or stdout if unspecified).
-> > +# Instructions can be sent from $input_file to background_import() loop via the
-> > +# fast-import progress command.
-> > +#
-> > +#    progress do: shell
-> > +# Parse the next progress line and invoke it as a shell command.
-> > +#
-> > +#    progress do: checkpoint and stop
-> > +# Send checkpoint and wait for its completion.
-> > +#
-> > +#    progress do: stop
-> > +# Internal instruction.
-> >  #
-> >  # To make sure you're observing the side effects of checkpoint *before*
-> >  # fast-import terminates (and thus writes out its state), check that the
-> >  # fast-import process is still running using background_import_still_running
-> >  # *after* evaluating the test conditions.
-> > -background_import_then_checkpoint () {
-> > +background_import () {
-> >       options=$1
-> >       input_file=$2
-> >
-> > @@ -3153,22 +3162,30 @@ background_import_then_checkpoint () {
-> >       # pipes writing sequence. We want to assume that the write below could
-> >       # block, e.g. if fast-import blocks writing its own output to &9
-> >       # because there is no reader on &9 yet.
-> > -     (
-> > -             cat "$input_file"
-> > -             echo "checkpoint"
-> > -             echo "progress checkpoint"
-> > -     ) >&8 &
-> > +     cat "$input_file" >&8 &
-> >
-> >       error=1 ;# assume the worst
-> >       while read output <&9
-> >       do
-> > -             if test "$output" = "progress checkpoint"
-> > +             if test "$output" = "progress do: shell"
-> > +             then
-> > +                     read output <&9
-> > +                     shell_cmd="$(echo $output |sed -e 's/^progress //')"
-> > +                     $shell_cmd
-> > +             elif test "$output" = "progress do: checkpoint and stop"
-> > +             then
-> > +                     (
-> > +                             echo "checkpoint"
-> > +                             echo "progress do: stop"
-> > +                     ) >&8 &
-> > +             elif test "$output" = "progress do: stop"
-> >               then
-> >                       error=0
-> >                       break
-> > +             else
-> > +                     # otherwise ignore cruft
-> > +                     echo >&2 "cruft: $output"
-> >               fi
-> > -             # otherwise ignore cruft
-> > -             echo >&2 "cruft: $output"
-> >       done
-> >
-> >       if test $error -eq 1
-> > @@ -3189,10 +3206,11 @@ test_expect_success PIPE 'V: checkpoint helper does not get stuck with extra out
-> >       cat >input <<-INPUT_END &&
-> >       progress foo
-> >       progress bar
-> > +     progress do: checkpoint and stop
-> >
-> >       INPUT_END
-> >
-> > -     background_import_then_checkpoint "" input &&
-> > +     background_import "" input &&
-> >       background_import_still_running
-> >  '
-> >
-> > @@ -3201,9 +3219,11 @@ test_expect_success PIPE 'V: checkpoint updates refs after reset' '
-> >       reset refs/heads/V
-> >       from refs/heads/U
-> >
-> > +     progress do: checkpoint and stop
-> > +
-> >       INPUT_END
-> >
-> > -     background_import_then_checkpoint "" input &&
-> > +     background_import "" input &&
-> >       test "$(git rev-parse --verify V)" = "$(git rev-parse --verify U)" &&
-> >       background_import_still_running
-> >  '
-> > @@ -3216,9 +3236,11 @@ test_expect_success PIPE 'V: checkpoint updates refs and marks after commit' '
-> >       data 0
-> >       from refs/heads/U
-> >
-> > +     progress do: checkpoint and stop
-> > +
-> >       INPUT_END
-> >
-> > -     background_import_then_checkpoint "--export-marks=marks.actual" input &&
-> > +     background_import "--export-marks=marks.actual" input &&
-> >
-> >       echo ":1 $(git rev-parse --verify V)" >marks.expected &&
-> >
-> > @@ -3237,9 +3259,11 @@ test_expect_success PIPE 'V: checkpoint updates refs and marks after commit (no
-> >       data 0
-> >       from refs/heads/U
-> >
-> > +     progress do: checkpoint and stop
-> > +
-> >       INPUT_END
-> >
-> > -     background_import_then_checkpoint "--export-marks=marks.actual" input &&
-> > +     background_import "--export-marks=marks.actual" input &&
-> >
-> >       echo ":2 $(git rev-parse --verify V2)" >marks.expected &&
-> >
-> > @@ -3255,13 +3279,63 @@ test_expect_success PIPE 'V: checkpoint updates tags after tag' '
-> >       tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-> >       data 0
-> >
-> > +     progress do: checkpoint and stop
-> > +
-> >       INPUT_END
-> >
-> > -     background_import_then_checkpoint "" input &&
-> > +     background_import "" input &&
-> >       git show-ref -d Vtag &&
-> >       background_import_still_running
-> >  '
-> >
-> > +test_expect_success PIPE 'V: checkpoint only resets changed branches' '
-> > +     cat >input <<-INPUT_END &&
-> > +     reset refs/heads/V3
-> > +     from refs/heads/U
-> > +
-> > +     checkpoint
-> > +
-> > +     progress do: shell
-> > +     progress git branch -f V3 V
-> > +
-> > +     reset refs/heads/V4
-> > +     from refs/heads/U
-> > +
-> > +     progress do: checkpoint and stop
-> > +
-> > +     INPUT_END
-> > +
-> > +     background_import "--force" input &&
-> > +     test "$(git rev-parse --verify V3)" = "$(git rev-parse --verify V)" &&
-> > +     background_import_still_running
-> > +'
-> > +
-> > +test_expect_success PIPE 'V: checkpoint only updates changed tags' '
-> > +     cat >input <<-INPUT_END &&
-> > +     tag Vtag2
-> > +     from refs/heads/U
-> > +     tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-> > +     data 0
-> > +
-> > +     checkpoint
-> > +
-> > +     progress do: shell
-> > +     progress git tag -f Vtag2 V
-> > +
-> > +     tag Vtag3
-> > +     from refs/heads/U
-> > +     tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-> > +     data 0
-> > +
-> > +     progress do: checkpoint and stop
-> > +
-> > +     INPUT_END
-> > +
-> > +     background_import "" input &&
-> > +     test "$(git show-ref -d Vtag2 |tail -1 |awk \{print\ \$1\})" = "$(git rev-parse --verify V)" &&
-> > +     background_import_still_running
-> > +'
-> > +
-> >  ###
-> >  ### series W (get-mark and empty orphan commits)
-> >  ###
-
-
-
--- 
-Eric Rannaud <e@nanocritical.com>
-Nanocritical, CEO
+yes, it's tricky. I've shot my foot off a number of times.
+Thanks
+Philip
