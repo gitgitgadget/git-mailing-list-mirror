@@ -2,154 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9591F461
-	for <e@80x24.org>; Wed, 15 May 2019 08:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 117511F461
+	for <e@80x24.org>; Wed, 15 May 2019 08:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726302AbfEOIgs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 04:36:48 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58393 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725871AbfEOIgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 04:36:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1557909405;
-        bh=Hirr1sgOwzBOW25oBL8pocoiI23r6BR25eEP+01f0Hc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OW8CQwrR0D13q4Qkfzz29ZG1bfrm9WIu7mAngvDBzyCjfDYus2F+H7mxznpdcoBHn
-         ctEruETysz25zBgdRsigP3Fk1y8hijj8LrLaFQZubdpM0KjgNdSpfvIGNU/yDhqpdD
-         1KAyU9b4KEz/sOGzzXMmipvccDcILKNVUlkblC44=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5fMY-1hJgWd1Zhi-007FZW; Wed, 15
- May 2019 10:36:45 +0200
-Date:   Wed, 15 May 2019 10:36:52 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t5616: refactor packfile replacement
-In-Reply-To: <991a3aa27dd7fe67adbed2e03502790932b5059c.1557868134.git.jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1905151032500.44@tvgsbejvaqbjf.bet>
-References: <cover.1557868134.git.jonathantanmy@google.com> <991a3aa27dd7fe67adbed2e03502790932b5059c.1557868134.git.jonathantanmy@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Nl/kCN+kjBrc6CE6em+NZXY6qE8Ux2ZJIo7xp6xDvRHiobpC5CH
- NGX6DCtIuzk1XEbgyarSrO6TYJc8/o7xA0eF6UpIpMtDxEBFN4QJ1V8NSc1ZzyoYDGlsL4w
- 1GL8/0Wl9O6Dof877e7vrYDhWfJFiOUFgNZsusmwqk09VLQhSdFpUWhb46jF5tnMKf5EegG
- nKrQGqDtkGdyKlxxQ9oJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6kyfp/RcqhE=:LDl8xZpn2+Gi62pM6f0kBT
- /1HCQ01pQ03CcFpTvqy5l3PIXVxNhtBTglZvGLrmNyM+Kctsqz+IQuoTxG+pOdfsiJqL4QCab
- qUWJWoA6QkLr1pdTKkMwa5dZjXSRUUx60HFRQweLiV2SwYIJd8+8Qqi0mlEMKu4y1oR50Vnte
- F+1e/Wo+OD5IZOlfD8L0HibpUyeM1nOM2VPm9umEoPc3WXYGFGQSBy3NayrSq4n+rXqKF19m1
- dfj5lYOYtpxykrzAPD/wbf/MrF36lYkUe1XfAtPhk1IdwTgdrj4y73arqt7xoPOUN86twgl2J
- zMf15vPFUYJYF47Hh7T0z+qBHbayh4ZGPboQgl9DrmCINNIMWuYAbT8q4jELBcEI1dVSDC261
- aIikpUgz2xxvwbAdKC0/q6A+J4QT3d33UhNg3mYBO36ZlpISVEvuVesObrZaX0szP8i/QtOhF
- HqmylKbBisxrs7IC4i+Z8cZbIxNIXYoFr64Vfm/DVm/aK33YeQJQfd0he7nkCaa7hEAMHlL3J
- QKtrLhexbM3OVrNblH5rdj5CYUBx8ozx2l+7EFyNAMu8mFgrDoT30xBkA2I6frZU19HTGyWS8
- jJka+5VX78eN3EEa33uJ0jkHtCuVg7ucrm20pELvptfiG4IOK5skGnqNgx9fjHpKRo9fiVoa/
- 705PCWnkOld6BlfOqKHjvl64qbBhUCKA0mKHEszu/AO5hdmHVFGjP9OVTHQLolHGyI065Udod
- mUdQLGSgThocUD8CG4wIqffppRnhLF0i1CkBAOjth+k4Mc6VThxrnzA47wBMtLcLZ+mQVvqvr
- YUwEQ2TIbri1dIl1fgLN2Y8dQ104I48kYI2rxb49tvGko2D5Foa8qw3RXWmnTjvb2C9gv1Jwi
- xXbh1ese1+lq71OCDkzpS1qU3f7Xm2MxJFtMFxlOZkJCVSIuWi/B2atIu2ZUiPIluS+754uKO
- 60NK+JbL5gQ==
-Content-Transfer-Encoding: quoted-printable
+        id S1725933AbfEOIpS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 04:45:18 -0400
+Received: from mx3.uni-regensburg.de ([194.94.157.148]:53724 "EHLO
+        mx3.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725929AbfEOIpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 04:45:18 -0400
+Received: from mx3.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id 0692B600005F
+        for <git@vger.kernel.org>; Wed, 15 May 2019 10:45:15 +0200 (CEST)
+Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by mx3.uni-regensburg.de (Postfix) with ESMTP id C28F3600004D
+        for <git@vger.kernel.org>; Wed, 15 May 2019 10:45:14 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
+        with Novell_GroupWise; Wed, 15 May 2019 10:45:14 +0200
+Message-Id: <5CDBD199020000A10003136F@gwsmtp.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.1.1 
+Date:   Wed, 15 May 2019 10:45:13 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     <philipoakley@iee.org>, <git@vger.kernel.org>
+Subject: Re: Antw: Re: Missing branches after clone
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+ <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+ <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
+ <5CDAAB56020000A100031334@gwsmtp.uni-regensburg.de>
+ <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>
+In-Reply-To: <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+>>> Philip Oakley <philipoakley@iee.org> schrieb am 15.05.2019 um 09:34 in
+Nachricht <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>:
+> On 14/05/2019 12:49, Ulrich Windl wrote:
+>> Hi!
+>>
+>> The confusing part actually is for me:
+>> "git clone" does NOT "Clone a repository into a new directory", but "clone
 
-On Tue, 14 May 2019, Jonathan Tan wrote:
+> the current branch into a new directory" (IMHO).
+>> So I was surprised that I couldn't merge branches under the same name in
+the 
+> cloned "repository".
+>> Only "git clone --bare" actually seems to clone "the repository".
+>> I think this is very confusing to new users. At least I didn't quite get
+the 
+> reasoning for that.
+> It's that you are missing the idea behind the "Branches that track the 
+> remote", which are local copies, but not YOUR branches. see below.
+> I clone the GitHub test repo. I get (a copy of) it all (the rtb's). Git 
+> _creates_ a local branch 'master' for me. Git checks out the lead remote 
+> branch into it. Command prompt returns. I cd into the new repo. I ask 
+> what branches _I_ have - just 'master'. I ask about all the branches the 
+> repo has - voila, I see all those rtb's in _my_ repo. They are all 
+> perfectly valid branch refs.
 
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 9a8f9886b3..7cc0c71556 100755
-> --- a/t/t5616-partial-clone.sh
-> +++ b/t/t5616-partial-clone.sh
-> @@ -244,11 +244,25 @@ test_expect_success 'fetch what is specified on CL=
-I even if already promised' '
->  . "$TEST_DIRECTORY"/lib-httpd.sh
->  start_httpd
->
-> -# Converts bytes into a form suitable for inclusion in a sed command. F=
-or
-> -# example, "printf 'ab\r\n' | hex_unpack" results in '\x61\x62\x0d\x0a'=
-.
-> -sed_escape () {
-> -	perl -e '$/ =3D undef; $input =3D <>; print unpack("H2" x length($inpu=
-t), $input)' |
-> -		sed 's/\(..\)/\\x\1/g'
-> +# Converts bytes into their hexadecimal representation. For example,
-> +# "printf 'ab\r\n' | hex_unpack" results in '61620d0a'.
-> +hex_unpack () {
-> +	perl -e '$/ =3D undef; $input =3D <>; print unpack("H2" x length($inpu=
-t), $input)'
-> +}
-> +
-> +# Inserts $1 at the start of the string and every 2 characters thereaft=
-er.
-> +intersperse () {
-> +	sed 's/\(..\)/'$1'\1/g'
-> +}
-> +
-> +# Create a one-time-sed command to replace the existing packfile with $=
-1.
-> +replace_packfile () {
-> +	# The protocol requires that the packfile be sent in sideband 1, hence
-> +	# the extra \x01 byte at the beginning.
-> +	printf "1,/packfile/!c %04x\\\\x01%s0000" \
-> +		"$(($(wc -c <$1) + 5))" \
-> +		"$(hex_unpack <$1 | intersperse '\\x')" \
-> +		>"$HTTPD_ROOT_PATH/one-time-sed"
->  }
+Yes, I can mostly follow you there with one exception: In the cloned
+repository the branches are not available under the same name as in the
+original repository (unless I'm totally confused). Therefore a beginner would
+simply assume "they are missing".
+I knew that (which was my use case) git optimizes local copies by linking as
+much as possible, but I don't understand why cloned branches are "soooo
+complicated". (I could understand it as an optimization for network copies)
 
-Urgh. This is not a problem *this* patch introduces, but why on Earth do
-we have to do complicated computations in shell code using an unholy mix
-of complex sed and Perl invocations, making things fragile and slow? We do
-have such a nice facility is the t/test-tool helper...
-
-The refactoring itself looks correct to me, of course.
-
-Thanks,
-Dscho
-
->
->  test_expect_success 'upon cloning, check that all refs point to objects=
-' '
-> @@ -270,10 +284,7 @@ test_expect_success 'upon cloning, check that all r=
-efs point to objects' '
->  	# Replace the existing packfile with the crafted one. The protocol
->  	# requires that the packfile be sent in sideband 1, hence the extra
->  	# \x01 byte at the beginning.
-> -	printf "1,/packfile/!c %04x\\\\x01%s0000" \
-> -		"$(($(wc -c <incomplete.pack) + 5))" \
-> -		"$(sed_escape <incomplete.pack)" \
-> -		>"$HTTPD_ROOT_PATH/one-time-sed" &&
-> +	replace_packfile incomplete.pack &&
->
->  	# Use protocol v2 because the sed command looks for the "packfile"
->  	# section header.
-> @@ -313,10 +324,7 @@ test_expect_success 'when partial cloning, tolerate=
- server not sending target of
->  	# Replace the existing packfile with the crafted one. The protocol
->  	# requires that the packfile be sent in sideband 1, hence the extra
->  	# \x01 byte at the beginning.
-> -	printf "1,/packfile/!c %04x\\\\x01%s0000" \
-> -		"$(($(wc -c <incomplete.pack) + 5))" \
-> -		"$(sed_escape <incomplete.pack)" \
-> -		>"$HTTPD_ROOT_PATH/one-time-sed" &&
-> +	replace_packfile incomplete.pack &&
->
->  	# Use protocol v2 because the sed command looks for the "packfile"
->  	# section header.
+> 
+> It will take a little while to appreciate this extra layer and how to 
+> use it, and how Git can 'dwim' (do what I mean) the usage of shortened 
+> refs and branch names, so it you try checking out 'change-the-title', 
+> git will know to fall back to using the rtb if you haven't created a 
+> local version.
+> Hope That Helps.
+> Philip
+> 
+> phili@Philip-Win10 MINGW64 / (master)
+> $ cd usr/src
+> 
+> phili@Philip-Win10 MINGW64 /usr/src (master)
+> $ git clone https://github.com/octocat/Spoon-Knife.git 
+> Cloning into 'Spoon-Knife'...
+> remote: Enumerating objects: 16, done.
+> remote: Total 16 (delta 0), reused 0 (delta 0), pack-reused 16
+> Unpacking objects: 100% (16/16), done.
+> 
+> phili@Philip-Win10 MINGW64 /usr/src (master)
+> $ cd Spoon-Knife/
+> 
+> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+> $ git branch
+> * master
+> 
+> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+> $ git branch -a
+> * master
+>    remotes/origin/HEAD -> origin/master
+>    remotes/origin/change-the-title
+>    remotes/origin/master
+>    remotes/origin/test-branch
+> 
+> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+> $
+> 
 > --
-> 2.21.0.1020.gf2820cf01a-goog
+> PS What change to the [clone?] man page would have helped you here?
+
+Maybe confirm this: At this state I could "checkout test-branch" (for
+example), but I could not "merge test-branch", right?
+(Another level of confusion is bash-completion which does not know those
+hidden branches)
+
+OK, reading git-clone again, the following might apply:
+Explain (or refer to) what a "remote-tracking branch" is.
+
+"checks out an initial branch that is forked from the cloned repository’s
+currently active branch" could be simplified to "checks out the active branch
+in the cloned repository"?
+
+Maybe add a paragraph at the end of the DESCRIPTION starting like: "To use
+another branch in the clones repository..."
+
+Maybe also add a pointer to the meanings of "origin" and "remote" (I know that
+the clone source becomes remote/origin)
+
+I wonder whether "This default configuration is achieved by creating
+references to the
+remote branch heads under refs/remotes/origin and by initializing
+remote.origin.url and remote.origin.fetch configuration variables." should
+become "The original repository's URL will be visible as remote/origin in the
+cloned reporitory"
+
+Maybe point out the differences between a "default clone" mand a "--mirror
+clone" in the DESCRIPTION.
+
+The example "Clone from upstream while borrowing from an existing local
+directory:" could benefit from a few explaining words (why would one want to do
+that, i.e. what's the effect?)
+
+None of the examples refers to using another branch than the default branch.
+Maybe add two examples:
+1: checking out a different branch, 2:merging a different branch to the
+current one
+
+That's what I think.
+
+Regards,
+Ulrich
+
+
+> 
+>>> Philip Oakley <philipoakley@iee.org> schrieb am 14.05.2019 um 12:33 in
+>> Nachricht <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>:
+>>> Hi Ulrich,
+>>> On 14/05/2019 11:12, Duy Nguyen wrote:
+>>>>> Then I
+>>> 
 >
->
+foundhttps://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branch
+>>> es  which handles the subject...
+>>>>> But still the most common solution there still looks like an ugly hack.
+>>>>> Thus I suggest to improve the man-pages (unless done already)
+>>>> Yeah I expected to see at least some definition of remote-tracking
+>>>> branches (vs local ones) but I didn't see one. Room for improvement.
+>>> Yes, the 'remote tracking branch' name [RTB] is very 'French' in its
+>>> backwardness (see NATO/OTAN).
+>>>
+>>> It is a 'branch which tracks a remote', and it is has the 'last time I
+>>> looked' state of the branch that is on the remote server, which may
+>>> have, by now, advanced or changed.
+>>>
+>>> So you need to have the three distinct views in your head of 'My branch,
+>>> held locally', 'my copy of Their branch, from when I last looked', and
+>>> 'Their branch, on a remote server, in a state I haven't seen recently'.
+>>>
+>>> Finding a better name for the "RTB", one with an easier cognitive load
+>>> for those trying to understand Git, would be an improvement.
+>>>
+>>> Though there has been a similar issue with 'staging the index'.
+>>> Ultimately it is a new way of thinking about artefacts (perfect
+>>> duplicates, no originals, no master, no copies, just verification
+>>> hashes) so needs new terms and a difficult learning experience.
+>>> -- 
+>>> Philip
+>>
+>>
+>>
+
+
+
