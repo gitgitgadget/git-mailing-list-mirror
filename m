@@ -2,95 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 797661F461
-	for <e@80x24.org>; Wed, 15 May 2019 12:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59D681F461
+	for <e@80x24.org>; Wed, 15 May 2019 12:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727028AbfEOMWe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 08:22:34 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:35424 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726684AbfEOMWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 08:22:34 -0400
-Received: by mail-ed1-f48.google.com with SMTP id p26so3854414edr.2
-        for <git@vger.kernel.org>; Wed, 15 May 2019 05:22:33 -0700 (PDT)
+        id S1726622AbfEOMi5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 08:38:57 -0400
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:45282 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726392AbfEOMi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 08:38:56 -0400
+Received: by mail-ot1-f52.google.com with SMTP id t24so2041505otl.12
+        for <git@vger.kernel.org>; Wed, 15 May 2019 05:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=OaoCvXEqY0WpRfe2nFJa1HhZf0pav/J0vkzrPVfhD1o=;
-        b=B8RT5lCB8zjYFVZoFCvOCxnc0oTqNbE0Ui54ci0kQtvHd//xugap8Ey+fOguXGKqwv
-         3gaTq20tpyJYUG5GUxwTZeH6ES6eMKQ0eKvGIsPXyvpTJSM548lTQjDpwKU3r/Pfojz8
-         i5B6s19J9AgzYedFvyrrfW/UNDxdnlSyao8a+4RV1s90gto1qxLItIRlWH0vnKMf+snl
-         anReoWixyeFPCMZN5IqhpPBDzqz4OrDowuZL/zowPrjl4V9BJ1wqwPjlherASj99Dq4v
-         V8myNSKaDYkUFAw6aCKMxwWPZ4lypQxTfuepmh+U1XrqXjLSPZMzL9FxTxusb7g0YKY8
-         mp9g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i1tkwHlBi5dAm76lQJw1QLOlL1AXOGpGAg/+UB4GTE8=;
+        b=QNHE9YLpijMaMyStuL2w4SW2SwHmSCNVIA8wAHkP+lpffqOwlVnP+Evz2NX37QROgM
+         jRzpSHLPwD8KDMGQJACwxJ/qUaMnZ6X64h54ZA+vKef8hNpHmWuUIJ2aYhJA1nGuwhTi
+         huOgvJh5f6eMEAz8W6BjbTdjDSQHZJ5m/8v05BuPdmnPK0uVyRS2/XK0B38SdEJxhgam
+         pPK5dtlN/BGY1m4IJMbwQ+pvSu9t+scoi2va2nKszFvtyFK8ww3xQWG2ijOvTBcUNvI6
+         lTb/li/GCmwwnRVxE+eTF222smAP3E4gtpO2xwn+n36x1At9G6tS4sO6tuKmmWD1V8Sk
+         ca8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=OaoCvXEqY0WpRfe2nFJa1HhZf0pav/J0vkzrPVfhD1o=;
-        b=eelXQsM9wwV0SPqLuCrm0ZPytdGuTI4vp+6oLR/g9uJeB5wnWGffwhLj7beKiP3r1E
-         ViekWfKo7/YmJch6abzHSCTZHpEcCec06Blm70URWzVKXB2oBGdOggYiYYF8Zqnf17Of
-         DQ8FQK3/vFb6+jgS6EXJh5iUJo8EX18OgpSDkrwLAlAz/Ldrd2U31xFjli0G4Xo/VK44
-         fGF1mnfaMbz51xKlLZz1jHs+jF3Z/ZwCfiSKkA0hHziVT8oYsgbc+CaJqelooXl/b2NL
-         mfqNUp3I6ksQAnSqgnIKTo5UDBpB0A3tGue2YzC9Gt9etsYmSgFkgz4bMSgZdzYt31UG
-         Rt1Q==
-X-Gm-Message-State: APjAAAV5CGLUH9YzDl7psszWgC+ZGeOEAP/yhLN3vuY87qoGQt2ovRU/
-        8kIhrYwFXg0SEV+xWTWQhB4nBtAX
-X-Google-Smtp-Source: APXvYqz44O6l4PAXvWK63WKgF+slW5FzKJ8d+iZm3p6JAc4daGg+Wp/68Tj9JHDfj7nxBudvmIru7g==
-X-Received: by 2002:a50:bdc6:: with SMTP id z6mr42173190edh.47.1557922952166;
-        Wed, 15 May 2019 05:22:32 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id p27sm441761ejf.65.2019.05.15.05.22.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 May 2019 05:22:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Git ML" <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Marc Stevens <marc@marc-stevens.nl>,
-        gaetan.leurent@inria.fr, thomas.peyrin@ntu.edu.sg,
-        Dan Shumow <shumow@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Git and the new SHA-1 prefix collision attack
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-Date:   Wed, 15 May 2019 14:22:28 +0200
-Message-ID: <875zqbx5yz.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i1tkwHlBi5dAm76lQJw1QLOlL1AXOGpGAg/+UB4GTE8=;
+        b=ncalisAXP8OJ66XuHSus+kexh4UyGbpkOx0fCYPSL+ZoHTnpwppy99rM87mwfu+3GU
+         HEqGHLTMz1ckUGv+XHz1kBsDAdDlKaxHeWkJS1MFOh3wl2hqiPDJCaBK8kZBgUZNdyle
+         OXHdwc1y7taURPlcPI7GSLXT+upQwxgI9wT0m2j04yHAuO0oSdNU6ozNPNnIOtKL0iRq
+         xSu7Xmpxxvkg06CAtp9jtHyMk3633K+gsNOOstpKQnf8khDgMt6t15JnX8NCrc7xF3SV
+         +e+aJeQ1dfUlaRY1IJ1CreD6cDOQoKp7QzicCMggawbEGzcBq6giLW4EhFt/RY3TVUuC
+         v1fg==
+X-Gm-Message-State: APjAAAXmRQHjKMIHUXT2cG1hnckhj0wREaL9uhAKc4DqOnfVXoqyHQMF
+        jjH3JxWkdnk5Ww8fwdkBUuURZynBastCnGJ0uOOnCA==
+X-Google-Smtp-Source: APXvYqzO/2mxTHQmqtnxphQJ9qsBJiwoG5E6zxAYm9AK399v1X81fZvve1oJG70ELrX8+SJfezum/aLolU7w/5FJZEs=
+X-Received: by 2002:a9d:4e08:: with SMTP id p8mr24570586otf.243.1557923935997;
+ Wed, 15 May 2019 05:38:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
+ <CAGyf7-GtnCqfqPWVpBAELB4xAE6syn7+DfKXgfhL0UoMfvbn4A@mail.gmail.com>
+In-Reply-To: <CAGyf7-GtnCqfqPWVpBAELB4xAE6syn7+DfKXgfhL0UoMfvbn4A@mail.gmail.com>
+From:   Cosmin Polifronie <oppturbv@gmail.com>
+Date:   Wed, 15 May 2019 15:38:44 +0300
+Message-ID: <CAJFQqNJsnkdwqk0+kCp6j5aL9BaXd=-JaXC9K5kSBSed+=V3xg@mail.gmail.com>
+Subject: Re: Running 'git worktree add' in 'pre-commit' hook
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[CC-list carried forward from the last SHA-1 thread I found]
+Hello Bryan,
 
-Thought I'd sent a brief line about this since nobody else did.
+My project contains a Gradle build that is dependent on a
+configuration found in a file called build.gradle. What I need to do
+is run Gradle with a proper build.gradle file, meaning: if a new
+build.gradle is staged, I will use that for my Gradle build, if not I
+will use the latest approved commit's one (as in a commit that has
+already passed the pre-commit check). The problem is that build.gradle
+can be modified and not be staged, and Gradle cannot know that, it
+will use whatever is available on disk. I want to avoid that.
 
-There's a newly published "From Collisions to Chosen-Prefix Collisions
-Application to Full SHA-1" paper making the news this week which builds
-on the SHAttered attack: https://eprint.iacr.org/2019/459.pdf
+This is why I needed a copy of my current repo with the file versions
+already approved (already staged at a previous date). This is why I am
+using 'git worktree add'.
 
-See https://shattered.io for that original attack.
+Now, I have found another solution using stashes, and those might
+work, but I am still curious about this situation.
 
-I asked Marc Stevens on Twitter whether the sha1collisiondetection
-library would cover the sorts of collisions generated by the method
-described in this paper. He said yes:
-https://twitter.com/realhashbreaker/status/1128419029536923649
-
-Not all the details are out on this new attack, in particular the
-researchers (CC'd) haven't yet published details[1] on improvements that
-would make such an attack cheaper to carry out than the current
-state-of-the art, which I understand from Marc's Twitter feed is
-something he's skeptical about.
-
-In any case, it looks like the sha1collisiondetection library will save
-the day again. Thanks Marc & Dan!
-
-1. https://www.zdnet.com/article/sha-1-collision-attacks-are-now-actually-practical-and-a-looming-danger/
+On Wed, May 15, 2019 at 3:46 AM Bryan Turner <bturner@atlassian.com> wrote:
+>
+> On Tue, May 14, 2019 at 7:53 AM Cosmin Polifronie <oppturbv@gmail.com> wrote:
+> >
+> > Hello! I am trying to run 'git worktree add <path> HEAD' in the
+> > 'pre-commit' hook, more specifically in a Python script that is being
+> > called from the hook. When doing so, I am greeted with the following
+> > error:
+> >
+> > On Windows 10:
+> > Preparing worktree (detached HEAD cbfef18)
+> > fatal: Unable to create 'C:/Users/meh/Desktop/abc/.git/index.lock': No
+> > such file or directory
+> >
+> > On Arch Linux:
+> > Preparing worktree (detached HEAD cbfef18)
+> > fatal: Unable to create '/home/cosmin/Downloads/abc/.git/index.lock':
+> > Not a directory
+> >
+> > Is it forbidden to call this command from a hook? If yes, what kind of
+> > alternatives do I have? I need to make a copy of the repo in its HEAD
+> > state, process it and then decide if I will pass the current commit or
+> > not.
+>
+> I can't speak to whether `git worktree add` should succeed or fail
+> inside a `pre-commit` hook, but...
+>
+> Why do you need a new work tree, versus whatever working copy you're
+> running `git commit` in? Is there a reason whatever validation needs
+> to be done can't be done in the existing working copy? `HEAD` is the
+> _previous, existing commit_, not the new, currently-being-created
+> commit, so your validation in the new work tree, if you actually
+> managed to create one, would be applied to the _latest existing
+> commit_, not the new changes you're trying to commit. Even trying to
+> copy the changes over wouldn't necessarily result in the same state,
+> because there may be unstaged changes.
+>
+> What type of validation are you trying to do? I think the failure
+> you're running into is an alarm bell indicating what you're trying to
+> do may not make sense. However, without any insight into what "process
+> it and then decide if I will pass the current commit or not" actually
+> looks like, it's hard to offer you much help.
+>
+> Bryan
+>
+> >
+> > Thanks! :)
