@@ -2,116 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30BB21F461
-	for <e@80x24.org>; Wed, 15 May 2019 17:59:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 290791F461
+	for <e@80x24.org>; Wed, 15 May 2019 18:22:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727244AbfEOR7w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 13:59:52 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:44969 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726335AbfEOR7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 13:59:51 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 4542Px4NWzz5tl9;
-        Wed, 15 May 2019 19:59:49 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 32B9020BA;
-        Wed, 15 May 2019 19:59:49 +0200 (CEST)
-Subject: Re: Closing fds twice when using remote helpers
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org
-References: <20190515105609.sucfjvuumeyyrmjb@glandium.org>
- <87bm04vt81.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <b6ff2486-a1c2-4e89-4338-9e4e56d528bc@kdbg.org>
-Date:   Wed, 15 May 2019 19:59:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <87bm04vt81.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S1726392AbfEOSW6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 14:22:58 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:46459 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726084AbfEOSW5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 14:22:57 -0400
+Received: by mail-pf1-f202.google.com with SMTP id d9so344179pfo.13
+        for <git@vger.kernel.org>; Wed, 15 May 2019 11:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=RXI/LsbYM/BICiziZdgx6GpnWzpR2FMzP+1hp26kgdE=;
+        b=kzHuFMmF74SbXahX403WcBYv10nXTwtClPjb/IYUOmNE2ZKJlBM9gVE2VH0Alh8tjw
+         1tzwK3CqUPjyE6rhtiBY20rTSg00NlSY3UDTASMpZW8O1NP5P64ohwkwHWlVDYO8gwdT
+         MnmUhPL0zuWshDmWglhLiS/7yklLGYMo9aMZWqjzPp4NvqBrEDcVvh060IGAuwKpKlk7
+         BHcxGS6l/ZhCnrskiFWeJUBa7u72DbJYQ9jrcsA+NzaCWmHhAXqfl8FYFozP2I/aoSsF
+         VHxjtOzfC6XqPcHm8qsZIe7+RegBL1LvSQAVanwfoGyEAliDZeYPopDhxCPI6AcCj5uY
+         hhtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=RXI/LsbYM/BICiziZdgx6GpnWzpR2FMzP+1hp26kgdE=;
+        b=AEicnmepb9qFWQAv96C2AH66u2C6FWB+4e0/efPf+mfofVaTstafqVeqYQ/lNI/PoW
+         AjykQhnQq2ibS4IaBNiH2GaGGVSzvjS6EpMNVNkepA1gYfysQvJaq4kJDhac1CKIrGKW
+         jOlSzee76SUGah9acuKdOqoshEQ6g/YUw4EQFmBpcr42GbyzGCM5Eb8aqX6gYGeJmhDB
+         9V40Vv2Ov6zK+DCaqjks0Gbn99hBf8p89IWScqu3NrzxpmLENxlD+QAmPpxlCklaAhTg
+         +Wl+Bye3hgmoqV6ymzSPJg7tdIcEqYe3HxyNQcecX4mF4qQLoezn7i+XJjO3YKlj7geE
+         eypQ==
+X-Gm-Message-State: APjAAAU0IeRy5YqYj+3LmE5pC+KtWSoRYayfPkCTs4+109hHFHZAG7uQ
+        UhUF4cbsvZ6BwgFjFyVBT0PqSOdXxEXxIxU38NBO
+X-Google-Smtp-Source: APXvYqyWv8YAq8r3iX1ILm32kyIbn4JsznAAXNKyCqM2kVlMzH9amVPEF2XX8f1GEVVMal7+bUYJ19K4UUZUVj3IAEng
+X-Received: by 2002:a63:1f04:: with SMTP id f4mr45723888pgf.423.1557944576811;
+ Wed, 15 May 2019 11:22:56 -0700 (PDT)
+Date:   Wed, 15 May 2019 11:22:53 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1905151032500.44@tvgsbejvaqbjf.bet>
+Message-Id: <20190515182253.105984-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <nycvar.QRO.7.76.6.1905151032500.44@tvgsbejvaqbjf.bet>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+Subject: Re: [PATCH 1/2] t5616: refactor packfile replacement
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Johannes.Schindelin@gmx.de
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.05.19 um 13:43 schrieb Ævar Arnfjörð Bjarmason:
+> > +# Converts bytes into their hexadecimal representation. For example,
+> > +# "printf 'ab\r\n' | hex_unpack" results in '61620d0a'.
+> > +hex_unpack () {
+> > +	perl -e '$/ = undef; $input = <>; print unpack("H2" x length($input), $input)'
+> > +}
+> > +
+> > +# Inserts $1 at the start of the string and every 2 characters thereafter.
+> > +intersperse () {
+> > +	sed 's/\(..\)/'$1'\1/g'
+> > +}
+> > +
+> > +# Create a one-time-sed command to replace the existing packfile with $1.
+> > +replace_packfile () {
+> > +	# The protocol requires that the packfile be sent in sideband 1, hence
+> > +	# the extra \x01 byte at the beginning.
+> > +	printf "1,/packfile/!c %04x\\\\x01%s0000" \
+> > +		"$(($(wc -c <$1) + 5))" \
+> > +		"$(hex_unpack <$1 | intersperse '\\x')" \
+> > +		>"$HTTPD_ROOT_PATH/one-time-sed"
+> >  }
 > 
-> On Wed, May 15 2019, Mike Hommey wrote:
-> 
->> Hi,
->>
->> I started getting a weird error message during some test case involving
->> git-cinnabar, which is a remote-helper to access mercurial
->> repositories.
->>
->> The error says:
->> fatal: mmap failed: Bad file descriptor
->>
->> ... which was not making much sense. Some debugging later, and it turns
->> out this is what happens:
->>
->> - start_command is called for fast-import
+> Urgh. This is not a problem *this* patch introduces, but why on Earth do
+> we have to do complicated computations in shell code using an unholy mix
+> of complex sed and Perl invocations, making things fragile and slow? We do
+> have such a nice facility is the t/test-tool helper...
 
-I guess, you request fast_import->out = -1.
+This might be a good #leftoverbits. I'm not sure which part you think
+needs to be replaced - maybe the thing that goes into one-time-sed?
 
->> - start_command is called again for git-remote-hg, passing the
->>   fast_import->out as cmd->in.
+> The refactoring itself looks correct to me, of course.
 
-OK.
-
->> - in start_command, we end up on the line of code that does
->>   close(cmd->in), so fast_import->out/cmd->in is now closed
-
-Yes. That's how the interface is specified.
-
->> - much later, in disconnect_helper, we call close(data->helper->out),
->>   where data->helper is the cmd for fast-import, and that fd was already
->> closed above.
-
-That must is wrong. Passing a fd to start_command() relinquishes
-responsibility.
-
->> - Except, well, fds being what they are, we in fact just closed a fd
->>   from a packed_git->pack_fd. So, when use_pack is later called, and
->>   tries to mmap data from that pack, it fails because the file
->>   descriptor was closed.
-
-Either dup() the file descriptor, or mmap() before you call the
-consuming start_command().
-
->> I'm not entirely sure how to address this... Any ideas?
->>
->> Relatedly, use_pack calls xmmap, which does its own error handling and
->> die()s in case of error, but then goes on to do its own check with a
->> different error message (which, in fact, could be more useful in other
->> cases). It seems like it should call xmmap_gently instead.
-> 
-> The "obvious" hacky fix is to pass in some "I own it, don't close it"
-> new flag in the child_process struct.
-> 
-> In fact we used to have such a thing in the code, see e72ae28895
-> ("start_command(), .in/.out/.err = -1: Callers must close the file
-> descriptor", 2008-02-16).
-
-That's a different thing. -1 tells that a pipe end should be passed back
-to the caller. Of course, it must not be closed by start_command.
-
-But if the caller passes their own fd *into* start_command/run_command,
-then the caller must not close it.
-
-> So we could bring it back, but I wonder if a better long-term solution
-> is to refactor the API to have explicit start_command() ->
-> free_command() steps, even if the free() is something that happens
-> implicitly unless some "gutsy" function is called.
-
-*Shrug* I'd use C++ to make the interface a no-brainer.
-
--- Hannes
+Thanks, and thanks for taking a look at this.
