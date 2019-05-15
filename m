@@ -2,186 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 475F11F461
-	for <e@80x24.org>; Wed, 15 May 2019 20:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04DF11F461
+	for <e@80x24.org>; Wed, 15 May 2019 20:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbfEOUUH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 16:20:07 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:37822 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbfEOUUH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 16:20:07 -0400
-Received: by mail-ed1-f44.google.com with SMTP id w37so1617932edw.4
-        for <git@vger.kernel.org>; Wed, 15 May 2019 13:20:05 -0700 (PDT)
+        id S1727087AbfEOUeL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 16:34:11 -0400
+Received: from mail-vs1-f50.google.com ([209.85.217.50]:41095 "EHLO
+        mail-vs1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726465AbfEOUeL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 16:34:11 -0400
+Received: by mail-vs1-f50.google.com with SMTP id g187so809804vsc.8
+        for <git@vger.kernel.org>; Wed, 15 May 2019 13:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=1p7x2IJPUyh2/DplMQ1FN5StKwyj4yhtSmQA4L7HwfU=;
-        b=b9XEKzG5egt2LOMGhaDm1FIfz/ksWbeGIdU2T1hL1V0We/ECLczotaWLXxVqEaexSb
-         6pZgPfv7t7L/MIpmVmRZj0NwhorPCLrYl6zQ1ITn8XSQxuVkJjGfiP4yTqAq9I18ihg4
-         rIMh2mz4v7fzctSD9iMYuyRkq3VjN+aQ8LLf+Ffu1Ly17uQ9dikC67r7VTzs4goRPPt7
-         06GElAp37o32KpMtQwnqg7AFYrqOf0475SZN5bJdQ7ssZLOcGrXQ7HHcehlUNfJrrEMy
-         ux2k5Pw+T9dsoi9BHC1SSegWSF8kJ7EH1dKdJEtpyznpE1IJInWb8TAWAu/OsZMRYTDb
-         fn5g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=65PT3Fbq10RxlOsOfHY0yRdrOZ72zdhjz8YSMfXmSlw=;
+        b=MWD0NWBPmxujsy4VJhALd3X9LOK/88HrP0E0148hufsnpjJJKZ0oh0xHN0cNhd6xpV
+         9KwAnYHUnAqyvQ7jBmwIvuMpp6j0fbDYK/2NJxtUAbvjSTL/fcUIFPgU5N+nyL1Tso8I
+         ApbcXIxrOsIHkX9o7BF4j4qdwQxSkyR+8Z4d2M0yL5652tT1huIbZcpv24mSnZyHeJ7X
+         tSkv+FfHwKcwl1JgxioMDX2ew1hywWrHcb9pbzhQZWnhHoldevDgH3NXCf21C9qhrk+N
+         2bqfUfU4zv63C8zjWqPDrN4eW6UCvWt7bVKZ6tQ1zhHHY+brfYJGAm0iAIC126fXX/ar
+         2yDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=1p7x2IJPUyh2/DplMQ1FN5StKwyj4yhtSmQA4L7HwfU=;
-        b=H9IObzHmR3vhUp18c0zYy7SoOnMoit4l0XxKOo5FBoBR265ZYyyQ3gfmkBbhfxBfp8
-         Si2eN2EQd9OjnfYmCa+cpur9Vdu6D3kJgVEPrkdrjjqg3DYjgCKxb7CNg9db18g617Ax
-         hvmPQxTPEznuYtwJz7IH3s2jVCviAJk6djRrHIiYTjRWD1PlRsWh5WzHrXDhRp1961EL
-         7TeDHxpgdGGKXOKuVwnmJOsbZftj1sf7NERWjv+H2YEx80ECiA10XdPTCap165RDHb89
-         +Bj35a9NK/E1EJblXSWn07mp+y5V+QHwPojHTuJADLyy0LDu2ir92BxoKLzNlo06pSDm
-         nh2Q==
-X-Gm-Message-State: APjAAAVvJc2A5JwRC+5pY4JlkA+icQKQbBuxkcs4yhqW+xw2H/tflXMq
-        3FgGpNkW++f3jTEEYHbzBjqwRzTe
-X-Google-Smtp-Source: APXvYqxXbCboa1qio7lwGUPrEquU54NUeDAtEIeaEwBgDYYgvENZ/U38IFhekqiLNpO3M6+HtAlxZg==
-X-Received: by 2002:a17:906:2acf:: with SMTP id m15mr20016819eje.31.1557951604681;
-        Wed, 15 May 2019 13:20:04 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b4sm1089643edf.7.2019.05.15.13.20.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 May 2019 13:20:03 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Eric S. Raymond" <esr@thyrsus.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-References: <20190515191605.21D394703049@snark.thyrsus.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190515191605.21D394703049@snark.thyrsus.com>
-Date:   Wed, 15 May 2019 22:20:03 +0200
-Message-ID: <871s0zwjv0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=65PT3Fbq10RxlOsOfHY0yRdrOZ72zdhjz8YSMfXmSlw=;
+        b=ebjINAGSg8zh47bVMWwQoRkBmVbSJMgNqEmMxN7G/OqQm/iLroXOz7x43wR4h8s3y2
+         +TRR7rBMOTCGuHUm3z8oTd4YjUCcA8dRuvZAVXO6BhEEbMDkHkiSThwUxnwItzuqzAGr
+         r89jWqvi4YofMgE6mBekO0+4RnqMXyRgHAhhFEj/zdaY7ofG6BcZ85Y470to0Xo3tNpK
+         Hg7iUe6dVn/wVJCA+3heamia3iMDq9OC3Bv/J0N+ynd6aN5ZdTdr5ynrmxgOiI2N1OaB
+         fm+xDamMveS6lmuOMCCTPi/nI1v66aEUfluaAqKBB0Tb+iSvokqQFDLWJG0wxtMCUMAa
+         qHUQ==
+X-Gm-Message-State: APjAAAVwQ0BxyMs70TzRA1ie26YwB9VOgRj9xwlnjxKOMe3RBFcxfrkm
+        0M8oy9CVIBO0rO3PJJBzf4gXLEKI+AZ6pSJili06qqQd4ts=
+X-Google-Smtp-Source: APXvYqw3xiW9PPeQeMUIsu8HxpzXtpz48COtP0BcR0Tw97Jt2hEQOkSHK6n/iOa0M6ANrSiE+lQimh+Gud5Hptl+rTk=
+X-Received: by 2002:a05:6102:1c7:: with SMTP id s7mr7032386vsq.136.1557952450140;
+ Wed, 15 May 2019 13:34:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAA01CsoJf+_-iowdm0EFWd52vOWE1Uo0GGZ55d3RyPJzg6gwgQ@mail.gmail.com>
+ <874l5vwxhw.fsf@evledraar.gmail.com>
+In-Reply-To: <874l5vwxhw.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 15 May 2019 13:33:57 -0700
+Message-ID: <CABPp-BGycoHEMN27Z9rAccT5yVRf3N50o4sc3wo8uE_HLR9QbA@mail.gmail.com>
+Subject: Re: Merging (joining/stiching/rewriting) history of "unrelated" git repositories
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, May 15 2019, Eric S. Raymond wrote:
-
-> The recent increase in vulnerability in SHA-1 means, I hope, that you
-> are planning for the day when git needs to change to something like
-> an elliptic-curve hash.  This means you're going to have a major
-> format break. Such is life.
-
-Note that most users of Git (default build options) won't be vulnerable
-to the latest attack (or SHAttered), see
-https://public-inbox.org/git/875zqbx5yz.fsf@evledraar.gmail.com/T/#u
-
-But yes the plan is to move to SHA-256. See
-https://github.com/git/git/blob/next/Documentation/technical/hash-function-transition.txt
-
-> Since this is going to have to happen anyway
-
-The SHA-1 <-> SHA-256 transition is planned to happen, but there's some
-strong opinions that this should be *only* for munging the content for
-hashing, not adding new stuff while we're at it (even if optional). See
-: https://public-inbox.org/git/87ftyyedqd.fsf@evledraar.gmail.com/
-
-> let me request two
-> functional changes in git. Neither will be at all difficult, but the
-> first one is also a thing that cannot be done without a format break,
-> which is why I have not suggested them before.  They come from lots of
-> (often painful) experience with repository conversions via
-> reposurgeon.
+On Wed, May 15, 2019 at 8:30 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> 1. Finer granularity on commit timestamps.
-
-If you wanted milli/micro/nano-second timestamps for commit objects or
-whatever other new info then it doesn't need to break the commit header
-format.
-
-You put it key-values in the commit message and read it back out via
-git-interpret-trailers.
-
-Or even put it in the header itself, e.g.:
-
-author <name> <epoch> <tz>
-committer <name> <epoch> <tz>
-x-author-ns <nanosecond part of author>
-x-committer-ns <nanosecond part of committer>
-
-Of course nobody would understand that new thing from day one, but
-that's nothing compared to breaking the existing header format.
-
-> 2. Timestamps unique per repository
+> On Wed, May 15 2019, Piotr Krukowiecki wrote:
 >
-> The coarse resolution of git timestamps, and the lack of uniqueness,
-> are at the bottom of several problems that are persistently irritating
-> when I do repository conversions and surgery.
+> > Hello,
+> >
+> > I'm migrating two repositories from svn. I already did svn->git
+> > migration (git-svn clone) and now have two git repositories.
+> >
+> > I would like to merge them into 1 git repository, but to merge also
+> > history - branches and tags.
+> >
+> > The reason is that the svn repositories in fact represent one
+> > "project" - you had to download both of then, they are not useful
+> > separately. Tags were applied to both repositories, also list of
+> > branches is almost identical for both.
+> >
+> > So right now I have:
+> >
+> >     - projectA:
+> >        master: r1, r4, r5, r7
+> >        branch1: r10, r11, r13
+> >     - projectB:
+> >        master: r2, r3, r6
+> >        branch1: r12, r14
+> >
+> > The content of projectA and projectB is different (let's say projectA
+> > is in subfolder A and projectB is in subfolder B). So revisions on
+> > projectA branches have only A folder, and revisions on projectB
+> > branches have only B folder.
+> >
+> > But I would like to have:
+> >
+> >     - projectAB:
+> >        master: r1', r2', r3', r4', r5', r6', r7'
+> >        branch1: r10', r11', r12', r13', r14'
+> >
+> > Where all revisions have content from both projects. For example, the
+> > r5' should have the "A" folder content the same as r5, but also should
+> > have "B" folder content the same as in r3 (because r3 was the last
+> > commit to projectB (date-wise) before commit r5 to projectA).
+> >
+> > There's additional difficulty of handling merges...
+> >
+> >>
+> > Any suggestions on what's the best way to do it?
+> >
+> >
+> > Currently I'm testing join-git-repos.py script
+> > (https://github.com/mbitsnbites/git-tools/blob/master/join-git-repos.py=
+)
+> > but it's slow, memory inefficient and handles "master" branch only...
+> >
+> >
+> > Thanks,
 >
-> The most obvious issue, though a relatively superficial one, is that I have
-> to thow away information whenever I convert a repository from a system with
-> finer-grained time.  Notably this is the case with Subversion, which keeps
-> time to milliseconds. This is probably the only respect in which its data
-> model remains superior to git's. :-)
+> You might be able to use https://github.com/newren/git-filter-repo
 
-Should be solved by putting it in the commit as noted above, just not in
-the very narrow part of the object that's reserved and not going to
-change.
+Splicing repos is an interesting case, but unless the history is
+linear and the branch/tag names exactly match and you are simplify
+weaving commits together based on timestamp within the same
+branch/tag, then I don't know what algorithm should be used to weave
+them together.  There are lots of choices, and "correct" may be very
+usecase-specific.
 
-More generally plenty of *->git importers write some extra data in the
-commits, usually in the commit message. Try e.g. cloning a SVN repo with
-"git svn clone" and see what it does.
+That said, filter-repo was designed to be usable as a library and has
+a few simple examples of such usage, including one of splicing some
+trivial repos together.  (See
+https://github.com/newren/git-filter-repo/blob/master/t/t9391/splice_repos.=
+py
+and https://github.com/newren/git-filter-repo/blob/master/t/t9391-filter-re=
+po-lib-usage.sh#L90-L121)
+ As noted there, fast-export's diff against first parent handling
+makes splicing commits into the second (or third) parent history of a
+merge problematic as new files introduced in such locations would by
+default appear to get deleted by the merge unless additional work is
+done to also insert the files there.  My example was meant as a simple
+testcase that should be easy to inspect by others, so it just worked
+with very short linear histories.
 
-> The deeper problem is that I want something from Git that I cannot
-> have with 1-second granularity. That is: a unique timestamp on each
-> commit in a repository. The only way to be certain of this is for git
-> to delay accepting integration of a patch until it can issue a unique
-> time mark for it - obviously impractical if the quantum is one second,
-> but not if it's a millisecond or microsecond.
->
-> Why do I want this? There are number of reasons, all related to a
-> mathematical concept called "total ordering".  At present, commits in
-> a Git repository only have partial ordering. One consequence is that
-> action stamps - the committer/date pairs I use as VCS-independent commit
-> identifications in reposurgeon - are not unique.  When a patch sequence
-> is applied, it can easily happen fast enough to give several successive
-> commits the same committer-ID and timestamp.
->
-> Of course the commit hash remains a unique commit ID.  But it can't
-> easily be parsed and followed by a human, which is a UX problem when
-> it's used as a commit stamp in change comments.
+Somewhat interestingly, a search on others having tried to solve this
+same problem turned up
+https://github.com/j5int/jbosstools-gitmigration, which apparently is
+based on git_fast_filter, which is the predecessor of filter-repo.
+Perhaps that tool would be useful to you as-is, though they apparently
+do ignore merges.
 
-You cannot get a guaranteed "total order" of any sort in anything like
-git's current object model without taking a global lock on all write
-operations.
+If folks have a good idea for a weaving algorithm that appears
+generally useful rather than usecase-specific, then I may be
+interested in coding it up as a more general example of using
+filter-repo as a library.  But every time I've thought about it before
+it just sounded too hairy and too usecase specific so I've just punted
+on it.
 
-Otherwise how would two concurrent ref updates / object writes be
-guaranteed not to get the timestamp? Unlikely with nanosecond accuracy,
-but not impossible.
-
-Even if you solve that, take two such repositories and "git merge
---allow-unrelated-histories" them together. Now what's the order?
-
-These issues are solved by defining ordering in terms of the graph, and
-writing this information after-the-fact. That's already part of git. See
-https://github.com/git/git/blob/next/Documentation/technical/commit-graph.txt
-and
-https://devblogs.microsoft.com/devops/supercharging-the-git-commit-graph-ii-file-format/
-
-> More deeply, the lack of total ordering means that repository graphs
-> don't have a single canonical serialized form.  This sounds abstract
-> but it means there are surgical operations I can't regression-test
-> properly.  My colleague Edward Cree has found cases where git fast-export
-> can issue a stream dump for which git fast-import won't necessarily
-> re-color certain interior nodes the same way when it's read back in
-> and I'm pretty sure the absence of total ordering on the branch tips
-> is at the bottom of that.
-
-Can you clarify what you mean by this? You run fast-import twice and get
-different results, is that it? If so that sounds like a bug.
-
-> I'm willing to write patches if this direction is accepted.  I've figured
-> out how to make fast-import streams upward-compatible with finer-grained
-> timestamps.
+> But I'd say try something even more stupid first:
