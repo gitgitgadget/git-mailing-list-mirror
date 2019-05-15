@@ -2,96 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFFFE1F461
-	for <e@80x24.org>; Wed, 15 May 2019 01:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48C661F461
+	for <e@80x24.org>; Wed, 15 May 2019 01:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfEOBgg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 21:36:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65348 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbfEOBgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 21:36:36 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F76A13A1CF;
-        Tue, 14 May 2019 21:36:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=SX1q5Gn+bbxQL
-        yDKpeX+X3d2Sxo=; b=TH7MYdRkYCSvD+fXQaimm4iS/2vm9VPjjWwihKXdbotwB
-        +w28kpPM0TYYz2L0u3xYBCrB5zE0ZYzUDaXroQA5rg6C6vzWsMTIuK9fRNO5z4L0
-        pXk/qe7PUkfQML/AXX4m/ymSCEiEfIaqVShoslWYBz4lWivq36WRfctZyxKs9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=rEYYXo+
-        0r7GiGUT/NKK2/YiSrF3WZFnYv61J9YaOsHI0n1iN1nqEqufJvd8SlkubjcrB4mp
-        ySJJqBDupB2e1U8p9bYb/a9gK2CA4a6UOggGjxZzAUmbZUARRnoWdcz6VLVpla25
-        HhcvLqG9kOjiIO1oGTZrux+ycQfTr/XO91ZE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0603C13A1CE;
-        Tue, 14 May 2019 21:36:36 -0400 (EDT)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        id S1726452AbfEOBml (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 21:42:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56200 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfEOBmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 21:42:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85AB169317;
+        Tue, 14 May 2019 21:42:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2t8oJ/QezYLzAc6R98dmxQOEzf4=; b=rfTB1l
+        eJiQK1oX0oZzrl6MgfX247Wap38iq0HSf3bF/62AK39XwXg92uO3e5Mz3hxpxDfh
+        rJ7bEduOnqDCiZ+8rZLJn/iuuaSFhiKwuwfqUAfF3orceHSVdi0Jqf7P8FFAQJNl
+        YMBCNiiPCPX0bPNX90TQQUY0bfQuR+6AJ9kk4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EcsWWazkECAjzgAxCedemDcM5CfS3pzr
+        wAB1UBGxqUw48hoKplfELUkD3yOva1txT1+E5ZKTKPA8ptodRNBQps3LBgwziYuy
+        jgubXFLpsPxSWJbNAcWngJi3U+3uYF3EdGyfEkKlvZppc3gaCAOQRyo2Ep1RYZCS
+        qimP+eC0cCw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7DA0469316;
+        Tue, 14 May 2019 21:42:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 752E613A1CD;
-        Tue, 14 May 2019 21:36:35 -0400 (EDT)
-Date:   Tue, 14 May 2019 21:36:33 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] test-lib: try harder to ensure a working jgit
-Message-ID: <20190515013633.GQ3654@pobox.com>
-References: <20190514020520.GI3654@pobox.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AEB2F69313;
+        Tue, 14 May 2019 21:42:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] pkt-line: fix declaration of `set_packet_header()`
+References: <pull.192.git.gitgitgadget@gmail.com>
+        <a6bfec76c85bbe9187b536ff78252b82e30e20d3.1557787395.git.gitgitgadget@gmail.com>
+        <xmqqo9469buw.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1905141454510.44@tvgsbejvaqbjf.bet>
+        <20190514144305.GA28530@sigill.intra.peff.net>
+Date:   Wed, 15 May 2019 10:42:35 +0900
+In-Reply-To: <20190514144305.GA28530@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 14 May 2019 10:43:06 -0400")
+Message-ID: <xmqqa7fo8pdg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20190514020520.GI3654@pobox.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: E047D468-76B1-11E9-8C03-E828E74BB12D-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B827069C-76B2-11E9-B428-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The JGIT prereq uses `type jgit` to determine whether jgit is present.
-While this is usually sufficient, it won't help if the jgit found is
-badly broken.  This wastes time running tests which fail due to no fault
-of our own.
+Jeff King <peff@peff.net> writes:
 
-Use `jgit --version` instead, to guard against cases where jgit is
-present on the system, but will fail to run, e.g. because of some JRE
-issue, or missing Java dependencies.  Checking that it gets far enough
-to process the '--version' argument isn't perfect, but seems to be good
-enough in practice.  It's also consistent with how we detect some other
-dependencies, see e.g. the CURL and UNZIP prerequisites.
+> I do have a slight preference for going the _other_ way. There is no
+> need to mark the parameter as const in the definition. It is passed by
+> value, so nobody except the function body cares either way. And we have
+> many function bodies where value-passed parameters (or local variables!)
+> are not marked as const, even though they are only assigned to once.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
+That would be more like this patch, then?
+
+-- >8 --
+Subject: pkt-line: drop 'const'-ness of a param to set_packet_header() 
+
+The fact that the incoming parameter is used as read-only in the
+fuction is an implementation detail that the callers should not have
+to know, and the prototype defined for the function in pkt-line.h
+lacked the "const" for that reason, but apparently some compilers
+complain about the parameter type mismatch.
+
+Let's squelch it by removing the "const" that is pointless for a
+small function like this, which would not help optimizing compilers
+nor reading humans that much.
+
+Noticed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-As promised, I stole the second paragraph from =C6var nearly verbatim. :)
-
- t/test-lib.sh | 2 +-
+ pkt-line.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 908ddb9c46..599fd70e14 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1522,7 +1522,7 @@ test_lazy_prereq NOT_ROOT '
- '
-=20
- test_lazy_prereq JGIT '
--	type jgit
-+	jgit --version
- '
-=20
- # SANITY is about "can you correctly predict what the filesystem would
---=20
-Todd
+diff --git a/pkt-line.c b/pkt-line.c
+index c9ed780d0b..a0e87b1e81 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -119,7 +119,7 @@ void packet_buf_delim(struct strbuf *buf)
+ 	strbuf_add(buf, "0001", 4);
+ }
+ 
+-void set_packet_header(char *buf, const int size)
++void set_packet_header(char *buf, int size)
+ {
+ 	static char hexchar[] = "0123456789abcdef";
+ 
