@@ -2,90 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9841F4B6
-	for <e@80x24.org>; Wed, 15 May 2019 01:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E76D1F461
+	for <e@80x24.org>; Wed, 15 May 2019 01:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726281AbfEOBqY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 21:46:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57776 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726174AbfEOBqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 21:46:24 -0400
-Received: (qmail 14115 invoked by uid 109); 15 May 2019 01:46:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 May 2019 01:46:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18511 invoked by uid 111); 15 May 2019 01:47:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 May 2019 21:47:03 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 May 2019 21:46:22 -0400
-Date:   Tue, 14 May 2019 21:46:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, Antonio Ospite <ao2@ao2.it>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1726529AbfEOBu4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 21:50:56 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63973 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfEOBu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 21:50:56 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E79913A312;
+        Tue, 14 May 2019 21:50:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=j7pA5QnQJ3O4KHYe/MTxgjH5O+g=; b=Yo5ppg
+        lAf4Mjk5qdGJAk8Xh52Ic7sDBDBrbl43Yg8X1nx97JqJmKm6B90NtFO9AfgIqKv8
+        nPfbVOwFC49bD/RiDqda6An1AKH1O5UMjwp4ncT8Bi+hgdGbcYh8N3yXqxs4IISe
+        smVPkr0ofWYZpZgCWhgFdqCkT58h79tq+4hAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A/jyx3FtSGjBzEpOLERaI450mrGN1ofz
+        CQa8i+e4VPoOn5/4AGVbuL9Zz7EaUIXF7Eu1sAvTOFdXSAo6xnmJr3gWCcZLiBJy
+        fE37n9yrh6nZwFKWQ78YwEFUXp5EmLU2BBx/AuPxBAkOC6RtlssMudzWFnbbds9q
+        vPYVknsEVEw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 472D713A311;
+        Tue, 14 May 2019 21:50:54 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B772F13A310;
+        Tue, 14 May 2019 21:50:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] get_oid: handle NULL repo->index
-Message-ID: <20190515014622.GB13255@sigill.intra.peff.net>
-References: <20190511205711.tdclwrdixaau75zv@dcvr>
- <20190511223120.GA25224@sigill.intra.peff.net>
- <20190511230204.GA18474@sigill.intra.peff.net>
- <20190514135455.GA17927@sigill.intra.peff.net>
- <CACsJy8AvsyOz2G1zjRjpKYVZ0DLKj02-v=hXJHS0BRHnxoeWAw@mail.gmail.com>
+Subject: Re: Missing branches after clone
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+        <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+        <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
+Date:   Wed, 15 May 2019 10:50:52 +0900
+In-Reply-To: <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org> (Philip Oakley's
+        message of "Tue, 14 May 2019 11:33:05 +0100")
+Message-ID: <xmqq5zqc8ozn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AvsyOz2G1zjRjpKYVZ0DLKj02-v=hXJHS0BRHnxoeWAw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFCF8F92-76B3-11E9-9851-E828E74BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 15, 2019 at 08:24:34AM +0700, Duy Nguyen wrote:
+Philip Oakley <philipoakley@iee.org> writes:
 
-> On Tue, May 14, 2019 at 8:54 PM Jeff King <peff@peff.net> wrote:
-> > diff --git a/sha1-name.c b/sha1-name.c
-> > index 775a73d8ad..455e9fb1ea 100644
-> > --- a/sha1-name.c
-> > +++ b/sha1-name.c
-> > @@ -1837,7 +1837,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
-> >                 if (flags & GET_OID_RECORD_PATH)
-> >                         oc->path = xstrdup(cp);
-> >
-> > -               if (!repo->index->cache)
-> > +               if (!repo->index || !repo->index->cache)
-> >                         repo_read_index(repo);
-> 
-> We could even drop the "if" and call repo_read_index()
-> unconditionally. If the index is already read, it will be no-op
-> (forcing a reread has always been discard_index(); read_index();)
+> It is a 'branch which tracks a remote', and it is has the 'last time I
+> looked' state of the branch that is on the remote server, which may
+> have, by now, advanced or changed.
 
-I think you missed my bit after the "---":
+Yup, I thought we long time ago decided to discourage use of "remote
+branch(es)" in our documentation to help unconfuse users and stick
+to the term "a remote-tracking branch" (the "remote-tracking" is a
+hyphenated one word)?
 
-  Arguably this code should just unconditionally call repo_read_index(),
-  which should be a noop if the index is already loaded. But I wanted to
-  do the minimal fix here, without getting into any subtle differences
-  between what checking index->cache versus index->initialized might
-  mean.  Anybody who wants to dig into that is welcome to make a patch
-  on top. :)
+> So you need to have the three distinct views in your head of 'My
+> branch, held locally', 'my copy of Their branch, from when I last
+> looked', and 'Their branch, on a remote server, in a state I haven't
+> seen recently'.
 
-> Thanks for catching this by the way. I'll need to go through all
-> the_index conversion to see if I left similar traps like this.
+Yup.  FWIW, when I need to refer to the last one, I'd always say "a
+branch at the remote" to avoid the confusing term "remote branch".
 
-Yeah. I could not find any others, but it would not hurt to have a
-second set of eyes.
-
-Also from my earlier message, if you missed it:
-
-  I also wondered if we should simply allocate an empty index whenever
-  we have a non-toplevel "struct repository", which might be less
-  surprising to other callers. I don't have a strong opinion either way.
-  I did grep around for other callers which might have similar problems,
-  but couldn't find any.
-
--Peff
