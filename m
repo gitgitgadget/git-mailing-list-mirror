@@ -2,127 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59D681F461
-	for <e@80x24.org>; Wed, 15 May 2019 12:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77E8A1F461
+	for <e@80x24.org>; Wed, 15 May 2019 13:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbfEOMi5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 08:38:57 -0400
-Received: from mail-ot1-f52.google.com ([209.85.210.52]:45282 "EHLO
-        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726392AbfEOMi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 08:38:56 -0400
-Received: by mail-ot1-f52.google.com with SMTP id t24so2041505otl.12
-        for <git@vger.kernel.org>; Wed, 15 May 2019 05:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i1tkwHlBi5dAm76lQJw1QLOlL1AXOGpGAg/+UB4GTE8=;
-        b=QNHE9YLpijMaMyStuL2w4SW2SwHmSCNVIA8wAHkP+lpffqOwlVnP+Evz2NX37QROgM
-         jRzpSHLPwD8KDMGQJACwxJ/qUaMnZ6X64h54ZA+vKef8hNpHmWuUIJ2aYhJA1nGuwhTi
-         huOgvJh5f6eMEAz8W6BjbTdjDSQHZJ5m/8v05BuPdmnPK0uVyRS2/XK0B38SdEJxhgam
-         pPK5dtlN/BGY1m4IJMbwQ+pvSu9t+scoi2va2nKszFvtyFK8ww3xQWG2ijOvTBcUNvI6
-         lTb/li/GCmwwnRVxE+eTF222smAP3E4gtpO2xwn+n36x1At9G6tS4sO6tuKmmWD1V8Sk
-         ca8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i1tkwHlBi5dAm76lQJw1QLOlL1AXOGpGAg/+UB4GTE8=;
-        b=ncalisAXP8OJ66XuHSus+kexh4UyGbpkOx0fCYPSL+ZoHTnpwppy99rM87mwfu+3GU
-         HEqGHLTMz1ckUGv+XHz1kBsDAdDlKaxHeWkJS1MFOh3wl2hqiPDJCaBK8kZBgUZNdyle
-         OXHdwc1y7taURPlcPI7GSLXT+upQwxgI9wT0m2j04yHAuO0oSdNU6ozNPNnIOtKL0iRq
-         xSu7Xmpxxvkg06CAtp9jtHyMk3633K+gsNOOstpKQnf8khDgMt6t15JnX8NCrc7xF3SV
-         +e+aJeQ1dfUlaRY1IJ1CreD6cDOQoKp7QzicCMggawbEGzcBq6giLW4EhFt/RY3TVUuC
-         v1fg==
-X-Gm-Message-State: APjAAAXmRQHjKMIHUXT2cG1hnckhj0wREaL9uhAKc4DqOnfVXoqyHQMF
-        jjH3JxWkdnk5Ww8fwdkBUuURZynBastCnGJ0uOOnCA==
-X-Google-Smtp-Source: APXvYqzO/2mxTHQmqtnxphQJ9qsBJiwoG5E6zxAYm9AK399v1X81fZvve1oJG70ELrX8+SJfezum/aLolU7w/5FJZEs=
-X-Received: by 2002:a9d:4e08:: with SMTP id p8mr24570586otf.243.1557923935997;
- Wed, 15 May 2019 05:38:55 -0700 (PDT)
+        id S1727351AbfEONHL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 09:07:11 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:55915 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725977AbfEONHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 09:07:11 -0400
+Received: from [192.168.1.22] ([92.1.197.142])
+        by smtp.talktalk.net with SMTP
+        id Qtcih7kuhgI7iQtcih5HiF; Wed, 15 May 2019 14:07:08 +0100
+X-Originating-IP: [92.1.197.142]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+ a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=CS6mKoAcAAAA:20 a=_-0-ZW8geTAbHovl2Z0A:9
+ a=QEXdDO2ut3YA:10 a=APqgjxcRD6nqXdMuohh7:22
+Subject: Re: Antw: Re: Missing branches after clone
+To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+ <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+ <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
+ <5CDAAB56020000A100031334@gwsmtp.uni-regensburg.de>
+ <b75bd892-b216-3c7d-f9e7-4470300e02fc@iee.org>
+ <5CDBD199020000A10003136F@gwsmtp.uni-regensburg.de>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <90bcfd4a-5fc3-69e2-5c7e-1abbbc03e09b@iee.org>
+Date:   Wed, 15 May 2019 14:07:09 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
- <CAGyf7-GtnCqfqPWVpBAELB4xAE6syn7+DfKXgfhL0UoMfvbn4A@mail.gmail.com>
-In-Reply-To: <CAGyf7-GtnCqfqPWVpBAELB4xAE6syn7+DfKXgfhL0UoMfvbn4A@mail.gmail.com>
-From:   Cosmin Polifronie <oppturbv@gmail.com>
-Date:   Wed, 15 May 2019 15:38:44 +0300
-Message-ID: <CAJFQqNJsnkdwqk0+kCp6j5aL9BaXd=-JaXC9K5kSBSed+=V3xg@mail.gmail.com>
-Subject: Re: Running 'git worktree add' in 'pre-commit' hook
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <5CDBD199020000A10003136F@gwsmtp.uni-regensburg.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfD/C3Ap8IfXtCxKvAOxvPLUZxnPQZD7mMn4QPgwFj6NBB8Z4UjFA2dmdQoPVfq7jB8Ebxvy/DQ4CzcvkluTj3KEKFlwREhYH+kqEpyhFp5fO6epMLUN1
+ 1oyLREA46tglJuVL47kZ6M70A/UL/DNJQpZNK8cw7HZYkBPZYg9dYz52AVlEW6Idx7KRYA7UQukP+JSKvexqahXSXn++Man0/6Y3QfkNJR6mr2EB/RH9sDa9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Bryan,
+On 15/05/2019 09:45, Ulrich Windl wrote:
+>> reasoning for that.
+>> It's that you are missing the idea behind the "Branches that track the
+>> remote", which are local copies, but not YOUR branches. see below.
+>> I clone the GitHub test repo. I get (a copy of) it all (the rtb's). Git
+>> _creates_ a local branch 'master' for me. Git checks out the lead remote
+>> branch into it. Command prompt returns. I cd into the new repo. I ask
+>> what branches _I_ have - just 'master'. I ask about all the branches the
+>> repo has - voila, I see all those rtb's in _my_ repo. They are all
+>> perfectly valid branch refs.
+> Yes, I can mostly follow you there with one exception: In the cloned
+> repository the branches are not available under the same name as in the
+> original repository (unless I'm totally confused). Therefore a beginner would
+> simply assume "they are missing".
+> I knew that (which was my use case) git optimizes local copies by linking as
+> much as possible, but I don't understand why cloned branches are "soooo
+> complicated". (I could understand it as an optimization for network copies)
 
-My project contains a Gradle build that is dependent on a
-configuration found in a file called build.gradle. What I need to do
-is run Gradle with a proper build.gradle file, meaning: if a new
-build.gradle is staged, I will use that for my Gradle build, if not I
-will use the latest approved commit's one (as in a commit that has
-already passed the pre-commit check). The problem is that build.gradle
-can be modified and not be staged, and Gradle cannot know that, it
-will use whatever is available on disk. I want to avoid that.
+My use case is that I help on the Git-for-Windows development. So I have 
+4 upstream repositories I need to look at:
+Git, Junio-git (maintainer), Git-For-Windows, and Dscho-git (gfw 
+maintainer).
 
-This is why I needed a copy of my current repo with the file versions
-already approved (already staged at a previous date). This is why I am
-using 'git worktree add'.
+All of them have a 'master' branch - so I can't have 4 different local 
+'master' branches. So, because of history, and hassles Dscho et. al. had 
+had to use 'develop', instead of 'master' for their lead branch name, 
+but now they are all 'master'. So I just copied that for a while.
 
-Now, I have found another solution using stashes, and those might
-work, but I am still curious about this situation.
-
-On Wed, May 15, 2019 at 3:46 AM Bryan Turner <bturner@atlassian.com> wrote:
+Meanwhile I more recently learned that I could simply start my new 
+feature branches direct from the remote tracking branches (which are 
+local!), and don't actually need a master branch at all!!  But it took a 
+long time for it all to click into place in my brain. I've have 50+ 
+years of the 'old masters' idea of there being a single unique master 
+artefact with all other being second rate copies. Now it's all 
+duplicates verified by hashes.
+>> It will take a little while to appreciate this extra layer and how to
+>> use it, and how Git can 'dwim' (do what I mean) the usage of shortened
+>> refs and branch names, so it you try checking out 'change-the-title',
+>> git will know to fall back to using the rtb if you haven't created a
+>> local version.
+>> Hope That Helps.
+>> Philip
+>>
+>> phili@Philip-Win10 MINGW64 / (master)
+>> $ cd usr/src
+>>
+>> phili@Philip-Win10 MINGW64 /usr/src (master)
+>> $ git clone https://github.com/octocat/Spoon-Knife.git
+>> Cloning into 'Spoon-Knife'...
+>> remote: Enumerating objects: 16, done.
+>> remote: Total 16 (delta 0), reused 0 (delta 0), pack-reused 16
+>> Unpacking objects: 100% (16/16), done.
+>>
+>> phili@Philip-Win10 MINGW64 /usr/src (master)
+>> $ cd Spoon-Knife/
+>>
+>> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+>> $ git branch
+>> * master
+>>
+>> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+>> $ git branch -a
+>> * master
+>>     remotes/origin/HEAD -> origin/master
+>>     remotes/origin/change-the-title
+>>     remotes/origin/master
+>>     remotes/origin/test-branch
+>>
+>> phili@Philip-Win10 MINGW64 /usr/src/Spoon-Knife (master)
+>> $
+>>
+>> --
+>> PS What change to the [clone?] man page would have helped you here?
+> Maybe confirm this: At this state I could "checkout test-branch" (for
+> example), but I could not "merge test-branch", right?
+> (Another level of confusion is bash-completion which does not know those
+> hidden branches)
+for completion, use the remote name first. If the action may be 
+ambiguous or dangerous because of Dwimming, then git tends to avoid 
+doing it..
 >
-> On Tue, May 14, 2019 at 7:53 AM Cosmin Polifronie <oppturbv@gmail.com> wrote:
-> >
-> > Hello! I am trying to run 'git worktree add <path> HEAD' in the
-> > 'pre-commit' hook, more specifically in a Python script that is being
-> > called from the hook. When doing so, I am greeted with the following
-> > error:
-> >
-> > On Windows 10:
-> > Preparing worktree (detached HEAD cbfef18)
-> > fatal: Unable to create 'C:/Users/meh/Desktop/abc/.git/index.lock': No
-> > such file or directory
-> >
-> > On Arch Linux:
-> > Preparing worktree (detached HEAD cbfef18)
-> > fatal: Unable to create '/home/cosmin/Downloads/abc/.git/index.lock':
-> > Not a directory
-> >
-> > Is it forbidden to call this command from a hook? If yes, what kind of
-> > alternatives do I have? I need to make a copy of the repo in its HEAD
-> > state, process it and then decide if I will pass the current commit or
-> > not.
+> OK, reading git-clone again, the following might apply:
+> Explain (or refer to) what a "remote-tracking branch" is.
+Interestingly, try 'git help glossary' to see the glossary of terms. 
+Their are other useful guides that can be access by the same method. 
+`git help -g` will list them.
 >
-> I can't speak to whether `git worktree add` should succeed or fail
-> inside a `pre-commit` hook, but...
+> "checks out an initial branch that is forked from the cloned repository’s
+> currently active branch" could be simplified to "checks out the active branch
+> in the cloned repository"?
 >
-> Why do you need a new work tree, versus whatever working copy you're
-> running `git commit` in? Is there a reason whatever validation needs
-> to be done can't be done in the existing working copy? `HEAD` is the
-> _previous, existing commit_, not the new, currently-being-created
-> commit, so your validation in the new work tree, if you actually
-> managed to create one, would be applied to the _latest existing
-> commit_, not the new changes you're trying to commit. Even trying to
-> copy the changes over wouldn't necessarily result in the same state,
-> because there may be unstaged changes.
+> Maybe add a paragraph at the end of the DESCRIPTION starting like: "To use
+> another branch in the clones repository..."
 >
-> What type of validation are you trying to do? I think the failure
-> you're running into is an alarm bell indicating what you're trying to
-> do may not make sense. However, without any insight into what "process
-> it and then decide if I will pass the current commit or not" actually
-> looks like, it's hard to offer you much help.
+> Maybe also add a pointer to the meanings of "origin" and "remote" (I know that
+> the clone source becomes remote/origin)
 >
-> Bryan
+> I wonder whether "This default configuration is achieved by creating
+> references to the
+> remote branch heads under refs/remotes/origin and by initializing
+> remote.origin.url and remote.origin.fetch configuration variables." should
+> become "The original repository's URL will be visible as remote/origin in the
+> cloned reporitory"
 >
-> >
-> > Thanks! :)
+> Maybe point out the differences between a "default clone" mand a "--mirror
+> clone" in the DESCRIPTION.
+>
+> The example "Clone from upstream while borrowing from an existing local
+> directory:" could benefit from a few explaining words (why would one want to do
+> that, i.e. what's the effect?)
+>
+> None of the examples refers to using another branch than the default branch.
+> Maybe add two examples:
+> 1: checking out a different branch, 2:merging a different branch to the
+> current one
+>
+> That's what I think.
+>
+> Regards,
+> Ulrich
+>
+>
+Thanks
