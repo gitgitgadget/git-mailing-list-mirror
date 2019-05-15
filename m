@@ -2,97 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B0371F461
-	for <e@80x24.org>; Wed, 15 May 2019 01:28:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFFFE1F461
+	for <e@80x24.org>; Wed, 15 May 2019 01:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbfEOB2d (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 21:28:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61175 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbfEOB2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 21:28:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E8A4142C4C;
-        Tue, 14 May 2019 21:28:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t07sl5aQKXgBWxSK98ugLHDMJXg=; b=lMd8Qa
-        PQgZ5zTTDVxKngOFweWuSS3IkVCp0pJKX2LszRDsiUewWXCFIoHWXmGu1cIa96fx
-        as/oaQ3RmUnrQh5zyOyTYZPEr1lLjdQzXRjShVilE3X2LSGRCdw9tAxSX5nQVFqu
-        m+oXuVJyBsRcIGjq7aIBe/MTe8CcpNgzYTHx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MXUJuMjspw7lmJ5x8mK/63D2DUgrrr/L
-        yw3tXLhl3YoMKT01I+xZ761Qq2AE3ZqUv+/X0kCrw0CHVK5EkyFp1sSKVbmTKQeD
-        6wGlACNGiIOF5YE4UXVgRivYYXLlVnuYzs701Tkx8YsSgCtSunZDLNw39qMeP7cU
-        sdcCHEyHqp8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05A28142C4B;
-        Tue, 14 May 2019 21:28:31 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726270AbfEOBgg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 May 2019 21:36:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65348 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfEOBgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 May 2019 21:36:36 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F76A13A1CF;
+        Tue, 14 May 2019 21:36:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=SX1q5Gn+bbxQL
+        yDKpeX+X3d2Sxo=; b=TH7MYdRkYCSvD+fXQaimm4iS/2vm9VPjjWwihKXdbotwB
+        +w28kpPM0TYYz2L0u3xYBCrB5zE0ZYzUDaXroQA5rg6C6vzWsMTIuK9fRNO5z4L0
+        pXk/qe7PUkfQML/AXX4m/ymSCEiEfIaqVShoslWYBz4lWivq36WRfctZyxKs9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=rEYYXo+
+        0r7GiGUT/NKK2/YiSrF3WZFnYv61J9YaOsHI0n1iN1nqEqufJvd8SlkubjcrB4mp
+        ySJJqBDupB2e1U8p9bYb/a9gK2CA4a6UOggGjxZzAUmbZUARRnoWdcz6VLVpla25
+        HhcvLqG9kOjiIO1oGTZrux+ycQfTr/XO91ZE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0603C13A1CE;
+        Tue, 14 May 2019 21:36:36 -0400 (EDT)
+Received: from pobox.com (unknown [173.67.141.44])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F26D142C47;
-        Tue, 14 May 2019 21:28:30 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: js/difftool-no-index, was Re: What's cooking in git.git (May 2019, #02; Tue, 14)
-References: <xmqqa7fqbahj.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1905141153150.44@tvgsbejvaqbjf.bet>
-Date:   Wed, 15 May 2019 10:28:29 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1905141153150.44@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 14 May 2019 11:54:26 +0200 (CEST)")
-Message-ID: <xmqqef508q0y.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 752E613A1CD;
+        Tue, 14 May 2019 21:36:35 -0400 (EDT)
+Date:   Tue, 14 May 2019 21:36:33 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] test-lib: try harder to ensure a working jgit
+Message-ID: <20190515013633.GQ3654@pobox.com>
+References: <20190514020520.GI3654@pobox.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF251C88-76B0-11E9-B8FD-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20190514020520.GI3654@pobox.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: E047D468-76B1-11E9-8C03-E828E74BB12D-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+The JGIT prereq uses `type jgit` to determine whether jgit is present.
+While this is usually sufficient, it won't help if the jgit found is
+badly broken.  This wastes time running tests which fail due to no fault
+of our own.
 
-> Hi Junio,
->
-> On Tue, 14 May 2019, Junio C Hamano wrote:
->
->> * js/difftool-no-index (2019-05-09) 1 commit
->>  - difftool --no-index: error out on --dir-diff (and don't crash)
->>
->>  The "--dir-diff" mode of "git difftool" is not useful in "--no-index"
->>  mode; they are now explicitly marked as mutually incompatible.
->>
->>  Will merge to 'next'.
->
-> Seeing as the following is a part of v2.22.0-rc0's release notes:
->
-> 	 * "git difftool" can now run outside a repository.
->
-> maybe we could get this to `master` instead of `next`?
+Use `jgit --version` instead, to guard against cases where jgit is
+present on the system, but will fail to run, e.g. because of some JRE
+issue, or missing Java dependencies.  Checking that it gets far enough
+to process the '--version' argument isn't perfect, but seems to be good
+enough in practice.  It's also consistent with how we detect some other
+dependencies, see e.g. the CURL and UNZIP prerequisites.
 
-There is no 'instead of'.  Topics advance one step at a time.
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+As promised, I stole the second paragraph from =C6var nearly verbatim. :)
 
-I do not recall seeing you respond to my review comments on the
-"error out" patch <xmqqv9ykdr1w.fsf@gitster-ct.c.googlers.com>, but
-thinking about it further, assuming that my rephrasing of your
-justification in my review was correct, I wonder if it is even more
-correct if we do not error out but simply behave as if "--dir-diff"
-option were not given.
+ t/test-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That is, if there were some way to distinguish tracked and untracked
-paths in --no-index mode, --dir-diff would copy only the tracked parts
-to temporary directories and run tree comparison.  Since there is no
-"untracked paths" by definition in --no-index mode, we do not even
-have to make copies but just compare the two directories given using
-the same tree comparison tool.
-
-Wouldn't that be more useful behaviour than telling the end users to
-run the backend tree comparison tool themselves?
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 908ddb9c46..599fd70e14 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1522,7 +1522,7 @@ test_lazy_prereq NOT_ROOT '
+ '
+=20
+ test_lazy_prereq JGIT '
+-	type jgit
++	jgit --version
+ '
+=20
+ # SANITY is about "can you correctly predict what the filesystem would
+--=20
+Todd
