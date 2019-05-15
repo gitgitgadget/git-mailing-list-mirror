@@ -2,149 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E62841F461
-	for <e@80x24.org>; Wed, 15 May 2019 18:34:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99D8A1F461
+	for <e@80x24.org>; Wed, 15 May 2019 18:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbfEOSeR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 14:34:17 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:15190 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726392AbfEOSeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 14:34:17 -0400
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 5C1EBC0586D8
-        for <git@vger.kernel.org>; Wed, 15 May 2019 18:34:17 +0000 (UTC)
-Received: from localhost (ovpn-112-27.ams2.redhat.com [10.36.112.27])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id A63CA5D9C3;
-        Wed, 15 May 2019 18:34:16 +0000 (UTC)
-From:   marcandre.lureau@redhat.com
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <mlureau@redhat.com>,
-        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] RFC: userdiff: add built-in pattern for rust
-Date:   Wed, 15 May 2019 20:34:15 +0200
-Message-Id: <20190515183415.31383-1-marcandre.lureau@redhat.com>
+        id S1726475AbfEOS7v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 14:59:51 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:38704 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbfEOS7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 14:59:51 -0400
+Received: by mail-ed1-f41.google.com with SMTP id w11so1306396edl.5
+        for <git@vger.kernel.org>; Wed, 15 May 2019 11:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=wUgq3LK4Uw2PzQHh26eOLVdqQQGzFPdOV6mF3ZsMQj0=;
+        b=ALrUhDUTBKyxvXtfOz4hwW1JyPv0ieleRfd+uVXhPqKBGIx2Ryd2zwYA2ljFn1Yktg
+         PznaZCJ7lnt4hgl3jqjVX+agJKbcrKa17C/FtEBiFN5/9xSwvmO/d5Y5V0JNeTGNuscm
+         StKnhoiExbaDl1EcqmVt2mg3MDboFj4xPDl9FiU0BBDsTsTPcD/sRIyrnwuR3sIzVt6i
+         ZMWEP5CAtBTK9sRsqCSM8p5HRFrVXmjyNcV+5fxDzXlV2fmr3AfOE1oTHeUVxh1+Rb1k
+         2/C+0jb4t0PKDfPNzq5QKgv4b2uj8tufDPMdzROYnJcXxfvrS1QRXiJNS58z8FQSPGq/
+         z6WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=wUgq3LK4Uw2PzQHh26eOLVdqQQGzFPdOV6mF3ZsMQj0=;
+        b=SYE3B5J+9pOr55EFkhznlJMOTZ2pU+kUJA75VEBzsTyp8MySumRLYHdfosn4Y2ul2R
+         1J9U9QjOz9T45KAZ7kUzPjnt25d8VIzYl40V6M2d55LCKAy2/wEJWRKsEM+vW+c0oEB3
+         KHY9qV76fDDra8M8FViZgs/k2J3Q40KYILWK+Wq/5UVydxdXw0s4h1WozwDnCHBTjmCy
+         5VLh0LW58M115gQGIdaVZJTrZK7uuIaNA6M10Gc+lbfQz5qphKcu+/UYUP3JxrGDCIYF
+         CnM4T8+g1Gly1QoBlMpdPy6GE625gLKNwgMoeyg2oYRTI36MU//oerqZfQh8NbQhuxCz
+         mGkw==
+X-Gm-Message-State: APjAAAWu070S/DCU76FMwlpH3QK6ta2FxMrtIX1hz5LkSlgUwfI9+uDo
+        KEb8eddJ1aQoBhLlfhSH5wk=
+X-Google-Smtp-Source: APXvYqxS97mSwJqEBM1kpAvyCF6/y2rr4EV1NUYxjYL0K/wiLTDoFdUWX3HnBey/lf2hcT+SpOpVuw==
+X-Received: by 2002:aa7:d617:: with SMTP id c23mr45095736edr.74.1557946789513;
+        Wed, 15 May 2019 11:59:49 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id s7sm1056787eda.62.2019.05.15.11.59.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 May 2019 11:59:48 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Martin Langhoff <martin.langhoff@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git ransom campaign incident report - May 2019
+References: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
+Date:   Wed, 15 May 2019 20:59:47 +0200
+Message-ID: <8736lfwnks.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Wed, 15 May 2019 18:34:17 +0000 (UTC)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Marc-André Lureau <mlureau@redhat.com>
 
-This adds xfuncname and word_regex patterns for Rust, a quite
-popular programming language. It also includes test cases for the
-xfuncname regex (t4018) and updated documentation.
+On Wed, May 15 2019, Martin Langhoff wrote:
 
-The word_regex pattern finds identifiers, integers, floats and
-operators, according to the Rust Reference Book.
+> Spotted this on the internet...
+>
+> https://github.blog/2019-05-14-git-ransom-campaign-incident-report/
+>
+> Haven't hacked on git for a while, and I am not affiliated with any of
+> the stakeholders. However, reading it, I wanted to slam my head on the
+> desk.
+>
+> IIRC, git will sanely store a password elsewhere if it gets to prompt
+> for it. Should we be trying to unpack usernames/passwords from HTTP
+> urls, and DTRT with them?
+>
+> Are there other ways this could be made better?
 
-RFC: since I don't understand why when there are extra lines such as the
-one with FIXME, the funcname is not correctly reported. Help welcome!
+I think we should do nothing.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- Documentation/gitattributes.txt | 2 ++
- t/t4018-diff-funcname.sh        | 1 +
- t/t4018/rust-fn                 | 5 +++++
- t/t4018/rust-struct             | 5 +++++
- t/t4018/rust-trait              | 5 +++++
- userdiff.c                      | 9 +++++++++
- 6 files changed, 27 insertions(+)
- create mode 100644 t/t4018/rust-fn
- create mode 100644 t/t4018/rust-struct
- create mode 100644 t/t4018/rust-trait
+The linked blog post really manages to bury the lead. I guess you'll get
+that when PR at three different companies gets a say. For those looking
+for a brief summary, here's mine:
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 4fb20cd0e9..07da08fb27 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -833,6 +833,8 @@ patterns are available:
- 
- - `ruby` suitable for source code in the Ruby language.
- 
-+- `rust` suitable for source code in the Rust language.
-+
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 22f9f88f0a..9261d6d3a0 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -43,6 +43,7 @@ diffpatterns="
- 	php
- 	python
- 	ruby
-+	rust
- 	tex
- 	custom1
- 	custom2
-diff --git a/t/t4018/rust-fn b/t/t4018/rust-fn
-new file mode 100644
-index 0000000000..f450590d6c
---- /dev/null
-+++ b/t/t4018/rust-fn
-@@ -0,0 +1,5 @@
-+pub(self) fn RIGHT<T>(x: &[T]) where T: Debug {
-+    let _ = x;
-+    // FIXME: extra lines break match?
-+    let a = ChangeMe;
-+}
-diff --git a/t/t4018/rust-struct b/t/t4018/rust-struct
-new file mode 100644
-index 0000000000..76aff1c0d8
---- /dev/null
-+++ b/t/t4018/rust-struct
-@@ -0,0 +1,5 @@
-+#[derive(Debug)]
-+pub(super) struct RIGHT<'a> {
-+    name: &'a str,
-+    age: ChangeMe,
-+}
-diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
-new file mode 100644
-index 0000000000..ea397f09ed
---- /dev/null
-+++ b/t/t4018/rust-trait
-@@ -0,0 +1,5 @@
-+unsafe trait RIGHT<T> {
-+    fn len(&self) -> u32;
-+    fn ChangeMe(&self, n: u32) -> T;
-+    fn iter<F>(&self, f: F) where F: Fn(T);
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 3a78fbf504..9e1e2fa03f 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -130,6 +130,15 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
- 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
- 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
-+PATTERNS("rust",
-+	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(struct|enum|union|mod)[ \t].*)$\n"
-+	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(unsafe[\t ]+)?trait[ \t].*)$\n"
-+	 "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?((const|unsafe|extern(([\t ]+)*\"[^)]+\")?)[\t ]+)*fn[ \t].*)$\n",
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-+	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-+	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
- PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+    Some people using git hosting sites "git clone"'d https URLs to
+    their repos with username/passwords in them. They then pointed a
+    webserver at their checked-out directory, and got pwned by someone
+    scraping "/.git/config" from public websites looking for
+    credentials.
 
-base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
--- 
-2.22.0.rc0.1.g4f1097ba08
+Trying to mitigate this in git is just going to annoy users who are
+doing this in the context of an otherwise secure workflow. The users who
+were affected by this are probably also the sort of users who are
+hardcoding their AWS password in some JavaScript checked into their
+project or whatever, there's only so much you can do.
 
+It's probably more productive to say convince whoever maintains the
+default nginx/apache etc. docker image to default to some Fisher-Price
+mode where dotfiles aren't served up by default.
+
+Or, for GitLab/GitHub etc. to discourage use of https API tokens in
+favor of SSH deploy keys. OpenSSH goes out of its way to not allow you
+to provide paswords in URLs, on the command-line etc. in anticipation of
+exactly this sort of scenario. Even then I've seen users write say
+docker images where they manage to hardcode an SSH private key in a
+public image out of convenience or lazyness (say needing "git clone"
+something during the image build).
