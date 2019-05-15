@@ -2,117 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCF5F1F461
-	for <e@80x24.org>; Wed, 15 May 2019 03:03:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD6561F461
+	for <e@80x24.org>; Wed, 15 May 2019 05:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726362AbfEODD3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 May 2019 23:03:29 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37483 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726295AbfEODD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 May 2019 23:03:28 -0400
-Received: by mail-io1-f65.google.com with SMTP id u2so1032342ioc.4
-        for <git@vger.kernel.org>; Tue, 14 May 2019 20:03:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BWpwIWZMzRE/EZ0hAyjMuIPex19U6OG9dTOqik3FnsY=;
-        b=EsG7ddwjJOkhrsBvMzcoZslIOSXIlr4YMeX/PUHx4XQxVZBbCMwqqwWhfnMW/MKOjI
-         rGeQOGi+4oMvIXJn4nUUkwZCLiQPikkH2D1pt/n6mkuzjmwj3wWi8UNWrzAJId65u14r
-         rjTdKv9h2EtfwezCgbdJZYtD7nDeqDsphzwHRduCgzPU5Bj7jsAvHLBzRJ6m2VRMWfzf
-         vtaDhs0ZI4NoMDm73OSpwTB4X0SorxJKJYGhiF81AWMKVDn/v+fLSAkBK/k3sPRbt7Uq
-         rGmJd2OaHxz7TXiqGYaFi/TBMKQ30elDs5xTtErqmJMc94awg0JfvzAswXvlCNGnme0Z
-         aWpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BWpwIWZMzRE/EZ0hAyjMuIPex19U6OG9dTOqik3FnsY=;
-        b=U5DGndjO+GVCwRCUpdmQxICMBYPrdz2lcELFMA3GG7J5RUSNCIUrvSw0RclYhNe8iX
-         sspAvODCyobTNO2+CA7dZtji/LKIkLHme/s6tfs5vP7bqcBDAaU+r71aZhveUblI4lbx
-         u2lnypEL1QX/20WBm89QH/pLyp4U98S8Q7aNeioYQGdN22Y83e/hK3uWISb4stF6YrJj
-         fcYPKe1W9rHl86DeR6GyjrhmF5Gby43+QKQCFjlEQp56Odlx+plceHo6WVR/Al/rqMwL
-         Z0cq/xSVuDkbSYdh6Ms6dlsqL5I8jMmipqh74KBeGUo95uqrUNG+45bSfQa68gl+7v9A
-         Ki6Q==
-X-Gm-Message-State: APjAAAX0xLAbXyLK2xXCzeeS/iuYp4vuKa9yuO59ZTRzvkPTyXxIEG8Z
-        DjwWeg9uGHb/lWyNOUGUuYTOonyDJf6kz8JuHn8=
-X-Google-Smtp-Source: APXvYqzvrCy8i4UG4mtTxJ3YksRHdttR16TPwTKY2puDWQYHXwR4OvTaWd+C8QHbg+2YtbG9/OV6R10ql0+3gPz8jLM=
-X-Received: by 2002:a5d:8795:: with SMTP id f21mr18810549ion.20.1557889407332;
- Tue, 14 May 2019 20:03:27 -0700 (PDT)
+        id S1726254AbfEOFQn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 01:16:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51598 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbfEOFQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 01:16:43 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 722AA13BB6A;
+        Wed, 15 May 2019 01:16:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JhYEHM7GekDnsyaKmaKdlTZYyB0=; b=T4/p3Z
+        0S9XP1LQwJUmTYRvepTkleDFn3tAx4tBNlyjdzeJY+6lq7JRVnSndidg3vAuNiYb
+        y90EA4tf0uIHh+pJ9VJUI3JJMCa8U9ggDVODyhTpIq0ZGWfZKmNtanHDDvGViLf5
+        k42XygfvgRp7lJEA071b/pYX1b65G9E348eGo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MqtEbJLxwflHgzdinS/WIumhVOoj68hZ
+        BlYnrYEJ1/Go++mwRvvEXEV4kirBPyVpXuNpbAmWTEzFtxgd5q6K1E6LEjK4+X6S
+        rzIuYb3r6lhrldIHut+VjleFdpiP5T0gN9yHUtIs4Cuepqlcqb/Yz1wvzApmvbcL
+        8DRbHkfC93Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6993013BB69;
+        Wed, 15 May 2019 01:16:41 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D1EE813BB67;
+        Wed, 15 May 2019 01:16:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Eric Wong <e@80x24.org>,
+        Antonio Ospite <ao2@ao2.it>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] get_oid: handle NULL repo->index
+References: <20190511205711.tdclwrdixaau75zv@dcvr>
+        <20190511223120.GA25224@sigill.intra.peff.net>
+        <20190511230204.GA18474@sigill.intra.peff.net>
+        <20190514135455.GA17927@sigill.intra.peff.net>
+        <CACsJy8AvsyOz2G1zjRjpKYVZ0DLKj02-v=hXJHS0BRHnxoeWAw@mail.gmail.com>
+        <20190515014622.GB13255@sigill.intra.peff.net>
+Date:   Wed, 15 May 2019 14:16:39 +0900
+In-Reply-To: <20190515014622.GB13255@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 14 May 2019 21:46:22 -0400")
+Message-ID: <xmqqh89w70w8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190430060210.79610-1-johnlinp@gmail.com> <ae1332b8-a227-e83a-8862-8811b6a81251@gmail.com>
- <20190501234512.GD202237@genre.crustytoothpaste.net> <CAKO26MvXmOMHgqWSoVrmdwyDFyqDrChkMOHq6iuJAX8pvHzZoA@mail.gmail.com>
- <20190502231537.GE202237@genre.crustytoothpaste.net> <CAKO26MuisScMPp0SxRo896y7waEgR3HjU3A8+VM73eS0xgU8RQ@mail.gmail.com>
- <CAKO26Mtn+KDnkHWsKf8mAyTmeaCYK0gjdNad5bxJe-qxjKs=xw@mail.gmail.com>
- <xmqqh89ydhqu.fsf@gitster-ct.c.googlers.com> <20190514020416.GH7458@genre.crustytoothpaste.net>
- <xmqqftpha3tb.fsf@gitster-ct.c.googlers.com> <CAKO26Msqj93hwKVduB0op=sMXs3egM2zvyfcJgpoqTWn4ywHHw@mail.gmail.com>
- <xmqq4l5wa6fm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4l5wa6fm.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
-Date:   Wed, 15 May 2019 11:02:59 +0800
-Message-ID: <CAKO26MvNJ6q-GPvY8QSrc+9-HYKK=rBJuNUrMK8EgC9YEq2O5Q@mail.gmail.com>
-Subject: Re: [PATCH v2] status: add an empty line when there is no hint
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9F42E0CE-76D0-11E9-9D13-E828E74BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jeff King <peff@peff.net> writes:
 
-Junio C Hamano <gitster@pobox.com> =E6=96=BC 2019=E5=B9=B45=E6=9C=8815=E6=
-=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=888:48=E5=AF=AB=E9=81=93=EF=BC=9A
+> Also from my earlier message, if you missed it:
 >
-> =E6=9E=97=E8=87=AA=E5=9D=87 <johnlinp@gmail.com> writes:
->
-> > I was not talking about the messages in the editor session. I was
-> > talking about "git commit" without "git add" anything.
-> >
-> > For example:
-> >
-> > ```
-> > $ touch newfile.txt
-> > $ git commit
-> > On branch master
-> > Untracked files:
-> >         newfile.txt
-> >
-> > nothing added to commit but untracked files present
-> > ```
-> >
-> > My current patch is trying to add an empty line between
-> > "Untracked files:" and "newfile.txt".
->
-> I do not think that one is paged, so if you ask me, I'd say we
-> shouldn't add an extra blank there.  Is that message also reused in
-> the editor session, or do two different codepaths produce a similar
-> looking message, one for the above case direct to the terminal and
-> the other for the editor session?
+>   I also wondered if we should simply allocate an empty index whenever
+>   we have a non-toplevel "struct repository", which might be less
+>   surprising to other callers. I don't have a strong opinion either way.
+>   I did grep around for other callers which might have similar problems,
+>   but couldn't find any.
 
-The messages produced in wt-status.c seem to be reused in
-both terminal and editor session. When I tried to modify the
-messages in terminal, the ones in editor session will also
-be modified accordingly.
-
-By the way, my new patch to remove extra blank line is here:
-https://github.com/gitgitgadget/git/pull/196
-I am still waiting for someone to comment "/allow johnlinp".
-
->
-> But again...
->
-> >> At the same time, I think I've been happy enough with the current
-> >> output from both commands, so if you let me bikeshed freely, I'd
-> >> probably pick "let's not change anything then" ;-)
->
+That is an approach to make it harder to make mistakes by accepting
+possibly a small wasted resource; but at that point, I think calling
+repo_read_index() unconditionally from here and similar places would
+be a simpler fix in the same spirit.
