@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 914911F461
-	for <e@80x24.org>; Thu, 16 May 2019 11:25:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2385D1F461
+	for <e@80x24.org>; Thu, 16 May 2019 11:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbfEPLZv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 07:25:51 -0400
-Received: from mail-it1-f182.google.com ([209.85.166.182]:53898 "EHLO
-        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726537AbfEPLZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 07:25:51 -0400
-Received: by mail-it1-f182.google.com with SMTP id m141so5481878ita.3
-        for <git@vger.kernel.org>; Thu, 16 May 2019 04:25:50 -0700 (PDT)
+        id S1726618AbfEPLcV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 07:32:21 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:36779 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726383AbfEPLcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 07:32:20 -0400
+Received: by mail-it1-f196.google.com with SMTP id e184so5629168ite.1
+        for <git@vger.kernel.org>; Thu, 16 May 2019 04:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lE0i+5VtdTIjirYmGo5SVZ6sG9PNdxoU7IbpHUftF8w=;
-        b=BY+JvOZPHCQtzLAFnzyze2za8dT0YzuEwfteLM7YfHn2oqnIVYmXCQw9qKklMS+yMB
-         541Kuo4x8PaWvjtIZ8//grVeLfB6YKqLOtm5TPrRIf+kj0slwVxNvKsCDbnnCkAJKG8A
-         trQueMljung3W6MhIG+D3yMXUKj5SpdVfzX2AZc3pf3ua+VnMIsKbwFH2BCWUCRVcGyN
-         JGld6It+tEMfLX5+9KzryDi0XuPg1RiZIjSAZQeyV+S2iaPzH/8zo32/cNO+fmZWHKtF
-         OrDvFXGC2k05iYtV0eyRg8HEKAvV1byShONoHS1g2EqXRoJYo4ZlzNGPFZwq83PtLrEB
-         kyPw==
+        bh=UABh+D5vIu3HM3tsu5lBqapNGK+b1sOiQT2P+6a7VOI=;
+        b=qFKDW5L4+1acBeehLzefuKIq3XOAr5zq2Ykn+xhgBWdvAanPJriZjVeEtFzIB1fqLc
+         PFuYKZm+MAdpYb+lCleXBZl/ossxhCLQqj+rEwn9BwMnxWO2WrYELZcavdNi23JDu3u+
+         1fP/zeNhKd/0hxS8N5PGY3QEgG1RjnX6TVQob4PJx2/SNPgknVPDmM78lar9Fp7ySx0L
+         9gxESE7LEoJZ7CvSLCrUmKCFHaFJkFLG+Jpj05NLYXpzycVZUcs7jtQ29+siCUcqj6Xt
+         E1tbeOwP1tS3ZfT1Spv+QSLnNewblYIUYbDgniwAtsq9Ox9bsMUhQ0KUV48y8vxPibkd
+         2igg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lE0i+5VtdTIjirYmGo5SVZ6sG9PNdxoU7IbpHUftF8w=;
-        b=RKL+k56eEimLe0tH5EOn+Dtp5gNxY9w5xYxRgFZgGOZ768uZlt0F8eYLvtEBLM3ZZG
-         XuylqVuj5mD6vHYZfGTZfI4Q6zZtfuGX9Zhdhftvlgaf37a1KRGCBLWCmeYDIuiOfwpI
-         Xmz0veaW3nDmu5AGxYBQhOWTWJOmw9l6T0VImnppBsr2VJ7C5l17ODB220V1q+d/oCwv
-         TltTV0OSmyi794SOymB8VhjwK77dwVUNsrf6+BMSchwsnsu+/guVFbbcUxWfecxVn+0i
-         r0+7JGjSBmqDCrrLUmhUXLMG1WDQ3RFMGn2RQq2icJOB7enBD6NkBsGf0fF1bYU9GJSg
-         geMg==
-X-Gm-Message-State: APjAAAUioqzOnJW3u4/vaoG/FM8Mo7B3INXPRH4WIR3Gjh0LRYKuc/Pe
-        OVuyyEijIVb9RyVvr24k7eRn9ct8mzHOWgItz58VIg==
-X-Google-Smtp-Source: APXvYqx0KWuM/7FeJvYPNPfTqkPxlKW9hUIXuzV5iYY0pDattjgfJ7KktZRCFYKi88K6kk0zbb3hmbf7SFaIK9f5P+w=
-X-Received: by 2002:a02:ba85:: with SMTP id g5mr31077984jao.92.1558005950112;
- Thu, 16 May 2019 04:25:50 -0700 (PDT)
+        bh=UABh+D5vIu3HM3tsu5lBqapNGK+b1sOiQT2P+6a7VOI=;
+        b=KYvPxSQbKqTjta3dsIEB/XV0vKUUsJB2zj9szM/lNal3swO+eCtDWAqLJm7NEaikM3
+         TbZDt97yUj6maEfOjma1Y+Bfiv6kbOQ6FUYyjMmVeKCitGa/mUdbEjv/Fei3+5oURvFW
+         B9dzpWf2HaRKxp1jHHa/hTzsPeqDfn05xVjYm1O89xlqiLxItF2Yltg44UQdMjechaXD
+         rne4zgwrNAcw2YCcgIW73e9FiHbUoCshrzdMSGIHjag+pa7eoMzAGNogc6AZaiNl2YGf
+         vBT8nJco2QgKOJJfE/PtAXlkRsy/GMJUA8RGXLasvvUNSHMIoA3iqHXItVNC6iBpAgb2
+         L4yg==
+X-Gm-Message-State: APjAAAWFAnJThColZy0CODX6yqUUx1m20iZkXjr9ZXCAKankwvKRo8qH
+        8l4/Yn4ZbG5NRJc2dKFdXE7AcDFc6uCQ/yG0NQRDbw==
+X-Google-Smtp-Source: APXvYqy0Gy9ocUVoGu4/Pg2Dj07YODbtz6jEj2/9leYBWL0YW8GkxavPEvQF2Bkxr3Nsq0Z8WqQYoFT0A7QbMwD+6/8=
+X-Received: by 2002:a24:56c1:: with SMTP id o184mr12059233itb.123.1558006339841;
+ Thu, 16 May 2019 04:32:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
-In-Reply-To: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
+References: <20190513175903.126079-1-bavison@riscosopen.org>
+In-Reply-To: <20190513175903.126079-1-bavison@riscosopen.org>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 16 May 2019 18:25:24 +0700
-Message-ID: <CACsJy8DnkjuZD-9pbhAsFo16jHKt8U831LLxb3-nCQP5_FOmtA@mail.gmail.com>
-Subject: Re: Running 'git worktree add' in 'pre-commit' hook
-To:     Cosmin Polifronie <oppturbv@gmail.com>
+Date:   Thu, 16 May 2019 18:31:53 +0700
+Message-ID: <CACsJy8B589nOPNt6143BNQNojRYn4pyQCMNZKLRn+EGyWD4-mw@mail.gmail.com>
+Subject: Re: [PATCH] clone: add `--remote-submodules` flag
+To:     Ben Avison <bavison@riscosopen.org>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -61,45 +61,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 14, 2019 at 9:53 PM Cosmin Polifronie <oppturbv@gmail.com> wrote:
+On Tue, May 14, 2019 at 2:46 AM Ben Avison <bavison@riscosopen.org> wrote:
 >
-> Hello! I am trying to run 'git worktree add <path> HEAD' in the
-> 'pre-commit' hook, more specifically in a Python script that is being
-> called from the hook. When doing so, I am greeted with the following
-> error:
->
-> On Windows 10:
-> Preparing worktree (detached HEAD cbfef18)
-> fatal: Unable to create 'C:/Users/meh/Desktop/abc/.git/index.lock': No
-> such file or directory
->
-> On Arch Linux:
-> Preparing worktree (detached HEAD cbfef18)
-> fatal: Unable to create '/home/cosmin/Downloads/abc/.git/index.lock':
-> Not a directory
->
-> Is it forbidden to call this command from a hook?
+> When using `git clone --recurse-submodules` there was previously no way to
+> pass a `--remote` switch to the implicit `git submodule update` command for
+> any use case where you want the submodules to be checked out on their
+> remote-tracking branch rather than with the SHA-1 recorded in the superproject.
 
-pre-commit hook sets GIT_INDEX_FILE to this "index.lock" so you have
-the latest index content (which is not the same as from
-$GIT_DIR/index). This variable will interfere with any commands that
-work on a different worktree.
-
-So you probably can still make it work by backing up $GIT_INDEX_FILE
-(in case you need it), then unset it before you use "git worktree" (or
-cd to it if you keep a permanent separate worktree for pre-commit
-activities). To make sure you don't have similar problems, you
-probably should do "env | grep GIT" from the hook and see if any other
-variables are set.
-
-> If yes, what kind of
-> alternatives do I have? I need to make a copy of the repo in its HEAD
-> state, process it and then decide if I will pass the current commit or
-> not.
->
-> Thanks! :)
-
-
-
+Are there any other submodule options that could be useful passing
+from git-clone as well? What I'm getting at is, if there are multiple
+of them, perhaps we need a different/generic approach than introducing
+a bunch of --<something>-submodules. But of course if --remote is the
+only useful one left, then it's moot.
 -- 
 Duy
