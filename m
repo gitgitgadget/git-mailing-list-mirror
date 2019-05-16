@@ -2,174 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-10.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FC3A1F461
-	for <e@80x24.org>; Thu, 16 May 2019 21:06:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 741A71F4B6
+	for <e@80x24.org>; Thu, 16 May 2019 21:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727189AbfEPVGF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 17:06:05 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45238 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726681AbfEPVGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 17:06:05 -0400
-Received: by mail-pg1-f194.google.com with SMTP id i21so2134276pgi.12
-        for <git@vger.kernel.org>; Thu, 16 May 2019 14:06:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XQ9LXzMD1rqsHBhDBACt9knvR9VvhGq8n+y+JXCvquU=;
-        b=PsxdkVFG+nbCfj2YfOlCDbKILr7qLFjmg3suZUGJe+qwIxkYiKMpwDxC9zW0WsRLoB
-         V1foHBFrvbw9ICCnyv8IDj0RPmEoODoDI8hVQ7doqqjPx3ULEz/Rbv9t0tUZr8Qf5gHv
-         AjkQAbNjLR+lYUyIUMQDkGXV/6LKLCnBM5MZ2bjnubPoJUv9zS/7wQuHUavFgq9CYUYS
-         Vq0bRFg9MAUu3PWGuNdsGqg1Vc5V9qeFkEw9hc1RrAdblO2o45Z7duAbCd8EyBLokTA5
-         onVliv8feApXLonbN/PBjDxRS+HoFihOZdaQBdDdN9Y3/TngdMR904XErKUQbGmuFrH6
-         O/QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XQ9LXzMD1rqsHBhDBACt9knvR9VvhGq8n+y+JXCvquU=;
-        b=k+tEaoeZJcUMrRfhP3IpQZr9srWuyrajHgu02l7r3xkRnsw6hu7gzEO6RAckbCWOED
-         WRaUoc4z0kJ4NTyApxVgXNzQWs9M7qh465rVMC4Wzl4B8xbexSxyaljTxpWejCSGla/X
-         tJiFbH4S//nOAE2me/HTWTDGJCzwdFEfF0dXuQmAEBZdcTL/w/Go08uOjqQFMGrjYjKm
-         Q4NkGd7KyP2PEDN4sEXqfeqmaeyAWnBSwjf0l2CUqFviyBZKujhzL8S8DpPD1RbeKXGt
-         gHfr1ohN1C8upIgLeLgfBpkKwa4RY2vCHSgeAdXmUUUS1MlYDIW4xrjZti6pJyJ+ejOY
-         +yNQ==
-X-Gm-Message-State: APjAAAUmDxAVcsZoGzBXnhVDiFWPZnpsACHRGGToznxVHYeKaAzcLqPa
-        AnquyWu+/jeijF0xOq8fIWteUy8c/EetLA==
-X-Google-Smtp-Source: APXvYqxaQGrh/vjSkifZb1vFkbhQ3fhXxi572HqAU/uSsLEozAiyYc+pHaRxkv4HaSd7YQmoi+YXgw==
-X-Received: by 2002:a63:6ac1:: with SMTP id f184mr53509338pgc.25.1558040763861;
-        Thu, 16 May 2019 14:06:03 -0700 (PDT)
-Received: from google.com ([2620:0:100e:903:92a9:af1c:1897:8241])
-        by smtp.gmail.com with ESMTPSA id q5sm8115723pfb.51.2019.05.16.14.06.02
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 16 May 2019 14:06:03 -0700 (PDT)
-Date:   Thu, 16 May 2019 14:05:58 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        id S1728255AbfEPVM2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 17:12:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59864 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727086AbfEPVM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 17:12:28 -0400
+Received: (qmail 569 invoked by uid 109); 16 May 2019 21:12:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 May 2019 21:12:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7022 invoked by uid 111); 16 May 2019 21:13:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 May 2019 17:13:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 May 2019 17:12:26 -0400
+Date:   Thu, 16 May 2019 17:12:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] grep: provide sane default to grep_source struct
-Message-ID: <20190516210558.GB138048@google.com>
-References: <20190516020023.61161-1-emilyshaffer@google.com>
- <20190516022911.GA135875@google.com>
+Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
+Message-ID: <20190516211226.GE9816@sigill.intra.peff.net>
+References: <20190515231617.GA1395@sigill.intra.peff.net>
+ <20190516182646.173332-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190516022911.GA135875@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190516182646.173332-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 15, 2019 at 08:11:52PM -0700, Jonathan Nieder wrote:
-> Hi,
-> 
-> Emily Shaffer wrote:
-> 
-> > grep_buffer creates a struct grep_source gs and calls grep_source()
-> > with it. However, gs.name is null, which eventually produces a
-> > segmentation fault in
-> > grep_source()->grep_source_1()->show_line() when grep_opt.status_only is
-> > not set.
-> 
-> Thanks for catching it.  Taking a step back, I think the problem is in
-> the definition of "struct grep_source":
-> 
-> 	struct grep_source {
-> 		char *name;
-> 
-> 		enum grep_source_type {
-> 			GREP_SOURCE_OID,
-> 			GREP_SOURCE_FILE,
-> 			GREP_SOURCE_BUF,
-> 		} type;
-> 		void *identifier;
-> 
-> 		...
-> 	};
-> 
-> What is the difference between a 'name' and an 'identifier'?  Who is
-> responsible for free()ing them?  Can they be NULL?  This is pretty
-> underdocumented for a public type.
-> 
-> If we take the point of view that 'name' should always be non-NULL,
-> then I wonder:
-> 
-> - can we document that?
-> - can grep_source_init enforce that?
+On Thu, May 16, 2019 at 11:26:46AM -0700, Jonathan Tan wrote:
 
-Today grep_source_init() defaults to NULL. So if we decide that 'name'
-should be non-NULL it will be somewhat changing the intent.
+> > Pretty unlikely, but should we put some kind of circuit-breaker into the
+> > client to ensure this?
+> 
+> I thought of this - such a server could, but it seems to me that it
+> would be similar to a server streaming random bytes to us without
+> stopping (which is already possible).
 
-	void grep_source_init(struct grep_source *gs, enum grep_source_type type,        
-	                      const char *name, const char *path,                        
-	                      const void *identifier)                                    
-	{                                                                                
-	        gs->type = type;                                                         
-	        gs->name = xstrdup_or_null(name); 
-	...
+True. I was thinking mainly of the infinite-redirection protections we
+put in place for https. But I agree that in general, since we don't have
+inherent limits on the size of workloads, that servers can already troll
+clients pretty hard in a variety of ways.
 
-> - can we take advantage of that in grep_source as well, as a sanity
->   check that the grep_source has been initialized?
-> - while we're here, can we describe what the field is used for
->   (prefixing output with context before a ":", I believe)?
+So I could go either way, though I do think it makes sense for on-demand
+fetches for partial clones to avoid asking for thin packs as a general
+principle. As a matter of fact, should partial clones _always_ avoid
+asking for thin packs?  That would make this issue go away entirely.
 
-In general the documentation for grep.[ch] is pretty light. There aren't
-any header comments and `Documentation/technical/api-grep.txt` is a
-todo. So I agree that we should document it anywhere we can.
+Sometimes it would be more efficient (we do not have to get an extra
+base object just to resolve the delta we needed) but sometimes worse (if
+we did actually have the base, it's a win). Whether it's a win would
+depend on the "hit" rate, and I suspect that is heavily dependent on
+workload characteristics (what kind of filtering is in use, are we
+topping up in a non-partial way, etc).
 
-> > Jonathan Nieder proposed alternatively adding some check to grep_source()
-> > to ensure that if opt->status_only is unset, gs->name must be non-NULL
-> > (and yell about it if not), as well as some extra comments indicating
-> > what assumptions are made about the data coming into functions like
-> > grep_source(). I'm fine with that as well (although I'm not sure it
-> > makes sense semantically to require a name which the user probably can't
-> > easily set, or else ban the user from printing LOC during grep). Mostly
-> > I'm happy with any solution besides a segfault with no error logging :)
+> > Off the top of my head, I am pretty sure your assumption holds for all
+> > versions of Git that support delta-base-offset[1]. But that feels a lot
+> > less certain to me. I could imagine an alternate server implementation,
+> > for example, that is gluing together packs and does not try hard to
+> > order the base before the delta, which would require it to use REF_DELTA
+> > instead of OFS_DELTA.
 > 
-> Let's compare the two possibilities.
+> A cursory glance makes me think that REF_DELTA against a base object
+> also in the pack is already correctly handled. Right before the
+> invocation of conclude_pack() (which calls fix_unresolved_deltas(), the
+> function I modified), resolve_deltas() is invoked. The latter invokes
+> resolve_base() (directly or through threaded_second_pass()) which
+> invokes find_unresolved_deltas(), which invokes
+> find_unresolved_deltas_1(), which seems to handle both REF_DELTA and
+> OFS_DELTA.
 > 
-> The advantage of "(in memory)" is that it Just Works, which should
-> make a nicer development experience with getting a new caller mostly
-> working on the way to getting them working just the way you want.
-> 
-> The disadvantage is that if we start outputting that in production, we
-> and static analyzers are less likely to notice.  In other words,
-> printing "(in memory)" is leaking details to the end user that do not
-> match what the end user asked for.  NULL would instead produce a
-> crash, prompting the author of the caller to fix it.
-> 
-> What was particularly pernicious about this example is that the NULL
-> dereference only occurs if the grep has a match.  So I suppose I'm
-> leaning toward (in addition to adding some comments to document the
-> struct) adding a check like
-> 
-> 	if (!gs->name && !opt->status_only)
-> 		BUG("grep calls that could print name require name");
-> 
-> to grep_source.
+> Snipping the rest as I don't think we need to solve those if we can
+> handle REF_DELTA being against an object in a pack, but let me know if
+> you think that some of the points there still need to be addressed.
 
-Why not both? :)
+Right, REF_DELTA is definitely correctly handled currently, and I don't
+think that would break with your patch. It's just that your patch would
+introduce a bunch of extra traffic as we request bases separately that
+are already in the pack.
 
-But seriously, I am planning to push a second patch with both, per
-Junio's reply.
-
-I'll consider the documentation out of scope for now since I'm not sure
-I know enough about grep.[ch]'s intent or history to document anything
-yet. :)
-
-> 
-> That would also sidestep the question of whether this debugging aid
-> should be translated. :)
-> 
-> Sensible?
-> 
-> Thanks,
-> Jonathan
+-Peff
