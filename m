@@ -2,99 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD6E91F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:13:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 600EF1F4B6
+	for <e@80x24.org>; Thu, 16 May 2019 23:13:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726623AbfEPXNW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:13:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55447 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbfEPXNW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:13:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58A3371B7C;
-        Thu, 16 May 2019 19:13:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Bv02mEOBSDqpSB6wszfxyu07dk0=; b=sXl0mi
-        1891Ox6MCpt8GpsVoo1L0PrZJGu3J0rvKA53d0yqJSLpcaw/R5jKHOFy3aoRBhjV
-        F4TR4x4WcL+ZnFOud/nAMcEVfzPSK6h7zwm/tKeXSdJFIAY/xJ1H2ARO3ZCo15yQ
-        gJzy0/Gel0zt9d5bS69inlxMUyJx/0IZum8hw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FUp3fBCtH/5o4YDOCr17Ocm3ibpzsVfh
-        T1tWmYAWDdK7OLJjUyafq/ogI7bvbBbBRF52+MWZ50uY3meHd1IIyydWDxngLBJa
-        BdvFIA5/dZVj+lcjB5U0ciCpJL+9idVCdKjL9V0cI9CmwhPkEh8vsm46i9+r1vcX
-        wMSDup7Nsd8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3ADE671B7B;
-        Thu, 16 May 2019 19:13:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B64B71B7A;
-        Thu, 16 May 2019 19:13:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     avarab@gmail.com, git@vger.kernel.org, jrnieder@gmail.com,
-        sandals@crustytoothpaste.net, sunshine@sunshineco.com,
-        xypron.glpk@gmx.de
-Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in that order
-References: <20190508105607.178244-1-gitster@pobox.com>
-        <20190508105607.178244-1-gitster@pobox.com>
-        <5cddeb61.1c69fb81.47ed4.e648@mx.google.com>
-Date:   Fri, 17 May 2019 08:13:15 +0900
-In-Reply-To: <5cddeb61.1c69fb81.47ed4.e648@mx.google.com> (Stephen Boyd's
-        message of "Thu, 16 May 2019 15:59:44 -0700")
-Message-ID: <xmqqh89u3sdw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726697AbfEPXNs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 19:13:48 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:51523 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbfEPXNs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 19:13:48 -0400
+Received: by mail-it1-f193.google.com with SMTP id m3so5223338itl.1
+        for <git@vger.kernel.org>; Thu, 16 May 2019 16:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=YF7R07c+NTQvDRmlMMZdXvFYRBu26WBOcQUzTiWqDg8=;
+        b=aflU027cfIWi51brWH3XSTPwABJ4YLc+vQRE4+NRiVi6//VQRyR+52o5LR476W1mWt
+         2ffQFNBu4EVwD9BEds45+TFHtV8TiKHKIB7pxfvpdwxINKUHQwEPbe+hCATRxOLzlYMc
+         AZqSn1a2zG29o8tKN41GuGr9VIg6H3I0EX5skBrVF7cOtX1i9cQiSVgTSOoPMIn3xag7
+         4a3kiP7y7Bp/e9pczdhC5B3Lth6fhNKsYgPSrLdzUe4EeRe1vIHJDuvl9Hp8dj4GeV9J
+         btrtyQ7DE8kFQ3hiJKf67cdYL+4RN1W5yR8w+OE/ka9QMt1X6wEp2AcNI+xdT6i5vFPb
+         dJDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=YF7R07c+NTQvDRmlMMZdXvFYRBu26WBOcQUzTiWqDg8=;
+        b=iRBNwHCm8o3zGiCcJn7MeXFkAxzZG/2ya+4tBg/xNeJLxFHnAGx6VQ3kJOqWdKbk1z
+         M33wUBA/jntNLJ56O06U4iLqMuZ5pNIZUqfxZqHa5sUwId9Hd9EjdsMx/U3s5hLH7Mio
+         xKbZfurf0KP23IL7TDd06PpEB7c9aSNIUiUWEqYPQGSkSaLXalLOcq9LyI/v6FMYvG7N
+         oBFihBeeHt1BLkJu5WRhsKqES1+zTHO+CO4JRiVKaxlool6nDCwMi7e6A75JNm/sc+f9
+         VUOWT9UaUHRNiVxku/spocqgbeAu3bgFTTphvco4INDcIZg+Msjw5MR+YtYLJEp5Rlqt
+         Hdww==
+X-Gm-Message-State: APjAAAW6/FQv/uNoXe0Jd3yiJCMfjeb0DgZUf8wFOSBQ2UfRsA3f9bad
+        nU1UuF3mypTzrygpsvJ0UMIUDiSM
+X-Google-Smtp-Source: APXvYqyXAz1madmri3Nflr3XtY33sjxw9UIAOgHrDOfhcXpZU1uED1VQwkSHhcle+SjuSVYsicymDg==
+X-Received: by 2002:a24:e3cb:: with SMTP id d194mr14364746ith.100.1558048427259;
+        Thu, 16 May 2019 16:13:47 -0700 (PDT)
+Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
+        by smtp.gmail.com with ESMTPSA id 8sm2130445ioe.1.2019.05.16.16.13.46
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 16 May 2019 16:13:46 -0700 (PDT)
+Date:   Thu, 16 May 2019 19:13:44 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH v4 0/2] format-patch: teach format.notes config option
+Message-ID: <cover.1558048212.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 303CB5D6-7830-11E9-B709-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen Boyd <swboyd@chromium.org> writes:
+Hi Junio,
 
->> As can be seen in this change the only place where we actually want to
->> do something clever is with the to/cc/bcc variables, where setting
->> them on the command-line (or using --no-{to,cc,bcc}) should clear out
->> values we grab from the config.
->> 
->> All the rest are things where the command-line should simply override
->> the config values, and by reading the config first the config code
->> doesn't need all this "let's not set it was on the command-line"
->> special-casing, as [1] shows we'd otherwise need to care about the
->> difference between whether something was a default or present in
->> config to fix the bug in e67a228cd8.
->
-> This broke my workflow.
->
-> I specify --identity=<account> on the commandline and I want that to
-> pick out my send-email config from my global .gitconfig file that
-> corresponds to that identity. With this change, the config is parsed
-> before the getopt part so --identity on the commandline is a nop and
-> never looks into the config file to figure this out. So at least
-> --identity is special in addition to --to,cc,bcc.
+I've changed format.notes so that it can accept a boolean as well.
+Hopefully, my last email has addressed the remainder of your comments.
 
-Ah, sorry that nobody noticed that case, but you are right.  Because
-the ident is used as a part of the key to find identity-specific
-configuration values, if the command line gives one, we must have an
-access to it before we start reading the configuration.  In that sense,
-it is more fundamental to special-case the option.
+Changes since v3:
 
-We are past -rc0, so I am inclined to revert the change (and perhaps
-replace it with the other "fix" that did not break the parsing order
-like these patches did), with an expectation that a clever fix will
-be found later, *unless* a simple and correct fix is found quickly.
+* Made format.notes accept a boolean instead of "standard" to get
+  default notes
+
+Changes since v2:
+
+* Fixed if-else code style
+* Fixed typoed errors in 2/2 log message
+
+Changes since v1:
+
+* Made format.notes accept a notes ref instead of a boolean
+
+
+Denton Liu (2):
+  git-format-patch.txt: document --no-notes option
+  format-patch: teach format.notes config option
+
+ Documentation/config/format.txt    | 15 +++++++
+ Documentation/git-format-patch.txt |  7 ++-
+ builtin/log.c                      | 20 ++++++++-
+ t/t4014-format-patch.sh            | 70 ++++++++++++++++++++++++++++++
+ 4 files changed, 110 insertions(+), 2 deletions(-)
+
+Range-diff against v3:
+1:  4c3535f25b = 1:  4c3535f25b git-format-patch.txt: document --no-notes option
+2:  df864c4adf ! 2:  7cb770e190 format-patch: teach format.notes config option
+    @@ -25,14 +25,16 @@
+      	format-patch by default.
+     +
+     +format.notes::
+    -+	A ref which specifies where to get the notes (see
+    -+	linkgit:git-notes[1]) that are appended for the commit after the
+    -+	three-dash line.
+    ++	Provides the default value for the `--notes` option to
+    ++	format-patch. Accepts a boolean value, or a ref which specifies
+    ++	where to get notes. If false, format-patch defaults to
+    ++	`--no-notes`. If true, format-patch defaults to `--notes`. If
+    ++	set to a non-boolean value, format-patch defaults to
+    ++	`--notes=<ref>`, where `ref` is the non-boolean value. Defaults
+    ++	to false.
+     ++
+    -+If the special value of "standard" is specified, then the standard notes
+    -+ref is used (i.e. the notes ref used by `git notes` when no `--ref`
+    -+argument is specified). If one wishes to use the ref
+    -+`ref/notes/standard`, please use that literal instead.
+    ++If one wishes to use the ref `ref/notes/true`, please use that literal
+    ++instead.
+     ++
+     +This configuration can be specified multiple times in order to allow
+     +multiple notes refs to be included.
+    @@ -69,15 +71,17 @@
+      	}
+     +	if (!strcmp(var, "format.notes")) {
+     +		struct strbuf buf = STRBUF_INIT;
+    -+
+    ++		int b = git_parse_maybe_bool(value);
+    ++		if (!b)
+    ++			return 0;
+     +		rev->show_notes = 1;
+    -+		if (!strcmp(value, "standard")) {
+    -+			rev->notes_opt.use_default_notes = 1;
+    -+		} else {
+    ++		if (b < 0) {
+     +			strbuf_addstr(&buf, value);
+     +			expand_notes_ref(&buf);
+     +			string_list_append(&rev->notes_opt.extra_notes_refs,
+     +					strbuf_detach(&buf, NULL));
+    ++		} else {
+    ++			rev->notes_opt.use_default_notes = 1;
+     +		}
+     +		return 0;
+     +	}
+    @@ -117,7 +121,7 @@
+     +	git format-patch -1 --stdout --no-notes --notes >out &&
+     +	grep "notes config message" out &&
+     +
+    -+	test_config format.notes standard &&
+    ++	test_config format.notes true &&
+     +	git format-patch -1 --stdout >out &&
+     +	grep "notes config message" out &&
+     +	git format-patch -1 --stdout --notes >out &&
+-- 
+2.21.0.1049.geb646f7864
 
