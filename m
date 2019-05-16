@@ -2,149 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24DC61F461
-	for <e@80x24.org>; Thu, 16 May 2019 17:20:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98F5C1F461
+	for <e@80x24.org>; Thu, 16 May 2019 18:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726943AbfEPRUC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 13:20:02 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36616 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726807AbfEPRUC (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 May 2019 13:20:02 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:89af:9dea:d4e0:996c])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AFA7760737;
-        Thu, 16 May 2019 17:19:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1558027198;
-        bh=yV5EAbk3T9E4nAj93DVLxs/9TokoqA9qLQOsuICOpD8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QAkuQuZNB76Mt9IsXJI3Xe3PSBvfhOMVCwuxXLrol5IKvGN3fNQqvMIpsH1Vrh5xN
-         ythQgt1BOL6tmogF+CnUjoCrShm5swE0izanmK4LwipiVnNOAWVCJ0K4jRWuF0Y4Uo
-         XuIB1/+8THP7YeEimhFWNzaWsoiR1q+Im8/5nAqR3VuglOE7lbqODYSugnxGen9kur
-         T1VqTsf6ZUyEuJh/JtbUo8E+MdRHYiXAIz8fZoA878ivCCyj7A1ODdeuFCf7y5moeO
-         YP0/fzGGhWjMadCvtAoov+gH578JXxmjm2BfFncF15JeFWDQj6MXI7vshwTgfDXWIA
-         GZ72k/PQdF9RJlWXSzITechUVjKMhBHndaodG8/WS0QT8BWb3xCuMLbtDZLIovK22D
-         uDWjUwIyirdJitq4jIFZ3iME7yjf7WTAfXqI8CUoNZ9TUqH6oX99s7SXwHvqPJpU6+
-         TFMwPnJZTvAZLGo3jtRdxJLHQjM1BQAow3aiZ85fsxueTV082ZU
-Date:   Thu, 16 May 2019 17:19:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 6/7] config: allow configuration of multiple hook
- error behavior
-Message-ID: <20190516171953.GA265608@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <20190514002332.121089-1-sandals@crustytoothpaste.net>
- <20190514002332.121089-8-sandals@crustytoothpaste.net>
- <20190516050200.GB7241@sigill.intra.peff.net>
+        id S1728996AbfEPSFc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 14:05:32 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54342 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbfEPSFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 14:05:32 -0400
+Received: by mail-wm1-f67.google.com with SMTP id i3so4539232wml.4
+        for <git@vger.kernel.org>; Thu, 16 May 2019 11:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3YXGcZDpsgWltXH4Mtk5AGSKE+IrzDYj5VAjrEl8E9s=;
+        b=Ua3RjrVWG4rp7qoQfaASq78rrCDSdutodJoXuFbQ8X5Ou1m+OIYzNDtZljTA09Kw9U
+         SPsQAEWL4qfQ3f0jMHSRMpGsJkVMKrOi8zDYA5yOK4t7IQNAODmtNEksK0snm0QEnnUa
+         XQesCIoCwwX6+DkGx+5uv0xGqmvdJ6owkoQEgyLxSKkUGzN63eAvmGkVLtrzObioxCYQ
+         AGM4Bv5KvILZAKDYeqKIwgEyJmtmfVjy/dgZxHkkQC/7xdZQHGrLhjbysjQ/8kax5/ac
+         ZEdjkTHQTyr5djJqFVb3pn4fe1J4m0CNiCWMJgxgM9Y64nDQAHNLKAAlkQCc/31hVsRP
+         07YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3YXGcZDpsgWltXH4Mtk5AGSKE+IrzDYj5VAjrEl8E9s=;
+        b=sKjS+CM+6/eARhVg0WTaS3GTy0lLvUDsVRVMGP/9rKt/H0xN+viIsVktSWMqTIv8EP
+         3/kOu9EKWji+CA5b/nsrtln5L531gj0eVehHWgClaIKQzh3F+x2Mz7IKVPNcNRLB2X+T
+         SBifoMPGdodwMyMXZy1XjitoZkFA7yH/ITDb8VIbWmb+MArUVQ7AZietvGk8qt0f06Oc
+         rI7YH76O+hccOi0nDSrg+xdvdjHLgJl1icd730rVgNtbUBMPokHNxylMWmrfaTPnuU6h
+         +Cymu0nFiJTjAdbPwJmdJPAZb6Gizguq6vSEW7uSAqOBeHIvsd9VsRqIZdxfcWh9baVx
+         gj8A==
+X-Gm-Message-State: APjAAAXAyHF56lKgWu/r+XbjsxvI2x7SM/xwGVVKB3dKassoRaHUrpTP
+        aIFf7JVUFhYYElBbTn9mBbNO9osgk2k=
+X-Google-Smtp-Source: APXvYqzZ8usqjM1aS2P4WXc1mkmTOMbJ5cliLQBgv6NrVW4Bh9Kr3COucjyShsv3tF6wke+qFGyxRQ==
+X-Received: by 2002:a1c:7e10:: with SMTP id z16mr17298462wmc.98.1558029929780;
+        Thu, 16 May 2019 11:05:29 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o4sm5317591wmc.38.2019.05.16.11.05.28
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 16 May 2019 11:05:29 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Osipov <michael.osipov@siemens.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Makefile: remove the NO_R_TO_GCC_LINKER flag
+Date:   Thu, 16 May 2019 20:05:21 +0200
+Message-Id: <20190516180521.1933-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
+In-Reply-To: <20190516093412.14795-1-avarab@gmail.com>
+References: <20190516093412.14795-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oyUTqETQ0mS9luUI"
-Content-Disposition: inline
-In-Reply-To: <20190516050200.GB7241@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-4-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Remove the NO_R_TO_GCC_LINKER flag, thus switching the default to
+"-Wl,-rpath,$LIBPATH" instead of our current "-R$LIBPATH". This is a
+relatively obscure thing that only kicks in when using one of the
+LIBDIR flags, e.g. LIBPCREDIR or CURLDIR.
 
---oyUTqETQ0mS9luUI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How we invoke the linker to do this can still be overridden with
+CC_LD_DYNPATH, as seen in our configure.ac script.
 
-On 2019-05-16 at 05:02:00, Jeff King wrote:
-> > +static int git_default_hook_config(const char *key, const char *value)
-> > +{
-> > +	const char *hook;
-> > +	size_t key_len;
-> > +	uintptr_t behavior;
-> > +
-> > +	key +=3D strlen("hook.");
-> > +	if (strip_suffix(key, ".errorbehavior", &key_len)) {
->=20
-> There's an undocumented assumption that the caller has confirmed that
-> the key starts with "hook." here. Can we be a little more defensive and
-> do:
->=20
->   if (skip_prefix(key, "hook.", &key))
-> 	return 0;
+Our use of "-R" dates back to 455a7f3275 ("More portability.",
+2005-09-30). Soon after that in bbfc63dd78 ("gcc does not necessarily
+pass runtime libpath with -R", 2006-12-27) the NO_R_TO_GCC flag was
+added, allowing optional use of "-Wl,-rpath=".
 
-Yeah, the caller checks that, but I think being a little more defensive
-is fine.
+Then in f5b904db6b ("Makefile: Allow CC_LD_DYNPATH to be overriden",
+2008-08-16) the ability to override this flag to something else
+entirely was added, as some linkers use neither "-Wl,-rpath," nor
+"-R".
 
-> here (we could even drop the check in git_default_config).
->=20
-> Or we could use parse_key(), which is designed for this:
->=20
->   if (parse_key(key, "hook", &subsection, &subsection_len, &key) < 0 ||
->       !subsection)
-> 	return 0;
+From what I can tell we should, with the benefit of hindsight, have
+made this change back in 2006. GCC & ld supported this type of
+invocation back then, or since at least binutils-gdb.git's[1]
+a1ad915dc4 ("[...]Add support for -rpath[...]", 1994-07-20). Most
+people compiling git with a custom LIBDIR are going to be on a GNU-ish
+system, and having to provide this NO_R_TO_GCC_LINKER flag on top of a
+custom LIBDIR is annoying.
 
-Oh, good, I didn't know we had that. That's exactly what I want.
+There are some OS's that don't support -rpath, e.g. AIX ld just
+supports "-R". Perhaps we should follow this up with some
+config.mak.uname changes, but as noted it's quite possible that nobody
+on these platforms uses this (instead libraries in the system's search
+path). We *could* also use "-Wl,-R", but let's not introduce something
+new.
 
->   if (!strcmp(key, "errorbehavior"))
-> 	...
->=20
-> > +	/* Use -2 as sentinel because failure to exec is -1. */
-> > +	int ret =3D -2;
->=20
-> Maybe this would be simpler to follow by using an enum for the handler
-> return value?
+Further reading and prior art can be found at [2][3][4][5]. Making a
+plain "-R" an error seems from reading those reports to have been
+introduced in GCC 4.6 released on March 25, 2011, but I couldn't
+confirm this with absolute certainty, its release notes are ambiguous
+on the subject, and I couldn't be bothered to try to build & bisect it
+against GCC 4.5.
 
-We can't make this variable an enum because we'd have to define 256
-entries (well, we can, but it would be a hassle), but I can create an
-enum and assign it to the int variable, sure.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+1. git://sourceware.org/git/binutils-gdb.git
+2. https://github.com/tsuna/boost.m4/issues/15
+3. https://bugzilla.gnome.org/show_bug.cgi?id=641416
+4. https://stackoverflow.com/questions/12629042/g-4-6-real-error-unrecognized-option-r
+5. https://curl.haxx.se/mail/archive-2014-11/0005.html
+6. https://gcc.gnu.org/gcc-4.6/changes.html
 
---oyUTqETQ0mS9luUI
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+Looking at that HP/UX configure patch I was reminded of being annoyed
+by the NO_R_TO_GCC_LINKER flag.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzdm7gACgkQv1NdgR9S
-9osurQ//WdP2TRdDsLHTAaR4iKwizUSwjlm3t2i4Zti7VI8tG0d4ylApApQcqtnQ
-DK//zNOgk8oFTMEycYkGQcVLD7GV3xGhnk9s1i+yu+rWAeud8eu9NpXiGv/TAe5v
-8u3qMt+/Y50Pkz6lmTv83c/AD5/CTvzBtRW0UBQK92vSkAObKfHga5nf5hbOmRlu
-N87s7qIkNNKtDuAUp7q0zFz5u+NIvyEDGGQUT27FnNtEco8J1Ssbk8AlHU7zWUdY
-5WpTO4W1ulQdYw+zHaHZoPbpX6OCR1MpS+ZFjErgBwpGIqKzpaRcRkoU7ToLiN++
-G7dX19NUrOvauoNxXnhhKxqI43ieuDgRZKcGUjk/SLpwryAtqzs8QwbMFuTxCiBO
-04jcrlzekqqm6J95mJJrNUfE6J5ENr5leE25yllRD6JKXTKTrf3ILu70oN9bOJAX
-pc6wG4pz5SVfTTBtw5iNqYW5CsWe2CaW23giYdWdFnYHBbsrvjZYTIjpvIR6JPpj
-rB8dVf0oYP4Zjxustf7rAWVsZ+whhRraS5/+G2xTmJWPtA1NCQmGBin+5y0abvmv
-AUS03NFYdz6NdVkVxO2mNsTRT2CjQ5P4JEdK59jrNvtd+K0DpUrSch8Gz+EUnU1r
-5vvEB8zhqPVWmQUU0f7jBjo3xmSmv05Bteiouf+mGnjIFNIb64s=
-=x5lS
------END PGP SIGNATURE-----
+ Makefile | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
---oyUTqETQ0mS9luUI--
+diff --git a/Makefile b/Makefile
+index f965509b3c..ce7a489d64 100644
+--- a/Makefile
++++ b/Makefile
+@@ -265,10 +265,6 @@ all::
+ #
+ # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
+ #
+-# Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
+-# that tells runtime paths to dynamic libraries;
+-# "-Wl,-rpath=/path/lib" is used instead.
+-#
+ # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
+ # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
+ #
+@@ -1160,6 +1156,7 @@ endif
+ # which'll override these defaults.
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
++CC_LD_DYNPATH = -Wl,-rpath,
+ BASIC_CFLAGS = -I.
+ BASIC_LDFLAGS =
+ 
+@@ -1287,16 +1284,6 @@ ifeq ($(uname_S),Darwin)
+ 	PTHREAD_LIBS =
+ endif
+ 
+-ifndef CC_LD_DYNPATH
+-	ifdef NO_R_TO_GCC_LINKER
+-		# Some gcc does not accept and pass -R to the linker to specify
+-		# the runtime dynamic library path.
+-		CC_LD_DYNPATH = -Wl,-rpath,
+-	else
+-		CC_LD_DYNPATH = -R
+-	endif
+-endif
+-
+ ifdef NO_LIBGEN_H
+ 	COMPAT_CFLAGS += -DNO_LIBGEN_H
+ 	COMPAT_OBJS += compat/basename.o
+-- 
+2.21.0.1020.gf2820cf01a
+
