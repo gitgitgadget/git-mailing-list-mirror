@@ -2,91 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SORTED_RECIPS,SPF_HELO_NONE,
+	SPF_NONE shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE601F461
-	for <e@80x24.org>; Thu, 16 May 2019 22:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F06351F461
+	for <e@80x24.org>; Thu, 16 May 2019 22:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727245AbfEPWlz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 18:41:55 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:49692 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726943AbfEPWly (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 18:41:54 -0400
-Received: by mail-vk1-f202.google.com with SMTP id t204so1856053vkd.16
-        for <git@vger.kernel.org>; Thu, 16 May 2019 15:41:54 -0700 (PDT)
+        id S1726814AbfEPW7q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 18:59:46 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:37331 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726464AbfEPW7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 18:59:46 -0400
+Received: by mail-pf1-f193.google.com with SMTP id g3so2617359pfi.4
+        for <git@vger.kernel.org>; Thu, 16 May 2019 15:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=mk2T3v08UGG/VrLic8t3Yz3WI/Iqg/bpKfJ/xfqi0Mg=;
-        b=qm4l5sHOY+Cw8QHxIZmTRcHke+uyRgljbx9oSpt6TLCoZbpf1utwTxyTrwDjOkSK92
-         QplcfWOxYXl7w7muesfLpBqf5N+oWywUf8UV2RjQUbg0AP/8DPR+xE89WfKmhJZEtPc+
-         1C9HSb0PCnb5m/W9ABZFZWL2JtvQZNvZJ1JcVI4FXvuJT5oiit7OR4N9xvVzntMG4/wr
-         BSOzqZ8KXXq5jRVCMaHKlEu6QNwTj/zywCR+lqbLV09cpcd+XA/6zQb2QKVD3x/hcv8M
-         A+3NmYkd3YohhFavVcu/bThuyOlsA1XbEyeprib/h9DP8iA2fFrPx3Y/dP67UsrmopsB
-         PvpQ==
+        d=chromium.org; s=google;
+        h=message-id:mime-version:content-transfer-encoding:in-reply-to
+         :in-reply-to:references:subject:from:cc:to:user-agent:date;
+        bh=zlhlRtJeasseLSHTIydrTmO9zbtDDlI+0Ya/YOKB9/s=;
+        b=ZF81zHWkfI0S/B9G0QIu6aPxZ9DY+1UlvX28C634pwUbInCy7H4xgp+9jbCjxouLza
+         iJ/A9TUvY2+TCnRA/rmnl0BoWsy8jBnb+G6Dg7VBunKlGJTzTXGJAnFtOTO+kRPHKIMP
+         CcWvtzXSGiLdbJO+3ANAxl3SDIv9n/XLMCmaQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=mk2T3v08UGG/VrLic8t3Yz3WI/Iqg/bpKfJ/xfqi0Mg=;
-        b=GGJRs7PSZc0gLacKeb3TY7PNBh07p2DE8ba9vFTyf3w4cegyxHO/OhTBlYXyI2G0OG
-         Nj6e6EYBFd9N8f0e72hCmvmVxBuk+wB5P61PWF4BlI+BB6OchxaDp21efUhcmRTrxrK2
-         7YWBY/YBcyJ5yWsD360iOWDB6ax3En903/JMUwE9PeHYY2hsc9poIAJrlDOOJmnzp82Z
-         90im2plLtftlbVCO/iQd3nFOKiISV/iecbr0gKFctgSizHm0bhJ6s5zRi0qZQ0aSGPIi
-         ZR6ctuj6u1rw1l3DMCexNoNINgyTZctiLnk0MJZhxkC9fulUxlBtLmKSv+RDeBhbGpX/
-         MvEA==
-X-Gm-Message-State: APjAAAX7r5If0ivPjwc3RzYh4H2Slez2CZItfldNzF4z+CoJoa0DFp8Z
-        aTo8uoYgMJYUdISabt6yqQKbPl1PpS4AbSvkIRG+
-X-Google-Smtp-Source: APXvYqzG4Q/TWnBi63J5QNHyAlVkd8LlnAlY5AA0Q1P9ITiaCGgG4BdisxWSF4wEUVzG76A4JbvDfQBeR20Kxzg561Ah
-X-Received: by 2002:a67:f24d:: with SMTP id y13mr6417482vsm.82.1558046513672;
- Thu, 16 May 2019 15:41:53 -0700 (PDT)
-Date:   Thu, 16 May 2019 15:41:50 -0700
-In-Reply-To: <cover.1558030802.git.matvore@google.com>
-Message-Id: <20190516224150.243395-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1558030802.git.matvore@google.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: Re: [RFC PATCH 0/3] implement composite filters
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:in-reply-to:in-reply-to:references
+         :subject:from:cc:to:user-agent:date;
+        bh=zlhlRtJeasseLSHTIydrTmO9zbtDDlI+0Ya/YOKB9/s=;
+        b=M6v+4AT9khE9lKHiTd8fbAwgEt4/VDr+Py+bOV/sUfUu7UCAcVufZi/u8chtCq3ybR
+         QbOqj9P7OYiOwsxsGlOoIj/RmFmLRd9daPIYWXT0uMA8taSCwLtSYg+kwz9JPBlAHgKn
+         0Y4Ic4c/7T0uGJAujWOHkFf1RsK9I+82+9Dq6JI/jIz2wTpOc+HR4vfrgUV6XzvvlIoj
+         lf7XEK7GgQNKExls0P1h2nFkQkegDLIuV03bYekwYWaNset1wlJWOzlMURbIt/eGPRTJ
+         5bYzqMyAe0bt4g9RpWkd9huZAMX2E4OQg0RP1IUN47fTrCZWaQE+h/xGOEbPtiAkipiY
+         i2Uw==
+X-Gm-Message-State: APjAAAWF9ND9458RRHHv6FSlBEl+8uvYXHiFxV/Jt7GVErxY7p8ZmTbo
+        OPzhJK4XZIx4ruI4zrg3f9kG2hnCRZjwYw==
+X-Google-Smtp-Source: APXvYqzgMNcT3ejxEhT9jjIBSZMqryaQHJUOHD/DLT4REITJSJ0rteT8QrWjrFpPzqVwMfC4fg+qeA==
+X-Received: by 2002:a65:62c4:: with SMTP id m4mr52900188pgv.308.1558047585836;
+        Thu, 16 May 2019 15:59:45 -0700 (PDT)
+Received: from chromium.org ([2620:15c:202:1:fa53:7765:582b:82b9])
+        by smtp.gmail.com with ESMTPSA id g17sm10983540pfk.55.2019.05.16.15.59.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 May 2019 15:59:45 -0700 (PDT)
+Message-ID: <5cddeb61.1c69fb81.47ed4.e648@mx.google.com>
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190509114830.29647-4-avarab@gmail.com>
+In-Reply-To: <20190509114830.29647-4-avarab@gmail.com>
+References: <20190508105607.178244-1-gitster@pobox.com>, <20190508105607.178244-1-gitster@pobox.com>
+Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in that order
+From:   Stephen Boyd <swboyd@chromium.org>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+        sandals@crustytoothpaste.net, sunshine@sunshineco.com,
+        xypron.glpk@gmx.de
+To:     avarab@gmail.com
+User-Agent: alot/0.8.1
+Date:   Thu, 16 May 2019 15:59:44 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Here is a first stab at composite filters. It does not actually support omits,
-> but the biggest difficulties of the implementation are already addressed. So I
-> decided to send out an early version to give interested people an idea of just
-> what is needed to implement it, and then give them a chance to change my mind
-> (Jonathan T. especially was concerned about code complexity).
+(Sorry for weird reply, I'm not subscribed and my MUA is not prepared
+for this)
 
-Thanks - seeing these patches reduces my concerns significantly. A
-composite filter has LHS and RHS filters, either of which can be
-composite themselves, so we support compositing arbitrary numbers of
-filters. I see that the approach is to run LHS and RHS in lockstep, with
-our own handling of the result flags:
+> Change the git-send-email command-line argument parsing and config
+> reading code to parse those two in the right order. I.e. first we set
+> our hardcoded defaults, then we read our config, and finally we read
+> the command-line, with later sets overriding earlier sets.
+>=20
+> This fixes a bug introduced in e67a228cd8 ("send-email: automatically
+> determine transfer-encoding", 2018-07-08). That change broke the broke
+> the reading of sendmail.transferencoding because it wasn't careful to
+> update our fragile code dealing with doing this in the previous
+> "defaults -> getopt -> config" order..
+>=20
+> But as we can see from the history for this file doing it this way was
+> never what we actually wanted, it just something we grew organically
+> as of 5483c71d7a ("git-send-email: make options easier to configure.",
+> 2007-06-27) and have been dealing with the fallout since, e.g. in
+> 463b0ea22b ("send-email: Fix %config_path_settings handling",
+> 2011-10-14).
+>=20
+> As can be seen in this change the only place where we actually want to
+> do something clever is with the to/cc/bcc variables, where setting
+> them on the command-line (or using --no-{to,cc,bcc}) should clear out
+> values we grab from the config.
+>=20
+> All the rest are things where the command-line should simply override
+> the config values, and by reading the config first the config code
+> doesn't need all this "let's not set it was on the command-line"
+> special-casing, as [1] shows we'd otherwise need to care about the
+> difference between whether something was a default or present in
+> config to fix the bug in e67a228cd8.
 
-- LOFR_MARK_SEEN is tracked for LHS and RHS separately. To support an
-  arbitrary number of filters, we don't use object flags to track this,
-  so we use oidsets instead. I don't think that the extra memory usage
-  will be a problem (we already allocate more for all the struct
-  object). If this is an issue in the future, we can switch to using
-  object flags for the first N filters, and oidsets thereafter.
+This broke my workflow.
 
-- LOFR_SKIP_TREE is simulated if only one filter wants to skip the tree.
+I specify --identity=3D<account> on the commandline and I want that to
+pick out my send-email config from my global .gitconfig file that
+corresponds to that identity. With this change, the config is parsed
+before the getopt part so --identity on the commandline is a nop and
+never looks into the config file to figure this out. So at least
+--identity is special in addition to --to,cc,bcc.
 
-- I haven't fully figured out LOFR_DO_SHOW yet. It seems to me that if
-  an object appears twice in the walk, and the LHS says LOFR_DO_SHOW on
-  the first occurrence, if the RHS says LOFR_DO_SHOW on the second
-  occurrence, the object will be shown twice. But perhaps this isn't a
-  problem - as it is, I think that a filter can call LOFR_DO_SHOW
-  multiple times on the same object anyway. In any case, if this turns
-  out to be a problem, it seems surmountable to me.
