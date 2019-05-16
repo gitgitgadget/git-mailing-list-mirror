@@ -2,175 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0191A1F461
-	for <e@80x24.org>; Thu, 16 May 2019 22:36:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE601F461
+	for <e@80x24.org>; Thu, 16 May 2019 22:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728340AbfEPWgx convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 16 May 2019 18:36:53 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:36530 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727333AbfEPWgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 18:36:52 -0400
-Received: by mail-oi1-f194.google.com with SMTP id l203so3797704oia.3
-        for <git@vger.kernel.org>; Thu, 16 May 2019 15:36:52 -0700 (PDT)
+        id S1727245AbfEPWlz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 18:41:55 -0400
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:49692 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726943AbfEPWly (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 18:41:54 -0400
+Received: by mail-vk1-f202.google.com with SMTP id t204so1856053vkd.16
+        for <git@vger.kernel.org>; Thu, 16 May 2019 15:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=mk2T3v08UGG/VrLic8t3Yz3WI/Iqg/bpKfJ/xfqi0Mg=;
+        b=qm4l5sHOY+Cw8QHxIZmTRcHke+uyRgljbx9oSpt6TLCoZbpf1utwTxyTrwDjOkSK92
+         QplcfWOxYXl7w7muesfLpBqf5N+oWywUf8UV2RjQUbg0AP/8DPR+xE89WfKmhJZEtPc+
+         1C9HSb0PCnb5m/W9ABZFZWL2JtvQZNvZJ1JcVI4FXvuJT5oiit7OR4N9xvVzntMG4/wr
+         BSOzqZ8KXXq5jRVCMaHKlEu6QNwTj/zywCR+lqbLV09cpcd+XA/6zQb2QKVD3x/hcv8M
+         A+3NmYkd3YohhFavVcu/bThuyOlsA1XbEyeprib/h9DP8iA2fFrPx3Y/dP67UsrmopsB
+         PvpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2l5GOAZbP/7a3/EZ0E4v1EC/7QHsBR1wdDntox139ng=;
-        b=EhSbJ39pySUYlIyXB9wcWyCm1vyfhqrMRGrFCu/QwZNF5y9i7F/nml61YQ56jOJkbK
-         oy7fUbAnD/dPtaxFEdf9IsgWkQfWMEJ82eVR+VdJ0DhUSKvCkRIFhTZlSBXl+ztXlURI
-         Ib1PnrrW1+QqcBbklXe3TdFGVSww1LOo97/MXy0phOYXK4NU/fyE3KGbOOwwpVvuZxYg
-         NmL1Ig6Ymmng6sL1FnBO+uJNPOB1KEiVWWvuswBQfXAhc473+Ad/CqRagShCbytPC50W
-         yyZ03mWiHVuDnmE4t2G+Snep0/TqAISBonH9PgutPl2n38+4GDV1duzyzHdVZCOyLq7Y
-         fNjQ==
-X-Gm-Message-State: APjAAAV7Ua3IxXvp18VaXjr6qsCnVdPHlQ0/ZASPTZF8mnKRjPQq8KI8
-        o0cgXFUR0z2oyMza+ZKzLw+wBYOL2Z9YejPiL/INTRa92YU=
-X-Google-Smtp-Source: APXvYqxyirMS62/xt7H28tf3fXOmbZnzgRgSe3H3ueSLbIBetn3ALkNX3pBcDbxkIPOPUMvye79ccTDUlM1skGtIH/U=
-X-Received: by 2002:aca:b344:: with SMTP id c65mr6682908oif.46.1558046212024;
- Thu, 16 May 2019 15:36:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190515183415.31383-1-marcandre.lureau@redhat.com>
- <c8b6e9c6-12a4-c6dd-bea9-7f07c8af7d15@kdbg.org> <CAMxuvayAS=UbM6JF1WHkb5XsoVwQa2i4HQJM=0A4wo-t+T2cAw@mail.gmail.com>
-In-Reply-To: <CAMxuvayAS=UbM6JF1WHkb5XsoVwQa2i4HQJM=0A4wo-t+T2cAw@mail.gmail.com>
-From:   =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date:   Fri, 17 May 2019 00:36:40 +0200
-Message-ID: <CAMxuvayShHs4=ykFaVgmvr0NkO=nb7n7Lht1-5MdafDavNF6MQ@mail.gmail.com>
-Subject: Re: [PATCH] RFC: userdiff: add built-in pattern for rust
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=mk2T3v08UGG/VrLic8t3Yz3WI/Iqg/bpKfJ/xfqi0Mg=;
+        b=GGJRs7PSZc0gLacKeb3TY7PNBh07p2DE8ba9vFTyf3w4cegyxHO/OhTBlYXyI2G0OG
+         Nj6e6EYBFd9N8f0e72hCmvmVxBuk+wB5P61PWF4BlI+BB6OchxaDp21efUhcmRTrxrK2
+         7YWBY/YBcyJ5yWsD360iOWDB6ax3En903/JMUwE9PeHYY2hsc9poIAJrlDOOJmnzp82Z
+         90im2plLtftlbVCO/iQd3nFOKiISV/iecbr0gKFctgSizHm0bhJ6s5zRi0qZQ0aSGPIi
+         ZR6ctuj6u1rw1l3DMCexNoNINgyTZctiLnk0MJZhxkC9fulUxlBtLmKSv+RDeBhbGpX/
+         MvEA==
+X-Gm-Message-State: APjAAAX7r5If0ivPjwc3RzYh4H2Slez2CZItfldNzF4z+CoJoa0DFp8Z
+        aTo8uoYgMJYUdISabt6yqQKbPl1PpS4AbSvkIRG+
+X-Google-Smtp-Source: APXvYqzG4Q/TWnBi63J5QNHyAlVkd8LlnAlY5AA0Q1P9ITiaCGgG4BdisxWSF4wEUVzG76A4JbvDfQBeR20Kxzg561Ah
+X-Received: by 2002:a67:f24d:: with SMTP id y13mr6417482vsm.82.1558046513672;
+ Thu, 16 May 2019 15:41:53 -0700 (PDT)
+Date:   Thu, 16 May 2019 15:41:50 -0700
+In-Reply-To: <cover.1558030802.git.matvore@google.com>
+Message-Id: <20190516224150.243395-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1558030802.git.matvore@google.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
+Subject: Re: [RFC PATCH 0/3] implement composite filters
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     matvore@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+> Here is a first stab at composite filters. It does not actually support omits,
+> but the biggest difficulties of the implementation are already addressed. So I
+> decided to send out an early version to give interested people an idea of just
+> what is needed to implement it, and then give them a chance to change my mind
+> (Jonathan T. especially was concerned about code complexity).
 
-On Fri, May 17, 2019 at 12:17 AM Marc-André Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi
->
-> On Thu, May 16, 2019 at 10:29 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> >
-> > Am 15.05.19 um 20:34 schrieb marcandre.lureau@redhat.com:
-> > > From: Marc-André Lureau <mlureau@redhat.com>
-> > >
-> > > This adds xfuncname and word_regex patterns for Rust, a quite
-> > > popular programming language. It also includes test cases for the
-> > > xfuncname regex (t4018) and updated documentation.
-> > >
-> > > The word_regex pattern finds identifiers, integers, floats and
-> > > operators, according to the Rust Reference Book.
-> > >
-> > > RFC: since I don't understand why when there are extra lines such as the
-> > > one with FIXME, the funcname is not correctly reported. Help welcome!
-> > >
-> > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > ---
-> > >  Documentation/gitattributes.txt | 2 ++
-> > >  t/t4018-diff-funcname.sh        | 1 +
-> > >  t/t4018/rust-fn                 | 5 +++++
-> > >  t/t4018/rust-struct             | 5 +++++
-> > >  t/t4018/rust-trait              | 5 +++++
-> >
-> > Nice to see tests!
-> >
-> > > diff --git a/userdiff.c b/userdiff.c
-> > > index 3a78fbf504..9e1e2fa03f 100644
-> > > --- a/userdiff.c
-> > > +++ b/userdiff.c
-> > > @@ -130,6 +130,15 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
-> > >        "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
-> > >        "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
-> > >        "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
-> > > +PATTERNS("rust",
-> > > +      "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(struct|enum|union|mod)[ \t].*)$\n"
-> > > +      "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?(unsafe[\t ]+)?trait[ \t].*)$\n"
-> > > +      "^[\t ]*(((pub|pub\\([^)]+\\))[\t ]+)?((const|unsafe|extern(([\t ]+)*\"[^)]+\")?)[\t ]+)*fn[ \t].*)$\n",
-> >
-> > The last \n there is the reason for the test failures: it adds an empty
-> > pattern that matches everywhere and does not capture any text.
->
-> Oops, thanks!
->
-> >
-> > Can we simplify these patterns as in
-> >
-> >    ^
-> >    space*
-> >    ( pub ( "(" stuff ")" )? space* )?
-> >    ( struct|enum|union|mod|unsafe|trait|const|extern|fn )
-> >    stuff
-> >    $
-> >
-> > You don't have to check for a correct syntax rigorously because you can
-> > assume that only correct Rust code will be passed to the patterns.
->
-> yes, but with
->
-> extern ( space* '"' stuff '"' )?
->
-> I'll try that
->
+Thanks - seeing these patches reduces my concerns significantly. A
+composite filter has LHS and RHS filters, either of which can be
+composite themselves, so we support compositing arbitrary numbers of
+filters. I see that the approach is to run LHS and RHS in lockstep, with
+our own handling of the result flags:
 
-Or do you want to capture any line with "extern..." or "unsafe..." ?
+- LOFR_MARK_SEEN is tracked for LHS and RHS separately. To support an
+  arbitrary number of filters, we don't use object flags to track this,
+  so we use oidsets instead. I don't think that the extra memory usage
+  will be a problem (we already allocate more for all the struct
+  object). If this is an issue in the future, we can switch to using
+  object flags for the first N filters, and oidsets thereafter.
 
-That's a bit too much I think, in particular, with unsafe, which is
-commonly used with a simple block.
+- LOFR_SKIP_TREE is simulated if only one filter wants to skip the tree.
 
-So perhaps this instead?:
-
-[\t ]*((pub(\([^)]+\))[\t ]+)?((const|unsafe|extern([\t
-]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn)[ \t].*)$
-
-
-> >
-> > > +      /* -- */
-> > > +      "[a-zA-Z_][a-zA-Z0-9_]*"
-> > > +      "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-> >
-> > I assume that
-> >
-> >        +e_1.ei8-e_2.eu128
-> >
-> > is correct syntax, but not a single token. Yet, your number pattern
-> > would take it as a single word.
-> >
-> > > +      "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-> >
-> > You should really subsume your number patterns under a single pattern
-> > that requires an initial digit, because you can again assume that only
-> > correct syntax will be shown to the patterns:
-> >
-> >         "|[0-9][0-9_a-fA-Fuisxz]*([.][0-9]*([eE][+-]?[0-9]+)?)?"
-> >
-> > (very likely, I have mistaken the meaning of f32 and f64 here).
->
-> That doesn't capture 0o70, easy to fix.
->
-> Then it doesn't capture the examples from the reference manual:
-> 123.0f64;
-> 0.1f64;
-> 0.1f32;
-> 12E+99_f64;
->
-> Thanks for your help!
->
-> >
-> > > +      "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
-> > >  PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
-> > >        "[={}\"]|[^={}\" \t]+"),
-> > >  PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
-> > >
-> > > base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
-> > >
-> >
-> > -- Hannes
+- I haven't fully figured out LOFR_DO_SHOW yet. It seems to me that if
+  an object appears twice in the walk, and the LHS says LOFR_DO_SHOW on
+  the first occurrence, if the RHS says LOFR_DO_SHOW on the second
+  occurrence, the object will be shown twice. But perhaps this isn't a
+  problem - as it is, I think that a filter can call LOFR_DO_SHOW
+  multiple times on the same object anyway. In any case, if this turns
+  out to be a problem, it seems surmountable to me.
