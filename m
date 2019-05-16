@@ -3,83 +3,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ABE21F461
-	for <e@80x24.org>; Thu, 16 May 2019 09:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C29621F461
+	for <e@80x24.org>; Thu, 16 May 2019 09:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbfEPJTV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 05:19:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50878 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbfEPJTV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 05:19:21 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F40D114FFE7;
-        Thu, 16 May 2019 05:19:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/oMsZUHtqtOLqiBI5pzWSDqF8B8=; b=FUDb7D
-        DsaUE5kONGFsY1iLaMKqpIRdLHPGM0KSCDdwL0NasQ26pf3TFfgTAsV24R+dFMWz
-        Y9NXLqpEg+3VaV1/Q7mB+TwQyaIhDyZKtm2c7K5V5ZLpjc7cG6qYzcqmhE/yA9wV
-        O62yOmBxXKaB0qlrdBlwAxyWEuFV+xM4YaT8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I7g66alU9RVQHE1akv/Gbkg+m4fTobLE
-        lLUoAPW6NoxSZUtYyP3lHmKySUF2uVIG/lFpko8itEDP4wZdzVNsA4TYQGyJ98cM
-        D7jJgzHVGqpL5uahksBKMImclqE0SoIKnq7qqkPMMLcKu1iM2k/ztMPf8GMB70j0
-        C4mMq57imMg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EBFCE14FFE6;
-        Thu, 16 May 2019 05:19:16 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F84C14FFE5;
-        Thu, 16 May 2019 05:19:16 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     "LI\, BO XUAN" <liboxuan@connect.hku.hk>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        philipoakley@iee.org
-Subject: Re: [PATCH v3] userdiff.c & doc/gitattributes.txt: add Octave
-References: <CALM0=-mTLakSBW67vqHNX84p=uw990QDbpeUfh1HKq9N0CiiLA@mail.gmail.com>
-        <20190511041331.51642-1-liboxuan@connect.hku.hk>
-        <aa86f483-9c73-eb6d-1a73-80fd4894c093@kdbg.org>
-        <CALM0=-n_=8K4RWE9MvwPFT26UwN-rAA09ryqdTfEF4GJ57YBjg@mail.gmail.com>
-        <a2455214-9ce5-71e3-74bc-114af6fcfca7@kdbg.org>
-Date:   Thu, 16 May 2019 18:19:15 +0900
-In-Reply-To: <a2455214-9ce5-71e3-74bc-114af6fcfca7@kdbg.org> (Johannes Sixt's
-        message of "Wed, 15 May 2019 19:46:18 +0200")
-Message-ID: <xmqqlfz64uzw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726707AbfEPJeW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 05:34:22 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36062 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbfEPJeW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 05:34:22 -0400
+Received: by mail-wm1-f65.google.com with SMTP id j187so2733457wmj.1
+        for <git@vger.kernel.org>; Thu, 16 May 2019 02:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=eQ+9qG1yyI2t7ULNU0ompfNtjAKUW7w2QwIPJI/Rkdo=;
+        b=gRueI4EFHWR4oEq20Hx2njOU6CFfwK6+vRfhX0Bh/9gSqh5qfmdSOgGHEkR/ocBCIA
+         djayuyylvq4UWQzCGqHfEoMv9AVxyex9oYUnOBI6JECieFaVJ/sT/kpovqA2qDoFCEGb
+         ZMNoAVEtMFz6qxNU6rpJy+yIA/rzM0Yp2YfnzKYQoUxc5Y1bTQFahoJMR1leDA8scRyg
+         uxPCPXxo3JO8EvpV81LT6c7WiuwSRloQ9+IMaz20gC1OMdXJw9ca7Az0esIhR3HJ6sJz
+         f07fW/sFAo5mgV1cQ7yxtImmFoqQu4crq4lLG2MQG3y3FAecR0AX1JmzNNvf1wS/RKCP
+         hgJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=eQ+9qG1yyI2t7ULNU0ompfNtjAKUW7w2QwIPJI/Rkdo=;
+        b=W26CnZxCMFUq16VgGyWQD6csQpGXXR+B3cuvBE8T+aqheIqowyKoeYapXda8/5YTad
+         Wl5dkat1vbYOi/5WIVyyOlCK6df2e/1oS1acoSQvXGiE4WugKhIXhUa/NGgn2BcYjGba
+         btM2b7TC9l0pRO6N8mkFnUxQZSW+eLKQQuLFKAPfvQAKMIvEMiLzOQE0S1caf5h6619H
+         WpkGos6qHVJIiXIgKVC+lf4YDOseOrx6g3DLlX/u6inoSiehk1o1NBUsh9Kv2S8VE2rj
+         Uf96U65y8JaSZ/BX95VaaEa05239/M4WoC0cGpNdDSVNb9SBHAaC4KRG3YTiZVCKKIEx
+         Q3Wg==
+X-Gm-Message-State: APjAAAUCnDLdiQfqKEd8H1gE7hPFDrqMt0DWAqn6my9ADwLHzFkbnJ+v
+        mh67sV9dzTgV1juSHJSzfBfI+8YX
+X-Google-Smtp-Source: APXvYqy3BtZJEheGKSrlK8DWvNRi1Jc9nv6rzaOYpID4Z+EI7c7vdHhLrioMD6Ziqpd1eyKotWO6GQ==
+X-Received: by 2002:a1c:f311:: with SMTP id q17mr26947376wmq.144.1557999260182;
+        Thu, 16 May 2019 02:34:20 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e8sm10367490wrc.34.2019.05.16.02.34.19
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 16 May 2019 02:34:19 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Osipov <michael.osipov@siemens.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] configure: Detect linking style for HP aCC on HP-UX
+Date:   Thu, 16 May 2019 11:34:12 +0200
+Message-Id: <20190516093412.14795-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
+In-Reply-To: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
+References: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD7319D4-77BB-11E9-96C4-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+From: Michael Osipov <michael.osipov@siemens.com>
 
-> In Matlab, is %%% followed by space at the beginning of a line
-> *commonly* used for something different? If I were to make a guess, I
-> would say no. If I'm right, it does not hurt to merge the Octave rules
-> into the Matlab rules.
+HP aCC does not accept any of the previously tested CC_LD_DYNPATH
+formats, but only its own[1] "-Wl,+b" format. Add it to configure.ac.
 
-That is true because we are not syntax-aware and error-highlighting
-text editor.  If we were, I'd suspect that your stance may probably
-be different.  But instead we apply these patterns to a program that
-is assumed to be correctly written.
+1. http://nixdoc.net/man-pages/hp-ux/man1/ld_pa.1.html
 
-And from that point of view, I agree with you that it would not hurt
-to make the existing patterns for Matlab slightly more receptive so
-that a correctly written programs in either language would be matched
-appropriately.
+Signed-off-by: Michael Osipov <michael.osipov@siemens.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-But would it hurt to have two similar entries, with a clear
-description on how they are different, in our code there, given how
-infrequently individual entries have historically been updated?
+I took the liberty of slightly amending the commit message.
+
+ configure.ac | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index be3b55f1cc..a43b476402 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -475,8 +475,18 @@ else
+       if test "$git_cv_ld_rpath" = "yes"; then
+          CC_LD_DYNPATH=-rpath
+       else
+-         CC_LD_DYNPATH=
+-         AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
++         AC_CACHE_CHECK([if linker supports -Wl,+b,], git_cv_ld_wl_b, [
++            SAVE_LDFLAGS="${LDFLAGS}"
++            LDFLAGS="${SAVE_LDFLAGS} -Wl,+b,/"
++            AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])], [git_cv_ld_wl_b=yes], [git_cv_ld_wl_b=no])
++            LDFLAGS="${SAVE_LDFLAGS}"
++         ])
++         if test "$git_cv_ld_wl_b" = "yes"; then
++            CC_LD_DYNPATH=-Wl,+b,
++          else
++             CC_LD_DYNPATH=
++             AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
++          fi
+       fi
+    fi
+ fi
+-- 
+2.21.0.1020.gf2820cf01a
+
