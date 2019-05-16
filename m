@@ -2,78 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BD9A1F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:09:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6E91F461
+	for <e@80x24.org>; Thu, 16 May 2019 23:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726563AbfEPXJp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:09:45 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:59203 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbfEPXJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:09:44 -0400
-Received: from [192.168.1.22] ([92.1.197.142])
-        by smtp.talktalk.net with SMTP
-        id RPVMhQsg9WIpcRPVMhyO75; Fri, 17 May 2019 00:09:42 +0100
-X-Originating-IP: [92.1.197.142]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
- a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=anyJmfQTAAAA:8
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=AMgbiCRiAAAA:8
- a=5rxgeBVgAAAA:8 a=PKzvZo6CAAAA:8 a=LBdqEnOb79ycxjD7EhEA:9 a=QEXdDO2ut3YA:10
- a=u09W0hvIdLUA:10 a=YJ_ntbLOlx1v6PCnmBeL:22 a=cU_FsQMbVzznvpCqsfaC:22
- a=PwKx63F5tFurRwaNxrlG:22 a=q92HNjYiIAC_jH7JDaYf:22
-Subject: Re: [PATCH v3 2/2] Doc: git.txt: remove backticks from link and add
- git-scm.com/docs
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <CAPig+cQ4FZeOxbVU-5qTrQm8Q-khwHuCwekAr-aGtbLKAVzY0Q@mail.gmail.com>
- <20190515224709.2936-1-philipoakley@iee.org>
- <20190515224709.2936-3-philipoakley@iee.org>
- <xmqqbm035fhx.fsf@gitster-ct.c.googlers.com>
- <d79d5e70-ec3a-c6ca-b23d-a44edf2579d2@iee.org>
- <20190516222204.GB11784@sigill.intra.peff.net>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <d8f90604-a0de-a054-2af8-8aa33b07071c@iee.org>
-Date:   Fri, 17 May 2019 00:09:42 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726623AbfEPXNW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 19:13:22 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55447 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbfEPXNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 19:13:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58A3371B7C;
+        Thu, 16 May 2019 19:13:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bv02mEOBSDqpSB6wszfxyu07dk0=; b=sXl0mi
+        1891Ox6MCpt8GpsVoo1L0PrZJGu3J0rvKA53d0yqJSLpcaw/R5jKHOFy3aoRBhjV
+        F4TR4x4WcL+ZnFOud/nAMcEVfzPSK6h7zwm/tKeXSdJFIAY/xJ1H2ARO3ZCo15yQ
+        gJzy0/Gel0zt9d5bS69inlxMUyJx/0IZum8hw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FUp3fBCtH/5o4YDOCr17Ocm3ibpzsVfh
+        T1tWmYAWDdK7OLJjUyafq/ogI7bvbBbBRF52+MWZ50uY3meHd1IIyydWDxngLBJa
+        BdvFIA5/dZVj+lcjB5U0ciCpJL+9idVCdKjL9V0cI9CmwhPkEh8vsm46i9+r1vcX
+        wMSDup7Nsd8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3ADE671B7B;
+        Thu, 16 May 2019 19:13:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B64B71B7A;
+        Thu, 16 May 2019 19:13:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     avarab@gmail.com, git@vger.kernel.org, jrnieder@gmail.com,
+        sandals@crustytoothpaste.net, sunshine@sunshineco.com,
+        xypron.glpk@gmx.de
+Subject: Re: [PATCH v3 3/3] send-email: do defaults -> config -> getopt in that order
+References: <20190508105607.178244-1-gitster@pobox.com>
+        <20190508105607.178244-1-gitster@pobox.com>
+        <5cddeb61.1c69fb81.47ed4.e648@mx.google.com>
+Date:   Fri, 17 May 2019 08:13:15 +0900
+In-Reply-To: <5cddeb61.1c69fb81.47ed4.e648@mx.google.com> (Stephen Boyd's
+        message of "Thu, 16 May 2019 15:59:44 -0700")
+Message-ID: <xmqqh89u3sdw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190516222204.GB11784@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfDxAB2zEBsMqimYOWNsbJa96vxDPbmiTYTjYEXS8ekPUpNp2iPYwimtxh/+NvNMV2PSxq172fYwQfrs7wZUDxKq8KvBiwfWyt5HgKUGy6Vz7aegOIPTG
- DdWvjo6tzkf5Ky/KaUaT1gzobBu77Zd2ATzyE75M8rFOtW2LNgxhBR57ZeRiSJRa5n5EHMhkFg8nzXya5Sq20UwN35seJrEHydbaA0zRohVrcAXQFOBeEPqF
- GGLmyDD7WYhDfdQMUl0nvedFV3uSn+hgIYflwmOMLqeIlHb77KSuj57+dvjXI4RH0rQnNEmLp+/4+tQDFntpPqkzXM4MkP3RWX3oTW5fYM/mfqMpPyDiR5qA
- wK4yVt7j
+Content-Type: text/plain
+X-Pobox-Relay-ID: 303CB5D6-7830-11E9-B709-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/05/2019 23:22, Jeff King wrote:
-> On Thu, May 16, 2019 at 12:25:47PM +0100, Philip Oakley wrote:
+Stephen Boyd <swboyd@chromium.org> writes:
+
+>> As can be seen in this change the only place where we actually want to
+>> do something clever is with the to/cc/bcc variables, where setting
+>> them on the command-line (or using --no-{to,cc,bcc}) should clear out
+>> values we grab from the config.
+>> 
+>> All the rest are things where the command-line should simply override
+>> the config values, and by reading the config first the config code
+>> doesn't need all this "let's not set it was on the command-line"
+>> special-casing, as [1] shows we'd otherwise need to care about the
+>> difference between whether something was a default or present in
+>> config to fix the bug in e67a228cd8.
 >
->>> Except perhaps for these to see what's there:
->>>
->>> Documentation/git-archimport.txt:	Attempt to auto-register archives at `http://mirrors.sourcecontrol.net`
->> That domain is gone. Whole line should probably be removed.
-> Heh, see:
+> This broke my workflow.
 >
->    https://public-inbox.org/git/20170420203441.mrlwbkqinub7m225@sigill.intra.peff.net/
->
-> I left it to people who actually care about arch to clean up that line
-> and figure out if there is some useful alternative.
->
-Thanks. I'll sit on my hands on that one then (i.e. do nothing).
--- 
-Philip
+> I specify --identity=<account> on the commandline and I want that to
+> pick out my send-email config from my global .gitconfig file that
+> corresponds to that identity. With this change, the config is parsed
+> before the getopt part so --identity on the commandline is a nop and
+> never looks into the config file to figure this out. So at least
+> --identity is special in addition to --to,cc,bcc.
+
+Ah, sorry that nobody noticed that case, but you are right.  Because
+the ident is used as a part of the key to find identity-specific
+configuration values, if the command line gives one, we must have an
+access to it before we start reading the configuration.  In that sense,
+it is more fundamental to special-case the option.
+
+We are past -rc0, so I am inclined to revert the change (and perhaps
+replace it with the other "fix" that did not break the parsing order
+like these patches did), with an expectation that a clever fix will
+be found later, *unless* a simple and correct fix is found quickly.
+
