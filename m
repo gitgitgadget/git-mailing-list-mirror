@@ -2,76 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E996E1F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:17:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A656E1F461
+	for <e@80x24.org>; Thu, 16 May 2019 23:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbfEPXRI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:17:08 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:45723 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbfEPXRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:17:07 -0400
-Received: by mail-wr1-f45.google.com with SMTP id b18so5065983wrq.12
-        for <git@vger.kernel.org>; Thu, 16 May 2019 16:17:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=C//vXymTHDBCR6y6FP1BtG46HtSj9RZmi0pdEZkkwVY=;
-        b=U7oa3W4DiVnCzj884Tc5UZsABAkewGvFq01XAxEW6W3vVSh5wBNv5gipJyU1zjCabe
-         U1YVY8Nc0ej2OAdPJaRtYzc0Po0/Cp7qJlZUF+hNmq41j7u+1h0SvRqJlGWpBdU89OWr
-         1h+faxPaqv58QHx0myQOoFc4JluqaM2Zm7WahZiJdfAdqiS1SpBIX3RL92N8gx2HiEdg
-         G0h/uf99LeU0msUMldyhm1N3A4sc5PAFOWzGl0f+6INl7DhtDgm1ut0VUv8OZlpqRqAM
-         SSpJPRPITwgNihd427rGBjDXAACAda/u73LG4aflYNBvbU7z3sPknFnLGjdXWLWf9/Us
-         le0Q==
-X-Gm-Message-State: APjAAAU4PSnt/pqZW8hN+tlTqDJ9uVedwLgjfTDMa1NVbjwarDy1AzTE
-        FWVkZ0gYgSVg3qE9rL6S6qwc7X0a788jiLh8gvg=
-X-Google-Smtp-Source: APXvYqyxB/lwT0WUwDnDBF9A9UM/Sdc18QoUbgU8b5c6S4NBG6ehRnZJm3QbSrOziq/AGhk6gTMgl2swBpMdI2O0y2I=
-X-Received: by 2002:adf:e902:: with SMTP id f2mr32685905wrm.301.1558048626138;
- Thu, 16 May 2019 16:17:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
- <CACsJy8DnkjuZD-9pbhAsFo16jHKt8U831LLxb3-nCQP5_FOmtA@mail.gmail.com> <20190516221702.GA11784@sigill.intra.peff.net>
-In-Reply-To: <20190516221702.GA11784@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 16 May 2019 19:16:54 -0400
-Message-ID: <CAPig+cQQ5svrDKRPenL2+bJHGjddUPnAXCFSsQN+WBHqzGpDow@mail.gmail.com>
-Subject: Re: Running 'git worktree add' in 'pre-commit' hook
+        id S1726971AbfEPXVN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 19:21:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58958 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726948AbfEPXVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 19:21:13 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5F4E155B59;
+        Thu, 16 May 2019 19:21:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/yTSxTsH3AKBFvnX4yjjvWGO/rA=; b=Yq27I5
+        eJHNgd5cy7AYXi7y5/F9cZifdD1qP4FnfYxMl88R++FYfyCkp0fMiBnnqHZxcZOb
+        SlX+vn2K9S9d4uemwbknY13vjUKUpvTTZwI4BI5WcgxMDswvUW8rfBn4ZPMW+o5X
+        jf4usDd19AWDqCEAqpXI+MKNKoWy4q677Ww8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=x9rV/ZGn7tFEHd04rmFyqBs0imOOm9uW
+        PCbx8wjKssUsbGo2BgwKYmb5yDQ/K9hNb7OzWO/zjMKFUZitF4DECO30mr/jN7oq
+        c/mISCHy8+Itcwe2nDjuJb1U2/j+IFrQMnPF3hthr9R+jK6HInvVGTFh/gpKxrlP
+        mUGsFdKYjeM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE823155B58;
+        Thu, 16 May 2019 19:21:10 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 416B4155B57;
+        Thu, 16 May 2019 19:21:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Cosmin Polifronie <oppturbv@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Michael Osipov <michael.osipov@siemens.com>
+Subject: Re: [PATCH] Makefile: remove the NO_R_TO_GCC_LINKER flag
+References: <20190516093412.14795-1-avarab@gmail.com>
+        <20190516180521.1933-1-avarab@gmail.com>
+        <20190516222525.GC11784@sigill.intra.peff.net>
+Date:   Fri, 17 May 2019 08:21:09 +0900
+In-Reply-To: <20190516222525.GC11784@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 16 May 2019 18:25:25 -0400")
+Message-ID: <xmqqd0ki3s0q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4A103D92-7831-11E9-8C79-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 16, 2019 at 6:17 PM Jeff King <peff@peff.net> wrote:
-> On Thu, May 16, 2019 at 06:25:24PM +0700, Duy Nguyen wrote:
-> > So you probably can still make it work by backing up $GIT_INDEX_FILE
-> > (in case you need it), then unset it before you use "git worktree" (or
-> > cd to it if you keep a permanent separate worktree for pre-commit
-> > activities). [...]
->
-> The case of actually _adding_ a new work tree (before we enter it) is
-> weirder, though. We definitely want to stay in the same repository, and
-> clearing all of that would not make sense. I do wonder if worktree-add
-> should be handling GIT_INDEX_FILE (ignoring it when we want to be
-> dealing with the index of the new worktree we added, and handling any
-> relative fixups if we chdir inside the worktree code).
+Jeff King <peff@peff.net> writes:
 
-Ignoring GIT_INDEX_FILE was indeed the conclusion reached earlier in
-this thread. Addressing your other point, "git worktree add" does
-chdir() into the new worktree if a post-checkout hook exists since
-that hook needs to run in the new worktree, not in the worktree in
-which the "git worktree add" command itself was invoked. For the hook
-invocation, it already sanitizes the environment of GIT_DIR and
-GIT_WORK_TREE, and GIT_INDEX_FILE ought to be cleaned too. Is there
-any existing code in Git for doing the relative fixups you mention for
-other Git environment variables?
+> Far be it from me to care about AIX, but it seems like this is ripe for
+> regressions, because we don't know which platforms were relying on "-R"
+> instead of "-Wl,-rpath", and now everybody will be using the latter by
+> default.
+
+I do not have a stake in AIX, either, but I had the same reaction.
+
+Those who found having to give NO_R_TO_GCC_LINKER=NoThanks annoying
+could have passed CC_LD_DYNPATH=-Wl,-rpath instead, but that is not
+much shorter or sweeter X-<; with this change, they do not have to
+do anything, but those who are broken can pass CC_LD_DYNPATH=-R to
+unbreak it.  So it may not be the end of the world, but this move
+certainly smells like robbing non-GCC users to pay GCC users to me.
