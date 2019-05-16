@@ -2,107 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9758B1F461
-	for <e@80x24.org>; Thu, 16 May 2019 07:13:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E181F461
+	for <e@80x24.org>; Thu, 16 May 2019 07:49:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbfEPHNT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 03:13:19 -0400
-Received: from david.siemens.de ([192.35.17.14]:54758 "EHLO david.siemens.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726277AbfEPHNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 03:13:19 -0400
-Received: from mail3.siemens.de (mail3.siemens.de [139.25.208.14])
-        by david.siemens.de (8.15.2/8.15.2) with ESMTPS id x4G7DHqB023574
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 16 May 2019 09:13:17 +0200
-Received: from [147.54.65.49] (MD11GXTC.ad001.siemens.net [147.54.65.49])
-        by mail3.siemens.de (8.15.2/8.15.2) with ESMTP id x4G7DHhI028067;
-        Thu, 16 May 2019 09:13:17 +0200
-Subject: Re: [PATCH] sha1dc: update from upstream
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-References: <3cabed9e-3949-93cc-2c9c-500a9cd9d4cd@siemens.com>
- <20190513221701.1837-1-avarab@gmail.com>
- <09f64da1-b8aa-3cd7-89d7-475b8722e176@siemens.com>
- <87a7fovsz8.fsf@evledraar.gmail.com>
-From:   "Osipov, Michael" <michael.osipov@siemens.com>
-Message-ID: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
-Date:   Thu, 16 May 2019 09:13:16 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726976AbfEPHtT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 03:49:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64914 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726513AbfEPHtS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 03:49:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8020B148537;
+        Thu, 16 May 2019 03:49:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vEiVpE3llrfHT4MFqQFluPmTQVg=; b=eRA2e8
+        nR6MNdEdYsDYJaAKC1bSFPEJrTp8DR5500tdjUuy8bX/LcCvn/WP5Qi6TlczanhF
+        4yvcyr7wm8FiMQJGeukSn38ZQpAcmnhkH1kUjc8mH2kHr091W5Y7DVZADDAfEbQI
+        NVHcJpj8dDnELqqoCQaCLhEi/AQtLxIak9hV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G3Rpmp3lymp1ejV+jmxu5G79Yg13nK2O
+        n7gEPsIug3ib8eISdO19qJfkeuV4rdDUoTN+T6yOOUyy5sGOm26WVWCzNwVd13DU
+        gGijgQlYD22eUrOjPBVFFxXePoyQjo54WCP+EyHj5fbZ4kWdhnp/D+rsQCEIUfu+
+        GikU7eDk+Qs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 679F0148536;
+        Thu, 16 May 2019 03:49:16 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEDFC148535;
+        Thu, 16 May 2019 03:49:15 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org, Michael Platings <michael@platin.gs>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v7 7/8] blame: add a fingerprint heuristic to match ignored lines
+References: <20190515214503.77162-1-brho@google.com>
+        <20190515214503.77162-8-brho@google.com>
+Date:   Thu, 16 May 2019 16:49:14 +0900
+In-Reply-To: <20190515214503.77162-8-brho@google.com> (Barret Rhoden's message
+        of "Wed, 15 May 2019 17:45:02 -0400")
+Message-ID: <xmqqpnoi4z5x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87a7fovsz8.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1A6EFF1A-77AF-11E9-934D-E828E74BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Barret Rhoden <brho@google.com> writes:
 
+> From: Michael Platings <michael@platin.gs>
+>
+> +test_expect_success setup '
+> +	{ for ((i=2;i<=$last_test;i++))
 
-Am 2019-05-15 um 13:48 schrieb Ævar Arnfjörð Bjarmason:
-> 
-> On Tue, May 14 2019, Osipov, Michael wrote:
-> 
->> Hi,
->>
->> Am 2019-05-14 um 00:17 schrieb Ævar Arnfjörð Bjarmason:
->>> Update sha1dc from the latest version by the upstream
->>> maintainer[1]. See 07a20f569b ("Makefile: fix unaligned loads in
->>> sha1dc with UBSan", 2019-03-12) for the last update.
->>>
->>> This fixes an issue where HP-UX IA64 was wrongly detected as a
->>> Little-endian instead of a Big-endian system, see [2] and [3].
->>>
->>> 1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/855827c583bc30645ba427885caa40c5b81764d2
->>> 2. https://public-inbox.org/git/603989bd-f86d-c61d-c6f5-fb6748a65ba9@siemens.com/
->>> 3. https://github.com/cr-marcstevens/sha1collisiondetection/pull/50
->>>
->>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->>> ---
->>>
->>> n Thu, May 09 2019, Osipov, Michael wrote:
->>>
->>>> Hey there,
->>>>
->>>> Am 2019-05-09 um 09:32 schrieb Ævar Arnfjörð Bjarmason:
->>>>>
->>>>> On Wed, May 08 2019, Osipov, Michael wrote:
->>>>>
->>>>>> Hi folks,
->>>>>
->>>>> Hi see Documentation/SubmittingPatches for how to submit patches inline
->>>>> instead of as attachments.
->>>>
->>>> Do you want me to resend the configure.ac change as per wiki article?
->>>> I can also create a PR on GitHub. I am happy with both as long as I
->>>> don't have to retain the patch for myself only ;-)
->>>
->>> Yeah that patch to git.git should be done separately. I see your PR
->>> went in upstream, here's a patch to update our code to match.
->>
->> To avoid misunderstandings, I have factored out the Git patch and
->> created a PR: https://github.com/git/git/pull/608
-> 
-> Thanks. If you want to submit it for inclusion you'll need to submit it
-> as a patch here to the ML as described here:
-> https://github.com/git/git/blob/master/Documentation/SubmittingPatches
-> 
-> Or you can use this pull-request-by-proxy thing:
-> https://gitgitgadget.github.io/
-> 
-> Or if you don't want to deal with any of that crap just say and I'll
-> E-Mail this to the list for you. Just want to give you a chance to do it
-> :)
+Crap.
 
-Yes, please do so. It seems like our corporate mail relay server does 
-not allow sending emails outside of our dns namespace. I get bounces 
-from mailer daemon.
+What language are you writing this in?
 
-Michael
+Please make it a habit to try running the test suite with a shell
+that is *not* bash, after you are happy with your tests in bash, e.g.
+
+	$ make SHELL_PATH=/bin/dash test
+
+Thanks.
+
+> +	do
+> +		# Append each line in a separate commit to make it easy to
+> +		# check which original line the blame output relates to.
+> +
+> +		line_count=0 &&
+> +		{ while IFS= read line
+> +		do
+> +			line_count=$((line_count+1)) &&
+> +			echo "$line" >>"$i" &&
+> +			git add "$i" &&
+> +			test_tick &&
+> +			GIT_AUTHOR_NAME="$line_count" git commit -m "$line_count"
+> +		done } <"a$i"
+> +	done } &&
