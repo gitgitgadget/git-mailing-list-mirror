@@ -2,171 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98F5C1F461
-	for <e@80x24.org>; Thu, 16 May 2019 18:05:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B88571F461
+	for <e@80x24.org>; Thu, 16 May 2019 18:07:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728996AbfEPSFc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 14:05:32 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54342 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726339AbfEPSFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 14:05:32 -0400
-Received: by mail-wm1-f67.google.com with SMTP id i3so4539232wml.4
-        for <git@vger.kernel.org>; Thu, 16 May 2019 11:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3YXGcZDpsgWltXH4Mtk5AGSKE+IrzDYj5VAjrEl8E9s=;
-        b=Ua3RjrVWG4rp7qoQfaASq78rrCDSdutodJoXuFbQ8X5Ou1m+OIYzNDtZljTA09Kw9U
-         SPsQAEWL4qfQ3f0jMHSRMpGsJkVMKrOi8zDYA5yOK4t7IQNAODmtNEksK0snm0QEnnUa
-         XQesCIoCwwX6+DkGx+5uv0xGqmvdJ6owkoQEgyLxSKkUGzN63eAvmGkVLtrzObioxCYQ
-         AGM4Bv5KvILZAKDYeqKIwgEyJmtmfVjy/dgZxHkkQC/7xdZQHGrLhjbysjQ/8kax5/ac
-         ZEdjkTHQTyr5djJqFVb3pn4fe1J4m0CNiCWMJgxgM9Y64nDQAHNLKAAlkQCc/31hVsRP
-         07YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3YXGcZDpsgWltXH4Mtk5AGSKE+IrzDYj5VAjrEl8E9s=;
-        b=sKjS+CM+6/eARhVg0WTaS3GTy0lLvUDsVRVMGP/9rKt/H0xN+viIsVktSWMqTIv8EP
-         3/kOu9EKWji+CA5b/nsrtln5L531gj0eVehHWgClaIKQzh3F+x2Mz7IKVPNcNRLB2X+T
-         SBifoMPGdodwMyMXZy1XjitoZkFA7yH/ITDb8VIbWmb+MArUVQ7AZietvGk8qt0f06Oc
-         rI7YH76O+hccOi0nDSrg+xdvdjHLgJl1icd730rVgNtbUBMPokHNxylMWmrfaTPnuU6h
-         +Cymu0nFiJTjAdbPwJmdJPAZb6Gizguq6vSEW7uSAqOBeHIvsd9VsRqIZdxfcWh9baVx
-         gj8A==
-X-Gm-Message-State: APjAAAXAyHF56lKgWu/r+XbjsxvI2x7SM/xwGVVKB3dKassoRaHUrpTP
-        aIFf7JVUFhYYElBbTn9mBbNO9osgk2k=
-X-Google-Smtp-Source: APXvYqzZ8usqjM1aS2P4WXc1mkmTOMbJ5cliLQBgv6NrVW4Bh9Kr3COucjyShsv3tF6wke+qFGyxRQ==
-X-Received: by 2002:a1c:7e10:: with SMTP id z16mr17298462wmc.98.1558029929780;
-        Thu, 16 May 2019 11:05:29 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o4sm5317591wmc.38.2019.05.16.11.05.28
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 16 May 2019 11:05:29 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Osipov <michael.osipov@siemens.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] Makefile: remove the NO_R_TO_GCC_LINKER flag
-Date:   Thu, 16 May 2019 20:05:21 +0200
-Message-Id: <20190516180521.1933-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
-In-Reply-To: <20190516093412.14795-1-avarab@gmail.com>
-References: <20190516093412.14795-1-avarab@gmail.com>
+        id S1729012AbfEPSHY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 14:07:24 -0400
+Received: from outmail148096.authsmtp.net ([62.13.148.96]:45110 "EHLO
+        outmail148096.authsmtp.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726339AbfEPSHY (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 May 2019 14:07:24 -0400
+X-Greylist: delayed 994 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 May 2019 14:07:23 EDT
+Received: from mail-c233.authsmtp.com (mail-c233.authsmtp.com [62.13.128.233])
+        by punt18.authsmtp.com. (8.15.2/8.15.2) with ESMTP id x4GHolD1057830;
+        Thu, 16 May 2019 18:50:47 +0100 (BST)
+        (envelope-from bavison@riscosopen.org)
+Received: from amoe.lan ([37.152.216.162])
+        (authenticated bits=0)
+        by mail.authsmtp.com (8.15.2/8.15.2) with ESMTPSA id x4GHojYE047541
+        (version=TLSv1.2 cipher=AES128-SHA bits=128 verify=NO);
+        Thu, 16 May 2019 18:50:46 +0100 (BST)
+        (envelope-from bavison@riscosopen.org)
+Subject: Re: [PATCH] clone: add `--remote-submodules` flag
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190513175903.126079-1-bavison@riscosopen.org>
+ <CACsJy8B589nOPNt6143BNQNojRYn4pyQCMNZKLRn+EGyWD4-mw@mail.gmail.com>
+From:   Ben Avison <bavison@riscosopen.org>
+Organization: RISC OS Open Ltd
+Message-ID: <1376dce1-6ca1-88f2-97c9-c8dd2ac683a1@riscosopen.org>
+Date:   Thu, 16 May 2019 18:50:45 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:60.0)
+ Gecko/20100101 Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8B589nOPNt6143BNQNojRYn4pyQCMNZKLRn+EGyWD4-mw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Server-Quench: 2222d98d-7803-11e9-a01e-84349711df28
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd1YggXA1ZfRRob ESQCJDVBUg4iPRpU DBlFKhFVNl8UURhQ KkJXbgASJgRCAnRQ SnkJW1VdQFx5U2Z1 YQ5XIwZafEtLXRto UU5XQ1RQCwdtAxke B1BWVm4KKF8vDX50 YkNmXz5dWk1+O0R/ QEwAHGVSeGBoaGMC UUENfh4FcAIfYxdB aVR2U3IMNTMFbjQC El17DAgYAR5/HWxe RgYLIABaSEoHVjZ5 AgoPGDIzEAgeWi82 KBA7LlMHFA4fNkw9 WX4A
+X-Authentic-SMTP: 61633632303230.1021:706
+X-AuthFastPath: 0 (Was 255)
+X-AuthSMTP-Origin: 37.152.216.162/2525
+X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the NO_R_TO_GCC_LINKER flag, thus switching the default to
-"-Wl,-rpath,$LIBPATH" instead of our current "-R$LIBPATH". This is a
-relatively obscure thing that only kicks in when using one of the
-LIBDIR flags, e.g. LIBPCREDIR or CURLDIR.
+On 16/05/2019 12:31, Duy Nguyen wrote:
+> On Tue, May 14, 2019 at 2:46 AM Ben Avison <bavison@riscosopen.org> wrote:
+>>
+>> When using `git clone --recurse-submodules` there was previously no way to
+>> pass a `--remote` switch to the implicit `git submodule update` command for
+>> any use case where you want the submodules to be checked out on their
+>> remote-tracking branch rather than with the SHA-1 recorded in the superproject.
+> 
+> Are there any other submodule options that could be useful passing
+> from git-clone as well? What I'm getting at is, if there are multiple
+> of them, perhaps we need a different/generic approach than introducing
+> a bunch of --<something>-submodules. But of course if --remote is the
+> only useful one left, then it's moot.
 
-How we invoke the linker to do this can still be overridden with
-CC_LD_DYNPATH, as seen in our configure.ac script.
+That's an interesting point. However, for many of the switches, it only 
+makes sense to set them one way when you're calling `git submodule 
+update` within `git clone --recurse-submodules`.
 
-Our use of "-R" dates back to 455a7f3275 ("More portability.",
-2005-09-30). Soon after that in bbfc63dd78 ("gcc does not necessarily
-pass runtime libpath with -R", 2006-12-27) the NO_R_TO_GCC flag was
-added, allowing optional use of "-Wl,-rpath=".
 
-Then in f5b904db6b ("Makefile: Allow CC_LD_DYNPATH to be overriden",
-2008-08-16) the ability to override this flag to something else
-entirely was added, as some linkers use neither "-Wl,-rpath," nor
-"-R".
+--quiet: already inherited from `git clone`
 
-From what I can tell we should, with the benefit of hindsight, have
-made this change back in 2006. GCC & ld supported this type of
-invocation back then, or since at least binutils-gdb.git's[1]
-a1ad915dc4 ("[...]Add support for -rpath[...]", 1994-07-20). Most
-people compiling git with a custom LIBDIR are going to be on a GNU-ish
-system, and having to provide this NO_R_TO_GCC_LINKER flag on top of a
-custom LIBDIR is annoying.
+--progress: already inherited from `git clone`
 
-There are some OS's that don't support -rpath, e.g. AIX ld just
-supports "-R". Perhaps we should follow this up with some
-config.mak.uname changes, but as noted it's quite possible that nobody
-on these platforms uses this (instead libraries in the system's search
-path). We *could* also use "-Wl,-R", but let's not introduce something
-new.
+--force: wouldn't have any effect since there cannot be any local 
+changes to override yet
 
-Further reading and prior art can be found at [2][3][4][5]. Making a
-plain "-R" an error seems from reading those reports to have been
-introduced in GCC 4.6 released on March 25, 2011, but I couldn't
-confirm this with absolute certainty, its release notes are ambiguous
-on the subject, and I couldn't be bothered to try to build & bisect it
-against GCC 4.5.
+--remote: this is what my patch is adding support for
 
-1. git://sourceware.org/git/binutils-gdb.git
-2. https://github.com/tsuna/boost.m4/issues/15
-3. https://bugzilla.gnome.org/show_bug.cgi?id=641416
-4. https://stackoverflow.com/questions/12629042/g-4-6-real-error-unrecognized-option-r
-5. https://curl.haxx.se/mail/archive-2014-11/0005.html
-6. https://gcc.gnu.org/gcc-4.6/changes.html
+--no-fetch: since any submodules will be freshly cloned, there is no 
+need to fetch from them again already, so you'd always want this on (as 
+far as I'm aware, this only has effect when you also use --remote, so 
+I've made it conditional on that)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+--checkout/--rebase/--merge: since there cannot be any local changes to 
+rebased or merged yet, these wouldn't have any effect, and it's fine to 
+leave them as the default (--checkout)
 
-Looking at that HP/UX configure patch I was reminded of being annoyed
-by the NO_R_TO_GCC_LINKER flag.
+--init: you always want this in this case
 
- Makefile | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+--reference/--dissociate: I suppose you might want these in theory? 
+However, as far as I understand, it's only really useful for `git 
+submodule update` if the superproject only contains a single submodule, 
+since each submodule would require a different reference repository.
 
-diff --git a/Makefile b/Makefile
-index f965509b3c..ce7a489d64 100644
---- a/Makefile
-+++ b/Makefile
-@@ -265,10 +265,6 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
--# Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
--# that tells runtime paths to dynamic libraries;
--# "-Wl,-rpath=/path/lib" is used instead.
--#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-@@ -1160,6 +1156,7 @@ endif
- # which'll override these defaults.
- CFLAGS = -g -O2 -Wall
- LDFLAGS =
-+CC_LD_DYNPATH = -Wl,-rpath,
- BASIC_CFLAGS = -I.
- BASIC_LDFLAGS =
- 
-@@ -1287,16 +1284,6 @@ ifeq ($(uname_S),Darwin)
- 	PTHREAD_LIBS =
- endif
- 
--ifndef CC_LD_DYNPATH
--	ifdef NO_R_TO_GCC_LINKER
--		# Some gcc does not accept and pass -R to the linker to specify
--		# the runtime dynamic library path.
--		CC_LD_DYNPATH = -Wl,-rpath,
--	else
--		CC_LD_DYNPATH = -R
--	endif
--endif
--
- ifdef NO_LIBGEN_H
- 	COMPAT_CFLAGS += -DNO_LIBGEN_H
- 	COMPAT_OBJS += compat/basename.o
--- 
-2.21.0.1020.gf2820cf01a
+--recursive: at present this is applied unconditionally. I suppose you 
+might only want to recurse to one level, but I'd think that's rare?
 
+--depth: at present you only get to set this to a depth of 1, by passing 
+`--shallow-submodules` to `git clone`. I suppose you might occasionally 
+want a different depth, but again I'd expect that to be rare.
+
+--no-recommend-shallow: there may be an argument for letting you set 
+this one, and you can't at present
+
+--jobs: already inherited from `git clone`
+
+
+In summary, the most significant omission is --remote IMHO, though there 
+may be an argument for adding a small number of others.
+
+Ben
