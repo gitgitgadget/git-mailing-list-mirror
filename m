@@ -2,90 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00F4F1F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80A451F461
+	for <e@80x24.org>; Thu, 16 May 2019 23:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727338AbfEPXeH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:34:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52663 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726857AbfEPXeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:34:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2031471D36;
-        Thu, 16 May 2019 19:34:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L6Op9/91vcjo6b9S6HP5biua8PI=; b=HI2Qs7
-        1Aj0L9yR3CjL23Vx1LLgp8ahRXM0IWTWRkqkebe8iYyk4VB6nlAVnawnXaDkdp2U
-        Yk+KnGYNwTQcWgPO7E7LfJb7xZuQdPw/49g6UFbpGJbkQWMM7l2ETwLzqzGO1UBh
-        cnMdXRyiqxrKJOW6aG497fvQf0yyPXvbGdPhs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uuJMOQdfZMh/D05ijl50leKu9aNWWrdl
-        RMi19m1hwtFME8JkIN60fBVmY34d8eRt5jiKGeWFMJfVcUJaNVHy4gVehXGnuD29
-        mfGK2SY4aSkpbMgCNmvCivoYuzb8dUwoTxPJq92eixjJy6ASbVOg9qmn26b1b3eW
-        adY4dOi8diA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1836971D35;
-        Thu, 16 May 2019 19:34:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.255.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727505AbfEPX6U (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 19:58:20 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:36096 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726523AbfEPX6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 19:58:20 -0400
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D209871D33;
-        Thu, 16 May 2019 19:34:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     "LI\, BO XUAN" <liboxuan@connect.hku.hk>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        philipoakley@iee.org
-Subject: Re: [PATCH v3] userdiff.c & doc/gitattributes.txt: add Octave
-References: <CALM0=-mTLakSBW67vqHNX84p=uw990QDbpeUfh1HKq9N0CiiLA@mail.gmail.com>
-        <20190511041331.51642-1-liboxuan@connect.hku.hk>
-        <aa86f483-9c73-eb6d-1a73-80fd4894c093@kdbg.org>
-        <CALM0=-n_=8K4RWE9MvwPFT26UwN-rAA09ryqdTfEF4GJ57YBjg@mail.gmail.com>
-        <a2455214-9ce5-71e3-74bc-114af6fcfca7@kdbg.org>
-        <xmqqlfz64uzw.fsf@gitster-ct.c.googlers.com>
-        <262eb1d4-a898-c6d0-8e04-ce6c58eaa4e6@kdbg.org>
-Date:   Fri, 17 May 2019 08:33:59 +0900
-In-Reply-To: <262eb1d4-a898-c6d0-8e04-ce6c58eaa4e6@kdbg.org> (Johannes Sixt's
-        message of "Thu, 16 May 2019 21:20:57 +0200")
-Message-ID: <xmqq8sv63rfc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by mx1.redhat.com (Postfix) with ESMTPS id 2C789307D846;
+        Thu, 16 May 2019 23:58:20 +0000 (UTC)
+Received: from localhost (ovpn-112-26.ams2.redhat.com [10.36.112.26])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 23C6F605D0;
+        Thu, 16 May 2019 23:58:16 +0000 (UTC)
+From:   marcandre.lureau@redhat.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <mlureau@redhat.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v2] userdiff: add built-in pattern for rust
+Date:   Fri, 17 May 2019 01:58:15 +0200
+Message-Id: <20190516235815.13886-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 15F80D94-7833-11E9-B425-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Thu, 16 May 2019 23:58:20 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+From: Marc-André Lureau <mlureau@redhat.com>
 
-> I'd prefer to keep this list at the minimum necessary as long as it is
-> hard-coded in C.
+This adds xfuncname and word_regex patterns for Rust, a quite
+popular programming language. It also includes test cases for the
+xfuncname regex (t4018) and updated documentation.
 
-Yeah, I know that feeling.
+The word_regex pattern finds identifiers, integers, floats and
+operators, according to the Rust Reference Book.
 
-> I would take a different stance if this were some
-> configuration file that we ship.
+Cc: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ Documentation/gitattributes.txt | 2 ++
+ t/t4018-diff-funcname.sh        | 1 +
+ t/t4018/rust-fn                 | 5 +++++
+ t/t4018/rust-impl               | 5 +++++
+ t/t4018/rust-struct             | 5 +++++
+ t/t4018/rust-trait              | 5 +++++
+ userdiff.c                      | 7 +++++++
+ 7 files changed, 30 insertions(+)
+ create mode 100644 t/t4018/rust-fn
+ create mode 100644 t/t4018/rust-impl
+ create mode 100644 t/t4018/rust-struct
+ create mode 100644 t/t4018/rust-trait
 
-Hmm, now you reminded me of my ancient wish.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 4fb20cd0e9..07da08fb27 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -833,6 +833,8 @@ patterns are available:
+ 
+ - `ruby` suitable for source code in the Ruby language.
+ 
++- `rust` suitable for source code in the Rust language.
++
+ - `tex` suitable for source code for LaTeX documents.
+ 
+ 
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 22f9f88f0a..9261d6d3a0 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -43,6 +43,7 @@ diffpatterns="
+ 	php
+ 	python
+ 	ruby
++	rust
+ 	tex
+ 	custom1
+ 	custom2
+diff --git a/t/t4018/rust-fn b/t/t4018/rust-fn
+new file mode 100644
+index 0000000000..cbe02155f1
+--- /dev/null
++++ b/t/t4018/rust-fn
+@@ -0,0 +1,5 @@
++pub(self) fn RIGHT<T>(x: &[T]) where T: Debug {
++    let _ = x;
++    // a comment
++    let a = ChangeMe;
++}
+diff --git a/t/t4018/rust-impl b/t/t4018/rust-impl
+new file mode 100644
+index 0000000000..09df3cd93b
+--- /dev/null
++++ b/t/t4018/rust-impl
+@@ -0,0 +1,5 @@
++impl<'a, T: AsRef<[u8]>>  std::RIGHT for Git<'a> {
++
++    pub fn ChangeMe(&self) -> () {
++    }
++}
+diff --git a/t/t4018/rust-struct b/t/t4018/rust-struct
+new file mode 100644
+index 0000000000..76aff1c0d8
+--- /dev/null
++++ b/t/t4018/rust-struct
+@@ -0,0 +1,5 @@
++#[derive(Debug)]
++pub(super) struct RIGHT<'a> {
++    name: &'a str,
++    age: ChangeMe,
++}
+diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
+new file mode 100644
+index 0000000000..ea397f09ed
+--- /dev/null
++++ b/t/t4018/rust-trait
+@@ -0,0 +1,5 @@
++unsafe trait RIGHT<T> {
++    fn len(&self) -> u32;
++    fn ChangeMe(&self, n: u32) -> T;
++    fn iter<F>(&self, f: F) where F: Fn(T);
++}
+diff --git a/userdiff.c b/userdiff.c
+index 3a78fbf504..8d7e62e2a5 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -130,6 +130,13 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
+ 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
+ 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
++PATTERNS("rust",
++	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl(<.+>)?)[ \t]+[^;]*)$",
++	 /* -- */
++	 "[a-zA-Z_][a-zA-Z0-9_]*"
++	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
++	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
++	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+ 	 "[={}\"]|[^={}\" \t]+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
 
-Perhaps it is not too bad to ship $(sharedir)/git-core/userdiff that
-can be read using git_config_from_file() interface, using a very
-narrow callback function that understands only diff.*.xfuncname and
-diff.*.wordregex and discards everything else, without even
-following the include/includeIf stuff?  As long as that can be done
-safely and without too much overhead, we could get rid of the
-hardcoded patterns in userdiff.c::builtin_drivers[] and that would
-be wonderful ;-)
+base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
+-- 
+2.22.0.rc0.1.ge0ee2a09d1
 
