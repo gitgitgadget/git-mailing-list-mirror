@@ -7,64 +7,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6251F461
-	for <e@80x24.org>; Thu, 16 May 2019 01:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC1921F461
+	for <e@80x24.org>; Thu, 16 May 2019 01:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727249AbfEPBqZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 21:46:25 -0400
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:46718 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726730AbfEPBZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 21:25:51 -0400
-Received: by mail-qk1-f194.google.com with SMTP id a132so1224285qkb.13
-        for <git@vger.kernel.org>; Wed, 15 May 2019 18:25:50 -0700 (PDT)
+        id S1727235AbfEPBqY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 21:46:24 -0400
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:38364 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbfEPBOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 21:14:35 -0400
+Received: by mail-qk1-f176.google.com with SMTP id a64so1267930qkg.5
+        for <git@vger.kernel.org>; Wed, 15 May 2019 18:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6SeWOnRZSmHWJUO6NKEpEkDGnjj8GhH7NroY4Ui//F8=;
-        b=j4fs37CRuFnp4yWhwZv4nCyYdQ/P0ToRxmxTJA3JrwZjWbsHyyusvy2Dg4GtBI9Ho/
-         9AgB0P8GE/EG+qRLm1lptXCjDk/ZD2YAIYSS0z+ls8oHc53EqmmiRnxUb9B17dmNByuY
-         NI/ty69983M5FR5Urebqm9euMn3mhzS1YMbFmj/eslrEcTeIDZezQ3+/TedXBBKsIbUM
-         YdyJ9BX57WjxmOt8VdR1usUtBA49kg/oRydWCk/XFLpvcybLYVTou1UMOb/Brk08bbpV
-         tOSoguuztdWbRkpL0ZkyBDUOLfKPigBT5SOtQN0dAwxiDSzYmArAh3UcEwLmcser/LZ+
-         wQFw==
+        bh=pExmcxiScxUcFeI6zybdEVQxC+cjD0e8gmV0ENI9UmE=;
+        b=EOenvPSFYbYhUdtLsLtH6YxISjbM0708MuKDiI4gIBNPbyuHrC/8Gmbs2m0iudN+AK
+         V/VXQlYhhjWR6te3G/YQon+y2DD7xThvCDFsP0laFzSpO15tA2VAV4iv7e5NarsVmszd
+         iGlV8lg1xKJTpsf+Pdpuxjhz8qL6jZTG3rkE8b3sPxDDGADKMb4mqkdDcGUfdjSlfCii
+         0NdJKDmrHFGTe9/oxRDGmyNQSMQBETK6XQOVtHEChInpoOTqKXdnDqWmjWlzS88qUm0C
+         USX85zUJj6eSnQ6fcXmhW3nzxLRZ65O1DI5fpegbE1QWU09I7Hz6OnwLMmcTHoOqJt0X
+         VnAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=6SeWOnRZSmHWJUO6NKEpEkDGnjj8GhH7NroY4Ui//F8=;
-        b=kGPp6yDxOIL/9t2w5Z99d/0uJRX2jgRLNkRBIOgPboUtUfNbSyWePkblinqpCCvDCw
-         Uffsv6f7I9PKebae/jtnKip84k48oVuxosDj3vm1eZ44/OFD0IM2S8uEMZ2Hj0zVdRKP
-         RGxGXloBuVCwV1PeLnWgHomuR/f+Ai8+Y5L2VZM7c67bXehSy8SMspMJeYdIA0ePpaRe
-         MP8zSTfoD1dbL+cD5sJqbAfRmiI/ulP8weKTAFSwFcBDqmcWs1wpS477xXx2cVqVGQou
-         UwoAR17YQgYHVlD3J1YkVYP2Zi86v0T9N6aZqxOhzUO7yFkBIyDSJYdfHlhK8nvF0rhQ
-         3Pyg==
-X-Gm-Message-State: APjAAAUoaSLwb/56hVSmwLsH8j75fPjbAFYx5Eah+kWuKhPy316w4u9M
-        qX5Nn/xSn6yqW5Gn9MNM9e8Tz8oIUaA=
-X-Google-Smtp-Source: APXvYqzJOG2DJDyhlyxNwx9J7xMtfVnYr2RYmxpQMCW8NIJT4csbS8oLM98lQDftFpmpIUpaTyD0zA==
-X-Received: by 2002:a37:6043:: with SMTP id u64mr24283066qkb.9.1557969949296;
-        Wed, 15 May 2019 18:25:49 -0700 (PDT)
+        bh=pExmcxiScxUcFeI6zybdEVQxC+cjD0e8gmV0ENI9UmE=;
+        b=G3brQTzoZWIhSMt08at3vRsoVBKZzBUatBqDb8GPJmjxFPJ1T+BTGsM1n9PPJ+Rdzu
+         5ZmoGqZphUFyrieigD2nsc3CiJmPpw7zkugO3NLODQ+pAW8zoA9+/X41V2/ELqYR0z29
+         koCk3Khrxy1Kc76y0wWe+5B1NchtU8K7IH7fMkM6IqmINVxphkiXLEMc/KD49PcmudH0
+         s84HOqPDK5R3NK+Lpjjku8bR1BXsQIUnhsNH6n09UEIqHd3qPw3iGYYzsoZgyeodMib+
+         67OzRBHIwVB4RDLFGGVUkQ+hp9QrxmDiKpBmvtq6u2puzIYVGiSDh/8XKOdLuMkjDYoL
+         JqmA==
+X-Gm-Message-State: APjAAAVl83RLhDz3h1zp03cuX19S93Bnh3ajTqdPW2uT98fiHuL/KeKa
+        A6v9jqrfPQXSM21MmN9FCMNl2z51J5o=
+X-Google-Smtp-Source: APXvYqwQ847pPofmbZDtlWDxdnQb6MYk6Coux2xc9PhlmfW7RSRO5MmaYjCY3XMnrP1SxSn/vYNcTA==
+X-Received: by 2002:a37:6082:: with SMTP id u124mr19048046qkb.144.1557969273522;
+        Wed, 15 May 2019 18:14:33 -0700 (PDT)
 Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id q66sm1955550qke.66.2019.05.15.18.25.48
+        by smtp.gmail.com with ESMTPSA id a51sm2720286qta.85.2019.05.15.18.14.32
         (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 May 2019 18:25:48 -0700 (PDT)
+        Wed, 15 May 2019 18:14:32 -0700 (PDT)
 Subject: Re: Finer timestamps and serialization in git
 To:     esr@thyrsus.com
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+Cc:     git@vger.kernel.org
 References: <20190515191605.21D394703049@snark.thyrsus.com>
  <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
- <023b01d50b5c$cbd3cd90$637b68b0$@pdinc.us>
- <998895a9-cfbb-c458-cc88-fa1aabed4389@gmail.com>
- <20190516002831.GC124956@thyrsus.com>
+ <20190515233230.GA124956@thyrsus.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3b8d6a78-bd88-770c-e79b-d732f7e277fd@gmail.com>
-Date:   Wed, 15 May 2019 21:25:46 -0400
+Message-ID: <ab3222ab-9121-9534-1472-fac790bf08a4@gmail.com>
+Date:   Wed, 15 May 2019 21:14:30 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
  Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <20190516002831.GC124956@thyrsus.com>
+In-Reply-To: <20190515233230.GA124956@thyrsus.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -73,84 +71,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/15/2019 8:28 PM, Eric S. Raymond wrote:
+On 5/15/2019 7:32 PM, Eric S. Raymond wrote:
 > Derrick Stolee <stolee@gmail.com>:
->> What problem are you trying to solve where commit date is important?
+>> On 5/15/2019 3:16 PM, Eric S. Raymond wrote:
+>>> The deeper problem is that I want something from Git that I cannot
+>>> have with 1-second granularity. That is: a unique timestamp on each
+>>> commit in a repository.
+>>
+>> This is impossible in a distributed version control system like Git
+>> (where the commits are immutable). No matter your precision, there is
+>> a chance that two machiens commit at the exact same moment on two different
+>> machines and then those commits are merged into the same branch.
 > 
-> I don't know what Jason's are.  I know what mine are.
+> It's easy to work around that problem. Each git daemon has to single-thread
+> its handling of incoming commits at some level, because you need a lock on the
+> file system to guarantee consistent updates to it.
 > 
-> A. Portable commit identifiers
+> So if a commit comes in that would be the same as the date of the
+> previous commit on the current branch, you bump the incoming commit timestamp.
+
+This changes the commit, causing it to have a different object id, and
+now the client that pushed that commit disagrees with your machine on
+the history.
+
+> That's the simple case. The complicated case is checking for date
+> collisions on *other* branches. But there are ways to make that fast,
+> too. There's a very obvious one involving a presort that is is O(log2
+> n) in the number of commits.
 > 
-> 1. When I in-migrate a repository from (say) Subversion with
-> reposurgeon, I want to be able to patch change comments so that (say)
-> r2367 becomes a unique reference to its corresponding commit. I do
-> not want the kludge of appending a relic SVN-ID header to be *required*,
-> though some customers may choose that. Requirung that is an orthogonality
-> violation.
-
-Instead of using the free-form nature of a commit message to include links
-to an external VCS, you want a first-class data type in Git to provide this
-data? Not only is that backwards, it makes the link between the Git repo and
-the SVN repo weaker. How would you distinguish between a commit generated from
-the old SVN repo and a commit that was created directly in the Git repo without
-performing a lookup to the SVN repo based on (committer, timestamp)?
-
-> 2. Because I think in decadal timescales about infrastructure, I want
-> my commit references to be in a format that won't break when the history
-> is forward-migrated to the *next* VCS. That pretty much eliminates any
-> from of opaque hash. (Git itself will have a weaker version of this problem
-> when you change hash formats.)
+> I wouldn't have brought this up in the first place if I didn't have a
+> pretty clear idea how to do it in code!
 > 
-> 3. Accordingly, I invented action stamps. This is an action stamp:
-> <esr@thyrsus.com!2019-05-15T20:01:15Z>. One reason I want timestamp
-> uniqueness is for action-stamp uniqueness.
-
-Looks like you have an excellent format for a backwards-facing link.
-
-Gerrit uses a commit-msg hook [1] to insert "Change-Id" tags into
-commit messages. You could probably do something similar. If you have
-control over _every_ client interacting with the repo, you could even
-have this interact with a central authority to give a unique stamp.
-
-> B. Unique canonical form of import-stream representation.
+>> Even when you specify a committer, there are many environments where a set
+>> of parallel machines are creating commits with the same identity.
 > 
-> Reposurgeon is a very complex piece of software with subtle failure
-> modes.  I have a strong need to be able to regression-test its
-> operation.  Right now there are important cases in which I can't do
-> that because (a) the order in which it writes commits and (b) how it
-> colors branches, are both phase-of-moon dependent.  That is, the
-> algorithms may be deterministic but they're not documented and seem to
-> be dependent on variables that are hidden from me.
+> If those commit sets become the same commit in the final graph, this is
+> not a problem for total ordering.
 > 
-> Before import streams can have a canonical output order without hidden
-> variables (e.g. depending only on visible metadata) in practice, that
-> needs to be possible in principle. I've thought about this a lot and
-> not only are unique commit timestamps the most natural way to make
-> it possible, they're the only way conistent with the reality that
-> commit comments may be altered for various good reasons during
-> repository translation.
-
-If you are trying to debug or test something, why don't you serialize
-the input you are using for your test?
-
->> P.S. All of my (overly strong) opinions on using commit date are made
->> more valid when you realize anyone can set GIT_COMMITTER_DATE to get
->> an arbitrary commit date.
+>>> Why do I want this? There are number of reasons, all related to a
+>>> mathematical concept called "total ordering".  At present, commits in
+>>> a Git repository only have partial ordering. 
+>>
+>> This is true of any directed acyclic graph. If you want a total ordering
+>> that is completely unambiguous, then you should think about maintaining
+>> a linear commit history by requiring rebasing instead of merging.
 > 
-> In the way I would write things, you can *request* that date, but in
-> case of a collision you might actually get one a few microseconds off
-> that preserves its order relationship with your other commits.
+> Excuse me, but your premise is incorrect.  A git DAG isn't just "any" DAG.
+> The presence of timestamps makes a total ordering possible.
+> 
+> (I was a theoretical mathematician in a former life. This is all very
+> familiar ground to me.)
 
-As mentioned above, you need to make this request at the time the commit
-is created, and you'll need to communicate with a central authority. That
-goes against the distributed nature of Git.
+Same. But you seem to have a fundamental misunderstanding about the immutability
+of commits, which is core to how Git works. If you change a commit, then you
+get a new object id and now distributed copies don't agree on the history.
 
-In my opinion, Git already gives you the flexibility to achieve the goals
-you are looking for. But changing a core data type to make your goals
-slightly more convenient is not a valuable exercise.
+>>> One consequence is that
+>>> action stamps - the committer/date pairs I use as VCS-independent commit
+>>> identifications in reposurgeon - are not unique.  When a patch sequence
+>>> is applied, it can easily happen fast enough to give several successive
+>>> commits the same committer-ID and timestamp.
+>>
+>> Sorting by committer/date pairs sounds like an unhelpful idea, as that
+>> does not take any graph topology into account. It happens that commits
+>> can actually have an _earlier_ commit date than its parent.
+> 
+> Yes, I'm aware of that.  The uniqueness properties that make a total
+> ordering desirable are not actually dependent on timestamp order
+> coinciding with topo order.
+> 
+>> Changing the granularity of timestamps requires changing the commit format,
+>> which is probably a non-starter.
+> 
+> That's why I started by noting that you're going to have to break the
+> format anyway to move to an ECDSA hash (or whatever you end up using).
+> 
+> I'm saying that *since you'll need to do that anyway*, it's a good time
+> to think about making timestamps finer-grained and unique.
+
+That change is difficult enough as it is. I don't think your goals justify
+making this more complicated. You are also not considering:
+
+ * The in-memory data type now needs to be a floating-point type, or an
+   even larger integer type using a different set of units.
+
+ * This data type now affects our priority queues for commit walks, how
+   we store the commit date in the commit-graph file, how we compute
+   relative dates for 'git log' pretty formats.
 
 -Stolee
-
-[1] https://gerrit-review.googlesource.com/Documentation/cmd-hook-commit-msg.html
- 
 
