@@ -2,104 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 592091F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:15:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E996E1F461
+	for <e@80x24.org>; Thu, 16 May 2019 23:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726813AbfEPXPO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:15:14 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:33973 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726461AbfEPXPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:15:14 -0400
-Received: by mail-qt1-f201.google.com with SMTP id o32so4799751qtf.1
-        for <git@vger.kernel.org>; Thu, 16 May 2019 16:15:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=+8W8euwtG57A2lfDAPs0o2c/Vajh1RDT7iAuXG5CETo=;
-        b=PMrbp6jVYtvtw7/O+4qJgobngphgWA4aBjlJrTbGTliiKko2vzciXgocUq/Absn/sD
-         wrwSbZPRaKDV4iWgJHDw1chUr6OIPu1sOhtI3NEmykdxXb7zjv222h4bdsYtJVJ5pOXc
-         6WP0Ins1PFtehQ22pbQXTaqne3PgM8Yl5N/328kh8Wxc5fPqCCjJBdwFki/+8jndCTGl
-         qq/yadLeduuNJ0Gqb7nP8H4mpFwNMnoEZEuWEgchncbD2bQ5MeK+iJ/P0AfE/6ty8HhK
-         nnrha/PbpXQDX9Mm28mOAEdqxXDKcDW22GLWAKw8N7WBAvUESng9tCF0Heo1+XCpaWJ0
-         u6Ww==
+        id S1726876AbfEPXRI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 19:17:08 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:45723 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbfEPXRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 19:17:07 -0400
+Received: by mail-wr1-f45.google.com with SMTP id b18so5065983wrq.12
+        for <git@vger.kernel.org>; Thu, 16 May 2019 16:17:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=+8W8euwtG57A2lfDAPs0o2c/Vajh1RDT7iAuXG5CETo=;
-        b=T1GE2qNxSXaNUEZCxpQ+QRpvH6JK1HMzAmxBftA9ak+hhiknK6ib9EOlWrJYsJs2hI
-         23wpoFVA0mq0Rrel9Jrg9vT+ktyR2VNi6dtotv5Vcd4svO7hma7iBJQem2PBG8pFj1Xb
-         fXgWn63C9C9X0yLbclSUCDvkDtPCcHGd+1iKuVhjdBavjiiIrv7VN4p8AxanDg025EoS
-         vIFGtAGsqIAAWOTyjX5lKAXkey0h7H62mQT8KyW4FUx/JdxiSIIVILXponn4FuSJmZt4
-         0+UDdLSJodFJmYyxxmn2ZCe2AvCDcAoEKjWui06RHt/RV6HqdaH3XRgsXq24CyaWhZZx
-         6inQ==
-X-Gm-Message-State: APjAAAWj4WFRS1/QbJxR/p55n/b7USrJeUJJP1sFgWLcFzW9Hu5Vh+4B
-        hr0FDyEoHdhEc2ih/f/dPiDlacxpFjg/A0m3AZGX
-X-Google-Smtp-Source: APXvYqz2Bw4AiQU4m2xqX2rGXrc/v1qbyCnzqfvfeOAmcAjenjJ4TON7vwLe4eDoEJIz/8JSGCiv+Ny+aMv9gLPO+CR9
-X-Received: by 2002:aed:3501:: with SMTP id a1mr45146635qte.265.1558048513035;
- Thu, 16 May 2019 16:15:13 -0700 (PDT)
-Date:   Thu, 16 May 2019 16:15:09 -0700
-In-Reply-To: <20190516214257.GD10787@sigill.intra.peff.net>
-Message-Id: <20190516231509.253998-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190516214257.GD10787@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C//vXymTHDBCR6y6FP1BtG46HtSj9RZmi0pdEZkkwVY=;
+        b=U7oa3W4DiVnCzj884Tc5UZsABAkewGvFq01XAxEW6W3vVSh5wBNv5gipJyU1zjCabe
+         U1YVY8Nc0ej2OAdPJaRtYzc0Po0/Cp7qJlZUF+hNmq41j7u+1h0SvRqJlGWpBdU89OWr
+         1h+faxPaqv58QHx0myQOoFc4JluqaM2Zm7WahZiJdfAdqiS1SpBIX3RL92N8gx2HiEdg
+         G0h/uf99LeU0msUMldyhm1N3A4sc5PAFOWzGl0f+6INl7DhtDgm1ut0VUv8OZlpqRqAM
+         SSpJPRPITwgNihd427rGBjDXAACAda/u73LG4aflYNBvbU7z3sPknFnLGjdXWLWf9/Us
+         le0Q==
+X-Gm-Message-State: APjAAAU4PSnt/pqZW8hN+tlTqDJ9uVedwLgjfTDMa1NVbjwarDy1AzTE
+        FWVkZ0gYgSVg3qE9rL6S6qwc7X0a788jiLh8gvg=
+X-Google-Smtp-Source: APXvYqyxB/lwT0WUwDnDBF9A9UM/Sdc18QoUbgU8b5c6S4NBG6ehRnZJm3QbSrOziq/AGhk6gTMgl2swBpMdI2O0y2I=
+X-Received: by 2002:adf:e902:: with SMTP id f2mr32685905wrm.301.1558048626138;
+ Thu, 16 May 2019 16:17:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
+ <CACsJy8DnkjuZD-9pbhAsFo16jHKt8U831LLxb3-nCQP5_FOmtA@mail.gmail.com> <20190516221702.GA11784@sigill.intra.peff.net>
+In-Reply-To: <20190516221702.GA11784@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 16 May 2019 19:16:54 -0400
+Message-ID: <CAPig+cQQ5svrDKRPenL2+bJHGjddUPnAXCFSsQN+WBHqzGpDow@mail.gmail.com>
+Subject: Re: Running 'git worktree add' in 'pre-commit' hook
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Cosmin Polifronie <oppturbv@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > > Right, REF_DELTA is definitely correctly handled currently, and I don't
-> > > think that would break with your patch. It's just that your patch would
-> > > introduce a bunch of extra traffic as we request bases separately that
-> > > are already in the pack.
-> > 
-> > Ah...I see. For this problem, I think that it can be solved with the
-> > "if (objects[d->obj_no].real_type != OBJ_REF_DELTA)" check that the
-> > existing code uses before calling read_object(). I'll include this in
-> > the next reroll if any other issue comes up.
-> 
-> I'm confused about this. Aren't we pre-fetching before we've actually
-> resolved deltas? The base could be in the pack as a true base, and we
-> might have seen it already then. But it could itself be a delta, and we
-> wouldn't know we have it until we resolve it (this gets into the
-> lucky/unlucky ordering thing).
+On Thu, May 16, 2019 at 6:17 PM Jeff King <peff@peff.net> wrote:
+> On Thu, May 16, 2019 at 06:25:24PM +0700, Duy Nguyen wrote:
+> > So you probably can still make it work by backing up $GIT_INDEX_FILE
+> > (in case you need it), then unset it before you use "git worktree" (or
+> > cd to it if you keep a permanent separate worktree for pre-commit
+> > activities). [...]
+>
+> The case of actually _adding_ a new work tree (before we enter it) is
+> weirder, though. We definitely want to stay in the same repository, and
+> clearing all of that would not make sense. I do wonder if worktree-add
+> should be handling GIT_INDEX_FILE (ignoring it when we want to be
+> dealing with the index of the new worktree we added, and handling any
+> relative fixups if we chdir inside the worktree code).
 
-resolve_deltas(), invoked before any new code introduced in this patch,
-has this comment:
-
-> /*
->  * Second pass:
->  * - for all non-delta objects, look if it is used as a base for
->  *   deltas;
->  * - if used as a base, uncompress the object and apply all deltas,
->  *   recursively checking if the resulting object is used as a base
->  *   for some more deltas.
->  */
-
-I haven't seen any code that contradicts this comment. And looking at
-the code, for each non-delta object, I think that all deltas are checked
-- regardless of whether they appear before or after that non-delta
-object. (find_ref_delta() does a binary search from 0 to
-nr_ref_deltas, calculated in parse_pack_objects() which happens before
-any resolution of deltas.)
-
-And find_unresolved_deltas_1() (called from resolve_deltas() indirectly)
-sets the real_type when it resolves a delta, as far as I can tell.
-
-So there is more than one "resolve deltas" step - resolve_deltas() and
-then fix_unresolved_deltas(). The pre-fetching happens only during the
-latter.
+Ignoring GIT_INDEX_FILE was indeed the conclusion reached earlier in
+this thread. Addressing your other point, "git worktree add" does
+chdir() into the new worktree if a post-checkout hook exists since
+that hook needs to run in the new worktree, not in the worktree in
+which the "git worktree add" command itself was invoked. For the hook
+invocation, it already sanitizes the environment of GIT_DIR and
+GIT_WORK_TREE, and GIT_INDEX_FILE ought to be cleaned too. Is there
+any existing code in Git for doing the relative fixups you mention for
+other Git environment variables?
