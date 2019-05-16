@@ -2,115 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 103811F461
-	for <e@80x24.org>; Thu, 16 May 2019 02:00:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91C141F461
+	for <e@80x24.org>; Thu, 16 May 2019 02:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbfEPCAp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 May 2019 22:00:45 -0400
-Received: from mail-ot1-f73.google.com ([209.85.210.73]:51674 "EHLO
-        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726039AbfEPCAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 May 2019 22:00:44 -0400
-Received: by mail-ot1-f73.google.com with SMTP id 68so950339otu.18
-        for <git@vger.kernel.org>; Wed, 15 May 2019 19:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=L+QotSifchmjb/VjKPlpnkPS0I7ApHwzihPEf1NVO8w=;
-        b=TN0dNyfRErIQBh04l2z3HLPvDMF7Bhqm+E+mOgxoz1ZU2KqiwqQIz/SbnmMYCAZW61
-         CMmFv2l0Em3qAu6sNT9KOmQTwZ5COcucjvVfjechEVln36uB5sIx3JkGFRWr44hKzpuz
-         InU9PQpFfYum8smXI2H1JZuoP/ilhqZMxRKNLkp+k4GZeFtBDawuhr1zp928k65EbbyF
-         PAfoGp4cRqjHemVqPgY1P0W/I3jsrO9ngrgrWwJAuUhJ1v8wbmlTAE8KALwXChJH/Zrs
-         SKlIVEyg1JgvEfwLgC4kFjodTEKf4el6bMJux1sihc3NKrjh5QgahIeHPl7PCZK/HFyF
-         e+bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=L+QotSifchmjb/VjKPlpnkPS0I7ApHwzihPEf1NVO8w=;
-        b=MkcNBjZpoE1cynoWbXDYKlcshD8JdtVzBTzbsULqJpb54GAeli0q1Vw9rTM4iHzdHh
-         6G2UKNQe9am7jp7RZeAIzrUXzqIeIoY5DFYqr9srpR3V5mPoaYXus9lNJt/DiwKRj8R6
-         MMighm9W06dBzXmxbvObgg+gBP6Dz7BueuM7G58O6m15vxj2fYbYuBMVnOK0nV/E2Lgq
-         FF8fX7xb86PWPuM/sFmlYtkUNFl2LGHN1WYo4Rc476LX0bT198mKs5kaRaaS+Ti+Xo8z
-         vrtQlwdl0RdZkgdU2B6PVwdLclZuTinuaDFpe/iHvi0lJu+cbiDqZv/cjWd3VUNwE54O
-         Ag2w==
-X-Gm-Message-State: APjAAAU2kghyUBLbfWMKTfIpu41pNZ+h3hYlSPxWlz5EKl0LEVukOc1v
-        Zev3kQoTXYNsXB5WF49418xJleRWyJLh7RqXZt3uFOa5cGfgvZeYhjwhU9zO8yEdgfk+832BQNj
-        UEeWuL/EqR9qxTDqmvU4kU6rYNwJpyQb91usLn9OZWTTIsygNGXrqeRCDJ639faX5Iwj2r6cY+A
-        ==
-X-Google-Smtp-Source: APXvYqxqTU2vjIzavXt3VjLgHBv7rgUCVm4rA/sZO7+3tW1ktOa/hoQQ4VN7BWpHi/ZSzgCJ+SLBrcWV/NsL+V1w51s=
-X-Received: by 2002:aca:d40a:: with SMTP id l10mr8649456oig.177.1557972043309;
- Wed, 15 May 2019 19:00:43 -0700 (PDT)
-Date:   Wed, 15 May 2019 19:00:23 -0700
-Message-Id: <20190516020023.61161-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a-goog
-Subject: [RFC PATCH] grep: provide sane default to grep_source struct
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     jrn@google.com, Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726218AbfEPCSl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 May 2019 22:18:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63896 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725974AbfEPCSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 May 2019 22:18:40 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1313146311;
+        Wed, 15 May 2019 22:18:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XfRyv5cxTHb90fp9aQgnvpwBgyo=; b=yP+f4W
+        7E21Pfi7Mg22v6e+MmHQ5xO/JbMpt0fYViR6HNOtnJe3tfB12glV0fx7bCQ28VMS
+        KAdFO6dyQceJAP+YTiAuUzAWatIvD272Cld3llmnjP2DdRW10dBJVYWXHPmZrWt5
+        kQHZXKNSHZnN0KpStebef/Nn5hsEZeCqcUyAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ePDKulFI5D7yJZsN4+8mNTmdi2d/GAjT
+        aKt8XlA9t1ZzDqryonqshS6IA94XP9HrvV5/+TCAL+LNLb/qD8u4BPJ3z4wsHrxj
+        blkR5uFM+3eRkXsY99O2B3kg7lVqmsLmyi9LT4fYknKoQyoqlvwIZtOwdXBIjnRR
+        hlIBCGBUZQw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9B78146310;
+        Wed, 15 May 2019 22:18:37 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.255.141])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F39514630F;
+        Wed, 15 May 2019 22:18:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Poughon Victor <Victor.Poughon@cnes.fr>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Feedback on git-restore
+References: <3E55146A6A81B44A9CB69CAB65908CEA6B91353C@TW-MBX-P01.cnesnet.ad.cnes.fr>
+        <20190515103031.GA29149@ash>
+Date:   Thu, 16 May 2019 11:18:36 +0900
+In-Reply-To: <20190515103031.GA29149@ash> (Duy Nguyen's message of "Wed, 15
+        May 2019 17:30:31 +0700")
+Message-ID: <xmqq7ear5egz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E9CAF612-7780-11E9-A4AA-E828E74BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-grep_buffer creates a struct grep_source gs and calls grep_source()
-with it. However, gs.name is null, which eventually produces a
-segmentation fault in
-grep_source()->grep_source_1()->show_line() when grep_opt.status_only is
-not set.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-This seems to be unreachable from existing commands but is reachable in
-the event that someone rolls their own revision walk and neglects to set
-rev_info->grep_filter->status_only. Conceivably, someone might want to
-print all changed lines of all commits which match some regex.
+> I think it depends on whether use actively use the index, or you
+> mostly ignore it and always do "git commit -a" and friends.
+>
+> When you do use the index, the "worktree <-> index <-> HEAD" is the
+> three stages that you are aware, in that order, and restoring from the
+> "next" stage is expected.
+>
+> It does feel natural for me that we "restore worktree from the index"
+> and "restore index from HEAD". But maybe I'm just too used to the old
+> way of thinking? Let's see what other people say.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
-Hiya,
+I am somewhat sympathetic to unexperienced users who do not "get"
+Git here, but because I still think you cannot make effective use of
+Git without understanding the workflow using the index as an "extra"
+level sitting between the working tree and the commits, I think it
+is a learning experience worth investing in for a new user to get
+used to the way of thinking you showed in the above paragraphs.
 
-I ran into this issue while I was working on a tutorial on rolling your
-own revision walk. I didn't want to print all the lines associated with
-a matching change, but it didn't seem good that a seemingly-sane
-grep_filter config was segfaulting.
+> This is also consistent with other commands, for example "git diff
+> --staged/--cached" compares the index and HEAD and "git diff" compares
+> worktree and the index. You would need extra effort e.g. "git diff
+> HEAD" to compare the worktree and HEAD.
 
-I don't know if adding a placeholder name is the right answer (hence RFC
-patch).
+Exactly.
 
-Jonathan Nieder proposed alternatively adding some check to grep_source()
-to ensure that if opt->status_only is unset, gs->name must be non-NULL
-(and yell about it if not), as well as some extra comments indicating
-what assumptions are made about the data coming into functions like
-grep_source(). I'm fine with that as well (although I'm not sure it
-makes sense semantically to require a name which the user probably can't
-easily set, or else ban the user from printing LOC during grep). Mostly
-I'm happy with any solution besides a segfault with no error logging :)
+> This --index vs --staged was discussed and --staged is a compromise.
+> The problem is --index means something different in existing
+> commands. It specifies that you want to target both the index _and_
+> worktree. --cached on the other hand only targets the index [1].
+>
+> It's confusing, yes. But --index/--cached is part of Git and we cannot
+> just ignore our baggage and redefine --index to "just index".
 
-Thanks in advance for everyone's thoughts.
-Emily
+Another thing worth pointing out here may be that a user would stop
+feeling it a baggage once the index-centric way of thinking sinks
+in.  Because the index is so central to the local use of Git
+workflow (i.e. "I am just cloning and pulling from the outside world
+to fllow along" does not count), "just the working tree and not the
+index" mode is an anomaly, until/unless you start talking about
+going backwards (e.g. "I've smudged my working tree by mistake, and
+need to recover by copying something out to it", which is the mental
+model of "restore").
 
+	Side note: while at the mechanical level what it does is an
+	equivalent to what "checkout -- <paths>" does, the mental
+	models are different.  "checkout" is still a way to move
+	forward "I need the contents of these paths in my next
+	commit to look like those in that tree-ish, so copy them out
+	to the working tree (to e.g. compile test) and also to the
+	index (for e.g. the ease of committing after testing is
+	done)".
 
- grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> So the compromise is we leave --index/--cached alone and gradually
+> move to the --staged/--worktree combo (for other commands as well).
 
-diff --git a/grep.c b/grep.c
-index 0d50598acd..fd84454faf 100644
---- a/grep.c
-+++ b/grep.c
-@@ -2045,7 +2045,7 @@ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
- 	struct grep_source gs;
- 	int r;
- 
--	grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL, NULL);
-+	grep_source_init(&gs, GREP_SOURCE_BUF, _("(in memory)"), NULL, NULL);
- 	gs.buf = buf;
- 	gs.size = size;
- 
--- 
-2.21.0.1020.gf2820cf01a-goog
+I think what is truly new and valuable is the "working tree only,
+bypassing the index" mode, but I am not sure if we want to always
+force us to say both when we want to affect both the index and the
+working tree, as the index is still central to the local workflow.
+I am not sure if there is a wide agreement with such a "gradually
+move to" plan.
 
+Also, when you want to only affect the indexed contents, wouldn't
+existing "--cached" suffice?
+
+IOW, I do not mind --staged as a synonym for --cached, and --worktree
+as a useful addition, but I do not think these new pair should replace
+the existing ones.
