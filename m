@@ -2,236 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B06341F461
-	for <e@80x24.org>; Fri, 17 May 2019 19:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C473B1F461
+	for <e@80x24.org>; Fri, 17 May 2019 20:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729058AbfEQT4Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 15:56:25 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45929 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728297AbfEQT4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 15:56:25 -0400
-Received: by mail-wr1-f65.google.com with SMTP id b18so8275983wrq.12
-        for <git@vger.kernel.org>; Fri, 17 May 2019 12:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=N1cXo9OerMOr2PDE69u/yN4T0DTo3NxEn/wP4arpNzE=;
-        b=grJuKcqDz7w/2okjwFrlkZMzrt3TtuDjts2HmjFxjp6g4i6hXqKDS2ZtyKxNonJsUd
-         rTb6jFkJK/ovDv+iPYRgMYL6TT9lo+tT9EvqVmgJzW0ws4S5snja1n68ttV5dGHA89My
-         6e+4IikNPsAIjL7xC06dIBSpKpXIOTEGoWlb6909gXZXGzqQpGFcrEfAX3zKgrWQ1hta
-         7aEOe26CyMjr9ribOdcgkaB2VBn5hzQWchy9s2M23UcUMbFrdNOeOP/jz3wqGLAei0TR
-         FlrtWnyWn8Z17u56UiCYN7B99Ht5kVHb3RaEkTe2xENlD2rbEs1UcIS9katz8iQM3Q2E
-         1eZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=N1cXo9OerMOr2PDE69u/yN4T0DTo3NxEn/wP4arpNzE=;
-        b=EU6Ksnjdz07X2HZ5aMB4pREj4IOe55qgViWWJ1yQYEjV2Ww3dWlNxkLPq3oFRlymRl
-         BH864Lx8b3PIfkivUGE1Er962mFQcs4tyueeSq9goqZTJxD6C/srxaaZfod1YmImwZ1y
-         b/H1dlzqzHBMIn/2VnF05TlQwc8CnoS+Gkm4cDLBdzbd74UmPVea8qZub9lOuzR4+EZR
-         ZBrK6pxD+stSM3UL8TVsSTfeuboNtrQ4XYkocraja/Dx2SDiYqIV8J8bCe8DkPO9+Hjl
-         VHe1HIsgcCutbClpktvqJxwyGRgUdnei92YWJJH1wfz+000i0a+eeEoO20bYGKEk7tMz
-         1PQQ==
-X-Gm-Message-State: APjAAAVwZP1cCeTnly9rIDsWZvimyRM02pilL9A3BeeLGRmmh+9eNWbQ
-        HmqRjMEK1eHGULLSrRhKIe3aFuCOiFg=
-X-Google-Smtp-Source: APXvYqwSk61qzaS+TGlJllmrOfrRSjErLCwJYh8DBldqmCAxxA59X4iUQ9Grpcg+6UithX55LDv4Xw==
-X-Received: by 2002:adf:f407:: with SMTP id g7mr19720356wro.196.1558122982426;
-        Fri, 17 May 2019 12:56:22 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r2sm18691149wrr.65.2019.05.17.12.56.21
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 17 May 2019 12:56:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Stephen Boyd <swboyd@chromium.org>, jrnieder@gmail.com,
-        sandals@crustytoothpaste.net, sunshine@sunshineco.com,
-        xypron.glpk@gmx.de, Paolo Bonzini <pbonzini@redhat.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 5/5] send-email: remove support for deprecated sendemail.smtpssl
-Date:   Fri, 17 May 2019 21:55:45 +0200
-Message-Id: <20190517195545.29729-6-avarab@gmail.com>
-X-Mailer: git-send-email 2.22.0.rc0.259.g3cce4bfedb
-In-Reply-To: <xmqqsgtd3fw3.fsf@gitster-ct.c.googlers.com>
-References: <xmqqsgtd3fw3.fsf@gitster-ct.c.googlers.com>
+        id S1727757AbfEQUbL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 16:31:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:44791 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726761AbfEQUbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 16:31:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1558125055;
+        bh=kqvwlipWat7VUaJnj1Yx/VzJxhl7J2VZ9T9nAh8B3pA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PGgONnLuoxIEJ9TyxYT6Ttw/uSvZbV3GJ79SLJHSaNqP7dex+RasYCVXN8WXfvsoB
+         dgGZ/RimNBW8V9fV9TEGst2Ubd2Yirj3iBCWqkTmEq95niH7c/o72ssfKswWlsFrVL
+         6seJhD8M61maWH3kq4ZGPIqG26xMjRXfte/5w8J4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLA45-1hRSO73Y2L-000NH9; Fri, 17
+ May 2019 22:30:54 +0200
+Date:   Fri, 17 May 2019 22:31:03 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/7] run-command: add preliminary support for multiple
+ hooks
+In-Reply-To: <91532c2d-7536-6e15-728b-bd18256b2ef3@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1905172227200.46@tvgsbejvaqbjf.bet>
+References: <20190514002332.121089-1-sandals@crustytoothpaste.net> <20190514002332.121089-2-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.1905141653130.44@tvgsbejvaqbjf.bet> <20190515224425.GK7458@genre.crustytoothpaste.net>
+ <91532c2d-7536-6e15-728b-bd18256b2ef3@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hBL/BFBGn9az1cVFGPNuVTwhw5WHFk/XtEo/+QzkcgshnJKwGke
+ Ut7FCm06TZUA9YSgNMyjwKP8D/8wUNjmgHYtkSk6Mu3vjsJIVo07I7tjj5JPsyqjaw0c2Up
+ FW1gtDa/+HIooR6InXnagxa2BRrBANMXpoilWWkzbGt8aIFas2BlizihPoqkr0EPBQz1mNB
+ WeKh32P5dP5PQ5vD0HXag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mhEf+Uy+jjo=:CxPeOEyDT/HgAUtX6HUaMy
+ KCmpMRcRj2wZMwyHfIYLFpJX2LP8mukrUTJZ23h6m0Nnz3dZp21Et6SNOvnbYK2VfdOnOSfdw
+ bSgBySTwsID+wQb3op0swDBvR+c8zWSDf+LXb+V5J01U8xgsvI6/FUG+5t2UpJcdJvojvgwoX
+ umYqKLQP05P+8OrhZVVBD1uSsb3ck1AT0HiIWCTvVnK82om+zspHPQRZSvlR6K2hsIoWyJYoB
+ qq5tt3Gd1zsyqZdrT/iA8VvoYW2o1TakPjoSYbH3i33JmT/xxHxSwu/3EwLaLlABOuf9GH6ye
+ sWtpZ062RZV2kBQnuy0TDecn5CNSPGWK5J8HtQjUanMYbDLO0zUn7Wz+Rkf4emgVPxdhIheW/
+ DoxZAc+fSwcxwoPy11QtvPUJCb6cAaJvM6w1Mx6VzmTv/72r9dU+619Lq+7FaGk3AF0cRHYi/
+ Gk5gXj/pA7V5og7kWoqCd2HLEWkhNP3NhnDMbYtvYrWnlnn0vyx69l/BhkxYcKFyhxg/2So+x
+ GC9/ataDhdEP6Ak/jfPVh8BgDAHpb1zi2ZaCSFvjKrWqZmVaLqkeGxb8ANLliU8vCfez4W1H9
+ OJ7KYzqlCwHMCw3a8J+xdlpXKab4wyA0KtvJpMKHmcOjgnoCl5ChUXPtv/9oIiJIx9Nm/v/qO
+ YL9PE22r99eZ/thbG7HJHg9mn26KC5ACoYgOUXBt6W6HkvGQMRVMENtH6/zBF/+1dPeaSEk4B
+ P4pu5G3nnDgXGLR8L1dSy3PcXiY0uwJGABD4rUX0fwLCttehSRRPsW7f3MjwEqniFK9d+lNBi
+ /Yzt+Zd235v/yEN6wdo6axiaCKD2IcgPXSOjxzTdc4IF3dWw/UpodSu1rVMoguT8V5RMwFA0O
+ FnJ0YeNWhLjJnpNYc+lQUUv0ust8yWS5hPEERSyMcQKnL0XUBWegNU3XJB4DhHv4dx37wkjcO
+ BAmlKU2POsqXH5+KG7ewMgBYOXtEtK1TKlfmYiKLxbXnoC9yQB90H
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the sendemail.smtpssl configuration variable and its associated
---smtp-ssl command-line option. This has been documented as deprecated
-since f6bebd121a ("git-send-email: add support for TLS via
-Net::SMTP::SSL", 2008-06-25) and 65180c6618 ("List send-email config
-options in config.txt.", 2009-07-22), respectively. Waiting for 10
-years should be enough.
+Hi Hannes,
 
-This allows us to fix a special case in read_config(). We couldn't
-just parse sendemail.smtpEncryption like everything else because we'd
-need to fall back on sendemail.smtpssl. Now that we don't need to do
-that we don't need this special case anymore. Let's still find out if
-someone's using this and die() with a helpful message if that's the
-case.
+On Thu, 16 May 2019, Johannes Sixt wrote:
 
-Because of my recent improvements to the command-line and config
-parsing we can also revert fa835cd572 ("git-send-email: prevent
-undefined variable warnings if no encryption is set", 2008-06-26),
-since we now sensibly support setting defaults for these mixed config
-& command-line options.
+> Am 16.05.19 um 00:44 schrieb brian m. carlson:
+> > On Tue, May 14, 2019 at 05:12:39PM +0200, Johannes Schindelin wrote:
+> >> On Tue, 14 May 2019, brian m. carlson wrote:
+> >>> +/*
+> >>> + * Return 1 if a hook exists at path (which may be modified) using =
+access(2)
+> >>> + * with check (which should be F_OK or X_OK), 0 otherwise. If strip=
+ is true,
+> >>> + * additionally consider the same filename but with STRIP_EXTENSION=
+ added.
+> >>> + * If check is X_OK, warn if the hook exists but is not executable.
+> >>> + */
+> >>> +static int has_hook(struct strbuf *path, int strip, int check)
+> >>> +{
+> >>> +	if (access(path->buf, check) < 0) {
+> >>> +		int err =3D errno;
+> >>> +
+> >>> +		if (strip) {
+> >>> +#ifdef STRIP_EXTENSION
+> >>> +			strbuf_addstr(path, STRIP_EXTENSION);
+> >>> +			if (access(path->buf, check) >=3D 0)
+> >>> +				return 1;
+> >>> +			if (errno =3D=3D EACCES)
+> >>> +				err =3D errno;
+> >>> +#endif
+> >>> +		}
+> >>
+> >> How about simply guarding the entire `if()`? It is a bit unusual to g=
+uard
+> >> *only* the inside block ;-)
+> >
+> > I can make that change.
+>
+> But then we'll have an unused argument in some build configurations.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config/sendemail.txt |  3 ---
- Documentation/git-send-email.txt   |  3 ---
- git-send-email.perl                | 26 +++++++++-----------------
- t/t9001-send-email.sh              |  9 +++++++++
- 4 files changed, 18 insertions(+), 23 deletions(-)
+That's a valid point.
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 0006faf800..d7855bff1f 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -8,9 +8,6 @@ sendemail.smtpEncryption::
- 	See linkgit:git-send-email[1] for description.  Note that this
- 	setting is not subject to the 'identity' mechanism.
- 
--sendemail.smtpssl (deprecated)::
--	Deprecated alias for 'sendemail.smtpEncryption = ssl'.
--
- sendemail.smtpsslcertpath::
- 	Path to ca-certificates (either a directory or a single file).
- 	Set it to an empty string to disable certificate verification.
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index a861934c69..6cf5c32ce8 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -236,9 +236,6 @@ The --smtp-server-option option must be repeated for each option you want
- to pass to the server. Likewise, different lines in the configuration files
- must be used for each option.
- 
----smtp-ssl::
--	Legacy alias for '--smtp-encryption ssl'.
--
- --smtp-ssl-cert-path::
- 	Path to a store of trusted CA certificates for SMTP SSL/TLS
- 	certificate validation (either a directory that has been processed
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 80cbbfd2b8..b1ed45b907 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -77,7 +77,6 @@ sub usage {
-     --smtp-user             <str>  * Username for SMTP-AUTH.
-     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
-     --smtp-encryption       <str>  * tls or ssl; anything else disables.
--    --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
-                                      Pass an empty string to disable certificate
-                                      verification.
-@@ -236,7 +235,7 @@ sub do_edit {
- my ($cover_cc, $cover_to);
- my ($to_cmd, $cc_cmd);
- my ($smtp_server, $smtp_server_port, @smtp_server_options);
--my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
-+my ($smtp_authuser, $smtp_ssl_cert_path);
- my ($batch_size, $relogin_delay);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
- my ($confirm);
-@@ -250,6 +249,9 @@ sub do_edit {
- my $use_xmailer = 1;
- my $validate = 1;
- my $target_xfer_encoding = 'auto';
-+my $smtp_encryption = '';
-+# Deprecated variables
-+my $deprecated_smtp_ssl;
- 
- my %config_bool_settings = (
-     "thread" => \$thread,
-@@ -266,10 +268,12 @@ sub do_edit {
- );
- 
- my %config_settings = (
-+    "smtpencryption" => \$smtp_encryption,
-     "smtpserver" => \$smtp_server,
-     "smtpserverport" => \$smtp_server_port,
-     "smtpserveroption" => \@smtp_server_options,
-     "smtpuser" => \$smtp_authuser,
-+    "smtpssl" => \$deprecated_smtp_ssl,
-     "smtppass" => \$smtp_authpass,
-     "smtpdomain" => \$smtp_domain,
-     "smtpauth" => \$smtp_auth,
-@@ -366,18 +370,6 @@ sub read_config {
- 			$$target = $v;
- 		}
- 	}
--
--	if (!defined $smtp_encryption) {
--		my $setting = "$prefix.smtpencryption";
--		my $enc = Git::config(@repo, $setting);
--		return unless defined $enc;
--		return if $configured->{$setting}++;
--		if (defined $enc) {
--			$smtp_encryption = $enc;
--		} elsif (Git::config_bool(@repo, "$prefix.smtpssl")) {
--			$smtp_encryption = 'ssl';
--		}
--	}
- }
- 
- # sendemail.identity yields to --identity. We must parse this
-@@ -426,7 +418,7 @@ sub read_config {
- 		    "smtp-server-port=s" => \$smtp_server_port,
- 		    "smtp-user=s" => \$smtp_authuser,
- 		    "smtp-pass:s" => \$smtp_authpass,
--		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
-+		    "smtp-ssl" => sub { $deprecated_smtp_ssl = 1 },
- 		    "smtp-encryption=s" => \$smtp_encryption,
- 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
- 		    "smtp-debug:i" => \$debug_net_smtp,
-@@ -484,8 +476,8 @@ sub read_config {
- 	"(via command-line or configuration option)\n")
- 	if defined $relogin_delay and not defined $batch_size;
- 
--# 'default' encryption is none -- this only prevents a warning
--$smtp_encryption = '' unless (defined $smtp_encryption);
-+die __("Use of deprecated option --smtp-ssl (or smtp.smtpssl config), use --smtp-encryption=ssl (or sendemail.smtpEncryption=ssl) instead\n")
-+	if $deprecated_smtp_ssl;
- 
- # Set CC suppressions
- my(%suppress_cc);
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 890e2874c3..b5ccfa8737 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1849,6 +1849,15 @@ test_expect_success 'aliases and sendemail.identity' '
- 	test_i18ngrep "cloud-aliases" stderr
- '
- 
-+test_expect_success 'deprecated --smtp-ssl (or sendemail.smtpssl=true)' '
-+	test_must_fail git -c sendemail.smtpssl=true send-email -1 2>stderr &&
-+	test_i18ngrep "deprecated option.*or.*config" stderr &&
-+	test_must_fail git send-email --smtp-ssl -1 &&
-+	test_i18ngrep "deprecated option.*or.*config" stderr &&
-+	test_must_fail git -c sendemail.identity=test -c sendemail.test.smtpssl=true send-email -1 &&
-+	test_i18ngrep "deprecated option.*or.*config" stderr
-+'
-+
- test_sendmail_aliases () {
- 	msg="$1" && shift &&
- 	expect="$@" &&
--- 
-2.21.0.1020.gf2820cf01a
-
+Thanks,
+Dscho
