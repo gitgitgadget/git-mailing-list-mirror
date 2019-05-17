@@ -2,101 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D76241F461
-	for <e@80x24.org>; Fri, 17 May 2019 08:55:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A32A81F461
+	for <e@80x24.org>; Fri, 17 May 2019 10:28:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbfEQIzM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 04:55:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60536 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726685AbfEQIzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 04:55:11 -0400
-Received: (qmail 25510 invoked by uid 109); 17 May 2019 08:55:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 May 2019 08:55:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12836 invoked by uid 111); 17 May 2019 08:55:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 17 May 2019 04:55:51 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 May 2019 04:55:10 -0400
-Date:   Fri, 17 May 2019 04:55:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
-Message-ID: <20190517085509.GA20039@sigill.intra.peff.net>
-References: <20190516214257.GD10787@sigill.intra.peff.net>
- <20190516231509.253998-1-jonathantanmy@google.com>
- <20190517010950.GA30146@sigill.intra.peff.net>
- <20190517012234.GA31027@sigill.intra.peff.net>
- <20190517043939.GA12063@sigill.intra.peff.net>
- <CACsJy8CNyug3wvZ+6ts1nzgWyPF1JqC0LceP-HzMHjqvCr2Ugw@mail.gmail.com>
+        id S1728458AbfEQK2Y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 06:28:24 -0400
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:43595 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728175AbfEQK2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 06:28:24 -0400
+Received: by mail-lj1-f174.google.com with SMTP id z5so5799354lji.10
+        for <git@vger.kernel.org>; Fri, 17 May 2019 03:28:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=U1rxucPJ3nRd1vwnWfRJNKBcH2j9IYjdaNtqH52RiOI=;
+        b=mz0n/W8wrHwd6eJHa0OcWQzqF+ss+dYEgYUDDMxlJgenxWSksM9x7m/9jDX6imxqEY
+         dQxlvOBhblj7NwatbNlWLh3SPtZj9g/zu7p7M5n2rpssKi3qVkTTDwU/qXrw3a2230e/
+         XE7q7EDU/vFeFY8uANhG4vZtVu2/s09lR9DD8Hg1B3HEHC/e0fcyiPewH9swBelBl9Nm
+         xkPOvfc5BOr1FlMABBBjsryfjyQfuZIki+MAqmA7nnboEACE1RaU2htwY3Ab4ti5GOQl
+         SifEYSEHcawsxllJCknHWnkEoJXeFGnhDebXZuGaQFwOEaoUTIeuZsLbtz53MIcCuW5P
+         TFRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=U1rxucPJ3nRd1vwnWfRJNKBcH2j9IYjdaNtqH52RiOI=;
+        b=k6r4QSGOy/0dE+c2w9xKli8xIHQJ+Y1Vj49IUl+rX/6msCrmfb10vAoIUoQfXIX8cx
+         vpq4H5pt6kPfOy5OGXNtAjPUSnKfjDkT5kNn/F0zSeW1Iuqrd3LJOf/2ryOW8dm6AdiW
+         AFLEnTNLFCIdSfAh61tinsuBOuAfOs7KimH0Ai7GY8V7BAZzIE2Xi5Wavpv13wwO7V00
+         4et++36u5Af1CEJ460VWVPzGOi6YiA6XxKGFPKaCu3yE+PKWBrwIXldMtOnp+jI2j+Dp
+         LXCRxLgEiFl8am4SzJewoyW7JyNKS4gnzfIQwIkM48ZmdX7xsd8stJ3wqffUaTbGJTBL
+         xggw==
+X-Gm-Message-State: APjAAAVJbNOxks+C0zZiY3v4Ruhuc4iYSDDytKtkji8+RwZRqUyEVu1Y
+        0ywO2wXBRH+B0ljFsMKSVt3cCHVpNxVFPDRFVTkkRLQu
+X-Google-Smtp-Source: APXvYqzvRN8uve+Ws9bgWKpn+fp5vu3p9koO2no6F1/kVZ5AVCvNJMiUy1ALijwV/0ynn+L+avB5PLk1UayXi0HuKPU=
+X-Received: by 2002:a2e:99cd:: with SMTP id l13mr1662520ljj.110.1558088902640;
+ Fri, 17 May 2019 03:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CNyug3wvZ+6ts1nzgWyPF1JqC0LceP-HzMHjqvCr2Ugw@mail.gmail.com>
+From:   Thijs ter Horst <gmterhorst@gmail.com>
+Date:   Fri, 17 May 2019 12:28:11 +0200
+Message-ID: <CAK1=Op7qo3xVo3h=GJRxxw8q68ahtis-bAPa0eTD9eJeFF8TCg@mail.gmail.com>
+Subject: Resetting files during a merge causes loss of resetted change,
+ invisible in commit logs.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 17, 2019 at 02:20:42PM +0700, Duy Nguyen wrote:
+Dear all,
 
-> On Fri, May 17, 2019 at 12:35 PM Jeff King <peff@peff.net> wrote:
-> > As it turns out, index-pack does not handle these complicated cases at
-> > all! In the final fix_unresolved_deltas(), we are only looking for thin
-> > deltas, and anything that was not yet resolved is assumed to be a thin
-> > object. In many of these cases we _could_ resolve them if we tried
-> > harder. But that is good news for us because it means that these
-> > expectations about delta relationships are already there, and the
-> > pre-fetch done by your patch should always be 100% correct and
-> > efficient.
-> 
-> Is it worth keeping some of these notes in the "third pass" comment
-> block in index-pack.c to help future readers?
+Disclaimer: I have never done a bug report / worked with mailing lists
+before, so if I'm doing things wrong I'd gladly hear.
 
-Perhaps. I started on the patch below, but I had trouble in the commit
-message. I couldn't find the part of the code that explains why we would
-never produce this combination, though empirically we do not.
+As the title describes, git can change files without logging the
+change. I'm not sure how to describe it shortly, so I've made a
+minimal reproduction at 'https://github.com/gmth/git_test', along with
+a shell script (git_debug.sh) that reproduces what I think is a
+problem. In that repo "text1.txt" changes back when according to
+commit logs it shouldnt have.
 
--- >8 --
-Subject: [PATCH] index-pack: describe an implication of our thin resolving
+I ran into this when I lost some changes in my codebase that I could
+not find in the commit logs, and a merge commit ('feature' into
+'master') showed that that commit reverted a file to an earlier state,
+while that change was not visible in any commits in 'feature'. The
+cause in my case was probably that I accidentally clicked the
+"Discard" button on a file in SmartGit, but the shell script shows how
+to reproduce it with commandline git. Therefore I do not think this
+has to do with SmartGit.
 
-After digging into the delta resolution code, I discovered a surprising
-(to me, anyway) implication of our strategy: we could never find a
-non-thin delta with a thin delta as its base. This is OK because
-pack-objects will never produce such a combination, because....?
+I am unsure if I'm allowed to attach the reproducing shell script to
+this email, so that's why I haven't (spam filters etc).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/index-pack.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Kind regards,
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index ccf4eb7e9b..f40f4560d4 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1224,6 +1224,13 @@ static void resolve_deltas(void)
-  * Third pass:
-  * - append objects to convert thin pack to full pack if required
-  * - write the final pack hash
-+ *
-+ * Note that we assume all deltas at this phase are thin. We take only a
-+ * single pass over the unresolved objects, and we look for bases only
-+ * in our set of already-existing objects, _not_ other objects within this
-+ * pack. This means that we would never find an object A stored as a delta
-+ * against another object B in this pack, when B is a thin delta against a base
-+ * not in the pack.
-  */
- static void fix_unresolved_deltas(struct hashfile *f);
- static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned char *pack_hash)
--- 
-2.22.0.rc0.544.g1eb4087842
-
+Thijs ter Horst
