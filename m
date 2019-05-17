@@ -2,220 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB3DF1F461
-	for <e@80x24.org>; Fri, 17 May 2019 16:54:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83AA61F461
+	for <e@80x24.org>; Fri, 17 May 2019 16:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727370AbfEQQyI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 12:54:08 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:40840 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbfEQQyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 12:54:08 -0400
-Received: by mail-io1-f66.google.com with SMTP id s20so6021446ioj.7
-        for <git@vger.kernel.org>; Fri, 17 May 2019 09:54:07 -0700 (PDT)
+        id S1727668AbfEQQ4t (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 12:56:49 -0400
+Received: from mail-ua1-f54.google.com ([209.85.222.54]:41359 "EHLO
+        mail-ua1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726519AbfEQQ4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 12:56:49 -0400
+Received: by mail-ua1-f54.google.com with SMTP id s30so2933335uas.8
+        for <git@vger.kernel.org>; Fri, 17 May 2019 09:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=me5eH0mGk+7NhywuHhUvxxH7u0icYO9JNs0lRdPbqIQ=;
-        b=AAagLzOs0/JShx8IiwDSofOii7tIOVT6iioe26LYLtIfSji8kiRGB6ZiXnwNZl+GQt
-         ibVGQbKRm54PRo6BzjqtLl1UrrvWhFHlfvkWVBkDByZ/bOKQjfiRVrFOwNhRyZQGTGhX
-         FBRM7Zm4/GgAAi/4y2N3Kxv+LSZMioZ2SvI6F4bH8da6rKsHIudWjfz85Qq/K1cAc1Gr
-         /ahbQHy7F+nnysdgZ26x4kh+n2tq8tlz+1Ly7TPYlEcbHKQJNfLb8KbTJRSKar2CH/Es
-         yTkRPu+G7VgUMX9nwAYB2TRm6KBZYYLQPhum8R3oNrY/uYFjmwcKmk2k3v4XwacsQRzL
-         +gKQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xb3tZCrgYxgKSXOazsD1miL5klYobl1eFX2CLGEK/ek=;
+        b=tHsCtHyU17LI7vZUqGKyfOrZ2j+yOFCE4IKJkvujXFQ9kxeADQtt9RnaJUIisB7jlu
+         2iJYcyYoxk2RBjtBNQL8gCbnIHp659izV87mnEZPmrVwyBb6SM03Oi4tv0lAtYeh2i7I
+         No48T3ZZ4HvNgSvHvZ5DVJIux6etk4gm9V/1plAphupdQIBjN3v4iRV6fI1EB2fJwfaA
+         9AbIo02YUIhNhIwLypLsowgs5+dYXl7NQahm4/6YiFj5Bgb0OmSZVJ88IF4RD56wVzZt
+         bvjndLqXTosU2Z5F5uvD5Yu4IkpKff6zwZMXrGaKh/PLTxXwyH2g5/KQcuz8W4Jq9mKp
+         2fdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=me5eH0mGk+7NhywuHhUvxxH7u0icYO9JNs0lRdPbqIQ=;
-        b=sKwtduR5KFlguiOMgNK7dL9NQiwAYIXP7FnTvEh2vGN9HoAe3zq7UdfP7oI+/2dvhX
-         Q4hKXvW6PqYKjbH8eKLLD18Blry133Gx7lXsXxQTFNUWQS2kzFO+cemwolHKz5oi3J1U
-         HVISTZO/jefTrR6PzAN/aeoV+61yDSIO9lvsAlzRHMoQ5hEzGiPfaVSWqnbGGQCyrKSm
-         ma5ROAkkQchdDQEuJHybEWDUnH20su0NMQ9JMM31JkTNBZmKkPrLZphqgW3veDPyyuGc
-         TdAkhNv6JiapG9dU3yYReIqOqNM5grW/G4TUpx21e9OscJmZE/LedKHSg71CXO4swrkh
-         rBYw==
-X-Gm-Message-State: APjAAAU2rFVhzQtmWgCFB+pker2rElCwEBhd8Zxvo1U5a55gbR1pkXWG
-        db31plDzpeeWitWGjBukNjQ=
-X-Google-Smtp-Source: APXvYqyYdy34U/b4gheUri9OoS8/TmRRgvZ9cGMCJrloyOgXDwTbVQlzebW82qLRJD7QZYdbJwBnPA==
-X-Received: by 2002:a6b:fb03:: with SMTP id h3mr11807776iog.248.1558112047266;
-        Fri, 17 May 2019 09:54:07 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
-        by smtp.gmail.com with ESMTPSA id d24sm704212ioo.21.2019.05.17.09.54.06
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 17 May 2019 09:54:06 -0700 (PDT)
-Date:   Fri, 17 May 2019 12:54:05 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/6] teach branch-specific options for format-patch
-Message-ID: <20190517165405.GA2541@archbookpro.localdomain>
-References: <cover.1557072929.git.liu.denton@gmail.com>
- <cover.1558052674.git.liu.denton@gmail.com>
- <xmqqk1ep3ejv.fsf@gitster-ct.c.googlers.com>
- <20190517072515.GA22326@archbookpro.localdomain>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xb3tZCrgYxgKSXOazsD1miL5klYobl1eFX2CLGEK/ek=;
+        b=OylQp+FSIHTfHEywJ++wHy5MhOpJnupYuSCzYjM+Ccc9mxeVdhFT6uATEDjTrm+j3S
+         SUyG+ngXck9tN7vT9o2flpdr68c4NNTks0Y37q0zPhKNDn5k3ns5Mv1WBqUAenK6U1+D
+         OAGQ8dt/7FL7veNkevdQvCEPjaj87nEoqOKFLNi3scpi8xJco3jjgiuy5NDr2GS9MPBP
+         ncd2CE2UeYYlXVVlmHxJFlcIDbT/f1IqkTvxmH8bVAbEFebMgGjfdBNB9yf6QTdwmSun
+         10tfwNM1/pXNoOixPaF5eg98blC2fmy+ArlBtJHnECY/A9eKCRBP57fCIijBttRmatqY
+         fxgg==
+X-Gm-Message-State: APjAAAVJj8b2VNQRQrkw5XlTS3Ie1WXb6XV9gTjANElNTO95FpH+Ay2v
+        Skp5gRp2eCKvZY3MBPA/XKFsnGUYKOrU5+An4d5WAHgiTOo=
+X-Google-Smtp-Source: APXvYqw1JneZboPJdgFH8f6jVRGRgYB7gHQSTE/8zHnK15aU5htyhV8h8OJu33Fjlltn9ue/Woz017keXRGNjUZT+Q0=
+X-Received: by 2002:ab0:3058:: with SMTP id x24mr24806262ual.95.1558112208222;
+ Fri, 17 May 2019 09:56:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190517072515.GA22326@archbookpro.localdomain>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+References: <CAK1=Op7qo3xVo3h=GJRxxw8q68ahtis-bAPa0eTD9eJeFF8TCg@mail.gmail.com>
+In-Reply-To: <CAK1=Op7qo3xVo3h=GJRxxw8q68ahtis-bAPa0eTD9eJeFF8TCg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 17 May 2019 09:56:37 -0700
+Message-ID: <CABPp-BFgTi728c+2vXA8Yxi103Hfsfov69GrJKXzYv-H_wwQ7g@mail.gmail.com>
+Subject: Re: Resetting files during a merge causes loss of resetted change,
+ invisible in commit logs.
+To:     Thijs ter Horst <gmterhorst@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Thijs,
 
-I just realised that my use-cases wouldn't be fully covered with the
-onBranch configuration option.
+On Fri, May 17, 2019 at 3:47 AM Thijs ter Horst <gmterhorst@gmail.com> wrote:
+>
+> Dear all,
+>
+> Disclaimer: I have never done a bug report / worked with mailing lists
+> before, so if I'm doing things wrong I'd gladly hear.
+>
+> As the title describes, git can change files without logging the
+> change. I'm not sure how to describe it shortly, so I've made a
+> minimal reproduction at 'https://github.com/gmth/git_test', along with
+> a shell script (git_debug.sh) that reproduces what I think is a
+> problem. In that repo "text1.txt" changes back when according to
+> commit logs it shouldnt have.
+>
+> I ran into this when I lost some changes in my codebase that I could
+> not find in the commit logs, and a merge commit ('feature' into
+> 'master') showed that that commit reverted a file to an earlier state,
+> while that change was not visible in any commits in 'feature'. The
+> cause in my case was probably that I accidentally clicked the
+> "Discard" button on a file in SmartGit, but the shell script shows how
+> to reproduce it with commandline git. Therefore I do not think this
+> has to do with SmartGit.
+>
+> I am unsure if I'm allowed to attach the reproducing shell script to
+> this email, so that's why I haven't (spam filters etc).
 
-On Fri, May 17, 2019 at 03:25:15AM -0400, Denton Liu wrote:
-> Hi Junio,
-> 
-> On Fri, May 17, 2019 at 01:12:04PM +0900, Junio C Hamano wrote:
-> > Denton Liu <liu.denton@gmail.com> writes:
-> > 
-> > > diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> > > index dc77941c48..d387451573 100644
-> > > --- a/Documentation/config/format.txt
-> > > +++ b/Documentation/config/format.txt
-> > > @@ -28,14 +28,22 @@ format.headers::
-> > >  
-> > >  format.to::
-> > >  format.cc::
-> > > +format.<branch-name>.to::
-> > > +format.<branch-name>.cc::
-> > >  	Additional recipients to include in a patch to be submitted
-> > > -	by mail.  See the --to and --cc options in
-> > > -	linkgit:git-format-patch[1].
-> > > +	by mail.  For the <branch-name> options, the recipients are only
-> > > +	included if patches are generated for the given <branch-name>.
-> > > +	See the --to and --cc options in linkgit:git-format-patch[1].
-> > 
-> > An obvious question that somebody else may raise is:
-> > 
-> >     What makes the branch name that special?  What guarantees that
-> >     it would stay to be the *only* thing that affects the choice of
-> >     these variables?
-> > 
-> > An obvious answer to that is "nothing---we are painting ourselves in
-> > a corner we cannot easily get out of with this design".
-> > 
-> > If we want to drive format-patch differently depending on the
-> > combination of the worktree location *and* the branch the patches
-> > are generated from, we can do something like:
-> > 
-> > 	[includeif "gitdir:/path/to/worktree/1"] path = one.inc
-> > 	[includeif "gitdir:/path/to/worktree/2"] path = two.inc
-> > 
-> > and then have one.inc/two.inc have customized definition of these
-> > format.<branch>.{to,cc,...} variables.
-> > 
-> > But at that point, Ævar's "wouldn't this fit better with includeif"
-> > suggestion becomes more and more appropriate.  Once we invent the
-> > way to combine the conditions for includeIf, it would benefit not
-> > just this set of variables but all others that will follow in the
-> > future.
-> 
-> Hmm, I'm starting to like Ævar's idea more the more I think about it.
-> 
+We tend to just like them inline, but no big deal.
 
-There is one limitation with onBranch. Suppose someone runs
+Which part is unexpected for you?  Is it that the reset command will
+reset a file to an older version (maybe there's something about the
+reset documentation we need to improve?), that certain flags to the
+log command didn't show you test1.txt (which flags?  perhaps we need
+to improve the documentation on those flags?), or was it that you knew
+the existing log flags wouldn't show you test1.txt based on their
+documentation and you expected there to be some kind of flag for the
+log command that would highlight this 'evil' merge where by 'evil' I
+mean that it differs from an automatic-merge-and-accept-conflicts and
+particularly in an area that's not conflicted (in which case
+https://bugs.chromium.org/p/git/issues/detail?id=12 may be of interest
+to you)?
 
-	$ git checkout other
-	$ git format-patch master..feature
-
-Then, with onBranch, they'd use get the To and Cc of `other`. But with
-`format.feature.*`, format-patch correctly handles this and will use
-`feature`'s To and Cc.
-
-> > 
-> > Having said that, as long as we are fine with the plan to deprecate
-> > and remove these three-level variables this patch introdues in the
-> > future, I think it is OK to have them as a temporary stop-gap
-> > measure.
-
-With this new discovery, I'm not sure it'd be possible to deprecate it
-without losing a use-case.
-
-> > 
-> > > +format.<branch-name>.coverSubject::
-> > > +	When format-patch generates a cover letter for the given
-> > > +	<branch-name>, use the specified subject for the cover letter
-> > > +	instead of the generic template.
-> > 
-> > I still think it is a mistake that this has to be given separately
-> > and possibly redundantly from the branch description.
-> 
-> I forgot about incorporating this. Since we don't need a branch-specific
-> coverSubject anymore, we can push everything into a includeif since now
-> format.<name>.coverSubject doesn't really need to exist.
-> 
-> I'm going to repurpose --cover-subject format.coverSubject to be a
-> boolean option which'll mean "process the description and if you can
-> extract a subject out of it, put it on the cover letter". This way, we
-> can maintain backwards compatability in case users have some specific
-> use-case.
-> 
-> Unless you'd like this processing to be the default behaviour? I'm
-> impartial either way.
-> 
-> > 
-> > > +static const char *branch_specific_config[] = {
-> > > +	"branch",
-> > > +	"format",
-> > > +	NULL
-> > > +};
-> > 
-> > Yuck.  This will break a workflow where a fixed branch with a known
-> > configuration is deleted and recreated over and over again
-> > (e.g. think of "for-linus" branches used for request-pull in each
-> > merge window).
-> 
-> I suppose when we implement `onBranch`, you'd prefer `git branch -d` to
-> also not discard those sections.
-> 
-> > 
-> > >  static void delete_branch_config(const char *branchname)
-> > >  {
-> > >  	struct strbuf buf = STRBUF_INIT;
-> > > -	strbuf_addf(&buf, "branch.%s", branchname);
-> > > -	if (git_config_rename_section(buf.buf, NULL) < 0)
-> > > -		warning(_("Update of config-file failed"));
-> > > +	int i;
-> > > +	for (i = 0; branch_specific_config[i]; i++) {
-> > > +		strbuf_addf(&buf, "%s.%s", branch_specific_config[i], branchname);
-> > > +		if (git_config_rename_section(buf.buf, NULL) < 0)
-> > > +			warning(_("Update of config-file failed"));
-> > > +		strbuf_reset(&buf);
-> > > +	}
-> > 
-> > This will hardcode the unwarranted limitation that the second level
-> > of the format.*.var hierarchy MUST be branch names and nothing else,
-> > won't it?  
-> > 
-> 
-> I was expecting it to only be branch names but now let's take a
-> different approach.
-> 
-> Consider patches 3-6 dropped. I'd like to queue 1-2, though, since
-> they're just cleanup patches.
-
-In light of this, I don't plan on dropping 3-6 anymore. I'm going to
-reroll the new behaviour of coverSubject.
-
-> 
-> Also, expect a onBranch patchset some time in the future (not the near
-> future, school is busy).
-> 
-> Thanks for your feedback, Junio.
+Elijah
