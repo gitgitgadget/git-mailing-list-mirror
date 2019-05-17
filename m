@@ -2,285 +2,258 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E15D1F461
-	for <e@80x24.org>; Fri, 17 May 2019 21:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D1ED1F461
+	for <e@80x24.org>; Fri, 17 May 2019 22:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727367AbfEQV7A (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 17:59:00 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39220 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbfEQV7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 17:59:00 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w8so8561215wrl.6
-        for <git@vger.kernel.org>; Fri, 17 May 2019 14:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3Uoycpqd2W82y3dKu1IxpyY08Hq+RMsZwZ3Vk6TJyLo=;
-        b=As0s/dYsZLASedHX11xmt/aFBYZiSn/misj7YLqCmke9HQDKyPPlSWIhI/EKpNAKaP
-         ZwycUo/uUq8bRS78DwJq1XVtONRLpUh4b06eNfhADmwVv7hAZyeyStpaOUK3DogcohuH
-         ExoQvrEFMRR2S7rzh7we/o2Ghv03Vi1hKSSb8WjElFVQIfwARKoLVtaJpJTzRIpfpSnS
-         kbKY3wQwjaYTTU4MsujOHRCslxP8/COZ0nB/klTDDGsr5bUHb9od6e0r4NsJulMyNLyT
-         ELfX9w9H7dDbRH7ZzuHi9JQHrpaPU1IDyCP7B3MngyecSha4+t6263JOABGFigyKPS+R
-         1uhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3Uoycpqd2W82y3dKu1IxpyY08Hq+RMsZwZ3Vk6TJyLo=;
-        b=AJQ440GH0VLB/SNNkjWgS2BTwNT1ltOyIoBT6g2kXecDVRiaaXauTT6ZL08V22ns7E
-         KL0PyZ+6wOV32PaWL4kxFmvSqwatY9+l5yvoaSKix9Dkl311pA5gMLIKAgbuDtqq6U9b
-         SZo3vIfNPKqkCmnM0GcfB/5lkBC9T36AfuHzBdJt4fzqEC7W4a0hVCknDH7Rj3LDl4c3
-         8CphTZ7Syazt4PdQmKMUM1GWPJw/prOtcHaHe+nieMwPNhzRDsAE92v1/Qy/o3UbfciL
-         CjVLnoMzcJEeMWNPtR3l22Q4j/gR1lQh2x9DXut/fiZcLg+5YHIzLSrRxwGh4oiUZcpb
-         edlQ==
-X-Gm-Message-State: APjAAAWxcyK8e9O1lpxm8yta4PxLAQ3VUp4WuMa9TGaga5U04HPB5qQY
-        yhtjBUKMpu8cRf9AtdXAwTRUb98gmGw=
-X-Google-Smtp-Source: APXvYqyGiUurMnEohuHGQnbCLB4iv3axOURhW64fVb4Z0HYyOWKsyy4iqhzAHe/Bwu9Y6CFcnmk2uw==
-X-Received: by 2002:adf:d089:: with SMTP id y9mr19279387wrh.239.1558130336782;
-        Fri, 17 May 2019 14:58:56 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y40sm16640846wrd.96.2019.05.17.14.58.54
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 17 May 2019 14:58:54 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        id S1729127AbfEQWC0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 18:02:26 -0400
+Received: from mout.gmx.net ([212.227.17.22]:38019 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726726AbfEQWC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 18:02:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1558130537;
+        bh=/uoI+o2r0z/wSibRBhuMLLytx+Tn9vEGMIoaPZw4KS0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CfyodInFs1BnqFRDRKmtouAyMOg7RefnFJZYZ5ZDEXZvzVddSdXZRChECKrxBpVZc
+         CxT9c+Z16wBkDpnVJFdE5FQBzxcfbyMBeOy5zhDJcB3H+SAFz/mXAojB2mBvJbbg8v
+         4WlivNu8Eb6ioy0WdVe3quEqFyOzcR2XlpvS5OlU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRTiG-1hGmXp0gqe-00ShYl; Sat, 18
+ May 2019 00:02:17 +0200
+Date:   Sat, 18 May 2019 00:02:24 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Michael Osipov <michael.osipov@siemens.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] Makefile: remove the NO_R_TO_GCC_LINKER flag
-Date:   Fri, 17 May 2019 23:58:47 +0200
-Message-Id: <20190517215847.28179-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
-In-Reply-To: <xmqqd0ki3s0q.fsf@gitster-ct.c.googlers.com>
-References: <xmqqd0ki3s0q.fsf@gitster-ct.c.googlers.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [RFC WIP PATCH v8 13/13] WIP: can_fast_forward() support for
+ --preserve-merges and --rebase-merges
+In-Reply-To: <20190508001252.15752-14-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905172316260.46@tvgsbejvaqbjf.bet>
+References: <cover.1555832783.git.liu.denton@gmail.com> <20190508001252.15752-14-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1307149947-1558130547=:46"
+X-Provags-ID: V03:K1:Ia+NKCY7+ezkV8RZWwFAc0e28TxAfqabaiEQR0tal2Oawpb9cgI
+ ouT7UOFwgUsPEcZWYtpsosqYr/XrXOp7AHKd0sN4ht0Sz1MAEJIu3ZIbODGN8OdNPWoFS2A
+ mNa7MmOahlDzE0WqovDo+2iWqEtmUQ+8O1MaQD+4Vhte1zfKkNLx0n/D15crlzydMf7VsNZ
+ QOvG4f7QwZJ0Wcd8MVFZQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sGCQvXAltVs=:OZqXw5LkwsW+UaIKY78d5A
+ KglRfer6sxRxDWs2WcSB7cxLl8hZLTrxd6Vpo+FAJ7BCOdmtzlSaVZ87Vblx7D00XHyA517K4
+ FA7py9jIPXvO64P/3t2Dc+zmIlWTfmRcv0rbKFVj2wRlXLHYCGZcM+NGi40ewU0hObeg/T9Xr
+ loZjXR331Dwk8y8jLSGngNttDboBUMWyTWBSZQ8pIU6awGqmOurAUgG4Jgc7xO/rR5IvPrkcF
+ /oahSKreoW0isfRhmwEIv9lColCK5FVLdhFYaHueNxYfTfNmKUalmv1t2iyncHsDeaA9ogogj
+ MnFCS5h0mJ2veRSbt42pp02BfSQnb29qPdI6Ynnan7GHLczmoKFequJvJYs3xB+/h+X8iGLE4
+ +Tph9DOUOKHYYnv+6eTxtQTx4kX8a+SO1QDaOiOuwkI8wMV40R4+ZmGp8P9mWA8SXkjpJbG59
+ KMIdlmSg50qW+1wQ3QJwWOhaxxQ7heb8J3HwBaGNR69gkYdTtHiE+o5sM7F9YNeFiWU7lGumq
+ UDU6SfTsDFzEZh5QGkeH6QPxo0PNO65k1Pl1DPTMhjY8/ZS8JSom6fDbB62cYR/Bnwe3JN+4X
+ KzSZ7W6ESLNTFiyb5QTn+OlcmLA+f6N408Z36pgY6XaEph1C/8ayGEByD9G6bDiFdkji6jWpH
+ vQGR1A3mBksnHOc24/zsIvk5+DAdN08rA5xDDdEoRTJqd/Vt0VeV0dwQGUruqVTpBdZPU5Hk4
+ U3M9aSwhKPqdrQVjBVOjymlQ60Gynd7D1PrTCID+wNbCEXUBlgdScJV6tUHkbBCZPPdqCXk5X
+ ggBPeN4YpYqHMkqqN7gBLKhGXFeyYEXBxOegKXjwM0WnwTv7v5U8FJb1T6oktHA/65n4l681F
+ PQMmuiAwboqPPMvyPVh88kWAdDryval6QahjjMmnxn6N8PxOXzJhF3fnlPxO6SS265Mus/kMB
+ 7YMTfueToydi0nsvrPJAXcxDTitTOdRhBZHqVZJODvnVeTYCglcf2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change our default CC_LD_DYNPATH invocation to something GCC likes
-these days. Since the GCC 4.6 release unknown flags haven't been
-passed through to ld(1). Thus our previous default of CC_LD_DYNPATH=-R
-would cause an error on modern GCC unless NO_R_TO_GCC_LINKER was set.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This CC_LD_DYNPATH flag is really obscure, and I don't expect anyone
-except those working on git development ever use this.
+--8323328-1307149947-1558130547=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It's not needed to simply link to libraries like say libpcre,
-but *only* for those cases where we're linking to such a library not
-present in the OS's library directories. See e.g. ldconfig(8) on Linux
-for more details.
+Hi =C3=86var,
 
-I use this to compile my git with a LIBPCREDIR=$HOME/g/pcre2/inst as
-I'm building that from source, but someone maintaining an OS package
-is almost certainly not going to use this. They're just going to set
-USE_LIBPCRE=YesPlease after installing the libpcre dependency,
-which'll point to OS libraries which ld(1) will find without the help
-of CC_LD_DYNPATH.
+On Wed, 8 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Another thing that helps mitigate any potential breakage is that we
-detect the right type of invocation in configure.ac, which e.g. HP/UX
-uses[1], as does IBM's AIX package[2]. From what I can tell both AIX
-and Solaris packagers are building git with GCC, so I'm not adding a
-corresponding config.mak.uname default to cater to their OS-native
-linkers.
+> This seems to work, needs more tests etc...
 
-Now for an overview of past development in this area:
+I can see how it works, but it is a bit limited, and at the same time
+overzealous.
 
-Our use of "-R" dates back to 455a7f3275 ("More portability.",
-2005-09-30). Soon after that in bbfc63dd78 ("gcc does not necessarily
-pass runtime libpath with -R", 2006-12-27) the NO_R_TO_GCC flag was
-added, allowing optional use of "-Wl,-rpath=".
+The reason why we do not enter the fast-forwarding block in the
+interactive case would appear to me to be that the interactive rebase
+*might* want to avoid fast-forwarding e.g. with --force-rebase.
 
-Then in f5b904db6b ("Makefile: Allow CC_LD_DYNPATH to be overriden",
-2008-08-16) the ability to override this flag to something else
-entirely was added, as some linkers use neither "-Wl,-rpath," nor
-"-R".
+However, that is not the only instance where we must not simply
+fast-forward: Think `--exec`. There might be others, too. (I just saw that
+`--signoff` sets `FORCE_REBASE`, but `--exec` does not, so you cannot even
+use the `FORCE_REBASE` flag as indicator.)
 
-From what I can tell we should, with the benefit of hindsight, have
-made this change back in 2006. GCC & ld supported this type of
-invocation back then, or since at least binutils-gdb.git's[3]
-a1ad915dc4 ("[...]Add support for -rpath[...]", 1994-07-20).
+Since `git rebase -rx "make -j8"` is something I use myself, this here
+patch would therefore break *my* workflow.
 
-Further reading and prior art can be found at [4][5][6][7]. Making a
-plain "-R" an error seems from reading those reports to have been
-introduced in GCC 4.6 released on March 25, 2011[8], but I couldn't
-confirm this with absolute certainty, its release notes are ambiguous
-on the subject, and I couldn't be bothered to try to build & bisect it
-against GCC 4.5.
+This is the "overzealous" part. Now for the "limited" part:
 
-1. https://public-inbox.org/git/20190516093412.14795-1-avarab@gmail.com/
-2. https://www.ibm.com/developerworks/aix/library/aix-toolbox/alpha.html
-3. git://sourceware.org/git/binutils-gdb.git
-4. https://github.com/tsuna/boost.m4/issues/15
-5. https://bugzilla.gnome.org/show_bug.cgi?id=641416
-6. https://stackoverflow.com/questions/12629042/g-4-6-real-error-unrecognized-option-r
-7. https://curl.haxx.se/mail/archive-2014-11/0005.html
-8. https://gcc.gnu.org/gcc-4.6/changes.html
+Let's take a step back and ask how the interactive rebase handles these
+potentially fast-forwarding cases? Via `skip_unnecessary_picks()`.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+And that function is ill-prepared for rebasing merges (I specifically do
+*not* think about `--preserve-merges` at this point, for all I care, it is
+already deprecated *and* dropped).
 
-On Fri, May 17 2019, Junio C Hamano wrote:
+Even if this function *was* well-prepared for rebasing merges, I think
+that would miss the mark. Take this todo list, for example:
 
-> Jeff King <peff@peff.net> writes:
+	label onto
+
+	# Branch dscho
+	reset onto
+	pick a123 first
+	label dscho
+
+	# Branch avar
+	reset onto
+	pick b789 second
+	label avar
+
+	reset onto
+	merge -C c124 dscho
+	merge -C d314 avar
+
+Two branches, both one patch deep, both merged, one after the other. Now,
+if you insert `pick abc zeroth` before the first `pick`, obviously the
+first branch would no longer be skippable, but the second one totally
+would be!
+
+This is the "limited" part.
+
+To remedy this, I think what we would need is code in `pick_commits()`,
+right where `TODO_RESET` is handled (or more toward the beginning of that
+function), that would:
+
+- parse the argument (this is currently done in `do_reset()` and would
+  have to be refactored out) and pretend that it is `HEAD`,
+
+- look at the following command: if it is
+
+	- a `pick`, and if its parent agrees with `HEAD`, pretend that
+	  the `pick` was actually a `reset`, update the pretended `HEAD`
+	  and keep looking at the next command,
+
+	- a `merge`, and if its option was `-C <orig-merge>` (not
+	  lower-case `-c`!), and if its parent agrees with `HEAD`, and if
+	  its merge head(s) agree with the original merge commit's (if
+	  any), pretend that it was actually a `reset <orig-merge>`,
+	  update the pretended `HEAD` and keep looking at the next
+	  command,
+
+	- a `label`, perform it, but with the pretended `HEAD`, and keep
+	  looking for the next command,
+
+	- a `reset`, update the `done` and `git-rebase-todo` files and
+	  start the entire spiel from the top,
+
+	- otherwise perform the reset.
+
+- all while skipping, this code would need to take care of updating the
+  `done` and `git-rebase-todo` files,
+
+- if a `reset` is necessary, and if it fails, the `done` and
+  `git-rebase-todo` files should *not* be updated, but the original
+  `reset` should be re-scheduled, and
+
+- since this adds quite a bit of code, it should probably be done in a
+  separate function.
+
+Instead of marking this as a left-over bit (which I would either forget,
+or whose status would be hard to track), I decided to open a ticket:
+
+	https://github.com/gitgitgadget/git/issues/209
+
+(I opened GitGitGadget's issues for exactly this kind of use case, because
+I recently tried to find some useful left-over bits as easy project
+starters, and even *I* found it super hard to find those, let alone figure
+out whether they are being/have been addressed already, a mailing list is
+just not a good bug tracker, even if it is still better than trying to
+report a bug on Twitter, where I could not even have written this
+paragraph in a single Tweet.)
+
+Ciao,
+Dscho
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/rebase.c               | 6 ++++++
+>  t/t3432-rebase-fast-forward.sh | 7 +++++--
+>  2 files changed, 11 insertions(+), 2 deletions(-)
 >
->> Far be it from me to care about AIX, but it seems like this is ripe for
->> regressions, because we don't know which platforms were relying on "-R"
->> instead of "-Wl,-rpath", and now everybody will be using the latter by
->> default.
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 167d4fcf67..de1c5cacb8 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -892,6 +892,12 @@ static void populate_merge_bases(struct commit *hea=
+d, struct commit *onto,
 >
-> I do not have a stake in AIX, either, but I had the same reaction.
+>  static int should_fast_forward(struct rebase_options *opts)
+>  {
+> +	if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
+> +		if (opts->rebase_merges)
+> +			return 1;
+> +		if (opts->type =3D=3D REBASE_PRESERVE_MERGES)
+> +			return 1;
+> +	}
+>  	return !is_interactive(opts);
+>  }
+>
+> diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forwar=
+d.sh
+> index e8a9bf42b6..d3e1815057 100755
+> --- a/t/t3432-rebase-fast-forward.sh
+> +++ b/t/t3432-rebase-fast-forward.sh
+> @@ -44,12 +44,13 @@ test_rebase_same_head_ () {
+>  	test_expect_$status "git rebase$flag $* with $changes is $what with $c=
+mp HEAD" "
+>  		oldhead=3D\$(git rev-parse HEAD) &&
+>  		test_when_finished 'git reset --hard \$oldhead' &&
+> -		git rebase$flag $* >stdout &&
+> +		git rebase$flag $* >stdout 2>stderr &&
+>  		if test $what =3D work
+>  		then
+>  			# Must check this case first, for 'is up to
+>  			# date, rebase forced[...]rewinding head' cases
+> -			test_i18ngrep 'rewinding head' stdout
+> +			test_i18ngrep 'rewinding head' stdout ||
+> +			test_i18ngrep 'is up to date, rebase forced' stdout
+>  		elif test $what =3D noop
+>  		then
+>  			test_i18ngrep 'is up to date' stdout &&
+> @@ -79,6 +80,8 @@ test_rebase_same_head success noop same success noop-f=
+orce same --keep-base mast
+>  test_rebase_same_head success noop same success noop-force same --keep-=
+base
+>  test_rebase_same_head success noop same success noop-force same --no-fo=
+rk-point
+>  test_rebase_same_head success noop same success noop-force same --keep-=
+base --no-fork-point
+> +test_rebase_same_head success noop same success noop-force same --prese=
+rve-merges
+> +test_rebase_same_head success noop same success noop-force same --rebas=
+e-merges
+>  test_rebase_same_head success noop same success work same --fork-point =
+master
+>  test_rebase_same_head success noop same success work diff --fork-point =
+--onto B B
+>  test_rebase_same_head success noop same success work diff --fork-point =
+--onto B... B
+> --
+> 2.21.0.1020.gf2820cf01a
+>
+>
 
-I did a bad job of summarizing why this change makes sense. Here's a
-v2 with a changed commit message. The first 4 pargaraphs are most
-relevant.
-
-Range-diff:
-1:  bd9558b1cf ! 1:  56abcd0fae Makefile: remove the NO_R_TO_GCC_LINKER flag
-    @@ -2,13 +2,34 @@
-     
-         Makefile: remove the NO_R_TO_GCC_LINKER flag
-     
-    -    Remove the NO_R_TO_GCC_LINKER flag, thus switching the default to
-    -    "-Wl,-rpath,$LIBPATH" instead of our current "-R$LIBPATH". This is a
-    -    relatively obscure thing that only kicks in when using one of the
-    -    LIBDIR flags, e.g. LIBPCREDIR or CURLDIR.
-    +    Change our default CC_LD_DYNPATH invocation to something GCC likes
-    +    these days. Since the GCC 4.6 release unknown flags haven't been
-    +    passed through to ld(1). Thus our previous default of CC_LD_DYNPATH=-R
-    +    would cause an error on modern GCC unless NO_R_TO_GCC_LINKER was set.
-     
-    -    How we invoke the linker to do this can still be overridden with
-    -    CC_LD_DYNPATH, as seen in our configure.ac script.
-    +    This CC_LD_DYNPATH flag is really obscure, and I don't expect anyone
-    +    except those working on git development ever use this.
-    +
-    +    It's not needed to simply link to libraries like say libpcre,
-    +    but *only* for those cases where we're linking to such a library not
-    +    present in the OS's library directories. See e.g. ldconfig(8) on Linux
-    +    for more details.
-    +
-    +    I use this to compile my git with a LIBPCREDIR=$HOME/g/pcre2/inst as
-    +    I'm building that from source, but someone maintaining an OS package
-    +    is almost certainly not going to use this. They're just going to set
-    +    USE_LIBPCRE=YesPlease after installing the libpcre dependency,
-    +    which'll point to OS libraries which ld(1) will find without the help
-    +    of CC_LD_DYNPATH.
-    +
-    +    Another thing that helps mitigate any potential breakage is that we
-    +    detect the right type of invocation in configure.ac, which e.g. HP/UX
-    +    uses[1], as does IBM's AIX package[2]. From what I can tell both AIX
-    +    and Solaris packagers are building git with GCC, so I'm not adding a
-    +    corresponding config.mak.uname default to cater to their OS-native
-    +    linkers.
-    +
-    +    Now for an overview of past development in this area:
-     
-         Our use of "-R" dates back to 455a7f3275 ("More portability.",
-         2005-09-30). Soon after that in bbfc63dd78 ("gcc does not necessarily
-    @@ -22,32 +43,24 @@
-     
-         From what I can tell we should, with the benefit of hindsight, have
-         made this change back in 2006. GCC & ld supported this type of
-    -    invocation back then, or since at least binutils-gdb.git's[1]
-    -    a1ad915dc4 ("[...]Add support for -rpath[...]", 1994-07-20). Most
-    -    people compiling git with a custom LIBDIR are going to be on a GNU-ish
-    -    system, and having to provide this NO_R_TO_GCC_LINKER flag on top of a
-    -    custom LIBDIR is annoying.
-    -
-    -    There are some OS's that don't support -rpath, e.g. AIX ld just
-    -    supports "-R". Perhaps we should follow this up with some
-    -    config.mak.uname changes, but as noted it's quite possible that nobody
-    -    on these platforms uses this (instead libraries in the system's search
-    -    path). We *could* also use "-Wl,-R", but let's not introduce something
-    -    new.
-    +    invocation back then, or since at least binutils-gdb.git's[3]
-    +    a1ad915dc4 ("[...]Add support for -rpath[...]", 1994-07-20).
-     
-    -    Further reading and prior art can be found at [2][3][4][5]. Making a
-    +    Further reading and prior art can be found at [4][5][6][7]. Making a
-         plain "-R" an error seems from reading those reports to have been
-    -    introduced in GCC 4.6 released on March 25, 2011, but I couldn't
-    +    introduced in GCC 4.6 released on March 25, 2011[8], but I couldn't
-         confirm this with absolute certainty, its release notes are ambiguous
-         on the subject, and I couldn't be bothered to try to build & bisect it
-         against GCC 4.5.
-     
-    -    1. git://sourceware.org/git/binutils-gdb.git
-    -    2. https://github.com/tsuna/boost.m4/issues/15
-    -    3. https://bugzilla.gnome.org/show_bug.cgi?id=641416
-    -    4. https://stackoverflow.com/questions/12629042/g-4-6-real-error-unrecognized-option-r
-    -    5. https://curl.haxx.se/mail/archive-2014-11/0005.html
-    -    6. https://gcc.gnu.org/gcc-4.6/changes.html
-    +    1. https://public-inbox.org/git/20190516093412.14795-1-avarab@gmail.com/
-    +    2. https://www.ibm.com/developerworks/aix/library/aix-toolbox/alpha.html
-    +    3. git://sourceware.org/git/binutils-gdb.git
-    +    4. https://github.com/tsuna/boost.m4/issues/15
-    +    5. https://bugzilla.gnome.org/show_bug.cgi?id=641416
-    +    6. https://stackoverflow.com/questions/12629042/g-4-6-real-error-unrecognized-option-r
-    +    7. https://curl.haxx.se/mail/archive-2014-11/0005.html
-    +    8. https://gcc.gnu.org/gcc-4.6/changes.html
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-
- Makefile | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index f965509b3c..ce7a489d64 100644
---- a/Makefile
-+++ b/Makefile
-@@ -265,10 +265,6 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
--# Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
--# that tells runtime paths to dynamic libraries;
--# "-Wl,-rpath=/path/lib" is used instead.
--#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-@@ -1160,6 +1156,7 @@ endif
- # which'll override these defaults.
- CFLAGS = -g -O2 -Wall
- LDFLAGS =
-+CC_LD_DYNPATH = -Wl,-rpath,
- BASIC_CFLAGS = -I.
- BASIC_LDFLAGS =
- 
-@@ -1287,16 +1284,6 @@ ifeq ($(uname_S),Darwin)
- 	PTHREAD_LIBS =
- endif
- 
--ifndef CC_LD_DYNPATH
--	ifdef NO_R_TO_GCC_LINKER
--		# Some gcc does not accept and pass -R to the linker to specify
--		# the runtime dynamic library path.
--		CC_LD_DYNPATH = -Wl,-rpath,
--	else
--		CC_LD_DYNPATH = -R
--	endif
--endif
--
- ifdef NO_LIBGEN_H
- 	COMPAT_CFLAGS += -DNO_LIBGEN_H
- 	COMPAT_OBJS += compat/basename.o
--- 
-2.21.0.1020.gf2820cf01a
-
+--8323328-1307149947-1558130547=:46--
