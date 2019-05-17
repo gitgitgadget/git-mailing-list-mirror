@@ -2,102 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3FED1F4B6
-	for <e@80x24.org>; Fri, 17 May 2019 06:26:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4801F461
+	for <e@80x24.org>; Fri, 17 May 2019 06:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727709AbfEQG0j (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 02:26:39 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:37648 "EHLO bsmtp7.bon.at"
+        id S1727726AbfEQG4l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 02:56:41 -0400
+Received: from mout.gmx.net ([212.227.15.18]:37815 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727184AbfEQG0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 02:26:39 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 454yx90GYVz5tlD;
-        Fri, 17 May 2019 08:26:36 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id E2CCF20BA;
-        Fri, 17 May 2019 08:26:35 +0200 (CEST)
-Subject: Re: [PATCH v2] userdiff: add built-in pattern for rust
-To:     =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <mlureau@redhat.com>
-Cc:     git@vger.kernel.org
-References: <20190516235815.13886-1-marcandre.lureau@redhat.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <1bc4ff0c-4283-a7ff-311f-6415e71bce92@kdbg.org>
-Date:   Fri, 17 May 2019 08:26:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727481AbfEQG4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 02:56:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1558076193;
+        bh=Mf0/dTvh0g9/Ce13iEtmhKUcYflbWahd5jiMEc5rWMk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=a1xKgTlvmBAyCEB3avtBQV3KTkyHCtZd08lh0lNOmI9hrqpLkhj7tgOlvWVDq+Dgb
+         PW4HU5Xjlakz0hM9QAOukXeLKchtNrMMX8NaWGOxngR9JizpX1hol7tjlFkKo68k/b
+         U7kusR4eRE1wfeEfR3G8zibryeQ5yFqn9aE60zCk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.49.132.255] ([95.208.59.45]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU0k-1grNA532dY-00aZA1; Fri, 17
+ May 2019 08:56:33 +0200
+Date:   Fri, 17 May 2019 08:56:42 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] rebase -r: always reword merge -c
+In-Reply-To: <20190502102249.9071-1-phillip.wood123@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905170855000.46@tvgsbejvaqbjf.bet>
+References: <a226ffff-212b-d81c-11fd-bb496b84a78d@gmail.com> <20190502102249.9071-1-phillip.wood123@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20190516235815.13886-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:AnsqSLp1Egtec5HKLQctVaTfNNMgeQPO50e0L2i/vNookCBkTD1
+ XERpD6SOkg5Gb+4Uf5ZT4wMDm0tZeWz8O9GrNJ0KX7TIQMmzMhwxkQiBoguK8pKJl2qFh8s
+ dV3V1MVtcY7hs9U3hGTZKAHSTiOXOCMwT3daH3nVC6cLp1oVaB1OU2YcOthhnXocFy+4JUf
+ cBeH88/2Bu6S5eCHTOv2g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4QTTgMZZxKc=:YfZ+QXidNZiOeNs0BTZlMP
+ dgM3C3s3d1H0QRQhsr7MzfvEdntvlk/A/V9XGXUlf+piTCMpy5MFvE14mBiUAwEm5qQ/JdhNV
+ bDg2s/ps9AK8KcZ1AocZhOF7nLw/n+MQ7aSA2dOlWdjROjs+dXPVbmsSDrWt3TgpZVWTX85oL
+ 7/xbOSW15UyBc8Mr2rVAG8B/nPc8MXdtWEBUNez0p9Qyi2Je/fCqZduqCBR/mH+YM1mkIclh+
+ +IVkrE8sVhqB13sV6wlOeTiuPANvUQFu2Iu9jpuzsMvoqv8TQQwbSsd0asQI3ZqPnsEcIScjZ
+ yu4kFzybR571mbGuCEBz+gf6Fpsdb7hTApNxo8S5eMkS5wQi7qzI8RsTIauDZ+Pzc1bWUeCEF
+ FGAJZQIUhJKUgVbVjvhFXRFtfRWIdWWxG/c6B1E2Uphn/Yv+T2NMHSD/qTEQigxEMeutMitSp
+ vdhoH8KBNjd2UrQ/VVU4ldw/kD8Ak8qZHzRImoyB9qvUxogXs4SrIaCcDHE02UhTbHco/o370
+ dF59t2ANOcpbxZmDVY77A4hd3DkOP5pblICVbDYQfDHuUKHz5XUDem8W3ziFrnpsEyZjPJb5x
+ a/URAZcE6tNvPlsdV27UcpjYogdHiStQr91difxI6cmmBjiBzU8WYjx6y4gLiiVLpcJbLtmJt
+ +4JdvvFnHphzkJnbhH/wwqdIVMITgDwIXq+X57Tu12YvaPy4QdBsr96nZZjH2Bpuj99CDC/4u
+ 7NcSRQiCr7CzVcKSKiq67og0xO6ur7z2OEPITIv8vwNvsaC17QAMpQ4WrOwsnIpisqGVrEzdy
+ FlOnt3L7t+MnkjrEEcZr7hm0sKMJBbQTjyRMVn03JDgeYfqynV5qqT8Xuu/yZn9f7zQ+XFvx3
+ 6YLMmES8nt2tCTT+Fu8agEaHhr/diqhkdEHEhWO/l+L78wkZXtxtDZFMdjvYQ7x/zQeD+I7zi
+ hPZjk5j7PIMBFdt8xH+kNa/kgsfHeUH1P5eJ2Bum1lT/SS9ubYZnC
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.05.19 um 01:58 schrieb marcandre.lureau@redhat.com:
-> From: Marc-André Lureau <mlureau@redhat.com>
-> 
-> This adds xfuncname and word_regex patterns for Rust, a quite
-> popular programming language. It also includes test cases for the
-> xfuncname regex (t4018) and updated documentation.
-> 
-> The word_regex pattern finds identifiers, integers, floats and
-> operators, according to the Rust Reference Book.
-> 
-> Cc: Johannes Sixt <j6t@kdbg.org>
+Hi Junio,
 
-In this code base, Cc: footers are disliked.
+I think this one fell through the cracks (at least I failed to find it in
+`pu`), but I deem it a bug fix worthy of including in v2.22.0.
 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Ciao,
+Dscho
+
+
+On Thu, 2 May 2019, Phillip Wood wrote:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> If a merge can be fast-forwarded then make sure that we still edit the
+> commit message if the user specifies -c. The implementation follows the
+> same pattern that is used for ordinary rewords that are fast-forwarded.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
-
-> diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
-> new file mode 100644
-> index 0000000000..ea397f09ed
-> --- /dev/null
-> +++ b/t/t4018/rust-trait
-> @@ -0,0 +1,5 @@
-> +unsafe trait RIGHT<T> {
-> +    fn len(&self) -> u32;
-> +    fn ChangeMe(&self, n: u32) -> T;
-> +    fn iter<F>(&self, f: F) where F: Fn(T);
-> +}
-
-You mentioned that 'unsafe' is commonly used for blocks, and these cases
-should not be picked up. Can we have a test case that demonstrates that
-this is indeed the case?
-
-> diff --git a/userdiff.c b/userdiff.c
-> index 3a78fbf504..8d7e62e2a5 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -130,6 +130,13 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
->  	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
->  	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
-> +PATTERNS("rust",
-> +	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl(<.+>)?)[ \t]+[^;]*)$",
-> +	 /* -- */
-> +	 "[a-zA-Z_][a-zA-Z0-9_]*"
-> +	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-
-This pattern did not change. Doesn't it still mark "+e_1.e_8-e_2.eu128"
-as a single word?
-
-> +	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-
-I still think that you should reduce the complexity of these patterns.
-They do not have to be restrictive to dismiss wrong syntax, just liberal
-enough to catch correct syntax. Let me try again:
-
-	"|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
-
-> +	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::")
--- Hannes
+> Thanks to Dscho for his comments on v1, I've changed the test as he sugg=
+ested.
+>
+> Range-diff:
+> 1:  0532b70644 ! 1:  738799241a rebase -r: always reword merge -c
+>     @@ -40,9 +40,12 @@
+>
+>      +test_expect_success 'fast-forward merge -c still rewords' '
+>      +  git checkout -b fast-forward-merge-c H &&
+>     -+  set_fake_editor &&
+>     -+  FAKE_COMMIT_MESSAGE=3Dedited GIT_SEQUENCE_EDITOR=3D"echo merge -=
+c H G >" \
+>     -+          git rebase -ir @^ &&
+>     ++  (
+>     ++          set_fake_editor &&
+>     ++          FAKE_COMMIT_MESSAGE=3Dedited \
+>     ++                  GIT_SEQUENCE_EDITOR=3D"echo merge -c H G >" \
+>     ++                  git rebase -ir @^
+>     ++  ) &&
+>      +  echo edited >expected &&
+>      +  git log --pretty=3Dformat:%B -1 >actual &&
+>      +  test_cmp expected actual
+>
+>  sequencer.c              |  5 +++++
+>  t/t3430-rebase-merges.sh | 13 +++++++++++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 0db410d590..ff8565e7a8 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3248,6 +3248,10 @@ static int do_merge(struct repository *r,
+>  		rollback_lock_file(&lock);
+>  		ret =3D fast_forward_to(r, &commit->object.oid,
+>  				      &head_commit->object.oid, 0, opts);
+> +		if (flags & TODO_EDIT_MERGE_MSG) {
+> +			run_commit_flags |=3D AMEND_MSG;
+> +			goto fast_forward_edit;
+> +		}
+>  		goto leave_merge;
+>  	}
+>
+> @@ -3351,6 +3355,7 @@ static int do_merge(struct repository *r,
+>  		 * value (a negative one would indicate that the `merge`
+>  		 * command needs to be rescheduled).
+>  		 */
+> +	fast_forward_edit:
+>  		ret =3D !!run_git_commit(r, git_path_merge_msg(r), opts,
+>  				       run_commit_flags);
+>
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index 4c69255ee6..01238d4b6e 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -164,6 +164,19 @@ test_expect_success 'failed `merge <branch>` does n=
+ot crash' '
+>  	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
+>  '
+>
+> +test_expect_success 'fast-forward merge -c still rewords' '
+> +	git checkout -b fast-forward-merge-c H &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_COMMIT_MESSAGE=3Dedited \
+> +			GIT_SEQUENCE_EDITOR=3D"echo merge -c H G >" \
+> +			git rebase -ir @^
+> +	) &&
+> +	echo edited >expected &&
+> +	git log --pretty=3Dformat:%B -1 >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'with a branch tip that was cherry-picked already' =
+'
+>  	git checkout -b already-upstream master &&
+>  	base=3D"$(git rev-parse --verify HEAD)" &&
+> --
+> 2.21.0
+>
+>
+>
