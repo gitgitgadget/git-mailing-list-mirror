@@ -7,93 +7,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5DFF1F461
-	for <e@80x24.org>; Fri, 17 May 2019 01:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1845C1F461
+	for <e@80x24.org>; Fri, 17 May 2019 01:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726216AbfEQBJx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 21:09:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60292 "HELO cloud.peff.net"
+        id S1727126AbfEQBTo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 21:19:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60310 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725985AbfEQBJw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 21:09:52 -0400
-Received: (qmail 9208 invoked by uid 109); 17 May 2019 01:09:53 -0000
+        id S1726241AbfEQBTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 21:19:43 -0400
+Received: (qmail 9523 invoked by uid 109); 17 May 2019 01:19:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 May 2019 01:09:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 May 2019 01:19:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9557 invoked by uid 111); 17 May 2019 01:10:32 -0000
+Received: (qmail 9631 invoked by uid 111); 17 May 2019 01:20:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 May 2019 21:10:31 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 May 2019 21:20:22 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 May 2019 21:09:51 -0400
-Date:   Thu, 16 May 2019 21:09:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 May 2019 21:19:42 -0400
+Date:   Thu, 16 May 2019 21:19:42 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
-Message-ID: <20190517010950.GA30146@sigill.intra.peff.net>
-References: <20190516214257.GD10787@sigill.intra.peff.net>
- <20190516231509.253998-1-jonathantanmy@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Cosmin Polifronie <oppturbv@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Running 'git worktree add' in 'pre-commit' hook
+Message-ID: <20190517011941.GA30372@sigill.intra.peff.net>
+References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
+ <CACsJy8DnkjuZD-9pbhAsFo16jHKt8U831LLxb3-nCQP5_FOmtA@mail.gmail.com>
+ <20190516221702.GA11784@sigill.intra.peff.net>
+ <CAPig+cQQ5svrDKRPenL2+bJHGjddUPnAXCFSsQN+WBHqzGpDow@mail.gmail.com>
+ <20190517001926.GA13525@sigill.intra.peff.net>
+ <CAPig+cQpmD9+frJWNfcts1+RFBTjrHUHk_eR4Y94GAnGZC=7hQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190516231509.253998-1-jonathantanmy@google.com>
+In-Reply-To: <CAPig+cQpmD9+frJWNfcts1+RFBTjrHUHk_eR4Y94GAnGZC=7hQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 16, 2019 at 04:15:09PM -0700, Jonathan Tan wrote:
+On Thu, May 16, 2019 at 09:02:06PM -0400, Eric Sunshine wrote:
 
-> > /*
-> >  * Second pass:
-> >  * - for all non-delta objects, look if it is used as a base for
-> >  *   deltas;
-> >  * - if used as a base, uncompress the object and apply all deltas,
-> >  *   recursively checking if the resulting object is used as a base
-> >  *   for some more deltas.
-> >  */
+> On Thu, May 16, 2019 at 8:19 PM Jeff King <peff@peff.net> wrote:
+> > On Thu, May 16, 2019 at 07:16:54PM -0400, Eric Sunshine wrote:
+> > > Is there
+> > > any existing code in Git for doing the relative fixups you mention for
+> > > other Git environment variables?
+> >
+> > You can assign local_repo_env to child_process.env (or push it
+> > individually to env_array if you have to mix with other variables). See
+> > git_connect() for an example.
 > 
-> I haven't seen any code that contradicts this comment. And looking at
-> the code, for each non-delta object, I think that all deltas are checked
-> - regardless of whether they appear before or after that non-delta
-> object. (find_ref_delta() does a binary search from 0 to
-> nr_ref_deltas, calculated in parse_pack_objects() which happens before
-> any resolution of deltas.)
-> 
-> And find_unresolved_deltas_1() (called from resolve_deltas() indirectly)
-> sets the real_type when it resolves a delta, as far as I can tell.
-> 
-> So there is more than one "resolve deltas" step - resolve_deltas() and
-> then fix_unresolved_deltas(). The pre-fetching happens only during the
-> latter.
+> I wasn't aware of 'local_repo_env', but can see how it could be
+> helpful as a basis for building machinery to adjust relative paths
+> contained in those environment variables prior to a chdir(). My
+> original question was if such machinery already exists, but I'm
+> guessing from your response that it doesn't.
 
-OK, that is better than I realized. But I think there is still one
-interesting case: what happens if a thin delta is used as the base for a
-non-thin delta (even one that is OFS_DELTA)?
+Oh, I see. I totally missed that you said "relative fixups" and not
+"clearing". :)
 
-We cannot handle that second delta until the third pass in
-fix_unresolved_deltas(), because we do not realize we have the base
-until we resolve the thin delta.
-
-Specifically, I wonder:
-
-  - do we pre-fetch it, not realizing that we will soon have the base?
-    That's not ideal, but I think is necessary if we pre-fetch (and is
-    still a worst case even if we did single on-demand fetches).
-
-  - will we ever append a presumed-thin base to the pack, only to later
-    realize that we already have that object, creating a duplicate
-    object in the pack? If so, do we handle this correctly when
-    generating the index (I know we've had issues in the past and have
-    expressly forbidden duplicates from appearing in the index; even
-    having a duplicate in the pack stream itself is non-ideal, though,
-    as it screws up things like on-disk size calculations).
-
-    Because of the sorting in fix_unresolved_deltas(), I think this
-    could easily be prevented if the non-thin delta is OFS_DELTA (by
-    just checking for the base in our already-found list of objects
-    before we call read_object_file(). But for REF_DELTA, I think we
-    have no way of knowing that appending is the wrong thing (and no
-    good way of backing it out afterwards).
+There's the chdir_notify system. Any variables which need updating need
+to register themselves, and then the chdir in the worktree code needs to
+be done with chdir_notify(). See chdir-notify.h for details.
 
 -Peff
