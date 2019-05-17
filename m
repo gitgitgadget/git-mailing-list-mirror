@@ -2,70 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5935D1F461
-	for <e@80x24.org>; Fri, 17 May 2019 01:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5DFF1F461
+	for <e@80x24.org>; Fri, 17 May 2019 01:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726920AbfEQBCU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 21:02:20 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:34844 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726575AbfEQBCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 21:02:20 -0400
-Received: by mail-wr1-f44.google.com with SMTP id m3so5107645wrv.2
-        for <git@vger.kernel.org>; Thu, 16 May 2019 18:02:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rCc6u+sKsjO5IH8ZFd5b+DUYfcUzAvm4uW9j+8leyvI=;
-        b=gOAfmcalWqeBB6ASe6otAC5oekcu5z649CQ5WAwMt7Tn8pgBedHdgWuhWHTycbC+KP
-         EidX1o5+ZJGoWIaPL70D2bVgpcSEAqj8urfO7i6+0QxWNwwdNLu3UGFPfXy/vEx6ZQpZ
-         KL+yBwBJjKFX0zrhXHaxHxQ4hvfR4EW98OzvXCz+mNQG+6vE4KKJ42c0WpqRdGbXCkFu
-         cm0o8fsQEHpaOGRsAh1Os5Psc66cYLIToyGaoTqjOoyMOVJD1WoOvYKl/vmTdLXpcfOq
-         RNSBgAvvMlx05UekAG0S6lG5zZ3g4g3lCFFatfGJ02QHFXs5UyAzsNyh4V+A9STLb4/G
-         rprQ==
-X-Gm-Message-State: APjAAAVIK/0IqF1gKzateQ4bUOMlqIJ2cPVIZ6+s2fHq3sBJbZvXWtqm
-        XnGD6i6VD4erlzFRfRqnG7JtPnKEXGIPJSrHSR4=
-X-Google-Smtp-Source: APXvYqywCD+hwyLAqqtgQ0re28nbYMWom2gwKU7eIjCJL+aQF5GBbyjqUaBIySiskAbtOAmt4MJqu6YZRcFR3H4MVtM=
-X-Received: by 2002:adf:9c8a:: with SMTP id d10mr15411628wre.9.1558054938455;
- Thu, 16 May 2019 18:02:18 -0700 (PDT)
+        id S1726216AbfEQBJx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 21:09:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60292 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725985AbfEQBJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 May 2019 21:09:52 -0400
+Received: (qmail 9208 invoked by uid 109); 17 May 2019 01:09:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 May 2019 01:09:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9557 invoked by uid 111); 17 May 2019 01:10:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 May 2019 21:10:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 May 2019 21:09:51 -0400
+Date:   Thu, 16 May 2019 21:09:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
+Message-ID: <20190517010950.GA30146@sigill.intra.peff.net>
+References: <20190516214257.GD10787@sigill.intra.peff.net>
+ <20190516231509.253998-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com>
- <CACsJy8DnkjuZD-9pbhAsFo16jHKt8U831LLxb3-nCQP5_FOmtA@mail.gmail.com>
- <20190516221702.GA11784@sigill.intra.peff.net> <CAPig+cQQ5svrDKRPenL2+bJHGjddUPnAXCFSsQN+WBHqzGpDow@mail.gmail.com>
- <20190517001926.GA13525@sigill.intra.peff.net>
-In-Reply-To: <20190517001926.GA13525@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 16 May 2019 21:02:06 -0400
-Message-ID: <CAPig+cQpmD9+frJWNfcts1+RFBTjrHUHk_eR4Y94GAnGZC=7hQ@mail.gmail.com>
-Subject: Re: Running 'git worktree add' in 'pre-commit' hook
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Cosmin Polifronie <oppturbv@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190516231509.253998-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 16, 2019 at 8:19 PM Jeff King <peff@peff.net> wrote:
-> On Thu, May 16, 2019 at 07:16:54PM -0400, Eric Sunshine wrote:
-> > Is there
-> > any existing code in Git for doing the relative fixups you mention for
-> > other Git environment variables?
->
-> You can assign local_repo_env to child_process.env (or push it
-> individually to env_array if you have to mix with other variables). See
-> git_connect() for an example.
+On Thu, May 16, 2019 at 04:15:09PM -0700, Jonathan Tan wrote:
 
-I wasn't aware of 'local_repo_env', but can see how it could be
-helpful as a basis for building machinery to adjust relative paths
-contained in those environment variables prior to a chdir(). My
-original question was if such machinery already exists, but I'm
-guessing from your response that it doesn't.
+> > /*
+> >  * Second pass:
+> >  * - for all non-delta objects, look if it is used as a base for
+> >  *   deltas;
+> >  * - if used as a base, uncompress the object and apply all deltas,
+> >  *   recursively checking if the resulting object is used as a base
+> >  *   for some more deltas.
+> >  */
+> 
+> I haven't seen any code that contradicts this comment. And looking at
+> the code, for each non-delta object, I think that all deltas are checked
+> - regardless of whether they appear before or after that non-delta
+> object. (find_ref_delta() does a binary search from 0 to
+> nr_ref_deltas, calculated in parse_pack_objects() which happens before
+> any resolution of deltas.)
+> 
+> And find_unresolved_deltas_1() (called from resolve_deltas() indirectly)
+> sets the real_type when it resolves a delta, as far as I can tell.
+> 
+> So there is more than one "resolve deltas" step - resolve_deltas() and
+> then fix_unresolved_deltas(). The pre-fetching happens only during the
+> latter.
+
+OK, that is better than I realized. But I think there is still one
+interesting case: what happens if a thin delta is used as the base for a
+non-thin delta (even one that is OFS_DELTA)?
+
+We cannot handle that second delta until the third pass in
+fix_unresolved_deltas(), because we do not realize we have the base
+until we resolve the thin delta.
+
+Specifically, I wonder:
+
+  - do we pre-fetch it, not realizing that we will soon have the base?
+    That's not ideal, but I think is necessary if we pre-fetch (and is
+    still a worst case even if we did single on-demand fetches).
+
+  - will we ever append a presumed-thin base to the pack, only to later
+    realize that we already have that object, creating a duplicate
+    object in the pack? If so, do we handle this correctly when
+    generating the index (I know we've had issues in the past and have
+    expressly forbidden duplicates from appearing in the index; even
+    having a duplicate in the pack stream itself is non-ideal, though,
+    as it screws up things like on-disk size calculations).
+
+    Because of the sorting in fix_unresolved_deltas(), I think this
+    could easily be prevented if the non-thin delta is OFS_DELTA (by
+    just checking for the base in our already-found list of objects
+    before we call read_object_file(). But for REF_DELTA, I think we
+    have no way of knowing that appending is the wrong thing (and no
+    good way of backing it out afterwards).
+
+-Peff
