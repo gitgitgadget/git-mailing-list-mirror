@@ -2,160 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80A451F461
-	for <e@80x24.org>; Thu, 16 May 2019 23:58:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92E661F461
+	for <e@80x24.org>; Fri, 17 May 2019 00:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727505AbfEPX6U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 May 2019 19:58:20 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:36096 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726523AbfEPX6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 May 2019 19:58:20 -0400
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 2C789307D846;
-        Thu, 16 May 2019 23:58:20 +0000 (UTC)
-Received: from localhost (ovpn-112-26.ams2.redhat.com [10.36.112.26])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 23C6F605D0;
-        Thu, 16 May 2019 23:58:16 +0000 (UTC)
-From:   marcandre.lureau@redhat.com
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <mlureau@redhat.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2] userdiff: add built-in pattern for rust
-Date:   Fri, 17 May 2019 01:58:15 +0200
-Message-Id: <20190516235815.13886-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.48]); Thu, 16 May 2019 23:58:20 +0000 (UTC)
+        id S1727393AbfEQAKM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 May 2019 20:10:12 -0400
+Received: from resqmta-ch2-02v.sys.comcast.net ([69.252.207.34]:41802 "EHLO
+        resqmta-ch2-02v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726523AbfEQAKM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 May 2019 20:10:12 -0400
+X-Greylist: delayed 488 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 May 2019 20:10:12 EDT
+Received: from resomta-ch2-16v.sys.comcast.net ([69.252.207.112])
+        by resqmta-ch2-02v.sys.comcast.net with ESMTP
+        id RJSNhwRTzB4iYRQK3hMmKw; Fri, 17 May 2019 00:02:03 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1558051323;
+        bh=uVVYddpr9FOEzHH/A/aGdsISkPydASzK1H6n0L4Yd/g=;
+        h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+         Message-Id:To;
+        b=GYQLC2506IAACC4fCKAL6NeEhMGpCJN5gS93BIMPtyBqZPJlJxI2nOAI9NZiJmpON
+         uIijP4B7zvDy1xQg9Y+5AjST8JWtPPF6P9EZDQqj09aez0vb8wbW2z9UzfRNIFBXfm
+         bKmkah6syznyQXzdjxfclZs0QQW2ZZjXS6ppbKDCQAMkwH0gsyyGaXo65wjk2IG75Y
+         ypouObhshetnTOjF2MeqEV2zgi8J4jZtprqwXTNxbUoOuoexnso2mJQMxMvvDUyro/
+         auUO2GOmE5paijfpjxeEDR6djlPj6hovBMrR6mQrwlQ5GsVvknCLVXWYBRY1iMLI08
+         IWG75V8U8+2VA==
+Received: from [IPv6:2620::100e:913:f5a7:cfbe:d129:9d11] ([IPv6:2620:0:100e:913:f5a7:cfbe:d129:9d11])
+        by resomta-ch2-16v.sys.comcast.net with ESMTPA
+        id RQJoh6dkwNwSxRQJthDpNG; Fri, 17 May 2019 00:02:01 +0000
+X-Xfinity-VMeta: sc=0;st=legit
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [RFC PATCH 0/3] implement composite filters
+From:   Matthew DeVore <matvore@comcast.net>
+In-Reply-To: <20190516224150.243395-1-jonathantanmy@google.com>
+Date:   Thu, 16 May 2019 17:01:48 -0700
+Cc:     matvore@google.com, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <740617F3-9C9F-4F1D-86F7-1A129C7F3F3D@comcast.net>
+References: <cover.1558030802.git.matvore@google.com>
+ <20190516224150.243395-1-jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Marc-André Lureau <mlureau@redhat.com>
 
-This adds xfuncname and word_regex patterns for Rust, a quite
-popular programming language. It also includes test cases for the
-xfuncname regex (t4018) and updated documentation.
 
-The word_regex pattern finds identifiers, integers, floats and
-operators, according to the Rust Reference Book.
+> On 2019/05/16, at 15:41, Jonathan Tan <jonathantanmy@google.com> =
+wrote:
+>=20
+> Thanks - seeing these patches reduces my concerns significantly. A
 
-Cc: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- Documentation/gitattributes.txt | 2 ++
- t/t4018-diff-funcname.sh        | 1 +
- t/t4018/rust-fn                 | 5 +++++
- t/t4018/rust-impl               | 5 +++++
- t/t4018/rust-struct             | 5 +++++
- t/t4018/rust-trait              | 5 +++++
- userdiff.c                      | 7 +++++++
- 7 files changed, 30 insertions(+)
- create mode 100644 t/t4018/rust-fn
- create mode 100644 t/t4018/rust-impl
- create mode 100644 t/t4018/rust-struct
- create mode 100644 t/t4018/rust-trait
+Thank you for taking a look :)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 4fb20cd0e9..07da08fb27 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -833,6 +833,8 @@ patterns are available:
- 
- - `ruby` suitable for source code in the Ruby language.
- 
-+- `rust` suitable for source code in the Rust language.
-+
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 22f9f88f0a..9261d6d3a0 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -43,6 +43,7 @@ diffpatterns="
- 	php
- 	python
- 	ruby
-+	rust
- 	tex
- 	custom1
- 	custom2
-diff --git a/t/t4018/rust-fn b/t/t4018/rust-fn
-new file mode 100644
-index 0000000000..cbe02155f1
---- /dev/null
-+++ b/t/t4018/rust-fn
-@@ -0,0 +1,5 @@
-+pub(self) fn RIGHT<T>(x: &[T]) where T: Debug {
-+    let _ = x;
-+    // a comment
-+    let a = ChangeMe;
-+}
-diff --git a/t/t4018/rust-impl b/t/t4018/rust-impl
-new file mode 100644
-index 0000000000..09df3cd93b
---- /dev/null
-+++ b/t/t4018/rust-impl
-@@ -0,0 +1,5 @@
-+impl<'a, T: AsRef<[u8]>>  std::RIGHT for Git<'a> {
-+
-+    pub fn ChangeMe(&self) -> () {
-+    }
-+}
-diff --git a/t/t4018/rust-struct b/t/t4018/rust-struct
-new file mode 100644
-index 0000000000..76aff1c0d8
---- /dev/null
-+++ b/t/t4018/rust-struct
-@@ -0,0 +1,5 @@
-+#[derive(Debug)]
-+pub(super) struct RIGHT<'a> {
-+    name: &'a str,
-+    age: ChangeMe,
-+}
-diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
-new file mode 100644
-index 0000000000..ea397f09ed
---- /dev/null
-+++ b/t/t4018/rust-trait
-@@ -0,0 +1,5 @@
-+unsafe trait RIGHT<T> {
-+    fn len(&self) -> u32;
-+    fn ChangeMe(&self, n: u32) -> T;
-+    fn iter<F>(&self, f: F) where F: Fn(T);
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 3a78fbf504..8d7e62e2a5 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -130,6 +130,13 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
- 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
- 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
-+PATTERNS("rust",
-+	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl(<.+>)?)[ \t]+[^;]*)$",
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-+	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-+	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
- PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+>=20
+> - LOFR_MARK_SEEN is tracked for LHS and RHS separately. To support an
+>  arbitrary number of filters, we don't use object flags to track this,
+>  so we use oidsets instead. I don't think that the extra memory usage
+>  will be a problem (we already allocate more for all the struct
+>  object). If this is an issue in the future, we can switch to using
+>  object flags for the first N filters, and oidsets thereafter.
 
-base-commit: ab15ad1a3b4b04a29415aef8c9afa2f64fc194a2
--- 
-2.22.0.rc0.1.ge0ee2a09d1
+Yup. Another possibility that comes to mind is that when both the lhs =
+and rhs seen sets contain the same object, we promote it to a combined =
+set, and remove it from the individual ones at that time.
+
+>=20
+> - LOFR_SKIP_TREE is simulated if only one filter wants to skip the =
+tree.
+>=20
+> - I haven't fully figured out LOFR_DO_SHOW yet. It seems to me that if
+>  an object appears twice in the walk, and the LHS says LOFR_DO_SHOW on
+>  the first occurrence, if the RHS says LOFR_DO_SHOW on the second
+>  occurrence, the object will be shown twice. But perhaps this isn't a
+
+LOFR_DO_SHOW is only propagated upward from the combine: filter if both =
+children indicate LOFR_DO_SHOW for the same object at the same point in =
+the traversal (see the line that has "combined_result |=3D =
+LOFR_DO_SHOW"). In the scenario you draw out, the object won=E2=80=99t =
+be shown at all, since the first occurrence is filtered out for one =
+reason, and the second is filtered out for a separate reason. This may =
+happen when a sparse: filter includes a "deep" blob but excludes the =
+same blob at a shallower point in the tree, and a tree: filter does the =
+opposite with the same blob. Just thinking about it now for a moment, =
+this seems intuitive and reasonable.
 
