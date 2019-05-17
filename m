@@ -8,83 +8,102 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C541F461
-	for <e@80x24.org>; Fri, 17 May 2019 18:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D1231F461
+	for <e@80x24.org>; Fri, 17 May 2019 18:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727640AbfEQSaX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 14:30:23 -0400
-Received: from mout.gmx.net ([212.227.15.18]:45867 "EHLO mout.gmx.net"
+        id S1726939AbfEQSdj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 14:33:39 -0400
+Received: from mout.gmx.net ([212.227.17.21]:41497 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726282AbfEQSaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 14:30:23 -0400
+        id S1726282AbfEQSdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 14:33:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558117815;
-        bh=HvLJuzAvxdFU0IXD3rhxlgWI1/vl5jGjuVk91bAIVsk=;
+        s=badeba3b8450; t=1558118017;
+        bh=KYxva64Jv+t2SviwpGtPT7+bxUNLFSGuTdoJUAdCBBc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aJm9okW+xNqCTjOZPdJxBRGcNtpZOng1h+VwmSLvJP2bhxX6MFCP6iKwQdNbHnj82
-         22rIc1WmUZnCF5N+BOhFA/3sxQteaV60XMgGGFOtgFt1KqlicuFfO9tbeiLNNftNQv
-         bz0y7iTyEtvYqyKgYrnnYBhuT5osMtVfc5LFAC0A=
+        b=li2TnhOpn1vXkX9GWv04Yii3oUryjYFO7sekp6grE/VPTSX2iry9M5c54eBchNXA7
+         ax6/PxjBGGaD9v/j1QPo7d0bQlHXaHThjaZbxrhd1j8eCtOzJdLmun+wqhRgMdlNaU
+         QVEKeueshkaLywWEwMm9F7C+H+G5YS4IkXBUiDQA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me8RK-1h1l2f2Yak-00Psdr; Fri, 17
- May 2019 20:30:15 +0200
-Date:   Fri, 17 May 2019 20:30:24 +0200 (DST)
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M35iN-1gZJu33HEt-00swUI; Fri, 17
+ May 2019 20:33:36 +0200
+Date:   Fri, 17 May 2019 20:33:45 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH 1/1] stash: document stash.useBuiltin
-In-Reply-To: <xmqqo9445cba.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905172030050.46@tvgsbejvaqbjf.bet>
-References: <pull.193.git.gitgitgadget@gmail.com> <6c250451658f34c1415bfcba35ee6303cecac0dc.1557825553.git.gitgitgadget@gmail.com> <CAPig+cRoyOJrEuVY109NKafTCUc399p9tk64L9sZok=AOZ1MPg@mail.gmail.com> <nycvar.QRO.7.76.6.1905151025580.44@tvgsbejvaqbjf.bet>
- <xmqqo9445cba.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
+In-Reply-To: <20190515182812.107420-1-jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1905172032550.46@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1905151040240.44@tvgsbejvaqbjf.bet> <20190515182812.107420-1-jonathantanmy@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mWs41DnKaBbV74Ac1Zj+FjcHUyGJAtWVxXAi2zTuVCfvzThU4Bj
- ql2NhICDhlsGhfRe2DMZfiHyIkF7vsstWktx/grZvM0cjWB/N6k7plXAhCEFoRiuf/wgiEG
- RwZ2KZuX/50FUvv7Ntq0FJchv0pJJGq+k/udYDqAU10zAXyu3KvDjY9HF7lwGsRnCCpFT/6
- BfSUeIVca1AYOXtP9IG6Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vABglpDE/54=:RsOyZqG//X9WZy7IiG28Oj
- xc9+Ja7b0Pnco87L8Znf7K6AwPhzznZST07aeo3KxojnaEPqBysT5TJzKVBhuP4L7avUitzXs
- EHd1+q76cI33iYcLRn4WV0j3C3tTUjASx5giKzK9WssquW8tFfjKN8PEoo6acNovA16sSQyPk
- JX4AJ/sPU1dvOGoqfsd6ARYBEkTyK3cQ5l0Za1NWSlu+i0ph9eDWxj2EhdhqZ88KW5M7e9waF
- ZdiU01UQu/jWO081lNvNzws8iSGoxdUdsoUeGatTV7ScikTx/TGhkyY1GXXzohewK1LNkhceh
- +mwPUlUVLPOMItidiK6prrIW0r+XI7CY0SSuKbeUkHSbfdunEA9cyBxzWS7zOb/hRCFH9KGuF
- uVXUeL0yYXV14P8bgYEycJjezVMvz/ycEJ/hMxfMI5H0FYEsr2ISprKF/3KlcBoWiYTs+soCr
- b/bynKSR0Ue5bdemBENTYZE6ZzM5HzWBycQ6+eme4UT3Fc3JImDoKxC2i6vQxci62XXUD9cTj
- mto7vCjlkNHGS7VvQR/2/ibeVRbELfAElnpKUIiv1UEvt7xpHWPGqS3jlrty+0ODJu4GRizeh
- cLldT7ZnELRaXav2yn+0tbYxOQQ2nNmw7PoEcKUUF1rEWGfQdbJ3yRf7jGlRniqn+18h8Yo6b
- USQOOCnpQNx4oa/Eez1pLiuY/avzMMPqgvHePDGV9sGiUIltHA7fvz3JCuPZNBFS7au6S/Gzo
- numgSphDZSwLcuTbHXsZDgZnI0G52YltmHPFtgdDPORrxqV37l0VrhJ51IIJrpyqfNb2/818C
- gPTtks9OjithE2tlF+ernmW5fBG2QA5Y4CRnY4Bz5SoMUVgNeXwD1xs8C3uk9L+ou8HBIZ5XK
- ebszXN8tHo6JVtYhoXw4SSi30g0VsMy94CaCgUnws/zI+II/ourLgSLoZeFsSAGMR5m9KCPDc
- uqwdJYPUotFpuK6jI59cT/RQmwA2VAdOkqkxG+g+KYXgthOmxORNl
+X-Provags-ID: V03:K1:RyfI+EYauCGqV78XmlRxUWXI0c/lSdNPWnQyT+Q5EipyqYBkdWS
+ xSlAvB+mQLxFWvuxHag5QMjdDI6is//9QSQ8DAz6w3BLbx78hY2YkSuVTypVVxfPpOoT39U
+ UacbtSzWf95L7X+AkMexf+yXp3n1rb1U64CSjUjP3LW0gpq6Q+B123AK9ojgCuDW+c0jzxf
+ IWQl0C/XiHrLcPgMbhoLA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Hx0sf/lzeqE=:M8ZZd1QRPc5/gqm37hQZA4
+ 2USfllZBQbEkjL75FH3jwwf06qPOmiO0eUEqzrsbsnfuLXH2nt7ehuo0IpPO/0GjdHym0+Xr2
+ viF+3nWO/4Mn2qG8NMifCO3WdRwTO7cvrrcss55f8Uuov2jrkKzxQDUYKwLL+OfsuoIMnODcD
+ Qh81Y//xKQINGwtImK8TS3QxwHfS3yvHs6C0QFzIdbE/ft5pe3xaVV+xpdBJ3b0CbmGNde/kL
+ 1gU9Zz5smmVFYpL2vnbOarBmzCHfYcnGlhf8ms+9sRbRbyKjkXJ8uZgc62kbiHadWwzCoTems
+ 4P9xC+JbainuOSZyJunvGAcoYTdwUapQdJEBcdBZk0bcoQLCfRwYbvufvVWnbRWJzRFLNlgzN
+ 9DYhuBKYwc4lGePHMy/mWTMcK1KUHbyjWkkznf+tYY2c8dli/AjRRelABjU3eDlky0OFURtso
+ fz+5tz06ZIQBZ6DsjtsxdKtD/ki7Gpic6qETa9JcaRAOvvbQE46ric3GyMFJguzaGxbgKdUp5
+ fwsK8gOjKA2pCqm2b5d8tl1hrO2Z4C++c2pTzl7L5gmnvpa/emWcZx7lgx9AugtjLZFw/I5Hz
+ 9tlXaLqODWiHTaq6uBnMd3EDaWK47IVh+V3Tpeu5hIxgn2beQvySO/6sYp97rOveElDNaedlu
+ FvKlmeBkNc2P5GM94/6EU9coDNaS23Vf2NH214P1g5ykvCSyCSXtOi9V8e/MbTDzpOAmRmFPn
+ WMYR5iIO/Ymg4L2GDQzLou3iz9zKml/BQUf89ia135r0+k669Jh4yXDz1ktnM/2d9MUt0Jd5C
+ OjYFgkhnw7oOSpOI+zOia3WLbJhAXKyikwal3IpBENP7cvz4NHksmu9cs0r5ELKndOrobCA33
+ mQU3B8FAyTGMpq3w3Bd1swSqXMnSHkCUJZzJnw6UtViPIKTsGstbAz+8nMhz31ILPccAkUNu6
+ w0exCqdGEWhUAvHCOe09MAeIItJAjmVC/Y4Sd+W7VPiVJq/KQxCxO
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Jonathan,
 
-On Wed, 15 May 2019, Junio C Hamano wrote:
+On Wed, 15 May 2019, Jonathan Tan wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> See a few nits below, none of which are necessarily worth a re-roll.
+> > > To resolve this, prefetch all missing REF_DELTA bases before attempt=
+ing
+> > > to resolve them. This both ensures that all bases are attempted to b=
+e
+> > > fetched, and ensures that we make only one request per index-pack
+> > > invocation, and not one request per missing object.
 > >
-> > Thanks!
-> >
-> > Junio, do you agree, do you want to fix it up on your side?
+> > Hmm. I wonder whether this can lead to *really* undesirable behavior, =
+e.g.
+> > with deep delta chains. The client would possibly have to fetch the
+> > REF_DELTA object, but that would also be delivered in a thin pack with
+> > *another* REF_DELTA object, and the same over and over again, with ple=
+nty
+> > of round trips that kill performance really well.
 >
-> I think you'd see all of them in what I've pushed out.
+> When the client fetches the REF_DELTA base, it won't be a REF_DELTA
+> object itself because Git makes these fetches without any "have" lines,
+> so the server doesn't know anything to delta against. Admittedly, this
+> is just due how to we implemented it - if later we find a way to
+> optimize the lazy fetches by adding "have", then we'll have to revisit
+> this.
 
-Indeed, what you merged to `next` looks good to me, too.
+Ah! I *think* I understand this better now. Thank you.
 
-Thanks,
+> Quoting from the commit message:
+>
+> > > (When fetching REF_DELTA bases, it is unlikely that
+> > > those are REF_DELTA themselves, because we do not send "have" when
+> > > making such fetches.)
+>
+> I tried to address this point with this sentence in the commit message.
+> If you think that this should be addressed more clearly in the commit
+> message, let me know if you have any suggestions.
+
+I totally read over this part of the commit message, apparently. My bad.
+
+Sorry for the noise!
 Dscho
