@@ -2,116 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E0E1F461
-	for <e@80x24.org>; Sat, 18 May 2019 06:42:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA62B1F461
+	for <e@80x24.org>; Sat, 18 May 2019 08:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbfERGm4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 May 2019 02:42:56 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:37961 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725268AbfERGm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 May 2019 02:42:56 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 455bFT67x6z5tlD;
-        Sat, 18 May 2019 08:42:53 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 597FF20BA;
-        Sat, 18 May 2019 08:42:52 +0200 (CEST)
-Subject: Re: [PATCH] make slash-rules more readable
-To:     "Dr. Adam Nielsen" <admin@in-ici.net>
-References: <20190507104507.18735-1-admin@in-ici.net>
- <xmqqzhnxh5nm.fsf@gitster-ct.c.googlers.com>
- <094f3746-67c9-0284-0593-eb6b24d5c4a3@in-ici.net>
- <469c37d9-4491-9072-211f-d9d8614413e0@in-ici.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <f80eb2e5-3285-40bd-018d-ff0c7e5e9ff5@kdbg.org>
-Date:   Sat, 18 May 2019 08:42:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727156AbfERI20 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 May 2019 04:28:26 -0400
+Received: from mail-lj1-f174.google.com ([209.85.208.174]:35911 "EHLO
+        mail-lj1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725446AbfERI20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 May 2019 04:28:26 -0400
+Received: by mail-lj1-f174.google.com with SMTP id z1so8263938ljb.3
+        for <git@vger.kernel.org>; Sat, 18 May 2019 01:28:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y2Eqt8XqKO0YkHTtOqIPI4QnZ9qpTxOLDMCI33D9Cto=;
+        b=Mq/Hf3dP7mcfuQ/JO267cW0+dpP0WkWa+n7ufW6GiWHjyfUktaapfyIuCg2WZIF6Tc
+         HnTjnlOfxWIutF6R5Z+FWdjbzmroim508bZQpvu5tS1Lr/bOWmeO8RMoSMelg+O5hZFA
+         FFBYAvxXlPRnipaqWfjd7Qmdcj4pzThr74XDghuwJ1gyajpaTLONWvJsa3a9wXL8/PDh
+         s6SU2qI1cG50G4SZ3yC9HFSV2SFlpNdshecJnMyXs3ATpn38nFCO4CC+dl1r/TMaL6W9
+         QgKOz/XrmE7tfE4j5Hb7MC0tHrn1A57E6ZtfzgElj2wN9qhIfF0NPPfaNNNoGcMBb4b8
+         wnxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y2Eqt8XqKO0YkHTtOqIPI4QnZ9qpTxOLDMCI33D9Cto=;
+        b=Pl4fBBdj2ImrAvI9m+jLdvFMZuMc6JfiYXRJGxWMsObJ+Cjkvz8xCrunktsc5PD13F
+         iYtsz/AN8SveRPSjbJHP7NO07HD6ZoAy17GFCKlEJSxWXpmeKXwzNpHWI7EErXOVPnqg
+         /BK8ox9EOVLWupw7yWlw0aUUuUyovzMwUfLQac9dQ7wVgBcdivoyMF0c1MmyUWzW63EZ
+         Tzrv/uBOEGVc/l2SA4F3v/HGIljcPBaZmwfueSYxwk8jZr1TGYN7mTgU16p4CUEwYOM8
+         rZAH/iZ1WIn8A3MYQBK7z2GW10mZrOUyKtoJ0mBkl0ujmItOA/+80of3h0olYih9HVBZ
+         7sbQ==
+X-Gm-Message-State: APjAAAWVQ0vsYiBy3bIL8RGKSgUr5HfaG/FY9TZPDCN0uE8aOVr+AloS
+        DRVJaPDSFE7HGHhak0kqer0/ldnyd1JHODHbfbc=
+X-Google-Smtp-Source: APXvYqz3DeSoiGwKKDIcPoJqgfU4Ty96fsiCpUNjXM8TJHs9coG+3i679gbVDi1obEmylCKIAkcihrgVN0t1JpV5MgQ=
+X-Received: by 2002:a2e:91c3:: with SMTP id u3mr1384364ljg.130.1558168104656;
+ Sat, 18 May 2019 01:28:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <469c37d9-4491-9072-211f-d9d8614413e0@in-ici.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <CAN2Gq-Rb3v8-8PKmKUGKJ3wP-UvAF2n59a9UGbtjiGibE8q=zg@mail.gmail.com>
+ <b3e170ed-ca5f-c754-892a-d11d4b71d989@iee.org> <CAN2Gq-RNt2x-023qC2LWawYGUz5g08=oVK+ub4iLGnh90aQdyQ@mail.gmail.com>
+In-Reply-To: <CAN2Gq-RNt2x-023qC2LWawYGUz5g08=oVK+ub4iLGnh90aQdyQ@mail.gmail.com>
+From:   Rocky Ji <rockyji3438@gmail.com>
+Date:   Sat, 18 May 2019 13:59:11 +0530
+Message-ID: <CAN2Gq-TvGATQ_Nn1UDVgf4MxKeY83BDPNHdiOQiqSiETevQeZQ@mail.gmail.com>
+Subject: Re: How to update Git's metadata without affecting working dir?
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.05.19 um 23:43 schrieb Dr. Adam Nielsen:
->> Another thing that I noticed is that its not mentioned anywhere that
->> the pattern use a slash as a directory separator (instead of a
->> backslash), its only clear from the examples. Maybe its worth to
->> mention it in the "PATTERN FORMAT" section. Also its maybe worth to
->> introduce the term "leading slash" and "trailing slash" because they
->> will be of importance of the following paragraphs. Something like this
->> after the paragraph of "!":
->>
->>      [...] for example, "\!important!.txt".
->>
->>      A slash `/` is used as a directory separator.
->>      A leading slash (that is if the pattern begins with a slash)
->>      or a trailing slash (that is if the pattern ends with a slash)
->>      have special meaning and are explained below.
->>
->>      If the pattern contains a trailing slash, it would only find
->>      a match with a directory. [...]
->>
-> 
-> 
-> I changed my mind about this last addition. I think it is not very
-> readable and there is no need to explain leading/trailing slash. Maybe
-> one could just note it like this:
-> 
->       [...] for example, "\!important!.txt".
-> 
->       A slash `/` is used as a directory separator.
->       A leading and trailing slash have special meaning
->       and are explained in the following.
-> 
->       If the pattern ends with a slash, it would only find
->       a match with a directory. [...]
-> 
-> then I would also add:
-> 
->      If the pattern does not end with a slash, it would find a match
->      with a file or directory.
-> 
-> 
-> Two notes about two sentences that I proposed a while ago:
-> 
->> + - If the pattern contains no slash "`/`" (except an optional
-> trailing slash),
->> +   the ...
-> 
-> I think that this sentence is not very readable. The exceptional case in
-> the brackets makes it over complicated.
-> 
->> + - A pattern that contains a non-trailing slash is matched
-> 
-> And I don't like this phrase either. I think its too easy to confuse it
-> with "A pattern that contains no trailing slash".
-> 
-> So I would suggest to replace both with the following:
-> 
->     If the pattern contains no slash or only a trailing slash, [...].
->     Otherwise (when it contains a non-trailing slash) the pattern
->     is matched [...].
+Hi Philip Oakley,
 
-With all those new "if"s, "but"s, "otherwise"s, "when"s, and "except"s,
-I have a feeling that the current way to say
+Minor correction: the Google groups question is a duplicate of this &
+not the other way around.
 
-   If .... ends with a slash, then ... only directories... The trailing
-   slash is removed for the purpose of the remaining rules.
+My first mail to git[at]vger.kernel.org got rejected, claiming some
+virus reason (I don't even know C or OS basics, server is just blaming
+me). So I reposted it from live-ubuntu machine; I was afraid my
+question would never show up on mailing list.
 
-is still the best way to go forward. I do understand that this is a
-rather technical way to explain things than a colloquial one, but it
-also does remove a lot of conditionals and, therefore, mental burden.
+Also git-scm site says this mailing list is for bug reports also. I
+was afraid my question would be ignored as trivial.
 
--- Hannes
+Because of those doubts, I duplicated it on
+git-users[at]googlegroups.com, I had no intention to spam this awesome
+group.
+
+Thank You.
+
+On Sat, May 18, 2019 at 5:42 AM Rocky Ji <rockyji3438@gmail.com> wrote:
+>
+> Hi Philip Oakley,
+>
+> Minor correction: the Google groups question is a duplicate of this & not the other way around.
+>
+> My first mail to git[at]vger.kernel.org got rejected, claiming some virus reason (I don't even know C or OS basics). After reposting; I was afraid my question would never show up on mailing list.
+>
+> And git-scm site said this mailing list is for bug reports also. I was afraid my question would be ignored as trivial.
+>
+> Because of those doubts, I duplicated it on git-users[at]googlegroups.com
+>
+> On Sat, May 18, 2019, 02:24 Philip Oakley <philipoakley@iee.org> wrote:
+>>
+>> This is a duplicate of a question on the Git Users list.
+>>
+>> On 17/05/2019 18:04, Rocky Ji wrote:
+>> > I am working individually at the moment.
+>> > I have the habit of committing related changes on a regular basis, but
+>> > I push to GitLab only at the end of class session.
+>> >
+>> > -------Events to reproduce the situation--------
+>> >
+>> > Thursday, in school:
+>> > - `git clone https://gitlab.../my-repo`
+>> > - create a few .rst documentation files
+>> > - commit the above changes before I `git push -U origin master`
+>> >
+>> > Friday, in school:
+>> > - start working on new feature, create a test file `test_A.rb`
+>> > - I commit the changes but forget to push
+>> >
+>> > Sunday, **in home**:
+>> > - I `git clone https://gitlab.../my-repo`
+>> > - work on the exciting new feature that popped in my head, create `feature.rb`
+>> > - commit the changes before I `git push -U origin master`
+>> >
+>> > Monday, in school:
+>> > - running `git status` shows `Your branch is ahead of 'origin/master'
+>> > by 1 commit.`
+>> >
+>> > --------end problem reproduction----------------
+>> >
+>> > Questions I have
+>> >
+>> > 1. What will happen if I follow Git's recommendation `use "git push"
+>> > to publish your local commits`?
+>> > 2. How do I resolve this situation? I don't want loose any information
+>> > i.e. preserve `test_A.rb` and `feature.rb` along with their commit
+>> > messages and timestamps.
+>> > 3. Why does Git assume that local-working-dir is "ahead" without
+>> > consulting the Gitlab server first?
+>> > 4. How to make Git "consult" (but not mess the working-dir) GitLab
+>> > repo before starting my day's work?
+>> >
+>> > Thank you.
+>>
