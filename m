@@ -2,118 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CC6A1F461
-	for <e@80x24.org>; Sat, 18 May 2019 05:45:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57E0E1F461
+	for <e@80x24.org>; Sat, 18 May 2019 06:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725906AbfERFkk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 May 2019 01:40:40 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:42861 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725468AbfERFkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 May 2019 01:40:39 -0400
-Received: by mail-vs1-f65.google.com with SMTP id z11so5968469vsq.9
-        for <git@vger.kernel.org>; Fri, 17 May 2019 22:40:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f+JQL6WXlD6YqI8ArgMoPf5l4nUqzrApbmGK53Pv+w4=;
-        b=qUX7+eM8G0itW4pDgv/gBZGhStJlgruA6tk5giina2YT2f92ysjtIkty4QyjdD/xZG
-         8sVRtwC0sQ4CLjc/eWzJUQvrqfC04/ySh4jJWkxIOCwQvCUz9UyQeypeYr2lCgM+RrIo
-         ch0+isB6i4tkl/x2sd0+Q6jLlZNMuUoh/j1UC9dTRghRpLlWFfxSPW9vQQL3zNEHIlDR
-         3EZmS1/QC40afSCQQ03//gdMUh7jduiL2PpLyyvdHxbwQneqdoWjI4mtX2XCS1qD9R1l
-         aEcIhjSxw4BrZmBKx8B8DfQj+iM2mT/wJZ40s+/8IPhxuSxuW7ESAwmmRjDcle2/nVii
-         1HLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f+JQL6WXlD6YqI8ArgMoPf5l4nUqzrApbmGK53Pv+w4=;
-        b=uShgF3u+1crkjJ+H7J12luC1+a56RKKuJcfwse+qyFY4Pj3aZNB9vcHlhKjBJkA+fq
-         H5B8vZEyEnmV7y2B3Q+3O4ZtzKzZQuFQBOdYvE4ViTukmzRQPuO9KOqD6td2o8VaLTby
-         /0iOM6CC3LKMnkDRtt7Bl2/Ql7HwW7POgCzRf6jif9jLttB3HBZeV4OESPtarf1sZIaC
-         UYQ093fTzmBAwzuge3k2MM6v0iBDEPcx6WpICbj/n88ssxYqa2MCJIV7kWXp3+0NbjOm
-         jB3xCv5kThs83CqZrl4LWkh8Ki8ZTGVioUvKJx0+hrUeHd58UVkCATFxZWjhOFAojgnW
-         HPCg==
-X-Gm-Message-State: APjAAAWLbNJH7jEft3xarC1RBz706Lzcrm5KwcnHORUjXe5nS8K2sfIn
-        dW/xwNIdhUIzM3mZg+OYN3zwI9xHIP+22WGORjs=
-X-Google-Smtp-Source: APXvYqwBlxUeHN/OCw3n+gSpnZ5hG30PMmuF5+olO3jhs/z8UuoEj4OyrMB3CYQjKE39I0b5ar5lSxVH9UHRcP7Joq4=
-X-Received: by 2002:a67:6f07:: with SMTP id k7mr28730272vsc.117.1558158038832;
- Fri, 17 May 2019 22:40:38 -0700 (PDT)
+        id S1726262AbfERGm4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 May 2019 02:42:56 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:37961 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725268AbfERGm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 May 2019 02:42:56 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 455bFT67x6z5tlD;
+        Sat, 18 May 2019 08:42:53 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 597FF20BA;
+        Sat, 18 May 2019 08:42:52 +0200 (CEST)
+Subject: Re: [PATCH] make slash-rules more readable
+To:     "Dr. Adam Nielsen" <admin@in-ici.net>
+References: <20190507104507.18735-1-admin@in-ici.net>
+ <xmqqzhnxh5nm.fsf@gitster-ct.c.googlers.com>
+ <094f3746-67c9-0284-0593-eb6b24d5c4a3@in-ici.net>
+ <469c37d9-4491-9072-211f-d9d8614413e0@in-ici.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f80eb2e5-3285-40bd-018d-ff0c7e5e9ff5@kdbg.org>
+Date:   Sat, 18 May 2019 08:42:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190517204826.45308-1-emilyshaffer@google.com>
-In-Reply-To: <20190517204826.45308-1-emilyshaffer@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 17 May 2019 22:40:27 -0700
-Message-ID: <CABPp-BHZkQG+pr4MmVGahHDR56grqvRsYNxZ=uShK70APzj9LA@mail.gmail.com>
-Subject: Re: [PATCH] doc: hint about GIT_DEBUGGER
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <469c37d9-4491-9072-211f-d9d8614413e0@in-ici.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+Am 17.05.19 um 23:43 schrieb Dr. Adam Nielsen:
+>> Another thing that I noticed is that its not mentioned anywhere that
+>> the pattern use a slash as a directory separator (instead of a
+>> backslash), its only clear from the examples. Maybe its worth to
+>> mention it in the "PATTERN FORMAT" section. Also its maybe worth to
+>> introduce the term "leading slash" and "trailing slash" because they
+>> will be of importance of the following paragraphs. Something like this
+>> after the paragraph of "!":
+>>
+>>      [...] for example, "\!important!.txt".
+>>
+>>      A slash `/` is used as a directory separator.
+>>      A leading slash (that is if the pattern begins with a slash)
+>>      or a trailing slash (that is if the pattern ends with a slash)
+>>      have special meaning and are explained below.
+>>
+>>      If the pattern contains a trailing slash, it would only find
+>>      a match with a directory. [...]
+>>
+> 
+> 
+> I changed my mind about this last addition. I think it is not very
+> readable and there is no need to explain leading/trailing slash. Maybe
+> one could just note it like this:
+> 
+>       [...] for example, "\!important!.txt".
+> 
+>       A slash `/` is used as a directory separator.
+>       A leading and trailing slash have special meaning
+>       and are explained in the following.
+> 
+>       If the pattern ends with a slash, it would only find
+>       a match with a directory. [...]
+> 
+> then I would also add:
+> 
+>      If the pattern does not end with a slash, it would find a match
+>      with a file or directory.
+> 
+> 
+> Two notes about two sentences that I proposed a while ago:
+> 
+>> + - If the pattern contains no slash "`/`" (except an optional
+> trailing slash),
+>> +   the ...
+> 
+> I think that this sentence is not very readable. The exceptional case in
+> the brackets makes it over complicated.
+> 
+>> + - A pattern that contains a non-trailing slash is matched
+> 
+> And I don't like this phrase either. I think its too easy to confuse it
+> with "A pattern that contains no trailing slash".
+> 
+> So I would suggest to replace both with the following:
+> 
+>     If the pattern contains no slash or only a trailing slash, [...].
+>     Otherwise (when it contains a non-trailing slash) the pattern
+>     is matched [...].
 
-On Fri, May 17, 2019 at 3:40 PM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> We check for a handy environment variable GIT_DEBUGGER when running via
-> bin-wrappers/, but this feature is undocumented. Add a hint to how to
-> use it into the CodingGuidelines (which is where other useful
-> environment settings like DEVELOPER are documented).
->
-> It looks like you can use GIT_DEBUGGER to pick gdb by default, or you
-> can hand it your own debugger if you like to use something else (or if
-> you want custom flags for gdb). Hopefully document that intent within
-> CodingGuidelines.
+With all those new "if"s, "but"s, "otherwise"s, "when"s, and "except"s,
+I have a feeling that the current way to say
 
-Thanks for working on this.
+   If .... ends with a slash, then ... only directories... The trailing
+   slash is removed for the purpose of the remaining rules.
 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
-> Maybe this isn't the right place for this patch. But right now git grep
-> reveals that GIT_DEBUGGER is completely undocumented.
+is still the best way to go forward. I do understand that this is a
+rather technical way to explain things than a colloquial one, but it
+also does remove a lot of conditionals and, therefore, mental burden.
 
-Does 'git log --grep=GIT_DEBUGGER' count?  ;-)
-
-> Alternatively, it might make sense to only add a short blurb about using
-> GIT_DEBUGGER flag to CodingGuidelines and then documenting how to use it
-> inside of wrap-for-bin.sh.
->
->  Documentation/CodingGuidelines | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 32210a4386..e17cd75b50 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -412,6 +412,11 @@ For C programs:
->     must be declared with "extern" in header files. However, function
->     declarations should not use "extern", as that is already the default.
->
-> + - You can launch gdb around your program using the shorthand GIT_DEBUGGER.
-> +   Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
-> +   run `GIT_DEBUGGER=debugger-binary some-args ./bin-wrappers/git foo` to
-
-Missing some quotes around debugger-binary and some-args:
-+   run `GIT_DEBUGGER="debugger-binary some-args" ./bin-wrappers/git foo` to
-
-Also, one thing I always wonder about with command documentation like
-this is whether people will understand that "debugger-binary",
-"some-args", and "foo" are just placeholders rather than literal text
--- and that everything else is literal text and not meant to be
-placeholders.  Does it make since to include a couple examples, or
-perhaps modify the text somehow to avoid confusion between
-placeholders and literals, or maybe just tell me I overthinking this?
-(I've been bit by similar problems in other contexts, so I'm just
-flagging it for you to consider).
-
-Elijah
+-- Hannes
