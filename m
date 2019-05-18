@@ -2,106 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45D121F461
-	for <e@80x24.org>; Fri, 17 May 2019 23:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E14561F461
+	for <e@80x24.org>; Sat, 18 May 2019 00:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728528AbfEQXN3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 May 2019 19:13:29 -0400
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:37493 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726757AbfEQXN3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 May 2019 19:13:29 -0400
-Received: by mail-ot1-f42.google.com with SMTP id r10so8217690otd.4
-        for <git@vger.kernel.org>; Fri, 17 May 2019 16:13:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FNTpBvVMWBJvgXmcSRLQLhyzKFAyzKk9ijeCOxlu3bA=;
-        b=Nwjm+1+gpeKNOwLHp5qdYsYOVVgvc3VwFAsLzxG8Lm01BQR+VGFUYvE7EYrbqaSeUX
-         naN0k3urdnc501itqulYrHoIFe5slZYIpG5YzOOy/ibU2GVIxNLEbz0Uh7YeU3aCJQTR
-         ntlxPFNtDbEfFV0A5n2FpHj5+D0np2iAiXAP/hYp3wlMUhjnYhL0K1kzrwGLXA/hcRpk
-         ibA9qf4GMNg2Z3o5cmStJOkVdFvFPvNWB3J8GLfMmBfn292zzLKlBZkEJcHBqxIVMxWu
-         snPNJZE7uxd4yA178d8jZyNpXz+mbY3xg6hx8NIXq/lPNWDQRbMeirsSOy18O1X5EitD
-         h54g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FNTpBvVMWBJvgXmcSRLQLhyzKFAyzKk9ijeCOxlu3bA=;
-        b=GDhHNEKdmjLAhyJTU/8ZcCT3a8wcglxwnfVGnyWIf6lkeFESz/uvo8t161ZUycjj9Y
-         65zjVDX9qhwvJqSciG3Uyuvpsvq9G70+Zl4y5Usf52tBsJx695cBOJk0B5rkKDDQUib7
-         9QLfo+QyLy4AUrAQJYwS9+OLa5Rn79pRw5U/NHXZKnQ04VYKaPZqeDSZcamgOJzpziC+
-         hTLwDCkOiKWqROyERdqJmAy9Nm81UOT6JbAcUohroVoWf5oX2l3DpbUoc2ed7LGAl751
-         MDwht/K5utOsAWtbcYJehgmShurDZVvWfv0K0/g8Kl34r3orEhtp9IrhLvkcQOr0PxaY
-         Tt4A==
-X-Gm-Message-State: APjAAAVfozyeolR2CU6+D4croMbDOKGB04W4hmXdAmMHSTaX5nBHD5j6
-        QyFYxdcB2HdbuUDY7v2gbgbjBFamBeOBS4ghCxs=
-X-Google-Smtp-Source: APXvYqx53jxwbmk8MX4Qa0GGAqm0n4+vffmN9M1stkCqfRVVCWKq4T02oem+rYcw/hrSY4ErMh2nQZDSaiO97WJVVbA=
-X-Received: by 2002:a9d:7a85:: with SMTP id l5mr5984191otn.170.1558134808843;
- Fri, 17 May 2019 16:13:28 -0700 (PDT)
+        id S1727366AbfERAyS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 May 2019 20:54:18 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:54588 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726200AbfERAyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 May 2019 20:54:17 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1hRnc4-0000Yg-2A
+        for git@vger.kernel.org; Sat, 18 May 2019 09:54:12 +0900
+Date:   Sat, 18 May 2019 09:54:12 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Subject: Revision walking, commit dates, slop
+Message-ID: <20190518005412.n45pj5p2rrtm2bfj@glandium.org>
 MIME-Version: 1.0
-References: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
- <8736lfwnks.fsf@evledraar.gmail.com> <20190516042739.GH4596@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1905172121130.46@tvgsbejvaqbjf.bet> <20190517222031.GA17966@sigill.intra.peff.net>
-In-Reply-To: <20190517222031.GA17966@sigill.intra.peff.net>
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Fri, 17 May 2019 19:13:17 -0400
-Message-ID: <CACPiFC+=co2-yGwoiKqr1qSu8dLmVQZ5NxfbdwOr7xz=a7xpdA@mail.gmail.com>
-Subject: Re: Git ransom campaign incident report - May 2019
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 17, 2019 at 6:20 PM Jeff King <peff@peff.net> wrote:
-> I hate the magical-ness of 3b, because credential-store really _isn't_
-> the best choice. It's just better than the current behavior. At the same
-> time, by doing it automatically, the existing flow they were using just
-> works, and is moderately better.
+Hi,
 
-Quite a bit better. It sits in a different directory, and with tight
-permissions.
+There are established corner cases, where in a repo where commit dates
+are not monotonically increasing, revision walking can go horribly
+wrong. This was discussed in the past in e.g.
+https://public-inbox.org/git/20150521061553.GA29269@glandium.org/
 
-Overall -- thank you! That's the process I was picturing. Even just
-scrubbing the credentials -- your "step 1" -- would be a significant
-improvement, if a bit unfriendly.
+The only (simple) workable way, given the current algorithm, to get an
+accurate view off rev-list is to essentially make slop infinite. This
+works fine, at the expense of runtime.
 
-> > Judging from looking at my own automated jobs, it does not appear that you
-> > would *ever* need to store such credentials in the Git config, anyway. If
-> > you need to, say, push to a repository, you can always store the full URL
-> > (or the credentials) in a secret variable.
->
-> Yes, that's definitely the way you _should_ do it. I think the problem
+Now, ignoring any modification for the above, I'm hitting another corner
+case in some other "weird" history, where I have 500k commits all with
+the same date. With such a commit dag, something as trivial as
+`git rev-list HEAD~..HEAD` goes through all commits from the root commit
+to HEAD, which takes multiple seconds, when the (obvious) output is one
+commit.
 
-The key thing are the credentials, and there are much better solutions
-for this -- ssh keys, etc.
+It looks like the only way revision walking stops going through all the
+ancestry is through slop, and slop is essentially made infinite by the
+fact all commits have the same date (because of the date check in
+still_interesting(). By extension, this means the workaound for the
+first corner case above, which is to make slop infinite, essentially
+makes all rev walking go through the entire ancestry of the commits
+given on the command line.
 
-This isn't for thoughtful users, this is to save unaware users from
-themselves. Maybe they'll and hurt themselves with something else, but
-that's part of removing sharp edges from a product.
+It feels like some cases of everybody_uninteresting should shorcut slop
+entirely, but considering the only way for slop to decrease at all is
+when everybody_uninteresting returns true, that would seem like a wrong
+assumption. But I'm also not sure what slop helps with in the first
+place (but I don't have a clear view of the broader picture of how the
+entire revision walking works).
 
-cheers,
+Anyways, a rather easy way to witness this happening is to create a
+dummy repo like:
+  git init foo
+  cd foo
+  for i in $(seq 1 50); do
+    echo $i > a;
+    git add a;
+    git commit -a -m $i;
+  done
 
+The something as simple as `git rev-list HEAD~..HEAD` will go through
+all 50 commits (assuming the script above created commits in the same
+second, which it did on my machine)
 
-m
+By the time both HEAD~ and HEAD have been processed, the revision
+walking should have enough information to determine that it doesn't need
+to go further, but still does. Even with something like HEAD~2..HEAD,
+after the first round of processing parents it should be able to see
+there's not going to be any more interesting commits.
 
+I'm willing to dig into this, but if someone familiar with the
+algorithm could give me some hints as to what I might be missing in the
+big picture, that would be helpful.
 
+Cheers,
 
-
---
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+Mike
