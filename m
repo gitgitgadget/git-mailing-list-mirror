@@ -2,162 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9F901F461
-	for <e@80x24.org>; Sat, 18 May 2019 12:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5B221F461
+	for <e@80x24.org>; Sat, 18 May 2019 12:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729805AbfERMBq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 May 2019 08:01:46 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:45140 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729301AbfERMBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 May 2019 08:01:46 -0400
-Received: by mail-wr1-f50.google.com with SMTP id b18so9652793wrq.12
-        for <git@vger.kernel.org>; Sat, 18 May 2019 05:01:44 -0700 (PDT)
+        id S1729791AbfERMSQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 May 2019 08:18:16 -0400
+Received: from mail-it1-f177.google.com ([209.85.166.177]:56010 "EHLO
+        mail-it1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728283AbfERMSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 May 2019 08:18:16 -0400
+Received: by mail-it1-f177.google.com with SMTP id q132so16056039itc.5
+        for <git@vger.kernel.org>; Sat, 18 May 2019 05:18:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=VRQAoQ49LCx9mjXjzOiaANLgrN9u1e3SB0y7ob6uqfw=;
-        b=ZzrZCI91gu8Qjb/q1Jd79ad08h7oLOXviAdRAefdj9355LAsdG9tKJiwhIiGKj65qp
-         SFbTkq8XcqUY9t/kkE+19TUXywVH31MwB2J/7daTxmVDYLpVm4aFLVj4f/IljZWaTVPa
-         MTfuBTLI75ZB1m+tgCkQN7GNwPoTyDnmbcsDS+r64GEc6ZCvRGxLJKJA3GYOoB5n0F3N
-         twOErHi497qiSfnnGa8QAz3OEmnhJxhmGI3Rp0S8UeAeJqUwWUNrXVa/kQ8ah1IqHaSD
-         JpyEAkF9YGYcCVxj5ouhJ14qjmh1cuyA4wq6NazKQzIr718q1ZD4HmgVLh9vTmgEkDWD
-         0KJQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ARiKllkzgTYis5POQxHLl3Y3t1KagU6E1blcO4nZb8o=;
+        b=lqh32NRQCg6pjdFBx5ebbzAaEI5/1q274gnYkRPvkwGQWbEP3UXjLipdOr0ayrhQcX
+         EBXFHp3O58RwXhYu5CTN8i0M1Fgu3Q0ullMgmQnADRCcOYi4V2FE7Ip+9BsHl/7tAsD0
+         9+YLi5W0EwrSCD2BUq298GEh8bMH7xilxLo2ZGhBK7J6w115Z3BFx4AAyAtfA2jedp0g
+         5DL8vETh0SFb1X7A0cO91wDUG5tO55/NrTqpjCgj/y0/XEZuxcCM0pS3tz/eIHelrDiL
+         mGAnbPxPiBIN20KxPhwa+3sSwkuSbotbX9n1uu0aWKpu8nYtgi4jpd2IMk85Au6zZJj9
+         UJTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=VRQAoQ49LCx9mjXjzOiaANLgrN9u1e3SB0y7ob6uqfw=;
-        b=tpQHenCYmEbIpdY5eBP9EOZz1vwMqSPofOX1TnNxZ3aJhQ+BD+MRDBteBFsVVFYOxs
-         eB+KB1vyJLqae7CS/4HfGS/b2ISyRKm9i9IY87EXhdrGU0EFIsTxMg/lnt2EfK5azPGV
-         WzrwNKfYFdhkfUaxNL15LjlurgSwxfZSKFrR+z9mpSUvTsSohkQVPvJmx301iA3BkavQ
-         jfQ8VvWa7IuWtbZ6JDdayaYwyJ8doTTD6yQDPUpcYK063mH13CI0ANBBR4OzeSZ0MDbW
-         xNBbb8mNmthP5DkW3+1YeKaxbDBQtqqz4laWG+37Qx16GMmY+ld8Sl7/IypzKnltvyFx
-         wnsg==
-X-Gm-Message-State: APjAAAU5HDAOWlpONOOQj1F0BS/9HedRLGsGymO2YxANiLfE0UEeTL5O
-        I3lgZm7NdDEpOY0r762r4ycJCd6F
-X-Google-Smtp-Source: APXvYqyvSp9k1/H+eWa6I4fLd5I0TNwN7cYVInqcKukv7J3ngsGYj0EtaGXaVLXybhxHRs+1Z0wujA==
-X-Received: by 2002:adf:e850:: with SMTP id d16mr23688347wrn.269.1558180903556;
-        Sat, 18 May 2019 05:01:43 -0700 (PDT)
-Received: from szeder.dev (x4db5503e.dyn.telefonica.de. [77.181.80.62])
-        by smtp.gmail.com with ESMTPSA id i185sm20990315wmg.32.2019.05.18.05.01.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 May 2019 05:01:42 -0700 (PDT)
-Date:   Sat, 18 May 2019 14:01:40 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org, Kacper Kornet <draenog@pld-linux.org>
-Subject: Re: Revision walking, commit dates, slop
-Message-ID: <20190518120140.GB951@szeder.dev>
-References: <20190518005412.n45pj5p2rrtm2bfj@glandium.org>
- <20190518015005.GA951@szeder.dev>
- <20190518035828.pjaqfrkkvldhri6v@glandium.org>
- <20190518041706.ct6ie5trvxgdhjar@glandium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ARiKllkzgTYis5POQxHLl3Y3t1KagU6E1blcO4nZb8o=;
+        b=Gz0bNjNpx+gGK6pILHAS+eHe6aXiUehI+QnBH6lhmVYwyhKeLkTwNsPeESoRItgF0+
+         PGQTe+8LIWnvuczVN8DxqGzGUUch1xeaUiIJfT6q0II1/nK7WwKlvbJoyNDzVSGUYoOD
+         Se97ifXzfQJdPF/z6oDeZNgbRgIjyIlqpiADR67Xwpz1FWl8Nq/DcHA2yPqipQilYP4a
+         pJ0XinaSsHai+G6nCvilaPORqfnOpD3/nH/Yj8oQGw/Al8WJ3FU56uveqPTZa/1cAUoI
+         FQiGbzk6CWSDpY2H47wwhbcHpJ0QKUZswsLCbAqgJ2lImQ6YQg46uVF8q6LQzchcoQFR
+         vvqQ==
+X-Gm-Message-State: APjAAAWxYQZu9kE4iMBgCC11EwszvXHPHCfiFn/vvO+hub4+EI1y82JI
+        6va8IU2eymzYELtyHoD/v1yUG6rUNmHPem6utOg=
+X-Google-Smtp-Source: APXvYqzDGkswPWgeJcuTYqHXjkqdg4EaAdDZo1zNDetbkmMeBqZelIdybmZMz12D5mZYTNaFUJ1lIkjlsHKE6FSWFAU=
+X-Received: by 2002:a02:3002:: with SMTP id q2mr2228533jaq.30.1558181895765;
+ Sat, 18 May 2019 05:18:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190518041706.ct6ie5trvxgdhjar@glandium.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+ <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+ <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org> <CACsJy8D9wDiTOfKP4sdMFQrR66qa4cLZuqqn32yH83_q0XjKRg@mail.gmail.com>
+ <aeb83b28-3db1-f37c-6cb0-6be5622da114@iee.org>
+In-Reply-To: <aeb83b28-3db1-f37c-6cb0-6be5622da114@iee.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 18 May 2019 19:17:49 +0700
+Message-ID: <CACsJy8Cc+cj0kC5=N+6AGB2UGDWA3uK946vgdhg9Cpx9a7w2wg@mail.gmail.com>
+Subject: Re: Missing branches after clone
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 18, 2019 at 01:17:06PM +0900, Mike Hommey wrote:
-> On Sat, May 18, 2019 at 12:58:28PM +0900, Mike Hommey wrote:
-> > On Sat, May 18, 2019 at 03:50:05AM +0200, SZEDER Gábor wrote:
-> > > On Sat, May 18, 2019 at 09:54:12AM +0900, Mike Hommey wrote:
-> > > > There are established corner cases, where in a repo where commit dates
-> > > > are not monotonically increasing, revision walking can go horribly
-> > > > wrong. This was discussed in the past in e.g.
-> > > > https://public-inbox.org/git/20150521061553.GA29269@glandium.org/
-> > > > 
-> > > > The only (simple) workable way, given the current algorithm, to get an
-> > > > accurate view off rev-list is to essentially make slop infinite. This
-> > > > works fine, at the expense of runtime.
-> > > > 
-> > > > Now, ignoring any modification for the above, I'm hitting another corner
-> > > > case in some other "weird" history, where I have 500k commits all with
-> > > > the same date. With such a commit dag, something as trivial as
-> > > > `git rev-list HEAD~..HEAD` goes through all commits from the root commit
-> > > > to HEAD, which takes multiple seconds, when the (obvious) output is one
-> > > > commit.
-> > > > 
-> > > > It looks like the only way revision walking stops going through all the
-> > > > ancestry is through slop, and slop is essentially made infinite by the
-> > > > fact all commits have the same date (because of the date check in
-> > > > still_interesting(). By extension, this means the workaound for the
-> > > > first corner case above, which is to make slop infinite, essentially
-> > > > makes all rev walking go through the entire ancestry of the commits
-> > > > given on the command line.
-> > > > 
-> > > > It feels like some cases of everybody_uninteresting should shorcut slop
-> > > > entirely, but considering the only way for slop to decrease at all is
-> > > > when everybody_uninteresting returns true, that would seem like a wrong
-> > > > assumption. But I'm also not sure what slop helps with in the first
-> > > > place (but I don't have a clear view of the broader picture of how the
-> > > > entire revision walking works).
-> > > > 
-> > > > Anyways, a rather easy way to witness this happening is to create a
-> > > > dummy repo like:
-> > > >   git init foo
-> > > >   cd foo
-> > > >   for i in $(seq 1 50); do
-> > > >     echo $i > a;
-> > > >     git add a;
-> > > >     git commit -a -m $i;
-> > > >   done
-> > > > 
-> > > > The something as simple as `git rev-list HEAD~..HEAD` will go through
-> > > > all 50 commits (assuming the script above created commits in the same
-> > > > second, which it did on my machine)
-> > > > 
-> > > > By the time both HEAD~ and HEAD have been processed, the revision
-> > > > walking should have enough information to determine that it doesn't need
-> > > > to go further, but still does. Even with something like HEAD~2..HEAD,
-> > > > after the first round of processing parents it should be able to see
-> > > > there's not going to be any more interesting commits.
-> > > > 
-> > > > I'm willing to dig into this, but if someone familiar with the
-> > > > algorithm could give me some hints as to what I might be missing in the
-> > > > big picture, that would be helpful.
-> > > 
-> > > All the above is without commit-graph, I presume?  If so, then you
-> > > should give it a try, as it might bring immediate help in your
-> > > pathological repo.  With 5k commit in the same second (enforced via
-> > > 'export GIT_COMMITTER_DATE=$(date); for i in {1..5000} ...') I get:
-> > > 
-> > >   $ best-of-five -q git rev-list HEAD~..HEAD
-> > >   0.069
-> > >   $ git commit-graph write --reachableComputing commit graph generation
-> > >   numbers: 100% (5000/5000), done.
-> > >   $ best-of-five -q git rev-list HEAD~..HEAD
-> > >   0.004
-> > 
-> > I'm not observing any difference from using commit-graph, whether in
-> > time or in the number of commits that are looked at in limit_list().
-> 
-> -c core.commitGraph=true does make a difference in time, but not in the
-> number of commits looked at in limit_list(). So it's only faster because
-> each iteration of the loop is faster. It means it's still dependent on
-> the depth of the dag, and the larger the repo will grow, the slower it
-> will get.
+On Tue, May 14, 2019 at 6:10 PM Philip Oakley <philipoakley@iee.org> wrote:
+> >> It is a 'branch which tracks a remote', and it is has the 'last time I
+> >> looked' state of the branch that is on the remote server, which may
+> >> have, by now, advanced or changed.
+> >>
+> >> So you need to have the three distinct views in your head of 'My branch,
+> >> held locally', 'my copy of Their branch, from when I last looked', and
+> >> 'Their branch, on a remote server, in a state I haven't seen recently'.
+> > What I was looking for is this. I don't think we have something like
+> > this in the man pages (I only checked a few though) and not even sure
+> > where it should be if it should be added to the man pages, git-branch?
+> > git-remote? git-fetch? git-branch.txt might be the best place because
+> > this is still about branches.
+> >
+> At the moment its in `git help glossary`, but could be improved, and
+> references to it given in the various man pages.
 
-Oh, indeed.  Well, at least you'll waste about an order of magnitude
-less processor time until you figure out how to fix it :)
+It does not look easy to link to a specific term/section between man
+pages. The way user-manual.html does it is to embed the whole
+glossary.
 
-Btw, once upon a time this was fast, but it became slow with commit
-c19d1b4e84 (Fix revision walk for commits with the same dates,
-2013-03-22).
-
-
+I suppose we could still do something similar after breaking down
+glossary.txt (like we do with config.txt) the only include relevant
+terms. Not sure if this a really good idea to pursue.
+-- 
+Duy
