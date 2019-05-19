@@ -7,88 +7,83 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87B551F461
-	for <e@80x24.org>; Sat, 18 May 2019 19:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1230A1F461
+	for <e@80x24.org>; Sun, 19 May 2019 00:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbfERTot (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 May 2019 15:44:49 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:45259 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725446AbfERTos (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 May 2019 15:44:48 -0400
+        id S1727301AbfESAJh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 May 2019 20:09:37 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:22749 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727037AbfESAJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 May 2019 20:09:37 -0400
 Received: from [192.168.1.22] ([92.1.197.142])
         by smtp.talktalk.net with SMTP
-        id S5G9hoWPknuQZS5GAhC1sS; Sat, 18 May 2019 20:44:46 +0100
+        id S9OPhKYCFgI7iS9OPh7gRo; Sun, 19 May 2019 01:09:34 +0100
 X-Originating-IP: [92.1.197.142]
 X-Spam: 0
-X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
+X-OAuthority: v=2.3 cv=KYisTjQD c=1 sm=1 tr=0 a=gH7h/AuSNjzKVpz8AWYPeg==:117
  a=gH7h/AuSNjzKVpz8AWYPeg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=3rmH6Jhg6BXpqsnTiloA:9 a=QEXdDO2ut3YA:10
-Subject: Re: Command to list <pattern> Branches on a specific Remote (i.e.
- select from rtb's)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <dcdff07d-77c7-8cb8-fa06-82acda5fe9ec@iee.org>
- <87lfz3vcbt.fsf@evledraar.gmail.com>
+ a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8 a=XcCI3kNqQuHEl8agLOMA:9 a=QEXdDO2ut3YA:10
+ a=xts0dhWdiJbonKbuqhAr:22
+Subject: Re: Missing branches after clone
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Git Mailing List <git@vger.kernel.org>
+References: <5CDA8D37020000A100031319@gwsmtp.uni-regensburg.de>
+ <CACsJy8AX9Wp3W=d1=ozF9nZXGE1muooMf7fKCtdOOi1g8QRmig@mail.gmail.com>
+ <0c9ec78a-9245-e1df-7ec6-a5d77d1a5261@iee.org>
+ <CACsJy8D9wDiTOfKP4sdMFQrR66qa4cLZuqqn32yH83_q0XjKRg@mail.gmail.com>
+ <aeb83b28-3db1-f37c-6cb0-6be5622da114@iee.org>
+ <CACsJy8Cc+cj0kC5=N+6AGB2UGDWA3uK946vgdhg9Cpx9a7w2wg@mail.gmail.com>
 From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <720a0b5f-cc20-5b75-8222-68eed77beeea@iee.org>
-Date:   Sat, 18 May 2019 20:44:46 +0100
+Message-ID: <033ba463-dddd-d5b8-903c-9729190c213a@iee.org>
+Date:   Sun, 19 May 2019 01:09:35 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <87lfz3vcbt.fsf@evledraar.gmail.com>
+In-Reply-To: <CACsJy8Cc+cj0kC5=N+6AGB2UGDWA3uK946vgdhg9Cpx9a7w2wg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
-X-CMAE-Envelope: MS4wfCK8BWFGfwr9J/Foi+y+ipB8PieZpx8MKiBNo99hrY76CToitx+fTV1Qhdnajjf5EqUweibn8FHWSqtzp0UL/T7lkBYKBUbTXQAeIHFpuGKwMgIuA4h4
- D2IyjcTGlwtNQHSCV+KCp7yGzR/OFVLxJK3JkQualb8GXO9V+TyENX1UctJN3GPEla3cqZxg5QvcyvjUtO5hQSb+w1zLugpwHu8=
+X-CMAE-Envelope: MS4wfGNhsQ42Gb0m42aDu8mSI2hELgeY5t9evsEkQRzj+lOkw1H3PSvmWxl2JWjMjql/MXWVIj7v4PTwcYBBcAZMva8pmJRMM1hKmxer2oRqKObZB9GGXxvF
+ vEwhDi/bnQnmjQnn9S7USAYATEhSevLuEtGnY2K/Y8EAxJUZz3+z/pOeJ57yQcpb1JsAuyx7oUrjIjZG5miglqkQj4Pu5XgENOIyN2iXd3wuc4MKLnAKqH62
+ xL2Va20y0qbCdyc6DmUB7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
-
-On 18/05/2019 19:37, Ævar Arnfjörð Bjarmason wrote:
-> On Sat, May 18 2019, Philip Oakley wrote:
+On 18/05/2019 13:17, Duy Nguyen wrote:
+> On Tue, May 14, 2019 at 6:10 PM Philip Oakley <philipoakley@iee.org> wrote:
+>>>> It is a 'branch which tracks a remote', and it is has the 'last time I
+>>>> looked' state of the branch that is on the remote server, which may
+>>>> have, by now, advanced or changed.
+>>>>
+>>>> So you need to have the three distinct views in your head of 'My branch,
+>>>> held locally', 'my copy of Their branch, from when I last looked', and
+>>>> 'Their branch, on a remote server, in a state I haven't seen recently'.
+>>> What I was looking for is this. I don't think we have something like
+>>> this in the man pages (I only checked a few though) and not even sure
+>>> where it should be if it should be added to the man pages, git-branch?
+>>> git-remote? git-fetch? git-branch.txt might be the best place because
+>>> this is still about branches.
+>>>
+>> At the moment its in `git help glossary`, but could be improved, and
+>> references to it given in the various man pages.
+> It does not look easy to link to a specific term/section between man
+> pages. The way user-manual.html does it is to embed the whole
+> glossary.
 >
->> Hi,
->> I'm unsure if there is a command for this.
->>
->> Currently I have 1600+ remote tracking branches (rtb) for my Git repo
->> as it covers both git.git and git-for-windows and some other
->> contributors.
->>
->> Finding a specific rtb for a particular remote looks like there ought
->> to be a simple command ready to do the job, but I haven't found
->> anything.
->>
->> Is there a command or simple simple invocation of branch, show-ref,
->> for-each-ref, etc that can be give a branch pattern and remote name to
->> quickly filter down the list of potential branches to just one or two
->> 24-line screens?
-> That's:
->
->      git for-each-ref 'refs/remotes/<remote>/<pattern>'
->      git branch -a -l '<remote>/<pattern>'
->
-> The latter will conflate <remote> with any local branches you happen to
-> have prefixed with <remote>.
->
-> The reason this isn't some easy mode in some command is because there's
-> no hard notion that a given remote "owns" a given set of RTB's. It's
-> just convention, but they can and do overlap sometimes.
->
-> See the logic in 'git remote remove' that needs to decide if a deletion
-> of a remote should delete its remote tracking refs: 7ad2458fad ("Make
-> "git-remote rm" delete refs acccording to fetch specs", 2008-06-01)
-Thanks, that's magic. I was also conflating the 'pattern' with a grep 
-style sub-string search in my exploration.
-
-So, as long as one uses the RTB 'remote name', rather than the remotes 
-'remote name' it should all be golden.
-
-I'll add the answer to one on the stackoverflow Q&A's I'd looked at. I 
-hadn't put the branch -a and -l options together.
+> I suppose we could still do something similar after breaking down
+> glossary.txt (like we do with config.txt) the only include relevant
+> terms. Not sure if this a really good idea to pursue.
+Mainly I was commenting on the fact that the description is in a guide 
+(which isn't well known).
+And that we rarely give links to the guides.
+For those that end up using the HTML man pages, having hyperlinks to the 
+particular section would be useful, though I'm not sure if their is a 
+neat way of doing that which is 'nice' for those using the 'man' viewer.
+So yes, it's more of a back burner issue, unless some eager tech authors 
+suddenly show up;-)
 --
 Philip
