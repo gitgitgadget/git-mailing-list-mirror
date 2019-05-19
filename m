@@ -7,99 +7,158 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B82E31F461
-	for <e@80x24.org>; Sun, 19 May 2019 18:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6D771F461
+	for <e@80x24.org>; Sun, 19 May 2019 18:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727996AbfESSeI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 May 2019 14:34:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33540 "HELO cloud.peff.net"
+        id S1728024AbfESShP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 May 2019 14:37:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33546 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727344AbfESSeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 May 2019 14:34:08 -0400
-Received: (qmail 20800 invoked by uid 109); 19 May 2019 05:07:27 -0000
+        id S1726946AbfESShP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 May 2019 14:37:15 -0400
+Received: (qmail 20817 invoked by uid 109); 19 May 2019 05:10:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 19 May 2019 05:07:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 19 May 2019 05:10:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28044 invoked by uid 111); 19 May 2019 05:08:06 -0000
+Received: (qmail 28070 invoked by uid 111); 19 May 2019 05:11:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 19 May 2019 01:08:06 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 19 May 2019 01:11:13 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 May 2019 01:07:24 -0400
-Date:   Sun, 19 May 2019 01:07:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 May 2019 01:10:32 -0400
+Date:   Sun, 19 May 2019 01:10:32 -0400
 From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Martin Langhoff <martin.langhoff@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git ransom campaign incident report - May 2019
-Message-ID: <20190519050724.GA26179@sigill.intra.peff.net>
-References: <CACPiFCJdXsrywra8qPU3ebiiGQP3YPC6g-_Eohbfwu_bQgfyVg@mail.gmail.com>
- <8736lfwnks.fsf@evledraar.gmail.com>
- <20190516042739.GH4596@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1905172121130.46@tvgsbejvaqbjf.bet>
- <20190517222031.GA17966@sigill.intra.peff.net>
+Subject: [PATCH 1/3] transport_anonymize_url(): support retaining username
+Message-ID: <20190519051031.GA19434@sigill.intra.peff.net>
+References: <20190519050724.GA26179@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190517222031.GA17966@sigill.intra.peff.net>
+In-Reply-To: <20190519050724.GA26179@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 17, 2019 at 06:20:31PM -0400, Jeff King wrote:
+When we anonymize URLs to show in messages, we strip out both the
+username and password (if any). But there are also contexts where we
+should strip out the password (to avoid leaking it) but retain the
+username.
 
-> What if we did this:
-> 
->   1. Do not ever write the password part of a URL into config.
-> 
->   2. When we extract the user/pass out of a URL, put them into the
->      credential struct, so that when we successfully authenticate, we
->      trigger storage. This _might_ actually happen already, but we
->      should definitely confirm it.
-> 
->   3. If the user has no credential helper defined, then do one of:
-> 
->      a. Warn them that the credential was not recorded, but that they
->         can use "git clone -c credential.helper=store" as a fallback
-> 	(but probably worded in a way to recommend using something
-> 	stronger if possible).
-> 
-> 	This is slightly annoying because following the advice requires
-> 	re-cloning. Fixing it up from there is more like:
-> 
-> 	  git config credential.helper store
-> 	  git fetch
-> 	  [interactively input password]
-> 
->      b. Just use credential-store. Optionally notify them of what
->          happened (and that they might want to choose a better helper).
+Let's generalize transport_anonymize_url() to support both cases. We'll
+give it a new name since the password-only mode isn't really
+"anonymizing", but keep the old name as a synonym to avoid disrupting
+existing callers.
 
-So here are patches to do that. Step 2 is indeed how things work
-already, so nothing was needed there (there are still 3 patches because
-there was a bit of prep-work ;) ).
+Note that there are actually three places we parse URLs, and this
+functionality _could_ go into any of them:
 
-I did 3b here: automagically enabling credential-store. I'm still on the
-fence on whether that's a good idea or not.
+  - transport_anonymize_url(), which we modify here
 
-I don't have any data on how many victims of this ransom campaign might
-have been helped by this. But it certainly seems like a decent best
-practice. I'd hope that _most_ people have moved on to using a
-credential helper and supplying the initial password interactively these
-days; this is really just aimed at people who don't know better. So the
-goal is making them a bit more secure, but also educating them about the
-other options. Hopefully without breaking any workflows. :)
+  - the urlmatch.c code parses a URL into its constituent parts, from
+    which we could easily remove the elements we want to drop and
+    re-format it as a single URL. But its parsing also normalizes
+    elements (e.g., downcasing hostnames).  This isn't wrong, but it's
+    more friendly if we can leave the rest of the URL untouched.
 
--Peff
+  - credential_form_url() parses a URL and decodes the specific
+    elements, but it's hard to convert it back into a regular URL. It
+    treats "host:port" as a single unit, meaning it needs to be
+    re-encoded specially (since a colon would otherwise end
+    percent-encoded).
 
-  [1/3]: transport_anonymize_url(): support retaining username
-  [2/3]: clone: avoid storing URL passwords in config
-  [3/3]: clone: auto-enable git-credential-store when necessary
+Since transport_anonymize_url() seemed closest to what we want here, I
+used that as the base.
 
- builtin/clone.c            | 37 +++++++++++++++++++++++++++++++++++--
- credential.c               | 13 +++++++++++++
- credential.h               |  6 ++++++
- t/t5550-http-fetch-dumb.sh | 12 ++++++++++++
- transport.c                | 21 ++++++++++++++-------
- transport.h                | 11 ++++++++++-
- 6 files changed, 90 insertions(+), 10 deletions(-)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I think it would be beneficial to unify these three cases under a single
+parser, but it seemed like too big a rabbit hole for this topic. Of the
+three, the urlmatch one seems the most mature. I think if we could
+simply separate the normalization from the parsing/decoding, the others
+could build on top of it. It might also require some careful thinking
+about how pseudo-urls like ssh "host:path" interact.
+
+I won't call that a #leftoverbits, because it's more of a feast. :)
+
+ transport.c | 21 ++++++++++++++-------
+ transport.h | 11 ++++++++++-
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index f1fcd2c4b0..ba61e57295 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1335,11 +1335,7 @@ int transport_disconnect(struct transport *transport)
+ 	return ret;
+ }
+ 
+-/*
+- * Strip username (and password) from a URL and return
+- * it in a newly allocated string.
+- */
+-char *transport_anonymize_url(const char *url)
++char *transport_strip_url(const char *url, int strip_user)
+ {
+ 	char *scheme_prefix, *anon_part;
+ 	size_t anon_len, prefix_len = 0;
+@@ -1348,7 +1344,10 @@ char *transport_anonymize_url(const char *url)
+ 	if (url_is_local_not_ssh(url) || !anon_part)
+ 		goto literal_copy;
+ 
+-	anon_len = strlen(++anon_part);
++	anon_len = strlen(anon_part);
++	if (strip_user)
++		anon_part++;
++
+ 	scheme_prefix = strstr(url, "://");
+ 	if (!scheme_prefix) {
+ 		if (!strchr(anon_part, ':'))
+@@ -1373,7 +1372,15 @@ char *transport_anonymize_url(const char *url)
+ 		cp = strchr(scheme_prefix + 3, '/');
+ 		if (cp && cp < anon_part)
+ 			goto literal_copy;
+-		prefix_len = scheme_prefix - url + 3;
++
++		if (strip_user)
++			prefix_len = scheme_prefix - url + 3;
++		else {
++			cp = strchr(scheme_prefix + 3, ':');
++			if (cp && cp > anon_part)
++				goto literal_copy; /* username only */
++			prefix_len = cp - url;
++		}
+ 	}
+ 	return xstrfmt("%.*s%.*s", (int)prefix_len, url,
+ 		       (int)anon_len, anon_part);
+diff --git a/transport.h b/transport.h
+index 06e06d3d89..6d8c99ac91 100644
+--- a/transport.h
++++ b/transport.h
+@@ -243,10 +243,19 @@ const struct ref *transport_get_remote_refs(struct transport *transport,
+ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
+ int transport_disconnect(struct transport *transport);
+-char *transport_anonymize_url(const char *url);
+ void transport_take_over(struct transport *transport,
+ 			 struct child_process *child);
+ 
++/*
++ * Strip password and optionally username from a URL and return
++ * it in a newly allocated string (even if nothing was stripped).
++ */
++char *transport_strip_url(const char *url, int strip_username);
++static inline char *transport_anonymize_url(const char *url)
++{
++	return transport_strip_url(url, 1);
++}
++
+ int transport_connect(struct transport *transport, const char *name,
+ 		      const char *exec, int fd[2]);
+ 
+-- 
+2.22.0.rc0.583.g23d90da2b3
+
