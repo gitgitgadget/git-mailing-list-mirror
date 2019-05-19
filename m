@@ -2,107 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTTP_EXCESSIVE_ESCAPES,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6C571F461
-	for <e@80x24.org>; Sun, 19 May 2019 01:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF0E11F461
+	for <e@80x24.org>; Sun, 19 May 2019 01:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbfESBM1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 May 2019 21:12:27 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51103 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfESBM0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 May 2019 21:12:26 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD62E6282B;
-        Sat, 18 May 2019 21:12:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        id S1729362AbfESB3e (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 May 2019 21:29:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53777 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727670AbfESB3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 May 2019 21:29:34 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B681214181E;
+        Sat, 18 May 2019 21:29:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lt5tFtHp/62t4Mjzt8CHIm+VZKI=; b=qSX5IO
-        OQ8V3jnuzgpRpDTsc3Cm0vuYLwv6TtliYEEVt/AulpYMayacxc1G15ttea7kynjN
-        jeHaCCVgBE0uC71ADU7cQZB6ykZW/0uQZJ8J1O5jJWxBDosGK2cnglx3PjSRPZsg
-        AHWhqZVjVAKVf5uEc6zG9Xkft6m7f9kweh/lU=
+        :content-type:content-transfer-encoding; s=sasl; bh=kNh9zxTHsGvs
+        qR7pW+/2i+NaiUM=; b=yiaVEN8ANT3ZgKn3QbGaE/c58gCGYvlva6TTrbH2Sd8F
+        bPSJWitEVmlwXBstWLIF3SKDwpzemFIH/3amzSb8+2LduM7QNnPkYp+fbJzblxBx
+        eUmTOkjiYTRtKpn17GEW8/O3pjXr1MeArlk87wCD/7CYeeCbuzofYeXlq9I8JDU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=q+DUlXvXufOpysf6kN1rSxU9IREt2VjV
-        mTqgKh5kAexnukOCqkNzYQaYDdSsuwTeftwYYGqDEZ2rXz9JTnUAlbBynRIhBB9t
-        udrJuM+FgmTnECGdZF/0a0tb40d+cpD9TyY4a17gWgos61C7dfcnF5wtWFSFdrDV
-        GX7D8ItQnVg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C71AA6282A;
-        Sat, 18 May 2019 21:12:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LqL72d
+        XpB1MTTneNI/N3d+Pq5LIdmIfAhg9FDUMO1FwLts5OS5kqaTHWkszXxubebMf21W
+        Pem/jbOzRGCraOJKi3d2yIc3O2v5EN6BYCs+cws9uLOJqgxXBu8rKIFgBh6nNkJg
+        uQm7mXPFvkjPUhrFg7NuZwZC7WHlhhrXt4/IA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AC5AA14181D;
+        Sat, 18 May 2019 21:29:26 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.255.141])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 04C0362825;
-        Sat, 18 May 2019 21:12:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F75F14181C;
+        Sat, 18 May 2019 21:29:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@comcast.net>
-Cc:     Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com
-Subject: Re: [RFC PATCH 3/3] list-objects-filter: implement composite filters
-References: <20190514001610.GA136746@google.com>
-        <cover.1558030802.git.matvore@google.com>
-        <02a8c9b017d8df056d7e90aff907d6e0b5506467.1558030802.git.matvore@google.com>
-        <xmqqwoip3gp0.fsf@gitster-ct.c.googlers.com>
-        <1E174CAA-BD57-400B-A83B-4AABFAFBC04B@comcast.net>
-Date:   Sun, 19 May 2019 10:12:16 +0900
-In-Reply-To: <1E174CAA-BD57-400B-A83B-4AABFAFBC04B@comcast.net> (Matthew
-        DeVore's message of "Fri, 17 May 2019 06:17:43 -0700")
-Message-ID: <xmqq5zq72qof.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Stephen Boyd <swboyd@chromium.org>, jrnieder@gmail.com,
+        sandals@crustytoothpaste.net, sunshine@sunshineco.com,
+        xypron.glpk@gmx.de, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 4/5] send-email: fix regression in sendemail.identity parsing
+References: <xmqqsgtd3fw3.fsf@gitster-ct.c.googlers.com>
+        <20190517195545.29729-5-avarab@gmail.com>
+Date:   Sun, 19 May 2019 10:29:24 +0900
+In-Reply-To: <20190517195545.29729-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 17 May 2019 21:55:44 +0200")
+Message-ID: <xmqq1s0v2pvv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 25C6A4C8-79D3-11E9-B349-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 89FB6774-79D5-11E9-9F87-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@comcast.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> My justification for the URL-encoding scheme is:
+> Fix a regression in my recent 3494dfd3ee ("send-email: do defaults ->
+> config -> getopt in that order", 2019-05-09). I missed that the
+> $identity variable needs to be extracted from the command-line before
+> we do the config reading, as it determines which config variable we
+> should read first. See [1] for the report.
 > ...
-> 3. Continuing to use a single filter line seemed the least
-> disruptive considering both this codebase and Git clones like
-> JGit. Other clones will likely fail saying "unknown filter
-> combine:" or something like that until it gets implemented. A
-> paranoid consideration is that clones and proprietary server
-> implementations may currently allow the "filter" line to be
-> silently overridden if it is repeated.
->
-> 4. Assuming we *do* use a single filter line over the wire, it
-> makes sense to allow the user to specify the raw filter line as
-> well as have the more friendly UI of repeating --filter flags.
->
-> 5. If we use repeated "filter" lines over the wire, and later
-> start implementing a more complete DSL for specifying filters (see
-> Mercurial's "revsets") the repeated-filter-line feature in the
-> protocol may end up becoming deprecated and we will end up
-> back-pedaling to allow integration of the "&" operator with
-> whatever new operators we need.
+> Refactor read_config() do what we actually mean here. We don't want to
+> set a given sendemail.VAR if a sendemail.$identity.VAR previously set
+> it. The old code was conflating this desire with the hardcoded
+> defaults for these variables, and as discussed in 3494dfd3ee that was
+> never going to work.
 
-OK, that's fair.
+I am not sure if the "never going to work" claim is a correct one.
+The "no hardcoded default in the variable, read command line, fill
+missing ones from the two config files and finally apply the default
+for the ones that are still missing" was cumbersome, error-prone
+without a table, but did work.
 
-> 1. Allow anything to be encoded. I chose this because it's how I
-> usually think of URL encoding working. For instance, if I go to
-> https://public-inbox.org/git/?q=cod%65+coverage in Chrome, the
-> browser automatically decodes the %65 to an e in the address
-> bar. Safari does not automatically decode, but the server
-> apparently interprets the %65 as an e. I am not really attached to
-> this choice.
+It seems that no matter how we cut it, the cumbersomeness has to
+exist, as long as the command line --identity needs to be taken care
+of.  Without that complication, I really liked the base series---the
+"set var to hardcoded default, overwrite with config and then
+overwrite with command line, without having to check if we already
+got value in an earlier step" was so much simpler and easy to
+explain X-<.
 
-OK, so the rule is "when you see 'combine:' (this part is never
-encoded), take the rest as a single string, separate it at '+' (these
-pluses are never encoded), and URLdecode each part---each of these
-parts is a filter", which totally makes sense.  I somehow didn't see
-that clearly written in your description.
+> @@ -371,17 +380,30 @@ sub read_config {
+> ...
+>  my $help;
+>  my $git_completion_helper;
+> -my $rc =3D GetOptions("h" =3D> \$help,
+> -                    "dump-aliases" =3D> \$dump_aliases);
+> ...
+> @@ -410,8 +432,6 @@ sub read_config {
+> ...
+>  		    "smtp-auth=3Ds" =3D> \$smtp_auth,
+> -		    "no-smtp-auth" =3D> sub {$smtp_auth =3D 'none'},
+> -		    "identity=3Ds" =3D> \$identity,
 
+You seem to be building on top of ab/send-email-transferencoding-fix
+and something else, and these two hunks did not apply.  I think I
+managed to wiggle the patch in correctly, though.
+
+Thanks.
