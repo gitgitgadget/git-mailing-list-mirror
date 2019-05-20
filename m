@@ -2,134 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 112C11F462
-	for <e@80x24.org>; Mon, 20 May 2019 22:28:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ADC41F462
+	for <e@80x24.org>; Mon, 20 May 2019 22:29:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbfETW2D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 18:28:03 -0400
-Received: from e2i236.smtp2go.com ([103.2.140.236]:40749 "EHLO
-        e2i236.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725763AbfETW2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 18:28:03 -0400
-X-Greylist: delayed 545 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 May 2019 18:28:01 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpservice.net; s=m1fbw0.a1-4.dyn; x=1558392182; h=Feedback-ID:
-        X-Smtpcorp-Track:Date:Message-ID:From:To:Subject:Reply-To:Sender:
-        List-Unsubscribe; bh=XhMlZ45BeThP6CDh60r5D72AMgTqhklPUTGCw7mJgq0=; b=0+DwEyvt
-        l1Ygd8SBa7LEet5U7wlhGV0P9VUYTXUxqGlfRu21SsUNMzDcbcwE/PdvsLZ6NnMSrz0z58oKaHB2s
-        xUrtkJxTvXlep3FdALK1rKQOGtm4icENnCBlT9ySB+WZDY8UWxewax1AkWIL/8YzhndrgcHJrTzfk
-        D/v3ZHvd0UrCf0ydaWk7r7e6vnxe0yGEljCDp2eOJ83i/RZCrnbqeQI5omMrxQgOCrQ6gmOjdgASr
-        RLovh8+t0IfjEtjICi+2scnIUFKaXTx/j8/Fbgmtj/j7Jrb7pr4+AlSxgV4RYIX8LvIRQ4m7hOK3J
-        6YEEwCDRLigXfHWmoYWLFMH7jQ==;
-Received: from [10.176.58.103] (helo=SmtpCorp)
-        by smtpcorp.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.91)
-        (envelope-from <philipoakley@iee.org>)
-        id 1hSqcQ-cp4Wbs-Vl; Mon, 20 May 2019 22:18:54 +0000
-Received: from [10.86.143.26] (helo=[10.192.168.1])
-        by smtpcorp.com with esmtp (Exim 4.91)
-        (envelope-from <philipoakley@iee.org>)
-        id 1hSqcQ-9EFR0E-Lb; Mon, 20 May 2019 22:18:54 +0000
-Subject: Re: Finer timestamps and serialization in git
-To:     =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
-        "Eric S. Raymond" <esr@thyrsus.com>
-Cc:     Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-References: <20190515191605.21D394703049@snark.thyrsus.com>
- <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
- <20190515233230.GA124956@thyrsus.com> <87woiqvic4.fsf@evledraar.gmail.com>
- <86woimox24.fsf@gmail.com> <20190520004559.GA41412@thyrsus.com>
- <86r28tpikt.fsf@gmail.com> <20190520141417.GA83559@thyrsus.com>
- <20190520164134.6b35b9f9@kitsune.suse.cz>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <2f0ab8c9-adf4-416d-519a-a313de89d5e1@iee.org>
-Date:   Mon, 20 May 2019 23:18:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726196AbfETW3q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 18:29:46 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50854 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbfETW3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 18:29:46 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f204so905177wme.0
+        for <git@vger.kernel.org>; Mon, 20 May 2019 15:29:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HDE0WbmAxOX4+SV6yXBcO+8F4mExL9ENWZP1DOT7YY=;
+        b=tJKTamKFkTwch255o8RjqH7iqZWl4wr5fNhV8TVVQw8CuKRmzBy7UqV7Z6IpIg7i60
+         Rai0gDRXabqTc9I/uvRqbzO96ASInf+HhCQN++n9bVHkumfaZsBHMl2uC/CjTkcZ8WEt
+         XYjwvavpWLObqc6Om5J0NM1tkp0yBHQlFJ8+Wci51pMvdrybv5ApqsjoPHTE5UGpzWmA
+         uuTFc7+LXn8IJ/2B/aRa7VU5vfZsffNQECmCSoo3UG1MESl3bhJWu3ZCZ9TOYXOABzXB
+         Yde9tjkbgHEeDsUkLIoD/yHIuYjG6KlTf/7rDpJC6SZOMEiBjkylAD7/SagxecC2efFh
+         NdiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+HDE0WbmAxOX4+SV6yXBcO+8F4mExL9ENWZP1DOT7YY=;
+        b=EpbxwQTrsPUJYAkkhuOjeh6eDpfWjQgwaa5WJVWyLWgpsnNXRPuWrSj/3MRRSNp3Wn
+         pATKdG8+kQ5rFaDL1tWUbnAnjwtn/+55XkRkKBAKzNp40/uMWnOo7M+D2k2pYpg9XXrZ
+         afXfYOrMWvFl9tz8fRmaSaYaFlyV3e9gRdVc8JwsYa6cVV2dujTGhB0NDRZIHHOJ9d5H
+         S/VQxdTNWc2RO01WjX0BeDTK7YNd1pl7vHCJhrx8rZBXs8qMJyjcXAmzmCdPa62B16e7
+         D/I1n1q/BaeMnQ8bJ0CtEFgu04epbBMlBVRwSFc2+YEEjjMSxvQ55R+M999bfXBlMzST
+         cVkA==
+X-Gm-Message-State: APjAAAVeYYaLVIJvhiQUpCieiDeBfPt6pyrpCrdCSa+p2bdMMte3JTPJ
+        qIwJFuDjGcqWPvd0mLVMr9NsR9qZE7Y=
+X-Google-Smtp-Source: APXvYqybyzsfVDOC3amVkhI9t8DUKF970OSR71F209fm31GPOzW6mLS7TAOF+yk2KWIKQ9+LJpMM3w==
+X-Received: by 2002:a1c:cb82:: with SMTP id b124mr932051wmg.107.1558391382990;
+        Mon, 20 May 2019 15:29:42 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id h8sm2010671wmf.5.2019.05.20.15.29.41
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 20 May 2019 15:29:42 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] hash-object: don't pointlessly zlib compress without -w
+Date:   Tue, 21 May 2019 00:29:32 +0200
+Message-Id: <20190520222932.22843-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 MIME-Version: 1.0
-In-Reply-To: <20190520164134.6b35b9f9@kitsune.suse.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Smtpcorp-Track: 1hSqcQ9EFR0ELP.45feIah-o
-Feedback-ID: 66524m:66524aMf6O2Y:66524sYYiWBYbgo
-X-Report-Abuse: Please forward a copy of this message, including all headers, to <abuse-report@smtp2go.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When hash-object hashes something the size of core.bigFileThreshold or
+larger (512MB by default) it'll be streamed through
+stream_to_pack().
 
-On 20/05/2019 15:41, Michal Suchánek wrote:
->>   But you were talking as though all those commits
->> have to be modified*after they're in the DAG*, and that's not the case.
->> If any timestamp has to be modified, it only has to happen*once*, at the
->> time its commit enters the repo.
-> And that's where you get it wrong. Git is*distributed*. There is more
-> than one repository. Each repository has its own DAG
-So far so good. In fact it the change to 'distributed' that has ruined 
-Eric's Acton stamps that assume that the 'time' came from a single 
-central server.
->   that is completely
-> unrelated to the other repositories and their DAGs.
-This bit will confuse. It is only the new commits in the different 
-repositories that are 'unrelated'. Their common history commits are 
-identical sha1 values, and the DAG links back to their common root commit(s)
-> So when you take
-> your history and push it to another repository and the timestamps
-> change as the result what ends up in the other repository is not the
-> history you pushed. So the repositories diverge and you no longer know
-> what is what.
->
-If the sender tweaks their timestamps at commit time, then no one 
-'knows'. It's just a minor bit of clock drift/slop. But once they have a 
-cascaded history which has been published (and used) you are locked into 
-that.
+That added in 568508e765 ("bulk-checkin: replace fast-import based
+implementation", 2011-10-28) would compress the file with zlib, but
+was oblivious as to whether the content would actually be written out
+to disk, which isn't the case unless hash-object is called with the
+"-w" option.
 
+Hashing is much slower if we need to compress the content, so let's
+check if the HASH_WRITE_OBJECT flag has been given.
 
-As noted previously. The significant change is the loss of the central 
-server and the referential nature of it's clock time stamp.
+An accompanying perf test shows how much this improves things. With
+CFLAGS=-O3 and OPENSSL_SHA1=Y the relevant change is (manually
+reformatted to avoid long lines):
 
+    1007.6: 'git hash-object <file>' with threshold=32M
+        -> 1.57(1.55+0.01)   0.09(0.09+0.00) -94.3%
+    1007.7: 'git hash-object --stdin < <file>' with threshold=32M
+        -> 1.57(1.57+0.00)   0.09(0.07+0.01) -94.3%
+    1007.8: 'echo <file> | git hash-object --stdin-paths' threshold=32M
+        -> 1.59(1.56+0.00)   0.09(0.08+0.00) -94.3%
 
-If the action stamp is just a useful temporary intermediary in a 
-transfer then cheats are possible (e.g. some randomising hash of a 
-definative partr of the commit).
+The same tests using "-w" still take that long, since those will need
+to zlib compress the relevant object. With the sha1collisiondetection
+library (our default) there's less of a difference since the hashing
+itself is slower, or respectively:
 
+    1.71(1.65+0.01)   0.19(0.18+0.01) -88.9%
+    1.70(1.66+0.02)   0.19(0.19+0.00) -88.8%
+    1.69(1.66+0.00)   0.19(0.18+0.00) -88.8%
 
-But if the action stamps are meant to be permanent and re-generatable 
-for a round trip between a central server change set based server to 
-Git, and then back again, repeatably, without divergence, loss, or 
-change, then it is not going to happen reliably. To do so requires the 
-creation of fixed total order (by design - single clock) from commits 
-that are only partially ordered (by design! - DAG rather than multiple 
-unsynchronized user clocks).
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ bulk-checkin.c              |  3 ++-
+ t/perf/p1007-hash-object.sh | 53 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 1 deletion(-)
+ create mode 100755 t/perf/p1007-hash-object.sh
 
-
-For backward compatibility Git only has (and only needs 1 second 
-resolution).
-
-
-The multi-decade/century VCS idea of a master artifact and then near 
-copies (since koalin and linen drawings, blue prints, ..) with central 
-_control_ is being replaced by zero cost perfect replication, 
-authentication by hash, with its distribution of control (of artifact 
-entry into the VCS) to _users_, from managers. Managers simply select 
-and decide on the artifact quality and authorize the use of a hash.
-
-
-Most folks haven't really looked below the surface of what it is that 
-makes GIT and DVCS so successful, and it's not just the Linus effect. 
-The previous certainties (e.g. the idea of a total order to allow 
-logging by change-set) have gone.
-
---
-
-Philip
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 39ee7d6107..a26126ee76 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -105,8 +105,9 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 	int status = Z_OK;
+ 	int write_object = (flags & HASH_WRITE_OBJECT);
+ 	off_t offset = 0;
++	int level = write_object ? pack_compression_level : Z_NO_COMPRESSION;
+ 
+-	git_deflate_init(&s, pack_compression_level);
++	git_deflate_init(&s, level);
+ 
+ 	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), type, size);
+ 	s.next_out = obuf + hdrlen;
+diff --git a/t/perf/p1007-hash-object.sh b/t/perf/p1007-hash-object.sh
+new file mode 100755
+index 0000000000..8df6dc59a5
+--- /dev/null
++++ b/t/perf/p1007-hash-object.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++
++test_description="Tests performance of hash-object"
++. ./perf-lib.sh
++
++test_perf_fresh_repo
++
++test_lazy_prereq SHA1SUM_AND_SANE_DD_AND_URANDOM '
++	>empty &&
++	sha1sum empty >empty.sha1sum &&
++	grep -q -w da39a3ee5e6b4b0d3255bfef95601890afd80709 empty.sha1sum &&
++	dd if=/dev/urandom of=random.test bs=1024 count=1 &&
++	stat -c %s random.test >random.size &&
++	grep -q -x 1024 random.size
++'
++
++if test_have_prereq !SHA1SUM_AND_SANE_DD_AND_URANDOM
++then
++	skip_all='failed prereq check for sha1sum/dd/stat'
++	test_perf 'dummy p0013 test (skipped all tests)' 'true'
++	test_done
++fi
++
++test_expect_success 'setup 64MB file.random file' '
++	dd if=/dev/urandom of=file.random count=$((64*1024)) bs=1024
++'
++
++test_perf 'sha1sum(1) on file.random (for comparison)' '
++	sha1sum file.random
++'
++
++for threshold in 32M 64M
++do
++	for write in '' ' -w'
++	do
++		for literally in ' --literally -t commit' ''
++		do
++			test_perf "'git hash-object$write$literally <file>' with threshold=$threshold" "
++				git -c core.bigFileThreshold=$threshold hash-object$write$literally file.random
++			"
++
++			test_perf "'git hash-object$write$literally --stdin < <file>' with threshold=$threshold" "
++				git -c core.bigFileThreshold=$threshold hash-object$write$literally --stdin <file.random
++			"
++
++			test_perf "'echo <file> | git hash-object$write$literally --stdin-paths' threshold=$threshold" "
++				echo file.random | git -c core.bigFileThreshold=$threshold hash-object$write$literally --stdin-paths
++			"
++		done
++	done
++done
++
++test_done
+-- 
+2.21.0.1020.gf2820cf01a
 
