@@ -2,136 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AD51F462
-	for <e@80x24.org>; Mon, 20 May 2019 21:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06D5A1F462
+	for <e@80x24.org>; Mon, 20 May 2019 21:53:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbfETVic (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 17:38:32 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:44259 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbfETVic (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 17:38:32 -0400
-Received: by mail-ua1-f65.google.com with SMTP id p13so5841441uaa.11
-        for <git@vger.kernel.org>; Mon, 20 May 2019 14:38:31 -0700 (PDT)
+        id S1726893AbfETVxX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 17:53:23 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:43485 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbfETVxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 17:53:22 -0400
+Received: by mail-wr1-f51.google.com with SMTP id r4so16198424wro.10
+        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c9EeGxY4se8wmjoRLn71XdOn6UuW9h4BvIOISfBgFZ4=;
-        b=tvK6Y4hyDzVcAhnVcrXn7vPC+cJwJM+JZfWNOIg8NYqs5BfyE6suF2dicD7LmP8DL6
-         8oKtQKxtook6BfKvw5thP31jXQ2gnBIoJGRUUssXXTLKl1tbQ2iaIzHAEglEqJD/dr49
-         5ovtibxBdUt1fHQwwuY5UD0oZH5lpEJ4RdYOg+PQDyOBg/tBGnlfqsTooNN9jljMnJ7F
-         6O8qCQb01kNMu80IFIJAXjbVfGD8vCcP9P+ziNaLrH0iXFOJ2dwupPVP8xRKqglIHNeO
-         GyLJ8w+0arl/Ok+kjD0Lp22bWupdgrdUSJalm0OuQdIKkyLJXLIIRTuZLjx/IN0h6F3j
-         Gesw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=haxnGUpsJ+BswOlloHnFoVZfv826s65qjaZcfIPULBE=;
+        b=uwyi24lxBVcCqcU9fEY9/sKMUaYI7E4COY+QsUY5ZP/cWSho2dFGnc3DjfDKu0Pug5
+         yDG3sDuW0l2wAG0Hb6WXyqzd0KYgxtzgf1v+GX3m4kMn5FhZsD6JqxEZQPCCadT1OpXa
+         NrgHtacqEJBoMlH5OMXxbbmTiSR2W5EzDQLn4oUWlR1bvianf+VWTm14q909TkRu/83i
+         V4zytE2FB9nCFsajNHA+bnxZWVaCncUAgegZ68r+oCW383gljHtgG9oPOa/p7OpUXX6n
+         zRkOQyzMHtuMXNDRNOwJrFEbnpVgK2Iifw4CaeZ/uKUidtasrvGzERibgtN/eOGLCq/u
+         CzFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c9EeGxY4se8wmjoRLn71XdOn6UuW9h4BvIOISfBgFZ4=;
-        b=V5ywmHpZ60eNHmUWk+Y6QPFnqwJ/6Bu3L3f/UURVqRuMn1zp/mPyznImvolokopvac
-         WlhUWmT6RP8Z2+EfZbztE97QNicbTksZtYYbO5ZAGDa9kiSW/NtVIKlD6O4XGUgw3S8G
-         eNzquW6lYYYBcs+RXS4qHaf0KhxwQWNIewsJsX1Fl6Qzsm2B4zaw3FDzhWFXQslrCcdy
-         H6W1/yFcdM0BTp3UoaqAWiOGZx5vQZieiehIxHIqE7opMH3aP83rksWao25ZmC301E/M
-         QJUFjHvyWle/YFhK99Rw2UCUudUUcK3FgNMixAjpEesFT7BGJ2paPaln3e66Qv7r11Kb
-         jxdg==
-X-Gm-Message-State: APjAAAXEfJeYfRFYsl8Q+xeB18IlOkW1TNChLz8fBDMvnOueRWVgbTQy
-        HJ2JiKELQ0QWqKjN77PQ2Oal4N3hd481QrXViFY=
-X-Google-Smtp-Source: APXvYqyCxjuMQwvVczEOTO8r0Ufc2wNlL2aQWAhDhKtcS2aDc1APZfB3Ft3xSqeS5Fi9O1ysTJA7t7i5A7U63NKoNeY=
-X-Received: by 2002:ab0:3058:: with SMTP id x24mr35243491ual.95.1558388311391;
- Mon, 20 May 2019 14:38:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=haxnGUpsJ+BswOlloHnFoVZfv826s65qjaZcfIPULBE=;
+        b=kZKOIKv2q/6mZE31Ao9PKmG5lpi9MCCTwa+HpFjwPHbHO4UHgEIjteOE4003pu3H39
+         uuf/ep42xCi2snZaHA9OnbXvVqI7t5yuv+W7SvLxEY57fmJVWAUSFRTfSKqb673jU9G+
+         ACOCtzGEh3RNYctfZ8RORc8fhIkPLcaAWXUCnMP46Iudh/wKh0DjfwwT+Rp45CYhmYxt
+         sqQcF0Uz0SNGcH9t3ZGrUYT9sNiejUVqZNSna9inmo3/VP9h0aS3xADL/zW1RxsLlutG
+         X/n/4HHxGncBs2LlyKb2rLS7TqlW9+Bf+NF4e0eEAAnf+1b1cmrelwSme5Q+oYtAV2wl
+         v39g==
+X-Gm-Message-State: APjAAAVR7/6Mkd8VZGmNS/cWto2Qh66TkEDgT3DsOL1GTjVulAjKiK6j
+        /tN5WasXCJkB8a7fPma8WfdKWQTT
+X-Google-Smtp-Source: APXvYqx/4Ap0+wzE1CBsBZdNGbF0KFHY2tVof2wI6VMo18SJErUTMgQ4cZ9Kdr7OXouIROVzgi3wAg==
+X-Received: by 2002:a5d:658b:: with SMTP id q11mr28520094wru.130.1558389201158;
+        Mon, 20 May 2019 14:53:21 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.19
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 20 May 2019 14:53:20 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Adam Roben <aroben@apple.com>,
+        Bryan Larsen <bryan.larsen@gmail.com>,
+        Matthias Urlichs <smurf@smurf.noris.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/3] hash-object doc: small fixes
+Date:   Mon, 20 May 2019 23:53:09 +0200
+Message-Id: <20190520215312.10363-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 MIME-Version: 1.0
-References: <20190515191605.21D394703049@snark.thyrsus.com>
- <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com> <20190515233230.GA124956@thyrsus.com>
- <87woiqvic4.fsf@evledraar.gmail.com> <86woimox24.fsf@gmail.com>
- <20190520004559.GA41412@thyrsus.com> <86r28tpikt.fsf@gmail.com> <20190520141417.GA83559@thyrsus.com>
-In-Reply-To: <20190520141417.GA83559@thyrsus.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 May 2019 14:38:20 -0700
-Message-ID: <CABPp-BHK1N2zZoeBeSgnh12LPqLgZxfbL0DzALj28y97_Q-ahg@mail.gmail.com>
-Subject: Re: Finer timestamps and serialization in git
-To:     esr@thyrsus.com
-Cc:     Jakub Narebski <jnareb@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Small doc fixes. Maybe trivial enough to land in 2.22, but there's no
+rush.
 
-On Mon, May 20, 2019 at 11:09 AM Eric S. Raymond <esr@thyrsus.com> wrote:
+A pair of #leftoverbits I noticed is that we've implemented the
+"--stdin-paths" option via unquote_c_style() from day one, so our
+current docs lie (and still do with this series) about wanting
+\n-delimited files, you can't hash a file called '"foo"' as you'd
+expect, you need to pass '"\"foo\""'.
 
-> > For cookie to be unique among all forks / clones of the same repository
-> > you need either centralized naming server, or for the cookie to be based
-> > on contents of the commit (i.e. be a hash function).
->
-> I don't need uniquess across all forks, only uniqueness *within the repo*.
+I wonder if we should document this at this point, or just change it
+and add a "-z" option. None of our tests fail if I remove this
+unquote_c_style() codepath, and it's never been documented, but
+someone in the wild may have organically depended on it.
 
-You've lost me.  In other places you stated you didn't want to use the
-commit hash, and now you say this.  If you only care about uniqueness
-within the current copy of the repo and don't care about uniqueness
-across forks (i.e. clones or copies that exist now or in the future --
-including copies stored using SHA256), then what's wrong with using
-the commit hash?
+Ævar Arnfjörð Bjarmason (3):
+  hash-object doc: stop mentioning git-cvsimport
+  hash-object doc: elaborate on -w and --literally promises
+  hash-object doc: point to ls-files and rev-parse
 
-> I want this for two reasons: (1) so that action stamps are unique, (2)
-> so that there is a unique canonical ordering of commits in a fast export
-> stream.
+ Documentation/git-hash-object.txt | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-A stable ordering of commits in a fast-export stream might be a cool
-feature.  But I don't know how to define one, other than perhaps sort
-first by commit-depth (maybe optionally adding a few additional
-intermediate sorting criteria), and then finally sort by commit hash
-as a tiebreaker.  Without the fallback to commit hash, you fall back
-on normal traversal order which isn't stable (it depends on e.g. order
-of branches listed on the command line to fast-export, or if using
---all, what new branch you just added that comes alphabetically before
-others).
+-- 
+2.21.0.1020.gf2820cf01a
 
-I suspect that solution might run afoul of your dislike for commit
-hashes, though, so I'm not sure it'd work for you.
-
-> (Without that second property there are surgical cases I can't
-> regression-test.)
->
-> > >                                                          For my use case
-> > > that cookie should *not* be a hash, because hashes always break N years
-> > > down.  It should be an eternally stable product of the commit metadata.
-> >
-> > Well, the idea for SHA-1 <--> NewHash == SHA-256 transition is to avoid
-> > having a flag day, and providing full interoperability between
-> > repositories and Git installations using the old hash ad using new
-> > hash^1.  This will be done internally by using SHA-1 <--> SHA-256
-> > mapping.  So after the transition all you need is to publish this
-> > mapping somewhere, be it with Internet Archive or Software Heritage.
-> > Problem solved.
->
-> I don't see it.  How does this prevent old clients from barfing on new
-> repositories?
-
-Depends on range of time for "old".  The plan as I understood it
-(which is suspect): make git version which understand both SHA-1 and
-SHA-256 (which I think is already done, though I haven't followed
-closely), wait some time, allow people to opt in to converting, allow
-more time, consider ways of nudging people to switch.
-
-You are right that clients older than any version that understands
-SHA-256 would barf on the new repositories.
-
-> So let me back up a step.  I will cheerfully drop advocating bumping
-> timestamps if anyone can tell me how a different way to define a per-commit
-> reference cookie that (a) is unique within its repo, and (b) only requires
-> metadata visible in the fast-export representation of the commit.
-
-Does passing --show-original-ids option to fast-export and using the
-resulting original-oid field as the cookie count?
