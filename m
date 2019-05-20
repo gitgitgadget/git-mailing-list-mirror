@@ -2,233 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D60B1F4B6
-	for <e@80x24.org>; Mon, 20 May 2019 13:17:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9969D1F461
+	for <e@80x24.org>; Mon, 20 May 2019 13:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732080AbfETNRF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 09:17:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33926 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727319AbfETNRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 09:17:05 -0400
-Received: (qmail 25225 invoked by uid 109); 20 May 2019 13:17:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 13:17:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4125 invoked by uid 111); 20 May 2019 13:17:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 09:17:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 09:17:03 -0400
-Date:   Mon, 20 May 2019 09:17:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     gitster@pobox.com, ao2@ao2.it, e@80x24.org, git@vger.kernel.org
-Subject: Re: [PATCH] repository.c: always allocate 'index' at repo init time
-Message-ID: <20190520131702.GB13474@sigill.intra.peff.net>
-References: <xmqqftpf5g3d.fsf@gitster-ct.c.googlers.com>
- <20190519025636.24819-1-pclouds@gmail.com>
+        id S1731728AbfETNm2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 09:42:28 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:41292 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731005AbfETNm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 09:42:28 -0400
+Received: by mail-wr1-f43.google.com with SMTP id g12so14388713wro.8
+        for <git@vger.kernel.org>; Mon, 20 May 2019 06:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Pt4QrLtiyx8iKPmeIwLRlIWqn24kWnTxoNS57TCoYCI=;
+        b=LcfdWG74oMcIfkEP55BRnlzruz9wzRLYYZrF8SmRnTc+zHlk3tBRB3V1XCUhNQzpaF
+         84tLO7Yo4baq8k70VrN3b0NuLxhB80v/6fpffC5vQ2u3PrYCuhogj7YKgdKMXyht6F6w
+         N9BD7yDv3k65UrE/24OhOTK6LWDakO+IaJa8IfuiEmmYGcm1RquK9xTzggC29nuyFeXI
+         JY7vKT92KJNcgd9i3XN+uPGfVqXTMkl4Rr2PTok+s4r2BpPpceh2cEkeDSxeuKjjlAhb
+         NxS0apuc92Kfdnky9ZwGWvC1i+sYLzOESbIOCqvL7J6A6uT1voc0vtYWcR9A8aKGzAvH
+         YliA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=Pt4QrLtiyx8iKPmeIwLRlIWqn24kWnTxoNS57TCoYCI=;
+        b=L7I4EtyuGhn8RAkpUZH8HJGQf+tw7GlQbYB4dCh5bDxHDsZLV9+0B0/UusypMyMotz
+         ZagYsRylTWEb+p8MSuRWw/yF0fDpSTvHR7IPhaVEEtas1o2iGmh/nPykkS2CYbzXN8z/
+         w8Qu8VzwM7Aohcl3+N5yBzjQdCXuRDs6+G+qVa4QMAb5xnhLDsVEOEdK37Xol8lrWzvY
+         VGyrU4BTgoVut3R14HcFukI7gIIbfjxFJgnfkl3UvWOSzclsKpSY+ODsZ0Onz6KiAchV
+         rvxGI8y/nf7NHMX/ZUJWKx5aQu4ayJvl49a/5p483XnFh8bMriHch2Z4amSw9Kw8U+0C
+         Er5A==
+X-Gm-Message-State: APjAAAWVnMIrlPPH1j0qiqSPO8CH3RyckRDsKRUo9jAA7XgOUBUg5NAL
+        6zprM0ahC0ACIQIRh2JMRfzy2M3JcHk=
+X-Google-Smtp-Source: APXvYqzcbvlLJ79ALVIgOEc78CemCOA3wPmbaUxNS069eJyKYKoZ7Z+jAvqq5h9QbnJ6/laUmaqaeA==
+X-Received: by 2002:adf:ab45:: with SMTP id r5mr19664857wrc.100.1558359745435;
+        Mon, 20 May 2019 06:42:25 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egp40.neoplus.adsl.tpnet.pl. [83.21.79.40])
+        by smtp.gmail.com with ESMTPSA id j82sm27217996wmj.40.2019.05.20.06.42.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 May 2019 06:42:24 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Mike Hommey <mh@glandium.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Revision walking, commit dates, slop
+References: <20190518005412.n45pj5p2rrtm2bfj@glandium.org>
+        <20190518015005.GA951@szeder.dev>
+        <20190518035828.pjaqfrkkvldhri6v@glandium.org>
+        <20190518041706.ct6ie5trvxgdhjar@glandium.org>
+        <f14799c3-e343-eb41-3536-65de7e38fbd9@gmail.com>
+        <86mujhpewj.fsf@gmail.com>
+        <cfa2c367-5cd7-add5-0293-caa75b103f34@gmail.com>
+Date:   Mon, 20 May 2019 15:42:23 +0200
+In-Reply-To: <cfa2c367-5cd7-add5-0293-caa75b103f34@gmail.com> (Derrick
+        Stolee's message of "Mon, 20 May 2019 07:20:01 -0400")
+Message-ID: <86ftp9p7i8.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190519025636.24819-1-pclouds@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 19, 2019 at 09:56:36AM +0700, Nguyễn Thái Ngọc Duy wrote:
+Derrick Stolee <stolee@gmail.com> writes:
+> On 5/20/2019 7:02 AM, Jakub Narebski wrote:
+>>
+>> Are there any blockers that prevent the switch to this
+>> "generation number v2"?
+>>=20
+>> - Is it a problem with insufficient data to choose the correct numbering
+>>   as "generation number v2' (there can be only one)?
+>> - Is it a problem with selected "generation number v2" being
+>>   incompatibile with gen v2, and Git failing when new version of
+>>   commit-graph is used instead of softly just not using commit-graph?
+>> - Or is it something else?
 
-> This patch goes with the second option, making sure that 'index' is
-> always allocated after initialization. It's less effort than the first
-> one, and also safer because you could still miss things during the code
-> audit. The extra allocation cost is not a real concern.
+Thanks for the explanation.
 
-I think this direction makes sense.
+> The switch becomes a bit complicated.
+>
+> First, the plan was to version the commit-graph file to v2, and that would
+> include a byte in the header for the "reachability index version" [1]. Si=
+nce
+> older clients fail hard on a newer file version, we are switching to inst=
+ead
+> including the reachability index version as a value in a more flexible=20
+> "metadata chunk" [2].
 
-The patch looks good, though I wonder if we could simplify even further
-by just embedding an index into the repository object. The purpose of
-having it as a pointer, I think, is so that the_repository can point to
-the_index. But we could possibly hide the latter behind some macro
-trickery like:
+Ugh, that is bad.  The version number inn the commit-graph file format
+was supposed to make it possible to easily change the format; now it
+looks like we are stuck with workarounds until the released version that
+dies on never commit-graph file format version innstead of softly not
+utilizing the commit-graph file dies off.
 
-  #define the_index (the_repository->index)
+How this issue got missed in review...
 
-I spent a few minutes on a proof of concept patch, but it gets a bit
-hairy:
+If we cannot change the format, all that is left is ading new chunks,
+and changes that conform to commit-graph file version 1.=20=20
 
-  1. There are some circular dependencies in the header files. We'd need
-     repository.h to depend on cache.h to get the definition of
-     index_state, but the latter includes repository.h. We'd need to
-     break the index bits out of cache.h into index.h, which in turn
-     requires breaking out some other parts. I did a sloppy job of it in
-     the patch below.
+>                      Using the generation number column for the corrected
+> commit-date offsets (assuming we also guarantee the offset is strictly
+> increasing from parent to child), these new values will be backwards-
+> compatible _except_ for 'git commit-graph verify'.
 
-  2. There are hundreds of spots that need to swap out "repo->index" for
-     "&repo->index". In the patch below I just did enough to compile
-     archive-zip.o, to illustrate. :)
+O.K., so the "generation number v2 (legacy)" would be incremental and
+backward-compatibile in use (though not in generation and validation).
 
-So it's definitely non-trivial to go that way. I'm not sure if it's
-worth the effort to switch at this point, but even if it is, your patch
-seems like a good thing to do in the meantime.
+Do I understand it correctly how it is calculated:
 
-Either way, I think we could probably revert the non-test portion of my
-581d2fd9f2 (get_oid: handle NULL repo->index, 2019-05-14) after this.
+  corrected_date(C) =3D max(committer_date(C),
+                          max_{P =E2=88=88 parents(C)}(corrected_date(P)) +=
+ 1)
+  offset(C) =3D corrected_date(C) - committer_date(C)
+  gen_v2(C) =3D max(offset(C), max_{P =E2=88=88 parents(C)}(gen_v2(P)) + 1)=
+=20
 
--Peff
+Do you have benchmark for this "monotonically offset corrected commit
+date" generation number in https://github.com/derrickstolee/git/commits/rea=
+ch-perf
+and https://github.com/derrickstolee/gen-test ?
 
----
-diff --git a/archive-zip.c b/archive-zip.c
-index 4d66b5be6e..517e203483 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -353,7 +353,7 @@ static int write_zip_entry(struct archiver_args *args,
- 				return error(_("cannot read %s"),
- 					     oid_to_hex(oid));
- 			crc = crc32(crc, buffer, size);
--			is_binary = entry_is_binary(args->repo->index,
-+			is_binary = entry_is_binary(&args->repo->index,
- 						    path_without_prefix,
- 						    buffer, size);
- 			out = buffer;
-@@ -430,7 +430,7 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(args->repo->index,
-+				is_binary = entry_is_binary(&args->repo->index,
- 							    path_without_prefix,
- 							    buf, readlen);
- 			write_or_die(1, buf, readlen);
-@@ -463,7 +463,7 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(args->repo->index,
-+				is_binary = entry_is_binary(&args->repo->index,
- 							    path_without_prefix,
- 							    buf, readlen);
- 
-diff --git a/cache.h b/cache.h
-index b4bb2e2c11..d0450025e1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -17,6 +17,7 @@
- #include "sha1-array.h"
- #include "repository.h"
- #include "mem-pool.h"
-+#include "oid.h"
- 
- #include <zlib.h>
- typedef struct git_zstream {
-@@ -43,28 +44,6 @@ int git_deflate_end_gently(git_zstream *);
- int git_deflate(git_zstream *, int flush);
- unsigned long git_deflate_bound(git_zstream *, unsigned long);
- 
--/* The length in bytes and in hex digits of an object name (SHA-1 value). */
--#define GIT_SHA1_RAWSZ 20
--#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
--/* The block size of SHA-1. */
--#define GIT_SHA1_BLKSZ 64
--
--/* The length in bytes and in hex digits of an object name (SHA-256 value). */
--#define GIT_SHA256_RAWSZ 32
--#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
--/* The block size of SHA-256. */
--#define GIT_SHA256_BLKSZ 64
--
--/* The length in byte and in hex digits of the largest possible hash value. */
--#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
--#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
--/* The largest possible block size for any supported hash. */
--#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
--
--struct object_id {
--	unsigned char hash[GIT_MAX_RAWSZ];
--};
--
- #define the_hash_algo the_repository->hash_algo
- 
- #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
-@@ -143,16 +122,6 @@ struct cache_header {
- #define INDEX_FORMAT_LB 2
- #define INDEX_FORMAT_UB 4
- 
--/*
-- * The "cache_time" is just the low 32 bits of the
-- * time. It doesn't matter if it overflows - we only
-- * check it for equality in the 32 bits we save.
-- */
--struct cache_time {
--	uint32_t sec;
--	uint32_t nsec;
--};
--
- struct stat_data {
- 	struct cache_time sd_ctime;
- 	struct cache_time sd_mtime;
-@@ -326,32 +295,6 @@ static inline unsigned int canon_mode(unsigned int mode)
- #define UNTRACKED_CHANGED	(1 << 7)
- #define FSMONITOR_CHANGED	(1 << 8)
- 
--struct split_index;
--struct untracked_cache;
--
--struct index_state {
--	struct cache_entry **cache;
--	unsigned int version;
--	unsigned int cache_nr, cache_alloc, cache_changed;
--	struct string_list *resolve_undo;
--	struct cache_tree *cache_tree;
--	struct split_index *split_index;
--	struct cache_time timestamp;
--	unsigned name_hash_initialized : 1,
--		 initialized : 1,
--		 drop_cache_tree : 1,
--		 updated_workdir : 1,
--		 updated_skipworktree : 1,
--		 fsmonitor_has_run_once : 1;
--	struct hashmap name_hash;
--	struct hashmap dir_hash;
--	struct object_id oid;
--	struct untracked_cache *untracked;
--	uint64_t fsmonitor_last_update;
--	struct ewah_bitmap *fsmonitor_dirty;
--	struct mem_pool *ce_mem_pool;
--};
--
- /* Name hashing */
- int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
- void add_name_hash(struct index_state *istate, struct cache_entry *ce);
-diff --git a/repository.h b/repository.h
-index 4fb6a5885f..3371afceaa 100644
---- a/repository.h
-+++ b/repository.h
-@@ -1,11 +1,11 @@
- #ifndef REPOSITORY_H
- #define REPOSITORY_H
- 
-+#include "index.h"
- #include "path.h"
- 
- struct config_set;
- struct git_hash_algo;
--struct index_state;
- struct lock_file;
- struct pathspec;
- struct raw_object_store;
-@@ -87,7 +87,7 @@ struct repository {
- 	 * Repository's in-memory index.
- 	 * 'repo_read_index()' can be used to populate 'index'.
- 	 */
--	struct index_state *index;
-+	struct index_state index;
- 
- 	/* Repository's current hash algorithm, as serialized on disk. */
- 	const struct git_hash_algo *hash_algo;
+
+Also, what would happen if different versions of Git tried to add to
+commit-graph in interleaved way, either with rewrite or incremental?
+
+> Second, we need to pull the reachability index value into a commit slab.
+
+Is commit slab documented somewhere in Documentation/technical/, or just
+in comments in commit-slab.h?
+
+As I understand it, commit slab is Git-specific implementition of
+inside-out object storage for commit data (i.e. struct of arrays instead
+of array of structs), isn't it?  I wonder if using commit slab improves
+cache utilization...
+
+> The generation value is currently 32 bits, but we will expand that to
+> 64 as it stores a timestamp. The commit struct is a bit bloated already,
+> so this will reduce the required memory space even when not using the
+> commit-graph. But, it requires some refactoring, including every place
+> where we pass a "min_generation" needs to change type and name.
+
+Could this be done with Coccinelle's spatch, similar to
+e.g. contrib/coccinelle/commit.cocci?
+
+>
+> Third and finally, we need to calculate the new values and change the
+> read logic to sum the offset and commit-date (when the metadata chunk
+> says we are using corrected commit date).
+
+Right.
+
+> While none of this is _incredibly_ hard to do, it does require a bit
+> of care. It's on my list to get to at some point, but making the file
+> incremental is higher priority to me.
+
+All right, I can understand that.
+
+> [1] https://public-inbox.org/git/pull.112.git.gitgitgadget@gmail.com/
+> [2] https://public-inbox.org/git/87h8acivkh.fsf@evledraar.gmail.com/
+
+Best,
+--
+Jakub Nar=C4=99bski
