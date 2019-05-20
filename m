@@ -7,78 +7,75 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 197FD1F461
-	for <e@80x24.org>; Mon, 20 May 2019 12:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E4D71F461
+	for <e@80x24.org>; Mon, 20 May 2019 12:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389323AbfETMkm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 08:40:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33878 "HELO cloud.peff.net"
+        id S2388104AbfETMuT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 08:50:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33884 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2387507AbfETMkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 08:40:41 -0400
-Received: (qmail 24215 invoked by uid 109); 20 May 2019 12:40:41 -0000
+        id S1730404AbfETMuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 08:50:19 -0400
+Received: (qmail 24482 invoked by uid 109); 20 May 2019 12:50:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 12:40:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 12:50:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3805 invoked by uid 111); 20 May 2019 12:41:21 -0000
+Received: (qmail 3851 invoked by uid 111); 20 May 2019 12:50:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 08:41:21 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 08:50:59 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 08:40:39 -0400
-Date:   Mon, 20 May 2019 08:40:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 08:50:17 -0400
+Date:   Mon, 20 May 2019 08:50:17 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     "Eric S. Raymond" <esr@thyrsus.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-Message-ID: <20190520124039.GF11212@sigill.intra.peff.net>
-References: <20190515191605.21D394703049@snark.thyrsus.com>
- <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
- <20190515233230.GA124956@thyrsus.com>
- <87woiqvic4.fsf@evledraar.gmail.com>
- <86woimox24.fsf@gmail.com>
- <20190520004559.GA41412@thyrsus.com>
- <86r28tpikt.fsf@gmail.com>
+To:     Alejandro Sanchez <asanchez1987@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/4] am: drop tty requirement for --interactive
+Message-ID: <20190520125016.GA13474@sigill.intra.peff.net>
+References: <20190520120636.GA12634@sigill.intra.peff.net>
+ <20190520121113.GC11212@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <86r28tpikt.fsf@gmail.com>
+In-Reply-To: <20190520121113.GC11212@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 20, 2019 at 11:43:14AM +0200, Jakub Narebski wrote:
+On Mon, May 20, 2019 at 08:11:13AM -0400, Jeff King wrote:
 
-> You can receive new commits in the repository by creating them, and from
-> other repository (via push or fetch).  In the second case you often get
-> many commits at once.
-> 
-> In [1] it is described how using "bitmap index" you can avoid parsing
-> commits when deciding which objects to send to the client; they can be
-> directly copied to the client (added to the packfile that is sent to
-> client).  Thanks to this reachability bitmap (bit vector) the time to
-> clone Linux repository decreased from 57 seconds to 1.6 seconds.
+> We have required that the stdin of "am --interactive" be a tty since
+> a1451104ac (git-am: interactive should fail gracefully., 2005-10-12).
+> However, this isn't strictly necessary, and makes the tool harder to
+> test (and is unlike all of our other --interactive commands).
 
-No, this is mixing up sending and receiving. On the sending side, we try
-very hard not to open up objects if we can avoid it (using tricks like
-reachability bitmaps helps us quickly decide what to send, and reusing
-the on-disk packfile data lets us send out objects without decompressing
-them).
+I think this is worth doing for simplicity and consistency. But as you
+might guess, my ulterior motive was making it easier to add tests.
 
-But on the receiving side, we do not trust the sender at all. The
-protocol specifically does not send the sha1 of any object. The receiver
-instead inflates every object it gets and computes the object hash
-itself. And then on top of that, we traverse the commit graph to make
-sure that the server sent us all of the objects we need to have a
-complete graph.
+In theory we _should_ be able to use test_terminal for this, but it
+seems to be racy, because it will quickly read all input and close the
+descriptor (to give the reader EOF). But after that close, isatty() will
+no longer report it correctly. E.g., if I run this:
 
-So adding any extra object-quality checks on the receiving side would
-not really change that equation.
+  perl test-terminal.perl sh -c '
+	for i in 0 1 2; do
+		echo $i is $(test -t $i || echo not) a tty
+	done
+  ' </dev/null
 
-But I do otherwise agree with your mail that the general idea of having
-the receiver _change_ the incoming objects is going to lead to a world
-of headaches.
+it _usually_ says "0 is a tty", but racily may say "not a tty". If you
+put a sleep into the beginning of the shell, then it will basically
+always lose the race and say "not".
+
+It might be possible to overcome this by making test-terminal more
+clever (i.e., is there a way for us to send an "EOF" over the pty
+without actually _closing_ it? That would behave like a real terminal,
+where you can hit ^D to generate an EOF but then type more).
+
+But barring that, this works by just avoiding it entirely. :)
+
+Curiously, my script above also reports consistently that stdout is not
+a tty, but that stderr is. I'm not sure why this is, but it no tests
+seem to care either way.
 
 -Peff
