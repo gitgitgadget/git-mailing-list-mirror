@@ -2,308 +2,337 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC9B1F461
-	for <e@80x24.org>; Mon, 20 May 2019 09:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B21311F461
+	for <e@80x24.org>; Mon, 20 May 2019 10:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731427AbfETJnV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 05:43:21 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33295 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731393AbfETJnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 05:43:20 -0400
-Received: by mail-wr1-f65.google.com with SMTP id d9so825931wrx.0
-        for <git@vger.kernel.org>; Mon, 20 May 2019 02:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=f1fFrcrejwp06n/AbWCplMOIUws42c3G0FoPZdEFUSU=;
-        b=XSdC7dqAnxqh6r/JjJuIgKWE3+yOUL2sVPs6mgD+1ITqpd+qlmB1wRTIPajSeJ1TU6
-         VCPIzukRuKZlOeT7h2jkkYHiWukUxqa2JAgHsm4kI9+sHz0lyJtkpkxBbwfuWLdgHDy9
-         ToIVc2LjJdF/LW6kp0rLPOBrcYpMmoWjMSXRL/OkExQCGoc0aDiXpV7Hskkxg0KRF3Li
-         A1dpE/kmj5Ra7QywINmmgDmfkf5wDwpDTly9JFMKOd3OCphlaVxs9LRIkD3R68K9O+Ro
-         9xmdUxgKhjgggZdSEHYcl8CCVd1cP/nlud5GOBiUVRomJin8w/LQfWECoL3RxbeXFK2y
-         D3WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=f1fFrcrejwp06n/AbWCplMOIUws42c3G0FoPZdEFUSU=;
-        b=W2vHpEsGlYB4Vf8b6PqzwKmc28EEvEFkJZJZ/pwBBdRG/6hQx4T+XiFx0cCuMkw8Nq
-         7CR7eSH9FPNpwAT9k2oSqrxrLezL9kdPniqpCLq+OptUabQB+A6AJfc3Kmw58jazdmCe
-         xVrxXQuZgSFgkqPDrTbRB4ugGHi496xnR5Vtq6IY5QcdxnNx5ewG6C1IBs/cWhO04eg6
-         5Kk4isZqf08KNKVS29TjMe4CSvu1JMc/3YnjL0iYitfMm1XfGu+OiGZtSwgts9BCgYcp
-         v0OztFKRDMmjffjCu3sFDAsFhkhVZrT+DZZIxxdOCs0HupGbN7a8fhRhmewKF0IXpIEX
-         8Wfw==
-X-Gm-Message-State: APjAAAWKjIj52GN9PBmTNJ+GLxr9eTS456ZnWC4rLvYBtd09llwMeMXb
-        3+cttO/qNNA9pEZAtJlLfrxEABLDovw=
-X-Google-Smtp-Source: APXvYqxkDXuEp7TxTBkb+bzozvG9VJABkkZfa7Qe4rQ/yY3PSghjA1dfCDciSYiaoiqVJPCwhTo80g==
-X-Received: by 2002:adf:ec0f:: with SMTP id x15mr44393433wrn.120.1558345397766;
-        Mon, 20 May 2019 02:43:17 -0700 (PDT)
-Received: from Laptop-Acer-Aspire-F15 (egp40.neoplus.adsl.tpnet.pl. [83.21.79.40])
-        by smtp.gmail.com with ESMTPSA id a10sm19306919wrm.94.2019.05.20.02.43.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 May 2019 02:43:16 -0700 (PDT)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     "Eric S. Raymond" <esr@thyrsus.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-References: <20190515191605.21D394703049@snark.thyrsus.com>
-        <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
-        <20190515233230.GA124956@thyrsus.com>
-        <87woiqvic4.fsf@evledraar.gmail.com> <86woimox24.fsf@gmail.com>
-        <20190520004559.GA41412@thyrsus.com>
-Date:   Mon, 20 May 2019 11:43:14 +0200
-In-Reply-To: <20190520004559.GA41412@thyrsus.com> (Eric S. Raymond's message
-        of "Sun, 19 May 2019 20:45:59 -0400")
-Message-ID: <86r28tpikt.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1732274AbfETKBa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 06:01:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:33501 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727866AbfETKBa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 06:01:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1558346480;
+        bh=sVainbvD1qAmb3ribj4UgTsiWKATe4Bwgc3FZpQkVq8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Aj32X0oBaHMGSDTHeIEHXpPHzhj7Pwoqqs/tGPDyujyWvWFFvPakr+8uIE1WLhU66
+         mu5XUe2B9lZFfcijBqr7tPYW+su+QSkykkI6DjnrL8OxXD8kLslHr8rntoSFezGz4K
+         g4J3iTbAD7oU84kJP57bazz0Z/YAqCaWdNwClw7o=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MlNtF-1goL4X1ymb-00lozs; Mon, 20
+ May 2019 12:01:20 +0200
+Date:   Mon, 20 May 2019 12:01:04 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 3/3] packfile: close_all_packs to close_object_store
+In-Reply-To: <0e948f639fb5209f07f8e3eb356b5886c41ff2be.1558118506.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905201141000.46@tvgsbejvaqbjf.bet>
+References: <pull.208.git.gitgitgadget@gmail.com> <0e948f639fb5209f07f8e3eb356b5886c41ff2be.1558118506.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mbcNjwYhM5l4TQSKKR1Yum149+B3WTnxsbORVG4VQo48XJ/epvn
+ DKCElrjvKHw4um2JLcQfiowa3wcOSf1+h08IVqbGKbePpAe2QxN5Y40Vjosl1yL+SFoRMtY
+ HSXuPDzFspSc7kTQs/UgddTFj/UBwk92RbiFS+70U6m6sl6BQUTmpNGEG5MRyYECkuhUVp7
+ MSj3CeM0eJsIiOAQQB3zw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lv9CMHionRk=:5Iymf4ZtdVraGgnZWYpPP2
+ qpM7Qb0+UDPmp40z+dLr6+pNmn02b0l3iX4HHMfABaAUV17m84BJzmgREWuZ+QLhcXqItHBXf
+ Pv+IyaH2M/u9fBCxlwUpjEO9oGGlyUQ+QfQyrq7he5ouKS2/PBIdG2sbodI1m1f1y0Fwx8hBm
+ x6w/2FI3jglYd4dysgS65ZZEIX7AAyBQZhAPSxbr+G+/5HS9IegKUQGH3lJ5MXzIAN3zD+dYP
+ ppYTA29u+aFUn7kQI9QaRxkvFgmLLyE6+IrNowY1kjtUAhG/GoKJEIXUyOx2VkjJU4ko3MxmH
+ jypUR8vZMgNTSxXWDzEMme7JdlmlMYI3/YKhXN2Dfcu4EDyPLhr9Yufq88OKTaUNeGTnHDPQG
+ dPdl61D55+v2clnpoJ/qvRfhw7YGL8F3c2Bj3U86xd4syJxbIa/imYKekQ+6k5t0Pl2Gf4LMt
+ /QaUuz92YRUAnyLGktnETrDrDC3eF/TtNKfTTTTfZyRAThK1Mh4pZ/cX1K9Jpoms/qUrD0IeJ
+ +NwU0hsK5T7EHbBkgur0jiPrmx6OjswzMjgFrmVU4TTax1vxbs88Ax82btPWeBZchzHK7CrKg
+ 8dDCKw4w3sNCmbnDq4MQoTE04QMSzYlGQUO3kI4HsiCSLCxxGPVMLwHwsVxbFQ+Ma/1mK+oJX
+ xP/er/c+auwBiDq46UMQKxyKOMfS6FE5ZjPMKJTDgWLiPQqfoLu0uyHOC2NBedM+F29stmqVu
+ E49GvnW+JsqV9uNHXMq1Q6ynA4I356n35aPvkmZxTm0yfX+4lHBIbMJyznba7R9r+osffX/ZZ
+ nJNDM9aiGu0njJgyUpNNSp9We1k8p19gf8TX4o/rF23maeTrQ3GSvIZus0XtqVhrTZvldMIYI
+ 0Pzq3oVu9UHRfTls/Pi4n9fQhdlquKcOh4lfgtlc6xdP5AugPPfdjxc0vjH9uL0RW7nFW2R1X
+ vnVIuJSo5Q41/rnHY+cEWHFX1oHAhJnhiVIWFb/5Jsx2QhlvywEeY
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric S. Raymond" <esr@thyrsus.com> writes:
-> Jakub Narebski <jnareb@gmail.com>:
+Hi Stolee,
 
->> As far as I understand it this would slow down receiving new commits
->> tremendously.  Currently great care is taken to not have to parse the
->> commit object during fetch or push if it is not necessary (thanks to
->> things such as reachability bitmaps, see e.g. [1]).
->>=20
->> With this restriction you would need to parse each commit to get at
->> commit timestamp and committer, check if the committer+timestamp is
->> unique, and bump it if it is not.
+*really* minor nit: the commit subject probably wants to have a "rename"
+after the colon ;-)
+
+The patch looks sensible to me. Since Junio asked for a sanity check
+whether all of the call sites of `close_all_packs()` actually want to
+close the MIDX and the commit graph, too, I'll do the "speak out loud"
+type of patch review here (spoiler: all of them check out):
+
+On Fri, 17 May 2019, Derrick Stolee via GitGitGadget wrote:
+
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 58a2aef28b..9315d32d2a 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1800,7 +1800,7 @@ static void am_run(struct am_state *state, int res=
+ume)
+>  	 */
+>  	if (!state->rebasing) {
+>  		am_destroy(state);
+> -		close_all_packs(the_repository->objects);
+> +		close_object_store(the_repository->objects);
+>  		run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+
+Here, we run `git gc --auto`, so we obviously really want to close all
+read handles.
+
+Check.
+
+>  	}
+>  }
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 50bde99618..82ce682c80 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1240,7 +1240,7 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+>  	transport_disconnect(transport);
 >
-> So, I'd want to measure that rather than simply assuming it's a blocker.
-> Clocks are very cheap these days.
+>  	if (option_dissociate) {
+> -		close_all_packs(the_repository->objects);
+> +		close_object_store(the_repository->objects);
+>  		dissociate_from_references();
 
-Clocks may be cheap, but parsing is not.
+Here, we prepare for disassociating the reference repository specified via
+`git clone --reference <directory>`. Obviously, we need to let go of all
+the handles we might have open there.
 
-You can receive new commits in the repository by creating them, and from
-other repository (via push or fetch).  In the second case you often get
-many commits at once.
+Check.
 
-In [1] it is described how using "bitmap index" you can avoid parsing
-commits when deciding which objects to send to the client; they can be
-directly copied to the client (added to the packfile that is sent to
-client).  Thanks to this reachability bitmap (bit vector) the time to
-clone Linux repository decreased from 57 seconds to 1.6 seconds.
-
-It is not a direct correspondence, but there most probably would be the
-same problem with requiring fractional timestamp+committer identity to
-be unique on the receiving side.
-
-[1]: https://githubengineering.com/counting-objects/
-
->> Also, bumping timestamp means that the commit changed, means that its
->> contents-based ID changed, means that all commits that follow it needs
->> to have its contents changed...  And now you need to rewrite many
->> commits.
+>  	}
 >
-> What "commits that follow it?" By hypothesis, the incoming commit's
-> timestamp is bumped (if it's bumped) when it's first added to a branch
-> or branches, before there are following commits in the DAG.
-
-Errr... the main problem is with distributed nature of Git, i.e. when
-two repositories create different commits with the same
-committer+timestamp value.  You receive commits on fetch or push, and
-you receive many commits at once.
-
-Say you have two repositories, and the history looks like this:
-
- repo A:   1<---2<---a<---x<---c<---d      <- master
-
- repo B:   1<---2<---X<---3<---4           <- master
-
-When you push from repo A to repo B, or fetch in repo B from repo A you
-would get the following DAG of revisions
-
- repo B:   1<---2<---X<---3<---4           <- master
-                 \
-                  \--a<---x<---c<---d      <- repo_A/master
-
-Now let's assume that commits X and x have the came committer and the
-same fractional timestamp, while being different commits.  Then you
-would need to bump timestamp of 'x', changing the commit.  This means
-that 'c' needs to be rewritten too, and 'd' also:
-
- repo B:   1<---2<---X<---3<---4           <- master
-                 \
-                  \--a<---x'<--c'<--d'     <- repo_A/master
-
-And now for the final nail in the coffing of the Bazaar-esque idea of
-changing commits on arrival.  Say that repository A created new commits,
-and pushed them to B.  You would need to rewrite all future commits from
-this repository too, and you would always fetch all commits starting
-from the first "bumped"
-
- repo A:   1<---2<---a<---x<---c<---d<---E   <- master
-
-transfer of [<---x<---c<---d<---E], instead of [<--E], because 'x', 'c',
-and 'd' are missing in repo B.
-
- repo B:   1<---2<---X<---3<---4             <- master
-                 \
-                  \--a<---x'<--c'<--d'<--E'  <- repo_A/master
-
-And there is yet another problem.  Let's assume that repo B created some
-history on top of bump-rewritten commits:
-
- repo B:   1<---2<---X<---3<---4             <- master
-                 \
-                  \--a<---x'<--c'<--d'<--E'  <- repo_A/master
-                                \
-                                 \--5        <- next
-
-Then if in repo A you fetch from repo B (remember, in Git there is no
-concept of central repository), you would get the following history
-
-                  /--X'<--3'<--4'            <- repo_B/master
-                 /
- repo A:   1<---2<---a<---x<---c<---d<---E   <- master
-                     \
-                      \---x'<--c'
-                                \
-                                 \--5        <- repo_B/master
-
-(because 'X' is now incoming, it needs to be "bumped", therefore
-changing 3' and 4').
-
-The history without all this rewriting looks like this:
-
-                  /--X<---3<---4'            <- repo_B/master
-                 /=20=20=20=20=20=20=20=20=20=20=20
- repo A:   1<---2<---a<---x<---c<---d<---E   <- master
-                                \
-                                 \--5        <- repo_B/master
-
-Notice the difference?
-
->>    And you also break the assumptions that the same commits have
->> the same contents (including date) and the same ID in different
->> repositories (some of which may include additional branches, some of
->> which may have been part of network of related repositories, etc.).
-
-See repo A and repo B in above example.
-
-> Wait...unless I completely misunderstand the hash-chain model, doesn't the
-> hash of a commit depend on the hashes of its parents?  If that's the case,
-> commits cannot have portable hashes. If it's not, please correct me.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b620fd54b4..3aec95608f 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1670,7 +1670,7 @@ int cmd_fetch(int argc, const char **argv, const c=
+har *prefix)
 >
-> But if it's not, how does your first objection make sense?
-
-Hash of a commit depend in hashes of its parents (Merkle tree). That is
-why signing a commit (or a tag pointing to the commit) signs a whole
-history of a commit.
-
->>> You don't need a daemon now to write commits to a repository. You can
->>> just add stuff to the object store, and then later flip the SHA-1 on a
->>> reference, we lock those indivdiual references, but this sort of thing
->>> would require a global write lock. This would introduce huge concurrency
->>> caveats that are non-issues now.
->>>
->>> Dumb clients matter. Now you can e.g. have two libgit2 processes writing
->>> to ref A and B respectively in the same repo, and they never have to
->>> know about each other or care about IPC.
+>  	string_list_clear(&list, 0);
 >
-> How do they know they're not writing to the same ref?  What keeps
-> *that* operation atomic?
-
-Because different refs are stored in different files (at least for
-"live" refs that are stores in loose ref format).  The lock is taken on
-ref (to update ref and its reflog in sync), there is no need to take
-global lock on all refs.
-
->> You do realize that dates may not be monotonic (because of imperfections
->> in clock synchronization), thus the fact that the date is different from
->> parent does not mean that is different from ancestor.
+> -	close_all_packs(the_repository->objects);
+> +	close_object_store(the_repository->objects);
 >
-> Good point. That means the O(log2 n) version of the check has to be done
-> all the time.  Unfortunate.
+>  	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
 
-Especially with around 1 million of commits (Linux kernel, Chromium,
-AOSP), or even 3M commits (MS Windows repository).
+Again, a `git gc --auto` that needs closing of all read handles to the
+files that might be overwritten by the garbage collection.
 
->>>> That's the simple case. The complicated case is checking for date
->>>> collisions on *other* branches. But there are ways to make that fast,
->>>> too. There's a very obvious one involving a presort that is is O(log2
->>>> n) in the number of commits.
->>=20
->> I don't think performance hit you would get would be acceptable.
+Check.
+
+>  	if (verbosity < 0)
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index df2573f124..20c8f1bfe8 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -632,7 +632,7 @@ int cmd_gc(int argc, const char **argv, const char *=
+prefix)
+>  	gc_before_repack();
 >
-> Again, it's bad practice to assume rather than measure. Human intuitions
-> about this sort of thing are notoriously unreliable.
+>  	if (!repository_format_precious_objects) {
+> -		close_all_packs(the_repository->objects);
+> +		close_object_store(the_repository->objects);
+>  		if (run_command_v_opt(repack.argv, RUN_GIT_CMD))
 
-Techniques created to handle very large repositories (with respect to
-number of commits) that make it possible for Git to avoid parsing commit
-objects, namely bitmap index (for 'git fetch'/'clone') and serialized
-commit graph (for 'git log') lead to _significant_ performance
-improvements.
+Here, we want to repack. AFAICT it is the only sane thing we can do to
+invalidate whatever we read from the object store into memory.
 
-The performance changes from "waiting for Git to finish" to "done in the
-blink of eye" (well, almost).
+Check.
 
->>>> Excuse me, but your premise is incorrect.  A git DAG isn't just "any" =
-DAG.
->>>> The presence of timestamps makes a total ordering possible.
->>>>
->>>> (I was a theoretical mathematician in a former life. This is all very
->>>> familiar ground to me.)
->>=20
->> Maybe in theory, when all clock are synchronized.
+>  			die(FAILED_RUN, repack.argv[0]);
 >
-> My assertion does not depend on synchronized clocks, because it doesn't h=
-ave to.
+> @@ -660,7 +660,7 @@ int cmd_gc(int argc, const char **argv, const char *=
+prefix)
+>  	report_garbage =3D report_pack_garbage;
+>  	reprepare_packed_git(the_repository);
+>  	if (pack_garbage.nr > 0) {
+> -		close_all_packs(the_repository->objects);
+> +		close_object_store(the_repository->objects);
+>  		clean_pack_garbage();
+
+This wants to delete a number of files that are now obsolete, and it makes
+sense to make sure that there are no open read handles to those anymore.
+It is a bit unclear from just reading the code what types of files are
+accumulated into the `pack_garbage` string list, but then, we're in the
+last throngs of a garbage collection, and *just* about to write a new
+commit graph (if `gc.writeCommitGraph=3Dtrue`), so I think it is quite oka=
+y
+to close not only the packs here, but everything we opened from the object
+store.
+
+So I'd give this a check mark, too.
+
+>  	}
 >
-> If the timestamps in your repo are unique, there *is* a total ordering -=
-=20
-> by timestamp. What you don't get is guaranteed consistency with the
-> topo ordering - that is you get no guarantee that a child's timestamp
-> is greater than its parents'. That really would require a common
-> timebase.
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index e47d77baee..72d7a7c909 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -449,7 +449,7 @@ static void finish(struct commit *head_commit,
+>  			 * We ignore errors in 'gc --auto', since the
+>  			 * user should see them.
+>  			 */
+> -			close_all_packs(the_repository->objects);
+> +			close_object_store(the_repository->objects);
+>  			run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+
+Obviously yet another `git gc --auto`, so yes, we need to close the object
+store handles we have.
+
+Check.
+
+>  		}
+>  	}
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 7c7bc13e91..ed30fcd633 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -328,7 +328,7 @@ static int finish_rebase(struct rebase_options *opts=
+)
 >
-> But I don't need that stronger property, because the purpose of
-> totally ordering the repo is to guarantee the uniqueness of action
-> stamps.  For that, all I need is to be able to generate a unique cookie
-> for each commit that can be inserted in its action stamp.
+>  	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+>  	apply_autostash(opts);
+> -	close_all_packs(the_repository->objects);
+> +	close_object_store(the_repository->objects);
+>  	/*
+>  	 * We ignore errors in 'gc --auto', since the
+>  	 * user should see them.
 
-For cookie to be unique among all forks / clones of the same repository
-you need either centralized naming server, or for the cookie to be based
-on contents of the commit (i.e. be a hash function).
+Yet another `git gc --auto`.
 
->                                                          For my use cases
-> that cookie should *not* be a hash, because hashes always break N years
-> down.  It should be an eternally stable product of the commit metadata.
+Check.
 
-Well, the idea for SHA-1 <--> NewHash =3D=3D SHA-256 transition is to avoid
-having a flag day, and providing full interoperability between
-repositories and Git installations using the old hash ad using new
-hash^1.  This will be done internally by using SHA-1 <--> SHA-256
-mapping.  So after the transition all you need is to publish this
-mapping somewhere, be it with Internet Archive or Software Heritage.
-Problem solved.
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index d58b7750b6..92cd1f508c 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -2032,7 +2032,7 @@ int cmd_receive_pack(int argc, const char **argv, =
+const char *prefix)
+>  			proc.git_cmd =3D 1;
+>  			proc.argv =3D argv_gc_auto;
+>
+> -			close_all_packs(the_repository->objects);
+> +			close_object_store(the_repository->objects);
+>  			if (!start_command(&proc)) {
 
-P.S. Could you explain to me how one can use action stamp, e.g.
-<esr@thyrsus.com!2019-05-15T20:01:15.473209800Z>, to quickly find the
-commit it refers to?  With SHA-1 id you have either filesystem pathname
-or the index file for pack to find it _fast_.
+This `proc` refers to another `git gc --auto` (see a couple lines above,
+still within the hunk).
 
-Footnotes:
-----------
-1. That is why where would be no "major format break", thus no place for
-   incompatibile format changes.
+Check.
 
-Best,
---
-Jakub Nar=C4=99bski
+>  				if (use_sideband)
+>  					copy_to_sideband(proc.err, -1, NULL);
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 67f8978043..4de8b6600c 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -419,7 +419,7 @@ int cmd_repack(int argc, const char **argv, const ch=
+ar *prefix)
+>  	if (!names.nr && !po_args.quiet)
+>  		printf_ln(_("Nothing new to pack."));
+>
+> -	close_all_packs(the_repository->objects);
+> +	close_object_store(the_repository->objects);
+>
+>  	/*
+>  	 * Ok we have prepared all new packfiles.
+
+Ah, the joys of un-dynamic patch review. What you, dear reader, cannot see
+in this hunk is that the code comment at the end continues thusly:
+
+         * First see if there are packs of the same name and if so
+         * if we can move them out of the way (this can happen if we
+         * repacked immediately after packing fully.
+         */
+
+Meaning: we're about to rename some pack files. So the pack file handles
+need to be closed, all right, but what about the other object store
+handles? There is no mention of the commit graph (more on that below), but
+the loop following the code comment contains this:
+
+                        if (!midx_cleared) {
+                                clear_midx_file(the_repository);
+                                midx_cleared =3D 1;
+                        }
+
+So yes, I would give this a check.
+
+It does puzzle me, I have to admit, that there is no (opt-in) code block
+to re-write the commit graph. After all, the commit graph references the
+pack files, right? So if they are repacked, it would at least be
+invalidated at this point...
+
+> diff --git a/object.c b/object.c
+> index e81d47a79c..cf1a2b7086 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -517,7 +517,7 @@ void raw_object_store_clear(struct raw_object_store =
+*o)
+>  	o->loaded_alternates =3D 0;
+>
+>  	INIT_LIST_HEAD(&o->packed_git_mru);
+> -	close_all_packs(o);
+> +	close_object_store(o);
+
+We're in the middle of a function called `raw_object_store_clear()`. So...
+
+Check.
+
+>  	o->packed_git =3D NULL;
+>  }
+>
+> diff --git a/packfile.c b/packfile.c
+> index ce12bffe3e..017046fcf9 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -337,7 +337,7 @@ void close_pack(struct packed_git *p)
+>  	close_pack_index(p);
+>  }
+>
+> -void close_all_packs(struct raw_object_store *o)
+> +void close_object_store(struct raw_object_store *o)
+>  {
+>  	struct packed_git *p;
+>
+> diff --git a/packfile.h b/packfile.h
+> index d70c6d9afb..e95e389eb8 100644
+> --- a/packfile.h
+> +++ b/packfile.h
+> @@ -81,7 +81,7 @@ extern uint32_t get_pack_fanout(struct packed_git *p, =
+uint32_t value);
+>  extern unsigned char *use_pack(struct packed_git *, struct pack_window =
+**, off_t, unsigned long *);
+>  extern void close_pack_windows(struct packed_git *);
+>  extern void close_pack(struct packed_git *);
+> -extern void close_all_packs(struct raw_object_store *o);
+> +extern void close_object_store(struct raw_object_store *o);
+>  extern void unuse_pack(struct pack_window **);
+>  extern void clear_delta_base_cache(void);
+>  extern struct packed_git *add_packed_git(const char *path, size_t path_=
+len, int local);
+> --
+> gitgitgadget
+
+And this concludes my review.
+
+Thank you!
+Dscho
