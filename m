@@ -2,75 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 725BF1F462
-	for <e@80x24.org>; Mon, 20 May 2019 18:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C51F81F462
+	for <e@80x24.org>; Mon, 20 May 2019 19:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbfETSt2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 14:49:28 -0400
-Received: from siwi.pair.com ([209.68.5.199]:43099 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725536AbfETSt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 14:49:28 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 0C0323F4088;
-        Mon, 20 May 2019 14:49:28 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:995c:4aa3:4774:bbd8] (unknown [IPv6:2001:4898:a800:1012:4a90:4aa3:4774:bbd8])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 86FB23F404C;
-        Mon, 20 May 2019 14:49:27 -0400 (EDT)
-Subject: Re: I made a flame graph renderer for git's trace2 output
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <87zhnuwdkp.fsf@evledraar.gmail.com>
- <8794fd2e-6256-3238-6d87-2e726d4a91fa@gmail.com>
- <20190510170014.GQ14763@szeder.dev>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <0c3e48e0-ef87-39c2-a984-ba7deede0651@jeffhostetler.com>
-Date:   Mon, 20 May 2019 14:49:26 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726584AbfETTGT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 15:06:19 -0400
+Received: from mail-io1-f48.google.com ([209.85.166.48]:40931 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725536AbfETTGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 15:06:19 -0400
+Received: by mail-io1-f48.google.com with SMTP id s20so11915414ioj.7
+        for <git@vger.kernel.org>; Mon, 20 May 2019 12:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QzZE9jFbHqOGJKb7odntY6nSTCezqxIRWPNodlHk2xo=;
+        b=CBIza3B1gqmWZ19UAfEjcgM1l7DpiemU8uY4yUS22ENov5JFyxsZ3CBksQYSdxP3fY
+         4MFg3eevc5IWAbIwbrAOTsswjBFfaH+0BBTcnQ4ayVDU2zVvSEi13iL0Kq0aduCc2Yfx
+         8yaK18JSItLIa8GLI1v1J02rpFGUD0P+y6PhlUWVLWCXiWnDA75F28HRHyXjh+Ie+c9g
+         y5E6zVLvOHr6qieIMlH4FERkw3WmsRIfzaMZYZIMv5mPCzNGPFzy5hkzMSmS/e6bYCxX
+         o4GrOZxuj85UcljKrEOIzz1c1mcYUR6cFb7e9syLlshs4GYo5nJclkGkWQZAsWh7LnUY
+         o7+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QzZE9jFbHqOGJKb7odntY6nSTCezqxIRWPNodlHk2xo=;
+        b=K44lKHDY8h77BR1qJFO/gdWxXYuubPzFTRGrfWEjWB6f+fG4XviUG3yPRN9eRgEbdP
+         Wv58p528v1cn24fNQwl7vamC9ubnwETKGui99tZ3wHK77Ts7nMtOp2YldgxhdTmIo5mZ
+         O+P1lmMQMkqoGSiujuVY0oxrwD2nDh1Q4ZFfUWoPZohn0itEBH9VeG8s8ijT1Oe6kuKC
+         Nr8mhYElQcuM+9I0/jplQRuQ+y+A2mEt+6otVmmBQvol4+6539skpqVKgo4YLPLhzXGd
+         OGLLQvnugBO3Vohd8M24B3PqHT92NEhVBgt1EyxWbenX9dqwxOk7XLBe7vGN+zJ4o3Kv
+         YMwg==
+X-Gm-Message-State: APjAAAWteu2NA4MO+EVnUH2Z59+G7jQrUDWkXO9/rtbQz3S8oWeP45H0
+        7ADvlCo7rJo3xixxhvccrhi40EAOqWL93LoIcROIoPk/hrU=
+X-Google-Smtp-Source: APXvYqyloS6ZKCQ4Ac7ONK15oKaup7o7Pm35bkJPFMluGEfbd0oRHuQupykbysUKED2G5Ua3l/KlU8Pq4nc9KSYrIY4=
+X-Received: by 2002:a05:6602:95:: with SMTP id h21mr20536731iob.109.1558379178175;
+ Mon, 20 May 2019 12:06:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190510170014.GQ14763@szeder.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Mon, 20 May 2019 12:06:07 -0700
+Message-ID: <CAGyf7-F-d-n39fJmjYc_2rjqQa4d7PFCx63LwW3m7PFetEgzEw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.22.0-rc1
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, May 19, 2019 at 10:00 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>  * The diff machinery, one of the oldest parts of the system, which
+>    long predates the parse-options API, uses fairly long and complex
+>    handcrafted option parser.  This is being rewritten to use the
+>    parse-options API.
 
+It looks like with these changes it's no longer possible to use "-U"
+(or, I'd assume, "--unified") without adding an explicit number for
+context lines.
 
-On 5/10/2019 1:00 PM, SZEDER Gábor wrote:
-> On Fri, May 10, 2019 at 12:38:52PM -0400, Derrick Stolee wrote:
->> export GIT_TR2_EVENT=~/git-tr2-event.txt
-> 
-> Hrm,  better late than never, or at least better late than after it's
-> in a release...
-> 
-> Why does an environment variable that is supposed to be set by users
-> have this "TR2" abbreviation in its prefix?  What exactly, if
-> anything, did we gain by omitting "ACE" and not calling it
-> "GIT_TRACE2_..."?
-> 
-> Ken Thompson springs to mind, who (allegedly?) later regretted
-> spelling creat()/O_CREAT without the 'e'...
-> 
+Was it not intended that a user could pass "-U" to explicitly say "I
+want a unified diff with the default number of context lines"? Because
+it's always worked that way, as far as I can tell (certainly since
+early 1.7.x releases). Is it possible, with the new parse-options
+code, to restore that behavior? Removing that is likely to be a pretty
+big disruption for Bitbucket Server, which has always explicitly
+passed "-U" to "git diff". If the community wants to move forward with
+the change, I understand. I'm not trying to roadblock it; I'm just
+listing an explicit example of something that will be significantly
+affected by the change. Perhaps Git 2.22 could emit a warning about
+the change in behavior and then a subsequent version could turn it
+into an error, to give us (and anyone else relying on this behavior)
+more time to make adjustments?
 
-For closure here on this thread.  I chose TR2 rather than TRACE2
-somewhat at random for convenience during testing.  Changing is fine
-as you suggest in your other patch series.
+I'm aware a unified diff is the default output, but many commands have
+flags that essentially tell Git to do what it would do by default.
+That can help counter changes in the default, as well as safeguarding
+against new config options that allow specifying a different default
+(as it were). For example, "git diff" has "--no-color", which could
+override configuration and essentially applied the default
+behavior--until the default configuration was changed in 1.8.4 from
+"never" to "auto". By using "--no-color", even though we didn't "need"
+to, we were protected against that change in the default.
 
-Thanks
-Jeff
+Best regards,
+Bryan Turner
