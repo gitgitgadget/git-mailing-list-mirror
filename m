@@ -2,108 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29D5B1F462
-	for <e@80x24.org>; Mon, 20 May 2019 21:53:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F3FA1F462
+	for <e@80x24.org>; Mon, 20 May 2019 22:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726955AbfETVxb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 17:53:31 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43412 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfETVx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 17:53:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r4so16198643wro.10
-        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:28 -0700 (PDT)
+        id S1726107AbfETW1X (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 18:27:23 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37375 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbfETW1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 18:27:23 -0400
+Received: by mail-ed1-f67.google.com with SMTP id w37so26136299edw.4;
+        Mon, 20 May 2019 15:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rc6ypPd/1pcy07wnydsn0f/YwNrE/zJObGpMETKsD5c=;
-        b=fJQz2eesGvch0GcOFbNN0yLD/IDTEWTPD2vVqNVhSK2gNQtdXJcO0aHNEocnjsncT0
-         tqipI/vEFKJjlnqz8F5/IMx5JmgFA2aLbhcJej9tGdRB+XKATxP5BqsbaYN8EbHpR3ip
-         r2HZ0ooPE7YJGpkv8o5Wc0/09wv64HlEC5EU65DkvZ6LdS36QAt2wULojilZSEmaKplV
-         deBGqN/FMM5r3sN9se2yGE5GDFajWqJMQrewzkXvfB+3eSXIkAoHCVYuWYdBGeXu7jY/
-         O2wLqxqMjmLDmnwkZMHiw+moOgkjGVIxQGXC/3dh5V8jTtYUhSEMBlx4rlqR2rlySuTX
-         FtXw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=uXf03ubmTcfI0eT3gMSdVF3rfDP/ceSBVPh5QTAx1DQ=;
+        b=e7MVjWec7GQw3w2k9lvFzirVq2tq/HIjKWCqbw8Rni9lUQ9jGjussUrzeAsl7Ib2jG
+         0snkUptiGx3SZh14M9GSA8uY49tKqgVf02iYSWYpNDFBBi4gDEWzpi+5kUM/Xr7l54aw
+         sz6PoRqr+7fY/dwVvMps3nrlZUtupZDfh+9LEwxe4ZCLg6E3dWoa+yENoeK0QOzW/HS4
+         G2wyuX8DivG07NCWQmbfOtXkWKu5inMTT+i9RRVLoP9OF8lfs1lf0MXNhcttX7PVvUP+
+         aZu1G4DO+wRxM544gMI/HGawJJ41gJG6DVugX9f4nS9mtOyYh31XyIa3T5itOHVTWDZ2
+         yK9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rc6ypPd/1pcy07wnydsn0f/YwNrE/zJObGpMETKsD5c=;
-        b=o4OxUqnIrAyG84ONgeyht2/3GA+GA+OXPHLNi3MFHMow7u1d9zZMJwaa3XYc/lB2JR
-         zta0tBEMn9MwcTFDN+7pWJkugKc1AhR84Yogn4tkX04Z+fgFmyF1CpRuppZb3yaEY9Fu
-         AnWDViLuPTQWZ0dJMm14wbXUgQEjrnxPPbq+QnobqeD+5znqSQDbVMIfddNLNTVLK1qp
-         t9xfb9IX4RZPFT3GR7DOqVd6hZIesbp2G2pj1BvtjUBMURPCuZOhWnnIVrO2TwrzEdyd
-         0swFHAnbXtXInPLlZxP68YJXjhJ+RrIJcaw4qXaVlvw4cy60mpfpFy4GuAj6B1inU3+5
-         gjXQ==
-X-Gm-Message-State: APjAAAWEyfbSXmzUmTV6jXgegqn03KymgGBh0ySm3Gu1kk8Tjohpn0HS
-        9wn9lrq1RVs3WI1CZr8CbTVl7yzP
-X-Google-Smtp-Source: APXvYqwtwBqNhDBYjXC5BblB35MNdv93H9J6D6SXlgIk5x4T8Km/yI1jqAngOYyKnsHRncFcDejErA==
-X-Received: by 2002:adf:e74b:: with SMTP id c11mr46209277wrn.172.1558389207614;
-        Mon, 20 May 2019 14:53:27 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.26
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 20 May 2019 14:53:26 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Adam Roben <aroben@apple.com>,
-        Bryan Larsen <bryan.larsen@gmail.com>,
-        Matthias Urlichs <smurf@smurf.noris.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] hash-object doc: point to ls-files and rev-parse
-Date:   Mon, 20 May 2019 23:53:12 +0200
-Message-Id: <20190520215312.10363-4-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
-In-Reply-To: <20190520215312.10363-1-avarab@gmail.com>
-References: <20190520215312.10363-1-avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=uXf03ubmTcfI0eT3gMSdVF3rfDP/ceSBVPh5QTAx1DQ=;
+        b=hn/Rwa11WliLAJFOXLvTVhq7zM1ILAG5HZk0g4pi06mvCILrnhMyyxrxJ7U+Hgi2Nu
+         O29zt/SLYgDSS//m8U66iFjJTqaSpPjcRWlJtRg7wPJafXR3N6BSKuvLeUVqZtl1A+Th
+         muLrBdA/CuCB4RYSeYoI6cSBLpEDPTpkOhmKkVkJb6p0ctb/uRQkebn3gKPUyIpBdvO7
+         PD5Ev0YPIGygEXyz4H7/qYyE6bDLl/PaR9pm5djB3EbOxuMv2/PmeapdYTDYefd/SM/M
+         gEkXDqBLhqThY4t0FKVQybh3CdmyMGaBkRv6wpdZjQhtSCV1JbI6rwsnGhUDHOd2mcQb
+         QxGA==
+X-Gm-Message-State: APjAAAUWsKOaocUK+xXvgsQmzAdnnAjnvm3KSDa+xztd6vKKj82M6Arg
+        9DqTScZkfRCyyjqiOax/Ht8=
+X-Google-Smtp-Source: APXvYqxE5kQa5f85xphHorZ7AZrJ3JYn74K3s3Pd5eGU89k0m+jz+/6e1CTbfdrtRC9XKKO+BVfi6g==
+X-Received: by 2002:a50:a535:: with SMTP id y50mr78577263edb.249.1558391241195;
+        Mon, 20 May 2019 15:27:21 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id g11sm5835232eda.42.2019.05.20.15.27.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 May 2019 15:27:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.22.0-rc1
+References: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com> <CAGyf7-F-d-n39fJmjYc_2rjqQa4d7PFCx63LwW3m7PFetEgzEw@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CAGyf7-F-d-n39fJmjYc_2rjqQa4d7PFCx63LwW3m7PFetEgzEw@mail.gmail.com>
+Date:   Tue, 21 May 2019 00:27:19 +0200
+Message-ID: <87ef4svk1k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the intro to note that it's better to ask the index about files
-already tracked by it.
 
-I've seen uses of this in the wild where the use-case was finding
-object IDs for files found in a freshly cloned repo, i.e. something
-like "git ls-files | git hash-object --stdin-paths".
+On Mon, May 20 2019, Bryan Turner wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/git-hash-object.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+> On Sun, May 19, 2019 at 10:00 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>  * The diff machinery, one of the oldest parts of the system, which
+>>    long predates the parse-options API, uses fairly long and complex
+>>    handcrafted option parser.  This is being rewritten to use the
+>>    parse-options API.
+>
+> It looks like with these changes it's no longer possible to use "-U"
+> (or, I'd assume, "--unified") without adding an explicit number for
+> context lines.
+>
+> Was it not intended that a user could pass "-U" to explicitly say "I
+> want a unified diff with the default number of context lines"? Because
+> it's always worked that way, as far as I can tell (certainly since
+> early 1.7.x releases). Is it possible, with the new parse-options
+> code, to restore that behavior? Removing that is likely to be a pretty
+> big disruption for Bitbucket Server, which has always explicitly
+> passed "-U" to "git diff". If the community wants to move forward with
+> the change, I understand. I'm not trying to roadblock it; I'm just
+> listing an explicit example of something that will be significantly
+> affected by the change. Perhaps Git 2.22 could emit a warning about
+> the change in behavior and then a subsequent version could turn it
+> into an error, to give us (and anyone else relying on this behavior)
+> more time to make adjustments?
+>
+> I'm aware a unified diff is the default output, but many commands have
+> flags that essentially tell Git to do what it would do by default.
+> That can help counter changes in the default, as well as safeguarding
+> against new config options that allow specifying a different default
+> (as it were). For example, "git diff" has "--no-color", which could
+> override configuration and essentially applied the default
+> behavior--until the default configuration was changed in 1.8.4 from
+> "never" to "auto". By using "--no-color", even though we didn't "need"
+> to, we were protected against that change in the default.
 
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index 100630d021..077d83ec65 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -20,6 +20,13 @@ work tree), and optionally writes the resulting object into the
- object database.  Reports its object ID to its standard output.
- When <type> is not specified, it defaults to "blob".
- 
-+This command won't take the shortcut of seeing if the path(s) to be
-+hashed are present in the index, in which case their already computed
-+object ID could be retrieved by linkgit:git-ls-files[1] via the
-+`--stage` option, or by linkgit:git-rev-parse[1]. Use those instead of
-+e.g. `--stdin-paths` if the intent is to say find the blob object IDs
-+of checked-out files.
-+
- OPTIONS
- -------
- 
--- 
-2.21.0.1020.gf2820cf01a
+I don't know if argument-less -U was ever intended, but I think in light
+of what you're saying we should consider it a regression to fix before
+2.22.0 is out. CC-ing Duy who wrote d473e2e0e8 ("diff.c: convert
+-U|--unified", 2019-01-27).
 
+The bug there is that the old opt_arg() code would be torelant to empty
+values. I noticed a similar change the other day with the --abbrev
+option, but didn't think it was worth noting. Maybe it's a more general
+problem, in both cases we had a blindspot in our tests.
