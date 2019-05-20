@@ -2,106 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDB061F461
-	for <e@80x24.org>; Mon, 20 May 2019 11:28:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A696B1F461
+	for <e@80x24.org>; Mon, 20 May 2019 11:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732549AbfETL2W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 07:28:22 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46835 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732468AbfETL2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 07:28:22 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r7so14128641wrr.13
-        for <git@vger.kernel.org>; Mon, 20 May 2019 04:28:21 -0700 (PDT)
+        id S1732100AbfETLzM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 07:55:12 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:40970 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731486AbfETLzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 07:55:12 -0400
+Received: by mail-qk1-f195.google.com with SMTP id g190so8572379qkf.8
+        for <git@vger.kernel.org>; Mon, 20 May 2019 04:55:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sBcdSJR/zr7fTF0HYeIUmY4k5t+A54l023rayJjXUP0=;
+        b=kHvWQUOKCFukJeZGYpsuo10Zbc1Z9vq7CpMRTElbbMhBHLatmpQgehTNBkDUfRUayX
+         5abZVfexOD2yPUBgkLJVjyj/8Rmwn3XqegwRNtQpGh9ycpVQgRR7dDNvC1k+225quuka
+         97ncNGLLS7C4QoYeYHA82os5j3B6wCDzytzDcZpaTt/HRTITq00crsdrKbUl0dcfEoT4
+         VlW30ruLB43vkgx9DhFkEN+2LCe+LH6p8OjMCwIo0ZFPydCVcDE9H0379mZkwkpHDqbe
+         BzayL+YYfXYDGRCH7DKl1BFNyMW5cF7axeAIXJONXkuriNq2wFA+xFzTaR7zzZ3Lru9H
+         eNdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xTk/kk/k8oLK/KIGNrCpBgib/GgDn2VEqZEu42ls5R8=;
-        b=MGh8waiyz02fpI5z26EkoT6WU7pejtFRek8CHyehhztpWzigZn2vAzVlSIK4GrWhp1
-         WWQdqLQtg0AvEjWpLH/8b8g5tKNsLzrzvM1qyzxkKCzcRKOXUe3DkBTcQAPB6i2zmB9x
-         cJVgJJnR1fEF4pJxMwo5YbAT6uYxjnZZrx+EQfcMqRyA8IqHkbkYb3qL7u4qWaeY+fy8
-         l/k68haOWzXHhUSv8dIh4e/rzc/s7ANWl/vunKczKByTr9H6lpijIwnxY+Zc/U5mk0iO
-         TgDhSBiztZXF1xPiIZy1r1WnvsZmQl47o35ApKUrzvx43WQkvyCe19bnI6Kyd99RimmA
-         CVMw==
-X-Gm-Message-State: APjAAAXeNYIVEiEP/RZeyfGcEBhmtWAjkRFsJEeTY8KjmLxptIEao4YX
-        2vQ+Ys1mA6zqxOKr3v5c6H7ACOmJLB+c+2dHvIA=
-X-Google-Smtp-Source: APXvYqyIKF1FzVsAzhE5BkxhgE334jtNucwQM+9V6ZxSvIlBJovojFqHPVBcZuLWxVMaL43sQQWpi97jQ26YOEn5bWE=
-X-Received: by 2002:adf:e902:: with SMTP id f2mr45270847wrm.301.1558351700541;
- Mon, 20 May 2019 04:28:20 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sBcdSJR/zr7fTF0HYeIUmY4k5t+A54l023rayJjXUP0=;
+        b=s9DhWBvMETVsvQ2xp54cSg8vkHOtWz/69I+DFXjwRC7qCIidPwRkXt+E8V7aEG3HKD
+         mXbuLFk8c0X9FRWCJCFUkM7p8MJD8BBgw63Rvp+tVO0I4ySAE465TKHsh+v9kU5RTHpf
+         X6GV/SxFuGsdmFY5w4eKSQxOp8SVMdirRFYf3v0YzhEb2jDphdtPxELzz0wdKHMw6JuD
+         NR9ygDoruNQzyu2yZLE9EurW4FjepCT+3lMlBFTgoo60n2TN8g5dEJN62oW8upAP1lau
+         hCcEa/TYM1s4MqKcqLfXNEx0mlo0ZnlqgKlwuEbRm6dYtW752l+mhNBJOquo7OZgNl+u
+         sKeA==
+X-Gm-Message-State: APjAAAU8XCBZSn+8UCcfTbsoTHDq+UumGxEqHA7q/c6JE7d2QKW1roqP
+        +zbkrFihMQZu+wpvy94TNDs=
+X-Google-Smtp-Source: APXvYqxCULT3u61uRUs/U4+Fts9voy/tAOpqZkj17UqvFN26WMJjYshkEo4sLIM8/KIccmJAzWCkjw==
+X-Received: by 2002:a37:34b:: with SMTP id 72mr57937342qkd.42.1558353311728;
+        Mon, 20 May 2019 04:55:11 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:8824:a533:8b:9681? ([2001:4898:a800:1012:3958:a533:8b:9681])
+        by smtp.gmail.com with ESMTPSA id x127sm6870303qka.31.2019.05.20.04.55.10
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 May 2019 04:55:10 -0700 (PDT)
+Subject: Re: [PATCH 3/3] packfile: close_all_packs to close_object_store
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.208.git.gitgitgadget@gmail.com>
+ <0e948f639fb5209f07f8e3eb356b5886c41ff2be.1558118506.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1905201141000.46@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0c13a91f-e45e-d177-758a-30e9517a664f@gmail.com>
+Date:   Mon, 20 May 2019 07:55:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-References: <20190519050724.GA26179@sigill.intra.peff.net> <20190519051604.GC19434@sigill.intra.peff.net>
-In-Reply-To: <20190519051604.GC19434@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 May 2019 07:28:08 -0400
-Message-ID: <CAPig+cTkjJjuyrDOUh92B16an+wy9OnZgyKY0-bihWnzyWsoKg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] clone: auto-enable git-credential-store when necessary
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Martin Langhoff <martin.langhoff@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1905201141000.46@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 19, 2019 at 2:42 PM Jeff King <peff@peff.net> wrote:
-> If the user clones with a URL containing a password and has no
-> credential helper configured, we're stuck. We don't want to write the
-> password into .git/config because that risks accidentally disclosing it.
-> But if we don't record it somewhere, subsequent fetches will fail unless
-> the user is there to input the password.
->
-> But we can actually go a step further and enable the "store" helper for
-> them. [...]
->
-> The biggest downside is that it's a bit magical from the user's
-> perspective, because now the password is off in some other file (usually
-> ~/.git-credentials, but sometimes in $XDG_CONFIG_HOME). Which
-> complicates things if they want to purge the repo and password, for
-> example, because now they can't just delete the repository directory.
->
-> The file location is documented, though, and we point people to the
-> documentation. So perhaps it will be enough (and better still, may lead
-> to them configuring a more secure helper).
+On 5/20/2019 6:01 AM, Johannes Schindelin wrote:
+> Hi Stolee,
+> 
+> *really* minor nit: the commit subject probably wants to have a "rename"
+> after the colon ;-)
 
-I'm trying to decide how I feel about this based upon my own
-experience recently of having my password magically stored by Git for
-Windows without warning or consent on a computer which was not my own
-but on which I needed to access a private GitHub repository. Although
-the situation is not perfectly analogous, the concern of having one's
-password magically squirreled-away _somewhere_ unexpectedly is the
-same. Being unfamiliar with Git for Windows's credential helper or
-Windows credential management in general, I experienced more than a
-few minutes of consternation and alarm before finally figuring out
-where Git for Windows had stored my password and how to remove it. The
-sense of alarm and discomfort likely would have not arisen had the
-credential helper given me the opportunity to approve or deny the
-action.
+I did put that there, but then the subject line was too long. I'm not
+opposed to putting it back.
+ 
+> The patch looks sensible to me. Since Junio asked for a sanity check
+> whether all of the call sites of `close_all_packs()` actually want to
+> close the MIDX and the commit graph, too, I'll do the "speak out loud"
+> type of patch review here (spoiler: all of them check out):
 
->  static const char sanitized_url_advice[] = N_(
->  "The URL you provided to Git contains a password. It will be\n"
->  "used to clone the repository, but to avoid accidental disclosure\n"
-> +"the password will not be recorded in the repository config.\n"
-> +"Since you have no credential helper configured, the \"store\" helper\n"
-> +"has been enabled for this repository, and will provide the password\n"
-> +"for further fetches.\n"
-> +"\n"
-> +"Note that the password is still stored in plaintext in the filesystem;\n"
-> +"consider configuring a more secure helper. See \"git help gitcredentials\"\n"
-> +"and \"git help git-credential-store\" for details.\n"
->  );
+Thanks for the detail here!
 
-Give the above experience, one way to mitigate such feelings of alarm
-might, at a minimum, be for this message to say where the password is
-being stored (and, possibly, how to remove it) so the user can do so
-immediately if desired. Prompting the user to approve or deny the
-action might also go a long way toward making this more palatable
-(assuming the session is interactive).
+>> diff --git a/builtin/repack.c b/builtin/repack.c
+>> index 67f8978043..4de8b6600c 100644
+>> --- a/builtin/repack.c
+>> +++ b/builtin/repack.c
+>> @@ -419,7 +419,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>>  	if (!names.nr && !po_args.quiet)
+>>  		printf_ln(_("Nothing new to pack."));
+>>
+>> -	close_all_packs(the_repository->objects);
+>> +	close_object_store(the_repository->objects);
+>>
+>>  	/*
+>>  	 * Ok we have prepared all new packfiles.
+> 
+> Ah, the joys of un-dynamic patch review. What you, dear reader, cannot see
+> in this hunk is that the code comment at the end continues thusly:
+> 
+>          * First see if there are packs of the same name and if so
+>          * if we can move them out of the way (this can happen if we
+>          * repacked immediately after packing fully.
+>          */
+> 
+> Meaning: we're about to rename some pack files. So the pack file handles
+> need to be closed, all right, but what about the other object store
+> handles? There is no mention of the commit graph (more on that below), but
+> the loop following the code comment contains this:
+> 
+>                         if (!midx_cleared) {
+>                                 clear_midx_file(the_repository);
+>                                 midx_cleared = 1;
+>                         }
+> 
+> So yes, I would give this a check.
+> 
+> It does puzzle me, I have to admit, that there is no (opt-in) code block
+> to re-write the commit graph. After all, the commit graph references the
+> pack files, right? So if they are repacked, it would at least be
+> invalidated at this point...
+
+The commit-graph does not directly reference the packs. The file will still be
+valid, except if we GC'd some commits that it references. We have the ability
+to rewrite the graph in 'git gc'.
+
+The MIDX does reference packs by name, so it needs to be cleared before we delete
+packs. This _could_ be done with more care: we only need to delete it if a pack
+it references is queued for deletion. However, you can do that using the
+'git multi-pack-index expire|repack' pattern currently cooking.
+
+Thanks,
+-Stolee
+
