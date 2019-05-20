@@ -2,111 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46F421F462
-	for <e@80x24.org>; Mon, 20 May 2019 16:15:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224071F462
+	for <e@80x24.org>; Mon, 20 May 2019 16:36:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392552AbfETQO7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 12:14:59 -0400
-Received: from mout.web.de ([212.227.15.14]:37241 "EHLO mout.web.de"
+        id S2389142AbfETQg0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 12:36:26 -0400
+Received: from thyrsus.com ([71.162.243.5]:50362 "EHLO snark.thyrsus.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733050AbfETQO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 12:14:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1558368891;
-        bh=eZ0Ihyd2/Gjwk1+unaZvdozkMR0TiDwOO9LwRYnuR3k=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Tfd+olQdmx2j7oBdVxDk6PFCLwGUdTYuwlWcFbtQ2lp81JQT4xoguvZQAFtj3YaF6
-         zUSuVHOchKgQ9buhHYf6R5M0YF7YSczzIEi8kVOGjuD1Xp8s2vbYmVUvIIl3xSYxmW
-         zxx+PTDcKrfYkJTqu4dXUDRnK6iZOXrHqYb5/jws=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.24.192]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MC6ZE-1hJzUh1Se8-008qCe; Mon, 20
- May 2019 18:14:51 +0200
-Subject: Re: [PATCH 1/3] transport_anonymize_url(): support retaining username
-To:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Martin Langhoff <martin.langhoff@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20190519050724.GA26179@sigill.intra.peff.net>
- <20190519051031.GA19434@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <29276251-0dd4-d22c-4479-7de52efc35b2@web.de>
-Date:   Mon, 20 May 2019 18:14:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1731223AbfETQg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 12:36:26 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+        id 95F91470485F; Mon, 20 May 2019 12:36:25 -0400 (EDT)
+Date:   Mon, 20 May 2019 12:36:25 -0400
+From:   "Eric S. Raymond" <esr@thyrsus.com>
+To:     Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+Cc:     Derrick Stolee <stolee@gmail.com>, Jason Pyeron <jpyeron@pdinc.us>,
+        git@vger.kernel.org
+Subject: Re: Finer timestamps and serialization in git
+Message-ID: <20190520163625.GA99397@thyrsus.com>
+Reply-To: esr@thyrsus.com
+References: <20190515191605.21D394703049@snark.thyrsus.com>
+ <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
+ <023b01d50b5c$cbd3cd90$637b68b0$@pdinc.us>
+ <998895a9-cfbb-c458-cc88-fa1aabed4389@gmail.com>
+ <20190516002831.GC124956@thyrsus.com>
+ <3b8d6a78-bd88-770c-e79b-d732f7e277fd@gmail.com>
+ <20190520170518.73ad912b@kitsune.suse.cz>
 MIME-Version: 1.0
-In-Reply-To: <20190519051031.GA19434@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:IbE7Rd1ycICbgLDxCj2DO0/L84Sn19LPGlwEhrXIzBhVdJ8iCr3
- gIRxjFTDHT9KPFoOH8+5jcIe4BNhxhUT7FIfDAX9Gi2tlgQhQsbLoLG3MDh5FVgC1ev9uJu
- wuEBj9umXe2bsRdZyUrkVu973pSjxXHw9bzZOUEfqhCpoSDE4u0QR+dmx2ATH0bMItkYcLG
- tigOJSwFu8h1Aa/dZfC3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MqnXGuzeAFY=:ZYcAZtk+REV3lrkeqhuC1k
- HCM2G5pRWbsjledqb/9Cr7iEZEcj/Z2l3zA47EyhLs55X1fpeJn4MbDhGooxLPlG/oeS9ejfz
- 8GZPKGCGqbabfxhFzO0Dnz4GFrvt7vYnN7VCZ0TXFz5njjtzHgwe5+rtBIIzApSNgv3olJyaw
- 0EzjLh9QJyDa2OoAzKd9cNn+av3uOG86bLMPCOk1vM4q+CMfu0lSMYRURLuYyPz21MyyYh15W
- V5nXhJDkriaQ1xaLAlFv8ywlJtmD/6HYP6fjxcZj6kOUOO1hKBuut5IAcl7vApRPSwyEgUvdk
- 2qBABaDs039VV18CMLCKgkgajm4kXlf7ZqU9EComYT4UJFLLMS/w71+rtDLeo5wDOI/bPiuMz
- K8Ivqv+2oZ8rQs5a4BP9S+2HnjquQSF9Lp+cdwe09ikqyOpoaYbzc4XTxOCHmv2CrTV1k2MpL
- 0uXZIfRCIOPcmhh7/Xmh2yQIdnwXOYA9nh1L0MK0IA9zBdaJHz/Q8Ty3i/ueTXnEiDBibzbve
- 8N2IYVMgstke6b5N7UncQYEPjA+ykxDa49igL2lQ8gzenT8f0POs32zdoeQY8LtIG5Cs6Tol3
- 2xg4k0e9BwZzOg3m3LeGEW7/w77j0FJ6IDGXFlwLXa/Xz6sQVPueEhJXM1PYBxfVZZq+8/WpX
- F9P8chMgEXmlApQc2T0XuNe7CF2zQuPuGAgp4Gn/DqqGdyQDDgtMFC17lrA89ElBQ9DOg/UsK
- tqqMleWyHSaXxq5nL/xMeAtk2kYKwvc25ehSePBycE5KfuzGCchVJxlu7A/VmDCcbmHK6FUj+
- ynhSXi40o3epy34R8AO4EnkOnb/tWXovUm1swyw6Ky9lVy6sLMj470zwIuKu7EejgTsDsysON
- bLDt7rfVVXqSD5Gft4sUxoRpeh6ATgxCinHhq2P+S9O4Jt1/jMMjhDCjm1m2PK9S8pHeR2+dD
- xcMnrHrWElfoR78avwuVGdz7UngRK2/Y=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190520170518.73ad912b@kitsune.suse.cz>
+Organization: Eric Conspiracy Secret Labs
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.05.19 um 07:10 schrieb Jeff King:
-> diff --git a/transport.c b/transport.c
-> index f1fcd2c4b0..ba61e57295 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1373,7 +1372,15 @@ char *transport_anonymize_url(const char *url)
->  		cp = strchr(scheme_prefix + 3, '/');
->  		if (cp && cp < anon_part)
->  			goto literal_copy;
-> -		prefix_len = scheme_prefix - url + 3;
-> +
-> +		if (strip_user)
-> +			prefix_len = scheme_prefix - url + 3;
-> +		else {
-> +			cp = strchr(scheme_prefix + 3, ':');
-> +			if (cp && cp > anon_part)
+Michal Suchánek <msuchanek@suse.de>:
+> On Wed, 15 May 2019 21:25:46 -0400
+> Derrick Stolee <stolee@gmail.com> wrote:
+> 
+> > On 5/15/2019 8:28 PM, Eric S. Raymond wrote:
+> > > Derrick Stolee <stolee@gmail.com>:  
+> > >> What problem are you trying to solve where commit date is important?  
+> 
+> > > B. Unique canonical form of import-stream representation.
+> > > 
+> > > Reposurgeon is a very complex piece of software with subtle failure
+> > > modes.  I have a strong need to be able to regression-test its
+> > > operation.  Right now there are important cases in which I can't do
+> > > that because (a) the order in which it writes commits and (b) how it
+> > > colors branches, are both phase-of-moon dependent.  That is, the
+> > > algorithms may be deterministic but they're not documented and seem to
+> > > be dependent on variables that are hidden from me.
+> > > 
+> > > Before import streams can have a canonical output order without hidden
+> > > variables (e.g. depending only on visible metadata) in practice, that
+> > > needs to be possible in principle. I've thought about this a lot and
+> > > not only are unique commit timestamps the most natural way to make
+> > > it possible, they're the only way conistent with the reality that
+> > > commit comments may be altered for various good reasons during
+> > > repository translation.  
+> > 
+> > If you are trying to debug or test something, why don't you serialize
+> > the input you are using for your test?
+> 
+> And that's the problem. Serialization of a git repository is not stable
+> because there is no total ordering on commits. And for testing you need
+> to serialize some 'before' and 'after' state and they can be totally
+> different. Not because the repository state is totally different but
+> because the serialization of the state is not stable.
 
-Don't you mean this?
+Yes, msuchanek is right - that is exactly the problem.  Very well put.
 
-			if (!cp || cp > anon_part)
+git fast-import streams *are* the serialization; they're what reposurgeon
+ingests and emits.  The concrete problem I have is that there is no stable
+correspondence between a repository and one canonical fast-import
+serialization of it.
 
-Or the search could stop at anon_part in the first place:
+That is a bigger pain in the ass than you will be able to imagine unless
+and until you try writing surgical tools yourself and discover that you
+can't write tests for them.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
 
-			assert(scheme_prefix + 3 < anon_part);
-			cp = memchr(schema_prefix + 3, ':', anon_part - schema_prefix - 3);
-			if (!cp)
 
-That whole thing looks fragile.  I wonder if using the official regex
-(https://tools.ietf.org/html/rfc3986#appendix-B) would make it easier
-and more robust.
-
-> +				goto literal_copy; /* username only */
-> +			prefix_len = cp - url;
-
-Anyway, you don't want cp == NULL here.
-
-> +		}
->  	}
->  	return xstrfmt("%.*s%.*s", (int)prefix_len, url,
->  		       (int)anon_len, anon_part);
