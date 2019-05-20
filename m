@@ -8,160 +8,177 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0951F462
-	for <e@80x24.org>; Mon, 20 May 2019 16:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCA3D1F462
+	for <e@80x24.org>; Mon, 20 May 2019 16:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388933AbfETQn2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 12:43:28 -0400
-Received: from mout.gmx.net ([212.227.15.15]:40469 "EHLO mout.gmx.net"
+        id S2390044AbfETQtN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 12:49:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:33365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388804AbfETQn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 12:43:28 -0400
+        id S2390019AbfETQtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 12:49:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558370604;
-        bh=W7f/lFzD94WLi5fUjHyqf5TPEqhtxS37egaIVZHayhA=;
+        s=badeba3b8450; t=1558370944;
+        bh=oGJVysiKqDqaN1Bg5M9YwCPMPjCngM2KUYylWQI2lg0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ph6D0/YE/6y3T9ZR2gI3sopl5uD3Hq7fsdzXyYaqNt/gxTng+IVMJ4r9xjdC51D8a
-         MZ2s7Aogwdmgn8/M6b19ku7+pvhKmGL+huaHtlW+WPip/jRpJ8uflsdsQ+3zpifZPK
-         5WcXuihB1fZw2/p+aNKjtGpigBtl2sXccfcPMKas=
+        b=GSgUTTAXgv0J1JUSUtdhymGmEX/1jcdZuWctxjoPAy1SlrHcWGyvyliSDO6PPZ5NM
+         DwbOYqLTyXmDlHJ+dL80huqQoKd5+ZKtG3ksn1UCpi/EEHS0kVd6jJMIhp/Haxysh5
+         dNjR0rQNud2p/KbYxvLL+NkJOLiwSl0PUYuSHp2M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSMw7-1h4FRA34xf-00TWm4; Mon, 20
- May 2019 18:43:23 +0200
-Date:   Mon, 20 May 2019 18:43:07 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDQeU-1hKYG13RSA-00AYP6; Mon, 20
+ May 2019 18:49:03 +0200
+Date:   Mon, 20 May 2019 18:48:47 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, Martin Langhoff <martin.langhoff@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] transport_anonymize_url(): support retaining
- username
-In-Reply-To: <20190519051031.GA19434@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1905201836380.46@tvgsbejvaqbjf.bet>
-References: <20190519050724.GA26179@sigill.intra.peff.net> <20190519051031.GA19434@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/3] clone: auto-enable git-credential-store when
+ necessary
+In-Reply-To: <20190520123110.GE11212@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1905201845550.46@tvgsbejvaqbjf.bet>
+References: <20190519050724.GA26179@sigill.intra.peff.net> <20190519051604.GC19434@sigill.intra.peff.net> <CAPig+cTkjJjuyrDOUh92B16an+wy9OnZgyKY0-bihWnzyWsoKg@mail.gmail.com> <20190520123110.GE11212@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9NwMWMSxNaEEJStDF6uuRcov7NgF9zX/w7aBPAUWPi+81rDhbQ9
- /kHTcmnLw9Ja1PEDsL3MgmD51Ycv8UIfzzgQuEKRhWi30jgsQ5BaUN0eo9XAa77SPGuakY5
- kTcHdRr/R5EnYtZRbBpAzpUXGXB8fMmmAemkXsZJhJvljYGWmwL/wnspTrox363tjQPZcy+
- 5Byh3cuZk79CmBPvMczyQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BDJBP5n1zWM=:5FyO+dsSvwl4NMY71Cfhow
- dB0Q+xTPWa4KkAnbKJo4E3Rs6yz2ZhW8t8I9kFbFtaebQwGNK5XR0RI9MvpNu0vsrtOKqm3VS
- UjTTxEZwGHeIUlX8zzrUA8EY/VAAOty6QgLbtsTzBxOj0E97h72qhzdtAzAxTsuWkj4yFqCuU
- HXpXNtdJ6wxY0OfGSS1nxnU7taaiyah4aCG6fQ83lds+9GbGB0PYAkhcKkEp53yT2lTKA0B7j
- HRZZrDTdlqpwdKmcVrYpxzmVBQNBZM5e47Ot1AKzFPbdBqoMjC4kLUM0B3F8PaG2LzqFTDWlY
- EdtEpa/OdFZhT69sC/iZaPKLGunKqTv9p825ZOL7yCNZNoCB0gEamA7R125xqttBxFBZ1gfw3
- kiByhPlbhDGdNAb8jBV1F/38EV1cR6JEzrA1dHXq06B0HTM0Puk4bTEwu3Kqr5WuEw0IuECcH
- 1e4t/wwIPG51Ci80N94JOwLbXYSGYwy1wQiFcdwLd4HTJfQ1cr+6D2QbjzW+1szK1T1YWJb5Y
- YIhtefq4rhSCMnLjaq07uuKJv6H5OFrlG2O4Sku4fKlWtSneDx8rT5EZKzp0qir6vB5RyPc8R
- oKhwW63G9mcxpjSm6fL18N+dLEbWIQ3vD/hmlS/4xqB02gDrk0oPOLSs7JxBe3QsMUfNGCBDN
- C4TUOOWaqWAbAdNLJDyZjyWjwKW2dO44DDFBpLfU7fOmXNys+XN2EGmb33xRv+ZAE9pJd7dRZ
- UF7CvgQqXsHRSBscht163Z29By1eyYq4nUeewCJaCZlVYimZ8ItI6Od53U+Xt/gDIuvGrW8dQ
- m1KoF+hSQJKm1rnDlURe02RO6ufNhx0/aprlLpzifQ3C9BgG/ZoKxpDroq0OIE5hPO7pPt5x8
- Pf0MFWEHi0uQ19KbI5m3jB2vy4ayqKxLFNXzw9cUzjGSek2evBB9tohZ0pUA7S1KCxBSnE6cD
- HNDf9lDs9ky2VxaCy73PMcJUUUb4lKiORVrbwr+zz/i2tb2WR7E0W
+X-Provags-ID: V03:K1:28fFIEzEOv2Ht0Mc8ePPUaaw0lvJPLl/t2VDtHEb+j24r5R2PCQ
+ bf1Ny5lK4+kcIWcMWOwcUKcXexl8/LrKuc0eHdWK8iiX8TkghuAxqRedu/6MVZE73yW8FFn
+ fZF3WAfEMu/xpWw9CTsxARJL5CXS73tIjluODwYJblwCyaIy8spcRik7Xb5YZ95FqaZUwY8
+ lOtnWke4JRovsoDferIKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:s1Mnxv3aLnY=:9K8BDNcNTo8oenHU78gw9M
+ QYjtWGtgNEYmnaWbcu0rCVwQVNNO72jkFHXiGJWIa0P0Y+a5CiLhI/Jd8ljb7L+OwpIn8QZDW
+ fnauuCdivNYfoYOQmlwzLjwlfZwTKIuTdP30phONuETNj/L65ZUO+P3i/ex/48KAH7NR3CwNL
+ hYduHYU9h708TJUU00TBb0SSFPfwOQOqjOzuSIxCG9UIfRR6O/S0RJ1VqEIiAFi3ORhOajJVy
+ rQ9rRddpVWOrrMrlG7TECYwgkTq7jrSI27k1fWHuqNLErThbZjUwX1mVd1kOBAfTjKpHX0AVz
+ 2fYImlxWdCRxrhy7K43hbgLyy4/7i9Eu6+RNHKuLpRkUwFps99CCN5RK04YdSukIJOtigl//d
+ jrkDsIe3uI/uu7DtMS5L388kbX4+XCWEuW9g8mHEH/Kv1m47oPIpJcs4eLaFRSOVk29RyjhZe
+ hlig8L18T+JPPG4nBIu24KQMUjjfAoGI6yjmrj1qRWLj63KkUVhhRl1VrmObYNAwva6Pq6k78
+ noXD4TSR2gX+EBD4Bztom6IsUc9eMEJf/4c4XOPnK8u5UI4aKE4Qi//OBHrZ0RTcq/kmEBSIU
+ gyPmUEPYOxmF7+SFK02fFsPgZPDjosKcaUM6MA3CZ1SplYBpVEqGH8zcnqBdACjmWzsM1L4fe
+ CKe5H0HIfS+B2ibUQMegYYxZaTyBj8VpQmWLp9N6N1mkE7ff3+XD2XxxrS+OyvEobHzb6zhcY
+ DpdDJT2fMj6DSPVgG9jjxSknwkA3RrLXLSoQ7Z/4ekpkxHo/N+L3XjXX1l1Wm7T9GGV/UMttz
+ 2mlahxVhDBrpkX3ZYXS2IJNuPIcbbscHX75I2uy7cBH0VreSpAGfeziq+iY3aDmJf6QKikML/
+ 2hrUGmeWghydMUuC1UWqRE2dIbgnmt5TeFdOAynnxcUMgSLu7G0rWpoh4IltW0g7WNGKKxAp7
+ e4Jyn2P6Ri67cd6eb2GJWcArDiTbS8/NiwkTUu2p3HIQr4xk0VZm8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whoops. Meant to comment on this:
+Hi Peff,
 
-On Sun, 19 May 2019, Jeff King wrote:
+On Mon, 20 May 2019, Jeff King wrote:
 
-> diff --git a/transport.c b/transport.c
-> index f1fcd2c4b0..ba61e57295 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1335,11 +1335,7 @@ int transport_disconnect(struct transport *transp=
-ort)
->  	return ret;
->  }
+> On Mon, May 20, 2019 at 07:28:08AM -0400, Eric Sunshine wrote:
 >
-> -/*
-> - * Strip username (and password) from a URL and return
-> - * it in a newly allocated string.
-> - */
-> -char *transport_anonymize_url(const char *url)
-> +char *transport_strip_url(const char *url, int strip_user)
-
-It might make more sense to skip the "transport_" prefix here, and maybe
-use a slightly more descriptive name? My current favorite would be
-`strip_credentials_from_url(const char *url, int keep_user)`.
-
->  {
->  	char *scheme_prefix, *anon_part;
->  	size_t anon_len, prefix_len =3D 0;
-> @@ -1348,7 +1344,10 @@ char *transport_anonymize_url(const char *url)
->  	if (url_is_local_not_ssh(url) || !anon_part)
->  		goto literal_copy;
+> > > The biggest downside is that it's a bit magical from the user's
+> > > perspective, because now the password is off in some other file
+> > > (usually ~/.git-credentials, but sometimes in $XDG_CONFIG_HOME).
+> > > Which complicates things if they want to purge the repo and
+> > > password, for example, because now they can't just delete the
+> > > repository directory.
+> > >
+> > > The file location is documented, though, and we point people to the
+> > > documentation. So perhaps it will be enough (and better still, may
+> > > lead to them configuring a more secure helper).
+> >
+> > I'm trying to decide how I feel about this based upon my own
+> > experience recently of having my password magically stored by Git for
+> > Windows without warning or consent on a computer which was not my own
+> > but on which I needed to access a private GitHub repository. Although
+> > the situation is not perfectly analogous, the concern of having one's
+> > password magically squirreled-away _somewhere_ unexpectedly is the
+> > same. Being unfamiliar with Git for Windows's credential helper or
+> > Windows credential management in general, I experienced more than a
+> > few minutes of consternation and alarm before finally figuring out
+> > where Git for Windows had stored my password and how to remove it. The
+> > sense of alarm and discomfort likely would have not arisen had the
+> > credential helper given me the opportunity to approve or deny the
+> > action.
 >
-> -	anon_len =3D strlen(++anon_part);
-> +	anon_len =3D strlen(anon_part);
-> +	if (strip_user)
-> +		anon_part++;
-> +
->  	scheme_prefix =3D strstr(url, "://");
->  	if (!scheme_prefix) {
->  		if (!strchr(anon_part, ':'))
-> @@ -1373,7 +1372,15 @@ char *transport_anonymize_url(const char *url)
->  		cp =3D strchr(scheme_prefix + 3, '/');
->  		if (cp && cp < anon_part)
->  			goto literal_copy;
-> -		prefix_len =3D scheme_prefix - url + 3;
-> +
-> +		if (strip_user)
-> +			prefix_len =3D scheme_prefix - url + 3;
-> +		else {
-> +			cp =3D strchr(scheme_prefix + 3, ':');
+> Thanks, that's a good elaboration of the uneasiness I was feeling. This
+> patch is better than the status quo in that your password was already
+> being squirreled away in plaintext, and now it's at least locked down
+> with filesystem permissions. But it's clearly not as far as we could go.
+> I was mostly just afraid to break existing workflows, but maybe we
+> should be more opinionated.
+>
+> Or maybe we just need to give more specific details about how to back
+> out the change.
 
-How about `scheme_prefix +=3D 3;` (actually quite a bit earlier than here)=
-,
-followed by `memchr(scheme_prefix, ':', anon_part - scheme_prefix)`?
+I think that would make the most sense. "If you did not mean for this
+password to be stored, call [...]".
 
-Ah, I see you just copied that part from above...
+> > > +"Note that the password is still stored in plaintext in the filesys=
+tem;\n"
+> > > +"consider configuring a more secure helper. See \"git help gitcrede=
+ntials\"\n"
+> > > +"and \"git help git-credential-store\" for details.\n"
+> > >  );
+> >
+> > Give the above experience, one way to mitigate such feelings of alarm
+> > might, at a minimum, be for this message to say where the password is
+> > being stored (and, possibly, how to remove it) so the user can do so
+> > immediately if desired. Prompting the user to approve or deny the
+> > action might also go a long way toward making this more palatable
+> > (assuming the session is interactive).
+>
+> I actually thought about pointing to the file, but it's non-trivial to
+> do so (there's a bunch of internal logic in credential-store to decide
+> between $HOME and XDG locations).
+>
+> I think what we really need are better commands to manage credentials
+> independent of helpers, and then we could recommend a simple command to
+> clear a credential that you don't want to have stored. Right now I think
+> the best you can do is:
+>
+>   echo url=3Dhttps://example.com | git credential reject
+>
+> but:
+>
+>   - "reject" is a funny term; this comes from the C code, which thinks
+>     of it in terms of the server approving/rejecting (and that makes
+>     sense for scripts calling this command). But at the helper level,
+>     the operations are really store/erase. We probably ought to support
+>     those names, too.
+>
+>   - piping the credential protocol is slightly awkward; we probably
+>     ought to allow a url on the command line, and avoid reading stdin if
+>     we get one.
+>
+> That would give us:
+>
+>   git credential erase https://example.com
+>
+> which is really quite readable. :)
+>
+> Likewise, if we choose not to auto-enable the store helper, we'd
+> probably want to give advice on seeding your password. Right now that
+> is:
+>
+>   echo url=3Dhttps://example.com | git credential fill | git credential =
+approve
+>
+> which is...not intuitive. It would make sense to me to have a "seed"
+> operation which does a fill/approve together. Maybe that should just be
+> what "store" does, which would allow:
+>
+>   $ git credential store https://example.com
+>   Username for 'https://example.com':
+>   Password for 'https://user@example.com':
+>
+> (Of course you can also just "git fetch" to get prompted, but it seems
+> like this shouldn't require a network operation if you don't want it
+> to).
 
-Thanks,
+There is nothing stopping us from adding a new command to `git
+credential`: `git credential forget <url>` where the URL may contain the
+user name for further differentiation (and maybe even a password that will
+be ignored, for copy/pasting convenience).
+
+Ciao,
 Dscho
-
-> +			if (cp && cp > anon_part)
-> +				goto literal_copy; /* username only */
-> +			prefix_len =3D cp - url;
-> +		}
->  	}
->  	return xstrfmt("%.*s%.*s", (int)prefix_len, url,
->  		       (int)anon_len, anon_part);
-> diff --git a/transport.h b/transport.h
-> index 06e06d3d89..6d8c99ac91 100644
-> --- a/transport.h
-> +++ b/transport.h
-> @@ -243,10 +243,19 @@ const struct ref *transport_get_remote_refs(struct=
- transport *transport,
->  int transport_fetch_refs(struct transport *transport, struct ref *refs)=
-;
->  void transport_unlock_pack(struct transport *transport);
->  int transport_disconnect(struct transport *transport);
-> -char *transport_anonymize_url(const char *url);
->  void transport_take_over(struct transport *transport,
->  			 struct child_process *child);
->
-> +/*
-> + * Strip password and optionally username from a URL and return
-> + * it in a newly allocated string (even if nothing was stripped).
-> + */
-> +char *transport_strip_url(const char *url, int strip_username);
-> +static inline char *transport_anonymize_url(const char *url)
-> +{
-> +	return transport_strip_url(url, 1);
-> +}
-> +
->  int transport_connect(struct transport *transport, const char *name,
->  		      const char *exec, int fd[2]);
->
-> --
-> 2.22.0.rc0.583.g23d90da2b3
->
->
