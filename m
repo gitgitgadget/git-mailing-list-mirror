@@ -2,107 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4D1E1F461
-	for <e@80x24.org>; Mon, 20 May 2019 10:02:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1E7F1F461
+	for <e@80x24.org>; Mon, 20 May 2019 10:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732367AbfETKCN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 06:02:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33718 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725951AbfETKCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 06:02:13 -0400
-Received: (qmail 18657 invoked by uid 109); 20 May 2019 10:02:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 10:02:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2628 invoked by uid 111); 20 May 2019 10:02:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 06:02:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 06:02:11 -0400
-Date:   Mon, 20 May 2019 06:02:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Alejandro Sanchez <asanchez1987@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Abort (core dumped)
-Message-ID: <20190520100211.GA26426@sigill.intra.peff.net>
-References: <CAA4phoGrA=AsBFHkqZ54=6ev5BH+F7rLd0Hcr-t2kF_YFNrs2g@mail.gmail.com>
+        id S1732390AbfETKDo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 06:03:44 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44436 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729834AbfETKDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 06:03:44 -0400
+Received: by mail-ed1-f65.google.com with SMTP id b8so22927715edm.11
+        for <git@vger.kernel.org>; Mon, 20 May 2019 03:03:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=At2usxGR4GQUXIXsCHuThhiPVkb38P38V3WYBksOqJ8=;
+        b=J5BKci+PWPUEg6FO7kD/QQz9SlUNXly8BpbSE4YPqujih17jCdJ2qq8Y5BYvspidIB
+         rJyB2N0/9JsMnQpu5Rd7udTQW5KUHNZCahQw1L4mASlTgdv1o7WsS//zkJasMxuduiIM
+         NqokK/sBpcyInlUiYbQMhO8FET4e/MYbGF+P41oDF1iM0y8vtWEw7Z/RyimD2iJlETHk
+         OOh4218BXVRLQeINsr3Ob6LfxTccV4Mn7wNEITGJnUHkKnoUd1iD9S5dJ+AeL3BY98y6
+         njEZl9EeqSq+wexxOwQa7wdfbUeO3zLmjaZCCoftRWXpoGjC6nU2/HDFhPaJtZtolCCq
+         4ZIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=At2usxGR4GQUXIXsCHuThhiPVkb38P38V3WYBksOqJ8=;
+        b=HDg9Q2UnB9MVfQohUL5PWG5chfTDu5nsYHPT6wxYDxjlJDFIlgCrBAl142xmPlGPqp
+         wkLbC4V687LVNyt4RGa09E4pKEqdnYK4VVU6YGZVrGmzCZsAFLQ+DW9agRoYpf21rS6R
+         5L8IyVPxjnBPD3OLEKGaCW6uWS8cFSqd+OVSrl1Eo8vTwIYb+y6U6ksdxHwpOvAg74pV
+         PJjpyKZlNhpCXACn2BlXzErlZTozpJcYF7AK/pCcfO08iADWypI9AjPBtLDa24PqkHpB
+         tGnqkwxeYegmw85peg1nvRuMLWyF8a/TZXsoGWJbUaehmY5LWaJXdQDvQKB5oyFNIkfx
+         sUpw==
+X-Gm-Message-State: APjAAAXPVZwN7xUrsnE5xx0ObIgU+gi4/ZbAmkWDfrOTbYFHyQ91zX+w
+        /DVCXp1H5Zg5oge8+tsybWu0PHN8YT8w+VByD1/aXY81fAg=
+X-Google-Smtp-Source: APXvYqyyD97dDq5dTTXGmfPZxp+mHLnc3JgSwAlBtXnUZAS8njWZ9j5a6GEwPOo5YWEEOXRwF8zQ9hHA3Zd4DWoJwlA=
+X-Received: by 2002:a50:94ed:: with SMTP id t42mr75160740eda.288.1558346622696;
+ Mon, 20 May 2019 03:03:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAA4phoGrA=AsBFHkqZ54=6ev5BH+F7rLd0Hcr-t2kF_YFNrs2g@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 20 May 2019 12:03:31 +0200
+Message-ID: <CAP8UFD0qay_nSXyq=-vFqfxuJ-Q6+Cr+woMHMT3tnPvAfxrRGQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 51
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        David Pursehouse <dpursehouse@collab.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 20, 2019 at 10:35:53AM +0200, Alejandro Sanchez wrote:
+Hi everyone!
 
-> alex@polaris:~/slurm/source$ git add -u
-> alex@polaris:~/slurm/source$ git am -i --continue
-> Applying: Handle duplicate archive file names.
-> error: object 861d3c6f689a3ca5eb5fb5c409d46de0ad5555e1 is a commit, not a tree
-> BUG: diff-lib.c:526: run_diff_index must be passed exactly one tree
-> Aborted (core dumped)
+A draft of a new Git Rev News edition is available here:
 
-Hmm. So I think the interesting error is probably that first line: some
-code expects to look up a tree but sees a commit, and then as a result
-it probably feeds too few items to run_diff_index(), triggering the
-assertion failure.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-51.md
 
-Just grepping around, this looks quite suspicious:
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-  $ git grep -hW get_oid_tree builtin/am.c
-  static void write_index_patch(const struct am_state *state)
-  ...
-  if (!get_oid_tree("HEAD", &head))
-	tree = lookup_tree(the_repository, &head);
-  else
-	tree = lookup_tree(the_repository,
-			   the_repository->hash_algo->empty_tree);
+  https://github.com/git/git.github.io/issues/376
 
-Using get_oid_tree() does not actually return a tree; it just
-prioritizes trees when disambiguating names (which is pointless here,
-since we're not feeding an ambiguous oid). HEAD will always be a commit,
-and then lookup_tree() similarly does not peel that down to an actual
-tree. And this whole function is called only in interactive-mode, so
-it's possible that it's simply not used much and nobody noticed.
+You can also reply to this email.
 
-I haven't tried to reproduce yet. Is the repository (and patch) that you
-used to demonstrate this publicly available? Or alternatively, is it
-possible to show a backtrace from the coredump?
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-If my blind guess is right, then something like this probably fixes it:
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index bdd1bbc35d..93305560c1 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1339,9 +1339,17 @@ static void write_index_patch(const struct am_state *state)
- 	struct rev_info rev_info;
- 	FILE *fp;
- 
--	if (!get_oid_tree("HEAD", &head))
--		tree = lookup_tree(the_repository, &head);
--	else
-+	if (!get_oid("HEAD", &head)) {
-+		struct object *obj;
-+		struct commit *commit;
-+
-+		obj = parse_object_or_die(&head, NULL);
-+		commit = object_as_type(the_repository, obj, OBJ_COMMIT, 0);
-+		if (!commit)
-+			die("unable to parse HEAD as a commit");
-+
-+		tree = get_commit_tree(commit);
-+	} else
- 		tree = lookup_tree(the_repository,
- 				   the_repository->hash_algo->empty_tree);
- 
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday May 22nd.
 
--Peff
+Thanks,
+Christian.
