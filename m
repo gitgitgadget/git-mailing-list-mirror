@@ -2,119 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA8021F462
-	for <e@80x24.org>; Mon, 20 May 2019 23:04:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 856481F462
+	for <e@80x24.org>; Mon, 20 May 2019 23:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbfETXEW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 19:04:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64343 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726384AbfETXEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 19:04:21 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C29C1657B5;
-        Mon, 20 May 2019 19:04:19 -0400 (EDT)
-        (envelope-from nico@fluxnic.net)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:in-reply-to:message-id:references:mime-version
-        :content-type; s=sasl; bh=zlwnVOOPARAhNMk6yZKsaUZDecA=; b=Xb3lRy
-        ONbeGF+ByC49BILQx0YVZMDvD6zwRKGASMg8EbagyGidC2hvEhrqywRs+nmCFA6Y
-        8BGqLTECxUFbmrpeBhD/GR/36q3+U9JSmeRbpksIfgpFhqWBeFDahFnxg3Comafw
-        AO6C6cgVa5rZcro8CPUutmiNnLrl3EOxm9QWM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BAEC4657B4;
-        Mon, 20 May 2019 19:04:19 -0400 (EDT)
-        (envelope-from nico@fluxnic.net)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=fluxnic.net;
- h=date:from:to:cc:subject:in-reply-to:message-id:references:mime-version:content-type; s=2016-12.pbsmtp; bh=kiUCoprI77i2zk7WaSnGF2eD7qVmZj9ucGBLDz0pld0=; b=dHzOFEAKW1LWBB4mZkoQ34El+lZzJVf9K/v0VR4n/r0XshAaeZtP6g0WO0tMvXdvPZR5STLRk3b2yZBV4zxPwx2s52WzTWPL9arkJHpBUDnwsT3r1Kvp0gO2Je184jZtNtZd4TkAbzbKPNU6SX4m1cTReXZPe3BO1e9x2HDQdEI=
-Received: from yoda.home (unknown [70.82.130.96])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B1641657B3;
-        Mon, 20 May 2019 19:04:16 -0400 (EDT)
-        (envelope-from nico@fluxnic.net)
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-        by yoda.home (Postfix) with ESMTPSA id D0DDB2DA01F4;
-        Mon, 20 May 2019 19:04:14 -0400 (EDT)
-Date:   Mon, 20 May 2019 19:04:14 -0400 (EDT)
-From:   Nicolas Pitre <nico@fluxnic.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
+        id S1726575AbfETXMY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 19:12:24 -0400
+Received: from thyrsus.com ([71.162.243.5]:33844 "EHLO snark.thyrsus.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726164AbfETXMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 19:12:24 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+        id 7FA06470485F; Mon, 20 May 2019 19:12:23 -0400 (EDT)
+Date:   Mon, 20 May 2019 19:12:23 -0400
+From:   "Eric S. Raymond" <esr@thyrsus.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jakub Narebski <jnareb@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
-In-Reply-To: <CACsJy8AkhKX57RYL1Z+HZHqKbAKKOcLoRkgwg8bSnk+DW2+Nmg@mail.gmail.com>
-Message-ID: <nycvar.YSQ.7.76.1905201803520.1558@knanqh.ubzr>
-References: <20190516214257.GD10787@sigill.intra.peff.net> <20190516231509.253998-1-jonathantanmy@google.com> <20190517010950.GA30146@sigill.intra.peff.net> <20190517012234.GA31027@sigill.intra.peff.net> <20190517043939.GA12063@sigill.intra.peff.net>
- <CACsJy8CNyug3wvZ+6ts1nzgWyPF1JqC0LceP-HzMHjqvCr2Ugw@mail.gmail.com> <20190517085509.GA20039@sigill.intra.peff.net> <CACsJy8AkhKX57RYL1Z+HZHqKbAKKOcLoRkgwg8bSnk+DW2+Nmg@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+Subject: Re: Finer timestamps and serialization in git
+Message-ID: <20190520231223.GA117962@thyrsus.com>
+Reply-To: esr@thyrsus.com
+References: <20190515191605.21D394703049@snark.thyrsus.com>
+ <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
+ <20190515233230.GA124956@thyrsus.com>
+ <87woiqvic4.fsf@evledraar.gmail.com>
+ <86woimox24.fsf@gmail.com>
+ <20190520004559.GA41412@thyrsus.com>
+ <86r28tpikt.fsf@gmail.com>
+ <20190520141417.GA83559@thyrsus.com>
+ <CABPp-BHK1N2zZoeBeSgnh12LPqLgZxfbL0DzALj28y97_Q-ahg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Pobox-Relay-ID: 9798AC00-7B53-11E9-92ED-B0405B776F7B-78420484!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BHK1N2zZoeBeSgnh12LPqLgZxfbL0DzALj28y97_Q-ahg@mail.gmail.com>
+Organization: Eric Conspiracy Secret Labs
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 18 May 2019, Duy Nguyen wrote:
-
-> On Fri, May 17, 2019 at 3:55 PM Jeff King <peff@peff.net> wrote:
+Elijah Newren <newren@gmail.com>:
+> Hi,
+> 
+> On Mon, May 20, 2019 at 11:09 AM Eric S. Raymond <esr@thyrsus.com> wrote:
+> 
+> > > For cookie to be unique among all forks / clones of the same repository
+> > > you need either centralized naming server, or for the cookie to be based
+> > > on contents of the commit (i.e. be a hash function).
 > >
-> > On Fri, May 17, 2019 at 02:20:42PM +0700, Duy Nguyen wrote:
-> >
-> > > On Fri, May 17, 2019 at 12:35 PM Jeff King <peff@peff.net> wrote:
-> > > > As it turns out, index-pack does not handle these complicated cases at
-> > > > all! In the final fix_unresolved_deltas(), we are only looking for thin
-> > > > deltas, and anything that was not yet resolved is assumed to be a thin
-> > > > object. In many of these cases we _could_ resolve them if we tried
-> > > > harder. But that is good news for us because it means that these
-> > > > expectations about delta relationships are already there, and the
-> > > > pre-fetch done by your patch should always be 100% correct and
-> > > > efficient.
-> > >
-> > > Is it worth keeping some of these notes in the "third pass" comment
-> > > block in index-pack.c to help future readers?
-> >
-> > Perhaps. I started on the patch below, but I had trouble in the commit
-> > message. I couldn't find the part of the code that explains why we would
-> > never produce this combination, though empirically we do not.
+> > I don't need uniquess across all forks, only uniqueness *within the repo*.
+> 
+> You've lost me.  In other places you stated you didn't want to use the
+> commit hash, and now you say this.  If you only care about uniqueness
+> within the current copy of the repo and don't care about uniqueness
+> across forks (i.e. clones or copies that exist now or in the future --
+> including copies stored using SHA256), then what's wrong with using
+> the commit hash?
 
-Good question indeed.
+Because it's not self-describing, can't be computed solely from visible
+commit metadata, and relies on complex external assumptions about how
+the hash is computed which break when your VCS changes hash algorithms.
 
-> That still has some value even if your commit ends up with a question
-> mark. There's not much to dig out of 636171cb80 (make index-pack able
-> to complete thin packs., 2006-10-25). Adding Nico, maybe he still
-> remembers...
+These are dealbreakers because one of my major objectives is forward
+portability of these IDs forever. And I mean *forever*.  It should be
+possible for someone in the year 40,000, in between assaulting planets
+for the God-Emperor, to look at an import stream and deduce how to
+resolve the cookies to their commits without seeing git's code or
+knowing anything about its hash algorithms.
 
-What about this comment in fix_unresolved_deltas():
+I think maybe the reason I'm having so much trouble getting this
+across is that git insiders are used to thinking of import streams as
+transient things.  Because I do a lot of repo migrations, I have a
+very different view of them.  I built reposurgeon on the realization
+that they're a general transport format for revision histories, and
+that has forward value independent of the existence of git.
 
-        /*
-         * Since many unresolved deltas may well be themselves base objects
-         * for more unresolved deltas, we really want to include the
-         * smallest number of base objects that would cover as much delta
-         * as possible by picking the
-         * trunc deltas first, allowing for other deltas to resolve without
-         * additional base objects.  Since most base objects are to be found
-         * before deltas depending on them, a good heuristic is to start
-         * resolving deltas in the same order as their position in the pack.
-         */
+If a stream contained fully forward-portable action stamps, it would be
+forward-portable forever.  Hashes in commit comments are the *only*
+blocker to that.  Take this from a person who has spent way too much time
+patching Subversion IDs like r1234 during repository conversions.
 
-Doesn't that cover it?
+It would take so little to make this work. Existing stream format is
+*almost there*.
 
-In pack-objects, another comment says:
+> A stable ordering of commits in a fast-export stream might be a cool
+> feature.  But I don't know how to define one, other than perhaps sort
+> first by commit-depth (maybe optionally adding a few additional
+> intermediate sorting criteria), and then finally sort by commit hash
+> as a tiebreaker. Without the fallback to commit hash, you fall back
+> on normal traversal order which isn't stable (it depends on e.g. order
+> of branches listed on the command line to fast-export, or if using
+> --all, what new branch you just added that comes alphabetically before
+> others).
+>
+> I suspect that solution might run afoul of your dislike for commit
+> hashes, though, so I'm not sure it'd work for you.
 
- * Depth value does not matter - find_deltas() will
- * never consider reused delta as the base object to
- * deltify other objects against, in order to avoid
- * circular deltas.
+It does. See above.
 
-Sorry if I'm not of any help here. Although I used to have my brain 
-wrapped around this code pretty tightly, it's been quite a while, and 
-the code did change as well since then.
+> > So let me back up a step.  I will cheerfully drop advocating bumping
+> > timestamps if anyone can tell me how a different way to define a per-commit
+> > reference cookie that (a) is unique within its repo, and (b) only requires
+> > metadata visible in the fast-export representation of the commit.
+> 
+> Does passing --show-original-ids option to fast-export and using the
+> resulting original-oid field as the cookie count?
+
+I was not aware of this option.  Looking...no wonder, it's not on my
+system man page.  Must be recent.
+
+OK. Wow.  That is *useful*, and I am going to upgrade reposurgeon to read
+it.  With that I can do automatic commit-reference rewriting.
+
+I don't consider it a complete solution. The problem is that OID is
+a consistent property that can be used to resolve cookies, but there's
+no guaranteed that it's a *preserved* property that survives multiple
+round trips and changes in hash functions.
+
+So the right way to use it is to pick it up, do reference-cookie
+resolution, and then mung the reference cookies to a format that is
+stable forever.  I don't know what that format should be yet.  I
+have a message in composition about this.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
 
 
-Nicolas
