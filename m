@@ -2,133 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9714A1F461
-	for <e@80x24.org>; Mon, 20 May 2019 00:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DEA51F461
+	for <e@80x24.org>; Mon, 20 May 2019 01:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728287AbfETAqA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 May 2019 20:46:00 -0400
-Received: from thyrsus.com ([71.162.243.5]:42670 "EHLO snark.thyrsus.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726923AbfETAp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 May 2019 20:45:59 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-        id 66E494704887; Sun, 19 May 2019 20:45:59 -0400 (EDT)
-Date:   Sun, 19 May 2019 20:45:59 -0400
-From:   "Eric S. Raymond" <esr@thyrsus.com>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-Message-ID: <20190520004559.GA41412@thyrsus.com>
-Reply-To: esr@thyrsus.com
-References: <20190515191605.21D394703049@snark.thyrsus.com>
- <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
- <20190515233230.GA124956@thyrsus.com>
- <87woiqvic4.fsf@evledraar.gmail.com>
- <86woimox24.fsf@gmail.com>
+        id S1729052AbfETBdN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 May 2019 21:33:13 -0400
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:44002 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727620AbfETBdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 May 2019 21:33:13 -0400
+Received: by mail-qk1-f180.google.com with SMTP id z6so7854213qkl.10
+        for <git@vger.kernel.org>; Sun, 19 May 2019 18:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=vdpHX7+BrUsTA7xgAOUiS9/XeTe3KOG8hBrHz9sdVyI=;
+        b=cAv3MkeZXtC5/ClmRZ0WMOHxZTyGRdsytpc95nFpQ4qlGu1jLVMHI5qQ2ltJNpUg7I
+         uR0w8aW1Qwkjh6cNkBKcdrbhbAgszQAhS8IebzEdXNxQB/K6QKhdYeOqYsp+biOiCB+5
+         /2Nt9TiM6b7sxAm9XBF3/cnVWydhz6gj+gnMFsRqll5edrTNHc+YAAh4YQAvoRHV0BRb
+         0b6+Sgk+u9vbgVnLJCFAzQkq0wP6SZZ3kECTvwB2MBReUs/6qJF3lLUoIINOIYt/dvn2
+         a1a91BKwAmMwBFvlAdN48RpB5qFxn+THJgmD84JMhmJzb/aW1XlF1Yz1T8cZCYFqY2rn
+         KXIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=vdpHX7+BrUsTA7xgAOUiS9/XeTe3KOG8hBrHz9sdVyI=;
+        b=p3FNBYcd284jnBcxFSRCqtHRK3cLu3miA3pUx2EDIJBwJ8EgGU8aU6iPhcNIwjEGF7
+         ed3XSZ8N5BoSdOZeB8S6XxrlWWqQR/9qfFQa5Ef+H4HGOCyB2vv9FtnxnphDyy7hy/tH
+         gqk0DtDA0lsq2o848ta9W41Je66S+FTQT4/ABslhC4ugU1ve+yGMAULD8Hp06RcBjcQ3
+         asQrp/DF+NtVYThvhx1Uc3cSdls37E5c/Ixh1QbxmaHvHtfnMP9NMYBIown1hB5Hb++R
+         KbTvmisMO+JInmuZqxWPv3BKNNh/A8bF/ulYJydZp23euEBXM+Lwkfz2NRA4Hb8/1stj
+         TzcQ==
+X-Gm-Message-State: APjAAAWBmWCAuhxj0oL0hcIAUPg4t8d5egIzKimCaJh7j4G4bWd69DeO
+        WBrlaN1T342j4zrv7E49zo7GHYbTzLQ=
+X-Google-Smtp-Source: APXvYqwMgSuhdPnfhmrRdLrgkWZsKsKsND7FLOWDpyzZegzy+jCGwhNp99mfWevxmbeAtl8UvlCfig==
+X-Received: by 2002:a05:620a:403:: with SMTP id 3mr55527353qkp.221.1558315991976;
+        Sun, 19 May 2019 18:33:11 -0700 (PDT)
+Received: from [10.0.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id k8sm3789603qke.16.2019.05.19.18.33.10
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 May 2019 18:33:11 -0700 (PDT)
+Subject: Re: Revision walking, commit dates, slop
+To:     Mike Hommey <mh@glandium.org>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+References: <20190518005412.n45pj5p2rrtm2bfj@glandium.org>
+ <20190518015005.GA951@szeder.dev>
+ <20190518035828.pjaqfrkkvldhri6v@glandium.org>
+ <20190518041706.ct6ie5trvxgdhjar@glandium.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f14799c3-e343-eb41-3536-65de7e38fbd9@gmail.com>
+Date:   Sun, 19 May 2019 21:33:08 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86woimox24.fsf@gmail.com>
-Organization: Eric Conspiracy Secret Labs
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190518041706.ct6ie5trvxgdhjar@glandium.org>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com>:
-> As far as I understand it this would slow down receiving new commits
-> tremendously.  Currently great care is taken to not have to parse the
-> commit object during fetch or push if it is not necessary (thanks to
-> things such as reachability bitmaps, see e.g. [1]).
+On 5/18/2019 12:17 AM, Mike Hommey wrote:
+> On Sat, May 18, 2019 at 12:58:28PM +0900, Mike Hommey wrote:
+>> On Sat, May 18, 2019 at 03:50:05AM +0200, SZEDER Gábor wrote:
+>>>
+>>> All the above is without commit-graph, I presume?  If so, then you
+>>> should give it a try, as it might bring immediate help in your
+>>> pathological repo.  With 5k commit in the same second (enforced via
+>>> 'export GIT_COMMITTER_DATE=$(date); for i in {1..5000} ...') I get:
+>>>
+>>>   $ best-of-five -q git rev-list HEAD~..HEAD
+>>>   0.069
+>>>   $ git commit-graph write --reachableComputing commit graph generation
+>>>   numbers: 100% (5000/5000), done.
+>>>   $ best-of-five -q git rev-list HEAD~..HEAD
+>>>   0.004
+>>
+>> I'm not observing any difference from using commit-graph, whether in
+>> time or in the number of commits that are looked at in limit_list().
 > 
-> With this restriction you would need to parse each commit to get at
-> commit timestamp and committer, check if the committer+timestamp is
-> unique, and bump it if it is not.
+> -c core.commitGraph=true does make a difference in time, but not in the
+> number of commits looked at in limit_list(). So it's only faster because
+> each iteration of the loop is faster. It means it's still dependent on
+> the depth of the dag, and the larger the repo will grow, the slower it
+> will get.
 
-So, I'd want to measure that rather than simply assuming it's a blocker.
-Clocks are very cheap these days.
+The plan is to use the commit-graph's generation numbers for these A..B
+queries, but due to some cases when commit date is a _better_ heuristic
+than generation numbers, we have not enabled them for A..B. You'll see
+that 'git rev-list --topo-order -n 1 HEAD` will be much faster with the
+commit-graph, but adding '--topo-order' to your 'HEAD~1..HEAD' query
+should not change the time at all.
 
-> Also, bumping timestamp means that the commit changed, means that its
-> contents-based ID changed, means that all commits that follow it needs
-> to have its contents changed...  And now you need to rewrite many
-> commits.
+See [1] for the discussion about "generation number v2" which will allow
+us to use a better heuristic in these cases.
 
-What "commits that follow it?" By hypothesis, the incoming commit's
-timestamp is bumped (if it's bumped) when it's first added to a branch
-or branches, before there are following commits in the DAG.
+Thanks,
+-Stolee
 
->    And you also break the assumptions that the same commits have
-> the same contents (including date) and the same ID in different
-> repositories (some of which may include additional branches, some of
-> which may have been part of network of related repositories, etc.).
-
-Wait...unless I completely misunderstand the hash-chain model, doesn't the
-hash of a commit depend on the hashes of its parents?  If that's the case,
-commits cannot have portable hashes. If it's not, please correct me.
-
-But if it's not, how does your first objection make sense?
-
-> > You don't need a daemon now to write commits to a repository. You can
-> > just add stuff to the object store, and then later flip the SHA-1 on a
-> > reference, we lock those indivdiual references, but this sort of thing
-> > would require a global write lock. This would introduce huge concurrency
-> > caveats that are non-issues now.
-> >
-> > Dumb clients matter. Now you can e.g. have two libgit2 processes writing
-> > to ref A and B respectively in the same repo, and they never have to
-> > know about each other or care about IPC.
-
-How do they know they're not writing to the same ref?  What keeps
-*that* operation atomic?
-
-> You do realize that dates may not be monotonic (because of imperfections
-> in clock synchronization), thus the fact that the date is different from
-> parent does not mean that is different from ancestor.
-
-Good point. That means the O(log2 n) version of the check has to be done
-all the time.  Unfortunate.
-
-> >> That's the simple case. The complicated case is checking for date
-> >> collisions on *other* branches. But there are ways to make that fast,
-> >> too. There's a very obvious one involving a presort that is is O(log2
-> >> n) in the number of commits.
-> 
-> I don't think performance hit you would get would be acceptable.
-
-Again, it's bad practice to assume rather than measure. Human intuitions
-about this sort of thing are notoriously unreliable.
-
-> >> Excuse me, but your premise is incorrect.  A git DAG isn't just "any" DAG.
-> >> The presence of timestamps makes a total ordering possible.
-> >>
-> >> (I was a theoretical mathematician in a former life. This is all very
-> >> familiar ground to me.)
-> 
-> Maybe in theory, when all clock are synchronized.
-
-My assertion does not depend on synchronized clocks, because it doesn't have to.
-
-If the timestamps in your repo are unique, there *is* a total ordering - 
-by timestamp. What you don't get is guaranteed consistency with the
-topo ordering - that is you get no guarantee that a child's timestamp
-is greater than its parents'. That really would require a common
-timebase.
-
-But I don't need that stronger property, because the purpose of
-totally ordering the repo is to guararantee the uniqueness of action
-stamps.  For that, all I need is to be able to generate a unique cookie
-for each commit that can be inserted in its action stamp.  For my use cases
-that cookie should *not* be a hash, because hashes always break N years
-down.  It should be an eternally stable product of the commit metadata.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-
+[1] https://public-inbox.org/git/6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com/
