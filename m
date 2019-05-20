@@ -7,148 +7,139 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3191F461
-	for <e@80x24.org>; Mon, 20 May 2019 12:13:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 459ED1F461
+	for <e@80x24.org>; Mon, 20 May 2019 12:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732644AbfETMND (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 08:13:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33836 "HELO cloud.peff.net"
+        id S2390282AbfETMbN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 08:31:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33848 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730921AbfETMND (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 08:13:03 -0400
-Received: (qmail 23430 invoked by uid 109); 20 May 2019 12:13:02 -0000
+        id S2389618AbfETMbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 08:31:12 -0400
+Received: (qmail 23929 invoked by uid 109); 20 May 2019 12:31:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 12:13:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 20 May 2019 12:31:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3723 invoked by uid 111); 20 May 2019 12:13:43 -0000
+Received: (qmail 3762 invoked by uid 111); 20 May 2019 12:31:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 08:13:43 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 May 2019 08:31:52 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 08:13:01 -0400
-Date:   Mon, 20 May 2019 08:13:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 May 2019 08:31:10 -0400
+Date:   Mon, 20 May 2019 08:31:10 -0400
 From:   Jeff King <peff@peff.net>
-To:     Alejandro Sanchez <asanchez1987@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH 4/4] am: fix --interactive HEAD tree resolution
-Message-ID: <20190520121301.GD11212@sigill.intra.peff.net>
-References: <20190520120636.GA12634@sigill.intra.peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Martin Langhoff <martin.langhoff@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] clone: auto-enable git-credential-store when
+ necessary
+Message-ID: <20190520123110.GE11212@sigill.intra.peff.net>
+References: <20190519050724.GA26179@sigill.intra.peff.net>
+ <20190519051604.GC19434@sigill.intra.peff.net>
+ <CAPig+cTkjJjuyrDOUh92B16an+wy9OnZgyKY0-bihWnzyWsoKg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190520120636.GA12634@sigill.intra.peff.net>
+In-Reply-To: <CAPig+cTkjJjuyrDOUh92B16an+wy9OnZgyKY0-bihWnzyWsoKg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In interactive mode, "git am -i --resolved" will try to generate a patch
-based on what is in the index, so that it can prompt "apply this
-patch?". To do so it needs the tree of HEAD, which it tries to get with
-get_oid_tree(). However, this doesn't yield a tree oid; the "tree" part
-just means "if you must disambiguate short oids, then prefer trees" (and
-we do not need to disambiguate at all, since we are feeding a ref name).
+On Mon, May 20, 2019 at 07:28:08AM -0400, Eric Sunshine wrote:
 
-Instead, we must parse the oid as a commit (which should always be true
-in a non-corrupt repository), and access its tree pointer manually.
+> > The biggest downside is that it's a bit magical from the user's
+> > perspective, because now the password is off in some other file (usually
+> > ~/.git-credentials, but sometimes in $XDG_CONFIG_HOME). Which
+> > complicates things if they want to purge the repo and password, for
+> > example, because now they can't just delete the repository directory.
+> >
+> > The file location is documented, though, and we point people to the
+> > documentation. So perhaps it will be enough (and better still, may lead
+> > to them configuring a more secure helper).
+> 
+> I'm trying to decide how I feel about this based upon my own
+> experience recently of having my password magically stored by Git for
+> Windows without warning or consent on a computer which was not my own
+> but on which I needed to access a private GitHub repository. Although
+> the situation is not perfectly analogous, the concern of having one's
+> password magically squirreled-away _somewhere_ unexpectedly is the
+> same. Being unfamiliar with Git for Windows's credential helper or
+> Windows credential management in general, I experienced more than a
+> few minutes of consternation and alarm before finally figuring out
+> where Git for Windows had stored my password and how to remove it. The
+> sense of alarm and discomfort likely would have not arisen had the
+> credential helper given me the opportunity to approve or deny the
+> action.
 
-This has been broken since the conversion to C in 7ff2683253
-(builtin-am: implement -i/--interactive, 2015-08-04), but there was no
-test coverage because of interactive-mode's insistence on having a tty.
-That was lifted in the previous commit, so we can now add a test for
-this case.
+Thanks, that's a good elaboration of the uneasiness I was feeling. This
+patch is better than the status quo in that your password was already
+being squirreled away in plaintext, and now it's at least locked down
+with filesystem permissions. But it's clearly not as far as we could go.
+I was mostly just afraid to break existing workflows, but maybe we
+should be more opinionated.
 
-Note that before this patch, the test would result in a BUG() which
-comes from 3506dc9445 (has_uncommitted_changes(): fall back to empty
-tree, 2018-07-11). But before that, we'd have simply segfaulted (and in
-fact this is the exact type of case the BUG() added there was trying to
-catch!).
+Or maybe we just need to give more specific details about how to back
+out the change.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/am.c              | 14 ++++++++---
- t/t4257-am-interactive.sh | 49 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 3 deletions(-)
- create mode 100755 t/t4257-am-interactive.sh
+> > +"Note that the password is still stored in plaintext in the filesystem;\n"
+> > +"consider configuring a more secure helper. See \"git help gitcredentials\"\n"
+> > +"and \"git help git-credential-store\" for details.\n"
+> >  );
+> 
+> Give the above experience, one way to mitigate such feelings of alarm
+> might, at a minimum, be for this message to say where the password is
+> being stored (and, possibly, how to remove it) so the user can do so
+> immediately if desired. Prompting the user to approve or deny the
+> action might also go a long way toward making this more palatable
+> (assuming the session is interactive).
 
-diff --git a/builtin/am.c b/builtin/am.c
-index ea16b844f1..33bd7a6eab 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1339,9 +1339,17 @@ static void write_index_patch(const struct am_state *state)
- 	struct rev_info rev_info;
- 	FILE *fp;
- 
--	if (!get_oid_tree("HEAD", &head))
--		tree = lookup_tree(the_repository, &head);
--	else
-+	if (!get_oid("HEAD", &head)) {
-+		struct object *obj;
-+		struct commit *commit;
-+
-+		obj = parse_object_or_die(&head, NULL);
-+		commit = object_as_type(the_repository, obj, OBJ_COMMIT, 0);
-+		if (!commit)
-+			die("unable to parse HEAD as a commit");
-+
-+		tree = get_commit_tree(commit);
-+	} else
- 		tree = lookup_tree(the_repository,
- 				   the_repository->hash_algo->empty_tree);
- 
-diff --git a/t/t4257-am-interactive.sh b/t/t4257-am-interactive.sh
-new file mode 100755
-index 0000000000..6989bf7aba
---- /dev/null
-+++ b/t/t4257-am-interactive.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+
-+test_description='am --interactive tests'
-+. ./test-lib.sh
-+
-+test_expect_success 'set up patches to apply' '
-+	test_commit unrelated &&
-+	test_commit no-conflict &&
-+	test_commit conflict-patch file patch &&
-+	git format-patch --stdout -2 >mbox &&
-+
-+	git reset --hard unrelated &&
-+	test_commit conflict-master file master base
-+'
-+
-+# Sanity check our setup.
-+test_expect_success 'applying all patches generates conflict' '
-+	test_must_fail git am mbox &&
-+	echo resolved >file &&
-+	git add -u &&
-+	git am --resolved
-+'
-+
-+test_expect_success 'interactive am can apply a single patch' '
-+	git reset --hard base &&
-+	printf "%s\n" y n | git am -i mbox &&
-+
-+	echo no-conflict >expect &&
-+	git log -1 --format=%s >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'interactive am can resolve conflict' '
-+	git reset --hard base &&
-+	printf "%s\n" y y | test_must_fail git am -i mbox &&
-+	echo resolved >file &&
-+	git add -u &&
-+	printf "%s\n" v y | git am -i --resolved &&
-+
-+	echo conflict-patch >expect &&
-+	git log -1 --format=%s >actual &&
-+	test_cmp expect actual &&
-+
-+	echo resolved >expect &&
-+	git cat-file blob HEAD:file >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.22.0.rc1.539.g7bfcdfe86d
+I actually thought about pointing to the file, but it's non-trivial to
+do so (there's a bunch of internal logic in credential-store to decide
+between $HOME and XDG locations).
+
+I think what we really need are better commands to manage credentials
+independent of helpers, and then we could recommend a simple command to
+clear a credential that you don't want to have stored. Right now I think
+the best you can do is:
+
+  echo url=https://example.com | git credential reject
+
+but:
+
+  - "reject" is a funny term; this comes from the C code, which thinks
+    of it in terms of the server approving/rejecting (and that makes
+    sense for scripts calling this command). But at the helper level,
+    the operations are really store/erase. We probably ought to support
+    those names, too.
+
+  - piping the credential protocol is slightly awkward; we probably
+    ought to allow a url on the command line, and avoid reading stdin if
+    we get one.
+
+That would give us:
+
+  git credential erase https://example.com
+
+which is really quite readable. :)
+
+Likewise, if we choose not to auto-enable the store helper, we'd
+probably want to give advice on seeding your password. Right now that
+is:
+
+  echo url=https://example.com | git credential fill | git credential approve
+
+which is...not intuitive. It would make sense to me to have a "seed"
+operation which does a fill/approve together. Maybe that should just be
+what "store" does, which would allow:
+
+  $ git credential store https://example.com
+  Username for 'https://example.com':
+  Password for 'https://user@example.com':
+
+(Of course you can also just "git fetch" to get prompted, but it seems
+like this shouldn't require a network operation if you don't want it
+to).
+
+-Peff
