@@ -2,102 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46B561F462
-	for <e@80x24.org>; Mon, 20 May 2019 20:38:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBD6820382
+	for <e@80x24.org>; Mon, 20 May 2019 20:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726010AbfETUit (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 16:38:49 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39568 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfETUit (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 16:38:49 -0400
-Received: by mail-pl1-f194.google.com with SMTP id g9so7243574plm.6
-        for <git@vger.kernel.org>; Mon, 20 May 2019 13:38:49 -0700 (PDT)
+        id S1726780AbfETUyI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 16:54:08 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:37865 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbfETUyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 16:54:07 -0400
+Received: by mail-pf1-f193.google.com with SMTP id g3so7818539pfi.4
+        for <git@vger.kernel.org>; Mon, 20 May 2019 13:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=kpPcRD8+P46UuyNogW4r491cyoUyyCXqxf8VeGh0NPs=;
-        b=t1O0HLG6atruIiZ7sgWF+aTJWkaEGdqj8NIaHUi6kYzbkscPns8vNs/WFPI3anq3sk
-         JzBwEDcaOCMcxG5rJHjkCkq7ap8Ab7IFTPCkqb7O7cl6AFx0nKrgopYTifesdn57DpPW
-         dGDSRDbmEYmlS3McdLcahf+tluo8Tp+dFIrvs/IutnJ2qB5XjUB3tHQr9KUwPaApXZhP
-         Z4O39SzL8Wx8ieO6Tlt8A515Ozj5QFWweWYLC4F5GDRn/EJWv+VcobR8RGHXcmZxmHUB
-         4poR3QSxDF7ev67lUniXpAu2lYdHElAcc5hnOvIXvGceJfJESTqGenYRbgAfiMao/CK+
-         dIwg==
+        bh=kqSmXEhamaaW9n6VwClQy6MY3meOeiHXoT2dcqvYYLg=;
+        b=hSuQeQtItcjK43XO+RYKuTFqx4mx5Om8OC9wcdX463N4Uu9j7i6vO5oJNhRB1sCROx
+         bkgZ/pE3WBUngzOG4kwRHiMD5+CjGRpuoJV0SCTRlZMqZiCgkgVJrm1qBchtHKNHLdGd
+         5N5/8CTAWqiBLXnnlnsnR3CoopztdMoGVKngRJyQ6CazQG6CuceW7J3LyRhtE5DDkqC1
+         /vBaSU9kaz2CZsKOyfXtVsRsit5mKSDTAskDB7dz078qtyIbNhgVaQ9CfikeD+ZQfXvv
+         jKdkA6MqYMG4XXZRhcFsi6YIzrJxnbBLPnbNueOy/G4E0jBagjp+mI+y8M1TG/RLi4v6
+         ijTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kpPcRD8+P46UuyNogW4r491cyoUyyCXqxf8VeGh0NPs=;
-        b=cinwP1aJvV90q54LrTE2B3ZhJI1VS//EwxZDflrHdFNZ/Uz/u9npDKpdAPjVOpmHAe
-         W6voP0YFW4+PAn0wgvuzl4AtJzIJL/Fx2d8i1h3O+Ego0lyZuCN+F2SOFpnDUQ3PiCjG
-         Q1312zhZP6QZ1/tsoIcf2Yx+bvosSeRu2Xy3fS14lpWGb57eRiqMLrprnbnVIo6q5h1+
-         XCuZidSbZnUOYuJ8uTNowkP7BH8FzAgy2MfBOyFiWC57oMlXNHShgF+AtlAy9yKpOZJ4
-         EPEhtzrTzJ5W06Ag3TBo6x10yfGcvlAWRFVDY4gKKX8hp7/d658UyWoykuziLzR7TQPo
-         R1hQ==
-X-Gm-Message-State: APjAAAXesVOVtKfDdZoJTxPA2KvVMrGdavKCy0XX8H8qI6zstBgQfV1N
-        69qKqar9PF6KGUDb5fAA4HZfrQgUb9slEA==
-X-Google-Smtp-Source: APXvYqyaCGxSs0q6xfRa3uJ/imN6TRf0OLGmtjWeYp11Qg3Uru5h+6vRtiU5uohD7meojZGmLtRPMg==
-X-Received: by 2002:a17:902:e30b:: with SMTP id cg11mr77318008plb.3.1558384728322;
-        Mon, 20 May 2019 13:38:48 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id 135sm34242399pfb.97.2019.05.20.13.38.47
+        bh=kqSmXEhamaaW9n6VwClQy6MY3meOeiHXoT2dcqvYYLg=;
+        b=qVfBRaruwQgQDvKRUIe4eX2Va+BMXtSSk6YPg4xTDUGoMMPTaTDoAG6Qe90YtM5Q43
+         LwFpqc/PSf4Plr4O59zxWKJd48SQXkFWTLdwMeI7N3a2m2r0YlW5zAXG9QzEQHQOd9jy
+         2yi8RUMwUR9GxYv1Z6UFq/hWKa0u+7YofHYIzKK8HdY9t9KytaLLOFrErjZ0d7LTjZbe
+         TM2y/Cy/0wxVSrQlNlPuFh7cxKkdpOnk1fXjWZn1Fpmea1LhF4rhw5vuM+XdY/DvGiQt
+         oqWEnZaOntAUVuTNumHUkDyf8zQuvj/RE9r03CJOdlhmJRfodjMbSvI/XKu0/TH8t7Jh
+         LPXw==
+X-Gm-Message-State: APjAAAW2aEuEG5IC4uJDaNhLVO2Q5wdfxE24lgQWWmpxjwVvIlVtOLxi
+        4vNZTSC3uvJ/ViTnENZLS5U=
+X-Google-Smtp-Source: APXvYqzxQCvFbn7zitvlkZR6dSjCHWVk75Y2BPwlnAQ18iVW12TZJ1jINmNYFZ6Ee2AE0E8qSvdFxA==
+X-Received: by 2002:a62:bd0e:: with SMTP id a14mr63022381pff.44.1558385646709;
+        Mon, 20 May 2019 13:54:06 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id c23sm37200712pfp.0.2019.05.20.13.54.05
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 20 May 2019 13:38:47 -0700 (PDT)
-Date:   Mon, 20 May 2019 13:38:43 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: hint about GIT_DEBUGGER
-Message-ID: <20190520203843.GA64994@google.com>
-References: <20190517204826.45308-1-emilyshaffer@google.com>
- <CABPp-BHZkQG+pr4MmVGahHDR56grqvRsYNxZ=uShK70APzj9LA@mail.gmail.com>
+        Mon, 20 May 2019 13:54:06 -0700 (PDT)
+Date:   Mon, 20 May 2019 13:54:04 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitsubmodules: align html and nroff lists
+Message-ID: <20190520205404.GA32230@google.com>
+References: <20190501203216.141398-1-emilyshaffer@google.com>
+ <20190501210354.GC13372@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BHZkQG+pr4MmVGahHDR56grqvRsYNxZ=uShK70APzj9LA@mail.gmail.com>
+In-Reply-To: <20190501210354.GC13372@sigill.intra.peff.net>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[snip]
+Jeff King wrote:
 
-> > + - You can launch gdb around your program using the shorthand GIT_DEBUGGER.
-> > +   Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
-> > +   run `GIT_DEBUGGER=debugger-binary some-args ./bin-wrappers/git foo` to
-> 
-> Missing some quotes around debugger-binary and some-args:
-> +   run `GIT_DEBUGGER="debugger-binary some-args" ./bin-wrappers/git foo` to
-> 
-> Also, one thing I always wonder about with command documentation like
-> this is whether people will understand that "debugger-binary",
-> "some-args", and "foo" are just placeholders rather than literal text
-> -- and that everything else is literal text and not meant to be
-> placeholders.  Does it make since to include a couple examples, or
-> perhaps modify the text somehow to avoid confusion between
-> placeholders and literals, or maybe just tell me I overthinking this?
-> (I've been bit by similar problems in other contexts, so I'm just
-> flagging it for you to consider).
+> The patch itself looks good to me.
 
-It's a good point. I like to use placeholders that don't sound like a
-real command (and failed a little here), for example,
-`GIT_DEBUGGER=my-cool-debugger some-various-args`. It can be a challenge
-to choose a placeholder that sounds fake but also doesn't sound too
-informal (the above feels informal to me). I think the best way is to
-show an example, that's a good idea. I'll come up with one and send
-another round this week.
+For what it's worth,
 
-Thanks a bunch for having a look.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
- - Emily
+as well.  It's a straightforward patch and solves the reader-facing
+problem.  Thanks.
 
-> 
-> Elijah
+For the curious, the upstream discussion in docbook-xsl is
+https://lists.oasis-open.org/archives/docbook-apps/201905/msg00001.html.
+I'm not sure where their bug tracker lives and what bug number this has
+there.
+
+Thanks,
+Jonathan
