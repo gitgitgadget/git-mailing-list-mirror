@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85A6B1F462
-	for <e@80x24.org>; Mon, 20 May 2019 21:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8D521F462
+	for <e@80x24.org>; Mon, 20 May 2019 21:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbfETVx0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 17:53:26 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37810 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725776AbfETVx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 17:53:26 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 7so800146wmo.2
-        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:24 -0700 (PDT)
+        id S1726931AbfETVx3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 17:53:29 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40496 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726899AbfETVx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 17:53:27 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 15so786084wmg.5
+        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=re919G5EiPff6sSQMEG3RHfnP97frjXQ577syAaw1NA=;
-        b=dquAnUl4bypv511k6Xjt7iUYH7oNum4o3WJQZ7UUlAJP+BBPk0kdz9A1wt81GodupP
-         +Vw6nQIVKIn7IrbJGk00RfzwrF+UpZTpwtux5G2iIKV9/xRUXC3Jdz0egxxrxwmCcERm
-         LLtl+h52PPyTXIAfyMx08qRA7ryUMmSIiY08zaNq8D3MNJt1hzMh4zrMcGVoA0wQs7W2
-         PT5op3bfvT2HX3g6Vs4SkZI3eD3zf2C9SImC3CCUGcGUfB5ov4Fc1kr9iC9xJM7Se0sE
-         sjbdA8TxGd3qtMl7ANPtJ5ocACeK60WMrPnTtVeesxV8jaOdSmlXXuEFriJ9B/hbiBPD
-         2Z1Q==
+        bh=Qfp+25EdtCzAZagRvcYdxv6hoKsRLjQuQA4YfB9EpF0=;
+        b=cm4iFseLAhBjPLY14aJBQmKw+7+iZUeLJo7e0YToi2w9b4GSCp0May3y5tmBxgZFja
+         zPFVYLRR/1U5hJn2NY8/YL/PkGMfEfeSVfoSFMCczVKCmRPy63SGZZ5SmZwBUuEavU+l
+         e9JOBIA1+8+3aUnLGvsko/ygBmxTgWGDA6tzyOQkTgkc1tzWKo7d5G2UMQktPw7PtDtq
+         d65KFrYECIuu88LzCiA5IeSSUo6p1yIwOwoD5ZN71DSzZIHTyP84BqUxdsukbYLi2wQu
+         O1lN+eQcc8VEOkgyzxM24cmqlDnQdr1J02JwTco/YctVyBbwJoVuIKMwJ2R6ldNQUyRo
+         i2xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=re919G5EiPff6sSQMEG3RHfnP97frjXQ577syAaw1NA=;
-        b=Q2Pl2pNIMlWgm5FcNZu76eo39GicpSZpEuQ6GfubdCvr3DG3ATNq+JURGWthw9LqjX
-         np1uZabkKvnn6G81zXGNdNIfeVaFjq9Dk2DMukCoI+CqRi5DBq7TP02NRtNF7s2ryW8X
-         o1yWSnX6DNmILh6NhwQYuVPYlagCRJb3up7eoB4UfvYvTE+ypy677vHFfgmel2S4L3gV
-         Aq0DGOB1+MDqqpgSnVuEShojfru13ex9QGafoHJEBCMHN7gJSKKK7SPSEhQbRHYDZSeM
-         gxw0gPBzDIO+TLFow+ICAaSXniMzM9897s1gqEbxQAYvXbXzPzINTg5jkfxcDoA2JlEw
-         H/Ow==
-X-Gm-Message-State: APjAAAXnv5nDNXo9m1uUxHYZ7uwD+QAaTXQJe+jc46SCP4R3v0Vu+Zfs
-        S+fVcSg0YypftNxL+wvlJDtKZQi/
-X-Google-Smtp-Source: APXvYqzHZyaZINr4GziNRDaDv+upixvGSeFjjUh0em91f7hAkHLPRMfw8JGTTZzfmbBR/tTQf+ik+w==
-X-Received: by 2002:a7b:cb01:: with SMTP id u1mr793780wmj.153.1558389203820;
-        Mon, 20 May 2019 14:53:23 -0700 (PDT)
+        bh=Qfp+25EdtCzAZagRvcYdxv6hoKsRLjQuQA4YfB9EpF0=;
+        b=gz6XyGlwCc+kUq25pSrLWKIv7ARTj/fQVStCUy2l9vVpCMhPEdYf5WcqqzEIRGN7Le
+         4LXSH6Z0Z7WAikILgpbJb+VtRiK7DuSPQpWGruDBTWnFZ4BEgb0UJci+NSoNiGIIG25n
+         fQqTq2727kG+ytaCtabeRZiVJFelR5Wz7TKPMiOSUobtaIsp2cTeeBMiEtX5wokZwQsD
+         /9qQABh96C0v83No7i/RLI5YyFhdM3Xk6Ib6u82eYqKLYRIN+/+/eAuj4sdTGHso/T0r
+         LtF3PxpUOyIspNBekLGG8m/tGjFUyJ1jY78vYnV2VOnQkZlnFv1DmFxUeulQXOmTuxq1
+         37pA==
+X-Gm-Message-State: APjAAAVezbwGjTjgGSst4xMuMpHq1UWzJ0C+RBiBfML310n/NLQI6/NB
+        G0SpzYSIgFBoUcC7a+C6kwkvUZqk
+X-Google-Smtp-Source: APXvYqzxYgvO6qNeafn924q9qGOeshQDiv1jG4NKOwuj74nxfjgJx+2ZXgn6fb1i/W4jEVTbKf+teA==
+X-Received: by 2002:a1c:f916:: with SMTP id x22mr795139wmh.81.1558389205268;
+        Mon, 20 May 2019 14:53:25 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.22
+        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.24
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 20 May 2019 14:53:22 -0700 (PDT)
+        Mon, 20 May 2019 14:53:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] hash-object doc: stop mentioning git-cvsimport
-Date:   Mon, 20 May 2019 23:53:10 +0200
-Message-Id: <20190520215312.10363-2-avarab@gmail.com>
+Subject: [PATCH 2/3] hash-object doc: elaborate on -w and --literally promises
+Date:   Mon, 20 May 2019 23:53:11 +0200
+Message-Id: <20190520215312.10363-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 In-Reply-To: <20190520215312.10363-1-avarab@gmail.com>
 References: <20190520215312.10363-1-avarab@gmail.com>
@@ -74,35 +74,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove a reference to git-cvsimport in the intro. As can be seen from
-the history of this command[1] it was originally intended for use with
-git-cvsimport, but how it uses it (and that it uses it at all) is
-irrelevant trivia at this point.
+Clarify the hash-object docs to explicitly note that the --literally
+option guarantees that a loose object will be written, but that a
+normal -w ("write") invocation doesn't.
 
-1. See 7672db20c2 ("[PATCH] Expose object ID computation functions.",
-   2005-07-08) and 8b8840e046 ("[PATCH] cvsgit fixes: spaces in
-   filenames and CVS server dialog woes", 2005-08-15).
+At first I thought talking about "loose object" in the docs was a
+mistake in 83115ac4a8 ("git-hash-object.txt: document --literally
+option", 2015-05-04), but as is clear from 5ba9a93b39 ("hash-object:
+add --literally option", 2014-09-11) this was intended all along.
+
+As seen in 4dd1fbc7b1 ("Bigfile: teach "git add" to send a large file
+straight to a pack", 2011-05-08) we'll otherwise not guarantee that we
+write loose objects, so let's explicitly note that, using vague enough
+language to leave the door open to any arbitrary future storage
+format, not just loose objects and packs.
+
+While I'm at it remove the mention of "--stdin" from the "--literally"
+documentation. This wasn't correct, the "--literally" option combines
+with any other option (e.g. "--stdin-paths"), not just "--stdin".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-hash-object.txt | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ Documentation/git-hash-object.txt | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index 814e74406a..df9e2c58bd 100644
+index df9e2c58bd..100630d021 100644
 --- a/Documentation/git-hash-object.txt
 +++ b/Documentation/git-hash-object.txt
-@@ -18,9 +18,7 @@ Computes the object ID value for an object with specified type
- with the contents of the named file (which can be outside of the
- work tree), and optionally writes the resulting object into the
- object database.  Reports its object ID to its standard output.
--This is used by 'git cvsimport' to update the index
--without modifying files in the work tree.  When <type> is not
--specified, it defaults to "blob".
-+When <type> is not specified, it defaults to "blob".
+@@ -28,6 +28,12 @@ OPTIONS
  
- OPTIONS
- -------
+ -w::
+ 	Actually write the object into the object database.
+++
++No guarantees are made as to how the object is added to the database
++(e.g. whether as a loose object, or streamed to a pack), except in the
++case of the `--literally` option. How it's written may depend on
++heuristics such as the `core.bigFileThreshold` configuration variable
++(see linkgit:git-config[1]).
+ 
+ --stdin::
+ 	Read the object from standard input instead of from a file.
+@@ -53,10 +59,11 @@ OPTIONS
+ 	is always implied, unless the `--path` option is given.
+ 
+ --literally::
+-	Allow `--stdin` to hash any garbage into a loose object which might not
++	Allow for hashing arbitrary data which might not
+ 	otherwise pass standard object parsing or git-fsck checks. Useful for
+ 	stress-testing Git itself or reproducing characteristics of corrupt or
+-	bogus objects encountered in the wild.
++	bogus objects encountered in the wild. When writing objects guarantees
++	that the written object will be a loose object, for ease of debugging.
+ 
+ GIT
+ ---
 -- 
 2.21.0.1020.gf2820cf01a
 
