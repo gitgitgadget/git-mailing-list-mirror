@@ -2,82 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DACA21F461
-	for <e@80x24.org>; Mon, 20 May 2019 15:05:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2705A1F461
+	for <e@80x24.org>; Mon, 20 May 2019 15:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730766AbfETPFW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 11:05:22 -0400
-Received: from mx2.suse.de ([195.135.220.15]:59238 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2387871AbfETPFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 11:05:20 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 22339AD8F;
-        Mon, 20 May 2019 15:05:19 +0000 (UTC)
-Date:   Mon, 20 May 2019 17:05:18 +0200
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     esr@thyrsus.com, Jason Pyeron <jpyeron@pdinc.us>,
-        git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-Message-ID: <20190520170518.73ad912b@kitsune.suse.cz>
-In-Reply-To: <3b8d6a78-bd88-770c-e79b-d732f7e277fd@gmail.com>
-References: <20190515191605.21D394703049@snark.thyrsus.com>
-        <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
-        <023b01d50b5c$cbd3cd90$637b68b0$@pdinc.us>
-        <998895a9-cfbb-c458-cc88-fa1aabed4389@gmail.com>
-        <20190516002831.GC124956@thyrsus.com>
-        <3b8d6a78-bd88-770c-e79b-d732f7e277fd@gmail.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+        id S2388127AbfETPRY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 11:17:24 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:43472 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732343AbfETPRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 11:17:24 -0400
+Received: by mail-ed1-f66.google.com with SMTP id w33so24391621edb.10
+        for <git@vger.kernel.org>; Mon, 20 May 2019 08:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=n6KT/JllFft5cE+IMdole+7d+Ac08LunS/hD9c5WtOg=;
+        b=VnloKE9DRqwlFQweegqnAivf18iiJvFREdh7mCz2eRQ0mZzFdp/k4O8OQb2313RSTT
+         TYnk84UX0BJCnpXgBAhT26joUxRdI58TVrGKUiPDMaZ5cYMiDXB7CyonhetIJtP5cWkw
+         7+yOU2uLKM6KdLaLzRr2Apv+ZCAKH6Si/C/qBrN5X5HSZJFEN7AQ4fThkdz7wOW84zX2
+         SlNNNzskZDes2fnK06ZYpZMXGzWmLls5LI5QO25CSn0t1rIW8ugQiuk71BKBxAWxALWz
+         tEmqZQcWnHts6LYnLVrYcWi2bU4O8zRu6LGpjbQKcxCo7ex6vX61BdhwVyeIQxgfhDiE
+         JGDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=n6KT/JllFft5cE+IMdole+7d+Ac08LunS/hD9c5WtOg=;
+        b=TdjKac++3mipBmUFep/fcbAFmPcyRoA2RWqPbH8IWu7j/kqA79F/AE++nHVKUSeqjP
+         Qw6zp9NoNZ/BwcW+uotd/JlKWKVEHC8bnEoBYTHlez1pS7614sZUqkbwK6VwemMhtLQ4
+         ItsJs1YXSyfbJfQvlwcAPk/GW2BB3Zdh53XdnEVnnSQc8ANrnUTOEZKB6/ZEXumUxWrl
+         s+FO9oc5Ou7SRH8wQ+33dCOGtvnuyKBiqmQBINUPILUVbOAc5T2Lrtnw1y/Pc6JsrpwF
+         xkK+TP+S4QE23BrGcLiM5yIkKujHp+SdblpC2zlTsOpnzch0v8OfKQQ3LT7y7AxGxemD
+         Qhyw==
+X-Gm-Message-State: APjAAAXRBHRfMOwMafyeU0+rMJPE3Iqczm5/5AP4fMT0hmuvLmcIeM//
+        MyAblBOauEV7KTlQfw+aQvw=
+X-Google-Smtp-Source: APXvYqw5Un/maTwKmSR8n4ErlDmqyep1gOdaTRahYvDanqTRSeJ/5OWw2LBsl2qetPs9UeZl9QxgKg==
+X-Received: by 2002:a50:8e81:: with SMTP id w1mr75910619edw.271.1558365442315;
+        Mon, 20 May 2019 08:17:22 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id l19sm5688042edc.84.2019.05.20.08.17.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 May 2019 08:17:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Martin Langhoff <martin.langhoff@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] clone: auto-enable git-credential-store when necessary
+References: <20190519050724.GA26179@sigill.intra.peff.net> <20190519051604.GC19434@sigill.intra.peff.net> <87imu5ut4x.fsf@evledraar.gmail.com> <20190520140825.GA31580@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190520140825.GA31580@sigill.intra.peff.net>
+Date:   Mon, 20 May 2019 17:17:20 +0200
+Message-ID: <87h89pupdr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 15 May 2019 21:25:46 -0400
-Derrick Stolee <stolee@gmail.com> wrote:
 
-> On 5/15/2019 8:28 PM, Eric S. Raymond wrote:
-> > Derrick Stolee <stolee@gmail.com>:  
-> >> What problem are you trying to solve where commit date is important?  
+On Mon, May 20 2019, Jeff King wrote:
 
-> > B. Unique canonical form of import-stream representation.
-> > 
-> > Reposurgeon is a very complex piece of software with subtle failure
-> > modes.  I have a strong need to be able to regression-test its
-> > operation.  Right now there are important cases in which I can't do
-> > that because (a) the order in which it writes commits and (b) how it
-> > colors branches, are both phase-of-moon dependent.  That is, the
-> > algorithms may be deterministic but they're not documented and seem to
-> > be dependent on variables that are hidden from me.
-> > 
-> > Before import streams can have a canonical output order without hidden
-> > variables (e.g. depending only on visible metadata) in practice, that
-> > needs to be possible in principle. I've thought about this a lot and
-> > not only are unique commit timestamps the most natural way to make
-> > it possible, they're the only way conistent with the reality that
-> > commit comments may be altered for various good reasons during
-> > repository translation.  
-> 
-> If you are trying to debug or test something, why don't you serialize
-> the input you are using for your test?
+> On Mon, May 20, 2019 at 03:56:14PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> > -test_expect_failure 'fetch of password-URL clone uses stored auth' '
+>> > +test_expect_success 'fetch of password-URL clone uses stored auth' '
+>> >  	set_askpass wrong &&
+>> >  	git -C clone-auth-none fetch &&
+>> >  	expect_askpass none
+>>
+>> I've only looked at this very briefly, there's a regression here where
+>> you're assuming that having a configured credential helper means it
+>> works.
+>>
+>> I.e. I have a ~/.gitconfig where I point to some-gnome-thing-or-other
+>> what doesn't exist on my VPS in my ~/.gitconfig, cloning just warns
+>> about it being missing, but will store the password in the repo.
+>>
+>> With this you detect that I have the helper, don't store it, but then my
+>> helper doesn't work, whereas this worked before.
+>
+> There are more cases beyond that, too. You might have a helper defined
+> which doesn't actually store passwords, but just sometimes tries to
+> provide one. My thinking was that if you're clueful enough to have
+> configured helpers, you can probably deal with the fallout. But you're
+> right that it may still be a regression in the sense that the user may
+> still have to actually _do_ something to get their fetch to work.
+>
+> I guess a more robust version of this is that _after_ the successful
+> clone, we could ask the credential system "hey, do you have the
+> credential for $URL?". And if it can't answer, then we can take action
+> (whether that action is setting up credential-store and seeding it with
+> the password, or just advising the user about the situation).
+>
+> -Peff
 
-And that's the problem. Serialization of a git repository is not stable
-because there is no total ordering on commits. And for testing you need
-to serialize some 'before' and 'after' state and they can be totally
-different. Not because the repository state is totally different but
-because the serialization of the state is not stable.
+Yeah I don't mean deal with some there-but-broken helper, but this:
 
-Thanks
+    /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnom=
+e-keyring:
+    not found
 
-Michal
+Until then the observable effect of that has been to make the
+credential.helper config a noop, but now it's causing "we have a helper"
+behavior.
