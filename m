@@ -2,163 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 367FF1F462
-	for <e@80x24.org>; Mon, 20 May 2019 18:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38F6A1F462
+	for <e@80x24.org>; Mon, 20 May 2019 18:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727269AbfETSGL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 14:06:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48709 "EHLO mout.gmx.net"
+        id S1726069AbfETSW2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 14:22:28 -0400
+Received: from siwi.pair.com ([209.68.5.199]:40450 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725951AbfETSGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 14:06:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558375565;
-        bh=jEASy77lF2IvAaeJfHkgjMuEEFGw/wj2AmeWUwlPl7s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IXaNaiL1MQQb5xN/rrlm0J0dXEOe4IR9PPNURQGz82V+kSNnlIhfmn7ERZrvZucwr
-         2TqoYX24yi6UV3Rzr3Jobb0qdKILpzenhSvQUbmrBjaa+537AtWiG/s0v2HMhC1S5b
-         Kgu89VrV8p6m2j2v1h1tvg5XEn2osq5iyiRQ/qyc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAcs-1gvdi83yFE-00bXxT; Mon, 20
- May 2019 20:06:05 +0200
-Date:   Mon, 20 May 2019 20:05:48 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v4 2/2] merge: add --quit
-In-Reply-To: <20190518113043.18389-3-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905201904240.46@tvgsbejvaqbjf.bet>
-References: <20190514091322.12427-1-pclouds@gmail.com> <20190518113043.18389-1-pclouds@gmail.com> <20190518113043.18389-3-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725951AbfETSW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 14:22:28 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 13CAB3F4088;
+        Mon, 20 May 2019 14:22:27 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:995c:4aa3:4774:bbd8] (unknown [IPv6:2001:4898:a800:1012:4a90:4aa3:4774:bbd8])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9ACB93F4019;
+        Mon, 20 May 2019 14:22:26 -0400 (EDT)
+Subject: Re: I made a flame graph renderer for git's trace2 output
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <87zhnuwdkp.fsf@evledraar.gmail.com>
+ <20190510210324.GA30947@sigill.intra.peff.net>
+ <87y33evuop.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <d1f9a2f4-500d-d5f6-af3d-75d3fdb1323b@jeffhostetler.com>
+Date:   Mon, 20 May 2019 14:22:25 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-725443162-1558375565=:46"
-X-Provags-ID: V03:K1:qxsI6cCABJAn5BehCx/qBRg4/dLVZvrUivduRixmvaggqgl7KCx
- dvNlrCWBWb5qpTaMG8uaheNbt63j/mDAHg0PLceMvzyFhzjzkF03ah8ZD8PvM3PTR6w8Zg7
- WmrRSnoMj6+U3wKYAdZO+Em/B/Z2oLM+14F9xuaOdvG4QE/g6BiHWwYMFkRoHuyylhf0ge5
- Bl3+Mib9gVnRlCTJq5THg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gmBESlW8va0=:hwBbmcVRmHxI5nwfPNcA97
- TRnbZ+tBQlS1ILOG9fBDLnzeQ+ZwxBrwupdGoSVz1hs72v+7ZYEJAZWi6dKgaVsAh5zU6FpQw
- vZE+aTXDGDK7NdwruH157tVENbl+TK9v9AzgXX2aq2kmSIfaraH0uag8Kt1hSwIrFN6vTz4Ws
- ejCyeBFIiFoE6DoAgNakgSykMGFFLth5U+M+CwCdbZgHzlEqYdy1pTLINiru5KkfxvtErUdQ8
- NA1Eg8JYU46WIRqiYw0NJuNsYPE6nhTxIl5pTm56RUlAptxZZ8gkrL+gmnBYDRgFsubqafznG
- usA7Hkaxf2LxnplsHMeoqg1QFvLBE3vnHlgoa3jTQFs3ThuixEKTqrwsPLvTDzdTzEBn7KwCl
- zZnUEt0BIt13TAK9Egt6Vd9saFEiv3PnFjBCiXj091Xfoi6ISoF4kirrX7sYDVeyhw/2N8+51
- lnibh0E51MnsoxRg1WHgXFWJserhNaUwdvEtAm9aqMDAo3f/bghftGrGOOEvZ49YxpwAmdfmM
- IM/j4Bra/maSZD5xv/o08vJRKYyOMQeWuDXn/HNvnyWktQfD4V2WXYMgdwGeUvl8VpWncf6Qa
- ENvYUHbZ75yaVrFeh2Hxtw0IBWtVTw7VK592LnIN5SmTGnY8ZBGgGLDxGtKJKZTSNyuq1PRSe
- JI2fJQsqm0kcVQRHlmzooPqhBgxlXp7yi6Bh71MPlPn7ee3yrwlCsiuP0yxnSu445M9/rpm2F
- yyvIb6m3R3eIBt/HdBwNF0c6HG/JIxoCCVw6yGOPohHj1cRyohc9GJRNc2mJFHgmTrdTGuhCf
- 5ogMsiXyD36mm03wb0wjmt6MQOowgKrC1ViajCQ7IFrRsm/64ds0BUzX3Xnd4dDW0ZY6wfPQl
- fZ12owwwn0ZLwAYNob3aaY38pkIPwaUSot5BgnJ/StZl5PEK2cZhkIwLtG1rN/Fc/2fGNmNGs
- fDtbRU9rkjwDShuCu+SUSX55UCJkq15km8hqcHDgVzIYZQd01Yx/R
+In-Reply-To: <87y33evuop.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-725443162-1558375565=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-Hi Duy,
+On 5/10/2019 5:57 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, May 10 2019, Jeff King wrote:
+> 
+>> On Fri, May 10, 2019 at 05:09:58PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>>> As noted in TODOs in the script there's various stuff I'd like to do
+>>> better, and this also shows how we need a lot more trace regions to get
+>>> granular data.
+>>
+>> Hmm. My gut reaction was: doesn't "perf record -g make test" already
+>> give us that granular data? I know "perf" isn't available everywhere,
+>> but the idea of the FlameGraph repo is that it takes input from a lot of
+>> sources (though I don't know if it supports any Windows-specific formats
+>> yet, which is presumably a point of interesting to trace-2 authors).
+>>
+>> But having generated such a flamegraph, it's not all that helpful. It
+>> mainly tells us that we spend a lot of time on fork/exec. Which is no
+>> surprise, since the test suite is geared not towards heavy workloads,
+>> but lots of tiny functionality tests.
+>>
+>> TBH, I'm not sure that flame-graphing the test suite is going to be all
+>> that useful in the long run. It's going to be heavily weighted by the
+>> types of things the test suite does. Flamegraphs are good for
+>> understanding where your time is going for a particular workload, but
+>> the workload of the test suite is not that interesting.
+>>
+>> And once you do have a particular workload of interest that you can
+>> replay, then I think the granular "perf" results really can be helpful.
+>>
+>> I think the trace2 flamegraph would be most useful if you were
+>> collecting across a broad spectrum of workloads done by a user. You
+>> _can_ do that with perf or similar tools, but it can be a bit awkward.
+>> I do wonder how painful it would be to alias "git" to "perf record git"
+>> for a day or something.
+> 
+> Yeah I should have mentioned that I'm mainly linking to the test suite
+> rendering as a demo.
+> 
+> My actual use-case for this is to see what production nodes are spending
+> their time on, similar to what Microsoft is doing with their use of this
+> facility.
+> 
+> The test suite serves as a really good test-case for the output, and to
+> stress-test my aggregation script, since we're pretty much guaranteed to
+> run all our commands, and cover a lot of unusual cases.
+> 
+> It also shows that we've got a long way to go in improving the trace2
+> facility, i.e. adding region enter/leave for some of the things we spend
+> the most time on.
+> 
 
-On Sat, 18 May 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Very nice!
 
-> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-> index 106148254d..625a24a980 100755
-> --- a/t/t7600-merge.sh
-> +++ b/t/t7600-merge.sh
-> @@ -822,4 +822,30 @@ test_expect_success EXECKEEPSPID 'killed merge can =
-be completed with --continue'
->  	verify_parents $c0 $c1
->  '
->
-> +test_expect_success 'merge --quit' '
-> +	git init merge-quit &&
-> +	(
-> +		cd merge-quit &&
-> +		test_commit base &&
-> +		echo one >>base.t &&
-> +		git commit -am one &&
-> +		git branch one &&
-> +		git checkout base &&
-> +		echo two >>base.t &&
-> +		git commit -am two &&
-> +		test_must_fail git -c rerere.enabled=3Dtrue merge one &&
-> +		test_path_is_file .git/MERGE_HEAD &&
-> +		test_path_is_file .git/MERGE_MODE &&
-> +		test_path_is_file .git/MERGE_MSG &&
-> +		git rerere status >rerere.before &&
-> +		git merge --quit &&
-> +		test_path_is_missing .git/MERGE_HEAD &&
-> +		test_path_is_missing .git/MERGE_MODE &&
-> +		test_path_is_missing .git/MERGE_MSG &&
-> +		git rerere status >rerere.after &&
-> +		test_must_be_empty rerere.after &&
-> +		! test_cmp rerere.after rerere.before
-> +	)
-> +'
+Yes, there is more work to do to add more regions to get more
+granular data for interesting/problematic things.  My primary
+goal in this phase has been to get the basic machinery in place
+and be vetted with some universally interesting regions, such as
+reading/writing the index and the phases of status.
 
-Good test cases do not *need* to be excessively long. Something like this
-should be conciser, and more importantly, less inviting to typos or other
-bugs:
+Going forward, we can trivially (permanently) add new regions as we
+want.  I tend to use temporary "experimental" regions during my perf
+investigations so that I don't clutter up the mainline source with
+uninteresting noise.
 
-	test_commit quit-test &&
-	test_commit quit-one quit-test.t one &&
-	git reset --hard HEAD^ &&
-	test_commit quit-two quit-test.t two &&
+WRT the TODO's in your script:
 
-	test_must_fail git -c rerere.enabled=3Dtrue merge one &&
-	test_path_is_file .git/MERGE_HEAD &&
-	git rerere status >rerere &&
-	test -s rerere &&
+[] I don't think data events will be useful for your usage.  The data
+values are orthogonal to the time values.
 
-	git merge --quit &&
-	test_path_is_missing .git/MERGE_HEAD &&
-	git rerere status >rerere &&
-	test_must_be_empty rerere
+[] I would add the child_start/_exit events to the stack.  This will
+give you the names of non-builtin/shell commands and hooks.  The
+various "child_class" and "use_shell" and "hook_name" fields will help
+you avoid duplicate stack frames (which you'll get for builtin
+commands).
 
-Note that this does not do an exhaustive test for all the .git/MERGE_*
-files: this test regression promises to verify that `git merge --quit`
-works, it does not promise to verify that a failed `git merge` leaves all
-of those files! Using just `MERGE_HEAD` as a tell-tale for that is plenty
-sufficient.
-
-Likewise, this test case does not verify that the output of `git rerere
-status` is different before and after the `git merge --quit`. That is not
-the point of the test, to make sure that they are different. The point is
-to make sure that it is empty afterwards, but not empty beforehand.
-
-Technically, your version of the test case verifies the same (if a file's
-contents differ from an empty file's, then necessarily it is not empty,
-but it requires some gymnastics to come to that conclusion). There is no
-need for convoluted thinking in regression test cases. In fact, the easier
-it is to understand the *intent* of a test case, the quicker the
-investigation of any future bug, and consequently the faster the bug fix.
-
-Also, the less you execute, the quicker the test case runs. That might not
-sound like much, but we have over 20,000 test cases in our test suite.
-That multiplication is really easy to compute in your head. If all of them
-were written succinctly, I bet you would find it much less taxing on your
-patience to actually run the full test suite from time to time ;-)
-
-And this illustrates a very real cost of a slow test suite in addition to
-the time: developers will run it less often, causing more regressions,
-wasting even more time in the long run.
-
-Ciao,
-Johannes
-
---8323328-725443162-1558375565=:46--
+Jeff
