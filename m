@@ -2,127 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51EE31F462
-	for <e@80x24.org>; Mon, 20 May 2019 21:32:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91AD51F462
+	for <e@80x24.org>; Mon, 20 May 2019 21:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726111AbfETVcE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 17:32:04 -0400
-Received: from thyrsus.com ([71.162.243.5]:58938 "EHLO snark.thyrsus.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725810AbfETVcE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 17:32:04 -0400
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-        id B1281470485F; Mon, 20 May 2019 17:32:03 -0400 (EDT)
-Date:   Mon, 20 May 2019 17:32:03 -0400
-From:   "Eric S. Raymond" <esr@thyrsus.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>,
-        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-Subject: Re: Finer timestamps and serialization in git
-Message-ID: <20190520213203.GA110573@thyrsus.com>
-Reply-To: esr@thyrsus.com
-References: <20190515191605.21D394703049@snark.thyrsus.com>
- <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
- <023b01d50b5c$cbd3cd90$637b68b0$@pdinc.us>
- <998895a9-cfbb-c458-cc88-fa1aabed4389@gmail.com>
- <20190516002831.GC124956@thyrsus.com>
- <3b8d6a78-bd88-770c-e79b-d732f7e277fd@gmail.com>
- <20190520170518.73ad912b@kitsune.suse.cz>
- <20190520163625.GA99397@thyrsus.com>
- <7e88805c-7e08-2631-599d-b47a098f1ce1@gmail.com>
+        id S1726491AbfETVic (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 17:38:32 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:44259 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfETVic (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 17:38:32 -0400
+Received: by mail-ua1-f65.google.com with SMTP id p13so5841441uaa.11
+        for <git@vger.kernel.org>; Mon, 20 May 2019 14:38:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c9EeGxY4se8wmjoRLn71XdOn6UuW9h4BvIOISfBgFZ4=;
+        b=tvK6Y4hyDzVcAhnVcrXn7vPC+cJwJM+JZfWNOIg8NYqs5BfyE6suF2dicD7LmP8DL6
+         8oKtQKxtook6BfKvw5thP31jXQ2gnBIoJGRUUssXXTLKl1tbQ2iaIzHAEglEqJD/dr49
+         5ovtibxBdUt1fHQwwuY5UD0oZH5lpEJ4RdYOg+PQDyOBg/tBGnlfqsTooNN9jljMnJ7F
+         6O8qCQb01kNMu80IFIJAXjbVfGD8vCcP9P+ziNaLrH0iXFOJ2dwupPVP8xRKqglIHNeO
+         GyLJ8w+0arl/Ok+kjD0Lp22bWupdgrdUSJalm0OuQdIKkyLJXLIIRTuZLjx/IN0h6F3j
+         Gesw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c9EeGxY4se8wmjoRLn71XdOn6UuW9h4BvIOISfBgFZ4=;
+        b=V5ywmHpZ60eNHmUWk+Y6QPFnqwJ/6Bu3L3f/UURVqRuMn1zp/mPyznImvolokopvac
+         WlhUWmT6RP8Z2+EfZbztE97QNicbTksZtYYbO5ZAGDa9kiSW/NtVIKlD6O4XGUgw3S8G
+         eNzquW6lYYYBcs+RXS4qHaf0KhxwQWNIewsJsX1Fl6Qzsm2B4zaw3FDzhWFXQslrCcdy
+         H6W1/yFcdM0BTp3UoaqAWiOGZx5vQZieiehIxHIqE7opMH3aP83rksWao25ZmC301E/M
+         QJUFjHvyWle/YFhK99Rw2UCUudUUcK3FgNMixAjpEesFT7BGJ2paPaln3e66Qv7r11Kb
+         jxdg==
+X-Gm-Message-State: APjAAAXEfJeYfRFYsl8Q+xeB18IlOkW1TNChLz8fBDMvnOueRWVgbTQy
+        HJ2JiKELQ0QWqKjN77PQ2Oal4N3hd481QrXViFY=
+X-Google-Smtp-Source: APXvYqyCxjuMQwvVczEOTO8r0Ufc2wNlL2aQWAhDhKtcS2aDc1APZfB3Ft3xSqeS5Fi9O1ysTJA7t7i5A7U63NKoNeY=
+X-Received: by 2002:ab0:3058:: with SMTP id x24mr35243491ual.95.1558388311391;
+ Mon, 20 May 2019 14:38:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7e88805c-7e08-2631-599d-b47a098f1ce1@gmail.com>
-Organization: Eric Conspiracy Secret Labs
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190515191605.21D394703049@snark.thyrsus.com>
+ <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com> <20190515233230.GA124956@thyrsus.com>
+ <87woiqvic4.fsf@evledraar.gmail.com> <86woimox24.fsf@gmail.com>
+ <20190520004559.GA41412@thyrsus.com> <86r28tpikt.fsf@gmail.com> <20190520141417.GA83559@thyrsus.com>
+In-Reply-To: <20190520141417.GA83559@thyrsus.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 May 2019 14:38:20 -0700
+Message-ID: <CABPp-BHK1N2zZoeBeSgnh12LPqLgZxfbL0DzALj28y97_Q-ahg@mail.gmail.com>
+Subject: Re: Finer timestamps and serialization in git
+To:     esr@thyrsus.com
+Cc:     Jakub Narebski <jnareb@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com>:
-> What it sounds like you are doing is piping a 'git fast-import' process into
-> reposurgeon, and testing that reposurgeon does the same thing every time.
-> Of course this won't be consistent if 'git fast-import' isn't consistent.
+Hi,
 
-It's not actually import that fails to have consistent behavior, it's export.
+On Mon, May 20, 2019 at 11:09 AM Eric S. Raymond <esr@thyrsus.com> wrote:
 
-That is, if I fast-import a given stream, I get indistinguishable
-in-core commit DAGs every time. (It would be pretty alarming if this
-weren't true!)
+> > For cookie to be unique among all forks / clones of the same repository
+> > you need either centralized naming server, or for the cookie to be based
+> > on contents of the commit (i.e. be a hash function).
+>
+> I don't need uniquess across all forks, only uniqueness *within the repo*.
 
-What I have no guarantee of is the other direction.  In a multibranch repo,
-fast-export writes out branches in an order I cannot predict and which
-appears from the outside to be randomly variable.
+You've lost me.  In other places you stated you didn't want to use the
+commit hash, and now you say this.  If you only care about uniqueness
+within the current copy of the repo and don't care about uniqueness
+across forks (i.e. clones or copies that exist now or in the future --
+including copies stored using SHA256), then what's wrong with using
+the commit hash?
 
-> But what you should do instead is store a fixed file from one run of
-> 'git fast-import' and send that file to reposurgeon for the repeated test.
-> Don't rely on fast-import being consistent and instead use fixed input for
-> your test.
-> 
-> If reposurgeon is providing the input to _and_ consuming the output from
-> 'git fast-import', then yes you will need to have at least one integration
-> test that runs the full pipeline. But for regression tests covering complicated
-> logic in reposurgeon, you're better off splitting the test (or mocking out
-> 'git fast-import' with something that provides consistent output given
-> fixed input).
+> I want this for two reasons: (1) so that action stamps are unique, (2)
+> so that there is a unique canonical ordering of commits in a fast export
+> stream.
 
-And I'd do that... but the problem is more fundamental than you seem to
-understand.  git fast-export can't ship a consistent output order because
-it doesn't retain metadata sufficient to totally order child branches.
+A stable ordering of commits in a fast-export stream might be a cool
+feature.  But I don't know how to define one, other than perhaps sort
+first by commit-depth (maybe optionally adding a few additional
+intermediate sorting criteria), and then finally sort by commit hash
+as a tiebreaker.  Without the fallback to commit hash, you fall back
+on normal traversal order which isn't stable (it depends on e.g. order
+of branches listed on the command line to fast-export, or if using
+--all, what new branch you just added that comes alphabetically before
+others).
 
-This is why I wanted unique timestamps.  That would solve the problem,
-branch child commits of any node would be ordered by their commit date.
+I suspect that solution might run afoul of your dislike for commit
+hashes, though, so I'm not sure it'd work for you.
 
-But I had a realization just now.  A much smaller change would do it.
-Suppose branch creations had creation stamps with a weak uniqueness property;
-for any given parent node, the creation stamps of all branches originating
-there are guaranteed to be unique?
+> (Without that second property there are surgical cases I can't
+> regression-test.)
+>
+> > >                                                          For my use case
+> > > that cookie should *not* be a hash, because hashes always break N years
+> > > down.  It should be an eternally stable product of the commit metadata.
+> >
+> > Well, the idea for SHA-1 <--> NewHash == SHA-256 transition is to avoid
+> > having a flag day, and providing full interoperability between
+> > repositories and Git installations using the old hash ad using new
+> > hash^1.  This will be done internally by using SHA-1 <--> SHA-256
+> > mapping.  So after the transition all you need is to publish this
+> > mapping somewhere, be it with Internet Archive or Software Heritage.
+> > Problem solved.
+>
+> I don't see it.  How does this prevent old clients from barfing on new
+> repositories?
 
-If that were true, there would be an implied total ordering of the
-repository.  The rules for writing out a totally ordered dump would go
-like this:
+Depends on range of time for "old".  The plan as I understood it
+(which is suspect): make git version which understand both SHA-1 and
+SHA-256 (which I think is already done, though I haven't followed
+closely), wait some time, allow people to opt in to converting, allow
+more time, consider ways of nudging people to switch.
 
-1. At any given step there is a set of active branches and a cursor
-on each such branch.  Each cursor points at a commit and caches the
-creation stamp of the current branch.
+You are right that clients older than any version that understands
+SHA-256 would barf on the new repositories.
 
-2. Look at the set of commits under the cursors.  Write the oldest one.
-If multiple commits have the same commit date, break ties by their
-branch creation stamps.
+> So let me back up a step.  I will cheerfully drop advocating bumping
+> timestamps if anyone can tell me how a different way to define a per-commit
+> reference cookie that (a) is unique within its repo, and (b) only requires
+> metadata visible in the fast-export representation of the commit.
 
-3. Bump that cursor forward. If you're at a branch creation, it
-becomes multiple cursors, one for each child branch.
-If you're at a join, some cursors go away.
-
-Here's the clever bit - you make the creation stamp nothing but a
-counter that says "This was the Nth branch creation."  And it is
-set by these rules:
-
-4. If the branch creation stamp is undefined at branch creation time,
-number it in any way you like as long as each stamp is unique. A
-defined, documented order would be nice but is not necessary for
-streams to round-trip.
-
-5. When writing an export stream, you always utter a reset at the
-point of branch creation.
-
-6. When reading an import stream, the ordinal for a new branch is
-defined as the number of resets you have seen.
-
-Rules 5 and 6 together guarantee that branch creation ordinals round-trip
-through export streams.  Thus, streams round-trip and I can have my
-regression tests with no change to git's visible interface at all!
-
-I could write this code.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-
+Does passing --show-original-ids option to fast-export and using the
+resulting original-oid field as the cookie count?
