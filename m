@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8D521F462
-	for <e@80x24.org>; Mon, 20 May 2019 21:53:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29D5B1F462
+	for <e@80x24.org>; Mon, 20 May 2019 21:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbfETVx3 (ORCPT <rfc822;e@80x24.org>);
+        id S1726955AbfETVxb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 17:53:31 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43412 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbfETVx3 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 20 May 2019 17:53:29 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40496 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726899AbfETVx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 17:53:27 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 15so786084wmg.5
-        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:26 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id r4so16198643wro.10
+        for <git@vger.kernel.org>; Mon, 20 May 2019 14:53:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qfp+25EdtCzAZagRvcYdxv6hoKsRLjQuQA4YfB9EpF0=;
-        b=cm4iFseLAhBjPLY14aJBQmKw+7+iZUeLJo7e0YToi2w9b4GSCp0May3y5tmBxgZFja
-         zPFVYLRR/1U5hJn2NY8/YL/PkGMfEfeSVfoSFMCczVKCmRPy63SGZZ5SmZwBUuEavU+l
-         e9JOBIA1+8+3aUnLGvsko/ygBmxTgWGDA6tzyOQkTgkc1tzWKo7d5G2UMQktPw7PtDtq
-         d65KFrYECIuu88LzCiA5IeSSUo6p1yIwOwoD5ZN71DSzZIHTyP84BqUxdsukbYLi2wQu
-         O1lN+eQcc8VEOkgyzxM24cmqlDnQdr1J02JwTco/YctVyBbwJoVuIKMwJ2R6ldNQUyRo
-         i2xg==
+        bh=rc6ypPd/1pcy07wnydsn0f/YwNrE/zJObGpMETKsD5c=;
+        b=fJQz2eesGvch0GcOFbNN0yLD/IDTEWTPD2vVqNVhSK2gNQtdXJcO0aHNEocnjsncT0
+         tqipI/vEFKJjlnqz8F5/IMx5JmgFA2aLbhcJej9tGdRB+XKATxP5BqsbaYN8EbHpR3ip
+         r2HZ0ooPE7YJGpkv8o5Wc0/09wv64HlEC5EU65DkvZ6LdS36QAt2wULojilZSEmaKplV
+         deBGqN/FMM5r3sN9se2yGE5GDFajWqJMQrewzkXvfB+3eSXIkAoHCVYuWYdBGeXu7jY/
+         O2wLqxqMjmLDmnwkZMHiw+moOgkjGVIxQGXC/3dh5V8jTtYUhSEMBlx4rlqR2rlySuTX
+         FtXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qfp+25EdtCzAZagRvcYdxv6hoKsRLjQuQA4YfB9EpF0=;
-        b=gz6XyGlwCc+kUq25pSrLWKIv7ARTj/fQVStCUy2l9vVpCMhPEdYf5WcqqzEIRGN7Le
-         4LXSH6Z0Z7WAikILgpbJb+VtRiK7DuSPQpWGruDBTWnFZ4BEgb0UJci+NSoNiGIIG25n
-         fQqTq2727kG+ytaCtabeRZiVJFelR5Wz7TKPMiOSUobtaIsp2cTeeBMiEtX5wokZwQsD
-         /9qQABh96C0v83No7i/RLI5YyFhdM3Xk6Ib6u82eYqKLYRIN+/+/eAuj4sdTGHso/T0r
-         LtF3PxpUOyIspNBekLGG8m/tGjFUyJ1jY78vYnV2VOnQkZlnFv1DmFxUeulQXOmTuxq1
-         37pA==
-X-Gm-Message-State: APjAAAVezbwGjTjgGSst4xMuMpHq1UWzJ0C+RBiBfML310n/NLQI6/NB
-        G0SpzYSIgFBoUcC7a+C6kwkvUZqk
-X-Google-Smtp-Source: APXvYqzxYgvO6qNeafn924q9qGOeshQDiv1jG4NKOwuj74nxfjgJx+2ZXgn6fb1i/W4jEVTbKf+teA==
-X-Received: by 2002:a1c:f916:: with SMTP id x22mr795139wmh.81.1558389205268;
-        Mon, 20 May 2019 14:53:25 -0700 (PDT)
+        bh=rc6ypPd/1pcy07wnydsn0f/YwNrE/zJObGpMETKsD5c=;
+        b=o4OxUqnIrAyG84ONgeyht2/3GA+GA+OXPHLNi3MFHMow7u1d9zZMJwaa3XYc/lB2JR
+         zta0tBEMn9MwcTFDN+7pWJkugKc1AhR84Yogn4tkX04Z+fgFmyF1CpRuppZb3yaEY9Fu
+         AnWDViLuPTQWZ0dJMm14wbXUgQEjrnxPPbq+QnobqeD+5znqSQDbVMIfddNLNTVLK1qp
+         t9xfb9IX4RZPFT3GR7DOqVd6hZIesbp2G2pj1BvtjUBMURPCuZOhWnnIVrO2TwrzEdyd
+         0swFHAnbXtXInPLlZxP68YJXjhJ+RrIJcaw4qXaVlvw4cy60mpfpFy4GuAj6B1inU3+5
+         gjXQ==
+X-Gm-Message-State: APjAAAWEyfbSXmzUmTV6jXgegqn03KymgGBh0ySm3Gu1kk8Tjohpn0HS
+        9wn9lrq1RVs3WI1CZr8CbTVl7yzP
+X-Google-Smtp-Source: APXvYqwtwBqNhDBYjXC5BblB35MNdv93H9J6D6SXlgIk5x4T8Km/yI1jqAngOYyKnsHRncFcDejErA==
+X-Received: by 2002:adf:e74b:: with SMTP id c11mr46209277wrn.172.1558389207614;
+        Mon, 20 May 2019 14:53:27 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.24
+        by smtp.gmail.com with ESMTPSA id n63sm600249wmn.38.2019.05.20.14.53.26
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 20 May 2019 14:53:24 -0700 (PDT)
+        Mon, 20 May 2019 14:53:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] hash-object doc: elaborate on -w and --literally promises
-Date:   Mon, 20 May 2019 23:53:11 +0200
-Message-Id: <20190520215312.10363-3-avarab@gmail.com>
+Subject: [PATCH 3/3] hash-object doc: point to ls-files and rev-parse
+Date:   Mon, 20 May 2019 23:53:12 +0200
+Message-Id: <20190520215312.10363-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 In-Reply-To: <20190520215312.10363-1-avarab@gmail.com>
 References: <20190520215312.10363-1-avarab@gmail.com>
@@ -74,61 +74,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clarify the hash-object docs to explicitly note that the --literally
-option guarantees that a loose object will be written, but that a
-normal -w ("write") invocation doesn't.
+Amend the intro to note that it's better to ask the index about files
+already tracked by it.
 
-At first I thought talking about "loose object" in the docs was a
-mistake in 83115ac4a8 ("git-hash-object.txt: document --literally
-option", 2015-05-04), but as is clear from 5ba9a93b39 ("hash-object:
-add --literally option", 2014-09-11) this was intended all along.
-
-As seen in 4dd1fbc7b1 ("Bigfile: teach "git add" to send a large file
-straight to a pack", 2011-05-08) we'll otherwise not guarantee that we
-write loose objects, so let's explicitly note that, using vague enough
-language to leave the door open to any arbitrary future storage
-format, not just loose objects and packs.
-
-While I'm at it remove the mention of "--stdin" from the "--literally"
-documentation. This wasn't correct, the "--literally" option combines
-with any other option (e.g. "--stdin-paths"), not just "--stdin".
+I've seen uses of this in the wild where the use-case was finding
+object IDs for files found in a freshly cloned repo, i.e. something
+like "git ls-files | git hash-object --stdin-paths".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-hash-object.txt | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ Documentation/git-hash-object.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index df9e2c58bd..100630d021 100644
+index 100630d021..077d83ec65 100644
 --- a/Documentation/git-hash-object.txt
 +++ b/Documentation/git-hash-object.txt
-@@ -28,6 +28,12 @@ OPTIONS
+@@ -20,6 +20,13 @@ work tree), and optionally writes the resulting object into the
+ object database.  Reports its object ID to its standard output.
+ When <type> is not specified, it defaults to "blob".
  
- -w::
- 	Actually write the object into the object database.
-++
-+No guarantees are made as to how the object is added to the database
-+(e.g. whether as a loose object, or streamed to a pack), except in the
-+case of the `--literally` option. How it's written may depend on
-+heuristics such as the `core.bigFileThreshold` configuration variable
-+(see linkgit:git-config[1]).
++This command won't take the shortcut of seeing if the path(s) to be
++hashed are present in the index, in which case their already computed
++object ID could be retrieved by linkgit:git-ls-files[1] via the
++`--stage` option, or by linkgit:git-rev-parse[1]. Use those instead of
++e.g. `--stdin-paths` if the intent is to say find the blob object IDs
++of checked-out files.
++
+ OPTIONS
+ -------
  
- --stdin::
- 	Read the object from standard input instead of from a file.
-@@ -53,10 +59,11 @@ OPTIONS
- 	is always implied, unless the `--path` option is given.
- 
- --literally::
--	Allow `--stdin` to hash any garbage into a loose object which might not
-+	Allow for hashing arbitrary data which might not
- 	otherwise pass standard object parsing or git-fsck checks. Useful for
- 	stress-testing Git itself or reproducing characteristics of corrupt or
--	bogus objects encountered in the wild.
-+	bogus objects encountered in the wild. When writing objects guarantees
-+	that the written object will be a loose object, for ease of debugging.
- 
- GIT
- ---
 -- 
 2.21.0.1020.gf2820cf01a
 
