@@ -2,202 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3760F1F462
-	for <e@80x24.org>; Tue, 21 May 2019 10:58:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 973841F462
+	for <e@80x24.org>; Tue, 21 May 2019 11:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfEUK61 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 06:58:27 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:60460 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726289AbfEUK61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 06:58:27 -0400
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 4F5EFC01F278;
-        Tue, 21 May 2019 10:58:26 +0000 (UTC)
-Received: from localhost (ovpn-112-62.ams2.redhat.com [10.36.112.62])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 7F2075DD7E;
-        Tue, 21 May 2019 10:58:21 +0000 (UTC)
-From:   marcandre.lureau@redhat.com
-To:     git@vger.kernel.org
-Cc:     j6t@kdbg.org,
-        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <mlureau@redhat.com>,
-        =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v4] userdiff: add built-in pattern for rust
-Date:   Tue, 21 May 2019 12:58:20 +0200
-Message-Id: <20190521105820.28511-1-marcandre.lureau@redhat.com>
+        id S1726740AbfEULL2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 07:11:28 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:49061 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726042AbfEULL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 07:11:28 -0400
+X-Greylist: delayed 1602 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 May 2019 07:11:28 EDT
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x4LAig2L057346
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Tue, 21 May 2019 06:44:42 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: [Breakage] 2.22.0-rc1 - t0211-trace2-perf.sh
+Date:   Tue, 21 May 2019 06:44:36 -0400
+Message-ID: <019e01d50fc2$324bd400$96e37c00$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 21 May 2019 10:58:26 +0000 (UTC)
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdUPwX5hnpBW1EOeQi+B+3SL0q/RZw==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Marc-André Lureau <mlureau@redhat.com>
+Hi All,
 
-This adds xfuncname and word_regex patterns for Rust, a quite
-popular programming language. It also includes test cases for the
-xfuncname regex (t4018) and updated documentation.
+On the NonStop platform, the entire test for t0211-trace2-perf.sh does not
+work. The first case, in verbose, reports:
 
-The word_regex pattern finds identifiers, integers, floats and
-operators, according to the Rust Reference Book.
+We get errors when the script is run:
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- Documentation/gitattributes.txt | 2 ++
- t/t4018-diff-funcname.sh        | 1 +
- t/t4018/rust-fn                 | 5 +++++
- t/t4018/rust-impl               | 5 +++++
- t/t4018/rust-nested-fn          | 6 ++++++
- t/t4018/rust-struct             | 5 +++++
- t/t4018/rust-trait              | 5 +++++
- t/t4018/rust-trait-default      | 8 ++++++++
- t/t4018/rust-unsafe             | 6 ++++++
- userdiff.c                      | 6 ++++++
- 10 files changed, 49 insertions(+)
- create mode 100644 t/t4018/rust-fn
- create mode 100644 t/t4018/rust-impl
- create mode 100644 t/t4018/rust-nested-fn
- create mode 100644 t/t4018/rust-struct
- create mode 100644 t/t4018/rust-trait
- create mode 100644 t/t4018/rust-trait-default
- create mode 100644 t/t4018/rust-unsafe
+Use of uninitialized value within @tokens in pattern match (m//) at
+t0211/scrub_perf.perl line 29, <> line 1.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 4fb20cd0e9..07da08fb27 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -833,6 +833,8 @@ patterns are available:
- 
- - `ruby` suitable for source code in the Ruby language.
- 
-+- `rust` suitable for source code in the Rust language.
-+
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 22f9f88f0a..9261d6d3a0 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -43,6 +43,7 @@ diffpatterns="
- 	php
- 	python
- 	ruby
-+	rust
- 	tex
- 	custom1
- 	custom2
-diff --git a/t/t4018/rust-fn b/t/t4018/rust-fn
-new file mode 100644
-index 0000000000..cbe02155f1
---- /dev/null
-+++ b/t/t4018/rust-fn
-@@ -0,0 +1,5 @@
-+pub(self) fn RIGHT<T>(x: &[T]) where T: Debug {
-+    let _ = x;
-+    // a comment
-+    let a = ChangeMe;
-+}
-diff --git a/t/t4018/rust-impl b/t/t4018/rust-impl
-new file mode 100644
-index 0000000000..09df3cd93b
---- /dev/null
-+++ b/t/t4018/rust-impl
-@@ -0,0 +1,5 @@
-+impl<'a, T: AsRef<[u8]>>  std::RIGHT for Git<'a> {
-+
-+    pub fn ChangeMe(&self) -> () {
-+    }
-+}
-diff --git a/t/t4018/rust-nested-fn b/t/t4018/rust-nested-fn
-new file mode 100644
-index 0000000000..ca5cca3292
---- /dev/null
-+++ b/t/t4018/rust-nested-fn
-@@ -0,0 +1,6 @@
-+fn foo() {
-+    fn RIGHT() {
-+        // must catch nested function
-+        ChangeMe;
-+    }
-+}
-diff --git a/t/t4018/rust-struct b/t/t4018/rust-struct
-new file mode 100644
-index 0000000000..76aff1c0d8
---- /dev/null
-+++ b/t/t4018/rust-struct
-@@ -0,0 +1,5 @@
-+#[derive(Debug)]
-+pub(super) struct RIGHT<'a> {
-+    name: &'a str,
-+    age: ChangeMe,
-+}
-diff --git a/t/t4018/rust-trait b/t/t4018/rust-trait
-new file mode 100644
-index 0000000000..ea397f09ed
---- /dev/null
-+++ b/t/t4018/rust-trait
-@@ -0,0 +1,5 @@
-+unsafe trait RIGHT<T> {
-+    fn len(&self) -> u32;
-+    fn ChangeMe(&self, n: u32) -> T;
-+    fn iter<F>(&self, f: F) where F: Fn(T);
-+}
-diff --git a/t/t4018/rust-trait-default b/t/t4018/rust-trait-default
-new file mode 100644
-index 0000000000..e667d22ca4
---- /dev/null
-+++ b/t/t4018/rust-trait-default
-@@ -0,0 +1,8 @@
-+trait RIGHT {
-+
-+    fn new(name: &'static str) -> Self;
-+
-+    fn ChangeMe(&self) {
-+        // should skip "new", and return trait name
-+    }
-+}
-diff --git a/t/t4018/rust-unsafe b/t/t4018/rust-unsafe
-new file mode 100644
-index 0000000000..fd4661a934
---- /dev/null
-+++ b/t/t4018/rust-unsafe
-@@ -0,0 +1,6 @@
-+unsafe fn RIGHT(inc: u32) {
-+    unsafe {
-+        // don't catch unsafe block
-+        ChangeMe += inc;
-+    }
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 3a78fbf504..2bcf105caf 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -130,6 +130,12 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
- 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
- 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
-+PATTERNS("rust",
-+	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl)[< \t]+[^;]*)$",
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
-+	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
- PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+Initialized empty Git repository in /home/git/git/t/trash
+directory.t0211-trace2-perf/.git/
+expecting success:
+        test_when_finished "rm trace.perf actual expect" &&
+        GIT_TR2_PERF="$(pwd)/trace.perf" test-tool trace2 001return 0 &&
+        perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
+        cat >expect <<-EOF &&
+                d0|main|version|||||$V
+                d0|main|start||_T_ABS_|||_EXE_ trace2 001return 0
+                d0|main|cmd_name|||||trace2 (trace2)
+                d0|main|exit||_T_ABS_|||code:0
+                d0|main|atexit||_T_ABS_|||code:0
+        EOF
+        test_cmp expect actual
 
-base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
--- 
-2.22.0.rc1.1.g079e7d2849.dirty
+--- expect      2019-05-21 10:38:47 +0000
++++ actual      2019-05-21 10:38:47 +0000
+@@ -1,5 +1,5 @@
+-d0|main|version|||||2.22.0.rc1
+-d0|main|start||_T_ABS_|||_EXE_ trace2 001return 0
+-d0|main|cmd_name|||||trace2 (trace2)
+-d0|main|exit||_T_ABS_|||code:0
+-d0|main|atexit||_T_ABS_|||code:0
++d0|th01:unknown|version|||||2.22.0.rc1
++d0|th02:unknown|start||_T_ABS_|||_EXE_ trace2 001return 0
++d0|th03:unknown|cmd_name|||||trace2 (trace2)
++d0|th04:unknown|exit||_T_ABS_|||code:0
++d0|th06:unknown|atexit||_T_ABS_|||code:0
+
+Our perl is v5.24.0 and this cannot be upgraded.
+
+Thoughts?
+
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
 
