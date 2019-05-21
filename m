@@ -2,93 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7954E1F462
-	for <e@80x24.org>; Tue, 21 May 2019 02:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97F4D1F462
+	for <e@80x24.org>; Tue, 21 May 2019 02:31:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727511AbfEUCAM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 22:00:12 -0400
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:45577 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbfEUCAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 22:00:12 -0400
-Received: by mail-pf1-f180.google.com with SMTP id s11so8150692pfm.12
-        for <git@vger.kernel.org>; Mon, 20 May 2019 19:00:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=35KvLNJ/3cmFY6ypiRK01JhG2/gqq5o75SnZrVMLBDc=;
-        b=ReKAaT/9DVp8nyEi4uhGul1wW3+kbmBWkzP2kb3kbP7sXdSSVimT5KjTJZQsTUHgqP
-         kCi4fawpkRX/DzIe2TSIgx0fEEZBffB1+IDVkD6so5cv+NIVfEP04fu0CkYywij5uQOp
-         okWpmmH4sDavr04SeAfwq8+BAyas9cSFXJvmw/I/k6JtpOTxreqaJeumNqmCM45mjS4G
-         wx2XF9OW9mKuRXYTjsCqaQohsviAUy4k4DmkVRSBGJVkKcKrpaYY3HEpFJGItvM/rj39
-         eW3pNpM+IQYdoB0P159jykHiyXo0CJ5YsX74/ZftGHHByt95dWrNj+xrfT0Q1VX9uOW2
-         sKJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=35KvLNJ/3cmFY6ypiRK01JhG2/gqq5o75SnZrVMLBDc=;
-        b=JW2BxxYwwWLJgCVrsZfpfyiMk1xOJFOj583EGxD7o4kc8Wmd3jZqGInyt8ZxnNntcS
-         f0tQy1xP+kYlcwgIjNkr+bkVvTMWqQAwuzYHS14m/3Mpc1m7+3R69qob++vV8bOD/nmg
-         QiaoJL7LCVv8BQUO1TZjcjBCSXesIHBkvVee9g+kJK2bnvw9dQZmTzJEMksH1r96wuRG
-         uzSxHkMdKLgLLzTooSpGOqNBnnZbAL8XzOnn4GMdFAhGhs2iqp1HpLdbodxyfNmMfGei
-         fjVeY89nItxaAET3a6dXSY7qMUiqDXh2nmrz+2PC/qaaV43Dc5Q86hEXudKCG8nPlx5O
-         xlAg==
-X-Gm-Message-State: APjAAAW9be30FdtHYXv4Gae55+E3ZApXcJatbfgMY1VZVHIL08EWTQZf
-        18n35B3zSbQ2y7a7D9aBw9ySqhj2
-X-Google-Smtp-Source: APXvYqy5MsECbAuF0HJzTzheKH61zRU4bbWSakjBajT3U4Rkm07IAsl7dLAPFq8uhbCwHlqFMwD/lw==
-X-Received: by 2002:aa7:860a:: with SMTP id p10mr66908489pfn.214.1558404011113;
-        Mon, 20 May 2019 19:00:11 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id 85sm12926909pfa.131.2019.05.20.19.00.10
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 20 May 2019 19:00:10 -0700 (PDT)
-Date:   Mon, 20 May 2019 19:00:09 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Mike Hommey <mh@glandium.org>, git@vger.kernel.org
-Subject: Re: Revision walking, commit dates, slop
-Message-ID: <20190521020009.GC32230@google.com>
-References: <20190518005412.n45pj5p2rrtm2bfj@glandium.org>
- <20190518015005.GA951@szeder.dev>
+        id S1727512AbfEUCbJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 22:31:09 -0400
+Received: from mout.web.de ([212.227.17.11]:58095 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726548AbfEUCbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 22:31:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1558405867;
+        bh=ceFuBnwnMwEe/GzqZLw0h5iXO8eP7t8jmFcQWmp8/bM=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=gosP5eQkcqqPpk0IFh5b7W03LAyaZ3bv3mSAXFgKAlICur3otjJ1CQeIiMESyL86i
+         /+aYk3uuVxecqBVZy2MS8/O3Fdhk+t9z+KwfO/HHAYs3squRjcflCkEFJ04kMsU/Qu
+         kjgcsensiw5Lhb714OlTrAyQPz7WtBOggUzAZg8g=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MhleR-1hEpmi1YaR-00MrAp; Tue, 21
+ May 2019 04:31:07 +0200
+Date:   Tue, 21 May 2019 04:31:06 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Ax Da <discussion@gmx.net>, git@vger.kernel.org
+Subject: Re: Git config "ignorecase = true" has issues
+Message-ID: <20190521023106.3sfrapksxg6xjtdg@tb-raspi4>
+References: <trinity-4a160867-2036-4f8a-8363-7bf2e021d840-1558184320864@3c-app-gmx-bs48>
+ <b75455b6-139a-aa6c-c7f6-7c9330e2ac6f@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190518015005.GA951@szeder.dev>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <b75455b6-139a-aa6c-c7f6-7c9330e2ac6f@kdbg.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:N1NpPc1Zl9nPRw8F0IWTFOZD08Wdk1IUio/e7tVQxwNahwdVPGA
+ KhKDGK/P8jr/iA9G3NuhlU/2ct2Pvd5A+Zq+EkKOZLV/y9IAdEZ4AuISOKNiuv9CRPg6rCb
+ AoztGcZOwTCaX5gj0JyHa2lQAEhAHgIkSXb3dDaq+14pUMO9Tx70u77LngfIBBguyyrplW+
+ /00UEG4YKJvGcyUriFJlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vmIjI6h0FaQ=:o+kabDkPHFugderJyaqJBD
+ J+2F+cbr921s5RhJHx3iFcx7xcH0Qt0VZ8e7kJl/OlcmzTobdS9Unlwnc26wvcnmmcMnxBAgT
+ WdcBlhXRzV0Hhy4DWE43Qa6qPI54CuokLJtNzAuCUl6bZTjEoqQiKQlcp0UhG64JW1whH6q7e
+ PkJ2ROD6ss81jVRa8/05tai7LRKIhAMiKtJ92LkY9famRMZR3O+0CcT7JrUtn2O/EcbuUMyRe
+ QokVTDAOOr+SRBRkF1pWBdU1xUQ3ppMcFFxWHVd76so14R/wHvNnXtvjOTw5R/fclVvS12+Su
+ L/mqv51Sl3HQjHzogv/fPty/roiXuVivzMBP462HZ+qdJBS3mRfVxceP3Co5QzRjqJn+VqC+O
+ FiRZudGmLTGhuoWSOHI86Q8NUy3iRAZLnrXIHKgB1uwEm0jQyc8tLRLFO5WK+RP3An51wc5pj
+ pDheU7ceVPcnrPdk4J4j89SRwuDeznwcmM/MqNV0T9+VReqf1fJSpGjjafa9G4O5qFfZ8/sYh
+ v12vGC9QR5y+Lv8SwSCX5C61yx8oQ/IUbGI9cJ9U2W4NzXGeuQA2qQw4v2FeYVEtXd5pH+0RC
+ zReu2H2QVqLvz4e1K4vnTK78xHai7YVLqv6rD+E3DUct4RPFF2U/U96n4wnAr/hG2kY0S05Qj
+ D9skOB1wkHpTDf3/2eC0fi/13tTMpJs0naXSLOt5D4PZPD/DANRRAKOnlD+rqqM/PbPiCyOKR
+ 1Rxjm/FJl26FkdIfZQvydlulOg788ZByjwhDdcx5RRGC3rMP8jHxuY2HYdUwNrcnzTg+lJIzI
+ xMQUezAzqYzkULiqHI1w2ouz+XSOmYs/t7GHLfjqcBEagWIU7toG4HFw1ywP936FpHGWRXT/s
+ gKu4z1DH8V7WVQNf2rIo+HXsidmcgg6tIpt281IpFzzseKGgqiGsJNKSPyEwdMCwRZRW2EecU
+ fepXKV6AZdXvcDfEbC5fbYzH2f3BmZ58=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor wrote:
-> On Sat, May 18, 2019 at 09:54:12AM +0900, Mike Hommey wrote:
+On Sat, May 18, 2019 at 06:38:39PM +0200, Johannes Sixt wrote:
+> Am 18.05.19 um 14:58 schrieb Ax Da:
+> > You can rename files like this:
+> > git mv File.txt file.txt
+>
+> On a case-insensitive, case-preserving filesystem, a case-only rename
+> operation is better performed in two steps that do not just change the c=
+ase:
+>
+> git mv File.txt  file.txtx
+> git mv file.txtx file.txt
 
->> There are established corner cases, where in a repo where commit dates
->> are not monotonically increasing,
-[...]
-> All the above is without commit-graph, I presume?  If so, then you
-> should give it a try, as it might bring immediate help in your
-> pathological repo.  With 5k commit in the same second (enforced via
-> 'export GIT_COMMITTER_DATE=$(date); for i in {1..5000} ...') I get:
+Is this still needed in latest versions of Git, please see below  ?
+A quick test shows that both the file is renamed and the index is updated:
 
-Just to emphasize this point: one field in the commit-graph file is a
-generation number (or more generally, a "reachability index" in the
-standard jargon).  The reason I'm excited about having this field is
-that it will allow us to stop playing games with slop.
+user@mac:~/projects/git/git.pu> git mv Makefile MAKEFILE
+user@mac:~/projects/git/git.pu> ls -l MAKEFILE
+-rw-r--r--  1 tb  staff  100301 Apr 17 16:53 MAKEFILE
 
-So please join forces with Stolee and help us get to that future
-sooner. :)
+user@mac:~/projects/git/git.pu> git status
+HEAD detached at git.git/pu
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
 
-Thanks,
-Jonathan
+        renamed:    Makefile -> MAKEFILE
+
+
+
+  commit baa37bff9a845471754d3f47957d58a6ccc30058
+  Author: David Turner <dturner@twitter.com>
+  Date:   Thu May 8 10:23:34 2014 -0700
+
+    mv: allow renaming to fix case on case insensitive filesystems
+
+    "git mv hello.txt Hello.txt" on a case insensitive filesystem
+     always triggers "destination already exists" error, because these
+    two names refer to the same path from the filesystem's point of
+    view, and requires the user to give "--force" when correcting the
+    case of the path recorded in the index and in the next commit.
+
+    Detect this case and allow it without requiring "--force".
+
+    Signed-off-by: David Turner <dturner@twitter.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+
+[snip]
