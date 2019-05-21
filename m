@@ -2,66 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0835B1F462
-	for <e@80x24.org>; Mon, 20 May 2019 23:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37B5E1F462
+	for <e@80x24.org>; Tue, 21 May 2019 00:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbfETXte (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 May 2019 19:49:34 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42772 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726584AbfETXtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 May 2019 19:49:33 -0400
-Received: by mail-ed1-f68.google.com with SMTP id l25so26337221eda.9
-        for <git@vger.kernel.org>; Mon, 20 May 2019 16:49:31 -0700 (PDT)
+        id S1727078AbfEUAIb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 May 2019 20:08:31 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45909 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726584AbfEUAIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 May 2019 20:08:31 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b18so16406966wrq.12
+        for <git@vger.kernel.org>; Mon, 20 May 2019 17:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=i3rQwUbAL4TEWZPkZYLJf/D1JeCUcoN+HhU/G4bOm9w=;
-        b=oA3J8qzS0Z3iRtwy4SXXBODYnqhTl7OivFrYqX49cK5C0YHuhOXpTcCGL159cKFFYH
-         PjltbbUnhQw/5hy7+GBW1zLiq6ukzKFCgvuRe5u39xLXsjH50tL/YH4GoE6ZEiKKP+bB
-         YnMkVtVcsju317o1hHIcuTjO9tpMGnhu+nuunLL7KAhNvwqzICpTA0QnlzIPrQb3+5PD
-         yIjl+ghmA0LUZKX9jUBoowtguH/lK0M6J5JH8EKqOIRkH3gEe6qzTtCf0ABDBBCkHsZC
-         Nff5sS6B/WoXQIERajw7EhhG/uQEy2y6OrrdWao4e2AIb/on14M36TM0rlKI7123T+o6
-         2mjw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=hi2IcDzU04QCUopHmbmDmU8BVVsnQJT9xlAdG875Chw=;
+        b=NcDownO+YRgMu5er2LLlRMucc5uhxt9zCJR5qpUB7HgSFFdYWjGlOXrK7njchi/yar
+         wd4fK4L9kHkAt/TeYr0VFNG/x3+S5t4CfjGQqPPUQQIhi3OF29OI04JiA7VDYHu9KvIc
+         +rkeTdkRepfFgufuiuGE73UqlMglO4PkkZNpoWy6Z9DuB106dYI11YBZ8PpZN12UkZD3
+         Ths/YHngkvVRqe7UfqXJ/U7tXRpLvFk8toaHnTOjh/nS+Leq3IP2LuE6WjnVx/HNfI2B
+         /l0Gk9VM7pdVgMo0HuJ5pTB/OVyuUMPeZDgplbzztjx8qoOQ005aicJXZrsGYjp3ogFs
+         wjLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=i3rQwUbAL4TEWZPkZYLJf/D1JeCUcoN+HhU/G4bOm9w=;
-        b=Dks9WSP/BajAKXWcPjzJJtgZUUGsAqW2p/cPtvSmpEPKcf4k3AtILruV2X+URu0ENk
-         OwU6J0XKg3WgTzg6jgcnh7BZVjo13BkcupXcVWkomzT1A2F4MgBTGEV2ZpKHyCwuTqP6
-         T0RdR46AhiX+826AS08vhYqF7JHuJNCY4yL4w2ZPD/HQ1EPvYk1bwhMG8o9aKg7K4848
-         Uo01JtpCGRIcGi9YTZMxl2EzwcSz9XKIxVTQ1bQEJvdx7ycq17NBsggYjDP8wPTDGKgA
-         0jbPkqziV2rl/tb51dLpKNEHtlDHK7DI8FLTnrlSaCm8mbrH/lNjbUHdwZ8eWGRAacyL
-         EL+Q==
-X-Gm-Message-State: APjAAAXd8NoCK1H2lyeNdu2u30btL3ODSkRGOJReUiUAfRfI6pXUjf5S
-        eYFe3eCDTUCCyY+wN1UjiqnIHnpcUfM=
-X-Google-Smtp-Source: APXvYqwgJGOphdmIWe/RJytDXVBQqbe0RKg/T3jYckYhafvOwz7sDkb47oX/gl9OjbyJv4WRX3JmQQ==
-X-Received: by 2002:a50:92c9:: with SMTP id l9mr78652078eda.75.1558396170789;
-        Mon, 20 May 2019 16:49:30 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id l19sm5952069edc.84.2019.05.20.16.49.29
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=hi2IcDzU04QCUopHmbmDmU8BVVsnQJT9xlAdG875Chw=;
+        b=kFAnWK+2oaFNrCPQuM3OjnZ9XUm6h5Jcq1KZ3rdDCLHRmLt9MT/dqXAIyoGBZ5HO/R
+         5MTrEvy7Ooh3RJVccbb7pszCx5hRuPuge8OipqU/HYiE8IFAGBruoJaVAJ4BYDjTQVyu
+         o1FR0UQ50o1rEL0uv3SXLZTAzG3XKrivHt+KeI8Qmmmi53ikzURmCi4Hxd+2W8bXYcxd
+         unRu8VeEjaWE9gpILqWAs4NiJIFzCogOppGNUYL8PiKSVbLe2vexsZzpfMekDRjs3SX2
+         EC5MsdOd5qWXan0y3U8sLO2GjR2JEJiitmj3LFk1NZZg/OGMZUjxRSMQOHmjntXJpelA
+         fkgg==
+X-Gm-Message-State: APjAAAXkrI9sQqANPO/rmygHXGlOs9ab+D2YBVsXF8hqMlVqXbEEdxF1
+        yGmvtfLJJ9/x7J6AUs+C/6KCrV4IVWk=
+X-Google-Smtp-Source: APXvYqypPFfyPLmY+mw/oC8Jy7HOngMLStnOtH6NoSVHiNAAMRqxGaCIbyVpM2W2cTi1Dds8JfZS6Q==
+X-Received: by 2002:adf:9794:: with SMTP id s20mr35132567wrb.104.1558397307968;
+        Mon, 20 May 2019 17:08:27 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (egf151.neoplus.adsl.tpnet.pl. [83.21.69.151])
+        by smtp.gmail.com with ESMTPSA id q16sm1296254wmj.17.2019.05.20.17.08.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 May 2019 16:49:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little projects
-References: <87in9ucsbb.fsf@evledraar.gmail.com> <20190520182353.22221-1-matheus.bernardino@usp.br>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190520182353.22221-1-matheus.bernardino@usp.br>
-Date:   Tue, 21 May 2019 01:49:28 +0200
-Message-ID: <87d0kcvg8n.fsf@evledraar.gmail.com>
+        Mon, 20 May 2019 17:08:27 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     "Eric S. Raymond" <esr@thyrsus.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: Finer timestamps and serialization in git
+References: <20190515191605.21D394703049@snark.thyrsus.com>
+        <ae62476c-1642-0b9c-86a5-c2c8cddf9dfb@gmail.com>
+        <20190515233230.GA124956@thyrsus.com>
+        <87woiqvic4.fsf@evledraar.gmail.com> <86woimox24.fsf@gmail.com>
+        <20190520004559.GA41412@thyrsus.com> <86r28tpikt.fsf@gmail.com>
+        <20190520141417.GA83559@thyrsus.com>
+Date:   Tue, 21 May 2019 02:08:25 +0200
+In-Reply-To: <20190520141417.GA83559@thyrsus.com> (Eric S. Raymond's message
+        of "Mon, 20 May 2019 10:14:17 -0400")
+Message-ID: <86v9y4oeiu.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -70,199 +74,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Eric S. Raymond" <esr@thyrsus.com> writes:
+> Jakub Narebski <jnareb@gmail.com>:
 
-On Mon, May 20 2019, Matheus Tavares wrote:
+>>> What "commits that follow it?" By hypothesis, the incoming commit's
+>>> timestamp is bumped (if it's bumped) when it's first added to a branch
+>>> or branches, before there are following commits in the DAG.
+>>=20
+>> Errr... the main problem is with distributed nature of Git, i.e. when
+>> two repositories create different commits with the same
+>> committer+timestamp value.  You receive commits on fetch or push, and
+>> you receive many commits at once.
+>>=20
+>> Say you have two repositories, and the history looks like this:
+>>=20
+>>  repo A:   1<---2<---a<---x<---c<---d      <- master
+>>=20
+>>  repo B:   1<---2<---X<---3<---4           <- master
+>>=20
+>> When you push from repo A to repo B, or fetch in repo B from repo A you
+>> would get the following DAG of revisions
+>>=20
+>>  repo B:   1<---2<---X<---3<---4           <- master
+>>                  \
+>>                   \--a<---x<---c<---d      <- repo_A/master
+>>=20
+>> Now let's assume that commits X and x have the came committer and the
+>> same fractional timestamp, while being different commits.  Then you
+>> would need to bump timestamp of 'x', changing the commit.  This means
+>> that 'c' needs to be rewritten too, and 'd' also:
+>>=20
+>>  repo B:   1<---2<---X<---3<---4           <- master
+>>                  \
+>>                   \--a<---x'<--c'<--d'     <- repo_A/master
+>
+> Of course that's true.  But you were talking as though all those commits
+> have to be modified *after they're in the DAG*, and that's not the case.
+> If any timestamp has to be modified, it only has to happen *once*, at the
+> time its commit enters the repo.
 
-> Hi, =C3=86var
->
->> Give "rebase -i" some option so when you "reword" the patch is
->> included in the message.
->>
->> I keep going to the shell because I have no idea what change I'm
->> describing.
->
-> I have the same problem, so I wanted to try solving this. The patch
-> bellow creates a "rebase.verboseCommit" configuration that includes
-> a diff when rewording or squashing. I'd appreciate knowing your thoughts
-> on it.
->
-> As Christian wisely pointed out to me, though, we can also achieve this
-> behavior by setting "commit.verbose" to true. The only "downside" of it
-> is that users cannot choose to see the diff only when rebasing. Despite
-> of that, if we decide not to go with this patch, what do you think of
-> adding a "commit.verbose" entry at git-rebase's man page?
+The time commit 'x' was created in repo A there was no need to bump the
+timestamp.  Same with commit 'X' in repo B (well, unless there is a
+central serialization server - which would not fly).  It is only after
+push from repo A to repo B that we have two commits: 'x' and 'X' with
+the same timestamp.
 
-Thanks for working on this. I'd somehow missed the addition of the
-commit.verbose option, so the problem I had is 100% solved by it (and
-I've turned it on).
+> Actually, in the normal case only x would need to be modified. The only
+> way c would need to be modified is if bumping x's timestamp caused an
+> actual collision with c's.
+>
+> I don't see any conceptual problem with this.  You appear to me to be
+> confusing two issues.  Yes, bumping timestamps would mean that all
+> hashes downstream in the Merkle tree would be generated differently,
+> even when there's no timestamp collision, but so what?  The hash of a
+> commit isn't portable to begin with - it can't be, because AFAIK
+> there's no guarantee that the ancestry parts of the DAG in two
+> repositories where copies of it live contain all the same commits and
+> topo relationships.
 
-I think it's better to just document it with rebase, perhaps rather than
-mention that option specifically (but that would also be fine) promise
-that we support "commit" options in general.
+Errr... how did you get that the hash of a commit is not portable???
+Same contents means same hash, i.e. same object identifier.  Two
+repositories can have part of history in common (for example different
+forks of the same repository, like different "trees" of Linux kernel),
+sharing part of DAG.  Same commits, same topo relationships.  That's how
+_distributed_ version control works.
 
-Do we promise anywhere that interactive rebase is going to run the
-"normal" git-commit command. From a quick skimming of the docs it
-doesn't seem so, perhaps we should explicitly promise that, and then
-test for it if we don't (e.g. by stealing the tests you added).
+[I think we may have been talking past each other.]
 
-Aside from that, if this patch is kept I see commit.verbose is a
-bool-or-int option, but yours is maybe-bool, so there's no way with
-rebase.verboseCommit to turn on the higher level of verbosity. Perhaps
-if this option is kept some implementation that just grabs whatever "X"
-rebase.verboseCommit=3DX is set to and passes it as commit.verbase=3DX down
-to git-commit is better, letting it deal with the validation?
+>> And now for the final nail in the coffing of the Bazaar-esque idea of
+>> changing commits on arrival.  Say that repository A created new commits,
+>> and pushed them to B.  You would need to rewrite all future commits from
+>> this repository too, and you would always fetch all commits starting
+>> from the first "bumped"
+>
+> I don't see how the second clause of your last sentence follows from the
+> first unless commit hashes really are supposed to be portable across
+> repositories.  And I don't see how that can be so given that 'git am'
+> exists and a branch can thus be rooted at a different place after
+> it is transported and integrated.
 
-> diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebas=
-e.txt
-> index d98e32d812..ae50b3e05d 100644
-> --- a/Documentation/config/rebase.txt
-> +++ b/Documentation/config/rebase.txt
-> @@ -62,3 +62,8 @@ rebase.rescheduleFailedExec::
->  	Automatically reschedule `exec` commands that failed. This only makes
->  	sense in interactive mode (or when an `--exec` option was provided).
->  	This is the same as specifying the `--reschedule-failed-exec` option.
-> +
-> +rebase.verboseCommit::
-> +	When rewording or squashing commits, during an interactive rebase, show
-> +	the commits' diff to help describe the modifications they bring. False
-> +	by default.
-> diff --git a/sequencer.c b/sequencer.c
-> index f88a97fb10..1596fc4cd0 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -914,6 +914,7 @@ N_("you have staged changes in your working tree\n"
->  #define CLEANUP_MSG (1<<3)
->  #define VERIFY_MSG  (1<<4)
->  #define CREATE_ROOT_COMMIT (1<<5)
-> +#define VERBOSE_COMMIT (1<<6)
+'git rebase', 'git rebase --interactive' and 'git am' create diffent
+commits; that is why their's result is called "history rewriting" (it
+actually is creating altered copy, and garbage-collecting old pre-copy
+and pre-change version).  Anyway, the recommended practice is to not
+rewrite published history (where somebody could have bookmarked it).
+
+Note also that this copy preserves author date, not committer date; also
+commits can be deleted, split and merged during "rewrite".
+
+Fetch and push do not use 'git am', and they preserve commits and their
+identities.  That is how they can be effective and peformant.
+
+>> Hash of a commit depend in hashes of its parents (Merkle tree). That is
+>> why signing a commit (or a tag pointing to the commit) signs a whole
+>> history of a commit.
 >
->  static int run_command_silent_on_success(struct child_process *cmd)
->  {
-> @@ -1007,6 +1008,8 @@ static int run_git_commit(struct repository *r,
->  		argv_array_push(&cmd.args, "-n");
->  	if ((flags & AMEND_MSG))
->  		argv_array_push(&cmd.args, "--amend");
-> +	if ((flags & VERBOSE_COMMIT))
-> +		argv_array_push(&cmd.args, "-v");
->  	if (opts->gpg_sign)
->  		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
->  	if (defmsg)
-> @@ -1782,7 +1785,7 @@ static int do_pick_commit(struct repository *r,
->  	char *author =3D NULL;
->  	struct commit_message msg =3D { NULL, NULL, NULL, NULL };
->  	struct strbuf msgbuf =3D STRBUF_INIT;
-> -	int res, unborn =3D 0, allow;
-> +	int res, unborn =3D 0, allow, verbose_commit =3D 0;
+> That's what I thought.
+
+[...]
+>> For cookie to be unique among all forks / clones of the same repository
+>> you need either centralized naming server, or for the cookie to be based
+>> on contents of the commit (i.e. be a hash function).
 >
->  	if (opts->no_commit) {
->  		/*
-> @@ -1843,6 +1846,9 @@ static int do_pick_commit(struct repository *r,
->  		return error(_("cannot get commit message for %s"),
->  			oid_to_hex(&commit->object.oid));
+> I don't need uniquess across all forks, only uniqueness *within the repo*.
+
+Err, what?  So the proposed "action stamp" identifier is even more
+useless?  If you can't use <esr@thyrsus.com!2019-05-15T20:01:15.473209800Z>
+to uniquely name revision, so that every person that has that commit can
+know which commit is it, what's the use?
+
+Is "action stamp" meant to be some local identifier, like Mercurial's
+Subversion-like revision number, good only for local repository?
+
+> I want this for two reasons: (1) so that action stamps are unique, (2)
+> so that there is a unique canonical ordering of commits in a fast export
+> stream.
 >
-> +	if (git_config_get_maybe_bool("rebase.verbosecommit", &verbose_commit) =
-< 0)
-> +		warning("Invalid value for rebase.verboseCommit. Using 'false' instead=
-.");
-> +
->  	if (opts->allow_ff && !is_fixup(command) &&
->  	    ((parent && oideq(&parent->object.oid, &head)) ||
->  	     (!parent && unborn))) {
-> @@ -1853,6 +1859,8 @@ static int do_pick_commit(struct repository *r,
->  		if (res || command !=3D TODO_REWORD)
->  			goto leave;
->  		flags |=3D EDIT_MSG | AMEND_MSG | VERIFY_MSG;
-> +		if (verbose_commit)
-> +			flags |=3D VERBOSE_COMMIT;
->  		msg_file =3D NULL;
->  		goto fast_forward_edit;
->  	}
-> @@ -1909,12 +1917,17 @@ static int do_pick_commit(struct repository *r,
->  			author =3D get_author(msg.message);
->  	}
+> (Without that second property there are surgical cases I can't
+> regression-test.)
+
+You can always use object identifier (hash) for tiebreaking for second
+case use.
+
+>>>                                                          For my use cas=
+es
+>>> that cookie should *not* be a hash, because hashes always break N years
+>>> down.  It should be an eternally stable product of the commit metadata.
+>>=20
+>> Well, the idea for SHA-1 <--> NewHash =3D=3D SHA-256 transition is to av=
+oid
+>> having a flag day, and providing full interoperability between
+>> repositories and Git installations using the old hash ad using new
+>> hash^1.  This will be done internally by using SHA-1 <--> SHA-256
+>> mapping.  So after the transition all you need is to publish this
+>> mapping somewhere, be it with Internet Archive or Software Heritage.
+>> Problem solved.
 >
-> -	if (command =3D=3D TODO_REWORD)
-> +	if (command =3D=3D TODO_REWORD) {
->  		flags |=3D EDIT_MSG | VERIFY_MSG;
-> +		if (verbose_commit)
-> +			flags |=3D VERBOSE_COMMIT;
-> +	}
->  	else if (is_fixup(command)) {
->  		if (update_squash_messages(r, command, commit, opts))
->  			return -1;
->  		flags |=3D AMEND_MSG;
-> +		if (verbose_commit)
-> +			flags |=3D VERBOSE_COMMIT;
->  		if (!final_fixup)
->  			msg_file =3D rebase_path_squash_msg();
->  		else if (file_exists(rebase_path_fixup_msg())) {
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 1723e1a858..9b410d31e2 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1477,4 +1477,60 @@ test_expect_success 'valid author header when auth=
-or contains single quote' '
->  	test_cmp expected actual
->  '
+> I don't see it.  How does this prevent old clients from barfing on new
+> repositories?
+
+The SHA-1 <--> SHA-256 interoperation is on the client-server level; one
+can use old Git that uses SHA-1 from repository that uses SHA-256, and
+vice versa.
+
+>> P.S. Could you explain to me how one can use action stamp, e.g.
+>> <esr@thyrsus.com!2019-05-15T20:01:15.473209800Z>, to quickly find the
+>> commit it refers to?  With SHA-1 id you have either filesystem pathname
+>> or the index file for pack to find it _fast_.
 >
-> +write_script "reword-and-check-for-diff" <<\EOF &&
-> +case "$1" in
-> +*/git-rebase-todo)
-> +	sed s/pick/reword/ "$1" > "$1.tmp"
-> +	mv -f "$1.tmp" "$1"
-> +	;;
-> +*)
-> +	grep '^diff --git' "$1" >has-diff
-> +	;;
-> +esac
-> +exit 0
-> +EOF
-> +
-> +test_expect_success 'rebase -i does not show diff by default when reword=
-ing' '
-> +	rebase_setup_and_clean no-verbose-commit-reword &&
-> +	test_set_editor "$PWD/reword-and-check-for-diff" &&
-> +	git rebase -i HEAD~1 &&
-> +	test_line_count =3D 0 has-diff
-> +'
-> +
-> +test_expect_success 'rebase -i respects rebase.verboseCommit when reword=
-ing' '
-> +	rebase_setup_and_clean verbose-commit-reword &&
-> +	test_config rebase.verboseCommit true &&
-> +	test_set_editor "$PWD/reword-and-check-for-diff" &&
-> +	git rebase -i HEAD~1 &&
-> +	test_line_count -gt 0 has-diff
-> +'
-> +
-> +write_script "squash-and-check-for-diff" <<\EOF &&
-> +case "$1" in
-> +*/git-rebase-todo)
-> +	sed "s/pick \([0-9a-f]*\) E/squash \1 E/" "$1" > "$1.tmp"
-> +	mv -f "$1.tmp" "$1"
-> +	;;
-> +*)
-> +	grep '^diff --git' "$1" >has-diff
-> +	;;
-> +esac
-> +exit 0
-> +EOF
-> +
-> +test_expect_success 'rebase -i does not show diff by default when squash=
-ing' '
-> +	rebase_setup_and_clean no-verbose-commit-squash &&
-> +	test_set_editor "$PWD/squash-and-check-for-diff" &&
-> +	git rebase -i HEAD~2 &&
-> +	test_line_count =3D 0 has-diff
-> +'
-> +
-> +test_expect_success 'rebase -i respects rebase.verboseCommit when squash=
-ing' '
-> +	rebase_setup_and_clean verbose-commit-squash &&
-> +	test_config rebase.verboseCommit true &&
-> +	test_set_editor "$PWD/squash-and-check-for-diff" &&
-> +	git rebase -i HEAD~2 &&
-> +	test_line_count -gt 0 has-diff
-> +'
-> +
->  test_done
+> For the purposes that make action stamps important I don't really care
+> about performance much (though there are fairly obvious ways to
+> achieve it).
+
+What ways?
+
+>              My goal is to ensure that revision histories (e.g. in
+> their import-stream format) are forward-portable to future VCSes
+> without requiring any data outside the stream itself.
+
+In Git you can store "action stamp" in extra extension headers in commit
+objects (as was already proposed in this thread).
+
+Best,
+--
+Jakub Nar=C4=99bski
