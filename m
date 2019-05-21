@@ -2,105 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A05701F462
-	for <e@80x24.org>; Tue, 21 May 2019 18:32:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67D1B1F462
+	for <e@80x24.org>; Tue, 21 May 2019 19:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728175AbfEUSc4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 14:32:56 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55755 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727969AbfEUSc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 14:32:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558463571;
-        bh=FUHbuRjP9Tl+GUYJZDYmj0/c4roZjPlBDQtgT4ZVYo4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aOgIr2K+I3YWiFMw9ifgUaAWtJ/opXxdmZFyHD64VY761h559p5601pVztOsxpnS7
-         r/q3BPvU8IIDpS1iLRfZzlwOODuPzxoAqNq6jdHBoD4KgMOaB+A4V1FhziXi6F+DfZ
-         M+EK1UlfSKk5RBdtTODQMc0zDMWJ2rxTVjiPJKcs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LnfuZ-1h0RWG1Yo3-00hwaH; Tue, 21
- May 2019 20:32:51 +0200
-Date:   Tue, 21 May 2019 20:32:35 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/rebase-cleanup, was Re: What's cooking in git.git (May 2019, #03;
- Sun, 19)
-In-Reply-To: <xmqqv9y6zufi.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905212028240.46@tvgsbejvaqbjf.bet>
-References: <xmqqv9y6zufi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727341AbfEUTeA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 15:34:00 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33502 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727046AbfEUTeA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 15:34:00 -0400
+Received: by mail-ed1-f65.google.com with SMTP id n17so75920edb.0
+        for <git@vger.kernel.org>; Tue, 21 May 2019 12:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=eaQA2O5Be+M6j+7ktYqJQ7LkOejmVInPTcDDtIE+AVU=;
+        b=Y1twHL/mVvJn6b12MxdSynNrYufeMZ5e5mUT6bsUoaWdOom2SJbAYUt9ueDMNgWonh
+         hUAAIYW4pP82r2VIJ9vXfbrBtaadpylS/8KtQhrxX65dDdqkf33pIT6l/wWfzzXcn1dJ
+         ZSt1HInQ6V0szgTPpYnwNo/MRdHyrDSvucEITdV0E8PhWEhAEi2T33P1ewXLAsYJoRUi
+         LuXTOY7b1u5NNycK5JoZszmB/lq/Qo/FmSkZ6IfECj/1s5gpExKSHINCzXQxF0K0loOz
+         jqZ+A7P78J7OmlU1UQlKYM2j5RmtiboJjBlfFD4X6daS1DdiToTyP/2o6BjAk97z153Q
+         rc4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=eaQA2O5Be+M6j+7ktYqJQ7LkOejmVInPTcDDtIE+AVU=;
+        b=aexa9nf58ZgPd7kT0LJfLHC1vRMBqIb5vgJRDf9SABYt66uy8eU06uZCMCblJ2C+Mu
+         S1UzzE9EcHLCLeXACYGubnsVjTva8jTfXjI3zthH3GaOGq6T+Aa6MbN2265cC4EVmMiQ
+         heJ6QPvJyta5MxhMYXeqnbNFaGt/60C3giMGi+i9Wf0U7B3c+h78G62LIKBG/gsLQ1kN
+         skrTjhzc41tbpFXjC2c/40ucjS0uU+2cAaZuNsmekpTgTJCWZ08vVUItaMUOfzCG90+L
+         YlBD+fd71nlpPSwYW8z7Udp2m744zSKcR9LYWLVTubkWVYLeBHk7w8rVZbBHRiXPopzB
+         F1HA==
+X-Gm-Message-State: APjAAAXDFlJk7nnzmjzDKEJKNoJSbSBD0M+TX1YY9d/w8VOoYUX+9zi2
+        TR+g33f20QoTI5uiOsCX8oSAsoup
+X-Google-Smtp-Source: APXvYqxh3TPrKKfIH3jOEpPLTs8ZRts9ta8kMP5NkeKkC+JXI05DCDp0yQL6ugFPOApZOh8OyRYCHg==
+X-Received: by 2002:a17:906:6a50:: with SMTP id n16mr66951890ejs.119.1558467238645;
+        Tue, 21 May 2019 12:33:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m7sm6508843edd.64.2019.05.21.12.33.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 May 2019 12:33:58 -0700 (PDT)
+Date:   Tue, 21 May 2019 12:33:58 -0700 (PDT)
+X-Google-Original-Date: Tue, 21 May 2019 19:33:56 GMT
+Message-Id: <pull.222.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:2Y9ngb+PeUuT9BF4XnPAwFa1Cr3MnQs01nguGXS9EjKaEkiMdcF
- zExYCBVHhIKsPGaSDRoG/WKvThg+UzUKprgnL3d60Hjs6PlzYEb6ZQ/M9niz9Xmld1ZxoDf
- lxWwynx66eicIbrili3VWldKigyEK1tysKE204nLuGqm3stZsLGpfHFLp9rL1pDaiidbAjJ
- fLYKhkSI07zHRbQdhn21Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vU24PqpND0Y=:6QLNlCsXvO6izVjYYyQcHp
- BeOuFJt+2s7tIn7MYtgiZAsudygOoX7vxjJLmHIC7zNUV6HKMd72Y22WLwmBn1pBArrFp4iUg
- XjnBrqHl/vhUw5JHv4UB/eqBw7OfM+/tq/JV1NBeX3wtQa478iKCJ1wBguKiEE5Wl2Rz8UJkD
- kA2AWPozY+MLRZBmEzZmyks+jduihF7aqdD85xzZ3QjNXsmlUaC9cj4i9uq43u9wHH+zn1nvW
- NnKgVsAryDWKjc9bkSc+q2/h/SenRqchfR5dBSWLHdqJkwBPtA7P1ZzyoVyAZ4YXN9l1W+C56
- 8O55X/z4VMiMAbGJc2EBL5mEgNLIxJPJt42Ig5CX5ZGyrgEj6AFRdtg95qyQWNhxm6CSZYBO/
- QWBoiLvebO6g887cBdms/EWB9K5BZH296E7MJjAVGDjV/f3GRTnn9bKUjG/ZuVw7OcmftzSFg
- /d+iJbGGaER6qt0vyg6yoH3m6JxO85X4niXsChXuXzVGgz5iR6RxTQdYPRXNWZ1Cauxl/A5fI
- BXDhos9M0L3fdxRtxKzkl1bbMXrrZgEZJJSIBNxjSI9OR5KpW0pEgjmzgMC0QWp/gaOL4TDSs
- tuVp3mcU2ZCO9pJxze+pN9PWxHh0mS67w9meIxxIRMTx9iVakRo1oIZMtiWLapBFOcCJx2+Qk
- 8IexM5qJOJ+cVr849Ze6PH7/aFHPe4iY/wmI4jW8htfF1FDS9MaAz2WtRNLbm0HBwABzVM8WK
- xkr0xkeiJa1fqLYaKPFs9D5qSe8UnJxJa3aBvFulCiPF8BtBg22NnoUon/IJgo25uG6ooMOvf
- Ow4no85j+QR/x15xYcl7Tq6PWHEtb/xbiwURpLPnPmq6Khr6HBz77mvbI9OjeY4uHeVunC69U
- SYZXz/3eWOYymZ1pdC5Ktkms/F1BB3RUHI8Ebm8gW6Vr3pCElemzzqYW285tRkQjsB3eqziwe
- QZS4kSg5WLmhIvocjUuUjyhMeBJ5qWVV0yME9nx3yhL5rKb6MVcP/
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This commit addresses the problem reported in:
+https://public-inbox.org/git/92cfdf43-8841-9c5a-7838-dda995038908@jeffhostetler.com/T/#mbaf8069f6d1bc18d5a02d3682a1f9282f5547ea9
 
-On Sun, 19 May 2019, Junio C Hamano wrote:
+As Duy suggested, pthread_getspecific() just returns NULL when NO_PTHREADS
+is defined. And pthread_setspecific() silently does not nothing. So this
+problem was hidden from view.
 
-> The first release candidate Git 2.22-rc1 has been tagged.  There
-> still are a few topics from 'next' that need to go to 'master'
-> before the final, but otherwise this should be pretty close to the
-> final version.  Knock knock...
+I have to wonder if we should update pthread_*specific() to call BUG() when
+NO_PTHREADS is defined as a way to catch unguarded usages easier or make
+this issue more clear.
 
-Fingers crossed!
+Jeff Hostetler (1):
+  trace2: fix tracing when NO_PTHREADS is defined
 
-> I'll be offline for a week or so and will tag -rc2 early next week
-> when I get back to the US.
+ trace2/tr2_tls.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-Enjoy your time off.
 
-> * js/rebase-cleanup (2019-05-15) 5 commits
->   (merged to 'next' on 2019-05-16 at ccfed8f263)
->  + rebase: fold git-rebase--common into the -p backend
->  + sequencer: the `am` and `rebase--interactive` scripts are gone
->  + .gitignore: there is no longer a built-in `git-rebase--interactive`
->  + t3400: stop referring to the scripted rebase
->  + Drop unused git-rebase--am.sh
->
->  Update supporting parts of "git rebase" to remove code that should
->  no longer be used.
->
->  Will cook in 'next'.
-
-I guess you're saying that this is *not* one of those branches you want to
-still merge into `master` before v2.22.0... Is this reading correct?
-
-I ask because I have one more patch in the queue that cleans up the
-NEEDSWORK in git.c that we can now address, and I kept it out of the patch
-series in order to make it easier to merge down before v2.22 final...
-
-Ciao,
-Dscho
+base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-222%2Fjeffhostetler%2Ftrace2-no-pthread-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-222/jeffhostetler/trace2-no-pthread-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/222
+-- 
+gitgitgadget
