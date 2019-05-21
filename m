@@ -2,99 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BE891F462
-	for <e@80x24.org>; Tue, 21 May 2019 14:48:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59CB1F462
+	for <e@80x24.org>; Tue, 21 May 2019 14:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728289AbfEUOs3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 10:48:29 -0400
-Received: from mail-ua1-f42.google.com ([209.85.222.42]:43370 "EHLO
-        mail-ua1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbfEUOs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 10:48:29 -0400
-Received: by mail-ua1-f42.google.com with SMTP id u4so6699709uau.10
-        for <git@vger.kernel.org>; Tue, 21 May 2019 07:48:28 -0700 (PDT)
+        id S1728104AbfEUO5c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 10:57:32 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35524 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727534AbfEUO5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 10:57:31 -0400
+Received: by mail-pg1-f195.google.com with SMTP id t1so7305851pgc.2
+        for <git@vger.kernel.org>; Tue, 21 May 2019 07:57:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EJfy1fIF3CnnQzc4F6lvc471ZHlH5QMihdRhLxrMKS8=;
-        b=p0AUgrkUeiD9/qCdwDNI8rX3XrPs/JysnlUMthrAE1vtBSBjb7PbluiGgZlph7tG6d
-         2gS3wn9wfYydWYNj5NYQGvYDTbEG6sStp019oiFVRmsVrZQ3OudQNw5hdFlaxkt/bIyw
-         eiiwALFS+3VaPD+OmNL4L/Jji0SUV1rvubE7Q=
+        d=connect-hku-hk.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TVWVBYftWwdiBHJwSUVc4c+PzIc3P8RSqks+5odTBMc=;
+        b=rPIHTxZAmDMSXg61o4BP/XMUpUQTxrM84dyatymAf9/M4FS1yxdTkIOmw1UZovbkyi
+         E0uce+wdv0oaoq+uentK5qwWQjXUYTwVI6YIG4K9sT9tfENp0CuvS6X+6M89iJK2FhA5
+         vFM7RJVP45pq6ATunBVBGRm6rcNvSA7CnfLBobCJFY+EfEf2uGEXx4CljmTWi/eGEmrH
+         os7MwVFKhW9L90OOOrywpcH41momgPRM7kzKVuagyGPL3N8BGxjdsK8YPU2chNuw3mhS
+         hj+domgU2oLVAcbU8rFvIB4928l/zPSCKmukVHf0anqjLevaIHvI3LqOwYjvVlWi6/Bo
+         +9kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EJfy1fIF3CnnQzc4F6lvc471ZHlH5QMihdRhLxrMKS8=;
-        b=EV9e84GZ7ftNUtvYOwpQW38zO+vq4Ge1xecFX/rPFiY4+YMNMIhnyKAbBQkmu0wP51
-         1rWSt9+/qpDe3LDanWFcKji9VUC0YZKhfSunkLISCM14jFB1p4/LGQ06+xi93CrYTHqd
-         IEhjFsvX1qz3fGVyy8CeDc+x5h+gCcK4Q/H3OkJQ0IkWXwyDTa7YmDDq2LnOdL0xTYeF
-         fCTDDqVwYu5p06JKZGlzE2Uyw7MW9YSHtPAlbqeMiF+KYGy5GsLrpydDH4M1J/0agzx7
-         gSp2Bh7aMa7+qycsQmH3Omn0nHKUCyDjyaPQkxHxU6juXAsRNBDT8EXIC1TBOOhjiUSJ
-         qzTg==
-X-Gm-Message-State: APjAAAUuRSVjQHeRJf7CPoHR/ApVha9SH7ykr+uCGeqlj70HtlKOTpUH
-        NwaL/HQBR1bOU1t5Ahdtj2cAkgfEQW40hkY71G8YXg==
-X-Google-Smtp-Source: APXvYqzpwS1YS28JpbEQXZn+LcawGbnh6e51MbUGK1TZpBQW7UbgX80H58RZtR5YKNOLX234aaL169D0ON3f4ks+wAs=
-X-Received: by 2002:ab0:1407:: with SMTP id b7mr8252179uae.112.1558450107504;
- Tue, 21 May 2019 07:48:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TVWVBYftWwdiBHJwSUVc4c+PzIc3P8RSqks+5odTBMc=;
+        b=IekDaoITg3CGeHpRpoWUNu9x/jIyXm35u/0Fu7QRydIPLF9j65deobi3dbr41gfC3k
+         XCk5qvEbiBzTjGmWTXN+4CS2iLHh4C+rHcYnysPuK/hWgyO3spP1TyKv/f9ZZ1Q7raC9
+         0m2Qp3Uwtkg68e5gESghSkq10k0onJxU+rm2hdf2fbH9awMF/hzm/7VvZkyZjWeIKEGk
+         +VByUXpNDQmL+J2QtzpUh/gl+qPPIhiYOnoa/lVXCCXfvdYAYWkfRAVTlfJvBaf77e/N
+         oaj9Sii1Hyg9nq+S2IeC5/XsQqqJbm3brO5dwN4ZyRd2lHQZYwUlAkjWk6uUxxQjtEwV
+         JwVA==
+X-Gm-Message-State: APjAAAVo3aEEWvV9jdgs5iZtik+z7sosr4qtrRmMwc6HVkRLmPCGkYEA
+        Yp0KZLN8fLgAdsrFXNvRonnzCb6Q2REBcQ==
+X-Google-Smtp-Source: APXvYqyJnV65JCSYoBOcUh61pCcQJc0ANNbh6Xk5awR9vYqOUcjrvamvrb9ObPa6of48VXBWNqMyjQ==
+X-Received: by 2002:aa7:842f:: with SMTP id q15mr88669499pfn.161.1558450650973;
+        Tue, 21 May 2019 07:57:30 -0700 (PDT)
+Received: from MBP.local.hk ([175.159.177.127])
+        by smtp.gmail.com with ESMTPSA id a37sm10934638pga.67.2019.05.21.07.57.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 May 2019 07:57:30 -0700 (PDT)
+From:   Boxuan Li <liboxuan@connect.hku.hk>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, philipoakley@iee.org, gitster@pobox.com,
+        j6t@kdbg.org, Boxuan Li <liboxuan@connect.hku.hk>
+Subject: [PATCH v6] userdiff: add Octave
+Date:   Tue, 21 May 2019 22:57:18 +0800
+Message-Id: <20190521145718.56693-1-liboxuan@connect.hku.hk>
+X-Mailer: git-send-email 2.21.0.777.g83232e3864
+In-Reply-To: <3b7a22e8-0310-3738-0476-b6d73f187331@kdbg.org>
+References: <3b7a22e8-0310-3738-0476-b6d73f187331@kdbg.org>
 MIME-Version: 1.0
-References: <01cf52cb-7e90-efde-a06c-f0413f9efc8a@gmail.com>
-In-Reply-To: <01cf52cb-7e90-efde-a06c-f0413f9efc8a@gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Tue, 21 May 2019 15:47:50 +0100
-Message-ID: <CA+kUOa=N5GuKoLjNh=8JkTBnpcdxQ2-OLZbOFAGUhBkZ9dVH4A@mail.gmail.com>
-Subject: Re: Cygwin Git Performance
-To:     Nathan and Ila Reynolds <nathanila@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 21 May 2019 at 15:34, Nathan and Ila Reynolds wrote:
->
-> I am not sure if this is the right mailing list.  If not, please
-> redirect me to the right place.
->
-> I have Cygwin's git (2.21.0) and Git for Windows (2.21.0) installed on
-> my Windows 10 machine.  I run the following command with each binary
-> "git push --all" on a simple 2 line change to 1 file.  If I use Cygwin's
-> git, then the operation takes almost 5 minutes.  If I use Git for
-> Windows, then the operation takes almost 20 seconds.  I tried using
-> --verbose to figure out why Cygwin's git is so slow but it does not
-> reveal anything to me as to why.  What can I do to figure out why
-> Cygwin's git is so slow? I am hoping that we can get to the bottom of
-> this and it can be fixed to help all users.
+Octave pattern is almost the same as matlab, except
+that '%%%' and '##' can also be used to begin code sections,
+in addition to '%%' that is understood by both. Octave
+pattern is merged into Matlab pattern. Test cases for
+the hunk header patterns of matlab and octave under
+t/t4018 are added.
 
-Re which mailing list to use: are you using the version of Cygwin Git
-that gets installed when using Cygwin's setup-x86/setup-x86_64
-installer? If so, you'll probably have better luck reporting on the
-Cygwin mailing list per https://cygwin.com/lists.html. If it's
-something you built yourself, it's less clear, because it depends
-where things are going wrong. In either case, I'm the maintainer for
-the Cygwin Git package, so I'm probably a good person to at least take
-a first pass at the problem.
+Signed-off-by: Boxuan Li <liboxuan@connect.hku.hk>
+Acked-by: Johannes Sixt <j6t@kdbg.org>
+---
+Thanks to review from Johannes, update from v5:
+Fix grammar and style
+---
+ Documentation/gitattributes.txt | 2 +-
+ t/t4018/matlab-class-definition | 5 +++++
+ t/t4018/matlab-function         | 4 ++++
+ t/t4018/matlab-octave-section-1 | 3 +++
+ t/t4018/matlab-octave-section-2 | 3 +++
+ t/t4018/matlab-section          | 3 +++
+ userdiff.c                      | 7 ++++++-
+ 7 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100644 t/t4018/matlab-class-definition
+ create mode 100644 t/t4018/matlab-function
+ create mode 100644 t/t4018/matlab-octave-section-1
+ create mode 100644 t/t4018/matlab-octave-section-2
+ create mode 100644 t/t4018/matlab-section
 
-It is expected that Cygwin's Git is slower than Git for Windows, as
-they're both running on the same hardware, operating system and file
-system, but Cygwin has a heavier interface layer between the Git code
-and the OS. However I'd expect that difference to be basically
-unnoticable the vast majority of the time; 20 seconds to 5 minutes is
-significantly more than I'd consider typical.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 4fb20cd0e9..e387cc6dda 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -819,7 +819,7 @@ patterns are available:
+ 
+ - `java` suitable for source code in the Java language.
+ 
+-- `matlab` suitable for source code in the MATLAB language.
++- `matlab` suitable for source code in the MATLAB and Octave languages.
+ 
+ - `objc` suitable for source code in the Objective-C language.
+ 
+diff --git a/t/t4018/matlab-class-definition b/t/t4018/matlab-class-definition
+new file mode 100644
+index 0000000000..84daedfb4e
+--- /dev/null
++++ b/t/t4018/matlab-class-definition
+@@ -0,0 +1,5 @@
++classdef RIGHT
++    properties
++        ChangeMe
++    end
++end
+diff --git a/t/t4018/matlab-function b/t/t4018/matlab-function
+new file mode 100644
+index 0000000000..897a9b13ff
+--- /dev/null
++++ b/t/t4018/matlab-function
+@@ -0,0 +1,4 @@
++function y = RIGHT()
++x = 5;
++y = ChangeMe + x;
++end
+diff --git a/t/t4018/matlab-octave-section-1 b/t/t4018/matlab-octave-section-1
+new file mode 100644
+index 0000000000..3bb6c4670e
+--- /dev/null
++++ b/t/t4018/matlab-octave-section-1
+@@ -0,0 +1,3 @@
++%%% RIGHT section
++# this is octave script
++ChangeMe = 1;
+diff --git a/t/t4018/matlab-octave-section-2 b/t/t4018/matlab-octave-section-2
+new file mode 100644
+index 0000000000..ab2980f7f2
+--- /dev/null
++++ b/t/t4018/matlab-octave-section-2
+@@ -0,0 +1,3 @@
++## RIGHT section
++# this is octave script
++ChangeMe = 1;
+diff --git a/t/t4018/matlab-section b/t/t4018/matlab-section
+new file mode 100644
+index 0000000000..5ea59a5de0
+--- /dev/null
++++ b/t/t4018/matlab-section
+@@ -0,0 +1,3 @@
++%% RIGHT section
++% this is understood by both matlab and octave
++ChangeMe = 1;
+diff --git a/userdiff.c b/userdiff.c
+index 3a78fbf504..04270fb4d7 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -58,7 +58,12 @@ PATTERNS("java",
+ 	 "|[-+*/<>%&^|=!]="
+ 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+ PATTERNS("matlab",
+-	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^%%[[:space:]].*$",
++	 /*
++	  * Octave pattern is mostly the same as matlab, except that '%%%' and
++	  * '##' can also be used to begin code sections, in addition to '%%'
++	  * that is understood by both.
++	  */
++	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^(%%%?|##)[[:space:]].*$",
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
+ PATTERNS("objc",
+ 	 /* Negate C statements that can look like functions */
+-- 
+2.21.0.777.g83232e3864
 
-My immediate thoughts are around (a) PATH handling and (b) third-party
-dependencies like what SSH library is being used. So I can rule those
-out, can you give me (a) the standard Cygwin diagnostic package from
-running "cygcheck -s -v -r > cygcheck.out" in a Cygwin terminal
-(off-list, if you prefer), and (b) details of the remote repository
-you're pushing to?
-
-Cheers,
-
-Adam
