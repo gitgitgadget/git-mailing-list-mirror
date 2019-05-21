@@ -2,69 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F029120380
-	for <e@80x24.org>; Tue, 21 May 2019 20:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBCE21F462
+	for <e@80x24.org>; Tue, 21 May 2019 21:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727437AbfEUU6J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 16:58:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35348 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727136AbfEUU6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 16:58:08 -0400
-Received: (qmail 531 invoked by uid 109); 21 May 2019 20:58:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 May 2019 20:58:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17137 invoked by uid 111); 21 May 2019 20:58:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 May 2019 16:58:48 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 May 2019 16:58:06 -0400
-Date:   Tue, 21 May 2019 16:58:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Antonio Ospite <ao2@ao2.it>,
-        Eric Wong <e@80x24.org>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] repository.c: always allocate 'index' at repo init time
-Message-ID: <20190521205806.GA14807@sigill.intra.peff.net>
-References: <xmqqftpf5g3d.fsf@gitster-ct.c.googlers.com>
- <20190519025636.24819-1-pclouds@gmail.com>
- <20190520131702.GB13474@sigill.intra.peff.net>
- <CACsJy8CoauTdJ1huU=w2YNbw53iea5U304yAu2oCUuTvFRaV7w@mail.gmail.com>
+        id S1727275AbfEUVGD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 17:06:03 -0400
+Received: from siwi.pair.com ([209.68.5.199]:47455 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727136AbfEUVGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 17:06:03 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 985763F4094;
+        Tue, 21 May 2019 17:06:02 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:101d:dfe8:f4b5:4e4b] (unknown [IPv6:2001:4898:a800:1012:c150:dfe8:f4b5:4e4b])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 575493F408A;
+        Tue, 21 May 2019 17:06:02 -0400 (EDT)
+Subject: Re: Cygwin Git Performance
+To:     Nathan and Ila Reynolds <nathanila@gmail.com>, git@vger.kernel.org
+References: <01cf52cb-7e90-efde-a06c-f0413f9efc8a@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <5d06cf4a-c29f-335f-52f9-c6c35369b673@jeffhostetler.com>
+Date:   Tue, 21 May 2019 17:06:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CoauTdJ1huU=w2YNbw53iea5U304yAu2oCUuTvFRaV7w@mail.gmail.com>
+In-Reply-To: <01cf52cb-7e90-efde-a06c-f0413f9efc8a@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 21, 2019 at 05:34:02PM +0700, Duy Nguyen wrote:
 
-> >   2. There are hundreds of spots that need to swap out "repo->index" for
-> >      "&repo->index". In the patch below I just did enough to compile
-> >      archive-zip.o, to illustrate. :)
+
+On 5/21/2019 10:34 AM, Nathan and Ila Reynolds wrote:
+> I am not sure if this is the right mailing list.  If not, please 
+> redirect me to the right place.
 > 
-> You are more thorough than me. I saw #2 first and immediately backed
-> off (partly for a selfish reason: I have plenty of the_repo conversion
-> patches in queue and anything touching "repo" may delay those patches
-> even more).
+> I have Cygwin's git (2.21.0) and Git for Windows (2.21.0) installed on 
+> my Windows 10 machine.  I run the following command with each binary 
+> "git push --all" on a simple 2 line change to 1 file.  If I use Cygwin's 
+> git, then the operation takes almost 5 minutes.  If I use Git for 
+> Windows, then the operation takes almost 20 seconds.  I tried using 
+> --verbose to figure out why Cygwin's git is so slow but it does not 
+> reveal anything to me as to why.  What can I do to figure out why 
+> Cygwin's git is so slow? I am hoping that we can get to the bottom of 
+> this and it can be fixed to help all users.
+> 
 
-Yeah, that's true, it would be disruptive.
 
-> There's also #3 but this one is minor. So far 'struct repo' is more of
-> a glue of things. Embedding index_state in it while leaving
-> object_store, ref_store... pointers feels inconsistent and a bit
-> weird. It's not a strong reason for making index_state a pointer too,
-> but if we have to deal with pointers anyway...
+You might try turning on GIT_TRACE_PERFORMANCE [1] and see if that
+shows any differences.
 
-And yeah, I agree it would nice for it to all be consistent. Let's leave
-it at your patch for now, and we can think about refactoring this later.
+If you can install 2.22.0-rc* versions of both, you can turn on
+GIT_TR2_PERF [2] and some additional details.
 
--Peff
+If your repo is very large, it may be due to some Windows file system
+optimizations present in the Git for Windows version.
+
+[1] https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables
+[2] 
+https://github.com/git/git/blob/master/Documentation/technical/api-trace2.txt#L80
+
+
+Hope that helps,
+Jeff
