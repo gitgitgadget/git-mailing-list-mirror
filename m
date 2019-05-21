@@ -2,105 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C20201F462
-	for <e@80x24.org>; Tue, 21 May 2019 16:06:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3050D1F462
+	for <e@80x24.org>; Tue, 21 May 2019 16:55:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728176AbfEUQGb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 12:06:31 -0400
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:38728 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727941AbfEUQGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 12:06:30 -0400
-Received: by mail-vs1-f66.google.com with SMTP id x184so10446067vsb.5
-        for <git@vger.kernel.org>; Tue, 21 May 2019 09:06:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FU7vYo606hRurpvJj+b4lWKofA8Z+dRBYcMcZO0u3VU=;
-        b=VzvOk4WrhH40UvovHtQUlxtGWBTAn7qHK8YiHFWiqG436tYWzq9zac7IEwaGr25aEE
-         85dbl7h7Y0FuJks/GpevBhUdrCHQFMKu2KOjRyG7/C8dK5plCVpk4mQg/8zmS4h9C0Vj
-         EYP9ZIFsv55uU304RRkEjm1/mhx4KinfcMDsnP9gTgs7tvTGFS5PssmSeNWok+RX+BGd
-         nJrH9zu2Fs/OA1KTojmeWCjOa8Rhm8ez6msq05q2qTnE4tiiGYy9OREMcPcWtT1/XRJf
-         KBPhDHKusc/R38JRdgvIu71xwxpBxeixckJ9ddPXTyu3+dLhajmylO7DMiGIBWxNBXZe
-         V9jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FU7vYo606hRurpvJj+b4lWKofA8Z+dRBYcMcZO0u3VU=;
-        b=dnAZYWQ4D96ah6MzIQ9IhkEZVVocalw8GA6XXBeFzgbr37dWX63gykgF9NaOrWSjIZ
-         Q2eEULNWbZ3gy/BAEVI73OX3ddTSKwsPkhV+5UJwQo6TXJh4cVZQISseMj3XbVbMuDcb
-         t60uy45PxA9cc2wK1H97tk1A2aPQyG/rJRcDhHbYPlJl2+ZfMmgRaFuA/Rgc3eTq/lCR
-         ZK8Mqv+3gBryBpEs3aEcy1H0gErq6sPtaPu03F6dfgda1d21hDYSyR1L3O+wwjivD42x
-         JQKVKQdTRHVpa+Nos5qOydk4m1RzFDG6RxqEgMwc1EXs9w0/ALels1QjOlPRwE0WoFbt
-         5tRQ==
-X-Gm-Message-State: APjAAAWMeW7pGtWHfg0EKZYBMJ+85M2eYnbKVTR4t/sKfj+VjgSqKy8d
-        RA4jEYEaJZJZfl1Lpda+uPKFH78JfbRY6IQCLN4=
-X-Google-Smtp-Source: APXvYqzYVxAmKiM4TQH5s/8kb5uqPxy/BmJUpzx4xYhTqJQv7lqYQyNis9FSALfrwjUEXOUeCZKgEUT2MYe1ux6E46g=
-X-Received: by 2002:a67:df13:: with SMTP id s19mr42353094vsk.175.1558454789611;
- Tue, 21 May 2019 09:06:29 -0700 (PDT)
+        id S1728283AbfEUQz2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 12:55:28 -0400
+Received: from siwi.pair.com ([209.68.5.199]:21115 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727925AbfEUQz2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 12:55:28 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id EED1A3F4051;
+        Tue, 21 May 2019 12:55:26 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:101d:dfe8:f4b5:4e4b] (unknown [IPv6:2001:4898:a800:1012:c150:dfe8:f4b5:4e4b])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9F6E93F4024;
+        Tue, 21 May 2019 12:55:26 -0400 (EDT)
+Subject: Re: [Breakage] 2.22.0-rc1 - t0211-trace2-perf.sh
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Duy Nguyen' <pclouds@gmail.com>,
+        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
+        <avarab@gmail.com>
+Cc:     'Git Mailing List' <git@vger.kernel.org>
+References: <019e01d50fc2$324bd400$96e37c00$@nexbridge.com>
+ <87a7fguiwn.fsf@evledraar.gmail.com>
+ <CACsJy8DhsU6CL95W9gsWaTSnN+_7Z_+Q7yPjhuDRRKfCrhnz2w@mail.gmail.com>
+ <000501d50fd6$24c0f0e0$6e42d2a0$@nexbridge.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <92cfdf43-8841-9c5a-7838-dda995038908@jeffhostetler.com>
+Date:   Tue, 21 May 2019 12:55:25 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190517204826.45308-1-emilyshaffer@google.com> <20190521010036.70378-1-emilyshaffer@google.com>
-In-Reply-To: <20190521010036.70378-1-emilyshaffer@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 21 May 2019 09:06:18 -0700
-Message-ID: <CABPp-BHehO4dJCpNHws=PAaqxTyoeLyb3N1BGFG+AEEgBYVtBQ@mail.gmail.com>
-Subject: Re: [PATCH v2] doc: hint about GIT_DEBUGGER
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <000501d50fd6$24c0f0e0$6e42d2a0$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 20, 2019 at 6:01 PM Emily Shaffer <emilyshaffer@google.com> wrote:
->
-> We check for a handy environment variable GIT_DEBUGGER when running via
-> bin-wrappers/, but this feature is undocumented. Add a hint to how to
-> use it into the CodingGuidelines (which is where other useful
-> environment settings like DEVELOPER are documented).
->
 
-Two very minor nits:
 
-> It looks like you can use GIT_DEBUGGER to pick gdb by default, or you
+On 5/21/2019 9:07 AM, Randall S. Becker wrote:
+> On May 21, 2019 07:59, Duy Nguyen wrote:
+>> On Tue, May 21, 2019 at 6:51 PM Ævar Arnfjörð Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> But the real bug looks like the trace2 code unconditionally depending
+>>> on pthreads, even though NonStop has 'NO_PTHREADS =
+>> UnfortunatelyYes'
+>>> defined.
+>>>
+>>> That's why we get this th%d:unknown stuff, the trace2/tr2_tls.c code
+>>> using pthreads is failing with whatever pthread-bizarro NonStop has.
+>>>
+>>> That seems easy enough to "fix", just always fake up "main" if we
+>>> don't have pthreads, but perhaps Jeff H. has another opinion on it...
+>>
+>> That's not NonStop. thread-utils.h (re)defines pthread_getspecific() to return
+>> NULL when NO_PTHREADS, which triggers this I think.
+> 
+> The platform *is* NonStop, which has SPT and PUT pthreads, but we have never been able to make them work with git, so did not include them in the configuration.
+> 
 
-I think it'd sound better without 'It looks like'; perhaps drop that part?
+I just reproduced this on my Mac with NO_PTHREADS defined.
+I'll post a fix shortly.
 
-> can hand it your own debugger if you like to use something else (or if
-> you want custom flags for gdb). Hopefully document that intent within
-> CodingGuidelines.
-
-Maybe just leave out 'Hopefully'?
-
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  Documentation/CodingGuidelines | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 32210a4386..e99af36df9 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -412,6 +412,12 @@ For C programs:
->     must be declared with "extern" in header files. However, function
->     declarations should not use "extern", as that is already the default.
->
-> + - You can launch gdb around your program using the shorthand GIT_DEBUGGER.
-> +   Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
-> +   run `GIT_DEBUGGER=my-debugger-binary my-args ./bin-wrappers/git foo` to
-> +   use your own debugger and arguments. Example: `GIT_DEBUGGER="ddd --gdb"
-> +   ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
-> +
-
-Other than the minor nits above:
-Acked-by: Elijah Newren <newren@gmail.com>
+Jeff
