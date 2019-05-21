@@ -2,81 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 540651F462
-	for <e@80x24.org>; Tue, 21 May 2019 07:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 360471F462
+	for <e@80x24.org>; Tue, 21 May 2019 08:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726193AbfEUHx3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 03:53:29 -0400
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:33054 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725942AbfEUHx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 03:53:29 -0400
-Received: by mail-qt1-f180.google.com with SMTP id m32so19448912qtf.0
-        for <git@vger.kernel.org>; Tue, 21 May 2019 00:53:28 -0700 (PDT)
+        id S1726525AbfEUIcU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 04:32:20 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:40292 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726242AbfEUIcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 04:32:19 -0400
+Received: by mail-it1-f194.google.com with SMTP id h11so3363434itf.5;
+        Tue, 21 May 2019 01:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=R1U19hOTC9BgSbXDmYybAXtMVP1mQKcYCcGv+arlSPw=;
-        b=dwEt3CxszkKOCQ1yDuq5AohTlWPs07jyyvy9+rJG71IznL2FMSoLn2g652GU8fpVpz
-         2iI86Nrii5R3BonOLI1Esx6ldLRO7v6EZJ/zO19zqmYSvovc2PZXp9xUaoCcVCFZ5zdo
-         UZqI7k4t6IgxtK2KHDqzaaojJh42GewNF7zE55J/Uup2xiKaG03vtevIVaeSncUfYOL7
-         zsMWRHXUKz+H4G3jESW1iEtWvydz5qNl/oAJoVhM9jWOr+1rZ2e2/R/wctBeOPefoSxf
-         B0HCCVkqYxZA93Imsr1DRSAfyUXz0+wrbDm+7ulz/cKShCcKdy0xCjVBrx2zcK8GX49W
-         XjCg==
+         :cc:content-transfer-encoding;
+        bh=I+h1YZrTDmKlD5sMhKmtJB756Lv1rsdZchXT/qjmFr0=;
+        b=WU11g7eodKvj0jUc/K95u8KduoqHBD0MzyPoeO1NZAAjups6XlRbqUh8Tylz3QwJcL
+         Gb7Tm55QGaJ3oGsFXFImeY6wSjcIVQetOuRlZ5OHqqlsbpI6DJgZpW1Ck7AB9bY5Z/zX
+         kC5/09eJPUrEFYhQCm8TjjUvo65GTV5a/Og5DqcbbKV/R1BFKh/4odHsuIaFtuArr3hu
+         ecOGZweCaSHd4tqr3QFheqN/xjqt9rBxZSuA1Bu9EboQLUvwzkF76K/1ihIPHKH5wZqU
+         BSriLwH9YS2TZ+EntdvKhe04XByKEfs8Yt0XFABQoX8lx2eQ8G6TADcoV48PWPyXn2SM
+         61zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=R1U19hOTC9BgSbXDmYybAXtMVP1mQKcYCcGv+arlSPw=;
-        b=lFBuxssDG8M0kt3UzngZz+kPh9vUECJQPPgVhtY5KLWjc9AeLdhVjZveIsHyCa2cGZ
-         i6zYtOTHfKgw+EYUYpABBbNPIIwAeYkCkpxeWt9tQriexUkh5N+KiASuKzgg8+B4fGVV
-         mr7afmQuTfOLDRVqTuEyxI7G1sj90qEFnwgQaprdtY4X6C03beXXTwSD52D2mK4zUHYY
-         RkojFXLbFs9GC6FxX4d9wvKY5JCvio+Mci5qRCc6/X2VZ2ocbQO4aI7c7HPA/3ACwt6F
-         4qGxaLmYaCtZd0U7UVpFWiyY9GnpQCuKbQCjBLCDgT/u+zjJZMq1Zh2QOoKVTZ673LR2
-         rUFA==
-X-Gm-Message-State: APjAAAWuPj1DfIUHoaoNzgftfz76rDgpbT3/FNDSx8QgKr+LN4W2KhJq
-        OQU1dLg9xr1vcgQpc7BadsGaJt/Z+/0WtrK2a+o=
-X-Google-Smtp-Source: APXvYqwE59SgXtKvOfYteCP3tVojdvmj74IO4HQtztYv1mUXC/ZOVOI5oAvaIWzrOPQBhdrZPYDdLmBTAjUTfV2cOZw=
-X-Received: by 2002:a0c:b89d:: with SMTP id y29mr17279978qvf.170.1558425208192;
- Tue, 21 May 2019 00:53:28 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=I+h1YZrTDmKlD5sMhKmtJB756Lv1rsdZchXT/qjmFr0=;
+        b=DzndgebdbvWZ+tP9xzL+ElAvL7XpTTzkLimISwtgmX6hoH59kZ2wtmyDbiqrue4IYB
+         5xlitGiqarTn4jdDPFQwrkpp12MG/mRK/qmDHmr3NmDLjE/RMGyy00UaUgiWvnTbUfka
+         VLQA9GDMxG9lz16TYv8bJb2+6QklU837Z4avWuGQBTppbZMRuCmoKUOKu+8QMrln/53j
+         OB7Z0YxkSEbbDSB5IvpLixlJuogzszw2E3AF2+dRmRUY1tL87bteVAtfaiJ+gTaIIEIV
+         NI9OpcvsbawUIJO08OXgZpf8IfFazuJ0gK0D+VtDTWp7wuiSfucuTNCJ08ao9Ub3Cefx
+         49Nw==
+X-Gm-Message-State: APjAAAXf7em3fCUxX32hXvjutemDEPzfS1pk4E2zzsLq0q0VqvSCxvve
+        T1Jvna60zYby34Bab5Qoqlx+Vey7iKCzAllAbyU=
+X-Google-Smtp-Source: APXvYqy6Tl5gUHWyF/Tm4q5p2sdj9gQ6LoZpoJQDSDZrElkev6O7L9QwjLgQsNbcGxOiH7ejJLGV9FUPmaLKPdvJd5U=
+X-Received: by 2002:a02:3002:: with SMTP id q2mr12336301jaq.30.1558427538902;
+ Tue, 21 May 2019 01:32:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAA01CsoJf+_-iowdm0EFWd52vOWE1Uo0GGZ55d3RyPJzg6gwgQ@mail.gmail.com>
- <874l5vwxhw.fsf@evledraar.gmail.com> <CABPp-BGycoHEMN27Z9rAccT5yVRf3N50o4sc3wo8uE_HLR9QbA@mail.gmail.com>
- <86a7fhp6yv.fsf@gmail.com>
-In-Reply-To: <86a7fhp6yv.fsf@gmail.com>
-From:   Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Date:   Tue, 21 May 2019 09:53:15 +0200
-Message-ID: <CAA01Csp+RpCXO4noewBOMY6qJiBy=Gshv3rUh83ZY2RJ5Th3Ww@mail.gmail.com>
-Subject: Re: Merging (joining/stiching/rewriting) history of "unrelated" git repositories
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+References: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com> <CAGyf7-F-d-n39fJmjYc_2rjqQa4d7PFCx63LwW3m7PFetEgzEw@mail.gmail.com>
+ <87ef4svk1k.fsf@evledraar.gmail.com>
+In-Reply-To: <87ef4svk1k.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 21 May 2019 15:31:52 +0700
+Message-ID: <CACsJy8AdhQH25NeDKKdSBctXcU=oyGcJ05XaNryj22GUQH5Btw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.22.0-rc1
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 20, 2019 at 3:54 PM Jakub Narebski <jnareb@gmail.com> wrote:
-> There is also reposurgeon tool; though its main purported purpose is to
-> aid migrating from one version control system to another, it can also be
-> used to edit repositories (utilizing fast-import stream).
+On Tue, May 21, 2019 at 5:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->   https://gitlab.com/esr/reposurgeon
->   http://www.catb.org/~esr/reposurgeon/
+>
+> On Mon, May 20 2019, Bryan Turner wrote:
+>
+> > On Sun, May 19, 2019 at 10:00 AM Junio C Hamano <gitster@pobox.com> wro=
+te:
+> >>
+> >>  * The diff machinery, one of the oldest parts of the system, which
+> >>    long predates the parse-options API, uses fairly long and complex
+> >>    handcrafted option parser.  This is being rewritten to use the
+> >>    parse-options API.
+> >
+> > It looks like with these changes it's no longer possible to use "-U"
+> > (or, I'd assume, "--unified") without adding an explicit number for
+> > context lines.
+> >
+> > ...
+>
+> I don't know if argument-less -U was ever intended, but I think in light
+> of what you're saying we should consider it a regression to fix before
+> 2.22.0 is out. CC-ing Duy who wrote d473e2e0e8 ("diff.c: convert
+> -U|--unified", 2019-01-27).
 
-If only there was real documentation for it...
+There should be no behavior change in this series. Period. I'm pretty
+sure I misread the old opt_arg() code and this is the result.
+--inter-hunk-context is also affected. I'm working on it.
 
+> The bug there is that the old opt_arg() code would be torelant to empty
+> values. I noticed a similar change the other day with the --abbrev
+> option, but didn't think it was worth noting. Maybe it's a more general
+> problem, in both cases we had a blindspot in our tests.
 
-[resending in plain text...]
-
--- 
-Piotr Krukowiecki
+Hmm.. this one is different (at least it does not use opt_arg()). But
+I'll double check.
+--=20
+Duy
