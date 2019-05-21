@@ -2,105 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26B951F462
-	for <e@80x24.org>; Tue, 21 May 2019 21:26:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 704611F462
+	for <e@80x24.org>; Tue, 21 May 2019 21:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727575AbfEUV0M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 17:26:12 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:38489 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbfEUV0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 17:26:12 -0400
-Received: by mail-ed1-f44.google.com with SMTP id w11so457758edl.5
-        for <git@vger.kernel.org>; Tue, 21 May 2019 14:26:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=z1nLmTKZOwKZpYe8Cz5GsZT7WfmQQJSoyCFYyDHq2yU=;
-        b=L4mDvh4Evuu5oeuS8nOQmXKxkDYzphZbYlW2nzfMv9/hK4rxHDqNhrBlUeEbYmI1Jn
-         G9/XVlN1P0LZ85/qxsy9ixhbuAYKmNL7C+YDhAF4GHIWbJm6AZ8kau6HZo8znaWw4J99
-         R7A3eG0NkFLEPwOQJvOchT4eTkT6QjlAfSdCU2uNgcBOsYyb1FwKqO3KxVcHSryZuo2n
-         mjYOvdxkWMtiRLVSPHHf7tEpfoeG8WGrACq4OP9FRua8Mau8jeA6kNTCXSjPM6s4dr4I
-         QUcl7BhArcFuR9sGOAGlDf7cCqWMTo3KDF+Gj6emHrRdZqeG75MpQEk5U8EvBK6McUah
-         Ccvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=z1nLmTKZOwKZpYe8Cz5GsZT7WfmQQJSoyCFYyDHq2yU=;
-        b=RABXMSBXdWSKypDIQ/kDfeNaJ83ROTQjnxoP+M4l200kONIUTE1UNYFzf1pspcIQnS
-         XAAcdbyTV2poWVs6BGXgseFAdwW5ggSLD+LBGfjUg8DLY+twPQlD3eq6/L6BQbrEnUKt
-         ILepOidnrkalc37cvC2kopM+Rav8DBCh2Ac8wAGkn/Nkwwem5Hd+EWr0a+ny6ejen9AN
-         RlNNLkF65riHR6XS7QeHRZlnLHG7/TkPRxW87M3QL3HjRnVOFrB6AccX1spMNB6LClf0
-         WFpheawid+Efov6W9md6kc4XxpXh2vnpcrd2zr4lyU7o/wPv9CEHeWtYvJ2AyYZcHV1S
-         AaRg==
-X-Gm-Message-State: APjAAAWbPSs+soaKUfyEqA44V8gLnFTn7U5tf6UbIOzooSTlivpzVGQb
-        62huglbjvmAtitYsX6SgSq5kj5O3yRs6qf8OwEYIgGM4lY0=
-X-Google-Smtp-Source: APXvYqxALLonKgjvrLJb2MeXQ8PqpuO3qsJVr6bYNec43cXIhgfvMe7G2UrSvH+feuUIB3T+yvX3BEdozV7CyvQldIo=
-X-Received: by 2002:a17:906:1483:: with SMTP id x3mr36225311ejc.90.1558473969896;
- Tue, 21 May 2019 14:26:09 -0700 (PDT)
+        id S1727477AbfEUV1q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 17:27:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35390 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727222AbfEUV1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 17:27:46 -0400
+Received: (qmail 1510 invoked by uid 109); 21 May 2019 21:27:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 May 2019 21:27:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17323 invoked by uid 111); 21 May 2019 21:28:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 May 2019 17:28:26 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 May 2019 17:27:44 -0400
+Date:   Tue, 21 May 2019 17:27:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
+Message-ID: <20190521212744.GC14807@sigill.intra.peff.net>
+References: <pull.222.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-From:   Keith Thompson <Keith.S.Thompson@gmail.com>
-Date:   Tue, 21 May 2019 14:25:57 -0700
-Message-ID: <CAAHpriPYxFv=vET92DonRb=kV_NWEDFe0nRnNH2wxcwP78BDdA@mail.gmail.com>
-Subject: Slightly confusing documentation for "git clone --recursive"
-To:     git@vger.kernel.org
-Cc:     Keith Thompson <Keith.S.Thompson@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.222.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In builtin/clone.c, the handling of "--recursive" as an alias for
-"--recurse-submodules" changed between
-v2.22.0-rc0 and v2.22.0-rc1. This report refers to the way it's
-documented in the newest version
-and suggests some improvements.
+On Tue, May 21, 2019 at 12:33:58PM -0700, Jeff Hostetler via GitGitGadget wrote:
 
-The short help (git clone -h) says:
+> As Duy suggested, pthread_getspecific() just returns NULL when NO_PTHREADS
+> is defined. And pthread_setspecific() silently does not nothing. So this
+> problem was hidden from view.
+> 
+> I have to wonder if we should update pthread_*specific() to call BUG() when
+> NO_PTHREADS is defined as a way to catch unguarded usages easier or make
+> this issue more clear.
 
-    --recursive[=<pathspec>]
-                          initialize submodules in the clone
-    --recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
+I think it should actually store the data asked for by the caller, as if
+we were the single thread running. We discussed this as the time of
+refactoring NO_PTHREADS, but there was only one caller that would have
+benefited. Now there are two. ;)
 
-It repeats the same description, but doesn't explicitly say that
-they're equivalent. I can imagine
-this causing some confusion. I might have wondered if there's some
-subtle difference between them.
-Suggested change:
+Discussion in the subthread of this patch:
 
-    --recursive[=<pathspec>]
-    --recurse-submodules[=<pathspec>]
-                          initialize submodules in the clone
+  https://public-inbox.org/git/20181027071003.1347-2-pclouds@gmail.com/
 
-The long help ("git clone --help") says:
-
-       --recurse-submodules[=<pathspec]
-           After the clone is created, initialize and clone submodules within
-           based on the provided pathspec. If no pathspec is provided, all
-           submodules are initialized and cloned. This option can be given
-           multiple times for pathspecs consisting of multiple entries. The
-           resulting clone has submodule.active set to the provided pathspec,
-           or "." (meaning all submodules) if no pathspec is provided.
-
-           Submodules are initialized and cloned using their default settings.
-           This is equivalent to running git submodule update --init
-           --recursive <pathspec> immediately after the clone is finished.
-           This option is ignored if the cloned repository does not have a
-           worktree/checkout (i.e. if any of --no-checkout/-n, --bare, or
-           --mirror is given)
-
-The "--recursive" spelling is not documented, but is used in an example in
-the documentation for "--recursive-submodules". Suggested change:
-
-       --recursive=<pathspec]
-       --recurse-submodules[=<pathspec]
-           After the clone is created, initialize and clone submodules within
-           [... rest of description as before]
+-Peff
