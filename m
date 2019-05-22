@@ -2,83 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7118A1F462
-	for <e@80x24.org>; Wed, 22 May 2019 12:03:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF68E1F462
+	for <e@80x24.org>; Wed, 22 May 2019 13:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728680AbfEVMDx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 08:03:53 -0400
-Received: from mail-oi1-f179.google.com ([209.85.167.179]:39306 "EHLO
-        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727464AbfEVMDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 08:03:53 -0400
-Received: by mail-oi1-f179.google.com with SMTP id v2so1372341oie.6
-        for <git@vger.kernel.org>; Wed, 22 May 2019 05:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=informer-com.20150623.gappssmtp.com; s=20150623;
-        h=sender:date:to:from:reply-to:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qLpSLyuEZxIUfINSscb7Buj7YwWnZ9nIMH+igN9fxiI=;
-        b=OyC08drAFmMfKwxvZJpXF0KQcqVNkTIcNEleCzyQMX/Ojb9jJiBUJF/GxI4l/i7qw1
-         pK8r/1FRJEBWIJ15VDEmEgmY6IqFbGc0DESldU67FFsgoN/oTfrpqfc0DmQqNiTOfVe/
-         4IMwWLqHnQrocZ57KP40TsWaxU8SItpAIntU3kUs4fyKVrYiP17olZruVtKJ/H0xk1gA
-         lFBuGzmjfenMg6PDBc105QocGvunlFip4fxG/9tiZ4hLAzUepcZYcsGL8wdLOjciv9yd
-         krptUqiBluigoDBTm1wq2z+OfnxGeXlzOPtCt5x2iy5icpeMEjru3ZRrg8zOkTwZ5eI5
-         NyLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:to:from:reply-to:subject:message-id
-         :mime-version:content-transfer-encoding;
-        bh=qLpSLyuEZxIUfINSscb7Buj7YwWnZ9nIMH+igN9fxiI=;
-        b=Y9WNB8yAEiZbuTuU8muD863UZds/hDrjzvEbcFkd+gBadmP1l1YL6f59Uaz84BGaMh
-         KFdBEJY2MZhgnhjn/RxovnlvlvPLBLcbONryi48NoP3sq8x5zY+fd88jFVhyK4CS6MVj
-         XQ48KLWKwNXDEvU/a09H3knVPbjzaNXhtTno89xazumVWNUbnFEuF8R/3CypU1xor9y3
-         SGE3TEFmSqY+Xn0um3cRQObQFdZH8ColkJXeldj5aSv60gKacI8OcpxPKn0zS/v/H+iy
-         5lUbLtIiNUNfmYyhs9+UirNB7Wv+dmYwaXeG3MUkvAxpXJFQduldwPRK7G33Y55ztgRB
-         uuVg==
-X-Gm-Message-State: APjAAAXkHmFUE9bXvSpgPM+wX9JxRmPV4BjJjGmt+M+SwWnkGOPGrsuU
-        7VaXLes8KX8uFlNCmhKOUo7+K6GyUUA=
-X-Google-Smtp-Source: APXvYqxLkUNTLOvKb7pEJZxTaPFXabbM8OGoJRq+7WGZ7AXZjBjuM3rDUa7hIQi13ZYRv4040QeZJw==
-X-Received: by 2002:aca:d40b:: with SMTP id l11mr699294oig.132.1558526632341;
-        Wed, 22 May 2019 05:03:52 -0700 (PDT)
-Received: from software.informer.com ([208.88.224.100])
-        by smtp.gmail.com with ESMTPSA id u8sm8600355otk.53.2019.05.22.05.03.51
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 May 2019 05:03:51 -0700 (PDT)
-Date:   Wed, 22 May 2019 08:03:51 -0400
-To:     git@vger.kernel.org
-From:   Kasey Bloome <partners@informer.com>
-Reply-to: Kasey Bloome <partners@informer.com>
-Subject: GIT by github 2.21.0 got reviewed on Software Informer
-Message-ID: <787cc1158404969e56c6ef3787457cf9@software.informer.com>
+        id S1729468AbfEVNXl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 09:23:41 -0400
+Received: from siwi.pair.com ([209.68.5.199]:34154 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729463AbfEVNXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 09:23:41 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7BB213F4047;
+        Wed, 22 May 2019 09:23:40 -0400 (EDT)
+Received: from [10.160.99.45] (unknown [167.220.149.45])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 342723F4023;
+        Wed, 22 May 2019 09:23:40 -0400 (EDT)
+Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
+To:     Jeff King <peff@peff.net>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.222.git.gitgitgadget@gmail.com>
+ <20190521212744.GC14807@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com>
+Date:   Wed, 22 May 2019 09:23:39 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="iso-8859-1"
+In-Reply-To: <20190521212744.GC14807@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good day!
 
- would like to inform you that your product GIT by github 2.21.0 has been reviewed by our editors and your program got "Editor's Pick Award", "100% Clean Award". You can read the review at https://git.software.informer.com/.
 
-We would be grateful if you place our award with a link to our review on your website. On our part, we can offer featuring your program in our Today's Highlight block. This block is shown in the rotator at the top of the main page and also on every page of our website in the upper left corner.
+On 5/21/2019 5:27 PM, Jeff King wrote:
+> On Tue, May 21, 2019 at 12:33:58PM -0700, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> As Duy suggested, pthread_getspecific() just returns NULL when NO_PTHREADS
+>> is defined. And pthread_setspecific() silently does not nothing. So this
+>> problem was hidden from view.
+>>
+>> I have to wonder if we should update pthread_*specific() to call BUG() when
+>> NO_PTHREADS is defined as a way to catch unguarded usages easier or make
+>> this issue more clear.
+> 
+> I think it should actually store the data asked for by the caller, as if
+> we were the single thread running. We discussed this as the time of
+> refactoring NO_PTHREADS, but there was only one caller that would have
+> benefited. Now there are two. ;)
+> 
+> Discussion in the subthread of this patch:
+> 
+>    https://public-inbox.org/git/20181027071003.1347-2-pclouds@gmail.com/
+> 
+> -Peff
+> 
 
-You are welcome to order a free video tutorial for your program as well. Once it's finished, you can add it to your website.
+I was wondering about that too as the proper long term solution.
+We would need (as the discussion suggests [1]) to properly
+respect/represent the pthread_key_t argument.
 
-We also offer you to take advantage of our free storage by hosting your installation package on our servers and listing us as one of the mirror downloads for your program. There is a selection of predesigned buttons available to fit the look of your website.
+For now, I've guarded my usage of pthread_getspecific() in the trace2
+(similar to what index-pack does), so its not urgent that we update it.
+And I'd rather we take this simple trace2 fix now and not try to combine
+it with fixes for the pthread macros.  Especially now as we're in the RC
+cycle for 2.22.
 
-Please let me know if you're interested in any of these offers.
+I'll make a note to revisit the pthread code after 2.22.
 
-We are on the list of the world's 1000 most visited websites, so this could get your program some extra exposure.
+Thanks
+Jeff
 
-Kind regards,
-Kasey Bloome
 
+[1] 
+https://public-inbox.org/git/CACsJy8DLW_smOJd6aCoRcJZxQ2Lzut5US=sPadj7=fhne0UHGg@mail.gmail.com/
 
