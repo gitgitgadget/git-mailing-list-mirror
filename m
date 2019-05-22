@@ -2,103 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEDA11F462
-	for <e@80x24.org>; Wed, 22 May 2019 00:48:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C696F1F462
+	for <e@80x24.org>; Wed, 22 May 2019 00:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727825AbfEVAss (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 20:48:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36686 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726083AbfEVAss (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 21 May 2019 20:48:48 -0400
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE35060100;
-        Wed, 22 May 2019 00:48:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1558486127;
-        bh=GFyDXZTnPvelzrDJJvY05CZ4uzKaW4pTybHJ4cdpt6U=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QUg2JmfFO4i6W/PgoFdSbix+iY3J6EqCkP/EsBJqscIKjx1tDsiNEbFSl6N4xmhHm
-         oOclDHuDDZON1xzOFIGEphMNB6BrDcgvHrQA+VPnyaM7JiTzGwNbdwELRhmKJAv5ry
-         wKPgX7Zedsiw40h/KN2VbPBIL99NuN9sTK56cc5MiFu5VrhJyNDWTtN17FUt9HzkFT
-         TOFBZV0G3WXJd/+Mw5aBZExlrG/wh/FnRvZSyUOzxpclRiFFR8IHp5IERlB09t3Sc7
-         agvGa9QRjAIkDMoI+D6FtA8Gjbr/8mGd9hAmwoiYixIdPY5qqdw11p36MlGDlBQDdz
-         tyzEqpVMHNAItyOasz885uzZ/tf/k+H+S09M73oYXGwKq8TyGF0ksKEu1gezydxotX
-         8ddfY9KxVq05YA+Kyey/dd+fmg+sC1zZrVjusW9TZxCPNKLMBn1tZsi6QqbqeyNXKZ
-         m9VP1tTIZm2sGzTXrz0uUEC+AW3kjUzP97fEzBXoiGUeK0NKopi
-Date:   Wed, 22 May 2019 00:48:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Git Mailing List' <git@vger.kernel.org>
-Subject: Re: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
-Message-ID: <20190522004825.GC8616@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Git Mailing List' <git@vger.kernel.org>
-References: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com>
+        id S1728031AbfEVA7C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 20:59:02 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:41526 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726083AbfEVA7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 May 2019 20:59:02 -0400
+Received: by mail-io1-f68.google.com with SMTP id a17so468940iot.8
+        for <git@vger.kernel.org>; Tue, 21 May 2019 17:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zsagz2bQdFZGkLR2nSECAIYGtMyI7jBhaXKXGOePe5E=;
+        b=unZL6Cob9h3qwJf34uLtzb6cgZLjP5pMXicVIBZdEiqgGdBo9fbuY8QkEujfq9qWc0
+         UDtpeg6G9E7nQrGuTptaSyDuxC+Kqe92o+icZ63Qwcz91JZHDVQtSpJ4/Avyi3AKXEaC
+         Q2HlCpkGKuaBHZl/Ji5Zs8pFEXW8fQe5Gd/JXNHxEJptc0P3MGpJbisRsI0rz7p/9059
+         1DI4mHY28ZGnOatK6l1jT9yN5eZh8ZblGGb82eIquCEf7YuaHIZqulipnj1jM/cxsGRU
+         FjdGnMtAT+5dv13IJXdegYwFRAJi61tYrFBVMniKwxGIiRSQSCxc5aBPpfmQsqNW09I5
+         kl0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zsagz2bQdFZGkLR2nSECAIYGtMyI7jBhaXKXGOePe5E=;
+        b=E9i7MElUV8KtCy+cFDTRy8xRLROslQ0bLwn2GRWBkUEJpXtkdIhl3EWzR5e/xFWXxm
+         a9N5faV/8/78BNfic0errSg+s4dsGRxm6NNJWZ7QlbJDO84jtk6aD1equb+GphAqogt4
+         LK+jcaebrBVjebI0mYgx3suxIQVQ+y7h7PfKM/1E6HfTGLzH02GJmAxAPETG3jCSu2z5
+         RoFK6EAiWwTekyrQb/bRWQegkauyyq+/xVyC9CV8OYGnmh5xgVOq9LVjP/63PzmbKyMM
+         H8UBcqsSghbLxDt4gQ15dh/agCK/a/82UKeyY9oNixGg32WPn4zNLf9M6D2mTVXVYh+j
+         0U0Q==
+X-Gm-Message-State: APjAAAU/8YIAus+sjCtMmJFmTHVNgXDjT/Ap9fdCBjrGC9zinby5DXVv
+        Ou5ar/roKtUR72wDCs71lro=
+X-Google-Smtp-Source: APXvYqzW1kJ7zxMCssvM2iZgAmtkznRE2L27W5BezXjIsNZ1s+ALKPfKHIg8qA00sNeza1uZNZs+cA==
+X-Received: by 2002:a6b:7a49:: with SMTP id k9mr30868839iop.73.1558486741057;
+        Tue, 21 May 2019 17:59:01 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id q24sm7593952ioh.31.2019.05.21.17.59.00
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Tue, 21 May 2019 17:59:00 -0700 (PDT)
+Date:   Tue, 21 May 2019 17:58:58 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] grep: provide sane default to grep_source struct
+Message-ID: <20190522005858.GB219159@google.com>
+References: <20190516214444.191743-1-emilyshaffer@google.com>
+ <20190522003402.77767-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="R+My9LyyhiUvIEro"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
+In-Reply-To: <20190522003402.77767-1-emilyshaffer@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Emily Shaffer wrote:
 
---R+My9LyyhiUvIEro
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Subject: grep: provide sane default to grep_source struct
 
-On 2019-05-21 at 21:47:54, Randall S. Becker wrote:
-> When running the test in isolation, it passes without incident whether or
-> not --verbose is used. So far, this only occurs on the first run through.=
- I
-> wanted to report it, based on the inconsistency of results. This is not t=
-he
-> first time tests have acted in this fashion, and I realize it is difficult
-> to do anything about it without being able to recreate the situation.
+This subject line doesn't describe what the patch does any more.  How
+about something like
 
-Does running git clean -dxf cause it to be reproducible?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+	grep: fail early if call could print output and name is not set
 
---R+My9LyyhiUvIEro
-Content-Type: application/pgp-signature; name="signature.asc"
+?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
+> grep_buffer creates a struct grep_source gs and calls grep_source()
+> with it. However, gs.name is null, which eventually produces a
+> segmentation fault in grep_source()->grep_source_1()->show_line()
+> when grep_opt.status_only is not set.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzknFkACgkQv1NdgR9S
-9ouGjxAApLmdAFn3dskO12AEL6dA4VX8KtHwu8IYMJ6KBEzeXc8jI+wHSx070K5C
-LzxCvK6UxVL4fqOq8Xek+piiilyFIw/RA3xoeJg+j9P9gnXvHJRg2NKUvj7qfUAU
-CmcdAlh1CbRocxcfaJb9TrVkP7HcAElblGHTpqBlLQhk/XTRtADQplfu2eyVCgv0
-7hJoZEV7/llaL5psOvnoodPdfnGwF6rV2lPOtMGtYsOIZ/5r+jpLgPqPX48tNo5X
-8/o0BYWCBPcFvrtbJf/rraN2ecwDXW6Adh08Q/zvBkQIzsRcXGKCA75bMoGzEyho
-wR6quLoRm10oaKbBfS97HpzeQoR6pZqGbNkGqd+H0ZekQzPvctGOlUWFIW8+JFd4
-lbD2VEuGEtM/hZLEFhrotsfz8NA1vm90ieOh11QTNLtict3ColK3lSYyR6Ahs/Vm
-2MP5DwXoLw4CT3q+ss142Brci6lx7esDAn80NojovjMZLYAUa1VIJTJCMAt2bLXb
-k+VToMRYrVq0XmeSLE0SvQhbsuET+LrmhQST8ERhlcel2Q+/Q56lWG9/rfTJN+Ir
-MkOeEJ4K1zF6l7yrSIAPs3REQts/8KICfjabzsyniamisRnsC1S4/zaWyGbajGep
-hYT5CltQdQconoEi89IfZx5mk9NZYckzJEY9xhEHTWV3Il7Na3w=
-=TX/P
------END PGP SIGNATURE-----
+This is the place to describe the motivation behind the patch:
 
---R+My9LyyhiUvIEro--
+- what is the current behavior?
+- what is the motivation behind the current behavior?
+- in what scenario does it fail?
+- how does it fail, and what is undesirable about that failure?
+
+Perhaps something like
+
+	grep_source, the workhorse of Git's grep library, allows passing in an
+	arbitrary grep_source representing the haystack in which to search for
+	a needle matching a pattern.  In most callers, the grep_source::name
+	field is set to an appropriate prefix to print before a colon when a
+	result matches:
+
+		README:Git is an Open Source project covered by the GNU General Public
+
+	One caller, grep_buffer, leaves the 'name' field set to NULL because
+	there is not enough context to determine an appropriate name to put in
+	such output lines.  In practice, this has been fine because the only
+	caller of grep_buffer is "git log --grep" and that caller sets
+	status_only to disable output (and only check whether a match exists).
+	But this is brittle: a future caller can call grep_buffer without
+	status_only set, and as soon as it hits a match, grep_source will
+	segfault in the process of trying to print
+
+		(null):Git is an Open Source project covered by the GNU General Public
+
+> This seems to be unreachable from existing commands but is reachable in
+> the event that someone rolls their own revision walk and neglects to set
+> rev_info->grep_filter->status_only. Conceivably, someone might want to
+> print all changed lines of all commits which match some regex.
+
+Focusing on the use case instead of the details of how it is implemented,
+we can simplify this to
+
+	For example, such a future caller might want to print all matching
+	lines from commits which match a regex.
+
+> To futureproof, give developers a heads-up if grep_source() is called
+> and a valid name field is expected but not given. This path should be
+> unreachable now, but in the future may become reachable if developers
+> want to add the ability to use grep_buffer() in prepared in-core data
+> and provide hints to the user about where the data came from.
+
+Here we can concisely describe the improved behavior with the fix:
+
+	Futureproof by diagnosing a use of the API that could trigger that
+	condition early, before we know whether the pattern matches:
+
+		BUG: git.c:832: grep call which could print a name requires grep_source.name be non-NULL
+		Aborted
+
+And then what it makes possible:
+
+	This way, the caller's author gets a quick indication of how to fix
+	it, by ensuring that either grep_source.name is set or that
+	status_only is set to prevent printing output.
+
+And how it came up:
+
+	Noticed while adding such a call in a tutorial on revision walks.
+
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+[...]
+> I also moved the BUG() to grep_source_1() to keep it close to the error
+> itself and reflowed the commit message.
+
+Makes sense.  Thanks for these summaries of what changed between each
+revision of the patch --- they're very helpful.
+
+With whatever subset of the above suggested commit message changes
+make sense,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+[...]
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1780,6 +1780,10 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+>  	enum grep_context ctx = GREP_CONTEXT_HEAD;
+>  	xdemitconf_t xecfg;
+>  
+> +	if (!opt->status_only && gs->name == NULL)
+
+optional: can use !gs->name here.
+
+> +		BUG("grep call which could print a name requires "
+> +		    "grep_source.name be non-NULL");
