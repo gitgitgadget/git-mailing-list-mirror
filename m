@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA081F462
-	for <e@80x24.org>; Wed, 22 May 2019 19:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED00E1F462
+	for <e@80x24.org>; Wed, 22 May 2019 19:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387518AbfEVTx2 (ORCPT <rfc822;e@80x24.org>);
+        id S2387830AbfEVTxa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 15:53:30 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44140 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731083AbfEVTx2 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 22 May 2019 15:53:28 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46185 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731902AbfEVTx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 15:53:28 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f37so5442248edb.13
+Received: by mail-ed1-f66.google.com with SMTP id b8so5466316edm.11
         for <git@vger.kernel.org>; Wed, 22 May 2019 12:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jL00gtXMpf6ZHXcGetecML4+Wa/xge3YswvQS6i+nxU=;
-        b=aCkKwlKhxgJvS4R4s1zcSZWIdbRE8eg+A4UbsjYN2OBCFYWCgz5IefObWJOa79T7Mf
-         rtOBtGv7jqZwz1FTic6UyrvVWgrIH3oikMJc7Eba90cr7WRpiXqFDybLVAwPMtZs1hIq
-         I76rFn8uEQUvJjVCrfWZT+ublPcTpMz6fjMr4RRZfmRLErdbJDais14aGLxk/32NB+jI
-         PrtU65K/cP1v9/7JmhQk4fgwOW1t4rAP+Jb2eyo/rcmALGFiOmQh/xUYTzKR/LiyeIrU
-         LjtADD3xkmUXEemD3MCfZrVAVYHxlhdbud/KVA17AnSYKryfktzYVMot3UZZj9WVvlvC
-         598g==
+        bh=SBF2mLzea+VExbgygA5wg79b6Iz5rutjkqnWziqJX0Y=;
+        b=vehZXNoQ1D6wgTmeVbKXMQ9IzKV2NPt3t3zw2kE7VI2OlkIbCoJpzF8S51KVvHlGgO
+         hLkIRNL2d9r0Fx2r69CjAkuBHJf07FX0Oeddl47VSLbMLnwzDHmn1lPA8UkthHa8QVE3
+         YkuwOxm7JiqvlP/9vj5bi2qLf8KfIyX1VbBdEHuqIIEFiKKEKMntMz2eLmlIWZaV2D+L
+         y3j9ExA4ZWHUk+rClRlgNhoO3SQXJg9cIxfLuVNaA7CfAwW3b4DlndM9uimaFwGzJ6/x
+         ccPMXbU+EplZfL+CnNq77uB67EK4AziwfAd0zAiTz3daOAjHZWoQj0+W+ELNaQze8EDZ
+         nuMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jL00gtXMpf6ZHXcGetecML4+Wa/xge3YswvQS6i+nxU=;
-        b=CmrYByWYdE4tFmq5hXrb44/H+wYRMP4utOFi9LmfhtvsZUi0X+D4MteKm/2KmhyPWM
-         zzTLK1lHNG0vD/VK9/tzNBZlQOoLV7H7ONSu0QYirN/x4C/nVyXA6iE96JSccb6lI4Qk
-         E5bKDDRTQW8RX5oXlkZrU61zgfW9/PFX4zZKxTNwwG0Mjh3z4aCCjM4xjY5T8RJaFllI
-         09uudwd5F3dzgWiUnAxTKLTrBOOd/4q0HNuN9nTRpBEGSugOl8czrXtIBqRpPz1AssfX
-         rSohYZgfSifYzscnJUUuxjKbmCRQI9lPkTHk0P2mKHmN71wU+L7By2gP573/x4uqsnDs
-         XMEQ==
-X-Gm-Message-State: APjAAAUg9+wfBXX4gAlrMqSYvSCK6WIOnTcLu+owxbyWncmIT3mlLjlN
-        wino5WInD9NOFqn3hnFIof/ODVUg
-X-Google-Smtp-Source: APXvYqz6cMALi6iP3W+HXxQvocRSIO/VoQf/480MTcegWkzmXBt3Rd/f+i6GeY7XZguJukImLfMf3Q==
-X-Received: by 2002:a17:906:3586:: with SMTP id o6mr53542928ejb.253.1558554805420;
-        Wed, 22 May 2019 12:53:25 -0700 (PDT)
+        bh=SBF2mLzea+VExbgygA5wg79b6Iz5rutjkqnWziqJX0Y=;
+        b=cZM3Y0X7/doi/PM4PeR+uOg068pmGo6tJRpvDLEoXmAisuClOdtmvV6C3rUoisfwZd
+         SChBxOjRwPXdhYEIHfGGWMOGKqNM+N8wwqOKJIVjnyiI1mkht97WZ3E7CSAQhnHp31v3
+         0P0KmuZyfePktwEr4LyjABksYkrmsA67BmLaWasL78nJ5uCO08mHzi7jLo76CLcgvq78
+         4ZJJcHaWeMaIShpov3W+6iRIRZENoJUbyDd2BRLIu88kAAijFhkuCgluxX3hJJYcNxzG
+         +pxfOq+5HmzmsSfM+5NECnx9NytEmb3vcCq4z5pLrBXQ9D2D1Yiq7oWuRFA1JCRbADER
+         Sc9w==
+X-Gm-Message-State: APjAAAVDpbimoA330UR+JZqWt7U6uTatPW/oYySxkwByCEzIz9BrNXcu
+        DWnK6zih0M59dPpcIq9oGL5oy5ip
+X-Google-Smtp-Source: APXvYqzJgBGTcqRthFN6aitSQ3M/T8qmw2qbBZNm8RVBbSBroEIVt5+oj2NsdeiBUk9c3HYEVtB8rw==
+X-Received: by 2002:a50:e61a:: with SMTP id y26mr92088153edm.292.1558554806149;
+        Wed, 22 May 2019 12:53:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h44sm7268248eda.3.2019.05.22.12.53.24
+        by smtp.gmail.com with ESMTPSA id g11sm7312435eda.42.2019.05.22.12.53.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 22 May 2019 12:53:25 -0700 (PDT)
 Date:   Wed, 22 May 2019 12:53:25 -0700 (PDT)
-X-Google-Original-Date: Wed, 22 May 2019 19:53:13 GMT
-Message-Id: <a8c0b47c8af44e2216e4a9462b384424ce94a2c9.1558554800.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Wed, 22 May 2019 19:53:14 GMT
+Message-Id: <4fefd0a654f6c296aad90b49df59af7a7877e3bf.1558554800.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v2.git.gitgitgadget@gmail.com>
 References: <pull.184.git.gitgitgadget@gmail.com>
         <pull.184.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 04/11] commit-graph: load commit-graph chains
+Subject: [PATCH v2 05/11] commit-graph: add base graphs chunk
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,150 +74,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Prepare the logic for reading a chain of commit-graphs.
+To quickly verify a commit-graph chain is valid on load, we will
+read from the new "Base Graphs Chunk" of each file in the chain.
+This will prevent accidentally loading incorrect data from manually
+editing the commit-graph-chain file or renaming graph-{hash}.graph
+files.
 
-First, look for a file at $OBJDIR/info/commit-graph. If it exists,
-then use that file and stop.
-
-Next, look for the chain file at $OBJDIR/info/commit-graphs/commit-graph-chain.
-If this file exists, then load the hash values as line-separated values in that
-file and load $OBJDIR/info/commit-graphs/graph-{hash[i]}.graph for each hash[i]
-in that file. The file is given in order, so the first hash corresponds to the
-"base" file and the final hash corresponds to the "tip" file.
-
-This implementation assumes that all of the graph-{hash}.graph files are in
-the same object directory as the commit-graph-chain file. This will be updated
-in a future change. This change is purposefully simple so we can isolate the
-different concerns.
+The commit_graph struct already had an object_id struct "oid", but
+it was never initialized or used. Add a line to read the hash from
+the end of the commit-graph file and into the oid member.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 98 +++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 93 insertions(+), 5 deletions(-)
+ .../technical/commit-graph-format.txt         | 11 ++++++++--
+ commit-graph.c                                | 22 +++++++++++++++++++
+ commit-graph.h                                |  1 +
+ 3 files changed, 32 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 16452a0504..a4f17441ae 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -44,8 +44,9 @@ HEADER:
+ 
+   1-byte number (C) of "chunks"
+ 
+-  1-byte (reserved for later use)
+-     Current clients should ignore this value.
++  1-byte number (B) of base commit-graphs
++      We infer the length (H*B) of the Base Graphs chunk
++      from this value.
+ 
+ CHUNK LOOKUP:
+ 
+@@ -92,6 +93,12 @@ CHUNK DATA:
+       positions for the parents until reaching a value with the most-significant
+       bit on. The other bits correspond to the position of the last parent.
+ 
++  Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
++      This list of H-byte hashes describe a set of B commit-graph files that
++      form a commit-graph chain. The graph position for the ith commit in this
++      file's OID Lookup chunk is equal to i plus the number of commits in all
++      base graphs.  If B is non-zero, this chunk must exist.
++
+ TRAILER:
+ 
+ 	H-byte HASH-checksum of all of the above.
 diff --git a/commit-graph.c b/commit-graph.c
-index e2f438f6a3..70e44393b8 100644
+index 70e44393b8..060897fff0 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -45,6 +45,19 @@ char *get_commit_graph_filename(const char *obj_dir)
- 	return xstrfmt("%s/info/commit-graph", obj_dir);
- }
+@@ -22,6 +22,7 @@
+ #define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+ #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
++#define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
  
-+static char *get_split_graph_filename(const char *obj_dir,
-+				      const char *oid_hex)
-+{
-+	return xstrfmt("%s/info/commit-graphs/graph-%s.graph",
-+		       obj_dir,
-+		       oid_hex);
-+}
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+@@ -262,6 +263,12 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 			else
+ 				graph->chunk_extra_edges = data + chunk_offset;
+ 			break;
 +
-+static char *get_chain_filename(const char *obj_dir)
-+{
-+	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", obj_dir);
-+}
++		case GRAPH_CHUNKID_BASE:
++			if (graph->chunk_base_graphs)
++				chunk_repeated = 1;
++			else
++				graph->chunk_base_graphs = data + chunk_offset;
+ 		}
+ 
+ 		if (chunk_repeated) {
+@@ -280,6 +287,8 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 		last_chunk_offset = chunk_offset;
+ 	}
+ 
++	hashcpy(graph->oid.hash, graph->data + graph->data_len - graph->hash_len);
 +
- static uint8_t oid_version(void)
+ 	if (verify_commit_graph_lite(graph))
+ 		return NULL;
+ 
+@@ -315,8 +324,21 @@ static int add_graph_to_chain(struct commit_graph *g,
  {
- 	return 1;
-@@ -286,18 +299,93 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file)
- 	return load_commit_graph_one_fd_st(fd, &st);
- }
+ 	struct commit_graph *cur_g = chain;
  
-+static int prepare_commit_graph_v1(struct repository *r, const char *obj_dir)
-+{
-+	char *graph_name = get_commit_graph_filename(obj_dir);
-+	r->objects->commit_graph = load_commit_graph_one(graph_name);
-+	free(graph_name);
-+
-+	return r->objects->commit_graph ? 0 : -1;
-+}
-+
-+static int add_graph_to_chain(struct commit_graph *g,
-+			      struct commit_graph *chain,
-+			      struct object_id *oids,
-+			      int n)
-+{
-+	struct commit_graph *cur_g = chain;
-+
-+	while (n) {
-+		n--;
-+		cur_g = cur_g->base_graph;
++	if (n && !g->chunk_base_graphs) {
++		warning(_("commit-graph has no base graphs chunk"));
++		return 0;
 +	}
 +
-+	g->base_graph = chain;
+ 	while (n) {
+ 		n--;
 +
-+	if (chain)
-+		g->num_commits_in_base = chain->num_commits + chain->num_commits_in_base;
-+
-+	return 1;
-+}
-+
-+static void prepare_commit_graph_chain(struct repository *r, const char *obj_dir)
-+{
-+	struct strbuf line = STRBUF_INIT;
-+	struct stat st;
-+	struct object_id *oids;
-+	int i = 0, valid = 1;
-+	char *chain_name = get_chain_filename(obj_dir);
-+	FILE *fp;
-+
-+	if (stat(chain_name, &st))
-+		return;
-+
-+	if (st.st_size <= the_hash_algo->hexsz)
-+		return;
-+
-+	fp = fopen(chain_name, "r");
-+	free(chain_name);
-+
-+	if (!fp)
-+		return;
-+
-+	oids = xcalloc(st.st_size / (the_hash_algo->hexsz + 1), sizeof(struct object_id));
-+
-+	while (strbuf_getline_lf(&line, fp) != EOF && valid) {
-+		char *graph_name;
-+		struct commit_graph *g;
-+
-+		if (get_oid_hex(line.buf, &oids[i])) {
-+			warning(_("invalid commit-graph chain: line '%s' not a hash"),
-+				line.buf);
-+			valid = 0;
-+			break;
++		if (!oideq(&oids[n], &cur_g->oid) ||
++		    !hasheq(oids[n].hash, g->chunk_base_graphs + g->hash_len * n)) {
++			warning(_("commit-graph chain does not match"));
++			return 0;
 +		}
 +
-+		graph_name = get_split_graph_filename(obj_dir, line.buf);
-+		g = load_commit_graph_one(graph_name);
-+		free(graph_name);
 +
-+		if (g && add_graph_to_chain(g, r->objects->commit_graph, oids, i))
-+			r->objects->commit_graph = g;
-+		else
-+			valid = 0;
-+	}
-+
-+	free(oids);
-+	fclose(fp);
-+}
-+
- static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
- {
--	char *graph_name;
+ 		cur_g = cur_g->base_graph;
+ 	}
  
- 	if (r->objects->commit_graph)
- 		return;
+diff --git a/commit-graph.h b/commit-graph.h
+index f9fe32ebe3..80f4917ddb 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -55,6 +55,7 @@ struct commit_graph {
+ 	const unsigned char *chunk_oid_lookup;
+ 	const unsigned char *chunk_commit_data;
+ 	const unsigned char *chunk_extra_edges;
++	const unsigned char *chunk_base_graphs;
+ };
  
--	graph_name = get_commit_graph_filename(obj_dir);
--	r->objects->commit_graph =
--		load_commit_graph_one(graph_name);
-+	if (!prepare_commit_graph_v1(r, obj_dir))
-+		return;
- 
--	FREE_AND_NULL(graph_name);
-+	prepare_commit_graph_chain(r, obj_dir);
- }
- 
- /*
+ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st);
 -- 
 gitgitgadget
 
