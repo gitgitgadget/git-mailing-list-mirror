@@ -2,93 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF68E1F462
-	for <e@80x24.org>; Wed, 22 May 2019 13:23:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4F0C1F462
+	for <e@80x24.org>; Wed, 22 May 2019 13:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729468AbfEVNXl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 09:23:41 -0400
-Received: from siwi.pair.com ([209.68.5.199]:34154 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729463AbfEVNXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 09:23:41 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 7BB213F4047;
-        Wed, 22 May 2019 09:23:40 -0400 (EDT)
-Received: from [10.160.99.45] (unknown [167.220.149.45])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 342723F4023;
-        Wed, 22 May 2019 09:23:40 -0400 (EDT)
-Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
-To:     Jeff King <peff@peff.net>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.222.git.gitgitgadget@gmail.com>
- <20190521212744.GC14807@sigill.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com>
-Date:   Wed, 22 May 2019 09:23:39 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729172AbfEVNq3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 22 May 2019 09:46:29 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:56228 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729126AbfEVNq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 09:46:29 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x4MDkIUX065267
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 22 May 2019 09:46:19 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
+Cc:     "'Git Mailing List'" <git@vger.kernel.org>
+References: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com> <20190522004825.GC8616@genre.crustytoothpaste.net>
+In-Reply-To: <20190522004825.GC8616@genre.crustytoothpaste.net>
+Subject: RE: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
+Date:   Wed, 22 May 2019 09:46:13 -0400
+Message-ID: <004301d510a4$bbe362e0$33aa28a0$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <20190521212744.GC14807@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHMXCdBtn7xefigKEQDPm4zJf8pugKY8znQpnPJCgA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 5/21/2019 5:27 PM, Jeff King wrote:
-> On Tue, May 21, 2019 at 12:33:58PM -0700, Jeff Hostetler via GitGitGadget wrote:
+On May 21, 2019 20:48, brian m. carlson wrote:
+> To: Randall S. Becker <rsbecker@nexbridge.com>
+> Cc: 'Git Mailing List' <git@vger.kernel.org>
+> Subject: Re: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
 > 
->> As Duy suggested, pthread_getspecific() just returns NULL when NO_PTHREADS
->> is defined. And pthread_setspecific() silently does not nothing. So this
->> problem was hidden from view.
->>
->> I have to wonder if we should update pthread_*specific() to call BUG() when
->> NO_PTHREADS is defined as a way to catch unguarded usages easier or make
->> this issue more clear.
+> On 2019-05-21 at 21:47:54, Randall S. Becker wrote:
+> > When running the test in isolation, it passes without incident whether
+> > or not --verbose is used. So far, this only occurs on the first run
+> > through. I wanted to report it, based on the inconsistency of results.
+> > This is not the first time tests have acted in this fashion, and I
+> > realize it is difficult to do anything about it without being able to recreate
+> the situation.
 > 
-> I think it should actually store the data asked for by the caller, as if
-> we were the single thread running. We discussed this as the time of
-> refactoring NO_PTHREADS, but there was only one caller that would have
-> benefited. Now there are two. ;)
-> 
-> Discussion in the subthread of this patch:
-> 
->    https://public-inbox.org/git/20181027071003.1347-2-pclouds@gmail.com/
-> 
-> -Peff
-> 
+> Does running git clean -dxf cause it to be reproducible?
 
-I was wondering about that too as the proper long term solution.
-We would need (as the discussion suggests [1]) to properly
-respect/represent the pthread_key_t argument.
+I will give it a go. Having exactly the same behaviour in t7519 subtest 19. I wonder whether there are breadcrumbs not being cleaned up. Will report back when I am able - may take a day or so.
 
-For now, I've guarded my usage of pthread_getspecific() in the trace2
-(similar to what index-pack does), so its not urgent that we update it.
-And I'd rather we take this simple trace2 fix now and not try to combine
-it with fixes for the pthread macros.  Especially now as we're in the RC
-cycle for 2.22.
+Cheers,
+Randall
 
-I'll make a note to revisit the pthread code after 2.22.
-
-Thanks
-Jeff
-
-
-[1] 
-https://public-inbox.org/git/CACsJy8DLW_smOJd6aCoRcJZxQ2Lzut5US=sPadj7=fhne0UHGg@mail.gmail.com/
 
