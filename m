@@ -2,109 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D94C1F462
-	for <e@80x24.org>; Wed, 22 May 2019 14:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC17B1F462
+	for <e@80x24.org>; Wed, 22 May 2019 15:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729560AbfEVOyW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 10:54:22 -0400
-Received: from mout.gmx.net ([212.227.15.15]:46477 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728450AbfEVOyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 10:54:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558536859;
-        bh=Jq9r33mdnuzxJ4HbgY71uOESrtlxapjSckpRHrQ6Psk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Mhn/1P+XXG3LC7pcMfiSYdXpaIr3OZ5xOhX1Qt2/RN++Jr3S80yYqnpDj2TPgMdd6
-         rxaRDp8pWJP7tArvDgVjo0w58c0BznCWbzq6Em+sVrj5UTXX9RrBVpkJGRK+/lqAVl
-         y/7vVmR5P4WF89kKqk0NHWMZR8OCn3lIHjRPIco4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7Ka-1hNNpZ28ny-00BZTi; Wed, 22
- May 2019 16:54:19 +0200
-Date:   Wed, 22 May 2019 16:54:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Oussama Ghorbel <oussama.ghorbel@iopsys.eu>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+        id S1729753AbfEVP14 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 11:27:56 -0400
+Received: from mail-eopbgr50074.outbound.protection.outlook.com ([40.107.5.74]:46246
+        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729583AbfEVP14 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 11:27:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=intenogroup.onmicrosoft.com; s=selector1-intenogroup-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bYlbyzi5SX31c1ABj/c8ytiea/VQt/un9z/xSL1lH+4=;
+ b=vHGAPGDsY0EZeKQ55CoqEn/9NJ3ZK/nfaIqoMPcfXL9hlmtuFrtQLcpaeX5Um9YxhlwH08Onixs/M90uwTQWHoYoz8JzdKiuQe9HrC5bFjHY48hFZUmvT896jmH6M+SWKfHmyf7JsGpVz4XpZwTanc5wUFO363PrL0WcpZl8Ld4=
+Received: from VI1PR08MB3454.eurprd08.prod.outlook.com (20.177.59.20) by
+ VI1PR08MB4573.eurprd08.prod.outlook.com (20.178.126.206) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1922.15; Wed, 22 May 2019 15:27:53 +0000
+Received: from VI1PR08MB3454.eurprd08.prod.outlook.com
+ ([fe80::dc78:5268:40ff:dfd5]) by VI1PR08MB3454.eurprd08.prod.outlook.com
+ ([fe80::dc78:5268:40ff:dfd5%3]) with mapi id 15.20.1900.020; Wed, 22 May 2019
+ 15:27:53 +0000
+From:   Oussama Ghorbel <oussama.ghorbel@iopsys.eu>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: strange behavior of git diff-index
-In-Reply-To: <VI1PR08MB3454100258C23CB1F2B709F5EB000@VI1PR08MB3454.eurprd08.prod.outlook.com>
-Message-ID: <nycvar.QRO.7.76.6.1905221651270.46@tvgsbejvaqbjf.bet>
+Thread-Topic: strange behavior of git diff-index
+Thread-Index: AQHVEITFUMiusrwMTUmKw6ax3XbKfaZ3O1qAgAAJcoA=
+Date:   Wed, 22 May 2019 15:27:53 +0000
+Message-ID: <1b86251f-1b64-dfdf-7e40-e8a0c1e42e55@iopsys.eu>
 References: <VI1PR08MB3454100258C23CB1F2B709F5EB000@VI1PR08MB3454.eurprd08.prod.outlook.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+ <nycvar.QRO.7.76.6.1905221651270.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1905221651270.46@tvgsbejvaqbjf.bet>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: HE1PR0501CA0011.eurprd05.prod.outlook.com
+ (2603:10a6:3:1a::21) To VI1PR08MB3454.eurprd08.prod.outlook.com
+ (2603:10a6:803:7c::20)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=oussama.ghorbel@iopsys.eu; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:9b0:1:3302:8a97:8e8e:d547:4f2c]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1d4ce928-2f1d-47eb-ba69-08d6deca0e8c
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);SRVR:VI1PR08MB4573;
+x-ms-traffictypediagnostic: VI1PR08MB4573:
+x-microsoft-antispam-prvs: <VI1PR08MB4573F25B058DC813AF4F2077EB000@VI1PR08MB4573.eurprd08.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0045236D47
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(396003)(366004)(376002)(39850400004)(136003)(199004)(189003)(86362001)(71200400001)(31686004)(71190400001)(6116002)(76176011)(486006)(53936002)(11346002)(25786009)(31696002)(446003)(476003)(36756003)(14454004)(186003)(68736007)(81156014)(2616005)(6436002)(52116002)(305945005)(8676002)(256004)(6486002)(44832011)(81166006)(73956011)(46003)(6246003)(7736002)(99286004)(316002)(8936002)(2906002)(4326008)(5660300002)(102836004)(74482002)(6916009)(66476007)(66946007)(229853002)(6506007)(386003)(53546011)(66446008)(478600001)(6512007)(64756008)(66556008);DIR:OUT;SFP:1101;SCL:1;SRVR:VI1PR08MB4573;H:VI1PR08MB3454.eurprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: iopsys.eu does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: pItYqkAAuMOihAZhhFjC7xc0ZAGSL59LgjsyFdq1rn5oUjvLAZybb9GEClDH2q8DL1CJkRnQXGRBqJwfJH/UizzVgKZbWUIKyiMesOpqoBW/2qMmZa0NU3GlI9CVyV0hqypCrR7xuPfX7Iom/xfFlLMNpUwEygritI8+15Z6h3UsO1d0HIAz67n5+vuEMss8ssm/1xIZf/VLqr6JxlV3ZkfUjIf6wWbVDz0EQJsKXS6zXR++WoE3nTG+yQm0hhmKHhALoB+kQumiHULCMU4/vyEHBICdB3gFulfOyk2nDJEYA2++gdulXy+BPtuEjLvf6rdngwcepxOpoD6othK3ZvlNLjdvZHxdtM+J9zbGsgQuEdfXuyB3MoJ0rektmzYYaWR9zbHzXVQ5nIcZCqltN8SGsZ2ASBsMm7Gz7W+n1JM=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B93F87C393470C4086617C71EBA17ABD@eurprd08.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-388345071-1558536859=:46"
-X-Provags-ID: V03:K1:gVXLuWBcYLr+995RhDBNjil8NiMWk+sdfnPScXyBc5TvBgaGVrk
- Yd73PfUnzZXuqL0c/nQkcU5gbuCnxxUGaTm84ykLGyZ+h+fWFZ09GUqCrFtfmv/addls2VR
- K4LNM3LAJCnbyaZ3jJM3erhQby1TO2ts9HvzXGA4L/SS1QX9Zej3gca9KMvxuE9Y3o1ZFTw
- bi1NLnYX1kaypiNUSSIuQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UO61dwYfRZ0=:qig8c9KeqwblYQilksHoh0
- DLoqqP1G0waQPasn/DDZQt1mky0/RTLj1zLXLDCc9sNFPI2djqISm1jlH7GhlPzkhw5cSj68H
- KKhTGHcVh7gIuVK8fPGxuX3SeM9FiteURbknxL6mCasEa67V8EFrkWLucvLRuZJsRi4tEMQqE
- Grv7U6l7Vm7Q8LM9XTgxP0yMWRmyzgrZW9IppshKjfleEjEMU4VWsV7tuHcIernokV66y1f4o
- BSu/q5gakqbkAyzqQARoibwymFUDrioa6x36MT8Evl1lYU5HfxLr8WkKEifO5reBIYKE8xEC8
- W9TLpXnqdUznpwx8i6l/0s4vrmkEBsf5M+e0iBnGySSHkBOQPumL1qc4EtEnm3i3FU1UVqSJm
- 61Zmi5mAoD6O3wN86idqO6mf8w8doyhVKxujIA/qudiuurI/Wn3nPMSro7+7QIm+c2EUKXSjl
- Hnqo1shlBAPeAJwaP3glA58lcfgH/h/SWVeu82TY3+2Deo9xNeDVy/AEA58zvLw//Z7CsLbqN
- SO58/LQGcSvW2nn1YCN7Sb0nke0LoPktm1XKJ9dwRWU8eNRmPdJ0lzXqW6zyPyFKn84vQP09/
- GfhijTvEDFB/S2AHInGX9QoZMbNg9pASikgERduvUFWMe7HaQwSMPYaqTqTgyOXHdB9epCV24
- w6GW6Ab1IM0/PD+fj1DwCH3g4X8Gas/JQr4XL/ke+H+lSHMM/7k7Z4ilLnmI+oOeE/Km8eXi7
- pQEgNDWA/+vXIP2O/njYYPuXczdvOEhXqUlhi0VFYQ0G6ryoUg/ZefdoVCyj4v0oXBHuSbmD6
- kx4JIPXLyCFkwnCuPZWD9GTDUNnat6TIGVrzHdkeBYBEMsQ2/yrcp3RLQfz2XHoP/z5nFJZWt
- ReiG5XR0z6rsAxwpYO7PydlSqechNMCbR3u+nZVy8zbY1/QbpDOCtmHO3TKy26MqH4oqFpOSO
- i3YkfRcBSFdw+OMtZdg7uzKFy6hEpxJ8ExGES6vu7RlGSwYk9mBuJ
+X-OriginatorOrg: iopsys.eu
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d4ce928-2f1d-47eb-ba69-08d6deca0e8c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 May 2019 15:27:53.2629
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7ff78d65-2de4-40f5-8675-0569e5c7a65d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB4573
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-388345071-1558536859=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Oussama,
-
-On Wed, 22 May 2019, Oussama Ghorbel wrote:
-
-> git diff-index is giving me incorrect information, however if I run git =
-diff, then git diff-index again it will show the correct information.
-> The steps are the following:
-> $ git diff-index --name-only HEAD
-> git appears to list all files in the project irrespective if they modifi=
-ed or not
-> $ git diff
-> $ git diff --cached
-> will show nothing. So I don't have any modification.=C2=A0
-> Now strangely if I run git diff-index, it will also show nothing which i=
-s correction behavior.
->
-> my git version is 2.7.4
-> Any explanation?
-
-The low-level `diff-index` command is meant to be used in scripts, and
-does specifically *not* refresh the index before running. Meaning that it
-could possibly mistake a file for being modified even if it is not
-modified, just because it is marked "modified" in the index [*1*].
-
-Short answer: use the high-level command `git diff` that is intended for
-human consumption.
-
-Ciao,
-Johannes
-
-Footnote *1*: It is actually a bit more complicated than that: the index
-stores metadata such as mtime, size, uid, etc, and compares that to the
-metadata on disk. If there is any mismatch, or if everything matches but
-the mtime *also* matches the index file's itself, the file is considered
-not up to date, i.e. marked as modified.
-
---8323328-388345071-1558536859=:46--
+SGkgSm9oYW5uZXMsDQoNClRoYW5rc8KgYSBsb3QgZm9yIHRoZSBjbGFyaWZpY2F0aW9uIQ0KDQpS
+ZWdhcmRzLA0KT3Vzc2FtYQ0KT24gNS8yMi8xOSA0OjU0IFBNLCBKb2hhbm5lcyBTY2hpbmRlbGlu
+IHdyb3RlOg0KPiBIaSBPdXNzYW1hLA0KPg0KPiBPbiBXZWQsIDIyIE1heSAyMDE5LCBPdXNzYW1h
+IEdob3JiZWwgd3JvdGU6DQo+DQo+PiBnaXQgZGlmZi1pbmRleCBpcyBnaXZpbmcgbWUgaW5jb3Jy
+ZWN0IGluZm9ybWF0aW9uLCBob3dldmVyIGlmIEkgcnVuIGdpdCBkaWZmLCB0aGVuIGdpdCBkaWZm
+LWluZGV4IGFnYWluIGl0IHdpbGwgc2hvdyB0aGUgY29ycmVjdCBpbmZvcm1hdGlvbi4NCj4+IFRo
+ZSBzdGVwcyBhcmUgdGhlIGZvbGxvd2luZzoNCj4+ICQgZ2l0IGRpZmYtaW5kZXggLS1uYW1lLW9u
+bHkgSEVBRA0KPj4gZ2l0IGFwcGVhcnMgdG8gbGlzdCBhbGwgZmlsZXMgaW4gdGhlIHByb2plY3Qg
+aXJyZXNwZWN0aXZlIGlmIHRoZXkgbW9kaWZpZWQgb3Igbm90DQo+PiAkIGdpdCBkaWZmDQo+PiAk
+IGdpdCBkaWZmIC0tY2FjaGVkDQo+PiB3aWxsIHNob3cgbm90aGluZy4gU28gSSBkb24ndCBoYXZl
+IGFueSBtb2RpZmljYXRpb24uDQo+PiBOb3cgc3RyYW5nZWx5IGlmIEkgcnVuIGdpdCBkaWZmLWlu
+ZGV4LCBpdCB3aWxsIGFsc28gc2hvdyBub3RoaW5nIHdoaWNoIGlzIGNvcnJlY3Rpb24gYmVoYXZp
+b3IuDQo+Pg0KPj4gbXkgZ2l0IHZlcnNpb24gaXMgMi43LjQNCj4+IEFueSBleHBsYW5hdGlvbj8N
+Cj4gVGhlIGxvdy1sZXZlbCBgZGlmZi1pbmRleGAgY29tbWFuZCBpcyBtZWFudCB0byBiZSB1c2Vk
+IGluIHNjcmlwdHMsIGFuZA0KPiBkb2VzIHNwZWNpZmljYWxseSAqbm90KiByZWZyZXNoIHRoZSBp
+bmRleCBiZWZvcmUgcnVubmluZy4gTWVhbmluZyB0aGF0IGl0DQo+IGNvdWxkIHBvc3NpYmx5IG1p
+c3Rha2UgYSBmaWxlIGZvciBiZWluZyBtb2RpZmllZCBldmVuIGlmIGl0IGlzIG5vdA0KPiBtb2Rp
+ZmllZCwganVzdCBiZWNhdXNlIGl0IGlzIG1hcmtlZCAibW9kaWZpZWQiIGluIHRoZSBpbmRleCBb
+KjEqXS4NCj4NCj4gU2hvcnQgYW5zd2VyOiB1c2UgdGhlIGhpZ2gtbGV2ZWwgY29tbWFuZCBgZ2l0
+IGRpZmZgIHRoYXQgaXMgaW50ZW5kZWQgZm9yDQo+IGh1bWFuIGNvbnN1bXB0aW9uLg0KPg0KPiBD
+aWFvLA0KPiBKb2hhbm5lcw0KPg0KPiBGb290bm90ZSAqMSo6IEl0IGlzIGFjdHVhbGx5IGEgYml0
+IG1vcmUgY29tcGxpY2F0ZWQgdGhhbiB0aGF0OiB0aGUgaW5kZXgNCj4gc3RvcmVzIG1ldGFkYXRh
+IHN1Y2ggYXMgbXRpbWUsIHNpemUsIHVpZCwgZXRjLCBhbmQgY29tcGFyZXMgdGhhdCB0byB0aGUN
+Cj4gbWV0YWRhdGEgb24gZGlzay4gSWYgdGhlcmUgaXMgYW55IG1pc21hdGNoLCBvciBpZiBldmVy
+eXRoaW5nIG1hdGNoZXMgYnV0DQo+IHRoZSBtdGltZSAqYWxzbyogbWF0Y2hlcyB0aGUgaW5kZXgg
+ZmlsZSdzIGl0c2VsZiwgdGhlIGZpbGUgaXMgY29uc2lkZXJlZA0KPiBub3QgdXAgdG8gZGF0ZSwg
+aS5lLiBtYXJrZWQgYXMgbW9kaWZpZWQuDQo=
