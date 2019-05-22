@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3C6F1F462
-	for <e@80x24.org>; Wed, 22 May 2019 00:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEDA11F462
+	for <e@80x24.org>; Wed, 22 May 2019 00:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727385AbfEVAfn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 May 2019 20:35:43 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:39357 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726083AbfEVAfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 May 2019 20:35:43 -0400
-Received: from [10.0.2.15] ([87.115.253.20])
-        by smtp with ESMTPA
-        id TFELhLXZmticRTFEMhZqfa; Wed, 22 May 2019 01:35:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1558485342; bh=6JXJVGb/dQud4MgbqQzX7u2je+pQ1WmiyGxrSFt5/Go=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=sbbWJszQPED7dz3majPWfbXZ8jO6LnWCfjCf+XfwWUkuJnDkx2nmZQxwdXkVC+PUV
-         xbcWrgnf64sWUq6uKSchWfnVaelGa6kuMi8rtS/r7gY0IIVngMD7dwVcO9p+y4A3CN
-         ffcXDGCt1jJ0Wt2qciWeh+Zg2rjf2dYd0L/bnfdfxkb2o1uk0kJXhTHGs0u71wpLhW
-         cQcJDVF9yTn4xC4zI/kciGxfCbPYCYreZJ8IWH1AVXDq6zvVROQsSorQ/KfMC+eFvI
-         nG5xO3+PGYukn4yL0tLE8j1Pf8mCppWtYKlg9PX8EqihmGs9KmCm679ta6qOGy4RlC
-         /AcvH+E1QTjAQ==
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Gs88BX9C c=1 sm=1 tr=0
- a=ceBz2RPxfYaxgFK6o8vNfQ==:117 a=ceBz2RPxfYaxgFK6o8vNfQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8
- a=DMf4DAfpwMgutcOSsScA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: Incorrect diff-parseopt conversion?
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <82f79cd9-5273-b9a4-744d-f5fa95dd1f47@ramsayjones.plus.com>
- <CACsJy8BHeVDDnEYXaOAPtEoesTVNCiPGSgnJYjtL6aYSU0-J5A@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <791da98b-4065-e477-92cb-ceac80cc04e6@ramsayjones.plus.com>
-Date:   Wed, 22 May 2019 01:35:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1727825AbfEVAss (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 May 2019 20:48:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36686 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726083AbfEVAss (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 21 May 2019 20:48:48 -0400
+Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE35060100;
+        Wed, 22 May 2019 00:48:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1558486127;
+        bh=GFyDXZTnPvelzrDJJvY05CZ4uzKaW4pTybHJ4cdpt6U=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=QUg2JmfFO4i6W/PgoFdSbix+iY3J6EqCkP/EsBJqscIKjx1tDsiNEbFSl6N4xmhHm
+         oOclDHuDDZON1xzOFIGEphMNB6BrDcgvHrQA+VPnyaM7JiTzGwNbdwELRhmKJAv5ry
+         wKPgX7Zedsiw40h/KN2VbPBIL99NuN9sTK56cc5MiFu5VrhJyNDWTtN17FUt9HzkFT
+         TOFBZV0G3WXJd/+Mw5aBZExlrG/wh/FnRvZSyUOzxpclRiFFR8IHp5IERlB09t3Sc7
+         agvGa9QRjAIkDMoI+D6FtA8Gjbr/8mGd9hAmwoiYixIdPY5qqdw11p36MlGDlBQDdz
+         tyzEqpVMHNAItyOasz885uzZ/tf/k+H+S09M73oYXGwKq8TyGF0ksKEu1gezydxotX
+         8ddfY9KxVq05YA+Kyey/dd+fmg+sC1zZrVjusW9TZxCPNKLMBn1tZsi6QqbqeyNXKZ
+         m9VP1tTIZm2sGzTXrz0uUEC+AW3kjUzP97fEzBXoiGUeK0NKopi
+Date:   Wed, 22 May 2019 00:48:26 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Git Mailing List' <git@vger.kernel.org>
+Subject: Re: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
+Message-ID: <20190522004825.GC8616@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Git Mailing List' <git@vger.kernel.org>
+References: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8BHeVDDnEYXaOAPtEoesTVNCiPGSgnJYjtL6aYSU0-J5A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfFzR7rEyIofOhBlLRBW9Vzs9mAASKXf28X/2/r6LCeTs4Os03hfmbvf3uUpJ4YATFoJ3BGUJ/0sw4Pn514NX9t6xK2AkNMIik1Ki1nWfOULUvYZecrMk
- 3Mjtq9G/jD6ci53j20OctlQPoqmE6N0SopQJos+ecP3bcmL+5rG3aXXDZYgOrR/TpIzkcYyhLVMZ3Q==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="R+My9LyyhiUvIEro"
+Content-Disposition: inline
+In-Reply-To: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--R+My9LyyhiUvIEro
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 22/05/2019 01:11, Duy Nguyen wrote:
-> On Wed, May 22, 2019 at 2:56 AM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->> Hi Duy,
->>
->> I am in the middle of rebasing a long running branch onto
->> current master (v2.22.0-rc1) and noticed something odd with
->> commit af2f368091 ("diff-parseopt: convert --output-*",
->> 2019-02-21).
->>
->> As part of the branch I am rebasing, I have defined a new
->> OPT_LL_CALLBACK() macro[1], which I had intended to apply to
->> the 'output' option to diff. However, commit af2f368091
->> defines that option thus:
->>
->> +               { OPTION_CALLBACK, 0, "output", options, N_("<file>"),
->> +                 N_("Output to a specific file"),
->> +                 PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
->>
->> Note that the 'option type' is given as OPTION_CALLBACK, not
->> as OPTION_LOWLEVEL_CALLBACK. Is this intended?
-> 
-> Yeah I think this is correct (phew!).
+On 2019-05-21 at 21:47:54, Randall S. Becker wrote:
+> When running the test in isolation, it passes without incident whether or
+> not --verbose is used. So far, this only occurs on the first run through.=
+ I
+> wanted to report it, based on the inconsistency of results. This is not t=
+he
+> first time tests have acted in this fashion, and I realize it is difficult
+> to do anything about it without being able to recreate the situation.
 
-OK, I just had a look at the code in parse-options.c.
-Hmm, somewhat ugly! :-D
+Does running git clean -dxf cause it to be reproducible?
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Thanks.
+--R+My9LyyhiUvIEro
+Content-Type: application/pgp-signature; name="signature.asc"
 
-ATB,
-Ramsay Jones
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.15 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzknFkACgkQv1NdgR9S
+9ouGjxAApLmdAFn3dskO12AEL6dA4VX8KtHwu8IYMJ6KBEzeXc8jI+wHSx070K5C
+LzxCvK6UxVL4fqOq8Xek+piiilyFIw/RA3xoeJg+j9P9gnXvHJRg2NKUvj7qfUAU
+CmcdAlh1CbRocxcfaJb9TrVkP7HcAElblGHTpqBlLQhk/XTRtADQplfu2eyVCgv0
+7hJoZEV7/llaL5psOvnoodPdfnGwF6rV2lPOtMGtYsOIZ/5r+jpLgPqPX48tNo5X
+8/o0BYWCBPcFvrtbJf/rraN2ecwDXW6Adh08Q/zvBkQIzsRcXGKCA75bMoGzEyho
+wR6quLoRm10oaKbBfS97HpzeQoR6pZqGbNkGqd+H0ZekQzPvctGOlUWFIW8+JFd4
+lbD2VEuGEtM/hZLEFhrotsfz8NA1vm90ieOh11QTNLtict3ColK3lSYyR6Ahs/Vm
+2MP5DwXoLw4CT3q+ss142Brci6lx7esDAn80NojovjMZLYAUa1VIJTJCMAt2bLXb
+k+VToMRYrVq0XmeSLE0SvQhbsuET+LrmhQST8ERhlcel2Q+/Q56lWG9/rfTJN+Ir
+MkOeEJ4K1zF6l7yrSIAPs3REQts/8KICfjabzsyniamisRnsC1S4/zaWyGbajGep
+hYT5CltQdQconoEi89IfZx5mk9NZYckzJEY9xhEHTWV3Il7Na3w=
+=TX/P
+-----END PGP SIGNATURE-----
+
+--R+My9LyyhiUvIEro--
