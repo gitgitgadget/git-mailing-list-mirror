@@ -2,85 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE9001F462
-	for <e@80x24.org>; Wed, 22 May 2019 10:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1081F462
+	for <e@80x24.org>; Wed, 22 May 2019 10:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728690AbfEVKQY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 06:16:24 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41892 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728406AbfEVKQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 06:16:23 -0400
-Received: by mail-ed1-f65.google.com with SMTP id m4so3021718edd.8
-        for <git@vger.kernel.org>; Wed, 22 May 2019 03:16:22 -0700 (PDT)
+        id S1728602AbfEVKeB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 06:34:01 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46291 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728438AbfEVKeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 06:34:01 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r7so1651682wrr.13
+        for <git@vger.kernel.org>; Wed, 22 May 2019 03:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=1rLsltxCe0KQuVuZyGLA6hAjSltolb8BIgQ8SRMOV1k=;
-        b=hiqxxOIx+EyGZ1s5ATJoY1zrpwh7GI+yJwsix8jyphj33qqY3iUfts3OgG518quJ/J
-         yVc34QTZmfI5OIPNF8OmfFHCjPfDbO3QSGW2R3m2GPWndfiC976G140i2wsCWUbwaAgw
-         8mdXHl2noGb+qXOce6czimhq5Ffn8etQXBU+ALE216S7H6GpEckqRg9FgpfkljA3/5SW
-         kFDWQf0VgKHqUPLZJaBez+WPrSNXOBRYd/i9WTnIciUzpunn0Kb27OIspce9+VROqQ+d
-         h7CwRpDYWQXmOXfdwMAAijU5RPikYklVQ10vB++IwPYX+SB7km90rdQMem0YUYBKJBVj
-         EXOg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=eQfxAS2RC2FKSRbD5/Wq0skonaWbIZ7AHN/yqBY5bLU=;
+        b=hEqGsZzR5l0dTY87+9mqZIX4Qc/JqhFTqkxKDLtnst3tWJ3im8e6GCwlOpPnsxpjbi
+         p0vCf47j4wWFv+vp/oc5YdPmJ4kcJRn0oaoEK4Yh0ZcW5EZXk7BTerRRPHpKmu2XZ5Qc
+         uVyKA4zFpkOj8tntluUOzpllMbF+/Tem6WmM2n5GzP1YlSXF7cY9uDEoSSuv5sVub8bM
+         VCmR0EK9a3ZP2+epgVsGuk/2xVq72Jt4c1VBzWZ1kqIMZdwYoWCjxyIgRgavnUvovRlK
+         B90mgFneNL2px/810bv8p5leIJtRJT4tzKuk5qfpBtzVgYRLhGSjtCCxKMvsNWbWlnsw
+         2xRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=1rLsltxCe0KQuVuZyGLA6hAjSltolb8BIgQ8SRMOV1k=;
-        b=I6jyOfsLbA98XZQPDk8CIgGQCV+Qz0f3R6ysVrXwe2mE1jgJm8NfPWc/O0PD2i5XVT
-         D9pfHnXlbbfNWj0BP1b6goFSAkXu07aiROONjbkvC2gDpyh01Cbkgv6n4rGgS0Ol1lWv
-         xbYd5FovF7v0aNQnv/2GNHL58sk0Yn34F6hXkB03Bkc2Aofrd1mRLxUyeVAqwjzjsg3r
-         u4XilPX4KKagvYuSP2r0wmscvB2qcTodX0HGcGA6IqghHEUR3uzn2E36+UuHF80WwxUA
-         m5YIrfywBGDu8VWELs0vzeGKJg5K8u6tWgUsOsQy9zsH8nLzve2d5UZJu8I9gI5msn+Z
-         Dn5Q==
-X-Gm-Message-State: APjAAAUgVIbq16kLS5LPdXTenX7E8yYekKYC+n/eEtSsau2hVPoXRM7z
-        E0RBCjltQ2Im9kVLGeri2D0xZTRxQGK0jMw+YJ2osTyHuQs=
-X-Google-Smtp-Source: APXvYqyrsg5A4sXW2HdD3Q/TV5qdtNNkfDKCNrMvWKne30JXq5wZ9px2JKn68LNL4tSUxyWST32iJSEGYVber4leQfc=
-X-Received: by 2002:a50:94ed:: with SMTP id t42mr89462403eda.288.1558520181800;
- Wed, 22 May 2019 03:16:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=eQfxAS2RC2FKSRbD5/Wq0skonaWbIZ7AHN/yqBY5bLU=;
+        b=t34ejSIHYSoafsjmxx0RIisQJjA9X11w3GaFybS6br0ml7MMNLpqJ9PTrm8j3rrWn5
+         AYSBPVc63yO3166jr712QcwGmQIPoCPxINSFdDihrFusMpAmKrKbJL9Y6f10JrYumlQk
+         Shx4AQAM/5LjBCppWPDLJ0T15+xSt/StACImZE0UyjfjljT9wo/b0K69mraVHAFPSWaX
+         eFWeGsW12d9JNWztBv354j9OAbNd1dGtBc+YHZWVNkieR5tCr/O1IMF6GKDp2wnig/K7
+         gNPS4B5KKhr2ubGgh6kOy/UNTp2qK/xMFpCE3t1yVXlRpTeW1JWgwwexh+imxLUke+2x
+         DR9w==
+X-Gm-Message-State: APjAAAWUvLwecqvU4aeC1JgX6USxqLnp21/C2NKfxu4m0lxvxeT9x/X+
+        uUf0GmsDb3pywZdEL7NW21URFGUU
+X-Google-Smtp-Source: APXvYqzCCne494Wk+0UjP9kNmL15h117aL9Pu+/dmbIpnlgN/ppIPtgEHzG8kmMXZDfGYZ3h4pd3PQ==
+X-Received: by 2002:a5d:4206:: with SMTP id n6mr61873wrq.58.1558521238914;
+        Wed, 22 May 2019 03:33:58 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id g17sm21589358wrr.65.2019.05.22.03.33.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 May 2019 03:33:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] upload-pack: strip namespace from symref data
+References: <CAGyf7-Ew8rS8n67Few9+dT6VXy9rQbaYLswuZkQ3-4j_T_d=qg@mail.gmail.com> <20190521214630.GD14807@sigill.intra.peff.net> <20190522043146.GA2563@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190522043146.GA2563@sigill.intra.peff.net>
+Date:   Wed, 22 May 2019 12:33:56 +0200
+Message-ID: <875zq2vkvf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 22 May 2019 12:16:09 +0200
-Message-ID: <CAP8UFD3rhdoarZPc9q0VSWVFivXaQx99scio4G-tDX6Pbbuhig@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 51
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        David Pursehouse <dpursehouse@collab.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Luca Milanesio <luca.milanesio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
 
-The 51th edition of Git Rev News is now published:
+On Wed, May 22 2019, Jeff King wrote:
 
-  https://git.github.io/rev_news/2019/05/22/edition-51/
+> Since 7171d8c15f (upload-pack: send symbolic ref information as
+> capability, 2013-09-17), we've sent cloning and fetching clients special
+> information about which branch HEAD is pointing to, so that they don't
+> have to guess based on matching up commit ids.
 
-Thanks a lot to David Pursehouse, Luca Milanesio and Denton Liu who
-contributed this month!
+I'd add a 2nd paragraph here:
 
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+    The client will then use the corresponding code added in a45b5f0552
+    ("connect: annotate refs with their symref information in
+    get_remote_head()", 2013-09-17) to find the intended symref. See
+    9907d1359c ("Merge branch 'jc/upload-pack-send-symref'", 2013-10-30)
+    for the full set of changes related to this.
+
+...because, see later...
+
+> However, this feature has never worked properly with the GIT_NAMESPACE
+> feature.  Because upload-pack uses head_ref_namespaced(find_symref), we
+> do find and report on refs/namespaces/foo/HEAD instead of the actual
+> HEAD of the repo. This makes sense, since the branch pointed to by the
+> top-level HEAD may not be advertised at all. But we do two things wrong:
+>
+>   1. We report the full name refs/namespaces/foo/HEAD, instead of just
+>      HEAD. Meaning no client is going to bother doing anything with that
+>      symref, since we're not otherwise advertising it.
+>
+>   2. We report the symref destination using its full name (e.g.,
+>      refs/namespaces/foo/refs/heads/master). That's similarly useless to
+>      the client, who only saw "refs/heads/master" in the advertisement.
+>
+> We should be stripping the namespace prefix off of both places (which
+> this patch fixes).
+>
+> Likely nobody noticed because bug (1) means that from the client's
+> perspective, we did not report on HEAD at all. And thus it uses the
+> pre-7171d8c15f fallback code to guess the correct HEAD, which is usually
+> right. It only falls down in ambiguous cases (like the one laid out in
+> the included test).
+
+...because here you're talking about "the client's perspective" and "it
+uses the pre-7171d8c15f [...] code", but this should say "the
+pre-a45b5f0552 code", i.e. mention the commit that changed the *client*
+logic.
+
+Well, the client also "uses" the server-side code indirectly, but I
+think it's easier to follow along if we note what both sides are (as I
+dug up when reviewing this...).
+
+> This also means that we don't have to worry about breaking anybody who
+> was putting pre-stripped names into their namespace symrefs when we fix
+> bug (2). Because of bug (1), nobody would have been using the symref we
+> advertised in the first place (not to mention that those symrefs would
+> have appeared broken for any non-namespaced access).
+>
+> Note that we have separate fixes here for the v0 and v2 protocols. The
+> symref advertisement moved in v2 to be a part of the ls-refs command.
+> This actually gets part (1) right, since the symref annotation
+> piggy-backs on the existing ref advertisement, which is properly
+> stripped. But it still needs a fix for part (2). The included tests
+> cover both protocols.
+>
+> Reported-by: Bryan Turner <bturner@atlassian.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This is the same as my earlier fix, but with the v2 bit added, and of
+> course tests and a commit message. Thanks (as usual) for a helpful bug
+> report.
+>
+> I don't know if we have a general philosophy for testing v0 versus v2.
+> Without specifying the protocol at all, we'd catch the former on a
+> regular run and the latter under a GIT_TEST_PROTOCOL_VERSION=2 run. So
+> we _could_ just rely on that, but since I had to do two separate fixes,
+> it made sense to me to include explicit tests.
+
+Yeah, we shouldn't rely on the GIT_TEST_* stuff for coverage, it should
+just be used to find things that fall between the cracks.
+
+>  ls-refs.c                        |  3 ++-
+>  t/t5509-fetch-push-namespaces.sh | 28 ++++++++++++++++++++++++++++
+>  upload-pack.c                    |  4 ++--
+>  3 files changed, 32 insertions(+), 3 deletions(-)
+>
+> diff --git a/ls-refs.c b/ls-refs.c
+> index 0a7dbc6442..818aef70a0 100644
+> --- a/ls-refs.c
+> +++ b/ls-refs.c
+> @@ -57,7 +57,8 @@ static int send_ref(const char *refname, const struct object_id *oid,
+>  		if (!symref_target)
+>  			die("'%s' is a symref but it is not?", refname);
+>
+> -		strbuf_addf(&refline, " symref-target:%s", symref_target);
+> +		strbuf_addf(&refline, " symref-target:%s",
+> +			    strip_namespace(symref_target));
+>  	}
+>
+>  	if (data->peel) {
+> diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
+> index c88df78c0b..75cbfcc392 100755
+> --- a/t/t5509-fetch-push-namespaces.sh
+> +++ b/t/t5509-fetch-push-namespaces.sh
+> @@ -124,4 +124,32 @@ test_expect_success 'try to update a hidden full ref' '
+>  	test_must_fail git -C original push pushee-namespaced master
+>  '
+>
+> +test_expect_success 'set up ambiguous HEAD' '
+> +	git init ambiguous &&
+> +	(
+> +		cd ambiguous &&
+> +		git commit --allow-empty -m foo &&
+> +		git update-ref refs/namespaces/ns/refs/heads/one HEAD &&
+> +		git update-ref refs/namespaces/ns/refs/heads/two HEAD &&
+> +		git symbolic-ref refs/namespaces/ns/HEAD \
+> +			refs/namespaces/ns/refs/heads/two
+> +	)
+> +'
+> +
+> +test_expect_success 'clone chooses correct HEAD (v0)' '
+> +	GIT_NAMESPACE=ns git -c protocol.version=0 \
+> +		clone ambiguous ambiguous-v0 &&
+> +	echo refs/heads/two >expect &&
+> +	git -C ambiguous-v0 symbolic-ref HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'clone chooses correct HEAD (v2)' '
+> +	GIT_NAMESPACE=ns git -c protocol.version=2 \
+> +		clone ambiguous ambiguous-v2 &&
+> +	echo refs/heads/two >expect &&
+> +	git -C ambiguous-v2 symbolic-ref HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 24298913c0..4d2129e7fc 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1037,8 +1037,8 @@ static int find_symref(const char *refname, const struct object_id *oid,
+>  	symref_target = resolve_ref_unsafe(refname, 0, NULL, &flag);
+>  	if (!symref_target || (flag & REF_ISSYMREF) == 0)
+>  		die("'%s' is a symref but it is not?", refname);
+> -	item = string_list_append(cb_data, refname);
+> -	item->util = xstrdup(symref_target);
+> +	item = string_list_append(cb_data, strip_namespace(refname));
+> +	item->util = xstrdup(strip_namespace(symref_target));
+>  	return 0;
+>  }
