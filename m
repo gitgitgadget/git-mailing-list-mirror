@@ -2,129 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA1C1F462
-	for <e@80x24.org>; Thu, 23 May 2019 00:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0E441F462
+	for <e@80x24.org>; Thu, 23 May 2019 00:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728352AbfEWAXt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 20:23:49 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:32922 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727634AbfEWAXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 20:23:49 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c66so5858838wme.0
-        for <git@vger.kernel.org>; Wed, 22 May 2019 17:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=8Z3Eml8upLbrxr94pKfGZW7ehGnLyEha3uoenvgcKQo=;
-        b=hdEsbtvyWSZZRlu7dEV3qD2ectb57PVGOWBCdp/9vfI0oVqYL0wrVqJ/fd7MQe8h4R
-         J4ASouMHLhytFiVKFTedMv/5HKN/HaJfoGPRE57KSg0AUBAEWqMxguz66pKhpLuZVMmA
-         uNjx6ju684135cXjZXYFnb8xozLKj9tweVQ2mehCUGF8Nm4TXbPmFoLRxVKFM6ybqPBj
-         +Dt+sxFIsNuMojN3CwrM62376mUAmcDJdUxRMZK5uajmY8x7tXwD5zZPaxjzlJLShX8K
-         bOQUbMK0W+ocUn9a2yA8SUSgkDgdmJuyX36XRFbo9QU2J0pyQTFOIk2qTNLSiHaLjeqo
-         OSgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=8Z3Eml8upLbrxr94pKfGZW7ehGnLyEha3uoenvgcKQo=;
-        b=SNU3KeK8ll8EG+MrzdISTIrWpmXvao95wN1XKJ4nTl9l0eXrXgJqRaHMtFIKKnILFf
-         l3bYll89e+32dEq9rxGKpC0dDcJSJlgW+wVLe7cseAeupftvdHE1gYmwesD1h7pXbHma
-         3HByaFq9NtsfD2a3FvH9IFEpy7bN2UmBqe4BnFiGXzojF9+tCuI6G0peuBlAr9RgIXOm
-         jhPY2opy8u2xopmJQjCbtZLBxrO7iPN72VOiFlV4VhdulBiN0F59XMgFqlb9xUuQaWzT
-         oABXZmXiQRen+5VVbdftVU37osiCrDf49eY14p5wev6lm8RRDecSHYbnZhKdwwu4RyY6
-         tH+w==
-X-Gm-Message-State: APjAAAW9N7Wzx8jmtzH6ovrm/n6VeiGbinXEwbWC2Znm/p8vfkjc8kzE
-        wY5ZTbHmAtcefXtN0pRtFfY=
-X-Google-Smtp-Source: APXvYqxYGWTiVUkmMgWQx0DzVQij4Cb7KAr7DzC8NJsInLWFoafVTo9LuHRPF8whIiTmYM2LlPyz+Q==
-X-Received: by 2002:a1c:a7cc:: with SMTP id q195mr9668217wme.53.1558571027018;
-        Wed, 22 May 2019 17:23:47 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id x6sm39052836wru.36.2019.05.22.17.23.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 May 2019 17:23:45 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Maksim Odnoletkov <odnoletkov@mail.ru>
-Cc:     gitster@pobox.com, git@vger.kernel.org, keithbsmiley@gmail.com
-Subject: Re: [PATCH] Make stashing nothing exit 1
-References: <xmqqh8bsphny.fsf@gitster-ct.c.googlers.com> <20190522235705.68452-1-odnoletkov@mail.ru>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190522235705.68452-1-odnoletkov@mail.ru>
-Date:   Thu, 23 May 2019 02:23:44 +0200
-Message-ID: <871s0quigf.fsf@evledraar.gmail.com>
+        id S1728518AbfEWAcg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 20:32:36 -0400
+Received: from out03.mta.xmission.com ([166.70.13.233]:58485 "EHLO
+        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727634AbfEWAcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 20:32:36 -0400
+Received: from in01.mta.xmission.com ([166.70.13.51])
+        by out03.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.87)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1hTbes-0003DT-Vn; Wed, 22 May 2019 18:32:35 -0600
+Received: from ip72-206-97-68.om.om.cox.net ([72.206.97.68] helo=x220.xmission.com)
+        by in01.mta.xmission.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.87)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1hTber-00050g-W8; Wed, 22 May 2019 18:32:34 -0600
+From:   ebiederm@xmission.com (Eric W. Biederman)
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <junkio@cox.net>
+Date:   Wed, 22 May 2019 19:32:27 -0500
+Message-ID: <87ftp6j9ic.fsf@xmission.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-XM-SPF: eid=1hTber-00050g-W8;;;mid=<87ftp6j9ic.fsf@xmission.com>;;;hst=in01.mta.xmission.com;;;ip=72.206.97.68;;;frm=ebiederm@xmission.com;;;spf=neutral
+X-XM-AID: U2FsdGVkX1/UgZnNCQ+YB2Qj6u3wZtYjBusCqehteEw=
+X-SA-Exim-Connect-IP: 72.206.97.68
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH] send-email: Add an option to suppress adding a specific email address
+X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, May 23 2019, Maksim Odnoletkov wrote:
+Make it easy to suppress stable@vger.kernel.org.  Long story short it
+is desirable to have ``Cc: stable@vger.kernel.org'' on many bug fixes
+sent to the linux kernel.  It is not always desirable to actually the
+stable maintainer immediately as the patches are still being reviewed
+etc.  Actually cc'd the stable maintainers in the linux kernel is not
+even really necessary as they will always find the tag after the patch
+has been merged in the commit body.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Keith Smiley <keithbsmiley@gmail.com> writes:
->>
->> > In the case there are no files to stash, but the user asked to stash, we
->> > should exit 1 since the stashing failed.
->> > ---
->>
->> Sorry, but I fail to see why this is a good change.  Did you have
->> some script that wanted the exit code from "git stash" to indicate
->> if it had anything to stash and change the behaviour based on it?
->>
->> Is it a big enough hassle to figure out if the "stash" command did
->> something yourself that justifies forcing existing scripts that rely
->> on "no-op is merely a normal exit" behaviour other people have
->> written in the past several years?
->
-> The problem with current behaviour is it makes it hard to use stash in
-> scripts. A natural stash use case is: wrap some operation requiring a
-> clean working tree with a stash push-pop pair. But that doesn't work
-> properly when working tree is already clean - push silently does nothing
-> and following pop becomes unbalanced. You have to keep that in mind and
-> work around with something like:
->
-> if ! git diff-index --exit-code --quiet HEAD
-> then
-> 	git stash push
-> 	trap 'git stash pop' EXIT
-> fi
->
-> With this change this can be simplified to:
->
-> git stash push && trap 'git stash pop' EXIT
->
-> I don't mind keeping this new behaviour behind an option for
-> compatibility. Or alternatively resolve this use case by supporting
-> --allow-empty in stash-push. But my feeling is it is natural for 'git
-> stash push' to report error for no-op case because the command is
-> explicitly about creating new stash entries. A close analogy is 'git
-> commit' which errors on no-op. Contrary all commands treating no-op as a
-> success I'm aware of are not about creating new objects but about
-> querying or syncing.
+So I am adding yet another suppress command "suppress-addr" that will
+take an email address keep that email address from being automatically
+added to a destination the email will be sent to.
 
-I view "stash push" more like just "push", or even a special case for
-"reset --hard", in both of those cases we don't exit non-zero if there's
-nothing to do, i.e. if there's nothing to push, or if "reset --hard"
-ends up needing to do nothing.
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+ Documentation/git-send-email.txt |  5 +++++
+ git-send-email.perl              | 20 +++++++++++++++++++-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-On the other hand as you point out it can also be viewed as "create new
-stash entry", just like "create new commit", and we error out on that.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 1afe9fc858ea..9833d4dbd9f4 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -346,6 +346,11 @@ Default is the value of `sendemail.suppresscc` configuration value; if
+ that is unspecified, default to 'self' if --suppress-from is
+ specified, as well as 'body' if --no-signed-off-cc is specified.
+ 
++--suppress-addr=<address>::
++	Specify an address that should not be automatically copied
++	on any email.
++	Default is the value of `sendemail.suppressaddr`.
++
+ --[no-]suppress-from::
+ 	If this is set, do not add the From: address to the cc: list.
+ 	Default is the value of `sendemail.suppressFrom` configuration
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 8eb63b5a2f8d..2ac0985f3f00 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -98,6 +98,7 @@ sub usage {
+     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
+     --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, misc-by, all.
++    --suppress-addr         <str>  * Don't automatically add the specified address
+     --[no-]cc-cover                * Email Cc: addresses in the cover letter.
+     --[no-]to-cover                * Email To: addresses in the cover letter.
+     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
+@@ -237,6 +238,7 @@ sub do_edit {
+ my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
+ my ($validate, $confirm);
+ my (@suppress_cc);
++my (@suppress_addr);
+ my ($auto_8bit_encoding);
+ my ($compose_encoding);
+ my $target_xfer_encoding = 'auto';
+@@ -274,6 +276,7 @@ sub do_edit {
+     "aliasfiletype" => \$aliasfiletype,
+     "bcc" => \@bcclist,
+     "suppresscc" => \@suppress_cc,
++    "suppressaddr" => \@suppress_addr,
+     "envelopesender" => \$envelope_sender,
+     "confirm"   => \$confirm,
+     "from" => \$sender,
+@@ -360,6 +363,7 @@ sub signal_handler {
+ 		    "suppress-from!" => \$suppress_from,
+ 		    "no-suppress-from" => sub {$suppress_from = 0},
+ 		    "suppress-cc=s" => \@suppress_cc,
++		    "suppress-addr=s" => \@suppress_addr,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
+ 		    "no-signed-off-cc|no-signed-off-by-cc" => sub {$signed_off_by_cc = 0},
+ 		    "cc-cover|cc-cover!" => \$cover_cc,
+@@ -489,6 +493,16 @@ sub read_config {
+ 	delete $suppress_cc{'body'};
+ }
+ 
++# Set specific suppress addresses
++my (%suppress_addr);
++if (@suppress_addr) {
++	foreach my $addr (@suppress_addr) {
++		my $qaddr = unquote_rfc2047($addr);
++		my $saddr = sanitize_address($qaddr);
++		$suppress_addr{$saddr} = 1;
++	}
++}
++
+ # Set confirm's default value
+ my $confirm_unconfigured = !defined $confirm;
+ if ($confirm_unconfigured) {
+@@ -1623,6 +1637,7 @@ sub process_file {
+ 				$sauthor = sanitize_address($author);
+ 				next if $suppress_cc{'author'};
+ 				next if $suppress_cc{'self'} and $sauthor eq $sender;
++				next if ($suppress_addr{$sauthor});
+ 				printf(__("(mbox) Adding cc: %s from line '%s'\n"),
+ 					$1, $_) unless $quiet;
+ 				push @cc, $1;
+@@ -1642,6 +1657,7 @@ sub process_file {
+ 						next if ($suppress_cc{'self'});
+ 					} else {
+ 						next if ($suppress_cc{'cc'});
++						next if ($suppress_addr{$saddr});
+ 					}
+ 					printf(__("(mbox) Adding cc: %s from line '%s'\n"),
+ 						$addr, $_) unless $quiet;
+@@ -1681,7 +1697,7 @@ sub process_file {
+ 			# line 2 = subject
+ 			# So let's support that, too.
+ 			$input_format = 'lots';
+-			if (@cc == 0 && !$suppress_cc{'cc'}) {
++			if (@cc == 0 && !$suppress_cc{'cc'} && !$suppress_addr{$_}) {
+ 				printf(__("(non-mbox) Adding cc: %s from line '%s'\n"),
+ 					$_, $_) unless $quiet;
+ 				push @cc, $_;
+@@ -1700,6 +1716,7 @@ sub process_file {
+ 			$c = strip_garbage_one_address($c);
+ 			# sanitize a bit more to decide whether to suppress the address:
+ 			my $sc = sanitize_address($c);
++			next if ($suppress_addr{$sc});
+ 			if ($sc eq $sender) {
+ 				next if ($suppress_cc{'self'});
+ 			} else {
+@@ -1833,6 +1850,7 @@ sub recipients_cmd {
+ 		$address =~ s/^\s*//g;
+ 		$address =~ s/\s*$//g;
+ 		$address = sanitize_address($address);
++		next if ($suppress_addr{$address});
+ 		next if ($address eq $sender and $suppress_cc{'self'});
+ 		push @addresses, $address;
+ 		printf(__("(%s) Adding %s: %s from: '%s'\n"),
+-- 
+2.21.0.dirty
 
-In practice I bet there's very few scripters of "git commit" that don't
-want to actually create a commit, whereas "stash push" is more likely to
-be used like "reset --hard", i.e. just "wipe/save-wipe changes if
-needed".
-
-I don't mind an --exit-code for it, or even a change in the default
-behavior, just pointing out that it's a bit more nuanced than just a
-missing exit code, given "push", "reset" etc. prior art.
