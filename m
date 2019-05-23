@@ -2,161 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEA471F462
-	for <e@80x24.org>; Thu, 23 May 2019 13:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E23F91F462
+	for <e@80x24.org>; Thu, 23 May 2019 13:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729972AbfEWNA7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 09:00:59 -0400
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:42216 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728309AbfEWNA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 09:00:59 -0400
-Received: by mail-qt1-f196.google.com with SMTP id j53so6533296qta.9
-        for <git@vger.kernel.org>; Thu, 23 May 2019 06:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PlwUN1mQFjrh0pHSjgzBaeZacNJFgjOlcAQuH2RU+Zw=;
-        b=tpEhxbW2pgpSa/QLZrKV/+pJVSMIDmJaQDA3owvbgJiDm0aIpfc1FsIYDoNeEIV5zf
-         7aZaZ1DvsNdys7dXP3MpGMTFgSJFIJH9b/r3ZjDMosxMJoEHL9JKhY2bUCivgfTNM+X/
-         NVhSbSIuiWNKkJOOYA7+l10VjXQPPmI/im9TXIMZephVTsOmDYazW6yk0YoUd+RLCd4E
-         rbN9Pn+wbbRBQy6DySI3pe+uy723aQtpMPXuBmeqKwyN0bSXWpK7fpOMTTmTJmD3xw72
-         vNo7ZlkACPNe4RsNIz5u4od2NET+kUcy/U/lYHC6I2D7kQcl6u8ASK5jZRdCRYgeLDRG
-         zylw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PlwUN1mQFjrh0pHSjgzBaeZacNJFgjOlcAQuH2RU+Zw=;
-        b=GKbXMqF+1cpN8lqPEEJFmgbao6XEUqQAOT+bh1iq8QFO6Fu5Kl9mxxE+OJbcixKFUt
-         +vjAaBW5F+RpSYG5zCsCyNZMBrsH8gOc74rK/M0p5KBBGLsNe8AJjmeA6XufKfT5e5xQ
-         nQXxul6HpmX/Z07CUZmi0Tyh/FWL4Mo81SsGMOzq7uGbnOU1eQXJiG9PgnsI2GXZLSuK
-         rJrBEEfKzv/ceHfjSAtmWyECGx7djlOltj2nFxwdltNpXduV+eZT53eeulipIif+lqtM
-         hA7GmB6NKeyOJIvgV8wh54mZSfXDXz2Yxot+2ml7wpMPwmj6dNDlj+WoZKxbTdmAHUhA
-         wV4A==
-X-Gm-Message-State: APjAAAWj3Fgyc1+IJq3BHscuJygqXVtA7KbJts6LcTzzCnexMIlwhC6R
-        PMPqdMU/afIIBNlfImNMkdA=
-X-Google-Smtp-Source: APXvYqz4WAqwQqfcP1W+XBrRXgc/umqRY4EIrwEzgpsG0mGdRkLChh2NaVJ0B5cll1N30bm5mqXnwA==
-X-Received: by 2002:ac8:2e38:: with SMTP id r53mr80643783qta.192.1558616458120;
-        Thu, 23 May 2019 06:00:58 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:2932:ade9:ad1d:97b8? ([2001:4898:a800:1010:da67:ade9:ad1d:97b8])
-        by smtp.gmail.com with ESMTPSA id m21sm2104344qkk.0.2019.05.23.06.00.56
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 May 2019 06:00:57 -0700 (PDT)
-Subject: Re: [PATCH v2 09/11] commit-graph: merge commit-graph chains
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, git@jeffhostetler.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.184.git.gitgitgadget@gmail.com>
- <pull.184.v2.git.gitgitgadget@gmail.com>
- <9567daa0b88e9fa2e755d9060341c7a39629ea86.1558554800.git.gitgitgadget@gmail.com>
- <87zhnet2zp.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ae1189cf-d9a6-b5d9-6b0b-e460d59dc9a0@gmail.com>
-Date:   Thu, 23 May 2019 09:00:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        id S1730751AbfEWNzQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 09:55:16 -0400
+Received: from siwi.pair.com ([209.68.5.199]:40865 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730323AbfEWNzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 09:55:15 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id CDC743F4088;
+        Thu, 23 May 2019 09:55:13 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7FD853F404C;
+        Thu, 23 May 2019 09:55:13 -0400 (EDT)
+Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.222.git.gitgitgadget@gmail.com>
+ <20190521212744.GC14807@sigill.intra.peff.net>
+ <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com>
+ <20190523055108.GA20871@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <50badedb-7856-374e-b14c-1eb1951c63f0@jeffhostetler.com>
+Date:   Thu, 23 May 2019 09:55:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-In-Reply-To: <87zhnet2zp.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20190523055108.GA20871@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/22/2019 8:43 PM, Ævar Arnfjörð Bjarmason wrote:
+
+
+On 5/23/2019 1:51 AM, Jeff King wrote:
+> On Wed, May 22, 2019 at 09:23:39AM -0400, Jeff Hostetler wrote:
 > 
-> On Wed, May 22 2019, Derrick Stolee via GitGitGadget wrote:
+>> I was wondering about that too as the proper long term solution.
+>> We would need (as the discussion suggests [1]) to properly
+>> respect/represent the pthread_key_t argument.
+>>
+>> For now, I've guarded my usage of pthread_getspecific() in the trace2
+>> (similar to what index-pack does), so its not urgent that we update it.
+>> And I'd rather we take this simple trace2 fix now and not try to combine
+>> it with fixes for the pthread macros.  Especially now as we're in the RC
+>> cycle for 2.22.
 > 
->> To keep lookups fast, but also keep most incremental writes fast, create
->> a strategy for merging levels of the commit-graph chain. The strategy is
->> detailed in the commit-graph design document, but is summarized by these
->> two conditions:
->>
->>   1. If the number of commits we are adding is more than half the number
->>      of commits in the graph below, then merge with that graph.
->>
->>   2. If we are writing more than 64,000 commits into a single graph,
->>      then merge with all lower graphs.
->>
->> The numeric values in the conditions above are currently constant, but
->> can become config options in a future update.
->> [...]
->> +## Merge Strategy
->> +
->> +When writing a set of commits that do not exist in the commit-graph stack of
->> +height N, we default to creating a new file at level N + 1. We then decide to
->> +merge with the Nth level if one of two conditions hold:
->> +
->> +  1. The expected file size for level N + 1 is at least half the file size for
->> +     level N.
->> +
->> +  2. Level N + 1 contains more than MAX_SPLIT_COMMITS commits (64,0000
->> +     commits).
->> +
->> +This decision cascades down the levels: when we merge a level we create a new
->> +set of commits that then compares to the next level.
->> +
->> +The first condition bounds the number of levels to be logarithmic in the total
->> +number of commits.  The second condition bounds the total number of commits in
->> +a `graph-{hashN}` file and not in the `commit-graph` file, preventing
->> +significant performance issues when the stack merges and another process only
->> +partially reads the previous stack.
->> +
->> +The merge strategy values (2 for the size multiple, 64,000 for the maximum
->> +number of commits) could be extracted into config settings for full
->> +flexibility.
+> Yeah, I think that makes sense.
 > 
-> As noted this can become configurable, so it's no big deal. But is there
-> any reason for ths 64K limit anymore?
+>> I'll make a note to revisit the pthread code after 2.22.
+> 
+> For fun, here's a constant-time zero-allocation implementation that I
+> came up with. It passes t0211 with NO_PTHREADS, but I didn't test it
+> beyond that.
+> 
+> diff --git a/thread-utils.h b/thread-utils.h
+> index 4961487ed9..f466215742 100644
+> --- a/thread-utils.h
+> +++ b/thread-utils.h
+> @@ -18,7 +18,7 @@
+>   #define pthread_t int
+>   #define pthread_mutex_t int
+>   #define pthread_cond_t int
+> -#define pthread_key_t int
+> +#define pthread_key_t git_pthread_key_t
+>   
+>   #define pthread_mutex_init(mutex, attr) dummy_pthread_init(mutex)
+>   #define pthread_mutex_lock(mutex)
+> @@ -31,16 +31,49 @@
+>   #define pthread_cond_broadcast(cond)
+>   #define pthread_cond_destroy(cond)
+>   
+> -#define pthread_key_create(key, attr) dummy_pthread_init(key)
+> -#define pthread_key_delete(key)
+> +#define pthread_key_create(key, destroy) git_pthread_key_create(key, destroy)
+> +#define pthread_key_delete(key) git_pthread_key_delete(key)
+>   
+>   #define pthread_create(thread, attr, fn, data) \
+>   	dummy_pthread_create(thread, attr, fn, data)
+>   #define pthread_join(thread, retval) \
+>   	dummy_pthread_join(thread, retval)
+>   
+> -#define pthread_setspecific(key, data)
+> -#define pthread_getspecific(key) NULL
+> +#define pthread_setspecific(key, data) git_pthread_setspecific(key, data)
+> +#define pthread_getspecific(key) git_pthread_getspecific(key)
+> +
+> +typedef struct {
+> +	void *data;
+> +	/* extra indirection because setspecific is passed key by value */
+> +	void **vdata;
+> +} git_pthread_key_t;
+> +
+> +static inline int git_pthread_key_create(git_pthread_key_t *key,
+> +					 void (*destroy)(void *))
+> +{
+> +	key->data = NULL;
+> +	key->vdata = &key->data;
+> +	/* We don't use this; alternatively we could all via atexit(). */
+> +	if (destroy)
+> +		BUG("NO_PTHREADS does not support pthread key destructors");
+> +	return 0;
+> +}
+> +
+> +static inline int git_pthread_key_delete(git_pthread_key_t key)
+> +{
+> +	/* noop */
+> +	return 0;
+> +}
+> +
+> +static inline void git_pthread_setspecific(git_pthread_key_t key, void *data)
+> +{
+> +	*(key.vdata) = data;
+> +}
+> +
+> +static inline void *git_pthread_getspecific(git_pthread_key_t key)
+> +{
+> +	return key.data;
+> +}
+>   
+>   int dummy_pthread_create(pthread_t *pthread, const void *attr,
+>   			 void *(*fn)(void *), void *data);
+> 
 
-There may not be an important reason to include it by default. Whatever config
-option we use could have special values:
+Thanks!  I'll play with this and submit something after 2.22 and
+things slow down a bit.
 
- * -1: No maximum commit limit (default)
- *  0: Never write more than one level.
-
-I would personally set a limit somewhere around 64,000 to prevent long chains
-and having some processes hit a concurrency issue where their run-time
-commit-graph is effectively 100,000 commits behind.
-
-> While with the default expiry of 0sec we can still get that race, it
-> seems unlikely in practice, as the "commit-graph write" process would
-> write a new manifest at the end, then go and unlink() the old files.
-
-The process reading an old manifest can still only succeed partially as it
-reads the chain from bottom-to-top. Succeeding gracefully in this case is
-built-in, but should have a test! (noted)
-
-But I don't think the concurrency window is any more lenient than before.
-We now have the flexibility to set a non-zero expiry window. That was
-impossible in the other model.
-
-> So maybe at this point we could make this even dumber with something
-> that behaves like gc.autoPackLimit? I.e. keep writing new graphs, and
-> then coalesce them all (or maybe not the "base" graph, like
-> gc.bigPackThreshold)?
-
-I will look into these existing settings and try to include similar options
-here. Better to stay consistent when we can.
-
-> Also: These docs refer to MAX_SPLIT_COMMITS, but in v2 it's now a
-> "split_strategy_max_commits" variable instead.
-
-Thanks for catching my out-of-date documentation.
-
--Stolee
+Jeff
 
