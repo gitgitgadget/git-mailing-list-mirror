@@ -2,100 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2EB1F462
-	for <e@80x24.org>; Thu, 23 May 2019 20:05:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D6941F462
+	for <e@80x24.org>; Thu, 23 May 2019 20:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387591AbfEWUFy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 16:05:54 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56681 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387455AbfEWUFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 16:05:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558641938;
-        bh=fdzdXILDSg2XS9OsW55n9MTeyIRK4fJWLrpcmtqd3rM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AzfMkwYc30nz7HT/RCq1Ql/1KEynodmfszVb4mRc1OKtLPGCfUnbT5VMe98pAR6w8
-         0bOkAN3Alz9KpAETNSRbJy0FyRuW9wRravuhqX+QfmbpG5Zc2QulNbMsu6egThKSck
-         5LbjfzQr7Rdlg6ugB5lSnMe/YtHxjbEPx8aZ7O8M=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRmjw-1h52nj3rZq-00TG3L; Thu, 23
- May 2019 22:05:38 +0200
-Date:   Thu, 23 May 2019 22:05:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        'Git Mailing List' <git@vger.kernel.org>
-Subject: Issues with t7519.19, was RE: [Breakage] 2.22.0-rc1
- t5401-update-hooks.sh
-In-Reply-To: <004301d510a4$bbe362e0$33aa28a0$@nexbridge.com>
-Message-ID: <nycvar.QRO.7.76.6.1905232203130.46@tvgsbejvaqbjf.bet>
-References: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com> <20190522004825.GC8616@genre.crustytoothpaste.net> <004301d510a4$bbe362e0$33aa28a0$@nexbridge.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387412AbfEWUJd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 16:09:33 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:39686 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726451AbfEWUJd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 16:09:33 -0400
+Received: by mail-pf1-f169.google.com with SMTP id z26so3845315pfg.6
+        for <git@vger.kernel.org>; Thu, 23 May 2019 13:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YixxO4E0z9WvK4EdUY0g8kZAifn6GhjMFqDFJrg6QgE=;
+        b=JTDIg3ks+Dl9nTqSsjgPdgec3sDa2ZTaxAxEtOnDX0Cc9pyVzHp5B0BqXIiXIMWFr3
+         R4qHU43aNnIzKMCcoiAbcsNRIc6ksfDHjB1Sjy0RSDW1pnXee5eNApt3IOY7vDh+NL3p
+         k+lsjqa+xXCOtYWYuCGdNL1HlJ34vC2TTBgkTWMXCebDJeAM+NSSACaF7GUz4Ujubzpw
+         u3SitEd13K7dwOew2Gw1RncX/cYG/plB7tKlJ/y05yESe+E/q/Ru36GbiPo4urbIjQ9C
+         v3BAtT5Q7vICLY9Y93T8GDsNJab2YKjofqj++jRYx82Le++fEZ7LtBnUGFReJAsLcYAJ
+         MqpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YixxO4E0z9WvK4EdUY0g8kZAifn6GhjMFqDFJrg6QgE=;
+        b=tgrmKojgR4YDyzcPBnv+LKvoelAvFkNsbDYcNpbz5K2AE0EImcbayYolREIZ1AAOE6
+         +JG2YJbJ4BX9nvrb6lyLxDXNKB71/3neJ+eaJAXSRBfxYyyxKiFRmJqZFN4o8u4WWw9o
+         rkhUjmjQO4UcHphtPfvggWwTX9TO/I3Qod7EQpE5CGcrd0EEm3Wt6npHC++eP2EKMx43
+         Yihw5SAQFZ2Hbq449lSF+CxPCqyLYQo7vDP4VlwCWkdaA2En+FvlsG4M2XIirrrA9cRV
+         yuQPGo2RGp3uPJc6BBl7FdKobHgyQu7d71ZW2kxy7uWPJEP32HgH2VTYTrKZQ1gMgvkb
+         4OPg==
+X-Gm-Message-State: APjAAAVnzviP2+e6L/XuJc3jBOJ33k3rOB3iSt9f50ZRolTnf6rdo3ob
+        Jmzr23aJF+PAPpSnfLAOMxRzMFTg
+X-Google-Smtp-Source: APXvYqyNmPcHJlwlqovT93oJ9ZhlmbdBV8Alk1HHvO4I1hk6FjUSJfWqYl6OuNUS8pYL7PZ3pjqydg==
+X-Received: by 2002:aa7:99c7:: with SMTP id v7mr107337882pfi.103.1558642171813;
+        Thu, 23 May 2019 13:09:31 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id t15sm178072pjb.6.2019.05.23.13.09.30
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 23 May 2019 13:09:31 -0700 (PDT)
+Date:   Thu, 23 May 2019 13:09:29 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     "Eric S. Raymond" <esr@thyrsus.com>, git@vger.kernel.org
+Subject: Re: RFC: Separate commit identification from Merkle hashing
+Message-ID: <20190523200929.GA70860@google.com>
+References: <20190521013250.3506B470485F@snark.thyrsus.com>
+ <86h89lq96v.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:31WTnJ3jW/YulDMpqAJKGq4BQzG0/+nlge+gPjVNr3xLS/hWRXV
- h0DO97YrblTdawNfModtZiDDPpGlkfV+qFjOz4Dzs+9KIwSjhr4It5lDWAEfQ51dEir69OM
- IWzgcfOGjTBXtcCJgOdhwJMyigyP3EyPYYczXHlAcUOvvNgk5ruwtPhxJQatqLvVRjQZTFS
- gsH4tKUXkIIvJw9TT634w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LDb3Z1MDQ5c=:cdXuQW3LbH5y1jtvl3qYpU
- V2AxdmUL72LN+v4c0pmYgXwDQrj/1Ks9z5YkoBDLE4o4rcin8tTsvXiHqXXTFvvQdK1jPKH/I
- VwOrbs3QpGyXp9cUSfL0fZTAeH3RQdwrEpteEk9akjfTBpoCxBO0d1jAIlyaTKmFkoBXF4l8Y
- S41YQqoEXvKiyHgvmORKDoE8z5H2qrcwFvABPleax2ogj79DcIF6QWm15WFcy3h34BYDn/nNE
- I2PdGOmAWNC5efDfRr+3Glf/2mhVNgc/zjTU++qcLxuEcQQJQ40HusIEtM7SA6+30M/yKJ42H
- w8pRJRpSQvlhlhHC42eJBVDgcTacuBRKD8O6+8E3Wvgh5ZC2MRdFeLYraPzak+F2bDBpGQ1ER
- O1zvFVVI/mEzUAkHhimRGyRz2hkkHJmJNWwCKew9dxaaMyTBgIN+ZevngBq3xJ8zxJbmxJTmW
- X+F95V1YP68U3lqFjRH/Uyq3x4dF3dEXmSFaRfTmiTHERdxuY9TcB4cQo258EdV2qsqXZk1xZ
- osqw5iQbWbNZ2sKcukC+Lkq9t23Hgb/1lwRnMlYHwRqfTVmjMD7UQWQ2ee2pvfdFsipsULPSR
- 8tp+hi/qd0/JTNu7Wzb18Kfz4eXfEEX2t9dWMjNyPuyz9rCLlRqTcb+MHCgyqsPIVJevpDiW7
- rkWYafRNb4xCtRvS9NyuVc9PYhIMJTt5RwlS0EB/TCWZzP8EuqThMNlvAte3UN+f8MQCc7nlv
- HbOrQwkYE/WumJ8IWloMOW004QZzfc7SHLCttJou67CbjT5cFQTR0Q4cUp+TRqSubSCb+j9pC
- wm/g0fJ6z8pmmk+I4tB3FA3G7oMWBgshdyL4Cdh7lp4/Am29Mmr6SPKQpeXd5qlUFS4DBXjUX
- CzOtgI/UCS+UrSaWWupf2aLpWCWtr2VfRsxsCrBVAswfe1LdI4fIqtAUOR56k3ftTEvz5JEUt
- Bfz79rvUh074zCnygLr9W4OYNEWb7bNaLf9imxTrcb2SGFLZP1aZS
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86h89lq96v.fsf@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Randall,
+Hi,
 
-On Wed, 22 May 2019, Randall S. Becker wrote:
+Jakub Narebski wrote:
 
-> On May 21, 2019 20:48, brian m. carlson wrote:
-> > To: Randall S. Becker <rsbecker@nexbridge.com>
-> > Cc: 'Git Mailing List' <git@vger.kernel.org>
-> > Subject: Re: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
-> >
-> > On 2019-05-21 at 21:47:54, Randall S. Becker wrote:
-> > > When running the test in isolation, it passes without incident
-> > > whether or not --verbose is used. So far, this only occurs on the
-> > > first run through. I wanted to report it, based on the inconsistency
-> > > of results. This is not the first time tests have acted in this
-> > > fashion, and I realize it is difficult to do anything about it
-> > > without being able to recreate
-> > the situation.
-> >
-> > Does running git clean -dxf cause it to be reproducible?
->
-> I will give it a go. Having exactly the same behaviour in t7519 subtest
-> 19. I wonder whether there are breadcrumbs not being cleaned up. Will
-> report back when I am able - may take a day or so.
+> I think Documentation/technical/hash-function-transition.txt misses
+> considerations for fast-import format (it talks about problem with
+> submodules, shallow clones, and currently not solved problem of
+> translating notes; it does not talk about git-replace, either).
 
-I fear that t7519's problems are *completely* unrelated to the t5401 issue
-you reported earlier. I hunted the t7519 problems down today, and I could
-imagine that these patches fix your t7519, too:
+Hm, can you say more?  I think fast-import is not significantly
+different from other tools that want to pick an appropriate object
+format for input and an appropriate object format for output.
 
-	https://github.com/gitgitgadget/git/pull/223
+Do you mean that the fast-import file should have a field for
+explicitly specifying the input object format, and that that doc
+ought to call it out?
 
-Ciao,
-Johannes
+[...]
+> For security, all references in Merkle-tree of hashes must use strong
+> verification hash.  This means that you need to be able to refer to any
+> object, including commit, by its verification hash name of its
+> verification hash form (where all references inside object, like
+> "parent" and "tree" headers in commit objects, use verification hashes).
+
+This kind of crypto agility weakens any guarantees that rely on
+strength of a hash function.  The security level would be that of the
+weakest of the supported hash functions.
+
+In other words, usually the benefit of supporting multiple hash
+functions as a reader is that you want the strength of the strongest
+of those hash functions and you need a migration path to get there.
+If you don't have a way to eventually drop support for the weaker
+hashes, then what benefit do you get from supporting multiple hash
+functions?
+
+Jonathan
