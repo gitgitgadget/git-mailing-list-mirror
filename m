@@ -2,40 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0E441F462
-	for <e@80x24.org>; Thu, 23 May 2019 00:32:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 187D71F462
+	for <e@80x24.org>; Thu, 23 May 2019 00:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728518AbfEWAcg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 20:32:36 -0400
-Received: from out03.mta.xmission.com ([166.70.13.233]:58485 "EHLO
+        id S1728511AbfEWAie (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 20:38:34 -0400
+Received: from out03.mta.xmission.com ([166.70.13.233]:59451 "EHLO
         out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727634AbfEWAcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 20:32:36 -0400
+        with ESMTP id S1727790AbfEWAid (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 20:38:33 -0400
 Received: from in01.mta.xmission.com ([166.70.13.51])
         by out03.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.87)
         (envelope-from <ebiederm@xmission.com>)
-        id 1hTbes-0003DT-Vn; Wed, 22 May 2019 18:32:35 -0600
+        id 1hTbke-0003mF-D1; Wed, 22 May 2019 18:38:32 -0600
 Received: from ip72-206-97-68.om.om.cox.net ([72.206.97.68] helo=x220.xmission.com)
         by in01.mta.xmission.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
         (Exim 4.87)
         (envelope-from <ebiederm@xmission.com>)
-        id 1hTber-00050g-W8; Wed, 22 May 2019 18:32:34 -0600
+        id 1hTbkc-0005Ur-Gw; Wed, 22 May 2019 18:38:32 -0600
 From:   ebiederm@xmission.com (Eric W. Biederman)
 To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <junkio@cox.net>
-Date:   Wed, 22 May 2019 19:32:27 -0500
-Message-ID: <87ftp6j9ic.fsf@xmission.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+Date:   Wed, 22 May 2019 19:38:24 -0500
+Message-ID: <87d0kaj98f.fsf@xmission.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-XM-SPF: eid=1hTber-00050g-W8;;;mid=<87ftp6j9ic.fsf@xmission.com>;;;hst=in01.mta.xmission.com;;;ip=72.206.97.68;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX1/UgZnNCQ+YB2Qj6u3wZtYjBusCqehteEw=
+X-XM-SPF: eid=1hTbkc-0005Ur-Gw;;;mid=<87d0kaj98f.fsf@xmission.com>;;;hst=in01.mta.xmission.com;;;ip=72.206.97.68;;;frm=ebiederm@xmission.com;;;spf=neutral
+X-XM-AID: U2FsdGVkX1/xPpo27zNqRfE4XeNZV4MswZeNetpRPXY=
 X-SA-Exim-Connect-IP: 72.206.97.68
 X-SA-Exim-Mail-From: ebiederm@xmission.com
 Subject: [PATCH] send-email: Add an option to suppress adding a specific email address
