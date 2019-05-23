@@ -2,87 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AF8B1F462
-	for <e@80x24.org>; Thu, 23 May 2019 21:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D39C21F462
+	for <e@80x24.org>; Thu, 23 May 2019 21:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730601AbfEWVGg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 17:06:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56646 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726222AbfEWVGg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 17:06:36 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 15FA16D54C;
-        Thu, 23 May 2019 17:06:34 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=j/3xfcR2oeqpsrt6ImjECW4hFnA=; b=VukcIpr
-        sl+AHuSy7mywhlh9jFBxtyK71lEnvPbbyoODigMidKXixAQc0wOhK8ukt38QIU2T
-        HxlztqCWkMsHkLOhIHt+PLf6A6YlNzVIQk5Iv1JF67ylcXHJwQA/QYchSZHZkaEL
-        knnRQfQzuxd1Ff8Sae55yBwhDHYUelZQ+8cg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=d6JZkbNvukhE9FObKhpMHgJPN2I5BTqr1
-        RIouj/m6lFfxRz0cbUDfEFkdTux0ZEteH/tM73MKP9gz3GUAGm5aZ8IWW50dOjCq
-        97Vh7w2cbKvT/nZAKUxwoQNKjH7cn84OjC69K9nMgMIvrdtHLlJbzxAklL4Fmgze
-        ijPEYriF1U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0CE556D54B;
-        Thu, 23 May 2019 17:06:34 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CD7CA6D54A;
-        Thu, 23 May 2019 17:06:30 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Thu, 23 May 2019 17:06:28 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        git-packagers@googlegroups.com
-Subject: Re: New diff test failures on s390x architecture (was: [ANNOUNCE]
- Git v2.22.0-rc1)
-Message-ID: <20190523210627.GP3654@pobox.com>
-References: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com>
- <20190523150416.GL3654@pobox.com>
- <20190523191429.GO3654@pobox.com>
- <CACsJy8CY8CVVv1+s9sLtVEAhrC5Ki8NSY2qje8+se7VVudFo_g@mail.gmail.com>
+        id S2388217AbfEWVTS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 17:19:18 -0400
+Received: from thyrsus.com ([71.162.243.5]:56324 "EHLO snark.thyrsus.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387914AbfEWVTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 17:19:17 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+        id 81BFD4704887; Thu, 23 May 2019 17:19:16 -0400 (EDT)
+Date:   Thu, 23 May 2019 17:19:16 -0400
+From:   "Eric S. Raymond" <esr@thyrsus.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Subject: Re: RFC: Separate commit identification from Merkle hashing
+Message-ID: <20190523211916.GA73150@thyrsus.com>
+Reply-To: esr@thyrsus.com
+References: <20190521013250.3506B470485F@snark.thyrsus.com>
+ <86h89lq96v.fsf@gmail.com>
+ <20190523205009.GA69096@thyrsus.com>
+ <20190523205457.GC70860@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8CY8CVVv1+s9sLtVEAhrC5Ki8NSY2qje8+se7VVudFo_g@mail.gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: A3670732-7D9E-11E9-AEDB-8D86F504CC47-09356542!pb-smtp21.pobox.com
+In-Reply-To: <20190523205457.GC70860@google.com>
+Organization: Eric Conspiracy Secret Labs
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com>:
+> Honestly, I do think you have missed some fundamental issues.
+> https://public-inbox.org/git/ab3222ab-9121-9534-1472-fac790bf08a4@gmail.com/
+> discusses this further.
 
-Duy Nguyen wrote:
-> On Fri, May 24, 2019 at 2:14 AM Todd Zullinger <tmz@pobox.com> wrote:
->> I am guessing it's no coincidence that this only fails on
->> s390x and it is the only big endian architecture in the
->> fedora build system.
-> 
-> I see a problem with -w and wrong type casting. sizeof(int) and
-> sizeof(long) on s390x are not the same, are they?
+Have re-read.  That was a different pair of proposals.
 
-I don't believe so.  I tested a small program which output
-sizeof(int) and sizeof(long).  On s390x it's 4 bytes and 8
-bytes, respectively (same as on x86_64).  I hope that's the
-right way to test.
+I have abandoned the idea of forcing timestamp uniqueness entirely - that was
+a hack to define a canonical commit order, and my new RFC describes a better
+way to get this.
 
-Thanks,
-
+I still think finer-grained timestamps would be a good idea, but that is
+much less important than the different set of properties we can guarantee
+via the new RFC.
 -- 
-Todd
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+
