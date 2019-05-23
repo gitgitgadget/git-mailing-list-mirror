@@ -2,122 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44D761F462
-	for <e@80x24.org>; Thu, 23 May 2019 20:49:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 598701F462
+	for <e@80x24.org>; Thu, 23 May 2019 20:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731543AbfEWUt3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 16:49:29 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55323 "EHLO mout.gmx.net"
+        id S1731609AbfEWUuM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 16:50:12 -0400
+Received: from thyrsus.com ([71.162.243.5]:55572 "EHLO snark.thyrsus.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726451AbfEWUt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 16:49:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558644559;
-        bh=R2kok3conkar6SIeid6msu3QXMzqpZBSCf27F5c9XVA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=T5EBKTryyZCAjfXEEz4dobFxV+sbvhzDBVogwgtV7xA/sGQBUpm+Q7PDxZmroqJFm
-         3xF78s/NLNbJaU/EimudrO222OMEwqu1Msy9Cd1x5Pena2TzUBsY1DnfBXIManOsbp
-         1IXt5tO+bB2e6MpjhrpffcdIN2Uq2DxFdlJKzo0g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVe87-1h8JIu2n7P-00Ywgt; Thu, 23
- May 2019 22:49:19 +0200
-Date:   Thu, 23 May 2019 22:49:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Fix fsmonitor after discard_index()
-In-Reply-To: <87ef74a1dv.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905232245390.46@tvgsbejvaqbjf.bet>
-References: <pull.165.git.gitgitgadget@gmail.com> <87ef74a1dv.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731462AbfEWUuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 16:50:12 -0400
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+        id 37AB84704887; Thu, 23 May 2019 16:50:09 -0400 (EDT)
+Date:   Thu, 23 May 2019 16:50:09 -0400
+From:   "Eric S. Raymond" <esr@thyrsus.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: RFC: Separate commit identification from Merkle hashing
+Message-ID: <20190523205009.GA69096@thyrsus.com>
+Reply-To: esr@thyrsus.com
+References: <20190521013250.3506B470485F@snark.thyrsus.com>
+ <86h89lq96v.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1745083161-1558644560=:46"
-X-Provags-ID: V03:K1:Cl3war3NMWitXQT6vqwdMeNvBmXq3rhCEXbwqc7dXwiadf2RaQm
- /HHhmsSYLS2m6xfuWyjv1Bmj63ZsiUc9eFFrceD4ooGDo6dC5mFf3nn+Js/yPORieBlu2zX
- 2iIeyL7ARfMd8rRAAqV9GxJqjIf/XG+8jZey9YWvW3RydKDbegt9kJFBzeOkhDMq7AQYzrq
- tHfbp9tg+EGMcVAbIVG5w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QV6s2mk2Sgs=:UF+AVVL1P2Gyjq3gpd7C9t
- f8wRYuo+FTkKUTvXGlqLJH5XZU76xrNr+GlFQoGuV8K+ENkgwLeYHx3ieoqQe87liMeZmoG0C
- Y2Q6OM1f7Gbe2WXyGUcOV+OxytlD70qEt5QYUJcLq7mb2dO+5G6mUbWluYQ50GDFovDyzhMoK
- BBKZMx69xI2u0xoDjpFnHr98nd77HXDuKNdZprJOhn/4h3LTVZUQlVeLivkIDrOo74Ax2Frvi
- NgnJvL55SUGgsAfY5vBgtWvHYfrwHgMxm7MZ3kriTh8MKAzNM7KXLnSMOCkIqdSY2sNVvoai2
- ikp9VE0uVKccaFF/uYlsb8oNuouZRU+iBAfbJoS8ukVmbBBOr8prhxx2aDt9otyMjbH1VjxT6
- hHJWCjWnG5LbGGJernPgwMtLo345ja/AvW9HL2uebMK/O/bb50S/0iE8UyULbDinYtwl7+Ocl
- dFIgYCHN29m7tN2X9K+jBA8cTM+MSPpj7qX2eqQue1I7jzhcaf1xkm/g684ZR5a9M7GwvazPS
- 4wTRaRPQBcwNYKGqEnbKPi5FxhYgK69ZMlG63IGfbqwb4qHbPfpS8Eq1L4b8veRAAJFkH8gpo
- q73tz2kYsrJfpP4wARl2nj2z8VdQrKgCOuT4iXENpny0coa5k/gYEwTTFi0J+S2REZVdQJlnQ
- dkwpLzk+n8LounMNOUFtTIB1Hiw2ZzBddpPySDFMejLSWb+j2i5kMnPgqicY1mhrso581PEQi
- IRCi/K0cPWb86QlV29HZFDbMULJWV8cCBZiU81ybcFmImvmLNhrpoDxTKllX8mLeiBwZv5mA+
- zf99xEio2qS+LA8JNmTEr5tIngaXzUmJREz6T0mNl40jXAnyPRjn06aBi18gJPOwsF3JvW4uR
- 01TrlxLEnjQPz+BuhO+K5KGTAPUQ92Y2hOMW1cp0oC3qPLKp85Z3WyM+AuUlGcgyXxfaiBUGj
- LVufJ73IP/ORIuqztNRNYw9sjSOO7WE5Xr8bWtE383wG/X1C8W/8e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86h89lq96v.fsf@gmail.com>
+Organization: Eric Conspiracy Secret Labs
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jakub Narebski <jnareb@gmail.com>:
+> You want both more (stable IDs for all commits, not only those signed)
+> and less (you don't need verification down the tree using IDs used for
+> commit ID).
 
---8323328-1745083161-1558644560=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+That's right.  My assumption is that future VCSes will do their own
+hash chaining in ways we don't really want to try to anticipate or
+constrain.
 
-Hi =C3=86var,
+> Currently Git makes use of the fact that SHA-1 and SHA-256 identifiers
+> are of different lengths to distinguish them (see section "Meaning of
+> signatures") in Documentation/technical/hash-function-transition.txt
 
-On Mon, 18 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+That's the obvious hack.  As a future-proofing issue, though, I think
+it would be unwise to count on all future hashes being of distinguishable
+lengths. Explicit algorithm tagging is better, at least internally.
 
->
-> On Sat, Mar 16 2019, Johannes Schindelin via GitGitGadget wrote:
->
-> > It was reported by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > [https://public-inbox.org/git/nycvar.QRO.7.76.6.1903142058130.41@tvgsb=
-ejvaqbjf.bet/T/#mb8718fe52e4721dacd3b143a09187ff9090ef4e3]
-> > that there were problems with the fsmonitor feature in conjunction
-> > with the newly built-in git stash/git rebase.
+> There might be, I think, the problem for "tree" objects.  As opposed to
+> all other places, "tree" objects use binary representation of hash, and
+> not hexadecimal textual representation (some consider that a design
+> mistake).
+
+I'm inclined to agree that it was a mistake.  But whether it gets
+replaced by a binary struct holding an {algorithm-tag,value} pair or a
+textual representation of same is not something I care about a lot.
+
+> I think Documentation/technical/hash-function-transition.txt misses
+> considerations for fast-import format
+
+You can count on me to stay on top of that; fast-import format is utterly
+critical to how reposurgeon works, so I have a strong incentive to make
+sure it stays healthy.
+
+(Some of you may not know - reposurgeon solves the thorny problems of
+editing repositories by sidestepping to the textual serialized
+representation of them.  It's basically a structure editor for
+fast-import streams that fools the outside world into thinking it
+edits live repositories by having importers and exporters at either
+end of its data flow.)
+
+> All right.  Looks sensible on first glance.
+
+I am very relieved to hear that. My view of git is outside-in; I was quite
+worried I might have missed some crucial issue.
+
+> For security, all references in Merkle-tree of hashes must use strong
+> verification hash.  This means that you need to be able to refer to any
+> object, including commit, by its verification hash name of its
+> verification hash form (where all references inside object, like
+> "parent" and "tree" headers in commit objects, use verification hashes).
+
+Fair enough. One minor way in which my thinking has evolved since
+I wrote the RFC is that I now think it might be fruitful not to throw away
+the idea of the verification hash as naming a commit, but rather to think
+of the separated commit-ID as an alias for the verification hash.
+
+This reframing won't make any difference to the code, but it clarifies
+what to do if, for example, an import stream declares the same commit
+ID for multiple commits, or fails to declare a commit ID at all.  In both
+cases the commit is still uniquely named by its verification hash. Commit-ID
+namespace-management failures become annoying but not critical.
+
+> You need to store this commit ID somewhere.  Current proposal for
+> transitional period in Documentation/technical/hash-function-transition.txt
+> talks about loose object index ($GIT_OBJECT_DIR/loose-object-idx) with
+> the following format:
+> 
+>   # loose-object-idx
+>   (sha256-name SP sha1-name LF)*
+> 
+> In packfile index contains separate SHA-1 indices and SHA-256 indices
+> into packfile, providing fast mapping from SHA-1 name or SHA-256 name to
+> position (index) of object in the packfile.
+
+I would generalize this to something like
+
+(hash-algorithm-tag:value SP sha1-name LF)
+
+> Something similar might have been needed for commit IDs mapping.
+
+I think so, yes.
+
+> One problem is that neither loose object index, not the packfile index
+> are transported alongside with the objects.  So we may need to put
+> commit ID elsewhere...
+> 
+> Note that we cannot put X-hash identifier into X-hash object form, that
+> is you cannot add "id" header to object (though you might add "other-id"
+> header, assuming that if ID is hash based it is on the other-id form
+> without other-id header).
+> 
+>   id <sha-1 identifier of this object>
+>   tree 0fa044a4d161254a3eae0bd06c0452d79e489593
+>   parent 6505413ad94ddfc01f9e2f5c1b79ea6b8ffbabbb
+>   author A U Thor <author@example.com> 1558619302 +0200
+>   committer C O Mitter <committer@example.com> 1558628753 -0500
+> 
+>   fixes
+
+Implementation details. Let's get the design right and properly specified
+before worrying too hard about this level of the problem.
+
+I may do another RFC about how to avoid having this problem ever
+again.  In truth, I think git objects should have open property lists,
+like bzr, with a property namespace reserved for system
+expansion. That way, when you need objects to have new semantics, you
+can do it without having an object-format flag day
+
+> > Notice several important properties of this design.
 > >
-> > The culprit really is that the fsmonitor flag that says whether it was
-> > queried already was not re-set after discard_index() was called by
-> > mistake.
+> > A. Git becomes absolutely future-proofed against hash-algorithm
+> >    changes. It can even support the use of multiple hash types over
+> >    the lifetime of one repo.
 > >
-> > This fixes that, and apparently also other long-standing fsmonitor
-> > issues.
->
-> I've added this to my internal build & now the test suite passes in the
-> fsmonitor mode without any test skipping.
->
-> > (Note that there is still a flakiness around t7519
-> > [https://github.com/git-for-windows/git/pull/2127#pullrequestreview-21=
-5010574]
-> > where it tries to make sure that the fsmonitor hook can prevent unnece=
-ssary
-> > lstat() calls, but that seems to be unrelated to this here bug.)
->
-> FWIW Since February 1st, 2018 I've run my builds on CentOS [67] through
-> an GIT_FSMONITOR_TEST=3D$PWD/t7519/fsmonitor-all test and have never
-> encountered this flakyness, and I built pretty much on every "next"
-> push-out.
->
-> The fix sounds good, just one data point on the rarity of the race in
-> practice. I hadn't noticed this being flaky.
+> > B. All SHA-1 commit references will resolve forever even after git
+> >    stops generating them.  All future hash-based commit references will
+> >    also be good forever.
+> 
+> We might need to be able to distinguish commit IDs from hash-based
+> object identifier of commit on command line, perhaps with something like
+> 
+>   <commit-id>^{id}
+> 
+> This is similar to proposed
+> 
+>   git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
 
-I finally found some time to track this down (it only took me two
-days...): it is a racy condition that *hides* the bug.
+Reasonable.
 
-Details and a fix in https://github.com/gitgitgadget/git/pull/223
+> > C. The id/verification split will be invisible from clients at start,
+> >    because initially they coincide and will continue to do so unless
+> >    an explicit decision changes either the verification-hash algorithm
+> >    or the way commit-IDs are initialized.
+> 
+> The problem may be with reusing command output for input (to refer to
+> objects and commits).
 
-Ciao,
-Dscho
+Solvable, I think.
 
---8323328-1745083161-1558644560=:46--
+> > D. My wish for forward-portable unique commit IDs is granted.
+> >    They're not by default eyeball-friendly, but I can live with that.
+> >    Furthermore, because they're preserved in streams they can be
+> >    eternally stable even as hash algorithms and preferred ID
+> >    formats change.
+> 
+> Good.
+
+Oh, man, you have no idea how good yet.  You won't until you've done a
+few repo conversions yourself.
+
+/me needs a cross-eyed emoji here
+
+> > E. There is now a unique total order on the repo, modulo highly
+> >    unlikely (and in priciple completely avoidable) commit-ID
+> >    collisions. It's commit date tie-broken by commit-ID sort order.
+> >    It too survives hash-function changes.
+> 
+> Nice.
+
+One thing I will commit to do if we get this far is write the fast-export
+code that does canonical order.  I need this badly for reposurgeon tests.
+
+> > F. There's no need for timestamp uniqueness any more.
+> >
+> > G. When a repository is imported from (say) Subversion, the Subversion
+> >    IDs *don't have to break*!  They can be used to initialize the
+> >    commit-ID fields. Many users migrating from other VCSes will be
+> >    deeply, deeply grateful for this feature.
+> 
+> There would also need to be some support to retrieve commits using their
+> "commit ID" stable identifiers.  It may not need to be very fast.
+
+Agreed.
+
+OK, what do we do next?  Who needs to sign off on this?  Should I prepare
+an edit for the hash-function-transition.txt describing the splitting off
+of commit IDs?
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+
+
