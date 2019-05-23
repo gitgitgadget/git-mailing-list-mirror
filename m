@@ -2,96 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82A6B1F462
-	for <e@80x24.org>; Thu, 23 May 2019 20:55:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25E461F462
+	for <e@80x24.org>; Thu, 23 May 2019 20:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387915AbfEWUzA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 16:55:00 -0400
-Received: from mail-pl1-f182.google.com ([209.85.214.182]:39044 "EHLO
-        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387529AbfEWUzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 16:55:00 -0400
-Received: by mail-pl1-f182.google.com with SMTP id g9so3218011plm.6
-        for <git@vger.kernel.org>; Thu, 23 May 2019 13:55:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sXxo9auSqvY4gK+o3RrQtLtyD43p9Wkn8zIalMwg+AM=;
-        b=OFEvyreWaiDbBCdEYYxfOLmFU5/hi549n96/G3vghsZnqBexSAiIJJXO+gPB/G5pWK
-         RggNZFa+2/iq7Ou0wm5hEyrqzaKieBMVw93X5e+5O9/IDr9fd+4obOD0ewmo1ZJF2g31
-         ZGgC2Avo5foQA1CqsEqNAIllXFfu7AfiKo97jbwGl8ePcd6tRWPeru8s/AixFCXlzJd8
-         XZV7VUwuu2FX7hAXvvWq/nOf4wf/KB0v6i7RMTfRMR6rIN2xNzvKV34fzaH9id9Rw7Tp
-         EESq2+fJz5feWsN4EBJh1IJ14uTj4v4dBuAbNx1H4RV+HRW/Yi6bEYDe7y7JQvNSXDRP
-         QQoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sXxo9auSqvY4gK+o3RrQtLtyD43p9Wkn8zIalMwg+AM=;
-        b=lFapS2Lka1iW3oQ6urm7YgQpOHOBl4BCs+mAVyv+60MlOlRbfR8qjxDynfC2Y0wmY8
-         GK/TMJF30Ovw4m2YdGclTvXc6pnfdeWwuSuM3PAm7Mu04FrvU0cAthHfNC3HTXAD3SgU
-         3q6ASA88aNc6nGDuY8F4RKR/500NeEFPRVdYJOyb3B3O7YQNt38L+oPQDyE20Rdb8yQN
-         35YWuSgt+Q7enLLWh9hppHwhz1jN/podwO0NkL4PMdzHtLIaz/yDcyGofsAckPts/G5E
-         moe9Z8GRbtjeXPpEG5gti5oh9FVrmq2qCzoIm8KYsCJyEJ2v9N00/3NHw7MhyLvBL3YS
-         G3Ew==
-X-Gm-Message-State: APjAAAXgK9akXJ5sukQtwZqQYmC3prSWO+IK6HoLu3kA9X+QsT+WALxA
-        eVUPUy/yr2oyNtpprNSQpJQ=
-X-Google-Smtp-Source: APXvYqwnqrqKX3fJhys74MnwcFihfUl0q6DKIR02nr69Ac+J4t70FsRljVjA/wkdY1AVxgPLH4/+3Q==
-X-Received: by 2002:a17:902:f085:: with SMTP id go5mr91377984plb.53.1558644899306;
-        Thu, 23 May 2019 13:54:59 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id c129sm306785pfg.178.2019.05.23.13.54.58
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 23 May 2019 13:54:58 -0700 (PDT)
-Date:   Thu, 23 May 2019 13:54:57 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "Eric S. Raymond" <esr@thyrsus.com>
-Cc:     Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-Subject: Re: RFC: Separate commit identification from Merkle hashing
-Message-ID: <20190523205457.GC70860@google.com>
-References: <20190521013250.3506B470485F@snark.thyrsus.com>
- <86h89lq96v.fsf@gmail.com>
- <20190523205009.GA69096@thyrsus.com>
+        id S2388195AbfEWUzf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 16:55:35 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37421 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387529AbfEWUze (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 16:55:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1558644918;
+        bh=UVs/2rBU/MOWblEquVOF6glZ7QgZImUVM2PTuSA1s54=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WiBe3SU7SjwNYCh6wJ3gFFLSpyNaQ72AIH82PP73jevz34UqQRkH2NA0IFkLtcCAb
+         3XOHmjU0ujK3O6oU9dCwj5+sWrIZvmVRsT9emyy/AJTxyl4F3mA+Wu7VFDphlT6fjJ
+         H3sKuLRjkN8AAP56uOKuDC8GO7UhDAfZOxi7c+Ok=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MH4Os-1hP1BE0XqM-00DrSh; Thu, 23
+ May 2019 22:55:18 +0200
+Date:   Thu, 23 May 2019 22:55:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        'Git Mailing List' <git@vger.kernel.org>
+Subject: RE: Issues with t7519.19, was RE: [Breakage] 2.22.0-rc1
+ t5401-update-hooks.sh
+In-Reply-To: <006401d511a4$bdffbbe0$39ff33a0$@nexbridge.com>
+Message-ID: <nycvar.QRO.7.76.6.1905232254200.46@tvgsbejvaqbjf.bet>
+References: <001501d5101e$db98dfb0$92ca9f10$@nexbridge.com> <20190522004825.GC8616@genre.crustytoothpaste.net> <004301d510a4$bbe362e0$33aa28a0$@nexbridge.com> <nycvar.QRO.7.76.6.1905232203130.46@tvgsbejvaqbjf.bet>
+ <006401d511a4$bdffbbe0$39ff33a0$@nexbridge.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190523205009.GA69096@thyrsus.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: multipart/mixed; boundary="8323328-1079695625-1558644919=:46"
+X-Provags-ID: V03:K1:eG2lty5SDmmvDIS2LKxWcO8DRAk7N5D1mjT0VrJHjkaNaDVfLtC
+ yJVo/lBa9GqjamsI4ryWp3UNescyeC9/jsTm5QVYstjDWN+653LWAqDcKs40JuWGTk91x9M
+ pcKrt64cpz+9w6nl+YYq9+NJSkR046CTID9agVtVTGhleiz4BWbyCgYni5DrJsFajU/pvsQ
+ q5aXLTFBXvXvkQqJVezug==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JTdJu+UjM8w=:r8WHRdB23jH2LztAoAWNzZ
+ luWRKP+uXcnGxNyyLQ61MV09tdP2ysx61mtIT8Ilo69oSq7jfc/gfP28bTNJ26h9ZzSk7TmhB
+ XdSCeEcZ+wb1w3N07BruRm/qVdwyDohy0bueHiVN8DLZTVMuPI0Pi9RJ34O2Kg8ArHmR5e+MI
+ l5/ffoxFo+01q5eqYggMufFAUo8D2pl8FGWp1ABqzoyvF3Iv5edi6BA9e/z/O/Lh8BuSVQjXP
+ Hp1hMSmT1MouTX/cLcXzJ5CzJRu/ggHHPa8ded4pyILSJQgRd4RiMpYw2webrwCwJ3DYHONr0
+ LUJAwyYGMf77udVqgEX8SLX9snxHwheNm9ZPMBrroOIZcqSw5SEegNWkoj3dBIqRh7JD0BP08
+ i2nGq75pYScrQl9QZaR9ZRi2Pa+WZfbGOEo87h74XdHsyFBRVIqTxrnLQns3N1ivHhf0oLaF6
+ g3F1ctvE6N7Hu587VAnmUSE+jreo/QaApIz+rtgKNKsauZG9I412twodMs73EWogB0i8TA0dW
+ dIYJzoUnQJPsK22ijWnIWprkS7hwzsSJTZ/jTYEQ7jHHJBz9S0RZaSjUk4ckziynucSZywq9E
+ RMPnhDBS6i2mZwPBd2Joo6wvAbHIj50l3Th4AVsPjiHT2Q1vRY4xY/UafS1M1eeRR2sMqlJ0M
+ nmYWLmYGgfFGTSDbed8sJ4MDwT6BjGNvRXOB8qoYXIDapXNuCLBKXaLejLzcQQr+pegCb2MzQ
+ bggKWIwEp+faDlLt2zCKh91uO1CbeLaYEThrmzroRvX7w3zxelbGmK3TucYQMtWj8ciZJrnsa
+ kkuOfSKh3Iy20XE9kKUNDFpwJnNs7Sd6Gb5WOwSbtT39tKu2x5aYw5YU8YB9iIxbpt+8rCIhu
+ /vDBFpBBwtny5sSrfTKDstW/Sz6zJl80GGouN+Ah6GyjUm2DD/faOmCe39Ao0auOBW0R8up4T
+ IAgepMuUDjgiOPEqnC1WoDu0tr4aN6QRaepxpZH5xkNXjRTmk6Bpw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric S. Raymond wrote:
-> Jakub Narebski <jnareb@gmail.com>:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->> Currently Git makes use of the fact that SHA-1 and SHA-256 identifiers
->> are of different lengths to distinguish them (see section "Meaning of
->> signatures") in Documentation/technical/hash-function-transition.txt
+--8323328-1079695625-1558644919=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Randall,
+
+On Thu, 23 May 2019, Randall S. Becker wrote:
+
+> On May 23, 2019 16:06, Johannes Schindelin wrote:
+> > On Wed, 22 May 2019, Randall S. Becker wrote:
+> >
+> > > On May 21, 2019 20:48, brian m. carlson wrote:
+> > > > To: Randall S. Becker <rsbecker@nexbridge.com>
+> > > > Cc: 'Git Mailing List' <git@vger.kernel.org>
+> > > > Subject: Re: [Breakage] 2.22.0-rc1 t5401-update-hooks.sh
+> > > >
+> > > > On 2019-05-21 at 21:47:54, Randall S. Becker wrote:
+> > > > > When running the test in isolation, it passes without incident
+> > > > > whether or not --verbose is used. So far, this only occurs on th=
+e
+> > > > > first run through. I wanted to report it, based on the
+> > > > > inconsistency of results. This is not the first time tests have
+> > > > > acted in this fashion, and I realize it is difficult to do
+> > > > > anything about it without being able to recreate
+> > > > the situation.
+> > > >
+> > > > Does running git clean -dxf cause it to be reproducible?
+> > >
+> > > I will give it a go. Having exactly the same behaviour in t7519
+> > > subtest 19. I wonder whether there are breadcrumbs not being cleaned
+> > > up. Will report back when I am able - may take a day or so.
+> >
+> > I fear that t7519's problems are *completely* unrelated to the t5401 i=
+ssue
+> > you reported earlier. I hunted the t7519 problems down today, and I co=
+uld
+> > imagine that these patches fix your t7519, too:
+> >
+> > 	https://github.com/gitgitgadget/git/pull/223
 >
-> That's the obvious hack.  As a future-proofing issue, though, I think
-> it would be unwise to count on all future hashes being of distinguishable
-> lengths.
+> From the description, I believe it. Timestamp resolution on NonStop is i=
+n microseconds and those are not even slightly simulated. Coupled with thi=
+s being an MPP not SMP, things can occur within the same microsecond, or i=
+n weird situations slightly before or after when comparing the clock on di=
+fferent CPUs. Yes, time-travel is possible at the single microsecond level=
+ =F0=9F=98=89. Cores are synchronized, but our machine has 4 CPUs and sync=
+hronizing the file system across all of them does lead to slightly strange=
+ situations.
 
-We're not counting on that.  As discussed in that section, future
-hashes can change the format.
+I tested my patches with
 
-[...]
->> All right.  Looks sensible on first glance.
->
-> I am very relieved to hear that. My view of git is outside-in; I was quite
-> worried I might have missed some crucial issue.
+	sh t7519-status-fsmonitor.sh --stress-jobs=3D8 --stress-limit=3D10
 
-Honestly, I do think you have missed some fundamental issues.
-https://public-inbox.org/git/ab3222ab-9121-9534-1472-fac790bf08a4@gmail.com/
-discusses this further.
+Why don't you check out my branch, build and test, and then we know
+whether it fixes your t7519 bug?
 
-Regards,
-Jonathan
+Ciao,
+Johannes
+
+--8323328-1079695625-1558644919=:46--
