@@ -8,60 +8,57 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE0881F462
-	for <e@80x24.org>; Thu, 23 May 2019 00:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0900D1F462
+	for <e@80x24.org>; Thu, 23 May 2019 00:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730310AbfEWAoP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 May 2019 20:44:15 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40494 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729506AbfEWAnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 May 2019 20:43:10 -0400
-Received: by mail-wr1-f65.google.com with SMTP id f10so4260121wre.7
-        for <git@vger.kernel.org>; Wed, 22 May 2019 17:43:09 -0700 (PDT)
+        id S1728761AbfEWAsm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 May 2019 20:48:42 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34769 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727790AbfEWAsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 May 2019 20:48:42 -0400
+Received: by mail-wm1-f68.google.com with SMTP id j187so5873424wma.1
+        for <git@vger.kernel.org>; Wed, 22 May 2019 17:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=rt7QilW/1NNwK39FufclhSlP0vDq+CnxIV0yTmTTNoo=;
-        b=fuqu7eEsHtbHJnh9eYpXXREGskN8ZDpCSIXTtWT3hEqnTLXXN1Xdqoy1KDXT6FK5VG
-         vY7XFCAkgSZrc9N4QY+SADyKwEVLbASMw4YaJX2KTrf/m/r3/LGvvfXR6OozxCBRkG7K
-         F7V7zU6Gquy0/LR4QdTgdxC9euuaoNlaGKEcXhhRtezJ1UoYuMdQxDKb2y0mnpZ2N4ac
-         E2drY1haeH/4aNxAVFoaPHidseWNuTScDK7m/Xlw0gA5yaq5YH9FQw55TzPP3DqbTe0p
-         TCNO+mdp5uVrtvM+zVkxlNFwSigkJZv0BO1ozaE0VqK/XkFite3FzHiX0mbpkg0AybY5
-         jirA==
+        bh=+47TQCMi+ISKXN6B5P0emI4Z19ie2yC6T+H5pxCzAcs=;
+        b=m+RTwpP5MfHpZAX75ZZ4NmCw4HwvcIqI6H1eenihl6wAJLpeVNPs5CgsVxmGPjhGlc
+         Z3hK/3t8AAV+ClacRwGExs9Pszf2t5RaAui7lhjjTmCCPmSVo8nS2+brFeDOphk45hCZ
+         3M1ParsFLTKPkLPZWj5qZNIX2wXVb+cV8vQZMc1rsuO63gCxGFqLkRNdhA4RPtmbvi01
+         eRh6wTrP6YmlfTGFaj/LR3ejmwdn+N6XicfIrh+nXRxdpJQCYAaKpoy4J3m/9Mh44dLV
+         1NLT5JQPy64f+/9C+StHkIHN7ej3wqbxrO6k8Z3VLbrPwj+5ZPu9FNU3q4A7ej8G0hiC
+         5Kpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=rt7QilW/1NNwK39FufclhSlP0vDq+CnxIV0yTmTTNoo=;
-        b=P7lUAOSVxjF+gDqHXwFE6Pru59OONDTbC4Oa4bZxqqAp/55xHhvk21vi9DQklZVzQk
-         N1jbUJDrcx/w343LOPnSSkqHKqQ+Gpe+xzY8yqPBHnn5MGeycJGi07nzfio34mLvnniZ
-         vylU8+iC3xq5joyZAC28Ejt0IpHEkgAZkWcLGXymQrdgQ3DEW7Gh0J9p6A+00NaYLNCB
-         xIJOJkvyqZg1Q/ZIa+CPVvgvMa9hFtUOoM3w/GHd1oh68kow6ZmhNE+jsvOjB7Asfz/2
-         ms7C0UOWfTK6PILmLlDjH3OW05N2JFhpbwkZMAOr5pZ1VL+F3kXrh5LJ4MQIK1Xl+YsY
-         rbfQ==
-X-Gm-Message-State: APjAAAVpivrfyeSvY36yORgA4s7PV/L8aRLohMB2Zn/LuLkfa92M/m41
-        A3Bc4tTfCZvTI0/54rS903s=
-X-Google-Smtp-Source: APXvYqxsSLW41AaGc2XMu/E1+Z+0VCqXNEKzv2XQ82muThhM476CtAgeA8KW/O3Zo6GfbA/UOHtMIA==
-X-Received: by 2002:a5d:6406:: with SMTP id z6mr13453294wru.87.1558572188953;
-        Wed, 22 May 2019 17:43:08 -0700 (PDT)
+        bh=+47TQCMi+ISKXN6B5P0emI4Z19ie2yC6T+H5pxCzAcs=;
+        b=CNt9WVF16813n0pU5JDGu4C0gkkNY9J0kzZL9zsIUhWUb08MP/gue9/WWQrdwrVEX8
+         pzNw/p/7JF8yrqyOzutgO0sIHSWOC5KVO27DklwHN2JgHcRcVIplYgzqU/YfjBLxSKOj
+         SKG23xiia+EuUhnTDjv18awNtq6tRQI44HkOGlZznBEeoJP9l1Bx0+A0b4MWs4vtw4e6
+         Tce0FiQmfASXF83+w6t0W96Kj+PfoXqvcjGsR6xRsAhWwHRAXl+/hld9EU4dn9QRGEF1
+         bcOmf4rif0T4evg1UdNk5jC73G7wmVClo3kiTOW3goli8kXoMaapyIiCLBrtOKBrRp0m
+         N5Bw==
+X-Gm-Message-State: APjAAAWIcRv8D9o2E8nJgJSeTVkVfCMut8LIKNd0Wuo02fLThUgvEbn4
+        MGDCNt5/UYRFbSdApO7YEfg=
+X-Google-Smtp-Source: APXvYqxlBfPTD+6g2gmvZytZe+R0n0H1ts1ZSK4DgY+sMk2680FLDP94+99qTwrU5Yqmlw0KPhBlww==
+X-Received: by 2002:a05:600c:551:: with SMTP id k17mr9336508wmc.35.1558572519888;
+        Wed, 22 May 2019 17:48:39 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id x22sm9007727wmi.4.2019.05.22.17.43.07
+        by smtp.gmail.com with ESMTPSA id m16sm5779965wrb.5.2019.05.22.17.48.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 May 2019 17:43:07 -0700 (PDT)
+        Wed, 22 May 2019 17:48:39 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, git@jeffhostetler.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 09/11] commit-graph: merge commit-graph chains
-References: <pull.184.git.gitgitgadget@gmail.com> <pull.184.v2.git.gitgitgadget@gmail.com> <9567daa0b88e9fa2e755d9060341c7a39629ea86.1558554800.git.gitgitgadget@gmail.com>
+To:     "Eric W. Biederman" <ebiederm@xmission.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: Add an option to suppress adding a specific email address
+References: <87d0kaj98f.fsf@xmission.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <9567daa0b88e9fa2e755d9060341c7a39629ea86.1558554800.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 May 2019 02:43:06 +0200
-Message-ID: <87zhnet2zp.fsf@evledraar.gmail.com>
+In-reply-to: <87d0kaj98f.fsf@xmission.com>
+Date:   Thu, 23 May 2019 02:48:38 +0200
+Message-ID: <87y32yt2qh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -70,58 +67,23 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, May 22 2019, Derrick Stolee via GitGitGadget wrote:
+On Thu, May 23 2019, Eric W. Biederman wrote:
 
-> To keep lookups fast, but also keep most incremental writes fast, create
-> a strategy for merging levels of the commit-graph chain. The strategy is
-> detailed in the commit-graph design document, but is summarized by these
-> two conditions:
+> Make it easy to suppress stable@vger.kernel.org.  Long story short it
+> is desirable to have ``Cc: stable@vger.kernel.org'' on many bug fixes
+> sent to the linux kernel.  It is not always desirable to actually the
+> stable maintainer immediately as the patches are still being reviewed
+> etc.  Actually cc'd the stable maintainers in the linux kernel is not
+> even really necessary as they will always find the tag after the patch
+> has been merged in the commit body.
 >
->   1. If the number of commits we are adding is more than half the number
->      of commits in the graph below, then merge with that graph.
->
->   2. If we are writing more than 64,000 commits into a single graph,
->      then merge with all lower graphs.
->
-> The numeric values in the conditions above are currently constant, but
-> can become config options in a future update.
-> [...]
-> +## Merge Strategy
-> +
-> +When writing a set of commits that do not exist in the commit-graph stack of
-> +height N, we default to creating a new file at level N + 1. We then decide to
-> +merge with the Nth level if one of two conditions hold:
-> +
-> +  1. The expected file size for level N + 1 is at least half the file size for
-> +     level N.
-> +
-> +  2. Level N + 1 contains more than MAX_SPLIT_COMMITS commits (64,0000
-> +     commits).
-> +
-> +This decision cascades down the levels: when we merge a level we create a new
-> +set of commits that then compares to the next level.
-> +
-> +The first condition bounds the number of levels to be logarithmic in the total
-> +number of commits.  The second condition bounds the total number of commits in
-> +a `graph-{hashN}` file and not in the `commit-graph` file, preventing
-> +significant performance issues when the stack merges and another process only
-> +partially reads the previous stack.
-> +
-> +The merge strategy values (2 for the size multiple, 64,000 for the maximum
-> +number of commits) could be extracted into config settings for full
-> +flexibility.
+> So I am adding yet another suppress command "suppress-addr" that will
+> take an email address keep that email address from being automatically
+> added to a destination the email will be sent to.
 
-As noted this can become configurable, so it's no big deal. But is there
-any reason for ths 64K limit anymore?
+I have a rewrite of much of the adjacent code queued in "next", can you
+check if applying it to that branch makes this work as you expect?
 
-While with the default expiry of 0sec we can still get that race, it
-seems unlikely in practice, as the "commit-graph write" process would
-write a new manifest at the end, then go and unlink() the old files.
-
-So maybe at this point we could make this even dumber with something
-that behaves like gc.autoPackLimit? I.e. keep writing new graphs, and
-then coalesce them all (or maybe not the "base" graph, like
-gc.bigPackThreshold)?
-
-Also: These docs refer to MAX_SPLIT_COMMITS, but in v2 it's now a
-"split_strategy_max_commits" variable instead.
+Whether it does or not, this change should have a corresponding test
+update to t/t9001-send-email.sh, so we can just run that to see if it's
+doing the right thing.
