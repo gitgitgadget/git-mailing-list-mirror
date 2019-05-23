@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 581FC1F462
-	for <e@80x24.org>; Thu, 23 May 2019 21:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC5E81F462
+	for <e@80x24.org>; Thu, 23 May 2019 21:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388331AbfEWVu3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 17:50:29 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:55527 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388290AbfEWVu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 17:50:29 -0400
-Received: by mail-wm1-f47.google.com with SMTP id x64so7303536wmb.5
-        for <git@vger.kernel.org>; Thu, 23 May 2019 14:50:27 -0700 (PDT)
+        id S2388293AbfEWVy0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 17:54:26 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:37308 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387709AbfEWVy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 17:54:26 -0400
+Received: by mail-wr1-f49.google.com with SMTP id e15so7860988wrs.4
+        for <git@vger.kernel.org>; Thu, 23 May 2019 14:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=66GUWhmvhaIFVgmkI5iT0Y3DE50lFwM2EpFEzJTrAu0=;
-        b=khlqKr7oRhEMCWzJEoR6e/Av2PzAoBMnGBbbfEC1FQbK9IoMFfx3EZf6UskHEgjT23
-         sq6RujGvspHsZWFTIHOF/GTCnYjPyVxlVhHbkw3hSUo2eI9OqFrGCx3BOk+MOYVbSOKf
-         bWR/E4FPFO9g5Coa+Q5PiXgDJab/PRYbOC3jQDDmuvA10/8tA3CD3zuKPU9P2RLBAe1A
-         JOCV9u1hSYinJTKbvV9IOIZX9Y1GAAKFCgZFehP2hHG935JM0HvS45vrdgC5s672yxHv
-         SohN4xJgbZhndLlkkG29EFtW+b0/tmj9whrqE1sv1NYbHBJL77O9iVEf5+KcO1gy2cF2
-         Nn3g==
+        bh=jRS2V6nXPWLQBZaCGIgHstvii953eaLilLU7XLQPrCo=;
+        b=ZEMWDiZOlzZ1mcIbxa0TwwLQDumMc2T68pdEBL7kij1yik1Bm/hXpBXsD56kTPR39N
+         olsJTZVORNc6iJDGP3zgfe+W3Fxcj6NuQzXO6/zUL9/YdlZmMvNXDy6oxnTMDmb1EZ74
+         N8eSJcXfvzp9VewaZ8aBWcAidh4a8e4tGcBx2WfjFiH/wlF+fuh5GZRlrdEl9d8kFCtk
+         s7ASXBUKotnsQ2AOsO07CODK92P+ItP2jBjjcXFwPE9mhkQdlUSkzpATyTGi9GYg313U
+         7qUN/QU4yBrqo/J630wT/que1b8SlZD0vAaUUQSfIo5B975vf0g6PcbCHsVzPaKwtkvw
+         WdOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=66GUWhmvhaIFVgmkI5iT0Y3DE50lFwM2EpFEzJTrAu0=;
-        b=OfjG/FoyW5makpwIyFqShpcR423SVdDqJxnGDi184e6Zsz16jaJxRTHHlfMHmIvL8Z
-         fyzwuUI54EXtFQuxUbsKZ1SIqllpcyNkw3pN3TriFdxlx6JAWzDL+6MDR0BWh3A/aWJn
-         hgh2bgXr0ONqD0FLZ5FZNymT74fuN1Gml7a8gpqtpHdlk2jpOHVNwfFFNH8ucv0aieHd
-         tzTBZrhf7aS82Jfr7leFmKqXDtvprBzYu4Mm7cIgHm/klqooWAqLgk2nm4u6OlvmjViJ
-         rm83In/ghdLlmHa8wlArg5ndAjK5rTuQB4hatX/OlNdRtyrlCgDAC2BWKEKbqM8NWV4y
-         +iTQ==
-X-Gm-Message-State: APjAAAU6sxIHefJHlb9kUcf9kqunBO/c4qCW77w6s8pY06TGefLPbeDM
-        Qa5aDKJ1HZ2Q71yjymTCu3w=
-X-Google-Smtp-Source: APXvYqyf+qInMZYVjMu5PFkscyTAU4gRVJDWWyGv0VKm7zWNvaKm19ni4SAMvqSwHMWT5g5aVLE1Cg==
-X-Received: by 2002:a1c:700b:: with SMTP id l11mr14291443wmc.106.1558648227039;
-        Thu, 23 May 2019 14:50:27 -0700 (PDT)
+        bh=jRS2V6nXPWLQBZaCGIgHstvii953eaLilLU7XLQPrCo=;
+        b=fVuWdxbffsX0uENRN+uJKfAkzwhwLj14FQbDCbppq2ondHW/J7eaEK7zrzZ5hMTS7S
+         7dpK3CWjeswEQqVuJV3yqMtpZXiTGvamNBZeIEmBnaf9d+s+/g61b5KpUFnZ+DbG4nbp
+         7kqfSdS69IXjQNKnMLNe4aeKxOwh6zc7A6GbiYvTnS1YFR3na6LfeyGYgs8wHBK7KOvy
+         t0YRQ2t4XVHGhtAoAvskw4gFcuhhCTkAq0RypsGJLUIOpRvEuzFfDhGF6BL3JAD+D4dn
+         OvdQtbsnY86sK4nGxQoK6hsX9w+MAhdHu5XZJNGPOF1YJK4/GlmSK99WeQU/7pbDietN
+         CVhg==
+X-Gm-Message-State: APjAAAVBAVBT7kzLZ54av9SZR5IDRC4ytYvA5CT4XeW5UvauvbzZ1woo
+        04HNygffdOs1pOgEeGbWaEUjFefWeZg=
+X-Google-Smtp-Source: APXvYqwAquui5oAQc+RoFBfB9yNTr5jEgQpozaJGa1qDaMlh7RA+O/XMy7hY+74MPTbdXB+jA7wvKw==
+X-Received: by 2002:a5d:6b12:: with SMTP id v18mr5276289wrw.306.1558648464703;
+        Thu, 23 May 2019 14:54:24 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b194sm501106wmb.23.2019.05.23.14.50.25
+        by smtp.gmail.com with ESMTPSA id z5sm821047wmi.34.2019.05.23.14.54.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 May 2019 14:50:25 -0700 (PDT)
+        Thu, 23 May 2019 14:54:23 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "Eric S. Raymond" <esr@thyrsus.com>,
-        Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-Subject: Re: RFC: Separate commit identification from Merkle hashing
-References: <20190521013250.3506B470485F@snark.thyrsus.com> <86h89lq96v.fsf@gmail.com> <20190523205009.GA69096@thyrsus.com> <20190523205457.GC70860@google.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, Karl Ostmo <kostmo@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: standalone library/tool to query commit-graph?
+References: <CAECbv94KF9MhzZqa8BR-RL93mh0NuD3vA69pAT-sY5O74e_duQ@mail.gmail.com> <be719a37-ffa0-26d3-eb9c-0f5ccde52e7f@gmail.com> <86blztq8ap.fsf@gmail.com>
 User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190523205457.GC70860@google.com>
-Date:   Thu, 23 May 2019 23:50:24 +0200
-Message-ID: <87v9y0g7rz.fsf@evledraar.gmail.com>
+In-reply-to: <86blztq8ap.fsf@gmail.com>
+Date:   Thu, 23 May 2019 23:54:22 +0200
+Message-ID: <87tvdkg7ld.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -68,51 +68,31 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, May 23 2019, Jonathan Nieder wrote:
+On Thu, May 23 2019, Jakub Narebski wrote:
 
-> Eric S. Raymond wrote:
->> Jakub Narebski <jnareb@gmail.com>:
+> Derrick Stolee <stolee@gmail.com> writes:
+>> On 5/22/2019 2:49 PM, Karl Ostmo wrote:
 >
->>> Currently Git makes use of the fact that SHA-1 and SHA-256 identifiers
->>> are of different lengths to distinguish them (see section "Meaning of
->>> signatures") in Documentation/technical/hash-function-transition.txt
+>>> After producing the file ".git/objects/info/commit-graph" with the
+>>> command "git commit-graph write", is there a way to answer queries
+>>> like "git merge-base --is-ancestor" without having a .git directory?
+>>> E.g. is there a library that will operate on the "commit-graph" file
+>>> all by itself?
 >>
->> That's the obvious hack.  As a future-proofing issue, though, I think
->> it would be unwise to count on all future hashes being of distinguishable
->> lengths.
+>> You could certainly build such a tool, assuming your merge-base parameters are
+>> full-length commit ids. If you try to start at ref names, you'll need the .git
+>> directory.
+>>
+>> I would not expect such a tool to ever exist in the Git codebase. Instead, you
+>> would need a new project, say "graph-analyzer --graph=<path> --is-ancestor <id1> <id2>"
 >
-> We're not counting on that.  As discussed in that section, future
-> hashes can change the format.
+> It would be nice if such tool could convert commit-graph into other
+> commonly used augmented graph storage formats, like GEXF (Graph Exchange
+> XML Format), GraphML, GML (Graph Modelling Language), Pajek format or
+> Graphviz .dot format.
 
-I think both of you are also missing something that's implicit (but
-unfortunately not very explicitly talked about) in that document, which
-is that such hash transitions are assumed to have an out-of-bounds
-temporal component to them.
-
-I.e. let's assume that instead of SHA-256 we're switching to SHA-X,
-which like SHA-1 is also a 20 byte hash function, so they're the same
-length.
-
-You'd then get a git.git with SHA-1 today, next year you'd have A
-SHA-1<->SHA-X mapping table, but the year after that we'd be fully on
-SHA-X for new content.
-
-So even though we carry code and lookup table for looking up the old
-SHA-1 values we're not going to continue to pointlessly generate that
-bidirectional mapping forever. We'll have some sort of gravestone marker
-where we say "past this point it's SHA-X only".
-
-That's not implemented or specified yet, but could e.g. be a magic ref
-of some sort advertised by the server, and the client would enforce that
-such a marker could only be made with the stronger hash function.
-
-Thus a couple of years after that the SHA-1 -> SHA-X transition someone
-generating a colliding tag where a new good SHA-X tag *could* point to
-bad SHA-1 content won't be exploitable in practice. At that point
-clients won't be downloading SHA-1'd content or generating the mapping
-table anymore.
-
-So I don't see why a format change for the tags is needed, it would only
-matter *if* we have a full collision *and* the hashes are the same
-length (which we have no plan for), *and* if we assume we don't have
-some other mitigations in play.
+Wouldn't that make more sense as a hypothetical output format for "log
+--graph" rather than something you'd want to emit from the commit-graph?
+Presumably you'd want to export in such a format to see the shape of the
+repo, and since the commit graph doesn't include any commits outside of
+packs you'd miss any loose commits.
