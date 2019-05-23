@@ -2,89 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8AE1F462
-	for <e@80x24.org>; Thu, 23 May 2019 16:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6908A20380
+	for <e@80x24.org>; Thu, 23 May 2019 17:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731334AbfEWQ5b (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 12:57:31 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:46688 "EHLO
-        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730899AbfEWQ5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 12:57:31 -0400
-Received: by mail-io1-f45.google.com with SMTP id q21so5399285iog.13
-        for <git@vger.kernel.org>; Thu, 23 May 2019 09:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=dk0or+3rG6rxXVfxjwROCL8S3Tfkv3JjtAuoIAN6+AI=;
-        b=mF61EYz5slvI0lp6AzoQjd+gH/ObUwX2Ae9u3YvrPsNWkfKmYnTP1JfUHltY4t5SnO
-         lsAELRhGPNciMnQKY/3GUzZLlD+nzneBKSn0C6R2+huWrWM/kcCduJwh4rsVjaS2IOBJ
-         MWtLLFobZQUa/dFp11Nuh8XCxGGmYTIj5GzrO0/E1U3BdsF9bZTCZyqxp7q3iXz3ZGyt
-         N4SxQ1gl+8zdTUtRPW5uU7o9sTFz1ZTzKyrynAEtFebAyWdcQ4twD+agudfWu0x+RUlj
-         4tfsxTmki+peJ8GQsY+5wVhk+p39yp+IaFUXtiI8oxcvDsJZPBV/0xTUYlBset/4iif6
-         jiBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=dk0or+3rG6rxXVfxjwROCL8S3Tfkv3JjtAuoIAN6+AI=;
-        b=U6sM/Y4uNqUv6Ga2x+4v1zlJ6YuRFgya0+1E0SBkYDIISZ8dcykkYwVhmZK3Aik3kA
-         52F01rhppoWfA+cGK5GZgvVUVzMRPXc2r5EFPX3Vs2HAxmIBVU8mxsv+0dIGT56oxbTw
-         4lkD3s49vfsWNTgQopLqp6u1VUa4cBeQTxOzjjmLsd4Rdr6PMGzaTvY+AtKeb20xuG3E
-         fP0l+nFx+dbRFPz+ssAwbFxejYJVq5SQyxOUcFnkx64A5HrSajeqg8hN0JhFwJeB0RtF
-         DzVKb6JQyd0KGOeit3BE8aE29yFuxhdU+Sw9BDw88t6pMQbLn0CichNKei6Vlpe1CAdC
-         bE9w==
-X-Gm-Message-State: APjAAAXsSwZdA/PoLuJ3fbNq5+CvuERa2JZEPeKT76jWXG/5GgmaZMPO
-        /Y0sOt49oQszae/GT3dVRKs3RUKTRhfNdnndejnWcN3LF8wD0g==
-X-Google-Smtp-Source: APXvYqyZ+RP3kdsgSXeOGIy1nKRRH9qo04MLO3MeHsMLAqnqs1AdHPK8P93klpWl0hXv0om+9R+Dtc6Q1RwSSDDb8po=
-X-Received: by 2002:a6b:8ec4:: with SMTP id q187mr26756367iod.280.1558630318116;
- Thu, 23 May 2019 09:51:58 -0700 (PDT)
+        id S1731217AbfEWR1Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 13:27:24 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57170 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730957AbfEWR1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 13:27:24 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 843791F462;
+        Thu, 23 May 2019 17:27:23 +0000 (UTC)
+Date:   Thu, 23 May 2019 17:27:23 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2] server-info: do not list unlinked packs
+Message-ID: <20190523172723.eny6smdt57zxau6z@dcvr>
+References: <20190512040825.GA25370@sigill.intra.peff.net>
+ <87tve0w3ao.fsf@evledraar.gmail.com>
+ <20190514094729.GA12256@sigill.intra.peff.net>
+ <20190514115047.oncvfq24fhnp64re@dcvr>
+ <87ftphw7mv.fsf@evledraar.gmail.com>
+ <20190515004551.emrxvboqemwnqh4g@dcvr>
+ <20190515203839.zixx23bwzeyto6a3@dcvr>
+ <20190515214806.GA31693@sigill.intra.peff.net>
+ <20190523085959.4q76pokx2gy6wqq7@dcvr>
+ <20190523102456.GA6583@sigill.intra.peff.net>
 MIME-Version: 1.0
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 23 May 2019 13:51:47 -0300
-Message-ID: <CAHd-oW40x3-4rye3QeVGix5pfTCoCHmiwg8ddCeq1E6YYongag@mail.gmail.com>
-Subject: [GSoC] How to protect cached_objects
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190523102456.GA6583@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+Jeff King <peff@peff.net> wrote:
+> On Thu, May 23, 2019 at 08:59:59AM +0000, Eric Wong wrote:
+> 
+> > > We never delete entries from the in-memory packed_git list; a reprepare
+> > > only adds to the list. You'd need to teach update_server_info() to
+> > > ignore packs which are no longer present (or switch to exec-ing a
+> > > separate update-server-info binary).
+> > 
+> > Ah, checking files_exists() and setting a bit seems sufficient.
+> 
+> Yes, though we do we even need to store the bit?
 
-As one of my first tasks in GSoC, I'm looking to protect the global
-states at sha1-file.c for future parallelizations. Currently, I'm
-analyzing how to deal with the cached_objects array, which is a small
-set of in-memory objects that read_object_file() is able to return
-although they don't really exist on disk. The only current user of
-this set is git-blame, which adds a fake commit containing
-non-committed changes.
+I wanted to avoid the over-allocation, and I hit a bounds error
+because I forgot to adjust num_pack as you mentioned below.
 
-As it is now, if we start parallelizing blame, cached_objects won't be
-a problem since it is written to only once, at the beginning, and read
-from a couple times latter, with no possible race conditions.
+> I.e.,
+> 
+> > @@ -199,12 +200,16 @@ static void init_pack_info(const char *infofile, int force)
+> >  		 */
+> >  		if (!p->pack_local)
+> >  			continue;
+> > +		if (!file_exists(p->pack_name)) {
+> > +			p->pack_unlinked = 1;
+> > +			continue;
+> > +		}
+> >  		i++;
+> >  	}
+> >  	num_pack = i;
+> >  	info = xcalloc(num_pack, sizeof(struct pack_info *));
+> >  	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
+> > -		if (!p->pack_local)
+> > +		if (!p->pack_local || p->pack_unlinked)
+> >  			continue;
+> >  		assert(i < num_pack);
+> >  		info[i] = xcalloc(1, sizeof(struct pack_info));
+> 
+> If we just check file_exists() in the second loop, then this is entirely
+> local to update_server_info(). And other users of packed_git do not have
+> to wonder who is responsible for setting that flag in the global list.
+> 
+> It does mean you'd over-allocate the array (and num_pack would have to
+> be adjusted down to "i" after the second loop), but that's not a big
+> deal.  I do think the whole two-loop thing would be more readable if we
+> simply grew it on the fly with ALLOC_GROW().
 
-But should we make these operations thread safe for future uses that
-could involve potential parallel writes and reads too?
+ALLOC_GROW makes the whole thing much nicer.
+Thanks for the hint :>
 
-If so, we have two options:
-- Make the array thread local, which would oblige us to replicate data, or
-- Protect it with locks, which could impact the sequential
-performance. We could have a macro here, to skip looking on
-single-threaded use cases. But we don't know, a priori, the number of
-threads that would want to use the pack access code.
+---------------------8<---------------------
+Subject: [PATCH] server-info: do not list unlinked packs
 
-Any thought on this?
+Having non-existent packs in objects/info/packs causes
+dumb HTTP clients to abort.
 
-Thanks,
-Matheus Tavares
+v2: use single loop with ALLOC_GROW as suggested by Jeff King
+
+Signed-off-by: Eric Wong <e@80x24.org>
+Helped-by: Jeff King <peff@peff.net>
+---
+Interdiff:
+  diff --git a/object-store.h b/object-store.h
+  index 2c9facc8f2..272e01e452 100644
+  --- a/object-store.h
+  +++ b/object-store.h
+  @@ -77,7 +77,6 @@ struct packed_git {
+   		 freshened:1,
+   		 do_not_close:1,
+   		 pack_promisor:1,
+  -		 pack_unlinked:1,
+   		 multi_pack_index:1;
+   	unsigned char hash[GIT_MAX_RAWSZ];
+   	struct revindex_entry *revindex;
+  diff --git a/server-info.c b/server-info.c
+  index 69e2c5279b..92187c70db 100644
+  --- a/server-info.c
+  +++ b/server-info.c
+  @@ -192,30 +192,21 @@ static void init_pack_info(const char *infofile, int force)
+   {
+   	struct packed_git *p;
+   	int stale;
+  -	int i = 0;
+  +	int i;
+  +	size_t alloc = 0;
+   
+   	for (p = get_all_packs(the_repository); p; p = p->next) {
+   		/* we ignore things on alternate path since they are
+   		 * not available to the pullers in general.
+   		 */
+  -		if (!p->pack_local)
+  -			continue;
+  -		if (!file_exists(p->pack_name)) {
+  -			p->pack_unlinked = 1;
+  -			continue;
+  -		}
+  -		i++;
+  -	}
+  -	num_pack = i;
+  -	info = xcalloc(num_pack, sizeof(struct pack_info *));
+  -	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
+  -		if (!p->pack_local || p->pack_unlinked)
+  +		if (!p->pack_local || !file_exists(p->pack_name))
+   			continue;
+  -		assert(i < num_pack);
+  +
+  +		i = num_pack++;
+  +		ALLOC_GROW(info, num_pack, alloc);
+   		info[i] = xcalloc(1, sizeof(struct pack_info));
+   		info[i]->p = p;
+   		info[i]->old_num = -1;
+  -		i++;
+   	}
+   
+   	if (infofile && !force)
+
+ server-info.c | 18 +++++++-----------
+ t/t6500-gc.sh |  2 ++
+ 2 files changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/server-info.c b/server-info.c
+index 41274d098b..92187c70db 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "dir.h"
+ #include "repository.h"
+ #include "refs.h"
+ #include "object.h"
+@@ -191,26 +192,21 @@ static void init_pack_info(const char *infofile, int force)
+ {
+ 	struct packed_git *p;
+ 	int stale;
+-	int i = 0;
++	int i;
++	size_t alloc = 0;
+ 
+ 	for (p = get_all_packs(the_repository); p; p = p->next) {
+ 		/* we ignore things on alternate path since they are
+ 		 * not available to the pullers in general.
+ 		 */
+-		if (!p->pack_local)
+-			continue;
+-		i++;
+-	}
+-	num_pack = i;
+-	info = xcalloc(num_pack, sizeof(struct pack_info *));
+-	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
+-		if (!p->pack_local)
++		if (!p->pack_local || !file_exists(p->pack_name))
+ 			continue;
+-		assert(i < num_pack);
++
++		i = num_pack++;
++		ALLOC_GROW(info, num_pack, alloc);
+ 		info[i] = xcalloc(1, sizeof(struct pack_info));
+ 		info[i]->p = p;
+ 		info[i]->old_num = -1;
+-		i++;
+ 	}
+ 
+ 	if (infofile && !force)
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 515c6735e9..c0f04dc6b0 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -71,6 +71,8 @@ test_expect_success 'gc --keep-largest-pack' '
+ 		git gc --keep-largest-pack &&
+ 		( cd .git/objects/pack && ls *.pack ) >pack-list &&
+ 		test_line_count = 2 pack-list &&
++		awk "/^P /{print \$2}" <.git/objects/info/packs >pack-info &&
++		test_line_count = 2 pack-info &&
+ 		test_path_is_file $BASE_PACK &&
+ 		git fsck
+ 	)
+-- 
+EW
