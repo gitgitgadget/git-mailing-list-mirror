@@ -2,222 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6908A20380
-	for <e@80x24.org>; Thu, 23 May 2019 17:27:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0617D1F462
+	for <e@80x24.org>; Thu, 23 May 2019 17:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731217AbfEWR1Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 13:27:24 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:57170 "EHLO dcvr.yhbt.net"
+        id S1731312AbfEWRni (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 13:43:38 -0400
+Received: from smtp34.i.mail.ru ([94.100.177.94]:45562 "EHLO smtp34.i.mail.ru"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730957AbfEWR1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 13:27:24 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 843791F462;
-        Thu, 23 May 2019 17:27:23 +0000 (UTC)
-Date:   Thu, 23 May 2019 17:27:23 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2] server-info: do not list unlinked packs
-Message-ID: <20190523172723.eny6smdt57zxau6z@dcvr>
-References: <20190512040825.GA25370@sigill.intra.peff.net>
- <87tve0w3ao.fsf@evledraar.gmail.com>
- <20190514094729.GA12256@sigill.intra.peff.net>
- <20190514115047.oncvfq24fhnp64re@dcvr>
- <87ftphw7mv.fsf@evledraar.gmail.com>
- <20190515004551.emrxvboqemwnqh4g@dcvr>
- <20190515203839.zixx23bwzeyto6a3@dcvr>
- <20190515214806.GA31693@sigill.intra.peff.net>
- <20190523085959.4q76pokx2gy6wqq7@dcvr>
- <20190523102456.GA6583@sigill.intra.peff.net>
+        id S1731107AbfEWRnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 13:43:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+        h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:To:From; bh=ocJQACdNnZ20tqJFkdCbg3q7yHAd3P1XjOkb4DNx4bE=;
+        b=XQwBU+69viJBEp6ddf6E6N3eRMwG5a5hwctZs1UcmdzY4nJ4ThZXWaStaiONuOmhgCsB4f12LS2mkIXrkfKwd1M+EqFxooxOYZjSQWiqbtCRtGc8mWjJdH7/FJpGNjZ9RRb1w05G5f4XWCOT0X1W4a8Bc3Wc4j4AVcSn9havxcE=;
+Received: by smtp34.i.mail.ru with esmtpa (envelope-from <odnoletkov@mail.ru>)
+        id 1hTrkd-0005aI-1J
+        for git@vger.kernel.org; Thu, 23 May 2019 20:43:35 +0300
+From:   Maksim Odnoletkov <odnoletkov@mail.ru>
+To:     git@vger.kernel.org
+Subject: Problem using 'submodule.recurse'
+Date:   Thu, 23 May 2019 18:42:14 +0100
+Message-Id: <20190523174214.7447-1-odnoletkov@mail.ru>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190523102456.GA6583@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp34.i.mail.ru; auth=pass smtp.auth=odnoletkov@mail.ru smtp.mailfrom=odnoletkov@mail.ru
+X-77F55803: BBE463BEF7A60BD05A78504BD2AC29418E23A805F02667948CF70DC37648559C4F94B2BACF553B6A649E9F66BB9B2253
+X-7FA49CB5: 0D63561A33F958A5157208FA24B6769C517C673E33ACDFDA05D95A5D25037B9B8941B15DA834481FA18204E546F3947C21E93C0F2A571C7BF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8BF80095D1E57F4578A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224975765671F80319073AA81AA40904B5D9CF19DD082D7633A093541453170D46FCD81D268191BDAD3D78DA827A17800CE78B25CD4253D1D611CD04E86FAF290E2DBBC930A3941E20C675ECD9A6C639B01B78DA827A17800CE7CED881E36CABC998B2C112EF77284E0375ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC852301B74F4230CB9127F269C8F02392CD5571747095F342E88FB05168BE4CE3AF
+X-Mailru-Sender: 19DA870CD1633C32D2D4C917A6A43E73B5C1438A167F40A6965853A961C68739640D58BC46D090736E44F38C8238B89B3DDE9B364B0DF28904E2E3863F77217AF25921C611F62F88AE208404248635DF
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
-> On Thu, May 23, 2019 at 08:59:59AM +0000, Eric Wong wrote:
-> 
-> > > We never delete entries from the in-memory packed_git list; a reprepare
-> > > only adds to the list. You'd need to teach update_server_info() to
-> > > ignore packs which are no longer present (or switch to exec-ing a
-> > > separate update-server-info binary).
-> > 
-> > Ah, checking files_exists() and setting a bit seems sufficient.
-> 
-> Yes, though we do we even need to store the bit?
+I have a problem using 'submodule.recurse' config option. I want to use
+it and at the same time fine-tune behavior for individual commands with
+more specific options. For example to keep 'on-demand' behavior for
+'fetch' and 'pull'.
 
-I wanted to avoid the over-allocation, and I hit a bounds error
-because I forgot to adjust num_pack as you mentioned below.
+ * If I put 'fetch.recurseSubmodules = on-demand' *below*
+   'submodule.recurse = true' in the config, it kinda works - fetch will
+   use 'on-demand' behavior.
+ * But with this setup 'fetch' within 'pull' will always recurse
+   unconditionally. Looking at the code this happens because 'pull'
+   reads 'submodule.recurse' and seeing it in non-default state forces
+   this behavior on underlying 'fetch'.
 
-> I.e.,
-> 
-> > @@ -199,12 +200,16 @@ static void init_pack_info(const char *infofile, int force)
-> >  		 */
-> >  		if (!p->pack_local)
-> >  			continue;
-> > +		if (!file_exists(p->pack_name)) {
-> > +			p->pack_unlinked = 1;
-> > +			continue;
-> > +		}
-> >  		i++;
-> >  	}
-> >  	num_pack = i;
-> >  	info = xcalloc(num_pack, sizeof(struct pack_info *));
-> >  	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
-> > -		if (!p->pack_local)
-> > +		if (!p->pack_local || p->pack_unlinked)
-> >  			continue;
-> >  		assert(i < num_pack);
-> >  		info[i] = xcalloc(1, sizeof(struct pack_info));
-> 
-> If we just check file_exists() in the second loop, then this is entirely
-> local to update_server_info(). And other users of packed_git do not have
-> to wonder who is responsible for setting that flag in the global list.
-> 
-> It does mean you'd over-allocate the array (and num_pack would have to
-> be adjusted down to "i" after the second loop), but that's not a big
-> deal.  I do think the whole two-loop thing would be more readable if we
-> simply grew it on the fly with ALLOC_GROW().
+As far as I understand there is no way currently to have 'on-demand'
+recursing for 'fetch' within the 'pull' when 'submodule.recurse' is on
+(outside of using command line args). Also with described setup 'fetch'
+behaves differently from 'pull' which is unexpected.
 
-ALLOC_GROW makes the whole thing much nicer.
-Thanks for the hint :>
+Looking at the code quickly I see two ways this can be resolved:
 
----------------------8<---------------------
-Subject: [PATCH] server-info: do not list unlinked packs
-
-Having non-existent packs in objects/info/packs causes
-dumb HTTP clients to abort.
-
-v2: use single loop with ALLOC_GROW as suggested by Jeff King
-
-Signed-off-by: Eric Wong <e@80x24.org>
-Helped-by: Jeff King <peff@peff.net>
----
-Interdiff:
-  diff --git a/object-store.h b/object-store.h
-  index 2c9facc8f2..272e01e452 100644
-  --- a/object-store.h
-  +++ b/object-store.h
-  @@ -77,7 +77,6 @@ struct packed_git {
-   		 freshened:1,
-   		 do_not_close:1,
-   		 pack_promisor:1,
-  -		 pack_unlinked:1,
-   		 multi_pack_index:1;
-   	unsigned char hash[GIT_MAX_RAWSZ];
-   	struct revindex_entry *revindex;
-  diff --git a/server-info.c b/server-info.c
-  index 69e2c5279b..92187c70db 100644
-  --- a/server-info.c
-  +++ b/server-info.c
-  @@ -192,30 +192,21 @@ static void init_pack_info(const char *infofile, int force)
-   {
-   	struct packed_git *p;
-   	int stale;
-  -	int i = 0;
-  +	int i;
-  +	size_t alloc = 0;
-   
-   	for (p = get_all_packs(the_repository); p; p = p->next) {
-   		/* we ignore things on alternate path since they are
-   		 * not available to the pullers in general.
-   		 */
-  -		if (!p->pack_local)
-  -			continue;
-  -		if (!file_exists(p->pack_name)) {
-  -			p->pack_unlinked = 1;
-  -			continue;
-  -		}
-  -		i++;
-  -	}
-  -	num_pack = i;
-  -	info = xcalloc(num_pack, sizeof(struct pack_info *));
-  -	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
-  -		if (!p->pack_local || p->pack_unlinked)
-  +		if (!p->pack_local || !file_exists(p->pack_name))
-   			continue;
-  -		assert(i < num_pack);
-  +
-  +		i = num_pack++;
-  +		ALLOC_GROW(info, num_pack, alloc);
-   		info[i] = xcalloc(1, sizeof(struct pack_info));
-   		info[i]->p = p;
-   		info[i]->old_num = -1;
-  -		i++;
-   	}
-   
-   	if (infofile && !force)
-
- server-info.c | 18 +++++++-----------
- t/t6500-gc.sh |  2 ++
- 2 files changed, 9 insertions(+), 11 deletions(-)
-
-diff --git a/server-info.c b/server-info.c
-index 41274d098b..92187c70db 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "dir.h"
- #include "repository.h"
- #include "refs.h"
- #include "object.h"
-@@ -191,26 +192,21 @@ static void init_pack_info(const char *infofile, int force)
- {
- 	struct packed_git *p;
- 	int stale;
--	int i = 0;
-+	int i;
-+	size_t alloc = 0;
- 
- 	for (p = get_all_packs(the_repository); p; p = p->next) {
- 		/* we ignore things on alternate path since they are
- 		 * not available to the pullers in general.
- 		 */
--		if (!p->pack_local)
--			continue;
--		i++;
--	}
--	num_pack = i;
--	info = xcalloc(num_pack, sizeof(struct pack_info *));
--	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
--		if (!p->pack_local)
-+		if (!p->pack_local || !file_exists(p->pack_name))
- 			continue;
--		assert(i < num_pack);
-+
-+		i = num_pack++;
-+		ALLOC_GROW(info, num_pack, alloc);
- 		info[i] = xcalloc(1, sizeof(struct pack_info));
- 		info[i]->p = p;
- 		info[i]->old_num = -1;
--		i++;
- 	}
- 
- 	if (infofile && !force)
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 515c6735e9..c0f04dc6b0 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -71,6 +71,8 @@ test_expect_success 'gc --keep-largest-pack' '
- 		git gc --keep-largest-pack &&
- 		( cd .git/objects/pack && ls *.pack ) >pack-list &&
- 		test_line_count = 2 pack-list &&
-+		awk "/^P /{print \$2}" <.git/objects/info/packs >pack-info &&
-+		test_line_count = 2 pack-info &&
- 		test_path_is_file $BASE_PACK &&
- 		git fsck
- 	)
--- 
-EW
+ * Add 'pull.recurseSubmodules' option so it can be used to explicitly
+   override 'submodule.recurse' for 'pull'.
+ * Don't force recursing behavior from 'pull' to underlying 'fetch' if
+   it comes from config and not from command line args.
