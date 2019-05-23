@@ -2,131 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 989721F462
-	for <e@80x24.org>; Thu, 23 May 2019 15:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8AE1F462
+	for <e@80x24.org>; Thu, 23 May 2019 16:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730866AbfEWPEX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 11:04:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62245 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730783AbfEWPEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 11:04:23 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1755113C6C4;
-        Thu, 23 May 2019 11:04:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=mVj2I1ARkbeZ4jRROBxU2bo2S98=; b=wkOLsWC
-        7T1zl+ZO0l3cJu5GANSxQnUKfTLWcSgZmjU9bXpljb0aWp5PgAOKgv6W3AsVXiK9
-        cmlh9+gkAec2D/ZVUWrTtP5OPP5XWthVim5cilPjeN6jQ0GuYAYUXWwjCwSDYBBq
-        WkhvVqVxQUOh9Qj3d/UYCiNTATqr7I1kGerU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=ewDgYKIf4CHidoirhr91+3OlczIZCRZer
-        fMFeszxhTNY4qcvZardPCvYh4zTMftNmMls4CO1il49uxwHrko6MQicBhiqV3Tw3
-        CW1YuvyowiNpl2SrBadlr4e/AO6CgdKl1WKR3HQe+phumrJvgGNMpy/9wUQUuOAc
-        ZPtG3CtGRc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E7F113C6C3;
-        Thu, 23 May 2019 11:04:19 -0400 (EDT)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71AA313C6C2;
-        Thu, 23 May 2019 11:04:18 -0400 (EDT)
-Date:   Thu, 23 May 2019 11:04:16 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git-packagers@googlegroups.com
-Subject: New diff test failures on s390x architecture (was: [ANNOUNCE] Git
- v2.22.0-rc1)
-Message-ID: <20190523150416.GL3654@pobox.com>
-References: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com>
+        id S1731334AbfEWQ5b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 12:57:31 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:46688 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730899AbfEWQ5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 12:57:31 -0400
+Received: by mail-io1-f45.google.com with SMTP id q21so5399285iog.13
+        for <git@vger.kernel.org>; Thu, 23 May 2019 09:57:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=dk0or+3rG6rxXVfxjwROCL8S3Tfkv3JjtAuoIAN6+AI=;
+        b=mF61EYz5slvI0lp6AzoQjd+gH/ObUwX2Ae9u3YvrPsNWkfKmYnTP1JfUHltY4t5SnO
+         lsAELRhGPNciMnQKY/3GUzZLlD+nzneBKSn0C6R2+huWrWM/kcCduJwh4rsVjaS2IOBJ
+         MWtLLFobZQUa/dFp11Nuh8XCxGGmYTIj5GzrO0/E1U3BdsF9bZTCZyqxp7q3iXz3ZGyt
+         N4SxQ1gl+8zdTUtRPW5uU7o9sTFz1ZTzKyrynAEtFebAyWdcQ4twD+agudfWu0x+RUlj
+         4tfsxTmki+peJ8GQsY+5wVhk+p39yp+IaFUXtiI8oxcvDsJZPBV/0xTUYlBset/4iif6
+         jiBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=dk0or+3rG6rxXVfxjwROCL8S3Tfkv3JjtAuoIAN6+AI=;
+        b=U6sM/Y4uNqUv6Ga2x+4v1zlJ6YuRFgya0+1E0SBkYDIISZ8dcykkYwVhmZK3Aik3kA
+         52F01rhppoWfA+cGK5GZgvVUVzMRPXc2r5EFPX3Vs2HAxmIBVU8mxsv+0dIGT56oxbTw
+         4lkD3s49vfsWNTgQopLqp6u1VUa4cBeQTxOzjjmLsd4Rdr6PMGzaTvY+AtKeb20xuG3E
+         fP0l+nFx+dbRFPz+ssAwbFxejYJVq5SQyxOUcFnkx64A5HrSajeqg8hN0JhFwJeB0RtF
+         DzVKb6JQyd0KGOeit3BE8aE29yFuxhdU+Sw9BDw88t6pMQbLn0CichNKei6Vlpe1CAdC
+         bE9w==
+X-Gm-Message-State: APjAAAXsSwZdA/PoLuJ3fbNq5+CvuERa2JZEPeKT76jWXG/5GgmaZMPO
+        /Y0sOt49oQszae/GT3dVRKs3RUKTRhfNdnndejnWcN3LF8wD0g==
+X-Google-Smtp-Source: APXvYqyZ+RP3kdsgSXeOGIy1nKRRH9qo04MLO3MeHsMLAqnqs1AdHPK8P93klpWl0hXv0om+9R+Dtc6Q1RwSSDDb8po=
+X-Received: by 2002:a6b:8ec4:: with SMTP id q187mr26756367iod.280.1558630318116;
+ Thu, 23 May 2019 09:51:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq36la24t1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 09C35892-7D6C-11E9-8E0A-72EEE64BB12D-09356542!pb-smtp2.pobox.com
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 23 May 2019 13:51:47 -0300
+Message-ID: <CAHd-oW40x3-4rye3QeVGix5pfTCoCHmiwg8ddCeq1E6YYongag@mail.gmail.com>
+Subject: [GSoC] How to protect cached_objects
+To:     git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[-cc: lkml, +cc: Duy as author of a good number of
-diff-related commits in 2.22.0 :) ]
+Hi, everyone
 
-Hi,
+As one of my first tasks in GSoC, I'm looking to protect the global
+states at sha1-file.c for future parallelizations. Currently, I'm
+analyzing how to deal with the cached_objects array, which is a small
+set of in-memory objects that read_object_file() is able to return
+although they don't really exist on disk. The only current user of
+this set is git-blame, which adds a fake commit containing
+non-committed changes.
 
-While running the 2.22.0-rc1 tests on Fedora, I hit a few
-new test failures since 2.21.0 -- but only on the s390x
-architecture.
+As it is now, if we start parallelizing blame, cached_objects won't be
+a problem since it is written to only once, at the beginning, and read
+from a couple times latter, with no possible race conditions.
 
-I haven't had time to dig into these the past few days, so I
-thought I would send what I do have in case the problem is
-obvious to someone else.  I think all of the failing tests
-are due to `git diff` commands.
+But should we make these operations thread safe for future uses that
+could involve potential parallel writes and reads too?
 
-Test Summary Report
--------------------
-t4017-diff-retval.sh                             (Wstat: 256 Tests: 24 Failed: 1)
-  Failed test:  2
-  Non-zero exit status: 1
-t4015-diff-whitespace.sh                         (Wstat: 256 Tests: 83 Failed: 11)
-  Failed tests:  2-7, 9, 11, 52-53, 79
-  Non-zero exit status: 1
-t4035-diff-quiet.sh                              (Wstat: 256 Tests: 22 Failed: 4)
-  Failed tests:  17-20
-  Non-zero exit status: 1
-t4040-whitespace-status.sh                       (Wstat: 256 Tests: 11 Failed: 4)
-  Failed tests:  3, 5, 7, 9
-  Non-zero exit status: 1
-t4038-diff-combined.sh                           (Wstat: 256 Tests: 24 Failed: 3)
-  Failed tests:  10-12
-  Non-zero exit status: 1
-t4050-diff-histogram.sh                          (Wstat: 256 Tests: 3 Failed: 1)
-  Failed test:  1
-  Non-zero exit status: 1
-t4061-diff-indent.sh                             (Wstat: 256 Tests: 33 Failed: 19)
-  Failed tests:  2-4, 8, 12, 14, 18, 20-21, 24-33
-  Non-zero exit status: 1
-t4065-diff-anchored.sh                           (Wstat: 256 Tests: 7 Failed: 1)
-  Failed test:  6
-  Non-zero exit status: 1
-t4253-am-keep-cr-dos.sh                          (Wstat: 256 Tests: 7 Failed: 1)
-  Failed test:  7
-  Non-zero exit status: 1
+If so, we have two options:
+- Make the array thread local, which would oblige us to replicate data, or
+- Protect it with locks, which could impact the sequential
+performance. We could have a macro here, to skip looking on
+single-threaded use cases. But we don't know, a priori, the number of
+threads that would want to use the pack access code.
 
-The test output from '-x --verbose-log' is quite verbose and
-the issues are often in whitespace/end-of-line which might
-be mangled by some MTA/MUA.  So the output is at:
+Any thought on this?
 
-    https://tmz.fedorapeople.org/git-2.22.0-rc1-s390x-failures (327K)
-
-I don't have direct access to these s390x builders.  I may
-be able to arrange shell access (or even reproduce this with
-qemu's s390x emulation).
-
-Before I go further down that road, I wanted to see if this
-output might be enough to point to the problem.  If not, I
-can run the failing tests with the --debug option and save
-the trash directory (unless I can get more direct access to
-the s390x builder to be able to bisect).
-
-I rebuilt git-2.21.0 on the same s390x builder successfully,
-so I don't think this issue is a bug in another of the
-packages in the current Fedora tree.  But it's certainly
-possible that git-2.22.0-rc1 is just tickling a real bug in
-some other tool/library on s390x.
-
-Thanks for any help in narrowing this down.
-
--- 
-Todd
+Thanks,
+Matheus Tavares
