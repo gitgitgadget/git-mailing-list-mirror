@@ -2,142 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A79020380
-	for <e@80x24.org>; Thu, 23 May 2019 09:00:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B33691F462
+	for <e@80x24.org>; Thu, 23 May 2019 09:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727434AbfEWJAA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 May 2019 05:00:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:51316 "EHLO dcvr.yhbt.net"
+        id S1729949AbfEWJuH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 May 2019 05:50:07 -0400
+Received: from smtp47.i.mail.ru ([94.100.177.107]:41144 "EHLO smtp47.i.mail.ru"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725814AbfEWJAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 May 2019 05:00:00 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 742591F462;
-        Thu, 23 May 2019 08:59:59 +0000 (UTC)
-Date:   Thu, 23 May 2019 08:59:59 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH] server-info: do not list unlinked packs
-Message-ID: <20190523085959.4q76pokx2gy6wqq7@dcvr>
-References: <20190511013455.5886-1-e@80x24.org>
- <87v9ygwoj0.fsf@evledraar.gmail.com>
- <20190512040825.GA25370@sigill.intra.peff.net>
- <87tve0w3ao.fsf@evledraar.gmail.com>
- <20190514094729.GA12256@sigill.intra.peff.net>
- <20190514115047.oncvfq24fhnp64re@dcvr>
- <87ftphw7mv.fsf@evledraar.gmail.com>
- <20190515004551.emrxvboqemwnqh4g@dcvr>
- <20190515203839.zixx23bwzeyto6a3@dcvr>
- <20190515214806.GA31693@sigill.intra.peff.net>
+        id S1726429AbfEWJuG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 May 2019 05:50:06 -0400
+X-Greylist: delayed 35482 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 May 2019 05:50:05 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+        h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:Message-ID:Date:From:In-Reply-To:References:MIME-Version; bh=l9KXaQz1GzULqUIc8FoXekrXpVuighQeTyvE6S0Hspg=;
+        b=qs36L2gtM9j522U22XxhaSO6WtOy+9W4bhrPd2zyNHXPu4K8/wUn4uNE4zvR9XJffcGm03hjguaqioatIyDpmej8C8+9sER0SJJssmMMeT3VQG2LgR0RWjH7+841Y0dFrzTWzTEoVT54VyGka3uZx0reZmW1Z536FP744scgMFY=;
+Received: by smtp47.i.mail.ru with esmtpa (envelope-from <odnoletkov@mail.ru>)
+        id 1hTkMN-0000nb-En
+        for git@vger.kernel.org; Thu, 23 May 2019 12:50:04 +0300
+Received: by mail-io1-f49.google.com with SMTP id v7so4317527iob.10
+        for <git@vger.kernel.org>; Thu, 23 May 2019 02:50:03 -0700 (PDT)
+X-Gm-Message-State: APjAAAUDkPcUZVYrz9ImBSBH9qUN7xR5UduU8ZOQkraGNnx91UaOqNRZ
+        p1attwEYJslBOTKx0eccYIL0Rll7do9ejgnSUDQ=
+X-Google-Smtp-Source: APXvYqwRImnOSywJPLLq7PM/dQx40lDEVXCAzd8GPc7HWNUqesAHXvuG08S801FWIbSnp0MMQnZ26pipbHKyN18PpB8=
+X-Received: by 2002:a6b:5116:: with SMTP id f22mr30311617iob.185.1558605002364;
+ Thu, 23 May 2019 02:50:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190515214806.GA31693@sigill.intra.peff.net>
+References: <xmqqh8bsphny.fsf@gitster-ct.c.googlers.com> <20190522235705.68452-1-odnoletkov@mail.ru>
+ <30d1e067-4184-30e8-bfd2-6ba8da0fc1f5@kdbg.org>
+In-Reply-To: <30d1e067-4184-30e8-bfd2-6ba8da0fc1f5@kdbg.org>
+From:   Maksim Odnoletkov <odnoletkov@mail.ru>
+Date:   Thu, 23 May 2019 10:49:51 +0100
+X-Gmail-Original-Message-ID: <CAEYVt4pv1JCZf_tXC4S3-D940MfrohEo0+qst73GScm9+5Rbvg@mail.gmail.com>
+Message-ID: <CAEYVt4pv1JCZf_tXC4S3-D940MfrohEo0+qst73GScm9+5Rbvg@mail.gmail.com>
+Subject: Re: [PATCH] Make stashing nothing exit 1
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     gitster@pobox.com, git@vger.kernel.org, keithbsmiley@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp47.i.mail.ru; auth=pass smtp.auth=odnoletkov@mail.ru smtp.mailfrom=odnoletkov@mail.ru
+X-77F55803: 0014004E1F3277295A78504BD2AC29418E23A805F02667946C5FFC93732DA433450DA77368CFE40BDF80C731D9F61FF4
+X-7FA49CB5: 0D63561A33F958A5534A7CA17DD01848DC10D6B1C2241BC69BBABCCD6EDD99DC8941B15DA834481FA18204E546F3947C1D471462564A2E19F6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B2EE5AD8F952D28FBA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C224906B0952B3C02BDD73AA81AA40904B5D9CF19DD082D7633A093541453170D46FCD81D268191BDAD3D78DA827A17800CE7AB8EEA909F5DE8F7CD04E86FAF290E2DBBC930A3941E20C675ECD9A6C639B01B78DA827A17800CE7E87EAEC642D14D3B4D0697F13E8DDE4A75ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC852301B74F4230CB9127F269C8F02392CD5571747095F342E88FB05168BE4CE3AF
+X-Mailru-Sender: 4C235FE2E5D2D890D35D2197AF433329404A5EFBB888B1B432E54423F65A384D35B354B808D7FFF0A42620DD4D382ACDC77752E0C033A69E5B5A690398F5F5FE1B1963E874B928233453F38A29522196
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
-> On Wed, May 15, 2019 at 08:38:39PM +0000, Eric Wong wrote:
-> 
-> > I've also noticed objects/info/packs contains stale entries
-> > after repack/gc runs on current git.
-> > 
-> > Tried adding reprepare_packed_git before update_server_info,
-> > but that didn't seem to work; so maybe something isn't cleared.
-> > Might have time to investigate more this week, might not...
-> 
-> We never delete entries from the in-memory packed_git list; a reprepare
-> only adds to the list. You'd need to teach update_server_info() to
-> ignore packs which are no longer present (or switch to exec-ing a
-> separate update-server-info binary).
+> On 23 May 2019, at 07:14, Johannes Sixt <j6t@kdbg.org> wrote:
+>
+>> Am 23.05.19 um 01:57 schrieb Maksim Odnoletkov:
+>> The problem with current behaviour is it makes it hard to use stash in
+>> scripts. A natural stash use case is: wrap some operation requiring a
+>> clean working tree with a stash push-pop pair. But that doesn't work
+>> properly when working tree is already clean - push silently does nothing
+>> and following pop becomes unbalanced. You have to keep that in mind and
+>> work around with something like:
+>>
+>> if ! git diff-index --exit-code --quiet HEAD
+>> then
+>>    git stash push
+>>    trap 'git stash pop' EXIT
+>> fi
+>>
+>> With this change this can be simplified to:
+>>
+>> git stash push && trap 'git stash pop' EXIT
+>
+> In a script, shouldn't you better use 'create' + 'store' instead of 'push=
+'?
+>
+> -- Hannes
 
-Ah, checking files_exists() and setting a bit seems sufficient.
+Just like 'push' 'create' doesn't error on no-op and
+doesn't create a stash commit =E2=80=93 so you still need to handle this
+edge case manually.
 
---------8<---------
-Subject: [PATCH] server-info: do not list unlinked packs
-
-Having non-existent packs in objects/info/packs causes
-dumb HTTP clients to abort.
-
-There remains a small window where the old objects/info/packs
-file can refer to unlinked packs.  That's unavoidable even on a
-local FS given the time-of-use-time-of-check window between
-listing and retrieving files.
-
-Signed-off-by: Eric Wong <e@80x24.org>
----
-  I think the small window I refer to can be worked around by
-  teaching the dumb HTTP client to reread objects/info/packs
-  if it 404s while trying to GET a pack...
-
- object-store.h | 1 +
- server-info.c  | 7 ++++++-
- t/t6500-gc.sh  | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/object-store.h b/object-store.h
-index 272e01e452..2c9facc8f2 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -77,6 +77,7 @@ struct packed_git {
- 		 freshened:1,
- 		 do_not_close:1,
- 		 pack_promisor:1,
-+		 pack_unlinked:1,
- 		 multi_pack_index:1;
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	struct revindex_entry *revindex;
-diff --git a/server-info.c b/server-info.c
-index 41274d098b..69e2c5279b 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "dir.h"
- #include "repository.h"
- #include "refs.h"
- #include "object.h"
-@@ -199,12 +200,16 @@ static void init_pack_info(const char *infofile, int force)
- 		 */
- 		if (!p->pack_local)
- 			continue;
-+		if (!file_exists(p->pack_name)) {
-+			p->pack_unlinked = 1;
-+			continue;
-+		}
- 		i++;
- 	}
- 	num_pack = i;
- 	info = xcalloc(num_pack, sizeof(struct pack_info *));
- 	for (i = 0, p = get_all_packs(the_repository); p; p = p->next) {
--		if (!p->pack_local)
-+		if (!p->pack_local || p->pack_unlinked)
- 			continue;
- 		assert(i < num_pack);
- 		info[i] = xcalloc(1, sizeof(struct pack_info));
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 515c6735e9..c0f04dc6b0 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -71,6 +71,8 @@ test_expect_success 'gc --keep-largest-pack' '
- 		git gc --keep-largest-pack &&
- 		( cd .git/objects/pack && ls *.pack ) >pack-list &&
- 		test_line_count = 2 pack-list &&
-+		awk "/^P /{print \$2}" <.git/objects/info/packs >pack-info &&
-+		test_line_count = 2 pack-info &&
- 		test_path_is_file $BASE_PACK &&
- 		git fsck
- 	)
-
-base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
--- 
-EW
+I was thinking of using create-apply pair for this use case but push-pop
+has added benefit of preserving a user-accessible stash entry for manual
+recovery in case stash can't be cleanly applied after the operation.
