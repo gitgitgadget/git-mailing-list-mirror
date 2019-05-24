@@ -2,134 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAB61F462
-	for <e@80x24.org>; Fri, 24 May 2019 14:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7311F462
+	for <e@80x24.org>; Fri, 24 May 2019 17:08:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391605AbfEXOlY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 10:41:24 -0400
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:56107 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390885AbfEXOlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 10:41:24 -0400
-Received: by mail-wm1-f45.google.com with SMTP id x64so9648684wmb.5
-        for <git@vger.kernel.org>; Fri, 24 May 2019 07:41:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=nGGhu81yV/j2o9MGLG07oWe7S8UXml7lYBRA1q2Aidc=;
-        b=cuh5Tz+dLpttTX1pRMMn59XSKRhubmq1WyfiOxItwnNZSdRBcOlUFzdK6uVBY/Go21
-         xzeRNppSt/8lOUQH5z0iZSN0fPY4wU0TtwrHlOH3XlGwEyudKLyJOcD1LStlRTw7MCol
-         O3dLak+CDrj+LHURR2303qAc9x46fFZ6vp8irGe4j8drtTNF9z2QllUhaNmbo5C42KEI
-         Suq4RbIXO8lMvECgaSJejczeLMdJ4ozRZhoxKzUv35GkiR+By3emokiECJpi5Ap3U2gr
-         U9Ptp41nMVY0zrEgwYKG4DYa/mdoHVKiDKNm/DF3cOjpUBJWedcgJAocG6A0BstXJEVc
-         I99Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=nGGhu81yV/j2o9MGLG07oWe7S8UXml7lYBRA1q2Aidc=;
-        b=cJrcx7eF2qbFPoSCfinqnOgWWe8pPfm5lnOUJFpxAeBlkZgcnYYPQoJYgsoZlKuo8n
-         X2l7C+eBHhIldgEpxwBt1MmrHsu9WrALb91EjeBj42jbnrC+gduxpPCbUE8Gl3C9yYoY
-         TehlbfiAK3AR5QrR9lmRCAk0hwgbMsQgtWlZhYIxl348b8n33idKxWaWCgQhydQ5PH5B
-         1dg/b0MXJyl/nPE5we6hJn21esGW41du0fHUTpTJjyYGHFteKm8w5AdI4Ex8+iu0tdt4
-         4Oo+c7JlZ0lTRWoAMlptaLgPRGgJsatu30hVmtKENsHyivOd9ZZ+jo90Y8TOi0vgEYW4
-         YDuQ==
-X-Gm-Message-State: APjAAAXDu97qbPuGaTiseDP8bK56PRi9lr4udmzF+gYPyNeV8XFzVmDH
-        4n/S5GTdZ294/L6UkL2ZB2n6DTAGk9g=
-X-Google-Smtp-Source: APXvYqyP2QijNy27Cn+GO+qNqT/MuZ1SypoGVsnk5dzGhhsoIGFnglHDq7O0gtjy3XbUk+kLWuBIpQ==
-X-Received: by 2002:a1c:cf4c:: with SMTP id f73mr127491wmg.118.1558708881770;
-        Fri, 24 May 2019 07:41:21 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id e14sm3103211wma.41.2019.05.24.07.41.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 07:41:21 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: Need help merging unrelated histories
-References: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
-Date:   Fri, 24 May 2019 16:41:20 +0200
-Message-ID: <87blzrgbjj.fsf@evledraar.gmail.com>
+        id S1729681AbfEXRIC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 13:08:02 -0400
+Received: from resqmta-po-01v.sys.comcast.net ([96.114.154.160]:42550 "EHLO
+        resqmta-po-01v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725777AbfEXRIC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 May 2019 13:08:02 -0400
+Received: from resomta-po-14v.sys.comcast.net ([96.114.154.238])
+        by resqmta-po-01v.sys.comcast.net with ESMTP
+        id UD8phzF1cHkmzUDflhxl1S; Fri, 24 May 2019 17:08:01 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1558717681;
+        bh=BvZJOjD2GiM243wGHA0BoOusDj7wH60RRzlhvmPfWhs=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=HLs5K0qTMYEiIBRV8JmaQweBj5lPBdACGMOkrxgDgakppH8mB8Ozst/230JI1Y/0x
+         jKfVxTr4WF7ZLX18/h1QgwucPWG1SK4/FXRWtdk5qAxXD/9cdTwlv8zucj+qbLxQDb
+         vzRFQiiU5Owbw+YnZ2tMZKKXIjftuBIPilMfmVD4ehUFLhbYvMvAXeypaY/sWzPMIX
+         /7e7NaRtAkdvH4i8zQs9e3jDLT6xJJjJh1KnqfDsfZn954NTR3FlULaWCmfrVbEwnV
+         QxiaqOfkX3YuLBuRGypQWYo/2SeQT8wVlPxHPxPjugfic/2C3OVI2X9Py3Z8eOCaEi
+         Cxa2sdAQB+SSQ==
+Received: from comcast.net ([IPv6:2601:647:4b02:2491:f5ca:db6a:b0f5:2073])
+        by resomta-po-14v.sys.comcast.net with ESMTPSA
+        id UDfihMCE5aUYaUDfjhRWw4; Fri, 24 May 2019 17:08:00 +0000
+X-Xfinity-VMeta: sc=-100;st=legit
+Date:   Fri, 24 May 2019 10:07:58 -0700
+From:   Matthew DeVore <matvore@comcast.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Matthew DeVore <matvore@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC PATCH] list-objects-filter: disable 'sparse:path' filters
+Message-ID: <20190524170758.GB7160@comcast.net>
+References: <20190524120318.4851-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190524120318.4851-1-chriscool@tuxfamily.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, May 24, 2019 at 02:03:18PM +0200, Christian Couder wrote:
+> For now though, let's just disable 'sparse:path' filters.
 
-On Fri, May 24 2019, Robert Dailey wrote:
+This is probably the right thing to do. I did jump through a lot of hoops to
+support escaping sub-filters in my pending filter combination patchset, since
+sparse spec path names can have arbitrary characters. After this patch we only
+support a handful of characters in filterspecs, so a lot of that escaping logic
+can be dropped, at least for now. Anyway, this is not a complaint, just an
+observation.
 
-> Everything I'm going to describe is related to this repository:
->
-> https://github.com/powervr-graphics/Native_SDK
->
-> This repo has several distinct branches. None of them seem to be tied
-> to each other. Instead of having a `master` where they branched off
-> each of their releases (e.g. 3.1, 3.2, 4.0), it looks like they made a
-> copy of previous branches with no ancestry and then continued coding
-> on that.
->
-> What I'm trying to do is go back and rebase all of the X.X branches
-> onto a new `master` branch. I started off with this:
->
-> $ git checkout --orphan master
->
-> Then I committed a `.gitattributes`. Next, I rebased the first
-> (oldest) release branch:
->
-> $ git rebase -i --onto master origin/3.0 --root
->
-> Then I merged:
->
-> $ git checkout master && git merge --no-ff -
->
-> Next, I did 3.1:
->
-> $ git rebase -i --onto master origin/3.0 origin/3.1 -X theirs
->
-> Using interactive mode, Git is smart enough to detect duplicate
-> commits and eliminates those, even though the 2 branches do not share
-> a merge base. I continued doing this all the way up to rebasing 4.3,
-> but that's when things got tough. I see a lot of 'UD', 'UA', 'AU',
-> 'AA' merge conflicts. These are obviously due to the fact that the
-> branches aren't connected. But I expected was that `-X theirs` would
-> always favor what's on the branch being rebased. However, it seems
-> this only affects modified conflicts, not adds or deletes.
->
-> I was trying to find a way to bulk-resolve these. I mean, if git sees
-> a file added on the left AND the right, I want the right one (theirs;
-> the one coming from the 4.3 branch). Even though the branches are
-> unrelated in terms of their history, I want the net effect of the
-> rebase to essentially reflect the files on 4.3 itself. If a file isn't
-> present on HEAD, delete it. If a file exists on REBASE_HEAD but not on
-> HEAD, then add it. If the same file exists on both, favor the one on
-> REBASE_HEAD.
->
-> But I don't see a way of doing that. I tried `git checkout --theirs .`
-> and `git checkout REBASE_HEAD -- .` but this doesn't work with all
-> conflict types.
->
-> Can anyone provide some advice on how to properly restructure this
-> repository to create some ancestry, as if all along a `master` existed
-> and all release branches were based on this in a linear fashion?
+The alternative is to hide sparse:path= support behind a flag which is disabled
+by default, but I don't recommend doing that just to have an excuse to include
+the URL-encoding logic.
 
-We don't have a merge strategy to do this, but should. I had a WIP patch
-for this here that I haven't picked up:
-https://public-inbox.org/git/87sh7sdtc1.fsf@evledraar.gmail.com/
+Thank you for cleaning up.
 
-But you can emulate the same thing with "read-tree" and
-"commit". I.e. manually craft a commit with plumbing that diverges from
-the "master" branch, then instead of stock "rebase" write some loop
-where you keep using "read-tree" to read what you want to stage into the
-index from the existing branched commits, then the equivalent of "git
-commit -c" etc. to commit it.
+>  	} else if (skip_prefix(arg, "sparse:path=", &v0)) {
+> -		filter_options->choice = LOFC_SPARSE_PATH;
+> -		filter_options->sparse_path_value = strdup(v0);
+> -		return 0;
+> +		if (errbuf) {
+> +			strbuf_addstr(
+> +				errbuf,
+> +				_("sparse:path filters are now disabled"));
+
+This wording may leave room for misunderstanding, since it sounds a little like
+the filter can be re-enabled somehow. Maybe you can say "sparse:path filters
+support has been dropped [optional: 'for security reasons' etc.]"
+
+> +		}
+> +		return 1;
+>  	}
+>  	/*
+>  	 * Please update _git_fetch() in git-completion.bash when you
+
+As the comment states, don't forget to update git-completion.bash :)
