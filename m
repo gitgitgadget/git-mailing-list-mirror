@@ -8,56 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B3731F462
-	for <e@80x24.org>; Fri, 24 May 2019 12:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0C31F462
+	for <e@80x24.org>; Fri, 24 May 2019 12:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391509AbfEXMXu (ORCPT <rfc822;e@80x24.org>);
+        id S2391500AbfEXMXu (ORCPT <rfc822;e@80x24.org>);
         Fri, 24 May 2019 08:23:50 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45508 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391244AbfEXMXu (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42163 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391289AbfEXMXu (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 May 2019 08:23:50 -0400
-Received: by mail-ed1-f67.google.com with SMTP id g57so14086722edc.12
-        for <git@vger.kernel.org>; Fri, 24 May 2019 05:23:49 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id l25so14108489eda.9
+        for <git@vger.kernel.org>; Fri, 24 May 2019 05:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FQZHA8T/68mYgZ+JgAHcGu0ZzENuqCsFXTL+HmtPL9Y=;
-        b=DpX60qNs1IvkNplvibZ6DfWNNyOhhZDhwmPA7i/Fxi0tcLudwy0Q7jn7N8v8a0mWyN
-         5eTV59LZhxnFCNZvgp+YSDw3Teh/lMzQGDTMx7vQAn96uyhbWfPfdfXxcQfnV7iJz9js
-         HG7kFd62t1drEKkbbJ7KtB3d2hfcjhRusg6/tG9nLHr/hwFCeXhYZt+Ndf9iCqO3NYx7
-         kJ9DF4gDa717lz9BR3h0Ix+k8MoQFPtSDZFJ8QvrNXAb9XlOuRspb5Su7wacVFWmNJ06
-         aa8KsyNS5WOQak9bxii+kmTpvgzi7+KOy+JcLuK3d10TsNBwzpKde6peV2YjljSnYKPL
-         oHNw==
+        bh=CgOZPV9l5cjUckmd1qbMi96Bug1liWqGmAlp/eN3OUc=;
+        b=AlJcDyoyzNq3BaMyj5e8H4vQiaps2vEy8IVW/+4sbzXsPfKOcAHKakrprfl8Qp1D32
+         S0PTnct6G84ioOdBJ64EvPk2lYnu4bENqFvDdJc1FM1vi0WKNtRDBNlWoKfeOdC4c6S4
+         0DWlc+Qvgq2Icw69rUqbr6ryH1tk1oRpYd4rbwOePrO2GPua1NteusUoja3KvjXCSjO3
+         M6KslBEDzGN6+mfhM2Q5zLoMgg8LeBkcCpairv+spD/Uzecs7pkMHnp8b0OysJTOtVsz
+         ep6n2YcdG+DTAd7+ASjngeVV+8o2Ao5eXgOmXn5ejrcQ8nE/85EyVvYmWyLiCxQ/jyXe
+         RjyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FQZHA8T/68mYgZ+JgAHcGu0ZzENuqCsFXTL+HmtPL9Y=;
-        b=RYYGCnQRqgccpkkey7PDv9jQmPsgy9a3kH1jo+n474YDkaKDB1uRIpt6uV98i2LOMD
-         1+ee5Ckkv+s1l9/jxSoAW/dKckg2+tTOPIQ8BDiqPofMwK0UCUp8cX2zxf+MbhEkWOUO
-         eEfuyQS40YHOu039WA1iu2934BB14gRefzRF1L35Ny6chLmncaKZ3xODrGkbvaEt/IZ7
-         Kjg5ioRdcY1T3FSr2UM5dRuZlqtdXT4e48AlaOMKfCPw4HXDZDBCCwQH1FaEYm2uZ5b4
-         NQa2TjSCSGapUAn5p/tuw8zzCwXt4nYmhkZi39MpN273KOFBkoyT2qIzSFC1vFi2O+y5
-         lZiQ==
-X-Gm-Message-State: APjAAAVD6+/zwYXhljlugkRJwyrvIsb5ewMvwXJa3T9jaiOetYPotSEJ
-        s867aPTTVCoANJpA2OFFr3BQ918j
-X-Google-Smtp-Source: APXvYqz9aiE7kk5DJzRzTxKo0ifso3Z0z2R7jdruJ2n66z9YSXXSL7gIDO5kByZjSk1eK0CGfc9iRA==
-X-Received: by 2002:a17:906:4e87:: with SMTP id v7mr75338446eju.150.1558700628692;
-        Fri, 24 May 2019 05:23:48 -0700 (PDT)
+        bh=CgOZPV9l5cjUckmd1qbMi96Bug1liWqGmAlp/eN3OUc=;
+        b=qjPE5hT3ylI5amkw2AG7UaGNTNxYNwUSkbsbDd3MND+P9KxQKByvoHergLRA3uvQJT
+         2PYgBzDc9tnSAYwi2cXQyPXH973De1jccgyW4mU3QUPPWDPRpFY8itwVirUiaZSSfRl1
+         ymiJgKOe/1pMv0JAca5FdvpbeDanVBuIzOOH3dYFBU7BF8u/yU/x0Ov9iAx4rH4/7aNB
+         Rs2p5A4AifJrOqw+9pHIoGBVEzDZPWKis2H2av18WnyjpBbv8fcIHF7LBbdJ9EBZr69p
+         sl7tuA1kZ9w+alL/3vzAynrw8IFwIV6LLr5lk/lLC4qq3FwpMkRICWZcWI0lTHxDaUCZ
+         f8aw==
+X-Gm-Message-State: APjAAAUuOnwZ6ntcgYDpdg8ZKumNlXGf9cWF9yogU2PdCmB3Tll1RaxJ
+        ykSFthbiajZLZKMq/DaH+gvQoNiU
+X-Google-Smtp-Source: APXvYqyW804Yb4uTN7xLVkepgV08HIr6CxtnwriiartYu1ermiT+UFFMcK6GIHFMPMIm6EEwDFHgsA==
+X-Received: by 2002:aa7:c403:: with SMTP id j3mr69026022edq.144.1558700627799;
+        Fri, 24 May 2019 05:23:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x40sm699592edx.52.2019.05.24.05.23.47
+        by smtp.gmail.com with ESMTPSA id mh2sm346604ejb.33.2019.05.24.05.23.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 May 2019 05:23:48 -0700 (PDT)
-Date:   Fri, 24 May 2019 05:23:48 -0700 (PDT)
-X-Google-Original-Date: Fri, 24 May 2019 12:23:45 GMT
-Message-Id: <4f988adc1879cdf5d772b805c4b4d5b3f1a5612b.1558700625.git.gitgitgadget@gmail.com>
+        Fri, 24 May 2019 05:23:47 -0700 (PDT)
+Date:   Fri, 24 May 2019 05:23:47 -0700 (PDT)
+X-Google-Original-Date: Fri, 24 May 2019 12:23:44 GMT
+Message-Id: <232eb7a33bbb4863a1ae69000186f7338cdcaa63.1558700625.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.223.git.gitgitgadget@gmail.com>
 References: <pull.223.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] mark_fsmonitor_valid(): mark the index as changed if
- needed
+Subject: [PATCH 1/2] fill_stat_cache_info(): prepare for an fsmonitor fix
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,118 +72,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Without this bug fix, t7519's four "status doesn't detect unreported
-modifications" test cases would fail occasionally (and, oddly enough,
-*a lot* more frequently on Windows).
-
-The reason is that these test cases intentionally use the side effect of
-`git status` to re-write the index if any updates were detected: they
-first clean the worktree, run `git status` to update the index as well
-as show the output to the casual reader, then make the worktree dirty
-again and expect no changes to reported if running with a mocked
-fsmonitor hook.
-
-The problem with this strategy was that the index was written during
-said `git status` on the clean worktree for the *wrong* reason: not
-because the index was marked as changed (it wasn't), but because the
-recorded mtimes were racy with the index' own mtime.
-
-As the mtime granularity on Windows is 100 nanoseconds (see e.g.
-https://docs.microsoft.com/en-us/windows/desktop/SysInfo/file-times),
-the mtimes of the files are often enough *not* racy with the index', so
-that that `git status` call currently does not always update the index
-(including the fsmonitor extension), causing the test case to fail.
-
-The obvious fix: if we change *any* index entry's `CE_FSMONITOR_VALID`
-flag, we should also mark the index as changed. That will cause the
-index to be written upon `git status`, *including* an updated fsmonitor
-extension.
-
-Side note: Even though the reader might think that the t7519 issue
-should be *much* more prevalent on Linux, given that the ext4 filesystem
-(that seems to be used by every Linux distribution) stores mtimes in
-nanosecond precision. However, ext4 uses `current_kernel_time()` (see
-https://unix.stackexchange.com/questions/11599#comment762968_11599; it
-is *amazingly* hard to find any proper source of information about such
-ext4 questions) whose accuracy seems to depend on many factors but is
-safely worse than the 100-nanosecond granularity of NTFS (again, it is
-*horribly* hard to find anything remotely authoritative about this
-question). So it seems that the racy index condition that hid the bug
-fixed by this patch simply is a lot more likely on Linux than on
-Windows. But not impossible ;-)
+We will need to pass down the `struct index_state` to
+`mark_fsmonitor_valid()` for an upcoming bug fix, and this here function
+calls that there function, so we need to extend the signature of
+`fill_stat_cache_info()` first.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff-lib.c      | 2 +-
- fsmonitor.h     | 5 +++--
- preload-index.c | 2 +-
- read-cache.c    | 4 ++--
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ apply.c                | 2 +-
+ builtin/update-index.c | 2 +-
+ cache.h                | 2 +-
+ entry.c                | 2 +-
+ read-cache.c           | 6 +++---
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index a838c219ec..61812f48c2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -232,7 +232,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 
- 		if (!changed && !dirty_submodule) {
- 			ce_mark_uptodate(ce);
--			mark_fsmonitor_valid(ce);
-+			mark_fsmonitor_valid(istate, ce);
- 			if (!revs->diffopt.flags.find_copies_harder)
- 				continue;
+diff --git a/apply.c b/apply.c
+index f15afa9f6a..4992eca416 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4310,7 +4310,7 @@ static int add_index_file(struct apply_state *state,
+ 						     "created file '%s'"),
+ 						   path);
+ 			}
+-			fill_stat_cache_info(ce, &st);
++			fill_stat_cache_info(state->repo->index, ce, &st);
  		}
-diff --git a/fsmonitor.h b/fsmonitor.h
-index 8489fa3244..739318ab6d 100644
---- a/fsmonitor.h
-+++ b/fsmonitor.h
-@@ -49,9 +49,10 @@ void refresh_fsmonitor(struct index_state *istate);
-  * called any time the cache entry has been updated to reflect the
-  * current state of the file on disk.
-  */
--static inline void mark_fsmonitor_valid(struct cache_entry *ce)
-+static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache_entry *ce)
- {
--	if (core_fsmonitor) {
-+	if (core_fsmonitor && !(ce->ce_flags & CE_FSMONITOR_VALID)) {
-+		istate->cache_changed = 1;
- 		ce->ce_flags |= CE_FSMONITOR_VALID;
- 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
- 	}
-diff --git a/preload-index.c b/preload-index.c
-index e73600ee78..ed6eaa4738 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -78,7 +78,7 @@ static void *preload_thread(void *_data)
- 		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY|CE_MATCH_IGNORE_FSMONITOR))
- 			continue;
- 		ce_mark_uptodate(ce);
--		mark_fsmonitor_valid(ce);
-+		mark_fsmonitor_valid(index, ce);
- 	} while (--nr > 0);
- 	if (p->progress) {
- 		struct progress_data *pd = p->progress;
+ 		if (write_object_file(buf, size, blob_type, &ce->oid) < 0) {
+ 			discard_cache_entry(ce);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 27db0928bf..3f8cc6ccb4 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -280,7 +280,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+ 	memcpy(ce->name, path, len);
+ 	ce->ce_flags = create_ce_flags(0);
+ 	ce->ce_namelen = len;
+-	fill_stat_cache_info(ce, st);
++	fill_stat_cache_info(&the_index, ce, st);
+ 	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
+ 
+ 	if (index_path(&the_index, &ce->oid, path, st,
+diff --git a/cache.h b/cache.h
+index b4bb2e2c11..bf20337ef4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -826,7 +826,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st);
+ int match_stat_data_racy(const struct index_state *istate,
+ 			 const struct stat_data *sd, struct stat *st);
+ 
+-void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
++void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, struct stat *st);
+ 
+ #define REFRESH_REALLY		0x0001	/* ignore_valid */
+ #define REFRESH_UNMERGED	0x0002	/* allow unmerged */
+diff --git a/entry.c b/entry.c
+index 0e4f2f2910..53380bb614 100644
+--- a/entry.c
++++ b/entry.c
+@@ -373,7 +373,7 @@ static int write_entry(struct cache_entry *ce,
+ 			if (lstat(ce->name, &st) < 0)
+ 				return error_errno("unable to stat just-written file %s",
+ 						   ce->name);
+-		fill_stat_cache_info(ce, &st);
++		fill_stat_cache_info(state->istate, ce, &st);
+ 		ce->ce_flags |= CE_UPDATE_IN_BASE;
+ 		mark_fsmonitor_invalid(state->istate, ce);
+ 		state->istate->cache_changed |= CE_ENTRY_CHANGED;
 diff --git a/read-cache.c b/read-cache.c
-index d3b43ae3ba..32816763bd 100644
+index 22e7b9944e..d3b43ae3ba 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -204,7 +204,7 @@ void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, st
+@@ -195,7 +195,7 @@ int match_stat_data(const struct stat_data *sd, struct stat *st)
+  * cache, ie the parts that aren't tracked by GIT, and only used
+  * to validate the cache.
+  */
+-void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
++void fill_stat_cache_info(struct index_state *istate, struct cache_entry *ce, struct stat *st)
+ {
+ 	fill_stat_data(&ce->ce_stat_data, st);
  
- 	if (S_ISREG(st->st_mode)) {
- 		ce_mark_uptodate(ce);
--		mark_fsmonitor_valid(ce);
-+		mark_fsmonitor_valid(istate, ce);
- 	}
- }
+@@ -728,7 +728,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 	memcpy(ce->name, path, namelen);
+ 	ce->ce_namelen = namelen;
+ 	if (!intent_only)
+-		fill_stat_cache_info(ce, st);
++		fill_stat_cache_info(istate, ce, st);
+ 	else
+ 		ce->ce_flags |= CE_INTENT_TO_ADD;
  
-@@ -1432,7 +1432,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 			 */
- 			if (!S_ISGITLINK(ce->ce_mode)) {
- 				ce_mark_uptodate(ce);
--				mark_fsmonitor_valid(ce);
-+				mark_fsmonitor_valid(istate, ce);
- 			}
- 			return ce;
- 		}
+@@ -1447,7 +1447,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
+ 	updated = make_empty_cache_entry(istate, ce_namelen(ce));
+ 	copy_cache_entry(updated, ce);
+ 	memcpy(updated->name, ce->name, ce->ce_namelen + 1);
+-	fill_stat_cache_info(updated, &st);
++	fill_stat_cache_info(istate, updated, &st);
+ 	/*
+ 	 * If ignore_valid is not set, we should leave CE_VALID bit
+ 	 * alone.  Otherwise, paths marked with --no-assume-unchanged
 -- 
 gitgitgadget
+
