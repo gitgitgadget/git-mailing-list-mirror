@@ -2,115 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21E751F462
-	for <e@80x24.org>; Fri, 24 May 2019 07:36:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C85B61F609
+	for <e@80x24.org>; Fri, 24 May 2019 07:55:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388962AbfEXHgE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 03:36:04 -0400
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:36623 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388911AbfEXHgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 03:36:04 -0400
-Received: by mail-oi1-f194.google.com with SMTP id y124so6352265oiy.3
-        for <git@vger.kernel.org>; Fri, 24 May 2019 00:36:03 -0700 (PDT)
+        id S2389046AbfEXHzJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 03:55:09 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42941 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388911AbfEXHzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 03:55:09 -0400
+Received: by mail-wr1-f68.google.com with SMTP id l2so8921880wrb.9
+        for <git@vger.kernel.org>; Fri, 24 May 2019 00:55:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EAm536cmBgNzuQERm9w0Z4eOb4/onkapn1BQMInDP2M=;
-        b=e1aQab9mqR3WCsBqPOQZLcEeoK4jg+DmtwGylFcNn5Q+E2Bek2pwnvqnCHho1IS/dT
-         rPmm6zFUfECkuTzVPJ38O6AeszxCKPbMyCC4Y7hS1ULUPvHleKdJZ9/kpZr2AGmDMllw
-         iIaapmsWuayRvA3Lbuxb35dW354OWcLxV4hsIc2khurRv6EZv3giNsnVRxKdEOX4DbMe
-         xUd34iMEeOnxIX4KSdrS57coodNBJ3PRiE8/wMm92YW6CxTwYXLfavFiQcHEF7uI4b+Y
-         C00wisyblvpG1QCZR3Ri5xRoqMvhOQjy0nF8b779y5xcvNOPOt14NYlI4aAZGlBdT92P
-         HCWA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=l/b7RBnMj09xEsudonwbnkUy0XDTNtKU797h/yU1VV0=;
+        b=Sv6bqy/EZv/477YN3boqinVkpuj21G7WbjXpGZ3J9H8Qc37vUvJT+Sl1K5cBBEurQW
+         SmxkLUzQg0iH+kiBWqSuDZGAAXBWpx50o85Lx/T3oqXIjPIB036T4tV2z4mSy6REPS9m
+         RvD3CFKqwSly0xbDc+JYg9N/OtlLF+3CNnNSCQC7oY+7IJmAEiFiKK7xar/vsy90jW6W
+         0IvADg7ERbBalO0otGTaNn86H+QWhd34HRxVNPYGVarjlg4ZcKNRe3sU8kkDj9ysmzM6
+         Q9q8/QIdodxP7hTPgPC9jVTdRrK3+EuT2fUO3xW6g7OSZmHlsGGJPNch+QnFeTPu/BnM
+         EBww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EAm536cmBgNzuQERm9w0Z4eOb4/onkapn1BQMInDP2M=;
-        b=kFvsZqNtYSxK4DoMz5PEGNDwi2ubbT9kiGSokAmBrB7CMzF3q/CpeC+uiG7173qrPe
-         bc8fz4z0euwdvQuen01W4cSR8Z90gaM9u3Y+Q+dCz6pSK5j502O7g2Y2UGlveuDzFcbO
-         keR9ZYCZnyPBtXPV6C+X9vPq37ahWPMGd6JEka+JBzVyISdPYQPadSqYLfSnD65vY99a
-         dDOb4F2yKuhPc4yTviP2/Iv2vLPRCRVsDhEvGwk8y1It3TIRgPTMNzlx/qplxH/VAtju
-         sa0bwf3BKWLKnwXMIudapxT/5grtLfC8GdwjDdODfshn6t5W/kNLxIEHFGmzGbEAJauC
-         FuLA==
-X-Gm-Message-State: APjAAAXxSG07L+lcsacnIhvPc1czo8ILkJlTuiREnblXjA+/QO8b+6w+
-        kI8Zd4DhME8rjDlYRDP18QP4oPqspOyLijh35Wo=
-X-Google-Smtp-Source: APXvYqxTcdI3/3lVrhrvj9OysUB3qAhFP3IB7nRxSpOL8pIFArL8XTAukaDxm4avqaPmgmO5jUm/bJE5bH78ZUeZHgU=
-X-Received: by 2002:aca:b403:: with SMTP id d3mr5539974oif.179.1558683363281;
- Fri, 24 May 2019 00:36:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
- <20190524070644.GF25694@sigill.intra.peff.net>
-In-Reply-To: <20190524070644.GF25694@sigill.intra.peff.net>
-From:   Keegan Carruthers-Smith <keegan.csmith@gmail.com>
-Date:   Fri, 24 May 2019 09:35:51 +0200
-Message-ID: <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
-Subject: Re: git archive generates tar with malformed pax extended attribute
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=l/b7RBnMj09xEsudonwbnkUy0XDTNtKU797h/yU1VV0=;
+        b=H9u7qp5l9iSxSdP7+w1u7Sar4oWbb8J1T0wr+tFJUSH82d+bsW/5Kz5lbJRyk6rbfN
+         Oa6CWHryzgA9QbWGZfMaKb8yCBFzc1LMtFfRKBPzX3de2W8dKiOlwZ+XjXNLDsh9yu09
+         bWghVtYR1a3LLzwYWtO5Dy+Ebtg/Zb2RcWQaGarnPzGxsh7VDetnI02/7r0w7Kg1NbIV
+         uKw7Gu4Vw7MbHjq6HySXdbfEl04lljR/CHSprSYy6rI0GuPVGoXxXr74LyNxUkgLTfnM
+         AU0Nhjo44KB/y9GTSEXpnjCVXzlzbGKKwqEBTbtb55+BRIgu9NCQGvJyenWTJY7KZqr9
+         YTIg==
+X-Gm-Message-State: APjAAAXlGqzH1FodlNO70pD6rM9ogCnhnUfcrFiZBiJfZGRybtU8b3b8
+        M+Yoo0esNnMNCKvHOgepDzFv0ZEIE+M=
+X-Google-Smtp-Source: APXvYqzNk4d19qea1ux9DuUdWPsg4HXeHRav0YsTo//qE/p/q5dNAELchAnPqdIgvp+kZOqd2fJSwg==
+X-Received: by 2002:adf:e30d:: with SMTP id b13mr46915859wrj.246.1558684506982;
+        Fri, 24 May 2019 00:55:06 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id c131sm1556109wma.31.2019.05.24.00.55.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 24 May 2019 00:55:06 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+References: <20190310233956.GB3059@sigill.intra.peff.net> <20190312031303.5tutut7zzvxne5dw@dcvr> <20190312104954.GA2023@sigill.intra.peff.net> <20190313015133.n7f7lyujnlwfytre@dcvr> <20190313145417.GA24101@sigill.intra.peff.net> <20190314091254.nescpfp3n6mbjpmh@dcvr> <87zhoz8b9o.fsf@evledraar.gmail.com> <20190410225721.GA32262@sigill.intra.peff.net> <20190523113031.GA17448@sigill.intra.peff.net> <87tvdlt1jp.fsf@evledraar.gmail.com> <20190524072724.GH25694@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190524072724.GH25694@sigill.intra.peff.net>
+Date:   Fri, 24 May 2019 09:55:05 +0200
+Message-ID: <87r28offs6.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 24 May 2019 at 09:06, Jeff King <peff@peff.net> wrote:
+
+On Fri, May 24 2019, Jeff King wrote:
+
+> On Thu, May 23, 2019 at 09:26:34PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> On Fri, May 24, 2019 at 08:45:23AM +0200, Keegan Carruthers-Smith wrote:
+>> > I spent a while thinking and experimenting with this tonight. The resu=
+lt
+>> > is the patch below. =C3=86var, do you still have a copy of the repo th=
+at
+>> > misbehaved? I'd be curious to see how it fares.
+>>
+>> No, sorry. I think we could make an artificial test to emulate it, which
+>> would be something like:
+>>
+>>  * ~1 million commits
+>>  * local clone setup to fetch all branches/tags (default 'git clone')
+>>  * local a bit ahead/behind
+>>  * Have old "main" pack with *.bitmap, bunch of other packs/loose object=
+s without that
+>>  * push try to push the local change upstream (or to a topic branch)
+>>
+>> I tried briefly to emulate this with git.git with:
+>> [...]
+>> But didn't get anywhere, probably because here my topics are all stuff I
+>> have already, and I just have 2x packs.
 >
-> > git archive can generate a malformed tar archive. bsdtar reports the
-> > error "tar: Ignoring malformed pax extended attribute" when reading
-> > the archive. Go's "tar/archive" package also reports the error
-> > "archive/tar: invalid tar header". However, BusyBox's tar does not
-> > report the error (unsure if it just has less error logging).
-> >
-> > I can reproduce this when generating the tar on linux and mac. I
-> > tested this with "git version 2.21.0" and a build of next I did today:
-> > "git version 2.22.0.rc1.257.g3120a18244"
-> >
-> > Reproduction:
-> >
-> >   $ git clone https://github.com/SSW-SCIENTIFIC/NNDD.git
-> >   $ cd NNDD
-> >   $ git archive --format tar c21b98da2ca7f007230e696b2eda5da6589fe137
-> > | tar tf - > /dev/null
-> >   tar: Ignoring malformed pax extended attribute
-> >   tar: Error exit delayed from previous errors.
+> Yeah, I haven't been able to find a reproduction for this problem at
+> will. The bitmaps are _supposed_ to be sprinkled around through the
+> commit graph so that we don't have to walk far. But presumably in your
+> case that was not so.
 >
-> I can't reproduce on Linux, using GNU tar (1.30) nor with bsdtar 3.3.3
-> (from Debian's bsdtar package). What does your "tar --version" say?
+> I'm not sure what tickles the bitmap-writer to fail so hard. Is it
+> having too many refs? Weird patterns in the graph? Just a ton of
+> commits?
 
-bsdtar 2.8.3 - libarchive 2.8.3
+Ah, why did only this ancient (big) pack have a bitmap?
 
-> Git does write a pax header with the commit id in it as a comment.
-> Presumably that's what it's complaining about (but it is not malformed
-> according to any tar I've tried). If you feed git-archive a tree rather
-> than a commit, that is omitted. What does:
->
->   git archive --format tar c21b98da2^{tree} | tar tf - >/dev/null
->
-> say? If it doesn't complain, then we know it's indeed the pax comment
-> field.
+The bitmap writer had never failed, this was just a repository where
+some automation (on a dev/staging box) cloned a repo, and someone had
+once run a manual "repack" to make make a pack with a bitmap.
 
-It also complains
+Then as time passed that pack stayed around, and re-looking at this that
+could have only happened because I had gc.bigPackThreshold turned on.
 
-  $ git archive --format tar c21b98da2^{tree} | tar tf - >/dev/null
-  tar: Ignoring malformed pax extended attribute
-  tar: Error exit delayed from previous errors.
+I.e. without that we'd have eventually done a full repack, so the bitmap
+would have gone away.
 
-Some more context: I work at Sourcegraph.com We mirror a lot of repos
-from github.com. We usually interact with a working copy by running
-git archive on it in our infrastructure. This is the first repository
-that I have noticed which produces this error. An interesting thing to
-note is the commit metadata contains a lot of non-ascii text which was
-my guess at what my be tripping up the tar creation.
+So getting the repo into that state was a series of unlikely events.
 
-Keegan
+I think to the extent that this is an issue we can reproduce in the
+future the proper fix for it in lieu of some easy fix in the bitmap code
+would be to just teach "gc" to unlink old *.bitmap files if we detect
+they're too stale.
+
+I.e. we don't need to deal gracefully with some case where the bitmaps
+just cover some tiny part of the graph, we can just teach "gc" to either
+update them, or (if we're not currently writing them) unlink them.
+
+That seems to me to be a good idea in general, not just with bitmaps but
+also the commit graph. If we're doing a GC and our current settings
+aren't such that we'd update those files, shouldn't we just unlink them?
