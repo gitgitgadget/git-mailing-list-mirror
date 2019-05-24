@@ -8,118 +8,130 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A2311F462
-	for <e@80x24.org>; Fri, 24 May 2019 10:08:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9051F462
+	for <e@80x24.org>; Fri, 24 May 2019 10:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390429AbfEXKI4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 06:08:56 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:35289 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389806AbfEXKI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 06:08:56 -0400
-Received: by mail-wr1-f50.google.com with SMTP id m3so9391082wrv.2
-        for <git@vger.kernel.org>; Fri, 24 May 2019 03:08:55 -0700 (PDT)
+        id S2390419AbfEXKMO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 06:12:14 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35698 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390230AbfEXKMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 06:12:14 -0400
+Received: by mail-wm1-f65.google.com with SMTP id w9so2510060wmi.0
+        for <git@vger.kernel.org>; Fri, 24 May 2019 03:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=vgU3unCKfwkZbWoqMR3xsvHoaSxkppz/SRe7vfp0QQM=;
-        b=HxVodAXwyE3YswDFV4b32/cs7nk/A32D8BmMdtOEuYdhRGQ7a4stMUuZo3Dn3mmtXz
-         ID44e5M+qFB6bsie66CqburKDE4w2VX8nW+3RIg2UXtBTOjcogAX8z3kk/27jWa5DGkv
-         i41Qzyxtw7vO8rk0i5Md/Zq24J1cWE4t96kp22D9niKV+ug/C0BQsABEwe/n+ltUIPRQ
-         DcW4hMCiYkxc7ZSsPkniTI1xOLZkhHxYJTAzDYk74gAWMINJ6qW/lEODGbzfm7KkBr+E
-         LBbpKqW1DZlmCD9n381K1M3OQkARpghvfX/mzqc8yKQZXQtRzSCnuWnCggbsxFOnojMz
-         0KqA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=cNKZoXwZ0hkZiB77J7N5Y6KjG+/cNFsE3t0JruRXMZU=;
+        b=P0N/PMVuV0DJkK24XKZ0U0UtLoIDRGs5VEzAGjURgkOn1P8m5Vn5I9pm0kikjGDkAF
+         6X17PCQ+4lNKKRMQHXccs4UPR2B7lXpDz2Xk5gsZTDq5AqEU9ETnSCB33/JFIehE6j6T
+         qHauVp+nnnCmkEYPMvNo9JO27DuE/PnfbZRZbfhquWKVfH7x4b2N5kEB7fCoiiA3kghF
+         qw4oRkIujNLgHZ34lH8Q70E+Ek8662MVbzYPVM9g/zbsDQh8e6amV+xUtgGRNwy8Vq1U
+         L1qEeTcWFiaFs01pDQcOC6cQ9zEn7hTx2/iqnjueJC5uU+aivpEHy5x8bLBKc3+eUz3V
+         cH4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=vgU3unCKfwkZbWoqMR3xsvHoaSxkppz/SRe7vfp0QQM=;
-        b=W0JMS91YcBjwFVBBc2bgPbkTAnKoTJamQq9IpOIOnHtpys/1Lye3jW9Yjy5gyirs+Y
-         XeCl8Avpusx332TsTzq4UFZ9YzjQjJE+vq9dc5MYglZaVqJcHcJlI6xYxpJboAbX0bDz
-         cQeYmwfliAeU9+RE57gQHpHhhj0fjy2HM2O5WcpPynOWDxr1nBQlOwB598ZNaRDyWwRH
-         ZUcm8g1Ofvkc07YsPwV3bSurhO087TDQAfEG/YRUhki9zsFFzQ2gpIlj8CmV8OhbVAQd
-         7HGIhS7zaRdIQ9ntOqU9llRad+EdOUCOJzsZV/O4duKq/96e55s3Kqa20Yc2Rla+K69S
-         e1bA==
-X-Gm-Message-State: APjAAAU8Aogn1vHapMzk/UIAYHE9jYD3WTemEiLWx+vFhlE0gOdABD4n
-        WoV4KVrAj/8YwDawjDapZKVsRwuj+QE=
-X-Google-Smtp-Source: APXvYqzQfsb7ClWWZekeVKIgq2wZ2iJpqGuG/QdUN10VlbrgsCLpy4ePeHWr6i8MrHFsKOIK3kLw9Q==
-X-Received: by 2002:adf:9c8e:: with SMTP id d14mr10393533wre.215.1558692534550;
-        Fri, 24 May 2019 03:08:54 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=cNKZoXwZ0hkZiB77J7N5Y6KjG+/cNFsE3t0JruRXMZU=;
+        b=oyJYU+lZ2l5dvngrA1DwFRqT/av14MZ6s8xq8bUV5z0xqYJw1EPUYj2XWv+NuRbd5J
+         QEf4DBidFNNPc8uAjkErtkA6ZKDlu9QIaHYrERzSH4M4puUbFG8Fye65lYlxvTohPgpX
+         CcGs7h6Yb0ORPkgOFdnN7fFydndhrobYAlf/0EZG+qFrcWEVe3cDCV4ckxsX6FOlFTWu
+         /n8xbX/3l306hxiHv5kR1l3gZKneoURfQ9s0dd+HsIgshElvdgEZmhb6vobUDhpMnlm0
+         0rzvFyIQQtZRqNUSk2q7KrRt0YI+PHPfPRAbtdBZljMkWAZ2vBw4Zvz3XyviY/y0kCKZ
+         7r+w==
+X-Gm-Message-State: APjAAAVB26zwenAC7LAfUnA/Iulg6L+UT6E250ypIgXpTeItquPJqMIt
+        wG/N4hQIkH4LeqTRFbV64+A=
+X-Google-Smtp-Source: APXvYqyZjy8yPW1y69yJTZ4SarxA4jLn2pj6YvdybbbteptWu7FE3+5rq4bJf618P0RAOgbp1k3eLQ==
+X-Received: by 2002:a1c:7503:: with SMTP id o3mr16204480wmc.28.1558692732013;
+        Fri, 24 May 2019 03:12:12 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b10sm3181716wrh.59.2019.05.24.03.08.53
+        by smtp.gmail.com with ESMTPSA id x64sm3382061wmg.17.2019.05.24.03.12.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 03:08:53 -0700 (PDT)
+        Fri, 24 May 2019 03:12:10 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Incorrect diff-parseopt conversion?
-References: <82f79cd9-5273-b9a4-744d-f5fa95dd1f47@ramsayjones.plus.com> <CACsJy8BHeVDDnEYXaOAPtEoesTVNCiPGSgnJYjtL6aYSU0-J5A@mail.gmail.com> <791da98b-4065-e477-92cb-ceac80cc04e6@ramsayjones.plus.com> <CACsJy8AzY4EO_io_8R41uVDsbCj+_Fn8YOQ8e+JmAC27dFW7UA@mail.gmail.com>
+To:     Jakub Narebski <jnareb@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Adam Roben <aroben@apple.com>,
+        Bryan Larsen <bryan.larsen@gmail.com>,
+        "Matthias Urlichs" <smurf@smurf.noris.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/3] hash-object doc: elaborate on -w and --literally promises
+References: <20190520215312.10363-1-avarab@gmail.com> <20190520215312.10363-3-avarab@gmail.com> <20190522050839.GB29933@sigill.intra.peff.net> <86woigp3ro.fsf@gmail.com>
 User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CACsJy8AzY4EO_io_8R41uVDsbCj+_Fn8YOQ8e+JmAC27dFW7UA@mail.gmail.com>
-Date:   Fri, 24 May 2019 12:08:53 +0200
-Message-ID: <87mujcf9l6.fsf@evledraar.gmail.com>
+In-reply-to: <86woigp3ro.fsf@gmail.com>
+Date:   Fri, 24 May 2019 12:12:10 +0200
+Message-ID: <87lfywf9fp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, May 24 2019, Duy Nguyen wrote:
+On Fri, May 24 2019, Jakub Narebski wrote:
 
-> On Wed, May 22, 2019 at 7:35 AM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>> On Mon, May 20, 2019 at 11:53:11PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
 >>
+>>> Clarify the hash-object docs to explicitly note that the --literally
+>>> option guarantees that a loose object will be written, but that a
+>>> normal -w ("write") invocation doesn't.
 >>
+>> I had to double-check here: you mean that _when_ we are writing an
+>> object, "--literally" would always write loose, right?
 >>
->> On 22/05/2019 01:11, Duy Nguyen wrote:
->> > On Wed, May 22, 2019 at 2:56 AM Ramsay Jones
->> > <ramsay@ramsayjones.plus.com> wrote:
->> >>
->> >> Hi Duy,
->> >>
->> >> I am in the middle of rebasing a long running branch onto
->> >> current master (v2.22.0-rc1) and noticed something odd with
->> >> commit af2f368091 ("diff-parseopt: convert --output-*",
->> >> 2019-02-21).
->> >>
->> >> As part of the branch I am rebasing, I have defined a new
->> >> OPT_LL_CALLBACK() macro[1], which I had intended to apply to
->> >> the 'output' option to diff. However, commit af2f368091
->> >> defines that option thus:
->> >>
->> >> +               { OPTION_CALLBACK, 0, "output", options, N_("<file>"),
->> >> +                 N_("Output to a specific file"),
->> >> +                 PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
->> >>
->> >> Note that the 'option type' is given as OPTION_CALLBACK, not
->> >> as OPTION_LOWLEVEL_CALLBACK. Is this intended?
->> >
->> > Yeah I think this is correct (phew!).
+>>> At first I thought talking about "loose object" in the docs was a
+>>> mistake in 83115ac4a8 ("git-hash-object.txt: document --literally
+>>> option", 2015-05-04), but as is clear from 5ba9a93b39 ("hash-object:
+>>> add --literally option", 2014-09-11) this was intended all along.
 >>
->> OK, I just had a look at the code in parse-options.c.
->> Hmm, somewhat ugly! :-D
+>> Hmm. After reading both of those, I do think it's mostly an
+>> implementation detail. I would not be at all surprised to find that the
+>> test suite relies on this (e.g., cleaning up with rm
+>> .git/objects/ab/cd1234). But I suspect we also rely on that for the
+>> non-literal case, too. ;)
+>>
+>> So I am on the fence. In some sense it doesn't hurt to document the
+>> behavior, but I'm not sure I would want to lock us in to any particular
+>> behavior, even for --literally. The intent of the option (as I recall)
+>> really is just "let us write whatever trash we want as an object,
+>> ignoring all quality checks".
 >
-> Yeah it's a bit hackish. The problem is parse-options (and also config
-> parser) does not allow passing user data to the callback. Changing it
-> would affect all callsites at once. It's just too scary for me to do
-> it and I chose an uglier way but with smaller impact.
+> I thik that this implemetation detail of `--literally` is here to stay;
+> how would you otherwise fix the issue if garbage object makes Git crash?
+>
+> However, I would prefer to have options state _intent_; if there is
+> legitimate need for a tool that creates loose objects, it would be
+> better to have separate `--loose` option to `git hash-object` (which
+> would imply `-w`, otherwise it doesn't have sense).
 
-As an aside because I've sometimes wanted to pass such arbitrary data to
-the callback.
+I wonder if we can just remove this option and replace it with a
+GIT_TEST_* env variable, or even a test-tool helper. I can't see why
+anyone other than our own test suite wants this, and that's why it was
+added. So why document it & expose it in a plumbing tool?
 
-Do you mean it's painful to change "struct option" because of all the
-macros around it?
-
-Instead of all callsites, wouldn't that just be a patch simliar to
-bf3ff338a2 ("parse-options: stop abusing 'callback' for lowlevel
-callbacks", 2019-01-27)?
-
-I.e. a special callback that'll be called to return a void* to arbitrary
-data, and then we'll call the callback with that.
-
-Or, just passing it around in a global variable, since we know the flow
-of when we setup the data, and when parse_options() is called.
+>>>  --literally::
+>>> -	Allow `--stdin` to hash any garbage into a loose object which might n=
+ot
+>>> +	Allow for hashing arbitrary data which might not
+>>>  	otherwise pass standard object parsing or git-fsck checks. Useful for
+>>>  	stress-testing Git itself or reproducing characteristics of corrupt or
+>>> -	bogus objects encountered in the wild.
+>>> +	bogus objects encountered in the wild. When writing objects guarantees
+>>> +	that the written object will be a loose object, for ease of debugging.
+>>
+>> I had to read this last sentence a few times to parse it. Maybe a comma
+>> before guarantees would help? Or even:
+>>
+>>   When writing objects, this option guarantees that the written object
+>>   will be a loose object, for ease of debugging.
+>
+> I agree that this reads better.
+>
+> Regards,
