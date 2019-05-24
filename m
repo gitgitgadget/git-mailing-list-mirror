@@ -2,121 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE291F462
-	for <e@80x24.org>; Fri, 24 May 2019 08:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67DE31F462
+	for <e@80x24.org>; Fri, 24 May 2019 08:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389156AbfEXIGA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 04:06:00 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:34766 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388959AbfEXIF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 04:05:59 -0400
-Received: by mail-ed1-f46.google.com with SMTP id p27so13181090eda.1
-        for <git@vger.kernel.org>; Fri, 24 May 2019 01:05:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KTP8xo8bXt3EqCAo6ry32/b5+DzTsRWcd2joGB1ntSU=;
-        b=GTg9NKXI/h5kqekLgssorVwVnMk4c4XGv+/SZVb8+bTyLUVoC1DV7r4G0KQvCt3yCS
-         xEICklUEK45OCyB1LulbqJ3zv3DhX6S0npe82noNDXTq8CEZW55hNrfBVSnu101J82sm
-         J89QjADZn6TxdYJrPHQBMnePv3xtNuWj3kJam8iXGsStXAIBZ3pMdV9daHVih7LSCXeg
-         FZzDdeo2WbDGDQimvaCmBx7PwUzhqCN6D19TNHuNrX66NneZ7g712qeRS3RyiZ7NZMmh
-         hhUyTq3IvSwW6+6pG4DZokXsJHBGoiJRNOxJPr8vv3Y8PSqEVVLNIMaUMJfeiXO1aaDT
-         CujQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KTP8xo8bXt3EqCAo6ry32/b5+DzTsRWcd2joGB1ntSU=;
-        b=qaciEvfVgr8Ahi4EfH2vOECYg1EhUTfKEoEgPZMd0eRiqGiilFmx2b8sTe+Y9FD881
-         czNFgXbOQozbkyWt1xv/bR9pllpEXKpOgscLObljRgKkMywVy8sqAwgagOmLgVyYT+fO
-         Fk3R+HwFbrOvDZYKqmuh3CN5at5V+bZrQ2fjlDhah8OnIuTCPw3pb8CPndlW2FCAaBKo
-         TbRFV+Hr6U23oV+VVvvh9fTPj9QGgtavSw2eEujwAie1bNHzfDNm6f6zpv5XJV2DnYUz
-         LsMo/eRi64b2JGqmnQ7je6Y37tAig7xFi2XvYax21o70aed4jML5CzhpzEFTeapGCZMz
-         eZxg==
-X-Gm-Message-State: APjAAAV12AVYnfQcSI2ffVm2g5B9GYkbx23GZoFTSbLa3TzuVtVCxgR/
-        LxDia34BmNKlx/UIxLgLTnoERVGHaGnjA7uu0hKQC9/v3s4=
-X-Google-Smtp-Source: APXvYqxXMJUzRfTSU4muFUhzugP4fGDs3F+hk9215Soea6lbGBcAkYid1sbKLKEQc1DklbsSnG0jWmiE856XDquZEKU=
-X-Received: by 2002:a50:ec87:: with SMTP id e7mr102309962edr.126.1558685157835;
- Fri, 24 May 2019 01:05:57 -0700 (PDT)
+        id S2389327AbfEXINk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 04:13:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37658 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2389658AbfEXINj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 04:13:39 -0400
+Received: (qmail 26324 invoked by uid 109); 24 May 2019 08:13:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 May 2019 08:13:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7676 invoked by uid 111); 24 May 2019 08:14:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 May 2019 04:14:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 May 2019 04:13:37 -0400
+Date:   Fri, 24 May 2019 04:13:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Keegan Carruthers-Smith <keegan.csmith@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git archive generates tar with malformed pax extended attribute
+Message-ID: <20190524081337.GA9082@sigill.intra.peff.net>
+References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
+ <20190524070644.GF25694@sigill.intra.peff.net>
+ <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20181108050755.GA32158@sigill.intra.peff.net> <79b06312-75ca-5a50-c337-dc6715305edb@jeffhostetler.com>
- <20181122173931.GA22123@sigill.intra.peff.net>
-In-Reply-To: <20181122173931.GA22123@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 24 May 2019 10:05:45 +0200
-Message-ID: <CAP8UFD0XbOUj70pt4X=HDvGBoLaG9qBv9SWGnM6N8FG3t-57rg@mail.gmail.com>
-Subject: Re: how does "clone --filter=sparse:path" work?
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Matthew DeVore <matvore@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Sorry for the late reply to this.)
+On Fri, May 24, 2019 at 09:35:51AM +0200, Keegan Carruthers-Smith wrote:
 
-On Sat, Nov 24, 2018 at 8:07 AM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Nov 08, 2018 at 01:57:52PM -0500, Jeff Hostetler wrote:
->
-> > > Should we simply be disallowing sparse:path filters over upload-pack?
+> > I can't reproduce on Linux, using GNU tar (1.30) nor with bsdtar 3.3.3
+> > (from Debian's bsdtar package). What does your "tar --version" say?
+> 
+> bsdtar 2.8.3 - libarchive 2.8.3
 
-I agree that it should either be disallowed or heavily restricted.
+Interesting. I wonder if there was a libarchive bug that was fixed
+between 2.8.3 and 3.3.3.
 
-> > The option to allow an absolute path over the wire probably needs more
-> > thought as you suggest.
+> > Git does write a pax header with the commit id in it as a comment.
+> > Presumably that's what it's complaining about (but it is not malformed
+> > according to any tar I've tried). If you feed git-archive a tree rather
+> > than a commit, that is omitted. What does:
 > >
-> > Having it in the traverse code was useful for local testing in the
-> > client.
+> >   git archive --format tar c21b98da2^{tree} | tar tf - >/dev/null
 > >
-> > But mainly I was thinking of a use case on the client of the form:
-> >
-> >     git rev-list
-> >         --objects
-> >         --filter=spec:path=.git/sparse-checkout
+> > say? If it doesn't complain, then we know it's indeed the pax comment
+> > field.
+> 
+> It also complains
+> 
+>   $ git archive --format tar c21b98da2^{tree} | tar tf - >/dev/null
+>   tar: Ignoring malformed pax extended attribute
+>   tar: Error exit delayed from previous errors.
 
-Do you mean "sparse:path" instead of "spec:path"?
+Ah, OK. So it's not the comment field at all, but some other entry.
 
-> >         --missing=print
-> >         <commit>
-> >
-> > and get a list of the blobs that you don't have and would need before
-> > you could checkout <commit> using the current sparse-checkout definition.
-> > You could then have a pre-checkout hook that would bulk
-> > fetch them before starting the actual checkout.  Since that would be
-> > more efficient than demand-loading blobs individually during the
-> > checkout.  There's more work to do in this area, but that was the idea.
-> >
-> > But back to your point, yes, I think we should restrict this over the
-> > wire.
->
-> Thanks for your thorough response, and sorry for the slow reply. I had
-> meant to reply with a patch adding in the restriction, but I haven't
-> quite gotten to it. :)
+> Some more context: I work at Sourcegraph.com We mirror a lot of repos
+> from github.com. We usually interact with a working copy by running
+> git archive on it in our infrastructure. This is the first repository
+> that I have noticed which produces this error. An interesting thing to
+> note is the commit metadata contains a lot of non-ascii text which was
+> my guess at what my be tripping up the tar creation.
 
-The way I see it could be restricted is by adding a config option on
-the server, maybe called "uploadpack.sparsePathFilter", to tell which
-filenames can be accessed using "--filter=sparse:path=".
+Yeah, though the only thing that makes it into the tarfile is the actual
+tree entries. I'd imagine the file content is not likely to be a source
+of problems, as it's common to see binary gunk there. Most of the
+filenames are pretty mundane, but this symlink destination is a little
+funny:
 
-For example with uploadpack.sparsePathFilter set to
-"/home/user/git/sparse/*" and "--filter=sparse:path=foo" then
-"/home/user/git/sparse/foo" on the server would be used if it exists.
-(Of course care should be taken that things like
-"--filter=sparse:path=bar/../../foo" are rejected.)
+  $ git archive ... | tar tvf - | grep nicovideo4as.swc
+  lrwxrwxrwx root/root         0 2019-05-24 03:05 libs/nicovideo4as.swc -> PK\003\004\024
 
-If uploadpack.sparsePathFilter is unset or set to "false", then
-"--filter=sparse:path=<stuff>" would always error out.
+That's not the full story, though. It is indeed a symlink in the
+tree:
 
-Is this what you had in mind?
+  $ git ls-tree -r HEAD libs/nicovideo4as.swc
+  120000 blob ec3137b5fcaeae25cf67927068af116517683806	libs/nicovideo4as.swc
+
+But the contents of that blob, which should be the destination filename,
+are definitely not:
+
+  $ git cat-file blob ec3137b5f | wc -c
+  57804
+  $ git cat-file blob ec3137b5f | xxd | head -1
+  00000000: 504b 0304 1400 0800 0800 5069 694e 0000  PK........PiiN..
+
+There's quite a bit more data there. And what tar showed us goes up to
+the first NUL, which does not seem surprising.
+
+It's possible Git is doing the wrong thing on the writing side, but
+given that newer versions of bsdtar handle it fine, I'd guess that the
+old one simply had problems consuming poorly formed symlink filenames.
+
+-Peff
