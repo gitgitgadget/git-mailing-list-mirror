@@ -2,99 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D813F1F462
-	for <e@80x24.org>; Fri, 24 May 2019 19:11:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C16211F462
+	for <e@80x24.org>; Fri, 24 May 2019 19:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391360AbfEXTLz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 15:11:55 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:47046 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727115AbfEXTLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 15:11:54 -0400
-Received: by mail-pg1-f195.google.com with SMTP id o11so920880pgm.13
-        for <git@vger.kernel.org>; Fri, 24 May 2019 12:11:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YkEhpvVyBP8BIrWoAYgcTe5JbjLX5VxRrZIOCZo3Zhw=;
-        b=mQ0Kz6joGkqjyWe91rjg3Q+YEOStLrolpsOL3HPGZq4rQFNJA//lxLDTHoKwDEUXwg
-         v5VtKDrAAYB4mTWUCganKgwj5jE+mkFez360TU+tq8xbaWy2iqKowOVr8TRCkJYG1Wzl
-         YtPHHpeYAlTCVByaTSXvVwDbGZQ8uaumKjQgp5Sm6VdjeWMOlj6iaOPgFYZgZLTnGeBF
-         PUWBadwTeFmOfHvwlUmC9GstxetW2KwC5NECNbeDXvtU5eS9shTZTSWD2oTsaQzyTOqg
-         HAlu2B40SlhZ4aaJYEMWVeVcSbV96QFTZv3GyUEKL4z+Y2QUlOSuT2f3LVFzmxpDk5hq
-         unjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YkEhpvVyBP8BIrWoAYgcTe5JbjLX5VxRrZIOCZo3Zhw=;
-        b=NJM/tWSWZ+2i1YYRLPkT5SQKCmUrp5Thq1X6ZRuD114T7TsqeACT/hdxz1Ct1s5pFa
-         uJuZZAVARM+8ZDVo59wr+zcwuKN79aerMYtKRqZk9oXVR183ontBIfMEbVYYmFT/JkYc
-         rOEyWySmih6Wfd7VmRcJL4yVBHY+v5kvkTjkm292w2xiR8UlGYAfzEWpf2K/pFHtr6dG
-         TO+L7TLhnDh1n67RMhh/ONj0PTARVrAcougonXs6a91I9XSVATYX0o8s2gLO0b+7GUFr
-         ecLXfvFgOUXWD/lry+1BDntR+BgxJhIq8yckF0EDL7YBQNa4lZczQRzy7zmkY1r5N0sy
-         FwSg==
-X-Gm-Message-State: APjAAAWlbayDBibeAsOwDoKZHCyRvx596c07rVeOJWf04coMjip/DGIJ
-        y7iaHgEDF5UCHHmDAPJ5UP3sOPwd
-X-Google-Smtp-Source: APXvYqx8n4o4gAVY4DgMXjO5DaC2uRsnSK6uX1mhs9sBHlspjijB+W1ymo9R1WlSOjjVXanmPR/ZFA==
-X-Received: by 2002:a63:eb0d:: with SMTP id t13mr9987143pgh.37.1558725113640;
-        Fri, 24 May 2019 12:11:53 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id o1sm8342207pfa.66.2019.05.24.12.11.52
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 24 May 2019 12:11:52 -0700 (PDT)
-Date:   Fri, 24 May 2019 12:11:51 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fetch-pack: send server options after command
-Message-ID: <20190524191151.GA14606@google.com>
-References: <20190522200822.176870-1-jonathantanmy@google.com>
+        id S1732098AbfEXTd7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 15:33:59 -0400
+Received: from siwi.pair.com ([209.68.5.199]:57435 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727344AbfEXTd7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 15:33:59 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 185C03F408D;
+        Fri, 24 May 2019 15:33:59 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:a930:ecfb:793f:8fff] (unknown [IPv6:2001:4898:a800:1012:5a64:ecfb:793f:8fff])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 940CD3F4047;
+        Fri, 24 May 2019 15:33:58 -0400 (EDT)
+Subject: Re: [RFC PATCH] list-objects-filter: disable 'sparse:path' filters
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Matthew DeVore <matvore@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+References: <20190524120318.4851-1-chriscool@tuxfamily.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3ac687d6-d534-13c8-db9a-f481403634d1@jeffhostetler.com>
+Date:   Fri, 24 May 2019 15:33:57 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190522200822.176870-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190524120318.4851-1-chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
 
-> Currently, if any server options are specified during a protocol v2
-> fetch, server options will be sent before "command=fetch". Write server
-> options to the request buffer in send_fetch_request() so that the
-> components of the request are sent in the correct order.
->
-> The protocol documentation states that the command must come first. The
-> Git server implementation in serve.c (see process_request() in that
-> file) tolerates any order of command and capability, which is perhaps
-> why we haven't noticed this. This was noticed when testing against a
-> JGit server implementation, which follows the documentation in this
-> regard.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+
+On 5/24/2019 8:03 AM, Christian Couder wrote:
+> If someone wants to use as a filter a sparse file that is in the
+> repository, something like "--filter=sparse:oid=<ref>:<path>"
+> already works.
+> 
+> So 'sparse:path' is only interesting if the sparse file is not in
+> the repository. In this case though the current implementation has
+> a big security issue, as it makes it possible to ask the server to
+> read any file, like for example /etc/password, and to explore the
+> filesystem, as well as individual lines of files.
+> 
+> If someone is interested in using a sparse file that is not in the
+> repository as a filter, then at the minimum a config option, such
+> as "uploadpack.sparsePathFilter", should be implemented first to
+> restrict the directory from which the files specified by
+> 'sparse:path' can be read.
+> 
+> For now though, let's just disable 'sparse:path' filters.
 > ---
->  fetch-pack.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   list-objects-filter-options.c |  9 ++++++---
+>   list-objects-filter-options.h |  2 --
+>   list-objects-filter.c         | 22 ----------------------
+>   3 files changed, 6 insertions(+), 27 deletions(-)
+> 
+> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+> index c0036f7378..007c104b93 100644
+> --- a/list-objects-filter-options.c
+> +++ b/list-objects-filter-options.c
+> @@ -78,9 +78,12 @@ static int gently_parse_list_objects_filter(
+>   		return 0;
+>   
+>   	} else if (skip_prefix(arg, "sparse:path=", &v0)) {
+> -		filter_options->choice = LOFC_SPARSE_PATH;
+> -		filter_options->sparse_path_value = strdup(v0);
+> -		return 0;
+> +		if (errbuf) {
+> +			strbuf_addstr(
+> +				errbuf,
+> +				_("sparse:path filters are now disabled"));
+> +		}
+> +		return 1;
+>   	}
+>   	/*
+>   	 * Please update _git_fetch() in git-completion.bash when you
+[...]
 
-Oh, dear.  Thanks for fixing it.
+We should update git-completion.bash to remove this option.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Jeff
 
-6e98305985 (clone: send server options when using protocol v2,
-2019-04-12) is part of release candidates, but it looks like we caught
-this in time to get the fix in before the release.
-
-Should we add an interop test for this to t/interop/?
-
-Thanks,
-Jonathan
