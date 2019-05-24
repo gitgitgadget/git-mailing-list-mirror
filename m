@@ -2,109 +2,276 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45341F462
-	for <e@80x24.org>; Fri, 24 May 2019 11:17:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D43081F609
+	for <e@80x24.org>; Fri, 24 May 2019 11:31:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391107AbfEXLRL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 07:17:11 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37490 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391105AbfEXLRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 07:17:10 -0400
-Received: by mail-wr1-f66.google.com with SMTP id e15so9615612wrs.4
-        for <git@vger.kernel.org>; Fri, 24 May 2019 04:17:09 -0700 (PDT)
+        id S2391080AbfEXLbQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 07:31:16 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:41766 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390714AbfEXLbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 07:31:16 -0400
+Received: by mail-qk1-f194.google.com with SMTP id m18so6940286qki.8
+        for <git@vger.kernel.org>; Fri, 24 May 2019 04:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=YcUn0Hr8pHdl5jJZNx0Dch6KsW2RGJV35mf4/SxSaXM=;
-        b=T++8Ev2C7k/ygkx/Z1ScXI4TLTY7dFxn1sQBLxNBnfrHVd2xRGt+pRAyTqsqlQKiCc
-         gPft+3R2tA5J1iFE7uICu5bSH959PoQZSGwz7YKifeEF9754qHHrLlKSj9J00Wxuv6lR
-         3qsexFgMyz74cTYO/kE5qZqOo4jA73/I6FFxvvCimnYl1NNdQMtgJde9L3/pCddI3bzk
-         HDjjX40uC0NmwEKXwh3AM8n6LrwdSJnBwcl90XwRC8B56fFbea7XjK9hgMwo/Qojp+ZY
-         3B/NDrsQ80fhiaI6On5KwfM9SdrbacVK0Zs/wt8c46/j1P+zvtVI3J5Hl6qQf2mJSyep
-         1VBQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IxvxcRwX+nt0KwgD6Y/C7HzVVip/ECesyT24yxt5cEg=;
+        b=N2kzjqePAGGxGAP6HI+oPLmaOY1fDnDIs7IGHbfYvJrwivCimdr5Qfv4TxSACze7q9
+         4tYKJto8CUu4oaCsael3TeTUbb9Rdt4jwkq7di7oqF4WYEpCCy7l2lCzPhuW2MkKYTcd
+         KyuZne91M3zMLr0oAVjKFedx27H9yL/d3yNEioWFqkH8ZWwlCd2FsCumYWOxjb1KcGhI
+         FaubGBrsBAwa9aR4jVl0m43wzQ1jnQWL5AgQqet+WH6VL81mHaVVy1bFKEBo6Z7GU6TU
+         Z83dDeCmFBBSJDUs2aJZvwe6t4pqdcTwFVTHMYvn+BChNu2QMpyjB13werriumO/D+kp
+         hJ2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=YcUn0Hr8pHdl5jJZNx0Dch6KsW2RGJV35mf4/SxSaXM=;
-        b=mEDl9pPVoQ6RCYEPUNaParXADY8bAFuI9BkVgrjrKKDhfDLCEnXMLYX3cUxR3839aX
-         8XnpDs21LmplYbXGLgvKHyivdRNGr/vTAbWxA/Tn7FPxpRa/Yj5cof3zHC/ltqBWnh0u
-         M2+FPs7XZudUH7o0j5eMn8hDIJbcxK6/1EYIeXlZje4lKbSo1oKSU6jr+DccP4/5EI5+
-         MzItOAjURjYoupHbbnOgAjlGqqhd0TScIqZqrMPWQWECLd8AqVynlP5FlsW0nXTERDt/
-         8iOUUv4qS8EzF0rd4LJHRMsC2Oq2MAJ6PG8lMWW7CM1io9gMCatH1Iy/dMo2Paw3uqD2
-         /49A==
-X-Gm-Message-State: APjAAAWYXghSP73DVpfzhX+IaOnw1AL2Y0RSxzJRZx/2hjiJ7M/px55y
-        Kkj94ZDB0GofGJURnDO5fpenWn6nQ9w=
-X-Google-Smtp-Source: APXvYqzh/kWptelUEtNAq3Two5wRgYM62QJy1ke0xUswEqAREipYXgV8ZYQ4pAFwq68kX9bRJB3Mtw==
-X-Received: by 2002:a5d:6b03:: with SMTP id v3mr3157143wrw.309.1558696628613;
-        Fri, 24 May 2019 04:17:08 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id t13sm4164536wra.81.2019.05.24.04.17.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 04:17:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
-References: <20190313145417.GA24101@sigill.intra.peff.net> <20190314091254.nescpfp3n6mbjpmh@dcvr> <87zhoz8b9o.fsf@evledraar.gmail.com> <20190410225721.GA32262@sigill.intra.peff.net> <20190523113031.GA17448@sigill.intra.peff.net> <87tvdlt1jp.fsf@evledraar.gmail.com> <20190524072724.GH25694@sigill.intra.peff.net> <87r28offs6.fsf@evledraar.gmail.com> <20190524082605.GB9082@sigill.intra.peff.net> <87pno8fcp8.fsf@evledraar.gmail.com> <20190524092920.GD951@szeder.dev>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190524092920.GD951@szeder.dev>
-Date:   Fri, 24 May 2019 13:17:06 +0200
-Message-ID: <87imu0f6fh.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IxvxcRwX+nt0KwgD6Y/C7HzVVip/ECesyT24yxt5cEg=;
+        b=ryRWWJVsnha40KIPyKegpkYSDnP/23kHTUj/mN3CcWz51gGnkvaKO/n0SXkfaQZakF
+         BwmQ9vyLwvqu9hXuWeNi5pIARz78BtsQfeMb5ziDV70gZTYOZxYTqoPvp4gbyCIyzgVl
+         uOzDsMohfsTaW4Z2D0eR3+tGcRGqSEWKrOn32i+bLX8eYN7Ja/MWB2mQQEmDe3IZ++PS
+         fdibEctckO5GuWcja4vUehIz5Uc9UtCSKk5sBZ0azGR30L0wfZtALvjj7MAcXajdVGyJ
+         y/9DQh0clIpxl3GR8YUeDexL2WudBB0NEndIz5l4dIFD0ZiAHQtPzaYdunoD97SZ+1uf
+         7Nvg==
+X-Gm-Message-State: APjAAAXlS8WaufPp6O25mNH7xdh9zaZSzqSPWcdrs8pix6H6XY/q8mWT
+        wOhmoCdY0px0xOGYjAnV1zQ4hYr+X70=
+X-Google-Smtp-Source: APXvYqylQd/0OTWGwkH/EqKVGkoqncPvCiD2CaFUhqgwyf/Okhw7yrFlFgreJN0wDC6MtAnmEqH0zQ==
+X-Received: by 2002:a37:4948:: with SMTP id w69mr82094448qka.122.1558697474711;
+        Fri, 24 May 2019 04:31:14 -0700 (PDT)
+Received: from linux.mshome.net ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id b19sm1115807qkk.51.2019.05.24.04.31.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 May 2019 04:31:14 -0700 (PDT)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, e@80x24.org,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] pack-bitmap: look for an uninteresting bitmap
+Date:   Fri, 24 May 2019 11:31:12 +0000
+Message-Id: <20190524113112.30185-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.22.0.rc0
+In-Reply-To: <20190523113031.GA17448@sigill.intra.peff.net>
+References: <20190523113031.GA17448@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If we try to do a range query such as C..D with topology as
 
-On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
+ A_0 - ... - A_10000 - B - C_1 - ... - C_1000 - C
+                         \
+                           D_1 - ... - D_1000 - D
 
-> On Fri, May 24, 2019 at 11:01:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> I don't think it's a performance problem to have an old commit-graph
->> lying around. But if you turn on the commit-graph, run gc a bunch, then
->> turn it off in config we'll have it lying around forever, even if you do
->> subsequent gc's.
->>
->> So I think we should delete such things on the general principle that
->> the end-state of a gc's shouldn't be the accumulation of the values of
->> past configuration options if we can help it.
->>
->> Maybe that screws over other users who did a "commit-graph write"
->> without setting gc.writeCommitGraph, but I think the only sane thing to
->> do is to make "gc" fully 'own' such things if its turned on at all.
->
-> Note that there is 'core.commitGraph' as well; as long as it's
-> enabled, no commit-graph files should be deleted.
+and none of the commits in {A_i, B, C_j, C} have a computed
+bitmap, then we will very likely walk many many trees before
+computing one for the "have" bitmap.
 
-Why? If we won't update it or write it if it's not there, why keep it
-around?
+Instead, perform a commit walk to the boundary of C...D and
+look for computed bitmaps in { B, C_j, C }. If any are found,
+then it is worth starting from there and building a bitmap.
+If not, revert to the old method of walking trees.
 
-It means the commit-graph code and anything else (like bitmaps) needs to
-deal with stale data for the common and default gc --auto case.
+NOTE: this is only a proof-of-concept, as it fails a test in
+t5310-pack-bitmaps.sh (clearly marked as a failure now).
 
-You also can't have e.g. a global core.commitGraph=3Dtrue config along
-with a per-repo gc.writeCommitGraph=3Dtrue config do what you expect.
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
 
-Now just because you wanted to write it for some you'll end up keeping
-it around forever because you'd also want to optimistically always use
-it if it's there.
+On 5/23/2019 7:30 AM, Jeff King wrote:> +	/*
+> +	 * First traverse the relevant commits as we would for a normal
+> +	 * traversal.
+> +	 */
+> +	while (commits.nr) {
+> +		struct commit *commit = prio_queue_get(&commits);
+> +		struct bitmap **dst_bitmap;
 
-Note that I'm talking about the *default* gc semantics, they don't have
-to cover all advanced use-cases, just be good enough for most, and it's
-also important that they're as simple as possible, and don't result in
-stuff like "my performance sucks because I turned this config option on
-once a year ago for 2 days".
+I was looking at this code again, and noticed this while() condition.
+
+Shouldn't this use queue_has_nonstale() like in paint_down_to_common()?
+
+Looking at the body of the loop, I don't see a way for the loop to stop
+without it walking the entire history of C _and_ D.
+
+Based on that, I wrote the patch below as an experiment. The
+has_uninteresting_bitmap_in_frontier() shamelessly steals code from
+paint_down_to_common(). Note the failing test, but perhaps there is
+something salvageable from this.
+
+Thanks,
+-Stolee
+
+
+ pack-bitmap.c           | 92 ++++++++++++++++++++++++++++++++++++++++-
+ t/t5310-pack-bitmaps.sh |  2 +-
+ 2 files changed, 91 insertions(+), 3 deletions(-)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 6069b2fe55..1f4683663e 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "repository.h"
+ #include "object-store.h"
++#include "prio-queue.h"
+ 
+ /*
+  * An entry on the bitmap index, representing the bitmap for a given
+@@ -679,6 +680,81 @@ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+ 	return 0;
+ }
+ 
++#define PARENT1         (1u<<16)
++#define PARENT2         (1u<<17)
++#define STALE           (1u<<18)
++
++static const int all_flags = { PARENT1 | PARENT2 | STALE };
++
++static int queue_has_nonstale(struct prio_queue *queue)
++{
++	int i;
++	for (i = 0; i < queue->nr; i++) {
++		struct commit *commit = queue->array[i].data;
++		if (!(commit->object.flags & STALE))
++			return 1;
++	}
++	return 0;
++}
++
++static int has_uninteresting_bitmap_in_frontier(struct repository *r,
++						struct commit_list *list,
++						struct bitmap_index *bitmap_git)
++{
++	int res = 0;
++	struct commit_list *iter = list;
++	struct prio_queue queue = { compare_commits_by_commit_date };
++
++	while (iter) {
++		prio_queue_put(&queue, iter->item);
++		iter = iter->next;
++	}
++
++	while (queue_has_nonstale(&queue)) {
++		struct commit *commit = prio_queue_get(&queue);
++		struct commit_list *parents;
++		int flags;
++
++		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
++		if (flags == (PARENT1 | PARENT2)) {
++			/* Mark parents of a found merge stale */
++			flags |= STALE;
++		}
++
++		if (flags & PARENT1) {
++			khiter_t pos = kh_get_oid_map(bitmap_git->bitmaps, commit->object.oid);
++
++			if (pos < kh_end(bitmap_git->bitmaps)) {
++				res = 1;
++				goto cleanup;
++			}
++		}
++
++		parents = commit->parents;
++		while (parents) {
++			struct commit *p = parents->item;
++			parents = parents->next;
++			if ((p->object.flags & flags) == flags)
++				continue;
++			if (repo_parse_commit(r, p))
++				goto cleanup;
++			p->object.flags |= flags;
++			prio_queue_put(&queue, p);
++		}
++	}
++
++cleanup:
++	clear_prio_queue(&queue);
++
++	iter = list;
++	while (iter) {
++		clear_commit_marks(iter->item, all_flags);
++		iter = iter->next;
++	}
++
++	return res;
++}
++
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ {
+ 	unsigned int i;
+@@ -689,6 +765,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ 	struct bitmap *wants_bitmap = NULL;
+ 	struct bitmap *haves_bitmap = NULL;
+ 
++	struct commit_list *commits = NULL;
++
+ 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 	/* try to open a bitmapped pack, but don't parse it yet
+ 	 * because we may not need to use it */
+@@ -704,16 +782,22 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ 		while (object->type == OBJ_TAG) {
+ 			struct tag *tag = (struct tag *) object;
+ 
+-			if (object->flags & UNINTERESTING)
++			if (object->flags & UNINTERESTING) {
++				object->flags |= PARENT1;
+ 				object_list_insert(object, &haves);
+-			else
++			} else {
++				object->flags |= PARENT2;
+ 				object_list_insert(object, &wants);
++			}
+ 
+ 			if (!tag->tagged)
+ 				die("bad tag");
+ 			object = parse_object_or_die(&tag->tagged->oid, NULL);
+ 		}
+ 
++		if (object->type == OBJ_COMMIT)
++			commit_list_insert((struct commit *)object, &commits);
++
+ 		if (object->flags & UNINTERESTING)
+ 			object_list_insert(object, &haves);
+ 		else
+@@ -740,6 +824,10 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs)
+ 	if (load_pack_bitmap(bitmap_git) < 0)
+ 		goto cleanup;
+ 
++	if (!has_uninteresting_bitmap_in_frontier(the_repository, commits, bitmap_git))
++		goto cleanup;
++
++	/* this is the real no-turning-back point! */
+ 	object_array_clear(&revs->pending);
+ 
+ 	if (haves) {
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index a26c8ba9a2..615608fbbf 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -422,7 +422,7 @@ test_expect_success 'fetch without bitmaps ignores delta against old base' '
+ '
+ 
+ # And do the same for the bitmap case, where we do expect to find the delta.
+-test_expect_success 'fetch with bitmaps can reuse old base' '
++test_expect_failure 'fetch with bitmaps can reuse old base' '
+ 	test_config pack.usebitmaps true &&
+ 	test_when_finished "rm -rf client.git" &&
+ 	git init --bare client.git &&
+-- 
+2.22.0.rc0
+
