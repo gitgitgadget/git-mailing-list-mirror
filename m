@@ -2,68 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF1221F462
-	for <e@80x24.org>; Fri, 24 May 2019 14:08:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAB61F462
+	for <e@80x24.org>; Fri, 24 May 2019 14:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403921AbfEXOI2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 10:08:28 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:39457 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403914AbfEXOI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 10:08:27 -0400
-Received: by mail-lf1-f65.google.com with SMTP id f1so7252513lfl.6
-        for <git@vger.kernel.org>; Fri, 24 May 2019 07:08:26 -0700 (PDT)
+        id S2391605AbfEXOlY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 10:41:24 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:56107 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390885AbfEXOlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 10:41:24 -0400
+Received: by mail-wm1-f45.google.com with SMTP id x64so9648684wmb.5
+        for <git@vger.kernel.org>; Fri, 24 May 2019 07:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:sender:from:date:message-id
-         :subject:to;
-        bh=ANipaKJC+mwQNAi9SKqRbHXZuaQtcmiGCdRW0FfGYps=;
-        b=ItWm6YdqndzsD2a4G+4FwlBVBvi+I8RCM5eLvLzSMDvo04ceYslswz6fMNLxYnEtBO
-         6XdALF1ThRf5LOQu2SJBT9h5h8hWWjnJFFjrnkezwIu8FZVcN5vm5iWNyIZwjZ4r0jI8
-         /EzwKHHAt1WXVTDyMMrn53e3yW+c/PcpHzBwmCuOcMXWH2rN8M5ZEW660E2vfLVSPdQN
-         q0S7eX3efFHdtAvROZx6+x7d2oXy8/MdE78qqIRl5xfyVvjmghh6k2isQnR/LeNRfLAB
-         fuA8jgFX3hhXq7ViFYNbHuyEsUbIkguW8RNZSltzYKPOJEC+2WAquF8+2sV/k1Hbg2Vm
-         WZOQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=nGGhu81yV/j2o9MGLG07oWe7S8UXml7lYBRA1q2Aidc=;
+        b=cuh5Tz+dLpttTX1pRMMn59XSKRhubmq1WyfiOxItwnNZSdRBcOlUFzdK6uVBY/Go21
+         xzeRNppSt/8lOUQH5z0iZSN0fPY4wU0TtwrHlOH3XlGwEyudKLyJOcD1LStlRTw7MCol
+         O3dLak+CDrj+LHURR2303qAc9x46fFZ6vp8irGe4j8drtTNF9z2QllUhaNmbo5C42KEI
+         Suq4RbIXO8lMvECgaSJejczeLMdJ4ozRZhoxKzUv35GkiR+By3emokiECJpi5Ap3U2gr
+         U9Ptp41nMVY0zrEgwYKG4DYa/mdoHVKiDKNm/DF3cOjpUBJWedcgJAocG6A0BstXJEVc
+         I99Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to;
-        bh=ANipaKJC+mwQNAi9SKqRbHXZuaQtcmiGCdRW0FfGYps=;
-        b=ee2xbAl7dONrSnyn2PHQRAYHN1s8e5Xj5IzlyuA7d6ynqhXvj/wOfk7N1x1QXgJnGz
-         nwj5eh48YF1ltwrH1NkMv66tLsGp/HRoFJiyjyhILf+c4mWiWYoaeZNWqd7vzFdWPdaX
-         bTyP5oLrjayBlI/XBur/a9uEKpORrcORZ6i93kt0kzo8dklfKHXsw41DIMosvMI5khKB
-         rZz9NsQjervu6FlLebelOMGrQYOMLJ+YzkF0scrIVHoZjWAHA75xPu729pR8GCruWCFf
-         KSAQMemKNIimunu2Qx12lca7IgssF5vzDUeoY3FqLJjnhYT12MZqwXznIC8V/gVnS+8c
-         Y16Q==
-X-Gm-Message-State: APjAAAXKUjvas+/I49GW/uuuX6X9iPhnb2+ToadgmzVg4AXUXcMV2Azt
-        Zd56J9Xh1/rqvU4mKgftBs+2fwhhyxSoBdd2Rj2NVUKy
-X-Google-Smtp-Source: APXvYqxHORnvu+BLtaGNxATRFRu/2u+PIG6tpPms1iAUNE6ZedypjdwtDqI4mR/044Mur7pzgzBDoqmREtGkhQVANYY=
-X-Received: by 2002:a19:ee0a:: with SMTP id g10mr15613463lfb.127.1558706905479;
- Fri, 24 May 2019 07:08:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
-In-Reply-To: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
-X-Google-Sender-Delegation: rcdailey@gmail.com
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Fri, 24 May 2019 09:08:13 -0500
-X-Google-Sender-Auth: vWIkguIHl_CHM5Kjkjtc7OWzagE
-Message-ID: <CAHd499ArS4h=V=407D70uXhtAguvVmcogHVS3J199ECJAhgfgw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=nGGhu81yV/j2o9MGLG07oWe7S8UXml7lYBRA1q2Aidc=;
+        b=cJrcx7eF2qbFPoSCfinqnOgWWe8pPfm5lnOUJFpxAeBlkZgcnYYPQoJYgsoZlKuo8n
+         X2l7C+eBHhIldgEpxwBt1MmrHsu9WrALb91EjeBj42jbnrC+gduxpPCbUE8Gl3C9yYoY
+         TehlbfiAK3AR5QrR9lmRCAk0hwgbMsQgtWlZhYIxl348b8n33idKxWaWCgQhydQ5PH5B
+         1dg/b0MXJyl/nPE5we6hJn21esGW41du0fHUTpTJjyYGHFteKm8w5AdI4Ex8+iu0tdt4
+         4Oo+c7JlZ0lTRWoAMlptaLgPRGgJsatu30hVmtKENsHyivOd9ZZ+jo90Y8TOi0vgEYW4
+         YDuQ==
+X-Gm-Message-State: APjAAAXDu97qbPuGaTiseDP8bK56PRi9lr4udmzF+gYPyNeV8XFzVmDH
+        4n/S5GTdZ294/L6UkL2ZB2n6DTAGk9g=
+X-Google-Smtp-Source: APXvYqyP2QijNy27Cn+GO+qNqT/MuZ1SypoGVsnk5dzGhhsoIGFnglHDq7O0gtjy3XbUk+kLWuBIpQ==
+X-Received: by 2002:a1c:cf4c:: with SMTP id f73mr127491wmg.118.1558708881770;
+        Fri, 24 May 2019 07:41:21 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id e14sm3103211wma.41.2019.05.24.07.41.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 24 May 2019 07:41:21 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
 Subject: Re: Need help merging unrelated histories
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
+Date:   Fri, 24 May 2019 16:41:20 +0200
+Message-ID: <87blzrgbjj.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 24, 2019 at 9:04 AM Robert Dailey <rcdailey.lists@gmail.com> wrote:
->
+
+On Fri, May 24 2019, Robert Dailey wrote:
+
 > Everything I'm going to describe is related to this repository:
 >
 > https://github.com/powervr-graphics/Native_SDK
@@ -118,10 +123,13 @@ On Fri, May 24, 2019 at 9:04 AM Robert Dailey <rcdailey.lists@gmail.com> wrote:
 > repository to create some ancestry, as if all along a `master` existed
 > and all release branches were based on this in a linear fashion?
 
-By the way, everything I've done so far (up to 4.2) is located here:
+We don't have a merge strategy to do this, but should. I had a WIP patch
+for this here that I haven't picked up:
+https://public-inbox.org/git/87sh7sdtc1.fsf@evledraar.gmail.com/
 
-https://github.com/rcdailey/Native_SDK
-
-There is a `master` branch in my fork of that repo. I am not sure if
-I've done it correctly so far, or if how I've done this up to 4.2
-explains why 4.3 is so hard.
+But you can emulate the same thing with "read-tree" and
+"commit". I.e. manually craft a commit with plumbing that diverges from
+the "master" branch, then instead of stock "rebase" write some loop
+where you keep using "read-tree" to read what you want to stage into the
+index from the existing branched commits, then the equivalent of "git
+commit -c" etc. to commit it.
