@@ -2,115 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407641F462
-	for <e@80x24.org>; Fri, 24 May 2019 09:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C71981F462
+	for <e@80x24.org>; Fri, 24 May 2019 10:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390013AbfEXJzc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 05:55:32 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:55054 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389911AbfEXJzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 05:55:32 -0400
-Received: by mail-it1-f193.google.com with SMTP id h20so14760637itk.4
-        for <git@vger.kernel.org>; Fri, 24 May 2019 02:55:31 -0700 (PDT)
+        id S2390106AbfEXKEb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 06:04:31 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36571 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389745AbfEXKEb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 06:04:31 -0400
+Received: by mail-wm1-f66.google.com with SMTP id v22so1347285wml.1
+        for <git@vger.kernel.org>; Fri, 24 May 2019 03:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Xwp5Btmykf5Ykaey2k90ssKQ8hSlJImFPR1/yY0upiM=;
-        b=a9pnWC5jChwX+jB82vQ5juA9lPD5b3eti3nrxFeRzDbBaX4d3kcgPPLMTFlw2V7/Yj
-         tGaIsm5PqkUE0/hc4Q87SVXTSzy95PKAl3ZRqDIgn5R9i9N6yTF0K3ffa/Bn9Hh8OKrZ
-         7EZVevOW3IoZE10Rg/lgWIRy2r0U/ZQb2CjY7VAsnhg7BYGX3T0hH49RuKPNuTYN4y4g
-         BPT+GC8uVksyF/u+/WV2KdF7rETbDE3MeEdddXtO1dMGLxLuiQhqqngiahipaeLi0/90
-         neouuBi59fd+lrjHnfBpjANU0TZIsFFaczsiVuwDbMBXx/4FQliOnIx2Qyo8UjrlZNm9
-         PJoQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+oRMGQUqmVuffMlgN6RBBLulwZinEt8GhLp9US8KLS8=;
+        b=WvZblZIYrw8V9vQuRSyRRPQ4M16MA2Ym/nqZVbyigQ07ityt5ixDoygj1UEEP9xKEp
+         fFIN/qT9ISnL4miPdBUsh5PAS4k5h/HsroLhOfLSZ5owGVDBa1ZjI13lrfYi8f7ue7M8
+         RPMGGBrtITIeouGftJmfQD9W9FckEjvvgiUCnpkIpyr1CuiYX37J5dU+FR1ifv9VZZsy
+         AYaJ2STKa0N1CocUY/RNAORuvYEPS/KMjI3r2ckB4j4mNwCD2hCzV4qoauIiK8xZDmNw
+         E+0HqSyi3pqgV0w9JmWNs8tyqYsy2w4zvjvUp4fihXdnD4pdr6VvqQzf+DlJOrf5GlVa
+         Huig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Xwp5Btmykf5Ykaey2k90ssKQ8hSlJImFPR1/yY0upiM=;
-        b=gl0R3DJiMcCrLSyPCWWTC3mjIaSdaEy02+lA2Q0Sfc9pr5529TSF2B4VBr7UiA6KoC
-         IhhTcpNRvuYObm5KZOqE1qmYW8sP7wzTXXzfu+p0C096mkYB2y4M5TfZ10emilme2I8v
-         zfIOJiv7I1uLHrxceFPcfDABmovT3HMQsUQslxEWl4tZ4hBkhR04jzWMXpItXVf3g9/R
-         megkZEK3TpyrfE6m19w1qbfzilS2/cllaryyuV/PL+Iq3r2Aydgg2AYdM9cy//hvBu3m
-         m3zKzVn/UzXV9o2sKpup6uQbZXFTvMXGpiNP9YMpxGvsL17UE2JUS8Rh/KKAm/0n1r7n
-         b48Q==
-X-Gm-Message-State: APjAAAXFW4zDDR4G8535moXCCzBOeugcNs3bJmhq+k4SKBb00WU/qmRp
-        5i2rGY61cu4gggTX0sjudPN7sYH7qTY4cCe68Bc=
-X-Google-Smtp-Source: APXvYqxK0eO5/rskEaa2h+6ddAaK2+QQWzCCtAS3zsHSwaXDRmNibKs5fICKJ0oGXe9fDEyxVSG4FWC+NwxjxNrttbQ=
-X-Received: by 2002:a24:47cc:: with SMTP id t195mr16250263itb.117.1558691731246;
- Fri, 24 May 2019 02:55:31 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=+oRMGQUqmVuffMlgN6RBBLulwZinEt8GhLp9US8KLS8=;
+        b=JFkbKLFO1NMDdovrmuJFLQ8d7DHkcZeUhByoxxEb+i2jAV8m+xsX9LVC56/cFlfItg
+         43MzSRvhUtVN9TstfMbP5AR9gIubijZsg+zcVp9QofQAHP9mdZve19po0Wfy9M7JW3vP
+         +kLTqM3TTL7X8o+pkoNwcFDgBonCfYTEX4d2cHLX1mUogiW1R7dZVKl5F0vrmoyPD3bv
+         GyCmSDKQWormGzHS0V/Zqct23L2GH6LsyU6NzwFH1dU8w3pLTiCbATcER8r16R7NPTby
+         OteOWgRftUkWJh/D+/u8jQeGNjO5FlrvZY4FCtCBR7TOsQ9l3Uu8vhtkbe5ivpQk68Ye
+         x2Nw==
+X-Gm-Message-State: APjAAAX8G/skcF2koTpyAlM9USN/rOWRvw7OzYdjZRC7l9ZvY3087lzF
+        EGgNrUmFQ2VfQaDGNbjXorM=
+X-Google-Smtp-Source: APXvYqxOh4wEbthjpn5ofD3n/+zKWwa87ujl2YLO7iXjgkpCwhIorsYVrJWM8o9o2CnWJdnu4t2RQw==
+X-Received: by 2002:a1c:6c04:: with SMTP id h4mr8946831wmc.135.1558692268925;
+        Fri, 24 May 2019 03:04:28 -0700 (PDT)
+Received: from Laptop-Acer-Aspire-F15 (ekn89.neoplus.adsl.tpnet.pl. [83.21.181.89])
+        by smtp.gmail.com with ESMTPSA id a9sm2113598wmh.5.2019.05.24.03.04.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 24 May 2019 03:04:28 -0700 (PDT)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Adam Roben <aroben@apple.com>,
+        Bryan Larsen <bryan.larsen@gmail.com>,
+        Matthias Urlichs <smurf@smurf.noris.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/3] hash-object doc: elaborate on -w and --literally promises
+References: <20190520215312.10363-1-avarab@gmail.com>
+        <20190520215312.10363-3-avarab@gmail.com>
+        <20190522050839.GB29933@sigill.intra.peff.net>
+Date:   Fri, 24 May 2019 12:04:27 +0200
+In-Reply-To: <20190522050839.GB29933@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 22 May 2019 01:08:39 -0400")
+Message-ID: <86woigp3ro.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-References: <CAHd-oW40x3-4rye3QeVGix5pfTCoCHmiwg8ddCeq1E6YYongag@mail.gmail.com>
-In-Reply-To: <CAHd-oW40x3-4rye3QeVGix5pfTCoCHmiwg8ddCeq1E6YYongag@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 24 May 2019 16:55:04 +0700
-Message-ID: <CACsJy8DFw1Y_bhE=k2ZEMTk+vFvwwmx4GDnRXEQB9cp58M3vLg@mail.gmail.com>
-Subject: Re: [GSoC] How to protect cached_objects
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 23, 2019 at 11:51 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
+Jeff King <peff@peff.net> writes:
+> On Mon, May 20, 2019 at 11:53:11PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-
-> Hi, everyone
+>> Clarify the hash-object docs to explicitly note that the --literally
+>> option guarantees that a loose object will be written, but that a
+>> normal -w ("write") invocation doesn't.
 >
-> As one of my first tasks in GSoC, I'm looking to protect the global
-> states at sha1-file.c for future parallelizations. Currently, I'm
-> analyzing how to deal with the cached_objects array, which is a small
-> set of in-memory objects that read_object_file() is able to return
-> although they don't really exist on disk. The only current user of
-> this set is git-blame, which adds a fake commit containing
-> non-committed changes.
+> I had to double-check here: you mean that _when_ we are writing an
+> object, "--literally" would always write loose, right?
 >
-> As it is now, if we start parallelizing blame, cached_objects won't be
-> a problem since it is written to only once, at the beginning, and read
-> from a couple times latter, with no possible race conditions.
+>> At first I thought talking about "loose object" in the docs was a
+>> mistake in 83115ac4a8 ("git-hash-object.txt: document --literally
+>> option", 2015-05-04), but as is clear from 5ba9a93b39 ("hash-object:
+>> add --literally option", 2014-09-11) this was intended all along.
 >
-> But should we make these operations thread safe for future uses that
-> could involve potential parallel writes and reads too?
+> Hmm. After reading both of those, I do think it's mostly an
+> implementation detail. I would not be at all surprised to find that the
+> test suite relies on this (e.g., cleaning up with rm
+> .git/objects/ab/cd1234). But I suspect we also rely on that for the
+> non-literal case, too. ;)
 >
-> If so, we have two options:
-> - Make the array thread local, which would oblige us to replicate data, or
-> - Protect it with locks, which could impact the sequential
-> performance. We could have a macro here, to skip looking on
-> single-threaded use cases. But we don't know, a priori, the number of
-> threads that would want to use the pack access code.
+> So I am on the fence. In some sense it doesn't hurt to document the
+> behavior, but I'm not sure I would want to lock us in to any particular
+> behavior, even for --literally. The intent of the option (as I recall)
+> really is just "let us write whatever trash we want as an object,
+> ignoring all quality checks".
+
+I thik that this implemetation detail of `--literally` is here to stay;
+how would you otherwise fix the issue if garbage object makes Git crash?
+
+However, I would prefer to have options state _intent_; if there is
+legitimate need for a tool that creates loose objects, it would be
+better to have separate `--loose` option to `git hash-object` (which
+would imply `-w`, otherwise it doesn't have sense).
+
+>>  --literally::
+>> -	Allow `--stdin` to hash any garbage into a loose object which might not
+>> +	Allow for hashing arbitrary data which might not
+>>  	otherwise pass standard object parsing or git-fsck checks. Useful for
+>>  	stress-testing Git itself or reproducing characteristics of corrupt or
+>> -	bogus objects encountered in the wild.
+>> +	bogus objects encountered in the wild. When writing objects guarantees
+>> +	that the written object will be a loose object, for ease of debugging.
 >
-> Any thought on this?
+> I had to read this last sentence a few times to parse it. Maybe a comma
+> before guarantees would help? Or even:
+>
+>   When writing objects, this option guarantees that the written object
+>   will be a loose object, for ease of debugging.
 
-I would go with "that's the problem of the future me". I'll go with a
-simple global (I mean per-object store) mutex. After we have a
-complete picture how many locks we need, and can run some tests to see
-the amount of lock contention we have (or even cache missess if we
-have so many locks), then we can start thinking of an optimal
-strategy.
+I agree that this reads better.
 
-I mean, this is an implementation detail and can't affect object
-access API right? That gives us some breathing room to change stuff
-without preparing for something that we don't need right now (like
-multiple cached_objects writers)
-
-
-> Thanks,
-> Matheus Tavares
-
-
-
--- 
-Duy
+Regards,
+--
+Jakub Nar=C4=99bski
