@@ -2,102 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E85A1F609
-	for <e@80x24.org>; Fri, 24 May 2019 12:21:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFAEC1F462
+	for <e@80x24.org>; Fri, 24 May 2019 12:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391352AbfEXMVe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 08:21:34 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:36206 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391216AbfEXMVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 08:21:34 -0400
-Received: by mail-wm1-f42.google.com with SMTP id v22so1766303wml.1
-        for <git@vger.kernel.org>; Fri, 24 May 2019 05:21:32 -0700 (PDT)
+        id S2391482AbfEXMXt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 08:23:49 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:34494 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391244AbfEXMXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 08:23:48 -0400
+Received: by mail-ed1-f68.google.com with SMTP id p27so14173829eda.1
+        for <git@vger.kernel.org>; Fri, 24 May 2019 05:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=Ab/rvBmfEXGY1PXIRdVW5fe2Ibg1/m8yNyjqsSeqYcg=;
-        b=RiWhXr20GWppZEIzoTGKmjl//zvVIt4BLUONqIuFHCZ0BrBWYJgIwzlAQKURb0K481
-         Gg43UM0Nwq/0TiI00nrVjM8eDHZW2t5SAvitbsIDlDL5WsG988sL0HVQqpGoJ7fY3+w6
-         3Eryjl1M442txgYWfLeRdXKa33+rfditMwcm5+y4h8RLz1fmYVxktzDuI1OcZqAQH5w0
-         47HDPDo2hWgaMn7hR/jmuyfhk5a9PeF3UPTQVGlmM1+ASdCohGx0ERnFCe+E5XcMZE+O
-         vT9r7O20r5UfuoTO/XCMV5NzzCS24bPq59PjFBflqM0YRjcpcLxZGBc8WNQ/LHNEzs2u
-         vTqw==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=e3fUcmI2wRxCsr1hmzNrwhMoEyiPjpeyRJYuwYxa7GM=;
+        b=milam3PLoEFObg2Dw7b2dx57b6Lh4poXgHLyVqgUFk/VbLJja50MXhRCo3xO7tv8xU
+         nsDTZA4jX9Hia9jM4fN2q62i6SBALNSPJsX8fOIiIPdXZaGCq8kR08VY8ZgSUDhjVrC+
+         e+ikp1Who8zIg3njDNxI6uOZ5M31HSlaHnPbj/1gXk06h59R6d4FZj9PVrIujUsvAu12
+         4XvGV6t3kaoOjDUEiP/QyxYckfUhI/bcRsPCvFqxG4BfaHDW1vXSlM7Uq1t6qvY6TPjs
+         oaV3bH28UnWLei5B6B4BBySMBc5IjY/4DgxVJlT7HIpB3y4GxjKsCvojCrUvOKEnbFvN
+         5WYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=Ab/rvBmfEXGY1PXIRdVW5fe2Ibg1/m8yNyjqsSeqYcg=;
-        b=eCT2Ue+M7s4430yTjF/HrO5RJFpeB4I9K3MOEeEcFp+bfzA80snBURZKi36peTKwUs
-         f6OsoA4Di/orMYesSfn/0SunTpWQuoU5u6CPvYFbDqXxMXPbmwIC62rwFP58wG9zlNYu
-         qOCa9OP5/U49yig1A3gYN1w14iyU7MIT1Pqjh52g0K2zqvrWr/bakzYI9myZFDcdU2Xg
-         pIc6DlX8KtEVL8b9SAZ7YsPJeXd7+16WUCS3hYhEqOb+hQfLGjCHN115n+PpO7i+BHO5
-         rCU4OHK/fDVor0It37egz6micF0rbV59w0AFZl7fUCEb6/zGH0PwvS0zg5vU7x2NZcUj
-         TOvQ==
-X-Gm-Message-State: APjAAAWbsh/L3+2s0NLGaPv8UpSwlD+7aRkwCrz3yO3RTx1QqodnBgqh
-        RVBKRCv2G6mr4uP3cIYCxT4=
-X-Google-Smtp-Source: APXvYqysb1d8Lp96f4a3pnIFAPKkW612LzrelgJnMirBicGmDFxHZu+o8Azys+0Phna+3ufmykslwQ==
-X-Received: by 2002:a1c:7e08:: with SMTP id z8mr15081731wmc.36.1558700492209;
-        Fri, 24 May 2019 05:21:32 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id 74sm2648547wma.7.2019.05.24.05.21.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 05:21:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Matthew DeVore <matvore@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH] list-objects-filter: disable 'sparse:path' filters
-References: <20190524120318.4851-1-chriscool@tuxfamily.org>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190524120318.4851-1-chriscool@tuxfamily.org>
-Date:   Fri, 24 May 2019 14:21:29 +0200
-Message-ID: <87ef4of3g6.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=e3fUcmI2wRxCsr1hmzNrwhMoEyiPjpeyRJYuwYxa7GM=;
+        b=daCFWIFlkZXA9JpM0nGx86xtkL3w1jiIpQx0fkItfpdGWm3hC62qmuYVVDYYRl2zWd
+         xJ1pMkZRZD/8LmIR/4KZcF2yr/rYwLD4l1KDEFBZnqFc/XVdDyvPZBeVG5hfbHxeLzuC
+         7wx09/8+YIAsy+GKVTwRJZKwFmByb6JRJZlCPhOSeiVx6rntsED1hwdC/lEmWo9OshsZ
+         wUIAUx05spuShZ/619e0IZ29/+o5GAkrh2qbC0ExI6VZf6hMYla+jQReTL6+NCQjo8df
+         ebqev584P8XJkJFKQGQhsw96yJM0Cu0y/l1vNyER3KpPsi87WESPuLyQ78SLA1E447Ga
+         /fXg==
+X-Gm-Message-State: APjAAAUlrNGvMknYT9JyTm0xrRmp6cxxvmeRspAHsi1/pW4LeckGN7i/
+        YAGIaVI9UU3opMnwRlLfJlshsDcZ
+X-Google-Smtp-Source: APXvYqwZyRs8um9jHdS9JAqRMGqCJzCdTBmXND6TR21yS4trJr1ah1SxePzxBdAnLG0JI91f/q59hw==
+X-Received: by 2002:a17:906:830d:: with SMTP id j13mr41690089ejx.151.1558700626999;
+        Fri, 24 May 2019 05:23:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p8sm355569eju.5.2019.05.24.05.23.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 May 2019 05:23:46 -0700 (PDT)
+Date:   Fri, 24 May 2019 05:23:46 -0700 (PDT)
+X-Google-Original-Date: Fri, 24 May 2019 12:23:43 GMT
+Message-Id: <pull.223.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] Fix racy fsmonitor
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The t7519-status-fsmonitor.sh tests became a lot more flaky with the recent
+fsmonitor fix (js/fsmonitor-refresh-after-discarding-index). That fix,
+however, did not introduce the flakiness, but it just made it much more
+likely to be hit. And it seemed to be hit only on Windows.
 
-On Fri, May 24 2019, Christian Couder wrote:
+The reason, though, is that the fsmonitor feature failed to mark the
+in-memory index as changed, i.e. in need of writing, and it was the 
+has_racy_timestamp() test that hid this bug in most cases (although a lot
+less on Windows, where the files' mtimes are actually a lot more accurate
+than on Linux).
 
-> If someone wants to use as a filter a sparse file that is in the
-> repository, something like "--filter=sparse:oid=<ref>:<path>"
-> already works.
->
-> So 'sparse:path' is only interesting if the sparse file is not in
-> the repository. In this case though the current implementation has
-> a big security issue, as it makes it possible to ask the server to
-> read any file, like for example /etc/password, and to explore the
-> filesystem, as well as individual lines of files.
+This fixes https://github.com/gitgitgadget/git/issues/197
 
-Removing this is a good idea.
+Johannes Schindelin (2):
+  fill_stat_cache_info(): prepare for an fsmonitor fix
+  mark_fsmonitor_valid(): mark the index as changed if needed
 
-Just to clarify, what was the attack surface in practice? We pass this
-to add_excludes_from_file_to_list(), are there cases where it'll spew
-out parse errors/warnings that allow you to extract content from such a
-file?
+ apply.c                |  2 +-
+ builtin/update-index.c |  2 +-
+ cache.h                |  2 +-
+ diff-lib.c             |  2 +-
+ entry.c                |  2 +-
+ fsmonitor.h            |  5 +++--
+ preload-index.c        |  2 +-
+ read-cache.c           | 10 +++++-----
+ 8 files changed, 14 insertions(+), 13 deletions(-)
 
-Or does it amount to a DoS vector by pointing to some huge (binary?)
-file on-disk, or a security issue where you could via the error or
-timings discover whether the file exists or not, something else?
 
-I wonder if server operators need to be paranoid about the DoS from the
-issue with <oid>:<path> noted int/perf/p0100-globbing.sh which this is
-presumably vulnerable to, i.e. someone with repository write access
-uploading pathological patterns. That might be particularly annoying for
-e.g. GitHub where the fork network's object storage is shared.
+base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-223%2Fdscho%2Ffix-racy-fsmonitor-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-223/dscho/fix-racy-fsmonitor-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/223
+-- 
+gitgitgadget
