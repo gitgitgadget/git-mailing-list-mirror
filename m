@@ -8,49 +8,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3D901F462
-	for <e@80x24.org>; Fri, 24 May 2019 09:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2FD61F462
+	for <e@80x24.org>; Fri, 24 May 2019 09:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390100AbfEXJY5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 05:24:57 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40801 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389787AbfEXJY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 05:24:56 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d30so4740858pgm.7
-        for <git@vger.kernel.org>; Fri, 24 May 2019 02:24:56 -0700 (PDT)
+        id S2390114AbfEXJZC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 05:25:02 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:37448 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389777AbfEXJZB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 05:25:01 -0400
+Received: by mail-pf1-f195.google.com with SMTP id a23so4990636pff.4
+        for <git@vger.kernel.org>; Fri, 24 May 2019 02:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=d2wOxNCt+FPNfebWjxvOuoSawQQz8cpz65cxOkj61I0=;
-        b=K40vTBethlrdvkffpMirpm5L54tKX4j+TKt1vf+btESFbm/vrk0dwY7okxpZI4XcFa
-         GOFgD/x3701a120I389EuwgffY5m1f6si/ZzpJP77exIrIb6AFTI142xMZ5ut2KQ+zGU
-         +UiNMUchXoMTAyTJkefpmwn1kedYFDyVfCQI9kR+ezODdiBvis6DD9T/9uYq/ZJB/KjS
-         YTmKLJahxHU6LajXFI6VjtoyrF0/r2E432Gk91Rlv1gfDrG+acLMjbGr9WcK7P6CvLmd
-         s1hS1LtTf6NP0DbuZG5W9Bt3QUq/w1G9B+RG5HJ3sn7Ub0OdV2QH8azNIB9uHqWCPnXz
-         +cQA==
+        bh=ZkU0Sy3kGo2Tpxjx47UMjQZq7d/ezG/8c+Qx3KTnaGM=;
+        b=a8C8fY1yhBsEIW2pYCqHNdn8GcIukZzcqB0ucnl/7l/0oXhvLdg1yRdWulKWxz7FvH
+         0o8zMDgBlCHHTI5Zz3i2HZQewA7RML2aw+aqM9WDWDYf6w2n0RiaZfEbaDm8oN3KDer+
+         nzoGma1cJekO8mWivYZlWS1WKicFFOV7n5nstjvDPm9875h767bXwFuvifgiWpPRj706
+         I/tqrGJXn1tEx6hI2LthJYXwO0A6l1EAdKCZk9cqWZ2tGJl5iABDbiJeqDqiY2zLdnnO
+         A7eZbPLOW18rvFWhmVlm576o2GQWJ742XZRh1bJOBLUiWBrjwNceKZh4cZgg83jZ5Cur
+         eqig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=d2wOxNCt+FPNfebWjxvOuoSawQQz8cpz65cxOkj61I0=;
-        b=hIdY+GDAHpWwY/TJaixRalGabSq53HsLkmUaNOCJwmyraycvfKwlV2jSf0OEu6Rq3w
-         0YqH4mn4l4Y5gptaav8UFPi1XHd2mAUF3V4qKIi/Tmfk7NL3loBCMbr4V1mNw61fjj7+
-         oKeq6jzAY9KA3CORGCg20KJJSGw/u6KJlGuvTyRcWNg0R+eViRMxfxGweC0GRP5i5avB
-         n1NrbusXaA5XAaNalChD/WdSv3knMJRfwXYyczWoTQkAiyvRwmvA4ljyckTSVIa2TzDm
-         nW6gw0p0XaXQSkOpu8JTPrW57L1Rb0DEX4SoEyAIfvBG+YCgSFg1OjnM07r1NvoqqdB1
-         CQfw==
-X-Gm-Message-State: APjAAAXQKyhMsVcL61ewAZi1a7QgrysTOZFk28+aoaL3k3HzrWPu3iKY
-        yu/HE82DSZ9ae9T6h8Ga6KBpk2eO
-X-Google-Smtp-Source: APXvYqyLtAjEQcOzq01iUT1PxI/0EqNRgp7Uv6EY2/s8UGAkPrUryjd0GpOlvJc+W4kKEmCpLDogdQ==
-X-Received: by 2002:a17:90a:35c:: with SMTP id 28mr7366895pjf.110.1558689895406;
-        Fri, 24 May 2019 02:24:55 -0700 (PDT)
+        bh=ZkU0Sy3kGo2Tpxjx47UMjQZq7d/ezG/8c+Qx3KTnaGM=;
+        b=FBpg2M2wrgGCP1UEFGls+Zi0a99x0s/s9EZROqSu1Lk+u55ZI8TGp41T7oETLSx/PO
+         XCReWt2V7g4kqmKWVTc/i+uf5wla1vQvWTF/OWEix6aNV+bxa22yNnndO1exMam00u2y
+         YcXJwn1xxy6io2wiHkwIwJearLHM7mbVQ7RDW41Ie8hRZAjlfEWMbrb68fIjS4IIQrlD
+         hwXV3IB4lxiS9e2VclxgfEHxONB1rU+dDX162xyLE7Q7C48DaNfiMKQZa3WB/g3fQUdy
+         RnaXoik9EgauUqn0lUNo6ew7pI57koeGgLtGSmOkmD+ATXXTAjs3cY1YPbTQj9VMbHa8
+         LacA==
+X-Gm-Message-State: APjAAAVIRo5/6Zbo6dZnrtSo3sEeGCT3nDj3AzqoGhlYgB44RmMNPaDX
+        HOHuDMZ70Ofse3Jz34lbJ32bIJVH
+X-Google-Smtp-Source: APXvYqwRVBc1+ZQuPCJcpH6OXS2cv5vnjxChpMmjww088eursLi4ohB1w43cuWZuEsH2raGoNEOzJA==
+X-Received: by 2002:a17:90a:32c1:: with SMTP id l59mr7650060pjb.1.1558689900303;
+        Fri, 24 May 2019 02:25:00 -0700 (PDT)
 Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id 4sm3072854pfj.111.2019.05.24.02.24.52
+        by smtp.gmail.com with ESMTPSA id x18sm3823972pfj.17.2019.05.24.02.24.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 May 2019 02:24:54 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 24 May 2019 16:24:50 +0700
+        Fri, 24 May 2019 02:24:59 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 24 May 2019 16:24:55 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, bturner@atlassian.com, tmz@pobox.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/3] diff-parseopt: correct variable types that are used by parseopt
-Date:   Fri, 24 May 2019 16:24:40 +0700
-Message-Id: <20190524092442.701-2-pclouds@gmail.com>
+Subject: [PATCH 2/3] diff-parseopt: restore -U (no argument) behavior
+Date:   Fri, 24 May 2019 16:24:41 +0700
+Message-Id: <20190524092442.701-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
 In-Reply-To: <20190524092442.701-1-pclouds@gmail.com>
 References: <20190524092442.701-1-pclouds@gmail.com>
@@ -73,124 +73,177 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most number-related OPT_ macros store the value in an 'int'
-variable. Many of the variables in 'struct diff_options' have a
-different type, but during the conversion to using parse_options() I
-failed to notice and correct.
+Before d473e2e0e8 (diff.c: convert -U|--unified, 2019-01-27), -U and
+--unified are implemented with a custom parser opt_arg() in diff.c. I
+didn't check this code carefully and not realize that it's the
+equivalent of PARSE_OPT_NONEG | PARSE_OPT_OPTARG.
 
-The problem was reported on s360x which is a big-endian
-architechture. The variable to store '-w' option in this case is
-xdl_opts, 'long' type, 8 bytes. But since parse_options() assumes
-'int' (4 bytes), it will store bits in the wrong part of xdl_opts. The
-problem was found on little-endian platforms because parse_options()
-will accidentally store at the right part of xdl_opts.
+In other words, if -U is specified without any argument, the option
+should be accepted, and the default value should be used. Without
+PARSE_OPT_OPTARG, parse_options() will reject this case and cause a
+regression.
 
-There aren't much to say about the type change (except that 'int' for
-xdl_opts should still be big enough, since Windows' long is the same
-size as 'int' and nobody has complained so far). Some safety checks may
-be implemented in the future to prevent class of bugs.
-
-Reported-by: Todd Zullinger <tmz@pobox.com>
+Reported-by: Bryan Turner <bturner@atlassian.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.h | 70 +++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ diff.c                                    | 10 ++++---
+ t/t4013-diff-various.sh                   |  2 ++
+ t/t4013/diff.diff_-U1_initial..side (new) | 29 ++++++++++++++++++++
+ t/t4013/diff.diff_-U2_initial..side (new) | 31 ++++++++++++++++++++++
+ t/t4013/diff.diff_-U_initial..side (new)  | 32 +++++++++++++++++++++++
+ 5 files changed, 100 insertions(+), 4 deletions(-)
 
-diff --git a/diff.h b/diff.h
-index b20cbcc091..4527daf6b7 100644
---- a/diff.h
-+++ b/diff.h
-@@ -65,39 +65,39 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+diff --git a/diff.c b/diff.c
+index 4d3cf83a27..80ddc11671 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5211,9 +5211,11 @@ static int diff_opt_unified(const struct option *opt,
  
- #define DIFF_FLAGS_INIT { 0 }
- struct diff_flags {
--	unsigned recursive;
--	unsigned tree_in_recursive;
--	unsigned binary;
--	unsigned text;
--	unsigned full_index;
--	unsigned silent_on_remove;
--	unsigned find_copies_harder;
--	unsigned follow_renames;
--	unsigned rename_empty;
--	unsigned has_changes;
--	unsigned quick;
--	unsigned no_index;
--	unsigned allow_external;
--	unsigned exit_with_status;
--	unsigned reverse_diff;
--	unsigned check_failed;
--	unsigned relative_name;
--	unsigned ignore_submodules;
--	unsigned dirstat_cumulative;
--	unsigned dirstat_by_file;
--	unsigned allow_textconv;
--	unsigned textconv_set_via_cmdline;
--	unsigned diff_from_contents;
--	unsigned dirty_submodules;
--	unsigned ignore_untracked_in_submodules;
--	unsigned ignore_dirty_submodules;
--	unsigned override_submodule_config;
--	unsigned dirstat_by_line;
--	unsigned funccontext;
--	unsigned default_follow_renames;
--	unsigned stat_with_summary;
--	unsigned suppress_diff_headers;
--	unsigned dual_color_diffed_diffs;
-+	unsigned int recursive;
-+	unsigned int tree_in_recursive;
-+	unsigned int binary;
-+	unsigned int text;
-+	unsigned int full_index;
-+	unsigned int silent_on_remove;
-+	unsigned int find_copies_harder;
-+	unsigned int follow_renames;
-+	unsigned int rename_empty;
-+	unsigned int has_changes;
-+	unsigned int quick;
-+	unsigned int no_index;
-+	unsigned int allow_external;
-+	unsigned int exit_with_status;
-+	unsigned int reverse_diff;
-+	unsigned int check_failed;
-+	unsigned int relative_name;
-+	unsigned int ignore_submodules;
-+	unsigned int dirstat_cumulative;
-+	unsigned int dirstat_by_file;
-+	unsigned int allow_textconv;
-+	unsigned int textconv_set_via_cmdline;
-+	unsigned int diff_from_contents;
-+	unsigned int dirty_submodules;
-+	unsigned int ignore_untracked_in_submodules;
-+	unsigned int ignore_dirty_submodules;
-+	unsigned int override_submodule_config;
-+	unsigned int dirstat_by_line;
-+	unsigned int funccontext;
-+	unsigned int default_follow_renames;
-+	unsigned int stat_with_summary;
-+	unsigned int suppress_diff_headers;
-+	unsigned int dual_color_diffed_diffs;
- };
+ 	BUG_ON_OPT_NEG(unset);
  
- static inline void diff_flags_or(struct diff_flags *a,
-@@ -151,7 +151,7 @@ struct diff_options {
- 	int skip_stat_unmatch;
- 	int line_termination;
- 	int output_format;
--	unsigned pickaxe_opts;
-+	unsigned int pickaxe_opts;
- 	int rename_score;
- 	int rename_limit;
- 	int needed_rename_limit;
-@@ -169,7 +169,7 @@ struct diff_options {
- 	const char *prefix;
- 	int prefix_length;
- 	const char *stat_sep;
--	long xdl_opts;
-+	int xdl_opts;
+-	options->context = strtol(arg, &s, 10);
+-	if (*s)
+-		return error(_("%s expects a numerical value"), "--unified");
++	if (arg) {
++		options->context = strtol(arg, &s, 10);
++		if (*s)
++			return error(_("%s expects a numerical value"), "--unified");
++	}
+ 	enable_patch_output(&options->output_format);
  
- 	/* see Documentation/diff-options.txt */
- 	char **anchors;
+ 	return 0;
+@@ -5272,7 +5274,7 @@ static void prep_parse_options(struct diff_options *options)
+ 			  DIFF_FORMAT_PATCH, DIFF_FORMAT_NO_OUTPUT),
+ 		OPT_CALLBACK_F('U', "unified", options, N_("<n>"),
+ 			       N_("generate diffs with <n> lines context"),
+-			       PARSE_OPT_NONEG, diff_opt_unified),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG, diff_opt_unified),
+ 		OPT_BOOL('W', "function-context", &options->flags.funccontext,
+ 			 N_("generate diffs with <n> lines context")),
+ 		OPT_BIT_F(0, "raw", &options->output_format,
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 9f8f0e84ad..a9054d2db1 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -338,6 +338,8 @@ format-patch --inline --stdout initial..master^^
+ format-patch --stdout --cover-letter -n initial..master^
+ 
+ diff --abbrev initial..side
++diff -U initial..side
++diff -U1 initial..side
+ diff -r initial..side
+ diff --stat initial..side
+ diff -r --stat initial..side
+diff --git a/t/t4013/diff.diff_-U1_initial..side b/t/t4013/diff.diff_-U1_initial..side
+new file mode 100644
+index 0000000000..b69f8f048a
+--- /dev/null
++++ b/t/t4013/diff.diff_-U1_initial..side
+@@ -0,0 +1,29 @@
++$ git diff -U1 initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -2 +2,3 @@ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -3 +3,4 @@
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+diff --git a/t/t4013/diff.diff_-U2_initial..side b/t/t4013/diff.diff_-U2_initial..side
+new file mode 100644
+index 0000000000..8ffe04f203
+--- /dev/null
++++ b/t/t4013/diff.diff_-U2_initial..side
+@@ -0,0 +1,31 @@
++$ git diff -U2 initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -2,2 +2,5 @@
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+diff --git a/t/t4013/diff.diff_-U_initial..side b/t/t4013/diff.diff_-U_initial..side
+new file mode 100644
+index 0000000000..c66c0dd5c6
+--- /dev/null
++++ b/t/t4013/diff.diff_-U_initial..side
+@@ -0,0 +1,32 @@
++$ git diff -U initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
 -- 
 2.22.0.rc0.322.g2b0371e29a
 
