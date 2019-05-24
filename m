@@ -7,108 +7,140 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B1001F462
-	for <e@80x24.org>; Fri, 24 May 2019 06:27:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 975E91F462
+	for <e@80x24.org>; Fri, 24 May 2019 06:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388924AbfEXG10 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 02:27:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37536 "HELO cloud.peff.net"
+        id S2388689AbfEXGj5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 02:39:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37548 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388141AbfEXG10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 02:27:26 -0400
-Received: (qmail 25014 invoked by uid 109); 24 May 2019 06:27:26 -0000
+        id S2388365AbfEXGj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 02:39:57 -0400
+Received: (qmail 25269 invoked by uid 109); 24 May 2019 06:39:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 May 2019 06:27:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 May 2019 06:39:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6418 invoked by uid 111); 24 May 2019 06:28:07 -0000
+Received: (qmail 6486 invoked by uid 111); 24 May 2019 06:40:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 May 2019 02:28:07 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 May 2019 02:40:38 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 May 2019 02:27:24 -0400
-Date:   Fri, 24 May 2019 02:27:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 May 2019 02:39:55 -0400
+Date:   Fri, 24 May 2019 02:39:55 -0400
 From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Alejandro Sanchez <asanchez1987@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/4] am: drop tty requirement for --interactive
-Message-ID: <20190524062724.GC25694@sigill.intra.peff.net>
+Subject: Re: [PATCH 4/4] am: fix --interactive HEAD tree resolution
+Message-ID: <20190524063955.GD25694@sigill.intra.peff.net>
 References: <20190520120636.GA12634@sigill.intra.peff.net>
- <20190520121113.GC11212@sigill.intra.peff.net>
- <20190520125016.GA13474@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1905230840450.46@tvgsbejvaqbjf.bet>
+ <20190520121301.GD11212@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1905230840450.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 23, 2019 at 08:44:31AM +0200, Johannes Schindelin wrote:
+On Thu, May 23, 2019 at 09:12:27AM +0200, Johannes Schindelin wrote:
 
-> >   perl test-terminal.perl sh -c '
-> > 	for i in 0 1 2; do
-> > 		echo $i is $(test -t $i || echo not) a tty
-> > 	done
-> >   ' </dev/null
-> >
-> > it _usually_ says "0 is a tty", but racily may say "not a tty". If you
-> > put a sleep into the beginning of the shell, then it will basically
-> > always lose the race and say "not".
+> > +	if (!get_oid("HEAD", &head)) {
+> > +		struct object *obj;
+> > +		struct commit *commit;
+> > +
+> > +		obj = parse_object_or_die(&head, NULL);
+> > +		commit = object_as_type(the_repository, obj, OBJ_COMMIT, 0);
+> > +		if (!commit)
+> > +			die("unable to parse HEAD as a commit");
 > 
-> This is just another nail in the coffin for `test-terminal.perl`, as far
-> as I am concerned.
+> Wouldn't this be easier to read like this:
+> 
+> 		struct commit *commit =
+> 			lookup_commit_reference(the_repository, &head);
 
-I think it's only broken for stdin, but yeah, it's not great. I think
-the fact that test-terminal is not available everywhere (and thus many
-people are skipping a bunch of tests) is much more damning. :)
+Just the first two lines, I assume you mean; we still have to die
+ourselves. There is a lookup_commit_or_die(), but weirdly it warns if
+there was any tag dereferencing. I guess that would never happen here,
+since we're reading HEAD (and most of the existing calls appear to be
+for HEAD). So I'll go with that.
 
-> In the built-in `add -i` patch series, I followed a strategy where I move
-> totally away from `test-terminal`, in favor of using some knobs to force
-> Git into thinking that we are in a terminal.
+> > +test_expect_success 'interactive am can apply a single patch' '
+> > +	git reset --hard base &&
+> > +	printf "%s\n" y n | git am -i mbox &&
+> 
+> Since we want contributors to copy-edit our test cases (even if they do
+> not happen to be Unix shell scripting experts), it would be better to
+> write
+> 
+> 	test_write_lines y n | git am -i mbox &&
+> 
+> here. Same for similar `printf` invocations further down.
 
-I'm in favor of this. The current "add -i" is pretty accepting of
-reading from stdin, and I think we can do that in most places. The main
-use of test_terminal has been to check color and progress decisions. I'd
-be just as happy to see something like this:
+I think test_write_lines is mostly about avoiding echo chains, but it's
+probably a little more readable to avoid having to say "\n". I'll adopt
+that.
 
-  int git_isatty(int fd)
-  {
-	static int override[3];
-	static int initialized;
-	if (!initialized) {
-		const char *x = getenv("GIT_PRETEND_TTY");
-		if (x) {
-			for (; *x; x++) {
-				int n = *x - '0';
-				if (n > 0 && n < ARRAY_SIZE(override)
-					override[n] = 1;
-			}
-		}
-		initialized = 1;
-	}
-	if (fd > 0 && fd < ARRAY_SIZE(override) && override[fd])
-		return 1;
-	return isatty(fd);
-  }
+> > +	echo no-conflict >expect &&
+> > +	git log -1 --format=%s >actual &&
+> > +	test_cmp expect actual
+> 
+> I would prefer
+> 
+> 	test no-conflict = "$(git show -s --format=%s HEAD)"
+> 
+> or even better:
+> 
+> test_cmp_head_oneline () {
+> 	if test "$1" != "$(git show -s --format=%s HEAD)"
+> 	then
+> 		echo >&4 "HEAD's oneline is '$(git show -s \
+> 			--format=%s HEAD)'; expected '$1'"
+> 		return 1
+> 	fi
+> }
 
-> But at the same time, I *also* remove the limitation (for most cases) of
-> "read from /dev/tty", in favor of reading from stdin, and making things
-> testable, and more importantly: scriptable.
+This, I disagree with. IMHO comparing command output using "test" is
+harder to read and produces worse debugging output (unless you do a
+helper as you showed, which I think makes the readability even worse).
+Not to mention that it raises questions of the shell's whitespace
+handling (though that does not matter for this case).
 
-As far as I know, apart from this git-am fix, the only thing that reads
-from the terminal is the credential prompt. That one has to be a bit
-picky, because:
+What's your complaint with test_cmp? Is it the extra process? Could we
+perhaps deal with that by having it use `read` for the happy-path?
 
-  - we need to prompt from processes which have no stdio connected to
-    the user (e.g., remote-curl).
+Or do you prefer having a one-liner? I'd rather come up with a more
+generic helper to cover this case, that can run any command and compare
+it to a single argument (or stdin). E.g.,:
 
-  - we need to put the terminal into no-echo mode for passwords (and
-    probably should bail if that fails, to be paranoid)
+  test_cmp_cmd no-conflict git log -1 --format=%s
 
-In the case of credentials we already have multiple mechanisms for
-scripting the input (credential helpers and askpass). It would be nice
-to be able to test the terminal-level code automatically, but I'm just
-not sure how that would work.
+or
+
+  test_cmp_cmd - git foo <<-\EOF
+  multi-line
+  expectation
+  EOF
+
+But I'd rather approach those issues separately and systematically, and
+not hold up this bug fix.
+
+> > +test_expect_success 'interactive am can resolve conflict' '
+> > +	git reset --hard base &&
+> > +	printf "%s\n" y y | test_must_fail git am -i mbox &&
+> > +	echo resolved >file &&
+> > +	git add -u &&
+> > +	printf "%s\n" v y | git am -i --resolved &&
+> 
+> Maybe a comment, to explain to the casual reader what the "v" and the "y"
+> are supposed to do?
+
+OK. The "v" is actually optional, but I figured it would not hurt to
+have us print the patch we just generated. I'll add a comment.
+
+> After wrapping my head around the intentions of these commands, I agree
+> that they test for the right thing.
+
+Thanks!
 
 -Peff
