@@ -2,159 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20EA11F609
-	for <e@80x24.org>; Fri, 24 May 2019 13:41:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2F751F462
+	for <e@80x24.org>; Fri, 24 May 2019 14:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403815AbfEXNlp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 09:41:45 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45535 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391361AbfEXNlo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 09:41:44 -0400
-Received: by mail-wr1-f65.google.com with SMTP id b18so10055388wrq.12
-        for <git@vger.kernel.org>; Fri, 24 May 2019 06:41:43 -0700 (PDT)
+        id S2403934AbfEXOFL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 10:05:11 -0400
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:34989 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403907AbfEXOFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 10:05:10 -0400
+Received: by mail-lj1-f173.google.com with SMTP id h11so8798053ljb.2
+        for <git@vger.kernel.org>; Fri, 24 May 2019 07:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=GAFXbR7Jk0XOVJGcPAhV3HqDpUXfmMGwO9iU5J5CnGg=;
-        b=BxhFdzpmJeK8wQzSiALSZuTbdPiSRVpQkOliTX5jh4MzxUsvy8xv7EVK1DDU6Hqwpq
-         INkSBDRMitLyxsjfpj1zW6nW5ndxBaARq2odmwMSH1t9UDeHsb3qIrKjUd4TMRaV9clR
-         IULh5o/nc5lcaXZduqCJQLPYteMzgXI9TVzoCVU9+hmG+YZNVaoyERQjJAqkqSZwOYdw
-         AXaXq5qf+xiKPFKO14ThSgPmMQTsCssAOEf+4R583h+O97k/cwY/VrA97C6awMNy73C8
-         sbtQj1tDzNLl87GzmtD6nzKNFKNFgH8u45I456TTDpQrm3qodFHeCr9HD9Sj1j5X+3G2
-         2UHw==
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=U0xbbqA4wkmp0Eq+WFvI9l7SFdpb1z0iwOxF84OhH8E=;
+        b=PhGvELX9osxxhph3UCCIm8OAE+kcDuyLlMwj+kVO174JA4py3B4Yr3iuueilPB+68c
+         /d7pLV6/D1HGjfqDMwNUO/xIH3XguWSttcplkO1O9swlAr6sxX/AgP1vrVrFI8wNvboK
+         dXj6/WZI46b6dY3d/drtRJpbiid4UjQAC0n/pWI8anqs0V94b+vougx5xeKNryhW55gu
+         Jl/R42F0TdCpdDibVPtKfZzPj83WiSw1LmcjlZs3LPqXDkCVCJiQmRKp6wIPtPTx6Wyj
+         maeYbF3WvzjAi6n8NzZpW2GR7aAhTDQKLFmMxaQTVRPXb78lo+/7hQKPUbEIrkMTySqO
+         KNmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=GAFXbR7Jk0XOVJGcPAhV3HqDpUXfmMGwO9iU5J5CnGg=;
-        b=Z/vRRguh0r7xi9HmNBmIrwQ80KIFYlmk+YrhtZSLuLtC7UTlKo4TaFfcY9lXK15K4D
-         N5xua+909txZde08jYZSzizQsxP872ca43UG2CCs2pDMJEP4UUN44oP0pFGbDbg1ztyZ
-         9xwxNwGoCQMBsrkQ7FVL4taHNB2ieS9YO0bw1eb4cavbPyEXDoZS9WCqM0he0XAV5DEc
-         Yfl+9ijuGs6qt7zFLi3fc3kt2WGha49LTJkEdv+3lL0lirBKRTqkM9xVQnW4D0jyLIL5
-         Bls7gR4cB0AuQFJYYqTQ8yWKjZmYfngPzDcId54sR5zG5ZBQOugygZN+sAdOGwOoKPhL
-         rwAQ==
-X-Gm-Message-State: APjAAAU4YGaHuQuRfgn2rMiMmkn4g4QgJMgv7rpIvssQSB6+IqEl4rgd
-        mOmys6cf/xhWbo8sXSTw3Cw=
-X-Google-Smtp-Source: APXvYqz9I0oP0voaT/J6CQ6JkxivtjRrbOsVww1SssAVY2ZHArjf7lueWvcXM1Y0jV6VOvJPCbIqOg==
-X-Received: by 2002:adf:f48a:: with SMTP id l10mr454404wro.60.1558705302493;
-        Fri, 24 May 2019 06:41:42 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id q68sm3055045wme.11.2019.05.24.06.41.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 06:41:41 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
-References: <20190523113031.GA17448@sigill.intra.peff.net> <87tvdlt1jp.fsf@evledraar.gmail.com> <20190524072724.GH25694@sigill.intra.peff.net> <87r28offs6.fsf@evledraar.gmail.com> <20190524082605.GB9082@sigill.intra.peff.net> <87pno8fcp8.fsf@evledraar.gmail.com> <20190524092920.GD951@szeder.dev> <87imu0f6fh.fsf@evledraar.gmail.com> <20190524114114.GH951@szeder.dev> <87ftp4f4j8.fsf@evledraar.gmail.com> <20190524123419.GI951@szeder.dev>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190524123419.GI951@szeder.dev>
-Date:   Fri, 24 May 2019 15:41:40 +0200
-Message-ID: <87d0k8ezqj.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=U0xbbqA4wkmp0Eq+WFvI9l7SFdpb1z0iwOxF84OhH8E=;
+        b=lgfRPayxPJ4pmeMtrDXdjnEEx/mX2JqkqMKMuywfXYH0tuGtiE/uJdnQiiejXGXHVv
+         0yO1irwqE23UPSUPGcVwnGVEOhvz0KcZ/HLSbWOi2sQbW+uabiMqqneJoAfwQyBc5hFe
+         PoaD188VbIne1euFT4bEO/7s0HYdo8IGcCmXIMIioQHwppl4YUkro3t6EeKwIqLKr90r
+         3Lueh+NLY4J/KcJMeet3afvrnIu6He+hseQKepS373H2xoovaFo4IdCtwh7wMB/Mi4MP
+         /5qn1gXiYGMBWHEMst/AsPwVDvIpIdR9o/VEzEnkbcr3H2iCmpOlO5kQvmOsLTl4tYov
+         NWcA==
+X-Gm-Message-State: APjAAAWtNEQfrHMQUfQllglr6RxxKee3qKQJEUgh9rrwJrcQ2qP6vxt+
+        Heo0EIzA5ylaFmojKoez2Wwvxm4067Vwr/MIM+bxrZ8L
+X-Google-Smtp-Source: APXvYqx39r1ZEVfMhUJh11mlsJN+DkHMU5le+WynP2NaWhCzH6bix3QCKmLQ7t2W3xgx/37YAJzug/jiIhJs5yPjX2E=
+X-Received: by 2002:a2e:1412:: with SMTP id u18mr18173357ljd.197.1558706708469;
+ Fri, 24 May 2019 07:05:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 24 May 2019 09:04:57 -0500
+X-Google-Sender-Auth: qbSnZnrdqmyWB1ITmNFd3xKEaCM
+Message-ID: <CAHd499AidrL4jCG_WytPJF9yHfJJJvWJ5fpjKN6sGBY5Weu8Hg@mail.gmail.com>
+Subject: Need help merging unrelated histories
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Everything I'm going to describe is related to this repository:
 
-On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
+https://github.com/powervr-graphics/Native_SDK
 
-> On Fri, May 24, 2019 at 01:58:03PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
->>
->> > On Fri, May 24, 2019 at 01:17:06PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->> >>
->> >> On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
->> >>
->> >> > On Fri, May 24, 2019 at 11:01:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=
-=B0 Bjarmason wrote:
->> >> >> I don't think it's a performance problem to have an old commit-gra=
-ph
->> >> >> lying around. But if you turn on the commit-graph, run gc a bunch,=
- then
->> >> >> turn it off in config we'll have it lying around forever, even if =
-you do
->> >> >> subsequent gc's.
->> >> >>
->> >> >> So I think we should delete such things on the general principle t=
-hat
->> >> >> the end-state of a gc's shouldn't be the accumulation of the value=
-s of
->> >> >> past configuration options if we can help it.
->> >> >>
->> >> >> Maybe that screws over other users who did a "commit-graph write"
->> >> >> without setting gc.writeCommitGraph, but I think the only sane thi=
-ng to
->> >> >> do is to make "gc" fully 'own' such things if its turned on at all.
->> >> >
->> >> > Note that there is 'core.commitGraph' as well; as long as it's
->> >> > enabled, no commit-graph files should be deleted.
->> >>
->> >> Why? If we won't update it or write it if it's not there, why keep it
->> >> around?
->> >
->> > To read it, if 'core.commitGraph' says that is should be read.
->> >
->> >> It means the commit-graph code and anything else (like bitmaps) needs=
- to
->> >> deal with stale data for the common and default gc --auto case.
->> >>
->> >> You also can't have e.g. a global core.commitGraph=3Dtrue config along
->> >> with a per-repo gc.writeCommitGraph=3Dtrue config do what you expect.
->> >>
->> >> Now just because you wanted to write it for some you'll end up keeping
->> >> it around forever because you'd also want to optimistically always use
->> >> it if it's there.
->> >
->> > This is exactly what I expect it to do.
->>
->> Do you also expect base packs with an associated bitmap to have an
->> implicit *.keep flag under gc with pack.writeBitmaps=3Dfalse and
->> pack.useBitmaps=3Dtrue?
->
-> I don't understand what an "implicit *.keep flag" is[...]
+This repo has several distinct branches. None of them seem to be tied
+to each other. Instead of having a `master` where they branched off
+each of their releases (e.g. 3.1, 3.2, 4.0), it looks like they made a
+copy of previous branches with no ancestry and then continued coding
+on that.
 
-A .keep means we keep the pack, and e.g. gc.bigPackThreshold is
-effectively an implicit *.keep flag on a pack matching some critera,
-which in this case caused this issue of a stale *.bitmap file (since the
-pack wasn't touched, neither was the bitmap).
+What I'm trying to do is go back and rebase all of the X.X branches
+onto a new `master` branch. I started off with this:
 
-> [...]However, since a reachability bitmap is always associated with a
-> pack, but the commit-graph is not, I don't think this is a valid
-> comparison.
+$ git checkout --orphan master
 
-I don't either, I'm just trying to understand where you're coming from,
-and I still don't.
+Then I committed a `.gitattributes`. Next, I rebased the first
+(oldest) release branch:
 
-That bitmaps are associated with specific packs and the commit graph
-isn't is an internal implementation detail. Users who care about that
-distinction either don't use "git gc" or would be willing to tweak its
-settings.
+$ git rebase -i --onto master origin/3.0 --root
 
-For the rest I think removing existing side-indexes is a good default
-for the practical reasons mentioned upthread.
+Then I merged:
 
->> >> Note that I'm talking about the *default* gc semantics, they don't ha=
-ve
->> >> to cover all advanced use-cases, just be good enough for most, and it=
-'s
->> >> also important that they're as simple as possible, and don't result in
->> >> stuff like "my performance sucks because I turned this config option =
-on
->> >> once a year ago for 2 days".
+$ git checkout master && git merge --no-ff -
+
+Next, I did 3.1:
+
+$ git rebase -i --onto master origin/3.0 origin/3.1 -X theirs
+
+Using interactive mode, Git is smart enough to detect duplicate
+commits and eliminates those, even though the 2 branches do not share
+a merge base. I continued doing this all the way up to rebasing 4.3,
+but that's when things got tough. I see a lot of 'UD', 'UA', 'AU',
+'AA' merge conflicts. These are obviously due to the fact that the
+branches aren't connected. But I expected was that `-X theirs` would
+always favor what's on the branch being rebased. However, it seems
+this only affects modified conflicts, not adds or deletes.
+
+I was trying to find a way to bulk-resolve these. I mean, if git sees
+a file added on the left AND the right, I want the right one (theirs;
+the one coming from the 4.3 branch). Even though the branches are
+unrelated in terms of their history, I want the net effect of the
+rebase to essentially reflect the files on 4.3 itself. If a file isn't
+present on HEAD, delete it. If a file exists on REBASE_HEAD but not on
+HEAD, then add it. If the same file exists on both, favor the one on
+REBASE_HEAD.
+
+But I don't see a way of doing that. I tried `git checkout --theirs .`
+and `git checkout REBASE_HEAD -- .` but this doesn't work with all
+conflict types.
+
+Can anyone provide some advice on how to properly restructure this
+repository to create some ancestry, as if all along a `master` existed
+and all release branches were based on this in a linear fashion?
