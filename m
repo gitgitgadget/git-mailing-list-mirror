@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B4E1F462
-	for <e@80x24.org>; Fri, 24 May 2019 10:49:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D45341F462
+	for <e@80x24.org>; Fri, 24 May 2019 11:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390503AbfEXKtQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 06:49:16 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55646 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390402AbfEXKtP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 06:49:15 -0400
-Received: by mail-wm1-f66.google.com with SMTP id x64so8866739wmb.5
-        for <git@vger.kernel.org>; Fri, 24 May 2019 03:49:15 -0700 (PDT)
+        id S2391107AbfEXLRL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 07:17:11 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37490 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391105AbfEXLRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 07:17:10 -0400
+Received: by mail-wr1-f66.google.com with SMTP id e15so9615612wrs.4
+        for <git@vger.kernel.org>; Fri, 24 May 2019 04:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=LMelrTpYGv8j9tdwUFEQl94SWrVNmVpjy7KduyNZN/U=;
-        b=E7iBTj+Sa/l4mhMtzVFBllK/JzI2okLSPuZCRz0DD2ms8Z1gIitOx5LEiIQhMhfVlR
-         f2zrs75jQZ0+Bft5niaiCM9TIJ/cccrYXdgYyI4JwcTq9V7G5MMY5N6fSHEexailMlaP
-         6/yz4JeMeT/K23rbxb0yTgKUm9PXuERU/mSu4uXkXbAdZd5Oiy8ptO+7dVFk6+JCONfk
-         N4r+x7fW0xNSLgeb1UMJiEir898GVIm6xkDcuqSTC51ZAF4ZgFXcLpxEIehOL5CcIOYI
-         wgZz6nomrhzXZwvo2ey7n9NqKZ7YE4MnPKs5oIBxzXpX+UXpXFMV9XxcH4Cld9P4MMkl
-         Y3og==
+        bh=YcUn0Hr8pHdl5jJZNx0Dch6KsW2RGJV35mf4/SxSaXM=;
+        b=T++8Ev2C7k/ygkx/Z1ScXI4TLTY7dFxn1sQBLxNBnfrHVd2xRGt+pRAyTqsqlQKiCc
+         gPft+3R2tA5J1iFE7uICu5bSH959PoQZSGwz7YKifeEF9754qHHrLlKSj9J00Wxuv6lR
+         3qsexFgMyz74cTYO/kE5qZqOo4jA73/I6FFxvvCimnYl1NNdQMtgJde9L3/pCddI3bzk
+         HDjjX40uC0NmwEKXwh3AM8n6LrwdSJnBwcl90XwRC8B56fFbea7XjK9hgMwo/Qojp+ZY
+         3B/NDrsQ80fhiaI6On5KwfM9SdrbacVK0Zs/wt8c46/j1P+zvtVI3J5Hl6qQf2mJSyep
+         1VBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=LMelrTpYGv8j9tdwUFEQl94SWrVNmVpjy7KduyNZN/U=;
-        b=Pj53gXNL0dbQUCtp03zOT8TwDrsBjYIOTvC4mBW8zfePFYt9M+HI2SbJIJTrdTfFFb
-         N5Lx0zi2HEo7NUURVhWnOzzzmCF/1nCN/HAyE3sJCZSnGRza2DqstfcsO2eMxCl0SSUk
-         oyLxTxpDZASTasEAPt3JkifKvQWFbuSIr5g/m8hQQRes9ODQVoMLm+UKbcyt/hSZMgz6
-         gdXLg8Bk+yMcZsjLaiEAsKhWeCojS2iLSDM/Aqkt1SqGdO15WlRbPM7+b1Pd4+z1wGFv
-         0nwDAhCOk3kwNuJsN+oGLAJfT2rAmok3MZyKGeBBns6S4SZXLndix/y+Idje1PwGke9/
-         bssw==
-X-Gm-Message-State: APjAAAUX6eu1/vv/uw6Yo1Fd2JtXhMScDSgNewo3Wr+/t2VvPREhDEsG
-        W23puNagNuhTvfwT0pOKIC9YXy3jYbM=
-X-Google-Smtp-Source: APXvYqwEHzVSAZoN0NrkzRhoMcbh8j+sTOgta6cH7Dmp/hEiJaqZu68u5JNz/CAVE3Ns7CwTuv+QGQ==
-X-Received: by 2002:a1c:be19:: with SMTP id o25mr14906691wmf.138.1558694954185;
-        Fri, 24 May 2019 03:49:14 -0700 (PDT)
+        bh=YcUn0Hr8pHdl5jJZNx0Dch6KsW2RGJV35mf4/SxSaXM=;
+        b=mEDl9pPVoQ6RCYEPUNaParXADY8bAFuI9BkVgrjrKKDhfDLCEnXMLYX3cUxR3839aX
+         8XnpDs21LmplYbXGLgvKHyivdRNGr/vTAbWxA/Tn7FPxpRa/Yj5cof3zHC/ltqBWnh0u
+         M2+FPs7XZudUH7o0j5eMn8hDIJbcxK6/1EYIeXlZje4lKbSo1oKSU6jr+DccP4/5EI5+
+         MzItOAjURjYoupHbbnOgAjlGqqhd0TScIqZqrMPWQWECLd8AqVynlP5FlsW0nXTERDt/
+         8iOUUv4qS8EzF0rd4LJHRMsC2Oq2MAJ6PG8lMWW7CM1io9gMCatH1Iy/dMo2Paw3uqD2
+         /49A==
+X-Gm-Message-State: APjAAAWYXghSP73DVpfzhX+IaOnw1AL2Y0RSxzJRZx/2hjiJ7M/px55y
+        Kkj94ZDB0GofGJURnDO5fpenWn6nQ9w=
+X-Google-Smtp-Source: APXvYqzh/kWptelUEtNAq3Two5wRgYM62QJy1ke0xUswEqAREipYXgV8ZYQ4pAFwq68kX9bRJB3Mtw==
+X-Received: by 2002:a5d:6b03:: with SMTP id v3mr3157143wrw.309.1558696628613;
+        Fri, 24 May 2019 04:17:08 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id y132sm2939630wmd.35.2019.05.24.03.49.12
+        by smtp.gmail.com with ESMTPSA id t13sm4164536wra.81.2019.05.24.04.17.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 03:49:13 -0700 (PDT)
+        Fri, 24 May 2019 04:17:07 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Karl Ostmo <kostmo@gmail.com>, git@vger.kernel.org
-Subject: Re: standalone library/tool to query commit-graph?
-References: <CAECbv94KF9MhzZqa8BR-RL93mh0NuD3vA69pAT-sY5O74e_duQ@mail.gmail.com> <be719a37-ffa0-26d3-eb9c-0f5ccde52e7f@gmail.com> <86blztq8ap.fsf@gmail.com> <87tvdkg7ld.fsf@evledraar.gmail.com> <20190523222031.GC951@szeder.dev> <f05405d7-c78d-a0e4-75a1-d623f977400a@gmail.com> <20190524093459.GE951@szeder.dev> <87o93sfahj.fsf@evledraar.gmail.com> <20190524100653.GF951@szeder.dev>
+Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
+References: <20190313145417.GA24101@sigill.intra.peff.net> <20190314091254.nescpfp3n6mbjpmh@dcvr> <87zhoz8b9o.fsf@evledraar.gmail.com> <20190410225721.GA32262@sigill.intra.peff.net> <20190523113031.GA17448@sigill.intra.peff.net> <87tvdlt1jp.fsf@evledraar.gmail.com> <20190524072724.GH25694@sigill.intra.peff.net> <87r28offs6.fsf@evledraar.gmail.com> <20190524082605.GB9082@sigill.intra.peff.net> <87pno8fcp8.fsf@evledraar.gmail.com> <20190524092920.GD951@szeder.dev>
 User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190524100653.GF951@szeder.dev>
-Date:   Fri, 24 May 2019 12:49:12 +0200
-Message-ID: <87k1egf7pz.fsf@evledraar.gmail.com>
+In-reply-to: <20190524092920.GD951@szeder.dev>
+Date:   Fri, 24 May 2019 13:17:06 +0200
+Message-ID: <87imu0f6fh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -72,57 +72,39 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
 
-> On Fri, May 24, 2019 at 11:49:28AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+> On Fri, May 24, 2019 at 11:01:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
 armason wrote:
+>> I don't think it's a performance problem to have an old commit-graph
+>> lying around. But if you turn on the commit-graph, run gc a bunch, then
+>> turn it off in config we'll have it lying around forever, even if you do
+>> subsequent gc's.
 >>
->> On Fri, May 24 2019, SZEDER G=C3=A1bor wrote:
+>> So I think we should delete such things on the general principle that
+>> the end-state of a gc's shouldn't be the accumulation of the values of
+>> past configuration options if we can help it.
 >>
->> > On Thu, May 23, 2019 at 07:48:33PM -0400, Derrick Stolee wrote:
->> >> On 5/23/2019 6:20 PM, SZEDER G=C3=A1bor wrote:
->> >> > On Thu, May 23, 2019 at 11:54:22PM +0200, =C3=86var Arnfj=C3=B6r=C3=
-=B0 Bjarmason wrote:
->> >
->> >> >> and since the commit graph doesn't include any commits outside of
->> >> >> packs you'd miss any loose commits.
->> >> >
->> >> > No, the commit-graph includes loose commits as well.
->> >>
->> >> Depends on how you build the commit-graph.
->> >
->> > Yeah; I just didn't want to go into details, hoping that this short
->> > reply will be enough to jog =C3=86var's memory to recall our earlier
->> > discussion about this :)
->>
->> To clarify (and I should have said) I meant it'll include only packed
->> commits in the mode Karl Ostmo invoked it in, as Derrick points out.
+>> Maybe that screws over other users who did a "commit-graph write"
+>> without setting gc.writeCommitGraph, but I think the only sane thing to
+>> do is to make "gc" fully 'own' such things if its turned on at all.
 >
-> No, even in that mode it will include loose objects as well, if it has
-> to; that's what the "and closes under reachability" part of Derrick's
-> reply means and that's what I showed in our earlier discussion at:
->
->   https://public-inbox.org/git/20190322154943.GF22459@szeder.dev/
+> Note that there is 'core.commitGraph' as well; as long as it's
+> enabled, no commit-graph files should be deleted.
 
-I should have said "include any commits outside of packs [to seed the
-revision walk]".
+Why? If we won't update it or write it if it's not there, why keep it
+around?
 
-As you correctly point out there *are* caveats to that, e.g. it's
-possible to have packs & loose commits but you include everything
-because of reachability.
+It means the commit-graph code and anything else (like bitmaps) needs to
+deal with stale data for the common and default gc --auto case.
 
-For the purposes of the discussion Jakub started upthread the
-not-quite-correct-but-close-enough mental model that we generally tend
-to accumulate loose objects that later coalesce into packs is close
-enough.
+You also can't have e.g. a global core.commitGraph=3Dtrue config along
+with a per-repo gc.writeCommitGraph=3Dtrue config do what you expect.
 
-I.e. for that reason for most users a "git commit-graph write" won't
-produce a graph with all reachable commits, e.g. try cloning git.git,
-"git am"-ing a patch on top, and generate it again, it'll be the same
-(unless you picked a humongous patch).
+Now just because you wanted to write it for some you'll end up keeping
+it around forever because you'd also want to optimistically always use
+it if it's there.
 
-Similarly it'll be incomplete for most users that have
-gc.writeCommitGraph=3Dtrue on since they use "gc --auto", and they're
-likely in an in-between state where they have a semi-stale graph.
-
-So building tools directly on top of it shouldn't be anyone's first
-choice, instead walk the DAG and see if that walking code can as an
-optimization optimistically consult the commit-graph.
+Note that I'm talking about the *default* gc semantics, they don't have
+to cover all advanced use-cases, just be good enough for most, and it's
+also important that they're as simple as possible, and don't result in
+stuff like "my performance sucks because I turned this config option on
+once a year ago for 2 days".
