@@ -2,131 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C85B61F609
-	for <e@80x24.org>; Fri, 24 May 2019 07:55:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCE291F462
+	for <e@80x24.org>; Fri, 24 May 2019 08:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389046AbfEXHzJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 May 2019 03:55:09 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42941 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388911AbfEXHzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 May 2019 03:55:09 -0400
-Received: by mail-wr1-f68.google.com with SMTP id l2so8921880wrb.9
-        for <git@vger.kernel.org>; Fri, 24 May 2019 00:55:07 -0700 (PDT)
+        id S2389156AbfEXIGA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 May 2019 04:06:00 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:34766 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388959AbfEXIF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 May 2019 04:05:59 -0400
+Received: by mail-ed1-f46.google.com with SMTP id p27so13181090eda.1
+        for <git@vger.kernel.org>; Fri, 24 May 2019 01:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=l/b7RBnMj09xEsudonwbnkUy0XDTNtKU797h/yU1VV0=;
-        b=Sv6bqy/EZv/477YN3boqinVkpuj21G7WbjXpGZ3J9H8Qc37vUvJT+Sl1K5cBBEurQW
-         SmxkLUzQg0iH+kiBWqSuDZGAAXBWpx50o85Lx/T3oqXIjPIB036T4tV2z4mSy6REPS9m
-         RvD3CFKqwSly0xbDc+JYg9N/OtlLF+3CNnNSCQC7oY+7IJmAEiFiKK7xar/vsy90jW6W
-         0IvADg7ERbBalO0otGTaNn86H+QWhd34HRxVNPYGVarjlg4ZcKNRe3sU8kkDj9ysmzM6
-         Q9q8/QIdodxP7hTPgPC9jVTdRrK3+EuT2fUO3xW6g7OSZmHlsGGJPNch+QnFeTPu/BnM
-         EBww==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KTP8xo8bXt3EqCAo6ry32/b5+DzTsRWcd2joGB1ntSU=;
+        b=GTg9NKXI/h5kqekLgssorVwVnMk4c4XGv+/SZVb8+bTyLUVoC1DV7r4G0KQvCt3yCS
+         xEICklUEK45OCyB1LulbqJ3zv3DhX6S0npe82noNDXTq8CEZW55hNrfBVSnu101J82sm
+         J89QjADZn6TxdYJrPHQBMnePv3xtNuWj3kJam8iXGsStXAIBZ3pMdV9daHVih7LSCXeg
+         FZzDdeo2WbDGDQimvaCmBx7PwUzhqCN6D19TNHuNrX66NneZ7g712qeRS3RyiZ7NZMmh
+         hhUyTq3IvSwW6+6pG4DZokXsJHBGoiJRNOxJPr8vv3Y8PSqEVVLNIMaUMJfeiXO1aaDT
+         CujQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=l/b7RBnMj09xEsudonwbnkUy0XDTNtKU797h/yU1VV0=;
-        b=H9u7qp5l9iSxSdP7+w1u7Sar4oWbb8J1T0wr+tFJUSH82d+bsW/5Kz5lbJRyk6rbfN
-         Oa6CWHryzgA9QbWGZfMaKb8yCBFzc1LMtFfRKBPzX3de2W8dKiOlwZ+XjXNLDsh9yu09
-         bWghVtYR1a3LLzwYWtO5Dy+Ebtg/Zb2RcWQaGarnPzGxsh7VDetnI02/7r0w7Kg1NbIV
-         uKw7Gu4Vw7MbHjq6HySXdbfEl04lljR/CHSprSYy6rI0GuPVGoXxXr74LyNxUkgLTfnM
-         AU0Nhjo44KB/y9GTSEXpnjCVXzlzbGKKwqEBTbtb55+BRIgu9NCQGvJyenWTJY7KZqr9
-         YTIg==
-X-Gm-Message-State: APjAAAXlGqzH1FodlNO70pD6rM9ogCnhnUfcrFiZBiJfZGRybtU8b3b8
-        M+Yoo0esNnMNCKvHOgepDzFv0ZEIE+M=
-X-Google-Smtp-Source: APXvYqzNk4d19qea1ux9DuUdWPsg4HXeHRav0YsTo//qE/p/q5dNAELchAnPqdIgvp+kZOqd2fJSwg==
-X-Received: by 2002:adf:e30d:: with SMTP id b13mr46915859wrj.246.1558684506982;
-        Fri, 24 May 2019 00:55:06 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id c131sm1556109wma.31.2019.05.24.00.55.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 May 2019 00:55:06 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3] repack: enable bitmaps by default on bare repos
-References: <20190310233956.GB3059@sigill.intra.peff.net> <20190312031303.5tutut7zzvxne5dw@dcvr> <20190312104954.GA2023@sigill.intra.peff.net> <20190313015133.n7f7lyujnlwfytre@dcvr> <20190313145417.GA24101@sigill.intra.peff.net> <20190314091254.nescpfp3n6mbjpmh@dcvr> <87zhoz8b9o.fsf@evledraar.gmail.com> <20190410225721.GA32262@sigill.intra.peff.net> <20190523113031.GA17448@sigill.intra.peff.net> <87tvdlt1jp.fsf@evledraar.gmail.com> <20190524072724.GH25694@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190524072724.GH25694@sigill.intra.peff.net>
-Date:   Fri, 24 May 2019 09:55:05 +0200
-Message-ID: <87r28offs6.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KTP8xo8bXt3EqCAo6ry32/b5+DzTsRWcd2joGB1ntSU=;
+        b=qaciEvfVgr8Ahi4EfH2vOECYg1EhUTfKEoEgPZMd0eRiqGiilFmx2b8sTe+Y9FD881
+         czNFgXbOQozbkyWt1xv/bR9pllpEXKpOgscLObljRgKkMywVy8sqAwgagOmLgVyYT+fO
+         Fk3R+HwFbrOvDZYKqmuh3CN5at5V+bZrQ2fjlDhah8OnIuTCPw3pb8CPndlW2FCAaBKo
+         TbRFV+Hr6U23oV+VVvvh9fTPj9QGgtavSw2eEujwAie1bNHzfDNm6f6zpv5XJV2DnYUz
+         LsMo/eRi64b2JGqmnQ7je6Y37tAig7xFi2XvYax21o70aed4jML5CzhpzEFTeapGCZMz
+         eZxg==
+X-Gm-Message-State: APjAAAV12AVYnfQcSI2ffVm2g5B9GYkbx23GZoFTSbLa3TzuVtVCxgR/
+        LxDia34BmNKlx/UIxLgLTnoERVGHaGnjA7uu0hKQC9/v3s4=
+X-Google-Smtp-Source: APXvYqxXMJUzRfTSU4muFUhzugP4fGDs3F+hk9215Soea6lbGBcAkYid1sbKLKEQc1DklbsSnG0jWmiE856XDquZEKU=
+X-Received: by 2002:a50:ec87:: with SMTP id e7mr102309962edr.126.1558685157835;
+ Fri, 24 May 2019 01:05:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20181108050755.GA32158@sigill.intra.peff.net> <79b06312-75ca-5a50-c337-dc6715305edb@jeffhostetler.com>
+ <20181122173931.GA22123@sigill.intra.peff.net>
+In-Reply-To: <20181122173931.GA22123@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 24 May 2019 10:05:45 +0200
+Message-ID: <CAP8UFD0XbOUj70pt4X=HDvGBoLaG9qBv9SWGnM6N8FG3t-57rg@mail.gmail.com>
+Subject: Re: how does "clone --filter=sparse:path" work?
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Matthew DeVore <matvore@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(Sorry for the late reply to this.)
 
-On Fri, May 24 2019, Jeff King wrote:
-
-> On Thu, May 23, 2019 at 09:26:34PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On Sat, Nov 24, 2018 at 8:07 AM Jeff King <peff@peff.net> wrote:
 >
->> > I spent a while thinking and experimenting with this tonight. The resu=
-lt
->> > is the patch below. =C3=86var, do you still have a copy of the repo th=
-at
->> > misbehaved? I'd be curious to see how it fares.
->>
->> No, sorry. I think we could make an artificial test to emulate it, which
->> would be something like:
->>
->>  * ~1 million commits
->>  * local clone setup to fetch all branches/tags (default 'git clone')
->>  * local a bit ahead/behind
->>  * Have old "main" pack with *.bitmap, bunch of other packs/loose object=
-s without that
->>  * push try to push the local change upstream (or to a topic branch)
->>
->> I tried briefly to emulate this with git.git with:
->> [...]
->> But didn't get anywhere, probably because here my topics are all stuff I
->> have already, and I just have 2x packs.
+> On Thu, Nov 08, 2018 at 01:57:52PM -0500, Jeff Hostetler wrote:
 >
-> Yeah, I haven't been able to find a reproduction for this problem at
-> will. The bitmaps are _supposed_ to be sprinkled around through the
-> commit graph so that we don't have to walk far. But presumably in your
-> case that was not so.
+> > > Should we simply be disallowing sparse:path filters over upload-pack?
+
+I agree that it should either be disallowed or heavily restricted.
+
+> > The option to allow an absolute path over the wire probably needs more
+> > thought as you suggest.
+> >
+> > Having it in the traverse code was useful for local testing in the
+> > client.
+> >
+> > But mainly I was thinking of a use case on the client of the form:
+> >
+> >     git rev-list
+> >         --objects
+> >         --filter=spec:path=.git/sparse-checkout
+
+Do you mean "sparse:path" instead of "spec:path"?
+
+> >         --missing=print
+> >         <commit>
+> >
+> > and get a list of the blobs that you don't have and would need before
+> > you could checkout <commit> using the current sparse-checkout definition.
+> > You could then have a pre-checkout hook that would bulk
+> > fetch them before starting the actual checkout.  Since that would be
+> > more efficient than demand-loading blobs individually during the
+> > checkout.  There's more work to do in this area, but that was the idea.
+> >
+> > But back to your point, yes, I think we should restrict this over the
+> > wire.
 >
-> I'm not sure what tickles the bitmap-writer to fail so hard. Is it
-> having too many refs? Weird patterns in the graph? Just a ton of
-> commits?
+> Thanks for your thorough response, and sorry for the slow reply. I had
+> meant to reply with a patch adding in the restriction, but I haven't
+> quite gotten to it. :)
 
-Ah, why did only this ancient (big) pack have a bitmap?
+The way I see it could be restricted is by adding a config option on
+the server, maybe called "uploadpack.sparsePathFilter", to tell which
+filenames can be accessed using "--filter=sparse:path=".
 
-The bitmap writer had never failed, this was just a repository where
-some automation (on a dev/staging box) cloned a repo, and someone had
-once run a manual "repack" to make make a pack with a bitmap.
+For example with uploadpack.sparsePathFilter set to
+"/home/user/git/sparse/*" and "--filter=sparse:path=foo" then
+"/home/user/git/sparse/foo" on the server would be used if it exists.
+(Of course care should be taken that things like
+"--filter=sparse:path=bar/../../foo" are rejected.)
 
-Then as time passed that pack stayed around, and re-looking at this that
-could have only happened because I had gc.bigPackThreshold turned on.
+If uploadpack.sparsePathFilter is unset or set to "false", then
+"--filter=sparse:path=<stuff>" would always error out.
 
-I.e. without that we'd have eventually done a full repack, so the bitmap
-would have gone away.
-
-So getting the repo into that state was a series of unlikely events.
-
-I think to the extent that this is an issue we can reproduce in the
-future the proper fix for it in lieu of some easy fix in the bitmap code
-would be to just teach "gc" to unlink old *.bitmap files if we detect
-they're too stale.
-
-I.e. we don't need to deal gracefully with some case where the bitmaps
-just cover some tiny part of the graph, we can just teach "gc" to either
-update them, or (if we're not currently writing them) unlink them.
-
-That seems to me to be a good idea in general, not just with bitmaps but
-also the commit graph. If we're doing a GC and our current settings
-aren't such that we'd update those files, shouldn't we just unlink them?
+Is this what you had in mind?
