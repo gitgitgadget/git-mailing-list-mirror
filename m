@@ -2,97 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BE671F462
-	for <e@80x24.org>; Sun, 26 May 2019 20:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 003001F462
+	for <e@80x24.org>; Sun, 26 May 2019 21:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbfEZUth (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 May 2019 16:49:37 -0400
-Received: from mail-lf1-f51.google.com ([209.85.167.51]:34059 "EHLO
-        mail-lf1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbfEZUth (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 May 2019 16:49:37 -0400
-Received: by mail-lf1-f51.google.com with SMTP id v18so10602847lfi.1
-        for <git@vger.kernel.org>; Sun, 26 May 2019 13:49:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IJg/yCjfVM3Ozhpb5ZCNN4WebegqjDbfI7FMAeP5e48=;
-        b=GD3ZVbCtAZQtaJFSDPqrCMmGJBcOkN8aadPzlAK4DlrCkWV1mtFgYPxuS4XgVoIFNB
-         07DttpIS7YSA6RHknmleBz7ZadImeyD5hn2YsmsOhxL1gJeJcYNAfteCCxReSzZW5Sy7
-         HXffCAFYiq7pFrgWGoGWbWSP6Y+fjHTJprbE0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IJg/yCjfVM3Ozhpb5ZCNN4WebegqjDbfI7FMAeP5e48=;
-        b=nsl+hi1X+CpWThDJljumJbL0duFn5TrPvNbl4CXvzhevP5V4Ek4HvbDyTnaoxkxQk2
-         WABsCUllKic+7qoC0NPZ+ch3K4i+CY3Btc+X4nTVsiwBPovTfFG3a/QE2TRxPm20pAPn
-         uknK19O+oTU1FJfif/RBIcNdKUwmIQY6KRboShBiQPqQCRS5fd5tTyAFAix5O7Ll6mv8
-         OiMyepio7ePrEU6X5yHRfxQtvhNGqyZfkTpkVOCpb1iExtYGLbzGnzhe6rWQcQnliR75
-         HERTNvXR7ATLwqoHMHneDFkgt/N7xyWDJPg5cd7s3S6Qrus8Fq3sZb93O/0XrCino21E
-         tf4A==
-X-Gm-Message-State: APjAAAWpvSXxH9LGFy/sUcort5uKuX8C9VdPmdUgXG//oWPy0PKzcuJj
-        KWs05N5lt16hCZuEWRZ1+mSAOYkcGqE=
-X-Google-Smtp-Source: APXvYqy3k2/nySSrPzGa9H28yN+yF6X5uuDGVpnh0W1oXydLT9fIHBWj9lR6wB2h9G3h55GK8Uh9vg==
-X-Received: by 2002:a19:7716:: with SMTP id s22mr843027lfc.64.1558903774285;
-        Sun, 26 May 2019 13:49:34 -0700 (PDT)
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com. [209.85.167.53])
-        by smtp.gmail.com with ESMTPSA id j69sm2185084ljb.72.2019.05.26.13.49.33
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 May 2019 13:49:33 -0700 (PDT)
-Received: by mail-lf1-f53.google.com with SMTP id n22so2858355lfe.12
-        for <git@vger.kernel.org>; Sun, 26 May 2019 13:49:33 -0700 (PDT)
-X-Received: by 2002:a19:521a:: with SMTP id m26mr10136807lfb.134.1558903772902;
- Sun, 26 May 2019 13:49:32 -0700 (PDT)
+        id S1726073AbfEZVeC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 May 2019 17:34:02 -0400
+Received: from mout.web.de ([212.227.17.11]:52337 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725827AbfEZVeC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 May 2019 17:34:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1558906418;
+        bh=zRZNcGOZ6wQj36V/MgBgtpPqF9RGjXshHnAJJa4GLiI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=nrmxoZFBtL/byNdHtmijZZuW1Erp07gySC5X01CpYSXI2CfFXNnK/nUQkZcn2pkEc
+         giIt3E/dyQZXVKRNSWH2zzZs5HhFvrrWCChNm7fn+/Oee6sSYsirRKB4Ou3agR9MaN
+         Uf0WD+XdPLwIwlCL3HzdDTAqr3M/uQzP/WG2HRjY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.23] ([79.203.20.65]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8R26-1giHpY04W2-00vycQ; Sun, 26
+ May 2019 23:33:38 +0200
+Subject: Re: git archive generates tar with malformed pax extended attribute
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Keegan Carruthers-Smith <keegan.csmith@gmail.com>,
+        git@vger.kernel.org
+References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
+ <20190524070644.GF25694@sigill.intra.peff.net>
+ <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
+ <20190524081337.GA9082@sigill.intra.peff.net>
+ <b4aaff4b-eaf7-9eaf-063f-42c073078060@web.de>
+ <877eaefdkt.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2b52ca7b-bb72-193a-9d6b-83003ce49424@web.de>
+Date:   Sun, 26 May 2019 23:33:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <1558864555-53503-1-git-send-email-pbonzini@redhat.com>
- <CAHk-=wi3YcO4JTpkeENETz3fqf3DeKc7-tvXwqPmVcq-pgKg5g@mail.gmail.com> <2d55fd2a-afbf-1b7c-ca82-8bffaa18e0d0@redhat.com>
-In-Reply-To: <2d55fd2a-afbf-1b7c-ca82-8bffaa18e0d0@redhat.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Sun, 26 May 2019 13:49:16 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgzKzAwS=_ySikL1f=Gr62YXL_WXGh82wZKMOvzJ9+2VA@mail.gmail.com>
-Message-ID: <CAHk-=wgzKzAwS=_ySikL1f=Gr62YXL_WXGh82wZKMOvzJ9+2VA@mail.gmail.com>
-Subject: Re: [GIT PULL] KVM changes for Linux 5.2-rc2
-To:     Paolo Bonzini <pbonzini@redhat.com>,
-        Junio Hamano C <gitster@pobox.com>
-Cc:     Linux List Kernel Mailing <linux-kernel@vger.kernel.org>,
-        =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?= <rkrcmar@redhat.com>,
-        KVM list <kvm@vger.kernel.org>,
-        Git List Mailing <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <877eaefdkt.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:GcvWVNWfwcZjWxf8oOZCu9fWFpuNjHBYIDzKlWAlqEQAHbx9NH1
+ kuLNb58+CNUelPrcCWnQQ+h9fNZeGH5Ud0oLgtttyiYpE1RWky3m+TZWSELlwsIJzRjG7Wj
+ 0d/Jo4A1eLhxN7BZa7MXCjBkkMSUeJNLW+INIPn7A+gMbKpQPvFmQ2rjg7eitI8IzM6CVUp
+ rclRpHpCqU3J8m/s9RDiQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:92JclFD5w70=:/FhPeJoLOERtLBFUorNDl4
+ 01OD6i/2Qp5Neyu8CoZAoB79PBU7dWdYlhicG79aMORbkIf6OIGUTYuy8QM+B9ZjOfIMK97/T
+ FhHLvkbUcxybr8ntTE5UOY2ORXI+ADP195ZxHkOOmu8s5bvCJpngvAHKbag7F5MryHqlO8s1H
+ UV+gMfxxRG1BLMfUwZo3xJ2Gi1Bvmh4RgzqAvSfmKldD253544HEKr7p0/vyxhx4WYw6L/Xhb
+ v9Rq+XmIO+FlUh1s4VNir15BdkFzMyPkOBVFOVASqiDIltYwYEXu6uCSMRi6dKXFAn0dEH3a4
+ /4Sr2t85FQnujGavIAl/uLFC1kzNLpnaeidqVe6BTPmY6b8u/OLY07wnr7XbDYQj600QDewW1
+ /SBPynWTtB2cnX53itAiMyCa/ve04CeVf6DVrQRbszR9RnSCWjpBzkrfgVF1dvGa2uaoHlOZv
+ 79JyB098H2Fv+rCHZKBI0/lVr1CyoIqFzkxS9hQu56fnX6eRfGlaCUIQQoVIuQNY1RvUevGzF
+ yA601e+W/F5gNAriFXz85bpj+oWXBAUNjp7aezUaMpzUGpbAxZCkjueUmXbrMnVgABPnYHjd8
+ esF8N5AdkO9iK1x0soZL6oIRNhlK0kYiLgR9+67uTk2x9uDwrTlPO1e4MG8nKXPddT8l2pQFm
+ m3Hdu4+WdXQqiTJGW75pYctitRH42XZzLhIy1q2/6wYvaqw2x/REbkne5/eBiH4sxtNgXgH2H
+ xglv8lDrgFXao619w5ZhcuddUZutZi2LRVhzLt1HWTCbvHcH3rPjVrv7hO/iS2HAc+/UrZpM1
+ Hj1EgyYyz19GTB0EzmQjou6r+xbH4s4ff8DpOcrmo9ucdLOPkvB62hAeQkmjQ1codYgt0YmDa
+ SYEV/IbrL4bSpQGLcMugeZNSxpqD63XIN1eU4Mgj7R+zwu/5mamC8rFxxXkm5dnJukpBbZBrv
+ rVnHOLv4KIBE5DUeHxx4dqP/WEIDlU0c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 26, 2019 at 10:53 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+Am 25.05.19 um 23:07 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> The interesting thing is that not only git will treat lightweight tags
-> like, well, tags:
+> On Sat, May 25 2019, Ren=C3=A9 Scharfe wrote:
+>
+>> We could truncate symlink targets at the first NUL as well in git
+>> archive -- but that would be a bit sad, as the archive formats allow
+>> storing the "real" target from the repo, with NUL and all.
 
-Yeah, that's very much by design - lightweight tags are very
-comvenient for local temporary stuff where you don't want signing etc
-(think automated test infrastructure, or just local reminders).
+> But that being said, this assumption that data in a tar archive will get
+> written to a FS of some sort isn't true. There's plenty of consumers of
+> the format that read it in-memory and stream its contents out to
+> something else entirely, e.g. taking "git archive --remote" output,
+> parsing it with e.g. [1] and throwing some/all of the content into a
+> database.
+>
+> 1. https://metacpan.org/pod/Archive::Tar
 
-> In addition, because I _locally_ had a tag object that
-> pointed to the same commit and had the same name, git-request-pull
-> included my local tag's message in its output!  I wonder if this could
-> be considered a bug.
+Git archive writes link targets that are 100 characters long or less
+into the appropriate field in the plain tar header.  It copies
+everything, including NULs, but unlike a PAX extended header that field
+lacks a length indicator, so extractors basically have to treat it as
+NUL-terminated.
 
-Yeah, I think git request-pull should at least *warn* about the tag
-not being the same object locally as in the remote you're asking me to
-pull.
+If we want to preserve NUL in short link targets as well, we'd have to
+put such names into an PAX extended header..
 
-Are you sure you didn't get a warning, and just missed it? But adding
-Junio and the Git list just as a possible heads-up for this in case
-git request-pull really only compares the object the tag points to,
-rather than the SHA1 of the tag itself.
+=2D--
+ archive-tar.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-             Linus
+diff --git a/archive-tar.c b/archive-tar.c
+index 3e53aac1e6..e8f55578d1 100644
+=2D-- a/archive-tar.c
++++ b/archive-tar.c
+@@ -291,7 +291,8 @@ static int write_tar_entry(struct archiver_args *args,
+ 	}
+
+ 	if (S_ISLNK(mode)) {
+-		if (size > sizeof(header.linkname)) {
++		if (size > sizeof(header.linkname) ||
++		    memchr(buffer, '\0', size)) {
+ 			xsnprintf(header.linkname, sizeof(header.linkname),
+ 				  "see %s.paxheader", oid_to_hex(oid));
+ 			strbuf_append_ext_header(&ext_header, "linkpath",
+=2D-
+2.21.0
