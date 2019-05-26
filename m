@@ -8,114 +8,261 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 003001F462
-	for <e@80x24.org>; Sun, 26 May 2019 21:34:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 280EB1F462
+	for <e@80x24.org>; Sun, 26 May 2019 22:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726073AbfEZVeC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 May 2019 17:34:02 -0400
-Received: from mout.web.de ([212.227.17.11]:52337 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725827AbfEZVeC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 May 2019 17:34:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1558906418;
-        bh=zRZNcGOZ6wQj36V/MgBgtpPqF9RGjXshHnAJJa4GLiI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=nrmxoZFBtL/byNdHtmijZZuW1Erp07gySC5X01CpYSXI2CfFXNnK/nUQkZcn2pkEc
-         giIt3E/dyQZXVKRNSWH2zzZs5HhFvrrWCChNm7fn+/Oee6sSYsirRKB4Ou3agR9MaN
-         Uf0WD+XdPLwIwlCL3HzdDTAqr3M/uQzP/WG2HRjY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.23] ([79.203.20.65]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M8R26-1giHpY04W2-00vycQ; Sun, 26
- May 2019 23:33:38 +0200
-Subject: Re: git archive generates tar with malformed pax extended attribute
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Keegan Carruthers-Smith <keegan.csmith@gmail.com>,
-        git@vger.kernel.org
-References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
- <20190524070644.GF25694@sigill.intra.peff.net>
- <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
- <20190524081337.GA9082@sigill.intra.peff.net>
- <b4aaff4b-eaf7-9eaf-063f-42c073078060@web.de>
- <877eaefdkt.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2b52ca7b-bb72-193a-9d6b-83003ce49424@web.de>
-Date:   Sun, 26 May 2019 23:33:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1725923AbfEZWzK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 May 2019 18:55:10 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45794 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725846AbfEZWzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 May 2019 18:55:09 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b18so14985917wrq.12;
+        Sun, 26 May 2019 15:55:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=OMUk3Qi7ehStox1DKoqfw3m6PEg9rEqP98IUbifxH40=;
+        b=dL9U/Hs0k07/elOl2yV3Sfr5qMcxJeT6cjMsUmUZJA3LlNCcJKrMFVVv2fUK1Li/1x
+         uEkLV78dO0oOnaD7IxTCWipjmoIAmpxYXWfq8MgJxcjFTgHGcq/0nEUtBuWPdRG1/bfC
+         pqkRkoUP331yG072PeaywNnAcFwgpu5oDo/ZBuPY9TTTnbVcXf9f0hOeED+MTXuRsOJc
+         hd4G1qrBRWElra2bY5T7eqK2IJBYbfESroRTfaPnmHm6D9TB11xtdeGNcNziO45sjf8w
+         dxVbXHa6eZh1ZxrXhs7Gby0PRqEYQsmrggJiEfA68zI27ik/EfbX/fXH5wIXcAU5Okww
+         zukQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OMUk3Qi7ehStox1DKoqfw3m6PEg9rEqP98IUbifxH40=;
+        b=n/Kv2IWZvdueTDjtF9fFuD/D2MD+OSlbV396m1MB1NIMTeVeTjWB0uOe8QRprhfUbu
+         bG+c/yoix73Hqtheny90R9abGLCsZmZL7xZgQ/zIfLAkL5fyFkS6if9ElqiuNDX+r4PZ
+         O7cLqJigxwdR1W8hlZOF9XiD2g3MBdYEWO2Ed7FdiWKv1X7HzYmOThh+zchegno25b7g
+         pKaksDPrzXOvb3mhboeNGjFYdBS3Ge/3ZA7dS54Ubox/7XIPtsTFCpjY3b6MLPAaDT9M
+         H7bhGMdEm4Tdih35zv2hhR7x0VfRYLMjwiqynCiknQpcuLeb69OekWFXKGfH6CP0a7by
+         IsEQ==
+X-Gm-Message-State: APjAAAU/ucY6ZM2Npk3SKEQtM9B+GHpb7rnwqSWPWfMz0Ousj9RxBdA0
+        4RXhCN/p/LCCgBm0x3AFG2c0CrbKGL0=
+X-Google-Smtp-Source: APXvYqwsZJrMq2FvJYmaIUI2oleYd9y7vg8Rz7ZHXC5bOcQoX+zWMHLdmD+YOybLAcHepTNVEmL9xA==
+X-Received: by 2002:adf:8b83:: with SMTP id o3mr63637568wra.278.1558911306386;
+        Sun, 26 May 2019 15:55:06 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z21sm9502851wmf.25.2019.05.26.15.55.05
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Sun, 26 May 2019 15:55:05 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Paolo Bonzini <pbonzini@redhat.com>,
+        Linux List Kernel Mailing <linux-kernel@vger.kernel.org>,
+        =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>,
+        KVM list <kvm@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC/PATCH] refs: tone down the dwimmery in refname_match() for {heads,tags,remotes}/*
+Date:   Mon, 27 May 2019 00:54:45 +0200
+Message-Id: <20190526225445.21618-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
+In-Reply-To: <CAHk-=wgzKzAwS=_ySikL1f=Gr62YXL_WXGh82wZKMOvzJ9+2VA@mail.gmail.com>
+References: <CAHk-=wgzKzAwS=_ySikL1f=Gr62YXL_WXGh82wZKMOvzJ9+2VA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <877eaefdkt.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GcvWVNWfwcZjWxf8oOZCu9fWFpuNjHBYIDzKlWAlqEQAHbx9NH1
- kuLNb58+CNUelPrcCWnQQ+h9fNZeGH5Ud0oLgtttyiYpE1RWky3m+TZWSELlwsIJzRjG7Wj
- 0d/Jo4A1eLhxN7BZa7MXCjBkkMSUeJNLW+INIPn7A+gMbKpQPvFmQ2rjg7eitI8IzM6CVUp
- rclRpHpCqU3J8m/s9RDiQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:92JclFD5w70=:/FhPeJoLOERtLBFUorNDl4
- 01OD6i/2Qp5Neyu8CoZAoB79PBU7dWdYlhicG79aMORbkIf6OIGUTYuy8QM+B9ZjOfIMK97/T
- FhHLvkbUcxybr8ntTE5UOY2ORXI+ADP195ZxHkOOmu8s5bvCJpngvAHKbag7F5MryHqlO8s1H
- UV+gMfxxRG1BLMfUwZo3xJ2Gi1Bvmh4RgzqAvSfmKldD253544HEKr7p0/vyxhx4WYw6L/Xhb
- v9Rq+XmIO+FlUh1s4VNir15BdkFzMyPkOBVFOVASqiDIltYwYEXu6uCSMRi6dKXFAn0dEH3a4
- /4Sr2t85FQnujGavIAl/uLFC1kzNLpnaeidqVe6BTPmY6b8u/OLY07wnr7XbDYQj600QDewW1
- /SBPynWTtB2cnX53itAiMyCa/ve04CeVf6DVrQRbszR9RnSCWjpBzkrfgVF1dvGa2uaoHlOZv
- 79JyB098H2Fv+rCHZKBI0/lVr1CyoIqFzkxS9hQu56fnX6eRfGlaCUIQQoVIuQNY1RvUevGzF
- yA601e+W/F5gNAriFXz85bpj+oWXBAUNjp7aezUaMpzUGpbAxZCkjueUmXbrMnVgABPnYHjd8
- esF8N5AdkO9iK1x0soZL6oIRNhlK0kYiLgR9+67uTk2x9uDwrTlPO1e4MG8nKXPddT8l2pQFm
- m3Hdu4+WdXQqiTJGW75pYctitRH42XZzLhIy1q2/6wYvaqw2x/REbkne5/eBiH4sxtNgXgH2H
- xglv8lDrgFXao619w5ZhcuddUZutZi2LRVhzLt1HWTCbvHcH3rPjVrv7hO/iS2HAc+/UrZpM1
- Hj1EgyYyz19GTB0EzmQjou6r+xbH4s4ff8DpOcrmo9ucdLOPkvB62hAeQkmjQ1codYgt0YmDa
- SYEV/IbrL4bSpQGLcMugeZNSxpqD63XIN1eU4Mgj7R+zwu/5mamC8rFxxXkm5dnJukpBbZBrv
- rVnHOLv4KIBE5DUeHxx4dqP/WEIDlU0c=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.05.19 um 23:07 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+When a refspec like HEAD:tags/x is pushed where HEAD is a branch,
+we'll push a *branch* that'll be located at "refs/heads/tags/x". This
+is part of the rather straightforward rules I documented in
+2219c09e23 ("push doc: document the DWYM behavior pushing to
+unqualified <dst>", 2018-11-13).
+
+However, if there exists a refs/tags/x on the remote the
+count_refspec_match() logic will, as a result of calling
+refname_match() match the detected branch type of the LHS of the
+refspec to refs/tags/x, because it's in a loop where it tries to match
+"tags/x" to "refs/tags/X', then "refs/tags/tags/x" etc.
+
+This resulted in a case[1] where someone on LKML did:
+
+    git push kvm +HEAD:tags/for-linus
+
+Which would have created a new "tags/for-linus" branch in their "kvm"
+repository, except because they happened to have an existing
+"refs/tags/for-linus" reference we pushed there instead, and replaced
+an annotated tag with a lightweight tag.
+
+Let's tone this down a bit and not match the more general expansions
+if they'd overlap with later expansions.
+
+This patch is a hack, and should not be applied. We probably want to
+fix this for "push", but we use refname_match() all over the place. We
+probably want to start by undoing part of
+54457fe509 ("refname_match(): always use the rules in
+ref_rev_parse_rules", 2014-01-14) and having special rules just for
+push.
+
+Furthermore ref_rev_parse_rules is used elsewhere, should we be doing
+this in other places? I think not if we undo most of 54457fe509 and
+can just have a custom matcher just for count_refspec_match(). That
+one shouldn't need any sort of magic, because elsewhere in the remote
+push DWYM code we try to add implicit refs/{tags,heads}/ prefixes.
+
+As the t/t5150-request-pull.sh change shows this results in a failing
+test where a local "full" branch is being pushed to a remote
+"refs/tags/full". So maybe this is something LKML people actually want
+for some reason.
+
+1. https://lore.kernel.org/lkml/2d55fd2a-afbf-1b7c-ca82-8bffaa18e0d0@redhat.com/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Sun, May 26 2019, Linus Torvalds wrote:
+
+> On Sun, May 26, 2019 at 10:53 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> The interesting thing is that not only git will treat lightweight tags
+>> like, well, tags:
 >
-> On Sat, May 25 2019, Ren=C3=A9 Scharfe wrote:
+> Yeah, that's very much by design - lightweight tags are very
+> comvenient for local temporary stuff where you don't want signing etc
+> (think automated test infrastructure, or just local reminders).
 >
->> We could truncate symlink targets at the first NUL as well in git
->> archive -- but that would be a bit sad, as the archive formats allow
->> storing the "real" target from the repo, with NUL and all.
-
-> But that being said, this assumption that data in a tar archive will get
-> written to a FS of some sort isn't true. There's plenty of consumers of
-> the format that read it in-memory and stream its contents out to
-> something else entirely, e.g. taking "git archive --remote" output,
-> parsing it with e.g. [1] and throwing some/all of the content into a
-> database.
+>> In addition, because I _locally_ had a tag object that
+>> pointed to the same commit and had the same name, git-request-pull
+>> included my local tag's message in its output!  I wonder if this could
+>> be considered a bug.
 >
-> 1. https://metacpan.org/pod/Archive::Tar
+> Yeah, I think git request-pull should at least *warn* about the tag
+> not being the same object locally as in the remote you're asking me to
+> pull.
+>
+> Are you sure you didn't get a warning, and just missed it? But adding
+> Junio and the Git list just as a possible heads-up for this in case
+> git request-pull really only compares the object the tag points to,
+> rather than the SHA1 of the tag itself.
 
-Git archive writes link targets that are 100 characters long or less
-into the appropriate field in the plain tar header.  It copies
-everything, including NULs, but unlike a PAX extended header that field
-lacks a length indicator, so extractors basically have to treat it as
-NUL-terminated.
+This behavior looks like a bug to me. This RFC-quality patch is an
+initial stab at fixing it, and is all I had time for today.
 
-If we want to preserve NUL in short link targets as well, we'd have to
-put such names into an PAX extended header..
+ refs.c                   |  8 +++++++-
+ t/t5150-request-pull.sh  |  2 +-
+ t/t5505-remote.sh        | 17 +++++++++++++++++
+ t/t9101-git-svn-props.sh | 12 ++++++------
+ 4 files changed, 31 insertions(+), 8 deletions(-)
 
-=2D--
- archive-tar.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+diff --git a/refs.c b/refs.c
+index 92d1f6dbdd..729b921328 100644
+--- a/refs.c
++++ b/refs.c
+@@ -514,9 +514,15 @@ int refname_match(const char *abbrev_name, const char *full_name)
+ 	const int abbrev_name_len = strlen(abbrev_name);
+ 	const int num_rules = NUM_REV_PARSE_RULES;
+ 
+-	for (p = ref_rev_parse_rules; *p; p++)
++	for (p = ref_rev_parse_rules; *p; p++) {
++		if (!strcmp(*p, "refs/%.*s") &&
++		    (starts_with(abbrev_name, "tags/") ||
++		     starts_with(abbrev_name, "heads/") ||
++		     starts_with(abbrev_name, "remotes/")))
++			continue;
+ 		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name)))
+ 			return &ref_rev_parse_rules[num_rules] - p;
++	}
+ 
+ 	return 0;
+ }
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index fca001eb9b..0265871cf4 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -212,7 +212,7 @@ test_expect_success 'pull request format' '
+ 		cd local &&
+ 		git checkout initial &&
+ 		git merge --ff-only master &&
+-		git push origin tags/full &&
++		git push origin full:refs/tags/full &&
+ 		git request-pull initial "$downstream_url" tags/full >../request
+ 	) &&
+ 	<request sed -nf fuzz.sed >request.fuzzy &&
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 883b32efa0..52507b9e50 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1277,4 +1277,21 @@ test_expect_success 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and
+ 	)
+ '
+ 
++test_expect_success 'HEAD:tags/A and HEAD:tags/B should not be different one of refs/tags/[AB] exists' '
++	git clone "file://$PWD/two" tags-match &&
++	(
++		cd tags-match &&
++		test_commit A &&
++		git rev-parse HEAD >expected &&
++
++		git push origin HEAD:tags/my-not-a-tag &&
++		git -C ../two rev-parse refs/heads/tags/my-not-a-tag >actual &&
++		test_cmp expected actual &&
++
++		git push origin HEAD:tags/my-tag &&
++		git -C ../two rev-parse refs/heads/tags/my-tag >actual &&
++		test_cmp expected actual
++	)
++'
++
+ test_done
+diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+index c26c4b0927..f9e43f4e97 100755
+--- a/t/t9101-git-svn-props.sh
++++ b/t/t9101-git-svn-props.sh
+@@ -73,11 +73,11 @@ test_expect_success 'fetch revisions from svn' 'git svn fetch'
+ 
+ name='test svn:keywords ignoring'
+ test_expect_success "$name" \
+-	'git checkout -b mybranch remotes/git-svn &&
++	'git checkout -b mybranch refs/remotes/git-svn &&
+ 	echo Hi again >> kw.c &&
+ 	git commit -a -m "test keywords ignoring" &&
+-	git svn set-tree remotes/git-svn..mybranch &&
+-	git pull . remotes/git-svn'
++	git svn set-tree refs/remotes/git-svn..mybranch &&
++	git pull . refs/remotes/git-svn'
+ 
+ expect='/* $Id$ */'
+ got="$(sed -ne 2p kw.c)"
+@@ -95,7 +95,7 @@ test_expect_success "propset CR on crlf files" '
+ 
+ test_expect_success 'fetch and pull latest from svn and checkout a new wc' \
+ 	'git svn fetch &&
+-	 git pull . remotes/git-svn &&
++	 git pull . refs/remotes/git-svn &&
+ 	 svn_cmd co "$svnrepo" new_wc'
+ 
+ for i in crlf ne_crlf lf ne_lf cr ne_cr empty_cr empty_lf empty empty_crlf
+@@ -117,7 +117,7 @@ cd test_wc
+ 	 svn_cmd commit -m "propset CRLF on cr files"'
+ cd ..
+ test_expect_success 'fetch and pull latest from svn' \
+-	'git svn fetch && git pull . remotes/git-svn'
++	'git svn fetch && git pull . refs/remotes/git-svn'
+ 
+ b_cr="$(git hash-object cr)"
+ b_ne_cr="$(git hash-object ne_cr)"
+@@ -168,7 +168,7 @@ cat >create-ignore-index.expect <<\EOF
+ EOF
+ 
+ test_expect_success 'test create-ignore' "
+-	git svn fetch && git pull . remotes/git-svn &&
++	git svn fetch && git pull . refs/remotes/git-svn &&
+ 	git svn create-ignore &&
+ 	cmp ./.gitignore create-ignore.expect &&
+ 	cmp ./deeply/.gitignore create-ignore.expect &&
+-- 
+2.21.0.1020.gf2820cf01a
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 3e53aac1e6..e8f55578d1 100644
-=2D-- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -291,7 +291,8 @@ static int write_tar_entry(struct archiver_args *args,
- 	}
-
- 	if (S_ISLNK(mode)) {
--		if (size > sizeof(header.linkname)) {
-+		if (size > sizeof(header.linkname) ||
-+		    memchr(buffer, '\0', size)) {
- 			xsnprintf(header.linkname, sizeof(header.linkname),
- 				  "see %s.paxheader", oid_to_hex(oid));
- 			strbuf_append_ext_header(&ext_header, "linkpath",
-=2D-
-2.21.0
