@@ -2,148 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CFD21F609
-	for <e@80x24.org>; Mon, 27 May 2019 20:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825671F462
+	for <e@80x24.org>; Mon, 27 May 2019 20:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727179AbfE0UU2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 May 2019 16:20:28 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58793 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726657AbfE0UU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 May 2019 16:20:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1558988416;
-        bh=breGvCc6vFwwVj+yVg2d0K6AX+m3SGUD9MkQDc8sl2w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LNTbP8ZJAK3UPKADdZaMizQV5z51sBqO581piNLEor7TR5NpLPZPYx9yhxJmrRWIP
-         6/X9WvZILQ5/6sl6D/HOiWgXsT2tN3Vtkngmjz7o+kVRcerELdy35Ml05vfZ1cLX29
-         qpEFED2Abku0CD5kZ7TeNn0kvpxrIFIq40SolE7c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M5a9E-1ggqxE04eO-00xZKy; Mon, 27
- May 2019 22:20:16 +0200
-Date:   Mon, 27 May 2019 22:20:15 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] bundle verify: error out if called without an object
- database
-In-Reply-To: <20190527200838.GF8616@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1905272219000.28524@tvgsbejvaqbjf.bet>
-References: <pull.226.git.gitgitgadget@gmail.com> <f0545e872344dd25e11db7fe095cde1578b26748.1558987152.git.gitgitgadget@gmail.com> <20190527200838.GF8616@genre.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727001AbfE0UWo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 May 2019 16:22:44 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:45320 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726657AbfE0UWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 May 2019 16:22:43 -0400
+Received: from [192.168.1.22] ([78.148.161.28])
+        by smtp.talktalk.net with SMTP
+        id VM8mhGS0SnuQZVM8nhHmwB; Mon, 27 May 2019 21:22:41 +0100
+X-Originating-IP: [78.148.161.28]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
+ a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=aulWLQ49AAAA:20 a=uPZiAMpXAAAA:8 a=anyJmfQTAAAA:8
+ a=272ucciLAAAA:20 a=ncthPEse3oiWa_h6qGwA:9 a=QEXdDO2ut3YA:10
+ a=YJ_ntbLOlx1v6PCnmBeL:22
+Subject: Re: git filter-branch re-write history over a range of commits did
+ notwork
+To:     Johannes Sixt <j6t@kdbg.org>, LU Chuck <Chuck.LU@edenred.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "chuck.lu@qq.com" <chuck.lu@qq.com>
+References: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
+ <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
+Date:   Mon, 27 May 2019 21:22:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1084637661-1558988416=:28524"
-X-Provags-ID: V03:K1:vJMwx4ESY2cL6qjMdTSUPQp/0KNMWK36cRXUDH7zyDfAzpncZdk
- MtUIh2UfGSHOF5rRNHoo6KrZh+qc5nv8vaq7uvptvTJ5i/y+XVt6rabInbEEWhj71EiiLvf
- i7Qb/+ODIJmdoiTzi2ehSAXRZ2BuRPHvMTh0VGEVp0nF3174/p4M4dtinZSYJS2ckD9Q6hs
- 7bOJg44kBMTdcXpLQNL0w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zk9KYdv4eOU=:bI1a0IR8h/nPDXCH9Tw563
- Z97462/6VF69hA1S46XOgCxAmuyLi8W1wCqSdordnXIHlAk7F3p+NxG9eCZH/bxlunZo3lQdy
- mdllXxw4Htwhv6J/ShbVC28vILD8u3atPClgZtkkKS4Mc49oA7aOTkpRJ4m7IoYXtY9etEsWg
- Z0yKN+4slbB1XkeHCU1MCu/riB6pkOJ7zR2xbJlkUkhHLjJxgRHxvsLqv62k8mTGvEUz/UbJY
- IidkABpnC3GvsWsZYvpnc/Tm9PHfGIaIWVEm96ZJnxguy2yVU9NtgdwDiG+LMvPujyXjGBOc1
- aizBr2ZOMUzKnSJV3S2xfkunhIKkoep6XpQhiqyFVv5V6BGWF3QFuiyuOCLTIb79cj+LZM37w
- IYUSF8z7ng1ZCBYPtoe1YcqfSN6mBQQcw2ifGG78PaKuZZixJga1k1y/Kga+KoHiY2TGTi5Bk
- fwCHpY4W7HIslsMhk8UBItYKU4B8Ys79r2XO6M55Je8NgY30jHMpyUiD8UPSo5pJ7b20mpAuw
- 32PscywHcOW2yyLNJ6/h/qPUPOS81osbqQSARMXjpjC87AUoKHFV1z1oMViozqo+hRhq6aH9u
- UbWfPlfc87VkbmZgs7oPXe9fypxNTJH7cQMh0OucnTB3CejlHvunOGs3J0gbAYTQLcl4HJte1
- KBqKnGwOpJp6PWTvXy/rPTlJ82iaf35LmHoGoY20NMyo6pVY+TEqQebZtS1N6wyLaOrIGm0W9
- +y5oQUvhV8miEjDwmo1zMTG1S4GReaZtn5gDWBndUTTDKYgb34+D1XtrR8tgLfsQzD4N6bg//
- b+MCMADrXWpaShUA7M0tYXtLk6Dn9Px7sA+Rv5GKcsY/4N9jcnST7W0yuSsAIBYAC9uAKEAbd
- blGBaM/BsM5KBzrDR+ghmwEfjU4WkWg7qVibYnBuuhfPQPmQqEA7Hkxsl9cALKDNdmGy6oHWR
- d77l124Vp6HJ/1t3mRb8+DDqhSxOblBOI8ER1Vkkg2iXlrxVYVgI6
+In-Reply-To: <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfLUhoWQBWYQnfejCV3d2x1YPj8Z8Y2mF6XMkX5t45kPWsPbB0qlxhAJmxUfCmohlvXwkqv5cAGuc6kXwZ6S3C3ghMe5fvhCwPcHaGTcHigWcotYlJnTz
+ 43jbfnO0CXK2NhLOi9AU8HKow8N4hCHDYFQ0h0UUGXGDReINWpLyrsCAQXBhvEI6/+TMDthBEbBFu13xKJgrRVmfZdDzunfNb+yGTHBxrMhGFXgyaAKy8hHZ
+ 6Iw67eWS23qXTwYOSgjR5w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Chuck,
 
---8323328-1084637661-1558988416=:28524
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 27/05/2019 19:21, Johannes Sixt wrote:
+> Am 27.05.19 um 10:01 schrieb LU Chuck:
+>> Hi team,
+>>
+>>      The issue comes from https://github.com/git-for-windows/git/issues/2206.
+>>
+>>      I want to re-write history by filter-branch command over a range of commits, but the command did not work.
+>>      I have referred to the following three documentation about how to use git filter-branch:
+>>      https://stackoverflow.com/questions/15250070/running-filter-branch-over-a-range-of-commits
+>>      https://stackoverflow.com/questions/28536980/git-change-commit-date-to-author-date
+>>      https://git-scm.com/docs/git-filter-branch
+>>
+>>      You can reproduce the problem by the following steps
+>>      1. clone the repository https://github.com/chucklu/LeetCode/
+>>      2. checkout to the temp branch
+>>      3. run the command git filter-branch --env-filter 'export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"' ... 67d9d9..f70bf4
+> Did you not tell us everything because you write ... in this message
+> when you cited the command you used, or do you say that you used ...
+> literally in the command?
 
-Hi brian,
+The three dots is provided in the literal EXAMPLES section of the man 
+page. That is probably an error, as I think it is meant to be an 
+ellipsis to indicate 'insert other options here'.
 
-On Mon, 27 May 2019, brian m. carlson wrote:
+Simply remove the three dots ('symmetric diff notation') .
 
-> On 2019-05-27 at 19:59:14, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The deal with bundles is: they really are thin packs, with very little
+Not sure what the correct change to the man page should be, but clearly 
+it has caused confusion. It also takes a moment to properly realise 
+which commits the two dot notation will refer to in the example which 
+may further compound the confusion about the three dots.
+
+Philip
 >
-> Generally a colon can only follow what could be a complete sentence, so
-> maybe we want to say something like "The deal with bundles is that they
-> really are=E2=80=A6" or "The deal with bundles is this: they really are=
-=E2=80=A6".
+>>      4. You will got the info "Found nothing to rewrite"
+>>   
+>>      However, it was supposed to overwrite the history from commit 9c1580 to commit f70bf4, make the commit date same as date.
+>>      I am not sure if I am using the filter-branch correctly, or if there is a bug in git?
+>>
+>>      Anyone can help me? Thanks in advance.
+> -- Hannes
 
-Thanks for educating me.
-
-> > sugar on top. So we really need a repository (or more appropriately, a=
-n
-> > object database) to work with, when asked to verify a bundle.
-> >
-> > Let's error out with a useful error message if `git bundle verify` is
-> > called without such an object database to work with.
-> >
-> > Reported by Konstantin Ryabitsev.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  bundle.c                | 3 +++
-> >  t/t5607-clone-bundle.sh | 6 ++++++
-> >  2 files changed, 9 insertions(+)
-> >
-> > diff --git a/bundle.c b/bundle.c
-> > index b45666c49b..b5d21cd80f 100644
-> > --- a/bundle.c
-> > +++ b/bundle.c
-> > @@ -142,6 +142,9 @@ int verify_bundle(struct repository *r,
-> >  	int i, ret =3D 0, req_nr;
-> >  	const char *message =3D _("Repository lacks these prerequisite commi=
-ts:");
-> >
-> > +	if (!r || !r->objects || !r->objects->odb)
-> > +		return error(_("need a repository to verify a bundle"));
-> > +
-> >  	repo_init_revisions(r, &revs, NULL);
-> >  	for (i =3D 0; i < p->nr; i++) {
-> >  		struct ref_list_entry *e =3D p->list + i;
-> > diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
-> > index cf39e9e243..2a0fb15cf1 100755
-> > --- a/t/t5607-clone-bundle.sh
-> > +++ b/t/t5607-clone-bundle.sh
-> > @@ -14,6 +14,12 @@ test_expect_success 'setup' '
-> >  	git tag -d third
-> >  '
-> >
-> > +test_expect_success '"verify" needs a worktree' '
->
-> Did you want to say "needs a repository"? Or do we really need a
-> worktree?
-
-Right, that was a place I meant to change after making up my mind what is
-actually required, but forgot.
-
-> Other than that, this looks fine to me. This is a much better experience
-> than a BUG and a nice improvement overall.
-
-Thank you! v2 incoming.
-
-Ciao,
-Dscho
-
---8323328-1084637661-1558988416=:28524--
