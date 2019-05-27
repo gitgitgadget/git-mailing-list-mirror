@@ -2,125 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2D61F462
-	for <e@80x24.org>; Mon, 27 May 2019 10:08:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59E911F462
+	for <e@80x24.org>; Mon, 27 May 2019 11:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726063AbfE0KID (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 May 2019 06:08:03 -0400
-Received: from mx07-002aaa01.pphosted.com ([185.132.180.47]:29644 "EHLO
-        mx07-002aaa01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725943AbfE0KID (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 May 2019 06:08:03 -0400
-Received: from pps.filterd (m0118689.ppops.net [127.0.0.1])
-        by mx07-002aaa01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x4R7xpCo001036
-        for <git@vger.kernel.org>; Mon, 27 May 2019 08:01:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edenred.com; h=from : to : cc :
- subject : date : message-id : content-type : content-transfer-encoding :
- mime-version; s=dk201811; bh=vTlWBtFlqXBlnxiBznGdU20onI4VXluMFpv7SjDIrLk=;
- b=1hR37vEffCMGv9hLFSVR8OrwtFDLKzMVtN3cL8Xn48kzN8tVg8lMb39eb0ESb44qAyHn
- KIF5QnxsZHUtZa5VDNh47KK/AQdirfEZD1xs+WXarHwzApzN3XQQXssRnLeagHjyym9l
- IMpc/zf1oy1YLvVXdDkQr/fXR9wAl/RbP5LqEleQaDAnQ5OSJkaCgN7bhdISafUnXTBA
- NIyVlrP4rCjvowjzEkV/qOvg1zd128RQTRXzMjy1W3aXRpcrK8YLunpoKs/E3W8Gf83G
- 25dQyfV9VJ6glQW23vzqUkXj56QK9ZO3TLtHMoEuQqdC6541dJFaKHK9k+y0st+tigWy Rg== 
-Received: from ehq-smtp-usr-p.edenred.com ([204.103.47.130])
-        by mx07-002aaa01.pphosted.com with ESMTP id 2srb0p85cr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 27 May 2019 08:01:16 +0000
-Received: from ehq-smtp-usr-mx1p20-p.edenred.com () by
- ehq-smtp-usr-mx1p18-p.edenred.com () with  (TLS) id
- 15.0.1395.4; Mon, 27 May 2019 10:01:16 +0200
-Received: from EUR02-VE1-obe.outbound.protection.outlook.com (104.47.6.51) by
- ehq-smtp-usr-mx1p20-p.edenred.com () with 
- (TLS) id 15.0.1395.4 via Frontend Transport; Mon, 27 May 2019 10:01:16 +0200
-Received: from DB7PR05MB5573.eurprd05.prod.outlook.com (20.177.193.214) by
- DB7SPR01MB0019.eurprd05.prod.outlook.com (20.177.122.33) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1922.22; Mon, 27 May 2019 08:01:15 +0000
-Received: from DB7PR05MB5573.eurprd05.prod.outlook.com
- ([fe80::d93a:e741:155:318d]) by DB7PR05MB5573.eurprd05.prod.outlook.com
- ([fe80::d93a:e741:155:318d%6]) with mapi id 15.20.1922.021; Mon, 27 May 2019
- 08:01:15 +0000
-From:   LU Chuck <Chuck.LU@edenred.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "chuck.lu@qq.com" <chuck.lu@qq.com>
-Subject: git filter-branch re-write history over a range of commits did
- notwork
-Thread-Topic: git filter-branch re-write history over a range of commits did
- notwork
-Thread-Index: AdUUYk+0TU9swc+jQ+aKfvGwOQfe0w==
-Date:   Mon, 27 May 2019 08:01:15 +0000
-Message-ID: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [140.207.1.78]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 3d39fb7e-6ba6-4157-cf66-08d6e2797e00
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:DB7SPR01MB0019;
-x-ms-traffictypediagnostic: DB7SPR01MB0019:
-x-ms-exchange-purlcount: 5
-x-microsoft-antispam-prvs: <DB7SPR01MB001921784DC7AFCEB07CA2208D1D0@DB7SPR01MB0019.eurprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2958;
-x-forefront-prvs: 0050CEFE70
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(136003)(346002)(376002)(39860400002)(51874003)(189003)(199004)(76116006)(73956011)(53936002)(64756008)(68736007)(66946007)(6506007)(66446008)(2351001)(26005)(102836004)(486006)(99286004)(6306002)(9686003)(6436002)(5640700003)(14454004)(8936002)(476003)(25786009)(7696005)(55016002)(4326008)(3846002)(52536014)(6116002)(5660300002)(316002)(86362001)(305945005)(7736002)(186003)(81156014)(71200400001)(81166006)(2906002)(6916009)(8676002)(71190400001)(66556008)(66476007)(2501003)(66066001)(478600001)(33656002)(966005)(74316002)(72206003)(1730700003)(256004);DIR:OUT;SFP:1102;SCL:1;SRVR:DB7SPR01MB0019;H:DB7PR05MB5573.eurprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: edenred.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: VxH15z/QKhKtQJjK8hTdqnQXKS0h1JNix2l9d4WbdxyT+FQgbuoYlEkhQwWNFM2aOpIh8ms/eC2op1MDKiB1RN5sujEyrrc2GUyoyrvS/vjenJp7eXDBUEcK7ajEqlSspi8/wUkWEye2i8L5rxdXvRczVlsvHEWM3ZOvnmpukVYkPhC7xDYvYnIEpnp8QF/MQ6oazT7Kn26dQlpVx7GIUzkzRCZc8vh/81VldjF7tJfxm9oQZ3abqI5DHCJQpQj3XnQ3IiyPeQuBkEu7gSRtbehs7hDcT1la9D8QPkVnrJuC11Dpusx6pTchiB1JxtJvY2wzKfbIQybeMHegVA25GIbf3T4AbQfRsNpSLmxByAAz8sZo48qFMOok4xeXuzc4m/0o1N+Z2J6xLfe1q1q/bzbQJippq6dV0qIS5r+8ZBc=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1726722AbfE0L2e (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 May 2019 07:28:34 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35902 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725943AbfE0L2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 May 2019 07:28:33 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s17so16602056wru.3
+        for <git@vger.kernel.org>; Mon, 27 May 2019 04:28:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IFI1Zm451vig9qUkxf0bUt1cGmuAL4UFs2kOxpJycZw=;
+        b=Cgd55bvd4RVLtPf8cyDwQwYg2XVY8c7VfJsNXYC2pcoNpuJjjRuKZAm9VYhEH9r9aC
+         xISHeOtUlYMDgwcK9s03l2UK/bkf2A2qDF+Rk5B/080bkfZYBrlQI4jzwTtJ8Oj/USJc
+         m05fkHq5XK18/+r46v1FFGLweyyNC86YjtVeKxOIWdA3Z2e9YB0P3HI/X96kEdQNaGBu
+         RfFnsG2N8oEwgnBHGij44Ak8Y7GwV1MT8/jQ5FA6NUQAVES7+rdRmd1sv9LpoIdB2Eii
+         QfM/t4EJ37w4rx6WuY5UwGaH6SIQ+b9Wtqx0qfHm34yZoQ16e/2ydebHZQ8DEAyWT7G3
+         Q1kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IFI1Zm451vig9qUkxf0bUt1cGmuAL4UFs2kOxpJycZw=;
+        b=XIHwSa0h+umgGbh2+98q2PajG0ZFuQvMciSnU19iRfmHGHWSMiG++yLjibf3+vqdse
+         gsrgE3tKCSSrr9H+Jkg5TvrCMYg77EBSjnMHu2zf8H025uZCf5d7qxg7gmK+ZdhMoPXO
+         d2Lh9kX4nZxjBKydnqYmgbzknPQgiMhCTdcwWjX7KnEqdgfUeTEueqc5gLYXBk/Z6DtS
+         WcxGNpIfKWWwKii75U9/ChXZcW0UiJayG+u6ep9rymSPpAP9d8dEwmnAfKt8MQqC4e/9
+         8ENVgk7xNO7HB27ZcVFXGRi7YaSpUD3Z95d8ZOSC8kjT+QhGQISGqMEo9V9Iz72Tmmny
+         C4xQ==
+X-Gm-Message-State: APjAAAWxd0OJgR4i95xLh8CRkyvN5ErTeuVoVf9Skxfa/hTcJbdfvk6F
+        Uyla4xM4urmPO1UhlZRtkms=
+X-Google-Smtp-Source: APXvYqzYnqSA+pFHsTkGOfD/trkjcQeN+5PJnbQD5hXiV5CmyKfsM6tTTGRFvtVXAmXkguaj8TibfA==
+X-Received: by 2002:adf:cc8d:: with SMTP id p13mr21259132wrj.114.1558956511441;
+        Mon, 27 May 2019 04:28:31 -0700 (PDT)
+Received: from szeder.dev (x4db96a1d.dyn.telefonica.de. [77.185.106.29])
+        by smtp.gmail.com with ESMTPSA id u2sm32132479wra.82.2019.05.27.04.28.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 May 2019 04:28:30 -0700 (PDT)
+Date:   Mon, 27 May 2019 13:28:28 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        git@jeffhostetler.com, jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 08/11] commit-graph: add --split option to builtin
+Message-ID: <20190527112828.GK951@szeder.dev>
+References: <pull.184.git.gitgitgadget@gmail.com>
+ <pull.184.v2.git.gitgitgadget@gmail.com>
+ <5ad14f574b6ffa5e233d61098dbcfc29c3632be5.1558554800.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d39fb7e-6ba6-4157-cf66-08d6e2797e00
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2019 08:01:15.1426
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4c1d9e0f-5c27-4228-a35a-de7b4083ff7b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: chuck.lu@edenred.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7SPR01MB0019
-X-OriginatorOrg: edenred.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-05-27_05:,,
- signatures=0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5ad14f574b6ffa5e233d61098dbcfc29c3632be5.1558554800.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
+On Wed, May 22, 2019 at 12:53:27PM -0700, Derrick Stolee via GitGitGadget wrote:
+> diff --git a/t/t5323-split-commit-graph.sh b/t/t5323-split-commit-graph.sh
+> new file mode 100755
+> index 0000000000..96704b9f5b
+> --- /dev/null
+> +++ b/t/t5323-split-commit-graph.sh
+> @@ -0,0 +1,122 @@
+> +#!/bin/sh
+> +
+> +test_description='split commit graph'
+> +. ./test-lib.sh
+> +
+> +GIT_TEST_COMMIT_GRAPH=0
+> +
+> +test_expect_success 'setup repo' '
+> +	git init &&
+> +	git config core.commitGraph true &&
+> +	infodir=".git/objects/info" &&
+> +	graphdir="$infodir/commit-graphs" &&
+> +	test_oid_init
+> +'
+> +
+> +graph_read_expect() {
+> +	NUM_BASE=0
+> +	if test ! -z $2
+> +	then
+> +		NUM_BASE=$2
+> +	fi
+> +	cat >expect <<- EOF
+> +	header: 43475048 1 1 3 $NUM_BASE
+> +	num_commits: $1
+> +	chunks: oid_fanout oid_lookup commit_metadata
+> +	EOF
+> +	git commit-graph read >output &&
+> +	test_cmp expect output
+> +}
+> +
+> +test_expect_success 'create commits and write commit-graph' '
+> +	for i in $(test_seq 3)
+> +	do
+> +		test_commit $i &&
+> +		git branch commits/$i
+> +	done &&
 
-    The issue comes from https://github.com/git-for-windows/git/issues/2206=
-.
+Please add a "|| return 1" at the end of the for loop's body, i.e.
 
-    I want to re-write history by filter-branch command over a range of com=
-mits, but the command did not work.
-    I have referred to the following three documentation about how to use g=
-it filter-branch:
-    https://stackoverflow.com/questions/15250070/running-filter-branch-over=
--a-range-of-commits
-    https://stackoverflow.com/questions/28536980/git-change-commit-date-to-=
-author-date
-    https://git-scm.com/docs/git-filter-branch
+  for ....
+  do
+        this &&
+        that || return 1
+  done
 
-    You can reproduce the problem by the following steps
-    1. clone the repository https://github.com/chucklu/LeetCode/
-    2. checkout to the temp branch
-    3. run the command git filter-branch --env-filter 'export GIT_COMMITTER=
-_DATE=3D"$GIT_AUTHOR_DATE"' ... 67d9d9..f70bf4
-    4. You will got the info "Found nothing to rewrite"
-=20
-    However, it was supposed to overwrite the history from commit 9c1580 to=
- commit f70bf4, make the commit date same as date.
-    I am not sure if I am using the filter-branch correctly, or if there is=
- a bug in git?
+because for loops continue iteration even when the commands in their
+body failed, potentially hinding errors.
 
-    Anyone can help me? Thanks in advance.
+This applies to the other three for loops below as well.
 
-Chuck Lu
-Regards
+> +	git commit-graph write --reachable &&
+> +	test_path_is_file $infodir/commit-graph &&
+> +	graph_read_expect 3
+> +'
+> +
+> +graph_git_two_modes() {
+> +	git -c core.commitGraph=true $1 >output
+> +	git -c core.commitGraph=false $1 >expect
+> +	test_cmp expect output
+> +}
+> +
+> +graph_git_behavior() {
+> +	MSG=$1
+> +	BRANCH=$2
+> +	COMPARE=$3
+> +	test_expect_success "check normal git operations: $MSG" '
+> +		graph_git_two_modes "log --oneline $BRANCH" &&
+> +		graph_git_two_modes "log --topo-order $BRANCH" &&
+> +		graph_git_two_modes "log --graph $COMPARE..$BRANCH" &&
+> +		graph_git_two_modes "branch -vv" &&
+> +		graph_git_two_modes "merge-base -a $BRANCH $COMPARE"
+> +	'
+> +}
+> +
+> +graph_git_behavior 'graph exists' commits/3 commits/1
+> +
+> +verify_chain_files_exist() {
+> +	for hash in $(cat $1/commit-graph-chain)
+> +	do
+> +		test_path_is_file $1/graph-$hash.graph
+> +	done
+> +}
+> +
+> +test_expect_success 'add more commits, and write a new base graph' '
+> +	git reset --hard commits/1 &&
+> +	for i in $(test_seq 4 5)
+> +	do
+> +		test_commit $i &&
+> +		git branch commits/$i
+> +	done &&
+> +	git reset --hard commits/2 &&
+> +	for i in $(test_seq 6 10)
+> +	do
+> +		test_commit $i &&
+> +		git branch commits/$i
+> +	done &&
+> +	git reset --hard commits/2 &&
+> +	git merge commits/4 &&
+> +	git branch merge/1 &&
+> +	git reset --hard commits/4 &&
+> +	git merge commits/6 &&
+> +	git branch merge/2 &&
+> +	git commit-graph write --reachable &&
+> +	graph_read_expect 12
+> +'
+> +
+> +test_expect_success 'add three more commits, write a tip graph' '
+> +	git reset --hard commits/3 &&
+> +	git merge merge/1 &&
+> +	git merge commits/5 &&
+> +	git merge merge/2 &&
+> +	git branch merge/3 &&
+> +	git commit-graph write --reachable --split &&
+> +	test_path_is_missing $infodir/commit-graph &&
+> +	test_path_is_file $graphdir/commit-graph-chain &&
+> +	ls $graphdir/graph-*.graph >graph-files &&
+> +	test_line_count = 2 graph-files &&
+> +	verify_chain_files_exist $graphdir
+> +'
+> +
+> +graph_git_behavior 'split commit-graph: merge 3 vs 2' merge/3 merge/2
+> +
+> +test_expect_success 'add one commit, write a tip graph' '
+> +	test_commit 11 &&
+> +	git branch commits/11 &&
+> +	git commit-graph write --reachable --split &&
+> +	test_path_is_missing $infodir/commit-graph &&
+> +	test_path_is_file $graphdir/commit-graph-chain &&
+> +	ls $graphdir/graph-*.graph >graph-files &&
+> +	test_line_count = 3 graph-files &&
+> +	verify_chain_files_exist $graphdir
+> +'
+> +
+> +graph_git_behavior 'three-layer commit-graph: commit 11 vs 6' commits/11 commits/6
+> +
+> +test_done
+> -- 
+> gitgitgadget
+> 
