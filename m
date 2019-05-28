@@ -2,91 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF6A31F462
-	for <e@80x24.org>; Tue, 28 May 2019 12:13:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 548391F462
+	for <e@80x24.org>; Tue, 28 May 2019 12:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbfE1MNY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 08:13:24 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:59701 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726620AbfE1MNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 08:13:24 -0400
-Received: from localhost.localdomain ([78.148.161.28])
-        by smtp.talktalk.net with SMTP
-        id Vayph2doDWIpcVayph6wwa; Tue, 28 May 2019 13:13:23 +0100
-X-Originating-IP: [78.148.161.28]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
- a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8
- a=VwQbUJbxAAAA:8 a=KaBGzcqrvFpBx-mTBmcA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
- a=QEXdDO2ut3YA:10 a=j_Tf7YO6MbsA:10 a=xts0dhWdiJbonKbuqhAr:22
- a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22
-From:   Philip Oakley <philipoakley@iee.org>
-To:     GitList <git@vger.kernel.org>
-Subject: [PATCH] doc branch: provide examples for listing remote tracking branches
-Date:   Tue, 28 May 2019 13:13:15 +0100
-Message-Id: <20190528121315.2604-1-philipoakley@iee.org>
-X-Mailer: git-send-email 2.22.0.rc1.windows.1.33.gc7da05f206
-In-Reply-To: <CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
-References: <CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
-MIME-Version: 1.0
+        id S1727221AbfE1MmQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 08:42:16 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36506 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726933AbfE1MmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 08:42:16 -0400
+Received: by mail-ed1-f68.google.com with SMTP id a8so31583277edx.3
+        for <git@vger.kernel.org>; Tue, 28 May 2019 05:42:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=PM445pByYKFixrZrr1BGm9QX/zjgmUaJExgQbXqcztg=;
+        b=q2HO7uqRPsEo99Ph7YyotHe4Ou2+PhbT6eBdYhNVbcMB17eR3TyMWVAzUyuReTy0LS
+         5/mLMVSd4vGMk1hNGVa1ZugT5uFF3FndfBFHqacUKYkjHFmjsyyJVVKZZq+U6yR8CI90
+         fy62eO7atcKnEJHILpyJFGrXSOaFLBd0BEfRkGU/N43tTv7CXak+CqeWVhyuSV8xS1LC
+         naidaiwS0ECqsEQ7QdsJP4quvlIbx36Y8b8be9oJsukh3aRarD+9xvTaYnbKpdujKES4
+         tLVpz62/y7AMWEEI7WHEYnC01x7wSmU9HiuDbt1gsUdIk9C7okCIUgztQgn4+40Q9BF4
+         AsrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PM445pByYKFixrZrr1BGm9QX/zjgmUaJExgQbXqcztg=;
+        b=ss3ACH065mvuSmFcodzMw904ckRRygt08LKDqqJS9Cbz4RSq/itmGA/KoMRbAIvdPr
+         zs6cHrlIM768bw7xqGnFE/juL75od7V++yb8bsyTxMfbrTh3XEzgAwLi/RcAWNT8EB3V
+         dDhIsxLTs7NwlNe9uucMld8V1LAnIk3c+LkYfDXBlMHJ9VQcPfybOB+MRXMaKkwNJDBP
+         6QaZS9DA9LQfD0xSw25LOjzr9QvoTcWDQktv2mFHnpi+nmAHWnmx4zHkrE6h/W8jj9Nh
+         93qwFa2/T0FilYvz4wDFTsbrQbkDC9tkgQE6pTmJ3k1S8pCr/bFcJ4so/By6sHcgkxAx
+         acSA==
+X-Gm-Message-State: APjAAAUlFZ/tVLaAelm7oHq62YXbQupmg8jHKYXEygA0y3wFvtuY1GN6
+        pw6LiUoH+8FpgorsguPHkH1kFUba6Xk=
+X-Google-Smtp-Source: APXvYqwjKnBo4SDMGFoWI0hR9Xd8Fxd405Ys8o6F3sSfoFyASagxH3DGQnrLzHpzKxJH247O5V+YLw==
+X-Received: by 2002:a50:b56a:: with SMTP id z39mr128909346edd.91.1559047334638;
+        Tue, 28 May 2019 05:42:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f50sm726193ede.61.2019.05.28.05.42.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 May 2019 05:42:14 -0700 (PDT)
+Date:   Tue, 28 May 2019 05:42:14 -0700 (PDT)
+X-Google-Original-Date: Tue, 28 May 2019 12:42:10 GMT
+Message-Id: <pull.227.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/3] Deprecate git rebase -p even more
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfNfOs452x/55bGia5TIZJKkn+VwaHPh/mLUYhc+ucZIeCLquwdgwK/JZTWIWNOitZzLgRJYFve3xZULyt6QLHL1NLbV9/pUvUBB4Vn4kNq3kiXuSuP/R
- 0ozd9SKpCtuSvlMyRL36RFxs9UdT0nlUz2uAN6y1LN/WPCPOt+3XnngPCcPmSWXi5uUPvI++ysdtqw==
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The availability of these pattern selections is not obvious from
-the man pages, as per mail thread <87lfz3vcbt.fsf@evledraar.gmail.com>.
+Turns out that I forgot a couple of spots when I sent the patch series to
+deprecate git rebase -p earlier...
 
-Provide examples.
+Johannes Schindelin (3):
+  tests: mark a couple more test cases as requiring `rebase -p`
+  docs: say that `--rebase=preserve` is deprecated
+  rebase docs: recommend `-r` over `-p`
 
-Signed-off-by: Philip Oakley <philipoakley@iee.org>
----
+ Documentation/git-pull.txt             |  5 +++--
+ Documentation/git-rebase.txt           |  5 +++--
+ t/t3422-rebase-incompatible-options.sh |  5 +++--
+ t/t3427-rebase-subtree.sh              | 15 ++++++++++-----
+ 4 files changed, 19 insertions(+), 11 deletions(-)
 
-in response to 
-<CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
-https://public-inbox.org/git/?q=%3CCACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S%2BhiXBoUGQ%40mail.gmail.com%3E
 
-to: "Git Mailing List <git@vger.kernel.org>"
-cc: "Duy Nguyen <pclouds@gmail.com>"
-cc: "Ævar Arnfjörð Bjarmason <avarab@gmail.com>"
-
- Documentation/git-branch.txt | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 3bd83a7cbd..7ed91f1be3 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -314,6 +314,18 @@ $ git branch -D test                                    <2>
- <2> Delete the "test" branch even if the "master" branch (or whichever branch
-     is currently checked out) does not have all commits from the test branch.
- 
-+Listing branches from a specific remote::
-++
-+------------
-+$ git branch -a -l '<remote>/<pattern>'                 <1>
-+$ git for-each-ref 'refs/remotes/<remote>/<pattern>'    <2>
-+------------
-++
-+<1> This can conflate <remote> with any local branches you happen to
-+    have been prefixed with the same <remote> pattern.
-+<2> `for-each-ref` can take a wide range of options. See linkgit:git-for-each-ref[1]
-+
-+Patterns will normally need quoting.
- 
- NOTES
- -----
+base-commit: aa25c82427ae70aebf3b8f970f2afd54e9a2a8c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-227%2Fdscho%2Fdeprecate-rebase-p-more-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-227/dscho/deprecate-rebase-p-more-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/227
 -- 
-2.22.0.rc1.windows.1
-
+gitgitgadget
