@@ -3,95 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B15A41F462
-	for <e@80x24.org>; Tue, 28 May 2019 16:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8CC1F462
+	for <e@80x24.org>; Tue, 28 May 2019 16:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726802AbfE1QqD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 12:46:03 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:46576 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbfE1QqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 12:46:03 -0400
-Received: by mail-ua1-f67.google.com with SMTP id a95so8187482uaa.13
-        for <git@vger.kernel.org>; Tue, 28 May 2019 09:46:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7YL3enUTLhKsB1RXIB1N3QAUCCjwF7Xs5aIP2hg28hY=;
-        b=pCbZfHQJUq++9Dj7kufyhhNJmYCoBNFwSO4AqKKJ0Hf85EsyWNbDXyrK2VJ7hoAQE0
-         goIcZZx3+FI2EUEIyzMYgcirO0MdHi0nUes2mur92New24dK0HmbBGhxESpqTx8xH8Nn
-         QyZImAzAr7uRbmBTkHMxKlj5DMOTGc0u0j6DlnxmWORyijuch/d/DRMQ0JRKBvjQVVYg
-         ewBtGQoddcqZlYqaZgnBFNNfNEE5hm5Ssn6dnkrhSXpfetKi5V4E22Rn6vg511Kaa7aA
-         haEtb4lXCNQnuc9+kTI8DwDeTfjXsnsBN+Qz2kReY37QMtmlKSK8S/WFDVGR9G6PLJ21
-         oAOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7YL3enUTLhKsB1RXIB1N3QAUCCjwF7Xs5aIP2hg28hY=;
-        b=HZghfBXSwo92I9hSbQJWf76C0/fLwEjAeKw/k6wiLfpNtzcG2y6XoiXyP/jpUIE6uZ
-         qUxL442JD8ntuL46+NpwtoFjQOyBqjvr5Vn1+SjjwIJKVspGdxUaCJUe6JiPNpmX84RF
-         nKJ9na7Z2yC1DGEs/C2GrqMDXVObGy2JkH4V9RehWg2BpFKHM3C6nsdqG2aoFTAguKlD
-         hsUZLhxBUCKi+Kdn+zpT4N55LpuXXKTq/cXx99Tn4Un1UZ+s2Mijbiylrp76dcEUntMn
-         puqSQGDGp7suea7fIUWVBgVU8dN7Ijqk9EfWLSjip3+7A4jm2OIRvE05HoC2IAm3+rm2
-         ZR7Q==
-X-Gm-Message-State: APjAAAWjja/1WqGDylR16UjS5QgSKIk1kSkUZCfBWD62VQjgnQb9VVub
-        2qbzAvm8XEZ/MUpSBZLhirQj+vwnh94=
-X-Google-Smtp-Source: APXvYqwA03hv+uS5HyCjIgiBoo1G36TBbw5oDuFzaCIV1Cd5OQMkzbCmQD3l16TXiqrC+SRxOJ6J8Q==
-X-Received: by 2002:a9f:2d9a:: with SMTP id v26mr32131245uaj.83.1559061962235;
-        Tue, 28 May 2019 09:46:02 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:911a:cd17:22da:62b? ([2001:4898:a800:1010:4250:cd17:22da:62b])
-        by smtp.gmail.com with ESMTPSA id e187sm14587701vse.16.2019.05.28.09.46.01
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 09:46:01 -0700 (PDT)
-Subject: Re: [PATCH 1/2] trace2: rename environment variables to GIT_TRACE2*
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@jeffhostetler.com,
-        git@vger.kernel.org
-References: <20190510211502.GS14763@szeder.dev>
- <20190519144309.9597-1-szeder.dev@gmail.com>
- <xmqq36ky5ywr.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f03e2ba6-36d8-d82b-3349-61341365b94e@gmail.com>
-Date:   Tue, 28 May 2019 12:46:01 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        id S1726874AbfE1QuH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 12:50:07 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64925 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbfE1QuG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 12:50:06 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BDD146E646;
+        Tue, 28 May 2019 12:50:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=QyvZIeWDESnw
+        NTeUT/tXAPRlNmc=; b=kL5zpyF0JtZpwMuwjaHyaQ4mZpXan4oR3+Ylr+hN252t
+        sZGQeuoGuoVaHgtL1wl9lACIQJduL/qnTaUXVBdQj+TGjBOBcgZnf67cUHs1JM+K
+        jHZrKSVgaqkjPIZROrvET6K16YNagN81itlRTv3MtiGnEF40YEZrQ7yDiebrtQI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PfIMaM
+        nyn7RA67guGMWVK/jSdyUugvKjEQavL3kHXzguIGinfKUMz5tr+KB45+hU60Jfl1
+        WGhsg2inTT625hggmDHhGzcrfJEoRN4O2gWPDlHd9bXzQlyDVporLnri6d9jEGaW
+        9dwZRyTQkeT1jD5HRHUjFuJuyFtzaGGIckKxg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B690B6E645;
+        Tue, 28 May 2019 12:50:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CFFB26E640;
+        Tue, 28 May 2019 12:50:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Adam Roben <aroben@apple.com>,
+        Bryan Larsen <bryan.larsen@gmail.com>,
+        Matthias Urlichs <smurf@smurf.noris.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/3] hash-object doc: elaborate on -w and --literally promises
+References: <20190520215312.10363-1-avarab@gmail.com>
+        <20190520215312.10363-3-avarab@gmail.com>
+Date:   Tue, 28 May 2019 09:49:59 -0700
+In-Reply-To: <20190520215312.10363-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 20 May 2019 23:53:11 +0200")
+Message-ID: <xmqqd0k24j7s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq36ky5ywr.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: A2C161F6-8168-11E9-B04B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/28/2019 12:25 PM, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
->> For an environment variable that is supposed to be set by users, the
->> GIT_TR2* env vars are just too unclear, inconsistent, and ugly.
-> 
-> FWIW, I personally am in favor of this change and would prefer to see
-> this done before the use of the names with unguessable abbreviation
-> gets ingrained too deeply.  
-> 
-> I do not see any objections around these two patches after waiting
-> for a week or so, but I do not see any Yay!s, either, so ...
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Talking with Jeff offline, we have no objections to the new names.
+> Clarify the hash-object docs to explicitly note that the --literally
+> option guarantees that a loose object will be written, but that a
+> normal -w ("write") invocation doesn't.
+>
+> At first I thought talking about "loose object" in the docs was a
+> mistake in 83115ac4a8 ("git-hash-object.txt: document --literally
+> option", 2015-05-04), but as is clear from 5ba9a93b39 ("hash-object:
+> add --literally option", 2014-09-11) this was intended all along.
 
-We'll need to do some follow-up work on our side as we update our
-version of Git, but that's not an issue.
+I have to admit that this "loose only" was the doing of my
+defeatism.  IOW, I was utterly pessimistic that I would be able to
+add more types (and more importantly, unbounded number of random
+types) of objects in the packstream.
 
-Thanks,
--Stolee
+So, "loose object" limitation is a practical one for those of us who
+cannot think of a reasonable way to cram arbitrary number of random
+new types into just 3 bits of the "type" bitfield, and not inherent
+to the "hash-object --literally" command.
 
+So I am very happy to see the first hunk of this patch, but I doubt
+there is much value in the last sentence the second hunk adds.
+
+Thanks.
