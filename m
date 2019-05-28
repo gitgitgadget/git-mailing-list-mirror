@@ -2,83 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0C31F462
-	for <e@80x24.org>; Tue, 28 May 2019 21:09:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D65E31F462
+	for <e@80x24.org>; Tue, 28 May 2019 21:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727144AbfE1VJK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 17:09:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53020 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726683AbfE1VJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 17:09:10 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0237F14ADD2;
-        Tue, 28 May 2019 17:09:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6yYUBfjVjkDNxSodi1NlVbDrv5o=; b=osPZJ/
-        nzo4KYcj8wbIfn8+3KXKy7YtLJjvxj9KHrXyGzEuh88UrPscvrrjRL+OZLwIotUd
-        sB0O+rnaAjp4f5FgjGQDiUxaU7xPNZYp8acSZ4JuzLPJFAbv+N0Ni4wEoCWSMi5A
-        s3Fc59BkBUl1ySpodT4gGuL825IezW7KItdEs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cTOVgvps9KjOEwK9921AH6IMFD7kR0Pp
-        3zvzayZ/mVJY2sXLJH2tYU7qa2JR10Fidl30sEC5CJv38ZBIeNG3t50Rxw6gniLY
-        MbrEND7XHhyJRrK5YJq9EqRgyyCdoSbNOfFZWLfD6h43Ht02h4MAGFEI5L6RYemq
-        NGmUzVVxD3Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED27014ADD1;
-        Tue, 28 May 2019 17:09:07 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61FCE14ADD0;
-        Tue, 28 May 2019 17:09:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] bundle verify: error out if called without an object database
-References: <pull.226.git.gitgitgadget@gmail.com>
-        <f0545e872344dd25e11db7fe095cde1578b26748.1558987152.git.gitgitgadget@gmail.com>
-        <20190528015133.GA29724@sigill.intra.peff.net>
-        <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
-        <20190528210428.GE24650@sigill.intra.peff.net>
-Date:   Tue, 28 May 2019 14:09:06 -0700
-In-Reply-To: <20190528210428.GE24650@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 28 May 2019 17:04:28 -0400")
-Message-ID: <xmqqy32qz3pp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1727364AbfE1V3Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 17:29:25 -0400
+Received: from mail-io1-f51.google.com ([209.85.166.51]:39173 "EHLO
+        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726492AbfE1V3Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 17:29:24 -0400
+Received: by mail-io1-f51.google.com with SMTP id r185so12163007iod.6
+        for <git@vger.kernel.org>; Tue, 28 May 2019 14:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ty+MmHJ+K3HR6QGCDeoo5qLSsDPPU8w0HOKHjNrWXhk=;
+        b=KPPG3tKKb+6ct8bRkbdi7IlYCXRPuQRmVhSj5gsjcyC9tp9yI6nmAf0kyEUnCPAiTz
+         xwheG9v9+piEjRZ/w9GYvtqVD9LYr1CJJirextZfN4rxW0JYgpLNsuI1ErMQq1tff25R
+         BXyv1moN51IeEcbUn3IT/siJSLh+iyrBXZNLaKJzbutIC4Mf/W66aSGTGtwKCmCItPpN
+         g2tBko1LRfUwo3xJn/74bLoF0jfjo/6LUu/B8rSkA12xk86OHwLRROAUJLYCfFggIS3x
+         +GmW3TcDyYeX4vS9LlsRnweokzPvvKwwPsmVkThFAxK2byM7JNp7uloYKXpQxghV4tL9
+         bUwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ty+MmHJ+K3HR6QGCDeoo5qLSsDPPU8w0HOKHjNrWXhk=;
+        b=px6uQq2tyKJVAZneR2Rh7dZ2Eu/mpjYpjBuNiv578wIcoS/StmZtYZaOmbqYC5aeSy
+         POnY5RgbmxUJUogltgn8q1Ny+nwIKNnmeELDjAECwxMT8NALFeJ+/LxIdv+fZRF0pb2Z
+         OAkMT9oYqcgpW7hjs8iN0IgmsJCsAVf6FSoUTd8ngY6H+wfo9DmQIqcZ7GUqLb9nOwqT
+         c6Cl5R9mK6pJeKbbtRZBt8M3m7Cp1ni84v0WOKCjYdk7+dto/dhjH3afqSiBvqdEkN7O
+         KRIGQ2hhIxQitK/kbkM7sd5rq2AifAkEwG+COD8Mf+8ec6ct0TPp1Ki1/E2a3CKU+RRU
+         q/vw==
+X-Gm-Message-State: APjAAAXmqknYL3vJvDoExpIfCR/Q1p1ADJcIhoJWPZFCF70EOMtY+t1+
+        kVLksO+5b11fjln6sfZm6yLDBg+QF2tNWI2douA=
+X-Google-Smtp-Source: APXvYqzZYgQc01vpVRF4rq9DiGXkOT0+X22scyryJOQRo7hAQUCcQnjsoui8Db5XNaxTMufAihIK4y7Puy6gvrONSuA=
+X-Received: by 2002:a5d:84ce:: with SMTP id z14mr20934976ior.107.1559078963982;
+ Tue, 28 May 2019 14:29:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D49FB816-818C-11E9-AA0E-46F8B7964D18-77302942!pb-smtp1.pobox.com
+References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet> <20190528063451.GG7946@sigill.intra.peff.net>
+ <CAKkfZL30QuBM6vT69OSS_keNuGi1U-bJ+jDiyDfhZmnr9L9xvA@mail.gmail.com>
+ <20190528204051.GA24650@sigill.intra.peff.net> <CAKkfZL3ZNgNFzxrYbjbhCF5BR12vQPy2sNuYdxmQgmuG+mo9Gw@mail.gmail.com>
+ <20190528205608.GC24650@sigill.intra.peff.net>
+In-Reply-To: <20190528205608.GC24650@sigill.intra.peff.net>
+From:   Brendan Boerner <bboerner.biz@gmail.com>
+Date:   Tue, 28 May 2019 16:29:13 -0500
+Message-ID: <CAKkfZL1BmOjzJ1QrQ43gJx89si3-M_1KMz=EWXN=pK6HSjCEkQ@mail.gmail.com>
+Subject: Re: 'git stash list' => Segmentation fault
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Thanks Jeff.
 
-> So I guess you are asking only about the part that I dismissed above as
-> "not all that interesting". I.e., do people actually run:
->
->   git bundle verify foo.bundle &&
->   git clone foo.bundle
->
-> That is not nonsense, per-se, but it is somewhat pointless since the
-> clone will verify the bundle itself anyway. But then, I guess I do not
-> see much point in anyone calling "bundle verify" in the first place.
+To answer your previous question I'm using git v2.21.0. I'm using the
+Ubuntu 14.04 PPA as well as Linuxbew (also v2.21.0).
 
-Yeah, I tend to agree that 'bundle verify' is pointless before
-trying to clone from it and seeing it fail (it still would be useful
-if 'bundle verify' gives more info on the breakage than 'clone', but
-it is not all that interesting at that point unless the user is
-working on git itself).
+Your help helped me narrow this down to linuxbrew. Take it out of my
+path no segfault.
+
+Uninstall linuxbrew git, linuxbrew still in PATH, use PPA git, segfault.
+
+Narrowed down further to be the "gettext" package - remove it from
+linuxbrew and PPA git stash list => no segfault.
+
+I'll ping the Linuxbrew folks.
+
+Thanks for you help!
+Brendan
+
+On Tue, May 28, 2019 at 3:56 PM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, May 28, 2019 at 03:53:51PM -0500, Brendan Boerner wrote:
+>
+> > Lot of good tips for debugging for me to work on - I'll work on that.
+> >
+> > Both to avoid spamming the list and if sending large files e.g. strace
+> > is it ok if I continue correspondence with you directly? (And
+> > Johannes?)
+>
+> In general, please keep substantive responses on the list, so everybody
+> can follow along. Adding to the list volume is fine. :)
+>
+> But certainly if there are sensitive bits, feel free to send them
+> directly off-list.
+>
+> -Peff
