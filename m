@@ -2,104 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D521F462
-	for <e@80x24.org>; Tue, 28 May 2019 08:52:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B531B1F462
+	for <e@80x24.org>; Tue, 28 May 2019 09:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726438AbfE1Iwk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 04:52:40 -0400
-Received: from mail-yw1-f46.google.com ([209.85.161.46]:46472 "EHLO
-        mail-yw1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbfE1Iwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 04:52:40 -0400
-Received: by mail-yw1-f46.google.com with SMTP id x144so3462196ywd.13
-        for <git@vger.kernel.org>; Tue, 28 May 2019 01:52:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Y5WipblxtzDjQTJwJUd8wm+5WZPNwL02HxkzI42R/zU=;
-        b=BkF2SLtZM6EtDS9x/oq0EtcXmNXSg3Ie+gAi3Qyzj57D/hPEBeTJ3nILvzG1STVrBE
-         xgWZz7cxMkdD85bjDW1g2NkrKCL2zQ5Gw3ys9Vr6+g3mTTO4evPP8JlRUaPqn/jdygR5
-         IECGWAceaJWr+r/ZnfAqkznGRDCVBVDDIxp9ue6AOPlHQGPUFuNXsAp7pSSAUStCry9D
-         +0AR/wdw2FJEzFCc0yfplan8Sql7nG1/kij2nSANyaLBuuUSMPMdI+2VrrbzfYp+7XU8
-         ixYh/byi2lqgxeXTGkAjKyFqhemU7tYvabThFxLmDwh3rvuenY80TbFvCOUMNPMLNrce
-         yaoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Y5WipblxtzDjQTJwJUd8wm+5WZPNwL02HxkzI42R/zU=;
-        b=cpRMfA7SBU8FfYDudeTNGLWZ5+FncHJfovxamuJgxaVtAOjgEq39qNtJ8tYQLWOv0M
-         9SLOcWW9IK2/kC8FtjkrollIyUQ5a0Y+2DXh+cWbflafZF5jKlx2nYPc52ikyI7kzB+Q
-         c9XOyr5vxzSSB/q8rrDHWvRM5vI0j7ARLsHyGlM6agZORbULPZZkGYJBHIwJrZOqjncg
-         kPP2y0lVHhtehKFPlEYj3a8CZ3YayKvGvdP/DIwwzCL3HanvBq7w6A8w1zWhVEnbF/Qz
-         krmro/Wqq38vXwURz1WhdsRMbof+dDWIA7YtS7wfBUO19TBOWSFy85oUE7JeS3fM4DLg
-         GAFA==
-X-Gm-Message-State: APjAAAWS8Z41oRihhTObli0WNj4VouA2aCl+IS2rkHxBdBBqIJGoF1mV
-        hYvMxky9TN4SvkapIshq96slh3cieRhEN3Thbny83mRg
-X-Google-Smtp-Source: APXvYqzEbVbm3os3yhx1qinVN9wtLL/hoLU5kwi/yBa3vaNxSwAou7pMfltj9HPCgvb6w/xUyzwbvhG2nM0sBB6cpi0=
-X-Received: by 2002:a81:454:: with SMTP id 81mr57258094ywe.210.1559033559381;
- Tue, 28 May 2019 01:52:39 -0700 (PDT)
+        id S1726279AbfE1JKR convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 28 May 2019 05:10:17 -0400
+Received: from mx0a-002e3701.pphosted.com ([148.163.147.86]:41988 "EHLO
+        mx0a-002e3701.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726853AbfE1JKQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 May 2019 05:10:16 -0400
+Received: from pps.filterd (m0148663.ppops.net [127.0.0.1])
+        by mx0a-002e3701.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x4S962OR016860
+        for <git@vger.kernel.org>; Tue, 28 May 2019 09:10:15 GMT
+Received: from g9t5008.houston.hpe.com (g9t5008.houston.hpe.com [15.241.48.72])
+        by mx0a-002e3701.pphosted.com with ESMTP id 2ss1rpg5m3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 28 May 2019 09:10:15 +0000
+Received: from G1W8106.americas.hpqcorp.net (g1w8106.austin.hp.com [16.193.72.61])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by g9t5008.houston.hpe.com (Postfix) with ESMTPS id C3B9756
+        for <git@vger.kernel.org>; Tue, 28 May 2019 09:10:14 +0000 (UTC)
+Received: from G4W9328.americas.hpqcorp.net (16.208.32.98) by
+ G1W8106.americas.hpqcorp.net (16.193.72.61) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Tue, 28 May 2019 09:10:14 +0000
+Received: from G9W9209.americas.hpqcorp.net (2002:10dc:429c::10dc:429c) by
+ G4W9328.americas.hpqcorp.net (2002:10d0:2062::10d0:2062) with Microsoft SMTP
+ Server (TLS) id 15.0.1367.3; Tue, 28 May 2019 09:10:13 +0000
+Received: from NAM05-CO1-obe.outbound.protection.outlook.com (15.241.52.10) by
+ G9W9209.americas.hpqcorp.net (16.220.66.156) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3 via Frontend Transport; Tue, 28 May 2019 09:10:13 +0000
+Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM (10.169.47.13) by
+ TU4PR8401MB0782.NAMPRD84.PROD.OUTLOOK.COM (10.169.44.136) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1922.16; Tue, 28 May 2019 09:10:12 +0000
+Received: from TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::6c61:bb5d:e04b:dc38]) by TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::6c61:bb5d:e04b:dc38%4]) with mapi id 15.20.1922.021; Tue, 28 May 2019
+ 09:10:12 +0000
+From:   "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: GIT issue while cloning (fatal: pack is corrupted (SHA1 mismatch))
+ !!!
+Thread-Topic: GIT issue while cloning (fatal: pack is corrupted (SHA1
+ mismatch)) !!!
+Thread-Index: AdUVNK2vOdBL1LuLQeCX2A7XwcsEXwAAGetA
+Date:   Tue, 28 May 2019 09:10:12 +0000
+Message-ID: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [16.242.235.134]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1538edb6-0272-4ab9-6783-08d6e34c4a4b
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:TU4PR8401MB0782;
+x-ms-traffictypediagnostic: TU4PR8401MB0782:
+x-microsoft-antispam-prvs: <TU4PR8401MB07821D5B397336413793A06AE11E0@TU4PR8401MB0782.NAMPRD84.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:2887;
+x-forefront-prvs: 00514A2FE6
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(346002)(396003)(136003)(39860400002)(376002)(189003)(199004)(86362001)(256004)(66066001)(76116006)(2351001)(1730700003)(6116002)(7736002)(305945005)(5660300002)(316002)(3846002)(6436002)(102836004)(81156014)(81166006)(14454004)(8676002)(478600001)(68736007)(6916009)(74316002)(33656002)(8936002)(2906002)(52536014)(55016002)(486006)(99286004)(2501003)(25786009)(66946007)(66476007)(66556008)(66446008)(64756008)(73956011)(6506007)(7696005)(53936002)(5640700003)(71200400001)(71190400001)(186003)(9686003)(476003)(26005);DIR:OUT;SFP:1102;SCL:1;SRVR:TU4PR8401MB0782;H:TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: hpe.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 6c16s/ub5PDuQzMbeyBwpzsfnVVYOZAb9Dv4sNPViZxDWPpU9LBXbyfqDBAeAQzAs5dwJ1TRVQKgN/dElfO8HEesnrPFItZtaKVlJYbF5zGSDhFccQ8Ma9QJxGAwIV5naCJJ6TM7GEVMQ5xpysuAmEcpQ/jZhE+pNPKGBQ4npj8vm+kAgH/QAHVUc8v4gdIuClv+pJD68i+EYrU5X5k2uApaZBav45lSpege3hve4x+XlBctKQ94lA6NKRBNJvqmS2OiqeIP9AkdeQOovJUcdLajhM9A1PdDuvtAJoUlMaw6prZiOUgj26P8xyXGL0UqV+xIumJE7+CGq+L/9yiYghvudmyQh+h+a/zzQW1fVAxTcv3BgM61/tpxjz5loXimoK0/ThDtwHu2X6IjMnxGPprnVamnGGNEGq0+FX4BnkY=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Tue, 28 May 2019 11:52:02 +0300
-Message-ID: <CAHMHMxWzchXG_Ct3=n9OP=3Q-ENjt7BkGQ2iWDAE3eYhv4MpyQ@mail.gmail.com>
-Subject: `git stash show` "forgets" about untracked files
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1538edb6-0272-4ab9-6783-08d6e34c4a4b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2019 09:10:12.1427
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ibrahim.vanak@hpe.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TU4PR8401MB0782
+X-OriginatorOrg: hpe.com
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-05-28_04:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=840 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905280061
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there,
+Hello,
 
-I have saved some new untraced files, along with some tracked files in
-a stash, in order to start making small commits.
-However, it seems that doing `git stash show`, will leave no trace
-about untracked files being bundled inside.
+We are seeing issue with GIT 2.14 version. When we try to clone the repos, it is taking HUGE amount of time on HPUX, whereas on the linux machine with same network configuration, it's getting cloned in less than mins. So we want to know has anyone reported this issue? What is the fix for this? Has the fix been released for this? Whom should we contact for this? 
 
-For example:
+Thanks & Regards,
+Ibrahim Vanak
 
-#                                 tracked -- untracked
-user@host:repo/folder$ git stash push -u file.ctrl file1.ctrl
-file2.ctrl file3.ctrl file4.ctrl -m 'New feature with untrackeds'
-Saved working directory and index state WIP on feature/auth_saml:
-03cd4d56538 fixup! drop! squash! NGFW-16257 QA: Configure Identity
-Provider with Ansible with asd2
-fatal: pathspec 'folder/-m' did not match any files  #[1]
-error: unrecognized input
-user@host:repo/folder$ git stash show
- file.ctrl | 4 ++++
- 1 file changed, 4 insertions(+)
-user@host:repo/folder$ git stash pop
-file1.ctrl already exists, no checkout
-file2.ctrl already exists, no checkout
-file3.ctrl already exists, no checkout
-file4.ctrl already exists, no checkout
-Could not restore untracked files from stash entry
-$  git --version
-git version 2.21.0
+Below is the HPUX system where we are seeing issue, it is taking 1 hr 45 mins and later it failed:
 
----------------------------------------
+root@sstl002.in.rdlabs.hpecorp.net# uname -a
+HP-UX sstl002 B.11.31 U ia64 0158936019 unlimited-user license
+root@sstl002.in.rdlabs.hpecorp.net# time git clone git@github.hpe.com:HPUX/SysFaultMgmt.git
+Cloning into 'SysFaultMgmt'...
+remote: Enumerating objects: 63627, done.
+remote: Total 63627 (delta 0), reused 0 (delta 0), pack-reused 63627
+Receiving objects: 100% (63627/63627), 681.90 MiB | 111.00 KiB/s, done.
+fatal: pack is corrupted (SHA1 mismatch)
+fatal: index-pack failed
 
-I understand that I could probably have staged them, and then commit maybe?
-I didn't want that at the time though
+real    104m3.373s
+user    0m36.220s
+sys     0m6.090s
+You have mail in /var/mail/root
+root@sstl002.in.rdlabs.hpecorp.net#
 
----------------------------------------
+Below is the system where it has passed in less than 3 mins:
 
-[1]: This also seems to be a bug.
-I understand I wrote it wrong, but, since I haven't used `--`, I am
-not sure if `git` has the right to assume that `-m` is a filename.
-However, the command has finished correctly.
+[root@chandana ~]# uname -a
+Linux chandana.in.rdlabs.hpecorp.net 3.10.0-327.el7.x86_64 #1 SMP Thu Nov 19 22:10:57 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux 
+[root@chandana ~]# time git clone git@github.hpe.com:HPUX/SysFaultMgmt.git
+Cloning into 'SysFaultMgmt'...
+remote: Enumerating objects: 63627, done.
+remote: Total 63627 (delta 0), reused 0 (delta 0), pack-reused 63627
+Receiving objects: 100% (63627/63627), 681.90 MiB | 5.59 MiB/s, done.
+Resolving deltas: 100% (35495/35495), done.
+Checking connectivity... done.
+Checking out files: 100% (10634/10634), done.
 
-=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
-=CE=BF=CF=82
+real    2m46.517s
+user    0m36.601s
+sys     0m10.503s
+
