@@ -2,131 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC34E1F462
-	for <e@80x24.org>; Tue, 28 May 2019 18:16:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2B281F462
+	for <e@80x24.org>; Tue, 28 May 2019 18:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727766AbfE1SQt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 14:16:49 -0400
-Received: from mout.gmx.net ([212.227.15.15]:34953 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727473AbfE1SQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 14:16:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559067407;
-        bh=BMdhm602hn3/geQ/Dw0nkzwb719/x2eILSB7Sqtz7b0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fqcDnJmjF9SwRcA67EpzP0C5GDBst5yYGUTHcvH39kSTmFojY3euyvcXSx2DGCEzn
-         kb3z+/ks6G3lbF1Vvrw2VXFi1yXwpCs1b1Oo068cAqIJYJ1N0GlEl+gHqn+ze6xMFH
-         x6G8aS+LqkqtN0eOwyRlqItIWEDlS4/MkXVTPEZk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfYLa-1gynkE3YPQ-00fwT1; Tue, 28
- May 2019 20:16:46 +0200
-Date:   Tue, 28 May 2019 20:16:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little
- projects
-In-Reply-To: <CAHd-oW7BFYd=LQBF4mF5QTpce9YtXj1WDf85AyO+CLwC9GMqDg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905282014270.44@tvgsbejvaqbjf.bet>
-References: <87in9ucsbb.fsf@evledraar.gmail.com> <20190520182353.22221-1-matheus.bernardino@usp.br> <nycvar.QRO.7.76.6.1905281235280.44@tvgsbejvaqbjf.bet> <CAHd-oW7BFYd=LQBF4mF5QTpce9YtXj1WDf85AyO+CLwC9GMqDg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728070AbfE1SZ0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 14:25:26 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63702 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbfE1SZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 14:25:26 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8316D6F0C7;
+        Tue, 28 May 2019 14:25:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=gHVmYi+Mfvl/BiNvo3jRw7xBW8s=; b=WzPku/g23njiBFKuBkqd
+        ALDDczaOW1A3/GPY5NHOX4wCULkp3/PV2wlRolMzq3wl20w30IhqEmfSrtTOhKAq
+        TZ8xki+GBvppeBe/BPKRHzfMY8tj0NEp27j1fLIThFH2/2S8zFqaatJsBJ3ycMs6
+        rpdSbbNvE3FqcLU/GdfQebw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=x47Z4tz5P1KB3VOH5zBhUD6NVZlE52oGfvqrqsPb55ktvU
+        QLDRXzV9N1/zifkoMhqaskSR8pDRXBo0tzHCp4hYeBSH/1RnCv+wULeVLG1B2bLj
+        JdXCL0dS++HggUtiuKRUL8Kz5pTH7NXSZ1Ity3Rf3NEzH3XEYIYfOeZWNfKig=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7B85E6F0C6;
+        Tue, 28 May 2019 14:25:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A64326F0C5;
+        Tue, 28 May 2019 14:25:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] rebase: replace incorrect logical negation by correct bitwise one
+References: <pull.221.git.gitgitgadget@gmail.com>
+        <aa0acf4c5ff843a480afdb5715fa03186d82a6d1.1558461018.git.gitgitgadget@gmail.com>
+Date:   Tue, 28 May 2019 11:25:19 -0700
+Message-ID: <xmqq5zpu308g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BXNUOl4fkpQIPipKg1ePDXSorXDuTs5N9kLEUQiFJHeEZwVx8rE
- ZsMSI9g0y1NgXXYD/GPzVXjce4rPnYRSA3kKFS3ikRo1cWGX0fY97DuL4/oC9MIhX8RTSNk
- vT0E/4jnug5BdVjkOw7aqpmOBuQNC5xT9EVPBDCHySM//j910FQ31p1WSex4o7FtthgI+BN
- fD3mjUoWH6rFH+lwjjtpg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3WwLQFkAA7c=:ESgJgr1lQvXwl/cPhKx/rS
- 9almsWm9k+rSysvW3ekloLvTRo479UW54kjx27W7mDheEauht9dMRjRK4Kf++wLL7rU1Mcr+3
- lv5VPxheFs1YQlPd0sD63C9Bx7fwYBlk1VDM2Qi8qgxSV2zw+f5LzpDCeuKO478pkv7HgsHi1
- kLKF4XL2/uEvCJlx6+HRL3Ot2k9eszSu2XeggKfJoyeBYfhKJlY7ShiTMMioT177l7GECDnrb
- ih7IgdxrTQQTGntnFvUNlbdqKvV07rQhLnkp2VXn+7c4G4feHkBDDvSo0wLdhdQgRuASU8GFr
- gDAtNHi/qgEAsCfApqFthfh0g0sCW5e+53o6i74l5wTaRbkROsNKFFl6HIZh0NSvFrX4yMmmU
- 5Duwi1W/TI32QHVywUVoVHdNwC9W9UbSCVS7zebToHSXdoA5gn5LwAGf3JC1QXcD+FFU0qh7Q
- Z3tvAV6MpDpq79Kavg/6PFzls82qohGGNJN5Q6I4czgY64MFxe57ni2AnJ94v4rCSqAQyNlhI
- d+xFBI4KafStg+BK0N0MZ9CtNwmPWC6yqAaBovTCvv/J6Yvuhdt3059SodPWQXU5ELgkSaq3d
- c9tGePBYSQ/s7yAQ57ce0cfrH/hbvwy5IbgxV3Az5r8L5rVpLkiQ+XFoy/Y9VrquJXYyf9Vk8
- FnMocTKnsWbOwhHnqeX6DLjduRZfgHLfKQBtcXPr68fj1tsqlgaCBLTz4TWelrYHQPQaSEzth
- msLxNF3SGh6vauvJx0J5YpaX8+Gs8js0wNd0Pf2gtX0bpTOybx4iPfDY8blL+URxDTOCssMgI
- vcSHx+ADYcZufXIY9c2gEHwL8g+y8Opyd+VJT7ZOi58atF8jw+AkbTdfoykuxd0yfcu2hp1bf
- 3+PScXUgt5fdp+cUsvCJixG19WSkbESVsv+beBN7QKaY6guxLj6DskjkX7P3P+yswRPwes9e0
- qwuI7Ik3bWo3GdD0subeIHppkFQYVV4RIGvH0W+CVWrPlkk04z4KH
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F40A009C-8175-11E9-A680-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Tue, 28 May 2019, Matheus Tavares Bernardino wrote:
-
-> On Tue, May 28, 2019 at 7:37 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Mon, 20 May 2019, Matheus Tavares wrote:
-> >
-> > > > Give "rebase -i" some option so when you "reword" the patch is
-> > > > included in the message.
-> > > >
-> > > > I keep going to the shell because I have no idea what change I'm
-> > > > describing.
-> > >
-> > > I have the same problem, so I wanted to try solving this. The patch
-> > > bellow creates a "rebase.verboseCommit" configuration that includes =
-a
-> > > diff when rewording or squashing. I'd appreciate knowing your though=
-ts
-> > > on it.
-> > >
-> > > As Christian wisely pointed out to me, though, we can also achieve t=
-his
-> > > behavior by setting "commit.verbose" to true. The only "downside" of=
- it
-> > > is that users cannot choose to see the diff only when rebasing.
-> >
-> > You could of course add an alias like
-> >
-> >         [alias]
-> >                 myrebase =3D -c commit.verbose=3Dtrue rebase
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Hmm, I didn't know about `alias`. Thanks for the information.
+> In bff014dac7d9 (builtin rebase: support the `verbose` and `diffstat`
+> options, 2018-09-04), we added a line that wanted to remove the
+> `REBASE_DIFFSTAT` bit from the flags, but it used an incorrect negation.
 >
-> > which *should* work.
-> >
-> > However, I am actually slightly in favor of your patch because it *doe=
-s*
-> > make it more convenient to have this on during rebases only.
+> Found by Coverity.
 >
-> Another option we were discussing is to document that rebase obeys all
-> commit.* options, instead of adding the rebase.verboseCommit config.
-> Yes, this way we won't be able to toggle diff for rebase only, but I'm
-> not sure if that's something users would want to do...
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/rebase.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index ba3a574e40..db6ca9bd7d 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1203,7 +1203,7 @@ static int rebase_config(const char *var, const char *value, void *data)
+>  		if (git_config_bool(var, value))
+>  			opts->flags |= REBASE_DIFFSTAT;
+>  		else
+> -			opts->flags &= !REBASE_DIFFSTAT;
+> +			opts->flags &= ~REBASE_DIFFSTAT;
+>  		return 0;
+>  	}
 
-It is rather unintuitive that the `commit.*` options apply to a rebase.
-Sure, you could document it. But realistically, how many users will read
-it? Yes, I agree, that is a very low percentage.
+Obviously correct.  Thanks.
 
-Also: you yourself mentioned the rather convincing use case of `reword`.
+At this point in the codeflow, the .flags field is not touched by
+parse_options() yet, the configuration codepath only touches that
+field for REBASE_DIFFSTAT, and because REBASE_DIFFSTAT is not 0,
+"[rebase] stat = no", which would want only the REBASE_DIFFSTAT bit
+cleared in the word, can afford to instead assign 0 to the whole
+word without causing any damage, which is funny way for this bug to
+be hidden for a long time...
 
-Personally, I never really thought that I'd need `commit.verbose`. But
-your report made me think that I could use it *just* for `reword`, too.
 
-So now you already have two active Git contributors wishing for that
-feature.
-
-Ciao,
-Dscho
