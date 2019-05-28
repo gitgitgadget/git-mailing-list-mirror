@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98E161F462
-	for <e@80x24.org>; Tue, 28 May 2019 23:02:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B83D1F462
+	for <e@80x24.org>; Tue, 28 May 2019 23:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727612AbfE1XCR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 19:02:17 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35923 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727587AbfE1XCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 19:02:17 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s17so307510wru.3
-        for <git@vger.kernel.org>; Tue, 28 May 2019 16:02:16 -0700 (PDT)
+        id S1726620AbfE1XIj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 19:08:39 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:35287 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726463AbfE1XIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 19:08:39 -0400
+Received: by mail-it1-f194.google.com with SMTP id u186so578496ith.0
+        for <git@vger.kernel.org>; Tue, 28 May 2019 16:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=l+EhfS69FVvD2Jjh242ZgBaeIS5c9yBbi4WmmhX754M=;
-        b=LE0rhrfOp33fRlKzvSRkaHy8JWGAyCtcNiGDpRuZW3ycBDkOz9JlpVP5ZNATQObrFF
-         5gbGkKwWzOesSCJ4RAuKXmjVY5WGHIM+86Plpn9nXmL/oYYFh3vJUWvos95XpUd9sD+C
-         fE4TUAlh5/u2ZJMPC+xEO9NOPmXzLotNsofatSFdu8r6MsJky8T71n6G1lOFkm2iYkuU
-         n3IKLgzmTubK8WyylCco9/WofYzbmS2jdB8b18LE/fLVoIvE55sjy+DDucmB0aK0cTfq
-         jHeMW6NPjTKkotrC4Jgw4HLq4ZJdS6PRBDfnrKtTbkrzHvFcNeTb5QaanUZR86tx3jyI
-         3IxQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VXbn8n8ntyoU+t9yiZTFA1NgEhTwhzMI+oJ0eu9+3TQ=;
+        b=e5J9VxO+f7pt+hUR9skmxedhvYjFqqN6imU7HNTQ3sfN3Znx5mEFoveS9qfYhl/1n7
+         Uwt8P7BgZXxmwBOJVVboMMzke3gG0lq9L4XTr5EOb+jS/YOjvpyBYbbd6rWGUBXHEz0t
+         6ZlWUmQfRBQRVBeIer/GxaFEdnjh05qA2wwKNWnZH1fQ6KnGpwI1x6WXyP7RK5jLYu6N
+         e4cg9ub+yPZ9CrIhLXOoT83i3/tD0vjArc05ObI7MG2ZcxLRMuUYGW08nVjWcxIs2cvU
+         MRW6iwXpDSqDxC0dhyB8F9fMciyAFtXTKsatBZzyM33Uom4oeum9ztZr5qlV0B/a0Oko
+         UUvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=l+EhfS69FVvD2Jjh242ZgBaeIS5c9yBbi4WmmhX754M=;
-        b=R7L1D9uuebaSOXKqidB5B1kYvP/qN4Tt+sCGlpXJKuOMcECBO+hps1vho+rGCxeVNP
-         B6qWp/jOcv6xgsX7sf6x6zEufFb8wumBFSRAS0ZKbOmn6+C8L6zbDKlgExux7kj/5ajC
-         t2fCpGUJLzoKvE+dwm+SnQS8fvcQmqlu2kxEuLWABR0Cf0fqtAq2LbANhK+acprrwJQr
-         YqxgTfOOz7kifJ1172FbnZzs5d1/0befQe8d5pCb7JD1yJVtMgXH+D/+q0uIf6ettvS0
-         drzCiGkpvGO3AlLdYBuPplKLNJ4hOm0w3qpKPTAlrJAuz1KtxvH+Ja1Fc2XLto2DAfFl
-         KHVQ==
-X-Gm-Message-State: APjAAAULxoEh7NuwzfBEHUi6ZxkEpgSDe/ojhI8cVp/IgiCq5bDAePCW
-        9xMCVciswVRsA+xiHncIQBuuwnmi
-X-Google-Smtp-Source: APXvYqwmxmStxD+8U2sJV7Gp9BV+r4LQ2tJfAxwywl2gvKNhllwDO6+XqE+Y8O+maI8NxkxFfPrk5Q==
-X-Received: by 2002:a5d:4a8d:: with SMTP id o13mr3033541wrq.350.1559084535708;
-        Tue, 28 May 2019 16:02:15 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id z5sm3992206wma.36.2019.05.28.16.02.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 May 2019 16:02:13 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>, git@jeffhostetler.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] trace2: rename environment variables to GIT_TRACE2*
-References: <20190510211502.GS14763@szeder.dev> <20190519144309.9597-1-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190519144309.9597-1-szeder.dev@gmail.com>
-Date:   Wed, 29 May 2019 01:02:12 +0200
-Message-ID: <87blzmmbd7.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VXbn8n8ntyoU+t9yiZTFA1NgEhTwhzMI+oJ0eu9+3TQ=;
+        b=ocjnmg+oEt3/P4w7PlszRf1yfJUm5Qz3n+tVmINtqJUWjj9ECuKYASBlCTJ/6tiYMh
+         fRVwHDvqMILU/ANhlN+soLZtMgkkeYzVg/62cC9iUmlTIg6BstWDr+zIkzxhsTFSJdzt
+         yKe1VIv0RAefru3aT9gdk6G6Va9Jd1dscgxLEN2bkQJKlAac6oEPYLZEnaUEa6I4WjRJ
+         OjjDTenz7eWu4LZL75tgPdAjr3nO7efxAbrMm110YYaiCRoYOFVbOo6GX4Qjwn8u4YJ/
+         b3PBDALUXWfD4wv9LsHghxU9gGxaYhX1calG6+Pxz9PgxkOjamnYz2dcU8Cd5YQRBHtO
+         RXqw==
+X-Gm-Message-State: APjAAAUPRqe0J/zGKuYKnMSFYfNQnDGBEpC/yWshiDRve7laR2zQLrf8
+        knS0E2ZSjP9hMzpp+4PR8LGxwpD9rjxfxfTL3qRZixx/RJM=
+X-Google-Smtp-Source: APXvYqwdcdOt+bx8Z1NWD0ieJEUJzgRyqVYnMkunDgSb3HLr2jHQQJO+mk05e5NJOJ525JjBHn/234O6ymV2OZktMIw=
+X-Received: by 2002:a02:a494:: with SMTP id d20mr4180266jam.62.1559084918158;
+ Tue, 28 May 2019 16:08:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com>
+ <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com> <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+Date:   Wed, 29 May 2019 07:08:26 +0800
+Message-ID: <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] status: remove the empty line after hints
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     John Lin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Sun, May 19 2019, SZEDER G=C3=A1bor wrote:
-
-> For an environment variable that is supposed to be set by users, the
-> GIT_TR2* env vars are just too unclear, inconsistent, and ugly.
+Junio C Hamano <gitster@pobox.com> =E6=96=BC 2019=E5=B9=B45=E6=9C=8829=E6=
+=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=884:41=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> Most of the established GIT_* environment variables don't use
-> abbreviations, and in case of the few that do (GIT_DIR,
-> GIT_COMMON_DIR, GIT_DIFF_OPTS) it's quite obvious what the
-> abbreviations (DIR and OPTS) stand for.  But what does TR stand for?
-> Track, traditional, trailer, transaction, transfer, transformation,
-> transition, translation, transplant, transport, traversal, tree,
-> trigger, truncate, trust, or ...?!
+> =E6=9E=97=E8=87=AA=E5=9D=87 <johnlinp@gmail.com> writes:
 >
-> The trace2 facility, as the '2' suffix in its name suggests, is
-> supposed to eventually supercede Git's original trace facility.  It's
-> reasonable to expect that the corresponding environment variables
-> follow suit, and after the original GIT_TRACE variables they are
-> called GIT_TRACE2; there is no such thing is 'GIT_TR'.
+> > Hi Junio,
+> >
+> > John Lin via GitGitGadget <gitgitgadget@gmail.com> =E6=96=BC 2019=E5=B9=
+=B45=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:54=E5=AF=AB=
+=E9=81=93=EF=BC=9A
+> >>
+> >> From: John Lin <johnlinp@gmail.com>
+> >>
+> >> Before this patch, there is inconsistency between the status
+> >> messages with hints and the ones without hints: there is an
+> >> empty line between the title and the file list if hints are
+> >> presented, but there isn't one if there are no hints.
+> >>
+> >> This patch remove the inconsistency by removing the empty
+> >> lines even if hints are presented.
+> >
+> > I would like to ask for the final decision on this patch. Thank you.
 >
-> All trace2-specific config variables are, very sensibly, in the
-> 'trace2' section, not in 'tr2'.
+> If I recall correctly, the test part of this patch conflicts badly
+> with a topic in flight that splits 'checkout' into 'restore' and
+> 'switch', which is a more important topic between the two.  So if I
+> must give _the final_ decision, then we need to drop this patch, but
+> I'd rather not ;-)
 >
-> OTOH, we don't gain anything at all by omitting the last three
-> characters of "trace" from the names of these environment variables.
+> Doing this change on top of the switch/restore topic, once it
+> stabilized more and graduated to 'master', would be the best course
+> of action, I would think.
 >
-> So let's rename all GIT_TR2* environment variables to GIT_TRACE2*,
-> before they make their way into a stable release.
+> Thanks.
 
-Good to see this land in 2.22.0. I wonder if we shouldn't take this
-further and rename trace2.* config to trace.*, and just re-use
-GIT_TRACE=3D1 instead of having GIT_TRACE2 as well, and have a
-GIT_TRACE_VERSION to switch between them.
+I see. Thanks for your kind explanation. I'll wait for the
+switch/restore topic to merge into master.
 
-Then we could just switch in a future version. We've never promised what
-the trace format was going to look like, and the existing one isn't
-configurable (and we won't be making the v1 one...), so starting from
-the outset with "2" in config is unfortunate.
-
-We'd still have special snowflakes like e.g. GIT_TRACE_PACKET.
-
-OTOH we can just do this after the release if it's deemed a good idea,
-and just support trace2.* as aliases for trace.* for some amount of
-time, same for the env vars.
+Best,
+John Lin
