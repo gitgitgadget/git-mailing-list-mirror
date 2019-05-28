@@ -2,99 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A9031F462
-	for <e@80x24.org>; Tue, 28 May 2019 06:23:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24D451F462
+	for <e@80x24.org>; Tue, 28 May 2019 06:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbfE1GXM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 02:23:12 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:63636 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725904AbfE1GXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 02:23:12 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45CkL55q7sz5tlL;
-        Tue, 28 May 2019 08:23:09 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 861881B7D;
-        Tue, 28 May 2019 08:23:08 +0200 (CEST)
-Subject: Re: git filter-branch re-write history over a range of commits did
- notwork
-To:     LU Chuck <Chuck.LU@edenred.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "chuck.lu@qq.com" <chuck.lu@qq.com>
-References: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
- <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
- <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
- <DB7PR05MB5573B5B80C8A9CBE867803D88D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <fa23e865-94ed-308f-6a19-75b6ea89eec3@kdbg.org>
-Date:   Tue, 28 May 2019 08:23:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726910AbfE1G2I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 02:28:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39440 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726657AbfE1G2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 02:28:08 -0400
+Received: (qmail 27449 invoked by uid 109); 28 May 2019 06:28:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 06:28:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10427 invoked by uid 111); 28 May 2019 06:28:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 02:28:49 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 02:28:05 -0400
+Date:   Tue, 28 May 2019 02:28:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
+Message-ID: <20190528062804.GE7946@sigill.intra.peff.net>
+References: <pull.222.git.gitgitgadget@gmail.com>
+ <20190521212744.GC14807@sigill.intra.peff.net>
+ <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com>
+ <20190523055108.GA20871@sigill.intra.peff.net>
+ <CACsJy8D7w4sC_tchx-Q80PCiu+2hYfkZo22_Vb3vgJ+xvgUAAA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <DB7PR05MB5573B5B80C8A9CBE867803D88D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <CACsJy8D7w4sC_tchx-Q80PCiu+2hYfkZo22_Vb3vgJ+xvgUAAA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.05.19 um 07:42 schrieb LU Chuck:
->> From: Philip Oakley <philipoakley@iee.org>
->> The three dots is provided in the literal EXAMPLES section of the man page. That is
->> probably an error, as I think it is meant to be an ellipsis to indicate 'insert other
->> options here'.
->>
->> Simply remove the three dots ('symmetric diff notation') .
->>
->> Not sure what the correct change to the man page should be, but clearly it has
->> caused confusion. It also takes a moment to properly realise which commits the
->> two dot notation will refer to in the example which may further compound the
->> confusion about the three dots.
->>
->> Philip
-> [LU Chuck] Hi Hannes,
->          I used ... literally when I cited the command. I write the command with ... directly as the document introduce the usage like that.
->          You can check the document https://git-scm.com/docs/git-filter-branch#_examples about the --env-filter section.
+On Sat, May 25, 2019 at 05:43:55PM +0700, Duy Nguyen wrote:
 
-Copying and pasting examples literally is dangerous. You should know
-what you are doing.
+> > +typedef struct {
+> > +       void *data;
+> > +       /* extra indirection because setspecific is passed key by value */
+> > +       void **vdata;
+> 
+> Ha! I was thinking a separate key->value mapping which is complicated
+> in C. But this works pretty well for a single thread, and it even
+> supports multiple keys.
 
-"..." is a revision range that computes the mergebase between HEAD and
-HEAD, which is (surprise!) HEAD, and then includes the two end points,
-but excludes everything below the mergebase. So, the revision
-specification that your command ends up with is
+I really wish that all of the functions passed the pthread_key_t by
+reference. That would make it possible to define the key as a single
+pointer.
 
-     HEAD HEAD ^HEAD ^67d9d9 f70bf4
+I'm not sure if pthread_key_t's are meant to be shallow-copyable. I.e.,
+should this work:
 
-Which is empty if f70bf4 is an ancestor of HEAD.
+  void foo(pthread_key_t *out)
+  {
+	pthread_key_t tmp;
+	pthread_key_create(&tmp, NULL);
+	*out = tmp;
+  }
+  ...
+  pthread_key_t k;
+  foo(&k);
+  pthread_setspecific(k, some_ptr);
 
->          Hi Philip,
->          I also tried to execute the command without ..., 
->          git filter-branch --env-filter 'export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"' 67d9d9..f70bf4
->          then I will get another error " You must specify a ref to rewrite."
+It does not with my proposed plan, because the pointer in tmp.data went
+out of scope, leaving tmp.vdata (and thus k.vdata) as a dangling
+pointer.
 
-You cannot restrict your filter to a subset of commits like this. After
-all, all commits that descend from one of the rewritten commits must
-also change, up to and including to the branch refs. Therefore, it is
-necessary to mention the branches that you rewrite in this manner.
+The code above seems like a vaguely crazy thing to do. But if we want to
+be absolutely paranoid, we'd have to malloc() an extra pointer in the
+create() function, instead of carrying it inside the key. Or just make a
+global "void *thread_specific_data[PTHREAD_KEYS_MAX]" and make each key
+an integer index into it.
 
-Perhaps:
+It's pretty clear that they expect one of those two implementations,
+given that POSIX says key creation can report either ENOMEM, or EAGAIN
+if we exceed PTHREAD_KEYS_MAX. :)
 
-   git filter-branch --env-filter '
-     if git merge-base --is-ancestor $GIT_COMMIT f70bf4; then
-       export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
-     fi' -- 67d9d9..master
-
-This assumes that only branch master is affected by the rewriting. Use
---all if you have many affected branches.
-
--- Hannes
+-Peff
