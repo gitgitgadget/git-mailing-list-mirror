@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC8751F462
-	for <e@80x24.org>; Tue, 28 May 2019 12:42:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 169691F462
+	for <e@80x24.org>; Tue, 28 May 2019 12:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbfE1MmT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 08:42:19 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33286 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726933AbfE1MmS (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727430AbfE1MmU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 08:42:20 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45452 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727390AbfE1MmS (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 May 2019 08:42:18 -0400
-Received: by mail-ed1-f68.google.com with SMTP id n17so31625483edb.0
-        for <git@vger.kernel.org>; Tue, 28 May 2019 05:42:16 -0700 (PDT)
+Received: by mail-ed1-f67.google.com with SMTP id g57so16728989edc.12
+        for <git@vger.kernel.org>; Tue, 28 May 2019 05:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HMQgZHfq9JEs+fc8qhzqeYNjLDHwafxvbtinbB89+p8=;
-        b=ZwkADRHUjtu/ptEf43tYVzJwl13lLkD3P5ExsJuIxHAYkkBU9plA5YVyhvy6z7HT1/
-         gtEThbiti3zJEmZSL285ZkDdJAhYzAMR/NkTSpzcsw7HYlwbL+Vza58hLBoydLugn1LJ
-         PKe6O2RSVhktiieVpvb0wtSulDMu5RA0TSDQ2fSMWi6X/dpGy8hLjiMEKZyPPeSm56Qd
-         rpllczhEa4Hrsr470cP/7/1jCXKwEaTn55DWUr6FCEKbHpt5S8WV7NwfRtzA616OOQ73
-         8/FLYyvmUFWjoxgurtylegEHm9WNNhz8SXWxU22vAK1yDdhugavKskYwDcbmmtJed8lM
-         VE2Q==
+        bh=N3Cp8i9JwEcJxG1B2UlqEvv+bqTEEpNWRZZ63pk+CpQ=;
+        b=NEv+BptzK3QPzJB4saHLojfNlZ+o0AK6PFTQKri+7OAhkW7z/FvNi3h0d2Ufd+Sc48
+         wA/LRIw2Xig3tIryRnOYBwx6S4bDPsb0weUWzC/zCTLIwe5HBJfMohCvqrV1guph8lSP
+         tWo1vu9Ou+yTdisF645uGPScDtSqj79VOYaUnml8Lm39WIFAMunJ0jf6VbmTvbzV566T
+         gNLPySz5n8lafdoFGxpyBRvmzA6/H6QB4wLXEHypjBi3Ki42U2mWcqJ/85/q98Yy40mQ
+         nfLlRhM3aaR8+n/9RsArszCwt2xNxGxef/W2R0ax6ifTMTvyUknVkSVfb6SRdSRAHeFj
+         6nIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HMQgZHfq9JEs+fc8qhzqeYNjLDHwafxvbtinbB89+p8=;
-        b=irZOTpFewYCtIf6vsBLSmgG5WAevdISftDSqjDURNmEcFYXeYI5IyuPVwLd7CAquvx
-         d1kDPIQfdGDe+RWBlpHr79ij1rDIZ2xTfZlvMzkQNCNOjojkWhMsoeArVPbJuQRpVl2t
-         XynVyaKuhs5LDCPRKOOwias5AN85ez/ozhK1q98ucRPR5O2szsaExk362XgJ0c51sLIm
-         N55dPjko0ddGHHPTioL+vlW8MLCOVrSI4DSNrPZ2I1Mhqp+rI6uBaIA38n1YxFTdgZci
-         7l33Qz13Gz/ugPjD6iYdq4Bb1k45YJS2PUIyDuhgPQVDpu3COqU9LVItA/Puu2AX7RRO
-         x66g==
-X-Gm-Message-State: APjAAAWBVMYMRN29voJqQPa8cJaHWcYEsxeuiT8vHI3itv3b31q30nRR
-        Gyl5S5GeFjk3/y8rOZozVGOGZ4G1ACQ=
-X-Google-Smtp-Source: APXvYqwk8mUdKPLoXREl7s1yGNZXWE+d8gDKq/cFev/Cu7nXh0uQxhW9RLhiPyDhYWs0sQrmIQPCkA==
-X-Received: by 2002:a17:906:d557:: with SMTP id gk23mr19706824ejb.285.1559047336075;
+        bh=N3Cp8i9JwEcJxG1B2UlqEvv+bqTEEpNWRZZ63pk+CpQ=;
+        b=PSGC4YdRHWRSATvoxi9IKUyeftFKA/TCtXw56lWzBtAQht0wSxD/tMrAuLLdA46RIf
+         4Y+ThAlRdmz0vNskV/HpjW0VWg64fs8hTmluhM7mLzqlk0qkZucMIyxMf0swyxwaS8K5
+         Ycj+oXoy5AzK0f+ZGMyk8phd7QDwHUVP6O+z3W+GWA2tqqEnPOZGA3kOi1QOmeI1HEO/
+         iUcTStbNUvScBsSIps0Q/8VcC2CWZY2ciDi7qp242H1Aiyduq+MjfcD8cSBs6TULLhTx
+         D7sXAftPNmACxF+HGEq6Jl1jjeD04PdUhPbmItWn452cvARM/ohY+Rv5Pwiw5McFccLe
+         odxw==
+X-Gm-Message-State: APjAAAVZObUHzI3N4RR3beZSvNUXTwVgvKZEI1fcYdS8F0QpxOGCnroH
+        t3Ti6P2KUajJCV8gz4W+vaC7esJNWPc=
+X-Google-Smtp-Source: APXvYqztebDGElg2SutsH6P3Rm1y+FVHOaodBsZdZVJVHboAAfFVyAP6IgaYkTaZE21P9qoVfiEHsQ==
+X-Received: by 2002:a50:8ed8:: with SMTP id x24mr130719884edx.183.1559047336738;
         Tue, 28 May 2019 05:42:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e33sm4227515edd.53.2019.05.28.05.42.15
+        by smtp.gmail.com with ESMTPSA id e10sm418513eja.78.2019.05.28.05.42.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 05:42:15 -0700 (PDT)
-Date:   Tue, 28 May 2019 05:42:15 -0700 (PDT)
-X-Google-Original-Date: Tue, 28 May 2019 12:42:12 GMT
-Message-Id: <09cdff86fb42ee0dbc6ce6a1e276a17811a72021.1559047333.git.gitgitgadget@gmail.com>
+        Tue, 28 May 2019 05:42:16 -0700 (PDT)
+Date:   Tue, 28 May 2019 05:42:16 -0700 (PDT)
+X-Google-Original-Date: Tue, 28 May 2019 12:42:13 GMT
+Message-Id: <363da05a66360d2b5f31391878f08dcf81b04915.1559047333.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.227.git.gitgitgadget@gmail.com>
 References: <pull.227.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/3] docs: say that `--rebase=preserve` is deprecated
+Subject: [PATCH 3/3] rebase docs: recommend `-r` over `-p`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,32 +71,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As of Git v2.22.0, the `--preserve-merges` backend of `git rebase` will
-be officially deprecated in favor of the `--rebase-merges` backend.
-Consequently, `git pull --rebase=preserve` will also be deprected. State
-this explicitly.
+The `--preserve-merges` option is now deprecated in favor of
+`--rebase-merges`; Let's stop recommending the former.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-pull.txt | 5 +++--
+ Documentation/git-rebase.txt | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 118d9d86f7..a5e9501a0a 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -112,8 +112,9 @@ When set to `merges`, rebase using `git rebase --rebase-merges` so that
- the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When set to preserve, rebase with the `--preserve-merges` option passed
--to `git rebase` so that locally created merge commits will not be flattened.
-+When set to `preserve` (deprecated in favor of `merges`), rebase with the
-+`--preserve-merges` option passed to `git rebase` so that locally created
-+merge commits will not be flattened.
- +
- When false, merge the current branch into the upstream branch.
- +
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index f5e6ae3907..5e4e927647 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -675,7 +675,8 @@ $ git rebase -i HEAD~5
+ 
+ And move the first patch to the end of the list.
+ 
+-You might want to preserve merges, if you have a history like this:
++You might want to recreate merge commits, e.g. if you have a history
++like this:
+ 
+ ------------------
+            X
+@@ -689,7 +690,7 @@ Suppose you want to rebase the side branch starting at "A" to "Q". Make
+ sure that the current HEAD is "B", and call
+ 
+ -----------------------------
+-$ git rebase -i -p --onto Q O
++$ git rebase -i -r --onto Q O
+ -----------------------------
+ 
+ Reordering and editing commits usually creates untested intermediate
 -- 
 gitgitgadget
-
