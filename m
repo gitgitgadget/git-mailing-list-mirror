@@ -2,149 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 647951F462
-	for <e@80x24.org>; Tue, 28 May 2019 19:42:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 084D91F462
+	for <e@80x24.org>; Tue, 28 May 2019 19:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726619AbfE1TmH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 15:42:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61776 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbfE1TmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 15:42:07 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B0A336F7EE;
-        Tue, 28 May 2019 15:42:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=m/tItwfow82Mxpai+MYepMBXIuk=; b=PwLg9K
-        /QVZsHuVfDrVDwdJygm60MlqrTAai61pq6kZ3i+LE/bwzIbGstQ0NtUMvGShX5BS
-        VDUIGA0SCS24wr9fXiSeMT7Uwerg8Mxr62BbI9/dQpvjG4sEe9vu227M6tA+DaNg
-        cVi8tQrtkDa9ExxRC0QJuPz18IM6wnTbsJSUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n6LI2I9Efun9pLYao144WoBqrIaUzmGZ
-        mMeK/FBF4jCkRtUxQka0gglddzHapu4GeezGildeMdFigJ9Q2aHoWwmG58gq+Gyt
-        ndIQX/eyOZ6ftIol2udkNhLfaxUijw7o2SVysqwruwnG/iHR3pT/Jy/usM5SpSjn
-        t+d2/E23FHY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A83E86F7ED;
-        Tue, 28 May 2019 15:42:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D281D6F7EB;
-        Tue, 28 May 2019 15:42:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Matthew DeVore <matvore@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] list-objects-filter: disable 'sparse:path' filters
-References: <20190525142834.6168-1-chriscool@tuxfamily.org>
-Date:   Tue, 28 May 2019 12:41:58 -0700
-In-Reply-To: <20190525142834.6168-1-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Sat, 25 May 2019 16:28:34 +0200")
-Message-ID: <xmqqo93m1i49.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726812AbfE1T40 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 15:56:26 -0400
+Received: from mail-it1-f170.google.com ([209.85.166.170]:40266 "EHLO
+        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726453AbfE1T4Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 15:56:25 -0400
+Received: by mail-it1-f170.google.com with SMTP id h11so5957475itf.5
+        for <git@vger.kernel.org>; Tue, 28 May 2019 12:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TAl9DvZUn+8yDSY6uBG3rzF5QSazgpr7rMvym7vMchc=;
+        b=CkQOjhZlYFHNdmJWkYx3sMLioudwkiyo6k8njk+4D3TEC5GibOhIlVsqENjT5xRx4x
+         XjndYhTeGiVHYtzMJuLlPM4kKVeh/eCn3KviJPVR90y/AxNPfCRVAfCgdi1OLcL7ZAM6
+         Ju0ckxaDbzpK8QusmiVDkdSWWRxOc0iP/kyTvLOXkTu0Wn/+D56W48jLub9D/cvEl9Qc
+         CyBPYhevrGK49oNiSkA8+wnyYOK8ttlcre8HuZLI7B1hSczfDmUtgoHmMWL2OWkwtioe
+         FFPfPMOU1QAy+aJ2keCHKg4CHSLH5lzBF90naDSCC3Cj8pk89DA+NcowxcuwAlSH5hQg
+         S+QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TAl9DvZUn+8yDSY6uBG3rzF5QSazgpr7rMvym7vMchc=;
+        b=ToTxPzs6pX4rx3YJsLWAdQt7tduxAKSHu4PkUYR9+KJ7ilefduCVHQiMNeUw6tYdya
+         HcAd2lmhHesnUt9nO6h1PvWQX1Nt/a2Wc+mWb/M+vl1BlyBMObu+9b6wMzRs21OkREZ5
+         jd5SBDNX+IBHvfox+NDBuqNRxov/HMB0LqIutlpIbV3M3UaQar5aLtQRF9D2qbFbAgYs
+         +1bbPmy1uPRIHONkjj6I1mStOXKXqQUVlcaYnOTXzKZx/7EE7jJsbRnTZ/u3tX5N1YSv
+         lZVXJzotOSXeGZtLZbDWjnaNc79vf97W4+WDgjmFdaw+2t2Zdh74lBqs4+Jjp7GKZiZM
+         tPGg==
+X-Gm-Message-State: APjAAAXfQx87pUwqg6ZESqCkf8ICONBfVdvs/8r0xPtsWV3n3XMlvcZs
+        xxw4H7mGxdgbepNSYGw/NozzokGogCJqYI0UJkY=
+X-Google-Smtp-Source: APXvYqz4anQWAZ08N0E5z30RH3UIFK3kL/l4SS9Az7HfbWeT5ygiViWRgaNnyeqJBpQGgjdxDWV2ccN9mXJncPXJQmU=
+X-Received: by 2002:a02:cb4b:: with SMTP id k11mr5742601jap.109.1559073384812;
+ Tue, 28 May 2019 12:56:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A95D172C-8180-11E9-9B54-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet> <20190528063451.GG7946@sigill.intra.peff.net>
+In-Reply-To: <20190528063451.GG7946@sigill.intra.peff.net>
+From:   Brendan Boerner <bboerner.biz@gmail.com>
+Date:   Tue, 28 May 2019 14:56:13 -0500
+Message-ID: <CAKkfZL30QuBM6vT69OSS_keNuGi1U-bJ+jDiyDfhZmnr9L9xvA@mail.gmail.com>
+Subject: Re: 'git stash list' => Segmentation fault
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Yes, providing the repo isn't an option.
 
-> If someone wants to use as a filter a sparse file that is in the
-> repository, something like "--filter=sparse:oid=<ref>:<path>"
-> already works.
+Thanks for the suggestions, here's what I can provide. Unfortunately
+not a lot in the stack trace.
+
+Do you need the whole repo or would bits of it suffice e.g. index?
+
+bboerner@myhost:~/funproject/Src$ GIT_TRACE=1 git stash list
+14:52:22.633388 git.c:670               trace: exec: git-stash list
+14:52:22.633448 run-command.c:643       trace: run_command: git-stash list
+Segmentation fault (core dumped)
+Segmentation fault (core dumped)
+Segmentation fault (core dumped)
+14:52:24.904494 git.c:419               trace: built-in: git rev-parse --git-dir
+14:52:24.944879 git.c:419               trace: built-in: git rev-parse
+--git-path objects
+14:52:24.949126 git.c:419               trace: built-in: git rev-parse
+--show-prefix
+14:52:24.951414 git.c:419               trace: built-in: git rev-parse
+--show-toplevel
+14:52:24.953447 git.c:419               trace: built-in: git rev-parse
+--git-path index
+14:52:24.955670 git.c:419               trace: built-in: git config
+--get-colorbool color.interactive
+14:52:24.957435 git.c:419               trace: built-in: git config
+--get-color color.interactive.help 'red bold'
+14:52:24.958753 git.c:419               trace: built-in: git config
+--get-color  reset
+14:52:24.960461 git.c:419               trace: built-in: git rev-parse
+--verify --quiet refs/stash
+14:52:25.040053 git.c:419               trace: built-in: git log
+'--format=%gd: %gs' -g --first-parent -m refs/stash --
+14:52:26.436274 run-command.c:643       trace: run_command: unset
+GIT_PAGER_IN_USE; LESS=FRX LV=-c less
+stash@{0}: On devel: NYFL optimization
+stash@{1}: On GL285: gl285
+
+
+(gdb) bt
+#0  0x00007fd321805fdf in ?? ()
+#1  0x0000000000000000 in ?? ()
+
+Regards,
+Brendan
+
+On Tue, May 28, 2019 at 1:34 AM Jeff King <peff@peff.net> wrote:
 >
-> So 'sparse:path' is only interesting if the sparse file is not in
-> the repository. In this case though the current implementation has
-> a big security issue, as it makes it possible to ask the server to
-> read any file, like for example /etc/password, and to explore the
-> filesystem, as well as individual lines of files.
+> On Mon, May 27, 2019 at 08:47:56PM +0200, Johannes Schindelin wrote:
 >
-> If someone is interested in using a sparse file that is not in the
-> repository as a filter, then at the minimum a config option, such
-> as "uploadpack.sparsePathFilter", should be implemented first to
-> restrict the directory from which the files specified by
-> 'sparse:path' can be read.
+> > > bboerner@myhost:~/funproject/Src/bash$ git stash list
+> > > Segmentation fault (core dumped)
+> > > Segmentation fault (core dumped)
+> > > Segmentation fault (core dumped)
+> > > stash@{0}: On devel: NYFL optimization
+> > > stash@{1}: On GL285: gl285
+> >
+> > Unfortunately, this leaves *very* little in the way of actionable
+> > evidence. Would it be possible for you to share a tar'red up copy of the
+> > .git/ directory? Or do you find that this happens for all of your stashes?
+> > What is the output when you run this with `GIT_TRACE=1`?
 >
-> For now though, let's just disable 'sparse:path' filters.
+> Alternatively, if you cannot share the repo, a backtrace from gdb might
+> help. There should be a core file either in the working directory, or in
+> the ".git/" directory. Try "gdb git /path/to/core" and then "bt" to get
+> the backtrace.
 >
-> Helped-by: Matthew DeVore <matvore@google.com>
-> Helped-by: Jeff Hostetler <git@jeffhostetler.com>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->
-> Changes since the RFC version are the following:
->
->   - improved the error message when 'sparse:path' is used,
->   - updated "git-completion.bash",
->   - freed "sparse_path_value" field in list_objects_filter_release(),
->   - updated tests (t5317 and t6112).
->
-> Thanks to Matthew and Jeff for the suggestions.
->
->  contrib/completion/git-completion.bash |  2 +-
->  list-objects-filter-options.c          | 10 ++--
->  list-objects-filter-options.h          |  2 -
->  list-objects-filter.c                  | 22 --------
->  t/t5317-pack-objects-filter-objects.sh | 71 +++++---------------------
->  t/t6112-rev-list-filters-objects.sh    | 39 +++++---------
->  6 files changed, 33 insertions(+), 113 deletions(-)
-
-What is curious is that this does not touch Documentation/ hierarchy
-at all---is that a sign that nobody makes any serious use of the
---filter=... thing and we can freely drop "features" around it when
-we see it necessary (like in this case)?
-
-Or do we need something like this on top (or squashed in)?  I can
-live with or without "Note that..." myself.
-
-Thanks.
-
-
- Documentation/rev-list-options.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index ddbc1de43f..73aafea8d6 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -725,9 +725,6 @@ specification contained in the blob (or blob-expression) '<blob-ish>'
- to omit blobs that would not be not required for a sparse checkout on
- the requested refs.
- +
--The form '--filter=sparse:path=<path>' similarly uses a sparse-checkout
--specification contained in <path>.
--+
- The form '--filter=tree:<depth>' omits all blobs and trees whose depth
- from the root tree is >= <depth> (minimum depth if an object is located
- at multiple depths in the commits traversed). <depth>=0 will not include
-@@ -737,6 +734,9 @@ tree and blobs which are referenced directly by a commit reachable from
- <commit> or an explicitly-given object. <depth>=2 is like <depth>=1
- while also including trees and blobs one more level removed from an
- explicitly-given commit or tree.
-++
-+Note that the form '--filter=sparse:path=<path>' that wants to read from
-+an arbitrary path on the filesystem is not supported, for security reasons.
- 
- --no-filter::
- 	Turn off any previous `--filter=` argument.
-
-
+> -Peff
