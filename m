@@ -8,95 +8,153 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB5251F462
-	for <e@80x24.org>; Tue, 28 May 2019 10:37:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E95D81F462
+	for <e@80x24.org>; Tue, 28 May 2019 11:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726500AbfE1Khh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 06:37:37 -0400
-Received: from mout.gmx.net ([212.227.15.19]:42729 "EHLO mout.gmx.net"
+        id S1726638AbfE1LGs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 07:06:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39383 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726345AbfE1Khh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 06:37:37 -0400
+        id S1726313AbfE1LGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 07:06:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559039853;
-        bh=RuKvWTgfkmtVW6yqDw9DCMLgLHaNndUDVU+b/jBkw+Q=;
+        s=badeba3b8450; t=1559041597;
+        bh=HyURmUFBtEl6fmbZVS/yAUG1OTIU4RADJqi4CrYCuT4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gtumrnR21EL2Mzkq6IpCZ+q50rIaAHrGiArQLhdI7aarC/mt2g4JyRuJnVcUHbGZy
-         D8FRGMF00cM4usv4BEy1mzF95ZBzLz/P8hdaWVsoHpNqwN7XwN4HEVsb6BIpy0jNV8
-         G+rSlZsbvuFxEz+YbnFFk1guBzEA3Py7OvbastHY=
+        b=ejv0RIE9DOeCK8ldOcz1Wo9dDsaGz/G7ovwlq4eao7/D8V5yXHU87gM1lVTfVygAX
+         yZriIJeZAQWaJTVrUHqEhjp5d6goinMAb4Qq3fB50ejMfklXTKvd4f7qJFOwW1YZWt
+         hpfdT6LZs94XEroCIBmOruS4v+NBl9wNazs4xKrs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXr3H-1h8rOc07kt-00Wkt0; Tue, 28
- May 2019 12:37:33 +0200
-Date:   Tue, 28 May 2019 12:37:16 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjdS8-1guKNJ33Ae-00bfgC; Tue, 28
+ May 2019 13:06:37 +0200
+Date:   Tue, 28 May 2019 13:06:21 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-cc:     avarab@gmail.com, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little
- projects
-In-Reply-To: <20190520182353.22221-1-matheus.bernardino@usp.br>
-Message-ID: <nycvar.QRO.7.76.6.1905281235280.44@tvgsbejvaqbjf.bet>
-References: <87in9ucsbb.fsf@evledraar.gmail.com> <20190520182353.22221-1-matheus.bernardino@usp.br>
+To:     Jeff King <peff@peff.net>
+cc:     Alejandro Sanchez <asanchez1987@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/4] am: fix --interactive HEAD tree resolution
+In-Reply-To: <20190524063955.GD25694@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1905281301070.44@tvgsbejvaqbjf.bet>
+References: <20190520120636.GA12634@sigill.intra.peff.net> <20190520121301.GD11212@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet> <20190524063955.GD25694@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Z5um8ze9bgGt8VyCfaXmrRDUJDYPQCnEmHLVVQsxzaWL98BuK7P
- I0OMNJeq07q+A3p0N7UTe5SeH7VLY9PHrk/5DxSOXzKnyF/z/69LChwSLix9GxrBU4V8df8
- XM+KqDXxZ+rwHInZxTTWVChOi+Rt8RMn001oRDukZNnzLTXLbgI4Rqttp9lJ6Nz6oNCTgcM
- 6qfMu+HIFd/YD2oo353pA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JP37Q5mktX4=:EX/LiM/TG7X0KJ9CfRVB1Y
- U9QO3luQmQ5MGgv5d+JQeOGC0KU9RMauyQ/g4QL5+gpkw2/nXYjak68UbyZMHq6gqC3R5s69D
- CSicqJSL5yO567O6+GsMw5ESk4Tm8ES/GMCGS8oicMwZgTXPW+YXb5GYQi7eSAo02FKMvdi1v
- fdMFtblaJ6+y6XGwQz+y2ODnQAy05JI4RNoNOSFVyozqEw1vAbA8w8bhjSS0NAE5QjFZGNc9A
- NagmEKCeRXykDezfij1ARWoDb3cLSQSWaXv6hx8Ly6DNpoWK6NoOwQi9RHlqXAKK9RzFfP5Sx
- 7Ae6IjfQ52iI6C+XlZzIcDEgIuIAOPrvb+4AUR17gKPnw0TFlt3Fh2w4zcCNK93KY59Vjmh4h
- PneFw6ArpP1WKGQQCMOGKKSyrRW5NYpMBXGgeDREoMQc52OquUpfhjDgdj8JAOImSdMh+o9IJ
- i6Wlbs6lCMIOWrdd5qYx1/iDVKk3jvSOlyGBGBo6nbKdKaVa/xEH5sGsmP/2CgG0OMHcNJHyx
- XK1gs+J59iV7X6SSSGIJ9/gJrfsavuhLCwlHANep5EaSeQK4wBPuj+HaOFZfECDR1r9LPuLFr
- jC8gt38xDNXno03Nje+Kz9IYOUMHR9MHnQg2qph1B/YrfKrfD/3SPslNm8KScQPgKbqmXnmSB
- ItfC0UaYf/SZUCRepLVHGH2pJesEesyYhY2+7PaNepFcyL4DU4a+ZSv+8K9XpvoaQbtEBRQQj
- WEpcZ/3gpKbclAj8SPCilGSpiSpHqo35G2lAx+KPBijSwec4iYv5t/4ydGelhWAjuYmFip4G/
- Zy/BxseJYKXdORXP64lzXnaIvRb2IuOfTqYvR+fPjRLRo2hVvaazWo1Jq+3+C3XldcOegiaBj
- MgTyBbCdVndHwsH4wXMl+rmwiU6+/ToF8ZZaQPopMgZ5yQIa2O30+ZHFS7Z2+SuZXRf9dwdP7
- ZKBXTmj9uf9OyDQ2Nirb9yRny0Y13DlbgeKihwhtB2ThofHmeesBV
+X-Provags-ID: V03:K1:GttUGx7o28RM17TQnsnjlq4BEWl9moUrj+FksyRSEf4BMYYNU/q
+ AgS8yRpQhM8pa+TEmAmmVV3cbEWqpHei1LDCKmVDqmtMh4vH0b8UT/bbPl1ZxHR97l650Hm
+ P+yihmQZ8AkABwkdiU+86TgGqgWUDysCfVYnwxFwDhdQAhnTGqVpXdZ9kIFAvvfe/67kgig
+ f3r9YIlzV8WZLRPFaY1jA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pCLdk9qbuXg=:BrfFb825qXdB3UAZAuwywx
+ 1nDLptaua56HCTbzlGTLDnf6+wwWrSYvXktJPF6mD6tJPOxBN56lZJkheS5LVICTocOGzkPo/
+ OXOU7kRgTbwKM8RolgaD7A6kVFp+x3S0R5zef8sNOn+vLXGkXLBIVcocqXt1yaUuUTeOvJqQz
+ oIwIT0yfqPLQzE53drFhz0o13b1j4qGL5RdhqDTIZLn03l5Qv0+r2ZFAz5Y1Lek+in8za/Wn1
+ 7GJPK2tvf109tuR+TOp9ljzBnAkoCZdD/wGuIaYgGMdbW85q+q8q0JrjMpv4Zbm5y+SEzT64a
+ 2IQAfhsUyWtN9JNztqg2cSSTYHiN0IeweHAtd/2y4Z4tAgZPN0kYGenA66O2j4Ja5ZZ1WFuKE
+ Yu8BSHOy25j3k/NWObeSjuP/BCM98KXBnLmcsdtrTM1nAtckhY+k/caTccdScYKdne0fFZ2+4
+ 4RNMOxHNkyN+bv/3DfjqLwsqiuljacwqPPJNkB/ibkZmzyz9jNXYbhQZ0UMluOKSf36np80O9
+ c/NlzUZOOdrnn1BY/9n0/AkU2nUyEPKWR/CLv5EjjJ7zxGrYkjo3FQA0NxTmCkBty34PLP08R
+ q7Vk3QRJ5AL4sxdYv1/h3z2nQwYxRmWrv8r2KvjPmyPr6kz5jCb28TwJmjNkslPvq1XqEPtf2
+ T/rmIttoOMjxIrznXZAvwyIlRHCYBZ+HlliUx0F1YZEfnGz/4gkkPZim0pWXSSk1cqcrE9fwe
+ /MjdS+nHOojOP/GzQCPLYlmQ+kAVGJNOE2C2JLhU4zbRc7KX4gNgPJzUI/sgoAi6EdLlW0jgx
+ NIpEh+HyI900YyckM4phfN2aiL+tpBJQa4ITfHuxwi7SdBmf6A8tHkVScsOs9XtrysKCdTW0J
+ dOdil066MbPxEAFFfuG7emWbLWUQ8K2kFOUHJaF8KpVib9W3tEIx5CFd1OlSshmVWEujqg9D5
+ ufZsfNO4K6ZMIBlSsQnNkwzyQBiMjEqIYKIxUeVNpt4mufWSAg/Lo
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+Hi Peff,
 
-On Mon, 20 May 2019, Matheus Tavares wrote:
+On Fri, 24 May 2019, Jeff King wrote:
 
-> > Give "rebase -i" some option so when you "reword" the patch is
-> > included in the message.
+> On Thu, May 23, 2019 at 09:12:27AM +0200, Johannes Schindelin wrote:
+>
+> > > +	echo no-conflict >expect &&
+> > > +	git log -1 --format=3D%s >actual &&
+> > > +	test_cmp expect actual
 > >
-> > I keep going to the shell because I have no idea what change I'm
-> > describing.
+> > I would prefer
+> >
+> > 	test no-conflict =3D "$(git show -s --format=3D%s HEAD)"
+> >
+> > or even better:
+> >
+> > test_cmp_head_oneline () {
+> > 	if test "$1" !=3D "$(git show -s --format=3D%s HEAD)"
+> > 	then
+> > 		echo >&4 "HEAD's oneline is '$(git show -s \
+> > 			--format=3D%s HEAD)'; expected '$1'"
+> > 		return 1
+> > 	fi
+> > }
 >
-> I have the same problem, so I wanted to try solving this. The patch
-> bellow creates a "rebase.verboseCommit" configuration that includes a
-> diff when rewording or squashing. I'd appreciate knowing your thoughts
-> on it.
+> This, I disagree with. IMHO comparing command output using "test" is
+> harder to read and produces worse debugging output (unless you do a
+> helper as you showed, which I think makes the readability even worse).
+> Not to mention that it raises questions of the shell's whitespace
+> handling (though that does not matter for this case).
 >
-> As Christian wisely pointed out to me, though, we can also achieve this
-> behavior by setting "commit.verbose" to true. The only "downside" of it
-> is that users cannot choose to see the diff only when rebasing.
+> What's your complaint with test_cmp? Is it the extra process? Could we
+> perhaps deal with that by having it use `read` for the happy-path?
 
-You could of course add an alias like
+I would prefer it if we adopted a more descriptive style in the test
+suite, as I always found that style to be much easier to work with (you
+might have guessed that I am spending a lot of time chasing test
+failures).
 
-	[alias]
-		myrebase =3D -c commit.verbose=3Dtrue rebase
+Succinctness is just one benefit of that.
 
-which *should* work.
+A more important benefit is that you can teach a helper that verifies
+onelines to show very useful information in case of a failure, something
+that `test_cmp` cannot do because it is totally agnostic to what it
+compares.
 
-However, I am actually slightly in favor of your patch because it *does*
-make it more convenient to have this on during rebases only.
+> Or do you prefer having a one-liner? I'd rather come up with a more
+> generic helper to cover this case, that can run any command and compare
+> it to a single argument (or stdin). E.g.,:
+>
+>   test_cmp_cmd no-conflict git log -1 --format=3D%s
+>
+> or
+>
+>   test_cmp_cmd - git foo <<-\EOF
+>   multi-line
+>   expectation
+>   EOF
+
+I guess that you and me go into completely opposite directions here. I
+want something *less* general. Because I want to optimize for the
+unfortunate times when a test fails and most likely somebody else than the
+original author of the test case is tasked with figuring out what the heck
+goes wrong.
+
+You seem to want to optimize for writing test cases. Which I find -- with
+all due respect -- the wrong thing to optimize for. It is already dirt
+easy to write new test cases. But *good* test cases (i.e. easy to debug
+ones)? Not so much.
+
+> But I'd rather approach those issues separately and systematically, and
+> not hold up this bug fix.
+
+Sure.
+
+> > > +test_expect_success 'interactive am can resolve conflict' '
+> > > +	git reset --hard base &&
+> > > +	printf "%s\n" y y | test_must_fail git am -i mbox &&
+> > > +	echo resolved >file &&
+> > > +	git add -u &&
+> > > +	printf "%s\n" v y | git am -i --resolved &&
+> >
+> > Maybe a comment, to explain to the casual reader what the "v" and the =
+"y"
+> > are supposed to do?
+>
+> OK. The "v" is actually optional, but I figured it would not hurt to
+> have us print the patch we just generated. I'll add a comment.
+
+Thank you.
 
 Ciao,
 Dscho
