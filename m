@@ -8,72 +8,95 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D1A61F462
-	for <e@80x24.org>; Tue, 28 May 2019 10:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB5251F462
+	for <e@80x24.org>; Tue, 28 May 2019 10:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726553AbfE1KQy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 06:16:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58965 "EHLO mout.gmx.net"
+        id S1726500AbfE1Khh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 06:37:37 -0400
+Received: from mout.gmx.net ([212.227.15.19]:42729 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726476AbfE1KQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 06:16:53 -0400
+        id S1726345AbfE1Khh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 06:37:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559038609;
-        bh=EOuWrsY+VjCkdaV+XAixRFQxuQdfOrKwUiSxsup3990=;
+        s=badeba3b8450; t=1559039853;
+        bh=RuKvWTgfkmtVW6yqDw9DCMLgLHaNndUDVU+b/jBkw+Q=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Cbx/lYLRBsO8kcPS1RO93xuFWFi4hTJnqmHQw429kZwxigOoxutZU/Cqa8Iq+jPa6
-         FVlHLXp2GMyb05ZZ1RuLigteRbiUEAckBbsxVW8JilPGTFWTFyWRyDUygweicSCxtB
-         QrQnpUQSn4bDI9c1MbKILlGeRL23vVVn2TstvL/8=
+        b=gtumrnR21EL2Mzkq6IpCZ+q50rIaAHrGiArQLhdI7aarC/mt2g4JyRuJnVcUHbGZy
+         D8FRGMF00cM4usv4BEy1mzF95ZBzLz/P8hdaWVsoHpNqwN7XwN4HEVsb6BIpy0jNV8
+         G+rSlZsbvuFxEz+YbnFFk1guBzEA3Py7OvbastHY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ljqgb-1gu1UH49V3-00brdK; Tue, 28
- May 2019 12:16:49 +0200
-Date:   Tue, 28 May 2019 12:16:33 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXr3H-1h8rOc07kt-00Wkt0; Tue, 28
+ May 2019 12:37:33 +0200
+Date:   Tue, 28 May 2019 12:37:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: GIT issue while cloning (fatal: pack is corrupted (SHA1 mismatch))
- !!!
-In-Reply-To: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
-Message-ID: <nycvar.QRO.7.76.6.1905281214380.44@tvgsbejvaqbjf.bet>
-References: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+cc:     avarab@gmail.com, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little
+ projects
+In-Reply-To: <20190520182353.22221-1-matheus.bernardino@usp.br>
+Message-ID: <nycvar.QRO.7.76.6.1905281235280.44@tvgsbejvaqbjf.bet>
+References: <87in9ucsbb.fsf@evledraar.gmail.com> <20190520182353.22221-1-matheus.bernardino@usp.br>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8nkTzwOPWx2VhoXNyOqa5HtQof/fJ1bTVwS6f8Ks5SXBMpQGiEH
- 67MOWcMu+EJjyIS5I9l+F8Dh/dXVDb46ocI7wy4MB8aGyZo6z/nttWZU33BFJqJmUMVKYvu
- UEH6XZ0d9KV3AGw/GHdPTSjoLxcwsphWV6kVQUvMzrIFvbQ+PW6+6KhWA2Q1pugsI7GyHWs
- 96rBerZjYkPbdyZioc++w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ep62As3QmUM=:tg6WHnfVVvLKdbSKNt14rA
- FA6h16OL5R/hxCiFN106LDufNrGH5Tsok1x9/ZWUiWg8nzqS+nXkdWia/ofYgNlV/QWPR3ftG
- rqCJVyJacN/13HZR9ANu/qHai8wtGUbWGdRgd+mVDF1v+5uw/dWVvvV8bWRjOGTp2UEpya6bt
- gDXf9X3elrwTZ2Menc/27hulYhCVA5l77P0vZNolswONAtFlJ8gqsu4yr2iJGWz763loG9b2n
- /ntow2FDswgr3o/0WE8lqBqiuusBlGHzcqkoFSQT2cQc1KL8ckAgH/VaRnSC9oflV+1GnOo6v
- jBZsxJ9AexD0s9Zqm0/n8qmjhcYGi13PuaFldoMKbgLPL2jRmVExKMM1mToCsYVyFA1Uq/MCR
- gbT8ROrYQ6obYBh0m8yRZPBV/2GWfrOMB5l3sRm/V9hkX6h2dHg0JBU7zwZHiRegFnftj56B/
- DUgH1o038Jq8wmKhglMHeosaOa1zlG+xiVABqmybX6n5vtguNGJ4vMmbLAcBnXn9iyzmhKrkD
- Fu4sU4WFBZjMOZqdCjTEY95RYfTab+qGFVWrDmpmECGpSMtU5jzUk7x6PpqqfPjumDgev69D6
- o0AQIycFGNrtlyhGrpqBM5U8mmiz3o8sh98Q+ZyOw+8m8osE/+mvQRw3oNVAd5CbsgVq+b2bY
- 1GUGBB/aaCYRgezwwChzpvOnH/mxW0P50rsUEoJaonXS108vMS/KG1rzz4eh3c6ALATd6KaxU
- PVh9ayU6WujWss+CYDv/0016jqpPAgb6VTrggsXfOTRLPdUyROCn033W6uRB6JSbbBGnbnltI
- Rm+cnlqpestkSJp8FD/bRsmmVZt6uud8ipwFYRcAU5/3aPg8bNFlPPZ1qqef0HIhmstIrm5ei
- 8H96ue7jqAa5Xryqp4L00NVlQLzN7VhvW/hgPRylwYhstZuQKvYyXn4ctWciIW1jpjXxU1wml
- KQO0ANGzCPobgxubz5gxIPIuHkeC53ULFU6MY5R7we9hzOrzpYY0P
+X-Provags-ID: V03:K1:Z5um8ze9bgGt8VyCfaXmrRDUJDYPQCnEmHLVVQsxzaWL98BuK7P
+ I0OMNJeq07q+A3p0N7UTe5SeH7VLY9PHrk/5DxSOXzKnyF/z/69LChwSLix9GxrBU4V8df8
+ XM+KqDXxZ+rwHInZxTTWVChOi+Rt8RMn001oRDukZNnzLTXLbgI4Rqttp9lJ6Nz6oNCTgcM
+ 6qfMu+HIFd/YD2oo353pA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JP37Q5mktX4=:EX/LiM/TG7X0KJ9CfRVB1Y
+ U9QO3luQmQ5MGgv5d+JQeOGC0KU9RMauyQ/g4QL5+gpkw2/nXYjak68UbyZMHq6gqC3R5s69D
+ CSicqJSL5yO567O6+GsMw5ESk4Tm8ES/GMCGS8oicMwZgTXPW+YXb5GYQi7eSAo02FKMvdi1v
+ fdMFtblaJ6+y6XGwQz+y2ODnQAy05JI4RNoNOSFVyozqEw1vAbA8w8bhjSS0NAE5QjFZGNc9A
+ NagmEKCeRXykDezfij1ARWoDb3cLSQSWaXv6hx8Ly6DNpoWK6NoOwQi9RHlqXAKK9RzFfP5Sx
+ 7Ae6IjfQ52iI6C+XlZzIcDEgIuIAOPrvb+4AUR17gKPnw0TFlt3Fh2w4zcCNK93KY59Vjmh4h
+ PneFw6ArpP1WKGQQCMOGKKSyrRW5NYpMBXGgeDREoMQc52OquUpfhjDgdj8JAOImSdMh+o9IJ
+ i6Wlbs6lCMIOWrdd5qYx1/iDVKk3jvSOlyGBGBo6nbKdKaVa/xEH5sGsmP/2CgG0OMHcNJHyx
+ XK1gs+J59iV7X6SSSGIJ9/gJrfsavuhLCwlHANep5EaSeQK4wBPuj+HaOFZfECDR1r9LPuLFr
+ jC8gt38xDNXno03Nje+Kz9IYOUMHR9MHnQg2qph1B/YrfKrfD/3SPslNm8KScQPgKbqmXnmSB
+ ItfC0UaYf/SZUCRepLVHGH2pJesEesyYhY2+7PaNepFcyL4DU4a+ZSv+8K9XpvoaQbtEBRQQj
+ WEpcZ/3gpKbclAj8SPCilGSpiSpHqo35G2lAx+KPBijSwec4iYv5t/4ydGelhWAjuYmFip4G/
+ Zy/BxseJYKXdORXP64lzXnaIvRb2IuOfTqYvR+fPjRLRo2hVvaazWo1Jq+3+C3XldcOegiaBj
+ MgTyBbCdVndHwsH4wXMl+rmwiU6+/ToF8ZZaQPopMgZ5yQIa2O30+ZHFS7Z2+SuZXRf9dwdP7
+ ZKBXTmj9uf9OyDQ2Nirb9yRny0Y13DlbgeKihwhtB2ThofHmeesBV
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Matheus,
 
-On Tue, 28 May 2019, Vanak, Ibrahim wrote:
+On Mon, 20 May 2019, Matheus Tavares wrote:
 
-> We are seeing issue with GIT 2.14 version.
+> > Give "rebase -i" some option so when you "reword" the patch is
+> > included in the message.
+> >
+> > I keep going to the shell because I have no idea what change I'm
+> > describing.
+>
+> I have the same problem, so I wanted to try solving this. The patch
+> bellow creates a "rebase.verboseCommit" configuration that includes a
+> diff when rewording or squashing. I'd appreciate knowing your thoughts
+> on it.
+>
+> As Christian wisely pointed out to me, though, we can also achieve this
+> behavior by setting "commit.verbose" to true. The only "downside" of it
+> is that users cannot choose to see the diff only when rebasing.
 
-You definitely want to upgrade ASAP. Not only is the issue that you
-reported fixed, but two distinct vulnerabilities have been fixed since
-v2.14.0. Your version is still vulnerable.
+You could of course add an alias like
+
+	[alias]
+		myrebase =3D -c commit.verbose=3Dtrue rebase
+
+which *should* work.
+
+However, I am actually slightly in favor of your patch because it *does*
+make it more convenient to have this on during rebases only.
 
 Ciao,
-Johannes
+Dscho
