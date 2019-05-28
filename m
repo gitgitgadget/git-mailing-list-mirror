@@ -3,75 +3,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D091F462
-	for <e@80x24.org>; Tue, 28 May 2019 17:14:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EB751F462
+	for <e@80x24.org>; Tue, 28 May 2019 17:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbfE1ROK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 13:14:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65038 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726236AbfE1ROK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 13:14:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ECF90143C08;
-        Tue, 28 May 2019 13:14:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+hnOdDRVOJzDgEHjlF19LGqt51g=; b=R0cbwS
-        piP4rp6zvzxMS2TAgoo3x30FzvXaR53ljgnWMY/Idt/2wb9JsoiX075VSnH7ODpx
-        uCFchYsAYVdULzWPCXpk1tZT4YtR0C/slGT8iTs/TfhS2gWkZ2dvvnNKv4OA84Si
-        VYr3WdWi83xe3uNxxhfKQUYiaslMSSy/HGXeM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ThX4abCXvar54d81hHL6kn1OKrujuSe3
-        zja8nB/G415YdRPUyPuFDR8vq1G6d88tZaVHbmQwnckUSzIQUhjy1VYbua/PoIaB
-        xcLHdSFMseYQSn1SKTU4ioCeeDetFpEQl7+00aI7WiGhrDhjINUM9Ztoy3Zuw5RN
-        y1yc5Q6xAKU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5A6D143C04;
-        Tue, 28 May 2019 13:14:07 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E205143C02;
-        Tue, 28 May 2019 13:14:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff King <peff@peff.net>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] trace2: fix tracing when NO_PTHREADS is defined
-References: <pull.222.git.gitgitgadget@gmail.com>
-        <20190521212744.GC14807@sigill.intra.peff.net>
-        <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com>
-Date:   Tue, 28 May 2019 10:14:05 -0700
-In-Reply-To: <97796007-db6e-f2ea-91ae-3113b74e4ae9@jeffhostetler.com> (Jeff
-        Hostetler's message of "Wed, 22 May 2019 09:23:39 -0400")
-Message-ID: <xmqqv9xu33j6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726982AbfE1Rhp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 13:37:45 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:33077 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbfE1Rhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 13:37:45 -0400
+Received: by mail-it1-f194.google.com with SMTP id j17so3238862itk.0
+        for <git@vger.kernel.org>; Tue, 28 May 2019 10:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6J63JKf18EX/xm5eAz1Hp1WsfMHk2p1qHmvdOngbQJA=;
+        b=yKhxMmd7g98OCl4c2YswdCzCkrirnZzMfmqKcXyp+/lnnOyMY829Mfvn74LWOUrDhz
+         /q4qj9AjykUqtXh/YKJ+maTrz4p7b7bfq4DYmEyL2YqGpj3Eh0fh4INr4/X8JpzM3OXt
+         volHlrRjeXvW9s7RjdS0FPySF3ORBd32w5jEDZcFzE5FNL63QeI6bkx4ul52JxR1nC9H
+         CpfBEEwMupmuL+5djq2fwqnGpnE1Grf/NQpfb57hOvPHhISZ39ZApLpw1hx58BmTeN3c
+         nAUnl3FNcQDCO7CcmpYtDaDzJzuWw+z/Swhq0qyaYUbwppCVjm1JbVQj0N+Rtxzu5Cl/
+         ClvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6J63JKf18EX/xm5eAz1Hp1WsfMHk2p1qHmvdOngbQJA=;
+        b=gPGxclfGaoccgmKPnaOlHfGMKwyeoTvmXFtBfSqq7+K+47fw/+VEnrztnIB5DkQqC7
+         mi984wKmYTA9o6QiWdbXwOhxO3DnqFOEY8kQqAWNkEUqnPxGBLJ0Ht94afGc+gOMep4I
+         Zbcw5/ppzr/xbWrmezm28QOr2S0M1frpUk9ubRnHFmUG/JV2tr3RkgGYyPfJaF47dDJB
+         z16uhZNiPwTCwZN9iEztmzMPkreDY2NOV6AzmHclqoai6sEGD0/MsXUZhXZ/073tSWR5
+         QEgLfiw4PvTjDkhBzP0SOxx4WAJIXGkWBp649GX2SfMzdUY5YHA/D292qoVH6+jcW3tc
+         qskQ==
+X-Gm-Message-State: APjAAAXXF1Ek0I86qDkIcysZVcCZ9Rla/nxkf6Juaol4BiheaxnbyXzv
+        kuYKrX1Cy81Qr9Z5eVFbjNx+7yKXe62pE83QKADZxw==
+X-Google-Smtp-Source: APXvYqxf44pW/cbhBK/7iWERl+mi5miawH68trhEOSraEWLW13RdI61yeQbMCzwKkakXInX4jipFrY10ysS35WyPkwE=
+X-Received: by 2002:a24:e084:: with SMTP id c126mr3927007ith.124.1559065064150;
+ Tue, 28 May 2019 10:37:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 005C41DE-816C-11E9-B526-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+References: <87in9ucsbb.fsf@evledraar.gmail.com> <20190520182353.22221-1-matheus.bernardino@usp.br>
+ <nycvar.QRO.7.76.6.1905281235280.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1905281235280.44@tvgsbejvaqbjf.bet>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 28 May 2019 14:37:33 -0300
+Message-ID: <CAHd-oW7BFYd=LQBF4mF5QTpce9YtXj1WDf85AyO+CLwC9GMqDg@mail.gmail.com>
+Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little projects
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
-
-> For now, I've guarded my usage of pthread_getspecific() in the trace2
-> (similar to what index-pack does), so its not urgent that we update it.
-> And I'd rather we take this simple trace2 fix now and not try to combine
-> it with fixes for the pthread macros.  Especially now as we're in the RC
-> cycle for 2.22.
+On Tue, May 28, 2019 at 7:37 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> I'll make a note to revisit the pthread code after 2.22.
+> Hi Matheus,
+>
+> On Mon, 20 May 2019, Matheus Tavares wrote:
+>
+> > > Give "rebase -i" some option so when you "reword" the patch is
+> > > included in the message.
+> > >
+> > > I keep going to the shell because I have no idea what change I'm
+> > > describing.
+> >
+> > I have the same problem, so I wanted to try solving this. The patch
+> > bellow creates a "rebase.verboseCommit" configuration that includes a
+> > diff when rewording or squashing. I'd appreciate knowing your thoughts
+> > on it.
+> >
+> > As Christian wisely pointed out to me, though, we can also achieve this
+> > behavior by setting "commit.verbose" to true. The only "downside" of it
+> > is that users cannot choose to see the diff only when rebasing.
+>
+> You could of course add an alias like
+>
+>         [alias]
+>                 myrebase = -c commit.verbose=true rebase
 
-Thanks, both.  The above direction makes sense for me, too.
+Hmm, I didn't know about `alias`. Thanks for the information.
 
+> which *should* work.
+>
+> However, I am actually slightly in favor of your patch because it *does*
+> make it more convenient to have this on during rebases only.
+
+Another option we were discussing is to document that rebase obeys all
+commit.* options, instead of adding the rebase.verboseCommit config.
+Yes, this way we won't be able to toggle diff for rebase only, but I'm
+not sure if that's something users would want to do...
+
+> Ciao,
+> Dscho
