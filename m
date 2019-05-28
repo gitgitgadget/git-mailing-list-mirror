@@ -2,151 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 826AD1F462
-	for <e@80x24.org>; Mon, 27 May 2019 23:43:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 237991F462
+	for <e@80x24.org>; Tue, 28 May 2019 00:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727271AbfE0Xn6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 May 2019 19:43:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36770 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727050AbfE0Xn5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 May 2019 19:43:57 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:5881:abd5:52a:5d54])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727257AbfE1AFx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 May 2019 20:05:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64370 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbfE1AFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 May 2019 20:05:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E28F7662AC;
+        Mon, 27 May 2019 20:05:50 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=4wmuMbIFhbV0y
+        lNl8Vrd7/w5uII=; b=jRZS24Zb1awCj9zZ0EaS3VzJ/5gD9IKTzhCrmlvf1zieN
+        Tzug+uqcWM/TuAA3IaDasfLBbWZ5sktsE6nfF19c38CL99e4CPEPfrWlT2jpntQ2
+        ZXLOOJ3bAnSxt8Om/uItQ1ZLGWfKy11cAsSL4T9m2X650vkCZkVfcDMnJwEzTs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=ZSM7Pvf
+        UfKWpIafVlBEqDoFAn317Idt20vTE+YhwAxcWzvOIfwEtrAkMUrW0PhIC7mjLHRa
+        m6ZywtZuQQ/KDdgKtfFiDnaouRN+i4nM6Ykyo2hVfztxhkFpOebx2Qk3/LVPEpjG
+        2dcLobe7vQIjdRKMCUEQiQeiGRxxqmTmaPc0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF59D662A9;
+        Mon, 27 May 2019 20:05:50 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [173.67.141.44])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2284560737;
-        Mon, 27 May 2019 23:43:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1559000634;
-        bh=jJ31Bj4iBzWcTRYm/2Kt7VrXvIDbR2fdGN9UJOy7DX4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=RmawC6+IuIKGgmJxYfqVyv4zZfMbTEqiCDU8mX3Zvz+yY0r57V7ZCsyl4qAjr4hwG
-         /inDjwreOh4KpoKjbWDpvLshPo3h8Pho7xMNNld7LBIf3SVuqEHrm6zvIova2GQgOv
-         wAsmV376rxOawO2UbkTIKpP/5jgxG2Vy2sHSiOvpyfqcVT2QhD+X/+PT2t2Nb2eolD
-         R1bgDBBaiQckdRA51dZIlsKrWq4jiw7Ib74DT9q6sIGmyRW2gvBw0UOzDCtkVK5bsw
-         qAURgejMRWpe4WX1chqNLhBV30lynG8mWvWiiePM/GnLTVAQGB1ZUbbg5BqZFcE5VL
-         Bz+cmGk1u4genMz6cEUFclrsOus4RlWu+czxNT8BM0DYGbYe2WTlWrjiGMLj/dkMye
-         a2HU4ddwgx/jdLhQ5IE4vkvXxpXA1g/pUMYuAa5+vVfu30yLsJLagsv2Elb/9fhhl3
-         pZb51u0esr0n+z0qu9azBr4356Juxv53GWWeujKlPaxgXtmLlLr
-Date:   Mon, 27 May 2019 23:43:47 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Eric Wong <e@80x24.org>, Chris Mayo <aklhfex@gmail.com>,
-        git@vger.kernel.org, git-packagers@googlegroups.com,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4DCB1662A7;
+        Mon, 27 May 2019 20:05:47 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Mon, 27 May 2019 20:05:44 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Chris Mayo <aklhfex@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
+        git@vger.kernel.org
 Subject: Re: [PATCH] send-email: remove documented requirement for
  Net::SMTP::SSL
-Message-ID: <20190527234347.GH8616@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>, Chris Mayo <aklhfex@gmail.com>,
-        git@vger.kernel.org, git-packagers@googlegroups.com,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Message-ID: <20190528000544.GX3654@pobox.com>
 References: <20190526172242.13000-1-aklhfex@gmail.com>
  <20190527193517.GA22013@dcvr>
- <87imtvmy7f.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lrvsYIebpInmECXG"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <87imtvmy7f.fsf@evledraar.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20190527193517.GA22013@dcvr>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 5883F3BA-80DC-11E9-B68E-8D86F504CC47-09356542!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---lrvsYIebpInmECXG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2019-05-27 at 20:36:36, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> I've done enough git-send-email patching in anger for a year at least
-> with what's sitting in "next" so I'm not working on this, but just my
-> 0.02:
+Eric Wong wrote:
+> Chris Mayo <aklhfex@gmail.com> wrote:
+>> git-send-email uses the TLS support in the Net::SMTP core module from
+>> recent versions of Perl. Documenting the minimum version is complex
+>> because of separate numbering for Perl (5.21.5~169), Net:SMTP (2.34)
+>> and libnet (3.01). Version numbers from commit:
+>> bfbfc9a953 ("send-email: Net::SMTP::starttls was introduced in v2.34",
+>> 2017-05-31)
 >=20
-> I wonder if we shouldn't just be much more aggressive about version
-> requirements for something like git-send-email.
+> No disagreement for removing the doc requirement for Net::SMTP::SSL.
 >=20
-> Do we really have git users who want a new git *and* have an old perl
-> *and* aren't just getting it from an OS package where the module is
-> dual-life, so the distributor can just package up the newer version if
-> we were to require it?
-
-In my experience, shipping newer versions of packages shipped with the
-OS is a no-no. That's a great way to break unrelated software on the
-system, and if you're the distributor, to get users angry at you about
-breaking stuff on their systems.
-
-We do indeed have users who want a newer Git on those systems and are
-using the system Perl. The Git shipped with CentOS 7 (not to mention
-CentOS 6) is positively ancient and doesn't support useful features like
-worktrees, so it makes sense to upgrade it. But if you're not a Perl
-shop, nobody cares about the version of Perl on the system and fussing
-with it doesn't make sense.
-
-> I.e. couldn't we just remove the fallback code added in 0ead000c3a
-> ("send-email: Net::SMTP::SSL is obsolete, use only when necessary",
-> 2017-03-24) and do away with this version detection (which b.t.w. should
-> just do a $obj->can("starttls") check instead).
+> But core modules can be split out by OS packagers.  For
+> Fedora/RH-based systems, the trend tends to be increasing
+> granularity and having more optional packages.
 >=20
-> For shipping a newer Net::SMTP we aren't talking about upgrading
-> /usr/bin/perl, just that module, and anyone who's packaging git
-> (e.g. Debian) who cares about minimal dependencies is likely splitting
-> out git-send-email.perl anyway.
->=20
-> We could then just add some flag similar to NO_PERL_CPAN_FALLBACKS so
-> we'd error out by default unless these modules were there when git was
-> built, packagers could then still set some "no I can't be bothered with
-> send-email at all" or "no I can't be bothered with its SSL support", in
-> the latter case git-send-email would work except for the SSL parts.
+> So I think documenting Net::SMTP (and Net::Domain) as
+> requirements would still be good, perhaps with a note stating
+> they're typically installed with Perl.
 
-We had a problem with Homebrew sometime back where they stopped shipping
-git-send-email because it required Perl modules and there was a big
-uproar and a request for us to allow dynamic Perl support. I would like
-to discourage distributors from simply refusing to ship core pieces of
-Git because it tends to cause problems for users and for us down the
-line.
+I didn't know that git-send-email.perl could take advantage
+of Net::SMTP::starttls until I read this.
 
-I understand and am fine with splitting components out into multiple
-packages or omitting parts interfacing with other systems (e.g.
-git-svn).
+[Adding Dennis and Jonathan as the authors of 0ead000c3a
+("send-email: Net::SMTP::SSL is obsolete, use only when
+necessary", 2017-03-24) bfbfc9a953 ("send-email:
+Net::SMTP::starttls was introduced in v2.34", 2017-05-31),
+respectively.]
+
+The current Fedora and Red Hat package have a requirement on
+Net::SMTP::SSL from long, long ago=B9.  As I looked at whether
+I could remove that (or more accurately, replace it with
+IO::Socket::SSL which is needed for Net::SMTP to handle
+starttls), I noticed that on RHEL7 the Net::SMTP version was
+2.31, but starttls support has been backported=B2.
+
+I wonder if it's (separately from this change) worth
+adjusting the conditional which sets $use_net_smtp_ssl to
+use "Net::SMTP->can('starttls')" rather than a strict
+version check?  (It might not be if using 'can' is too
+fragile or would only benefit the Red Hat 7 packages which
+likely won't officially be updated to a newer git with such
+a change.)
+
+Something like:
+
+diff --git i/git-send-email.perl w/git-send-email.perl
+index 24859a7bc3..84ac03994d 100755
+--- i/git-send-email.perl
++++ w/git-send-email.perl
+@@ -1465,7 +1465,7 @@ sub send_message {
+ 		}
+=20
+ 		require Net::SMTP;
+-		my $use_net_smtp_ssl =3D version->parse($Net::SMTP::VERSION) < version=
+->parse("2.34");
++		my $use_net_smtp_ssl =3D Net::SMTP->can('starttls') ? 0 : 1;
+ 		$smtp_domain ||=3D maildomain();
+=20
+ 		if ($smtp_encryption eq 'ssl') {
+
+=B9 https://bugzilla.redhat.com/443615
+=B2 https://bugzilla.redhat.com/1557574
+  https://git.centos.org/rpms/perl/c/13dfe3?branch=3Dc7
+
 --=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---lrvsYIebpInmECXG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzsdjMACgkQv1NdgR9S
-9ouqyw/+MDyZYaLwszRJNxO97ed9FQhwLO7JXjtkBvcnPUn6cuSwgKs2M8xuZuWT
-oTDj5l3jwh6JMCy+nJdOawIXISjgrp3Ml/3ZH85JDw0ED08M9OXfQ0AJNuPMi5H+
-D5spo4TD3Fo9IawGQ9QUbmCc4UGxbrMSKnPeLakT1veTKAzn8rQFfSeuYbbXEoQU
-5R6gYQ99+OQUab4JIu1CFYyy8r9+Z991fjcoIM9omJ6eWyeOmXTbKRCHYacFhxR7
-1guieffJGROxAnA5vD1y+tXFCJEcZx4k38dVt0ERz+0pZ7VK1muf60KNBDGxOyca
-eR9aWFJRPzh/yxdEN6lFlQUeRCjmaJQfdWpdZzDjKNBBNZ0ODB/EvVekU0tYQeTE
-cdE4RJFLU7Ax5CRQPi7NIKzT2tAHrX17clIT3UXz3sl2La4uikLQxdRcYZw7+D9F
-WvTba4jWDsIx9qeCpcpINnlhYd4n8fQ6J6xiGWsmJOCapOOeq2Xc1udl4T7xXHDR
-2upX3kjjsvK/PkpY+GW7khpmPCVgyaAhUGp8vv9BoEPNYE8tnw9O9fmg2EQbRjpd
-svhgesEtYLmJeyYhEEXaC0VYPAMw5yDNGxISGuyxoG0g05Jnmt1XebwMhYbCPivu
-kgVfqna2UAvJ9v0sz0hSh8wKses2QreXcpKZif1YFNTVpnORKzU=
-=eAFQ
------END PGP SIGNATURE-----
-
---lrvsYIebpInmECXG--
+Todd
