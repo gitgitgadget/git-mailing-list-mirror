@@ -2,100 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0821F462
-	for <e@80x24.org>; Tue, 28 May 2019 21:04:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0C31F462
+	for <e@80x24.org>; Tue, 28 May 2019 21:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbfE1VEa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 17:04:30 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40452 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727273AbfE1VEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 17:04:30 -0400
-Received: (qmail 4797 invoked by uid 109); 28 May 2019 21:04:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 21:04:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18086 invoked by uid 111); 28 May 2019 21:05:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 17:05:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 17:04:28 -0400
-Date:   Tue, 28 May 2019 17:04:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1727144AbfE1VJK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 17:09:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53020 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726683AbfE1VJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 17:09:10 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0237F14ADD2;
+        Tue, 28 May 2019 17:09:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6yYUBfjVjkDNxSodi1NlVbDrv5o=; b=osPZJ/
+        nzo4KYcj8wbIfn8+3KXKy7YtLJjvxj9KHrXyGzEuh88UrPscvrrjRL+OZLwIotUd
+        sB0O+rnaAjp4f5FgjGQDiUxaU7xPNZYp8acSZ4JuzLPJFAbv+N0Ni4wEoCWSMi5A
+        s3Fc59BkBUl1ySpodT4gGuL825IezW7KItdEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cTOVgvps9KjOEwK9921AH6IMFD7kR0Pp
+        3zvzayZ/mVJY2sXLJH2tYU7qa2JR10Fidl30sEC5CJv38ZBIeNG3t50Rxw6gniLY
+        MbrEND7XHhyJRrK5YJq9EqRgyyCdoSbNOfFZWLfD6h43Ht02h4MAGFEI5L6RYemq
+        NGmUzVVxD3Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED27014ADD1;
+        Tue, 28 May 2019 17:09:07 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 61FCE14ADD0;
+        Tue, 28 May 2019 17:09:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org,
         Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] bundle verify: error out if called without an object
- database
-Message-ID: <20190528210428.GE24650@sigill.intra.peff.net>
+Subject: Re: [PATCH 1/1] bundle verify: error out if called without an object database
 References: <pull.226.git.gitgitgadget@gmail.com>
- <f0545e872344dd25e11db7fe095cde1578b26748.1558987152.git.gitgitgadget@gmail.com>
- <20190528015133.GA29724@sigill.intra.peff.net>
- <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
+        <f0545e872344dd25e11db7fe095cde1578b26748.1558987152.git.gitgitgadget@gmail.com>
+        <20190528015133.GA29724@sigill.intra.peff.net>
+        <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
+        <20190528210428.GE24650@sigill.intra.peff.net>
+Date:   Tue, 28 May 2019 14:09:06 -0700
+In-Reply-To: <20190528210428.GE24650@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 28 May 2019 17:04:28 -0400")
+Message-ID: <xmqqy32qz3pp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D49FB816-818C-11E9-AA0E-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 28, 2019 at 01:03:26PM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > As Gábor noted in the earlier thread, if the bundle doesn't have any
-> > prerequisites, this _used_ to work before b1ef400eec (setup_git_env:
-> > avoid blind fall-back to ".git", 2016-10-20). I don't know if anybody
-> > cares about that case or not, but we could do something like:
-> >
-> >   if (p->nr)
-> > 	verify_prerequisites();
-> >
-> >   /* otherwise, fall through to the printing portions */
-> >
-> > and then just check for a repository in verify_prerequisites(), which is
-> > the only part that needs to look at the repository object at all.
-> 
-> It depends on how important we consider the use of bundles that can
-> be cloned from.  If it is important enough, what you suggest is an
-> improvement worth doing over what Dscho did.
-> 
-> A bundle that can be cloned from (i.e. no prerequisite) is meant to
-> be used without having any repository by definition, so it is a
-> grave regression to require object store when verifying such a
-> bundle.
-> 
-> On the other hand, a bundle that cannot be cloned from but only
-> usabel for an incremental sneaker-net update needs receiving
-> repository anyway, so it is perfectly fine to require object store.
+> So I guess you are asking only about the part that I dismissed above as
+> "not all that interesting". I.e., do people actually run:
+>
+>   git bundle verify foo.bundle &&
+>   git clone foo.bundle
+>
+> That is not nonsense, per-se, but it is somewhat pointless since the
+> clone will verify the bundle itself anyway. But then, I guess I do not
+> see much point in anyone calling "bundle verify" in the first place.
 
-I was thinking this was matters only for "bundle verify", which is not
-all that interesting (either you can clone from it, or you cannot).
-
-It is also used as part of unbundle(), which is called from the
-transport code. But at that point of a clone, we'd already have created
-the new repository we're writing into. I.e., "git clone .../foo.bundle"
-still works fine either way.
-
-So I guess you are asking only about the part that I dismissed above as
-"not all that interesting". I.e., do people actually run:
-
-  git bundle verify foo.bundle &&
-  git clone foo.bundle
-
-That is not nonsense, per-se, but it is somewhat pointless since the
-clone will verify the bundle itself anyway. But then, I guess I do not
-see much point in anyone calling "bundle verify" in the first place.
-
--Peff
+Yeah, I tend to agree that 'bundle verify' is pointless before
+trying to clone from it and seeing it fail (it still would be useful
+if 'bundle verify' gives more info on the breakage than 'clone', but
+it is not all that interesting at that point unless the user is
+working on git itself).
