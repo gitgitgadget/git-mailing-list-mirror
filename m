@@ -2,105 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 607EF1F462
-	for <e@80x24.org>; Tue, 28 May 2019 21:01:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0821F462
+	for <e@80x24.org>; Tue, 28 May 2019 21:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727624AbfE1VBk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 28 May 2019 17:01:40 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:46727 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727569AbfE1VBk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 17:01:40 -0400
-Received: by mail-oi1-f193.google.com with SMTP id 203so200596oid.13
-        for <git@vger.kernel.org>; Tue, 28 May 2019 14:01:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VCxCm0S0QqqBlsZ5MSsdPbS5WHWeyxdoyQQ8JktA9oE=;
-        b=CGjqVmoYUl/ifzHR/ztmj1ikxyiRZ2JlvPBSvihHrgzf7wNYweGml/pB0x0zGy34Ge
-         xuVlW42zZyUHIALfQ/NLGqi1XUwF6lIETxPkoHxdSTKuCLEKaLFExv1nR9/AUwFmegP9
-         0D36Ich7RHOmrWklVoayp8po3wvbD7cjlroKnoLuw190fz53WBaCxXr1MoOyzTrwo2Pq
-         GWDqkYkHUyB3qB+4cHRCxCFu2jOsOprNW2MCUxKolBvfc8iSKCIdkpnRYj5uJWe9+NB9
-         YOAKcgg3ujAjmQMeKNQiALag70Nq93+6LOFv6YrjLOz9zVCnSMvheOBGclToOyx2nnFZ
-         8Kow==
-X-Gm-Message-State: APjAAAUsAQbBW2MOxc5eplpHz0TIa47i4hxIUYYGvHJVK2r19WR5sI4T
-        HvPUluC84YoOeU2Fuak+jcAZ+4v9zVNgbf5pyRdW8A==
-X-Google-Smtp-Source: APXvYqwRrZZ7nOwBCgBSpuRRMlOMpj8YP7vD0mXalMHhGWlVUyNPfHlqJ8wqcM4Fvkx91kvkPrLciKV0TsyoSog+iso=
-X-Received: by 2002:aca:4ec5:: with SMTP id c188mr4226413oib.33.1559077299501;
- Tue, 28 May 2019 14:01:39 -0700 (PDT)
+        id S1727755AbfE1VEa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 17:04:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40452 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727273AbfE1VEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 17:04:30 -0400
+Received: (qmail 4797 invoked by uid 109); 28 May 2019 21:04:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 21:04:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18086 invoked by uid 111); 28 May 2019 21:05:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 17:05:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 17:04:28 -0400
+Date:   Tue, 28 May 2019 17:04:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] bundle verify: error out if called without an object
+ database
+Message-ID: <20190528210428.GE24650@sigill.intra.peff.net>
+References: <pull.226.git.gitgitgadget@gmail.com>
+ <f0545e872344dd25e11db7fe095cde1578b26748.1558987152.git.gitgitgadget@gmail.com>
+ <20190528015133.GA29724@sigill.intra.peff.net>
+ <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190520170403.16672-1-marcandre.lureau@redhat.com>
- <e1c4c2ab-927d-fff9-b9e7-13943cba2273@kdbg.org> <CAMxuvay3ynFuP3fu57T0f9NEhjbCfM2hCUrdBHvxw-d1Jj54FA@mail.gmail.com>
- <xmqqtvde4jxv.fsf@gitster-ct.c.googlers.com> <a7d42d82-7d84-bf25-55ce-5c57a7ce70e9@kdbg.org>
-In-Reply-To: <a7d42d82-7d84-bf25-55ce-5c57a7ce70e9@kdbg.org>
-From:   =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date:   Tue, 28 May 2019 23:01:27 +0200
-Message-ID: <CAMxuvaxW9fc4ft=aERSUt4+n237bdtDpKJMvyKq=H7yz-VLWbg@mail.gmail.com>
-Subject: Re: [PATCH v3] userdiff: add built-in pattern for rust
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqftoy1h4h.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
+On Tue, May 28, 2019 at 01:03:26PM -0700, Junio C Hamano wrote:
 
-On Tue, May 28, 2019 at 10:31 PM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 28.05.19 um 18:34 schrieb Junio C Hamano:
-> > Marc-André Lureau <marcandre.lureau@redhat.com> writes:
+> Jeff King <peff@peff.net> writes:
+> 
+> > As Gábor noted in the earlier thread, if the bundle doesn't have any
+> > prerequisites, this _used_ to work before b1ef400eec (setup_git_env:
+> > avoid blind fall-back to ".git", 2016-10-20). I don't know if anybody
+> > cares about that case or not, but we could do something like:
 > >
-> >> Ok, I am adding:
-> >> ...
-> >> sure, I thought it was already covered.
-> >> ...
-> >> I think that would be fine, ok I am changing it
+> >   if (p->nr)
+> > 	verify_prerequisites();
 > >
-> > Thanks, both.
+> >   /* otherwise, fall through to the printing portions */
 > >
-> > The previous round has already hit 'next' (which means that we won't
-> > replacing the patch wholesale), so whatever you do, please make the
-> > update relative to / on top of what is queued as d74e7860
-> > ("userdiff: add built-in pattern for rust", 2019-05-17).
->
-> Ok. So, Marc-André, would you mind resending an incremental patch,
-> because the word-regexp that is currently in 'next' would catch certain
-> expressions that should be multiple words as a single word?
+> > and then just check for a repository in verify_prerequisites(), which is
+> > the only part that needs to look at the repository object at all.
+> 
+> It depends on how important we consider the use of bundles that can
+> be cloned from.  If it is important enough, what you suggest is an
+> improvement worth doing over what Dscho did.
+> 
+> A bundle that can be cloned from (i.e. no prerequisite) is meant to
+> be used without having any repository by definition, so it is a
+> grave regression to require object store when verifying such a
+> bundle.
+> 
+> On the other hand, a bundle that cannot be cloned from but only
+> usabel for an incremental sneaker-net update needs receiving
+> repository anyway, so it is perfectly fine to require object store.
 
-Beside a few extras tests, the diff is:
+I was thinking this was matters only for "bundle verify", which is not
+all that interesting (either you can clone from it, or you cannot).
 
-@@ -134,11 +134,10 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
-         "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
-         "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
- PATTERNS("rust",
--        "^[\t ]*((pub(\\([^\\)]+\\))?[\t
-]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t
-]+)?(struct|enum|union|mod|trait|fn|impl(<.+>)?)[ \t]+[^;]*)$",
-+        "^[\t ]*((pub(\\([^\\)]+\\))?[\t
-]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t
-]+)?(struct|enum|union|mod|trait|fn|impl)[< \t]+[^;]*)$",
-         /* -- */
-         "[a-zA-Z_][a-zA-Z0-9_]*"
--        "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
--        "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
-+        "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
-         "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+It is also used as part of unbundle(), which is called from the
+transport code. But at that point of a clone, we'd already have created
+the new repository we're writing into. I.e., "git clone .../foo.bundle"
+still works fine either way.
 
-So it is simplifying handling of type parameters, and lowering the
-complexity of literal numbers.
+So I guess you are asking only about the part that I dismissed above as
+"not all that interesting". I.e., do people actually run:
 
-Both of these changes were based on your recommendations. Would you
-mind sending a follow-up patch yourself?
+  git bundle verify foo.bundle &&
+  git clone foo.bundle
 
-I can send a seperate patch for the 3 extra tests.
+That is not nonsense, per-se, but it is somewhat pointless since the
+clone will verify the bundle itself anyway. But then, I guess I do not
+see much point in anyone calling "bundle verify" in the first place.
 
-thanks
+-Peff
