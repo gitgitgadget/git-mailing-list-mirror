@@ -2,104 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96F361F462
-	for <e@80x24.org>; Tue, 28 May 2019 00:11:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9594B1F609
+	for <e@80x24.org>; Tue, 28 May 2019 01:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727510AbfE1AL6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 May 2019 20:11:58 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:41874 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727128AbfE1AL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 May 2019 20:11:58 -0400
-Received: by mail-ua1-f65.google.com with SMTP id l14so7143854uah.8
-        for <git@vger.kernel.org>; Mon, 27 May 2019 17:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nanocritical.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cpZ5YHMW83OAVGzHIT1QjvKLRzPXFd4hcUJ4SLkWbLw=;
-        b=AsOHuF+Jn89nZqMevfavJvl3LvG1CthNG5s7OVbPte/7IEkKTF9o7UA7C/Pez7BxJL
-         7ynaxdlDjmcF3+zR+yHp2ovZ9h4CCEY1O6qmxMlxmGsfRhNwZIIKLT5reCmiRMHrMx/a
-         m4HTnEtRmpJkIJKkJtitT53eA85mg1cau5xJQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cpZ5YHMW83OAVGzHIT1QjvKLRzPXFd4hcUJ4SLkWbLw=;
-        b=cISk0r5BLZbA3DVpOIjBzty/Pb3MuBUqRcTJvV+2liTg9OOP9TEjOzWf9HM3x6jbUy
-         6L+r3n9hLROFEueSHLOeXTzJCpN9KwKK9twIFfejtDzg1t4s1lRbDOxN4GFl1eMcqRfG
-         aLrnZ7Dtaln4a805WWp31WQDRMKZv9nhN7j/CmmsSo/1q5UE0V7ayNC9/zuhtfodvb+W
-         tojKaz4KaazKXRYvUpY26Flf2ucbSz71cF3HFJuIjrcjBsRxQigiOM/Pq4nQsp2Wvnv+
-         uBGbCNX/QrFTqxUXTcSEMwRQzRQ/L/AmmFFRw/nNYzT1Nq2MRT2fpnSYQXzuuSFIajJg
-         mtLQ==
-X-Gm-Message-State: APjAAAVHxsCN27C6dJwk6NGxnWsofnZyhARe2E3rRc8ShFz8O8NxOqLc
-        AUAVYz7DGDs3tkeK8DPtxSDJYJwNztssL9KF4oVuow11
-X-Google-Smtp-Source: APXvYqydLkR5kK0/VWA0PtXqsdwkEzmgn4J5IdmS1gvd/6t3Pt0mWfYVIHJCd76SVRfxJ2g+tWk9ztbwy7HYZhG+m3Y=
-X-Received: by 2002:ab0:7150:: with SMTP id k16mr28369256uao.22.1559002317016;
- Mon, 27 May 2019 17:11:57 -0700 (PDT)
+        id S1727799AbfE1BWP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 May 2019 21:22:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42844 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727090AbfE1BWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 May 2019 21:22:15 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 9295E1F462;
+        Tue, 28 May 2019 01:22:14 +0000 (UTC)
+Date:   Tue, 28 May 2019 01:22:14 +0000
+From:   Eric Wong <e@80x24.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Chris Mayo <aklhfex@gmail.com>, git@vger.kernel.org,
+        git-packagers@googlegroups.com,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH] send-email: remove documented requirement for
+ Net::SMTP::SSL
+Message-ID: <20190528012214.p7t4kfthxia4y464@dcvr>
+References: <20190526172242.13000-1-aklhfex@gmail.com>
+ <20190527193517.GA22013@dcvr>
+ <87imtvmy7f.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAH_=xoYQEvXKnhyZsUeZ=VTEMOpOdgbd-57f7-6M+2KQLSAAUQ@mail.gmail.com>
- <20190527211245.12292-1-newren@gmail.com> <CAH_=xoZ5Lt2nn50cfDbTA-ZVeshi8HZ91Od4btuUXpBGCanGng@mail.gmail.com>
- <CABPp-BFkqyGT_YHReKPJKy-nX5eWYhb9AVE2UeD7M+nhKT0dqg@mail.gmail.com>
-In-Reply-To: <CABPp-BFkqyGT_YHReKPJKy-nX5eWYhb9AVE2UeD7M+nhKT0dqg@mail.gmail.com>
-From:   Eric Rannaud <e@nanocritical.com>
-Date:   Mon, 27 May 2019 17:11:45 -0700
-Message-ID: <CAH_=xoY+3_uEJ0VRVwP6vqLKdWzzU8hjLosf6sjjJtqP4mW=ng@mail.gmail.com>
-Subject: Re: [PATCH v4] fast-import: checkpoint: only write out refs and tags
- if we changed them
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeremy Serror <jeremy.serror@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87imtvmy7f.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 27, 2019 at 4:27 PM Elijah Newren <newren@gmail.com> wrote:
-> That sounds good...though it's taking my short patch and just about
-> amounts to completely rewriting it.  Would you like to take it over
-> including authorship, and just add either a "Original-patch-by:" or
-> "Based-on-patch-by:" for me in the commit message (these two tags
-> appear to be the two most common attribution mechanism used in
-> git.git's history when someone does this)?
-
-Sure. Co-authored-by is an option too. I'll turn all of this in 3
-patches: improve background_import, your patch, the rest of mine.
-
-
-> > > +       cat >input <<-INPUT_END &&
-> > > +       feature done
-> > > +       commit refs/heads/V3
-> > > +       mark :3
-> > > +       committer Me My <self@and.eye> 1234567890 +0123
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> On Mon, May 27 2019, Eric Wong wrote:
+> > Chris Mayo <aklhfex@gmail.com> wrote:
+> >> git-send-email uses the TLS support in the Net::SMTP core module from
+> >> recent versions of Perl. Documenting the minimum version is complex
+> >> because of separate numbering for Perl (5.21.5~169), Net:SMTP (2.34)
+> >> and libnet (3.01). Version numbers from commit:
+> >> bfbfc9a953 ("send-email: Net::SMTP::starttls was introduced in v2.34",
+> >> 2017-05-31)
 > >
-> > You likely want to use:
-> > committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
->
-> I see other tests in that testsuite using this, and using it here
-> certainly wouldn't hurt; I'm not opposed to it.  But I'm
-> curious...other than "other tests in the same testcase use it a lot" I
-> don't see why the choice of committer name/email/date matters at all.
-> Is there an actual reason for this that I just missed?
+> > No disagreement for removing the doc requirement for Net::SMTP::SSL.
+> >
+> > But core modules can be split out by OS packagers.  For
+> > Fedora/RH-based systems, the trend tends to be increasing
+> > granularity and having more optional packages.
+> >
+> > So I think documenting Net::SMTP (and Net::Domain) as
+> > requirements would still be good, perhaps with a note stating
+> > they're typically installed with Perl.
+> >
+> > Fwiw, I recently ran into some issues where core modules such as
+> > Devel::Peek, Encode, and autodie were separate packages on CentOS 7.
+> 
+> I've done enough git-send-email patching in anger for a year at least
+> with what's sitting in "next" so I'm not working on this, but just my
+> 0.02:
+> 
+> I wonder if we shouldn't just be much more aggressive about version
+> requirements for something like git-send-email.
+> 
+> Do we really have git users who want a new git *and* have an old perl
+> *and* aren't just getting it from an OS package where the module is
+> dual-life, so the distributor can just package up the newer version if
+> we were to require it?
 
-There is no direct benefit here except consistency.
+I started writing this earlier, but dropped my connection.
+And brian said the same thing I was going to say.
 
-These vars are set the same on every test run so that the SHA1 of
-generated patches is the same as in a previous run (see also
-test_tick() to increment the date by one minute). So in general this
-makes it easier to debug tests as hashes can be compared between runs.
-But your hand-picked values do give you that property.
+If OS packagers were to start making Net::SMTP/Net::Domain
+optional (which I sorta expect...), we should make them
+optional, too (and add descriptive error messages and manpage
+updates).
 
-However, as normal git commands use the vars automatically, by using
-them here, fast-import commands and direct git commands produce the
-same hashes if they're doing the same work. That's the main benefit of
-using them here: while the test does not currently rely on that
-property, maybe it will (or someone debugging down the road will
-expect that).
+I have no need for Net::SMTP with sendemail.smtpserver=/usr/bin/msmtp
+
+> I.e. couldn't we just remove the fallback code added in 0ead000c3a
+> ("send-email: Net::SMTP::SSL is obsolete, use only when necessary",
+> 2017-03-24) and do away with this version detection (which b.t.w. should
+> just do a $obj->can("starttls") check instead).
+
+Too soon for the fallback code removal; maybe when CentOS 6 is
+EOL.... However, the "->can" check is nicer, yes.
+
+> For shipping a newer Net::SMTP we aren't talking about upgrading
+> /usr/bin/perl, just that module, and anyone who's packaging git
+> (e.g. Debian) who cares about minimal dependencies is likely splitting
+> out git-send-email.perl anyway.
+> 
+> We could then just add some flag similar to NO_PERL_CPAN_FALLBACKS so
+> we'd error out by default unless these modules were there when git was
+> built, packagers could then still set some "no I can't be bothered with
+> send-email at all" or "no I can't be bothered with its SSL support", in
+> the latter case git-send-email would work except for the SSL parts.
+> 
+> That would take care of the communication about module dependencies via
+> manpage problem since we'd error by default. When I package things I
+> much prefer that error mode to "parts of package silently don't work
+> because we check at runtime and I didn't religiously scour the
+> docs/release notes".
+
+I prefer we check options passed to the program and decide
+which dependencies to require based on that.  The manpage and
+--help could be listing the modules required for certain option
+groups, even.
+
+> I wouldn't say the same thing about git-add--interactive.perl due to
+> more common its use is.
+
+I wish to see git-send-email (and vendor-neutral messaging in
+general) gain more traction.  IMHO, send-email should reach the
+commonality of other parts of git.
+
+
+
+(*) if/when I find the time, I'd make "git svn find-rev"
+    work w/o SVN::Perl, too.
