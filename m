@@ -7,78 +7,86 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70BF51F462
-	for <e@80x24.org>; Tue, 28 May 2019 12:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6A31F462
+	for <e@80x24.org>; Tue, 28 May 2019 12:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfE1MI5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 08:08:57 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:27569 "EHLO
+        id S1726826AbfE1MNY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 08:13:24 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:59701 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726620AbfE1MI5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 08:08:57 -0400
+        with ESMTP id S1726620AbfE1MNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 08:13:24 -0400
 Received: from localhost.localdomain ([78.148.161.28])
         by smtp.talktalk.net with SMTP
-        id VauUh2dGYWIpcVauUh6wip; Tue, 28 May 2019 13:08:54 +0100
+        id Vayph2doDWIpcVayph6wwa; Tue, 28 May 2019 13:13:23 +0100
 X-Originating-IP: [78.148.161.28]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
- a=ujKALdKAi7z8notBBWqKeA==:17 a=xtxXYLxNAAAA:8 a=aulWLQ49AAAA:20
- a=bt3WUTiwAAAA:8 a=bMbd_MaA56Wz9_IoiEkA:9 a=_Qo28uX402cA:10
- a=xts0dhWdiJbonKbuqhAr:22 a=OXx4ngWzwLx9h_IvVXMu:22
+ a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=xtxXYLxNAAAA:8 a=5rxgeBVgAAAA:8
+ a=VwQbUJbxAAAA:8 a=KaBGzcqrvFpBx-mTBmcA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
+ a=QEXdDO2ut3YA:10 a=j_Tf7YO6MbsA:10 a=xts0dhWdiJbonKbuqhAr:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22
 From:   Philip Oakley <philipoakley@iee.org>
 To:     GitList <git@vger.kernel.org>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] compat/vcbuild/README: clean/update 'vcpkg' env for Visual Studio updates
-Date:   Tue, 28 May 2019 13:08:46 +0100
-Message-Id: <20190528120846.1056-1-philipoakley@iee.org>
+Subject: [PATCH] doc branch: provide examples for listing remote tracking branches
+Date:   Tue, 28 May 2019 13:13:15 +0100
+Message-Id: <20190528121315.2604-1-philipoakley@iee.org>
 X-Mailer: git-send-email 2.22.0.rc1.windows.1.33.gc7da05f206
+In-Reply-To: <CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
+References: <CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfCdUkiduSiB+HGzPresshz+VbhIeRDD6S2JYY99RhiBscJUdR0y9d0mDrjyh8rpB4xh7tX3MWrm7WXcxmW60V6THR+L5Ck+7JJ452VWMUwGCjEaTe60M
- O53TG2d8Vth/dOdRaCygfF2zA59DIHqig60PoNhViKJ+dCpEPpiPMM+afPjN1IDz771OaBSlPyqOG0Y5FrLn150x1p5IQgJCiZ+Gw8Z7jPubUL36cSo+c9Yd
- ht+b1rGSBPvphPc7gc57YA==
+X-CMAE-Envelope: MS4wfNfOs452x/55bGia5TIZJKkn+VwaHPh/mLUYhc+ucZIeCLquwdgwK/JZTWIWNOitZzLgRJYFve3xZULyt6QLHL1NLbV9/pUvUBB4Vn4kNq3kiXuSuP/R
+ 0ozd9SKpCtuSvlMyRL36RFxs9UdT0nlUz2uAN6y1LN/WPCPOt+3XnngPCcPmSWXi5uUPvI++ysdtqw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the user installs an updated version of Visual Studio, the previously
-generated MSVC-DEFS-GEN will need to be deleted to allow updating.
+The availability of these pattern selections is not obvious from
+the man pages, as per mail thread <87lfz3vcbt.fsf@evledraar.gmail.com>.
 
-Alternatively the whole vcpkg download may be cleaned allowing it to be
-reloaded, though this may take much longer on slower connections.
+Provide examples.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.org>
 ---
 
-In response to discussions at:
-https://github.com/git-for-windows/git/issues/2186
+in response to 
+<CACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S+hiXBoUGQ@mail.gmail.com>
+https://public-inbox.org/git/?q=%3CCACsJy8CwY8gzeWa9kNRX3ecez1JGiQiaOknbAoU7S%2BhiXBoUGQ%40mail.gmail.com%3E
 
-cc: Jeff Hostetler <git@jeffhostetler.com>
-cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+to: "Git Mailing List <git@vger.kernel.org>"
+cc: "Duy Nguyen <pclouds@gmail.com>"
+cc: "Ævar Arnfjörð Bjarmason <avarab@gmail.com>"
 
- compat/vcbuild/README | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/git-branch.txt | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-index 81da36a93b..40695fc1cc 100644
---- a/compat/vcbuild/README
-+++ b/compat/vcbuild/README
-@@ -18,6 +18,13 @@ The Steps to Build Git with VS2015 or VS2017 from the command line.
-    Makefile:
-       <repo_root>/compat/vcbuild/MSVC-DEFS-GEN
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 3bd83a7cbd..7ed91f1be3 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -314,6 +314,18 @@ $ git branch -D test                                    <2>
+ <2> Delete the "test" branch even if the "master" branch (or whichever branch
+     is currently checked out) does not have all commits from the test branch.
  
-+   - If you update your Visual Studio version, then delete the MSVC-DEFS-GEN
-+   file so that fresh environment variables can be discovered.
++Listing branches from a specific remote::
+++
++------------
++$ git branch -a -l '<remote>/<pattern>'                 <1>
++$ git for-each-ref 'refs/remotes/<remote>/<pattern>'    <2>
++------------
+++
++<1> This can conflate <remote> with any local branches you happen to
++    have been prefixed with the same <remote> pattern.
++<2> `for-each-ref` can take a wide range of options. See linkgit:git-for-each-ref[1]
 +
-+   Or clean the "vcpkg" environment with:
-+
-+   $ make MSVC=1 clean
-+
- 2. OPTIONALLY copy the third-party *.dll and *.pdb files into the repo
-    root to make it easier to run and debug git.exe without having to
-    manipulate your PATH.  This is especially true for debug sessions in
++Patterns will normally need quoting.
+ 
+ NOTES
+ -----
 -- 
 2.22.0.rc1.windows.1
 
