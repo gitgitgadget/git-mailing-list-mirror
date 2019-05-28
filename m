@@ -3,77 +3,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78A1C1F462
-	for <e@80x24.org>; Tue, 28 May 2019 16:42:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B15A41F462
+	for <e@80x24.org>; Tue, 28 May 2019 16:46:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbfE1Qm2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 12:42:28 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57536 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726362AbfE1Qm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 12:42:28 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D5F16BDE3;
-        Tue, 28 May 2019 12:42:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PpG0NJruOrKWg21uH1YLDruQp/c=; b=dt0Etw
-        2GpPFTd/wuihnwMRt5+5w2qKcbKIyh0Drgto76n8jwK26nPCDMNoVOqPKOaokK5P
-        pFNF7SD939KmKAgdRuPplstromdBMgM3rerTvecMAhZcxk0ipRbgO6hRMrPzyVCU
-        rdMbqePsy4AmmojAthu3DSaSnS4Zqo/SuvMIM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tDZsDWCujjOONKdlQOH9TOQvUGeT04vR
-        +afriOonPBmmnYSJ9/vF24Vyb0FCpQeCSnUlf8c6JwKRuhvB0m331GjK060MbM4l
-        QLF9XmofBvujeQzaj7LKfS2/r6/DhfOKFDjMj3Bz2zcwb4WCfbdr2WvsRazuYioS
-        lq6YVBkh0aQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 124C66BDE2;
-        Tue, 28 May 2019 12:42:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EB7AF6BDD6;
-        Tue, 28 May 2019 12:42:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+        id S1726802AbfE1QqD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 12:46:03 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:46576 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbfE1QqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 12:46:03 -0400
+Received: by mail-ua1-f67.google.com with SMTP id a95so8187482uaa.13
+        for <git@vger.kernel.org>; Tue, 28 May 2019 09:46:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7YL3enUTLhKsB1RXIB1N3QAUCCjwF7Xs5aIP2hg28hY=;
+        b=pCbZfHQJUq++9Dj7kufyhhNJmYCoBNFwSO4AqKKJ0Hf85EsyWNbDXyrK2VJ7hoAQE0
+         goIcZZx3+FI2EUEIyzMYgcirO0MdHi0nUes2mur92New24dK0HmbBGhxESpqTx8xH8Nn
+         QyZImAzAr7uRbmBTkHMxKlj5DMOTGc0u0j6DlnxmWORyijuch/d/DRMQ0JRKBvjQVVYg
+         ewBtGQoddcqZlYqaZgnBFNNfNEE5hm5Ssn6dnkrhSXpfetKi5V4E22Rn6vg511Kaa7aA
+         haEtb4lXCNQnuc9+kTI8DwDeTfjXsnsBN+Qz2kReY37QMtmlKSK8S/WFDVGR9G6PLJ21
+         oAOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7YL3enUTLhKsB1RXIB1N3QAUCCjwF7Xs5aIP2hg28hY=;
+        b=HZghfBXSwo92I9hSbQJWf76C0/fLwEjAeKw/k6wiLfpNtzcG2y6XoiXyP/jpUIE6uZ
+         qUxL442JD8ntuL46+NpwtoFjQOyBqjvr5Vn1+SjjwIJKVspGdxUaCJUe6JiPNpmX84RF
+         nKJ9na7Z2yC1DGEs/C2GrqMDXVObGy2JkH4V9RehWg2BpFKHM3C6nsdqG2aoFTAguKlD
+         hsUZLhxBUCKi+Kdn+zpT4N55LpuXXKTq/cXx99Tn4Un1UZ+s2Mijbiylrp76dcEUntMn
+         puqSQGDGp7suea7fIUWVBgVU8dN7Ijqk9EfWLSjip3+7A4jm2OIRvE05HoC2IAm3+rm2
+         ZR7Q==
+X-Gm-Message-State: APjAAAWjja/1WqGDylR16UjS5QgSKIk1kSkUZCfBWD62VQjgnQb9VVub
+        2qbzAvm8XEZ/MUpSBZLhirQj+vwnh94=
+X-Google-Smtp-Source: APXvYqwA03hv+uS5HyCjIgiBoo1G36TBbw5oDuFzaCIV1Cd5OQMkzbCmQD3l16TXiqrC+SRxOJ6J8Q==
+X-Received: by 2002:a9f:2d9a:: with SMTP id v26mr32131245uaj.83.1559061962235;
+        Tue, 28 May 2019 09:46:02 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:911a:cd17:22da:62b? ([2001:4898:a800:1010:4250:cd17:22da:62b])
+        by smtp.gmail.com with ESMTPSA id e187sm14587701vse.16.2019.05.28.09.46.01
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 May 2019 09:46:01 -0700 (PDT)
+Subject: Re: [PATCH 1/2] trace2: rename environment variables to GIT_TRACE2*
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@jeffhostetler.com,
         git@vger.kernel.org
-Subject: Re: [PATCH] gitsubmodules: align html and nroff lists
-References: <20190501203216.141398-1-emilyshaffer@google.com>
-        <20190501210354.GC13372@sigill.intra.peff.net>
-        <20190520205404.GA32230@google.com>
-Date:   Tue, 28 May 2019 09:42:19 -0700
-In-Reply-To: <20190520205404.GA32230@google.com> (Jonathan Nieder's message of
-        "Mon, 20 May 2019 13:54:04 -0700")
-Message-ID: <xmqqh89e4jkk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+References: <20190510211502.GS14763@szeder.dev>
+ <20190519144309.9597-1-szeder.dev@gmail.com>
+ <xmqq36ky5ywr.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f03e2ba6-36d8-d82b-3349-61341365b94e@gmail.com>
+Date:   Tue, 28 May 2019 12:46:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90A403E4-8167-11E9-B5A5-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <xmqq36ky5ywr.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On 5/28/2019 12:25 PM, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+>> For an environment variable that is supposed to be set by users, the
+>> GIT_TR2* env vars are just too unclear, inconsistent, and ugly.
+> 
+> FWIW, I personally am in favor of this change and would prefer to see
+> this done before the use of the names with unguessable abbreviation
+> gets ingrained too deeply.  
+> 
+> I do not see any objections around these two patches after waiting
+> for a week or so, but I do not see any Yay!s, either, so ...
 
-> Jeff King wrote:
->
->> The patch itself looks good to me.
->
-> For what it's worth,
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> as well.  It's a straightforward patch and solves the reader-facing
-> problem.  Thanks.
+Talking with Jeff offline, we have no objections to the new names.
 
-Thanks, all.
+We'll need to do some follow-up work on our side as we update our
+version of Git, but that's not an issue.
+
+Thanks,
+-Stolee
+
