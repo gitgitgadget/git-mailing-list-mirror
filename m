@@ -2,78 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F41A1F462
-	for <e@80x24.org>; Tue, 28 May 2019 09:33:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266E61F462
+	for <e@80x24.org>; Tue, 28 May 2019 09:37:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726574AbfE1Jdg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 05:33:36 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:59935 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726438AbfE1Jdg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 05:33:36 -0400
-Received: from [192.168.1.22] ([78.148.161.28])
-        by smtp.talktalk.net with SMTP
-        id VYU9hBgj1p7QXVYU9hicaL; Tue, 28 May 2019 10:33:34 +0100
-X-Originating-IP: [78.148.161.28]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=drql9Go4 c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
- a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=anyJmfQTAAAA:8 a=_Dd1uWhXbKya2ipeAgcA:9 a=QEXdDO2ut3YA:10
- a=YJ_ntbLOlx1v6PCnmBeL:22
-Subject: Re: git filter-branch re-write history over a range of commits did
- notwork
-To:     LU Chuck <Chuck.LU@edenred.com>, Johannes Sixt <j6t@kdbg.org>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "chuck.lu@qq.com" <chuck.lu@qq.com>
-References: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
- <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
- <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
- <DB7PR05MB5573B5B80C8A9CBE867803D88D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
- <fa23e865-94ed-308f-6a19-75b6ea89eec3@kdbg.org>
- <DB7PR05MB5573B5FC17FD1F221F7AAD558D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <3cf99e80-98aa-639b-ac9d-a882da349fc8@iee.org>
-Date:   Tue, 28 May 2019 10:33:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726574AbfE1Jhb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 05:37:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39536 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726279AbfE1Jhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 05:37:31 -0400
+Received: (qmail 29643 invoked by uid 109); 28 May 2019 09:37:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 09:37:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11641 invoked by uid 111); 28 May 2019 09:38:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 05:38:13 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 05:37:28 -0400
+Date:   Tue, 28 May 2019 05:37:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: GIT issue while cloning (fatal: pack is corrupted (SHA1
+ mismatch)) !!!
+Message-ID: <20190528093728.GA15106@sigill.intra.peff.net>
+References: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-In-Reply-To: <DB7PR05MB5573B5FC17FD1F221F7AAD558D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfPu0AdFMkzxJnBiCFHxwJTKOxigaTDDseDtjXt4Vy+9caVBWp2cVODOQ6APn4gpKCFbySMpY8arz0rPLsIbA8RCWqBCkNf9LGQqukXq1PAG+PG3f8661
- zgAt2BHs6NcfJsQl3+uc0VSa/QxJKZlizaN8/euTcwU9V/IFxMoAWjjWdZGD+nYxPnKlCPj/ySiM2G0Vw9CB6hFAs7HDDyIfZcOUheHzTY3Y3jqPbHBm77LA
- xvY6KIXd2JERDeYQaS6SBw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chuck,
+On Tue, May 28, 2019 at 09:10:12AM +0000, Vanak, Ibrahim wrote:
 
-On 28/05/2019 08:10, LU Chuck wrote:
-[snip]
->> Copying and pasting examples literally is dangerous. You should know what you
->> are doing.
->>
->> "..." is a revision range that computes the mergebase between HEAD and HEAD,
->> which is (surprise!) HEAD, and then includes the two end points, but excludes
->> everything below the mergebase. So, the revision specification that your
->> command ends up with is
->>
->>       HEAD HEAD ^HEAD ^67d9d9 f70bf4
->>
->> Which is empty if f70bf4 is an ancestor of HEAD.
-> [LU Chuck] Sorry, I can't understand this part, did you have an documentation about the explanation for ...?
-https://git-scm.com/docs/gitrevisions#Documentation/gitrevisions.txt-Theem82308203emthree-dotSymmetricDifferenceNotation
->           "computes the mergebase between HEAD and HEAD" I have no idea about this. And you also talked about mergebase, but in my situation, there is only one branch with 5 commits. I did not have a mergebase.
->           You can check the detail description below.
-When there is no specific revisions around the three dots then HEAD is 
-assumed (to save typing)
+> We are seeing issue with GIT 2.14 version. When we try to clone the
+> repos, it is taking HUGE amount of time on HPUX, whereas on the linux
+> machine with same network configuration, it's getting cloned in less
+> than mins. So we want to know has anyone reported this issue? What is
+> the fix for this? Has the fix been released for this? Whom should we
+> contact for this?
 
-[snipping the comments on the alternate script]
+I don't know about the slowness, but...
+
+> Below is the HPUX system where we are seeing issue, it is taking 1 hr 45 mins and later it failed:
+> 
+> root@sstl002.in.rdlabs.hpecorp.net# uname -a
+> HP-UX sstl002 B.11.31 U ia64 0158936019 unlimited-user license
+> root@sstl002.in.rdlabs.hpecorp.net# time git clone git@github.hpe.com:HPUX/SysFaultMgmt.git
+> Cloning into 'SysFaultMgmt'...
+> remote: Enumerating objects: 63627, done.
+> remote: Total 63627 (delta 0), reused 0 (delta 0), pack-reused 63627
+> Receiving objects: 100% (63627/63627), 681.90 MiB | 111.00 KiB/s, done.
+> fatal: pack is corrupted (SHA1 mismatch)
+> fatal: index-pack failed
+
+Git v2.14 uses the sha1collision-detection implementation of sha1 by
+default. That has a bug that was fixed recently with:
+
+  commit 4125f78222749cb8fc91115abec3ac83e5dfb194
+  Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+  Date:   Tue May 14 00:17:01 2019 +0200
+  
+      sha1dc: update from upstream
+      
+      Update sha1dc from the latest version by the upstream
+      maintainer[1]. See 07a20f569b ("Makefile: fix unaligned loads in
+      sha1dc with UBSan", 2019-03-12) for the last update.
+      
+      This fixes an issue where HP-UX IA64 was wrongly detected as a
+      Little-endian instead of a Big-endian system, see [2] and [3].
+      
+      1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/855827c583bc30645ba427885caa40c5b81764d2
+      2. https://public-inbox.org/git/603989bd-f86d-c61d-c6f5-fb6748a65ba9@siemens.com/
+      3. https://github.com/cr-marcstevens/sha1collisiondetection/pull/50
+
+which looks like it would impact your system. You can either:
+
+  1. Try v2.22.0-rc1, which will be the first release with that fix.
+
+  2. Try cherry-picking the various fixes on top of v2.14.0:
+
+       git checkout v2.14.0
+       git cherry-pick 23e37f8e9d5961c0c8d52ac481693d3fca5309ce
+       git cherry-pick 07a20f569b4b1690e717eaac0954007a8edfbfc2
+       git cherry-pick 4125f78222749cb8fc91115abec3ac83e5dfb194
+
+  3. Compile with another sha1 implementation. E.g.:
+
+       # if you have openssl available; otherwise,
+       # try BLK_SHA1
+       echo 'OPENSSL_SHA1 = Yes' >config.mak
+       make
+
+     Note that you won't be protected from collision attacks, but those
+     are still impractically expensive to mount at this point. It may be
+     a good tradeoff until you can upgrade to a more recent Git.
+
+-Peff
