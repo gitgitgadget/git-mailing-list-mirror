@@ -2,113 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCA7B1F462
-	for <e@80x24.org>; Tue, 28 May 2019 19:05:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C261C1F462
+	for <e@80x24.org>; Tue, 28 May 2019 19:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727372AbfE1TFR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 15:05:17 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:32885 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbfE1TFR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 15:05:17 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g21so8741833plq.0
-        for <git@vger.kernel.org>; Tue, 28 May 2019 12:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OehierHcnpZ+7gWjZfsLwcPcK6h2HzIQn+Y4taDiKhs=;
-        b=fg7DCK0vDQdlLZWLbTaX/CHQtudpRDwUknq04kS93uRci82RmW/7Q9PK6VYApN7yuM
-         KiDv+t8WOV6er+Wg/yIq4P1n+cTFRRvKH1SXBpbHqyxDkuWYspZO3ZMKKUCQhsZ8kysZ
-         sS3AOrOcGVsmzQ8NBDR/QJZHkrQimDpAYrAYf/kss+6es3cRplnaEEO8B085InrCL4c5
-         ygIPwTGbi+L5AYraatzS0aGpfgzW2iEn0K1xkTHsh3IpyHee4v3wFyvr0dPpNTtbk5Cq
-         8BoQXCmBKGzYAc4g5V6WdGsr0kBM1iYMCYjq8ykf4ToEPUCjLkhEyRGeywMV6YXLuhMx
-         BNKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OehierHcnpZ+7gWjZfsLwcPcK6h2HzIQn+Y4taDiKhs=;
-        b=fokyRC5wCmU2x0/Pu/GL0RFtDNmvEjD+/gY9N/dLLYHprH4sHAdk3R0ffcHqX/TVqv
-         TDX9vfeAhjq0RdjUzNkxoOidZr6jWfnhB6Qzg5gBUncmAx7a49OzMRBlc3MTF/h6+FiN
-         p9yvOn6qcBRR9UXc8QbdKiIEDXUNtTGgfwqtLLQhDpQsIe/ZYSOiMLibFgVQNSP7+1zj
-         CFNzA/csjHTnA4BBIs9kAEdRMyhI2UBg2rezzMePGQI5fePOuZcRBN1SOWK13/mYVg5y
-         O2hhVSvkVFh4jcFxtpzk3Q4k1VSis+p5gJQY2W+zkP7Utb+/lxUX3zMhKqFPP64efgcc
-         xJsA==
-X-Gm-Message-State: APjAAAWUp7PzQmWKom+5MUQRRur7kriardY0zeZZzSSXWizIH1Y3fQiG
-        wXwXaQWsyIDySv1WdBA+/WZW6A==
-X-Google-Smtp-Source: APXvYqzgHCA41886H4+YmgUiZQ9k9v4nxARp+qB9LiY+ks3wblNokPTEG6PTo/PJTGXBC4H9YKUSTQ==
-X-Received: by 2002:a17:902:4181:: with SMTP id f1mr113099873pld.22.1559070316169;
-        Tue, 28 May 2019 12:05:16 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id d4sm3174933pju.19.2019.05.28.12.05.14
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Tue, 28 May 2019 12:05:14 -0700 (PDT)
-Date:   Tue, 28 May 2019 12:05:10 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3] doc: hint about GIT_DEBUGGER in CodingGuidelines
-Message-ID: <20190528190510.GA133078@google.com>
-References: <20190521010036.70378-1-emilyshaffer@google.com>
- <20190523005533.260611-1-emilyshaffer@google.com>
- <CAPig+cQSp2pY9_fYhDPO+YwEmVXiqB+wjhL9NTcA+Mc_TQbWHg@mail.gmail.com>
+        id S1727631AbfE1THg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 15:07:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61779 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbfE1THg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 15:07:36 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46484149FB9;
+        Tue, 28 May 2019 15:07:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=zBSD6yDqSQVc
+        VsLLoNHRdqPouS4=; b=Yy2Ll4a1RWJfFJ6i5haTCBvEdnntFsA2RltuOKdv3mID
+        rexaxZEQE4FsQH6wpuotqZH6I3ObEa80/1Ts6F+6CxdpA9xLwjDn5o0FJW6cYxNs
+        GZk5Y6nrmYgS73Sakq9+d834kdrTs9eMzjJqnzdARdkuEjN+2lJ2qMcTzUJogD0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pkpbMW
+        iftXw0NSQSHLhcXzd9fMw6ZzlLOHkmGPUkCys6LJrI0pav/W/x/WvzbBkbCKUtKF
+        NJkKfM3dFXr0PFSO/RC+9RTchP6Owb2G4ApmdkHjDYxuoqJOwlW0LxRkx1tWK55M
+        4IQTCd9d48d+ktjXwL4D1jAodqEvFo/qeECmI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC902149FB7;
+        Tue, 28 May 2019 15:07:30 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22786149FB3;
+        Tue, 28 May 2019 15:07:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vishal Verma <vishal@kernel.org>
+Cc:     git@vger.kernel.org, Vishal Verma <vishal@stellar.sh>,
+        Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4] merge: refuse --commit with --squash
+References: <20190523225338.14619-1-vishal@kernel.org>
+        <20190524183617.8291-1-vishal@kernel.org>
+Date:   Tue, 28 May 2019 12:07:29 -0700
+In-Reply-To: <20190524183617.8291-1-vishal@kernel.org> (Vishal Verma's message
+        of "Fri, 24 May 2019 12:36:17 -0600")
+Message-ID: <xmqq1s0i2ya6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQSp2pY9_fYhDPO+YwEmVXiqB+wjhL9NTcA+Mc_TQbWHg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D71E6A9E-817B-11E9-B7E0-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 23, 2019 at 06:09:17AM -0400, Eric Sunshine wrote:
-> On Wed, May 22, 2019 at 8:56 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> > We check for a handy environment variable GIT_DEBUGGER when running via
-> > bin-wrappers/, but this feature is undocumented. Add a hint to how to
-> > use it into the CodingGuidelines (which is where other useful
-> > environment settings like DEVELOPER are documented).
-> >
-> > You can use GIT_DEBUGGER to pick gdb by default, or you can hand it your
-> > own debugger if you like to use something else (or if you want custom
-> > flags for gdb). This commit documents that intent within
-> > CodingGuidelines.
-> 
-> This last sentence is repeating what is already stated in the first
-> paragraph, thus doesn't seem to add value. In fact, the remainder of
-> the second paragraph seems to be repeating what is in the patch
-> proper, thus could likely be dropped.
+Vishal Verma <vishal@kernel.org> writes:
 
-Yes, you're right. Dropped.
+> From: Vishal Verma <vishal@stellar.sh>
+>
+> Convert option_commit to tristate, representing the states of
+> 'default/untouched', 'enabled-by-cli', 'disabled-by-cli'. With this in
+> place, check whether option_commit was enabled by cli when squashing a
+> merge. If so, error out, as this is not supported.
+>
+> Previously, when --squash was supplied, 'option_commit' was silently
+> dropped. This could have been surprising to a user who tried to overrid=
+e
+> the no-commit behavior of squash using --commit explicitly.
+>
+> Add a note to the --squash option for git-merge to clarify the
+> incompatibility, and add a test case to t7600-merge.sh
+>
+> Cc: Junio C Hamano <gitster@pobox.com>
+> Cc: Rafael Ascens=C3=A3o <rafa.almas@gmail.com>
+> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Vishal Verma <vishal@stellar.sh>
+> ---
 
-> 
-> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> > ---
-> > diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> > @@ -412,6 +412,12 @@ For C programs:
-> > + - You can launch gdb around your program using the shorthand GIT_DEBUGGER.
-> > +   Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
-> > +   run `GIT_DEBUGGER=my-debugger-binary my-args ./bin-wrappers/git foo` to
-> 
-> Don't you need to bind my-debugger-binary and my-args together with
-> shell quotes? Also, placeholders like these are often ensconced in
-> angle brackets, so perhaps:
-> 
->     ... `GIT_DEBUGGER="<debugger> <debugger-args>" ./bin-wrappers/git ...
+I personally feel that "merge --squash --commit" that does not
+complain and leaves the result in the working tree to be tweaked and
+then committed is perfectly fine, especially given that the reason
+why "--commit" option exists is primarily because we need to allow
+"--no-commit" to stop the normal merge from recording the result in
+a new commit.
 
-Fixed. I did get the dq in the example but missed it with the
-placeholders. :) Thanks, good catch.
+A user who really wanted to record what a merge would bring to the
+current state in a single-parent commit would have to do "git
+commit" after that anyway, and with this patch, the user would
+instead need to run the same "git merge" command again, without
+"--commit", before being able to do so, so in the sense, it is
+likely that this change makes it more cumbersome to use for such a
+user to use the command.=20
 
-> > +   use your own debugger and arguments. Example: `GIT_DEBUGGER="ddd --gdb"
-> > +   ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
-
-Patch update to follow. Thanks.
-
- - Emily
+But I guess that this change will give an incentive to actually
+allow the combination to "just work" by making it more obvious that
+the combination is not supported, so it would be a slight
+improvement in that sense ;-)
