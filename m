@@ -2,102 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D65E31F462
-	for <e@80x24.org>; Tue, 28 May 2019 21:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07F6D1F462
+	for <e@80x24.org>; Tue, 28 May 2019 21:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbfE1V3Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 17:29:25 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:39173 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726492AbfE1V3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 17:29:24 -0400
-Received: by mail-io1-f51.google.com with SMTP id r185so12163007iod.6
-        for <git@vger.kernel.org>; Tue, 28 May 2019 14:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ty+MmHJ+K3HR6QGCDeoo5qLSsDPPU8w0HOKHjNrWXhk=;
-        b=KPPG3tKKb+6ct8bRkbdi7IlYCXRPuQRmVhSj5gsjcyC9tp9yI6nmAf0kyEUnCPAiTz
-         xwheG9v9+piEjRZ/w9GYvtqVD9LYr1CJJirextZfN4rxW0JYgpLNsuI1ErMQq1tff25R
-         BXyv1moN51IeEcbUn3IT/siJSLh+iyrBXZNLaKJzbutIC4Mf/W66aSGTGtwKCmCItPpN
-         g2tBko1LRfUwo3xJn/74bLoF0jfjo/6LUu/B8rSkA12xk86OHwLRROAUJLYCfFggIS3x
-         +GmW3TcDyYeX4vS9LlsRnweokzPvvKwwPsmVkThFAxK2byM7JNp7uloYKXpQxghV4tL9
-         bUwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ty+MmHJ+K3HR6QGCDeoo5qLSsDPPU8w0HOKHjNrWXhk=;
-        b=px6uQq2tyKJVAZneR2Rh7dZ2Eu/mpjYpjBuNiv578wIcoS/StmZtYZaOmbqYC5aeSy
-         POnY5RgbmxUJUogltgn8q1Ny+nwIKNnmeELDjAECwxMT8NALFeJ+/LxIdv+fZRF0pb2Z
-         OAkMT9oYqcgpW7hjs8iN0IgmsJCsAVf6FSoUTd8ngY6H+wfo9DmQIqcZ7GUqLb9nOwqT
-         c6Cl5R9mK6pJeKbbtRZBt8M3m7Cp1ni84v0WOKCjYdk7+dto/dhjH3afqSiBvqdEkN7O
-         KRIGQ2hhIxQitK/kbkM7sd5rq2AifAkEwG+COD8Mf+8ec6ct0TPp1Ki1/E2a3CKU+RRU
-         q/vw==
-X-Gm-Message-State: APjAAAXmqknYL3vJvDoExpIfCR/Q1p1ADJcIhoJWPZFCF70EOMtY+t1+
-        kVLksO+5b11fjln6sfZm6yLDBg+QF2tNWI2douA=
-X-Google-Smtp-Source: APXvYqzZYgQc01vpVRF4rq9DiGXkOT0+X22scyryJOQRo7hAQUCcQnjsoui8Db5XNaxTMufAihIK4y7Puy6gvrONSuA=
-X-Received: by 2002:a5d:84ce:: with SMTP id z14mr20934976ior.107.1559078963982;
- Tue, 28 May 2019 14:29:23 -0700 (PDT)
+        id S1727273AbfE1VaH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 17:30:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40530 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726492AbfE1VaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 17:30:06 -0400
+Received: (qmail 5621 invoked by uid 109); 28 May 2019 21:30:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 21:30:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18513 invoked by uid 111); 28 May 2019 21:30:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 17:30:49 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 17:30:04 -0400
+Date:   Tue, 28 May 2019 17:30:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Vanak, Ibrahim" <ibrahim.vanak@hpe.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: GIT issue while cloning (fatal: pack is corrupted (SHA1
+ mismatch)) !!!
+Message-ID: <20190528213004.GF24650@sigill.intra.peff.net>
+References: <TU4PR8401MB121664A8A588D799803F1E84E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
+ <20190528093728.GA15106@sigill.intra.peff.net>
+ <TU4PR8401MB1216A7B920D40B5063123A94E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet> <20190528063451.GG7946@sigill.intra.peff.net>
- <CAKkfZL30QuBM6vT69OSS_keNuGi1U-bJ+jDiyDfhZmnr9L9xvA@mail.gmail.com>
- <20190528204051.GA24650@sigill.intra.peff.net> <CAKkfZL3ZNgNFzxrYbjbhCF5BR12vQPy2sNuYdxmQgmuG+mo9Gw@mail.gmail.com>
- <20190528205608.GC24650@sigill.intra.peff.net>
-In-Reply-To: <20190528205608.GC24650@sigill.intra.peff.net>
-From:   Brendan Boerner <bboerner.biz@gmail.com>
-Date:   Tue, 28 May 2019 16:29:13 -0500
-Message-ID: <CAKkfZL1BmOjzJ1QrQ43gJx89si3-M_1KMz=EWXN=pK6HSjCEkQ@mail.gmail.com>
-Subject: Re: 'git stash list' => Segmentation fault
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <TU4PR8401MB1216A7B920D40B5063123A94E11E0@TU4PR8401MB1216.NAMPRD84.PROD.OUTLOOK.COM>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Jeff.
+On Tue, May 28, 2019 at 06:45:18PM +0000, Vanak, Ibrahim wrote:
 
-To answer your previous question I'm using git v2.21.0. I'm using the
-Ubuntu 14.04 PPA as well as Linuxbew (also v2.21.0).
+> BUT still I have significant slowness(50 times slower than clone on
+> linux machine) while cloning. HPUX box is having very good H/W
+> configuration and network is also stable.
 
-Your help helped me narrow this down to linuxbrew. Take it out of my
-path no segfault.
+From your output:
 
-Uninstall linuxbrew git, linuxbrew still in PATH, use PPA git, segfault.
+> [hpux]
+> Receiving objects: 100% (63627/63627), 681.90 MiB | 111.00 KiB/s, done.
+> [linux]
+> Receiving objects: 100% (63627/63627), 681.90 MiB | 5.59 MiB/s, done.
 
-Narrowed down further to be the "gettext" package - remove it from
-linuxbrew and PPA git stash list => no segfault.
+The main things going on there are:
 
-I'll ping the Linuxbrew folks.
+  1. we're getting the bytes over the network
 
-Thanks for you help!
-Brendan
+  2. we're computing a sha1 on the stream we're getting
 
-On Tue, May 28, 2019 at 3:56 PM Jeff King <peff@peff.net> wrote:
->
-> On Tue, May 28, 2019 at 03:53:51PM -0500, Brendan Boerner wrote:
->
-> > Lot of good tips for debugging for me to work on - I'll work on that.
-> >
-> > Both to avoid spamming the list and if sending large files e.g. strace
-> > is it ok if I continue correspondence with you directly? (And
-> > Johannes?)
->
-> In general, please keep substantive responses on the list, so everybody
-> can follow along. Adding to the list volume is fine. :)
->
-> But certainly if there are sensitive bits, feel free to send them
-> directly off-list.
->
-> -Peff
+  3. we're zlib inflating any non-delta objects we find and computing
+     their sha1
+
+  4. we're checking the filesystem to see if we have other copies of any
+     of those objects
+
+For (2) and (3) it could be that the sha1 implementation is not quite as
+fast. But 50x is much larger than I'd expect. If you've built Git from
+source, you could try running "t/helper/test-sha1 <big-file" and timing
+the result. That would isolate sha1 performance.  If it's slow, try
+building with "make BLK_SHA1=Yes" or "make OPENSSL_SHA1=Yes" and see if
+that's faster.
+
+For (4), we'll have to stat() in .git/objects to see if we have a loose
+version of the object. That can be slow if you have a really terrible
+NFS setup, for example. But I doubt that would still be slow in v2.21.
+There we should be using the new loose-cache which will only readdir()
+the object directories once.
+
+If neither of those pan out, it seems like the network is slow? Or maybe
+ssh? Or pipes passing data from clone to index-pack?
+
+-Peff
