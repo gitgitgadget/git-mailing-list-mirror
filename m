@@ -7,71 +7,94 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5741F462
-	for <e@80x24.org>; Tue, 28 May 2019 17:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09E111F462
+	for <e@80x24.org>; Tue, 28 May 2019 18:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbfE1R7f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 13:59:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50516 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726576AbfE1R7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 13:59:35 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CC4014976F;
-        Tue, 28 May 2019 13:59:33 -0400 (EDT)
+        id S1727678AbfE1SA2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 14:00:28 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52236 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbfE1SA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 14:00:27 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C2656EE30;
+        Tue, 28 May 2019 14:00:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l7xgilu9vJB7PV0gMUiXpszNpDU=; b=F/JIYR
-        0TENrimSqaR78fxOcIyf7ToJ+nNwkhJujDo6SibxSbyjuJgNUe438DiZ8DCuQc6C
-        Q+CuAvFE/i+SulcGC6q1vV534AMm54gXrMlVYpxj3wQDWsNBdX8TaZxsYY27gWR8
-        Arl6pnE9/nAneNYjg2N3RV1s+b9+NGZwthRKs=
+        :content-type; s=sasl; bh=M7YklV3pSqid5x3h3R08LqGqePo=; b=FAjj3s
+        48ysozR6YrIpYdV4rUI8CekjcwDnm/p1yDcr3PuE/uQMU/mRyh5jsxWcKxuIQ+C4
+        YGanXnAxHnlJexmaQavncqWJ+VtbOW/MBD0Od3BACSEpRkruxERWnWg1eVISOLZ/
+        exVPktCasiP26rxXhvOKZsfz2NT2eH7h9zXYg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=H+28fDj0tmuFaC4mz1UPMWhUebA30L7O
-        PzApVnh6GNyKWYLkisGuLFuZTpyBdbI3s7HpqGBVYSUmUhgwdETYo6FTv/tuR/Qt
-        VbNX1/04kCL8tmkHKJA41nouFO7/1ZmL4n6D3tCN6zLDqBikAYpuK7PgPP2N+IJC
-        pjEA3YrB+SE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 018E314976E;
-        Tue, 28 May 2019 13:59:33 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=PqGR2QMtA6UxJonDrURpLnTdS5/hw1zI
+        GsYrC9ua7g6gWCEkflL05QcHqBU7CkX1BHUkJ5fkoxbefFovxL+6PJllqzC3GoVq
+        O0qTrn94+64Vn8AZYDm8myfnjLscmKgkGNV6sfi83F9O1emi37T5XVUl/WmuluL3
+        n0SUdtw2N9A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5BE166EE2E;
+        Tue, 28 May 2019 14:00:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6B5EA14976D;
-        Tue, 28 May 2019 13:59:32 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 803536EE27;
+        Tue, 28 May 2019 14:00:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com,
-        matvore@comcast.net
-Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
-References: <cover.1558484115.git.matvore@google.com>
-        <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
-        <2b47d4b1-ea62-d59e-77e0-d95dfad084e0@jeffhostetler.com>
-Date:   Tue, 28 May 2019 10:59:31 -0700
-In-Reply-To: <2b47d4b1-ea62-d59e-77e0-d95dfad084e0@jeffhostetler.com> (Jeff
-        Hostetler's message of "Fri, 24 May 2019 17:01:15 -0400")
-Message-ID: <xmqqh89e31fg.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: send server options after command
+References: <20190522200822.176870-1-jonathantanmy@google.com>
+        <20190524191151.GA14606@google.com>
+Date:   Tue, 28 May 2019 11:00:22 -0700
+In-Reply-To: <20190524191151.GA14606@google.com> (Jonathan Nieder's message of
+        "Fri, 24 May 2019 12:11:51 -0700")
+Message-ID: <xmqqd0k231e1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 589E7A46-8172-11E9-AD1D-46F8B7964D18-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 77AA093C-8172-11E9-A207-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> In the RFC version, there was discussion [2] of the wire format
-> and the need to be backwards compatible with existing servers and
-> so use the "combine:" syntax so that we only have a single filter
-> line on the wire.  Would it be better to have compliant servers
-> advertise a "filters" (plural) capability in addition to the
-> existing "filter" (singular) capability?  Then the client would
-> know that it could send a series of filter lines using the existing
-> syntax.  Likewise, if the "filters" capability was omitted, the
-> client could error out without the extra round-trip.
+> Jonathan Tan wrote:
+>
+>> Currently, if any server options are specified during a protocol v2
+>> fetch, server options will be sent before "command=fetch". Write server
+>> options to the request buffer in send_fetch_request() so that the
+>> components of the request are sent in the correct order.
+>>
+>> The protocol documentation states that the command must come first. The
+>> Git server implementation in serve.c (see process_request() in that
+>> file) tolerates any order of command and capability, which is perhaps
+>> why we haven't noticed this. This was noticed when testing against a
+>> JGit server implementation, which follows the documentation in this
+>> regard.
+>>
+>> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>> ---
+>>  fetch-pack.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Oh, dear.  Thanks for fixing it.
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-All good ideas.
+
+Yeah, looks good.  Thanks.
+
+>
+> 6e98305985 (clone: send server options when using protocol v2,
+> 2019-04-12) is part of release candidates, but it looks like we caught
+> this in time to get the fix in before the release.
+>
+> Should we add an interop test for this to t/interop/?
+>
+> Thanks,
+> Jonathan
