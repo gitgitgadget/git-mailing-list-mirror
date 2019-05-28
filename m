@@ -2,173 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A318B1F609
-	for <e@80x24.org>; Tue, 28 May 2019 02:17:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFF5F1F462
+	for <e@80x24.org>; Tue, 28 May 2019 05:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727738AbfE1CRq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 May 2019 22:17:46 -0400
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:41590 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727313AbfE1CRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 May 2019 22:17:46 -0400
-Received: by mail-ed1-f41.google.com with SMTP id m4so29265975edd.8
-        for <git@vger.kernel.org>; Mon, 27 May 2019 19:17:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=mfIJsSApRZDUwEv0194q2usyLOT3U0KzJeazGPQqBhM=;
-        b=Pm9TDnzQjnz73MiYEkX87EIY5Qa0HZ/o+NEmL/ETs8fu9CnrG5ERSLDrZc+YOy9H8T
-         bq+Gaz6ckIpdpM78cnUE+dp77f48pgVsp6tQ7qNyYdlr23JIc8BSBboOUZuaVf09aDPQ
-         b0iBc2YQE1rBBBwp3/dz6Ml9g5if+/6BbmW1NUfnuoBbq9av4EZoJYNfLJTm+mXXbQeS
-         7iefUMtkoRhtY6SSyQDEEcrfXpwthvAuJFMMCdycnBajm19Xl4MjoRWx3+Vl6yRdZUvT
-         AE0BV8yVmhMYzUqLKVBVW2LgEcQuVfOj8TCjfdAyy4KRRxcP/3AvNfJpHTvuED++EJ4p
-         1r8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=mfIJsSApRZDUwEv0194q2usyLOT3U0KzJeazGPQqBhM=;
-        b=sZS3ejxR9z+nMVBU5BUBcz8Q19VfCBjchFVBylqmKZKdKrZyLEW6No5rHisf8RjGMB
-         c2W9ZvtKqaOnjGWH78VSFIbIlCH5LJMiFnI6GCZvYVYPnxCzxpHWAh2JXi6CfxkJ2RjC
-         EozPCTTb/0vO01Cn28WZXKRzWG92wxPXtJ+5zTTOSqx0JrBe2ommTKrAAY94iXbklyA1
-         m393C809IqXiJ5WvxZ/Nz28Q468VHgmYSOIaEjV9Yp6dY5JatfUsCvVVk3S9R0BFTOZa
-         vD31zwtCP3AmdyQknhLb5Eyw4/YgsEMV9GpAKte+qOPQqQV7cnQGBUgQ9PaxQovqenUJ
-         jQJA==
-X-Gm-Message-State: APjAAAWjsgENReYOkNdAUAb0FtryQvsJUbESVdDtxMsiW3Y0LEzIlkmH
-        1X3YYFsw7By0MXQuH78ASjc=
-X-Google-Smtp-Source: APXvYqw2kFSZh2cDBed9qaB2L4pg0/kFqXg/In+QZ0qVMOl4xfI+LkLN1aQ+/oQeb8GF9O2FQR/XrA==
-X-Received: by 2002:a50:b343:: with SMTP id r3mr127124677edd.53.1559009864284;
-        Mon, 27 May 2019 19:17:44 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id f8sm3828414edd.15.2019.05.27.19.17.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 May 2019 19:17:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Eric Wong <e@80x24.org>, Chris Mayo <aklhfex@gmail.com>,
-        git@vger.kernel.org, git-packagers@googlegroups.com,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] send-email: remove documented requirement for Net::SMTP::SSL
-References: <20190526172242.13000-1-aklhfex@gmail.com> <20190527193517.GA22013@dcvr> <87imtvmy7f.fsf@evledraar.gmail.com> <20190527234347.GH8616@genre.crustytoothpaste.net>
-User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190527234347.GH8616@genre.crustytoothpaste.net>
-Date:   Tue, 28 May 2019 04:17:42 +0200
-Message-ID: <87ftozmiex.fsf@evledraar.gmail.com>
+        id S1726810AbfE1FmP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 01:42:15 -0400
+Received: from mx07-002aaa01.pphosted.com ([185.132.180.47]:1683 "EHLO
+        mx07-002aaa01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725904AbfE1FmO (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 May 2019 01:42:14 -0400
+Received: from pps.filterd (m0118690.ppops.net [127.0.0.1])
+        by mx07-002aaa01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x4S5YrJf031555;
+        Tue, 28 May 2019 05:42:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edenred.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=dk201811;
+ bh=Z/v0zbDBmh4ZN6TI98TqKaFqpxOkoCMDiDX65u+zP+g=;
+ b=uLLYp4ssUPQghKmIZUoxy4HcAffOJ8U13kY+p2MaLWhEK24w77fxwmBoHwaeYaexSKY4
+ QmmwMFO1He9GHrHBfFeyzTErnXRYvxjtHv4Mdq81Djp6pqOpfZBbmPl880qUBolSnL8b
+ l/JGgLplDLqIZu1VED92sNOB8PlSTx8FShqYJ7JkXFdBlyYsJX+QP43NCEdxkzERalZr
+ muF3F5YYykLI1/2irVO50IWHvpb4wmMet2fKhrgh9vhGmWJqGmdiCHCIYtx4mDOuduMh
+ h5SR6SRsvyfZ0XPJT41SJSNsC0HCipwbzb2fprKlLSiqLa5+xS04xnZF5Y//11deeYpU EA== 
+Received: from ehq-smtp-usr-p.edenred.com ([204.103.47.132])
+        by mx07-002aaa01.pphosted.com with ESMTP id 2srqfkrv6p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+        Tue, 28 May 2019 05:42:09 +0000
+Received: from ehq-smtp-usr-mx1p18-p.edenred.com () by
+ ehq-smtp-usr-mx1p21-p.edenred.com () with  (TLS) id
+ 15.0.1395.4; Tue, 28 May 2019 07:42:08 +0200
+Received: from EUR03-AM5-obe.outbound.protection.outlook.com (104.47.8.53) by
+ ehq-smtp-usr-mx1p18-p.edenred.com () with  (TLS) id 15.0.1395.4
+ via Frontend Transport; Tue, 28 May 2019 07:42:08 +0200
+Received: from DB7PR05MB5573.eurprd05.prod.outlook.com (20.177.193.214) by
+ DB7PR05MB6169.eurprd05.prod.outlook.com (20.178.107.14) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1922.17; Tue, 28 May 2019 05:42:07 +0000
+Received: from DB7PR05MB5573.eurprd05.prod.outlook.com
+ ([fe80::d93a:e741:155:318d]) by DB7PR05MB5573.eurprd05.prod.outlook.com
+ ([fe80::d93a:e741:155:318d%6]) with mapi id 15.20.1922.021; Tue, 28 May 2019
+ 05:42:07 +0000
+From:   LU Chuck <Chuck.LU@edenred.com>
+To:     Philip Oakley <philipoakley@iee.org>, Johannes Sixt <j6t@kdbg.org>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "chuck.lu@qq.com" <chuck.lu@qq.com>
+Subject: RE: git filter-branch re-write history over a range of commits did
+ notwork
+Thread-Topic: git filter-branch re-write history over a range of commits did
+ notwork
+Thread-Index: AdUUYk+0TU9swc+jQ+aKfvGwOQfe0wAVrIqAAAQ7KgAAEzBtoA==
+Date:   Tue, 28 May 2019 05:42:06 +0000
+Message-ID: <DB7PR05MB5573B5B80C8A9CBE867803D88D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
+References: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
+ <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
+ <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
+In-Reply-To: <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [140.207.1.78]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 98d96972-790e-47ae-fd25-08d6e32f387d
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:DB7PR05MB6169;
+x-ms-traffictypediagnostic: DB7PR05MB6169:
+x-ms-exchange-purlcount: 5
+x-microsoft-antispam-prvs: <DB7PR05MB6169114128C0C28996FE14A18D1E0@DB7PR05MB6169.eurprd05.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:353;
+x-forefront-prvs: 00514A2FE6
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(396003)(366004)(376002)(346002)(136003)(51874003)(13464003)(199004)(189003)(64756008)(66556008)(66446008)(81166006)(81156014)(25786009)(66476007)(73956011)(66946007)(54906003)(5660300002)(7696005)(7736002)(8936002)(305945005)(66066001)(68736007)(26005)(486006)(76176011)(71200400001)(86362001)(19627235002)(71190400001)(476003)(4326008)(52536014)(102836004)(76116006)(53546011)(256004)(186003)(8676002)(446003)(11346002)(110136005)(6506007)(99286004)(53936002)(33656002)(966005)(6436002)(6306002)(14454004)(72206003)(9686003)(316002)(55016002)(478600001)(229853002)(74316002)(6116002)(3846002)(2906002)(6246003);DIR:OUT;SFP:1102;SCL:1;SRVR:DB7PR05MB6169;H:DB7PR05MB5573.eurprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: edenred.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: x4iLaQLE0Zl22j1bbZi8L22AOidviTJ+caLZqra2N7Kre92/ATcjZ5WjAOtD28+dhqyc52sOl7QrQ4AlobbHzsyRqN4tEadKDvP0gtoZwW8qchWpb8QK2MmE8XWQmpIsymfMGG3l652wE8cCyC9SdW7oGTDBjsXcEUKHq8BLsdUSWHfmQGrdLyCFMh7FnpkIozUc4gX/LcCk2XMADcLzGkj7Z4tFoaTCHCxoYZvhpmnxfW/+XPtsYsrUAzOT/03WqpzSiKYIuwlUxenP4ARwxLvoVwvZGo5tS4HVOOhek875scThNl0hr9Rk9zB8+kin1bZyZ9zJ7soIWdA9iP74mraQx5xbrHEHQysXk0F9RqN/t3fOolljrCCWbjmiuyd1taIrzgi+ChSAztDYpikorlsb+x/mBiSek7jI0QfLtqU=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98d96972-790e-47ae-fd25-08d6e32f387d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2019 05:42:06.9633
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 4c1d9e0f-5c27-4228-a35a-de7b4083ff7b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: chuck.lu@edenred.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR05MB6169
+X-OriginatorOrg: edenred.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-05-28_02:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, May 28 2019, brian m. carlson wrote:
-
-> On 2019-05-27 at 20:36:36, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> I've done enough git-send-email patching in anger for a year at least
->> with what's sitting in "next" so I'm not working on this, but just my
->> 0.02:
->>
->> I wonder if we shouldn't just be much more aggressive about version
->> requirements for something like git-send-email.
->>
->> Do we really have git users who want a new git *and* have an old perl
->> *and* aren't just getting it from an OS package where the module is
->> dual-life, so the distributor can just package up the newer version if
->> we were to require it?
->
-> In my experience, shipping newer versions of packages shipped with the
-> OS is a no-no. That's a great way to break unrelated software on the
-> system, and if you're the distributor, to get users angry at you about
-> breaking stuff on their systems.
-
-Just because a package X needs dependency Y at version Z doesn't mean
-you need to package it up in such a way that everything that needs any
-version of Y must use it at version Z, you put the two versions in
-different places on the FS.
-
-So in this case the packager would grumble a bit and package up a
-Net::SMTP installed at another path. I do that myself to get some more
-modern versions of dependencies on CentOS 6 without breaking the base
-system.
-
-Does that mean we should do it in this case? No, and given the feedback
-in this thread about this in particular I think we should just keep the
-old code.
-
-But I think is important to clarify in general, i.e. just because you're
-on CentOS 6 and don't want to update the main perl-Net-SMTP you can
-still package up a for-git-perl-Net-SMTP or whatever.
-
-We had a similar discussion about whether to depend on a more recent
-libcurl in the past:
-
-https://public-inbox.org/git/CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxo=
-hSCsQ@mail.gmail.com/
-
-> We do indeed have users who want a newer Git on those systems and are
-> using the system Perl. The Git shipped with CentOS 7 (not to mention
-> CentOS 6) is positively ancient and doesn't support useful features like
-> worktrees, so it makes sense to upgrade it. But if you're not a Perl
-> shop, nobody cares about the version of Perl on the system and fussing
-> with it doesn't make sense.
-
-What I was suggesting was whether it was worth it to ask distributors to
-drop in a few *.pm files, and perhaps a *.so or two compiled against
-openssl, they wouldn't need to change the base /usr/bin/perl.
-
-In the case of the *.pm stuff we could drop fallbacks into
-perl/Git/LoadCPAN if we wanted things to work out of the box.
-
->> I.e. couldn't we just remove the fallback code added in 0ead000c3a
->> ("send-email: Net::SMTP::SSL is obsolete, use only when necessary",
->> 2017-03-24) and do away with this version detection (which b.t.w. should
->> just do a $obj->can("starttls") check instead).
->>
->> For shipping a newer Net::SMTP we aren't talking about upgrading
->> /usr/bin/perl, just that module, and anyone who's packaging git
->> (e.g. Debian) who cares about minimal dependencies is likely splitting
->> out git-send-email.perl anyway.
->>
->> We could then just add some flag similar to NO_PERL_CPAN_FALLBACKS so
->> we'd error out by default unless these modules were there when git was
->> built, packagers could then still set some "no I can't be bothered with
->> send-email at all" or "no I can't be bothered with its SSL support", in
->> the latter case git-send-email would work except for the SSL parts.
->
-> We had a problem with Homebrew sometime back where they stopped shipping
-> git-send-email because it required Perl modules and there was a big
-> uproar and a request for us to allow dynamic Perl support. I would like
-> to discourage distributors from simply refusing to ship core pieces of
-> Git because it tends to cause problems for users and for us down the
-> line.
-
-I'm sympathetic to packagers that do that, particularly when "add -i"
-and friends in s/Perl/C/ land, at which point we'd be asking some
-distributors who otherwise wouldn't have perl at all to install it just
-for us.
-
-It seems packagers mainly had issues with the Perl-SSL stuff. We already
-support SSL for https via libcurl usually, perhaps we'd be better off
-having some wrapper using that
-(https://curl.haxx.se/libcurl/c/smtp-tls.html), or having
-git-send-email.perl support something simpler like say stunnel.
-
-> I understand and am fine with splitting components out into multiple
-> packages or omitting parts interfacing with other systems (e.g.
-> git-svn).
-
-I tend to think of SVN as a system more closely related to Git than Git
-is related to E-Mail :)
-
-It's also something that's by definition part of an "egress" workflow,
-so it tends to be much easier to work around it being missing than say
-"add -i" or something you truly need locally not being there.
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGhpbGlwIE9ha2xleSA8
+cGhpbGlwb2FrbGV5QGllZS5vcmc+DQo+IFNlbnQ6IFR1ZXNkYXksIE1heSAyOCwgMjAxOSA0OjIz
+IEFNDQo+IFRvOiBKb2hhbm5lcyBTaXh0IDxqNnRAa2RiZy5vcmc+OyBMVSBDaHVjayA8Q2h1Y2su
+TFVAZWRlbnJlZC5jb20+DQo+IENjOiBnaXRAdmdlci5rZXJuZWwub3JnOyBjaHVjay5sdUBxcS5j
+b20NCj4gU3ViamVjdDogUmU6IGdpdCBmaWx0ZXItYnJhbmNoIHJlLXdyaXRlIGhpc3Rvcnkgb3Zl
+ciBhIHJhbmdlIG9mIGNvbW1pdHMgZGlkIG5vdHdvcmsNCj4gDQo+IEhpIENodWNrLA0KPiANCj4g
+T24gMjcvMDUvMjAxOSAxOToyMSwgSm9oYW5uZXMgU2l4dCB3cm90ZToNCj4gPiBBbSAyNy4wNS4x
+OSB1bSAxMDowMSBzY2hyaWViIExVIENodWNrOg0KPiA+PiBIaSB0ZWFtLA0KPiA+Pg0KPiA+PiAg
+ICAgIFRoZSBpc3N1ZSBjb21lcyBmcm9tDQo+IGh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50
+LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2l0aHViLmNvbV9naXQtMkRmb3ItMg0KPiBEd2luZG93
+c19naXRfaXNzdWVzXzIyMDYmZD1Ed0lDYVEmYz1PMTdtNlVkcU9BSVpoOVhROHBUbDRnJnI9VmNH
+ZQ0KPiBJZU9aXzhfemxyUU5TYm9lbllsdGZ4R05JWE5fcUc2VnBaZ1hWUmsmbT15Rm03bEFka1JM
+Tk1UMDU4U0hRVWpNDQo+IFJGS3pKTkRGdGVYbG9oS3BaSFZDcyZzPVNtMXAzWW95MjF4SzBfellC
+WjVpeExvLUZrM0dBc1h5Z0MzSTZoVFpLVGcNCj4gJmU9IC4NCj4gPj4NCj4gPj4gICAgICBJIHdh
+bnQgdG8gcmUtd3JpdGUgaGlzdG9yeSBieSBmaWx0ZXItYnJhbmNoIGNvbW1hbmQgb3ZlciBhIHJh
+bmdlIG9mDQo+IGNvbW1pdHMsIGJ1dCB0aGUgY29tbWFuZCBkaWQgbm90IHdvcmsuDQo+ID4+ICAg
+ICAgSSBoYXZlIHJlZmVycmVkIHRvIHRoZSBmb2xsb3dpbmcgdGhyZWUgZG9jdW1lbnRhdGlvbiBh
+Ym91dCBob3cgdG8gdXNlDQo+IGdpdCBmaWx0ZXItYnJhbmNoOg0KPiA+Pg0KPiBodHRwczovL3Vy
+bGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX3N0YWNrb3ZlcmZsb3cu
+Y29tX3F1ZXMNCj4gdGlvbnNfMTUyNTAwNzBfcnVubmluZy0yRGZpbHRlci0yRGJyYW5jaC0yRG92
+ZXItMkRhLTJEcmFuZ2UtMkRvZi0yRGNvbQ0KPiBtaXRzJmQ9RHdJQ2FRJmM9TzE3bTZVZHFPQUla
+aDlYUThwVGw0ZyZyPVZjR2VJZU9aXzhfemxyUU5TYm9lbllsdGYNCj4geEdOSVhOX3FHNlZwWmdY
+VlJrJm09eUZtN2xBZGtSTE5NVDA1OFNIUVVqTVJGS3pKTkRGdGVYbG9oS3BaSFYNCj4gQ3Mmcz1h
+WU1WcXJFalZsc2pHWkNSYnFGM2RiUFB1YnYyZHROYkdFVHJFcXRPMDFFJmU9DQo+ID4+DQo+IGh0
+dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fc3RhY2tv
+dmVyZmxvdy5jb21fcXVlcw0KPiB0aW9uc18yODUzNjk4MF9naXQtMkRjaGFuZ2UtMkRjb21taXQt
+MkRkYXRlLTJEdG8tMkRhdXRob3ItMkRkYXRlJmQ9RA0KPiB3SUNhUSZjPU8xN202VWRxT0FJWmg5
+WFE4cFRsNGcmcj1WY0dlSWVPWl84X3psclFOU2JvZW5ZbHRmeEdOSVhOX3ENCj4gRzZWcFpnWFZS
+ayZtPXlGbTdsQWRrUkxOTVQwNThTSFFVak1SRkt6Sk5ERnRlWGxvaEtwWkhWQ3Mmcz1SdmpPDQo+
+IGpPRVhVd3pZSnAtTzNqc3N1TnBteUNXVy1VT2l0OHJ3RnJjS1dCRSZlPQ0KPiA+Pg0KPiA+PiBo
+dHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX2dpdC0y
+RHNjbS5jb21fZG8NCj4gPj4NCj4gY3NfZ2l0LTJEZmlsdGVyLTJEYnJhbmNoJmQ9RHdJQ2FRJmM9
+TzE3bTZVZHFPQUlaaDlYUThwVGw0ZyZyPVZjR2VJZU8NCj4gWg0KPiA+Pg0KPiBfOF96bHJRTlNi
+b2VuWWx0ZnhHTklYTl9xRzZWcFpnWFZSayZtPXlGbTdsQWRrUkxOTVQwNThTSFFVak1SRkt6DQo+
+IEpOREZ0DQo+ID4+IGVYbG9oS3BaSFZDcyZzPWZvNmFmRk5rT20zNWxlZndUOE1xMV9MVERXOWZK
+V1M3cTZkdXB6dGlQa28mZT0NCj4gPj4NCj4gPj4gICAgICBZb3UgY2FuIHJlcHJvZHVjZSB0aGUg
+cHJvYmxlbSBieSB0aGUgZm9sbG93aW5nIHN0ZXBzDQo+ID4+ICAgICAgMS4gY2xvbmUgdGhlIHJl
+cG9zaXRvcnkNCj4gaHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0
+dHBzLTNBX19naXRodWIuY29tX2NodWNrbHVfTGVlDQo+IHRDb2RlXyZkPUR3SUNhUSZjPU8xN202
+VWRxT0FJWmg5WFE4cFRsNGcmcj1WY0dlSWVPWl84X3psclFOU2JvZW4NCj4gWWx0ZnhHTklYTl9x
+RzZWcFpnWFZSayZtPXlGbTdsQWRrUkxOTVQwNThTSFFVak1SRkt6Sk5ERnRlWGxvaEtwWg0KPiBI
+VkNzJnM9YW1OQzhDWWotOU5heTIxYXgzN2VHd19jXzkybGgwWjZfVks3c1RnQ3dYUSZlPQ0KPiA+
+PiAgICAgIDIuIGNoZWNrb3V0IHRvIHRoZSB0ZW1wIGJyYW5jaA0KPiA+PiAgICAgIDMuIHJ1biB0
+aGUgY29tbWFuZCBnaXQgZmlsdGVyLWJyYW5jaCAtLWVudi1maWx0ZXIgJ2V4cG9ydA0KPiA+PiBH
+SVRfQ09NTUlUVEVSX0RBVEU9IiRHSVRfQVVUSE9SX0RBVEUiJyAuLi4gNjdkOWQ5Li5mNzBiZjQN
+Cj4gPiBEaWQgeW91IG5vdCB0ZWxsIHVzIGV2ZXJ5dGhpbmcgYmVjYXVzZSB5b3Ugd3JpdGUgLi4u
+IGluIHRoaXMgbWVzc2FnZQ0KPiA+IHdoZW4geW91IGNpdGVkIHRoZSBjb21tYW5kIHlvdSB1c2Vk
+LCBvciBkbyB5b3Ugc2F5IHRoYXQgeW91IHVzZWQgLi4uDQo+ID4gbGl0ZXJhbGx5IGluIHRoZSBj
+b21tYW5kPw0KPiANCj4gVGhlIHRocmVlIGRvdHMgaXMgcHJvdmlkZWQgaW4gdGhlIGxpdGVyYWwg
+RVhBTVBMRVMgc2VjdGlvbiBvZiB0aGUgbWFuIHBhZ2UuIFRoYXQgaXMNCj4gcHJvYmFibHkgYW4g
+ZXJyb3IsIGFzIEkgdGhpbmsgaXQgaXMgbWVhbnQgdG8gYmUgYW4gZWxsaXBzaXMgdG8gaW5kaWNh
+dGUgJ2luc2VydCBvdGhlcg0KPiBvcHRpb25zIGhlcmUnLg0KPiANCj4gU2ltcGx5IHJlbW92ZSB0
+aGUgdGhyZWUgZG90cyAoJ3N5bW1ldHJpYyBkaWZmIG5vdGF0aW9uJykgLg0KPiANCj4gTm90IHN1
+cmUgd2hhdCB0aGUgY29ycmVjdCBjaGFuZ2UgdG8gdGhlIG1hbiBwYWdlIHNob3VsZCBiZSwgYnV0
+IGNsZWFybHkgaXQgaGFzDQo+IGNhdXNlZCBjb25mdXNpb24uIEl0IGFsc28gdGFrZXMgYSBtb21l
+bnQgdG8gcHJvcGVybHkgcmVhbGlzZSB3aGljaCBjb21taXRzIHRoZQ0KPiB0d28gZG90IG5vdGF0
+aW9uIHdpbGwgcmVmZXIgdG8gaW4gdGhlIGV4YW1wbGUgd2hpY2ggbWF5IGZ1cnRoZXIgY29tcG91
+bmQgdGhlDQo+IGNvbmZ1c2lvbiBhYm91dCB0aGUgdGhyZWUgZG90cy4NCj4gDQo+IFBoaWxpcA0K
+W0xVIENodWNrXSBIaSBIYW5uZXMsDQogICAgICAgICBJIHVzZWQgLi4uIGxpdGVyYWxseSB3aGVu
+IEkgY2l0ZWQgdGhlIGNvbW1hbmQuIEkgd3JpdGUgdGhlIGNvbW1hbmQgd2l0aCAuLi4gZGlyZWN0
+bHkgYXMgdGhlIGRvY3VtZW50IGludHJvZHVjZSB0aGUgdXNhZ2UgbGlrZSB0aGF0Lg0KICAgICAg
+ICAgWW91IGNhbiBjaGVjayB0aGUgZG9jdW1lbnQgaHR0cHM6Ly9naXQtc2NtLmNvbS9kb2NzL2dp
+dC1maWx0ZXItYnJhbmNoI19leGFtcGxlcyBhYm91dCB0aGUgLS1lbnYtZmlsdGVyIHNlY3Rpb24u
+DQoNCiAgICAgICAgIEhpIFBoaWxpcCwNCiAgICAgICAgIEkgYWxzbyB0cmllZCB0byBleGVjdXRl
+IHRoZSBjb21tYW5kIHdpdGhvdXQgLi4uLCANCiAgICAgICAgIGdpdCBmaWx0ZXItYnJhbmNoIC0t
+ZW52LWZpbHRlciAnZXhwb3J0IEdJVF9DT01NSVRURVJfREFURT0iJEdJVF9BVVRIT1JfREFURSIn
+IDY3ZDlkOS4uZjcwYmY0DQogICAgICAgICB0aGVuIEkgd2lsbCBnZXQgYW5vdGhlciBlcnJvciAi
+IFlvdSBtdXN0IHNwZWNpZnkgYSByZWYgdG8gcmV3cml0ZS4iDQoNCiAgICAgICAgIEhpIHRlYW0N
+CiAgICAgICAgIEkgaGF2ZSBmaXZlIGNvbW1pdHMgQSxCLEMsRCxFIHdpdGggY29tbWl0IGlkIGFz
+IGZvbGxvd2luZzoNCiAgICAgICAgIEEoNjdkOWQ5KTwtLUIoOWMxNTgwKTwtLUMoMmVlYzRkKTwt
+LUQoYTQ1OTk1KTwtLUUoZjcwYmY0KSAgDQogICAgICAgICBUaGUgY29tbWl0cyBCLEMsRCxFICdz
+IGNvbW1pdGVyIGRhdGUgYW5kIGF1dGhvciBkYXRlIGFyZSBub3QgdGhlIHNhbWUuIEkgd2FudCB0
+byB1c2UgZmlsdGVyLWJyYW5jaCBjb21tYW5kIHRvIG1ha2UgdGhlIGNvbW1pdGVyIGRhdGUgc2Ft
+ZSBhcyB0aGUgYXV0aG9yIGRhdGUuDQogICAgICAgICBJIGFtIHVzaW5nIHRoZSBmb2xsb3dpbmcg
+Y29tbWFuZCB0byBhY2hpZXZlIHJlLXdyaXRlIGhpc3Rvcnk6DQogICAgICAgICBnaXQgZmlsdGVy
+LWJyYW5jaCAtLWVudi1maWx0ZXIgJ2V4cG9ydCBHSVRfQ09NTUlUVEVSX0RBVEU9IiRHSVRfQVVU
+SE9SX0RBVEUiJyAuLi4gQS4uRQ0KICAgICAgICAgSG93ZXZlciB0aGUgY29tbWFuZCBkaWQgbm90
+IHdvcmsuDQoNCj4gPg0KPiA+PiAgICAgIDQuIFlvdSB3aWxsIGdvdCB0aGUgaW5mbyAiRm91bmQg
+bm90aGluZyB0byByZXdyaXRlIg0KPiA+Pg0KPiA+PiAgICAgIEhvd2V2ZXIsIGl0IHdhcyBzdXBw
+b3NlZCB0byBvdmVyd3JpdGUgdGhlIGhpc3RvcnkgZnJvbSBjb21taXQgOWMxNTgwDQo+IHRvIGNv
+bW1pdCBmNzBiZjQsIG1ha2UgdGhlIGNvbW1pdCBkYXRlIHNhbWUgYXMgZGF0ZS4NCj4gPj4gICAg
+ICBJIGFtIG5vdCBzdXJlIGlmIEkgYW0gdXNpbmcgdGhlIGZpbHRlci1icmFuY2ggY29ycmVjdGx5
+LCBvciBpZiB0aGVyZSBpcyBhIGJ1ZyBpbg0KPiBnaXQ/DQo+ID4+DQo+ID4+ICAgICAgQW55b25l
+IGNhbiBoZWxwIG1lPyBUaGFua3MgaW4gYWR2YW5jZS4NCj4gPiAtLSBIYW5uZXMNCg0K
