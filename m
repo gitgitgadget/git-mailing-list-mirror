@@ -2,74 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AD4C1F462
-	for <e@80x24.org>; Tue, 28 May 2019 19:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AD961F462
+	for <e@80x24.org>; Tue, 28 May 2019 19:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727655AbfE1TIT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 15:08:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40230 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726452AbfE1TIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 15:08:19 -0400
-Received: (qmail 1045 invoked by uid 109); 28 May 2019 19:08:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 19:08:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16539 invoked by uid 111); 28 May 2019 19:08:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 15:08:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 15:08:15 -0400
-Date:   Tue, 28 May 2019 15:08:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Keegan Carruthers-Smith <keegan.csmith@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: git archive generates tar with malformed pax extended attribute
-Message-ID: <20190528190815.GA20499@sigill.intra.peff.net>
-References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
- <20190524070644.GF25694@sigill.intra.peff.net>
- <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
- <20190524081337.GA9082@sigill.intra.peff.net>
- <b4aaff4b-eaf7-9eaf-063f-42c073078060@web.de>
- <20190528055805.GB7946@sigill.intra.peff.net>
- <5b312f6c-3375-66ba-efc7-931e4ddc4b11@web.de>
+        id S1726947AbfE1TXo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 15:23:44 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62553 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726787AbfE1TXo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 15:23:44 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F02E6D04A;
+        Tue, 28 May 2019 15:23:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=NcfzkhFZ6syV
+        wmWiv7/AS9iJqj8=; b=wc+SxM3w4nDvvTIyzFChAvxsihV1erYltZ+e7mzvqHJi
+        I+xu1el42hj9rpkLQg9ocNW59tpCGyUt36qG4ii/yXJXGvtBVbxK1GRDdk5IHHgl
+        zgLU2T8j2OGvW6E3zBPqoolzPjp4gFderbVcWF3G5NUzbOqi6laxlkEVRbRqLs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bhY6JF
+        fmm7HVQLpSL07cn+oBMN56pVbVIyNzjfBBcU6N+JaAdF0r3pYfPv7gdpdFqoFIis
+        eMaBXFpA13g6iRb1jKHMmX4hC5jj890K7gPKhdOEeat9SAEZ2d7yBSvFb1Lrj30u
+        sCm9hMOPA7cPNKc+FahBWNuZlRsJ2bz+W/lz0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 581D86D049;
+        Tue, 28 May 2019 15:23:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 87D6F6D048;
+        Tue, 28 May 2019 15:23:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        bturner@atlassian.com, tmz@pobox.com
+Subject: Re: [PATCH 1/3] diff-parseopt: correct variable types that are used by parseopt
+References: <20190524092442.701-1-pclouds@gmail.com>
+        <20190524092442.701-2-pclouds@gmail.com>
+Date:   Tue, 28 May 2019 12:23:37 -0700
+In-Reply-To: <20190524092442.701-2-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Fri, 24 May 2019 16:24:40 +0700")
+Message-ID: <xmqqtvde1iyu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5b312f6c-3375-66ba-efc7-931e4ddc4b11@web.de>
+X-Pobox-Relay-ID: 18EF4072-817E-11E9-924D-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 28, 2019 at 08:01:43PM +0200, René Scharfe wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Am 28.05.19 um 07:58 schrieb Jeff King:
-> > On Sat, May 25, 2019 at 03:26:53PM +0200, René Scharfe wrote:
-> >
-> >> We could
-> >> make git fsck report such symlinks.
-> >
-> > This is a little tricky, because fsck generally looks at individual
-> > objects, and the bad pattern is a combination of a tree and a blob
-> > together. I think you could make it work by reusing some of the code and
-> > patterns from 9e84a6d758 (Merge branch 'jk/submodule-fsck-loose' into
-> > maint, 2018-05-22).
-> 
-> Actually it's super easy, barely an inconvenience (SCNR, watched a lot
-> of those rants recently)..  Did I miss something?
+> Most number-related OPT_ macros store the value in an 'int'
+> variable. Many of the variables in 'struct diff_options' have a
+> different type, but during the conversion to using parse_options() I
+> failed to notice and correct.
 
-Yes. You cannot rely on calling read_object_file() in real-time when the
-fsck is being done by index-pack. The blob in question may be in the
-pack you are indexing.
+Why does this patch need to be so noisy?  "unsigned identifier" is
+the same as "unsigned int identifier", isn't it?
 
-See fsck_finish() for how we do this for .gitmodules checks.
+That is, wouldn't this hunk ...
 
--Peff
+> @@ -169,7 +169,7 @@ struct diff_options {
+>  	const char *prefix;
+>  	int prefix_length;
+>  	const char *stat_sep;
+> -	long xdl_opts;
+> +	int xdl_opts;
+
+... the only one that matters?
