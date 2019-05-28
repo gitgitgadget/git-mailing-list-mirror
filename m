@@ -7,69 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDB621F462
-	for <e@80x24.org>; Tue, 28 May 2019 06:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 845CB1F462
+	for <e@80x24.org>; Tue, 28 May 2019 06:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbfE1GaJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 02:30:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39460 "HELO cloud.peff.net"
+        id S1727090AbfE1Gez (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 02:34:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39478 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726305AbfE1GaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 02:30:09 -0400
-Received: (qmail 27493 invoked by uid 109); 28 May 2019 06:30:11 -0000
+        id S1727067AbfE1Gez (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 02:34:55 -0400
+Received: (qmail 27712 invoked by uid 109); 28 May 2019 06:34:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 06:30:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 May 2019 06:34:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10451 invoked by uid 111); 28 May 2019 06:30:51 -0000
+Received: (qmail 10514 invoked by uid 111); 28 May 2019 06:35:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 02:30:51 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 02:35:35 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 02:30:07 -0400
-Date:   Tue, 28 May 2019 02:30:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 02:34:51 -0400
+Date:   Tue, 28 May 2019 02:34:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Matthew DeVore <matvore@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] list-objects-filter: disable 'sparse:path' filters
-Message-ID: <20190528063006.GF7946@sigill.intra.peff.net>
-References: <20190525142834.6168-1-chriscool@tuxfamily.org>
+To:     Brendan Boerner <bboerner.biz@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: 'git stash list' => Segmentation fault
+Message-ID: <20190528063451.GG7946@sigill.intra.peff.net>
+References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190525142834.6168-1-chriscool@tuxfamily.org>
+In-Reply-To: <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 25, 2019 at 04:28:34PM +0200, Christian Couder wrote:
+On Mon, May 27, 2019 at 08:47:56PM +0200, Johannes Schindelin wrote:
 
-> If someone wants to use as a filter a sparse file that is in the
-> repository, something like "--filter=sparse:oid=<ref>:<path>"
-> already works.
+> > bboerner@myhost:~/funproject/Src/bash$ git stash list
+> > Segmentation fault (core dumped)
+> > Segmentation fault (core dumped)
+> > Segmentation fault (core dumped)
+> > stash@{0}: On devel: NYFL optimization
+> > stash@{1}: On GL285: gl285
 > 
-> So 'sparse:path' is only interesting if the sparse file is not in
-> the repository. In this case though the current implementation has
-> a big security issue, as it makes it possible to ask the server to
-> read any file, like for example /etc/password, and to explore the
-> filesystem, as well as individual lines of files.
-> 
-> If someone is interested in using a sparse file that is not in the
-> repository as a filter, then at the minimum a config option, such
-> as "uploadpack.sparsePathFilter", should be implemented first to
-> restrict the directory from which the files specified by
-> 'sparse:path' can be read.
-> 
-> For now though, let's just disable 'sparse:path' filters.
+> Unfortunately, this leaves *very* little in the way of actionable
+> evidence. Would it be possible for you to share a tar'red up copy of the
+> .git/ directory? Or do you find that this happens for all of your stashes?
+> What is the output when you run this with `GIT_TRACE=1`?
 
-Thanks for picking this up. The patch looks fine to me (versus just
-disabling it for remote invocations) assuming we are OK with the
-possible regression. I suppose cooking this in 'next' for a while is one
-way we might find out if anybody yells loudly.
+Alternatively, if you cannot share the repo, a backtrace from gdb might
+help. There should be a core file either in the working directory, or in
+the ".git/" directory. Try "gdb git /path/to/core" and then "bt" to get
+the backtrace.
 
 -Peff
