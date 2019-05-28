@@ -2,181 +2,773 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBE561F462
-	for <e@80x24.org>; Tue, 28 May 2019 07:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4811F462
+	for <e@80x24.org>; Tue, 28 May 2019 07:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726984AbfE1HKL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 03:10:11 -0400
-Received: from mx07-002aaa01.pphosted.com ([185.132.180.47]:10022 "EHLO
-        mx07-002aaa01.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726203AbfE1HKL (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 May 2019 03:10:11 -0400
-Received: from pps.filterd (m0118689.ppops.net [127.0.0.1])
-        by mx07-002aaa01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x4S75Zp8003585;
-        Tue, 28 May 2019 07:10:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edenred.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=dk201811;
- bh=MivYZBkkmKXyLDxkrX/EJUMtUcmSJPSOOr13m8igxQw=;
- b=GEj8s993EuUGtJVE4rMZYDfbCXrhP+wfs2HW4+tFom7ze0NaY+HHvuYMIRClxiVCZrnz
- Rsx3AqGfUHoNBOedp7vj+6Hrs2eWh4UN03LkDg78kQctaw7bs9gYix6xC1wg9rTmPsrT
- NmihZs8P9BPkTNd9rhOzdIbeKsybRgSkYlx5djkKZpuyddr5q+LobBGDT6PX2+CTA3Qu
- NjPFQhfo2lBmIRRfepSmM8DZ1OK8o6jhIKsjOK70vat3W3dLzjdC3/Qz1Z/q+7O/CcVL
- 9HyL722QuzZk0wYuivkinc5/KZlWIOi4hCiz7RXraTsHxuJQx9wfkBivuPrAOi3lmuGL aQ== 
-Received: from ehq-smtp-usr-p.edenred.com ([204.103.47.130])
-        by mx07-002aaa01.pphosted.com with ESMTP id 2srq7214am-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Tue, 28 May 2019 07:10:06 +0000
-Received: from ehq-smtp-usr-mx1p18-p.edenred.com () by
- ehq-smtp-usr-mx1p18-p.edenred.com () with  (TLS) id
- 15.0.1395.4; Tue, 28 May 2019 09:10:05 +0200
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (104.47.12.56) by
- ehq-smtp-usr-mx1p18-p.edenred.com () with  (TLS) id 15.0.1395.4
- via Frontend Transport; Tue, 28 May 2019 09:10:05 +0200
-Received: from DB7PR05MB5573.eurprd05.prod.outlook.com (20.177.193.214) by
- DB7PR05MB5258.eurprd05.prod.outlook.com (20.178.42.18) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1922.20; Tue, 28 May 2019 07:10:04 +0000
-Received: from DB7PR05MB5573.eurprd05.prod.outlook.com
- ([fe80::d93a:e741:155:318d]) by DB7PR05MB5573.eurprd05.prod.outlook.com
- ([fe80::d93a:e741:155:318d%6]) with mapi id 15.20.1922.021; Tue, 28 May 2019
- 07:10:04 +0000
-From:   LU Chuck <Chuck.LU@edenred.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-CC:     Philip Oakley <philipoakley@iee.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "chuck.lu@qq.com" <chuck.lu@qq.com>
-Subject: RE: git filter-branch re-write history over a range of commits did
- notwork
-Thread-Topic: git filter-branch re-write history over a range of commits did
- notwork
-Thread-Index: AdUUYk+0TU9swc+jQ+aKfvGwOQfe0wAVrIqAAAQ7KgAAEzBtoAAByCoAAAELfSA=
-Date:   Tue, 28 May 2019 07:10:04 +0000
-Message-ID: <DB7PR05MB5573B5FC17FD1F221F7AAD558D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
-References: <DB7PR05MB5573AD842E430342E2BD011B8D1D0@DB7PR05MB5573.eurprd05.prod.outlook.com>
- <db2dcf54-8b1c-39b1-579c-425ef158c6a1@kdbg.org>
- <75618ca1-748d-0761-9108-c7deac63cb53@iee.org>
- <DB7PR05MB5573B5B80C8A9CBE867803D88D1E0@DB7PR05MB5573.eurprd05.prod.outlook.com>
- <fa23e865-94ed-308f-6a19-75b6ea89eec3@kdbg.org>
-In-Reply-To: <fa23e865-94ed-308f-6a19-75b6ea89eec3@kdbg.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [140.207.1.78]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 708b57e9-38ca-48fe-07db-08d6e33b81ec
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:DB7PR05MB5258;
-x-ms-traffictypediagnostic: DB7PR05MB5258:
-x-ms-exchange-purlcount: 2
-x-microsoft-antispam-prvs: <DB7PR05MB525850818BBA65409CD1CC068D1E0@DB7PR05MB5258.eurprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 00514A2FE6
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(396003)(346002)(39860400002)(366004)(376002)(199004)(189003)(13464003)(966005)(316002)(71190400001)(5660300002)(71200400001)(52536014)(9686003)(8676002)(81156014)(81166006)(486006)(6306002)(8936002)(256004)(55016002)(14454004)(54906003)(14444005)(478600001)(2906002)(72206003)(3846002)(99286004)(6116002)(7696005)(66066001)(6436002)(6916009)(25786009)(102836004)(4326008)(76176011)(86362001)(66946007)(66446008)(66556008)(66476007)(73956011)(64756008)(26005)(53936002)(76116006)(6246003)(186003)(229853002)(33656002)(446003)(11346002)(476003)(68736007)(7736002)(53546011)(305945005)(74316002)(6506007);DIR:OUT;SFP:1102;SCL:1;SRVR:DB7PR05MB5258;H:DB7PR05MB5573.eurprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: edenred.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: TSQjZcY0CCxxmlQxKn24ZgbGlrIuPj5wQ9KO+DI3bVt4PqRlhNBE/hhzz2GXFe92GF0KKrBsSYX5hCYohjAUsSSqmrD61Pj6g4vNg7L66MqQjWZwBsO9JyVCRGt8ZsyKrrzkJzycdhXdefwe3Uhwtv3nzx92JipD4R2q1V4fqWJfqV3KKXrq++E7qUSqfnD5eKGWlYaLx3jlh5oONwWqwIDYc6ruXCuf8tu2SM9mfXfqvbLCUGhanMqm4wHerjvvHmPZF7QcEPwPeR985LnkJh3lCOuOCgQzCl85FKucWwZUZOm37Altg6/wLMXMslT8FwEnoFPtOeA+SF+6ztZARHYCXCgQZGIB67vYfaMdXbn9Hx/mqOhYqzcuBJ9GYjMTjv6N80ZvvZUHXTuGaRu7oYjWYkGg8wG8bSQvfWk2lo4=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1727295AbfE1Hmp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 03:42:45 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:52362 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726921AbfE1Hmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 03:42:45 -0400
+Received: by mail-it1-f193.google.com with SMTP id t184so2726014itf.2
+        for <git@vger.kernel.org>; Tue, 28 May 2019 00:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1ZEf6hNrs7MXPDIShXEqhY5ZD1z+scBiVTIaqGjo0xI=;
+        b=podjAIdDIP++v8iGPKJhe81SFijhxAatRizdTZQbsdiqXC90HfzNDFg8bls6LF6kEo
+         0Fgyapo++2pxbZatDVZ+aN8IEU7EkwoXcI767i1v8GdI5dsnTUsYXWdipE3atrGk62kY
+         UYWrbwLwRCYqbibOj+U4BM21S2MZp1k74u3I3vaM9t+8/Q6unFFcp4JIjqZB3JdK3EPP
+         Uxij0zod9bxRqhqFiGL8w+efPTFavaSy6YtGrTZqwXzi7MC7c75LHUqF1xXqiqx0MAwJ
+         NNYv7MjhtQzKR4W1j2UbSs+mmFq2yIz6TXJq8dNKa0xYjm2LqA3y1fQ2q21aC+oUby/B
+         +BTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1ZEf6hNrs7MXPDIShXEqhY5ZD1z+scBiVTIaqGjo0xI=;
+        b=srnH3rMfNFHMPiiKcRcMHZo0oWf//TkkyvLmQzJuu7RtkyJDLrxLFQOJfc1/JAvIMY
+         nXFhbbSIIGP/gnlwpy1Umu9IfUgQNZ1f4OF/TXeTMavkN/8ftfVXNs/hF9TA+4cZziaX
+         AUXm4D5QUpIpSJpYXQeoCoaQkdpHYt07wAFgpcN3dH9Y+7rLCEb7UkLUPAcmm7rpVc3E
+         CDRSowc9Nmg3esfau7b/lcZU9Tid5H2egaR/IXIXXq7+kDHgOiWzu4e++EmWSuxHHTP+
+         XgpG4mV3xQhsFKuVc/PDLrLakl92Jg0WuN4Fv3PCVPd06sujBR7m0+clTvzVeOSuYag+
+         V4bQ==
+X-Gm-Message-State: APjAAAVb1UhB3cqzzrl53Kz6wb/utZfiLwCJvW9gBuXF3mdgdC+brAI4
+        mG7G+Lvjs92YPLpyQHTcQUJrUW0KH6KBcFbHE40=
+X-Google-Smtp-Source: APXvYqxR+euPsgjnrKldRFAvbpqIugUFKIdeb+nf2PlODeI/nScKhQJApQ39u43K0lldUPQg/np8eAGuWBpYaq4fHbA=
+X-Received: by 2002:a24:59c4:: with SMTP id p187mr2039319itb.123.1559029363655;
+ Tue, 28 May 2019 00:42:43 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 708b57e9-38ca-48fe-07db-08d6e33b81ec
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2019 07:10:04.1199
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4c1d9e0f-5c27-4228-a35a-de7b4083ff7b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: chuck.lu@edenred.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR05MB5258
-X-OriginatorOrg: edenred.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-05-28_03:,,
- signatures=0
+References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com>
+In-Reply-To: <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+Date:   Tue, 28 May 2019 15:42:32 +0800
+Message-ID: <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] status: remove the empty line after hints
+To:     John Lin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSm9oYW5uZXMgU2l4dCA8
-ajZ0QGtkYmcub3JnPg0KPiBTZW50OiBUdWVzZGF5LCBNYXkgMjgsIDIwMTkgMjoyMyBQTQ0KPiBU
-bzogTFUgQ2h1Y2sgPENodWNrLkxVQGVkZW5yZWQuY29tPg0KPiBDYzogUGhpbGlwIE9ha2xleSA8
-cGhpbGlwb2FrbGV5QGllZS5vcmc+OyBnaXRAdmdlci5rZXJuZWwub3JnOyBjaHVjay5sdUBxcS5j
-b20NCj4gU3ViamVjdDogUmU6IGdpdCBmaWx0ZXItYnJhbmNoIHJlLXdyaXRlIGhpc3Rvcnkgb3Zl
-ciBhIHJhbmdlIG9mIGNvbW1pdHMgZGlkIG5vdHdvcmsNCj4gDQo+IEFtIDI4LjA1LjE5IHVtIDA3
-OjQyIHNjaHJpZWIgTFUgQ2h1Y2s6DQo+ID4+IEZyb206IFBoaWxpcCBPYWtsZXkgPHBoaWxpcG9h
-a2xleUBpZWUub3JnPiBUaGUgdGhyZWUgZG90cyBpcyBwcm92aWRlZA0KPiA+PiBpbiB0aGUgbGl0
-ZXJhbCBFWEFNUExFUyBzZWN0aW9uIG9mIHRoZSBtYW4gcGFnZS4gVGhhdCBpcyBwcm9iYWJseSBh
-bg0KPiA+PiBlcnJvciwgYXMgSSB0aGluayBpdCBpcyBtZWFudCB0byBiZSBhbiBlbGxpcHNpcyB0
-byBpbmRpY2F0ZSAnaW5zZXJ0DQo+ID4+IG90aGVyIG9wdGlvbnMgaGVyZScuDQo+ID4+DQo+ID4+
-IFNpbXBseSByZW1vdmUgdGhlIHRocmVlIGRvdHMgKCdzeW1tZXRyaWMgZGlmZiBub3RhdGlvbicp
-IC4NCj4gPj4NCj4gPj4gTm90IHN1cmUgd2hhdCB0aGUgY29ycmVjdCBjaGFuZ2UgdG8gdGhlIG1h
-biBwYWdlIHNob3VsZCBiZSwgYnV0DQo+ID4+IGNsZWFybHkgaXQgaGFzIGNhdXNlZCBjb25mdXNp
-b24uIEl0IGFsc28gdGFrZXMgYSBtb21lbnQgdG8gcHJvcGVybHkNCj4gPj4gcmVhbGlzZSB3aGlj
-aCBjb21taXRzIHRoZSB0d28gZG90IG5vdGF0aW9uIHdpbGwgcmVmZXIgdG8gaW4gdGhlDQo+ID4+
-IGV4YW1wbGUgd2hpY2ggbWF5IGZ1cnRoZXIgY29tcG91bmQgdGhlIGNvbmZ1c2lvbiBhYm91dCB0
-aGUgdGhyZWUgZG90cy4NCj4gPj4NCj4gPj4gUGhpbGlwDQo+ID4gW0xVIENodWNrXSBIaSBIYW5u
-ZXMsDQo+ID4gICAgICAgICAgSSB1c2VkIC4uLiBsaXRlcmFsbHkgd2hlbiBJIGNpdGVkIHRoZSBj
-b21tYW5kLiBJIHdyaXRlIHRoZSBjb21tYW5kDQo+IHdpdGggLi4uIGRpcmVjdGx5IGFzIHRoZSBk
-b2N1bWVudCBpbnRyb2R1Y2UgdGhlIHVzYWdlIGxpa2UgdGhhdC4NCj4gPiAgICAgICAgICBZb3Ug
-Y2FuIGNoZWNrIHRoZSBkb2N1bWVudA0KPiBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5j
-b20vdjIvdXJsP3U9aHR0cHMtM0FfX2dpdC0yRHNjbS5jb21fZG9jc19naXQNCj4gLTJEZmlsdGVy
-LTJEYnJhbmNoLTIzLTVGZXhhbXBsZXMmZD1Ed0lDYVEmYz1PMTdtNlVkcU9BSVpoOVhROHBUbDRn
-Jg0KPiByPVZjR2VJZU9aXzhfemxyUU5TYm9lbllsdGZ4R05JWE5fcUc2VnBaZ1hWUmsmbT1WdU5k
-T3pjZW82OFpVbktPQQ0KPiBjRVBLSmNXSkdWYmo5clZ4N21xRU1Ca0Y5cyZzPWZ3VF9Zc0hWSWNa
-TGtaa1hjd04wWHpFZlladVpWdmtUaFNNLQ0KPiBWX28ybmE4JmU9ICBhYm91dCB0aGUgLS1lbnYt
-ZmlsdGVyIHNlY3Rpb24uDQo+IA0KPiBDb3B5aW5nIGFuZCBwYXN0aW5nIGV4YW1wbGVzIGxpdGVy
-YWxseSBpcyBkYW5nZXJvdXMuIFlvdSBzaG91bGQga25vdyB3aGF0IHlvdQ0KPiBhcmUgZG9pbmcu
-DQo+IA0KPiAiLi4uIiBpcyBhIHJldmlzaW9uIHJhbmdlIHRoYXQgY29tcHV0ZXMgdGhlIG1lcmdl
-YmFzZSBiZXR3ZWVuIEhFQUQgYW5kIEhFQUQsDQo+IHdoaWNoIGlzIChzdXJwcmlzZSEpIEhFQUQs
-IGFuZCB0aGVuIGluY2x1ZGVzIHRoZSB0d28gZW5kIHBvaW50cywgYnV0IGV4Y2x1ZGVzDQo+IGV2
-ZXJ5dGhpbmcgYmVsb3cgdGhlIG1lcmdlYmFzZS4gU28sIHRoZSByZXZpc2lvbiBzcGVjaWZpY2F0
-aW9uIHRoYXQgeW91cg0KPiBjb21tYW5kIGVuZHMgdXAgd2l0aCBpcw0KPiANCj4gICAgICBIRUFE
-IEhFQUQgXkhFQUQgXjY3ZDlkOSBmNzBiZjQNCj4gDQo+IFdoaWNoIGlzIGVtcHR5IGlmIGY3MGJm
-NCBpcyBhbiBhbmNlc3RvciBvZiBIRUFELg0KW0xVIENodWNrXSBTb3JyeSwgSSBjYW4ndCB1bmRl
-cnN0YW5kIHRoaXMgcGFydCwgZGlkIHlvdSBoYXZlIGFuIGRvY3VtZW50YXRpb24gYWJvdXQgdGhl
-IGV4cGxhbmF0aW9uIGZvciAuLi4/DQogICAgICAgICAiY29tcHV0ZXMgdGhlIG1lcmdlYmFzZSBi
-ZXR3ZWVuIEhFQUQgYW5kIEhFQUQiIEkgaGF2ZSBubyBpZGVhIGFib3V0IHRoaXMuIEFuZCB5b3Ug
-YWxzbyB0YWxrZWQgYWJvdXQgbWVyZ2ViYXNlLCBidXQgaW4gbXkgc2l0dWF0aW9uLCB0aGVyZSBp
-cyBvbmx5IG9uZSBicmFuY2ggd2l0aCA1IGNvbW1pdHMuIEkgZGlkIG5vdCBoYXZlIGEgbWVyZ2Vi
-YXNlLg0KICAgICAgICAgWW91IGNhbiBjaGVjayB0aGUgZGV0YWlsIGRlc2NyaXB0aW9uIGJlbG93
-Lg0KPiANCj4gPiAgICAgICAgICBIaSBQaGlsaXAsDQo+ID4gICAgICAgICAgSSBhbHNvIHRyaWVk
-IHRvIGV4ZWN1dGUgdGhlIGNvbW1hbmQgd2l0aG91dCAuLi4sDQo+ID4gICAgICAgICAgZ2l0IGZp
-bHRlci1icmFuY2ggLS1lbnYtZmlsdGVyICdleHBvcnQNCj4gR0lUX0NPTU1JVFRFUl9EQVRFPSIk
-R0lUX0FVVEhPUl9EQVRFIicgNjdkOWQ5Li5mNzBiZjQNCj4gPiAgICAgICAgICB0aGVuIEkgd2ls
-bCBnZXQgYW5vdGhlciBlcnJvciAiIFlvdSBtdXN0IHNwZWNpZnkgYSByZWYgdG8gcmV3cml0ZS4i
-DQo+IA0KPiBZb3UgY2Fubm90IHJlc3RyaWN0IHlvdXIgZmlsdGVyIHRvIGEgc3Vic2V0IG9mIGNv
-bW1pdHMgbGlrZSB0aGlzLiBBZnRlciBhbGwsIGFsbCBjb21taXRzDQo+IHRoYXQgZGVzY2VuZCBm
-cm9tIG9uZSBvZiB0aGUgcmV3cml0dGVuIGNvbW1pdHMgbXVzdCBhbHNvIGNoYW5nZSwgdXAgdG8g
-YW5kDQo+IGluY2x1ZGluZyB0byB0aGUgYnJhbmNoIHJlZnMuIFRoZXJlZm9yZSwgaXQgaXMgbmVj
-ZXNzYXJ5IHRvIG1lbnRpb24gdGhlIGJyYW5jaGVzDQo+IHRoYXQgeW91IHJld3JpdGUgaW4gdGhp
-cyBtYW5uZXIuDQo+IA0KPiBQZXJoYXBzOg0KPiANCj4gICAgZ2l0IGZpbHRlci1icmFuY2ggLS1l
-bnYtZmlsdGVyICcNCj4gICAgICBpZiBnaXQgbWVyZ2UtYmFzZSAtLWlzLWFuY2VzdG9yICRHSVRf
-Q09NTUlUIGY3MGJmNDsgdGhlbg0KPiAgICAgICAgZXhwb3J0IEdJVF9DT01NSVRURVJfREFURT0i
-JEdJVF9BVVRIT1JfREFURSINCj4gICAgICBmaScgLS0gNjdkOWQ5Li5tYXN0ZXINCj4gDQo+IFRo
-aXMgYXNzdW1lcyB0aGF0IG9ubHkgYnJhbmNoIG1hc3RlciBpcyBhZmZlY3RlZCBieSB0aGUgcmV3
-cml0aW5nLiBVc2UgLS1hbGwgaWYgeW91DQo+IGhhdmUgbWFueSBhZmZlY3RlZCBicmFuY2hlcy4N
-CltMVSBDaHVja10gSGkgSGFubmVzLA0KICAgICAgICAgSSBoYXZlIHRyaWVkIHdpdGggdGhlIGNv
-bW1hbmQgeW91IHByb3ZpZGVkLCB3aGF0IEkgZ290IGlzIA0KICAgICAgICAgICAgIFJld3JpdGUg
-MzFjZDVlZjZmMDY4YzQ2MjIyZmUxODU4NzBjMDljOTU5ZGQ3MTEzZSAoNy83KSAoNiBzZWNvbmRz
-IHBhc3NlZCwgcmVtYWluaW5nIDAgcHJlZGljdGVkKQ0KICAgICAgICAgICAgIFdBUk5JTkc6IFJl
-ZiAncmVmcy9oZWFkcy9tYXN0ZXInIGlzIHVuY2hhbmdlZA0KICAgICAgICAgSSBhbSB3b25kZXJp
-bmcgd2h5IEkgZ290IHRoaXMgd2FybmluZywgd2hhdCBJIGRpZCBoYXZlIG5vdGhpbmcgdG8gZG8g
-d2l0aCBtYXN0ZXIgYnJhbmNoLg0KICAgICAgICAgSSBhbSBub3Qgb24gYnJhbmNoIG1hc3Rlci4g
-TXkgY3VycmVudCBicmFuY2ggaXMgdGVtcCBhbmQgSEVBRCBwb2ludCB0byB0ZW1wIGJyYW5jaCwg
-YW5kIHRlbXAgcG9pbnQgdG8gY29tbWl0IGY3MGJmNC4NCiAgICAgICAgIEFjdHVhbGx5IHlvdSBj
-YW4gY2xvbmUgdGhlIHJlcG9zaXRvcnkgaHR0cHM6Ly9naXRodWIuY29tL2NodWNrbHUvTGVldENv
-ZGUgYW5kIGdpdCBjaGVja291dCAtYiB0ZW1wIG9yaWdpbi90ZW1wLiBUaGVuIGRvIGEgc2ltcGxl
-IHRlc3QuDQoNCiAgICAgICAgIE15IHB1cnBvc2UgaXMgYXMgSSBtZW50aW9uZWQgaW4gbGFzdCBl
-bWFpbCwNCiAgICAgICAgIEkgaGF2ZSBmaXZlIGNvbW1pdHMgQSxCLEMsRCxFIHdpdGggY29tbWl0
-IGlkIGFzIGZvbGxvd2luZzoNCiAgICAgICAgIEEoNjdkOWQ5KTwtLUIoOWMxNTgwKTwtLUMoMmVl
-YzRkKTwtLUQoYTQ1OTk1KTwtLUUoZjcwYmY0KSAgDQogICAgICAgICBUaGUgdGVtcCBicmFuY2gg
-cG9pbnQgdG8gY29tbWl0IEUoZjcwYmY0KSBhbmQgdGhlIEhFQUQgcG9pbnQgdG8gdGVtcCBicmFu
-Y2guDQogICAgICAgICBUaGUgY29tbWl0cyBCLEMsRCxFICdzIGNvbW1pdGVyIGRhdGUgYW5kIGF1
-dGhvciBkYXRlIGFyZSBub3QgdGhlIHNhbWUuIEkgd2FudCB0byB1c2UgZmlsdGVyLWJyYW5jaCBj
-b21tYW5kIHRvIG1ha2UgdGhlIGNvbW1pdGVyIGRhdGUgc2FtZSBhcyB0aGUgYXV0aG9yIGRhdGUu
-DQoNCj4gDQo+IC0tIEhhbm5lcw0K
+Hi Junio,
+
+John Lin via GitGitGadget <gitgitgadget@gmail.com> =E6=96=BC 2019=E5=B9=B45=
+=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:54=E5=AF=AB=E9=
+=81=93=EF=BC=9A
+>
+> From: John Lin <johnlinp@gmail.com>
+>
+> Before this patch, there is inconsistency between the status
+> messages with hints and the ones without hints: there is an
+> empty line between the title and the file list if hints are
+> presented, but there isn't one if there are no hints.
+>
+> This patch remove the inconsistency by removing the empty
+> lines even if hints are presented.
+
+I would like to ask for the final decision on this patch. Thank you.
+
+Best,
+John Lin
+
+>
+> Signed-off-by: John Lin <johnlinp@gmail.com>
+> ---
+>  t/t7060-wtstatus.sh    |  5 ----
+>  t/t7508-status.sh      | 62 ------------------------------------------
+>  t/t7512-status-help.sh | 14 ----------
+>  wt-status.c            |  4 ---
+>  4 files changed, 85 deletions(-)
+>
+> diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+> index 53cf42fac1..d5218743e9 100755
+> --- a/t/t7060-wtstatus.sh
+> +++ b/t/t7060-wtstatus.sh
+> @@ -38,7 +38,6 @@ You have unmerged paths.
+>
+>  Unmerged paths:
+>    (use "git add/rm <file>..." as appropriate to mark resolution)
+> -
+>         deleted by us:   foo
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -143,7 +142,6 @@ You have unmerged paths.
+>
+>  Unmerged paths:
+>    (use "git add/rm <file>..." as appropriate to mark resolution)
+> -
+>         both added:      conflict.txt
+>         deleted by them: main.txt
+>
+> @@ -177,7 +175,6 @@ You have unmerged paths.
+>
+>  Unmerged paths:
+>    (use "git add/rm <file>..." as appropriate to mark resolution)
+> -
+>         both deleted:    main.txt
+>         added by them:   sub_master.txt
+>         added by us:     sub_second.txt
+> @@ -201,12 +198,10 @@ You have unmerged paths.
+>    (use "git merge --abort" to abort the merge)
+>
+>  Changes to be committed:
+> -
+>         new file:   sub_master.txt
+>
+>  Unmerged paths:
+>    (use "git rm <file>..." to mark resolution)
+> -
+>         both deleted:    main.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index e1f11293e2..1cb1032c98 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -95,18 +95,15 @@ test_expect_success 'status --column' '
+>  #
+>  # Changes to be committed:
+>  #   (use "git reset HEAD <file>..." to unstage)
+> -#
+>  #      new file:   dir2/added
+>  #
+>  # Changes not staged for commit:
+>  #   (use "git add <file>..." to update what will be committed)
+>  #   (use "git checkout -- <file>..." to discard changes in working direc=
+tory)
+> -#
+>  #      modified:   dir1/modified
+>  #
+>  # Untracked files:
+>  #   (use "git add <file>..." to include in what will be committed)
+> -#
+>  #      dir1/untracked dir2/untracked
+>  #      dir2/modified  untracked
+>  #
+> @@ -129,18 +126,15 @@ cat >expect <<\EOF
+>  #
+>  # Changes to be committed:
+>  #   (use "git reset HEAD <file>..." to unstage)
+> -#
+>  #      new file:   dir2/added
+>  #
+>  # Changes not staged for commit:
+>  #   (use "git add <file>..." to update what will be committed)
+>  #   (use "git checkout -- <file>..." to discard changes in working direc=
+tory)
+> -#
+>  #      modified:   dir1/modified
+>  #
+>  # Untracked files:
+>  #   (use "git add <file>..." to include in what will be committed)
+> -#
+>  #      dir1/untracked
+>  #      dir2/modified
+>  #      dir2/untracked
+> @@ -279,23 +273,19 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir2/modified
+>
+>  Ignored files:
+>    (use "git add -f <file>..." to include in what will be committed)
+> -
+>         .gitignore
+>         dir1/untracked
+>         dir2/untracked
+> @@ -348,18 +338,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Ignored files:
+>    (use "git add -f <file>..." to include in what will be committed)
+> -
+>         .gitignore
+>         dir1/untracked
+>         dir2/modified
+> @@ -421,13 +408,11 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> @@ -485,18 +470,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -543,18 +525,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -606,18 +585,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   ../dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         untracked
+>         ../dir2/modified
+>         ../dir2/untracked
+> @@ -677,18 +653,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         <GREEN>new file:   dir2/added<RESET>
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         <RED>modified:   dir1/modified<RESET>
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         <BLUE>dir1/untracked<RESET>
+>         <BLUE>dir2/modified<RESET>
+>         <BLUE>dir2/untracked<RESET>
+> @@ -803,18 +776,15 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -853,12 +823,10 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/
+>         untracked
+> @@ -897,19 +865,16 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>         new file:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -957,14 +922,12 @@ and have 1 and 2 different commits each, respective=
+ly.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>         new file:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Submodule changes to be committed:
+> @@ -974,7 +937,6 @@ Submodule changes to be committed:
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -1020,12 +982,10 @@ and have 2 and 2 different commits each, respectiv=
+ely.
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -1069,14 +1029,12 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD^1 <file>..." to unstage)
+> -
+>         new file:   dir2/added
+>         new file:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Submodule changes to be committed:
+> @@ -1086,7 +1044,6 @@ Submodule changes to be committed:
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         dir1/untracked
+>         dir2/modified
+>         dir2/untracked
+> @@ -1124,13 +1081,11 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Submodule changes to be committed:
+> @@ -1140,7 +1095,6 @@ Submodule changes to be committed:
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         .gitmodules
+>         dir1/untracked
+>         dir2/modified
+> @@ -1236,14 +1190,12 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+>    (commit or discard the untracked or modified content in submodules)
+> -
+>         modified:   dir1/modified
+>         modified:   sm (modified content)
+>
+> @@ -1254,7 +1206,6 @@ Submodule changes to be committed:
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         .gitmodules
+>         dir1/untracked
+>         dir2/modified
+> @@ -1296,13 +1247,11 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>         modified:   sm (new commits)
+>
+> @@ -1318,7 +1267,6 @@ Submodules changed but not updated:
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         .gitmodules
+>         dir1/untracked
+>         dir2/modified
+> @@ -1380,13 +1328,11 @@ cat > expect << EOF
+>  ;
+>  ; Changes to be committed:
+>  ;   (use "git reset HEAD <file>..." to unstage)
+> -;
+>  ;      modified:   sm
+>  ;
+>  ; Changes not staged for commit:
+>  ;   (use "git add <file>..." to update what will be committed)
+>  ;   (use "git checkout -- <file>..." to discard changes in working direc=
+tory)
+> -;
+>  ;      modified:   dir1/modified
+>  ;      modified:   sm (new commits)
+>  ;
+> @@ -1402,7 +1348,6 @@ cat > expect << EOF
+>  ;
+>  ; Untracked files:
+>  ;   (use "git add <file>..." to include in what will be committed)
+> -;
+>  ;      .gitmodules
+>  ;      dir1/untracked
+>  ;      dir2/modified
+> @@ -1432,12 +1377,10 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         .gitmodules
+>         dir1/untracked
+>         dir2/modified
+> @@ -1459,18 +1402,15 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+> -
+>         .gitmodules
+>         dir1/untracked
+>         dir2/modified
+> @@ -1582,13 +1522,11 @@ and have 2 and 2 different commits each, respecti=
+vely.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   sm
+>
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   dir1/modified
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index c1eb72555d..e5ba2d2c8a 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -33,7 +33,6 @@ You have unmerged paths.
+>
+>  Unmerged paths:
+>    (use "git add <file>..." to mark resolution)
+> -
+>         both modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -54,7 +53,6 @@ All conflicts fixed but you are still merging.
+>    (use "git commit" to conclude merge)
+>
+>  Changes to be committed:
+> -
+>         modified:   main.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> @@ -87,7 +85,6 @@ You are currently rebasing branch '\''rebase_conflicts'=
+\'' on '\''$ONTO'\''.
+>  Unmerged paths:
+>    (use "git reset HEAD <file>..." to unstage)
+>    (use "git add <file>..." to mark resolution)
+> -
+>         both modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -111,7 +108,6 @@ You are currently rebasing branch '\''rebase_conflict=
+s'\'' on '\''$ONTO'\''.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   main.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> @@ -150,7 +146,6 @@ You are currently rebasing branch '\''rebase_i_confli=
+cts_second'\'' on '\''$ONTO
+>  Unmerged paths:
+>    (use "git reset HEAD <file>..." to unstage)
+>    (use "git add <file>..." to mark resolution)
+> -
+>         both modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -177,7 +172,6 @@ You are currently rebasing branch '\''rebase_i_confli=
+cts_second'\'' on '\''$ONTO
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   main.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> @@ -247,7 +241,6 @@ You are currently splitting a commit while rebasing b=
+ranch '\''split_commit'\''
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -355,7 +348,6 @@ You are currently splitting a commit while rebasing b=
+ranch '\''several_edits'\''
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -454,7 +446,6 @@ You are currently splitting a commit while rebasing b=
+ranch '\''several_edits'\''
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -558,7 +549,6 @@ You are currently splitting a commit while rebasing b=
+ranch '\''several_edits'\''
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+>    (use "git checkout -- <file>..." to discard changes in working directo=
+ry)
+> -
+>         modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -747,7 +737,6 @@ You are currently cherry-picking commit $TO_CHERRY_PI=
+CK.
+>
+>  Unmerged paths:
+>    (use "git add <file>..." to mark resolution)
+> -
+>         both modified:   main.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -771,7 +760,6 @@ You are currently cherry-picking commit $TO_CHERRY_PI=
+CK.
+>    (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+>
+>  Changes to be committed:
+> -
+>         modified:   main.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> @@ -836,7 +824,6 @@ You are currently reverting commit $TO_REVERT.
+>  Unmerged paths:
+>    (use "git reset HEAD <file>..." to unstage)
+>    (use "git add <file>..." to mark resolution)
+> -
+>         both modified:   to-revert.txt
+>
+>  no changes added to commit (use "git add" and/or "git commit -a")
+> @@ -856,7 +843,6 @@ You are currently reverting commit $TO_REVERT.
+>
+>  Changes to be committed:
+>    (use "git reset HEAD <file>..." to unstage)
+> -
+>         modified:   to-revert.txt
+>
+>  Untracked files not listed (use -u option to show untracked files)
+> diff --git a/wt-status.c b/wt-status.c
+> index e065558c31..3d10d19af0 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -194,7 +194,6 @@ static void wt_longstatus_print_unmerged_header(struc=
+t wt_status *s)
+>         } else {
+>                 status_printf_ln(s, c, _("  (use \"git add/rm <file>...\"=
+ as appropriate to mark resolution)"));
+>         }
+> -       status_printf_ln(s, c, "%s", "");
+>  }
+>
+>  static void wt_longstatus_print_cached_header(struct wt_status *s)
+> @@ -210,7 +209,6 @@ static void wt_longstatus_print_cached_header(struct =
+wt_status *s)
+>                 status_printf_ln(s, c, _("  (use \"git reset %s <file>...=
+\" to unstage)"), s->reference);
+>         else
+>                 status_printf_ln(s, c, _("  (use \"git rm --cached <file>=
+...\" to unstage)"));
+> -       status_printf_ln(s, c, "%s", "");
+>  }
+>
+>  static void wt_longstatus_print_dirty_header(struct wt_status *s,
+> @@ -229,7 +227,6 @@ static void wt_longstatus_print_dirty_header(struct w=
+t_status *s,
+>         status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to=
+ discard changes in working directory)"));
+>         if (has_dirty_submodules)
+>                 status_printf_ln(s, c, _("  (commit or discard the untrac=
+ked or modified content in submodules)"));
+> -       status_printf_ln(s, c, "%s", "");
+>  }
+>
+>  static void wt_longstatus_print_other_header(struct wt_status *s,
+> @@ -241,7 +238,6 @@ static void wt_longstatus_print_other_header(struct w=
+t_status *s,
+>         if (!s->hints)
+>                 return;
+>         status_printf_ln(s, c, _("  (use \"git %s <file>...\" to include =
+in what will be committed)"), how);
+> -       status_printf_ln(s, c, "%s", "");
+>  }
+>
+>  static void wt_longstatus_print_trailer(struct wt_status *s)
+> --
+> gitgitgadget
