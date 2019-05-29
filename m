@@ -2,128 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7A91F462
-	for <e@80x24.org>; Wed, 29 May 2019 09:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FDFE1F462
+	for <e@80x24.org>; Wed, 29 May 2019 09:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbfE2JLo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 05:11:44 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:43620 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725911AbfE2JLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 05:11:44 -0400
-Received: by mail-pl1-f196.google.com with SMTP id gn7so788799plb.10
-        for <git@vger.kernel.org>; Wed, 29 May 2019 02:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=C7hX91qz3vqJ6SvsPoUxKHsJMUdb/xZv58Ut8nEe1vU=;
-        b=Z+GB+nF4WYxRmr9IZoaszFvuZ/0257ruAly+p9ngB15SY7bqYtxVKBKjcvBhCnynrM
-         MrU3VFQMVydQj4PAkNXFWNv09sQe7uYgGRlF+fF4XQSrU6hS63kUDSVeKbw0sJCpd+P7
-         b8RzXkR6dyJHdR4wR9sprEw2Jd/9fbyhhbi4CbPMjGyjbJLjUMLNAENh9Qkezg2kRvQ+
-         /aLRSH3jmRi08u18ZFDYKnlddexiXcbrjmnucZzpXK+LZzCYeRCwXRGx3LHWNpCFH78t
-         9xJMTYd9JItbU0jTV6F/0kHWPv30R0BRfAtHWVf5ED0UYA4uX3MAj2GlnyJ3Og38gb6T
-         zPEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=C7hX91qz3vqJ6SvsPoUxKHsJMUdb/xZv58Ut8nEe1vU=;
-        b=VgH6Zw9euTgSdny3PgTDYwO+jUo4poR+tcxR1rT850jFDe94T1hflZ2kE1ChoZzl5i
-         b1HoO86q31ODHqsCPwMp738Gac2+xGqk733DRoeyY2LvVCO8ladXtUIIETDUYuNWVWZU
-         wJYwxr1O0L92WX3NbAfdaTNUlsNc1k7AHhK8ftsGoHH9i7CxyYjYFxJYhywv1iWLgJ9Y
-         MDes5StVns8rRJ27vQGjCBKnOTLj+Y/c9Pvmks7yjT8Xknq/nvehUjSwxfq3Wa+lnxNS
-         njtBCZmPWOYdjF950hMvN8yOuYoHSLcPgNmig+JbwK/CoUXfkSmbOTKrrPywCz5/Oi2t
-         WgZA==
-X-Gm-Message-State: APjAAAUD6CAevrr1MrNBoPn/tZS3R+/138pLcbh+UPEeAUnftZ8NCiNI
-        ph3Y9u1Rkwa01cBIJjAXkno=
-X-Google-Smtp-Source: APXvYqw/tzRzVelBA8IM3zCvv/jT+PV2WEQoFD/z7+VfPSV14LG/mL4RAbgr0/2HFa2qgfjywKxU2A==
-X-Received: by 2002:a17:902:8d96:: with SMTP id v22mr65051145plo.282.1559121103691;
-        Wed, 29 May 2019 02:11:43 -0700 (PDT)
-Received: from ash ([115.72.28.243])
-        by smtp.gmail.com with ESMTPSA id e16sm22497632pfj.77.2019.05.29.02.11.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 May 2019 02:11:43 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 29 May 2019 16:11:39 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, bturner@atlassian.com, git@vger.kernel.org,
-        gitster@pobox.com, tmz@pobox.com
-Subject: [PATCH v2 3/3] parse-options: check empty value in OPT_INTEGER and OPT_ABBREV
-Date:   Wed, 29 May 2019 16:11:16 +0700
-Message-Id: <20190529091116.21898-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
-In-Reply-To: <20190529091116.21898-1-pclouds@gmail.com>
-References: <20190524092442.701-1-pclouds@gmail.com>
- <20190529091116.21898-1-pclouds@gmail.com>
+        id S1726101AbfE2JjE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 05:39:04 -0400
+Received: from mout.gmx.net ([212.227.17.20]:36063 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725914AbfE2JjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 05:39:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559122742;
+        bh=zDhkV43tlaRKu/MpapJA3fYx3X1zlPHbP2ItLvG28os=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WYGa624oLwd5LGN2uyre4rfOpaknlC2p+OgJuSXsm1P34ZUk/ysOu08k2pC85E6Ah
+         anywMthV/yvcBmyhknGCX9HnvcvA+iu03KN83LRqMXZhyObvFhww1Itw9YXIarlT8s
+         dF3MwX2HV6kbrz4hJUYocwF+7FRNxpEXjArINsBY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLA45-1hWC1v0CaP-000P1a; Wed, 29
+ May 2019 11:39:02 +0200
+Date:   Wed, 29 May 2019 11:38:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little
+ projects
+In-Reply-To: <87in9ucsbb.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905291137070.44@tvgsbejvaqbjf.bet>
+References: <87in9ucsbb.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1348207627-1559122742=:44"
+X-Provags-ID: V03:K1:s3ZHl+VgxO2h3txvgEDn7Bfq0wDJAfUTUuKRhVsig2j2CMg5BHL
+ bRPF955V1Kypa64gN3nQLlQm2zE6TdHtlp+2Qye7UgMKTrXvPqQdsw0dY8skCAUW4PKA+8D
+ L/bq5/cxk/MAYn1ZmMSL/uTH0EkKTjb0KM8SI8M+Cw621OMIdBmxU2G1JUVa05Rip9qjxkb
+ AuE+mBqzK0BjNbFU3p+DA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rfUpn67xooE=:xBsw8hQqsh8ORy7Ujt7MQE
+ 8/lyUgxPW8oIOpXYl65K1HqW2Zf6F6vs4tlOvtSYJa5RpfB9StNzGvT6KQ9FNoW2ft2T5zBWB
+ VkSb7dIUlxUMx2DjFxj2bJhb/X6dg0ndadhygND17VgiM5tAl2Sr78XEqSgQ566Utf0QVg8ja
+ 5TteUK93FfVlZ5jrWqdCDGhCWn9bz+NdwQvaAhG7Yx5zZ5fDXUPxoRXTkSgjQ0qo4jwqYGmWa
+ M/Jnlbcuebcv2jjpkSYfNynu3uFVOov+xazFKe46LbuqgLEWIOGJvGN9zJj4dPjATUyw1tsGm
+ Ot48W1FG0CO2f3ymV7HAr6Hv6a7gUIbyAHLIE878H+zplQYqWpPEPIIO5pc4oLv3j3psDUhPR
+ RhPdmHHep0wwVc/maxlMLiyKiAyGcigxhtygH+36DxPopt0lEjL0mBJGl736IwBRTpIBYHdKw
+ Gs57f2tAAHZW/nUeVN8N9RtiBvvAK5T/Kxu+JB4GvnOl5eUdF0UTE1vsyj/R23v7kunST2JHg
+ 35stm65bSBW7q3GmS3iLMwKAMTgjTiWCs6uzt5+dV8dociWoFXx+rn74swrIVTJQ5MckDN/6N
+ tYdzgNDZQhfDWcBr6o2GAPELtWlreKcO/YbMtQiVbsBY41jMKFXGDgGxNHULpoQp22FmMciNB
+ kSHztmcrgrnWZ+i/FToLGINKiF1wZEvGo/9c/6M17q6hXkKGUDP0Yrl5nJ4g+Zrvp9FuEeTy2
+ UtR9q+z/ILGLpoQn1WX11UsQmmUxUiiA9yIwQLeMbyZlxSKPJ073qohowkD/+97MySRoQPexL
+ cXWoAf48lPuwNiVvUCSCzxi2r9yItupOb9lCx62+cFoLXSln1KdoFevagX2eG3b3qe2H5MF3m
+ U/e3tseYQnw9iEnq0+xEeIEbUUVD5RioC63iaGn29ObTmo8Acraj6t5qGUOrPVBTqdG5TvKwd
+ EbHMrqbnTcpr9rzAcc7KjqOF7BJ4q7LMrAaBYrdJcFNRJ2vscKYtL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When parsing the argument for OPT_INTEGER and OPT_ABBREV, we check if we
-can parse the entire argument to a number with "if (*s)". There is one
-missing check: if "arg" is empty to begin with, we fail to notice.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This could happen with long option by writing like
+--8323328-1348207627-1559122742=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-  git diff --inter-hunk-context= blah blah
+Hi =C3=86var,
 
-Before 16ed6c97cc (diff-parseopt: convert --inter-hunk-context,
-2019-03-24), --inter-hunk-context is handled by a custom parser
-opt_arg() and does detect this correctly.
+On Sat, 17 Mar 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-This restores the bahvior for --inter-hunk-context and make sure all
-other integer options are handled the same (sane) way. For OPT_ABBREV
-this is new behavior. But it makes it consistent with the rest.
+> In lieu of sending a PR to https://git.github.io/SoC-2018-Microprojects/
+> I thought I'd list a few more suggestions, and hopefully others will
+> chime in.
 
-PS. OPT_MAGNITUDE has similar code but git_parse_ulong() does detect
-empty "arg". So it's good to go.
+I am in the same camp, and figured that GitGitGadget (which *already*
+augments the Git mailing list-centric workflow via GitHub's convenient UI)
+would make for a fine location for these small left-over bits. So I added
+them to https://github.com/gitgitgadget/git/issues/234 (except the
+"git-unpack-*" idea, as I think that should be done as a test helper
+instead, and it should be done in the context of a new test case that
+actually needs this).
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- parse-options-cb.c | 3 +++
- parse-options.c    | 3 +++
- 2 files changed, 6 insertions(+)
+Ciao,
+Dscho
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 4b95d04a37..a3de795c58 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -16,6 +16,9 @@ int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
- 	if (!arg) {
- 		v = unset ? 0 : DEFAULT_ABBREV;
- 	} else {
-+		if (!*arg)
-+			return error(_("option `%s' expects a numerical value"),
-+				     opt->long_name);
- 		v = strtol(arg, (char **)&arg, 10);
- 		if (*arg)
- 			return error(_("option `%s' expects a numerical value"),
-diff --git a/parse-options.c b/parse-options.c
-index 987e27cb91..87b26a1d92 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -195,6 +195,9 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
- 		}
- 		if (get_arg(p, opt, flags, &arg))
- 			return -1;
-+		if (!*arg)
-+			return error(_("%s expects a numerical value"),
-+				     optname(opt, flags));
- 		*(int *)opt->value = strtol(arg, (char **)&s, 10);
- 		if (*s)
- 			return error(_("%s expects a numerical value"),
--- 
-2.22.0.rc0.322.g2b0371e29a
-
+--8323328-1348207627-1559122742=:44--
