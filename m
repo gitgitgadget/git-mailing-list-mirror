@@ -2,191 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F195D1F462
-	for <e@80x24.org>; Wed, 29 May 2019 20:09:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B62C41F462
+	for <e@80x24.org>; Wed, 29 May 2019 20:10:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726395AbfE2UJ4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 16:09:56 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:34116 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfE2UJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 16:09:55 -0400
-Received: by mail-pl1-f196.google.com with SMTP id w7so1522767plz.1
-        for <git@vger.kernel.org>; Wed, 29 May 2019 13:09:54 -0700 (PDT)
+        id S1726498AbfE2UK4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 16:10:56 -0400
+Received: from mail-it1-f176.google.com ([209.85.166.176]:53187 "EHLO
+        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbfE2UKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 16:10:55 -0400
+Received: by mail-it1-f176.google.com with SMTP id t184so6123444itf.2
+        for <git@vger.kernel.org>; Wed, 29 May 2019 13:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9KYjvSfHiPQEVPCia0CaY52A1UOMT4AV6EMgaGjWGVY=;
-        b=RMEo8J6dTJEMIOLcqwOaqmWRKabCoOEUtfcMAWyFqvJWHtR6aHKfIBlnIjQcdp7ttw
-         pzQzJyOpQ+GrI5DvHJQszn6yLh+joH4jTUFw6/IL1oMQWZ29TzpT5N6PHBDz5akBRQo6
-         EQMEtlNctmMkCbvjtvD1XWZYNCRvDicsfH+F5xwt6Ys7EHrPMhQPzN4KcfqUlncWmR32
-         8LaIjMqxuSY9hrKSAMNMuTskj8v789FeXifdeQO5b7KlhCYZrNd+CMs2cDtFaV/wxqpE
-         Gp4Vtms8CG0EREAIVnYrHrb+s/o7Pb1C7uMkEPLxJRZ9pUJ8FS60stTeii8qMKvG8Uw7
-         wH7g==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ru96lpPFEcOSkXqq7PC7HTysyFH77/+ZCRqDYWGQY5w=;
+        b=WPzVffRD+zAF50IIMYkikvIUUm9X7jOT4UwMMTW9A90NZd++gQqX7vAlS43cJFtDXn
+         tQmMxGRRWxuynRSL/ZvSEZKrIrU9/Cpf/VjMaWzh+WWo7uoQNo1zyYFadLfOsBcKQRnw
+         fYuItQaguDiYtFv2Ap6w5XDDPEFZKZ1ns2MY5P0AWUqFMcIBuOCbbqccNYXyUdEd76ub
+         KyprCEeLMXLsBt7Yt9dg1ndTF9Lxrxh2gJssvoj1eaC1qdoiR8SNt3mShspTdqKTciHX
+         KB/QDC4x9cuq5eyois6N6Iz5UGdUKiVmZlQjqmzAmnKcs2f065It6r5nZ2iPIWkZ/0Jz
+         X5XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9KYjvSfHiPQEVPCia0CaY52A1UOMT4AV6EMgaGjWGVY=;
-        b=Ns0JTBJMmmk8GpKStu9Io9L9RFD7mr7mKJEaREqXsa344J/Y5tv84/zEM5eMpk3SNA
-         KDQNAIjQhQSYc7hw9c6+E/UtvDLEbrMd4SFik7HY+Gvqge+ojOsuP0B6+bcjQylT0xVP
-         W/XHdqf1TDH2mt8g30N6ZWBNLkK5DgORol2cY8f9PaTksTQn3ZLIh0hWxExp9e/1W5fg
-         CoLEFNYXGbDfpcOruSZt5X+vtzC0FpFSodAThSWRmT4LUHJEjPHb9ybxiNPjkXsOiCJ4
-         HN1Bqcxp4/FiK9UZsW/NNSLsB4HufSZTcsvhDEFmEIvHrTqwpyG0uDCDIhhv7Bmypmih
-         57+w==
-X-Gm-Message-State: APjAAAXumYo+O5JQgehvnGap7JZ/e2CXEyBScXvKafYsA7zxLTPVEtVP
-        8ZspvLhuCgmKmt9lcYqZSptT3A==
-X-Google-Smtp-Source: APXvYqwbkF//4eZR04c8lNunC/EuImKCdft2F9WDC7oezwDJGkskNxemvz2S1B7bkvnOrU8q9I1Cag==
-X-Received: by 2002:a17:902:122:: with SMTP id 31mr3825831plb.217.1559160591454;
-        Wed, 29 May 2019 13:09:51 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
-        by smtp.gmail.com with ESMTPSA id r9sm478486pfc.173.2019.05.29.13.09.48
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 29 May 2019 13:09:49 -0700 (PDT)
-Date:   Wed, 29 May 2019 13:09:44 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 1/2] documentation: add tutorial for first contribution
-Message-ID: <20190529200944.GA52337@google.com>
-References: <20190517190359.21676-1-emilyshaffer@google.com>
- <20190517190701.49722-2-emilyshaffer@google.com>
- <CAP8UFD2YH50Br4BNmTqEVeUknxi1X39JCRB4XMwK8rx3DWx=KA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ru96lpPFEcOSkXqq7PC7HTysyFH77/+ZCRqDYWGQY5w=;
+        b=ThUt7j4+VC+6Q+1uDe3O5bV6bUBmoiPNWNM3Y1oMUeMeborVpR5pPzj/3ZpIOwJsUE
+         QQ0sxIW0SVES/dS9Yk0sqR7Y8d4qeYMysQTPIsE2QroA+p+bjIVtnmFTXtgHZKy6Mm9D
+         7JLt99wxb/3nV/G+VloGJf8650Qq6tK5e8nxR9d7gcJTL8PiEGjnkA7bBykkCUE6E+jW
+         NNlwSye5n1T8R7SmMefVxySjcK6f3nxVd960/BYRqyrn3jGD7r5tMkmD+NsUu6H6wHqc
+         r44LNmT+Aqy5FknQuo0VlVIhJsBdG4o4OEIhA2m6nVtyHsPXmOujVhxt8aALp2a2trFw
+         gL2Q==
+X-Gm-Message-State: APjAAAXL5O+TTkCN3ZDnm96NfCMm9FkC2r6OpCZ/GsIb1L6RSzyudlGV
+        ngmYAN93hOlU/XfuU9vtxE+gR5jGJUm1L79g2a4=
+X-Google-Smtp-Source: APXvYqxqu5YYP7qx5bPvnLgWrJNZSE+7k7N6KIKy/SuQTYD+NSWJu1q0l1V+oMrfRQ05jmcXYudg97KO1qVZENdwiqo=
+X-Received: by 2002:a02:5488:: with SMTP id t130mr42829403jaa.20.1559160654566;
+ Wed, 29 May 2019 13:10:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2YH50Br4BNmTqEVeUknxi1X39JCRB4XMwK8rx3DWx=KA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet> <20190528063451.GG7946@sigill.intra.peff.net>
+ <CAKkfZL30QuBM6vT69OSS_keNuGi1U-bJ+jDiyDfhZmnr9L9xvA@mail.gmail.com>
+ <20190528204051.GA24650@sigill.intra.peff.net> <CAKkfZL3ZNgNFzxrYbjbhCF5BR12vQPy2sNuYdxmQgmuG+mo9Gw@mail.gmail.com>
+ <20190528205608.GC24650@sigill.intra.peff.net> <CAKkfZL1BmOjzJ1QrQ43gJx89si3-M_1KMz=EWXN=pK6HSjCEkQ@mail.gmail.com>
+ <20190528213912.GH24650@sigill.intra.peff.net>
+In-Reply-To: <20190528213912.GH24650@sigill.intra.peff.net>
+From:   Brendan Boerner <bboerner.biz@gmail.com>
+Date:   Wed, 29 May 2019 15:10:43 -0500
+Message-ID: <CAKkfZL385B99fJ10V-yXVK3KpHNNA-fpM31zwvsBrfr02pD3jw@mail.gmail.com>
+Subject: Re: 'git stash list' => Segmentation fault
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 26, 2019 at 09:48:26AM +0200, Christian Couder wrote:
-> On Fri, May 17, 2019 at 11:48 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+Hey Jeff,
+
+Yes, if I install gettext build from source envsubst and gettext no
+segfaults. tset from ncurses segfaults as well unless I install from
+source.
+
+So weird breakage which manifested as a red herring. :-(
+
+Thanks for your help helping me sort it out.
+
+Regards,
+Brendan
+
+
+
+On Tue, May 28, 2019 at 4:39 PM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, May 28, 2019 at 04:29:13PM -0500, Brendan Boerner wrote:
+>
+> > To answer your previous question I'm using git v2.21.0. I'm using the
+> > Ubuntu 14.04 PPA as well as Linuxbew (also v2.21.0).
 > >
-> > This tutorial covers how to add a new command to Git and, in the
-> > process, everything from cloning git/git to getting reviewed on the
-> > mailing list. It's meant for new contributors to go through
-> > interactively, learning the techniques generally used by the git/git
-> > development community.
-> 
-> Very nice, thanks! I tried it and I liked it very much.
-> 
-> I noted a few nits that might help improve it a bit.
-> 
-> > +----
-> > +$ git clone https://github.com/git/git git
-> 
-> Nit: maybe add "$ cd git" after that.
-
-Sure, done.
-
-> 
-> > +Check it out! You've got a command! Nice work! Let's commit this.
-> > +
-> > +----
-> > +$ git add Makefile builtin.h builtin/psuh.c git.c
-> > +$ git commit -s
-> > +----
-> 
-> Nit: when building a "git-psuh" binary is created at the root of the
-> repo which will pollute the `git status` output. The usual way we deal
-> with that is by adding "/git-psuh" to the ".gitignore" at the root of
-> the repo.
-
-Right you are - good catch. I'll add a paragraph about adding to the
-gitignore.
-> 
-> > +=== Implementation
-> > +
-> > +It's probably useful to do at least something besides printing out a string.
-> > +Let's start by having a look at everything we get.
-> > +
-> > +Modify your `cmd_psuh` implementation to dump the args you're passed:
-> 
-> Nit: maybe it could be a bit more clear that the previous printf()
-> call should be kept as is, otherwise the test added later will fail.
-
-Done.
-
-> 
-> > +----
-> > +       const char *cfg_name;
-> > +
-> > +...
-> > +
-> > +       git_config(git_default_config, NULL)
-> 
-> Nit: a ";" is missing at the end of the above line.
-
-Yikes, done.
-
-> 
-> > +Let's commit this as well.
-> > +
-> > +----
-> > +$ git commit -sm "psuh: print the current branch"
-> 
-> Nit: maybe add "builtin/psuh.c" at the end of the above line, so that
-> a `git add builtin/psuh.c` is not needed.
-
-This is purely personal preference, but I prefer manually adding files
-first. I didn't add any indication about staging the changes to psuh.c
-though, so I'm adding a line to `git add builtin/psuh.c`. I found one
-other place where the commit line was shown without the add line, so I
-included the add there too.
-
-> 
-> > +....
-> > +git-psuh(1)
-> > +===========
-> > +
-> > +NAME
-> > +----
-> > +git-psuh - Delight users' typo with a shy horse
-> > +
-> > +
-> > +SYNOPSIS
-> > +--------
-> > +[verse]
-> > +'git-psuh'
-> > +
-> > +DESCRIPTION
-> > +-----------
-> > +...
-> > +
-> > +OPTIONS[[OPTIONS]]
-> > +------------------
-> > +...
-> > +
-> > +OUTPUT
-> > +------
-> > +...
-> > +
-> > +
-> 
-> Nit: it seems that the above newline could be removed.
-
-
-Sure, why not.
-
-> 
-> Thanks,
-> Christian.
-
-Thanks for trying it out and for your thorough review, Christian. I
-appreciate it! Since this is checked into next already, I'll be sending
-a follow-on patch in reply to my last version in this thread which is
-based on the tip of next.
-
- - Emily
+> > Your help helped me narrow this down to linuxbrew. Take it out of my
+> > path no segfault.
+> >
+> > Uninstall linuxbrew git, linuxbrew still in PATH, use PPA git, segfault.
+> >
+> > Narrowed down further to be the "gettext" package - remove it from
+> > linuxbrew and PPA git stash list => no segfault.
+> >
+> > I'll ping the Linuxbrew folks.
+>
+> Ah, that makes sense. You're indeed running the shell version, and it's
+> invoking "gettext" for messages, which is probably what's segfaulting.
+> And that explains the multiple segfaults and the fact that they didn't
+> actually cause the overall operation to fail.
+>
+> So probably nothing here for Git to fix. Thanks for following up with
+> the resolution!
+>
+> -Peff
