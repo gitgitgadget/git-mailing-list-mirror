@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E05671F462
-	for <e@80x24.org>; Wed, 29 May 2019 21:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29A4C1F462
+	for <e@80x24.org>; Wed, 29 May 2019 21:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726547AbfE2V3R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 17:29:17 -0400
-Received: from siwi.pair.com ([209.68.5.199]:59088 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726189AbfE2V3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 17:29:16 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 028A93F4023;
-        Wed, 29 May 2019 17:29:16 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:c90f:aaf8:aafe:c1ce] (unknown [IPv6:2001:4898:a800:1010:7a45:aaf8:aafe:c1ce])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1726689AbfE2Vpg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 17:45:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53683 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbfE2Vpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 17:45:35 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 742A976127;
+        Wed, 29 May 2019 17:45:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cS6DBbmwRkj0
+        YCWKjKISXWhm66Y=; b=Y4BCkuZE5dC7hZiIJdqWWzxnWsC4NUEmS9wRmpb1N2BM
+        0Y1bHzrmCX6vxZhBn76TPhDzh+ntQVji7J1A4RiPDi8wAQmJw7WyrouoHDT0aeFX
+        8Ggd8IBatl91x4XgLuKgXeE6GXlRoQzyneGCLkpIwbu/4rRNSzc0dsOTuvrxW+8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rYBZa0
+        q6IyhpUp1v+vm9xNTdgI30uCpco4zW0vugxIyYOPb6xrc2dFr2wtsx50iL28izLX
+        mjflidyCNAMDdkcjHkdgdoqfa4slB3ZZ8MyvvJaKnhdjlbKBNnEKePqp8MBg25kO
+        Ok/XyH4iP0UetVVUsl3hO6zIrhXVnchaqcZm4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6CFD076126;
+        Wed, 29 May 2019 17:45:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 645473F4019;
-        Wed, 29 May 2019 17:29:15 -0400 (EDT)
-Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
-To:     Matthew DeVore <matvore@comcast.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-References: <cover.1558484115.git.matvore@google.com>
- <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
- <2b47d4b1-ea62-d59e-77e0-d95dfad084e0@jeffhostetler.com>
- <xmqqh89e31fg.fsf@gitster-ct.c.googlers.com>
- <20190529150228.GC4700@comcast.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <9f1025ec-a3d7-c5f4-4a7a-15e4131f2b87@jeffhostetler.com>
-Date:   Wed, 29 May 2019 17:29:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C9DC776124;
+        Wed, 29 May 2019 17:45:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] trace2: rename environment variables to GIT_TRACE2*
+References: <20190510211502.GS14763@szeder.dev>
+        <20190519144309.9597-1-szeder.dev@gmail.com>
+        <87blzmmbd7.fsf@evledraar.gmail.com>
+        <c93cb249-1618-e2ed-5ba3-31d716fdbe06@jeffhostetler.com>
+Date:   Wed, 29 May 2019 14:45:30 -0700
+In-Reply-To: <c93cb249-1618-e2ed-5ba3-31d716fdbe06@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 29 May 2019 15:58:32 -0400")
+Message-ID: <xmqqk1e9x7d1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190529150228.GC4700@comcast.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 15A771F4-825B-11E9-BD54-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-
-On 5/29/2019 11:02 AM, Matthew DeVore wrote:
-> On Tue, May 28, 2019 at 10:59:31AM -0700, Junio C Hamano wrote:
->> Jeff Hostetler <git@jeffhostetler.com> writes:
+> On 5/28/2019 7:02 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >>
->>> In the RFC version, there was discussion [2] of the wire format
->>> and the need to be backwards compatible with existing servers and
->>> so use the "combine:" syntax so that we only have a single filter
->>> line on the wire.  Would it be better to have compliant servers
->>> advertise a "filters" (plural) capability in addition to the
-> 
-> This is a good idea and I hadn't considered it. It does seem to make the
-> repeated filter lines a safer bet than I though.
-> 
->>> existing "filter" (singular) capability?  Then the client would
->>> know that it could send a series of filter lines using the existing
->>> syntax.  Likewise, if the "filters" capability was omitted, the
->>> client could error out without the extra round-trip.
+>> On Sun, May 19 2019, SZEDER G=C3=A1bor wrote:
+>> ...
+>>> So let's rename all GIT_TR2* environment variables to GIT_TRACE2*,
+>>> before they make their way into a stable release.
 >>
->> All good ideas.
-> 
-> After hacking the code halfway together to make the above idea work, and
-> learning quite a lot in the process, I saw set_git_option in transport.c and
-> realized that all existing transport options are assumed to be ? (0 or 1) rather
-> than * (0 or more). So "filter" would be the first transport option that is
-> repeated.
-> 
-> Even though multiple reviewers have weighed in supporting repeated filter lines,
-> I'm still conflicted about it. It seems the drawback to the + syntax is the
-> requirement for encoding the individual filters, but this encoding is no longer
-> required since the sparse:path=... filter no longer has to be supported. And the
-> URL encoding, if it is ever reintroduced, is just boilerplate and is unlikely to
-> change later or cause a significant maintainance burden.
+>> Good to see this land in 2.22.0. I wonder if we shouldn't take this
+>> further and rename trace2.* config to trace.*, and just re-use
+>> GIT_TRACE=3D1 instead of having GIT_TRACE2 as well, and have a
+>> GIT_TRACE_VERSION to switch between them.
+>>
+>> Then we could just switch in a future version. We've never promised wh=
+at
+>> the trace format was going to look like, and the existing one isn't
+>> configurable (and we won't be making the v1 one...), so starting from
+>> the outset with "2" in config is unfortunate.
+>>
+>> We'd still have special snowflakes like e.g. GIT_TRACE_PACKET.
+>>
+>> OTOH we can just do this after the release if it's deemed a good idea,
+>> and just support trace2.* as aliases for trace.* for some amount of
+>> time, same for the env vars.
+>
+> I'm open to considering such a change while we're at it.
 
-Was sparse:path filter the only reason for needing all the URL encoding?
-The sparse:oid form allows values <ref>:<path> and these (or at least
-the <path> portion) may contain special characters.  So don't we need to
-URL encode this form too?
+I'm a bit against "while we're at it" part.  Let's take the
+s/TR2/TRACE2/ change and stop at it for the upcoming release,
+without spending too much time on over-engineering the stuff that
+are primarily for developers.
 
-
-> 
-> The essence of the repeated filter line is that we need additional high-level
-> machinery just for the sake of making the lower-level machinery... marginally
-> simpler, hopefully? And if we ever need to add new filter combinations (like OR
-> or XOR rather than AND) this repeated filter line thing will be a legacy
-> annoyance (users will wonder why does repeated "filter" mean AND rather than
-> one of the other supported combination methods?). Repeating filter lines seems
-> like a leaky abstraction to me.
-> 
-> I would be helped if someone re-iterated why the repeated filter lines are a
-> good idea in light of the fact that URL escaping is no longer required to make
-> it work.
-> 
+Thanks.
