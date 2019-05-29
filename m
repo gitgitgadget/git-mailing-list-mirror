@@ -2,143 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8971F462
-	for <e@80x24.org>; Wed, 29 May 2019 00:29:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4D8A1F462
+	for <e@80x24.org>; Wed, 29 May 2019 01:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbfE2A3k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 May 2019 20:29:40 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:37250 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbfE2A3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 May 2019 20:29:40 -0400
-Received: by mail-qt1-f194.google.com with SMTP id y57so500565qtk.4
-        for <git@vger.kernel.org>; Tue, 28 May 2019 17:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2vpwBF2yQItxE5uDn2Icq3iK2m63ilLmjN2FZv6YJP8=;
-        b=hv/lrKJazZCShXcRLw+AZQV1dlrhb8gUXErsROYXeZ9iRIZ3FF2B0MITQEkfrufWub
-         uBpfCihbgMN2PiYio3SmwZL1AfmMq/PK+g1sSu6+UwjZg+OASRtqF+p13ttL+rLPN20B
-         M+FtFWjNCrATRY/nJD2Uko5/F7soUqOM/9F24iqOuZaGvNeqpLxndBUkO/TEPyIA7NxO
-         npCZLN0NA2AC/DZWJzAWOvxCDY8QIs95L84lhdw5vu9ZRckKZEgHK59nMTaivirG33ND
-         G7b/ey4eQ/fZcloWtjpNQ5N9n7wuNinBvc/G7Q75XI4zCZ6tuF4b22vWZ80sw4nLerVL
-         pPog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2vpwBF2yQItxE5uDn2Icq3iK2m63ilLmjN2FZv6YJP8=;
-        b=liDf3LUIad4by7VNv7vHbZeIgYt7FmKdG06RqPs8BbnarBXKPnjNQHp2B0U1/p05eP
-         ljDc6nIOAQ51TfxPdcXhO7Srkn45ttyfAOvdkMOIWzsNjeVQeyYmnA9/GH/351Km2EaW
-         RB5GMCSHgVmvf7XZopPwUpFf8TxCxkrTwFlrgrOdYgb/O2hxiRUPV8flN7KCW17hk2XW
-         eF7vmWQTrog+Mj0hw4LHdoNHGWJrY25hHwuTl2PQjk+WKMmChSYA3gVcfQbUAH3Y05df
-         ayyptf4V13+NnHgrmIWzqVrBCn27k+stuSxL0Ew2ZuaI459eCkmT0absECMIeFAU8oJM
-         bZ9Q==
-X-Gm-Message-State: APjAAAUOxf6G7dJ6EsdC0ixF+akBliEo8NQKsDMuRKJ8B2vHu3LWTwfy
-        rE8rHnGmK00WNEXTu+vQ/RY=
-X-Google-Smtp-Source: APXvYqwGGQfEAzqWxMOE4dHsDT0vfCA93st+zzsNdF9/VIkxTsk41Il3zEREjHsz1Zyo3EkhdLxFgw==
-X-Received: by 2002:ac8:6941:: with SMTP id n1mr72620210qtr.122.1559089779169;
-        Tue, 28 May 2019 17:29:39 -0700 (PDT)
-Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id h63sm2635440qkf.4.2019.05.28.17.29.38
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 May 2019 17:29:38 -0700 (PDT)
-Subject: Re: [PATCH 1/1] sha1-file: split OBJECT_INFO_FOR_PREFETCH
-To:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.228.git.gitgitgadget@gmail.com>
- <2737e62966cae2f00d75a93446bad76e5816d07e.1559056745.git.gitgitgadget@gmail.com>
- <20190528205441.GB24650@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f30f82f9-b07e-d6c3-5ccb-9b08b8424f7c@gmail.com>
-Date:   Tue, 28 May 2019 20:29:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        id S1726068AbfE2BRs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 May 2019 21:17:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40792 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725805AbfE2BRs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 May 2019 21:17:48 -0400
+Received: (qmail 12651 invoked by uid 109); 29 May 2019 01:17:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 May 2019 01:17:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20928 invoked by uid 111); 29 May 2019 01:18:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 May 2019 21:18:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 May 2019 21:17:44 -0400
+Date:   Tue, 28 May 2019 21:17:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Keegan Carruthers-Smith <keegan.csmith@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: git archive generates tar with malformed pax extended attribute
+Message-ID: <20190529011744.GA22340@sigill.intra.peff.net>
+References: <CAMVcy0Q0TL6uEGR2NeudJrOiXdQ87XcducL0EwMidWucjk5XYw@mail.gmail.com>
+ <20190524070644.GF25694@sigill.intra.peff.net>
+ <CAMVcy0ThtcDNjqat0+nQ4B91hC30NTUe=RW8v9WDxA2Q-4SyRA@mail.gmail.com>
+ <20190524081337.GA9082@sigill.intra.peff.net>
+ <b4aaff4b-eaf7-9eaf-063f-42c073078060@web.de>
+ <20190528055805.GB7946@sigill.intra.peff.net>
+ <5b312f6c-3375-66ba-efc7-931e4ddc4b11@web.de>
+ <20190528190815.GA20499@sigill.intra.peff.net>
+ <5f9ac691-4cb1-a15d-ca44-63fb64994d59@web.de>
 MIME-Version: 1.0
-In-Reply-To: <20190528205441.GB24650@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5f9ac691-4cb1-a15d-ca44-63fb64994d59@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/28/2019 4:54 PM, Jeff King wrote:
-> On Tue, May 28, 2019 at 08:19:07AM -0700, Derrick Stolee via GitGitGadget wrote:
-> 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The OBJECT_INFO_FOR_PREFETCH bitflag was added to sha1-file.c in 0f4a4fb1
->> (sha1-file: support OBJECT_INFO_FOR_PREFETCH, 2019-03-29) and is used to
->> prevent the fetch_objects() method when enabled.
->>
->> However, there is a problem with the current use. The definition of
->> OBJECT_INFO_FOR_PREFETCH is given by adding 32 to OBJECT_INFO_QUICK. This is
->> clearly stated above the definition (in a comment) that this is so
->> OBJECT_INFO_FOR_PREFETCH implies OBJECT_INFO_QUICK. The problem is that using
->> "flag & OBJECT_INFO_FOR_PREFETCH" means that OBJECT_INFO_QUICK also implies
->> OBJECT_INFO_FOR_PREFETCH.
->>
->> Split out the single bit from OBJECT_INFO_FOR_PREFETCH into a new
->> OBJECT_INFO_SKIP_FETCH_OBJECT as the single bit and keep
->> OBJECT_INFO_FOR_PREFETCH as the union of two flags. This allows a clearer use
->> of flag checking while also keeping the implication of OBJECT_INFO_QUICK.
-> 
-> Oof. I actually suggested splitting these up for review, but thought it
-> was only a clarity/flexibility issue, and completely missed the
-> correctness aspect of checking when the bit is set.
-> 
-> I agree with Junio's other response that using "==" would be the right
-> way for a multi-bit check, in general. But I like the split here,
-> because I think the result is more clear to read and harder to get
-> wrong for future checks.
+On Wed, May 29, 2019 at 01:34:32AM +0200, René Scharfe wrote:
 
-Thanks, for the feedback, both of you.
-
-> I'd even go so far as to say...
+> It figures.
 > 
->> + * This is meant for bulk prefetching of missing blobs in a partial
->> + * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
->> + */
->> +#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
+> So something like the patch below?
 > 
-> we could dump this, and callers should just say what they mean (i.e.,
-> specify both flags).
+> Parsing trees with symlinks twice is not ideal, but keeps the set
+> structure simple -- a standard oidset suffices.
 
-Dropping the _PREFETCH flag also makes oid_object_info_extended() slightly
-less "coupled" to the prefetch feature, and instead describes more explicitly
-the way the flag is changing the behavior of the method.
- 
-> There are only two of them, and I think both would be more readable with
-> a helper more like:
-> 
->   int should_prefetch_object(struct repository *r,
->                              const struct object_id *oid) {
-> 	return !oid_object_info_extended(r, oid, NULL,
-> 	                                 OBJECT_INFO_SKIP_FETCH_OBJECT |
-> 					 OBJECT_INFO_QUICK);
->   }
-> 
-> but unless everybody is immediately on-board with "yes, that is much
-> nicer", I don't want bikeshedding to hold up your important and
-> obviously-correct fix.
+If blobs comes after trees (and they usually do in a pack), you can do
+it in a single pass by marking the blob as a symlink target, and then
+when we actually see that blob's contents, marking it as either OK or
+problematic. And then the finish() step just correlates those with the
+tree.
 
-I'll come back with another series to drop the _PREFETCH flag after the
-release calms down. It can give more time for others to chime in here.
+It does require O(n) storage in the number of symlinked blobs, but also
+O(n) in the number of symlinked tree entries (number of trees with
+symlinks times the number of entries in each such tree, _even if they're
+the same entry/blob as another tree).
 
-Thanks, Junio for the quick turnaround in taking the patch.
+That makes it a lot worse than the existing gitmodules check. There we
+only care about finding the .gitmodules blobs. So even though you have a
+ton of trees that mention .gitmodules (basically every root tree), the
+the .gitmodules file itself doesn't change much. So we only end up with
+a small oidset (and a small worst case for looking at objects twice).
 
-Thanks,
--Stolee
+But here the problem is in the tree, not the blob. So we're not finding
+suspect blobs, but rather re-checking each tree. And no matter what we
+do (whether it's visiting the object again, or creating a set or mapping
+with the object names) is going to be linear there. And a repository
+with a symlink in the root tree is going to revisit or put in our
+mapping every single root tree.
+
+TBH, I'm not sure this fsck check was worth it even without the
+implementation complexity.
+
+> The global variables are ugly.  Moving them into struct fsck_option
+> would be possible, but not much better, as they aren't really
+> options.
+
+Yeah, we use the name "context" elsewhere for this, which is a bit
+clearer. In a real object-oriented design, I guess people would make an
+"Fscker" object, and it would carry the options and context forward.
+That's basically what our "context" objects are.
+
+> FSCK_MSG_MISSING_TREE_OBJECT has never been used before, it seems.
+
+Yeah, this is leftover cruft from my gitmodules series. I double-checked
+the early iterations to be sure, and it is definitely the case. I didn't
+dig down to find out the reason it went away, but I think it is probably
+that the original version tried harder to find .gitmodules only in root
+trees, and later we decided to just complain about it in any tree.
+
+-Peff
