@@ -2,109 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62C41F462
-	for <e@80x24.org>; Wed, 29 May 2019 20:10:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 438641F462
+	for <e@80x24.org>; Wed, 29 May 2019 20:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726498AbfE2UK4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 16:10:56 -0400
-Received: from mail-it1-f176.google.com ([209.85.166.176]:53187 "EHLO
-        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbfE2UKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 16:10:55 -0400
-Received: by mail-it1-f176.google.com with SMTP id t184so6123444itf.2
-        for <git@vger.kernel.org>; Wed, 29 May 2019 13:10:54 -0700 (PDT)
+        id S1726483AbfE2UST (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 16:18:19 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:45754 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfE2UST (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 16:18:19 -0400
+Received: by mail-qt1-f202.google.com with SMTP id g14so2973313qta.12
+        for <git@vger.kernel.org>; Wed, 29 May 2019 13:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ru96lpPFEcOSkXqq7PC7HTysyFH77/+ZCRqDYWGQY5w=;
-        b=WPzVffRD+zAF50IIMYkikvIUUm9X7jOT4UwMMTW9A90NZd++gQqX7vAlS43cJFtDXn
-         tQmMxGRRWxuynRSL/ZvSEZKrIrU9/Cpf/VjMaWzh+WWo7uoQNo1zyYFadLfOsBcKQRnw
-         fYuItQaguDiYtFv2Ap6w5XDDPEFZKZ1ns2MY5P0AWUqFMcIBuOCbbqccNYXyUdEd76ub
-         KyprCEeLMXLsBt7Yt9dg1ndTF9Lxrxh2gJssvoj1eaC1qdoiR8SNt3mShspTdqKTciHX
-         KB/QDC4x9cuq5eyois6N6Iz5UGdUKiVmZlQjqmzAmnKcs2f065It6r5nZ2iPIWkZ/0Jz
-         X5XA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=MKBWDzhD5SZMbo2FuNm/0MIB6QloxYsuTSbcvXs+aH8=;
+        b=rDkmTixD6OqNEYBXWd40q1e6GKODF74PkBjQu5HNj8RZpWfP0eDFVP4G7g33wp4tLp
+         ZbjYbEa1xpX+yvFWiH5Cj9Grqxdo96ACmsCf5WGz5YI8oNsvrSI35ge0rOYrPkdNu3Jl
+         H98DY31hXqGBHns1z7yvjEcepySqFB4YsIuv0AZzI1sRds0kKWzG5VyWZG1mWhrGDK1K
+         yDyA1X6Sd44qhRn0sDmq21CLw3MFVAFZU5dZSQyOmPVlsEhojqkTrezq9mKnNr2ZlZhs
+         zqLr3qAY6gJubsLqOj0eceWSYOmggAYB6xrFt6aFkMJnP6UUCNkNYveid+AvI0zYEa1Q
+         FDfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ru96lpPFEcOSkXqq7PC7HTysyFH77/+ZCRqDYWGQY5w=;
-        b=ThUt7j4+VC+6Q+1uDe3O5bV6bUBmoiPNWNM3Y1oMUeMeborVpR5pPzj/3ZpIOwJsUE
-         QQ0sxIW0SVES/dS9Yk0sqR7Y8d4qeYMysQTPIsE2QroA+p+bjIVtnmFTXtgHZKy6Mm9D
-         7JLt99wxb/3nV/G+VloGJf8650Qq6tK5e8nxR9d7gcJTL8PiEGjnkA7bBykkCUE6E+jW
-         NNlwSye5n1T8R7SmMefVxySjcK6f3nxVd960/BYRqyrn3jGD7r5tMkmD+NsUu6H6wHqc
-         r44LNmT+Aqy5FknQuo0VlVIhJsBdG4o4OEIhA2m6nVtyHsPXmOujVhxt8aALp2a2trFw
-         gL2Q==
-X-Gm-Message-State: APjAAAXL5O+TTkCN3ZDnm96NfCMm9FkC2r6OpCZ/GsIb1L6RSzyudlGV
-        ngmYAN93hOlU/XfuU9vtxE+gR5jGJUm1L79g2a4=
-X-Google-Smtp-Source: APXvYqxqu5YYP7qx5bPvnLgWrJNZSE+7k7N6KIKy/SuQTYD+NSWJu1q0l1V+oMrfRQ05jmcXYudg97KO1qVZENdwiqo=
-X-Received: by 2002:a02:5488:: with SMTP id t130mr42829403jaa.20.1559160654566;
- Wed, 29 May 2019 13:10:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAKkfZL2p8yFr3ecsQ63HzeZ+u-Jukf7YcYHk_8iBaKcA4WbEfg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1905272046250.47@tvgsbejvaqbjf.bet> <20190528063451.GG7946@sigill.intra.peff.net>
- <CAKkfZL30QuBM6vT69OSS_keNuGi1U-bJ+jDiyDfhZmnr9L9xvA@mail.gmail.com>
- <20190528204051.GA24650@sigill.intra.peff.net> <CAKkfZL3ZNgNFzxrYbjbhCF5BR12vQPy2sNuYdxmQgmuG+mo9Gw@mail.gmail.com>
- <20190528205608.GC24650@sigill.intra.peff.net> <CAKkfZL1BmOjzJ1QrQ43gJx89si3-M_1KMz=EWXN=pK6HSjCEkQ@mail.gmail.com>
- <20190528213912.GH24650@sigill.intra.peff.net>
-In-Reply-To: <20190528213912.GH24650@sigill.intra.peff.net>
-From:   Brendan Boerner <bboerner.biz@gmail.com>
-Date:   Wed, 29 May 2019 15:10:43 -0500
-Message-ID: <CAKkfZL385B99fJ10V-yXVK3KpHNNA-fpM31zwvsBrfr02pD3jw@mail.gmail.com>
-Subject: Re: 'git stash list' => Segmentation fault
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=MKBWDzhD5SZMbo2FuNm/0MIB6QloxYsuTSbcvXs+aH8=;
+        b=rpYQQnO7W/Kq3+pTVhBKxNxHVn/IMADKMhegDN55X5cNEJ4WR+xNmekNi5QN8RY7t2
+         Hm+wWVVKs7AlZ6FuWxuWe9yJA+V5JBiu+0z1j6beN/AoM88JLW9lB1aunJ/qHC+nPqUT
+         4ggldx3OFvv7ZymeoVmZ98VMJxVi92I4cfPDVwqHUhhKxZuQrFZwwZpNFp+HUg+zW6BY
+         Yp/Q6zh3GBX8C1QZ0t7+0eLP6D8VbZSOLy8wVYBOYE05OA7B2+HWiYrARUZyqXQm7a9B
+         scQbjW9X4yVN6RDL+q+qmiEuJ5kZdIN3d24GPVOTDmpN+4Q/S//b7E0rW8BfA2qDLEx8
+         n/zQ==
+X-Gm-Message-State: APjAAAUEW0cMbtj4rAlggTIBfK/6iyAC0gxAAv1oBQ3QA4RmeSL/LnQu
+        wYGLXf3b6nWv5yJ1jLq1ZPdHm5epwfqin1fzuZHjCXYdKK69MotIu6mqDV17/hWuHXa8gh3q4wX
+        aipc51zTFiefyFOIa4qXYhD7LSATIf5/I6v8pcVtXlpaIPSVNV6Yc42ob/pH3mCi7xcXXh6EVeg
+        ==
+X-Google-Smtp-Source: APXvYqwm9SJmx5sAvlLj1nB7zEhGEXVhqsIRaaesiT6cFgYTraOBj5MVp7SQTNwOAiQqRUvCVDw52nereYEMraPwNRc=
+X-Received: by 2002:a37:7a05:: with SMTP id v5mr3653283qkc.74.1559161097714;
+ Wed, 29 May 2019 13:18:17 -0700 (PDT)
+Date:   Wed, 29 May 2019 13:18:09 -0700
+In-Reply-To: <20190517190359.21676-1-emilyshaffer@google.com>
+Message-Id: <20190529201809.169065-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.rc1.257.g3120a18244-goog
+Subject: [PATCH] doc: add some nit fixes to MyFirstContribution
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Jeff,
+A trial run-through of the tutorial revealed a few typos and missing
+commands in the tutorial itself. This commit fixes typos, clarifies
+which lines to keep or modify in some places, and adds a section on
+putting the git-psuh binary into the gitignore.
 
-Yes, if I install gettext build from source envsubst and gettext no
-segfaults. tset from ncurses segfaults as well unless I install from
-source.
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+This patch is based on next, as the doc hasn't made it to master yet.
 
-So weird breakage which manifested as a red herring. :-(
+- Missing `cd git` after cloning the repo
+- Documented how to add git-psuh to the gitignore
+- Documented the need to leave prior printfs in place during the
+  tutorial
+- Typos: missing ;, stray newline
+- Missing `git add builtin/psuh.c` in a couple of places; this could
+  also have been done by adding the filename to the end of the commit
+  call, but I don't think that's a good habit (as opposed to staging all
+  changes, inspecting the wt state, and then committing). Open for
+  debate.
 
-Thanks for your help helping me sort it out.
+Big thanks to Christian for the trial run and review.
 
-Regards,
-Brendan
+ - Emily
 
+ Documentation/MyFirstContribution.txt | 31 +++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index 274df8575b..895b7cfd4f 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -35,6 +35,7 @@ the mirror on GitHub.
+ 
+ ----
+ $ git clone https://github.com/git/git git
++$ cd git
+ ----
+ 
+ [[identify-problem]]
+@@ -164,8 +165,28 @@ $ ./bin-wrappers/git psuh
+ 
+ Check it out! You've got a command! Nice work! Let's commit this.
+ 
++`git status` reveals modified `Makefile`, `builtin.h`, and `git.c` as well as
++untracked `builtin/psuh.c` and `git-psuh`. First, let's take care of the binary,
++which should be ignored. Open `.gitignore` in your editor, find `/git-push`, and
++add an entry for your new command in alphabetical order:
++
++----
++...
++/git-prune-packed
++/git-psuh
++/git-pull
++/git-push
++/git-quiltimport
++/git-range-diff
++...
++----
++
++Checking `git status` again should show that `git-psuh` has been removed from
++the untracked list and `.gitignore` has been added to the modified list. Now we
++can stage and commit:
++
+ ----
+-$ git add Makefile builtin.h builtin/psuh.c git.c
++$ git add Makefile builtin.h builtin/psuh.c git.c .gitignore
+ $ git commit -s
+ ----
+ 
+@@ -211,7 +232,8 @@ on the reference implementation linked at the top of this document.
+ It's probably useful to do at least something besides printing out a string.
+ Let's start by having a look at everything we get.
+ 
+-Modify your `cmd_psuh` implementation to dump the args you're passed:
++Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
++existing `printf()` calls in place:
+ 
+ ----
+ 	int i;
+@@ -243,7 +265,7 @@ function body:
+ 
+ ...
+ 
+-	git_config(git_default_config, NULL)
++	git_config(git_default_config, NULL);
+ 	if (git_config_get_string_const("user.name", &cfg_name) > 0)
+ 		printf(_("No name is found in config\n"));
+ 	else
+@@ -315,6 +337,7 @@ Run it again. Check it out - here's the (verbose) name of your current branch!
+ Let's commit this as well.
+ 
+ ----
++$ git add builtin/psuh.c
+ $ git commit -sm "psuh: print the current branch"
+ ----
+ 
+@@ -366,6 +389,7 @@ see the subject line of the most recent commit in `origin/master` that you know
+ about. Neat! Let's commit that as well.
+ 
+ ----
++$ git add builtin/psuh.c
+ $ git commit -sm "psuh: display the top of origin/master"
+ ----
+ 
+@@ -418,7 +442,6 @@ OUTPUT
+ ------
+ ...
+ 
+-
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+-- 
+2.22.0.rc1.257.g3120a18244-goog
 
-On Tue, May 28, 2019 at 4:39 PM Jeff King <peff@peff.net> wrote:
->
-> On Tue, May 28, 2019 at 04:29:13PM -0500, Brendan Boerner wrote:
->
-> > To answer your previous question I'm using git v2.21.0. I'm using the
-> > Ubuntu 14.04 PPA as well as Linuxbew (also v2.21.0).
-> >
-> > Your help helped me narrow this down to linuxbrew. Take it out of my
-> > path no segfault.
-> >
-> > Uninstall linuxbrew git, linuxbrew still in PATH, use PPA git, segfault.
-> >
-> > Narrowed down further to be the "gettext" package - remove it from
-> > linuxbrew and PPA git stash list => no segfault.
-> >
-> > I'll ping the Linuxbrew folks.
->
-> Ah, that makes sense. You're indeed running the shell version, and it's
-> invoking "gettext" for messages, which is probably what's segfaulting.
-> And that explains the multiple segfaults and the fact that they didn't
-> actually cause the overall operation to fail.
->
-> So probably nothing here for Git to fix. Thanks for following up with
-> the resolution!
->
-> -Peff
