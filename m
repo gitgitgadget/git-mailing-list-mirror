@@ -8,59 +8,60 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 222401F462
-	for <e@80x24.org>; Wed, 29 May 2019 18:07:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1AC31F462
+	for <e@80x24.org>; Wed, 29 May 2019 18:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726018AbfE2SH4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 14:07:56 -0400
-Received: from mout.gmx.net ([212.227.15.18]:47189 "EHLO mout.gmx.net"
+        id S1727657AbfE2SKh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 14:10:37 -0400
+Received: from mout.gmx.net ([212.227.17.20]:45165 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725917AbfE2SHz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 14:07:55 -0400
+        id S1727626AbfE2SKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 14:10:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559153267;
-        bh=+ypF8PuNnJZF36FnD7sbRAXBGD4j37cQDxkb7/uMsZo=;
+        s=badeba3b8450; t=1559153425;
+        bh=gqZ2rFFUqkQdVGVR9HApJWsquSMT6P0EzVxGnSiThZo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=STge3XaCMrfiQlw26S1cq3/4NONV6xRsovEQedIOglmhMAvsYe2O/5u7PX4CGN0il
-         1X0GtTAN66CEOadlmJ77lvgIrlRZvgQALWJm5avIYFg2zvEhTlde70orERsvESVv82
-         DsHjpQjxZozBJGqkOR1zEKjtlUN5z6OV3eJ8Vd/Q=
+        b=M8M5ExaXIO2GaY6cljGqYYC2xedBmpHb7nOqSAcWj4Ix4KHP6J6ZZtGfNvIKp0ehS
+         9/4hVULgriOSFbZ43kguXgPzsGQdElBnYviSbpfwt1y6cjiZXKiQ3Q8sygwHoSgKfb
+         gP+3nWA8EMN/ywz8r473F1MoR0AmYj0byzQFlKHg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Md3li-1hDpLd1q66-00IHF8; Wed, 29
- May 2019 20:07:47 +0200
-Date:   Wed, 29 May 2019 20:07:31 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M42nY-1hW31t1VR2-00047P; Wed, 29
+ May 2019 20:10:25 +0200
+Date:   Wed, 29 May 2019 20:10:09 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Bret Barkelew <bret@corthon.com>
-cc:     Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
-Subject: Re: git version 2.20.1.windows.1 throws file name too long in gitk
-In-Reply-To: <CAGTkKagwzceU51O6dK_6-MRZdEW52-xEFoGBVf9z9XLVEJoAGg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905292004380.44@tvgsbejvaqbjf.bet>
-References: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com> <CAGyf7-HcncFOfmm5McEkOvCTkHNdePDSEQDZwEAK=z1bmC=QKw@mail.gmail.com> <CAGTkKag-fTy3iZAKJxEnWD6_b_3pfuYvQQKBkLaeSL8wKM2sfg@mail.gmail.com> <nycvar.QRO.7.76.6.1901091936420.41@tvgsbejvaqbjf.bet>
- <CAGTkKajkW-U9mhh_GmTXmZQbnceEKX_BcMtOF4hOhEDZe2u9Bw@mail.gmail.com> <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet> <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com> <CAGTkKajYiyT_OtX1mQECvxjvKXndjBYAqwgKMimJrroPAAvZJA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1904271722290.45@tvgsbejvaqbjf.bet> <CAGTkKagwzceU51O6dK_6-MRZdEW52-xEFoGBVf9z9XLVEJoAGg@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: ab/send-email-transferencoding-fix, was Re: What's cooking in
+ git.git (May 2019, #04; Tue, 28)
+In-Reply-To: <xmqqh89dyxp1.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905292009030.44@tvgsbejvaqbjf.bet>
+References: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905291424140.44@tvgsbejvaqbjf.bet> <877ea9mo98.fsf@evledraar.gmail.com> <xmqqh89dyxp1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-964857275-1559153267=:44"
-X-Provags-ID: V03:K1:+laJZwrXvqFS+t0WV5tYXTax1uX20BIFmc36W1rW++mHxVeU6ks
- Evis9LnhzfDrjWVugaI9baEsAGaX0XufKKRC49OI2RoOgfu51XdbIahT25ST3v0gqNw70wd
- tWPBudgVl7Fitp220ka84h8B5XmSUd37EHxPYX9YFnZQGVVeNWb0iVcCcsAeKg6kAvGJzQv
- 8CERC4+aP+FuDqwE/N0ZQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5qG21283jjs=:As3BAwAxXmJQO3FzkiMMjM
- 2wRARNVLHM/XsrKo0aGEBOQIQbTPs4faf4NZMr2nzgnKwhanUwZq6LGq6TKTe7q4uEaRZY3Tt
- Itmqx9JgvxUrT2Qf2flB8JdZZ2zcJADwkXeBubdtAC0kVALpyF4oGJRR+z9KN3g1RHBzZaLVg
- K/q1p4vo0SFZPiW2t9Ds5TJitWXMtGnSMASwCAu9FEuMlKhfPjaYqvQ4lNnvOTMIbmmZVqvUj
- sEm2XpUp2r/RosdINpv4/0UhwnfWlZCJrpyM73oFfpJFtmvylrDFX6BeM9vhRSf8N9O+mpWzm
- JhQE4T2LqO37D4wia/fvcugZb3TdXMFh5X2kgmZP7geR62DATLCL2Fv1S95kdvr4KlW8NUa87
- 2dhxMdKoyB1x1otTyNpT2p+1A+JLZePsI+C57M1z/mD9Ea6Vb8n2TibyDyzf/mxvABy23hPmR
- HSCIm3PA99RxyFgV8ecBvnVnU+yJ7v/+C2pfSs5ZsV08iuiQUJ3iuP15qvfWQLs/TGzEycOOF
- quqyfTpSXiTw4Iedrs7oZSkvMx8Spsyg+a6MeGfa2xnPtR6AZhCG9yi/KRcRywRrpLfOs/mRb
- LbtjhotvwjXZK5hXPfVdw+P7MlTYjMDtMzlOODT8oi2YieknK21SQtAYm1cQVoGQD5z/GRNe/
- vQZ0fC02UIl3DKrNRMDC8wizt4JB5h8+LQ2GO73ucWs/CT3IY0rSAV+EdgBaA6Gf2FXFGxMOv
- eMxtDuTKu0gXorWKsGlI6juc/nO3gDy1zql3m4DZ39B9Blrn0GbmUXIQCMMzDLyKtUmaOaI3g
- QTYd62bfJic0zJeUvx/LG/lh0rZ9oD2JVsv9ho1dja/meDqwB22TR1U75nC7/RJwV2eHuZhM8
- cay5NxJukbqOB3ahFsYNmQN4vCyZhAOCTIHRFoggXJ7IIPPwnGRVFHoOe09e1DdYQhUJHd4JU
- ZTFW0n1wf5cvft4Itd2Iop+rvpuUOEO7J8eo99UjOB/GeYfU19290
+Content-Type: multipart/mixed; BOUNDARY="8323328-1044786231-1559153353=:44"
+Content-ID: <nycvar.QRO.7.76.6.1905292009210.44@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:01/w8ewtV1G8d4Jd7QvsFjE/opnK9S0yqjeFrXrA43nGaxhTwp7
+ kZprczYpq2ZDhE6DohfanD8PaDn5zCFIRijRZkmj3zi3JWeCjNbcFDH/yKwCI3DkuOAoDDd
+ HUZZzatGH+fjY1G7BbxqtECrv3ZLodGeEYsAFlVnY72T5R/dsdlqv4vFVvir+Ms12qr6XUo
+ DYPtoWSbmv5yeKfUyA8qQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:z4LNWivzb9s=:zfBfwkJIA6CTvDaLkhtKz/
+ QKNSZCQGVjB0mKepq83v3NRIs7GfmOBYjSoEqXBPrVFw/VoAaIjZiwDVarhTU/wsYBTYrcGe6
+ CQlnUilASEDSMAIRSLK0c0DqqZRnCx4J8gBrUyK3CYYBYDvVXhKXcCW9NS1ZEj94Jb9To1hph
+ 333K4APvOVtjNUs57EMzbtPjFRrSVcfM61BNqluoV5z7KYWUAm9eZepMn9Q9CO86b6GYJdfyJ
+ svgxrhcgzfYoSbXOE++DR3Egn6rhlYam0Q8F9/6x41pcgiybrDkiqdvEJyVIIzK9zMR6xtZH0
+ i5vzZNm6vgKiTaejoVzP/PbSBJCnzYtPCvr9+XFsrnDBnvweg6AMwIUJW46ktvc3Lf/jemLyj
+ My0rfJn//J7x3OOmhjs/PkQsGw9nrEziz/d3FPL7GoxB/SSI+/tE1fI0zfCmppL5+dJf07BPl
+ dbyl5z73pB6Nsi4FK816gphWFCo+CqwDMQpHWlkl7s1PV4Uy/Zwz27+coAe8A4nAKwRb5VLK2
+ OwOwXnQAR2qdDP6Ay9euhzw+y2U8vLqzREemFrmzDfu53kEbFrMeyGpU3vaLuVWmE/va/e/Sq
+ ebXVGXV3KckR6lKCqv+eeQBwY+62B+JXxV6Q8gRaZ3VAGjFL9qBxuc6AL386/32O+SdVFHK7B
+ y5SUK8f2AayQPvWZ6tQS12k5rjwAjuuc2EzaggY89Y96Z/CGFn0x6oiq0ZGL0YT+102J1Aayn
+ /3vnkRmzcMqblzCeIaMoDCj9vDcZuiGKmGVGjVuVV+Q3gY9iw1aP2p783tJQmrj5fm3ylEFSo
+ 25T6v/pZ5q9owB2F52hLfk2hhM6g2FCPHZ8UL9sT4FJIOwNdGoRGkl6+/D+YlJDrAqco6JTea
+ 3VyiqxII9OBhv4c0UOCsXofKa5JGS3qSp60OpmFuzI8jJfAiJX+efhtxHbyYmeswOdoHUHYou
+ XJYr4HYScz6lRoUrsk5Q9VyuuJCNGS85opKRY17hySFj+qlZHtSQH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,199 +70,61 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-964857275-1559153267=:44
-Content-Type: text/plain; charset=UTF-8
+--8323328-1044786231-1559153353=:44
+Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.1905292009211.44@tvgsbejvaqbjf.bet>
 
-Hi Bret,
+Hi Junio,
 
-On Wed, 29 May 2019, Bret Barkelew wrote:
+On Wed, 29 May 2019, Junio C Hamano wrote:
 
-> I know it's an incredibly late reply, but I have not seen this issue
-> reappear since the patches. Thank you very much for helping!
-
-It might be late, but it is even more welcome! Thanks for the feedback
-(and I am particularly happy that it works for you).
-
-Ciao,
-Johannes
-
-P.S.: For lurkers, I just realized that I never linked to the patches:
-https://github.com/git-for-windows/git/pull/2170
-
-As this PR really only touches code that is already in Git for Windows,
-but not yet in git.git, I think I'll try to find some time post-v2.22.0 to
-brush up those gitk patches and contribute them to the Git mailing list
-for review.
-
-> On Sat, Apr 27, 2019 at 4:20 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Hi Bret,
-> >
-> > On Thu, 18 Apr 2019, Bret Barkelew wrote:
-> >
-> > > This issue is now being reported by more users inside MS. I'll also
-> > > reach out to the Git for Windows advocacy group to see if they have
-> > > any ideas.
-> > >
-> > > I have not had time to figure out the inner workings of Tcl/Tk. Is
-> > > there any way to turn on tracing/logging in Git for which commands a=
-re
-> > > being called by gitk?
-> >
-> > Thank you for reaching out with detailed information internally, I am
-> > happy to report that together with the help of Max Kirillov, this is n=
-ow
-> > resolved and a snapshot is available from
-> > https://wingit.blob.core.windows.net/files/index.html that has the fix=
-.
-> >
-> > Ciao,
-> > Johannes
-> >
-> > > On Thu, Jan 10, 2019 at 10:55 AM Bret Barkelew <bret@corthon.com> wr=
-ote:
-> > > >
-> > > > On Thu, Jan 10, 2019 at 7:20 AM Johannes Schindelin
-> > > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > >
-> > > > > Hi Bret,
-> > > > >
-> > > > > in that case, please try to find a way to trace the commands in =
-a Tcl/Tk
-> > > > > program (which gitk is) and see which command triggers the error=
-.
-> > > >
-> > > > Er... that's a little out of my depth. I'll see if I can find time=
- to learn.
-> > > > Meanwhile, is there any way to request better instrumentation for =
-the
-> > > > error dialog so this data could have been collected for me?
-> > > >
-> > > > >
-> > > > > Ciao,
-> > > > > Johannes
-> > > > >
-> > > > >
-> > > > > On Wed, 9 Jan 2019, Bret Barkelew wrote:
-> > > > >
-> > > > > > Will try to reply in-line, when appropriate.
-> > > > > > The latest snapshot (git version 2.20.1.windows.1.5.g6b286585b=
-1) still
-> > > > > > has the issue.
-> > > > > >
-> > > > > > - Bret
-> > > > > >
-> > > > > >
-> > > > > > On Wed, Jan 9, 2019 at 10:39 AM Johannes Schindelin
-> > > > > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > > > >
-> > > > > > > Hi Bret,
-> > > > > > >
-> > > > > > >
-> > > > > > > On Thu, 3 Jan 2019, Bret Barkelew wrote:
-> > > > > > >
-> > > > > > > > They are the exact same path (with a different drive lette=
-r).
-> > > > > > >
-> > > > > > > [it's a bit hard to follow the thread if you top-post a repl=
-y to an
-> > > > > > > inline-replied answer, maybe imitate the style of other mail=
-s in the
-> > > > > > > future.]
-> > > > > > >
-> > > > > > > > Another thing I've been able to confirm is I uninstalled g=
-it 2.20.1
-> > > > > > > > and installed 2.19.0 on the failing system, and the older =
-version of
-> > > > > > > > Git works.
-> > > > > > > > I've also tried a suggested fix I saw elsewhere to enable =
-long path
-> > > > > > > > names in the Windows registry, which did not resolve the i=
-ssue with
-> > > > > > > > git 2.20.1.
-> > > > > > > >
-> > > > > > > > Happy to collect any additional data.
-> > > > > > >
-> > > > > > > Please try the latest snapshot at
-> > > > > > > https://wingit.blob.core.windows.net/files/index.html (I *th=
-ink* the bug
-> > > > > > > might be fixed via
-> > > > > > > https://github.com/git-for-windows/MINGW-packages/pull/32).
-> > > > > > >
-> > > > > > > Ciao,
-> > > > > > > Johannes
-> > > > > > >
-> > > > > > > > - Bret
-> > > > > > > >
-> > > > > > > > On Thu, Jan 3, 2019 at 7:10 PM Bryan Turner <bturner@atlas=
-sian.com> wrote:
-> > > > > > > > >
-> > > > > > > > > On Thu, Jan 3, 2019 at 6:21 PM Bret Barkelew <bret@corth=
-on.com> wrote:
-> > > > > > > > >>
-> > > > > > > > >> When I open gitk in a particular repository under this =
-version of Git
-> > > > > > > > >> for Windows, I now get a dialog box that says "Error: c=
-ouldn't execute
-> > > > > > > > >> "git": file name too long". I've noticed that the most =
-pronounced
-> > > > > > > > >> effect is that I cannot see the file diffs (or sometime=
-s the file name
-> > > > > > > > >> list) for any of the commits. I don't know the exact re=
-pro, but I've
-> > > > > > > > >> narrowed down the following things:
-> > > > > > > > >>
-> > > > > > > > >> - This does not happen with the same repo if I use a sy=
-stem that has
-> > > > > > > > >> git 2.19.0.windows.1 on another machine.
-> > > > > > > > >> - This does not happen on my current machine in a fresh=
-ly cloned repo.
-> > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > How =E2=80=9Cdeep=E2=80=9D are the paths to the differen=
-t clones on the different systems? Are all of the clones at exactly the sa=
-me path on disk?
-> > > > > > > > >
-> > > > > > > > > Git on Windows is (by defaulted) limited by MAX_PATH, wh=
-ich is 260 characters. That length is calculated including the path to the=
- repository itself and then to the file inside the repository. That means,=
- for example, a given repository cloned to C:\repo may not have issues, bu=
-t the same repository cloned to C:\Users\Bryan\Documents\workspaces\repo m=
-ay.
-> > > > > > > > >
-> > > > > > > > >>
-> > > > > > > > >> However, as soon as the remote updates with any changes=
- on a given
-> > > > > > > > >> fetch/pull, the repo is put in a bad state permanently.
-> > > > > > > > >>
-> > > > > > > > >> I've pasted the output from gitk below...
-> > > > > > > > >>
-> > > > > > > > >> couldn't execute "git": file name too long
-> > > > > > > > >> couldn't execute "git": file name too long
-> > > > > > > > >>     while executing
-> > > > > > > > >> "open $cmd r"
-> > > > > > > > >>     (procedure "getallcommits" line 48)
-> > > > > > > > >>     invoked from within
-> > > > > > > > >> "getallcommits"
-> > > > > > > > >>     (procedure "readcache" line 80)
-> > > > > > > > >>     invoked from within
-> > > > > > > > >> "readcache file827e200"
-> > > > > > > > >>     ("eval" body line 1)
-> > > > > > > > >>     invoked from within
-> > > > > > > > >> "eval $script"
-> > > > > > > > >>     (procedure "dorunq" line 11)
-> > > > > > > > >>     invoked from within
-> > > > > > > > >> "dorunq"
-> > > > > > > > >>     ("after" script)
-> > > > > > > > >>
-> > > > > > > > >> Happy to gather whatever data needed.
-> > > > > > > > >> Thanks!
-> > > > > > > > >> - Bret Barkelew
-> > > > > > > >
-> > > > > >
-> > >
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
+> > On Wed, May 29 2019, Johannes Schindelin wrote:
+> >
+> >> On Tue, 28 May 2019, Junio C Hamano wrote:
+> >>
+> >>> * ab/send-email-transferencoding-fix (2019-05-19) 7 commits
+> >>>  - send-email: fix regression in sendemail.identity parsing
+> >>>  - send-email: document --no-[to|cc|bcc]
+> >>>  - send-email: fix broken transferEncoding tests
+> >>>  - send-email: remove cargo-culted multi-patch pattern in tests
+> >>>   (merged to 'next' on 2019-05-13 at 38c6a1e7e0)
+> >>>  + send-email: do defaults -> config -> getopt in that order
+> >>>  + send-email: rename the @bcclist variable for consistency
+> >>>  + send-email: move the read_config() function above getopts
+> >>>
+> >>>  Since "git send-email" learned to take 'auto' as the value for the
+> >>>  transfer-encoding, it by mistake stopped honoring the values given
+> >>>  to the configuration variables sendemail.transferencoding and/or
+> >>>  sendemail.<ident>.transferencoding.  This has been corrected to
+> >>>  (finally) redoing the order of setting the default, reading the
+> >>>  configuration and command line options.
+> >>>
+> >>>  Will merge to 'next'.
+> >>
+> >> I just sent a reminder that the tip commit is broken under NO_PERL, a=
+nd
+> >> accompanied the report with a diff that could be squashed in. =C3=86v=
+ar, please
+> >> have a look and say yay or nay, and please let's only let this enter
+> >> `next` once it is fixed (because otherwise the Azure Pipeline will sp=
+am me
+> >> every tim `next` is psuhed -- thanks, Emily, now I mistype this every
+> >> single time).
+> >
+> > Sorry about missing this. Your prereq addition in
+> > <nycvar.QRO.7.76.6.1905291106540.44@tvgsbejvaqbjf.bet> looks obviously
+> > correct to me.
+>
+> Yeah, I recall that one from previous week.  Let's queue it on top
+> (and find the right place tos quash it in).
 
---8323328-964857275-1559153267=:44--
+Sorry, I was unclear. The commit to amend is the tip one: "send-email: fix
+regression in sendemail.identity parsing".
+
+Thanks,
+Dscho
+
+--8323328-1044786231-1559153353=:44--
