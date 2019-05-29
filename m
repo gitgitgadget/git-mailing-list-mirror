@@ -7,86 +7,103 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F33F1F462
-	for <e@80x24.org>; Wed, 29 May 2019 16:53:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0575D1F462
+	for <e@80x24.org>; Wed, 29 May 2019 17:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbfE2Qxr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 12:53:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62163 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbfE2Qxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 12:53:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B218F151B66;
-        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+        id S1726099AbfE2Rba (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 13:31:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58698 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfE2Rb3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 13:31:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C91EC14D430;
+        Wed, 29 May 2019 13:31:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KzKSBnH1BoTtU0et4zM5VDPgMwc=; b=AbrNyn
-        7QmINpdW31omZDozmqLLNhEHUzOQ6oNN3a9A9mIzlx+OOa/kWGyTp6DRgpzBjJqY
-        7TE0gk46dTmYBTa/+teJAvfLWUGAQBx0YZNIFGu+57g2jE0Zi90/VTzVvEXwM+w9
-        eHV9/9z9bsYcbvFhkZbzV/Ue95vMA7j/zLOiU=
+        :content-type:content-transfer-encoding; s=sasl; bh=1eXjUXvDEv5z
+        +LfJUoy1PdtZUK0=; b=WqxIYOmks2JkAuuVBQm6pQrckFxfwexcd1jtlbGOtZZr
+        QzG6SbMnME8wiIuAv/CSuGkr1xrXMF9kaLy5gwVkrmC7S/JLgcmM/vw7WzSUDMuL
+        4EhJTo6TKlZNbdSCda7PWcvPu2aP6BhBPH/kPJb4yLWr3KQQ1oxvjBjO8uLGOTg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RbjhAhbVLSg3LYplfAD3HYeYIl4KCrLg
-        eIa9HTMrBIspV3N2LoMbPigcDyV/f8ePnz+GRQ0kyzaYCcsy/KyyPCPIuJq7Llhm
-        1iRtngiQ2BXV2vJlhYOwgWR6lT8XnTq6pvsAv5H2Bj10h23tW+ZtzhsA20Mn8MkA
-        nLHkxwzLJl4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA5C2151B65;
-        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BHbrVs
+        BD3FO1JnZqV4rZ+IG4jT9qXMtOq7yOOXMZtxc/dMAL9jQroEaaEz4nQiepRxVNnf
+        LFL/wxSjhHyg0OKkWMxy50s8gB1VxKnOd9UcunMpofCE+YDoBIqaH1qkYiAO1cwF
+        F7chhq9ppclw6jVejnccAvq5q/PEKxJuGuaCw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C096614D42F;
+        Wed, 29 May 2019 13:31:24 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16558151B64;
-        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F9CE14D42D;
+        Wed, 29 May 2019 13:31:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2019, #04; Tue, 28)
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: ab/send-email-transferencoding-fix, was Re: What's cooking in git.git (May 2019, #04; Tue, 28)
 References: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com>
-        <20190528222604.GA14921@sigill.intra.peff.net>
-Date:   Wed, 29 May 2019 09:53:44 -0700
-In-Reply-To: <20190528222604.GA14921@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 28 May 2019 18:26:04 -0400")
-Message-ID: <xmqqlfypyzfr.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1905291424140.44@tvgsbejvaqbjf.bet>
+        <877ea9mo98.fsf@evledraar.gmail.com>
+Date:   Wed, 29 May 2019 10:31:22 -0700
+In-Reply-To: <877ea9mo98.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 29 May 2019 14:36:03 +0200")
+Message-ID: <xmqqh89dyxp1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 523AE318-8232-11E9-B516-46F8B7964D18-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 94AF5F9E-8237-11E9-B7A0-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Tue, May 28, 2019 at 03:08:31PM -0700, Junio C Hamano wrote:
+> On Wed, May 29 2019, Johannes Schindelin wrote:
 >
->> Quite a few new topics, most of which are fixes with different
->> urgency, have been picked up.  Perhaps we'd need an extra -rc for
->> this cycle to squash existing regression at the tip of 'master'.
->> At this point, the criteria for merging to 'master' is *NOT* "This
->> is an obviously correct fix", but is "This is an obviously correct
->> fix for a breakage we introduced during this cycle".
+>> Hi Junio & =C3=86var,
 >>
->> [...]
+>> On Tue, 28 May 2019, Junio C Hamano wrote:
 >>
->> * ds/object-info-for-prefetch-fix (2019-05-28) 1 commit
->>  - sha1-file: split OBJECT_INFO_FOR_PREFETCH
->> 
->>  Code cleanup.
->> 
->>  Will merge to 'next'.
+>>> * ab/send-email-transferencoding-fix (2019-05-19) 7 commits
+>>>  - send-email: fix regression in sendemail.identity parsing
+>>>  - send-email: document --no-[to|cc|bcc]
+>>>  - send-email: fix broken transferEncoding tests
+>>>  - send-email: remove cargo-culted multi-patch pattern in tests
+>>>   (merged to 'next' on 2019-05-13 at 38c6a1e7e0)
+>>>  + send-email: do defaults -> config -> getopt in that order
+>>>  + send-email: rename the @bcclist variable for consistency
+>>>  + send-email: move the read_config() function above getopts
+>>>
+>>>  Since "git send-email" learned to take 'auto' as the value for the
+>>>  transfer-encoding, it by mistake stopped honoring the values given
+>>>  to the configuration variables sendemail.transferencoding and/or
+>>>  sendemail.<ident>.transferencoding.  This has been corrected to
+>>>  (finally) redoing the order of setting the default, reading the
+>>>  configuration and command line options.
+>>>
+>>>  Will merge to 'next'.
+>>
+>> I just sent a reminder that the tip commit is broken under NO_PERL, an=
+d
+>> accompanied the report with a diff that could be squashed in. =C3=86va=
+r, please
+>> have a look and say yay or nay, and please let's only let this enter
+>> `next` once it is fixed (because otherwise the Azure Pipeline will spa=
+m me
+>> every tim `next` is psuhed -- thanks, Emily, now I mistype this every
+>> single time).
 >
-> I think this one is actually a bug-fix (we are refusing to prefetch for
-> "QUICK" calls even though was not the intent), and it is new in this
-> release.
->
-> I'm not sure of the user-visible impacts, though. There are a lot of
-> QUICK calls, and I'm not sure for which ones it is important to fetch.
+> Sorry about missing this. Your prereq addition in
+> <nycvar.QRO.7.76.6.1905291106540.44@tvgsbejvaqbjf.bet> looks obviously
+> correct to me.
 
-Hmph.  I took it as primarily futureproofing, as I didn't find a way
-to trigger bad behaviour from within the current codebase.
+Yeah, I recall that one from previous week.  Let's queue it on top
+(and find the right place tos quash it in).
 
-
-
+Thanks, both.
