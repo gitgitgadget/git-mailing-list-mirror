@@ -2,120 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9AE1F462
-	for <e@80x24.org>; Wed, 29 May 2019 11:42:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8A2E1F462
+	for <e@80x24.org>; Wed, 29 May 2019 11:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbfE2LmR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 07:42:17 -0400
-Received: from mout.gmx.net ([212.227.15.15]:43991 "EHLO mout.gmx.net"
+        id S1726985AbfE2Lvn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 07:51:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58307 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726101AbfE2LmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 07:42:17 -0400
+        id S1726921AbfE2Lvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 07:51:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559130130;
-        bh=u2aaamXSNMWtbcRBG9dsznOKzCrUUvyxqF7x0jpT/fw=;
+        s=badeba3b8450; t=1559130695;
+        bh=L3+jVsu/tw4Mi8UW/g+wc6Wsf1AVVsZSnK715Y8B0Ps=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HYFcAri7AwYhUPd40jSd5D+O2RkqHFp7ZJ6P88M03sboDv+Q8uvnn9IGoYkCF4hqi
-         QyPjxajdcRbEAZgrkLFlxmoD1yn/o1NT7jAJ5gCYSGLi6Emk2Tq7Dd4/WIJ5NxLigL
-         jlBE/emzlFBnYt3FrnSynXQlUufFMJ3iAvf0fiDk=
+        b=SW9PhSJEYNlJfmIOFnk3azZrRTAW545NZ0NDn19IztO9ZC0WbLUFQYQ5nnWKBSLYz
+         ezKeGer2y2gv3biWLq7s8w3PQV0N4O8VV19+VXfBjctdmMflAxoYkRliDFbxzwdznY
+         JM3Vt1D0oVJx83OZ6NbMzacaGU3pFOygECHaCvNs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbBk-1gdZzw0LpO-00sh0F; Wed, 29
- May 2019 13:42:10 +0200
-Date:   Wed, 29 May 2019 13:41:54 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MACmL-1hLCgg32c5-00BNLI; Wed, 29
+ May 2019 13:51:35 +0200
+Date:   Wed, 29 May 2019 13:51:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Mike Mueller via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Mike Mueller <mike.mueller@moodys.com>
-Subject: Re: [PATCH v2 1/1] p4 unshelve: fix "Not a valid object name HEAD0"
- on Windows
-In-Reply-To: <xmqq7eaa1fjt.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905291341060.44@tvgsbejvaqbjf.bet>
-References: <pull.183.git.gitgitgadget@gmail.com>        <pull.183.v2.git.gitgitgadget@gmail.com>        <5e89d1aceb9125231797a355e9465d1a41a1741c.1559067344.git.gitgitgadget@gmail.com> <xmqq7eaa1fjt.fsf@gitster-ct.c.googlers.com>
+To:     =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH 1/1] status: remove the empty line after hints
+In-Reply-To: <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905291349360.44@tvgsbejvaqbjf.bet>
+References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com> <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com> <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com>
+ <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l7IDD9ibngfvM8xDMYYvC8ruaCNgctJduTVNSh0VvlY4voIIfkp
- ui+0k2YdmQDzu2Uig32W9V/xZ3jZKyqprkhKXNEF0wsfd6K0NOEJm2rjh65vTiUh4WPNew8
- SWGCG7ja+OXo/wvvTx8RW2a9sSQQGATi3G8d6BJ9GzcNg+JuiXxLbYrkVYmcx37Z7Cnf3tC
- vI5XP3+s+MBLCD2BSGxhQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FjZRPyb7gSw=:5ht6BsOWyhCSvDvtWl9RZO
- 3ff4rRVdibv/t4aA//NAWAdLcWokpVPa+HwKg2/3sgKIBJ2Rl1bMTuv7TDN+gI556JJIMPwlI
- zdwuaEQkK2QySJcAKDrcnr2gSUWD6lSzI17dFin5JMdutYAqj9fvkOOyUsj9+NcHEc0XXFwGV
- QQUZw/TVxmHNcXS64DTtn2HQmdH5FLMWIDjGkflBolQ90vY0xmkI4ydpx+r1bZR3PKvlJ3Qkh
- 0DMTf8MxpHST2bEy352MHRi28qXVYDNWNW5JNu7lvQzDaxQ3/BmNzFRYYOEISOLj4BuZzOylU
- jiEilndQ3g5Ann8ijFh//gYhjCTNBs48f8pOU2HWo0GZXgwZQqwrnFIIfBOf5peL+pT1gVr1r
- UBtY2RkxEPlCFRvlgukF2dunDTWKX5jtrISq9nCfGEvRfXjcQFZsICt57vNn4PFPK31A0pkQ6
- CxWg1pTWJ0aZLHniXojpymicYLbqlSFfqqldj2ekOj6rayEJ7eEecGYw0uTWwkmzxkQ1fyt9+
- 6KOa06UyiZIUi6apwqpN3blv4Zex1oaGfnI+MPLcEcgzXF2wuQh50q2AWyn1NmDY1GTfXwut8
- hdNLzgdp6FK7p/eOylK+1CyV+FISZCFnbcsfdGnmp32bWU/u4wJrOdsy3Izsyu2itzWrO3bhf
- davTAkdN1WKaJmbH9QIcfEnfeVs5tL5p2SNBJ5VKBXkCbrOjcLqWiqJOkMbBFDhibuLXMAeeg
- HaOdCdh6w4GoK4BaEOvcSkzJbWp8MPMMY4bgRssPVKGn97BuOecd6LbrdvMomTW5WjBzrXlo4
- 5V4vsBNpThm7mofv2zAT7Y8PkLV59rx9BnKPWgab+oDwOLJ5NTNCz+cCNS+f9ysfmrUUPrJDT
- Al2wD45eDsWBAzFYreFBVx/rFs3dMHBloIk40mzKp0x4/w9L6RrXR/I6oCTdmDw8+aj7ps6Xe
- l/tVXdQBV3mk5o7Ln1J0HWwtMJQKFn/B+vAvJ6WHUaHk2a3eyk3MP
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-2065383305-1559130695=:44"
+X-Provags-ID: V03:K1:0bYl61xp5lHsJV5CrhG4q2D2ahRCTbCkK+W5jjKP2iI1sdAAVxe
+ fvV6jNyF+cgMAWWMuLqWLllper7h0GHzcInaH7ygVvXKZDqHzldLTC1aBk6iw5oRc/hG+Eg
+ 92jGPAzPSIJOp6EgM6H/7Ba804nuESS/4yie7u9zA2X0cGEKs4wrIiG6+Kjxlp+2gbMAlr1
+ ucZDSQb+AXZ7BSUXJOiuA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BN0uMKRHmUE=:wW4jdrQPzxXds5t0lj5fwT
+ 6MnL3DZhxB+N/Wea7oFm+AFsCjm47M8B6UJHUlvLOI8Y04jHZNohUjTjQIoug+37uvqcHKCxV
+ uBxFCQVI3ugblA1eL45R1J55yp/H1JNrXU+Z6FqNHc7S8WuL1tRFfy8pDIWSELnm/lhV6hX3u
+ nA8fdXedpN1jjDDPAhkP2VL87IZW3T8FIg4zq1kezRbPpHEfxMZ2TWIpbwaH/mtanCcpYcv4V
+ GQv+yBdTj10jN5ueTMsfx4yk9M9q2mojOzzE6l+SLGkm+VIfn3bw7EqCTbOvgMJgMueq0GMfw
+ 7n778PLwyqgTPLCo8Kal1mkKRRNBnRFZa73KBPRI+wVGawXhRCqAzaC5/8FyYhglVInaHq055
+ aIGhF1BrIQbD+suxRFsVBtAkF1z66Fq2EcOs/w3SJGZtXqQXWCqSNRRFbNtQjzRnwmvfkqjIi
+ db4RgxWPhH4s/91rHebqj0M9ARvmbdVF3jgPNN7tBa9OiY8CYEDQM5Gq/8L2w8u/gW72jymoS
+ cBXY8qvPrWShimI6KYpDiKxf9IS7teqg0sOVS0/9jdTJkMsqzSovb4xDEOrplBT5e4/4UTBk3
+ Fp7Wixhuegb1OAlBUCYbOnBnTKlxDjsyov/ubAWX317EbCMiEotSf1t1NKCZ3NeUR/DBZi+zy
+ iJIRGxr6kPMB1rGJYfxJDsgfWjWVEtHENviSoUz4QAHmIC9JmEs01Fve4jCBVLj+ZV62TkUAl
+ N/Iy+enudH1xGJqnC0XU3hOt2YH6lFMZySQFz3vDDMlBBNifofTJIZ/Z00T5NnN8q1LfijLLP
+ F1+P70IMLAbW3t5pshIf1khqwx+skGd1c1boJj5RyP2ukRtildDIlF+N34OdDFPEMzMdvnqvd
+ /1pEtorJq/0O+Ic49/dkFbse29ImTH7BEknDKFKPPNNhGGtGqR3rNoe+7TSrJK5NLQE4GeR6z
+ gOt4m21iuiFSX7wrTdh1OscudOlTPk+fwHngSoXC7Czsczuzn6lQz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 28 May 2019, Junio C Hamano wrote:
+--8323328-2065383305-1559130695=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> "Mike Mueller via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Mike Mueller <mike.mueller@moodys.com>
-> >
-> > git p4 unshelve was failing with these errors:
-> >
-> > fatal: Not a valid object name HEAD0
-> > Command failed: git cat-file commit HEAD^0
-> >
-> > (git version 2.21.0.windows.1, python 2.7.16)
-> >
-> > The pOpen call used by git-p4 to invoke the git command can take eithe=
-r a
-> > string or an array as a first argument. The array form is preferred
-> > because platform-specific escaping of special characters will be
-> > handled automatically.(https://docs.python.org/2/library/subprocess.ht=
-ml)
-> > The extractLogMessageFromGitCommit method was, however, using the stri=
-ng
-> > form and so the caret (^) character in the HEAD^0 argument was not bei=
-ng
-> > escaped on Windows.  The caret happens to be the escape character, whi=
-ch
-> > is why the git command was receiving HEAD0.
->
-> In the output from
->
->     git grep 'read_pipe_lines("'
->
-> together with a few hits to harmless constant command line, we find
-> this line
->
->     diff =3D read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (sel=
-f.diffOpts, id, id))
->
-> Would the caret we see there cause a similar problem?  It would end
-> up running something like
->
->    $ git diff-tree -r -M "HEAD^" "HEAD"
+Hi John Lin,
 
-I think you're right!
+On Wed, 29 May 2019, =E6=9E=97=E8=87=AA=E5=9D=87 wrote:
 
-In addition, I wonder whether we would want to replace the `^` by a `~`,
-which would have the same effect, but does not need quoting in Bash nor
-CMD.
+> Junio C Hamano <gitster@pobox.com> =E6=96=BC 2019=E5=B9=B45=E6=9C=8829=
+=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=884:41=E5=AF=AB=E9=81=93=EF=
+=BC=9A
+> >
+> > =E6=9E=97=E8=87=AA=E5=9D=87 <johnlinp@gmail.com> writes:
+> >
+> > > John Lin via GitGitGadget <gitgitgadget@gmail.com> =E6=96=BC 2019=E5=
+=B9=B45=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:54=E5=
+=AF=AB=E9=81=93=EF=BC=9A
+> > >>
+> > >> From: John Lin <johnlinp@gmail.com>
+> > >>
+> > >> Before this patch, there is inconsistency between the status
+> > >> messages with hints and the ones without hints: there is an
+> > >> empty line between the title and the file list if hints are
+> > >> presented, but there isn't one if there are no hints.
+> > >>
+> > >> This patch remove the inconsistency by removing the empty
+> > >> lines even if hints are presented.
+> > >
+> > > I would like to ask for the final decision on this patch. Thank you.
+> >
+> > If I recall correctly, the test part of this patch conflicts badly
+> > with a topic in flight that splits 'checkout' into 'restore' and
+> > 'switch', which is a more important topic between the two.  So if I
+> > must give _the final_ decision, then we need to drop this patch, but
+> > I'd rather not ;-)
+> >
+> > Doing this change on top of the switch/restore topic, once it
+> > stabilized more and graduated to 'master', would be the best course
+> > of action, I would think.
+> >
+> > Thanks.
+>
+> I see. Thanks for your kind explanation. I'll wait for the
+> switch/restore topic to merge into master.
+
+You could already rebase it on top of
+https://github.com/gitgitgadget/git/tree/nd/switch-and-restore, say so in
+your cover letter, and send a new iteration.
 
 Ciao,
-Dscho
+Johannes
+
+--8323328-2065383305-1559130695=:44--
