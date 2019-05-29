@@ -8,100 +8,114 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C87C1F462
-	for <e@80x24.org>; Wed, 29 May 2019 09:40:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9AE1F462
+	for <e@80x24.org>; Wed, 29 May 2019 11:42:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726005AbfE2Jkl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 05:40:41 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49035 "EHLO mout.gmx.net"
+        id S1726702AbfE2LmR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 07:42:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:43991 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725874AbfE2Jkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 05:40:41 -0400
+        id S1726101AbfE2LmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 07:42:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559122839;
-        bh=zJ+jPRQqpqF46PO9oLfog22IypGFl9QEsEhnAQBsjWU=;
+        s=badeba3b8450; t=1559130130;
+        bh=u2aaamXSNMWtbcRBG9dsznOKzCrUUvyxqF7x0jpT/fw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=brXDz8WfzgJpTqIEXpuFXcS9fr5Kca9PhsXYBj/P3sNB8ySoarvMzOOFpMw3k7JKn
-         S0fTirKbz/RJY1AK+yMNI3EQyKvRUDPqwSwEcPgeccpTFLOMObaf9M5ba42vrEF4Gm
-         keocxyv/irWOztdVgQ0GaWvGZfdt0beQyfOF+Gmk=
+        b=HYFcAri7AwYhUPd40jSd5D+O2RkqHFp7ZJ6P88M03sboDv+Q8uvnn9IGoYkCF4hqi
+         QyPjxajdcRbEAZgrkLFlxmoD1yn/o1NT7jAJ5gCYSGLi6Emk2Tq7Dd4/WIJ5NxLigL
+         jlBE/emzlFBnYt3FrnSynXQlUufFMJ3iAvf0fiDk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbMmA-1glLn32JtS-00kvPF; Wed, 29
- May 2019 11:40:39 +0200
-Date:   Wed, 29 May 2019 11:40:24 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbBk-1gdZzw0LpO-00sh0F; Wed, 29
+ May 2019 13:42:10 +0200
+Date:   Wed, 29 May 2019 13:41:54 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [GSoC] Some #leftoverbits for anyone looking for little
- projects
-In-Reply-To: <nycvar.QRO.7.76.6.1905291137070.44@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1905291139460.44@tvgsbejvaqbjf.bet>
-References: <87in9ucsbb.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1905291137070.44@tvgsbejvaqbjf.bet>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Mike Mueller via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Mike Mueller <mike.mueller@moodys.com>
+Subject: Re: [PATCH v2 1/1] p4 unshelve: fix "Not a valid object name HEAD0"
+ on Windows
+In-Reply-To: <xmqq7eaa1fjt.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905291341060.44@tvgsbejvaqbjf.bet>
+References: <pull.183.git.gitgitgadget@gmail.com>        <pull.183.v2.git.gitgitgadget@gmail.com>        <5e89d1aceb9125231797a355e9465d1a41a1741c.1559067344.git.gitgitgadget@gmail.com> <xmqq7eaa1fjt.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2027595769-1559122839=:44"
-X-Provags-ID: V03:K1:n2IFIfGd2s9kM6nS9/s7vN0k/QYrubS3oeFWzWp4HMjVdtTF3jq
- LLcs1bO8TF/hH7B7XdPJSrNl3v8IQehrGlGVsO8tsEz/w74/fwQbSXt/eQaDHNEGUkkTSlL
- hifztdEiZvJm9T2ilx6SE0wF6i/KZWpCKlvimpOA2ds0PBT2DiRQ0nlBEwbs9KdPleUDm4S
- eDQiq2actl3aMCoMOAizw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MsPvUAHHocc=:2qGsgNsymt/HfKBvxyaW+W
- JituMdq6Mf6l+nTlx53cOOxzfr+KbSj38tYxZsQEbXnOPdqnRecipMsBWUiUp7EiOS30I/RI0
- jRCFsXGo5YEe1D5dnAaZ316mAx/uKMXaA4Kdc/uIEaru74S7tNrrTUQlJYoIp7H4XZuojeWRC
- iMQ7pC4F73K/ZDaEnVLAN9T6mf01JSia0zXUMLxPBgJWRSZ7RxUd8FTxW5FdphrMGq6nQXBy6
- ZYafXg6ea0r6bkeX5Vg6F8kCsNzIq2lJ6yU5aXRYXzeQPx5GxGkU1s2j8StFyPRlx/VYOU/59
- v3wXXLFv+VpwCu/ObfKvTNgsApKjXAB2qFD4g7bqWgNqwUu30YeGJ7b+9ZRhGSy/IQxUswCeG
- QGzavnokUACV3b3XPOz/Ek2NDB31IPKDDAt1UBKNaoPlGMlBiA108heX61BQLawqVYMd1Vq10
- Rwv3Le/JCGZ/TqF4bqHOS74TdnwFNrFKvYr59v1sOX74Z9Urxjyatd5S47Q0uATBxEl6byZPm
- 6yinXtOsBhYxZ0T4xIEHfXFntIH8hTSPUbF6MUt5QjtmAz/hpZazVZX7gW8NRIWXIIbFtS9iX
- PfdqJbJwwS3zbdK2jo9/djsyTOV36P0GhV7SgeQEenPQsl1dFtNv6se4AqHFFrRy+30r/K87O
- hQTluygHhF8BHKh1HbPSI/qRw0d3xWWUo3vAqvz0kLXxY048Ts7Jmx99s6VfyeCvLYrq1oJrm
- cUpprUV3D3jaP95EyVmefUyvCGy6sS4AscwTWduyZC91wnq4uvRTc/ZMAMRo7WdvHHPbLTegC
- 5H0C/PZGa4iD60y2/4cj8xNHmhg0PGLwL33Us1fsclbrnt5DmgfwOanN2VTUTMJx4lhFXWmYw
- bHYL3DFynJDYPCOPnBkiBHiq0N3nJD8bnjMzGGQtxdIEaPvrdJHsdFes95tueJM3Hh3pG85+Y
- iw55+2UpVgrdwLDcMSCHWIA2AZI1dF8lVRTi7vZAh5f6dx7LpC2Zk
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:l7IDD9ibngfvM8xDMYYvC8ruaCNgctJduTVNSh0VvlY4voIIfkp
+ ui+0k2YdmQDzu2Uig32W9V/xZ3jZKyqprkhKXNEF0wsfd6K0NOEJm2rjh65vTiUh4WPNew8
+ SWGCG7ja+OXo/wvvTx8RW2a9sSQQGATi3G8d6BJ9GzcNg+JuiXxLbYrkVYmcx37Z7Cnf3tC
+ vI5XP3+s+MBLCD2BSGxhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FjZRPyb7gSw=:5ht6BsOWyhCSvDvtWl9RZO
+ 3ff4rRVdibv/t4aA//NAWAdLcWokpVPa+HwKg2/3sgKIBJ2Rl1bMTuv7TDN+gI556JJIMPwlI
+ zdwuaEQkK2QySJcAKDrcnr2gSUWD6lSzI17dFin5JMdutYAqj9fvkOOyUsj9+NcHEc0XXFwGV
+ QQUZw/TVxmHNcXS64DTtn2HQmdH5FLMWIDjGkflBolQ90vY0xmkI4ydpx+r1bZR3PKvlJ3Qkh
+ 0DMTf8MxpHST2bEy352MHRi28qXVYDNWNW5JNu7lvQzDaxQ3/BmNzFRYYOEISOLj4BuZzOylU
+ jiEilndQ3g5Ann8ijFh//gYhjCTNBs48f8pOU2HWo0GZXgwZQqwrnFIIfBOf5peL+pT1gVr1r
+ UBtY2RkxEPlCFRvlgukF2dunDTWKX5jtrISq9nCfGEvRfXjcQFZsICt57vNn4PFPK31A0pkQ6
+ CxWg1pTWJ0aZLHniXojpymicYLbqlSFfqqldj2ekOj6rayEJ7eEecGYw0uTWwkmzxkQ1fyt9+
+ 6KOa06UyiZIUi6apwqpN3blv4Zex1oaGfnI+MPLcEcgzXF2wuQh50q2AWyn1NmDY1GTfXwut8
+ hdNLzgdp6FK7p/eOylK+1CyV+FISZCFnbcsfdGnmp32bWU/u4wJrOdsy3Izsyu2itzWrO3bhf
+ davTAkdN1WKaJmbH9QIcfEnfeVs5tL5p2SNBJ5VKBXkCbrOjcLqWiqJOkMbBFDhibuLXMAeeg
+ HaOdCdh6w4GoK4BaEOvcSkzJbWp8MPMMY4bgRssPVKGn97BuOecd6LbrdvMomTW5WjBzrXlo4
+ 5V4vsBNpThm7mofv2zAT7Y8PkLV59rx9BnKPWgab+oDwOLJ5NTNCz+cCNS+f9ysfmrUUPrJDT
+ Al2wD45eDsWBAzFYreFBVx/rFs3dMHBloIk40mzKp0x4/w9L6RrXR/I6oCTdmDw8+aj7ps6Xe
+ l/tVXdQBV3mk5o7Ln1J0HWwtMJQKFn/B+vAvJ6WHUaHk2a3eyk3MP
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-2027595769-1559122839=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 28 May 2019, Junio C Hamano wrote:
 
-Hi,
-
-On Wed, 29 May 2019, Johannes Schindelin wrote:
-
-> On Sat, 17 Mar 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> "Mike Mueller via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > In lieu of sending a PR to https://git.github.io/SoC-2018-Microproject=
-s/
-> > I thought I'd list a few more suggestions, and hopefully others will
-> > chime in.
+> > From: Mike Mueller <mike.mueller@moodys.com>
+> >
+> > git p4 unshelve was failing with these errors:
+> >
+> > fatal: Not a valid object name HEAD0
+> > Command failed: git cat-file commit HEAD^0
+> >
+> > (git version 2.21.0.windows.1, python 2.7.16)
+> >
+> > The pOpen call used by git-p4 to invoke the git command can take eithe=
+r a
+> > string or an array as a first argument. The array form is preferred
+> > because platform-specific escaping of special characters will be
+> > handled automatically.(https://docs.python.org/2/library/subprocess.ht=
+ml)
+> > The extractLogMessageFromGitCommit method was, however, using the stri=
+ng
+> > form and so the caret (^) character in the HEAD^0 argument was not bei=
+ng
+> > escaped on Windows.  The caret happens to be the escape character, whi=
+ch
+> > is why the git command was receiving HEAD0.
 >
-> I am in the same camp, and figured that GitGitGadget (which *already*
-> augments the Git mailing list-centric workflow via GitHub's convenient U=
-I)
-> would make for a fine location for these small left-over bits. So I adde=
-d
-> them to https://github.com/gitgitgadget/git/issues/234 (except the
+> In the output from
+>
+>     git grep 'read_pipe_lines("'
+>
+> together with a few hits to harmless constant command line, we find
+> this line
+>
+>     diff =3D read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (sel=
+f.diffOpts, id, id))
+>
+> Would the caret we see there cause a similar problem?  It would end
+> up running something like
+>
+>    $ git diff-tree -r -M "HEAD^" "HEAD"
 
-Of course, I added them to https://github.com/gitgitgadget/git/issues/,
-with #234 being the last from this email.
+I think you're right!
+
+In addition, I wonder whether we would want to replace the `^` by a `~`,
+which would have the same effect, but does not need quoting in Bash nor
+CMD.
 
 Ciao,
 Dscho
-
-> "git-unpack-*" idea, as I think that should be done as a test helper
-> instead, and it should be done in the context of a new test case that
-> actually needs this).
->
-> Ciao,
-> Dscho
-
---8323328-2027595769-1559122839=:44--
