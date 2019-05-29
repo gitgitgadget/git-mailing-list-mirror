@@ -2,88 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF7EE1F462
-	for <e@80x24.org>; Wed, 29 May 2019 23:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04C271F462
+	for <e@80x24.org>; Wed, 29 May 2019 23:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726508AbfE2X1t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 19:27:49 -0400
-Received: from resqmta-po-06v.sys.comcast.net ([96.114.154.165]:58868 "EHLO
-        resqmta-po-06v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726240AbfE2X1t (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 May 2019 19:27:49 -0400
-Received: from resomta-po-11v.sys.comcast.net ([96.114.154.235])
-        by resqmta-po-06v.sys.comcast.net with ESMTP
-        id W5kwh4HRquZnZW7z3h6q8M; Wed, 29 May 2019 23:27:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=20190202a; t=1559172469;
-        bh=SJ7cvUEiN0F5Ebu/DClz83D3TRju1R3dpYi7/bSgKng=;
-        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
-         Content-Type;
-        b=aP2V9hCZv+A84rXV2PjD2GcvARVAD10MqKPagdeqica1xjS5LuEoL/XLPOwQfObOq
-         1KGnrN5YeLVvxHbw+I4/tf4UxoHq3jCEMy4tplDL6G+1K1nfhlcTwWyFNZ4c1k23Kw
-         NOdw5PDMxWvjumLo1pBrggBZQXgAbLUz0zywn6Oj0jYFuyInvxdCrYT12Nq19d2fap
-         pgG0PGRg33rORd8F+hbu2qMIOcrGwSUDe1eEpOp6nWyA1tZglBtCSmb4WRhN0aMsky
-         bZb19aQ5AXv5csEWaheoYSPy3GKRIsLDu3TXOqOJiN3FWmXJLCJREEXbg9zrrsauez
-         jnGTzDYu2k3+g==
-Received: from comcast.net ([IPv6:2601:647:4b02:2491:fc46:edea:c698:2e7a])
-        by resomta-po-11v.sys.comcast.net with ESMTPSA
-        id W7z1h0xFkVCZLW7z2hqtXy; Wed, 29 May 2019 23:27:48 +0000
-X-Xfinity-VMeta: sc=0;st=legit
-Date:   Wed, 29 May 2019 16:27:46 -0700
-From:   Matthew DeVore <matvore@comcast.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
-Message-ID: <20190529232746.GE4700@comcast.net>
-References: <cover.1558484115.git.matvore@google.com>
- <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
- <2b47d4b1-ea62-d59e-77e0-d95dfad084e0@jeffhostetler.com>
- <xmqqh89e31fg.fsf@gitster-ct.c.googlers.com>
- <20190529150228.GC4700@comcast.net>
- <9f1025ec-a3d7-c5f4-4a7a-15e4131f2b87@jeffhostetler.com>
+        id S1726546AbfE2Xhi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 19:37:38 -0400
+Received: from mail-pl1-f177.google.com ([209.85.214.177]:38585 "EHLO
+        mail-pl1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbfE2Xhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 19:37:37 -0400
+Received: by mail-pl1-f177.google.com with SMTP id f97so1728162plb.5
+        for <git@vger.kernel.org>; Wed, 29 May 2019 16:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0cQK+0oXk0Lu7JOl4t1Io+acEO+iENnCt7vSbfRKc90=;
+        b=dHzgQs3bAS9Vvz6LL50I5IZcL5ZuqyUuRqRshT7KzYz4CvLXRx59AcB0Fbf7GArBC8
+         Q8G3iR1q25VLpcjeP79sMMHcl04HhYB9VlwBVku9N3ucXYwfYsT7MR63pA1Sq1FbAJrv
+         oOR7Gmc9j6LROLfdcomtG6ewvwZTAKYzD0LMwSYPdBJvmgt7YdNDjN+cEKCXsZgAviRL
+         5ZJY9QekINwiStLMb6jT8Trm8MJHV59HgK2h3PLJVZO79l0/L5W8BIo8lyJy/sch4E6W
+         0QCqUqwLrydp1UVb/cNxk18hhwiSO0cYRkaCxkROq3Ve0xh4CprMtUWixqH2pbYtNtDU
+         ZalA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0cQK+0oXk0Lu7JOl4t1Io+acEO+iENnCt7vSbfRKc90=;
+        b=s5h9xGLdl5gSLelkd04XHYBsAtcDk7r9uQbfBf+j2c0M8dJQe/AP41/Rz2ruwiq0XK
+         XH1i6q9hIE7mLEp/crKT++9oQoKrhKIBRW6/dIqRpKQgax3tI7wGRPV43wh5CDFPMPH8
+         f5Kg/R2W9TVk1xirAG1X6EG8KBBFNoxGIJtpFNMhBZXfPYYgqcNJIG0FCcw1BqDweRQG
+         Sx+8buaWwh7uAzm6AeRv5o5kdTzYnioMDUwrI7GOTycwNfjsVZMUYrBtozqC2OdMSRRs
+         NyqYvmuD7+KQz3oQCt6zEtgUXNZKtWRHQwpG0LNXGMM/phAOpbscT0s/gWz+p1/H9JWR
+         iZdA==
+X-Gm-Message-State: APjAAAVEuQdxxIJoalYiwINIbLW+vvlAv3uY4dFt14aMJiJ2J2HhLQws
+        7PwaXWwK9IMlCPeHSCmsM3Y=
+X-Google-Smtp-Source: APXvYqxDLZQzczIVGdpZpquCXS5XvKC/h9AiOk6x8wMVrNrnx5pd/fPLlzmSm8l44FokRTQg6CRgBA==
+X-Received: by 2002:a17:902:6b:: with SMTP id 98mr696732pla.108.1559173056884;
+        Wed, 29 May 2019 16:37:36 -0700 (PDT)
+Received: from ar135.iitr.local ([2409:4052:2082:d869:70f5:bbd6:2317:457])
+        by smtp.gmail.com with ESMTPSA id s80sm823235pfs.117.2019.05.29.16.37.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 May 2019 16:37:35 -0700 (PDT)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     rohit.ashiwal265@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        matheus.bernardino@usp.br, newren@gmail.com,
+        olyatelezhnaya@gmail.com, t.gummerer@gmail.com
+Subject: [GSoC] Blogging with Rohit
+Date:   Thu, 30 May 2019 05:05:40 +0530
+Message-Id: <20190529233540.23077-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
+References: <20190511001421.25283-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9f1025ec-a3d7-c5f4-4a7a-15e4131f2b87@jeffhostetler.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 29, 2019 at 05:29:14PM -0400, Jeff Hostetler wrote:
-> Was sparse:path filter the only reason for needing all the URL encoding?
-> The sparse:oid form allows values <ref>:<path> and these (or at least
-> the <path> portion) may contain special characters.  So don't we need to
-> URL encode this form too?
+Hey Everyone!
 
-Oh, I missed this. I was only thinking an oid was allowed after "sparse:". So as
-I suspected I was overlooking something obvious.
+Three days have past since the coding period began and I'm almost ready
+with my first patch of the GSoC season. Check this blog[1] out to know
+about its status.
 
-Now I just want to understand the objection to URL encoding a little better. I
-haven't worked with in a project that requires a lot of boilerplate before, so I
-may be asking obvious things again. If so, sorry in advance.
+Thanks!
+Rohit
 
-So the objections, as I interpret them so far, are that:
+[1]: https://rashiwal.me/2019/leftover-bits/
 
- a the URL encoding/decoding complicates the code base
- b explaining the URL encoding, while it allows for future expansion, requires
-   some verbose documentation in git-rev-list that is potentially distracting or
-   confusing
- c there may be a better way to allow for future expansion that does not require
-   URL encoding
- d the URL encoding is unpleasant to use (note that my patchset makes it
-   optional for the user to use and it is only mandatory in sending it over the
-   wire)
-
-I think these are reasonable and I'm willing to stop digging my heels in :) Does
-the above sum everything up?
