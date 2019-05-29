@@ -2,145 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 672B81F462
-	for <e@80x24.org>; Wed, 29 May 2019 20:57:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24BA31F462
+	for <e@80x24.org>; Wed, 29 May 2019 20:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726605AbfE2U50 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 16:57:26 -0400
-Received: from siwi.pair.com ([209.68.5.199]:54557 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726428AbfE2U50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 16:57:26 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 4A8FB3F4051;
-        Wed, 29 May 2019 16:57:25 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:c90f:aaf8:aafe:c1ce] (unknown [IPv6:2001:4898:a800:1010:7a45:aaf8:aafe:c1ce])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9E7B73F4019;
-        Wed, 29 May 2019 16:57:24 -0400 (EDT)
-Subject: Re: [PATCH] list-objects-filter: merge filter data structs
-To:     Junio C Hamano <gitster@pobox.com>,
-        Matthew DeVore <matvore@comcast.net>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-References: <cover.1558484115.git.matvore@google.com>
- <341bc55d4a3f5438b1523525cf683f96d75e8c3e.1558484115.git.matvore@google.com>
- <20190524004938.GB46998@google.com> <20190528184801.GA4556@comcast.net>
- <20190528224010.GA4700@comcast.net>
- <xmqq4l5dyrcu.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e9147614-80f9-4c18-b431-539e2376295d@jeffhostetler.com>
-Date:   Wed, 29 May 2019 16:57:23 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1726225AbfE2U5t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 16:57:49 -0400
+Received: from mail-gateway-shared10.cyon.net ([194.126.200.61]:38710 "EHLO
+        mail-gateway-shared10.cyon.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725990AbfE2U5t (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 May 2019 16:57:49 -0400
+X-Greylist: delayed 390 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 May 2019 16:57:48 EDT
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared10.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <bb@drbeat.li>)
+        id 1hW5XV-0007Ud-VL
+        for git@vger.kernel.org; Wed, 29 May 2019 22:51:16 +0200
+Received: from [10.20.10.230] (port=15170 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <bb@drbeat.li>)
+        id 1hW5XU-008aEf-Mm; Wed, 29 May 2019 22:51:12 +0200
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 74674180616; Wed, 29 May 2019 22:51:12 +0200 (CEST)
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH] unicode: update the width tables to Unicode 12.1
+Date:   Wed, 29 May 2019 22:50:45 +0200
+Message-Id: <20190529205045.22903-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.21.0.1020.gf2820cf01a
 MIME-Version: 1.0
-In-Reply-To: <xmqq4l5dyrcu.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-OutGoing-Spam-Status: No, score=-0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Now that Unicode 12.1 has been announced[0], update the character
+width tables to the new version.
 
+[0] http://blog.unicode.org/2019/05/unicode-12-1-en.html
 
-On 5/29/2019 3:48 PM, Junio C Hamano wrote:
-> Matthew DeVore <matvore@comcast.net> writes:
-> 
->> Simplify the filter execution data logic and structs by putting all
->> execution data for all filter types in a single struct. This results in
->> a tiny overhead for each filter instance, and in exchange, invoking
->> filters is not only easier but the list-objects-filter public API is
->> simpler and more opaque.
-> 
-> Hmmm...
-> 
->> +struct filter_data {
->> +	/* Used by all filter types. */
->>   	struct oidset *omits;
->> +
->> +	enum list_objects_filter_result (*filter_object_fn)(
->> +		struct repository *r,
->> +		enum list_objects_filter_situation filter_situation,
->> +		struct object *obj,
->> +		const char *pathname,
->> +		const char *filename,
->> +		struct filter_data *filter_data);
->> +
->> +	/* BEGIN tree:<depth> filter data */
->> +
->> +	/*
->> +	 * Maps trees to the minimum depth at which they were seen. It is not
->> +	 * necessary to re-traverse a tree at deeper or equal depths than it has
->> +	 * already been traversed.
->> +	 *
->> +	 * We can't use LOFR_MARK_SEEN for tree objects since this will prevent
->> +	 * it from being traversed at shallower depths.
->> +	 */
->> +	struct oidmap seen_at_depth;
->> +
->> +	unsigned long exclude_depth;
->> +	unsigned long current_depth;
->> +
->> +	/* BEGIN blobs:limit=<limit> filter data */
->> +
->> +	unsigned long max_bytes;
->> +
->> +	/* BEGIN sparse:... filter data */
->> +
->> +	struct exclude_list el;
->> +
->> +	size_t nr, alloc;
->> +	struct frame *array_frame;
->>   };
-> 
-> I am hoping that I am not misreading the intention but you do not
-> plan to use the above so that you can say "apply 'tree:depth=4' and
-> 'blobs:limit=1G' at the same time" by filling the fields in a single
-> struct, do you?  For combined filter, you'll still have multiple
-> instances of filter_data struct, strung together in a list that says
-> "all of these must be satisfied" or something like that, right?
-> 
-> And if that is the case, I am not sure why the above "struct with
-> all these fields" is a good idea.  If these three (and probably we
-> will have more as the system evolves) sets of fields in this outer
-> struct for different filters were enclosed in a union, that would be
-> a different story, though.
-> 
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ unicode-width.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-I'm not sure I like the combined structure as proposed.
-But let's think about it.
-
-I think part of problem with my original version was putting the
-filter_fn and filter_free_fn in the traversal_context rather than
-inside the filter_*_data structure.
-
-I did a simple combined structure for the list_objects_filter_options
-and kind of regretted it because it wasn't obvious which data fields
-were defined or undefined in each filter constructor.  But it was
-convenient when parsing the command line.
-
-I think having a combined structure with a union enclosing a structure
-for the data fields in each filter type would be worth considering.
-That way you have a somewhat self-documenting sub-structure for each
-filter type that indicates which fields are defined.
-
-I'd also suggest keeping the "oidset omits" inside each of the
-sub-structures, but that's just me.
-
-
-BTW, I don't see a free_fn.  That may collapse out with your proposal
-but I wanted to ask.
-
-Thanks
-Jeff
+diff --git a/unicode-width.h b/unicode-width.h
+index 93a48f3bf8..c9d027625d 100644
+--- a/unicode-width.h
++++ b/unicode-width.h
+@@ -380,8 +380,7 @@ static const struct interval double_width[] = {
+ { 0x31C0, 0x31E3 },
+ { 0x31F0, 0x321E },
+ { 0x3220, 0x3247 },
+-{ 0x3250, 0x32FE },
+-{ 0x3300, 0x4DBF },
++{ 0x3250, 0x4DBF },
+ { 0x4E00, 0xA48C },
+ { 0xA490, 0xA4C6 },
+ { 0xA960, 0xA97C },
+-- 
+2.21.0.1020.gf2820cf01a
 
