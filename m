@@ -2,87 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-7.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D90C1F462
-	for <e@80x24.org>; Wed, 29 May 2019 19:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F195D1F462
+	for <e@80x24.org>; Wed, 29 May 2019 20:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726399AbfE2T7d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 15:59:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59706 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725956AbfE2T7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 15:59:33 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A521778C4;
-        Wed, 29 May 2019 15:59:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YuFByNBrW2ZgR2zhYTiu9Q5aPWA=; b=I98cPg
-        +ZLcMg434kVGjJGYTUl1l0GUSRCInAvqBZBQ0pBKDttPte4F85VBHHmOVD/ndtbc
-        LeH2VrhpBUDhoJ9V7wJ83TbRYWLDz5hnPlZv4omDf/MkplRxA/RWwkiPlg8OXUXD
-        9UM7sbu1nWyvza6U6zD6dVkrU0X7Njpg96QLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QJHcKDl941U09HHsOTzAcdoa0z9amV4T
-        cpW03zfaoiF/wD+nPbM3zRCM9+3bIhRQbzHqFtB2MD16ziuY7WaJTerAAgfQrv+R
-        CGo2qa7UIRyWRmZvN8O3C0OgN/6lLRG8XV5kX/aofPmio5OZXsZKQ2/oJMTnj0JB
-        X5i9DQltlbs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 427ED778C3;
-        Wed, 29 May 2019 15:59:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A14B8778C0;
-        Wed, 29 May 2019 15:59:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Xin Li <delphij@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] clone: respect user supplied origin name when setting up partial clone
-References: <20190524000150.GD70860@google.com>
-        <20190524001525.12952-1-delphij@google.com>
-Date:   Wed, 29 May 2019 12:59:26 -0700
-In-Reply-To: <20190524001525.12952-1-delphij@google.com> (Xin Li's message of
-        "Thu, 23 May 2019 17:15:25 -0700")
-Message-ID: <xmqqr28hxc9t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726395AbfE2UJ4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 16:09:56 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34116 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfE2UJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 16:09:55 -0400
+Received: by mail-pl1-f196.google.com with SMTP id w7so1522767plz.1
+        for <git@vger.kernel.org>; Wed, 29 May 2019 13:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9KYjvSfHiPQEVPCia0CaY52A1UOMT4AV6EMgaGjWGVY=;
+        b=RMEo8J6dTJEMIOLcqwOaqmWRKabCoOEUtfcMAWyFqvJWHtR6aHKfIBlnIjQcdp7ttw
+         pzQzJyOpQ+GrI5DvHJQszn6yLh+joH4jTUFw6/IL1oMQWZ29TzpT5N6PHBDz5akBRQo6
+         EQMEtlNctmMkCbvjtvD1XWZYNCRvDicsfH+F5xwt6Ys7EHrPMhQPzN4KcfqUlncWmR32
+         8LaIjMqxuSY9hrKSAMNMuTskj8v789FeXifdeQO5b7KlhCYZrNd+CMs2cDtFaV/wxqpE
+         Gp4Vtms8CG0EREAIVnYrHrb+s/o7Pb1C7uMkEPLxJRZ9pUJ8FS60stTeii8qMKvG8Uw7
+         wH7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9KYjvSfHiPQEVPCia0CaY52A1UOMT4AV6EMgaGjWGVY=;
+        b=Ns0JTBJMmmk8GpKStu9Io9L9RFD7mr7mKJEaREqXsa344J/Y5tv84/zEM5eMpk3SNA
+         KDQNAIjQhQSYc7hw9c6+E/UtvDLEbrMd4SFik7HY+Gvqge+ojOsuP0B6+bcjQylT0xVP
+         W/XHdqf1TDH2mt8g30N6ZWBNLkK5DgORol2cY8f9PaTksTQn3ZLIh0hWxExp9e/1W5fg
+         CoLEFNYXGbDfpcOruSZt5X+vtzC0FpFSodAThSWRmT4LUHJEjPHb9ybxiNPjkXsOiCJ4
+         HN1Bqcxp4/FiK9UZsW/NNSLsB4HufSZTcsvhDEFmEIvHrTqwpyG0uDCDIhhv7Bmypmih
+         57+w==
+X-Gm-Message-State: APjAAAXumYo+O5JQgehvnGap7JZ/e2CXEyBScXvKafYsA7zxLTPVEtVP
+        8ZspvLhuCgmKmt9lcYqZSptT3A==
+X-Google-Smtp-Source: APXvYqwbkF//4eZR04c8lNunC/EuImKCdft2F9WDC7oezwDJGkskNxemvz2S1B7bkvnOrU8q9I1Cag==
+X-Received: by 2002:a17:902:122:: with SMTP id 31mr3825831plb.217.1559160591454;
+        Wed, 29 May 2019 13:09:51 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:b186:acdd:e7ae:3d4c])
+        by smtp.gmail.com with ESMTPSA id r9sm478486pfc.173.2019.05.29.13.09.48
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Wed, 29 May 2019 13:09:49 -0700 (PDT)
+Date:   Wed, 29 May 2019 13:09:44 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v6 1/2] documentation: add tutorial for first contribution
+Message-ID: <20190529200944.GA52337@google.com>
+References: <20190517190359.21676-1-emilyshaffer@google.com>
+ <20190517190701.49722-2-emilyshaffer@google.com>
+ <CAP8UFD2YH50Br4BNmTqEVeUknxi1X39JCRB4XMwK8rx3DWx=KA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 445081DA-824C-11E9-B383-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD2YH50Br4BNmTqEVeUknxi1X39JCRB4XMwK8rx3DWx=KA@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Xin Li <delphij@google.com> writes:
+On Sun, May 26, 2019 at 09:48:26AM +0200, Christian Couder wrote:
+> On Fri, May 17, 2019 at 11:48 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+> >
+> > This tutorial covers how to add a new command to Git and, in the
+> > process, everything from cloning git/git to getting reviewed on the
+> > mailing list. It's meant for new contributors to go through
+> > interactively, learning the techniques generally used by the git/git
+> > development community.
+> 
+> Very nice, thanks! I tried it and I liked it very much.
+> 
+> I noted a few nits that might help improve it a bit.
+> 
+> > +----
+> > +$ git clone https://github.com/git/git git
+> 
+> Nit: maybe add "$ cd git" after that.
 
-> Signed-off-by: Xin Li <delphij@google.com>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  builtin/clone.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Sure, done.
 
-Thanks.  Can you add a test to demonstrate existing breakage without
-this single-line code change in the same patch?
+> 
+> > +Check it out! You've got a command! Nice work! Let's commit this.
+> > +
+> > +----
+> > +$ git add Makefile builtin.h builtin/psuh.c git.c
+> > +$ git commit -s
+> > +----
+> 
+> Nit: when building a "git-psuh" binary is created at the root of the
+> repo which will pollute the `git status` output. The usual way we deal
+> with that is by adding "/git-psuh" to the ".gitignore" at the root of
+> the repo.
 
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 50bde99618..822208a346 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -1215,7 +1215,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  			remote_head_points_at, &branch_top);
->  
->  	if (filter_options.choice)
-> -		partial_clone_register("origin", &filter_options);
-> +		partial_clone_register(option_origin, &filter_options);
->  
->  	if (is_local)
->  		clone_local(path, git_dir);
+Right you are - good catch. I'll add a paragraph about adding to the
+gitignore.
+> 
+> > +=== Implementation
+> > +
+> > +It's probably useful to do at least something besides printing out a string.
+> > +Let's start by having a look at everything we get.
+> > +
+> > +Modify your `cmd_psuh` implementation to dump the args you're passed:
+> 
+> Nit: maybe it could be a bit more clear that the previous printf()
+> call should be kept as is, otherwise the test added later will fail.
+
+Done.
+
+> 
+> > +----
+> > +       const char *cfg_name;
+> > +
+> > +...
+> > +
+> > +       git_config(git_default_config, NULL)
+> 
+> Nit: a ";" is missing at the end of the above line.
+
+Yikes, done.
+
+> 
+> > +Let's commit this as well.
+> > +
+> > +----
+> > +$ git commit -sm "psuh: print the current branch"
+> 
+> Nit: maybe add "builtin/psuh.c" at the end of the above line, so that
+> a `git add builtin/psuh.c` is not needed.
+
+This is purely personal preference, but I prefer manually adding files
+first. I didn't add any indication about staging the changes to psuh.c
+though, so I'm adding a line to `git add builtin/psuh.c`. I found one
+other place where the commit line was shown without the add line, so I
+included the add there too.
+
+> 
+> > +....
+> > +git-psuh(1)
+> > +===========
+> > +
+> > +NAME
+> > +----
+> > +git-psuh - Delight users' typo with a shy horse
+> > +
+> > +
+> > +SYNOPSIS
+> > +--------
+> > +[verse]
+> > +'git-psuh'
+> > +
+> > +DESCRIPTION
+> > +-----------
+> > +...
+> > +
+> > +OPTIONS[[OPTIONS]]
+> > +------------------
+> > +...
+> > +
+> > +OUTPUT
+> > +------
+> > +...
+> > +
+> > +
+> 
+> Nit: it seems that the above newline could be removed.
+
+
+Sure, why not.
+
+> 
+> Thanks,
+> Christian.
+
+Thanks for trying it out and for your thorough review, Christian. I
+appreciate it! Since this is checked into next already, I'll be sending
+a follow-on patch in reply to my last version in this thread which is
+based on the tip of next.
+
+ - Emily
