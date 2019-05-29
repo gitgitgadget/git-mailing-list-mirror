@@ -8,115 +8,104 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C4AB1F609
-	for <e@80x24.org>; Wed, 29 May 2019 11:57:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9621A1F462
+	for <e@80x24.org>; Wed, 29 May 2019 12:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726018AbfE2L5R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 07:57:17 -0400
-Received: from mout.gmx.net ([212.227.15.19]:58995 "EHLO mout.gmx.net"
+        id S1727211AbfE2M1D (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 08:27:03 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49733 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725894AbfE2L5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 07:57:17 -0400
+        id S1727199AbfE2M1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 08:27:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559131029;
-        bh=i4UV2eKJcBvYk8tNJHssyR3MlmAJXvSauLFeZVcuSOI=;
+        s=badeba3b8450; t=1559132815;
+        bh=xBS4mL4UF+fmx6+5293AkyyUiviuenNwMMY07NeMpig=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hDy2a5ldlu/W+DDKVs6xBx9UgOgod6rM6V4jBRgJeetGcS84dJ9ju8EcHYWSRaS1h
-         51Dpa7q7zA1pJyNZmHW13fFeKJSl9NegQXNxhYNVDeOBEsMP30HXKk9Ps0Y1LgYsBg
-         FAFi01Y6R4t9HiV6BijTg0iCpGOEcYplxlaj1NQo=
+        b=SFPPQ4hO1rXMmGFWcxra5wN3qT5E+S+Mc8YV9s2s4cc6o0Rs7DoRPHR23rYV2UvEp
+         uycLHTvLDJqkfnA9NgrXxN51n+pQDnnx5ewZ/4Dpfk1UuHw/h9jTgE5HM9yDfDMsTk
+         UvCgd4JGyTs7xdpS1OM/ap9EeBiamYpwEkhUGBew=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1gaDqx2ikk-014ndO; Wed, 29
- May 2019 13:57:09 +0200
-Date:   Wed, 29 May 2019 13:56:53 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Ee8-1gd1b532zI-00tASw; Wed, 29
+ May 2019 14:26:55 +0200
+Date:   Wed, 29 May 2019 14:26:39 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Alejandro Sanchez <asanchez1987@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 4/4] am: fix --interactive HEAD tree resolution
-In-Reply-To: <20190528213529.GG24650@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1905291356240.44@tvgsbejvaqbjf.bet>
-References: <20190520120636.GA12634@sigill.intra.peff.net> <20190520121301.GD11212@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet> <20190524063955.GD25694@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1905281301070.44@tvgsbejvaqbjf.bet>
- <20190528213529.GG24650@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: ab/send-email-transferencoding-fix, was Re: What's cooking in git.git
+ (May 2019, #04; Tue, 28)
+In-Reply-To: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905291424140.44@tvgsbejvaqbjf.bet>
+References: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hdAlRbYXHiwTpyGgI2eGsdQxoQuRxncbbAlWMjJvNHE3zyeM1AS
- 8JwUiZE1XlsoXanSIZQBL53Y/ZO16duRPWzQndofVfB1lUNl1mxqdNKGPlRfSI6HUv4/3C9
- X4kOrmqFpCMOr0gdostTBd8eHVn57IigCHIb08p2scsnkWnfEq+2vYNBMeJyruBxDn6YlK+
- Qzz7gx6pXYGcerGPtwLlw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6Tcfi7IMTVI=:CCcXD2OW8uM1t4Nney6lBK
- yQrTv73v46mgKVehidxsBBrn+LngxwJhr2oqY02IW9JkJ4vCXky5LaovC4AgMrDRMRSvPGL9y
- umyCEmHOTAfVy3i9DO14U2YLBkI+rwOdH4uuyE4ekKmmX6wkWbtDVycMDdGg7uVrn0WCW8+hJ
- e45TsflVXFSurlsyBDiRiQh2qpVaKFvELMuynNA3PRWUsNn50Y6qVu+lA8zKTNP1zMkHUJfXB
- 0GsdyW8AJcVdziTSX8Gt4Zo4gbYlX9dPYfPmLo8iYnPrEH/0Wye5lfIEmWz1h4mn4xDYJOunU
- 5DmBmenMGz+yp0KaO3dVXxwaPy9qDydeSNTVdUccQKCRKQokhLndyucJdWqf9mvMZ7WP8X1d/
- xi6knLpe6yc/gRLRkEouipTVNW9aTmuTD/IuD6st5OZsoBiPurCqh57LWCH1FGQU0kQin0rLd
- Q+GpM4WFgEgcvXDPYZ9t6QrBLgOqomNUClEOAxj9j3sPKMZoo2lStNQDrujD8m1SfjVOHO8pC
- Lbgmx0dpKn6Ri3AzcXjofP+5f8ZmSx0aK8nIRWUpLPXRhZTQb6JtREYUsc34lsDmX5g4Og4tM
- vK6J0s9awpRBcyMUtnLORobLyqbSV+8MIuk0cNgSvLVUPsuFaTjISc24Ns0UtagEV1jWICefJ
- wpcOetf/7fcuAf4/v6lVrTWyUudBCYSMbIlQMKR9c8l9GO8eY3rIPtR9Dl5teVM1v9vaV5Fd6
- p4GUhErPZb0MUv2ZqiuHtkSA5rqetbslTQM6KqA72RUaSWWvGHfBFqY0zxrytLhK1LTqoHj/8
- E8xGYoh3qXjdXjXQxXhGxth8U1ocYsc2F5xpxt8gLXJ7SAFq2pGoxEnAdDdTRaEnOZeQO21IC
- o1tNYY4EMPRYCXEemCzP5QQ5BRMaxtds/5/+mJJJpxfbLZ+Dbb+Z2fkzCV9Jh5tQZKvDTHMxC
- +XIr8Y0zsGTqFDOco1H1Pr3+l82Ls21Ku0lxan3JqRzcdhtRxkZE6
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1184330680-1559132815=:44"
+X-Provags-ID: V03:K1:x6CmjQaifIQAD5mzkSGYmEIm5atJPsErfGGg2DTnyZPFlN+IIfh
+ g+TvrO5p8vi1aW/XHBGFsoOLBvuCNB9l98mN8uAHrr8NCHK98d+cMlbAcwDnmT+1GbZtlPt
+ Zec24g1T9bLkiOlVPVc3IzXE16tLwp77dob2K97nGF0LUMPs6vdAjbk65DSjouX1GHBVjsi
+ H3pkO7giqRLR0A+WRdUQg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Kc+6AIfUE6c=:D15FLWtEH5PYaEPxANVIKh
+ Onw7wGvXRM+xgc0AQSqgoQIFUIjHcfBvXQkQYuGqKfqBKZAczSObFoDz2FYcE8u4ip/qmTwMl
+ O7ZQXFWgnz3HjUru90B7G6h+/Ew7tUOpc6UGE+eVscZBOr720up+DS37Fa2RRFCsONsrKVxRj
+ ktpg3987bLt8e+cSLyFvRQe9WZS4GSr3nXKwnTTGxksR6hw0A5nolR3chLg3GuPDJYeYmsYTg
+ ijYC1tbeUV8bqQdRII8PuII4D9EpvZKCqfKOSbWDt5wXYIP3H6J5YbQ7caahGSBkKlkFLDdBd
+ IdLRcVoZSEvZUakkuhFI2bK2SEiks37L/DIenzeKt2Zi/twX2lhy1NYoy7racbZnHJ+Vmc3V5
+ TpTHV0yfCkV3zo/4aIDcuWUfL24qHCVS34JWk+IhB0XEqD/8sM2XkLn0MpjvyT804YDnCr8z5
+ qquUpAaO0aBJgWYmwuzzgqAMI7Fopbvh/SEyXXJYfCHenMXYiiy1CkrZ/cI1l1Xe+FOyYM6wr
+ 0p7E0qeAMzCUcrgDrrcnQvfUvM7siEzWnkbC3bbgQvSTSIB3mVGcX/mW6+TCeUc+YUC1+zO3o
+ 65IzrigwuhcNHDgc8XSCZkP1rXuLJVAVgj0m3AW9c9ZHxpAIoBqQLhoCOYtWUtG2CXC6OpEpY
+ UVXGeHaHzIAXODF65TFg0XtLFEClaqH2gQ+BswYXWH23cYR2CHwD6jjuJ21O6RT/H4qUrXUka
+ j4eDcvsX7E5HcE6QvNUrL4n0FQuTKP+E1GYzgz5LclXEFFlPmahVmme3DUjZIF03QZSuiZY38
+ 0domWhGqCdgHQkEyKy+iXKOjqVgo0xlcvMS2OFR0qMie31EDGh52/89453UyOGWPCCDqjqsL7
+ p7Uk2dl7GFh2rPLcnpCHydyKLCjdnkZzuJ8yP5Ni8GyNZiHJ16brfcUZUx0nT6vInybsfnh36
+ exbdVm39Bi1SU1Xy1HV53g0kZHQci9khH95OEaHr6SlXJufWT9DXA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 28 May 2019, Jeff King wrote:
+--8323328-1184330680-1559132815=:44
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Tue, May 28, 2019 at 01:06:21PM +0200, Johannes Schindelin wrote:
+Hi Junio & =C3=86var,
+
+On Tue, 28 May 2019, Junio C Hamano wrote:
+
+> * ab/send-email-transferencoding-fix (2019-05-19) 7 commits
+>  - send-email: fix regression in sendemail.identity parsing
+>  - send-email: document --no-[to|cc|bcc]
+>  - send-email: fix broken transferEncoding tests
+>  - send-email: remove cargo-culted multi-patch pattern in tests
+>   (merged to 'next' on 2019-05-13 at 38c6a1e7e0)
+>  + send-email: do defaults -> config -> getopt in that order
+>  + send-email: rename the @bcclist variable for consistency
+>  + send-email: move the read_config() function above getopts
 >
-> > > Or do you prefer having a one-liner? I'd rather come up with a more
-> > > generic helper to cover this case, that can run any command and comp=
-are
-> > > it to a single argument (or stdin). E.g.,:
-> > >
-> > >   test_cmp_cmd no-conflict git log -1 --format=3D%s
-> > >
-> > > or
-> > >
-> > >   test_cmp_cmd - git foo <<-\EOF
-> > >   multi-line
-> > >   expectation
-> > >   EOF
-> >
-> > I guess that you and me go into completely opposite directions here. I
-> > want something *less* general. Because I want to optimize for the
-> > unfortunate times when a test fails and most likely somebody else than=
- the
-> > original author of the test case is tasked with figuring out what the =
-heck
-> > goes wrong.
-> >
-> > You seem to want to optimize for writing test cases. Which I find -- w=
-ith
-> > all due respect -- the wrong thing to optimize for. It is already dirt
-> > easy to write new test cases. But *good* test cases (i.e. easy to debu=
-g
-> > ones)? Not so much.
+>  Since "git send-email" learned to take 'auto' as the value for the
+>  transfer-encoding, it by mistake stopped honoring the values given
+>  to the configuration variables sendemail.transferencoding and/or
+>  sendemail.<ident>.transferencoding.  This has been corrected to
+>  (finally) redoing the order of setting the default, reading the
+>  configuration and command line options.
 >
-> Hmm. I too want the test output to be useful to people other than the
-> test author. But I find the output from test_cmp perfectly fine there.
-> My first step in digging into a failure is usually to look at what
-> commands the test is running, which generally makes it obvious why we
-> are expecting one thing and seeing another (or at least, just as obvious
-> as a hand-written message).
->
-> So to me the two are equal on that front, which makes me want to go with
-> the thing that is shorter to write, as it makes it more likely the test
-> writer will write it. The _worst_ option IMHO is a straight-up use of
-> "test" which provides no output at all in the test log of what value we
-> _did_ see. That requires the person looking into the failure to re-run
-> the test, which is hard if it's a remote CI, or if the failure does not
-> always reproduce.
+>  Will merge to 'next'.
 
-If you think your version is easier to debug, then I won't object.
+I just sent a reminder that the tip commit is broken under NO_PERL, and
+accompanied the report with a diff that could be squashed in. =C3=86var, p=
+lease
+have a look and say yay or nay, and please let's only let this enter
+`next` once it is fixed (because otherwise the Azure Pipeline will spam me
+every tim `next` is psuhed -- thanks, Emily, now I mistype this every
+single time).
 
-Thanks,
+Ciao,
 Dscho
+
+--8323328-1184330680-1559132815=:44--
