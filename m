@@ -2,402 +2,250 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42F191F462
-	for <e@80x24.org>; Wed, 29 May 2019 12:44:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19BDE1F462
+	for <e@80x24.org>; Wed, 29 May 2019 13:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726225AbfE2Mox (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 08:44:53 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39176 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbfE2Mox (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 08:44:53 -0400
-Received: by mail-ed1-f65.google.com with SMTP id e24so3590299edq.6
-        for <git@vger.kernel.org>; Wed, 29 May 2019 05:44:51 -0700 (PDT)
+        id S1726889AbfE2NUY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 09:20:24 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51084 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfE2NUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 09:20:23 -0400
+Received: by mail-wm1-f66.google.com with SMTP id f204so1688530wme.0
+        for <git@vger.kernel.org>; Wed, 29 May 2019 06:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MuoX0tqP1K4DrwBg+f2hDLwHAsLGFE+fvik88snsT+M=;
-        b=ZYbgWMJwI0DCS4PFa9+PwDuhLI3EoYcJIo+ZHGvcWoYUFhK31voONTAGURMdNOXN2g
-         P0I+3tsd1se+KiVBIHW1khycktJzq8gwwSaLeZLbg8t3pS4eJP5nqT/7xNvnN+3ngPIA
-         Fb1W/WfuBe9SRlmzNrh7aNeSzEefHTZnUVFxBhUrrqrR2VBYTYseFp2RwL3kTilzXzp8
-         jpYROGBFsNgEtR8KsV7pigR5vnCaC+GhE1dsGJMh40VDTk2PoZEzoyKNjg1+UxHPWt4k
-         543t66OpFbiyskw7Yb92vJR0wIE3nNMG3FiRxrVS7g6OpoNJK+jKCAXSMlabS6BIbL9s
-         1AAA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5z1m3TpLww6eVPKc6o3YofU14vxs+SooZz+vzG1TBnQ=;
+        b=UjpzwNC6YmGsYO60Mp9qC0QCsHTVy6GcxrG50CUcHDDOqFNiF5PXUh8xLGWkfoBgqB
+         toLoI23GNmouewrS8HhhX2KQ5rNqcc4Rva571jzjxfQuF8fDTAKS5DIZqpsApNArYRKr
+         EAPeG0MK7mWtTW1M0tQKaR8hauAA9+OGeaQBWlJ3GijzViXt2I2ZT0Wo7bmHSocixuAC
+         /MpUw3rE9tR2G5+eUWuhS3DJu1+IGeXQGjV6lKufWbm+kxvDqmlrHlW8/z68jczIoobD
+         NAbDtYAxbNysarTWS8VPF/FjvyDQG9fupQBJQ3I8FHhbc8j+AM6/yH1TPfmtq2KdcjGr
+         aoIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MuoX0tqP1K4DrwBg+f2hDLwHAsLGFE+fvik88snsT+M=;
-        b=F3YGOzngOQ2f9PAsyaAQSFVnCTtyA5bFn3RF1fNV6aZ1gd8A7AxqpLgdmXhWeFBJjY
-         DqbuVSfj0mnWdzGDhJER0w3QNYD3QqLw9ly1dlkl+3vtxJgjg0aWqyykR3n4pIS4yq22
-         O671poYZpEuhwESf3+AJP6vnUtecvhEeMX4JkQVDsqYKWDV2TmeYn4DjUiuf1C+x0uJr
-         z1wdx7f5mjR56a95TTFfQFg8W3ZLp5AMt336GwgUGs/IhLOXruN11BWuVqQAHkOzIWgL
-         /y6xSPtAELcmUmN+eFjfCYgDnLtOOJdop6CJ++3F5KEbcqi9yBuGMUtyLjGMNPmP8fbw
-         BQpg==
-X-Gm-Message-State: APjAAAVJg5NIIz02Q3wSQ86qkkJOXdPM+9GXVvxhpPcXJe6rbMQmiMv5
-        Z/KTPw9SGJfn440d3O8VZODGYdtWEfc=
-X-Google-Smtp-Source: APXvYqw6A6PjsAVb5LYC7udU4Jid3gtnR8NApCsgxd0fJt7rKOjY9thy6ijMSsPzCwhbwvo8c5Lyfg==
-X-Received: by 2002:a17:906:7053:: with SMTP id r19mr28856346ejj.101.1559133890630;
-        Wed, 29 May 2019 05:44:50 -0700 (PDT)
-Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id l18sm2792938ejs.44.2019.05.29.05.44.49
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5z1m3TpLww6eVPKc6o3YofU14vxs+SooZz+vzG1TBnQ=;
+        b=nvogW8Xcw5jpCLakFqfMzJuUGdAXCBrrYvQEURNu1hP3joRKEdDF0MYK022AaFWEBz
+         jLsP4tEeGg2BzvZcSsf0K1zjMhGkPzDyxwid3Cbqf/BxBJ7F8YaDrGMW4HoXXHuW5b1E
+         l4vSOs61atUFCoIyTtSNeefVA1Je2uysKev5HSkaWpXfKbmmN8pRb8ySIOjfFTGCPn+a
+         CI0CZk83nAp9JvkWQeGA0gYsv7UpSA0Zqvmhw/PYsKMDhoAG5VDUtY6QlW4647sGHBaG
+         9U7dvbpnD5EGpXsy0lwzLqsuPXPYuE/t7ZmXWVHrkDHHKSvmzwvetTc22/OoK+FRpHXT
+         7KAw==
+X-Gm-Message-State: APjAAAXD8Cbf1F+FCCuAWAwJoVipbIsIquZy3jBwJfuWQC8wV3lL4gfc
+        YTpE6G94R9t5SHkGb7zi9t8=
+X-Google-Smtp-Source: APXvYqyQdcsUkEQTBAcC0EYSs40vPNyXJACdvt4DJLvb7q6h8f05ND6EhnrAjpgzXEEe+cRh8OdMMg==
+X-Received: by 2002:a7b:c943:: with SMTP id i3mr6641822wml.128.1559136020748;
+        Wed, 29 May 2019 06:20:20 -0700 (PDT)
+Received: from szeder.dev (x4db54514.dyn.telefonica.de. [77.181.69.20])
+        by smtp.gmail.com with ESMTPSA id c131sm6923015wma.31.2019.05.29.06.20.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 May 2019 05:44:49 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Matthew DeVore <matvore@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3] list-objects-filter: disable 'sparse:path' filters
-Date:   Wed, 29 May 2019 14:44:32 +0200
-Message-Id: <20190529124432.5707-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.22.0.rc1.7.gaa5a13be45.dirty
+        Wed, 29 May 2019 06:20:19 -0700 (PDT)
+Date:   Wed, 29 May 2019 15:20:17 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Jeff King <peff@peff.net>, Alexander Huynh <alex@grande.coffee>,
+        git <git@vger.kernel.org>
+Subject: Re: git-clone --config remote.origin.fetch regression
+Message-ID: <20190529132017.GM951@szeder.dev>
+References: <CAFQ2z_O7rupGS4rntiUwJCHUj3bO0U88bVAToveEo_uU0Eu96w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFQ2z_O7rupGS4rntiUwJCHUj3bO0U88bVAToveEo_uU0Eu96w@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+On Tue, May 28, 2019 at 07:34:58PM -0300, Han-Wen Nienhuys wrote:
+> (see also https://github.com/google/zoekt/issues/81)
+> 
+> It looks like git 2.21 included a regression. The command
+> 
+> git clone --bare --progress \
+>   --config "remote.origin.fetch=+refs/heads/*:refs/heads/*" \
+>   https://github.com/google/zoekt.git \
+>   /tmp/zoekt-git2.20.git
+> 
+> would succeed with git 2.20, but fails with
+> 
+>  fatal: multiple updates for ref 'refs/heads/master' not allowed
+> 
+> in git 2.21, probably caused by commit 515be83.
+> 
+> Should I call git in another way? I originally included
+> "remote.origin.fetch=+refs/heads/*:refs/heads/*" to avoid getting
+> Gerrit refs (refs/changes/*), but maybe I should use a different
+> incantation?
 
-If someone wants to use as a filter a sparse file that is in the
-repository, something like "--filter=sparse:oid=<ref>:<path>"
-already works.
+On first sight I was wondering why you don't use '--mirror', but yeah,
+that would fetch 'refs/changes/*' as well (the whole 'refs/*',
+really).  In the meantime a workaround would be to run separate
+commands to accomplish what 'git clone' would do under the hood:
 
-So 'sparse:path' is only interesting if the sparse file is not in
-the repository. In this case though the current implementation has
-a big security issue, as it makes it possible to ask the server to
-read any file, like for example /etc/password, and to explore the
-filesystem, as well as individual lines of files.
+  git init --bare zoekt.git
+  cd zoekt.git
+  git config remote.origin.url https://github.com/google/zoekt.git
+  git config remote.origin.fetch '+refs/heads/*:refs/heads/*'
+  git fetch
 
-If someone is interested in using a sparse file that is not in the
-repository as a filter, then at the minimum a config option, such
-as "uploadpack.sparsePathFilter", should be implemented first to
-restrict the directory from which the files specified by
-'sparse:path' can be read.
 
-For now though, let's just disable 'sparse:path' filters.
+This is indeed caused by 515be83382 (clone: respect additional
+configured fetch refspecs during initial fetch, 2018-11-14): since 
+then the same refspec comes up twice in remote->fetch, once from the
+configuration that you specified on the command line and once from the
+default refspec that 'git clone' would have used anyway, and in the
+end 'git clone' tries to write each ref twice, once for each of those
+two refspecs, in a single ref transaction, hence the error.
 
-Helped-by: Matthew DeVore <matvore@google.com>
-Helped-by: Jeff Hostetler <git@jeffhostetler.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I'm not quite sure how to properly handle the situation.  The patch at
+the bottom makes your case (and the case in an earlier report [1])
+work by omitting 'git clone's default refspec if one of the configured
+refspecs have the same destination side as the default refspec.  I
+think this is a step in the right-ish direction, but there are some
+open questions:
+
+  - Should it only check the destination side of the refspecs, or the
+    source as well?  IOW, in case of e.g.
+
+      git clone --bare \
+                -c 'remote.origin.fetch=refs/foo/*:refs/heads/*' ...
+
+    should it only fetch from 'refs/foo/*' or both from 'refs/foo/*'
+    and 'refs/heads/*'?  With the patch below it's only 'refs/foo/*'.
+    If we were to fetch from both, then I expect trouble when both
+    'refs/foo/feature' and 'refs/heads/feature' happen to exist, but
+    this is a more general issue not limited to 'git clone -c ...'.
+
+  - Even if it were to check the source side of the refspec, it should
+    ignore the optional leading '+' in the refspecs, because otherwise
+    the command
+
+      # no leading '+' in the additional configured refspec
+      git clone --bare \
+                -c 'remote.origin.fetch=refs/heads/*:refs/heads/*' ...
+
+    would lead to the same error, because the default refspec for
+    '--bare' is '+refs/heads/*:refs/heads/*'.
+
+    (Sidenote: 'git clone's default refspec always has the leading
+    '+', but I think that's unnecessary, because during cloning there
+    are no existing refs to be updated in the first place.)
+
+  - What should be written to the configuration?  Writing the default
+    refspec configuration uses a different logic than assembling the
+    default refspec for the initial fetch.  As a result, even if the
+    default refspec is not used in the initial fetch, the command
+
+      # no leading '+' in the additional configured refspec
+      git clone \
+        -c 'remote.origin.fetch=refs/heads/*:refs/remotes/origin/*' ...
+
+    will still write it to the config, resulting in:
+
+      $ git config --get-all remote.origin.fetch
+      refs/heads/*:refs/remotes/origin/*
+      +refs/heads/*:refs/remotes/origin/*
+
+    Alas, we can't simply avoid writing the default refspec to the
+    configuration if it matches one of the additional configured
+    refspecs from the command line, because there is
+
+      git -c remote.origin.fetch=<refspec> clone ...
+
+    as well...
+
+  - Alternatively, we could make ref transactions a bit more lax about
+    duplicated entries, and ignore multiple updates to the same ref if
+    all of those ref updates want to do the same thing, i.e. have the
+    same old and new OID.  However, the issue with writing the
+    configuration would still remain.
+
+
+[1] https://public-inbox.org/git/20190307214447.GA4909@chabuduo/
+
+ --- >8 ---
+
+Subject: [PATCH] [PoC] clone: avoid redundant default refspec
+
 ---
+ builtin/clone.c         | 19 ++++++++++++++++++-
+ t/t5611-clone-config.sh | 15 +++++++++++++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
-Changes since version 2 are the following:
-
-  - added changes to Documentation/rev-list-options.txt, as
-    discussed with Junio.
-
- Documentation/rev-list-options.txt     |  7 +--
- contrib/completion/git-completion.bash |  2 +-
- list-objects-filter-options.c          | 10 ++--
- list-objects-filter-options.h          |  2 -
- list-objects-filter.c                  | 22 --------
- t/t5317-pack-objects-filter-objects.sh | 71 +++++---------------------
- t/t6112-rev-list-filters-objects.sh    | 39 +++++---------
- 7 files changed, 37 insertions(+), 116 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index ddbc1de43f..71a1fcc093 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -725,9 +725,6 @@ specification contained in the blob (or blob-expression) '<blob-ish>'
- to omit blobs that would not be not required for a sparse checkout on
- the requested refs.
- +
--The form '--filter=sparse:path=<path>' similarly uses a sparse-checkout
--specification contained in <path>.
--+
- The form '--filter=tree:<depth>' omits all blobs and trees whose depth
- from the root tree is >= <depth> (minimum depth if an object is located
- at multiple depths in the commits traversed). <depth>=0 will not include
-@@ -737,6 +734,10 @@ tree and blobs which are referenced directly by a commit reachable from
- <commit> or an explicitly-given object. <depth>=2 is like <depth>=1
- while also including trees and blobs one more level removed from an
- explicitly-given commit or tree.
-++
-+Note that the form '--filter=sparse:path=<path>' that wants to read
-+from an arbitrary path on the filesystem has been dropped for security
-+reasons.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 85b0d3155d..f104510cfe 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -907,6 +907,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct remote *remote;
+ 	int err = 0, complete_refs_before_fetch = 1;
+ 	int submodule_progress;
++	int i, add_default_refspec = 1;
++	const char *default_refspec_dst;
  
- --no-filter::
- 	Turn off any previous `--filter=` argument.
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3eefbabdb1..9f71bcde96 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1536,7 +1536,7 @@ _git_fetch ()
- 		return
- 		;;
- 	--filter=*)
--		__gitcomp "blob:none blob:limit= sparse:oid= sparse:path=" "" "${cur##--filter=}"
-+		__gitcomp "blob:none blob:limit= sparse:oid=" "" "${cur##--filter=}"
- 		return
- 		;;
- 	--*)
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index c0036f7378..a15d0f7829 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -78,9 +78,12 @@ static int gently_parse_list_objects_filter(
- 		return 0;
+ 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
  
- 	} else if (skip_prefix(arg, "sparse:path=", &v0)) {
--		filter_options->choice = LOFC_SPARSE_PATH;
--		filter_options->sparse_path_value = strdup(v0);
--		return 0;
-+		if (errbuf) {
-+			strbuf_addstr(
-+				errbuf,
-+				_("sparse:path filters support has been dropped"));
+@@ -1093,7 +1095,22 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 	strbuf_addf(&default_refspec, "+%s*:%s*", src_ref_prefix,
+ 		    branch_top.buf);
+-	refspec_append(&remote->fetch, default_refspec.buf);
++	/*
++	 * Don't add the default refspec if the user specified an additional
++	 * refspec in the configuration whose destination matches the
++	 * destination of the default refspec, because then both would want
++	 * to update the same ref(s), leading to "multiple updates" error
++	 * from the refs transaction.
++	 * TODO: Or should it check both the source and the destination?
++	 */
++	default_refspec_dst = strchr(default_refspec.buf, ':') + 1;
++	for (i = 0; i < remote->fetch.nr; i++)
++		if (!strcmp(default_refspec_dst, remote->fetch.items[i].dst)) {
++			add_default_refspec = 0;
++			break;
 +		}
-+		return 1;
- 	}
- 	/*
- 	 * Please update _git_fetch() in git-completion.bash when you
-@@ -136,7 +139,6 @@ void list_objects_filter_release(
- {
- 	free(filter_options->filter_spec);
- 	free(filter_options->sparse_oid_value);
--	free(filter_options->sparse_path_value);
- 	memset(filter_options, 0, sizeof(*filter_options));
- }
++	if (add_default_refspec)
++		refspec_append(&remote->fetch, default_refspec.buf);
  
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index e3adc78ebf..c54f0000fb 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -13,7 +13,6 @@ enum list_objects_filter_choice {
- 	LOFC_BLOB_LIMIT,
- 	LOFC_TREE_DEPTH,
- 	LOFC_SPARSE_OID,
--	LOFC_SPARSE_PATH,
- 	LOFC__COUNT /* must be last */
- };
- 
-@@ -44,7 +43,6 @@ struct list_objects_filter_options {
- 	 * choice.
- 	 */
- 	struct object_id *sparse_oid_value;
--	char *sparse_path_value;
- 	unsigned long blob_limit_value;
- 	unsigned long tree_exclude_depth;
- };
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index ee449de3f7..53f90442c5 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -478,27 +478,6 @@ static void *filter_sparse_oid__init(
- 	return d;
- }
- 
--static void *filter_sparse_path__init(
--	struct oidset *omitted,
--	struct list_objects_filter_options *filter_options,
--	filter_object_fn *filter_fn,
--	filter_free_fn *filter_free_fn)
--{
--	struct filter_sparse_data *d = xcalloc(1, sizeof(*d));
--	d->omits = omitted;
--	if (add_excludes_from_file_to_list(filter_options->sparse_path_value,
--					   NULL, 0, &d->el, NULL) < 0)
--		die("could not load filter specification");
--
--	ALLOC_GROW(d->array_frame, d->nr + 1, d->alloc);
--	d->array_frame[d->nr].defval = 0; /* default to include */
--	d->array_frame[d->nr].child_prov_omit = 0;
--
--	*filter_fn = filter_sparse;
--	*filter_free_fn = filter_sparse_free;
--	return d;
--}
--
- typedef void *(*filter_init_fn)(
- 	struct oidset *omitted,
- 	struct list_objects_filter_options *filter_options,
-@@ -514,7 +493,6 @@ static filter_init_fn s_filters[] = {
- 	filter_blobs_limit__init,
- 	filter_trees_depth__init,
- 	filter_sparse_oid__init,
--	filter_sparse_path__init,
- };
- 
- void *list_objects_filter__init(
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index 4c0201c34b..2d2f5d0229 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -277,6 +277,10 @@ test_expect_success 'verify normal and blob:limit packfiles have same commits/tr
+ 	transport = transport_get(remote, remote->url[0]);
+ 	transport_set_verbosity(transport, option_verbosity, option_progress);
+diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
+index 60c1ba951b..e63eec2894 100755
+--- a/t/t5611-clone-config.sh
++++ b/t/t5611-clone-config.sh
+@@ -92,6 +92,21 @@ test_expect_success 'clone -c remote.<remote>.fetch=<refspec> --origin=<name>' '
+ 	test_cmp expect actual
  '
  
- # Test sparse:path=<path> filter.
-+# !!!!
-+# NOTE: sparse:path filter support has been dropped for security reasons,
-+# so the tests have been changed to make sure that using it fails.
-+# !!!!
- # Use a local file containing a sparse-checkout specification to filter
- # out blobs not required for the corresponding sparse-checkout.  We do not
- # require sparse-checkout to actually be enabled.
-@@ -315,73 +319,24 @@ test_expect_success 'verify blob count in normal packfile' '
- 	test_cmp expected observed
- '
- 
--test_expect_success 'verify sparse:path=pattern1' '
--	git -C r3 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
--	awk -f print_2.awk ls_files_result |
--	sort >expected &&
--
--	git -C r3 pack-objects --revs --stdout --filter=sparse:path=../pattern1 >filter.pack <<-EOF &&
-+test_expect_success 'verify sparse:path=pattern1 fails' '
-+	test_must_fail git -C r3 pack-objects --revs --stdout \
-+		--filter=sparse:path=../pattern1 <<-EOF
- 	HEAD
- 	EOF
--	git -C r3 index-pack ../filter.pack &&
--
--	git -C r3 verify-pack -v ../filter.pack >verify_result &&
--	grep blob verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	test_cmp expected observed
--'
--
--test_expect_success 'verify normal and sparse:path=pattern1 packfiles have same commits/trees' '
--	git -C r3 verify-pack -v ../all.pack >verify_result &&
--	grep -E "commit|tree" verify_result |
--	awk -f print_1.awk |
--	sort >expected &&
--
--	git -C r3 verify-pack -v ../filter.pack >verify_result &&
--	grep -E "commit|tree" verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	test_cmp expected observed
- '
- 
--test_expect_success 'verify sparse:path=pattern2' '
--	git -C r3 ls-files -s sparse1 dir1/sparse1 >ls_files_result &&
--	awk -f print_2.awk ls_files_result |
--	sort >expected &&
--
--	git -C r3 pack-objects --revs --stdout --filter=sparse:path=../pattern2 >filter.pack <<-EOF &&
-+test_expect_success 'verify sparse:path=pattern2 fails' '
-+	test_must_fail git -C r3 pack-objects --revs --stdout \
-+		--filter=sparse:path=../pattern2 <<-EOF
- 	HEAD
- 	EOF
--	git -C r3 index-pack ../filter.pack &&
--
--	git -C r3 verify-pack -v ../filter.pack >verify_result &&
--	grep blob verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	test_cmp expected observed
--'
--
--test_expect_success 'verify normal and sparse:path=pattern2 packfiles have same commits/trees' '
--	git -C r3 verify-pack -v ../all.pack >verify_result &&
--	grep -E "commit|tree" verify_result |
--	awk -f print_1.awk |
--	sort >expected &&
--
--	git -C r3 verify-pack -v ../filter.pack >verify_result &&
--	grep -E "commit|tree" verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	test_cmp expected observed
- '
- 
- # Test sparse:oid=<oid-ish> filter.
--# Like sparse:path, but we get the sparse-checkout specification from
--# a blob rather than a file on disk.
-+# Use a blob containing a sparse-checkout specification to filter
-+# out blobs not required for the corresponding sparse-checkout.  We do not
-+# require sparse-checkout to actually be enabled.
- 
- test_expect_success 'setup r4' '
- 	git init r4 &&
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index 9c11427719..acd7f5ab80 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -157,6 +157,10 @@ test_expect_success 'verify blob:limit=1m' '
- '
- 
- # Test sparse:path=<path> filter.
-+# !!!!
-+# NOTE: sparse:path filter support has been dropped for security reasons,
-+# so the tests have been changed to make sure that using it fails.
-+# !!!!
- # Use a local file containing a sparse-checkout specification to filter
- # out blobs not required for the corresponding sparse-checkout.  We do not
- # require sparse-checkout to actually be enabled.
-@@ -176,37 +180,20 @@ test_expect_success 'setup r3' '
- 	echo sparse1 >pattern2
- '
- 
--test_expect_success 'verify sparse:path=pattern1 omits top-level files' '
--	git -C r3 ls-files -s sparse1 sparse2 >ls_files_result &&
--	awk -f print_2.awk ls_files_result |
--	sort >expected &&
--
--	git -C r3 rev-list --quiet --objects --filter-print-omitted \
--		--filter=sparse:path=../pattern1 HEAD >revs &&
--	awk -f print_1.awk revs |
--	sed "s/~//" |
--	sort >observed &&
--
--	test_cmp expected observed
-+test_expect_success 'verify sparse:path=pattern1 fails' '
-+	test_must_fail git -C r3 rev-list --quiet --objects \
-+		--filter-print-omitted --filter=sparse:path=../pattern1 HEAD
- '
- 
--test_expect_success 'verify sparse:path=pattern2 omits both sparse2 files' '
--	git -C r3 ls-files -s sparse2 dir1/sparse2 >ls_files_result &&
--	awk -f print_2.awk ls_files_result |
--	sort >expected &&
--
--	git -C r3 rev-list --quiet --objects --filter-print-omitted \
--		--filter=sparse:path=../pattern2 HEAD >revs &&
--	awk -f print_1.awk revs |
--	sed "s/~//" |
--	sort >observed &&
--
--	test_cmp expected observed
-+test_expect_success 'verify sparse:path=pattern2 fails' '
-+	test_must_fail git -C r3 rev-list --quiet --objects \
-+		--filter-print-omitted --filter=sparse:path=../pattern2 HEAD
- '
- 
- # Test sparse:oid=<oid-ish> filter.
--# Like sparse:path, but we get the sparse-checkout specification from
--# a blob rather than a file on disk.
-+# Use a blob containing a sparse-checkout specification to filter
-+# out blobs not required for the corresponding sparse-checkout.  We do not
-+# require sparse-checkout to actually be enabled.
- 
- test_expect_success 'setup r3 part 2' '
- 	echo dir1/ >r3/pattern &&
++test_expect_success 'clone -c remote.origin.fetch=<refspec> matches the default refspec' '
++	rm -rf child &&
++	git clone -c "remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*" \
++		. child &&
++	# TODO: look, the same refspec is stored in the config twice:
++	git -C child config --get-all remote.origin.fetch &&
++	git -C child for-each-ref --format="%(refname)" >actual &&
++	cat >expect <<-\EOF &&
++	refs/heads/master
++	refs/remotes/origin/HEAD
++	refs/remotes/origin/master
++	EOF
++	test_cmp expect actual
++'
++
+ # Tests for the hidden file attribute on windows
+ is_hidden () {
+ 	# Use the output of `attrib`, ignore the absolute path
 -- 
-2.22.0.rc1.7.gaa5a13be45.dirty
-
+2.22.0.rc1.423.g9b4f2abbc5
