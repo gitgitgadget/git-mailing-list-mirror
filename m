@@ -7,104 +7,228 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100781F462
-	for <e@80x24.org>; Wed, 29 May 2019 16:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCEB61F462
+	for <e@80x24.org>; Wed, 29 May 2019 16:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726439AbfE2QQC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 12:16:02 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40450 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfE2QQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 12:16:01 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d30so180789pgm.7
-        for <git@vger.kernel.org>; Wed, 29 May 2019 09:16:01 -0700 (PDT)
+        id S1727161AbfE2Qkz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 12:40:55 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:52938 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbfE2Qkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 12:40:55 -0400
+Received: by mail-it1-f194.google.com with SMTP id t184so4992506itf.2
+        for <git@vger.kernel.org>; Wed, 29 May 2019 09:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=connect-hku-hk.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uzk13SCFW/9AlqPeEJddbik19pZgX9MsfxzCBb0p6jc=;
-        b=kt1LRfzF5e9ciBUgK8es/MWgP+zETJKYeSBS7SxVBdeVrZSd3QUCgv1e0v1q4Su+Hz
-         NaHGfywpE4jWx/IEnyy/tKfdClFPe+WkEHb41bNJPukTevy/1t1dViB0MHOOM7Hu1got
-         NKwe4WBXTlTeWinF74IBlyRxQAWeJBxmDMkNyVCYRv95WkMawAn7h4pagRu/Hlh5SbNi
-         qFriruKSApB6z56xBejxf8GrgznoR5mlETE37jLvXzooR8Zwdgh30g56ogonf+xbC/MY
-         TGfbTfCV/CbHmWw2cMymCvkr/opwUGEUlyDCIsSbC9rtj6fH/VT+JsVT9RBNyGDC8s+x
-         4OsA==
+        d=corthon-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dZb2r+q1pRpUGOX7Pprltu0Dnlkmahrv/tbJTpxt67U=;
+        b=1ionzWqOkXUSZzKhoviXe5g3cmH7G2iw3pX1NlWQ1DStllBGWP3EdM84XD29SD7Hxl
+         Cujlf1DN4sFzOa3wnjqcmTkHceiK6a+/5holudaJ4N5+fVCe3UGuRnQljCoVz/vXtGuQ
+         9/Muez/FU4JEjvIKJCK11FcF1bb+EW6+mTaIjr3PDVtH9c/SABkX4HnJ8iiw1hA4tpoW
+         JdNX6C9x5ImuT6x4FfItdok/YJGftO7ZbF/9RAj9XCUl056tBsbmt0833kMJUoJwSVOl
+         DHpNmqH2fQ9hyCGLjkg9Iy0aBtcfsW7/PRDy22yxkiRHRKCClQsllkIv+A/mxNd69lwM
+         3JSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uzk13SCFW/9AlqPeEJddbik19pZgX9MsfxzCBb0p6jc=;
-        b=NJO71BWJzaPOFQlFUVC3ADn4S/qCHsq2ZyiZFPyxlJzatlvy4hPJzdF9E9Ktsfz+wE
-         jXkkb4wiJdymLHDlgBtSRoNUIIiYR6rxmKHOulL//hD9D4BWBEoddPywjKICt3EZqEQt
-         qnM0EK3smMgsJ5zYB2KTqUjGo2KmLVf5BG7annhxR5uVU1yVQJy2t7DPC8L0NPFWoPSa
-         NnLGeg5T7vHXxftOG0D9KzcGSzb2JlG8/2p1WyjcBNEqEYydFGRuj86ICLfTWYuQByZZ
-         qSMK5fDSbCqfPlvkOb6JCuPIYH+KYAZwp7Cn1tNKRuD6MSyUw3/c9nvrNEUBBAWHh3un
-         a8YQ==
-X-Gm-Message-State: APjAAAVVboZgH+Gw1yLY26h4TWb1eoPZgxoRO0UJXWfqzK4J3JEcjeon
-        3XEhg8BBuhBzPzKyLFDeZZyf+Fwoemk=
-X-Google-Smtp-Source: APXvYqyoEgAZR3zVrFPBReghZFTb05NTu+zfULRW2NZFyTJK4g2eNJZcy6+YKK9M3zsyHesCVoCNcg==
-X-Received: by 2002:a63:1c19:: with SMTP id c25mr15442322pgc.183.1559146560832;
-        Wed, 29 May 2019 09:16:00 -0700 (PDT)
-Received: from MBP.local.hk ([175.159.177.52])
-        by smtp.gmail.com with ESMTPSA id x7sm106573pfm.82.2019.05.29.09.15.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 May 2019 09:16:00 -0700 (PDT)
-From:   Boxuan Li <liboxuan@connect.hku.hk>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, philipoakley@iee.org, gitster@pobox.com,
-        j6t@kdbg.org, Boxuan Li <liboxuan@connect.hku.hk>
-Subject: [PATCH] userdiff: fix grammar and style issues
-Date:   Thu, 30 May 2019 00:15:39 +0800
-Message-Id: <20190529161539.47445-1-liboxuan@connect.hku.hk>
-X-Mailer: git-send-email 2.21.0.777.g83232e3864
-In-Reply-To: <1c31f3fc-9283-91ef-7c96-6eed2f010491@kdbg.org>
-References: <1c31f3fc-9283-91ef-7c96-6eed2f010491@kdbg.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dZb2r+q1pRpUGOX7Pprltu0Dnlkmahrv/tbJTpxt67U=;
+        b=aHw2MxJ+2irM623twcbjNgwe9JEcKz80tCpDg0WIZa7lJH4N/s/Z9AOJoOQWeY9I0Q
+         qSvjalXfwAK7CkjzQrzwvRRCCKA8fRhNRqQUVZ26FMwH4zt1XbIj53zBm5/Tq7KUnoF+
+         kIGbcd1KLQNU8BjdmZMMoT2Wy9lZ4CiO5x3NsR8IebVxW3JIGMIeZWOjekLM5lZWDQIV
+         ghVH/vbPY0FQIWGfgkHjZDVTwtDMK7D0NubClHXKScLbTKb7M7zhJ8ua6HWDP9oRW8NZ
+         n0PCBqJrr0jw/iExJkxNAf8rhrlGLB3cToTchjY49kVbh6/7c3aJVBgTwc54It+p4wHS
+         d9MQ==
+X-Gm-Message-State: APjAAAW3q5OKlNoKdHXyNxQH8JxSAqKoOdfiRHBipISam0E5Y3nO1yKg
+        FUky3v7PgLpE8BQSEofqIPEKmZjJVEyn6llpz5Q=
+X-Google-Smtp-Source: APXvYqwuIqBOm1vWxmffPBqIWUG+CDbnGm1cP/aBeO2D4LmVSx5IYUCYuapTWrVVtrjNubxY4wX//HpBKdKfBhv6Wq8=
+X-Received: by 2002:a05:660c:f87:: with SMTP id x7mr8632413itl.163.1559148049572;
+ Wed, 29 May 2019 09:40:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com>
+ <CAGyf7-HcncFOfmm5McEkOvCTkHNdePDSEQDZwEAK=z1bmC=QKw@mail.gmail.com>
+ <CAGTkKag-fTy3iZAKJxEnWD6_b_3pfuYvQQKBkLaeSL8wKM2sfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1901091936420.41@tvgsbejvaqbjf.bet> <CAGTkKajkW-U9mhh_GmTXmZQbnceEKX_BcMtOF4hOhEDZe2u9Bw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet> <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com>
+ <CAGTkKajYiyT_OtX1mQECvxjvKXndjBYAqwgKMimJrroPAAvZJA@mail.gmail.com> <nycvar.QRO.7.76.6.1904271722290.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1904271722290.45@tvgsbejvaqbjf.bet>
+From:   Bret Barkelew <bret@corthon.com>
+Date:   Wed, 29 May 2019 09:40:40 -0700
+Message-ID: <CAGTkKagwzceU51O6dK_6-MRZdEW52-xEFoGBVf9z9XLVEJoAGg@mail.gmail.com>
+Subject: Re: git version 2.20.1.windows.1 throws file name too long in gitk
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Boxuan Li <liboxuan@connect.hku.hk>
----
-Based on 'next' branch
----
- Documentation/gitattributes.txt | 2 +-
- userdiff.c                      | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+I know it's an incredibly late reply, but I have not seen this issue
+reappear since the patches. Thank you very much for helping!
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index ade5e6d400..2796dfc83b 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -819,7 +819,7 @@ patterns are available:
- 
- - `java` suitable for source code in the Java language.
- 
--- `matlab` suitable for source code in the MATLAB and Octave language.
-+- `matlab` suitable for source code in the MATLAB and Octave languages.
- 
- - `objc` suitable for source code in the Objective-C language.
- 
-diff --git a/userdiff.c b/userdiff.c
-index 5a3bff3836..a47b24b320 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -58,9 +58,11 @@ PATTERNS("java",
- 	 "|[-+*/<>%&^|=!]="
- 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
- PATTERNS("matlab",
--	 /* Octave pattern is mostly the same as matlab, except that '%%%' and
-+	 /*
-+	  * Octave pattern is mostly the same as matlab, except that '%%%' and
- 	  * '##' can also be used to begin code sections, in addition to '%%'
--	  * that is understood by both. */
-+	  * that is understood by both.
-+	  */
- 	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^(%%%?|##)[[:space:]].*$",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
- PATTERNS("objc",
--- 
-2.21.0.777.g83232e3864
+- Bret
 
+On Sat, Apr 27, 2019 at 4:20 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Bret,
+>
+> On Thu, 18 Apr 2019, Bret Barkelew wrote:
+>
+> > This issue is now being reported by more users inside MS. I'll also
+> > reach out to the Git for Windows advocacy group to see if they have
+> > any ideas.
+> >
+> > I have not had time to figure out the inner workings of Tcl/Tk. Is
+> > there any way to turn on tracing/logging in Git for which commands are
+> > being called by gitk?
+>
+> Thank you for reaching out with detailed information internally, I am
+> happy to report that together with the help of Max Kirillov, this is now
+> resolved and a snapshot is available from
+> https://wingit.blob.core.windows.net/files/index.html that has the fix.
+>
+> Ciao,
+> Johannes
+>
+> > On Thu, Jan 10, 2019 at 10:55 AM Bret Barkelew <bret@corthon.com> wrote=
+:
+> > >
+> > > On Thu, Jan 10, 2019 at 7:20 AM Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > Hi Bret,
+> > > >
+> > > > in that case, please try to find a way to trace the commands in a T=
+cl/Tk
+> > > > program (which gitk is) and see which command triggers the error.
+> > >
+> > > Er... that's a little out of my depth. I'll see if I can find time to=
+ learn.
+> > > Meanwhile, is there any way to request better instrumentation for the
+> > > error dialog so this data could have been collected for me?
+> > >
+> > > >
+> > > > Ciao,
+> > > > Johannes
+> > > >
+> > > >
+> > > > On Wed, 9 Jan 2019, Bret Barkelew wrote:
+> > > >
+> > > > > Will try to reply in-line, when appropriate.
+> > > > > The latest snapshot (git version 2.20.1.windows.1.5.g6b286585b1) =
+still
+> > > > > has the issue.
+> > > > >
+> > > > > - Bret
+> > > > >
+> > > > >
+> > > > > On Wed, Jan 9, 2019 at 10:39 AM Johannes Schindelin
+> > > > > <Johannes.Schindelin@gmx.de> wrote:
+> > > > > >
+> > > > > > Hi Bret,
+> > > > > >
+> > > > > >
+> > > > > > On Thu, 3 Jan 2019, Bret Barkelew wrote:
+> > > > > >
+> > > > > > > They are the exact same path (with a different drive letter).
+> > > > > >
+> > > > > > [it's a bit hard to follow the thread if you top-post a reply t=
+o an
+> > > > > > inline-replied answer, maybe imitate the style of other mails i=
+n the
+> > > > > > future.]
+> > > > > >
+> > > > > > > Another thing I've been able to confirm is I uninstalled git =
+2.20.1
+> > > > > > > and installed 2.19.0 on the failing system, and the older ver=
+sion of
+> > > > > > > Git works.
+> > > > > > > I've also tried a suggested fix I saw elsewhere to enable lon=
+g path
+> > > > > > > names in the Windows registry, which did not resolve the issu=
+e with
+> > > > > > > git 2.20.1.
+> > > > > > >
+> > > > > > > Happy to collect any additional data.
+> > > > > >
+> > > > > > Please try the latest snapshot at
+> > > > > > https://wingit.blob.core.windows.net/files/index.html (I *think=
+* the bug
+> > > > > > might be fixed via
+> > > > > > https://github.com/git-for-windows/MINGW-packages/pull/32).
+> > > > > >
+> > > > > > Ciao,
+> > > > > > Johannes
+> > > > > >
+> > > > > > > - Bret
+> > > > > > >
+> > > > > > > On Thu, Jan 3, 2019 at 7:10 PM Bryan Turner <bturner@atlassia=
+n.com> wrote:
+> > > > > > > >
+> > > > > > > > On Thu, Jan 3, 2019 at 6:21 PM Bret Barkelew <bret@corthon.=
+com> wrote:
+> > > > > > > >>
+> > > > > > > >> When I open gitk in a particular repository under this ver=
+sion of Git
+> > > > > > > >> for Windows, I now get a dialog box that says "Error: coul=
+dn't execute
+> > > > > > > >> "git": file name too long". I've noticed that the most pro=
+nounced
+> > > > > > > >> effect is that I cannot see the file diffs (or sometimes t=
+he file name
+> > > > > > > >> list) for any of the commits. I don't know the exact repro=
+, but I've
+> > > > > > > >> narrowed down the following things:
+> > > > > > > >>
+> > > > > > > >> - This does not happen with the same repo if I use a syste=
+m that has
+> > > > > > > >> git 2.19.0.windows.1 on another machine.
+> > > > > > > >> - This does not happen on my current machine in a freshly =
+cloned repo.
+> > > > > > > >
+> > > > > > > >
+> > > > > > > > How =E2=80=9Cdeep=E2=80=9D are the paths to the different c=
+lones on the different systems? Are all of the clones at exactly the same p=
+ath on disk?
+> > > > > > > >
+> > > > > > > > Git on Windows is (by defaulted) limited by MAX_PATH, which=
+ is 260 characters. That length is calculated including the path to the rep=
+ository itself and then to the file inside the repository. That means, for =
+example, a given repository cloned to C:\repo may not have issues, but the =
+same repository cloned to C:\Users\Bryan\Documents\workspaces\repo may.
+> > > > > > > >
+> > > > > > > >>
+> > > > > > > >> However, as soon as the remote updates with any changes on=
+ a given
+> > > > > > > >> fetch/pull, the repo is put in a bad state permanently.
+> > > > > > > >>
+> > > > > > > >> I've pasted the output from gitk below...
+> > > > > > > >>
+> > > > > > > >> couldn't execute "git": file name too long
+> > > > > > > >> couldn't execute "git": file name too long
+> > > > > > > >>     while executing
+> > > > > > > >> "open $cmd r"
+> > > > > > > >>     (procedure "getallcommits" line 48)
+> > > > > > > >>     invoked from within
+> > > > > > > >> "getallcommits"
+> > > > > > > >>     (procedure "readcache" line 80)
+> > > > > > > >>     invoked from within
+> > > > > > > >> "readcache file827e200"
+> > > > > > > >>     ("eval" body line 1)
+> > > > > > > >>     invoked from within
+> > > > > > > >> "eval $script"
+> > > > > > > >>     (procedure "dorunq" line 11)
+> > > > > > > >>     invoked from within
+> > > > > > > >> "dorunq"
+> > > > > > > >>     ("after" script)
+> > > > > > > >>
+> > > > > > > >> Happy to gather whatever data needed.
+> > > > > > > >> Thanks!
+> > > > > > > >> - Bret Barkelew
+> > > > > > >
+> > > > >
+> >
