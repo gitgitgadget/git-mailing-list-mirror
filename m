@@ -2,110 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38C7D1F981
-	for <e@80x24.org>; Wed, 29 May 2019 16:48:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F33F1F462
+	for <e@80x24.org>; Wed, 29 May 2019 16:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbfE2QsA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 12:48:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63204 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfE2Qr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 12:47:59 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97D9314CE64;
-        Wed, 29 May 2019 12:47:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=i+y/uhUft1fFU
-        ymkaSqKUfQSEok=; b=J08Soo0t31Nb74S1BvTTZTeOMhZjM9zNULFq0OqbLEo4J
-        w9vggHOc4JeZBhOPi+YAmCcrdqlNK+XoEa+r3R+ro4QRdbNNNhCslZGe6m4m+QUG
-        DGQf2BsAtrEMmgBV4SqVYshCc1AOXqyd32kMdK8IaETaEFSgu606SA5bhZ/9k0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=yNnRdWG
-        62FaS1RX8R1RBvtBcFzMRDMqXm51cud1w98RSpF2hocJNGvBYC1gbZUd/vufM0J4
-        2D+98NhPiRcq+0b+i8W8G5WdtSr4M/K0QkSpkL/19FxyUQ06AzVMBvrDy/rZgUwC
-        3aoFqMdVDYse+GoHQiFLhQflN72iXPN5Im2Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9046514CE63;
-        Wed, 29 May 2019 12:47:57 -0400 (EDT)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        id S1727097AbfE2Qxr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 12:53:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62163 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726617AbfE2Qxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 12:53:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B218F151B66;
+        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KzKSBnH1BoTtU0et4zM5VDPgMwc=; b=AbrNyn
+        7QmINpdW31omZDozmqLLNhEHUzOQ6oNN3a9A9mIzlx+OOa/kWGyTp6DRgpzBjJqY
+        7TE0gk46dTmYBTa/+teJAvfLWUGAQBx0YZNIFGu+57g2jE0Zi90/VTzVvEXwM+w9
+        eHV9/9z9bsYcbvFhkZbzV/Ue95vMA7j/zLOiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RbjhAhbVLSg3LYplfAD3HYeYIl4KCrLg
+        eIa9HTMrBIspV3N2LoMbPigcDyV/f8ePnz+GRQ0kyzaYCcsy/KyyPCPIuJq7Llhm
+        1iRtngiQ2BXV2vJlhYOwgWR6lT8XnTq6pvsAv5H2Bj10h23tW+ZtzhsA20Mn8MkA
+        nLHkxwzLJl4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA5C2151B65;
+        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0CC0314CE62;
-        Wed, 29 May 2019 12:47:57 -0400 (EDT)
-Date:   Wed, 29 May 2019 12:47:55 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, bturner@atlassian.com, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH v2 1/3] diff-parseopt: correct variable types that are
- used by parseopt
-Message-ID: <20190529164755.GE3654@pobox.com>
-References: <20190524092442.701-1-pclouds@gmail.com>
- <20190529091116.21898-1-pclouds@gmail.com>
- <20190529091116.21898-2-pclouds@gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16558151B64;
+        Wed, 29 May 2019 12:53:45 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2019, #04; Tue, 28)
+References: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com>
+        <20190528222604.GA14921@sigill.intra.peff.net>
+Date:   Wed, 29 May 2019 09:53:44 -0700
+In-Reply-To: <20190528222604.GA14921@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 28 May 2019 18:26:04 -0400")
+Message-ID: <xmqqlfypyzfr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190529091116.21898-2-pclouds@gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 82D08952-8231-11E9-8D1C-72EEE64BB12D-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 523AE318-8232-11E9-B516-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> Most number-related OPT_ macros store the value in an 'int'
-> variable. Many of the variables in 'struct diff_options' have a
-> different type, but during the conversion to using parse_options() I
-> failed to notice and correct.
->=20
-> The problem was reported on s360x which is a big-endian
-> architechture. The variable to store '-w' option in this case is
-> xdl_opts, 'long' type, 8 bytes. But since parse_options() assumes
-> 'int' (4 bytes), it will store bits in the wrong part of xdl_opts. The
-> problem was found on little-endian platforms because parse_options()
-> will accidentally store at the right part of xdl_opts.
->=20
-> There aren't much to say about the type change (except that 'int' for
-> xdl_opts should still be big enough, since Windows' long is the same
-> size as 'int' and nobody has complained so far). Some safety checks may
-> be implemented in the future to prevent class of bugs.
->=20
-> Reported-by: Todd Zullinger <tmz@pobox.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> ---
->  diff.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/diff.h b/diff.h
-> index b20cbcc091..d5e44baa96 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -169,7 +169,7 @@ struct diff_options {
->  	const char *prefix;
->  	int prefix_length;
->  	const char *stat_sep;
-> -	long xdl_opts;
-> +	int xdl_opts;
-> =20
->  	/* see Documentation/diff-options.txt */
->  	char **anchors;
+Jeff King <peff@peff.net> writes:
 
-FWIW, I ran this versions of the series through the fedora
-buildsystem and noticed no issues on s390x or any other
-architectures.
+> On Tue, May 28, 2019 at 03:08:31PM -0700, Junio C Hamano wrote:
+>
+>> Quite a few new topics, most of which are fixes with different
+>> urgency, have been picked up.  Perhaps we'd need an extra -rc for
+>> this cycle to squash existing regression at the tip of 'master'.
+>> At this point, the criteria for merging to 'master' is *NOT* "This
+>> is an obviously correct fix", but is "This is an obviously correct
+>> fix for a breakage we introduced during this cycle".
+>>
+>> [...]
+>>
+>> * ds/object-info-for-prefetch-fix (2019-05-28) 1 commit
+>>  - sha1-file: split OBJECT_INFO_FOR_PREFETCH
+>> 
+>>  Code cleanup.
+>> 
+>>  Will merge to 'next'.
+>
+> I think this one is actually a bug-fix (we are refusing to prefetch for
+> "QUICK" calls even though was not the intent), and it is new in this
+> release.
+>
+> I'm not sure of the user-visible impacts, though. There are a lot of
+> QUICK calls, and I'm not sure for which ones it is important to fetch.
 
-Thanks,
+Hmph.  I took it as primarily futureproofing, as I didn't find a way
+to trigger bad behaviour from within the current codebase.
 
---=20
-Todd
+
+
