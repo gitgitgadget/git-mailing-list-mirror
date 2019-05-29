@@ -3,107 +3,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0575D1F462
-	for <e@80x24.org>; Wed, 29 May 2019 17:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 968791F462
+	for <e@80x24.org>; Wed, 29 May 2019 17:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726099AbfE2Rba (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 13:31:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58698 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfE2Rb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 13:31:29 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C91EC14D430;
-        Wed, 29 May 2019 13:31:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1eXjUXvDEv5z
-        +LfJUoy1PdtZUK0=; b=WqxIYOmks2JkAuuVBQm6pQrckFxfwexcd1jtlbGOtZZr
-        QzG6SbMnME8wiIuAv/CSuGkr1xrXMF9kaLy5gwVkrmC7S/JLgcmM/vw7WzSUDMuL
-        4EhJTo6TKlZNbdSCda7PWcvPu2aP6BhBPH/kPJb4yLWr3KQQ1oxvjBjO8uLGOTg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BHbrVs
-        BD3FO1JnZqV4rZ+IG4jT9qXMtOq7yOOXMZtxc/dMAL9jQroEaaEz4nQiepRxVNnf
-        LFL/wxSjhHyg0OKkWMxy50s8gB1VxKnOd9UcunMpofCE+YDoBIqaH1qkYiAO1cwF
-        F7chhq9ppclw6jVejnccAvq5q/PEKxJuGuaCw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C096614D42F;
-        Wed, 29 May 2019 13:31:24 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F9CE14D42D;
-        Wed, 29 May 2019 13:31:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: ab/send-email-transferencoding-fix, was Re: What's cooking in git.git (May 2019, #04; Tue, 28)
-References: <xmqqtvdez0yo.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1905291424140.44@tvgsbejvaqbjf.bet>
-        <877ea9mo98.fsf@evledraar.gmail.com>
-Date:   Wed, 29 May 2019 10:31:22 -0700
-In-Reply-To: <877ea9mo98.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 29 May 2019 14:36:03 +0200")
-Message-ID: <xmqqh89dyxp1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726820AbfE2Rck (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 13:32:40 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:40776 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbfE2Rck (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 13:32:40 -0400
+Received: by mail-ed1-f54.google.com with SMTP id r18so3913343edo.7
+        for <git@vger.kernel.org>; Wed, 29 May 2019 10:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KZPjH/65MMTbdYuVDqJrldvorGEKOFeqMhBAmPlucx8=;
+        b=CmsddoYF+eqmcqqiNUxbfOmmGTNn6R9FmjpxpkMlGIKx1Ah0xlcXPTU+6NqGwFkA77
+         Em3QF030KpjFmP3egATuduLpQWIHcIVWm7/Erul9BLKxjUySidNsisajpAqb5DqWg/pa
+         ZQBpJrIuqvxW0keTfXr51DEWxUZIUUfDA2yLAgmWGzHoorPyrceoaJnPOiEbABRfYNAf
+         +lGZwjSL90RW8YHZvxhTBdujSa9CEityhFMVfAdFGjeLBu41pB3ib6WdwbKdGdRc1mMa
+         84ohubxjNF4+DlTuCtJIot7E/+93MmEs8Ho/np1NQilUnSH+f8oopiVNih6gwO5MLwJr
+         bNrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KZPjH/65MMTbdYuVDqJrldvorGEKOFeqMhBAmPlucx8=;
+        b=Afy764ppT51H+GLDJNvienzhL4/vmIVKWHBmgpIq4/ZDADjt6icuQwh66I35vv7Sbr
+         C2GBtxcoE/HGV169U3rCwwsbIH5XyUnHvwlASriYwhSi7hyXqvam3dZb0Cp08Jl6jhgX
+         CrMwgLhzMnoAY2p0XuclpPWIsj6zHOd0w0p0i2ysCnhHQuUPafI7RgcqeeQcONJulWKf
+         4RDB4qJlT0YQfDiaB/5F8x7p1TP3jfN0OxSOC7l7hLA2YuXRSKPHVhxFrj47rPSjrnMd
+         P5n1EBfS905jqhi5es+QPjXQEeVjnXMW+GGRoB7lrrgvC7jQts24GkJ/rMzcwnqyPGML
+         e6MA==
+X-Gm-Message-State: APjAAAXlVe86BIxFNYhuGJB8B25U9LFlZFxoF7g0vmgtl3JVebfLUDCM
+        ZOcMcSlBzYWsQ7KObpTZGcpj4C6uRu4HSnbV2/k=
+X-Google-Smtp-Source: APXvYqyx5s1cwwsuPi3OTieXOm8c2JUP3BAwvyDK/BGwQbkiKiKy/z52fyWRWcDpcYfp499rHtbG2vIN2t9jsoTJeTw=
+X-Received: by 2002:a17:906:720e:: with SMTP id m14mr35800183ejk.84.1559151158464;
+ Wed, 29 May 2019 10:32:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 94AF5F9E-8237-11E9-B7A0-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+References: <CA+P7+xrXz7-TgV4ufVkXqjgi8X1UD=pQJC3s2JA5fH-sEEnENA@mail.gmail.com>
+ <8736l6ujcr.fsf@evledraar.gmail.com>
+In-Reply-To: <8736l6ujcr.fsf@evledraar.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 29 May 2019 10:32:27 -0700
+Message-ID: <CA+P7+xovDWswGpM-E4tc2AmHsnpwRzK57Zs27bm-itjwrdehhg@mail.gmail.com>
+Subject: Re: git describe/contains for submodule commits
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Wed, May 29 2019, Johannes Schindelin wrote:
+On Wed, May 22, 2019 at 5:04 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->> Hi Junio & =C3=86var,
->>
->> On Tue, 28 May 2019, Junio C Hamano wrote:
->>
->>> * ab/send-email-transferencoding-fix (2019-05-19) 7 commits
->>>  - send-email: fix regression in sendemail.identity parsing
->>>  - send-email: document --no-[to|cc|bcc]
->>>  - send-email: fix broken transferEncoding tests
->>>  - send-email: remove cargo-culted multi-patch pattern in tests
->>>   (merged to 'next' on 2019-05-13 at 38c6a1e7e0)
->>>  + send-email: do defaults -> config -> getopt in that order
->>>  + send-email: rename the @bcclist variable for consistency
->>>  + send-email: move the read_config() function above getopts
->>>
->>>  Since "git send-email" learned to take 'auto' as the value for the
->>>  transfer-encoding, it by mistake stopped honoring the values given
->>>  to the configuration variables sendemail.transferencoding and/or
->>>  sendemail.<ident>.transferencoding.  This has been corrected to
->>>  (finally) redoing the order of setting the default, reading the
->>>  configuration and command line options.
->>>
->>>  Will merge to 'next'.
->>
->> I just sent a reminder that the tip commit is broken under NO_PERL, an=
-d
->> accompanied the report with a diff that could be squashed in. =C3=86va=
-r, please
->> have a look and say yay or nay, and please let's only let this enter
->> `next` once it is fixed (because otherwise the Azure Pipeline will spa=
-m me
->> every tim `next` is psuhed -- thanks, Emily, now I mistype this every
->> single time).
 >
-> Sorry about missing this. Your prereq addition in
-> <nycvar.QRO.7.76.6.1905291106540.44@tvgsbejvaqbjf.bet> looks obviously
-> correct to me.
+> On Thu, May 23 2019, Jacob Keller wrote:
+>
+> > Hi,
+> >
+> > I've had a few times where I was curious of when a submodule got set
+> > to a specific commit.
+> >
+> > I noticed that git describe has "blob" support, which outputs something=
+ like
+> >
+> > <commit>:/path/to/file
+> >
+> > using the revision walking machinery.
+> >
+> > I'm curious if anyone knows if that sort of revision walk could be
+> > expected to find the first treeish that had a submodule commit instead
+> > of a blob.
+> >
+> > I'm not that familiar with the revision walking, so I was hoping to
+> > get some pointers of whre to look before I began implementing.
+> >
+> > Ultimately, I'd like to have some sort of command like:
+> >
+> >   git submodule contains <submodule> <commit id>
+> >
+> > and have it try to figure out the most recent commit htat has a
+> > submodule change for which the submodule is a child of the specified
+> > submodule commit.
+> >
+> > I can sort of reverse engineer this through git log, but it's slow and
+> > tedious, so I was hoping to be able to implement it into a revision
+> > walk that did this.
+> >
+> > Once I know the commit that introduces the submodule change, I could
+> > feed that to git describe --contains to find the tag/version which
+> > included the change easily enough.
+> >
+> > Thanks,
+> > Jake
+>
+> You can do this with --find-object, e.g. on git.git:
+>
+>     git log --find-object=3D855827c583bc30645ba427885caa40c5b81764d2
+>
+> Plugging that into describe.c should be fairly straightforward.
 
-Yeah, I recall that one from previous week.  Let's queue it on top
-(and find the right place tos quash it in).
+Thanks, I'll take a look at this.
 
-Thanks, both.
+Regards,
+Jake
