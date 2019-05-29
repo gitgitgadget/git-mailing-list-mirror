@@ -2,159 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48FC91F462
-	for <e@80x24.org>; Wed, 29 May 2019 09:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0BEC1F462
+	for <e@80x24.org>; Wed, 29 May 2019 09:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726141AbfE2JLi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 05:11:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43189 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725911AbfE2JLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 05:11:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559121071;
-        bh=is5Xt5IVAxYrOfX5x/a9mrhLJ4pqbF/b10CsrG/qH0k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SeXt88ZOlygApZb+e6JPzRAXPV+BR9OGynrqDpcxjRPqpnhZUBYf3wFKqvwbA2zdg
-         Qvt6BBxJzP8eeftIouhKdiLUo89VLbdJNkknBILoaM58/UGbG6XgewBqomvMbOqfAa
-         YY9G+vVfDRM2b2uzM0PMmpUz06EtRlduoKr3qtE4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5wPb-1hXqgn48L5-007VQ4; Wed, 29
- May 2019 11:11:11 +0200
-Date:   Wed, 29 May 2019 11:10:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Stephen Boyd <swboyd@chromium.org>,
-        jrnieder@gmail.com, sandals@crustytoothpaste.net,
-        sunshine@sunshineco.com, xypron.glpk@gmx.de,
-        Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 4/5] send-email: fix regression in sendemail.identity
- parsing
-In-Reply-To: <nycvar.QRO.7.76.6.1905222223380.46@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1905291106540.44@tvgsbejvaqbjf.bet>
-References: <xmqqsgtd3fw3.fsf@gitster-ct.c.googlers.com> <20190517195545.29729-5-avarab@gmail.com> <nycvar.QRO.7.76.6.1905222223380.46@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726173AbfE2JLk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 05:11:40 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:44882 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725911AbfE2JLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 05:11:39 -0400
+Received: by mail-pl1-f194.google.com with SMTP id c5so785985pll.11
+        for <git@vger.kernel.org>; Wed, 29 May 2019 02:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZkU0Sy3kGo2Tpxjx47UMjQZq7d/ezG/8c+Qx3KTnaGM=;
+        b=kND/JYiR45BGiPxvq3UZBF8W4sdKFoCSJxjolZX/wBkerpXieDoT+14V6ROozBFXW5
+         P9uluWqWc3Mic/pyhhf+O+f4I4Y0V7ImTZOkY8IhVDvtMz76Uvdj3xyvDPoyWa/WJEMy
+         foxxFXl+rrULvsRSvt3wSu724XMtT4Pb7tqZsx94VBBRYvKrpv85Oqv2Yvo3aqHw/1Go
+         I5bYJ1ZLrMdM2Zh8XcEb4gvpjnTNVNr9oxN8PRU6T3H0g0jwvENV0Z6A1JbC61rJ8eHV
+         upSdekVfJY4ad0zN8rIhydgHFk+spjyubARvAz3q42JHoePWtGwacMEKQnA8SzCWfFCp
+         cAog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZkU0Sy3kGo2Tpxjx47UMjQZq7d/ezG/8c+Qx3KTnaGM=;
+        b=ZL1Iedk8J+i+vzPhFILftUZuXvqqoMHMH7vrgh8gMkgDbW44XQ5d4iNhdRLXH2csh3
+         NLXQr0bWLGRgG2mBC5K8SIeh4HFj+R3RKwwRVCe9UmBK5DSsXwqPPM1jusiRUL0wupOp
+         +APNTYatWYhuGJ44KXf9A8/oEKFCJ7hq3jVexH5LepZoQKkH8XyYudLDLVglV/xERS3z
+         H82hAp5PdBxy065jHTkeVFlgJlcMouEwAxAs2tX94cQ3hYIS/iUaUGeu/v0c86mF03r/
+         jZqmCRPl7muzyHzvXhVV2qoNTUkB12ZMDkSBiUqw4ulOnIijcsOBQun7igk8E+Lx0ezI
+         OM5g==
+X-Gm-Message-State: APjAAAWMRiIxWAuZTh0OHN4EQXuTMqGMC+4DiQMF6AwDZRTV1KATigsn
+        iCoychLNhWHB30ByzDmsKV8=
+X-Google-Smtp-Source: APXvYqyPmmjIOm0eHzwc2VPt6CRx8c/ZzD7LbeLJzTt1xwD0f7DPVTSuD7nJn8/B8AmyqSzBZwqJbg==
+X-Received: by 2002:a17:902:9697:: with SMTP id n23mr35204811plp.283.1559121098789;
+        Wed, 29 May 2019 02:11:38 -0700 (PDT)
+Received: from ash ([115.72.28.243])
+        by smtp.gmail.com with ESMTPSA id e14sm16793838pff.60.2019.05.29.02.11.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 May 2019 02:11:38 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 29 May 2019 16:11:34 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     avarab@gmail.com, bturner@atlassian.com, git@vger.kernel.org,
+        gitster@pobox.com, tmz@pobox.com
+Subject: [PATCH v2 2/3] diff-parseopt: restore -U (no argument) behavior
+Date:   Wed, 29 May 2019 16:11:15 +0700
+Message-Id: <20190529091116.21898-3-pclouds@gmail.com>
+X-Mailer: git-send-email 2.22.0.rc0.322.g2b0371e29a
+In-Reply-To: <20190529091116.21898-1-pclouds@gmail.com>
+References: <20190524092442.701-1-pclouds@gmail.com>
+ <20190529091116.21898-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1918119686-1559121071=:44"
-X-Provags-ID: V03:K1:YOq189N9DHZilcGbj6b+u4P2//74Ac1neZil9rp6GbiFUp4Czjg
- 6MHA58Y+XkHyoCC0s1YSLmvpLjxJkvsXzPVqjF5kMg3TkVu3pWpnydKPckXghHhpKY9JS3s
- jUcU8mIIyVmVtCynGD/+BZp5zn9dY9GFh4okzxHqHfQ09+EzZxK8udnMmUakCZ4nagPEP4R
- zACSaKPTEtTn3kw6P+ZtA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dFeoqPIcisY=:ySh23Ma0lZ/T4ybpvFwipG
- D/zeFtXTkA//hh/SWifk0/2RZuxnZkrLvmRlQrLsAd73l2TpM5EEA0id9o9NVxz81AuRZt+Sq
- 5lXo0gxyqf0VQRCOLhrFQWdPu98kILOdotMz8FV51FvLQvXXzVAeySozHNfy0wIiHiVc/y9aq
- nSzuXHmxH4lWmJE/Ao5V4sddg1RM4UwlMaMvRPjXB2UjGPT/lyaxmbsmyspNT7hxqq8vRFawE
- oN5cIqbohmtN3TYbG3UMm7NM+cEDvv0HsXlqvKI4azAX16ie4VYLymMa3SSe5kxOnHl6bXf23
- EtG0i5soza1DkQS5wChGHGsWUpQU1mKf38Vtue7wtCR+b11zZZbBn1p/42GLa9sv7pu6xXznC
- OL+rgsPr0U929+vn8yU3XdpPCJx/yMK0tE38/p5zk+AJn+JFmjUTRzr813/2I9ombl7V8atyT
- gWROVUu6Tz4xdKvuUkvCoqzC2JgBRXQ6nIJMM9s/DZ+cYgExyRqQAjLPPxRI5gWeCV4BcHC6B
- UEJx3REH6xqI4FSoZ5ttvfpow8pAZRDjjLj6NLN8xYq5/EhPGf3Bw/yuimaa8IQw/duo+6wvC
- DG/7aQx8IxH0ZO3ltET7vMP24+S/2WGq7gcBMRSIlRE5EFapAMzJOP+BWLcntboMs0MxaNWeq
- 5lCQPtw+PwOoVPGDj7jIk9W02E3CYQ3vxxctG9kD9EudN7XRVtXqKBxU/yC7eOpvoYqUpFzla
- O7dg5Pc0BBkpSoRQS4HoyDm9TfHdXAohO1rNz5SPZeY6NFcSRD1eckLy3wFzClpzOa4yjxks8
- PNQ/3FzkPJVnMEdgd3hlkmm7hVCIJgabrvh7iki9g0Rg3pUcEfE5/m+tmmU9G6bLAItmqHP/d
- T3J5J5Ii95YPqrHlbTPnEX6u7gxfPKWnrgaBUc/XfrtaRV2aYuiWxs94yDM2/ArzLNLJgEn0y
- uS0Szd3bj9IpFD7O2Z6l3M/MBaMdFqMGRZCwjrV4zUWkZhTou7INK
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Before d473e2e0e8 (diff.c: convert -U|--unified, 2019-01-27), -U and
+--unified are implemented with a custom parser opt_arg() in diff.c. I
+didn't check this code carefully and not realize that it's the
+equivalent of PARSE_OPT_NONEG | PARSE_OPT_OPTARG.
 
---8323328-1918119686-1559121071=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In other words, if -U is specified without any argument, the option
+should be accepted, and the default value should be used. Without
+PARSE_OPT_OPTARG, parse_options() will reject this case and cause a
+regression.
 
-Hi Junio & =C3=86var,
+Reported-by: Bryan Turner <bturner@atlassian.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ diff.c                                    | 10 ++++---
+ t/t4013-diff-various.sh                   |  2 ++
+ t/t4013/diff.diff_-U1_initial..side (new) | 29 ++++++++++++++++++++
+ t/t4013/diff.diff_-U2_initial..side (new) | 31 ++++++++++++++++++++++
+ t/t4013/diff.diff_-U_initial..side (new)  | 32 +++++++++++++++++++++++
+ 5 files changed, 100 insertions(+), 4 deletions(-)
 
-On Wed, 22 May 2019, Johannes Schindelin wrote:
+diff --git a/diff.c b/diff.c
+index 4d3cf83a27..80ddc11671 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5211,9 +5211,11 @@ static int diff_opt_unified(const struct option *opt,
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 
+-	options->context = strtol(arg, &s, 10);
+-	if (*s)
+-		return error(_("%s expects a numerical value"), "--unified");
++	if (arg) {
++		options->context = strtol(arg, &s, 10);
++		if (*s)
++			return error(_("%s expects a numerical value"), "--unified");
++	}
+ 	enable_patch_output(&options->output_format);
+ 
+ 	return 0;
+@@ -5272,7 +5274,7 @@ static void prep_parse_options(struct diff_options *options)
+ 			  DIFF_FORMAT_PATCH, DIFF_FORMAT_NO_OUTPUT),
+ 		OPT_CALLBACK_F('U', "unified", options, N_("<n>"),
+ 			       N_("generate diffs with <n> lines context"),
+-			       PARSE_OPT_NONEG, diff_opt_unified),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG, diff_opt_unified),
+ 		OPT_BOOL('W', "function-context", &options->flags.funccontext,
+ 			 N_("generate diffs with <n> lines context")),
+ 		OPT_BIT_F(0, "raw", &options->output_format,
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 9f8f0e84ad..a9054d2db1 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -338,6 +338,8 @@ format-patch --inline --stdout initial..master^^
+ format-patch --stdout --cover-letter -n initial..master^
+ 
+ diff --abbrev initial..side
++diff -U initial..side
++diff -U1 initial..side
+ diff -r initial..side
+ diff --stat initial..side
+ diff -r --stat initial..side
+diff --git a/t/t4013/diff.diff_-U1_initial..side b/t/t4013/diff.diff_-U1_initial..side
+new file mode 100644
+index 0000000000..b69f8f048a
+--- /dev/null
++++ b/t/t4013/diff.diff_-U1_initial..side
+@@ -0,0 +1,29 @@
++$ git diff -U1 initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -2 +2,3 @@ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -3 +3,4 @@
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+diff --git a/t/t4013/diff.diff_-U2_initial..side b/t/t4013/diff.diff_-U2_initial..side
+new file mode 100644
+index 0000000000..8ffe04f203
+--- /dev/null
++++ b/t/t4013/diff.diff_-U2_initial..side
+@@ -0,0 +1,31 @@
++$ git diff -U2 initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -2,2 +2,5 @@
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+diff --git a/t/t4013/diff.diff_-U_initial..side b/t/t4013/diff.diff_-U_initial..side
+new file mode 100644
+index 0000000000..c66c0dd5c6
+--- /dev/null
++++ b/t/t4013/diff.diff_-U_initial..side
+@@ -0,0 +1,32 @@
++$ git diff -U initial..side
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+-- 
+2.22.0.rc0.322.g2b0371e29a
 
-> On Fri, 17 May 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
-> > [...]
-> > +test_expect_success $PREREQ 'sendemail.identity: bool variable fallba=
-ck' '
-> > +	git -c sendemail.identity=3Dcloud \
-> > +		-c sendemail.xmailer=3Dfalse \
-> > +		send-email \
-> > +		--dry-run \
-> > +		--from=3D"nobody@example.com" \
-> > +		$patches >stdout &&
-> > +	grep "To: cloud@example.com" stdout &&
-> > +	! grep "X-Mailer" stdout
-> > +'
-> > +
->
-> These test cases all diligently use the `$PREREQ` prerequisite, but...
->
-> >  test_expect_success $PREREQ '--no-to overrides sendemail.to' '
-> >  	git send-email \
-> >  		--dry-run \
-> > @@ -1785,6 +1840,15 @@ test_expect_success '--dump-aliases must be use=
-d alone' '
-> >  	test_must_fail git send-email --dump-aliases --to=3Djanice@example.c=
-om -1 refs/heads/accounting
-> >  '
-> >
-> > +test_expect_success 'aliases and sendemail.identity' '
-> > +	test_must_fail git \
-> > +		-c sendemail.identity=3Dcloud \
-> > +		-c sendemail.aliasesfile=3Ddefault-aliases \
-> > +		-c sendemail.cloud.aliasesfile=3Dcloud-aliases \
-> > +		send-email -1 2>stderr &&
-> > +	test_i18ngrep "cloud-aliases" stderr
-> > +'
-> > +
->
-> This one is missing it. That breaks the Windows job in our Azure Pipelin=
-e
-> where we leave out all of the Perl bits (to accelerate the tests somewha=
-t).
-
-For the record, this is still breaking our Azure Pipeline build.
-
-Junio, would you terribly mind applying this on top (or fetching it from
-the `shears/pu` branch at https://github.com/git-for-windows/git)?
-
-=2D- snipsnap --
-=46rom 4c946f956d894676f68f5b130ab414d8ea75e97d Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Wed, 29 May 2019 11:09:23 +0200
-Subject: [PATCH] SQUASH???
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- t/t9001-send-email.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 7caab8160fcf..7c5ef114ac90 100755
-=2D-- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1840,7 +1840,7 @@ test_expect_success '--dump-aliases must be used alo=
-ne' '
- 	test_must_fail git send-email --dump-aliases --to=3Djanice@example.com -=
-1 refs/heads/accounting
- '
-
--test_expect_success 'aliases and sendemail.identity' '
-+test_expect_success $PREREQ 'aliases and sendemail.identity' '
- 	test_must_fail git \
- 		-c sendemail.identity=3Dcloud \
- 		-c sendemail.aliasesfile=3Ddefault-aliases \
-=2D-
-2.22.0.rc1.windows.1.19.g571a93d65ff3
-
---8323328-1918119686-1559121071=:44--
