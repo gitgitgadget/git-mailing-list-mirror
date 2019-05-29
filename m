@@ -2,74 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C30DE1F462
-	for <e@80x24.org>; Wed, 29 May 2019 19:55:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82EC11F462
+	for <e@80x24.org>; Wed, 29 May 2019 19:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726320AbfE2TzD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 15:55:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60727 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbfE2TzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 15:55:03 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 04DF27785E;
-        Wed, 29 May 2019 15:55:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6iMF+W+ndAvWhg1eFnLCSNV8AdI=; b=glHM4H
-        +ZtIX5WMoe5rCHd0QKZZKl/ONf2lC4JQ3QpAbrx6pl8tXv9sLKrwM1KW0JoTm1Rd
-        zcXWfffWn8JzLQa26IP6cuQnBk3F8yA0qo+4kxvf9/qJnL8ACi4IA4vxt8MWMQyj
-        0XRZv8W2HOykkVtk4wpxL9mABbgcd8sRk/SR0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=im9xNFCAxLvHTTHf40f5YDwcDMrr7443
-        gt1s3QpDJZQu/mCxHmMkNpwCz8/fkmrz/GZ4I8pQyB+sAifv0UVkrBlKnHmVerb3
-        +BC1/61K2UOF6KvsTKIChFGgVhfCiqmRhhlydyfUJOp0tKaQYY2mHebmtiHNpO9B
-        lYt2dwhl2rM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F1EB57785D;
-        Wed, 29 May 2019 15:55:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726254AbfE2T6e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 15:58:34 -0400
+Received: from siwi.pair.com ([209.68.5.199]:46078 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725956AbfE2T6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 15:58:34 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A5E163F40FA;
+        Wed, 29 May 2019 15:58:33 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:c90f:aaf8:aafe:c1ce] (unknown [IPv6:2001:4898:a800:1010:7a45:aaf8:aafe:c1ce])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4B46977859;
-        Wed, 29 May 2019 15:55:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        avarab@gmail.com, bturner@atlassian.com, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] diff-parseopt: correct variable types that are used by parseopt
-References: <20190524092442.701-1-pclouds@gmail.com>
-        <20190529091116.21898-1-pclouds@gmail.com>
-        <20190529091116.21898-2-pclouds@gmail.com>
-        <20190529164755.GE3654@pobox.com>
-Date:   Wed, 29 May 2019 12:54:58 -0700
-In-Reply-To: <20190529164755.GE3654@pobox.com> (Todd Zullinger's message of
-        "Wed, 29 May 2019 12:47:55 -0400")
-Message-ID: <xmqqv9xtxch9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 50E3C3F40F0;
+        Wed, 29 May 2019 15:58:33 -0400 (EDT)
+Subject: Re: [PATCH 1/2] trace2: rename environment variables to GIT_TRACE2*
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+References: <20190510211502.GS14763@szeder.dev>
+ <20190519144309.9597-1-szeder.dev@gmail.com>
+ <87blzmmbd7.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <c93cb249-1618-e2ed-5ba3-31d716fdbe06@jeffhostetler.com>
+Date:   Wed, 29 May 2019 15:58:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A45D3D30-824B-11E9-8E01-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <87blzmmbd7.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
 
-> FWIW, I ran this versions of the series through the fedora
-> buildsystem and noticed no issues on s390x or any other
-> architectures.
->
-> Thanks,
 
-Thanks, both.
+On 5/28/2019 7:02 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Sun, May 19 2019, SZEDER Gábor wrote:
+> 
+>> For an environment variable that is supposed to be set by users, the
+>> GIT_TR2* env vars are just too unclear, inconsistent, and ugly.
+>>
+>> Most of the established GIT_* environment variables don't use
+>> abbreviations, and in case of the few that do (GIT_DIR,
+>> GIT_COMMON_DIR, GIT_DIFF_OPTS) it's quite obvious what the
+>> abbreviations (DIR and OPTS) stand for.  But what does TR stand for?
+>> Track, traditional, trailer, transaction, transfer, transformation,
+>> transition, translation, transplant, transport, traversal, tree,
+>> trigger, truncate, trust, or ...?!
+>>
+>> The trace2 facility, as the '2' suffix in its name suggests, is
+>> supposed to eventually supercede Git's original trace facility.  It's
+>> reasonable to expect that the corresponding environment variables
+>> follow suit, and after the original GIT_TRACE variables they are
+>> called GIT_TRACE2; there is no such thing is 'GIT_TR'.
+>>
+>> All trace2-specific config variables are, very sensibly, in the
+>> 'trace2' section, not in 'tr2'.
+>>
+>> OTOH, we don't gain anything at all by omitting the last three
+>> characters of "trace" from the names of these environment variables.
+>>
+>> So let's rename all GIT_TR2* environment variables to GIT_TRACE2*,
+>> before they make their way into a stable release.
+> 
+> Good to see this land in 2.22.0. I wonder if we shouldn't take this
+> further and rename trace2.* config to trace.*, and just re-use
+> GIT_TRACE=1 instead of having GIT_TRACE2 as well, and have a
+> GIT_TRACE_VERSION to switch between them.
+> 
+> Then we could just switch in a future version. We've never promised what
+> the trace format was going to look like, and the existing one isn't
+> configurable (and we won't be making the v1 one...), so starting from
+> the outset with "2" in config is unfortunate.
+> 
+> We'd still have special snowflakes like e.g. GIT_TRACE_PACKET.
+> 
+> OTOH we can just do this after the release if it's deemed a good idea,
+> and just support trace2.* as aliases for trace.* for some amount of
+> time, same for the env vars.
+> 
+
+I'm open to considering such a change while we're at it.
+
+Jeff
