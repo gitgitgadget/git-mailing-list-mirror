@@ -2,126 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8A2E1F462
-	for <e@80x24.org>; Wed, 29 May 2019 11:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C4AB1F609
+	for <e@80x24.org>; Wed, 29 May 2019 11:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726985AbfE2Lvn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 May 2019 07:51:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:58307 "EHLO mout.gmx.net"
+        id S1726018AbfE2L5R (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 May 2019 07:57:17 -0400
+Received: from mout.gmx.net ([212.227.15.19]:58995 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726921AbfE2Lvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 May 2019 07:51:41 -0400
+        id S1725894AbfE2L5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 May 2019 07:57:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559130695;
-        bh=L3+jVsu/tw4Mi8UW/g+wc6Wsf1AVVsZSnK715Y8B0Ps=;
+        s=badeba3b8450; t=1559131029;
+        bh=i4UV2eKJcBvYk8tNJHssyR3MlmAJXvSauLFeZVcuSOI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SW9PhSJEYNlJfmIOFnk3azZrRTAW545NZ0NDn19IztO9ZC0WbLUFQYQ5nnWKBSLYz
-         ezKeGer2y2gv3biWLq7s8w3PQV0N4O8VV19+VXfBjctdmMflAxoYkRliDFbxzwdznY
-         JM3Vt1D0oVJx83OZ6NbMzacaGU3pFOygECHaCvNs=
+        b=hDy2a5ldlu/W+DDKVs6xBx9UgOgod6rM6V4jBRgJeetGcS84dJ9ju8EcHYWSRaS1h
+         51Dpa7q7zA1pJyNZmHW13fFeKJSl9NegQXNxhYNVDeOBEsMP30HXKk9Ps0Y1LgYsBg
+         FAFi01Y6R4t9HiV6BijTg0iCpGOEcYplxlaj1NQo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MACmL-1hLCgg32c5-00BNLI; Wed, 29
- May 2019 13:51:35 +0200
-Date:   Wed, 29 May 2019 13:51:19 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1gaDqx2ikk-014ndO; Wed, 29
+ May 2019 13:57:09 +0200
+Date:   Wed, 29 May 2019 13:56:53 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-Subject: Re: [PATCH 1/1] status: remove the empty line after hints
-In-Reply-To: <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905291349360.44@tvgsbejvaqbjf.bet>
-References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com> <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com> <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com>
- <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+cc:     Alejandro Sanchez <asanchez1987@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/4] am: fix --interactive HEAD tree resolution
+In-Reply-To: <20190528213529.GG24650@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1905291356240.44@tvgsbejvaqbjf.bet>
+References: <20190520120636.GA12634@sigill.intra.peff.net> <20190520121301.GD11212@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1905230858570.46@tvgsbejvaqbjf.bet> <20190524063955.GD25694@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1905281301070.44@tvgsbejvaqbjf.bet>
+ <20190528213529.GG24650@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2065383305-1559130695=:44"
-X-Provags-ID: V03:K1:0bYl61xp5lHsJV5CrhG4q2D2ahRCTbCkK+W5jjKP2iI1sdAAVxe
- fvV6jNyF+cgMAWWMuLqWLllper7h0GHzcInaH7ygVvXKZDqHzldLTC1aBk6iw5oRc/hG+Eg
- 92jGPAzPSIJOp6EgM6H/7Ba804nuESS/4yie7u9zA2X0cGEKs4wrIiG6+Kjxlp+2gbMAlr1
- ucZDSQb+AXZ7BSUXJOiuA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BN0uMKRHmUE=:wW4jdrQPzxXds5t0lj5fwT
- 6MnL3DZhxB+N/Wea7oFm+AFsCjm47M8B6UJHUlvLOI8Y04jHZNohUjTjQIoug+37uvqcHKCxV
- uBxFCQVI3ugblA1eL45R1J55yp/H1JNrXU+Z6FqNHc7S8WuL1tRFfy8pDIWSELnm/lhV6hX3u
- nA8fdXedpN1jjDDPAhkP2VL87IZW3T8FIg4zq1kezRbPpHEfxMZ2TWIpbwaH/mtanCcpYcv4V
- GQv+yBdTj10jN5ueTMsfx4yk9M9q2mojOzzE6l+SLGkm+VIfn3bw7EqCTbOvgMJgMueq0GMfw
- 7n778PLwyqgTPLCo8Kal1mkKRRNBnRFZa73KBPRI+wVGawXhRCqAzaC5/8FyYhglVInaHq055
- aIGhF1BrIQbD+suxRFsVBtAkF1z66Fq2EcOs/w3SJGZtXqQXWCqSNRRFbNtQjzRnwmvfkqjIi
- db4RgxWPhH4s/91rHebqj0M9ARvmbdVF3jgPNN7tBa9OiY8CYEDQM5Gq/8L2w8u/gW72jymoS
- cBXY8qvPrWShimI6KYpDiKxf9IS7teqg0sOVS0/9jdTJkMsqzSovb4xDEOrplBT5e4/4UTBk3
- Fp7Wixhuegb1OAlBUCYbOnBnTKlxDjsyov/ubAWX317EbCMiEotSf1t1NKCZ3NeUR/DBZi+zy
- iJIRGxr6kPMB1rGJYfxJDsgfWjWVEtHENviSoUz4QAHmIC9JmEs01Fve4jCBVLj+ZV62TkUAl
- N/Iy+enudH1xGJqnC0XU3hOt2YH6lFMZySQFz3vDDMlBBNifofTJIZ/Z00T5NnN8q1LfijLLP
- F1+P70IMLAbW3t5pshIf1khqwx+skGd1c1boJj5RyP2ukRtildDIlF+N34OdDFPEMzMdvnqvd
- /1pEtorJq/0O+Ic49/dkFbse29ImTH7BEknDKFKPPNNhGGtGqR3rNoe+7TSrJK5NLQE4GeR6z
- gOt4m21iuiFSX7wrTdh1OscudOlTPk+fwHngSoXC7Czsczuzn6lQz
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hdAlRbYXHiwTpyGgI2eGsdQxoQuRxncbbAlWMjJvNHE3zyeM1AS
+ 8JwUiZE1XlsoXanSIZQBL53Y/ZO16duRPWzQndofVfB1lUNl1mxqdNKGPlRfSI6HUv4/3C9
+ X4kOrmqFpCMOr0gdostTBd8eHVn57IigCHIb08p2scsnkWnfEq+2vYNBMeJyruBxDn6YlK+
+ Qzz7gx6pXYGcerGPtwLlw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6Tcfi7IMTVI=:CCcXD2OW8uM1t4Nney6lBK
+ yQrTv73v46mgKVehidxsBBrn+LngxwJhr2oqY02IW9JkJ4vCXky5LaovC4AgMrDRMRSvPGL9y
+ umyCEmHOTAfVy3i9DO14U2YLBkI+rwOdH4uuyE4ekKmmX6wkWbtDVycMDdGg7uVrn0WCW8+hJ
+ e45TsflVXFSurlsyBDiRiQh2qpVaKFvELMuynNA3PRWUsNn50Y6qVu+lA8zKTNP1zMkHUJfXB
+ 0GsdyW8AJcVdziTSX8Gt4Zo4gbYlX9dPYfPmLo8iYnPrEH/0Wye5lfIEmWz1h4mn4xDYJOunU
+ 5DmBmenMGz+yp0KaO3dVXxwaPy9qDydeSNTVdUccQKCRKQokhLndyucJdWqf9mvMZ7WP8X1d/
+ xi6knLpe6yc/gRLRkEouipTVNW9aTmuTD/IuD6st5OZsoBiPurCqh57LWCH1FGQU0kQin0rLd
+ Q+GpM4WFgEgcvXDPYZ9t6QrBLgOqomNUClEOAxj9j3sPKMZoo2lStNQDrujD8m1SfjVOHO8pC
+ Lbgmx0dpKn6Ri3AzcXjofP+5f8ZmSx0aK8nIRWUpLPXRhZTQb6JtREYUsc34lsDmX5g4Og4tM
+ vK6J0s9awpRBcyMUtnLORobLyqbSV+8MIuk0cNgSvLVUPsuFaTjISc24Ns0UtagEV1jWICefJ
+ wpcOetf/7fcuAf4/v6lVrTWyUudBCYSMbIlQMKR9c8l9GO8eY3rIPtR9Dl5teVM1v9vaV5Fd6
+ p4GUhErPZb0MUv2ZqiuHtkSA5rqetbslTQM6KqA72RUaSWWvGHfBFqY0zxrytLhK1LTqoHj/8
+ E8xGYoh3qXjdXjXQxXhGxth8U1ocYsc2F5xpxt8gLXJ7SAFq2pGoxEnAdDdTRaEnOZeQO21IC
+ o1tNYY4EMPRYCXEemCzP5QQ5BRMaxtds/5/+mJJJpxfbLZ+Dbb+Z2fkzCV9Jh5tQZKvDTHMxC
+ +XIr8Y0zsGTqFDOco1H1Pr3+l82Ls21Ku0lxan3JqRzcdhtRxkZE6
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peff,
 
---8323328-2065383305-1559130695=:44
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 28 May 2019, Jeff King wrote:
 
-Hi John Lin,
-
-On Wed, 29 May 2019, =E6=9E=97=E8=87=AA=E5=9D=87 wrote:
-
-> Junio C Hamano <gitster@pobox.com> =E6=96=BC 2019=E5=B9=B45=E6=9C=8829=
-=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=884:41=E5=AF=AB=E9=81=93=EF=
-=BC=9A
-> >
-> > =E6=9E=97=E8=87=AA=E5=9D=87 <johnlinp@gmail.com> writes:
-> >
-> > > John Lin via GitGitGadget <gitgitgadget@gmail.com> =E6=96=BC 2019=E5=
-=B9=B45=E6=9C=8815=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:54=E5=
-=AF=AB=E9=81=93=EF=BC=9A
-> > >>
-> > >> From: John Lin <johnlinp@gmail.com>
-> > >>
-> > >> Before this patch, there is inconsistency between the status
-> > >> messages with hints and the ones without hints: there is an
-> > >> empty line between the title and the file list if hints are
-> > >> presented, but there isn't one if there are no hints.
-> > >>
-> > >> This patch remove the inconsistency by removing the empty
-> > >> lines even if hints are presented.
-> > >
-> > > I would like to ask for the final decision on this patch. Thank you.
-> >
-> > If I recall correctly, the test part of this patch conflicts badly
-> > with a topic in flight that splits 'checkout' into 'restore' and
-> > 'switch', which is a more important topic between the two.  So if I
-> > must give _the final_ decision, then we need to drop this patch, but
-> > I'd rather not ;-)
-> >
-> > Doing this change on top of the switch/restore topic, once it
-> > stabilized more and graduated to 'master', would be the best course
-> > of action, I would think.
-> >
-> > Thanks.
+> On Tue, May 28, 2019 at 01:06:21PM +0200, Johannes Schindelin wrote:
 >
-> I see. Thanks for your kind explanation. I'll wait for the
-> switch/restore topic to merge into master.
+> > > Or do you prefer having a one-liner? I'd rather come up with a more
+> > > generic helper to cover this case, that can run any command and comp=
+are
+> > > it to a single argument (or stdin). E.g.,:
+> > >
+> > >   test_cmp_cmd no-conflict git log -1 --format=3D%s
+> > >
+> > > or
+> > >
+> > >   test_cmp_cmd - git foo <<-\EOF
+> > >   multi-line
+> > >   expectation
+> > >   EOF
+> >
+> > I guess that you and me go into completely opposite directions here. I
+> > want something *less* general. Because I want to optimize for the
+> > unfortunate times when a test fails and most likely somebody else than=
+ the
+> > original author of the test case is tasked with figuring out what the =
+heck
+> > goes wrong.
+> >
+> > You seem to want to optimize for writing test cases. Which I find -- w=
+ith
+> > all due respect -- the wrong thing to optimize for. It is already dirt
+> > easy to write new test cases. But *good* test cases (i.e. easy to debu=
+g
+> > ones)? Not so much.
+>
+> Hmm. I too want the test output to be useful to people other than the
+> test author. But I find the output from test_cmp perfectly fine there.
+> My first step in digging into a failure is usually to look at what
+> commands the test is running, which generally makes it obvious why we
+> are expecting one thing and seeing another (or at least, just as obvious
+> as a hand-written message).
+>
+> So to me the two are equal on that front, which makes me want to go with
+> the thing that is shorter to write, as it makes it more likely the test
+> writer will write it. The _worst_ option IMHO is a straight-up use of
+> "test" which provides no output at all in the test log of what value we
+> _did_ see. That requires the person looking into the failure to re-run
+> the test, which is hard if it's a remote CI, or if the failure does not
+> always reproduce.
 
-You could already rebase it on top of
-https://github.com/gitgitgadget/git/tree/nd/switch-and-restore, say so in
-your cover letter, and send a new iteration.
+If you think your version is easier to debug, then I won't object.
 
-Ciao,
-Johannes
-
---8323328-2065383305-1559130695=:44--
+Thanks,
+Dscho
