@@ -2,114 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	URIBL_BLOCKED shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 376971F462
-	for <e@80x24.org>; Thu, 30 May 2019 16:12:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA281F462
+	for <e@80x24.org>; Thu, 30 May 2019 16:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726430AbfE3QML (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 12:12:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52190 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbfE3QML (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 12:12:11 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5964159731;
-        Thu, 30 May 2019 12:12:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Hr7I3VFrwzjnMzwIMVSIOjs+P5w=; b=n61YWZ
-        rATksCdI51nXh7Y1coGegBQoeH1DMhmtJhwnSzXTqohuODtLYRgU28MB2me+qwzC
-        25xCKaP2PCNJQc0rZTd6ekKW1S2t8dxev13oiV442/8rlhZt2mhGErJ68Gqyv53A
-        VLEZLSwP2y8T1kJ1H8bCCFbGex4aLoZkog2MQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IzFxyFjtePrvLLEQ/5KhmCvq/3qGykL7
-        50TjWZoOEY22g/M5FB6zErble4G+rFP0pMCeTRN/05tLB+H/tEB1hIUrirsnkfYK
-        21CT/tGXnQA4dibkilVvfDd4VpRD9Fyw92Ii+ZQvwnRoYJiRVZVyMEhySBr1HPkB
-        ZylDs4vSB8o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD86F159730;
-        Thu, 30 May 2019 12:12:08 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8FD7E15972F;
-        Thu, 30 May 2019 12:12:07 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     jeffhost@microsoft.com, git@vger.kernel.org,
-        emilyshaffer@google.com, jonathantanmy@google.com, jrn@google.com,
-        dstolee@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-Subject: Re: [RFC PATCH v2] list-objects-filter: merge filter data structs
-References: <e9147614-80f9-4c18-b431-539e2376295d@jeffhostetler.com>
-        <20190530015658.GA4313@comcast.net>
-Date:   Thu, 30 May 2019 09:12:06 -0700
-In-Reply-To: <20190530015658.GA4313@comcast.net> (Matthew DeVore's message of
-        "Wed, 29 May 2019 18:56:58 -0700")
-Message-ID: <xmqqef4fyl9l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726527AbfE3Qoj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 12:44:39 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:56963 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725961AbfE3Qoj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 12:44:39 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45FD2D2S8Nz5tlF;
+        Thu, 30 May 2019 18:44:36 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B47BC208D;
+        Thu, 30 May 2019 18:44:35 +0200 (CEST)
+Subject: [PATCH] userdiff: two simplifications of patterns for rust
+To:     =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20190520170403.16672-1-marcandre.lureau@redhat.com>
+ <e1c4c2ab-927d-fff9-b9e7-13943cba2273@kdbg.org>
+ <CAMxuvay3ynFuP3fu57T0f9NEhjbCfM2hCUrdBHvxw-d1Jj54FA@mail.gmail.com>
+ <xmqqtvde4jxv.fsf@gitster-ct.c.googlers.com>
+ <a7d42d82-7d84-bf25-55ce-5c57a7ce70e9@kdbg.org>
+ <CAMxuvaxW9fc4ft=aERSUt4+n237bdtDpKJMvyKq=H7yz-VLWbg@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2d32b107-9278-faa0-4fea-afe662031272@kdbg.org>
+Date:   Thu, 30 May 2019 18:44:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AC03EDE0-82F5-11E9-9500-46F8B7964D18-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAMxuvaxW9fc4ft=aERSUt4+n237bdtDpKJMvyKq=H7yz-VLWbg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+- Do not enforce (but assume) syntactic correctness of language
+  constructs that go into hunk headers: we only want to ensure that
+  the keywords actually are words and not just the initial part of
+  some identifier.
 
-> +struct filter_data {
-> +	/* Used by all filter types. */
->  	struct oidset *omits;
-> +
-> +	enum list_objects_filter_result (*filter_object_fn)(
-> +		struct repository *r,
-> +		enum list_objects_filter_situation filter_situation,
-> +		struct object *obj,
-> +		const char *pathname,
-> +		const char *filename,
-> +		struct filter_data *filter_data);
-> +
-> +	void (*filter_clear_fn)(struct filter_data *filter_data);
-> +
-> +	union {
-> +		struct {
-> +			/*
-> +			 * Maps trees to the minimum depth at which they were
-> +			 * seen. It is not necessary to re-traverse a tree at
-> +			 * deeper or equal depths than it has already been
-> +			 * traversed.
-> +			 *
-> +			 * We can't use LOFR_MARK_SEEN for tree objects since
-> +			 * this will prevent it from being traversed at
-> +			 * shallower depths.
-> +			 */
-> +			struct oidmap seen_at_depth;
-> +
-> +			unsigned long exclude_depth;
-> +			unsigned long current_depth;
-> +		};
+- In the word regex, match numbers only when they begin with a digit,
+  but then be liberal in what follows, assuming that the text that is
+  matched is syntactially correct.
 
-Name this, and the ohter two union members, and the union itself as
-one member inside the outer struct; some compilers would be unhappy
-with the GCC extension that allows you to refer to the member in
-this struct as ((struct filter_data *)p)->seen_at_depth, no?
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 28.05.19 um 23:01 schrieb Marc-André Lureau:
+> Both of these changes were based on your recommendations. Would you
+> mind sending a follow-up patch yourself?
+> 
+> I can send a seperate patch for the 3 extra tests.
 
-> +		struct {
-> +			unsigned long max_bytes;
-> +		};
-> +
-> +		struct {
-> +			struct exclude_list el;
-> +
-> +			size_t nr, alloc;
-> +			struct frame *array_frame;
-> +		};
-> +	};
->  };
+So, here it is. Looking forward to seeing a patch with the tests.
 
+ userdiff.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/userdiff.c b/userdiff.c
+index 8d7e62e2a5..2bcf105caf 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -131,11 +131,10 @@ PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
+ 	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
+ PATTERNS("rust",
+-	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl(<.+>)?)[ \t]+[^;]*)$",
++	 "^[\t ]*((pub(\\([^\\)]+\\))?[\t ]+)?((async|const|unsafe|extern([\t ]+\"[^\"]+\"))[\t ]+)?(struct|enum|union|mod|trait|fn|impl)[< \t]+[^;]*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+-	 "|[-+_0-9.eE]+(f32|f64|u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
+-	 "|0[box]?[0-9a-fA-F_]+(u8|u16|u32|u64|u128|usize|i8|i16|i32|i64|i128|isize)?"
++	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+ 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+ 	 "[={}\"]|[^={}\" \t]+"),
+-- 
+2.21.0.285.gc38d92e052
