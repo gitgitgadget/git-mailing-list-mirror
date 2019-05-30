@@ -2,102 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 462BF1F462
-	for <e@80x24.org>; Thu, 30 May 2019 14:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1171F462
+	for <e@80x24.org>; Thu, 30 May 2019 14:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727058AbfE3Oxb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 10:53:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:34599 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727080AbfE3Oxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 10:53:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559227999;
-        bh=0qV3lEIi8HZ9nj5Oc/K9eXSDdko2a1hG75mO2wi0xXc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fIMKlelc6tjxfdsHbbIGomA/2Cvg5//aQtUT7v/MQ8ymSBreM2+wcN0i4O7vEF3YU
-         k+bBpY9eC+NFx5Rsl+yRSQT9myVjFP8Snmls5d7JtarorBpI6b9dm4hNKL4idtFtJB
-         y2vF9fzvNL480d9KLJBKLRax2tmqD6IkcbHxDXB8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.49.166.183] ([95.208.59.239]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4QwW-1gUrt30NhW-011VgI; Thu, 30
- May 2019 16:53:19 +0200
-Date:   Thu, 30 May 2019 16:53:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     James Harvey <jamespharvey20@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: Request: git add --interactive: split hunk: When can't split
- further, split on empty lines
-In-Reply-To: <CA+X5Wn5bt-3zHUqtRDWtc0A82SFmWPuQ0+RvRLaAV6Vn24nf4g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905301644020.44@tvgsbejvaqbjf.bet>
-References: <CA+X5Wn5bt-3zHUqtRDWtc0A82SFmWPuQ0+RvRLaAV6Vn24nf4g@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726807AbfE3O7M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 10:59:12 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:58000 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726501AbfE3O7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 10:59:12 -0400
+Received: from [10.0.2.15] ([87.115.253.20])
+        by smtp with ESMTPA
+        id WMWGhxcs0mVenWMWHhDtJ4; Thu, 30 May 2019 15:59:11 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1559228351; bh=ELRYK+ZDT5OGtdbvfFhr7jYT/dFG2r8fq+mSItdgxpI=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=oJ6JtMwEDRIjZdQfmDtL9zpiGK72tGD0U/up6b+dUpFn2OwxnnSdfYQSK6sCzqDae
+         MV5fYExOBqITsc1xb3w9ul6SAUeMEDtDXhL5JPc8xl0zoaTinN8LP5PvKDpaKrQ/jK
+         YiVAsVTjy0HOLu+GLIaD7r+GswcuhU1SxiVs++cKE0tk+cWkgT7EAmDTbr1rWY4Gke
+         56wyjQ7SVVz5W3WTpkAkOhsXR9adgAHYMnxGiwRVQRm1pfJH+2oPoFBI1Zwz1Jokcg
+         xcHL7y6lW1aaxxufyZZ6qj4R5OS8ZflnWzXc7nrOsROLyw20PaoeNuUviymXct2MBO
+         Vho8DjvTaAUNA==
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=I5Ubu+og c=1 sm=1 tr=0
+ a=ceBz2RPxfYaxgFK6o8vNfQ==:117 a=ceBz2RPxfYaxgFK6o8vNfQ==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=l5TglQF3YJ2S1DbDJiQA:9
+ a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 00/52] fix some -Wmissing-field-initializer warnings
+To:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <cf0b720e-ad29-79e7-17d5-b69d50e7007e@ramsayjones.plus.com>
+ <0f1c5a49-f971-848d-700e-9c124ae8e617@kdbg.org>
+ <20190530120441.GD31607@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <dce88509-f4d5-1e7b-26f1-eff5cdccf1d0@ramsayjones.plus.com>
+Date:   Thu, 30 May 2019 15:59:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dRXGv5GvrkHD6JT+0Hct3gXuPXId1kjMwzwLz07ie/uBQ7Yditg
- vHu6bZWq3pncqHsWSpVDer/mQaXqTY+pci9RsN689fjmwiyFn+bYgSpZ+WKrlVs7Obz68k3
- FqkSb+HcOlZ65tCNqK6pVmgpFQW9TZlmqGwgZhZqUOWyLPoSAuqNH8a8vytymRS0hLBq2EO
- ulQSu4dcmMj5ownBgFTcg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SbtntX4/ISE=:B/6gb4VsXNQ0fZJgbJ4DAn
- 2H8EdK1psLXT1uwjUC93sazIoYzy9Zev15fyyLhpd96SYKhxF4gzYDS0bSuVIOeiq/qMJ/ecD
- 0MMq9ky+FTbBiYcKt1upSiZSDPf0wRVMl6pG1euBcO3t9N/1bgnS1YFEqBuSATiO45alkWjPV
- /3/FRuLMmxHbEzZHTnSKs36/PLtHzrZVi6PNR8vf2z2Zb6GxBgPVBn915VphLjS4tS032j0ef
- Jbw3FIU01Bp4p2M0vitysS0O3bkSYfuv0WkBCfRWcTE44CB8cC/nCX6ftqznrqHNXeYEEoGvA
- WhuzfQ2gFY+DG+kGpN0bIZQYI6b0vXsQERR0hzblTJhUKA5cB6hpBs7l64462rdhr1LZkml9H
- I0s2wth4P0vzTYE31VtmNiJH9Atwm+eyac/ITmfQOLf9GLrdACgiy724tQ65eK+Wk7SOeGfUH
- FIDcNRl8xn25GDzBSSGoiw9cuHY/5dYCZOiXAUpGe87bPTDw22H7PXc2XLVYDnxgnmGMQzftK
- In5i0IC9dta4NSx1kMPGgiIu458KPedVQ+Da8OneM/hKuDwWgq0UGHLH8nUzIeaZplIZU2IrI
- Na3xnHU1n+tvJI8oWi0nBlpIS3vRTRulUXrSQTesPC3O76kbTHHBguyPorx5dAWGcu9U/lbH+
- 0uC/6+FPIYoEV2QlU1a2a3MVFlnv4jjLw7i6Sdg+ubDXNQNAwlmF9QyQmEaMfCtraYcB+9ZBA
- 8XUMFCiDtNZLuQAc9Tr+J1eYcEtOPunjFp7C00RMVSztvYaNbC7HgMxSOhal+y78hDB2EMpxl
- ydSPMkaocmobmW4S/k8euRL87T4BWQ7FkM9GShaC8+CN0VgHbbmMI5OkrHnh2UvhVAwKALUhx
- DfYldBimf/CvmyGpWLmlpjTEIj+5Wv9VCoS3k+CAvjbIsrSjKiuzk03SHhEdWmuUVckzlRICE
- y63GRvncmQZBo9/NZCyodUsNVisbAByNOAOzwpHRa4kw3yK8S2lg0
+In-Reply-To: <20190530120441.GD31607@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfFNJlpc25/wPbSaoCPQyfeoIepvpoW6HCBXW42KtkgPSdapA7L+FSIBiD4acl/w0XQgC178u6O+UWrc0U8tVRp7tIye0aK/QIfmTwHoV3FOhZVTMVc0v
+ 2wtU92YmzTeKDT+A/dqjD3YE1wTQ8XtBj5MWVMyhEEpKdl2crFDAtMfc6SljOdB1BhgZlOfl8vXabg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi James,
 
-On Wed, 29 May 2019, James Harvey wrote:
 
-> When adding interactively, 's' can be used to split the current hunk.
-> Once it gets down to where 's' reports "Sorry, cannot split this
-> hunk", it could be useful if it would then start splitting based on
-> empty lines, probably leaving empty lines at the top of the split
-> hunks.  It certainly wouldn't be perfect, and might create many hunks,
-> but it would be a nice alternative to manually editing the hunk.
-> Certainly someone could still manually edit the hunk if they didn't
-> want to use it in a particular situation.
+On 30/05/2019 13:04, Jeff King wrote:
+> On Thu, May 30, 2019 at 10:47:37AM +0200, Johannes Sixt wrote:
+> 
+>> I had a brief look at the series. IMO, it is a mistake to appease
+>> -Wmissing-field-initializer.
+>>
+>> We have two sorts of initializers:
+>>
+>>  - zero initializers: they just want to null out every field,
+>>    like CHILD_PROCESS_INIT and ad-hoc initializers of structs
+>>    such as xpparam_t pp = { 0 }; in range-diff.c
+>>
+>>  - value initializers are always macros, such as STRING_LIST_INIT_DUP
+>>    and the OPT_* family.
+>>
+>> I am strongly against forcing zero initializers to write down a value
+>> for every field. It is much more preferable to depend on that the
+>> compiler does the right thing with them. -Wmissing-field-initializer
+>> would provide guidance in the wrong direction. A zero initializer looks
+>> like this: = { 0 }; and nothing else.
+> 
+> I had a similar impression while perusing the commits. I don't mind
+> forcing some extra work on programmers to appease a warning if
+> disregarding it is a common source of errors. But I didn't see any real
+> bug-fixes in the series, so it doesn't seem like that good a tradeoff to
+> me.
+> 
+> Contrast that with the -Wunused-parameters warning. I found a dozen or
+> so actual bugs by sifting through the results, and another couple dozen
+> spots where the code could be cleaned up or simplified. If we want to
+> shut up the warning completely (so we can pay attention to it), we'll
+> then have to annotate probably a couple hundred spots, and keep those
+> annotations up to date. But I feel better doing that knowing that it's
+> shown real-world value.
 
-While a neat idea from the users' perspective, I think that it is
-technically a bit challenging, as you then have a problem to coalesce the
-patches appropriately.
+OK, I will drop this branch then.
 
-The thing with the splitting at context lines is that you have a much
-easier time to merge individual split-hunks into a "coalesced" hunk
-because the context lines stay context lines.
+Thanks all.
 
-Having said that, there was a patch series recently to add the ability to
-stage individual lines, and I think that your feature request could be
-implemented on top of that.
+ATB,
+Ramsay Jones
 
-In the meantime, an Outreachy intern and I worked on turning `git add -i`
-into a built-in (it was written in Perl, and the built-in is written in
-portable C instead), and I *think* that the plan with the patch series to
-stage individual lines was to re-implement it on top of the built-in patch
-series.
 
-Would you be interested in participating in that project?
-
-Ciao,
-Johannes
