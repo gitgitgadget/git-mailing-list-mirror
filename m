@@ -2,93 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A8951F462
-	for <e@80x24.org>; Thu, 30 May 2019 18:46:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4241F462
+	for <e@80x24.org>; Thu, 30 May 2019 18:59:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbfE3Sqq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 14:46:46 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:37283 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726079AbfE3Sqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 14:46:45 -0400
-X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 May 2019 14:46:45 EDT
-Received: from mailserver ([209.93.137.235])
-        by smtp with ESMTP
-        id WPxJhbVuYticRWPxKhfdjD; Thu, 30 May 2019 19:39:14 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Gs88BX9C c=1 sm=1 tr=0
- a=OVOw0JOETibW2qhth7KVPA==:117 a=OVOw0JOETibW2qhth7KVPA==:17
- a=x7bEGLp0ZPQA:10 a=YbTMELGUhT8A:10 a=pGLkceISAAAA:8 a=H9Wy_3nOsWJAWYE_l6AA:9
- a=y5w_7QHp1lY0aFnu:21 a=hLrfXUZu5lQcYeqn:21
-From:   Chris Mayo <aklhfex@gmail.com>
-To:     git@vger.kernel.org
-Cc:     e@80x24.org
-Subject: [PATCH v2] send-email: update documentation of required Perl modules
-Date:   Thu, 30 May 2019 19:39:10 +0100
-Message-Id: <20190530183910.25518-1-aklhfex@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1726477AbfE3S7H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 14:59:07 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44529 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbfE3S7H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 14:59:07 -0400
+Received: by mail-ed1-f67.google.com with SMTP id b8so10528118edm.11
+        for <git@vger.kernel.org>; Thu, 30 May 2019 11:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=CCMo66QDQR6nXo7GbcRI7s6wEZurrBPp8GvSE9QkyKU=;
+        b=Id1LHtQ1veUWJBTITOy2TADKdMedVI/LgKWd83x6pYDi5vaiUlYG9jPoWL/P0/h6jo
+         eK3GcxR+q9IMqzyF++1/hYB6xSbQkLUzWvh2oPo4fjSTOT/dg/FYO5pXkrXhpGW2Bg/9
+         RK7Em3Cwekj3Bfn7JLoxsQwQcmbOm7u7igFJRvAo0W5moEZiEKw4+/F9Eighomg4uJUP
+         Qzd6zfb1AOWdXdNea27a9ceVxBtSJSPi3gIXH61zcT05ZjKwpDzLOnjH+XtNH1OpQYWR
+         lt/qQ3HvLo/SiHt1ssmzxzicBI4Tb18pAF2Lu55iiSCbp+7oDbU4qyEj2pFZeD6pOobD
+         XQ4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=CCMo66QDQR6nXo7GbcRI7s6wEZurrBPp8GvSE9QkyKU=;
+        b=QnrBDEcBdhTI9k3KvnTo3nWYEwKTH52nyU/ZwJ4wxptaekdcLumL5REpTgJEbdEAGj
+         fvkFemgI3fOTIpznG6lz4HwADd5Vt7FFxRW64f3Kb3JFPQpeKwEl1DX6CsiYvl2ChWlm
+         2laD8BFX+CegeR6WSn/UbfGG+pZRYZqZrenwAIuE4NlDYm2yASqdrqW/9hK1NOuEIsbu
+         bsH4T3xixG05nt1c+3cyXniaursp4qYpVVoC+lMiLda0GabKc0w+iW4f1GaEToitqzse
+         L7lL6iMSgVXXgnBgkyJCuZy5iyKu4VzMHwYOSkxXKVvOw0QJJPiDvlXJdiv8fH8oZWAc
+         GILA==
+X-Gm-Message-State: APjAAAVQbVpYZzlMJj4iLEDf5H/Fz9K95ZPRMKkltd3cNPHiSmm7H6Ww
+        X15CfjOXCFXFHOH+hy1murM=
+X-Google-Smtp-Source: APXvYqyImNKPt+iueGp8Z7tVTmB78GGUQZlUxnadVwuI8bHZbGRaLUw+dxcdiAlC/geOd2OcZEh7DA==
+X-Received: by 2002:a17:906:5008:: with SMTP id s8mr5127868ejj.308.1559242745900;
+        Thu, 30 May 2019 11:59:05 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id y16sm577231ejj.2.2019.05.30.11.59.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 May 2019 11:59:04 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] userdiff: two simplifications of patterns for rust
+References: <20190520170403.16672-1-marcandre.lureau@redhat.com>
+        <e1c4c2ab-927d-fff9-b9e7-13943cba2273@kdbg.org>
+        <CAMxuvay3ynFuP3fu57T0f9NEhjbCfM2hCUrdBHvxw-d1Jj54FA@mail.gmail.com>
+        <xmqqtvde4jxv.fsf@gitster-ct.c.googlers.com>
+        <a7d42d82-7d84-bf25-55ce-5c57a7ce70e9@kdbg.org>
+        <CAMxuvaxW9fc4ft=aERSUt4+n237bdtDpKJMvyKq=H7yz-VLWbg@mail.gmail.com>
+        <2d32b107-9278-faa0-4fea-afe662031272@kdbg.org>
+User-agent: Debian GNU/Linux 10 (buster); Emacs 26.1; mu4e 1.1.0
+In-reply-to: <2d32b107-9278-faa0-4fea-afe662031272@kdbg.org>
+Date:   Thu, 30 May 2019 20:59:04 +0200
+Message-ID: <875zprn4zr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfG8SUI0IDyoTwOWscoBSxmaF1lP+BYtk7i8HDexD1ukxueqa+8OTSeQmRb9yohnANFd5wFVBCQPGaHszr5stwjzpbbgIIdPFTOTHyprUdY7a+mnvsCL1
- WP/l0RK2BRVYz/VHmcH+9FrpxYLywbiZzrD6mEZu64iwNZQlJnEtPxFr
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve and complete the list of required email related Perl modules,
-clarifying which are core Perl modules and remove Net::SMTP::SSL.
 
-git-send-email uses the TLS support in the Net::SMTP core module from
-recent versions of Perl. Documenting the minimum version is complex
-because of separate numbering for Perl (5.21.5~169), Net:SMTP (2.34)
-and libnet (3.01). Version numbers from commit:
-bfbfc9a953 ("send-email: Net::SMTP::starttls was introduced in v2.34",
-2017-05-31).
+On Thu, May 30 2019, Johannes Sixt wrote:
 
-Users of older Perl versions without Net::SMTP::SSL installed will get a
-clear error message.
+> - Do not enforce (but assume) syntactic correctness of language
+>   constructs that go into hunk headers: we only want to ensure that
+>   the keywords actually are words and not just the initial part of
+>   some identifier.
+>
+> - In the word regex, match numbers only when they begin with a digit,
+>   but then be liberal in what follows, assuming that the text that is
+>   matched is syntactially correct.
 
-Signed-off-by: Chris Mayo <aklhfex@gmail.com>
----
+I don't know if this is possible for Rust (but very much suspect so...),
+but I think that in general we should aim to be more forgiving than not
+with these patterns.
 
-This is v2 of the patch titled:
-"send-email: remove documented requirement for Net::SMTP::SSL"
-
-Changes:
-- add the core Net::Domain and Net::SMTP modules with an expanded note as
-  suggested, also the core module MIME::QuotedPrint (MIME::Base64 is already
-  listed).
-- add the CPAN module Mail::Address (Authen::SASL is already listed)
-
- Documentation/git-send-email.txt | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 1afe9fc858..504ae7fe76 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -500,8 +500,12 @@ app-specific or your regular password as appropriate.  If you have credential
- helper configured (see linkgit:git-credential[1]), the password will be saved in
- the credential store so you won't have to type it the next time.
- 
--Note: the following perl modules are required
--      Net::SMTP::SSL, MIME::Base64 and Authen::SASL
-+Note: the following core Perl modules that may be installed with your
-+distribution of Perl are required:
-+MIME::Base64, MIME::QuotedPrint, Net::Domain and Net::SMTP.
-+These additional Perl modules are also required:
-+Authen::SASL and Mail::Address.
-+
- 
- SEE ALSO
- --------
--- 
-2.21.0
-
+Because, as the history of userdiff.c shows, new keywords get introduced
+into these languages, and old git versions survive for a long time. If
+the syntax is otherwise fairly regular perhaps we don't need to hardcode
+the list of existing keywords?
