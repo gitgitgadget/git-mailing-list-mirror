@@ -2,90 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF281F462
-	for <e@80x24.org>; Thu, 30 May 2019 20:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 048F41F462
+	for <e@80x24.org>; Thu, 30 May 2019 20:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726415AbfE3Uc7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 16:32:59 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:55412 "EHLO bsmtp7.bon.at"
+        id S1726512AbfE3Uqu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 16:46:50 -0400
+Received: from mout.gmx.net ([212.227.15.19]:41821 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726079AbfE3Uc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 16:32:59 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 45FK5h47k8z5tlK;
-        Thu, 30 May 2019 22:32:56 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 26045208D;
-        Thu, 30 May 2019 22:32:56 +0200 (CEST)
-Subject: Re: [PATCH] userdiff: two simplifications of patterns for rust
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20190520170403.16672-1-marcandre.lureau@redhat.com>
- <e1c4c2ab-927d-fff9-b9e7-13943cba2273@kdbg.org>
- <CAMxuvay3ynFuP3fu57T0f9NEhjbCfM2hCUrdBHvxw-d1Jj54FA@mail.gmail.com>
- <xmqqtvde4jxv.fsf@gitster-ct.c.googlers.com>
- <a7d42d82-7d84-bf25-55ce-5c57a7ce70e9@kdbg.org>
- <CAMxuvaxW9fc4ft=aERSUt4+n237bdtDpKJMvyKq=H7yz-VLWbg@mail.gmail.com>
- <2d32b107-9278-faa0-4fea-afe662031272@kdbg.org>
- <875zprn4zr.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <e898920d-46bf-781a-de2f-6452bf5bae05@kdbg.org>
-Date:   Thu, 30 May 2019 22:32:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726169AbfE3Uqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 16:46:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559249178;
+        bh=Siw79cWtpdqIra+7UI1LABoYjxdEdi93K6MRgVDAeYw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Kk49fXom6K9TFP41RDk9hKx3Q7eCs7TBgwsQ8gMe0RMD4wW+1BOJE3qlkkWfxShN/
+         PBHM2JAdrIfCqef6w0IleAEYTRnsisRnFP/praZbOATwrHFtP+y7Efyq0PkcAHD3li
+         NBxMMHgsT0V722NMbnHeX6/OHB+YuWIyN63PbYDI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7Ka-1hQRfM0UNW-00Baed; Thu, 30
+ May 2019 22:46:18 +0200
+Date:   Thu, 30 May 2019 22:46:00 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v5 04/16] promisor-remote: implement
+ promisor_remote_get_direct()
+In-Reply-To: <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905302235000.44@tvgsbejvaqbjf.bet>
+References: <20190409161116.30256-1-chriscool@tuxfamily.org> <20190409161116.30256-5-chriscool@tuxfamily.org> <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <875zprn4zr.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:iCQv0HwCezUG69xGQrVE5iQX/WHiVFDpF+Qqb/tW8aoahzoracv
+ lPa7EN/j7lsOgfw0ThU2VsSwkbyPRi9d5wxBFWLj/NnaTRtegBL///YUIao4co3XCKdY+sy
+ DAWwpjOTBd7t01ZMORekRu+0Y1mzOTUdGgqSfYVQG0+If7EBJlX+8EXyjwKosWW/oXh6Z51
+ mI/8ZTZoN56mqv7LSNbtA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PsSYe32T94k=:xSBATqYzblfCCWG+M9pbAT
+ fTpkgkB3ozo4IFaRgB/VERT1gDvS4YDHq6wZse2QpsVk2g88GmEdcgdWYtrqB9yvUCCzjGacL
+ jacekpTG+4bUA/5LbsxPoNdqp5PHJqdoihEUOdPJtJJVRPfOA/+QpJXzrRsLb7ZzSouzJuWv3
+ 5QEW4Duuzo7g31l4a5CgEN5dLozRZQjeTfRzBshY0jt1jhgnlSWuHnfEeTpMcScjSXb+uZPnj
+ eVZKTpd/2XBo9JoX/7vnGaGJNhMMZ09gWjzLLOhiURhhe8903Blcj5fOr4/OvhWkccZSHjgPu
+ l8rygDUlkmqh9vURdgNVnH2c2V9QrArOMhBAL4HXESzEdI02IPdly8ow8sdcjufulhChmrxio
+ kVlvT/hOMjLqVgWkZAy0ZYcbAXimh4a025GO6+jUx9Y9H5kzBgyg/B2bRw/hBuH/G10FT0aQx
+ OryY0fjzEYmU5KbCVoZVB6Lope8Grt7kePFy2tPd49X30wCwex0XUPUWtMdJKocD97P2oK68p
+ ci5SC1Fr6vkWJyCAJPuqiHYaQshzowaPfX+F7Z74ptWJ6Ofpw+aY9N91lnDFJBjzHD0djetU1
+ 5exOdKNrmVkqYq5P400Z7uJ5cWGPmntM/lcQuZvL/N4el5zZjrNe6c9D09kmx1VNM30NMfOWt
+ vGiUFwEfbJ5Xgd9i0M/P806Ca7meksm8BkJvQ9sUoijM8YMKIg0pkMT1SYSRKLA/kE2R4tlmf
+ t3KuMOxRccgVVTNDOGms2NR7tPawEOAcwwwDdhRrxCi8Jk3iyW0jqgCBR8CWfshSxSOIOxmE/
+ F7HW4MSMDEm+AyuizEa4xycwHzzHHhRi+XFnzM0h5Ho5sMYjJCM8q/VDZG4vHSRvBmXp+QQdr
+ VEIatngxCKnrHf0SvnNy4cTzJEAt7SkGXNDPCPRNXwJxAMLmj3KQs07KlKq8zd+/0RKhrgyeQ
+ LbUHf0MEElLkj2JLabu5bmSaWfT/2KP0UbrcxmH0rjoJit8ed42Y9
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.05.19 um 20:59 schrieb Ævar Arnfjörð Bjarmason:
-> 
-> On Thu, May 30 2019, Johannes Sixt wrote:
-> 
->> - Do not enforce (but assume) syntactic correctness of language
->>   constructs that go into hunk headers: we only want to ensure that
->>   the keywords actually are words and not just the initial part of
->>   some identifier.
->>
->> - In the word regex, match numbers only when they begin with a digit,
->>   but then be liberal in what follows, assuming that the text that is
->>   matched is syntactially correct.
-> 
-> I don't know if this is possible for Rust (but very much suspect so...),
-> but I think that in general we should aim to be more forgiving than not
-> with these patterns.
+Hi,
 
-The C/C++ pattern is actually very forgiving in the hunk header pattern:
-It takes every line that begins with an un-indented letter. That works
-very well in in C because C does not have nested functions and it is
-typical that the function definition lines are not indented. But that
-breaks down with C++: indented function definitions are very common;
-they happen inside class and namespace definitions. Such functions are
-not picked up, and we live with that so far (at least, I do).
+On Thu, 30 May 2019, Derrick Stolee wrote:
 
-> Because, as the history of userdiff.c shows, new keywords get introduced
-> into these languages, and old git versions survive for a long time. If
-> the syntax is otherwise fairly regular perhaps we don't need to hardcode
-> the list of existing keywords?
+> On 4/9/2019 12:11 PM, Christian Couder wrote:
+> > From: Christian Couder <christian.couder@gmail.com>
+> >
+> > +{
+> > +	int i, missing_nr =3D 0;
+> > +	int *missing =3D xcalloc(oid_nr, sizeof(*missing));
+> > +	struct object_id *old_oids =3D *oids;
+> > +	struct object_id *new_oids;
+> > +	int old_fetch_if_missing =3D fetch_if_missing;
+> > +
+> > +	fetch_if_missing =3D 0;
+>
+> This global 'fetch_if_missing' swap seems very fragile. I'm guessing you
+> are using it to prevent a loop when calling oid_object_info_extended()
+> below. Can you instead pass a flag to the method that disables the
+> fetch_if_missing behavior?
 
-We are talking about (1) hunk header lines (not something really
-important) and (2) programming languages: new keywords don't pop up
-every month. Granted, inventing new languages is en vogue these days.
-But really, I mean, WTH?
+FWIW I mentioned the very same concern here:
+https://public-inbox.org/git/nycvar.QRO.7.76.6.1903272300020.41@tvgsbejvaq=
+bjf.bet/
 
-Having available keywords to recognize hunk header candidates helps a
-lot. I thought long about a possible pattern for C++, but I gave up,
-because the language is so rich and there are no suitable keywords.
+The situation is *pretty* bad by now. I see `fetch_if_missing` mentioned
+25 times in `master`, and all but one are in .c files or in cache.h.
 
--- Hannes
+The flag is actually used only in `oid_object_info_extended()`, and that
+function accepts an `unsigned flags`, so one might think that it could be
+extended to accept also a `OBJECT_INFO_LOOKUP_FETCH_IF_MISSING`. But then,
+there are many callers of that function, some of them also pretty low in
+the food chain. For example, `oid_object_info()` (does not accept `flags`)
+or `read_object()` (does not accept flags either).
+
+So it looks as if the idea to pass this flag down the call chain entailed
+a pretty serious avalanche effect.
+
+An alternative that strikes me as inelegant, still, but nevertheless
+better would be to move `fetch_if_missing` into `struct repository`.
+
+Ciao,
+Dscho
