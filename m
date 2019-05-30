@@ -2,109 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF4E61F462
-	for <e@80x24.org>; Thu, 30 May 2019 14:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 462BF1F462
+	for <e@80x24.org>; Thu, 30 May 2019 14:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfE3OBv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 10:01:51 -0400
-Received: from siwi.pair.com ([209.68.5.199]:31040 "EHLO siwi.pair.com"
+        id S1727058AbfE3Oxb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 10:53:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:34599 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726232AbfE3OBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 10:01:50 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2BA103F4090;
-        Thu, 30 May 2019 10:01:49 -0400 (EDT)
-Received: from [IPv6:2001:4898:6808:13e:c90f:aaf8:aafe:c1ce] (unknown [IPv6:2001:4898:a800:1010:7a45:aaf8:aafe:c1ce])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 81FEB3F4051;
-        Thu, 30 May 2019 10:01:48 -0400 (EDT)
-Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
-To:     Matthew DeVore <matvore@comcast.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-References: <cover.1558484115.git.matvore@google.com>
- <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
- <2b47d4b1-ea62-d59e-77e0-d95dfad084e0@jeffhostetler.com>
- <xmqqh89e31fg.fsf@gitster-ct.c.googlers.com>
- <20190529150228.GC4700@comcast.net>
- <9f1025ec-a3d7-c5f4-4a7a-15e4131f2b87@jeffhostetler.com>
- <20190529232746.GE4700@comcast.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <0d8973e7-5b29-fb09-a435-3bf2ec23269f@jeffhostetler.com>
-Date:   Thu, 30 May 2019 10:01:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1727080AbfE3Oxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 10:53:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559227999;
+        bh=0qV3lEIi8HZ9nj5Oc/K9eXSDdko2a1hG75mO2wi0xXc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fIMKlelc6tjxfdsHbbIGomA/2Cvg5//aQtUT7v/MQ8ymSBreM2+wcN0i4O7vEF3YU
+         k+bBpY9eC+NFx5Rsl+yRSQT9myVjFP8Snmls5d7JtarorBpI6b9dm4hNKL4idtFtJB
+         y2vF9fzvNL480d9KLJBKLRax2tmqD6IkcbHxDXB8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.49.166.183] ([95.208.59.239]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4QwW-1gUrt30NhW-011VgI; Thu, 30
+ May 2019 16:53:19 +0200
+Date:   Thu, 30 May 2019 16:53:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     James Harvey <jamespharvey20@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: Request: git add --interactive: split hunk: When can't split
+ further, split on empty lines
+In-Reply-To: <CA+X5Wn5bt-3zHUqtRDWtc0A82SFmWPuQ0+RvRLaAV6Vn24nf4g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905301644020.44@tvgsbejvaqbjf.bet>
+References: <CA+X5Wn5bt-3zHUqtRDWtc0A82SFmWPuQ0+RvRLaAV6Vn24nf4g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20190529232746.GE4700@comcast.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dRXGv5GvrkHD6JT+0Hct3gXuPXId1kjMwzwLz07ie/uBQ7Yditg
+ vHu6bZWq3pncqHsWSpVDer/mQaXqTY+pci9RsN689fjmwiyFn+bYgSpZ+WKrlVs7Obz68k3
+ FqkSb+HcOlZ65tCNqK6pVmgpFQW9TZlmqGwgZhZqUOWyLPoSAuqNH8a8vytymRS0hLBq2EO
+ ulQSu4dcmMj5ownBgFTcg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SbtntX4/ISE=:B/6gb4VsXNQ0fZJgbJ4DAn
+ 2H8EdK1psLXT1uwjUC93sazIoYzy9Zev15fyyLhpd96SYKhxF4gzYDS0bSuVIOeiq/qMJ/ecD
+ 0MMq9ky+FTbBiYcKt1upSiZSDPf0wRVMl6pG1euBcO3t9N/1bgnS1YFEqBuSATiO45alkWjPV
+ /3/FRuLMmxHbEzZHTnSKs36/PLtHzrZVi6PNR8vf2z2Zb6GxBgPVBn915VphLjS4tS032j0ef
+ Jbw3FIU01Bp4p2M0vitysS0O3bkSYfuv0WkBCfRWcTE44CB8cC/nCX6ftqznrqHNXeYEEoGvA
+ WhuzfQ2gFY+DG+kGpN0bIZQYI6b0vXsQERR0hzblTJhUKA5cB6hpBs7l64462rdhr1LZkml9H
+ I0s2wth4P0vzTYE31VtmNiJH9Atwm+eyac/ITmfQOLf9GLrdACgiy724tQ65eK+Wk7SOeGfUH
+ FIDcNRl8xn25GDzBSSGoiw9cuHY/5dYCZOiXAUpGe87bPTDw22H7PXc2XLVYDnxgnmGMQzftK
+ In5i0IC9dta4NSx1kMPGgiIu458KPedVQ+Da8OneM/hKuDwWgq0UGHLH8nUzIeaZplIZU2IrI
+ Na3xnHU1n+tvJI8oWi0nBlpIS3vRTRulUXrSQTesPC3O76kbTHHBguyPorx5dAWGcu9U/lbH+
+ 0uC/6+FPIYoEV2QlU1a2a3MVFlnv4jjLw7i6Sdg+ubDXNQNAwlmF9QyQmEaMfCtraYcB+9ZBA
+ 8XUMFCiDtNZLuQAc9Tr+J1eYcEtOPunjFp7C00RMVSztvYaNbC7HgMxSOhal+y78hDB2EMpxl
+ ydSPMkaocmobmW4S/k8euRL87T4BWQ7FkM9GShaC8+CN0VgHbbmMI5OkrHnh2UvhVAwKALUhx
+ DfYldBimf/CvmyGpWLmlpjTEIj+5Wv9VCoS3k+CAvjbIsrSjKiuzk03SHhEdWmuUVckzlRICE
+ y63GRvncmQZBo9/NZCyodUsNVisbAByNOAOzwpHRa4kw3yK8S2lg0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi James,
 
+On Wed, 29 May 2019, James Harvey wrote:
 
-On 5/29/2019 7:27 PM, Matthew DeVore wrote:
-> On Wed, May 29, 2019 at 05:29:14PM -0400, Jeff Hostetler wrote:
->> Was sparse:path filter the only reason for needing all the URL encoding?
->> The sparse:oid form allows values <ref>:<path> and these (or at least
->> the <path> portion) may contain special characters.  So don't we need to
->> URL encode this form too?
-> 
-> Oh, I missed this. I was only thinking an oid was allowed after "sparse:". So as
-> I suspected I was overlooking something obvious.
-> 
-> Now I just want to understand the objection to URL encoding a little better. I
-> haven't worked with in a project that requires a lot of boilerplate before, so I
-> may be asking obvious things again. If so, sorry in advance.
-> 
-> So the objections, as I interpret them so far, are that:
-> 
->   a the URL encoding/decoding complicates the code base
->   b explaining the URL encoding, while it allows for future expansion, requires
->     some verbose documentation in git-rev-list that is potentially distracting or
->     confusing
->   c there may be a better way to allow for future expansion that does not require
->     URL encoding
->   d the URL encoding is unpleasant to use (note that my patchset makes it
->     optional for the user to use and it is only mandatory in sending it over the
->     wire)
-> 
-> I think these are reasonable and I'm willing to stop digging my heels in :) Does
-> the above sum everything up?
-> 
+> When adding interactively, 's' can be used to split the current hunk.
+> Once it gets down to where 's' reports "Sorry, cannot split this
+> hunk", it could be useful if it would then start splitting based on
+> empty lines, probably leaving empty lines at the top of the split
+> hunks.  It certainly wouldn't be perfect, and might create many hunks,
+> but it would be a nice alternative to manually editing the hunk.
+> Certainly someone could still manually edit the hunk if they didn't
+> want to use it in a particular situation.
 
-My primary concern was how awkward it would be to use the URL
-encoding syntax on the command line, but as you say, that can be
-avoided by using the multiple --filter args.
+While a neat idea from the users' perspective, I think that it is
+technically a bit challenging, as you then have a problem to coalesce the
+patches appropriately.
 
-And to be honest, the wire format is hidden from user view, so it
-doesn't really matter there.  So either approach is fine.  I was
-hoping that the "filters (plural)" approach would let us avoid URL
-encoding, but that comes with its own baggage as you suggested.
-And besides, URL encoding is well-understood.
+The thing with the splitting at context lines is that you have a much
+easier time to merge individual split-hunks into a "coalesced" hunk
+because the context lines stay context lines.
 
-And I don't want to prematurely complicate this with ANDs ORs and
-XORs as you mention in another thread.
+Having said that, there was a patch series recently to add the ability to
+stage individual lines, and I think that your feature request could be
+implemented on top of that.
 
-So don't let me stop this effort.
+In the meantime, an Outreachy intern and I worked on turning `git add -i`
+into a built-in (it was written in Perl, and the built-in is written in
+portable C instead), and I *think* that the plan with the patch series to
+stage individual lines was to re-implement it on top of the built-in patch
+series.
 
+Would you be interested in participating in that project?
 
-BTW, I don't think I've seen this mentioned anywhere and I don't
-remember if this got into the code or not.  But we discussed having
-a repo-local config setting to remember the filter-spec used by the
-partial clone that would be inherited by a subsequent (partial) fetch.
-Or would be set by the first partial fetch following a normal clone.
-Having a single composite filter spec would help with this.
-
-Jeff
+Ciao,
+Johannes
