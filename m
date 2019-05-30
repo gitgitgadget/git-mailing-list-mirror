@@ -2,208 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	URIBL_BLOCKED shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FA8A1F609
-	for <e@80x24.org>; Thu, 30 May 2019 17:21:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70D731F462
+	for <e@80x24.org>; Thu, 30 May 2019 18:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726899AbfE3RV5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 13:21:57 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:42655 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726566AbfE3RVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 13:21:55 -0400
-Received: by mail-qt1-f195.google.com with SMTP id s15so7877737qtk.9
-        for <git@vger.kernel.org>; Thu, 30 May 2019 10:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jT6znG29NjtFJmSFNcehpKaJ/Nyzs77ZpgkM+7MhGJs=;
-        b=kjlsy01+S2d4N4IHDqmf4/QFxjxJn3b4XfYgVGUxjmDUJp5evirU0+41C9V2FO7hUM
-         eknhv5q2+oqz4VEp6XxDImOYui1WMClSSi98O5jYvY981K2wxLrfCC5xHTBDcc9BsMfO
-         VnvvigzUDlp7TO8anjg7HacV9jEcU51xn3mVF+UOxIT2ftw5WkgU7d7BMEd7rBEwT1LW
-         DyVFMqKRt0IwJ1VgH/d3WVCppVZECE6Dq64NPovRORunztPCV3LSWlrs/7JYwMUaT8yf
-         kl1jSJcbg88Yl0MBvsCAutznh5AbySakhKCn0nGcMtBCYuYRNSDskFyr85l88R5kAIxS
-         WUVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jT6znG29NjtFJmSFNcehpKaJ/Nyzs77ZpgkM+7MhGJs=;
-        b=nyulQnGesj20SK2qSX8v9St3jaOdLcxxjYJdDkyqiGhG2H4lt6ULsHXbcXo83fqzdK
-         ugmK5CCa9GK02qpxjXZEkZwgN2WAlgjLFE1BiH7EWEiil2gUQz+2glP7RjBX2RDn8EOx
-         H7exftW0V1O5WeA5gfTsmF65A+dZsEd/W+1GVL4LTpwnBDOnmiru/5Wu/sj2jBpVUb4G
-         g/R4m+s2q6r48TDL5CvotRok5J02Uj8Y3+rXaroeIA1mooGvuy6+rNXqT847OPboTR0W
-         mQDMVq8R05fi3szagvr0oTC5APYzOxPSTkI/a75QvUNJPmTFAovIOzpSIi67NaHRCgjW
-         MKTw==
-X-Gm-Message-State: APjAAAWpffytY6VlRlIXj4mtpgCbgEBOarAphk5PtHi3dmYzwS1jSsvK
-        JaVq2TzrSd8kSZMmOGK+cFY=
-X-Google-Smtp-Source: APXvYqyPJdCGj3hpsaANfDPsGIgiyJ5wOnmQy/NQnLPJ4NOOR+xQeCYkhwRLlbuOYe7FEsgYvXspWw==
-X-Received: by 2002:ac8:7349:: with SMTP id q9mr2693886qtp.151.1559236914572;
-        Thu, 30 May 2019 10:21:54 -0700 (PDT)
-Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id d16sm2169589qtd.73.2019.05.30.10.21.52
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 10:21:53 -0700 (PDT)
-Subject: Re: [PATCH v5 04/16] promisor-remote: implement
- promisor_remote_get_direct()
-To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <20190409161116.30256-1-chriscool@tuxfamily.org>
- <20190409161116.30256-5-chriscool@tuxfamily.org>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
-Date:   Thu, 30 May 2019 13:21:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
-MIME-Version: 1.0
-In-Reply-To: <20190409161116.30256-5-chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=utf-8
+        id S1726566AbfE3SQV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 14:16:21 -0400
+Received: from mail-eopbgr770073.outbound.protection.outlook.com ([40.107.77.73]:56327
+        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726280AbfE3SQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 14:16:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=voltserver.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+YVT7sxcmRTX9AryBFu1S+nLgdZhPPhLLOM0Zuc+MuM=;
+ b=0leZDUtl5AgutgTfwpieQ53tK+WP3bYeYTerWlaXJeo/qSbJXJgM3fwQfIyNdAR8Y1jpahzjjd9BD40hLCgLTemUK6bg4p8VOPFo7/F9mS3X9XlyYheo3hWWvVDI4ZEaYFjdHK89r2243tmT+o6+9F4rFYgx3MwGizN3DmrVd5I=
+Received: from BN8PR11MB3571.namprd11.prod.outlook.com (20.178.218.159) by
+ BN8PR11MB3777.namprd11.prod.outlook.com (20.178.221.144) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1922.17; Thu, 30 May 2019 18:16:17 +0000
+Received: from BN8PR11MB3571.namprd11.prod.outlook.com
+ ([fe80::41e6:5031:6141:cdb2]) by BN8PR11MB3571.namprd11.prod.outlook.com
+ ([fe80::41e6:5031:6141:cdb2%5]) with mapi id 15.20.1922.021; Thu, 30 May 2019
+ 18:16:17 +0000
+From:   Alex Levy <alex.levy@voltserver.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: possible submodule bug?
+Thread-Topic: possible submodule bug?
+Thread-Index: AdUXAd5IoyZbf3DPRJyFjyiJc7NSUg==
+Date:   Thu, 30 May 2019 18:16:17 +0000
+Message-ID: <BN8PR11MB35711F87B0981C6897DCE3CC89180@BN8PR11MB3571.namprd11.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=alex.levy@voltserver.com; 
+x-originating-ip: [72.87.93.109]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 7887d9ce-c3fb-462a-eee4-08d6e52ae8e9
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(7021145)(8989299)(4534185)(7022145)(4603075)(4627221)(201702281549075)(8990200)(7048125)(7024125)(7027125)(7023125)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:BN8PR11MB3777;
+x-ms-traffictypediagnostic: BN8PR11MB3777:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <BN8PR11MB3777760CA484C91A7096132589180@BN8PR11MB3777.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3383;
+x-forefront-prvs: 00531FAC2C
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(396003)(39840400004)(366004)(136003)(376002)(346002)(54504004)(189003)(199004)(99286004)(102836004)(256004)(186003)(81156014)(26005)(66446008)(14444005)(53936002)(2501003)(316002)(476003)(44832011)(5660300002)(86362001)(486006)(9686003)(33656002)(64756008)(6306002)(305945005)(55016002)(7696005)(6436002)(6116002)(76116006)(66556008)(3480700005)(68736007)(66946007)(7736002)(966005)(66066001)(7116003)(25786009)(3846002)(1730700003)(8676002)(2351001)(81166006)(8936002)(6916009)(508600001)(73956011)(71190400001)(5640700003)(52536014)(6506007)(66476007)(71200400001)(2906002)(74316002)(14454004);DIR:OUT;SFP:1101;SCL:1;SRVR:BN8PR11MB3777;H:BN8PR11MB3571.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: voltserver.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: AwA/sM/PuK9pnULGG6cpusp39bTBgy6pU8XeXpCEm09KXx6kGf7PeRpwfGo73bMj3226KbeVue7dqCTklmgrhdFf6IlVBA4YjoZRok3gkI81UBtUAeoIDyxvg+OKHnPX0bkLbEzBwYO7Nu2c08102oo8LyxKGEyf9lCon+7bkiYqzth0rVhrcDXyRZYQabil1pd9ROuXZVR9GgTjpFrUvo1hWHhtFArjeMVN6sww5bEVq/pWiAoG1RmN67yiAD7awwACE8bd5MTq6+Ddeiwr082f5fpIMdLQ/LdAEejDcioJ8XHRWzEKhuqIg+dKidrlL7kwqAR5oVXv4Gm7y7KFWYdfTPJ3c4Pd1dEXJHFgzD9f1SIPSsC2zvxfgLuWmlObxG4KMSUJvYomK0XwZyINRzcaW8wfFRXG6qZ4vPRb1dA=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: voltserver.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7887d9ce-c3fb-462a-eee4-08d6e52ae8e9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2019 18:16:17.5837
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9d954406-2c01-45a3-9cc8-be64a19fb626
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: alex.levy@voltserver.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR11MB3777
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/9/2019 12:11 PM, Christian Couder wrote:
-> From: Christian Couder <christian.couder@gmail.com>
-> 
-> This is implemented for now by calling fetch_objects(). It fetches
-> from all the promisor remotes.
+Hi. I'm running git version 2.13.2.windows.1.  My coworker has the same beh=
+avior with 2.21.0.windows.1.
 
-Hi Christian,
+I recently set up a git submodule by doing "git submodule add https://githu=
+b.com/VoltServer/example".  Based on our teams preference, I then tried to =
+update .gitmodules to use the alternate URL "git@github.com:VoltServer/exam=
+ple.git".  When I manually edited the .gitmodules file, I failed to type it=
+ in correctly, instead providing "git@github.com/VoltServer/example" (I thi=
+nk the same problem applies for any malformed URL).  After my coworker pull=
+ed this commit and tried to init the submodule we realized my mistake.  So,=
+ I fixed .gitmodules to use the correct URL, committed, and he pulled again=
+.  Despite now having the correct URL, his superproject clone still failed =
+to clone the submodule.  I found a workaround, but I'm not certain if the w=
+orkaround was valid or not.
 
-Sorry for jumping on the thread late, but I noticed some peculiarities
-when looking at the test coverage report.
+Here are the recreation steps:
 
-> +static int remove_fetched_oids(struct object_id **oids, int oid_nr, int to_free)
+mkdir example
+cd example
+mkdir a
+cd a
+git init
+touch foo
+git add foo
+git commit -m "Initial commit."
+git submodule add https://github.com/VoltServer/example
+git commit -m "Add submodule."
+vim .gitmodules // edit as described above
+git add .gitmodules
+git commit -m "Update to wrong URL in .gitmodules."
+cd ..
+git clone a b
+cd b
+git submodule update --init
 
-This method does not seem to be covered by the test suite at all.
-Is this scenario difficult to set up for a test?
+That last command gives the following output:
 
-> +{
-> +	int i, missing_nr = 0;
-> +	int *missing = xcalloc(oid_nr, sizeof(*missing));
-> +	struct object_id *old_oids = *oids;
-> +	struct object_id *new_oids;
-> +	int old_fetch_if_missing = fetch_if_missing;
-> +
-> +	fetch_if_missing = 0;
+Submodule 'example' (git@github.com/VoltServer/example) registered for path=
+ 'example'
+fatal: repository 'git@github.com/VoltServer/example' does not exist
+fatal: clone of 'git@github.com/VoltServer/example' into submodule path 'C:=
+/projects/temp/example/b/example' failed
+Failed to clone 'example'. Retry scheduled
+fatal: repository 'git@github.com/VoltServer/example' does not exist
+fatal: clone of 'git@github.com/VoltServer/example' into submodule path 'C:=
+/projects/temp/example/b/example' failed
+Failed to clone 'example' a second time, aborting
 
-This global 'fetch_if_missing' swap seems very fragile. I'm guessing you are using
-it to prevent a loop when calling oid_object_info_extended() below. Can you instead
-pass a flag to the method that disables the fetch_if_missing behavior?
+If I now edit .gitmodules to reflect the correct URL:
 
-> +
-> +	for (i = 0; i < oid_nr; i++)
-> +		if (oid_object_info_extended(the_repository, &old_oids[i], NULL, 0)) {
+cd ../a
+vim .gitmodules // format the URL correctly
+git add .gitmodules
+git commit -m "Fix .gitmodules URL."
+cd ../b
+git pull
+git submodule update --init
 
-A use of "the_repository" this deep in new code is asking for a refactor later to remove it.
-Please try to pass a "struct repository *r" through your methods so we minimize references
-to the_repository (and the amount of work required to remove them later).
+This gives the same error message as before, except with the first line abo=
+ut registering the submodule missing.
 
-> +			missing[i] = 1;
-> +			missing_nr++;
-> +		}
-> +
-> +	fetch_if_missing = old_fetch_if_missing;
-> +
-> +	if (missing_nr) {
-> +		int j = 0;
-> +		new_oids = xcalloc(missing_nr, sizeof(*new_oids));
-> +		for (i = 0; i < oid_nr; i++)
-> +			if (missing[i])
-> +				oidcpy(&new_oids[j++], &old_oids[i]);
-> +		*oids = new_oids;
-> +		if (to_free)
-> +			free(old_oids);
-> +	}
-> +
-> +	free(missing);
-> +
-> +	return missing_nr;
-> +}
-> +
-> +int promisor_remote_get_direct(const struct object_id *oids, int oid_nr)
-> +{
-> +	struct promisor_remote *r;
-> +	struct object_id *missing_oids = (struct object_id *)oids;
-> +	int missing_nr = oid_nr;
+I've found a workaround if I manually edit .git/config in each clone to ref=
+lect the correct URL.  After doing that, running "git submodule update --in=
+it" works as expected.
 
-Note that for this method, "missing_nr" actually means "number of oids still in the list".
-
-> +	int to_free = 0;
-> +	int res = -1;
-> +
-> +	promisor_remote_init();
-> +
-> +	for (r = promisors; r; r = r->next) {
-> +		if (fetch_objects(r->name, missing_oids, missing_nr) < 0) {
-
-This block hits if we have any missing objects. This is not currently hit by the test
-suite.
-
-> +			if (missing_nr == 1)
-> +				continue;
-
-But we skip the call below if there is exactly one object in the list, as it must be the one
-missing object. So, to be interesting we need to try fetching multiple objects.
-
-> +			missing_nr = remove_fetched_oids(&missing_oids, missing_nr, to_free);
-
-Here is the one call, and after this assignment "missing_nr" does mean the number of missing objects.
-However, I do think this could be clarified by using remaining_nr and remaining_oids.
-
-> +			if (missing_nr) {
-> +				to_free = 1;
-> +				continue;
-> +			}
-
-Now this block took a bit to grok. You use to_free in the if(to_free) free(missing_oids); below.
-But it also changes the behavior of remove_fetched_oids(). This means that the first time
-remove_fetched_oids() will preserve the list (because it is the input list) but all later
-calls will free the newly-created intermediate list. This checks out.
-
-What is confusing to me: is there any reason that missing_nr would be zero in this situation?
-I guess if the fetch_objects() failed to find some objects, but we ended up having them locally
-in a new call to oid_object_info_extended(). That's a fringe case that is worth guarding against
-but I wouldn't worry about testing.
-
-> +		}
-> +		res = 0;
-> +		break;
-> +	}
-> +
-> +	if (to_free)
-> +		free(missing_oids);
-> +
-> +	return res;
-> +}
-
-While the test coverage report brought this patch to my attention, it does seem correct.
-I still think a test exposing this method would be good, especially one that requires
-a fetch_objects() call to multiple remotes to really exercise the details of remove_fetched_oids().
+My understanding is that I shouldn't ever have to edit anything in the .git=
+ directory.  So, have I found a bug with .gitmodules being ignored after ad=
+ding a given submodule?  Or is this just user error, a case of "Don't do th=
+at.  Initialize the submodule with the correct URL and move on."?
 
 Thanks,
--Stolee
+Alex
+
+Alex Levy
+Firmware Engineer
+VoltServer, Inc.
+42 Ladd Street, Suite 227
+East Greenwich, RI=A002818
+alex.levy@VoltServer.com
+888-622-8658 x413
+
 
