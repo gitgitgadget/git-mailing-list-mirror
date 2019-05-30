@@ -2,84 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD8411F462
-	for <e@80x24.org>; Thu, 30 May 2019 18:29:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A8951F462
+	for <e@80x24.org>; Thu, 30 May 2019 18:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726720AbfE3S3e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 14:29:34 -0400
-Received: from resqmta-po-01v.sys.comcast.net ([96.114.154.160]:34614 "EHLO
-        resqmta-po-01v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726079AbfE3S3d (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 May 2019 14:29:33 -0400
-Received: from resomta-po-01v.sys.comcast.net ([96.114.154.225])
-        by resqmta-po-01v.sys.comcast.net with ESMTP
-        id WNAnh5cQ6HkmzWPnxhA0Fb; Thu, 30 May 2019 18:29:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=20190202a; t=1559240973;
-        bh=+XK5S3iLcelfcn7xRBOJ4tZz02fSHYmplNZGzQ43l8Y=;
-        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
-         Content-Type;
-        b=b8xeRSDNQSviA/xVUOZhG/jApkgGHVWfOboiyn/sMnFDDpvghAGeOKp5Vc2w3GwTq
-         bsm7NAqJLhJK+7ydCmYKIet2xFmjN/+D5olJmcfMHkk27ynO6+yYbGptlNkc675I3v
-         ijZOd0i0EtUey9aabkB9kwwQUcbtl+O+/mtDM7zqdRM8QSEkBfznyHoMLOPOhpigwB
-         q7iWeCF9lMfk0t+TT2iibGrJYpiqKE0ho02UESKWnpj9j4Pzk5Tt1rB6aLZ4B8wU90
-         eI8RVsegTYmkJa5IIa0DbjDpEkwjAUES4CsF00ajfGGElPRacEN23wwbHysntPm06G
-         Kmwx5uA8mVLpQ==
-Received: from comcast.net ([IPv6:2601:647:4b02:2491:1ed:c9d3:7cb2:4cca])
-        by resomta-po-01v.sys.comcast.net with ESMTPSA
-        id WPnkhhqn4lRViWPnwhmFnt; Thu, 30 May 2019 18:29:33 +0000
-X-Xfinity-VMeta: sc=0;st=legit
-Date:   Thu, 30 May 2019 11:29:20 -0700
-From:   Matthew DeVore <matvore@comcast.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew DeVore <matvore@google.com>, jeffhost@microsoft.com,
-        git@vger.kernel.org, emilyshaffer@google.com,
-        jonathantanmy@google.com, jrn@google.com, dstolee@microsoft.com,
-        jrnieder@gmail.com, pclouds@gmail.com
-Subject: Re: [RFC PATCH v2] list-objects-filter: merge filter data structs
-Message-ID: <20190530182920.GA4641@comcast.net>
-References: <e9147614-80f9-4c18-b431-539e2376295d@jeffhostetler.com>
- <20190530015658.GA4313@comcast.net>
- <xmqqef4fyl9l.fsf@gitster-ct.c.googlers.com>
+        id S1726386AbfE3Sqq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 14:46:46 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:37283 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726079AbfE3Sqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 14:46:45 -0400
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 May 2019 14:46:45 EDT
+Received: from mailserver ([209.93.137.235])
+        by smtp with ESMTP
+        id WPxJhbVuYticRWPxKhfdjD; Thu, 30 May 2019 19:39:14 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Gs88BX9C c=1 sm=1 tr=0
+ a=OVOw0JOETibW2qhth7KVPA==:117 a=OVOw0JOETibW2qhth7KVPA==:17
+ a=x7bEGLp0ZPQA:10 a=YbTMELGUhT8A:10 a=pGLkceISAAAA:8 a=H9Wy_3nOsWJAWYE_l6AA:9
+ a=y5w_7QHp1lY0aFnu:21 a=hLrfXUZu5lQcYeqn:21
+From:   Chris Mayo <aklhfex@gmail.com>
+To:     git@vger.kernel.org
+Cc:     e@80x24.org
+Subject: [PATCH v2] send-email: update documentation of required Perl modules
+Date:   Thu, 30 May 2019 19:39:10 +0100
+Message-Id: <20190530183910.25518-1-aklhfex@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqef4fyl9l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfG8SUI0IDyoTwOWscoBSxmaF1lP+BYtk7i8HDexD1ukxueqa+8OTSeQmRb9yohnANFd5wFVBCQPGaHszr5stwjzpbbgIIdPFTOTHyprUdY7a+mnvsCL1
+ WP/l0RK2BRVYz/VHmcH+9FrpxYLywbiZzrD6mEZu64iwNZQlJnEtPxFr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 30, 2019 at 09:12:06AM -0700, Junio C Hamano wrote:
-> > +	union {
-> > +		struct {
-> 
-> Name this, and the ohter two union members, and the union itself as
-> one member inside the outer struct; some compilers would be unhappy
-> with the GCC extension that allows you to refer to the member in
-> this struct as ((struct filter_data *)p)->seen_at_depth, no?
-> 
+Improve and complete the list of required email related Perl modules,
+clarifying which are core Perl modules and remove Net::SMTP::SSL.
 
-Anonymous unions and structs apparently require C11, which I guess is not
-something we want to require.
+git-send-email uses the TLS support in the Net::SMTP core module from
+recent versions of Perl. Documenting the minimum version is complex
+because of separate numbering for Perl (5.21.5~169), Net:SMTP (2.34)
+and libnet (3.01). Version numbers from commit:
+bfbfc9a953 ("send-email: Net::SMTP::starttls was introduced in v2.34",
+2017-05-31).
 
-If I have to name the union and struct, a lot of the conciseness of this
-refactor is lost. All accesses of filter data either have to be qualified with
-something like filter_data->type_specific.tree.seen_at_depth. If we want to
-avoid that messy construct, we are back to assigning an alias pointer of the
-correct type as we are doing before this patch anyway.
+Users of older Perl versions without Net::SMTP::SSL installed will get a
+clear error message.
 
-It's possible there is a clean and concise way to do C-style OO that is better
-than what is already here, but this seems to be not worth our time at this
-point. For the time being, I'll just change this patch to simplify the API (so
-everything is emcompassed in an opaque `struct filter *`) and keep the
-implementation more or less as-is.
+Signed-off-by: Chris Mayo <aklhfex@gmail.com>
+---
 
-Thank you for taking a look.
+This is v2 of the patch titled:
+"send-email: remove documented requirement for Net::SMTP::SSL"
+
+Changes:
+- add the core Net::Domain and Net::SMTP modules with an expanded note as
+  suggested, also the core module MIME::QuotedPrint (MIME::Base64 is already
+  listed).
+- add the CPAN module Mail::Address (Authen::SASL is already listed)
+
+ Documentation/git-send-email.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 1afe9fc858..504ae7fe76 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -500,8 +500,12 @@ app-specific or your regular password as appropriate.  If you have credential
+ helper configured (see linkgit:git-credential[1]), the password will be saved in
+ the credential store so you won't have to type it the next time.
+ 
+-Note: the following perl modules are required
+-      Net::SMTP::SSL, MIME::Base64 and Authen::SASL
++Note: the following core Perl modules that may be installed with your
++distribution of Perl are required:
++MIME::Base64, MIME::QuotedPrint, Net::Domain and Net::SMTP.
++These additional Perl modules are also required:
++Authen::SASL and Mail::Address.
++
+ 
+ SEE ALSO
+ --------
+-- 
+2.21.0
+
