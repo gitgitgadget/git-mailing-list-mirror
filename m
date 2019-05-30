@@ -2,37 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 048F41F462
-	for <e@80x24.org>; Thu, 30 May 2019 20:46:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C87C61F609
+	for <e@80x24.org>; Thu, 30 May 2019 20:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbfE3Uqu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 May 2019 16:46:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:41821 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726169AbfE3Uqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 May 2019 16:46:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559249178;
-        bh=Siw79cWtpdqIra+7UI1LABoYjxdEdi93K6MRgVDAeYw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Kk49fXom6K9TFP41RDk9hKx3Q7eCs7TBgwsQ8gMe0RMD4wW+1BOJE3qlkkWfxShN/
-         PBHM2JAdrIfCqef6w0IleAEYTRnsisRnFP/praZbOATwrHFtP+y7Efyq0PkcAHD3li
-         NBxMMHgsT0V722NMbnHeX6/OHB+YuWIyN63PbYDI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7Ka-1hQRfM0UNW-00Baed; Thu, 30
- May 2019 22:46:18 +0200
-Date:   Thu, 30 May 2019 22:46:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        id S1726501AbfE3Uyv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 May 2019 16:54:51 -0400
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43327 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725961AbfE3Uyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 May 2019 16:54:50 -0400
+Received: by mail-qt1-f193.google.com with SMTP id z24so8730428qtj.10
+        for <git@vger.kernel.org>; Thu, 30 May 2019 13:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nSLjbs7GQ3LW2l7/ollUWrKCnPkWHOepQdy23cDRo7M=;
+        b=nedrXBHv4baiAWvuGVSgt4B1Qow7GGknUiiczfvD1BIx367w2pePF1X9a6CkqgrkAY
+         mSe3kad4QZwW9lP7hmEVbiOODVllKEXBWxAF0J7WRJFNeYF+lJGpQ0t5umefgXV5R1ug
+         uKbyRaNjxoPCDtPmoM+nJpaBdKQ7cfjk2M5JLd2bipIOQNl6oTdgHkVn7tKvWifyheJn
+         FJ9WMmu0x+W/mUQC7MrXjf4ahrs/VfraMnIvSWGa1qGQLdIfSmfGI8euKOLvwF/EQ1pi
+         0NCiUSss5QV9Q0gqBAxxpkQATrzeUVG6ip1PSxdQxzOogsad+iutIudWrI8HMrX8KF5j
+         YKog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nSLjbs7GQ3LW2l7/ollUWrKCnPkWHOepQdy23cDRo7M=;
+        b=of+ztu7nHvXvxXGHLk7fYUSuM0DH864Pd8Fr7r7RRqML0dKvV/9W11owI2UFDXuWGb
+         E0zrJ5SNyw4Axxs4RXYAcoXlNjGx4ZzscZN9LxCTx4Gou/jrr+0GA7yUorhD/jcE3GEw
+         tbDaVCGFSB88DCn6bpsamnW+Ctt6HNHrkspIywiFHOSyU2uKBLKAS7jbl5YYtEdEWLNR
+         LjmzzKNmfZWq7HDYFeZZa8IdZBjy5CK4H/aMJXWO5dsx46wCfBgdxRylVpyhXPFhVwL4
+         zk5DIhwEVQ7SIf7HsQXyqyQFkCs39dnbGtyysLj14Vw+y2hcSdQkL6/ALB7Bho0aOCrI
+         fy+g==
+X-Gm-Message-State: APjAAAU9T3/+q8r98qFWo4rJyPsgEoABXpKhT2ZarLxzT3XAT96+NO2F
+        ECG8mPrBr2oa2uNZBMuu/1g=
+X-Google-Smtp-Source: APXvYqzcBZnFcuxxf7FgvT3Dj4QqsKZjGP93ErITpAOPxbkEow52bQEfUrtl+u9q73G4GWModMPb3A==
+X-Received: by 2002:ac8:5485:: with SMTP id h5mr5449936qtq.253.1559249689636;
+        Thu, 30 May 2019 13:54:49 -0700 (PDT)
+Received: from [10.0.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id k9sm2208403qki.20.2019.05.30.13.54.48
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 May 2019 13:54:48 -0700 (PDT)
+Subject: Re: [PATCH v5 04/16] promisor-remote: implement
+ promisor_remote_get_direct()
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
         Jonathan Tan <jonathantanmy@google.com>,
@@ -45,81 +67,78 @@ cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v5 04/16] promisor-remote: implement
- promisor_remote_get_direct()
-In-Reply-To: <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1905302235000.44@tvgsbejvaqbjf.bet>
-References: <20190409161116.30256-1-chriscool@tuxfamily.org> <20190409161116.30256-5-chriscool@tuxfamily.org> <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+References: <20190409161116.30256-1-chriscool@tuxfamily.org>
+ <20190409161116.30256-5-chriscool@tuxfamily.org>
+ <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com>
+ <nycvar.QRO.7.76.6.1905302235000.44@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2329a4c7-bfb9-10ce-9d1c-8c754d6dee05@gmail.com>
+Date:   Thu, 30 May 2019 16:54:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iCQv0HwCezUG69xGQrVE5iQX/WHiVFDpF+Qqb/tW8aoahzoracv
- lPa7EN/j7lsOgfw0ThU2VsSwkbyPRi9d5wxBFWLj/NnaTRtegBL///YUIao4co3XCKdY+sy
- DAWwpjOTBd7t01ZMORekRu+0Y1mzOTUdGgqSfYVQG0+If7EBJlX+8EXyjwKosWW/oXh6Z51
- mI/8ZTZoN56mqv7LSNbtA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PsSYe32T94k=:xSBATqYzblfCCWG+M9pbAT
- fTpkgkB3ozo4IFaRgB/VERT1gDvS4YDHq6wZse2QpsVk2g88GmEdcgdWYtrqB9yvUCCzjGacL
- jacekpTG+4bUA/5LbsxPoNdqp5PHJqdoihEUOdPJtJJVRPfOA/+QpJXzrRsLb7ZzSouzJuWv3
- 5QEW4Duuzo7g31l4a5CgEN5dLozRZQjeTfRzBshY0jt1jhgnlSWuHnfEeTpMcScjSXb+uZPnj
- eVZKTpd/2XBo9JoX/7vnGaGJNhMMZ09gWjzLLOhiURhhe8903Blcj5fOr4/OvhWkccZSHjgPu
- l8rygDUlkmqh9vURdgNVnH2c2V9QrArOMhBAL4HXESzEdI02IPdly8ow8sdcjufulhChmrxio
- kVlvT/hOMjLqVgWkZAy0ZYcbAXimh4a025GO6+jUx9Y9H5kzBgyg/B2bRw/hBuH/G10FT0aQx
- OryY0fjzEYmU5KbCVoZVB6Lope8Grt7kePFy2tPd49X30wCwex0XUPUWtMdJKocD97P2oK68p
- ci5SC1Fr6vkWJyCAJPuqiHYaQshzowaPfX+F7Z74ptWJ6Ofpw+aY9N91lnDFJBjzHD0djetU1
- 5exOdKNrmVkqYq5P400Z7uJ5cWGPmntM/lcQuZvL/N4el5zZjrNe6c9D09kmx1VNM30NMfOWt
- vGiUFwEfbJ5Xgd9i0M/P806Ca7meksm8BkJvQ9sUoijM8YMKIg0pkMT1SYSRKLA/kE2R4tlmf
- t3KuMOxRccgVVTNDOGms2NR7tPawEOAcwwwDdhRrxCi8Jk3iyW0jqgCBR8CWfshSxSOIOxmE/
- F7HW4MSMDEm+AyuizEa4xycwHzzHHhRi+XFnzM0h5Ho5sMYjJCM8q/VDZG4vHSRvBmXp+QQdr
- VEIatngxCKnrHf0SvnNy4cTzJEAt7SkGXNDPCPRNXwJxAMLmj3KQs07KlKq8zd+/0RKhrgyeQ
- LbUHf0MEElLkj2JLabu5bmSaWfT/2KP0UbrcxmH0rjoJit8ed42Y9
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1905302235000.44@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Thu, 30 May 2019, Derrick Stolee wrote:
-
-> On 4/9/2019 12:11 PM, Christian Couder wrote:
-> > From: Christian Couder <christian.couder@gmail.com>
-> >
-> > +{
-> > +	int i, missing_nr =3D 0;
-> > +	int *missing =3D xcalloc(oid_nr, sizeof(*missing));
-> > +	struct object_id *old_oids =3D *oids;
-> > +	struct object_id *new_oids;
-> > +	int old_fetch_if_missing =3D fetch_if_missing;
-> > +
-> > +	fetch_if_missing =3D 0;
+On 5/30/2019 4:46 PM, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 30 May 2019, Derrick Stolee wrote:
+> 
+>> On 4/9/2019 12:11 PM, Christian Couder wrote:
+>>> From: Christian Couder <christian.couder@gmail.com>
+>>>
+>>> +{
+>>> +	int i, missing_nr = 0;
+>>> +	int *missing = xcalloc(oid_nr, sizeof(*missing));
+>>> +	struct object_id *old_oids = *oids;
+>>> +	struct object_id *new_oids;
+>>> +	int old_fetch_if_missing = fetch_if_missing;
+>>> +
+>>> +	fetch_if_missing = 0;
+>>
+>> This global 'fetch_if_missing' swap seems very fragile. I'm guessing you
+>> are using it to prevent a loop when calling oid_object_info_extended()
+>> below. Can you instead pass a flag to the method that disables the
+>> fetch_if_missing behavior?
+> 
+> FWIW I mentioned the very same concern here:
+> https://public-inbox.org/git/nycvar.QRO.7.76.6.1903272300020.41@tvgsbejvaqbjf.bet/
+> 
+> The situation is *pretty* bad by now. I see `fetch_if_missing` mentioned
+> 25 times in `master`, and all but one are in .c files or in cache.h.
+> 
+> The flag is actually used only in `oid_object_info_extended()`, and that
+> function accepts an `unsigned flags`, so one might think that it could be
+> extended to accept also a `OBJECT_INFO_LOOKUP_FETCH_IF_MISSING`. But then,
+> there are many callers of that function, some of them also pretty low in
+> the food chain. For example, `oid_object_info()` (does not accept `flags`)
+> or `read_object()` (does not accept flags either).
 >
-> This global 'fetch_if_missing' swap seems very fragile. I'm guessing you
-> are using it to prevent a loop when calling oid_object_info_extended()
-> below. Can you instead pass a flag to the method that disables the
-> fetch_if_missing behavior?
+> So it looks as if the idea to pass this flag down the call chain entailed
+> a pretty serious avalanche effect.
 
-FWIW I mentioned the very same concern here:
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1903272300020.41@tvgsbejvaq=
-bjf.bet/
+It could be approached in small bits.
 
-The situation is *pretty* bad by now. I see `fetch_if_missing` mentioned
-25 times in `master`, and all but one are in .c files or in cache.h.
+First, add an OBJECT_INFO_NEVER_FETCH_IF_MISSING flag that overrides fetch_if_missing,
+and then use the flag in small places like this one. Then, build up to the other
+methods as appropriate.
 
-The flag is actually used only in `oid_object_info_extended()`, and that
-function accepts an `unsigned flags`, so one might think that it could be
-extended to accept also a `OBJECT_INFO_LOOKUP_FETCH_IF_MISSING`. But then,
-there are many callers of that function, some of them also pretty low in
-the food chain. For example, `oid_object_info()` (does not accept `flags`)
-or `read_object()` (does not accept flags either).
+> An alternative that strikes me as inelegant, still, but nevertheless
+> better would be to move `fetch_if_missing` into `struct repository`.
 
-So it looks as if the idea to pass this flag down the call chain entailed
-a pretty serious avalanche effect.
+This is literally the _least_ we should do to reduce our dependence on
+globals. Maybe this happens first, then the flag idea could be done bits
+at a time.
 
-An alternative that strikes me as inelegant, still, but nevertheless
-better would be to move `fetch_if_missing` into `struct repository`.
+Thanks,
+-Stolee
 
-Ciao,
-Dscho
