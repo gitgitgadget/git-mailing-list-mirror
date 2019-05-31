@@ -2,104 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DCA41F462
-	for <e@80x24.org>; Fri, 31 May 2019 20:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB8D1F462
+	for <e@80x24.org>; Fri, 31 May 2019 20:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727539AbfEaUXJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 16:23:09 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42943 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727376AbfEaUXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 16:23:09 -0400
-Received: by mail-io1-f67.google.com with SMTP id g16so9291456iom.9
-        for <git@vger.kernel.org>; Fri, 31 May 2019 13:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IU6Fs5EoflZPyRpNS2UvMPKQFby1iqnT4HtkP0gTyNA=;
-        b=I9tqoCsdSSK1n1bV9/Z+th7O1VqfmEEmCrH/47cyc4q2C1TkaV0w2/8EiZsjWPu4GA
-         8Ds4msNHr8RFk7Qa5+HzqZYO1PDMs/AKz9ot9BWZ0C1CfM9n0IMFdhSosTUIwLGW7IaG
-         aJClcW5RXlyKKu+YQIE5E4n3NgRHNnf5UGR9DZh8nQ6Dc1tN3ZFPTNN2hA1a/VbVy/7D
-         csiKWkAU37BN/Ifcy32ZrsbjJp/8cOy+BerYSzzbMdSs0YaxynQhECZ09F6Be152ntbj
-         kwPzvcttykfnhShxeniianwROQRvDAsXQtfEsP4dgVove9GmCIVAZ7zBSPNKv1BMk1sU
-         w7FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IU6Fs5EoflZPyRpNS2UvMPKQFby1iqnT4HtkP0gTyNA=;
-        b=Xi14WM22LuMmsDn9kpFfnWn5DfTdrMnpI68ETdVnnr0op+guc1BfmFWx6uU3ZiWdBz
-         YxzranGd40Z2VEjoTwhe7WzrBXod2M6f4JDAacVOOFJNie0b24SZJernaulYWnx86HMz
-         5cEGLqWJ0P8TBKJnFO4SaHz0/rMOazYUypzOMrXoCGAxc7xIV7MaG98sRuJn8gAfMNNh
-         ZggqN4kkKGprQx/psINUaNP72p3dxveq1Sc2EZyxF65tW4AfYCuSaCAAGP/OqTokI0YU
-         T4VJNKTMmyL/RXeNhewym3WzAq/hPp9sY++u8Hd1L5Z9qqNK1WC+EpMxWnqk0GkClex6
-         OVWw==
-X-Gm-Message-State: APjAAAXucz8U5bD04i9s7fBrK16sHbUgJiNTmlUREUKBXvVmyNxC2irB
-        RtDtgPHj/gPjI4wIRdbfXjfR/ovq
-X-Google-Smtp-Source: APXvYqxjGDaYGRazaQXVx+FO5Jq9TUkhchcEW8FqoKXajarepbSQ7OEAVHsbFQdB4hwDKSJuF+gr7w==
-X-Received: by 2002:a5d:8e0c:: with SMTP id e12mr8704797iod.31.1559334188133;
-        Fri, 31 May 2019 13:23:08 -0700 (PDT)
-Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
-        by smtp.gmail.com with ESMTPSA id p63sm2406913iof.45.2019.05.31.13.23.07
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 31 May 2019 13:23:07 -0700 (PDT)
-Date:   Fri, 31 May 2019 16:23:06 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] config/alias.txt: document alias accepting non-command
- first word
-Message-ID: <13d9ddd3541e3815078c4853c6f7c25cddd89126.1559333840.git.liu.denton@gmail.com>
-References: <cover.1559333840.git.liu.denton@gmail.com>
+        id S1727541AbfEaU0e (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 16:26:34 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51435 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727354AbfEaU0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 16:26:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559334387;
+        bh=Wv4g/pY2n5RQd6ZBXhqki/aQNd5DZj1UrAKYUs1NhZU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CMfqI97ckYuF2+Ib0iieIxWfFLG3b2ldbeTvvk14HsY7ldj6ZUD4be/K+otQvG4eh
+         q8NNKXlkpeo/HuhZMNeL4YkEJwvHVOZoW8OVys5LEK2Z7UOYoLXDmEouNEm97ETkoB
+         BqIuWu98QNIN4wPkWHCXFoEJeDYtgR74W1Zcb7ro=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbxJ8-1hGvNl27wk-00JNkH; Fri, 31
+ May 2019 22:26:27 +0200
+Date:   Fri, 31 May 2019 22:26:11 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: cc/list-objects-filter-wo-sparse-path, was Re: What's cooking in
+ git.git (May 2019, #05; Thu, 30)
+In-Reply-To: <xmqqwoi6v4ei.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1905312224020.1775@tvgsbejvaqbjf.bet>
+References: <xmqqwoi7ws9z.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905311346170.44@tvgsbejvaqbjf.bet> <xmqqwoi6v4ei.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1559333840.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ha0fzL5qq5efsAvk435ExSnvI4IPpLtDbQl3yeIXcaTLm34oQzj
+ H6amwixux6J+B0CqvoyAbGCkNNyXRVoa7BCDCx6HtLAW0SlU3rf4MqzPXmtHLRVxVXQxRQs
+ XKjsb+V973QHql4Rf8/mYmxtFqIitjFcRrMLqkOu6AkNa0uqYAmhBpDWuTRfwfBi10yEdgg
+ aToFE8FjJOzM1FDxeAaYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WrhFQCMbVFo=:GoQYWeiUkl66EM21tHuz3c
+ Khq+c+XqHCZLWkYOw7DOXo0rh1GHGrm/gVyBjQ0TVrJgyjk0WgZdcK2mY4oqD79PwQC8yXG3P
+ i/axv8TWQ92Wn3wG4In+jn0U5CI//CRUUqxr2tbZ76ja4546Eyr3zx30ZKLedtN7zWT7Y0VzX
+ d3UczufH8QAaITzGh2lRiSFKa2lEK7sA+C76xfOoy1kaU0SagPprKprD5HX9dtV3/WfrxmDYd
+ A+rdUWN0f64XI2N1hL7sGCFe/En9x1iwgFxQotMqQ3DSGrE2GaQZ0QzFtMPqxgWRPILXKSqES
+ wjpdDtySxkZja31ly0bEPXioeHEa15AUtgZT8ymIv5p5MdPGA9Z3HAkHPnpNwH53WJhpJu2Oe
+ aXONnd24R1fax0OL1e0hsFBtDuIHXQQLUeBmGlE4r2G/ad2sbza5Dki6P2Tub4WzE0/kjuNoT
+ ItfDl++rljlLJQisWBi5oxme9mIJ1HJhZgzNVAk5SieU5gDWkdLVkyt6Qn7E3i/DVaq8tg/sS
+ AIACcVPbN5mKt3jrpH0h30GVoQMnhWoYpZe0naV6M7CUAjb++pFQ9Sbti1GBUg3vcrWaKB/pO
+ g0pt/KcECx0/pqq2HbUhd9GjfVsQ1vkmVmkFoiDe4rjGgVFkpQX8Md9BWNmTOFG26vMeXNigx
+ CHVlJwtwT8qkoeu8oqaldiCSpCNU1pw1DY6haPO3DYY/NQCrXvJOM37OCXi1GG1cXn1vGGZAp
+ S7HoZkO+IPHlfjTCq67I/GXrI92LBurcpP/R6ea0++dSHCMEP4ZT8s0EyWQ0MEVQBGXwULrZ4
+ 9w9ec7dpUyhGXQGTERtL1JbqZvnOVPYLHoNgH5dJ6N7p6j2bIjYNnte2v5p2fVlBKcBxLM0RR
+ GwynEMh+fcPXQUiElf4KN8m7qVx7dIH25ElcD1yLc4MxVlMkfDDQVief+ghtz6KwwkQkZ+Iqx
+ SkVMmszs6qc89giaZBgZptMTqZ9ubt5tupFjwu4G/mErSFn052zPv
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One can see that an alias that begins with a non-command first word,
-such as `loud-rebase = -c commit.verbose=true rebase`, is permitted.
-However, this isn't immediately obvious to users as alias instances
-typically begin with a command.
+Hi Junio,
 
-Document the fact that an alias can begin with a non-command first word
-so that users will be able to discover that this is a feature.
+On Fri, 31 May 2019, Junio C Hamano wrote:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/config/alias.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> * cc/list-objects-filter-wo-sparse-path (2019-05-29) 1 commit
+> >>   (merged to 'next' on 2019-05-30 at 5a294203ad)
+> >>  + list-objects-filter: disable 'sparse:path' filters
+> >>
+> >>  Disable "--filter=3Dsparse:path=3D<path>" that would allow reading f=
+rom
+> >>  paths on the filesystem.
+> >>
+> >>  Will cook in 'next'.
+> >
+> > Not sure whether we want to fast-track this into v2.22.0. There is a r=
+isk.
+> >
+> > But then, the longer we ship with `--filter=3Dsparse:path` *enabled*, =
+the
+> > more we invite users to actually try and use it.
+>
+> This one I wasn't quite decided on, for exactly the same reason why
+> you said "Not sure".  I am inclined to merge it to 'master' at this
+> point, as it indeed is a risk to keep it enabled.
+>
+> The only remaining question it raises is if it makes it worthwhile
+> to add another rc; it introduces one new localizable string, too.
 
-diff --git a/Documentation/config/alias.txt b/Documentation/config/alias.txt
-index 5425449a50..f241f03ebe 100644
---- a/Documentation/config/alias.txt
-+++ b/Documentation/config/alias.txt
-@@ -7,6 +7,14 @@ alias.*::
- 	spaces, the usual shell quoting and escaping is supported.
- 	A quote pair or a backslash can be used to quote them.
- +
-+Note that the first word of an alias does not necessarily have to be a
-+command. It can be a command-line option that will be passed into the
-+invocation of `git`. In particular, this is useful when used with `-c`
-+to pass in one-time configurations. For example,
-+`loud-rebase = -c commit.verbose=true rebase` can be defined such that
-+running `git loud-merge` would be equivalent to
-+`git -c commit.verbose=true rebase`.
-++
- If the alias expansion is prefixed with an exclamation point,
- it will be treated as a shell command.  For example, defining
- `alias.new = !gitk --all --not ORIG_HEAD`, the invocation
--- 
-2.22.0.rc1.169.g49223abbf8
+That'd be more a question to the L10N coordinator (who you Cc:ed)... Jiang
+Lin? Would that require another -rc?
 
+Ciao,
+Dscho
