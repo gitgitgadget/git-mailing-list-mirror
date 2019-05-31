@@ -2,91 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 370421F462
-	for <e@80x24.org>; Fri, 31 May 2019 11:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7F01F462
+	for <e@80x24.org>; Fri, 31 May 2019 11:41:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726442AbfEaLju (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 07:39:50 -0400
-Received: from mout.gmx.net ([212.227.17.21]:45257 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726158AbfEaLju (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 07:39:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559302785;
-        bh=ZZvjRvWs3uXpWOA7nGs5+Rjd3iqA1gxDz7Ds6viISQQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PxODlqiRDAsCUdyJizisSxmb8hyUHd9FYSSW9rB5bUAQy6AvOAewFy3KexMEkO8zs
-         j3JfZUdmF1WgwrlZEPyDiMyJW9DICx4BrVU9Bo8w3uPKgh4Vbi5vyk7a/iy+mg+fUW
-         evQPdn5uYlrum/iruIqJMyIQr/bZbJDKnJeNIY3c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mnaof-1gpgAe38lx-00jdJc; Fri, 31
- May 2019 13:39:45 +0200
-Date:   Fri, 31 May 2019 13:39:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2019, #05; Thu, 30)
-In-Reply-To: <xmqqwoi7ws9z.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905311337270.44@tvgsbejvaqbjf.bet>
-References: <xmqqwoi7ws9z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726331AbfEaLlr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 07:41:47 -0400
+Received: from smtp-sh2.infomaniak.ch ([128.65.195.6]:37415 "EHLO
+        smtp-sh2.infomaniak.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726158AbfEaLlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 07:41:47 -0400
+X-Greylist: delayed 618 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 May 2019 07:41:45 EDT
+Received: from smtp6.infomaniak.ch (smtp6.infomaniak.ch [83.166.132.19])
+        by smtp-sh.infomaniak.ch (8.14.5/8.14.5) with ESMTP id x4VBVPiW029173
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Fri, 31 May 2019 13:31:26 +0200
+Received: from [IPv6:2a01:cb00:807:e500:fab5:24b3:6e93:219] (2a01cb000807e500fab524b36e930219.ipv6.abo.wanadoo.fr [IPv6:2a01:cb00:807:e500:fab5:24b3:6e93:219])
+        (authenticated bits=0)
+        by smtp6.infomaniak.ch (8.14.5/8.14.5) with ESMTP id x4VBVPCs006459
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+        for <git@vger.kernel.org>; Fri, 31 May 2019 13:31:25 +0200
+To:     git@vger.kernel.org
+From:   David <courrier@david-kremer.fr>
+Subject: Severe Regression in Git 1.21.0 -- not receiving any data
+Message-ID: <04a82e31-2292-ef73-98c5-b9a5ff28e000@david-kremer.fr>
+Date:   Fri, 31 May 2019 13:31:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lM0q9H4mJtPxIMYvqr+AmtLhgdj7OwTZvkNJ8Od9kjt1BRd+5jJ
- QptQ+Jzjpi3jnJk05vh4Su9E9rKwIqZmBxKspjBose1ZS5hG4bvWVHyelzc9KqSAEAZZ+da
- ytTBcClmR3gB2yyQrr8H5oG/p2ivWWE+0vzMlpjYyePEk6OB+2sCTE7+CAHs9wO5p+uqIbm
- K8uywUPFTVRVlBFTI3KSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xU2k+yUstU0=:gEYFuXmXbqQxMHwndzmG3g
- Wnw/7oI5Lw+rQJBwQTwCf//ynU5xUbw8W+XJGS7ZrklczZCm9jgm+SHx4rcuNsO6P8oE+KY5U
- oaDLvNfgJSpnH+plz9E7JR0ChaLJfIDv/4t9kIr1uZRLjY72znksG4WaFT9vMYS7umf1+2JxB
- sPBOBZDGUqFNmANwGh7DWpZGidlotSdXIJZ6wI3j4rzekp43pXuH3Ap4SMOcrF7IzCt29iTIf
- SUTYuPaozuhAqTdaDZPGSc2KoVLYh/lWSV2QE8WX3RHbiFgpLi1byy559n7Jxv6VIouvUqZz+
- hPOZKJrVdesOngtbpZUtTVUDGlaiA+u1EhJy5em2BGR0/F8OZfaw3OxOSl5u0wTmVBU2VspWA
- vwMRi3XnblStg31dtsi6FwWSS7yAFkBuT5rf2i9YlENLqtJecJJIM12k8HIiI+6RqMltWOMkp
- 5LOqJfFJdHXrM6g8NWiuEFaBPBhdqMZRWcgJE2vvr665BBEXSZQvRaADYbQlgcVnqJoQrcSpU
- 6oV22ggMTNPVE8OsySCPqpNjWeDFky9hdWnltN7GU1lB2yGAtH0oh+CY9syZ7iCS/UU4QLUpx
- w1XU+A2QnW3onqruJVwgpks0z2yEsOe1gcPtZ6mrXyIj4s2ng0ATXemLqhEQu60xWtt+T6cFc
- Kh+kyAFFypIBVQuJ5uiHTaI664XQUPVzz3E7pvBNW0n34q0DGvnKb7MZY7X4D/GnX4GC1srTU
- 88tChD5zi69Bgs1uuKgNwrrsGMWZ+beZynZrgGsU3F22FIK6S4r/OmQRMjN133QBm20hjmdIV
- 0bEoC5VJv6QaWtM7JfQCH8yhMA/AkPBEb8BmyMgDap0A2gBPL1D93+O/87QZyKj1ke+RFkkhV
- etuI9Htx+9NJKPfXBEw9X+nZf0leWWPj5sua/RvrQXkdU/roIkcgay65TQy1SV5hrLadtv6bO
- 2IroDYKDwD1mU9rjXMTLq7ytgNxWCCeQN+sfpcyNYIQmWpRxvHRRz
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: fr-classic
+X-Antivirus: Dr.Web (R) for Unix mail servers drweb plugin ver.6.0.2.8
+X-Antivirus-Code: 0x100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+# Summary
 
-On Thu, 30 May 2019, Junio C Hamano wrote:
+I was trying to clone the AOSP source tree (Android Open Source Project) 
+and I finally was able to formally identify what seems to be a severe 
+regression (one that is blocking usage) in the last version of git (2.21.0).
 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
->
-> The second round of release candidate has been tagged, after
-> slipping for several days to merge a handful of last-minute
-> regression fixes.
+# Steps to reproduce
 
-You hinted in an earlier "What's cooking" that you'd maybe go for an -rc3.
-Is that still the case?
+The AOSP projects recommend to use ubuntu 14.04 as its build platform. 
+The git version for this distro is :
 
-Or for that matter: do you plan on releasing a v2.21.1 before v2.22.0?
+```
+root@eb57f366840e:/android# git --version
+git version 1.9.1
+```
 
-Ciao,
-Dscho
+In a docker image for this OS, I am able to execute:
 
-P.S.: As you might have guessed, I would like to know in order to
-determine how to proceed with Git for Windows' `master`: whether to hop on
-the v2.22.x train or whether to stay on the v2.21.x train just a little
-longer.
+```
+root@eb57f366840e:~# git clone 
+https://android.googlesource.com/platform/manifest
+Cloning into 'manifest'...
+remote: Sending approximately 39.94 MiB ...
+remote: Counting objects: 852, done
+remote: Finding sources: 100% (27/27)
+remote: Total 16017 (delta 4968), reused 16017 (delta 4968)
+Receiving objects: 100% (16017/16017), 39.65 MiB | 9.04 MiB/s, done.
+Resolving deltas: 100% (4968/4968), done.
+Checking connectivity... done.
+```
+
+Now, on my local Archlinux Box, the git version is 2.21.0 (latest).
+
+The same command:
+
+```
+
+git clone https://android.googlesource.com/platform/manifest
+```
+
+Is launching a single thread that uses 100% of one CPU core FOREVER, 
+until a timeout arises after like 40 minutes (the remote hung up 
+unexpectedly). Someone on the #git channel (irc.freenode.net) was able 
+to reproduce the exact same behaviour.
+
+I must add that this of course arises only with the repo I mention in 
+this email (github repositories are just fine). So probably a mismatch 
+in protocol between git server/client ? Anyways, I'm far from having the 
+skills to fix that thing.
+
+I hope this report is useful, and in any case, I would like to know 
+about the possible outcomes of this report.
+
+I would be actually very surprised if someone did not notice that 
+before, given that the latest git version is from february, but I can 
+try anyway :)
+
+Cheers,
+
+David
+
