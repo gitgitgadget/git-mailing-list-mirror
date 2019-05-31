@@ -2,142 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,T_HK_NAME_DR shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5F681F462
-	for <e@80x24.org>; Fri, 31 May 2019 07:44:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA681F462
+	for <e@80x24.org>; Fri, 31 May 2019 11:36:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbfEaHoh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 03:44:37 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:59058 "EHLO
-        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725955AbfEaHoh (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 03:44:37 -0400
-Received: from [2001:16b8:5c8e:5500:5015:4633:2bbd:77c7] (helo=adam-MS-7A63.fritz.box); authenticated
-        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hWcDK-0000KD-Ed; Fri, 31 May 2019 09:44:34 +0200
-From:   "Dr. Adam Nielsen" <admin@in-ici.net>
-To:     git@vger.kernel.org
-Cc:     "Dr. Adam Nielsen" <admin@in-ici.net>
-Subject: [PATCH] make slash-rules more readable
-Date:   Fri, 31 May 2019 09:44:26 +0200
-Message-Id: <20190531074426.6810-1-admin@in-ici.net>
-X-Mailer: git-send-email 2.17.1
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1559288676;85b9b76a;
-X-HE-SMSGID: 1hWcDK-0000KD-Ed
+        id S1726376AbfEaLgI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 07:36:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41235 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726158AbfEaLgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 07:36:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559302532;
+        bh=CeordEY5LT7bR83XA38oiPPmmCw8hHkUfTu81vxCP3Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hgE831lvspXfyLY9tMM/I14Ow5DyDk/uAzkBd7RMkmVsQssGTSAbZm/Tjqt1T8dUg
+         L4F/NKmmj9kZ4Cy1ngYIRgFNishFSDgIrjkbO2rcE5IoR3QoXmAs+BsLUJgsOJn/3f
+         HwMrdxt4DzavYVhLSpdZrvS0eqrzczOrGTFlttdo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlESk-1gzGk61PLK-00b6So; Fri, 31
+ May 2019 13:35:32 +0200
+Date:   Fri, 31 May 2019 13:35:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v5 04/16] promisor-remote: implement
+ promisor_remote_get_direct()
+In-Reply-To: <2329a4c7-bfb9-10ce-9d1c-8c754d6dee05@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1905311332560.44@tvgsbejvaqbjf.bet>
+References: <20190409161116.30256-1-chriscool@tuxfamily.org> <20190409161116.30256-5-chriscool@tuxfamily.org> <b4d69d2b-dc0d-fffb-2909-c54060fe9cd1@gmail.com> <nycvar.QRO.7.76.6.1905302235000.44@tvgsbejvaqbjf.bet>
+ <2329a4c7-bfb9-10ce-9d1c-8c754d6dee05@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qz41fNWJ4NXjl9zh9Z9h8nVwtcVccVEPHjmKXlSF22KPWcA11Hm
+ lMtsE2Q4rvNjVl+xPhJE6Cu+nUG8VTgM+DMwfDnby802tWzxNXRz4jyehz+NxM17Dny03uI
+ 8C7Xzzwwdh5ViQ3o/Q17uAwFseaqp8tgwhUIR9L/pbiJBuIn5yk9rvcJC/ZW8LCpszzo/eu
+ Z2LlNRdgLZDzd9u1YetyA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ajl8si0L1YA=:6dzpzRSBYjSGq9uAw+C4kW
+ dNuVkXcH2EhgsdWwOjyFA59kPJVVkgKrU0fUWIOJ+OtaVwT0TG2FBVfKPMX9RlE6X0dqMRAFe
+ 0kWU28oX/5CukGzJJ9/o3giquUa3/K9v3dVUO478oynFh/gjsQY9LahKq+BSKK14jjoTWcG88
+ ljuNJIUYVHo7k53Pb+ZIQeCIvYUPz9wATQXkTNchTPYyq3O2N6oIirO5s+gxYkvYtd3Qljutu
+ fp8YMf7VOyECGWUpI/n2hfjBJchZAP0SgMl7NPul2rFakz6h9XZd/K05bMh/MJ8e0+TOSMfvJ
+ nAGhG/q7s3TtdroKpd2C5zucIsLopSsoj6OEI/HgGQsjr9LJtipLNjp65GJH9mHk3PAeFPtxs
+ T0yugaHuTwrWQTBcINi2Z2P0yGgiTf0yOIxyd3GhFnNk7IV8VbDdZjgB8rv141pJ6cWHAXHzQ
+ y+YMw5PzJsTj6893lzWvpJ8HiOyHK2k7iXgxxVLAogcfkraK8yd9o6GEs66YkuSaLrKRzeMf5
+ CBnHEUK8NAx8RU4ekfhrTPjWQky0PSznAHwUrG+nltHuZkMF5y/Fi1UaPmf2mduegMXKVAPeb
+ YUsAtJlW75SLZM+4FkeBK7vy+HC+QPhP/4PF8V8z8YLr8NvLx7v5Tvcn+HUDluLbFyimnNoj8
+ cJkyZFfEe6jDAIO4/K8tD8juHTeEpctGJH6Ryc1R4jYpGt2adtuCrSz0vqTT5gh9ddnJHymk+
+ Cnr0DaGcfieKRblfvwi6WcbRH6ZTN6Eppqnh6vCNQh7lJMvwqTz1+XRJw09LeODpE1oesY/eZ
+ WQoSHGjg9bs8I9zLGXIB07NBa5Ov3u5u4jdHWpt4I2zXALUh388hR3KjCV2HPuxnYJPQ3Z7ci
+ tr7H4nh3z3Mb2/KZsCgpi8P1SX6eirHTuhUxDyhYQXbi7OE5Lo8L2D5GdQqO7oW8jnVDKSSmE
+ szaFH9iIthR9j5Dl6W8fuTmafUviEaN/ryxQkHVxaFPQ8tr1+WhZN
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gitignore.txt: make slash-rules more readable
+Hi Stolee,
 
-Remove meta-rule in a paragraph for trailing-slash.
-Be precise whenever a trailing slash would make a 
-difference. Improve paragraph for pattern without slash. 
-Remove rule for leading slash because its now redundant. 
-Instead, add examples for leading slash and asterix in 
-example section.
+On Thu, 30 May 2019, Derrick Stolee wrote:
 
-Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
+> On 5/30/2019 4:46 PM, Johannes Schindelin wrote:
+> >
+> > On Thu, 30 May 2019, Derrick Stolee wrote:
+> >
+> >> On 4/9/2019 12:11 PM, Christian Couder wrote:
+> >>> From: Christian Couder <christian.couder@gmail.com>
+> >>>
+> >>> +{
+> >>> +	int i, missing_nr =3D 0;
+> >>> +	int *missing =3D xcalloc(oid_nr, sizeof(*missing));
+> >>> +	struct object_id *old_oids =3D *oids;
+> >>> +	struct object_id *new_oids;
+> >>> +	int old_fetch_if_missing =3D fetch_if_missing;
+> >>> +
+> >>> +	fetch_if_missing =3D 0;
+> >>
+> >> This global 'fetch_if_missing' swap seems very fragile. I'm guessing =
+you
+> >> are using it to prevent a loop when calling oid_object_info_extended(=
+)
+> >> below. Can you instead pass a flag to the method that disables the
+> >> fetch_if_missing behavior?
+> >
+> > FWIW I mentioned the very same concern here:
+> > https://public-inbox.org/git/nycvar.QRO.7.76.6.1903272300020.41@tvgsbe=
+jvaqbjf.bet/
+> >
+> > The situation is *pretty* bad by now. I see `fetch_if_missing` mention=
+ed
+> > 25 times in `master`, and all but one are in .c files or in cache.h.
+> >
+> > The flag is actually used only in `oid_object_info_extended()`, and th=
+at
+> > function accepts an `unsigned flags`, so one might think that it could=
+ be
+> > extended to accept also a `OBJECT_INFO_LOOKUP_FETCH_IF_MISSING`. But t=
+hen,
+> > there are many callers of that function, some of them also pretty low =
+in
+> > the food chain. For example, `oid_object_info()` (does not accept `fla=
+gs`)
+> > or `read_object()` (does not accept flags either).
+> >
+> > So it looks as if the idea to pass this flag down the call chain entai=
+led
+> > a pretty serious avalanche effect.
+>
+> It could be approached in small bits.
+>
+> First, add an OBJECT_INFO_NEVER_FETCH_IF_MISSING flag that overrides
+> fetch_if_missing, and then use the flag in small places like this one.
+> Then, build up to the other methods as appropriate.
 
----
- Documentation/gitignore.txt | 71 ++++++++++++++++++++++++++-----------
- 1 file changed, 50 insertions(+), 21 deletions(-)
+That is a good idea. I fear that it will still take a Herculean effort to
+get there, as some of the call paths strike me as rather deep...
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index b5bc9dbff0..a6c7807c74 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -89,28 +89,32 @@ PATTERN FORMAT
-    Put a backslash ("`\`") in front of the first "`!`" for patterns
-    that begin with a literal "`!`", for example, "`\!important!.txt`".
- 
-- - If the pattern ends with a slash, it is removed for the
--   purpose of the following description, but it would only find
-+ - A slash `/` is used as a directory separator. A leading and trailing
-+   slash have special meaning and are explained in the following.
-+
-+ - If the pattern ends with a slash, it would only find
-    a match with a directory.  In other words, `foo/` will match a
--   directory `foo` and paths underneath it, but will not match a
--   regular file or a symbolic link `foo` (this is consistent
--   with the way how pathspec works in general in Git).
--
-- - If the pattern does not contain a slash '/', Git treats it as
--   a shell glob pattern and checks for a match against the
--   pathname relative to the location of the `.gitignore` file
--   (relative to the toplevel of the work tree if not from a
--   `.gitignore` file).
--
-- - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
--   anything except "`/`", "`?`" matches any one character except "`/`"
--   and "`[]`" matches one character in a selected range. See
--   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
--   description.
--
-- - A leading slash matches the beginning of the pathname.
--   For example, "/{asterisk}.c" matches "cat-file.c" but not
--   "mozilla-sha1/sha1.c".
-+   directory `foo`, but will not match a regular file or a
-+   symbolic link `foo` (this is consistent with the way how
-+   pathspec works in general in Git).
-+
-+ - If the pattern does not end with a slash, it would find a match
-+   with a file or directory.
-+
-+ - The pattern is matched relative to the location of
-+   the `.gitignore` file. Except if the pattern contains
-+   no slash (or no slash but a trailing slash), then the pattern is
-+   matched against all files and folders (recursively)
-+   from the location of the `.gitignore` file.
-+   For example, `doc/frotz/` matches `doc/frotz` directory, but not
-+   a/doc/frotz`; however `frotz/` matches `frotz` and `a/frotz` that
-+   is a directory (all paths are relative from the `.gitignore` file).
-+
-+ - An asterisk "`*`" matches anything except a slash.
-+   The character "`?`" matches any one character except "`/`".
-+   The range notation, e.g. `[a-zA-Z]`, can be used to match
-+   one of the characters in a range. See fnmatch(3) and the
-+   FNM_PATHNAME flag for a more detailed description.
- 
- Two consecutive asterisks ("`**`") in patterns matched against
- full pathname may have special meaning:
-@@ -152,6 +156,31 @@ To stop tracking a file that is currently tracked, use
- EXAMPLES
- --------
- 
-+ - The pattern `/bar` only matches the file or folder `bar`
-+   but not `a/bar`, whereas the pattern `bar` would match both
-+   (relative to the `.gitignore` file). That is because the
-+   pattern `/bar` contains a non-trailing slash and thus matches
-+   relative to the location of the `.gitignore` file.
-+   Since `bar` has no slash, it matches recursively.
-+
-+ - The pattern 'hello.*' is not sufficient for the following rule:
-+   "ignore any file whose name begins with 'hello' and in this
-+   directory only, not in its subdirectories." because the pattern
-+   does not have any slash. To work around this limitation,
-+   you can prepend your pattern with a slash, i.e. '/hello.*';
-+   the pattern now matches 'hello.txt', 'hello.c' but not
-+   'a/hello.java'.
-+
-+ - The pattern `doc/frotz` and `/doc/frotz` have the same effect
-+   in any `.gitignore` file. Both pattern contain a non-trailing
-+   slash and thus match relative to the location of the
-+   `.gitignore` file.
-+
-+ - The pattern "foo/*", matches "foo/test.json"
-+   (a regular file), "foo/bar" (a diretory), but it does not match
-+   "foo/bar/hello.c" (a regular file), as the asterisk in the
-+   patter does not match "bar/hello.c" which has a slash in it.
-+
- --------------------------------------------------------------
-     $ git status
-     [...]
--- 
-2.17.1
+> > An alternative that strikes me as inelegant, still, but nevertheless
+> > better would be to move `fetch_if_missing` into `struct repository`.
+>
+> This is literally the _least_ we should do to reduce our dependence on
+> globals. Maybe this happens first, then the flag idea could be done bits
+> at a time.
 
+Okay, then, I added https://github.com/gitgitgadget/git/issues/251 so we
+won't forget.
+
+BTW I am rather happy about the way the GitGitGadget issues turn out: I
+added a couple of left-over bits, and could already close two tickets
+after other developers pointed out that they had already been addressed,
+something an unsuspecting GSoC student, for example, could not otherwise
+have found out very easily (or for that matter, I myself...).
+
+Ciao,
+Dscho
