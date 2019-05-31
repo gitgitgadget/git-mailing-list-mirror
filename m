@@ -2,98 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,T_HK_NAME_DR shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFB71F462
-	for <e@80x24.org>; Fri, 31 May 2019 06:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5F681F462
+	for <e@80x24.org>; Fri, 31 May 2019 07:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbfEaGrI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 02:47:08 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:35235 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbfEaGrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 02:47:08 -0400
-Received: by mail-ot1-f67.google.com with SMTP id n14so8163697otk.2
-        for <git@vger.kernel.org>; Thu, 30 May 2019 23:47:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ISV5il3ppBoyc7W3kxhiiBHxO7gtqAyWtFoMdPm9XFY=;
-        b=Re6TOVipsgLfQIqveD3MhvyfOUEJ1ToZElJv7R5rNkLb+xU4ttoQNe79Z29o5Lik9Y
-         P1p+qhZc3PodYl9e00crTVQy3jtBhbcfy5Ketq/Br4FgNOIzNRnCK/v08AbhMnIXqsR0
-         heRSD6orzuIY7U6mo+g20XN3cVk/T+PMyhRkcXgfv2yteQKep2iHzGxJCvy3XZwx9vHJ
-         maFCJsbzfjgZ/ZE+v0beADpA0I/eU670KhxKv+CGi+kT5CRCDBHxBWVKtvCOPyoPsFjo
-         Eem4fDWMiFbTm4sxTSksol/P8iqqEidgcexMg9Bk+MQudMY9Nly/wUhK4xIc12mPddCz
-         2QBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ISV5il3ppBoyc7W3kxhiiBHxO7gtqAyWtFoMdPm9XFY=;
-        b=Syv78iGaPjOJVa5tW3eDlCsH2cUw9uo4douu1QxSJA3apQ+BjnQMK0mrwgAwdDIHPZ
-         4w+MzPpgPMuw84gU31IfGp0n3Wd4ufWiie3kf6hym6bADtKXA0Dok/MIP6zKA6hNEcfs
-         /tT/fcp340cM1M4tDBFIpk0PkgCY/cC/TpIHXPzTCpqSm/H7UhMpmhhLw3903UYMJsrh
-         xvU8YRmHFYmNSImYuis4bxnFoiSPf3J0l1uffRtfeKG/zNX7zaMvI9w89s6d7C5dlRJH
-         z0vx8fRR0+N6bhkhbCEKHs5iYnOp2jlkIRWrLlfvCSk+LoETyEVTG/6TaJ2HZU12Rkml
-         yW0w==
-X-Gm-Message-State: APjAAAXM1KOM1FHz98SxsFyYgnY/1GtHM91saCKP9PKdLO2w0DauQZi0
-        LZI/RSXJvaarNHjZbFEQv+xT8oplqeJ61w==
-X-Google-Smtp-Source: APXvYqzeD1l2FZUg5nWy2TUZ0qf/GlsSOWTt/VE0MGHsaXVoxO/ImSODsIANr4t7bCBQivxZYDrSWg==
-X-Received: by 2002:a9d:4f0f:: with SMTP id d15mr349942otl.52.1559285227262;
-        Thu, 30 May 2019 23:47:07 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.26])
-        by smtp.gmail.com with ESMTPSA id s110sm1945156otb.34.2019.05.30.23.47.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 May 2019 23:47:06 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.22.0 round #2
-Date:   Fri, 31 May 2019 14:46:52 +0800
-Message-Id: <20190531064652.18837-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.21.0.3.g3ece05c5f4
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1726275AbfEaHoh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 03:44:37 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:59058 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725955AbfEaHoh (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 03:44:37 -0400
+Received: from [2001:16b8:5c8e:5500:5015:4633:2bbd:77c7] (helo=adam-MS-7A63.fritz.box); authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hWcDK-0000KD-Ed; Fri, 31 May 2019 09:44:34 +0200
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+To:     git@vger.kernel.org
+Cc:     "Dr. Adam Nielsen" <admin@in-ici.net>
+Subject: [PATCH] make slash-rules more readable
+Date:   Fri, 31 May 2019 09:44:26 +0200
+Message-Id: <20190531074426.6810-1-admin@in-ici.net>
+X-Mailer: git-send-email 2.17.1
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1559288676;85b9b76a;
+X-HE-SMSGID: 1hWcDK-0000KD-Ed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+gitignore.txt: make slash-rules more readable
 
-Git v2.22.0-rc2 introduced 6 update messages, and let's start new round of git
-l10n based on the following commit:
+Remove meta-rule in a paragraph for trailing-slash.
+Be precise whenever a trailing slash would make a 
+difference. Improve paragraph for pattern without slash. 
+Remove rule for leading slash because its now redundant. 
+Instead, add examples for leading slash and asterix in 
+example section.
 
-    l10n: git.pot: v2.22.0 round 2 (6 new, 3 removed)
-    
-    Generate po/git.pot from v2.22.0-rc2 for git v2.22.0 l10n round 2.
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
 
-You can get it from the usual place:
+---
+ Documentation/gitignore.txt | 71 ++++++++++++++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 21 deletions(-)
 
-    https://github.com/git-l10n/git-po/
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index b5bc9dbff0..a6c7807c74 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -89,28 +89,32 @@ PATTERN FORMAT
+    Put a backslash ("`\`") in front of the first "`!`" for patterns
+    that begin with a literal "`!`", for example, "`\!important!.txt`".
+ 
+- - If the pattern ends with a slash, it is removed for the
+-   purpose of the following description, but it would only find
++ - A slash `/` is used as a directory separator. A leading and trailing
++   slash have special meaning and are explained in the following.
++
++ - If the pattern ends with a slash, it would only find
+    a match with a directory.  In other words, `foo/` will match a
+-   directory `foo` and paths underneath it, but will not match a
+-   regular file or a symbolic link `foo` (this is consistent
+-   with the way how pathspec works in general in Git).
+-
+- - If the pattern does not contain a slash '/', Git treats it as
+-   a shell glob pattern and checks for a match against the
+-   pathname relative to the location of the `.gitignore` file
+-   (relative to the toplevel of the work tree if not from a
+-   `.gitignore` file).
+-
+- - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
+-   anything except "`/`", "`?`" matches any one character except "`/`"
+-   and "`[]`" matches one character in a selected range. See
+-   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
+-   description.
+-
+- - A leading slash matches the beginning of the pathname.
+-   For example, "/{asterisk}.c" matches "cat-file.c" but not
+-   "mozilla-sha1/sha1.c".
++   directory `foo`, but will not match a regular file or a
++   symbolic link `foo` (this is consistent with the way how
++   pathspec works in general in Git).
++
++ - If the pattern does not end with a slash, it would find a match
++   with a file or directory.
++
++ - The pattern is matched relative to the location of
++   the `.gitignore` file. Except if the pattern contains
++   no slash (or no slash but a trailing slash), then the pattern is
++   matched against all files and folders (recursively)
++   from the location of the `.gitignore` file.
++   For example, `doc/frotz/` matches `doc/frotz` directory, but not
++   a/doc/frotz`; however `frotz/` matches `frotz` and `a/frotz` that
++   is a directory (all paths are relative from the `.gitignore` file).
++
++ - An asterisk "`*`" matches anything except a slash.
++   The character "`?`" matches any one character except "`/`".
++   The range notation, e.g. `[a-zA-Z]`, can be used to match
++   one of the characters in a range. See fnmatch(3) and the
++   FNM_PATHNAME flag for a more detailed description.
+ 
+ Two consecutive asterisks ("`**`") in patterns matched against
+ full pathname may have special meaning:
+@@ -152,6 +156,31 @@ To stop tracking a file that is currently tracked, use
+ EXAMPLES
+ --------
+ 
++ - The pattern `/bar` only matches the file or folder `bar`
++   but not `a/bar`, whereas the pattern `bar` would match both
++   (relative to the `.gitignore` file). That is because the
++   pattern `/bar` contains a non-trailing slash and thus matches
++   relative to the location of the `.gitignore` file.
++   Since `bar` has no slash, it matches recursively.
++
++ - The pattern 'hello.*' is not sufficient for the following rule:
++   "ignore any file whose name begins with 'hello' and in this
++   directory only, not in its subdirectories." because the pattern
++   does not have any slash. To work around this limitation,
++   you can prepend your pattern with a slash, i.e. '/hello.*';
++   the pattern now matches 'hello.txt', 'hello.c' but not
++   'a/hello.java'.
++
++ - The pattern `doc/frotz` and `/doc/frotz` have the same effect
++   in any `.gitignore` file. Both pattern contain a non-trailing
++   slash and thus match relative to the location of the
++   `.gitignore` file.
++
++ - The pattern "foo/*", matches "foo/test.json"
++   (a regular file), "foo/bar" (a diretory), but it does not match
++   "foo/bar/hello.c" (a regular file), as the asterisk in the
++   patter does not match "bar/hello.c" which has a slash in it.
++
+ --------------------------------------------------------------
+     $ git status
+     [...]
+-- 
+2.17.1
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
-
---
-Jiang Xin
