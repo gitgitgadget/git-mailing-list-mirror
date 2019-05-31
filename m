@@ -2,107 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB041F462
-	for <e@80x24.org>; Fri, 31 May 2019 17:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33FBC1F462
+	for <e@80x24.org>; Fri, 31 May 2019 18:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbfEaRvv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 13:51:51 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:35427 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726559AbfEaRvu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 13:51:50 -0400
-Received: by mail-qt1-f194.google.com with SMTP id d23so1939764qto.2
-        for <git@vger.kernel.org>; Fri, 31 May 2019 10:51:50 -0700 (PDT)
+        id S1726803AbfEaSCC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 14:02:02 -0400
+Received: from resqmta-po-01v.sys.comcast.net ([96.114.154.160]:33656 "EHLO
+        resqmta-po-01v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726359AbfEaSCC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 14:02:02 -0400
+Received: from resomta-po-12v.sys.comcast.net ([96.114.154.236])
+        by resqmta-po-01v.sys.comcast.net with ESMTP
+        id WkLLh6w21HkmzWlqrhCKOl; Fri, 31 May 2019 18:02:01 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=w9wwBVodmf09kQXZA6fnwtoLXkeOlNxabxSqn6a+H8g=;
-        b=Hpx3hYT4uisARAQ/mCSaHb5lme1pxcooYODI5eyjcEOMWfKWWcvQUp9PRLJ7eLpYxb
-         xlK1xu+vMZ6XpTxjGE8r/XfPhOCEwWQAVn7fnNkBfuVuan9rNo3Qb7OJvysKgtZ1E7Ao
-         oaOS9D+JdoLGsKi2fdBISD8QnTe3StIFqabeDq73932DqzJU/Nh5M7+CYV5BS4h/uTaB
-         1X+SHi+S+hFDRKR2JKTkdolxtsAJPQzV6qQwBZqmWZznkgBjGHdurr1m7Vx/IWmCFiL0
-         5+KDG6lpn9R5nzITf1owgpu7g6rM7Qx17i7jZv0fdxzxaWMIAyZWEK3ucIeRrddSo10I
-         2LoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=w9wwBVodmf09kQXZA6fnwtoLXkeOlNxabxSqn6a+H8g=;
-        b=Xh7rPC5ZzcjNkHvwhw9RJI1fnlSoPK4FujRfHTJ9RwdApJ1xOKMTO6xWsxw8OySV1f
-         2nMO0Q7tSMSHdVIQzXRJRHCjPek+VrbwwLyxtzlDm8Y3bXyGP50hx1WSgj4omqIadurF
-         gN7NXm2U/1Xvh9uCc0ZXWcC3sFE2dRmH5L8UthdPzwlpgYGglP4YfYkBoCfZ0ZMjsDIj
-         J1pvk0cSs4+hFC+2zF0VEhv9Wg0vImj71fwdWj4HTu2gvOy8eM9N9cUgln0LIoBiQ3fP
-         uuXzjHxkN9hH0v4vnuKhlAQa83gSykvgBY/P4iiBAeWb62+KFJKd24/0UPfkH4jwvaMd
-         Rg7g==
-X-Gm-Message-State: APjAAAWMz72wKT/nucMaRW6XiCb7PqzhoKJDHVNJ4WT3hWs1XIjGRUtm
-        N/jCrJViY5ZmDHfN9i7FhR0=
-X-Google-Smtp-Source: APXvYqyY/wrzRpAE6IYSAdUNaxhpZ6rSTppISBYD8be1fbgSie9Bja0+xyacRbPHrvFlK8feQwgrdQ==
-X-Received: by 2002:aed:3a45:: with SMTP id n63mr10229261qte.109.1559325109718;
-        Fri, 31 May 2019 10:51:49 -0700 (PDT)
-Received: from [10.0.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id n10sm1070604qke.72.2019.05.31.10.51.48
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 May 2019 10:51:48 -0700 (PDT)
-Subject: Re: Git Test Coverage Report (Thursday, May 30th)
-From:   Derrick Stolee <stolee@gmail.com>
-To:     GIT Mailing-list <git@vger.kernel.org>
-Cc:     Barret Rhoden <brho@google.com>, michael@platin.gs,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <2fb43bd3-71a7-fd92-e9b8-43e4eeed34cd@gmail.com>
- <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-Message-ID: <0d7dbfe6-53df-1df8-ac94-4dfab85bbc9f@gmail.com>
-Date:   Fri, 31 May 2019 13:51:46 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        d=comcastmailservice.net; s=20180828_2048; t=1559325721;
+        bh=oZVqoL4RKSpo678tSWPn/15KADuCc42+nOh3WQtpzoI=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=rWS6opT9EEZbwKb7mPSYt2V3CTh2a7WK0gSKTw93BzIXnGP9z/GO/CoCewwZ/W9e5
+         BXX4nAVpxAp2+7k3PCriialx6XHJlXvCG7uneY97RE4hcetsgAUkF4ZhyWoWfORV9X
+         DFa81c4ipa/sTSkVVZ9evquv2J63TVK2mKW9HN5lIKjqtZ4AnuUHxDWQVppmupL9JJ
+         YnrW+Fo7eStddduR10Dtcw7jd8Dlq3U69WWOYlJ6MSD4eFqDkpTGjI1wNU98pI8+gV
+         CixYFUSWzGek8/f4yJe9vEyZMxn4vC0Fa1ArdINzuljYNKB1sBpOirWCyb1+ARpLC4
+         mFt46iEcH/G8A==
+Received: from comcast.net ([IPv6:2601:647:4b02:2491:a4f1:9a8c:7e29:36eb])
+        by resomta-po-12v.sys.comcast.net with ESMTPSA
+        id WlqmhLjb7T55RWlqrhQdKs; Fri, 31 May 2019 18:02:01 +0000
+X-Xfinity-VMeta: sc=0;st=legit
+Date:   Fri, 31 May 2019 11:01:56 -0700
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     emilyshaffer@google.com
+Subject: [PATCH 1/1] list-objects-filter-options: error is localizeable
+Message-ID: <20190531180156.GA7633@comcast.net>
 MIME-Version: 1.0
-In-Reply-To: <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/30/2019 2:24 PM, Derrick Stolee wrote:
-> Further, these tests failed
->
-> t3400-rebase.sh                           (Wstat: 256 Tests: 28 Failed: 2)
->   Failed tests:  20, 28
->   Non-zero exit status: 1
-> t3420-rebase-autostash.sh                 (Wstat: 256 Tests: 38 Failed: 6)
->   Failed tests:  6, 13, 16, 23, 26, 33
->   Non-zero exit status: 1
-> t3404-rebase-interactive.sh               (Wstat: 256 Tests: 110 Failed: 5)
->   Failed tests:  3, 9-10, 100-101
->   Non-zero exit status: 1
-> t5521-pull-options.sh                     (Wstat: 256 Tests: 19 Failed: 1)
->   Failed test:  3
->   Non-zero exit status: 1
-> t5551-http-fetch-smart.sh                 (Wstat: 256 Tests: 37 Failed: 1)
->   Failed test:  26
->   Non-zero exit status: 1
-> 
-> They don't fail locally, so perhaps we shouldn't blindly trust the coverage data
-> until I work out why these errors occurred. (Many of the cases I called out
-> above I couldn't hit locally with a die() statement.)
+The "invalid filter-spec" message is user-facing and not a BUG, so make
+it localizeable.
 
-These tests all failed during the second run that set optional GIT_TEST
-environment variables. Specifically, GIT_TEST_REBASE_USE_BUILTIN=false
-caused these tests to break. We now output this message:
+For reference, the message appears in this context:
 
-	warning: the rebase.useBuiltin support has been removed!
-	See its entry in 'git help config' for details.
+	$ git rev-list --filter=blob:nonse --objects HEAD
+	fatal: invalid filter-spec 'blob:nonse'
 
-I'm removing that variable from the build definition.
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
+ list-objects-filter-options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
--Stolee
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index c0036f7378..e46ea467bc 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -81,21 +81,21 @@ static int gently_parse_list_objects_filter(
+ 		filter_options->choice = LOFC_SPARSE_PATH;
+ 		filter_options->sparse_path_value = strdup(v0);
+ 		return 0;
+ 	}
+ 	/*
+ 	 * Please update _git_fetch() in git-completion.bash when you
+ 	 * add new filters
+ 	 */
+ 
+ 	if (errbuf)
+-		strbuf_addf(errbuf, "invalid filter-spec '%s'", arg);
++		strbuf_addf(errbuf, _("invalid filter-spec '%s'"), arg);
+ 
+ 	memset(filter_options, 0, sizeof(*filter_options));
+ 	return 1;
+ }
+ 
+ int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
+ 			      const char *arg)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	if (gently_parse_list_objects_filter(filter_options, arg, &buf))
+-- 
+2.17.1
+
