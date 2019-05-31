@@ -2,119 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0D21F462
-	for <e@80x24.org>; Fri, 31 May 2019 06:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFB71F462
+	for <e@80x24.org>; Fri, 31 May 2019 06:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbfEaGD0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 02:03:26 -0400
-Received: from mail-ua1-f44.google.com ([209.85.222.44]:35963 "EHLO
-        mail-ua1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725963AbfEaGD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 02:03:26 -0400
-Received: by mail-ua1-f44.google.com with SMTP id 94so3431943uam.3
-        for <git@vger.kernel.org>; Thu, 30 May 2019 23:03:25 -0700 (PDT)
+        id S1726181AbfEaGrI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 02:47:08 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:35235 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbfEaGrI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 02:47:08 -0400
+Received: by mail-ot1-f67.google.com with SMTP id n14so8163697otk.2
+        for <git@vger.kernel.org>; Thu, 30 May 2019 23:47:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eP9tiArOHoRrC0oJdro6qDuwyYDHkbOXlld7/68vioo=;
-        b=VjAGyKgLqsa7slqrPWHM6myXcs0rTNiRqPJom7UR1hWAccjogcoKVUazAJ8wDCwuiF
-         iBT02EaH15tEcIwcF+a8kaFQK9kvs4joLy1bjU7UUKhCeYVnhrwaGVjqaGteChcJ5Dgn
-         67sT1tMxdiT7zC3GciHB9VTRaJpObFXQY18BNPLXX6Q6i1WY5rVOKCPG6kNmJ21iexdo
-         Y/X4Y8tInQhDCPzEllFNR5LkUN8dOyb9v0YTd//ZYku+7lsp2++KhpdVYpFpv1y1J5vK
-         XNpH/3iXu9ID6JqplrMdflsoGQAdMexxPpGgAtT9H69uuPgmC65qylROyoTi0AuGNp3a
-         +Fgw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ISV5il3ppBoyc7W3kxhiiBHxO7gtqAyWtFoMdPm9XFY=;
+        b=Re6TOVipsgLfQIqveD3MhvyfOUEJ1ToZElJv7R5rNkLb+xU4ttoQNe79Z29o5Lik9Y
+         P1p+qhZc3PodYl9e00crTVQy3jtBhbcfy5Ketq/Br4FgNOIzNRnCK/v08AbhMnIXqsR0
+         heRSD6orzuIY7U6mo+g20XN3cVk/T+PMyhRkcXgfv2yteQKep2iHzGxJCvy3XZwx9vHJ
+         maFCJsbzfjgZ/ZE+v0beADpA0I/eU670KhxKv+CGi+kT5CRCDBHxBWVKtvCOPyoPsFjo
+         Eem4fDWMiFbTm4sxTSksol/P8iqqEidgcexMg9Bk+MQudMY9Nly/wUhK4xIc12mPddCz
+         2QBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eP9tiArOHoRrC0oJdro6qDuwyYDHkbOXlld7/68vioo=;
-        b=SwcTzRaXI2/JK0M1JN1HQPDowAuKe93LFeY1eqDqOYXsTQgTxutDY6JsHX56mElJBW
-         oSRJF3zy8yEmZz4hCnnJi113NHErYwJtp68kYxB43Et8C7t3S0vxbtMep8D692UZlWjl
-         knwlp3SUd3eHTBduwQFin6zZlYKlPKpCQVdPxQ+e8e3AI1ZuiIAYp6419Zq5FT9iJq8o
-         EryIo8g023wfjsCOgH12G9ybf+/YYzmkv9q77vKo9Bq/70C+jeF1uIeF/CjiLDb6crNi
-         ERE3ZgvoHhzpBjHxWHIU89F0MzqCdojy8aWMSr4DBhfBoLwAzh+HFiUxAyQdyfw1N74G
-         vfOw==
-X-Gm-Message-State: APjAAAW+l24jon/7EIBaTHuKBse3dENFK3jxltn6Mnfm1vulvwF0aznV
-        xchQGxNiT2NrmzVhSrU4F0uR9OwYCXwZQ+WnTN68oPLi/J8=
-X-Google-Smtp-Source: APXvYqxtzKXFdjvDUHy0Iq9HsXVxGCgjc2T0tu2j4gVtkWdtxIQdtGtH/cb8EuZ2uMuFgcIw0Sei4Iq7lYcYkKV64qU=
-X-Received: by 2002:ab0:4e12:: with SMTP id g18mr4307185uah.1.1559282604949;
- Thu, 30 May 2019 23:03:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ISV5il3ppBoyc7W3kxhiiBHxO7gtqAyWtFoMdPm9XFY=;
+        b=Syv78iGaPjOJVa5tW3eDlCsH2cUw9uo4douu1QxSJA3apQ+BjnQMK0mrwgAwdDIHPZ
+         4w+MzPpgPMuw84gU31IfGp0n3Wd4ufWiie3kf6hym6bADtKXA0Dok/MIP6zKA6hNEcfs
+         /tT/fcp340cM1M4tDBFIpk0PkgCY/cC/TpIHXPzTCpqSm/H7UhMpmhhLw3903UYMJsrh
+         xvU8YRmHFYmNSImYuis4bxnFoiSPf3J0l1uffRtfeKG/zNX7zaMvI9w89s6d7C5dlRJH
+         z0vx8fRR0+N6bhkhbCEKHs5iYnOp2jlkIRWrLlfvCSk+LoETyEVTG/6TaJ2HZU12Rkml
+         yW0w==
+X-Gm-Message-State: APjAAAXM1KOM1FHz98SxsFyYgnY/1GtHM91saCKP9PKdLO2w0DauQZi0
+        LZI/RSXJvaarNHjZbFEQv+xT8oplqeJ61w==
+X-Google-Smtp-Source: APXvYqzeD1l2FZUg5nWy2TUZ0qf/GlsSOWTt/VE0MGHsaXVoxO/ImSODsIANr4t7bCBQivxZYDrSWg==
+X-Received: by 2002:a9d:4f0f:: with SMTP id d15mr349942otl.52.1559285227262;
+        Thu, 30 May 2019 23:47:07 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.26])
+        by smtp.gmail.com with ESMTPSA id s110sm1945156otb.34.2019.05.30.23.47.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 May 2019 23:47:06 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.22.0 round #2
+Date:   Fri, 31 May 2019 14:46:52 +0800
+Message-Id: <20190531064652.18837-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.21.0.3.g3ece05c5f4
 MIME-Version: 1.0
-References: <CAGyf7-EgiWtt0xu9nfYdhafZ6D70nSxbNYAguFrN8OWRqWmzGQ@mail.gmail.com>
-In-Reply-To: <CAGyf7-EgiWtt0xu9nfYdhafZ6D70nSxbNYAguFrN8OWRqWmzGQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 May 2019 23:03:13 -0700
-Message-ID: <CABPp-BHramOjqpH0Rz-PEKbi0TX_sKOYvLiZ2Pb=hEpViaShmw@mail.gmail.com>
-Subject: Re: "Losing" MERGE_HEAD
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 30, 2019 at 9:19 PM Bryan Turner <bturner@atlassian.com> wrote:
->
-> I was looking through the commit history in a repository I work in and
-> I found a place where someone had created a merge, but somewhere
-> between "git merge" and "git commit" the fact that it was a merge was
-> "lost". Instead they ended up with a really big commit that applied
-> all the changes from the merged-in branch.
->
-> A really easy way to reproduce this is:
-> git merge master #Assume this has conflicts, or use --no-commit
-> git checkout -b some-new-branch
->
-> When the checkout runs, MERGE_HEAD et al are deleted without any sort
-> of warning, but the uncommitted changes are not lost. If a user then
-> runs "git commit", and doesn't notice that there's no helpful "It
-> looks like you may be committing a merge", they'll create a new,
-> non-merge commit that essentially reapplies all the changes they
-> merged in.
->
-> I'm pretty familiar with Git and I make this mistake at least a few
-> times a year. So far I've always caught it during the commit, though.
-> Unfortunately, in this case, the bad "merge" wasn't noticed before it
-> made its way to master, so now it's there for good.
->
-> I'm not sure what there is to do about this. It's clear it's a
-> long-standing behavior. One approach might be to introduce a warning
-> when changing branches deletes MERGE_*. A different one might be to
-> fail to change branches without something like --force. I'm not sure
-> either is _better_ than the current behavior, but they're certainly
-> _clearer_. That said, perhaps this behavior is something someone
-> relies on.
->
-> Best regards,
-> Bryan Turner
+Hi,
 
-Discussed in detail recently starting at
-https://public-inbox.org/git/CACsJy8Axa5WsLSjiscjnxVK6jQHkfs-gH959=YtUvQkWriAk5w@mail.gmail.com/
+Git v2.22.0-rc2 introduced 6 update messages, and let's start new round of git
+l10n based on the following commit:
 
-resulting in
-https://public-inbox.org/git/20190329103919.15642-8-pclouds@gmail.com/
-and
-https://public-inbox.org/git/20190329103919.15642-24-pclouds@gmail.com/
+    l10n: git.pot: v2.22.0 round 2 (6 new, 3 removed)
+    
+    Generate po/git.pot from v2.22.0-rc2 for git v2.22.0 l10n round 2.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-I think we should still do the follow up for checkout, as mentioned at
-https://public-inbox.org/git/CABPp-BHX1gRhTdurAwrPg60Hk-OuhbrEN=4zatx4OOUo-DkQvw@mail.gmail.com/
+You can get it from the usual place:
 
-It's good to get extra feedback that this isn't just theoretical but
-is causing people actual problems.  Do you want to take the time to
-make the change I suggested in the last email above and propose it to
-the list?  I think the main thing needed is just a good commit message
-and getting feedback and thoughts from others; your description above
-was well written and I'm busy on other things right now, so if you'd
-like to tackle it, I'd appreciate it.  If not, I will hopefully
-remember to get back to it eventually.
+    https://github.com/git-l10n/git-po/
 
-Hope that helps,
-Elijah
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
