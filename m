@@ -2,91 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B970A1F462
-	for <e@80x24.org>; Fri, 31 May 2019 17:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB041F462
+	for <e@80x24.org>; Fri, 31 May 2019 17:51:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726450AbfEaRkU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 13:40:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64235 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725934AbfEaRkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 13:40:20 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D34915D2C8;
-        Fri, 31 May 2019 13:40:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CEC/iL3JRth50JtdEO+krzbZ5X4=; b=OkW5H6
-        2q5BEBhP/NwVed1tvNkT98tYsu5XKl0+EXmRjpk1zW9Jo77QFHumgNUVWKYF2p/g
-        LoxK15psS4gJLpn1pX2UPzS7F7T0Lwq2mNaNJtaYt7ZzcNrgdXa74Njq7EUqHyiJ
-        95jsQP8O8sN/ZgOaHPkIHLPBvwIJJ3AktU0xE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Zx9Z/3K2t0aDc48BOIzL566ZhTp6ZNy4
-        qsqmMYWTd9X4HK2/hh6UlPuHsdJvcaxxNdrdvnkiqrdruq4glpqanUDoXBSUvQcC
-        huHWHwGNxi0eAHtcIi0vJu8l80gGAAOzbSoRfrOoAQQkNVTaXjax5mOQ4ASSqxvZ
-        9uxUv3y2/KU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 859E815D2C7;
-        Fri, 31 May 2019 13:40:18 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DAE6315D2C6;
-        Fri, 31 May 2019 13:40:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Dr. Adam Nielsen" <admin@in-ici.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] make slash-rules more readable
-References: <20190531074426.6810-1-admin@in-ici.net>
-        <xmqqh89awprl.fsf@gitster-ct.c.googlers.com>
-        <88c6cf45-3908-6561-c3bf-11adf628f8af@in-ici.net>
-Date:   Fri, 31 May 2019 10:40:16 -0700
-In-Reply-To: <88c6cf45-3908-6561-c3bf-11adf628f8af@in-ici.net> (Adam Nielsen's
-        message of "Fri, 31 May 2019 19:24:25 +0200")
-Message-ID: <xmqq1s0ewmin.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726697AbfEaRvv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 13:51:51 -0400
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:35427 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726559AbfEaRvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 13:51:50 -0400
+Received: by mail-qt1-f194.google.com with SMTP id d23so1939764qto.2
+        for <git@vger.kernel.org>; Fri, 31 May 2019 10:51:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=w9wwBVodmf09kQXZA6fnwtoLXkeOlNxabxSqn6a+H8g=;
+        b=Hpx3hYT4uisARAQ/mCSaHb5lme1pxcooYODI5eyjcEOMWfKWWcvQUp9PRLJ7eLpYxb
+         xlK1xu+vMZ6XpTxjGE8r/XfPhOCEwWQAVn7fnNkBfuVuan9rNo3Qb7OJvysKgtZ1E7Ao
+         oaOS9D+JdoLGsKi2fdBISD8QnTe3StIFqabeDq73932DqzJU/Nh5M7+CYV5BS4h/uTaB
+         1X+SHi+S+hFDRKR2JKTkdolxtsAJPQzV6qQwBZqmWZznkgBjGHdurr1m7Vx/IWmCFiL0
+         5+KDG6lpn9R5nzITf1owgpu7g6rM7Qx17i7jZv0fdxzxaWMIAyZWEK3ucIeRrddSo10I
+         2LoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=w9wwBVodmf09kQXZA6fnwtoLXkeOlNxabxSqn6a+H8g=;
+        b=Xh7rPC5ZzcjNkHvwhw9RJI1fnlSoPK4FujRfHTJ9RwdApJ1xOKMTO6xWsxw8OySV1f
+         2nMO0Q7tSMSHdVIQzXRJRHCjPek+VrbwwLyxtzlDm8Y3bXyGP50hx1WSgj4omqIadurF
+         gN7NXm2U/1Xvh9uCc0ZXWcC3sFE2dRmH5L8UthdPzwlpgYGglP4YfYkBoCfZ0ZMjsDIj
+         J1pvk0cSs4+hFC+2zF0VEhv9Wg0vImj71fwdWj4HTu2gvOy8eM9N9cUgln0LIoBiQ3fP
+         uuXzjHxkN9hH0v4vnuKhlAQa83gSykvgBY/P4iiBAeWb62+KFJKd24/0UPfkH4jwvaMd
+         Rg7g==
+X-Gm-Message-State: APjAAAWMz72wKT/nucMaRW6XiCb7PqzhoKJDHVNJ4WT3hWs1XIjGRUtm
+        N/jCrJViY5ZmDHfN9i7FhR0=
+X-Google-Smtp-Source: APXvYqyY/wrzRpAE6IYSAdUNaxhpZ6rSTppISBYD8be1fbgSie9Bja0+xyacRbPHrvFlK8feQwgrdQ==
+X-Received: by 2002:aed:3a45:: with SMTP id n63mr10229261qte.109.1559325109718;
+        Fri, 31 May 2019 10:51:49 -0700 (PDT)
+Received: from [10.0.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id n10sm1070604qke.72.2019.05.31.10.51.48
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 May 2019 10:51:48 -0700 (PDT)
+Subject: Re: Git Test Coverage Report (Thursday, May 30th)
+From:   Derrick Stolee <stolee@gmail.com>
+To:     GIT Mailing-list <git@vger.kernel.org>
+Cc:     Barret Rhoden <brho@google.com>, michael@platin.gs,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <2fb43bd3-71a7-fd92-e9b8-43e4eeed34cd@gmail.com>
+ <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
+Message-ID: <0d7dbfe6-53df-1df8-ac94-4dfab85bbc9f@gmail.com>
+Date:   Fri, 31 May 2019 13:51:46 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 27B2715C-83CB-11E9-8EBE-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+In-Reply-To: <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Dr. Adam Nielsen" <admin@in-ici.net> writes:
-
->>> + - The pattern `doc/frotz` and `/doc/frotz` have the same effect
->>> +   in any `.gitignore` file. Both pattern contain a non-trailing
->>> +   slash and thus match relative to the location of the
->>> +   `.gitignore` file.
->>
->> ... this paragraph wouldn't have been necessary.
+On 5/30/2019 2:24 PM, Derrick Stolee wrote:
+> Further, these tests failed
 >
-> I think this above example follows from (and thus isn't necessary, but
-> just a fine example)
->
->     + - The pattern is matched relative to the location of
->     +   the `.gitignore` file. Except if the pattern contains
->     +   no slash [...]
->
-> Because a pattern with a leading slash has a slash, it "is matched
-> relative to the location of the `.gitignore` file".
+> t3400-rebase.sh                           (Wstat: 256 Tests: 28 Failed: 2)
+>   Failed tests:  20, 28
+>   Non-zero exit status: 1
+> t3420-rebase-autostash.sh                 (Wstat: 256 Tests: 38 Failed: 6)
+>   Failed tests:  6, 13, 16, 23, 26, 33
+>   Non-zero exit status: 1
+> t3404-rebase-interactive.sh               (Wstat: 256 Tests: 110 Failed: 5)
+>   Failed tests:  3, 9-10, 100-101
+>   Non-zero exit status: 1
+> t5521-pull-options.sh                     (Wstat: 256 Tests: 19 Failed: 1)
+>   Failed test:  3
+>   Non-zero exit status: 1
+> t5551-http-fetch-smart.sh                 (Wstat: 256 Tests: 37 Failed: 1)
+>   Failed test:  26
+>   Non-zero exit status: 1
+> 
+> They don't fail locally, so perhaps we shouldn't blindly trust the coverage data
+> until I work out why these errors occurred. (Many of the cases I called out
+> above I couldn't hit locally with a die() statement.)
 
-But that does not explain why the pattern /doc/frotz matches the
-path doc/frotz.  A reader can understand 'd' (the second letter in
-the patern) would match 'd' (the firstr letter in the path), 'o'
-with 'o', etc., but nobody told the reader which substring of the
-path consumes the leading '/' in the pattern as matched.
+These tests all failed during the second run that set optional GIT_TEST
+environment variables. Specifically, GIT_TEST_REBASE_USE_BUILTIN=false
+caused these tests to break. We now output this message:
 
->>  - A leading slash, if any, is implicitly removed before matching the
->>    pattern with the pathname, but the pattern still counts as having
->>    a non-trailing slash for the purpose of the above rule.
+	warning: the rebase.useBuiltin support has been removed!
+	See its entry in 'git help config' for details.
 
-Yeah, that would be an addition that makes the updated text
-more complete.
+I'm removing that variable from the build definition.
+
+Thanks,
+-Stolee
