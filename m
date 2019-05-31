@@ -2,134 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36FBC1F462
-	for <e@80x24.org>; Fri, 31 May 2019 13:16:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 642951F462
+	for <e@80x24.org>; Fri, 31 May 2019 14:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726555AbfEaNQa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 09:16:30 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:33911 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726442AbfEaNQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 09:16:29 -0400
-Received: by mail-it1-f195.google.com with SMTP id g23so10896037iti.1
-        for <git@vger.kernel.org>; Fri, 31 May 2019 06:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0u3Qs/DizbIfG1CeVQ7Fw3cyf/ofrJTR1cqXdXLzLwM=;
-        b=QdgEjdfvP4j5XNzGcxRnunIB5phSQohh/DY7xmbYeQKijja2y0XUCejPW3n75ADKV5
-         FaPInF3MQXK3JeCtyJq6TinXlSF3VGkbYA7O6ohnsK8T6QS3neHgI1+coBzr7pNGugLQ
-         rnNsKgu1fRBsywS+llwIS12RaQaqdBxse3rsiLjiwZBj5ROcwzM7L2uynREeN3jUQAAC
-         ur50nt+4SRnknUAWFH9xXHAO+anl0sNlXHi+reqNX2yVQkNqzU1eD57Oxrxtjy20G8r0
-         pJHxnL8b+8wwsp3lhegFTKPQzG5sNV9C+KiLJT/T3S2XpQFSHfjsdFV4aiUtZdzjRirJ
-         HZxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0u3Qs/DizbIfG1CeVQ7Fw3cyf/ofrJTR1cqXdXLzLwM=;
-        b=RbFOS++MMpyM1TwALgmLwcBPKvNs6cLjiTJX6EGG8zuznrywGb00eM9r2zsLYFQmmA
-         QoSsMXPxvLBJ/BTd5Rcftkl3kVCfCwgvB8QSC6g8fPtrRqEbiw69llnwwm/AIgavelRj
-         Zr1ZqHh9m2cWTD56ExSjl1J7wwxahKdieD0t6VXMoJSwcJnvcyKvZrTILppJpknEDdtD
-         Bf48s03jy7JGOKQvry1g2Fncxboo3Z5FuMPRdhzY6rfenoK+M/0A2GPbbWp4ctK+/UBO
-         xmqpczYh+m7pIWbTUoGdwSi2o29BFqBfoG6+zhEDFT7u4Tdo8DGUgUSKseYn9+3x6Q7W
-         g7Mw==
-X-Gm-Message-State: APjAAAXsdThM0Jbx5um5s5mE7du1FaChVfqNO5Q8OG8cmwHw91Ttdriw
-        KAW/+FZ8UEXne/twmdlb8Fg=
-X-Google-Smtp-Source: APXvYqykLGI1z2aIrKWJVzNhSMO5k3D44ao3TE8wOhZyMX+GWMJYykKfL+ubv4IxvVCQsZsZ2Ijfjg==
-X-Received: by 2002:a24:ed7:: with SMTP id 206mr4567915ite.97.1559308588892;
-        Fri, 31 May 2019 06:16:28 -0700 (PDT)
-Received: from archbookpro.localdomain (ktnron0919w-grc-01-76-68-140-144.dsl.bell.ca. [76.68.140.144])
-        by smtp.gmail.com with ESMTPSA id q1sm2004261ios.86.2019.05.31.06.16.27
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 31 May 2019 06:16:27 -0700 (PDT)
-Date:   Fri, 31 May 2019 09:16:26 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] config: learn the "onbranch:" includeIf condition
-Message-ID: <20190531131626.GA30114@archbookpro.localdomain>
-References: <xmqqh8a5k9bu.fsf@gitster-ct.c.googlers.com>
- <7b60e58ba554768fd915e4f5c00a97737707ed42.1559263024.git.liu.denton@gmail.com>
- <nycvar.QRO.7.76.6.1905311453420.44@tvgsbejvaqbjf.bet>
+        id S1726697AbfEaOpI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 10:45:08 -0400
+Received: from mail-eopbgr750109.outbound.protection.outlook.com ([40.107.75.109]:45893
+        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726616AbfEaOpI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 10:45:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
+ b=oc4+n1xAe64DDZCORCRWPWVzw7VdRH4upNP6oY6D9wsZvtER9TeBiBrHE8br9xXAz5U/0HJQC95aGaOhWSIMGUnLBMDjjTMXYikhT6roLts6I0/rwVkp/31Wt+N8cnFc8n6o6S4Qy/XIVN15SKiWhKJEE5TFUnF3etl28vWdz2c=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=testarcselector01;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5zbo9zCiGEcaDcIjrKKr3YSvEByb0Dfg0FbO9CqWi60=;
+ b=gJB+SYthrgokgwtdqthmD9L6BCTg5fHL3UlH9HdFbAYhgLRHqqxPJo3hm6W0E+kfcl+7t8RaTX6vq/eLOVxklef7RpcXmoM98rhnJWYTIPCwFG6QSLRM05tXEKxJgtHut61yljGtTeaZVjcbx4MQAMG1Vw7AC/3iM3bTWqipwUU=
+ARC-Authentication-Results: i=1; test.office365.com
+ 1;spf=none;dmarc=none;dkim=none;arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5zbo9zCiGEcaDcIjrKKr3YSvEByb0Dfg0FbO9CqWi60=;
+ b=fMpoUZnI1Mvl3z0QvN3kWREg7KY+7dLb7JvKZ3Xqvan8B6VFsDKJH+06V8hCec/K/KoWQWWJgeWbRNBznY4oYUksEM61auLXt+BBb2lzFTrXbuaZM3Fgh6P0TOoTCvLTbcEyvvAyYiAAIpIjXiyE4l/e5Oj7/79JQVjybSjvN+4=
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com (2603:10b6:408:73::11)
+ by BN8PR21MB1204.namprd21.prod.outlook.com (2603:10b6:408:76::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1965.4; Fri, 31 May
+ 2019 14:45:05 +0000
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::2147:f6c0:c7f:30e1]) by BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::2147:f6c0:c7f:30e1%7]) with mapi id 15.20.1965.003; Fri, 31 May 2019
+ 14:45:05 +0000
+From:   Cliff Schomburg <clisc@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Simple shortcut for "git push --set-upstream origin
+ newBranchName"
+Thread-Topic: Simple shortcut for "git push --set-upstream origin
+ newBranchName"
+Thread-Index: AdUXME7sW+dzzd+8STqmdbLpESwchwABfZYAAAAnfwAAIhlQgA==
+Date:   Fri, 31 May 2019 14:45:05 +0000
+Message-ID: <BN8PR21MB1156F7F3E7EFF9C8A60F33D0B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+References: <BN8PR21MB1156ED141AE2662BC5328A22B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <BN8PR21MB1156F593DAEBD7194DA7041EB7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <BN8PR21MB1156DA1893F64814F1BE8709B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+In-Reply-To: <BN8PR21MB1156DA1893F64814F1BE8709B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=clisc@microsoft.com; 
+x-originating-ip: [24.182.67.250]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 7499d802-49f6-41eb-03e5-08d6e5d6922f
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:BN8PR21MB1204;
+x-ms-traffictypediagnostic: BN8PR21MB1204:
+x-microsoft-antispam-prvs: <BN8PR21MB120499094C32FB319AD91027B7190@BN8PR21MB1204.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 00540983E2
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(396003)(346002)(366004)(39860400002)(376002)(189003)(199004)(53754006)(71190400001)(71200400001)(8990500004)(10290500003)(22452003)(76176011)(6916009)(66946007)(33656002)(66556008)(76116006)(66446008)(4744005)(14454004)(73956011)(316002)(64756008)(68736007)(7696005)(102836004)(66476007)(6246003)(478600001)(53546011)(2501003)(2351001)(6506007)(52396003)(10090500001)(186003)(99286004)(26005)(476003)(305945005)(8936002)(11346002)(446003)(3846002)(229853002)(25786009)(66066001)(256004)(486006)(86362001)(81166006)(5660300002)(5640700003)(53936002)(52536014)(8676002)(1730700003)(81156014)(6436002)(2906002)(74316002)(7736002)(9686003)(55016002)(6116002);DIR:OUT;SFP:1102;SCL:1;SRVR:BN8PR21MB1204;H:BN8PR21MB1156.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: b065y1e1OB11xfDUR61LIiH2VZRu1jKwfb+0AH2E1aAuum1sIE/SqDS1gKJwMc1GqWtkc47bwLzZAO1XqNmFI3f0bO2SDXA5dHien7dZ1ZJvCYiWsahQ4KfkW+P1igTtXQoWs13Q7swPFXR0+Maxq+Slxvd9wZyevB+pkE0xrO31snA+awH2yV0WOLfdaxOlzTehgYxzrFjDaLApxvPm8nGbi6GnbcMR4uv+7hZDgwNic5n4El+SKNOvgEFg2u/6kWpGt9N+fR3apGE6bzDxjB/eHt00ydhBSTPJNjn8K+t5qqwI3S8rUBA2KWRqeX9ZreeVkhfRdmFJ+aiCVKxKOL+E4YI2xaqeYfGJXZzcRPyHM0gkNcd7sb6KEzmW7HyZe9FPLTuvgRw2e6Djgw6PRzzItYFxvV1o3h+JOAZjfbY=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1905311453420.44@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.12.0 (2019-05-25)
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7499d802-49f6-41eb-03e5-08d6e5d6922f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 May 2019 14:45:05.5521
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: clisc@microsoft.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR21MB1204
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Resending as plain text
 
-On Fri, May 31, 2019 at 02:58:30PM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 30 May 2019, Denton Liu wrote:
-> 
-> > Currently, if a user wishes to have individual settings per branch, they
-> > are required to manually keep track of the settings in their head and
-> > manually set the options on the command-line or change the config at
-> > each branch.
-> >
-> > Teach config the "onbranch:" includeIf condition so that it can
-> > conditionally include configuration files if the branch is checked out
-> > in the current worktree.
-> 
-> What a coincidence. I actually wished for something like this, to have
-> branch-specific aliases.
-> 
-> However, I would need this to handle patterns (via `wildmatch()`?) rather
-> than branch names.
+From: Cliff Schomburg=20
+Sent: Thursday, May 30, 2019 6:29 PM
+To: git@vger.kernel.org
+Subject: Simple shortcut for "git push --set-upstream origin newBranchName"
 
-Do you mean that we should be able to match a branch by pattern? So, for
-example, if we had
+Hi all,
 
-	[includeIf "onbranch:mas*"]
+This is more of a suggestion than a bug report.
 
-we'd match if we were on "master"?
+I create new topic branches quite frequently and push them into the remote =
+repo (origin).
 
-> 
-> > I decided to go ahead and implement the includeIf onbranch semantics for
-> > fun. For completeness, I'm sending it to the list but I'm not really
-> > sure if this should get merged, since I don't really have a use-case for
-> > this, especially if we go the branch-specific format-patch config route.
-> >
-> > Another thing to note is that this change doesn't completely cover all
-> > the use-cases that the branch-specific format-patch does. In particular,
-> > if I run
-> >
-> > 	$ git checkout foo
-> > 	$ git format-patch master..bar
-> >
-> > with the `format.bar.*`, we'd get bar-specific configs, whereas with
-> > `includeIf "onbranch:bar"`, we'd fail to include bar-specific configs
-> > and, more dangerously, we'd be including foo's configs.
-> 
-> I actually think that this is fine. "on branch" means that you are on the
-> specified branch, not that you merely mention the branch name on the
-> command-line (in which case there would be the ambiguity "did the user
-> mean `master` or `bar`?").
+It's a bit of a hassle to type "git push -set-upstream origin newBranchName=
+" each and every time I want to push a new branch.
 
-The reason why I brought this up as a use case was because currently,
-when format-patch generates a cover letter, with the above, it'll use
-bar's branch description to populate it even if "foo" is checked out. As
-a result, when implementing the branch-specific format-patch stuff, I
-wanted to make this consistent so that we wouldn't end up in a situation
-where the cover letter has the branch's description but is missing its
-Cc's.
+I'm proposing a shortcut for this command.=A0 Perhaps "git push -default" o=
+r "git push -new-branch" which could be shortened to "git push -d" or "git =
+push -nb" or something.
 
-> 
-> Ciao,
-> Dscho
+Based on the man-page for push, it looks like this could be an alias for:
+=A0=A0=A0 "git push -set-upstream origin HEAD"
+In which case HEAD should always be the current branch name.
+
+Thoughts?=A0 Concerns?
+
+Thanks,
+Cliff
+
