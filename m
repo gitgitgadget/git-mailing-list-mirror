@@ -7,31 +7,42 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE,T_HK_NAME_DR shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 666C11F462
-	for <e@80x24.org>; Fri, 31 May 2019 18:16:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FC8E1F462
+	for <e@80x24.org>; Fri, 31 May 2019 18:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbfEaSQY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 14:16:24 -0400
-Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:35028 "EHLO
+        id S1727064AbfEaSRa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 14:17:30 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:35104 "EHLO
         vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726967AbfEaSQY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 14:16:24 -0400
+        by vger.kernel.org with ESMTP id S1726701AbfEaSRa (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 14:17:30 -0400
 Received: from [2001:16b8:5c8e:5500:5015:4633:2bbd:77c7] (helo=adam-MS-7A63.fritz.box); authenticated
         by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1hWm4k-0002XQ-Af; Fri, 31 May 2019 20:16:22 +0200
+        id 1hWm5n-0002ZT-Lq; Fri, 31 May 2019 20:17:27 +0200
 From:   "Dr. Adam Nielsen" <admin@in-ici.net>
 To:     git@vger.kernel.org
 Cc:     "Dr. Adam Nielsen" <admin@in-ici.net>
 Subject: [PATCH] make slash-rules more readable
-Date:   Fri, 31 May 2019 20:16:17 +0200
-Message-Id: <20190531181617.24190-1-admin@in-ici.net>
+Date:   Fri, 31 May 2019 20:17:22 +0200
+Message-Id: <20190531181722.24325-1-admin@in-ici.net>
 X-Mailer: git-send-email 2.17.1
-X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1559326583;de7b961d;
-X-HE-SMSGID: 1hWm4k-0002XQ-Af
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1559326649;9560f3d4;
+X-HE-SMSGID: 1hWm5n-0002ZT-Lq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+gitignore.txt: make slash-rules more readable
+
+Remove meta-rule in a paragraph for trailing-slash.
+Be precise whenever a trailing slash would make a 
+difference. Improve paragraph for pattern without slash. 
+Remove rule for leading slash because its now redundant. 
+Instead, add examples for leading slash and asterix in 
+example section.
+
+Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
 
 ---
  Documentation/gitignore.txt | 75 ++++++++++++++++++++++++++-----------
