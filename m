@@ -2,122 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 642951F462
-	for <e@80x24.org>; Fri, 31 May 2019 14:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C744F1F609
+	for <e@80x24.org>; Fri, 31 May 2019 14:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbfEaOpI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 10:45:08 -0400
-Received: from mail-eopbgr750109.outbound.protection.outlook.com ([40.107.75.109]:45893
-        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726616AbfEaOpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 10:45:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
- b=oc4+n1xAe64DDZCORCRWPWVzw7VdRH4upNP6oY6D9wsZvtER9TeBiBrHE8br9xXAz5U/0HJQC95aGaOhWSIMGUnLBMDjjTMXYikhT6roLts6I0/rwVkp/31Wt+N8cnFc8n6o6S4Qy/XIVN15SKiWhKJEE5TFUnF3etl28vWdz2c=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=testarcselector01;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5zbo9zCiGEcaDcIjrKKr3YSvEByb0Dfg0FbO9CqWi60=;
- b=gJB+SYthrgokgwtdqthmD9L6BCTg5fHL3UlH9HdFbAYhgLRHqqxPJo3hm6W0E+kfcl+7t8RaTX6vq/eLOVxklef7RpcXmoM98rhnJWYTIPCwFG6QSLRM05tXEKxJgtHut61yljGtTeaZVjcbx4MQAMG1Vw7AC/3iM3bTWqipwUU=
-ARC-Authentication-Results: i=1; test.office365.com
- 1;spf=none;dmarc=none;dkim=none;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5zbo9zCiGEcaDcIjrKKr3YSvEByb0Dfg0FbO9CqWi60=;
- b=fMpoUZnI1Mvl3z0QvN3kWREg7KY+7dLb7JvKZ3Xqvan8B6VFsDKJH+06V8hCec/K/KoWQWWJgeWbRNBznY4oYUksEM61auLXt+BBb2lzFTrXbuaZM3Fgh6P0TOoTCvLTbcEyvvAyYiAAIpIjXiyE4l/e5Oj7/79JQVjybSjvN+4=
-Received: from BN8PR21MB1156.namprd21.prod.outlook.com (2603:10b6:408:73::11)
- by BN8PR21MB1204.namprd21.prod.outlook.com (2603:10b6:408:76::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1965.4; Fri, 31 May
- 2019 14:45:05 +0000
-Received: from BN8PR21MB1156.namprd21.prod.outlook.com
- ([fe80::2147:f6c0:c7f:30e1]) by BN8PR21MB1156.namprd21.prod.outlook.com
- ([fe80::2147:f6c0:c7f:30e1%7]) with mapi id 15.20.1965.003; Fri, 31 May 2019
- 14:45:05 +0000
-From:   Cliff Schomburg <clisc@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Simple shortcut for "git push --set-upstream origin
+        id S1726804AbfEaOvL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 10:51:11 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:42372 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726421AbfEaOvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 10:51:11 -0400
+Received: by mail-wr1-f49.google.com with SMTP id l2so6711940wrb.9
+        for <git@vger.kernel.org>; Fri, 31 May 2019 07:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=gs9s9FNlCJuk0a92k+VgLSl9YS2MrfJa/p/P/EqHicI=;
+        b=p6kmbSmbdGBeKMiaFyCS2/WgDvTvUttKXi0+CaYcfgeLBRDyPJAeO3B+TiS9R4iNJU
+         ax7LjNCEOQbawheSwpL23ec8Q/sw49963PzHdOgKVxd747q6tEOHHJVIUnLGoBu9KLFp
+         7P5EJjSvbtspfn9Wnsp8A17nB8YX5j/HeyHuJYlrABijKIQg8/LfpoieBY3DtYUWLu3Z
+         qpWodNU/N2ST1YN4gIW4yW9esXRUrkaqRwt8iCa42cNfy4JEQeShqYW8iv7Xfh6rKLrS
+         8dV3K/m2tmz1kJiy2QEbEeZsFjFMCAj4hQyWGsppS//bZWjzKI7QPxJOMtAmwm4Skijl
+         vGhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gs9s9FNlCJuk0a92k+VgLSl9YS2MrfJa/p/P/EqHicI=;
+        b=XZCKAG2WBTz7TJc3OzoROaDiVPaToZWXtB1b7Bmo8slwN4wlmPf+TbYup7KYGv/I89
+         /WIdvJBA6/MsaOn1wkTFQtTMAQXoI5oIh/+uodkrWHSou7KI3ynMIYr5r0YVXuSENlFc
+         01WY67Z9jTtlNBRO3zlik80yPaH0VaCduVhhvhDpa89xbxbKt6u0Qh9WFp9XEts1pvAz
+         aF0KNJHfVu1ps9tKQs/c9orWNL7vPc3uT35v1wZ+uTO240VVkxuRbswhgQ/w4MY0cFU/
+         YywP2VlJrHZkrM5PIYRHun3UWqWM6vyhbMoDpEd1nwlC8gZuNWCGffLNyqNvO0DKAaQJ
+         QabA==
+X-Gm-Message-State: APjAAAUwPlzEuMhb+Vx26ed24b5bztXJkJbTO7mALpk2Nhjf/71ZEV2t
+        uKEeVsssox9a6nxRjyl/GhRct0u+NyI=
+X-Google-Smtp-Source: APXvYqyEVy98V92NUZIpUmX0/Ggh7vuPVo81pA+TTdaCpA+jqgiorYot/MFmj+jLA3wAokbVX1lpXw==
+X-Received: by 2002:a5d:43c9:: with SMTP id v9mr6845704wrr.70.1559314269867;
+        Fri, 31 May 2019 07:51:09 -0700 (PDT)
+Received: from [192.168.1.13] (adqg48.neoplus.adsl.tpnet.pl. [79.185.140.48])
+        by smtp.gmail.com with ESMTPSA id a17sm3854691wrr.80.2019.05.31.07.51.08
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 May 2019 07:51:09 -0700 (PDT)
+Subject: Re: Simple shortcut for "git push --set-upstream origin
  newBranchName"
-Thread-Topic: Simple shortcut for "git push --set-upstream origin
- newBranchName"
-Thread-Index: AdUXME7sW+dzzd+8STqmdbLpESwchwABfZYAAAAnfwAAIhlQgA==
-Date:   Fri, 31 May 2019 14:45:05 +0000
-Message-ID: <BN8PR21MB1156F7F3E7EFF9C8A60F33D0B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+To:     Cliff Schomburg <clisc@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 References: <BN8PR21MB1156ED141AE2662BC5328A22B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
  <BN8PR21MB1156F593DAEBD7194DA7041EB7180@BN8PR21MB1156.namprd21.prod.outlook.com>
  <BN8PR21MB1156DA1893F64814F1BE8709B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
-In-Reply-To: <BN8PR21MB1156DA1893F64814F1BE8709B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=clisc@microsoft.com; 
-x-originating-ip: [24.182.67.250]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7499d802-49f6-41eb-03e5-08d6e5d6922f
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);SRVR:BN8PR21MB1204;
-x-ms-traffictypediagnostic: BN8PR21MB1204:
-x-microsoft-antispam-prvs: <BN8PR21MB120499094C32FB319AD91027B7190@BN8PR21MB1204.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 00540983E2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(396003)(346002)(366004)(39860400002)(376002)(189003)(199004)(53754006)(71190400001)(71200400001)(8990500004)(10290500003)(22452003)(76176011)(6916009)(66946007)(33656002)(66556008)(76116006)(66446008)(4744005)(14454004)(73956011)(316002)(64756008)(68736007)(7696005)(102836004)(66476007)(6246003)(478600001)(53546011)(2501003)(2351001)(6506007)(52396003)(10090500001)(186003)(99286004)(26005)(476003)(305945005)(8936002)(11346002)(446003)(3846002)(229853002)(25786009)(66066001)(256004)(486006)(86362001)(81166006)(5660300002)(5640700003)(53936002)(52536014)(8676002)(1730700003)(81156014)(6436002)(2906002)(74316002)(7736002)(9686003)(55016002)(6116002);DIR:OUT;SFP:1102;SCL:1;SRVR:BN8PR21MB1204;H:BN8PR21MB1156.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: b065y1e1OB11xfDUR61LIiH2VZRu1jKwfb+0AH2E1aAuum1sIE/SqDS1gKJwMc1GqWtkc47bwLzZAO1XqNmFI3f0bO2SDXA5dHien7dZ1ZJvCYiWsahQ4KfkW+P1igTtXQoWs13Q7swPFXR0+Maxq+Slxvd9wZyevB+pkE0xrO31snA+awH2yV0WOLfdaxOlzTehgYxzrFjDaLApxvPm8nGbi6GnbcMR4uv+7hZDgwNic5n4El+SKNOvgEFg2u/6kWpGt9N+fR3apGE6bzDxjB/eHt00ydhBSTPJNjn8K+t5qqwI3S8rUBA2KWRqeX9ZreeVkhfRdmFJ+aiCVKxKOL+E4YI2xaqeYfGJXZzcRPyHM0gkNcd7sb6KEzmW7HyZe9FPLTuvgRw2e6Djgw6PRzzItYFxvV1o3h+JOAZjfbY=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ <BN8PR21MB1156F7F3E7EFF9C8A60F33D0B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+From:   Patryk Obara <dreamer.tan@gmail.com>
+Message-ID: <ac62f96f-0ebc-2dff-3365-781e6b9142a3@gmail.com>
+Date:   Fri, 31 May 2019 16:51:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7499d802-49f6-41eb-03e5-08d6e5d6922f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 May 2019 14:45:05.5521
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: clisc@microsoft.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR21MB1204
+In-Reply-To: <BN8PR21MB1156F7F3E7EFF9C8A60F33D0B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Resending as plain text
+On 31/05/2019 16:45, Cliff Schomburg wrote:
+> I'm proposing a shortcut for this command.
 
-From: Cliff Schomburg=20
-Sent: Thursday, May 30, 2019 6:29 PM
-To: git@vger.kernel.org
-Subject: Simple shortcut for "git push --set-upstream origin newBranchName"
+What's wrong with "$ git push -u origin branch"?
 
-Hi all,
-
-This is more of a suggestion than a bug report.
-
-I create new topic branches quite frequently and push them into the remote =
-repo (origin).
-
-It's a bit of a hassle to type "git push -set-upstream origin newBranchName=
-" each and every time I want to push a new branch.
-
-I'm proposing a shortcut for this command.=A0 Perhaps "git push -default" o=
-r "git push -new-branch" which could be shortened to "git push -d" or "git =
-push -nb" or something.
-
-Based on the man-page for push, it looks like this could be an alias for:
-=A0=A0=A0 "git push -set-upstream origin HEAD"
-In which case HEAD should always be the current branch name.
-
-Thoughts?=A0 Concerns?
-
-Thanks,
-Cliff
-
+--
+Patryk Obara
