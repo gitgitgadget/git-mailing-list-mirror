@@ -2,153 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE,T_HK_NAME_DR shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E34B81F462
-	for <e@80x24.org>; Fri, 31 May 2019 17:24:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD521F462
+	for <e@80x24.org>; Fri, 31 May 2019 17:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbfEaRYU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 13:24:20 -0400
-Received: from mout.gmx.net ([212.227.17.20]:41083 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726721AbfEaRYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 13:24:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559323452;
-        bh=XxY+f+j5Cfycsivw5/MPVPNDKBpDwYXJQkvzCJD1Ezk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=K7x6OacEL/hdJSjoqhz+3zTYI3PbrRnIsr05c45lnJSCnFJ0h++2cfgEEgO/kvl23
-         UDCxH3W1DSNLEqBvnUVlWnNVfRFm5SWuJvW7qS2UB97teEDYIo4Vs4nHERqKJVOF/8
-         UBA/jLiz6AhoaWtFK6GEyj/gv7I+jdoi1K1OlzCk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mchyv-1hEolm3plh-00Htvq; Fri, 31
- May 2019 19:24:12 +0200
-Date:   Fri, 31 May 2019 19:23:56 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] config: learn the "onbranch:" includeIf condition
-In-Reply-To: <20190531131626.GA30114@archbookpro.localdomain>
-Message-ID: <nycvar.QRO.7.76.6.1905311918510.44@tvgsbejvaqbjf.bet>
-References: <xmqqh8a5k9bu.fsf@gitster-ct.c.googlers.com> <7b60e58ba554768fd915e4f5c00a97737707ed42.1559263024.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.1905311453420.44@tvgsbejvaqbjf.bet> <20190531131626.GA30114@archbookpro.localdomain>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726798AbfEaRYa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 13:24:30 -0400
+Received: from vwp8955.webpack.hosteurope.de ([176.28.35.119]:60616 "EHLO
+        vwp8955.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726806AbfEaRYa (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 13:24:30 -0400
+Received: from [2001:16b8:5c8e:5500:5015:4633:2bbd:77c7]; authenticated
+        by vwp8955.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1hWlGU-0002o4-5V; Fri, 31 May 2019 19:24:26 +0200
+Subject: Re: [PATCH] make slash-rules more readable
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20190531074426.6810-1-admin@in-ici.net>
+ <xmqqh89awprl.fsf@gitster-ct.c.googlers.com>
+From:   "Dr. Adam Nielsen" <admin@in-ici.net>
+Cc:     git@vger.kernel.org
+Message-ID: <88c6cf45-3908-6561-c3bf-11adf628f8af@in-ici.net>
+Date:   Fri, 31 May 2019 19:24:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4F0IXaRmWssfwCHBwRbHcxko5GFVu0zwFFOm4VhWV8rgcPKolql
- ITlVZX6cj2EozHeZ89AFxP5tIGzalpAXxwbcHyj67KvWi9a7B8IdVZ7PuWv2PEOXYQE6oHz
- xU6v5zBP1Y3kV0E1XtBQegzmHwUIvqC3AWvQ49SULSP3Ltc3ye1hYaDvLeEqCMkFOxqyRGS
- 0joA01sXSV//x1hoMJ4Fw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P/e+sv/Za2o=:vS/lMMSpwNh024cgg5kO+g
- P8K/BqH1qL8o3wMMBw8DWcJTCFbIyev5dmg1ozIfxhgOVgiEdXJqir2jKLpOgGbThboCPVLC2
- f6uyzu3mZIlr2K9SOYDdTzLfplgY4P7GHYIjJyYlM7+Xo7zPZAIcLosOurLw2XBdPG2YVu2j/
- 5ioyt2t8pEIOcaGlZxF5+kpTN9aIEpr7cDPE2cwAVwMrw67MdDoWMVCb5GIUThoBKBJvvVlA2
- pexNHiPNozo0tRTqyV1ooY0jTbsS6CeASiAPJyO1ijNbx1q/uPOPEf0226Dof3rkTxgd0pMgo
- Mo4imYRuoG3TA9FZ6ZU03cM5f9vbYUMPuuJk9lnu8MWMscxIAEIR1d2mwD83PDJNlJFtrEw1E
- TbSvJfo1hkMuo8u3WuGFr+GJ5Qs8m7ANZ9Qdu6wn7emp0zoOb5YuDJxURqPXZztgFVVE3CiEo
- Bi7Q6esgDKqf39EY8842ECMXkskGMVahoRifGnevX1SvlzZfvDfU9k5O1N0ACPsieMDNCJyzn
- 3es5t3OgRZ/eV8aMF39jVwmdlAsGETUBWNcg/SDdg/me0qAAGqBd8x//TCV418/VLcWsCh0ir
- 0A7Y8yPSz2pgdvst3Ay8mqzouKqwC+53YaMsFxWW645PzSPSIGSRBWJJuL0aQFNhEViZnJcQm
- tYbBoi4G+6WiY0oJl8RqLWpn6wUNnhCb/h35R0qvaqDZVO9pGCAG/OQPIkC5Ylsquh/UtI5sA
- lADo9u3m5D86vbq6PagTuqG6ZBAwpi8ZY0bFP+uleVnXXC/2KFTpHkrPuZHi0LQV5xL0mIdK6
- Z6KTVEwu0mG9Wgo2ijjWW1dFzBKMJS7snoQHceaw4oZmJVd65orwZlg3fBmHs8P/ALixOCTkB
- fAeGqvYz9fRhnTIvx2n8yDbeuh2mwpMlgwxsZo25zEJG2IsmoTf5Q0SGtJDL7CLOwWr6Bifxy
- WADYumcEq10NTxqPj46UnSgY537IeDjuoop2cW50zwnS9lYNLgMwV
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqh89awprl.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;admin@in-ici.net;1559323469;11dc0a0a;
+X-HE-SMSGID: 1hWlGU-0002o4-5V
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
 
-On Fri, 31 May 2019, Denton Liu wrote:
+On 31.05.19 18:30, Junio C Hamano wrote:
+> "Dr. Adam Nielsen" <admin@in-ici.net> writes:
+> 
+>> gitignore.txt: make slash-rules more readable
+>>
+>> Remove meta-rule in a paragraph for trailing-slash.
+>> Be precise whenever a trailing slash would make a
+>> difference. Improve paragraph for pattern without slash.
+>> Remove rule for leading slash because its now redundant.
+>> Instead, add examples for leading slash and asterix in
+>> example section.
+>>
+>> Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
+>>
+>> ---
+>>   Documentation/gitignore.txt | 71 ++++++++++++++++++++++++++-----------
+>>   1 file changed, 50 insertions(+), 21 deletions(-)
+> 
+> I think the updated text is readable, except for one nit.
+> 
+> Specifically, if you took my suggestion in an earlier review to
 
-> On Fri, May 31, 2019 at 02:58:30PM +0200, Johannes Schindelin wrote:
->
-> > On Thu, 30 May 2019, Denton Liu wrote:
-> >
-> > > Currently, if a user wishes to have individual settings per branch,
-> > > they are required to manually keep track of the settings in their
-> > > head and manually set the options on the command-line or change the
-> > > config at each branch.
-> > >
-> > > Teach config the "onbranch:" includeIf condition so that it can
-> > > conditionally include configuration files if the branch is checked
-> > > out in the current worktree.
-> >
-> > What a coincidence. I actually wished for something like this, to have
-> > branch-specific aliases.
-> >
-> > However, I would need this to handle patterns (via `wildmatch()`?)
-> > rather than branch names.
->
-> Do you mean that we should be able to match a branch by pattern? So, for
-> example, if we had
->
-> 	[includeIf "onbranch:mas*"]
->
-> we'd match if we were on "master"?
+I guess you are referencing on your review from 08.05.2019 to which I 
+responded On 12.05.19 11:56,
 
-Yes, precisely.
+ >> The "note" is not incorrect per-se.  The behaviour described is
+ >> because the leading slash is removed for the purpose of textual
+ >> matching against paths, but still counts as a non-trailing slash for
+ >> the purpose of anchoring the pattern to the level of recursion.
+ >>
+ >> I am not sure if that is obvious to the readers, though.
+ >
+ > Yes, its not explained to the reader that the leading slash is removed
+ > for the purpose of textual matching. But maybe this is not necessary in
+ > order to understand the effect of the pattern.
 
-I would use this for the "ever-green" branches of Git for Windows, i.e.
-the branches that are continuously rebasing Git for Windows' branch
-thicket on top of maint, master, next & pu. Those are called
-`shears/maint`, `shears/master`, etc (for historical reasons) in
-https://github.com/git-for-windows/git.
+> explicitly say that leading slash is merely a workaround for a
+> string without slash to anchor the pattern to the directory and
+> it should be treated as if it does not exist otherwise, then ...
+> 
+>> + - The pattern `doc/frotz` and `/doc/frotz` have the same effect
+>> +   in any `.gitignore` file. Both pattern contain a non-trailing
+>> +   slash and thus match relative to the location of the
+>> +   `.gitignore` file.
+> 
+> ... this paragraph wouldn't have been necessary.
 
-> > > I decided to go ahead and implement the includeIf onbranch semantics
-> > > for fun. For completeness, I'm sending it to the list but I'm not
-> > > really sure if this should get merged, since I don't really have a
-> > > use-case for this, especially if we go the branch-specific
-> > > format-patch config route.
-> > >
-> > > Another thing to note is that this change doesn't completely cover
-> > > all the use-cases that the branch-specific format-patch does. In
-> > > particular, if I run
-> > >
-> > > 	$ git checkout foo
-> > > 	$ git format-patch master..bar
-> > >
-> > > with the `format.bar.*`, we'd get bar-specific configs, whereas with
-> > > `includeIf "onbranch:bar"`, we'd fail to include bar-specific config=
-s
-> > > and, more dangerously, we'd be including foo's configs.
-> >
-> > I actually think that this is fine. "on branch" means that you are on =
-the
-> > specified branch, not that you merely mention the branch name on the
-> > command-line (in which case there would be the ambiguity "did the user
-> > mean `master` or `bar`?").
->
-> The reason why I brought this up as a use case was because currently,
-> when format-patch generates a cover letter, with the above, it'll use
-> bar's branch description to populate it even if "foo" is checked out. As
-> a result, when implementing the branch-specific format-patch stuff, I
-> wanted to make this consistent so that we wouldn't end up in a situation
-> where the cover letter has the branch's description but is missing its
-> Cc's.
+I think this above example follows from (and thus isn't necessary, but 
+just a fine example)
 
-That strikes me as a different use case than `includeIf`. I could imagine
-that you'd want a setting like `formatpatch.detecttargetbranch =3D auto` o=
-r
-some such that would pick up the `format.bar*` settings if there was *one*
-rev argument, and it was a commit range (or a tip commit), *and* it
-obviously referred to a single target branch.
+     + - The pattern is matched relative to the location of
+     +   the `.gitignore` file. Except if the pattern contains
+     +   no slash [...]
 
-It's just a scenario that is *very* specific to `git format-patch`.
+Because a pattern with a leading slash has a slash, it "is matched 
+relative to the location of the `.gitignore` file".
 
-For example, I would not, ever, want `git log ..next` to pick up a
-config specific to `next` just because I mentioned a commit range with
-`range` as the tip to start from.
+> 
+> Besides, one extra reason why these two have the same effect is not
+> given in the updated text to explain away "To which substring of
+> path 'doc/frotz' does that leading slash in /doc/frotz match?"
+ >
+> The updated text does not seem to explain that the leading slash is
+> merely to pretend that the pattern "contains a slash so it does not
+> apply in a subdirectory" and for the purpose of pattern matching the
+> slash does not participate in the textual match, which seems to have
+> been lost in the updated patch, relative to the suggestions raised
+> in the review of earlier rounds.
 
-Ciao,
-Dscho
+I believe its not said anywhere in the docs that the pattern is compared 
+  by a textual match to a piece of the full path of a file\folder (where 
+the path is represented as in a unix-like OS).
+
+I feel like your proposal from
+
+On 08.05.19 07:33, Junio C Hamano wrote:
+ >  - A leading slash, if any, is implicitly removed before matching the
+ >    pattern with the pathname, but the pattern still counts as having
+ >    a non-trailing slash for the purpose of the above rule.
+
+is great for everyone who knows about the algorithm in the background, 
+but for others it might be unclear what is meant.
+
+For example "pathname" is not explained anywhere. Its not clear if 
+"pathname" itself contains a leading slash, or in which format the 
+"pathname" is represented, or if its is absolute or relative.
+And "implicitly removed before matching.." is maybe a bit confusing for 
+people that see the matching algorithm as a black box. If its not 
+explained anywhere in detail how the matching algorithm is conducted, 
+why would it matter to tell that the leading slash is removed implicitly?
+
+Thats why I think, the case with the leading slash is already covered by 
+the paragraph
+
+     + - The pattern is matched relative to the location of
+     +   the `.gitignore` file. Except if the pattern contains
+     +   no slash [...]
+
+and why I put the further explanations (that are not necessary in my 
+opinion, but also not obvious) in the example section.
+
+Thus, I don't feel the need to add another paragraph, but if you want, I 
+can add
+
+ >  - A leading slash, if any, is implicitly removed before matching the
+ >    pattern with the pathname, but the pattern still counts as having
+ >    a non-trailing slash for the purpose of the above rule.
+
+as another bullet to the patch.
+
+All the best,
+Adam
