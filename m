@@ -8,83 +8,147 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 090911F462
-	for <e@80x24.org>; Fri, 31 May 2019 17:15:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E34B81F462
+	for <e@80x24.org>; Fri, 31 May 2019 17:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726541AbfEaRPL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 13:15:11 -0400
-Received: from mout.gmx.net ([212.227.15.15]:33003 "EHLO mout.gmx.net"
+        id S1726741AbfEaRYU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 13:24:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:41083 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726518AbfEaRPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 13:15:10 -0400
+        id S1726721AbfEaRYT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 13:24:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559322904;
-        bh=D4VXJ+yVtgJS1yoHuQlv4CtsqjpKx5qutoJ7PLrDozY=;
+        s=badeba3b8450; t=1559323452;
+        bh=XxY+f+j5Cfycsivw5/MPVPNDKBpDwYXJQkvzCJD1Ezk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=crdvkYvXDq9HsMGJMGi+l6U8U70EOBE9fghamt3ZabfCOud2crhwcTQD187QThpAL
-         dM0iwWRmoZIsh8Cje4kEKRZa5vgJygLZtHNKcxroZGmn4UfkgN9FdCgNwQzEk8kfJK
-         8hj80JYDctVe8Q4VQ+MFELLikwTDF9pGtMWp3U8o=
+        b=K7x6OacEL/hdJSjoqhz+3zTYI3PbrRnIsr05c45lnJSCnFJ0h++2cfgEEgO/kvl23
+         UDCxH3W1DSNLEqBvnUVlWnNVfRFm5SWuJvW7qS2UB97teEDYIo4Vs4nHERqKJVOF/8
+         UBA/jLiz6AhoaWtFK6GEyj/gv7I+jdoi1K1OlzCk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaZrd-1hH1YM3wMb-00KCBQ; Fri, 31
- May 2019 19:15:04 +0200
-Date:   Fri, 31 May 2019 19:14:45 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mchyv-1hEolm3plh-00Htvq; Fri, 31
+ May 2019 19:24:12 +0200
+Date:   Fri, 31 May 2019 19:23:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2019, #05; Thu, 30)
-In-Reply-To: <xmqqd0jywo97.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1905311914240.44@tvgsbejvaqbjf.bet>
-References: <xmqqwoi7ws9z.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1905311337270.44@tvgsbejvaqbjf.bet> <xmqqd0jywo97.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] config: learn the "onbranch:" includeIf condition
+In-Reply-To: <20190531131626.GA30114@archbookpro.localdomain>
+Message-ID: <nycvar.QRO.7.76.6.1905311918510.44@tvgsbejvaqbjf.bet>
+References: <xmqqh8a5k9bu.fsf@gitster-ct.c.googlers.com> <7b60e58ba554768fd915e4f5c00a97737707ed42.1559263024.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.1905311453420.44@tvgsbejvaqbjf.bet> <20190531131626.GA30114@archbookpro.localdomain>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qRUVuvycS7j4Vfcoxq3IHVCz5DZFA8P8XfZbILjOTgmWeo8d+cj
- RnJihxC4hpKzLUYCDmNuiuEeWy2JhG5fvIRfXaetz9iR99zYp2RIAhrmAkdI9fxO6TPBEbS
- RVQGBasLfIrYBZKgIw9mD1+z1G5WzDIVlCe3QVukOPpAfZuqkHsuahFWoOe+4T0AmTBg/ko
- 040AWCHi5vuPFd8aEvOzw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Mu5092eAPPA=:Ei1L1t+4PV1aDR0zbCNVRT
- C3misZbK1bEKVx2lsjl8TYinbyAf+m69WnpgSc22pGT+A7nVPNayICXVha0X6wNxXrOrgT/zP
- Ko4GFLmoBn1gQ4d/o50q4chBT6ick/mmrlr7VygW0xWJ22lDizpQj0sz6oXBzYxCeGGE/vDYA
- fSDyDtcmQtscbNji0QLSe9B6TLQgkfqJqVVqsS60iJgJiqrljOeC2QGm7HzH30sQLvi1r3RGH
- HJTDPN8D290HFVq5Q6nC0wc/ZuHKVIFFl1PnMOsA3KfJDB3pMJFoos+9ymwplZYYptJLfiOvd
- Vw7mpQYwE5oBuNa9rZ8fYM97xAGnUiVxQqeK8tC7lvHgpGkbA46EOE6d2Ggsri+wpvdLc5Lm4
- uBmCRQi8pF+pfpKg5mvjkeDQBLpaqme0E5KTpg73YTm8fLeckRqtsHL5AVKTKyiIg8RSHOuA9
- 4VaxAn8mZMIR6OovJuE01pbvEDsMwTcraegu9s+4lJHPpgqg6LBG8XPJ46OJ+3ny5xT278uI5
- 1+VH3ATXEy8uOULoMxaRqt1ks0N20eAUNyX2t/hm87JUhqnLGTg3sF/tWnJgWpHqDSGdivRDj
- CX36Oeezh4DA7qwJDiJDvUQ+Ov+4/9TOckAxB80jnTd+cNJ3XLQPITHH3WGFmiyJvjwKrncHU
- MhjeGsTJXzjvOlZTET73rHsvRzm/TEeljeBYMXg3F9c02AK3WsRxqmeR9LLfT/qWkzJDbeRcA
- JYJ7+DexjxBck9QZTo+JDotemJXmpzCE2T8WKlz8ioSpOYVvVcLVAQvngREpcSZnTA2lj6i5i
- fitUx92yNKWY4PmEN5/xiuBvfD1dTLdwp+bxvB0t2UBP1CQ380ks4gZhsoicyXgM2ie6cCyTi
- RSOmvczqgrI5XjUsaj3y2pJlIi9urScuj6aRI8kTq118LlnF2igVsFa814gpn528iujE1wxVc
- p1li22yhdvOcChkt+BDX2xYIGCpzSFXQZpJO1DO0oZGeMBaWWHC7C
+X-Provags-ID: V03:K1:4F0IXaRmWssfwCHBwRbHcxko5GFVu0zwFFOm4VhWV8rgcPKolql
+ ITlVZX6cj2EozHeZ89AFxP5tIGzalpAXxwbcHyj67KvWi9a7B8IdVZ7PuWv2PEOXYQE6oHz
+ xU6v5zBP1Y3kV0E1XtBQegzmHwUIvqC3AWvQ49SULSP3Ltc3ye1hYaDvLeEqCMkFOxqyRGS
+ 0joA01sXSV//x1hoMJ4Fw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:P/e+sv/Za2o=:vS/lMMSpwNh024cgg5kO+g
+ P8K/BqH1qL8o3wMMBw8DWcJTCFbIyev5dmg1ozIfxhgOVgiEdXJqir2jKLpOgGbThboCPVLC2
+ f6uyzu3mZIlr2K9SOYDdTzLfplgY4P7GHYIjJyYlM7+Xo7zPZAIcLosOurLw2XBdPG2YVu2j/
+ 5ioyt2t8pEIOcaGlZxF5+kpTN9aIEpr7cDPE2cwAVwMrw67MdDoWMVCb5GIUThoBKBJvvVlA2
+ pexNHiPNozo0tRTqyV1ooY0jTbsS6CeASiAPJyO1ijNbx1q/uPOPEf0226Dof3rkTxgd0pMgo
+ Mo4imYRuoG3TA9FZ6ZU03cM5f9vbYUMPuuJk9lnu8MWMscxIAEIR1d2mwD83PDJNlJFtrEw1E
+ TbSvJfo1hkMuo8u3WuGFr+GJ5Qs8m7ANZ9Qdu6wn7emp0zoOb5YuDJxURqPXZztgFVVE3CiEo
+ Bi7Q6esgDKqf39EY8842ECMXkskGMVahoRifGnevX1SvlzZfvDfU9k5O1N0ACPsieMDNCJyzn
+ 3es5t3OgRZ/eV8aMF39jVwmdlAsGETUBWNcg/SDdg/me0qAAGqBd8x//TCV418/VLcWsCh0ir
+ 0A7Y8yPSz2pgdvst3Ay8mqzouKqwC+53YaMsFxWW645PzSPSIGSRBWJJuL0aQFNhEViZnJcQm
+ tYbBoi4G+6WiY0oJl8RqLWpn6wUNnhCb/h35R0qvaqDZVO9pGCAG/OQPIkC5Ylsquh/UtI5sA
+ lADo9u3m5D86vbq6PagTuqG6ZBAwpi8ZY0bFP+uleVnXXC/2KFTpHkrPuZHi0LQV5xL0mIdK6
+ Z6KTVEwu0mG9Wgo2ijjWW1dFzBKMJS7snoQHceaw4oZmJVd65orwZlg3fBmHs8P/ALixOCTkB
+ fAeGqvYz9fRhnTIvx2n8yDbeuh2mwpMlgwxsZo25zEJG2IsmoTf5Q0SGtJDL7CLOwWr6Bifxy
+ WADYumcEq10NTxqPj46UnSgY537IeDjuoop2cW50zwnS9lYNLgMwV
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Denton,
 
-On Fri, 31 May 2019, Junio C Hamano wrote:
+On Fri, 31 May 2019, Denton Liu wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Fri, May 31, 2019 at 02:58:30PM +0200, Johannes Schindelin wrote:
 >
-> >> The second round of release candidate has been tagged, after slipping
-> >> for several days to merge a handful of last-minute regression fixes.
+> > On Thu, 30 May 2019, Denton Liu wrote:
 > >
-> > You hinted in an earlier "What's cooking" that you'd maybe go for an
-> > -rc3. Is that still the case?
+> > > Currently, if a user wishes to have individual settings per branch,
+> > > they are required to manually keep track of the settings in their
+> > > head and manually set the options on the command-line or change the
+> > > config at each branch.
+> > >
+> > > Teach config the "onbranch:" includeIf condition so that it can
+> > > conditionally include configuration files if the branch is checked
+> > > out in the current worktree.
+> >
+> > What a coincidence. I actually wished for something like this, to have
+> > branch-specific aliases.
+> >
+> > However, I would need this to handle patterns (via `wildmatch()`?)
+> > rather than branch names.
 >
-> That was back when I did not know exactly what shape the tip of 'master'
-> was.  I agree with what you said in your announcement of the Windows
-> port of the -rc2; it seems that the release candidates are in reasonably
-> good shape so far, and perhaps we can do without another round, even
-> though it may be prudent to slip the final for a few days to give enough
-> space between -rc2 and the final.
+> Do you mean that we should be able to match a branch by pattern? So, for
+> example, if we had
+>
+> 	[includeIf "onbranch:mas*"]
+>
+> we'd match if we were on "master"?
 
-Okay! I think we're on the same page.
+Yes, precisely.
 
-Thanks,
+I would use this for the "ever-green" branches of Git for Windows, i.e.
+the branches that are continuously rebasing Git for Windows' branch
+thicket on top of maint, master, next & pu. Those are called
+`shears/maint`, `shears/master`, etc (for historical reasons) in
+https://github.com/git-for-windows/git.
+
+> > > I decided to go ahead and implement the includeIf onbranch semantics
+> > > for fun. For completeness, I'm sending it to the list but I'm not
+> > > really sure if this should get merged, since I don't really have a
+> > > use-case for this, especially if we go the branch-specific
+> > > format-patch config route.
+> > >
+> > > Another thing to note is that this change doesn't completely cover
+> > > all the use-cases that the branch-specific format-patch does. In
+> > > particular, if I run
+> > >
+> > > 	$ git checkout foo
+> > > 	$ git format-patch master..bar
+> > >
+> > > with the `format.bar.*`, we'd get bar-specific configs, whereas with
+> > > `includeIf "onbranch:bar"`, we'd fail to include bar-specific config=
+s
+> > > and, more dangerously, we'd be including foo's configs.
+> >
+> > I actually think that this is fine. "on branch" means that you are on =
+the
+> > specified branch, not that you merely mention the branch name on the
+> > command-line (in which case there would be the ambiguity "did the user
+> > mean `master` or `bar`?").
+>
+> The reason why I brought this up as a use case was because currently,
+> when format-patch generates a cover letter, with the above, it'll use
+> bar's branch description to populate it even if "foo" is checked out. As
+> a result, when implementing the branch-specific format-patch stuff, I
+> wanted to make this consistent so that we wouldn't end up in a situation
+> where the cover letter has the branch's description but is missing its
+> Cc's.
+
+That strikes me as a different use case than `includeIf`. I could imagine
+that you'd want a setting like `formatpatch.detecttargetbranch =3D auto` o=
+r
+some such that would pick up the `format.bar*` settings if there was *one*
+rev argument, and it was a commit range (or a tip commit), *and* it
+obviously referred to a single target branch.
+
+It's just a scenario that is *very* specific to `git format-patch`.
+
+For example, I would not, ever, want `git log ..next` to pick up a
+config specific to `next` just because I mentioned a commit range with
+`range` as the tip to start from.
+
+Ciao,
 Dscho
