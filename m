@@ -7,52 +7,50 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550F71F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 00:41:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DFCC1F462
+	for <e@80x24.org>; Sat,  1 Jun 2019 01:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbfFAAlu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 20:41:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36856 "EHLO
+        id S1726956AbfFABMO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 21:12:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36860 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726518AbfFAAlu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 20:41:50 -0400
+        by vger.kernel.org with ESMTP id S1726804AbfFABMO (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 21:12:14 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1504:7263:609b:f73f])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 960D860100;
-        Sat,  1 Jun 2019 00:41:47 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 06F2360100;
+        Sat,  1 Jun 2019 01:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1559349707;
-        bh=RtFsUFc8yGPD7QTr5YkXvItQQUF9mxdkYowtJmlvjno=;
+        s=default; t=1559351531;
+        bh=b9jufjU+jiU/vQiZlPf0TYkJF9cAO8jyVpt8LhVFX1Y=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=in+XQrB4pWlbvwLvPE4Tm1W6rj8jhB3xghSbmJvAHLKBv6ImRiTyrBYbS7JZYHKuS
-         9HcdSBzL/SsDXsL9bu5QqQ/XgnEtQ1n6/5IYSio8cBLd3NcGw2z9duXw11pujUKC+r
-         pH2KtM4vTpun25L4k4R/keCI5LZa7b52ym+IdasUhvLD8JQqu4bBzNSzcTXttBjzbX
-         4E+hg1yGHfU+fZRMpy6A6u0u0kkuqvzq2Jy9jLh/RoLVwZ3sRdoxmco7pxjbXrXKmG
-         yL0WcyoVsxQBp/oWHssfEIM2xpUPkPSPhMKp57k25V3Ag9KaMih0tlcZpghCOkAdfs
-         7b29s6EODtfTLSXTBhZlCHXvPVT0M4Wzj6RBGv33dpRRt31/3rAeLd2E45jqi/oEAu
-         ICs0RZCKIOmZmWWnYg2d35yfIbpD3rCMRaQr0/YdSJVaqZqd0p6Qkcq+m/KcixIGMU
-         FmkkiG/5BmwoWkn5m2AJfbVXbONE4rSE1UNgD2K1mzUNdPvEOiy
-Date:   Sat, 1 Jun 2019 00:41:43 +0000
+        b=CeXc8oRF86Li/Ri/Ws2PYYyUF+v6a1u2kgkK+Ra78nescLaWDC/Jg4j0ItSQoBjyh
+         HOFLsOMVOZv0fAd5rV7tuGExhldElUtsbW0wEx6mTeOI1ZgMDbu7cXUW+fsLuRKxd3
+         ZhOBQoeIkYSWZRXUpNYm+0Ib7WybOmOEVVqdYRPd59aGPxf1UIZhA1pK9DYyB2sots
+         CpOCXc0rR8ciEknFCxkBKghwUPCJcuWwJ8txy46BZLtPp7uMqE7/70lrMBvmMROPEK
+         2Q08slqWSWb/LrsWeY2N/+BbhCZVyefJ62hk1jVtDyq4kjY+sz/+gPH72Yk9F+E6s5
+         EzrXaGXacdZOh9n/JzuCXpqwMipKwyvr6uOXkZ541T/mynQIaeHJ3i0mmNO+EaIQvF
+         uB8TRCBMHq92cstcj5ZcVIX7pRkioqyh8/3pg8A/duPmu127DJR2MJAkckgfi81L7p
+         qWTGVk6UE8sYtXZ0z+/PfFgmm3fM+izSxOI3YJM7ql3bz6Pb2L2
+Date:   Sat, 1 Jun 2019 01:12:07 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Travis not looking so good
-Message-ID: <20190601004143.GN8616@genre.crustytoothpaste.net>
+To:     Alex Levy <alex.levy@voltserver.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: possible submodule bug?
+Message-ID: <20190601011206.GO8616@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-References: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+        Alex Levy <alex.levy@voltserver.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <BN8PR11MB35711F87B0981C6897DCE3CC89180@BN8PR11MB3571.namprd11.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Vy1A5eXR7jld12ZH"
+        protocol="application/pgp-signature"; boundary="U+NfgObvpQT1Q9Yq"
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <BN8PR11MB35711F87B0981C6897DCE3CC89180@BN8PR11MB3571.namprd11.prod.outlook.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-5-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -63,67 +61,64 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Vy1A5eXR7jld12ZH
+--U+NfgObvpQT1Q9Yq
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2019-05-30 at 19:32:41, Johannes Schindelin wrote:
-> Hi G=C3=A1bor,
+On 2019-05-30 at 18:16:17, Alex Levy wrote:
+> I've found a workaround if I manually edit .git/config in each clone to r=
+eflect the correct URL.  After doing that, running "git submodule update --=
+init" works as expected.
 >=20
-> do you have any idea why Travis is failing like this in the macOS/gcc
-> job?
->=20
-> > +case "$jobname" in
-> > +brew link gcc@8
-> > Error: No such keg: /usr/local/Cellar/gcc@8
-> > The command "ci/install-dependencies.sh" failed and exited with 1 durin=
-g .
->=20
-> I usually only look at the Azure Pipelines (which gives me plenty enough
-> to do, what with pu's individual branches being tested individually), but
-> couldn't fail to notice that *all* four branches (maint, master, next and
-> pu) fail in Travis' macOS/gcc job (and only there, the Azure Pipelines are
-> all green):
->=20
-> https://github.com/git/git/branches/all
->=20
-> What's going on?
+> My understanding is that I shouldn't ever have to edit anything in the .g=
+it directory.  So, have I found a bug with .gitmodules being ignored after =
+adding a given submodule?  Or is this just user error, a case of "Don't do =
+that.  Initialize the submodule with the correct URL and move on."?
 
-I'm certainly not an expert on macOS, so I could be getting things wrong
-here, but it looks like we don't ever explicitly install the gcc@8
-package from Homebrew. It may have happened to be installed
-automatically by Travis in the past, but they may have upgraded now that
-GCC 9 has been released.
+git-submodule(1) documents this behavior under the init subcommand:
 
-I suspect if we want to use GCC 8, we need to explicitly install it by
-using "brew install gcc@8", or we can just pick the latest released GCC
-by using "brew install gcc" if we like that better. We will still need
-to do "brew link gcc" (or "gcc@8"), since I suspect Homebrew won't
-auto-link it since macOS provides a gcc binary.
+  When present, it will also copy the value of `submodule.$name.update`.
+  This command does not alter existing information in .git/config. You
+  can then customize the submodule clone URLs in .git/config for your
+  local setup and proceed to `git submodule update`; you can also just
+  use `git submodule update --init` without the explicit 'init' step if
+  you do not intend to customize any submodule locations.
+
+The goal is to let you customize the URL. For example, maybe you are
+using an open-source project with submodules but you're on a restricted
+corporate network where access to certain sites is prohibited, or maybe
+the server hosting the submodule is down temporarily or permanently.
+
+So this isn't really a bug, but more of a feature, even if it's
+inconvenient in this particular case.
+
+You can, however, use "git submodule sync" to sync across updated
+changes to the URL. This is a bunch easier and faster than editing
+things by hand or with "git config".
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---Vy1A5eXR7jld12ZH
+--U+NfgObvpQT1Q9Yq
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.15 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzxycYACgkQv1NdgR9S
-9ov+RxAAp6bzkU43ib9MVbCK1wP9/FcVVGot+zlrT00uQ1rZwKMJTm91zBen/SuY
-oBMwGQFWItb9ubeK5xJZuMbCuQMKFBaTwS1q4aF7zLYX5dcbTwMR9Tt8nDavp4Rb
-2o6FWZK8kMiciobBro07pWLeFQA8zaMdOIHBU/lRWaQLLa52Sn3mAInpf7ZbQTuW
-30ipdd7l5/uhFTAb51vSX3v7KcjwOMMopvkqSubzlcJQ6NgWtX5k5rcHO/JZO+nk
-8t3PR0V4pLI4AInqHsgy/8tPBJZrKq63BAnuZVg5VW1A2cfjBkkJvsmO+146BumE
-n7aRkWlFRfJv6gbO+zL3h23FZ6hoRWNzhpC5MxfatjLzynksYQdNwEqyDWg2benU
-2CJcVvGz1ieoRn4+6TbzPVfBmTY5mQqrjCzWTYHvobqKWie42B4CFpSsksQHKupg
-7dixg3v5h1cvhMUWaGo0Mhpj7sHBKgQEhx351j7YXr8NWh4wfop4ocvbsQMl4Fs1
-Ku3UWBhhWszDRX3tBKhZ9y1UZxJC06MCRNwHTiLqGgv4NCC68SmjSabLrVJO8qbn
-N4U2UMSpgFHjFEG+kWKkuLPnMdj4ZBsNcvCpc1sc30Eet+2uB+R9Axakf220EBkQ
-Nbe8F1IZvL+36QszPIuGhpg9gOhpDTDzQ4yy3VzcHEyba6Jyr+Q=
-=dYQ4
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzx0OYACgkQv1NdgR9S
+9ouB2RAAz5r+H4leK+hlYR0a7FTfPdWBAGkFOuhpUgJFY68bbzGcrDdG6ZJlHoMB
+f1kQ4pzQ8XdzEr3TnJk8GRQzcKOvs24eXrHsUCiJ1hZbjMWohqofPosJth/TpOPJ
+jfYrvfF4lGKj5gTO8NTplr1f71OH7DOThjc2bqc0vFfNEG2fcNfNaGD8w9BKWorS
+SHFbtFBBID3hGaddjDQ2EFFXADC8wQEIZVhDUFcOPZi0OqMZ++Wm5VqbDvuQIgCZ
+2nMOaOrRrhTEhyUKCAptK/RJSa9xokeGuWD5xqqQPtMPLTIy8Z3SK0Rgti3npp03
+bTVJVgwjYiYFQNKcSu11pXsguX7Lj60EjeCStyqNdD8cpjvC4PRX+ZFx1n0OxOiF
+CcVesM4YuOb+2T4AEC5Dn9yXuovpznphTPKCjaDt906z3wZMU+cX/llpjlDDkO16
+Y9OWi/n1B4+r28WrAkg7BOILVDGD+M1K2CrL6xJhTZOzxZW5mwlV1ebW06gm/V7O
+gZ0V9eL5sK/l+YtuwWdbjoXQB1QhyudiefJ280vtEbYiqsRnAhXOzlUjnlun4Jdg
++B8yH/ml8mBweLs5BkFTePZ4OxijcL45IzD83rKjFGjsY1bFI7O9BFu4KU4/rCIh
+ilQdmXyraYkADhd9xaDOjzDRoduL9govV1F9OLqlcGJMMtrUp2A=
+=kN9Z
 -----END PGP SIGNATURE-----
 
---Vy1A5eXR7jld12ZH--
+--U+NfgObvpQT1Q9Yq--
