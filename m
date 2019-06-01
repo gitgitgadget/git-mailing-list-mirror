@@ -2,123 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DFCC1F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 01:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8871F462
+	for <e@80x24.org>; Sat,  1 Jun 2019 01:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbfFABMO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 21:12:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36860 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726804AbfFABMO (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 21:12:14 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1504:7263:609b:f73f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 06F2360100;
-        Sat,  1 Jun 2019 01:12:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1559351531;
-        bh=b9jufjU+jiU/vQiZlPf0TYkJF9cAO8jyVpt8LhVFX1Y=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=CeXc8oRF86Li/Ri/Ws2PYYyUF+v6a1u2kgkK+Ra78nescLaWDC/Jg4j0ItSQoBjyh
-         HOFLsOMVOZv0fAd5rV7tuGExhldElUtsbW0wEx6mTeOI1ZgMDbu7cXUW+fsLuRKxd3
-         ZhOBQoeIkYSWZRXUpNYm+0Ib7WybOmOEVVqdYRPd59aGPxf1UIZhA1pK9DYyB2sots
-         CpOCXc0rR8ciEknFCxkBKghwUPCJcuWwJ8txy46BZLtPp7uMqE7/70lrMBvmMROPEK
-         2Q08slqWSWb/LrsWeY2N/+BbhCZVyefJ62hk1jVtDyq4kjY+sz/+gPH72Yk9F+E6s5
-         EzrXaGXacdZOh9n/JzuCXpqwMipKwyvr6uOXkZ541T/mynQIaeHJ3i0mmNO+EaIQvF
-         uB8TRCBMHq92cstcj5ZcVIX7pRkioqyh8/3pg8A/duPmu127DJR2MJAkckgfi81L7p
-         qWTGVk6UE8sYtXZ0z+/PfFgmm3fM+izSxOI3YJM7ql3bz6Pb2L2
-Date:   Sat, 1 Jun 2019 01:12:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Alex Levy <alex.levy@voltserver.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: possible submodule bug?
-Message-ID: <20190601011206.GO8616@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alex Levy <alex.levy@voltserver.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <BN8PR11MB35711F87B0981C6897DCE3CC89180@BN8PR11MB3571.namprd11.prod.outlook.com>
+        id S1726988AbfFABMu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 21:12:50 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:43614 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbfFABMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 21:12:50 -0400
+Received: by mail-io1-f65.google.com with SMTP id k20so9726906ios.10
+        for <git@vger.kernel.org>; Fri, 31 May 2019 18:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QKmWrmG2uteOFdK/ZxeDRwW4VfORtAABgRAkkprbjww=;
+        b=VEzBJyRQG6CbldLGGTmkqlEXLKeiGNpQYIKGM/1FPalQpSpGSdGdqBV+/v3d3il67R
+         E/+oIanISK2LOKqhiGebuE0sxU13rH1NuzrRxa0FCEu8LUEwGYdSdj7VZhjIyUrFmcSk
+         tLHkGydWj4EFPIHWyr2TXKWv0sbpjBQHHuaoeplksgkGA0q0/Psic+xIQg9l7yUz/Mdj
+         1Mz1uKuhc3zLAfzQXm7jTRYy10bhZUtlpE0MHhNH/3ZkBueK81fk+V4YJnp9MBaY+ubj
+         2HPrivIoxvstOqe4vvNpduh5VOenH+waNlJ7K7RcFM/RuGztR1vla2fY7GmUU2wt87m8
+         axNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QKmWrmG2uteOFdK/ZxeDRwW4VfORtAABgRAkkprbjww=;
+        b=pPSiAzcHeUtJ1zeTZrfSPI3XxWw8bdw1TQHB9lhSHWxTIjSN69FxscMuRMFhpQul7Z
+         1yTBEbeRYEsN5Z9++ckDFAsSdTyxQHl5n37G6apHiVUHKqj3GJWVdNjn0b/FMz3rS8kO
+         yPN3Y8m0uf3oHdA2+h1RvIsQ6oiczOUTuTFrBU+vxmOFrtz+CRIg40uH13ahfvnMBtT1
+         2q9eLA5C5zbroebUTrxE/j/ABzfE5/9O5EqrN2L5tdjUm80nhbLI/PJJ9t+IHUzft50c
+         2DDcq3QTC+19WV7laKUA4qFayIBEKOtU4oCfnFM0Qel6DIgWEH/mQBW4q4EIv3ArsaGG
+         88Nw==
+X-Gm-Message-State: APjAAAXduC8H1WiCkMTFZfC58PXoAcKdXU3bGhfCWED80x3MOpPRnmkc
+        SGEoff/kn2JNC/6tF0l0ks3ZtwerfEbpbQr40Ps=
+X-Google-Smtp-Source: APXvYqxyWsc0HWhP+qWchBVqHQDrNdvO7ydM8VG6ZCJV6+1lZjSy/paPDdQ4AjSouEoBQPulxxFqtK0AiJ5IfyboIWw=
+X-Received: by 2002:a5d:9d8a:: with SMTP id 10mr8595399ion.179.1559351568880;
+ Fri, 31 May 2019 18:12:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="U+NfgObvpQT1Q9Yq"
-Content-Disposition: inline
-In-Reply-To: <BN8PR11MB35711F87B0981C6897DCE3CC89180@BN8PR11MB3571.namprd11.prod.outlook.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com>
+ <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com>
+ <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com> <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1905291349360.44@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1905291349360.44@tvgsbejvaqbjf.bet>
+From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+Date:   Sat, 1 Jun 2019 09:12:32 +0800
+Message-ID: <CAKO26MtvBRo76TenubyeVNkeA6e5yrS4DZFSLG1ByztP7mMVXw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] status: remove the empty line after hints
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Johannes,
 
---U+NfgObvpQT1Q9Yq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin <Johannes.Schindelin@gmx.de> =E6=96=BC 2019=E5=B9=B45=
+=E6=9C=8829=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=887:51=E5=AF=AB=E9=
+=81=93=EF=BC=9A
+>
+> Hi John Lin,
+>
+> You could already rebase it on top of
+> https://github.com/gitgitgadget/git/tree/nd/switch-and-restore, say so in
+> your cover letter, and send a new iteration.
 
-On 2019-05-30 at 18:16:17, Alex Levy wrote:
-> I've found a workaround if I manually edit .git/config in each clone to r=
-eflect the correct URL.  After doing that, running "git submodule update --=
-init" works as expected.
->=20
-> My understanding is that I shouldn't ever have to edit anything in the .g=
-it directory.  So, have I found a bug with .gitmodules being ignored after =
-adding a given submodule?  Or is this just user error, a case of "Don't do =
-that.  Initialize the submodule with the correct URL and move on."?
+Thanks for the suggestion. I already rebase on your
+nd/switch-and-restore: https://github.com/gitgitgadget/git/pull/196
+However, it seems to have some conflict with the master branch and
+gitgitgadget refused to submit the patch. So I guess I still have to
+wait for the nd/switch-and-restore to resolve the conflict.
 
-git-submodule(1) documents this behavior under the init subcommand:
-
-  When present, it will also copy the value of `submodule.$name.update`.
-  This command does not alter existing information in .git/config. You
-  can then customize the submodule clone URLs in .git/config for your
-  local setup and proceed to `git submodule update`; you can also just
-  use `git submodule update --init` without the explicit 'init' step if
-  you do not intend to customize any submodule locations.
-
-The goal is to let you customize the URL. For example, maybe you are
-using an open-source project with submodules but you're on a restricted
-corporate network where access to certain sites is prohibited, or maybe
-the server hosting the submodule is down temporarily or permanently.
-
-So this isn't really a bug, but more of a feature, even if it's
-inconvenient in this particular case.
-
-You can, however, use "git submodule sync" to sync across updated
-changes to the URL. This is a bunch easier and faster than editing
-things by hand or with "git config".
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---U+NfgObvpQT1Q9Yq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzx0OYACgkQv1NdgR9S
-9ouB2RAAz5r+H4leK+hlYR0a7FTfPdWBAGkFOuhpUgJFY68bbzGcrDdG6ZJlHoMB
-f1kQ4pzQ8XdzEr3TnJk8GRQzcKOvs24eXrHsUCiJ1hZbjMWohqofPosJth/TpOPJ
-jfYrvfF4lGKj5gTO8NTplr1f71OH7DOThjc2bqc0vFfNEG2fcNfNaGD8w9BKWorS
-SHFbtFBBID3hGaddjDQ2EFFXADC8wQEIZVhDUFcOPZi0OqMZ++Wm5VqbDvuQIgCZ
-2nMOaOrRrhTEhyUKCAptK/RJSa9xokeGuWD5xqqQPtMPLTIy8Z3SK0Rgti3npp03
-bTVJVgwjYiYFQNKcSu11pXsguX7Lj60EjeCStyqNdD8cpjvC4PRX+ZFx1n0OxOiF
-CcVesM4YuOb+2T4AEC5Dn9yXuovpznphTPKCjaDt906z3wZMU+cX/llpjlDDkO16
-Y9OWi/n1B4+r28WrAkg7BOILVDGD+M1K2CrL6xJhTZOzxZW5mwlV1ebW06gm/V7O
-gZ0V9eL5sK/l+YtuwWdbjoXQB1QhyudiefJ280vtEbYiqsRnAhXOzlUjnlun4Jdg
-+B8yH/ml8mBweLs5BkFTePZ4OxijcL45IzD83rKjFGjsY1bFI7O9BFu4KU4/rCIh
-ilQdmXyraYkADhd9xaDOjzDRoduL9govV1F9OLqlcGJMMtrUp2A=
-=kN9Z
------END PGP SIGNATURE-----
-
---U+NfgObvpQT1Q9Yq--
+Best,
+John Lin
