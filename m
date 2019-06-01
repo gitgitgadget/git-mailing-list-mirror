@@ -8,263 +8,192 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA2AE1F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 00:36:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44A081F462
+	for <e@80x24.org>; Sat,  1 Jun 2019 00:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727003AbfFAAge (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 20:36:34 -0400
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:41004 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbfFAAge (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 20:36:34 -0400
-Received: by mail-pg1-f202.google.com with SMTP id d7so5808623pgc.8
-        for <git@vger.kernel.org>; Fri, 31 May 2019 17:36:33 -0700 (PDT)
+        id S1727026AbfFAAgh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 20:36:37 -0400
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:40469 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727012AbfFAAgh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 20:36:37 -0400
+Received: by mail-qt1-f202.google.com with SMTP id 37so2081881qtc.7
+        for <git@vger.kernel.org>; Fri, 31 May 2019 17:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=BMPcOqBP2FWjY9Ze5KWmFGtgnrtud6lGYenFifssv5U=;
-        b=czUPca0SPE2y1c781YycjckqJkVVdXYhd+Top1G3czbLMZzAs+mfL73ZdcV+QOfTnf
-         oQVIibZFXblavyPf73eGXPI7nEckw7dN0RcQAYcDhC7ClsghhhsVbEhC2QbYIJNlQ7lQ
-         Q5O7vYxBW9r8kJCk4Z0NXcj8/y3MX+mH92TOrR80knRWfOsjRhXrSYvpq9nRE33tsqQx
-         2OIrMcBtwGVijLOifOo7lnJGw4KjZXWL59KyefuZZtjeJWFW15nMi8DLEKE7pEKsHcAi
-         Mzr+nrbccsZKj5FKJNSWTV3rCtEyNyCsHKHnOa9w9YVJo9Z/i5qGBJ1I17v2/4ZMKn5X
-         4Rjw==
+        bh=yqEWilff9PfEDxnWwsAsf5xmQ2hB/9aS1CJfqlFT+BM=;
+        b=ZT5F9EHOtZSzNdfAkZiB585TIXy8xHTBnTnQeHDA4vsrWS9ro4uHvpvOAEgtI0Ie5L
+         Fb+YHxtBblZWO146riTaTpy14IGQAh7diaK/GwnEqYGlO0FKq0XNxO3gqYBtE1OHOwRM
+         9xHAYJEJQSFnOjfYpe9lMLGbNIZl/tMHB53SCTFE52r589+1RcKW219TPZPbx+UZ06pY
+         BkTvfGZ4OEhtp1ebX/9cPslF9829/O6bt0iC2WYJj5whLYOxdm0Gcw/4u+jpU32mKTgQ
+         NRUjZ6M06Hm0vWc4Vpy0IDPh1Bw//UFvRIeppiI+hBTfHBIS1YtQLR0XVEdyNNvD27xW
+         ZhsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=BMPcOqBP2FWjY9Ze5KWmFGtgnrtud6lGYenFifssv5U=;
-        b=f3N+OuW+Jkbkt2iMHxLnyas18l/pO2aUFZ2tTsr1Y6m/fta/ZTyJjDPZfkqMAXkk/l
-         kiIGIKS4oLEhpAiIZjSjrZ0l8gXckjzijfD/iiOD/cLrOqldhSTlO10QpkKUqFdo4nmJ
-         70mVHIyU+qoYqR5cptbyo5oJFBgv8EcRgu6dQkGwwKAIGXjqul73IMTUPgxGJvitM7+S
-         2Fx3Kk3GLIYvFAYL6UXks8zi1blu8/X1HgjLLqP4pDrVmQCBSme7JIa0nogVLITel31T
-         6QE2rEuWPRzxzF9sNwMYdyIHZgUG58xyOWg0Icvd1e5udfNEx+bUqBXYS8b7cd6JzpG0
-         WtRg==
-X-Gm-Message-State: APjAAAVcdt9VazrxMKau5sr1Ynj8ILZOJj2FW416PNNT0+SfzZE6eNcf
-        jhlkDDV2OgpLsquFJ1MxA1vybATub2BuySsUKEtFbIml7Otz+eHEEUT4inXZpCWSnB20Oh6+fBm
-        dSd0fqp/1pooNBDkkT1WZtGKb59BP/j5Jd2NNzTLNwhVvZMQvy1H3C3VNwIg=
-X-Google-Smtp-Source: APXvYqzleiFjrFmoHAcIX10Rz9F9MiKmIzsJTu/1SL+bekk2rcqUM40kXsYYKrg70xIMc54tmZ/3mSLzD4fg
-X-Received: by 2002:a63:8449:: with SMTP id k70mr12798812pgd.208.1559349393129;
- Fri, 31 May 2019 17:36:33 -0700 (PDT)
-Date:   Fri, 31 May 2019 17:36:01 -0700
+        bh=yqEWilff9PfEDxnWwsAsf5xmQ2hB/9aS1CJfqlFT+BM=;
+        b=rrkSOg1nxTHZ6YDduHh9CI0mrp2PqboW52YlYb1bGEhF3VBg/zxGE2ce1TKmK/OVP7
+         abYb1iYVgsySjrhYS0vKSqyvi91Czd1YVnBwHyrMEA8mP2vk0Ij3232kDZNNjdAEa+mZ
+         2Rti+w8bjdGAy6qH3Owxl5nyBYA3gPohYaI2KNqtNcIOL7DpCQno3G1q6nrme2VSRu+k
+         N7ADHmh656tQNzt3G4yLanxUooAapuUM5KGbeOkb8FEEJGwckhAfzHYQGFs2ow5OsVhX
+         XCJMHAzrcmLPJmZKNHgk71o94oMm0T3ZaX+3gN9uH/553WMHeXdyHNtefCuvEaB6E25E
+         d9zA==
+X-Gm-Message-State: APjAAAWwy8W4y3T6YpNE9A6jnl0PWDLflw9iC07yiqUNrhd9legF1fKu
+        ke52t5ZcbCgGxgwukPrZEcO9pR5U6B7H1FmfZv6QL/8MkA4bGn03lh+iUOlJEOgpFTUHmTLrord
+        YhqauavNebZCm5EdBrDYz2roc+yzJqn6nv9dyQ5tu2tzslAw4m5vp8oArKlc=
+X-Google-Smtp-Source: APXvYqzjpwDYj51paBVkKjnEph+18kggbIr78pcuogrrFhoqi5GLVeyWcSx/Pp/mreSz1U1PLRTF6uCtbf0q
+X-Received: by 2002:a0c:9dc4:: with SMTP id p4mr11784434qvf.69.1559349395813;
+ Fri, 31 May 2019 17:36:35 -0700 (PDT)
+Date:   Fri, 31 May 2019 17:36:02 -0700
 In-Reply-To: <20190601003603.90794-1-matvore@google.com>
-Message-Id: <20190601003603.90794-8-matvore@google.com>
+Message-Id: <20190601003603.90794-9-matvore@google.com>
 Mime-Version: 1.0
 References: <20190601003603.90794-1-matvore@google.com>
 X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [PATCH v2 7/9] list-objects-filter-options: allow mult. --filter
+Subject: [PATCH v2 8/9] list-objects-filter-options: clean up use of ALLOC_GROW
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
         dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
         pclouds@gmail.com, emilyshaffer@google.com
-Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>
+Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow combining of multiple filters by simply repeating the --filter
-flag. Before this patch, the user had to combine them in a single flag
-somewhat awkwardly (e.g. --filter=combine:FOO+BAR), including
-URL-encoding the individual filters.
+Introduce a new macro ALLOC_GROW_BY which automatically zeros the added
+array elements and takes care of updating the nr value. Use the macro in
+code introduced earlier in this patchset.
 
-To make this work, in the --filter flag parsing callback, rather than
-error out when we detect that the filter_options struct is already
-populated, we modify it in-place to contain the added sub-filter. The
-existing sub-filter becomes the lhs of the combined filter, and the
-next sub-filter becomes the rhs. We also have to URL-encode the LHS and
-RHS sub-filters.
-
-We can simplify the operation if the LHS is already a combine: filter.
-In that case, we just append the URL-encoded RHS sub-filter to the LHS
-spec to get the new spec.
-
-Helped-by: Emily Shaffer <emilyshaffer@google.com>
-Helped-by: Jeff Hostetler <git@jeffhostetler.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- Documentation/rev-list-options.txt  | 16 +++++
- list-objects-filter-options.c       | 90 ++++++++++++++++++++++++++---
- list-objects-filter-options.h       | 11 ++++
- t/t5616-partial-clone.sh            | 19 ++++++
- t/t6112-rev-list-filters-objects.sh | 44 ++++++++++++--
- transport.c                         |  1 +
- upload-pack.c                       |  2 +
- 7 files changed, 171 insertions(+), 12 deletions(-)
+ cache.h                       | 22 ++++++++++++++++++++++
+ list-objects-filter-options.c | 17 +++++++----------
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index ddbc1de43f..7b4116f279 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -730,20 +730,36 @@ specification contained in <path>.
- +
- The form '--filter=tree:<depth>' omits all blobs and trees whose depth
- from the root tree is >= <depth> (minimum depth if an object is located
- at multiple depths in the commits traversed). <depth>=0 will not include
- any trees or blobs unless included explicitly in the command-line (or
- standard input when --stdin is used). <depth>=1 will include only the
- tree and blobs which are referenced directly by a commit reachable from
- <commit> or an explicitly-given object. <depth>=2 is like <depth>=1
- while also including trees and blobs one more level removed from an
- explicitly-given commit or tree.
-++
-+Multiple '--filter=' flags can be specified to combine filters. Only
-+objects which are accepted by every filter are included.
-++
-+The form '--filter=combine:<filter1>+<filter2>+...<filterN>' can also be
-+used to combined several filters, but this is harder than just repeating
-+the '--filter' flag and is usually not necessary. Filters are joined by
-+'{plus}' and individual filters are %-encoded (i.e. URL-encoded).
-+Besides the '{plus}' and '%' characters, the following characters are
-+reserved and also must be encoded: `~!@#$^&*()[]{}\;",<>?`+&#39;&#96;+
-+as well as all characters with ASCII code &lt;= `0x20`, which includes
-+space and newline.
-++
-+Other arbitrary characters can also be encoded. For instance,
-+'combine:tree:3+blob:none' and 'combine:tree%3A3+blob%3Anone' are
-+equivalent.
+diff --git a/cache.h b/cache.h
+index fa8ede9a2d..847fbdeff0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -652,33 +652,55 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ void sanitize_stdfds(void);
+ int daemonize(void);
  
- --no-filter::
- 	Turn off any previous `--filter=` argument.
+ #define alloc_nr(x) (((x)+16)*3/2)
  
- --filter-print-omitted::
- 	Only useful with `--filter=`; prints a list of the objects omitted
- 	by the filter.  Object IDs are prefixed with a ``~'' character.
+ /*
+  * Realloc the buffer pointed at by variable 'x' so that it can hold
+  * at least 'nr' entries; the number of entries currently allocated
+  * is 'alloc', using the standard growing factor alloc_nr() macro.
+  *
++ * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
++ * added niceties.
++ *
+  * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
+  */
+ #define ALLOC_GROW(x, nr, alloc) \
+ 	do { \
+ 		if ((nr) > alloc) { \
+ 			if (alloc_nr(alloc) < (nr)) \
+ 				alloc = (nr); \
+ 			else \
+ 				alloc = alloc_nr(alloc); \
+ 			REALLOC_ARRAY(x, alloc); \
+ 		} \
+ 	} while (0)
  
- --missing=<missing-action>::
- 	A debug option to help with future "partial clone" development.
++/*
++ * Similar to ALLOC_GROW but handles updating of the nr value and
++ * zeroing the bytes of the newly-grown array elements.
++ *
++ * DO NOT USE any expression with side-effect for any of the
++ * arguments.
++ */
++#define ALLOC_GROW_BY(x, nr, increase, alloc) \
++	do { \
++		if (increase) { \
++			size_t new_nr = nr + (increase); \
++			if (new_nr < nr) \
++				BUG("negative growth in ALLOC_GROW_BY"); \
++			ALLOC_GROW(x, new_nr, alloc); \
++			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
++			nr = new_nr; \
++		} \
++	} while (0)
++
+ /* Initialize and use the cache information */
+ struct lock_file;
+ void preload_index(struct index_state *index,
+ 		   const struct pathspec *pathspec,
+ 		   unsigned int refresh_flags);
+ int do_read_index(struct index_state *istate, const char *path,
+ 		  int must_exist); /* for testting only! */
+ int read_index_from(struct index_state *, const char *path,
+ 		    const char *gitdir);
+ int is_index_unborn(struct index_state *);
 diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 5687425847..5e98e4a309 100644
+index 5e98e4a309..d8abe6cfcf 100644
 --- a/list-objects-filter-options.c
 +++ b/list-objects-filter-options.c
-@@ -1,18 +1,19 @@
- #include "cache.h"
- #include "commit.h"
- #include "config.h"
- #include "revision.h"
- #include "argv-array.h"
- #include "list-objects.h"
- #include "list-objects-filter.h"
- #include "list-objects-filter-options.h"
-+#include "trace.h"
+@@ -142,26 +142,24 @@ static int has_reserved_character(
+ 	}
+ 
+ 	return 0;
+ }
+ 
+ static int parse_combine_subfilter(
+ 	struct list_objects_filter_options *filter_options,
+ 	struct strbuf *subspec,
+ 	struct strbuf *errbuf)
+ {
+-	size_t new_index = filter_options->sub_nr++;
++	size_t new_index = filter_options->sub_nr;
+ 
+-	ALLOC_GROW(filter_options->sub, filter_options->sub_nr,
+-		   filter_options->sub_alloc);
+-	memset(&filter_options->sub[new_index], 0,
+-	       sizeof(*filter_options->sub));
++	ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
++		      filter_options->sub_alloc);
+ 
+ 	return has_reserved_character(subspec, errbuf) ||
+ 		url_decode(subspec, errbuf) ||
+ 		gently_parse_list_objects_filter(
+ 			&filter_options->sub[new_index], subspec->buf, errbuf);
+ }
  
  static int parse_combine_filter(
  	struct list_objects_filter_options *filter_options,
  	const char *arg,
- 	struct strbuf *errbuf);
+@@ -273,27 +271,26 @@ int parse_list_objects_filter(
+ 		/*
+ 		 * Make filter_options an LOFC_COMBINE spec so we can trivially
+ 		 * add subspecs to it.
+ 		 */
+ 		transform_to_combine_type(filter_options);
  
- /*
-  * Parse value of the argument to the "filter" keyword.
-  * On the command line this looks like:
-  *       --filter=<arg>
-@@ -197,30 +198,105 @@ static int parse_combine_filter(
+ 		strbuf_addstr(&filter_options->filter_spec, "+");
+ 		add_url_encoded(&filter_options->filter_spec, arg);
+ 		trace_printf("Generated composite filter-spec: %s\n",
+ 			     filter_options->filter_spec.buf);
+-		ALLOC_GROW(filter_options->sub, filter_options->sub_nr + 1,
+-			   filter_options->sub_alloc);
+-		filter_options = &filter_options->sub[filter_options->sub_nr++];
+-		memset(filter_options, 0, sizeof(*filter_options));
++		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
++			      filter_options->sub_alloc);
  
- cleanup:
- 	strbuf_list_free(subspecs);
- 	if (result) {
- 		list_objects_filter_release(filter_options);
- 		memset(filter_options, 0, sizeof(*filter_options));
+ 		parse_error = gently_parse_list_objects_filter(
+-			filter_options, arg, &errbuf);
++			&filter_options->sub[filter_options->sub_nr - 1], arg,
++			&errbuf);
  	}
- 	return result;
- }
- 
--int parse_list_objects_filter(struct list_objects_filter_options *filter_options,
--			      const char *arg)
-+static void add_url_encoded(struct strbuf *dest, const char *s)
-+{
-+	while (*s) {
-+		if (*s <= ' ' || strchr(RESERVED_NON_WS, *s) ||
-+			*s == '%' || *s == '+')
-+			strbuf_addf(dest, "%%%02X", (int)*s);
-+		else
-+			strbuf_addf(dest, "%c", *s);
-+		s++;
-+	}
-+}
-+
-+/*
-+ * Changes filter_options into an equivalent LOFC_COMBINE filter options
-+ * instance. Does not do anything if filter_options is already LOFC_COMBINE.
-+ */
-+static void transform_to_combine_type(
-+	struct list_objects_filter_options *filter_options)
-+{
-+	assert(filter_options->choice);
-+	if (filter_options->choice == LOFC_COMBINE)
-+		return;
-+	{
-+		const int initial_sub_alloc = 2;
-+		struct list_objects_filter_options *sub_array =
-+			xcalloc(initial_sub_alloc, sizeof(*sub_array));
-+		sub_array[0] = *filter_options;
-+		memset(filter_options, 0, sizeof(*filter_options));
-+		filter_options->sub = sub_array;
-+		filter_options->sub_alloc = initial_sub_alloc;
-+	}
-+	filter_options->sub_nr = 1;
-+	filter_options->choice = LOFC_COMBINE;
-+	strbuf_init(&filter_options->filter_spec, 0);
-+	strbuf_addstr(&filter_options->filter_spec, "combine:");
-+	add_url_encoded(&filter_options->filter_spec,
-+			filter_options->sub[0].filter_spec.buf);
-+	/*
-+	 * We don't need the filter_spec strings for subfilter specs, only the
-+	 * top level.
-+	 */
-+	strbuf_release(&filter_options->sub[0].filter_spec);
-+}
-+
-+void list_objects_filter_die_if_populated(
-+	struct list_objects_filter_options *filter_options)
- {
--	struct strbuf buf = STRBUF_INIT;
- 	if (filter_options->choice)
- 		die(_("multiple filter-specs cannot be combined"));
--	strbuf_init(&filter_options->filter_spec, 0);
--	strbuf_addstr(&filter_options->filter_spec, arg);
--	if (gently_parse_list_objects_filter(filter_options, arg, &buf))
--		die("%s", buf.buf);
-+}
-+
-+int parse_list_objects_filter(
-+	struct list_objects_filter_options *filter_options,
-+	const char *arg)
-+{
-+	struct strbuf errbuf = STRBUF_INIT;
-+	int parse_error;
-+
-+	if (!filter_options->choice) {
-+		strbuf_init(&filter_options->filter_spec, 0);
-+		strbuf_addstr(&filter_options->filter_spec, arg);
-+
-+		parse_error = gently_parse_list_objects_filter(
-+			filter_options, arg, &errbuf);
-+	} else {
-+		/*
-+		 * Make filter_options an LOFC_COMBINE spec so we can trivially
-+		 * add subspecs to it.
-+		 */
-+		transform_to_combine_type(filter_options);
-+
-+		strbuf_addstr(&filter_options->filter_spec, "+");
-+		add_url_encoded(&filter_options->filter_spec, arg);
-+		trace_printf("Generated composite filter-spec: %s\n",
-+			     filter_options->filter_spec.buf);
-+		ALLOC_GROW(filter_options->sub, filter_options->sub_nr + 1,
-+			   filter_options->sub_alloc);
-+		filter_options = &filter_options->sub[filter_options->sub_nr++];
-+		memset(filter_options, 0, sizeof(*filter_options));
-+
-+		parse_error = gently_parse_list_objects_filter(
-+			filter_options, arg, &errbuf);
-+	}
-+	if (parse_error)
-+		die("%s", errbuf.buf);
+ 	if (parse_error)
+ 		die("%s", errbuf.buf);
  	return 0;
  }
  
@@ -272,275 +201,6 @@ index 5687425847..5e98e4a309 100644
  				  const char *arg, int unset)
  {
  	struct list_objects_filter_options *filter_options = opt->value;
- 
- 	if (unset || !arg) {
- 		list_objects_filter_set_no_filter(filter_options);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index e1e23fd191..f8c8a624e4 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -56,20 +56,31 @@ struct list_objects_filter_options {
- 	struct list_objects_filter_options *sub;
- 
- 	/*
- 	 * END choice-specific parsed values.
- 	 */
- };
- 
- /* Normalized command line arguments */
- #define CL_ARG__FILTER "filter"
- 
-+void list_objects_filter_die_if_populated(
-+	struct list_objects_filter_options *filter_options);
-+
-+/*
-+ * Parses the filter spec string given by arg and either (1) simply places the
-+ * result in filter_options if it is not yet populated or (2) combines it with
-+ * the filter already in filter_options if it is already populated. In the case
-+ * of (2), the filter specs are combined as if specified with 'combine:'.
-+ *
-+ * Dies and prints a user-facing message if an error occurs.
-+ */
- int parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg);
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset);
- 
- #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
- 	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
- 	  N_("object filtering"), 0, \
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 9a8f9886b3..11536f4028 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -201,20 +201,39 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
- 	test_line_count = 70 fetched_objects &&
- 
- 	awk -f print_1.awk fetched_objects |
- 	xargs -n1 git -C dst cat-file -t >fetched_types &&
- 
- 	sort -u fetched_types >unique_types.observed &&
- 	test_write_lines blob commit tree >unique_types.expected &&
- 	test_cmp unique_types.expected unique_types.observed
- '
- 
-+test_expect_success 'implicitly construct combine: filter with repeated flags' '
-+	GIT_TRACE=$(pwd)/trace git clone --bare \
-+		--filter=blob:none --filter=tree:1 \
-+		"file://$(pwd)/srv.bare" pc2 &&
-+	grep "trace:.* git pack-objects .*--filter=combine:blob:none+tree:1" \
-+		trace &&
-+	git -C pc2 rev-list --objects --missing=allow-any HEAD >objects &&
-+
-+	# We should have gotten some root trees.
-+	grep " $" objects &&
-+	# Should not have gotten any non-root trees or blobs.
-+	! grep " ." objects &&
-+
-+	xargs -n 1 git -C pc2 cat-file -t <objects >types &&
-+	sort -u types >unique_types.actual &&
-+	test_write_lines commit tree >unique_types.expected &&
-+	test_cmp unique_types.expected unique_types.actual
-+'
-+
- test_expect_success 'partial clone fetches blobs pointed to by refs even if normally filtered out' '
- 	rm -rf src dst &&
- 	git init src &&
- 	test_commit -C src x &&
- 	test_config -C src uploadpack.allowfilter 1 &&
- 	test_config -C src uploadpack.allowanysha1inwant 1 &&
- 
- 	# Create a tag pointing to a blob.
- 	BLOB=$(echo blob-contents | git -C src hash-object --stdin -w) &&
- 	git -C src tag myblob "$BLOB" &&
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index c36199457d..7fb5e50cde 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -357,21 +357,30 @@ test_expect_success 'verify tree:3 includes everything expected' '
- 
- test_expect_success 'combine:... for a simple combination' '
- 	git -C r3 rev-list --objects --filter=combine:tree:2+blob:none HEAD \
- 		>actual &&
- 
- 	expect_has HEAD "" &&
- 	expect_has HEAD~1 "" &&
- 	expect_has HEAD dir1 &&
- 
- 	# There are also 2 commit objects
--	test_line_count = 5 actual
-+	test_line_count = 5 actual &&
-+
-+	cp actual expected &&
-+
-+	# Try again using repeated --filter - this is equivalent to a manual
-+	# combine with "combine:...+..."
-+	git -C r3 rev-list --objects --filter=combine:tree:2 \
-+		--filter=blob:none HEAD >actual &&
-+
-+	test_cmp expected actual
- '
- 
- test_expect_success 'combine:... with URL encoding' '
- 	git -C r3 rev-list --objects \
- 		--filter=combine:tree%3a2+blob:%6Eon%65 HEAD >actual &&
- 
- 	expect_has HEAD "" &&
- 	expect_has HEAD~1 "" &&
- 	expect_has HEAD dir1 &&
- 
-@@ -435,24 +444,26 @@ test_expect_success 'combine:... with edge-case hex digits: Ff Aa 0 9' '
- 	git -C r3 rev-list --objects --filter="combine:tree%3A2+blob%3anone" \
- 		HEAD >actual &&
- 	test_line_count = 5 actual &&
- 	git -C r3 rev-list --objects --filter="combine:tree:%30" HEAD >actual &&
- 	test_line_count = 2 actual &&
- 	git -C r3 rev-list --objects --filter="combine:tree:%39+blob:none" \
- 		HEAD >actual &&
- 	test_line_count = 5 actual
- '
- 
--test_expect_success 'add a sparse pattern blob whose path has reserved chars' '
-+test_expect_success 'add sparse pattern blobs whose paths have reserved chars' '
- 	cp r3/pattern r3/pattern1+renamed% &&
--	git -C r3 add pattern1+renamed% &&
--	git -C r3 commit -m "add sparse pattern file with reserved chars"
-+	cp r3/pattern "r3/p;at%ter+n" &&
-+	cp r3/pattern r3/^~pattern &&
-+	git -C r3 add pattern1+renamed% "p;at%ter+n" ^~pattern &&
-+	git -C r3 commit -m "add sparse pattern files with reserved chars"
- '
- 
- test_expect_success 'combine:... with more than two sub-filters' '
- 	git -C r3 rev-list --objects \
- 		--filter=combine:tree:3+blob:limit=40+sparse:oid=master:pattern \
- 		HEAD >actual &&
- 
- 	expect_has HEAD "" &&
- 	expect_has HEAD~1 "" &&
- 	expect_has HEAD~2 "" &&
-@@ -463,21 +474,44 @@ test_expect_success 'combine:... with more than two sub-filters' '
- 	# Should also have 3 commits
- 	test_line_count = 9 actual &&
- 
- 	# Try again, this time making sure the last sub-filter is only
- 	# URL-decoded once.
- 	cp actual expect &&
- 
- 	git -C r3 rev-list --objects \
- 		--filter=combine:tree:3+blob:limit=40+sparse:oid=master:pattern1%2brenamed%25 \
- 		HEAD >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	# Use the same composite filter again, but with a pattern file name that
-+	# requires encoding multiple characters, and use implicit filter
-+	# combining.
-+	GIT_TRACE=$(pwd)/trace git -C r3 rev-list --objects \
-+		--filter=tree:3 --filter=blob:limit=40 \
-+		--filter=sparse:oid="master:p;at%ter+n" \
-+		HEAD >actual &&
-+
-+	test_cmp expect actual &&
-+	grep "Generated composite filter-spec: combine:tree:3+blob:limit=40+sparse:oid=master:p%3Bat%25ter%2B" \
-+		trace &&
-+
-+	# Repeat the above test, but this time, the characters to encode are in
-+	# the LHS of the combined filter.
-+	GIT_TRACE=$(pwd)/trace git -C r3 rev-list --objects \
-+		--filter=sparse:oid=master:^~pattern \
-+		--filter=tree:3 --filter=blob:limit=40 \
-+		HEAD >actual &&
-+
-+	test_cmp expect actual &&
-+	grep "Generated composite filter-spec: combine:sparse:oid=master:%5E%7Epattern+tree:3+blob:limit=40" \
-+		trace
- '
- 
- # Test provisional omit collection logic with a repo that has objects appearing
- # at multiple depths - first deeper than the filter's threshold, then shallow.
- 
- test_expect_success 'setup r4' '
- 	git init r4 &&
- 
- 	echo foo > r4/foo &&
- 	mkdir r4/subdir &&
-diff --git a/transport.c b/transport.c
-index f1fcd2c4b0..ee7dd1c062 100644
---- a/transport.c
-+++ b/transport.c
-@@ -217,20 +217,21 @@ static int set_git_option(struct git_transport_options *opts,
- 	} else if (!strcmp(name, TRANS_OPT_DEEPEN_RELATIVE)) {
- 		opts->deepen_relative = !!value;
- 		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_FROM_PROMISOR)) {
- 		opts->from_promisor = !!value;
- 		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_NO_DEPENDENTS)) {
- 		opts->no_dependents = !!value;
- 		return 0;
- 	} else if (!strcmp(name, TRANS_OPT_LIST_OBJECTS_FILTER)) {
-+		list_objects_filter_die_if_populated(&opts->filter_options);
- 		parse_list_objects_filter(&opts->filter_options, value);
- 		return 0;
- 	}
- 	return 1;
- }
- 
- static int connect_setup(struct transport *transport, int for_push)
- {
- 	struct git_transport_data *data = transport->data;
- 	int flags = transport->verbose > 0 ? CONNECT_VERBOSE : 0;
-diff --git a/upload-pack.c b/upload-pack.c
-index 2cdd499f28..16e748ba58 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -877,20 +877,21 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
- 		if (process_deepen(reader->line, &depth))
- 			continue;
- 		if (process_deepen_since(reader->line, &deepen_since, &deepen_rev_list))
- 			continue;
- 		if (process_deepen_not(reader->line, &deepen_not, &deepen_rev_list))
- 			continue;
- 
- 		if (skip_prefix(reader->line, "filter ", &arg)) {
- 			if (!filter_capability_requested)
- 				die("git upload-pack: filtering capability not negotiated");
-+			list_objects_filter_die_if_populated(&filter_options);
- 			parse_list_objects_filter(&filter_options, arg);
- 			continue;
- 		}
- 
- 		if (!skip_prefix(reader->line, "want ", &arg) ||
- 		    parse_oid_hex(arg, &oid_buf, &features))
- 			die("git upload-pack: protocol error, "
- 			    "expected to get object ID, not '%s'", reader->line);
- 
- 		if (parse_feature_request(features, "deepen-relative"))
-@@ -1296,20 +1297,21 @@ static void process_args(struct packet_reader *request,
- 			continue;
- 		if (process_deepen_not(arg, &data->deepen_not,
- 				       &data->deepen_rev_list))
- 			continue;
- 		if (!strcmp(arg, "deepen-relative")) {
- 			data->deepen_relative = 1;
- 			continue;
- 		}
- 
- 		if (allow_filter && skip_prefix(arg, "filter ", &p)) {
-+			list_objects_filter_die_if_populated(&filter_options);
- 			parse_list_objects_filter(&filter_options, p);
- 			continue;
- 		}
- 
- 		if ((git_env_bool("GIT_TEST_SIDEBAND_ALL", 0) ||
- 		     allow_sideband_all) &&
- 		    !strcmp(arg, "sideband-all")) {
- 			data->writer.use_sideband = 1;
- 			continue;
- 		}
 -- 
 2.17.1
 
