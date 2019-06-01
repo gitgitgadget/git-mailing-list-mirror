@@ -2,170 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D2381F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 00:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 550F71F462
+	for <e@80x24.org>; Sat,  1 Jun 2019 00:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbfFAAgj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 20:36:39 -0400
-Received: from mail-ot1-f74.google.com ([209.85.210.74]:41501 "EHLO
-        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbfFAAgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 20:36:38 -0400
-Received: by mail-ot1-f74.google.com with SMTP id z1so5342570oth.8
-        for <git@vger.kernel.org>; Fri, 31 May 2019 17:36:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=qiiN5fs489IzftRbt2WCr2seLgQznoLRsCHpc6K/kbQ=;
-        b=YuJtg2dpZn9NphL5+k7iGUgTOuRAaicMX7A3WvvEpwl3ykedgWUfwZ+sMmr701us/1
-         5TwHvko1vJZSMXDqIrt6N0wDhTNTJ5Nt9YBi4x4b8IaJmuswqLS4YT2ROyxPy+Kz5+Cr
-         yICtD0kwa2dAcacyYj19L8Yq5bpJCzIslKdYK2/cvBgRNgSGDv8jbM4AKrCn/5PvuVMt
-         8Vw4LqFce3XJ4Rf84vw18gdhUmHQyqqcQNp4YiCll0Iyr9/OYkQ9bWKXuRme9r2ynjBj
-         3/+gbzCA1PvHGM3oj6ZQuiMt2rQFM3HZFATxmeI5zCE+vkXhXPUKfRQrGI5IAGM+mGhz
-         dzvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=qiiN5fs489IzftRbt2WCr2seLgQznoLRsCHpc6K/kbQ=;
-        b=A6Y+dXfTUEzedpjHIFYXajDORVL3JDHU5Uspo45MrTcZ7Nnq0lwHyJ/ZnpP0m9UYMj
-         a7mquMkNk/Kr3hT0NS9FH/NnioQGTMwZV1oqbNB84jk9ZtkewKzq/mF3wNnlM2L9NT8b
-         2eYxYACVlUW1CtPgzyFAUVgR7ClKauexZzaKgAO6Q6O5sVUC6FXeJkDXvAwHujDeAC5Q
-         hfD2CEif63nJY1spIyI6HqCBWqoWYBdRZmHsqZ6RwISLPLXie3ilt+LapYNsxgnIwx+s
-         ww6nB9fHMCicHl5m044qS5LtFMPx2k+I1aOt3VH46DPZHgl7k3giH2FHOmoRQTWasN6Y
-         6Rtg==
-X-Gm-Message-State: APjAAAUcMvXHPL7x9V1v62BfOPwa4HSIEaIfDPoU2HhYONCSyGN3yb9O
-        CdcXrJyTjOFh+DjI2/NeGI0lLq+PdAROTl0OveggS3eXHk+ctKyy12u2x6P/BEAUI57prPzv6h7
-        ylUNn069ws/rDSBaCdLyt/y5osC0nhdmIT9cbMtDdRGd1OjFWVepHQcoTDx4=
-X-Google-Smtp-Source: APXvYqxJ7/WTb1MRdwkhycyZ57q6zdM7Tic4yjcsJ2xBY55EfJ5XjyoKReXpA0xhNVqOBX2CSThVDbAeslik
-X-Received: by 2002:aca:5209:: with SMTP id g9mr91242oib.35.1559349398139;
- Fri, 31 May 2019 17:36:38 -0700 (PDT)
-Date:   Fri, 31 May 2019 17:36:03 -0700
-In-Reply-To: <20190601003603.90794-1-matvore@google.com>
-Message-Id: <20190601003603.90794-10-matvore@google.com>
-Mime-Version: 1.0
-References: <20190601003603.90794-1-matvore@google.com>
-X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [PATCH v2 9/9] list-objects-filter-options: make parser void
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
-        dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
-        pclouds@gmail.com, emilyshaffer@google.com
-Cc:     Matthew DeVore <matvore@google.com>, matvore@comcast.net
-Content-Type: text/plain; charset="UTF-8"
+        id S1726748AbfFAAlu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 20:41:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36856 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726518AbfFAAlu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 May 2019 20:41:50 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1504:7263:609b:f73f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 960D860100;
+        Sat,  1 Jun 2019 00:41:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1559349707;
+        bh=RtFsUFc8yGPD7QTr5YkXvItQQUF9mxdkYowtJmlvjno=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=in+XQrB4pWlbvwLvPE4Tm1W6rj8jhB3xghSbmJvAHLKBv6ImRiTyrBYbS7JZYHKuS
+         9HcdSBzL/SsDXsL9bu5QqQ/XgnEtQ1n6/5IYSio8cBLd3NcGw2z9duXw11pujUKC+r
+         pH2KtM4vTpun25L4k4R/keCI5LZa7b52ym+IdasUhvLD8JQqu4bBzNSzcTXttBjzbX
+         4E+hg1yGHfU+fZRMpy6A6u0u0kkuqvzq2Jy9jLh/RoLVwZ3sRdoxmco7pxjbXrXKmG
+         yL0WcyoVsxQBp/oWHssfEIM2xpUPkPSPhMKp57k25V3Ag9KaMih0tlcZpghCOkAdfs
+         7b29s6EODtfTLSXTBhZlCHXvPVT0M4Wzj6RBGv33dpRRt31/3rAeLd2E45jqi/oEAu
+         ICs0RZCKIOmZmWWnYg2d35yfIbpD3rCMRaQr0/YdSJVaqZqd0p6Qkcq+m/KcixIGMU
+         FmkkiG/5BmwoWkn5m2AJfbVXbONE4rSE1UNgD2K1mzUNdPvEOiy
+Date:   Sat, 1 Jun 2019 00:41:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Travis not looking so good
+Message-ID: <20190601004143.GN8616@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+References: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Vy1A5eXR7jld12ZH"
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1905302125190.44@tvgsbejvaqbjf.bet>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-5-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function always returns 0, so make it return void instead.
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- list-objects-filter-options.c | 12 +++++-------
- list-objects-filter-options.h |  2 +-
- 2 files changed, 6 insertions(+), 8 deletions(-)
+--Vy1A5eXR7jld12ZH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index d8abe6cfcf..ed02c88eb6 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -247,21 +247,21 @@ static void transform_to_combine_type(
- 	strbuf_release(&filter_options->sub[0].filter_spec);
- }
- 
- void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options)
- {
- 	if (filter_options->choice)
- 		die(_("multiple filter-specs cannot be combined"));
- }
- 
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg)
- {
- 	struct strbuf errbuf = STRBUF_INIT;
- 	int parse_error;
- 
- 	if (!filter_options->choice) {
- 		strbuf_init(&filter_options->filter_spec, 0);
- 		strbuf_addstr(&filter_options->filter_spec, arg);
- 
-@@ -280,34 +280,32 @@ int parse_list_objects_filter(
- 			     filter_options->filter_spec.buf);
- 		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
- 			      filter_options->sub_alloc);
- 
- 		parse_error = gently_parse_list_objects_filter(
- 			&filter_options->sub[filter_options->sub_nr - 1], arg,
- 			&errbuf);
- 	}
- 	if (parse_error)
- 		die("%s", errbuf.buf);
--	return 0;
- }
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset)
- {
- 	struct list_objects_filter_options *filter_options = opt->value;
- 
--	if (unset || !arg) {
-+	if (unset || !arg)
- 		list_objects_filter_set_no_filter(filter_options);
--		return 0;
--	}
--
--	return parse_list_objects_filter(filter_options, arg);
-+	else
-+		parse_list_objects_filter(filter_options, arg);
-+	return 0;
- }
- 
- void expand_list_objects_filter_spec(
- 	const struct list_objects_filter_options *filter,
- 	struct strbuf *expanded_spec)
- {
- 	strbuf_init(expanded_spec, 0);
- 	if (filter->choice == LOFC_BLOB_LIMIT)
- 		strbuf_addf(expanded_spec, "blob:limit=%lu",
- 			    filter->blob_limit_value);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index f8c8a624e4..2c0ce6383a 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -67,21 +67,21 @@ void list_objects_filter_die_if_populated(
- 	struct list_objects_filter_options *filter_options);
- 
- /*
-  * Parses the filter spec string given by arg and either (1) simply places the
-  * result in filter_options if it is not yet populated or (2) combines it with
-  * the filter already in filter_options if it is already populated. In the case
-  * of (2), the filter specs are combined as if specified with 'combine:'.
-  *
-  * Dies and prints a user-facing message if an error occurs.
-  */
--int parse_list_objects_filter(
-+void parse_list_objects_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg);
- 
- int opt_parse_list_objects_filter(const struct option *opt,
- 				  const char *arg, int unset);
- 
- #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
- 	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
- 	  N_("object filtering"), 0, \
- 	  opt_parse_list_objects_filter }
--- 
-2.17.1
+On 2019-05-30 at 19:32:41, Johannes Schindelin wrote:
+> Hi G=C3=A1bor,
+>=20
+> do you have any idea why Travis is failing like this in the macOS/gcc
+> job?
+>=20
+> > +case "$jobname" in
+> > +brew link gcc@8
+> > Error: No such keg: /usr/local/Cellar/gcc@8
+> > The command "ci/install-dependencies.sh" failed and exited with 1 durin=
+g .
+>=20
+> I usually only look at the Azure Pipelines (which gives me plenty enough
+> to do, what with pu's individual branches being tested individually), but
+> couldn't fail to notice that *all* four branches (maint, master, next and
+> pu) fail in Travis' macOS/gcc job (and only there, the Azure Pipelines are
+> all green):
+>=20
+> https://github.com/git/git/branches/all
+>=20
+> What's going on?
 
+I'm certainly not an expert on macOS, so I could be getting things wrong
+here, but it looks like we don't ever explicitly install the gcc@8
+package from Homebrew. It may have happened to be installed
+automatically by Travis in the past, but they may have upgraded now that
+GCC 9 has been released.
+
+I suspect if we want to use GCC 8, we need to explicitly install it by
+using "brew install gcc@8", or we can just pick the latest released GCC
+by using "brew install gcc" if we like that better. We will still need
+to do "brew link gcc" (or "gcc@8"), since I suspect Homebrew won't
+auto-link it since macOS provides a gcc binary.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--Vy1A5eXR7jld12ZH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.15 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlzxycYACgkQv1NdgR9S
+9ov+RxAAp6bzkU43ib9MVbCK1wP9/FcVVGot+zlrT00uQ1rZwKMJTm91zBen/SuY
+oBMwGQFWItb9ubeK5xJZuMbCuQMKFBaTwS1q4aF7zLYX5dcbTwMR9Tt8nDavp4Rb
+2o6FWZK8kMiciobBro07pWLeFQA8zaMdOIHBU/lRWaQLLa52Sn3mAInpf7ZbQTuW
+30ipdd7l5/uhFTAb51vSX3v7KcjwOMMopvkqSubzlcJQ6NgWtX5k5rcHO/JZO+nk
+8t3PR0V4pLI4AInqHsgy/8tPBJZrKq63BAnuZVg5VW1A2cfjBkkJvsmO+146BumE
+n7aRkWlFRfJv6gbO+zL3h23FZ6hoRWNzhpC5MxfatjLzynksYQdNwEqyDWg2benU
+2CJcVvGz1ieoRn4+6TbzPVfBmTY5mQqrjCzWTYHvobqKWie42B4CFpSsksQHKupg
+7dixg3v5h1cvhMUWaGo0Mhpj7sHBKgQEhx351j7YXr8NWh4wfop4ocvbsQMl4Fs1
+Ku3UWBhhWszDRX3tBKhZ9y1UZxJC06MCRNwHTiLqGgv4NCC68SmjSabLrVJO8qbn
+N4U2UMSpgFHjFEG+kWKkuLPnMdj4ZBsNcvCpc1sc30Eet+2uB+R9Axakf220EBkQ
+Nbe8F1IZvL+36QszPIuGhpg9gOhpDTDzQ4yy3VzcHEyba6Jyr+Q=
+=dYQ4
+-----END PGP SIGNATURE-----
+
+--Vy1A5eXR7jld12ZH--
