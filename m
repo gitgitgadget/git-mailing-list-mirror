@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44A081F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 00:36:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D2381F462
+	for <e@80x24.org>; Sat,  1 Jun 2019 00:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbfFAAgh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 May 2019 20:36:37 -0400
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:40469 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727012AbfFAAgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 May 2019 20:36:37 -0400
-Received: by mail-qt1-f202.google.com with SMTP id 37so2081881qtc.7
-        for <git@vger.kernel.org>; Fri, 31 May 2019 17:36:36 -0700 (PDT)
+        id S1727012AbfFAAgj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 May 2019 20:36:39 -0400
+Received: from mail-ot1-f74.google.com ([209.85.210.74]:41501 "EHLO
+        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726518AbfFAAgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 May 2019 20:36:38 -0400
+Received: by mail-ot1-f74.google.com with SMTP id z1so5342570oth.8
+        for <git@vger.kernel.org>; Fri, 31 May 2019 17:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=yqEWilff9PfEDxnWwsAsf5xmQ2hB/9aS1CJfqlFT+BM=;
-        b=ZT5F9EHOtZSzNdfAkZiB585TIXy8xHTBnTnQeHDA4vsrWS9ro4uHvpvOAEgtI0Ie5L
-         Fb+YHxtBblZWO146riTaTpy14IGQAh7diaK/GwnEqYGlO0FKq0XNxO3gqYBtE1OHOwRM
-         9xHAYJEJQSFnOjfYpe9lMLGbNIZl/tMHB53SCTFE52r589+1RcKW219TPZPbx+UZ06pY
-         BkTvfGZ4OEhtp1ebX/9cPslF9829/O6bt0iC2WYJj5whLYOxdm0Gcw/4u+jpU32mKTgQ
-         NRUjZ6M06Hm0vWc4Vpy0IDPh1Bw//UFvRIeppiI+hBTfHBIS1YtQLR0XVEdyNNvD27xW
-         ZhsQ==
+        bh=qiiN5fs489IzftRbt2WCr2seLgQznoLRsCHpc6K/kbQ=;
+        b=YuJtg2dpZn9NphL5+k7iGUgTOuRAaicMX7A3WvvEpwl3ykedgWUfwZ+sMmr701us/1
+         5TwHvko1vJZSMXDqIrt6N0wDhTNTJ5Nt9YBi4x4b8IaJmuswqLS4YT2ROyxPy+Kz5+Cr
+         yICtD0kwa2dAcacyYj19L8Yq5bpJCzIslKdYK2/cvBgRNgSGDv8jbM4AKrCn/5PvuVMt
+         8Vw4LqFce3XJ4Rf84vw18gdhUmHQyqqcQNp4YiCll0Iyr9/OYkQ9bWKXuRme9r2ynjBj
+         3/+gbzCA1PvHGM3oj6ZQuiMt2rQFM3HZFATxmeI5zCE+vkXhXPUKfRQrGI5IAGM+mGhz
+         dzvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=yqEWilff9PfEDxnWwsAsf5xmQ2hB/9aS1CJfqlFT+BM=;
-        b=rrkSOg1nxTHZ6YDduHh9CI0mrp2PqboW52YlYb1bGEhF3VBg/zxGE2ce1TKmK/OVP7
-         abYb1iYVgsySjrhYS0vKSqyvi91Czd1YVnBwHyrMEA8mP2vk0Ij3232kDZNNjdAEa+mZ
-         2Rti+w8bjdGAy6qH3Owxl5nyBYA3gPohYaI2KNqtNcIOL7DpCQno3G1q6nrme2VSRu+k
-         N7ADHmh656tQNzt3G4yLanxUooAapuUM5KGbeOkb8FEEJGwckhAfzHYQGFs2ow5OsVhX
-         XCJMHAzrcmLPJmZKNHgk71o94oMm0T3ZaX+3gN9uH/553WMHeXdyHNtefCuvEaB6E25E
-         d9zA==
-X-Gm-Message-State: APjAAAWwy8W4y3T6YpNE9A6jnl0PWDLflw9iC07yiqUNrhd9legF1fKu
-        ke52t5ZcbCgGxgwukPrZEcO9pR5U6B7H1FmfZv6QL/8MkA4bGn03lh+iUOlJEOgpFTUHmTLrord
-        YhqauavNebZCm5EdBrDYz2roc+yzJqn6nv9dyQ5tu2tzslAw4m5vp8oArKlc=
-X-Google-Smtp-Source: APXvYqzjpwDYj51paBVkKjnEph+18kggbIr78pcuogrrFhoqi5GLVeyWcSx/Pp/mreSz1U1PLRTF6uCtbf0q
-X-Received: by 2002:a0c:9dc4:: with SMTP id p4mr11784434qvf.69.1559349395813;
- Fri, 31 May 2019 17:36:35 -0700 (PDT)
-Date:   Fri, 31 May 2019 17:36:02 -0700
+        bh=qiiN5fs489IzftRbt2WCr2seLgQznoLRsCHpc6K/kbQ=;
+        b=A6Y+dXfTUEzedpjHIFYXajDORVL3JDHU5Uspo45MrTcZ7Nnq0lwHyJ/ZnpP0m9UYMj
+         a7mquMkNk/Kr3hT0NS9FH/NnioQGTMwZV1oqbNB84jk9ZtkewKzq/mF3wNnlM2L9NT8b
+         2eYxYACVlUW1CtPgzyFAUVgR7ClKauexZzaKgAO6Q6O5sVUC6FXeJkDXvAwHujDeAC5Q
+         hfD2CEif63nJY1spIyI6HqCBWqoWYBdRZmHsqZ6RwISLPLXie3ilt+LapYNsxgnIwx+s
+         ww6nB9fHMCicHl5m044qS5LtFMPx2k+I1aOt3VH46DPZHgl7k3giH2FHOmoRQTWasN6Y
+         6Rtg==
+X-Gm-Message-State: APjAAAUcMvXHPL7x9V1v62BfOPwa4HSIEaIfDPoU2HhYONCSyGN3yb9O
+        CdcXrJyTjOFh+DjI2/NeGI0lLq+PdAROTl0OveggS3eXHk+ctKyy12u2x6P/BEAUI57prPzv6h7
+        ylUNn069ws/rDSBaCdLyt/y5osC0nhdmIT9cbMtDdRGd1OjFWVepHQcoTDx4=
+X-Google-Smtp-Source: APXvYqxJ7/WTb1MRdwkhycyZ57q6zdM7Tic4yjcsJ2xBY55EfJ5XjyoKReXpA0xhNVqOBX2CSThVDbAeslik
+X-Received: by 2002:aca:5209:: with SMTP id g9mr91242oib.35.1559349398139;
+ Fri, 31 May 2019 17:36:38 -0700 (PDT)
+Date:   Fri, 31 May 2019 17:36:03 -0700
 In-Reply-To: <20190601003603.90794-1-matvore@google.com>
-Message-Id: <20190601003603.90794-9-matvore@google.com>
+Message-Id: <20190601003603.90794-10-matvore@google.com>
 Mime-Version: 1.0
 References: <20190601003603.90794-1-matvore@google.com>
 X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [PATCH v2 8/9] list-objects-filter-options: clean up use of ALLOC_GROW
+Subject: [PATCH v2 9/9] list-objects-filter-options: make parser void
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org, jonathantanmy@google.com, jrn@google.com,
         dstolee@microsoft.com, jeffhost@microsoft.com, jrnieder@gmail.com,
@@ -65,142 +65,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a new macro ALLOC_GROW_BY which automatically zeros the added
-array elements and takes care of updating the nr value. Use the macro in
-code introduced earlier in this patchset.
+This function always returns 0, so make it return void instead.
 
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- cache.h                       | 22 ++++++++++++++++++++++
- list-objects-filter-options.c | 17 +++++++----------
- 2 files changed, 29 insertions(+), 10 deletions(-)
+ list-objects-filter-options.c | 12 +++++-------
+ list-objects-filter-options.h |  2 +-
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index fa8ede9a2d..847fbdeff0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -652,33 +652,55 @@ int init_db(const char *git_dir, const char *real_git_dir,
- void sanitize_stdfds(void);
- int daemonize(void);
- 
- #define alloc_nr(x) (((x)+16)*3/2)
- 
- /*
-  * Realloc the buffer pointed at by variable 'x' so that it can hold
-  * at least 'nr' entries; the number of entries currently allocated
-  * is 'alloc', using the standard growing factor alloc_nr() macro.
-  *
-+ * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
-+ * added niceties.
-+ *
-  * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-  */
- #define ALLOC_GROW(x, nr, alloc) \
- 	do { \
- 		if ((nr) > alloc) { \
- 			if (alloc_nr(alloc) < (nr)) \
- 				alloc = (nr); \
- 			else \
- 				alloc = alloc_nr(alloc); \
- 			REALLOC_ARRAY(x, alloc); \
- 		} \
- 	} while (0)
- 
-+/*
-+ * Similar to ALLOC_GROW but handles updating of the nr value and
-+ * zeroing the bytes of the newly-grown array elements.
-+ *
-+ * DO NOT USE any expression with side-effect for any of the
-+ * arguments.
-+ */
-+#define ALLOC_GROW_BY(x, nr, increase, alloc) \
-+	do { \
-+		if (increase) { \
-+			size_t new_nr = nr + (increase); \
-+			if (new_nr < nr) \
-+				BUG("negative growth in ALLOC_GROW_BY"); \
-+			ALLOC_GROW(x, new_nr, alloc); \
-+			memset((x) + nr, 0, sizeof(*(x)) * (increase)); \
-+			nr = new_nr; \
-+		} \
-+	} while (0)
-+
- /* Initialize and use the cache information */
- struct lock_file;
- void preload_index(struct index_state *index,
- 		   const struct pathspec *pathspec,
- 		   unsigned int refresh_flags);
- int do_read_index(struct index_state *istate, const char *path,
- 		  int must_exist); /* for testting only! */
- int read_index_from(struct index_state *, const char *path,
- 		    const char *gitdir);
- int is_index_unborn(struct index_state *);
 diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index 5e98e4a309..d8abe6cfcf 100644
+index d8abe6cfcf..ed02c88eb6 100644
 --- a/list-objects-filter-options.c
 +++ b/list-objects-filter-options.c
-@@ -142,26 +142,24 @@ static int has_reserved_character(
- 	}
- 
- 	return 0;
+@@ -247,21 +247,21 @@ static void transform_to_combine_type(
+ 	strbuf_release(&filter_options->sub[0].filter_spec);
  }
  
- static int parse_combine_subfilter(
- 	struct list_objects_filter_options *filter_options,
- 	struct strbuf *subspec,
- 	struct strbuf *errbuf)
+ void list_objects_filter_die_if_populated(
+ 	struct list_objects_filter_options *filter_options)
  {
--	size_t new_index = filter_options->sub_nr++;
-+	size_t new_index = filter_options->sub_nr;
- 
--	ALLOC_GROW(filter_options->sub, filter_options->sub_nr,
--		   filter_options->sub_alloc);
--	memset(&filter_options->sub[new_index], 0,
--	       sizeof(*filter_options->sub));
-+	ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
-+		      filter_options->sub_alloc);
- 
- 	return has_reserved_character(subspec, errbuf) ||
- 		url_decode(subspec, errbuf) ||
- 		gently_parse_list_objects_filter(
- 			&filter_options->sub[new_index], subspec->buf, errbuf);
+ 	if (filter_options->choice)
+ 		die(_("multiple filter-specs cannot be combined"));
  }
  
- static int parse_combine_filter(
+-int parse_list_objects_filter(
++void parse_list_objects_filter(
  	struct list_objects_filter_options *filter_options,
- 	const char *arg,
-@@ -273,27 +271,26 @@ int parse_list_objects_filter(
- 		/*
- 		 * Make filter_options an LOFC_COMBINE spec so we can trivially
- 		 * add subspecs to it.
- 		 */
- 		transform_to_combine_type(filter_options);
+ 	const char *arg)
+ {
+ 	struct strbuf errbuf = STRBUF_INIT;
+ 	int parse_error;
  
- 		strbuf_addstr(&filter_options->filter_spec, "+");
- 		add_url_encoded(&filter_options->filter_spec, arg);
- 		trace_printf("Generated composite filter-spec: %s\n",
+ 	if (!filter_options->choice) {
+ 		strbuf_init(&filter_options->filter_spec, 0);
+ 		strbuf_addstr(&filter_options->filter_spec, arg);
+ 
+@@ -280,34 +280,32 @@ int parse_list_objects_filter(
  			     filter_options->filter_spec.buf);
--		ALLOC_GROW(filter_options->sub, filter_options->sub_nr + 1,
--			   filter_options->sub_alloc);
--		filter_options = &filter_options->sub[filter_options->sub_nr++];
--		memset(filter_options, 0, sizeof(*filter_options));
-+		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
-+			      filter_options->sub_alloc);
+ 		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
+ 			      filter_options->sub_alloc);
  
  		parse_error = gently_parse_list_objects_filter(
--			filter_options, arg, &errbuf);
-+			&filter_options->sub[filter_options->sub_nr - 1], arg,
-+			&errbuf);
+ 			&filter_options->sub[filter_options->sub_nr - 1], arg,
+ 			&errbuf);
  	}
  	if (parse_error)
  		die("%s", errbuf.buf);
- 	return 0;
+-	return 0;
  }
  
  int opt_parse_list_objects_filter(const struct option *opt,
  				  const char *arg, int unset)
  {
  	struct list_objects_filter_options *filter_options = opt->value;
+ 
+-	if (unset || !arg) {
++	if (unset || !arg)
+ 		list_objects_filter_set_no_filter(filter_options);
+-		return 0;
+-	}
+-
+-	return parse_list_objects_filter(filter_options, arg);
++	else
++		parse_list_objects_filter(filter_options, arg);
++	return 0;
+ }
+ 
+ void expand_list_objects_filter_spec(
+ 	const struct list_objects_filter_options *filter,
+ 	struct strbuf *expanded_spec)
+ {
+ 	strbuf_init(expanded_spec, 0);
+ 	if (filter->choice == LOFC_BLOB_LIMIT)
+ 		strbuf_addf(expanded_spec, "blob:limit=%lu",
+ 			    filter->blob_limit_value);
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index f8c8a624e4..2c0ce6383a 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -67,21 +67,21 @@ void list_objects_filter_die_if_populated(
+ 	struct list_objects_filter_options *filter_options);
+ 
+ /*
+  * Parses the filter spec string given by arg and either (1) simply places the
+  * result in filter_options if it is not yet populated or (2) combines it with
+  * the filter already in filter_options if it is already populated. In the case
+  * of (2), the filter specs are combined as if specified with 'combine:'.
+  *
+  * Dies and prints a user-facing message if an error occurs.
+  */
+-int parse_list_objects_filter(
++void parse_list_objects_filter(
+ 	struct list_objects_filter_options *filter_options,
+ 	const char *arg);
+ 
+ int opt_parse_list_objects_filter(const struct option *opt,
+ 				  const char *arg, int unset);
+ 
+ #define OPT_PARSE_LIST_OBJECTS_FILTER(fo) \
+ 	{ OPTION_CALLBACK, 0, CL_ARG__FILTER, fo, N_("args"), \
+ 	  N_("object filtering"), 0, \
+ 	  opt_parse_list_objects_filter }
 -- 
 2.17.1
 
