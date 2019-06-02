@@ -2,90 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF43E1F462
-	for <e@80x24.org>; Sun,  2 Jun 2019 11:04:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 407B01F462
+	for <e@80x24.org>; Sun,  2 Jun 2019 11:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbfFBLE2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Jun 2019 07:04:28 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:43671 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbfFBLE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jun 2019 07:04:28 -0400
-Received: by mail-wr1-f47.google.com with SMTP id r18so354746wrm.10
-        for <git@vger.kernel.org>; Sun, 02 Jun 2019 04:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=i+fJKCrQ4nf46crTTk/Wan1TLLGiDIZUjLoBuvi2cUE=;
-        b=sIJrfDVM/fsyklC6YlcS3iGigeFbFkXKM4BuXh4g6dHr+ZyEXE2xY9yvXSd2T8+xdC
-         hX137ZQ+3vjfBS/xvmhX7BZcf9kDAS1HFemBeuUKJqJ61kW8v+qEmMcTS8kZl+sqd0+V
-         wn3RQfHokh4FF0QLiNHJRQsJVzdos9xj6Yh+zU5FKInNcVsNYzp/b1Ap1fVDMuX9BLQX
-         +Lndz3Ft7vHVCeAWSGK2HtwQ3klQJn1Dtt/6g+y4gkmbqs4QyEvFnn3xxJUbPYgl3YwP
-         FxjM9tjHq/nHh6Rg9oOdB1ipfpAOoStw3gIMcjdww1PPCmrIQifilICxeh3BMWXjpNcZ
-         M3QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=i+fJKCrQ4nf46crTTk/Wan1TLLGiDIZUjLoBuvi2cUE=;
-        b=jml1BO4Vr506qNuKubgvvT8CnRqUQogSITbTpD9ZKUrUHv3YmgZq21onI6VUXpyWVg
-         QJoSiGbPLV8yy2kpQ8YRmdn3P4ZNmRYZrFuqhxJ3wjNAIEA9p3BJP6ZLseH4rE4Q0Ykc
-         l3ZB1oHNu8ffeIQ8xESbpA3UTtYEOpzCWsFRYWTBVovJ/ASn9fnsG/c/zCp/wwCRdN5x
-         BCb1vlPos17EPmYLX4kXH8Lh/iBgN4YkCSR1gnifmB7wV8gBWEfwTSSn08kgQ5h6G8cN
-         dlp3QjvqRCVkrzSvOHqRZfDCtdzOvdSCO5Su9LLx74WpdxbZ/VyjtvsQTaD3U+ytH4Ln
-         WTEA==
-X-Gm-Message-State: APjAAAV2U1zGFZp5duuIY5c7sbiB339cXYSjLQ09jXROAxLXcmYx/Yyc
-        B77ghqeP+ZJLegBjDbtAYYvVLqHS
-X-Google-Smtp-Source: APXvYqwDK1HdzFf9xwe9E0yIfev9vZGggGjW82x0qbvAQnKtreTLqQe8ZezCdqPUQO/oFb7ZRAIDoA==
-X-Received: by 2002:a5d:68cd:: with SMTP id p13mr12721217wrw.0.1559473466105;
-        Sun, 02 Jun 2019 04:04:26 -0700 (PDT)
-Received: from andromeda.localnet ([80.215.95.183])
-        by smtp.gmail.com with ESMTPSA id v184sm21120486wma.6.2019.06.02.04.04.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 02 Jun 2019 04:04:25 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
+        id S1726270AbfFBLTJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Jun 2019 07:19:09 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:53019 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbfFBLTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jun 2019 07:19:09 -0400
+Received: from [192.168.1.22] ([78.148.161.28])
+        by smtp.talktalk.net with SMTP
+        id XOW2hoQGwdraxXOW2hJwkV; Sun, 02 Jun 2019 12:19:07 +0100
+X-Originating-IP: [78.148.161.28]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
+ a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=eVKDs-1nHTYKp73fY14A:9 a=QEXdDO2ut3YA:10
+Subject: Re: Why is there still git-rebase--am.sh?
+To:     Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Why is there still git-rebase--am.sh?
-Date:   Sun, 02 Jun 2019 13:04:15 +0200
-Message-ID: <3322453.bNc8J3RWDa@andromeda>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <3322453.bNc8J3RWDa@andromeda>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <ab655637-bb6d-436d-a822-31fa1a9495ed@iee.org>
+Date:   Sun, 2 Jun 2019 12:19:08 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <3322453.bNc8J3RWDa@andromeda>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfJYgyc+eZS4mvh8mnVibltBkDfBpgoXOXL645o/OyDd6Lgn6ZcTLoOhxRqKAgELpIx3tySpwLCCaTyZB37oSgdlntT9AI9WgCdvO5180Mtp1IJNK91wn
+ h5azqklDnMo2z5uOCbd5hE4heiM3/nQLin/aZr8T2ZCUFAg36S1H4w8CP/Q3JxDwH2HcFV9vO/PWYlWQzgqieQonC/6Vo9EBKuiB70d5Zosj0BzH3ZRD5jsv
+ EEVXRAxDHNTkYKgDiEdfQ/Om+T27hjtzMbj0sXoE968=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Alban,
 
-I was wandering in rebase=E2=80=99s source code, and found out that even th=
-ough=20
-run_specific_rebase() no longer calls git-rebase--am.sh since 21853626ea=20
-("built-in rebase: call `git am` directly", 2019-01-18), this commit did no=
-t=20
-remove the code to call it.  I guess it was an oversight.
-
-Now that git-legacy-rebase.sh is gone (since d03ebd411c, "rebase: remove th=
-e=20
-rebase.useBuiltin setting", 2019-03-18), I would expect this file to be=20
-completely removed, too.
-
-May I send a patch to remove git-rebase--am.sh, or is there a reason to kee=
-p=20
-it?
-
-Cheers,
-Alban
-
-
-
-
+On 02/06/2019 12:04, Alban Gruin wrote:
+> Hi,
+>
+> I was wandering in rebase’s source code, and found out that even though
+> run_specific_rebase() no longer calls git-rebase--am.sh since 21853626ea
+> ("built-in rebase: call `git am` directly", 2019-01-18), this commit did not
+> remove the code to call it.  I guess it was an oversight.
+>
+> Now that git-legacy-rebase.sh is gone (since d03ebd411c, "rebase: remove the
+> rebase.useBuiltin setting", 2019-03-18), I would expect this file to be
+> completely removed, too.
+>
+> May I send a patch to remove git-rebase--am.sh, or is there a reason to keep
+> it?
+>
+>
+What's cooking (May 2019, #05; Thu, 30) has it in js/rebase-cleanup 
+(2019-05-15) 5 commits, and will be cooked in next.
+Philip
