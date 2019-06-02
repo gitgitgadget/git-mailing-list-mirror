@@ -7,41 +7,42 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF6B1F462
-	for <e@80x24.org>; Sun,  2 Jun 2019 07:07:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 553B41F462
+	for <e@80x24.org>; Sun,  2 Jun 2019 07:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbfFBHH5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Jun 2019 03:07:57 -0400
-Received: from mail-ua1-f51.google.com ([209.85.222.51]:36380 "EHLO
-        mail-ua1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfFBHH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jun 2019 03:07:56 -0400
-Received: by mail-ua1-f51.google.com with SMTP id 94so5386354uam.3
-        for <git@vger.kernel.org>; Sun, 02 Jun 2019 00:07:56 -0700 (PDT)
+        id S1726136AbfFBH1g (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Jun 2019 03:27:36 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:38855 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbfFBH1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jun 2019 03:27:36 -0400
+Received: by mail-ua1-f66.google.com with SMTP id j2so1511926uaq.5
+        for <git@vger.kernel.org>; Sun, 02 Jun 2019 00:27:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=h683FC4S5lyJ6047H1RbK6fOXJMFXdmTv184ut8iEes=;
-        b=HnfdjXqLZxChDMJMjD6BCNUWGNna0z3O2BoQZXpkyzIuVW17HsMr8TyuvsCj88mKNw
-         7SZX6bXf3pCdq64b1fVog4WLfjayrv5yBepWIPfc7apyhgkOhkLgaExo1zCDhFPmZs9g
-         v1KbvpPxf838xS9Q76MbkOWLGhjuIRXEliTt0d4RmUcE5IQatO7aMx3QXN0eNoJgOxcm
-         2lDNIlTlkDkl+zEopfGo43eAW7FRyBu6zVoTJRXM5/togy48yzzvk8npuDaopYmaKFx5
-         5rRP7jfhKQoT6GehapOK//1BgauSrlg+UYAVaJGKoLR2EHglqj6hgh/QRcLRFVDZ5jr7
-         TEOg==
-X-Gm-Message-State: APjAAAU79kd6hq8loSEZRY3a4xJGeiKCgewlgaoykDMTO7RbL/JsV4my
-        d+iR26qBPyZZ11pxwY/isc5Ow4cldBAFrYDxxmA=
-X-Google-Smtp-Source: APXvYqx3Vb7sOTsPpMhH9gv6A2pwPvyCljU91Btp2c/5Mnd1GqwlklydvjTt3wqDMfAoFF28Py/KFE1wga+YaVSX0yo=
-X-Received: by 2002:ab0:b87:: with SMTP id c7mr3522655uak.101.1559459275635;
- Sun, 02 Jun 2019 00:07:55 -0700 (PDT)
+        bh=xOsAbkjeu3T5BZicounraXrItw8D3fVXlEZoVEkja/c=;
+        b=XEz/PxYYKx6eMnYYMURCqDVMZV6iMkv1iTZYwLpBiAPnGcQWbxNN/pIcWwBzgsN1wn
+         7vgFpTKEMdm2GeCgQw2MbkK4CC/4kr4/JBSFyYlqb+hRwy6ygqh/xmI8/tCwnuJvu/G1
+         6gXlUKmMof5pt2zUGjJzXVhxOJzZ9ofNHIRHE+8aeb4HeSsUAXFT2dHi9HApD19kA1yL
+         W3DWxvRA9YRhI1xfFWpG6zF2g7JCujGS6NiEXl3OJJuEk87cdmPv5Hw72W9DeJAIfnA0
+         EjzCqoiQLHM91wkifmdQ/BnjM/CJj7ipjgTpPDsIlVbubWJOpFWEv3QsV53/EWF52VWe
+         pJww==
+X-Gm-Message-State: APjAAAUurrTrBdMvJeJlq9XdZf6V+YNM/A+1ZS1WEiuTJX2885RDYUAq
+        j3ZUlmdAyuoRQ/1aHKl05urpLJb97jWIFo3qLiEACA==
+X-Google-Smtp-Source: APXvYqwgePj7ieK0XnTINUwAWa6kFANJDG1IPUmrQ+10UUSjN6vIvSCG03JRCBrYaHyi7hvD/P0SU5/DN124UdiBLeA=
+X-Received: by 2002:ab0:67c3:: with SMTP id w3mr5594181uar.68.1559457244612;
+ Sat, 01 Jun 2019 23:34:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <ad2ff81a-d75e-1ac4-07d0-c807a2ed9e36@gmx.de>
-In-Reply-To: <ad2ff81a-d75e-1ac4-07d0-c807a2ed9e36@gmx.de>
+References: <20190601201212.19165-1-zombieleetnca@gmail.com>
+In-Reply-To: <20190601201212.19165-1-zombieleetnca@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 2 Jun 2019 03:07:45 -0400
-Message-ID: <CAPig+cSsNQDe-3GLnmvA+EPior=RSPETJDjkCc7X1qi6gWSGDQ@mail.gmail.com>
-Subject: Re: worktree add already exists
-To:     Ingo Wolf <ingo.wolf@gmx.de>
+Date:   Sun, 2 Jun 2019 02:33:54 -0400
+Message-ID: <CAPig+cQ4+nCLfrh2s76_RbLuGCOt7C3xu9HoSQstAeB585vZBA@mail.gmail.com>
+Subject: Re: [RFC PATCH] doc: change 'The standard email format' to 'The
+ standard date format'
+To:     Victory Osikwemhe <zombieleetnca@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -49,50 +50,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 27, 2019 at 11:32 AM Ingo Wolf <ingo.wolf@gmx.de> wrote:
-> $ ls -a barework
-> ./  ../  test.txt
-> $ git -C bare worktree add --no-checkout ../barework
-> Preparing worktree (new branch 'barework')
-> fatal: '../barework' already exists
-> $ git -C bare branch
->    barework
-> * master
-> Why this doesn't just work and if not why is barework branch made then,
-> why at all ?
+On Sat, Jun 1, 2019 at 4:12 PM Victory Osikwemhe
+<zombieleetnca@gmail.com> wrote:
+> The current content of date-formats.txt under the RFC 2822 section
+> specifies 'The standard email format' whereas the format specified
+> is a date format
+>
+> Signed-off-by: Victory Osikwemhe <zombieleetnca@gmail.com>
+> ---
+> diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+> @@ -14,7 +14,7 @@ Git internal format::
+>  RFC 2822::
+> -       The standard email format as described by RFC 2822, for example
+> +       The standard date format as described by RFC 2822, for example
+>         `Thu, 07 Apr 2005 22:13:13 +0200`.
 
-It is by design that "git worktree add" (in general) fails if the
-target directory already exists and is non-empty. This is consistent
-with how "git clone" behaves. As for why your particular use-case
-isn't directly supported, it's likely that nobody has yet asked for
-it, and nobody thought about this particular case when --no-checkout
-was added (which came some time after basic "git worktree add" itself
-was implemented).
+Given that not everyone is going to know (or be motivated to discover)
+that RFC 2822 is about email, I wonder if this change could make the
+text even more self-describing by instead saying this:
 
-It is an accident of implementation that the new branch gets created
-before "git worktree add" errors out due to the existing non-empty
-directory (and, likely, nobody complained about it, so it went
-unnoticed). This particular issue probably can be easily fixed now
-that the logic for checking if the target directory can be a valid
-worktree has been factored out of the code which actually creates the
-new directory[1].
-
-[1]: 45059e6468 (worktree: prepare for more checks of whether path can
-become worktree, 2018-08-28)
-
-> I would like to attach an existing dir to git (make it a workdir) and
-> then update the index with git reset and checkin the differences.
-
-I haven't thought through the possible ramifications, but the actual
-implementation might be as simple as changing this code in
-builtin/worktree.c:validate_worktree_add():
-
-    if (file_exists(path) && !is_empty_dir(path))
-        die(_("'%s' already exists"), path);
-
-to:
-
-    if (opts->checkout && file_exists(path) && !is_empty_dir(path))
-        die(_("'%s' already exists"), path);
-
-or something.
+    The standard email date format ...
