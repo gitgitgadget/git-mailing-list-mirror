@@ -2,112 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE091F462
-	for <e@80x24.org>; Sat,  1 Jun 2019 21:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF6B1F462
+	for <e@80x24.org>; Sun,  2 Jun 2019 07:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726246AbfFAVWW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jun 2019 17:22:22 -0400
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:46770 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726195AbfFAVWV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jun 2019 17:22:21 -0400
-Received: by mail-qt1-f175.google.com with SMTP id z19so5263202qtz.13
-        for <git@vger.kernel.org>; Sat, 01 Jun 2019 14:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=platin-gs.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jR2J8yi1jz0SRs9eGYkwvLJ4/H98H8mztM9h/UsBRH8=;
-        b=vl8q/6T8HxWUhzItU6V178QNU5qcYK43RhQpSn6Va8P/cB5zva0RLIdBzM/bLfj1R8
-         g5GAfXHImm1mcdHP4pnwFpIWxFYWnPI9uotdabpnx27tHYMlvDXBqxH8w974uBWGE4zt
-         5YUrxTV9XJvLNcYeWDVJGB9/LXwXminQ9vp6TDUeAxyBp/couDJlaFWrS5dT2dGj0k21
-         4JvIWqWOlpRap6yC0ETRqoegPcv3eEyDQy0QwR9JcL06dGDaU3I2jbn6CxlqA0DwJpAD
-         i02Xjw1V+czW7plNBcRt6WqQKDywYR3e/qr48ycy3N1EYX7t8KdFy1XJ1ZwHfY0XRzgk
-         i3Sw==
+        id S1726292AbfFBHH5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Jun 2019 03:07:57 -0400
+Received: from mail-ua1-f51.google.com ([209.85.222.51]:36380 "EHLO
+        mail-ua1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbfFBHH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jun 2019 03:07:56 -0400
+Received: by mail-ua1-f51.google.com with SMTP id 94so5386354uam.3
+        for <git@vger.kernel.org>; Sun, 02 Jun 2019 00:07:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jR2J8yi1jz0SRs9eGYkwvLJ4/H98H8mztM9h/UsBRH8=;
-        b=kBcDk9IOkrCwGBiq724l3GTuh2eXE41mYgDS9eCPQo2+6OVRfx8kPhnYsnwOYrTz+W
-         likaNjLAj025ts9PvdTTQBIEp4BwDoKoSnRvDzmrAaYMc2HJ9X+Go1EeqmSk3aiBZ13o
-         dDxiqHPuGW0Io7UbT1zm9VxPU4K6mKu3bJXRAUdLqCbtjowYIJhyAZDLEnCuKTZexBmj
-         aLVX+ZOXl2VUNp+xP88qU2iGDxYsHlLtsThwRMoFcGkX0KeFbm9wuzwovgXWag5ipV/s
-         R7TlGJRuVp6Bv8lHu6+xJdD1MOZRBl268fbUI4sHbXZZi2MQQ7ITzavLeobXD644ZMQx
-         Tstg==
-X-Gm-Message-State: APjAAAXxVZigSHNdWWj3/HI3SqTWZeg2NFmcggdanA6sL9lVB+amYFZS
-        2s2f+0l1TAL4Ns2iPZpvLpj13FSu1ODgw88ofs4=
-X-Google-Smtp-Source: APXvYqz7kJlziIXbLNr0bCg+4YX6rIGcVjAAnpZirTHplWive4u7Lvs/UF5uqv8uJsFchmRJND+NoFdkOsRPcSnsO7o=
-X-Received: by 2002:aed:3e0f:: with SMTP id l15mr16549861qtf.251.1559424140667;
- Sat, 01 Jun 2019 14:22:20 -0700 (PDT)
+        bh=h683FC4S5lyJ6047H1RbK6fOXJMFXdmTv184ut8iEes=;
+        b=HnfdjXqLZxChDMJMjD6BCNUWGNna0z3O2BoQZXpkyzIuVW17HsMr8TyuvsCj88mKNw
+         7SZX6bXf3pCdq64b1fVog4WLfjayrv5yBepWIPfc7apyhgkOhkLgaExo1zCDhFPmZs9g
+         v1KbvpPxf838xS9Q76MbkOWLGhjuIRXEliTt0d4RmUcE5IQatO7aMx3QXN0eNoJgOxcm
+         2lDNIlTlkDkl+zEopfGo43eAW7FRyBu6zVoTJRXM5/togy48yzzvk8npuDaopYmaKFx5
+         5rRP7jfhKQoT6GehapOK//1BgauSrlg+UYAVaJGKoLR2EHglqj6hgh/QRcLRFVDZ5jr7
+         TEOg==
+X-Gm-Message-State: APjAAAU79kd6hq8loSEZRY3a4xJGeiKCgewlgaoykDMTO7RbL/JsV4my
+        d+iR26qBPyZZ11pxwY/isc5Ow4cldBAFrYDxxmA=
+X-Google-Smtp-Source: APXvYqx3Vb7sOTsPpMhH9gv6A2pwPvyCljU91Btp2c/5Mnd1GqwlklydvjTt3wqDMfAoFF28Py/KFE1wga+YaVSX0yo=
+X-Received: by 2002:ab0:b87:: with SMTP id c7mr3522655uak.101.1559459275635;
+ Sun, 02 Jun 2019 00:07:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <2fb43bd3-71a7-fd92-e9b8-43e4eeed34cd@gmail.com> <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-In-Reply-To: <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-From:   Michael Platings <michael@platin.gs>
-Date:   Sat, 1 Jun 2019 22:22:09 +0100
-Message-ID: <CAJDYR9QAWVJxn7cf1DQbnZTKeSGJPCXcTJT9FVNEDpf1bimtGg@mail.gmail.com>
-Subject: Re: Git Test Coverage Report (Thursday, May 30th)
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>,
-        Barret Rhoden <brho@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+References: <ad2ff81a-d75e-1ac4-07d0-c807a2ed9e36@gmx.de>
+In-Reply-To: <ad2ff81a-d75e-1ac4-07d0-c807a2ed9e36@gmx.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 2 Jun 2019 03:07:45 -0400
+Message-ID: <CAPig+cSsNQDe-3GLnmvA+EPior=RSPETJDjkCc7X1qi6gWSGDQ@mail.gmail.com>
+Subject: Re: worktree add already exists
+To:     Ingo Wolf <ingo.wolf@gmx.de>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks very much for this Derrick. I looked into it and it turns out
-that the missing coverage in blame.c for "certainties[i] =
-CERTAINTY_NOT_CALCULATED" was due to earlier code overwriting the same
-value in most cases, thereby defeating an optimization. I've deleted
-that earlier code and now coverage is as expected. I posted the patch
-here: https://public-inbox.org/git/20190601210925.15339-1-michael@platin.gs/T/#u
-I also deleted the other uncovered code that appeared in the same
-patch as it was unreachable.
+On Mon, May 27, 2019 at 11:32 AM Ingo Wolf <ingo.wolf@gmx.de> wrote:
+> $ ls -a barework
+> ./  ../  test.txt
+> $ git -C bare worktree add --no-checkout ../barework
+> Preparing worktree (new branch 'barework')
+> fatal: '../barework' already exists
+> $ git -C bare branch
+>    barework
+> * master
+> Why this doesn't just work and if not why is barework branch made then,
+> why at all ?
 
-> On 5/30/2019 8:52 AM, Derrick Stolee wrote:
-> > blame.c
-> > 170072f9 846)     (result[i] >= most_certain_line_a ||
-> > 170072f9 847)      second_best_result[i] >= most_certain_line_a)) {
-> > 170072f9 848) certainties[i] = CERTAINTY_NOT_CALCULATED;
->
-> This section appears in the following block:
->
->         /* More invalidating of results that may be affected by the choice of
->          * most certain line.
->          * Discard the matches for lines in B that are currently matched with a
->          * line in A such that their ordering contradicts the ordering imposed
->          * by the choice of most certain line.
->          */
->         for (i = most_certain_local_line_b - 1; i >= invalidate_min; --i) {
->                 /* In this loop we discard results for lines in B that are
->                  * before most-certain-line-B but are matched with a line in A
->                  * that is after most-certain-line-A.
->                  */
->                 if (certainties[i] >= 0 &&
->                     (result[i] >= most_certain_line_a ||
->                      second_best_result[i] >= most_certain_line_a)) {
->                         certainties[i] = CERTAINTY_NOT_CALCULATED;
->                 }
->         }
->         for (i = most_certain_local_line_b + 1; i < invalidate_max; ++i) {
->                 /* In this loop we discard results for lines in B that are
->                  * after most-certain-line-B but are matched with a line in A
->                  * that is before most-certain-line-A.
->                  */
->                 if (certainties[i] >= 0 &&
->                     (result[i] <= most_certain_line_a ||
->                      second_best_result[i] <= most_certain_line_a)) {
->                         certainties[i] = CERTAINTY_NOT_CALCULATED;
->                 }
->         }
->
-> Note that the first for loop includes the uncovered lines. The logical operands
-> are backwards of the conditions in the second for loop, which are covered. This
-> seems non-trivial enough to merit a test.
+It is by design that "git worktree add" (in general) fails if the
+target directory already exists and is non-empty. This is consistent
+with how "git clone" behaves. As for why your particular use-case
+isn't directly supported, it's likely that nobody has yet asked for
+it, and nobody thought about this particular case when --no-checkout
+was added (which came some time after basic "git worktree add" itself
+was implemented).
+
+It is an accident of implementation that the new branch gets created
+before "git worktree add" errors out due to the existing non-empty
+directory (and, likely, nobody complained about it, so it went
+unnoticed). This particular issue probably can be easily fixed now
+that the logic for checking if the target directory can be a valid
+worktree has been factored out of the code which actually creates the
+new directory[1].
+
+[1]: 45059e6468 (worktree: prepare for more checks of whether path can
+become worktree, 2018-08-28)
+
+> I would like to attach an existing dir to git (make it a workdir) and
+> then update the index with git reset and checkin the differences.
+
+I haven't thought through the possible ramifications, but the actual
+implementation might be as simple as changing this code in
+builtin/worktree.c:validate_worktree_add():
+
+    if (file_exists(path) && !is_empty_dir(path))
+        die(_("'%s' already exists"), path);
+
+to:
+
+    if (opts->checkout && file_exists(path) && !is_empty_dir(path))
+        die(_("'%s' already exists"), path);
+
+or something.
