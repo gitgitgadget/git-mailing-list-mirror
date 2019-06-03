@@ -2,95 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34DF91F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 22:39:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2052B1F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 22:48:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726488AbfFCWj2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 18:39:28 -0400
-Received: from resqmta-po-04v.sys.comcast.net ([96.114.154.163]:35142 "EHLO
-        resqmta-po-04v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726025AbfFCWj2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Jun 2019 18:39:28 -0400
-Received: from resomta-po-01v.sys.comcast.net ([96.114.154.225])
-        by resqmta-po-04v.sys.comcast.net with ESMTP
-        id XvDVhpyWgd4wBXvbzhma2k; Mon, 03 Jun 2019 22:39:27 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=20190202a; t=1559601567;
-        bh=wwiA0CppbMkdXyQl7Ija8V0wcfCg9QkqCxnw+1d/kW0=;
-        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
-         Content-Type;
-        b=3ORrYnp/lBEOQgGtlmZdl+KD0ZUoTjZmrIeUwOZPnATzWljj64Sc+MUb4Tggr+P+g
-         Ci6QdFZSmMx9rZWvEgwwYDwkK/vsEXoJVvcLieHe3F7QS+QAzbvMDC6c0cLLpr8qc0
-         O/SXKsSGqltfbC/z2nw8oYoNl1iTb4N6k5R0ijt6/69Pnn0bGJhpx5VgcUC2+KiKhl
-         v90ix4cWrEbeaXMfxnm54W0BIlvPMp8uSyOYR+U6eoPZ/Z1fifzhESOkhjczSvKVtm
-         i6tmcEqZMd28MGU4rfDPG8ZZiEHMfY4TizgphRuDWUhFUQ+bC9qmd4kRrUNUmM7SS+
-         ujfI6R4/TYTLg==
-Received: from comcast.net ([IPv6:2601:647:4b02:2491:a5aa:2f0c:f3a4:606c])
-        by resomta-po-01v.sys.comcast.net with ESMTPSA
-        id XvbxhwsL4lRViXvbyhqsjY; Mon, 03 Jun 2019 22:39:27 +0000
-X-Xfinity-VMeta: sc=-100;st=legit
-Date:   Mon, 3 Jun 2019 15:39:25 -0700
-From:   Matthew DeVore <matvore@comcast.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Matthew DeVore <matvore@google.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>, jrn@google.com,
-        dstolee@microsoft.com, Jeff Hostetler <jeffhost@microsoft.com>,
+        id S1726269AbfFCWsc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 18:48:32 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34965 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbfFCWsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 18:48:32 -0400
+Received: by mail-wr1-f67.google.com with SMTP id m3so13785163wrv.2
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 15:48:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=RoyZ979CTglaoUVw3VZMsO7uWRYx6xdzhu8yHDov1fU=;
+        b=s+gtHAlL8bySvVzbgMZacv7HPg+JuRtFeuSPlwm+aKXVlQmDzCLW1p0K8xdwz6vTsH
+         wG+jWCB6IQjm+IR1F7roBopD2JWduhd45upV9fIaf9z+7wJMGM1obBcWxPhX3XB8DyPC
+         5mEE4N+wEE/dXImWhsZ0XiN4iwHCIr/9ukHINPeKS729DdNSBkxmLkX5X1NQ/cv7iObR
+         vqlkdE7KznKqzNal9wEGacBWQ11DwCNVDAsHVowqFkhxEXP4EZ95oTiDXi1H3W0FXVaR
+         AWv7hxZvQV2WralRZe4dLBhtpAYe9ZueBpNr/fA/CCGUDshZrex0+djSYwWa0TDC1LOj
+         VvxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=RoyZ979CTglaoUVw3VZMsO7uWRYx6xdzhu8yHDov1fU=;
+        b=EKTCPzkqM0nrwk3DEy+leGA6cFv16eEMgIzRQTeRTafPGqKqcjfZp+yYkIyUnScV4I
+         SBM3n9mSLEbsvB1GsGbuRipwb/oZkX4Szfsu6qlRMkf35M9+8BSncH//YshpqUlqNpBO
+         /HRgs5LJIHMr+NrsLasRK7ulVTk4YZBW9q3gWD38/ERK8jXR7QrRdoxNOrHbe+k8gL6W
+         eCjr8eXs8ZUN5AwQkI7QC+SDb2N/+zAUOROEgDmfW20mGvkomEibVKZit/7Lg4OQMHOU
+         c9svKZSRsS9qApgLr0yJ0+SdKQ1hK/Q3uB9+dM1qAT8HuFtJDL9gP9lsRWYXAJZ05S2B
+         +AGA==
+X-Gm-Message-State: APjAAAVzz2xymargfM6n3U4ZKmg0dXLZMAXKmEHfXOp8y800KXNyCcX6
+        dy56XqEj3Ax0SGVk8lM1nC7I2upd
+X-Google-Smtp-Source: APXvYqwCt8D+zCaFv2H6GhsBe/4QZQaWIxyLpO/77LxH9etpfUfMCkSsozvM9O7vFRidtITXHhk2Sg==
+X-Received: by 2002:a5d:63cb:: with SMTP id c11mr17887689wrw.65.1559602109951;
+        Mon, 03 Jun 2019 15:48:29 -0700 (PDT)
+Received: from gmail.com (79.108.96.12.dyn.user.ono.com. [79.108.96.12])
+        by smtp.gmail.com with ESMTPSA id t63sm3758788wmt.6.2019.06.03.15.48.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 03 Jun 2019 15:48:29 -0700 (PDT)
+Date:   Tue, 4 Jun 2019 00:48:14 +0200
+From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 8/9] list-objects-filter-options: clean up use of
- ALLOC_GROW
-Message-ID: <20190603223925.GH4641@comcast.net>
-References: <20190601003603.90794-1-matvore@google.com>
- <20190601003603.90794-9-matvore@google.com>
- <CA+P7+xqqS8wMeNw1E8yXzStNHgrCU5ME1wpWckbPA7pBD3OBHg@mail.gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stephan Beyer <s-beyer@gmx.net>, Taylor Blau <me@ttaylorr.com>,
+        Patryk Obara <patryk.obara@gmail.com>
+Subject: [PATCH] clang-format: use git grep to generate the ForEachMacros list
+Message-ID: <20190603224814.GA15851@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+P7+xqqS8wMeNw1E8yXzStNHgrCU5ME1wpWckbPA7pBD3OBHg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+User-Agent: elm/2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 03, 2019 at 03:07:40PM -0700, Jacob Keller wrote:
-> > +/*
-> > + * Similar to ALLOC_GROW but handles updating of the nr value and
-> > + * zeroing the bytes of the newly-grown array elements.
-> > + *
-> > + * DO NOT USE any expression with side-effect for any of the
-> > + * arguments.
-> > + */
-> 
-> Since ALLOC_GROW already doesn't handle this safely, there isn't
-> necessarily a reason to fix it, but you could read the macro values
-> into temporary variables inside the do { } while(0) loop in order to
-> avoid the multiple-expansion side effect issues...
+The ForEachMacros list can reasonably be generated grepping
+the C source code for macros with 'for_each' in their name.
 
-For x I don't think that's possible since we don't know the pointer type. For
-nr and alloc it doesn't make sense since they're being assigned to. For
-`increase` I could try this:
+Taken almost verbatim from the .clang-format file in the Linux kernel.
 
-	size_t ALLOC_GROW_BY__increase = (increase);
+Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+---
+We wrote this for the Linux kernel a while ago, and it has been working
+fine there, so I thought it would be nice to use the same approach here.
+There are fancier ways of approaching this, of course.
 
-but I'm not sure how well this works when `increase` is a signed type. This
-seemed sufficiently pitfall-y that I didn't attempt it. Relatedly, I was
-thinking something like this would be nice, if anyone has time for such a
-refactor:
+ .clang-format | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-struct growth_info {
-	size_t nr, alloc;
-}
+diff --git a/.clang-format b/.clang-format
+index 41d4cd23fd..c592dda681 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -148,8 +148,21 @@ SpacesInSquareBrackets: false
+ Cpp11BracedListStyle: false
+ 
+ # A list of macros that should be interpreted as foreach loops instead of as
+-# function calls.
+-ForEachMacros: ['for_each_string_list_item', 'for_each_wanted_builtin', 'for_each_builtin', 'for_each_ut']
++# function calls. Taken from:
++#   git grep -h '^#define [^[:space:]]*for_each[^[:space:]]*(' \
++#   | sed "s,^#define \([^[:space:]]*for_each[^[:space:]]*\)(.*$,  - '\1'," \
++#   | sort | uniq
++ForEachMacros:
++  - 'for_each_abbrev'
++  - 'for_each_builtin'
++  - 'for_each_string_list_item'
++  - 'for_each_ut'
++  - 'for_each_wanted_builtin'
++  - 'list_for_each'
++  - 'list_for_each_dir'
++  - 'list_for_each_prev'
++  - 'list_for_each_prev_safe'
++  - 'list_for_each_safe'
+ 
+ # The maximum number of consecutive empty lines to keep.
+ MaxEmptyLinesToKeep: 1
+-- 
+2.17.1
 
-And use that to replace individual "size_t foo_nr, foo_alloc"
-
-And make ALLOC_GROW_BY use it. I think a bulk, maybe even most, ALLOC_GROW
-invocations can be changed to ALLOC_GROW_BY.
