@@ -8,188 +8,153 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD321F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id F02791F462
 	for <e@80x24.org>; Mon,  3 Jun 2019 20:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbfFCUS0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 16:18:26 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45076 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726685AbfFCUSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 16:18:23 -0400
-Received: by mail-ed1-f66.google.com with SMTP id f20so28558697edt.12
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 13:18:21 -0700 (PDT)
+        id S1726836AbfFCUS1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 16:18:27 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40745 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726743AbfFCUSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 16:18:24 -0400
+Received: by mail-ed1-f67.google.com with SMTP id r18so27588057edo.7
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 13:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jsy8sX9BKSrzPQtmLrNXXGnWG38hAkMUnkOubuKiEVs=;
-        b=NF22jSFmBxTuNeHgyBqq5auX6HrW9cBQ3Fqnw8GcxKHCz+ToBpGxoMjG8PlsIG6svZ
-         R2CZDphKDHZVpqeAc83KOkSUrnMMUAjriqHdMiXCOVd44rLzW5Z8SgkLABpGVWfPhJ6x
-         ytZUixHZOmSkXlEvPMERDzGj6GJSLVYLlwO7g5yJ35K3CFEULsG10RDK16maukv9M1V3
-         ShR7ouXhr3vN5bsS407R4BNEFFIu763ZlvrEOLJVILP65IXlEM/Zi2Cxj5a3hw/A7ARN
-         uKxKBP6jVBIwuWJiThul1wQS3CmyRjKT3Y5J5ap8ppj6tHgF0hS+T4LohhsxTC1qn97e
-         bMIw==
+        bh=HFC9/i6a4bKxfAGC539ovO2CdF/OPBkFYJfuCD6yPxc=;
+        b=rQTdlX72Y6hdVEvY2a/OfnLI8RpugNT8nEePSCU6ObuKq/zuSlH3xGb8P2umbbt+qC
+         Ciq5TFpQvUmnulm9M7GFFZCq1zPXsqgVP2icoJ2u6UQ84efHKXbInuNb6uiP3eCSXSU5
+         FbfMm5lMm+GCJWycN9wSm+qklVSzoQU4kOjvtdD1NfeoDbjLaVT+hKqoFhUrxBayCSCO
+         XJiw97Q6C8rq5KusnMnK8rXIX+9uUFbEKjv6n1Kw9wCf3w9YQ70UXH/zwxWp3fTMKr1r
+         aZrpYhvsG56LqijYYrD4HUUY32oIf2/wB/Z5zQNdAG29rb/kaC3n4Rkh4gzhLOamvLJa
+         ICDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jsy8sX9BKSrzPQtmLrNXXGnWG38hAkMUnkOubuKiEVs=;
-        b=IWmeVSAs0V+hmqiGuJ2tHoaaQygl9p3bVYqF3Bj4Vw4dAxkX6fuzYtO5eqPprXUxM8
-         m4lKFOefmyB9gL2WLB0D2EPfbvM/QeKRhiwak6SGVPqpdVAuSq5aAwR3dnzShVvh+ddl
-         gwAsV1ABoMxCqeHCQHqPG+fYZrqDe+3Wg3h6c4T46JNppEUm9haxUGfqFofyHmv1X/bt
-         lnu9PlwRDxjK2JFP8fniSrthphYfD7V3XxyZ/YeGceS8hsB4Pm27FaDDqSvZFSgGXULl
-         HpLyE/4wki4tIMYxd5DHA2n1QeEVNb5a+Kca6dmpsn6Hx5ULJu+7C/cqpVVeuIOLqAYF
-         VFRQ==
-X-Gm-Message-State: APjAAAUHyOXTNT3Uov/CQFAz4ztXlI86F/uiYQ+X8urAA8gTC6uWkFAp
-        pimwKumeACfWOHRHOYeg0wwAkHXn
-X-Google-Smtp-Source: APXvYqxsNBt3gwbMZjIIKXemJO+mGRA9SIBaoZCFIyiWDInAQjEcRPmyMRWB0XnXC8QiLWTHKAzxrQ==
-X-Received: by 2002:a50:926d:: with SMTP id j42mr12385745eda.237.1559593100511;
-        Mon, 03 Jun 2019 13:18:20 -0700 (PDT)
+        bh=HFC9/i6a4bKxfAGC539ovO2CdF/OPBkFYJfuCD6yPxc=;
+        b=Xo/mVR5fr2hK+dvOM/OUEIt4AOgYog/5Qpp3n6wkbXw2DY7Pxo8FB4b5UUji1Kp4en
+         5/IxYnsHrms53NYJraPkffFJBUKxU4Z4FSxGv1/hq/jpKd7aBAE7/qjXKH/X0fJ0rxES
+         QhEPhU7wCb7AO/W+n+9Axc6EOQKACrgL7mcMFaxM/OSQEvlnGKTtZKEtQAoQpnSAm7T2
+         7+vUxmwO4DyqUNuky98cvhYi/GXqFvOdl3NSHnM3EqBKCAZFiwSvqvim1qak91/oim8q
+         zlYTrgoxj2hBN++cHCQKajZRWtk15wUJeuuQaxznVBeXmO2sG++3N4elql9RdXZEzZUH
+         pQmw==
+X-Gm-Message-State: APjAAAWit/b9BtjCpgBOJN7TyVe86Ai93pWBPF3YNHIA+tSTgNFT7TAC
+        s5vrEEvu80Be0PEt72xq4y8plJAa
+X-Google-Smtp-Source: APXvYqz0cP3xOkbQ2xlR4kqllDn0LGl2XTn0ifCpA2dT1sUnL9GI3pKdhgVox0Ew+wXOzzNvp/RFAA==
+X-Received: by 2002:a50:b665:: with SMTP id c34mr32341112ede.148.1559593102723;
+        Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r14sm2797198ejb.54.2019.06.03.13.18.19
+        by smtp.gmail.com with ESMTPSA id s16sm2750640eju.25.2019.06.03.13.18.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 13:18:20 -0700 (PDT)
-Date:   Mon, 03 Jun 2019 13:18:20 -0700 (PDT)
-X-Google-Original-Date: Mon, 03 Jun 2019 20:18:08 GMT
-Message-Id: <d5f5d7453c8135cf0c1186447de4323d31d4eca8.1559593097.git.gitgitgadget@gmail.com>
+        Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
+Date:   Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
+X-Google-Original-Date: Mon, 03 Jun 2019 20:18:11 GMT
+Message-Id: <d2e5cf185711385643999493fcfbcf03afe13e34.1559593097.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.254.git.gitgitgadget@gmail.com>
 References: <pull.254.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 02/11] repo-settings: use index.version=4 by default
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 05/11] status: add warning when a/b calculation takes too long
+ for long/normal format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-If a repo is large, it likely has many paths in its working directory.
-This means the index could be compressed using version 4. Set this as
-a default when core.size=large.
-
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/core.txt  |  3 +++
- Documentation/config/index.txt |  1 +
- read-cache.c                   | 12 +++++++-----
- repo-settings.c                |  6 ++++++
- repo-settings.h                |  1 +
- 5 files changed, 18 insertions(+), 5 deletions(-)
+ advice.c    |  2 ++
+ advice.h    |  1 +
+ wt-status.c | 17 +++++++++++++++++
+ 3 files changed, 20 insertions(+)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 1a188db620..ea64f675fa 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -613,3 +613,6 @@ core.size::
- +
- * `gc.writeCommitGraph=true` eneables writing commit-graph files during
- `git gc`.
-++
-+* `index.version=4` uses prefix-compression to reduce the size of the
-+.git/index file.
-diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
-index f181503041..d4b56925c4 100644
---- a/Documentation/config/index.txt
-+++ b/Documentation/config/index.txt
-@@ -24,3 +24,4 @@ index.threads::
- index.version::
- 	Specify the version with which new index files should be
- 	initialized.  This does not affect existing repositories.
-+	If `core.size=large`, then the default value is 4.
-diff --git a/read-cache.c b/read-cache.c
-index 22e7b9944e..7fab8ff748 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -25,6 +25,7 @@
- #include "fsmonitor.h"
- #include "thread-utils.h"
- #include "progress.h"
-+#include "repo-settings.h"
+diff --git a/advice.c b/advice.c
+index ce5f374ecd..54f8dea30c 100644
+--- a/advice.c
++++ b/advice.c
+@@ -12,6 +12,7 @@ int advice_push_needs_force = 1;
+ int advice_push_unqualified_ref_name = 1;
+ int advice_status_hints = 1;
+ int advice_status_u_option = 1;
++int advice_status_ahead_behind_warning = 1;
+ int advice_commit_before_merge = 1;
+ int advice_reset_quiet_warning = 1;
+ int advice_resolve_conflict = 1;
+@@ -68,6 +69,7 @@ static struct {
+ 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
+ 	{ "statusHints", &advice_status_hints },
+ 	{ "statusUoption", &advice_status_u_option },
++	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
+ 	{ "commitBeforeMerge", &advice_commit_before_merge },
+ 	{ "resetQuiet", &advice_reset_quiet_warning },
+ 	{ "resolveConflict", &advice_resolve_conflict },
+diff --git a/advice.h b/advice.h
+index e50f02cdfe..c86de9b9b8 100644
+--- a/advice.h
++++ b/advice.h
+@@ -12,6 +12,7 @@ extern int advice_push_needs_force;
+ extern int advice_push_unqualified_ref_name;
+ extern int advice_status_hints;
+ extern int advice_status_u_option;
++extern int advice_status_ahead_behind_warning;
+ extern int advice_commit_before_merge;
+ extern int advice_reset_quiet_warning;
+ extern int advice_resolve_conflict;
+diff --git a/wt-status.c b/wt-status.c
+index d2a1bec226..c94d43879a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -19,6 +19,8 @@
+ #include "lockfile.h"
+ #include "sequencer.h"
  
- /* Mask for the name length in ce_flags in the on-disk index */
- 
-@@ -1599,16 +1600,17 @@ struct cache_entry *refresh_cache_entry(struct index_state *istate,
- 
- #define INDEX_FORMAT_DEFAULT 3
- 
--static unsigned int get_index_format_default(void)
-+static unsigned int get_index_format_default(struct repository *r)
- {
- 	char *envversion = getenv("GIT_INDEX_VERSION");
- 	char *endp;
--	int value;
- 	unsigned int version = INDEX_FORMAT_DEFAULT;
- 
- 	if (!envversion) {
--		if (!git_config_get_int("index.version", &value))
--			version = value;
-+		prepare_repo_settings(r);
++#define AB_DELAY_WARNING_IN_MS (2 * 1000)
 +
-+		if (r->settings->index_version >= 0)
-+			version = r->settings->index_version;
- 		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
- 			warning(_("index.version set, but the value is invalid.\n"
- 				  "Using version %i"), INDEX_FORMAT_DEFAULT);
-@@ -2765,7 +2767,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	}
+ static const char cut_line[] =
+ "------------------------ >8 ------------------------\n";
  
- 	if (!istate->version) {
--		istate->version = get_index_format_default();
-+		istate->version = get_index_format_default(the_repository);
- 		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
- 			init_split_index(istate);
- 	}
-diff --git a/repo-settings.c b/repo-settings.c
-index 6f5e18d92e..7e6e65d60c 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -14,6 +14,7 @@ static int git_repo_config(const char *key, const char *value, void *cb)
- 		if (!strcmp(value, "large")) {
- 			UPDATE_DEFAULT(rs->core_commit_graph, 1);
- 			UPDATE_DEFAULT(rs->gc_write_commit_graph, 1);
-+			UPDATE_DEFAULT(rs->index_version, 4);
- 		}
- 		return 0;
- 	}
-@@ -25,6 +26,10 @@ static int git_repo_config(const char *key, const char *value, void *cb)
- 		rs->gc_write_commit_graph = git_config_bool(key, value);
- 		return 0;
- 	}
-+	if (!strcmp(key, "index.version")) {
-+		rs->index_version = git_config_int(key, value);
-+		return 0;
+@@ -1085,14 +1087,29 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
+ 	struct branch *branch;
+ 	char comment_line_string[3];
+ 	int i;
++	uint64_t t_begin = 0;
+ 
+ 	assert(s->branch && !s->is_initial);
+ 	if (!skip_prefix(s->branch, "refs/heads/", &branch_name))
+ 		return;
+ 	branch = branch_get(branch_name);
++
++	t_begin = getnanotime();
++
+ 	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags))
+ 		return;
+ 
++	if (advice_status_ahead_behind_warning &&
++	    s->ahead_behind_flags == AHEAD_BEHIND_FULL) {
++		uint64_t t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
++		if (t_delta_in_ms > AB_DELAY_WARNING_IN_MS) {
++			strbuf_addf(&sb, _("\n"
++					   "It took %.2f seconds to compute the branch ahead/behind values.\n"
++					   "You can use '--no-ahead-behind' to avoid this.\n"),
++				    t_delta_in_ms / 1000.0);
++		}
 +	}
- 
- 	return 1;
- }
-@@ -39,6 +44,7 @@ void prepare_repo_settings(struct repository *r)
- 	/* Defaults */
- 	r->settings->core_commit_graph = -1;
- 	r->settings->gc_write_commit_graph = -1;
-+	r->settings->index_version = -1;
- 
- 	repo_config(r, git_repo_config, r->settings);
- }
-diff --git a/repo-settings.h b/repo-settings.h
-index 11d08648e1..9b8104042e 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -4,6 +4,7 @@
- struct repo_settings {
- 	char core_commit_graph;
- 	char gc_write_commit_graph;
-+	int index_version;
- };
- 
- struct repository;
++
+ 	i = 0;
+ 	if (s->display_comment_prefix) {
+ 		comment_line_string[i++] = comment_line_char;
 -- 
 gitgitgadget
 
