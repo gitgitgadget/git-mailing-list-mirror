@@ -2,146 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF1E1F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 15:46:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7E01F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 16:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfFCPqt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 11:46:49 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39411 "EHLO
+        id S1729210AbfFCQDw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 12:03:52 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45821 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726922AbfFCPqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 11:46:49 -0400
-Received: by mail-wr1-f66.google.com with SMTP id x4so12629237wrt.6
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 08:46:48 -0700 (PDT)
+        with ESMTP id S1728800AbfFCQDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 12:03:52 -0400
+Received: by mail-wr1-f66.google.com with SMTP id b18so12644438wrq.12
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 09:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CxVmmnn73P1MB0M2HAORVfdhBaEuLYbkYgFL55r5T1c=;
-        b=CUA9HCHri5ucBRmxhDvr5wg8H3qIvzo32fPDIG0mnYvu9ZNv19J9BXaLXT7QyVfmgB
-         ACjfxIgEJ/ZcXYCX5zzxBch5ctGccUAlDCQJRqWaEdcW/V4Jye9SavSm9w/uk6u5+ZqO
-         6vTkq57eCCKDbyVKEHeTh1f/K3amdVaEh2QMpSieLMJtr2UayBcjBG5wka5M+1yW6MVM
-         okgrjMbFeV/lHqLNiI+EoO/Q/PVASAtMTg0vFyy2FEM5Wh+5lY4/QyEHugUGQxMh3tPG
-         eDas9XNfs4iU3ufxVY3/iRUfBa29HyL+0ssRCT6W34amKpQuYNYbzm/6d0zy9WQxUFQw
-         MGZA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=K4hI5VzyEmN0pp2bYyiizZjGrxQByJ3B5DXoRbPUeiA=;
+        b=Sm1u5oAp9CUCG5H+0+wrpo9wjOXE/QEplTQXaFGDozs/u2OurIgAzaqIo9GCUwaTNC
+         aQYlprpRlsSQnZ0D902wHyieZX7N+9fgiAVqq7Wnv52umhpuYjQaSpLIRliPYio8L9RE
+         vnus2HAqeyRuRP34Ap2flCIxX7V8yrHi+t+a4hx9dVHDxc/fP3sP7oxaM62el/re55cw
+         FjUiIpschOUMi+qWTzgLHaBpqNaitx5k+SXIdQEI6RshW3kGLq3mhSOWtsNq1mDbF1/W
+         w3iBPtpBXdMAvCx37mHYLNzCK3dLxysr3WbdsnkY8PP6qKycmCIOEnmrhEAiBdx4B/Eh
+         dJ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CxVmmnn73P1MB0M2HAORVfdhBaEuLYbkYgFL55r5T1c=;
-        b=UdZ6M+DR6vr/5e0g5UuK6htUENkc5gn0jdROrkq84rgl8BxY5/B3fhcNysUgfUOizB
-         rLUr8BSn2OLZDFthXAGv1XbNChAV8G4Zwn8yvMFFFoUOOc07seeIec1dTTPU3zDMXpe7
-         uIahrril/N+tIMxlHHDMXiF5LWuYVeBUbFCsfhMg8UgVsSJvfHR79KXDvP3bBWL8DPph
-         x9AboINSE+Wf47dRwbXkey6dRZzXEmrG/shOTES48pmyR6ZH9NCKdeK6Y3Eb3GqiDt9H
-         gIUfXg4ezV01SIKehnC60WYl+KnonZZr5pQTRLPbgD6tGcJP9eGHjtJHL8hFf8JdKSSm
-         lZ8Q==
-X-Gm-Message-State: APjAAAWeWpWDjQqiWnABiUHzca2fwp+LJsyEtLqLVrHrY0+/9rMex81n
-        g1bSpu8Zb3dh1yZ5yVwhgnZPXr6u
-X-Google-Smtp-Source: APXvYqyjT9+R4QsVQ+RvR5cdrD+5GaMXbQ2nUBCtCm/Jtng9bw6Rco3GF3lmncie5knTSh5KWT8mSQ==
-X-Received: by 2002:a5d:498a:: with SMTP id r10mr16820931wrq.28.1559576807474;
-        Mon, 03 Jun 2019 08:46:47 -0700 (PDT)
-Received: from szeder.dev (x4dbd37ab.dyn.telefonica.de. [77.189.55.171])
-        by smtp.gmail.com with ESMTPSA id w14sm2512282wrk.44.2019.06.03.08.46.45
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=K4hI5VzyEmN0pp2bYyiizZjGrxQByJ3B5DXoRbPUeiA=;
+        b=KoCWEncSpcE+8UoImWJigLPbMTeFSgpWgXCIqdbPSeJFp5faTgrNZXsPlo4tlqlBe6
+         gl2K9wprRcFNDAHBtmNMqHoQ0PdY5y9mAPwILfnDgekyUjn7gqPxYO06X7teKDdhWbAa
+         8QWJVFXZOn5yN/2W1e7lr4dH5JrccrcqXPAKVPyryuFplyaNPRuH3KYG542piQ68yDik
+         IBhv7oa9pP4idNGhakguujSi7dyeYJ8N0DL+BmPikkc68Z6B9NROopJBdhnByk2eYM08
+         UFiii9hNB5EbWowLQO2Sj0ynNGMHj4Vf9mbp1bxs3mgQpxgPzrIftZWwUZwucKM4sUCt
+         l5QQ==
+X-Gm-Message-State: APjAAAUQ58diBxL/sBKhSbI1t2id6iMS0ONsHFeJa0rc3nuUjwBjwmly
+        rhCAjp4IJAIrTVqdYVXoTlarYU2a
+X-Google-Smtp-Source: APXvYqw+iyUbppbPoF9P5SjHQfeW6nzXILlA9kzvZXc2p3feJzFZ/Fp2bqQuz0U3I9fvb+OGi1eGIg==
+X-Received: by 2002:adf:ee4a:: with SMTP id w10mr5601068wro.311.1559577830599;
+        Mon, 03 Jun 2019 09:03:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g16sm10071262wmh.33.2019.06.03.09.03.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 08:46:46 -0700 (PDT)
-Date:   Mon, 3 Jun 2019 17:46:44 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] am: add --check option
-Message-ID: <20190603154644.GQ951@szeder.dev>
-References: <20190603142523.3826-1-sir@cmpwn.com>
+        Mon, 03 Jun 2019 09:03:48 -0700 (PDT)
+Date:   Mon, 03 Jun 2019 09:03:48 -0700 (PDT)
+X-Google-Original-Date: Mon, 03 Jun 2019 16:03:33 GMT
+Message-Id: <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.184.v3.git.gitgitgadget@gmail.com>
+References: <pull.184.v2.git.gitgitgadget@gmail.com>
+        <pull.184.v3.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v3 01/14] commit-graph: document commit-graph chains
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190603142523.3826-1-sir@cmpwn.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
+        jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 03, 2019 at 10:25:23AM -0400, Drew DeVault wrote:
-> ---
->  Documentation/git-am.txt |  7 ++++++-
->  builtin/am.c             | 13 +++++++++++++
->  2 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index fc3b993c33..bc01e87d85 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
->  SYNOPSIS
->  --------
->  [verse]
-> -'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
-> +'git am' [--signoff] [--keep] [--check] [--[no-]keep-cr] [--[no-]utf8]
->  	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
->  	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
->  	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
-> @@ -44,6 +44,11 @@ OPTIONS
->  --keep-non-patch::
->  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
->  
-> +--check::
-> +	Instead of applying the patch(es), see if they are
-> +	applicable to the current working tree and/or the index
-> +	file and detects errors.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Note that in "real" patch series a later patch quite often depends on
-the changes made in earlier patches, and this option should somehow
-account for that.  I'm not sure how to do that without actually
-applying the patches, though...
+Add a basic description of commit-graph chains. More details about the
+feature will be added as we add functionality. This introduction gives a
+high-level overview to the goals of the feature and the basic layout of
+commit-graph chains.
 
-  # Create two patches, each modifying the same line in the same file.
-  $ echo 0 >file
-  $ git add file
-  $ git commit -m initial
-  [master 956965a] initial
-   1 file changed, 1 insertion(+)
-   create mode 100644 file
-  $ echo 1 >file
-  $ git commit -m one file
-  [master fd65db1] one
-   1 file changed, 1 insertion(+), 1 deletion(-)
-  $ echo 2 >file
-  $ git commit -m two file
-  [master 1b878f1] two
-   1 file changed, 1 insertion(+), 1 deletion(-)
-  $ git format-patch -2
-  0001-one.patch
-  0002-two.patch
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/technical/commit-graph.txt | 59 ++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-  # This shows that the second patch is applicable on top of the
-  # first:
-  $ git checkout HEAD^
-  HEAD is now at fd65db1 one
-  $ git apply --check 0002-two.patch ; echo $?
-  0
-
-  # But 'git am --check' reports that the two patches can't be
-  # applied on the initial commit, because it attempts to apply the
-  # second patch on the initial commit as well, instead on top of the
-  # first:
-  $ git checkout HEAD^
-  Previous HEAD position was fd65db1 one
-  HEAD is now at 956965a initial
-  $ ~/src/git/bin-wrappers/git am --check 0001-one.patch 0002-two.patch
-  Applying: one
-  Applying: two
-  error: patch failed: file:1
-  error: file: patch does not apply
-  Patch failed at 0002 two
-
-  # Though, of course, they can be applied just fine:
-  $ ~/src/git/bin-wrappers/git am 0001-one.patch 0002-two.patch
-  Applying: one
-  Applying: two
+diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+index fb53341d5e..1dca3bd8fe 100644
+--- a/Documentation/technical/commit-graph.txt
++++ b/Documentation/technical/commit-graph.txt
+@@ -127,6 +127,65 @@ Design Details
+   helpful for these clones, anyway. The commit-graph will not be read or
+   written when shallow commits are present.
+ 
++Commit Graphs Chains
++--------------------
++
++Typically, repos grow with near-constant velocity (commits per day). Over time,
++the number of commits added by a fetch operation is much smaller than the
++number of commits in the full history. By creating a "chain" of commit-graphs,
++we enable fast writes of new commit data without rewriting the entire commit
++history -- at least, most of the time.
++
++## File Layout
++
++A commit-graph chain uses multiple files, and we use a fixed naming convention
++to organize these files. Each commit-graph file has a name
++`$OBJDIR/info/commit-graphs/graph-{hash}.graph` where `{hash}` is the hex-
++valued hash stored in the footer of that file (which is a hash of the file's
++contents before that hash). For a chain of commit-graph files, a plain-text
++file at `$OBJDIR/info/commit-graphs/commit-graph-chain` contains the
++hashes for the files in order from "lowest" to "highest".
++
++For example, if the `commit-graph-chain` file contains the lines
++
++```
++	{hash0}
++	{hash1}
++	{hash2}
++```
++
++then the commit-graph chain looks like the following diagram:
++
++ +-----------------------+
++ |  graph-{hash2}.graph  |
++ +-----------------------+
++	  |
++ +-----------------------+
++ |                       |
++ |  graph-{hash1}.graph  |
++ |                       |
++ +-----------------------+
++	  |
++ +-----------------------+
++ |                       |
++ |                       |
++ |                       |
++ |  graph-{hash0}.graph  |
++ |                       |
++ |                       |
++ |                       |
++ +-----------------------+
++
++Let X0 be the number of commits in `graph-{hash0}.graph`, X1 be the number of
++commits in `graph-{hash1}.graph`, and X2 be the number of commits in
++`graph-{hash2}.graph`. If a commit appears in position i in `graph-{hash2}.graph`,
++then we interpret this as being the commit in position (X0 + X1 + i), and that
++will be used as its "graph position". The commits in `graph-{hash2}.graph` use these
++positions to refer to their parents, which may be in `graph-{hash1}.graph` or
++`graph-{hash0}.graph`. We can navigate to an arbitrary commit in position j by checking
++its containment in the intervals [0, X0), [X0, X0 + X1), [X0 + X1, X0 + X1 +
++X2).
++
+ Related Links
+ -------------
+ [0] https://bugs.chromium.org/p/git/issues/detail?id=8
+-- 
+gitgitgadget
 
