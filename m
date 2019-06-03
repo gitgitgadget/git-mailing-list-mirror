@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 212691F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id E189A1F462
 	for <e@80x24.org>; Mon,  3 Jun 2019 16:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729317AbfFCQEA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 12:04:00 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36442 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729264AbfFCQD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 12:03:57 -0400
-Received: by mail-wm1-f65.google.com with SMTP id v22so11681296wml.1
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 09:03:56 -0700 (PDT)
+        id S1729340AbfFCQEC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 12:04:02 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38886 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729254AbfFCQD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 12:03:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id d18so12684556wrs.5
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 09:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yRexFTAAHVRV/GufD+aZoXR0cLznGgM1SlRVD2E1Yhs=;
-        b=LMiGFSFfGAh8P7WgvUQQadE9axjemdFk//gdAdVwrQjiKNvW902F+mFRHMiQ1sKhbc
-         42cYnixcn4m2k/JfA/if8i+lq76QIbe3BYrdfZ8yuqsF6cQU9EtuFiTTcFv4XA8w6CU/
-         jgoa02T8SY9Nig4fwx+0mUoekJfG6r4DeNa3JSq0qQIj7VtpBeywqtQYf5ifSW014TGQ
-         1TQwMkeMogEha9KpDJ96pL/Mpskj7uZr2anNG99cPMRO9+Xz1+PEp5OpryzPK6QldaGJ
-         p1cn9tRGgMh7hJEtufIauZ++Q/epK3PVU7qbt69bbRsklcdqP1guMpVWKoOManvRDvwp
-         vEGA==
+        bh=OqCXYRcMeKqsZMB3Y33NXjxUoMSHWEttFombG9rJOZU=;
+        b=NyAfvOSbNP/tyjv5VGl6q3b8lMVNDL8giJe0+nMzNyboUztV5j9qdZ2LI5/LRWruh/
+         LsO9f0vkQVZxiVRbNYaLJyIimIK0xflCbqdnYmBpX4dRww5ufetpwbvKpC5VFZaweCZ5
+         yYoKcTTMhq+kGpLPM4VccTA+9XZ0tfOToGUw2EKDSuncmjPgz4ufR3IMS0AcymBTn5ys
+         +C7ui+H3gRwRzx+f4+mUHYTdRzsn+fABow07RJyBnuGWGIluXp/PYJuI5GL50Pxoc5Af
+         ipM9Oc2chhFSZoIIkkcr3jujQ7wqO8o6aAt0yWwOERKkM0TlILB9VDvboMxix6I+SKA9
+         wC3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yRexFTAAHVRV/GufD+aZoXR0cLznGgM1SlRVD2E1Yhs=;
-        b=SA9HHZumirEMxS5OB1N8YNU9JOhfvscn0889uHIiWSIbJL8voLrtrlYE+4jV+Zjhgk
-         XCOo0fqVaYrgzRxIBLAI5DgdaVdVNAGXcq5Uq62p8+BxDwHiorby17knautQBwky9zDR
-         0GqUhkGCCdlMhmrdxPs7sD7sspCpB0L5HBsC5UAiyewYut0XsIyxvjvV2wCYW4c77KOO
-         z8eTSfycymO5RixnDXE99qEDN8mZvhwgbugw2g2zEHmQeWlKEza7Q1sJgS3bm3n5+Jpr
-         Y2r79vh3rNtq2vIAptAQoFykLmgGpc9DYzuBZJYgtCAga/U80AshjzausjgnjvO1oC0O
-         2q7g==
-X-Gm-Message-State: APjAAAWtkwGz6/ASKBAErdI9A5ujUaI11OU2pPwKstXqkBVCzOPRLV+f
-        zD2+sk2iwQOQQWH4B1aoKN1jZyFP
-X-Google-Smtp-Source: APXvYqy3xG4lhe3EL/81T5LEbQggwHkOojHODGBPaZR5KmOaRt8YyYL/5Hut/7VaTYaNMM1BWFb3WA==
-X-Received: by 2002:a7b:cb01:: with SMTP id u1mr15820094wmj.153.1559577835352;
-        Mon, 03 Jun 2019 09:03:55 -0700 (PDT)
+        bh=OqCXYRcMeKqsZMB3Y33NXjxUoMSHWEttFombG9rJOZU=;
+        b=Qwg9fjwc4+cjXhyT5LFF2ITytkclk9GfgHygDd3dz88/NCHokceOpMIuDJIRYLwLbH
+         Qos8jUajEyV1xmltsmCwVEceE09aD3WxP473uOfeUcBYatsJ+zpB0uxJ/YF9GDGv2QcY
+         PdwynDa2kbq/N/UYIOQZ7NuTKHEBvJe68PDZJypNKSu4jSmpOPDR/+B7iomRWKDNqAoW
+         21hAVujFzBiAMbb0C0y42xkXhkohmHGsmYQRf+midSsZGUzQOsNMHyXz/l5VXu3+86G/
+         p7MCYU25L3QWnuxQVFlUxbad+e8MiRmd97Xlt1j5JA+T2hT6UV6IDLmpFv7e+qqJmwOk
+         /OZg==
+X-Gm-Message-State: APjAAAWfuT5ZfAwwkhvZenY+LfyxBSjm+LqkhMH3g0ZWYbPkM7VYdo8v
+        J1+rDvoUT5UTdkL2h9ElwYt5QXKq
+X-Google-Smtp-Source: APXvYqzEhdrMMe39Juti1+1HBmQceFo7FHu2kmzB1jH1+w4ykKn7lKxEI6muKrLlySXQFCrCe7MROw==
+X-Received: by 2002:a5d:6b90:: with SMTP id n16mr17266154wrx.206.1559577834621;
+        Mon, 03 Jun 2019 09:03:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f8sm7366406wrx.11.2019.06.03.09.03.54
+        by smtp.gmail.com with ESMTPSA id 135sm3657145wmb.28.2019.06.03.09.03.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 03 Jun 2019 09:03:54 -0700 (PDT)
 Date:   Mon, 03 Jun 2019 09:03:54 -0700 (PDT)
-X-Google-Original-Date: Mon, 03 Jun 2019 16:03:38 GMT
-Message-Id: <e65f9e841d577c13d26c1737ebb8a2cf65713be9.1559577826.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Mon, 03 Jun 2019 16:03:37 GMT
+Message-Id: <df44cbc1bf6e18c3682652c2de69de7a9caf5fc2.1559577826.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v3.git.gitgitgadget@gmail.com>
 References: <pull.184.v2.git.gitgitgadget@gmail.com>
         <pull.184.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 06/14] commit-graph: rearrange chunk count logic
+Subject: [PATCH v3 05/14] commit-graph: add base graphs chunk
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,82 +74,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The number of chunks in a commit-graph file can change depending on
-whether we need the Extra Edges Chunk. We are going to add more optional
-chunks, and it will be helpful to rearrange this logic around the chunk
-count before doing so.
+To quickly verify a commit-graph chain is valid on load, we will
+read from the new "Base Graphs Chunk" of each file in the chain.
+This will prevent accidentally loading incorrect data from manually
+editing the commit-graph-chain file or renaming graph-{hash}.graph
+files.
 
-Specifically, we need to finalize the number of chunks before writing
-the commit-graph header. Further, we also need to fill out the chunk
-lookup table dynamically and using "num_chunks" as we add optional
-chunks is useful for adding optional chunks in the future.
+The commit_graph struct already had an object_id struct "oid", but
+it was never initialized or used. Add a line to read the hash from
+the end of the commit-graph file and into the oid member.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ .../technical/commit-graph-format.txt         | 11 ++++++++--
+ commit-graph.c                                | 22 +++++++++++++++++++
+ commit-graph.h                                |  1 +
+ 3 files changed, 32 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 16452a0504..a4f17441ae 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -44,8 +44,9 @@ HEADER:
+ 
+   1-byte number (C) of "chunks"
+ 
+-  1-byte (reserved for later use)
+-     Current clients should ignore this value.
++  1-byte number (B) of base commit-graphs
++      We infer the length (H*B) of the Base Graphs chunk
++      from this value.
+ 
+ CHUNK LOOKUP:
+ 
+@@ -92,6 +93,12 @@ CHUNK DATA:
+       positions for the parents until reaching a value with the most-significant
+       bit on. The other bits correspond to the position of the last parent.
+ 
++  Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
++      This list of H-byte hashes describe a set of B commit-graph files that
++      form a commit-graph chain. The graph position for the ith commit in this
++      file's OID Lookup chunk is equal to i plus the number of commits in all
++      base graphs.  If B is non-zero, this chunk must exist.
++
+ TRAILER:
+ 
+ 	H-byte HASH-checksum of all of the above.
 diff --git a/commit-graph.c b/commit-graph.c
-index 909c841db5..80df6d6d9d 100644
+index 3ed930159e..909c841db5 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1206,7 +1206,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	uint64_t chunk_offsets[5];
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
--	int num_chunks = ctx->num_extra_edges ? 4 : 3;
-+	int num_chunks = 3;
+@@ -22,6 +22,7 @@
+ #define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+ #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
++#define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
  
- 	ctx->graph_name = get_commit_graph_filename(ctx->obj_dir);
- 	if (safe_create_leading_directories(ctx->graph_name)) {
-@@ -1219,27 +1219,34 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
- 	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
  
--	hashwrite_be32(f, GRAPH_SIGNATURE);
--
--	hashwrite_u8(f, GRAPH_VERSION);
--	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
--	hashwrite_u8(f, 0); /* unused padding byte */
--
- 	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
- 	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
- 	chunk_ids[2] = GRAPH_CHUNKID_DATA;
--	if (ctx->num_extra_edges)
--		chunk_ids[3] = GRAPH_CHUNKID_EXTRAEDGES;
--	else
--		chunk_ids[3] = 0;
--	chunk_ids[4] = 0;
-+	if (ctx->num_extra_edges) {
-+		chunk_ids[num_chunks] = GRAPH_CHUNKID_EXTRAEDGES;
-+		num_chunks++;
+@@ -262,6 +263,12 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 			else
+ 				graph->chunk_extra_edges = data + chunk_offset;
+ 			break;
++
++		case GRAPH_CHUNKID_BASE:
++			if (graph->chunk_base_graphs)
++				chunk_repeated = 1;
++			else
++				graph->chunk_base_graphs = data + chunk_offset;
+ 		}
+ 
+ 		if (chunk_repeated) {
+@@ -280,6 +287,8 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 		last_chunk_offset = chunk_offset;
+ 	}
+ 
++	hashcpy(graph->oid.hash, graph->data + graph->data_len - graph->hash_len);
++
+ 	if (verify_commit_graph_lite(graph))
+ 		return NULL;
+ 
+@@ -315,8 +324,21 @@ static int add_graph_to_chain(struct commit_graph *g,
+ {
+ 	struct commit_graph *cur_g = chain;
+ 
++	if (n && !g->chunk_base_graphs) {
++		warning(_("commit-graph has no base graphs chunk"));
++		return 0;
 +	}
 +
-+	chunk_ids[num_chunks] = 0;
+ 	while (n) {
+ 		n--;
++
++		if (!oideq(&oids[n], &cur_g->oid) ||
++		    !hasheq(oids[n].hash, g->chunk_base_graphs + g->hash_len * n)) {
++			warning(_("commit-graph chain does not match"));
++			return 0;
++		}
++
++
+ 		cur_g = cur_g->base_graph;
+ 	}
  
- 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
- 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
- 	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
- 	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
--	chunk_offsets[4] = chunk_offsets[3] + 4 * ctx->num_extra_edges;
-+
-+	num_chunks = 3;
-+	if (ctx->num_extra_edges) {
-+		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
-+						4 * ctx->num_extra_edges;
-+		num_chunks++;
-+	}
-+
-+	hashwrite_be32(f, GRAPH_SIGNATURE);
-+
-+	hashwrite_u8(f, GRAPH_VERSION);
-+	hashwrite_u8(f, oid_version());
-+	hashwrite_u8(f, num_chunks);
-+	hashwrite_u8(f, 0);
+diff --git a/commit-graph.h b/commit-graph.h
+index f9fe32ebe3..80f4917ddb 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -55,6 +55,7 @@ struct commit_graph {
+ 	const unsigned char *chunk_oid_lookup;
+ 	const unsigned char *chunk_commit_data;
+ 	const unsigned char *chunk_extra_edges;
++	const unsigned char *chunk_base_graphs;
+ };
  
- 	for (i = 0; i <= num_chunks; i++) {
- 		uint32_t chunk_write[3];
+ struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st);
 -- 
 gitgitgadget
 
