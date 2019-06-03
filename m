@@ -8,153 +8,138 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02791F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 20:18:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 403071F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 20:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbfFCUS1 (ORCPT <rfc822;e@80x24.org>);
+        id S1726843AbfFCUS2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 16:18:28 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:38612 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbfFCUS1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 3 Jun 2019 16:18:27 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40745 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbfFCUSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 16:18:24 -0400
-Received: by mail-ed1-f67.google.com with SMTP id r18so27588057edo.7
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 13:18:23 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id g13so28600424edu.5
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 13:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HFC9/i6a4bKxfAGC539ovO2CdF/OPBkFYJfuCD6yPxc=;
-        b=rQTdlX72Y6hdVEvY2a/OfnLI8RpugNT8nEePSCU6ObuKq/zuSlH3xGb8P2umbbt+qC
-         Ciq5TFpQvUmnulm9M7GFFZCq1zPXsqgVP2icoJ2u6UQ84efHKXbInuNb6uiP3eCSXSU5
-         FbfMm5lMm+GCJWycN9wSm+qklVSzoQU4kOjvtdD1NfeoDbjLaVT+hKqoFhUrxBayCSCO
-         XJiw97Q6C8rq5KusnMnK8rXIX+9uUFbEKjv6n1Kw9wCf3w9YQ70UXH/zwxWp3fTMKr1r
-         aZrpYhvsG56LqijYYrD4HUUY32oIf2/wB/Z5zQNdAG29rb/kaC3n4Rkh4gzhLOamvLJa
-         ICDg==
+        bh=46Q2deTrfQEmBNRbtlho/6RqM4sx9pnnvg1IennUr8Q=;
+        b=oALegQnusiaZGwVftCJl/vOLB1jrHBwmbsA8unmayw/9SxLz1HIM04RQLkY+a8UaDc
+         CfdHrXwdLx4/iufEbQH+HKRAMkYA/1RhJ2mHCnyT1qN9U59JgG3OMGns/P4YWRvJgQiE
+         L/qm68j+PzeAT+4N3iMaGsGPc45sr1etsQu3Q5Gvq3et9bVtxuV7vk3BqRjjnnln0+QW
+         O/jkWXDD7/KLsYoXDhQL/CuLv7YwKC8DirDsFLbWPS4g6Mz/j+FXmz7zwZVJODP/VMFO
+         pxb9L5v1+JZcpyyQki1yXYuAcwajRy0xkWYGFUr3Fay08IWzkFo24HsGaVWAngAnldNZ
+         Djmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HFC9/i6a4bKxfAGC539ovO2CdF/OPBkFYJfuCD6yPxc=;
-        b=Xo/mVR5fr2hK+dvOM/OUEIt4AOgYog/5Qpp3n6wkbXw2DY7Pxo8FB4b5UUji1Kp4en
-         5/IxYnsHrms53NYJraPkffFJBUKxU4Z4FSxGv1/hq/jpKd7aBAE7/qjXKH/X0fJ0rxES
-         QhEPhU7wCb7AO/W+n+9Axc6EOQKACrgL7mcMFaxM/OSQEvlnGKTtZKEtQAoQpnSAm7T2
-         7+vUxmwO4DyqUNuky98cvhYi/GXqFvOdl3NSHnM3EqBKCAZFiwSvqvim1qak91/oim8q
-         zlYTrgoxj2hBN++cHCQKajZRWtk15wUJeuuQaxznVBeXmO2sG++3N4elql9RdXZEzZUH
-         pQmw==
-X-Gm-Message-State: APjAAAWit/b9BtjCpgBOJN7TyVe86Ai93pWBPF3YNHIA+tSTgNFT7TAC
-        s5vrEEvu80Be0PEt72xq4y8plJAa
-X-Google-Smtp-Source: APXvYqz0cP3xOkbQ2xlR4kqllDn0LGl2XTn0ifCpA2dT1sUnL9GI3pKdhgVox0Ew+wXOzzNvp/RFAA==
-X-Received: by 2002:a50:b665:: with SMTP id c34mr32341112ede.148.1559593102723;
-        Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
+        bh=46Q2deTrfQEmBNRbtlho/6RqM4sx9pnnvg1IennUr8Q=;
+        b=li3xtTGSSwIEgsQvb1asPbo8RNFJVT8bJkJAf4+owZgZFPcRtdLG4zHQk1/cIwpH/j
+         0v6ea48MzLlqRICdEQNvIUKmHaLb9s0ldcfviG6N6JPDdu+J5LuYWmV6/a5M60sO4tGs
+         blaJn1/BYIZL3Rqnbw/gCa+f4WhusMOsT+rjlpA8nIH0JIK9fjsRSVKspkl4v1xWkNS6
+         DR7BLxHr7Oqc2M69dwE781CrlD+BJQpYRPWkI8B4eQ5EkcbdJipVjs6F86+YWeAg7zTv
+         xIlQ5pDAj4KUxC4WUcrYuDbzPRSaAYRT4i+ZUtiJs3h5hemODCIAaG7uQ8JZLnxI6Js/
+         XBcw==
+X-Gm-Message-State: APjAAAWDUmqO4Ko566qRhWD9wlXemHWQvnUV1MDT7taa5lN8ESaSonOP
+        EnF2Gc5lPNgJBLbnmGlVlM1o3tcv
+X-Google-Smtp-Source: APXvYqxCpvq8+q39Hg5RNZtjjaCNeQE9vqYaayIYv5TJGm8B3mhSHU4SHx1P+/5HLGwovoelqsYQdQ==
+X-Received: by 2002:a50:fa4a:: with SMTP id c10mr31252645edq.35.1559593105604;
+        Mon, 03 Jun 2019 13:18:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s16sm2750640eju.25.2019.06.03.13.18.22
+        by smtp.gmail.com with ESMTPSA id i6sm1434593edv.33.2019.06.03.13.18.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
-Date:   Mon, 03 Jun 2019 13:18:22 -0700 (PDT)
-X-Google-Original-Date: Mon, 03 Jun 2019 20:18:11 GMT
-Message-Id: <d2e5cf185711385643999493fcfbcf03afe13e34.1559593097.git.gitgitgadget@gmail.com>
+        Mon, 03 Jun 2019 13:18:25 -0700 (PDT)
+Date:   Mon, 03 Jun 2019 13:18:25 -0700 (PDT)
+X-Google-Original-Date: Mon, 03 Jun 2019 20:18:15 GMT
+Message-Id: <6a80cfa5a5604eb4560e8ad7254a982caa894678.1559593097.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.254.git.gitgitgadget@gmail.com>
 References: <pull.254.git.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 05/11] status: add warning when a/b calculation takes too long
- for long/normal format
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 09/11] fetch: warn about forced updates after branch list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- advice.c    |  2 ++
- advice.h    |  1 +
- wt-status.c | 17 +++++++++++++++++
- 3 files changed, 20 insertions(+)
+ builtin/fetch.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/advice.c b/advice.c
-index ce5f374ecd..54f8dea30c 100644
---- a/advice.c
-+++ b/advice.c
-@@ -12,6 +12,7 @@ int advice_push_needs_force = 1;
- int advice_push_unqualified_ref_name = 1;
- int advice_status_hints = 1;
- int advice_status_u_option = 1;
-+int advice_status_ahead_behind_warning = 1;
- int advice_commit_before_merge = 1;
- int advice_reset_quiet_warning = 1;
- int advice_resolve_conflict = 1;
-@@ -68,6 +69,7 @@ static struct {
- 	{ "pushUnqualifiedRefName", &advice_push_unqualified_ref_name },
- 	{ "statusHints", &advice_status_hints },
- 	{ "statusUoption", &advice_status_u_option },
-+	{ "statusAheadBehindWarning", &advice_status_ahead_behind_warning },
- 	{ "commitBeforeMerge", &advice_commit_before_merge },
- 	{ "resetQuiet", &advice_reset_quiet_warning },
- 	{ "resolveConflict", &advice_resolve_conflict },
-diff --git a/advice.h b/advice.h
-index e50f02cdfe..c86de9b9b8 100644
---- a/advice.h
-+++ b/advice.h
-@@ -12,6 +12,7 @@ extern int advice_push_needs_force;
- extern int advice_push_unqualified_ref_name;
- extern int advice_status_hints;
- extern int advice_status_u_option;
-+extern int advice_status_ahead_behind_warning;
- extern int advice_commit_before_merge;
- extern int advice_reset_quiet_warning;
- extern int advice_resolve_conflict;
-diff --git a/wt-status.c b/wt-status.c
-index d2a1bec226..c94d43879a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -19,6 +19,8 @@
- #include "lockfile.h"
- #include "sequencer.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 571c255218..f8ff98fdaf 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -24,6 +24,8 @@
+ #include "list-objects-filter-options.h"
+ #include "commit-reach.h"
  
-+#define AB_DELAY_WARNING_IN_MS (2 * 1000)
++#define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
 +
- static const char cut_line[] =
- "------------------------ >8 ------------------------\n";
+ static const char * const builtin_fetch_usage[] = {
+ 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
+ 	N_("git fetch [<options>] <group>"),
+@@ -40,6 +42,7 @@ enum {
  
-@@ -1085,14 +1087,29 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
- 	struct branch *branch;
- 	char comment_line_string[3];
- 	int i;
-+	uint64_t t_begin = 0;
+ static int fetch_prune_config = -1; /* unspecified */
+ static int fetch_show_forced_updates = 1;
++static uint64_t forced_updates_ms = 0;
+ static int prune = -1; /* unspecified */
+ #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
  
- 	assert(s->branch && !s->is_initial);
- 	if (!skip_prefix(s->branch, "refs/heads/", &branch_name))
- 		return;
- 	branch = branch_get(branch_name);
-+
-+	t_begin = getnanotime();
-+
- 	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags))
- 		return;
+@@ -707,6 +710,7 @@ static int update_local_ref(struct ref *ref,
+ 	enum object_type type;
+ 	struct branch *current_branch = branch_get(NULL);
+ 	const char *pretty_ref = prettify_refname(ref->name);
++	int fast_forward = 0;
  
-+	if (advice_status_ahead_behind_warning &&
-+	    s->ahead_behind_flags == AHEAD_BEHIND_FULL) {
-+		uint64_t t_delta_in_ms = (getnanotime() - t_begin) / 1000000;
-+		if (t_delta_in_ms > AB_DELAY_WARNING_IN_MS) {
-+			strbuf_addf(&sb, _("\n"
-+					   "It took %.2f seconds to compute the branch ahead/behind values.\n"
-+					   "You can use '--no-ahead-behind' to avoid this.\n"),
-+				    t_delta_in_ms / 1000.0);
-+		}
+ 	type = oid_object_info(the_repository, &ref->new_oid, NULL);
+ 	if (type < 0)
+@@ -781,7 +785,15 @@ static int update_local_ref(struct ref *ref,
+ 		return r;
+ 	}
+ 
+-	if (!fetch_show_forced_updates || in_merge_bases(current, updated)) {
++	if (fetch_show_forced_updates) {
++		uint64_t t_before = getnanotime();
++		fast_forward = in_merge_bases(current, updated);
++		forced_updates_ms += (getnanotime() - t_before) / 1000000;
++	} else {
++		fast_forward = 1;
 +	}
 +
- 	i = 0;
- 	if (s->display_comment_prefix) {
- 		comment_line_string[i++] = comment_line_char;
++	if (fast_forward) {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		int r;
+ 
+@@ -980,6 +992,17 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		      " 'git remote prune %s' to remove any old, conflicting "
+ 		      "branches"), remote_name);
+ 
++	if (!fetch_show_forced_updates) {
++		warning(_("Fetch normally indicates which branches had a forced update, but that check has been disabled."));
++		warning(_("To re-enable, use '--show-forced-updates' flag or run 'git config fetch.showForcedUpdates true'."));
++	}
++	if (fetch_show_forced_updates &&
++	    forced_updates_ms > FORCED_UPDATES_DELAY_WARNING_IN_MS) {
++		warning(_("It took %.2f seconds to check forced updates. You can use '--no-show-forced-updates'\n"),
++			forced_updates_ms / 1000.0);
++		warning(_("or run 'git config fetch.showForcedUpdates false' to avoid this check.\n"));
++	}
++
+  abort:
+ 	strbuf_release(&note);
+ 	free(url);
 -- 
 gitgitgadget
 
