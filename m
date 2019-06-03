@@ -2,91 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3B3C1F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 06:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D64351F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 08:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbfFCGG7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 02:06:59 -0400
-Received: from mx3.uni-regensburg.de ([194.94.157.148]:46974 "EHLO
-        mx3.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726520AbfFCGG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 02:06:58 -0400
-Received: from mx3.uni-regensburg.de (localhost [127.0.0.1])
-        by localhost (Postfix) with SMTP id 3D0336000050
-        for <git@vger.kernel.org>; Mon,  3 Jun 2019 08:06:56 +0200 (CEST)
-Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-        by mx3.uni-regensburg.de (Postfix) with ESMTP id CF87F600004F
-        for <git@vger.kernel.org>; Mon,  3 Jun 2019 08:06:55 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
-        with Novell_GroupWise; Mon, 03 Jun 2019 08:06:55 +0200
-Message-Id: <5CF4B8FE020000A100031962@gwsmtp.uni-regensburg.de>
-X-Mailer: Novell GroupWise Internet Agent 18.1.1 
-Date:   Mon, 03 Jun 2019 08:06:54 +0200
-From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-To:     <gitster@pobox.com>, <git@vger.kernel.org>
-Subject: Antw: Re: Q: git describe --always --tags .. gives "warning:
- tag 'tag1' is really 'tag2' here"
-References: <5CEE38B4020000A1000317C6@gwsmtp.uni-regensburg.de><5CEE38B4020000A1000317C6@gwsmtp.uni-regensburg.de>
- (Ulrich Windl's message of "Wed, 29 May 2019 09:45:56 +0200")
- <xmqqd0k1ywal.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0k1ywal.fsf@gitster-ct.c.googlers.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
+        id S1727674AbfFCIoy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 04:44:54 -0400
+Received: from mail-lf1-f44.google.com ([209.85.167.44]:43596 "EHLO
+        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727182AbfFCIoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 04:44:54 -0400
+Received: by mail-lf1-f44.google.com with SMTP id d7so3389806lfb.10
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 01:44:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=e5hpxW6nG7Ht+w0I9JLNK++uE9RmZWzcut8GekVtLLg=;
+        b=dHRVp2q5WoAc5l02VH7FmR77pCwKlX5pclF17Bclv5Cd6FCNkvqnVhYGISgU71IYSO
+         0C9fSRvVLQQXyAEq8EsoJ4ZM9iEkpSWpRayMAsT84Ekn08UjkSHCGLn3zGU0iFuRE//+
+         QSske13ohhhf6Z9VvUNB74+HEzyraqbDl4GuO1NRU8z5aSik6jM8cbUty9yBi7d1rS4l
+         fN25nmSsfwB8fBH4Kvj7frmWbJ38kd807RcnvO5G8XB3pJvTgvIySvaZJyrP/vrAWmDG
+         //CGCUY46874xdxxitv3TNZk5W+4tFKE5vP1UnVY+6KfHJHwwRlWPHMcRxXUOXU4xNdJ
+         2VDg==
+X-Gm-Message-State: APjAAAXycnfiXE51qHmodFAPn8q7s+F9gtpIlJXaRHKb3/flpyqWllWz
+        ROCOVeT+oJNYJFflMKXUt5s858uAE/3BOPeN1B4qZhaa
+X-Google-Smtp-Source: APXvYqxBNqDWsJmeN+JwImmiJfnN153j2Fxy9teqFrO3uL79S12Urea1EfQdqhzEaQoCpPW6BLjIrtytaoSWU//ZYtc=
+X-Received: by 2002:ac2:44b1:: with SMTP id c17mr13062164lfm.87.1559551490943;
+ Mon, 03 Jun 2019 01:44:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <670f44c0ac554f2faec5a6112376b015@MSSMAILP06.ads.hel.kko.ch>
+ <xmqqtvxvxefx.fsf@gitster.mtv.corp.google.com> <CAGe7hXBPWvjaKZtz-Zn1az0HrCx=OpxGsghVJhLOBKMu3NJ2zA@mail.gmail.com>
+In-Reply-To: <CAGe7hXBPWvjaKZtz-Zn1az0HrCx=OpxGsghVJhLOBKMu3NJ2zA@mail.gmail.com>
+From:   David Eisner <david.eisner@oriel.oxon.org>
+Date:   Mon, 3 Jun 2019 09:44:39 +0100
+Message-ID: <CAGe7hXCqC9hYc3brekqcT4A5O4muzAL=7RzHjviSusMMY5qc_Q@mail.gmail.com>
+Subject: Fwd: [Feature- Request] Option to commit after checking out branch
+ command is made
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> Junio C Hamano <gitster@pobox.com> schrieb am 29.05.2019 um 20:01 in
-Nachricht
-<xmqqd0k1ywal.fsf@gitster-ct.c.googlers.com>:
-> "Ulrich Windl" <Ulrich.Windl@rz.uni‑regensburg.de> writes:
-> 
->> So I got the response:
->> warning: tag 'isredir‑0.3.0' is really 'iredir‑0.3.0' here
->> isredir‑0.3.0‑3‑gaf467c7
-> 
-> I suspect that "git cat‑file tag isredir‑0.3.0" would begin like
-> 
-> 	$ git cat‑file tag iredir‑0.3.0
-> 	object .....
-> 	type commit
-> 	tag isredir‑0.3.0
-> 	tagger ...
-> 
-> Notice that "tag" line records the true name of that tag, which does
-> not match where you stored that tag in refs/tags/ hierarchy?
+Hi all
 
-Hi!
+Interesting discussion.
 
-Sorry for the delay (long weekend): Yes it is as you guessed. The tag is a
-signed one, BTW.
+Though it's a pretty distant memory now, this "forgot to commit"
+scenario was really frequent for me when I started using git. Then I'd
+run commit and forget that it's split (from an outsider's perspective)
+into add and then commit. I like the design of git, trees, index, etc.
+now that I get it, but being kicked from one command to another with
+an error message which may or may not tell me which command I should
+have used is not fun.
 
-> 
-> While trying to describe af467c7 by following its ancestry and
-> finding the ancestor three generations ago, the command found
-> refs/tags/iredir‑0.3.0 and then noticed that discrepancy, which is
-> what the warning is about.
-> 
-> Imagine you have only v1.0.0 (which is with known issues) but
-> somebody did "cd .git/refs/tags && mv v1.0.0 v1.1.0" in an attempt
-> to fool you.  The fact that your 'master' is a bit ahead of the
-> commit that was tagged with the tag object (which is v1.0.0 but
-> pretending to be v1.1.0) can be seen with "describe", but the
-> command is careful enough to use the real version number
-> (i.e. v1.0.0) and not the refname (i.e. v1.1.0).
+Surely if it's an interactive "commit/stash/cancel" prompt, it could
+default to cancel for non-interactive settings. If you're running a
+script interactively that just does "git commit" and ignores the
+output, the prompt would be fine. If you're running a script in a
+non-interactive way, piping the command within the script, even just
+to logs, etc. the prompt will not appear, just like with log or diff,
+which do not use a pager in non-interactive contexts.
 
-Still I'm missing a verbose version of "git tag" that shows the commit IDs
-along with the tag names. Unfortunately "-v" is not "--verbose" but "--verify"
-(as opposed to "git remote" for example).
+Generally, I think that prompting by default instead of warning and
+quitting is a really good way to go. It more gently initiates the new
+user, while still giving the option to quit and deal with the issue
+another way. Seasoned users should be able to disable individual
+prompts or all using options. Scripting should be a secondary
+consideration for porcelain, because you can build more reliable
+scripts by either using porcelain or being more explicit with
+arguments and options. For example, in a script, it would be better to
+specify the remote and branches for a push, rather than using
+defaults.
 
-Regards,
-Ulrich
+Autostash/autocommit options would be great, if they also have "git
+config checkout.autostash/autocommit" and --no-autostash/autocommit
+and are set to prompt by default, or perhaps one autostash option that
+can be set to false/stash/commit/prompt.
 
+Yes, you could do this with scripting over the top of the existing
+commands, but the best experience for new users should be available
+out of the box, not by writing scripts.
+
+On Thu, 16 Nov 2017 at 01:07, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Ninivaggi Mattia <mattia.ninivaggi@helsana.ch> writes:
+>
+> > 1. I checkout a branch, without having commited first
+> >     > git checkout dev
+> > 2. I get this error message:
+> >     > error: Your local changes to the following files would be overwritten by checkout:
+> >     > // List of files
+> >     > // ..
+> >     > //
+> >     > Please commit your changes or stash them before you switch branches.
+> >
+> > But I would rather prefer a scenario like this:
+> > ...
+> > 1. I checkout a branch, without having commited first
+> >     > git checkout dev
+> > 2. I get a message like this:
+> >     > Your local changes to the following files would be overwritten by checkout:
+> >     > // List of files
+> >     > // ..
+> >     > //
+> >     > Would you want to commit first? (y/n))
+> >
+> > IF y --> prompt for commit message and commit automatically
+>
+> I do not think you want to do this for a few reasons.
+>
+>  * The "please commit or stash" is merely a suggestion whose primary
+>    purpose is to silence clueless newbies who would have complained
+>    "Git said 'error: ... overwritten by checkout' and I do not know
+>    what to do next; the error message is so unhelpful" otherwise.
+>    Majority of the time when I see this message, it is because I
+>    forgot that I was in the middle of doing something (meaning: I am
+>    far from finished with the changes I was working on), and I would
+>    not be ready to commit.  I'd rather keep working to get the work
+>    into a more reasonable shape before committing, or stash the
+>    changes first if the task I wanted to do on that "dev" branch is
+>    more urgent and what I was in the middle of doing is lower
+>    priority.
+>
+>    Because of this, I would expect many users (including the ones
+>    who are right now newbies but will have gained experience to
+>    become experts in the future) to appreciate "stash before switch"
+>    a lot more than "commit first before switch".
+>
+>  * People write scripts that use "git checkout" to switch branches,
+>    and they rely on the command to fail in this situation, instead
+>    of going interactive and gets stuck waiting for an input (which
+>    may never come).  Because of this, the updated behaviour you
+>    propose must never be the default, and at least must be protected
+>    behind a flag, something like "git checkout --autostash dev" (or
+>    "--autocommit", if you insist).  With that, you could do
+>
+>         [alias]
+>                 co = checkout --autostash
+>
+>    and train your fingers to say "git co dev".
+>
+> Of course, you can have a "git-co" script on your $PATH, which runs
+> "git checkout $1", lets it fail just like it does now, and then does
+> "git commit", if you really want the behaviour.  Again, you can then
+> use "git co dev" and you do not have to worry about breaking
+> people's scripts that depends on "git checkout" to fail without
+> going interactive.
