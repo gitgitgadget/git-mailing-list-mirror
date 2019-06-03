@@ -2,91 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 451A51F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 20:32:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D63E1F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 21:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726474AbfFCUc1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 16:32:27 -0400
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:35392 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbfFCUc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 16:32:27 -0400
-Received: by mail-vs1-f67.google.com with SMTP id u124so1541199vsu.2
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 13:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=J8BAWu3ulMU1vf09vvQIMwxtPvojeIIIGPZoOZnzxA0=;
-        b=RP0Qb5w3nkFDTuMfg0m4PD2FczfeO64kcl75m23nFr2XADMIWbPU7ZthUcGc7gq/DO
-         2qUWXYApK2EkKJ2iFNUmI02yrh75sMtuZ3+6+tZ4ewBc8dk1TEywjuYb4AJF7jrTgVp8
-         CtP1KUUUBTkEarNQuZSmF1cmQjw2I6scInghWTWwfvmlNWgyepnVe7LePduhwBovACfs
-         vSBasObqcl2yqY0dztxKxJkNphOC7BPY7EI6T3LqLNbRpa9l+AJnLUrnBDCIVPmK8lSI
-         EqKrgUz098qWApcAiFkdeVtsv+Xcyk3ieRO1tWgrXFaeOu45OzWM2LpPpOEbt103gV2N
-         Cpzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=J8BAWu3ulMU1vf09vvQIMwxtPvojeIIIGPZoOZnzxA0=;
-        b=TuFBG2+mpblNp9sGd8i9XRJXvdPi9dzJP1rFCItiVOENhFNosqPgZiPSZK9MxP824d
-         iwN2yyk7ihGK9WMPeyldHD+BClYKE6Nm72yicHB41GdNctw5HDkD8ezCREcNMjDmpk7z
-         2FF4yNnXJ9WiE0ksG6XMXcKFzH+rSRXaRD9mmxOeA6xYTvxNT+3g5sT8RapSJJ7L5NwG
-         tZZLpYklgbLdHlHZ2TwuOHLRUYdLTsZZdC1/m/fffzS4WYI2ntfnKzhGGHKqoxYT12og
-         2gsmGoceANNJ/7klcvCAK/eLBCmlJPw0L+ySCLqlf3X4nEK7iivaDvChVe7UsWwKcYfw
-         2aQw==
-X-Gm-Message-State: APjAAAWWKsQ9KHzoW02NmC0+yUfHGTlaJ7BSp83cEKq2QPQJpZdUEqy0
-        +JXxlJHhfdfTYTpKzlWhNSCgf3gKCjQPkF+7jFrwVg==
-X-Google-Smtp-Source: APXvYqyS0vyismbo88IiBUN0zQKHcqZyA/KA3vE6LAG0eulRiPim2JzY8Ph7so9DX7y2cOPcBz854FGnhqlSq92/dQg=
-X-Received: by 2002:a05:6102:446:: with SMTP id e6mr14578223vsq.175.1559593946002;
- Mon, 03 Jun 2019 13:32:26 -0700 (PDT)
+        id S1726704AbfFCVng (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 17:43:36 -0400
+Received: from mail-eopbgr740129.outbound.protection.outlook.com ([40.107.74.129]:22976
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726055AbfFCVng (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 17:43:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
+ b=jiZv46g2SIpzw/RryknSY2qHms2JEN/go/RPN3cZDbcrFLu2cmil1RwgsRig50DzBkMW6RjEJfULOaHcQcrMHXeb7MAdkiL/9DhZ7fbiyY+o9ZHTbV3FA9Bl7m9F9L7J6pWEHiMgyLBuOxA40If/kVm5OzFcVYI34sXpH3HchGM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=testarcselector01;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FdueSGM3to4xXbUKbI9iKRwC5t9vU1+kPY8+yoQJYqI=;
+ b=Dop3WoQDCZM5d7wCdeYZgtnRCVonXMT6QyPfbc45yBOdc/7V+c/FAwEWoRPvsTG0895oyAcSU8kyncsppWUt947OBwsiGyZOFRZaLHCxk1zDsI8FFyO0rKk+onSG/bPHh3FCeJgwGF1xlDAG/TXaOeQDvOnOk2k+AYuSxwhhCGE=
+ARC-Authentication-Results: i=1; test.office365.com
+ 1;spf=none;dmarc=none;dkim=none;arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FdueSGM3to4xXbUKbI9iKRwC5t9vU1+kPY8+yoQJYqI=;
+ b=JXoPY6A+FsF9WZMUktyW60vh/1OgzIGWZpL6lgS4UBk1nPyv5+prCPCmZamP6IZ3i2weCrNer6Dy2SGBB/zi1hFdP6GEkI5QfwV9znB+KbTiw8MSAXDiVCvwed+f4e8Nf6ek1GfLuzjul10FTE7dS9bq8Et6JBWuHr9rPW6xL+8=
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com (2603:10b6:408:73::11)
+ by BN8PR21MB1137.namprd21.prod.outlook.com (2603:10b6:408:71::32) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1987.3; Mon, 3 Jun
+ 2019 21:34:26 +0000
+Received: from BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::2147:f6c0:c7f:30e1]) by BN8PR21MB1156.namprd21.prod.outlook.com
+ ([fe80::2147:f6c0:c7f:30e1%6]) with mapi id 15.20.1987.003; Mon, 3 Jun 2019
+ 21:34:26 +0000
+From:   Cliff Schomburg <clisc@microsoft.com>
+To:     Patryk Obara <dreamer.tan@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Simple shortcut for "git push --set-upstream origin
+ newBranchName"
+Thread-Topic: Simple shortcut for "git push --set-upstream origin
+ newBranchName"
+Thread-Index: AdUXME7sW+dzzd+8STqmdbLpESwchwABfZYAAAAnfwAAIhlQgAAAP3sAAAAXsKAAAGgqAAAAPcTgAKQjJ/A=
+Date:   Mon, 3 Jun 2019 21:34:26 +0000
+Message-ID: <BN8PR21MB11569B2A49F0ACB69E883458B7140@BN8PR21MB1156.namprd21.prod.outlook.com>
+References: <BN8PR21MB1156ED141AE2662BC5328A22B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <BN8PR21MB1156F593DAEBD7194DA7041EB7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <BN8PR21MB1156DA1893F64814F1BE8709B7180@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <BN8PR21MB1156F7F3E7EFF9C8A60F33D0B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <ac62f96f-0ebc-2dff-3365-781e6b9142a3@gmail.com>
+ <BN8PR21MB115693C381F65E97AB65FA18B7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+ <ebc03b4e-daf8-d47f-94ca-a4a549589773@gmail.com>
+ <BN8PR21MB1156D785177A40EA7D8341ABB7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+In-Reply-To: <BN8PR21MB1156D785177A40EA7D8341ABB7190@BN8PR21MB1156.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=clisc@microsoft.com; 
+x-originating-ip: [24.182.67.250]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 3898ef99-717b-461e-4893-08d6e86b40ff
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);SRVR:BN8PR21MB1137;
+x-ms-traffictypediagnostic: BN8PR21MB1137:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <BN8PR21MB11379E257824EA15F5B178C5B7140@BN8PR21MB1137.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3968;
+x-forefront-prvs: 0057EE387C
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(396003)(136003)(346002)(39860400002)(376002)(13464003)(199004)(189003)(6436002)(6506007)(256004)(55016002)(74316002)(66476007)(25786009)(102836004)(22452003)(316002)(53546011)(66446008)(66556008)(64756008)(6306002)(9686003)(229853002)(66946007)(73956011)(6116002)(3846002)(10090500001)(76116006)(486006)(8990500004)(966005)(11346002)(66066001)(71200400001)(71190400001)(53936002)(2501003)(446003)(14454004)(476003)(478600001)(68736007)(26005)(6246003)(52536014)(5660300002)(10290500003)(186003)(76176011)(8936002)(86362001)(52396003)(7696005)(2906002)(7736002)(305945005)(33656002)(81166006)(110136005)(8676002)(99286004)(81156014);DIR:OUT;SFP:1102;SCL:1;SRVR:BN8PR21MB1137;H:BN8PR21MB1156.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 9be6MxZl4wydkXSTXBi/zKz0a3Dq3oDecfSH8K/9nBLNHDDInHmdonFqF0S+IZHF3q55Olag5eYNraKdtBl93by4UzkqNB82ELCinrOPzBZQT5/d3fUo1sZzxKJq4L5QbV4gMG+aPOfvOEoOhEASlzHm36gvCpge43NX27ys5RyzMwt0Si4DhkBEMpQXy6Bwwwgy4dxhhlWs0BdjnBn1q8LbdjgixqUARjZcrpkZyueOG4psCo6sMN+dOhIxU4USA1vBuy15BoEV4kyTBuKvyhtRy/zxVdG+oCX+56HHqTWtXNB5sW/eAcBhbFwexXQz3RiUSpHIQydCJ4aHJj44S7hEHNdItn161/rrL43hddXHFOtISmSQU14Yg35VA6bgBoWOxwH6K836O0zSjeHn5xO8lzN6drSSeJdWi0BZuF8=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20190531183651.10067-1-rafa.almas@gmail.com> <CACUQV59ZQ=WLXa4iDw3nSJWnZpiqAYLOuoHKsNWj48uC=+k5KQ@mail.gmail.com>
-In-Reply-To: <CACUQV59ZQ=WLXa4iDw3nSJWnZpiqAYLOuoHKsNWj48uC=+k5KQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 3 Jun 2019 13:32:13 -0700
-Message-ID: <CABPp-BFfYFj232cHd6_NTkEg1n8AOQ4Abm7ZrnLPWHJEDzUPsg@mail.gmail.com>
-Subject: Re: [bug?] clean: Demonstrate failure when used with paths
-To:     =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Samuel Lijin <sxlijin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3898ef99-717b-461e-4893-08d6e86b40ff
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2019 21:34:26.7261
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: clisc@microsoft.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR21MB1137
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 3, 2019 at 12:58 PM Rafael Ascens=C3=A3o <rafa.almas@gmail.com>=
- wrote:
->
-> I missed this RFC series which fixes this and others issues:
-> https://public-inbox.org/git/20180405173446.32372-1-newren@gmail.com
->
-> Cheers,
-> Rafael Ascens=C3=A3o
-
-Yeah, I've had cleaning that patch series up on my TODO list for quite
-some time.
-
-My vague recollection was that Peff pointed out a few things to clean
-up in my patches, and also highlighted a few extra adjacent issues in
-the surrounding underlying code...and when I started looking into
-fixing the additional stuff it was slightly more complex and ugly (and
-for some reason I didn't decide to just fix up and submit what I had
-but was trying to fix everything in the area).
-
-Also, briefly looking back at the cover letter and thread overview it
-looks like no one ever attempted to shed light on the question I asked
-in my RFC about what correct behavior was for one special case (i.e.
-whether patches 5 & 6 of that series should be kept or whether they
-should be dropped and patch 7 should be squashed into earlier
-patches).  Anyone have thoughts on that?
-
-Elijah
+U28gSSBnYXZlIHRoaXMgYSB0cnkgYW5kIGl0IHNlZW1zIG5vdCB0byBiZSBiZWhhdmluZyBhcyBl
+eHBlY3RlZDoNCg0KPmdpdCBwdXNoIC11DQpmYXRhbDogVGhlIGN1cnJlbnQgYnJhbmNoIHticmFu
+Y2hOYW1lfSBoYXMgbm8gdXBzdHJlYW0gYnJhbmNoLg0KVG8gcHVzaCB0aGUgY3VycmVudCBicmFu
+Y2ggYW5kIHNldCB0aGUgcmVtb3RlIGFzIHVwc3RyZWFtLCB1c2UNCg0KICAgIGdpdCBwdXNoIC0t
+c2V0LXVwc3RyZWFtIG9yaWdpbiB7YnJhbmNoTmFtZX0NCg0KSSdtIHVzaW5nIEdpdCBmb3IgV2lu
+ZG93cyBpbiBhIFdpbmRvd3MgQ01EIHByb21wdCwgaWYgdGhhdCBtYXR0ZXJzIGF0IGFsbC4NCg0K
+VGhhbmtzLG0NCkNsaWZmDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IENs
+aWZmIFNjaG9tYnVyZyANClNlbnQ6IEZyaWRheSwgTWF5IDMxLCAyMDE5IDExOjEzIEFNDQpUbzog
+UGF0cnlrIE9iYXJhIDxkcmVhbWVyLnRhbkBnbWFpbC5jb20+OyBnaXRAdmdlci5rZXJuZWwub3Jn
+DQpTdWJqZWN0OiBSRTogU2ltcGxlIHNob3J0Y3V0IGZvciAiZ2l0IHB1c2ggLS1zZXQtdXBzdHJl
+YW0gb3JpZ2luIG5ld0JyYW5jaE5hbWUiDQoNClRoYW5rcywgUGF0cnlrLiAgSXQncyBhbHdheXMg
+bmljZSB0byBzZWUgdGhlIGZlYXR1cmUgSSB3YW50IGlzIGFscmVhZHkgaW1wbGVtZW50ZWQhICDw
+n5iKDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBQYXRyeWsgT2JhcmEgPGRy
+ZWFtZXIudGFuQGdtYWlsLmNvbT4gDQpTZW50OiBGcmlkYXksIE1heSAzMSwgMjAxOSAxMTowNSBB
+TQ0KVG86IENsaWZmIFNjaG9tYnVyZyA8Y2xpc2NAbWljcm9zb2Z0LmNvbT47IGdpdEB2Z2VyLmtl
+cm5lbC5vcmcNClN1YmplY3Q6IFJlOiBTaW1wbGUgc2hvcnRjdXQgZm9yICJnaXQgcHVzaCAtLXNl
+dC11cHN0cmVhbSBvcmlnaW4gbmV3QnJhbmNoTmFtZSINCg0KT24gMzEvMDUvMjAxOSAxNjo1Niwg
+Q2xpZmYgU2Nob21idXJnIHdyb3RlOg0KPiBXb3csIEkgZGlkIG5vdCBzZWUgdGhhdCBpbiB0aGUg
+bWFuIHBhZ2VzLi4uIGJ1dCBJIHNlZSBpdCBub3cuICBUaGFua3MhDQo+IA0KPiBTbyBJIGd1ZXNz
+IEkgd291bGQgY2hhbmdlIG15IGFzayB0byB0aGlzOg0KPiANCj4gImdpdCBwdXNoIC11Ig0KPiAN
+Cj4gU2hvdWxkIGRlZmF1bHQgdG8gIm9yaWdpbiBicmFuY2giIGlmIG5vIHBhcmFtZXRlcnMgYXJl
+IHByb3ZpZGVkLg0KDQpJIHRoaW5rIG1vc3QgcGVvcGxlIHdpbGwgYWdyZWUsIGNvbnNpZGVyaW5n
+IGl0IGFscmVhZHkgd29ya3MgdGhpcyB3YXkgOikNCg0KVGhlIGRlZmF1bHQgYmVoYXZpb3VyIG9m
+IGdpdCBwdXNoIGNoYW5nZWQgaW4gR2l0IDIuMCwgcGVyaGFwcyB5b3Ugd2VyZSByZWFkaW5nIHNv
+bWUgb2xkIHR1dG9yaWFsLiBZb3UgY2FuIGNvbmZpZ3VyZSBpdCB0byBtYXRjaCB5b3VyIHByZWZl
+cmVuY2VzIGJ5IGNoYW5naW5nIHB1c2guZGVmYXVsdCB2YWx1ZSBpbiB5b3VyIGdpdCBjb25maWc6
+DQoNCmh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1o
+dHRwcyUzQSUyRiUyRmdpdC1zY20uY29tJTJGZG9jcyUyRmdpdC1jb25maWclMjNEb2N1bWVudGF0
+aW9uJTJGZ2l0LWNvbmZpZy50eHQtcHVzaGRlZmF1bHQmYW1wO2RhdGE9MDIlN0MwMSU3Q2NsaXNj
+JTQwbWljcm9zb2Z0LmNvbSU3Q2Y1MmQ2OTljM2ZjMTQ5ZDIwZGU1MDhkNmU1ZDk2YTRjJTdDNzJm
+OTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNjk0OTExOTI4OTc3MDgz
+OCZhbXA7c2RhdGE9SzJOZXp3T1d6WnJxc1U3bDhHeWJqYkp1d21SbkMybGxUNzdVaHZGJTJCOFJV
+JTNEJmFtcDtyZXNlcnZlZD0wDQoNCi0tDQpQYXRyeWsgT2JhcmENCg==
