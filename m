@@ -2,119 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0861F609
-	for <e@80x24.org>; Mon,  3 Jun 2019 18:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9D01F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 18:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726503AbfFCSLM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 14:11:12 -0400
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:36285 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbfFCSLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 14:11:11 -0400
-Received: by mail-pf1-f180.google.com with SMTP id u22so11069540pfm.3
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 11:11:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=vUxTFgpjzh6wgHVRDcoHwPtkRmd8fBEb6SM7URBEVIw=;
-        b=RaelsnWrBBvyj3b5GF7I5nnHa5u8t7dvC+5sBKGi0Y4BZt+7dJnr8WTVDCeeVHnn8q
-         PgdioQqKmqdBbrMaRUfEwI/QbJgjmJTQyLanYQbkz0OhN/s6/mdhvI2VgxKeWc8ch9MM
-         gF9gMobI0+kM6seRmninj204un7mponIVnteqEc9fCoXKXcs4CkwRtqwgnmuoOTNi4I7
-         b92OfHvrBH+9JLMCverEwiEFVqj8ktNLmMcZOa9gyaElQT555BjbMp3SFmswjlE8gFBq
-         KeodmKL5VNZYG8Ou8WStwJbiiNBGHbGClw6xkG05UKa36RQniCa6exPhcFLP5YIY0M6k
-         0shQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vUxTFgpjzh6wgHVRDcoHwPtkRmd8fBEb6SM7URBEVIw=;
-        b=kyXo2ioxbnipjdCr5Cf7QWPR3rfwJmv31BbyfU6t67DtPiEu2gP1jO40O1ODyIL1EU
-         vgvtVSQk1FcHnJhR2ynzaWFg2II5B6n/bAryUyVR2ZwexpqPfYo9BeylXxCssSBdyrJk
-         h71LR7qVZ2p6BikMZH+h9MVoA0UwVzKxoY+491sDDN5wBsFzY9AxrwcdVK77M5c8mKJZ
-         k8Yyw1+nJh6c+8N7hmRot/er4eVyhnPPb1Z6OEoiHIIo9BIACWm/7z13pbcn5kWcHScL
-         4gkA5i/Hr/jY6sCoABBZPzvGgnxVOb/yVK2Kq32nUwFbCdf2x6yaMwdjQLT8TTZnGVUR
-         aWbQ==
-X-Gm-Message-State: APjAAAWw/RaRkz/smaqJMNFAuawkzAxM8nrqsflemN8SepVRHws6kDZM
-        G0gtX4oZHCYhGYkdwY88kLMB1Q==
-X-Google-Smtp-Source: APXvYqwl+fF06pn/vwyB0YOfJuUzs+NF0CR71CEvYEVo86ZMS75LUm4qkM0JsGGafzl7aYaW7dRoew==
-X-Received: by 2002:aa7:93a7:: with SMTP id x7mr33343698pff.196.1559585470401;
-        Mon, 03 Jun 2019 11:11:10 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id y7sm28495975pja.26.2019.06.03.11.11.09
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 11:11:09 -0700 (PDT)
-Subject: Re: Git Test Coverage Report (Thursday, May 30th)
-To:     Derrick Stolee <stolee@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Cc:     michael@platin.gs, Jonathan Tan <jonathantanmy@google.com>
-References: <2fb43bd3-71a7-fd92-e9b8-43e4eeed34cd@gmail.com>
- <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <b4ce9cbc-71d3-4d7f-1ee2-e4e3fc23b015@google.com>
-Date:   Mon, 3 Jun 2019 14:11:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726336AbfFCSQ0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 14:16:26 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60235 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbfFCSQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 14:16:25 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F386D6B9F6;
+        Mon,  3 Jun 2019 14:16:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7KVWO8rQp98sH68LtrC0W0PEHHg=; b=HNz/HL
+        7bMZBsIq3wbCABtVyoODx71IzwxO3FyC1cK78UU8px50r7IwwddyPok+4SVLF1Qo
+        cqQfK1avCyigAm+bmKWJcmuRAYrLrUDSblOQP35QrmOKE0CHV33x2BiLaWWhp/Vl
+        u1CjBaZSMvyzBWse6fI+amQ250ZJ3i0OJ+6h4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QNlQpoJoTIEAkRpRTl2VVlbiDcECDSBn
+        KNCJZw3EbUkYzj+MS2eZxwP+dLmL3wVqVj6vGvc4a8CKul+In+19SxVrA/LwezD6
+        0DoWhI0lermRVoCHumZYQ0gkz1VA1g/loCCsaVY8yPNOQ3jrFr9HICGugUDzuJpW
+        5ASg/O5Grps=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EBDB06B9F5;
+        Mon,  3 Jun 2019 14:16:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 26DFC6B9F4;
+        Mon,  3 Jun 2019 14:16:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Drew DeVault <sir@cmpwn.com>, git <git@vger.kernel.org>
+Subject: Re: [Proposal] git am --check
+References: <BUJFK0ZEKP5I.16DDFWUTXGJTE@homura>
+        <CAP8UFD1W_tB34N-uAA85+QkHY6kmGWYYM47zceP3=5aTwxwvnQ@mail.gmail.com>
+        <CACsJy8CUGfUwi15+ggOgRT4xotCkJVhGtCrjMa=4pdnDq25f4A@mail.gmail.com>
+Date:   Mon, 03 Jun 2019 11:16:19 -0700
+In-Reply-To: <CACsJy8CUGfUwi15+ggOgRT4xotCkJVhGtCrjMa=4pdnDq25f4A@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 3 Jun 2019 16:35:01 +0700")
+Message-ID: <xmqqblzev8jw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0575D58-862B-11E9-8D79-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi -
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On 5/30/19 2:24 PM, Derrick Stolee wrote:
->> 8934ac8c 1190)     ent->ignored == next->ignored &&
->> 8934ac8c 1191)     ent->unblamable == next->unblamable) {
-> These lines are part of this diff:
-> 
-> --- a/blame.c
-> +++ b/blame.c
-> @@ -479,7 +479,9 @@ void blame_coalesce(struct blame_scoreboard *sb)
-> 
->          for (ent = sb->ent; ent && (next = ent->next); ent = next) {
->                  if (ent->suspect == next->suspect &&
-> -                   ent->s_lno + ent->num_lines == next->s_lno) {
-> +                   ent->s_lno + ent->num_lines == next->s_lno &&
-> +                   ent->ignored == next->ignored &&
-> +                   ent->unblamable == next->unblamable) {
->                          ent->num_lines += next->num_lines;
->                          ent->next = next->next;
->                          blame_origin_decref(next->suspect);
-> 
-> The fact that they are uncovered means that the && chain is short-circuited at
-> "ent->s_lno + ent->num_lines == next->s_lno" before the new conditions can be
-> checked. So, the block inside is never covered. It includes a call to
-> blame_origin_decref() and free(), so it would be good to try and exercise this region.
+> On Mon, Jun 3, 2019 at 4:29 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>
+>> On Sun, Jun 2, 2019 at 7:38 PM Drew DeVault <sir@cmpwn.com> wrote:
+>> >
+>> > This flag would behave similarly to git apply --check, or in other words
+>> > would exit with a nonzero status if the patch is not applicable without
+>> > actually applying the patch otherwise.
+>>
+>> `git am` uses the same code as `git apply` to apply patches, so there
+>> should be no difference between `git am --check` and `git apply
+>> --check`.
+>
+> One difference (that still annoys me) is "git apply" must be run at
+> topdir. "git am" can be run anywhere and it will automatically find
+> topdir.
+>
+> "git am" can also consume multiple patches, so it's some extra work if
+> we just use "git apply" directly, although I don't think that's a very
+> good argument for "am --check".
 
-What is your setup for determining if a line is uncovered?  Are you 
-running something like gcov for all of the tests in t/?
+Another is that "am" has preprocessing phase performed by mailsplit
+that deals with MIME garbage, which "apply" will totally choke on
+without even attempting to cope with.
 
-I removed this change, and none of the other blame tests appeared to 
-trigger this code block either, independently of this change.  (I put an 
-assert(0) inside the block).
+I haven't carefully read the "proposal" or any rfc patches yet, but
+would/should the command make a commit if the patch cleanly applies?
 
-However, two of our blame-ignore tests do get past the first two checks 
-in the if clause, (the suspects are equal and the s_lno chunks are 
-adjacent) and we do check the ignored/unblamable conditions.
-
-Specifically, if I undo this change and put an assert(0) in that block, 
-two of our tests hit that code, and one of our tests fails if I don't do 
-the check for ignored/unblamable.
-
-Thanks,
-Barret
-
-
-
+I wonder if a "--dry-run" option is more useful (i.e. checks and
+reports with the exit status *if* the command without "--dry-run"
+would cleanly succeed, but never makes a commit or touches the index
+or the working tree), given the motivating use case is a Git aware
+MUA that helps the user by saying "if you are busy you could perhaps
+skip this message as the patch would not apply to your tree anyway".
