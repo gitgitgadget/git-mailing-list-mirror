@@ -2,314 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C66281F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 22:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7065D1F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 22:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726317AbfFCWWv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 18:22:51 -0400
-Received: from resqmta-po-05v.sys.comcast.net ([96.114.154.164]:35478 "EHLO
-        resqmta-po-05v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726025AbfFCWWu (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Jun 2019 18:22:50 -0400
-Received: from resomta-po-07v.sys.comcast.net ([96.114.154.231])
-        by resqmta-po-05v.sys.comcast.net with ESMTP
-        id XpxLhvVb1F9fpXvLthGTfO; Mon, 03 Jun 2019 22:22:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=20190202a; t=1559600569;
-        bh=HrZJjYgplm0OTmz6QHKmFCZXFI+lYA0DxJPMTwPqgpk=;
-        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
-         Content-Type;
-        b=UzKzSodMjwmPfUV/ivsPVnpgksYxA4HotNYIdv6hOH/FRyTsi1FyIsGlz2A/oOmmh
-         QKuXGb4Q9gpu21UAOMMaLe0dPqwqliVn2amYwBAqCPDMsFqAl0LswJ13Qn1rMwn4C1
-         gX0Rioh9PNWeFWOXWKDN/UsTsXJYvA8YU6f6110Uz+5VxUtyAoGdONvwOxNwUUii4U
-         kZCaBzmeXVZfP10uCMqFyTHEJfwkp4VBCe5Z8jlw08ndPMQYIIDqR/oMT957rBvPJw
-         KOisXj7Ox2ZU/OQMznupSPVN1W72iamT7XYMRTd0sj5SfqP7PoLxo2a8qiKM2ykPeG
-         WYEk0dbzrQirQ==
-Received: from comcast.net ([IPv6:2601:647:4b02:2491:a5aa:2f0c:f3a4:606c])
-        by resomta-po-07v.sys.comcast.net with ESMTPSA
-        id XvLrhbalDqH0NXvLshvYtQ; Mon, 03 Jun 2019 22:22:49 +0000
-X-Xfinity-VMeta: sc=-100;st=legit
-Date:   Mon, 3 Jun 2019 15:22:47 -0700
-From:   Matthew DeVore <matvore@comcast.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
-        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
-        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
-Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
-Message-ID: <20190603222247.GG4641@comcast.net>
-References: <cover.1558484115.git.matvore@google.com>
- <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
- <20190528215359.GB133078@google.com>
- <20190531204821.GC4641@comcast.net>
- <20190531211041.GA19792@sigill.intra.peff.net>
- <20190601001231.GF4641@comcast.net>
- <20190603123435.GA18953@sigill.intra.peff.net>
+        id S1726881AbfFCWXl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 18:23:41 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36583 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726502AbfFCWXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 18:23:41 -0400
+Received: by mail-pg1-f194.google.com with SMTP id a3so1679609pgb.3
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 15:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=A6VivxIyEfJnqVKbUyttSRmR8ekQAXx/4GuBWCwj6UY=;
+        b=mhe3Lntonz91DAg687YRA+QACvEiL2WF5JnQXGP2h9EBX4iaNtz4RwQFP1V9Is9wBm
+         zwEXmqi4MzzQgjhRFNsrjXsApvwzk3LB/IgRbXckaX2QJ0Gklbj2FQ6ZTbiU2ekMZcip
+         mOF35TlXofsqwyDV812yQG5VRugGYLx3YXkYT10LTVOl1nHbKvgpRoNMUCw4pYwozU2x
+         3qfM2zjpea7dOtOXzec4hboW4g27pxpKP+xEAPzMpVK/ydoytIqMxxUXuEYAXucUdcqm
+         kWMT856Je6rTPOVF1uaBWO6gZpn1YMOJmc3dpbIQ6iNNuudlfE0j8/36E+FLNJlPCPJD
+         9BPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=A6VivxIyEfJnqVKbUyttSRmR8ekQAXx/4GuBWCwj6UY=;
+        b=mfF4XhjaX9b4zBa+9Zjqdqhbl4TJiUXgJrmqK977Wsq0cnj9cbhmShOaG98KiehzbX
+         Yf2COuUn30cBoG8suhFYz0DKncysN+nCKOs3rXM5z+CCY81Onh2jEuDSLxnvwLeOiTGG
+         wQ7btp9GAlvtWI272hifG61Ca94J/T3+SHjdSDdAatmhv41PPxi+2gRf4LLsMFeE5VdX
+         a2dUGYXdONZqmCXQZb3hbRaOOJploLnUlEV9beFtDnsAu5UDwSegaYBEN0Z8bbX84mIO
+         kilMfy+maFQN9fLbisLvz/Dh1uGdOsnfh7eRy0iees3vG0jZWRHl9k4WU0OwsbfmjxFs
+         8w5A==
+X-Gm-Message-State: APjAAAWUrKJKkT9q0lvCgyT/TDZ2oFoVCX2IgZkh6Q7Rt5trEmOK3vJ5
+        GZR0KDvc7YCy01j6YrRatkE=
+X-Google-Smtp-Source: APXvYqxcAlgx55Vr01qma55Uopnoj60Ylbtum7a0EWgN/cpL9ZnGD98JiB9QumcJDot2Emw11T8EgQ==
+X-Received: by 2002:a62:61c2:: with SMTP id v185mr18759456pfb.0.1559600620160;
+        Mon, 03 Jun 2019 15:23:40 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id b128sm9765552pfa.165.2019.06.03.15.23.38
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 03 Jun 2019 15:23:39 -0700 (PDT)
+Date:   Mon, 3 Jun 2019 15:23:37 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] index-pack: prefetch missing REF_DELTA bases
+Message-ID: <20190603222337.GA208159@google.com>
+References: <cover.1557868134.git.jonathantanmy@google.com>
+ <4fcaa4481b5fd2a76aa21263f997e00913db0e0f.1557868134.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190603123435.GA18953@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <4fcaa4481b5fd2a76aa21263f997e00913db0e0f.1557868134.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 03, 2019 at 08:34:35AM -0400, Jeff King wrote:
-> Great. We might want to stop there, but it's possible could reuse even
-> more code. I didn't look closely before, but it seems this code is
-> decoding a URL. We already have a url_decode() routine in url.c. Could
-> it be reused?
+Jonathan Tan wrote:
 
-Very nice. Here is an interdiff and the changes will be included in v3 of my
-patchset:
+> When fetching, the client sends "have" commit IDs indicating that the
+> server does not need to send any object referenced by those commits,
+> reducing network I/O. When the client is a partial clone, the client
+> still sends "have"s in this way, even if it does not have every object
+> referenced by a commit it sent as "have".
+>
+> If a server omits such an object, it is fine: the client could lazily
+> fetch that object before this fetch, and it can still do so after.
+>
+> The issue is when the server sends a thin pack containing an object that
+> is a REF_DELTA against such a missing object: index-pack fails to fix
+> the thin pack. When support for lazily fetching missing objects was
+> added in 8b4c0103a9 ("sha1_file: support lazily fetching missing
+> objects", 2017-12-08), support in index-pack was turned off in the
+> belief that it accesses the repo only to do hash collision checks.
+> However, this is not true: it also needs to access the repo to resolve
+> REF_DELTA bases.
+[...]
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/index-pack.c     | 26 +++++++++++++++--
+>  t/t5616-partial-clone.sh | 61 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 85 insertions(+), 2 deletions(-)
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index ed02c88eb6..0f135602a7 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -1,19 +1,20 @@
- #include "cache.h"
- #include "commit.h"
- #include "config.h"
- #include "revision.h"
- #include "argv-array.h"
- #include "list-objects.h"
- #include "list-objects-filter.h"
- #include "list-objects-filter-options.h"
- #include "trace.h"
-+#include "url.h"
- 
- static int parse_combine_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg,
- 	struct strbuf *errbuf);
- 
- /*
-  * Parse value of the argument to the "filter" keyword.
-  * On the command line this looks like:
-  *       --filter=<arg>
-@@ -84,54 +85,20 @@ static int gently_parse_list_objects_filter(
- 	 * Please update _git_fetch() in git-completion.bash when you
- 	 * add new filters
- 	 */
- 
- 	strbuf_addf(errbuf, "invalid filter-spec '%s'", arg);
- 
- 	memset(filter_options, 0, sizeof(*filter_options));
- 	return 1;
- }
- 
--static int url_decode(struct strbuf *s, struct strbuf *errbuf)
--{
--	char *dest = s->buf;
--	char *src = s->buf;
--	size_t new_len;
--
--	while (*src) {
--		if (src[0] != '%') {
--			*dest++ = *src++;
--			continue;
--		}
--
--		if (hex_to_bytes((unsigned char *)dest, src + 1, 1)) {
--			strbuf_addstr(errbuf,
--				      "error in filter-spec - "
--				      "invalid hex sequence after %");
--			return 1;
--		}
--
--		if (!*dest) {
--			strbuf_addstr(errbuf,
--				      "error in filter-spec - unexpected %00");
--			return 1;
--		}
--
--		src += 3;
--		dest++;
--	}
--	new_len = dest - s->buf;
--	strbuf_remove(s, new_len, s->len - new_len);
--
--	return 0;
--}
--
- static const char *RESERVED_NON_WS = "~`!@#$^&*()[]{}\\;'\",<>?";
- 
- static int has_reserved_character(
- 	struct strbuf *sub_spec, struct strbuf *errbuf)
- {
- 	const char *c = sub_spec->buf;
- 	while (*c) {
- 		if (*c <= ' ' || strchr(RESERVED_NON_WS, *c)) {
- 			strbuf_addf(errbuf,
- 				    "must escape char in sub-filter-spec: '%c'",
-@@ -147,56 +114,57 @@ static int has_reserved_character(
- static int parse_combine_subfilter(
- 	struct list_objects_filter_options *filter_options,
- 	struct strbuf *subspec,
- 	struct strbuf *errbuf)
- {
- 	size_t new_index = filter_options->sub_nr;
- 
- 	ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
- 		      filter_options->sub_alloc);
- 
--	return has_reserved_character(subspec, errbuf) ||
--		url_decode(subspec, errbuf) ||
--		gently_parse_list_objects_filter(
--			&filter_options->sub[new_index], subspec->buf, errbuf);
-+	decoded = url_percent_decode(subspec->buf);
-+
-+	result = gently_parse_list_objects_filter(
-+		&filter_options->sub[new_index], decoded, errbuf);
-+
-+	free(decoded);
-+	return result;
- }
- 
- static int parse_combine_filter(
- 	struct list_objects_filter_options *filter_options,
- 	const char *arg,
- 	struct strbuf *errbuf)
- {
- 	struct strbuf **subspecs = strbuf_split_str(arg, '+', 0);
- 	size_t sub;
--	int result;
-+	int result = 0;
- 
- 	if (!subspecs[0]) {
- 		strbuf_addf(errbuf,
- 			    _("expected something after combine:"));
- 		result = 1;
- 		goto cleanup;
- 	}
- 
--	for (sub = 0; subspecs[sub]; sub++) {
-+	for (sub = 0; subspecs[sub] && !result; sub++) {
- 		if (subspecs[sub + 1]) {
- 			/*
- 			 * This is not the last subspec. Remove trailing "+" so
- 			 * we can parse it.
- 			 */
- 			size_t last = subspecs[sub]->len - 1;
- 			assert(subspecs[sub]->buf[last] == '+');
- 			strbuf_remove(subspecs[sub], last, 1);
- 		}
- 		result = parse_combine_subfilter(
- 			filter_options, subspecs[sub], errbuf);
--		if (result)
--			goto cleanup;
- 	}
- 
- 	filter_options->choice = LOFC_COMBINE;
- 
- cleanup:
- 	strbuf_list_free(subspecs);
- 	if (result) {
- 		list_objects_filter_release(filter_options);
- 		memset(filter_options, 0, sizeof(*filter_options));
- 	}
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index 7fb5e50cde..e1bf3ed038 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -405,32 +405,20 @@ test_expect_success 'combine:... while URL-encoding things that should not be' '
- 
- test_expect_success 'combine: with nothing after the :' '
- 	expect_invalid_filter_spec combine: "expected something after combine:"
- '
- 
- test_expect_success 'parse error in first sub-filter in combine:' '
- 	expect_invalid_filter_spec combine:tree:asdf+blob:none \
- 		"expected .tree:<depth>."
- '
- 
--test_expect_success 'combine:... with invalid URL-encoded sequences' '
--	# Not enough hex chars
--	expect_invalid_filter_spec combine:tree:2+blob:non%a \
--		"error in filter-spec - invalid hex sequence after %" &&
--	# Non-hex digit after %
--	expect_invalid_filter_spec combine:tree:2+blob%G5none \
--		"error in filter-spec - invalid hex sequence after %" &&
--	# Null byte encoded by %
--	expect_invalid_filter_spec combine:tree:2+blob%00none \
--		"error in filter-spec - unexpected %00"
--'
--
- test_expect_success 'combine:... with non-encoded reserved chars' '
- 	expect_invalid_filter_spec combine:tree:2+sparse:@xyz \
- 		"must escape char in sub-filter-spec: .@." &&
- 	expect_invalid_filter_spec combine:tree:2+sparse:\` \
- 		"must escape char in sub-filter-spec: .\`." &&
- 	expect_invalid_filter_spec combine:tree:2+sparse:~abc \
- 		"must escape char in sub-filter-spec: .\~."
- '
- 
- test_expect_success 'validate err msg for "combine:<valid-filter>+"' '
-diff --git a/url.c b/url.c
-index 25576c390b..bdede647bc 100644
---- a/url.c
-+++ b/url.c
-@@ -79,20 +79,26 @@ char *url_decode_mem(const char *url, int len)
- 
- 	/* Skip protocol part if present */
- 	if (colon && url < colon) {
- 		strbuf_add(&out, url, colon - url);
- 		len -= colon - url;
- 		url = colon;
- 	}
- 	return url_decode_internal(&url, len, NULL, &out, 0);
- }
- 
-+char *url_percent_decode(const char *encoded)
-+{
-+	struct strbuf out = STRBUF_INIT;
-+	return url_decode_internal(&encoded, strlen(encoded), NULL, &out, 0);
-+}
-+
- char *url_decode_parameter_name(const char **query)
- {
- 	struct strbuf out = STRBUF_INIT;
- 	return url_decode_internal(query, -1, "&=", &out, 1);
- }
- 
- char *url_decode_parameter_value(const char **query)
- {
- 	struct strbuf out = STRBUF_INIT;
- 	return url_decode_internal(query, -1, "&", &out, 1);
-diff --git a/url.h b/url.h
-index 00b7d58c33..2a27c34277 100644
---- a/url.h
-+++ b/url.h
-@@ -1,16 +1,24 @@
- #ifndef URL_H
- #define URL_H
- 
- struct strbuf;
- 
- int is_url(const char *url);
- int is_urlschemechar(int first_flag, int ch);
- char *url_decode(const char *url);
- char *url_decode_mem(const char *url, int len);
-+
-+/*
-+ * Similar to the url_decode_{,mem} methods above, but doesn't assume there
-+ * is a scheme followed by a : at the start of the string. Instead, %-sequences
-+ * before any : are also parsed.
-+ */
-+char *url_percent_decode(const char *encoded);
-+
- char *url_decode_parameter_name(const char **query);
- char *url_decode_parameter_value(const char **query);
- 
- void end_url_with_slash(struct strbuf *buf, const char *url);
- void str_end_url_with_slash(const char *url, char **dest);
- 
- #endif /* URL_H */
+Thanks much.
+
+This bugfix has been working well at $DAYJOB:
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Is it something that could be in 2.22.0 or 2.22.1?
