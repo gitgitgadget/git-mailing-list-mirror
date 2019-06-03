@@ -2,103 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6011F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 15:26:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF1E1F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 15:46:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727343AbfFCP04 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 11:26:56 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33352 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726714AbfFCP04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 11:26:56 -0400
-Received: by mail-pf1-f194.google.com with SMTP id x15so1017443pfq.0
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 08:26:55 -0700 (PDT)
+        id S1727356AbfFCPqt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 11:46:49 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39411 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726922AbfFCPqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 11:46:49 -0400
+Received: by mail-wr1-f66.google.com with SMTP id x4so12629237wrt.6
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 08:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/OmdjoNH9TEofE6NkPYl5K+YTgd0fJSh3EOsIQR8ul4=;
-        b=Ih2aI/URWf3olWIlOHN5+O1m5ZwT+WAp/Qpp7WdR5igc95XUvLysThxDSyEBNyzAEV
-         6Y/tlH1LH0sIV2pkVtTUvm8xQ8vKG6eyHtkGbfPhuxnIOq4Ulsrlk1O3GQ+VDPz4SYsh
-         cSnwlj69L365uYCfXdMvoCmiTzpPn4/MlxYtXYj34ql/6PDQvM0waMaYVJ3UjBr1tOvz
-         6Pf/2NnZwUS7UZn2uyfznrb4wSKpMikkNmeN6HDO4Nvx83GjPZYfgAHG8LxfxSv6IkWZ
-         2WiSyEspvuNyaEsZnHkuHJOH4mqlQs8xTTyyRE34Z1EZReQhob/+Lmz3xZqaiakE3k9K
-         DduA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CxVmmnn73P1MB0M2HAORVfdhBaEuLYbkYgFL55r5T1c=;
+        b=CUA9HCHri5ucBRmxhDvr5wg8H3qIvzo32fPDIG0mnYvu9ZNv19J9BXaLXT7QyVfmgB
+         ACjfxIgEJ/ZcXYCX5zzxBch5ctGccUAlDCQJRqWaEdcW/V4Jye9SavSm9w/uk6u5+ZqO
+         6vTkq57eCCKDbyVKEHeTh1f/K3amdVaEh2QMpSieLMJtr2UayBcjBG5wka5M+1yW6MVM
+         okgrjMbFeV/lHqLNiI+EoO/Q/PVASAtMTg0vFyy2FEM5Wh+5lY4/QyEHugUGQxMh3tPG
+         eDas9XNfs4iU3ufxVY3/iRUfBa29HyL+0ssRCT6W34amKpQuYNYbzm/6d0zy9WQxUFQw
+         MGZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/OmdjoNH9TEofE6NkPYl5K+YTgd0fJSh3EOsIQR8ul4=;
-        b=llh+p1afRQBQzzsr2ElL8qnEuhRRLbu14ZPADbW2XaZxu6+TMW4Wbpc1eByHoHhgtI
-         mb0lOX1wb5VzYZvY54wcXr/1FcVFK6RXLoGmLSK3tcbMHci8Y4khKOou3jNDwsdi9jRG
-         +Bb1Y9dnqbKv7Gs+5v2YUEMSE8ysJsjk4d10eSfn5NLLlOysTliPnI+ErXcw5qZaQ/ms
-         6d9kGFJRsQChAdtivwV0faO56I9rQURjEI/FfaBhyDN6Js0Iq7u3Z1qKzc2ZyZcglZmW
-         c1282F0aElRBJ63ak/ffiRVsNbtzyDCt5RnKLXWvAbgOUHwh1lHgXAnVqcquH5LpJ2aO
-         1LXA==
-X-Gm-Message-State: APjAAAXlJOesn6L09P4W5VTY+Zyo06dxgPqujGu3sZaPFG8Mts3Niq+b
-        SiWClJXJTXMCx+NtdZ+i0hwhxw==
-X-Google-Smtp-Source: APXvYqwMfJ9uYFiCZov03/hVw+6HkMIzwtF0s7keb/cj8xQg6l+vdUaMncEDwG+X65zgdO5E/NqFzw==
-X-Received: by 2002:a63:1844:: with SMTP id 4mr27242228pgy.402.1559575615008;
-        Mon, 03 Jun 2019 08:26:55 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id c127sm23460698pfb.107.2019.06.03.08.26.53
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 08:26:54 -0700 (PDT)
-Subject: Re: [PATCH] blame - fix some issues identified by coverage report.
-To:     michael@platin.gs, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <Re: [PATCH v7 7/8] blame: add a fingerprint heuristic to match
- ignored lines> <20190601210925.15339-1-michael@platin.gs>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <10bbee35-4df1-1a6d-8301-6866c7445e2d@google.com>
-Date:   Mon, 3 Jun 2019 11:26:52 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CxVmmnn73P1MB0M2HAORVfdhBaEuLYbkYgFL55r5T1c=;
+        b=UdZ6M+DR6vr/5e0g5UuK6htUENkc5gn0jdROrkq84rgl8BxY5/B3fhcNysUgfUOizB
+         rLUr8BSn2OLZDFthXAGv1XbNChAV8G4Zwn8yvMFFFoUOOc07seeIec1dTTPU3zDMXpe7
+         uIahrril/N+tIMxlHHDMXiF5LWuYVeBUbFCsfhMg8UgVsSJvfHR79KXDvP3bBWL8DPph
+         x9AboINSE+Wf47dRwbXkey6dRZzXEmrG/shOTES48pmyR6ZH9NCKdeK6Y3Eb3GqiDt9H
+         gIUfXg4ezV01SIKehnC60WYl+KnonZZr5pQTRLPbgD6tGcJP9eGHjtJHL8hFf8JdKSSm
+         lZ8Q==
+X-Gm-Message-State: APjAAAWeWpWDjQqiWnABiUHzca2fwp+LJsyEtLqLVrHrY0+/9rMex81n
+        g1bSpu8Zb3dh1yZ5yVwhgnZPXr6u
+X-Google-Smtp-Source: APXvYqyjT9+R4QsVQ+RvR5cdrD+5GaMXbQ2nUBCtCm/Jtng9bw6Rco3GF3lmncie5knTSh5KWT8mSQ==
+X-Received: by 2002:a5d:498a:: with SMTP id r10mr16820931wrq.28.1559576807474;
+        Mon, 03 Jun 2019 08:46:47 -0700 (PDT)
+Received: from szeder.dev (x4dbd37ab.dyn.telefonica.de. [77.189.55.171])
+        by smtp.gmail.com with ESMTPSA id w14sm2512282wrk.44.2019.06.03.08.46.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Jun 2019 08:46:46 -0700 (PDT)
+Date:   Mon, 3 Jun 2019 17:46:44 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] am: add --check option
+Message-ID: <20190603154644.GQ951@szeder.dev>
+References: <20190603142523.3826-1-sir@cmpwn.com>
 MIME-Version: 1.0
-In-Reply-To: <20190601210925.15339-1-michael@platin.gs>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190603142523.3826-1-sir@cmpwn.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael -
-
-On 6/1/19 5:09 PM, michael@platin.gs wrote:
-> From: Michael Platings <michael@platin.gs>
+On Mon, Jun 03, 2019 at 10:25:23AM -0400, Drew DeVault wrote:
+> ---
+>  Documentation/git-am.txt |  7 ++++++-
+>  builtin/am.c             | 13 +++++++++++++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
 > 
-> Thanks to Derrick Stolee for highlighting missing coverage.
-> 
-> In the case of "certainties[i] = CERTAINTY_NOT_CALCULATED" this was
-> defeating an optimization that preserved results of calculations
-> between line-matching passes. This had caused other code to never
-> be executed - that code is now executed and only discards calculation
-> results that are no longer valid.
-> 
-> In the case of "max_search_distance_b = 0" this was never executed
-> because another statement was added earlier in the function to return
-> early in such a case.
-> 
-> Signed-off-by: Michael Platings <michael@platin.gs>
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index fc3b993c33..bc01e87d85 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
+> +'git am' [--signoff] [--keep] [--check] [--[no-]keep-cr] [--[no-]utf8]
+>  	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
+>  	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+>  	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+> @@ -44,6 +44,11 @@ OPTIONS
+>  --keep-non-patch::
+>  	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+>  
+> +--check::
+> +	Instead of applying the patch(es), see if they are
+> +	applicable to the current working tree and/or the index
+> +	file and detects errors.
 
-If it's OK with you, I can squash this into your existing patch in the 
-blame-ignore patch set.
+Note that in "real" patch series a later patch quite often depends on
+the changes made in earlier patches, and this option should somehow
+account for that.  I'm not sure how to do that without actually
+applying the patches, though...
 
-Thanks,
+  # Create two patches, each modifying the same line in the same file.
+  $ echo 0 >file
+  $ git add file
+  $ git commit -m initial
+  [master 956965a] initial
+   1 file changed, 1 insertion(+)
+   create mode 100644 file
+  $ echo 1 >file
+  $ git commit -m one file
+  [master fd65db1] one
+   1 file changed, 1 insertion(+), 1 deletion(-)
+  $ echo 2 >file
+  $ git commit -m two file
+  [master 1b878f1] two
+   1 file changed, 1 insertion(+), 1 deletion(-)
+  $ git format-patch -2
+  0001-one.patch
+  0002-two.patch
 
-Barret
+  # This shows that the second patch is applicable on top of the
+  # first:
+  $ git checkout HEAD^
+  HEAD is now at fd65db1 one
+  $ git apply --check 0002-two.patch ; echo $?
+  0
+
+  # But 'git am --check' reports that the two patches can't be
+  # applied on the initial commit, because it attempts to apply the
+  # second patch on the initial commit as well, instead on top of the
+  # first:
+  $ git checkout HEAD^
+  Previous HEAD position was fd65db1 one
+  HEAD is now at 956965a initial
+  $ ~/src/git/bin-wrappers/git am --check 0001-one.patch 0002-two.patch
+  Applying: one
+  Applying: two
+  error: patch failed: file:1
+  error: file: patch does not apply
+  Patch failed at 0002 two
+
+  # Though, of course, they can be applied just fine:
+  $ ~/src/git/bin-wrappers/git am 0001-one.patch 0002-two.patch
+  Applying: one
+  Applying: two
+
