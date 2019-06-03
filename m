@@ -2,120 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB591F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 15:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6011F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 15:26:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729373AbfFCPGf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 11:06:35 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:38182 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729081AbfFCPGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 11:06:35 -0400
-Received: by mail-it1-f196.google.com with SMTP id h9so12897056itk.3
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 08:06:34 -0700 (PDT)
+        id S1727343AbfFCP04 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 11:26:56 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33352 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbfFCP04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 11:26:56 -0400
+Received: by mail-pf1-f194.google.com with SMTP id x15so1017443pfq.0
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 08:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=UwvwVXlz0dIi+qx7yUh2GgWLLdPM0TCP7rgd2CYx71E=;
-        b=HwzRG9TcJcFzLH1k4G7bkB97I/5SLkkxYzpXrTs9qD2qst1rh/MWid4oQoRwFk0/SF
-         4M1Upn9ucfz2FnuMavsnxRGbw3pZCnBsw/2z6bPK/7yo0D12346TFXtBr6UXMtnFnuHB
-         DgT+CqGD4EVMWx3K3unYxraF/ENjn8wTgCiiENhdvB9lUh8ESPq+m0tnz/LQ6I92xQGl
-         mVtNLO6sEkcgs0fW6HyG0uMlgQo9w5tkwOiNopPRRTwDqaFojQFKybsnuKwR2en1WXsb
-         xQsdhsahnErL1VQ/0nGE7OSQ+JIi7LHO8u+4pJYTrrLQWAgUAeLlJ1LJZZf56d7nmBH0
-         VJEA==
+        d=google.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/OmdjoNH9TEofE6NkPYl5K+YTgd0fJSh3EOsIQR8ul4=;
+        b=Ih2aI/URWf3olWIlOHN5+O1m5ZwT+WAp/Qpp7WdR5igc95XUvLysThxDSyEBNyzAEV
+         6Y/tlH1LH0sIV2pkVtTUvm8xQ8vKG6eyHtkGbfPhuxnIOq4Ulsrlk1O3GQ+VDPz4SYsh
+         cSnwlj69L365uYCfXdMvoCmiTzpPn4/MlxYtXYj34ql/6PDQvM0waMaYVJ3UjBr1tOvz
+         6Pf/2NnZwUS7UZn2uyfznrb4wSKpMikkNmeN6HDO4Nvx83GjPZYfgAHG8LxfxSv6IkWZ
+         2WiSyEspvuNyaEsZnHkuHJOH4mqlQs8xTTyyRE34Z1EZReQhob/+Lmz3xZqaiakE3k9K
+         DduA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UwvwVXlz0dIi+qx7yUh2GgWLLdPM0TCP7rgd2CYx71E=;
-        b=YH8+VdBT1kktSiyLqFMSnrhaGKdEhuXOOaJlf/ycjQLMV1vxv5e3aBp+gx3Qsh20pk
-         1LMLaiLv4kg8SakVOC0HKEXqACvCxykGN0aPhPtHjgrcIvVYt/dJC3iiSadhZULEUXmB
-         D7uw91AQguf+YKlah9JYTJg3lDO8K6ewMwogahA/at1ylcGC7QlN82yTj1GVk3YnaMxX
-         Udn+OWUU9WAdhLSqF+sfTy+jRhb8yr0dnbZQKH0HUj3y4fs2nisyLbCt4zCpWkAEYG8x
-         RG/IN8YLy3hHme0zZjnBLos6b013AuEue94HnPQnqZ/mbOc8Hl4vpWLH/WVkdw846Hb5
-         fdLQ==
-X-Gm-Message-State: APjAAAX8hsh37s/b2+jXonYQlYhUL5Azp4r9teEh7jkuQoBpYDj++45k
-        S60h4MCr4Jjt0i+hZbxo+4D7wY/g59JhrivcRhez9dbXjOA=
-X-Google-Smtp-Source: APXvYqwRrjwerdsSWtm3Uzaf/xWQE9vS5DdFx36H4ZphcELNxLMifJH6YvrfvFELDwstTM8BocufyPNAy9ZtiVTBrfE=
-X-Received: by 2002:a24:2483:: with SMTP id f125mr6313775ita.123.1559574394004;
- Mon, 03 Jun 2019 08:06:34 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/OmdjoNH9TEofE6NkPYl5K+YTgd0fJSh3EOsIQR8ul4=;
+        b=llh+p1afRQBQzzsr2ElL8qnEuhRRLbu14ZPADbW2XaZxu6+TMW4Wbpc1eByHoHhgtI
+         mb0lOX1wb5VzYZvY54wcXr/1FcVFK6RXLoGmLSK3tcbMHci8Y4khKOou3jNDwsdi9jRG
+         +Bb1Y9dnqbKv7Gs+5v2YUEMSE8ysJsjk4d10eSfn5NLLlOysTliPnI+ErXcw5qZaQ/ms
+         6d9kGFJRsQChAdtivwV0faO56I9rQURjEI/FfaBhyDN6Js0Iq7u3Z1qKzc2ZyZcglZmW
+         c1282F0aElRBJ63ak/ffiRVsNbtzyDCt5RnKLXWvAbgOUHwh1lHgXAnVqcquH5LpJ2aO
+         1LXA==
+X-Gm-Message-State: APjAAAXlJOesn6L09P4W5VTY+Zyo06dxgPqujGu3sZaPFG8Mts3Niq+b
+        SiWClJXJTXMCx+NtdZ+i0hwhxw==
+X-Google-Smtp-Source: APXvYqwMfJ9uYFiCZov03/hVw+6HkMIzwtF0s7keb/cj8xQg6l+vdUaMncEDwG+X65zgdO5E/NqFzw==
+X-Received: by 2002:a63:1844:: with SMTP id 4mr27242228pgy.402.1559575615008;
+        Mon, 03 Jun 2019 08:26:55 -0700 (PDT)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.googlemail.com with ESMTPSA id c127sm23460698pfb.107.2019.06.03.08.26.53
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Jun 2019 08:26:54 -0700 (PDT)
+Subject: Re: [PATCH] blame - fix some issues identified by coverage report.
+To:     michael@platin.gs, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <Re: [PATCH v7 7/8] blame: add a fingerprint heuristic to match
+ ignored lines> <20190601210925.15339-1-michael@platin.gs>
+From:   Barret Rhoden <brho@google.com>
+Message-ID: <10bbee35-4df1-1a6d-8301-6866c7445e2d@google.com>
+Date:   Mon, 3 Jun 2019 11:26:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <pull.196.git.gitgitgadget@gmail.com> <468be8f85426ccf588ad558fab3c8927ef58627f.1557917642.git.gitgitgadget@gmail.com>
- <CAKO26MsGpEcK74CSdgNGjFdKAMDP5Knm+0_vtcnrBBJjBfjcQA@mail.gmail.com>
- <xmqq36ky1fe8.fsf@gitster-ct.c.googlers.com> <CAKO26Ms6_rJfq6knh14H1O-V2_6v8YxYdjah0vTdvpJTc7hdXw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1905291349360.44@tvgsbejvaqbjf.bet> <CAKO26MtvBRo76TenubyeVNkeA6e5yrS4DZFSLG1ByztP7mMVXw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1906031614020.48@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1906031614020.48@tvgsbejvaqbjf.bet>
-From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
-Date:   Mon, 3 Jun 2019 23:06:22 +0800
-Message-ID: <CAKO26MugSimxd+fiXR7CjT1uRsWXZ=s_a=ebtZmpSDyGg3HTgA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] status: remove the empty line after hints
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190601210925.15339-1-michael@platin.gs>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Michael -
 
-Thank you for your kind and detailed explanation. I really appreciate
-that. By the way, I just saw it passed all the Azure Pipeline checks.
-Please consider merging it into nd/switch-and-restore. Thank you.
+On 6/1/19 5:09 PM, michael@platin.gs wrote:
+> From: Michael Platings <michael@platin.gs>
+> 
+> Thanks to Derrick Stolee for highlighting missing coverage.
+> 
+> In the case of "certainties[i] = CERTAINTY_NOT_CALCULATED" this was
+> defeating an optimization that preserved results of calculations
+> between line-matching passes. This had caused other code to never
+> be executed - that code is now executed and only discards calculation
+> results that are no longer valid.
+> 
+> In the case of "max_search_distance_b = 0" this was never executed
+> because another statement was added earlier in the function to return
+> early in such a case.
+> 
+> Signed-off-by: Michael Platings <michael@platin.gs>
 
-Best,
-John Lin
+If it's OK with you, I can squash this into your existing patch in the 
+blame-ignore patch set.
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> =E6=96=BC 2019=E5=B9=B46=
-=E6=9C=883=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=8810:17=E5=AF=AB=E9=
-=81=93=EF=BC=9A
->
-> Hi John Lin,
->
-> On Sat, 1 Jun 2019, =E6=9E=97=E8=87=AA=E5=9D=87 wrote:
->
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> =E6=96=BC 2019=E5=B9=
-=B45=E6=9C=8829=E6=97=A5 =E9=80=B1=E4=B8=89
-> > =E4=B8=8B=E5=8D=887:51=E5=AF=AB=E9=81=93=EF=BC=9A
-> > >
-> > > You could already rebase it on top of
-> > > https://github.com/gitgitgadget/git/tree/nd/switch-and-restore, say s=
-o in
-> > > your cover letter, and send a new iteration.
-> >
-> > Thanks for the suggestion. I already rebase on your
-> > nd/switch-and-restore: https://github.com/gitgitgadget/git/pull/196
-> > However, it seems to have some conflict with the master branch and
-> > gitgitgadget refused to submit the patch. So I guess I still have to
-> > wait for the nd/switch-and-restore to resolve the conflict.
->
-> I am so sorry for being so sloppy. I should have said explicitly what I
-> had in mind: target the nd/switch-and-restore branch.
->
-> The GitGitGadget fork mirrors not only maint, master, next and pu, but
-> also the individual branches that Junio merges into pu (which are
-> published at https://github.com/gitster/git). That is, you can click the
-> Edit button next to your PR description, and instead of editing the PR
-> description, choose a different target branch from the drop-down box belo=
-w
-> it.
->
-> Since it was totally my mistake for not telling you this explicitly, I
-> allowed myself to do exactly this for you. The Azure Pipeline is running
-> as we speak.
->
-> Thanks & my apologies,
-> Johannes
+Thanks,
+
+Barret
