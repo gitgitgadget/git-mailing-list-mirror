@@ -8,106 +8,72 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E53FD1F462
-	for <e@80x24.org>; Mon,  3 Jun 2019 13:40:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 937F31F462
+	for <e@80x24.org>; Mon,  3 Jun 2019 13:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728872AbfFCNko (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 09:40:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:39375 "EHLO mout.gmx.net"
+        id S1728427AbfFCNno (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 09:43:44 -0400
+Received: from mout.gmx.net ([212.227.17.21]:41855 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727506AbfFCNkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 09:40:43 -0400
+        id S1728350AbfFCNno (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 09:43:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559569233;
-        bh=2C8KbR57lprhHA0ECswCvvA1Nuxq6GZBb7N2mZYUEOU=;
+        s=badeba3b8450; t=1559569418;
+        bh=LxICViho6oI1kOVnQFHyElLfvYqjbTq94sKkebuDOX0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Q9E/x3hBmjtRLTKDxgy7GIgfWz9R4/VtyHGq/MNAl5BXGSYB4ZjENkdK5e/aFL4JW
-         EoZg1si5yzHgNMJFPtAkJ57Sg3i2xLkPn9YJytVfA8tAPkTw3wZkkZ+LYUaCs7Y7bw
-         +V5K88M/jVLN7YfOn4TRYer0B82cxzJoYYSBUf0o=
+        b=aj3h1Nd94m7zzKPPa8nEva4Fc1P1VSD2v/8rrytrT7qHnJXeeBkWQJi1vbvXZaBD6
+         2+0Y4jva4mFqmaL17KzHaqrq5ByoF4e+5xo+maOrvQWppdymlcwE0tOsW7ZBAP7+51
+         9udTsO6nqC/qH90NgR80yDx6njAdxrupKMFW4YyY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8eAd-1gd5k20RUZ-00wFsz; Mon, 03
- Jun 2019 15:40:33 +0200
-Date:   Mon, 3 Jun 2019 15:40:39 +0200 (CEST)
+Received: from [192.168.0.171] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNw0t-1hVthp0F3b-007XcR; Mon, 03
+ Jun 2019 15:43:38 +0200
+Date:   Mon, 3 Jun 2019 15:43:44 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Jochen Sprickerhof <jochen@sprickerhof.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] add -p: coalesce hunks before testing applicability
-In-Reply-To: <a23789e9-ee99-d23b-ee25-1acef8d8d114@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906031229110.48@tvgsbejvaqbjf.bet>
-References: <20180828085858.3933-1-git@jochen.sprickerhof.de> <xmqq36uygyau.fsf@gitster-ct.c.googlers.com> <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net> <20180903190114.GC17416@vis> <d6a8f77b-0a83-90ae-a7fb-a3954ac3b346@talktalk.net>
- <nycvar.QRO.7.76.6.1903221453360.41@tvgsbejvaqbjf.bet> <a23789e9-ee99-d23b-ee25-1acef8d8d114@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH] i18n: fix typos found during l10n for git 2.22.0
+In-Reply-To: <20190602151122.7512-1-worldhello.net@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906031543190.48@tvgsbejvaqbjf.bet>
+References: <20190602151122.7512-1-worldhello.net@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L1GoWIteO1vJzDAEZ5vhTFZgRf2fRSduN0whdb527BdurnEEHEE
- QwwFZSYLzs7sv2HTdJRapyAwBvWFigVnKGWUVAzQBmY7byftc0GRX+a3+PikDMRIWs73ZdG
- iRohHDRlKSLQGW2Jm6/QDnRM4TzDWL6B1odBIc7sD0i1xj3+VnZg53W0fMQFhPch5h5BnO2
- yfAnN5oODa8aUpLS5KIHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6pXrL5IvK4g=:KRJ+LLGN/aCVsPpoH2OqWz
- jH1ecWhr9Up3VfWFngB8Y+dbYGVWI/psWCuoi6jo5+K4eGYaEuvIkoWumOxSFyvUSaDIBSQie
- XjAXt/UNKqgmCfRD+FXi6Bl87sT6b4/y6GqLISummU20jXkO+GcjAJAdDPtMS5q4zTY+4NzF4
- VvEPK7UZ1wlFf7cW11InLsu11THVEwkkgxHv+65ePf7n4fQwNJv8iW5q7ZYKp9bNARgNQdIwv
- DMau06vCJKyKyqk3iSCi8PZBAm/ELGieOva+Cjasnp5/YlScvuMgQgr7hSXkhCjzd6eKS8h6X
- 0xyU4rLEVbL5dvBQltzMwcf4Jn4tM27oZde0Y1KTwWwBQ5Ba3Hyp+ZpSQm56OqLc84fIN1hua
- ExuYUGdKUiJmpqrgi93UG0BmzVuFteHOZuBebAbFcHiLsWGU/o/v34d5D59R2GhMmP4Kf4UOH
- dLilHJhXKAW2pJ78oZAp/gYM7sqBPE/HwJgNx2syV4BSH91UMRejg20X+sUZ7YWHLixn9X+tm
- qNTtpBxJlrgq7l9w/+GJZx3gC7L18DbKbFrkPpZrxUhHXO0fLHPJkLIrMl9brqPcUPJvc2CoC
- af2jkVVFomyprKcSn6INMh4qr48k2Y9Mrxz64PG29hfpMkq1Wz1vYOnaWkQHMoowUBAD5ghZX
- SZRh5o+CY65bUiCUvr2ROv9aksf+zHq9cl/qqoG3qQ416GT+ZIDI491qrF+6UOgchR9XSp/bF
- rsBThEXrKT/3uHjPR2sT6ZEaPpV6N5WhcqHt6dKc/FswPMhc/nAF1VSzv0X7W/k5RPY8mGGUO
- jbDVi6HZ5VJ4vpV1xjG/dmCpO+CIi3uN5n9Cw/jHMoBJ7FHL20HxssKg2JtV4ZyNlSfXc777H
- xiwTNRisPMpYAh15n44eyHpHWt1XfkP3aujt45u+TdWEqtbLp8Adq692Db+gUIV7TrtRhSpOP
- 1RZ0gV7hdgNTkP0jO8J2CYegrX5Kolk/j0qTYrFGtZXlZJCmV5ajC
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:HaY+0b3TO1wIQeZFdlpHlrZB9hWfgVvHCJ5bJY2O+WqRLm2gSI7
+ PW2yTtHxil+K+K73oVHp3jtmVLJbEaikkl4cCwBbgUhqI2dV7NazRs74RcmLL613i8HPHb3
+ YFkaCrV+NkeBUnkZ1wBibxuNrZ9Xqdbbz1lT34495WSGhUciTDZ75kabxXD5yGauY8tzP62
+ Tt5XUOeQKFy+EQuvGEMLw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aC9pykDkr+U=:7BOgsia+SSQqGw7QmYdEPm
+ U+dw7VSRmtKSPb1OQSs36u6qhs/cq5sBHePzy+yRp6vVq8heqrl17flaKcmjKl6l9LxMTbD7T
+ j1yrV8hCCWk5s3Xm2Sd99BDol0N44r53h1RqzQyOlvvS2Vkha8D21ohd3AF/xOcbNEiBxSx1J
+ CRMiFzisuDutxSF7YEf/biTH8bdF4g8f8xkywbR+vS8HuDDIHP52jNTvW6idwa4XvLZPFba2T
+ 3z9ZtwaY0NL5gZgcSvcH1AHbSKamJh+5NdTH68YCSlIgc9IkA6TY/rwNQ8s9rTkXT1TvGADa4
+ V3Ng65jFA2iahgMscOv2R7vArGh4I0J0/z/3B2eScn5bP9YY39m+pVXU0qMu2Axl13MK207/y
+ KzgKzuZbR+wlcqGCMc3pBLlzL4efnsVx8VtbM3RmcbE2nYQFMRLHlmIvmkdfIl03ii2YDvXlb
+ y/xPV5HVaoAknX8KXsHsp/m7T4ZLT7Vb9zGZD8nMvZh1pQrdbOJ+MNzBMelWPBQlNPFd6K30z
+ fzwAa5GlZFxuNbmDXKe3xK2zDaSRG5/W7ZM2Rr0mJVoIGqZNtr21cjdORkfm20jjkbOugmLc7
+ SCVk5ilBld7BP16PdPlYq8A+BQ4mzyYgiBYXIAR3ht1P/J7qjuugHGs9ZTnEqKB/KirwqEWHW
+ kcIKXBnsWjhyibv8p7s8tdG4ogZ4DuyEYJV0d28Io3iVzrYBw+NpfOereLNL1g0hU/jH6hFrl
+ K/RqvNjrd/3W0bYMB4FdJ1abhykECDJN257ebWeofob7ayvtTUirLOrGA4mBnmRLgdZZgSN4E
+ M1xsfzUcBz9098xIABCijmY/WiFfYrIjCjp4TxbP23Va3TEzemUWH0ohyUMECyV2mX0wv9bYY
+ eJlWj1t3dMFR5uNZPDklb7J9YKaLxUV9cNAVaBRcXk7RCTEYUBw2uTXeaZOLnpByrqwkbGvzU
+ 9cTonTLq5MHi1LkW5sd9s1nlTWrOo80BkQugeDYc2ho3HF/iAormd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Jian Xin,
 
-On Sun, 2 Jun 2019, Phillip Wood wrote:
+On Sun, 2 Jun 2019, Jiang Xin wrote:
 
-> On 22/03/2019 14:06, Johannes Schindelin wrote:
->
-> > On Thu, 13 Sep 2018, Phillip Wood wrote:
-> >
-> > > On 03/09/2018 20:01, Jochen Sprickerhof wrote:
-> > >
-> > > > * Phillip Wood <phillip.wood@talktalk.net> [2018-08-30 14:47]:
-> > > >
-> > > > > We could restore the old test condition and coalesce the hunks
-> > > > > by copying all the hunks and setting $hunk->{USE}=3D1 when
-> > > > > creating the test patch if that turns out to be useful (it would
-> > > > > be interesting to see if the test still passes with that
-> > > > > change).
-> > > >
-> > > > We set USE=3D1 for $newhunk already, or where would you set it?
-> > >
-> > > To match the old test it needs to be set on the hunks we've skipped
-> > > or haven't got to yet so they're all in the patch that's tested
-> > > after editing a hunk.
-> >
-> > The way I fixed this in the C code is by teaching the equivalent of
-> > the `coalesce_overlapping_hunks()` function to simply ignore the
-> > equivalent of `$hunk->{USE}`: the function signature takes an
-> > additional `use_all` parameter, which will override the `use` field.
->
-> That sounds like a good solution. Thanks for working on the conversion
-> to C, I'll try and find time look at the code on github.
+> + ed8b4132c8 (remote-curl: mark all error messages for translation,
+>   2019-03-05)
 
-Please note that I did not update the Pull Requests on GitGitGadget
-lately, as I had no reviewer feedback on #170 and did not want to waste
-too much time on synchronizing my work between those PRs and Git for Windo=
-ws
-(which now has the built-in `git add -i` as an opt-in feature).
+Urgh. Sorry for that, and thank you for cleaning up my mess...
 
-So: the latest patches (as of time of writing) can be found here:
-https://github.com/git-for-windows/git/compare/9f09372011%5E...9f09372011%=
-5E2
-
-Thanks,
+Ciao,
 Dscho
