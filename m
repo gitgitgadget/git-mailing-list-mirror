@@ -2,176 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4C941F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 02:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67DD21F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 03:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbfFDCaq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 22:30:46 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54575 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfFDCap (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 22:30:45 -0400
-Received: by mail-wm1-f65.google.com with SMTP id g135so9954697wme.4
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 19:30:43 -0700 (PDT)
+        id S1726301AbfFDDQp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 23:16:45 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42896 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726136AbfFDDQo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 23:16:44 -0400
+Received: by mail-ed1-f68.google.com with SMTP id z25so3764014edq.9
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 20:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=vLQrmn/BUIPd9SkA8mOMgNcc5N5TRXJwmdkcZODFpPc=;
-        b=o21W0gL2YGU6cGQXFWFIHhKGwHADL7HsCYODo/Z5zJ86QSBBVV37AbvJ3J/YpDSCB/
-         fJtSzc5z5FON9JUH1uMojSs4DNCxoohMwSiC/MdLr9uQqsA3Kl0THwlXiZ0S5jkSareK
-         N6kdePFgYqeyrDiXbXZ96Hl2L2RhOnUlFFirPfPdnChPS2u3y49iASyzsHE4F4poraYV
-         JzSy15tV1XAKj5EkFuU4qoWu86HsPT7K5E6Sdd52X82Z9w+v53OITGT32fyyV8iyY43d
-         gAURvel2gv0yy1Cvm2V1R5JSuyKJoSe9BNBSWOXQBvj7idgFujy/yjhZW6ZfosuCFYf7
-         M+jQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F+tQQH5YnnqwRmul+DOE/GLcdC6gOXf6YKnTmFF6OQo=;
+        b=KLhUb/R1ZsyQl0ocDtlTEPWBKJu47kIqWvl1bYyrGnurVcFzqhK/Lok1vA01iilmRO
+         TqyizwtPR+zN6ppVgBwyk5X6kexC2tjbnJgKPtQs1AjVv3TpjgjM9dnZpx8iNnoYRZPD
+         VeqXEt3uvW15iP7i4yrDhEeTOnsUSD0gL9HfwBDFG27AxTGS+3GEuz9fAQlRPfqMgfZn
+         k7R0if1nS5NFlXQi40HDFQ2Cg7o+wyRS32Bs1h4tiemuPdJkpKTRJkiPgCSQdCXtCkF9
+         Y2uWS8MgM+sea7w4QyFiD1mSyw4+UC4Hb3KfG1kJTmJvs3VFTZUqJuGP8LYq4YpgfBmD
+         AkcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=vLQrmn/BUIPd9SkA8mOMgNcc5N5TRXJwmdkcZODFpPc=;
-        b=brQ5qau8nosFa1fSDPZARb5h8zsb4Au0nCyUNglQZrWg2UvDyTUZ+oM0buBsvUHbru
-         5K+sxHkNuZfVqAQwYxxVl04jD/lPDtYH2kd0IhiHdCOddiTdX3nAPSwnwsrer9CPjmAm
-         Oz6MRXp3I4JqCBOvL3brAuqjNaqPL5EJNBalMxuq/NsqTHkCKlFwSODIpsM6bA1+z5KG
-         UZyDUO7uihwMdt6yKIKryTcdOymDChEvzK/5iTf/arCczWf7okvVRHwFWNuAe49mP5uA
-         OmL2kGf1J95O8oPa99jUM2UAEvh5EnjI594z4XSzDT7KFZiARIM0GP/0oyGShhfrOlAC
-         7Tiw==
-X-Gm-Message-State: APjAAAXwr/bVshKl4/+e2Pw+gCcDoHaAyyFvl2p130Abk4Bo1ToOJnf+
-        cYXghsHH+3qs3YO9s3c4rkc=
-X-Google-Smtp-Source: APXvYqxce+YdWa3HtSWgLSNAJYDuyWDQkIt+v4Sz8quJ7y11V/7bSd0tz1Npy3o3xzl+r3uyfDlDJQ==
-X-Received: by 2002:a1c:7310:: with SMTP id d16mr133043wmb.107.1559615443219;
-        Mon, 03 Jun 2019 19:30:43 -0700 (PDT)
-Received: from szeder.dev (x4dbd37ab.dyn.telefonica.de. [77.189.55.171])
-        by smtp.gmail.com with ESMTPSA id s10sm11235264wrt.66.2019.06.03.19.30.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jun 2019 19:30:42 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 04:30:39 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     ben.humphreys@atlassian.com, Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.22.0-rc3
-Message-ID: <20190604023039.GR951@szeder.dev>
-References: <xmqqlfyito3a.fsf@gitster-ct.c.googlers.com>
- <CAFkS+y+dS51+nHTDy+A0HrXZpfsEE1UYPN-Xk0257o36ScUOHg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F+tQQH5YnnqwRmul+DOE/GLcdC6gOXf6YKnTmFF6OQo=;
+        b=HRu2m9Fpx3bdtPm8Iy+G7Ro3+j0iymSK6a8bc/4LMBTqmYqskEp9d9EJYR/aH4Z4Vw
+         q17/90AMCeH7neUs1m0Zq8ggFHfTAW3Nn0j/R2YIVyNQw2EFcsnfvg6jaRiORYir9Hhk
+         NwGHpvt5J/V9gj0StMXaXsMEJ6uyFI6qm3AsW9cYiPhv5w6ZljnZQI0zVK3B8yUydArZ
+         ugwYjSzWoKmjFd1NqIE0/Ks7QsvenngXCVGIb1SpPd9Lkkq7vRpkoK7kc1aaKiPKnNfi
+         CZyp0ay6CCC839Ah+lpZivGkjkyFf8uIOMAYjZ0ylVd8dCrdH9B+h5LJUm7UKSyLMWZH
+         Slfg==
+X-Gm-Message-State: APjAAAXkGOaZ7XRE8PnY1NtASXAGaSASoZx+UleP6G5uOPZucYPXKjsw
+        ZtycR/oAiTLWL5wMTAoWjXPLYOG0P+Mp+ZuYJ9jrsHa9LyU=
+X-Google-Smtp-Source: APXvYqyICRXpBRkEDeOm2lBmZhxEc0tbSf0MyXofONzrDytkHRY+adVzpeMy7NNKLjGD7IC1DR4pDgAknfEhDdJyDzI=
+X-Received: by 2002:a17:906:6a89:: with SMTP id p9mr7818357ejr.44.1559618203022;
+ Mon, 03 Jun 2019 20:16:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFkS+y+dS51+nHTDy+A0HrXZpfsEE1UYPN-Xk0257o36ScUOHg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190601003603.90794-1-matvore@google.com> <20190601003603.90794-9-matvore@google.com>
+ <CA+P7+xqqS8wMeNw1E8yXzStNHgrCU5ME1wpWckbPA7pBD3OBHg@mail.gmail.com> <20190603223925.GH4641@comcast.net>
+In-Reply-To: <20190603223925.GH4641@comcast.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 3 Jun 2019 20:16:34 -0700
+Message-ID: <CA+P7+xp6FYWZA8yXcksw6OiMqiM3Ja5EpVSTbcgeaGD-s+c6=w@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] list-objects-filter-options: clean up use of ALLOC_GROW
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     Matthew DeVore <matvore@google.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrn@google.com>, dstolee@microsoft.com,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 04, 2019 at 11:32:24AM +1000, Ben Humphreys wrote:
-> Hi folks,
-> 
-> I’m one of the Bitbucket Server developers and I just wanted to let
-> you know of one of our test cases that is now failing on the 2.22.0
-> release candidates (tested rc2 and rc3). I’m still looking into it,
-> but figure the release is probably imminent so worth reporting sooner
-> than later.
-> 
-> The problem seems to be related to some recent changes in
-> merge-recursive.c. I’ve made available our test dataset and the
-> following steps will reproduce the problem:
-> 
-> $ git --version
-> git version 2.22.0.rc3
-> 
-> $ git clone https://bitbucket.org/ben_humphreys/merge-dataset.git
-> $ cd merge-dataset
-> $ git checkout branch_that_has_rename_add_triggering_content_conflict_trgt
-> $ git merge origin/branch_that_has_rename_add_triggering_content_conflict_src
-> Assertion failed: (a->path && b->path), function merge_3way, file
-> merge-recursive.c, line 1044.
-> Abort trap: 6
-> 
-> The assertion is failing because b->path is null:
-> 
-> (lldb) print a->path
-> (char *const) $2 = 0x00007f8e177025f8 "count.txt"
-> (lldb) print b->path
-> (char *const) $3 = 0x0000000000000000 <no value available>
+On Mon, Jun 3, 2019 at 3:39 PM Matthew DeVore <matvore@comcast.net> wrote:
+>
+> On Mon, Jun 03, 2019 at 03:07:40PM -0700, Jacob Keller wrote:
+> > > +/*
+> > > + * Similar to ALLOC_GROW but handles updating of the nr value and
+> > > + * zeroing the bytes of the newly-grown array elements.
+> > > + *
+> > > + * DO NOT USE any expression with side-effect for any of the
+> > > + * arguments.
+> > > + */
+> >
+> > Since ALLOC_GROW already doesn't handle this safely, there isn't
+> > necessarily a reason to fix it, but you could read the macro values
+> > into temporary variables inside the do { } while(0) loop in order to
+> > avoid the multiple-expansion side effect issues...
+>
+> For x I don't think that's possible since we don't know the pointer type. For
+> nr and alloc it doesn't make sense since they're being assigned to. For
+> `increase` I could try this:
+>
 
-merge_3way() is called from merge_mode_and_contents(), which in turn
-is called from handle_rename_add(), which was modified in 8daec1df03
-(merge-recursive: switch from (oid,mode) pairs to a diff_filespec,
-2019-04-05) like this:
+Ah.. you could do the compiler typeof extensions, but I guess we
+probably don't wanna rely on that.
 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index ada1c19ed2..1d2c9e1772 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> 
-> @@ -1654,7 +1625,6 @@ static int handle_rename_add(struct merge_options *opt,
->  	/* a was renamed to c, and a separate c was added. */
->  	struct diff_filespec *a = ci->ren1->pair->one;
->  	struct diff_filespec *c = ci->ren1->pair->two;
-> -	struct diff_filespec tmp;
->  	char *path = c->path;
->  	char *prev_path_desc;
->  	struct merge_file_info mfi;
-> @@ -1669,23 +1639,21 @@ static int handle_rename_add(struct merge_options *opt,
->  	       a->path, c->path, rename_branch,
->  	       c->path, add_branch);
->  
-> -	filespec_from_entry(&tmp, ci->ren1->src_entry, other_stage);
-> -	tmp.path = a->path;
+>         size_t ALLOC_GROW_BY__increase = (increase);
+>
+> but I'm not sure how well this works when `increase` is a signed type. This
+> seemed sufficiently pitfall-y that I didn't attempt it.
 
-Note that 'tmp.path' used to be set ...
+Ok that makes sense.
 
-> -
->  	prev_path_desc = xstrfmt("version of %s from %s", path, a->path);
-> -	if (merge_mode_and_contents(opt, a, c, &tmp,
-
-... and that this 'tmp' used to become 'b' in
-merge_mode_and_contents() and then in merge_3way().
-
-> +	if (merge_mode_and_contents(opt, a, c,
-> +				    &ci->ren1->src_entry->stages[other_stage],
->  				    prev_path_desc,
->  				    opt->branch1, opt->branch2,
->  				    1 + opt->call_depth * 2, &mfi))
->  		return -1;
->  	free(prev_path_desc);
-
-
-This one-liner patch below the issue, the merge fails with conflicts
-as expected, but, honestly, I have no idea what I am doing :)  At
-least the test suite still passes, but that might not mean all that
-much since it missed this issue in the first place...
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a7bcfcbeb4..d2e380b7ed 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1660,6 +1660,7 @@ static int handle_rename_add(struct merge_options *opt,
- 	       c->path, add_branch);
- 
- 	prev_path_desc = xstrfmt("version of %s from %s", path, a->path);
-+	ci->ren1->src_entry->stages[other_stage].path = a->path;
- 	if (merge_mode_and_contents(opt, a, c,
- 				    &ci->ren1->src_entry->stages[other_stage],
- 				    prev_path_desc,
-
-
-> On Git 2.21.0 the merge succeeds (with conflicts as expected):
-> 
-> $ git merge origin/branch_that_has_rename_add_triggering_content_conflict_src
-> CONFLICT (rename/add): Rename numbers.txt->count.txt in
-> origin/branch_that_has_rename_add_triggering_content_conflict_src.
-> Added count.txt in HEAD
-> Auto-merging version of count.txt from numbers.txt
-> Auto-merging count.txt
-> Automatic merge failed; fix conflicts and then commit the result.
-> 
-> I’ll let you know if I get any further investigating this.
+Regards,
+Jake
