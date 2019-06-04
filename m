@@ -2,308 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 741F01F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 16:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40B611F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 16:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728195AbfFDQE1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 12:04:27 -0400
-Received: from smtp-o-3.desy.de ([131.169.56.156]:41048 "EHLO smtp-o-3.desy.de"
+        id S1728245AbfFDQH6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 12:07:58 -0400
+Received: from mout.gmx.net ([212.227.17.21]:46149 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728160AbfFDQE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 12:04:27 -0400
-Received: from smtp-buf-3.desy.de (smtp-buf-3.desy.de [131.169.56.166])
-        by smtp-o-3.desy.de (Postfix) with ESMTP id 22DF360249
-        for <git@vger.kernel.org>; Tue,  4 Jun 2019 18:04:23 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-3.desy.de 22DF360249
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-        t=1559664263; bh=an4b3OEeaf080b9eD0AoysO9ZlgBFzXFZy1AtbgwEko=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=ASklSvdXLVKJTG34Bx7Pu5r04Bbe1asrlGY7gEjrKdEske8iFTIsTbPOTdHB3x1aM
-         AbBDQAOXxirhU1ZXjJm+curjfBPGSKtQsEP1NGDViGBUZetOMhlbfYvk6AmdRSnaVv
-         9uhxcl/bJlBQOnGrrqsK074zgef0yAxmi578pJGg=
-Received: from smtp-m-3.desy.de (smtp-m-3.desy.de [IPv6:2001:638:700:1038::1:83])
-        by smtp-buf-3.desy.de (Postfix) with ESMTP id 1CACDA0077;
-        Tue,  4 Jun 2019 18:04:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at desy.de
-Received: from z-mbx-2.desy.de (z-mbx-2.desy.de [131.169.55.140])
-        by smtp-intra-1.desy.de (Postfix) with ESMTP id DDD4BC003B;
-        Tue,  4 Jun 2019 18:04:22 +0200 (CEST)
-Date:   Tue, 4 Jun 2019 18:04:22 +0200 (CEST)
-From:   "Mkrtchyan, Tigran" <tigran.mkrtchyan@desy.de>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-Message-ID: <139144069.10140489.1559664262817.JavaMail.zimbra@desy.de>
-In-Reply-To: <nycvar.QRO.7.76.6.1906041608570.1775@tvgsbejvaqbjf.bet>
-References: <60741736.3439901.1509090074292.JavaMail.zimbra@desy.de> <20190604114356.11042-1-tigran.mkrtchyan@desy.de> <20190604114356.11042-2-tigran.mkrtchyan@desy.de> <nycvar.QRO.7.76.6.1906041608570.1775@tvgsbejvaqbjf.bet>
-Subject: Re: [PATCH v2] tag: add tag.gpgSign config option to force all tags
- be GPG-signed
+        id S1728234AbfFDQH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 12:07:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559664474;
+        bh=dUu+Xzm6/Fo1HGEF+cnmjywlrh9cJQG6jAtvuo6/oSw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=IxY+wwI2lsISqdXP7Kr+cUQfTOxU5zrNq4MIhmm0BA0baEvBzZgrYMOLG08IhG0Zy
+         o6G4PTtnfZkqRseAgzWiWg4Ge9NmjuN+6G253r8Kpg/XMASpMIXNSvZnJ2cZny7NsJ
+         hURqBJZHk8Bf8XlAxcBcrT51d5AG2el2AaLXU4wE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lqn7e-1gtt8t3xiM-00eOKs; Tue, 04
+ Jun 2019 18:07:54 +0200
+Date:   Tue, 4 Jun 2019 18:07:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+cc:     Git mailing list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stephan Beyer <s-beyer@gmx.net>, Taylor Blau <me@ttaylorr.com>,
+        Patryk Obara <patryk.obara@gmail.com>
+Subject: Re: [PATCH] clang-format: use git grep to generate the ForEachMacros
+ list
+In-Reply-To: <20190603224814.GA15851@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906041807140.1775@tvgsbejvaqbjf.bet>
+References: <20190603224814.GA15851@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.8.10_GA_3781 (ZimbraWebClient - FF67 (Linux)/8.8.10_GA_3786)
-Thread-Topic: add tag.gpgSign config option to force all tags be GPG-signed
-Thread-Index: HyHE7KYsA35VL/bmdumKgkZIoTsA5A==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ohuZbubjuusRiVWm/8ApTAxfEqISvqoi9BcNUiNEdE89rPUstwP
+ fLk1Nulx9h1U8Bib78TwyAZAq7cDMyayTczDpXTe7MVVZokqLOgwSbf19zKodRp4iy7TlER
+ jtwJywKmkw9oQkuBSXodunge6zBJEhMVTdiqdE8qLcXCNNnAR06Y6ZJ/lI5xMIarGY3yq8y
+ 3boU4gOVp1Micusrpqnww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KfXe2iTYh2c=:Ale0z2Eg3+szY3tAxSV+1W
+ Gdh9zGgQc26LQz+SERozujBAi2QBNb6iI0ypCR+AczE9mE6Sb+fFwrARQsQJZQaXHypzDVWN7
+ Ko3VAGXHSyMxcxRkVoMcG+VZ1TkMqPgWADlQxS96r2AIrcq7nuYfQck1ThLbvcQI2S3dW2AiE
+ bCEjOS6fkcDhI4rbMkbfzkd7RWpz5/Wd+tmsju71Sgrd9bDEikS1+JklV6L724WgSjwRcmuJq
+ SWqCfBmJDXc6icFvwUA9RdnXkTihd6Ejrti49JqNjUBfpLVCOFcKokHwfVEKGLuqnyABdzYfL
+ u00wyyT10jNVZU/hwuqJOC6HK1v1fOM+xq5Xer2+K3lzOKXkK5oAxmS7A153TUbD7Ev1y8plz
+ hvLnUVfDGUTcQ0cAwT2qIUxd2ccjI8m/8dojX7DFSk4KKxne4pRoFYChARpOYEjaZTDxpcu1e
+ 5Sp4ewEeYl+wPn/ao/ibaT6B/Gk/6l7teHKxQ3V4OQHQj75jY5T/yThswReyb/qaF5e+l/mrT
+ 9ynNiymwov+mXGgqEuazko3lQNZ5fJqFZe2mX12/UA+hp5AqDP51qzN8rsSg+WYk/vFCQvqzj
+ tGK89HAbvTmpq7w3khK3d8Jn5YvUxHiSiwXvsZLhi60ChnB7Sr0tHYv5WXgD1WgrXuf8meIp+
+ kv0VZVnlBWWcz+ak6meyPQtUxl+j/YnGnsQKnW8bqIdN6I2/MXC/VOarOOMlzYLsnp/LqZE0/
+ /n6Z7/sHY1cgGxVrR9lJfNpl9oG314oC9n1C39Wr2hB7M0cTJVre/3ZAlOQLHhJZgNBwyRv3R
+ vPRIluqPl5Ecsfg3PKYWGV8O5FdBdIAmaxYfKLe5KXbueooHZ8VT1Jiz2ZTbT9oEIcivjO9EL
+ w8G9r+bsos+d0E5SHVfj6NlVaFQDZfYRcwacaPssHWQxAcBbBhXfgRMvlHKOEl33sJ3PwJArY
+ SKi+psnRqV23amKO8FkukHJlj0ZogjxA694ZS2TfAOQpDiWry5+nB
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Miguel,
 
+On Tue, 4 Jun 2019, Miguel Ojeda wrote:
 
-Hi Johannes,
+> The ForEachMacros list can reasonably be generated grepping
+> the C source code for macros with 'for_each' in their name.
+>
+> Taken almost verbatim from the .clang-format file in the Linux kernel.
+>
+> Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+> ---
+> We wrote this for the Linux kernel a while ago, and it has been working
+> fine there, so I thought it would be nice to use the same approach here.
 
-Thanks for the comments. I update the patch ant re-post.
+Makes sense to me!
 
-Tigran.
+Thanks,
+Johannes
 
------ Original Message -----
-> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> To: "Tigran Mkrtchyan" <tigran.mkrtchyan@desy.de>
-> Cc: "git" <git@vger.kernel.org>, "Jonathan Nieder" <jrnieder@gmail.com>
-> Sent: Tuesday, June 4, 2019 4:33:08 PM
-> Subject: Re: [PATCH v2] tag: add tag.gpgSign config option to force all tags be GPG-signed
-
-> Hi Tigran,
-> 
-> On Tue, 4 Jun 2019, Tigran Mkrtchyan wrote:
-> 
->> As may CI/CD tools don't allow to control command line options when
-> 
-> s/may/many/, maybe?
-> 
->> executing `git tag` command, a default value in the configuration file
->> will allow to enforce tag signing if required.
->>
->> The new config-file option tag.gpgSign enforces signed tags. Additional
->> command line option --no-gpg-sign is added to disable such behavior if
->> needed. E.g.:
->>
->>     $ git tag -m "commit message"
->>
->> will generate a GPG signed tag if tag.gpgSign option is true, while
->>
->>     $ git tag --no-gpg-sign -m "commit message"
->>
->> will skip the signing step.
->>
->> Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
->> ---
->>  Documentation/git-tag.txt |  7 +++++++
->>  builtin/tag.c             | 18 +++++++++++++++---
-> 
-> How about adding a section to Documentation/config/tag.txt as well?
-> 
-> Even better: it could be modeled after the description of commit.gpgsign
-> to which Stefan Beller linked in his review of your earlier patch (see
-> https://public-inbox.org/git/20131105112840.GZ4589@mars-attacks.org/):
-> 
->  tag.gpgsign::
->	A boolean to specify whether all tags should be GPG signed.
->	Use of this option when running in an automated script can
->	result in a large number of tags being signed. It is therefore
->	convenient to use an agent to avoid typing your gpg passphrase
->	several times.
-> 
->>  t/t7004-tag.sh            | 21 +++++++++++++++++++++
->>  3 files changed, 43 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
->> index a74e7b926d..d9dbfb4e37 100644
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -64,6 +64,9 @@ OPTIONS
->>  -s::
->>  --sign::
->>  	Make a GPG-signed tag, using the default e-mail address's key.
->> +	The default behabior of tag GPG-signing controlled by `tag.gpgSign`
-> 
-> s/behabior/behavior/ maybe?
-> 
-> And I would also insert an "is" before "controlled".
-> 
->> +	configuration variable if it exists, or disabled oder otherwise.
->> +	See linkgit:git-config[1].
->>
->>  -u <keyid>::
->>  --local-user=<keyid>::
->> @@ -193,6 +196,10 @@ This option is only applicable when listing tags without
->> annotation lines.
->>  	that of linkgit:git-for-each-ref[1].  When unspecified,
->>  	defaults to `%(refname:strip=2)`.
->>
->> +--no-gpg-sign::
-> 
-> Should this not be `--no-sign`? There is already a `--sign` option, and I
-> would wager a guess that it automagically handles `--no-sign`...
-> 
->> +	Countermand `tag.gpgSign` configuration variable that is
->> +	set to force each and every tag to be signed.
-> 
-> If you replace "Countermand" by "Override", you could simply merge this
-> into the section talking about `--sign`...
-> 
-> 
->> diff --git a/builtin/tag.c b/builtin/tag.c
->> index ef37dccf86..7f9aef4840 100644
->> --- a/builtin/tag.c
->> +++ b/builtin/tag.c
->> @@ -33,6 +33,7 @@ static const char * const git_tag_usage[] = {
->>
->>  static unsigned int colopts;
->>  static int force_sign_annotate;
->> +static int sign_tag;
-> 
-> Since this holds the value parsed from the config, I would like to see
-> some indication of that in the name. Maybe something like
-> `config_sign_tag`?
-> 
-> Also, I would recommend to initialize it with `-1` to be able to discern
-> between the three states `true`, `false` and `unspecified`.
-> 
->>  static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
->>  		     struct ref_format *format)
->> @@ -144,6 +145,11 @@ static int git_tag_config(const char *var, const char
->> *value, void *cb)
->>  	int status;
->>  	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
->>
->> +	if (!strcmp(var, "tag.gpgsign")) {
->> +		sign_tag = git_config_bool(var, value);
->> +		return 0;
->> +	}
->> +
->>  	if (!strcmp(var, "tag.sort")) {
->>  		if (!value)
->>  			return config_error_nonbool(var);
->> @@ -392,6 +398,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>  	struct ref_format format = REF_FORMAT_INIT;
->>  	int icase = 0;
->>  	int edit_flag = 0;
->> +	int no_gpg_sign = 0;
->>  	struct option options[] = {
->>  		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
->>  		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
->> @@ -413,6 +420,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>  					N_("use another key to sign the tag")),
->>  		OPT__FORCE(&force, N_("replace the tag if exists"), 0),
->>  		OPT_BOOL(0, "create-reflog", &create_reflog, N_("create a reflog")),
->> +		OPT_BOOL(0, "no-gpg-sign", &no_gpg_sign, N_("do not GPG-sign tag")),
->>
->>  		OPT_GROUP(N_("Tag listing options")),
->>  		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
->> @@ -445,6 +453,10 @@ int cmd_tag(int argc, const char **argv, const char
->> *prefix)
->>
->>  	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
->>
->> +	if (no_gpg_sign) {
->> +		sign_tag = 0;
->> +	}
->> +
-> 
-> Hmm. I'd rather like to see this folded into the `--no-sign` option
-> implied by the `OPT_BOOL('s', "sign", ...)` part. The way this would work
-> would be to initialize the struct like this:
-> 
->		struct create_tag_options opt = { .sign = -1 };
-> 
-> then leave
-> 
->		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
-> 
-> as-is, and later do this:
-> 
->	if (opt.sign < 0)
->		opt.sign = config_sign_tag > 0;
-> 
->> @@ -463,7 +475,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>  	if (cmdmode == 'l')
->>  		setup_auto_pager("tag", 1);
->>
->> -	if ((create_tag_object || force) && (cmdmode != 0))
->> +	if ((create_tag_object || force || no_gpg_sign) && (cmdmode != 0))
->>  		usage_with_options(git_tag_usage, options);
-> 
-> Should we really try to be that strict? If so, we would have to test for
-> `opt.sign > 0` here and make sure that above-mentioned `if (opt.sign < 0)`
-> block comes *after* this block.
-> 
->> @@ -556,8 +568,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>
->>  	create_reflog_msg(&object, &reflog_msg);
->>
->> -	if (create_tag_object) {
->> -		if (force_sign_annotate && !annotate)
->> +	if (create_tag_object || sign_tag) {
->> +		if (sign_tag || (force_sign_annotate && !annotate))
->>  			opt.sign = 1;
-> 
-> This would probably be better handled via
-> 
-> -	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-> +	create_tag_object = (opt.sign > 0 || config_sign_tag > 0 ||
-> +		annotate || msg.given || msgfile);
-> 
-> earlier. After all, this assignment of `create_tag_object` suggests that
-> it is a Boolean that catches *all* cases where a tag should be created.
-> 
-> But then, we would have to be very careful about this, as we don't want to
-> error out when a user calls `git tag -l` while `tag.gpgSign = true`. So
-> maybe instead:
-> 
-> -	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-> +	create_tag_object = (opt.sign > 0 || annotate || msg.given || msgfile);
-> 
-> and later, after that test whether `(create_tag_object || force) &&
-> cmd_mode != 0` do:
-> 
->	if (opt.sign < 0) {
->		opt.sign = config_sign_tag > 0;
->		create_tag_object ||= opt.sign;
-> 
->> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
->> index 6aeeb279a0..98a07a29d2 100755
->> --- a/t/t7004-tag.sh
->> +++ b/t/t7004-tag.sh
->> @@ -932,6 +932,27 @@ test_expect_success GPG \
->>  	test_cmp expect actual
->>  '
->>
->> +get_tag_header gpgsign-enabled $commit commit $time >expect
->> +echo "A message" >>expect
->> +echo '-----BEGIN PGP SIGNATURE-----' >>expect
->> +test_expect_success GPG \
->> +	'git tag configured tag.gpgsign enables GPG sign' \
->> +	'test_config tag.gpgsign true &&
->> +	git tag -m "A message" gpgsign-enabled &&
->> +	get_tag_msg gpgsign-enabled>actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +get_tag_header no-gpg-sign $commit commit $time >expect
->> +echo "A message" >>expect
->> +test_expect_success GPG \
->> +	'git tag --no-gpg-sign configured tag.gpgsign skip GPG sign' \
->> +	'test_config tag.gpgsign true &&
->> +	git tag -a --no-gpg-sign -m "A message" no-gpg-sign &&
-> 
-> With my idea above, this would of course become `--no-sign`.
-> 
->> +	get_tag_msg no-gpg-sign>actual &&
->> +	test_cmp expect actual
->> +'
->> +
->>  test_expect_success GPG \
->>  	'trying to create a signed tag with non-existing -F file should fail' '
->>  	! test -f nonexistingfile &&
-> 
-> Apart from the things I suggested in the hope to help you improve the
-> patch, this looks good to me so far.
-> 
-> Thanks,
-> Johannes
+>  .clang-format | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/.clang-format b/.clang-format
+> index 41d4cd23fd..c592dda681 100644
+> --- a/.clang-format
+> +++ b/.clang-format
+> @@ -148,8 +148,21 @@ SpacesInSquareBrackets: false
+>  Cpp11BracedListStyle: false
+>
+>  # A list of macros that should be interpreted as foreach loops instead =
+of as
+> -# function calls.
+> -ForEachMacros: ['for_each_string_list_item', 'for_each_wanted_builtin',=
+ 'for_each_builtin', 'for_each_ut']
+> +# function calls. Taken from:
+> +#   git grep -h '^#define [^[:space:]]*for_each[^[:space:]]*(' \
+> +#   | sed "s,^#define \([^[:space:]]*for_each[^[:space:]]*\)(.*$,  - '\=
+1'," \
+> +#   | sort | uniq
+> +ForEachMacros:
+> +  - 'for_each_abbrev'
+> +  - 'for_each_builtin'
+> +  - 'for_each_string_list_item'
+> +  - 'for_each_ut'
+> +  - 'for_each_wanted_builtin'
+> +  - 'list_for_each'
+> +  - 'list_for_each_dir'
+> +  - 'list_for_each_prev'
+> +  - 'list_for_each_prev_safe'
+> +  - 'list_for_each_safe'
+>
+>  # The maximum number of consecutive empty lines to keep.
+>  MaxEmptyLinesToKeep: 1
+> --
+> 2.17.1
+>
+>
