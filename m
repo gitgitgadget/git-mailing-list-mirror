@@ -2,117 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA8A51F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 20:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F400A1F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 20:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbfFDU1i (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 16:27:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56056 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbfFDU1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 16:27:38 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D10CA15D97A;
-        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4A77kkPG8JEK
-        LCTSCiOFemqOjGo=; b=SZrRrh8oHv9ytFKgGmogyO02YYivUFxNxe5aJ+8qUUhs
-        Ee3TIKO8/21a7He4V+JsO4tEkKB/k0rdaN8DME69bqfo7yxJA++pw41he/1fa3QK
-        xYJFqc310Nc2cJQeOf7bHSgzCQE3GxjpboZ5EKXGIdDRoPkV913DAow5KZP7DKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H1nRt4
-        7xWVaeJO6JScIcJ0MaD7bfr/LYltDZs/RlObrlNAn2BkeF4krPutsRqjYzHx7bbc
-        yr2kkiHmLcgPhV6KdTxxVH/5bM79d7yQAQpCDUDKY39kvBS9I4eVbv1TTg11oZex
-        +Yqh43mu7VlOipENXbtzTACYAZUyLjNWkU5iI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7DA415D979;
-        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34AF915D978;
-        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        jeffhostetler@microsoft.com, l.s.r@web.de, spearce@spearce.org,
-        jrn@google.com
-Subject: Re: [PATCH v2 1/2] url: do not read past end of buffer
-References: <cover.1559670300.git.matvore@google.com>
-        <9628f0bfeda578a1c7d157d61b87f5c430567d74.1559670300.git.matvore@google.com>
-Date:   Tue, 04 Jun 2019 13:27:34 -0700
-In-Reply-To: <9628f0bfeda578a1c7d157d61b87f5c430567d74.1559670300.git.matvore@google.com>
-        (Matthew DeVore's message of "Tue, 4 Jun 2019 10:57:04 -0700")
-Message-ID: <xmqq4l55t7t5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1726305AbfFDU17 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 16:27:59 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33717 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbfFDU16 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 16:27:58 -0400
+Received: by mail-pf1-f195.google.com with SMTP id x15so3582265pfq.0
+        for <git@vger.kernel.org>; Tue, 04 Jun 2019 13:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5TUgx2x2YHOrtaWflAUa/q4nCKm3Gm0OoeF8fnNui64=;
+        b=bgaDWjl1saJ3vhaZlZ2aXRu4ehBgM8/IxFPaiHuezw/3mGJ8ndNlgUFmx/Oa6N/r93
+         lwzveAieyCCEOQ3jH9fpVHXUIxsryHR3FF2a2GuYZ9Xx07oA6DbWx41XaijRFyQp8pKF
+         bBq8t4huuaNLB0Oh24tch/xoBhVqkoPSnc0w7tcOpxYhspEYaHk/2VcqIwemyuENOllo
+         9dJsgsWSS3EOA15hZdy5+ZOGUFMttQAvYjqCjOulN5oUUVcc0RHnB+6B7N5Rb7a1b1ZR
+         7ii3zw4b1JlDJvSUOXqxI1QvXhP326S8UqJNeVHORXf4Li1DTqjguVC9mm5eq3PgUBEm
+         tK7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5TUgx2x2YHOrtaWflAUa/q4nCKm3Gm0OoeF8fnNui64=;
+        b=ak8LDFxJq7aR2o+IrijtvbGWW9ag2ubMpPMsmEQDpCkQYcYguoGF9CeO3OFjBVkyC9
+         Y9cBSL+eOIzd8PQaypUhUGOITCYVMOm+JremKIb4+mt+jhki6nrWCFp8sLqlUdCuQZkM
+         /Rk37+78DZHkxHoQyZr5Yw98IZEJTBdkU+8/I7sxkiEM4snsJd0FruzkoDBj3uAJmx3x
+         +L3fDMUarAA90NN+2foeIDAeEKgWJrCPOUt5ZFDOK78Uz83Mx8Q35IbXZc6JxY13jynW
+         WHMz60gRE6Slug9sreHJqDoRdxxbRuFDS+UqrQRej1Y/Q0i8xRWYkoVepJhftlUqi9JL
+         vjwg==
+X-Gm-Message-State: APjAAAXEQGmo1BJEdU2/rDAUf4I0419d4Rwy41qC7YTYLbXtzUS8HRpv
+        0//AuFmXj7/W+JLDAtG9TUFMg2YO
+X-Google-Smtp-Source: APXvYqzcx25Q3aJgbIvRz7M84hCzhd3ANX+PomhAwEPMWu0y75ql1BipQstEZq/adtQWsOhplgBoAw==
+X-Received: by 2002:a65:4786:: with SMTP id e6mr512848pgs.85.1559680077945;
+        Tue, 04 Jun 2019 13:27:57 -0700 (PDT)
+Received: from newren2-linux.yojoe.local ([8.4.231.67])
+        by smtp.gmail.com with ESMTPSA id m9sm18711916pgd.23.2019.06.04.13.27.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 04 Jun 2019 13:27:57 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        ben.humphreys@atlassian.com, Elijah Newren <newren@gmail.com>,
+        Ben Humphreys <behumphreys@atlassian.com>
+Subject: [PATCH v2] merge-recursive: restore accidentally dropped setting of path
+Date:   Tue,  4 Jun 2019 13:27:50 -0700
+Message-Id: <20190604202750.3925-1-newren@gmail.com>
+X-Mailer: git-send-email 2.22.0.rc3.1.gd51cc00994
+In-Reply-To: <20190604072614.26885-1-newren@gmail.com>
+References: <20190604072614.26885-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 300EFC32-8707-11E9-B0E5-72EEE64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+In commit 8daec1df03de ("merge-recursive: switch from (oid,mode) pairs
+to a diff_filespec", 2019-04-05), we actually switched from
+(oid,mode,path) triplets to a diff_filespec -- but most callsites in the
+patch only needed to worry about oid and mode so the commit message
+focused on that.  The oversight in the commit message apparently spilled
+over to the code as well; one of the dozen or so callsites accidentally
+dropped the setting of the path in the conversion.  Restore the path
+setting in that location.
 
-> url_decode_internal could have been tricked into reading past the lengt=
-h
-> of the **query buffer if there are fewer than 2 characters after a % (i=
-n
-> a null-terminated string, % would have to be the last character).
-> Prevent this from happening by checking len before decoding the %
-> sequence.
->
-> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> Signed-off-by: Matthew DeVore <matvore@google.com>
-> ---
->  url.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/url.c b/url.c
-> index 25576c390b..9ea9d5611b 100644
-> --- a/url.c
-> +++ b/url.c
-> @@ -39,21 +39,21 @@ static char *url_decode_internal(const char **query=
-, int len,
->  		unsigned char c =3D *q;
-> =20
->  		if (!c)
->  			break;
->  		if (stop_at && strchr(stop_at, c)) {
->  			q++;
->  			len--;
->  			break;
->  		}
-> =20
-> -		if (c =3D=3D '%') {
-> +		if (c =3D=3D '%' && (len < 0 || len >=3D 3)) {
->  			int val =3D hex2chr(q + 1);
+Also, this pointed out that our testsuite was lacking a good rename/add
+test, at least one that involved the need for merge content with the
+rename.  Add such a test, and since rename/add vs. add/rename could
+possibly be important, redo the merge the opposite direction to make
+sure we don't have issues with the direction of the merge.  These
+testcases failed before restoring the setting of path, but with the
+paths appropriately set the testcases both pass.
 
-This made me wonder what happens when the caller sent -1 in len, but
-hex2chr() stops on such a string with % plus one hexadecimal at the
-end of the string, and we'd end up copying these two bytes one at a
-time, which is what we want, so it is OK.  And the rejection of %00
-done in 2/2 follows the same codeflow here, which is quite straight
-forward.
+Reported-by: Ben Humphreys <behumphreys@atlassian.com>
+Based-on-patch-by: SZEDER Gábor <szeder.dev@gmail.com>
+Tested-by: Ben Humphreys <behumphreys@atlassian.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Changes since v1:
+  * Minor tweaks suggested by SZEDER
+  * Added a Tested-by tag for Ben since he reran with his extra testsuite.
 
-Nice.
+Also, I posted an analysis verifying this was the only missed case
+elsewhere in this thread.
 
+ merge-recursive.c                    |   1 +
+ t/t6042-merge-rename-corner-cases.sh | 118 +++++++++++++++++++++++++++
+ 2 files changed, 119 insertions(+)
 
->  			if (0 <=3D val) {
->  				strbuf_addch(out, val);
->  				q +=3D 3;
->  				len -=3D 3;
->  				continue;
->  			}
->  		}
-> =20
->  		if (decode_plus && c =3D=3D '+')
+diff --git a/merge-recursive.c b/merge-recursive.c
+index a7bcfcbeb4..d2e380b7ed 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1660,6 +1660,7 @@ static int handle_rename_add(struct merge_options *opt,
+ 	       c->path, add_branch);
+ 
+ 	prev_path_desc = xstrfmt("version of %s from %s", path, a->path);
++	ci->ren1->src_entry->stages[other_stage].path = a->path;
+ 	if (merge_mode_and_contents(opt, a, c,
+ 				    &ci->ren1->src_entry->stages[other_stage],
+ 				    prev_path_desc,
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 09dfa8bd92..3fe2cd91dc 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -411,6 +411,124 @@ test_expect_success 'disappearing dir in rename/directory conflict handled' '
+ 	)
+ '
+ 
++# Test for basic rename/add-dest conflict, with rename needing content merge:
++#   Commit O: a
++#   Commit A: rename a->b, modifying b too
++#   Commit B: modify a, add different b
++
++test_expect_success 'setup rename-with-content-merge vs. add' '
++	test_create_repo rename-with-content-merge-and-add &&
++	(
++		cd rename-with-content-merge-and-add &&
++
++		test_seq 1 5 >a &&
++		git add a &&
++		git commit -m O &&
++		git tag O &&
++
++		git checkout -b A O &&
++		git mv a b &&
++		test_seq 0 5 >b &&
++		git add b &&
++		git commit -m A &&
++
++		git checkout -b B O &&
++		echo 6 >>a &&
++		echo hello world >b &&
++		git add a b &&
++		git commit -m B
++	)
++'
++
++test_expect_success 'handle rename-with-content-merge vs. add' '
++	(
++		cd rename-with-content-merge-and-add &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (rename/add)" out &&
++
++		git ls-files -s >out &&
++		test_line_count = 2 out &&
++		git ls-files -u >out &&
++		test_line_count = 2 out &&
++		# Also, make sure both unmerged entries are for "b"
++		git ls-files -u b >out &&
++		test_line_count = 2 out &&
++		git ls-files -o >out &&
++		test_line_count = 1 out &&
++
++		test_path_is_missing a &&
++		test_path_is_file b &&
++
++		test_seq 0 6 >tmp &&
++		git hash-object tmp >expect &&
++		git rev-parse B:b >>expect &&
++		git rev-parse >actual  \
++			:2:b    :3:b   &&
++		test_cmp expect actual &&
++
++		# Test that the two-way merge in b is as expected
++		git cat-file -p :2:b >>ours &&
++		git cat-file -p :3:b >>theirs &&
++		>empty &&
++		test_must_fail git merge-file \
++			-L "HEAD" \
++			-L "" \
++			-L "B^0" \
++			ours empty theirs &&
++		test_cmp ours b
++	)
++'
++
++test_expect_success 'handle rename-with-content-merge vs. add, merge other way' '
++	(
++		cd rename-with-content-merge-and-add &&
++
++		git reset --hard &&
++		git clean -fdx &&
++
++		git checkout B^0 &&
++
++		test_must_fail git merge -s recursive A^0 >out &&
++		test_i18ngrep "CONFLICT (rename/add)" out &&
++
++		git ls-files -s >out &&
++		test_line_count = 2 out &&
++		git ls-files -u >out &&
++		test_line_count = 2 out &&
++		# Also, make sure both unmerged entries are for "b"
++		git ls-files -u b >out &&
++		test_line_count = 2 out &&
++		git ls-files -o >out &&
++		test_line_count = 1 out &&
++
++		test_path_is_missing a &&
++		test_path_is_file b &&
++
++		test_seq 0 6 >tmp &&
++		git rev-parse B:b >expect &&
++		git hash-object tmp >>expect &&
++		git rev-parse >actual  \
++			:2:b    :3:b   &&
++		test_cmp expect actual &&
++
++		# Test that the two-way merge in b is as expected
++		git cat-file -p :2:b >>ours &&
++		git cat-file -p :3:b >>theirs &&
++		>empty &&
++		test_must_fail git merge-file \
++			-L "HEAD" \
++			-L "" \
++			-L "A^0" \
++			ours empty theirs &&
++		git hash-object b >actual &&
++		git hash-object ours >expect &&
++		test_cmp ours b
++	)
++'
++
+ # Test for all kinds of things that can go wrong with rename/rename (2to1):
+ #   Commit A: new files: a & b
+ #   Commit B: rename a->c, modify b
+-- 
+2.22.0.rc3.1.gd51cc00994
+
