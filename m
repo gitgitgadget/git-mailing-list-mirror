@@ -2,177 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27F4D1F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 20:23:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA8A51F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 20:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbfFDUXD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 16:23:03 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:44826 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbfFDUXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 16:23:03 -0400
-Received: by mail-ua1-f65.google.com with SMTP id p5so2569883uar.11
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 13:23:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3ZOcI/OGRU7g2BcEenBzjDyEBYa5hqjTBo7efVD8kaM=;
-        b=oPsAn/5l3wJ6wUdWeweebgWJ5D3fUUeH7aKyuYKD2w6hsK/4RmwvVg4nhDV7Xg3S1g
-         McBRfW431z+6q2IS5IIUYI7wSxQlMI6hsS9Wv0TS04PaE3bSsovL4O7YfHo30DFOqyCU
-         QnaVoORBqjm2+I2rkPZzowAbR9lfksZZLOvntO5xVuvVTcEGvtAe1aarr+0rX8X8iGX/
-         t4JYyCoA3ozkiVotS/jj7kqFrMzDuvurCOpazfCsZo10xAhhYcAKLLsERqAp/3KjKoyz
-         /DfHWAhHDGxNmHgt/dnDxl2ybDHAejKsO58Or8G0uS28KEgn88nFbRDC8oe3XBM2/XaD
-         bZFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3ZOcI/OGRU7g2BcEenBzjDyEBYa5hqjTBo7efVD8kaM=;
-        b=CYb3e5b2MCiWEKDkUBVciuRDZkkfHBc3W1WCHkNm65iwiIBIxq77EArs1RVu0d8Bbh
-         M8XDMIy28Ze/VpyZZt7Zy1H8l9Xx19QCyu3Ms12sdDxtmwYPbj7yBvjHxU9B6xPGFl/0
-         DAyNYIDDJPufTY8zs6bw+d49oUGvvoaNnMS2M+PNkh+Ggp8RtiUrTZojZUE5Frf/RPMa
-         Xapt4eHOEsNNEwYiXf2Yn6rM1q1kolJTA6lp3PxHuPbticCjxtmyObS5zM4HyjnktZ23
-         gm+OFnoMCAeoJIBSeRlUj+Q9pj34rE19gY9nalAG6zH33DtfWiCbeOTGpv6oOUPc2yLc
-         GHgg==
-X-Gm-Message-State: APjAAAWtd5P/SB0/a58o/OefyW6M6eDgJIsI/kRs8ieYqcm/d/pLKexa
-        kN2b7eGS0eSyw68R6XtoJW9NZJD/Z9qkgyn+jp0=
-X-Google-Smtp-Source: APXvYqz3VAnRQ/KCUFdaDTLs3lzeGv+gQqP6J0oN5IdNJA6rD0VAjn1c+7A+0O/SlPIOKRw4d8bdhQocp0PZa2lwUKE=
-X-Received: by 2002:a9f:3045:: with SMTP id i5mr17585198uab.81.1559679781490;
- Tue, 04 Jun 2019 13:23:01 -0700 (PDT)
+        id S1726293AbfFDU1i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 16:27:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56056 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbfFDU1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 16:27:38 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D10CA15D97A;
+        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4A77kkPG8JEK
+        LCTSCiOFemqOjGo=; b=SZrRrh8oHv9ytFKgGmogyO02YYivUFxNxe5aJ+8qUUhs
+        Ee3TIKO8/21a7He4V+JsO4tEkKB/k0rdaN8DME69bqfo7yxJA++pw41he/1fa3QK
+        xYJFqc310Nc2cJQeOf7bHSgzCQE3GxjpboZ5EKXGIdDRoPkV913DAow5KZP7DKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H1nRt4
+        7xWVaeJO6JScIcJ0MaD7bfr/LYltDZs/RlObrlNAn2BkeF4krPutsRqjYzHx7bbc
+        yr2kkiHmLcgPhV6KdTxxVH/5bM79d7yQAQpCDUDKY39kvBS9I4eVbv1TTg11oZex
+        +Yqh43mu7VlOipENXbtzTACYAZUyLjNWkU5iI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7DA415D979;
+        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 34AF915D978;
+        Tue,  4 Jun 2019 16:27:35 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jeffhostetler@microsoft.com, l.s.r@web.de, spearce@spearce.org,
+        jrn@google.com
+Subject: Re: [PATCH v2 1/2] url: do not read past end of buffer
+References: <cover.1559670300.git.matvore@google.com>
+        <9628f0bfeda578a1c7d157d61b87f5c430567d74.1559670300.git.matvore@google.com>
+Date:   Tue, 04 Jun 2019 13:27:34 -0700
+In-Reply-To: <9628f0bfeda578a1c7d157d61b87f5c430567d74.1559670300.git.matvore@google.com>
+        (Matthew DeVore's message of "Tue, 4 Jun 2019 10:57:04 -0700")
+Message-ID: <xmqq4l55t7t5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20190604023039.GR951@szeder.dev> <20190604072614.26885-1-newren@gmail.com>
-In-Reply-To: <20190604072614.26885-1-newren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 4 Jun 2019 13:22:50 -0700
-Message-ID: <CABPp-BFF4B+YoMyfxVDKPmob1wVarvz02BTiCEaPGH8FHJ9ATQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-recursive: restore accidentally dropped setting of path
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        ben.humphreys@atlassian.com,
-        Ben Humphreys <behumphreys@atlassian.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 300EFC32-8707-11E9-B0E5-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 4, 2019 at 12:26 AM Elijah Newren <newren@gmail.com> wrote:
-> On Mon, Jun 3, 2019 at 7:30 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
+Matthew DeVore <matvore@google.com> writes:
 
-> > > -     filespec_from_entry(&tmp, ci->ren1->src_entry, other_stage);
-> > > -     tmp.path =3D a->path;
-> >
-> > Note that 'tmp.path' used to be set ...
-> >
-> > > -
-> > >       prev_path_desc =3D xstrfmt("version of %s from %s", path, a->pa=
-th);
-> > > -     if (merge_mode_and_contents(opt, a, c, &tmp,
-> >
-> > ... and that this 'tmp' used to become 'b' in
-> > merge_mode_and_contents() and then in merge_3way().
-> >
-> > > +     if (merge_mode_and_contents(opt, a, c,
-> > > +                                 &ci->ren1->src_entry->stages[other_=
-stage],
-> > >                                   prev_path_desc,
-> > >                                   opt->branch1, opt->branch2,
-> > >                                   1 + opt->call_depth * 2, &mfi))
-> > >               return -1;
-> > >       free(prev_path_desc);
-> >
-> >
-> > This one-liner patch below the issue, the merge fails with conflicts
-> > as expected, but, honestly, I have no idea what I am doing :)  At
-> > least the test suite still passes, but that might not mean all that
-> > much since it missed this issue in the first place...
-> >
-> > diff --git a/merge-recursive.c b/merge-recursive.c
-> > index a7bcfcbeb4..d2e380b7ed 100644
-> > --- a/merge-recursive.c
-> > +++ b/merge-recursive.c
-> > @@ -1660,6 +1660,7 @@ static int handle_rename_add(struct merge_options=
- *opt,
-> >                c->path, add_branch);
-> >
-> >         prev_path_desc =3D xstrfmt("version of %s from %s", path, a->pa=
-th);
-> > +       ci->ren1->src_entry->stages[other_stage].path =3D a->path;
-> >         if (merge_mode_and_contents(opt, a, c,
-> >                                     &ci->ren1->src_entry->stages[other_=
-stage],
-> >                                     prev_path_desc,
-> >
-> >
+> url_decode_internal could have been tricked into reading past the lengt=
+h
+> of the **query buffer if there are fewer than 2 characters after a % (i=
+n
+> a null-terminated string, % would have to be the last character).
+> Prevent this from happening by checking len before decoding the %
+> sequence.
 >
-> This analysis and patch are correct; I somehow deleted the setting of the
-> path here in what should have been a straightforward conversion.
+> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> Signed-off-by: Matthew DeVore <matvore@google.com>
+> ---
+>  url.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I've tried to look through every other callsite to merge_3way to see
-> if any others fail to set the paths; there's a dozen or two of them.
-> I think this was the only one that was missed, but honestly I'm
-> exhausted right now and not sure I'm thinking straight.  So I'll
-> recheck tomorrow and do a bunch more testing.
+> diff --git a/url.c b/url.c
+> index 25576c390b..9ea9d5611b 100644
+> --- a/url.c
+> +++ b/url.c
+> @@ -39,21 +39,21 @@ static char *url_decode_internal(const char **query=
+, int len,
+>  		unsigned char c =3D *q;
+> =20
+>  		if (!c)
+>  			break;
+>  		if (stop_at && strchr(stop_at, c)) {
+>  			q++;
+>  			len--;
+>  			break;
+>  		}
+> =20
+> -		if (c =3D=3D '%') {
+> +		if (c =3D=3D '%' && (len < 0 || len >=3D 3)) {
+>  			int val =3D hex2chr(q + 1);
 
-I've rechecked pretty thoroughly and yeah this was the only one that
-was missed.  If anyone wants to double check me, here's some notes:
+This made me wonder what happens when the caller sent -1 in len, but
+hex2chr() stops on such a string with % plus one hexadecimal at the
+end of the string, and we'd end up copying these two bytes one at a
+time, which is what we want, so it is OK.  And the rejection of %00
+done in 2/2 follows the same codeflow here, which is quite straight
+forward.
 
-merge_3way has the following callers:
+Nice.
 
-merge_3way (1 caller)
-  <- merge_mode_and_contents (7 callers, 2x from handle_rename_rename_2to1)
-     <- merge_mode_and_contents (to flip args into canonical order)
-     <- handle_rename_add (1 caller)
-        <- process_entry
-     <- handle_rename_rename_1to2 (1 caller)
-        <- process_entry
-     <- handle_rename_rename_2to1 (1 caller)
-        <- process_entry
-     <- handle_content_merge (2 caller)
-        <- process_entry
-        <- handle_rename_normal (1 caller)
-          <- process_entry
-     <- handle_file_collision (6 callers, 2x from handle_rename_rename_1to2=
-)
-        <- handle_file_collision (to flip args into canonical order)
-        <- handle_rename_add (1 caller)
-           <- process_entry
-        <- handle_rename_rename_1to2 (1 caller)
-           <- process_entry
-        <- handle_rename_rename_2to1 (1 caller)
-           <- process_entry
-        <- process_entry
 
-From this, it's clear that just about everything starts in
-process_entry().  process_entry() is pretty meticulous about setting
-[oab]->path; it does so near the beginning of the function and then
-updates for each of the rename cases to make sure it has the basic
-values right.  I've audited all those and they are clean.  So the big
-question is which functions pass something other than the [oab]
-diff_filespec that they were passed; checking into that the answer is:
-
-  handle_rename_rename_2to1 (3 different places, but path set in all of the=
-m)
-  handle_rename_rename_1to2 (2 different places, but path set in all of the=
-m)
-  handle_rename_add         (2 different places; one missed setting a path)
-
-So, this is indeed the one case that was missed, and as SZEDER showed,
-it was in the original but the conversion just somehow dropped the
-simple one liner.  So I'll send an updated patch making the small
-tweaks suggested by SZEDER, add a Tested-by for Ben since he retested
-with his extra testcases for us, and then we'll be good for 2.22.0.
-
-While doing this I also found a couple other small cleanups and
-improvements, but I'll submit those after 2.22.0 is out; let's keep
-the regression fix as minimal as possible.
+>  			if (0 <=3D val) {
+>  				strbuf_addch(out, val);
+>  				q +=3D 3;
+>  				len -=3D 3;
+>  				continue;
+>  			}
+>  		}
+> =20
+>  		if (decode_plus && c =3D=3D '+')
