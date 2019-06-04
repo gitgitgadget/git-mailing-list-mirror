@@ -2,87 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 417B91F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 20:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 710F81F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 20:15:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbfFDUHL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 16:07:11 -0400
-Received: from mout.gmx.net ([212.227.15.19]:43837 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726179AbfFDUHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 16:07:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559678823;
-        bh=Usccl3HdNdo5i+1lan7zbX0qsgq+m9qrTl0erzEzvXE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a2cge7MbWWJJUvSEtw/gN9DbT3mTTEb9223cGS6Qxsja8nlsXb5NsH02SD08Uknqb
-         Ap/r2bbmdqR8BGKhMQu+NGJ2NJhBEjqNSQdietlNzjWpHsOAUYFMGS+z+YJtWnxQib
-         Z9sYkAFTHzU3EEs2P1MIdtsczJFIbZKbOZVgiJOo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaG7C-1gqggL1Zk6-00m3u0; Tue, 04
- Jun 2019 22:07:03 +0200
-Date:   Tue, 4 Jun 2019 22:06:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: pw/rebase-abort-clean-rewritten, was Re: What's cooking in git.git
- (Jun 2019, #01; Mon, 3)
-In-Reply-To: <xmqqsgsqto3n.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1906042205360.1775@tvgsbejvaqbjf.bet>
-References: <xmqqsgsqto3n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726343AbfFDUPA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 16:15:00 -0400
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:36665 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726211AbfFDUPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 16:15:00 -0400
+Received: by mail-vs1-f68.google.com with SMTP id l20so14367996vsp.3
+        for <git@vger.kernel.org>; Tue, 04 Jun 2019 13:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7CONhww/J3XLNgak14/t2peU3vSeK+VCicSReJ6ji7I=;
+        b=u4nXMEBEz5dCrZ05tVrdI2cpvrQJsvkxRoT3+DaTEIe68dqdkS1GAm7r/A9ocJALY8
+         An/yyfJzaXf0v/otnsDdbkuJt7uZJJpvkzUSFuP0SvH9J3CU/gnlshnZkIWdrFbm+rVl
+         E9TvhdhTF7ude7lOg73av2WsA3C4PA+r1bWHqRqU5NiY4ewKXLsXrYh5dzi6vZiYuce8
+         RFdLn41mA/z0efZ4IsJtAB/WJJH+AoLMdy/vaslAuxwcomZ4y/aGJIX27uqux/NKSzU8
+         uoIp8mRQ3F41WTWVcXHVNmgF/wszdIa3PnZEdcQEdV9brRlphY/GII5DyKBU2YvyM17E
+         xgZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7CONhww/J3XLNgak14/t2peU3vSeK+VCicSReJ6ji7I=;
+        b=O10A0aOdbp+1B0uNgx66iqgcPjAqMQiuN4T0qAKCbvVhW7IinY4YXGWP6YkzoPt2Rc
+         UWnXdwPfyP3THDaaOn4tTkwbLWcdG7Kr7wFk7uHpMalg7XCSc9V0qGOnsB5yVMN5jwfe
+         Tu6EdN/5+w/tcXTLvNYFXT1Y8v+ldJJE5mQJwbid8esDG7tIxu9QsGExhyjPb+tSvjnS
+         jjSpXB/rbumyXQR1h/+w/RkLmY92nkQtItI+FdZ0KLg5RmdQsvFK5MLeyIdoiFzOtV9h
+         yLNX3599WVbo/uTvtSgcYtmJLsFSnNBABmZtqmohQ5faRWlEsAQakesyZ2JKcwxIRpHn
+         1eAQ==
+X-Gm-Message-State: APjAAAXx6Kk1QqOSrQ6j1+7PYhHOzxrDRG03/1MNg6tMWAzqaVr1OTL8
+        tHD6jz+EJWgdWL0yIDYniSvlrihbPed0747tkY4=
+X-Google-Smtp-Source: APXvYqwxf9Xd/m4DexCuhY5yBr9rbizZXuYXJ/jnBmg0auXTSMY6hbred6dp0OTOxq+zWX+vZ/bDUjx0CNFRya9U5nE=
+X-Received: by 2002:a67:fac5:: with SMTP id g5mr5284215vsq.53.1559679299300;
+ Tue, 04 Jun 2019 13:14:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+Be2ZM+Eesq3SJHhl3f4T5zCSw0Yne+7G7jY607H2jnsynzsW4N
- zW7tot3kGFb1mk2k9yJtAs0+NDxm6377pD652aDNrPtjcQleAaoqsApYoeBqB4Qp/ujSSIW
- Y13MbhNZxmRn94qXRjsx7FA5r/4Lk3k354VWhZ1jAUypgQPnbJi7xAR3kAXgK/UXijnWF4M
- ow77cLLfgq7gYXs/ChdZw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dsQuCJjFBCc=:Bk3IJVqUisjHSRb1vWbnUV
- 2GxA6KzExPpJSxIK7z6FrW1bFITjb6d3PAbC+YFfy/JXDT8Co6+56T19u8WHkKrXNrIFoNXhC
- 4BtFYhLLvT99ic8WgE4aya9jddagyc0bfUsiWt/jIP4/WBtYPMasqt1OjM1vSrfn6y2RwdUhI
- BcisFJdSUxmQUCtJNAOv+eoB55yohLTU+SrYnBAORCxmLaIN9EDCF26Qr7Cj4NdQgexewjgRU
- d/tL35gqVCaCA3wVBCTZ/i0uIxyocZ9DiV32kcIrP2cuqA4khDSLApH6DljmUGm0kStsF6kQj
- b4AnohAV+47Ceqzt84m6KhLZ2cgcIhAvks4LcBQCuk6p+wbkQW8XIEWhg6/EbrMQwZjhD/86q
- FP8o84YByaG/zyfiY+SEJZnhYxTNuI2KSeAZlwC7qxoc65MzWx1KPx2pb8C7m6B2N6+4jtptR
- fzbsNI375E53v9wHBdI07IqCK2DAVHQtuSXw8c4Ou0u7y7XfSLGUhHTyHHECaFpq7yE102j3d
- triGdsu2sG2Tbc77iANFQj7Cjcj4b1+Odk9jw//2BTtdImaelFSDfP5ZcyKd6Uy2makbQpXB6
- rRApB171mksCmjpSj2cUbOt6FOYUzcxpgAj8vOnv7D1yHPibO+fR8oJZoGE4UijNoKVOysmyi
- OYp82mhVdLlqPp5DKh2brerdWHmrkRdDUHN/UI4Ks5jiPPF7ayVB7adzgeyUSwsx+l5dbfpC6
- VIrxUnPAxEFiGIyUmJzzHjpNpfutXR14kV8q8Rd39zXVbvKuulegONU/2z+6llMGYoo2Kn3FB
- 8iD+NIOnO7nZqMMaf+z6ytzZCRdgf9QwjtSkij9xQFmiRYoMhzXTIkbrtu0XeOtkx7lj94K/6
- 5Vdy6DM5d4akm/OqPGIK+qlp1JsP47tME9sZT17S81DdG6w9J0AW6+XuymrXWrZEoXDqXZLK8
- RyUSbcm54gBG7kb9PRDV8DKah9y1TkF66Bg/LY0rzd61JOAfAzOft
+References: <20190604023039.GR951@szeder.dev> <20190604072614.26885-1-newren@gmail.com>
+ <20190604131400.GS951@szeder.dev>
+In-Reply-To: <20190604131400.GS951@szeder.dev>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 4 Jun 2019 13:14:46 -0700
+Message-ID: <CABPp-BGmgCPt7y9Qhtud3VAPDE-D07=Cw6jH9QverveMWV_iuw@mail.gmail.com>
+Subject: Re: [PATCH] merge-recursive: restore accidentally dropped setting of path
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        ben.humphreys@atlassian.com,
+        Ben Humphreys <behumphreys@atlassian.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Mon, 3 Jun 2019, Junio C Hamano wrote:
-
-> * pw/rebase-abort-clean-rewritten (2019-05-15) 4 commits
->  - rebase --abort/--quit: cleanup refs/rewritten
->  - sequencer: return errors from sequencer_remove_state()
->  - rebase: warn if state directory cannot be removed
->  - rebase: fix a memory leak
+On Tue, Jun 4, 2019 at 6:14 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
+te:
 >
->  "git rebase --abort" used to leave refs/rewritten/ when concluding
->  "git rebase -r", which has been corrected.
+> On Tue, Jun 04, 2019 at 12:26:14AM -0700, Elijah Newren wrote:
+> > Of course, this wasn't the only bug; it also showed we had a glaring
+> > whole in our test coverage -- there's a dearth of tests for rename/add
+> > conflicts, and in particular none involving content merges for the
+> > rename side.  So, I created a patch which adds some tests for that
+> > (which triggered the assertion error).  I pulled SZEDER's fix into the
+> > same patch and added a commit message explaining the issue, using a
+> > Based-on-patch-by tag for the fix.  SZEDER: if you'd like to see this
+> > in a different format (maybe I add tests which show the error and then
+> > in a separate patch authored by you we introduce your fix?), just let
+> > me know.
 >
->  On hold.
->  cf. <20190514180349.17245-1-phillip.wood123@gmail.com>
+> Nah, I'm fine with it.
+>
+...
+> > In commit 8daec1df03de ("merge-recursive: switch from (oid,mode) pairs
+> > to a diff_filespec", 2019-04-05), we actually switched from
+> > (oid,mode,path) triplets to a diff_filespec -- but most callsites in th=
+e
+> > patch only needed to worry about oid and mode so the commit message
+> > focused on that.  The oversight in the commit message apparently spille=
+d
+> > over to the code as will; one of the dozen or so callsites accidentally
+>
+> s/will/well/
 
-Maybe you meant to say "Will cook in `next`" here?
+Thanks, will fix this up.
 
-Ciao,
-Dscho
+> > +             git ls-files -u >out &&
+> > +             test_line_count =3D 2 out &&
+> > +             git ls-files -u b >out &&
+>
+> Are these two 'git ls-files -u' executions as intended, i.e. first
+> without a file and then with 'b'?
+>
+> Or is this a bit of a "Huh?!"-inducing way (for me; for you it might
+> be an idiom :) to check that 'b' has two unmerged entries and no other
+> file has unmerged entries?
+
+Yes, with rename/add there's always a possibility that the original
+filename ('a', in this case) appears unmerged or that due to the
+rename/add collision that both paths are renamed (e.g. 'b.HEAD' and
+'b.MERGE_HEAD') and entries for these are found in the index.  I'll
+add a quick little comment before the second saying 'Also, make sure
+both unmerged entries are for "b"'.
+
+> > +             git hash-object b >actual &&
+> > +             git hash-object ours >expect &&
+> > +             test_cmp expect actual
+>
+> So these last three lines compute the object ids of two files and then
+> compare those two oids to make sure they match...  But wouldn't a
+> 'test_cmp ours b' do the trick just as well?
+
+Yes, that'd be better.  I'll fix it up and resend.
