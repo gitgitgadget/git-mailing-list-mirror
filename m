@@ -2,82 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 473E81F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 14:06:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A330A1F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 14:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbfFDOGW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 10:06:22 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:46953 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727137AbfFDOGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 10:06:22 -0400
-Received: by mail-ed1-f65.google.com with SMTP id h10so592154edi.13
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 07:06:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MuEb+cBksnjavR3R2ufRIkHDtZQRmjsZxsV0zqNCwUQ=;
-        b=cHfXZXrVnRFX5wG0Cb2FzqzZiG+TxihumRr/thmu9DfgCnSMO4jzXYlOIWGJiHxECj
-         52NvUQjUUuJ2Kb4kk8Zb2zeqHshczrnsz5L7d9ZBBzGSwxadhiVepMxVTyHb9QbtEQVn
-         f9q+3w0zFdKesNgnbPKLYXwtUrIlbcpZz03xDF5rGAH5yXYfHwEpBWdrHhKXPgXpAXTz
-         qJ9jFcDD6+v+/f0i7NomAJ63DwestQSNSGFcrHKLgonZNx+0TVzhLnVr0NRsergXJPhm
-         q+yvgw0z1YWJB//rgO3bL2t1RUlaiDRhSdSqV3If3msGwU0kZu/+O0yh7h3apy7aiog7
-         TXAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MuEb+cBksnjavR3R2ufRIkHDtZQRmjsZxsV0zqNCwUQ=;
-        b=MXDuWsgeZ9L85RhceocI/AYhACZCZuLtwc2xG1QIF3QssXF0CHSjKKmEN79444tBIf
-         ZvMIbPrq7Pe8exagjiWy4pdEqGw4xQoPxDWO3Tz1a94UFlFAZ6kGvt46pa0ffCBnRCnX
-         aXFfbRn4nbkvFVkxDB5/n/Qe30B3UHl4LixqrUs/f4vj8IuBjML5v2kZ/5g7BjvjbId6
-         HiKbpt4qjJQ18OiOHkY+OMoMa8K6X68Q5Ht7tr57uAGwWRF14qjSumSsRcpBWXU2rKEc
-         4sZBv5Th6gSl83iFI7ln2Dfdg62KcTuHT9KhKEZkjaZMnbNTGTcMaFjKewHa94aej9a4
-         jTUw==
-X-Gm-Message-State: APjAAAXHfqvyiMNI6bYxv0UiL9tKKdUVIjkBnuSJMxxo3QHjSyAr8I9Z
-        rIQ5qIUJCTg6h9ANmxfYxb1Teq0yNkfUOAAHJe7qJ550
-X-Google-Smtp-Source: APXvYqx7XG1/RTQkJU4qy8Zo3AcHZO//g2paaphMlXDsQ4AC3Yfi5jLzmKGqS+jz9BMR9AAwmY1RTMI2/PZ6D3hrRs8=
-X-Received: by 2002:a50:b487:: with SMTP id w7mr36473060edd.45.1559657180176;
- Tue, 04 Jun 2019 07:06:20 -0700 (PDT)
+        id S1727695AbfFDOQV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 10:16:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45856 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727287AbfFDOQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 10:16:21 -0400
+Received: (qmail 22368 invoked by uid 109); 4 Jun 2019 14:16:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Jun 2019 14:16:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14218 invoked by uid 111); 4 Jun 2019 14:17:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 04 Jun 2019 10:17:05 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2019 10:16:19 -0400
+Date:   Tue, 4 Jun 2019 10:16:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC/PATCH 1/5] t5801 (remote-helpers): cleanup refspec stuff
+Message-ID: <20190604141619.GA10598@sigill.intra.peff.net>
+References: <20190604021330.16130-1-felipe.contreras@gmail.com>
+ <20190604021330.16130-2-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-References: <BUKFSM2OTJUH.38N6DGWH9KX7H@homura> <c1dec466-55ca-8543-8f4e-b5daf1e0eab6@kdbg.org>
-In-Reply-To: <c1dec466-55ca-8543-8f4e-b5daf1e0eab6@kdbg.org>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 4 Jun 2019 16:06:07 +0200
-Message-ID: <CAP8UFD0d5ptCpn+u8-p=oa3gZFYdbeW+KapVcmKgqPQKR4scwA@mail.gmail.com>
-Subject: Re: [PATCH] am: add --check option
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Drew DeVault <sir@cmpwn.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190604021330.16130-2-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 4, 2019 at 8:03 AM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 04.06.19 um 00:00 schrieb Drew DeVault:
-> > On Mon Jun 3, 2019 at 11:09 PM Johannes Sixt wrote:
-> >> I have to wonder how --check works when 'am' applies multiple patches.
-> >>
-> >> When the second patch in a patch series depends on that the first patch
-> >> is fully applied, what does --check do? Without the first patch applied,
-> >> then a naive check of the second patch will certainly fail, doesn't it?
-> >
-> > Yeah, this was being discussed in another thread. It'll fail if the
-> > second patch relies on changes from the first. Open to suggestions on
-> > how to improve that, but I think it can be improved in a later patch.
+On Mon, Jun 03, 2019 at 09:13:26PM -0500, Felipe Contreras wrote:
 
-I think both features could be useful. For example sometimes a
-maintainer might want to know if applying only a patch that is in the
-middle of a patch series (for example something security related)
-could work without having to apply the previous patchs. So maybe both
-a --check and a --dry-run with different behavior regarding patch
-series would make sense.
+> diff --git a/t/t5801/git-remote-testgit b/t/t5801/git-remote-testgit
+> index 752c763eb6..f2b551dfaf 100755
+> --- a/t/t5801/git-remote-testgit
+> +++ b/t/t5801/git-remote-testgit
+> @@ -11,13 +11,10 @@ fi
+>  url=$2
+>  
+>  dir="$GIT_DIR/testgit/$alias"
+> -prefix="refs/testgit/$alias"
+>  
+> -default_refspec="refs/heads/*:${prefix}/heads/*"
+> +refspec="refs/heads/*:refs/testgit/$alias/heads/*"
+>  
+> -refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
+> -
+> -test -z "$refspec" && prefix="refs"
+> +test -n "$GIT_REMOTE_TESTGIT_NOREFSPEC" && refspec=""
+
+So this simplifies the feature by just allowing two refspecs: the
+default one, or none at all. And that works because all of the existing
+callers wanted or the other. Makes sense.
+
+> @@ -81,10 +78,10 @@ do
+>  
+>  		echo "feature done"
+>  		git fast-export \
+> +			${refspec:+"--refspec=$refspec"} \
+>  			${testgitmarks:+"--import-marks=$testgitmarks"} \
+>  			${testgitmarks:+"--export-marks=$testgitmarks"} \
+> -			$refs |
+> -		sed -e "s#refs/heads/#${prefix}/heads/#g"
+> +			$refs
+
+This second hunk puzzled me for a minute. By using --refspec, we can
+avoid doing the mapping with sed here, which is simpler and more robust.
+Good.
+
+One caveat for anybody else testing this: when I initially applied this
+patch, some tests failed! The problem turned out to be a leftover
+git-remote-testgit in my build dir from prior to 5afb2ce4cd
+(remote-testgit: move it into the support directory for t5801,
+2019-04-12).
+
+So the problem isn't related to this patch (it's only noticeable here
+because this is the first change to remote-testgit since it moved). I
+wonder if we could make the test script more robust here. I think it's
+tricky because the build dir is added to the $PATH internally by Git
+itself (since it's the exec-path), so nothing do in the test script can
+override that. Perhaps it's worth just renaming the script as part of
+the move. +cc Dscho
+
+-Peff
