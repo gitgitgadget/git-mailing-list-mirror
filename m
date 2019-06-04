@@ -8,50 +8,52 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60BE61F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 17:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAA611F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 17:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbfFDR5W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 13:57:22 -0400
-Received: from mail-oi1-f201.google.com ([209.85.167.201]:51977 "EHLO
-        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726162AbfFDR5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 13:57:21 -0400
-Received: by mail-oi1-f201.google.com with SMTP id w5so6680226oig.18
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 10:57:21 -0700 (PDT)
+        id S1726538AbfFDR5Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 13:57:25 -0400
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:43386 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfFDR5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 13:57:24 -0400
+Received: by mail-pf1-f202.google.com with SMTP id j7so5617152pfn.10
+        for <git@vger.kernel.org>; Tue, 04 Jun 2019 10:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=vxwWEB0L+2xXcvqv05spbAbEOiHij5fIQP3VRsntF9g=;
-        b=VHRxumewFKhw/KN6loDtij/P04SAjHUKC0pln2XxLGOxlO0REJ2IAU5mS1pwchLXfK
-         fNTfCKsXCuszcmUR53oBam1MNe7cKbPe+g8RQQdbejGaLLC0RLlRCuF+/2gQWOnI7x88
-         U8YoLFXLF5pHAjRsJCedruExyKVU42mKJ0UU+R0PtWGnetce6BGzYMZ7nyRPsIED6uYf
-         b+gZyyK/579St481WZ6/hgOa1KgPUL1YLQ34BjyYVO2rc51ZAFik+DW4G8BdpGqbT/ub
-         UGzvbLA64qpH2BdQu2Rc9gpn06CPcZ0a1mw/iMNRlb/TC6kCW+dBODtdSzMKXAf15FCB
-         B9xw==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=W+2KmQEjTc0Vs4CfPldSdvknXxurbhKd2I7SJQ1KzVI=;
+        b=ogXhZ/Z3iq0XdgMteGa4gZR4McJm5M8/bPjTi3vWP+hzZCB71may8YHeRei26gkh0b
+         fcZacFDqSzjwKE27sKoPMeUUHM8MNIvYMWOCbBj/upXrr50OqGTPIuyCd+VVVfoN19TC
+         Ds1o5bSfURu8506obdckEXy96vicN5GBsK9ByUbLJCR//kIoa6qfXe/+Bl2lgjb3JRMp
+         eFPuXPxrotJzpzKOEzgF5RmuV6Up/G+bPnU0w9YqYJXaFHjCpuIR9s3nQ2NAqId57biw
+         /ZmrMAcwr1Bhx6aJGxAgQlqXgxgGEntVQ7wHPCiHZQYlDLk4WXgX/Y1ul2IgFJ+YeBeX
+         leHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=vxwWEB0L+2xXcvqv05spbAbEOiHij5fIQP3VRsntF9g=;
-        b=s68ntRMaVt/ahU0tY+dSOxshhouYhfgdcfWT71JOlFgt77Lmndsn3R/YJo8fw5Ayz/
-         1zxNGmbhAlTC29H/jtISHTTMJzzixib/NBy8wP2bvGPh4OGSvWGaLXDVRljHhxpRqTAT
-         wsGqZ/fMof7d41cBranOrscxHLYUBM7lYeWQQE6VDBWdD2vv9VyWYaw0Gr/jMSIwF5Vl
-         7p9wE+k8a8IWC2TKj8CJyD42O3YIK4SaIcB2TUeunZcU5GQAz8Z/WhlwKFDUq0Vptl4b
-         12iIJYesX//17VCdRjoAdCsrI+QOcRgMG2XPeLuyHnPGN9ryOW53IirrJFe54qoS9nDc
-         RXKQ==
-X-Gm-Message-State: APjAAAXzwUuyL7Q/jwXVTt2NcgpRUOPVZdcXbo0n+2mAjJh1wn0DcVi/
-        52Mbc5Pb/FzX5/qtwL8R2PsSGCYocyTdX/naZzOsZ67CdDDE5AxpRsj0rqetAn5nFOE7giH4LE+
-        QwX5H8R0YJT8hG9kKdQuibBVCwJNSMf/ycFMYXxBKX6vbpz7EYVYSyzftbqE=
-X-Google-Smtp-Source: APXvYqxW2cWwggY5TolWoelTCR1WKziUqvlsxvPVl0GoF3Yqw83CTR3RDo3bgQGHDLl80l1ISYKHjCDDzy3H
-X-Received: by 2002:aca:4cc3:: with SMTP id z186mr2953210oia.74.1559671040972;
- Tue, 04 Jun 2019 10:57:20 -0700 (PDT)
-Date:   Tue,  4 Jun 2019 10:57:03 -0700
-Message-Id: <cover.1559670300.git.matvore@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=W+2KmQEjTc0Vs4CfPldSdvknXxurbhKd2I7SJQ1KzVI=;
+        b=jdOBLCEfHlnMSbG+0Q3O7/seopDdooLxJwTy+vtD+3653Mu1jYxfXFAAawP/wJNlxZ
+         TGxpdni4uB/bVZ2b0jsArHXN62G9fu76Pm0sGexwMrK1mqCsXeChEhAsRGhek3iR3eGg
+         DSDfycsO07bEHZMAJTdW2tp4uDi3vcjLcLv7W+WGuYL58uzd2NT0m4GICXLExYRYBJrI
+         PfzK9IwUrSupCfoirZLyp66Hc9J0HbrtW0o2SnlHSC9tlqUF7T2dhzmBesIwqMU0zOly
+         ScQsw5fcZKVQ5KRUnQVtIChpBc1NrLhvKOwMHynrQuFb4bENpiwzx4IuhHQSqKQ5QAmp
+         mdYw==
+X-Gm-Message-State: APjAAAVaVG/+10zL61BL4fOTh859MCjherTBl+ZG+qcHGAhBFcES3HPK
+        DZ3XpHLEqBhwid239G+O05XS6xYstSN5HolcgOBiwf/CyXOAwH0YUExQAA3/zTDb5X+8l5QOHzU
+        fVC3I60mnirfVvNFTJ8BByLYzFGqkmqAyGraoWL1sC1VHZnFB6lVda36zko0=
+X-Google-Smtp-Source: APXvYqx4DThlu7M0tBID7bCdZjPJbh8wJQhxnFAeyZSCc/kD+oZXDNHvHUeYMRLDtJyMcs0/8W3K2THpMlgP
+X-Received: by 2002:a63:ed16:: with SMTP id d22mr37026410pgi.35.1559671043528;
+ Tue, 04 Jun 2019 10:57:23 -0700 (PDT)
+Date:   Tue,  4 Jun 2019 10:57:04 -0700
+In-Reply-To: <cover.1559670300.git.matvore@google.com>
+Message-Id: <9628f0bfeda578a1c7d157d61b87f5c430567d74.1559670300.git.matvore@google.com>
 Mime-Version: 1.0
+References: <cover.1559670300.git.matvore@google.com>
 X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [PATCH v2 0/2] Harden url.c URL-decoding logic
+Subject: [PATCH v2 1/2] url: do not read past end of buffer
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, sandals@crustytoothpaste.net,
@@ -64,20 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This roll-up includes simple but important fixes from Brian Carlson and Ren=
-=C3=A9
-Scharfe.
+url_decode_internal could have been tricked into reading past the length
+of the **query buffer if there are fewer than 2 characters after a % (in
+a null-terminated string, % would have to be the last character).
+Prevent this from happening by checking len before decoding the %
+sequence.
 
- - fix typo of "NUL" in commit heading
- - re-enable %-decoding in non-NULL-terminated strings
+Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
+ url.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Matthew DeVore (2):
-  url: do not read past end of buffer
-  url: do not allow %00 to represent NUL in URLs
-
- url.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/url.c b/url.c
+index 25576c390b..9ea9d5611b 100644
+--- a/url.c
++++ b/url.c
+@@ -39,21 +39,21 @@ static char *url_decode_internal(const char **query, in=
+t len,
+ 		unsigned char c =3D *q;
+=20
+ 		if (!c)
+ 			break;
+ 		if (stop_at && strchr(stop_at, c)) {
+ 			q++;
+ 			len--;
+ 			break;
+ 		}
+=20
+-		if (c =3D=3D '%') {
++		if (c =3D=3D '%' && (len < 0 || len >=3D 3)) {
+ 			int val =3D hex2chr(q + 1);
+ 			if (0 <=3D val) {
+ 				strbuf_addch(out, val);
+ 				q +=3D 3;
+ 				len -=3D 3;
+ 				continue;
+ 			}
+ 		}
+=20
+ 		if (decode_plus && c =3D=3D '+')
 --=20
 2.21.0
 
