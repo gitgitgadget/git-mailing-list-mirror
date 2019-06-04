@@ -2,131 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 828491F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 16:38:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 725AC1F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 17:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727715AbfFDQiG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 12:38:06 -0400
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:34404 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727451AbfFDQiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 12:38:06 -0400
-Received: by mail-pf1-f182.google.com with SMTP id c85so4228566pfc.1
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 09:38:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8sQyGp4dFIQww70Nay+47++BpOFVy/vfdIDMzaJuYEY=;
-        b=TPvPhnDEp0/Ivlzt6b2tB/DgdyhReLnhHzEg3gVfC8m1TGxQV6Nq/hzLmOAqasHWUQ
-         CPJBn+rsH74zbKqsWVEO39bh1Iwcwqodpc6myJ3QBHHgzXGMPZCUmFAJcRV3CoVucrNb
-         v/NNYfQNarmi2MWzNEN2R/7W4ys0IU5UvRkMU7jl/Fn9DaBDi6ZMSrWgE1FzyB6LEu/8
-         KEdnsXWhguSuzcYkl4PiMedhNfnvCfO9RZcc5CIKvO+1Z3V5Gj3+EnqcTQL5bONYllKs
-         +Mn5g1K/U0E0Mp+c4ZwuAMKSMkieETd0iwUQ0/PYbEC8u9HpVZF5lRqidgUE06JBdHNl
-         YJ/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8sQyGp4dFIQww70Nay+47++BpOFVy/vfdIDMzaJuYEY=;
-        b=e00x1CZzNMwLxTdS2NLTWlV835XfzZpHBMZNqcLjvVFroyVfrA4SwdP2GbuXLLVz1r
-         dQQ3Rcusp0daJZ6h50+No0B8TpSlehhggStpbCs/RaM68rUco0IDfdMG7WNO2+4/SKRW
-         ZE3824H6vXGkAaJlnQSeks2Nynvga5pM+TdTtVl7JQRh6aHE2WmSF7nsAycX7e8zdnc4
-         bOMjUG+95dmqcnLo4lUaaLTDwYowCdVjsQMamf8GoRQ2+jP4ldwHbmc6PFZH5jyMzmtx
-         A2esmb96f1keJcuRdaIlK3u5zwTM7GXaCMq07lE1URj62kKDOrij23GAoXY6c600VhTr
-         zDlA==
-X-Gm-Message-State: APjAAAWLwYZp/dbtHwMvuPvg3CPsk94GXUShbdJ9i17cmPXLHNJSQvEx
-        T44737A+dwM0fbJ42wUC7A/PKusqPK8=
-X-Google-Smtp-Source: APXvYqziIh/w5nZlZf7nzWZzplhrLumXdm5naVsmQApP2QmpR5bThCaOM4pKuaqjPSVH5yRX/OFOZg==
-X-Received: by 2002:aa7:8dc3:: with SMTP id j3mr40725884pfr.141.1559666284769;
-        Tue, 04 Jun 2019 09:38:04 -0700 (PDT)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.googlemail.com with ESMTPSA id g8sm16480685pjs.23.2019.06.04.09.38.03
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Jun 2019 09:38:04 -0700 (PDT)
-Subject: Re: Git Test Coverage Report (Thursday, May 30th)
-To:     Derrick Stolee <stolee@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Cc:     michael@platin.gs, Jonathan Tan <jonathantanmy@google.com>
-References: <2fb43bd3-71a7-fd92-e9b8-43e4eeed34cd@gmail.com>
- <e18e4391-a574-1f4b-88c7-890ada116f51@gmail.com>
- <b4ce9cbc-71d3-4d7f-1ee2-e4e3fc23b015@google.com>
- <80a23fb8-5ea8-dba3-ce7d-f6f5d4c02310@gmail.com>
-From:   Barret Rhoden <brho@google.com>
-Message-ID: <9ab619bb-9deb-4e57-a3ad-9e996425b783@google.com>
-Date:   Tue, 4 Jun 2019 12:38:02 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1726510AbfFDRT4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 13:19:56 -0400
+Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:54622 "EHLO
+        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726286AbfFDRT4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 4 Jun 2019 13:19:56 -0400
+Received: from resomta-po-20v.sys.comcast.net ([96.114.154.244])
+        by resqmta-po-03v.sys.comcast.net with ESMTP
+        id YAi8huRp0pf2NYD6Jhj6O3; Tue, 04 Jun 2019 17:19:55 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=20190202a; t=1559668795;
+        bh=wDPAAOsmQN43uetY7IVkjmlqdg1xD+0O8Y3y9o7X2cs=;
+        h=Received:Received:Date:From:To:Subject:Message-ID:MIME-Version:
+         Content-Type;
+        b=1SghLomPR5XqtIqde35RhuaJmoILrnho3UJYYWtXxg4jFEp5hGL74HPjcHkc6GCTe
+         qBEZZEI4m1SDqlPQm6jgcG3CoazWNvxMBd6hN5N7zEHBZCQE1+KZVf5ZLxq3ctUgJ4
+         DTqvHZvcIPhYIazZ0FJ0NjpbKKKVzgtsxvdQbFEy70OEqV5ID/BZSCoQD7NLpGDO2P
+         TTOi0iF6FHmFWYquZbPDG46hblIFzz9BTq781TRaGkNLFqXg7DiZQbFAhRkLjIlwo5
+         Oge8NI7V3ekCyH3e8umEDJhKAcOzeSg1kvrhsga8qmutAGGBgf+ZuR39IdfWGb5Dpz
+         1/AR+57b8YaOQ==
+Received: from comcast.net ([IPv6:2601:647:4b02:2491:f95f:aa00:d2b2:a5dd])
+        by resomta-po-20v.sys.comcast.net with ESMTPSA
+        id YD6HhGwhESHF0YD6IhzM8F; Tue, 04 Jun 2019 17:19:54 +0000
+X-Xfinity-VMeta: sc=-100;st=legit
+Date:   Tue, 4 Jun 2019 10:19:52 -0700
+From:   Matthew DeVore <matvore@comcast.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
+        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
+        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
+Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
+Message-ID: <20190604171952.GI4641@comcast.net>
+References: <cover.1558484115.git.matvore@google.com>
+ <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
+ <20190528215359.GB133078@google.com>
+ <20190531204821.GC4641@comcast.net>
+ <20190531211041.GA19792@sigill.intra.peff.net>
+ <20190601001231.GF4641@comcast.net>
+ <20190603123435.GA18953@sigill.intra.peff.net>
+ <20190603222247.GG4641@comcast.net>
+ <20190604161332.GA29603@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <80a23fb8-5ea8-dba3-ce7d-f6f5d4c02310@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190604161332.GA29603@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/3/19 2:40 PM, Derrick Stolee wrote:
-> On 6/3/2019 2:11 PM, Barret Rhoden wrote:
->> Hi -
->>
->> On 5/30/19 2:24 PM, Derrick Stolee wrote:
->>>> 8934ac8c 1190)     ent->ignored == next->ignored &&
->>>> 8934ac8c 1191)     ent->unblamable == next->unblamable) {
->>> These lines are part of this diff:
->>>
->>> --- a/blame.c
->>> +++ b/blame.c
->>> @@ -479,7 +479,9 @@ void blame_coalesce(struct blame_scoreboard *sb)
->>>
->>>           for (ent = sb->ent; ent && (next = ent->next); ent = next) {
->>>                   if (ent->suspect == next->suspect &&
->>> -                   ent->s_lno + ent->num_lines == next->s_lno) {
->>> +                   ent->s_lno + ent->num_lines == next->s_lno &&
->>> +                   ent->ignored == next->ignored &&
->>> +                   ent->unblamable == next->unblamable) {
->>>                           ent->num_lines += next->num_lines;
->>>                           ent->next = next->next;
->>>                           blame_origin_decref(next->suspect);
->>>
->>> The fact that they are uncovered means that the && chain is short-circuited at
->>> "ent->s_lno + ent->num_lines == next->s_lno" before the new conditions can be
->>> checked. So, the block inside is never covered. It includes a call to
->>> blame_origin_decref() and free(), so it would be good to try and exercise this region.
->>
->> What is your setup for determining if a line is uncovered?  Are you running something like gcov for all of the tests in t/?
->>
->> I removed this change, and none of the other blame tests appeared to trigger this code block either, independently of this change.  (I put an assert(0) inside the block).
->>
->> However, two of our blame-ignore tests do get past the first two checks in the if clause, (the suspects are equal and the s_lno chunks are adjacent) and we do check the ignored/unblamable conditions.
->>
->> Specifically, if I undo this change and put an assert(0) in that block, two of our tests hit that code, and one of our tests fails if I don't do the check for ignored/unblamable.
+On Tue, Jun 04, 2019 at 12:13:32PM -0400, Jeff King wrote:
+> > -	return has_reserved_character(subspec, errbuf) ||
+> > -		url_decode(subspec, errbuf) ||
+> > -		gently_parse_list_objects_filter(
+> > -			&filter_options->sub[new_index], subspec->buf, errbuf);
+> > +	decoded = url_percent_decode(subspec->buf);
 > 
-> The tests use gcov while running the tests in t/. Here is the build [1].
-> 
-> There are some i/o errors happening in the build, which I have not
-> full diagnosed. It is entirely possible that you actually are covered,
-> but there was an error collecting the coverage statistics. The simplest
-> thing to do is to insert a die() statement and re-run the tests.
+> I think you can get rid of has_reserved_character() now, too.
 
-It looks like no existing tests cover that block in blame_coalesce(), 
-regardless of my commit.  That's based on putting die() in there and 
-running make in t/.  So at the worst, my patch isn't decreasing 
-coverage.  That's a pretty low bar.  =)
+The purpose of has_reserved_character is to allow for future
+extensibility if someone decides to implement a more sophisticated DSL
+and give meaning to these characters. That may be a long-shot, but it
+seems worth it.
 
-I'll try to come up with a test, independent of my blame-ignore work, 
-that can get in that block.
+> The reserved character list is still used on the encoding side. But I
+> think you could switch to strbuf_add_urlencode() there?
 
-Thanks,
-
-Barret
-
-
+strbuf_addstr_urlencode will either escape or not escape all rfc3986
+reserved characters, and that set includes both : and +. The former
+should not require escaping since it's a common character in filter
+specs, and I would like the hand-encoded combine specs to be relatively
+easy to type and read. The + must be escaped since it is used as part of
+the combine:... syntax to delimit sub filters. So
+strbuf_addstr_url_encode would have to be more customizable to make it
+work for this context. I'd like to add a parameterizable should_escape
+predicate (iow function pointer) which strbuf_addstr_urlencode accepts.
+I actually think this will be more readable than the current strbuf API.
