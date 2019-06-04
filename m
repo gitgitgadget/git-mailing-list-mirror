@@ -2,206 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93AF91F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 11:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1DFA1F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 12:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727403AbfFDLxz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 07:53:55 -0400
-Received: from smtp-o-3.desy.de ([131.169.56.156]:35385 "EHLO smtp-o-3.desy.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727250AbfFDLxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 07:53:54 -0400
-X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jun 2019 07:53:51 EDT
-Received: from smtp-buf-3.desy.de (smtp-buf-3.desy.de [IPv6:2001:638:700:1038::1:a6])
-        by smtp-o-3.desy.de (Postfix) with ESMTP id 44C6360261
-        for <git@vger.kernel.org>; Tue,  4 Jun 2019 13:44:30 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-3.desy.de 44C6360261
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-        t=1559648670; bh=fsuu/9pZrUyMnDAX6WAo9QH43eQIMOxdoaqnhOKHUto=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KEtenS9bf2t9aMyOrwxRwfawWeG/Z9fiJ+kDR//Qyy/QIbg+D0MyFIKlSK6kX0U01
-         0Ru/u+/re32V9UeusTA9+zvfrOZbNCxJKjHRgCPjhp07SvaQn1HpCUiQU3WNEKfWNF
-         LxbXiLkPRLgXBeW7spkRLX7Xefjb2eC+Yg46z5/o=
-Received: from smtp-m-3.desy.de (smtp-m-3.desy.de [IPv6:2001:638:700:1038::1:83])
-        by smtp-buf-3.desy.de (Postfix) with ESMTP id 401F3A0097;
-        Tue,  4 Jun 2019 13:44:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at desy.de
-Received: from ani.desy.de (zitpcx21033.desy.de [131.169.185.213])
-        by smtp-intra-2.desy.de (Postfix) with ESMTP id 1B07110003B;
-        Tue,  4 Jun 2019 13:44:30 +0200 (CEST)
-From:   Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-To:     git@vger.kernel.org
-Cc:     jrnieder@gmail.com, Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Subject: [PATCH v2] tag: add tag.gpgSign config option to force all tags be GPG-signed
-Date:   Tue,  4 Jun 2019 13:43:56 +0200
-Message-Id: <20190604114356.11042-2-tigran.mkrtchyan@desy.de>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190604114356.11042-1-tigran.mkrtchyan@desy.de>
-References: <60741736.3439901.1509090074292.JavaMail.zimbra@desy.de>
- <20190604114356.11042-1-tigran.mkrtchyan@desy.de>
+        id S1727656AbfFDMe0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 08:34:26 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:3186 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727543AbfFDMeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 08:34:25 -0400
+Received: from [192.168.1.22] ([78.148.161.28])
+        by smtp.talktalk.net with SMTP
+        id Y8dzhbZYGnuQZY8dzhM7Yh; Tue, 04 Jun 2019 13:34:24 +0100
+X-Originating-IP: [78.148.161.28]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
+ a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=FM8yyPGvAAAA:8 a=hQZsTO-tqpSOvaMfiiUA:9 a=QEXdDO2ut3YA:10
+ a=-RjHeblGm-41HPTmQUZ_:22
+Subject: Re: [PATCH] make slash-rules more readable
+To:     "Dr. Adam Nielsen" <admin@in-ici.net>, git@vger.kernel.org
+References: <20190531074426.6810-1-admin@in-ici.net>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <0c9f79f3-b43b-5f32-d217-ff92531c5da7@iee.org>
+Date:   Tue, 4 Jun 2019 13:34:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
+In-Reply-To: <20190531074426.6810-1-admin@in-ici.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfJYyyw4ZYlwdY3/y/DZndlH3wby5bhowMOovfMkI3jrbjkEI2gn0aBrr7D984o/JnHmXFKaEXoPRLu2ttL0kGjhJ4Cfm8ad0J+ULASmztcLUV5ltCDUU
+ aEnyOP78B5l0Evj3hv72Y3uXIl1nxlt9WxiMhPIP4kpKjTpkl8Jerebh0EmqojxwHJFk/0w9t+b24vy3ZVteqARwDzRWjbOkT8v0ymbXgeWaLAgdFGLIyyHy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As may CI/CD tools don't allow to control command line options when
-executing `git tag` command, a default value in the configuration file
-will allow to enforce tag signing if required.
+Hi Adam,
+On 31/05/2019 08:44, Dr. Adam Nielsen wrote:
+> gitignore.txt: make slash-rules more readable
+>
+> Remove meta-rule in a paragraph for trailing-slash.
+> Be precise whenever a trailing slash would make a
+> difference. Improve paragraph for pattern without slash.
+> Remove rule for leading slash because its now redundant.
+> Instead, add examples for leading slash and asterix in
+> example section.
+>
+> Signed-off-by: Dr. Adam Nielsen <admin@in-ici.net>
+I think the rules end up being difficult because we describe them from a 
+coders implementation viewpoint, rather than a users descriptive 
+viewpoint. Thus we avoided things like the difficult to code slashes in 
+the front/middle, and we get caught on the equivalent of neither/nor 
+phrases, which can even be difficult for native English speakers.
 
-The new config-file option tag.gpgSign enforces signed tags. Additional
-command line option --no-gpg-sign is added to disable such behavior if
-needed. E.g.:
+Later on there is a recursively/respectively issue (latter not 
+explicitly mentioned).  There is also an "Except if" not-a-proper 
+sentence. (mentioned off-line)
 
-    $ git tag -m "commit message"
+I think this is the truth table for the slash..
+Lead/  | mid/  | end/  |
+yes    |yes    |yes    | Directory, directly at .gitignore
+no     |yes    |yes    | Directory, directly at .gitignore
+yes    |no     |yes    | Directory, directly at .gitignore
+no     |no     |yes    | Directory, anywhere at, or below, .gitignore   
+<the tricky one ;-)
 
-will generate a GPG signed tag if tag.gpgSign option is true, while
+yes    |yes    |no     | file or Directory, directly at .gitignore
+no     |yes    |no     | file or Directory, directly at .gitignore
+yes    |no     |no     | file or Directory, directly at .gitignore
+no     |no     |no     | file or Directory, anywhere at, or below, 
+.gitignore
 
-    $ git tag --no-gpg-sign -m "commit message"
+After sleeping on it, I came up with:
 
-will skip the signing step.
+    The slash '/' is used as the directory separator. Separators may
+    occur at the beginning, middle or end of the .gitignore search pattern.
 
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
----
- Documentation/git-tag.txt |  7 +++++++
- builtin/tag.c             | 18 +++++++++++++++---
- t/t7004-tag.sh            | 21 +++++++++++++++++++++
- 3 files changed, 43 insertions(+), 3 deletions(-)
+    If there is a separator at the beginning or middle (or both) of the
+    pattern, then the pattern is relative to the directory level of the
+    particular .gitignore file itself. Otherwise the pattern may also
+    match at any level below the .gitignore level.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index a74e7b926d..d9dbfb4e37 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -64,6 +64,9 @@ OPTIONS
- -s::
- --sign::
- 	Make a GPG-signed tag, using the default e-mail address's key.
-+	The default behabior of tag GPG-signing controlled by `tag.gpgSign`
-+	configuration variable if it exists, or disabled oder otherwise.
-+	See linkgit:git-config[1].
- 
- -u <keyid>::
- --local-user=<keyid>::
-@@ -193,6 +196,10 @@ This option is only applicable when listing tags without annotation lines.
- 	that of linkgit:git-for-each-ref[1].  When unspecified,
- 	defaults to `%(refname:strip=2)`.
- 
-+--no-gpg-sign::
-+	Countermand `tag.gpgSign` configuration variable that is
-+	set to force each and every tag to be signed.
-+
- <tagname>::
- 	The name of the tag to create, delete, or describe.
- 	The new tag name must pass all checks defined by
-diff --git a/builtin/tag.c b/builtin/tag.c
-index ef37dccf86..7f9aef4840 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -33,6 +33,7 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- static int force_sign_annotate;
-+static int sign_tag;
- 
- static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 		     struct ref_format *format)
-@@ -144,6 +145,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	int status;
- 	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
- 
-+	if (!strcmp(var, "tag.gpgsign")) {
-+		sign_tag = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "tag.sort")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -392,6 +398,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct ref_format format = REF_FORMAT_INIT;
- 	int icase = 0;
- 	int edit_flag = 0;
-+	int no_gpg_sign = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -413,6 +420,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 					N_("use another key to sign the tag")),
- 		OPT__FORCE(&force, N_("replace the tag if exists"), 0),
- 		OPT_BOOL(0, "create-reflog", &create_reflog, N_("create a reflog")),
-+		OPT_BOOL(0, "no-gpg-sign", &no_gpg_sign, N_("do not GPG-sign tag")),
- 
- 		OPT_GROUP(N_("Tag listing options")),
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
-@@ -445,6 +453,10 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
- 
-+	if (no_gpg_sign) {
-+		sign_tag = 0;
-+	}
-+
- 	if (keyid) {
- 		opt.sign = 1;
- 		set_signing_key(keyid);
-@@ -463,7 +475,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (cmdmode == 'l')
- 		setup_auto_pager("tag", 1);
- 
--	if ((create_tag_object || force) && (cmdmode != 0))
-+	if ((create_tag_object || force || no_gpg_sign) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
- 
- 	finalize_colopts(&colopts, -1);
-@@ -556,8 +568,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	create_reflog_msg(&object, &reflog_msg);
- 
--	if (create_tag_object) {
--		if (force_sign_annotate && !annotate)
-+	if (create_tag_object || sign_tag) {
-+		if (sign_tag || (force_sign_annotate && !annotate))
- 			opt.sign = 1;
- 		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object);
- 	}
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 6aeeb279a0..98a07a29d2 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -932,6 +932,27 @@ test_expect_success GPG \
- 	test_cmp expect actual
- '
- 
-+get_tag_header gpgsign-enabled $commit commit $time >expect
-+echo "A message" >>expect
-+echo '-----BEGIN PGP SIGNATURE-----' >>expect
-+test_expect_success GPG \
-+	'git tag configured tag.gpgsign enables GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -m "A message" gpgsign-enabled &&
-+	get_tag_msg gpgsign-enabled>actual &&
-+	test_cmp expect actual
-+'
-+
-+get_tag_header no-gpg-sign $commit commit $time >expect
-+echo "A message" >>expect
-+test_expect_success GPG \
-+	'git tag --no-gpg-sign configured tag.gpgsign skip GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -a --no-gpg-sign -m "A message" no-gpg-sign &&
-+	get_tag_msg no-gpg-sign>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG \
- 	'trying to create a signed tag with non-existing -F file should fail' '
- 	! test -f nonexistingfile &&
+    If there is a separator at the end of the pattern then the pattern
+    will only match directories, otherwise the pattern can match both
+    files and directories.
+
+    Examples text..
+
+    The special '*' ...
+
+    The special '**' ...
+
 -- 
-2.21.0
+The key (for me) was to add in the sentence that says we have 
+beginning/middle/end slashes as a prompt ready for later, and use the 
+plural for 'separator'.
+
+I then also used 'otherwise' and an occasional 'also'  to avoid any 
+and/or/neither/nor logic problems. I removed all 'it/they/them' style 
+indirect references as it is easy to pick the wrong indirection.
+
+I have been explicit (pedantic) about '.gitignore search pattern' to 
+avoid the reader accidentally changing focus and thinking of the path 
+string.
+
+One could also add "Likewise the directory(?) pattern will not match a 
+symbolic link, as is normal for pathspecs in Git." as this isn't 
+mentioned elsewhere.
+--
+Philip
+
+> ---
+>   Documentation/gitignore.txt | 71 ++++++++++++++++++++++++++-----------
+>   1 file changed, 50 insertions(+), 21 deletions(-)
+>
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index b5bc9dbff0..a6c7807c74 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -89,28 +89,32 @@ PATTERN FORMAT
+>      Put a backslash ("`\`") in front of the first "`!`" for patterns
+>      that begin with a literal "`!`", for example, "`\!important!.txt`".
+>   
+> - - If the pattern ends with a slash, it is removed for the
+> -   purpose of the following description, but it would only find
+> + - A slash `/` is used as a directory separator. A leading and trailing
+> +   slash have special meaning and are explained in the following.
+> +
+> + - If the pattern ends with a slash, it would only find
+>      a match with a directory.  In other words, `foo/` will match a
+> -   directory `foo` and paths underneath it, but will not match a
+> -   regular file or a symbolic link `foo` (this is consistent
+> -   with the way how pathspec works in general in Git).
+> -
+> - - If the pattern does not contain a slash '/', Git treats it as
+> -   a shell glob pattern and checks for a match against the
+> -   pathname relative to the location of the `.gitignore` file
+> -   (relative to the toplevel of the work tree if not from a
+> -   `.gitignore` file).
+> -
+> - - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
+> -   anything except "`/`", "`?`" matches any one character except "`/`"
+> -   and "`[]`" matches one character in a selected range. See
+> -   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
+> -   description.
+> -
+> - - A leading slash matches the beginning of the pathname.
+> -   For example, "/{asterisk}.c" matches "cat-file.c" but not
+> -   "mozilla-sha1/sha1.c".
+> +   directory `foo`, but will not match a regular file or a
+> +   symbolic link `foo` (this is consistent with the way how
+> +   pathspec works in general in Git).
+> +
+> + - If the pattern does not end with a slash, it would find a match
+> +   with a file or directory.
+> +
+> + - The pattern is matched relative to the location of
+> +   the `.gitignore` file. Except if the pattern contains
+> +   no slash (or no slash but a trailing slash), then the pattern is
+> +   matched against all files and folders (recursively)
+> +   from the location of the `.gitignore` file.
+> +   For example, `doc/frotz/` matches `doc/frotz` directory, but not
+> +   a/doc/frotz`; however `frotz/` matches `frotz` and `a/frotz` that
+> +   is a directory (all paths are relative from the `.gitignore` file).
+> +
+> + - An asterisk "`*`" matches anything except a slash.
+> +   The character "`?`" matches any one character except "`/`".
+> +   The range notation, e.g. `[a-zA-Z]`, can be used to match
+> +   one of the characters in a range. See fnmatch(3) and the
+> +   FNM_PATHNAME flag for a more detailed description.
+>   
+>   Two consecutive asterisks ("`**`") in patterns matched against
+>   full pathname may have special meaning:
+> @@ -152,6 +156,31 @@ To stop tracking a file that is currently tracked, use
+>   EXAMPLES
+>   --------
+>   
+> + - The pattern `/bar` only matches the file or folder `bar`
+> +   but not `a/bar`, whereas the pattern `bar` would match both
+> +   (relative to the `.gitignore` file). That is because the
+> +   pattern `/bar` contains a non-trailing slash and thus matches
+> +   relative to the location of the `.gitignore` file.
+> +   Since `bar` has no slash, it matches recursively.
+> +
+> + - The pattern 'hello.*' is not sufficient for the following rule:
+> +   "ignore any file whose name begins with 'hello' and in this
+> +   directory only, not in its subdirectories." because the pattern
+> +   does not have any slash. To work around this limitation,
+> +   you can prepend your pattern with a slash, i.e. '/hello.*';
+> +   the pattern now matches 'hello.txt', 'hello.c' but not
+> +   'a/hello.java'.
+> +
+> + - The pattern `doc/frotz` and `/doc/frotz` have the same effect
+> +   in any `.gitignore` file. Both pattern contain a non-trailing
+> +   slash and thus match relative to the location of the
+> +   `.gitignore` file.
+> +
+> + - The pattern "foo/*", matches "foo/test.json"
+> +   (a regular file), "foo/bar" (a diretory), but it does not match
+> +   "foo/bar/hello.c" (a regular file), as the asterisk in the
+> +   patter does not match "bar/hello.c" which has a slash in it.
+> +
+>   --------------------------------------------------------------
+>       $ git status
+>       [...]
 
