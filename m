@@ -2,293 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09FA21F609
-	for <e@80x24.org>; Tue,  4 Jun 2019 13:14:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92B911F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 13:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727334AbfFDNOH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 09:14:07 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46215 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727129AbfFDNOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 09:14:06 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n4so10521199wrw.13
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 06:14:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=igKRtn4Ron95zokFfaZ/5xyWyW1GhJllsTEECooYs+8=;
-        b=gDOfgEJX8R5HjfP+gIRWq3l/3fghxEx7ymNWgGSCQoDhzFqxyeTF3jijauNAKcb47B
-         BJj9gDxtj4KPsuMZfx3e5aMNOaeuDcJJQ5/qgu8XBa2tUliYvvy9sFxIMgIkMTJdtxQE
-         M6SfIIiAXy7OFM4+gOAD6fPCDcbfWvluL9JDMgRKaMA6RKY3QKAIIe7JkokmbaRgXB+S
-         g4RKgOXAMCyfJMMAk4mhGYyWp9vlrMzZ/Pi8TFj8/Zai7/YY+pDEo9ypf4CPefAtHoEc
-         9FUf/rCYsA/dNGB7DL5eOVRSxj0JWKQY4/w6s8l9j2Yau1p60gBZO2ukSJaRIJ3cxlS3
-         UTFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=igKRtn4Ron95zokFfaZ/5xyWyW1GhJllsTEECooYs+8=;
-        b=K70bBcD30H8OsKRSr5CYKqMctwZIgE2R/ODciTHOFam3SmxJCV0ZR7nRWUYt7lbE6f
-         EQaTRx9aPiyvJSTYn2924VBUXk/G6ilbugInEuusW9slXCTVEB6NeAdgMQZTR0c5zRnl
-         TXwbfZKi/YtvNokaE9lqboYyEGF9pD2Q1yk5HIhVZq0CLb6X35bUjj9hApIlbYHNtVCZ
-         dP75ARLeOXoXsJif8MNpfWOrwgn0EvIsj4q0lX+TRbTm+3y5UTKa1iZDujyCYaH9aTTc
-         xfxa5iqanwLmNmJqqHqBy1Ij0aGJFj2OYM8F1J9vieSFZxhr423hWQocN3aCeVCu3r1W
-         eKjg==
-X-Gm-Message-State: APjAAAUBLU9fzsKeZKJ+YAlt5lF7T6ve2SCelMzyAaxCi8NNsR0wl4i9
-        AV+V/fldeiQrZl8daZbJzps=
-X-Google-Smtp-Source: APXvYqwxMJ2EdiBtLpBxK1JS91neVLK+Ad/9ox2mvFvmWZ5G84M2CLsFgUounrE36F6UnstE5NQPJw==
-X-Received: by 2002:adf:f046:: with SMTP id t6mr7333481wro.307.1559654043342;
-        Tue, 04 Jun 2019 06:14:03 -0700 (PDT)
-Received: from szeder.dev (x4dbe169e.dyn.telefonica.de. [77.190.22.158])
-        by smtp.gmail.com with ESMTPSA id u205sm21208923wmu.47.2019.06.04.06.14.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Jun 2019 06:14:02 -0700 (PDT)
-Date:   Tue, 4 Jun 2019 15:14:00 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        ben.humphreys@atlassian.com,
-        Ben Humphreys <behumphreys@atlassian.com>
-Subject: Re: [PATCH] merge-recursive: restore accidentally dropped setting of
- path
-Message-ID: <20190604131400.GS951@szeder.dev>
-References: <20190604023039.GR951@szeder.dev>
- <20190604072614.26885-1-newren@gmail.com>
+        id S1727435AbfFDNdA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 09:33:00 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59467 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727137AbfFDNdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 09:33:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559655169;
+        bh=PVL4hH/1812rGyjTJgWbmNG5HU/g8Lf8wjMLhP5vHOI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KScOmQfoyJjyWm/ZN2WSlP92hE+fWmaJhQsb0eW0NDxSqXKxaqk+MsOVL6x9pLwdD
+         MVXPrkYXNfNEAVDTPHzs5N86yw7NGpIcyiD4ONizL26DK1s98At0LJF4mIOxRCrQYz
+         xqOdbM4ilOS5Xvi68ejdgqOYlxv6vbqEy9KRlPrg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mo6ux-1gnm021Qcd-00pfvr; Tue, 04
+ Jun 2019 15:32:49 +0200
+Date:   Tue, 4 Jun 2019 15:32:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Jochen Sprickerhof <jochen@sprickerhof.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] add -p: coalesce hunks before testing applicability
+In-Reply-To: <3ac6c94c-edd5-b376-4d44-cbf7aebf37a0@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906041532000.1775@tvgsbejvaqbjf.bet>
+References: <20180828085858.3933-1-git@jochen.sprickerhof.de> <xmqq36uygyau.fsf@gitster-ct.c.googlers.com> <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net> <20180903190114.GC17416@vis> <d6a8f77b-0a83-90ae-a7fb-a3954ac3b346@talktalk.net>
+ <nycvar.QRO.7.76.6.1903221453360.41@tvgsbejvaqbjf.bet> <a23789e9-ee99-d23b-ee25-1acef8d8d114@gmail.com> <nycvar.QRO.7.76.6.1906031229110.48@tvgsbejvaqbjf.bet> <3ac6c94c-edd5-b376-4d44-cbf7aebf37a0@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190604072614.26885-1-newren@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7JtiTQza0F+yNmv62DQ7prHRnbtfnL14nV5XzDom2kKPU7NuVle
+ d3C8j6u8ZnmDow8JZC9+nplJZGZ2j68fnJvf6XlYCJerS4nRg763AWqrJ8opD2cGb6NRmTr
+ IZ0q/HXY+e8o0e7MZuyQV94NuBi6f4EbXl10SyLKcDMOhZACTNpX8ZuiltZtf7VpUdO4mqf
+ 1cDI4nGejCgwyeCKFTh0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4QNLtWaPAoI=:ZoVGUUQe03dl22F0ya91e4
+ TCIZ2/z6zXkORxtC8/naYFwHQqYohhSaLHuwdEfXy5gQNYeN5n4rbugnuhm7bgmSHWrrOIev7
+ sIeJSWzTI/c/jcf0XPX3GDrt1sUF7yPyNCsnW3H/d7BqzRPAGeX5dfJyUxcgcuT/arAzdps2N
+ If4uD2JjTmzW/8oFNEUq5cfEVZUx7ZCX6TqeFOmtO6coComAA4r2I6mMU0kw5LjlKjxExJ4U+
+ P1mK+1a4eCkyeH0OtK2FLoBc/67qOJbDNNDgX1q8EbHBs09goJs7KuyDfxPvNNN0nKM8ZMJpu
+ ieHO9Hb/tgycntWWrm97JdM/0w8+arYpQNabFjNriDdehP6UDWgONlQYJjwHmXUPp6NteKhOC
+ 7F20h/5I3RNcWLd+uflSYCd10QTiHRv/FZfAW1+idsn6LIFbE5G5C7kNgwYhFMrcTtBz6oVi6
+ rcP2mZ5alRY0aBBlLLyhXyVJhKILI6DyrsQE2K/MvwUGPiiK8EYOGNWxFN2/uKo9tv+mHykxT
+ JVkrgceu/aOxRonMv7QP6qb/PQ6bngXcM7fZ2PunlIQT6rCPrJCsuZWW+tf38eyFax60LLmDX
+ QSKJgKBPgFB7t2RX10GZ1gLVjPt2o8RjMlQWRJprTczPGNj3tNN+nZAamuUN99ktYzyfCALX7
+ UOJAypXo1y94XXNYMdNbkqRj35kXJqcSDxrfNP3uiICnK2lDpGOgKuOhuTrl5q6ADYgAf/Z61
+ Ctq65VqUDMVElEVKQTFel9JWIe/yz7lPlB8A8eote3YoCFD+ZrEFngW7djyhO83c/Gj9f9uBY
+ 3ddZF4SBmKoRTI2cVZeidBr8EoPa5YB69kO/3ThSAUBT35MWiMaHD1BlasoWan4wnaNdhSBd3
+ rgwpBo3Ei3fEoKvPB2t9QPNCwzUVQKkVSRwuoMlq/cLObYDBsbvmOfqb3k4E0b4E3t+jWXATS
+ yeTR1y7f7Fv03ICgYdQjwzCni5/oIE1lNConqm6wE0EiKjEk9ujp0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 04, 2019 at 12:26:14AM -0700, Elijah Newren wrote:
-> Of course, this wasn't the only bug; it also showed we had a glaring
-> whole in our test coverage -- there's a dearth of tests for rename/add
-> conflicts, and in particular none involving content merges for the
-> rename side.  So, I created a patch which adds some tests for that
-> (which triggered the assertion error).  I pulled SZEDER's fix into the
-> same patch and added a commit message explaining the issue, using a
-> Based-on-patch-by tag for the fix.  SZEDER: if you'd like to see this
-> in a different format (maybe I add tests which show the error and then
-> in a separate patch authored by you we introduce your fix?), just let
-> me know.
+Hi Phillip,
 
-Nah, I'm fine with it.
+On Mon, 3 Jun 2019, Phillip Wood wrote:
 
-> Since we're at -rc3 already, even if it is a trivial patch, I'm going to
-> try to re-analyze it all tomorrow to make sure I didn't miss anything and
-> see if I can find more tests to throw at it.
-> 
-> Ben: Could you rerun all your special testcases to make sure things
-> are good with this patch too?  It'd be much appreciated.
-> 
-> Thanks Ben for reporting and SZEDER for jumping on and analyzing and
-> cc'ing me.
-> 
-> Sorry for the headache folks,
+> On 03/06/2019 14:40, Johannes Schindelin wrote:
+> >
+> > On Sun, 2 Jun 2019, Phillip Wood wrote:
+> >
+> > > On 22/03/2019 14:06, Johannes Schindelin wrote:
+> > >
+> > > > On Thu, 13 Sep 2018, Phillip Wood wrote:
+> > > >
+> > > > > On 03/09/2018 20:01, Jochen Sprickerhof wrote:
+> > > > >
+> > > > > > * Phillip Wood <phillip.wood@talktalk.net> [2018-08-30 14:47]:
+> > > > > >
+> > > > > > > We could restore the old test condition and coalesce the
+> > > > > > > hunks by copying all the hunks and setting $hunk->{USE}=3D1
+> > > > > > > when creating the test patch if that turns out to be useful
+> > > > > > > (it would be interesting to see if the test still passes
+> > > > > > > with that change).
+> > > > > >
+> > > > > > We set USE=3D1 for $newhunk already, or where would you set it=
+?
+> > > > >
+> > > > > To match the old test it needs to be set on the hunks we've
+> > > > > skipped or haven't got to yet so they're all in the patch that's
+> > > > > tested after editing a hunk.
+> > > >
+> > > > The way I fixed this in the C code is by teaching the equivalent
+> > > > of the `coalesce_overlapping_hunks()` function to simply ignore
+> > > > the equivalent of `$hunk->{USE}`: the function signature takes an
+> > > > additional `use_all` parameter, which will override the `use`
+> > > > field.
+> > >
+> > > That sounds like a good solution. Thanks for working on the
+> > > conversion to C, I'll try and find time look at the code on github.
+> >
+> > Please note that I did not update the Pull Requests on GitGitGadget
+> > lately, as I had no reviewer feedback on #170 and did not want to
+> > waste too much time on synchronizing my work between those PRs and Git
+> > for Windows (which now has the built-in `git add -i` as an opt-in
+> > feature).
+> >
+> > So: the latest patches (as of time of writing) can be found here:
+> > https://github.com/git-for-windows/git/compare/9f09372011%5E...9f09372=
+011%5E2
+>
+> Thanks, I left some comments on the commits on the add-p-in-c branch at
+> https://github.com/dscho [1,2] before I saw your email. I've still got
+> quite a few commits to look at so I'll leave any further comments on the
+> git-for-windows repo instead.
 
-Thanks for the tests!
+Thank you so much! I hope to get to your comments very soon ;-)
 
+Ciao,
+Dscho
 
-
-> Subject: [PATCH] merge-recursive: restore accidentally dropped setting of path
-> 
-> In commit 8daec1df03de ("merge-recursive: switch from (oid,mode) pairs
-> to a diff_filespec", 2019-04-05), we actually switched from
-> (oid,mode,path) triplets to a diff_filespec -- but most callsites in the
-> patch only needed to worry about oid and mode so the commit message
-> focused on that.  The oversight in the commit message apparently spilled
-> over to the code as will; one of the dozen or so callsites accidentally
-
-s/will/well/
-
-> dropped the setting of the path in the conversion.  Restore the path
-> setting in that location.
-> 
-> Also, this pointed out that our testsuite was lacking a good rename/add
-> test, at least one that involved the need for merge content with the
-> rename.  Add such a test, and since rename/add vs. add/rename could
-> possibly be important, redo the merge the opposite direction to make
-> sure we don't have issues with the direction of the merge.  These
-> testcases failed before restoring the setting of path, but with the
-> paths appropriately set the testcases both pass.
-> 
-> Reported-by: Ben Humphreys <behumphreys@atlassian.com>
-> Based-on-patch-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-recursive.c                    |   1 +
->  t/t6042-merge-rename-corner-cases.sh | 118 +++++++++++++++++++++++++++
->  2 files changed, 119 insertions(+)
-> 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index a7bcfcbeb4..d2e380b7ed 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1660,6 +1660,7 @@ static int handle_rename_add(struct merge_options *opt,
->  	       c->path, add_branch);
->  
->  	prev_path_desc = xstrfmt("version of %s from %s", path, a->path);
-> +	ci->ren1->src_entry->stages[other_stage].path = a->path;
->  	if (merge_mode_and_contents(opt, a, c,
->  				    &ci->ren1->src_entry->stages[other_stage],
->  				    prev_path_desc,
-> diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
-> index 09dfa8bd92..0793f64099 100755
-> --- a/t/t6042-merge-rename-corner-cases.sh
-> +++ b/t/t6042-merge-rename-corner-cases.sh
-> @@ -411,6 +411,124 @@ test_expect_success 'disappearing dir in rename/directory conflict handled' '
->  	)
->  '
->  
-> +# Test for basic rename/add-dest conflict, with rename needing content merge:
-> +#   Commit O: a
-> +#   Commit A: rename a->b, modifying b too
-> +#   Commit B: modify a, add different b
-> +
-> +test_expect_success 'setup rename-with-content-merge vs. add' '
-> +	test_create_repo rename-with-content-merge-and-add &&
-> +	(
-> +		cd rename-with-content-merge-and-add &&
-> +
-> +		test_seq 1 5 >a &&
-> +		git add a &&
-> +		git commit -m O &&
-> +		git tag O &&
-> +
-> +		git checkout -b A O &&
-> +		git mv a b &&
-> +		test_seq 0 5 >b &&
-> +		git add b &&
-> +		git commit -m A &&
-> +
-> +		git checkout -b B O &&
-> +		echo 6 >>a &&
-> +		echo hello world >b &&
-> +		git add a b &&
-> +		git commit -m B
-> +	)
-> +'
-> +
-> +test_expect_success 'handle rename-with-content-merge vs. add' '
-> +	(
-> +		cd rename-with-content-merge-and-add &&
-> +
-> +		git checkout A^0 &&
-> +
-> +		test_must_fail git merge -s recursive B^0 >out &&
-> +		test_i18ngrep "CONFLICT (rename/add)" out &&
-> +
-> +		git ls-files -s >out &&
-> +		test_line_count = 2 out &&
-> +		git ls-files -u >out &&
-> +		test_line_count = 2 out &&
-> +		git ls-files -u b >out &&
-
-Are these two 'git ls-files -u' executions as intended, i.e. first
-without a file and then with 'b'?
-
-Or is this a bit of a "Huh?!"-inducing way (for me; for you it might
-be an idiom :) to check that 'b' has two unmerged entries and no other
-file has unmerged entries?
-
-> +		test_line_count = 2 out &&
-> +		git ls-files -o >out &&
-> +		test_line_count = 1 out &&
-> +
-> +		test_path_is_missing a &&
-> +		test_path_is_file b &&
-> +
-> +		test_seq 0 6 >tmp &&
-> +		git hash-object tmp >expect &&
-> +		git rev-parse B:b >>expect &&
-> +		git rev-parse >actual  \
-> +			:2:b    :3:b   &&
-> +		test_cmp expect actual &&
-> +
-> +		# Test that the two-way merge in b is as expected
-> +		git cat-file -p :2:b >>ours &&
-> +		git cat-file -p :3:b >>theirs &&
-> +		>empty &&
-> +		test_must_fail git merge-file \
-> +			-L "HEAD" \
-> +			-L "" \
-> +			-L "B^0" \
-> +			ours empty theirs &&
-> +		git hash-object b >actual &&
-> +		git hash-object ours >expect &&
-> +		test_cmp expect actual
-
-So these last three lines compute the object ids of two files and then
-compare those two oids to make sure they match...  But wouldn't a
-'test_cmp ours b' do the trick just as well?
-
-> +	)
-> +'
-> +
-> +test_expect_success 'handle rename-with-content-merge vs. add, merge other way' '
-> +	(
-> +		cd rename-with-content-merge-and-add &&
-> +
-> +		git reset --hard &&
-> +		git clean -fdx &&
-> +
-> +		git checkout B^0 &&
-> +
-> +		test_must_fail git merge -s recursive A^0 >out &&
-> +		test_i18ngrep "CONFLICT (rename/add)" out &&
-> +
-> +		git ls-files -s >out &&
-> +		test_line_count = 2 out &&
-> +		git ls-files -u >out &&
-> +		test_line_count = 2 out &&
-> +		git ls-files -u b >out &&
-> +		test_line_count = 2 out &&
-> +		git ls-files -o >out &&
-> +		test_line_count = 1 out &&
-> +
-> +		test_path_is_missing a &&
-> +		test_path_is_file b &&
-> +
-> +		test_seq 0 6 >tmp &&
-> +		git rev-parse B:b >expect &&
-> +		git hash-object tmp >>expect &&
-> +		git rev-parse >actual  \
-> +			:2:b    :3:b   &&
-> +		test_cmp expect actual &&
-> +
-> +		# Test that the two-way merge in b is as expected
-> +		git cat-file -p :2:b >>ours &&
-> +		git cat-file -p :3:b >>theirs &&
-> +		>empty &&
-> +		test_must_fail git merge-file \
-> +			-L "HEAD" \
-> +			-L "" \
-> +			-L "A^0" \
-> +			ours empty theirs &&
-> +		git hash-object b >actual &&
-> +		git hash-object ours >expect &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  # Test for all kinds of things that can go wrong with rename/rename (2to1):
->  #   Commit A: new files: a & b
->  #   Commit B: rename a->c, modify b
-> -- 
-> 2.22.0.rc3.1.g617c1f72bf
-> 
+> [1]
+> https://github.com/dscho/git/commit/9b7d0fbb095e9e14491d4344981ae346c97e=
+1692
+>
+> [2]
+> https://github.com/dscho/git/commit/74e058179ae7743a8a99e5a20d5362bf5556=
+3505
+>
+>
