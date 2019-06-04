@@ -8,103 +8,113 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 052B31F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 13:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F08401F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 13:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727456AbfFDNke (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 09:40:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51609 "EHLO mout.gmx.net"
+        id S1727220AbfFDNpy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 09:45:54 -0400
+Received: from mout.gmx.net ([212.227.15.19]:51067 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727137AbfFDNkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 09:40:33 -0400
+        id S1727033AbfFDNpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 09:45:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559655629;
-        bh=JxNJGA/0lIuawoZZgipa1j/c5ZoajEdI5QtBuAcjKio=;
+        s=badeba3b8450; t=1559655951;
+        bh=X+EH9BIL8+mzCXDJdJaIsA13NHfpdNkyRVvLJgprVC8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RCh637//cOCpD5mc7Yy8Mveyu3SmbTF5U7WkmOzUfpQMOhJPZbf0WKULUkxx8jlhG
-         EOJiBvotkEueClZAYHVvYrP5h7W4LNfAt+qMEtR/syfc6on0g/c3Ot79sfqPKGzZNi
-         M1pacrreFhcjNW1NsEc3Y0oaBwEgbW0Z6ONdc7qs=
+        b=FvIj6ZdRmmpifYUyvY07U+cD/QmOryrp9dyxcBgg9IwwgIqPI9SHcdfuF0iFci/Vj
+         HSiSDTD2A8MmctTXOLh/EdEJP6FOynfyjEXl0X8XGc/CMmpIjcMIXhjQv3VLuqS5Vy
+         h2GHiY0ToglCnoxgws9wPk/65VQT/LODliaE0W1c=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgMCe-1gkjub1p80-00nkGt; Tue, 04
- Jun 2019 15:40:29 +0200
-Date:   Tue, 4 Jun 2019 15:40:13 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvsIv-1gg36O33WJ-00sy7S; Tue, 04
+ Jun 2019 15:45:51 +0200
+Date:   Tue, 4 Jun 2019 15:45:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
-Subject: Re: [PATCH] am: add --check option
-In-Reply-To: <c1dec466-55ca-8543-8f4e-b5daf1e0eab6@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1906041539090.1775@tvgsbejvaqbjf.bet>
-References: <BUKFSM2OTJUH.38N6DGWH9KX7H@homura> <c1dec466-55ca-8543-8f4e-b5daf1e0eab6@kdbg.org>
+To:     Wen Bei Li <wenbei123@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] mergetools: add support for VS Code
+In-Reply-To: <20190603150315.16032-1-wenbei123@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906041542050.1775@tvgsbejvaqbjf.bet>
+References: <20190603150315.16032-1-wenbei123@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yp+jYYs30RjbFzyjCjKteRmoubuk13sUtWrldKHXb46u6Y/DzsD
- lADIgOlvSym+iaFF/xMTctnAUFJ6iQQM8sK21V35pG2oClAhpG1XyGNBZSB59aX7nA7vgvz
- PqU7L1AGbKBGcoB3dKHKSYxk6UfOXgHYJcATC+BYkJtuILcRyPG1som3JTp4wKtbB1rR5m4
- mXeJgF4+eg7RAhTPTv67Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Xs93UFd+Hgc=:dTWGU64ovdbmJrhfwlFkSP
- DonhvHxmjuVA/45fkNGLJ1s3rBrzZHsRlklQJWD9lB/J+Yf5Z/YZpB2ByT7vtzxUClZHKy6XE
- ABJoPqggNQENPgY7CPM1HviPL1sf8IAj+TcZ2q7JRzG4vZzH723/UHu+vwI6aNe/8/Cz/Ldwq
- ZJR3TAW7ZdguTaUbZFTg8CwMsXAyYX5sc31rJjPeLMwNh4nwRXhuExC0r4iTT7PKHUgUgHAVl
- p8rngEkdMuKrRe/Nln0EQqqA0MAHt6VBe/HE5JHvmQiTHgiIS0lleu+NKHIeJP5upuGdUNMvN
- arkoAaJZHPJDuJ/zYD6YeUiaZalf+ki/Dpfl42o18gsGpyz/y4LA3k86vLTkZykhi+Co514ZB
- olj1ey3fzo84Nkbk20OLiYnwfmx3EM+fQ/19w2Kri8ruf2ONcvlU86NwfNxqJSC5MRniiFCYg
- Lq78fh871FSBiZRG3cLORu3Sg/Nl4u3LTmfyZbYMzBrRM82OjwQZaLignySIMQaKiRBQBJwBo
- 9FtELMY6InjnU941g+PrO3JWt9iYB4jYfWSRN37nOlmJD4qfx9oEQafQ4XSFQPX7yonK5wCr5
- bGXppyaNq7bpWykgFhff8ZZmP7ThTTWYgDC8AnhSWagPFjmKkVrTOiVz2F+uN/Yhtmx24OwE+
- ZU/xop8ZXW63rXhqzwD6t7Z8noyphSRp4cYOtjHDgFyV/GnrDdtGXzhldwA+7YwsmgLwKMaif
- a7PojteKkr5HKia3E1HWMIWYIDQm+bq5RExCJ27y2M/ZOoj3Bo0UpDo9+AOZu3lohV2a6AO5c
- 1u4nrVLrZvOCLRYQHUiVkT4DYeu+N65yBQhOr2r0agSDmNuNUZZDn711ai/Ny6/Y8nn+GAiza
- dnwPXO84NzDuxOhfnXex4aojvDxs9vDiMWz6eC/7PGs0Llc8Nmm17uWxzrlDa2flE9Btfiz2F
- +fXUwtJvxI9WkmfReMpPoaebHT8SAhcRMTsVMdUO3mD2+vivAP0bM
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:/pEWz84XcJRDiEH7nNO8sxegepQftjHpGG4ZTguo4uzj6EYVLDn
+ W1wWNBXg3FMKtNgvpoKWJtgBlK+VvS2j4GiIjSeW2C4sRSqAX0zhiYhWKGkmkTMBmXNWpLu
+ N1kQzCjtkNJTUvhijOnOyNwXRPuaVaK3/gupI3rJAkArzM7Q7vxGKRPd0lySUVPYDjrvG3m
+ xaCebYClbm0EkwE/GBEnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9rmNupJREJY=:cU9CzMpPHthEawGdyuGvVi
+ JRWJ6qrxFgROuabMM+KZJ24nUcEJym1fbfi/p4N3SYQqCvQ1qqRCBJs+2h2C/tK5IRFF5F24F
+ 3TiZp4zxdhd/4w9akCnJzkpx+48AJf2MrDYK/fSjeM204l/xTKUNTCM1NDWj04CBlYfbwdQOK
+ HBDqn7Jl7XSdGfBvc5bcOSFFkn8FgSdqxcJacQ6DJMU5JCp3yEF723IselSh1IBANbx22+GJM
+ CMZEn39uXtXmla/VIYN0zbzJA6RNjSHHPvOiKXfKND2qPbL0jG/gtS6X/EXl6Hr6MCqryIWZx
+ NdRvKcDTwj8QRGtkzDfoHEk7zXq9MrOp/SpSEtxp9E30+dbaSV0GLqsp4x6hvRvQJhv303y+5
+ IUoW6GeVrtv2uglxMyk76LLLXYROfbFT88Emv3DyFEG2lCVNBDbvkzbkMwl/eQoo4ow4T1Gx2
+ u2lnGZ/ljujIaaizysuZ16DrQRDDO2KgrAHb/dxjskLzKm1aDyz+O/iesHkHPn7qzdai/zKer
+ 9A698tZabR/q5F4JXtGHdPU7/30XcJrQaYPZRy0p9q2j8i3ZoOeGkoLdSgd7NRVl0vLVVBtp4
+ zP/10fmIIOCT3T84Ri/Y1Z19hRSUYwtDRPMb8p7vJepQIHtzdnGsw2z8nlPbyVI7miqfapWM3
+ vs187DuuiqB0QP1z6g3p/3RzE0gW5ENJXkVwQHRWhmYHQwPyBWNEJjKbrQqFqvushP7UOW2zs
+ 5OiKTpY0SghHb+Hh7yU1nPtJzqap6vfdVHlwnszFXxEUT5XR6CGk5nkTC+aOGd8lQJU9RhArx
+ gIcDZQrkocvWv32wde03mvJy/kjM1tCb7qT2YVK9dBJXL7SqYaBE+3+gJhv3Lv414DaOiQqHw
+ ei+lz6UdVJ3saGyifAq+p6xEVAerfD62fjizVZaUqWZS0TYZBGfSe0O2cUhIDRzGVzbHYvLqR
+ 3iaqbZEWXxV31DjDU4npAGgxJN4/mKpqXqGvVEFFy9/3xY7e2xaIq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Wen Bei Li,
 
-On Tue, 4 Jun 2019, Johannes Sixt wrote:
+On Mon, 3 Jun 2019, Wen Bei Li wrote:
 
-> Am 04.06.19 um 00:00 schrieb Drew DeVault:
-> > On Mon Jun 3, 2019 at 11:09 PM Johannes Sixt wrote:
-> >> I have to wonder how --check works when 'am' applies multiple patches=
-.
-> >>
-> >> When the second patch in a patch series depends on that the first pat=
-ch
-> >> is fully applied, what does --check do? Without the first patch appli=
-ed,
-> >> then a naive check of the second patch will certainly fail, doesn't i=
-t?
-> >
-> > Yeah, this was being discussed in another thread. It'll fail if the
-> > second patch relies on changes from the first. Open to suggestions on
-> > how to improve that, but I think it can be improved in a later patch.
-> > One solution would be to apply all of the patches and then roll back t=
-he
-> > head, but that would dirty the reflog and wouldn't work on a read-only
-> > filesystem (which it ought to, imo). We can't just say bugger this for=
- a
-> > lark and ask people to use git-apply, because git-apply chokes on the
-> > typical email which isn't in the one specific format git-apply wants t=
-o
-> > see (git-am massages emails into that format before sending them to
-> > git-apply).
-> >
->
-> You can 'git apply --cached' the patches on a temporary index. This
-> works as long as no merge is necessary, because that would require a
-> worktree.
+> Teach difftool and mergetool about VS Code.
+> ---
 
-For extra brownie points, this could be done in-memory, without writing
-out any files.
+Even if it is a very short commit message (see e.g.
+https://github.com/git-for-windows/git/commit/581d2fd9f2d6 for a typical
+commit message in Git's repository), I think it is okay.
 
-Of course, while applying diffs should never need any merge, with the `-3`
-option, merges might be necessary, still...
+Personally, I would have "lost" a few words about Visual Studio Code and
+how popular it is, but probably only because I like it so much (and maybe
+nobody wants to hear about that anymore).
 
-Ciao,
+However, in the Git project we do ask for your Sign-off:
+https://git-scm.com/docs/SubmittingPatches#dco
+
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 204a5acd66..59512ae673 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -283,7 +283,7 @@ list_merge_tool_candidates () {
+>  		fi
+>  		tools="$tools gvimdiff diffuse diffmerge ecmerge"
+>  		tools="$tools p4merge araxis bc codecompare"
+> -		tools="$tools smerge"
+> +		tools="$tools smerge code"
+
+Do you also want to add support for `code-insiders`? (That's what I run a
+lot of the time because it allows me to develop code in my Windows
+Subsystem for Linux while the GUI runs on Windows.)
+
+>  	fi
+>  	case "${VISUAL:-$EDITOR}" in
+>  	*vim*)
+> diff --git a/mergetools/code b/mergetools/code
+> new file mode 100644
+> index 0000000000..566a0d9d63
+> --- /dev/null
+> +++ b/mergetools/code
+> @@ -0,0 +1,7 @@
+> +diff_cmd () {
+> +	"$merge_tool_path" --wait --diff "$LOCAL" "$REMOTE"
+> +}
+> +
+> +merge_cmd () {
+> +	"$merge_tool_path" --wait "$MERGED"
+> +}
+
+This looks good to me!
+
+Thanks,
 Johannes
