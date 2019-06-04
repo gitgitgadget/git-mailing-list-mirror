@@ -2,108 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 567251F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 17:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96CB11F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 18:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726554AbfFDR51 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jun 2019 13:57:27 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:47659 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726399AbfFDR51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jun 2019 13:57:27 -0400
-Received: by mail-qk1-f201.google.com with SMTP id l185so4273503qkd.14
-        for <git@vger.kernel.org>; Tue, 04 Jun 2019 10:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=JURdK7/4ldjw3H/6O9EyWWraJAfMhqF8Gi4ilftxmZg=;
-        b=XZ7BCkAqd4LvX5TMKHRAaBdIKT5mA5/h+goOTZ4PUfFW7nNBvx+yIx0hQv4nW6UbW7
-         DvTvPfz8CbcPn/ZAqsldaBbtxZPFtWGHQGTuQIhvHOtONv16DKcwQkGMrdv7qu84mK4m
-         /iFCxrNReecD4hczC6QEJZVU8Qbww+cuuZPdrEM8VTWRf21ByuRB3ZpLY/q2kave04mg
-         Emvx9vtTuVWVy1yOg0ONwxdiXc3P3qtfl4Lz7xwHK+V+iYIJWx0DX+wX6b/iZtn4KOqk
-         kAnxM/t4uphmRDCl7fJSq/ONgOURldCNzc0krqN4qQHoj1C4cUt8hWO7GmSAQhepzVQG
-         aPMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=JURdK7/4ldjw3H/6O9EyWWraJAfMhqF8Gi4ilftxmZg=;
-        b=Rq8GAJ0PWGEf7BeILKMgaeMbsdyiMNLh7kiMyqblxDVhYG1DZnCB1IflCNvFSoSCEz
-         /KZNdptsfYq7mUoE+GZFBQD9Y46rG5ruAhUyw4YgQQeQFV2pmWjHWC5Oo+ooMQfuXv50
-         NG5mqHmWSDHCWh7Z1eHNoZIGRsEdmzwGmmJJnsqQJZy+aQrAxBpjO5YrZwtopAXbaPBV
-         4A1HBI4NyOOZjIT+L7keQ9oPTbwfv53aQ7QISHcWNeM9h+ed13djaZFg9N2jzNkciyKl
-         Q+OXvbmmuzDdDl5k3m4gSJ8fOy2bo3BOw7IE/CMO1YcuPcWcrIgLVhW7ZzUDxhSZy0Mj
-         2Pbw==
-X-Gm-Message-State: APjAAAWqCb2k42c29buQvrbb5+tcrPYuXy24i2Lcvyin0NCgyFlTOpvu
-        ewNHLL11fp9TwEjXL3KWuoGYf8d7ftxKn6TzZolGUEZeCJ6xRywy+d7L+DSU6SY0a0HkKu6wNO+
-        NEQCdfNvSDVVEalHY8tH9ikh9ngAcorpHaonXpekEwekM3xPs9IwCRQ6N17A=
-X-Google-Smtp-Source: APXvYqzBQKZGAow6kqRK4Efw2aukSJSHaXTbW27+WooWpV0ngVpsY1cU3/IK/ynhumW6r/T36OBwlVgCl6zu
-X-Received: by 2002:a0c:9e55:: with SMTP id z21mr28653380qve.45.1559671046172;
- Tue, 04 Jun 2019 10:57:26 -0700 (PDT)
-Date:   Tue,  4 Jun 2019 10:57:05 -0700
-In-Reply-To: <cover.1559670300.git.matvore@google.com>
-Message-Id: <d3d6316a2aa4691c630b1bb2db6c3ac706aaaa31.1559670300.git.matvore@google.com>
-Mime-Version: 1.0
-References: <cover.1559670300.git.matvore@google.com>
-X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [PATCH v2 2/2] url: do not allow %00 to represent NUL in URLs
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org
-Cc:     Matthew DeVore <matvore@google.com>, sandals@crustytoothpaste.net,
-        jeffhostetler@microsoft.com, l.s.r@web.de, gitster@pobox.com,
-        spearce@spearce.org, jrn@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1726521AbfFDSvK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jun 2019 14:51:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46242 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726261AbfFDSvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jun 2019 14:51:10 -0400
+Received: (qmail 24173 invoked by uid 109); 4 Jun 2019 18:51:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Jun 2019 18:51:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16534 invoked by uid 111); 4 Jun 2019 18:51:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 04 Jun 2019 14:51:54 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jun 2019 14:51:08 -0400
+Date:   Tue, 4 Jun 2019 14:51:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
+        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
+        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
+Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
+Message-ID: <20190604185108.GA14738@sigill.intra.peff.net>
+References: <cover.1558484115.git.matvore@google.com>
+ <1f95597eedc4c651868601c0ff7c4a4d97ca4457.1558484115.git.matvore@google.com>
+ <20190528215359.GB133078@google.com>
+ <20190531204821.GC4641@comcast.net>
+ <20190531211041.GA19792@sigill.intra.peff.net>
+ <20190601001231.GF4641@comcast.net>
+ <20190603123435.GA18953@sigill.intra.peff.net>
+ <20190603222247.GG4641@comcast.net>
+ <20190604161332.GA29603@sigill.intra.peff.net>
+ <20190604171952.GI4641@comcast.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190604171952.GI4641@comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is no reason to allow %00 to terminate a string, so do not allow it.
-Otherwise, we end up returning arbitrary content in the string (that which is
-after the %00) which is effectively hidden from callers and can escape sanity
-checks and validation, and possible be used in tandem with a security
-vulnerability to introduce a payload.
+On Tue, Jun 04, 2019 at 10:19:52AM -0700, Matthew DeVore wrote:
 
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- url.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On Tue, Jun 04, 2019 at 12:13:32PM -0400, Jeff King wrote:
+> > > -	return has_reserved_character(subspec, errbuf) ||
+> > > -		url_decode(subspec, errbuf) ||
+> > > -		gently_parse_list_objects_filter(
+> > > -			&filter_options->sub[new_index], subspec->buf, errbuf);
+> > > +	decoded = url_percent_decode(subspec->buf);
+> > 
+> > I think you can get rid of has_reserved_character() now, too.
+> 
+> The purpose of has_reserved_character is to allow for future
+> extensibility if someone decides to implement a more sophisticated DSL
+> and give meaning to these characters. That may be a long-shot, but it
+> seems worth it.
 
-diff --git a/url.c b/url.c
-index 9ea9d5611b..1b8ef78cea 100644
---- a/url.c
-+++ b/url.c
-@@ -41,21 +41,21 @@ static char *url_decode_internal(const char **query, int len,
- 		if (!c)
- 			break;
- 		if (stop_at && strchr(stop_at, c)) {
- 			q++;
- 			len--;
- 			break;
- 		}
- 
- 		if (c == '%' && (len < 0 || len >= 3)) {
- 			int val = hex2chr(q + 1);
--			if (0 <= val) {
-+			if (0 < val) {
- 				strbuf_addch(out, val);
- 				q += 3;
- 				len -= 3;
- 				continue;
- 			}
- 		}
- 
- 		if (decode_plus && c == '+')
- 			strbuf_addch(out, ' ');
- 		else
--- 
-2.21.0
+I think you'll find that -Wunused-function complains, though, if nobody
+is calling it. I wasn't sure if what you showed in the interdiff was
+meant to be final (I had to add a few other variable declarations to
+make it compile, too).
 
+> > The reserved character list is still used on the encoding side. But I
+> > think you could switch to strbuf_add_urlencode() there?
+> 
+> strbuf_addstr_urlencode will either escape or not escape all rfc3986
+> reserved characters, and that set includes both : and +. The former
+> should not require escaping since it's a common character in filter
+> specs, and I would like the hand-encoded combine specs to be relatively
+> easy to type and read. The + must be escaped since it is used as part of
+> the combine:... syntax to delimit sub filters. So
+> strbuf_addstr_url_encode would have to be more customizable to make it
+> work for this context. I'd like to add a parameterizable should_escape
+> predicate (iow function pointer) which strbuf_addstr_urlencode accepts.
+> I actually think this will be more readable than the current strbuf API.
+
+That makes some sense, and I agree that readability is a good goal. Do
+we not need to be escaping colons in other URLs? Or are the strings
+you're generating not true by-the-book URLs? I'm just wondering if we
+could take this opportunity to improve the URLs we output elsewhere,
+too.
+
+-Peff
