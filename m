@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E90CD1F462
-	for <e@80x24.org>; Tue,  4 Jun 2019 02:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8034C1F462
+	for <e@80x24.org>; Tue,  4 Jun 2019 02:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726223AbfFDCNe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jun 2019 22:13:34 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:40198 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfFDCNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jun 2019 22:13:33 -0400
-Received: by mail-ot1-f67.google.com with SMTP id u11so18055199otq.7
-        for <git@vger.kernel.org>; Mon, 03 Jun 2019 19:13:33 -0700 (PDT)
+        id S1726292AbfFDCNg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jun 2019 22:13:36 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:33262 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfFDCNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jun 2019 22:13:35 -0400
+Received: by mail-oi1-f194.google.com with SMTP id q186so14443119oia.0
+        for <git@vger.kernel.org>; Mon, 03 Jun 2019 19:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JLJ96cE5/hO/RotU+tmJuqqMmqwq3TJiqG71abmsIG8=;
-        b=a5pFewgTp+pRh84a8KsMdRRT/HoX3IbtmzuXO9RTv8rJCwKnA47sLn3OhmAjH3Ma9N
-         tJUEXRwQ4l5NNaGeaFWKjkDaF6WjqPQtnf4gpMUs8K1kN+AHONeSuLAg/BbKmZBqopPX
-         94T6d9DwiMm7dJCMDlNayqN5YVQWmVkb43ftOg/3iwuiQfSNr6NTD3oy2Gj/qY7g4VnS
-         TU+1I9UAeCE3RZb8xar56YJH4+XVEP1Ee60inRXO3Pbtmd0kzTk6CmURirLyC5zSOcZX
-         Wg5UCa2uhCkjZQSaOioiqibZe/B1pvGL3wzV7djygPyPChgEuEPBeSdVtnxXiQD35z5g
-         XLsA==
+        bh=kx4d2muhZB2o265hqWGguwiqE3bKLdJqG3ngIRcLfa4=;
+        b=VrHjiaThsNukneCIehA8BTYu1PMECbyODzKRy8d8uqteZ9jaBhrvtZLbU8JShE09RC
+         fwQjxOsFTUOWfMDuHBqNuOFMwvSBm7U30tNZuR8pwI+Z8j8o4jd3Yhx3qZpkklKHckKt
+         ioq9NsML2tkVXDLQHWuUr/fNHhZeeLDO3gnTACdw6aYARwMqLEo5AvOeyV/d2u8eklIV
+         LJeXMvmCL8rD6U09ATC6q/bjz4xfyVNA+hPF7CKnyEfsiNadgkwIC0mVNBFCVcUWT/Lu
+         8z/WZrT3cM7CKnXhWllBXpN9TjF938SKepMrCrXsLrN+EVSplIU6eFtFDwg1Rfq20+ya
+         arMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JLJ96cE5/hO/RotU+tmJuqqMmqwq3TJiqG71abmsIG8=;
-        b=kguG1Dt3IR6wldAuPqmV1U6VghJG7E+aBO70wT82T3ZqSaxAoiQQwexGbg3jhDPbG3
-         pYdpIN06itXZ0LK087gU9BLYWH4TaQD0OsNwNQDlYYAd+UdqqFg12x+eQkiBXscoD0+l
-         VWzJHfi7RUwB75ZWJG3Fui3KZyfvJtUWO6ms2v5reuBo6MKc2WFAaQviq88w22aE/CMM
-         lhWA8g9VEP6tyo3R6ANl9wIEsflR8p7mzdU+WmiOdHTM/GyIckw/SYzbXmjHwuk6Gm4+
-         NtDiK4xrQfhLtnMf7mfgG6QUmFDSUrW3r3SlS41h5opHEZmV49huoQqWt+ryozIyc5Qz
-         GhPA==
-X-Gm-Message-State: APjAAAUEJty2MApBZhJ9h7mznGmce4y4z6jkGu7vdtscYPzWjAqweTaO
-        f0gYRs4cC12bGsXmy5UzQ+bkbxTTsWw=
-X-Google-Smtp-Source: APXvYqzrdNM5of+aO+7Gp7S6jChNJFnfDDP8VUOFglqXC/FKPVfeEvV/gSaCimRuGKnR51pfT+Xd6Q==
-X-Received: by 2002:a9d:3285:: with SMTP id u5mr3704767otb.266.1559614413015;
-        Mon, 03 Jun 2019 19:13:33 -0700 (PDT)
+        bh=kx4d2muhZB2o265hqWGguwiqE3bKLdJqG3ngIRcLfa4=;
+        b=KAduYPGax2QQCU8NwFB3B4aCQrWnacdsMnw/gR66EEeAQMMQl5gkuokhNrT6pxQTPJ
+         lrFftpCnWELsbhcxxnZJ60Un/fKdWLDXjfYgdo7/OK4/pg/Rla/LuTxEZ63ZZ8Aw6CIR
+         viN/9ffzJZq1i3wifMySAJFE/A0bz2YNpzakVskkVWUi5MHhU6C4nkxjlAqMITckL5nw
+         Kh6csuHsGzmv23rs4L95FFVcg1NnADABusKKsv1SUGQs+DMapXFX1hkFch+tjlFG8EmL
+         UBro8lY1PAQ2nOCdrWRBtK7MkuAGU8LnIEpX1bomF3Lvchpx1ve18rB6DJWsU84wjMuP
+         98qA==
+X-Gm-Message-State: APjAAAUYy9cpxgabV16AM+4NYAg4sq6wcCIfyoOrgc26mCZzAhkGBieN
+        786Lr136J0F9xRNMc3na5Sne9WDn/m8=
+X-Google-Smtp-Source: APXvYqw3JHHeObw/+CL52+rUIAwwSMD47/4Cb5W2ldxdEp9R9+icWrKfh0Nr+S/ec9Nt8pL7YFuonA==
+X-Received: by 2002:aca:abd8:: with SMTP id u207mr1915454oie.136.1559614414357;
+        Mon, 03 Jun 2019 19:13:34 -0700 (PDT)
 Received: from localhost (200-52-42-156.reservada.static.axtel.net. [200.52.42.156])
-        by smtp.gmail.com with ESMTPSA id m32sm4385340otc.55.2019.06.03.19.13.32
+        by smtp.gmail.com with ESMTPSA id o128sm6199384oih.48.2019.06.03.19.13.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 03 Jun 2019 19:13:32 -0700 (PDT)
+        Mon, 03 Jun 2019 19:13:33 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH 1/5] t5801 (remote-helpers): cleanup refspec stuff
-Date:   Mon,  3 Jun 2019 21:13:26 -0500
-Message-Id: <20190604021330.16130-2-felipe.contreras@gmail.com>
+Subject: [RFC/PATCH 2/5] t5801 (remote-helpers): add test to fetch tags
+Date:   Mon,  3 Jun 2019 21:13:27 -0500
+Message-Id: <20190604021330.16130-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190604021330.16130-1-felipe.contreras@gmail.com>
 References: <20190604021330.16130-1-felipe.contreras@gmail.com>
@@ -67,82 +67,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code is much simpler this way, specially thanks to:
+This used to work, but commit e198b3a740 broke it.
 
-  git fast-export --refspec
+  e198b3a740 (fetch: replace string-list used as a look-up table with a hashmap)
+
+Probably all remote helpers that use the import method are affected, but
+we didn't catch the issue.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t5801-remote-helpers.sh  |  8 ++++----
- t/t5801/git-remote-testgit | 11 ++++-------
- 2 files changed, 8 insertions(+), 11 deletions(-)
+ t/t5801-remote-helpers.sh  | 10 ++++++++++
+ t/t5801/git-remote-testgit | 17 ++++++++++++-----
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index d04f8007e0..48bed7c2fe 100755
+index 48bed7c2fe..238774bc17 100755
 --- a/t/t5801-remote-helpers.sh
 +++ b/t/t5801-remote-helpers.sh
-@@ -126,7 +126,7 @@ test_expect_success 'forced push' '
+@@ -303,4 +303,14 @@ test_expect_success 'fetch url' '
+ 	compare_refs server HEAD local FETCH_HEAD
  '
  
- test_expect_success 'cloning without refspec' '
--	GIT_REMOTE_TESTGIT_REFSPEC="" \
-+	GIT_REMOTE_TESTGIT_NOREFSPEC=1 \
- 	git clone "testgit::${PWD}/server" local2 2>error &&
- 	test_i18ngrep "this remote helper should implement refspec capability" error &&
- 	compare_refs local2 HEAD server HEAD
-@@ -135,7 +135,7 @@ test_expect_success 'cloning without refspec' '
- test_expect_success 'pulling without refspecs' '
- 	(cd local2 &&
- 	git reset --hard &&
--	GIT_REMOTE_TESTGIT_REFSPEC="" git pull 2>../error) &&
-+	GIT_REMOTE_TESTGIT_NOREFSPEC=1 git pull 2>../error) &&
- 	test_i18ngrep "this remote helper should implement refspec capability" error &&
- 	compare_refs local2 HEAD server HEAD
- '
-@@ -145,8 +145,8 @@ test_expect_success 'pushing without refspecs' '
- 	(cd local2 &&
- 	echo content >>file &&
- 	git commit -a -m ten &&
--	GIT_REMOTE_TESTGIT_REFSPEC="" &&
--	export GIT_REMOTE_TESTGIT_REFSPEC &&
-+	GIT_REMOTE_TESTGIT_NOREFSPEC=1 &&
-+	export GIT_REMOTE_TESTGIT_NOREFSPEC &&
- 	test_must_fail git push 2>../error) &&
- 	test_i18ngrep "remote-helper doesn.t support push; refspec needed" error
- '
++test_expect_failure 'fetch tag' '
++	(cd server &&
++	 git tag v1.0
++	) &&
++	(cd local &&
++	 git fetch
++	) &&
++	compare_refs local v1.0 server v1.0
++'
++
+ test_done
 diff --git a/t/t5801/git-remote-testgit b/t/t5801/git-remote-testgit
-index 752c763eb6..f2b551dfaf 100755
+index f2b551dfaf..6b9f0b5dc7 100755
 --- a/t/t5801/git-remote-testgit
 +++ b/t/t5801/git-remote-testgit
-@@ -11,13 +11,10 @@ fi
- url=$2
+@@ -12,9 +12,14 @@ url=$2
  
  dir="$GIT_DIR/testgit/$alias"
--prefix="refs/testgit/$alias"
  
--default_refspec="refs/heads/*:${prefix}/heads/*"
-+refspec="refs/heads/*:refs/testgit/$alias/heads/*"
+-refspec="refs/heads/*:refs/testgit/$alias/heads/*"
++h_refspec="refs/heads/*:refs/testgit/$alias/heads/*"
++t_refspec="refs/tags/*:refs/testgit/$alias/tags/*"
  
--refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
--
--test -z "$refspec" && prefix="refs"
-+test -n "$GIT_REMOTE_TESTGIT_NOREFSPEC" && refspec=""
+-test -n "$GIT_REMOTE_TESTGIT_NOREFSPEC" && refspec=""
++if test -n "$GIT_REMOTE_TESTGIT_NOREFSPEC"
++then
++	h_refspec=""
++	t_refspec=""
++fi
  
  GIT_DIR="$url/.git"
  export GIT_DIR
-@@ -81,10 +78,10 @@ do
+@@ -37,7 +42,8 @@ do
+ 	capabilities)
+ 		echo 'import'
+ 		echo 'export'
+-		test -n "$refspec" && echo "refspec $refspec"
++		test -n "$h_refspec" && echo "refspec $h_refspec"
++		test -n "$t_refspec" && echo "refspec $t_refspec"
+ 		if test -n "$gitmarks"
+ 		then
+ 			echo "*import-marks $gitmarks"
+@@ -49,7 +55,7 @@ do
+ 		echo
+ 		;;
+ 	list)
+-		git for-each-ref --format='? %(refname)' 'refs/heads/'
++		git for-each-ref --format='? %(refname)' 'refs/heads/' 'refs/tags/'
+ 		head=$(git symbolic-ref HEAD)
+ 		echo "@$head HEAD"
+ 		echo
+@@ -78,7 +84,8 @@ do
  
  		echo "feature done"
  		git fast-export \
-+			${refspec:+"--refspec=$refspec"} \
+-			${refspec:+"--refspec=$refspec"} \
++			${h_refspec:+"--refspec=$h_refspec"} \
++			${t_refspec:+"--refspec=$t_refspec"} \
  			${testgitmarks:+"--import-marks=$testgitmarks"} \
  			${testgitmarks:+"--export-marks=$testgitmarks"} \
--			$refs |
--		sed -e "s#refs/heads/#${prefix}/heads/#g"
-+			$refs
- 		echo "done"
- 		;;
- 	export)
+ 			$refs
 -- 
 2.21.0
 
