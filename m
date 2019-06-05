@@ -2,146 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC651F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 20:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C1E1F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 20:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726605AbfFEUMM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 16:12:12 -0400
-Received: from smtp-o-3.desy.de ([131.169.56.156]:44731 "EHLO smtp-o-3.desy.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726502AbfFEUMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 16:12:12 -0400
-Received: from smtp-buf-3.desy.de (smtp-buf-3.desy.de [IPv6:2001:638:700:1038::1:a6])
-        by smtp-o-3.desy.de (Postfix) with ESMTP id 8C3F66022F
-        for <git@vger.kernel.org>; Wed,  5 Jun 2019 22:12:09 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-3.desy.de 8C3F66022F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-        t=1559765529; bh=nW7ZZrxbSBEnd2imMNYCw2PQ5lbeKTZeFZIheC+ObiM=;
-        h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-        b=QU/5ZWGjEunVloiD3L02dpxz4Urtyv16X+dqhvvlN27WfMMlaiU5JAU23WOGvnCgs
-         kfzRfIslHwV0E50GOeyGMpHXlngr8nidrrocc/mrceriN3AE8xncjs2VP51roKu4Ym
-         vzwVh5SJqLp9QyI5ZS5ffFBQyRgArRUsDvtM8gIY=
-Received: from smtp-m-3.desy.de (smtp-m-3.desy.de [131.169.56.131])
-        by smtp-buf-3.desy.de (Postfix) with ESMTP id 857CEA0077;
-        Wed,  5 Jun 2019 22:12:09 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at desy.de
-Received: from z-mbx-2.desy.de (z-mbx-2.desy.de [131.169.55.140])
-        by smtp-intra-3.desy.de (Postfix) with ESMTP id 55CB78003E;
-        Wed,  5 Jun 2019 22:12:09 +0200 (CEST)
-Date:   Wed, 5 Jun 2019 22:12:09 +0200 (CEST)
-From:   "Mkrtchyan, Tigran" <tigran.mkrtchyan@desy.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-ID: <1933659713.10490718.1559765529240.JavaMail.zimbra@desy.de>
-In-Reply-To: <xmqqv9xkroc5.fsf@gitster-ct.c.googlers.com>
-References: <139144069.10140489.1559664262817.JavaMail.zimbra@desy.de> <20190605155300.26506-1-tigran.mkrtchyan@desy.de> <xmqqv9xkroc5.fsf@gitster-ct.c.googlers.com>
-Subject: Re: [PATCH v3] tag: add tag.gpgSign config option to force all tags
- be GPG-signed
+        id S1726527AbfFEUUW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 16:20:22 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:46351 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726464AbfFEUUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 16:20:22 -0400
+Received: by mail-pf1-f196.google.com with SMTP id y11so15472133pfm.13
+        for <git@vger.kernel.org>; Wed, 05 Jun 2019 13:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3QKPV+rE9kpX6rgTU5pmG/0LqnM/2CdZQt2C+yhwfPI=;
+        b=IcNNKIRfLqnH+bR6teP+fe8GtxbRaL3y86rIQV2xZkKu1ftA28L4moRgIl8QTKXc0D
+         WCLasrS102XChisS/9+8t2zBuMrkZQ3bWD0pS9uSQWaFidkDkCHDfHCgrJe3MPISr+EM
+         OagNVSRkkP6MWrD7sx1DA5jf6rvx2GffOxq//pYpN9EfYgEUw3Y1PB/HpRmhoaDTS35s
+         XHHjx3NDsTASjHow8Bdk1LzksQdqlW/+LpQzJ+0HjAaWpMXnIiq7VI25Pnl1GUpk7xXE
+         lGdF5a4kij0mzylroMn3DZF9BfogzKOr/kxJRXVdSiAt3yCmICAVbf1jDwPuZxB8U3xm
+         DfFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3QKPV+rE9kpX6rgTU5pmG/0LqnM/2CdZQt2C+yhwfPI=;
+        b=gy0sUvJnLjnTKiZXoSTtyokcHmqvCCDzy17VNEkli/bVPQ9tkaGZfC/mJ6o386mhwG
+         0ZWjNbtG14152EA/4yolAkHCkgCAPqsZ9SHq3gT815jLEodl/qaE3mpk4EKREtkPvMrP
+         u9XjBxPF2/jSq66bwR1IIUAlbCMiuvvM1k0jKymEUEYCuU+7ITbyCFhHDbRv26SaFfLo
+         kUQ8jCFnqnYEHr3Iz7k07L2MOOgjw9+evuHKowJ5eCseph7uVf5o6dHbTzA9bo+ZoQp2
+         A0nS9iMo6eXnZiDQsb4u2itIbQH+NKiX4JwNNw+XecjhlsW1iQxjup8ivXy8KZD2bqm2
+         hkbQ==
+X-Gm-Message-State: APjAAAXeh7lBBPulCRvZhZP4VDtErdw0CaBjNblUc+lUqswGB8bB4zsK
+        icGKjRYrOSIF0xcf5peo62rnCA==
+X-Google-Smtp-Source: APXvYqzsbxeOlcYfrUu5sJt3oPQ3Zbe1kI5q7a2JVvSke7cFgBljnJMnrkz/o7N5g2kooPA6CEFBww==
+X-Received: by 2002:a63:4d5d:: with SMTP id n29mr726920pgl.235.1559766021703;
+        Wed, 05 Jun 2019 13:20:21 -0700 (PDT)
+Received: from localhost ([205.175.106.159])
+        by smtp.gmail.com with ESMTPSA id 140sm27459241pfw.123.2019.06.05.13.20.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jun 2019 13:20:20 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 13:20:19 -0700
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stephan Beyer <s-beyer@gmx.net>, Taylor Blau <me@ttaylorr.com>,
+        Patryk Obara <patryk.obara@gmail.com>
+Subject: Re: [PATCH] clang-format: use git grep to generate the ForEachMacros
+ list
+Message-ID: <20190605202019.GA84760@D-10-18-172-221.dhcp4.washington.edu>
+References: <20190603224814.GA15851@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.8.10_GA_3781 (ZimbraWebClient - FF67 (Linux)/8.8.10_GA_3786)
-Thread-Topic: add tag.gpgSign config option to force all tags be GPG-signed
-Thread-Index: QvJm2IgH9hUTScKef/SxJ5TKG2caiA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190603224814.GA15851@gmail.com>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Miguel,
 
+On Tue, Jun 04, 2019 at 12:48:14AM +0200, Miguel Ojeda wrote:
+> The ForEachMacros list can reasonably be generated grepping
+> the C source code for macros with 'for_each' in their name.
+>
+> Taken almost verbatim from the .clang-format file in the Linux kernel.
+>
+> Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
 
------ Original Message -----
-> From: "Junio C Hamano" <gitster@pobox.com>
-> To: "Tigran Mkrtchyan" <tigran.mkrtchyan@desy.de>
-> Cc: "git" <git@vger.kernel.org>, "Jonathan Nieder" <jrnieder@gmail.com>, "Johannes Schindelin"
-> <Johannes.Schindelin@gmx.de>
-> Sent: Wednesday, June 5, 2019 6:25:46 PM
-> Subject: Re: [PATCH v3] tag: add tag.gpgSign config option to force all tags be GPG-signed
+Thanks for CC-ing me on this. I suspect that it was because I show up
+somewhere recently in the blame for 'git grep' (I believe I worked on
+adding `-o` about a year ago).
 
-> Tigran Mkrtchyan <tigran.mkrtchyan@desy.de> writes:
-> 
->> As many CI/CD tools don't allow to control command line options when
->> executing `git tag` command, a default value in the configuration file
->> will allow to enforce tag signing if required.
-
-Must of them blindly execute git commands with some hard-coded combination of
-options. It's clear to me, that they are the source of the problem, but
-git can be the solution.
-
-> 
-> Hmm.  Would these "many" tools still allow arbigrary configuration
-> set to affect their operation?  It sounds like a bigger issue but it
-> is a separate one.
-> 
->> The new config-file option tag.gpgSign enforces signed tags. Additional
->> ...
->> will skip the signing step.
-> 
-> This paragraph is well written.
-> 
->> The combination of -u <key-id> and --no-sign not allowed.
-> 
-> This sentence lacks a verb.  Perhaps s/not allowed/is &/.
-> 
-
-Jup. Sorry.
-
-> But more importantly, I think we should justify why this "not
-> allowed" makes sense as the design of the feature. A plausible
-> alternative design would simply follow the "last one wins" paradigm,
-> where
-> 
->    git tag -u key # "-u key" implies "-s"
-> 
->    git tag -u key --no-sign # "--no-sign' trumps the implied "-s"
-> 
->    git tag --no-sign -u key # "-u key"'s implication of "-s" trumps the
->			     # earlier "--no-sign"
-> 
-> and having "[tag] gpgsign" simply adds to the implication early in
-> the chain to be overridden by later command line options.
-> 
-> Let's explain why "you cannot give -u <key> and --no-sign at the
-> same time" is better than "the last one wins".
-
-This is matter of convention. I never pay attention to the order of options
-on the git command line, but I don't put conflicting options either, I hope.
-Does git already have position depended options? If yes, then fine with me.
-Otherwise, I don't want to introduce ambiguity. Yes, less ambiguity is my
-answer to why it's better than "the last one wins".
-
-
-> 
->> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
->> index a74e7b926d..2e5599a67f 100644
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -64,6 +64,13 @@ OPTIONS
->>  -s::
->>  --sign::
->>  	Make a GPG-signed tag, using the default e-mail address's key.
->> +	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
->> +	configuration variable if it exists, or disabled oder otherwise.
->> +	See linkgit:git-config[1].
->> +
->> +--no-sign::
->> +	Override `tag.gpgSign` configuration variable that is
->> +	set to force each and every tag to be signed.
->>  
->>  -u <keyid>::
->>  --local-user=<keyid>::
-> 
-> If we justify "-u and --no-sign do not mix", that design needs to be
-> explained to the end users in the documentation, not just in the
-> proposed log messsage.
-
-Make sense.
+You 'git grep' usage of course looks correct, so this patch looks good
+to me, too.
 
 Thanks,
-   Tigran.
+Taylor
