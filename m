@@ -2,206 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02CC01F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 15:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 997D11F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 16:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728553AbfFEPxR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 11:53:17 -0400
-Received: from smtp-o-2.desy.de ([131.169.56.155]:50087 "EHLO smtp-o-2.desy.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726421AbfFEPxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 11:53:16 -0400
-Received: from smtp-buf-2.desy.de (smtp-buf-2.desy.de [IPv6:2001:638:700:1038::1:a5])
-        by smtp-o-2.desy.de (Postfix) with ESMTP id 8F07F16055D
-        for <git@vger.kernel.org>; Wed,  5 Jun 2019 17:53:12 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-2.desy.de 8F07F16055D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-        t=1559749992; bh=nloCngE03VuIY9ftJ9gg+gkFmuJefJ7GyhwNy0UwenY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FtXBjvXCbkIkRwfpxnnYrmupyNkYjT3/dJ47bdQAuGi33pSLGsVYHbfx/k4UcMq6l
-         ugyim1EnoafsSl20tMq7xqZ4j7LapG51W4cWAd+kLQFUvYtZYx+dRx6LKuc6ChLNCP
-         0i5EuqyF1hn4tOOkLkbqjiP9oudSdVpdTtG9tS9Q=
-Received: from smtp-m-2.desy.de (smtp-m-2.desy.de [IPv6:2001:638:700:1038::1:82])
-        by smtp-buf-2.desy.de (Postfix) with ESMTP id 88C0C1A00B8;
-        Wed,  5 Jun 2019 17:53:12 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at desy.de
-Received: from ani.desy.de (zitpcx21033.desy.de [131.169.185.213])
-        by smtp-intra-3.desy.de (Postfix) with ESMTP id 55A428003E;
-        Wed,  5 Jun 2019 17:53:12 +0200 (CEST)
-From:   Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-To:     git@vger.kernel.org
-Cc:     jrnieder@gmail.com, Johannes.Schindelin@gmx.de,
-        Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Subject: [PATCH v3] tag: add tag.gpgSign config option to force all tags be GPG-signed
-Date:   Wed,  5 Jun 2019 17:53:00 +0200
-Message-Id: <20190605155300.26506-1-tigran.mkrtchyan@desy.de>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <139144069.10140489.1559664262817.JavaMail.zimbra@desy.de>
-References: <139144069.10140489.1559664262817.JavaMail.zimbra@desy.de>
+        id S1728660AbfFEQHB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 12:07:01 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35391 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728442AbfFEQHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 12:07:01 -0400
+Received: by mail-wr1-f68.google.com with SMTP id m3so4242028wrv.2
+        for <git@vger.kernel.org>; Wed, 05 Jun 2019 09:07:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8mjiflKrPotsV7MEu5qScrNXfNySGNn0nHzrn08z0Tk=;
+        b=AiVFjmP9NlajgdP4flVr6lYZx8cllEcVSgB5Hl4HyLk5Inai9MCq7W1Cvw/y8N2qFx
+         6D8sNU3wKDFlZeK65x4ES7hwTXKWzVmrFkUcBd9pBFXz2W+REwT9B3a1HZiSiZgv3RuM
+         IdZTU7EaY2Uj+CmQUpn+r0ZGC6XUDyLW4Y5eDelHRc2EHy9C66BXYAVx8td4ndYKK0R0
+         GTIWaD0Tx7A+2ADMg/ZFU1FrPCvrlxqzo1Dwe8ZfHGGmNlVuGctVWEYQH5zXqwR1AtvK
+         7naRlc5L9QSAR7l46MuZpK/e4jeDT3j+Jul0wfOs+hOCXbmPjVpNdqaFpMIElFmx6r3q
+         MGIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8mjiflKrPotsV7MEu5qScrNXfNySGNn0nHzrn08z0Tk=;
+        b=oYlW8O0iw5PkM8Sf/VxI68QKmiuhuQLsTnzKv+vrzJ1+0FseN16DbHWCpZ3/bNQp43
+         pKQjLY6nveOjoaqBogzFNjLbdx0vWSOUIftqaTHnmMDPZcG3Nl6STcmEFqK128w+uenu
+         /HQTVHmB5EaFmwE7VfidNWDKNPtPGrhWHPq9ddNPuiDnjh7R9akWLHHeiuDqB7cyaD0N
+         +ndWfvVnCtqbIXsMyUxqIFzjbjyutJvsG+zQ/6n+qP2zKrsR9q1b4LOaBQF/6v3mPYce
+         dL0mWrW952G0LyxftohrhxG0ShUnGfDITmM2nrqXsVCrDvBpHFEwYAiX9w8Efj4P4sI3
+         o/ng==
+X-Gm-Message-State: APjAAAV4mfge8xVNAvA38I3sC/w8EijAomMQs3EIJ2iJjwixElY8XnX0
+        xb0W0gn+i7UUqM4nOEWjxSCY1KD+
+X-Google-Smtp-Source: APXvYqzl3Hq8/iIwzJxDxFPJ/zw+opA+rrbvGpALiyjp/L8bPgj44zgg96Wz2FnacrJYjir6mEvAQw==
+X-Received: by 2002:adf:e60f:: with SMTP id p15mr785209wrm.332.1559750819778;
+        Wed, 05 Jun 2019 09:06:59 -0700 (PDT)
+Received: from szeder.dev (x4db390d3.dyn.telefonica.de. [77.179.144.211])
+        by smtp.gmail.com with ESMTPSA id a139sm32655644wmd.18.2019.06.05.09.06.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jun 2019 09:06:58 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 18:06:56 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Edward D'Souza via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Edward D'Souza <edsouza@gmail.com>
+Subject: Re: [PATCH 1/1] git-prompt.sh: update shell variable instructions.
+Message-ID: <20190605160656.GU951@szeder.dev>
+References: <pull.255.git.gitgitgadget@gmail.com>
+ <0074d3da7ad402043d58ebb107435ce955a347f5.1559747165.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0074d3da7ad402043d58ebb107435ce955a347f5.1559747165.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As many CI/CD tools don't allow to control command line options when
-executing `git tag` command, a default value in the configuration file
-will allow to enforce tag signing if required.
+On Wed, Jun 05, 2019 at 08:06:07AM -0700, Edward D'Souza via GitGitGadget wrote:
+> From: Edward D'Souza <edsouza@gmail.com>
+> 
+> Clarify the need to set variables like GIT_PS1_SHOWDIRTYSTATE before
+> "source ~/.git-prompt.sh" is executed in your shell init process.
+> 
+> If you set these preferences too late i.e. after .git-prompt.sh executes,
+> they will silently fail to take effect.
 
-The new config-file option tag.gpgSign enforces signed tags. Additional
-command line option --no-sign is added to disable such behavior if
-needed. E.g.:
+I can't reproduce this.  It doesn't matter when these variables are
+set, because __git_ps1() checks them each time it is invoked, it
+always has.
 
-    $ git tag -m "commit message"
+  $ echo $GIT_PS1_SHOWSTASHSTATE $GIT_PS1_SHOWDIRTYSTATE $GIT_PS1_SHOWUNTRACKEDFILES
+  
+  /tmp/repo$ git init
+  Initialized empty Git repository in /tmp/repo/.git/
+  /tmp/repo (master)$ echo 1 >file
+  /tmp/repo (master)$ git add file
+  /tmp/repo (master)$ git commit -q -m initial
+  /tmp/repo (master)$ echo 2 >file
+  /tmp/repo (master)$ git stash 
+  Saved working directory and index state WIP on master: 5ae0413 initial
+  /tmp/repo (master)$ echo 3 >file
+  /tmp/repo (master)$ git add file
+  /tmp/repo (master)$ echo 4 >file
+  /tmp/repo (master)$ >untracked
+  /tmp/repo (master)$ GIT_PS1_SHOWSTASHSTATE=y
+  /tmp/repo (master $)$ GIT_PS1_SHOWDIRTYSTATE=y
+  /tmp/repo (master *+$)$ GIT_PS1_SHOWUNTRACKEDFILES=y
+  /tmp/repo (master *+$%)$ unset GIT_PS1_SHOWSTASHSTATE GIT_PS1_SHOWDIRTYSTATE GIT_PS1_SHOWUNTRACKEDFILES
+  /tmp/repo (master)$ 
 
-will generate a GPG signed tag if tag.gpgSign option is true, while
+Note that some of these status indicators are controlled not only by
+environment variables but by corresponding 'bash.<indicator>' config
+variables as well.  Even if the env var is set to enable the status
+indicator globally, the config setting can still override that to
+allow disabling potentially expensive indicators on a per-repo basis.
+Is it possible that you had e.g. 'bash.showDirtyState = false' in your
+config somewhere?
 
-    $ git tag --no-sign -m "commit message"
+Anyway, even if the issue were real, this patch goes in the wrong
+direction: instead of requiring a workaround from users, we should
+rather fix the issue.
 
-will skip the signing step.
-
-The combination of -u <key-id> and --no-sign not allowed.
-
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
----
- Documentation/config/tag.txt |  7 +++++++
- Documentation/git-tag.txt    |  7 +++++++
- builtin/tag.c                | 23 ++++++++++++++++++-----
- t/t7004-tag.sh               | 21 +++++++++++++++++++++
- 4 files changed, 53 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config/tag.txt b/Documentation/config/tag.txt
-index 663663bdec..675483c3c3 100644
---- a/Documentation/config/tag.txt
-+++ b/Documentation/config/tag.txt
-@@ -8,6 +8,13 @@ tag.sort::
- 	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
- 	value of this variable will be used as the default.
- 
-+tag.gpgsign::
-+	A boolean to specify whether all tags should be GPG signed.
-+	Use of this option when running in an automated script can
-+	result in a large number of tags being signed. It is therefore
-+	convenient to use an agent to avoid typing your gpg passphrase
-+	several times.
-+
- tar.umask::
- 	This variable can be used to restrict the permission bits of
- 	tar archive entries.  The default is 0002, which turns off the
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index a74e7b926d..2e5599a67f 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -64,6 +64,13 @@ OPTIONS
- -s::
- --sign::
- 	Make a GPG-signed tag, using the default e-mail address's key.
-+	The default behavior of tag GPG-signing is controlled by `tag.gpgSign`
-+	configuration variable if it exists, or disabled oder otherwise.
-+	See linkgit:git-config[1].
-+
-+--no-sign::
-+	Override `tag.gpgSign` configuration variable that is
-+	set to force each and every tag to be signed.
- 
- -u <keyid>::
- --local-user=<keyid>::
-diff --git a/builtin/tag.c b/builtin/tag.c
-index ef37dccf86..ec5fd1dcc0 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -33,6 +33,7 @@ static const char * const git_tag_usage[] = {
- 
- static unsigned int colopts;
- static int force_sign_annotate;
-+static int config_sign_tag = -1; /* unspecified */
- 
- static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 		     struct ref_format *format)
-@@ -144,6 +145,11 @@ static int git_tag_config(const char *var, const char *value, void *cb)
- 	int status;
- 	struct ref_sorting **sorting_tail = (struct ref_sorting **)cb;
- 
-+	if (!strcmp(var, "tag.gpgsign")) {
-+		config_sign_tag = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "tag.sort")) {
- 		if (!value)
- 			return config_error_nonbool(var);
-@@ -442,14 +448,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	memset(&opt, 0, sizeof(opt));
- 	memset(&filter, 0, sizeof(filter));
- 	filter.lines = -1;
-+	opt.sign = -1;
- 
- 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
- 
--	if (keyid) {
--		opt.sign = 1;
--		set_signing_key(keyid);
--	}
--	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-+	if (keyid && !opt.sign)
-+		die(_("user key can't be specified with --no-sign option"));
- 
- 	if (!cmdmode) {
- 		if (argc == 0)
-@@ -463,6 +467,15 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (cmdmode == 'l')
- 		setup_auto_pager("tag", 1);
- 
-+	if (opt.sign == -1)
-+		opt.sign = cmdmode ? 0 : config_sign_tag > 0;
-+
-+	if (keyid) {
-+		opt.sign = 1;
-+		set_signing_key(keyid);
-+	}
-+	create_tag_object = (opt.sign || annotate || msg.given || msgfile);
-+
- 	if ((create_tag_object || force) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
- 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 6aeeb279a0..80eb13d94e 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -932,6 +932,27 @@ test_expect_success GPG \
- 	test_cmp expect actual
- '
- 
-+get_tag_header gpgsign-enabled $commit commit $time >expect
-+echo "A message" >>expect
-+echo '-----BEGIN PGP SIGNATURE-----' >>expect
-+test_expect_success GPG \
-+	'git tag configured tag.gpgsign enables GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -m "A message" gpgsign-enabled &&
-+	get_tag_msg gpgsign-enabled>actual &&
-+	test_cmp expect actual
-+'
-+
-+get_tag_header no-sign $commit commit $time >expect
-+echo "A message" >>expect
-+test_expect_success GPG \
-+	'git tag --no-sign configured tag.gpgsign skip GPG sign' \
-+	'test_config tag.gpgsign true &&
-+	git tag -a --no-sign -m "A message" no-sign &&
-+	get_tag_msg no-sign>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG \
- 	'trying to create a signed tag with non-existing -F file should fail' '
- 	! test -f nonexistingfile &&
--- 
-2.22.0.rc3.1.gdcc2db3530.dirty
+> Signed-off-by: Edward D'Souza <edsouza@gmail.com>
+> ---
+>  contrib/completion/git-prompt.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+> index c6cbef38c2..ab5bcc0fec 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -35,6 +35,11 @@
+>  #
+>  # The prompt status always includes the current branch name.
+>  #
+> +# The prompt can be customized by setting various shell variables
+> +# (GIT_PS1_SHOWDIRTYSTATE, GIT_PS1_SHOWSTASHSTATE, etc.), which are described
+> +# below. Make sure that these variables get set *before* the
+> +# "source ~/.git-prompt.sh" line from step 2 (above) runs.
+> +#
+>  # In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty value,
+>  # unstaged (*) and staged (+) changes will be shown next to the branch
+>  # name.  You can configure this per-repository with the
+> -- 
+> gitgitgadget
 
