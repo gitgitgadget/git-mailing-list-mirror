@@ -8,169 +8,122 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98A841F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 08:02:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBCDB1F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 08:12:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbfFEICq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 04:02:46 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60457 "EHLO mout.gmx.net"
+        id S1726531AbfFEIMk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 04:12:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:36043 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726693AbfFEICf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 04:02:35 -0400
+        id S1726467AbfFEIMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 04:12:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559721749;
-        bh=FoSbmVCkJds+z01OEzrxtzbAmVpbL4jL8CaKQGVts28=;
+        s=badeba3b8450; t=1559722348;
+        bh=9olsJFxuPyWSRG4qWWoKX4sVGbX9ZYe7pZ2JEo/v1kk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cBYNUGqtlN7XX+IsC62aT2tOC8/Ow5eCdK566VjL+VTAx3yCwiuCG9qaB8XBMWMZ/
-         /LClQAHDTjm3QjvDlZ61i7t61DrQZJNYoILvEdRnxNQrv4PoIwlCZtJtfl0fQ87s8W
-         aUDtakkljTyZI42tWGEN3z0JaZ5yyBxwXb8YsMXI=
+        b=Y6NjJyYWCQ4TsCLTTjEpcYMvUGCW6yELfhGMRthHVz53AJzD3+b4a7Jn/aw3lFmay
+         QwhJuG56xxQXUOCypN3CKSi8tIeOOwOXyKumYF0fEc+n7Mw4LFqxSyfaNZZBHxPPLz
+         AjrJnxx1yL4HJgI8O7MZECTApsmF9+1mKj9IhBsQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5QJD-1hX3IW2uDF-001OzZ; Wed, 05
- Jun 2019 10:02:29 +0200
-Date:   Wed, 5 Jun 2019 10:02:13 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRGvT-1h8ClX2U07-00UcNi; Wed, 05
+ Jun 2019 10:12:28 +0200
+Date:   Wed, 5 Jun 2019 10:12:12 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] config: learn the "onbranch:" includeIf condition
-In-Reply-To: <nycvar.QRO.7.76.6.1905312214331.1775@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1906050953050.1775@tvgsbejvaqbjf.bet>
-References: <7b60e58ba554768fd915e4f5c00a97737707ed42.1559263024.git.liu.denton@gmail.com> <3573995264441c50ea9529b3ee926d1ed3ec4ac8.1559330905.git.liu.denton@gmail.com> <nycvar.QRO.7.76.6.1905312214331.1775@tvgsbejvaqbjf.bet>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 0/5] Fix fetch regression with transport helpers
+In-Reply-To: <20190604021330.16130-1-felipe.contreras@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906051005060.1775@tvgsbejvaqbjf.bet>
+References: <20190604021330.16130-1-felipe.contreras@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+lYbc+XlTw+pjuh65BAIdMBIoIX/clv6Hw9e0Em9y4H96yoUGil
- Q0UmWnBR+T2vDx8uy6LczKp4eZZXi1YXWFEkolIkv/4KBc5STXKgtssdXVOTD6IktBj7iBo
- HU+SDgmI44eiYReLm1E3IZ8FQvVjXMdO1lFwmv7/IuQWZ8O6WYupfNZLNnc95zrO6zkL2Yd
- 88Hh9pozel/nP4RRsaorA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DsU5xp6WRDQ=:uwpIu5E/PsXv4384v/iPpv
- n9/YXwBRcvrA3XAtX2mFvUG62/aPNPqRvROlUho2p4dby55H3gH9aJ/6PsFFpmm0L+SQcZQ69
- 3+P41yVAN24pPUCgPYxrDxcUSri/2AISmlpqERApFKZ15mRj1HiE2KDPo8Unt3rfbMArV/Gsu
- ambxAQIWiEVjzJeljtYCdmOVSseHBO6bGKXz9+PPY42NUuD5VrVl/gMjic43cLpxO8tuRtd5R
- BS9/pClBBESzcVfc28N0a+dIqDjvBE8RyM7JZ36yNkEXkkwj3sDoibhbiTWdxnThzH9eGfel+
- MJoDF3SpTwLhQ0d0qn+avGZjM+8zN4wzcTMRtItbXqCxEmMvp9Vah/niD+6aRPr+s4KH+wAXv
- qPkksOOKIB2QTm/QHNXpMmjCLfZBxwzpjPvwgYQ+gl53aFaM29LLX5Y3Mct9oSsY9RRwQfmu5
- Q7tlWiURdT1wYassQmG4/Fr6T8ROabMfMtrLi0rGIbbHmEk7GAkz2OHVuLTkbYKlXcVk9A/2o
- OjUt6zIRS31Gxp0D0yWpnoc6W+/lANNMg7XEk2uWfVJWC9GeIVRNo7pB1rGNQvLJPaJtKA/UD
- UsA4JEZUU95ktFrTmZwyxOI+m93ma0pXYuakS4/195anoIqhH7BC+Yov0LgzNS5kP+4kRWUhp
- gnnRniaLqivWppIDTTdoGPpFx7VIMOnT22B0xyoeBGLSs7uS+9t2b/IU7u3xvOdPudmd+xiJk
- 5Px3dusiuw1NQTcpR3sAAYSLEIjQxKS0sMbLN0K6kw5JVzl+4e9Odd4j/y4qprvlU5GJq98lh
- m2XftlmQyujyyj2rJELEy3tKwHT2nDFdZ4pLSxoAAwfvv9LBEMKuXoycxjNuiKCK7soVkCq4I
- NI5IPxeU0zhthmne4AQjbkhOnpvHqDTv2uKxGqLERb9LJido2Z9sJzA6cQxAVU9omCYU9K5UQ
- phgy+fADyECz8l6CGzAg+MkLy/SnE2ogOJmENcaD4yWvD5CxObBFj
+X-Provags-ID: V03:K1:0tpZQIX+tFdwhrWyni6cmSM3TcP1LyPZzCAeKJDPXivsn9vt6cQ
+ q8015mAgwRuLOhDqSK0kkNRSfgl/1y08q8q64KTN3eBfuru3p4mIXiYPswY9/lsePgTWXDf
+ nFxA/6MJkkDEIirqNfpQIikLioiBb8HdGP6FxAnWNCHi+cLJFUMrzlW+yinW7LUFdyU8CH3
+ j7IosQcYLvOjmaFpXADdw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:K1d2G7qhrjk=:fF5eIB5mYu+4w0VtTWqF7c
+ yBz/J3Sb3g3/knO1nkzrA3Nivx05tOmwM5YOoEkeIf3/+ZSH4FpUvZtxFYCFd7r2CpU9kqrnO
+ gwsThZ7OlgXv+nUG5NfXGd6nZ5yfvamor0QCzFww/q0B2J1hFyBQoAfpqam4l6HJsU/+o2vW4
+ sdOtk3MyhBnw+hK7n44imDPkAP2Snw6Akl01tIgRF5NCwfI5hOVQHLciJLD9Y/OgWetPtaTrC
+ q6dqVqUQjYm0+T1znDSYM8frOsyCXuTjm/0q29pDEaMYQU5I1oC69N8Xnz5sS1hhOjQBaK44x
+ Gh2fJWyPgCBWac2NWTMP4KLGl3dtkH1Hbx4GJkBF8I9esbNcCGeBMjwG44h0rvbEOzDaIuxw4
+ ZJHzfITDsLf1yL7K5plK73nHjMkvQCrxKpHfCYVwVlEvShn+0xWFzL+YVxa3TiHtENMRKSKFR
+ q/n+2MotzPeDTCgGgLg2iVH+OPEdxXHIwjuaZP6vXHPZOJa+uM9BGTlt7RPVGtCr7Px2cu1iT
+ E6Iu6cQ9mgT6QQCc7o2OzfKzOEp9OE+uctaSdhXmRTRD6lNtYWEkXHbdWIokK9CQJwlo5weD1
+ hUo64VSIJwVL7GqJqjCDSkqExedBroA17KEErUWZHlQ1FSw366lJQura3Fo1GHCjYk2adZbpD
+ nYJ0wMyiFanE3HTJdqO9TAUvQ+aGHDsvXyNGRAxI10FvEmokmBlPhIqocms9+Ydmr/Dp5MY6T
+ yBMrs4c2p/ESZbizV+E+hoDy/RnaTVeTvdiX8/sDZSXskV4YIT5p5TupfcZoQ9E/wrya4GXS3
+ ZB+n6G7e4PDFIKUv142xVPRf6+gW1h9VhatKwX0KUXVNAWAF/yBVsxpUX7TtBKN6oi09fC67r
+ 4j3a4beID5/y0X9YWcHk026TgYsgSHPMfHhzjH0EHn2GoHKnP6DBeIUTa/kfkoJd9jz9t16qj
+ gfyiDHboIuPLinZ+xdGvpJTmTBFc1zNq6BOWAWwgVPzYNxju3DBnD
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+On Mon, 3 Jun 2019, Felipe Contreras wrote:
 
-On Fri, 31 May 2019, Johannes Schindelin wrote:
-
-> On Fri, 31 May 2019, Denton Liu wrote:
+> Felipe Contreras (5):
+>   t5801 (remote-helpers): cleanup refspec stuff
+>   t5801 (remote-helpers): add test to fetch tags
+>   fetch: trivial cleanup
+>   fetch: make the code more understandable
+>   fetch: fix regression with transport helpers
 >
-> > Currently, if a user wishes to have individual settings per branch,
-> > they are required to manually keep track of the settings in their head
-> > and manually set the options on the command-line or change the config
-> > at each branch.
-> >
-> > Teach config the "onbranch:" includeIf condition so that it can
-> > conditionally include configuration files if the branch that is
-> > checked out in the current worktree matches the pattern given.
->
-> This looks good to me.
+>  builtin/fetch.c            | 28 ++++++++++++++++++----------
+>  t/t5801-remote-helpers.sh  | 18 ++++++++++++++----
+>  t/t5801/git-remote-testgit | 22 +++++++++++++---------
+>  3 files changed, 45 insertions(+), 23 deletions(-)
 
-... actually...
+This fails on macOS, in t5601, both in our osx-clang and osx-gcc jobs, as
+well as in the StaticAnalysis job. For details, see
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D10206
 
-> > diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> > index 579a86b7f8..05c7def1f2 100755
-> > --- a/t/t1305-config-include.sh
-> > +++ b/t/t1305-config-include.sh
-> > @@ -309,6 +309,39 @@ test_expect_success SYMLINKS 'conditional include=
-, gitdir matching symlink, icas
-> >  	)
-> >  '
-> >
-> > +test_expect_success 'conditional include, onbranch' '
-> > +	(
-> > +		cd bar &&
+The t5601 failure looks like this:
 
-This `bar` is a side effect of an earlier test case. To be precise, of
-this test case:
+=2D- snip --
+checking prerequisite: CASE_INSENSITIVE_FS
 
-test_expect_success SYMLINKS 'conditional include, gitdir matching symlink=
-' '
-	ln -s foo bar &&
-	(
-		cd bar &&
-		echo "[includeIf \"gitdir:bar/\"]path=3Dbar7" >>.git/config
-&&
-		echo "[test]seven=3D7" >.git/bar7 &&
-		echo 7 >expect &&
-		git config test.seven >actual &&
-		test_cmp expect actual
-	)
-'
+mkdir -p "$TRASH_DIRECTORY/prereq-test-dir" &&
+(
+	cd "$TRASH_DIRECTORY/prereq-test-dir" &&
+	echo good >CamelCase &&
+	echo bad >camelcase &&
+	test "$(cat CamelCase)" !=3D good
 
-As you can see, this test case is marked with the `SYMLINKS` prerequisite,
-and hence can be skipped.
+)
+++ mkdir -p '/Users/vsts/agent/2.150.3/work/1/s/t/trash
+directory.t5601-clone/prereq-test-dir'
+++ cd '/Users/vsts/agent/2.150.3/work/1/s/t/trash
+directory.t5601-clone/prereq-test-dir'
+++ echo good
+++ echo bad
++++ cat CamelCase
+++ test bad '!=3D' good
+prerequisite CASE_INSENSITIVE_FS ok
+expecting success:
+	grep X icasefs/warning &&
+	grep x icasefs/warning &&
+	test_i18ngrep "the following paths have collided" icasefs/warning
 
-I got a crazy idea, though: how about `cd foo` instead of `cd bar`? It
-should still work, as `bar` is just a symbolic link (unless that test case
-has been skipped, in which case `bar` does not even exist) to `foo`.
+++ grep X icasefs/warning
+error: last command exited with $?=3D1
+not ok 99 - colliding file detection
+=2D- snap --
 
-And while this still relies on a side effect of an earlier test case
-('conditional include, both unanchored', to be precise), at least that
-test case cannot be skipped because of a missing prerequisite.
+My guess is that your changes remove something that was expected before,
+and is still expected, and that this was only tested on Linux, and only on
+a file system with case-sensitive file names.
 
-The same `s/cd bar/cd foo` applies to the second test case in this patch,
-too, of course.
+The StaticAnalysis job (which is admittedly a misnomer) points out another
+few valid issues, but that is probably because Junio applied this patch
+series on top of a very old commit. I, at least, could not spot any file
+in the Coccinelle report that was touched by this here patch series.
 
-Thanks,
-Dscho
-
-> > +		echo "[includeIf \"onbranch:foo-branch\"]path=3Dbar9" >>.git/config=
- &&
-> > +		echo "[test]nine=3D9" >.git/bar9 &&
-> > +		git checkout -b master &&
-> > +		test_must_fail git config test.nine &&
-> > +		git checkout -b foo-branch &&
-> > +		echo 9 >expect &&
-> > +		git config test.nine >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> > +'
-> > +
-> > +test_expect_success 'conditional include, onbranch, wildcard' '
-> > +	(
-> > +		cd bar &&
-> > +		echo "[includeIf \"onbranch:?oo-*/**\"]path=3Dbar10" >>.git/config =
-&&
-> > +		echo "[test]ten=3D10" >.git/bar10 &&
-> > +		git checkout -b not-foo-branch/a &&
-> > +		test_must_fail git config test.ten &&
-> > +
-> > +		echo 10 >expect &&
-> > +		git checkout -b foo-branch/a/b/c &&
-> > +		git config test.ten >actual &&
-> > +		test_cmp expect actual &&
-> > +
-> > +		git checkout -b moo-bar/a &&
-> > +		git config test.ten >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> > +'
-> > +
-> >  test_expect_success 'include cycles are detected' '
-> >  	cat >.gitconfig <<-\EOF &&
-> >  	[test]value =3D gitconfig
-> > --
-> > 2.22.0.rc1.169.g49223abbf8
-> >
-> >
->
->
+Ciao,
+Johannes
