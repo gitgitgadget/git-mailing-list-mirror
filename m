@@ -2,146 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13951F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 19:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 583071F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 19:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbfFET0u (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 15:26:50 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:40624 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726305AbfFET0u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 15:26:50 -0400
-Received: by mail-yw1-f66.google.com with SMTP id b143so2138123ywb.7
-        for <git@vger.kernel.org>; Wed, 05 Jun 2019 12:26:50 -0700 (PDT)
+        id S1726528AbfFETkv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 15:40:51 -0400
+Received: from mail-qk1-f181.google.com ([209.85.222.181]:39849 "EHLO
+        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726305AbfFETkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 15:40:51 -0400
+Received: by mail-qk1-f181.google.com with SMTP id i125so5938734qkd.6
+        for <git@vger.kernel.org>; Wed, 05 Jun 2019 12:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/r80IDaC6NUmAoGpHuEqiRsIICIsr/3zZddh2qUi1d4=;
-        b=Q1SW4cCWKN2Sbfvcv9iFZeG3XCQHAGnPcRlbfynnHidZ9K6YUdPNcI/rJ/uNoCmsB4
-         bT2NkVeTUx3kLDEFuedrlviawd9HXoVWlGHwgbkbALF3QggLxtN5ocEfm6SzjottSvGk
-         OZwo8xrYZEGU50/iAPgrBm0CxVl6a2dEolkohVEqxmpdkxW/V76n8kPG18sG2bVPh83G
-         x144lgWObxO92XhlxLzENEt/m/NGlN15T0dx8UqbnpjDXthEVSFDVGbDlmETOsMbAWCk
-         8d58UpPOlK7WfnLL4sGNfawDxAMpowVvGCbPHRqpy4kcyyO4NqT+7jVHCEDP3ZHOBUSK
-         PATQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=g0L5WuUEenU2EgKq1woau1GKAkItzUmv5XspcfqmEww=;
+        b=OtbLsDwdotc1XK+ZlPNB//xZnxlqEzuefxyj2ByyywpovDA0Cew4LnplKk1BYIsaRG
+         l4ZAFutgsFuN1ZKQA//NsDw5Cn95gJrANxhfuXPxC6A8GgVD7WykIVzAQx6+owOJYOnc
+         5jZEUDeSJvgsDKY1HimYZ8qubIHZTpMNaK35cUVj9fDjT1wtkzuNnso10VY/N3c3rPkX
+         L1b535LTxXyDNZs0MuyyaXo8XL712h0ueHVLuqqBOHynQbFdvOn6B3xFTmD9Pg2P7+Uz
+         sKbc7frJE5yntFMd4Xb+7JMICfZ/vHbituQWn5P9903tKg6rmg57XlOQtv1WMYEwMlkV
+         UtcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/r80IDaC6NUmAoGpHuEqiRsIICIsr/3zZddh2qUi1d4=;
-        b=aDQTeLc7iWDqIiW7b00GOcWmS96kJnSyN1ZHPhJ3yiGOGePKHF7+l5wDp1KnvX5l77
-         LLwKGar6ZHMfyJaP64oIUP3T6S88juckFVtlGuuT6eOhY69gP4bWnN6kHeZsLWAmCAE0
-         xsf56CGeE5HGPKC0CiWNmeBxf9w3dUkCTyv5MZQOaPyTKVmyY8exSJNsmGputE2i9v+Y
-         B/yH2sVKE/PgLPw5sk/pxx/BpW7pfMxMvG70M0V/09Sm2MHClnYXsIGkY+HLOcyY90f8
-         DisfA1YUxwUyzWaRDXiYQIWA23iAnF2FOJeXNnuY7LU91qW5KoJ3guVzmcKcC1xZ3FmA
-         1Fng==
-X-Gm-Message-State: APjAAAU8awzQ0RFKNim43MBf97U02wfdZSnu2lvsva+B/WkMKURbtswR
-        mmBXejqcXuWOhqGUpJv3Mhjg/uGJlZ4mfV4BZj4=
-X-Google-Smtp-Source: APXvYqx5lylziYFKX5hwyZeT01yL7SDc7dHv2kOn9J+KkCiYkWoEgNorK474orZHlDFZI6tR2u3IsUfHO/8EFsJwmUY=
-X-Received: by 2002:a81:2186:: with SMTP id h128mr3729764ywh.467.1559762809691;
- Wed, 05 Jun 2019 12:26:49 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=g0L5WuUEenU2EgKq1woau1GKAkItzUmv5XspcfqmEww=;
+        b=So+93+ptQwOtQn9F3vr1pLMBDq5SQe0p0gxGuYbQoXwEq/oX+Hfxr4xLPxPrZAHf0w
+         mGNGPqSQb64Rd/RTZ9vgO9/q9z4RHcdgrVwsV2JBJf+uMFqUGgZ0gYk+Nnq1SjqNrLb+
+         VEQwXkryAEHfjU8kt6SU4hUaVtUjBjHX/0QxmUNNbHUXXRTVCAeX/4chv/zBC8OOoVVC
+         g253c7I+EcqQVWcxV2xf2Jz7U7a4eGhAb/b7VJPrY0YlJelDwsfgBSrBK/HXuSW2VO7u
+         49SsS2yyS/L2vrJ5Dyj/JSx+Tk6l6Hb2hK5/CMTk3ibOrCQ0U5i1rpeAJuIyRH21KHbH
+         /GMQ==
+X-Gm-Message-State: APjAAAWxtl8uqlA0Q+7DO6Swn6z5VhuGNlabvipaL27iktL2tpSwPJ3z
+        Iqh90TcqZHox76ghvoCQLGipUAb8CK8=
+X-Google-Smtp-Source: APXvYqzaM/1c12nQeIQRZT3yA2OWMzCArMMNldT9ijgJIvN4Cz7/SNKqD3pX+NcPnrsqJZusGdYPQw==
+X-Received: by 2002:ae9:ed48:: with SMTP id c69mr34255769qkg.114.1559763649974;
+        Wed, 05 Jun 2019 12:40:49 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:f8bc:cb1d:88e9:2127? ([2001:4898:a800:1012:a9f0:cb1d:88e9:2127])
+        by smtp.gmail.com with ESMTPSA id k5sm11022735qkc.75.2019.06.05.12.40.49
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jun 2019 12:40:49 -0700 (PDT)
+Subject: Re: [PATCH] t5551: test usage of chunked encoding explicitly
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <20190605192624.129677-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <38419c39-cf69-099e-7ab1-2d4c4d9fbb74@gmail.com>
+Date:   Wed, 5 Jun 2019 15:40:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-References: <pull.255.git.gitgitgadget@gmail.com> <0074d3da7ad402043d58ebb107435ce955a347f5.1559747165.git.gitgitgadget@gmail.com>
- <20190605160656.GU951@szeder.dev>
-In-Reply-To: <20190605160656.GU951@szeder.dev>
-From:   "Edward D'Souza" <edsouza@gmail.com>
-Date:   Wed, 5 Jun 2019 15:26:38 -0400
-Message-ID: <CAH-P7x5t76wpjj--xvQAsqAMp7WTdsOKvou=13qpMJkuWOBzow@mail.gmail.com>
-Subject: Re: [PATCH 1/1] git-prompt.sh: update shell variable instructions.
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     "Edward D'Souza via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190605192624.129677-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Confirming that I can't reproduce this either. Should have done that
-first before continuing with a PR from two years ago!
+On 6/5/2019 3:26 PM, Jonathan Tan wrote:
+> When run using GIT_TEST_PROTOCOL_VERSION=2, a test in t5551 fails
+> because 4 POSTs (probe, ls-refs, probe, fetch) are sent instead of 2
+> (probe, fetch).
+> 
+> One way to resolve this would be to relax the condition (from "= 2" to
+> greater than 1, say), but upon further inspection, the test probably
+> shouldn't be counting the number of POSTs. This test states that large
+> requests are split across POSTs, but this is not correct; the main
+> change is that chunked transfer encoding is used, but the request is
+> still contained within one POST. (The test coincidentally works because
+> Git indeed sends 2 POSTs in the case of a large request, but that is
+> because, as stated above, the first POST is a probing RPC - see
+> post_rpc() in remote-curl.c for more information.)
+> 
+> Therefore, instead of counting POSTs, check that chunked transfer
+> encoding is used. This also has the desirable side effect of passing
+> with GIT_TEST_PROTOCOL_VERSION=2.
 
-On Wed, Jun 5, 2019 at 12:07 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Wed, Jun 05, 2019 at 08:06:07AM -0700, Edward D'Souza via GitGitGadget=
- wrote:
-> > From: Edward D'Souza <edsouza@gmail.com>
-> >
-> > Clarify the need to set variables like GIT_PS1_SHOWDIRTYSTATE before
-> > "source ~/.git-prompt.sh" is executed in your shell init process.
-> >
-> > If you set these preferences too late i.e. after .git-prompt.sh execute=
-s,
-> > they will silently fail to take effect.
->
-> I can't reproduce this.  It doesn't matter when these variables are
-> set, because __git_ps1() checks them each time it is invoked, it
-> always has.
->
->   $ echo $GIT_PS1_SHOWSTASHSTATE $GIT_PS1_SHOWDIRTYSTATE $GIT_PS1_SHOWUNT=
-RACKEDFILES
->
->   /tmp/repo$ git init
->   Initialized empty Git repository in /tmp/repo/.git/
->   /tmp/repo (master)$ echo 1 >file
->   /tmp/repo (master)$ git add file
->   /tmp/repo (master)$ git commit -q -m initial
->   /tmp/repo (master)$ echo 2 >file
->   /tmp/repo (master)$ git stash
->   Saved working directory and index state WIP on master: 5ae0413 initial
->   /tmp/repo (master)$ echo 3 >file
->   /tmp/repo (master)$ git add file
->   /tmp/repo (master)$ echo 4 >file
->   /tmp/repo (master)$ >untracked
->   /tmp/repo (master)$ GIT_PS1_SHOWSTASHSTATE=3Dy
->   /tmp/repo (master $)$ GIT_PS1_SHOWDIRTYSTATE=3Dy
->   /tmp/repo (master *+$)$ GIT_PS1_SHOWUNTRACKEDFILES=3Dy
->   /tmp/repo (master *+$%)$ unset GIT_PS1_SHOWSTASHSTATE GIT_PS1_SHOWDIRTY=
-STATE GIT_PS1_SHOWUNTRACKEDFILES
->   /tmp/repo (master)$
->
-> Note that some of these status indicators are controlled not only by
-> environment variables but by corresponding 'bash.<indicator>' config
-> variables as well.  Even if the env var is set to enable the status
-> indicator globally, the config setting can still override that to
-> allow disabling potentially expensive indicators on a per-repo basis.
-> Is it possible that you had e.g. 'bash.showDirtyState =3D false' in your
-> config somewhere?
->
-> Anyway, even if the issue were real, this patch goes in the wrong
-> direction: instead of requiring a workaround from users, we should
-> rather fix the issue.
->
-> > Signed-off-by: Edward D'Souza <edsouza@gmail.com>
-> > ---
-> >  contrib/completion/git-prompt.sh | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> >
-> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-> > index c6cbef38c2..ab5bcc0fec 100644
-> > --- a/contrib/completion/git-prompt.sh
-> > +++ b/contrib/completion/git-prompt.sh
-> > @@ -35,6 +35,11 @@
-> >  #
-> >  # The prompt status always includes the current branch name.
-> >  #
-> > +# The prompt can be customized by setting various shell variables
-> > +# (GIT_PS1_SHOWDIRTYSTATE, GIT_PS1_SHOWSTASHSTATE, etc.), which are de=
-scribed
-> > +# below. Make sure that these variables get set *before* the
-> > +# "source ~/.git-prompt.sh" line from step 2 (above) runs.
-> > +#
-> >  # In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty value,
-> >  # unstaged (*) and staged (+) changes will be shown next to the branch
-> >  # name.  You can configure this per-repository with the
-> > --
-> > gitgitgadget
->
+I'm all for testing the _right_ thing.
+
+> -test_expect_success 'large fetch-pack requests can be split across POSTs' '
+> +test_expect_success 'large fetch-pack requests can be sent using chunked encoding' '
+>  	GIT_TRACE_CURL=true git -c http.postbuffer=65536 \
+>  		clone --bare "$HTTPD_URL/smart/repo.git" split.git 2>err &&
+> -	grep "^=> Send header: POST" err >posts &&
+> -	test_line_count = 2 posts
+> +	grep "^=> Send header: Transfer-Encoding: chunked" err
+>  '
+
+And this does seem to be testing what you now claim it tests.
+
+LGTM.
+-Stolee
+
