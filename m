@@ -2,68 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97D031F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 18:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 639221F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 19:26:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbfFESsq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 14:48:46 -0400
-Received: from st43p00im-ztfb10073301.me.com ([17.58.63.186]:58812 "EHLO
-        st43p00im-ztfb10073301.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725950AbfFESsq (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Jun 2019 14:48:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=04042017; t=1559760525;
-        bh=LNmfdmYaAgGYdva+O2lgv8m/ZN+b+N5VooSE/uPgbmE=;
-        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
-        b=ZcQA1wxK/TqwIgVEGjLgsElmxO2zz6h/4HOLl3BMbNMXzi2IqNEFT5ZUagSrx4aLN
-         8JPgSaRlxSpl1t6DJlqHABaEVerenBFrV7Y+/ofjhAXimUGLOgl0RIocWQzwxLjwnT
-         DbtRTu/jebIvVvIddu1FEO4iJaWGLdQrYitvS+/KG6ZE7gmB6otmj8355bvmfD8DzD
-         aCI/U057SI8Ts645mWAPTgKlG7SQBoPjJV80emGVG09EfM8jT7/uNnwx/wGeThFWd0
-         DyrCbTtgiE6OhxDA+l5PxQ9Z+xz3MCPxQCpuFyBB/4AWKNpKftv61xTXz/Hb2y2coq
-         M7orEbPdwVexQ==
-Received: from [10.0.0.129] (unknown [46.229.173.224])
-        by st43p00im-ztfb10073301.me.com (Postfix) with ESMTPSA id 118E29403C7;
-        Wed,  5 Jun 2019 18:48:45 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From:   April Joy Diaz <asawaqoh001@icloud.com>
-Mime-Version: 1.0 (1.0)
-Date:   Thu, 6 Jun 2019 02:08:47 +0800
-Subject: Xender App
-Message-Id: <8F952AAB-474D-4E0F-8F00-CC487951162B@icloud.com>
-To:     "@gmail.com.ph.org 192.168.1.100:8080" <git@vger.kernel.org>,
-        Gabriel888@shareit.com, "@ gabriel888" <tonyomontana@gmail.com>,
-        Facebook <SeanMiko88@gmail.com>, appleid@id.apple.com,
-        Shoeboxed <asawaqoh001.3983@shoeboxed.com>,
-        help@team.shoeboxed.com, support@apple.com,
-        "@gmail.com.ph.org 192.168.1.100:8080" 
-        <reyesapriljoy01@gmail.com.org>, translate@mysms.com,
-        "@ gabriel888" <Gabriel888@gmail.com>, asawaqoh001@gmail.com,
-        =?utf-8?B?44Ko44Kk44OX44Oq44OrMTQg5bCP5r6k?= 
-        <chukokdiaz23@gmail.com>,
-        =?utf-8?B?44Ko44Kk44OX44Oq44OrMTQg44GC44Gq44Gf44Gu44OW44Op44Km?=
-         =?utf-8?B?44K244O844Gn44Gv?= <reyesapriljoy001@gmail.com>
-X-Mailer: iPhone Mail (16F156)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-06-05_11:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=2 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=2 clxscore=1015 mlxscore=2
- mlxlogscore=173 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1812120000 definitions=main-1906050116
+        id S1726515AbfFET03 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 15:26:29 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:51351 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726305AbfFET03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 15:26:29 -0400
+Received: by mail-pl1-f201.google.com with SMTP id d2so16682330pla.18
+        for <git@vger.kernel.org>; Wed, 05 Jun 2019 12:26:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=vBDM7PQbQBN3GWtFL9iJ2l/dj9SpOjlWgDfcpsTG34U=;
+        b=aG+3RuxiO/C51ZvfooGp0/pdnicBn43LktLR8Wr3NvYZbG0HNQ3W76fJsOO5pSf7rT
+         usDxZbAUDVgHKGTfeuhU+LGrcQ3viqWIfVXpjtrkO28cvLseJbh9l+zN2XEQDJcIXHZK
+         v9A8/wuyivO3tdPF+qtgFr9N1AEai0O+gLE3lckG1+FjUYY4XAYzVVIUgpIDPvkOv2uQ
+         +xHO6NgAprIh0DFLEbkVetJEl90CC6q+rtFcKDTyzIHE1wRtEFtjkdMZJsNJu9heem1t
+         3UvYE2riMX66bt/KD7jvZHaio+29JlPXt9KYcXgEUkMuOtKrfli4EOc8T/Er9esvjLay
+         jK/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=vBDM7PQbQBN3GWtFL9iJ2l/dj9SpOjlWgDfcpsTG34U=;
+        b=tc0X9TO2UXhkgZLXZzb8V+6j8bM0VhnHz2iRoDWciT8zN6DKbOvRfMb2ExtMTWngtn
+         JwEqwdf4yepPaRPfZPRcC/LtlK8WY3Riv1T7+ZP9Q2dQQp4cqFpYlcL7pI6MNlXPoSLw
+         vEp7lsp2Iw2BNZl/+p2wV+vaZEBbA7HjuVzfR8WCQ+tMrjoXzSqPuxqj6U1jBuCJCHKl
+         Ah/Xt7iRRicrYCkTzON4R3CSg9PfQ0sEFLza0/bHatSVEEkWRN7p2GQyJhH/ocVCeYnX
+         fSpMt8bjpXCs9M2dK+xuNf70mFyWtdaWr5k+BauVwsCLD5r4CRlxKyhusCdmoBq9lS2w
+         PV8g==
+X-Gm-Message-State: APjAAAWM5OubBe7hmmOBinrAf8aPR4CZP9acV9fm6jJZ9wRvQcXImMTO
+        MlL7rh5GlsRGTA301kULux0T+pvSeRWMwyoJzpJdo0jd4W2ZTkHKs48yD1I/MiI0J+USL1hRVow
+        16KJovWlDfxzeSqmzckzTolGpYdcxDFeVTPasobcugbQsuhSFFRd+vicBnNwtPf2K+Io/CccuA0
+        Nw
+X-Google-Smtp-Source: APXvYqywb1IwEDlkD/DSsOgGFrlNKamJHW/VMZdJjigbznbuDiAexGWOCTd9kGdP+Ql3vKG0FG0ugz0zX5/26Aa/Wg3i
+X-Received: by 2002:a63:c20c:: with SMTP id b12mr409883pgd.3.1559762788375;
+ Wed, 05 Jun 2019 12:26:28 -0700 (PDT)
+Date:   Wed,  5 Jun 2019 12:26:24 -0700
+Message-Id: <20190605192624.129677-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
+Subject: [PATCH] t5551: test usage of chunked encoding explicitly
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have found a file transfer app which is much faster than Bluetooth. Try Xe=
-nder for iOS:! Http://goo.gl/VIgi5l other platforms: http://goo.gl/qCCrt4
+When run using GIT_TEST_PROTOCOL_VERSION=2, a test in t5551 fails
+because 4 POSTs (probe, ls-refs, probe, fetch) are sent instead of 2
+(probe, fetch).
 
+One way to resolve this would be to relax the condition (from "= 2" to
+greater than 1, say), but upon further inspection, the test probably
+shouldn't be counting the number of POSTs. This test states that large
+requests are split across POSTs, but this is not correct; the main
+change is that chunked transfer encoding is used, but the request is
+still contained within one POST. (The test coincidentally works because
+Git indeed sends 2 POSTs in the case of a large request, but that is
+because, as stated above, the first POST is a probing RPC - see
+post_rpc() in remote-curl.c for more information.)
 
-Gabriel888@gmail.com=
+Therefore, instead of counting POSTs, check that chunked transfer
+encoding is used. This also has the desirable side effect of passing
+with GIT_TEST_PROTOCOL_VERSION=2.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+With this change, all tests pass at master with
+GIT_TEST_PROTOCOL_VERSION=2.
+---
+ t/t5551-http-fetch-smart.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index ac74626a7b..aed2d9bb05 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -301,11 +301,10 @@ test_expect_success CMDLINE_LIMIT \
+ 	)
+ '
+ 
+-test_expect_success 'large fetch-pack requests can be split across POSTs' '
++test_expect_success 'large fetch-pack requests can be sent using chunked encoding' '
+ 	GIT_TRACE_CURL=true git -c http.postbuffer=65536 \
+ 		clone --bare "$HTTPD_URL/smart/repo.git" split.git 2>err &&
+-	grep "^=> Send header: POST" err >posts &&
+-	test_line_count = 2 posts
++	grep "^=> Send header: Transfer-Encoding: chunked" err
+ '
+ 
+ test_expect_success 'test allowreachablesha1inwant' '
+-- 
+2.22.0.rc1.311.g5d7573a151-goog
 
