@@ -2,120 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 181E91F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 12:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 991E81F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 12:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727795AbfFEMWj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 08:22:39 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:39000 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727337AbfFEMWi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 08:22:38 -0400
-Received: by mail-io1-f68.google.com with SMTP id r185so20020063iod.6
-        for <git@vger.kernel.org>; Wed, 05 Jun 2019 05:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JUSCinmgKSTRVeGoYKAoo07pqKuv8f+Wl76nWpJ31ho=;
-        b=UZZ6yrLqIaMnSpt7kMiZbSmvZbe47PQYGvOEomYhQVSC6hISH+9sgWh7W22qx6oxRE
-         3rsCqc/j6yPQt1tjactpFxeyblUw8AQpbNM1UFCfasjZ4Rd7iXpQFst4DbHSQP7TpXCl
-         g0OGs8gcc43Zkk3/OyVIa/gE8tqd5WUm0j1Txkx+Xg/O5a4worPeqz6eUc2ysvXmx29K
-         Akh2RuLiZlkZv4szfdbsHpNYcLiTEgIkDY6OsFgC2aROLZKKnVhIIlRmHvg85yJsyK7T
-         TPkdBX+A5BFDLfkRWMV59rkBK6BPQffGfCgVvUFydNalGVILb0ywmhwxfG2/DC8FAAYt
-         zWJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JUSCinmgKSTRVeGoYKAoo07pqKuv8f+Wl76nWpJ31ho=;
-        b=CbbW3boprvY2zBIJ8gyLiiQ1MLnuykkueJFw9UTQpC2dmpOdmF+WxHnlOp9Oj+YRTC
-         +IhY4hw8ClsPom4jWq1rx3gUxNow66/nFEXablmxOaxMpIBSm1R/cHleCYl2BU3H+5+G
-         eW4PZGisQCEWicRTQaC5/qvE/smji0d9jsdfDykGTvEThaiPhI6PKOHv0bp+4igTGOPS
-         lUOcAPDZLnRJJXTtVCSCTOLgkNRxHsj1jfAntIVNPCHd6AVEwh6a2KYlAYQz0FulcfFc
-         858OWXfHJ/h4Xrt3UwJdSn+Y4ifxdGZxyjri56RFy1u6UNT0mcafKSzp5JNsg29rDwMz
-         TWIg==
-X-Gm-Message-State: APjAAAXQpLWBZQkRfDXHxu+Y/R7hxeRQbf4xd98DskfCdzapKkNB1sDn
-        d6Qnu6jTxHJja+5WWLblOP0dAVdt9Ivq6qALW4k=
-X-Google-Smtp-Source: APXvYqzH1eoViTj1FEoKzr2PshYMogYXMEWVFuOOAHyQVvLn1GoneeguRpvtiFezkaqrP+iQjQbuVwyiQrA3QMHfkkk=
-X-Received: by 2002:a6b:fa04:: with SMTP id p4mr6321233ioh.273.1559737357872;
- Wed, 05 Jun 2019 05:22:37 -0700 (PDT)
+        id S1727515AbfFEMhd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 08:37:33 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60091 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727273AbfFEMhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 08:37:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559738251;
+        bh=X7OChrVqnqjddkmusA3dE2wAnXBTqP7bQJHa66T2B3E=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=cSFTKUbub1XYsbBo3EYkmn9Y0GPCPDZrk8RcubbsSqxwYW7yPXg1ovhka9TJnj3Gp
+         X/VX4K837l5i3KeVu0Kx0wKjha0V+wOpEHivBVb+VUsQ0Ek7AlLdCLHpSLmyP0WLNP
+         yc59JqjmkNK8XFmIOIzupBQxZYBgEZElyaDO2lOU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkYbu-1gqstQ3O9u-00m0Hi; Wed, 05
+ Jun 2019 14:37:30 +0200
+Date:   Wed, 5 Jun 2019 14:37:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] config/alias.txt: document alias accepting non-command
+ first word
+In-Reply-To: <13d9ddd3541e3815078c4853c6f7c25cddd89126.1559333840.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906051434500.1775@tvgsbejvaqbjf.bet>
+References: <cover.1559333840.git.liu.denton@gmail.com> <13d9ddd3541e3815078c4853c6f7c25cddd89126.1559333840.git.liu.denton@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190604021330.16130-1-felipe.contreras@gmail.com>
- <nycvar.QRO.7.76.6.1906051005060.1775@tvgsbejvaqbjf.bet> <20190605112713.GA14027@sigill.intra.peff.net>
-In-Reply-To: <20190605112713.GA14027@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Jun 2019 19:22:11 +0700
-Message-ID: <CACsJy8DKWoerME5BykVmihyX2eX10YTO0BNyVc7MGjwp_Shg2Q@mail.gmail.com>
-Subject: Re: [RFC/PATCH 0/5] Fix fetch regression with transport helpers
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7nltF4oe787K3zaEj8BKLfAoQfadPthZv3kbsNqCDJSdCNoJ5eF
+ zyDillTfoIGyFxb/W+U6jNodITZtd5AbXC3DRJEdUsysVXOlDiQf9k74Ls/y6gfNogj8huw
+ eOyeQuRYplyMwvDLMIuk2Vj1KBJFzaJd88NPRVqe1TTma3Uv5wpNi28cT4HnG9KcNWWbA+a
+ nn9M/z2PCkCmOuQMByN0g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PFV0twDCaWY=:1jWAI7nwmbynLfSkyeXgus
+ MPFISy8kvk2NW9twPE2h6MyczGEAHXAXieXeGDppqvZt304F0JIhMYQGQMmKiNizov4g0wo43
+ 9BQlirdrS5INMJWKgmyv0kq51Qyla5ounhS+DZzpoOXCedOjcgWHm51SnhULY6ilomDTclCmj
+ kk0EicDzFfitV9Osqzr2uQ+dlHzcJza9g/TfLF9DIGDSwJ/4XPlSJKBFSo2tnBl188SCzYquY
+ qmYvW1/Chsig99WduQA3x206M5fzBkAMvIqUjy6rnEvkGdmbU3nwKq4qn7XXsZIZPYoaveQuJ
+ dWJQhAOzpRETTx+nenhmajbGJU/hdJ20f1p34NMC37x+Nqx0JJNTBfrdWMz7CFFfA18JDO+4l
+ TvcfzrfxrO+hGCM6KbJljq+1nAV5Yu4dTla4cH25YkUJk5om3a83FPMm0womBYdkoV9YEl5VA
+ xRH5kAj9VtIdC4kaRDmVkVuPBRxmAM6OqiYaTXPfwYnq7WuDrQErYasm101zg6q9qeNodq/6Q
+ ugAyFf3adie+iZe9dRfD9hPOy2CswSqBkwa4mAkhi1f/Axx2pRyCur3x+ip0MOG4NHyxQUmEn
+ ZjHwZSkCf3Xc8DqGCxGPaZGcWXUvXHSMJxIVMEnG4DwjSbdD5B+Y4uUbimdY6IkivqIgMV/yW
+ GTM+qY1lqIDqgEPgnyiuTxKTKenbNB7Uvf4njd0o3so1VTc89OL6VcmnfM6euJXijJJYS+i96
+ Le0M6B6jZ+6+OSA1dcrwbNVLS0r06nx+0UAHIzPZm2iXvncbsbxWUbCK5GRnfP53GPkaCPNH8
+ OFzsf3nmEJWfu+UXvUl9sZa14WUQB2TAiaCnh36/ZEcXHZGx8ir+nF0yvyjHgLFyIwPkR1FaV
+ wXwDwRYNm+6jxyAWLtuQKTr8PnOLrQM6LpTEVg4xxq0+i/eDspOSHVY3bIsOFJBVgxhY6YDAR
+ HdXIHaeisvP3ELy649UyiU5TQujnwxzBZjV6ZipM4W9VYipBiDyh9FjfiM0IZOabuFvxbggWM
+ XlC3hTqQpFnh8/SlFU3vHMw=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 5, 2019 at 6:27 PM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Jun 05, 2019 at 10:12:12AM +0200, Johannes Schindelin wrote:
->
-> > This fails on macOS, in t5601, both in our osx-clang and osx-gcc jobs, as
-> > well as in the StaticAnalysis job. For details, see
-> > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=10206
->
-> Hmm. I'm having a hard time seeing why (and I can't seem to reproduce it
-> locally on a case-insensitive HFS+ filesystem under Linux).
->
-> In particular, if the problem is here:
->
-> > expecting success:
-> >       grep X icasefs/warning &&
-> >       grep x icasefs/warning &&
-> >       test_i18ngrep "the following paths have collided" icasefs/warning
-> >
-> > ++ grep X icasefs/warning
-> > error: last command exited with $?=1
-> > not ok 99 - colliding file detection
->
-> then that implies it has to do with the checkout phase, which Felipe's
-> patch doesn't touch. Later in the log we see the actual file contents
-> (I'm confused as to how this gets here; it looks like debugging bits
-> that were added after the main script?):
->
->   2019-06-05T07:58:37.7961890Z Cloning into 'bogus'...
->   2019-06-05T07:58:37.7962430Z done.
->   2019-06-05T07:58:37.7963360Z warning: the following paths have collided (e.g. case-sensitive paths
->   2019-06-05T07:58:37.7964300Z on a case-insensitive filesystem) and only one from the same
->   2019-06-05T07:58:37.7964880Z colliding group is in the working tree:
->   2019-06-05T07:58:37.7965290Z
->   2019-06-05T07:58:37.7966250Z   'x'
->
-> whereas a succeeding test expects us to mention both 'x' and 'X'.
->
-> So we _did_ find the collision, but somehow 'X' was not reported.
-> Looking at the code, I'm not even sure how that could happen. Given that
-> this process does involve looking at stat data, it makes me wonder if
+Hi Denton,
 
-It does use stat data in mark_colliding_entries() if core.checkStat is
-false. I think on MacOS it's actually true.
+On Fri, 31 May 2019, Denton Liu wrote:
 
-I vaguely recall seeing just one 'x' once. I think last time I had a
-problem with truncating st_ino, but that should be fixed in e66ceca94b
-(clone: fix colliding file detection on APFS, 2018-11-20). So no idea
-how this happens again.
+> One can see that an alias that begins with a non-command first word,
+> such as `loud-rebase =3D -c commit.verbose=3Dtrue rebase`, is permitted.
+> However, this isn't immediately obvious to users as alias instances
+> typically begin with a command.
+>
+> Document the fact that an alias can begin with a non-command first word
+> so that users will be able to discover that this is a feature.
 
-> there could be some raciness involved. But again, I'm scratching my head
-> as to how exactly, and I couldn't reproduce it under load or with some
-> carefully inserted sleep() calls.
--- 
-Duy
+You caught me.
+
+Granted, back in 2006, when I introduced that feature, we were not *quite*
+as diligent about documenting new features as we are today (see
+4ab243a944a6 (Allow an alias to start with "-p", 2006-07-24)).
+
+I like your patch! Maybe you would like to mention `-p`, too, as a
+possible use case, as that was the original reason I introduced the
+feature? (To this day, the first thing I do on a new machine *right* after
+installing Git is to call `git config --global alias.ps '-p status'`)
+
+I'd be fine with these two patches as-are, of course.
+
+Thank you!
+Dscho
+
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  Documentation/config/alias.txt | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/Documentation/config/alias.txt b/Documentation/config/alias=
+.txt
+> index 5425449a50..f241f03ebe 100644
+> --- a/Documentation/config/alias.txt
+> +++ b/Documentation/config/alias.txt
+> @@ -7,6 +7,14 @@ alias.*::
+>  	spaces, the usual shell quoting and escaping is supported.
+>  	A quote pair or a backslash can be used to quote them.
+>  +
+> +Note that the first word of an alias does not necessarily have to be a
+> +command. It can be a command-line option that will be passed into the
+> +invocation of `git`. In particular, this is useful when used with `-c`
+> +to pass in one-time configurations. For example,
+> +`loud-rebase =3D -c commit.verbose=3Dtrue rebase` can be defined such t=
+hat
+> +running `git loud-merge` would be equivalent to
+> +`git -c commit.verbose=3Dtrue rebase`.
+> ++
+>  If the alias expansion is prefixed with an exclamation point,
+>  it will be treated as a shell command.  For example, defining
+>  `alias.new =3D !gitk --all --not ORIG_HEAD`, the invocation
+> --
+> 2.22.0.rc1.169.g49223abbf8
+>
+>
