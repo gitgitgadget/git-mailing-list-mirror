@@ -8,54 +8,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6115F1F462
-	for <e@80x24.org>; Wed,  5 Jun 2019 20:10:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 955EC1F462
+	for <e@80x24.org>; Wed,  5 Jun 2019 20:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbfFEUKO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jun 2019 16:10:14 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:32907 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726501AbfFEUKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jun 2019 16:10:14 -0400
-Received: by mail-it1-f193.google.com with SMTP id v193so409270itc.0
-        for <git@vger.kernel.org>; Wed, 05 Jun 2019 13:10:13 -0700 (PDT)
+        id S1726554AbfFEUKQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jun 2019 16:10:16 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:36919 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726501AbfFEUKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jun 2019 16:10:16 -0400
+Received: by mail-it1-f194.google.com with SMTP id s16so5598055ita.2
+        for <git@vger.kernel.org>; Wed, 05 Jun 2019 13:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1e6Ic01pflH6CE1BV9H5GiUI2c/j0PW20898M+daplo=;
-        b=OP0GBOwQMyIKCW9I2LLtncYl9jPQNLYndUllD2lnQp9XUf9CsrawSh3zCUl/2Fw8/v
-         DAbihUhkrg5fOmcvn0dszR7zQ6m+NkXkvJO3DgsqS1m4vLDGg4RUNG1qzFGvS26DJy1y
-         3BQi+yKDDs2WWnz6WJ/yaMAeNqOLjRsy37cMP/fDGsTnk7VBxVlKvfnDyODNJ23fQxd7
-         jYgb7B5KKidyZ617lYp7YM76hZHuq235sb3gTlSdX1hc5XKJUwJUOZlZRPWFXHdNoAvr
-         TU23XK7kChxvYcVph9Yq6yv15sLXGaerC/RtFi6B5lDUULVEMcfpS/aJrVNMoFsTTcfh
-         yq2Q==
+        bh=Z/GoHw6VmmNs2qhySlFs9Xllm3rJPQWEXqitL+W8ZRE=;
+        b=XKK6ciNx9AhnrFIV1j6so9SCIg8G0t7ZOd1G1nzBNYUoNbG99GjxN1c6s8z6lacdcO
+         iJbaj9C91Z1cBbnEHA/gVzjiYe74KhQB829nJEW17U9gCDiRB6pkx5p5vb3ymeS1aXdU
+         0dXIn1c9QQrK8se8jdC1OZLdEsIo9rWT0Q68o5FOJQvV8YZWSkvPGITExjfbwUKYvX3z
+         Tqe6lZI7fyVCCxm4Q91bmbT95HF84o08Vh47pAnhXkFdR5z0SHzHr6LX2kaqvsYfS2zH
+         g3bND6suEVumX3OABvDH/CK0bTLQVo1aS2HT/bNpFfiUxlEqdkCF5Se5Fsg4hEKIup1j
+         46rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1e6Ic01pflH6CE1BV9H5GiUI2c/j0PW20898M+daplo=;
-        b=hT1JRfM9BXOtiG+guF5fkoi7J6RVDFschh0NnmZryIfpCildBYQRThlrZlf7F5Vza6
-         7QyXR5CVVVO2dIq62TMgKMkxUFQUhXw9+74xcX+Lk7Tn4ccjSeqT7wioEY5CqXfw8iJ3
-         VtglfaI3OCQGYwu+91JMyUAGn/XLqxvurAzd8bpoeSWq13GqvsQ6b6RbPVSgnGYJVAII
-         HRCdvYKBCLmXUrY3OqXXpQqHShh6eUEfqMonKtLvojTbYlDGz37ZUm0/5PVlVMbJZK0l
-         3E3OL68MtJTvP8Ga+wJjG9jRRPL0NbS3ZXQl903sCaT0sTTN3LiGPVIMwLXbUC0uMTqE
-         LHsg==
-X-Gm-Message-State: APjAAAWmi1MUNQBVquLMDa4FM5uaNIE38A09RLTRntPByqBU+zU5Xv5y
-        gGn0eN1TglKihsANK/2tEw8EWj+Q
-X-Google-Smtp-Source: APXvYqxVgDMkJAOTrtpwteZXHtww6q2kdp3vJ9q4CwNmT493VTGJDvH0RLWqn5UqHfzGplvw0+vVgA==
-X-Received: by 2002:a02:7087:: with SMTP id f129mr17379972jac.38.1559765412996;
-        Wed, 05 Jun 2019 13:10:12 -0700 (PDT)
+        bh=Z/GoHw6VmmNs2qhySlFs9Xllm3rJPQWEXqitL+W8ZRE=;
+        b=k9QnOr9bdY13hlYQK9yUjFsckWh1flAwguLrB/cJgvt/osoNAIMbqROcIG+W33Qygw
+         VTDuwDx5p7wzXwP++Q/vQ3fK3fNa7yZ/6zpFhmRKPjSd4g2QKkb79oljZxB4wXxe487J
+         XhFtw4GGO1IOA/GShnU3CUUTEU7ZX9f9SSzWlxqB1dcPtxBnOBVRPDV83KS04SrK4abG
+         vxDe2EgDGD/Zt55NcYSu8RWAdx2uM2Uw6gbz5Wq997PqzRvfciKc/RMngjh3ovuL8sIW
+         Jc6kj2aWf5nCblkBxqnZqP6jcsuUjtQdXKRxU1tycifYWtlv8YFf1dD/NvcBSUBsQRsF
+         YfjQ==
+X-Gm-Message-State: APjAAAUA7oQAotU7XKwpSizPB+6sPlaNlf61G2rveB9bv8uu1AiqutBc
+        IVmFjIGlwXu64wlDWpDypIdlYFNb
+X-Google-Smtp-Source: APXvYqzKD/2OL2tggEhnNJQDe4SMCc87GRmGuvZ7IMk7TjysDZQnipgn1LQv/tVFXT9SB7WxN1N7hA==
+X-Received: by 2002:a24:ca46:: with SMTP id k67mr29009678itg.5.1559765415137;
+        Wed, 05 Jun 2019 13:10:15 -0700 (PDT)
 Received: from archbookpro.localdomain ([2620:101:f000:700:2553:5cea:cc9b:df9d])
-        by smtp.gmail.com with ESMTPSA id c17sm4824527ioo.82.2019.06.05.13.10.12
+        by smtp.gmail.com with ESMTPSA id r139sm7338934iod.61.2019.06.05.13.10.14
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Wed, 05 Jun 2019 13:10:12 -0700 (PDT)
-Date:   Wed, 5 Jun 2019 16:10:11 -0400
+        Wed, 05 Jun 2019 13:10:14 -0700 (PDT)
+Date:   Wed, 5 Jun 2019 16:10:13 -0400
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 1/2] config/alias.txt: change " and ' to `
-Message-ID: <bdc99e133258e01bc6d88ac66de22c15f9aa70c8.1559755652.git.liu.denton@gmail.com>
+Subject: [PATCH v2 2/2] config/alias.txt: document alias accepting
+ non-command first word
+Message-ID: <44c4e1c560de607f30eb87234611a5bbc00620a7.1559755652.git.liu.denton@gmail.com>
 References: <cover.1559333840.git.liu.denton@gmail.com>
  <cover.1559755652.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -68,44 +69,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, the documentation would mix " and ' for code and config
-snippets. Change these instances to ` so that they are marked up in
-monospace.
+One can see that an alias that begins with a non-command first word,
+such as `loud-rebase = -c commit.verbose=true rebase`, is permitted.
+However, this isn't immediately obvious to users as alias instances
+typically begin with a command.
+
+Document the fact that an alias can begin with a non-command first word
+so that users will be able to discover that this is a feature.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/config/alias.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/config/alias.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/Documentation/config/alias.txt b/Documentation/config/alias.txt
-index 0b14178314..5425449a50 100644
+index 5425449a50..f1ca739d57 100644
 --- a/Documentation/config/alias.txt
 +++ b/Documentation/config/alias.txt
-@@ -1,7 +1,7 @@
- alias.*::
- 	Command aliases for the linkgit:git[1] command wrapper - e.g.
--	after defining "alias.last = cat-file commit HEAD", the invocation
--	"git last" is equivalent to "git cat-file commit HEAD". To avoid
-+	after defining `alias.last = cat-file commit HEAD`, the invocation
-+	`git last` is equivalent to `git cat-file commit HEAD`. To avoid
- 	confusion and troubles with script usage, aliases that
- 	hide existing Git commands are ignored. Arguments are split by
+@@ -7,6 +7,16 @@ alias.*::
  	spaces, the usual shell quoting and escaping is supported.
-@@ -9,10 +9,10 @@ alias.*::
+ 	A quote pair or a backslash can be used to quote them.
  +
++Note that the first word of an alias does not necessarily have to be a
++command. It can be a command-line option that will be passed into the
++invocation of `git`. In particular, this is useful when used with `-c`
++to pass in one-time configurations or `-p` to force pagination. For example,
++`loud-rebase = -c commit.verbose=true rebase` can be defined such that
++running `git loud-rebase` would be equivalent to
++`git -c commit.verbose=true rebase`. Also, `ps = -p status` would be a
++helpful alias since `git ps` would paginate the output of `git status`
++where the original command does not.
+++
  If the alias expansion is prefixed with an exclamation point,
  it will be treated as a shell command.  For example, defining
--"alias.new = !gitk --all --not ORIG_HEAD", the invocation
--"git new" is equivalent to running the shell command
--"gitk --all --not ORIG_HEAD".  Note that shell commands will be
-+`alias.new = !gitk --all --not ORIG_HEAD`, the invocation
-+`git new` is equivalent to running the shell command
-+`gitk --all --not ORIG_HEAD`.  Note that shell commands will be
- executed from the top-level directory of a repository, which may
- not necessarily be the current directory.
--`GIT_PREFIX` is set as returned by running 'git rev-parse --show-prefix'
-+`GIT_PREFIX` is set as returned by running `git rev-parse --show-prefix`
- from the original current directory. See linkgit:git-rev-parse[1].
+ `alias.new = !gitk --all --not ORIG_HEAD`, the invocation
 -- 
 2.22.0.rc1.169.g49223abbf8
 
