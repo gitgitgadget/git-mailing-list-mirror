@@ -2,107 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 643561F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 17:35:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E36711F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 18:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728646AbfFFRfT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 13:35:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48124 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726863AbfFFRfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 13:35:19 -0400
-Received: (qmail 15812 invoked by uid 109); 6 Jun 2019 17:35:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Jun 2019 17:35:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31570 invoked by uid 111); 6 Jun 2019 17:36:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Jun 2019 13:36:03 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Jun 2019 13:35:17 -0400
-Date:   Thu, 6 Jun 2019 13:35:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeffrey Walton <noloader@gmail.com>
-Subject: Re: Git self test failure on Solaris 11.3
-Message-ID: <20190606173516.GA25089@sigill.intra.peff.net>
-References: <CAH8yC8kynjwT8wbHYV0DpDaMX=AnfmXeOci3uYUnnfsvbq4iRg@mail.gmail.com>
- <CAH8yC8knkXtBii9KhS2iUo908zTx_NyPUgXZhqdwmwEF7Gz8Jg@mail.gmail.com>
- <CAPig+cS98DeSaF6pNqKCn6bAy=jjiTuc3AZpPB2cXm6hQ6vcqQ@mail.gmail.com>
+        id S1730647AbfFFS3w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 14:29:52 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:38314 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729591AbfFFS3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 14:29:52 -0400
+Received: by mail-lj1-f195.google.com with SMTP id o13so2989437lji.5
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 11:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kaFhqS1zhdpFa36ITxbpafv/5DR+uDOs4gey98wHNy4=;
+        b=fIAy8DBitCECgPs8qTQ3cR9q/r8XOoY8fqyXw1QaWQ8HHyugo5Ghc2dgcALBio8Pgp
+         5foKzr1Ac0xyiieIm729T14nreEqLwBco65GEfucXBju+tear4HAXJQWwiqJiLWMqqPv
+         9h4VxHXk8SjA9qwerf560QS8CC9AGwxdUP+JjZ+wQmDjQNx7/rjJK0jH0LBm7qopB7O4
+         AzufUs/51GUcQxV5c8g77fx0ikPVuBwuVCDB2uWPy66jXaahIevYuAuVllMZzC5CaUit
+         5gSDV06NimDkxvZ9ZHXqOTkrhakTiZVltzO5XexDPkRJNh0VR7FAczlKRIpztFq7kJ7c
+         guIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kaFhqS1zhdpFa36ITxbpafv/5DR+uDOs4gey98wHNy4=;
+        b=YUcD/jpyD3uIJFVmbO2RtfbZL2yPlKrS+Op177yyAv8NTddtmE7O3pgleFLcDERXKr
+         167YSIKhgaIrQeueYPfee7lN8vQOrHJ4SRZnuemGUl3HaqvxCnZbB2Yx2k9Q1b7u/cRn
+         0YQWbMT2P3X8Fqio7zLP/qP1h9i/wH2CTuF/zVFcNwuWs0xn75KVrIble/Jmv5g7p7v2
+         NMPDUf9LuKHtvsweoAVopyghtDiic/UEcZ6bXQ1jgSFho7aH20xeb7Rkwtw9aswV5sex
+         6bT2a8HEjc84YQU3wpeDZoQrFK1Ak+mtyHyVVSgFbjl0xKDwmUpevRYQja86d3M3Ba0G
+         RrgQ==
+X-Gm-Message-State: APjAAAWhieUZQPy/PKwQ7B+/oksLZUs89URhcqjGUdFBEIP5KpRKI4W/
+        ooKJIS/QZqjpp+E4jAxW+ZGXU0weWBe+Yso39XE=
+X-Google-Smtp-Source: APXvYqzByCuWcr4z3y36eK0pNLOZfgYQ5ButLJBjhaDRYtHD/f2PW9tDy8eDfie0vt0p2M9a5c/diFsk20XcdZ/M4Ao=
+X-Received: by 2002:a2e:8909:: with SMTP id d9mr24541880lji.93.1559845790956;
+ Thu, 06 Jun 2019 11:29:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cS98DeSaF6pNqKCn6bAy=jjiTuc3AZpPB2cXm6hQ6vcqQ@mail.gmail.com>
+References: <20190603224814.GA15851@gmail.com> <20190605202019.GA84760@D-10-18-172-221.dhcp4.washington.edu>
+In-Reply-To: <20190605202019.GA84760@D-10-18-172-221.dhcp4.washington.edu>
+From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date:   Thu, 6 Jun 2019 20:29:40 +0200
+Message-ID: <CANiq72=9N_VmV=FVLw64Xhn0AGboTbud3be5fVTxapGyxTZ=rA@mail.gmail.com>
+Subject: Re: [PATCH] clang-format: use git grep to generate the ForEachMacros list
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stephan Beyer <s-beyer@gmx.net>,
+        Patryk Obara <patryk.obara@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 06, 2019 at 01:18:01PM -0400, Eric Sunshine wrote:
+On Wed, Jun 5, 2019 at 10:20 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Miguel,
+>
+> On Tue, Jun 04, 2019 at 12:48:14AM +0200, Miguel Ojeda wrote:
+> > The ForEachMacros list can reasonably be generated grepping
+> > the C source code for macros with 'for_each' in their name.
+> >
+> > Taken almost verbatim from the .clang-format file in the Linux kernel.
+> >
+> > Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+>
+> Thanks for CC-ing me on this. I suspect that it was because I show up
+> somewhere recently in the blame for 'git grep' (I believe I worked on
+> adding `-o` about a year ago).
 
-> > > not ok 12 - check normal git operations: twelve packs
-> > > #
-> > > #                       midx_git_two_modes "rev-list --objects --all" &&
-> > > #                       midx_git_two_modes "log --raw" &&
-> > > #                       midx_git_two_modes "count-objects --verbose" &&
-> > > #                       midx_git_two_modes "cat-file
-> > > --batch-all-objects --buffer --batch-check" &&
-> > > #                       midx_git_two_modes "cat-file
-> > > --batch-all-objects --buffer --batch-check --unsorted" sorted
-> > > #
-> [...]
-> 
-> Jeff Walton reported this to me privately. I'm not familiar with this
-> code and don't have time presently to investigate it, so I'm
-> forwarding it to the list in the hope that someone who knows the code
-> intimately (Stolee) or someone who has touched this code (Peff) might
-> have some idea about it. The failure is intermittent, so perhaps the
-> output of some command is not stable sort-wise(?).
+Yeah, I just picked a few names that were related to the file form the
+log, since I was unable to locate a MAINTAINERS file or something like
+that. :-)
 
-I can't seem to get it to fail for me, even under high load. Do you know
-which of those commands is failing (i.e., what does "-v -x" say)?
+Thanks for taking a look -- also to Johannes!
 
-If it's the rev-list or log output, it could be due to traversal order.
-I notice that the commit creation doesn't increment the timestamps. This
-might help:
-
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 70926b5bc0..79aa97efce 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -60,6 +60,7 @@ commit_and_list_objects () {
- 	} >file_101 &&
- 	git update-index --add file_101 &&
- 	tree=$(git write-tree) &&
-+	test_tick &&
- 	commit=$(git commit-tree $tree -p HEAD</dev/null) &&
- 	{
- 		echo $tree &&
-
-Though I think in each case that the results should be deterministic for
-a given set of commits (and the tests here are just running over the
-same set of commits with and without midx; so we should see the same
-output in both cases).
-
-The normal "cat-file" output should be sorted by sha1, so should be
-stable. The unsorted output will be in whatever order we happen to hit
-the packfiles, which _would_ be subject to timestamp variations.
-However, Jeffrey's email mentions Git 2.21, which predates my b4a14394af
-(t5319: fix bogus cat-file argument, 2019-04-05). So before that,
-"cat-file --unsorted" should always be producing no output. :)
-
-After the switch to correctly use --unordered, I could believe there
-might be a timestamp issue, but the "sorted" flag there means that we
-should be sorting the output before comparing.
-
-I can't reproduce the intermittent failure either on 2.21.0, or with
-v2.22.0-rc3.
-
--Peff
+Cheers,
+Miguel
