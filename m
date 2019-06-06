@@ -2,78 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3AB51F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 19:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2A681F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 19:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728504AbfFFTAM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 15:00:12 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40430 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbfFFTAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 15:00:11 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p11so3528250wre.7
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 12:00:11 -0700 (PDT)
+        id S1727776AbfFFTCa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 15:02:30 -0400
+Received: from mail-qk1-f171.google.com ([209.85.222.171]:42478 "EHLO
+        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbfFFTC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 15:02:29 -0400
+Received: by mail-qk1-f171.google.com with SMTP id b18so2152184qkc.9
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 12:02:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=eIVOzHWVGA3LsnNq71RtpUgklvLOAPgAuchryN2nKS4=;
+        b=EGisurSm7blVoUX0IeQoF7MsAFZ5RjdENd4YSqssSQKiTPqsEpkkiQv97ku9I1D6xT
+         J4HkjcC64NWD38yozAPU3bc89on5vHf1cHabUGc7C+iC4S+27vaofVSFzxaIvmv9O3xs
+         qAwUD1IF5L4twz1zkHvC5FHLhAmvjov5jSPKShZ9Ext/2Lhu0arMxB9xbfT/0ukr3/wA
+         bEnjRhh2sZ5jwOXsApz9dg2LBQVWwibloy7K6nsJNol5Py414lJZoTP46CV7bq5eXhoH
+         yA20vKifmqRwi+p/QoXG7hsUud+G87KPl0ZZ6nyVQr3u+KniSba5OUZVGbugXR4XG/hT
+         zomw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bgHnjJsSLCdczgUDHdy4nkxGN2jyqRVvD7XT4+fwzSo=;
-        b=gsDtvF9qP1D5/yvLk9HwWRGdP0YxruzfKtq1ELuGUNQrUFVxa79+MDFwcImkoywRfB
-         BgKq/wTv7+goz75UZ45dJ9772j2N4xWLVL5ZJmglmHX31v32RQYWIl3/oLcSP8FZh2I1
-         YPX4hgejOPHP8M8c7w4e10BaEyb4axPXlthvvsjCc2mPPe/1qXpHWAjZ6GFIWR2uO5En
-         k/P0FfBkbscybbjaQWk8ytjgPBG+RdjeTbTLLDx1lq7y9Iy7SMWeaVWofAYArmTclKAA
-         lBcc7bbZcoFBtDx7iX6t/ROacXuC4uNpia9kmG3s8sVbJrEiU/XPKzprgthzfYfEbrGw
-         wifw==
-X-Gm-Message-State: APjAAAWemd60Gnman8qrqw0zh6iPDBzCzOJCv4gJecmqbThhvxBsFbG0
-        ulrtoZma7D9kD7n8kxv85hMmcENGKXdpQ/KgEm8=
-X-Google-Smtp-Source: APXvYqyaer54HaFuTlX+1H3r3cxk23rD3PnkQi/hXSCuDAHAKFVVg5W0dVnDp6TBcAF1va2i7KpCr9KAbDb3mJ9R7So=
-X-Received: by 2002:adf:8b83:: with SMTP id o3mr28978565wra.278.1559847610707;
- Thu, 06 Jun 2019 12:00:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=eIVOzHWVGA3LsnNq71RtpUgklvLOAPgAuchryN2nKS4=;
+        b=WJBZGkeNMgJusYtuwvW0nkts34kzXBRt8mOXAcBpqRKzJNG+3y4YW/nEQSoRo8BxIZ
+         U+XuvvolZOR9dMt1Bh+kPHpY3SwkSVNP7z7uVnssmceS85BpMsTrHS5n16khYNs+RbBe
+         bBoFKzINt/J/zOT0Juw5kvWXJUi3zD13Pk+etRELnY/Kjyzwi0rsp3NTB2+gZR0xAkWw
+         xOUpmEB7ZMmEoGDi5JsOf3KvVgfdgiOoJB/4qpURq6F08sPrnYFlX3Zh1GTwROaHrES/
+         eWZHvRC7g+qLb29vZs1Q5jam6FtN6q1Csva2i0V67cdn+ZtOXSpi9WTct8l8G3OnLxeN
+         gXMQ==
+X-Gm-Message-State: APjAAAUDMUMfurVsDqQwnQTS0QaxrY3zXdUjIuxbIXzHVFJP+vtn0wfn
+        oefSlNpiuS94j+EmNKJvCYPtgmwIeTEyHu+YVnQOuD6Gv8GRqw==
+X-Google-Smtp-Source: APXvYqxqrPlNu9ABLWIOGyu4W2P56zTwj8Uj7+q07SCLtON6DmhXy1CJ7zkASZa6a41iOnzXTvY0WrPf3kSQC+OcZfs=
+X-Received: by 2002:a37:ea16:: with SMTP id t22mr40670485qkj.337.1559847748229;
+ Thu, 06 Jun 2019 12:02:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAH8yC8kynjwT8wbHYV0DpDaMX=AnfmXeOci3uYUnnfsvbq4iRg@mail.gmail.com>
- <CAH8yC8knkXtBii9KhS2iUo908zTx_NyPUgXZhqdwmwEF7Gz8Jg@mail.gmail.com>
- <CAPig+cS98DeSaF6pNqKCn6bAy=jjiTuc3AZpPB2cXm6hQ6vcqQ@mail.gmail.com> <20190606173516.GA25089@sigill.intra.peff.net>
-In-Reply-To: <20190606173516.GA25089@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 6 Jun 2019 15:00:00 -0400
-Message-ID: <CAPig+cQi6V=B7GtdN3+-1nPnLXiVjz-O+=WJt5f94o7wHy1VHg@mail.gmail.com>
-Subject: Re: Git self test failure on Solaris 11.3
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeffrey Walton <noloader@gmail.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Thu, 6 Jun 2019 12:02:17 -0700
+Message-ID: <CAJoAoZktk-w40MEsRZesvkX23Xn2uMUPiO_cMHa=-xfdyVHCWg@mail.gmail.com>
+Subject: Is --filter-print-omitted correct/used/needed?
+To:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 6, 2019 at 1:35 PM Jeff King <peff@peff.net> wrote:
-> On Thu, Jun 06, 2019 at 01:18:01PM -0400, Eric Sunshine wrote:
-> > > > not ok 12 - check normal git operations: twelve packs
-> >
-> > Jeff Walton reported this to me privately. I'm not familiar with this
-> > code and don't have time presently to investigate it, so I'm
-> > forwarding it to the list in the hope that someone who knows the code
-> > intimately (Stolee) or someone who has touched this code (Peff) might
-> > have some idea about it. The failure is intermittent, so perhaps the
-> > output of some command is not stable sort-wise(?).
->
-> I can't seem to get it to fail for me, even under high load. Do you know
-> which of those commands is failing (i.e., what does "-v -x" say)?
+Yesterday while down a rabbit hole, I discovered an interesting thing
+about the 'omitted' object in many filters in
+list-objects-filter-options.h.  It appears that when we call
+list-objects.h:traverse_commit_list_filtered() with a non-NULL
+'omitted' argument, we still perform a walk of all objects - that is,
+the filtered walk is no more efficient than the unfiltered walk from
+the same place via 'traverse_commit_list()'. I verified by calling
+each and counting the objects:
 
-I don't know.
+161         if (0) {
+162                 /* Unfiltered: */
+163                 printf(_("Unfiltered object walk.\n"));
+164                 traverse_commit_list(rev, walken_show_commit,
+165                                 walken_show_object, NULL);
+166         } else {
+167                 printf(_("Filtered object walk with filterspec
+'tree:1'.\n"));
+168                 /*
+169                  * We can parse a tree depth of 1 to demonstrate
+the kind of
+170                  * filtering that could occur eg during shallow
+cloning.
+171                  */
+172                 parse_list_objects_filter(&filter_options,
+"tree:1");
+173
+174                 traverse_commit_list_filtered(&filter_options,
+rev,
+175                         walken_show_commit, walken_show_object,
+NULL, &omitted);
+176         }
+177
+178         /* Count the omitted objects. */
+179         oidset_iter_init(&omitted, &oit);
+180
+181         while ((oid = oidset_iter_next(&oit)))
+182                 omitted_count++;
+183
+184         printf(_("Object walk completed. Found %d commits, %d
+blobs, %d tags, "
+185                "and %d trees; %d omitted objects.\n"),
+commit_count,
+186                blob_count, tag_count, tree_count, omitted_count);
 
-> I can't reproduce the intermittent failure either on 2.21.0, or with
-> v2.22.0-rc3.
+I found that omitted_count was always equal to the difference between
+sum(blob_count, tag_count, tree_count, commit_count) in the unfiltered
+and filtered walks. I also found that the length of time required to
+perform the unfiltered walk and the filtered-with-non-NULL-omitted
+walk was the same, while the time required to perform the filtered
+walk with NULL omitted was significantly shorter. (The walk in
+question was over the latest release of Git master, plus the ten or so
+commits in my feature branch.)
 
-I can't reproduce it either on Jeff's Solaris box. Perhaps Jeff can
-add "-v -x" to his automated build/test script in order to help
-diagnose the problem if it occurs again.
+I was surprised! I figured that with filter "tree:1" that "omitted"
+would contain only the objects on the "border" of the filter - that
+is, I assumed it would contain the blobs and trees in the root git
+dir, but none of those trees' blobs and trees. After talking with
+jrnieder at length, it sounds like neither of us were clear on why
+this "omitted" list would be needed beyond the initial development
+stage of a new filter... Jonathan's impression was also that if we do
+need the "omitted" list, it may be a bug that we're still traversing
+objects which are only reachable from objects already omitted.
 
-Thanks for looking into it.
+I grepped the Git source and found that we only provide a non-NULL
+"omitted" when someone calls "git rev-list --filter-print-omitted",
+which we verify with a simple test case for "blobs:none", in which
+case the "border" objects which were omitted must be the same as all
+objects which were omitted (since blobs aren't pointing to anything
+else). I think if we had written a similar test case with some trees
+we expect to omit we might have noticed sooner.
+
+Since I was already in the rabbit hole, out of curiosity I did a
+search on Github and only found one project referencing
+--filter-print-omitted which wasn't a mirror of Git:
+https://github.com/search?l=Python&q=%22--filter-print-omitted%22&type=Code
+
+So, what do we use --filter-print-omitted for? Is anybody needing it?
+Or do we just use it to verify this one test case? Should we fix it,
+or get rid of it, or neither?
+
+ - Emily
