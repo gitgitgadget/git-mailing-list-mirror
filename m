@@ -2,121 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27D1A1F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 17:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5430E1F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 17:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728611AbfFFRJP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 13:09:15 -0400
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:39298 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726693AbfFFRJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 13:09:14 -0400
-Received: by mail-qt1-f195.google.com with SMTP id i34so3526112qta.6
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 10:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EjtiNn0zompadvSYc23kgoxqsu+6ovVW7qilFhN7zFI=;
-        b=q+LpEiBuLsArHJg70UsapQ9YXsGPpkv3m0GCiiIPp7puKVFH93LeWoGkvAt8M29to0
-         4s6Pp6yx25gUROFaiIGyLeuU9eiQ2FeSg0tr5lgMixUZj5VnsnEq5aucUvc6ENv6nZTC
-         oYkxYDnp2fymRGJLOFTy7NXx22z/DG6ytKxi74sA2DCawCPJP7rxyXtUrpt+ZBwCpFrR
-         rz53dwgESnftHMoOrf/BHu4i4Yx4OaaKW5wtGw+1VrlxLwfUtTHpsVA8AZhwoi2oVNOX
-         LYeZ8t3zzP2oJ0WacUvfqbdqg04D3DcfpAPZamtDa0f0O6LYa58hLHjaUf9q+4t6Z2A2
-         n7Mw==
+        id S1730055AbfFFRSO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 13:18:14 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39405 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725267AbfFFRSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 13:18:13 -0400
+Received: by mail-wr1-f65.google.com with SMTP id x4so3252307wrt.6
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 10:18:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EjtiNn0zompadvSYc23kgoxqsu+6ovVW7qilFhN7zFI=;
-        b=EIXF5ueSOw/Mo3hacBw/oc7DXBAFrXzk3tN7OfGMfy2a04UZ4Tp8sE9nSvtUZ9MspA
-         qaJnRWpS/b0REd4zFkep4dsgFeGGaxoZzkD+VhkUo0Zg3qs2EQR2Bq8npCR8tAQd3Pio
-         64g+tsHYaJ4zk9uxiWO+Tl+JrJM14/qJ6mFiyOYuMS5jcRbtjYbh6Xt0CV8olx7EF5iS
-         Gl5arV3uktwVb31a/hSEF/A41dqEgzMlaOSH45IS9w1kR1HtSw+vX3M5IK9quG8fQ7nn
-         X5huuL8KEpno/1akNxtvdj4OIpUMse31dsMWMUmTjmR1jdQ1eRL4zG/10XwbutmRs2SL
-         /2yQ==
-X-Gm-Message-State: APjAAAWmpsEC+kjEUe7ZbOUdKY+6895wno5uyirHQwaDxHalchRe+Fne
-        Nupv7PYcifUenM5TT+NH6e0=
-X-Google-Smtp-Source: APXvYqwTSVaBEAQWWLsrNCYKpobLMvh2T/bwxAQoVAcdhS0sPFcG9miwHG2hRnmEnkixn9u9YA6i5g==
-X-Received: by 2002:ac8:3281:: with SMTP id z1mr41579294qta.130.1559840953940;
-        Thu, 06 Jun 2019 10:09:13 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:4daa:35d6:a381:1849? ([2001:4898:a800:1010:fedf:35d6:a381:1849])
-        by smtp.gmail.com with ESMTPSA id z1sm1515093qth.7.2019.06.06.10.09.12
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jun 2019 10:09:13 -0700 (PDT)
-Subject: Re: [PATCH v3 01/14] commit-graph: document commit-graph chains
-To:     Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.184.v2.git.gitgitgadget@gmail.com>
- <pull.184.v3.git.gitgitgadget@gmail.com>
- <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
- <6a6a0b72-e503-1fdd-e67e-2a84d825f89b@iee.org>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <909f355c-4c44-1556-71c7-168b28abddfc@gmail.com>
-Date:   Thu, 6 Jun 2019 13:09:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
- Thunderbird/67.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6Iiv/oW89hQ8sO37W1mOot9iGzU03ZVR4d4It3YL5Xo=;
+        b=rPij3NaaKfrOpnL2mkXUJsuQlSJjJTEx2sxHL8hZj42KQqGkuh0IqzF2SQDD2zXsSs
+         4bJjGTjE5O8gsEnF1e4U+Wsh+7RCAUv9+Lg+cZoiEEmQkfKaj0fRhHjUvtdqG3ljD6PC
+         EBhy9BEbSm0PjeQj+IhXjiHEpcEgoY3P/Q/EICkRmh7Uem6DaOi15QLU5MDPlJyEccSb
+         VXjK8XLFTodQgYm5c8zMoh73Wh0G59pI4tvZnMswPKAyzdCCYlyyy0eLn5nuAweQzMSZ
+         Eg6N1HNNYFLhgsZ1ahOwZ+6fL63PKSSYGVWsYOQQUXcvbHEhIR7RWn+op70X+SAjlfJz
+         DOjg==
+X-Gm-Message-State: APjAAAXN57hsNJ+5JEDyv0H0yD+94hY310Tj1LUq/5VF9PdiaqDacHOk
+        Y4isqQPH4ph0ecoABnOocmZPEeJiZFJSWOqa4qdsYg==
+X-Google-Smtp-Source: APXvYqwevw7vSb/bh8w4aPIk6VPF/tfZ34rxB2K4CcmUNf5gAcG/wmIomGUfAbr+OOBeEjsvIVgJBUSt2uzpLzHkng8=
+X-Received: by 2002:adf:f84f:: with SMTP id d15mr30213343wrq.53.1559841492141;
+ Thu, 06 Jun 2019 10:18:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <6a6a0b72-e503-1fdd-e67e-2a84d825f89b@iee.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAH8yC8kynjwT8wbHYV0DpDaMX=AnfmXeOci3uYUnnfsvbq4iRg@mail.gmail.com>
+ <CAH8yC8knkXtBii9KhS2iUo908zTx_NyPUgXZhqdwmwEF7Gz8Jg@mail.gmail.com>
+In-Reply-To: <CAH8yC8knkXtBii9KhS2iUo908zTx_NyPUgXZhqdwmwEF7Gz8Jg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 6 Jun 2019 13:18:01 -0400
+Message-ID: <CAPig+cS98DeSaF6pNqKCn6bAy=jjiTuc3AZpPB2cXm6hQ6vcqQ@mail.gmail.com>
+Subject: Re: Git self test failure on Solaris 11.3
+To:     Git List <git@vger.kernel.org>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/6/2019 8:10 AM, Philip Oakley wrote:
-> Hi Derrick ,
-> 
-> On 03/06/2019 17:03, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> Add a basic description of commit-graph chains.
-> Not really your problem, but I did notice that we don't actually explain what we mean here by a commit graph (before we start chaining them), and the distinction between the generic concept and the specific implementation.
-> 
-> If I understand it correctly, the regular DAG (directed acyclic graph) already inherently contains the commit graph, showing the parent(s) of each commit. Hence, why do we need another? (which then needs explaining the what/why/how)
-> 
-> So, in one sense, another commit chain is potentially duplicated redundant data. What hasn't been surfaced (for the reader coming later) is probably that accessing the DAG commit graph can be (a) slow, (b) one way (no child relationships), and (c) accesses large amounts of other data that isn't relevant to the task at hand.
-> 
-> So the commit graph (implementation) is [I think] a fast, compact, sorted(?), list of commit oids that provides two way linkage through the commit graph (?) to allow fast queries within the Git codebase.
-> 
-> The commit graph is normally considered immutable,
+[forwarding to the Git list]
 
-_Commits_ are immutable. The graph grows as commits are added.
+On Sun, Jun 2, 2019 at 6:23 AM Jeffrey Walton <noloader@gmail.com> wrote:
+> On Sun, Jun 2, 2019 at 5:09 AM Jeffrey Walton <noloader@gmail.com> wrote:
+> > I'm catching a self test failure on Solaris 11.3. Git 2.21 from sources.
+> >
+> > ok 8 - check normal git operations: two packs
+> > ok 9 - add more packs
+> > ok 10 - check normal git operations: mixed mode (two packs + extra)
+> > ok 11 - write midx with twelve packs
+> > not ok 12 - check normal git operations: twelve packs
+> > #
+> > #                       midx_git_two_modes "rev-list --objects --all" &&
+> > #                       midx_git_two_modes "log --raw" &&
+> > #                       midx_git_two_modes "count-objects --verbose" &&
+> > #                       midx_git_two_modes "cat-file
+> > --batch-all-objects --buffer --batch-check" &&
+> > #                       midx_git_two_modes "cat-file
+> > --batch-all-objects --buffer --batch-check --unsorted" sorted
+> > #
+> > ok 13 - verify multi-pack-index success
+> > ok 14 - verify bad signature
+> > ok 15 - verify bad version
+> > ...
+>
+> Ick, this is bad. Intermittent failure. The second time around it passed.
 
-This may be the crux of your confusion, since the commit-graph
-file can become stale as commits are added by 'git commit' or
-'git fetch'. The point of the incremental file format is to
-update the commit-graph data without rewriting the entire thing
-every time.
-
-Does this help clarify what's going on?
-
-> however the DAG commit graph can be extended by new commits, trimmed by branch deletion, rebasing, forced push, etc, or even reorganised via 'replace' or grafts commits, which must then be reflected in the commit graph (implementation).
-
-These things create new commit objects, which would not be in
-the commit-graph file until it is rewritten.
-
-> It just felt that there is a gap between the high level DAG, explained in the glossary, and the commit-graph That perhaps the technical/commit-graph.txt ought to summarise.
-
-I do think that technical/commit-graph.txt does summarize a lot
-about the commit-graph _file_ and how that accelerates walks on
-the high-level DAG. The added content in this patch does assume
-a full understanding of the previous contents of that file.
-
-Thanks,
--Stolee
-
+Jeff Walton reported this to me privately. I'm not familiar with this
+code and don't have time presently to investigate it, so I'm
+forwarding it to the list in the hope that someone who knows the code
+intimately (Stolee) or someone who has touched this code (Peff) might
+have some idea about it. The failure is intermittent, so perhaps the
+output of some command is not stable sort-wise(?).
