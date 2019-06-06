@@ -2,173 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2DB71F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 12:10:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFE71F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 12:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727316AbfFFMKe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 08:10:34 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:41057 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726040AbfFFMKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 08:10:34 -0400
-Received: from [192.168.1.22] ([78.148.161.28])
-        by smtp.talktalk.net with SMTP
-        id YrDxh78tkniZTYrDxhAysa; Thu, 06 Jun 2019 13:10:30 +0100
-X-Originating-IP: [78.148.161.28]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=B8HHL9lM c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
- a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=yMhMjlubAAAA:8 a=cm27Pg_UAAAA:8 a=zM4gqt3LEnJwM65h1vQA:9
- a=-t08PQZ5qw_vDj-n:21 a=QFOw3XsfVx9SVvDM:21 a=QEXdDO2ut3YA:10
- a=xmb-EsYY8bH0VWELuYED:22
-Subject: Re: [PATCH v3 01/14] commit-graph: document commit-graph chains
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
-        jrnieder@google.com, steadmon@google.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.184.v2.git.gitgitgadget@gmail.com>
- <pull.184.v3.git.gitgitgadget@gmail.com>
- <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <6a6a0b72-e503-1fdd-e67e-2a84d825f89b@iee.org>
-Date:   Thu, 6 Jun 2019 13:10:31 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1727961AbfFFMXt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 08:23:49 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:42777 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726092AbfFFMXt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 08:23:49 -0400
+Received: by mail-qk1-f196.google.com with SMTP id b18so1276428qkc.9
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 05:23:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SYCFpIvLYmlsjRI7H3NIbbVPfvWGg6PKCFs0B8RPvBQ=;
+        b=dkFll+KPq4FfVTc7KW9BhoLIDb7dCmuylC5shcvVnpMhhEa8ndmjVNFAW48SzPn7m/
+         Fegs9mo6VCOllHxZN+Wl/y+AYq4GlbQa6UVYRGvyaxYrlFEeYZJHKKbYwfwbNKse0hxH
+         v/QbD/BqN5Wb4iyhZydzP7WADXfzuwultrZFtryNHQJWRxuZKWdjU5MK6HFbj9IaeSJS
+         jsXB8pMGc0nZpDby2PDYhzwbi12d2MlQcazbfnQ8rLT8ZDKzh/HUPxbvqFOWUQpwDAmm
+         8XZYF7Y/rP2QsHlAC37uHy/ejAPrNFULlZGSmFskEvv8wl6V3luiINo1AcbyzTENQP79
+         mAvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SYCFpIvLYmlsjRI7H3NIbbVPfvWGg6PKCFs0B8RPvBQ=;
+        b=JsBsXfuAHHSPVVReRmfHmRwIvnfkx34c/zpdfIlpQtJJcbdoKFUNqixrb89zHSWKnJ
+         Bzs6DZx7b0ekU00wbT25GVM4D0PnPs6WV2rRuSYiVjUgBNKtiae/9PiOq2k4dlVmCiYD
+         QhDD7WLtY2mVIu1RbXZWLAepY/emj77sraSemmZmhv7N/g7NID/EscpakuVmGVuizXO1
+         g76bt9gSm+mQ3+ZKhwhy4Ro+PUC+T9YbRBiyOAgoG+MX0Zj217xnpwvCRC+lgIr9sxeW
+         yTM6S6s4E0e4rAKHXPdwJNeM1vRql4YjEqxMorxiELZZiusG2y6WxNS3Jfji5fdnaM1z
+         UJdQ==
+X-Gm-Message-State: APjAAAWn758ubsLaKSWCXzZgWLoOZmNnBhzhrauEjmSvrjfUgwlH2vHO
+        UcQWuClR8H0hD7dlpP3Hdr/Pu2OT1dc=
+X-Google-Smtp-Source: APXvYqyzFGLKb7KVpkR6HS86WUEsuR1w6X9QpdW0EF1nWZhhno03KkP3qZLzdgnqAodQDeSGqNeGXQ==
+X-Received: by 2002:a37:bd46:: with SMTP id n67mr30621800qkf.266.1559823828068;
+        Thu, 06 Jun 2019 05:23:48 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:f8bc:cb1d:88e9:2127? ([2001:4898:a800:1012:a9f0:cb1d:88e9:2127])
+        by smtp.gmail.com with ESMTPSA id o33sm956473qtk.67.2019.06.06.05.23.46
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Jun 2019 05:23:46 -0700 (PDT)
+Subject: Re: [PATCH 00/11] [RFC] Create 'core.size=large' setting to update
+ config defaults
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.254.git.gitgitgadget@gmail.com>
+ <xmqqftonsr6a.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <741a4e37-e5d6-829a-75ee-b9bc3f3b17b2@gmail.com>
+Date:   Thu, 6 Jun 2019 08:23:45 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:67.0) Gecko/20100101
+ Thunderbird/67.0
 MIME-Version: 1.0
-In-Reply-To: <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqqftonsr6a.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfJIiV2LY5aQxgIaqBDW+Cfk8ewgUjb+xdci6EcKcMPBTzh6MExoWTzOoUR8/viTJ7kE6+RDzwax+018OX7RqeRjMAbgpPzanuahHgBggoDP+ikwk89e8
- eoLxuk7NtHSw4eRt5mGa6UuXe7blBOV4ZkejzUmMz3o5wW84dgbSRrU/svzimT7cnlfidlxlT6+3Afwm/s5ijmxvzYO7RNM0X7vxMXNo8aA6Fi0zvlPi9wSk
- znRjuFMCWkrvJwI7XGHNMzk+cb3UwQ3ux/fh+ZbKzhSZuauJ2A0X4WTipNl7P4hyeow1Q6sB3UushWaIMEeGmkFhR9XxWqCm+m21QuPfYKYlQstwHnSmnP2b
- 7WPFJYZliULMoo4Nf0WJqdPZyh38gRxfdWoPsBYLny8ThrKvfHJLHdO6p6vK8n6xwtm0AUPa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick ,
+On 6/5/2019 4:39 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> This patch series includes a few new config options we created to speed up
+>> certain critical commands in VFS for Git. On their own, they would
+>> contribute little value as it is hard to discover new config variables.
+>> Instead, I've created this RFC as a goal for probably three sequential patch
+>> series:
+>>
+>>  1. (Patches 1-3) Introduce a new 'core.size' config setting that takes
+>>     'large' as a value. This enables several config values that are
+>>     beneficial for large repos. We use a certain set in VFS for Git (see
+>>     [1]), and most of those are applicable to any repo. This 'core.size'
+>>     setting is intended for users to automatically receive performance
+>>     updates as soon as they are stable, but they must opt-in to the setting
+>>     and can always explicitly set their own config values. The settings to
+>>     include here are core.commitGraph=true, gc.writeCommitGraph=true,
+>>     index.version=4, pack.useSparse=true.
+> 
+> ... and not the configuration introduced by the other two points in
+> this list?
 
-On 03/06/2019 17:03, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+They are added to the config setting after they are introduced. See
+patches 7 (status.aheadBehind) and 11 (fetch.showForcedUpdates).
+
+> "If you set this, these other configuration variables are set to
+> these default values" is a very valuable usability feature.  It
+> looks a lot more "meta" or "macro", and certainly is not a good idea
+> to call it as if it sits next to variables in any existing hierarchy.
+> 
+> I also wonder if this is something we would want to support in
+> general; random things that come to mind are:
+> 
+>  - should such a "macro" configuration be limited to boolean
+>    (e.g. the above core.size that takes 'large' is a boolean between
+>    'large' and 'not large'), or can it be an enum (e.g. choose among
+>    'large', 'medium' and 'small', and core.bigFileThreshold will be
+>    set to 1G, 512M and 128M respectively---this silly example is for
+>    illustration purposes only), and if so, can we express what these
+>    default values are for each choice without writing a lot of code?
+
+That's a good point that we could include recommended values for
+other non-boolean variables if our "meta" config setting is also
+non-boolean. This fits in with the "ring" ideas discussed earlier [1].
+Taking in a few ideas from your message, perhaps we create a new "meta"
+category for this setting and use an integer value for "how big do I
+think my repo is?" and we can apply different settings based on thresholds:
+
+ 0: no config defaults changed
+ 3: safe defaults (core.commitGraph, index.version=4)
+ 6: behavior-modifying defaults (status.aheadBehind, fetch.noShowForcedUpdates)
+
+Using 3 and 6 here to allow for finer gradients at a later date.
+
+[1] https://public-inbox.org/git/xmqqftonsr6a.fsf@gitster-ct.c.googlers.com/T/#m8dbaedc016ce7301b9d80e5ceb6a82edfa7bafac
+
+>  - if we were to have more than just this 'core.size' macro, can two
+>    otherwise orthogonal macros both control the same underlying
+>    variable, and if so, how do we express their interactions?
+>    "using these two at the same time is forbidden" is a perfectly
+>    acceptable answer for the first round until we figure out the
+>    desired semantics, of course.
+
+To borrow from linear algebra, I would recommend that two orthogonal
+config settings have disjoint _bases_ (i.e. the set of config settings
+they use are disjoint). Of course, this can be discussed in more
+detail when someone suggests a second meta-config setting. Such a
+second setting would need justification for why it doesn't work with
+our first setting.
+ 
+>  - perhaps we may eventually want to allow end users (via their
+>    ~/.gitconfig) and system administrators (via /etc/gitconfig)
+>    define such a macro setting (e.g. setting macro.largeRepoSetting
+>    sets pack.usebitmaps=true, pack.useSpars=true, etc.) *after* we
+>    figure out what we want to do to the other points in this list.
 >
-> Add a basic description of commit-graph chains.
-Not really your problem, but I did notice that we don't actually explain 
-what we mean here by a commit graph (before we start chaining them), and 
-the distinction between the generic concept and the specific implementation.
+>  - even if we do not allow end users and system administrators futz
+>    with custom macros, can we specify the macros we ship without
+>    casting them in code?
 
-If I understand it correctly, the regular DAG (directed acyclic graph) 
-already inherently contains the commit graph, showing the parent(s) of 
-each commit. Hence, why do we need another? (which then needs explaining 
-the what/why/how)
+Are you suggesting that we allow some config values to be pulled from
+the repo contents? If we could identify some config options as "safe"
+to include in the Git data, then a repo administrator could commit a
+"/.gitconfig" file _and_ some existing config option says "look at the
+config in the repo".
 
-So, in one sense, another commit chain is potentially duplicated 
-redundant data. What hasn't been surfaced (for the reader coming later) 
-is probably that accessing the DAG commit graph can be (a) slow, (b) one 
-way (no child relationships), and (c) accesses large amounts of other 
-data that isn't relevant to the task at hand.
+I see value in making some "safe" settings available in the repo, but
+also see that it can be very tricky to get right. Further, I think it
+is independent of the current direction. In fact, I would imagine the
+meta-config setting be one of the "safe" settings that we could put in
+this committed config file.
 
-So the commit graph (implementation) is [I think] a fast, compact, 
-sorted(?), list of commit oids that provides two way linkage through the 
-commit graph (?) to allow fast queries within the Git codebase.
-
-The commit graph is normally considered immutable, however the DAG 
-commit graph can be extended by new commits, trimmed by branch deletion, 
-rebasing, forced push, etc, or even reorganised via 'replace' or grafts 
-commits, which must then be reflected in the commit graph (implementation).
-
-It just felt that there is a gap between the high level DAG, explained 
-in the glossary, and the commit-graph That perhaps the 
-technical/commit-graph.txt ought to summarise.
-
---
-Philip
->   More details about the
-> feature will be added as we add functionality. This introduction gives a
-> high-level overview to the goals of the feature and the basic layout of
-> commit-graph chains.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->   Documentation/technical/commit-graph.txt | 59 ++++++++++++++++++++++++
->   1 file changed, 59 insertions(+)
->
-> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-> index fb53341d5e..1dca3bd8fe 100644
-> --- a/Documentation/technical/commit-graph.txt
-> +++ b/Documentation/technical/commit-graph.txt
-> @@ -127,6 +127,65 @@ Design Details
->     helpful for these clones, anyway. The commit-graph will not be read or
->     written when shallow commits are present.
->   
-> +Commit Graphs Chains
-> +--------------------
-> +
-> +Typically, repos grow with near-constant velocity (commits per day). Over time,
-> +the number of commits added by a fetch operation is much smaller than the
-> +number of commits in the full history. By creating a "chain" of commit-graphs,
-> +we enable fast writes of new commit data without rewriting the entire commit
-> +history -- at least, most of the time.
-> +
-> +## File Layout
-> +
-> +A commit-graph chain uses multiple files, and we use a fixed naming convention
-> +to organize these files. Each commit-graph file has a name
-> +`$OBJDIR/info/commit-graphs/graph-{hash}.graph` where `{hash}` is the hex-
-> +valued hash stored in the footer of that file (which is a hash of the file's
-> +contents before that hash). For a chain of commit-graph files, a plain-text
-> +file at `$OBJDIR/info/commit-graphs/commit-graph-chain` contains the
-> +hashes for the files in order from "lowest" to "highest".
-> +
-> +For example, if the `commit-graph-chain` file contains the lines
-> +
-> +```
-> +	{hash0}
-> +	{hash1}
-> +	{hash2}
-> +```
-> +
-> +then the commit-graph chain looks like the following diagram:
-> +
-> + +-----------------------+
-> + |  graph-{hash2}.graph  |
-> + +-----------------------+
-> +	  |
-> + +-----------------------+
-> + |                       |
-> + |  graph-{hash1}.graph  |
-> + |                       |
-> + +-----------------------+
-> +	  |
-> + +-----------------------+
-> + |                       |
-> + |                       |
-> + |                       |
-> + |  graph-{hash0}.graph  |
-> + |                       |
-> + |                       |
-> + |                       |
-> + +-----------------------+
-> +
-> +Let X0 be the number of commits in `graph-{hash0}.graph`, X1 be the number of
-> +commits in `graph-{hash1}.graph`, and X2 be the number of commits in
-> +`graph-{hash2}.graph`. If a commit appears in position i in `graph-{hash2}.graph`,
-> +then we interpret this as being the commit in position (X0 + X1 + i), and that
-> +will be used as its "graph position". The commits in `graph-{hash2}.graph` use these
-> +positions to refer to their parents, which may be in `graph-{hash1}.graph` or
-> +`graph-{hash0}.graph`. We can navigate to an arbitrary commit in position j by checking
-> +its containment in the intervals [0, X0), [X0, X0 + X1), [X0 + X1, X0 + X1 +
-> +X2).
-> +
->   Related Links
->   -------------
->   [0] https://bugs.chromium.org/p/git/issues/detail?id=8
+Thanks,
+-Stolee
+ 
 
