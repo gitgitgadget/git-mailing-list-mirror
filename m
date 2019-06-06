@@ -2,80 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C5D1F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 09:35:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DB71F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 12:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727894AbfFFJfW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 05:35:22 -0400
-Received: from mail-io1-f41.google.com ([209.85.166.41]:40786 "EHLO
-        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727816AbfFFJfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 05:35:22 -0400
-Received: by mail-io1-f41.google.com with SMTP id n5so138739ioc.7
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 02:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VMl4MQBJoPwGGa3f8AcuIOuWCrwjBEpXDTZDtDoKtQw=;
-        b=VnpOFsXAAfuKqiL/C+4lSrnLPS6Asnl7Dcg4OtcbMRIo/7QdeBUh1podWqyEDtYV9h
-         F7LTRgvx6hDGfwnJnXC9vb7RJStUWQwKvpytPkk3Q1UsPAK1aA8ur/xAOZowTEhTl/4C
-         jFSTLmtnAMtRYAWpAdeGJUT8dbIXZHL2P0aWZxwS7HSiFjHVXC2KsSvgnOvQt2ofFpMT
-         WPv1N+F3jJDHC8CZ8UWbJe0XLlNti1KHQe+9AOyzXY/mwdlczHllpqgGDGW2mTmsRqFJ
-         u+zYtOmxQD/RXSaa8Yw8/gtja6A9dUmGghGDZX2kVK02H+QNc9in9VHzNTYvELGKcxUr
-         fd3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VMl4MQBJoPwGGa3f8AcuIOuWCrwjBEpXDTZDtDoKtQw=;
-        b=dhfErzV0UABU/Qr64qCUE5urAdwELPQ6YVKXSnFx48po9i3WleYGd9AOuiaZ7Hy2Zk
-         pZeum9R9Oa3mdhvfRaP8Hw1HPDSxfo6YsQ4lnFgPcZJA1/ebP/hpdwE5kjCN0zV/ei7G
-         NNitIcecP4Lu6Z9h3sWtzPkgb4foCw8nb9OyJ+its2n2emKzd4YYmvTjBrCKyi97IRh0
-         1WDtWtQhl2rrCU2xsLMtxbCVOjY2C3TmUCwOjl9eTLQwsg7YVJitI0eTAMA0DJ7n5cgu
-         Pwy9jIF0H98m/Rh6RZyeJd2OwR8bdxvmID5+TeZfA1v35sEAsShen2vhrDCSgcvkaJVF
-         g72A==
-X-Gm-Message-State: APjAAAXVndnCH7+v1qUfG2jQpVgmCaXnDORlx3Yj2tZQn+EPZU3/xbGo
-        yHO8ILBXQPw9lA4Jyxm+IOZvZkHEFE3xCpFOgpHpZw==
-X-Google-Smtp-Source: APXvYqyJQVNJSTjDibmmYGoYk7/d4KoLL8oZYPIU2Lpi6nnUHginl0RnBeFPsktxOnA9p6RtcfXSyeRgW1QprsCuRQA=
-X-Received: by 2002:a6b:7f0b:: with SMTP id l11mr26486778ioq.282.1559813721754;
- Thu, 06 Jun 2019 02:35:21 -0700 (PDT)
+        id S1727316AbfFFMKe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 08:10:34 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:41057 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbfFFMKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 08:10:34 -0400
+Received: from [192.168.1.22] ([78.148.161.28])
+        by smtp.talktalk.net with SMTP
+        id YrDxh78tkniZTYrDxhAysa; Thu, 06 Jun 2019 13:10:30 +0100
+X-Originating-IP: [78.148.161.28]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=B8HHL9lM c=1 sm=1 tr=0 a=ujKALdKAi7z8notBBWqKeA==:117
+ a=ujKALdKAi7z8notBBWqKeA==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=yMhMjlubAAAA:8 a=cm27Pg_UAAAA:8 a=zM4gqt3LEnJwM65h1vQA:9
+ a=-t08PQZ5qw_vDj-n:21 a=QFOw3XsfVx9SVvDM:21 a=QEXdDO2ut3YA:10
+ a=xmb-EsYY8bH0VWELuYED:22
+Subject: Re: [PATCH v3 01/14] commit-graph: document commit-graph chains
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, git@jeffhostetler.com,
+        jrnieder@google.com, steadmon@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.184.v2.git.gitgitgadget@gmail.com>
+ <pull.184.v3.git.gitgitgadget@gmail.com>
+ <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <6a6a0b72-e503-1fdd-e67e-2a84d825f89b@iee.org>
+Date:   Thu, 6 Jun 2019 13:10:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-References: <ad2ff81a-d75e-1ac4-07d0-c807a2ed9e36@gmx.de> <CAPig+cSsNQDe-3GLnmvA+EPior=RSPETJDjkCc7X1qi6gWSGDQ@mail.gmail.com>
- <CACsJy8CxSN90-EfTpkd6RUHFVp2iGjZXokpMqw7Tf0EMXT5LfQ@mail.gmail.com>
- <CAPig+cQ0po+cqdqohkVqFyk=aowtjuYGM2J=31pFu6ZuPeAUFA@mail.gmail.com>
- <CACsJy8DiueSPST64=iCZc=V6UtU61RXjJqhBHvG59BwFVSh3QA@mail.gmail.com> <cd006427-03ad-4823-e872-96903cc96fd0@gmx.de>
-In-Reply-To: <cd006427-03ad-4823-e872-96903cc96fd0@gmx.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 6 Jun 2019 16:34:55 +0700
-Message-ID: <CACsJy8AKNrC_XY+6bq1FpPCs4MWZa_jCSiAvjmypPjS0g26cHg@mail.gmail.com>
-Subject: Re: worktree add already exists
-To:     Ingo Wolf <ingo.wolf@gmx.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559577826.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfJIiV2LY5aQxgIaqBDW+Cfk8ewgUjb+xdci6EcKcMPBTzh6MExoWTzOoUR8/viTJ7kE6+RDzwax+018OX7RqeRjMAbgpPzanuahHgBggoDP+ikwk89e8
+ eoLxuk7NtHSw4eRt5mGa6UuXe7blBOV4ZkejzUmMz3o5wW84dgbSRrU/svzimT7cnlfidlxlT6+3Afwm/s5ijmxvzYO7RNM0X7vxMXNo8aA6Fi0zvlPi9wSk
+ znRjuFMCWkrvJwI7XGHNMzk+cb3UwQ3ux/fh+ZbKzhSZuauJ2A0X4WTipNl7P4hyeow1Q6sB3UushWaIMEeGmkFhR9XxWqCm+m21QuPfYKYlQstwHnSmnP2b
+ 7WPFJYZliULMoo4Nf0WJqdPZyh38gRxfdWoPsBYLny8ThrKvfHJLHdO6p6vK8n6xwtm0AUPa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 5, 2019 at 10:30 PM Ingo Wolf <ingo.wolf@gmx.de> wrote:
->
-> Am 05.06.2019 um 12:17 schrieb Duy Nguyen:
-> > "worktree add --no-checkout --keep-worktree" is quite readable
->
-> worktree add --no-checkout -f (orce)
->
-> I've expected to work on an not empty directory
+Hi Derrick ,
 
-Yeah --force works too. Not sure how it interacts with "--force
---force". But --force is already overloaded, I don't think forcing
-harder is going to make it much worse.
--- 
-Duy
+On 03/06/2019 17:03, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Add a basic description of commit-graph chains.
+Not really your problem, but I did notice that we don't actually explain 
+what we mean here by a commit graph (before we start chaining them), and 
+the distinction between the generic concept and the specific implementation.
+
+If I understand it correctly, the regular DAG (directed acyclic graph) 
+already inherently contains the commit graph, showing the parent(s) of 
+each commit. Hence, why do we need another? (which then needs explaining 
+the what/why/how)
+
+So, in one sense, another commit chain is potentially duplicated 
+redundant data. What hasn't been surfaced (for the reader coming later) 
+is probably that accessing the DAG commit graph can be (a) slow, (b) one 
+way (no child relationships), and (c) accesses large amounts of other 
+data that isn't relevant to the task at hand.
+
+So the commit graph (implementation) is [I think] a fast, compact, 
+sorted(?), list of commit oids that provides two way linkage through the 
+commit graph (?) to allow fast queries within the Git codebase.
+
+The commit graph is normally considered immutable, however the DAG 
+commit graph can be extended by new commits, trimmed by branch deletion, 
+rebasing, forced push, etc, or even reorganised via 'replace' or grafts 
+commits, which must then be reflected in the commit graph (implementation).
+
+It just felt that there is a gap between the high level DAG, explained 
+in the glossary, and the commit-graph That perhaps the 
+technical/commit-graph.txt ought to summarise.
+
+--
+Philip
+>   More details about the
+> feature will be added as we add functionality. This introduction gives a
+> high-level overview to the goals of the feature and the basic layout of
+> commit-graph chains.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>   Documentation/technical/commit-graph.txt | 59 ++++++++++++++++++++++++
+>   1 file changed, 59 insertions(+)
+>
+> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+> index fb53341d5e..1dca3bd8fe 100644
+> --- a/Documentation/technical/commit-graph.txt
+> +++ b/Documentation/technical/commit-graph.txt
+> @@ -127,6 +127,65 @@ Design Details
+>     helpful for these clones, anyway. The commit-graph will not be read or
+>     written when shallow commits are present.
+>   
+> +Commit Graphs Chains
+> +--------------------
+> +
+> +Typically, repos grow with near-constant velocity (commits per day). Over time,
+> +the number of commits added by a fetch operation is much smaller than the
+> +number of commits in the full history. By creating a "chain" of commit-graphs,
+> +we enable fast writes of new commit data without rewriting the entire commit
+> +history -- at least, most of the time.
+> +
+> +## File Layout
+> +
+> +A commit-graph chain uses multiple files, and we use a fixed naming convention
+> +to organize these files. Each commit-graph file has a name
+> +`$OBJDIR/info/commit-graphs/graph-{hash}.graph` where `{hash}` is the hex-
+> +valued hash stored in the footer of that file (which is a hash of the file's
+> +contents before that hash). For a chain of commit-graph files, a plain-text
+> +file at `$OBJDIR/info/commit-graphs/commit-graph-chain` contains the
+> +hashes for the files in order from "lowest" to "highest".
+> +
+> +For example, if the `commit-graph-chain` file contains the lines
+> +
+> +```
+> +	{hash0}
+> +	{hash1}
+> +	{hash2}
+> +```
+> +
+> +then the commit-graph chain looks like the following diagram:
+> +
+> + +-----------------------+
+> + |  graph-{hash2}.graph  |
+> + +-----------------------+
+> +	  |
+> + +-----------------------+
+> + |                       |
+> + |  graph-{hash1}.graph  |
+> + |                       |
+> + +-----------------------+
+> +	  |
+> + +-----------------------+
+> + |                       |
+> + |                       |
+> + |                       |
+> + |  graph-{hash0}.graph  |
+> + |                       |
+> + |                       |
+> + |                       |
+> + +-----------------------+
+> +
+> +Let X0 be the number of commits in `graph-{hash0}.graph`, X1 be the number of
+> +commits in `graph-{hash1}.graph`, and X2 be the number of commits in
+> +`graph-{hash2}.graph`. If a commit appears in position i in `graph-{hash2}.graph`,
+> +then we interpret this as being the commit in position (X0 + X1 + i), and that
+> +will be used as its "graph position". The commits in `graph-{hash2}.graph` use these
+> +positions to refer to their parents, which may be in `graph-{hash1}.graph` or
+> +`graph-{hash0}.graph`. We can navigate to an arbitrary commit in position j by checking
+> +its containment in the intervals [0, X0), [X0, X0 + X1), [X0 + X1, X0 + X1 +
+> +X2).
+> +
+>   Related Links
+>   -------------
+>   [0] https://bugs.chromium.org/p/git/issues/detail?id=8
+
