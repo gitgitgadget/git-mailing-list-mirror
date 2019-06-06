@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5781F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 14:15:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66E9C1F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 14:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727482AbfFFOPc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 10:15:32 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34193 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727176AbfFFOPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 10:15:32 -0400
-Received: by mail-ed1-f67.google.com with SMTP id c26so3602079edt.1
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 07:15:31 -0700 (PDT)
+        id S1728648AbfFFOPh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 10:15:37 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46174 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727138AbfFFOPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 10:15:36 -0400
+Received: by mail-ed1-f66.google.com with SMTP id h10so3520355edi.13
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 07:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K4hI5VzyEmN0pp2bYyiizZjGrxQByJ3B5DXoRbPUeiA=;
-        b=JmgUW8+JrGc4+Mm32BmlmReWvW5ar67G88jJEzjyCOHWDngl/0SZ5fy2S5pUNpp+N4
-         1/BTzVkm+/8rEHooSO0s8jwHx/GLYwb8qrkxw/ag32JFyQqD1jilAwZKAfbs0w36rAix
-         6bqbZRJxfCydlDCvoDLaJOc2RLpkGcN3inggItuy8PA37lLMzEqOyQzLrQon8pRAhkzW
-         D/kLfH5ni/6JkHO8Zjfv08qiARJ+DAWIs/BXmEW7DcE0c6X+TzCEAiU8DEJSEhVntbm9
-         xIZjjgN97GtxhrLiBY1LrHXCwo8nWTZLPkwJ+P7glWcnmZ4gMPefqiYz3IqxJrt9YsaG
-         OCBQ==
+        bh=yRexFTAAHVRV/GufD+aZoXR0cLznGgM1SlRVD2E1Yhs=;
+        b=LqYXTgWYLNjYapN6xkbSXP64hiQlJYC8Qv1ciGnY/izjr//xhv3YTyzJyDuIHC6qKQ
+         q0n/79RXkRFiC3zZbtLcngOjwduDlH4bVW9JDYLN2VpBncB4akq6XNtGxpnNlZgE7D7N
+         0m+MpyryMlC6587e9+jfbh6saVS2+Tc3zipDxMd0G5EvDdAg+3s5LDOJI3ae4D8RZWAV
+         4t7PDGyTxk50859sU6qnKdSDFr+eOT/0a9lg6uqmCZ4j16bttxsKil68MIPJEEm1qbnE
+         FnEduWdwz0v29eER6bOzgOUYc1NgOgyfDKeHV4GWtLvBqlWh026HqoMf50oMvhXBdqya
+         R6UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K4hI5VzyEmN0pp2bYyiizZjGrxQByJ3B5DXoRbPUeiA=;
-        b=KWxlP9DophiVNLnjsLzITS2ch+qxcT3jQQCGvxpQufl+gDMajwaq5xaOTmoPhy8tKw
-         NwpHO0KlrlKFFItjzG8zaZ4MjGeWJUgzPbbDEJ6MpQVliyw4ghMH0h7TJhHgbFos9I4y
-         eJUqNVu60G8gO545GmwpTzYdynV3O0Lv9VoYYoBWchVQJmBR/HbLC1JMZoAiCcWJwjGt
-         JqZjtNJvuK0Pz9kJwSX8G1Ie/whiIRFHSOLmHdzEN7pPSxDxhDoDtdJKyQxfcfDJhb+h
-         IDZUKvcQt/ptRxIScodtqOUCnGjlQWDvFskQsDKrnVm3xyEYHJ+iFGluhypkx7zLo32d
-         i+BQ==
-X-Gm-Message-State: APjAAAXOW+6HTh2wO2335vWo7t8mLYVZyqJHKbildtQiW8hxnmcftMk9
-        SqmPrZUcBKxo+Y5uV19QUzlAhFEx
-X-Google-Smtp-Source: APXvYqwL59yFgRLCmNVldrRW9ApHi37CUB18HAz8UwnzPGS11f6HHBIKSCqNu6tgjomTBKtwhC3Rdw==
-X-Received: by 2002:a50:ba09:: with SMTP id g9mr31524710edc.172.1559830530277;
-        Thu, 06 Jun 2019 07:15:30 -0700 (PDT)
+        bh=yRexFTAAHVRV/GufD+aZoXR0cLznGgM1SlRVD2E1Yhs=;
+        b=YmmDkFB0cKmsj4BBblcDoFIQPVYa5pe2R/hduL2GeFLot5NH1uvDhv6lLzGiMEN6T3
+         BKTs8K3AigbmReOLUdKV+9/JyM/bUmT4uU/+MYcbtz18i6FZwJIdyUZkaZvsz4HKEZ3C
+         qO8gZaxXj9/LCXmT8gG0RGY0jXzNJADaWmJ0OREePpeNKejjDicg4CZ1b0WJUPSuXYA5
+         YxKYcg1mGHO/Vm0A0EWGcRyMFKT0q3iqUguL5snat20a8BxZlIXFJloylW1UwhV2FemE
+         NwdJ/ezozQSYF/ffEIup3u7cbkv4G0TYBM0kkitSawE6cvGYp9jTfWO3AmbVRXoIunuO
+         5OhA==
+X-Gm-Message-State: APjAAAWX46FqedCdzbQYjuEs6wvP2Y6VvhzGbYdNVI9Hy7+z5FHUdmVe
+        rpdw0cpzqrONBSvHkYjE8Lff8eWB
+X-Google-Smtp-Source: APXvYqxPzyOjfKyRxQOdRzPAq1oFLC5HMOhwbV/fTaOvqWwnK7WHc5cer2Cc42hptkeuuQw9DHyXBw==
+X-Received: by 2002:a50:9d43:: with SMTP id j3mr50948803edk.59.1559830534616;
+        Thu, 06 Jun 2019 07:15:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6sm359524eju.4.2019.06.06.07.15.29
+        by smtp.gmail.com with ESMTPSA id o22sm144108eje.2.2019.06.06.07.15.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jun 2019 07:15:29 -0700 (PDT)
-Date:   Thu, 06 Jun 2019 07:15:29 -0700 (PDT)
-X-Google-Original-Date: Thu, 06 Jun 2019 14:15:14 GMT
-Message-Id: <b184919255bfc9e0d57e1a5ca12fb76957879c61.1559830527.git.gitgitgadget@gmail.com>
+        Thu, 06 Jun 2019 07:15:34 -0700 (PDT)
+Date:   Thu, 06 Jun 2019 07:15:34 -0700 (PDT)
+X-Google-Original-Date: Thu, 06 Jun 2019 14:15:19 GMT
+Message-Id: <e65f9e841d577c13d26c1737ebb8a2cf65713be9.1559830527.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v4.git.gitgitgadget@gmail.com>
 References: <pull.184.v3.git.gitgitgadget@gmail.com>
         <pull.184.v4.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 01/14] commit-graph: document commit-graph chains
+Subject: [PATCH v4 06/14] commit-graph: rearrange chunk count logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,86 +74,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add a basic description of commit-graph chains. More details about the
-feature will be added as we add functionality. This introduction gives a
-high-level overview to the goals of the feature and the basic layout of
-commit-graph chains.
+The number of chunks in a commit-graph file can change depending on
+whether we need the Extra Edges Chunk. We are going to add more optional
+chunks, and it will be helpful to rearrange this logic around the chunk
+count before doing so.
+
+Specifically, we need to finalize the number of chunks before writing
+the commit-graph header. Further, we also need to fill out the chunk
+lookup table dynamically and using "num_chunks" as we add optional
+chunks is useful for adding optional chunks in the future.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph.txt | 59 ++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ commit-graph.c | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index fb53341d5e..1dca3bd8fe 100644
---- a/Documentation/technical/commit-graph.txt
-+++ b/Documentation/technical/commit-graph.txt
-@@ -127,6 +127,65 @@ Design Details
-   helpful for these clones, anyway. The commit-graph will not be read or
-   written when shallow commits are present.
+diff --git a/commit-graph.c b/commit-graph.c
+index 909c841db5..80df6d6d9d 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1206,7 +1206,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	uint64_t chunk_offsets[5];
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 	struct strbuf progress_title = STRBUF_INIT;
+-	int num_chunks = ctx->num_extra_edges ? 4 : 3;
++	int num_chunks = 3;
  
-+Commit Graphs Chains
-+--------------------
+ 	ctx->graph_name = get_commit_graph_filename(ctx->obj_dir);
+ 	if (safe_create_leading_directories(ctx->graph_name)) {
+@@ -1219,27 +1219,34 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
+ 	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+ 
+-	hashwrite_be32(f, GRAPH_SIGNATURE);
+-
+-	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, oid_version());
+-	hashwrite_u8(f, num_chunks);
+-	hashwrite_u8(f, 0); /* unused padding byte */
+-
+ 	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
+ 	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
+ 	chunk_ids[2] = GRAPH_CHUNKID_DATA;
+-	if (ctx->num_extra_edges)
+-		chunk_ids[3] = GRAPH_CHUNKID_EXTRAEDGES;
+-	else
+-		chunk_ids[3] = 0;
+-	chunk_ids[4] = 0;
++	if (ctx->num_extra_edges) {
++		chunk_ids[num_chunks] = GRAPH_CHUNKID_EXTRAEDGES;
++		num_chunks++;
++	}
 +
-+Typically, repos grow with near-constant velocity (commits per day). Over time,
-+the number of commits added by a fetch operation is much smaller than the
-+number of commits in the full history. By creating a "chain" of commit-graphs,
-+we enable fast writes of new commit data without rewriting the entire commit
-+history -- at least, most of the time.
++	chunk_ids[num_chunks] = 0;
+ 
+ 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+ 	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
+ 	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
+-	chunk_offsets[4] = chunk_offsets[3] + 4 * ctx->num_extra_edges;
 +
-+## File Layout
++	num_chunks = 3;
++	if (ctx->num_extra_edges) {
++		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
++						4 * ctx->num_extra_edges;
++		num_chunks++;
++	}
 +
-+A commit-graph chain uses multiple files, and we use a fixed naming convention
-+to organize these files. Each commit-graph file has a name
-+`$OBJDIR/info/commit-graphs/graph-{hash}.graph` where `{hash}` is the hex-
-+valued hash stored in the footer of that file (which is a hash of the file's
-+contents before that hash). For a chain of commit-graph files, a plain-text
-+file at `$OBJDIR/info/commit-graphs/commit-graph-chain` contains the
-+hashes for the files in order from "lowest" to "highest".
++	hashwrite_be32(f, GRAPH_SIGNATURE);
 +
-+For example, if the `commit-graph-chain` file contains the lines
-+
-+```
-+	{hash0}
-+	{hash1}
-+	{hash2}
-+```
-+
-+then the commit-graph chain looks like the following diagram:
-+
-+ +-----------------------+
-+ |  graph-{hash2}.graph  |
-+ +-----------------------+
-+	  |
-+ +-----------------------+
-+ |                       |
-+ |  graph-{hash1}.graph  |
-+ |                       |
-+ +-----------------------+
-+	  |
-+ +-----------------------+
-+ |                       |
-+ |                       |
-+ |                       |
-+ |  graph-{hash0}.graph  |
-+ |                       |
-+ |                       |
-+ |                       |
-+ +-----------------------+
-+
-+Let X0 be the number of commits in `graph-{hash0}.graph`, X1 be the number of
-+commits in `graph-{hash1}.graph`, and X2 be the number of commits in
-+`graph-{hash2}.graph`. If a commit appears in position i in `graph-{hash2}.graph`,
-+then we interpret this as being the commit in position (X0 + X1 + i), and that
-+will be used as its "graph position". The commits in `graph-{hash2}.graph` use these
-+positions to refer to their parents, which may be in `graph-{hash1}.graph` or
-+`graph-{hash0}.graph`. We can navigate to an arbitrary commit in position j by checking
-+its containment in the intervals [0, X0), [X0, X0 + X1), [X0 + X1, X0 + X1 +
-+X2).
-+
- Related Links
- -------------
- [0] https://bugs.chromium.org/p/git/issues/detail?id=8
++	hashwrite_u8(f, GRAPH_VERSION);
++	hashwrite_u8(f, oid_version());
++	hashwrite_u8(f, num_chunks);
++	hashwrite_u8(f, 0);
+ 
+ 	for (i = 0; i <= num_chunks; i++) {
+ 		uint32_t chunk_write[3];
 -- 
 gitgitgadget
 
