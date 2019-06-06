@@ -2,111 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D35A1F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 20:04:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 416F01F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 21:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728307AbfFFUEn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 16:04:43 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:32393 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbfFFUEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 16:04:43 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x56K4YQX098611
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 6 Jun 2019 16:04:35 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Subject: RE: [ANNOUNCE] Git v2.22.0-rc3
-Date:   Thu, 6 Jun 2019 16:04:29 -0400
-Message-ID: <00c901d51ca3$0fd17590$2f7460b0$@nexbridge.com>
+        id S1728499AbfFFV2M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 17:28:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52309 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728398AbfFFV2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 17:28:12 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A87A61427AA;
+        Thu,  6 Jun 2019 17:28:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hTiP+xwUjFVkVq4rvvLk44ixNUo=; b=R1dUu6
+        G+nRR5BtqQcsH0qw3V8ArtSzl7O80nODGp3vV521fKOJUZIFmShW1GoBBFCMjZQ+
+        jCUKTFco4jtsh3CoYd9icODCQV/KoURZ40uTjbq0Z3WqidNzLvu1lWxSP5l0exbE
+        uo6IfVjM9a9VWd1EekOOdtlyek5a6DvNGJSeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pvoU92ODKKCOdjgmyS7p6WcG298UC4NT
+        BPDy0eLHIyJYajuZQwZz1NG8TYxe+TWJlbCmKoB4yTwzNiWoGqj16NCN1Qmzushi
+        mPhVaLV2RsC9oWNmbX/kaz8TSpHA0qmVNmta7zFDGRIY/JnaL7mp84Q4cOxrcR4P
+        Mn+YLWtuWg8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FDAC1427A9;
+        Thu,  6 Jun 2019 17:28:07 -0400 (EDT)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 174961427A7;
+        Thu,  6 Jun 2019 17:28:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        git@jeffhostetler.com, jrnieder@google.com, steadmon@google.com,
+        johannes.schindelin@gmx.de, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 02/14] commit-graph: prepare for commit-graph chains
+References: <pull.184.v3.git.gitgitgadget@gmail.com>
+        <pull.184.v4.git.gitgitgadget@gmail.com>
+        <d0dc154a27c80a8113ff47eb60a6b6f98fbeec91.1559830527.git.gitgitgadget@gmail.com>
+Date:   Thu, 06 Jun 2019 14:28:06 -0700
+In-Reply-To: <d0dc154a27c80a8113ff47eb60a6b6f98fbeec91.1559830527.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Thu, 06 Jun 2019
+        07:15:30 -0700 (PDT)")
+Message-ID: <xmqqd0jqqu8p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdUcotvI4EV7WohRQbqqjJxYLQIqBQ==
-Content-Language: en-us
+Content-Type: text/plain
+X-Pobox-Relay-ID: F9A74B08-88A1-11E9-91CE-72EEE64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday, June 3, 2019 10:14 AM, I wrote:
-> On Monday, June 3, 2019 9:50 AM, Johannes Schindelin wrote:
-> > To: Randall S. Becker <rsbecker@nexbridge.com>
-> > Cc: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org
-> > Subject: RE: [ANNOUNCE] Git v2.22.0-rc2
-> >
-> > Hi Randall,
-> >
-> > On Sun, 2 Jun 2019, Randall S. Becker wrote:
-> >
-> > > Just a few small nits from RC2 test results on the NonStop TNS/E
-> > > platform:
-> > >
-> > > 1. t0021 subtest 15 is being flakey. It fails on the first run (make
-> > > -k
-> > > test) but succeeds when run in isolation. This is new on the NonStop
-> > > TNS/E platform. t0021 has been a bit flakey in the past, but not
-> > > recently. Just thought I'd mention it. It's only slightly
-> > > disconcerting because I make very heavy use of smudge filters but
-> > > since it runs fine in isolation, I'm going to assume it is fine. We
-> > > had one unsubstantiated report of an occasional misfire of smudge
-> > > filters, but no substantive evidence at this point to reproduce the
-> situation.
-> >
-> > t0021.15 is indeed flaky, and not only for NonStop. It is so flaky,
-> > even,
-> that I
-> > opened https://github.com/gitgitgadget/git/issues/241
-> 
-> Thanks.
-> 
-> > > 2. t7519 subtest 25 still does not pass (previously reported for
-> > > RC1) when run via "make -k test" the first time. This runs
-> > > successfully when run in isolation or the second time.
-> >
-> > I offered a fix for that in js/fsmonitor-unflake, and it already made
-> > it
-> into
-> > `next` (and hopefully into v2.22.0) as you can see here:
-> > https://github.com/gitgitgadget/git/commit/b5a81697520 (look for the
-> > branch symbol below the commit message).
-> 
-> I'll keep an eye out for it. We are good with RC2 anyway.
-> 
-> > > 3. t9001, t9020, t9600, t9601, t9602, t9604, fail, but should not
-> > > run on platform (not new, just a reminder). We do not have sendmail
-> > > or subversion.
-> >
-> > At least for Subversion, this should be detected. For send-email, I
-> > don't know... There *was* a bug in t9001 where it failed to mark a
-> > send-email tests cases with the `PERL` prerequisite, but that was
-> > fixed, and I guess
-> you
-> > have Perl anyway?
-> 
-> Yes, we do have Perl on the box. However, the send-email functions do not
-> work - probably missing modules. As far as SVN goes, we have the git SVN
-> modules, but not the actual SVM modules in our Perl. There has been some
-> effort to port those, but we have had CPAN issues for a while now. I am
-> trying to find a resource to help with porting - personally, I could
-really use
-> the SVN module to allow svn2git to function on box. That would make my
-> life a whole lot easier.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-RC3 shows no new breaks on NonStop. We are good with approving this one.
+> +static void load_oid_from_graph(struct commit_graph *g, int pos, struct object_id *oid)
+> +{
+> +	uint32_t lex_index;
+> +
+> +	if (!g)
+> +		BUG("NULL commit-graph");
+> +
+> +	while (pos < g->num_commits_in_base)
+> +		g = g->base_graph;
 
-Kind Regards,
-Randall
+If a rogue caller calls this function with pos < 0, this loop would
+eventually exhaust the chain and make g==NULL, I think.  Shouldn't a
+similar assert exist upfront for "if (pos < 0)" or perhaps make pos
+unsigned int instead?
+
+> +	if (pos >= g->num_commits + g->num_commits_in_base)
+> +		BUG("position %d is beyond the scope of this commit-graph (%d local + %d base commits)",
+> +		    pos, g->num_commits, g->num_commits_in_base);
+
+Where does 'pos' typically come from?  Taken from a parent commit
+field of a commit-graph file or something like that?
+
+As this is a "BUG()" and not a "die()", the callers of this function
+are responsible for making sure that, even if they are fed a set of
+corrupt commit-graph files, they never feed 'pos' that is out of
+bounds to this function.  The same is true for the other BUG() in
+fill_commit_in_graph().
+
+I am wondering if they have already sufficient protection, or if we
+are better off having die() instead saying "corrupted commit graph
+file" or something.  I dunno.
 
