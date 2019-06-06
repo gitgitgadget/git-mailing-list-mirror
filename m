@@ -2,126 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10D91F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 12:47:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633571F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 12:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726972AbfFFMrs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 08:47:48 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:44883 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725267AbfFFMrs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 08:47:48 -0400
-Received: by mail-oi1-f193.google.com with SMTP id e189so1432202oib.11
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 05:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Bq1HShuR0aK2zg06d3LmYRtanIoDyy3ZWyBSWsi/qLY=;
-        b=hjO0m5tXikxfeSzMmoNS0UCKzB9nRkspnrnILLw3htQGjR3fohbK3oqzBxbhqkv+SZ
-         REQLzaNBsVw3QKVhDPNOPn/GGwjfq46w0luoGWOadNhUfdADoCqG+f7qkWpXOJhiCCdb
-         gppXv9t0bBR5krN6RFTMj2K2i2oMyhI2hwdAh7uOpyLbI/tGOTi396bDBORrTpTKNtAG
-         NCQLhV1mpB9ZKkaoCrVYZYDIfS2LfhB1b7/cUDixkdwGWLDaW8vG54KU2a/n5PlXBSLH
-         JSOMp2EhmEJWw14MhfdAzYtBwcchulsASWaQzrGYZcwjMAR/S9akRZhyiEKBbflcMNY8
-         kguQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Bq1HShuR0aK2zg06d3LmYRtanIoDyy3ZWyBSWsi/qLY=;
-        b=mgWKTO97jgYTA5b7UWqg8GF6OicdaDomiEQeA4y2nJqDGtMhJbs/3o4wuAm8lhEFFa
-         KRjzErCm/wvHjRl0rCQAPqoRnGGsLOzzN9+mk5T3yx7UfixDX144ybGzLrIhD7ftRScH
-         cIxcuPr7AhdIrj5WK2ZuvzpPA8UliIL7RcQiPhrJG+PMT2NPY3BQgxFac0iADman2NxI
-         OBB6PPxgXfpvwFYcoODNtFzwrmc2CmA19FPF+n1z/od6QEzFjiLQw1tLEQw2pJqrz6T5
-         5YevdP8hNuLik+4phEwz74aqcvobJFlY5xh87uIBfclLwOymu5LRkuAmbTaXsUj29ntF
-         Qg/g==
-X-Gm-Message-State: APjAAAWj66M7YzlC6DUgwh156WIypqNS7kosyecAoHOTgT3MpbulVBSi
-        6sHIza3trsX3VeCEhA/B/dKGiE/tKHY=
-X-Google-Smtp-Source: APXvYqzqCV0rRyWgGmr658Jlwns4CEBQ3/kinpPTg5Qv3XAAtTwfLL6/kKgAjT9YTl3RoeAC0LuNrw==
-X-Received: by 2002:aca:4404:: with SMTP id r4mr11885703oia.130.1559825267344;
-        Thu, 06 Jun 2019 05:47:47 -0700 (PDT)
-Received: from localhost (200-52-42-156.reservada.static.axtel.net. [200.52.42.156])
-        by smtp.gmail.com with ESMTPSA id l31sm630013otc.30.2019.06.06.05.47.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Jun 2019 05:47:46 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Peter van der Does <peter@avirtualhome.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] completion: zsh: update installation instructions
-Date:   Thu,  6 Jun 2019 07:47:45 -0500
-Message-Id: <20190606124745.11227-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        id S1727310AbfFFMsw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 08:48:52 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49811 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725267AbfFFMsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 08:48:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1559825329;
+        bh=cwpcksP7I+f4ZSM63qTSpfN12M0n6CVvMtFFf8S1T/8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=EG5DkQOKzPgmY3KKNJ8CFSB1U3v9Y1C8e514FXtd7LQMaljMCUZ9BcTZZ1JgJrQ8R
+         YV8R6pyWcQoiHCiGLLlO8lX/380dfKYEjmQayDJSlNRe7Fl5U5YC6WxemaMaVeDJqo
+         2GWQMbwwh2V9F7ZDccuvDreidc8wrLN63ENblgDA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LobGI-1gtlNL2GpG-00gbKs; Thu, 06
+ Jun 2019 14:48:49 +0200
+Date:   Thu, 6 Jun 2019 14:48:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 0/2] Doc: document alias accepting non-command first
+ word
+In-Reply-To: <cover.1559755652.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906061448350.42@tvgsbejvaqbjf.bet>
+References: <cover.1559333840.git.liu.denton@gmail.com> <cover.1559755652.git.liu.denton@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jzmTi5qcHRkw84+8If5Ba+bMx8VWKPZqCFEsBNQlVkfnQ8PqbIt
+ 2bWAe0ZdXEQ0R6N3FyCKsoE2aTJDbjLrlPuYPo5tx1fUlYiGmOG5vUz1cpqDlXOMynHd7d5
+ F12tPUypgRPbY42bj80fGjvrjKM92byAGQIOHj8dTSEhhUucujKr5nl5z1MuScNgo21nOtU
+ erXisBFhu1iEDQSXmSR3w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w7b1NcN1Vwg=:MntHDTYL79L3As4+buZ65Q
+ 1zUQcnINsV1pb5fEyU++0T3Ds/y1MKanPnHyW9Fk408N0esk1aPYZlLyDtSE8mAhPPz5OYzla
+ v2Ih36nJVdjZd4j0sUVQ/FjcmtPdz+aOiKTWWWP9z0tjO4Hw4Dcs1amFfG7mUMIIstmzuFjj2
+ uhac+3AyPgLCdkfGT/4jWAzdwqqQkLQZhNlKOMW74qnj9iwtToxgTsYp1whXfZjyjH/187SVB
+ SoPirYSUyjLcjN6A973qiawKjbM16rrh8CMRRBCTufbYmagNDRDVgQhUgA4hRirnScZsob/bj
+ jlQIWQUWxs7gflDT1wyTFc/AbHMgJs8O7Mot36luyWtAFZNCagnevy70sHHnv+R4duQe0ydrW
+ 6cX1uSoRdhs/Ax8i72GqMdgkohRqfI+Rav4E47xqwza6oN9tILwyVwHqXa+skPxy8l34+AHyB
+ r4D3aZ1yArvseNaF3dffw3i8NV+J1vpesoTbh747KaVtjydW+db8gRnX8i6WNWEbSMXyAApLp
+ e8zrA9gRiB3NN63YTyFW1J5Q5/7PGLHdA/NgZaf/Y8I9udhpznBK4YmJCMGi8urzDCmtdSdaQ
+ Crz60pY7YEng+9T5s3tnSY3UW3Ce4giHbJwazD9wxsecHRY235lbuaPx4FoTIfLaFjWtntVRr
+ BctjsxjDX1cLh5iW2pckk4iY7vCxg0IRG6MTK2B2a9N4hDcKBydWGiFtrlhBYnW2YYl51hAOk
+ wk2N4+H82uQ9YUFwY0xNrUYC6wSucw8ix247HqnrtKjs61Qvj/8Sb9bcRqLmQtmVCRLCBpGlM
+ SeuSviWuwSL9+CzR+P6ILL8P8w8cb2HKPLWRT4wh0r4gNxKlck1TUbD0x988+FmAI+mlk9PgD
+ BJ07GDQofVZOVO233fGze4wYou0OETVltmnV9iqc2qB44VAecc7N0spW3+zBXmu1opZLV3GG2
+ hzS58n+H8U3Pt+7ACqrPfYBzEyyjy+Y+8m/tSi8r/cwwIHO0Humq/
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 0e5ed7cca3 wrongly changed the extension of the bash script
-to .zsh. The extension doesn't really matter, but it confuses people.
+Hi Denton,
 
-I've changed the text to make it clear that your zsh script goes to
-~/.zsh/_git, and the bash script to ~/.git-completion.bash (or wherever
-you want).
+On Wed, 5 Jun 2019, Denton Liu wrote:
 
-Also, update the default locations of the system bash-completion.
+> Thanks for the review, Johannes. I think it's a good idea to add another
+> alias for `-p` so included that suggestion. Also, while I was at it, I
+> found a typo so I fixed that too.
+>
+> Changes since v1:
+>
+> * s/loud-merge/loud-rebase/
+> * Add `-p` as another example since that was Dscho's original use-case
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.zsh | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
-
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 886bf95d1f..b3c4588515 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -4,17 +4,19 @@
- #
- # Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
- #
--# You need git's bash completion script installed somewhere, by default it
--# would be the location bash-completion uses.
--#
--# If your script is somewhere else, you can configure it on your ~/.zshrc:
--#
--#  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
--#
- # The recommended way to install this script is to copy to '~/.zsh/_git', and
- # then add the following to your ~/.zshrc file:
- #
- #  fpath=(~/.zsh $fpath)
-+#
-+# You need git's bash completion script installed. By default bash-completion
-+# uses /usr/share/bash-completion.
-+#
-+# If your bash completion script is somewhere else, you can configure it on
-+# your ~/.zshrc:
-+#
-+#  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
-+#
- 
- complete ()
- {
-@@ -31,9 +33,8 @@ if [ -z "$script" ]; then
- 	local e
- 	locations=(
- 		$(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
--		'/etc/bash_completion.d/git' # fedora, old debian
--		'/usr/share/bash-completion/completions/git' # arch, ubuntu, new debian
--		'/usr/share/bash-completion/git' # gentoo
-+		'/usr/share/bash-completion/completions/git'
-+		'/etc/bash_completion.d/git' # old debian
- 		)
- 	for e in $locations; do
- 		test -f $e && script="$e" && break
--- 
-2.21.0
-
+Looks good to me!
+Dscho
