@@ -8,58 +8,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 633571F462
-	for <e@80x24.org>; Thu,  6 Jun 2019 12:48:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4EDD1F462
+	for <e@80x24.org>; Thu,  6 Jun 2019 12:52:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727310AbfFFMsw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 08:48:52 -0400
-Received: from mout.gmx.net ([212.227.17.21]:49811 "EHLO mout.gmx.net"
+        id S1728010AbfFFMwq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 08:52:46 -0400
+Received: from mout.gmx.net ([212.227.15.15]:46301 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725267AbfFFMsw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 08:48:52 -0400
+        id S1727153AbfFFMwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 08:52:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1559825329;
-        bh=cwpcksP7I+f4ZSM63qTSpfN12M0n6CVvMtFFf8S1T/8=;
+        s=badeba3b8450; t=1559825561;
+        bh=pRYy2CV1qUipaepAzEjDkunGACiLm2vhsu1o9x24ihM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EG5DkQOKzPgmY3KKNJ8CFSB1U3v9Y1C8e514FXtd7LQMaljMCUZ9BcTZZ1JgJrQ8R
-         YV8R6pyWcQoiHCiGLLlO8lX/380dfKYEjmQayDJSlNRe7Fl5U5YC6WxemaMaVeDJqo
-         2GWQMbwwh2V9F7ZDccuvDreidc8wrLN63ENblgDA=
+        b=OxJgxVtRopwhQcmGfmYJA1ovY3uW9ro78CdCIotAyAbfuzTacJNPCD/M2pDpjdOW+
+         FdrP9LjWfX+H3XzE21V+h/rzZvb4S+2TcOf8h7ZgUmtrurUOAcao6kfx0oPdoYzzt0
+         L+7L+xLIJ8eaRrRHxjSC42uAJKQk2IIaHiwNWDPQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LobGI-1gtlNL2GpG-00gbKs; Thu, 06
- Jun 2019 14:48:49 +0200
-Date:   Thu, 6 Jun 2019 14:48:50 +0200 (CEST)
+Received: from [192.168.0.129] ([37.201.192.51]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEFlg-1hJVoH2Fjc-00FOok; Thu, 06
+ Jun 2019 14:52:41 +0200
+Date:   Thu, 6 Jun 2019 14:52:42 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Denton Liu <liu.denton@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/2] Doc: document alias accepting non-command first
- word
-In-Reply-To: <cover.1559755652.git.liu.denton@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1906061448350.42@tvgsbejvaqbjf.bet>
-References: <cover.1559333840.git.liu.denton@gmail.com> <cover.1559755652.git.liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] config: learn the "onbranch:" includeIf condition
+In-Reply-To: <49e22269d5a66d1975fca71a300e9099f46e1c40.1559769658.git.liu.denton@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1906061452130.42@tvgsbejvaqbjf.bet>
+References: <3573995264441c50ea9529b3ee926d1ed3ec4ac8.1559330905.git.liu.denton@gmail.com> <49e22269d5a66d1975fca71a300e9099f46e1c40.1559769658.git.liu.denton@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jzmTi5qcHRkw84+8If5Ba+bMx8VWKPZqCFEsBNQlVkfnQ8PqbIt
- 2bWAe0ZdXEQ0R6N3FyCKsoE2aTJDbjLrlPuYPo5tx1fUlYiGmOG5vUz1cpqDlXOMynHd7d5
- F12tPUypgRPbY42bj80fGjvrjKM92byAGQIOHj8dTSEhhUucujKr5nl5z1MuScNgo21nOtU
- erXisBFhu1iEDQSXmSR3w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w7b1NcN1Vwg=:MntHDTYL79L3As4+buZ65Q
- 1zUQcnINsV1pb5fEyU++0T3Ds/y1MKanPnHyW9Fk408N0esk1aPYZlLyDtSE8mAhPPz5OYzla
- v2Ih36nJVdjZd4j0sUVQ/FjcmtPdz+aOiKTWWWP9z0tjO4Hw4Dcs1amFfG7mUMIIstmzuFjj2
- uhac+3AyPgLCdkfGT/4jWAzdwqqQkLQZhNlKOMW74qnj9iwtToxgTsYp1whXfZjyjH/187SVB
- SoPirYSUyjLcjN6A973qiawKjbM16rrh8CMRRBCTufbYmagNDRDVgQhUgA4hRirnScZsob/bj
- jlQIWQUWxs7gflDT1wyTFc/AbHMgJs8O7Mot36luyWtAFZNCagnevy70sHHnv+R4duQe0ydrW
- 6cX1uSoRdhs/Ax8i72GqMdgkohRqfI+Rav4E47xqwza6oN9tILwyVwHqXa+skPxy8l34+AHyB
- r4D3aZ1yArvseNaF3dffw3i8NV+J1vpesoTbh747KaVtjydW+db8gRnX8i6WNWEbSMXyAApLp
- e8zrA9gRiB3NN63YTyFW1J5Q5/7PGLHdA/NgZaf/Y8I9udhpznBK4YmJCMGi8urzDCmtdSdaQ
- Crz60pY7YEng+9T5s3tnSY3UW3Ce4giHbJwazD9wxsecHRY235lbuaPx4FoTIfLaFjWtntVRr
- BctjsxjDX1cLh5iW2pckk4iY7vCxg0IRG6MTK2B2a9N4hDcKBydWGiFtrlhBYnW2YYl51hAOk
- wk2N4+H82uQ9YUFwY0xNrUYC6wSucw8ix247HqnrtKjs61Qvj/8Sb9bcRqLmQtmVCRLCBpGlM
- SeuSviWuwSL9+CzR+P6ILL8P8w8cb2HKPLWRT4wh0r4gNxKlck1TUbD0x988+FmAI+mlk9PgD
- BJ07GDQofVZOVO233fGze4wYou0OETVltmnV9iqc2qB44VAecc7N0spW3+zBXmu1opZLV3GG2
- hzS58n+H8U3Pt+7ACqrPfYBzEyyjy+Y+8m/tSi8r/cwwIHO0Humq/
+X-Provags-ID: V03:K1:ZLXdh/j66tc+oguPSKLQj8GMuEDJHfqmgNsObeocQEeGQlZE/St
+ PH2eiY5RVSQ0bNDJvO9pHqf0V6CExrwIc0/M7hzjtfr9ZK2eeSW8AFz50XgIjAUAgPIzWh2
+ usOjTxWok9614lZhqkT7dHr/dpWGNQfVWrH6bQeQ5v+NF7ApVmWmUX3tpvPRliVhZO07Sd5
+ aUOQn/isJQlxRptQKDohw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yeahmhzBEH0=:1r60IdsP9sgUHokAczs7iQ
+ jAbPmLhQ0zWoQNt/qbnw8hy/P/7FfXxp12+ioakNldFLaA0dYS4Szbvb7xeNK12Z51doMqF3W
+ 8UgxmFP3oBZtr6BeMmlNsQCNcG8eaTmrZ7IUJp7/rsLYC33mQg4lJKME6Ie9xoxXWqZO2jcRZ
+ 6wP72pQion0A0vZtPT38cUFCj6ajXbVroCpSFjt+zxOLZmNiFTM2vyjRCxwivughN9GwR/adM
+ e1ztHbZIbDjeu2RPz4arAwW/hpcdv2UZvtycYhtbHC0LTGb/i1dTQkHxiZesNiOShiW4Cu+u3
+ kYhrh8FDNdA59OBFe/VI4OQpLGQInLcLbpaOZH9HjZyArlqui73mpVAXphiZJUO+PUTK2uYw1
+ UPqsm/kEeqmoREXUMK6MVczXxxtGrPh63kfJyRzByLfAE9q5hjEPkNOvaP/ujnaUU0BH1gibo
+ qfhKkGwyqv97DO7qqfEDnPHHAV5ewpQo5D5/Kqn6MGssnmoyJv6uabXrgoUSJr2Zc7BV07Tvg
+ aoLvPh0m5LJvOfjzLeg3uQgyX37gB2fI2NPN7iMWBiEOf3NAfseqUpPi1qmKTJXv47EZCq9ci
+ bQObnMqP0BZFnpL4Z2kJiDcdyp+Kx9bNdy8r4Uadfb8/uVMSuxVk8ZvCKoEX0UMMsfyLgAFTQ
+ CzM8xvmUBhoQAkjLkoH0WSMyT1+0lXR3VUeFAgj6R+xb0L3PIg1ZKd0C3bhvZdXnaD1BFs4cY
+ F6JAnyimwhD6TWvsC7tcWsTLaZuPxBIyLE00qFKPBkL+i5xspjKwr8//vdadK3ThB+4WxvDi5
+ R163SwhANR8S/RGDwrqnWD7WQD2VQmpR9v8Bp+NDjWlPivR6QUdVw33Kci00D5qvvYAXunVeh
+ 4HV9JNadDaSe/UTE0HgCZJuasjoX9HdESJCb0P7PvtWF2GsPV3017dabbvhHj8/B2LD+1QJyv
+ XaSwPGRuhgdHzsflH5KLa+Hgj2x0ZwSNE5+2Xhr0bLeSW62V8vCAz
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,14 +72,26 @@ Hi Denton,
 
 On Wed, 5 Jun 2019, Denton Liu wrote:
 
-> Thanks for the review, Johannes. I think it's a good idea to add another
-> alias for `-p` so included that suggestion. Also, while I was at it, I
-> found a typo so I fixed that too.
+> Currently, if a user wishes to have individual settings per branch, they
+> are required to manually keep track of the settings in their head and
+> manually set the options on the command-line or change the config at
+> each branch.
 >
-> Changes since v1:
+> Teach config the "onbranch:" includeIf condition so that it can
+> conditionally include configuration files if the branch that is checked
+> out in the current worktree matches the pattern given.
 >
-> * s/loud-merge/loud-rebase/
-> * Add `-p` as another example since that was Dscho's original use-case
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>
+> Thanks for the review, Johannes and Duy. I've incorporated both of your
+> suggestions into this round.
+>
+> Notes:
+>     Changes since v2:
+>
+>     * Run test-cases outside foo/ since the subdirectory is not necessar=
+y
 
-Looks good to me!
+That should indeed take care of my concern. Thank you!
 Dscho
