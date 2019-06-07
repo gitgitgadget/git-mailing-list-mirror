@@ -2,96 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4131F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 14:51:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46B711F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 16:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729148AbfFGOva (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 10:51:30 -0400
-Received: from goliath.siemens.de ([192.35.17.28]:46790 "EHLO
-        goliath.siemens.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728446AbfFGOva (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 10:51:30 -0400
-Received: from mail1.siemens.de (mail1.siemens.de [139.23.33.14])
-        by goliath.siemens.de (8.15.2/8.15.2) with ESMTPS id x57EpK21014130
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 7 Jun 2019 16:51:20 +0200
-Received: from [147.54.65.49] (MD11GXTC.ad001.siemens.net [147.54.65.49])
-        by mail1.siemens.de (8.15.2/8.15.2) with ESMTP id x57EpK06011103;
-        Fri, 7 Jun 2019 16:51:20 +0200
-Subject: Re: [PATCH] configure: Detect linking style for HP aCC on HP-UX
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
- <20190516093412.14795-1-avarab@gmail.com>
-From:   "Osipov, Michael" <michael.osipov@siemens.com>
-Message-ID: <c12ec5ff-87c9-a6d0-e9f6-6d7e1cf343c5@siemens.com>
-Date:   Fri, 7 Jun 2019 16:51:19 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        id S1730733AbfFGQfs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 12:35:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57880 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730193AbfFGQfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 12:35:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 751107AA0A;
+        Fri,  7 Jun 2019 12:35:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=gUi+VPWKr3uo
+        JrgNyd75BFldavE=; b=u8z2vvB6d/cwkNon7Z4jOqq04FLtJtseWdZB4q6CbusY
+        Il09TMlqid1MwNkMsrPv2sSr9vWD2H0O5bTaDWmV9FwjpwPQPjke3eF8ujbsQ+Od
+        0aC35OktwYgd0RUD1T3AVTH8WFunxRw11LHz+e7lHMO9Y+59fkMVRja/oMQ/aVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=HOP7oQ
+        0C59QchBO8zNux+GnyavG+cp/84C335+wEhFtpk1jZCoM2t1jvQTzf3cBV8A+5iW
+        ZrG4+vZbAdDo4S/WfwLSiBJ0lK56sri/AVsoSdcCaD9GAzokX6FkJuEFPYTMFGH9
+        Fkixy/QJtxuDvPkZl+rDeiKoINFSOqHBPO31w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6DA3C7AA09;
+        Fri,  7 Jun 2019 12:35:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5DEC57AA01;
+        Fri,  7 Jun 2019 12:35:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     felipe.contreras@gmail.com, git@vger.kernel.org,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH] completion: do not cache if --git-completion-helper fails
+References: <20190607022443.5706-1-felipe.contreras@gmail.com>
+        <20190607093034.816-1-pclouds@gmail.com>
+Date:   Fri, 07 Jun 2019 09:35:39 -0700
+In-Reply-To: <20190607093034.816-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Fri, 7 Jun 2019 16:30:34 +0700")
+Message-ID: <xmqqzhmtpd44.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190516093412.14795-1-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4A9ACA6C-8942-11E9-A6AF-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
+>  	if [ -z "$options" ]; then
+> +		local nocache=3D
+>  		# leading and trailing spaces are significant to make
+>  		# option removal work correctly.
+> -		options=3D" $incl $(__git ${cmd/_/ } --git-completion-helper) "
+> +		options=3D" $incl $(__git ${cmd/_/ } --git-completion-helper) " || n=
+ocache=3Dt
+> +
+>  		for i in $excl; do
+>  			options=3D"${options/ $i / }"
+>  		done
 
-Am 2019-05-16 um 11:34 schrieb Ævar Arnfjörð Bjarmason:
-> From: Michael Osipov <michael.osipov@siemens.com>
-> 
-> HP aCC does not accept any of the previously tested CC_LD_DYNPATH
-> formats, but only its own[1] "-Wl,+b" format. Add it to configure.ac.
-> 
-> 1. http://nixdoc.net/man-pages/hp-ux/man1/ld_pa.1.html
-> 
-> Signed-off-by: Michael Osipov <michael.osipov@siemens.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> I took the liberty of slightly amending the commit message.
-> 
->   configure.ac | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/configure.ac b/configure.ac
-> index be3b55f1cc..a43b476402 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -475,8 +475,18 @@ else
->         if test "$git_cv_ld_rpath" = "yes"; then
->            CC_LD_DYNPATH=-rpath
->         else
-> -         CC_LD_DYNPATH=
-> -         AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
-> +         AC_CACHE_CHECK([if linker supports -Wl,+b,], git_cv_ld_wl_b, [
-> +            SAVE_LDFLAGS="${LDFLAGS}"
-> +            LDFLAGS="${SAVE_LDFLAGS} -Wl,+b,/"
-> +            AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])], [git_cv_ld_wl_b=yes], [git_cv_ld_wl_b=no])
-> +            LDFLAGS="${SAVE_LDFLAGS}"
-> +         ])
-> +         if test "$git_cv_ld_wl_b" = "yes"; then
-> +            CC_LD_DYNPATH=-Wl,+b,
-> +          else
-> +             CC_LD_DYNPATH=
-> +             AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
-> +          fi
->         fi
->      fi
->   fi
-> 
+Is there a point in doing this loop if we are not going to eval
+after all?  IOW...
 
-I can see that this one has not yet been committed nor my PR has been 
-pulled.
+> -		eval "$var=3D\"$options\""
+> +		test -n "$nocache" || eval "$var=3D\"$options\""
+>  	fi
 
-Any chances to get this into master?
+... I am wondering why it is not more like this
 
-Michael
+	if options=3D" $incl $(__git ${cmd/_/ } --git-completion-helper) "
+	then
+		for i in $excl
+		do
+			options=3D...
+		done
+		eval "$var=3D..."
+	fi
+
+or just return from the function instead of introducing and setting
+a new variable, as only remaining thing the function does is to call
+__gitcomp with $options, but we know that we are giving up on
+completing this round.
+
