@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0F901F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 18:15:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1514B1F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 18:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731446AbfFGSP5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 14:15:57 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51736 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730092AbfFGSP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 14:15:56 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84D2D14D0D0;
-        Fri,  7 Jun 2019 14:15:51 -0400 (EDT)
+        id S1731413AbfFGSXV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 14:23:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63057 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730183AbfFGSXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 14:23:20 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FE4B1594BE;
+        Fri,  7 Jun 2019 14:23:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l9SR4UlOHLnrOKbDM5bpS2Wux4U=; b=PFf0Zp
-        B3ntBvNNK+8pQJbvMMv3HtYLZ4BSDtb/Y5gCmBgCGX618StbgCY6cKfr7zi1CUWj
-        vn4MlCnRMsNtSXGvROIiN3Ov7HjvGAT+79eoDEBGN3W/zw5i8/AZXsAXRNigpeeB
-        NR71niMoTJbs4JXL6RqN14enRftE0iVxw06qQ=
+        :content-type; s=sasl; bh=UgucNY7FEcPG4ocv1lDlL129YHY=; b=lczHiI
+        9iXrDsksR57eC3GsVffHc/vgl/b7MIdFcimBY46qYpXHZ5Jn/mZgLCPQ3Op64yPQ
+        SGzJCJl1X8OCFD5k5obPjt02E0jPYmyPzmYkpxjv8KV70uQoFrtUS/wYgAZgoihU
+        IL3zGVh0B1QBrAMxKAszFvc6/PE+tjCZLP5HA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qzxmDqP+/FPqADsmbyJYMYu5FSBduZjl
-        ZwzTbac+nEmGv8biMDuiXJpJwK+AyIQz7FrtcTT54D4a6Ach3QW/l9J3bZ7yu9ff
-        0r1hiId+M62xbAmOGF6byGsUc+qZvIoWnGPx6bkPjWz4BBZWiHnyTHrhg3oQU2pQ
-        760bHP+vY0g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6433414D0CF;
-        Fri,  7 Jun 2019 14:15:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=i/QUsdGsvMSiCJ+Ziybg+P8xsGtEjUxa
+        Ew0uykJRDcuuf/3ZLx5j+MNrV/Fq+6k9OWW/cUY7f9UhPY10hLJuwfMxYDp13reQ
+        ycTXW7JIiKrfhFzgVBmm8LALZ1GYDG3OHbB2DgrE9klqwMX0L98ghOZdpNu8iY4A
+        EacL5TXwzGU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2790A1594BD;
+        Fri,  7 Jun 2019 14:23:16 -0400 (EDT)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B55EB14D0CB;
-        Fri,  7 Jun 2019 14:15:50 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 95BFB1594BC;
+        Fri,  7 Jun 2019 14:23:15 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
         git@jeffhostetler.com, jrnieder@google.com, steadmon@google.com,
         johannes.schindelin@gmx.de, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 05/14] commit-graph: add base graphs chunk
+Subject: Re: [PATCH v4 06/14] commit-graph: rearrange chunk count logic
 References: <pull.184.v3.git.gitgitgadget@gmail.com>
         <pull.184.v4.git.gitgitgadget@gmail.com>
-        <df44cbc1bf6e18c3682652c2de69de7a9caf5fc2.1559830527.git.gitgitgadget@gmail.com>
-Date:   Fri, 07 Jun 2019 11:15:49 -0700
-In-Reply-To: <df44cbc1bf6e18c3682652c2de69de7a9caf5fc2.1559830527.git.gitgitgadget@gmail.com>
+        <e65f9e841d577c13d26c1737ebb8a2cf65713be9.1559830527.git.gitgitgadget@gmail.com>
+Date:   Fri, 07 Jun 2019 11:23:14 -0700
+In-Reply-To: <e65f9e841d577c13d26c1737ebb8a2cf65713be9.1559830527.git.gitgitgadget@gmail.com>
         (Derrick Stolee via GitGitGadget's message of "Thu, 06 Jun 2019
-        07:15:33 -0700 (PDT)")
-Message-ID: <xmqqmuitp8h6.fsf@gitster-ct.c.googlers.com>
+        07:15:34 -0700 (PDT)")
+Message-ID: <xmqqimthp84t.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 47DD181C-8950-11E9-B252-72EEE64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 51076432-8951-11E9-BFB2-46F8B7964D18-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,59 +64,86 @@ X-Mailing-List: git@vger.kernel.org
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> -  1-byte (reserved for later use)
-> -     Current clients should ignore this value.
-> +  1-byte number (B) of base commit-graphs
-> +      We infer the length (H*B) of the Base Graphs chunk
-> +      from this value.
->  
->  CHUNK LOOKUP:
->  
-> @@ -92,6 +93,12 @@ CHUNK DATA:
->        positions for the parents until reaching a value with the most-significant
->        bit on. The other bits correspond to the position of the last parent.
->  
-> +  Base Graphs List (ID: {'B', 'A', 'S', 'E'}) [Optional]
-> +      This list of H-byte hashes describe a set of B commit-graph files that
-> +      form a commit-graph chain. The graph position for the ith commit in this
-> +      file's OID Lookup chunk is equal to i plus the number of commits in all
-> +      base graphs.  If B is non-zero, this chunk must exist.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The number of chunks in a commit-graph file can change depending on
+> whether we need the Extra Edges Chunk. We are going to add more optional
+> chunks, and it will be helpful to rearrange this logic around the chunk
+> count before doing so.
+>
+> Specifically, we need to finalize the number of chunks before writing
+> the commit-graph header. Further, we also need to fill out the chunk
+> lookup table dynamically and using "num_chunks" as we add optional
+> chunks is useful for adding optional chunks in the future.
 
-Hmph, an obvious alternative design would be to make the base list
-self describing without using the "reserved for future use" byte,
-which would allow more than 256 bases (not that being able to use
-300 bases is necessarily a useful feature) and also leave the
-reserved byte unused.
+Yup.  The resulting code may be slightly longer at this step than
+before, but it certainly is easier to follow the logic.  Good.
 
-It's not like being able to detect discrepancy (e.g. B!=0 but BASE
-chunk is missing, and/or BASE chunk appears but B==0) adds value by
-offering more protection against file corruption, so I am wondering
-why it is a good idea to consume the reserved byte for this.
 
-> +	if (n && !g->chunk_base_graphs) {
-> +		warning(_("commit-graph has no base graphs chunk"));
-> +		return 0;
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit-graph.c | 35 +++++++++++++++++++++--------------
+>  1 file changed, 21 insertions(+), 14 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 909c841db5..80df6d6d9d 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1206,7 +1206,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+>  	uint64_t chunk_offsets[5];
+>  	const unsigned hashsz = the_hash_algo->rawsz;
+>  	struct strbuf progress_title = STRBUF_INIT;
+> -	int num_chunks = ctx->num_extra_edges ? 4 : 3;
+> +	int num_chunks = 3;
+>  
+>  	ctx->graph_name = get_commit_graph_filename(ctx->obj_dir);
+>  	if (safe_create_leading_directories(ctx->graph_name)) {
+> @@ -1219,27 +1219,34 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+>  	hold_lock_file_for_update(&lk, ctx->graph_name, LOCK_DIE_ON_ERROR);
+>  	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+>  
+> -	hashwrite_be32(f, GRAPH_SIGNATURE);
+> -
+> -	hashwrite_u8(f, GRAPH_VERSION);
+> -	hashwrite_u8(f, oid_version());
+> -	hashwrite_u8(f, num_chunks);
+> -	hashwrite_u8(f, 0); /* unused padding byte */
+> -
+>  	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
+>  	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
+>  	chunk_ids[2] = GRAPH_CHUNKID_DATA;
+> -	if (ctx->num_extra_edges)
+> -		chunk_ids[3] = GRAPH_CHUNKID_EXTRAEDGES;
+> -	else
+> -		chunk_ids[3] = 0;
+> -	chunk_ids[4] = 0;
+> +	if (ctx->num_extra_edges) {
+> +		chunk_ids[num_chunks] = GRAPH_CHUNKID_EXTRAEDGES;
+> +		num_chunks++;
 > +	}
 > +
-n>  	while (n) {
->  		n--;
+> +	chunk_ids[num_chunks] = 0;
+>  
+>  	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+>  	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+>  	chunk_offsets[2] = chunk_offsets[1] + hashsz * ctx->commits.nr;
+>  	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * ctx->commits.nr;
+> -	chunk_offsets[4] = chunk_offsets[3] + 4 * ctx->num_extra_edges;
 > +
-> +		if (!oideq(&oids[n], &cur_g->oid) ||
-> +		    !hasheq(oids[n].hash, g->chunk_base_graphs + g->hash_len * n)) {
-
-Here, load_commit_graph_chain() that goes over the on-disk chain
-file that lists graph files called us with 'n', which can run up to
-the number of graph files listed in that file---and that number can
-be more than what is recorded in the graph-list chunk, in which case
-we are over-reading with this hasheq(), right?
-
-It seems that parse_commit_graph() only cares about the beginning of
-each chunk, and a crafted graph file can record two chunks with a
-gap in between, or two chunks that overlap, and nobody would notice.
-Is that true?
-
-Wasted space in the file between two chunks (i.e. a gap) is not
-necessarily bad and may not be a warning-worthy thing, but two
-chunks that overlap is probably not a good idea and worth noticing.
-The only sanity check it seems to do is to forbid chunks of the same
-kind from appearing twice.
+> +	num_chunks = 3;
+> +	if (ctx->num_extra_edges) {
+> +		chunk_offsets[num_chunks + 1] = chunk_offsets[num_chunks] +
+> +						4 * ctx->num_extra_edges;
+> +		num_chunks++;
+> +	}
+> +
+> +	hashwrite_be32(f, GRAPH_SIGNATURE);
+> +
+> +	hashwrite_u8(f, GRAPH_VERSION);
+> +	hashwrite_u8(f, oid_version());
+> +	hashwrite_u8(f, num_chunks);
+> +	hashwrite_u8(f, 0);
+>  
+>  	for (i = 0; i <= num_chunks; i++) {
+>  		uint32_t chunk_write[3];
