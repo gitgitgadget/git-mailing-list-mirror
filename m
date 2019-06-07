@@ -8,56 +8,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC1FF1F462
+	by dcvr.yhbt.net (Postfix) with ESMTP id 087F01F609
 	for <e@80x24.org>; Fri,  7 Jun 2019 18:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731921AbfFGSil (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 14:38:41 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43491 "EHLO
+        id S1731918AbfFGSik (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 14:38:40 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:37472 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731901AbfFGSie (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731904AbfFGSie (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Jun 2019 14:38:34 -0400
-Received: by mail-ed1-f66.google.com with SMTP id w33so4322335edb.10
-        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:33 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id w13so4363918eds.4
+        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fw5Y2dHBDiFWW6OD8UhRfhbOL0mhunXuojtHWy7e9I8=;
-        b=ZgRNnn4g+6EeEoVJwbeRCjsGq6zaFWFmQVPwyAlCEiX1FDguX0THHfqA0/Q509VJm8
-         Rpw93JdMIxRvQXdGM+2qPrmSQ6d44qHRRdoI1YrDHW0zZ6TB2dWfmnnmsoYP0JzgmFaQ
-         bbRv4URDpPDiZEtHvl5UGQFQw6NZB+5qmGOtFswvp+RX0AmGPFRqZWZJ8lpBzLx5e3je
-         qYEAUJGKQit/u/HSsa1QdASCbf50hTSNzZxTQ2kILTw7hoRnhOCl7DcH2MIeMWIKamxP
-         VSeMojLc6HTCV2fS5aVJ/UsBatvh2tflk8SMI5D2247hHbTgErErlDrP1TNRCB41RZSi
-         CPYA==
+        bh=hIi9l0byLwN4GcFQhxtlx5k7npFpNleBgyEOn32RhlE=;
+        b=OkM15TmWMbJFSWPZljY7kUEYoL5PupG1Y8+kY9w5Iui8HkLg86hjoE2wIVOTOz8JB9
+         ZElu4xOCp+7Xty5t03kqAkfMRUeUMvFoiAW33nYD8u8UYMbZtXdO6TLaoqz+7Xi9fopT
+         mn4HzV31Pjt1plKuXleFKVuP/N+AHjoCdDgYL/M2XPuiFpZ6dUhhLHEOV7KXIzFbPGnI
+         0FdZ4219hxXHZ+6pM6/NwwDLuHBzf8dDQsE9Gv1HCnAoczYdIrW+ZwYXhjejGt4bfIVc
+         oyb4lQ0au5WlqxhI1kLKKOpQ21PXfuRw16ChbB4ZyXXWtfOiOVQQnjFbgCE7cDVuyUQJ
+         xGkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fw5Y2dHBDiFWW6OD8UhRfhbOL0mhunXuojtHWy7e9I8=;
-        b=eoZS0u1Qji22cngKHgahvDObXWwyX9MnZUf4BhdoXxPUQnFepkdoGD7ozQxVPLcGsa
-         qCl1xXqE1rgOBURH1UMjjG0YnH2GAn4g0/ww+7Y8ropFnTSQydS0uSlnu3n4aySLee8G
-         GXzxh2gdoe443fFDw8C7Q8JV+RgIH3jKRQeiJekWhtmKUQSVm1DFpxSyntwFEZcTnLpv
-         +yyl/wdYQI8RiKpzs9Vw3Lu6P6CkbuPrnpqZeABrRuwIvZBEx18UgwjFW//KQOEuwcrO
-         RpxQp9HIQM3UaXT0CCro/xJty01GLMW1i48kXHBklOrU6fdCnSlVzpG56c/cRvVl8XzI
-         yJyg==
-X-Gm-Message-State: APjAAAXyFV7KxFzPu2cEq9/yogkyA1mg3rGvvSusYSzJoM9f4KQ9jJe+
-        2+ySCyaaCzmPhcZEvI1l779yJWkP
-X-Google-Smtp-Source: APXvYqws3Q4Tk9CLmiT2zyILEmuNhidfUaHHFzz1nXDVy511HVP/Gc3xIYQLcHht/BvTxm1DiB/ZLQ==
-X-Received: by 2002:a17:906:41c5:: with SMTP id g5mr27931340ejl.114.1559932712753;
-        Fri, 07 Jun 2019 11:38:32 -0700 (PDT)
+        bh=hIi9l0byLwN4GcFQhxtlx5k7npFpNleBgyEOn32RhlE=;
+        b=GliVTN5D+KuTGwn7ouZAQuduqvYs5efCdGanC5V6uC5wqkuHyxrSOaa3kHuuaYT7fi
+         WhXo21vytv6eUYxZETfDOD46PsTFrpRokJzUOak3sfak1F7ygCIhy8DiACaoZezyNRgN
+         1pWXkqdl++fLj+JqB2ENDlFyjkZevbt1BwD+gu6hgkI7crOl46vOiWeJTIdpocXWcKYC
+         vN7QovA25QFZGJxmIXOGLSt3dOhqqUQRRnNvTEKqPworcS/A1OOEjkDIuxK4fy+Z2OYv
+         6CsSwQq8b5STZeVmxVXtdNq4Dj8zSHyNPLH83nWC0RyUri84MsgkS5EJ1cTZf1OvAC+E
+         42fQ==
+X-Gm-Message-State: APjAAAXwjX9aoPMYUN+FHsFlrnOP/IfcwzvsIKu6nRUjnGH/kX7sR+Rd
+        0DkEbmkM5ontT0o3oW9uHQ4kGX9A
+X-Google-Smtp-Source: APXvYqwfV+Jd2HjQ+KYla1NhtI86/00OeyVU3qMVR6hECP5TmCzxC3w3Fo+YO5tUYiFYM3Z1SAUw7A==
+X-Received: by 2002:a50:913c:: with SMTP id e57mr8692250eda.257.1559932713448;
+        Fri, 07 Jun 2019 11:38:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u13sm708665edb.45.2019.06.07.11.38.32
+        by smtp.gmail.com with ESMTPSA id e10sm500618ejx.89.2019.06.07.11.38.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jun 2019 11:38:32 -0700 (PDT)
-Date:   Fri, 07 Jun 2019 11:38:32 -0700 (PDT)
-X-Google-Original-Date: Fri, 07 Jun 2019 18:38:18 GMT
-Message-Id: <101792b92db169a88d74d5f9292a7de30799e90c.1559932699.git.gitgitgadget@gmail.com>
+        Fri, 07 Jun 2019 11:38:33 -0700 (PDT)
+Date:   Fri, 07 Jun 2019 11:38:33 -0700 (PDT)
+X-Google-Original-Date: Fri, 07 Jun 2019 18:38:19 GMT
+Message-Id: <84a3ff7c61a27bab2d7f01267f09b314fb292d57.1559932699.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v5.git.gitgitgadget@gmail.com>
 References: <pull.184.v4.git.gitgitgadget@gmail.com>
         <pull.184.v5.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 15/16] commit-graph: test octopus merges with --split
+Subject: [PATCH v5 16/16] commit-graph: test --split across alternate without
+ --split
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,37 +76,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Octopus merges require an extra chunk of data in the commit-graph
-file format. Create a test that ensures the new --split option
-continues to work with an octopus merge. Specifically, ensure
-that the octopus merge has parents across layers to truly check
-that our graph position logic holds up correctly.
+We allow sharing commit-graph files across alternates. When we are
+writing a split commit-graph, we allow adding tip graph files that
+are not in the alternate, but include commits from our local repo.
+
+However, if our alternate is not using the split commit-graph format,
+its file is at .git/objects/info/commit-graph and we are trying to
+write files in .git/objects/info/commit-graphs/graph-{hash}.graph.
+
+We already have logic to ensure we do not merge across alternate
+boundaries, but we also cannot have a commit-graph chain to our
+alternate if uses the old filename structure.
+
+Create a test that verifies we create a new split commit-graph
+with only one level and we do not modify the existing commit-graph
+in the alternate.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t5324-split-commit-graph.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t5324-split-commit-graph.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index e8df35c30b..704def70bb 100755
+index 704def70bb..130f2baf44 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -290,4 +290,15 @@ test_expect_success 'verify after commit-graph-chain corruption' '
- 	)
- '
+@@ -301,4 +301,19 @@ test_expect_success 'add octopus merge' '
  
-+test_expect_success 'add octopus merge' '
-+	git reset --hard commits/10 &&
-+	git merge commits/3 commits/4 &&
-+	git branch merge/octopus &&
-+	git commit-graph write --reachable --split &&
-+	git commit-graph verify &&
-+	test_line_count = 3 $graphdir/commit-graph-chain
+ graph_git_behavior 'graph exists' merge/octopus commits/12
+ 
++test_expect_success 'split across alternate where alternate is not split' '
++	git commit-graph write --reachable &&
++	test_path_is_file .git/objects/info/commit-graph &&
++	cp .git/objects/info/commit-graph . &&
++	git clone --no-hardlinks . alt-split &&
++	(
++		cd alt-split &&
++		echo "$(pwd)"/../.git/objects >.git/objects/info/alternates &&
++		test_commit 18 &&
++		git commit-graph write --reachable --split &&
++		test_line_count = 1 $graphdir/commit-graph-chain
++	) &&
++	test_cmp commit-graph .git/objects/info/commit-graph
 +'
-+
-+graph_git_behavior 'graph exists' merge/octopus commits/12
 +
  test_done
 -- 
 gitgitgadget
-
