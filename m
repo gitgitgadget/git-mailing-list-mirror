@@ -2,131 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2381E1F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 17:03:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17DE91F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 17:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729936AbfFGRD4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 13:03:56 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64171 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729118AbfFGRD4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 13:03:56 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E32A72DF6;
-        Fri,  7 Jun 2019 13:03:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Nqh7nSzaDGR9
-        iLxZ/p0B9HZjcbY=; b=ML4boDbOTBcDCKQ2Wz9qi81ui7jJBqJmLmwj4rUs1AFe
-        ZYoFXbB2+DUsvsHzhRQEISg0oBaYil9S0uXchQEG8l3YhAeRGdCJAzcZd2aDk3AY
-        rd9KNYLXld3d/Rgf8KEi1h2pHPvk6n1+fgVeomvZR7TKXXpA10j4DlXS5hLEYuc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=r+rCwv
-        t1LTgESiuR2LzSQLe9AHPG3MKKbey/ZGnCpF0jVfHdSMTx0u/tAMWsts402WcPpj
-        cAwh6iNTxZCIbB3arr1KFZqfCvM6+tlGfTWYLM+o6RadLUZx9dhSrdvnCefoVE11
-        2wSvRlBkYAy6HuK5uIxIhlO0G/XdQHyiMusVM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 967BB72DF5;
-        Fri,  7 Jun 2019 13:03:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC47472DF3;
-        Fri,  7 Jun 2019 13:03:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Osipov\, Michael" <michael.osipov@siemens.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] configure: Detect linking style for HP aCC on HP-UX
-References: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
-        <20190516093412.14795-1-avarab@gmail.com>
-        <c12ec5ff-87c9-a6d0-e9f6-6d7e1cf343c5@siemens.com>
-Date:   Fri, 07 Jun 2019 10:03:45 -0700
-In-Reply-To: <c12ec5ff-87c9-a6d0-e9f6-6d7e1cf343c5@siemens.com> (Michael
-        Osipov's message of "Fri, 7 Jun 2019 16:51:19 +0200")
-Message-ID: <xmqqr285pbta.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
+        id S1729837AbfFGRdZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 13:33:25 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:37764 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729680AbfFGRdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 13:33:24 -0400
+Received: by mail-vs1-f65.google.com with SMTP id v6so1633362vsq.4
+        for <git@vger.kernel.org>; Fri, 07 Jun 2019 10:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NXdDkv6eFbPt6BEOz739AI9cO/S4JIT1GEu1EqR/cz8=;
+        b=VniKoz1JbSWt70ySRcgdMgmo+0aOJrTmF/1qynGUfCBbI4J4qPl2Ax+1B1MT8HvFQ1
+         WZmCOa34rFXdGDlbdI+oFoQA5Or8bfZI0DnRr8vPpxLMkyqnGHxifWAPoHnfNKUM+D0d
+         47SNiDWeg3PI8IszdvltAyI3iwHF7z1OHMjjpD4uhteJGPrhymDRUP3kz6DiLrh1G9uB
+         WaXQY4ejU/kw2ePgPjuVEI5WIrHgQYTXIB8b4RANRpr+EORfRgyH5ts9sPTpr8P4L3E1
+         /sSl9jec0/zLKgxpbrgd3el3wXbolpHAq2tUzOFmixMBD266CcZmDIMGHNgmWrLRnXzz
+         BXSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NXdDkv6eFbPt6BEOz739AI9cO/S4JIT1GEu1EqR/cz8=;
+        b=UJdR95UKQhGzfm7x1BwIzmxDjytqTwy1g4QBmUZdexr1S1QBcF6J7jas++atzdIU0a
+         VoIVl4lDODMHYY1pDxqRxhAF/YLdlXNZy5CovEJwcH0pVdKdMlxYAK4ThuKvIu8qL3EA
+         nh1yRKoJz9frLyq3MvyjISuaUqqxpQ1n8NvzagDXU/gyJwkNyzwZw+Z3HqA+CzmIK9f0
+         gCYJWCIMqLZ/rC58h/El358Ie3DxAaZZBs3BqX73OoIDQJHo+wS+2njQExEv4hdphKyZ
+         sK7h14g72WgzrqWHOoTGFMV54KkYIuc7OGKYuoXJn/CQFP0bpQVAkrHn3WDMfrOOO4Ee
+         rgcw==
+X-Gm-Message-State: APjAAAXzUcP/y96UqjAppCDao77a8w1MTeVG5QVnIOcWt99/MoRmNj9M
+        4rzG1tbCbuMYOVKc9VNJ5hHQmYdF2eA6N94dJcs=
+X-Google-Smtp-Source: APXvYqzfTYvJRMkn646G5flNKMHbcdK2lmfsMRYhKViUeLA5hfW23VlxhiG+CdSteMU+6SqaEkziwx1lIA1o2SluHro=
+X-Received: by 2002:a67:ea51:: with SMTP id r17mr2692462vso.12.1559928803606;
+ Fri, 07 Jun 2019 10:33:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3721CE78-8946-11E9-AFBC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20190607022443.5706-1-felipe.contreras@gmail.com>
+ <20190607093034.816-1-pclouds@gmail.com> <20190607100252.GA24208@szeder.dev>
+In-Reply-To: <20190607100252.GA24208@szeder.dev>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 7 Jun 2019 12:33:12 -0500
+Message-ID: <CAMP44s3EsNzBtt_pG8HVp_RTMTTArk7Twhty4_tzf2iiZ7TKUQ@mail.gmail.com>
+Subject: Re: [PATCH] completion: do not cache if --git-completion-helper fails
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Osipov, Michael" <michael.osipov@siemens.com> writes:
-
-> Am 2019-05-16 um 11:34 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> From: Michael Osipov <michael.osipov@siemens.com>
->>
->> HP aCC does not accept any of the previously tested CC_LD_DYNPATH
->> formats, but only its own[1] "-Wl,+b" format. Add it to configure.ac.
->>
->> 1. http://nixdoc.net/man-pages/hp-ux/man1/ld_pa.1.html
->>
->> Signed-off-by: Michael Osipov <michael.osipov@siemens.com>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
->> ---
->>
->> I took the liberty of slightly amending the commit message.
->>
->>   configure.ac | 14 ++++++++++++--
->>   1 file changed, 12 insertions(+), 2 deletions(-)
->>
->> diff --git a/configure.ac b/configure.ac
->> index be3b55f1cc..a43b476402 100644
->> --- a/configure.ac
->> +++ b/configure.ac
->> @@ -475,8 +475,18 @@ else
->>         if test "$git_cv_ld_rpath" =3D "yes"; then
->>            CC_LD_DYNPATH=3D-rpath
->>         else
->> -         CC_LD_DYNPATH=3D
->> -         AC_MSG_WARN([linker does not support runtime path to dynamic=
- libraries])
->> +         AC_CACHE_CHECK([if linker supports -Wl,+b,], git_cv_ld_wl_b,=
- [
->> +            SAVE_LDFLAGS=3D"${LDFLAGS}"
->> +            LDFLAGS=3D"${SAVE_LDFLAGS} -Wl,+b,/"
->> +            AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])], [git_cv_ld_wl_b=
-=3Dyes], [git_cv_ld_wl_b=3Dno])
->> +            LDFLAGS=3D"${SAVE_LDFLAGS}"
->> +         ])
->> +         if test "$git_cv_ld_wl_b" =3D "yes"; then
->> +            CC_LD_DYNPATH=3D-Wl,+b,
->> +          else
->> +             CC_LD_DYNPATH=3D
->> +             AC_MSG_WARN([linker does not support runtime path to dyn=
-amic libraries])
->> +          fi
->>         fi
->>      fi
->>   fi
->>
+On Fri, Jun 7, 2019 at 5:02 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
+te:
 >
-> I can see that this one has not yet been committed nor my PR has been
-> pulled.
+> On Fri, Jun 07, 2019 at 04:30:34PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> > "git <cmd> --git-completion-helper" could fail if the command checks fo=
+r
+> > a repo before parse_options(). If the result is cached, later on when
+> > the user moves to a worktree with repo, tab completion will still fail.
+> >
+> > Avoid this by detecting errors and not cache the completion output. We
+> > can try again and hopefully succeed next time (e.g. when a repo is
+> > found).
+> >
+> > Of course if --git-completion-helper fails permanently because of other
+> > reasons (*), this will slow down completion. But I don't see any better
+> > option to handle that case.
 >
-> Any chances to get this into master?
->
-> Michael
+> I think a permanently failing 'git cmd --git-completion-helper'
+> shouldn't really happen, unless there is a bug in the completion
+> script or the git installation or similar exceptional situation.  And
+> then that issue should be fixed, but I don't think we should worry
+> about an extra subshell and git process in those situations.
 
-Sorry, it jsut fell of the cracks.  The way the new test was added
-looks very good --- any platform that is happy with the existing
-test will continue to function the same way, and a platform that
-knows -Wl,+b would use it instead of failing.
+Indeed. In think there's only sane option to make this work in all
+situation; a reorganization.
 
-Will pick it up.
+Something like this should work:
 
-Thanks.
+struct command checkout_command =3D {
+.name =3D "checkout",
+.function =3D cmd_checkout,
+.run_options =3D RUN_SETUP | NEED_WORK_TREE,
+.help =3D N_("Switch branches or restore working tree files"),
+.options =3D {
+OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+...
+},
+}
+
+This way we could run parse_options_show_gitcomp() from git.c and not
+worry about whatever cmd_checkout() needs.
+
+This has the added advantage that it gathers information about this
+command that is stray in multiple sources (git.c, command-list.h), and
+it makes builtin.h cleaner too.
+
+Plus, we could rework the way -h works too.
+
+--=20
+Felipe Contreras
