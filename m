@@ -2,117 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17DE91F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 17:33:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 709D31F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 17:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729837AbfFGRdZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 13:33:25 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:37764 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729680AbfFGRdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 13:33:24 -0400
-Received: by mail-vs1-f65.google.com with SMTP id v6so1633362vsq.4
-        for <git@vger.kernel.org>; Fri, 07 Jun 2019 10:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NXdDkv6eFbPt6BEOz739AI9cO/S4JIT1GEu1EqR/cz8=;
-        b=VniKoz1JbSWt70ySRcgdMgmo+0aOJrTmF/1qynGUfCBbI4J4qPl2Ax+1B1MT8HvFQ1
-         WZmCOa34rFXdGDlbdI+oFoQA5Or8bfZI0DnRr8vPpxLMkyqnGHxifWAPoHnfNKUM+D0d
-         47SNiDWeg3PI8IszdvltAyI3iwHF7z1OHMjjpD4uhteJGPrhymDRUP3kz6DiLrh1G9uB
-         WaXQY4ejU/kw2ePgPjuVEI5WIrHgQYTXIB8b4RANRpr+EORfRgyH5ts9sPTpr8P4L3E1
-         /sSl9jec0/zLKgxpbrgd3el3wXbolpHAq2tUzOFmixMBD266CcZmDIMGHNgmWrLRnXzz
-         BXSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NXdDkv6eFbPt6BEOz739AI9cO/S4JIT1GEu1EqR/cz8=;
-        b=UJdR95UKQhGzfm7x1BwIzmxDjytqTwy1g4QBmUZdexr1S1QBcF6J7jas++atzdIU0a
-         VoIVl4lDODMHYY1pDxqRxhAF/YLdlXNZy5CovEJwcH0pVdKdMlxYAK4ThuKvIu8qL3EA
-         nh1yRKoJz9frLyq3MvyjISuaUqqxpQ1n8NvzagDXU/gyJwkNyzwZw+Z3HqA+CzmIK9f0
-         gCYJWCIMqLZ/rC58h/El358Ie3DxAaZZBs3BqX73OoIDQJHo+wS+2njQExEv4hdphKyZ
-         sK7h14g72WgzrqWHOoTGFMV54KkYIuc7OGKYuoXJn/CQFP0bpQVAkrHn3WDMfrOOO4Ee
-         rgcw==
-X-Gm-Message-State: APjAAAXzUcP/y96UqjAppCDao77a8w1MTeVG5QVnIOcWt99/MoRmNj9M
-        4rzG1tbCbuMYOVKc9VNJ5hHQmYdF2eA6N94dJcs=
-X-Google-Smtp-Source: APXvYqzfTYvJRMkn646G5flNKMHbcdK2lmfsMRYhKViUeLA5hfW23VlxhiG+CdSteMU+6SqaEkziwx1lIA1o2SluHro=
-X-Received: by 2002:a67:ea51:: with SMTP id r17mr2692462vso.12.1559928803606;
- Fri, 07 Jun 2019 10:33:23 -0700 (PDT)
+        id S1731216AbfFGR6K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 13:58:10 -0400
+Received: from siwi.pair.com ([209.68.5.199]:42083 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731052AbfFGR6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 13:58:10 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 83BF23F47F8;
+        Fri,  7 Jun 2019 13:58:08 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:5d6e:aba4:2027:955c] (unknown [IPv6:2001:4898:a800:1012:ea2:aba4:2027:955c])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id D731B3F4135;
+        Fri,  7 Jun 2019 13:58:07 -0400 (EDT)
+Subject: Re: [PATCH v2 4/9] list-objects-filter: implement composite filters
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        jonathantanmy@google.com, jrn@google.com, dstolee@microsoft.com,
+        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com,
+        emilyshaffer@google.com, Junio C Hamano <gitster@pobox.com>
+References: <20190601003603.90794-1-matvore@google.com>
+ <20190601003603.90794-5-matvore@google.com>
+ <0005347e-ceed-ac9e-ad0d-b7b11bc55d38@jeffhostetler.com>
+ <20190606223251.GA7246@comcast.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <5dc58484-b206-dfe0-981a-437d0a162444@jeffhostetler.com>
+Date:   Fri, 7 Jun 2019 13:58:01 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-References: <20190607022443.5706-1-felipe.contreras@gmail.com>
- <20190607093034.816-1-pclouds@gmail.com> <20190607100252.GA24208@szeder.dev>
-In-Reply-To: <20190607100252.GA24208@szeder.dev>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 7 Jun 2019 12:33:12 -0500
-Message-ID: <CAMP44s3EsNzBtt_pG8HVp_RTMTTArk7Twhty4_tzf2iiZ7TKUQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: do not cache if --git-completion-helper fails
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190606223251.GA7246@comcast.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 7, 2019 at 5:02 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
-te:
->
-> On Fri, Jun 07, 2019 at 04:30:34PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
-> > "git <cmd> --git-completion-helper" could fail if the command checks fo=
-r
-> > a repo before parse_options(). If the result is cached, later on when
-> > the user moves to a worktree with repo, tab completion will still fail.
-> >
-> > Avoid this by detecting errors and not cache the completion output. We
-> > can try again and hopefully succeed next time (e.g. when a repo is
-> > found).
-> >
-> > Of course if --git-completion-helper fails permanently because of other
-> > reasons (*), this will slow down completion. But I don't see any better
-> > option to handle that case.
->
-> I think a permanently failing 'git cmd --git-completion-helper'
-> shouldn't really happen, unless there is a bug in the completion
-> script or the git installation or similar exceptional situation.  And
-> then that issue should be fixed, but I don't think we should worry
-> about an extra subshell and git process in those situations.
 
-Indeed. In think there's only sane option to make this work in all
-situation; a reorganization.
 
-Something like this should work:
+On 6/6/2019 6:32 PM, Matthew DeVore wrote:
+> On Mon, Jun 03, 2019 at 05:51:28PM -0400, Jeff Hostetler wrote:
+>> Since we are assuming 'compose' is an AND operation, there may be an
+>> opportunity to short-cut some of this loop for blobs.  That is, if the
+>> object is a blob and any filter rejects it, it is omitted, so we don't
+>> need to keep looping for that object.  (Tree objects cannot be short-cut
+>> this way because a tree may appear at different depths or in different
+>> sparse "cones" and may have to be reconsidered.)
+> 
+> Blobs are also treated almost the same way as tree objects in tree:<depth>
+> filters - they can be included by tree:<depth> - so they also need to be
+> reconsidered when found at different depths.
+> 
+> But I agree it's always true that if some prior filter has excluded a blob, the
+> later filters don't even need to be *called at all* for that blob, unless
+> perhaps it's found under a different tree later. I also think it may be too
+> early to implement this optimization, since filter in a later release may just
+> want to "know" about a blob even if it must be excluded in the final result.
+> 
+> Does the optimization apply to trees as well? Does a tree:<depth> filter still
+> want to consider children of tree X if tree X has already been excluded by
+> another filter? If it doesn't want to consider, we can short-circuit the checks
+> very aggressively. If it does want to consider, we want the short-circuiting to
+> be customizable at least for trees.
+> 
+> A minor point - I don't think that short-circuiting the for loop (breaking out
+> early) is important, since it will be very rare that a combine: filter has more
+> than 4 or so sub-filters anyway. Calling the filter_fn implementation and
+> letting that do internal short-circuiting (informed by the previous filters'
+> results) can, however, skip a lot of computation.
+> 
+>> So you could add an "affects blobs only" bit to the per-filter data
+>> and try this out.  For example a "compose:blob:none+sparse:foo" should
+>> perform better than "compose:sparse:foo+blob:none" but give the same
+>> results.
+> 
+> Does "affects blobs only" mean the filter includes all non-blob objects?
+> 
 
-struct command checkout_command =3D {
-.name =3D "checkout",
-.function =3D cmd_checkout,
-.run_options =3D RUN_SETUP | NEED_WORK_TREE,
-.help =3D N_("Switch branches or restore working tree files"),
-.options =3D {
-OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
-...
-},
-}
+I just meant that the blobs:none and blobs:limit filters give you a hard
+omit.  Other filters later in the chain cannot change or override that
+answer (because of the AND assumption); it doesn't matter how deep or
+shallow the blob is the tree.
 
-This way we could run parse_options_show_gitcomp() from git.c and not
-worry about whatever cmd_checkout() needs.
+In the case of the tree:depth filter, a blob deep in the tree should
+be provisionally omitted in case it appears later in a shallow tree
+and should be included.  The tree filter can't do a hard omit on a blob
+(just like it can't do a hard omit on a tree node).
 
-This has the added advantage that it gathers information about this
-command that is stray in multiple sources (git.c, command-list.h), and
-it makes builtin.h cleaner too.
+WRT your question about a later filter "just wanting to know" about
+a blob, I'm not sure.
 
-Plus, we could rework the way -h works too.
+So yeah, let's wait on this.  We can always add it later as an
+optimization if/when it becomes a perf problem (and we have more
+experience using them in practice).
 
---=20
-Felipe Contreras
+Jeff
+
+
