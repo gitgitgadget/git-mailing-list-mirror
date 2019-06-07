@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAAB21F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 18:38:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 736961F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 18:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731911AbfFGSig (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 14:38:36 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46489 "EHLO
+        id S1731914AbfFGSii (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 14:38:38 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33653 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731875AbfFGSib (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731864AbfFGSib (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Jun 2019 14:38:31 -0400
-Received: by mail-ed1-f66.google.com with SMTP id h10so4290960edi.13
-        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:29 -0700 (PDT)
+Received: by mail-ed1-f66.google.com with SMTP id h9so4376679edr.0
+        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8GwK+SJ/NpmN1j24xiEiaUCUz9drAOgUNr6qT/zXHcg=;
-        b=g8J7pP7d2dFAFGJz5AdmDr3W3SP+zrvMaQegHRvrNPt/JOgOGj6yrroqqsHbWivoBa
-         51nu2VkvL++UZ+fmUd8i7FHJwPnQ//L7A/6hasvoS0NsBmjxPs1NbhYu9nl5SgAKKRhT
-         asGrslEMqbVy6uXpXQ+RG9OuBEEUXBxsXeHX03fpYO6og0SW4BCNoCivrpM3j4lCLi6d
-         6TAsbvvyulE7m3k+Ne3x3sAvGqgHdrgPDZtKBzisz+KupxMEL15i8MdpgLDFVl3Wxcdh
-         Ov1owRGsXri7hZQ7XURzloWU2e88qA5KzNyQ4sv8E/015NfVscPtUdMLDb6ymOQLxAKz
-         s36A==
+        bh=P/ewZl+4J9A+Ct7BhqYkuHgrPAEh/qQ7VuipaTWmsd4=;
+        b=NbKE4kMfmlfZm5tIfjLfliMk7MildUh51/8PzRdhi12tZj8HRgOdI7u5He15ZNFOOF
+         bpxydj54qF1CcGlNqLQ5p4fNMeUu4SoiXLgkg4uC5o2eL7dslsfviqo0c2GsYqJzvwMQ
+         A4N1zxV7DMFd9fg0t4Zm9KDOHQ16G6xdVVoqz8PB2xcDvSWewBHgeIbYQul02KFKKz3o
+         HUHN3KcSrzYLr++5F7AuLjB6EKguaC0S70k1sVxFlxop5iPMQLb299E/Nv0qmmrPy52I
+         L1+EmtQRYjTWRocbYlioiKv3b/sA8s2f1kC9yUOU509FKlK+OVyztxQFiBUGNfLEeIi4
+         u62A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8GwK+SJ/NpmN1j24xiEiaUCUz9drAOgUNr6qT/zXHcg=;
-        b=IeN0Y7+6fFfNuvk7X9J4NVPS3+sp2gXLVC4n+uS/y7t2idTq0x4tl6DBblBlXVStim
-         TyEjw5NnbhVDbBxXzPGg4Io0KzUY+stAotxJriA4NNg3Tr0V/xvjeBiq4hqkbCvGThhS
-         N0izKi8qPwkbHxZ/8lVxHU525fy/blvNxJKYXAnPiSUSRVB7yKZHFcDiqqjJNmUDyZ/r
-         1ZNUFHhVuKmbNLOco9xBmhxmL1nB68LoJg5O2JU0RQ5Fn0lHsrfrmWa2pG7QNuXLEx3a
-         AruVmzjWIMW5Nd7imZSJGj8KsSYv4qpU8pk/Qtlb0eguFQCuCdYl1sRDdUudCMCpAXj2
-         bHeA==
-X-Gm-Message-State: APjAAAV9IANinf3OaLp9LEnwxDiz7hERN0I8F88b/ebAke+9Pkv9smH6
-        fWINvlHdREmnOpoHrH/fa3LVnZTg
-X-Google-Smtp-Source: APXvYqwKkn7pHuV0HXrULhwR2Hx4jIli8KTaGyvdiMwcaCoHHvWbq0HrmlnHtGh0rDOIYUNwcJVAng==
-X-Received: by 2002:aa7:c919:: with SMTP id b25mr23273536edt.274.1559932708855;
+        bh=P/ewZl+4J9A+Ct7BhqYkuHgrPAEh/qQ7VuipaTWmsd4=;
+        b=TKr0xOLz/m13lFkz7AJPQp7bHKdf2R9ka0kRX1BJdG5sZ2q0HYtjDMIXl64AeJdjq5
+         PrxyVvZsi1yCTV618q8BYNiuuMcOLedGDgVRPyCBYj+8vTtvf0GAbG/IHQOgZ6xoMht7
+         nKZX06+ckqNPIA4gIdLZ6iILw5VARxS6V3huj3CxUiyVgOH+gFkrbrPN+/kntUoJNntq
+         0ZC9w8v4vjZir41QSXj0TX3N+FOoupzLJGAJ6ZnrUUP8bpuW3+JNrzqPT+QXB1zlvJaF
+         oV2tOb3y9zjYAKvHARYZNZbaH/W2ES/CopR08R35jWYk7SWQ09HYKQc/iisyx6GFM/oY
+         ClSA==
+X-Gm-Message-State: APjAAAWrF5xibxoHSpHCFO61it5J4tUmW3Xpj07FqdwqNiRvzrRo/oFt
+        DcQx1GWfYdgWWyjpyq83E3ODYUNh
+X-Google-Smtp-Source: APXvYqxsKsgPjSkn9cMJMwTKx7cRMwCJuNGiDtM69dHnr2xARMmMrHju8ByVYRH3TBd87f6du0i+gA==
+X-Received: by 2002:a05:6402:609:: with SMTP id n9mr3650572edv.159.1559932708001;
         Fri, 07 Jun 2019 11:38:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fj23sm509536ejb.47.2019.06.07.11.38.28
+        by smtp.gmail.com with ESMTPSA id q25sm503641ejb.38.2019.06.07.11.38.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jun 2019 11:38:28 -0700 (PDT)
-Date:   Fri, 07 Jun 2019 11:38:28 -0700 (PDT)
-X-Google-Original-Date: Fri, 07 Jun 2019 18:38:13 GMT
-Message-Id: <2093bab5b1e99e97e87a9efe130d7dc2938ce127.1559932699.git.gitgitgadget@gmail.com>
+        Fri, 07 Jun 2019 11:38:27 -0700 (PDT)
+Date:   Fri, 07 Jun 2019 11:38:27 -0700 (PDT)
+X-Google-Original-Date: Fri, 07 Jun 2019 18:38:12 GMT
+Message-Id: <28eccfa52b7fcce41de98cfa8ccd6d02da5c75f9.1559932699.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v5.git.gitgitgadget@gmail.com>
 References: <pull.184.v4.git.gitgitgadget@gmail.com>
         <pull.184.v5.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 10/16] commit-graph: allow cross-alternate chains
+Subject: [PATCH v5 09/16] commit-graph: merge commit-graph chains
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,251 +75,365 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In an environment like a fork network, it is helpful to have a
-commit-graph chain that spans both the base repo and the fork repo. The
-fork is usually a small set of data on top of the large repo, but
-sometimes the fork is much larger. For example, git-for-windows/git has
-almost double the number of commits as git/git because it rebases its
-commits on every major version update.
+When searching for a commit in a commit-graph chain of G graphs with N
+commits, the search takes O(G log N) time. If we always add a new tip
+graph with every write, the linear G term will start to dominate and
+slow the lookup process.
 
-To allow cross-alternate commit-graph chains, we need a few pieces:
+To keep lookups fast, but also keep most incremental writes fast, create
+a strategy for merging levels of the commit-graph chain. The strategy is
+detailed in the commit-graph design document, but is summarized by these
+two conditions:
 
-1. When looking for a graph-{hash}.graph file, check all alternates.
+  1. If the number of commits we are adding is more than half the number
+     of commits in the graph below, then merge with that graph.
 
-2. When merging commit-graph chains, do not merge across alternates.
+  2. If we are writing more than 64,000 commits into a single graph,
+     then merge with all lower graphs.
 
-3. When writing a new commit-graph chain based on a commit-graph file
-   in another object directory, do not allow success if the base file
-   has of the name "commit-graph" instead of
-   "commit-graphs/graph-{hash}.graph".
+The numeric values in the conditions above are currently constant, but
+can become config options in a future update.
+
+As we merge levels of the commit-graph chain, check that the commits
+still exist in the repository. A garbage-collection operation may have
+removed those commits from the object store and we do not want to
+persist them in the commit-graph chain. This is a non-issue if the
+'git gc' process wrote a new, single-level commit-graph file.
+
+After we merge levels, the old graph-{hash}.graph files are no longer
+referenced by the commit-graph-chain file. We will expire these files in
+a future change.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph.txt | 40 ++++++++++++++++++
- commit-graph.c                           | 54 +++++++++++++++++++-----
- commit-graph.h                           |  1 +
- t/t5324-split-commit-graph.sh            | 37 ++++++++++++++++
- 4 files changed, 121 insertions(+), 11 deletions(-)
+ Documentation/technical/commit-graph.txt |  80 ++++++++++
+ commit-graph.c                           | 180 ++++++++++++++++++-----
+ t/t5324-split-commit-graph.sh            |  13 ++
+ 3 files changed, 240 insertions(+), 33 deletions(-)
 
 diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index d9c6253b0a..473032e476 100644
+index 1dca3bd8fe..d9c6253b0a 100644
 --- a/Documentation/technical/commit-graph.txt
 +++ b/Documentation/technical/commit-graph.txt
-@@ -266,6 +266,42 @@ The merge strategy values (2 for the size multiple, 64,000 for the maximum
- number of commits) could be extracted into config settings for full
- flexibility.
+@@ -186,6 +186,86 @@ positions to refer to their parents, which may be in `graph-{hash1}.graph` or
+ its containment in the intervals [0, X0), [X0, X0 + X1), [X0 + X1, X0 + X1 +
+ X2).
  
-+## Chains across multiple object directories
++Each commit-graph file (except the base, `graph-{hash0}.graph`) contains data
++specifying the hashes of all files in the lower layers. In the above example,
++`graph-{hash1}.graph` contains `{hash0}` while `graph-{hash2}.graph` contains
++`{hash0}` and `{hash1}`.
 +
-+In a repo with alternates, we look for the `commit-graph-chain` file starting
-+in the local object directory and then in each alternate. The first file that
-+exists defines our chain. As we look for the `graph-{hash}` files for
-+each `{hash}` in the chain file, we follow the same pattern for the host
-+directories.
++## Merging commit-graph files
 +
-+This allows commit-graphs to be split across multiple forks in a fork network.
-+The typical case is a large "base" repo with many smaller forks.
++If we only added a new commit-graph file on every write, we would run into a
++linear search problem through many commit-graph files.  Instead, we use a merge
++strategy to decide when the stack should collapse some number of levels.
 +
-+As the base repo advances, it will likely update and merge its commit-graph
-+chain more frequently than the forks. If a fork updates their commit-graph after
-+the base repo, then it should "reparent" the commit-graph chain onto the new
-+chain in the base repo. When reading each `graph-{hash}` file, we track
-+the object directory containing it. During a write of a new commit-graph file,
-+we check for any changes in the source object directory and read the
-+`commit-graph-chain` file for that source and create a new file based on those
-+files. During this "reparent" operation, we necessarily need to collapse all
-+levels in the fork, as all of the files are invalid against the new base file.
++The diagram below shows such a collapse. As a set of new commits are added, it
++is determined by the merge strategy that the files should collapse to
++`graph-{hash1}`. Thus, the new commits, the commits in `graph-{hash2}` and
++the commits in `graph-{hash1}` should be combined into a new `graph-{hash3}`
++file.
 +
-+It is crucial to be careful when cleaning up "unreferenced" `graph-{hash}.graph`
-+files in this scenario. It falls to the user to define the proper settings for
-+their custom environment:
++			    +---------------------+
++			    |                     |
++			    |    (new commits)    |
++			    |                     |
++			    +---------------------+
++			    |                     |
++ +-----------------------+  +---------------------+
++ |  graph-{hash2} |->|                     |
++ +-----------------------+  +---------------------+
++	  |                 |                     |
++ +-----------------------+  +---------------------+
++ |                       |  |                     |
++ |  graph-{hash1} |->|                     |
++ |                       |  |                     |
++ +-----------------------+  +---------------------+
++	  |                  tmp_graphXXX
++ +-----------------------+
++ |                       |
++ |                       |
++ |                       |
++ |  graph-{hash0} |
++ |                       |
++ |                       |
++ |                       |
++ +-----------------------+
 +
-+ 1. When merging levels in the base repo, the unreferenced files may still be
-+    referenced by chains from fork repos.
++During this process, the commits to write are combined, sorted and we write the
++contents to a temporary file, all while holding a `commit-graph-chain.lock`
++lock-file.  When the file is flushed, we rename it to `graph-{hash3}`
++according to the computed `{hash3}`. Finally, we write the new chain data to
++`commit-graph-chain.lock`:
 +
-+ 2. The expiry time should be set to a length of time such that every fork has
-+    time to recompute their commit-graph chain to "reparent" onto the new base
-+    file(s).
++```
++	{hash3}
++	{hash0}
++```
 +
-+ 3. If the commit-graph chain is updated in the base, the fork will not have
-+    access to the new chain until its chain is updated to reference those files.
-+    (This may change in the future [5].)
++We then close the lock-file.
++
++## Merge Strategy
++
++When writing a set of commits that do not exist in the commit-graph stack of
++height N, we default to creating a new file at level N + 1. We then decide to
++merge with the Nth level if one of two conditions hold:
++
++  1. The expected file size for level N + 1 is at least half the file size for
++     level N.
++
++  2. Level N + 1 contains more than 64,0000 commits.
++
++This decision cascades down the levels: when we merge a level we create a new
++set of commits that then compares to the next level.
++
++The first condition bounds the number of levels to be logarithmic in the total
++number of commits.  The second condition bounds the total number of commits in
++a `graph-{hashN}` file and not in the `commit-graph` file, preventing
++significant performance issues when the stack merges and another process only
++partially reads the previous stack.
++
++The merge strategy values (2 for the size multiple, 64,000 for the maximum
++number of commits) could be extracted into config settings for full
++flexibility.
 +
  Related Links
  -------------
  [0] https://bugs.chromium.org/p/git/issues/detail?id=8
-@@ -292,3 +328,7 @@ Related Links
- 
- [4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
-     A patch to remove the ahead-behind calculation from 'status'.
-+
-+[5] https://public-inbox.org/git/f27db281-abad-5043-6d71-cbb083b1c877@gmail.com/
-+    A discussion of a "two-dimensional graph position" that can allow reading
-+    multiple commit-graph chains at the same time.
 diff --git a/commit-graph.c b/commit-graph.c
-index 288b5e0280..22b167d9eb 100644
+index f94538c3df..288b5e0280 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -320,6 +320,9 @@ static struct commit_graph *load_commit_graph_v1(struct repository *r, const cha
- 	struct commit_graph *g = load_commit_graph_one(graph_name);
- 	free(graph_name);
- 
-+	if (g)
-+		g->obj_dir = obj_dir;
-+
- 	return g;
+@@ -1298,36 +1298,6 @@ static int write_graph_chunk_base(struct hashfile *f,
+ 	return 0;
  }
  
-@@ -379,9 +382,8 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r, const
- 	count = st.st_size / (the_hash_algo->hexsz + 1);
- 	oids = xcalloc(count, sizeof(struct object_id));
+-static void init_commit_graph_chain(struct write_commit_graph_context *ctx)
+-{
+-	struct commit_graph *g = ctx->r->objects->commit_graph;
+-	uint32_t i;
+-
+-	ctx->new_base_graph = g;
+-	ctx->base_graph_name = xstrdup(g->filename);
+-	ctx->new_num_commits_in_base = g->num_commits + g->num_commits_in_base;
+-
+-	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
+-
+-	ALLOC_ARRAY(ctx->commit_graph_filenames_after, ctx->num_commit_graphs_after);
+-	ALLOC_ARRAY(ctx->commit_graph_hash_after, ctx->num_commit_graphs_after);
+-
+-	for (i = 0; i < ctx->num_commit_graphs_before - 1; i++)
+-		ctx->commit_graph_filenames_after[i] = xstrdup(ctx->commit_graph_filenames_before[i]);
+-
+-	if (ctx->num_commit_graphs_before)
+-		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_before - 1] =
+-			get_split_graph_filename(ctx->obj_dir, oid_to_hex(&g->oid));
+-
+-	i = ctx->num_commit_graphs_before - 1;
+-
+-	while (g) {
+-		ctx->commit_graph_hash_after[i] = xstrdup(oid_to_hex(&g->oid));
+-		i--;
+-		g = g->base_graph;
+-	}
+-}
+-
+ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ {
+ 	uint32_t i;
+@@ -1509,6 +1479,145 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	return 0;
+ }
  
--	for (i = 0; i < count && valid; i++) {
--		char *graph_name;
--		struct commit_graph *g;
-+	for (i = 0; i < count; i++) {
-+		struct object_directory *odb;
- 
- 		if (strbuf_getline_lf(&line, fp) == EOF)
- 			break;
-@@ -393,14 +395,29 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r, const
- 			break;
- 		}
- 
--		graph_name = get_split_graph_filename(obj_dir, line.buf);
--		g = load_commit_graph_one(graph_name);
--		free(graph_name);
-+		valid = 0;
-+		for (odb = r->objects->odb; odb; odb = odb->next) {
-+			char *graph_name = get_split_graph_filename(odb->path, line.buf);
-+			struct commit_graph *g = load_commit_graph_one(graph_name);
- 
--		if (g && add_graph_to_chain(g, graph_chain, oids, i))
--			graph_chain = g;
--		else
--			valid = 0;
-+			free(graph_name);
++static int split_strategy_max_commits = 64000;
++static float split_strategy_size_mult = 2.0f;
 +
-+			if (g) {
-+				g->obj_dir = odb->path;
++static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
++{
++	struct commit_graph *g = ctx->r->objects->commit_graph;
++	uint32_t num_commits = ctx->commits.nr;
++	uint32_t i;
 +
-+				if (add_graph_to_chain(g, graph_chain, oids, i)) {
-+					graph_chain = g;
-+					valid = 1;
-+				}
++	g = ctx->r->objects->commit_graph;
++	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
 +
-+				break;
-+			}
-+		}
++	while (g && (g->num_commits <= split_strategy_size_mult * num_commits ||
++		     num_commits > split_strategy_max_commits)) {
++		num_commits += g->num_commits;
++		g = g->base_graph;
 +
-+		if (!valid) {
-+			warning(_("unable to find all commit-graph files"));
-+			break;
-+		}
- 	}
- 
- 	free(oids);
-@@ -1418,7 +1435,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 	if (ctx->split && ctx->base_graph_name && ctx->num_commit_graphs_after > 1) {
- 		char *new_base_hash = xstrdup(oid_to_hex(&ctx->new_base_graph->oid));
--		char *new_base_name = get_split_graph_filename(ctx->obj_dir, new_base_hash);
-+		char *new_base_name = get_split_graph_filename(ctx->new_base_graph->obj_dir, new_base_hash);
- 
- 		free(ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 2]);
- 		free(ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 2]);
-@@ -1493,6 +1510,9 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
- 
- 	while (g && (g->num_commits <= split_strategy_size_mult * num_commits ||
- 		     num_commits > split_strategy_max_commits)) {
-+		if (strcmp(g->obj_dir, ctx->obj_dir))
-+			break;
-+
- 		num_commits += g->num_commits;
- 		g = g->base_graph;
- 
-@@ -1501,6 +1521,18 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
- 
- 	ctx->new_base_graph = g;
- 
-+	if (ctx->num_commit_graphs_after == 2) {
-+		char *old_graph_name = get_commit_graph_filename(g->obj_dir);
-+
-+		if (!strcmp(g->filename, old_graph_name) &&
-+		    strcmp(g->obj_dir, ctx->obj_dir)) {
-+			ctx->num_commit_graphs_after = 1;
-+			ctx->new_base_graph = NULL;
-+		}
-+
-+		free(old_graph_name);
++		ctx->num_commit_graphs_after--;
 +	}
 +
- 	ALLOC_ARRAY(ctx->commit_graph_filenames_after, ctx->num_commit_graphs_after);
- 	ALLOC_ARRAY(ctx->commit_graph_hash_after, ctx->num_commit_graphs_after);
++	ctx->new_base_graph = g;
++
++	ALLOC_ARRAY(ctx->commit_graph_filenames_after, ctx->num_commit_graphs_after);
++	ALLOC_ARRAY(ctx->commit_graph_hash_after, ctx->num_commit_graphs_after);
++
++	for (i = 0; i < ctx->num_commit_graphs_after &&
++		    i < ctx->num_commit_graphs_before; i++)
++		ctx->commit_graph_filenames_after[i] = xstrdup(ctx->commit_graph_filenames_before[i]);
++
++	i = ctx->num_commit_graphs_before - 1;
++	g = ctx->r->objects->commit_graph;
++
++	while (g) {
++		if (i < ctx->num_commit_graphs_after)
++			ctx->commit_graph_hash_after[i] = xstrdup(oid_to_hex(&g->oid));
++
++		i--;
++		g = g->base_graph;
++	}
++}
++
++static void merge_commit_graph(struct write_commit_graph_context *ctx,
++			       struct commit_graph *g)
++{
++	uint32_t i;
++	uint32_t offset = g->num_commits_in_base;
++
++	ALLOC_GROW(ctx->commits.list, ctx->commits.nr + g->num_commits, ctx->commits.alloc);
++
++	for (i = 0; i < g->num_commits; i++) {
++		struct object_id oid;
++		struct commit *result;
++
++		display_progress(ctx->progress, i + 1);
++
++		load_oid_from_graph(g, i + offset, &oid);
++
++		/* only add commits if they still exist in the repo */
++		result = lookup_commit_reference_gently(ctx->r, &oid, 1);
++
++		if (result) {
++			ctx->commits.list[ctx->commits.nr] = result;
++			ctx->commits.nr++;
++		}
++	}
++}
++
++static int commit_compare(const void *_a, const void *_b)
++{
++	const struct commit *a = *(const struct commit **)_a;
++	const struct commit *b = *(const struct commit **)_b;
++	return oidcmp(&a->object.oid, &b->object.oid);
++}
++
++static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
++{
++	uint32_t i, num_parents;
++	struct commit_list *parent;
++
++	if (ctx->report_progress)
++		ctx->progress = start_delayed_progress(
++					_("Scanning merged commits"),
++					ctx->commits.nr);
++
++	QSORT(ctx->commits.list, ctx->commits.nr, commit_compare);
++
++	ctx->num_extra_edges = 0;
++	for (i = 0; i < ctx->commits.nr; i++) {
++		display_progress(ctx->progress, i);
++
++		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
++			  &ctx->commits.list[i]->object.oid)) {
++			die(_("unexpected duplicate commit id %s"),
++			    oid_to_hex(&ctx->commits.list[i]->object.oid));
++		} else {
++			num_parents = 0;
++			for (parent = ctx->commits.list[i]->parents; parent; parent = parent->next)
++				num_parents++;
++
++			if (num_parents > 2)
++				ctx->num_extra_edges += num_parents - 2;
++		}
++	}
++
++	stop_progress(&ctx->progress);
++}
++
++static void merge_commit_graphs(struct write_commit_graph_context *ctx)
++{
++	struct commit_graph *g = ctx->r->objects->commit_graph;
++	uint32_t current_graph_number = ctx->num_commit_graphs_before;
++	struct strbuf progress_title = STRBUF_INIT;
++
++	while (g && current_graph_number >= ctx->num_commit_graphs_after) {
++		current_graph_number--;
++
++		if (ctx->report_progress) {
++			strbuf_addstr(&progress_title, _("Merging commit-graph"));
++			ctx->progress = start_delayed_progress(progress_title.buf, 0);
++		}
++
++		merge_commit_graph(ctx, g);
++		stop_progress(&ctx->progress);
++		strbuf_release(&progress_title);
++
++		g = g->base_graph;
++	}
++
++	if (g) {
++		ctx->new_base_graph = g;
++		ctx->new_num_commits_in_base = g->num_commits + g->num_commits_in_base;
++	}
++
++	if (ctx->new_base_graph)
++		ctx->base_graph_name = xstrdup(ctx->new_base_graph->filename);
++
++	sort_and_scan_merged_commits(ctx);
++}
++
+ int write_commit_graph(const char *obj_dir,
+ 		       struct string_list *pack_indexes,
+ 		       struct string_list *commit_hex,
+@@ -1554,6 +1663,9 @@ int write_commit_graph(const char *obj_dir,
+ 	ctx->approx_nr_objects = approximate_object_count();
+ 	ctx->oids.alloc = ctx->approx_nr_objects / 32;
  
-diff --git a/commit-graph.h b/commit-graph.h
-index 5c48c4f66a..10466bc064 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -48,6 +48,7 @@ struct commit_graph {
- 	uint32_t num_commits;
- 	struct object_id oid;
- 	char *filename;
-+	const char *obj_dir;
++	if (ctx->split && ctx->oids.alloc > split_strategy_max_commits)
++		ctx->oids.alloc = split_strategy_max_commits;
++
+ 	if (ctx->append) {
+ 		prepare_commit_graph_one(ctx->r, ctx->obj_dir);
+ 		if (ctx->r->objects->commit_graph)
+@@ -1607,9 +1719,11 @@ int write_commit_graph(const char *obj_dir,
+ 	if (!ctx->commits.nr)
+ 		goto cleanup;
  
- 	uint32_t num_commits_in_base;
- 	struct commit_graph *base_graph;
+-	if (ctx->split)
+-		init_commit_graph_chain(ctx);
+-	else
++	if (ctx->split) {
++		split_graph_merge_strategy(ctx);
++
++		merge_commit_graphs(ctx);
++	} else
+ 		ctx->num_commit_graphs_after = 1;
+ 
+ 	compute_generation_numbers(ctx);
 diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-index 5cb5663a30..46f0832f68 100755
+index ccd24bd22b..5cb5663a30 100755
 --- a/t/t5324-split-commit-graph.sh
 +++ b/t/t5324-split-commit-graph.sh
-@@ -90,6 +90,21 @@ test_expect_success 'add more commits, and write a new base graph' '
- 	graph_read_expect 12
- '
+@@ -119,4 +119,17 @@ test_expect_success 'add one commit, write a tip graph' '
  
-+test_expect_success 'fork and fail to base a chain on a commit-graph file' '
-+	test_when_finished rm -rf fork &&
-+	git clone . fork &&
-+	(
-+		cd fork &&
-+		rm .git/objects/info/commit-graph &&
-+		echo "$(pwd)/../.git/objects" >.git/objects/info/alternates &&
-+		test_commit new-commit &&
-+		git commit-graph write --reachable --split &&
-+		test_path_is_file $graphdir/commit-graph-chain &&
-+		test_line_count = 1 $graphdir/commit-graph-chain &&
-+		verify_chain_files_exist $graphdir
-+	)
+ graph_git_behavior 'three-layer commit-graph: commit 11 vs 6' commits/11 commits/6
+ 
++test_expect_success 'add one commit, write a merged graph' '
++	test_commit 12 &&
++	git branch commits/12 &&
++	git commit-graph write --reachable --split &&
++	test_path_is_file $graphdir/commit-graph-chain &&
++	test_line_count = 2 $graphdir/commit-graph-chain &&
++	ls $graphdir/graph-*.graph >graph-files &&
++	test_line_count = 4 graph-files &&
++	verify_chain_files_exist $graphdir
 +'
 +
- test_expect_success 'add three more commits, write a tip graph' '
- 	git reset --hard commits/3 &&
- 	git merge merge/1 &&
-@@ -132,4 +147,26 @@ test_expect_success 'add one commit, write a merged graph' '
- 
- graph_git_behavior 'merged commit-graph: commit 12 vs 6' commits/12 commits/6
- 
-+test_expect_success 'create fork and chain across alternate' '
-+	git clone . fork &&
-+	(
-+		cd fork &&
-+		git config core.commitGraph true &&
-+		rm -rf $graphdir &&
-+		echo "$(pwd)/../.git/objects" >.git/objects/info/alternates &&
-+		test_commit 13 &&
-+		git branch commits/13 &&
-+		git commit-graph write --reachable --split &&
-+		test_path_is_file $graphdir/commit-graph-chain &&
-+		test_line_count = 3 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files &&
-+		git -c core.commitGraph=true  rev-list HEAD >expect &&
-+		git -c core.commitGraph=false rev-list HEAD >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+graph_git_behavior 'alternate: commit 13 vs 6' commits/13 commits/6
++graph_git_behavior 'merged commit-graph: commit 12 vs 6' commits/12 commits/6
 +
  test_done
 -- 
