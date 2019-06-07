@@ -4,60 +4,60 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E94431F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 18:38:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A27C1F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 18:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731896AbfFGSib (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 14:38:31 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46484 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731848AbfFGSia (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 14:38:30 -0400
-Received: by mail-ed1-f66.google.com with SMTP id h10so4290855edi.13
-        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:28 -0700 (PDT)
+        id S1731905AbfFGSie (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 14:38:34 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41641 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730205AbfFGSi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 14:38:26 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p15so4330129eds.8
+        for <git@vger.kernel.org>; Fri, 07 Jun 2019 11:38:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hJCfoiqNpXoktswGUiw8XTcxbNGP7WGt3EcsUOiq/rU=;
-        b=gizchxluB10HTuKfGR/UaglZXYAu8QmSOIVUPItqKEHEsIQWQF+Ft5pcqdahEFnjiD
-         9D/1vsRzuQNpkxp7yKdMN7e+AFx2i1tuNIZchuH9b5TuSvlSM7ZDWuEV0Nr5qW6YMr21
-         2XB5NfgL3CKbmM9OtlVa+vUTM5mOhA03lF0GyT5paPm+wXSMlDj16PYNYYvxQXqDXanl
-         Krv1LdasSz0wdj3sQpMG74urzUsxDUUW8ReHEbfJ6bY60VUyrde1XXx8ZeK/nKMDWqDZ
-         qXFxTDpHSanf5DRUf5TC8PVvL03wXSWZ2GYVIrAVu3wIUbfsi/V7CZGqJf2R9SQ+NDWR
-         Ouug==
+        bh=wCy1+3watJ0Zb8uiXyaX4Lcd6sQRCqMcaFtraIfiO8k=;
+        b=tJCpS3yZ0Rhr3SUflaurbx0/xdzSmZ8Id5yBvBWcN0d6BrAp1X2Er3Qck5befoEqP3
+         X76u3Fmm34ciQI3LUMtIbKXPDyUBPn3R7DPaILhD8cJSz8dxyDV1U4okjnulnTns2FyR
+         q+qQAeRBd8Q5Kq4pOy5lk+zHr86g7Ivlv6Ncxxt/XNQqs20x4ES0CtH1Xw/Qk+8dNt3J
+         avKTe9Wscc9Oub4tPsH/k6mkdAez9ZVGQ64n6QmLiPy39bdfwPfj4dzSAlivn4XMXtsz
+         BEA1vvlUgfyNmKv86uLEgqVbUBxFFxPWuXNuOYQ/JsAK0fEC1upn6g4Kng2KFJZ01cfC
+         s/aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hJCfoiqNpXoktswGUiw8XTcxbNGP7WGt3EcsUOiq/rU=;
-        b=SfsR27ktw5S3skrmuYUyc2Ulzj/yeAzdkmsErTrt7Ev3joJlRHRn9oCneSsYh+mh3+
-         U4vz5mRn6CnBNFRfy9qhi2W+d75vR/1Fr0q1HBKLlUNDkOTy1f06fazM54ByP2hL8VjZ
-         rrD+MojRZTh2QxIM5FPzwOtvOEGJiBPLsklswEnJaIvRj76Jvz/h43O8JCxdVzO//zqJ
-         iXRSAu92XXTaltJ76ByhUyvIHcTkoDIsvlOZYphFFIpOPP3QslSfoRR0PlgqKsjTCJJf
-         NzWOm9uSqvPjZimr/L3SmDBcvUysFschZ454nAPC5Wd2xpN4z7IkPkta0ErY2F4gOBXS
-         QI8Q==
-X-Gm-Message-State: APjAAAUAGUn+h4qxVE1Atj06y66dFPgml3rnYi2kn2WOGmVoaPPYQaxI
-        lVH98M1JbTdv8ok4Xxrk70FglXTK
-X-Google-Smtp-Source: APXvYqzg88/gZLAvKUQD5J5gPoIIkAdq2YNe2ULOeoJbACBVn4xq9t9K/ZSRJFw0djLQtBz9ezhd2g==
-X-Received: by 2002:a17:906:37c2:: with SMTP id o2mr18991479ejc.209.1559932707183;
-        Fri, 07 Jun 2019 11:38:27 -0700 (PDT)
+        bh=wCy1+3watJ0Zb8uiXyaX4Lcd6sQRCqMcaFtraIfiO8k=;
+        b=Q1PvlGkk8HltbxXyorLlozKBJ2pLz50BuGDEULttu3WXL0TgAJCL0Jss++QrYJsSMq
+         ktaMiGezcSGQOmd+1OvcdeaeWkD6W4/IYIEEU7532SPz7OnIFI0RIreCMChCe7thicrS
+         lWAbF82NibfpL2XTMZO9gKJrhbxRJ/bs2gQQv1sNHfXCWEaE+OC/GQDqm8kQAy8Y5kcI
+         bwB+UW2bW+ShzjyAfDfxHM8TBJL0xIgHMKWTMOtFiHsLXNy7El1IZZIPG3VQGL9B5JaT
+         6rTdvUeJcAc3eoN2WFK9k6QYGo6P2LBD+eh6t7TCLLpGxlBo2AvhNOKpzPYOp60PExSP
+         AsrA==
+X-Gm-Message-State: APjAAAVQq0opcnVbxxM7HfrPw/p+iydiztSxkbUaWJePBwm22dzKnDds
+        16ymZzzGm2W6bwH7CC/qU4SmHsjc
+X-Google-Smtp-Source: APXvYqxUh+wklyRGCw2yTAlKucSwMDJW6+5I1nZHxql57nSJ4k3RoSbBsMWY+FJP4Uxb9gsVsfc91g==
+X-Received: by 2002:a50:b7f8:: with SMTP id i53mr59868187ede.196.1559932704214;
+        Fri, 07 Jun 2019 11:38:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x22sm713656edd.59.2019.06.07.11.38.26
+        by smtp.gmail.com with ESMTPSA id n8sm497129ejl.46.2019.06.07.11.38.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jun 2019 11:38:26 -0700 (PDT)
-Date:   Fri, 07 Jun 2019 11:38:26 -0700 (PDT)
-X-Google-Original-Date: Fri, 07 Jun 2019 18:38:11 GMT
-Message-Id: <a0330ebd2d9889b2fe1352cb232ac2652d32ac5d.1559932699.git.gitgitgadget@gmail.com>
+        Fri, 07 Jun 2019 11:38:23 -0700 (PDT)
+Date:   Fri, 07 Jun 2019 11:38:23 -0700 (PDT)
+X-Google-Original-Date: Fri, 07 Jun 2019 18:38:07 GMT
+Message-Id: <fc3423046b9b2fc43bf8323dd41281f0a29b9d0a.1559932699.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.184.v5.git.gitgitgadget@gmail.com>
 References: <pull.184.v4.git.gitgitgadget@gmail.com>
         <pull.184.v5.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 08/16] commit-graph: add --split option to builtin
+Subject: [PATCH v5 04/16] commit-graph: load commit-graph chains
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,230 +75,163 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add a new "--split" option to the 'git commit-graph write' subcommand. This
-option allows the optional behavior of writing a commit-graph chain.
+Prepare the logic for reading a chain of commit-graphs.
 
-The current behavior will add a tip commit-graph containing any commits that
-are not in the existing commit-graph or commit-graph chain. Later changes
-will allow merging the chain and expiring out-dated files.
+First, look for a file at $OBJDIR/info/commit-graph. If it exists,
+then use that file and stop.
 
-Add a new test script (t5324-split-commit-graph.sh) that demonstrates this
-behavior.
+Next, look for the chain file at $OBJDIR/info/commit-graphs/commit-graph-chain.
+If this file exists, then load the hash values as line-separated values in that
+file and load $OBJDIR/info/commit-graphs/graph-{hash[i]}.graph for each hash[i]
+in that file. The file is given in order, so the first hash corresponds to the
+"base" file and the final hash corresponds to the "tip" file.
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+This implementation assumes that all of the graph-{hash}.graph files are in
+the same object directory as the commit-graph-chain file. This will be updated
+in a future change. This change is purposefully simple so we can isolate the
+different concerns.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/commit-graph.c        |  10 ++-
- commit-graph.c                |  14 ++--
- t/t5324-split-commit-graph.sh | 122 ++++++++++++++++++++++++++++++++++
- 3 files changed, 138 insertions(+), 8 deletions(-)
- create mode 100755 t/t5324-split-commit-graph.sh
+ commit-graph.c | 112 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 106 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 828b1a713f..c2c07d3917 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -10,7 +10,7 @@ static char const * const builtin_commit_graph_usage[] = {
- 	N_("git commit-graph [--object-dir <objdir>]"),
- 	N_("git commit-graph read [--object-dir <objdir>]"),
- 	N_("git commit-graph verify [--object-dir <objdir>]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append] [--reachable|--stdin-packs|--stdin-commits]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits]"),
- 	NULL
- };
- 
-@@ -25,7 +25,7 @@ static const char * const builtin_commit_graph_read_usage[] = {
- };
- 
- static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append] [--reachable|--stdin-packs|--stdin-commits]"),
-+	N_("git commit-graph write [--object-dir <objdir>] [--append|--split] [--reachable|--stdin-packs|--stdin-commits]"),
- 	NULL
- };
- 
-@@ -35,9 +35,9 @@ static struct opts_commit_graph {
- 	int stdin_packs;
- 	int stdin_commits;
- 	int append;
-+	int split;
- } opts;
- 
--
- static int graph_verify(int argc, const char **argv)
- {
- 	struct commit_graph *graph = NULL;
-@@ -156,6 +156,8 @@ static int graph_write(int argc, const char **argv)
- 			N_("start walk at commits listed by stdin")),
- 		OPT_BOOL(0, "append", &opts.append,
- 			N_("include all commits already in the commit-graph file")),
-+		OPT_BOOL(0, "split", &opts.split,
-+			N_("allow writing an incremental commit-graph file")),
- 		OPT_END(),
- 	};
- 
-@@ -169,6 +171,8 @@ static int graph_write(int argc, const char **argv)
- 		opts.obj_dir = get_object_directory();
- 	if (opts.append)
- 		flags |= COMMIT_GRAPH_APPEND;
-+	if (opts.split)
-+		flags |= COMMIT_GRAPH_SPLIT;
- 
- 	read_replace_refs = 0;
- 
 diff --git a/commit-graph.c b/commit-graph.c
-index eb6d79567a..f94538c3df 100644
+index 70d5889892..263c73282e 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1472,12 +1472,16 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		}
+@@ -45,6 +45,19 @@ char *get_commit_graph_filename(const char *obj_dir)
+ 	return xstrfmt("%s/info/commit-graph", obj_dir);
+ }
  
- 		if (ctx->base_graph_name) {
--			result = rename(ctx->base_graph_name,
--					ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 2]);
-+			const char *dest = ctx->commit_graph_filenames_after[
-+						ctx->num_commit_graphs_after - 2];
++static char *get_split_graph_filename(const char *obj_dir,
++				      const char *oid_hex)
++{
++	return xstrfmt("%s/info/commit-graphs/graph-%s.graph",
++		       obj_dir,
++		       oid_hex);
++}
++
++static char *get_chain_filename(const char *obj_dir)
++{
++	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", obj_dir);
++}
++
+ static uint8_t oid_version(void)
+ {
+ 	return 1;
+@@ -286,18 +299,105 @@ static struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	return load_commit_graph_one_fd_st(fd, &st);
+ }
  
--			if (result) {
--				error(_("failed to rename base commit-graph file"));
--				return -1;
-+			if (strcmp(ctx->base_graph_name, dest)) {
-+				result = rename(ctx->base_graph_name, dest);
++static struct commit_graph *load_commit_graph_v1(struct repository *r, const char *obj_dir)
++{
++	char *graph_name = get_commit_graph_filename(obj_dir);
++	struct commit_graph *g = load_commit_graph_one(graph_name);
++	free(graph_name);
 +
-+				if (result) {
-+					error(_("failed to rename base commit-graph file"));
-+					return -1;
-+				}
- 			}
- 		} else {
- 			char *graph_name = get_commit_graph_filename(ctx->obj_dir);
-diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
-new file mode 100755
-index 0000000000..ccd24bd22b
---- /dev/null
-+++ b/t/t5324-split-commit-graph.sh
-@@ -0,0 +1,122 @@
-+#!/bin/sh
-+
-+test_description='split commit graph'
-+. ./test-lib.sh
-+
-+GIT_TEST_COMMIT_GRAPH=0
-+
-+test_expect_success 'setup repo' '
-+	git init &&
-+	git config core.commitGraph true &&
-+	infodir=".git/objects/info" &&
-+	graphdir="$infodir/commit-graphs" &&
-+	test_oid_init
-+'
-+
-+graph_read_expect() {
-+	NUM_BASE=0
-+	if test ! -z $2
-+	then
-+		NUM_BASE=$2
-+	fi
-+	cat >expect <<- EOF
-+	header: 43475048 1 1 3 $NUM_BASE
-+	num_commits: $1
-+	chunks: oid_fanout oid_lookup commit_metadata
-+	EOF
-+	git commit-graph read >output &&
-+	test_cmp expect output
++	return g;
 +}
 +
-+test_expect_success 'create commits and write commit-graph' '
-+	for i in $(test_seq 3)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git commit-graph write --reachable &&
-+	test_path_is_file $infodir/commit-graph &&
-+	graph_read_expect 3
-+'
++static int add_graph_to_chain(struct commit_graph *g,
++			      struct commit_graph *chain,
++			      struct object_id *oids,
++			      int n)
++{
++	struct commit_graph *cur_g = chain;
 +
-+graph_git_two_modes() {
-+	git -c core.commitGraph=true $1 >output
-+	git -c core.commitGraph=false $1 >expect
-+	test_cmp expect output
++	while (n) {
++		n--;
++		cur_g = cur_g->base_graph;
++	}
++
++	g->base_graph = chain;
++
++	if (chain)
++		g->num_commits_in_base = chain->num_commits + chain->num_commits_in_base;
++
++	return 1;
 +}
 +
-+graph_git_behavior() {
-+	MSG=$1
-+	BRANCH=$2
-+	COMPARE=$3
-+	test_expect_success "check normal git operations: $MSG" '
-+		graph_git_two_modes "log --oneline $BRANCH" &&
-+		graph_git_two_modes "log --topo-order $BRANCH" &&
-+		graph_git_two_modes "log --graph $COMPARE..$BRANCH" &&
-+		graph_git_two_modes "branch -vv" &&
-+		graph_git_two_modes "merge-base -a $BRANCH $COMPARE"
-+	'
++static struct commit_graph *load_commit_graph_chain(struct repository *r, const char *obj_dir)
++{
++	struct commit_graph *graph_chain = NULL;
++	struct strbuf line = STRBUF_INIT;
++	struct stat st;
++	struct object_id *oids;
++	int i = 0, valid = 1, count;
++	char *chain_name = get_chain_filename(obj_dir);
++	FILE *fp;
++	int stat_res;
++
++	fp = fopen(chain_name, "r");
++	stat_res = stat(chain_name, &st);
++	free(chain_name);
++
++	if (!fp ||
++	    stat_res ||
++	    st.st_size <= the_hash_algo->hexsz)
++		return NULL;
++
++	count = st.st_size / (the_hash_algo->hexsz + 1);
++	oids = xcalloc(count, sizeof(struct object_id));
++
++	for (i = 0; i < count && valid; i++) {
++		char *graph_name;
++		struct commit_graph *g;
++
++		if (strbuf_getline_lf(&line, fp) == EOF)
++			break;
++
++		if (get_oid_hex(line.buf, &oids[i])) {
++			warning(_("invalid commit-graph chain: line '%s' not a hash"),
++				line.buf);
++			valid = 0;
++			break;
++		}
++
++		graph_name = get_split_graph_filename(obj_dir, line.buf);
++		g = load_commit_graph_one(graph_name);
++		free(graph_name);
++
++		if (g && add_graph_to_chain(g, graph_chain, oids, i))
++			graph_chain = g;
++		else
++			valid = 0;
++	}
++
++	free(oids);
++	fclose(fp);
++
++	return graph_chain;
 +}
 +
-+graph_git_behavior 'graph exists' commits/3 commits/1
++static struct commit_graph *read_commit_graph_one(struct repository *r, const char *obj_dir)
++{
++	struct commit_graph *g = load_commit_graph_v1(r, obj_dir);
 +
-+verify_chain_files_exist() {
-+	for hash in $(cat $1/commit-graph-chain)
-+	do
-+		test_path_is_file $1/graph-$hash.graph || return 1
-+	done
++	if (!g)
++		g = load_commit_graph_chain(r, obj_dir);
++
++	return g;
 +}
 +
-+test_expect_success 'add more commits, and write a new base graph' '
-+	git reset --hard commits/1 &&
-+	for i in $(test_seq 4 5)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/2 &&
-+	for i in $(test_seq 6 10)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/2 &&
-+	git merge commits/4 &&
-+	git branch merge/1 &&
-+	git reset --hard commits/4 &&
-+	git merge commits/6 &&
-+	git branch merge/2 &&
-+	git commit-graph write --reachable &&
-+	graph_read_expect 12
-+'
-+
-+test_expect_success 'add three more commits, write a tip graph' '
-+	git reset --hard commits/3 &&
-+	git merge merge/1 &&
-+	git merge commits/5 &&
-+	git merge merge/2 &&
-+	git branch merge/3 &&
-+	git commit-graph write --reachable --split &&
-+	test_path_is_missing $infodir/commit-graph &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 2 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
-+
-+graph_git_behavior 'split commit-graph: merge 3 vs 2' merge/3 merge/2
-+
-+test_expect_success 'add one commit, write a tip graph' '
-+	test_commit 11 &&
-+	git branch commits/11 &&
-+	git commit-graph write --reachable --split &&
-+	test_path_is_missing $infodir/commit-graph &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 3 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
-+
-+graph_git_behavior 'three-layer commit-graph: commit 11 vs 6' commits/11 commits/6
-+
-+test_done
+ static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
+ {
+-	char *graph_name;
+ 
+ 	if (r->objects->commit_graph)
+ 		return;
+ 
+-	graph_name = get_commit_graph_filename(obj_dir);
+-	r->objects->commit_graph =
+-		load_commit_graph_one(graph_name);
+-
+-	FREE_AND_NULL(graph_name);
++	r->objects->commit_graph = read_commit_graph_one(r, obj_dir);
+ }
+ 
+ /*
 -- 
 gitgitgadget
 
