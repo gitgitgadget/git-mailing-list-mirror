@@ -7,173 +7,126 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0C1E1F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 16:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2381E1F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 17:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730447AbfFGQgW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jun 2019 12:36:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53350 "EHLO
+        id S1729936AbfFGRD4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jun 2019 13:03:56 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64171 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730304AbfFGQgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jun 2019 12:36:22 -0400
+        with ESMTP id S1729118AbfFGRD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jun 2019 13:03:56 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3816572A43;
-        Fri,  7 Jun 2019 12:36:16 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E32A72DF6;
+        Fri,  7 Jun 2019 13:03:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Y16kYbabmdQ3
-        51Hp6nzIWsWRWHo=; b=JS8W3vaJ9X2GR8IQG3BCYr7omUysPLNs9aPkbXgltkUW
-        wUyiJZURJEKE0zGHHrAq3PUe5HS+mKntYZ1Bm3Kgz/M5Lrlw/aTcESJ7cnFHvj0G
-        Nzyj4xF9o0C7oPZft/npPy6PNyhwR/tZRjKFJGRzYkJp34pw+/KbDlqCTNKZZeo=
+        :content-type:content-transfer-encoding; s=sasl; bh=Nqh7nSzaDGR9
+        iLxZ/p0B9HZjcbY=; b=ML4boDbOTBcDCKQ2Wz9qi81ui7jJBqJmLmwj4rUs1AFe
+        ZYoFXbB2+DUsvsHzhRQEISg0oBaYil9S0uXchQEG8l3YhAeRGdCJAzcZd2aDk3AY
+        rd9KNYLXld3d/Rgf8KEi1h2pHPvk6n1+fgVeomvZR7TKXXpA10j4DlXS5hLEYuc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EibCwZ
-        hnyC9x3uWfQDvaek48WE7wdjpBNVsFZTcr6zkZWaBw06DLgSUXWGeEdylM6A6lSA
-        qAV66bzGjqZQ9IX7wQvTxLdTZ4icVv4vznIBYp5ycCxclaJo75d2kEHGSZkkMdYb
-        ufXI+TD3Rjx6KlTv0SC5X06EP3HDNcrUVRIw8=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=r+rCwv
+        t1LTgESiuR2LzSQLe9AHPG3MKKbey/ZGnCpF0jVfHdSMTx0u/tAMWsts402WcPpj
+        cAwh6iNTxZCIbB3arr1KFZqfCvM6+tlGfTWYLM+o6RadLUZx9dhSrdvnCefoVE11
+        2wSvRlBkYAy6HuK5uIxIhlO0G/XdQHyiMusVM=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2BE1272A42;
-        Fri,  7 Jun 2019 12:36:16 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 967BB72DF5;
+        Fri,  7 Jun 2019 13:03:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3A19272A35;
-        Fri,  7 Jun 2019 12:36:13 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC47472DF3;
+        Fri,  7 Jun 2019 13:03:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alexander Shopov <ash@kambanaria.org>,
-        =?utf-8?Q?C=C3=A9dric?= Malard <c.malard-git@valdun.net>,
-        Christopher Diaz Riveros <chrisadr@gentoo.org>,
-        Fangyi Zhou <me@fangyi.io>,
-        =?utf-8?Q?Jean-No?= =?utf-8?Q?=C3=ABl?= Avila 
-        <jn.avila@free.fr>, Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Tran Ngoc Quan <vnwildman@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [GIT PULL] l10n updates for 2.22.0 round 3
-References: <20190607100812.24413-1-worldhello.net@gmail.com>
-Date:   Fri, 07 Jun 2019 09:36:10 -0700
-In-Reply-To: <20190607100812.24413-1-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Fri, 7 Jun 2019 18:08:12 +0800")
-Message-ID: <xmqqv9xhpd39.fsf@gitster-ct.c.googlers.com>
+To:     "Osipov\, Michael" <michael.osipov@siemens.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] configure: Detect linking style for HP aCC on HP-UX
+References: <6aabf669-a73f-d23d-8d65-8b96eefbae4b@siemens.com>
+        <20190516093412.14795-1-avarab@gmail.com>
+        <c12ec5ff-87c9-a6d0-e9f6-6d7e1cf343c5@siemens.com>
+Date:   Fri, 07 Jun 2019 10:03:45 -0700
+In-Reply-To: <c12ec5ff-87c9-a6d0-e9f6-6d7e1cf343c5@siemens.com> (Michael
+        Osipov's message of "Fri, 7 Jun 2019 16:51:19 +0200")
+Message-ID: <xmqqr285pbta.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5CFECD16-8942-11E9-B854-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3721CE78-8946-11E9-AFBC-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+"Osipov, Michael" <michael.osipov@siemens.com> writes:
 
-> Please pull the following l10n updates for Git 2.22.0.
+> Am 2019-05-16 um 11:34 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> From: Michael Osipov <michael.osipov@siemens.com>
+>>
+>> HP aCC does not accept any of the previously tested CC_LD_DYNPATH
+>> formats, but only its own[1] "-Wl,+b" format. Add it to configure.ac.
+>>
+>> 1. http://nixdoc.net/man-pages/hp-ux/man1/ld_pa.1.html
+>>
+>> Signed-off-by: Michael Osipov <michael.osipov@siemens.com>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+>> ---
+>>
+>> I took the liberty of slightly amending the commit message.
+>>
+>>   configure.ac | 14 ++++++++++++--
+>>   1 file changed, 12 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/configure.ac b/configure.ac
+>> index be3b55f1cc..a43b476402 100644
+>> --- a/configure.ac
+>> +++ b/configure.ac
+>> @@ -475,8 +475,18 @@ else
+>>         if test "$git_cv_ld_rpath" =3D "yes"; then
+>>            CC_LD_DYNPATH=3D-rpath
+>>         else
+>> -         CC_LD_DYNPATH=3D
+>> -         AC_MSG_WARN([linker does not support runtime path to dynamic=
+ libraries])
+>> +         AC_CACHE_CHECK([if linker supports -Wl,+b,], git_cv_ld_wl_b,=
+ [
+>> +            SAVE_LDFLAGS=3D"${LDFLAGS}"
+>> +            LDFLAGS=3D"${SAVE_LDFLAGS} -Wl,+b,/"
+>> +            AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])], [git_cv_ld_wl_b=
+=3Dyes], [git_cv_ld_wl_b=3Dno])
+>> +            LDFLAGS=3D"${SAVE_LDFLAGS}"
+>> +         ])
+>> +         if test "$git_cv_ld_wl_b" =3D "yes"; then
+>> +            CC_LD_DYNPATH=3D-Wl,+b,
+>> +          else
+>> +             CC_LD_DYNPATH=3D
+>> +             AC_MSG_WARN([linker does not support runtime path to dyn=
+amic libraries])
+>> +          fi
+>>         fi
+>>      fi
+>>   fi
+>>
 >
-> The following changes since commit 74583d89127e21255c12dd3c8a3bf60b497d=
-7d03:
+> I can see that this one has not yet been committed nor my PR has been
+> pulled.
 >
->   Git 2.22-rc3 (2019-06-03 11:25:12 -0700)
+> Any chances to get this into master?
 >
-> are available in the Git repository at:
->
->   git://github.com/git-l10n/git-po tags/l10n-2.22.0-rnd3
->
-> for you to fetch changes up to 0cdb8d2db2f39d1a29636975168c457d2dc0d466=
-:
->
->   Merge branch 'fr_review' of git://github.com/jnavila/git (2019-06-07 =
-16:51:09 +0800)
->
-> ----------------------------------------------------------------
-> l10n-2.22.0-rnd3
->
-> ----------------------------------------------------------------
+> Michael
 
-Thanks, all.  Will pull.
+Sorry, it jsut fell of the cracks.  The way the new test was added
+looks very good --- any platform that is happy with the existing
+test will continue to function the same way, and a platform that
+knows -Wl,+b would use it instead of failing.
 
-> Alessandro Menti (1):
->       l10n: it.po: Updated Italian translation
->
-> Alexander Shopov (3):
->       l10n: bg.po: Updated Bulgarian translation (4577t)
->       l10n: bg.po: Updated Bulgarian translation (4580t)
->       l10n: bg.po: Updated Bulgarian translation (4581t)
->
-> Christopher D=C3=ADaz Riveros (3):
->       l10n: es: 2.22.0 round 1
->       l10n: es: 2.22.0 round 2
->       l10n: es: 2.22.0 round 3
->
-> C=C3=A9dric Malard (1):
->       l10n: fr.po: Review French translation
->
-> Fangyi Zhou (1):
->       l10n: zh_CN: Revision for git v2.22.0 l10n
->
-> Jean-No=C3=ABl Avila (3):
->       l10n: fr.po v2.22.0.rnd1
->       l10n: fr.po v2.22.0 round 2
->       l10n: fr v2.22.0 rnd 3
->
-> Jiang Xin (15):
->       l10n: git.pot: v2.22.0 round 1 (270 new, 56 removed)
->       Merge branch 'master' of https://github.com/vnwildman/git
->       Merge branch 'master' of git://github.com/alshopov/git-po
->       Merge branch 'master' of https://github.com/Softcatala/git-po
->       Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
->       l10n: git.pot: v2.22.0 round 2 (6 new, 3 removed)
->       Merge branch 'master' of git://github.com/alshopov/git-po
->       Merge branch 'master' of https://github.com/vnwildman/git
->       Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
->       l10n: git.pot: v2.22.0 round 3 (3 new, 2 removed)
->       Merge branch 'it-l10n-wip' of github.com:AlessandroMenti/git-po
->       Merge branch '2.22' of https://github.com/ChrisADR/git-po
->       l10n: zh_CN: for git v2.22.0 l10n round 1~3
->       Merge branch 'master' of git://github.com/alshopov/git-po
->       Merge branch 'fr_review' of git://github.com/jnavila/git
->
-> Jordi Mas (1):
->       l10n: Update Catalan translation
->
-> Matthias R=C3=BCster (2):
->       l10n: TEAMS: Change German translation team leader
->       l10n: de.po: Update German translation
->
-> Peter Krefting (2):
->       l10n: sv.po: Update Swedish translation
->       l10n: sv.po: Update Swedish translation (4577t0f0u)
->
-> Ralf Thielow (1):
->       l10n: de.po: improve description of 'git reset --quiet'
->
-> Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (3):
->       l10n: vi.po(4577t): Updated Vietnamese translation for v2.22.0 ro=
-und 1
->       l10n: vi.po(4580t): Updated Vietnamese translation for v2.22.0 ro=
-und 2
->       l10n: vi.po(4581t): Updated Vietnamese translation for v2.22.0 ro=
-und 3
->
->  po/TEAMS    |     8 +-
->  po/bg.po    |  7688 ++++++++++++++++++++++------------------
->  po/ca.po    |  8989 ++++++++++++++++++++++++-----------------------
->  po/de.po    |  7399 ++++++++++++++++++++++-----------------
->  po/es.po    |  7336 +++++++++++++++++++++-----------------
->  po/fr.po    |  7702 ++++++++++++++++++++++------------------
->  po/git.pot  |  7415 ++++++++++++++++++++++-----------------
->  po/it.po    | 11094 ++++++++++++++++++++++++++++++++------------------=
---------
->  po/sv.po    |  7229 ++++++++++++++++++++++----------------
->  po/vi.po    |  7342 +++++++++++++++++++++-----------------
->  po/zh_CN.po |  7143 +++++++++++++++++++++----------------
->  11 files changed, 44506 insertions(+), 34839 deletions(-)
->
-> --
-> Jiang Xin
+Will pick it up.
+
+Thanks.
