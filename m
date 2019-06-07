@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC65B1F462
-	for <e@80x24.org>; Fri,  7 Jun 2019 01:09:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EDE11F462
+	for <e@80x24.org>; Fri,  7 Jun 2019 01:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727605AbfFGBJH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jun 2019 21:09:07 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:48872 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725784AbfFGBJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jun 2019 21:09:07 -0400
-Received: by mail-qk1-f202.google.com with SMTP id w184so246531qka.15
-        for <git@vger.kernel.org>; Thu, 06 Jun 2019 18:09:07 -0700 (PDT)
+        id S1727633AbfFGBJK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jun 2019 21:09:10 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:40814 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725784AbfFGBJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jun 2019 21:09:10 -0400
+Received: by mail-pl1-f201.google.com with SMTP id 91so325922pla.7
+        for <git@vger.kernel.org>; Thu, 06 Jun 2019 18:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=y4HjGDe3bxCzb0W8Y3JckXMbW1dC2Gj31sx9Q1n1qCg=;
-        b=KorrtD4hT0k0reQHslBXSmwNLIZQlZGKaReHDpAuxUtOckqeCcOQ2ySEDBPojSbVsD
-         DaPsZYQ4YinN7k+Ertg9VPWLo2taAjMuil4S7hzkZbymylyiqmdGZq+nvLy9raQgtqMx
-         tZoPWunxfa3wGPGYuHlQeZFi9mlAQhuXF127ciZkyMrY5nXjhUoPgfaRvEwJQkzclNnW
-         a8uWKckypfGWxMZNnGKe+1M+Ew8ifJThpACBJWG93F2nM6mN3wBW/EFrtZfGlDQU9UoO
-         uZ1IZPo9iK6qpnw0vn92HwkI9zHcDdJZEX8sP9FhZpPT5C6rC67CGy2dMivQ9ZZWnywu
-         LyuA==
+        bh=HPZL2HajTadRCgsrgYLXQhUvAinm7A/OFGdXxpVbbCA=;
+        b=QqIo5wbpCOG9Hnakq74sOhvWmFEataqncBrAJn8Y8BFId7i+IqiByUclG40rzKpYzF
+         JlvfSChg/ArzVd//KveZZnO/DNJUcKokdwI4xEyUNGVPL1sqP224bawKxU5zLpxFMvE+
+         4LOgmtqRQz/u2Fwa7bEQgMVId4iClhSltYeJr/wsfP0MAvrAUSjK4TuBDCgkMQrIu6Nu
+         3TgFfhbS+gNKcEG0Bk7LVNz77F2VyfEOLUZJp1MAuCr9F1jldPwXQX+pLiPJg5wXECkE
+         gMfaVXZJI6P4dAnJzJscH7BLJzLv1eRdRCZoD4WU+ew/7ufExjy3gQa34izJHu6gNcwX
+         fNZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=y4HjGDe3bxCzb0W8Y3JckXMbW1dC2Gj31sx9Q1n1qCg=;
-        b=pk0n/gKH4Aod/S0W4T+7JTJuiI/N/2Dmz22hISGdEod2PYIVVpOgsp763N7mo3q5BT
-         8cjznNLi478vFod+z3oELkslKN91HbRFzaCxnmdT9ol+CXiCYJrW1AS/DghD7AOrO9u5
-         9uM+cR6FOb7yUZ4E00QpWMQLZCpNSoULGqfqU15qYj+L1OdFwqstFIKnyhLmV5zzzcHi
-         pKQwLjqC7exn7wyXRSqGhW5Gu2I29wyeAttyVW2XuMOCIOLsq2o2iKy4ZHRsPw9NhJgD
-         hD0o4a+1XbLlvYs6xdkiqY30vXo9JLpKgygaLfhIjvt544o7rWzRea/ayezOp0xh9gFe
-         h+ew==
-X-Gm-Message-State: APjAAAXffcihgwRFDTbt+WD5BMDsquyWVuv3SDfnGxTETCedRMDIywh4
-        GUqVoiOavm7UGQg7TNvYY7ioEq1NwudBjs3sTDAI2Mt1Gh+WVqh3EqtXJTo2vSqKgf9lpoU7zsH
-        OdTzDkj1/Rz6MrR/fuUdX4C+fYvdfdf8p1vX3eYyRQc4n6ami8IomaGMFSzSIkQoEfvcnUy70ZA
+        bh=HPZL2HajTadRCgsrgYLXQhUvAinm7A/OFGdXxpVbbCA=;
+        b=F5qD8bwLiUnWgnk1iZZodGb9E0NPsFBL9qnLWyaIO26eZL/iEmZ8J6j0Mavj/0vuu0
+         5Dok3tSus4JCn2caC1Zr1geA4Ym9wyYynUDrBlpZv284BbmvhGDN3Kna1RJQL+UHVxUE
+         Uh2WUez3G5qPNgBpBQpEdRIZiupbZxyXIkTwkHKbLxiXDK1yqD1jVzuH+KJ85BDaFGcT
+         lKhom/74F3qSnVD/AA96cd4C27jTFcwsbTTqRDgiQSDUxVnzJIG6Ys+uNvVIlXlmg7Ii
+         zHhEY5bC1qo5ssm5xCXvd9MUdB+NMWIRDKYV/T6okEXGjENXu5hTXZil/x/peCAcsI6i
+         275w==
+X-Gm-Message-State: APjAAAUioI88j+eifQ74zKL+qtFfw2/h3Tr0oHQkQ7Zavz6Zj7xUus2A
+        7KQMRcYJ6LZo9ttAoh0fG2WPUhiQRJnamFhEVQHGMe5fJgNRwRGVS765nfJymnkMNNGbSg58kw+
+        UhEriCId7nFBNlHIzyz5RgG64+Qvbyz8VIPdVn6hr4bdDvxXTc6n+uUkWt/ZqxiQHkl54T8WoUA
         ==
-X-Google-Smtp-Source: APXvYqyMn9eXPZredAhPY+EI082a0znfbkuJDNim4ssftMjIfxGtltcwb/T4t6qp/mijJ6odwVdBm6VcS8eAkz7X1lY=
-X-Received: by 2002:ae9:e842:: with SMTP id a63mr40166454qkg.143.1559869746689;
- Thu, 06 Jun 2019 18:09:06 -0700 (PDT)
-Date:   Thu,  6 Jun 2019 18:08:03 -0700
+X-Google-Smtp-Source: APXvYqyEerY/P6atEjClIotsg7s6vvhj3AVRcAi/hz7apXwBErR1aUWzbzIdWB9PAsajzH/AsBVwTTbsW2pAv2tRyBQ=
+X-Received: by 2002:a63:e54d:: with SMTP id z13mr581094pgj.132.1559869748929;
+ Thu, 06 Jun 2019 18:09:08 -0700 (PDT)
+Date:   Thu,  6 Jun 2019 18:08:04 -0700
 In-Reply-To: <20190607010811.52944-1-emilyshaffer@google.com>
-Message-Id: <20190607010811.52944-6-emilyshaffer@google.com>
+Message-Id: <20190607010811.52944-7-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20190607010708.46654-1-emilyshaffer@google.com> <20190607010811.52944-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.22.0.rc1.311.g5d7573a151-goog
-Subject: [RFC PATCH 05/13] walken: configure rev_info and prepare for walk
+Subject: [RFC PATCH 06/13] walken: perform our basic revision walk
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -64,93 +64,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`struct rev_info` is what's used by the struct itself.
-`repo_init_revisions()` initializes the struct; then we need to set it
-up for the walk we want to perform, which is done in
-`final_rev_info_setup()`.
+Add the final steps needed and implement the walk loop itself. We add a
+method walken_commit_walk() which performs the final setup to revision.c
+and then iterates over commits from get_revision().
 
-The most important step here is adding the first object we want to walk
-to the pending array. Here, we take the easy road and use
-`add_head_to_pending()`; there is also a way to do it with
-`setup_revision_opt()` and `setup_revisions()` which we demonstrate but
-do not use. If we were to forget this step, the walk would do nothing -
-the pending queue would be checked, determined to be empty, and the walk
-would terminate immediately.
+This basic walk only prints the subject line of each commit in the
+history. It is nearly equivalent to `git log --oneline`.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- builtin/walken.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ builtin/walken.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
 diff --git a/builtin/walken.c b/builtin/walken.c
-index 5d1666a5da..c101db38c7 100644
+index c101db38c7..9cf19a24ab 100644
 --- a/builtin/walken.c
 +++ b/builtin/walken.c
-@@ -6,6 +6,7 @@
- 
+@@ -7,8 +7,11 @@
  #include <stdio.h>
  #include "builtin.h"
-+#include "revision.h"
+ #include "revision.h"
++#include "commit.h"
  #include "config.h"
  #include "parse-options.h"
++#include "pretty.h"
++#include "line-log.h"
  
-@@ -26,6 +27,35 @@ static void init_walken_defaults(void)
- 	 */
+ static const char * const walken_usage[] = {
+ 	N_("git walken"),
+@@ -78,6 +81,39 @@ static int git_walken_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
  }
  
 +/*
-+ * cmd_log calls a second set of init after the repo_init_revisions call. We'll
-+ * mirror those settings in post_repo_init_init.
++ * walken_commit_walk() is invoked by cmd_walken() after initialization. It
++ * does the commit walk only.
 + */
-+static void final_rev_info_setup(int argc, const char **argv, const char *prefix,
-+		struct rev_info *rev)
++static int walken_commit_walk(struct rev_info *rev)
 +{
-+	struct setup_revision_opt opt;
++	struct commit *commit;
++	struct strbuf prettybuf;
 +
-+	/* setup_revision_opt is used to pass options to the setup_revisions()
-+	 * call. It's got some special items for submodules and other types of
-+	 * optimizations, but for now, we'll just point it to HEAD and call it
-+	 * good. First we should make sure to reset it. TODO: This is useful for
-+	 * more complicated stuff revisions, but a decent shortcut for the first
-+	 * pass is add_head_to_pending().
++	strbuf_init(&prettybuf, 0);
++
++
++	/* prepare_revision_walk() gets the final steps ready for a revision
++	 * walk. We check the return value for errors. */
++	if (prepare_revision_walk(rev)) {
++		die(_("revision walk setup failed"));
++	}
++
++	/* Now we can start the real commit walk. get_revision grabs the next
++	 * revision based on the contents of rev.
 +	 */
-+	memset(&opt, 0, sizeof(opt));
-+	opt.def = "HEAD";
-+	opt.revarg_opt = REVARG_COMMITTISH;
-+	//setup_revisions(argc, argv, rev, &opt);
++	rev->diffopt.close_file = 0;
++	while ((commit = get_revision(rev)) != NULL) {
++		if (commit == NULL)
++			continue;
++		strbuf_reset(&prettybuf);
++		pp_commit_easy(CMIT_FMT_ONELINE, commit, &prettybuf);
++		printf(_("%s\n"), prettybuf.buf);
 +
-+	/* Let's force oneline format. */
-+	get_commit_format("oneline", rev);
-+	rev->verbose_header = 1;
-+	
-+	/* add the HEAD to pending so we can start */
-+	add_head_to_pending(rev);
++	}
++	return 0;
 +}
 +
- /*
-  * This method will be called back by git_config(). It is used to gather values
-  * from the configuration files available to Git.
-@@ -54,12 +84,24 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ int cmd_walken(int argc, const char **argv, const char *prefix)
+ {
+ 	struct option options[] = {
+@@ -98,10 +134,15 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	repo_init_revisions(the_repository, &rev, prefix);
  
-+	struct rev_info rev;
++	/* We can set our traversal flags here. */
++	rev.always_show_header = 1;
 +
- 	argc = parse_options(argc, argv, prefix, options, walken_usage, 0);
+ 	/* Before we do the walk, we need to set a starting point. It's not
+ 	 * coming from opt. */
+ 	final_rev_info_setup(argc, argv, prefix, &rev);
  
- 	init_walken_defaults();
- 
- 	git_config(git_walken_config, NULL);
- 
-+	/* Time to set up the walk. repo_init_revisions sets up rev_info with
-+	 * the defaults, but then you need to make some configuration settings
-+	 * to make it do what's special about your walk.
-+	 */
-+	repo_init_revisions(the_repository, &rev, prefix);
-+
-+	/* Before we do the walk, we need to set a starting point. It's not
-+	 * coming from opt. */
-+	final_rev_info_setup(argc, argv, prefix, &rev);
++	walken_commit_walk(&rev);
 +
  	printf(_("cmd_walken incoming...\n"));
  	return 0;
