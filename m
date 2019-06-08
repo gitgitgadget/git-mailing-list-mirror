@@ -8,83 +8,121 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85B751F462
-	for <e@80x24.org>; Sat,  8 Jun 2019 14:43:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97DC31F462
+	for <e@80x24.org>; Sat,  8 Jun 2019 14:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727073AbfFHOnp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jun 2019 10:43:45 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:37194 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbfFHOnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jun 2019 10:43:45 -0400
-Received: by mail-ed1-f48.google.com with SMTP id w13so6916122eds.4
+        id S1727085AbfFHOnq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Jun 2019 10:43:46 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43665 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726997AbfFHOnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jun 2019 10:43:46 -0400
+Received: by mail-ed1-f68.google.com with SMTP id w33so6878428edb.10
         for <git@vger.kernel.org>; Sat, 08 Jun 2019 07:43:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=FEeIqi5KGA6Y7GYeX9N19pW+1hKQrfkDd94BkgEd634=;
-        b=H+wRBDsebq1662nii4xJuXAhX61NMYe3Hupd9eXD2SdOXtoQyz/UMoyaleFfVe71Qc
-         N7a/G/eW61XuBuOPM3e5IciiqYdQv/HAG2g5PyV2j8KWR9BZ80pCKqp7DB0cIR6ascNq
-         h6TU6IqaB5RTO2Cix7nzHoFUapP18/+VUdUWMhezuDaXEFU1XUS7u0aWIJWr8DhXg2DR
-         edXhe7eUdVFr5C0wnSJFOiSFOgKWdAEkZ/GAcKQDq/VJD1Ew6EwjtsE9mZNeZWWi0zOh
-         Tk2C0NDZ7HA6m8TuCFJFAuqniXgF948xlLE/YS6u67vSQmCggCTzchuEG6hlMWiSQ0Z6
-         RPkA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=q0+YoSHRj4i59Hq5zqHYovA23h9TjLTOKx8r65OjhV0=;
+        b=d/15x5Q3C3QV+bBGIjHF6EW33bpVaOOWgP3QOy2Ss1BcsWrC9YGzPrpnZE1Jl59M0L
+         sst0c0rjBdaUR6dEAeut3ezDE0ho99fM29UW5mnprRCdh5vKOlaCORMQtyEAoLgzfJ/D
+         Obl334yZnUXlcmoRjcQyi/wE4/wNargNTeH+TTDHQOp1wWLgMAo3T543ne7uDwj6yMBL
+         XqXnZFbmqVTgGfVafq86bBeCMFRAr8yOVUQ458Tk8ZXV4/naWx9mhbZF7Me2XyEX7C6x
+         SfkUpfFoLHkYsYYb8EUC/fUkLHI/bENhju1MLZ3Tym7sZ3Qc3y9hda0Q5a1KkKs/UMgG
+         Z93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FEeIqi5KGA6Y7GYeX9N19pW+1hKQrfkDd94BkgEd634=;
-        b=YUMKasuKTPto0Nr1HXJEQ0sYXskOj94Om9ng5+Bf/Xq1fmzTsYLG89tG7EM0llk8QX
-         2HvCPGMbFdRd9V2xW0K/wE8GqDicfZQ0V3I8E0mpZJyrGfwcSKWjRGeOAmj8I8pKBORq
-         +9Wz0PmaRY7SCcue5IEdfWeXwD/mpD8zYdZLisbNR6PwJyZdQpQLwAzgKukkFRO0cxl7
-         qThW+TD2nmlQ5wGuvk04UZZU7zOZAs/7BqBZiloFyjtPNC58nWJxkOQWsvqM3af+E8CK
-         VrOikEqB/ftDGLvuCg5wc7LSO3MGzRVmZlcA9/QzU7yGqSfW6iyJ+D0JxGm8hjWzMEQc
-         Mo/g==
-X-Gm-Message-State: APjAAAVAw4PesvirrdJQThFwI0ujGiIBY3PDE3n3iBgqC/1qwD06Kd9R
-        i+5oV5Eensk8FyykIcHmS9tLGKaL
-X-Google-Smtp-Source: APXvYqy2NrFJ2wECtySxbccVeKh4c2RxHRV4YXLVW8JRY80EZBrogab4nI8JOT4U7xMl/wVGru8f2A==
-X-Received: by 2002:a50:91e5:: with SMTP id h34mr16224845eda.72.1560005023656;
-        Sat, 08 Jun 2019 07:43:43 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=q0+YoSHRj4i59Hq5zqHYovA23h9TjLTOKx8r65OjhV0=;
+        b=lttqYqVVyjvGGFmWIB9mRyDFi7w3yzeU9YI9EALYsdJKamOftwre+YL+iw6FAKo6//
+         E7jf2b0rdFZF2t8P0gGDiI8TBQL24e+kB2qCt/5lr8CM94fZ4+uNzb4M1IQIOpX3fx5f
+         SF4c86zdOF2oFr9UedA2VCUgzOoGTd8H7lK8i+cL/fqAbj9qJ1R1CNKdMyLiDMMcFcIv
+         HxIvdsJWnfecdRyeoZgZS//I2JW07KNoP6iHz+0A+ASzmUgnQCvrZdD88jt0gfYlb+EC
+         0r1DpY+tT0DcySUQR1SQI82H+Gx6bAv/eo1jeBOoDQE/QO2aakWUWZVEz2cRwTQq3GQc
+         Gt4A==
+X-Gm-Message-State: APjAAAWvudWQxqqw+Yp6NNVVc8kKVLwwifnxjFQTNO83IqoMTHSLGT6q
+        0b+3mYdsvm6QXZJV/KUMqW4XmpHB
+X-Google-Smtp-Source: APXvYqxLsH6MArIdpCjtFmgXu1KXwZhORObSuZvzUJm9Si5QijwhNAKNFDE5QYx+z2fCM2ccsgGwDg==
+X-Received: by 2002:a17:906:c106:: with SMTP id h6mr5609545ejz.112.1560005024242;
+        Sat, 08 Jun 2019 07:43:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o19sm1356443edt.87.2019.06.08.07.43.43
+        by smtp.gmail.com with ESMTPSA id b6sm1317015edi.72.2019.06.08.07.43.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Sat, 08 Jun 2019 07:43:43 -0700 (PDT)
 Date:   Sat, 08 Jun 2019 07:43:43 -0700 (PDT)
-X-Google-Original-Date: Sat, 08 Jun 2019 14:43:41 GMT
-Message-Id: <pull.151.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Sat, 08 Jun 2019 14:43:42 GMT
+Message-Id: <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.151.git.gitgitgadget@gmail.com>
+References: <pull.151.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Fix a test on NTFS (and probably HFS+)
+Subject: [PATCH 1/1] t0001: fix on case-insensitive filesystems
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My colleague Jameson Miller once presented me with a nice puzzle why the
-test suite failed on their system.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Turns out that it is possible in PowerShell to spell the directory with a
-different case than on disk in cd <directory>, and subsequent calls to get
-the current working directory will use that case, rather than what is
-recorded on disk. And since case-insensitive filesystems are frowned upon in
-the Linux world, Git's test suite was not prepared for such a scenario.
+On a case-insensitive filesystem, such as HFS+ or NTFS, it is possible
+that the idea Bash has of the current directory differs in case from
+what Git thinks it is. That's totally okay, though, and we should not
+expect otherwise.
 
-Johannes Schindelin (1):
-  t0001: fix on case-insensitive filesystems
+Reported by Jameson Miller.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t0001-init.sh | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
-
-base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-151%2Fdscho%2Ffunny-cased-cwd-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-151/dscho/funny-cased-cwd-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/151
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 42a263cada..f54a69e2d9 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -307,10 +307,20 @@ test_expect_success 'init prefers command line to GIT_DIR' '
+ 	test_path_is_missing otherdir/refs
+ '
+ 
++downcase_on_case_insensitive_fs () {
++	test false = "$(git config --get core.filemode)" || return 0
++	for f
++	do
++		tr A-Z a-z <"$f" >"$f".downcased &&
++		mv -f "$f".downcased "$f" || return 1
++	done
++}
++
+ test_expect_success 'init with separate gitdir' '
+ 	rm -rf newdir &&
+ 	git init --separate-git-dir realgitdir newdir &&
+ 	echo "gitdir: $(pwd)/realgitdir" >expected &&
++	downcase_on_case_insensitive_fs expected newdir/.git &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir realgitdir/refs
+ '
+@@ -365,6 +375,7 @@ test_expect_success 're-init to update git link' '
+ 	git init --separate-git-dir ../surrealgitdir
+ 	) &&
+ 	echo "gitdir: $(pwd)/surrealgitdir" >expected &&
++	downcase_on_case_insensitive_fs expected newdir/.git &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir surrealgitdir/refs &&
+ 	test_path_is_missing realgitdir/refs
+@@ -378,6 +389,7 @@ test_expect_success 're-init to move gitdir' '
+ 	git init --separate-git-dir ../realgitdir
+ 	) &&
+ 	echo "gitdir: $(pwd)/realgitdir" >expected &&
++	downcase_on_case_insensitive_fs expected newdir/.git &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir realgitdir/refs
+ '
 -- 
 gitgitgadget
