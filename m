@@ -2,139 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBD711F462
-	for <e@80x24.org>; Sun,  9 Jun 2019 20:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1EEA1F462
+	for <e@80x24.org>; Sun,  9 Jun 2019 20:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729369AbfFIUNM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 16:13:12 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37516 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726578AbfFIUNM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 9 Jun 2019 16:13:12 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1504:7263:609b:f73f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4A46960446;
-        Sun,  9 Jun 2019 20:13:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1560111190;
-        bh=wol3NLa9DrbkeZ6ED0cSsfqnNjmCG8eQUL04U3E3+m4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Y+xOKboavZDh3wGZYkXjs/Yot64u0EhLKTuI2ZT/SGAbRFKgPYBI6pe7Xhgff5j1m
-         qMW4PPoqY7SepUybUFD6LCdKl57y37wQEZ9dMmYq37KYBMIya8etRzA/NHtI0AWJ7e
-         Iwan9QPHdnQcM2EdkSnb1Ot0Ge9pHOdOgLxS8zTlRb9EXb4dms5MlaRg7SpQN3Jik/
-         yQNCixviKqwzAtQGWUWsPRzGiUB+Cef0fbmY3KKW76t7fFDXoEjYP3UHGBT9F/Iz77
-         Dx+h3w/KgZmk3te1/5p+iLvE7juTAp/iCAK8x2TFVz1s7ZSQEdfh3qhYsZgQ3dAnZx
-         exxYIfs0ZBYIzb352ayM0LWU04VSkT7G5yKbNdHpdv7dR47ADlG5GRLM89CnOem992
-         +Dpsaf80pOFpUOh8sft3rWzxS7Le1BO8kU/JGo7sB7TshAKb3PVtaE6twlwDFGW7yb
-         aUgCFe+J8LXuqNiT7/qdvWd5VRpaJoq64xk2pe9+vOSPk0tmVbn
-Date:   Sun, 9 Jun 2019 20:13:02 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] t0001: fix on case-insensitive filesystems
-Message-ID: <20190609201302.GX8616@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.151.git.gitgitgadget@gmail.com>
- <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
+        id S1729916AbfFIUZJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 16:25:09 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44097 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729554AbfFIUZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jun 2019 16:25:09 -0400
+Received: by mail-ed1-f65.google.com with SMTP id k8so11172516edr.11
+        for <git@vger.kernel.org>; Sun, 09 Jun 2019 13:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=y3nUIOqyqsTyHY2YyTjA5EMXqWQGr40llezEKnBQAQs=;
+        b=WeztkaXlQ1/IRj5/SIeEOwIzEgFBibx+1IOy70LRhB0NkAbAYDhYVKkNxqISTI+A9T
+         99bMpe/2AcneR0RdfKvNVw8MTfIlGijitOHKtx9akKEfNGykjnjJ/Eu3W56XkSFhw67K
+         72OeWGTbyMfbmQ1ogLm8eMwT/GEJ4puc0RoHhnWhQaArdwU4kdntN3eWLRyQucb9bRZg
+         pUIH71a6Vf0hBVQd56z1rVpZO/4e7rtvpTfkzJfIuCmiZgHAwfnD6vwvS7X9FHZ3+WIv
+         kZqpsCmqG5BZnprNt5EDXZnlVlA5qUIYqB1SPrbvRAFzJq3iFvKy+grLsyHQOO1uJrc3
+         IcOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=y3nUIOqyqsTyHY2YyTjA5EMXqWQGr40llezEKnBQAQs=;
+        b=U9IsQ4iNynad1TBPyRQqWCUf1d2fHibI7stRxCTSb+GW4g4WUif5BY0rZfwDFvCELJ
+         wTGeQnK4qXdB1046HTLfbtre41NvLPNp1zNqq9GLzCj6AfmNMUKLDxRF+vb19krm/cgf
+         aeZ8i+ofhsQbUjdeIfraY5cAg6ZhJveNooIqLxHc0AcCYdAH01ANEic32Jzcdk2ZUsJu
+         FEYzgk2VeZoGyNtFzEa6ZpNJNDa6k0n4m/4Jlsko6nAzjsojgWyE7hKjnxE3GIPqQhtt
+         iVIi/dX1Kh5EZtgvt8YN8dvGoSx7F4jrt0hrC5vm5vAzdutnvFTr6HNn4bKPGuFuRY8m
+         Q+Fw==
+X-Gm-Message-State: APjAAAUnmRjPm62ZhCukDau+x6++MmgC2eF8yuxUUopztAcYecvMkFjP
+        8nH4m9bjZmVq0jw8hY71Wq8YFHeYKStupK3keZk=
+X-Google-Smtp-Source: APXvYqxH8qoMtCCVvAZWYFKY7q0/GL/g/6JkP1I/czTDRzahAvru7EyyU0dSOlDDd7nO4bMGMVG2MfwQuJ55hSSsMWU=
+X-Received: by 2002:a17:906:2594:: with SMTP id m20mr57794164ejb.217.1560111907502;
+ Sun, 09 Jun 2019 13:25:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jwJ6bIT+r2BZUD+c"
-Content-Disposition: inline
-In-Reply-To: <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-5-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20190609044907.32477-1-chriscool@tuxfamily.org>
+ <20190609044907.32477-3-chriscool@tuxfamily.org> <20190609092259.GB24208@szeder.dev>
+In-Reply-To: <20190609092259.GB24208@szeder.dev>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 9 Jun 2019 22:24:55 +0200
+Message-ID: <CAP8UFD2AD9NzOUcLfN+NuWp_9JzwdV9oUo9rGAPXt3EP95=_og@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t: add t0016-oidmap.sh
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jun 9, 2019 at 11:23 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+>
+> On Sun, Jun 09, 2019 at 06:49:06AM +0200, Christian Couder wrote:
+> > +
+> > +test_oidmap() {
+> > +     echo "$1" | test-tool oidmap $3 > actual &&
+> > +     echo "$2" > expect &&
+>
+> Style nit: space between redirection op and filename.
 
---jwJ6bIT+r2BZUD+c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for spotting this. It's fixed in my current version.
 
-On 2019-06-08 at 14:43:43, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index 42a263cada..f54a69e2d9 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -307,10 +307,20 @@ test_expect_success 'init prefers command line to G=
-IT_DIR' '
->  	test_path_is_missing otherdir/refs
+> > +test_oidhash() {
+> > +     git rev-parse "$1" | perl -ne 'print hex("$4$3$2$1") . "\n" if m/=
+^(..)(..)(..)(..).*/;'
+>
+> New Perl dependencies always make Dscho sad... :)
+
+Yeah, I was not sure how to do it properly in shell so I was hoping I
+would get suggestions about this. Thanks for looking at this!
+
+I could have hardcoded the values as it is done in t0011-hashmap.sh,
+but I thought it was better to find a function that does he job.
+
+> So, 'test oidmap' from the previous patch prints the value we want to
+> check with:
+>
+>     printf("%u\n", sha1hash(oid.hash));
+
+Yeah, I did it this way because "test-hashmap.c" does the same kind of
+thing to print hashes:
+
+            printf("%u %u %u %u\n",
+                   strhash(p1), memhash(p1, strlen(p1)),
+                   strihash(p1), memihash(p1, strlen(p1)));
+
+> First, since object ids inherently make more sense as hex values, it
+> would be more appropriate to print that hash with the '%x' format
+> specifier,
+
+I would be ok with that, but then I think it would make sense to also
+print hex values in "test-hashmap.c".
+
+> and then we wouldn't need Perl's hex() anymore, and thus
+> could swap the order of the first four bytes in oidmap's hash without
+> relying on Perl, e.g. with:
+>
+>   sed -e 's/^\(..\)\(..\)\(..\)\(..\).*/\4\3\2\1/'
+>
+> Second, and more importantly, the need for swapping the byte order
+> indicates that this test would fail on big-endian systems, I'm afraid.
+> So I think we need an additional bswap32() on the printing side,
+
+Ok, but then shouldn't we also use bswap32() in "test-hashmap.c"?
+
+By the way it seems that we use ntohl() or htonl() instead of
+bswap32() in the source code.
+
+> and then could further simplify 'test_oidhash':
+>
+> diff --git a/t/helper/test-oidmap.c b/t/helper/test-oidmap.c
+> index 0ba122a264..4177912f9a 100644
+> --- a/t/helper/test-oidmap.c
+> +++ b/t/helper/test-oidmap.c
+> @@ -51,7 +51,7 @@ int cmd__oidmap(int argc, const char **argv)
+>
+>                         /* print hash of oid */
+>                         if (!get_oid(p1, &oid))
+> -                               printf("%u\n", sha1hash(oid.hash));
+> +                               printf("%x\n", bswap32(sha1hash(oid.hash)=
+));
+>                         else
+>                                 printf("Unknown oid: %s\n", p1);
+>
+> diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+> index 3a8e8bdb3d..9c0d88a316 100755
+> --- a/t/t0016-oidmap.sh
+> +++ b/t/t0016-oidmap.sh
+> @@ -22,10 +22,10 @@ test_expect_success 'setup' '
 >  '
-> =20
-> +downcase_on_case_insensitive_fs () {
-> +	test false =3D "$(git config --get core.filemode)" || return 0
-> +	for f
+>
+>  test_oidhash() {
+> -       git rev-parse "$1" | perl -ne 'print hex("$4$3$2$1") . "\n" if m/=
+^(..)(..)(..)(..).*/;'
+> +       git rev-parse "$1" | cut -c1-8
+>  }
+>
+> -test_expect_success PERL 'hash' '
+> +test_expect_success 'hash' '
 
-TIL that =E2=80=9Cfor f=E2=80=9D is equivalent to =E2=80=9Cfor f in "$@"=E2=
-=80=9D. Thanks for teaching
-me something new.
-
-> +	do
-> +		tr A-Z a-z <"$f" >"$f".downcased &&
-> +		mv -f "$f".downcased "$f" || return 1
-> +	done
-> +}
-> +
->  test_expect_success 'init with separate gitdir' '
->  	rm -rf newdir &&
->  	git init --separate-git-dir realgitdir newdir &&
->  	echo "gitdir: $(pwd)/realgitdir" >expected &&
-> +	downcase_on_case_insensitive_fs expected newdir/.git &&
-
-I wonder if there's maybe a simpler way. If we canonicalize paths when
-writing them to the gitdir file, then writing "$(pwd -P)" on the line
-above should produce the right result.
-
-Now, technically, POSIX doesn't require case canonicalization of the
-path with "pwd -P", but then again, POSIX doesn't permit
-case-insensitive file systems, and we know the behavior on macOS uses
-bash, which does the right thing in this case because it calls
-realpath(3). I've tested that it also does the right thing on Linux when
-the worktree containing the Git checkout is in a path with symlinks.
-
-I don't know how that works on Windows, but if it does, it might be
-simpler.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---jwJ6bIT+r2BZUD+c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.15 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlz9aE4ACgkQv1NdgR9S
-9osJGw//ZhWiHmDn7oHDls6uWJnCqaOji64Du85RooZ0s7hRrvknosonD8SIpctE
-OAG2eTpkpF/uBMKPgPKlTlpvy2nVm1Go/lri/mcF92w4NG13HijmDmeF/6qT59qI
-zEDBxYQCxKKOOSCwOJlDDQh8vi/FvqpHCwZ4Oz1hVJQ6tgTOMJUlzCrScXEekVCd
-NwfxhHzUqY4W35SfspRgJ8ihO8s31ij+yj8lZXLWy8JDXp+0FZWv3JVF1Som0fvo
-QCIs8E73fFekxMf27JXWupZNJmbap9dF2jTdn5uijsLVYihgKn7JNoeJYe+hLW4K
-G/ZZ/vpV7tcacIoBXwX8kUZkM4Pr4qYRxP5H2av1bYgRYs1vNHPmPzlBkCLmDi8W
-mnnkeyL1PrfSTNHgP321mJPGkENPyFVkIpptfYyYdzzmkeVicU0EgH6F5FCnbOVp
-gogz1UwWG2bO3ddbPcLfDkHTR8EbmTGm4XO1ahilaCiJVbxYn+p79Pa207mUxelS
-yf96tc75IJzU5bdHqUcpsOELVBMriV+24/S6/8w2mxFwJ41xr/578bg0M/jHiWTw
-5pBiZaTiFbsX3synbUkUUeiE7lTsE+oHFQuL/yy3/XmV4lA5oQfOY1Ao00rjBHpp
-TI7J7WauLl6L6HnTyKUqCFd2XRw/EHkznj7+Kms3AmcI2cR/rqg=
-=sGnf
------END PGP SIGNATURE-----
-
---jwJ6bIT+r2BZUD+c--
+Yeah, I agree that it seems better to me this way.
