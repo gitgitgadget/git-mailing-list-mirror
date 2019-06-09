@@ -2,104 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220A31F462
-	for <e@80x24.org>; Sun,  9 Jun 2019 10:09:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49E761F462
+	for <e@80x24.org>; Sun,  9 Jun 2019 12:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728231AbfFIKJU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 06:09:20 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:34690 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728139AbfFIKI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jun 2019 06:08:59 -0400
-Received: by mail-lf1-f68.google.com with SMTP id y198so4637070lfa.1
-        for <git@vger.kernel.org>; Sun, 09 Jun 2019 03:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=itwh7UAFSIfSIW1IOHCwjaKL9cZc0DHR/VvU3mMBDVU=;
-        b=flIyJjwJte4QRKt8aueF4ralhMFv1dvJa+f5utDs8lsWEeQXnCBX5wUGMNUR6+rlHu
-         GeiV1dhu2UZWJHG5WeHkumFn07F39mwi3ezNh+onNtyPm+G6O9nNW3ioDUDpnkIqQWzW
-         nX6Vc0yunGym/vpv6F1VOdufxncPDNLWXMDnyoFjGMRCkTuhIpPX6bHluRD1bn109Dfw
-         gnSjBpmcdwaElfdpWh8Au99LG6GN4zE85WEVzjJypxTyfa9vaAJEMaRN6H+R1X0ableT
-         fHW96IvuWmgMB/BerWdRfdk9+7zItBCdBrbgjmYgpjBaRH70dft5LMmkVsw9jYz08g1b
-         r9Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=itwh7UAFSIfSIW1IOHCwjaKL9cZc0DHR/VvU3mMBDVU=;
-        b=ibJQdHZcp3c06WrudWrPPPJEj4ArqZnHEQoUUZDrf+rZ7keJMV8uns95LG/QrPGnKW
-         F6PSKK5IqRp2MaTnFldciuyVo0I7dqGRVn6yTC7qFq2EGD+6fAx23EZp5VpBAcZmeoFe
-         +yYZomb9a2ht/vfzcL3ITmE6afLy1Jvro7/RkocwJjimpuE2UsE/PysqhZdMRqowVp2J
-         jWYf1uVaqqTilSLhZApIoCZV7S5mm0vw3yCamHm+9cvTMsoPpOQhcdxpa+KzYL6Th0Kw
-         MkJJWscXmupCPy8LVBuuBP8iK6LRwr5hROcwDyOp8NPepobh1rFp3HKssk3lvn8nH6aZ
-         CHLQ==
-X-Gm-Message-State: APjAAAVHtDbTQEHaqtp3ywQXhH3uCkY+HGMFATy4X/xIBAXeI5IH27kD
-        JOSOOORl/xkbUxWU0Beo2HegvreVy5o0Ei+0+K0=
-X-Google-Smtp-Source: APXvYqxrjAn9unWwPVzm93wb0Rrhcxj2fJEaxHghCObKUkiVE7JTz9PU+ybou05MTDvgh5qtEO29v1xqCDhq+mMVQbQ=
-X-Received: by 2002:a19:c142:: with SMTP id r63mr34089162lff.49.1560074937562;
- Sun, 09 Jun 2019 03:08:57 -0700 (PDT)
+        id S1728428AbfFIMgi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 08:36:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50058 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728319AbfFIMgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jun 2019 08:36:38 -0400
+Received: (qmail 23639 invoked by uid 109); 9 Jun 2019 12:36:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jun 2019 12:36:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19327 invoked by uid 111); 9 Jun 2019 12:37:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 09 Jun 2019 08:37:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jun 2019 08:36:36 -0400
+Date:   Sun, 9 Jun 2019 08:36:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, jonathantanmy@google.com,
+        jrn@google.com, git@vger.kernel.org, dstolee@microsoft.com,
+        jeffhost@microsoft.com, jrnieder@gmail.com, pclouds@gmail.com
+Subject: Re: [PATCH v1 3/5] list-objects-filter: implement composite filters
+Message-ID: <20190609123636.GA23555@sigill.intra.peff.net>
+References: <20190531211041.GA19792@sigill.intra.peff.net>
+ <20190601001231.GF4641@comcast.net>
+ <20190603123435.GA18953@sigill.intra.peff.net>
+ <20190603222247.GG4641@comcast.net>
+ <20190604161332.GA29603@sigill.intra.peff.net>
+ <20190604171952.GI4641@comcast.net>
+ <20190604185108.GA14738@sigill.intra.peff.net>
+ <20190604225921.GA43275@comcast.net>
+ <20190604231418.GA12501@sigill.intra.peff.net>
+ <20190604234951.GB43275@comcast.net>
 MIME-Version: 1.0
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com> <20190609090235.GC28007@hank.intra.tgummerer.com>
-In-Reply-To: <20190609090235.GC28007@hank.intra.tgummerer.com>
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Date:   Sun, 9 Jun 2019 15:36:23 +0530
-Message-ID: <CAL7ArXpMBXwOGXWmYx8Rv9bj2trJ-FS_VGgPmJbAh+evbaxNEw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 0/3] Teach cherry-pick/revert to skip commits
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190604234951.GB43275@comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Thomas
+On Tue, Jun 04, 2019 at 04:49:51PM -0700, Matthew DeVore wrote:
 
-On Sun, Jun 9, 2019 at 2:32 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> I tried to do it anyway :) I think this makes the strbuf API a bit easier to
+> reason about, and strbuf.h is a bit more self-documenting. WDYT?
 >
-> Thanks!  I found a few minor nits that I missed in my off-list review
-> on the PR.  We should give others some time to comment now before you
-> re-send it with the nits fixed (if you agree with them).
-
-Yes, I'll wait for some more reviews before sending another iteration.
-
-> One thing that would be good to add to future cover letters is a
-> reminder of how this fits in to your GSoC project, where the overall
-> end goal is to improve the consistency of sequencer commands, and this
-> is one step along that way.
-
-Sure, I'll keep this in mind and send some kind of summary in the next
-revision.
-
+> [...]
 >
-> > PR: https://github.com/r1walz/git/pull/1
-> > Reviewed-by: Elijah Newren <newren@gmail.com>
-> > Reviewed-by: Thomas Gummerer <t.gummerer@gmail.com>
->
-> Note that the 'Reviewed-by' footer is something that is "given" by the
-> reviewers, and should only be added after they have explicitly given
-> it for the patch/series in question.  Instead this should probably
-> mention that Elijah and me reviewed this off-list in the PR you linked
-> to above.
+> +typedef int (*char_predicate)(char ch);
+> +
+> +int is_rfc3986_unreserved(char ch);
+> +int is_rfc3986_reserved_or_unreserved(char ch);
+> +
+>  void strbuf_addstr_urlencode(struct strbuf *sb, const char *name,
+> -			     int reserved);
+> +			     char_predicate allow_unencoded_fn);
 
-Oh! But I read here, SubmittingPatches[1] docs, that it's nice to give
-credits to those who helped you. Should we fix it in some way? I don't
-know. Anyway, that is beyond the scope of this patch.
+Yeah, that seems reasonable. I worry slightly about adding function-call
+overhead to something that's processing a string character-by-character,
+but these strings tend to be short and infrequent.
 
->
-> > --
-> > 2.21.0
-> >
-
-Thanks for the review
-Rohit
-
-[1]: https://github.com/git/git/blob/v2.22.0/Documentation/SubmittingPatches#L289-L291
+-Peff
