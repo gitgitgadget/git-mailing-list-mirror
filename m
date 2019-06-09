@@ -2,137 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC1AA1F462
-	for <e@80x24.org>; Sun,  9 Jun 2019 21:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7E71F462
+	for <e@80x24.org>; Sun,  9 Jun 2019 22:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729517AbfFIVvt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 17:51:49 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37605 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726211AbfFIVvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jun 2019 17:51:48 -0400
-Received: by mail-ed1-f68.google.com with SMTP id w13so11441826eds.4
-        for <git@vger.kernel.org>; Sun, 09 Jun 2019 14:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5L4m9sCOnBmyCMGoKd7VbExdcmasadACUd1WpJzhH1Q=;
-        b=UApYPhgHHM1o0cQlQiDKbQoxayzGyLNFzG1L/NyKVwcOBdVwErXGQUb5Xx8muFbhmW
-         QUgPDkfyp2kUWVMh8zIxzC7wmXIsOVTXqMzFnMDYnZuDrsas//q39vBhlQbzJ7S+QkI1
-         40MRcox8DOmVsoNmYqOkjMfm1fli4wQcYtRp6qo1TJRZM583iQw/XHu1f9cJ0IRzFste
-         xhWNn3jFLx6GDFs58kKf03Lmrorp5TyMWcfA/zWanyV2Jqakxw7MZVx/99YLY5H3ycj/
-         on6Anr3GHHzCcfBMjknjINbjz8EhsfKVwlu1CkVFy0qk1SZfgC2kgPyQ+GF8AA1/a8N7
-         rRsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5L4m9sCOnBmyCMGoKd7VbExdcmasadACUd1WpJzhH1Q=;
-        b=OvhdWLgbO1c9q7m3GVAs/CNVqhGKU2FyvEdUqFwkioZa02HJveqq4dkZPFiygRy1fz
-         s3Yl0iSRR0HJE8d6Xq46nbggaEOvVmNOizq2ttrkbkGsbAAK2CK8mHYFXCaprO+fiUEF
-         6lHUwtvQrsgoL+STqIdBC5P5mfRjTGBGgLwlmlL0C9EG5fw+BO8YcjGb7fgifl/k3Kzy
-         xgXRg4QZJ/pwNaipWSvIGRKVCh5wd5PXyh5nhCDRBTxcF7ipNe+qkNi6mPDvwHXCfIpa
-         uRHzCQnCwp+3X7UOlleu5lm85jRvE9K9PcVX3/vP2I/EswjwM5IQ5cd+o80jDB9ZM782
-         gyNg==
-X-Gm-Message-State: APjAAAW4gYBS0nvyvN8vvfQ9x+OBATrwk/C+GcilZn8C652rF2ncO/up
-        g+s2XDkYgvqrxNNGonhANnNfJ8sztYFn7tg4DdY=
-X-Google-Smtp-Source: APXvYqxFSi9K+o01aPahrb72Uc0YnZRjBgwUFT+lIAWilLTbQIi4OBwxgv7RQPXJ2inWhhaxVxy4BDt41hCGCdakvPM=
-X-Received: by 2002:aa7:c5d2:: with SMTP id h18mr69123851eds.110.1560117107034;
- Sun, 09 Jun 2019 14:51:47 -0700 (PDT)
+        id S1729733AbfFIWoM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 18:44:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37536 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729304AbfFIWoM (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 9 Jun 2019 18:44:12 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1504:7263:609b:f73f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D789F61B2D;
+        Sun,  9 Jun 2019 22:44:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1560120249;
+        bh=RPGfPuvDymegjnq1/Win6VIudGMrbAx4qt7Y7+78/4s=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=i2EA6CVLY+/n01A1ZAh12d2SY3SW8UgBpzveRqW/v0BapghYI6NdG7QMcdDYKVVNr
+         NkkE6JZ091pVlR7vXgge4i6duW1xfmR+MFardzPaEoLbA/vqQAjeMQoWSJMr0hJAEa
+         CWBb9WEBRp304wh8YeWSdvIgWgofeLyCoqYpQT3dH8ydBu7XjE46YOZhxDT944dqOt
+         oMFC+YIbZ4yOIAoPX785cZm6emDKYqHilwZ4bSBbPwhtopMx4Wz1yTQevYtI9ToahY
+         1phlsAvrC2aAKqu7X+bKOOc+rawm1xHeowfEaJDPJhBdq52+D26XB5eEn4khS7tpd8
+         6Wm23gdxooclqJenHlpSt1b/0dQNXIWa0xQRzMe2TIDxtpkZJwj8EMTYmmtps/pPiJ
+         Sk2ZXnZTBTwd04Rkph5sVxon+5HaPfLa+OjMKLWn5tNOcIac29dZtvH7UeE64D00Iv
+         BMIrhDc5n/ROr/KhUHbcYRi+C1N2DWelCOS0uKEJ5UguOuppsYk
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 00/10] Hash-independent tests, part 4
+Date:   Sun,  9 Jun 2019 22:43:50 +0000
+Message-Id: <20190609224400.41557-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.22.0.rc2.383.gf4fbbf30c2
 MIME-Version: 1.0
-References: <20190609044907.32477-1-chriscool@tuxfamily.org>
- <20190609044907.32477-3-chriscool@tuxfamily.org> <20190609092259.GB24208@szeder.dev>
- <CAP8UFD2AD9NzOUcLfN+NuWp_9JzwdV9oUo9rGAPXt3EP95=_og@mail.gmail.com> <20190609212130.GC24208@szeder.dev>
-In-Reply-To: <20190609212130.GC24208@szeder.dev>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 9 Jun 2019 23:51:35 +0200
-Message-ID: <CAP8UFD3iDY8gAm09OK2uQzG6bsB+06wVcGC6pjOgttb4sZ9F+w@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t: add t0016-oidmap.sh
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 9, 2019 at 11:21 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Sun, Jun 09, 2019 at 10:24:55PM +0200, Christian Couder wrote:
-> > On Sun, Jun 9, 2019 at 11:23 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com=
-> wrote:
-> > >
-> > > New Perl dependencies always make Dscho sad... :)
-> >
-> > Yeah, I was not sure how to do it properly in shell so I was hoping I
-> > would get suggestions about this. Thanks for looking at this!
-> >
-> > I could have hardcoded the values as it is done in t0011-hashmap.sh,
-> > but I thought it was better to find a function that does he job.
->
-> Well, I'm fine with hardcoding the expected hash values (in network
-> byte order) as well, because then we won't add another git process
-> upstream of a pipe that would pop up during audit later...
+This is an additional series of fixes for tests to make them work with
+SHA-256.
 
-Ok, I think I will do that then.
+Mostly, this series introduces a helper function and fixes tests. There
+is one test (t1410) which adds an SHA1 prerequisite. I wasn't able to
+get the math to work out when trying to compute the proper values for
+SHA-256, and the test doesn't test what it's supposed to test without
+changes, so I opted to mark it with a prerequisite. Suggestions on how
+to make it functionally useful under SHA-256 would be appreciated.
 
-> > > So, 'test oidmap' from the previous patch prints the value we want to
-> > > check with:
-> > >
-> > >     printf("%u\n", sha1hash(oid.hash));
-> >
-> > Yeah, I did it this way because "test-hashmap.c" does the same kind of
-> > thing to print hashes:
-> >
-> >             printf("%u %u %u %u\n",
-> >                    strhash(p1), memhash(p1, strlen(p1)),
-> >                    strihash(p1), memihash(p1, strlen(p1)));
-> >
-> > > First, since object ids inherently make more sense as hex values, it
-> > > would be more appropriate to print that hash with the '%x' format
-> > > specifier,
-> >
-> > I would be ok with that, but then I think it would make sense to also
-> > print hex values in "test-hashmap.c".
-> >
-> > > and then we wouldn't need Perl's hex() anymore, and thus
-> > > could swap the order of the first four bytes in oidmap's hash without
-> > > relying on Perl, e.g. with:
-> > >
-> > >   sed -e 's/^\(..\)\(..\)\(..\)\(..\).*/\4\3\2\1/'
-> > >
-> > > Second, and more importantly, the need for swapping the byte order
-> > > indicates that this test would fail on big-endian systems, I'm afraid=
-.
-> > > So I think we need an additional bswap32() on the printing side,
-> >
-> > Ok, but then shouldn't we also use bswap32() in "test-hashmap.c"?
->
-> No.  The two test scripts/helpers work with different hashes.  t0011
-> and 'test-hashmap.c' uses the various FNV-1-based hash functions
-> (strhash(), memhash(), ...) to calculate an unsigned int hash of the
-> items stored in the hashmap, therefore their hashes will be the same
-> regardless of endianness.
+My hope is to introduce several small series of patches for tests that
+are mostly independent of one another and can be picked up reasonably
+quickly.
 
-I see. Thanks for explaining that.
+brian m. carlson (10):
+  t: add helper to convert object IDs to paths
+  t1410: make hash size independent
+  t1450: make hash size independent
+  t5000: make hash independent
+  t6030: make test work with SHA-256
+  t0027: make hash size independent
+  t0090: make test pass with SHA-256
+  t1007: remove SHA1 prerequisites
+  t1710: make hash independent
+  t2203: avoid hard-coded object ID values
 
->  In an oidmap, however, the hash is simply
-> the first four bytes of the object id as an unsigned int as is,
+ t/t0027-auto-crlf.sh                          |   6 +-
+ t/t0090-cache-tree.sh                         |   4 +-
+ t/t1007-hash-object.sh                        |  58 ++++++++++--------
+ t/t1410-reflog.sh                             |  16 ++---
+ t/t1450-fsck.sh                               |  44 ++++++++-----
+ t/t1700-split-index.sh                        |  51 ++++++++++-----
+ t/t2203-add-intent.sh                         |   6 +-
+ t/t5000-tar-tree.sh                           |  16 +++--
+ ...8938e6999cb59b3ff66739902a => huge-object} | Bin
+ t/t6030-bisect-porcelain.sh                   |  31 +++++-----
+ t/test-lib-functions.sh                       |   6 ++
+ 11 files changed, 144 insertions(+), 94 deletions(-)
+ rename t/t5000/{19f9c8273ec45a8938e6999cb59b3ff66739902a => huge-object} (100%)
 
-Yeah, I had realized that.
-
-Thanks,
-Christian.
