@@ -2,134 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 570091F462
-	for <e@80x24.org>; Sun,  9 Jun 2019 18:06:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27E641F462
+	for <e@80x24.org>; Sun,  9 Jun 2019 19:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729433AbfFISC4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jun 2019 14:02:56 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44433 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729352AbfFISCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jun 2019 14:02:55 -0400
-Received: by mail-wr1-f67.google.com with SMTP id b17so6863538wrq.11
-        for <git@vger.kernel.org>; Sun, 09 Jun 2019 11:02:54 -0700 (PDT)
+        id S1729199AbfFITXV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jun 2019 15:23:21 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45888 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729115AbfFITXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jun 2019 15:23:20 -0400
+Received: by mail-pf1-f195.google.com with SMTP id s11so3972996pfm.12
+        for <git@vger.kernel.org>; Sun, 09 Jun 2019 12:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rJrknrATBzTzkBoSDOuLl5nNqgAbx2hko0j+psp0m6A=;
-        b=Vgr0Bxs+9MvkbFsP4BAjU6cyOr88O9XOjmy6gqc/CmXc34bGXIQJLXW7rR2KKimxHv
-         yzzSojHdqOXVk3FtympG7LV8VQJnDr7/pzMROARLWzK6+/weokWxFeXCfEVgJ1yGDwSM
-         8CVQdsO233vaKeU0hBAwbNE1MZuBJNJV81xiXHd/2LrYl/Id4L2AjvluHhyTfQk4jeiq
-         NVDgh64e0/DBvNH4JUHj6LQAoVwf545FsWphkcgT2M2nbs9zBPMrJoEpiv08iS7sAKo/
-         VL0DQNOPReQYiBJ6Ch7nF4o/XcchKRjhpACrEIK9oKVelqx/4D0LSghAHyIkGsvFEMAi
-         j2FA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XUTLBNPSOBXVsO5dZQ461DI+juhfRqCFVj8GnB8r0r0=;
+        b=tSyOtFZVAI+sZwhkJo2BdLATn4/nXTkNELOgeLy08Zmo/TEJM351IP23cFUsZUj8XX
+         TXHGl718ODzms0/FDCU1/7335A+gpHHL4pmd4vbqhUt5DnZcqAXCC0efTg4ctvPAfjY8
+         Vs6130qJa9FBZ8s+Z0e4KjPyumUo8e1kN4C4zQrK/A2/uvHiIM3a5g2QnJotiDSYNnFv
+         IpzDDoXu6FkNC8U7SWJqgvxsFLCCpX8RwAGaTxBzQ4bddkhcw1JzuvVAQ1ru/hPMiib+
+         Tq3aH8eqWyh/YEmfKGsgLLpeR4lMOpLNN3uYgpYKYV5FSd3bAc97iH9oeeRIZqDr2PGw
+         AWEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rJrknrATBzTzkBoSDOuLl5nNqgAbx2hko0j+psp0m6A=;
-        b=jxRmuIgEsropBE8FT8uJxBRkHyceWSd44CLCVzoeYOUEZlPqNMdr5EMwnRtsZMhPh/
-         rX5/+duyBl+LGfP6OYZ3vWfhulkReLvKq/nxZPL1MzWJlr4dD62O6Bs2wuIdGOj8GO5I
-         EK/KfM1dc0z5rYkLkgHSXRvsUDkINYyrJAdZEjOwdSk4YutZO8fxt5hR2pts2t+UPERp
-         Ct0FODEiSV78qNijknGn2s9xWC8fYpQM8BfsbtzsZTwil4+Nn4TtiRLveRjZxabyAsqn
-         2Xz92vXh+IA9PqfsDLMVdGzY8+fgmqy2bT+YzTYzApAEa1WbpARRszfdqlzbQCScFCpF
-         R3NA==
-X-Gm-Message-State: APjAAAX3nS0YCve1q30EujUVyzyopfp3frpqRqDOlPVjGgZNkOQk2C5/
-        8Rwv0HqjFxpC7O9MWc+Q2XQ=
-X-Google-Smtp-Source: APXvYqx2acKLX81L0CGnn1r0IJkniK7bARm6ePokDiv+k/gefWQsi9coK4Pq1lW52t1GbivxKnly9w==
-X-Received: by 2002:adf:8307:: with SMTP id 7mr25650275wrd.86.1560103374250;
-        Sun, 09 Jun 2019 11:02:54 -0700 (PDT)
-Received: from [192.168.2.201] (host-89-242-178-164.as13285.net. [89.242.178.164])
-        by smtp.googlemail.com with ESMTPSA id g131sm4808650wmf.37.2019.06.09.11.02.52
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Jun 2019 11:02:53 -0700 (PDT)
-Subject: Re: [GSoC][PATCH 3/3] cherry-pick/revert: update hints
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>, git@vger.kernel.org
-Cc:     newren@gmail.com, t.gummerer@gmail.com
-References: <20190608191958.4593-1-rohit.ashiwal265@gmail.com>
- <20190608191958.4593-4-rohit.ashiwal265@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <61a8bfde-018c-5a69-5abd-89d4a332e39e@gmail.com>
-Date:   Sun, 9 Jun 2019 19:03:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XUTLBNPSOBXVsO5dZQ461DI+juhfRqCFVj8GnB8r0r0=;
+        b=dS44DIsRVtaCxj5zSU4psJxovdtlkF8U8VWLxM6G65bidNpKqzWFRUxLclY+qWitwc
+         xpY5j7hs5CzWo7qItsPtelyv6kia+7N1S8m6aUMBFt0bxtoKd48c3xalTfOpB1aXNZzJ
+         fsAIht3PvrPE7cypnNc0fJGVvdeUR8+TK/W5Bktq/sxvy/nvXLdDaT1YyD79DOWEBf5P
+         CnVZ8YnHNhXbwyVqJvUggnQeBEDjFltC2/3GMiZPSrfffobQWd69E7424aHRtJTY8c50
+         COvJepB4uxQUN4FdWdGxjxPRHlggnWroJiuglUTy8H9JLge8SDNfAU4yEWbGMQT4tFqD
+         Bevw==
+X-Gm-Message-State: APjAAAWxLuHAqe8aOjZqrsqw+Q+/Am4bfhSCxCZkjDyu9/ksrdIcatpP
+        zBQIDAUSDKk1MevDsott+YxqCra6ixyrpHRMyUw=
+X-Google-Smtp-Source: APXvYqzuEKpM2ATLWPpCwzkNexER1vuz+n61QTgLNzocuN5oWf2+q2rG41fxmwFEN60d8Fe8k1dosO8nL1puOgG9vRc=
+X-Received: by 2002:a63:a044:: with SMTP id u4mr11588540pgn.316.1560108200245;
+ Sun, 09 Jun 2019 12:23:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190608191958.4593-4-rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <pull.151.git.gitgitgadget@gmail.com> <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
+In-Reply-To: <1dd56d034efb6ff251bdac8d099052175f4777a0.1560005022.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 9 Jun 2019 21:23:08 +0200
+Message-ID: <CAN0heSrQ-AVui0OzpL7WGBzmdU4ignUsFxYqeXDtgR+CsDXbJw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t0001: fix on case-insensitive filesystems
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit
+Hi Dscho,
 
-On 08/06/2019 20:19, Rohit Ashiwal wrote:
-> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-> ---
->  builtin/commit.c | 13 ++++++++-----
->  sequencer.c      |  4 ++--
->  2 files changed, 10 insertions(+), 7 deletions(-)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 1c9e8e2228..1f47c51bdc 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -60,15 +60,18 @@ N_("The previous cherry-pick is now empty, possibly due to conflict resolution.\
->  "\n");
->  
->  static const char empty_cherry_pick_advice_single[] =
-> -N_("Otherwise, please use 'git reset'\n");
-> +N_("Otherwise, please use 'git cherry-pick --skip'\n");
->  
->  static const char empty_cherry_pick_advice_multi[] =
-> -N_("If you wish to skip this commit, use:\n"
-> +N_("and then use:\n"
->  "\n"
-> -"    git reset\n"
-> +"    git cherry-pick --continue\n"
->  "\n"
-> -"Then \"git cherry-pick --continue\" will resume cherry-picking\n"
-> -"the remaining commits.\n");
-> +"to resume cherry-picking the remaining commits.\n"
-> +"If you wish to skip this commit, use:\n"
-> +"\n"
-> +"    git cherry-pick --skip\n"
-> +"\n");
->  
->  static const char *color_status_slots[] = {
->  	[WT_STATUS_HEADER]	  = "header",
-> diff --git a/sequencer.c b/sequencer.c
-> index f586e677d3..e889427eef 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2654,8 +2654,8 @@ static int create_seq_dir(void)
->  {
->  	if (file_exists(git_path_seq_dir())) {
->  		error(_("a cherry-pick or revert is already in progress"));
-> -		advise(_("try \"git cherry-pick (--continue | --quit | --abort)\""));
-> -		advise(_("or  \"git revert (--continue | --quit | --abort)\""));
-> +		advise(_("try \"git cherry-pick (--continue | --skip | --quit | --abort)\""));
-> +		advise(_("or  \"git revert (--continue | --skip | --quit | --abort)\""));
+On Sat, 8 Jun 2019 at 16:45, Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> On a case-insensitive filesystem, such as HFS+ or NTFS, it is possible
+> that the idea Bash has of the current directory differs in case from
+> what Git thinks it is. That's totally okay, though, and we should not
+> expect otherwise.
 
-If the user has already committed the conflict resolution then we don't
-want to recommend --skip as there is nothing to skip.
+> +downcase_on_case_insensitive_fs () {
+> +       test false = "$(git config --get core.filemode)" || return 0
 
-Best Wishes
+I think it would be worthwhile to add `--type=bool` to this git-config
+call. See, e.g., the FILEMODE prereq in t/test-lib.sh. From my
+understanding, this check would regress if someone did s/false/no/ in
+builtin/init-db.c, so this check is perhaps not as robust as it could
+be. (Now, as for *why* someone would do such a change...)
 
-Phillip
+I do wonder if this is the right way to check for a case-insensitive
+filesystem. According to git-config(1), this variable tells whether "the
+executable bit of files in the working tree is to be honored". I can see
+how this property could correlate with the filesystem being
+case-insensitive, but from git-config(1), I would have expected
+core.ignoreCase to be queried instead.
 
->  		return -1;
->  	} else if (mkdir(git_path_seq_dir(), 0777) < 0)
->  		return error_errno(_("could not create sequencer directory '%s'"),
-> 
+You're no doubt a lot more familiar with filesystem case-insensitivity and
+how it interacts with Git than I am. Any light you could shed on this
+would be much appreciated.
 
+> +       for f
+> +       do
+> +               tr A-Z a-z <"$f" >"$f".downcased &&
+> +               mv -f "$f".downcased "$f" || return 1
+
+Makes sense. Good error-handling.
+
+> +       done
+> +}
+
+Cheers
+Martin
